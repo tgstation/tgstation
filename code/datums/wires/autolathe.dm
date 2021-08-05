@@ -42,7 +42,7 @@
 	switch(wire)
 		if(WIRE_HACK)
 			A.adjust_hacked(!mend)
-		if(WIRE_HACK)
+		if(WIRE_SHOCK)
 			A.shocked = !mend
 		if(WIRE_DISABLE)
 			A.disabled = !mend

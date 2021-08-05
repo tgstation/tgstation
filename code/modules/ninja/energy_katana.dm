@@ -111,7 +111,7 @@
 			msg = "Your Energy Katana lands at your feet!"
 
 	if(msg)
-		to_chat(user, "<span class='notice'>[msg]</span>")
+		to_chat(user, span_notice("[msg]"))
 
 /datum/action/innate/dash/ninja
 	current_charges = 3

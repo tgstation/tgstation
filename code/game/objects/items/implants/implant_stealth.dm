@@ -15,6 +15,7 @@
 	icon_state = "agentbox"
 	max_integrity = 1 // "This dumb box shouldn't take more than one hit to make it vanish."
 	move_speed_multiplier = 0.5
+	enable_door_overlay = FALSE
 
 /obj/structure/closet/cardboard/agent/proc/go_invisible()
 	animate(src, , alpha = 0, time = 20)

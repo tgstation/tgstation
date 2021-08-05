@@ -16,14 +16,20 @@
 	. = ..()
 	machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
 	if (machine)
-		machine.CONSOLE = src
+		machine.console = src
+
+/obj/machinery/mineral/stacking_unit_console/Destroy()
+	if(machine)
+		machine.console = null
+		machine = null
+	return ..()
 
 /obj/machinery/mineral/stacking_unit_console/multitool_act(mob/living/user, obj/item/I)
 	if(!multitool_check_buffer(user, I))
 		return
 	var/obj/item/multitool/M = I
 	M.buffer = src
-	to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
+	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
 	return TRUE
 
 /obj/machinery/mineral/stacking_unit_console/ui_interact(mob/user, datum/tgui/ui)
@@ -78,7 +84,7 @@
 	circuit = /obj/item/circuitboard/machine/stacking_machine
 	input_dir = EAST
 	output_dir = WEST
-	var/obj/machinery/mineral/stacking_unit_console/CONSOLE
+	var/obj/machinery/mineral/stacking_unit_console/console
 	var/stk_types = list()
 	var/stk_amt   = list()
 	var/stack_list[0] //Key: Type.  Value: Instance of type.
@@ -92,7 +98,9 @@
 	materials = AddComponent(/datum/component/remote_materials, "stacking", mapload, FALSE, mapload && force_connect)
 
 /obj/machinery/mineral/stacking_machine/Destroy()
-	CONSOLE = null
+	if(console)
+		console.machine = null
+		console = null
 	materials = null
 	return ..()
 
@@ -105,9 +113,9 @@
 /obj/machinery/mineral/stacking_machine/multitool_act(mob/living/user, obj/item/multitool/M)
 	if(istype(M))
 		if(istype(M.buffer, /obj/machinery/mineral/stacking_unit_console))
-			CONSOLE = M.buffer
-			CONSOLE.machine = src
-			to_chat(user, "<span class='notice'>You link [src] to the console in [M]'s buffer.</span>")
+			console = M.buffer
+			console.machine = src
+			to_chat(user, span_notice("You link [src] to the console in [M]'s buffer."))
 			return TRUE
 
 /obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/inp)

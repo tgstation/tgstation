@@ -771,7 +771,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Gh" = (
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)

@@ -13,20 +13,24 @@
 	limb_integrity = 0 // disabled for most exo-suits
 
 
-/obj/item/clothing/suit/worn_overlays(isinhands = FALSE)
-	. = list()
-	if(!isinhands)
-		if(damaged_clothes)
-			. += mutable_appearance('icons/effects/item_damage.dmi', "damaged[blood_overlay_type]")
-		if(HAS_BLOOD_DNA(src))
-			. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
-		var/mob/living/carbon/human/M = loc
-		if(ishuman(M) && M.w_uniform)
-			var/obj/item/clothing/under/U = M.w_uniform
-			if(istype(U) && U.attached_accessory)
-				var/obj/item/clothing/accessory/A = U.attached_accessory
-				if(A.above_suit)
-					. += U.accessory_overlay
+/obj/item/clothing/suit/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
+	. = ..()
+	if(isinhands)
+		return
+
+	if(damaged_clothes)
+		. += mutable_appearance('icons/effects/item_damage.dmi', "damaged[blood_overlay_type]")
+	if(HAS_BLOOD_DNA(src))
+		. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
+
+	var/mob/living/carbon/human/M = loc
+	if(!ishuman(M) || !M.w_uniform)
+		return
+	var/obj/item/clothing/under/U = M.w_uniform
+	if(istype(U) && U.attached_accessory)
+		var/obj/item/clothing/accessory/A = U.attached_accessory
+		if(A.above_suit)
+			. += U.accessory_overlay
 
 /obj/item/clothing/suit/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()

@@ -3,19 +3,19 @@
 		return FALSE
 
 	if(H.w_class > max_hardware_size)
-		to_chat(user, "<span class='warning'>This component is too large for \the [src]!</span>")
+		to_chat(user, span_warning("This component is too large for \the [src]!"))
 		return FALSE
 
 	if(H.expansion_hw)
 		if(LAZYLEN(expansion_bays) >= max_bays)
-			to_chat(user, "<span class='warning'>All of the computer's expansion bays are filled.</span>")
+			to_chat(user, span_warning("All of the computer's expansion bays are filled."))
 			return FALSE
 		if(LAZYACCESS(expansion_bays, H.device_type))
-			to_chat(user, "<span class='warning'>The computer immediately ejects /the [H] and flashes an error: \"Hardware Address Conflict\".</span>")
+			to_chat(user, span_warning("The computer immediately ejects /the [H] and flashes an error: \"Hardware Address Conflict\"."))
 			return FALSE
 
 	if(all_components[H.device_type])
-		to_chat(user, "<span class='warning'>This computer's hardware slot is already occupied by \the [all_components[H.device_type]].</span>")
+		to_chat(user, span_warning("This computer's hardware slot is already occupied by \the [all_components[H.device_type]]."))
 		return FALSE
 	return TRUE
 
@@ -32,7 +32,7 @@
 		LAZYSET(expansion_bays, H.device_type, H)
 	all_components[H.device_type] = H
 
-	to_chat(user, "<span class='notice'>You install \the [H] into \the [src].</span>")
+	to_chat(user, span_notice("You install \the [H] into \the [src]."))
 	H.holder = src
 	H.forceMove(src)
 	H.on_install(src, user)
@@ -47,7 +47,7 @@
 		LAZYREMOVE(expansion_bays, H.device_type)
 	all_components.Remove(H.device_type)
 
-	to_chat(user, "<span class='notice'>You remove \the [H] from \the [src].</span>")
+	to_chat(user, span_notice("You remove \the [H] from \the [src]."))
 
 	H.forceMove(get_turf(src))
 	H.holder = null

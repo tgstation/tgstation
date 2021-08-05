@@ -7,23 +7,23 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	/// The color that stuff like healing effects and the overmind camera gets
 	var/complementary_color = COLOR_BLACK
 	/// A short description of the power and its effects
-	var/shortdesc = null 
+	var/shortdesc = null
 	/// Any long, blob-tile specific effects
-	var/effectdesc = null 
+	var/effectdesc = null
 	/// Short descriptor of what the strain does damage-wise, generally seen in the reroll menu
 	var/analyzerdescdamage = "Unknown. Report this bug to a coder, or just adminhelp."
 	/// Short descriptor of what the strain does in general, generally seen in the reroll menu
 	var/analyzerdesceffect
 	/// Blobbernaut attack verb
-	var/blobbernaut_message = "slams" 
+	var/blobbernaut_message = "slams"
 	/// Message sent to any mob hit by the blob
-	var/message = "The blob strikes you" 
+	var/message = "The blob strikes you"
 	/// Gets added onto 'message' if the mob stuck is of type living
 	var/message_living = null
 	/// Stores world.time to figure out when to next give resources
 	var/resource_delay = 0
 	/// For blob-mobs and extinguishing-based effects
-	var/fire_based = FALSE 
+	var/fire_based = FALSE
 	var/mob/camera/blob/overmind
 	/// The amount of health regenned on core_process
 	var/base_core_regen = BLOB_CORE_HP_REGEN
@@ -70,6 +70,10 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		stack_trace("blobstrain created without overmind")
 	overmind = new_overmind
 
+/datum/blobstrain/Destroy()
+	overmind = null
+	return ..()
+
 /datum/blobstrain/proc/on_gain()
 	overmind.color = complementary_color
 
@@ -93,8 +97,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		F.max_spores += factory_spore_bonus
 
 	for(var/obj/structure/blob/B as anything in overmind.all_blobs)
-		B.max_integrity *= max_structure_health_multiplier
-		B.obj_integrity *= max_structure_health_multiplier
+		B.modify_max_integrity(B.max_integrity * max_structure_health_multiplier)
 		B.update_appearance()
 
 	for(var/mob/living/simple_animal/hostile/blob/BM as anything in overmind.blob_mobs)
@@ -125,13 +128,12 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		F.max_spores -= factory_spore_bonus
 
 	for(var/obj/structure/blob/B as anything in overmind.all_blobs)
-		B.max_integrity /= max_structure_health_multiplier
-		B.obj_integrity /= max_structure_health_multiplier
+		B.modify_max_integrity(B.max_integrity / max_structure_health_multiplier)
 
 	for(var/mob/living/simple_animal/hostile/blob/BM as anything in overmind.blob_mobs)
 		BM.maxHealth /= max_mob_health_multiplier
 		BM.health /= max_mob_health_multiplier
-		
+
 
 /datum/blobstrain/proc/on_sporedeath(mob/living/spore)
 
@@ -140,13 +142,13 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	if(message_living && !issilicon(M))
 		totalmessage += message_living
 	totalmessage += "!"
-	to_chat(M, "<span class='userdanger'>[totalmessage]</span>")
+	to_chat(M, span_userdanger("[totalmessage]"))
 
 /datum/blobstrain/proc/core_process()
 	if(resource_delay <= world.time)
 		resource_delay = world.time + 10 // 1 second
 		overmind.add_points(point_rate+point_rate_bonus)
-	overmind.blob_core.obj_integrity = min(overmind.blob_core.max_integrity, overmind.blob_core.obj_integrity+base_core_regen+core_regen_bonus)
+	overmind.blob_core.repair_damage(base_core_regen + core_regen_bonus)
 
 /datum/blobstrain/proc/attack_living(mob/living/L, list/nearby_blobs) // When the blob attacks people
 	send_message(L)
@@ -172,4 +174,4 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	return
 
 /datum/blobstrain/proc/examine(mob/user)
-	return list("<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
+	return list("<b>Progress to Critical Mass:</b> [span_notice("[overmind.blobs_legit.len]/[overmind.blobwincount].")]")

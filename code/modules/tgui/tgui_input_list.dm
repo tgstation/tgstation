@@ -82,12 +82,16 @@
 	src.message = message
 	src.buttons = list()
 	src.buttons_map = list()
+	var/list/repeat_buttons = list()
 
 	// Gets rid of illegal characters
 	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
 
 	for(var/i in buttons)
 		var/string_key = whitelistedWords.Replace("[i]", "")
+
+		//avoids duplicated keys E.g: when areas have the same name
+		string_key = avoid_assoc_duplicate_keys(string_key, repeat_buttons)
 
 		src.buttons += string_key
 		src.buttons_map[string_key] = i
@@ -144,13 +148,16 @@
 		if("choose")
 			if (!(params["choice"] in buttons))
 				return
-			choice = buttons_map[params["choice"]]
+			set_choice(buttons_map[params["choice"]])
 			SStgui.close_uis(src)
 			return TRUE
 		if("cancel")
 			SStgui.close_uis(src)
 			closed = TRUE
 			return TRUE
+
+/datum/tgui_list_input/proc/set_choice(choice)
+	src.choice = choice
 
 /**
  * # async tgui_list_input
@@ -162,23 +169,17 @@
 	var/datum/callback/callback
 
 /datum/tgui_list_input/async/New(mob/user, message, title, list/buttons, callback, timeout)
-	..(user, title, message, buttons, timeout)
+	..(user, message, title, buttons, timeout)
 	src.callback = callback
 
 /datum/tgui_list_input/async/Destroy(force, ...)
 	QDEL_NULL(callback)
 	. = ..()
 
-/datum/tgui_list_input/async/ui_close(mob/user)
+/datum/tgui_list_input/async/set_choice(choice)
 	. = ..()
-	qdel(src)
-
-/datum/tgui_list_input/async/ui_act(action, list/params)
-	. = ..()
-	if (!. || choice == null)
-		return
-	callback.InvokeAsync(choice)
-	qdel(src)
+	if(!isnull(src.choice))
+		callback?.InvokeAsync(src.choice)
 
 /datum/tgui_list_input/async/wait()
 	return

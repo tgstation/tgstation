@@ -13,7 +13,6 @@
 // Qdel should assume this object won't gc, and hard delete it posthaste.
 #define QDEL_HINT_HARDDEL_NOW 4
 
-//! Defines for the [gc_destroyed][/datum/var/gc_destroyed] var.
 
 #ifdef REFERENCE_TRACKING
 /** If REFERENCE_TRACKING is enabled, qdel will call this object's find_references() verb.
@@ -29,6 +28,10 @@
 #define GC_QUEUE_HARDDELETE 2
 #define GC_QUEUE_COUNT 2 //increase this when adding more steps.
 
+#define QDEL_ITEM_ADMINS_WARNED (1<<0) //! Set when admins are told about lag causing qdels in this type.
+#define QDEL_ITEM_SUSPENDED_FOR_LAG (1<<1) //! Set when a type can no longer be hard deleted on failure because of lag it causes while this happens.
+
+// Defines for the [gc_destroyed][/datum/var/gc_destroyed] var.
 #define GC_QUEUED_FOR_QUEUING -1
 #define GC_CURRENTLY_BEING_QDELETED -2
 

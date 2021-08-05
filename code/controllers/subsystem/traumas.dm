@@ -83,7 +83,7 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/spear, /obj/item/clothing/mask/gas,
 		)),
 
-		"lizards" = typecacheof(list(/obj/item/toy/plush/lizardplushie, /obj/item/food/kebab/tail, /obj/item/organ/tail/lizard,
+		"lizards" = typecacheof(list(/obj/item/toy/plush/lizard_plushie, /obj/item/food/kebab/tail, /obj/item/organ/tail/lizard,
 			/obj/item/reagent_containers/food/drinks/bottle/lizardwine, /obj/item/clothing/head/lizard, /obj/item/clothing/shoes/cowboy/lizard,
 		)),
 
@@ -190,7 +190,7 @@ SUBSYSTEM_DEF(traumas)
 		"aliens" = typecacheof(list(/turf/open/floor/plating/abductor, /turf/open/floor/plating/abductor2,
 			/turf/open/floor/mineral/abductor, /turf/closed/wall/mineral/abductor
 		)),
-		"falling" = typecacheof(list(/turf/open/chasm, /turf/open/floor/fakepit))
+		"falling" = typecacheof(list(/turf/open/chasm, /turf/open/floor/fakepit, /turf/open/openspace))
 	)
 
 	phobia_species = list("lizards" = typecacheof(list(/datum/species/lizard)),

@@ -11,4 +11,4 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		human_target.electrocution_animation(LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH)
-	to_chat(target, "<span class='userdanger'>The gods have punished you for your sins!</span>", confidential = TRUE)
+	to_chat(target, span_userdanger("The gods have punished you for your sins!"), confidential = TRUE)

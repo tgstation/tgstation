@@ -41,27 +41,37 @@
 	if(can_hack_open && SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
 		if (W.tool_behaviour == TOOL_SCREWDRIVER)
 			if (W.use_tool(src, user, 20))
+<<<<<<< HEAD
 				panel_open =! panel_open
 				to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the service panel.</span>")
+=======
+				open = !open
+				to_chat(user, span_notice("You [open ? "open" : "close"] the service panel."))
+>>>>>>> upstream/master
 			return
 		if (W.tool_behaviour == TOOL_WIRECUTTER)
-			to_chat(user, "<span class='danger'>[src] is protected from this sort of tampering, yet it appears the internal memory wires can still be <b>pulsed</b>.</span>")
+			to_chat(user, span_danger("[src] is protected from this sort of tampering, yet it appears the internal memory wires can still be <b>pulsed</b>."))
 			return
 		if (W.tool_behaviour == TOOL_MULTITOOL)
 			if(l_hacking)
-				to_chat(user, "<span class='danger'>This safe is already being hacked.</span>")
+				to_chat(user, span_danger("This safe is already being hacked."))
 				return
+<<<<<<< HEAD
 			if(panel_open == TRUE)
 				to_chat(user, "<span class='danger'>Now attempting to reset internal memory, please hold.</span>")
+=======
+			if(open == TRUE)
+				to_chat(user, span_danger("Now attempting to reset internal memory, please hold."))
+>>>>>>> upstream/master
 				l_hacking = TRUE
 				if (W.use_tool(src, user, 400))
-					to_chat(user, "<span class='danger'>Internal memory reset - lock has been disengaged.</span>")
+					to_chat(user, span_danger("Internal memory reset - lock has been disengaged."))
 					l_set = FALSE
 
 				l_hacking = FALSE
 				return
 
-			to_chat(user, "<span class='warning'>You must <b>unscrew</b> the service panel before you can pulse the wiring!</span>")
+			to_chat(user, span_warning("You must <b>unscrew</b> the service panel before you can pulse the wiring!"))
 			return
 
 	// -> storage/attackby() what with handle insertion, etc
@@ -179,7 +189,6 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "wall_safe"
 	desc = "Excellent for securing things away from grubby hands."
-	force = 8
 	w_class = WEIGHT_CLASS_GIGANTIC
 	anchored = TRUE
 	density = FALSE

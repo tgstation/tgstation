@@ -4,6 +4,7 @@
 	SStgui.on_logout(src)
 	unset_machine()
 	remove_from_player_list()
+<<<<<<< HEAD
 	if(client?.movingmob) //In the case the client was transferred to another mob and not deleted.
 		client.movingmob.client_mobs_in_contents -= src
 		UNSETEMPTY(client.movingmob.client_mobs_in_contents)
@@ -12,6 +13,9 @@
 	if(client)
 		client.images.Remove(frill_oval_mask)
 	frill_oval_mask = null
+=======
+	clear_client_in_contents()
+>>>>>>> upstream/master
 	..()
 
 	if(loc)

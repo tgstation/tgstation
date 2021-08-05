@@ -40,10 +40,10 @@
 		var/new_name = "Beacon_[stripped_input("Enter the custom name for this beacon", "It be Beacon ..your input..")]"
 		if(new_name && Adjacent(user))
 			name = new_name
-			to_chat(user, "<span class='notice'>You change beacon name to [name].</span>")
+			to_chat(user, span_notice("You change beacon name to [name]."))
 	else
 		locked =!locked
-		to_chat(user, "<span class='notice'>You [locked ? "" : "un"]lock [src].</span>")
+		to_chat(user, span_notice("You [locked ? "" : "un"]lock [src]."))
 	return TRUE
 
 /obj/machinery/spaceship_navigation_beacon/examine()

@@ -90,7 +90,7 @@
 	I.play_tool_sound(src)
 	if(generator)
 		disconnectFromGenerator()
-	to_chat(user, "<span class='notice'>You [anchored?"secure":"unsecure"] [src].</span>")
+	to_chat(user, span_notice("You [anchored?"secure":"unsecure"] [src]."))
 
 
 	var/obj/machinery/atmospherics/node1 = nodes[1]
@@ -99,11 +99,14 @@
 	if(node1)
 		node1.disconnect(src)
 		nodes[1] = null
-		nullifyPipenet(parents[1])
+		if(parents[1])
+			nullifyPipenet(parents[1])
+
 	if(node2)
 		node2.disconnect(src)
 		nodes[2] = null
-		nullifyPipenet(parents[2])
+		if(parents[2])
+			nullifyPipenet(parents[2])
 
 	if(anchored)
 		SetInitDirections()
@@ -141,7 +144,7 @@
 	if(generator)
 		disconnectFromGenerator()
 	mode = !mode
-	to_chat(user, "<span class='notice'>You set [src] to [mode?"cold":"hot"] mode.</span>")
+	to_chat(user, span_notice("You set [src] to [mode?"cold":"hot"] mode."))
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/circulator/screwdriver_act(mob/user, obj/item/I)
@@ -149,7 +152,7 @@
 		return TRUE
 	panel_open = !panel_open
 	I.play_tool_sound(src)
-	to_chat(user, "<span class='notice'>You [panel_open?"open":"close"] the panel on [src].</span>")
+	to_chat(user, span_notice("You [panel_open?"open":"close"] the panel on [src]."))
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/circulator/crowbar_act(mob/user, obj/item/I)
@@ -182,9 +185,9 @@
 		return
 
 	if(anchored)
-		to_chat(usr, "<span class='danger'>[src] is anchored!</span>")
+		to_chat(usr, span_danger("[src] is anchored!"))
 		return
 
 	flipped = !flipped
-	to_chat(usr, "<span class='notice'>You flip [src].</span>")
+	to_chat(usr, span_notice("You flip [src]."))
 	update_appearance()

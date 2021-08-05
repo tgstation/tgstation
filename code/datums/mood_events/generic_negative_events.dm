@@ -206,7 +206,7 @@
 	description = "<span class='warning'>[sadtarget.name] seems upset...</span>\n"
 
 /datum/mood_event/sacrifice_bad
-	description ="<span class='warning'>Those darn savages!</span>\n"
+	description = "<span class='warning'>Those darn savages!</span>\n"
 	mood_change = -5
 	timeout = 2 MINUTES
 
@@ -216,7 +216,7 @@
 	timeout = 2 MINUTES
 
 /datum/mood_event/graverobbing
-	description ="<span class='boldwarning'>I just desecrated someone's grave... I can't believe I did that...</span>\n"
+	description = "<span class='boldwarning'>I just desecrated someone's grave... I can't believe I did that...</span>\n"
 	mood_change = -8
 	timeout = 3 MINUTES
 
@@ -279,15 +279,8 @@
 	description = "<span class='boldwarning'>THEY'RE CUTTING ME OPEN!!</span>\n"
 	mood_change = -8
 
-/datum/mood_event/nanite_sadness
-	description = "<span class='warning robot'>+++++++HAPPINESS SUPPRESSION+++++++</span>\n"
-	mood_change = -7
-
-/datum/mood_event/nanite_sadness/add_effects(message)
-	description = "<span class='warning robot'>+++++++[message]+++++++</span>\n"
-
 /datum/mood_event/bald
-	description ="<span class='warning'>I need something to cover my head...</span>\n"
+	description = "<span class='warning'>I need something to cover my head...</span>\n"
 	mood_change = -3
 
 /datum/mood_event/bad_touch
@@ -348,3 +341,8 @@
 	description = "<span class='boldwarning'>I have been excommunicated!</span>\n"
 	mood_change = -10
 	timeout = 10 MINUTES
+
+/datum/mood_event/heresy
+	description = "<span class='boldwarning'>I can hardly breathe with all this HERESY going on!</span>\n"
+	mood_change = -5
+	timeout = 5 MINUTES

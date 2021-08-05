@@ -149,6 +149,30 @@
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/savannah_ivanov_main
+	name = "\"Savannah-Ivanov\" Central Control module"
+	desc = "Allows for the construction of a \"Savannah-Ivanov\" Central Control module."
+	id = "savannah_ivanov_main"
+	build_path = /obj/item/circuitboard/mecha/savannah_ivanov/main
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/savannah_ivanov_peri
+	name = "\"Savannah-Ivanov\" Peripherals Control module"
+	desc = "Allows for the construction of a \"Savannah-Ivanov\" Peripheral Control module."
+	id = "savannah_ivanov_peri"
+	build_path = /obj/item/circuitboard/mecha/savannah_ivanov/peripherals
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/savannah_ivanov_targ
+	name = "\"Savannah-Ivanov\" Weapons & Targeting Control module"
+	desc = "Allows for the construction of a \"Savannah-Ivanov\" Weapons & Targeting Control module."
+	id = "savannah_ivanov_targ"
+	build_path = /obj/item/circuitboard/mecha/savannah_ivanov/targeting
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 ////////////////////////////////////////
 /////////// Mecha Equpment /////////////
 ////////////////////////////////////////
@@ -425,6 +449,16 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
 	materials = list(/datum/material/iron = 8000, /datum/material/glass = 1000, /datum/material/plasma = 2000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+
+/datum/design/mecha_kineticgun
+	name = "Exosuit Mining (Proto-kinetic Accelerator)"
+	desc = "An exosuit-mounted mining tool that does increased damage in low pressure. Drawing from an onboard power source allows it to project further than the handheld version."
+	id = "mecha_kineticgun"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun
+	materials = list(/datum/material/iron = 8000, /datum/material/glass = 1000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 

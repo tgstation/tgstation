@@ -72,7 +72,9 @@
  * * silent - deletes the component without sending a [COMSIG_COMPONENT_REMOVING] signal
  */
 /datum/component/Destroy(force=FALSE, silent=FALSE)
-	if(!force && parent)
+	if(!parent)
+		return ..()
+	if(!force)
 		_RemoveFromParent()
 	if(!silent)
 		SEND_SIGNAL(parent, COMSIG_COMPONENT_REMOVING, src)
@@ -221,6 +223,8 @@
 		sig_type_or_types = list(sig_type_or_types)
 	for(var/sig in sig_type_or_types)
 		if(!signal_procs[target][sig])
+			if(!istext(sig))
+				stack_trace("We're unregistering with something that isn't a valid signal \[[sig]\], you fucked up")
 			continue
 		switch(length(lookup[sig]))
 			if(2)
@@ -313,8 +317,14 @@
 		var/datum/listening_datum = target
 		return NONE | call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
 	. = NONE
+	// This exists so that even if one of the signal receivers unregisters the signal,
+	// all the objects that are receiving the signal get the signal this final time.
+	// AKA: No you can't cancel the signal reception of another object by doing an unregister in the same signal.
+	var/list/queued_calls = list()
 	for(var/datum/listening_datum as anything in target)
-		. |= call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
+		queued_calls[listening_datum] = listening_datum.signal_procs[src][sigtype]
+	for(var/datum/listening_datum as anything in queued_calls)
+		. |= call(listening_datum, queued_calls[listening_datum])(arglist(arguments))
 
 // The type arg is casted so initial works, you shouldn't be passing a real instance into this
 /**
@@ -470,8 +480,9 @@
 
 /**
  * Removes the component from parent, ends up with a null parent
+ * Used as a helper proc by the component transfer proc, does not clean up the component like Destroy does
  */
-/datum/component/proc/RemoveComponent()
+/datum/component/proc/ClearFromParent()
 	if(!parent)
 		return
 	var/datum/old_parent = parent
@@ -492,7 +503,7 @@
 	if(!target || target.parent == src)
 		return
 	if(target.parent)
-		target.RemoveComponent()
+		target.ClearFromParent()
 	target.parent = src
 	var/result = target.PostTransfer()
 	switch(result)

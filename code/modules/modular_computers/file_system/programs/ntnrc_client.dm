@@ -19,9 +19,17 @@
 	var/list/channel_history = list()
 	var/operator_mode = FALSE // Channel operator mode
 	var/netadmin_mode = FALSE // Administrator mode (invisible to other users + bypasses passwords)
+	//A list of all the converstations we're a part of
+	var/list/datum/ntnet_conversation/conversations = list()
 
 /datum/computer_file/program/chatclient/New()
 	username = "DefaultUser[rand(100, 999)]"
+
+/datum/computer_file/program/chatclient/Destroy()
+	for(var/datum/ntnet_conversation/discussion as anything in conversations)
+		discussion.purge_client(src)
+	conversations.Cut()
+	return ..()
 
 /datum/computer_file/program/chatclient/ui_act(action, params)
 	. = ..()
@@ -120,9 +128,9 @@
 					// This program shouldn't even be runnable without computer.
 					CRASH("Var computer is null!")
 				if(!hard_drive)
-					computer.visible_message("<span class='warning'>\The [computer] shows an \"I/O Error - Hard drive connection error\" warning.</span>")
+					computer.visible_message(span_warning("\The [computer] shows an \"I/O Error - Hard drive connection error\" warning."))
 				else // In 99.9% cases this will mean our HDD is full
-					computer.visible_message("<span class='warning'>\The [computer] shows an \"I/O Error - Hard drive may be full. Please free some space and try again. Required space: [logfile.size]GQ\" warning.</span>")
+					computer.visible_message(span_warning("\The [computer] shows an \"I/O Error - Hard drive may be full. Please free some space and try again. Required space: [logfile.size]GQ\" warning."))
 			return TRUE
 		if("PRG_renamechannel")
 			if(!authed)

@@ -48,16 +48,16 @@
 	. = ..()
 	var/obj/structure/blob/special/core/core = overmind.blob_core
 	if (isobserver(user))
-		. += "<span class='notice'>Absorbed debris is currently reducing incoming damage by [round(max(min(DEBRIS_DENSITY, 10),0))]</span>"
+		. += span_notice("Absorbed debris is currently reducing incoming damage by [round(max(min(DEBRIS_DENSITY, 10),0))]")
 	else
 		switch (round(max(min(DEBRIS_DENSITY, 10),0)))
 			if (0)
-				. += "<span class='notice'>There is not currently enough absorbed debris to reduce damage.</span>"
+				. += span_notice("There is not currently enough absorbed debris to reduce damage.")
 			if (1 to 3)
-				. += "<span class='notice'>Absorbed debris is currently reducing incoming damage by a very low amount.</span>" // these roughly correspond with force description strings
+				. += span_notice("Absorbed debris is currently reducing incoming damage by a very low amount.") // these roughly correspond with force description strings
 			if (4 to 7)
-				. += "<span class='notice'>Absorbed debris is currently reducing incoming damage by a low amount.</span>"
+				. += span_notice("Absorbed debris is currently reducing incoming damage by a low amount.")
 			if (8 to 10)
-				. += "<span class='notice'>Absorbed debris is currently reducing incoming damage by a medium amount.</span>"
+				. += span_notice("Absorbed debris is currently reducing incoming damage by a medium amount.")
 
 #undef DEBRIS_DENSITY

@@ -1,11 +1,12 @@
 /datum/job/prisoner
 	title = "Prisoner"
 	department_head = list("The Security Team")
-	faction = "Station"
+	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 2
 	supervisors = "the security team"
 	selection_color = "#ffe1c3"
+	exp_granted_type = EXP_TYPE_CREW
 	paycheck = PAYCHECK_PRISONER
 
 	outfit = /datum/outfit/job/prisoner
@@ -19,6 +20,9 @@
 	)
 
 	family_heirlooms = list(/obj/item/pen/blue)
+
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE
+
 
 /datum/outfit/job/prisoner
 	name = "Prisoner"

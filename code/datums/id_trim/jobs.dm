@@ -24,7 +24,6 @@
 
 /datum/id_trim/job/New()
 	if(isnull(job_changes))
-		SSmapping.HACK_LoadMapConfig()
 		job_changes = SSmapping.config.job_changes
 
 	if(!length(job_changes) || !config_job)
@@ -106,7 +105,7 @@
 	assignment = "Bartender"
 	trim_state = "trim_bartender"
 	full_access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
-	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_BAR, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE)
 	config_job = "bartender"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 

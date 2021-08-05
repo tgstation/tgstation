@@ -95,7 +95,7 @@
 	SIGNAL_HANDLER
 	var/turf/open/dying_trapdoor = parent
 	if((!IS_OPEN(dying_trapdoor) && !IS_OPEN(path)) || path == /turf/open/floor/plating) //not a process of the trapdoor, so this trapdoor has been destroyed
-		dying_trapdoor.visible_message("<span class='warning'>The trapdoor mechanism in [dying_trapdoor] is broken!</span>")
+		dying_trapdoor.visible_message(span_warning("The trapdoor mechanism in [dying_trapdoor] is broken!"))
 		if(assembly)
 			assembly.linked = FALSE
 			assembly.stored_decals.Cut()
@@ -124,7 +124,7 @@
 	if(assembly)
 		RegisterSignal(parent, COMSIG_TURF_DECAL_DETACHED, .proc/decal_detached)
 	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_open.ogg', 50)
-	trapdoor_turf.visible_message("<span class='warning'>[trapdoor_turf] swings open!</span>")
+	trapdoor_turf.visible_message(span_warning("[trapdoor_turf] swings open!"))
 	trapdoor_turf.ChangeTurf(/turf/open/openspace, flags = CHANGETURF_INHERIT_AIR)
 
 /**
@@ -137,10 +137,10 @@
 	var/turf/open/trapdoor_turf = parent
 	var/obj/structure/lattice/blocking = locate() in trapdoor_turf.contents
 	if(blocking)
-		trapdoor_turf.visible_message("<span class='warning'>The trapdoor mechanism in [trapdoor_turf] tries to shut, but is jammed by [blocking]!</span>")
+		trapdoor_turf.visible_message(span_warning("The trapdoor mechanism in [trapdoor_turf] tries to shut, but is jammed by [blocking]!"))
 		return
 	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_shut.ogg', 50)
-	trapdoor_turf.visible_message("<span class='warning'>The trapdoor mechanism in [trapdoor_turf] swings shut!</span>")
+	trapdoor_turf.visible_message(span_warning("The trapdoor mechanism in [trapdoor_turf] swings shut!"))
 	trapdoor_turf.ChangeTurf(trapdoor_turf_path, flags = CHANGETURF_INHERIT_AIR)
 
 #undef IS_OPEN
@@ -171,7 +171,7 @@
 	if(linked)
 		return
 	if(!COOLDOWN_FINISHED(src, search_cooldown))
-		visible_message("<span class='warning'>[src] cannot attempt another trapdoor linkup so soon!</span>")
+		visible_message(span_warning("[src] cannot attempt another trapdoor linkup so soon!"))
 		return
 	attempt_link_up()
 	COOLDOWN_START(src, search_cooldown, search_cooldown_time)
@@ -180,7 +180,7 @@
 	var/turf/assembly_turf = get_turf(src)
 	if(!COOLDOWN_FINISHED(src, search_cooldown))
 		var/timeleft = DisplayTimeText(COOLDOWN_TIMELEFT(src, search_cooldown))
-		assembly_turf.visible_message("<span class='warning'>[src] is on cooldown! Please wait [timeleft].</span>", vision_distance = SAMETILE_MESSAGE_RANGE)
+		assembly_turf.visible_message(span_warning("[src] is on cooldown! Please wait [timeleft]."), vision_distance = SAMETILE_MESSAGE_RANGE)
 		return
 	if(SEND_GLOBAL_SIGNAL(COMSIG_GLOB_TRAPDOOR_LINK, src) & LINKED_UP)
 		playsound(assembly_turf, 'sound/machines/chime.ogg', 50, TRUE)
@@ -188,7 +188,7 @@
 		You may now use it to check where the trapdoor is... be careful!</span>", vision_distance = SAMETILE_MESSAGE_RANGE)
 	else
 		playsound(assembly_turf, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
-		assembly_turf.visible_message("<span class='warning'>[src] has failed to find a trapdoor nearby to link to.</span>", vision_distance = SAMETILE_MESSAGE_RANGE)
+		assembly_turf.visible_message(span_warning("[src] has failed to find a trapdoor nearby to link to."), vision_distance = SAMETILE_MESSAGE_RANGE)
 
 /**
  * ## trapdoor remotes!
@@ -208,22 +208,22 @@
 /obj/item/trapdoor_remote/examine(mob/user)
 	. = ..()
 	if(!internals)
-		. += "<span class='warning'>[src] has no internals! It needs a trapdoor controller to function.</span>"
+		. += span_warning("[src] has no internals! It needs a trapdoor controller to function.")
 		return
-	. += "<span class='notice'>The internals can be removed with a screwdriver.</span>"
+	. += span_notice("The internals can be removed with a screwdriver.")
 	if(!internals.linked)
-		. += "<span class='warning'>[src] is not linked to a trapdoor.</span>"
+		. += span_warning("[src] is not linked to a trapdoor.")
 		return
-	. += "<span class='notice'>[src] is linked to a trapdoor.</span>"
+	. += span_notice("[src] is linked to a trapdoor.")
 	if(!COOLDOWN_FINISHED(src, trapdoor_cooldown))
-		. += "<span class='warning'>It is on a short cooldown.</span>"
+		. += span_warning("It is on a short cooldown.")
 
 /obj/item/trapdoor_remote/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!internals)
-		to_chat(user, "<span class='warning'>[src] has no internals!</span>")
+		to_chat(user, span_warning("[src] has no internals!"))
 		return
-	to_chat(user, "<span class='notice'>You pop [internals] out of [src].</span>")
+	to_chat(user, span_notice("You pop [internals] out of [src]."))
 	internals.forceMove(get_turf(src))
 	internals = null
 
@@ -232,9 +232,9 @@
 	if(. || !istype(assembly))
 		return
 	if(internals)
-		to_chat(user, "<span class='warning'>[src] already has internals!</span>")
+		to_chat(user, span_warning("[src] already has internals!"))
 		return
-	to_chat(user, "<span class='notice'>You add [assembly] to [src].</span>")
+	to_chat(user, span_notice("You add [assembly] to [src]."))
 	internals = assembly
 	assembly.forceMove(src)
 
@@ -243,16 +243,16 @@
 	if(.)
 		return
 	if(!internals)
-		to_chat(user, "<span class='warning'>[src] has no internals!</span>")
+		to_chat(user, span_warning("[src] has no internals!"))
 		return
 	if(!internals.linked)
-		to_chat(user, "<span class='notice'>You activate [src].</span>")
+		to_chat(user, span_notice("You activate [src]."))
 		internals.pulsed()
 		return
 	if(!COOLDOWN_FINISHED(src, trapdoor_cooldown))
-		to_chat(user, "<span class='warning'>[src] is on a short cooldown.</span>")
+		to_chat(user, span_warning("[src] is on a short cooldown."))
 		return
-	to_chat(user, "<span class='notice'>You activate [src].</span>")
+	to_chat(user, span_notice("You activate [src]."))
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 	icon_state = "trapdoor_pressed"
 	addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), trapdoor_cooldown_time)
