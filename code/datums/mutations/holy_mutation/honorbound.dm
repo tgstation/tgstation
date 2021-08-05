@@ -59,7 +59,7 @@
 	var/mob/living/clickedmob = clickingon
 	if(!honorbound.DirectAccess(clickedmob) && !isgun(weapon))
 		return
-	if(weapon.item_flags & NOBLUDGEON)
+	if(weapon?.item_flags & NOBLUDGEON)
 		return
 	if(!honorbound.combat_mode && ((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK)))
 		return
