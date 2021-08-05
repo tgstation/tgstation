@@ -287,7 +287,7 @@ Also Good:
 	icon_state = "loot_site"
 	spawn_loot_chance = 20
 	loot = list(/obj/structure/closet/crate/secure/loot)
-```dm
+```
 
 Bad:
 
