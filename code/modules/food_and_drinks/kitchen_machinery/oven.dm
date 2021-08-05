@@ -26,6 +26,7 @@
 
 /obj/machinery/oven/Destroy()
 	QDEL_NULL(oven_loop)
+	QDEL_NULL(particles)
 	. = ..()
 
 /obj/machinery/oven/update_icon_state()
@@ -71,6 +72,7 @@
 			visible_message(span_danger("You smell a burnt smell coming from [src]!"))
 	smoke_state = worst_cooked_food_state
 	update_appearance()
+	update_particles()
 
 
 /obj/machinery/oven/attackby(obj/item/I, mob/user, params)
@@ -113,6 +115,7 @@
 	if(open)
 		playsound(src, 'sound/machines/oven/oven_open.ogg', 75, TRUE)
 		smoke_state = OVEN_SMOKE_STATE_NONE
+		update_particles()
 		to_chat(user, span_notice("You open [src]."))
 		end_processing()
 		if(used_tray)
@@ -133,6 +136,15 @@
 	else
 		oven_loop.stop()
 
+///This proc updates applies particles to the oven according to smoke state.
+/obj/machinery/oven/proc/update_particles()
+	QDEL_NULL(particles)
+	switch(smoke_state)
+		if(OVEN_SMOKE_STATE_BAD)
+			particles = new /particles/smoke()
+		if(OVEN_SMOKE_STATE_GOOD)
+			particles = new /particles/smoke/steam()
+
 /obj/machinery/oven/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(flags_1 & NODECONSTRUCT_1)
@@ -151,5 +163,23 @@
 	desc = "Time to bake cookies!"
 	icon_state = "oven_tray"
 
+//Move this shit to a separate particles file. Im going to bed.
+/particles/smoke
+	icon = 'icons/effects/particles/smoke.dmi'
+	icon_state = list("smoke_1" = 1, "smoke_2" = 1, "smoke_3" = 2)
+	width = 100
+	height = 100
+	count = 1000
+	spawning = 4
+	lifespan = 1.5 SECONDS
+	fade = 1 SECONDS
+	velocity = list(0, 0.6, 0)
+	position = list(6, 5, 0)
+	drift = generator("sphere", 0, 2, NORMAL_RAND)
+	friction = 0.2
+	gravity = list(0, 0.95)
+	grow = 0.05
 
-
+/particles/smoke/steam
+	icon_state = list("steam_1" = 1, "steam_2" = 1, "steam_3" = 2)
+	fade = 1.5 SECONDS
