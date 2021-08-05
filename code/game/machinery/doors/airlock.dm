@@ -177,7 +177,7 @@
 
 /obj/machinery/door/airlock/LateInitialize()
 	. = ..()
-	if(cyclelinkeddir)
+	if (cyclelinkeddir)
 		cyclelinkairlock()
 	if(closeOtherId)
 		update_other_id()
@@ -345,8 +345,8 @@
 /obj/machinery/door/airlock/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(electronics)
-	if(cyclelinkedairlock)
-		if(cyclelinkedairlock.cyclelinkedairlock == src)
+	if (cyclelinkedairlock)
+		if (cyclelinkedairlock.cyclelinkedairlock == src)
 			cyclelinkedairlock.cyclelinkedairlock = null
 		cyclelinkedairlock = null
 	if(closeOtherMulti) //remove this airlock from the list of every linked airlock
