@@ -4,15 +4,15 @@
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 
-	/// An assoc list of signal -> procpath to register to the loc this object is on.
-	var/list/connections
+	/// An assoc list of listener -> signal -> procpath to register to the loc this object is on.
+	var/list/connections = list()
 
 /datum/element/connect_loc/Attach(atom/movable/listener, list/connections)
 	. = ..()
 	if (!istype(listener))
 		return ELEMENT_INCOMPATIBLE
 
-	src.connections = connections
+	src.connections[listener] = connections
 
 	RegisterSignal(listener, COMSIG_MOVABLE_MOVED, .proc/on_moved, override = TRUE)
 	update_signals(listener)
@@ -27,15 +27,15 @@
 	if(isnull(listener_loc))
 		return
 
-	for (var/signal in connections)
+	for (var/signal in connections[listener])
 		//override=TRUE because more than one connect_loc element instance tracked object can be on the same loc
-		listener.RegisterSignal(listener_loc, signal, connections[signal], override=TRUE)
+		listener.RegisterSignal(listener_loc, signal, connections[listener][signal], override=TRUE)
 
 /datum/element/connect_loc/proc/unregister_signals(datum/listener, atom/old_loc)
 	if(isnull(old_loc))
 		return
 
-	for (var/signal in connections)
+	for (var/signal in connections[listener])
 		listener.UnregisterSignal(old_loc, signal)
 
 /datum/element/connect_loc/proc/on_moved(atom/movable/listener, atom/old_loc)
@@ -51,8 +51,8 @@
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH | ELEMENT_COMPLEX_DETACH
 	id_arg_index = 3
 
-	/// An assoc list of signal -> procpath to register to the loc this object is on.
-	var/list/connections
+	/// An assoc list of listener -> signal -> procpath to register to the loc this object is on.
+	var/list/connections = list()
 
 	/// An assoc list of locs that are being occupied and a list of targets that occupy them.
 	var/list/targets = list()
@@ -62,7 +62,7 @@
 	if (!istype(tracked))
 		return ELEMENT_INCOMPATIBLE
 
-	src.connections = connections
+	src.connections[listener] = connections
 
 	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved, override = TRUE)
 	update_signals(listener, tracked)
@@ -86,7 +86,7 @@
 		return
 
 	for (var/signal in connections)
-		listener.RegisterSignal(tracked.loc, signal, connections[signal], override=TRUE)
+		listener.RegisterSignal(tracked.loc, signal, connections[listener][signal], override=TRUE)
 		//override=TRUE because more than one connect_loc element instance tracked object can be on the same loc
 
 /datum/element/connect_loc_behalf/proc/unregister_all(datum/listener)
@@ -111,7 +111,7 @@
 	if(isnull(old_loc))
 		return
 
-	for (var/signal in connections)
+	for (var/signal in connections[listener])
 		listener.UnregisterSignal(old_loc, signal)
 
 /datum/element/connect_loc_behalf/proc/on_moved(atom/movable/tracked, atom/old_loc)
