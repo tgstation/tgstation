@@ -365,22 +365,23 @@
 	. = ..()
 	soul = new(src)
 	RegisterSignal(soul, COMSIG_LIVING_RESIST, .proc/on_resist)
+	RegisterSignal(src, COMSIG_OBJ_INTEGRITY_CHANGED, .proc/on_integrity_change)
 
 /obj/item/soulscythe/examine(mob/user)
 	. = ..()
-	. += soul.ckey ? span_nicegreen("There is a soul inhabiting it.") : span_danger("It's dormant.")
+	. += (soul && soul.ckey && !soul.stat) ? span_nicegreen("There is a soul inhabiting it.") : span_danger("It's dormant.")
 	. += span_userdanger("This item isn't currently finished if you're seeing it during a testmerge sorry.")
 
 /obj/item/soulscythe/attack_hand(mob/user, list/modifiers)
 	if(soul.ckey && !soul.faction_check_mob(user))
-		balloon_alert(user, "you can't pick it up!")
+		to_chat(user, span_warning("You can't pick up [src]!"))
 		return
 	return ..()
 
 /obj/item/soulscythe/pickup(mob/user)
 	. = ..()
 	if(soul.ckey)
-		animate() //stop spinnage
+		animate(src) //stop spinnage
 
 /obj/item/soulscythe/dropped(mob/user, silent)
 	. = ..()
@@ -388,13 +389,14 @@
 		SpinAnimation(15) //resume spinnage
 
 /obj/item/soulscythe/attack_self(mob/user, modifiers)
-	if(using || soul.ckey)
+	if(using || soul.ckey || soul.stat)
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		balloon_alert(user, "you can't awaken the scythe!")
 		return
 	using = TRUE
 	balloon_alert(user, "you hold the scythe up...")
+	ADD_TRAIT(src, TRAIT_NODROP, type)
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as [user.real_name]'s soulscythe?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/picked_ghost = pick(candidates)
@@ -407,6 +409,7 @@
 		density = TRUE
 	else
 		balloon_alert(user, "the scythe is dormant!")
+	REMOVE_TRAIT(src, TRAIT_NODROP, type)
 	using = FALSE
 
 /obj/item/soulscythe/relaymove(mob/living/user, direction)
@@ -422,6 +425,8 @@
 	COOLDOWN_START(src, move_cooldown, (direction in GLOB.cardinals) ? 0.1 SECONDS : 0.2 SECONDS)
 
 /obj/item/soulscythe/proc/on_resist(mob/living/user)
+	SIGNAL_HANDLER
+
 	if(isturf(loc))
 		return
 	balloon_alert(user, "you resist...")
@@ -434,8 +439,15 @@
 		holder.temporarilyRemoveItemFromInventory(src)
 	forceMove(drop_location())
 
+/obj/item/soulscythe/proc/on_integrity_change(datum/source, old_value, new_value)
+	SIGNAL_HANDLER
+
+	soul.set_health(new_value)
+
 /mob/living/simple_animal/soulscythe
 	name = "mysterious spirit"
+	maxHealth = 200
+	health = 200
 	gender = NEUTER
 	mob_biotypes = MOB_SPIRIT
 	faction = list()
