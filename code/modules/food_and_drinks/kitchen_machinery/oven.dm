@@ -50,7 +50,7 @@
 /obj/machinery/oven/process(delta_time)
 	..()
 	if(!used_tray) //Are we actually working?
-		smoke_state = OVEN_SMOKE_STATE_NONE
+		set_smoke_state(OVEN_SMOKE_STATE_NONE)
 		return
 	///We take the worst smoke state, so if something is burning we always know.
 	var/worst_cooked_food_state = 0
@@ -70,9 +70,8 @@
 
 		if(DT_PROB(10, delta_time))
 			visible_message(span_danger("You smell a burnt smell coming from [src]!"))
-	smoke_state = worst_cooked_food_state
+	set_smoke_state(worst_cooked_food_state)
 	update_appearance()
-	update_particles()
 
 
 /obj/machinery/oven/attackby(obj/item/I, mob/user, params)
@@ -106,7 +105,7 @@
 	oven_tray.flags_1 &= ~IS_ONTOP_1
 	vis_contents -= oven_tray
 	used_tray = null
-	UnregisterSignal(oven_tray, list(, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(oven_tray, COMSIG_MOVABLE_MOVED)
 	update_baking_audio()
 
 /obj/machinery/oven/attack_hand(mob/user, modifiers)
@@ -114,8 +113,7 @@
 	open = !open
 	if(open)
 		playsound(src, 'sound/machines/oven/oven_open.ogg', 75, TRUE)
-		smoke_state = OVEN_SMOKE_STATE_NONE
-		update_particles()
+		set_smoke_state(OVEN_SMOKE_STATE_NONE)
 		to_chat(user, span_notice("You open [src]."))
 		end_processing()
 		if(used_tray)
@@ -136,14 +134,20 @@
 	else
 		oven_loop.stop()
 
-///This proc updates applies particles to the oven according to smoke state.
-/obj/machinery/oven/proc/update_particles()
+///Updates the smoke state to something else, setting particles if relevant
+/obj/machinery/oven/proc/set_smoke_state(new_state)
+	if(new_state == smoke_state)
+		return
+	smoke_state = new_state
+
 	QDEL_NULL(particles)
 	switch(smoke_state)
 		if(OVEN_SMOKE_STATE_BAD)
 			particles = new /particles/smoke()
-		if(OVEN_SMOKE_STATE_GOOD)
+		if(OVEN_SMOKE_STATE_NEUTRAL)
 			particles = new /particles/smoke/steam()
+		if(OVEN_SMOKE_STATE_GOOD)
+			particles = new /particles/smoke/steam/mild
 
 /obj/machinery/oven/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -163,7 +167,7 @@
 	desc = "Time to bake cookies!"
 	icon_state = "oven_tray"
 
-//Move this shit to a separate particles file. Im going to bed.
+
 /particles/smoke
 	icon = 'icons/effects/particles/smoke.dmi'
 	icon_state = list("smoke_1" = 1, "smoke_2" = 1, "smoke_3" = 2)
@@ -173,12 +177,18 @@
 	spawning = 4
 	lifespan = 1.5 SECONDS
 	fade = 1 SECONDS
-	velocity = list(0, 0.6, 0)
+	velocity = list(0, 0.4, 0)
 	position = list(6, 5, 0)
 	drift = generator("sphere", 0, 2, NORMAL_RAND)
 	friction = 0.2
 	gravity = list(0, 0.95)
 	grow = 0.05
+
+/particles/smoke/steam/mild
+	spawning = 6
+	velocity = list(0, 0.3, 0)
+	friction = 0.25
+
 
 /particles/smoke/steam
 	icon_state = list("steam_1" = 1, "steam_2" = 1, "steam_3" = 2)
