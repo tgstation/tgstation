@@ -185,3 +185,11 @@
 		inhand_icon_state = "ushankadown"
 		to_chat(user, span_notice("You lower the ear flaps on the ushanka."))
 	earflaps = !earflaps
+
+/obj/item/clothing/head/fishcap
+	name = "fishing cap"
+	desc = "Women fear me \n\ Fish fear me \n\ Men turn their eyes away from me \n\ As I walk no beast dares make a sound in my presence \n\ I am alone on this barren Earth."
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "fishcap"
+	inhand_icon_state = "fishcap"
+	worn_y_offset = 14
