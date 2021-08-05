@@ -2,7 +2,7 @@
 	name = "oven"
 	desc = "Why do they call it oven when you of in the cold food of out hot eat the food?"
 	icon = 'icons/obj/machines/kitchenmachines.dmi'
-	icon_state = "griddle1_off"
+	icon_state = "oven_off"
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
@@ -23,6 +23,7 @@
 /obj/machinery/oven/Initialize()
 	. = ..()
 	oven_loop = new(src)
+	add_tray_to_oven(new obj/item/plate/oven_tray()) //Start with a tray
 
 /obj/machinery/oven/Destroy()
 	QDEL_NULL(oven_loop)
@@ -78,13 +79,12 @@
 	if(open && !used_tray && istype(I, /obj/item/plate/oven_tray))
 		if(user.transferItemToLoc(I, src, silent = FALSE))
 			to_chat(user, span_notice("You put [I] in [src]."))
-			add_tray_to_oven(I, user)
-			update_appearance()
+			add_tray_to_oven(I)
 	else
 		return ..()
 
 ///Adds a tray to the oven, making sure the shit can get baked.
-/obj/machinery/oven/proc/add_tray_to_oven(obj/item/plate/oven_tray, mob/user)
+/obj/machinery/oven/proc/add_tray_to_oven(obj/item/plate/oven_tray)
 	used_tray = oven_tray
 
 	vis_contents += oven_tray
@@ -94,6 +94,7 @@
 
 	RegisterSignal(used_tray, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
 	update_baking_audio()
+	update_appearance()
 
 ///Called when the tray is moved out of the oven in some way
 /obj/machinery/oven/proc/ItemMoved(obj/item/oven_tray, atom/OldLoc, Dir, Forced)

@@ -1516,11 +1516,6 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "afA" = (
-/obj/structure/table,
-/obj/machinery/microwave{
-	pixel_x = -3;
-	pixel_y = 6
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -1532,6 +1527,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
+/obj/machinery/oven,
 /turf/open/floor/iron,
 /area/service/kitchen)
 "afB" = (

@@ -23969,6 +23969,10 @@
 "eSc" = (
 /obj/structure/table,
 /obj/item/food/mint,
+/obj/item/reagent_containers/food/condiment/enzyme{
+	layer = 5
+	},
+/obj/item/stack/package_wrap,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "eSe" = (
@@ -40401,11 +40405,7 @@
 /turf/open/floor/engine/cult,
 /area/service/library)
 "omc" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/condiment/enzyme{
-	layer = 5
-	},
-/obj/item/stack/package_wrap,
+/obj/machinery/oven,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "omj" = (
