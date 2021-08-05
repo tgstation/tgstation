@@ -11,9 +11,12 @@
 	/// The amount of input ports to have
 	var/input_port_amount = 4
 
+	var/datum/port/input/option/arithmetic_option
+
 	/// The result from the output
 	var/datum/port/output/output
 
+	var/list/arithmetic_ports
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 /obj/item/circuit_component/arithmetic/populate_options()
@@ -25,13 +28,14 @@
 		COMP_ARITHMETIC_MIN,
 		COMP_ARITHMETIC_MAX,
 	)
-	options = component_options
+	arithmetic_option = add_option_port("Arithmetic Option", component_options)
 
 /obj/item/circuit_component/arithmetic/Initialize()
 	. = ..()
+	arithmetic_ports = list()
 	for(var/port_id in 1 to input_port_amount)
 		var/letter = ascii2text(text2ascii("A") + (port_id-1))
-		add_input_port(letter, PORT_TYPE_NUMBER)
+		arithmetic_ports += add_input_port(letter, PORT_TYPE_NUMBER)
 
 	output = add_output_port("Output", PORT_TYPE_NUMBER)
 
@@ -40,10 +44,8 @@
 	if(.)
 		return
 
-	var/list/ports = input_ports.Copy()
-	var/datum/port/input/first_port = ports[1]
-	ports -= first_port
-	ports -= trigger_input
+	var/list/ports = arithmetic_ports.Copy()
+	var/datum/port/input/first_port = popleft(ports)
 	var/result = first_port.input_value
 
 	for(var/datum/port/input/input_port as anything in ports)
@@ -51,7 +53,7 @@
 		if(isnull(value))
 			continue
 
-		switch(current_option)
+		switch(arithmetic_option.input_value)
 			if(COMP_ARITHMETIC_ADD)
 				result += value
 			if(COMP_ARITHMETIC_SUBTRACT)
