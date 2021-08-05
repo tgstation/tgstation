@@ -96,8 +96,8 @@
 		if(ISDIAGONALDIR(climbed_thing.dir) && same_loc)
 			if(params) //we check the icon x and y parameters of the click-drag to determine step_dir.
 				var/list/modifiers = params2list(params)
-				var/x_dist = text2num(LAZYACCESS(modifiers, ICON_X)) * (climbed_thing.dir & SOUTH ? -1 : 1)
-				var/y_dist = text2num(LAZYACCESS(modifiers, ICON_Y)) * (climbed_thing.dir & WEST ? -1 : 1)
+				var/x_dist = (text2num(LAZYACCESS(modifiers, ICON_X)) - world.icon_size/2) * (climbed_thing.dir & WEST ? -1 : 1)
+				var/y_dist = (text2num(LAZYACCESS(modifiers, ICON_Y)) - world.icon_size/2) * (climbed_thing.dir & SOUTH ? -1 : 1)
 				dir_step = (x_dist >= y_dist ? (EAST|WEST) : (NORTH|SOUTH)) & climbed_thing.dir
 			else //user is being moved by a forced_movement datum. dir_step will be the direction to the forced movement target.
 				dir_step = get_dir(user, user.force_moving.target)
