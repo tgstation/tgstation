@@ -23,7 +23,7 @@
 /obj/machinery/oven/Initialize()
 	. = ..()
 	oven_loop = new(src)
-	add_tray_to_oven(new obj/item/plate/oven_tray()) //Start with a tray
+	add_tray_to_oven(new /obj/item/plate/oven_tray()) //Start with a tray
 
 /obj/machinery/oven/Destroy()
 	QDEL_NULL(oven_loop)
@@ -31,10 +31,10 @@
 	. = ..()
 
 /obj/machinery/oven/update_icon_state()
-	if(open || !used_tray)
-		icon_state = "oven_off"
-	else
+	if(!open && used_tray?.contents.len)
 		icon_state = "oven_on"
+	else
+		icon_state = "oven_off"
 	return ..()
 
 /obj/machinery/oven/update_overlays()
@@ -45,7 +45,7 @@
 		. += door_overlay
 	else
 		. += mutable_appearance(icon, "oven_lid_closed")
-		if(used_tray)
+		if(used_tray?.contents.len)
 			. += emissive_appearance(icon, "oven_light_mask", alpha = src.alpha)
 
 /obj/machinery/oven/process(delta_time)
@@ -87,6 +87,8 @@
 /obj/machinery/oven/proc/add_tray_to_oven(obj/item/plate/oven_tray)
 	used_tray = oven_tray
 
+	if(!open)
+		used_tray.vis_flags |= VIS_HIDE
 	vis_contents += oven_tray
 	oven_tray.flags_1 |= IS_ONTOP_1
 	oven_tray.pixel_y = OVEN_TRAY_Y_OFFSET
@@ -130,7 +132,7 @@
 	return TRUE
 
 /obj/machinery/oven/proc/update_baking_audio()
-	if(!open && used_tray)
+	if(!open && used_tray?.contents.len)
 		oven_loop.start()
 	else
 		oven_loop.stop()
@@ -167,6 +169,7 @@
 	name = "oven tray"
 	desc = "Time to bake cookies!"
 	icon_state = "oven_tray"
+	max_items = 6
 
 
 /particles/smoke
