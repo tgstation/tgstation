@@ -96,6 +96,8 @@
 	ignore += typesof(/obj/effect/skyfall_landingzone)
 	//Leads to errors as a consequence of the logic behind moving back to a tile that's moving you somewhere else
 	ignore += typesof(/obj/effect/mapping_helpers/component_injector/areabound)
+	//Expects a mob to holderize, we have nothing to give
+	ignore += typesof(/obj/item/clothing/head/mob_holder)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
 	var/baseturf_count = length(spawn_at.baseturfs)
