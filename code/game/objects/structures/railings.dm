@@ -3,6 +3,7 @@
 	desc = "Basic railing meant to protect idiots like you from falling."
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "railing"
+	flags_1 = ON_BORDER_1
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
@@ -23,12 +24,12 @@
 	. = ..()
 	ini_dir = dir
 	if(climbable)
-		flags_1 |= ON_BORDER_1
 		AddElement(/datum/element/climbable)
 		var/static/list/loc_connections = list(
 			COMSIG_ATOM_EXIT = .proc/on_exit,
 		)
 
+	if(density) // blocks normal movement.
 		AddElement(/datum/element/connect_loc, loc_connections)
 
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
