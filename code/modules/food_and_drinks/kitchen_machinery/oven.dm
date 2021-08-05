@@ -22,7 +22,7 @@
 
 /obj/machinery/oven/Initialize()
 	. = ..()
-	oven_loop = new(list(src), FALSE)
+	oven_loop = new(src)
 
 /obj/machinery/oven/Destroy()
 	QDEL_NULL(oven_loop)
@@ -178,14 +178,14 @@
 	lifespan = 1.5 SECONDS
 	fade = 1 SECONDS
 	velocity = list(0, 0.4, 0)
-	position = list(6, 5, 0)
+	position = list(6, 0, 0)
 	drift = generator("sphere", 0, 2, NORMAL_RAND)
 	friction = 0.2
 	gravity = list(0, 0.95)
 	grow = 0.05
 
 /particles/smoke/steam/mild
-	spawning = 6
+	spawning = 1
 	velocity = list(0, 0.3, 0)
 	friction = 0.25
 
