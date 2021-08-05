@@ -6,7 +6,7 @@ Random spawners are an organized tool primarily for mapping to enhance replayabi
 
 *(note the audience of this README is directed towards mappers who lack knowledge of coding)*
 
-### Variables
+## Variables
 
 The following variables are defined in `code/game/objects/effects/spawners/random/random.dm` that control how a spawner works.
 
@@ -60,7 +60,9 @@ This means any spawner you create under the techstorage will also have those var
 	)
 ```
 
-### Template
+## Template
+
+All the random spawners follow the same template format to keep things consistent and unison.
 
 ```dm
 /obj/effect/spawner/random/INSERT_SPAWNER_GROUP/INSERT_SPAWNER_NAME
@@ -86,7 +88,7 @@ All the capitalized code is the parts where you are supposed to swap out with yo
 
 Find the path to different objects and add them to the list but try to be consistent with the types of the object and the spawner.  For example a medical spawner shouldn't have a emag in the loot list. (use an antag spawner for that instead!)
 
-### Probability
+## Probability
 
 Be aware that the `loot` list uses a *weighted chance* formula to determine probability.  So if there are no numbers set in the `loot` list then each object defaults to 1 and has the same probability to be selected. For our above example for the `minor_healing` spawner each medical item has a 1/3 chance to be spawned.  But if we rearranged the values to this:
 
@@ -115,11 +117,11 @@ Then now `suture` has a 50% chance of being spawned (2/4), `mesh` has a 25% chan
 
 Suture is 40% (2/5), Mesh is 20% (1/5), Gauze is 20% (1/5), and Syringe is 20% (1/5).  A weighted list has the advantage of not needing to update every item in the list when adding a new item.  If the list was based on a straight percent values, then each new item would require to manually go and edit ALL the items in the list.  For big lists that would become very tedious.  This is why we use weighted lists to determine probability!
 
-### Style
+## Style
 
 Here are some simple guidelines that you should stick to when making a new spawner:
 
-1. If ALL the items have the same chance, we should not set a weighted value to the item.  (ie. Do not put `/obj/item/stack/medical/suture = 1` unless other items have different spawn chances)
+### If ALL the items have the same chance, we should not set a weighted value to the item
 
 Good:
 
@@ -161,7 +163,7 @@ Bad:
 ```
 
 
-2. Sort the list from highest probability on the top, to lowest probability on the bottom.  (aka your rarest items for your spawner will be at the bottom of the list)
+### Sort the list from highest probability to lowest
 
 Good:
 
@@ -195,7 +197,7 @@ Bad:
 	)
 ```
 
-3. Always put the `loot` list at the bottom of your spawner.
+### Always put the `loot` list at the bottom of your spawner
 
 Good:
 
@@ -227,7 +229,7 @@ Bad:
 	lootdoubles = FALSE
 ```
 
-4. Always put a comma at the last item in the `loot` list.  (this will make it easier for people to add items to your spawner later without getting code errors)
+### Always put a comma at the last item in the `loot` list
 
 Good:
 
@@ -253,7 +255,7 @@ Bad:
 	)
 ```
 
-5. Keep the same tab formatting for the `loot` list, unless you only have one item you are spawning in the list.
+### Keep the same tab formatting for the `loot` list (unless there is only one item)
 
 Good:
 
@@ -299,7 +301,7 @@ Also Bad:
 		/obj/item/stack/medical/gauze,)
 ```
 
-6. Try to keep the total combined weight of your `loot` list to sane values.  Aim for all items to add up to 5, 10, 20, 50, or 100. This makes the math probability easier for people to calculate.  (this is recommended)
+### Try to keep the total combined weight of your `loot` list to sane values (Aim for 5, 10, 20, 50, or 100)
 
 Good:
 
