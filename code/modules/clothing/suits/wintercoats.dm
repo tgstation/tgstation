@@ -433,7 +433,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/custom/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
 	. = ..()
 	if(hood)
-		var/list/coat_colors = (SSgreyscale.ParseColorString(greyscale_colors))
+		var/list/coat_colors = SSgreyscale.ParseColorString(greyscale_colors)
 		var/list/new_coat_colors = coat_colors.Copy(1,4)
 		hood.set_greyscale(new_coat_colors) //Adopt the suit's grayscale coloring for visual clarity.
 
