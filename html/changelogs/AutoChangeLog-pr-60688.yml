@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Rust Heretics now need to stand on Rust to heal again, instead of passive free healing"

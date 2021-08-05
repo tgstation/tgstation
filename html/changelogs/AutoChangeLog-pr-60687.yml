@@ -1,0 +1,4 @@
+author: "Gandalf2k15"
+delete-after: True
+changes: 
+  - bugfix: "Reinforced walls should now smooth properly."

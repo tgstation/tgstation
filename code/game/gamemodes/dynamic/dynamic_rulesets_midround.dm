@@ -830,19 +830,19 @@
 	return virus
 
 /// Space Pirates ruleset
-/datum/dynamic_ruleset/midround/from_ghosts/pirates
+/datum/dynamic_ruleset/midround/pirates
 	name = "Space Pirates"
 	antag_flag = "Space Pirates"
 	required_type = /mob/dead/observer
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
-	required_candidates = 3
+	required_candidates = 0
 	weight = 4
 	cost = 10
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/from_ghosts/pirates/acceptable(population=0, threat=0)
+/datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat=0)
 	if (!SSmapping.empty_space)
 		return FALSE
 	return ..()

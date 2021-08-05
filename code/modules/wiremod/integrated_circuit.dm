@@ -1,3 +1,6 @@
+/// A list of all integrated circuits
+GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
+
 /**
  * # Integrated Circuitboard
  *
@@ -65,6 +68,9 @@
 
 /obj/item/integrated_circuit/Initialize()
 	. = ..()
+
+	GLOB.integrated_circuits += src
+
 	RegisterSignal(src, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
 
 /obj/item/integrated_circuit/loaded/Initialize()
@@ -81,6 +87,7 @@
 	examined_component = null
 	owner_id = null
 	QDEL_NULL(cell)
+	GLOB.integrated_circuits -= src
 	return ..()
 
 /obj/item/integrated_circuit/examine(mob/user)
@@ -498,14 +505,7 @@
 			examined_component = null
 			. = TRUE
 		if("save_circuit")
-			var/client/saver = usr.client
-			if(!check_rights_for(saver, R_VAREDIT))
-				return
-			var/temp_file = file("data/CircuitDownloadTempFile")
-			fdel(temp_file)
-			WRITE_FILE(temp_file, convert_to_json())
-			DIRECT_OUTPUT(saver, ftp(temp_file, "[display_name || "circuit"].json"))
-			. = TRUE
+			return attempt_save_to(usr.client)
 		if("add_variable")
 			var/variable_identifier = copytext(params["variable_name"], 1, PORT_MAX_NAME_LENGTH)
 			if(variable_identifier in circuit_variables)
@@ -582,3 +582,13 @@
 		id_card = owner_id.resolve()
 
 	return "[src] (Shell: [shell || "*null*"], Inserter: [key_name(inserter, include_link)], Owner ID: [id_card?.name || "*null*"])"
+
+/// Attempts to save a circuit to a given client
+/obj/item/integrated_circuit/proc/attempt_save_to(client/saver)
+	if(!check_rights_for(saver, R_VAREDIT))
+		return FALSE
+	var/temp_file = file("data/CircuitDownloadTempFile")
+	fdel(temp_file)
+	WRITE_FILE(temp_file, convert_to_json())
+	DIRECT_OUTPUT(saver, ftp(temp_file, "[display_name || "circuit"].json"))
+	return TRUE
