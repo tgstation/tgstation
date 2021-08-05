@@ -1,7 +1,12 @@
+/**
+ * Heals the user (if attached to an item) or the mob itself (if attached to a hostile simple mob)
+ * by a flat amount whenever a successful attack is performed against another living mob.
+ */
 /datum/element/lifesteal
 	element_flags = ELEMENT_DETACH|ELEMENT_BESPOKE
 	id_arg_index = 2
-	var/flat_heal // heals a constant amount every time a hit occurs
+	/// heals a constant amount every time a hit occurs
+	var/flat_heal
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 
 /datum/element/lifesteal/Attach(datum/target, flat_heal)
