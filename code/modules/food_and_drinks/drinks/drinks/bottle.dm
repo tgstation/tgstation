@@ -485,6 +485,7 @@
 	name = "Eau d' Dandy Brut Champagne"
 	desc = "Finely sourced from only the most pretentious French vineyards."
 	icon_state = "champagne_bottle"
+	base_icon_state = "champagne_bottle"
 	reagent_flags = TRANSPARENT
 	spillable = FALSE
 	isGlass = TRUE
@@ -501,9 +502,9 @@
 /obj/item/reagent_containers/food/drinks/bottle/champagne/update_icon_state()
 	. = ..()
 	if(spillable)
-		icon_state = "[initial(icon_state)]_popped"
+		icon_state = "[base_icon_state]_popped"
 	else
-		icon_state = initial(icon_state)
+		icon_state = base_icon_state
 
 /obj/item/reagent_containers/food/drinks/bottle/champagne/proc/pop_cork(mob/user)
 	user.visible_message(span_danger("[user] loosens the cork of [src] causing it to pop out of the bottle with great force."), \
@@ -512,7 +513,7 @@
 	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
 	spillable = TRUE
 	update_appearance()
-	var/obj/item/champagne_cork/popped_cork = new(get_turf(src))
+	var/obj/item/champagne_cork/popped_cork = new(user.loc)
 	popped_cork.might_of_the_sun_king = TRUE
 	var/turf/pop_target = get_edge_target_turf(popped_cork, user.dir)
 	popped_cork.throw_at(target = pop_target, thrower = user, speed = 2, range = 7, spin = FALSE)
