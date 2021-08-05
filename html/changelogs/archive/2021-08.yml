@@ -157,3 +157,41 @@
       spirit inside. lol.
   - refactor: refactored spirit possession used in the possessed blade into a component.
       now ANYTHING could be possessed if you so desire!
+2021-08-05:
+  Ghommie:
+  - balance: Standard bananium floor is now viable for clown decoration and isn't
+      slippery. Custom bananium floor tiles can be used to slip people though.
+  IndieanaJones:
+  - bugfix: Dynamic's Pirate spawn will now properly trigger.
+  InsaneRed:
+  - bugfix: You no longer need to unbuckle twice from xenomorph nests to be free
+  JohnFulpWillard:
+  - bugfix: Dead Cyborgs are thrown back into their body when turned into a Cultist
+      construct.
+  Melbert:
+  - code_imp: Uncomments the code that makes chaplains enjoy holymelons. Chaplains
+      will now gain positive moodlets from eating holy melons once again.
+  Mothblocks:
+  - admin: Admins now have a "View All Circuits" button to investigate circuits easier.
+  Paxilmaniac:
+  - expansion: hmg turret making use of newly fixed manned turret code, and the deployable
+      component
+  - bugfix: manned turret projectiles now actually go towards where you aim
+  - soundadd: new heavy machinegun sound from tgmc
+  - code_imp: deployable component, for deploying things from other things
+  SmArtKar:
+  - expansion: Conveyor switch and quantum pad can now be connected through USB cables
+  TemporalOroboros:
+  - bugfix: The chasm hallucination now visibly indicates the turfs it's effecting
+      again.
+  Watermelon914:
+  - refactor: Refactors datatype code completely for integrated circuits.
+  - refactor: Options have been moved to their own input port with their own special
+      type known as the "Option" type.
+  - bugfix: Fixed CTF breaking when it restarts.
+  Y0SH1M4S73R:
+  - bugfix: List literal components no longer append their output with garbage data.
+  antropod:
+  - bugfix: Custom vendor bluescreen
+  interestingusernam3:
+  - spellcheck: Gutlunches no longer eat through their nutrient sacs.
