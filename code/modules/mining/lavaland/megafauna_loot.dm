@@ -356,8 +356,6 @@
 	var/mob/living/simple_animal/soulscythe/soul
 	/// Are we grabbing a spirit?
 	var/using = FALSE
-	/// Blood level used for abilities
-	var/blood_level = 0
 	/// Cooldown between moves
 	COOLDOWN_DECLARE(move_cooldown)
 
@@ -365,6 +363,7 @@
 	. = ..()
 	soul = new(src)
 	RegisterSignal(soul, COMSIG_LIVING_RESIST, .proc/on_resist)
+	RegisterSignal(soul, COMSIG_MOB_ATTACK_RANGED, .proc/on_attack)
 	RegisterSignal(src, COMSIG_OBJ_INTEGRITY_CHANGED, .proc/on_integrity_change)
 
 /obj/item/soulscythe/examine(mob/user)
@@ -429,6 +428,9 @@
 
 	if(isturf(loc))
 		return
+	INVOKE_ASYNC(src, .proc/break_out, user)
+
+/obj/item/soulscythe/proc/break_out(mob/living/user)
 	balloon_alert(user, "you resist...")
 	if(!do_after(user, 5 SECONDS, target = src, timed_action_flags = IGNORE_TARGET_LOC_CHANGE))
 		balloon_alert(user, "interrupted!")
@@ -443,6 +445,23 @@
 	SIGNAL_HANDLER
 
 	soul.set_health(new_value)
+
+/obj/item/soulscythe/proc/on_attack(mob/living/source, atom/attacked_atom, modifiers)
+	SIGNAL_HANDLER
+
+	if(LAZYACCESS(modifiers, LEFT_CLICK))
+		if(get_dist(source, attacked_atom) > 1)
+			INVOKE_ASYNC(src, .proc/shoot_target, attacked_atom)
+		else
+			INVOKE_ASYNC(src, .proc/slash_target, attacked_atom)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		INVOKE_ASYNC(src, .proc/charge_target, attacked_atom)
+
+/obj/item/soulscythe/proc/shoot_target(atom/attacked_atom)
+
+/obj/item/soulscythe/proc/slash_target(atom/attacked_atom)
+
+/obj/item/soulscythe/proc/charge_target(atom/attacked_atom)
 
 /mob/living/simple_animal/soulscythe
 	name = "mysterious spirit"
