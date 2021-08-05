@@ -2,7 +2,7 @@
 	name = "gas flow meter"
 	desc = "It measures something."
 	icon = 'icons/obj/atmospherics/pipes/meter.dmi'
-	icon_state = "meter_base"
+	icon_state = "meter"
 	layer = HIGH_PIPE_LAYER
 	power_channel = AREA_USAGE_ENVIRON
 	use_power = IDLE_POWER_USE
@@ -61,15 +61,11 @@
 
 /obj/machinery/meter/process_atmos()
 	if(!(target?.flags_1 & INITIALIZED_1))
-		icon_state = "meter0"
-		greyscale_colors = COLOR_GRAY
-		set_greyscale(colors=greyscale_colors)
+		icon_state = "meter"
 		return FALSE
 
 	if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = "meter"
-		greyscale_colors = COLOR_GRAY
-		set_greyscale(colors=greyscale_colors)
 		return FALSE
 
 	use_power(5)

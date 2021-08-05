@@ -48,10 +48,14 @@
 	/// The job's outfit that will be assigned for plasmamen.
 	var/plasmaman_outfit = null
 
+	/// Minutes of experience-time required to play in this job. The type is determined by [exp_required_type] and [exp_required_type_department] depending on configs.
 	var/exp_requirements = 0
-
-	var/exp_type = ""
-	var/exp_type_department = ""
+	/// Experience required to play this job, if the config is enabled, and `exp_required_type_department` is not enabled with the proper config.
+	var/exp_required_type = ""
+	/// Department experience required to play this job, if the config is enabled.
+	var/exp_required_type_department = ""
+	/// Experience type granted by playing in this job.
+	var/exp_granted_type = ""
 
 	var/paycheck = PAYCHECK_MINIMAL
 	var/paycheck_department = ACCOUNT_CIV
@@ -73,8 +77,10 @@
 	/// If this job's mail goodies compete with generic goodies.
 	var/exclusive_mail_goodies = FALSE
 
-	///Bitfield of departments this job belongs wit
-	var/departments = NONE
+	/// Bitfield of departments this job belongs to. These get setup when adding the job into the department, on job datum creation.
+	var/departments_bitflags = NONE
+	/// Lazy list with the departments this job belongs to.
+	var/list/departments_list = null
 
 	/// Should this job be allowed to be picked for the bureaucratic error event?
 	var/allow_bureaucratic_error = TRUE
@@ -85,7 +91,7 @@
 	/// List of family heirlooms this job can get with the family heirloom quirk. List of types.
 	var/list/family_heirlooms
 
-	/// All values = (JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK)
+	/// All values = (JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT)
 	var/job_flags = NONE
 
 	/// Multiplier for general usage of the voice of god.
@@ -362,12 +368,6 @@
 	return SSjob.get_last_resort_spawn_points()
 
 
-/// Called after a successful latejoin spawn.
-/datum/job/proc/after_latejoin_spawn(mob/living/spawning)
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, src, spawning)
-
-
 /// Spawns the mob to be played as, taking into account preferences and the desired spawn point.
 /datum/job/proc/get_spawn_mob(client/player_client, atom/spawn_point)
 	var/mob/living/spawn_instance
@@ -393,7 +393,7 @@
 	if(!player_client)
 		return // Disconnected while checking for the appearance ban.
 	if(fully_randomize)
-		if(CONFIG_GET(flag/enforce_human_authority) && (job.departments & DEPARTMENT_COMMAND))
+		if(CONFIG_GET(flag/enforce_human_authority) && (job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
 			if(player_client.prefs.pref_species.id != SPECIES_HUMAN)
 				player_client.prefs.pref_species = new /datum/species/human
 			player_client.prefs.randomise_appearance_prefs(~RANDOMIZE_SPECIES)
@@ -404,7 +404,7 @@
 			fully_replace_character_name(null, GLOB.current_anonymous_theme.anonymous_name(src))
 	else
 		var/is_antag = (player_client.mob.mind in GLOB.pre_setup_antags)
-		if(CONFIG_GET(flag/enforce_human_authority) && (job.departments & DEPARTMENT_COMMAND))
+		if(CONFIG_GET(flag/enforce_human_authority) && (job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
 			player_client.prefs.randomise[RANDOM_SPECIES] = FALSE
 			if(player_client.prefs.pref_species.id != SPECIES_HUMAN)
 				player_client.prefs.pref_species = new /datum/species/human
@@ -445,3 +445,21 @@
 	// If this checks fails, then the name will have been handled during initialization.
 	if(!GLOB.current_anonymous_theme && player_client.prefs.custom_names["cyborg"] != DEFAULT_CYBORG_NAME)
 		apply_pref_name("cyborg", player_client)
+
+/**
+ * Called after a successful roundstart spawn.
+ * Client is not yet in the mob.
+ * This happens after after_spawn()
+ */
+/datum/job/proc/after_roundstart_spawn(mob/living/spawning, client/player_client)
+	SHOULD_CALL_PARENT(TRUE)
+
+
+/**
+ * Called after a successful latejoin spawn.
+ * Client is in the mob.
+ * This happens after after_spawn()
+ */
+/datum/job/proc/after_latejoin_spawn(mob/living/spawning)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, src, spawning)

@@ -263,11 +263,13 @@
 /obj/structure/closet/body_bag/environmental/prisoner/attack_hand_secondary(mob/user, modifiers)
 	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
 		return
-	if(!opened)
-		togglelock(user)
-	return TRUE
+	togglelock(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/body_bag/environmental/prisoner/togglelock(mob/living/user, silent)
+	if(opened)
+		to_chat(user, span_warning("You can't close the buckles while [src] is unzipped!"))
+		return
 	if(user in contents)
 		to_chat(user, span_warning("You can't reach the buckles from here!"))
 		return
@@ -276,7 +278,7 @@
 	if(!sinched)
 		for(var/mob/living/target in contents)
 			to_chat(target, span_userdanger("You feel the lining of [src] tighten around you! Soon, you won't be able to escape!"))
-		user.visible_message(span_notice("You begin sinching down the buckles on [src]."))
+		user.visible_message(span_notice("[user] begins sinching down the buckles on [src]."))
 		if(!(do_after(user,(sinch_time),target = src)))
 			return
 	sinched = !sinched
@@ -330,7 +332,7 @@
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/remove_air(amount)
 	if(sinched)
 		refresh_air()
-		return air_contents // The internals for this bag are bottomless. Syndicate bluespace trickery.
+		return air_contents.remove(amount) // The internals for this bag are bottomless. Syndicate bluespace trickery.
 	return ..(amount)
 
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/return_analyzable_air()

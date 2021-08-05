@@ -282,7 +282,7 @@
 
 	if(new_stat == DEAD)
 		return
-	// Someone we've eaten has spontaneously revived; maybe nanites, maybe a changeling
+	// Someone we've eaten has spontaneously revived; maybe regen coma, maybe a changeling
 	victim.forceMove(get_turf(src))
 	victim.exit_blood_effect()
 	victim.visible_message(span_warning("[victim] falls out of the air, covered in blood, with a confused look on their face."))
