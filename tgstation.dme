@@ -1129,7 +1129,6 @@
 #include "code\game\objects\effects\spawners\gibspawner.dm"
 #include "code\game\objects\effects\spawners\lootdrop.dm"
 #include "code\game\objects\effects\spawners\structure.dm"
-#include "code\game\objects\effects\spawners\vaultspawner.dm"
 #include "code\game\objects\effects\spawners\xeno_egg_delivery.dm"
 #include "code\game\objects\effects\spawners\random\ai_module.dm"
 #include "code\game\objects\effects\spawners\random\bureaucracy.dm"

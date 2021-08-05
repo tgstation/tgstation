@@ -2117,7 +2117,7 @@
 	},
 /area/awaymission/snowdin/cave/cavern)
 "gd" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
@@ -7286,7 +7286,7 @@
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "tu" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "tv" = (
@@ -8360,7 +8360,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/cave)
 "xr" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -8409,7 +8409,7 @@
 	},
 /area/awaymission/snowdin/post)
 "xx" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/spawner/random/structure/crate_abandoned,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -13090,7 +13090,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_dock)
 "La" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Lf" = (
@@ -13385,7 +13385,7 @@
 /area/awaymission/snowdin/cave)
 "NI" = (
 /obj/machinery/light/small/directional/north,
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/spawner/random/structure/crate_abandoned,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plating,
@@ -14173,7 +14173,7 @@
 /area/awaymission/snowdin/post/dorm)
 "Wx" = (
 /obj/machinery/light/broken/directional/west,
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "WA" = (
@@ -14481,7 +14481,7 @@
 /area/awaymission/snowdin/post/cavern2)
 "Zx" = (
 /obj/machinery/light/small/directional/north,
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "ZB" = (

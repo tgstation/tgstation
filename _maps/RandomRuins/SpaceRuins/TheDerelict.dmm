@@ -206,7 +206,7 @@
 /area/ruin/space/derelict/bridge/ai_upload)
 "bk" = (
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
 "bl" = (
@@ -275,7 +275,7 @@
 /area/ruin/space/derelict/bridge/ai_upload)
 "bA" = (
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
 "bB" = (
@@ -310,7 +310,7 @@
 /area/ruin/space/derelict/bridge/ai_upload)
 "bH" = (
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
 "bI" = (
@@ -409,7 +409,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
 "cb" = (
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged4"
 	},
@@ -497,7 +497,7 @@
 "cz" = (
 /obj/structure/rack,
 /obj/machinery/light/small/directional/north,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/access)
 "cA" = (
@@ -507,7 +507,7 @@
 /area/ruin/space/derelict/bridge/access)
 "cB" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/access)
 "cC" = (
@@ -644,7 +644,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/derelict/bridge/access)
 "de" = (
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/solarpanel/airless,
 /area/template_noop)
 "df" = (
@@ -751,7 +751,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/gravity_generator)
 "dE" = (
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/template_noop,
 /area/template_noop)
 "dF" = (
@@ -766,7 +766,7 @@
 /area/ruin/space/derelict/bridge)
 "dI" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "dJ" = (
@@ -813,7 +813,7 @@
 	},
 /area/ruin/space/derelict/singularity_engine)
 "dQ" = (
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged5"
 	},
@@ -872,7 +872,7 @@
 /area/ruin/space/derelict/singularity_engine)
 "eg" = (
 /obj/structure/window/reinforced,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged4"
 	},
@@ -1030,7 +1030,7 @@
 /area/ruin/space/derelict/bridge)
 "eQ" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "eS" = (
@@ -1113,7 +1113,7 @@
 "fg" = (
 /obj/structure/table,
 /obj/machinery/power/apc/auto_name/south,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
@@ -1127,7 +1127,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "fj" = (
@@ -1209,7 +1209,7 @@
 	},
 /area/ruin/space/derelict/singularity_engine)
 "fv" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
 "fw" = (
@@ -1296,7 +1296,7 @@
 /area/ruin/space/derelict/bridge/access)
 "fL" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
 	},
@@ -1372,7 +1372,7 @@
 "fY" = (
 /obj/structure/table,
 /obj/machinery/light/small/directional/east,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
 	},
@@ -1506,7 +1506,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary)
 "gG" = (
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "gH" = (
@@ -1553,7 +1553,7 @@
 	},
 /area/ruin/unpowered/no_grav)
 "gQ" = (
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/airless,
 /area/ruin/unpowered/no_grav)
 "gR" = (
@@ -1670,7 +1670,7 @@
 /area/ruin/space/derelict/arrival)
 "hs" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
 "ht" = (
@@ -1760,7 +1760,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
 	},
@@ -1799,7 +1799,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/chapel{
 	dir = 1
 	},
@@ -1871,7 +1871,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/chapel{
 	dir = 8
 	},
@@ -1884,7 +1884,7 @@
 /area/ruin/space/derelict/medical/chapel)
 "ig" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/chapel{
 	dir = 8
 	},
@@ -1905,7 +1905,7 @@
 /area/ruin/space/derelict/medical)
 "il" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/medical)
 "im" = (
@@ -1917,7 +1917,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "io" = (
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "ip" = (
@@ -1962,7 +1962,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/chapel{
 	dir = 1
 	},
@@ -2093,7 +2093,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/chapel{
 	dir = 1
 	},
@@ -2176,7 +2176,7 @@
 /area/ruin/space/derelict/medical)
 "jl" = (
 /obj/structure/closet/wardrobe/genetics_white,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
 "jm" = (
@@ -2354,7 +2354,7 @@
 /area/ruin/unpowered/no_grav)
 "jW" = (
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "jX" = (
@@ -2386,7 +2386,7 @@
 /area/ruin/unpowered/no_grav)
 "ke" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "kf" = (
@@ -2542,7 +2542,7 @@
 /area/ruin/space/derelict/arrival)
 "kW" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kX" = (
@@ -2565,7 +2565,7 @@
 /area/ruin/space/derelict/hallway/primary)
 "lb" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary/port)
 "lc" = (
@@ -2612,7 +2612,7 @@
 /area/ruin/space/derelict/hallway/primary/port)
 "lk" = (
 /obj/structure/closet/wardrobe/orange,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /obj/item/shovel/spade,
 /obj/item/cultivator,
 /turf/open/floor/iron/airless,
@@ -2623,7 +2623,7 @@
 /area/ruin/space/derelict/arrival)
 "lm" = (
 /obj/structure/closet/wardrobe,
-/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
 "ln" = (
@@ -2636,7 +2636,7 @@
 /area/ruin/space/derelict/hallway/primary)
 "lo" = (
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary)
 "lp" = (
@@ -2773,7 +2773,7 @@
 /area/ruin/space/derelict/hallway/primary/port)
 "lS" = (
 /obj/structure/closet/wardrobe/mixed,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
 "lT" = (
@@ -2991,7 +2991,7 @@
 	},
 /area/ruin/space/derelict/atmospherics)
 "mH" = (
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
 	},
@@ -3020,7 +3020,7 @@
 	},
 /area/ruin/space/derelict/atmospherics)
 "mO" = (
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/template_noop,
 /area/ruin/space/derelict/hallway/primary/port)
 "mP" = (
@@ -3029,11 +3029,11 @@
 /area/ruin/space/derelict/atmospherics)
 "mQ" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/random/maintenance/eight,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
 "mR" = (
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary)
 "mT" = (
@@ -3214,7 +3214,7 @@
 /area/ruin/space/derelict/hallway/secondary)
 "nE" = (
 /obj/machinery/door/firedoor,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "nF" = (

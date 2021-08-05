@@ -655,7 +655,7 @@
 /area/mine/production)
 "dd" = (
 /obj/structure/closet/emcloset,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "df" = (
@@ -2921,7 +2921,7 @@
 /area/mine/storage)
 "sX" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "tn" = (
@@ -3193,7 +3193,7 @@
 "vP" = (
 /obj/structure/cable,
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "vQ" = (
@@ -3395,7 +3395,7 @@
 /area/science/xenobiology)
 "xy" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "xz" = (
@@ -3702,7 +3702,7 @@
 /turf/closed/wall,
 /area/mine/storage)
 "AH" = (
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "AJ" = (
@@ -4365,7 +4365,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/wrench,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "GI" = (
@@ -4609,7 +4609,7 @@
 "IQ" = (
 /obj/structure/cable,
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "IZ" = (
@@ -4643,7 +4643,7 @@
 /area/mine/laborcamp)
 "Jv" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /obj/item/pickaxe,
 /obj/item/mining_scanner,
 /obj/item/storage/bag/ore,
