@@ -2432,6 +2432,7 @@
 #include "code\modules\jobs\job_exp.dm"
 #include "code\modules\jobs\job_report.dm"
 #include "code\modules\jobs\jobs.dm"
+#include "code\modules\jobs\departments\departments.dm"
 #include "code\modules\jobs\job_types\_job.dm"
 #include "code\modules\jobs\job_types\ai.dm"
 #include "code\modules\jobs\job_types\assistant.dm"
