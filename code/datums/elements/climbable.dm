@@ -89,8 +89,9 @@
 	climbed_thing.set_density(FALSE)
 	var/dir_step = get_dir(user, climbed_thing.loc)
 	var/same_loc = climbed_thing.loc == user.loc
-	//for on border objects you actually vault to the next turf.
-	if(climbed_thing.flags_1 & ON_BORDER_1 && same_loc)
+	// on border objects you actually vault to the next turf.
+	// FYI the reverse dir check is for when user is on the other side and has to step on the turf where the object is.
+	if(climbed_thing.flags_1 & ON_BORDER_1 && (same_loc || !(dir_step & REVERSE_DIR(climbed_thing.dir))))
 		//it can be vaulted over in two different cardinal directions. we choose one.
 		if(ISDIAGONALDIR(climbed_thing.dir) && same_loc)
 			if(params) //we check the icon x and y parameters of the click-drag to determine step_dir.
