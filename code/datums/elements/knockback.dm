@@ -1,3 +1,7 @@
+/**
+ * Mobs and items with this element will knock movable targets they hit away from them.
+ * Guns and turrets will instead fire projectiles with similar effects.
+ */
 /datum/element/knockback
 	/// distance the atom will be thrown
 	var/throw_distance
