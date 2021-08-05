@@ -345,21 +345,25 @@
 	icon_state = "soulscythe"
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	force = 20
 	throwforce = 17
 	armour_penetration = 50
 	sharpness = SHARP_EDGED
 	/// Soulscythe mob in the scythe
-	var/mob/living/simple_animal/hostile/soulscythe/soul
+	var/mob/living/simple_animal/soulscythe/soul
 	/// Can we grab a ghost?
-	var/usable = FALSE
+	var/usable = TRUE
 	/// Blood level used for abilities
 	var/blood_level = 0
+	/// Cooldown between moves
+	COOLDOWN_DECLARE(move_cooldown)
 
 /obj/item/soulscythe/Initialize()
 	. = ..()
 	soul = new(src)
-	soul.scythe = src
+	RegisterSignal(soul, COMSIG_LIVING_RESIST, .proc/on_resist)
 
 /obj/item/soulscythe/examine(mob/user)
 	. = ..()
@@ -387,33 +391,35 @@
 		balloon_alert(user, "the scythe is dormant!")
 		usable = TRUE
 
-/mob/living/simple_animal/hostile/soulscythe
-	name = "soulscythe"
-	desc = "An old relic of hell created by devils to establish themselves as the leadership of hell over the demons. It grows stronger while it possesses a powerful soul."
-	icon = 'icons/mob/lavaland/soulscythe.dmi'
-	icon_state = "soulscythe"
-	icon_living = "soulscythe"
+/obj/item/soulscythe/relaymove(mob/living/user, direction)
+	if(!COOLDOWN_FINISHED(src, move_cooldown))
+		return
+	if(!isturf(loc))
+		balloon_alert(user, "resist out!")
+		COOLDOWN_START(src, move_cooldown, 1 SECONDS)
+		return
+	if(pixel_x != base_pixel_x || pixel_y != base_pixel_y)
+		animate(src, 0.2 SECONDS, pixel_x = base_pixel_y, pixel_y = base_pixel_y)
+	Move(get_step(src, direction), direction)
+	COOLDOWN_START(src, move_cooldown, 0.1 SECONDS)
+
+/obj/item/soulscythe/proc/on_resist(mob/living/user)
+	if(!COOLDOWN_FINISHED(src, move_cooldown) || isturf(loc))
+		return
+	balloon_alert(user, "you resist...")
+	if(!do_after(user, 5 SECONDS, target = src))
+		balloon_alert(user, "interrupted!")
+		return
+	balloon_alert(user, "you break out")
+	if(ismob(loc))
+		var/mob/holder = loc
+		holder.temporarilyRemoveItemFromInventory(src)
+	forceMove(drop_location())
+
+/mob/living/simple_animal/soulscythe
+	name = "mysterious spirit"
 	gender = NEUTER
 	mob_biotypes = MOB_SPIRIT
-	maxHealth = 100
-	health = 100
-	healable = 0
-	pixel_x = -16
-	pixel_y = -16
-	base_pixel_x = -16
-	base_pixel_y = -16
-	/// Scythe object we are linked to
-	var/obj/item/soulscythe/scythe
-
-/mob/living/simple_animal/hostile/soulscythe/Initialize(mapload)
-	. = ..()
-	SpinAnimation(20)
-
-/mob/living/simple_animal/hostile/soulscythe/death(gibbed)
-	scythe?.usable = FALSE
-	ghostize(FALSE)
-	..()
-
 
 //Ash Drake: Spectral Blade, Lava Staff, Dragon's Blood
 
