@@ -20813,6 +20813,7 @@
 	c_tag = "Service-Cold Room";
 	dir = 4
 	},
+/obj/machinery/processor,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen)
 "cZG" = (
