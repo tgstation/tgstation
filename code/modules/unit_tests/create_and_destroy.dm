@@ -1,9 +1,9 @@
 ///Delete one of every type, sleep a while, then check to see if anything has gone fucky
-/datum/unit_test/del_test
+/datum/unit_test/create_and_destroy
 	//You absolutely must run last
 	priority = TEST_DEL_WORLD
 
-/datum/unit_test/del_test/Run()
+/datum/unit_test/create_and_destroy/Run()
 	//We'll spawn everything here
 	var/turf/spawn_at = run_loc_floor_bottom_left
 	var/list/ignore = list(
