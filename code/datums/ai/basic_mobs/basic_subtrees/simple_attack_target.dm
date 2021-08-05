@@ -3,9 +3,9 @@
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	. = ..()
-	if(!controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	if(!target || QDELETED(target))
 		return
-	controller.AddBehavior(/datum/ai_behavior/can_still_attack_target, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETTING_DATUM)
 	controller.AddBehavior(melee_attack_behavior, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 	return SUBTREE_RETURN_FINISH_PLANNING //we are going into battle...no distractions.
 
@@ -15,9 +15,9 @@
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	. = ..()
-	if(!controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	if(!target || QDELETED(target))
 		return
-	controller.AddBehavior(/datum/ai_behavior/can_still_attack_target, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETTING_DATUM)
 	controller.AddBehavior(ranged_attack_behavior, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 	return SUBTREE_RETURN_FINISH_PLANNING //we are going into battle...no distractions.
 
