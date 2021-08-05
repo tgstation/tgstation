@@ -114,3 +114,10 @@ obj/effect/spawner/random/exotic
 		/obj/item/shovel = 10,
 		/obj/item/spear = 8,
 	)
+
+/obj/effect/spawner/random/exotic/ripley
+	name = "25% mech 75% wreckage ripley spawner"
+	loot = list(
+		/obj/structure/mecha_wreckage/ripley = 3,
+		/obj/vehicle/sealed/mecha/working/ripley/mining = 1,
+	)

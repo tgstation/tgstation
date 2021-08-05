@@ -78,3 +78,4 @@
 /obj/effect/spawner/lootdrop/snowdin/dungeonheavy : /obj/effect/spawner/lootdrop/snowdin/antag_gear_strong
 /obj/effect/spawner/lootdrop/snowdin/dungeonmisc : /obj/effect/spawner/random/exotic/snow_gear
 /obj/effect/spawner/lootdrop/seed_vault : /obj/effect/spawner/random/food_or_drink/seed_vault
+/obj/effect/spawner/lootdrop/whiteship_cere_ripley : /obj/effect/spawner/random/exotic/ripley
