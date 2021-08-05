@@ -135,3 +135,12 @@
 		/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka = 1,
 		/obj/item/reagent_containers/food/drinks/bottle/trappist = 1,
 	)
+
+/obj/effect/spawner/random/food_or_drink/pizzaparty
+	name = "pizza bomb spawner"
+	loot = list(
+		/obj/item/pizzabox/margherita = 3,
+		/obj/item/pizzabox/meat = 3,
+		/obj/item/pizzabox/mushroom = 3,
+		/obj/item/pizzabox/bomb/armed = 1,
+	)

@@ -2128,7 +2128,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "gf" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/lootdrop/snowdin/dungeonheavy,
+/obj/effect/spawner/lootdrop/snowdin/antag_gear_strong,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
@@ -2964,7 +2964,7 @@
 /area/awaymission/snowdin/cave)
 "il" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/lootdrop/snowdin/dungeonmid,
+/obj/effect/spawner/random/exotic/antag_gear,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
@@ -3695,7 +3695,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
 "jN" = (
-/obj/effect/spawner/lootdrop/snowdin/dungeonmisc,
+/obj/effect/spawner/random/exotic/snow_gear,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "jO" = (
@@ -4649,7 +4649,7 @@
 /area/awaymission/snowdin/outside)
 "lT" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
@@ -7278,7 +7278,7 @@
 /area/awaymission/snowdin/outside)
 "ts" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/lootdrop/snowdin/dungeonheavy,
+/obj/effect/spawner/lootdrop/snowdin/antag_gear_strong,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "tt" = (
@@ -7295,7 +7295,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "tw" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/lootdrop/snowdin/dungeonmid,
+/obj/effect/spawner/random/exotic/antag_gear,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "tx" = (
@@ -7329,7 +7329,7 @@
 /area/awaymission/snowdin/outside)
 "tD" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "tE" = (
@@ -7361,7 +7361,7 @@
 /turf/open/floor/plating/ice/smooth,
 /area/awaymission/snowdin/outside)
 "tO" = (
-/obj/effect/spawner/lootdrop/snowdin/dungeonmid,
+/obj/effect/spawner/random/exotic/antag_gear,
 /turf/open/floor/plating/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "tP" = (
@@ -8029,7 +8029,7 @@
 /area/awaymission/snowdin/cave)
 "wn" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/floor/plating/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
@@ -8062,17 +8062,17 @@
 /area/awaymission/snowdin/cave)
 "wr" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "ws" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/floor/plating/ice/smooth,
 /area/awaymission/snowdin/cave)
 "wt" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/snowdin/dungeonmisc,
+/obj/effect/spawner/random/exotic/snow_gear,
 /turf/open/floor/plating/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
@@ -9247,8 +9247,8 @@
 /area/awaymission/snowdin/outside)
 "zP" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/snowdin/dungeonmisc,
-/obj/effect/spawner/lootdrop/snowdin/dungeonmisc,
+/obj/effect/spawner/random/exotic/snow_gear,
+/obj/effect/spawner/random/exotic/snow_gear,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/igloo)
 "zQ" = (
@@ -9616,13 +9616,13 @@
 /area/awaymission/snowdin/cave)
 "AU" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
-/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/igloo)
 "AV" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/igloo)
 "AW" = (
@@ -10865,8 +10865,8 @@
 /area/awaymission/snowdin/cave)
 "Er" = (
 /obj/structure/table/reinforced,
-/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
-/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -10938,7 +10938,7 @@
 "Ex" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
-/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -13116,7 +13116,7 @@
 "Lm" = (
 /obj/structure/table/wood,
 /obj/structure/fireaxecabinet/directional/south,
-/obj/effect/spawner/lootdrop/snowdin/dungeonmisc,
+/obj/effect/spawner/random/exotic/snow_gear,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/outside)
 "Ln" = (

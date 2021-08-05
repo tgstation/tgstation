@@ -72,3 +72,8 @@
 /obj/effect/spawner/lootdrop/gloves : /obj/effect/spawner/random/clothing/gloves
 /obj/effect/spawner/lootdrop/glowstick : /obj/effect/spawner/random/decoration/glowstick
 /obj/effect/spawner/lootdrop/lizardboots : /obj/effect/spawner/random/clothing/lizardboots
+/obj/effect/spawner/lootdrop/pizzaparty : /obj/effect/spawner/random/food_or_drink/pizzaparty
+/obj/effect/spawner/lootdrop/snowdin/dungeonlite : /obj/effect/spawner/random/exotic/antag_gear_weak
+/obj/effect/spawner/lootdrop/snowdin/dungeonmid : /obj/effect/spawner/random/exotic/antag_gear
+/obj/effect/spawner/lootdrop/snowdin/dungeonheavy : /obj/effect/spawner/lootdrop/snowdin/antag_gear_strong
+/obj/effect/spawner/lootdrop/snowdin/dungeonmisc : /obj/effect/spawner/random/exotic/snow_gear
