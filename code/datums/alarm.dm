@@ -22,9 +22,7 @@
 	if(istype(source_atom))
 		src.source_atom = source_atom
 	else
-		var/source_type = ""
-		if(istype(source_atom, /datum))
-			source_type = source_atom.type
+		var/source_type = (istype(source_atom, /datum)) ? source_atom.type : ""
 		stack_trace("a non atom was passed into alarm_handler! [source_atom] [source_type]")
 	return ..()
 
@@ -69,6 +67,7 @@
 
 ///Clears an alarm from any interested listeners
 /datum/alarm_handler/proc/clear_alarm(alarm_type, use_as_source_atom)
+	SIGNAL_HANDLER
 	if(!use_as_source_atom)
 		use_as_source_atom = source_atom
 	if(!use_as_source_atom)
@@ -190,6 +189,7 @@
 
 ///Used to manually clear camera refs if one is ref'd directly
 /datum/alarm_listener/proc/clear_camera_ref(obj/machinery/camera/source)
+	SIGNAL_HANDLER
 	var/list/alarms_cache = alarms  //Cache for sonic speec
 	for(var/alarm_type in alarms_cache)
 		var/list/alarms_of_type = alarms_cache[alarm_type] //Sonic cache speed forads

@@ -735,7 +735,7 @@
 		if (!(AA.machine_stat & (NOPOWER|BROKEN)) && !AA.shorted)
 			new_area_danger_level = clamp(max(new_area_danger_level, AA.danger_level), 0, 1)
 
-	var/did_anything_happen = FALSE
+	var/did_anything_happen
 	if(new_area_danger_level)
 		did_anything_happen = alarm_manager.send_alarm(ALARM_ATMOS)
 	else
