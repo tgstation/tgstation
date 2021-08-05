@@ -79,7 +79,7 @@
 	name = "random colored glowstick"
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "random_glowstick"
-	loot = (
+	loot = list(
 		/obj/item/flashlight/glowstick,
 		/obj/item/flashlight/glowstick/red,
 		/obj/item/flashlight/glowstick/blue,
