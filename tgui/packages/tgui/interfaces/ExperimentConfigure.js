@@ -211,14 +211,14 @@ export const Experiment = (props, context) => {
               : "rgba(0, 0, 0, 0.5)"}>
             <Box className="ExperimentConfigure__TagContainer">
               {tag}
-              <Icon
-                name="question-circle"
-                mx={0.5} />
-              <Box className="ExperimentConfigure__PerformanceHint">
-                <Tooltip
-                  content={performance_hint}
-                  position="bottom-left" />
-              </Box>
+              <Tooltip
+                content={performance_hint}
+                position="bottom-start">
+                <Icon
+                  name="question-circle"
+                  mx={0.5} />
+                <Box className="ExperimentConfigure__PerformanceHint" />
+              </Tooltip>
             </Box>
           </Flex.Item>
         </Flex>

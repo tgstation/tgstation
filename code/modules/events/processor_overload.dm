@@ -17,7 +17,7 @@
 
 	for(var/mob/living/silicon/ai/A in GLOB.ai_list)
 	//AIs are always aware of processor overload
-		to_chat(A, "<br><span class='warning'><b>[alert]</b></span><br>")
+		to_chat(A, "<br>[span_warning("<b>[alert]</b>")]<br>")
 
 	// Announce most of the time, but leave a little gap so people don't know
 	// whether it's, say, a tesla zapping tcomms, or some selective

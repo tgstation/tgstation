@@ -18,7 +18,7 @@
 				if(hidden_uplink)
 					hidden_uplink.telecrystals += amount
 					use(amount)
-					to_chat(user, "<span class='notice'>You press [src] onto yourself and charge your hidden uplink.</span>")
+					to_chat(user, span_notice("You press [src] onto yourself and charge your hidden uplink."))
 	else
 		return ..()
 

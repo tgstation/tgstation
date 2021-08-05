@@ -13,6 +13,7 @@
 
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "camera"
+	icon_keyboard = null
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/machinery/computer/camera_advanced/abductor/CreateEye()
@@ -71,7 +72,7 @@
 	if(!target || !iscarbon(owner))
 		return
 	if(world.time < use_delay)
-		to_chat(owner, "<span class='warning'>You must wait [DisplayTimeText(use_delay - world.time)] to use the [target] again!</span>")
+		to_chat(owner, span_warning("You must wait [DisplayTimeText(use_delay - world.time)] to use the [target] again!"))
 		return
 	var/mob/living/carbon/human/C = owner
 	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
@@ -79,7 +80,7 @@
 
 	var/area/target_area = get_area(remote_eye)
 	if(target_area.area_flags & ABDUCTOR_PROOF)
-		to_chat(owner, "<span class='warning'>This area is too heavily shielded to safely transport to.</span>")
+		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
 		return
 
 	use_delay = (world.time + abductor_pad_cooldown)
@@ -111,7 +112,7 @@
 	if(!target || !iscarbon(owner))
 		return
 	if(world.time < use_delay)
-		to_chat(owner, "<span class='warning'>You can only teleport to one place at a time!</span>")
+		to_chat(owner, span_warning("You can only teleport to one place at a time!"))
 		return
 	var/mob/living/carbon/human/C = owner
 	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
@@ -119,7 +120,7 @@
 
 	var/area/target_area = get_area(remote_eye)
 	if(target_area.area_flags & ABDUCTOR_PROOF)
-		to_chat(owner, "<span class='warning'>This area is too heavily shielded to safely transport to.</span>")
+		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
 		return
 
 	use_delay = (world.time + teleport_self_cooldown)

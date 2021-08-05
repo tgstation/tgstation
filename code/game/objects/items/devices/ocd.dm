@@ -7,5 +7,5 @@
 /obj/item/devices/ocd_device/attack_self(mob/user)
 	var/datum/round_event/bureaucratic_error/event = new()
 	event.start()
-	deadchat_broadcast("<span class='bold'> An OCD has been activated! </span>")
+	deadchat_broadcast(span_bold(" An OCD has been activated! "))
 	qdel(src)

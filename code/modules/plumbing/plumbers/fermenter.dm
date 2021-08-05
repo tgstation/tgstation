@@ -13,10 +13,14 @@
 /obj/machinery/plumbing/fermenter/Initialize(mapload, bolt, layer)
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/plumbing/grinder_chemical/can_be_rotated(mob/user, rotation_type)
 	if(anchored)
-		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
+		to_chat(user, span_warning("It is fastened to the floor!"))
 		return FALSE
 	return TRUE
 
@@ -24,16 +28,15 @@
 	. = ..()
 	eat_dir = newdir
 
-/obj/machinery/plumbing/fermenter/CanAllowThrough(atom/movable/AM)
+/obj/machinery/plumbing/fermenter/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(!anchored)
 		return
-	var/move_dir = get_dir(loc, AM.loc)
-	if(move_dir == eat_dir)
+	if(border_dir == eat_dir)
 		return TRUE
 
-/obj/machinery/plumbing/fermenter/Crossed(atom/movable/AM)
-	. = ..()
+/obj/machinery/plumbing/fermenter/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	ferment(AM)
 
 /// uses fermentation proc similar to fermentation barrels

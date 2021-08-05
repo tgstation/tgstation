@@ -46,11 +46,11 @@
 ///returns nothing with an alert instead of the message if it contains something in the ic filter, and sanitizes normally if the name is fine. It returns nothing so it backs out of the input the same way as if you had entered nothing.
 /proc/sanitize_name(t,allow_numbers=FALSE)
 	if(CHAT_FILTER_CHECK(t))
-		alert("You cannot set a name that contains a word prohibited in IC chat!")
+		tgui_alert(usr, "You cannot set a name that contains a word prohibited in IC chat!")
 		return ""
 	var/r = reject_bad_name(t,allow_numbers=allow_numbers,strict=TRUE)
 	if(!r)
-		alert("Invalid name.")
+		tgui_alert(usr, "Invalid name.")
 		return ""
 	return sanitize(r)
 
@@ -314,6 +314,7 @@
 /proc/truncate(text, max_length)
 	if(length(text) > max_length)
 		return copytext(text, 1, max_length)
+	return text
 
 //Returns a string with reserved characters and spaces before the first word and after the last word removed.
 /proc/trim(text, max_length)

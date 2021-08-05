@@ -7,12 +7,11 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/grenade/gas_crystal/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
-	var/turf/turf_loc = get_turf(src)
-	log_grenade(user, turf_loc) //Inbuilt admin procs already handle null users
+	log_grenade(user) //Inbuilt admin procs already handle null users
 	if(user)
 		add_fingerprint(user)
 		if(msg)
-			to_chat(user, "<span class='warning'>You crush the [src]! [capitalize(DisplayTimeText(det_time))]!</span>")
+			to_chat(user, span_warning("You crush the [src]! [capitalize(DisplayTimeText(det_time))]!"))
 	if(shrapnel_type && shrapnel_radius)
 		shrapnel_initialized = TRUE
 		AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_radius)

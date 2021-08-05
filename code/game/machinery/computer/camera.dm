@@ -252,6 +252,7 @@
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
+	icon_keyboard = null
 	layer = SIGN_LAYER
 	network = list("thunder")
 	density = FALSE
@@ -272,6 +273,22 @@
 	density = FALSE
 	circuit = null
 	interaction_flags_atom = NONE  // interact() is called by BigClick()
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/west
+	dir = EAST
+	pixel_x = -32
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize()
 	. = ..()
@@ -302,7 +319,7 @@ obj/machinery/computer/security/telescreen/entertainment/proc/notify(on)
 /obj/machinery/computer/security/telescreen/rd
 	name = "\improper Research Director's telescreen"
 	desc = "Used for watching the AI and the RD's goons from the safety of his office."
-	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test")
+	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test", "toxins")
 
 /obj/machinery/computer/security/telescreen/research
 	name = "research telescreen"

@@ -1,7 +1,7 @@
 /datum/job/scientist
 	title = "Scientist"
 	department_head = list("Research Director")
-	faction = "Station"
+	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 3
 	supervisors = "the research director"
@@ -27,6 +27,9 @@
 		/obj/item/camera_bug = 1
 	)
 
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE
+
+
 /datum/outfit/job/scientist
 	name = "Scientist"
 	jobtype = /datum/job/scientist
@@ -40,6 +43,7 @@
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/tox
 	duffelbag = /obj/item/storage/backpack/duffelbag/toxins
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/science=1)
 
 	id_trim = /datum/id_trim/job/scientist
 

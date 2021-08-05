@@ -18,23 +18,32 @@
 	var/item_recycle_sound = 'sound/items/welder.ogg'
 
 /obj/machinery/recycler/Initialize()
-	AddComponent(/datum/component/butchering/recycler, 1, amount_produced,amount_produced/5)
-	var/list/allowed_materials = list(/datum/material/iron,
-									/datum/material/glass,
-									/datum/material/silver,
-									/datum/material/plasma,
-									/datum/material/gold,
-									/datum/material/diamond,
-									/datum/material/plastic,
-									/datum/material/uranium,
-									/datum/material/bananium,
-									/datum/material/titanium,
-									/datum/material/bluespace
-									)
+	var/list/allowed_materials = list(
+		/datum/material/iron,
+		/datum/material/glass,
+		/datum/material/silver,
+		/datum/material/plasma,
+		/datum/material/gold,
+		/datum/material/diamond,
+		/datum/material/plastic,
+		/datum/material/uranium,
+		/datum/material/bananium,
+		/datum/material/titanium,
+		/datum/material/bluespace
+	)
 	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
+	AddComponent(/datum/component/butchering/recycler, 1, amount_produced,amount_produced/5)
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/recycler/LateInitialize()
 	. = ..()
 	update_appearance(UPDATE_ICON)
 	req_one_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION, REGION_CENTCOM))
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/recycler/RefreshParts()
 	var/amt_made = 0
@@ -53,7 +62,7 @@
 
 /obj/machinery/recycler/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Reclaiming <b>[amount_produced]%</b> of materials salvaged.</span>"
+	. += span_notice("Reclaiming <b>[amount_produced]%</b> of materials salvaged.")
 	. += {"The power light is [(machine_stat & NOPOWER) ? "off" : "on"].
 	The safety-mode light is [safety_mode ? "on" : "off"].
 	The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."}
@@ -81,7 +90,7 @@
 		safety_mode = FALSE
 		update_appearance()
 	playsound(src, "sparks", 75, TRUE, SILENCED_SOUND_EXTRARANGE)
-	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on [src].</span>")
+	to_chat(user, span_notice("You use the cryptographic sequencer on [src]."))
 
 /obj/machinery/recycler/update_icon_state()
 	var/is_powered = !(machine_stat & (BROKEN|NOPOWER))
@@ -90,17 +99,16 @@
 	icon_state = icon_name + "[is_powered]" + "[(bloody ? "bld" : "")]" // add the blood tag at the end
 	return ..()
 
-/obj/machinery/recycler/CanAllowThrough(atom/movable/AM)
+/obj/machinery/recycler/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(!anchored)
 		return
-	var/move_dir = get_dir(loc, AM.loc)
-	if(move_dir == eat_dir)
+	if(border_dir == eat_dir)
 		return TRUE
 
-/obj/machinery/recycler/Crossed(atom/movable/AM)
-	eat(AM)
-	. = ..()
+/obj/machinery/recycler/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/eat, AM)
 
 /obj/machinery/recycler/proc/eat(atom/movable/AM0, sound=TRUE)
 	if(machine_stat & (BROKEN|NOPOWER))

@@ -19,9 +19,8 @@
 	var/onstation = TRUE
 
 /obj/item/circuitboard/Initialize()
-	set_greyscale_config(/datum/greyscale_config/circuit)
-	set_greyscale_colors(greyscale_colors)
-	. = ..()
+	set_greyscale(new_config=/datum/greyscale_config/circuit)
+	return ..()
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/M)
 	if(LAZYLEN(M.component_parts))
@@ -102,4 +101,4 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			if(!ispath(A))
 				continue
 			nice_list += list("[req_components[A]] [initial(A.name)]")
-		. += "<span class='notice'>Required components: [english_list(nice_list)].</span>"
+		. += span_notice("Required components: [english_list(nice_list)].")

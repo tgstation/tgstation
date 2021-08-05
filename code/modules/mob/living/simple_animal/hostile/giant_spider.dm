@@ -1,29 +1,3 @@
-/**
- * # Poison Hostile Simplemob
- *
- * A subtype of the hostile simplemob which injects reagents into its target on attack, assuming the target accepts reagents.
- */
-/mob/living/simple_animal/hostile/poison
-	///How much of a reagent the mob injects on attack
-	var/poison_per_bite = 5
-	///What reagent the mob injects targets with
-	var/poison_type = /datum/reagent/toxin
-
-/mob/living/simple_animal/hostile/poison/AttackingTarget()
-	. = ..()
-	if(.)
-		inject_poison(target)
-
-/**
- * Injects poison into a given target.
- *
- * Checks if a given target accepts reagents, and then injects a given reagent into them if so.
- * Arguments:
- * * living_target - The targeted mob
- */
-/mob/living/simple_animal/hostile/poison/proc/inject_poison(mob/living/living_target)
-	if(poison_per_bite != 0 && living_target?.reagents)
-		living_target.reagents.add_reagent(poison_type, poison_per_bite)
 
 /**
  * # Giant Spider
@@ -33,7 +7,7 @@
  * A mob which can be created by botany or xenobiology.  The basic type is the guard, which is slower but sturdy and outputs good damage.
  * All spiders can produce webbing.  Currently does not inject toxin into its target.
  */
-/mob/living/simple_animal/hostile/poison/giant_spider
+/mob/living/simple_animal/hostile/giant_spider
 	name = "giant spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
 	icon_state = "guard"
@@ -72,7 +46,10 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	footstep_type = FOOTSTEP_MOB_CLAW
-	poison_per_bite = 0
+	///How much of a reagent the mob injects on attack
+	var/poison_per_bite = 0
+	///What reagent the mob injects targets with
+	var/poison_type = /datum/reagent/toxin
 	///Whether or not the spider is in the middle of an action.
 	var/is_busy = FALSE
 	///How quickly the spider can place down webbing.  One is base speed, larger numbers are slower.
@@ -82,29 +59,31 @@
 	///The message that the mother spider left for this spider when the egg was layed.
 	var/directive = ""
 	/// Short description of what this mob is capable of, for radial menu uses
-	var/menu_description = "Versatile spider variant for frontline combat. Jack of all trades, master of none. Does not inject toxin."
+	var/menu_description = "Versatile spider variant for frontline combat with high health and damage. Does not inject toxin."
 
-/mob/living/simple_animal/hostile/poison/giant_spider/Initialize()
+/mob/living/simple_animal/hostile/giant_spider/Initialize()
 	. = ..()
 	lay_web = new
 	lay_web.Grant(src)
+	if(poison_per_bite)
+		AddElement(/datum/element/venomous, poison_type, poison_per_bite)
 
-/mob/living/simple_animal/hostile/poison/giant_spider/Login()
+/mob/living/simple_animal/hostile/giant_spider/Login()
 	. = ..()
 	if(!. || !client)
 		return FALSE
 	if(directive)
-		to_chat(src, "<span class='spider'>Your mother left you a directive! Follow it at all costs.</span>")
-		to_chat(src, "<span class='spider'><b>[directive]</b></span>")
+		to_chat(src, span_spider("Your mother left you a directive! Follow it at all costs."))
+		to_chat(src, span_spider("<b>[directive]</b>"))
 		if(mind)
-			mind.store_memory("<span class='spider'><b>[directive]</b></span>")
+			mind.store_memory(span_spider("<b>[directive]</b>"))
 	GLOB.spidermobs[src] = TRUE
 
-/mob/living/simple_animal/hostile/poison/giant_spider/Destroy()
+/mob/living/simple_animal/hostile/giant_spider/Destroy()
 	GLOB.spidermobs -= src
 	return ..()
 
-/mob/living/simple_animal/hostile/poison/giant_spider/mob_negates_gravity()
+/mob/living/simple_animal/hostile/giant_spider/mob_negates_gravity()
 	return ..() || (locate(/obj/structure/spider/stickyweb) in loc)
 
 /**
@@ -112,9 +91,9 @@
  *
  * A subtype of the giant spider with purple eyes and toxin injection.
  *
- * A subtype of the giant spider which is faster, has toxin injection, but less health.  This spider is only slightly slower than a human.
+ * A subtype of the giant spider which is faster, has toxin injection, but less health and damage.  This spider is only slightly slower than a human.
  */
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter
+/mob/living/simple_animal/hostile/giant_spider/hunter
 	name = "hunter spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
 	icon_state = "hunter"
@@ -127,7 +106,7 @@
 	poison_per_bite = 10
 	move_to_delay = 5
 	speed = -0.1
-	menu_description = "Fast spider variant specializing in catching running prey, but has less health. Toxin injection of 10u per bite."
+	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less health and damage. Toxin injection of 10u per bite."
 
 /**
  * # Spider Nurse
@@ -137,7 +116,7 @@
  * A subtype of the giant spider which specializes in support skills.  Nurses can place down webbing in a quarter of the time
  * that other species can and can wrap other spiders' wounds, healing them.  Note that it cannot heal itself.
  */
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse
+/mob/living/simple_animal/hostile/giant_spider/nurse
 	name = "nurse spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes."
 	icon_state = "nurse"
@@ -151,33 +130,33 @@
 	melee_damage_upper = 10
 	poison_per_bite = 3
 	web_speed = 0.25
-	menu_description = "Support spider variant specializing in healing their brethren and placing webbings swiftly, but has very low amount of health and deals low damage. Toxin injection of 3u per bite."
+	menu_description = "Support spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage. Toxin injection of 3u per bite."
 	///The health HUD applied to the mob.
 	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
 
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/Initialize()
+/mob/living/simple_animal/hostile/giant_spider/nurse/Initialize()
 	. = ..()
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.add_hud_to(src)
 
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/AttackingTarget()
+/mob/living/simple_animal/hostile/giant_spider/nurse/AttackingTarget()
 	if(is_busy)
 		return
-	if(!istype(target, /mob/living/simple_animal/hostile/poison/giant_spider))
+	if(!istype(target, /mob/living/simple_animal/hostile/giant_spider))
 		return ..()
-	var/mob/living/simple_animal/hostile/poison/giant_spider/hurt_spider = target
+	var/mob/living/simple_animal/hostile/giant_spider/hurt_spider = target
 	if(hurt_spider == src)
-		to_chat(src, "<span class='warning'>You don't have the dexerity to wrap your own wounds.</span>")
+		to_chat(src, span_warning("You don't have the dexerity to wrap your own wounds."))
 		return
 	if(hurt_spider.health >= hurt_spider.maxHealth)
-		to_chat(src, "<span class='warning'>You can't find any wounds to wrap up.</span>")
+		to_chat(src, span_warning("You can't find any wounds to wrap up."))
 		return
-	visible_message("<span class='notice'>[src] begins wrapping the wounds of [hurt_spider].</span>","<span class='notice'>You begin wrapping the wounds of [hurt_spider].</span>")
+	visible_message(span_notice("[src] begins wrapping the wounds of [hurt_spider]."),span_notice("You begin wrapping the wounds of [hurt_spider]."))
 	is_busy = TRUE
 	if(do_after(src, 20, target = hurt_spider))
 		hurt_spider.heal_overall_damage(20, 20)
 		new /obj/effect/temp_visual/heal(get_turf(hurt_spider), "#80F5FF")
-		visible_message("<span class='notice'>[src] wraps the wounds of [hurt_spider].</span>","<span class='notice'>You wrap the wounds of [hurt_spider].</span>")
+		visible_message(span_notice("[src] wraps the wounds of [hurt_spider]."),span_notice("You wrap the wounds of [hurt_spider]."))
 	is_busy = FALSE
 
 /**
@@ -188,7 +167,7 @@
  * A subtype of the giant spider which specializes in pure strength and staying power.  Is slowed down greatly when not on webbing, but can lunge
  * to throw off attackers and possibly to stun them, allowing the tarantula to net an easy kill.
  */
-/mob/living/simple_animal/hostile/poison/giant_spider/tarantula
+/mob/living/simple_animal/hostile/giant_spider/tarantula
 	name = "tarantula"
 	desc = "Furry and black, it makes you shudder to look at it. This one has abyssal red eyes."
 	icon_state = "tarantula"
@@ -214,12 +193,12 @@
 	///The spider's charge ability
 	var/obj/effect/proc_holder/tarantula_charge/charge
 
-/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/Initialize()
+/mob/living/simple_animal/hostile/giant_spider/tarantula/Initialize()
 	. = ..()
 	charge = new
 	AddAbility(charge)
 
-/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/Moved(atom/oldloc, dir)
+/mob/living/simple_animal/hostile/giant_spider/tarantula/Moved(atom/oldloc, dir)
 	. = ..()
 	var/obj/structure/spider/stickyweb/web = locate() in loc
 	if(web && !silk_walking)
@@ -237,7 +216,7 @@
  * A subtype of the giant spider which specializes in speed and poison.  Injects a deadlier toxin than other spiders, moves extremely fast,
  * but like the hunter has a limited amount of health.
  */
-/mob/living/simple_animal/hostile/poison/giant_spider/viper
+/mob/living/simple_animal/hostile/giant_spider/viper
 	name = "viper spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has effervescent purple eyes."
 	icon_state = "viper"
@@ -264,7 +243,7 @@
  * However, this spider subtype has no offensive capability and can be quickly dispatched without assistance from other spiders.  They are also capable
  * of sending messages to all living spiders, being a communication line for the rest of the horde.
  */
-/mob/living/simple_animal/hostile/poison/giant_spider/midwife
+/mob/living/simple_animal/hostile/giant_spider/midwife
 	name = "broodmother spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has scintillating green eyes. Might also be hiding a real knife somewhere."
 	gender = FEMALE
@@ -295,7 +274,7 @@
 	///The ability for the spider to send a message to all currently living spiders.
 	var/datum/action/innate/spider/comm/letmetalkpls
 
-/mob/living/simple_animal/hostile/poison/giant_spider/midwife/Initialize()
+/mob/living/simple_animal/hostile/giant_spider/midwife/Initialize()
 	. = ..()
 	wrap = new
 	AddAbility(wrap)
@@ -314,23 +293,23 @@
  * Attempts to coccon the spider's cocoon_target after a do_after.
  * If the target is a human who hasn't been drained before, ups the spider's fed counter so it can lay enriched eggs.
  */
-/mob/living/simple_animal/hostile/poison/giant_spider/midwife/proc/cocoon()
+/mob/living/simple_animal/hostile/giant_spider/midwife/proc/cocoon()
 	if(stat == DEAD || !cocoon_target || cocoon_target.anchored)
 		return
 	if(cocoon_target == src)
-		to_chat(src, "<span class='warning'>You can't wrap yourself!</span>")
+		to_chat(src, span_warning("You can't wrap yourself!"))
 		return
-	if(istype(cocoon_target, /mob/living/simple_animal/hostile/poison/giant_spider))
-		to_chat(src, "<span class='warning'>You can't wrap other spiders!</span>")
+	if(istype(cocoon_target, /mob/living/simple_animal/hostile/giant_spider))
+		to_chat(src, span_warning("You can't wrap other spiders!"))
 		return
 	if(!Adjacent(cocoon_target))
-		to_chat(src, "<span class='warning'>You can't reach [cocoon_target]!</span>")
+		to_chat(src, span_warning("You can't reach [cocoon_target]!"))
 		return
 	if(is_busy)
-		to_chat(src, "<span class='warning'>You're already doing something else!</span>")
+		to_chat(src, span_warning("You're already doing something else!"))
 		return
 	is_busy = TRUE
-	visible_message("<span class='notice'>[src] begins to secrete a sticky substance around [cocoon_target].</span>","<span class='notice'>You begin wrapping [cocoon_target] into a cocoon.</span>")
+	visible_message(span_notice("[src] begins to secrete a sticky substance around [cocoon_target]."),span_notice("You begin wrapping [cocoon_target] into a cocoon."))
 	stop_automated_movement = TRUE
 	if(do_after(src, 50, target = cocoon_target))
 		if(is_busy)
@@ -341,10 +320,10 @@
 					consumed_mobs[living_target.tag] = TRUE
 					fed++
 					lay_eggs_enriched.UpdateButtonIcon(TRUE)
-					visible_message("<span class='danger'>[src] sticks a proboscis into [living_target] and sucks a viscous substance out.</span>","<span class='notice'>You suck the nutriment out of [living_target], feeding you enough to lay a cluster of eggs.</span>")
+					visible_message(span_danger("[src] sticks a proboscis into [living_target] and sucks a viscous substance out."),span_notice("You suck the nutriment out of [living_target], feeding you enough to lay a cluster of eggs."))
 					living_target.death() //you just ate them, they're dead.
 				else
-					to_chat(src, "<span class='warning'>[living_target] cannot sate your hunger!</span>")
+					to_chat(src, span_warning("[living_target] cannot sate your hunger!"))
 			cocoon_target.forceMove(casing)
 			if(cocoon_target.density || ismob(cocoon_target))
 				casing.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
@@ -363,9 +342,9 @@
 	button_icon_state = "lay_web"
 
 /datum/action/innate/spider/lay_web/Activate()
-	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider))
+	if(!istype(owner, /mob/living/simple_animal/hostile/giant_spider))
 		return
-	var/mob/living/simple_animal/hostile/poison/giant_spider/spider = owner
+	var/mob/living/simple_animal/hostile/giant_spider/spider = owner
 
 	if(!isturf(spider.loc))
 		return
@@ -373,12 +352,12 @@
 
 	var/obj/structure/spider/stickyweb/web = locate() in spider_turf
 	if(web)
-		to_chat(spider, "<span class='warning'>There's already a web here!</span>")
+		to_chat(spider, span_warning("There's already a web here!"))
 		return
 
 	if(!spider.is_busy)
 		spider.is_busy = TRUE
-		spider.visible_message("<span class='notice'>[spider] begins to secrete a sticky substance.</span>","<span class='notice'>You begin to lay a web.</span>")
+		spider.visible_message(span_notice("[spider] begins to secrete a sticky substance."),span_notice("You begin to lay a web."))
 		spider.stop_automated_movement = TRUE
 		if(do_after(spider, 40 * spider.web_speed, target = spider_turf))
 			if(spider.is_busy && spider.loc == spider_turf)
@@ -386,22 +365,16 @@
 		spider.is_busy = FALSE
 		spider.stop_automated_movement = FALSE
 	else
-		to_chat(spider, "<span class='warning'>You're already doing something else!</span>")
+		to_chat(spider, span_warning("You're already doing something else!"))
 
 /obj/effect/proc_holder/wrap
 	name = "Wrap"
 	panel = "Spider"
-	active = FALSE
-	action = null
 	desc = "Wrap something or someone in a cocoon. If it's a human or similar species, you'll also consume them, allowing you to lay enriched eggs."
 	ranged_mousepointer = 'icons/effects/mouse_pointers/wrap_target.dmi'
 	action_icon = 'icons/mob/actions/actions_animal.dmi'
 	action_icon_state = "wrap_0"
 	action_background_icon_state = "bg_alien"
-
-/obj/effect/proc_holder/wrap/Initialize()
-	. = ..()
-	action = new(src)
 
 /obj/effect/proc_holder/wrap/update_icon()
 	action.button_icon_state = "wrap_[active]"
@@ -409,37 +382,37 @@
 	return ..()
 
 /obj/effect/proc_holder/wrap/Click()
-	if(!istype(usr, /mob/living/simple_animal/hostile/poison/giant_spider/midwife))
+	if(!istype(usr, /mob/living/simple_animal/hostile/giant_spider/midwife))
 		return TRUE
-	var/mob/living/simple_animal/hostile/poison/giant_spider/midwife/user = usr
+	var/mob/living/simple_animal/hostile/giant_spider/midwife/user = usr
 	activate(user)
 	return TRUE
 
 /obj/effect/proc_holder/wrap/proc/activate(mob/living/user)
 	var/message
 	if(active)
-		message = "<span class='notice'>You no longer prepare to wrap something in a cocoon.</span>"
+		message = span_notice("You no longer prepare to wrap something in a cocoon.")
 		remove_ranged_ability(message)
 	else
-		message = "<span class='notice'>You prepare to wrap something in a cocoon. <B>Left-click your target to start wrapping!</B></span>"
+		message = span_notice("You prepare to wrap something in a cocoon. <B>Left-click your target to start wrapping!</B>")
 		add_ranged_ability(user, message, TRUE)
 		return TRUE
 
 /obj/effect/proc_holder/wrap/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
 		return
-	if(ranged_ability_user.incapacitated() || !istype(ranged_ability_user, /mob/living/simple_animal/hostile/poison/giant_spider/midwife))
+	if(ranged_ability_user.incapacitated() || !istype(ranged_ability_user, /mob/living/simple_animal/hostile/giant_spider/midwife))
 		remove_ranged_ability()
 		return
 
-	var/mob/living/simple_animal/hostile/poison/giant_spider/midwife/user = ranged_ability_user
+	var/mob/living/simple_animal/hostile/giant_spider/midwife/user = ranged_ability_user
 
 	if(user.Adjacent(target) && (ismob(target) || isobj(target)))
 		var/atom/movable/target_atom = target
 		if(target_atom.anchored)
 			return
 		user.cocoon_target = target_atom
-		INVOKE_ASYNC(user, /mob/living/simple_animal/hostile/poison/giant_spider/midwife/.proc/cocoon)
+		INVOKE_ASYNC(user, /mob/living/simple_animal/hostile/giant_spider/midwife/.proc/cocoon)
 		remove_ranged_ability()
 		return TRUE
 
@@ -449,17 +422,11 @@
 /obj/effect/proc_holder/tarantula_charge
 	name = "Charge"
 	panel = "Spider"
-	active = FALSE
-	action = null
 	desc = "Charge at a target, knocking them down if you collide with them.  Stuns yourself if you fail."
 	ranged_mousepointer = 'icons/effects/mouse_pointers/wrap_target.dmi'
 	action_icon = 'icons/mob/actions/actions_animal.dmi'
 	action_icon_state = "wrap_0"
 	action_background_icon_state = "bg_alien"
-
-/obj/effect/proc_holder/tarantula_charge/Initialize()
-	. = ..()
-	action = new(src)
 
 /obj/effect/proc_holder/tarantula_charge/update_icon()
 	action.button_icon_state = "wrap_[active]"
@@ -467,34 +434,34 @@
 	return ..()
 
 /obj/effect/proc_holder/tarantula_charge/Click()
-	if(!istype(usr, /mob/living/simple_animal/hostile/poison/giant_spider/tarantula))
+	if(!istype(usr, /mob/living/simple_animal/hostile/giant_spider/tarantula))
 		return TRUE
-	var/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/user = usr
+	var/mob/living/simple_animal/hostile/giant_spider/tarantula/user = usr
 	activate(user)
 	return TRUE
 
 /obj/effect/proc_holder/tarantula_charge/proc/activate(mob/living/user)
 	var/message
-	var/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/spider = user
+	var/mob/living/simple_animal/hostile/giant_spider/tarantula/spider = user
 	if(active)
-		message = "<span class='notice'>You stop preparing to charge.</span>"
+		message = span_notice("You stop preparing to charge.")
 		remove_ranged_ability(message)
 	else
 		if(!COOLDOWN_FINISHED(spider, charge_cooldown))
-			message = "<span class='notice'>Your charge is still on cooldown!</B></span>"
+			message = span_notice("Your charge is still on cooldown!</B>")
 			remove_ranged_ability(message)
-		message = "<span class='notice'>You prepare to charge. <B>Left-click your target to charge them!</B></span>"
+		message = span_notice("You prepare to charge. <B>Left-click your target to charge them!</B>")
 		add_ranged_ability(user, message, TRUE)
 		return 1
 
 /obj/effect/proc_holder/tarantula_charge/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
 		return
-	if(ranged_ability_user.incapacitated() || !istype(ranged_ability_user, /mob/living/simple_animal/hostile/poison/giant_spider/tarantula))
+	if(ranged_ability_user.incapacitated() || !istype(ranged_ability_user, /mob/living/simple_animal/hostile/giant_spider/tarantula))
 		remove_ranged_ability()
 		return
 
-	var/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/user = ranged_ability_user
+	var/mob/living/simple_animal/hostile/giant_spider/tarantula/user = ranged_ability_user
 
 	INVOKE_ASYNC(user, /mob/living/simple_animal/hostile/.proc/enter_charge, target)
 	remove_ranged_ability()
@@ -514,35 +481,35 @@
 	. = ..()
 	if(!.)
 		return
-	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/midwife))
+	if(!istype(owner, /mob/living/simple_animal/hostile/giant_spider/midwife))
 		return FALSE
-	var/mob/living/simple_animal/hostile/poison/giant_spider/midwife/S = owner
+	var/mob/living/simple_animal/hostile/giant_spider/midwife/S = owner
 	if(enriched && !S.fed)
 		return FALSE
 	return TRUE
 
 /datum/action/innate/spider/lay_eggs/Activate()
-	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/midwife))
+	if(!istype(owner, /mob/living/simple_animal/hostile/giant_spider/midwife))
 		return
-	var/mob/living/simple_animal/hostile/poison/giant_spider/midwife/spider = owner
+	var/mob/living/simple_animal/hostile/giant_spider/midwife/spider = owner
 
 	var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(spider)
 	if(eggs)
-		to_chat(spider, "<span class='warning'>There is already a cluster of eggs here!</span>")
+		to_chat(spider, span_warning("There is already a cluster of eggs here!"))
 	else if(enriched && !spider.fed)
-		to_chat(spider, "<span class='warning'>You are too hungry to do this!</span>")
+		to_chat(spider, span_warning("You are too hungry to do this!"))
 	else if(!spider.is_busy)
 		spider.is_busy = TRUE
-		spider.visible_message("<span class='notice'>[spider] begins to lay a cluster of eggs.</span>","<span class='notice'>You begin to lay a cluster of eggs.</span>")
+		spider.visible_message(span_notice("[spider] begins to lay a cluster of eggs."),span_notice("You begin to lay a cluster of eggs."))
 		spider.stop_automated_movement = TRUE
 		if(do_after(spider, 100, target = get_turf(spider)))
 			if(spider.is_busy)
 				eggs = locate() in get_turf(spider)
 				if(!eggs || !isturf(spider.loc))
-					var/egg_choice = enriched ? /obj/structure/spider/eggcluster/enriched : /obj/structure/spider/eggcluster
-					var/obj/structure/spider/eggcluster/new_eggs = new egg_choice(get_turf(spider))
+					var/egg_choice = enriched ? /obj/effect/mob_spawn/spider/enriched : /obj/effect/mob_spawn/spider
+					var/obj/effect/mob_spawn/spider/new_eggs = new egg_choice(get_turf(spider))
 					new_eggs.directive = spider.directive
-					new_eggs.faction = spider.faction.Copy()
+					new_eggs.faction = spider.faction
 					if(enriched)
 						spider.fed--
 					UpdateButtonIcon(TRUE)
@@ -563,14 +530,14 @@
 
 /datum/action/innate/spider/set_directive/IsAvailable()
 	if(..())
-		if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider))
+		if(!istype(owner, /mob/living/simple_animal/hostile/giant_spider))
 			return FALSE
 		return TRUE
 
 /datum/action/innate/spider/set_directive/Activate()
-	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/midwife))
+	if(!istype(owner, /mob/living/simple_animal/hostile/giant_spider/midwife))
 		return
-	var/mob/living/simple_animal/hostile/poison/giant_spider/midwife/spider = owner
+	var/mob/living/simple_animal/hostile/giant_spider/midwife/spider = owner
 	spider.directive = stripped_input(spider, "Enter the new directive", "Create directive", "[spider.directive]")
 	message_admins("[ADMIN_LOOKUPFLW(owner)] set its directive to: '[spider.directive]'.")
 	log_game("[key_name(owner)] set its directive to: '[spider.directive]'.")
@@ -581,7 +548,7 @@
 	button_icon_state = "command"
 
 /datum/action/innate/spider/comm/IsAvailable()
-	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/midwife))
+	if(!istype(owner, /mob/living/simple_animal/hostile/giant_spider/midwife))
 		return FALSE
 	return TRUE
 
@@ -604,8 +571,8 @@
 	if(!message)
 		return
 	var/my_message
-	my_message = "<span class='spider'><b>Command from [user]:</b> [message]</span>"
-	for(var/mob/living/simple_animal/hostile/poison/giant_spider/spider in GLOB.spidermobs)
+	my_message = span_spider("<b>Command from [user]:</b> [message]")
+	for(var/mob/living/simple_animal/hostile/giant_spider/spider in GLOB.spidermobs)
 		to_chat(spider, my_message)
 	for(var/ghost in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(ghost, user)
@@ -620,7 +587,7 @@
  * A subtype of the giant spider which is immune to temperature damage, unlike its normal counterpart.
  * Currently unused in the game unless spawned by admins.
  */
-/mob/living/simple_animal/hostile/poison/giant_spider/ice
+/mob/living/simple_animal/hostile/giant_spider/ice
 	name = "giant ice spider"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -628,7 +595,7 @@
 	poison_type = /datum/reagent/consumable/frostoil
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
-	menu_description = "Versatile ice spider variant for frontline combat. Jack of all trades, master of none. Immune to temperature damage. Does not inject frost oil."
+	menu_description = "Versatile ice spider variant for frontline combat with high health and damage. Immune to temperature damage. Does not inject frost oil."
 
 /**
  * # Ice Nurse Spider
@@ -637,14 +604,14 @@
  *
  * Same thing as the giant ice spider but mirrors the nurse subtype.  Also unused.
  */
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/ice
+/mob/living/simple_animal/hostile/giant_spider/nurse/ice
 	name = "giant ice spider"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 	poison_type = /datum/reagent/consumable/frostoil
 	color = rgb(114,228,250)
-	menu_description = "Support ice spider variant specializing in healing their brethren and placing webbings swiftly, but has very low amount of health and deals low damage. Immune to temperature damage. Frost oil injection of 3u per bite."
+	menu_description = "Support ice spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage. Immune to temperature damage. Frost oil injection of 3u per bite."
 
 /**
  * # Ice Hunter Spider
@@ -653,7 +620,7 @@
  *
  * Same thing as the giant ice spider but mirrors the hunter subtype.  Also unused.
  */
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter/ice
+/mob/living/simple_animal/hostile/giant_spider/hunter/ice
 	name = "giant ice spider"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -661,7 +628,7 @@
 	poison_type = /datum/reagent/consumable/frostoil
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
-	menu_description = "Fast ice spider variant specializing in catching running prey, but has less health. Immune to temperature damage. Frost oil injection of 10u per bite."
+	menu_description = "Fast ice spider variant specializing in catching running prey and frost oil injection, but has less health and damage. Immune to temperature damage. Frost oil injection of 10u per bite."
 
 /**
  * # Scrawny Hunter Spider
@@ -670,7 +637,7 @@
  *
  * Mainly used as a minor threat in abandoned places, such as areas in maintenance or a ruin.
  */
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter/scrawny
+/mob/living/simple_animal/hostile/giant_spider/hunter/scrawny
 	name = "scrawny spider"
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	health = 60
@@ -678,7 +645,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes, and looks abnormally thin and frail."
-	menu_description = "Fast spider variant specializing in catching running prey, but has less damage than a normal hunter spider at the cost of more health. Toxin injection of 10u per bite."
+	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less damage than a normal hunter spider at the cost of a little more health. Toxin injection of 10u per bite."
 
 /**
  * # Scrawny Tarantula
@@ -687,7 +654,7 @@
  *
  * Mainly used as a moderately strong but slow threat in abandoned places, such as areas in maintenance or a ruin.
  */
-/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/scrawny
+/mob/living/simple_animal/hostile/giant_spider/tarantula/scrawny
 	name = "scrawny tarantula"
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	health = 150
@@ -704,13 +671,13 @@
  *
  * Mainly used as a weak threat in abandoned places, such as areas in maintenance or a ruin.
  */
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/scrawny
+/mob/living/simple_animal/hostile/giant_spider/nurse/scrawny
 	name = "scrawny nurse spider"
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	health = 30
 	maxHealth = 30
 	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes, and looks abnormally thin and frail."
-	menu_description = "Weaker version of the nurse spider, specializing in healing their brethren and placing webbings swiftly, but has very low amount of health and deals low damage. Toxin injection of 3u per bite."
+	menu_description = "Weaker version of the nurse spider, specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage. Toxin injection of 3u per bite."
 
 /**
  * # Flesh Spider
@@ -720,32 +687,32 @@
  * A subtype of giant spider which only occurs from changelings.  Has the base stats of a hunter, but they can heal themselves.
  * They also produce web in 70% of the time of the base spider.  They also occasionally leave puddles of blood when they walk around.  Flavorful!
  */
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter/flesh
+/mob/living/simple_animal/hostile/giant_spider/hunter/flesh
 	desc = "A odd fleshy creature in the shape of a spider.  Its eyes are pitch black and soulless."
 	icon_state = "flesh_spider"
 	icon_living = "flesh_spider"
 	icon_dead = "flesh_spider_dead"
 	web_speed = 0.7
-	menu_description = "Self-sufficient spider variant capable of healing themselves and producing webbbing fast, but has less health. Toxin injection of 10u per bite."
+	menu_description = "Self-sufficient spider variant capable of healing themselves and producing webbbing fast, but has less health and damage. Toxin injection of 10u per bite."
 
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter/flesh/Moved(atom/oldloc, dir)
+/mob/living/simple_animal/hostile/giant_spider/hunter/flesh/Moved(atom/oldloc, dir)
 	. = ..()
 	if(prob(5))
 		new /obj/effect/decal/cleanable/blood/bubblegum(loc)
 
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter/flesh/AttackingTarget()
+/mob/living/simple_animal/hostile/giant_spider/hunter/flesh/AttackingTarget()
 	if(is_busy)
 		return
 	if(src == target)
 		if(health >= maxHealth)
-			to_chat(src, "<span class='warning'>You're not injured, there's no reason to heal.</span>")
+			to_chat(src, span_warning("You're not injured, there's no reason to heal."))
 			return
-		visible_message("<span class='notice'>[src] begins mending themselves...</span>","<span class='notice'>You begin mending your wounds...</span>")
+		visible_message(span_notice("[src] begins mending themselves..."),span_notice("You begin mending your wounds..."))
 		is_busy = TRUE
 		if(do_after(src, 20, target = src))
 			heal_overall_damage(50, 50)
 			new /obj/effect/temp_visual/heal(get_turf(src), "#80F5FF")
-			visible_message("<span class='notice'>[src]'s wounds mend together.</span>","<span class='notice'>You mend your wounds together.</span>")
+			visible_message(span_notice("[src]'s wounds mend together."),span_notice("You mend your wounds together."))
 		is_busy = FALSE
 		return
 	return ..()
@@ -757,11 +724,11 @@
  *
  * A viper spider with buffed attributes.  All I changed was its health value and gave it the ability to ventcrawl.  The crux of the wizard meta.
  */
-/mob/living/simple_animal/hostile/poison/giant_spider/viper/wizard
+/mob/living/simple_animal/hostile/giant_spider/viper/wizard
 	maxHealth = 80
 	health = 80
 	menu_description = "Stronger assassin spider variant with an unmatched speed, high amount of health and very deadly poison, but deals very low amount of damage. It also has ability to ventcrawl. Venom injection of 6u per bite."
 
-/mob/living/simple_animal/hostile/poison/giant_spider/viper/wizard/Initialize()
+/mob/living/simple_animal/hostile/giant_spider/viper/wizard/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)

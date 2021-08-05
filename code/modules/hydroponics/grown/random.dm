@@ -27,7 +27,6 @@
 	name = "strange plant"
 	desc = "What could this even be?"
 	icon_state = "crunchy"
-	bite_consumption_mod = 2
 
 /obj/item/food/grown/random/Initialize()
 	. = ..()

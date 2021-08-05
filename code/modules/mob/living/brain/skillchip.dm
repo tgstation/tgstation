@@ -151,7 +151,7 @@
 			chip_tally++
 
 	if(chip_tally && !silent)
-		to_chat(owner, "<span class='warning'>Unusual brain biology detected during regeneration. Failsafe procedure engaged. [chip_tally] skillchips have been deactivated.</span>")
+		to_chat(owner, span_warning("Unusual brain biology detected during regeneration. Failsafe procedure engaged. [chip_tally] skillchips have been deactivated."))
 
 /// Disables or re-enables any extra skillchips after skillchip limit changes.
 /obj/item/organ/brain/proc/update_skillchips()
