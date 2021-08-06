@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/get_column
 	display_name = "Get Column"
-	display_desc = "Gets the column of a table and returns it as a regular list."
+	desc = "Gets the column of a table and returns it as a regular list."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The list to perform the filter on
@@ -22,12 +22,6 @@
 	received_table = add_input_port("Input", PORT_TYPE_TABLE)
 	column_name = add_input_port("Column Name", PORT_TYPE_STRING)
 	output_list = add_output_port("Output", PORT_TYPE_LIST)
-
-/obj/item/circuit_component/get_column/Destroy()
-	received_table = null
-	column_name = null
-	output_list = null
-	return ..()
 
 /obj/item/circuit_component/get_column/input_received(datum/port/input/port)
 	. = ..()

@@ -53,12 +53,13 @@
 		H.visible_message(span_warning("[H] has given up on life as a mortal."))
 		var/T = get_turf(H)
 		if(too_spooky)
-			if(prob(30))
-				new/obj/item/instrument/saxophone/spectral(T)
-			else if(prob(30))
-				new/obj/item/instrument/trumpet/spectral(T)
-			else if(prob(30))
-				new/obj/item/instrument/trombone/spectral(T)
+			if(prob(90))
+				var/obj/item/instrument = pick(
+					/obj/item/instrument/saxophone/spectral,
+					/obj/item/instrument/trumpet/spectral,
+					/obj/item/instrument/trombone/spectral,
+				)
+				new instrument(T)
 			else
 				to_chat(H, span_boldwarning("The spooky gods forgot to ship your instrument. Better luck next unlife."))
 		to_chat(H, span_boldnotice("You are the spooky skeleton!"))
