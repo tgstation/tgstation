@@ -1,7 +1,4 @@
-/**
- * This used to be in paper.dm, it was some snowflake code that was
- * used ONLY on april's fool. We moved it to an element so it could be used in other places.
- */
+/// Attachable to items. Plays a bikehorn sound whenever attack_self is called (with a cooldown).
 /datum/element/honkspam
 	element_flags = ELEMENT_DETACH
 
