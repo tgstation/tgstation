@@ -42,39 +42,22 @@ const QuirkList = (props: {
   onClick: (quirkName: string, quirk: Quirk) => void,
 }) => {
   return (
-    <Stack
-      className="PreferencesMenu__Quirks__QuirkList"
-      vertical
-      fill
-    >
+    // Stack is not used here for a variety of IE flex bugs
+    <Box className="PreferencesMenu__Quirks__QuirkList">
       {props.quirks.map(([quirkKey, quirk]) => {
         const className = "PreferencesMenu__Quirks__QuirkList__quirk";
 
         const child = (
-          <Stack.Item
+          <Box
             className={className}
             key={quirkKey}
             onClick={() => props.onClick(quirkKey, quirk)}
-            style={{
-              "margin-top": 0,
-              // MOTHBLOCKS TODO: IE bug. Without this the text
-              // doesn't decide the height
-              "min-height": "100px",
-            }}
           >
             <Stack fill>
-              <Stack.Item style={{
+              <Stack.Item align="center" style={{
                 "border-right": "1px solid black",
-                "height": "100%",
               }}>
-                <Box
-                  className={classes(["quirks64x64", quirkKey])}
-                  style={{
-                    // "position": "relative",
-                    // "top": "50%",
-                    // "transform": "translateY(-50%)",
-                  }}
-                />
+                <Box className={classes(["quirks64x64", quirkKey])} />
               </Stack.Item>
 
               <Stack.Item grow style={{
@@ -115,26 +98,20 @@ const QuirkList = (props: {
                 </Stack>
               </Stack.Item>
             </Stack>
-          </Stack.Item>
+          </Box>
         );
 
-        return child;
-
-        // if (quirk.failTooltip) {
-        //   return (
-        //     <Tooltip
-        //       content={quirk.failTooltip}
-        //       key={quirkKey}
-        //       position="top"
-        //     >
-        //       {child}
-        //     </Tooltip>
-        //   );
-        // } else {
-        //   return child;
-        // }
+        if (quirk.failTooltip) {
+          return (
+            <Tooltip content={quirk.failTooltip}>
+              {child}
+            </Tooltip>
+          );
+        } else {
+          return child;
+        }
       })}
-    </Stack>
+    </Box>
   );
 };
 
