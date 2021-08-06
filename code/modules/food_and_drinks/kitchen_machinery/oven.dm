@@ -1,3 +1,13 @@
+#define OVEN_SMOKE_STATE_NONE 0
+#define OVEN_SMOKE_STATE_GOOD 1
+#define OVEN_SMOKE_STATE_NEUTRAL 2
+#define OVEN_SMOKE_STATE_BAD 3
+
+#define OVEN_LID_Y_OFFSET -15
+
+#define OVEN_TRAY_Y_OFFSET -16
+#define OVEN_TRAY_X_OFFSET -2
+
 /obj/machinery/oven
 	name = "oven"
 	desc = "Why do they call it oven when you of in the cold food of out hot eat the food?"
@@ -197,3 +207,14 @@
 /particles/smoke/steam
 	icon_state = list("steam_1" = 1, "steam_2" = 1, "steam_3" = 2)
 	fade = 1.5 SECONDS
+
+
+#undef OVEN_SMOKE_STATE_NONE
+#undef OVEN_SMOKE_STATE_GOOD
+#undef OVEN_SMOKE_STATE_NEUTRAL
+#undef OVEN_SMOKE_STATE_BAD
+
+#undef OVEN_LID_Y_OFFSET
+
+#undef OVEN_TRAY_Y_OFFSET
+#undef OVEN_TRAY_X_OFFSET
