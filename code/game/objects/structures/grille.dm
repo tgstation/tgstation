@@ -37,10 +37,12 @@
 	update_appearance()
 
 /obj/structure/grille/update_appearance(updates)
+	..()
 	if(QDELETED(src) || broken)
 		return
 
 /obj/structure/grille/update_icon()
+	..()
 	if(QDELETED(src) || broken)
 		return
 	var/ratio = obj_integrity / max_integrity

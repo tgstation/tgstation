@@ -300,7 +300,6 @@
 		current_canvas = new_canvas
 		if(!current_canvas.finalized)
 			current_canvas.finalize(user)
-		pixel_y = current_canvas.wall_y_offset
 		to_chat(user,span_notice("You frame [current_canvas]."))
 	update_appearance()
 

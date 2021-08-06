@@ -70,6 +70,9 @@
 	. = ..()
 	if(!machine_stat)
 		. += emissive_appearance(icon, "smartfridge-light-mask", alpha = src.alpha)
+
+/obj/machinery/smartfridge/update_overlays()
+	. = ..()
 	if(visible_contents)
 		switch(contents.len)
 			if(1 to 25)

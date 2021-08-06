@@ -52,7 +52,6 @@
 	myarea = get_area(src)
 	LAZYADD(myarea.firealarms, src)
 	AddElement(/datum/element/wall_mount)
-
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/machinery/firealarm/Destroy()

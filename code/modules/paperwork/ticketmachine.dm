@@ -133,6 +133,7 @@
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
 /obj/machinery/ticket_machine/update_icon()
+	..()
 	if(machine_stat & (NOPOWER|BROKEN))
 		icon_state = "ticketmachine_off"
 		return

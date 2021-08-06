@@ -243,6 +243,7 @@
 		/obj/item/circuit_component/air_alarm,
 	))
 
+
 /obj/machinery/airalarm/setDir(newdir)
 	. = ..()
 	switch(dir)
@@ -262,6 +263,7 @@
 			plane = WALL_PLANE
 			pixel_x = 2
 			pixel_y = 0
+
 
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()

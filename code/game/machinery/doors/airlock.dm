@@ -99,6 +99,8 @@
 	smoothing_groups = list(SMOOTH_GROUP_AIRLOCK)
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
+	greyscale_config = /datum/greyscale_config/airlocks/custom
+	greyscale_colors = "#a5a7ac#a5a7ac#969696#969696#5ea52c#6d6565#777777"
 	blocks_emissive = NONE // Custom emissive blocker. We don't want the normal behavior.
 
 	var/security_level = 0 //How much are wires secured
@@ -127,7 +129,7 @@
 	var/boltDown = 'sound/machines/boltsdown.ogg'
 	var/noPower = 'sound/machines/doorclick.ogg'
 	var/previous_airlock = /obj/structure/door_assembly //what airlock assembly mineral plating was applied to
-	var/airlock_material //material of inner filling; if its an airlock with glass, this should be set to "glass"
+	var/airlock_material = "fill" //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //Used for papers and photos pinned to the airlock
 
@@ -153,6 +155,8 @@
 		addtimer(CALLBACK(.proc/update_other_id), 5)
 	if(glass)
 		airlock_material = "glass"
+		greyscale_config = /datum/greyscale_config/airlocks/window
+		greyscale_colors = (copytext(greyscale_colors, 1, 42))
 	if(security_level > AIRLOCK_SECURITY_IRON)
 		obj_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
 		max_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
@@ -488,9 +492,15 @@
 /obj/machinery/door/airlock/update_icon_state()
 	. = ..()
 	switch(airlock_state)
-		if(AIRLOCK_OPEN, AIRLOCK_CLOSED)
-			icon_state = ""
-		if(AIRLOCK_DENY, AIRLOCK_OPENING, AIRLOCK_CLOSING, AIRLOCK_EMAG)
+		if(AIRLOCK_OPEN)
+			icon_state = "open"
+		if(AIRLOCK_CLOSED)
+			icon_state = "closed"
+		if(AIRLOCK_OPENING)
+			icon_state = "opening"
+		if(AIRLOCK_CLOSING)
+			icon_state = "closing"
+		if(AIRLOCK_DENY, AIRLOCK_EMAG)
 			icon_state = "nonexistenticonstate" //MADNESS
 
 /obj/machinery/door/airlock/update_overlays()
@@ -569,6 +579,7 @@
 			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
 			I.pixel_x = -32
 			. += I
+	update_greyscale()
 
 /obj/machinery/door/airlock/do_animate(animation)
 	switch(animation)

@@ -42,7 +42,7 @@
 		if (W.tool_behaviour == TOOL_SCREWDRIVER)
 			if (W.use_tool(src, user, 20))
 				panel_open = !panel_open
-				to_chat(user, span_notice("You [open ? "open" : "close"] the service panel."))
+				to_chat(user, span_notice("You [panel_open ? "open" : "close"] the service panel."))
 			return
 		if (W.tool_behaviour == TOOL_WIRECUTTER)
 			to_chat(user, span_danger("[src] is protected from this sort of tampering, yet it appears the internal memory wires can still be <b>pulsed</b>."))
@@ -115,6 +115,7 @@
 	return
 
 /obj/item/storage/secure/update_icon()
+	..()
 	cut_overlays()
 	if(!SEND_SIGNAL(src, COMSIG_CONTAINS_STORAGE))
 		return

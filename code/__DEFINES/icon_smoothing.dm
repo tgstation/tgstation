@@ -101,8 +101,9 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_MINERAL_WALLS S_TURF(56) ///turf/closed/mineral, /turf/closed/indestructible
 #define SMOOTH_GROUP_BOSS_WALLS S_TURF(57) ///turf/closed/indestructible/riveted/boss
 #define SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS S_TURF(58) ///turf/closed/wall/mineral/titanium/survival
+#define SMOOTH_GROUP_WINDOWS S_TURF(59)
 
-#define MAX_S_TURF SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS //Always match this value with the one above it.
+#define MAX_S_TURF SMOOTH_GROUP_WINDOWS //Always match this value with the one above it.
 
 
 #define S_OBJ(num) (MAX_S_TURF + 1 + num)
@@ -163,5 +164,3 @@ DEFINE_BITFIELD(smoothing_flags, list(
 
 #define SMOOTH_GROUP_GRILLE S_OBJ(71)					//obj/structure/grille
 #define SMOOTH_GROUP_GAS_TANK S_OBJ(71)
-
-#define MAX_S_OBJ SMOOTH_GROUP_GAS_TANK //Always match this value with the one above it.

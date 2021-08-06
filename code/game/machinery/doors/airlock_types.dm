@@ -6,19 +6,23 @@
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
 	normal_integrity = 450
+	greyscale_colors = "#3e7bc1#3e7bc1#2a5b94#2a5b94#369de5#6d6565#2c5280"
 
 /obj/machinery/door/airlock/security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
 	normal_integrity = 450
+	greyscale_colors = "#9f2828#9f2828#a51c1c#a51c1c#d27428#6d6565#8e2222"
 
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_eng
+	greyscale_colors = "#d8a81b#d8a81b#c2940d#c2940d#7f292f#6d6565#997715"
 
 /obj/machinery/door/airlock/medical
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_med
+	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#66ccff#6d6565#ffffff"
 
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance access"
@@ -26,39 +30,50 @@
 	overlays_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mai
 	normal_integrity = 250
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/machinery/door/airlock/maintenance/external
 	name = "external airlock access"
 	icon = 'icons/obj/doors/airlocks/station/maintenanceexternal.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_extmai
+	greyscale_config = /datum/greyscale_config/airlocks
+	greyscale_colors = "#4d4d4d#4d4d4d#5f5f5f#5f5f5f#998d67#998d67#333333"
 
 /obj/machinery/door/airlock/mining
 	name = "mining airlock"
 	icon = 'icons/obj/doors/airlocks/station/mining.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_min
+	greyscale_colors = "#c39344#c39344#b3863c#b3863c#78430d#6d6565#967032"
 
 /obj/machinery/door/airlock/atmos
 	name = "atmospherics airlock"
 	icon = 'icons/obj/doors/airlocks/tall/department/atmos.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_atmo
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/machinery/door/airlock/research
 	icon = 'icons/obj/doors/airlocks/station/research.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_research
+	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#974cdc#6d6565#ffffff"
 
 /obj/machinery/door/airlock/freezer
 	name = "freezer airlock"
 	icon = 'icons/obj/doors/airlocks/station/freezer.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_fre
+	greyscale_colors = "#ffffff#ffffff#eaeaea#eaeaea#808080#6d6565#ffffff"
 
 /obj/machinery/door/airlock/science
 	icon = 'icons/obj/doors/airlocks/station/science.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_science
+	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#9966ff#6d6565#ffffff"
 
 /obj/machinery/door/airlock/virology
 	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_viro
+	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#006600#6d6565#ffffff"
 
 //////////////////////////////////
 /*
@@ -159,6 +174,8 @@
 	name = "gold airlock"
 	icon = 'icons/obj/doors/airlocks/tall/mineral/gold.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_gold
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/machinery/door/airlock/gold/glass
 	opacity = FALSE
@@ -168,6 +185,8 @@
 	name = "silver airlock"
 	icon = 'icons/obj/doors/airlocks/tall/mineral/silver.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_silver
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/machinery/door/airlock/silver/glass
 	opacity = FALSE
@@ -179,6 +198,8 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_diamond
 	normal_integrity = 1000
 	explosion_block = 2
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/machinery/door/airlock/diamond/glass
 	normal_integrity = 950
@@ -190,6 +211,7 @@
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_uranium
 	var/last_event = 0
+	greyscale_colors = "#003300#003300#004400#004400#00330#6d6565#003300"
 
 /obj/machinery/door/airlock/uranium/process()
 	if(world.time > last_event+20)
@@ -211,6 +233,7 @@
 	desc = "No way this can end badly."
 	icon = 'icons/obj/doors/airlocks/station/plasma.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_plasma
+	greyscale_colors = "#890e89#890e89#660066#660066#660066#6d6565#5d035d"
 
 /obj/machinery/door/airlock/plasma/Initialize(mapload)
 	. = ..()
@@ -259,6 +282,7 @@
 	icon = 'icons/obj/doors/airlocks/station/bananium.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_bananium
 	doorOpen = 'sound/items/bikehorn.ogg'
+	greyscale_colors = "#ffff00#ffff00#ffff00#ffff00#ffff00#ffff00#ffff00"
 
 /obj/machinery/door/airlock/bananium/glass
 	opacity = FALSE
@@ -268,6 +292,7 @@
 	name = "sandstone airlock"
 	icon = 'icons/obj/doors/airlocks/station/sandstone.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sandstone
+	greyscale_colors = "#876f57#876f57#877869#877869#978471#6d6565#876f57"
 
 /obj/machinery/door/airlock/sandstone/glass
 	opacity = FALSE
@@ -277,6 +302,8 @@
 	name = "wooden airlock"
 	icon = 'icons/obj/doors/airlocks/station/wood.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_wood
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/machinery/door/airlock/wood/glass
 	opacity = FALSE
@@ -288,6 +315,8 @@
 	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	normal_integrity = 400
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/machinery/door/airlock/titanium/glass
 	normal_integrity = 350
@@ -299,6 +328,8 @@
 	icon = 'icons/obj/doors/airlocks/clockwork/pinion_airlock.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/clockwork/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_bronze
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/machinery/door/airlock/bronze/seethru
 	assemblytype = /obj/structure/door_assembly/door_assembly_bronze/seethru
@@ -313,6 +344,8 @@
 	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_public
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/machinery/door/airlock/public/glass
 	opacity = FALSE
@@ -343,6 +376,8 @@
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/machinery/door/airlock/external/glass
 	opacity = FALSE
@@ -360,6 +395,8 @@
 	normal_integrity = 1000
 	security_level = 6
 	explosion_block = 2
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/machinery/door/airlock/grunge
 	icon = 'icons/obj/doors/airlocks/tall/centcom.dmi'
@@ -379,6 +416,8 @@
 	explosion_block = 2
 	normal_integrity = 400 // reverse engieneerd: 400 * 1.5 (sec lvl 6) = 600 = original
 	security_level = 6
+	greyscale_config = null
+	greyscale_colors = null
 
 //////////////////////////////////
 /*
@@ -391,13 +430,17 @@
 	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_hatch
+	greyscale_config = null
+	greyscale_colors = null
 
-/obj/machinery/door/airlock/maintenance_hatch
+/obj/machinery/door/airlock/maintenance_hatch //Please dear fucking LORD make this a subtype of the above, they're the SAME GOD DAMN THING
 	name = "maintenance hatch"
 	icon = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mhatch
+	greyscale_config = null
+	greyscale_colors = null
 
 //////////////////////////////////
 /*
@@ -413,6 +456,8 @@
 	normal_integrity = 500
 	security_level = 1
 	damage_deflection = 30
+	greyscale_config = null
+	greyscale_colors = null
 
 //////////////////////////////////
 /*
@@ -424,6 +469,8 @@
 	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_shuttle
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/machinery/door/airlock/shuttle/glass
 	opacity = FALSE
@@ -442,6 +489,8 @@
 	aiControlDisabled = AI_WIRE_DISABLED
 	normal_integrity = 700
 	security_level = 1
+	greyscale_config = null
+	greyscale_colors = null
 
 //////////////////////////////////
 /*
@@ -457,6 +506,8 @@
 	aiControlDisabled = AI_WIRE_DISABLED
 	req_access = list(ACCESS_BLOODCULT)
 	damage_deflection = 10
+	greyscale_config = null
+	greyscale_colors = null
 	var/openingoverlaytype = /obj/effect/temp_visual/cult/door
 	var/friendly = FALSE
 	var/stealthy = FALSE
@@ -564,6 +615,26 @@
 	assemblytype = null
 	glass = TRUE
 	bound_width = 64 // 2x1
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/machinery/door/airlock/glass_large/narsie_act()
 	return
+
+//////////////////////////////////
+/*
+	Greyscale Config Airlocks
+*/
+
+/obj/machinery/door/airlock/greyscale
+	name = "fancy ungodlike airlock"
+	desc = "I can only imagine the amount of hate this will get if this isn't like... actually perfect."
+	icon = 'icons/obj/doors/airlocks/greyscale_template.dmi'
+	greyscale_config = /datum/greyscale_config/airlocks
+	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#ffffff#ffffff#ffffff"
+
+/obj/machinery/door/airlock/greyscale/red
+	greyscale_colors = "#d40808#d40808#d40808#d40808#ffffff#ffffff#808080"
+
+/obj/machinery/door/airlock/greyscale/green
+	greyscale_colors = "#00c41a#00c41a#00c41a#00c41a#ffffff#ffffff#808080"
