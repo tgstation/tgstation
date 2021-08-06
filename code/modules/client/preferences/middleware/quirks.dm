@@ -15,7 +15,12 @@
 /datum/preference_middleware/quirks/get_ui_static_data(mob/user)
 	var/list/data = list()
 
-	data["selected_quirks"] = preferences.all_quirks
+	var/list/selected_quirks = list()
+
+	for (var/quirk in preferences.all_quirks)
+		selected_quirks += sanitize_css_class_name(quirk)
+
+	data["selected_quirks"] = selected_quirks
 
 	return data
 
@@ -51,3 +56,46 @@
 	preferences.all_quirks = new_quirks
 
 	return TRUE
+
+/// Spritesheet generated for the quirks menu
+/datum/asset/spritesheet/quirks
+	name = "quirks"
+
+/datum/asset/spritesheet/quirks/register()
+	var/list/to_insert = list()
+
+	for (var/quirk_name in SSquirks.quirks)
+		var/quirk_type = SSquirks.quirks[quirk_name]
+		var/datum/quirk/quirk = new quirk_type
+
+		var/icon/quirk_icon = icon(quirk.icon)
+		quirk_icon.Scale(64, 64)
+		to_insert[sanitize_css_class_name(quirk_name)] = quirk_icon
+
+		qdel(quirk)
+
+	for (var/spritesheet_key in to_insert)
+		Insert(spritesheet_key, to_insert[spritesheet_key])
+
+	return ..()
+
+/// A generated list of all quirk names and descriptions.
+/datum/asset/json/quirk_info
+	name = "quirk_info"
+
+/datum/asset/json/quirk_info/generate()
+	var/list/quirk_info = list()
+
+	for (var/quirk_name in SSquirks.quirks)
+		var/datum/quirk/quirk = SSquirks.quirks[quirk_name]
+		quirk_info[sanitize_css_class_name(quirk_name)] = list(
+			"description" = initial(quirk.desc),
+			"name" = quirk_name,
+			"value" = initial(quirk.value),
+		)
+
+	return list(
+		"max_positive_quirks" = MAX_QUIRKS,
+		"quirk_info" = quirk_info,
+		"quirk_blacklist" = SSquirks.quirk_blacklist,
+	)

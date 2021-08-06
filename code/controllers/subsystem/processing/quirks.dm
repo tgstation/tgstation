@@ -143,7 +143,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 	for (var/quirk_name in quirks)
 		var/datum/quirk/quirk = SSquirks.quirks[quirk_name]
-		if (!istype(quirk))
+		if (isnull(quirk))
 			continue
 
 		if (initial(quirk.mood_quirk) && CONFIG_GET(flag/disable_human_mood))

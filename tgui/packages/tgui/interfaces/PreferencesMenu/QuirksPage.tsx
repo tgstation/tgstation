@@ -48,10 +48,16 @@ const QuirkList = (props: {
         const className = "PreferencesMenu__Quirks__QuirkList__quirk";
 
         const child = (
+          // MOTHBLOCKS TODO: This hijacks scrolling, focus scroll
+          // back to parent once clicked
           <Box
             className={className}
             key={quirkKey}
-            onClick={() => props.onClick(quirkKey, quirk)}
+            role="button"
+            tabIndex="1"
+            onClick={() => {
+              props.onClick(quirkKey, quirk);
+            }}
           >
             <Stack fill>
               <Stack.Item align="center" style={{
