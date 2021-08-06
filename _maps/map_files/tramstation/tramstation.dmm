@@ -16087,12 +16087,8 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/structure/table,
-/obj/machinery/microwave{
-	pixel_x = -3;
-	pixel_y = 6
-	},
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/oven,
 /turf/open/floor/iron,
 /area/service/kitchen)
 "cRs" = (

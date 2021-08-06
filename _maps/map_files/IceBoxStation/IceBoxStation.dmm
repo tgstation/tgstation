@@ -37119,8 +37119,8 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "myd" = (
-/obj/machinery/griddle,
 /obj/item/radio/intercom/directional/south,
+/obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "myw" = (
@@ -42669,8 +42669,8 @@
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
 "pAv" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
 /obj/machinery/light/small/directional/north,
+/obj/machinery/griddle,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "pAx" = (
