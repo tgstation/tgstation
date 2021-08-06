@@ -34,7 +34,7 @@
 		return
 
 	for(var/obj/item/I in loc)
-		if(notices >= 8)
+		if(notices >= MAX_NOTICES)
 			break
 		if(istype(I, /obj/item/paper))
 			I.forceMove(src)
@@ -53,7 +53,7 @@
 			if(!user.transferItemToLoc(O, src))
 				return
 			notices++
-			icon_state = "nboard0[notices]"
+			update_icon()
 			to_chat(user, span_notice("You pin the [O] to the noticeboard."))
 		else
 			to_chat(user, span_warning("The notice board is full!"))

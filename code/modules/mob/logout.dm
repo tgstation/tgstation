@@ -13,6 +13,7 @@
 	if(client)
 		client.images.Remove(frill_oval_mask)
 	frill_oval_mask = null
+
 	..()
 
 	if(loc)

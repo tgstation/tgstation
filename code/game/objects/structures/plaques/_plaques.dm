@@ -121,6 +121,7 @@
 		engraved = TRUE //The plaque now has a name, description, and can't be altered again.
 		user.visible_message(span_notice("[user] engraves [src]."), \
 			span_notice("You engrave [src]."))
+		icon_state = "goldenplaque"
 		return
 	if(istype(I, /obj/item/pen))
 		if(engraved)

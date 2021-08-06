@@ -79,9 +79,9 @@
 	var/area/area = get_area(src)
 
 	if(!detecting || !area.fire)
-		. += "fire_off"
-		. += mutable_appearance(icon, "fire_off")
-		. += emissive_appearance(icon, "fire_off")
+		. += "fire_allgood"
+		. += mutable_appearance(icon, "fire_allgood")
+		. += emissive_appearance(icon, "fire_allgood")
 	else if(obj_flags & EMAGGED)
 		. += "fire_emagged"
 		. +=  mutable_appearance(icon, "fire_emagged", layer, EMISSIVE_PLANE, dir)

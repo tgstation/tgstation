@@ -115,6 +115,7 @@
 	return
 
 /obj/item/storage/secure/update_icon()
+	..()
 	cut_overlays()
 	if(!SEND_SIGNAL(src, COMSIG_CONTAINS_STORAGE))
 		return
