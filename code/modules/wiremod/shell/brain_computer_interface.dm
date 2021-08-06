@@ -36,6 +36,7 @@
 /obj/item/circuit_component/bci_action
 	display_name = "BCI Action"
 	desc = "Represents an action the user can take when implanted with the brain-computer interface."
+	techweb_node_id = "bci_shells"
 	required_shells = list(/obj/item/organ/cyberimp/bci)
 
 	/// The icon of the button
