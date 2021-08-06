@@ -1,4 +1,0 @@
-author: "Wayland-Smithy"
-delete-after: True
-changes: 
-  - qol: "Improved the COMMS_KEY config documentation."
