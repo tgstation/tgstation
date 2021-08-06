@@ -60,6 +60,7 @@ export const createColorInput = (featureProps: FeatureValueProps<string>) => {
 export const createDropdownInput = (
   // Map of value to display texts
   choices: Record<string, InfernoNode>,
+  dropdownProps?: Record<string, unknown>,
 ): FeatureValue<string> => {
   return (featureProps: FeatureValueProps<string>) => {
     // MOTHBLOCKS TODO: Sort
@@ -74,6 +75,7 @@ export const createDropdownInput = (
           value: dataValue,
         };
       })}
+      {...dropdownProps}
     />);
   };
 };

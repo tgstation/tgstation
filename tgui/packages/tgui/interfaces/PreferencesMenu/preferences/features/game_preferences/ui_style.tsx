@@ -17,7 +17,7 @@ const UIStyleInput = (props: {
           "preferences64x32",
           `UI_style___${props.name}`,
         ])} style={{
-          "transform": "scale(0.9)",
+          "transform": "scale(0.8)",
         }} />
       </Flex.Item>
     </Flex>
@@ -38,5 +38,7 @@ export const UI_style: Feature<string, string> = {
     Plasmafire: <UIStyleInput name="Plasmafire" />,
     Retro: <UIStyleInput name="Retro" />,
     Slimecore: <UIStyleInput name="Slimecore" />,
+  }, {
+    clipSelectedText: false,
   }),
 };
