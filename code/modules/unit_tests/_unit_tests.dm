@@ -52,6 +52,7 @@
 #include "connect_loc.dm"
 #include "confusion.dm"
 #include "crayons.dm"
+#include "deletions.dm"
 #include "designs.dm"
 #include "dynamic_ruleset_sanity.dm"
 #include "egg_glands.dm"

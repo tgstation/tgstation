@@ -468,38 +468,23 @@
 	tastes = list("cake" = 4, "butter" = 2, "cream" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
 
-/obj/item/food/cake/pavlovacream
+/obj/item/food/cake/pavlova
 	name = "pavlova"
-	desc = "A sweet berry pavlova. Invented in New Zealand, has become popular with Vox for some reason."
+	desc = "A sweet berry pavlova. Invented in New Zealand, but named after a Russian ballerina... And scientifically proven to be the best at dinner parties!"
 	icon_state = "pavlova"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
 	foodtypes = DAIRY | FRUIT | SUGAR
 
-/obj/item/food/cake/pavlovacream/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/pavlovacream, 5, 30)
+/obj/item/food/cake/pavlova/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/pavlova, 5, 30)
 
-/obj/item/food/cakeslice/pavlovacream
-	name = "Pavlova slice"
-	desc = "A cracked slice of pavlova stacked with berries"
-	icon_state = "pavlova_slice"
-	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
-	foodtypes = DAIRY | FRUIT | SUGAR
-
-/obj/item/food/cake/pavlovakorta
-	name = "pavlova"
-	desc = "A sweet berry pavlova. Invented in New Zealand, has become popular with Vox for some reason."
-	icon_state = "pavlova"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5)
-	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
-	foodtypes = NUTS | FRUIT | SUGAR
-
-/obj/item/food/cake/pavlovakorta/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/pavlovakorta, 5, 30)
-
-/obj/item/food/cakeslice/pavlovakorta
+/obj/item/food/cakeslice/pavlova
 	name = "pavlova slice"
-	desc = "A cracked slice of pavlova stacked with berries"
+	desc = "A cracked slice of pavlova stacked with berries. You even got it sliced in such a way that more berries ended up on your slice, how delightfully devilish."
 	icon_state = "pavlova_slice"
 	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
+	foodtypes = DAIRY | FRUIT | SUGAR
+
+/obj/item/food/cakeslice/pavlova/nuts
 	foodtypes = NUTS | FRUIT | SUGAR

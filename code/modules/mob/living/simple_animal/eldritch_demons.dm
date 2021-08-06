@@ -332,7 +332,7 @@
 	if(stat == DEAD)
 		return ..()
 	var/turf/T = get_turf(src)
-	if(istype(T,/turf/open/floor/plating/rust))
+	if(HAS_TRAIT(T, TRAIT_RUSTY))
 		adjustBruteLoss(-1.5 * delta_time, FALSE)
 		adjustFireLoss(-1.5 * delta_time, FALSE)
 	return ..()

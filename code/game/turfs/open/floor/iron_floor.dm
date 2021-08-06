@@ -17,7 +17,8 @@
 /turf/open/floor/iron/rust_heretic_act()
 	if(prob(70))
 		new /obj/effect/temp_visual/glowing_rune(src)
-	ChangeTurf(/turf/open/floor/plating)
+	var/atom/changed_turf = ChangeTurf(/turf/open/floor/plating)
+	changed_turf.AddElement(/datum/element/rust)
 	return ..()
 
 

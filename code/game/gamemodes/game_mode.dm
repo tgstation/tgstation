@@ -97,29 +97,17 @@
 	return
 
 /proc/reopen_roundstart_suicide_roles()
-	var/list/valid_positions = list()
-	valid_positions += GLOB.engineering_positions
-	valid_positions += GLOB.medical_positions
-	valid_positions += GLOB.science_positions
-	valid_positions += GLOB.supply_positions
-	valid_positions += GLOB.service_positions
-	valid_positions += GLOB.security_positions
-	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_positions))
-		valid_positions += GLOB.command_positions //add any remaining command positions
-	else
-		valid_positions -= GLOB.command_positions //remove all command positions that were added from their respective department positions lists.
-
+	var/include_command = CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_positions)
 	var/list/reopened_jobs = list()
-	for(var/X in GLOB.suicided_mob_list)
-		if(!isliving(X))
+
+	for(var/mob/living/quitter in GLOB.suicided_mob_list)
+		var/datum/job/job = SSjob.GetJob(quitter.job)
+		if(!job || !(job.job_flags & JOB_REOPEN_ON_ROUNDSTART_LOSS))
 			continue
-		var/mob/living/L = X
-		if(L.job in valid_positions)
-			var/datum/job/J = SSjob.GetJob(L.job)
-			if(!J)
-				continue
-			J.current_positions = max(J.current_positions-1, 0)
-			reopened_jobs += L.job
+		if(!include_command && job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+			continue
+		job.current_positions = max(job.current_positions - 1, 0)
+		reopened_jobs += quitter.job
 
 	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_report))
 		if(reopened_jobs.len)
