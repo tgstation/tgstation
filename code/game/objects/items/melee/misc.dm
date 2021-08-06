@@ -185,6 +185,8 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	wound_bonus = 15
 
+	/// Whether this baton is active or not
+	var/extended = TRUE
 	/// Used interally, you don't want to modify
 	var/cooldown_check = 0
 	/// Default wait time until can stun again.
@@ -249,7 +251,7 @@
 	return
 
 /obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user, params)
-	if(!force) // MELBERT TODO: Improve this, contractor batons still work
+	if(!extended)
 		return ..()
 
 	add_fingerprint(user)
@@ -353,6 +355,8 @@
 	item_flags = NONE
 	force = 0
 	bare_wound_bonus = 5
+	extended = FALSE
+
 	/// The sound effecte played when our baton is extended.
 	var/on_sound = 'sound/weapons/batonextend.ogg'
 	/// The inhand iconstate used when our baton is extended.
@@ -395,6 +399,7 @@
  * Gives feedback to the user and makes it show up inhand.
  */
 /obj/item/melee/classic_baton/telescopic/proc/after_transform(mob/user, active)
+	extended = active
 	inhand_icon_state = active ? on_inhand_icon_state : "" // When inactive, there is no inhand icon_state.
 	balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
 	playsound(user ? user : loc, on_sound, 50, TRUE)
