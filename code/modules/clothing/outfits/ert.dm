@@ -619,16 +619,10 @@
 	suit_store = /obj/item/gun/ballistic/shotgun/lethal
 	mask = /obj/item/clothing/mask/cigarette/robustgold
 	head = /obj/item/clothing/head/helmet/marine/engineer
-	back = /obj/item/storage/backpack/ert/engineer
-	backpack_contents = list(
-		/obj/item/construction/rcd/loaded/upgraded = 1,
-		/obj/item/pipe_dispenser = 1,
-		/obj/item/storage/box/lethalshot = 1,
-		/obj/item/grenade/c4 = 3,
-)
+	back = /obj/item/deployable_turret_folded
 	uniform = /obj/item/clothing/under/syndicate/camo
-	belt = /obj/item/storage/belt/utility/full/powertools
-	glasses =  /obj/item/clothing/glasses/welding
+	belt = /obj/item/storage/belt/utility/full/powertools/rcd
+	glasses =  /obj/item/clothing/glasses/hud/diagnostic/sunglasses
 	r_pocket = /obj/item/rcd_ammo/large
 
 /datum/outfit/centcom/ert/marine/engineer/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)

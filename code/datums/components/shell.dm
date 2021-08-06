@@ -42,11 +42,14 @@
 	if(unremovable_circuit_components)
 		QDEL_LIST(unremovable_circuit_components)
 
-	unremovable_circuit_components = components
+	unremovable_circuit_components = list()
 
-	for(var/obj/item/circuit_component/circuit_component as anything in unremovable_circuit_components)
+	for(var/obj/item/circuit_component/circuit_component as anything in components)
+		if(ispath(circuit_component))
+			circuit_component = new circuit_component()
 		circuit_component.removable = FALSE
 		RegisterSignal(circuit_component, COMSIG_CIRCUIT_COMPONENT_SAVE, .proc/save_component)
+		unremovable_circuit_components += circuit_component
 
 /datum/component/shell/proc/save_component(datum/source, list/objects)
 	SIGNAL_HANDLER
@@ -88,7 +91,8 @@
 
 /datum/component/shell/proc/on_object_deconstruct()
 	SIGNAL_HANDLER
-	remove_circuit()
+	if(!attached_circuit.admin_only)
+		remove_circuit()
 
 /datum/component/shell/proc/on_attack_ghost(datum/source, mob/dead/observer/ghost)
 	SIGNAL_HANDLER
