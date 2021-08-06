@@ -12,6 +12,9 @@
 	bare_wound_bonus = 20
 	stealthy_audio = TRUE
 	w_class = WEIGHT_CLASS_SMALL
+
+	/// Whether our blade is active or not.
+	var/blade_active = FALSE
 	/// Force while active.
 	var/active_force = 30
 	/// Throwforce while active.
@@ -56,7 +59,7 @@
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /obj/item/melee/energy/suicide_act(mob/user)
-	if(force < active_force)
+	if(!blade_active)
 		attack_self(user)
 	user.visible_message(span_suicide("[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!"))
 	return (BRUTELOSS|FIRELOSS)
@@ -91,6 +94,7 @@
  * Also gives feedback to the user and activates or deactives the glow.
  */
 /obj/item/melee/energy/proc/after_transform(mob/user, active)
+	blade_active = active
 	if(active)
 		if(embedding)
 			updateEmbedding()
@@ -177,7 +181,7 @@
 	return ..()
 
 /obj/item/melee/energy/sword/cyborg/cyborg_unequip(mob/user)
-	if(force < active_force)
+	if(!blade_active)
 		return
 	attack_self(user)
 
@@ -273,6 +277,7 @@
 	sharpness = SHARP_EDGED
 	heat = 3500
 	w_class = WEIGHT_CLASS_BULKY
+	blade_active = TRUE
 	/// Our linked spark system that emits from our sword.
 	var/datum/effect_system/spark_spread/spark_system
 

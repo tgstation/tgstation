@@ -380,11 +380,12 @@
 	var/obj/item/organ/brain/our_brain = human_user.getorgan(/obj/item/organ/brain)
 
 	user.visible_message(span_suicide("[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind."))
-	if(force < active_force)
-		attack_self(user)
-	else
+	if(extended)
 		playsound(src, on_sound, 50, TRUE)
 		add_fingerprint(user)
+	else
+		attack_self(user)
+
 	sleep(3)
 	if (!QDELETED(human_user))
 		if(!QDELETED(our_brain))
