@@ -20778,7 +20778,9 @@
 	c_tag = "Service-Cold Room";
 	dir = 4
 	},
-/obj/machinery/processor,
+/obj/machinery/processor{
+	pixel_y = 6
+	},
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "cZG" = (
@@ -21176,8 +21178,10 @@
 /turf/open/floor/iron,
 /area/cargo/office)
 "dju" = (
-/obj/structure/reagent_dispensers/cooking_oil,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/obj/machinery/gibber,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "djH" = (
@@ -22858,6 +22862,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "emN" = (
@@ -24841,7 +24846,10 @@
 "fBG" = (
 /obj/machinery/light/directional/south,
 /obj/structure/kitchenspike,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "fBN" = (
@@ -28820,7 +28828,6 @@
 /area/engineering/supermatter/room)
 "hSB" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/duct,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
@@ -29353,7 +29360,9 @@
 "ikv" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/duct,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 4
+	},
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "ikw" = (
@@ -32641,7 +32650,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	dir = 1
 	},
-/obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "kaN" = (
@@ -34184,6 +34193,7 @@
 "kQK" = (
 /obj/machinery/holopad,
 /obj/effect/landmark/start/cook,
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "kQS" = (
@@ -38682,7 +38692,6 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
-/obj/machinery/duct,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /turf/open/floor/iron/freezer,
@@ -41267,10 +41276,10 @@
 	},
 /area/maintenance/port/fore)
 "oNL" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
-	dir = 1
-	},
-/obj/machinery/gibber,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/obj/structure/table,
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/item/food/chococoin,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "oNO" = (
@@ -57554,7 +57563,9 @@
 "xNX" = (
 /obj/structure/kitchenspike,
 /obj/item/radio/intercom/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "xOd" = (
