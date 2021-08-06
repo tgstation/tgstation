@@ -393,62 +393,6 @@
 	QDEL_NULL(mining_scanner)
 	return ..()
 
-// --------------------- Peacekeeper
-/obj/item/robot_model/peacekeeper
-	name = "Peacekeeper"
-	basic_modules = list(
-		/obj/item/assembly/flash/cyborg,
-		/obj/item/rsf/cookiesynth,
-		/obj/item/harmalarm,
-		/obj/item/reagent_containers/borghypo/peace,
-		/obj/item/holosign_creator/cyborg,
-		/obj/item/borg/cyborghug/peacekeeper,
-		/obj/item/extinguisher,
-		/obj/item/borg/projectile_dampen)
-	emag_modules = list(/obj/item/reagent_containers/borghypo/peace/hacked)
-	cyborg_base_icon = "peace"
-	model_select_icon = "standard"
-	model_traits = list(TRAIT_PUSHIMMUNE)
-	hat_offset = -2
-
-/obj/item/robot_model/peacekeeper/do_transform_animation()
-	..()
-	to_chat(loc, "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
-	You are not a security member and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
-
-// --------------------- Security
-/obj/item/robot_model/security
-	name = "Security"
-	basic_modules = list(
-		/obj/item/assembly/flash/cyborg,
-		/obj/item/restraints/handcuffs/cable/zipties,
-		/obj/item/melee/baton/loaded,
-		/obj/item/gun/energy/disabler/cyborg,
-		/obj/item/clothing/mask/gas/sechailer/cyborg,
-		/obj/item/extinguisher/mini)
-	radio_channels = list(RADIO_CHANNEL_SECURITY)
-	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
-	cyborg_base_icon = "sec"
-	model_select_icon = "security"
-	model_traits = list(TRAIT_PUSHIMMUNE)
-	hat_offset = 3
-
-/obj/item/robot_model/security/do_transform_animation()
-	..()
-	to_chat(loc, "<span class='userdanger'>While you have picked the security model, you still have to follow your laws, NOT Space Law. \
-	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
-
-/obj/item/robot_model/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
-	..()
-	var/obj/item/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/gun/energy/e_gun/advtaser/cyborg) in basic_modules
-	if(T)
-		if(T.cell.charge < T.cell.maxcharge)
-			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-			T.cell.give(S.e_cost * coeff)
-			T.update_appearance()
-		else
-			T.charge_timer = 0
-
 // --------------------- Service
 /obj/item/robot_model/service
 	name = "Service"
