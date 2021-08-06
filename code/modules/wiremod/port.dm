@@ -43,11 +43,11 @@
  */
 /datum/port/proc/set_value(value)
 	if(src.value != value)
-		if(isatom(input_value))
-			UnregisterSignal(input_value, COMSIG_PARENT_QDELETING)
+		if(isatom(value))
+			UnregisterSignal(value, COMSIG_PARENT_QDELETING)
 		src.value = datatype_handler.convert_value(src, value)
-		if(isatom(input_value))
-			RegisterSignal(input_value, COMSIG_PARENT_QDELETING, .proc/null_output)
+		if(isatom(value))
+			RegisterSignal(value, COMSIG_PARENT_QDELETING, .proc/null_value)
 	SEND_SIGNAL(src, COMSIG_PORT_SET_VALUE, value)
 
 /**

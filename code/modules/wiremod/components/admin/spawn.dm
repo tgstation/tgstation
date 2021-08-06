@@ -33,15 +33,15 @@
 	if(.)
 		return
 
-	var/typepath = input_path.input_value
+	var/typepath = input_path.value
 
 	if(!ispath(typepath, /atom))
 		return
 
-	var/list/params = parameters.input_value
+	var/list/params = parameters.value
 	if(!params)
 		params = list()
 
-	params.Insert(1, spawn_at.input_value)
+	params.Insert(1, spawn_at.value)
 
 	spawned_atom.set_output(new typepath(arglist(params)))

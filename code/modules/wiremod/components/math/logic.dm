@@ -19,7 +19,7 @@
 
 /obj/item/circuit_component/compare/logic/do_comparisons(list/ports)
 	. = FALSE
-	var/current_option = logic_options.input_value
+	var/current_option = logic_options.value
 
 	// Used by XOR
 	var/total_ports = 0

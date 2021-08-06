@@ -39,7 +39,7 @@
 		return
 
 	var/result
-	switch(textcase_options.input_value)
+	switch(textcase_options.value)
 		if(COMP_TEXT_LOWER)
 			result = lowertext(value)
 		if(COMP_TEXT_UPPER)

@@ -45,7 +45,7 @@
 
 /obj/item/circuit_component/select/input_received(datum/port/input/port)
 	. = ..()
-	var/current_option = comparison_options.input_value
+	var/current_option = comparison_options.value
 
 	switch(current_option)
 		if(COMP_COMPARISON_EQUAL, COMP_COMPARISON_NOT_EQUAL)

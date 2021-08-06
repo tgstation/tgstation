@@ -62,7 +62,7 @@
 	if(signal.data["code"] != round(code.value || 0))
 		return
 
-	if(public_options.input_value == COMP_RADIO_PRIVATE && parent?.owner_id != signal.data["key"])
+	if(public_options.value == COMP_RADIO_PRIVATE && parent?.owner_id != signal.data["key"])
 		return
 
 	trigger_output.set_output(COMPONENT_SIGNAL)

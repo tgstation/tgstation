@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 			var/list/connection_data = list()
 			if(!isnull(input.value) && (input.datatype in GLOB.circuit_dupe_whitelisted_types))
 				connection_data["stored_data"] = input.value
-				input_ports_stored_data[port.name] = connection_data
+				input_ports_stored_data[input.name] = connection_data
 			connection_data["connected_ports"] = list()
 			for(var/datum/port/output/output as anything in input.connected_ports)
 				connection_data["connected_ports"] += list(list(
