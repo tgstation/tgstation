@@ -20813,6 +20813,7 @@
 	c_tag = "Service-Cold Room";
 	dir = 4
 	},
+/obj/machinery/processor,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen)
 "cZG" = (
@@ -48942,6 +48943,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/medical/medbay/aft)
+"sVL" = (
+/obj/machinery/light/directional/east,
+/obj/structure/sign/poster/official/random{
+	pixel_x = 32
+	},
+/turf/open/floor/iron,
+/area/hallway/primary/central)
 "sWz" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -91661,8 +91669,8 @@ rck
 iRg
 bkR
 aLX
-dyC
-xnC
+sVL
+aJq
 aJq
 oIT
 xnC
@@ -91914,12 +91922,12 @@ eIL
 eIL
 rqA
 eIL
-pZC
+iBJ
 bDS
 mFN
 pZC
 pZC
-pZC
+iBJ
 pZC
 pZC
 pZC
