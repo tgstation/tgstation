@@ -32,7 +32,7 @@
 	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK, COMSIG_PARENT_EXAMINE))
 
 ///signal called on parent being examined
-/datum/component/chemical_transfer/proc/on_examine(datum/target, mob/user, list/examine_list)
+/datum/element/chemical_transfer/proc/on_examine(datum/target, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	var/probability_description
 	switch(transfer_prob)
@@ -47,13 +47,13 @@
 	examine_list += span_notice("Attacking with [target] will [probability_description] transfer reagents inside of you to your victim.")
 
 ///signal called on parent being used to attack a victim
-/datum/component/chemical_transfer/proc/on_attack(datum/target, mob/living/transfer_victim, mob/living/transfer_attacker)
+/datum/element/chemical_transfer/proc/on_attack(datum/target, mob/living/transfer_victim, mob/living/transfer_attacker)
 	SIGNAL_HANDLER
 
 	if(!istype(transfer_attacker) || !prob(transfer_prob))
 		return
 	var/built_attacker_message = replacetext(attacker_message, "%VICTIM", transfer_victim)
 	var/built_victim_message = replacetext(attacker_message, "%ATTACKER", transfer_attacker)
-	transfer_attacker.reagents?.trans_to(transfer_victim, user.reagents.total_volume, 1, 1, 0, transfered_by = user)
+	transfer_attacker.reagents?.trans_to(transfer_victim, transfer_attacker.reagents.total_volume, 1, 1, 0, transfered_by = transfer_attacker)
 	to_chat(transfer_attacker, built_attacker_message)
 	to_chat(transfer_victim, built_victim_message)

@@ -540,10 +540,10 @@
 	. = ..()
 	AddElement(/datum/element/kneejerk)
 	AddElement(
-		/datum/element/chemical_transfer,
-		span_notice("Your pride reflects on %VICTIM."),
-		span_userdanger("You feel insecure, taking on %ATTACKER's burden."),
-		CHEMICAL_TRANSFER_CHANCE
+		/datum/element/chemical_transfer,\
+		span_notice("Your pride reflects on %VICTIM."),\
+		span_userdanger("You feel insecure, taking on %ATTACKER's burden."),\
+		CHEMICAL_TRANSFER_CHANCE\
 	)
 
 #undef CHEMICAL_TRANSFER_CHANCE

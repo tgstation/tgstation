@@ -32,7 +32,7 @@
 	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_PARENT_EXAMINE))
 
 ///signal called on parent being examined
-/datum/component/chemical_transfer/proc/on_examine(datum/source, mob/user, list/examine_list)
+/datum/component/faction_granter/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(used)
 		examine_list += span_notice("[parent]'s faction granting power has been used up.")
