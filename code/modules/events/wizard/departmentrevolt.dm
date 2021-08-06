@@ -56,25 +56,37 @@
 
 	switch(department)
 		if("Uprising of Assistants") //God help you
-			jobs_to_revolt = list("Assistant")
+			jobs_to_revolt += "Assistant"
 			nation_name = pick("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
 		if("Medical")
-			jobs_to_revolt = GLOB.medical_positions
+			var/datum/job_department/job_department = SSjob.get_department_type(/datum/job_department/medical)
+			for(var/datum/job/job as anything in job_department.department_jobs)
+				jobs_to_revolt += job.title
 			nation_name = pick("Mede", "Healtha", "Recova", "Chemi", "Viro", "Psych")
 		if("Engineering")
-			jobs_to_revolt = GLOB.engineering_positions
+			var/datum/job_department/job_department = SSjob.get_department_type(/datum/job_department/engineering)
+			for(var/datum/job/job as anything in job_department.department_jobs)
+				jobs_to_revolt += job.title
 			nation_name = pick("Atomo", "Engino", "Power", "Teleco")
 		if("Science")
-			jobs_to_revolt = GLOB.science_positions
+			var/datum/job_department/job_department = SSjob.get_department_type(/datum/job_department/science)
+			for(var/datum/job/job as anything in job_department.department_jobs)
+				jobs_to_revolt += job.title
 			nation_name = pick("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
 		if("Supply")
-			jobs_to_revolt = GLOB.supply_positions
+			var/datum/job_department/job_department = SSjob.get_department_type(/datum/job_department/cargo)
+			for(var/datum/job/job as anything in job_department.department_jobs)
+				jobs_to_revolt += job.title
 			nation_name = pick("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
 		if("Service") //the few, the proud, the technically aligned
-			jobs_to_revolt = GLOB.service_positions.Copy() - list("Assistant", "Prisoner")
+			var/datum/job_department/job_department = SSjob.get_department_type(/datum/job_department/service)
+			for(var/datum/job/job as anything in job_department.department_jobs)
+				jobs_to_revolt += job.title
 			nation_name = pick("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
 		if("Security")
-			jobs_to_revolt = GLOB.security_positions
+			var/datum/job_department/job_department = SSjob.get_department_type(/datum/job_department/security)
+			for(var/datum/job/job as anything in job_department.department_jobs)
+				jobs_to_revolt += job.title
 			nation_name = pick("Securi", "Beepski", "Shitcuri", "Red", "Stunba", "Flashbango", "Flasha", "Stanfordi")
 
 	nation_name += pick("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")
@@ -89,19 +101,16 @@
 		department_target = pick(independent_departments)
 	nation.generate_nation_objectives(dangerous, department_target)
 
-	for(var/i in GLOB.human_list)
-		var/mob/living/carbon/human/possible_separatist = i
+	for(var/mob/living/carbon/human/possible_separatist as anything in GLOB.human_list)
 		if(!possible_separatist.mind)
 			continue
 		var/datum/mind/separatist_mind = possible_separatist.mind
-		if(!separatist_mind.assigned_role)
+		if(!(separatist_mind.assigned_role.title in jobs_to_revolt))
 			continue
-		for(var/job in jobs_to_revolt)
-			if(separatist_mind.assigned_role == job)
-				citizens += possible_separatist
-				separatist_mind.add_antag_datum(/datum/antagonist/separatist, nation, department)
-				nation.add_member(separatist_mind)
-				possible_separatist.log_message("Was made into a separatist, long live [nation_name]!", LOG_ATTACK, color="red")
+		citizens += possible_separatist
+		separatist_mind.add_antag_datum(/datum/antagonist/separatist, nation, department)
+		nation.add_member(separatist_mind)
+		possible_separatist.log_message("Was made into a separatist, long live [nation_name]!", LOG_ATTACK, color="red")
 
 	if(citizens.len)
 		var/jobs_english_list = english_list(jobs_to_revolt)

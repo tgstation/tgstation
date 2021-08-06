@@ -1,4 +1,3 @@
-//DON'T FORGET TO CHANGE THE REFILL SIZE IF YOU CHANGE THE MACHINE'S CONTENTS!
 /obj/machinery/vending/clothing
 	name = "ClothesMate" //renamed to make the slogan rhyme
 	desc = "A vending machine for clothing."
@@ -21,6 +20,7 @@
 		            /obj/item/clothing/head/beanie/stripedblue = 3,
 		            /obj/item/clothing/head/beanie/stripedgreen = 3,
 					/obj/item/clothing/head/beanie/rasta = 3,
+					/obj/item/clothing/head/beret/black = 3,
 					/obj/item/clothing/head/kippah = 3,
 					/obj/item/clothing/head/taqiyahred = 3,
 		            /obj/item/clothing/gloves/fingerless = 2,

@@ -580,7 +580,7 @@
 		mafia_panel.Grant(H)
 		var/client/player_client = GLOB.directory[role.player_key]
 		if(player_client)
-			player_client.prefs.copy_to(H)
+			player_client.prefs.safe_transfer_prefs_to(H, is_antag = TRUE)
 		role.body = H
 		player_role_lookup[H] = role
 		H.key = role.player_key

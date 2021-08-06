@@ -65,6 +65,9 @@
 /obj/effect/abstract/marker/at
 	name = "active turf marker"
 
+/obj/effect/abstract/marker/intercom
+	name = "intercom range marker"
+	color = COLOR_YELLOW
 
 /obj/effect/dummy/lighting_obj
 	name = "lighting fx obj"
@@ -95,5 +98,3 @@
 	if(!ismob(loc))
 		return INITIALIZE_HINT_QDEL
 
-/obj/effect/abstract/directional_lighting
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

@@ -20,7 +20,7 @@
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, .proc/clean_face)
 	AddComponent(/datum/component/personal_crafting)
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 	AddElement(/datum/element/strippable, GLOB.strippable_human_items, /mob/living/carbon/human/.proc/should_strip)
@@ -1007,8 +1007,8 @@
 /mob/living/carbon/human/get_exp_list(minutes)
 	. = ..()
 
-	if(mind.assigned_role in SSjob.name_occupations)
-		.[mind.assigned_role] = minutes
+	if(mind.assigned_role.title in SSjob.name_occupations)
+		.[mind.assigned_role.title] = minutes
 
 /mob/living/carbon/human/monkeybrain
 	ai_controller = /datum/ai_controller/monkey

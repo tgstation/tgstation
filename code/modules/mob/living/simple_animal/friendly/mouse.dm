@@ -1,6 +1,6 @@
 /mob/living/simple_animal/mouse
 	name = "mouse"
-	desc = "It's a nasty, ugly, evil, disease-ridden rodent."
+	desc = "They're a nasty, ugly, evil, disease-ridden rodent."
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"
@@ -28,6 +28,7 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
 	can_be_held = TRUE
+	held_w_class = WEIGHT_CLASS_TINY
 	held_state = "mouse_gray"
 	faction = list("rat")
 
@@ -60,7 +61,7 @@
 			M.name = name
 			if(toast)
 				M.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
-				M.desc = "It's toast."
+				M.desc = "They're toast."
 		qdel(src)
 	else
 		SSmobs.cheeserats -= src // remove play controlled mouse also
@@ -143,7 +144,7 @@
  */
 /mob/living/simple_animal/mouse/proc/evolve()
 	var/mob/living/simple_animal/hostile/regalrat/regalrat = new /mob/living/simple_animal/hostile/regalrat/controlled(loc)
-	visible_message(span_warning("[src] devours the cheese! He morphs into something... greater!"))
+	visible_message(span_warning("[src] devours the cheese! They morph into something... greater!"))
 	INVOKE_ASYNC(regalrat, /atom/movable/proc/say, "RISE, MY SUBJECTS! SCREEEEEEE!")
 	if(mind)
 		mind.transfer_to(regalrat)
@@ -191,7 +192,7 @@
 
 /obj/item/food/deadmouse
 	name = "dead mouse"
-	desc = "It looks like somebody dropped the bass on it. A lizard's favorite meal."
+	desc = "They look like somebody dropped the bass on it. A lizard's favorite meal."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "mouse_gray_dead"
 	bite_consumption = 3
@@ -207,7 +208,7 @@
 /obj/item/food/deadmouse/examine(mob/user)
 	. = ..()
 	if (reagents?.has_reagent(/datum/reagent/yuck) || reagents?.has_reagent(/datum/reagent/fuel))
-		. += span_warning("It's dripping with fuel and smells terrible.")
+		. += span_warning("They're dripping with fuel and smells terrible.")
 
 /obj/item/food/deadmouse/attackby(obj/item/I, mob/living/user, params)
 	if(I.get_sharpness() && user.combat_mode)
@@ -216,7 +217,7 @@
 			to_chat(user, span_notice("You butcher [src]."))
 			qdel(src)
 		else
-			to_chat(user, span_warning("You need to put [src] on a surface to butcher it!"))
+			to_chat(user, span_warning("You need to put [src] on a surface to butcher them!"))
 	else
 		return ..()
 

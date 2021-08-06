@@ -60,11 +60,12 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 		var/obj/item/stack/rods/V = W
 		if (V.get_amount() >= 1 && get_amount() >= 1)
 			var/obj/item/stack/sheet/rglass/RG = new (get_turf(user))
-			RG.add_fingerprint(user)
+			if(!QDELETED(RG))
+				RG.add_fingerprint(user)
 			var/replace = user.get_inactive_held_item()==src
 			V.use(1)
 			use(1)
-			if(QDELETED(src) && replace)
+			if(QDELETED(src) && replace && !QDELETED(RG))
 				user.put_in_hands(RG)
 		else
 			to_chat(user, span_warning("You need one rod and one sheet of glass to make reinforced glass!"))

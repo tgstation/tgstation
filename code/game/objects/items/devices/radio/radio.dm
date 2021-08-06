@@ -9,7 +9,7 @@
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	dog_fashion = /datum/dog_fashion/back
 
-	flags_1 = CONDUCT_1 | HEAR_1
+	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	throw_speed = 3
 	throw_range = 7
@@ -101,6 +101,8 @@
 
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
+
+	become_hearing_sensitive(ROUNDSTART_TRAIT)
 
 /obj/item/radio/ComponentInitialize()
 	. = ..()

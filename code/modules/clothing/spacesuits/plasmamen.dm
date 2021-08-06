@@ -132,9 +132,7 @@
 	else
 		set_light_on(FALSE)
 
-	for(var/X in actions)
-		var/datum/action/A=X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /obj/item/clothing/head/helmet/space/plasmaman/security
 	name = "security plasma envirosuit helmet"

@@ -416,6 +416,7 @@
 	max_charges = 1
 	item_flags = NEEDS_PERMIT | NOBLUDGEON
 	sharpness = SHARP_POINTY
+	pinless = TRUE
 	force = 18
 
 /obj/item/gun/magic/hook/shoot_with_empty_chamber(mob/living/user)
@@ -630,7 +631,7 @@
 	if(iscarbon(exposed_mob) && exposed_mob.stat != DEAD)
 		var/mob/living/carbon/exposed_carbon = exposed_mob
 		var/holycheck = ishumanbasic(exposed_carbon)
-		if(reac_volume < 5 || !(holycheck || islizard(exposed_carbon) || ismoth(exposed_carbon))) // implying xenohumans are holy //as with all things,
+		if(!HAS_TRAIT(exposed_carbon, TRAIT_CAN_USE_FLIGHT_POTION) || reac_volume < 5)
 			if((methods & INGEST) && show_message)
 				to_chat(exposed_carbon, span_notice("<i>You feel nothing but a terrible aftertaste.</i>"))
 			return

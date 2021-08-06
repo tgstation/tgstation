@@ -17,6 +17,7 @@
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
 #define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
 #define LAZYFIND(L, V) (L ? L.Find(V) : 0)
+///returns L[I] if L exists and I is a valid index of L, runtimes if L is not a list
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 #define LAZYLEN(L) length(L)

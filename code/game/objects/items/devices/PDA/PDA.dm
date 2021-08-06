@@ -261,7 +261,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += "[station_time_timestamp()]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
 				dat += "[time2text(world.realtime, "MMM DD")] [GLOB.year_integer+540]<br>"
 				dat += "It has been [ROUND_TIME] since the emergency shuttle was last called."
-				
+
 
 				dat += "<br><br>"
 
@@ -920,9 +920,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	else if(light_range)
 		set_light_on(TRUE)
 	update_appearance()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons(force = TRUE)
 
 /// Special light eater handling
 /obj/item/pda/proc/on_light_eater(obj/item/pda/source, datum/light_eater)

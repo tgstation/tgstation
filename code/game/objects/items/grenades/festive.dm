@@ -99,8 +99,7 @@
 		to_chat(user, span_danger("You've already removed all of the fuse!"))
 
 /obj/item/grenade/firecracker/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 80)
-	var/turf/T = get_turf(src)
-	log_grenade(user, T)
+	log_grenade(user)
 	if(user)
 		add_fingerprint(user)
 		if(msg)

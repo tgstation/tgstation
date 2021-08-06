@@ -88,7 +88,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 /datum/anonymous_theme/proc/anonymous_all_players()
 	var/datum/anonymous_theme/theme = GLOB.current_anonymous_theme
 	for(var/mob/living/player in GLOB.player_list)
-		if(!player.mind || (!ishuman(player) && !issilicon(player)) || !SSjob.GetJob(player.mind.assigned_role))
+		if(!player.mind || (!ishuman(player) && !issilicon(player)) || player.mind.assigned_role.faction != FACTION_STATION)
 			continue
 		if(issilicon(player))
 			player.fully_replace_character_name(player.real_name, theme.anonymous_ai_name(isAI(player)))
@@ -109,13 +109,14 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 /datum/anonymous_theme/proc/restore_all_players()
 	priority_announce("Names and Identities have been restored.", "Identity Restoration", SSstation.announcer.get_rand_alert_sound())
 	for(var/mob/living/player in GLOB.player_list)
-		if(!player.mind || (!ishuman(player) && !issilicon(player)) || !SSjob.GetJob(player.mind.assigned_role))
+		if(!player.mind || (!ishuman(player) && !issilicon(player)) || player.mind.assigned_role.faction != FACTION_STATION)
 			continue
 		var/old_name = player.real_name //before restoration
 		if(issilicon(player))
 			player.apply_pref_name("[isAI(player) ? "ai" : "cyborg"]", player.client)
 		else
-			player.client.prefs.copy_to(player, antagonist = (LAZYLEN(player.mind.antag_datums) > 0), is_latejoiner = FALSE)
+			player.client.prefs.sanitize_chosen_prefs() // Just in case they changed unlawfully.
+			player.client.prefs.apply_prefs_to(player) // This is not sound logic, as the prefs may have changed since then.
 			player.fully_replace_character_name(old_name, player.real_name) //this changes IDs and PDAs and whatnot
 
 /**
@@ -153,7 +154,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 	priority_announce("As punishment for this station's poor productivity when compared to neighbor stations, names and identities will be restricted until further notice.", "Finance Report", SSstation.announcer.get_rand_alert_sound())
 
 /datum/anonymous_theme/employees/anonymous_name(mob/target)
-	var/is_head_of_staff = (target.mind.assigned_role in GLOB.command_positions)
+	var/is_head_of_staff = target.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND
 	var/name = "[is_head_of_staff ? "Manager" : "Employee"] "
 	for(var/i in 1 to 6)
 		if(prob(30) || i == 1)

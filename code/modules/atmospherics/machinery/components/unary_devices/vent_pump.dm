@@ -485,7 +485,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos
 	frequency = FREQ_ATMOS_STORAGE
 	on = TRUE
-	icon_state = "vent_map_siphon_on-2"
+	icon_state = "vent_map_siphon_on-3"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos/air_output
 	name = "air mix tank output inlet"
