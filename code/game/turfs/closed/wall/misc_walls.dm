@@ -77,7 +77,6 @@
 	frill_icon = null
 
 /turf/closed/wall/rust
-<<<<<<< HEAD
 	name = "rusted wall"
 	desc = "A rusted metal wall."
 	icon = 'icons/turf/walls/rusty_wall.dmi'
@@ -86,11 +85,9 @@
 	base_icon_state = "rusty_wall"
 	smoothing_flags = SMOOTH_BITMASK
 	hardness = 45
-=======
 	//SDMM supports colors, this is simply for easier mapping
 	//and should be removed on initialize
 	color = COLOR_ORANGE_BROWN
->>>>>>> upstream/master
 
 /turf/closed/wall/rust/Initialize(mapload)
 	. = ..()
@@ -98,7 +95,6 @@
 	AddElement(/datum/element/rust)
 
 /turf/closed/wall/r_wall/rust
-<<<<<<< HEAD
 	name = "rusted reinforced wall"
 	desc = "A huge chunk of rusted reinforced metal."
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
@@ -107,11 +103,9 @@
 	base_icon_state = "rusty_reinforced_wall"
 	smoothing_flags = SMOOTH_BITMASK
 	hardness = 15
-=======
 	//SDMM supports colors, this is simply for easier mapping
 	//and should be removed on initialize
 	color = COLOR_ORANGE_BROWN
->>>>>>> upstream/master
 
 /turf/closed/wall/r_wall/rust/Initialize(mapload)
 	. = ..()

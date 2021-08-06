@@ -141,15 +141,11 @@
 #define COMSIG_ATOM_UPDATE_OVERLAYS "atom_update_overlays"
 ///from base of [/atom/update_icon]: (signalOut, did_anything)
 #define COMSIG_ATOM_UPDATED_ICON "atom_updated_icon"
-<<<<<<< HEAD
 ///from base of atom/set_smoothed_icon_state(): (new_junction)
 #define COMSIG_ATOM_SET_SMOOTHED_ICON_STATE "set_smoothed_icon_state"
-///from base of atom/Entered(): (atom/movable/entering, /atom)
-=======
 ///from base of [/atom/proc/smooth_icon]: ()
 #define COMSIG_ATOM_SMOOTHED_ICON "atom_smoothed_icon"
 ///from base of atom/Entered(): (atom/movable/arrived, atom/old_loc, list/atom/old_locs)
->>>>>>> upstream/master
 #define COMSIG_ATOM_ENTERED "atom_entered"
 /// Sent from the atom that just Entered src. From base of atom/Entered(): (/atom/destination, atom/old_loc, list/atom/old_locs)
 #define COMSIG_ATOM_ENTERING "atom_entering"

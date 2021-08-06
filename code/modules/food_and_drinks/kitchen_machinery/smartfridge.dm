@@ -12,14 +12,10 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/smartfridge
-<<<<<<< HEAD
 	integrity_failure = 0.25
-	var/base_build_path = /obj/machinery/smartfridge ///What path boards used to construct it should build into when dropped. Needed so we don't accidentally have them build variants with items preloaded in them.
-=======
 	/// What path boards used to construct it should build into when dropped. Needed so we don't accidentally have them build variants with items preloaded in them.
 	var/base_build_path = /obj/machinery/smartfridge
 	/// Maximum number of items that can be loaded into the machine
->>>>>>> upstream/master
 	var/max_n_of_items = 1500
 	/// If the AI is allowed to retrive items within the machine
 	var/allow_ai_retrieve = FALSE
@@ -75,8 +71,6 @@
 	if(!machine_stat)
 		. += emissive_appearance(icon, "smartfridge-light-mask", alpha = src.alpha)
 
-<<<<<<< HEAD
-
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()
 	if(visible_contents)
@@ -90,8 +84,6 @@
 		if(machine_stat & BROKEN)
 			. += "[initial(icon_state)]-cracks"
 
-=======
->>>>>>> upstream/master
 /*******************
 *   Item Adding
 ********************/

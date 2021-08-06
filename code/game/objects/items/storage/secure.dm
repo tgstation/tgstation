@@ -41,13 +41,8 @@
 	if(can_hack_open && SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
 		if (W.tool_behaviour == TOOL_SCREWDRIVER)
 			if (W.use_tool(src, user, 20))
-<<<<<<< HEAD
-				panel_open =! panel_open
-				to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the service panel.</span>")
-=======
-				open = !open
-				to_chat(user, span_notice("You [open ? "open" : "close"] the service panel."))
->>>>>>> upstream/master
+				panel_open = !panel_open
+				to_chat(user, span_notice("You [panel_open ? "open" : "close"] the service panel."))
 			return
 		if (W.tool_behaviour == TOOL_WIRECUTTER)
 			to_chat(user, span_danger("[src] is protected from this sort of tampering, yet it appears the internal memory wires can still be <b>pulsed</b>."))
@@ -56,13 +51,8 @@
 			if(l_hacking)
 				to_chat(user, span_danger("This safe is already being hacked."))
 				return
-<<<<<<< HEAD
 			if(panel_open == TRUE)
-				to_chat(user, "<span class='danger'>Now attempting to reset internal memory, please hold.</span>")
-=======
-			if(open == TRUE)
 				to_chat(user, span_danger("Now attempting to reset internal memory, please hold."))
->>>>>>> upstream/master
 				l_hacking = TRUE
 				if (W.use_tool(src, user, 400))
 					to_chat(user, span_danger("Internal memory reset - lock has been disengaged."))

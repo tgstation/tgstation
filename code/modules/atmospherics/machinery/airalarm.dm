@@ -238,8 +238,10 @@
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
 	set_frequency(frequency)
-<<<<<<< HEAD
 	AddElement(/datum/element/wall_mount)
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/air_alarm,
+	))
 
 
 /obj/machinery/airalarm/setDir(newdir)
@@ -262,11 +264,6 @@
 			pixel_x = 2
 			pixel_y = 0
 
-=======
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/air_alarm,
-	))
->>>>>>> upstream/master
 
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()

@@ -64,17 +64,6 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_CARPET_EXECUTIVE S_TURF(20) ///turf/open/floor/carpet/executive
 #define SMOOTH_GROUP_CARPET_STELLAR S_TURF(21) ///turf/open/floor/carpet/stellar
 #define SMOOTH_GROUP_CARPET_DONK S_TURF(22) ///turf/open/floor/carpet/donk
-<<<<<<< HEAD
-
-#define SMOOTH_GROUP_CLOSED_TURFS S_TURF(24) ///turf/closed
-#define SMOOTH_GROUP_MATERIAL_WALLS S_TURF(25) ///turf/closed/wall/material
-#define SMOOTH_GROUP_SYNDICATE_WALLS S_TURF(26) ///turf/closed/wall/r_wall/syndicate, /turf/closed/indestructible/syndicate
-#define SMOOTH_GROUP_HOTEL_WALLS S_TURF(27) ///turf/closed/indestructible/hotelwall
-#define SMOOTH_GROUP_MINERAL_WALLS S_TURF(28) ///turf/closed/mineral, /turf/closed/indestructible
-#define SMOOTH_GROUP_BOSS_WALLS S_TURF(29) ///turf/closed/indestructible/riveted/boss
-#define SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS S_TURF(30) ///turf/closed/wall/mineral/titanium/survival
-#define SMOOTH_GROUP_WINDOWS S_TURF(31)					///turf/closed/wall/window_frame
-=======
 #define SMOOTH_GROUP_CARPET_NEON S_TURF(23) //![turf/open/floor/carpet/neon]
 #define SMOOTH_GROUP_CARPET_SIMPLE_NEON S_TURF(24) //![turf/open/floor/carpet/neon/simple]
 #define SMOOTH_GROUP_CARPET_SIMPLE_NEON_WHITE S_TURF(25) //![turf/open/floor/carpet/neon/simple/white]
@@ -112,9 +101,9 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_MINERAL_WALLS S_TURF(56) ///turf/closed/mineral, /turf/closed/indestructible
 #define SMOOTH_GROUP_BOSS_WALLS S_TURF(57) ///turf/closed/indestructible/riveted/boss
 #define SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS S_TURF(58) ///turf/closed/wall/mineral/titanium/survival
->>>>>>> upstream/master
+#define SMOOTH_GROUP_WINDOWS S_TURF(59)
 
-#define MAX_S_TURF SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS //Always match this value with the one above it.
+#define MAX_S_TURF SMOOTH_GROUP_WINDOWS //Always match this value with the one above it.
 
 
 #define S_OBJ(num) (MAX_S_TURF + 1 + num)
@@ -173,12 +162,8 @@ DEFINE_BITFIELD(smoothing_flags, list(
 
 #define SMOOTH_GROUP_INDUSTRIAL_LIFT S_OBJ(70) ///obj/structure/industrial_lift
 
-<<<<<<< HEAD
-#define MAX_S_OBJ SMOOTH_GROUP_INDUSTRIAL_LIFT //Always match this value with the one above it.
-
 #define SMOOTH_GROUP_GRILLE S_OBJ(71)					//obj/structure/grille
-=======
+
 #define SMOOTH_GROUP_GAS_TANK S_OBJ(71)
 
 #define MAX_S_OBJ SMOOTH_GROUP_GAS_TANK //Always match this value with the one above it.
->>>>>>> upstream/master

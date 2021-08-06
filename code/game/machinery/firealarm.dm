@@ -51,11 +51,7 @@
 	update_appearance()
 	myarea = get_area(src)
 	LAZYADD(myarea.firealarms, src)
-<<<<<<< HEAD
 	AddElement(/datum/element/wall_mount)
-=======
-
->>>>>>> upstream/master
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/machinery/firealarm/Destroy()
@@ -80,21 +76,12 @@
 	if(!is_operational)
 		return
 
-<<<<<<< HEAD
-	if(buildstage != 2)
-		return
-
-	if(!triggered)
-		. += "fire_allgood"
-		. +=  mutable_appearance(icon, "fire_allgood", layer, EMISSIVE_PLANE, dir)
-=======
 	var/area/area = get_area(src)
 
 	if(!detecting || !area.fire)
 		. += "fire_off"
 		. += mutable_appearance(icon, "fire_off")
 		. += emissive_appearance(icon, "fire_off")
->>>>>>> upstream/master
 	else if(obj_flags & EMAGGED)
 		. += "fire_emagged"
 		. +=  mutable_appearance(icon, "fire_emagged", layer, EMISSIVE_PLANE, dir)

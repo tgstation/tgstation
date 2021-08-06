@@ -40,7 +40,6 @@
 	if(QDELETED(src) || broken)
 		return
 
-<<<<<<< HEAD
 /obj/structure/grille/update_icon()
 	if(QDELETED(src) || broken)
 		return
@@ -52,10 +51,6 @@
 		base_icon_state = "grille"
 
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
-=======
-	. = ..()
-	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
->>>>>>> upstream/master
 		QUEUE_SMOOTH(src)
 
 /obj/structure/grille/examine(mob/user)
@@ -352,13 +347,10 @@
 	broken = TRUE
 	rods_amount = 1
 	rods_broken = FALSE
-<<<<<<< HEAD
 	grille_type = /obj/structure/grille
 	broken_type = null
 	smoothing_flags = null
-=======
 
 /obj/structure/grille/broken/Initialize(mapload)
 	. = ..()
 	take_damage(max_integrity * 0.6)
->>>>>>> upstream/master

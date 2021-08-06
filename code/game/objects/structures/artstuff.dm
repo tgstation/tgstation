@@ -300,14 +300,8 @@
 		current_canvas = new_canvas
 		if(!current_canvas.finalized)
 			current_canvas.finalize(user)
-<<<<<<< HEAD
-		pixel_y = current_canvas.wall_y_offset
-		to_chat(user,"<span class='notice'>You frame [current_canvas].</span>")
-	update_icon()
-=======
 		to_chat(user,span_notice("You frame [current_canvas]."))
 	update_appearance()
->>>>>>> upstream/master
 
 /obj/structure/sign/painting/proc/try_rename(mob/user)
 	if(current_canvas.painting_name == initial(current_canvas.painting_name))

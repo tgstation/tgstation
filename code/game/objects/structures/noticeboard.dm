@@ -34,11 +34,7 @@
 		return
 
 	for(var/obj/item/I in loc)
-<<<<<<< HEAD
 		if(notices >= 8)
-=======
-		if(notices >= MAX_NOTICES)
->>>>>>> upstream/master
 			break
 		if(istype(I, /obj/item/paper))
 			I.forceMove(src)
@@ -53,21 +49,12 @@
 		if(!allowed(user))
 			to_chat(user, span_warning("You are not authorized to add notices!"))
 			return
-<<<<<<< HEAD
-		if(notices < 8)
-			if(!user.transferItemToLoc(O, src))
-				return
-			notices++
-			update_icon()
-			to_chat(user, "<span class='notice'>You pin the [O] to the noticeboard.</span>")
-=======
 		if(notices < MAX_NOTICES)
 			if(!user.transferItemToLoc(O, src))
 				return
 			notices++
 			icon_state = "nboard0[notices]"
 			to_chat(user, span_notice("You pin the [O] to the noticeboard."))
->>>>>>> upstream/master
 		else
 			to_chat(user, span_warning("The notice board is full!"))
 	else
@@ -96,33 +83,8 @@
 
 /obj/structure/noticeboard/ui_act(action, params)
 	. = ..()
-<<<<<<< HEAD
-	var/auth = allowed(user)
-	var/dat = "<B>[name]</B><BR>"
-	for(var/obj/item/P in src)
-		if(istype(P, /obj/item/paper))
-			dat += "<A href='?src=[REF(src)];read=[REF(P)]'>[P.name]</A> [auth ? "<A href='?src=[REF(src)];write=[REF(P)]'>Write</A> <A href='?src=[REF(src)];remove=[REF(P)]'>Remove</A>" : ""]<BR>"
-		else
-			dat += "<A href='?src=[REF(src)];read=[REF(P)]'>[P.name]</A> [auth ? "<A href='?src=[REF(src)];remove=[REF(P)]'>Remove</A>" : ""]<BR>"
-	user << browse("<HEAD><TITLE>Notices</TITLE></HEAD>[dat]","window=noticeboard")
-	onclose(user, "noticeboard")
-
-/obj/structure/noticeboard/Topic(href, href_list)
-	..()
-	usr.set_machine(src)
-	if(href_list["remove"])
-		if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED)) //For when a player is handcuffed while they have the notice window open
-			return
-		var/obj/item/I = locate(href_list["remove"]) in contents
-		if(istype(I) && I.loc == src)
-			I.forceMove(usr.loc)
-			usr.put_in_hands(I)
-			notices--
-			update_icon()
-=======
 	if(.)
 		return
->>>>>>> upstream/master
 
 	var/obj/item/item = locate(params["ref"]) in contents
 	if(!istype(item) || item.loc != src)

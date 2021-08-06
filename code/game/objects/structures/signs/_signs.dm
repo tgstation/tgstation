@@ -199,21 +199,8 @@
 	var/obj/structure/sign/placed_sign = new sign_path(user_turf) //We place the sign on the turf the user is standing, and pixel shift it to the target wall, as below.
 	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
 	var/dir = get_dir(user_turf, target_turf)
-<<<<<<< HEAD
-	user.visible_message("<span class='notice'>[user] fastens [src] to [target_turf].</span>", \
-		"<span class='notice'>You attach the sign to [target_turf].</span>")
-=======
-	if(dir & NORTH)
-		placed_sign.pixel_y = 32
-	else if(dir & SOUTH)
-		placed_sign.pixel_y = -32
-	if(dir & EAST)
-		placed_sign.pixel_x = 32
-	else if(dir & WEST)
-		placed_sign.pixel_x = -32
 	user.visible_message(span_notice("[user] fastens [src] to [target_turf]."), \
 		span_notice("You attach the sign to [target_turf]."))
->>>>>>> upstream/master
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
 	placed_sign.update_integrity(get_integrity())
 	placed_sign.setDir(dir)
