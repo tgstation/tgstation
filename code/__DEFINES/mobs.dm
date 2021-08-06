@@ -66,7 +66,7 @@
 #define LARVA_BODYPART "larva"
 
 
-#define NULL_BODY 0
+///Body type bitfields for allowed_animal_origin used to check compatible surgery body types (use NONE for no matching body type)
 #define HUMAN_BODY (1 << 0)
 #define MONKEY_BODY (1 << 1)
 #define ALIEN_BODY (1 << 2)
