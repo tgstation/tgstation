@@ -62,8 +62,6 @@ These are the few directives we have for project maintainers.
     - Try to get secondary maintainer approval before merging if you are able to.
   - PRs with empty commits intended to generate a changelog.
 - Do not merge PRs that contain content from the [banned content list](./CONTRIBUTING.md#banned-content).
-- Do not make people re-create issues and pull requests needlessly.
-- Do not make people beg or request their pr or issue be opened needlessly. Concider not reflexively closing prs and issues that have a chance of becoming acceptable, or asking the opener close it themselves so they have the ability to re-open it themselves.
 
 These are not steadfast rules as maintainers are expected to use their best judgement when operating.
 
