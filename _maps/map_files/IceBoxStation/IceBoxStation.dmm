@@ -7992,6 +7992,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "aRK" = (
@@ -22856,6 +22857,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "emN" = (
@@ -29101,6 +29103,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/iron/textured_half,
 /area/service/kitchen/coldroom)
 "ici" = (
@@ -32425,6 +32428,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "jUG" = (
@@ -38680,6 +38684,7 @@
 	},
 /obj/machinery/duct,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "npa" = (
@@ -40842,6 +40847,7 @@
 	},
 /obj/structure/closet/secure_closet/freezer/meat,
 /obj/machinery/power/apc/auto_name/east,
+/obj/structure/cable,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "oCM" = (
@@ -57192,6 +57198,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "xFL" = (
