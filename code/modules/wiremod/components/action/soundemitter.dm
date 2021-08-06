@@ -9,6 +9,9 @@
 	techweb_node_id = "basic_circuitry"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
+	/// Sound to play
+	var/datum/port/input/option/sound_file
+
 	/// Volume of the sound when played
 	var/datum/port/input/volume
 
@@ -41,7 +44,7 @@
 		COMP_SOUND_WARN,
 		COMP_SOUND_SLOWCLAP,
 	)
-	options = component_options
+	sound_file = add_option_port("Sound Option", component_options)
 
 	var/static/options_to_sound = list(
 		COMP_SOUND_BUZZ = 'sound/machines/buzz-sigh.ogg',
@@ -66,7 +69,7 @@
 	if(TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_SOUNDEMITTER))
 		return
 
-	var/sound_to_play = options_map[current_option]
+	var/sound_to_play = options_map[sound_file.input_value]
 	if(!sound_to_play)
 		return
 

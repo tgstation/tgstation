@@ -4,3 +4,217 @@
   ma44:
   - rscadd: Weapon rechargers will now be more noticeable when it has finished recharging
       something.
+2021-08-02:
+  Ghilker:
+  - bugfix: fixed issue where plasmaman clown and mime would die to the filtered plasma,
+      clown and mime masks no longer have filters roundstart
+  - qol: filters can be removed with rclick
+  Ghommie:
+  - bugfix: Fixed copies of stamped papers sharing the same `stamps` list.
+  - rscadd: People with the phobia of falling are now afraid of open space turfs.
+  Gurkenglas:
+  - qol: Circuit component descriptions and module names are now visible to the naked
+      eye.
+  InsaneRed:
+  - qol: Metastation's toxins has been reworked a bit to fit better with thermomachinery
+      and better piping
+  Jackraxxus:
+  - bugfix: The wisdom cow no longer spawns in space.
+  NamelessFairy:
+  - bugfix: Adds a missing wall to delta maint
+  Nari Harimoto:
+  - bugfix: Tram's RD telescreen can now view their dept cameras again
+  - bugfix: Delta and Meta RD offices now have a RD telescreen again
+  - bugfix: Delta science maint room no longer has a stray minisat camera
+  - bugfix: icebox science cameras now properly named and networked
+  - bugfix: removed stray purple tiles on walls in delta, removed a science camera
+      from a maintence room on delta, made it proper maint area
+  - bugfix: icebox xenobio slime consoles no longer have a unique network for them,
+      you may now use cerulean blueprints to use the slime consoles anywhere on the
+      station again
+  - bugfix: delta toxins room added its missing air alarm for the room itself, moved
+      the APC, removed a redundant second APC, toxins mix lab and toxins launch room
+      now share an APC and air alarm
+  - bugfix: trams toxins storage room now uses its correct area, added an APC to power
+      the room
+  Ryll/Shaps:
+  - qol: Adds a new preference for photosensitive players in the OOC preferences menu
+      to replace the bright white flash from things like flashes/flashbangs with a
+      solid black screen.
+  SmArtKar:
+  - qol: Servers now have USB ports
+  TheSmallBlue:
+  - bugfix: The outputs on the Launchpad USB component now work as they should.
+  TiviPlus:
+  - bugfix: riding offsets actually work now
+  Wayland-Smithy:
+  - qol: Improved the COMMS_KEY config documentation.
+  maxymax13:
+  - spellcheck: You no longer "accidently" shoot yourself spinning a gun
+  tf-4:
+  - bugfix: Clumsily hitting yourself with the classic baton now gives you the message
+      with the appropriate perspective
+  tralezab:
+  - bugfix: cannons lost their sprites in the last feature addition for them... now
+      they have those back!
+2021-08-03:
+  Fikou, sprites from /vg/:
+  - expansion: reinforced rock for mapping use
+  Ghommie:
+  - expansion: Picked up bees and mice can now fit in boxes.
+  Gurkenglas:
+  - expansion: Signals now fire a timestamp.
+  JohnFulpWillard:
+  - bugfix: Cultists using Twisted Construction on a Cyborg will no longer spawn 2
+      constructs.
+  KittyNoodle:
+  - bugfix: ethereal hair will now change with ethereal color without an external
+      update
+  SmArtKar:
+  - expansion: You can make BCI overlay and click interceptor circutry now!
+  - balance: BCI now has it's own research node.
+  - bugfix: You no longer can remove BCI core and actions from BCIs and insert them
+      into other circutry.
+  Thunder12345:
+  - code_imp: Removes (almost) all misc files from the clothing module
+  Watermelon914:
+  - admin: Adds admin components that allow admins to set variables, get variables,
+      call procs and execute sdql via circuits. To enable these components to function,
+      an admin needs to enable the admin_only variable on a circuit.
+  - qol: Adds more entity information to shell outputs to allow circuits to identify
+      who used the shell.
+  - expansion: Adds list literals.
+  - bugfix: CTF will no longer delete objects on CTF maps that shouldn't be deleted
+      and it'll also successfully regenerate the map once a CTF round ends.
+  - bugfix: Fixed phantom slipping caused by synthesized banana peels.
+  - bugfix: Fixed the metabolism unit test randomly failing because of neurowhine
+  carshalash:
+  - bugfix: Eggs now work when cracked into glasses
+2021-08-04:
+  Fikou:
+  - admin: adds list getter and text2num to sdql wrappers
+  Greniza:
+  - bugfix: The pip count, layout, and orientation of standard D6s has been brought
+      in line with a standard casino D6.
+  Gurkenglas:
+  - expansion: The multiplexer component, now router, also demultiplexes across multiple
+      outputs. Also, the indices now wrap instead of clamp.
+  Improvedname:
+  - bugfix: Anti-tider mister is no longer invinsible inhand
+  InsaneRed:
+  - bugfix: Cultists can once again draw runes in lavaland mining station
+  JohnFulpWillard:
+  - bugfix: Using Twisted Construction on an AI shell no longer ghosts the AI
+  MMMiracles:
+  - rscadd: Tramstation's service wing has been revamped!
+  - rscadd: The Kitchen and Hydroponics has been redesigned entirely with small adjustments
+      to the bar.
+  - rscadd: A larger dining area as well as a Kitchen area with underground freezer.
+  - rscadd: Better department layout in general for Hydroponics while keeping the
+      dedicated beekeeper room.
+  - rscadd: A dedicated service room to hold the various ordering/request consoles
+      between the ktichen/bar/hydro.
+  - rscadd: The stairs leading to the bar have been made very accessible from the
+      tram dock, being right beside the kitchen entrance. The lower segment of the
+      bar has been redesigned the better fit this change.
+  Mothblocks:
+  - bugfix: Fixed medical HUDs not showing the defib icon.
+  SmArtKar:
+  - expansion: You can control air alarms using USB now
+  - bugfix: Phazon microtool arrays no longer have an error sprite
+  TemporalOroboros:
+  - bugfix: Fixed rad collectors ignoring letting anyone (un)lock them with their
+      ID.
+  - bugfix: Beef wellingtons cannot be sliced to produce beef wellington slices that
+      can be sliced to produce beef wellington slices that can be sliced to produce
+      beef wellington slices...
+  Timberpoes:
+  - bugfix: Fixed a bug preventing the Plexagon HR Core app from de-prioritising jobs
+      when 5 or more jobs were prioritised.
+  Triiodine:
+  - bugfix: NT engineers have repaired a malfunctioning external airlock set at Kilostation
+      disposals. It should cycle properly now.
+  Watermelon914:
+  - bugfix: Vehicles can now be buckled to again.
+  - code_imp: Improves BCI code by removing an easily bypassable `add_to` check for
+      circuit components and implementing proper typechecking in the addable BCI components
+  - bugfix: Fixed the UI notices about the supported types not showing up on all BCI
+      components
+  Zytolg:
+  - rscadd: Makes Icebox Service Multi-Z through retroaction.
+  - rscadd: The first Multi-Z kitchen on /tgstation/
+  - bugfix: Tosses out the non Multi-Z aspects of the previous service
+  - qol: You can now use stairs to visit the various areas of Icebox Service
+  - bugfix: This should force ruin spawns out and away from the center of the station.
+      Next step is to actually add icebox ruins that are small but help force that
+      spawn condition.
+  interestingusernam3:
+  - bugfix: Being clumsy no longer protects you from grenades sticking to your hands.
+  tralezab:
+  - code_imp: Pavlova has better code :)
+  - spellcheck: Pavlova has a different description now
+  - bugfix: fixes soulstones granting themselves every language... instead of the
+      spirit inside. lol.
+  - refactor: refactored spirit possession used in the possessed blade into a component.
+      now ANYTHING could be possessed if you so desire!
+2021-08-05:
+  Ghommie:
+  - balance: Standard bananium floor is now viable for clown decoration and isn't
+      slippery. Custom bananium floor tiles can be used to slip people though.
+  IndieanaJones:
+  - bugfix: Dynamic's Pirate spawn will now properly trigger.
+  InsaneRed:
+  - bugfix: You no longer need to unbuckle twice from xenomorph nests to be free
+  JohnFulpWillard:
+  - bugfix: Dead Cyborgs are thrown back into their body when turned into a Cultist
+      construct.
+  Melbert:
+  - code_imp: Uncomments the code that makes chaplains enjoy holymelons. Chaplains
+      will now gain positive moodlets from eating holy melons once again.
+  Mothblocks:
+  - admin: Admins now have a "View All Circuits" button to investigate circuits easier.
+  Paxilmaniac:
+  - expansion: hmg turret making use of newly fixed manned turret code, and the deployable
+      component
+  - bugfix: manned turret projectiles now actually go towards where you aim
+  - soundadd: new heavy machinegun sound from tgmc
+  - code_imp: deployable component, for deploying things from other things
+  SmArtKar:
+  - expansion: Conveyor switch and quantum pad can now be connected through USB cables
+  TemporalOroboros:
+  - bugfix: The chasm hallucination now visibly indicates the turfs it's effecting
+      again.
+  Watermelon914:
+  - refactor: Refactors datatype code completely for integrated circuits.
+  - refactor: Options have been moved to their own input port with their own special
+      type known as the "Option" type.
+  - bugfix: Fixed CTF breaking when it restarts.
+  Y0SH1M4S73R:
+  - bugfix: List literal components no longer append their output with garbage data.
+  antropod:
+  - bugfix: Custom vendor bluescreen
+  interestingusernam3:
+  - spellcheck: Gutlunches no longer eat through their nutrient sacs.
+2021-08-06:
+  Gandalf2k15:
+  - bugfix: Reinforced walls should now smooth properly.
+  Ghommie:
+  - refactor: refactored the thrownthing datum a little.
+  - qol: you can now throw stuff at movables with no density, such as mobs lying on
+      the floor, mice, APCs, light bulbs etcetera etcetera.
+  - bugfix: Contractor pods won't land on groundless turfs such as chasms, lava or
+      open space anymore.
+  KubeRoot:
+  - bugfix: Tailored winter suit hoods are now colored correctly
+  Melbert:
+  - bugfix: Rust Heretics now need to stand on Rust to heal again, instead of passive
+      free healing
+  SmArtKar:
+  - balance: Doubles capacity for most shells
+  - expansion: Added scanner gate shells
+  dragomagol:
+  - admin: adds an additional log file, mob_tags, for referencing mob numbers in logs
+  timothymtorres:
+  - bugfix: Fixed being able to polymorph pAIs into other mobs.  It changes their
+      holoform now instead.
+  - bugfix: Fixed being able to polymorph mimics spawned from a staff of animate

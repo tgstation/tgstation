@@ -8,6 +8,9 @@
 	desc = "A component that can listen and send frequencies. If set to private, the component will only receive signals from other components attached to circuitboards with the same owner id."
 	techweb_node_id = "basic_circuitry"
 
+	/// The publicity options. Controls whether it's public or private.
+	var/datum/port/input/option/public_options
+
 	/// Frequency input
 	var/datum/port/input/freq
 	/// Signal input
@@ -23,7 +26,7 @@
 		COMP_RADIO_PUBLIC,
 		COMP_RADIO_PRIVATE,
 	)
-	options = component_options
+	public_options = add_option_port("Encryption Options", component_options)
 
 /obj/item/circuit_component/radio/Initialize()
 	. = ..()
@@ -60,7 +63,7 @@
 	if(signal.data["code"] != round(code.input_value || 0))
 		return
 
-	if(current_option == COMP_RADIO_PRIVATE && parent?.owner_id != signal.data["key"])
+	if(public_options.input_value == COMP_RADIO_PRIVATE && parent?.owner_id != signal.data["key"])
 		return
 
 	trigger_output.set_output(COMPONENT_SIGNAL)

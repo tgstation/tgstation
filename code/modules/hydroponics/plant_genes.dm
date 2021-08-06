@@ -29,91 +29,6 @@
 	new_gene.mutability_flags = mutability_flags
 	return new_gene
 
-/// Core plant genes. Stores the main variables: lifespan, endurance, production, yield, potency, instability, weed rate/chance
-/datum/plant_gene/core
-	/// The number value of our core gene.
-	var/value = 0
-
-/datum/plant_gene/core/get_name()
-	return "[name] [value]"
-
-/*
- * Apply our core gene's stats to our seed's stats.
- */
-/datum/plant_gene/core/proc/apply_stat(obj/item/seeds/our_seed)
-	return
-
-/datum/plant_gene/core/New(initial_value = 0)
-	value = initial_value
-
-/datum/plant_gene/core/Copy()
-	. = ..()
-	var/datum/plant_gene/core/new_core_gene = .
-	new_core_gene.value = value
-	return
-
-/datum/plant_gene/core/can_add(obj/item/seeds/our_seed)
-	. = ..()
-	if(!.)
-		return FALSE
-	return our_seed.get_gene(type) // We can't double-add core plant genes.
-
-/datum/plant_gene/core/lifespan
-	name = "Lifespan"
-	value = 25
-
-/datum/plant_gene/core/lifespan/apply_stat(obj/item/seeds/our_seed)
-	our_seed.lifespan = value
-
-/datum/plant_gene/core/endurance
-	name = "Endurance"
-	value = 15
-
-/datum/plant_gene/core/endurance/apply_stat(obj/item/seeds/our_seed)
-	our_seed.endurance = value
-
-/datum/plant_gene/core/production
-	name = "Production Speed"
-	value = 6
-
-/datum/plant_gene/core/production/apply_stat(obj/item/seeds/our_seed)
-	our_seed.production = value
-
-/datum/plant_gene/core/yield
-	name = "Yield"
-	value = 3
-
-/datum/plant_gene/core/yield/apply_stat(obj/item/seeds/our_seed)
-	our_seed.yield = value
-
-/datum/plant_gene/core/potency
-	name = "Potency"
-	value = 10
-
-/datum/plant_gene/core/potency/apply_stat(obj/item/seeds/our_seed)
-	our_seed.potency = value
-
-/datum/plant_gene/core/instability
-	name = "Stability"
-	value = 10
-
-/datum/plant_gene/core/instability/apply_stat(obj/item/seeds/our_seed)
-	our_seed.instability = value
-
-/datum/plant_gene/core/weed_rate
-	name = "Weed Growth Rate"
-	value = 1
-
-/datum/plant_gene/core/weed_rate/apply_stat(obj/item/seeds/our_seed)
-	our_seed.weed_rate = value
-
-/datum/plant_gene/core/weed_chance
-	name = "Weed Vulnerability"
-	value = 5
-
-/datum/plant_gene/core/weed_chance/apply_stat(obj/item/seeds/our_seed)
-	our_seed.weed_chance = value
-
 /// Reagent genes store a reagent ID and reagent ratio.
 /datum/plant_gene/reagent
 	name = "Nutriment"
@@ -952,4 +867,3 @@
 /// Currently unused and does nothing. Appears in strange seeds.
 /datum/plant_gene/trait/plant_type/alien_properties
 	name ="?????"
-

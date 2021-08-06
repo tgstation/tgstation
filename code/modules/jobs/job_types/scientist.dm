@@ -7,7 +7,8 @@
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
 	exp_requirements = 60
-	exp_type = EXP_TYPE_CREW
+	exp_required_type = EXP_TYPE_CREW
+	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/scientist
 	plasmaman_outfit = /datum/outfit/plasmaman/science
@@ -17,7 +18,9 @@
 
 	display_order = JOB_DISPLAY_ORDER_SCIENTIST
 	bounty_types = CIV_JOB_SCI
-	departments = DEPARTMENT_SCIENCE
+	departments_list = list(
+		/datum/job_department/science,
+		)
 
 	family_heirlooms = list(/obj/item/toy/plush/slimeplushie)
 
@@ -27,7 +30,7 @@
 		/obj/item/camera_bug = 1
 	)
 
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS
 
 
 /datum/outfit/job/scientist
