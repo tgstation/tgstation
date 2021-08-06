@@ -195,3 +195,26 @@
   - bugfix: Custom vendor bluescreen
   interestingusernam3:
   - spellcheck: Gutlunches no longer eat through their nutrient sacs.
+2021-08-06:
+  Gandalf2k15:
+  - bugfix: Reinforced walls should now smooth properly.
+  Ghommie:
+  - refactor: refactored the thrownthing datum a little.
+  - qol: you can now throw stuff at movables with no density, such as mobs lying on
+      the floor, mice, APCs, light bulbs etcetera etcetera.
+  - bugfix: Contractor pods won't land on groundless turfs such as chasms, lava or
+      open space anymore.
+  KubeRoot:
+  - bugfix: Tailored winter suit hoods are now colored correctly
+  Melbert:
+  - bugfix: Rust Heretics now need to stand on Rust to heal again, instead of passive
+      free healing
+  SmArtKar:
+  - balance: Doubles capacity for most shells
+  - expansion: Added scanner gate shells
+  dragomagol:
+  - admin: adds an additional log file, mob_tags, for referencing mob numbers in logs
+  timothymtorres:
+  - bugfix: Fixed being able to polymorph pAIs into other mobs.  It changes their
+      holoform now instead.
+  - bugfix: Fixed being able to polymorph mimics spawned from a staff of animate
