@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - bugfix: "Fixed being able to polymorph pAIs into other mobs.  It changes their holoform now instead."
-  - bugfix: "Fixed being able to polymorph mimics spawned from a staff of animate"
