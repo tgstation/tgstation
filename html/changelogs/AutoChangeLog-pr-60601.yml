@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - bugfix: "CTF will no longer delete objects on CTF maps that shouldn't be deleted and it'll also successfully regenerate the map once a CTF round ends."

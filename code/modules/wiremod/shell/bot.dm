@@ -27,13 +27,17 @@
 
 	/// Called when attack_hand is called on the shell.
 	var/datum/port/output/signal
+	/// The user who used the bot
+	var/datum/port/output/entity
 
 /obj/item/circuit_component/bot/Initialize()
 	. = ..()
+	entity = add_output_port("User", PORT_TYPE_ATOM)
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/bot/Destroy()
 	signal = null
+	entity = null
 	return ..()
 
 /obj/item/circuit_component/bot/register_shell(atom/movable/shell)
@@ -46,4 +50,6 @@
 	SIGNAL_HANDLER
 	source.balloon_alert(user, "pushed button")
 	playsound(source, get_sfx("terminal_type"), 25, FALSE)
+	entity.set_output(user)
 	signal.set_output(COMPONENT_SIGNAL)
+
