@@ -291,6 +291,8 @@ GLOBAL_VAR(preferences_species_data)
 				save_character()
 
 			character_preview_view.update_body()
+
+			return TRUE
 		if ("request_values")
 			var/requested_preference_key = params["preference"]
 
@@ -301,8 +303,12 @@ GLOBAL_VAR(preferences_species_data)
 			if (isnull(generated_preference_values[requested_preference_key]))
 				generated_preference_values[requested_preference_key] = generate_preference_values(requested_preference)
 				update_static_data(user, ui)
+
+			return TRUE
 		if ("rotate")
 			character_preview_view.dir = turn(character_preview_view.dir, -90)
+
+			return TRUE
 		if ("set_preference")
 			var/requested_preference_key = params["preference"]
 			var/value = params["value"]
@@ -392,6 +398,7 @@ GLOBAL_VAR(preferences_species_data)
 
 /datum/preferences/ui_close(mob/user)
 	save_preferences()
+	QDEL_NULL(character_preview_view)
 
 /datum/preferences/proc/create_character_preview_view(mob/user)
 	character_preview_view = new(null, src, user.client)
