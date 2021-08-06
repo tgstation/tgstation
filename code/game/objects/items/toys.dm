@@ -339,7 +339,9 @@
 
 /obj/item/toy/sword/Initialize()
 	. = ..()
-	AddComponent(/datum/component/transforming, on_transform_callback = CALLBACK(src, .proc/after_transform))
+	AddComponent(/datum/component/transforming, \
+		w_class_on = WEIGHT_CLASS_BULKY, \
+		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /*
  * Callback for the transforming component.
@@ -349,11 +351,9 @@
 /obj/item/toy/sword/proc/after_transform(mob/user, active)
 	if(active)
 		icon_state = "[icon_state]_[saber_color]"
-		to_chat(user, span_notice("You extend the plastic blade with a quick flick of your wrist."))
-		playsound(user ? user : loc, 'sound/weapons/saberon.ogg', 20, TRUE)
-	else
-		to_chat(user, span_notice("You push the plastic blade back down into the handle."))
-		playsound(user ? user : loc, 'sound/weapons/saberoff.ogg', 20, TRUE)
+
+	balloon_alert(user, "[active ? "flicked out":"pushed in"] [src]")
+	playsound(user ? user : loc, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 20, TRUE)
 
 // Copied from /obj/item/melee/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/weapon, mob/living/user, params)

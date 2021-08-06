@@ -3,7 +3,7 @@
 	max_integrity = 200
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 30)
 	attack_verb_continuous = list("hits", "taps", "pokes")
-	attack_verb_simple = list("hits", "taps", "pokes")
+	attack_verb_simple = list("hit", "tap", "poke")
 	resistance_flags = FIRE_PROOF
 	light_system = MOVABLE_LIGHT
 	light_range = 3
@@ -20,8 +20,10 @@
 	var/active_hitsound = 'sound/weapons/blade1.ogg'
 	/// Weight class while active.
 	var/active_w_class = WEIGHT_CLASS_BULKY
-	/// Attack verbs used while active.
-	var/list/active_attack_verbs
+	/// Continuous Attack verbs used while active.
+	var/list/active_continuous_attack_verbs
+	/// Simple attack verbs used while active.
+	var/list/active_simple_attack_verbs
 	/// The color of this energy based sword, for use in editing the icon_state.
 	var/sword_color_icon
 	/// The sharpness when active.
@@ -49,7 +51,8 @@
 		sharpness_on = active_sharpness, \
 		hitsound_on = active_hitsound, \
 		w_class_on = active_w_class, \
-		attack_verb_on = active_attack_verbs, \
+		attack_verb_continuous_on = active_continuous_attack_verbs, \
+		attack_verb_simple_on = active_simple_attack_verbs, \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /obj/item/melee/energy/suicide_act(mob/user)
@@ -61,7 +64,7 @@
 /obj/item/melee/energy/add_blood_DNA(list/blood_dna)
 	return FALSE
 
-/obj/item/melee/energy/process()
+/obj/item/melee/energy/process(delta_time)
 	open_flame()
 
 /obj/item/melee/energy/ignition_effect(atom/A, mob/user)
@@ -101,7 +104,7 @@
 		heat = initial(heat)
 		STOP_PROCESSING(SSobj, src)
 
-	balloon_alert(user, "[src] [active ? "enabled":"disabled"]")
+	balloon_alert(user, "[name] [active ? "enabled":"disabled"]")
 	playsound(user ? user : loc, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
 	set_light_on(active)
 
@@ -114,7 +117,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/axes_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "chops", "cleaves", "tears", "lacerates", "cuts")
-	attack_verb_simple = list("attacks", "chops", "cleaves", "tears", "lacerates", "cuts")
+	attack_verb_simple = list("attack", "chop", "cleave", "tear", "lacerate", "cut")
 	force = 40
 	throwforce = 25
 	throw_speed = 3

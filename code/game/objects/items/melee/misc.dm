@@ -345,7 +345,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	attack_verb_continuous = list("hits", "pokes")
-	attack_verb_simple = list("hits", "pokes")
+	attack_verb_simple = list("hit", "poke")
 	inhand_icon_state = ""
 	worn_icon_state = "tele_baton"
 	slot_flags = ITEM_SLOT_BELT
@@ -353,9 +353,13 @@
 	item_flags = NONE
 	force = 0
 	bare_wound_bonus = 5
+	/// The sound effecte played when our baton is extended.
 	var/on_sound = 'sound/weapons/batonextend.ogg'
+	/// The inhand iconstate used when our baton is extended.
 	var/on_inhand_icon_state = "nullrod"
+	/// The force on extension.
 	var/active_force = 10
+	/// The weight class on extension.
 	var/active_w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/melee/classic_baton/telescopic/Initialize()
@@ -363,7 +367,8 @@
 	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
 		w_class_on = active_w_class, \
-		attack_verb_on = list("smacks", "strikes", "cracks", "beats"), \
+		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
+		attack_verb_simple_on = list("smack", "strike", "crack", "beat"), \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
@@ -391,10 +396,8 @@
  */
 /obj/item/melee/classic_baton/telescopic/proc/after_transform(mob/user, active)
 	inhand_icon_state = active ? on_inhand_icon_state : "" // When inactive, there is no inhand icon_state.
-	balloon_alert(user, "[active ? "[src] extended" : "[src] collapsed"]")
+	balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
 	playsound(user ? user : loc, on_sound, 50, TRUE)
-	if(user)
-		add_fingerprint(user)
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton
 	name = "contractor baton"

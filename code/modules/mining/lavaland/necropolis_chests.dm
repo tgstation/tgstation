@@ -725,8 +725,9 @@
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	icon_state = "cleaving_saw"
+	worn_icon = "cleaving_saw"
 	attack_verb_continuous = list("attacks", "saws", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_simple = list("attacks", "saws", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "saw", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	force = 12
 	throwforce = 20
 	inhand_x_dimension = 64
@@ -753,10 +754,11 @@
 /obj/item/melee/cleaving_saw/Initialize()
 	. = ..()
 	AddComponent(/datum/component/transforming, \
-		transform_cooldown_time = 1 SECONDS, \
+		transform_cooldown_time = (CLICK_CD_MELEE * 0.25), \
 		force_on = open_force, \
 		throwforce_on = open_throwforce, \
-		attack_verb_on = list("cleaves", "swipes", "slashes", "chops"), \
+		attack_verb_continuous_on = list("cleaves", "swipes", "slashes", "chops"), \
+		attack_verb_simple_on = list("cleave", "swipe", "slash", "chop"), \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /obj/item/melee/cleaving_saw/examine(mob/user)
@@ -770,34 +772,10 @@
 	attack_self(user)
 	return BRUTELOSS
 
-/*
- * Callback for the transforming component.
- *
- * Gives feedback and makes the nextmove after transforming much quicker.
- */
-/obj/item/melee/cleaving_saw/proc/after_transform(mob/user, active)
-	is_open = active
-	user.changeNext_move(CLICK_CD_MELEE * 0.25)
-
-	if(active)
-		to_chat(user, span_notice("You open [src]. It will now cleave enemies in a wide arc and deal additional damage to fauna."))
-	else
-		to_chat(user, span_notice("You close [src]. It will now attack rapidly and cause fauna to bleed."))
-	playsound(user ? user : loc, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (is_open * 30000))
-
 /obj/item/melee/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
 	. = ..()
 	if(!is_open)
 		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
-
-/obj/item/melee/cleaving_saw/proc/nemesis_effects(mob/living/user, mob/living/target)
-	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite))
-		return
-	var/datum/status_effect/stacking/saw_bleed/existing_bleed = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
-	if(existing_bleed)
-		existing_bleed.add_stacks(bleed_stacks_per_hit)
-	else
-		target.apply_status_effect(STATUS_EFFECT_SAWBLEED, bleed_stacks_per_hit)
 
 /obj/item/melee/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!is_open || swiping || !target.density || get_turf(target) == get_turf(user))
@@ -826,6 +804,33 @@
 				if(user.Adjacent(L) && L.density)
 					melee_attack_chain(user, L)
 		swiping = FALSE
+
+/*
+ * If we're attacking [target]s in our nemesis list, apply unique effects.
+ *
+ * user - the mob attacking with the saw
+ * target - the mob being attacked
+ */
+/obj/item/melee/cleaving_saw/proc/nemesis_effects(mob/living/user, mob/living/target)
+	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite))
+		return
+	var/datum/status_effect/stacking/saw_bleed/existing_bleed = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
+	if(existing_bleed)
+		existing_bleed.add_stacks(bleed_stacks_per_hit)
+	else
+		target.apply_status_effect(STATUS_EFFECT_SAWBLEED, bleed_stacks_per_hit)
+
+/*
+ * Callback for the transforming component.
+ *
+ * Gives feedback and makes the nextmove after transforming much quicker.
+ */
+/obj/item/melee/cleaving_saw/proc/after_transform(mob/user, active)
+	is_open = active
+	user.changeNext_move(CLICK_CD_MELEE * 0.25)
+
+	balloon_alert(user, "[active ? "opened":"closed"] [src]")
+	playsound(user ? user : loc, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (is_open * 30000))
 
 //Dragon
 

@@ -67,11 +67,14 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	attack_verb_continuous = list("hits", "taps", "pokes")
-	attack_verb_simple = list("hits", "taps", "pokes")
+	attack_verb_simple = list("hit", "tap", "poke")
 	force = 0
 	throwforce = 0
 	hitsound = null
 	sharpness = NONE
+	stealthy_audio = TRUE
+	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = FIRE_PROOF
 	light_color = COLOR_YELLOW
 	/// Whether the sword is currently slippery
 	var/slipping = FALSE
@@ -81,7 +84,8 @@
 /obj/item/melee/bananium_sword/Initialize()
 	. = ..()
 	AddComponent(/datum/component/transforming, \
-		attack_verb_on = list("slips"), \
+		attack_verb_continuous_on = list("slips"), \
+		attack_verb_simple_on = list("slip"), \
 		clumsy_check = FALSE, \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
@@ -95,13 +99,13 @@
 	if(active)
 		icon_state = "[icon_state]_bananium"
 
-	balloon_alert(user, "[src] [active ? "enabled":"disabled"]")
+	balloon_alert(user, "[name] [active ? "enabled":"disabled"]")
 	playsound(user ? user : loc, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
 	set_light_on(active)
 	adjust_slipperiness()
 
-/* Adds or removes a slippery component, depending on whether the sword
- * is active or not.
+/*
+ * Adds or removes a slippery component, depending on whether the sword is active or not.
  */
 /obj/item/melee/bananium_sword/proc/adjust_slipperiness()
 	if(slipping)

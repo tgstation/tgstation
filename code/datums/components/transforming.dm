@@ -19,8 +19,10 @@
 	var/sharpness_on = NONE
 	/// Hitsound played when active
 	var/hitsound_on = 'sound/weapons/blade1.ogg'
-	/// List of attack verbs used when the weapon is enabled
-	var/list/attack_verb_on = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	/// List of continuous attack verbs used when the weapon is enabled
+	var/list/attack_verb_continuous_on = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	/// List of simple attack verbs used when the weapon is enabled
+	var/list/attack_verb_simple_on = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	/// Whether clumsy people need to succeed an RNG check to turn it on without hurting themselves
 	var/clumsy_check = TRUE
 	/// If we get sharpened with a whetstone, save the bonus here for later use if we un/redeploy
@@ -39,7 +41,8 @@
 		hitsound_on,
 		w_class_on,
 		clumsy_check = TRUE,
-		list/attack_verb_on,
+		list/attack_verb_continuous_on,
+		list/attack_verb_simple_on,
 		datum/callback/on_transform_callback,
 		)
 
@@ -52,9 +55,11 @@
 	src.sharpness_on = sharpness_on
 	src.hitsound_on = hitsound_on
 	src.w_class_on = w_class_on
-	if(islist(attack_verb_on))
-		src.attack_verb_on = attack_verb_on
 	src.clumsy_check = clumsy_check
+	if(islist(attack_verb_continuous_on))
+		src.attack_verb_continuous_on = attack_verb_continuous_on
+	if(islist(attack_verb_simple_on))
+		src.attack_verb_simple_on = attack_verb_simple_on
 	src.on_transform_callback = on_transform_callback
 
 	if(start_transformed)
@@ -72,7 +77,7 @@
 
 /datum/component/transforming/Destroy()
 	if(on_transform_callback)
-		QDEL_NULL(pre_tipped_callback)
+		QDEL_NULL(on_transform_callback)
 	return ..()
 
 /*
@@ -125,7 +130,7 @@
  * user - the mob transforming the item
  */
 /datum/component/transforming/proc/default_transform_message(obj/item/source, mob/user)
-	source.balloon_alert(user, "[active ? "enabled" : "disabled"] [src]")
+	source.balloon_alert(user, "[active ? "enabled" : "disabled"] [source]")
 	playsound(user ? user : source.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
 /*
@@ -148,18 +153,19 @@
  * source - the item being transformed
  */
 /datum/component/transforming/proc/set_active(obj/item/source)
+	if(sharpness_on)
+		source.sharpness = sharpness_on
 	if(isnum(force_on))
-		source.force = force_on + (sharpness_on ? sharpened_bonus : 0)
+		source.force = force_on + (source.sharpness ? sharpened_bonus : 0)
 	if(isnum(throwforce_on))
-		source.throwforce = throwforce_on + (sharpness_on ? sharpened_bonus : 0)
+		source.throwforce = throwforce_on + (source.sharpness ? sharpened_bonus : 0)
 		source.throw_speed = 4
 	if(hitsound_on)
 		source.hitsound = hitsound_on
-	if(attack_verb_on)
-		source.attack_verb_continuous = attack_verb_on
-		source.attack_verb_simple = attack_verb_on
-	if(sharpness_on)
-		source.sharpness = sharpness_on
+	if(attack_verb_continuous_on)
+		source.attack_verb_continuous = attack_verb_continuous_on
+	if(attack_verb_simple_on)
+		source.attack_verb_simple = attack_verb_simple_on
 	if(w_class_on)
 		source.w_class = w_class_on
 
@@ -172,18 +178,19 @@
  * source - the item being un-transformed
  */
 /datum/component/transforming/proc/set_inactive(obj/item/source)
+	if(sharpness_on)
+		source.sharpness = initial(source.sharpness)
 	if(isnum(force_on))
-		source.force = initial(source.force) + (initial(source.sharpness) ? sharpened_bonus : 0)
+		source.force = initial(source.force) + (source.sharpness ? sharpened_bonus : 0)
 	if(isnum(throwforce_on))
-		source.throwforce = initial(source.throwforce) + (initial(source.sharpness) ? sharpened_bonus : 0)
+		source.throwforce = initial(source.throwforce) + (source.sharpness ? sharpened_bonus : 0)
 		source.throw_speed = initial(source.throw_speed)
 	if(hitsound_on)
 		source.hitsound = initial(source.hitsound)
-	if(attack_verb_on)
+	if(attack_verb_continuous_on)
 		source.attack_verb_continuous = initial(source.attack_verb_continuous)
+	if(attack_verb_simple_on)
 		source.attack_verb_simple = initial(source.attack_verb_simple)
-	if(sharpness_on)
-		source.sharpness = initial(source.sharpness)
 	if(w_class_on)
 		source.w_class = initial(source.w_class)
 
@@ -206,7 +213,7 @@
 
 	if(prob(50))
 		to_chat(user, span_warning("You accidentally cut yourself with [parent], like a doofus!"))
-		user.take_bodypart_damage(5, 5)
+		user.take_bodypart_damage(10)
 		return TRUE
 	return FALSE
 
