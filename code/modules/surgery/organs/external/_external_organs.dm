@@ -226,9 +226,7 @@
 	return GLOB.moth_antennae_list
 
 /obj/item/organ/external/antennae/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(!(human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
-		return TRUE
-	return FALSE
+	return TRUE
 
 ///For moth antennae and wings we make an exception. If their features are burnt, we only update our original sprite
 /obj/item/organ/external/antennae/set_sprite(sprite)
