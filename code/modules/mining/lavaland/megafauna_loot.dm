@@ -338,6 +338,8 @@
 		glass_overlay.appearance_flags = RESET_COLOR
 		. += glass_overlay
 
+#define MAX_BLOOD_LEVEL 100
+
 /obj/item/soulscythe
 	name = "soulscythe"
 	desc = "An old relic of hell created by devils to establish themselves as the leadership of hell over the demons. It grows stronger while it possesses a powerful soul."
@@ -345,31 +347,44 @@
 	icon_state = "soulscythe"
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
+	attack_verb_simple = list("chop", "slice", "cut", "reap")
+	hitsound = 'sound/weapons/bladeslice.ogg'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	force = 20
 	throwforce = 17
 	armour_penetration = 50
 	sharpness = SHARP_EDGED
+	bare_wound_bonus = 10
 	layer = MOB_LAYER
 	/// Soulscythe mob in the scythe
 	var/mob/living/simple_animal/soulscythe/soul
 	/// Are we grabbing a spirit?
 	var/using = FALSE
+	/// Currently charging?
+	var/charging = FALSE
 	/// Cooldown between moves
 	COOLDOWN_DECLARE(move_cooldown)
+	/// Cooldown between attacks
+	COOLDOWN_DECLARE(attack_cooldown)
 
 /obj/item/soulscythe/Initialize()
 	. = ..()
 	soul = new(src)
 	RegisterSignal(soul, COMSIG_LIVING_RESIST, .proc/on_resist)
 	RegisterSignal(soul, COMSIG_MOB_ATTACK_RANGED, .proc/on_attack)
+	RegisterSignal(soul, COMSIG_MOB_ATTACK_RANGED_SECONDARY, .proc/on_secondary_attack)
 	RegisterSignal(src, COMSIG_OBJ_INTEGRITY_CHANGED, .proc/on_integrity_change)
 
 /obj/item/soulscythe/examine(mob/user)
 	. = ..()
-	. += (soul && soul.ckey && !soul.stat) ? span_nicegreen("There is a soul inhabiting it.") : span_danger("It's dormant.")
-	. += span_userdanger("This item isn't currently finished if you're seeing it during a testmerge sorry.")
+	. += soul.ckey ? span_nicegreen("There is a soul inhabiting it.") : span_danger("It's dormant.")
+
+/obj/item/soulscythe/attack(mob/living/attacked, mob/living/user, params)
+	. = ..()
+	if(attacked.stat != DEAD)
+		give_blood(10)
 
 /obj/item/soulscythe/attack_hand(mob/user, list/modifiers)
 	if(soul.ckey && !soul.faction_check_mob(user))
@@ -385,7 +400,7 @@
 /obj/item/soulscythe/dropped(mob/user, silent)
 	. = ..()
 	if(soul.ckey)
-		SpinAnimation(15) //resume spinnage
+		reset_spin() //resume spinnage
 
 /obj/item/soulscythe/attack_self(mob/user, modifiers)
 	if(using || soul.ckey || soul.stat)
@@ -406,36 +421,69 @@
 		balloon_alert(user, "the scythe glows up")
 		add_overlay("soulscythe_gem")
 		density = TRUE
+		if(!ismob(loc))
+			reset_spin()
 	else
 		balloon_alert(user, "the scythe is dormant!")
 	REMOVE_TRAIT(src, TRAIT_NODROP, type)
 	using = FALSE
 
 /obj/item/soulscythe/relaymove(mob/living/user, direction)
-	if(!COOLDOWN_FINISHED(src, move_cooldown))
+	if(!COOLDOWN_FINISHED(src, move_cooldown) || charging)
 		return
 	if(!isturf(loc))
 		balloon_alert(user, "resist out!")
 		COOLDOWN_START(src, move_cooldown, 1 SECONDS)
+		return
+	if(!use_blood(1), FALSE)
 		return
 	if(pixel_x != base_pixel_x || pixel_y != base_pixel_y)
 		animate(src, 0.2 SECONDS, pixel_x = base_pixel_y, pixel_y = base_pixel_y, flags = ANIMATION_PARALLEL)
 	Move(get_step(src, direction), direction)
 	COOLDOWN_START(src, move_cooldown, (direction in GLOB.cardinals) ? 0.1 SECONDS : 0.2 SECONDS)
 
+/obj/item/soulscythe/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(!charging)
+		return
+	charging = FALSE
+	throwforce *= 0.5
+	reset_spin()
+	if(!isliving(hit_atom))
+		return
+	var/mob/living/hit_mob = hit_atom
+	if(hit_mob.stat != DEAD)
+		give_blood(15)
+
+/obj/item/soulscythe/AllowClick()
+	return TRUE
+
+/obj/item/soulscythe/proc/use_blood(amount = 0, message = TRUE)
+	if(amount > soul.blood_level)
+		if(message)
+			to_chat(soul, span_warning("Not enough blood!"))
+		return FALSE
+	soul.blood_level -= amount
+	return TRUE
+
+/obj/item/soulscythe/proc/give_blood(amount)
+	soul.blood_level = min(MAX_BLOOD_LEVEL, soul.blood_level + amount)
+
 /obj/item/soulscythe/proc/on_resist(mob/living/user)
 	SIGNAL_HANDLER
 
 	if(isturf(loc))
 		return
-	INVOKE_ASYNC(src, .proc/break_out, user)
+	INVOKE_ASYNC(src, .proc/break_out)
 
-/obj/item/soulscythe/proc/break_out(mob/living/user)
-	balloon_alert(user, "you resist...")
-	if(!do_after(user, 5 SECONDS, target = src, timed_action_flags = IGNORE_TARGET_LOC_CHANGE))
-		balloon_alert(user, "interrupted!")
+/obj/item/soulscythe/proc/break_out()
+	if(!use_blood(10))
 		return
-	balloon_alert(user, "you break out")
+	balloon_alert(soul, "you resist...")
+	if(!do_after(soul, 5 SECONDS, target = src, timed_action_flags = IGNORE_TARGET_LOC_CHANGE))
+		balloon_alert(soul, "interrupted!")
+		return
+	balloon_alert(soul, "you break out")
 	if(ismob(loc))
 		var/mob/holder = loc
 		holder.temporarilyRemoveItemFromInventory(src)
@@ -449,19 +497,74 @@
 /obj/item/soulscythe/proc/on_attack(mob/living/source, atom/attacked_atom, modifiers)
 	SIGNAL_HANDLER
 
-	if(LAZYACCESS(modifiers, LEFT_CLICK))
-		if(get_dist(source, attacked_atom) > 1)
-			INVOKE_ASYNC(src, .proc/shoot_target, attacked_atom)
-		else
-			INVOKE_ASYNC(src, .proc/slash_target, attacked_atom)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		INVOKE_ASYNC(src, .proc/charge_target, attacked_atom)
+	if(!COOLDOWN_FINISHED(src, attack_cooldown) || !isturf(loc))
+		return
+	if(get_dist(source, attacked_atom) > 1)
+		INVOKE_ASYNC(src, .proc/shoot_target, attacked_atom)
+	else
+		INVOKE_ASYNC(src, .proc/slash_target, attacked_atom)
+
+/obj/item/soulscythe/proc/on_secondary_attack(mob/living/source, atom/attacked_atom, modifiers)
+	SIGNAL_HANDLER
+
+	if(!COOLDOWN_FINISHED(src, attack_cooldown) || !isturf(loc))
+		return
+	INVOKE_ASYNC(src, .proc/charge_target, attacked_atom)
 
 /obj/item/soulscythe/proc/shoot_target(atom/attacked_atom)
+	if(!use_blood(15))
+		return
+	COOLDOWN_START(src, attack_cooldown, 3 SECONDS)
+	var/obj/projectile/projectile = new /obj/projectile/soulscythe(get_turf(src))
+	projectile.preparePixelProjectile(attacked_atom, src)
+	projectile.firer = src
+	projectile.fire(null, attacked_atom)
+	visible_message(span_danger("[src] fires at [attacked_atom]!"), span_notice("You fire at [attacked_atom]!"))
+	playsound(src, 'sound/magic/fireball.ogg', 50, TRUE)
 
 /obj/item/soulscythe/proc/slash_target(atom/attacked_atom)
+	if(!use_blood(5))
+		return
+	COOLDOWN_START(src, attack_cooldown, 1 SECONDS)
+	animate(src)
+	SpinAnimation(5)
+	addtimer(CALLBACK(src, .proc/reset_spin), 1 SECONDS)
+	if(isliving(attacked_atom))
+		var/mob/living/attacked_mob = attacked_atom
+		if(attacked_mob.stat != DEAD)
+			give_blood(10)
+		attacked_mob.apply_damage(damage = force, sharpness = SHARP_EDGED, bare_wound_bonus = 5)
+		to_chat(attacked_mob, span_userdanger("You're slashed by [src]!"))
+	else if(ismachinery(attacked_atom) || isstructure(attacked_atom))
+		var/obj/attacked_obj = attacked_atom
+		attacked_obj.take_damage(force, BRUTE, MELEE, FALSE)
+	else
+		return
+	visible_message(span_danger("[src] slashes [attacked_atom]!"), span_notice("You slash [attacked_atom]!"))
+	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE)
+	do_attack_animation(attacked_atom, ATTACK_EFFECT_SLASH)
 
 /obj/item/soulscythe/proc/charge_target(atom/attacked_atom)
+	if(charging || !use_blood(30))
+		return
+	COOLDOWN_START(src, attack_cooldown, 5 SECONDS)
+	animate(src)
+	charging = TRUE
+	visible_message(span_danger("[src] starts charging..."))
+	balloon_alert(soul, "you start charging...")
+	if(!do_after(soul, 2 SECONDS, target = src, timed_action_flags = IGNORE_TARGET_LOC_CHANGE))
+		balloon_alert(soul, "interrupted!")
+		return
+	visible_message(span_danger("[src] charges at [attacked_atom]!"), span_notice("You charge at [attacked_atom]!"))
+	new /obj/effect/temp_visual/mook_dust(get_turf(src))
+	playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE)
+	SpinAnimation(1)
+	throwforce *= 2
+	throw_at(attacked_atom, 10, 3, soul, FALSE)
+
+/obj/item/soulscythe/proc/reset_spin()
+	animate(src)
+	SpinAnimation(15)
 
 /mob/living/simple_animal/soulscythe
 	name = "mysterious spirit"
@@ -470,6 +573,28 @@
 	gender = NEUTER
 	mob_biotypes = MOB_SPIRIT
 	faction = list()
+	/// Blood level, used for movement and abilities in a soulscythe
+	var/blood_level = MAX_BLOOD_LEVEL
+
+/mob/living/simple_animal/soulscythe/get_status_tab_items()
+	. = ..()
+	. += "Blood: [blood_level]/[MAX_BLOOD_LEVEL]"
+
+/mob/living/simple_animal/soulscythe/Life(delta_time, times_fired)
+	. = ..()
+	if(!stat)
+		blood_level = min(MAX_BLOOD_LEVEL, blood_level + round(1 * delta_time))
+
+/obj/projectile/soulscythe
+	name = "soulslash"
+	icon_state = "soulslash"
+	flag = MELEE //jokair
+	damage = 15
+	light_range = 1
+	light_power = 1
+	light_color = LIGHT_COLOR_BLOOD_MAGIC
+
+#undef MAX_BLOOD_LEVEL
 
 //Ash Drake: Spectral Blade, Lava Staff, Dragon's Blood
 
