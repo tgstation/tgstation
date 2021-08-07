@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/split
 	display_name = "Split"
-	display_desc = "Splits a string by the separator, turning it into a list"
+	desc = "Splits a string by the separator, turning it into a list"
 
 	/// The input port
 	var/datum/port/input/input_port
