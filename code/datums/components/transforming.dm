@@ -2,7 +2,10 @@
  * Transforming weapon component. For weapons that swap between states.
  * For example: Energy swords, cleaving saws, switch blades.
  *
- * Values will not update/change on transform if no values are passed in initalize.
+ * Used to easily make an item that can be attack_self'd to gain force or change mode.
+ *
+ * Only values passed on initialize will update when the item is activated (except the icon_state).
+ * The icon_state of the item will swap between "[icon_state]" and "[icon_state]_on".
  */
 /datum/component/transforming
 	/// Whether the weapon is transformed
