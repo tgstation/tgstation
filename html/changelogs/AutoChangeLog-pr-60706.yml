@@ -1,4 +1,0 @@
-author: "Nari Harimoto"
-delete-after: True
-changes: 
-  - bugfix: "chapel areas now work properly, no more APCs thinking its in space on tram"
