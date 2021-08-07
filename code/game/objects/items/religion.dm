@@ -12,8 +12,10 @@
 	var/inspiration_available = TRUE //If this banner can be used to inspire crew
 	var/morale_time = 0
 	var/morale_cooldown = 600 //How many deciseconds between uses
-	var/list/job_loyalties //Mobs with any of these assigned roles will be inspired
-	var/list/role_loyalties //Mobs with any of these special roles will be inspired
+	/// Mobs with assigned roles whose department bitflags match these will be inspired.
+	var/job_loyalties = NONE
+	/// Mobs with any of these special roles will be inspired
+	var/list/role_loyalties
 	var/warcry
 
 /obj/item/banner/examine(mob/user)
@@ -38,14 +40,14 @@
 	morale_time = world.time + morale_cooldown
 
 	var/list/inspired = list()
-	var/has_job_loyalties = LAZYLEN(job_loyalties)
+	var/has_job_loyalties = job_loyalties != NONE
 	var/has_role_loyalties = LAZYLEN(role_loyalties)
 	inspired += user //The user is always inspired, regardless of loyalties
 	for(var/mob/living/carbon/human/H in range(4, get_turf(src)))
 		if(H.stat == DEAD || H == user)
 			continue
 		if(H.mind && (has_job_loyalties || has_role_loyalties))
-			if(has_job_loyalties && (H.mind.assigned_role in job_loyalties))
+			if(has_job_loyalties && (H.mind.assigned_role.departments_bitflags & job_loyalties))
 				inspired += H
 			else if(has_role_loyalties && (H.mind.special_role in role_loyalties))
 				inspired += H
@@ -86,7 +88,7 @@
 
 /obj/item/banner/security/Initialize()
 	. = ..()
-	job_loyalties = GLOB.security_positions
+	job_loyalties = DEPARTMENT_BITFLAG_SECURITY
 
 /obj/item/banner/security/mundane
 	inspiration_available = FALSE
@@ -110,7 +112,7 @@
 
 /obj/item/banner/medical/Initialize()
 	. = ..()
-	job_loyalties = GLOB.medical_positions
+	job_loyalties = DEPARTMENT_BITFLAG_MEDICAL
 
 /obj/item/banner/medical/mundane
 	inspiration_available = FALSE
@@ -142,7 +144,7 @@
 
 /obj/item/banner/science/Initialize()
 	. = ..()
-	job_loyalties = GLOB.science_positions
+	job_loyalties = DEPARTMENT_BITFLAG_SCIENCE
 
 /obj/item/banner/science/mundane
 	inspiration_available = FALSE
@@ -169,7 +171,7 @@
 
 /obj/item/banner/cargo/Initialize()
 	. = ..()
-	job_loyalties = GLOB.supply_positions
+	job_loyalties = DEPARTMENT_BITFLAG_CARGO
 
 /obj/item/banner/cargo/mundane
 	inspiration_available = FALSE
@@ -193,7 +195,7 @@
 
 /obj/item/banner/engineering/Initialize()
 	. = ..()
-	job_loyalties = GLOB.engineering_positions
+	job_loyalties = DEPARTMENT_BITFLAG_ENGINEERING
 
 /obj/item/banner/engineering/mundane
 	inspiration_available = FALSE
@@ -217,7 +219,7 @@
 
 /obj/item/banner/command/Initialize()
 	. = ..()
-	job_loyalties = GLOB.command_positions
+	job_loyalties = DEPARTMENT_BITFLAG_COMMAND
 
 /obj/item/banner/command/mundane
 	inspiration_available = FALSE

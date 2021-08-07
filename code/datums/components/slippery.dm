@@ -1,5 +1,6 @@
 /// Slippery component, for making anything slippery. Of course.
 /datum/component/slippery
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// If the slip forces you to drop held items.
 	var/force_drop_items = FALSE
 	/// How long the slip keeps you knocked down.
@@ -41,6 +42,22 @@
 	else
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/Slip)
 
+/datum/component/slippery/InheritComponent(datum/component/slippery/component, i_am_original, knockdown, lube_flags = NONE, datum/callback/callback, paralyze, force_drop = FALSE, slot_whitelist)
+	if(component)
+		knockdown = component.knockdown_time
+		lube_flags = component.lube_flags
+		callback = component.callback
+		paralyze = component.paralyze_time
+		force_drop = component.force_drop_items
+		slot_whitelist = component.slot_whitelist
+
+	src.knockdown_time = max(knockdown, 0)
+	src.paralyze_time = max(paralyze, 0)
+	src.force_drop_items = force_drop
+	src.lube_flags = lube_flags
+	src.callback = callback
+	if(slot_whitelist)
+		src.slot_whitelist = slot_whitelist
 /*
  * The proc that does the sliping. Invokes the slip callback we have set.
  *
@@ -96,8 +113,9 @@
 	SIGNAL_HANDLER
 
 	UnregisterSignal(user, COMSIG_PARENT_PREQDELETED)
-	RemoveElement(/datum/element/connect_loc_behalf, holder, holder_connections)
-	holder = null
+	if(holder)
+		RemoveElement(/datum/element/connect_loc_behalf, holder, holder_connections)
+		holder = null
 
 /*
  * The slip proc, but for equipped items.

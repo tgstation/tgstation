@@ -14,11 +14,11 @@
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
 	var/base_action = /datum/action/spell_action
-	var/mob/living/owner
+	var/datum/weakref/owner
 
-/obj/effect/proc_holder/Initialize(mob/living/owner)
+/obj/effect/proc_holder/Initialize(mapload, mob/living/new_owner)
 	. = ..()
-	src.owner = owner
+	owner = WEAKREF(new_owner)
 	if(has_action)
 		action = new base_action(src)
 
@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 		var/mob/living/carbon/human/H = user
 
-		var/list/casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe,
+		var/static/list/casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe,
 		/obj/item/clothing/suit/space/hardsuit/wizard,
 		/obj/item/clothing/head/wizard,
 		/obj/item/clothing/head/helmet/space/hardsuit/wizard,

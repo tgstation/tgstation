@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/length
 	display_name = "Length"
-	display_desc = "A component that returns the length of its input."
+	desc = "A component that returns the length of its input."
 
 	/// The input port
 	var/datum/port/input/input_port
@@ -19,11 +19,6 @@
 	input_port = add_input_port("Input", PORT_TYPE_ANY)
 
 	output = add_output_port("Length", PORT_TYPE_NUMBER)
-
-/obj/item/circuit_component/length/Destroy()
-	input_port = null
-	output = null
-	return ..()
 
 /obj/item/circuit_component/length/input_received(datum/port/input/port)
 	. = ..()

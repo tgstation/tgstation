@@ -8,7 +8,7 @@
 	speak = list("EHEHEHEHEH","eh?")
 	speak_emote = list("brays")
 	emote_hear = list("brays.")
-	emote_see = list("shakes its head.", "stamps a foot.", "glares around.")
+	emote_see = list("shakes their head.", "stamps a foot.", "glares around.")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -110,7 +110,7 @@
 	speak = list("moo?","moo","MOOOOOO")
 	speak_emote = list("moos","moos hauntingly")
 	emote_hear = list("brays.")
-	emote_see = list("shakes its head.")
+	emote_see = list("shakes her head.")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -230,7 +230,7 @@
 	speak = list("Cherp.","Cherp?","Chirrup.","Cheep!")
 	speak_emote = list("cheeps")
 	emote_hear = list("cheeps.")
-	emote_see = list("pecks at the ground.","flaps its tiny wings.")
+	emote_see = list("pecks at the ground.","flaps her tiny wings.")
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 2
@@ -289,7 +289,7 @@
 	speak = list("Cluck!","BWAAAAARK BWAK BWAK BWAK!","Bwaak bwak.")
 	speak_emote = list("clucks","croons")
 	emote_hear = list("clucks.")
-	emote_see = list("pecks at the ground.","flaps its wings viciously.")
+	emote_see = list("pecks at the ground.","flaps her wings viciously.")
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 3
@@ -321,7 +321,7 @@
 	AddComponent(/datum/component/egg_layer,\
 		/obj/item/food/egg,\
 		list(/obj/item/food/grown/wheat),\
-		feed_messages = list("[p_they()] clucks happily."),\
+		feed_messages = list("She clucks happily."),\
 		lay_messages = EGG_LAYING_MESSAGES,\
 		eggs_left = 0,\
 		eggs_added_from_eating = rand(1, 4),\
@@ -365,7 +365,7 @@
 	speak = list("Weeeeeeee?","Weeee","WEOOOOOOOOOO")
 	speak_emote = list("grunts","grunts lowly")
 	emote_hear = list("brays.")
-	emote_see = list("shakes its head.")
+	emote_see = list("shakes her head.")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6

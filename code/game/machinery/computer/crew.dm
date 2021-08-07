@@ -22,7 +22,7 @@
 
 /obj/item/circuit_component/medical_console_data
 	display_name = "Crew Monitoring Data"
-	display_desc = "Outputs the medical statuses of people on the crew monitoring computer, where it can then be filtered with a Select Query component."
+	desc = "Outputs the medical statuses of people on the crew monitoring computer, where it can then be filtered with a Select Query component."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The records retrieved
@@ -33,11 +33,6 @@
 /obj/item/circuit_component/medical_console_data/Initialize()
 	. = ..()
 	records = add_output_port("Crew Monitoring Data", PORT_TYPE_TABLE)
-
-/obj/item/circuit_component/medical_console_data/Destroy()
-	records = null
-	return ..()
-
 
 /obj/item/circuit_component/medical_console_data/register_usb_parent(atom/movable/parent)
 	. = ..()
@@ -168,11 +163,11 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		ui.open()
 
 /datum/crewmonitor/proc/show(mob/M, source)
-	ui_sources[M] = source
+	ui_sources[WEAKREF(M)] = source
 	ui_interact(M)
 
 /datum/crewmonitor/ui_host(mob/user)
-	return ui_sources[user]
+	return ui_sources[WEAKREF(user)]
 
 /datum/crewmonitor/ui_data(mob/user)
 	var/z = user.z
@@ -189,9 +184,9 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		return data_by_z["[z]"]
 
 	var/list/results = list()
-	for(var/tracked_mob in GLOB.suit_sensors_list | GLOB.nanite_sensors_list)
+	for(var/tracked_mob in GLOB.suit_sensors_list)
 		if(!tracked_mob)
-			stack_trace("Null entry in suit sensors or nanite sensors list.")
+			stack_trace("Null entry in suit sensors list.")
 			continue
 
 		var/mob/living/tracked_living_mob = tracked_mob
@@ -208,31 +203,25 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		if(pos.z != z && (!is_station_level(pos.z) || !is_station_level(z)))
 			continue
 
-		var/sensor_mode
+		var/mob/living/carbon/human/tracked_human = tracked_living_mob
 
-		// Set sensor level based on whether we're in the nanites list or the suit sensor list.
-		if(tracked_living_mob in GLOB.nanite_sensors_list)
-			sensor_mode = SENSOR_COORDS
-		else
-			var/mob/living/carbon/human/tracked_human = tracked_living_mob
+		// Check their humanity.
+		if(!ishuman(tracked_human))
+			stack_trace("Non-human mob is in suit_sensors_list: [tracked_living_mob] ([tracked_living_mob.type])")
+			continue
 
-			// Check their humanity.
-			if(!ishuman(tracked_human))
-				stack_trace("Non-human mob is in suit_sensors_list: [tracked_living_mob] ([tracked_living_mob.type])")
-				continue
+		// Check they have a uniform
+		var/obj/item/clothing/under/uniform = tracked_human.w_uniform
+		if (!istype(uniform))
+			stack_trace("Human without a suit sensors compatible uniform is in suit_sensors_list: [tracked_human] ([tracked_human.type]) ([uniform?.type])")
+			continue
 
-			// Check they have a uniform
-			var/obj/item/clothing/under/uniform = tracked_human.w_uniform
-			if (!istype(uniform))
-				stack_trace("Human without a suit sensors compatible uniform is in suit_sensors_list: [tracked_human] ([tracked_human.type]) ([uniform?.type])")
-				continue
+		// Check if their uniform is in a compatible mode.
+		if((uniform.has_sensor <= NO_SENSORS) || !uniform.sensor_mode)
+			stack_trace("Human without active suit sensors is in suit_sensors_list: [tracked_human] ([tracked_human.type]) ([uniform.type])")
+			continue
 
-			// Check if their uniform is in a compatible mode.
-			if((uniform.has_sensor <= NO_SENSORS) || !uniform.sensor_mode)
-				stack_trace("Human without active suit sensors is in suit_sensors_list: [tracked_human] ([tracked_human.type]) ([uniform.type])")
-				continue
-
-			sensor_mode = uniform.sensor_mode
+		var/sensor_mode = uniform.sensor_mode
 
 		// The entry for this human
 		var/list/entry = list(

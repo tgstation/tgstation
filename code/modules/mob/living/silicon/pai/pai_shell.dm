@@ -58,7 +58,7 @@
 	stop_pulling()
 	if(istype(loc, /obj/item/clothing/head/mob_holder))
 		var/obj/item/clothing/head/mob_holder/MH = loc
-		MH.release()
+		MH.release(display_messages = FALSE)
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = card
@@ -86,11 +86,31 @@
 	var/choice = show_radial_menu(src, anchor, skins, custom_check = CALLBACK(src, .proc/check_menu, anchor), radius = 40, require_near = TRUE)
 	if(!choice)
 		return FALSE
+	set_holochassis(choice)
+	to_chat(src, span_boldnotice("You switch your holochassis projection composite to [choice]."))
+	update_resting()
+
+/**
+ * Sets the holochassis skin and updates the icons
+ * * Arguments:
+ * * choice The animal skin that will be used for the pAI holoform
+ */
+/mob/living/silicon/pai/proc/set_holochassis(choice)
+	if(!choice)
+		return FALSE
 	chassis = choice
 	icon_state = "[chassis]"
 	held_state = "[chassis]"
-	update_resting()
-	to_chat(src, span_boldnotice("You switch your holochassis projection composite to [chassis]."))
+
+/**
+ * Polymorphs the pai into a random holoform
+ */
+/mob/living/silicon/pai/wabbajack()
+	if(length(possible_chassis) < 2)
+		return
+	var/holochassis = pick(possible_chassis - chassis)
+	set_holochassis(holochassis)
+	to_chat(src, span_boldnotice("Your holochassis form morphs into that of a [holochassis]."))
 
 /**
  * Checks if we are allowed to interact with a radial menu

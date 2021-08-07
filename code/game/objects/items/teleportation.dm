@@ -167,15 +167,17 @@
 
 	var/list/locations = list()
 	for(var/obj/machinery/computer/teleporter/computer in GLOB.machines)
-		if(!computer.target)
+		var/atom/target = computer.target_ref?.resolve()
+		if(!target)
+			computer.target_ref = null
 			continue
-		var/area/computer_area = get_area(computer.target)
+		var/area/computer_area = get_area(target)
 		if(!computer_area || (computer_area.area_flags & NOTELEPORT))
 			continue
 		if(computer.power_station?.teleporter_hub && computer.power_station.engaged)
-			locations["[get_area(computer.target)] (Active)"] = computer
+			locations["[get_area(target)] (Active)"] = computer
 		else
-			locations["[get_area(computer.target)] (Inactive)"] = computer
+			locations["[get_area(target)] (Inactive)"] = computer
 
 	locations["None (Dangerous)"] = PORTAL_LOCATION_DANGEROUS
 
@@ -207,7 +209,7 @@
 		user.show_message(span_notice("[src] is recharging!"))
 		return
 
-	var/teleport_turf
+	var/atom/teleport_target
 
 	if (teleport_location == PORTAL_LOCATION_DANGEROUS)
 		var/list/dangerous_turfs = list()
@@ -221,16 +223,19 @@
 				continue
 			dangerous_turfs += dangerous_turf
 
-		teleport_turf = pick(dangerous_turfs)
+		teleport_target = pick(dangerous_turfs)
 	else
 		var/obj/machinery/computer/teleporter/computer = teleport_location
-		teleport_turf = computer.target
+		var/atom/target = computer.target_ref?.resolve()
+		if(!target)
+			computer.target_ref = null
+		teleport_target = target
 
-	if (teleport_turf == null)
+	if (teleport_target == null)
 		to_chat(user, span_notice("[src] vibrates, then stops. Maybe you should try something else."))
 		return
 
-	var/area/teleport_area = get_area(teleport_turf)
+	var/area/teleport_area = get_area(teleport_target)
 	if (teleport_area.area_flags & NOTELEPORT)
 		to_chat(user, span_notice("[src] is malfunctioning."))
 		return
@@ -238,7 +243,7 @@
 	if (!can_teleport_notifies(user))
 		return
 
-	var/list/obj/effect/portal/created = create_portal_pair(get_turf(user), get_teleport_turf(get_turf(teleport_turf)), 300, 1, null, atmos_link_override)
+	var/list/obj/effect/portal/created = create_portal_pair(get_turf(user), get_teleport_turf(get_turf(teleport_target)), 300, 1, null, atmos_link_override)
 	if(LAZYLEN(created) != 2)
 		return
 

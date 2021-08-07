@@ -119,19 +119,4 @@
 
 	return export
 
-/client/proc/export_dynamic_json()
-	set name = "Export dynamic.json"
-	set category = "Debug"
-
-	var/datum/game_mode/dynamic/dynamic = SSticker.mode
-
-	var/list/export = list()
-	export["Roundstart"] = export_dynamic_json_of(dynamic.roundstart_rules)
-	export["Midround"] = export_dynamic_json_of(dynamic.midround_rules)
-	export["Latejoin"] = export_dynamic_json_of(dynamic.latejoin_rules)
-
-	message_admins("Writing file...")
-	WRITE_FILE(file("[GLOB.log_directory]/dynamic.json"), json_encode(export))
-	message_admins("Writing complete.")
-
 #endif

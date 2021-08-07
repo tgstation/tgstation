@@ -1,4 +1,0 @@
-author: "spessbro"
-delete-after: True
-changes: 
-  - qol: "made portaseeder use ctrl-click instead of a verb"

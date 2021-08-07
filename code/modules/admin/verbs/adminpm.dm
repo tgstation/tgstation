@@ -25,17 +25,17 @@
 			html = span_danger("Error: Admin-PM-Panel: Only administrators may use this command."),
 			confidential = TRUE)
 		return
-	var/list/client/targets[0]
-	for(var/client/T)
-		if(T.mob)
-			if(isnewplayer(T.mob))
-				targets["(New Player) - [T]"] = T
-			else if(isobserver(T.mob))
-				targets["[T.mob.name](Ghost) - [T]"] = T
+	var/list/targets = list()
+	for(var/client/client as anything in GLOB.clients)
+		if(client.mob)
+			if(isnewplayer(client.mob))
+				targets["(New Player) - [client]"] = client
+			else if(isobserver(client.mob))
+				targets["[client.mob.name](Ghost) - [client]"] = client
 			else
-				targets["[T.mob.real_name](as [T.mob.name]) - [T]"] = T
+				targets["[client.mob.real_name](as [client.mob.name]) - [client]"] = client
 		else
-			targets["(No Mob) - [T]"] = T
+			targets["(No Mob) - [client]"] = client
 	var/target = input(src,"To whom shall we send a message?","Admin PM",null) as null|anything in sortList(targets)
 	cmd_admin_pm(targets[target],null)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

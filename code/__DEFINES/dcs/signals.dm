@@ -25,6 +25,8 @@
 #define COMSIG_GLOB_BUTTON_PRESSED "!button_pressed"
 /// job subsystem has spawned and equipped a new mob
 #define COMSIG_GLOB_JOB_AFTER_SPAWN "!job_after_spawn"
+/// job datum has been called to deal with the aftermath of a latejoin spawn
+#define COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN "!job_after_latejoin_spawn"
 /// crewmember joined the game (mob/living, rank)
 #define COMSIG_GLOB_CREWMEMBER_JOINED "!crewmember_joined"
 /// Random event is trying to roll. (/datum/round_event_control/random_event)
@@ -40,6 +42,8 @@
 	#define LINKED_UP (1<<0)
 /// an obj/item is created! (obj/item/created_item)
 #define COMSIG_GLOB_NEW_ITEM "!new_item"
+/// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
+#define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
 /// a weather event of some kind occured
 #define COMSIG_WEATHER_TELEGRAPH(event_type) "!weather_telegraph [event_type]"
 #define COMSIG_WEATHER_START(event_type) "!weather_start [event_type]"
@@ -62,7 +66,7 @@
 // /datum signals
 /// when a component is added to a datum: (/datum/component)
 #define COMSIG_COMPONENT_ADDED "component_added"
-/// before a component is removed from a datum because of RemoveComponent: (/datum/component)
+/// before a component is removed from a datum because of ClearFromParent: (/datum/component)
 #define COMSIG_COMPONENT_REMOVING "component_removing"
 /// before a datum's Destroy() is called: (force), returning a nonzero value will cancel the qdel operation
 #define COMSIG_PARENT_PREQDELETED "parent_preqdeleted"
@@ -181,6 +185,10 @@
 ///from obj/machinery/bsa/full/proc/fire(): ()
 #define COMSIG_ATOM_BSA_BEAM "atom_bsa_beam_pass"
 	#define COMSIG_ATOM_BLOCKS_BSA_BEAM (1<<0)
+///from base of atom/relaymove(): (mob/living/user, direction)
+#define COMSIG_ATOM_RELAYMOVE "atom_relaymove"
+	///prevents the "you cannot move while buckled! message"
+	#define COMSIG_BLOCK_RELAYMOVE (1<<0)
 
 ///from [/datum/controller/subsystem/explosions/proc/explode]: (/list(/atom, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke))
 #define COMSIG_ATOM_EXPLODE "atom_explode"
@@ -513,7 +521,9 @@
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 
 ///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone)
-#define COMSIG_MOB_APPLY_DAMGE "mob_apply_damage"
+#define COMSIG_MOB_APPLY_DAMAGE "mob_apply_damage"
+///from base of /mob/living/attack_alien(): (user)
+#define COMSIG_MOB_ATTACK_ALIEN "mob_attack_alien"
 ///from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_THROW "mob_throw"
 ///from base of /mob/verb/examinate(): (atom/target)
@@ -851,6 +861,11 @@
 ///from [/obj/structure/closet/supplypod/proc/preOpen]:
 #define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
 
+///from /obj/item/storage/book/bible/afterattack(): (mob/user, proximity)
+#define COMSIG_BIBLE_SMACKED "bible_smacked"
+	///stops the bible chain from continuing. When all of the effects of the bible smacking have been moved to a signal we can kill this
+	#define COMSIG_END_BIBLE_CHAIN (1<<0)
+
 ///Closets
 ///From base of [/obj/structure/closet/proc/insert]: (atom/movable/inserted)
 #define COMSIG_CLOSET_INSERT "closet_insert"
@@ -934,6 +949,8 @@
 #define COMSIG_MOB_FIRED_GUN "mob_fired_gun"
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
 #define COMSIG_GUN_FIRED "gun_fired"
+///called in /obj/item/gun/ballistic/process_chamber (casing)
+#define COMSIG_CASING_EJECTED "casing_ejected"
 
 // /obj/effect/proc_holder/spell signals
 
@@ -990,6 +1007,8 @@
 #define COMSIG_JOB_RECEIVED "job_received"
 ///from /mob/living/carbon/human/proc/set_coretemperature(): (oldvalue, newvalue)
 #define COMSIG_HUMAN_CORETEMP_CHANGE "human_coretemp_change"
+///from /datum/species/handle_fire. Called when the human is set on fire and burning clothes and stuff
+#define COMSIG_HUMAN_BURNING "human_burning"
 
 // /datum/species signals
 
@@ -1103,49 +1122,6 @@
 
 ///(customer, container) venue signal sent when a venue sells an item. source is the thing sold, which can be a datum, so we send container for location checks
 #define COMSIG_ITEM_SOLD_TO_CUSTOMER "item_sold_to_customer"
-
-//Nanites
-
-///() returns TRUE if nanites are found
-#define COMSIG_HAS_NANITES "has_nanites"
-///() returns TRUE if nanites have stealth
-#define COMSIG_NANITE_IS_STEALTHY "nanite_is_stealthy"
-///() deletes the nanite component
-#define COMSIG_NANITE_DELETE "nanite_delete"
-///(list/nanite_programs) - makes the input list a copy the nanites' program list
-#define COMSIG_NANITE_GET_PROGRAMS "nanite_get_programs"
-///(amount) Returns nanite amount
-#define COMSIG_NANITE_GET_VOLUME "nanite_get_volume"
-///(amount) Sets current nanite volume to the given amount
-#define COMSIG_NANITE_SET_VOLUME "nanite_set_volume"
-///(amount) Adjusts nanite volume by the given amount
-#define COMSIG_NANITE_ADJUST_VOLUME "nanite_adjust"
-///(amount) Sets maximum nanite volume to the given amount
-#define COMSIG_NANITE_SET_MAX_VOLUME "nanite_set_max_volume"
-///(amount(0-100)) Sets cloud ID to the given amount
-#define COMSIG_NANITE_SET_CLOUD "nanite_set_cloud"
-///(method) Modify cloud sync status. Method can be toggle, enable or disable
-#define COMSIG_NANITE_SET_CLOUD_SYNC "nanite_set_cloud_sync"
-///(amount) Sets safety threshold to the given amount
-#define COMSIG_NANITE_SET_SAFETY "nanite_set_safety"
-///(amount) Sets regeneration rate to the given amount
-#define COMSIG_NANITE_SET_REGEN "nanite_set_regen"
-///(code(1-9999)) Called when sending a nanite signal to a mob.
-#define COMSIG_NANITE_SIGNAL "nanite_signal"
-///(comm_code(1-9999), comm_message) Called when sending a nanite comm signal to a mob.
-#define COMSIG_NANITE_COMM_SIGNAL "nanite_comm_signal"
-///(mob/user, full_scan) - sends to chat a scan of the nanites to the user, returns TRUE if nanites are detected
-#define COMSIG_NANITE_SCAN "nanite_scan"
-///(list/data, scan_level) - adds nanite data to the given data list - made for ui_data procs
-#define COMSIG_NANITE_UI_DATA "nanite_ui_data"
-///(datum/nanite_program/new_program, datum/nanite_program/source_program) Called when adding a program to a nanite component
-#define COMSIG_NANITE_ADD_PROGRAM "nanite_add_program"
-	///Installation successful
-	#define COMPONENT_PROGRAM_INSTALLED (1<<0)
-	///Installation failed, but there are still nanites
-	#define COMPONENT_PROGRAM_NOT_INSTALLED (1<<1)
-///(datum/component/nanites, full_overwrite, copy_activation) Called to sync the target's nanites to a given nanite component
-#define COMSIG_NANITE_SYNC "nanite_sync"
 
 // /datum/component/storage signals
 
@@ -1347,6 +1323,15 @@
 /// Sent to [/obj/item/circuit_component] when it is removed from a circuit. (/obj/item/integrated_circuit)
 #define COMSIG_CIRCUIT_COMPONENT_REMOVED "circuit_component_removed"
 
+/// Called when the integrated circuit's cell is set.
+#define COMSIG_CIRCUIT_SET_CELL "circuit_set_cell"
+
+/// Called when the integrated circuit is turned on or off.
+#define COMSIG_CIRCUIT_SET_ON "circuit_set_on"
+
+/// Called when the integrated circuit's shell is set.
+#define COMSIG_CIRCUIT_SET_SHELL "circuit_set_shell"
+
 /// Sent to an atom when a [/obj/item/usb_cable] attempts to connect to something. (/obj/item/usb_cable/usb_cable, /mob/user)
 #define COMSIG_ATOM_USB_CABLE_TRY_ATTACH "usb_cable_try_attach"
 	/// Attaches the USB cable to the atom. If the USB cables moves away, it will disconnect.
@@ -1359,6 +1344,12 @@
 	/// Cancels the attack chain, but without performing any other action.
 	#define COMSIG_CANCEL_USB_CABLE_ATTACK (1<<2)
 
+/// Called when the circuit component is saved.
+#define COMSIG_CIRCUIT_COMPONENT_SAVE "circuit_component_save"
+
+/// Called when an external object is loaded.
+#define COMSIG_MOVABLE_CIRCUIT_LOADED "movable_circuit_loaded"
+
 /// Sent from /obj/structure/industrial_lift/tram when its travelling status updates. (travelling)
 #define COMSIG_TRAM_SET_TRAVELLING "tram_set_travelling"
 
@@ -1367,6 +1358,15 @@
 
 /// Called in /obj/structure/moneybot/add_money(). (to_add)
 #define COMSIG_MONEYBOT_ADD_MONEY "moneybot_add_money"
+
+/// Called when somebody passes through a scanner gate and it triggers
+#define COMSIG_SCANGATE_PASS_TRIGGER "scangate_pass_trigger"
+
+/// Called when somebody passes through a scanner gate and it does not trigger
+#define COMSIG_SCANGATE_PASS_NO_TRIGGER "scangate_pass_no_trigger"
+
+/// Called when something passes through a scanner gate shell
+#define COMSIG_SCANGATE_SHELL_PASS "scangate_shell_pass"
 
 // Merger datum signals
 /// Called on the object being added to a merger group: (datum/merger/new_merger)
@@ -1381,3 +1381,10 @@
 #define COMSIG_VACUUM_BAG_ATTACH "comsig_vacuum_bag_attach"
 /// Called on a bag being detached from a vacuum parent
 #define COMSIG_VACUUM_BAG_DETACH "comsig_vacuum_bag_detach"
+
+// Organ signals
+/// Called on the organ when it is implanted into someone (mob/living/carbon/receiver)
+#define COMSIG_ORGAN_IMPLANTED "comsig_organ_implanted"
+
+/// Called on the organ when it is removed from someone (mob/living/carbon/old_owner)
+#define COMSIG_ORGAN_REMOVED "comsig_organ_removed"
