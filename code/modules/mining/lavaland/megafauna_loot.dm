@@ -449,11 +449,13 @@
 	charging = FALSE
 	throwforce *= 0.5
 	reset_spin()
-	if(!isliving(hit_atom))
-		return
-	var/mob/living/hit_mob = hit_atom
-	if(hit_mob.stat != DEAD)
-		give_blood(15)
+	if(ismineralturf(hit_atom))
+		var/turf/closed/mineral/hit_rock = hit_atom
+		hit_rock.gets_drilled()
+	if(isliving(hit_atom))
+		var/mob/living/hit_mob = hit_atom
+		if(hit_mob.stat != DEAD)
+			give_blood(15)
 
 /obj/item/soulscythe/AllowClick()
 	return TRUE
@@ -523,23 +525,21 @@
 	playsound(src, 'sound/magic/fireball.ogg', 50, TRUE)
 
 /obj/item/soulscythe/proc/slash_target(atom/attacked_atom)
-	if(!use_blood(5))
+	if(isliving(attacked_atom) && use_blood(10))
+		var/mob/living/attacked_mob = attacked_atom
+		if(attacked_mob.stat != DEAD)
+			give_blood(15)
+		attacked_mob.apply_damage(damage = force * (ishostile(attacked_mob) ? 2 : 1), sharpness = SHARP_EDGED, bare_wound_bonus = 5)
+		to_chat(attacked_mob, span_userdanger("You're slashed by [src]!"))
+	else if((ismachinery(attacked_atom) || isstructure(attacked_atom)) && use_blood(5))
+		var/obj/attacked_obj = attacked_atom
+		attacked_obj.take_damage(force, BRUTE, MELEE, FALSE)
+	else
 		return
 	COOLDOWN_START(src, attack_cooldown, 1 SECONDS)
 	animate(src)
 	SpinAnimation(5)
 	addtimer(CALLBACK(src, .proc/reset_spin), 1 SECONDS)
-	if(isliving(attacked_atom))
-		var/mob/living/attacked_mob = attacked_atom
-		if(attacked_mob.stat != DEAD)
-			give_blood(10)
-		attacked_mob.apply_damage(damage = force, sharpness = SHARP_EDGED, bare_wound_bonus = 5)
-		to_chat(attacked_mob, span_userdanger("You're slashed by [src]!"))
-	else if(ismachinery(attacked_atom) || isstructure(attacked_atom))
-		var/obj/attacked_obj = attacked_atom
-		attacked_obj.take_damage(force, BRUTE, MELEE, FALSE)
-	else
-		return
 	visible_message(span_danger("[src] slashes [attacked_atom]!"), span_notice("You slash [attacked_atom]!"))
 	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE)
 	do_attack_animation(attacked_atom, ATTACK_EFFECT_SLASH)
@@ -593,6 +593,11 @@
 	light_range = 1
 	light_power = 1
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
+
+/obj/projectile/soulscythe/on_hit(atom/target, blocked = FALSE)
+	if(ishostile(target))
+		damage *= 2
+	return ..()
 
 #undef MAX_BLOOD_LEVEL
 
