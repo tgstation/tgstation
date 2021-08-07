@@ -85,6 +85,7 @@
 	initialize_actionspeed()
 	update_movespeed(TRUE)
 	become_hearing_sensitive()
+	log_mob_tag("\[[tag]\] CREATED: [key_name(src)]")
 
 /**
  * Generate the tag for this mob
@@ -1082,6 +1083,9 @@
 				// Only update if this player is a target
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
+
+	log_mob_tag("\[[tag]\] RENAMED: [key_name(src)]")
+
 	return TRUE
 
 ///Updates GLOB.data_core records with new name , see mob/living/carbon/human

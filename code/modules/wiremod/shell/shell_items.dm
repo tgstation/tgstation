@@ -57,3 +57,9 @@
 	name = "brain-computer interface assembly"
 	icon_state = "bci-open"
 	shell_to_spawn = /obj/item/organ/cyberimp/bci
+
+/obj/item/shell/scanner_gate
+	name = "scanner gate assembly"
+	icon = 'icons/obj/machines/scangate.dmi'
+	icon_state = "scangate_black_open"
+	shell_to_spawn = /obj/structure/scanner_gate_shell
