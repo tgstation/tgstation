@@ -11,6 +11,7 @@ export const DisplayName = (props, context) => {
   const TypeDisplayHandler = DATATYPE_DISPLAY_HANDLERS[port.type || 'unknown'];
 
   const hasInput = !isOutput
+    && !port.connected_to?.length
     && InputComponent;
 
   const displayType = TypeDisplayHandler? TypeDisplayHandler(port) : port.type;
