@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall
 	name = "Invisible Wall"
 	desc = "The mime's performance transmutates a wall into physical reality."
-	school = "mime"
+	school = SCHOOL_MIME
 	panel = "Mime"
 	summon_type = list(/obj/effect/forcefield/mime)
 	invocation_type = INVOCATION_EMOTE
@@ -21,7 +21,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/Click()
 	if(usr?.mind)
 		if(!usr.mind.miming)
-			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
+			to_chat(usr, span_warning("You must dedicate yourself to silence first!"))
 			return
 		invocation = "<B>[usr.real_name]</B> looks as if a wall is in front of [usr.p_them()]."
 	else
@@ -31,7 +31,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair
 	name = "Invisible Chair"
 	desc = "The mime's performance transmutates a chair into physical reality."
-	school = "mime"
+	school = SCHOOL_MIME
 	panel = "Mime"
 	summon_type = list(/obj/structure/chair/mime)
 	invocation_type = INVOCATION_EMOTE
@@ -51,7 +51,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair/Click()
 	if(usr?.mind)
 		if(!usr.mind.miming)
-			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
+			to_chat(usr, span_warning("You must dedicate yourself to silence first!"))
 			return
 		invocation = "<B>[usr.real_name]</B> pulls out an invisible chair and sits down."
 	else
@@ -69,7 +69,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_box
 	name = "Invisible Box"
 	desc = "The mime's performance transmutates a box into physical reality."
-	school = "mime"
+	school = SCHOOL_MIME
 	panel = "Mime"
 	summon_type = list(/obj/item/storage/box/mime)
 	invocation_type = INVOCATION_EMOTE
@@ -97,7 +97,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_box/Click()
 	if(usr?.mind)
 		if(!usr.mind.miming)
-			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
+			to_chat(usr, span_warning("You must dedicate yourself to silence first!"))
 			return
 		invocation = "<B>[usr.real_name]</B> moves [usr.p_their()] hands in the shape of a cube, pressing a box out of the air."
 	else
@@ -108,7 +108,7 @@
 /obj/effect/proc_holder/spell/targeted/mime/speak
 	name = "Speech"
 	desc = "Make or break a vow of silence."
-	school = "mime"
+	school = SCHOOL_MIME
 	panel = "Mime"
 	clothes_req = FALSE
 	human_req = TRUE
@@ -128,27 +128,27 @@
 		return
 	var/mob/living/carbon/human/H = usr
 	if(H.mind.miming)
-		still_recharging_msg = "<span class='warning'>You can't break your vow of silence that fast!</span>"
+		still_recharging_msg = span_warning("You can't break your vow of silence that fast!")
 	else
-		still_recharging_msg = "<span class='warning'>You'll have to wait before you can give your vow of silence again!</span>"
+		still_recharging_msg = span_warning("You'll have to wait before you can give your vow of silence again!")
 	..()
 
 /obj/effect/proc_holder/spell/targeted/mime/speak/cast(list/targets,mob/user = usr)
 	for(var/mob/living/carbon/human/H in targets)
 		H.mind.miming=!H.mind.miming
 		if(H.mind.miming)
-			to_chat(H, "<span class='notice'>You make a vow of silence.</span>")
+			to_chat(H, span_notice("You make a vow of silence."))
 			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "vow")
 		else
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "vow", /datum/mood_event/broken_vow)
-			to_chat(H, "<span class='notice'>You break your vow of silence.</span>")
+			to_chat(H, span_notice("You break your vow of silence."))
 
 // These spells can only be gotten from the "Guide for Advanced Mimery series" for Mime Traitors.
 
 /obj/effect/proc_holder/spell/targeted/forcewall/mime
 	name = "Invisible Blockade"
 	desc = "Form an invisible three tile wide blockade."
-	school = "mime"
+	school = SCHOOL_MIME
 	panel = "Mime"
 	wall_type = /obj/effect/forcefield/mime/advanced
 	invocation_type = INVOCATION_EMOTE
@@ -167,7 +167,7 @@
 /obj/effect/proc_holder/spell/targeted/forcewall/mime/Click()
 	if(usr?.mind)
 		if(!usr.mind.miming)
-			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
+			to_chat(usr, span_warning("You must dedicate yourself to silence first!"))
 			return
 		invocation = "<B>[usr.real_name]</B> looks as if a blockade is in front of [usr.p_them()]."
 	else
@@ -177,7 +177,7 @@
 /obj/effect/proc_holder/spell/aimed/finger_guns
 	name = "Finger Guns"
 	desc = "Shoot a mimed bullet from your fingers that stuns and does some damage."
-	school = "mime"
+	school = SCHOOL_MIME
 	panel = "Mime"
 	charge_max = 300
 	clothes_req = FALSE
@@ -201,11 +201,11 @@
 /obj/effect/proc_holder/spell/aimed/finger_guns/Click()
 	var/mob/living/carbon/human/owner = usr
 	if(owner.incapacitated())
-		to_chat(owner, "<span class='warning'>You can't properly point your fingers while incapacitated.</span>")
+		to_chat(owner, span_warning("You can't properly point your fingers while incapacitated."))
 		return
 	if(usr?.mind)
 		if(!usr.mind.miming)
-			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
+			to_chat(usr, span_warning("You must dedicate yourself to silence first!"))
 			return
 		invocation = "<B>[usr.real_name]</B> fires [usr.p_their()] finger gun!"
 	else
@@ -214,7 +214,7 @@
 
 /obj/effect/proc_holder/spell/aimed/finger_guns/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(caller.incapacitated())
-		to_chat(caller, "<span class='warning'>You can't properly point your fingers while incapacitated.</span>")
+		to_chat(caller, span_warning("You can't properly point your fingers while incapacitated."))
 		if(charge_type == "recharge")
 			var/refund_percent = current_amount/projectile_amount
 			charge_counter = charge_max * refund_percent

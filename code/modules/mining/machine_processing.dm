@@ -48,7 +48,7 @@
 	* target - the atom that just moved onto the `source` turf.
 	* oldLoc - the old location that `target` was at before moving onto `source`.
 */
-/obj/machinery/mineral/proc/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
+/obj/machinery/mineral/proc/pickup_item(datum/source, atom/movable/target, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
 	return
@@ -133,9 +133,20 @@
 /obj/machinery/mineral/processing_unit/Initialize()
 	. = ..()
 	proximity_monitor = new(src, 1)
-	AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/gold, /datum/material/diamond, /datum/material/plasma, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace), INFINITY, TRUE, /obj/item/stack, _breakdown_flags=BREAKDOWN_FLAGS_ORE_PROCESSOR)
+	var/list/allowed_materials = list(/datum/material/iron,
+									/datum/material/glass,
+									/datum/material/silver,
+									/datum/material/gold,
+									/datum/material/diamond,
+									/datum/material/plasma,
+									/datum/material/uranium,
+									/datum/material/bananium,
+									/datum/material/titanium,
+									/datum/material/bluespace
+									)
+	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_ORE_PROCESSOR, allowed_items=/obj/item/stack)
 	stored_research = new /datum/techweb/specialized/autounlocking/smelter
-	selected_material = SSmaterials.GetMaterialRef(/datum/material/iron)
+	selected_material = GET_MATERIAL_REF(/datum/material/iron)
 
 /obj/machinery/mineral/processing_unit/Destroy()
 	CONSOLE = null
@@ -189,7 +200,7 @@
 
 	return dat
 
-/obj/machinery/mineral/processing_unit/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
+/obj/machinery/mineral/processing_unit/pickup_item(datum/source, atom/movable/target, direction)
 	if(QDELETED(target))
 		return
 	if(istype(target, /obj/item/stack/ore))

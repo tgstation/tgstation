@@ -27,18 +27,18 @@
 	var/obj/structure/chisel_message/existing_message = locate() in T
 
 	if(!remaining_uses && !existing_message)
-		to_chat(user, "<span class='warning'>[src] is too worn out to use.</span>")
+		to_chat(user, span_warning("[src] is too worn out to use."))
 		return
 
 	if(!good_chisel_message_location(T))
-		to_chat(user, "<span class='warning'>It's not appropriate to engrave on [T].</span>")
+		to_chat(user, span_warning("It's not appropriate to engrave on [T]."))
 		return
 
 	if(existing_message)
-		user.visible_message("<span class='notice'>[user] starts erasing [existing_message].</span>", "<span class='notice'>You start erasing [existing_message].</span>", "<span class='hear'>You hear a chipping sound.</span>")
+		user.visible_message(span_notice("[user] starts erasing [existing_message]."), span_notice("You start erasing [existing_message]."), span_hear("You hear a chipping sound."))
 		playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 		if(do_after(user, tool_speed, target = existing_message))
-			user.visible_message("<span class='notice'>[user] erases [existing_message].</span>", "<span class='notice'>You erase [existing_message][existing_message.creator_key == user.ckey ? ", refunding a use" : ""].</span>")
+			user.visible_message(span_notice("[user] erases [existing_message]."), span_notice("You erase [existing_message][existing_message.creator_key == user.ckey ? ", refunding a use" : ""]."))
 			existing_message.persists = FALSE
 			qdel(existing_message)
 			playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
@@ -48,24 +48,24 @@
 
 	var/message = stripped_input(user, "What would you like to engrave?", "Leave a message")
 	if(!message)
-		to_chat(user, "<span class='notice'>You decide not to engrave anything.</span>")
+		to_chat(user, span_notice("You decide not to engrave anything."))
 		return
 
 	if(!target.Adjacent(user) && locate(/obj/structure/chisel_message) in T)
-		to_chat(user, "<span class='warning'>Someone wrote here before you chose! Find another spot.</span>")
+		to_chat(user, span_warning("Someone wrote here before you chose! Find another spot."))
 		return
 	playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
-	user.visible_message("<span class='notice'>[user] starts engraving a message into [T]...</span>", "<span class='notice'>You start engraving a message into [T]...</span>", "<span class='hear'>You hear a chipping sound.</span>")
+	user.visible_message(span_notice("[user] starts engraving a message into [T]..."), span_notice("You start engraving a message into [T]..."), span_hear("You hear a chipping sound."))
 	if(can_use() && do_after(user, tool_speed, target = T) && can_use()) //This looks messy but it's actually really clever!
 		if(!locate(/obj/structure/chisel_message) in T)
-			user.visible_message("<span class='notice'>[user] leaves a message for future spacemen!</span>", "<span class='notice'>You engrave a message into [T]!</span>", "<span class='hear'>You hear a chipping sound.</span>")
+			user.visible_message(span_notice("[user] leaves a message for future spacemen!"), span_notice("You engrave a message into [T]!"), span_hear("You hear a chipping sound."))
 			playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 			var/obj/structure/chisel_message/M = new(T)
 			M.register(user, message)
 			remove_use()
 
 /obj/item/soapstone/proc/can_use()
-	return remaining_uses == -1 || remaining_uses >= 0
+	return remaining_uses == -1 || remaining_uses > 0
 
 /obj/item/soapstone/proc/remove_use()
 	if(remaining_uses <= 0)
@@ -87,10 +87,10 @@
 		name = "dull [initial(name)]"
 
 /* Persistent engraved messages, etched onto the station turfs to serve
-   as instructions and/or memes for the next generation of spessmen.
+as instructions and/or memes for the next generation of spessmen.
 
-   Limited in location to station_z only. Can be smashed out or exploded,
-   but only permamently removed with the curator's soapstone.
+Limited in location to station_z only. Can be smashed out or exploded,
+but only permanently removed with the curator's soapstone.
 */
 
 /obj/item/soapstone/infinite
@@ -128,6 +128,9 @@
 
 	var/turf/original_turf
 
+	/// Total vote count at or below which we won't persist.
+	var/delete_at = -5
+
 /obj/structure/chisel_message/Initialize(mapload)
 	. = ..()
 	SSpersistence.chisel_messages += src
@@ -138,16 +141,19 @@
 		persists = FALSE
 		return INITIALIZE_HINT_QDEL
 
+	if(like_keys.len - dislike_keys.len <= delete_at)
+		persists = FALSE
+
 /obj/structure/chisel_message/proc/register(mob/user, newmessage)
 	hidden_message = newmessage
 	creator_name = user.real_name
 	creator_key = user.ckey
 	realdate = world.realtime
 	map = SSmapping.config.map_name
-	update_icon()
+	update_appearance()
 
 /obj/structure/chisel_message/update_icon()
-	..()
+	. = ..()
 	var/hash = md5(hidden_message)
 	var/newcolor = copytext_char(hash, 1, 7)
 	add_atom_colour("#[newcolor]", FIXED_COLOUR_PRIORITY)
@@ -189,7 +195,7 @@
 	var/turf/newloc = locate(x, y, z)
 	if(isturf(newloc))
 		forceMove(newloc)
-	update_icon()
+	update_appearance()
 
 /obj/structure/chisel_message/examine(mob/user)
 	. = ..()
@@ -199,10 +205,15 @@
 	if(persists)
 		SSpersistence.SaveChiselMessage(src)
 	SSpersistence.chisel_messages -= src
-	. = ..()
+	return ..()
 
 /obj/structure/chisel_message/interact()
 	return
+
+/obj/structure/chisel_message/ui_status(mob/user)
+	if(isobserver(user)) // ignore proximity restrictions if we're an observer
+		return UI_INTERACTIVE
+	return ..()
 
 /obj/structure/chisel_message/ui_state(mob/user)
 	return GLOB.always_state
@@ -228,6 +239,10 @@
 		data["admin_mode"] = TRUE
 		data["creator_key"] = creator_key
 		data["creator_name"] = creator_name
+	else
+		data["admin_mode"] = FALSE
+		data["creator_key"] = null
+		data["creator_name"] = null
 
 	return data
 
@@ -266,7 +281,10 @@
 		if("delete")
 			if(!is_admin)
 				return
-			var/confirm = alert(user, "Confirm deletion of engraved message?", "Confirm Deletion", "Yes", "No")
+			var/confirm = tgui_alert(user, "Confirm deletion of engraved message?", "Confirm Deletion", list("Yes", "No"))
 			if(confirm == "Yes")
 				persists = FALSE
 				qdel(src)
+				return
+
+	persists = like_keys.len - dislike_keys.len > delete_at

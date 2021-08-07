@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/ghost_role/operative
 	weight = 0 //Admin only
 	max_occurrences = 1
+	dynamic_should_hijack = TRUE
 
 /datum/round_event/ghost_role/operative
 	minimum_required = 1
@@ -10,7 +11,7 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/operative/spawn_role()
-	var/list/candidates = get_candidates(ROLE_OPERATIVE, null, ROLE_OPERATIVE)
+	var/list/candidates = get_candidates(ROLE_OPERATIVE, ROLE_OPERATIVE)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
@@ -23,12 +24,11 @@
 		return MAP_ERROR
 
 	var/mob/living/carbon/human/operative = new(pick(spawn_locs))
-	var/datum/preferences/A = new
-	A.copy_to(operative)
+	operative.randomize_human_appearance(~RANDOMIZE_SPECIES)
 	operative.dna.update_dna_identity()
 	var/datum/mind/Mind = new /datum/mind(selected.key)
-	Mind.assigned_role = "Lone Operative"
-	Mind.special_role = "Lone Operative"
+	Mind.set_assigned_role(SSjob.GetJobType(/datum/job/lone_operative))
+	Mind.special_role = ROLE_LONE_OPERATIVE
 	Mind.active = TRUE
 	Mind.transfer_to(operative)
 	Mind.add_antag_datum(/datum/antagonist/nukeop/lone)

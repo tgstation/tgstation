@@ -6,6 +6,7 @@
 	charge_max = 250
 	cooldown_min = 100
 	range = -1
+	school = SCHOOL_TRANSMUTATION
 	include_user = TRUE
 	invocation = "CLANG!"
 	invocation_type = INVOCATION_SHOUT
@@ -14,7 +15,7 @@
 /obj/effect/proc_holder/spell/targeted/rod_form/cast(list/targets,mob/user = usr)
 	var/area/A = get_area(user)
 	if(istype(A, /area/wizard_station))
-		to_chat(user, "<span class='warning'>You know better than to trash Wizard Federation property. Best wait until you leave to use [src].</span>")
+		to_chat(user, span_warning("You know better than to trash Wizard Federation property. Best wait until you leave to use [src]."))
 		return
 	for(var/mob/living/M in targets)
 		var/turf/start = get_turf(M)
@@ -34,6 +35,7 @@
 	var/damage_bonus = 0
 	var/turf/start_turf
 	notify = FALSE
+	dnd_style_level_up = FALSE
 
 /obj/effect/immovablerod/wizard/Move()
 	if(get_dist(start_turf, get_turf(src)) >= max_distance)
@@ -49,8 +51,8 @@
 
 /obj/effect/immovablerod/wizard/penetrate(mob/living/L)
 	if(L.anti_magic_check())
-		L.visible_message("<span class='danger'>[src] hits [L], but it bounces back, then vanishes!</span>" , "<span class='userdanger'>[src] hits you... but it bounces back, then vanishes!</span>" , "<span class='danger'>You hear a weak, sad, CLANG.</span>")
+		L.visible_message(span_danger("[src] hits [L], but it bounces back, then vanishes!") , span_userdanger("[src] hits you... but it bounces back, then vanishes!") , span_danger("You hear a weak, sad, CLANG."))
 		qdel(src)
 		return
-	L.visible_message("<span class='danger'>[L] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class='danger'>You hear a CLANG!</span>")
+	L.visible_message(span_danger("[L] is penetrated by an immovable rod!") , span_userdanger("The rod penetrates you!") , span_danger("You hear a CLANG!"))
 	L.adjustBruteLoss(70 + damage_bonus)

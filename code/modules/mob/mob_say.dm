@@ -4,8 +4,8 @@
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
-	if(GLOB.say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+	if(GLOB.say_disabled) //This is here to try to identify lag problems
+		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 	if(message)
 		say(message)
@@ -14,8 +14,8 @@
 /mob/verb/whisper_verb(message as text)
 	set name = "Whisper"
 	set category = "IC"
-	if(GLOB.say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+	if(GLOB.say_disabled) //This is here to try to identify lag problems
+		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 	whisper(message)
 
@@ -28,8 +28,8 @@
 	set name = "Me"
 	set category = "IC"
 
-	if(GLOB.say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+	if(GLOB.say_disabled) //This is here to try to identify lag problems
+		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -41,8 +41,8 @@
 	var/name = real_name
 	var/alt_name = ""
 
-	if(GLOB.say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+	if(GLOB.say_disabled) //This is here to try to identify lag problems
+		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
 	var/jb = is_banned_from(ckey, "Deadchat")
@@ -50,15 +50,21 @@
 		return
 
 	if(jb)
-		to_chat(src, "<span class='danger'>You have been banned from deadchat.</span>")
+		to_chat(src, span_danger("You have been banned from deadchat."))
 		return
 
 
 
 	if (src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
-			to_chat(src, "<span class='danger'>You cannot talk in deadchat (muted).</span>")
+			to_chat(src, span_danger("You cannot talk in deadchat (muted)."))
 			return
+
+		if(SSlag_switch.measures[SLOWMODE_SAY] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES) && src == usr)
+			if(!COOLDOWN_FINISHED(client, say_slowmode))
+				to_chat(src, span_warning("Message not sent due to slowmode. Please wait [SSlag_switch.slowmode_cooldown/10] seconds between messages.\n\"[message]\""))
+				return
+			COOLDOWN_START(client, say_slowmode, SSlag_switch.slowmode_cooldown)
 
 		if(src.client.handle_spam_prevention(message,MUTE_DEADCHAT))
 			return
@@ -95,25 +101,21 @@
 /mob/proc/hivecheck()
 	return FALSE
 
-///Check if the mob has a ling hivemind
-/mob/proc/lingcheck()
-	return LINGHIVE_NONE
-
 ///The amount of items we are looking for in the message
 #define MESSAGE_MODS_LENGTH 6
 /**
-  * Extracts and cleans message of any extenstions at the begining of the message
-  * Inserts the info into the passed list, returns the cleaned message
-  *
-  * Result can be
-  * * SAY_MODE (Things like aliens, channels that aren't channels)
-  * * MODE_WHISPER (Quiet speech)
-  * * MODE_SING (Singing)
-  * * MODE_HEADSET (Common radio channel)
-  * * RADIO_EXTENSION the extension we're using (lots of values here)
-  * * RADIO_KEY the radio key we're using, to make some things easier later (lots of values here)
-  * * LANGUAGE_EXTENSION the language we're trying to use (lots of values here)
-  */
+ * Extracts and cleans message of any extenstions at the begining of the message
+ * Inserts the info into the passed list, returns the cleaned message
+ *
+ * Result can be
+ * * SAY_MODE (Things like aliens, channels that aren't channels)
+ * * MODE_WHISPER (Quiet speech)
+ * * MODE_SING (Singing)
+ * * MODE_HEADSET (Common radio channel)
+ * * RADIO_EXTENSION the extension we're using (lots of values here)
+ * * RADIO_KEY the radio key we're using, to make some things easier later (lots of values here)
+ * * LANGUAGE_EXTENSION the language we're trying to use (lots of values here)
+ */
 /mob/proc/get_message_mods(message, list/mods)
 	for(var/I in 1 to MESSAGE_MODS_LENGTH)
 		// Prevents "...text" from being read as a radio message
@@ -127,7 +129,8 @@
 		else if(key == "%" && !mods[MODE_SING])
 			mods[MODE_SING] = TRUE
 		else if(key == ";" && !mods[MODE_HEADSET])
-			mods[MODE_HEADSET] = TRUE
+			if(stat == CONSCIOUS) //necessary indentation so it gets stripped of the semicolon anyway.
+				mods[MODE_HEADSET] = TRUE
 		else if((key in GLOB.department_radio_prefixes) && length(message) > length(key) + 1 && !mods[RADIO_EXTENSION])
 			mods[RADIO_KEY] = lowertext(message[1 + length(key)])
 			mods[RADIO_EXTENSION] = GLOB.department_radio_keys[mods[RADIO_KEY]]

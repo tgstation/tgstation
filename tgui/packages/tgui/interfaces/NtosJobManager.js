@@ -6,8 +6,7 @@ export const NtosJobManager = (props, context) => {
   return (
     <NtosWindow
       width={400}
-      height={620}
-      resizable>
+      height={620}>
       <NtosWindow.Content scrollable>
         <NtosJobManagerContent />
       </NtosWindow.Content>

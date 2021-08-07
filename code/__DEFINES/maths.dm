@@ -4,8 +4,8 @@
 
 #define NUM_E 2.71828183
 
-#define PI						3.1416
-#define INFINITY				1e31	//closer then enough
+#define PI 3.1416
+#define INFINITY 1e31 //closer then enough
 
 #define SHORT_REAL_LIMIT 16777216
 
@@ -94,7 +94,7 @@
 /proc/SolveQuadratic(a, b, c)
 	ASSERT(a)
 	. = list()
-	var/d		= b*b - 4 * a * c
+	var/d = b*b - 4 * a * c
 	var/bottom  = 2 * a
 	if(d < 0)
 		return
@@ -181,8 +181,8 @@
 	while(pixel_y < -16)
 		pixel_y += 32
 		new_y--
-	new_x = clamp(new_x, 0, world.maxx)
-	new_y = clamp(new_y, 0, world.maxy)
+	new_x = clamp(new_x, 1, world.maxx)
+	new_y = clamp(new_y, 1, world.maxy)
 	return locate(new_x, new_y, starting.z)
 
 // Returns a list where [1] is all x values and [2] is all y values that overlap between the given pair of rectangles

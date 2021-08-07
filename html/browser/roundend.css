@@ -24,6 +24,10 @@
 	color: rgb(109, 109, 255); font-weight: bold;
 }
 
+.service {
+	color: #6eaa2c; font-weight: bold;
+}
+
 .header {
 	font-size: 24px; font-weight: bold;
 }

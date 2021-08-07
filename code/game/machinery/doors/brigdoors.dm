@@ -2,11 +2,11 @@
 #define FONT_SIZE "5pt"
 #define FONT_COLOR "#09f"
 #define FONT_STYLE "Small Fonts"
-#define MAX_TIMER 9000
+#define MAX_TIMER 15 MINUTES
 
-#define PRESET_SHORT 1200
-#define PRESET_MEDIUM 1800
-#define PRESET_LONG 3000
+#define PRESET_SHORT 2 MINUTES
+#define PRESET_MEDIUM 3 MINUTES
+#define PRESET_LONG 5 MINUTES
 
 
 
@@ -30,8 +30,14 @@
 	var/activation_time = 0
 	var/timer_duration = 0
 
-	var/timing = FALSE		// boolean, true/1 timer is on, false/0 means it's not timing
-	var/list/obj/machinery/targets = list()
+	var/timing = FALSE // boolean, true/1 timer is on, false/0 means it's not timing
+	///List of weakrefs to nearby doors
+	var/list/doors = list()
+	///List of weakrefs to nearby flashers
+	var/list/flashers = list()
+	///List of weakrefs to nearby closets
+	var/list/closets = list()
+
 	var/obj/item/radio/Radio //needed to send messages to sec radio
 
 	maptext_height = 26
@@ -49,19 +55,19 @@
 	if(id != null)
 		for(var/obj/machinery/door/window/brigdoor/M in urange(20, src))
 			if (M.id == id)
-				targets += M
+				doors += WEAKREF(M)
 
 		for(var/obj/machinery/flasher/F in urange(20, src))
 			if(F.id == id)
-				targets += F
+				flashers += WEAKREF(F)
 
 		for(var/obj/structure/closet/secure_closet/brig/C in urange(20, src))
 			if(C.id == id)
-				targets += C
+				closets += WEAKREF(C)
 
-	if(!targets.len)
+	if(!length(doors) && !length(flashers) && length(closets))
 		obj_break()
-	update_icon()
+	update_appearance()
 
 
 //Main door timer loop, if it's timing and time is >0 reduce time by 1.
@@ -74,7 +80,7 @@
 	if(timing)
 		if(world.time - activation_time >= timer_duration)
 			timer_end() // open doors, reset timer, clear status screen
-		update_icon()
+		update_appearance()
 
 // open/closedoor checks if door_timer has power, if so it checks if the
 // linked door is open/closed (by density) then opens it/closes it.
@@ -85,18 +91,26 @@
 	activation_time = world.time
 	timing = TRUE
 
-	for(var/obj/machinery/door/window/brigdoor/door in targets)
+	for(var/datum/weakref/door_ref as anything in doors)
+		var/obj/machinery/door/window/brigdoor/door = door_ref.resolve()
+		if(!door)
+			doors -= door_ref
+			continue
 		if(door.density)
 			continue
 		INVOKE_ASYNC(door, /obj/machinery/door/window/brigdoor.proc/close)
 
-	for(var/obj/structure/closet/secure_closet/brig/C in targets)
-		if(C.broken)
+	for(var/datum/weakref/closet_ref as anything in closets)
+		var/obj/structure/closet/secure_closet/brig/closet = closet_ref.resolve()
+		if(!closet)
+			closets -= closet_ref
 			continue
-		if(C.opened && !C.close())
+		if(closet.broken)
 			continue
-		C.locked = TRUE
-		C.update_icon()
+		if(closet.opened && !closet.close())
+			continue
+		closet.locked = TRUE
+		closet.update_appearance()
 	return 1
 
 
@@ -112,20 +126,28 @@
 	timing = FALSE
 	activation_time = null
 	set_timer(0)
-	update_icon()
+	update_appearance()
 
-	for(var/obj/machinery/door/window/brigdoor/door in targets)
+	for(var/datum/weakref/door_ref as anything in doors)
+		var/obj/machinery/door/window/brigdoor/door = door_ref.resolve()
+		if(!door)
+			doors -=  door_ref
+			continue
 		if(!door.density)
 			continue
 		INVOKE_ASYNC(door, /obj/machinery/door/window/brigdoor.proc/open)
 
-	for(var/obj/structure/closet/secure_closet/brig/C in targets)
-		if(C.broken)
+	for(var/datum/weakref/closet_ref as anything in closets)
+		var/obj/structure/closet/secure_closet/brig/closet = closet_ref.resolve()
+		if(!closet)
+			closets -= closet_ref
 			continue
-		if(C.opened)
+		if(closet.broken)
 			continue
-		C.locked = FALSE
-		C.update_icon()
+		if(closet.opened)
+			continue
+		closet.locked = FALSE
+		closet.update_appearance()
 
 	return 1
 
@@ -151,8 +173,8 @@
 // if BROKEN, display blue screen of death icon AI uses
 // if timing=true, run update display function
 /obj/machinery/door_timer/update_icon()
+	. = ..()
 	if(machine_stat & (NOPOWER))
-		icon_state = "frame"
 		return
 
 	if(machine_stat & (BROKEN))
@@ -196,8 +218,12 @@
 	data["minutes"] = round((time_left - data["seconds"]) / 60)
 	data["timing"] = timing
 	data["flash_charging"] = FALSE
-	for(var/obj/machinery/flasher/F in targets)
-		if(F.last_flash && (F.last_flash + 150) > world.time)
+	for(var/datum/weakref/flash_ref as anything in flashers)
+		var/obj/machinery/flasher/flasher = flash_ref.resolve()
+		if(!flasher)
+			flashers -= flash_ref
+			continue
+		if(flasher.last_flash && (flasher.last_flash + 15 SECONDS) > world.time)
 			data["flash_charging"] = TRUE
 			break
 	return data
@@ -210,8 +236,10 @@
 
 	. = TRUE
 
+	var/mob/user = usr
+
 	if(!allowed(usr))
-		to_chat(usr, "<span class='warning'>Access denied.</span>")
+		to_chat(usr, span_warning("Access denied."))
 		return FALSE
 
 	switch(action)
@@ -219,13 +247,25 @@
 			var/value = text2num(params["adjust"])
 			if(value)
 				. = set_timer(time_left()+value)
+				investigate_log("[key_name(usr)] modified the timer by [value/10] seconds for cell [id], currently [time_left(seconds = TRUE)]", INVESTIGATE_RECORDS)
+				user.log_message("modified the timer by [value/10] seconds for cell [id], currently [time_left(seconds = TRUE)]", LOG_ATTACK)
 		if("start")
 			timer_start()
+			investigate_log("[key_name(usr)] has started [id]'s timer of [time_left(seconds = TRUE)] seconds", INVESTIGATE_RECORDS)
+			user.log_message("has started [id]'s timer of [time_left(seconds = TRUE)] seconds", LOG_ATTACK)
 		if("stop")
+			investigate_log("[key_name(usr)] has stopped [id]'s timer of [time_left(seconds = TRUE)] seconds", INVESTIGATE_RECORDS)
+			user.log_message("[key_name(usr)] has stopped [id]'s timer of [time_left(seconds = TRUE)] seconds", LOG_ATTACK)
 			timer_end(forced = TRUE)
 		if("flash")
-			for(var/obj/machinery/flasher/F in targets)
-				F.flash()
+			investigate_log("[key_name(usr)] has flashed cell [id]", INVESTIGATE_RECORDS)
+			user.log_message("[key_name(usr)] has flashed cell [id]", LOG_ATTACK)
+			for(var/datum/weakref/flash_ref as anything in flashers)
+				var/obj/machinery/flasher/flasher = flash_ref.resolve()
+				if(!flasher)
+					flashers -= flash_ref
+					continue
+				flasher.flash()
 		if("preset")
 			var/preset = params["preset"]
 			var/preset_time = time_left()
@@ -237,6 +277,8 @@
 				if("long")
 					preset_time = PRESET_LONG
 			. = set_timer(preset_time)
+			investigate_log("[key_name(usr)] set cell [id]'s timer to [preset_time/10] seconds", INVESTIGATE_RECORDS)
+			user.log_message("set cell [id]'s timer to [preset_time/10] seconds", LOG_ATTACK)
 			if(timing)
 				activation_time = world.time
 		else

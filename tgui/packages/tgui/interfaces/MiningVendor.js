@@ -11,8 +11,7 @@ export const MiningVendor = (props, context) => {
   return (
     <Window
       width={425}
-      height={600}
-      resizable>
+      height={600}>
       <Window.Content scrollable>
         <Section title="User">
           {data.user && (

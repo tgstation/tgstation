@@ -13,6 +13,7 @@
 
 	pipe_flags = PIPING_ONE_PER_TURF
 	pipe_state = "connector"
+	custom_reconcilation = TRUE
 
 	var/obj/machinery/portable_atmospherics/connected_device
 
@@ -30,7 +31,7 @@
 	icon_state = "connector"
 	if(showpipe)
 		cut_overlays()
-		var/image/cap = getpipeimage(icon, "connector_cap", initialize_directions)
+		var/image/cap = getpipeimage(icon, "connector_cap", initialize_directions, pipe_color)
 		add_overlay(cap)
 
 /obj/machinery/atmospherics/components/unary/portables_connector/process_atmos()
@@ -38,10 +39,16 @@
 		return
 	update_parents()
 
+/obj/machinery/atmospherics/components/unary/portables_connector/returnAirsForReconcilation(datum/pipeline/requester)
+	. = ..()
+	if(!connected_device)
+		return
+	. += connected_device.return_air()
+
 /obj/machinery/atmospherics/components/unary/portables_connector/can_unwrench(mob/user)
 	. = ..()
 	if(. && connected_device)
-		to_chat(user, "<span class='warning'>You cannot unwrench [src], detach [connected_device] first!</span>")
+		to_chat(user, span_warning("You cannot unwrench [src], detach [connected_device] first!"))
 		return FALSE
 
 /obj/machinery/atmospherics/components/unary/portables_connector/layer2

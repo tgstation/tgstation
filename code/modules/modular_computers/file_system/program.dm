@@ -15,6 +15,8 @@
 	var/filedesc = "Unknown Program"
 	/// Short description of this program's function.
 	var/extended_desc = "N/A"
+	/// Category in the NTDownloader.
+	var/category = PROGRAM_CATEGORY_MISC
 	/// Program-specific screen icon state
 	var/program_icon_state = null
 	/// Set to 1 for program to require nonstop NTNet connection to run. If NTNet connection is lost program crashes.
@@ -25,16 +27,22 @@
 	var/ntnet_status = 1
 	/// Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_TABLET combination) or PROGRAM_ALL
 	var/usage_flags = PROGRAM_ALL
-	/// Whether the program can be downloaded from NTNet. Set to 0 to disable.
-	var/available_on_ntnet = 1
-	/// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.
-	var/available_on_syndinet = 0
+	/// Whether the program can be downloaded from NTNet. Set to FALSE to disable.
+	var/available_on_ntnet = TRUE
+	/// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to TRUE to enable.
+	var/available_on_syndinet = FALSE
 	/// Name of the tgui interface
 	var/tgui_id
 	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
 	var/ui_header = null
 	/// Font Awesome icon to use as this program's icon in the modular computer main menu. Defaults to a basic program maximize window icon if not overridden.
 	var/program_icon = "window-maximize-o"
+	/// Whether this program can send alerts while minimized or closed. Used to show a mute button per program in the file manager
+	var/alert_able = FALSE
+	/// Whether the user has muted this program's ability to send alerts.
+	var/alert_silenced = FALSE
+	/// Whether to highlight our program in the main screen. Intended for alerts, but loosely available for any need to notify of changed conditions. Think Windows task bar highlighting. Available even if alerts are muted.
+	var/alert_pending = FALSE
 
 /datum/computer_file/program/New(obj/item/modular_computer/comp = null)
 	..()
@@ -58,7 +66,7 @@
 // Relays icon update to the computer.
 /datum/computer_file/program/proc/update_computer_icon()
 	if(computer)
-		computer.update_icon()
+		computer.update_appearance()
 
 // Attempts to create a log in global ntnet datum. Returns 1 on success, 0 on fail.
 /datum/computer_file/program/proc/generate_network_log(text)
@@ -66,10 +74,25 @@
 		return computer.add_log(text)
 	return 0
 
+/**
+ *Runs when the device is used to attack an atom in non-combat mode.
+ *
+ *Simulates using the device to read or scan something. Tap is called by the computer during pre_attack
+ *and sends us all of the related info. If we return TRUE, the computer will stop the attack process
+ *there. What we do with the info is up to us, but we should only return TRUE if we actually perform
+ *an action of some sort.
+ *Arguments:
+ *A is the atom being tapped
+ *user is the person making the attack action
+ *params is anything the pre_attack() proc had in the same-named variable.
+*/
+/datum/computer_file/program/proc/tap(atom/A, mob/living/user, params)
+	return FALSE
+
 /datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = 0, loud = 0, mob/user = null)
 	if(!(hardware_flag & usage_flags))
 		if(loud && computer && user)
-			to_chat(user, "<span class='danger'>\The [computer] flashes a \"Hardware Error - Incompatible software\" warning.</span>")
+			to_chat(user, span_danger("\The [computer] flashes a \"Hardware Error - Incompatible software\" warning."))
 		return FALSE
 	return TRUE
 
@@ -83,17 +106,17 @@
 	return TRUE
 
 /**
-  *Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
-  *ID must be inserted into a card slot to be read. If the program is not currently installed (as is the case when
-  *NT Software Hub is checking available software), a list can be given to be used instead.
-  *Arguments:
-  *user is a ref of the mob using the device.
-  *loud is a bool deciding if this proc should use to_chats
-  *access_to_check is an access level that will be checked against the ID
-  *transfer, if TRUE and access_to_check is null, will tell this proc to use the program's transfer_access in place of access_to_check
-  *access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.
+ *Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
+ *ID must be inserted into a card slot to be read. If the program is not currently installed (as is the case when
+ *NT Software Hub is checking available software), a list can be given to be used instead.
+ *Arguments:
+ *user is a ref of the mob using the device.
+ *loud is a bool deciding if this proc should use to_chats
+ *access_to_check is an access level that will be checked against the ID
+ *transfer, if TRUE and access_to_check is null, will tell this proc to use the program's transfer_access in place of access_to_check
+ *access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.
 */
-/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, transfer = FALSE, var/list/access)
+/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, transfer = FALSE, list/access)
 	// Defaults to required_access
 	if(!access_to_check)
 		if(transfer && transfer_access)
@@ -103,7 +126,7 @@
 	if(!access_to_check) // No required_access, allow it.
 		return TRUE
 
-	if(!transfer && computer && (computer.obj_flags & EMAGGED))	//emags can bypass the execution locks but not the download ones.
+	if(!transfer && computer && (computer.obj_flags & EMAGGED)) //emags can bypass the execution locks but not the download ones.
 		return TRUE
 
 	if(isAdminGhostAI(user))
@@ -121,14 +144,14 @@
 
 		if(!D)
 			if(loud)
-				to_chat(user, "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>")
+				to_chat(user, span_danger("\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning."))
 			return FALSE
 		access = D.GetAccess()
 
 	if(access_to_check in access)
 		return TRUE
 	if(loud)
-		to_chat(user, "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>")
+		to_chat(user, span_danger("\The [computer] flashes an \"Access Denied\" warning."))
 	return FALSE
 
 // This attempts to retrieve header data for UIs. If implementing completely new device of different type than existing ones
@@ -153,15 +176,15 @@
 	return FALSE
 
 /**
-  *
-  *Called by the device when it is emagged.
-  *
-  *Emagging the device allows certain programs to unlock new functions. However, the program will
-  *need to be downloaded first, and then handle the unlock on their own in their run_emag() proc.
-  *The device will allow an emag to be run multiple times, so the user can re-emag to run the
-  *override again, should they download something new. The run_emag() proc should return TRUE if
-  *the emagging affected anything, and FALSE if no change was made (already emagged, or has no
-  *emag functions).
+ *
+ *Called by the device when it is emagged.
+ *
+ *Emagging the device allows certain programs to unlock new functions. However, the program will
+ *need to be downloaded first, and then handle the unlock on their own in their run_emag() proc.
+ *The device will allow an emag to be run multiple times, so the user can re-emag to run the
+ *override again, should they download something new. The run_emag() proc should return TRUE if
+ *the emagging affected anything, and FALSE if no change was made (already emagged, or has no
+ *emag functions).
 **/
 /datum/computer_file/program/proc/run_emag()
 	return FALSE
@@ -213,7 +236,7 @@
 				program_state = PROGRAM_STATE_BACKGROUND // Should close any existing UIs
 
 				computer.active_program = null
-				computer.update_icon()
+				computer.update_appearance()
 				ui.close()
 
 				if(user && istype(user))

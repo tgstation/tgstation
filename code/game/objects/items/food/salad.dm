@@ -9,6 +9,7 @@
 	tastes = list("leaves" = 1)
 	foodtypes = VEGETABLES
 	eatverbs = list("devour","nibble","gnaw","gobble","chomp") //who the fuck gnaws and devours on a salad
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/salad/aesirsalad
 	name = "\improper Aesir salad"
@@ -32,15 +33,7 @@
 	icon_state = "validsalad"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/doctor_delight = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("leaves" = 1, "potato" = 1, "meat" = 1, "valids" = 1)
-	foodtypes = VEGETABLES | MEAT | FRIED | JUNKFOOD | FRUIT
-
-/obj/item/food/salad/oatmeal
-	name = "oatmeal"
-	desc = "A nice bowl of oatmeal."
-	icon_state = "oatmeal"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/nutriment/vitamin = 6)
-	tastes = list("oats" = 1, "milk" = 1)
-	foodtypes = DAIRY | GRAIN | BREAKFAST
+	foodtypes = VEGETABLES | MEAT | FRIED | FRUIT
 
 /obj/item/food/salad/fruit
 	name = "fruit salad"
@@ -81,7 +74,7 @@
 	icon_state = "boiledrice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("rice" = 1)
-	foodtypes = GRAIN
+	foodtypes = GRAIN | BREAKFAST
 
 /obj/item/food/salad/ricepudding
 	name = "rice pudding"
@@ -89,7 +82,8 @@
 	icon_state = "ricepudding"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("rice" = 1, "sweetness" = 1)
-	foodtypes = GRAIN | DAIRY
+	foodtypes = GRAIN | DAIRY | SUGAR
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/salad/ricepork
 	name = "rice and pork"
@@ -99,6 +93,15 @@
 	tastes = list("rice" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
 
+/obj/item/food/salad/risotto
+	name = "risotto"
+	desc = "Proof the Italians mastered every carb."
+	icon_state = "risotto"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("rice" = 1, "cheese" = 1)
+	foodtypes = GRAIN | DAIRY
+	venue_value = FOOD_PRICE_EXOTIC
+
 /obj/item/food/salad/eggbowl
 	name = "egg bowl"
 	desc = "A bowl of rice with a fried egg."
@@ -106,6 +109,22 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("rice" = 1, "egg" = 1)
 	foodtypes = GRAIN | MEAT //EGG = MEAT -NinjaNomNom 2017
+
+/obj/item/food/salad/edensalad
+	name = "\improper Salad of Eden"
+	desc = "A salad brimming with untapped potential."
+	icon_state = "edensalad"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/medicine/earthsblood = 3, /datum/reagent/medicine/omnizine = 5, /datum/reagent/drug/happiness = 2)
+	tastes = list("extreme bitterness" = 3, "hope" = 1)
+	foodtypes = VEGETABLES
+
+/obj/item/food/salad/gumbo
+	name = "black eyed gumbo"
+	desc = "A spicy and savory meat and rice dish."
+	icon_state = "gumbo"
+	food_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/nutriment = 5)
+	tastes = list("building heat" = 2, "savory meat and vegtables" = 1)
+	foodtypes = GRAIN | MEAT | VEGETABLES
 
 
 /obj/item/reagent_containers/glass/bowl
@@ -116,3 +135,16 @@
 	reagent_flags = OPENCONTAINER
 	custom_materials = list(/datum/material/glass = 500)
 	w_class = WEIGHT_CLASS_NORMAL
+	custom_price = PAYCHECK_ASSISTANT * 0.6
+
+/obj/item/reagent_containers/glass/bowl/Initialize()
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/salad/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
+
+// empty salad for custom salads
+/obj/item/food/salad/empty
+	name = "salad"
+	foodtypes = NONE
+	tastes = list()
+	icon_state = "bowl"
+	desc = "A delicious customized salad."

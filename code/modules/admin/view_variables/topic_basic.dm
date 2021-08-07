@@ -21,6 +21,7 @@
 						var/mob/living/L = target
 						if(istype(L))
 							vv_update_display(target, "real_name", L.real_name || "No real name")
+
 			if(href_list[VV_HK_BASIC_CHANGE])
 				modify_variables(target, target_var, 0)
 			if(href_list[VV_HK_BASIC_MASSEDIT])
@@ -34,7 +35,7 @@
 			if (!C)
 				return
 			if(!target)
-				to_chat(usr, "<span class='warning'>The object you tried to expose to [C] no longer exists (nulled or hard-deled)</span>", confidential = TRUE)
+				to_chat(usr, span_warning("The object you tried to expose to [C] no longer exists (nulled or hard-deled)"), confidential = TRUE)
 				return
 			message_admins("[key_name_admin(usr)] Showed [key_name_admin(C)] a <a href='?_src_=vars;datumrefresh=[REF(target)]'>VV window</a>")
 			log_admin("Admin [key_name(usr)] Showed [key_name(C)] a VV window of a [target]")
@@ -43,19 +44,9 @@
 	if(check_rights(R_DEBUG))
 		if(href_list[VV_HK_DELETE])
 			usr.client.admin_delete(target)
-			if (isturf(src))	// show the turf that took its place
+			if (isturf(src)) // show the turf that took its place
 				usr.client.debug_variables(src)
 				return
-
-		#ifdef REFERENCE_TRACKING
-		if(href_list[VV_HK_VIEW_REFERENCES])
-			var/datum/D = locate(href_list[VV_HK_TARGET])
-			if(!D)
-				to_chat(usr, "<span class='warning'>Unable to locate item.</span>")
-				return
-			usr.client.holder.view_refs(target)
-			return
-		#endif
 
 	if(href_list[VV_HK_MARK])
 		usr.client.mark_datum(target)
@@ -86,7 +77,13 @@
 			datumname = "element"
 			target._AddElement(lst)
 		log_admin("[key_name(usr)] has added [result] [datumname] to [key_name(target)].")
-		message_admins("<span class='notice'>[key_name_admin(usr)] has added [result] [datumname] to [key_name_admin(target)].</span>")
+		message_admins(span_notice("[key_name_admin(usr)] has added [result] [datumname] to [key_name_admin(target)]."))
+	if(href_list[VV_HK_MODIFY_GREYSCALE])
+		if(!check_rights(NONE))
+			return
+		var/datum/greyscale_modify_menu/menu = new(target, usr, SSgreyscale.configurations)
+		menu.Unlock()
+		menu.ui_interact(usr)
 	if(href_list[VV_HK_CALLPROC])
 		usr.client.callproc_datum(target)
 

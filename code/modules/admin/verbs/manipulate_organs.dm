@@ -71,4 +71,4 @@
 				var/obj/item/implantcase/case = new(get_turf(C))
 				case.imp = I
 				I.forceMove(case)
-				case.update_icon()
+				case.update_appearance()

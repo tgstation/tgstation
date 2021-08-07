@@ -99,7 +99,7 @@
 /datum/map_template/ruin/icemoon/underground/bathhouse
 	name = "Bath House"
 	id = "bathhouse"
-	description = "A taste of paradise, locked in the hell of the Ice Moon."
+	description = "A warm, safe place."
 	suffix = "icemoon_underground_bathhouse.dmm"
 
 /datum/map_template/ruin/icemoon/underground/wendigo_cave
@@ -115,3 +115,9 @@
 	Seem very intent on research and individual liberty, and also geology-based naming?"
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "golem_ship.dmm"
+
+/datum/map_template/ruin/icemoon/underground/mailroom
+	name = "Frozen-over Post Office"
+	id = "mailroom"
+	description = "This is where all of your paychecks went. Signed, the management."
+	suffix = "icemoon_underground_mailroom.dmm"

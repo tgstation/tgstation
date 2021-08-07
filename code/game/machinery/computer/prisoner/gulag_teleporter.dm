@@ -74,7 +74,7 @@
 	if(isliving(usr))
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 	if(!allowed(usr))
-		to_chat(usr, "<span class='warning'>Access denied.</span>")
+		to_chat(usr, span_warning("Access denied."))
 		return
 	switch(action)
 		if("scan_teleporter")
@@ -99,13 +99,13 @@
 			return TRUE
 		if("toggle_open")
 			if(teleporter.locked)
-				to_chat(usr, "<span class='alert'>The teleporter must be unlocked first.</span>")
+				to_chat(usr, span_alert("The teleporter must be unlocked first."))
 				return
 			teleporter.toggle_open()
 			return TRUE
 		if("teleporter_lock")
 			if(teleporter.state_open)
-				to_chat(usr, "<span class='alert'>The teleporter must be closed first.</span>")
+				to_chat(usr, span_alert("The teleporter must be closed first."))
 				return
 			teleporter.locked = !teleporter.locked
 			return TRUE
@@ -141,12 +141,12 @@
 		say("[contained_id]'s ID card goal defaulting to [contained_id.goal] points.")
 	log_game("[key_name(user)] teleported [key_name(prisoner)] to the Labor Camp [COORD(beacon)] for [id_goal_not_set ? "default goal of ":""][contained_id.goal] points.")
 	teleporter.handle_prisoner(contained_id, temporary_record)
-	playsound(src, 'sound/weapons/emitter.ogg', 50, TRUE)
+	playsound(src, 'sound/weapons/emitter.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	prisoner.forceMove(get_turf(beacon))
 	prisoner.Paralyze(40) // small travel dizziness
-	to_chat(prisoner, "<span class='warning'>The teleportation makes you a little dizzy.</span>")
+	to_chat(prisoner, span_warning("The teleportation makes you a little dizzy."))
 	new /obj/effect/particle_effect/sparks(get_turf(prisoner))
-	playsound(src, "sparks", 50, TRUE)
+	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(teleporter.locked)
 		teleporter.locked = FALSE
 	teleporter.toggle_open()

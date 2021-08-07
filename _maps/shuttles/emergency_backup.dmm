@@ -3,6 +3,7 @@
 /obj/machinery/computer/emergency_shuttle{
 	dir = 8
 	},
+/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape/backup)
 "c" = (
@@ -24,10 +25,6 @@
 "p" = (
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/backup)
-"q" = (
-/obj/machinery/status_display/evac,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape/backup)
 "u" = (
 /obj/structure/chair/office/light{
 	dir = 4
@@ -35,9 +32,11 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape/backup)
 "x" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape/backup)
+"A" = (
+/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape/backup)
 "F" = (
@@ -45,10 +44,12 @@
 /obj/item/paper/fluff/stations/centcom/broken_evac,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape/backup)
+"L" = (
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape/backup)
 "P" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape/backup)
 
@@ -63,14 +64,14 @@ m
 m
 "}
 (2,1,1) = {"
-q
-g
+m
+A
 g
 g
 x
 g
-g
-q
+L
+m
 "}
 (3,1,1) = {"
 m
@@ -113,14 +114,14 @@ g
 m
 "}
 (7,1,1) = {"
-q
+m
 a
 F
 f
 P
 g
-g
-q
+L
+m
 "}
 (8,1,1) = {"
 m

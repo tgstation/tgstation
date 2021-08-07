@@ -19,17 +19,22 @@
 
 /obj/machinery/field/containment/Initialize()
 	. = ..()
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, TRUE)
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/field/containment/Destroy()
 	FG1.fields -= src
 	FG2.fields -= src
 	CanAtmosPass = ATMOS_PASS_YES
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, FALSE)
 	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/machinery/field/containment/attack_hand(mob/user)
+/obj/machinery/field/containment/attack_hand(mob/user, list/modifiers)
 	if(get_dist(src, user) > 1)
 		return FALSE
 	else
@@ -53,21 +58,23 @@
 /obj/machinery/field/containment/ex_act(severity, target)
 	return FALSE
 
-/obj/machinery/field/containment/attack_animal(mob/living/simple_animal/M)
+/obj/machinery/field/containment/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(!FG1 || !FG2)
 		qdel(src)
 		return
-	if(ismegafauna(M))
-		M.visible_message("<span class='warning'>[M] glows fiercely as the containment field flickers out!</span>")
+	if(ismegafauna(user))
+		user.visible_message(span_warning("[user] glows fiercely as the containment field flickers out!"))
 		FG1.calc_power(INFINITY) //rip that 'containment' field
-		M.adjustHealth(-M.obj_damage)
+		user.adjustHealth(-user.obj_damage)
 	else
 		return ..()
 
-/obj/machinery/field/containment/Crossed(atom/movable/AM)
-	. = ..()
+/obj/machinery/field/containment/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(isliving(AM))
-		shock(AM)
+		var/mob/living/living_moving_through_field = AM
+		if(!living_moving_through_field.incorporeal_move)
+			shock(AM)
 
 	if(ismachinery(AM) || isstructure(AM) || ismecha(AM))
 		bump_field(AM)
@@ -78,6 +85,11 @@
 	FG1 = master1
 	FG2 = master2
 	return TRUE
+
+/obj/machinery/field/containment/proc/block_singularity()
+	SIGNAL_HANDLER
+
+	return SINGULARITY_TRY_MOVE_BLOCK
 
 /obj/machinery/field/containment/shock(mob/living/user)
 	if(!FG1 || !FG2)
@@ -107,7 +119,7 @@
 		return
 
 
-/obj/machinery/field/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/machinery/field/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(hasShocked || isliving(mover) || ismachinery(mover) || isstructure(mover) || ismecha(mover))
 		return FALSE
@@ -123,9 +135,9 @@
 		if(prob(20))
 			user.Stun(40)
 		user.take_overall_damage(0, shock_damage)
-		user.visible_message("<span class='danger'>[user.name] is shocked by the [src.name]!</span>", \
-		"<span class='userdanger'>Energy pulse detected, system damaged!</span>", \
-		"<span class='hear'>You hear an electrical crack.</span>")
+		user.visible_message(span_danger("[user.name] is shocked by the [src.name]!"), \
+		span_userdanger("Energy pulse detected, system damaged!"), \
+		span_hear("You hear an electrical crack."))
 
 	user.updatehealth()
 	bump_field(user)

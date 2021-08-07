@@ -21,8 +21,7 @@ export const NtosMain = (props, context) => {
         || 'NtOS Main Menu'}
       theme={device_theme}
       width={400}
-      height={500}
-      resizable>
+      height={500}>
       <NtosWindow.Content scrollable>
         {!!has_light && (
           <Section>
@@ -88,7 +87,7 @@ export const NtosMain = (props, context) => {
                 <Table.Cell>
                   <Button
                     fluid
-                    color="transparent"
+                    color={program.alert ? 'yellow' : 'transparent'}
                     icon={program.icon}
                     content={program.desc}
                     onClick={() => act('PC_runprogram', {

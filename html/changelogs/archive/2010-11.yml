@@ -1,0 +1,95 @@
+2010-11-02:
+  /tg/station ss13 team:
+  - unknown: Finished work on the "cult" gamemode. I'll still add features to it later,
+      but it is safe to be put on secret rotation now.
+  - unknown: Added an energy cutlass and made a pirate version of the space suit in
+      preparation for a later nuke update.
+  - unknown: Changeling now ends 15 minutes after changeling death, unless he's ressurected.
+  - unknown: Further fixing of wizarditis teleporting into space.
+  - unknown: Fixed the wise beard sprite.
+  - unknown: Fixed missing sprite for monkeyburgers.
+  - unknown: Fixed Beepsky automatically adding 2 treason points to EVERYONE.
+2010-11-05:
+  /tg/station ss13 team:
+  - unknown: The ban appeals URL can now be set in config.txt
+  - unknown: Secret mode default probabilities in config.txt made sane
+  - unknown: Admin send-to-thunderdome command fixed to no longer send people to the
+      other team's spawn.
+  - unknown: Having another disease no longer makes you immune to facehuggers.
+  - unknown: Magboots are now available from EVA.
+  - unknown: Changeling death timer shortened.  Destroying the changeling's body no
+      longer stops the death timer.
+  - unknown: Cult mode fixes.
+  - unknown: Fixed cyborgs pressing Cancel when choosing AIs.
+  - unknown: The play MIDIs setting now carries over when ghosting.
+  - unknown: Admins can now see if a cyborg is emagged via the player panel.
+  - unknown: "<b>PAPERWORK UPDATE v1:</b> Supply crates contain manifest slips, in\
+      \ a later update these will be returnable for supply points.\n\t"
+  - unknown: The Supply Ordering Console (Request computer in the QM lobby) can now
+      print requisition forms for ordering crates.  In conjunction with the rubber
+      stamps, these can be used to demonstrate proper authorisation for supply orders.
+  - unknown: Rubber stamps now spawn for each head of staff.
+  - unknown: The use of DNA Injectors and fueltank detonations are now admin-logged.
+  - unknown: Removed old debug code from gib()
+2010-11-14:
+  /tg/station ss13 team:
+  - unknown: Major food/drink code overhaul. Food items heal for more but not instantly.
+      Poison, Drug, and "Heat" effects from food items are also non-instant.
+  - unknown: Preperation for one-way containers and condiments.
+  - unknown: 'New Reagents: Nutriment, Ketchup, Soysauce, Salt, Pepper, Capsaicin
+      Oil, Frost Oil, Amatoxin, Psilocybin, Sprinkles'
+  - unknown: 'New Food Item: Chaos Donut: 1 Hot Sauce + 1 Cold Sauce + 1 Flour + 1
+      Egg. Has a variable effect. NOT DEADLY (usually).'
+  - unknown: 'New Drug: Ethylredoxrazine: Carbon + Oxygen + Anti-Toxin. Binds strongly
+      with Ethanol.'
+  - unknown: Tape Recorders added! Now you can actually PROVE someone said something!
+  - unknown: 'Amospherics Overhaul Started: It actually works now. You can also build
+      pipes and create function air and disposal systems!'
+  - unknown: Walls are now smooth.
+  - unknown: Alcohol no longer gets you as wasted or for as long.
+  - unknown: QM job split into QM and Cargo Technicians. QM has his own office.
+  - unknown: Doors can no longer be disassembled unless powered down and unbolted.
+  - unknown: 'New Job: Chief Medical Officer. Counts as a head of staff and is in
+      charge of medbay. Has his/her own office and coat.'
+  - unknown: Wizarditis Bottle no longer in virus crate.
+2010-11-16:
+  /tg/station ss13 team:
+  - unknown: <b>Cruazy Guest's map is now live.</b>
+  - unknown: Entire station has been rearranged.
+  - unknown: Prison Station added, with Prison Shuttle to transport to and from.
+  - unknown: 'New Job: Warden. Distributes security items.'
+  - unknown: The new map is still in testing, so please report any bugs or suggestions
+      you have to the forums.
+  - unknown: AI Liquid Dispensers, Codename SLIPPER, have been added to the AI core.
+      They dispense cleaning foam twenty times each with a cooldown of ten seconds
+      between uses. Mounted flashes have also been included.
+  - unknown: Clown stamp added to clown's backpack.
+2010-11-21:
+  /tg/station ss13 team:
+  - unknown: Bug fixes, not going into detail. Lots and lots of bug fixes, mostly
+      regarding the new map
+  - unknown: CMO has a more obvious lab coat, that looks nicer than the original
+  - unknown: CMO also has a stamp now
+  - unknown: QM has a denied stamp
+  - unknown: Cyborgs got tweaked. Laws only update when checked. Also have wires that
+      can be toyed
+  - unknown: Second construction site similar to the original
+  - unknown: Prison station has been tweaked, now includes a lounge, and toilets
+  - unknown: Detective's revolver starts with a reasonable number of bullets
+  - unknown: Prison teleporter to the courtroom now exists
+  - unknown: 'AI related stuff: More cameras, oh, and bug fixes!'
+  - unknown: Emergency storage moved
+  - unknown: Random AI law changes. New law templates, and variables. Old variables
+      were tweaked and some of the crappy templates were removed
+  - unknown: Ghosts can teleport to the derelict now
+  - unknown: Respriting of a bunch of stuff as well as graphical fixes
+  - unknown: Kitchen is attached to the bar again
+  - unknown: General map tweaks and fixes
+  - unknown: Wardens fixed for rev rounds
+  - unknown: 5-unit pills now work
+  - unknown: APCs added and moved
+  - unknown: Cola machine added. Contains various flavours of soda. Also added new
+      snacks to the now named snack machine. Water cooler added, just apply an empty
+      glass to it
+  - unknown: Salt &amp; Pepper have been added, as part of the food overhaul
+  - unknown: More bug fixes. There was a lot

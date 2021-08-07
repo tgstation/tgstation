@@ -20,10 +20,10 @@
 	else if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/item_afterattack)
 	else if(ishostile(parent))
-		RegisterSignal(parent, COMSIG_HOSTILE_ATTACKINGTARGET, .proc/hostile_attackingtarget)
+		RegisterSignal(parent, COMSIG_HOSTILE_POST_ATTACKINGTARGET, .proc/hostile_attackingtarget)
 
 /datum/component/knockback/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
+	UnregisterSignal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_POST_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
 
 /// triggered after an item attacks something
 /datum/component/knockback/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
@@ -34,9 +34,10 @@
 	do_knockback(target, user, get_dir(source, target))
 
 /// triggered after a hostile simplemob attacks something
-/datum/component/knockback/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target)
+/datum/component/knockback/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
 	SIGNAL_HANDLER
-
+	if(!success)
+		return
 	do_knockback(target, attacker, get_dir(attacker, target))
 
 /// triggered after a projectile hits something
@@ -47,13 +48,13 @@
 
 
 /**
-  * Throw a target in a direction
-  *
-  * Arguments:
-  * * target - Target atom to throw
-  * * thrower - Thing that caused this atom to be thrown
-  * * throw_dir - Direction to throw the atom
-  */
+ * Throw a target in a direction
+ *
+ * Arguments:
+ * * target - Target atom to throw
+ * * thrower - Thing that caused this atom to be thrown
+ * * throw_dir - Direction to throw the atom
+ */
 /datum/component/knockback/proc/do_knockback(atom/target, mob/thrower, throw_dir)
 	if(!ismovable(target) || throw_dir == null)
 		return

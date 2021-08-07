@@ -1,5 +1,5 @@
 /mob/living/simple_animal/bot/vibebot
-	name = "\improper vibebot"
+	name = "\improper Vibebot"
 	desc = "A little robot. It's just vibing, doing its thing."
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "vibebot"
@@ -8,10 +8,11 @@
 	health = 25
 	maxHealth = 25
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	pass_flags = PASSMOB
+	pass_flags = PASSMOB | PASSFLAPS
 
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
 	radio_channel = RADIO_CHANNEL_SERVICE //Doesn't even use the radio anyway.
+	bot_type = VIBE_BOT
 	model = "Vibebot"
 	window_id = "vibebot"
 	window_name = "Discomatic Vibe Bot v1.05"
@@ -25,7 +26,7 @@
 
 /mob/living/simple_animal/bot/vibebot/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/vibebot/get_controls(mob/user)
 	var/list/dat = list()
@@ -44,13 +45,13 @@
 /mob/living/simple_animal/bot/vibebot/turn_off()
 	. = ..()
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/vibebot/proc/Vibe()
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	add_atom_colour("#[random_color()]", TEMPORARY_COLOUR_PRIORITY)
 	set_light_color(color)
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/vibebot/proc/retaliate(mob/living/carbon/human/H)
 

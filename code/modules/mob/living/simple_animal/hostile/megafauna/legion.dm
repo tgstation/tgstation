@@ -1,21 +1,21 @@
 /**
-  *LEGION
-  *
-  *Legion spawns from the necropolis gate in the far north of lavaland. It is the guardian of the Necropolis and emerges from within whenever an intruder tries to enter through its gate.
-  *Whenever Legion emerges, everything in lavaland will receive a notice via color, audio, and text. This is because Legion is powerful enough to slaughter the entirety of lavaland with little effort. LOL
-  *
-  *It has three attacks.
-  *Spawn Skull. Most of the time it will use this attack. Spawns a single legion skull.
-  *Spawn Sentinel. The legion will spawn up to three sentinels, depending on its size.
-  *CHARGE! The legion starts spinning and tries to melee the player. It will try to flick itself towards the player, dealing some damage if it hits.
-  *
-  *When Legion dies, it will split into three smaller skulls up to three times.
-  *If you kill all of the smaller ones it drops a staff of storms, which allows its wielder to call and disperse ash storms at will and functions as a powerful melee weapon.
-  *
-  *Difficulty: Medium
-  *
-  *SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
-  */
+ *LEGION
+ *
+ *Legion spawns from the necropolis gate in the far north of lavaland. It is the guardian of the Necropolis and emerges from within whenever an intruder tries to enter through its gate.
+ *Whenever Legion emerges, everything in lavaland will receive a notice via color, audio, and text. This is because Legion is powerful enough to slaughter the entirety of lavaland with little effort. LOL
+ *
+ *It has three attacks.
+ *Spawn Skull. Most of the time it will use this attack. Spawns a single legion skull.
+ *Spawn Sentinel. The legion will spawn up to three sentinels, depending on its size.
+ *CHARGE! The legion starts spinning and tries to melee the player. It will try to flick itself towards the player, dealing some damage if it hits.
+ *
+ *When Legion dies, it will split into three smaller skulls up to three times.
+ *If you kill all of the smaller ones it drops a staff of storms, which allows its wielder to call and disperse ash storms at will and functions as a powerful melee weapon.
+ *
+ *Difficulty: Medium
+ *
+ *SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
+ */
 /mob/living/simple_animal/hostile/megafauna/legion
 	name = "Legion"
 	health = 700
@@ -28,6 +28,7 @@
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	speak_emote = list("echoes")
 	armour_penetration = 50
 	melee_damage_lower = 25
@@ -42,8 +43,10 @@
 	achievement_type = /datum/award/achievement/boss/legion_kill
 	crusher_achievement_type = /datum/award/achievement/boss/legion_crusher
 	score_achievement_type = /datum/award/score/legion_score
-	pixel_y = -16
 	pixel_x = -32
+	base_pixel_x = -32
+	pixel_y = -16
+	base_pixel_y = -16
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
 	wander = FALSE
@@ -114,7 +117,7 @@
 
 ///Attack proc. Gives legion some movespeed buffs and switches the AI to melee. At lower sizes, this also throws the skull at the player.
 /mob/living/simple_animal/hostile/megafauna/legion/proc/charge_target()
-	visible_message("<span class='warning'><b>[src] charges!</b></span>")
+	visible_message(span_warning("<b>[src] charges!</b>"))
 	SpinAnimation(speed = 20, loops = 3, parallel = FALSE)
 	ranged = FALSE
 	retreat_distance = 0
@@ -231,7 +234,7 @@
 			pixel_y = 0
 			maxHealth = 200
 	adjustHealth(0) //Make the health HUD look correct.
-	visible_message("<span class='boldannounce'>This is getting out of hands. Now there are three of them!</span>")
+	visible_message(span_boldannounce("This is getting out of hands. Now there are three of them!"))
 	for(var/i in 1 to 2) //Create three skulls in total
 		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(loc)
 		L.setVarsAfterSplit(src)
@@ -272,13 +275,13 @@
 
 /obj/item/staff/storm/attack_self(mob/user)
 	if(storm_nextuse > world.time)
-		to_chat(user, "<span class='warning'>The staff is still recharging!</span>")
+		to_chat(user, span_warning("The staff is still recharging!"))
 		return
 
 	var/area/user_area = get_area(user)
 	var/turf/user_turf = get_turf(user)
 	if(!user_area || !user_turf || (user_area.type in excluded_areas))
-		to_chat(user, "<span class='warning'>Something is preventing you from using the staff here.</span>")
+		to_chat(user, span_warning("Something is preventing you from using the staff here."))
 		return
 	var/datum/weather/A
 	for(var/V in SSweather.processing)
@@ -290,10 +293,10 @@
 	if(A)
 		if(A.stage != END_STAGE)
 			if(A.stage == WIND_DOWN_STAGE)
-				to_chat(user, "<span class='warning'>The storm is already ending! It would be a waste to use the staff now.</span>")
+				to_chat(user, span_warning("The storm is already ending! It would be a waste to use the staff now."))
 				return
-			user.visible_message("<span class='warning'>[user] holds [src] skywards as an orange beam travels into the sky!</span>", \
-			"<span class='notice'>You hold [src] skyward, dispelling the storm!</span>")
+			user.visible_message(span_warning("[user] holds [src] skywards as an orange beam travels into the sky!"), \
+			span_notice("You hold [src] skyward, dispelling the storm!"))
 			playsound(user, 'sound/magic/staff_change.ogg', 200, FALSE)
 			A.wind_down()
 			log_game("[user] ([key_name(user)]) has dispelled a storm at [AREACOORD(user_turf)]")
@@ -308,8 +311,8 @@
 		A.telegraph_duration = storm_telegraph_duration
 		A.end_duration = storm_duration
 
-	user.visible_message("<span class='warning'>[user] holds [src] skywards as red lightning crackles into the sky!</span>", \
-	"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
+	user.visible_message(span_warning("[user] holds [src] skywards as red lightning crackles into the sky!"), \
+	span_notice("You hold [src] skyward, calling down a terrible storm!"))
 	playsound(user, 'sound/magic/staff_change.ogg', 200, FALSE)
 	A.telegraph()
 	storm_nextuse = world.time + staff_cooldown
@@ -386,7 +389,7 @@
 	muzzle_type = /obj/effect/projectile/tracer/legion
 	impact_type = /obj/effect/projectile/tracer/legion
 	hitscan = TRUE
-	movement_type = UNSTOPPABLE
+	projectile_piercing = ALL
 
 ///Used for the legion turret tracer.
 /obj/effect/projectile/tracer/legion/tracer

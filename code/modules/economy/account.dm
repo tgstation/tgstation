@@ -10,6 +10,7 @@
 	var/account_id
 	var/being_dumped = FALSE //pink levels are rising
 	var/datum/bounty/civilian_bounty
+	var/list/datum/bounty/bounties
 	var/bounty_timer = 0
 
 /datum/bank_account/New(newname, job, modifier = 1)
@@ -79,7 +80,7 @@
 /datum/bank_account/proc/payday(amt_of_paychecks, free = FALSE)
 	if(!account_job)
 		return
-	var/money_to_transfer = account_job.paycheck * payday_modifier * amt_of_paychecks
+	var/money_to_transfer = round(account_job.paycheck * payday_modifier * amt_of_paychecks)
 	if(free)
 		adjust_money(money_to_transfer)
 		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)
@@ -104,8 +105,7 @@
 		var/icon_source = A
 		if(istype(A, /obj/item/card/id))
 			var/obj/item/card/id/id_card = A
-			if(id_card.uses_overlays)
-				icon_source = id_card.get_cached_flat_icon()
+			icon_source = id_card.get_cached_flat_icon()
 		var/mob/card_holder = recursive_loc_check(A, /mob)
 		if(ismob(card_holder)) //If on a mob
 			if(!card_holder.client || (!(card_holder.client.prefs.chat_toggles & CHAT_BANKCARD) && !force))
@@ -113,7 +113,7 @@
 
 			if(card_holder.can_hear())
 				card_holder.playsound_local(get_turf(card_holder), 'sound/machines/twobeep_high.ogg', 50, TRUE)
-				to_chat(card_holder, "[icon2html(icon_source, card_holder)] <span class='notice'>[message]</span>")
+				to_chat(card_holder, "[icon2html(icon_source, card_holder)] [span_notice("[message]")]")
 		else if(isturf(A.loc)) //If on the ground
 			var/turf/T = A.loc
 			for(var/mob/M in hearers(1,T))
@@ -121,7 +121,7 @@
 					continue
 				if(M.can_hear())
 					M.playsound_local(T, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-					to_chat(M, "[icon2html(icon_source, M)] <span class='notice'>[message]</span>")
+					to_chat(M, "[icon2html(icon_source, M)] [span_notice("[message]")]")
 		else
 			var/atom/sound_atom
 			for(var/mob/M in A.loc) //If inside a container with other mobs (e.g. locker)
@@ -131,11 +131,11 @@
 					sound_atom = A.drop_location() //in case we're inside a bodybag in a crate or something. doing this here to only process it if there's a valid mob who can hear the sound.
 				if(M.can_hear())
 					M.playsound_local(get_turf(sound_atom), 'sound/machines/twobeep_high.ogg', 50, TRUE)
-					to_chat(M, "[icon2html(icon_source, M)] <span class='notice'>[message]</span>")
+					to_chat(M, "[icon2html(icon_source, M)] [span_notice("[message]")]")
 
 /**
-  * Returns a string with the civilian bounty's description on it.
-  */
+ * Returns a string with the civilian bounty's description on it.
+ */
 /datum/bank_account/proc/bounty_text()
 	if(!civilian_bounty)
 		return FALSE
@@ -143,8 +143,8 @@
 
 
 /**
-  * Returns the required item count, or required chemical units required to submit a bounty.
-  */
+ * Returns the required item count, or required chemical units required to submit a bounty.
+ */
 /datum/bank_account/proc/bounty_num()
 	if(!civilian_bounty)
 		return FALSE
@@ -158,16 +158,16 @@
 		return "At least 1u"
 
 /**
-  * Produces the value of the account's civilian bounty reward, if able.
-  */
+ * Produces the value of the account's civilian bounty reward, if able.
+ */
 /datum/bank_account/proc/bounty_value()
 	if(!civilian_bounty)
 		return FALSE
 	return civilian_bounty.reward
 
 /**
-  * Performs house-cleaning on variables when a civilian bounty is replaced, or, when a bounty is claimed.
-  */
+ * Performs house-cleaning on variables when a civilian bounty is replaced, or, when a bounty is claimed.
+ */
 /datum/bank_account/proc/reset_bounty()
 	civilian_bounty = null
 	bounty_timer = 0

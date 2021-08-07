@@ -4,7 +4,7 @@
 	SStgui.on_logout(src)
 	unset_machine()
 	remove_from_player_list()
-
+	clear_client_in_contents()
 	..()
 
 	if(loc)

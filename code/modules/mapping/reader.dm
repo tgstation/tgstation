@@ -22,6 +22,9 @@
 	/// Offset bounds. Same as parsed_bounds until load().
 	var/list/bounds
 
+	///any turf in this list is skipped inside of build_coordinate
+	var/list/turf_blacklist = list()
+
 	// raw strings used to represent regexes more accurately
 	// '' used to avoid confusing syntax highlighting
 	var/static/regex/dmmRegex = new(@'"([a-zA-Z]+)" = \(((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}', "g")
@@ -162,15 +165,15 @@
 				WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
 
 		for(var/line in gset.gridLines)
-			if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
+			if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper) //Reverse operation and check if it is out of bounds of cropping.
 				--ycrd
 				continue
 			if(ycrd <= world.maxy && ycrd >= 1)
 				var/xcrd = gset.xcrd + x_offset - 1
 				for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
-					if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper)			//Same as above.
+					if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper) //Same as above.
 						++xcrd
-						continue								//X cropping.
+						continue //X cropping.
 					if(xcrd > world.maxx)
 						if(cropMap)
 							break
@@ -303,6 +306,10 @@
 	////////////////
 	//Instanciation
 	////////////////
+
+	for (var/turf_in_blacklist in turf_blacklist)
+		if (crds == turf_in_blacklist) //if the given turf is blacklisted, dont do anything with it
+			return
 
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
 	//first instance the /area and remove it from the members list
@@ -474,4 +481,9 @@
 
 /datum/parsed_map/Destroy()
 	..()
+	turf_blacklist.Cut()
+	parsed_bounds.Cut()
+	bounds.Cut()
+	grid_models.Cut()
+	gridSets.Cut()
 	return QDEL_HINT_HARDDEL_NOW

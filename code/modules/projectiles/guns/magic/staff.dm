@@ -14,6 +14,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/change
 	icon_state = "staffofchange"
 	inhand_icon_state = "staffofchange"
+	school = SCHOOL_TRANSMUTATION
 
 /obj/item/gun/magic/staff/animate
 	name = "staff of animation"
@@ -22,6 +23,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/animate
 	icon_state = "staffofanimation"
 	inhand_icon_state = "staffofanimation"
+	school = SCHOOL_EVOCATION
 
 /obj/item/gun/magic/staff/healing
 	name = "staff of healing"
@@ -30,6 +32,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/heal
 	icon_state = "staffofhealing"
 	inhand_icon_state = "staffofhealing"
+	school = SCHOOL_RESTORATION
 
 /obj/item/gun/magic/staff/healing/handle_suicide() //Stops people trying to commit suicide to heal themselves
 	return
@@ -44,6 +47,7 @@
 	max_charges = 10
 	recharge_rate = 2
 	no_den_usage = 1
+	school = SCHOOL_FORBIDDEN //this staff is evil. okay? it just is. look at this projectile type list. this is wrong.
 	var/allowed_projectile_types = list(/obj/projectile/magic/change, /obj/projectile/magic/animate, /obj/projectile/magic/resurrection,
 	/obj/projectile/magic/death, /obj/projectile/magic/teleport, /obj/projectile/magic/door, /obj/projectile/magic/aoe/fireball,
 	/obj/projectile/magic/spellblade, /obj/projectile/magic/arcane_barrage, /obj/projectile/magic/locker, /obj/projectile/magic/flying,
@@ -64,6 +68,7 @@
 	max_charges = 10
 	recharge_rate = 2
 	no_den_usage = 1
+	school = SCHOOL_TRANSMUTATION
 
 /obj/item/gun/magic/staff/honk
 	name = "staff of the honkmother"
@@ -74,10 +79,11 @@
 	inhand_icon_state = "honker"
 	max_charges = 4
 	recharge_rate = 8
+	school = SCHOOL_EVOCATION
 
 /obj/item/gun/magic/staff/spellblade
 	name = "spellblade"
-	desc = "A deadly combination of laziness and boodlust, this blade allows the user to dismember their enemies without all the hard work of actually swinging the sword."
+	desc = "A deadly combination of laziness and bloodlust, this blade allows the user to dismember their enemies without all the hard work of actually swinging the sword."
 	fire_sound = 'sound/magic/fireball.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/spellblade
 	icon_state = "spellblade"
@@ -90,6 +96,7 @@
 	block_chance = 50
 	sharpness = SHARP_EDGED
 	max_charges = 4
+	school = SCHOOL_EVOCATION
 
 /obj/item/gun/magic/staff/spellblade/Initialize()
 	. = ..()
@@ -110,6 +117,7 @@
 	worn_icon_state = "lockerstaff"
 	max_charges = 6
 	recharge_rate = 4
+	school = SCHOOL_TRANSMUTATION //in a way
 
 //yes, they don't have sounds. they're admin staves, and their projectiles will play the chaos bolt sound anyway so why bother?
 
@@ -121,6 +129,7 @@
 	icon_state = "staffofflight"
 	inhand_icon_state = "staffofchange"
 	worn_icon_state = "flightstaff"
+	school = SCHOOL_EVOCATION
 
 /obj/item/gun/magic/staff/sapping
 	name = "staff of sapping"
@@ -130,6 +139,7 @@
 	icon_state = "staffofsapping"
 	inhand_icon_state = "staffofdoor"
 	worn_icon_state = "sapstaff"
+	school = SCHOOL_FORBIDDEN //evil
 
 /obj/item/gun/magic/staff/necropotence
 	name = "staff of necropotence"
@@ -139,6 +149,7 @@
 	icon_state = "staffofnecropotence"
 	inhand_icon_state = "staffofchaos"
 	worn_icon_state = "necrostaff"
+	school = SCHOOL_NECROMANCY //REALLY evil
 
 /obj/item/gun/magic/staff/wipe
 	name = "staff of possession"
@@ -148,3 +159,4 @@
 	icon_state = "staffofwipe"
 	inhand_icon_state = "pharoah_sceptre"
 	worn_icon_state = "wipestaff"
+	school = SCHOOL_FORBIDDEN //arguably the worst staff in the entire game effect wise

@@ -8,11 +8,11 @@
 	announceWhen = 50
 	endWhen = 20
 	var/list/area/areasToOpen = list()
-	var/list/potential_areas = list(/area/bridge,
-									/area/engine,
+	var/list/potential_areas = list(/area/command,
+									/area/engineering,
 									/area/medical,
 									/area/security,
-									/area/quartermaster,
+									/area/cargo,
 									/area/science)
 	var/severity = 1
 
@@ -47,7 +47,7 @@
 			if(istype(O, /obj/structure/closet/secure_closet))
 				var/obj/structure/closet/secure_closet/temp = O
 				temp.locked = FALSE
-				temp.update_icon()
+				temp.update_appearance()
 			else if(istype(O, /obj/machinery/door/airlock))
 				var/obj/machinery/door/airlock/temp = O
 				if(temp.critical_machine) //Skip doors in critical positions, such as the SM chamber.

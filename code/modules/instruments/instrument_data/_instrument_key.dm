@@ -1,7 +1,7 @@
 /**
-  * Instrument key datums contain everything needed to know how to play a specific
-  * note of an instrument.*
-  */
+ * Instrument key datums contain everything needed to know how to play a specific
+ * note of an instrument.*
+ */
 /datum/instrument_key
 	/// The numerical key of what this is, from 1 to 127 on a standard piano keyboard.
 	var/key
@@ -21,8 +21,8 @@
 		calculate()
 
 /**
-  * Calculates and stores our deviation.
-  */
+ * Calculates and stores our deviation.
+ */
 /datum/instrument_key/proc/calculate()
 	if(!deviation)
 		CRASH("Invalid calculate call: No deviation or sample in instrument_key")

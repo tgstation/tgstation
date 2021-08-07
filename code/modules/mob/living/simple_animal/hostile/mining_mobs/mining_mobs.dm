@@ -3,15 +3,16 @@
 	vision_range = 2
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("mining")
-	weather_immunities = list("lava","ash")
+	weather_immunities = list(WEATHER_LAVA,WEATHER_ASH)
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	minbodytemp = 0
 	maxbodytemp = INFINITY
+	unsuitable_heat_damage = 20
 	response_harm_continuous = "strikes"
 	response_harm_simple = "strike"
 	status_flags = 0
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	var/crusher_loot
 	var/throw_message = "bounces off of"
 	var/fromtendril = FALSE
@@ -37,7 +38,7 @@
 		Aggro()
 	if(P.damage < 30 && P.damage_type != BRUTE)
 		P.damage = (P.damage / 3)
-		visible_message("<span class='danger'>[P] has a reduced effect on [src]!</span>")
+		visible_message(span_danger("[P] has a reduced effect on [src]!"))
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum) //No floor tiling them to death, wiseguy
@@ -46,7 +47,7 @@
 		if(!stat)
 			Aggro()
 		if(T.throwforce <= 20)
-			visible_message("<span class='notice'>The [T.name] [throw_message] [src.name]!</span>")
+			visible_message(span_notice("The [T.name] [throw_message] [src.name]!"))
 			return
 	..()
 
@@ -59,13 +60,3 @@
 
 /mob/living/simple_animal/hostile/asteroid/proc/spawn_crusher_loot()
 	butcher_results[crusher_loot] = 1
-
-/mob/living/simple_animal/hostile/asteroid/handle_temperature_damage()
-	if(bodytemperature < minbodytemp)
-		adjustBruteLoss(2)
-		throw_alert("temp", /obj/screen/alert/cold, 1)
-	else if(bodytemperature > maxbodytemp)
-		adjustBruteLoss(20)
-		throw_alert("temp", /obj/screen/alert/hot, 3)
-	else
-		clear_alert("temp")

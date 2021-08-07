@@ -19,10 +19,10 @@
 	. = ..()
 	AddComponent(spawner_type, mob_types, spawn_time, faction, spawn_text, max_mobs)
 
-/obj/structure/spawner/attack_animal(mob/living/simple_animal/M)
-	if(faction_check(faction, M.faction, FALSE)&&!M.client)
+/obj/structure/spawner/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(faction_check(faction, user.faction, FALSE) && !user.client)
 		return
-	..()
+	return ..()
 
 
 /obj/structure/spawner/syndicate
@@ -53,7 +53,7 @@
 	max_integrity = 200
 	max_mobs = 15
 	spawn_time = 150
-	mob_types = list(/mob/living/simple_animal/hostile/retaliate/clown, /mob/living/simple_animal/hostile/retaliate/clown/fleshclown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk, /mob/living/simple_animal/hostile/retaliate/clown/longface, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus, /mob/living/simple_animal/hostile/retaliate/clown/mutant/blob, /mob/living/simple_animal/hostile/retaliate/clown/banana, /mob/living/simple_animal/hostile/retaliate/clown/honkling, /mob/living/simple_animal/hostile/retaliate/clown/lube)
+	mob_types = list(/mob/living/simple_animal/hostile/retaliate/clown, /mob/living/simple_animal/hostile/retaliate/clown/fleshclown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk, /mob/living/simple_animal/hostile/retaliate/clown/longface, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus, /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton, /mob/living/simple_animal/hostile/retaliate/clown/banana, /mob/living/simple_animal/hostile/retaliate/clown/honkling, /mob/living/simple_animal/hostile/retaliate/clown/lube)
 	spawn_text = "climbs out of"
 	faction = list("clown")
 

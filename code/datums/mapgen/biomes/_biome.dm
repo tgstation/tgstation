@@ -12,7 +12,7 @@
 	var/list/fauna_types = list()
 
 ///This proc handles the creation of a turf of a specific biome type
-/datum/biome/proc/generate_turf(var/turf/gen_turf)
+/datum/biome/proc/generate_turf(turf/gen_turf)
 	gen_turf.ChangeTurf(turf_type, null, CHANGETURF_DEFER_CHANGE)
 	if(length(fauna_types) && prob(fauna_density))
 		var/mob/fauna = pick(fauna_types)

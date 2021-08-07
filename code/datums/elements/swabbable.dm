@@ -12,7 +12,7 @@ This element is used in vat growing to allow for the object to be
 	var/virus_define
 	///Amount of cell lines on a single sample
 	var/cell_line_amount
-	///Amount of viruses on a single sample
+	///The chance the sample will be infected with a virus.
 	var/virus_chance
 
 ///Listens for the swab signal and then generate a sample based on pre-determined lists that are saved as GLOBs. this allows us to have very few swabbable element instances.
@@ -29,7 +29,7 @@ This element is used in vat growing to allow for the object to be
 	src.virus_chance = virus_chance
 
 ///Stops listening to the swab signal; you can no longer be swabbed.
-/datum/element/swabable/Detach(datum/source, force)
+/datum/element/swabable/Detach(datum/source)
 	. = ..()
 	if(!isatom(source) || isarea(source))
 		return ELEMENT_INCOMPATIBLE

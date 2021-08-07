@@ -11,6 +11,8 @@
 	else if(istext(var_value))
 		if(findtext(var_value, "\n"))
 			. = VV_MESSAGE
+		else if(findtext(var_value, GLOB.is_color))
+			. = VV_COLOR
 		else
 			. = VV_TEXT
 
@@ -54,6 +56,7 @@
 				VV_TEXT,
 				VV_MESSAGE,
 				VV_ICON,
+				VV_COLOR,
 				VV_ATOM_REFERENCE,
 				VV_DATUM_REFERENCE,
 				VV_MOB_REFERENCE,
@@ -205,7 +208,7 @@
 		if(VV_PROCCALL_RETVAL)
 			var/list/get_retval = list()
 			callproc_blocking(get_retval)
-			.["value"] = get_retval[1]		//should have been set in proccall!
+			.["value"] = get_retval[1] //should have been set in proccall!
 			if(.["value"] == null)
 				.["class"] = null
 				return
@@ -261,11 +264,17 @@
 					break
 				D = locate(ref)
 				if(!D)
-					alert("Invalid ref!")
+					tgui_alert(usr,"Invalid ref!")
 					continue
 				if(!D.can_vv_mark())
-					alert("Datum can not be marked!")
+					tgui_alert(usr,"Datum can not be marked!")
 					continue
 			while(!D)
 			.["type"] = D.type
 			.["value"] = D
+
+		if(VV_COLOR)
+			.["value"] = input("Enter new color:", "Color", current_value) as color|null
+			if(.["value"] == null)
+				.["class"] = null
+				return

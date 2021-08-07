@@ -7,6 +7,7 @@
 	move_resist = INFINITY
 	obj_flags = NONE
 	vis_flags = VIS_INHERIT_PLANE
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
 /obj/effect/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	return
@@ -27,24 +28,10 @@
 	return
 
 /obj/effect/ex_act(severity, target)
-	if(target == src)
-		qdel(src)
-	else
-		switch(severity)
-			if(1)
-				qdel(src)
-			if(2)
-				if(prob(60))
-					qdel(src)
-			if(3)
-				if(prob(25))
-					qdel(src)
+	return FALSE
 
 /obj/effect/singularity_act()
 	qdel(src)
-
-/obj/effect/abstract/ex_act(severity, target)
-	return
 
 /obj/effect/abstract/singularity_pull()
 	return

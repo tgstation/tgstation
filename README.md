@@ -1,6 +1,6 @@
 ## /tg/station codebase
 
-[![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation) 
+[![Build Status](https://github.com/tgstation/tgstation/workflows/CI%20Suite/badge.svg)](https://github.com/tgstation/tgstation/actions?query=workflow%3A%22CI+Suite%22)
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Percentage of issues still open")
 [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Average time to resolve an issue")
 ![Coverage](https://img.shields.io/badge/coverage---3%25-red.svg)
@@ -25,6 +25,18 @@ Space Station 13 is a paranoia-laden round-based roleplaying game set against th
 [Running on the server](.github/RUNNING_A_SERVER.md)
 
 [Maps and Away Missions](.github/MAPS_AND_AWAY_MISSIONS.md)
+
+## :exclamation: How to compile :exclamation:
+
+On **2021-01-04** we have changed the way to compile the codebase.
+
+Find `BUILD.bat` here in the root folder of tgstation, and double click it to initiate the build. It consists of multiple steps and might take around 1-5 minutes to compile.
+
+After it finishes, you can then [setup the server](.github/RUNNING_A_SERVER.md) normally by opening `tgstation.dmb` in DreamDaemon.
+
+**Building tgstation in DreamMaker directly is now deprecated and might produce errors**, such as `'tgui.bundle.js': cannot find file`.
+
+**[How to compile in VSCode and other build options](tools/build/README.md).**
 
 ## Requirements for contributors
 [Guidelines for Contributors](.github/CONTRIBUTING.md)

@@ -31,9 +31,7 @@
 					/obj/item/clothing/under/suit/black = 1,
 					/obj/item/clothing/head/that = 1,
 					/obj/item/clothing/under/costume/kilt = 1,
-					/obj/item/clothing/head/beret = 1,
-					/obj/item/clothing/head/beret/vintage = 1,
-					/obj/item/clothing/head/beret/archaic = 1,
+					/obj/item/clothing/head/beret = 3,
 					/obj/item/clothing/accessory/waistcoat = 1,
 					/obj/item/clothing/glasses/monocle =1,
 					/obj/item/clothing/head/bowler = 1,
@@ -114,6 +112,8 @@
 					/obj/item/clothing/head/cueball = 1,
 					/obj/item/clothing/under/suit/white_on_white = 1,
 					/obj/item/clothing/under/costume/sailor = 1,
+					/obj/item/clothing/under/costume/referee = 1,
+					/obj/item/clothing/mask/whistle = 1,
 					/obj/item/clothing/head/delinquent = 1,
 					/obj/item/clothing/head/wig/random = 3,
 					/obj/item/clothing/head/shrine_wig = 1,
@@ -146,8 +146,8 @@
 				   /obj/item/clothing/head/weddingveil = 1,
 				   /obj/item/storage/belt/cummerbund = 1)
 	refill_canister = /obj/item/vending_refill/autodrobe
-	default_price = 180
-	extra_price = 360
+	default_price = PAYCHECK_ASSISTANT * 0.8 //Default of 40.
+	extra_price = PAYCHECK_HARD
 	payment_department = ACCOUNT_SRV
 	light_mask="theater-light-mask"
 

@@ -26,10 +26,10 @@
 /area/ruin/powered/shuttle/medium_3)
 "k" = (
 /obj/machinery/power/smes/magical,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_3)
 "l" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_3)
 "m" = (
 /turf/open/floor/plating,
@@ -48,7 +48,7 @@
 /area/ruin/powered/shuttle/medium_3)
 "p" = (
 /obj/machinery/door/airlock/public/glass,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_3)
 "q" = (
 /obj/structure/shuttle/engine/heater{
@@ -78,7 +78,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
 "w" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -91,7 +91,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
 "x" = (
 /obj/structure/chair/comfy{
@@ -107,7 +107,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
 "z" = (
 /obj/machinery/sleeper,
@@ -121,10 +121,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
 "A" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
 "C" = (
 /obj/effect/turf_decal/tile/blue{
@@ -137,7 +137,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
 "D" = (
 /obj/structure/table,
@@ -152,7 +152,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
 "E" = (
 /obj/structure/shuttle/engine/heater,

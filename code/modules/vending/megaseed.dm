@@ -23,15 +23,18 @@
 					/obj/item/seeds/garlic = 3,
 					/obj/item/seeds/grape = 3,
 					/obj/item/seeds/grass = 3,
+					/obj/item/seeds/korta_nut = 3,
 					/obj/item/seeds/lemon = 3,
 					/obj/item/seeds/lime = 3,
 					/obj/item/seeds/onion = 3,
 					/obj/item/seeds/orange = 3,
+					/obj/item/seeds/peas = 3,
 					/obj/item/seeds/pineapple = 3,
 					/obj/item/seeds/potato = 3,
 					/obj/item/seeds/poppy = 3,
 					/obj/item/seeds/pumpkin = 3,
 					/obj/item/seeds/wheat/rice = 3,
+					/obj/item/seeds/rose = 3,
 					/obj/item/seeds/soya = 3,
 					/obj/item/seeds/sugarcane = 3,
 					/obj/item/seeds/sunflower = 3,
@@ -53,8 +56,8 @@
 					/obj/item/seeds/random = 2)
 	premium = list(/obj/item/reagent_containers/spray/waterflower = 1)
 	refill_canister = /obj/item/vending_refill/hydroseeds
-	default_price = 100
-	extra_price = 350
+	default_price = PAYCHECK_PRISONER
+	extra_price = PAYCHECK_ASSISTANT
 	payment_department = ACCOUNT_SRV
 
 /obj/item/vending_refill/hydroseeds

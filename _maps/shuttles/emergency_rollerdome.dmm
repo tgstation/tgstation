@@ -93,15 +93,11 @@
 /turf/template_noop,
 /area/template_noop)
 "pI" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "qU" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "ss" = (
@@ -130,7 +126,7 @@
 /area/shuttle/escape)
 "wf" = (
 /obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
-/turf/open/floor/plasteel/elevatorshaft,
+/turf/open/floor/plating/elevatorshaft,
 /area/shuttle/escape)
 "wn" = (
 /obj/structure/chair/comfy/brown{
@@ -182,7 +178,7 @@
 /turf/open/floor/eighties,
 /area/shuttle/escape)
 "Dh" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "DR" = (
@@ -200,7 +196,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "HA" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "HS" = (
@@ -299,7 +295,7 @@
 /obj/structure/table/wood/poker,
 /obj/item/storage/box/drinkingglasses,
 /obj/item/reagent_containers/food/drinks/bottle/whiskey,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Zo" = (

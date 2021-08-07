@@ -1,6 +1,8 @@
 /obj/vehicle/sealed
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/enter_delay = 2 SECONDS
 	var/mouse_pointer
+	var/headlights_toggle = FALSE
 
 /obj/vehicle/sealed/generate_actions()
 	. = ..()
@@ -19,11 +21,18 @@
 		mob_try_enter(M)
 	return ..()
 
-/obj/vehicle/sealed/Exited(atom/movable/AM, atom/newLoc)
+/obj/vehicle/sealed/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(ismob(AM))
-		remove_occupant(AM)
+	if(ismob(gone))
+		remove_occupant(gone)
 
+// so that we can check the access of the vehicle's occupants. Ridden vehicles do this in the riding component, but these don't have that
+/obj/vehicle/sealed/Bump(atom/A)
+	. = ..()
+	if(istype(A, /obj/machinery/door))
+		var/obj/machinery/door/conditionalwall = A
+		for(var/occupant in occupants)
+			conditionalwall.bumpopen(occupant)
 
 /obj/vehicle/sealed/after_add_occupant(mob/M)
 	. = ..()
@@ -52,7 +61,7 @@
 	if(!istype(M))
 		return FALSE
 	if(!silent)
-		M.visible_message("<span class='notice'>[M] climbs into \the [src]!</span>")
+		M.visible_message(span_notice("[M] climbs into \the [src]!"))
 	M.forceMove(src)
 	add_occupant(M)
 	return TRUE
@@ -72,7 +81,7 @@
 		M.throw_at(target_turf, 5, 10)
 
 	if(!silent)
-		M.visible_message("<span class='notice'>[M] drops out of \the [src]!</span>")
+		M.visible_message(span_notice("[M] drops out of \the [src]!"))
 	return TRUE
 
 /obj/vehicle/sealed/proc/exit_location(M)
@@ -81,34 +90,29 @@
 /obj/vehicle/sealed/attackby(obj/item/I, mob/user, params)
 	if(key_type && !is_key(inserted_key) && is_key(I))
 		if(user.transferItemToLoc(I, src))
-			to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-			if(inserted_key)	//just in case there's an invalid key
+			to_chat(user, span_notice("You insert [I] into [src]."))
+			if(inserted_key) //just in case there's an invalid key
 				inserted_key.forceMove(drop_location())
 			inserted_key = I
 		else
-			to_chat(user, "<span class='warning'>[I] seems to be stuck to your hand!</span>")
+			to_chat(user, span_warning("[I] seems to be stuck to your hand!"))
 		return
 	return ..()
 
 /obj/vehicle/sealed/proc/remove_key(mob/user)
 	if(!inserted_key)
-		to_chat(user, "<span class='warning'>There is no key in [src]!</span>")
+		to_chat(user, span_warning("There is no key in [src]!"))
 		return
 	if(!is_occupant(user) || !(occupants[user] & VEHICLE_CONTROL_DRIVE))
-		to_chat(user, "<span class='warning'>You must be driving [src] to remove [src]'s key!</span>")
+		to_chat(user, span_warning("You must be driving [src] to remove [src]'s key!"))
 		return
-	to_chat(user, "<span class='notice'>You remove [inserted_key] from [src].</span>")
+	to_chat(user, span_notice("You remove [inserted_key] from [src]."))
 	inserted_key.forceMove(drop_location())
 	if(!HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		user.put_in_hands(inserted_key)
 	else
-		inserted_key.equip_to_best_slot(user, check_hand = FALSE)
+		inserted_key.equip_to_best_slot(user)
 	inserted_key = null
-
-
-/obj/vehicle/sealed/obj_destruction(damage_flag)
-	explosion(loc, 0, 1, 2, 3, 0)
-	return ..()
 
 /obj/vehicle/sealed/Destroy()
 	dump_mobs()
@@ -123,12 +127,22 @@
 
 /obj/vehicle/sealed/proc/dump_specific_mobs(flag, randomstep = TRUE)
 	for(var/i in occupants)
-		if((occupants[i] & flag))
-			mob_exit(i, null, randomstep)
-			if(iscarbon(i))
-				var/mob/living/carbon/C = i
-				C.Paralyze(40)
+		if(!(occupants[i] & flag))
+			continue
+		mob_exit(i, null, randomstep)
+		if(iscarbon(i))
+			var/mob/living/carbon/C = i
+			C.Paralyze(40)
 
 
 /obj/vehicle/sealed/AllowDrop()
+	return FALSE
+
+/obj/vehicle/sealed/relaymove(mob/living/user, direction)
+	if(canmove)
+		vehicle_move(direction)
+	return TRUE
+
+/// Sinced sealed vehicles (cars and mechs) don't have riding components, the actual movement is handled here from [/obj/vehicle/sealed/proc/relaymove]
+/obj/vehicle/sealed/proc/vehicle_move(direction)
 	return FALSE

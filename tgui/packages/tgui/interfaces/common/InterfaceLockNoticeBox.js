@@ -26,7 +26,7 @@ export const InterfaceLockNoticeBox = (props, context) => {
   // For silicon users
   if (siliconUser) {
     return (
-      <NoticeBox color={siliconUser && 'grey'}>
+      <NoticeBox color="grey">
         <Flex align="center">
           <Flex.Item>
             Interface lock status:

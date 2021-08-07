@@ -2,6 +2,7 @@
 	desc = "This is a Phazon exosuit. The pinnacle of scientific research and pride of Nanotrasen, it uses cutting edge bluespace technology and expensive materials."
 	name = "\improper Phazon"
 	icon_state = "phazon"
+	base_icon_state = "phazon"
 	movedelay = 2
 	dir_in = 2 //Facing South.
 	step_energy_drain = 3

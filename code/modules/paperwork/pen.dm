@@ -1,9 +1,9 @@
-/*	Pens!
- *	Contains:
- *		Pens
- *		Sleepy Pens
- *		Parapens
- *		Edaggers
+/* Pens!
+ * Contains:
+ * Pens
+ * Sleepy Pens
+ * Parapens
+ * Edaggers
  */
 
 
@@ -25,14 +25,14 @@
 	custom_materials = list(/datum/material/iron=10)
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
-	var/colour = "black"	//what colour the ink is!
+	var/colour = "black" //what colour the ink is!
 	var/degrees = 0
 	var/font = PEN_FONT
-	embedding = list()
+	embedding = list(embed_chance = 50)
 	sharpness = SHARP_POINTY
 
 /obj/item/pen/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
+	user.visible_message(span_suicide("[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku..."))
 	return(BRUTELOSS)
 
 /obj/item/pen/blue
@@ -68,7 +68,7 @@
 			colour = "blue"
 		else
 			colour = "black"
-	to_chat(user, "<span class='notice'>\The [src] will now write in [colour].</span>")
+	to_chat(user, span_notice("\The [src] will now write in [colour]."))
 	desc = "It's a fancy four-color ink pen, set to [colour]."
 
 /obj/item/pen/fountain
@@ -125,64 +125,82 @@
 	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
 	if(deg && (deg > 0 && deg <= 360))
 		degrees = deg
-		to_chat(user, "<span class='notice'>You rotate the top of the pen to [degrees] degrees.</span>")
+		to_chat(user, span_notice("You rotate the top of the pen to [degrees] degrees."))
 		SEND_SIGNAL(src, COMSIG_PEN_ROTATED, deg, user)
 
-/obj/item/pen/attack(mob/living/M, mob/user,stealth)
-	if(!istype(M))
-		return
-
-	if(!force)
-		if(M.can_inject(user, 1))
-			to_chat(user, "<span class='warning'>You stab [M] with the pen.</span>")
-			if(!stealth)
-				to_chat(M, "<span class='danger'>You feel a tiny prick!</span>")
-			. = 1
-
-		log_combat(user, M, "stabbed", src)
-
-	else
-		. = ..()
+/obj/item/pen/attack(mob/living/M, mob/user, params)
+	if(force) // If the pen has a force value, call the normal attack procs. Used for e-daggers and captain's pen mostly.
+		return ..()
+	if(!M.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
+		return FALSE
+	to_chat(user, span_warning("You stab [M] with the pen."))
+	to_chat(M, span_danger("You feel a tiny prick!"))
+	log_combat(user, M, "stabbed", src)
+	return TRUE
 
 /obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
 	. = ..()
-	//Changing Name/Description of items. Only works if they have the 'unique_rename' flag set
+	//Changing name/description of items. Only works if they have the UNIQUE_RENAME object flag set
 	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
-		var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
+		var/penchoice = input(user, "What would you like to edit?", "Rename, change description or reset both?") as null|anything in list("Rename","Change description","Reset")
 		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 			return
 		if(penchoice == "Rename")
-			var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"", MAX_NAME_LEN)
+			var/input = stripped_input(user,"What do you want to name [O]?", ,"[O.name]", MAX_NAME_LEN)
 			var/oldname = O.name
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-			if(oldname == input)
-				to_chat(user, "<span class='notice'>You changed \the [O.name] to... well... \the [O.name].</span>")
+			if(input == oldname || !input)
+				to_chat(user, span_notice("You changed [O] to... well... [O]."))
 			else
-				O.name = input
-				to_chat(user, "<span class='notice'>\The [oldname] has been successfully been renamed to \the [input].</span>")
+				O.AddComponent(/datum/component/rename, input, O.desc)
+				var/datum/component/label/label = O.GetComponent(/datum/component/label)
+				if(label)
+					label.remove_label()
+					label.apply_label()
+				to_chat(user, span_notice("You have successfully renamed \the [oldname] to [O]."))
 				O.renamedByPlayer = TRUE
 
 		if(penchoice == "Change description")
-			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
+			var/input = stripped_input(user,"Describe [O] here:", ,"[O.desc]", 140)
+			var/olddesc = O.desc
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-			O.desc = input
-			to_chat(user, "<span class='notice'>You have successfully changed \the [O.name]'s description.</span>")
+			if(input == olddesc || !input)
+				to_chat(user, span_notice("You decide against changing [O]'s description."))
+			else
+				O.AddComponent(/datum/component/rename, O.name, input)
+				to_chat(user, span_notice("You have successfully changed [O]'s description."))
+				O.renamedByPlayer = TRUE
+
+		if(penchoice == "Reset")
+			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+				return
+
+			qdel(O.GetComponent(/datum/component/rename))
+
+			//reapply any label to name
+			var/datum/component/label/label = O.GetComponent(/datum/component/label)
+			if(label)
+				label.remove_label()
+				label.apply_label()
+
+			to_chat(user, span_notice("You have successfully reset [O]'s name and description."))
+			O.renamedByPlayer = FALSE
 
 /*
  * Sleepypens
  */
 
-/obj/item/pen/sleepy/attack(mob/living/M, mob/user)
-	if(!istype(M))
+/obj/item/pen/sleepy/attack(mob/living/M, mob/user, params)
+	. = ..()
+	if(!.)
 		return
-
-	if(..())
-		if(reagents.total_volume)
-			if(M.reagents)
-
-				reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = INJECT)
+	if(!reagents.total_volume)
+		return
+	if(!M.reagents)
+		return
+	reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = INJECT)
 
 
 /obj/item/pen/sleepy/Initialize()
@@ -212,9 +230,9 @@
 /obj/item/pen/edagger/suicide_act(mob/user)
 	. = BRUTELOSS
 	if(on)
-		user.visible_message("<span class='suicide'>[user] forcefully rams the pen into their mouth!</span>")
+		user.visible_message(span_suicide("[user] forcefully rams the pen into their mouth!"))
 	else
-		user.visible_message("<span class='suicide'>[user] is holding a pen up to their mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(span_suicide("[user] is holding a pen up to their mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
 		attack_self(user)
 
 /obj/item/pen/edagger/attack_self(mob/living/user)
@@ -228,7 +246,7 @@
 		embedding = list(embed_chance = EMBED_CHANCE)
 		throwforce = initial(throwforce)
 		playsound(user, 'sound/weapons/saberoff.ogg', 5, TRUE)
-		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
+		to_chat(user, span_warning("[src] can now be concealed."))
 	else
 		on = TRUE
 		force = 18
@@ -239,9 +257,9 @@
 		embedding = list(embed_chance = 100) //rule of cool
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
-		to_chat(user, "<span class='warning'>[src] is now active.</span>")
+		to_chat(user, span_warning("[src] is now active."))
 	updateEmbedding()
-	update_icon()
+	update_appearance()
 
 /obj/item/pen/edagger/update_icon_state()
 	if(on)
@@ -253,6 +271,7 @@
 		inhand_icon_state = initial(inhand_icon_state)
 		lefthand_file = initial(lefthand_file)
 		righthand_file = initial(righthand_file)
+	return ..()
 
 /obj/item/pen/survival
 	name = "survival pen"

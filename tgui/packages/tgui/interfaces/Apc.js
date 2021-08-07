@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
@@ -8,8 +7,7 @@ export const Apc = (props, context) => {
   return (
     <Window
       width={450}
-      height={445}
-      resizable>
+      height={445}>
       <Window.Content scrollable>
         <ApcContent />
       </Window.Content>
@@ -86,7 +84,7 @@ const ApcContent = (props, context) => {
     );
   }
   return (
-    <Fragment>
+    <>
       <InterfaceLockNoticeBox />
       <Section title="Power Status">
         <LabeledList>
@@ -113,7 +111,7 @@ const ApcContent = (props, context) => {
             color={chargingStatus.color}
             buttons={(
               <Button
-                icon={data.chargeMode ? 'sync' : 'close'}
+                icon={data.chargeMode ? 'sync' : 'times'}
                 content={data.chargeMode ? 'Auto' : 'Off'}
                 disabled={locked}
                 onClick={() => act('charge')} />
@@ -131,7 +129,7 @@ const ApcContent = (props, context) => {
                 key={channel.title}
                 label={channel.title}
                 buttons={(
-                  <Fragment>
+                  <>
                     <Box inline mx={2}
                       color={channel.status >= 2 ? 'good' : 'bad'}>
                       {channel.status >= 2 ? 'On' : 'Off'}
@@ -156,7 +154,7 @@ const ApcContent = (props, context) => {
                       selected={!locked && channel.status === 0}
                       disabled={locked}
                       onClick={() => act('channel', topicParams.off)} />
-                  </Fragment>
+                  </>
                 )}>
                 {channel.powerLoad}
               </LabeledList.Item>
@@ -170,7 +168,7 @@ const ApcContent = (props, context) => {
       <Section
         title="Misc"
         buttons={!!data.siliconUser && (
-          <Fragment>
+          <>
             {!!data.malfStatus && (
               <Button
                 icon={malfStatus.icon}
@@ -182,7 +180,7 @@ const ApcContent = (props, context) => {
               icon="lightbulb-o"
               content="Overload"
               onClick={() => act('overload')} />
-          </Fragment>
+          </>
         )}>
         <LabeledList>
           <LabeledList.Item
@@ -213,6 +211,6 @@ const ApcContent = (props, context) => {
             )} />
         </LabeledList>
       </Section>
-    </Fragment>
+    </>
   );
 };

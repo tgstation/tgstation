@@ -19,7 +19,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_NECK
 	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 150)
-	custom_price = 120
+	custom_price = PAYCHECK_EASY * 2
 	var/flash_enabled = TRUE
 	var/state_on = "camera"
 	var/state_off = "camera_off"
@@ -27,7 +27,7 @@
 	var/pictures_left = 10
 	var/on = TRUE
 	var/cooldown = 64
-	var/blending = FALSE		//lets not take pictures while the previous is still processing!
+	var/blending = FALSE //lets not take pictures while the previous is still processing!
 	var/see_ghosts = CAMERA_NO_GHOSTS //for the spoop of it
 	var/obj/item/disk/holodisk/disk
 	var/sound/custom_sound
@@ -45,13 +45,13 @@
 /obj/item/camera/attack_self(mob/user)
 	if(!disk)
 		return
-	to_chat(user, "<span class='notice'>You eject [disk] out the back of [src].</span>")
+	to_chat(user, span_notice("You eject [disk] out the back of [src]."))
 	user.put_in_hands(disk)
 	disk = null
 
 /obj/item/camera/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Alt-click to change its focusing, allowing you to set how big of an area it will capture.</span>"
+	. += span_notice("Alt-click to change its focusing, allowing you to set how big of an area it will capture.")
 
 /obj/item/camera/proc/adjust_zoom(mob/user)
 	var/desired_x = input(user, "How high do you want the camera to shoot, between [picture_size_x_min] and [picture_size_x_max]?", "Zoom", picture_size_x) as num|null
@@ -78,23 +78,23 @@
 /obj/item/camera/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/camera_film))
 		if(pictures_left)
-			to_chat(user, "<span class='notice'>[src] still has some film in it!</span>")
+			to_chat(user, span_notice("[src] still has some film in it!"))
 			return
 		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
-		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+		to_chat(user, span_notice("You insert [I] into [src]."))
 		qdel(I)
 		pictures_left = pictures_max
 		return
 	if(istype(I, /obj/item/disk/holodisk))
 		if (!disk)
 			if(!user.transferItemToLoc(I, src))
-				to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
+				to_chat(user, span_warning("[I] is stuck to your hand!"))
 				return TRUE
-			to_chat(user, "<span class='notice'>You slide [I] into the back of [src].</span>")
+			to_chat(user, span_notice("You slide [I] into the back of [src]."))
 			disk = I
 		else
-			to_chat(user, "<span class='warning'>There's already a disk inside [src].</span>")
+			to_chat(user, span_warning("There's already a disk inside [src]."))
 		return TRUE //no afterattack
 	..()
 
@@ -116,7 +116,7 @@
 			return FALSE
 		else if(!(get_turf(target) in get_hear(world.view, user)))
 			return FALSE
-	else					//user is an atom
+	else //user is an atom
 		if(!(get_turf(target) in view(world.view, user)))
 			return FALSE
 	return TRUE
@@ -132,19 +132,14 @@
 			disk.record.caller_name = M.name
 			disk.record.set_caller_image(M)
 		else
-			to_chat(user, "<span class='warning'>Invalid holodisk target.</span>")
+			to_chat(user, span_warning("Invalid holodisk target."))
 			return
 
 	if(!can_target(target, user, flag))
 		return
 
 	on = FALSE
-
-	var/realcooldown = cooldown
-	var/mob/living/carbon/human/H = user
-	if (HAS_TRAIT(H, TRAIT_PHOTOGRAPHER))
-		realcooldown *= 0.5
-	addtimer(CALLBACK(src, .proc/cooldown), realcooldown)
+	addtimer(CALLBACK(src, .proc/cooldown), cooldown)
 
 	icon_state = state_off
 
@@ -188,7 +183,7 @@
 	var/clone_area = SSmapping.RequestBlockReservation(size_x * 2 + 1, size_y * 2 + 1)
 	for(var/turf/placeholder in block(locate(target_turf.x - size_x, target_turf.y - size_y, target_turf.z), locate(target_turf.x + size_x, target_turf.y + size_y, target_turf.z)))
 		var/turf/T = placeholder
-		while(istype(T, /turf/open/transparent/openspace)) //Multi-z photography
+		while(istype(T, /turf/open/openspace)) //Multi-z photography
 			T = SSmapping.get_turf_below(T)
 			if(!T)
 				break
@@ -212,7 +207,7 @@
 	qdel(clone_area)
 	get_icon.Blend("#000", ICON_UNDERLAY)
 
-	var/datum/picture/P = new("picture", desc.Join(" "), mobs_spotted, dead_spotted, get_icon, null, psize_x, psize_y, blueprints)
+	var/datum/picture/P = new("picture", desc.Join(" "), mobs_spotted, dead_spotted, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
 	after_picture(user, P, flag)
 	blending = FALSE
 
@@ -229,10 +224,10 @@
 	if(in_range(src, user)) //needed because of TK
 		user.put_in_hands(p)
 		pictures_left--
-		to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
+		to_chat(user, span_notice("[pictures_left] photos left."))
 		var/customise = "No"
 		if(can_customise)
-			customise = alert(user, "Do you want to customize the photo?", "Customization", "Yes", "No")
+			customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
 		if(customise == "Yes")
 			var/name1 = stripped_input(user, "Set a name for this photo, or leave blank. 32 characters max.", "Name", max_length = 32)
 			var/desc1 = stripped_input(user, "Set a description to add to photo, or leave blank. 128 characters max.", "Caption", max_length = 128)

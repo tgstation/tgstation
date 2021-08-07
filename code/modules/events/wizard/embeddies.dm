@@ -5,20 +5,13 @@
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 
+///behold... the only reason sticky is a subtype...
+/datum/round_event_control/wizard/embedpocalypse/canSpawnEvent(players_amt, gamemode)
+	if(GLOB.global_funny_embedding)
+		return FALSE
+
 /datum/round_event/wizard/embedpocalypse/start()
-	for(var/obj/item/I in world)
-		CHECK_TICK
-
-		if(!(I.flags_1 & INITIALIZED_1))
-			continue
-
-		if(!I.embedding || I.embedding == EMBED_HARMLESS)
-			I.embedding = EMBED_POINTY
-			I.updateEmbedding()
-			I.name = "pointy [I.name]"
-
-	GLOB.embedpocalypse = TRUE
-	GLOB.stickpocalypse = FALSE // embedpocalypse takes precedence over stickpocalypse
+	GLOB.global_funny_embedding = new /datum/global_funny_embedding/pointy
 
 /datum/round_event_control/wizard/embedpocalypse/sticky
 	name = "Make Everything Sticky"
@@ -27,20 +20,65 @@
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 
-/datum/round_event_control/wizard/embedpocalypse/sticky/canSpawnEvent(players_amt, gamemode)
-	if(GLOB.embedpocalypse)
-		return FALSE
-
 /datum/round_event/wizard/embedpocalypse/sticky/start()
-	for(var/obj/item/I in world)
+	GLOB.global_funny_embedding = new /datum/global_funny_embedding/sticky
+
+///set this to a new instance of a SUBTYPE of global_funny_embedding. The main type is a prototype and will runtime really hard
+GLOBAL_DATUM(global_funny_embedding, /datum/global_funny_embedding)
+
+/**
+ * ## global_funny_embedding!
+ *
+ * Stored in a global datum, and created when it is turned on via event or VV'ing the GLOB.embedpocalypse_controller to be a new /datum/global_funny_embedding.
+ * Gives every item in the world a prefix to their name, and...
+ * Makes every item in the world embed when thrown, but also hooks into global signals for new items created to also bless them with embed-ability(??).
+ */
+/datum/global_funny_embedding
+	var/embed_type = EMBED_POINTY
+	var/prefix = "error"
+
+/datum/global_funny_embedding/New()
+	. = ..()
+	//second operation takes MUCH longer, so lets set up signals first.
+	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM, .proc/on_new_item_in_existence)
+	handle_current_items()
+
+/datum/global_funny_embedding/Destroy(force)
+	. = ..()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM)
+
+///signal sent by a new item being created.
+/datum/global_funny_embedding/proc/on_new_item_in_existence(datum/source, obj/item/created_item)
+	SIGNAL_HANDLER
+
+	// this proc says it's for initializing components, but we're initializing elements too because it's you and me against the world >:)
+	if(LAZYLEN(created_item.embedding))
+		return //already embeds to some degree, so whatever 🐀
+	created_item.embedding = embed_type
+	created_item.name = "[prefix] [created_item.name]"
+	created_item.updateEmbedding()
+
+/**
+ * ### handle_current_items
+ *
+ * Gives every viable item in the world the embed_type, and the prefix prefixed to the name.
+ */
+/datum/global_funny_embedding/proc/handle_current_items()
+	for(var/obj/item/embed_item in world)
 		CHECK_TICK
-
-		if(!(I.flags_1 & INITIALIZED_1))
+		if(!(embed_item.flags_1 & INITIALIZED_1))
 			continue
+		if(!embed_item.embedding)
+			embed_item.embedding = embed_type
+			embed_item.updateEmbedding()
+			embed_item.name = "[prefix] [embed_item.name]"
 
-		if(!I.embedding)
-			I.embedding = EMBED_HARMLESS
-			I.updateEmbedding()
-			I.name = "sticky [I.name]"
+///everything will be... POINTY!!!!
+/datum/global_funny_embedding/pointy
+	embed_type = EMBED_POINTY
+	prefix = "pointy"
 
-	GLOB.stickpocalypse = TRUE
+///everything will be... sticky? sure, why not
+/datum/global_funny_embedding/sticky
+	embed_type = EMBED_HARMLESS
+	prefix = "sticky"

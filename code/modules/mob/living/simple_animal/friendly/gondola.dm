@@ -28,13 +28,12 @@
 	maxHealth = 200
 	health = 200
 	del_on_death = TRUE
-	pet_bonus = TRUE
-	pet_bonus_emote = "smiles!"
 
 	//Gondolas don't make footstep sounds
 
 /mob/living/simple_animal/pet/gondola/Initialize()
 	. = ..()
+	AddElement(/datum/element/pet_bonus, "smiles!")
 	if (!(istype(src, /mob/living/simple_animal/pet/gondola/gondolapod)))
 		CreateGondola()
 
@@ -64,6 +63,9 @@
 /mob/living/simple_animal/pet/gondola/IsVocal() //Gondolas are the silent walker.
 	return FALSE
 
+/// Special handling for gondolas, as they don't use icon_states and instead rely on overlays. The parent of this proc deletes all our overlays, so we're overriding it.
+/mob/living/simple_animal/pet/gondola/regenerate_icons()
+	return
 
 #undef GONDOLA_HEIGHT
 #undef GONDOLA_COLOR

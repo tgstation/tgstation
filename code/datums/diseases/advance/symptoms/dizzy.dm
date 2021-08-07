@@ -33,23 +33,25 @@ Bonus
 	)
 
 /datum/symptom/dizzy/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["stealth"] >= 4)
+	if(A.totalStealth() >= 4)
 		suppress_warning = TRUE
-	if(A.properties["transmittable"] >= 6) //druggy
+	if(A.totalTransmittable() >= 6) //druggy
 		power = 2
 
 /datum/symptom/dizzy/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(1, 2, 3, 4)
 			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, "<span class='warning'>[pick("You feel dizzy.", "Your head spins.")]</span>")
+				to_chat(M, span_warning("[pick("You feel dizzy.", "Your head spins.")]"))
 		else
-			to_chat(M, "<span class='userdanger'>A wave of dizziness washes over you!</span>")
+			to_chat(M, span_userdanger("A wave of dizziness washes over you!"))
 			if(M.dizziness <= 70)
 				M.dizziness += 30
 			if(power >= 2)

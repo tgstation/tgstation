@@ -1,23 +1,21 @@
 
-/*
- Mecha Pilots!
- by Remie Richards
-
- Mecha pilot mobs are able to pilot Mecha to a rudimentary level
- This allows for certain mobs to be more of a threat (Because they're in a MECH)
-
- Mecha Pilots can either spawn with one, or steal one!
-
- (Inherits from syndicate just to avoid copy-paste)
-
- Featuring:
- * Mecha piloting skills
- * Uses Mecha equipment
- * Uses Mecha special abilities in specific situations
- * Pure Evil Incarnate
-
-*/
-
+/**
+ * Mecha Pilots!
+ * By Remie Richards
+ *
+ * Mecha pilot mobs are able to pilot Mecha to a rudimentary level
+ * this allows for certain mobs to be more of a threat (Because they're in a MECH)
+ *
+ * Mecha Pilots can either spawn with one, or steal one!
+ *
+ * Inherits from syndicate just to avoid copy-paste)
+ *
+ * Featuring:
+ * * Mecha piloting skills
+ * * Uses Mecha equipment
+ * * Uses Mecha special abilities in specific situations
+ * * Pure Evil Incarnate
+ */
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot
 	name = "Syndicate Mecha Pilot"
 	desc = "Death to Nanotrasen. This variant comes in MECHA DEATH flavour."
@@ -71,9 +69,9 @@
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/enter_mecha(obj/vehicle/sealed/mecha/M)
 	if(!M)
 		return 0
-	target = null //Target was our mecha, so null it out
+	LoseTarget() //Target was our mecha, so null it out
 	M.aimob_enter_mech(src)
-	targets_from = M
+	targets_from = WEAKREF(M)
 	allow_movement_on_non_turfs = TRUE //duh
 	var/do_ranged = 0
 	for(var/equip in mecha.equipment)
@@ -99,14 +97,14 @@
 
 	mecha.aimob_exit_mech(src)
 	allow_movement_on_non_turfs = FALSE
-	targets_from = src
+	targets_from = null
 
 	//Find a new mecha
 	wanted_objects = typecacheof(/obj/vehicle/sealed/mecha/combat, TRUE)
 	var/search_aggressiveness = 2
 	for(var/obj/vehicle/sealed/mecha/combat/C in range(vision_range,src))
 		if(is_valid_mecha(C))
-			target = C
+			GiveTarget(C)
 			search_aggressiveness = 3 //We can see a mech? RUN FOR IT, IGNORE MOBS!
 			break
 	search_objects = search_aggressiveness
@@ -123,7 +121,7 @@
 		return FALSE
 	if(!M.has_charge(required_mecha_charge))
 		return FALSE
-	if(M.obj_integrity < M.max_integrity*0.5)
+	if(M.get_integrity() < M.max_integrity*0.5)
 		return FALSE
 	return TRUE
 
@@ -190,7 +188,7 @@
 				return
 			else
 				if(!CanAttack(M))
-					target = null
+					LoseTarget()
 					return
 
 		return target.attack_animal(src)
@@ -203,7 +201,7 @@
 	if(!mecha)
 		for(var/obj/vehicle/sealed/mecha/combat/mecha_in_range in range(src,vision_range))
 			if(is_valid_mecha(mecha_in_range))
-				target = mecha_in_range //Let's nab it!
+				GiveTarget(mecha_in_range) //Let's nab it!
 				minimum_distance = 1
 				ranged = 0
 				break
@@ -217,18 +215,18 @@
 			return
 
 			//Too Much Damage - Eject
-		if(mecha.obj_integrity < mecha.max_integrity*0.1)
+		if(mecha.get_integrity() < mecha.max_integrity*0.1)
 			exit_mecha(mecha)
 			return
 
-		//Smoke if there's too many targets	- Smoke Power
+		//Smoke if there's too many targets - Smoke Power
 		if(threat_count >= threat_use_mecha_smoke && prob(smoke_chance))
 			if(LAZYACCESSASSOC(mecha.occupant_actions, src, /datum/action/vehicle/sealed/mecha/mech_smoke) && !mecha.smoke_charges)
 				var/datum/action/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_smoke]
 				action.Trigger()
 
 		//Heavy damage - Defense Power or Retreat
-		if(mecha.obj_integrity < mecha.max_integrity*0.25)
+		if(mecha.get_integrity() < mecha.max_integrity*0.25)
 			if(prob(defense_mode_chance))
 				if(LAZYACCESSASSOC(mecha.occupant_actions, src, /datum/action/vehicle/sealed/mecha/mech_defense_mode) && !mecha.defense_mode)
 					var/datum/action/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
@@ -265,7 +263,7 @@
 	if(ismecha(the_target))
 		var/obj/vehicle/sealed/mecha/M = the_target
 		if(mecha)
-			if(M == mecha)	//Dont kill yourself
+			if(M == mecha) //Dont kill yourself
 				return FALSE
 		else //we're not in a mecha, so we check if we can steal it instead.
 			if(is_valid_mecha(M))

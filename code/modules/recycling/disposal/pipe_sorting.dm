@@ -8,9 +8,9 @@
 
 /obj/structure/disposalpipe/sorting/nextdir(obj/structure/disposalholder/H)
 	var/sortdir = dpdir & ~(dir | turn(dir, 180))
-	if(H.dir != sortdir)		// probably came from the negdir
-		if(check_sorting(H))	// if destination matches filtered type...
-			return sortdir		// exit through sortdirection
+	if(H.dir != sortdir) // probably came from the negdir
+		if(check_sorting(H)) // if destination matches filtered type...
+			return sortdir // exit through sortdirection
 
 	// go with the flow to positive direction
 	return dir
@@ -18,8 +18,6 @@
 // Sorting check, to be overridden in subtypes
 /obj/structure/disposalpipe/sorting/proc/check_sorting(obj/structure/disposalholder/H)
 	return FALSE
-
-
 
 // Mail sorting junction, uses package tags to sort objects.
 /obj/structure/disposalpipe/sorting/mail
@@ -64,10 +62,10 @@
 		if(O.currTag)// Tagger has a tag set
 			if(O.currTag in sortTypes)
 				sortTypes -= O.currTag
-				to_chat(user, "<span class='notice'>Removed \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
+				to_chat(user, span_notice("Removed \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter."))
 			else
 				sortTypes |= O.currTag
-				to_chat(user, "<span class='notice'>Added \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
+				to_chat(user, span_notice("Added \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter."))
 			playsound(src, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 	else
 		return ..()

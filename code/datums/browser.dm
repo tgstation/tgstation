@@ -4,7 +4,7 @@
 	var/window_id // window_id is used as the window name for browse and onclose
 	var/width = 0
 	var/height = 0
-	var/atom/ref = null
+	var/datum/weakref/ref = null
 	var/window_options = "can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;" // window option is set using window_id
 	var/stylesheets[0]
 	var/scripts[0]
@@ -16,8 +16,8 @@
 
 
 /datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null)
-
 	user = nuser
+	RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/user_deleted)
 	window_id = nwindow_id
 	if (ntitle)
 		title = format_text(ntitle)
@@ -26,7 +26,11 @@
 	if (nheight)
 		height = nheight
 	if (nref)
-		ref = nref
+		ref = WEAKREF(nref)
+
+/datum/browser/proc/user_deleted(datum/source)
+	SIGNAL_HANDLER
+	user = null
 
 /datum/browser/proc/add_head_content(nhead_content)
 	head_content = nhead_content
@@ -94,9 +98,9 @@
 	"}
 
 /datum/browser/proc/open(use_onclose = TRUE)
-	if(isnull(window_id))	//null check because this can potentially nuke goonchat
+	if(isnull(window_id)) //null check because this can potentially nuke goonchat
 		WARNING("Browser [title] tried to open with a null ID")
-		to_chat(user, "<span class='userdanger'>The [title] browser you tried to open failed a sanity check! Please report this on github!</span>")
+		to_chat(user, span_userdanger("The [title] browser you tried to open failed a sanity check! Please report this on github!"))
 		return
 	var/window_size = ""
 	if (width && height)
@@ -113,8 +117,13 @@
 /datum/browser/proc/setup_onclose()
 	set waitfor = 0 //winexists sleeps, so we don't need to.
 	for (var/i in 1 to 10)
-		if (user && winexists(user, window_id))
-			onclose(user, window_id, ref)
+		if (user?.client && winexists(user, window_id))
+			var/atom/send_ref
+			if(ref)
+				send_ref = ref.resolve()
+				if(!send_ref)
+					ref = null
+			onclose(user, window_id, send_ref)
 			break
 
 /datum/browser/proc/close()
@@ -153,31 +162,41 @@
 	opentime = 0
 	close()
 
-//designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
-/proc/tgalert(mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
+/**
+ * **DEPRECATED: USE tgui_alert(...) INSTEAD**
+ *
+ * Designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
+ * Arguments:
+ * * User - The user to show the alert to.
+ * * Message - The textual body of the alert.
+ * * Title - The title of the alert's window.
+ * * Button1 - The first button option.
+ * * Button2 - The second button option.
+ * * Button3 - The third button option.
+ * * StealFocus - Boolean operator controlling if the alert will steal the user's window focus.
+ * * Timeout - The timeout of the window, after which no responses will be valid.
+ */
+/proc/tgalert(mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = TRUE, Timeout = 6000)
 	if (!User)
 		User = usr
-	switch(askuser(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout))
+	if (!istype(User))
+		if (istype(User, /client))
+			var/client/client = User
+			User = client.mob
+		else
+			return
+
+	// Get user's response using a modal
+	var/datum/browser/modal/alert/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout)
+	A.open()
+	A.wait()
+	switch(A.selectedbutton)
 		if (1)
 			return Button1
 		if (2)
 			return Button2
 		if (3)
 			return Button3
-
-//Same shit, but it returns the button number, could at some point support unlimited button amounts.
-/proc/askuser(mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
-	if (!istype(User))
-		if (istype(User, /client/))
-			var/client/C = User
-			User = C.mob
-		else
-			return
-	var/datum/browser/modal/alert/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout)
-	A.open()
-	A.wait()
-	if (A.selectedbutton)
-		return A.selectedbutton
 
 /datum/browser/modal
 	var/opentime = 0
@@ -380,7 +399,7 @@
 			if ("color")
 				settings["mainsettings"][setting]["value"] = input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]", settings["mainsettings"][setting]["value"]) as color
 			if ("boolean")
-				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("Yes","No")
+				settings["mainsettings"][setting]["value"] = (settings["mainsettings"][setting]["value"] == "Yes") ? "No" : "Yes"
 			if ("ckey")
 				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("none") + GLOB.directory
 		if (settings["mainsettings"][setting]["callback"])
@@ -421,8 +440,8 @@
 // e.g. canisters, timers, etc.
 //
 // windowid should be the specified window name
-// e.g. code is	: user << browse(text, "window=fred")
-// then use 	: onclose(user, "fred")
+// e.g. code is : user << browse(text, "window=fred")
+// then use : onclose(user, "fred")
 //
 // Optionally, specify the "ref" parameter as the controlled atom (usually src)
 // to pass a "close=1" parameter to the atom's Topic() proc for special handling.
@@ -445,16 +464,16 @@
 // otherwise, just reset the client mob's machine var.
 //
 /client/verb/windowclose(atomref as text)
-	set hidden = TRUE						// hide this verb from the user's panel
-	set name = ".windowclose"			// no autocomplete on cmd line
+	set hidden = TRUE // hide this verb from the user's panel
+	set name = ".windowclose" // no autocomplete on cmd line
 
-	if(atomref!="null")				// if passed a real atomref
-		var/hsrc = locate(atomref)	// find the reffed atom
+	if(atomref!="null") // if passed a real atomref
+		var/hsrc = locate(atomref) // find the reffed atom
 		var/href = "close=1"
 		if(hsrc)
 			usr = src.mob
-			src.Topic(href, params2list(href), hsrc)	// this will direct to the atom's
-			return										// Topic() proc via client.Topic()
+			src.Topic(href, params2list(href), hsrc) // this will direct to the atom's
+			return // Topic() proc via client.Topic()
 
 	// no atomref specified (or not found)
 	// so just reset the user mob's machine var

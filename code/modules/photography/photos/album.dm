@@ -58,48 +58,63 @@
 
 /obj/item/storage/photo_album/hos
 	name = "photo album (Head of Security)"
+	icon_state = "album_blue"
 	persistence_id = "HoS"
 
 /obj/item/storage/photo_album/rd
 	name = "photo album (Research Director)"
+	icon_state = "album_blue"
 	persistence_id = "RD"
 
 /obj/item/storage/photo_album/hop
 	name = "photo album (Head of Personnel)"
+	icon_state = "album_blue"
 	persistence_id = "HoP"
 
 /obj/item/storage/photo_album/captain
 	name = "photo album (Captain)"
+	icon_state = "album_blue"
 	persistence_id = "Captain"
 
 /obj/item/storage/photo_album/cmo
 	name = "photo album (Chief Medical Officer)"
+	icon_state = "album_blue"
 	persistence_id = "CMO"
 
 /obj/item/storage/photo_album/qm
 	name = "photo album (Quartermaster)"
+	icon_state = "album_blue"
 	persistence_id = "QM"
 
 /obj/item/storage/photo_album/ce
 	name = "photo album (Chief Engineer)"
+	icon_state = "album_blue"
 	persistence_id = "CE"
 
 /obj/item/storage/photo_album/bar
 	name = "photo album (Bar)"
+	icon_state = "album_blue"
 	persistence_id = "bar"
 
 /obj/item/storage/photo_album/syndicate
 	name = "photo album (Syndicate)"
+	icon_state = "album_red"
 	persistence_id = "syndicate"
 
 /obj/item/storage/photo_album/library
 	name = "photo album (Library)"
+	icon_state = "album_blue"
 	persistence_id = "library"
 
 /obj/item/storage/photo_album/chapel
 	name = "photo album (Chapel)"
+	icon_state = "album_blue"
 	persistence_id = "chapel"
 
 /obj/item/storage/photo_album/prison
 	name = "photo album (Prison)"
+	icon_state = "album_blue"
 	persistence_id = "prison"
+
+/obj/item/storage/photo_album/personal
+	icon_state = "album_green"

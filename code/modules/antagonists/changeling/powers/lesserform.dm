@@ -11,9 +11,9 @@
 /datum/action/changeling/lesserform/sting_action(mob/living/carbon/human/user)
 	if(!user || user.notransform)
 		return FALSE
-	to_chat(user, "<span class='warning'>Our genes cry out!</span>")
+	to_chat(user, span_warning("Our genes cry out!"))
 	..()
 
-	user.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE | TR_KEEPSTAMINADAMAGE)
+	user.monkeyize()
 
 	return TRUE

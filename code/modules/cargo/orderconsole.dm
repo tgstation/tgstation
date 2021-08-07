@@ -13,15 +13,27 @@
 	var/can_approve_requests = TRUE
 	var/contraband = FALSE
 	var/self_paid = FALSE
-	var/safety_warning = "For safety reasons, the automated supply shuttle \
-		cannot transport live organisms, human remains, classified nuclear weaponry, \
-		homing beacons or machinery housing any form of artificial intelligence."
+	var/safety_warning = "For safety and ethical reasons, the automated supply shuttle \
+		cannot transport live organisms, human remains, classified nuclear weaponry, mail \
+		homing beacons, unstable eigenstates or machinery housing any form of artificial intelligence."
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
 	/// radio used by the console to send messages on supply channel
 	var/obj/item/radio/headset/radio
 	/// var that tracks message cooldown
 	var/message_cooldown
 	var/list/loaded_coupons
+	/// var that makes express console use rockets
+	var/is_express = FALSE
+	///The name of the shuttle template being used as the cargo shuttle. 'supply' is default and contains critical code. Don't change this unless you know what you're doing.
+	var/cargo_shuttle = "supply"
+	///The docking port called when returning to the station.
+	var/docking_home = "supply_home"
+	///The docking port called when leaving the station.
+	var/docking_away = "supply_away"
+	///If this console can loan the cargo shuttle. Set to false to disable.
+	var/stationcargo = TRUE
+	///The account this console processes and displays. Independent from the account the shuttle processes.
+	var/cargo_account = ACCOUNT_CAR
 
 
 /obj/machinery/computer/cargo/request
@@ -39,7 +51,15 @@
 
 /obj/machinery/computer/cargo/Destroy()
 	QDEL_NULL(radio)
-	..()
+	return ..()
+
+/obj/machinery/computer/cargo/attacked_by(obj/item/I, mob/living/user)
+	if(istype(I,/obj/item/trade_chip))
+		var/obj/item/trade_chip/contract = I
+		contract.try_to_unlock_contract(user)
+		return TRUE
+	else
+		return ..()
 
 /obj/machinery/computer/cargo/proc/get_export_categories()
 	. = EXPORT_CARGO
@@ -52,13 +72,13 @@
 	if(obj_flags & EMAGGED)
 		return
 	if(user)
-		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
-		"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
+		user.visible_message(span_warning("[user] swipes a suspicious card through [src]!"),
+		span_notice("You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband."))
 
 	obj_flags |= EMAGGED
 	contraband = TRUE
 
-	// This also permamently sets this on the circuit board
+	// This also permanently sets this on the circuit board
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.contraband = TRUE
 	board.obj_flags |= EMAGGED
@@ -77,15 +97,17 @@
 /obj/machinery/computer/cargo/ui_data()
 	var/list/data = list()
 	data["location"] = SSshuttle.supply.getStatusText()
-	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	var/datum/bank_account/D = SSeconomy.get_dep_account(cargo_account)
 	if(D)
 		data["points"] = D.account_balance
-	data["away"] = SSshuttle.supply.getDockedId() == "supply_away"
+	data["grocery"] = SSshuttle.chef_groceries.len
+	data["away"] = SSshuttle.supply.getDockedId() == docking_away
 	data["self_paid"] = self_paid
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
 	data["loan"] = !!SSshuttle.shuttle_loan
 	data["loan_dispatched"] = SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched
 	data["can_send"] = can_send
+	data["can_approve_requests"] = can_approve_requests
 	var/message = "Remember to stamp and send back the supply manifests."
 	if(SSshuttle.centcom_message)
 		message = SSshuttle.centcom_message
@@ -96,7 +118,7 @@
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		data["cart"] += list(list(
 			"object" = SO.pack.name,
-			"cost" = SO.pack.cost,
+			"cost" = SO.pack.get_cost(),
 			"id" = SO.id,
 			"orderer" = SO.orderer,
 			"paid" = !isnull(SO.paying_account) //paid by requester
@@ -106,7 +128,7 @@
 	for(var/datum/supply_order/SO in SSshuttle.requestlist)
 		data["requests"] += list(list(
 			"object" = SO.pack.name,
-			"cost" = SO.pack.cost,
+			"cost" = SO.pack.get_cost(),
 			"orderer" = SO.orderer,
 			"reason" = SO.reason,
 			"id" = SO.id
@@ -129,7 +151,7 @@
 			continue
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
-			"cost" = P.cost,
+			"cost" = P.get_cost(),
 			"id" = pack,
 			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
 			"goody" = P.goody,
@@ -149,15 +171,15 @@
 			if(SSshuttle.supplyBlocked)
 				say(blockade_warning)
 				return
-			if(SSshuttle.supply.getDockedId() == "supply_home")
+			if(SSshuttle.supply.getDockedId() == docking_home)
 				SSshuttle.supply.export_categories = get_export_categories()
-				SSshuttle.moveShuttle("supply", "supply_away", TRUE)
+				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				say("The supply shuttle is departing.")
 				investigate_log("[key_name(usr)] sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				investigate_log("[key_name(usr)] called the supply shuttle.", INVESTIGATE_CARGO)
 				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
-				SSshuttle.moveShuttle("supply", "supply_home", TRUE)
+				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 			. = TRUE
 		if("loan")
 			if(!SSshuttle.shuttle_loan)
@@ -167,7 +189,9 @@
 				return
 			else if(SSshuttle.supply.mode != SHUTTLE_IDLE)
 				return
-			else if(SSshuttle.supply.getDockedId() != "supply_away")
+			else if(SSshuttle.supply.getDockedId() != docking_away)
+				return
+			else if(stationcargo != TRUE)
 				return
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
@@ -176,10 +200,13 @@
 				log_game("[key_name(usr)] accepted a shuttle loan event.")
 				. = TRUE
 		if("add")
-			var/id = text2path(params["id"])
+			if(is_express)
+				return
+			var/id = params["id"]
+			id = text2path(id) || id
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
-				return
+				CRASH("Unknown supply pack id given by order console ui. ID: [params["id"]]")
 			if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || pack.DropPodOnly)
 				return
 
@@ -195,9 +222,9 @@
 				rank = "Silicon"
 
 			var/datum/bank_account/account
-			if(self_paid && ishuman(usr))
-				var/mob/living/carbon/human/H = usr
-				var/obj/item/card/id/id_card = H.get_idcard(TRUE)
+			if(self_paid && isliving(usr))
+				var/mob/living/L = usr
+				var/obj/item/card/id/id_card = L.get_idcard(TRUE)
 				if(!istype(id_card))
 					say("No ID card detected.")
 					return
@@ -277,7 +304,7 @@
 			self_paid = !self_paid
 			. = TRUE
 	if(.)
-		post_signal("supply")
+		post_signal(cargo_shuttle)
 
 /obj/machinery/computer/cargo/proc/post_signal(command)
 

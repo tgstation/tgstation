@@ -25,8 +25,7 @@
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 		panel_open = TRUE
-		update_icon()
-
+		update_appearance()
 
 	if(!built && !device && device_type)
 		device = new device_type(src)
@@ -46,10 +45,12 @@
 /obj/machinery/button/update_icon_state()
 	if(panel_open)
 		icon_state = "button-open"
-	else if(machine_stat & (NOPOWER|BROKEN))
+		return ..()
+	if(machine_stat & (NOPOWER|BROKEN))
 		icon_state = "[skin]-p"
-	else
-		icon_state = skin
+		return ..()
+	icon_state = skin
+	return ..()
 
 /obj/machinery/button/update_overlays()
 	. = ..()
@@ -60,48 +61,48 @@
 	if(board)
 		. += "button-board"
 
-/obj/machinery/button/attackby(obj/item/W, mob/user, params)
+/obj/machinery/button/attackby(obj/item/W, mob/living/user, params)
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(panel_open || allowed(user))
 			default_deconstruction_screwdriver(user, "button-open", "[skin]",W)
-			update_icon()
+			update_appearance()
 		else
-			to_chat(user, "<span class='alert'>Maintenance Access Denied.</span>")
+			to_chat(user, span_alert("Maintenance Access Denied."))
 			flick("[skin]-denied", src)
 		return
 
 	if(panel_open)
 		if(!device && istype(W, /obj/item/assembly))
 			if(!user.transferItemToLoc(W, src))
-				to_chat(user, "<span class='warning'>\The [W] is stuck to you!</span>")
+				to_chat(user, span_warning("\The [W] is stuck to you!"))
 				return
 			device = W
-			to_chat(user, "<span class='notice'>You add [W] to the button.</span>")
+			to_chat(user, span_notice("You add [W] to the button."))
 
 		if(!board && istype(W, /obj/item/electronics/airlock))
 			if(!user.transferItemToLoc(W, src))
-				to_chat(user, "<span class='warning'>\The [W] is stuck to you!</span>")
+				to_chat(user, span_warning("\The [W] is stuck to you!"))
 				return
 			board = W
 			if(board.one_access)
 				req_one_access = board.accesses
 			else
 				req_access = board.accesses
-			to_chat(user, "<span class='notice'>You add [W] to the button.</span>")
+			to_chat(user, span_notice("You add [W] to the button."))
 
 		if(!device && !board && W.tool_behaviour == TOOL_WRENCH)
-			to_chat(user, "<span class='notice'>You start unsecuring the button frame...</span>")
+			to_chat(user, span_notice("You start unsecuring the button frame..."))
 			W.play_tool_sound(src)
 			if(W.use_tool(src, user, 40))
-				to_chat(user, "<span class='notice'>You unsecure the button frame.</span>")
+				to_chat(user, span_notice("You unsecure the button frame."))
 				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
 				playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 				qdel(src)
 
-		update_icon()
+		update_appearance()
 		return
 
-	if(user.a_intent != INTENT_HARM && !(W.item_flags & NOBLUDGEON))
+	if(!user.combat_mode && !(W.item_flags & NOBLUDGEON))
 		return attack_hand(user)
 	else
 		return ..()
@@ -111,7 +112,7 @@
 		return
 	req_access = list()
 	req_one_access = list()
-	playsound(src, "sparks", 100, TRUE)
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	obj_flags |= EMAGGED
 
 /obj/machinery/button/attack_ai(mob/user)
@@ -132,7 +133,7 @@
 		id = "[port.id]_[id]"
 		setup_device()
 
-/obj/machinery/button/attack_hand(mob/user)
+/obj/machinery/button/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -149,15 +150,15 @@
 				req_access = list()
 				req_one_access = list()
 				board = null
-			update_icon()
-			to_chat(user, "<span class='notice'>You remove electronics from the button frame.</span>")
+			update_appearance()
+			to_chat(user, span_notice("You remove electronics from the button frame."))
 
 		else
 			if(skin == "doorctrl")
 				skin = "launcher"
 			else
 				skin = "doorctrl"
-			to_chat(user, "<span class='notice'>You change the button frame's front panel.</span>")
+			to_chat(user, span_notice("You change the button frame's front panel."))
 		return
 
 	if((machine_stat & (NOPOWER|BROKEN)))
@@ -167,7 +168,7 @@
 		return
 
 	if(!allowed(user))
-		to_chat(user, "<span class='alert'>Access Denied.</span>")
+		to_chat(user, span_alert("Access Denied."))
 		flick("[skin]-denied", src)
 		return
 
@@ -178,7 +179,7 @@
 		device.pulsed()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED,src)
 
-	addtimer(CALLBACK(src, /atom/.proc/update_icon), 15)
+	addtimer(CALLBACK(src, /atom/.proc/update_appearance), 15)
 
 /obj/machinery/button/door
 	name = "door button"
@@ -186,6 +187,22 @@
 	var/normaldoorcontrol = FALSE
 	var/specialfunctions = OPEN // Bitflag, see assembly file
 	var/sync_doors = TRUE
+
+/obj/machinery/button/door/directional/north
+	dir = SOUTH
+	pixel_y = 24
+
+/obj/machinery/button/door/directional/south
+	dir = NORTH
+	pixel_y = -24
+
+/obj/machinery/button/door/directional/east
+	dir = WEST
+	pixel_x = 24
+
+/obj/machinery/button/door/directional/west
+	dir = EAST
+	pixel_x = -24
 
 /obj/machinery/button/door/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -216,6 +233,16 @@
 	name = "combustion chamber vent control"
 	id = INCINERATOR_ATMOS_AUXVENT
 	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
+
+/obj/machinery/button/door/atmos_test_room_mainvent_1
+	name = "test chamber 1 vent control"
+	id = TEST_ROOM_ATMOS_MAINVENT_1
+	req_one_access = list(ACCESS_ATMOSPHERICS)
+
+/obj/machinery/button/door/atmos_test_room_mainvent_2
+	name = "test chamber 2 vent control"
+	id = TEST_ROOM_ATMOS_MAINVENT_2
+	req_one_access = list(ACCESS_ATMOSPHERICS)
 
 /obj/machinery/button/door/incinerator_vent_syndicatelava_main
 	name = "turbine vent control"
@@ -267,6 +294,13 @@
 	skin = "launcher"
 	device_type = /obj/item/assembly/control/flasher
 
+/obj/machinery/button/curtain
+	name = "curtain button"
+	desc = "A remote control switch for a mechanical curtain."
+	icon_state = "launcher"
+	skin = "launcher"
+	device_type = /obj/item/assembly/control/curtain
+
 /obj/machinery/button/flasher/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -300,5 +334,24 @@
 
 /obj/machinery/button/elevator/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>There's a small inscription on the button...</span>"
-	. += "<span class='notice'>THIS CALLS THE ELEVATOR! IT DOES NOT OPERATE IT! Interact with the elevator itself to use it!</span>"
+	. += span_notice("There's a small inscription on the button...")
+	. += span_notice("THIS CALLS THE ELEVATOR! IT DOES NOT OPERATE IT! Interact with the elevator itself to use it!")
+
+/obj/machinery/button/tram
+	name = "tram caller"
+	desc = "A button for calling the tram. It has a speakerbox in it with some internals."
+	icon_state = "launcher"
+	skin = "launcher"
+	device_type = /obj/item/assembly/control/tram
+	req_access = list()
+	id = 1
+
+/obj/machinery/button/tram/setup_device()
+	var/obj/item/assembly/control/tram/tram_device = device
+	tram_device.initial_id = id
+	. = ..()
+
+/obj/machinery/button/tram/examine(mob/user)
+	. = ..()
+	. += span_notice("There's a small inscription on the button...")
+	. += span_notice("THIS CALLS THE TRAM! IT DOES NOT OPERATE IT! The console on the tram tells it where to go!")

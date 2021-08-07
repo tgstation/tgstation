@@ -32,7 +32,6 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	dextrous = TRUE
 	held_items = list(null, null)
-	possible_a_intents = list(INTENT_HELP, INTENT_GRAB, INTENT_DISARM, INTENT_HARM)
 	faction = list("jungle")
 	robust_searching = TRUE
 	stat_attack = HARD_CRIT
@@ -76,11 +75,11 @@
 			L.throw_at(throw_target, rand(1,2), 7, src)
 		else
 			L.Paralyze(20)
-			visible_message("<span class='danger'>[src] knocks [L] down!</span>")
+			visible_message(span_danger("[src] knocks [L] down!"))
 
 /mob/living/simple_animal/hostile/gorilla/CanAttack(atom/the_target)
 	var/list/parts = target_bodyparts(target)
-	return ..() && !istype(the_target, /mob/living/carbon/monkey) && (!parts  || parts.len > 3)
+	return ..() && !ismonkey(the_target) && (!parts  || parts.len > 3)
 
 
 /mob/living/simple_animal/hostile/gorilla/CanSmashTurfs(turf/T)
@@ -102,7 +101,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/gorilla/can_use_guns(obj/item/G)
-	to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
+	to_chat(src, span_warning("Your meaty finger is much too large for the trigger guard!"))
 	return FALSE
 
 

@@ -31,6 +31,9 @@
 		"whiteship" = "whiteship_box",
 		"emergency" = "emergency_box")
 
+	/// Dictionary of job sub-typepath to template changes dictionary
+	var/job_changes = list()
+
 /proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	var/datum/map_config/config = new
 	if (default_to_box)
@@ -65,6 +68,14 @@
 		return
 
 	config_filename = filename
+
+	if(!json["version"])
+		log_world("map_config missing version!")
+		return
+
+	if(json["version"] != MAP_CURRENT_VERSION)
+		log_world("map_config has invalid version [json["version"]]!")
+		return
 
 	CHECK_EXISTS("map_name")
 	map_name = json["map_name"]
@@ -127,6 +138,12 @@
 		minetype = json["minetype"]
 
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
+
+	if ("job_changes" in json)
+		if(!islist(json["job_changes"]))
+			log_world("map_config \"job_changes\" field is missing or invalid!")
+			return
+		job_changes = json["job_changes"]
 
 	defaulted = FALSE
 	return TRUE

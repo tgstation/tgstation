@@ -15,7 +15,7 @@
 		petrified_mob = L
 		if(L.buckled)
 			L.buckled.unbuckle_mob(L,force=1)
-		L.visible_message("<span class='warning'>[L]'s skin rapidly turns to marble!</span>", "<span class='userdanger'>Your body freezes up! Can't... move... can't... think...</span>")
+		L.visible_message(span_warning("[L]'s skin rapidly turns to marble!"), span_userdanger("Your body freezes up! Can't... move... can't... think..."))
 		L.forceMove(src)
 		ADD_TRAIT(L, TRAIT_MUTE, STATUE_MUTE)
 		L.faction += "mimic" //Stops mimics from instaqdeling people in statues
@@ -50,7 +50,7 @@
 			if(petrified_mob)
 				S.mind.transfer_to(petrified_mob)
 				petrified_mob.Paralyze(100)
-				to_chat(petrified_mob, "<span class='notice'>You slowly come back to your senses. You are in control of yourself again!</span>")
+				to_chat(petrified_mob, span_notice("You slowly come back to your senses. You are in control of yourself again!"))
 		qdel(S)
 
 	for(var/obj/O in src)
@@ -60,6 +60,7 @@
 		petrified_mob.status_flags &= ~GODMODE
 		petrified_mob.forceMove(loc)
 		REMOVE_TRAIT(petrified_mob, TRAIT_MUTE, STATUE_MUTE)
+		REMOVE_TRAIT(petrified_mob, TRAIT_NOBLEED, MAGIC_TRAIT)
 		petrified_mob.take_overall_damage((petrified_mob.health - obj_integrity + 100)) //any new damage the statue incurred is transfered to the mob
 		petrified_mob.faction -= "mimic"
 		petrified_mob = null
@@ -69,7 +70,7 @@
 	if(!disassembled)
 		if(petrified_mob)
 			petrified_mob.dust()
-	visible_message("<span class='danger'>[src] shatters!.</span>")
+	visible_message(span_danger("[src] shatters!."))
 	qdel(src)
 
 
@@ -80,18 +81,10 @@
 		return FALSE
 	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
 	S.name = "statue of [name]"
-	bleedsuppress = 1
+	ADD_TRAIT(src, TRAIT_NOBLEED, MAGIC_TRAIT)
 	S.copy_overlays(src)
 	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
-	return TRUE
-
-/mob/living/carbon/monkey/petrify(statue_timer)
-	if(!isturf(loc))
-		return FALSE
-	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
-	S.name = "statue of a monkey"
-	S.icon_state = "monkey"
 	return TRUE
 
 /mob/living/simple_animal/pet/dog/corgi/petrify(statue_timer)

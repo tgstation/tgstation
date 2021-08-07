@@ -92,7 +92,7 @@
 	var/list/json = cached_json["testMerges"]
 	for(var/entry in json)
 		var/datum/tgs_revision_information/test_merge/tm = new
-		tm.time_merged = text2num(entry["timeMerged"])
+		tm.timestamp = text2num(entry["timeMerged"])
 
 		var/list/revInfo = entry["revision"]
 		if(revInfo)
@@ -104,7 +104,7 @@
 		tm.url = entry["url"]
 		tm.author = entry["author"]
 		tm.number = entry["number"]
-		tm.pull_request_commit = entry["pullRequestRevision"]
+		tm.head_commit = entry["pullRequestRevision"]
 		tm.comment = entry["comment"]
 
 		cached_test_merges += tm
@@ -118,7 +118,7 @@
 	var/list/params = params2list(T)
 	var/their_sCK = params[TGS4_INTEROP_ACCESS_IDENTIFIER]
 	if(!their_sCK)
-		return FALSE	//continue world/Topic
+		return FALSE //continue world/Topic
 
 	if(their_sCK != access_identifier)
 		return "Invalid comms key!";
@@ -192,7 +192,7 @@
 
 		//request a new port
 		export_lock = FALSE
-		var/list/new_port_json = Export(TGS4_COMM_NEW_PORT, list(TGS4_PARAMETER_DATA = "[world.port]"), TRUE)	//stringify this on purpose
+		var/list/new_port_json = Export(TGS4_COMM_NEW_PORT, list(TGS4_PARAMETER_DATA = "[world.port]"), TRUE) //stringify this on purpose
 
 		if(!new_port_json)
 			TGS_ERROR_LOG("No new port response from server![TGS4_PORT_CRITFAIL_MESSAGE]")
@@ -235,7 +235,7 @@
 
 	var/port = result[TGS4_PARAMETER_DATA]
 	if(!isnum(port))
-		return	//this is valid, server may just want use to reboot
+		return //this is valid, server may just want use to reboot
 
 	if(port == 0)
 		//to byond 0 means any port and "none" means close vOv

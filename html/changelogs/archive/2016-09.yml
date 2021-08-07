@@ -1,0 +1,381 @@
+2016-09-01:
+  Cruix:
+  - bugfix: fortune cookies will now drop their fortunes when they are eaten.
+  Iamgoofball:
+  - tweak: NULL Crate in cargo was added again because people are fucking idiots so
+      if we're going to have this stupid fucking crate might as well make it not fucking
+      garbo
+  Kor:
+  - rscadd: Watertanks will now explode when shot.
+  Lzimann:
+  - tweak: You can now open all access doors while restrained.
+  Shadowlight213:
+  - tweak: Rad storms are more obvious
+  - bugfix: Pizza bombs will now delete after exploding.
+  phil235:
+  - tweak: Putting packagewrap or hand labeler in a backpack is now done by clicking
+      and dragging.
+  - bugfix: You can now wrap backpacks and other storage items with packagewrap.
+2016-09-02:
+  A-t48:
+  - bugfix: Fixed cyborgs being able to use Power Warning emote when broken.
+  Iamgoofball:
+  - experiment: Freon has been reworked completely.
+  - rscadd: Water Vapor has been added to the Janitor's Closet.
+  RemieRichards:
+  - bugfix: Cutting bedsheets with a sharp object/wirecutters no longer puts the resulting
+      cloth INSIDE OF YOU if you're holding it, what a bug.
+  bgobandit:
+  - tweak: You can hide small items in urinals now. Use a screwdriver to screw open
+      the drain enclosure.
+  - rscadd: Every space urinal comes complete with space urinal cake. Do not eat.
+2016-09-04:
+  A-t48:
+  - bugfix: Radiation storms no longer spam "Your armor softened the blow."
+  - bugfix: Radiation always gives a message that you are being irradiated, regardless
+      of armor level (only an issue if you stripped off all clothing)
+  - bugfix: Radiation now displays a message appropriate for all mob types (no longer
+      references clothes).
+  Gun Hog:
+  - rscadd: Ghosts may now read an AI or Cyborg's laws by examining them.
+  Joan:
+  - rscadd: The talisman of construction now has 25 uses, each of which can convert
+      a sheet of plasteel to a sheet of runed metal. It can still convert metal into
+      construct shells, and requires no specific amount of uses to do so.
+  - rscadd: Added the 'Drain Life' rune to the runes cultists can make. It will drain
+      life from all creatures on the rune, healing the invoker.
+  - imageadd: The 'Astral Communion' rune has a new sprite, made by WJohnston.
+  - rscdel: You can no longer use telekinesis to hit people with items they're holding,
+      items inside items they're holding, items embedded in them, items actually implanted
+      in them, or items they're wearing.
+  MMMiracles:
+  - rscadd: A set of combat gear for bears has been added, see your local russian
+      for more information.
+  XDTM:
+  - tweak: Nanotrasen has now stocked the DNA Manipulators with potassium iodide instead
+      of epinephrine as rejuvenators.
+2016-09-07:
+  A-t48:
+  - bugfix: you can now scrub freon and water vapor
+  - bugfix: you can now label canisters as freon and water vapor
+  AnturK:
+  - rscadd: Watch out for special instructions from Centcom in the intercept report.
+  Cheridan:
+  - tweak: Brain damage no longer causes machines to be inoperable.
+  Ergovisavi:
+  - bugfix: Stops ash drakes from swooping across zlevels
+  Impisi:
+  - tweak: Increased chances of Modular Receiver drop in Maintenance
+  Incoming5643:
+  - rscdel: Wizards can no longer purchase the Cursed Heart from their spellbook.
+  Joan:
+  - experiment: The lava staff now has a short delay before creating lava, with a
+      visible indicator.
+  - tweak: The lava staff's cooldown is now somewhat shorter, and turning lava back
+      into basalt has a much shorter cooldown and no delay.
+  Lzimann:
+  - tweak: Stunprods no longer fit in your backpack, they go on your back now.
+  MrStonedOne:
+  - bugfix: Fixed lava sometimes doing massive amounts of damage.
+  - tweak: AFK players will no longer default to continue playing during restart votes.
+  XDTM:
+  - bugfix: Cloners now preserve your genetic mutations.
+  pubby:
+  - tweak: Changed military belt TC cost from 3 -> 1
+  - tweak: Update ingredient boxes to have more useful ingredients
+2016-09-08:
+  Jordie0608:
+  - rscadd: Notes can now be tagged as secret to be hidden from player viewed notes.
+  Lzimann:
+  - tweak: Legion implants now have a full heal when implanted instead of passive
+      heal + spawn tentacles. The healing also goes off when you enter crit.
+  Yackemflam:
+  - rscadd: You can now buy a box for a chance to mess with the stations meta for
+      ops.
+2016-09-09:
+  Ergovisavi:
+  - rscadd: Adds new loot for the colossus, the "Anomalous Crystal"
+  - tweak: Enabled colossus spawning again
+  Joan, Ausops:
+  - rscadd: Added some very fancy tables, constructed by adding carpet tiles to a
+      standard table frame.
+  MrStonedOne:
+  - experiment: Blessed our beloved code with dark magic.
+  Shadowlight213:
+  - tweak: Radiation storm direct tox loss removed
+  - tweak: Radiation storms now cause a radiation alert to appear for the duration
+2016-09-12:
+  Joan:
+  - rscadd: Cult structures can once again be constructed with runed metal.
+  - experiment: Cult structures can now take damage and be destroyed. Artificers can
+      repair them if they're damaged.
+  - tweak: The Recollection function of the clockwork slab is much more useful and
+      easier to parse.
+  - wip: Tweaked the Recital menus for scripture so the scripture are all in the proper
+      order. This might fuck you up if you were used to the incorrect order, but you'll
+      get used to it.
+  Nanotrasen Anti-Cheese Committee:
+  - bugfix: A glitch in the hydroponics tray firmware allowed it to retain plant growth
+      even after the plant was removed, resulting in the next planted seed being grown
+      instantaneously. This is no longer possible.
+  PKPenguin321:
+  - bugfix: Tesla shocks from grilles will no longer do thousands and thousands of
+      damage. They now properly deal burn damage that is equal to the current power
+      in the powernet divided by 5000.
+  Papa Bones:
+  - tweak: You can now rename the captain's sabre by using a pen on it.
+  RemieRichards:
+  - rscadd: Added the functionality for mobs to have multiple hands, this might have
+      broken some things, so please report any weirdness
+  Shadowlight213:
+  - rscdel: The surplus crate and random item will now only contain items allowed
+      by the gamemode
+  - rscdel: removes sleeping carp scroll from surplus crates
+  - experiment: Minimaps will now try to load from a cache or backup file if minimap
+      generation is disabled.
+  TheCarlSaganExpress:
+  - rscadd: Crayons, lipstick, cigarettes, and penlights can now be inserted into
+      PDAs.
+  phil235:
+  - rscadd: Monkeys can be dismembered.
+  - rscadd: Humans, monkeys and aliens can drop limbs when they are gibbed.
+  - rscadd: Roboticists can remove flashes, wires and power cells that they inserted
+      in robot head or torso by using a crowbar on it.
+  - rscadd: visual wounds appear on a monkey's bodyparts when injured, exactly like
+      humans.
+  - rscadd: Using a health analyzer on a monkey or alien shows the injuries to each
+      bodypart.
+  - rscadd: Monkeys can become husks.
+  - bugfix: Human-monkey transformations now respect missing limbs. No more limb regrowth
+      by becoming a monkey.
+  - bugfix: Changeling's regenerate ability also work while in monkey form.
+  - bugfix: Alien larva has its own gib and dust animation.
+  - bugfix: A bodypart that looks wounded still looks bloody when dismembered.
+  - bugfix: Amputation surgery now works on robotic limbs, and monkeys.
+2016-09-14:
+  Ergovisavi:
+  - bugfix: Fixes lockers, bodybags, etc, giving you ash storm / radiation storm protection
+  Erwgd:
+  - rscadd: Upgraded sleepers can now inject inacusiate to treat ear damage.
+  Joan:
+  - rscadd: Added brass, producible by proselytizing rods, metal, or plasteel, or
+      by using Replicant Alloy in-hand, and usable to construct a variety of cult-y
+      brass objects.
+  - tweak: Objects constructable with brass include; wall gears, pinion airlocks,
+      brass windoors, brass windows, brass table frames and tables, and brass floor
+      tiles.
+  - rscadd: Cogscarabs can convert brass sheets into liquified alloy with their proselytizer.
+  - tweak: You can use brass sheets on wall gears to produce clockwork walls, or,
+      if the gear is unanchored, false clockwork walls.
+  - bugfix: Fixed a bug preventing you from converting grilles into ratvar grilles.
+  - experiment: Please note that conservation of mass exists.
+  Sligneris:
+  - tweak: Captain's space armor has been readapted with modern hardsuit technology.
+  oranges:
+  - tweak: Examine code for dismembered humans now has better easter eggs
+2016-09-17:
+  BoxcarRacer41:
+  - rscadd: Added a new food, bacon. Bacon is made by processing raw meat cutlets.
+  - rscadd: Added a new burger recipe, the Bacon Burger. It is made with one bun,
+      one cheese wedge and three pieces of cooked bacon.
+  Ergovisavi:
+  - rscadd: Added a nightvision toggle to Shadowpeople
+  - tweak: Made several anomalous crystal variants more easily identified/easier to
+      see the effects thereof, and removed the "magic" activation possibility (replaced
+      with the "bomb" flag)
+  Gun Hog:
+  - tweak: Nanotrasen Robotics Division is proud to announce slightly less clunky
+      leg servo designs relating to the "Ripley" APLU and "Firefighter" exosuits.
+      Tests show increased mobility in both high and low pressure environments. The
+      previous designer has been fired for incompetence.
+  Improves tablets design:
+  - imageadd: Brings the tablet icons into the holy light of having depth
+  Joan:
+  - rscadd: Megafauna will now use ranged attacks even if they don't have direct vision
+      on their target.
+  - rscadd: Volt Void and Interdiction Lenses will now drain mech cells of energy.
+  - tweak: Ocular Wardens do slightly more damage to mechs.
+  - experiment: Replicant, Soul Vessel, Cogscarab, and Anima Fragment now take an
+      additional second to recite.
+  - tweak: Anima Fragments do slightly less damage in melee.
+  - tweak: Mending Motors and Clockwork Obelisks have slightly less health.
+  - tweak: Invoking Nezbere now requires 3 invokers.
+  - rscdel: Clockwork armor no longer has 5% energy resistance.
+  - bugfix: You can no longer construct clockwork structures on space turfs.
+  Papa Bones:
+  - tweak: BZ gas is no longer available on Box and Metastation layouts.
+  phil235:
+  - tweak: You no longer have to click a megaphone to use it, you simply keep it in
+      your active hand and talk normally.
+  - rscadd: Added new things
+  - imageadd: added some icons and images
+2016-09-20:
+  Ergovisavi:
+  - bugfix: fixed "friendly" xenobio mobs and mining drones attacking station drones
+  Joan:
+  - rscadd: Miners can now buy KA AoE damage mods from the mining vendor for 2000
+      points per mod.
+  - rscadd: 'Combined the Convert and Sacrifice runes into one rune. It''ll convert
+      targets that are alive and eligible, and attempt to sacrifice them otherwise.
+      The only changes to mechanics are that: Converting someone will heal them of
+      all brute and burn damage they had, and sacrificing anything will always produce
+      a soulstone(but will still only sometimes fill it)'
+  - tweak: You can no longer teleport to Teleport runes that have dense objects on
+      top of them.
+  - experiment: Wall runes will now activate other nearby wall runes when activated,
+      but will automatically disable after a minute and a half of continuous activity
+      and become unusable for 5 seconds.
+  - experiment: The Blood Boil rune no longer does all of its damage instantly or
+      stuns, but if you remain in range for the full duration you will be sent deep
+      into critical.
+  - experiment: Bubblegum has been seen reaching through blood. Try not to get hit.
+  - experiment: The Raise Dead rune no longer requires a noncultist corpse to revive
+      a cultist; instead, it will draw from the pool of all people sacrificed to power
+      the rune.
+  Mekhi:
+  - rscadd: Nanotrasen has been experimenting on cybernetics for a while, and rumors
+      are they have a few combat prototypes available...
+  - experiment: 'New arm implants: Energy-blade projector, implanted medical beamgun,
+      stun-arm implant (Like the borg version), flash implant that is automatically-regenerating
+      and doubles as a powerful flashlight. There is also one with all four items
+      in one. Also, a surgery toolkit implant. Adminspawn only for the moment.'
+  MrStonedOne:
+  - bugfix: Fixed space/nograv movement not triggering when atoms moved twice quickly
+      in space/nograv
+  Nanotrasen Stress Relief Board:
+  - rscadd: Latecomers to highlander can now join in on the fun.
+  - rscadd: The crew are encouraged to less pacifistic during highlander. Failing
+      to shed blood will result in your soul being devoured. Have a nice day.
+  Nicho1010:
+  - bugfix: Fixed lattices appearing after exploding lava
+  Screemonster:
+  - tweak: Abandoned crates no longer accept impossible guesses.
+  - tweak: Lets players know that all the digits in the code must be unique.
+  - tweak: Reads the last guess back on the multitool along with the correct/incorrect
+      guess readout.
+  - bugfix: multitool output on crates no longer returns nonsense values.
+  XDTM:
+  - rscadd: Positive viruses are now recognized by medical HUDs with a special icon.
+  - tweak: fully_heal no longer removes nonharmful viruses. This affects legion souls,
+      staffs of healing, and changeling's revive.
+  - rscadd: Canisters of any type of gas are now orderable in cargo. Dangerous experimental
+      gases will require Research Director approval.
+  Yackemflam:
+  - rscadd: The syndicate has learned on how to give their agents a true syndicate
+      ninja experience.
+  chickenboy10:
+  - rscadd: Added a Experimental Limb Grower to the medbay department, now medical
+      stuff can grow synthetic limbs using Synthflesh to help crew that suffer any
+      work related accidents. There may also be a limb that can be grown with a special
+      card...
+  feemjmeem:
+  - tweak: You can now disassemble meatspike frames with a welding tool.
+  phil235:
+  - experiment: 'adds a talk button next to the crafting button. Clicking it makes
+      a "wheel" appear around you with short predetermined messages that you click
+      to say them. This lets you say common responses without having to type in the
+      chat bar. Current messages available are:  "Hi", "Bye", "Thanks", "Come", "Help",
+      "Stop", "Get out", "Yes", and "No". The talk button can be activated with the
+      hotkey "H" or "CTRL+H"'
+  - rscadd: Wearing colored glasses colors your vision. This option can be enabled/disabled
+      by alt-clicking any glasses with such feature.
+2016-09-21:
+  Cyberboss:
+  - bugfix: The food processor's sprite's maintenance panel is no longer open while
+      closed and vice/versa
+  - tweak: Tesla arcs no longer lose power when passing through a coil that isn't
+      connected to a grid
+  MrStonedOne:
+  - bugfix: Fixes minimap generation crashes by making parts of it less precise
+2016-09-23:
+  Cyberboss:
+  - rscadd: Wire layouts of NanoTransen devices for the round can now be found in
+      the Station Blueprints
+  Incoming5643 + WJohnston:
+  - imageadd: Lizard sprites have received an overhaul, sprites courtesy of WJohnston!
+  - rscdel: While there are some new bits, a few old bits have gone by the wayside,
+      if your lizard has been affected by this the specific feature will be randomized
+      until you pick a new setting.
+  - rscadd: Lizards can now choose to have digitigrade legs (those weird backwards
+      bending ones). Keep in mind that they can only be properly seen in rather short
+      pants. They also preclude the use of shoes. By default no lizard will have these
+      legs, you have to opt in.
+  - rscadd: All ash walker lizards however are forced to have these legs.
+  - experiment: There is absolutely no tactical benefits to using digitigrade legs,
+      you are only crippling yourself if you use them.
+  Papa Bones:
+  - tweak: You can now quick-draw the officer's sabre from its sheath by alt-clicking
+      it.
+  XDTM:
+  - bugfix: Holy Water no longer leaves you stuttering for years.
+2016-09-24:
+  Cheridan:
+  - tweak: Nerfed Critical Hits
+  MrStonedOne:
+  - tweak: Orbits now use a subsystem.
+  - tweak: Orbits now bind to object's moving to allow for quicker updates, subsystem
+      fallback for when that doesn't work (for things inside of things or things that
+      move without announcing it)
+  XDTM:
+  - rscdel: Viruses start with 0 in every stat instead of 1.
+  - bugfix: Atomic Bomb, Pan-Galactic Gargle Blaster, Neurotoxin and Hippie's Delight
+      are now proper alcoholic drinks, and as such can disinfect, ignite, and be purged
+      by antihol.
+  optional name here:
+  - tweak: Changes cursed heart description to something slightly more clear.
+  - bugfix: Fixes a capitalization issue
+2016-09-26:
+  Cuboos:
+  - rscadd: Added E-cigarettes as contraband to cigarettes vending machines. They
+      take reagents instead of dried plants and also hold more than cigarettes or
+      pipes. You can modify them to puff out clouds of reagents or emag them to fill
+      a whole room with reagent vapor.
+  - rscadd: Added a new shirt to the clothing vendor relating to the newly added vapes.
+  Joan:
+  - tweak: Blobs will generally require fewer blobs to win during the blob mode, which
+      should hopefully make the mode end faster at lower overmind amounts.
+  Razharas:
+  - rscadd: '"Kudzu now keeps the mutations it had before and thus can be properly
+      cultivated to be whatever you want"'
+  TheCarlSaganExpress:
+  - rscadd: You may now insert crayons, lipstick, penlights, or cigarettes in your
+      PDA.
+  - bugfix: Removing cartridges from the PDA will no longer cause them to automatically
+      fall to the floor.
+  oranges:
+  - rscadd: It looks like a pizza delivery from an un-named station got misplaced
+2016-09-27:
+  Cobby:
+  - tweak: Nanotrasen has buffed the electronic safety devices found in Secure Briefcases
+      and Wallsafes, making them... well... more secure. In Particular, we added more
+      wires that do absolutely nothing but hinder the use of the multitool, along
+      with removing the ID slot only used by syndicates to emag the safe.
+  Incoming5643:
+  - rscadd: The secret satchels system has been updated to hide more smuggler's satchels
+      hidden randomly under the station
+  - experiment: In case you forgot about the secret satchel system, basically if you
+      take a smuggler's satchel (a traitor item also occasionally found under a random
+      tile in the station [USE T-RAYS]), stow away an item in it, and bury it under
+      the floor tiles that item can reappear in a random later round!
+  MrStonedOne:
+  - tweak: Custom Round end sounds selected by admins will be preloaded to all clients
+      before actually rebooting the world
+  Shadowlight213:
+  - bugfix: Fixes broken icon states when replacing warning floor tile
+  Supermichael777:
+  - tweak: Cat men have finally achieved equal discrimination.
+  TrustyGun+Pubby:
+  - imageadd: Lawyers now have unique speech bubbles.
+  XDTM:
+  - tweak: Using plasma on dark blue slimes will now spawn freon instead of arbitrarily
+      freezing mobs.
+  uraniummeltdown:
+  - tweak: Protolathe stock parts now build 5 times faster
+2016-09-28:
+  Cuboos:
+  - bugfix: Removed the admin message spam from the smoke_spread proc. You may now
+      vape in peace without the threat of a Blue Space Artillery
+  LanCartwright:
+  - rscdel: Removed Stimulants and Coffee from survival pens.
+  - tweak: Nanites have been replaced with Mining Nanites which heal more when you
+      are lower health, and do not have the ridiculous healing Adminorazine had.

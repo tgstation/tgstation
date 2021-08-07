@@ -37,7 +37,7 @@ $bg-map: colors.$bg-map !default;
 
   &:hover,
   &:focus {
-    background-color: lighten($color, 15%);
+    background-color: lighten($color, 30%);
     color: $text-color;
   }
 }
@@ -73,6 +73,13 @@ $bg-map: colors.$bg-map !default;
   // Add a margin to the icon to keep it separate from the text
   .fa, .fas, .far {
     margin-right: 0.25em;
+  }
+}
+
+.Button--hasContent.Button--iconPosition--right {
+  .fa, .fas, .far {
+    margin-right: 0px;
+    margin-left: 3px;
   }
 }
 

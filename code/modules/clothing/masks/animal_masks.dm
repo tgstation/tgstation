@@ -44,13 +44,13 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 /obj/item/clothing/mask/animal/examine(mob/user)
 	. = ..()
 	if(clothing_flags & VOICEBOX_TOGGLABLE)
-		. += "<span class='notice'>Its voicebox is currently [clothing_flags & VOICEBOX_DISABLED ? "disabled" : "enabled"]. <b>Alt-click</b> to toggle it.</span>"
+		. += span_notice("Its voicebox is currently [clothing_flags & VOICEBOX_DISABLED ? "disabled" : "enabled"]. <b>Alt-click</b> to toggle it.")
 
 /obj/item/clothing/mask/animal/AltClick(mob/user)
 	. = ..()
 	if(clothing_flags & VOICEBOX_TOGGLABLE)
 		clothing_flags ^= VOICEBOX_DISABLED
-		to_chat(user, "<span class='notice'>You [clothing_flags & VOICEBOX_DISABLED ? "disabled" : "enabled"] [src]'s voicebox.</span>")
+		to_chat(user, span_notice("You [clothing_flags & VOICEBOX_DISABLED ? "disabled" : "enabled"] [src]'s voicebox."))
 
 /obj/item/clothing/mask/animal/proc/make_cursed() //apply cursed effects.
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 		if(M.get_item_by_slot(ITEM_SLOT_MASK) == src)
 			if(update_speech_mod)
 				RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
-			to_chat(M, "<span class='userdanger'>[src] was cursed!</span>")
+			to_chat(M, span_userdanger("[src] was cursed!"))
 			M.update_inv_wear_mask()
 
 /obj/item/clothing/mask/animal/proc/clear_curse()
@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	if(ismob(loc))
 		var/mob/M = loc
 		if(M.get_item_by_slot(ITEM_SLOT_MASK) == src)
-			to_chat(M, "<span class='notice'>[src]'s curse has been lifted!</span>")
+			to_chat(M, span_notice("[src]'s curse has been lifted!"))
 			if(update_speech_mod)
 				UnregisterSignal(M, COMSIG_MOB_SAY)
 			M.update_inv_wear_mask()
@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	if(!iscarbon(user))
 		return ..()
 	if(slot == ITEM_SLOT_MASK && HAS_TRAIT_FROM(src, TRAIT_NODROP, CURSED_MASK_TRAIT))
-		to_chat(user, "<span class='userdanger'>[src] was cursed!</span>")
+		to_chat(user, span_userdanger("[src] was cursed!"))
 	return ..()
 
 
@@ -112,7 +112,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	inhand_icon_state = "pig"
 	animal_sounds = list("Oink!","Squeeeeeeee!","Oink Oink!")
 	curse_spawn_sound = 'sound/magic/pighead_curse.ogg'
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/mask/animal/pig/cursed
 	cursed = TRUE
@@ -126,7 +126,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	animal_sounds = list("Ree!!", "Reee!!","REEE!!","REEEEE!!")
 	animal_sounds_alt_probability = 5
 	animal_sounds_alt = list("HUUUUU!!","SMOOOOOKIN'!!","Hello my baby, hello my honey, hello my rag-time gal.", "Feels bad, man.", "GIT DIS GUY OFF ME!!" ,"SOMEBODY STOP ME!!", "NORMIES, GET OUT!!")
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/mask/animal/frog/cursed
 	cursed = TRUE
@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	name = "cow mask"
 	icon_state = "cowmask"
 	inhand_icon_state = "cowmask"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	curse_spawn_sound = 'sound/magic/cowhead_curse.ogg'
 	animal_sounds = list("Moooooooo!","Moo!","Moooo!")
 
@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	icon_state = "horsehead"
 	inhand_icon_state = "horsehead"
 	animal_sounds = list("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEYES|HIDEEARS
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEYES|HIDEEARS|HIDESNOUT
 	curse_spawn_sound = 'sound/magic/horsehead_curse.ogg'
 
 /obj/item/clothing/mask/animal/horsehead/cursed
@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	animal_type = "rat"
 	icon_state = "rat"
 	inhand_icon_state = "rat"
-	flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|HIDESNOUT
 	modifies_speech = FALSE
 	animal_sounds = list("Skree!","SKREEE!","Squeak!")
 
