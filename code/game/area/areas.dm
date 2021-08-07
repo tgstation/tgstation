@@ -243,11 +243,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		return
 
 	poweralm = state
-	for (var/mob/living/silicon/aiPlayer as anything in GLOB.silicon_mobs)
+	for (var/mob/living/silicon/ai_player as anything in GLOB.silicon_mobs)
 		if (!state)
-			aiPlayer.cancelAlarm("Power", src, source)
+			ai_player.cancelAlarm("Power", src, source)
 		else
-			aiPlayer.triggerAlarm("Power", src, cameras, source)
+			ai_player.triggerAlarm("Power", src, cameras, source)
 
 	for (var/obj/machinery/computer/station_alert/alert_computer as anything in GLOB.alert_consoles)
 		if(!state)
