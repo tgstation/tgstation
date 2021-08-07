@@ -897,11 +897,6 @@
 	dir = EAST
 	pixel_x = -24
 
-//all air alarms in area are connected via magic
-/area
-	var/list/air_vent_info = list()
-	var/list/air_scrub_info = list()
-
 /obj/item/circuit_component/air_alarm
 	display_name = "Air Alarm"
 	desc = "Controls levels of gases and their temperature as well as all vents and scrubbers in the room."

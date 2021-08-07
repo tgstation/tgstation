@@ -90,6 +90,9 @@
 	///Used to decide what the maximum time between ambience is
 	var/max_ambience_cooldown = 90 SECONDS
 
+	var/list/air_vent_info = list()
+	var/list/air_scrub_info = list()
+
 /**
  * A list of teleport locations
  *
