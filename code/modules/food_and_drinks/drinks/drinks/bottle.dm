@@ -155,6 +155,7 @@
 	name = "space beer"
 	desc = "Beer. In space."
 	icon_state = "beer"
+	volume = 30
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
 	foodtype = GRAIN | ALCOHOL
 	custom_price = PAYCHECK_EASY
@@ -172,6 +173,7 @@
 	desc = "A true dorf's drink of choice."
 	icon_state = "alebottle"
 	inhand_icon_state = "beer"
+	volume = 30
 	list_reagents = list(/datum/reagent/consumable/ethanol/ale = 30)
 	foodtype = GRAIN | ALCOHOL
 	custom_price = PAYCHECK_EASY
