@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - code_imp: "Moves most circuit component defines to their appropriate files"
