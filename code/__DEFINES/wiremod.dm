@@ -26,6 +26,8 @@
 #define PORT_TYPE_LIST "list"
 /// Table datatype. Derivative of list, contains other lists with matching columns.
 #define PORT_TYPE_TABLE "table"
+/// Options datatype. Derivative of string.
+#define PORT_TYPE_OPTION "option"
 
 // Other datatypes
 /// Atom datatype
@@ -48,8 +50,8 @@
 
 // Components
 
-/// The value that is sent whenever a component is simply sending a signal. This can be anything.
-#define COMPONENT_SIGNAL 1
+/// The value that is sent whenever a component is simply sending a signal. This can be anything, and is currently the seconds since roundstart.
+#define COMPONENT_SIGNAL (world.time / (1 SECONDS))
 
 // Comparison defines
 #define COMP_COMPARISON_EQUAL "="
@@ -110,6 +112,14 @@
 
 #define COMP_SECURITY_ARREST_AMOUNT_TO_FLAG 10
 
+// Proccall component
+#define COMP_PROC_GLOBAL "Global"
+#define COMP_PROC_OBJECT "Object"
+
+// Bar overlay component
+#define COMP_BAR_OVERLAY_VERTICAL "Vertical"
+#define COMP_BAR_OVERLAY_HORIZONTAL "Horizontal"
+
 // Shells
 
 /// Whether a circuit is stuck on a shell and cannot be removed (by a user)
@@ -125,9 +135,9 @@
 #define SHELL_FLAG_ALLOW_FAILURE_ACTION (1<<3)
 
 // Shell capacities. These can be converted to configs very easily later
-#define SHELL_CAPACITY_SMALL 10
-#define SHELL_CAPACITY_MEDIUM 25
-#define SHELL_CAPACITY_LARGE 50
+#define SHELL_CAPACITY_SMALL 25
+#define SHELL_CAPACITY_MEDIUM 50
+#define SHELL_CAPACITY_LARGE 100
 #define SHELL_CAPACITY_VERY_LARGE 500
 
 /// The maximum range a USB cable can be apart from a source
@@ -138,5 +148,15 @@
 #define CIRCUIT_FLAG_INPUT_SIGNAL (1<<0)
 /// Creates an output trigger that sends a pulse whenever the component is successfully triggered
 #define CIRCUIT_FLAG_OUTPUT_SIGNAL (1<<1)
+/// Prohibits the component from being duplicated via the module duplicator
+#define CIRCUIT_FLAG_UNDUPEABLE (1<<2)
+/// Marks a circuit component as admin only. Admins will only be able to link/unlink with these circuit components.
+#define CIRCUIT_FLAG_ADMIN (1<<3)
 /// This circuit component does not show in the menu.
-#define CIRCUIT_FLAG_HIDDEN (1<<2)
+#define CIRCUIT_FLAG_HIDDEN (1<<4)
+
+// Datatype flags
+/// The datatype supports manual inputs
+#define DATATYPE_FLAG_ALLOW_MANUAL_INPUT (1<<0)
+/// The datatype won't update the value when it is connected to the port
+#define DATATYPE_FLAG_AVOID_VALUE_UPDATE (1<<1)

@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/pathfind
 	display_name = "Pathfinder"
-	display_desc = "When triggered, the next step to the target's location as an entity. This can be used with the direction component and the drone shell to make it move on its own. The Id Card input port is for considering ID access when pathing, it does not give the shell actual access."
+	desc = "When triggered, the next step to the target's location as an entity. This can be used with the direction component and the drone shell to make it move on its own. The Id Card input port is for considering ID access when pathing, it does not give the shell actual access."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	var/datum/port/input/input_X
@@ -43,21 +43,6 @@
 	finished = add_output_port("Arrived to destination", PORT_TYPE_SIGNAL)
 	failed = add_output_port("Failed", PORT_TYPE_SIGNAL)
 	reason_failed = add_output_port("Fail reason", PORT_TYPE_STRING)
-
-/obj/item/circuit_component/pathfind/Destroy()
-	input_X = null
-	input_Y = null
-	id_card = null
-
-	output = null
-	finished = null
-	failed = null
-	reason_failed = null
-
-	path = null
-	old_dest = null
-	next_turf = null
-	return ..()
 
 /obj/item/circuit_component/pathfind/input_received(datum/port/input/port)
 	. = ..()

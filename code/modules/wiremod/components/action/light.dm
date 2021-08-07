@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/light
 	display_name = "Light"
-	display_desc = "A component that emits a light of a specific brightness and colour. Requires a shell."
+	desc = "A component that emits a light of a specific brightness and colour. Requires a shell."
 
 	/// The colours of the light
 	var/datum/port/input/red
@@ -34,15 +34,6 @@
 	brightness = add_input_port("Brightness", PORT_TYPE_NUMBER)
 
 	on = add_input_port("On", PORT_TYPE_NUMBER)
-
-
-/obj/item/circuit_component/light/Destroy()
-	red = null
-	green = null
-	blue = null
-	brightness = null
-	on = null
-	return ..()
 
 /obj/item/circuit_component/light/register_shell(atom/movable/shell)
 	. = ..()

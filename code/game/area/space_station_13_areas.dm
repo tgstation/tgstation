@@ -762,6 +762,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "abandoned_library"
 
 /area/service/chapel
+	name = "Chapel"
 	icon_state = "chapel"
 	mood_bonus = 5
 	mood_message = "<span class='nicegreen'>Being in the chapel brings me peace.</span>\n"
@@ -770,10 +771,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	flags_1 = NONE
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
-/area/service/chapel/main
-	name = "Chapel"
-
-/area/service/chapel/main/monastery
+/area/service/chapel/monastery
 	name = "Monastery"
 
 /area/service/chapel/office
@@ -1412,10 +1410,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Abandoned Research Lab"
 	icon_state = "abandoned_sci"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
-
-/area/science/nanite
-	name = "Nanite Lab"
-	icon_state = "nanite"
 
 // Telecommunications Satellite
 

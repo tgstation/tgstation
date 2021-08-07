@@ -162,12 +162,12 @@
 	ammo_x_offset = 2
 	shaded_charge = FALSE
 
-/obj/item/gun/energy/laser/instakill/Initialize()
-	. = ..()
-	AddElement(/datum/element/delete_on_drop)
-
 /obj/item/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
 	return
+
+/obj/item/gun/energy/laser/instakill/ctf/Initialize()
+	. = ..()
+	AddElement(/datum/element/delete_on_drop)
 
 /obj/item/ammo_casing/energy/instakill
 	projectile_type = /obj/projectile/beam/instakill
@@ -279,7 +279,7 @@
 
 
 // Instakill
-/obj/item/gun/energy/laser/instakill/red
+/obj/item/gun/energy/laser/instakill/ctf/red
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a red design."
 	icon_state = "instagibred"
 	inhand_icon_state = "instagibred"
@@ -338,7 +338,7 @@
 
 
 // Instakill
-/obj/item/gun/energy/laser/instakill/blue
+/obj/item/gun/energy/laser/instakill/ctf/blue
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a blue design."
 	icon_state = "instagibblue"
 	inhand_icon_state = "instagibblue"
@@ -404,7 +404,7 @@
 
 
 // Instakill
-/obj/item/gun/energy/laser/instakill/green
+/obj/item/gun/energy/laser/instakill/ctf/green
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a green design."
 	icon_state = "instagibgreen"
 	inhand_icon_state = "instagibgreen"
@@ -470,7 +470,7 @@
 
 
 // Instakill
-/obj/item/gun/energy/laser/instakill/yellow
+/obj/item/gun/energy/laser/instakill/ctf/yellow
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a yellow design."
 	icon_state = "instagibyellow"
 	inhand_icon_state = "instagibyellow"
