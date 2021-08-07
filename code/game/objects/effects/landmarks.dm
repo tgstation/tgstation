@@ -474,7 +474,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 					break
 			if(dense_object)
 				continue
-			new /obj/item/reagent_containers/food/drinks/beer/almost_empty(turf_to_spawn_on)
+			new /obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty(turf_to_spawn_on)
 
 ///Spawns the mob with some drugginess/drunkeness, and some disgust.
 /obj/effect/landmark/start/hangover/proc/make_hungover(mob/hangover_mob)

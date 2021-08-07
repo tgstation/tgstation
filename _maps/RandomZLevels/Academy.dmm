@@ -1817,7 +1817,7 @@
 /area/awaymission/academy/academyaft)
 "ib" = (
 /obj/structure/closet,
-/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /obj/item/clothing/under/color/lightpurple,
 /obj/item/poster/random_contraband,
 /turf/open/floor/iron,
