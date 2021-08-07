@@ -823,7 +823,7 @@
 		/datum/gas/zauker = new/datum/tlv/dangerous,
 		/datum/gas/helium = new/datum/tlv/dangerous,
 		/datum/gas/antinoblium = new/datum/tlv/dangerous,
-		/datum/gas/halon = new/datum/tlv/dangerous
+		/datum/gas/halon = new/datum/tlv/dangerous,
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Kitchen cold rooms start off at -14°C or 259.15K.
