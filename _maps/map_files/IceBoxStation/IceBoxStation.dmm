@@ -57208,6 +57208,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/mob/living/simple_animal/hostile/retaliate/goat{
+	name = "Pete"
+	},
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "xFL" = (
