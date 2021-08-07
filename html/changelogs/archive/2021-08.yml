@@ -195,3 +195,51 @@
   - bugfix: Custom vendor bluescreen
   interestingusernam3:
   - spellcheck: Gutlunches no longer eat through their nutrient sacs.
+2021-08-06:
+  Gandalf2k15:
+  - bugfix: Reinforced walls should now smooth properly.
+  Ghommie:
+  - refactor: refactored the thrownthing datum a little.
+  - qol: you can now throw stuff at movables with no density, such as mobs lying on
+      the floor, mice, APCs, light bulbs etcetera etcetera.
+  - bugfix: Contractor pods won't land on groundless turfs such as chasms, lava or
+      open space anymore.
+  KubeRoot:
+  - bugfix: Tailored winter suit hoods are now colored correctly
+  Melbert:
+  - bugfix: Rust Heretics now need to stand on Rust to heal again, instead of passive
+      free healing
+  SmArtKar:
+  - balance: Doubles capacity for most shells
+  - expansion: Added scanner gate shells
+  dragomagol:
+  - admin: adds an additional log file, mob_tags, for referencing mob numbers in logs
+  timothymtorres:
+  - bugfix: Fixed being able to polymorph pAIs into other mobs.  It changes their
+      holoform now instead.
+  - bugfix: Fixed being able to polymorph mimics spawned from a staff of animate
+2021-08-07:
+  ArcaneMusic:
+  - bugfix: Wirecutters have their correct belt slot icon again.
+  Ghommie:
+  - bugfix: railings can now be vaulted/climbed over from both sides.
+  - bugfix: Folded gold wheelchairs are now actually made of gold.
+  NamelessFairy:
+  - bugfix: Adds a missing wall on CentCom in the supplypod facility
+  - bugfix: Most if not all CentCom windows should now be on plating
+  Nari Harimoto:
+  - bugfix: chapel areas now work properly, no more APCs thinking its in space on
+      tram
+  Thunder12345:
+  - code_imp: Made the Occupational Corruption Device's deadchat message less cryptic,
+      and repathed it to something more descriptive
+  Zytolg:
+  - bugfix: Missing APC in Icebox Bar Maint
+  - bugfix: Changes icebox apiary to the correct type
+  - bugfix: Icebox Disposals was unlinked under the bar table. This should fix that.
+  - bugfix: Icebox - It was stated that the new department lacks some visibility so
+      I added some windows to Upstairs Botany to help with that.
+  - bugfix: Icebox - Bar was mapped using the wrong table type, now it isn't.
+  - bugfix: Icebox - Kitchen was missing the Processor and Grinder, you can now find
+      them in the freezer and downstairs respectively.
+  - bugfix: Icebox - Changes the bot portal in the bar to the correct subtype.

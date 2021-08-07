@@ -1354,6 +1354,15 @@
 /// Called in /obj/structure/moneybot/add_money(). (to_add)
 #define COMSIG_MONEYBOT_ADD_MONEY "moneybot_add_money"
 
+/// Called when somebody passes through a scanner gate and it triggers
+#define COMSIG_SCANGATE_PASS_TRIGGER "scangate_pass_trigger"
+
+/// Called when somebody passes through a scanner gate and it does not trigger
+#define COMSIG_SCANGATE_PASS_NO_TRIGGER "scangate_pass_no_trigger"
+
+/// Called when something passes through a scanner gate shell
+#define COMSIG_SCANGATE_SHELL_PASS "scangate_shell_pass"
+
 // Merger datum signals
 /// Called on the object being added to a merger group: (datum/merger/new_merger)
 #define COMSIG_MERGER_ADDING "comsig_merger_adding"

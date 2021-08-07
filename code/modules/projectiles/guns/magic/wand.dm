@@ -149,7 +149,7 @@
 /obj/item/gun/magic/wand/polymorph/zap_self(mob/living/user)
 	..() //because the user mob ceases to exists by the time wabbajack fully resolves
 
-	wabbajack(user)
+	user.wabbajack()
 	charges--
 
 /////////////////////////////////////
@@ -252,5 +252,3 @@
 	name = "wand of nothing"
 	desc = "It's not just a stick, it's a MAGIC stick?"
 	ammo_type = /obj/item/ammo_casing/magic/nothing
-
-

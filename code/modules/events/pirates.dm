@@ -426,7 +426,7 @@
 		return 0
 	else if("pirate" in H.faction) //can't ransom your fellow pirates to CentCom!
 		return 0
-	else if(H.mind.assigned_role.title in GLOB.command_positions)
+	else if(H.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 		return 3000
 	else
 		return 1000

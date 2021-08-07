@@ -1,4 +1,0 @@
-author: "dragomagol"
-delete-after: True
-changes: 
-  - admin: "adds an additional log file, mob_tags, for referencing mob numbers in logs"
