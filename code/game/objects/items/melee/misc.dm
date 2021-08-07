@@ -364,7 +364,7 @@
 	/// The force on extension.
 	var/active_force = 10
 	/// The weight class on extension.
-	var/active_w_class = WEIGHT_CLASS_BULKY
+	var/active_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/melee/classic_baton/telescopic/Initialize()
 	. = ..()
@@ -425,7 +425,6 @@
 	on_inhand_icon_state = "contractor_baton"
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	active_force = 16
-	active_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton/get_wait_description()
 	return span_danger("The baton is still charging!")

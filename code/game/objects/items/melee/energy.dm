@@ -30,7 +30,7 @@
 	/// The color of this energy based sword, for use in editing the icon_state.
 	var/sword_color_icon
 	/// The sharpness when active.
-	var/active_sharpness = SHARP_EDGED
+	var/active_sharpness
 	/// The heat given off when active.
 	var/active_heat = 3500
 
@@ -68,10 +68,11 @@
 	return FALSE
 
 /obj/item/melee/energy/process(delta_time)
-	open_flame()
+	if(heat)
+		open_flame()
 
 /obj/item/melee/energy/ignition_effect(atom/A, mob/user)
-	if(!heat)
+	if(!heat && !blade_active)
 		return ""
 
 	var/in_mouth = ""
@@ -96,11 +97,11 @@
 /obj/item/melee/energy/proc/after_transform(mob/user, active)
 	blade_active = active
 	if(active)
+		if(sword_color_icon)
+			icon_state = "[icon_state]_[sword_color_icon]"
 		if(embedding)
 			updateEmbedding()
 		heat = active_heat
-		if(sword_color_icon)
-			icon_state = "[icon_state]_[sword_color_icon]"
 		START_PROCESSING(SSobj, src)
 	else
 		if(embedding)
@@ -159,7 +160,7 @@
 	active_sharpness = SHARP_EDGED
 
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(force >= active_force)
+	if(blade_active)
 		return ..()
 	return FALSE
 
@@ -174,7 +175,7 @@
 		return
 
 	var/obj/item/stock_parts/cell/our_cell = user.cell
-	if(force >= active_force && !(our_cell.use(hitcost)))
+	if(blade_active && !(our_cell.use(hitcost)))
 		attack_self(user)
 		to_chat(user, span_notice("It's out of charge!"))
 		return
@@ -205,6 +206,7 @@
 /obj/item/melee/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return FALSE
 
+// The colored energy swords we all know and love.
 /obj/item/melee/energy/sword/saber
 	/// Assoc list of all possible saber colors to color define.
 	var/list/possible_colors = list(
@@ -218,10 +220,11 @@
 
 /obj/item/melee/energy/sword/saber/Initialize(mapload)
 	. = ..()
-	if(LAZYLEN(possible_colors))
-		var/set_color = pick(possible_colors)
-		sword_color_icon = set_color
-		set_light_color(possible_colors[set_color])
+	if(!sword_color_icon && LAZYLEN(possible_colors))
+		sword_color_icon = pick(possible_colors)
+
+	if(sword_color_icon)
+		set_light_color(possible_colors[sword_color_icon])
 
 /obj/item/melee/energy/sword/saber/process()
 	. = ..()
@@ -229,16 +232,16 @@
 		set_light_color(possible_colors[pick(possible_colors)])
 
 /obj/item/melee/energy/sword/saber/red
-	possible_colors = list("red" = COLOR_SOFT_RED)
+	sword_color_icon = "red"
 
 /obj/item/melee/energy/sword/saber/blue
-	possible_colors = list("blue" = LIGHT_COLOR_LIGHT_CYAN)
+	sword_color_icon = "blue"
 
 /obj/item/melee/energy/sword/saber/green
-	possible_colors = list("green" = LIGHT_COLOR_GREEN)
+	sword_color_icon = "green"
 
 /obj/item/melee/energy/sword/saber/purple
-	possible_colors = list("purple" = LIGHT_COLOR_LAVENDER)
+	sword_color_icon = "purple"
 
 /obj/item/melee/energy/sword/saber/attackby(obj/item/weapon, mob/living/user, params)
 	if(weapon.tool_behaviour == TOOL_MULTITOOL)

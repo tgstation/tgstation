@@ -330,7 +330,7 @@
 	back = /obj/item/storage/backpack/ert/clown
 	backpack_contents = list(
 		/obj/item/gun/ballistic/revolver/reverse = 1,
-		/obj/item/melee/bananium_sword = 1,
+		/obj/item/melee/energy/sword/bananium = 1,
 		/obj/item/shield/energy/bananium = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 )

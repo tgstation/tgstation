@@ -248,7 +248,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/transform_weapon()
 	if(time_until_next_transform <= world.time)
-		miner_saw.attack_self(src, TRUE)
+		miner_saw.attack_self(src)
 		if(!miner_saw.is_open)
 			rapid_melee = 5 // 4 deci cooldown before changes, npcpool subsystem wait is 20, 20/4 = 5
 		else
