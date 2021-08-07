@@ -3,9 +3,7 @@
 /// This has great use, primarially for components, but it carries with it some overhead
 /// So we do it seperately as it needs to hold state which is very likely to lead to bugs if it remains as an element.
 /datum/component/connect_loc_behalf
-	dupe_mode = COMPONENT_DUPE_SELECTIVE
-
-	datum_flags = DF_SIGNAL_VERBOSE
+	dupe_mode = COMPONENT_DUPE_UNIQUE
 
 	/// An assoc list of signal -> procpath to register to the loc this object is on.
 	var/list/connections
@@ -61,21 +59,16 @@
 	tracked_loc = tracked.loc
 
 	for (var/signal in connections)
-		RegisterSignal(tracked_loc, signal, .proc/handle_signal)
+		parent.RegisterSignal(tracked_loc, signal, connections[signal])
 
 /datum/component/connect_loc_behalf/proc/unregister_signals()
 	if(isnull(tracked_loc))
 		return
 
 	for (var/signal in connections)
-		UnregisterSignal(tracked_loc, signal)
+		parent.UnregisterSignal(tracked_loc, signal)
 
 	tracked_loc = null
-
-/datum/component/connect_loc_behalf/proc/handle_signal(sigtype, datum/source, ...)
-	SIGNAL_HANDLER
-	var/list/arguments = args.Copy(2)
-	return call(parent, connections[sigtype])(arglist(arguments))
 
 /datum/component/connect_loc_behalf/proc/on_moved(sigtype, atom/movable/tracked, atom/old_loc)
 	SIGNAL_HANDLER

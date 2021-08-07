@@ -12,8 +12,6 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	/// The connect_loc_behalf component for handling movement behaviour onto a turf.
-	var/datum/component/connect_loc_behalf
 
 
 /datum/component/squashable/Initialize(squash_chance, squash_damage, squash_flags, squash_callback)
@@ -29,7 +27,7 @@
 	if(!src.on_squash_callback && squash_callback)
 		on_squash_callback = CALLBACK(parent, squash_callback)
 
-	connect_loc_behalf = AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
+	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
 ///Handles the squashing of the mob
 /datum/component/squashable/proc/on_entered(turf/source_turf, atom/movable/crossing_movable)
@@ -74,4 +72,4 @@
 
 /datum/component/squashable/UnregisterFromParent()
 	. = ..()
-	QDEL_NULL(connect_loc_behalf)
+	qdel(GetComponent(/datum/component/connect_loc_behalf))

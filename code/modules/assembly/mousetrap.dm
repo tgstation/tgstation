@@ -13,8 +13,6 @@
 	var/static/list/holder_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	/// The connect_loc_behalf component for handling movement behaviour onto a turf.
-	var/datum/component/connect_loc_behalf
 
 /obj/item/assembly/mousetrap/Initialize()
 	. = ..()
@@ -49,11 +47,11 @@
 
 /obj/item/assembly/mousetrap/on_attach()
 	. = ..()
-	connect_loc_behalf = AddComponent(/datum/component/connect_loc_behalf, holder, holder_connections)
+	AddComponent(/datum/component/connect_loc_behalf, holder, holder_connections)
 
 /obj/item/assembly/mousetrap/on_detach()
 	. = ..()
-	QDEL_NULL(connect_loc_behalf)
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
 
 /obj/item/assembly/mousetrap/proc/triggered(mob/target, type = "feet")
 	if(!armed)

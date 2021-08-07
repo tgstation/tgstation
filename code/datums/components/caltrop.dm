@@ -24,8 +24,6 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 
-	/// The connect_loc_behalf component for handling movement behaviour onto a turf.
-	var/datum/component/connect_loc_behalf
 
 /datum/component/caltrop/Initialize(min_damage = 0, max_damage = 0, probability = 100, flags = NONE, soundfile = null)
 	. = ..()
@@ -39,7 +37,7 @@
 	src.soundfile = soundfile
 
 	if(ismovable(parent))
-		connect_loc_behalf = AddComponent(/datum/component/connect_loc_behalf, parent, crossed_connections)
+		AddComponent(/datum/component/connect_loc_behalf, parent, crossed_connections)
 	else
 		RegisterSignal(get_turf(parent), COMSIG_ATOM_ENTERED, .proc/on_entered)
 
@@ -104,4 +102,4 @@
 
 /datum/component/caltrop/UnregisterFromParent()
 	if(ismovable(parent))
-		QDEL_NULL(connect_loc_behalf)
+		qdel(GetComponent(/datum/component/connect_loc_behalf))

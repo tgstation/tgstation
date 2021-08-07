@@ -135,8 +135,6 @@
 
 ///Special snowflake component only used for the recycler.
 /datum/component/butchering/recycler
-	/// The connect_loc_behalf component for handling movement behaviour onto a turf.
-	var/datum/component/connect_loc_behalf
 
 
 /datum/component/butchering/recycler/Initialize(_speed, _effectiveness, _bonus_modifier, _butcher_sound, disabled, _can_be_blunt)
@@ -149,7 +147,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	connect_loc_behalf = AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
+	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
 /datum/component/butchering/recycler/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER

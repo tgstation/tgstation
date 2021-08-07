@@ -26,8 +26,6 @@
 		COMSIG_ATOM_ENTERED = .proc/play_squeak_crossed,
 	)
 
-	/// The connect_loc_behalf component for handling movement behaviour onto a turf.
-	var/datum/component/connect_loc_behalf
 
 /datum/component/squeak/Initialize(custom_sounds, volume_override, chance_override, step_delay_override, use_delay_override, extrarange, falloff_exponent, fallof_distance)
 	if(!isatom(parent))
@@ -36,7 +34,7 @@
 	if(ismovable(parent))
 		RegisterSignal(parent, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_IMPACT, COMSIG_PROJECTILE_BEFORE_FIRE), .proc/play_squeak)
 
-		connect_loc_behalf = AddComponent(/datum/component/connect_loc_behalf, parent, item_connections)
+		AddComponent(/datum/component/connect_loc_behalf, parent, item_connections)
 		RegisterSignal(parent, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react)
 		if(isitem(parent))
 			RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/play_squeak)
@@ -70,7 +68,7 @@
 
 /datum/component/squeak/UnregisterFromParent()
 	. = ..()
-	QDEL_NULL(connect_loc_behalf)
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
 
 /datum/component/squeak/proc/play_squeak()
 	SIGNAL_HANDLER
