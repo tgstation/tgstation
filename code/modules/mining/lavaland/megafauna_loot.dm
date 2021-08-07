@@ -435,7 +435,7 @@
 		balloon_alert(user, "resist out!")
 		COOLDOWN_START(src, move_cooldown, 1 SECONDS)
 		return
-	if(!use_blood(1), FALSE)
+	if(!use_blood(1, FALSE))
 		return
 	if(pixel_x != base_pixel_x || pixel_y != base_pixel_y)
 		animate(src, 0.2 SECONDS, pixel_x = base_pixel_y, pixel_y = base_pixel_y, flags = ANIMATION_PARALLEL)
