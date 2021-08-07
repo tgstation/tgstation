@@ -387,11 +387,10 @@
 		remove_area_power_relationship()
 
 	static_power_usage = new_usage
-
-	var/area/our_area = get_area(src)
-
-	if(our_area && new_usage)
-		our_area.addStaticPower(new_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
+	
+	if(new_usage)
+		var/area/our_area = get_area(src)
+		our_area?.addStaticPower(new_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
 
 	use_power = new_use_power
 
