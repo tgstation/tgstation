@@ -34,28 +34,17 @@
 
 /obj/item/circuit_component/soundemitter/populate_options()
 	var/static/component_options = list(
-		COMP_SOUND_BUZZ,
-		COMP_SOUND_BUZZ_TWO,
-		COMP_SOUND_CHIME,
-		COMP_SOUND_HONK,
-		COMP_SOUND_PING,
-		COMP_SOUND_SAD,
-		COMP_SOUND_WARN,
-		COMP_SOUND_SLOWCLAP,
+		"Buzz" = 'sound/machines/buzz-sigh.ogg',
+		"Buzz Twice" = 'sound/machines/buzz-two.ogg',
+		"Chime" = 'sound/machines/chime.ogg',
+		"Honk" = 'sound/items/bikehorn.ogg',
+		"Ping" = 'sound/machines/ping.ogg',
+		"Sad Trombone" = 'sound/misc/sadtrombone.ogg',
+		"Warn" = 'sound/machines/warning-buzzer.ogg',
+		"Slow Clap" = 'sound/machines/slowclap.ogg',
 	)
 	sound_file = add_option_port("Sound Option", component_options)
-
-	var/static/options_to_sound = list(
-		COMP_SOUND_BUZZ = 'sound/machines/buzz-sigh.ogg',
-		COMP_SOUND_BUZZ_TWO = 'sound/machines/buzz-two.ogg',
-		COMP_SOUND_CHIME = 'sound/machines/chime.ogg',
-		COMP_SOUND_HONK = 'sound/items/bikehorn.ogg',
-		COMP_SOUND_PING = 'sound/machines/ping.ogg',
-		COMP_SOUND_SAD = 'sound/misc/sadtrombone.ogg',
-		COMP_SOUND_WARN = 'sound/machines/warning-buzzer.ogg',
-		COMP_SOUND_SLOWCLAP = 'sound/machines/slowclap.ogg',
-	)
-	options_map = options_to_sound
+	options_map = component_options
 
 
 /obj/item/circuit_component/soundemitter/input_received(datum/port/input/port)
