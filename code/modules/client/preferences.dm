@@ -360,8 +360,7 @@ GLOBAL_VAR(preferences_species_data)
 
 			var/datum/job/job = SSjob.GetJob(job_title)
 
-			// MOTHBLOCKS TODO: FACTION_STATION once Rohesie's PR is megred
-			if (job.faction != "Station")
+			if (job.faction != FACTION_STATION)
 				return FALSE
 
 			return set_job_preference_level(job, level)
