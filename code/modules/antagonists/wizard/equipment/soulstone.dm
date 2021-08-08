@@ -24,11 +24,21 @@
 ///signal called whenever a soulstone is smacked by a bible
 /obj/item/soulstone/proc/on_bible_smacked(datum/source, mob/living/user, direction)
 	SIGNAL_HANDLER
-	if(IS_CULTIST(user) || theme == THEME_HOLY)
+	INVOKE_ASYNC(src, .proc/attempt_exorcism, user)
+
+/**
+ * attempt_exorcism: called from on_bible_smacked, takes time and if successful
+ * resets the item to a pre-possessed state
+ *
+ * Arguments:
+ * * exorcist: user who is attempting to remove the spirit
+ */
+/obj/item/soulstone/proc/attempt_exorcism(mob/exorcist)
+	if(IS_CULTIST(exorcist) || theme == THEME_HOLY)
 		return
-	balloon_alert(user, span_notice("exorcising [src]..."))
+	balloon_alert(exorcist, span_notice("exorcising [src]..."))
 	playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
-	if(!do_after(user, 4 SECONDS, target = src))
+	if(!do_after(exorcist, 4 SECONDS, target = src))
 		return
 	playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
 	required_role = null
@@ -41,8 +51,8 @@
 		mob_cultist.mind.remove_antag_datum(/datum/antagonist/cult)
 	for(var/mob/living/simple_animal/shade/sharded_shade in src)
 		sharded_shade.icon_state = "ghost1"
-		sharded_shade.name = "Purified [initial(EX.name)]"
-	user.visible_message(span_notice("[user] purifies [src]!"))
+		sharded_shade.name = "Purified [initial(sharded_shade.name)]"
+	exorcist.visible_message(span_notice("[exorcist] purifies [src]!"))
 	UnregisterSignal(src, COMSIG_BIBLE_SMACKED)
 
 /obj/item/soulstone/proc/role_check(mob/who)
@@ -211,15 +221,15 @@
 /obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/soulstone))
 		var/obj/item/soulstone/SS = O
-		if(!IS_CULTIST(user) && !IS_WIZARD(user) && !theme == THEME_HOLY)
+		if(!IS_CULTIST(user) && !IS_WIZARD(user) && !SS.theme == THEME_HOLY)
 			to_chat(user, span_danger("An overwhelming feeling of dread comes over you as you attempt to place [SS] into the shell. It would be wise to be rid of this quickly."))
 			user.Dizzy(30)
 			return
-		if(theme == THEME_HOLY && IS_CULTIST(user))
-			hot_potato(user)
+		if(SS.theme == THEME_HOLY && IS_CULTIST(user))
+			SS.hot_potato(user)
 			return
-		transfer_soul("CONSTRUCT",src,user)
-		was_used()
+		SS.transfer_soul("CONSTRUCT",src,user)
+		SS.was_used()
 	else
 		return ..()
 
