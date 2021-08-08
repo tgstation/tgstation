@@ -747,6 +747,7 @@
 #include "code\datums\elements\squashable.dm"
 #include "code\datums\elements\squish.dm"
 #include "code\datums\elements\strippable.dm"
+#include "code\datums\elements\subtype_picker.dm"
 #include "code\datums\elements\surgery_initiator.dm"
 #include "code\datums\elements\swabbable.dm"
 #include "code\datums\elements\tool_flash.dm"
