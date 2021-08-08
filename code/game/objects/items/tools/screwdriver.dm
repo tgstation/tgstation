@@ -72,7 +72,7 @@
 /obj/item/screwdriver/power
 	name = "hand drill"
 	desc = "A simple powered hand drill."
-	icon_state = "drill_screw"
+	icon_state = "drill"
 	inhand_icon_state = "drill"
 	worn_icon_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -92,6 +92,25 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 
+/obj/item/screwdriver/power/Initialize()
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		force_on = force, \
+		throwforce_on = throwforce, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		on_transform_callback = CALLBACK(src, .proc/after_transform))
+
+/*
+ * Callback for the transforming component.
+ *
+ * Toggles between crowbar and wirecutters and gives feedback to the user.
+ */
+/obj/item/screwdriver/power/proc/after_transform(mob/user, active)
+	tool_behaviour = (active ? TOOL_WRENCH : TOOL_SCREWDRIVER)
+	balloon_alert(user, "attached [active ? "bolt bit" : "screw bit"]")
+	playsound(user ? user : src, 'sound/items/change_drill.ogg', 50, TRUE)
+
 /obj/item/screwdriver/power/examine()
 	. = ..()
 	. += " It's fitted with a [tool_behaviour == TOOL_SCREWDRIVER ? "screw" : "bolt"] bit."
@@ -103,17 +122,6 @@
 		user.visible_message(span_suicide("[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/items/drill_use.ogg', 50, TRUE, -1)
 	return(BRUTELOSS)
-
-/obj/item/screwdriver/power/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_SCREWDRIVER)
-		tool_behaviour = TOOL_WRENCH
-		balloon_alert(user, "attached bolt bit")
-		icon_state = "drill_bolt"
-	else
-		tool_behaviour = TOOL_SCREWDRIVER
-		balloon_alert(user, "attached screw bit")
-		icon_state = "drill_screw"
 
 /obj/item/screwdriver/cyborg
 	name = "automated screwdriver"

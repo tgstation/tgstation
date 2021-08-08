@@ -833,7 +833,7 @@
 	user.changeNext_move(CLICK_CD_MELEE * 0.25)
 
 	balloon_alert(user, "[active ? "opened":"closed"] [src]")
-	playsound(user ? user : loc, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (is_open * 30000))
+	playsound(user ? user : src, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (is_open * 30000))
 
 //Dragon
 

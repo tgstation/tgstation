@@ -62,7 +62,7 @@
 /obj/item/crowbar/power
 	name = "jaws of life"
 	desc = "A set of jaws of life, compressed through the magic of science."
-	icon_state = "jaws_pry"
+	icon_state = "jaws"
 	inhand_icon_state = "jawsoflife"
 	worn_icon_state = "jawsoflife"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -73,10 +73,29 @@
 	toolspeed = 0.7
 	force_opens = TRUE
 
+/obj/item/crowbar/power/Initialize()
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		force_on = force, \
+		throwforce_on = throwforce, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		on_transform_callback = CALLBACK(src, .proc/after_transform))
+
+/*
+ * Callback for the transforming component.
+ *
+ * Toggles between crowbar and wirecutters and gives feedback to the user.
+ */
+/obj/item/crowbar/power/proc/after_transform(mob/user, active)
+	tool_behaviour = (active ? TOOL_WIRECUTTER : TOOL_CROWBAR)
+	balloon_alert(user, "attached [active ? "cutting" : "prying"]")
+	playsound(user ? user : src, 'sound/items/change_jaws.ogg', 50, TRUE)
+
 /obj/item/crowbar/power/syndicate
 	name = "Syndicate jaws of life"
 	desc = "A re-engineered copy of Nanotrasen's standard jaws of life. Can be used to force open airlocks in its crowbar configuration."
-	icon_state = "jaws_pry_syndie"
+	icon_state = "jaws_syndie"
 	toolspeed = 0.5
 	force_opens = TRUE
 
@@ -98,34 +117,6 @@
 				BP.drop_limb()
 				playsound(loc, "desecration", 50, TRUE, -1)
 	return (BRUTELOSS)
-
-/obj/item/crowbar/power/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_CROWBAR)
-		tool_behaviour = TOOL_WIRECUTTER
-		balloon_alert(user, "attached cutting jaws")
-		usesound = 'sound/items/jaws_cut.ogg'
-		update_appearance()
-
-	else
-		tool_behaviour = TOOL_CROWBAR
-		balloon_alert(user, "attached prying jaws")
-		usesound = 'sound/items/jaws_pry.ogg'
-		update_appearance()
-
-/obj/item/crowbar/power/update_icon_state()
-	if(tool_behaviour == TOOL_WIRECUTTER)
-		icon_state = "jaws_cutter"
-	else
-		icon_state = "jaws_pry"
-	return ..()
-
-/obj/item/crowbar/power/syndicate/update_icon_state()
-	if(tool_behaviour == TOOL_WIRECUTTER)
-		icon_state = "jaws_cutter_syndie"
-	else
-		icon_state = "jaws_pry_syndie"
-	return ..()
 
 /obj/item/crowbar/power/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && tool_behaviour == TOOL_WIRECUTTER)

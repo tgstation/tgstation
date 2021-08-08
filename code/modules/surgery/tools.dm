@@ -68,28 +68,35 @@
 	name = "searing tool"
 	desc = "It projects a high power laser used for medical applications."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "cautery_a"
+	icon_state = "e_cautery"
 	hitsound = 'sound/items/welder.ogg'
 	toolspeed = 0.7
 	light_system = MOVABLE_LIGHT
 	light_range = 1
 	light_color = COLOR_SOFT_RED
 
+/obj/item/cautery/advanced/Initialize()
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		force_on = force, \
+		throwforce_on = throwforce, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
-/obj/item/cautery/advanced/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/weapons/tap.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_CAUTERY)
-		tool_behaviour = TOOL_DRILL
-		balloon_alert(user, "lenses set to drill")
-		icon_state = "surgicaldrill_a"
-	else
-		tool_behaviour = TOOL_CAUTERY
-		balloon_alert(user, "lenses set to mend")
-		icon_state = "cautery_a"
+/*
+ * Callback for the transforming component.
+ *
+ * Toggles between drill and cautery and gives feedback to the user.
+ */
+/obj/item/cautery/advanced/proc/after_transform(mob/user, active)
+	tool_behaviour = (active ? TOOL_DRILL : TOOL_CAUTERY)
+	balloon_alert(user, "lenses set to [active ? "drill" : "mend"]")
+	playsound(user ? user : src, 'sound/weapons/tap.ogg', 50, TRUE)
 
 /obj/item/cautery/advanced/examine()
 	. = ..()
-	. += " It's set to [tool_behaviour == TOOL_CAUTERY ? "mending" : "drilling"] mode."
+	. += span_notice("It's set to [tool_behaviour == TOOL_CAUTERY ? "mending" : "drilling"] mode.")
 
 /obj/item/surgicaldrill
 	name = "surgical drill"
@@ -264,12 +271,10 @@
 	. = ..()
 	AddComponent(/datum/component/transforming, \
 		force_on = force + 1, \
-		throwforce_on = force, \
+		throwforce_on = throwforce, \
 		sharpness_on = sharpness, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
-		attack_verb_continuous_on = attack_verb_continuous, \
-		attack_verb_simple_on = attack_verb_simple, \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /*
@@ -278,7 +283,7 @@
  * Toggles between saw and scalpel and updates the light / gives feedback to the user.
  */
 /obj/item/scalpel/advanced/proc/after_transform(mob/user, active)
-	if(tool_behaviour == TOOL_SCALPEL)
+	if(active)
 		tool_behaviour = TOOL_SAW
 		set_light_range(2)
 	else
@@ -286,33 +291,41 @@
 		set_light_range(1)
 
 	balloon_alert(user, "[active ? "enabled" : "disabled"] bone-cutting mode")
-	playsound(user ? user : loc, 'sound/machines/click.ogg', 50, TRUE)
+	playsound(user ? user : src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/scalpel/advanced/examine()
 	. = ..()
-	. += " It's set to [tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw"] mode."
+	. += span_notice("It's set to [tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw"] mode.")
 
 /obj/item/retractor/advanced
 	name = "mechanical pinches"
 	desc = "An agglomerate of rods and gears."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "retractor_a"
+	icon_state = "adv_retractor"
 	toolspeed = 0.7
 
-/obj/item/retractor/advanced/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_RETRACTOR)
-		tool_behaviour = TOOL_HEMOSTAT
-		balloon_alert(user, "gears set to clamp")
-		icon_state = "hemostat_a"
-	else
-		tool_behaviour = TOOL_RETRACTOR
-		balloon_alert(user, "gears set to retract")
-		icon_state = "retractor_a"
+/obj/item/retractor/advanced/Initialize()
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		force_on = force, \
+		throwforce_on = throwforce, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		on_transform_callback = CALLBACK(src, .proc/after_transform))
+
+/*
+ * Callback for the transforming component.
+ *
+ * Toggles between retractor and hemostat and gives feedback to the user.
+ */
+/obj/item/retractor/advanced/proc/after_transform(mob/user, active)
+	tool_behaviour = (active ? TOOL_HEMOSTAT : TOOL_RETRACTOR)
+	balloon_alert(user, "gears set to [active ? "clamp" : "retract"]")
+	playsound(user ? user : src, 'sound/items/change_drill.ogg', 50, TRUE)
 
 /obj/item/retractor/advanced/examine()
 	. = ..()
-	. += " It resembles a [tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]."
+	. += span_notice("It resembles a [tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"].")
 
 /obj/item/shears
 	name = "amputation shears"

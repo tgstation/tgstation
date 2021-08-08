@@ -22,6 +22,10 @@
 	var/sharpness_on
 	/// Hitsound played when active
 	var/hitsound_on
+	/// List of the original continuous attack verbs the item has.
+	var/list/attack_verb_continuous_off
+	/// List of the original simple attack verbs the item has.
+	var/list/attack_verb_simple_off
 	/// List of continuous attack verbs used when the weapon is enabled
 	var/list/attack_verb_continuous_on
 	/// List of simple attack verbs used when the weapon is enabled
@@ -44,13 +48,15 @@
 		hitsound_on = 'sound/weapons/blade1.ogg',
 		w_class_on = WEIGHT_CLASS_BULKY,
 		clumsy_check = TRUE,
-		list/attack_verb_continuous_on = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"),
-		list/attack_verb_simple_on = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"),
+		list/attack_verb_continuous_on,
+		list/attack_verb_simple_on,
 		datum/callback/on_transform_callback,
 		)
 
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	var/obj/item/item_parent = parent
 
 	src.transform_cooldown_time = transform_cooldown_time
 	src.force_on = force_on
@@ -59,8 +65,14 @@
 	src.hitsound_on = hitsound_on
 	src.w_class_on = w_class_on
 	src.clumsy_check = clumsy_check
-	src.attack_verb_continuous_on = attack_verb_continuous_on
-	src.attack_verb_simple_on = attack_verb_simple_on
+
+	if(attack_verb_continuous_on)
+		src.attack_verb_continuous_on = attack_verb_continuous_on
+		attack_verb_continuous_off = item_parent.attack_verb_continuous
+	if(attack_verb_simple_on)
+		src.attack_verb_simple_on = attack_verb_simple_on
+		attack_verb_simple_off = item_parent.attack_verb_simple
+
 	src.on_transform_callback = on_transform_callback
 
 	if(start_transformed)
@@ -156,17 +168,19 @@
 /datum/component/transforming/proc/set_active(obj/item/source)
 	if(sharpness_on)
 		source.sharpness = sharpness_on
-	if(isnum(force_on))
+	if(force_on)
 		source.force = force_on + (source.sharpness ? sharpened_bonus : 0)
-	if(isnum(throwforce_on))
+	if(throwforce_on)
 		source.throwforce = throwforce_on + (source.sharpness ? sharpened_bonus : 0)
 		source.throw_speed = 4
 
-	source.hitsound = hitsound_on
-	source.attack_verb_continuous = attack_verb_continuous_on
-	source.attack_verb_simple = attack_verb_simple_on
-	source.w_class = w_class_on
+	if(attack_verb_continuous_on)
+		source.attack_verb_continuous = attack_verb_continuous_on
+	if(attack_verb_simple_on)
+		source.attack_verb_simple = attack_verb_simple_on
 
+	source.hitsound = hitsound_on
+	source.w_class = w_class_on
 	source.icon_state = "[source.icon_state]_on"
 
 /*
@@ -178,17 +192,19 @@
 /datum/component/transforming/proc/set_inactive(obj/item/source)
 	if(sharpness_on)
 		source.sharpness = initial(source.sharpness)
-	if(isnum(force_on))
+	if(force_on)
 		source.force = initial(source.force) + (source.sharpness ? sharpened_bonus : 0)
-	if(isnum(throwforce_on))
+	if(throwforce_on)
 		source.throwforce = initial(source.throwforce) + (source.sharpness ? sharpened_bonus : 0)
 		source.throw_speed = initial(source.throw_speed)
 
-	source.hitsound = initial(source.hitsound)
-	source.attack_verb_continuous = initial(source.attack_verb_continuous)
-	source.attack_verb_simple = initial(source.attack_verb_simple)
-	source.w_class = initial(source.w_class)
+	if(attack_verb_continuous_on)
+		source.attack_verb_continuous = attack_verb_continuous_off
+	if(attack_verb_simple_off)
+		source.attack_verb_simple = attack_verb_simple_off
 
+	source.hitsound = initial(source.hitsound)
+	source.w_class = initial(source.w_class)
 	source.icon_state = initial(source.icon_state)
 
 /*

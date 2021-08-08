@@ -402,7 +402,7 @@
 	extended = active
 	inhand_icon_state = active ? on_inhand_icon_state : null // When inactive, there is no inhand icon_state.
 	balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
-	playsound(user ? user : loc, on_sound, 50, TRUE)
+	playsound(user ? user : src, on_sound, 50, TRUE)
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton
 	name = "contractor baton"

@@ -21,6 +21,10 @@
 	var/active_force = 30
 	/// Throwforce while active.
 	var/active_throwforce = 20
+	/// Sharpness while active.
+	var/active_sharpness = SHARP_EDGED
+	/// Hitsound played attacking while active.
+	var/active_hitsound = 'sound/weapons/blade1.ogg'
 	/// Weight class while active.
 	var/active_w_class = WEIGHT_CLASS_BULKY
 	/// The heat given off when active.
@@ -29,7 +33,7 @@
 /obj/item/melee/energy/Initialize()
 	. = ..()
 	make_transformable()
-	AddComponent(/datum/component/butchering, _speed = 5 SECONDS, _butcher_sound = hitsound)
+	AddComponent(/datum/component/butchering, _speed = 5 SECONDS, _butcher_sound = active_hitsound)
 
 /obj/item/melee/energy/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -42,8 +46,11 @@
 	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
 		throwforce_on = active_throwforce, \
-		sharpness_on = SHARP_EDGED, \
+		sharpness_on = active_sharpness, \
+		hitsound_on = active_hitsound, \
 		w_class_on = active_w_class, \
+		attack_verb_continuous_on = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
+		attack_verb_simple_on = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"), \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /obj/item/melee/energy/suicide_act(mob/user)
@@ -98,7 +105,7 @@
 		STOP_PROCESSING(SSobj, src)
 
 	balloon_alert(user, "[name] [active ? "enabled":"disabled"]")
-	playsound(user ? user : loc, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
+	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
 	set_light_on(active)
 
 /// Energy axe - extremely strong.
@@ -129,10 +136,8 @@
 	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
 		throwforce_on = active_throwforce, \
-		sharpness_on = SHARP_EDGED, \
+		sharpness_on = sharpness, \
 		w_class_on = active_w_class, \
-		attack_verb_continuous_on = attack_verb_continuous, \
-		attack_verb_simple_on = attack_verb_simple, \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /obj/item/melee/energy/axe/suicide_act(mob/user)
