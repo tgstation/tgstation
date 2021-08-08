@@ -829,7 +829,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(!needs_heart())
 		return FALSE
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-	if(!heart || (heart.organ_flags & ORGAN_SYNTHETIC))
+	if(!heart)
 		return FALSE
 	return TRUE
 
