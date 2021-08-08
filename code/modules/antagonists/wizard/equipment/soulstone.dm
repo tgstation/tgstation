@@ -16,6 +16,35 @@
 	/// Role check, if any needed
 	var/required_role = /datum/antagonist/cult
 
+/obj/item/soulstone/Initialize()
+	. = ..()
+	if(theme != THEME_HOLY)
+		RegisterSignal(src, COMSIG_BIBLE_SMACKED, .proc/on_bible_smacked)
+
+///signal called whenever a soulstone is smacked by a bible
+/obj/item/soulstone/proc/on_bible_smacked(datum/source, mob/living/user, direction)
+	SIGNAL_HANDLER
+	if(IS_CULTIST(user) || theme == THEME_HOLY)
+		return
+	balloon_alert(user, span_notice("exorcising [src]..."))
+	playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
+	if(!do_after(user, 4 SECONDS, target = src))
+		return
+	playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
+	required_role = null
+	theme = THEME_HOLY
+	icon_state = "purified_soulstone"
+	for(var/mob/mob_cultist in contents)
+		if(mob_cultist.mind)
+			continue
+		icon_state = "purified_soulstone2"
+		mob_cultist.mind.remove_antag_datum(/datum/antagonist/cult)
+	for(var/mob/living/simple_animal/shade/sharded_shade in src)
+		sharded_shade.icon_state = "ghost1"
+		sharded_shade.name = "Purified [initial(EX.name)]"
+	user.visible_message(span_notice("[user] purifies [src]!"))
+	UnregisterSignal(src, COMSIG_BIBLE_SMACKED)
+
 /obj/item/soulstone/proc/role_check(mob/who)
 	return required_role ? (who.mind && who.mind.has_antag_datum(required_role, TRUE)) : TRUE
 
@@ -182,15 +211,15 @@
 /obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/soulstone))
 		var/obj/item/soulstone/SS = O
-		if(!IS_CULTIST(user) && !IS_WIZARD(user) && !SS.theme == THEME_HOLY)
+		if(!IS_CULTIST(user) && !IS_WIZARD(user) && !theme == THEME_HOLY)
 			to_chat(user, span_danger("An overwhelming feeling of dread comes over you as you attempt to place [SS] into the shell. It would be wise to be rid of this quickly."))
 			user.Dizzy(30)
 			return
-		if(SS.theme == THEME_HOLY && IS_CULTIST(user))
-			SS.hot_potato(user)
+		if(theme == THEME_HOLY && IS_CULTIST(user))
+			hot_potato(user)
 			return
-		SS.transfer_soul("CONSTRUCT",src,user)
-		SS.was_used()
+		transfer_soul("CONSTRUCT",src,user)
+		was_used()
 	else
 		return ..()
 
