@@ -272,6 +272,7 @@
 	AddComponent(/datum/component/transforming, \
 		force_on = force + 1, \
 		throwforce_on = throwforce, \
+		throw_speed_on = throw_speed, \
 		sharpness_on = sharpness, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \

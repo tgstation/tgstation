@@ -76,6 +76,7 @@
 
 /obj/item/melee/energy/sword/bananium/make_transformable()
 	AddComponent(/datum/component/transforming, \
+		throw_speed_on = 4, \
 		attack_verb_continuous_on = list("slips"), \
 		attack_verb_simple_on = list("slip"), \
 		clumsy_check = FALSE, \
@@ -127,42 +128,39 @@
 /obj/item/shield/energy/bananium
 	name = "bananium energy shield"
 	desc = "A shield that stops most melee attacks, protects user from almost all energy projectiles, and can be thrown to slip opponents."
+	icon_state = "bananaeshield"
 	throw_speed = 1
-	clumsy_check = 0
-	base_icon_state = "bananaeshield"
 	force = 0
 	throwforce = 0
 	throw_range = 5
-	on_force = 0
-	on_throwforce = 0
-	on_throw_speed = 1
 
-/obj/item/shield/energy/bananium/Initialize()
+	active_force = 0
+	active_throwforce = 0
+	active_throw_speed = 1
+	can_clumsy_use = TRUE
+
+/obj/item/shield/energy/bananium/after_transform(mob/user, active)
 	. = ..()
 	adjust_slipperiness()
 
-/* Adds or removes a slippery component, depending on whether the shield
- * is active or not.
+/*
+ * Adds or removes a slippery component, depending on whether the shield is active or not.
  */
 /obj/item/shield/energy/bananium/proc/adjust_slipperiness()
-	if(active)
+	if(enabled)
 		AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
 	else
 		qdel(GetComponent(/datum/component/slippery))
 
-/obj/item/shield/energy/bananium/attack_self(mob/living/carbon/human/user)
-	. = ..()
-	adjust_slipperiness()
-
 /obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
-	if(active)
+	if(enabled)
 		if(iscarbon(thrower))
 			var/mob/living/carbon/C = thrower
 			C.throw_mode_on(THROW_MODE_TOGGLE) //so they can catch it on the return.
 	return ..()
 
 /obj/item/shield/energy/bananium/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(active)
+	if(enabled)
 		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
 		if(iscarbon(hit_atom) && !caught)//if they are a carbon and they didn't catch it
 			var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)

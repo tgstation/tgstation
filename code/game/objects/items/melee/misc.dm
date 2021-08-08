@@ -409,6 +409,7 @@
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "contractor_baton"
+	worn_icon_state = "contractor_baton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
@@ -556,8 +557,8 @@
 /obj/item/melee/roastingstick
 	name = "advanced roasting stick"
 	desc = "A telescopic roasting stick with a miniature shield generator designed to ensure entry into various high-tech shielded cooking ovens and firepits."
-	icon_state = "roastingstick_0"
-	inhand_icon_state = "null"
+	icon_state = "roastingstick"
+	inhand_icon_state = null
 	worn_icon_state = "tele_baton"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
@@ -565,33 +566,51 @@
 	force = 0
 	attack_verb_continuous = list("hits", "pokes")
 	attack_verb_simple = list("hit", "poke")
+	/// The sausage attatched to our stick.
 	var/obj/item/food/sausage/held_sausage
+	/// Static list of things our roasting stick can interact with.
 	var/static/list/ovens
-	var/on = FALSE
+	/// The beam that links to the oven we use
 	var/datum/beam/beam
+	/// Whether or stick is extended and can recieve sausage
+	var/extended = FALSE
 
 /obj/item/melee/roastingstick/Initialize()
 	. = ..()
 	if (!ovens)
 		ovens = typecacheof(list(/obj/singularity, /obj/energy_ball, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire))
+	AddComponent(/datum/component/transforming, \
+		hitsound_on = hitsound, \
+		pre_transform_callback = CALLBACK(src, .proc/attempt_transform), \
+		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
-/obj/item/melee/roastingstick/attack_self(mob/user)
-	on = !on
-	if(on)
-		extend(user)
-	else
-		if (held_sausage)
-			to_chat(user, span_warning("You can't retract [src] while [held_sausage] is attached!"))
-			return
-		retract(user)
+/*
+ * Callback for the transforming component.
+ *
+ * If there is a sausage attached, returns FALSE, blocking the user from transforming the stick.
+ */
+/obj/item/melee/roastingstick/proc/attempt_transform(mob/user, active)
+	if(held_sausage)
+		to_chat(user, span_warning("You can't retract [src] while [held_sausage] is attached!"))
+		return FALSE
 
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
-	add_fingerprint(user)
+	return TRUE
+
+/*
+ * Callback for the transforming component.
+ *
+ * Gives feedback on stick extension.
+ */
+/obj/item/melee/roastingstick/proc/after_transform(mob/user, active)
+	extended = active
+	inhand_icon_state = active ? "nullrod" : null
+	balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
+	playsound(user ? user : src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
 /obj/item/melee/roastingstick/attackby(atom/target, mob/user)
 	..()
 	if (istype(target, /obj/item/food/sausage))
-		if (!on)
+		if (!extended)
 			to_chat(user, span_warning("You must extend [src] to attach anything to it!"))
 			return
 		if (held_sausage)
@@ -615,18 +634,6 @@
 	if(held_sausage)
 		. += mutable_appearance(icon, "roastingstick_sausage")
 
-/obj/item/melee/roastingstick/proc/extend(user)
-	to_chat(user, span_warning("You extend [src]."))
-	icon_state = "roastingstick_1"
-	inhand_icon_state = "nullrod"
-	w_class = WEIGHT_CLASS_BULKY
-
-/obj/item/melee/roastingstick/proc/retract(user)
-	to_chat(user, span_notice("You collapse [src]."))
-	icon_state = "roastingstick_0"
-	inhand_icon_state = null
-	w_class = WEIGHT_CLASS_SMALL
-
 /obj/item/melee/roastingstick/handle_atom_del(atom/target)
 	if (target == held_sausage)
 		held_sausage = null
@@ -634,7 +641,7 @@
 
 /obj/item/melee/roastingstick/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	if (!on)
+	if (!extended)
 		return
 	if (is_type_in_typecache(target, ovens))
 		if (held_sausage?.roasted)

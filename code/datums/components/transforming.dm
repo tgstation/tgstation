@@ -16,6 +16,8 @@
 	var/force_on
 	/// Throwforce of the weapon when active
 	var/throwforce_on
+	/// Throw speed of the weapon when active
+	var/throw_speed_on
 	/// Weight class of the weapon when active
 	var/w_class_on
 	/// The sharpness of the weapon when active
@@ -34,6 +36,8 @@
 	var/clumsy_check
 	/// If we get sharpened with a whetstone, save the bonus here for later use if we un/redeploy
 	var/sharpened_bonus = 0
+	/// Callback to be invoked before the weapon is transformed. Return FALSE from this to stop the transform action.
+	var/datum/callback/pre_transform_callback
 	/// Callback to be invoked whenever the weapon is transformed.
 	var/datum/callback/on_transform_callback
 	/// Cooldown in between transforms
@@ -44,12 +48,14 @@
 		transform_cooldown_time = 0 SECONDS,
 		force_on = 0,
 		throwforce_on = 0,
+		throw_speed_on = 2,
 		sharpness_on = NONE,
 		hitsound_on = 'sound/weapons/blade1.ogg',
 		w_class_on = WEIGHT_CLASS_BULKY,
 		clumsy_check = TRUE,
 		list/attack_verb_continuous_on,
 		list/attack_verb_simple_on,
+		datum/callback/pre_transform_callback,
 		datum/callback/on_transform_callback,
 		)
 
@@ -61,6 +67,7 @@
 	src.transform_cooldown_time = transform_cooldown_time
 	src.force_on = force_on
 	src.throwforce_on = throwforce_on
+	src.throw_speed_on = throw_speed_on
 	src.sharpness_on = sharpness_on
 	src.hitsound_on = hitsound_on
 	src.w_class_on = w_class_on
@@ -73,6 +80,7 @@
 		src.attack_verb_simple_on = attack_verb_simple_on
 		attack_verb_simple_off = item_parent.attack_verb_simple
 
+	src.pre_transform_callback = pre_transform_callback
 	src.on_transform_callback = on_transform_callback
 
 	if(start_transformed)
@@ -108,6 +116,10 @@
 	if(!COOLDOWN_FINISHED(src, transform_cooldown))
 		to_chat(user, span_warning("Wait a bit before trying to use [source] again!"))
 		return
+
+	if(pre_transform_callback)
+		if(!pre_transform_callback.Invoke(user))
+			return
 
 	if(do_transform_weapon(source, user))
 		clumsy_transform_effect(user)
@@ -172,7 +184,8 @@
 		source.force = force_on + (source.sharpness ? sharpened_bonus : 0)
 	if(throwforce_on)
 		source.throwforce = throwforce_on + (source.sharpness ? sharpened_bonus : 0)
-		source.throw_speed = 4
+	if(throw_speed_on)
+		source.throw_speed = throw_speed_on
 
 	if(attack_verb_continuous_on)
 		source.attack_verb_continuous = attack_verb_continuous_on
@@ -196,6 +209,7 @@
 		source.force = initial(source.force) + (source.sharpness ? sharpened_bonus : 0)
 	if(throwforce_on)
 		source.throwforce = initial(source.throwforce) + (source.sharpness ? sharpened_bonus : 0)
+	if(throw_speed_on)
 		source.throw_speed = initial(source.throw_speed)
 
 	if(attack_verb_continuous_on)

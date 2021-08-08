@@ -375,6 +375,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		start_transformed = start_extended, \
 		force_on = 20, \
 		throwforce_on = 23, \
+		throw_speed_on = throw_speed, \
 		sharpness_on = SHARP_EDGED, \
 		hitsound_on = 'sound/weapons/bladeslice.ogg', \
 		w_class_on = WEIGHT_CLASS_NORMAL, \

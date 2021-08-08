@@ -82,7 +82,7 @@
 	name = "combat wrench"
 	desc = "It's like a normal wrench but edgier. Can be found on the battlefield."
 	icon_state = "wrench_combat"
-	inhand_icon_state = "wrench_combat"
+	belt_icon_state = "wrench_combat"
 	attack_verb_continuous = list("devastates", "brutalizes", "commits a war crime against", "obliterates", "humiliates")
 	attack_verb_simple = list("devastate", "brutalize", "commit a war crime against", "obliterate", "humiliate")
 	tool_behaviour = null
@@ -90,7 +90,6 @@
 
 /obj/item/wrench/combat/Initialize()
 	. = ..()
-	//AddElement(/datum/element/update_icon_updates_onmob) // MELBERT TODO; Test
 	AddComponent(/datum/component/transforming, \
 		force_on = 6, \
 		throwforce_on = 8, \

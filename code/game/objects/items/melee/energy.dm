@@ -46,6 +46,7 @@
 	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
 		throwforce_on = active_throwforce, \
+		throw_speed_on = 4, \
 		sharpness_on = active_sharpness, \
 		hitsound_on = active_hitsound, \
 		w_class_on = active_w_class, \
@@ -136,6 +137,7 @@
 	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
 		throwforce_on = active_throwforce, \
+		throw_speed_on = throw_speed, \
 		sharpness_on = sharpness, \
 		w_class_on = active_w_class, \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
