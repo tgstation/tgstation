@@ -1,5 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes: 
-  - bugfix: "Adds a missing wall on CentCom in the supplypod facility"
-  - bugfix: "Most if not all CentCom windows should now be on plating"

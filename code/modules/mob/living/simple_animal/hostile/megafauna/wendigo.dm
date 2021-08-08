@@ -95,7 +95,7 @@ Difficulty: Hard
 	starting = get_turf(src)
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/OpenFire()
-	SetRecoveryTime(10 SECONDS)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 10 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 10 SECONDS))
 	if(WENDIGO_ENRAGED)
 		speed = 4
 		move_to_delay = 4
@@ -164,7 +164,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/heavy_stomp()
 	can_move = FALSE
 	wendigo_slam(src, 5, 3 - WENDIGO_ENRAGED, 8)
-	SetRecoveryTime(0 SECONDS)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 0 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 0 SECONDS))
 	can_move = TRUE
 
 /// Teleports to a location 4 turfs away from the enemy in view
@@ -185,7 +185,7 @@ Difficulty: Hard
 			if(target)
 				shockwave.original = target
 			shockwave.fire()
-	SetRecoveryTime(0 SECONDS)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 0 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 0 SECONDS))
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/teleport(range = 6)
 	var/list/possible_ends = view(range, target.loc) - view(range - 1, target.loc)
@@ -209,7 +209,7 @@ Difficulty: Hard
 		to_chat(dizzy_target, span_danger("The wendigo screams loudly!"))
 	SLEEP_CHECK_DEATH(1 SECONDS)
 	spiral_attack()
-	SetRecoveryTime(3 SECONDS)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 3 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 3 SECONDS))
 	SLEEP_CHECK_DEATH(3 SECONDS)
 	can_move = TRUE
 

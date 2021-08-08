@@ -1,3 +1,7 @@
+#define COMP_LOGIC_AND "AND"
+#define COMP_LOGIC_OR "OR"
+#define COMP_LOGIC_XOR "XOR"
+
 /**
  * # Logic Component
  *
@@ -47,3 +51,7 @@
 			return FALSE
 		if(.)
 			return TRUE
+
+#undef COMP_LOGIC_AND
+#undef COMP_LOGIC_OR
+#undef COMP_LOGIC_XOR

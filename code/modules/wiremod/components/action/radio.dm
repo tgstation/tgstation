@@ -1,3 +1,6 @@
+#define COMP_RADIO_PUBLIC "public"
+#define COMP_RADIO_PRIVATE "private"
+
 /**
  * # Radio Component
  *
@@ -66,3 +69,6 @@
 		return
 
 	trigger_output.set_output(COMPONENT_SIGNAL)
+
+#undef COMP_RADIO_PUBLIC
+#undef COMP_RADIO_PRIVATE

@@ -1,3 +1,7 @@
+#define COMP_PROC_GLOBAL "Global"
+#define COMP_PROC_OBJECT "Object"
+
+
 /**
  * # Proc Call Component
  *
@@ -63,3 +67,6 @@
 	GLOB.AdminProcCaller = null
 
 	output_value.set_output(result)
+
+#undef COMP_PROC_GLOBAL
+#undef COMP_PROC_OBJECT

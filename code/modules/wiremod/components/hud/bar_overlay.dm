@@ -1,3 +1,6 @@
+#define COMP_BAR_OVERLAY_VERTICAL "Vertical"
+#define COMP_BAR_OVERLAY_HORIZONTAL "Horizontal"
+
 /**
  * # Bar Overlay Component
  *
@@ -54,3 +57,6 @@
 		cool_overlay,
 		owner,
 	))
+
+#undef COMP_BAR_OVERLAY_VERTICAL
+#undef COMP_BAR_OVERLAY_HORIZONTAL

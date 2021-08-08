@@ -1,3 +1,6 @@
+#define COMP_TEXT_LOWER "To Lower"
+#define COMP_TEXT_UPPER "To Upper"
+
 /**
  * # Text Component
  *
@@ -47,3 +50,5 @@
 
 	output.set_output(result)
 
+#undef COMP_TEXT_LOWER
+#undef COMP_TEXT_UPPER
