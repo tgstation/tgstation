@@ -699,6 +699,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 		else
 			custom_names[name_id] = sanitized_name
 
+// MOTHBLOCKS TODO: Move to /datum/asset/json
 /proc/generate_preferences_species_data()
 	var/list/food_flags = FOOD_FLAGS
 	var/list/species_data = list()

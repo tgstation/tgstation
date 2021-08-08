@@ -41,20 +41,11 @@
 
 	moth_body.Blend(icon('icons/mob/moth_wings.dmi', "m_moth_wings_plain_BEHIND"), ICON_OVERLAY)
 
-	var/list/body_parts_with_markings = list(
+	var/list/body_parts = list(
 		BODY_ZONE_HEAD,
 		BODY_ZONE_CHEST,
 		BODY_ZONE_L_ARM,
 		BODY_ZONE_R_ARM,
-		// MOTHBLOCKS TODO: Don't need the legs, who cares
-		BODY_ZONE_L_LEG,
-		BODY_ZONE_R_LEG,
-	)
-
-	// MOTHBLOCKS TODO: Hands aren't necessary
-	var/list/body_parts = body_parts_with_markings + list(
-		BODY_ZONE_PRECISE_L_HAND,
-		BODY_ZONE_PRECISE_R_HAND,
 	)
 
 	for (var/body_part in body_parts)
@@ -68,7 +59,7 @@
 		var/icon/icon_with_markings = new(moth_body)
 
 		if (markings_name != "None")
-			for (var/body_part in body_parts_with_markings)
+			for (var/body_part in body_parts)
 				var/icon/body_part_icon = icon(markings.icon, "[markings.icon_state]_[body_part]")
 				body_part_icon.Crop(1, 1, 32, 32)
 				icon_with_markings.Blend(body_part_icon, ICON_OVERLAY)

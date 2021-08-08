@@ -24,6 +24,8 @@ export enum FeatureScope {
 type FeatureValue<T, U = T>
   = (featureProps: FeatureValueProps<T, U>) => JSX.Element;
 
+// MOTHBLOCKS TODO: Replace with real HoC's. Create them once on constructor
+// and pass in the value as a prop to the created element.
 type FeatureValueProps<T, U = T> = {
   act: typeof sendAct,
   featureId: string,
