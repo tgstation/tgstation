@@ -206,7 +206,6 @@
 		"comp_delay",
 		"comp_direction",
 		"comp_get_column",
-		"comp_get_hid",
 		"comp_gps",
 		"comp_health",
 		"comp_hear",
