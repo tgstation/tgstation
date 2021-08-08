@@ -1,12 +1,12 @@
-name: "PR Title Emoji Strip"
+name: PR title emoji
 on:
   pull_request:
     types: [opened, edited]
 
 jobs:
-  emoji_strip:
+  stripper:
     runs-on: ubuntu-20.04
     steps:
-    - uses: Wayland-Smithy/emoji-stripper-action@785a767ae8a5519af99d331b54c7c15a35bba184
+    - uses: Wayland-Smithy/emoji-stripper-action@9c788a6f42dddb57482770cb2ba4858a9b8fa84e
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
