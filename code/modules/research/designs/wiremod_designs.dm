@@ -238,11 +238,6 @@
 	id = "comp_module"
 	build_path = /obj/item/circuit_component/module
 
-/datum/design/component/get_hid
-	name = "HID Request Component"
-	id = "comp_get_hid"
-	build_path = /obj/item/circuit_component/get_hid
-
 /datum/design/component/ntnet_receive
 	name = "Pressure NTNet Transmitter"
 	id = "comp_ntnet_receive"
