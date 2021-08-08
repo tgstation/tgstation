@@ -231,8 +231,6 @@
 
 /*
  * Callback for the transforming component.
- *
- *
  */
 /obj/item/shield/energy/proc/after_transform(mob/user, active)
 	enabled = active
@@ -277,7 +275,7 @@
 /*
  * Callback for the transforming component.
  *
- * Allows it to be placed on back
+ * Allows it to be placed on back slot when active.
  */
 /obj/item/shield/riot/tele/proc/after_transform(mob/user, active)
 	extended = active
