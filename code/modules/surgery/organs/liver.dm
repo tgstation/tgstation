@@ -54,7 +54,7 @@
 		if(HAS_TRAIT(src, TRAIT_CULINARY_METABOLISM))
 			. += "The high iron content and slight smell of garlic, implies that this is the liver of a <em>cook</em>."
 		if(HAS_TRAIT(src, TRAIT_COMEDY_METABOLISM))
-			. += "A smell of bananas, a slippery sheen and <span class='clown'>honking</span> when depressed, implies that this is the liver of a <em>clown</em>."
+			. += "A smell of bananas, a slippery sheen and [span_clown("honking")] when depressed, implies that this is the liver of a <em>clown</em>."
 		if(HAS_TRAIT(src, TRAIT_MEDICAL_METABOLISM))
 			. += "Marks of stress and a faint whiff of medicinal alcohol, imply that this is the liver of a <em>medical worker</em>."
 		if(HAS_TRAIT(src, TRAIT_GREYTIDE_METABOLISM))
@@ -75,31 +75,31 @@
 #define HAS_PAINFUL_TOXIN 2
 
 /obj/item/organ/liver/on_life(delta_time, times_fired)
-	var/mob/living/carbon/C = owner
+	var/mob/living/carbon/liver_owner = owner
 	..() //perform general on_life()
-	if(istype(C))
-		if(!(organ_flags & ORGAN_FAILING) && !HAS_TRAIT(C, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
+	if(istype(liver_owner))
+		if(!(organ_flags & ORGAN_FAILING) && !HAS_TRAIT(liver_owner, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
 
 			var/provide_pain_message = HAS_NO_TOXIN
-			var/obj/belly = C.getorganslot(ORGAN_SLOT_STOMACH)
+			var/obj/belly = liver_owner.getorganslot(ORGAN_SLOT_STOMACH)
 			if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
 				//handle liver toxin filtration
-				for(var/datum/reagent/toxin/T in C.reagents.reagent_list)
-					var/thisamount = C.reagents.get_reagent_amount(T.type)
+				for(var/datum/reagent/toxin/toxin in liver_owner.reagents.reagent_list)
+					var/thisamount = liver_owner.reagents.get_reagent_amount(toxin.type)
 					if(belly)
-						thisamount += belly.reagents.get_reagent_amount(T.type)
+						thisamount += belly.reagents.get_reagent_amount(toxin.type)
 					if (thisamount && thisamount <= toxTolerance * (maxHealth - damage) / maxHealth ) //toxTolerance is effectively multiplied by the % that your liver's health is at
-						C.reagents.remove_reagent(T.type, 0.5 * delta_time)
+						liver_owner.reagents.remove_reagent(toxin.type, 0.5 * delta_time)
 					else
 						damage += (thisamount * toxLethality * delta_time)
 						if(provide_pain_message != HAS_PAINFUL_TOXIN)
-							provide_pain_message = T.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
+							provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
 
 			//metabolize reagents
-			C.reagents.metabolize(C, delta_time, times_fired, can_overdose=TRUE)
+			liver_owner.reagents.metabolize(liver_owner, delta_time, times_fired, can_overdose=TRUE)
 
 			if(provide_pain_message && damage > 10 && DT_PROB(damage/6, delta_time)) //the higher the damage the higher the probability
-				to_chat(C, "<span class='warning'>You feel a dull pain in your abdomen.</span>")
+				to_chat(liver_owner, span_warning("You feel a dull pain in your abdomen."))
 
 
 	if(damage > maxHealth)//cap liver damage
@@ -170,11 +170,11 @@
 		return
 	switch(failure_time)
 		if(0 to 3 * LIVER_FAILURE_STAGE_SECONDS - 1)
-			examine_list += "<span class='notice'>[owner]'s eyes are slightly yellow.</span>"
+			examine_list += span_notice("[owner]'s eyes are slightly yellow.")
 		if(3 * LIVER_FAILURE_STAGE_SECONDS to 4 * LIVER_FAILURE_STAGE_SECONDS - 1)
-			examine_list += "<span class='notice'>[owner]'s eyes are completely yellow, and he is visibly suffering.</span>"
+			examine_list += span_notice("[owner]'s eyes are completely yellow, and he is visibly suffering.")
 		if(4 * LIVER_FAILURE_STAGE_SECONDS to INFINITY)
-			examine_list += "<span class='danger'>[owner]'s eyes are completely yellow and swelling with pus. [owner.p_they()] don't look like they will be alive for much longer.</span>"
+			examine_list += span_danger("[owner]'s eyes are completely yellow and swelling with pus. [owner.p_they()] don't look like they will be alive for much longer.")
 
 /obj/item/organ/liver/on_death(delta_time, times_fired)
 	. = ..()
@@ -187,17 +187,16 @@
 		CRASH("on_death() called for [src] ([type]) with not-dead owner ([owner])")
 	if((organ_flags & ORGAN_FAILING) && HAS_TRAIT(carbon_owner, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
 		return
-	for(var/reagent in carbon_owner.reagents.reagent_list)
-		var/datum/reagent/R = reagent
-		R.on_mob_dead(carbon_owner, delta_time)
+	for(var/datum/reagent/chem as anything in carbon_owner.reagents.reagent_list)
+		chem.on_mob_dead(carbon_owner, delta_time)
 
 #undef HAS_SILENT_TOXIN
 #undef HAS_NO_TOXIN
 #undef HAS_PAINFUL_TOXIN
 #undef LIVER_FAILURE_STAGE_SECONDS
 
-/obj/item/organ/liver/get_availability(datum/species/S)
-	return !(TRAIT_NOMETABOLISM in S.inherent_traits)
+/obj/item/organ/liver/get_availability(datum/species/species)
+	return !(TRAIT_NOMETABOLISM in species.inherent_traits)
 
 /obj/item/organ/liver/plasmaman
 	name = "reagent processing crystal"

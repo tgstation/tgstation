@@ -69,6 +69,22 @@
 	var/last_spark = 0
 	var/datum/effect_system/spark_spread/spark_system
 
+/obj/machinery/sparker/directional/north
+	dir = SOUTH
+	pixel_y = 26
+
+/obj/machinery/sparker/directional/south
+	dir = NORTH
+	pixel_y = -26
+
+/obj/machinery/sparker/directional/east
+	dir = WEST
+	pixel_x = 26
+
+/obj/machinery/sparker/directional/west
+	dir = EAST
+	pixel_x = -26
+
 /obj/machinery/sparker/toxmix
 	id = INCINERATOR_TOXMIX_IGNITER
 
@@ -99,9 +115,9 @@
 		add_fingerprint(user)
 		disable = !disable
 		if (disable)
-			user.visible_message("<span class='notice'>[user] disables \the [src]!</span>", "<span class='notice'>You disable the connection to \the [src].</span>")
+			user.visible_message(span_notice("[user] disables \the [src]!"), span_notice("You disable the connection to \the [src]."))
 		if (!disable)
-			user.visible_message("<span class='notice'>[user] reconnects \the [src]!</span>", "<span class='notice'>You fix the connection to \the [src].</span>")
+			user.visible_message(span_notice("[user] reconnects \the [src]!"), span_notice("You fix the connection to \the [src]."))
 		update_appearance()
 	else
 		return ..()

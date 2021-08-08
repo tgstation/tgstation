@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/retaliate/frog
 	name = "frog"
-	desc = "It seems a little sad."
+	desc = "They seem a little sad."
 	icon_state = "frog"
 	icon_living = "frog"
 	icon_dead = "frog_dead"
@@ -37,14 +37,19 @@
 
 	if(prob(1))
 		name = "rare frog"
-		desc = "It seems a little smug."
+		desc = "They seem a little smug."
 		icon_state = "rare_frog"
 		icon_living = "rare_frog"
 		icon_dead = "rare_frog_dead"
 		butcher_results = list(/obj/item/food/nugget = 5)
 
-/mob/living/simple_animal/hostile/retaliate/frog/Crossed(AM as mob|obj)
-	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/mob/living/simple_animal/hostile/retaliate/frog/proc/on_entered(datum/source, AM as mob|obj)
+	SIGNAL_HANDLER
 	if(!stat && isliving(AM))
 		var/mob/living/L = AM
 		if(L.mob_size > MOB_SIZE_TINY)

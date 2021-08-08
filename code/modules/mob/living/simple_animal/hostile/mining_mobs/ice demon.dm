@@ -38,11 +38,14 @@
 	deathmessage = "fades as the energies that tied it to this world dissipate."
 	deathsound = 'sound/magic/demon_dies.ogg'
 	stat_attack = HARD_CRIT
-	is_flying_animal = TRUE
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
 	/// Distance the demon will teleport from the target
 	var/teleport_distance = 3
+
+/mob/living/simple_animal/hostile/asteroid/ice_demon/Initialize()
+	. = ..()
+	AddElement(/datum/element/simple_flying)
 
 /obj/projectile/temp/basilisk/ice
 	name = "ice blast"

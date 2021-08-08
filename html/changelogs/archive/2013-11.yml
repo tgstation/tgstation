@@ -1,0 +1,23 @@
+2013-11-17:
+  Laharl Montgommery:
+  - rscadd: AI can now anchor and unanchor itself. In short, it means the AI can be
+      dragged, if it wants to.
+2013-11-27:
+  RobRichards:
+  - rscadd: Nanotrasen surgeons are now certified to perform Limb replacements, The
+      robotic parts used in construction of Nanotrasen Cyborgs are the only parts
+      authorized for crew augmentation, these replacement limbs can be repaired with
+      standard welding tools and cables.
+2013-11-28:
+  Malkevin:
+  - tweak: Made the suit storage on the Captain's Tunic more useful than just a place
+      to store your e-o2 tank. You can now store the nuke disk, stamps, medal box,
+      flashes and melee weapons (mainly intended for the Chain of Command), and of
+      course - smoking paraphernalia
+2013-11-30:
+  Yota:
+  - tweak: The identification console will now require that ID and job names follow
+      the same restrictions as player names.
+  - bugfix: NTSL scripts and parrots should now handle apostrophes and such properly.  It&amp;#39;s
+      about time.
+  - bugfix: NTSL scripts now have a better sense of time.

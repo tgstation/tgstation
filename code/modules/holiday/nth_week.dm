@@ -67,7 +67,7 @@
 	return pick("Stout","Porter","Lager","Ale","Malt","Bock","Doppelbock","Hefeweizen","Pilsner","IPA","Lite") //I'm sorry for the last one
 
 /datum/holiday/nth_week/moth
-	name = "Moth Week"
+	name = MOTH_WEEK
 	begin_week = 3
 	end_week = 4
 	begin_month = JULY

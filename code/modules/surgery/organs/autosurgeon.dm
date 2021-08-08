@@ -32,20 +32,20 @@
 	if(starting_organ)
 		insert_organ(new starting_organ(src))
 
-/obj/item/autosurgeon/organ/proc/insert_organ(obj/item/I)
-	storedorgan = I
-	I.forceMove(src)
+/obj/item/autosurgeon/organ/proc/insert_organ(obj/item/item)
+	storedorgan = item
+	item.forceMove(src)
 	name = "[initial(name)] ([storedorgan.name])"
 
 /obj/item/autosurgeon/organ/attack_self(mob/user)//when the object it used...
 	if(!uses)
-		to_chat(user, "<span class='alert'>[src] has already been used. The tools are dull and won't reactivate.</span>")
+		to_chat(user, span_alert("[src] has already been used. The tools are dull and won't reactivate."))
 		return
 	else if(!storedorgan)
-		to_chat(user, "<span class='alert'>[src] currently has no implant stored.</span>")
+		to_chat(user, span_alert("[src] currently has no implant stored."))
 		return
 	storedorgan.Insert(user)//insert stored organ into the user
-	user.visible_message("<span class='notice'>[user] presses a button on [src], and you hear a short mechanical noise.</span>", "<span class='notice'>You feel a sharp sting as [src] plunges into your body.</span>")
+	user.visible_message(span_notice("[user] presses a button on [src], and you hear a short mechanical noise."), span_notice("You feel a sharp sting as [src] plunges into your body."))
 	playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, TRUE)
 	storedorgan = null
 	name = initial(name)
@@ -54,34 +54,33 @@
 	if(!uses)
 		desc = "[initial(desc)] Looks like it's been used up."
 
-/obj/item/autosurgeon/organ/attackby(obj/item/I, mob/user, params)
-	if(istype(I, organ_type))
+/obj/item/autosurgeon/organ/attackby(obj/item/weapon, mob/user, params)
+	if(istype(weapon, organ_type))
 		if(storedorgan)
-			to_chat(user, "<span class='alert'>[src] already has an implant stored.</span>")
+			to_chat(user, span_alert("[src] already has an implant stored."))
 			return
 		else if(!uses)
-			to_chat(user, "<span class='alert'>[src] has already been used up.</span>")
+			to_chat(user, span_alert("[src] has already been used up."))
 			return
-		if(!user.transferItemToLoc(I, src))
+		if(!user.transferItemToLoc(weapon, src))
 			return
-		storedorgan = I
-		to_chat(user, "<span class='notice'>You insert the [I] into [src].</span>")
+		storedorgan = weapon
+		to_chat(user, span_notice("You insert the [weapon] into [src]."))
 	else
 		return ..()
 
-/obj/item/autosurgeon/organ/screwdriver_act(mob/living/user, obj/item/I)
+/obj/item/autosurgeon/organ/screwdriver_act(mob/living/user, obj/item/screwtool)
 	if(..())
 		return TRUE
 	if(!storedorgan)
-		to_chat(user, "<span class='warning'>There's no implant in [src] for you to remove!</span>")
+		to_chat(user, span_warning("There's no implant in [src] for you to remove!"))
 	else
 		var/atom/drop_loc = user.drop_location()
-		for(var/J in src)
-			var/atom/movable/AM = J
-			AM.forceMove(drop_loc)
+		for(var/atom/movable/stored_implant as anything in src)
+			stored_implant.forceMove(drop_loc)
 
-		to_chat(user, "<span class='notice'>You remove the [storedorgan] from [src].</span>")
-		I.play_tool_sound(src)
+		to_chat(user, span_notice("You remove the [storedorgan] from [src]."))
+		screwtool.play_tool_sound(src)
 		storedorgan = null
 		if(uses != INFINITE)
 			uses--

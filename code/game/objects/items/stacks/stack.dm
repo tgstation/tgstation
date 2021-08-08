@@ -63,6 +63,9 @@
 		for(var/obj/item/stack/S in loc)
 			if(can_merge(S))
 				INVOKE_ASYNC(src, .proc/merge, S)
+				//Merge can call qdel on us, so let's be safe yeah?
+				if(QDELETED(src))
+					return
 	var/list/temp_recipes = get_main_recipes()
 	recipes = temp_recipes.Copy()
 	if(material_type)
@@ -77,6 +80,10 @@
 					recipes += temp
 	update_weight()
 	update_appearance()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /** Sets the amount of materials per unit for this stack.
  *
@@ -107,7 +114,7 @@
 
 /obj/item/stack/grind_requirements()
 	if(is_cyborg)
-		to_chat(usr, "<span class='warning'>[src] is electronically synthesized in your chassis and can't be ground up!</span>")
+		to_chat(usr, span_warning("[src] is electronically synthesized in your chassis and can't be ground up!"))
 		return
 	return TRUE
 
@@ -152,7 +159,7 @@
 		. += "There are [get_amount()] in the stack."
 	else
 		. += "There is [get_amount()] in the stack."
-	. += "<span class='notice'><b>Right-click</b> with an empty hand to take a custom amount.</span>"
+	. += span_notice("<b>Right-click</b> with an empty hand to take a custom amount.")
 
 /obj/item/stack/proc/get_amount()
 	if(is_cyborg)
@@ -247,7 +254,7 @@
 				return
 			if(recipe.time)
 				var/adjusted_time = 0
-				usr.visible_message("<span class='notice'>[usr] starts building \a [recipe.title].</span>", "<span class='notice'>You start building \a [recipe.title]...</span>")
+				usr.visible_message(span_notice("[usr] starts building \a [recipe.title]."), span_notice("You start building \a [recipe.title]..."))
 				if(HAS_TRAIT(usr, recipe.trait_booster))
 					adjusted_time = (recipe.time * recipe.trait_modifier)
 				else
@@ -305,9 +312,9 @@
 /obj/item/stack/proc/building_checks(datum/stack_recipe/recipe, multiplier)
 	if (get_amount() < recipe.req_amount*multiplier)
 		if (recipe.req_amount*multiplier>1)
-			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [recipe.req_amount*multiplier] [recipe.title]\s!</span>")
+			to_chat(usr, span_warning("You haven't got enough [src] to build \the [recipe.req_amount*multiplier] [recipe.title]\s!"))
 		else
-			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [recipe.title]!</span>")
+			to_chat(usr, span_warning("You haven't got enough [src] to build \the [recipe.title]!"))
 		return FALSE
 	var/turf/dest_turf = get_turf(usr)
 
@@ -315,16 +322,16 @@
 	if(ispath(recipe.result_type, /obj/structure/window))
 		var/obj/structure/window/result_path = recipe.result_type
 		if(!valid_window_location(dest_turf, usr.dir, is_fulltile = initial(result_path.fulltile)))
-			to_chat(usr, "<span class='warning'>The [recipe.title] won't fit here!</span>")
+			to_chat(usr, span_warning("The [recipe.title] won't fit here!"))
 			return FALSE
 
 	if(recipe.one_per_turf && (locate(recipe.result_type) in dest_turf))
-		to_chat(usr, "<span class='warning'>There is another [recipe.title] here!</span>")
+		to_chat(usr, span_warning("There is another [recipe.title] here!"))
 		return FALSE
 
 	if(recipe.on_floor)
 		if(!isfloorturf(dest_turf))
-			to_chat(usr, "<span class='warning'>\The [recipe.title] must be constructed on the floor!</span>")
+			to_chat(usr, span_warning("\The [recipe.title] must be constructed on the floor!"))
 			return FALSE
 
 		for(var/obj/object in dest_turf)
@@ -336,8 +343,8 @@
 				var/obj/structure/window/window_structure = object
 				if(!window_structure.fulltile)
 					continue
-			if(object.density)
-				to_chat(usr, "<span class='warning'>There is \a [object.name] here. You cant make \a [recipe.title] here!</span>")
+			if(object.density || NO_BUILD & object.obj_flags)
+				to_chat(usr, span_warning("There is \a [object.name] here. You can\'t make \a [recipe.title] here!"))
 				return FALSE
 	if(recipe.placement_checks)
 		switch(recipe.placement_checks)
@@ -346,11 +353,11 @@
 				for(var/direction in GLOB.cardinals)
 					step = get_step(dest_turf, direction)
 					if(locate(recipe.result_type) in step)
-						to_chat(usr, "<span class='warning'>\The [recipe.title] must not be built directly adjacent to another!</span>")
+						to_chat(usr, span_warning("\The [recipe.title] must not be built directly adjacent to another!"))
 						return FALSE
 			if(STACK_CHECK_ADJACENT)
 				if(locate(recipe.result_type) in range(1, dest_turf))
-					to_chat(usr, "<span class='warning'>\The [recipe.title] must be constructed at least one tile away from others of its type!</span>")
+					to_chat(usr, span_warning("\The [recipe.title] must be constructed at least one tile away from others of its type!"))
 					return FALSE
 	return TRUE
 
@@ -374,11 +381,11 @@
 	if(get_amount() < amount)
 		if(singular_name)
 			if(amount > 1)
-				to_chat(user, "<span class='warning'>You need at least [amount] [singular_name]\s to do this!</span>")
+				to_chat(user, span_warning("You need at least [amount] [singular_name]\s to do this!"))
 			else
-				to_chat(user, "<span class='warning'>You need at least [amount] [singular_name] to do this!</span>")
+				to_chat(user, span_warning("You need at least [amount] [singular_name] to do this!"))
 		else
-			to_chat(user, "<span class='warning'>You need at least [amount] to do this!</span>")
+			to_chat(user, span_warning("You need at least [amount] to do this!"))
 
 		return FALSE
 
@@ -437,10 +444,10 @@
 	S.add(transfer)
 	return transfer
 
-/obj/item/stack/Crossed(atom/movable/crossing)
+/obj/item/stack/proc/on_entered(datum/source, atom/movable/crossing)
+	SIGNAL_HANDLER
 	if(!crossing.throwing && can_merge(crossing))
-		merge(crossing)
-	. = ..()
+		INVOKE_ASYNC(src, .proc/merge, crossing)
 
 /obj/item/stack/hitby(atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(can_merge(hitting))
@@ -457,6 +464,10 @@
 		. = ..()
 
 /obj/item/stack/attack_hand_secondary(mob/user, modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
 	if(is_cyborg || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)) || zero_amount())
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	var/max = get_amount()
@@ -466,7 +477,7 @@
 	if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	split_stack(user, stackmaterial)
-	to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack.</span>")
+	to_chat(user, span_notice("You take [stackmaterial] sheets out of the stack."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /** Splits the stack into two stacks.
@@ -492,7 +503,7 @@
 	if(can_merge(W))
 		var/obj/item/stack/S = W
 		if(merge(S))
-			to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
+			to_chat(user, span_notice("Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s."))
 	else
 		. = ..()
 

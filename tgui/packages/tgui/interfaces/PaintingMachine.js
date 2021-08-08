@@ -59,6 +59,11 @@ export const PaintingMachine = (props, context) => {
             <>
               <Button.Confirm
                 disabled={!hasID}
+                content="Reset ID Account"
+                confirmContent="Confirm?"
+                onClick={() => act("reset_card")} />
+              <Button.Confirm
+                disabled={!hasID}
                 content="Imprint ID Trim"
                 confirmContent="Confirm?"
                 onClick={sel => act("trim_card", {

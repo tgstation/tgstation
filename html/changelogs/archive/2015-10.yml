@@ -1,0 +1,276 @@
+2015-10-04:
+  Fox P McCloud:
+  - tweak: Adds a bar of soap to the janitor's locker.
+  - rscadd: Re-adds the advanced mop as a researchable R&D item.
+  - rscadd: Adds a bluespace trashbag as a researchable R&D item; can hold large quantities
+      of garbage.
+  Jordie0608:
+  - rscadd: Added Special Verb 'Create Poll', an in-game interface to create server
+      polls for admins with +permissions.
+  MrPerson:
+  - rscdel: Removed NTSL. Sorry. People could write scripts that crashed the server,
+      and this is the only thing that can be done to prevent them from doing that.
+  MrStonedOne:
+  - rscdel: Removed feature where quick consecutive ghost orbits while moving could
+      be used to fuck with your sprite
+  - bugfix: Fixed ghosts losing floating animation when returning from an orbit
+  - bugfix: Fixed logic error that prevented orbit's automatic cancel when the orbiting
+      thing moved in certain situations.
+  - rscadd: Ghost Orbit size now changes based on the icon size of the thing they
+      are orbiting (for that sweet sweet singulo orbiting action)
+  - tweak: Removed needless checks in ghost orbit, you can now orbit yourself and
+      restart an orbit around the thing you are already orbiting
+  Xhuis:
+  - rscadd: Syndicate Medical cyborgs now have cryptographic sequencers.
+  - rscdel: Syndicate Medical cyborgs no longer have syringes.
+  - tweak: Restorative Nanites now heal much more damage per type.
+  - bugfix: Operative pinpointers now actually point toward the nearest operative.
+  - bugfix: Syndicate Assault cyborgs no longer start with medical supplies.
+  - bugfix: Energy saws now have a proper icon.
+  - bugfix: Non-operatives can now longer use operative pinpointers or Syndicate cyborg
+      teleporters.
+  - tweak: Doctor's Delight now requires cryoxadone in its recipe instead of omnizine.
+  - tweak: Doctor's Delight now restores half a point of brute, burn, toxin, and oxygen
+      damage per tick.
+  - tweak: Doctor's Delight now drains nutrition while it's in your system (that is,
+      unless you're a doctor).
+  - bugfix: Syndicate roboticists have given Syndicate medical cyborgs sharper hypospray
+      needles - they are now able to penetrate armor.
+2015-10-06:
+  Gun Hog, for WJohnston:
+  - rscadd: 'Add new Xenomorph caste: The Praetorian. Drones may become this on their
+      way to growing into a full queen, and a queen may promote one if there is not
+      one already.'
+  - tweak: Xenomorph queens are now GIGANTIC, along with the new Praetorian. Together,
+      they are considered royals.
+  - tweak: Queens are now significantly tougher to make up for their huge size.
+  - bugfix: All forms of dead xenomorph may now be grabbed and placed on a surgery
+      table for organ harvesting!
+  Xhuis:
+  - rscadd: Maintenance drones now have a more descriptive message when examined.
+  - tweak: A recent Nanotrasen firmware update to drones has increased vulnerability
+      to foreign influences. Please periodically check drones for abnormal behavior
+      or status LED malfunction. Note, however, that cryptographic sequencers will
+      not incur this behavior.
+  - tweak: In response to complaints about rogue drones, Nanotrasen engineers have
+      allowed factory resets on all drones by simply using a wrench.
+  - experiment: Central Command reminds drones to immediately retreat, if possible,
+      when a law override is begun. Not doing so may anger the gods and incur their
+      wrath!
+  - rscadd: Some virus symptoms that had no messages now have them.
+  - rscadd: 'New virology symptom: Weakness. This will cause stamina damage and fainting
+      spells.'
+  - tweak: Many virus symptom messages have been changed to be more threatening.
+2015-10-07:
+  Kor:
+  - rscadd: The alien queen can now perform a tail sweep attack, throwing back and
+      stunning all nearby foes.
+2015-10-13:
+  AnturK:
+  - rscadd: Display cases can now be built using 5 wood planks and 10 glass sheets.
+  - rscadd: Add airlock electronics to open it with id later, otherwise you'll have
+      to use crowbar
+  - tweak: Broken display cases can be fixed with glass sheets or removed using crowbar
+  - tweak: Added start_showpiece_type variable for mappers to create custom displays
+  - rscadd: Syndicate Lone Operatives spotted near the nanotrasen stations! Keep the
+      disk safe!
+  - tweak: Admin spawned nuclear operatives will now have access to nukeop equipment
+  Gun Hog:
+  - rscadd: Nanotrasen's research team has released a new, high tech design for Science
+      Goggles, which previously did nothing! They new come fitted with a portable
+      scanning module which will display the potential research data gained from experimenting
+      with an object. Nanotrasen has also released drivers which shall enable the
+      prototype hardsuit's built in scan visor.
+  - rscadd: Supporting this new design, Nanotrasen has seen fit to provide blueprints
+      for Science Goggles to the station's protolathe.
+  Kor:
+  - tweak: Gang implanters now only break implants/deconvert gangsters, meaning you
+      will have to use a pen to convert them afterwards.
+  - rscadd: An important function, accessible via alt+click, has been restored to
+      the detectives hat.
+  - sounddel: When Nar-Sie is created, they now use the old sound effect.
+  Steelpoint:
+  - rscadd: The Chief Medical Officers 'Medical Hardsuit' has been added to the CMO's
+      office. Boasts the usage of lightweight materials allowing fast movement while
+      wearing the suit as well as complete biological protection to airborne and similar
+      pathogens.
+  - rscadd: The Head of Security's personal 'HoS Hardsuit' has been added to the HoS's
+      office. This Hardsuit is slightly more armored than the regular Security Hardsuit.
+  - rscadd: The Research Directors 'Prototype Hardsuit' has been added to the RD's
+      office. This Hardsuit offers the highest levels of protection against explosive,
+      as well as biological, attacks, as well as fireproofing.
+  - rscdel: The Command EVA space suits, due to budget concerns, have been removed
+      and reloacted to another space station.
+  Xhuis:
+  - rscdel: All instances of autorifles have been removed from Security.
+  - rscadd: The armory has been re-mapped.
+  - tweak: The spell book has received a rebalancing! There are now ten uses by default,
+      but most spells cost two uses. Some underused spells, like Blind, Smoke, and
+      Forcewall, only cost a single use.
+  - experiment: After searching through the Sleeping Carp's ancient monastery in deep
+      space, more secrets have been uncovered of their traditional fighting techniques.
+  - tweak: Members of the Sleeping Carp gang are now able to deflect all ranged projectiles.
+  - tweak: Members of the Sleeping Carp gang are now uanble to use any type of ranged
+      weaponry. Doing so would be dishonorable.
+  - tweak: The Sleeping Carp martial art's effects are more damaging, and many stuns
+      have been increased in duration.
+  phil235:
+  - bugfix: Fixes critical bug causing multiple hits from single projectile.
+  - bugfix: Fixes not being able to shoot a mob on same tile as the shooter.
+  - bugfix: Clicking your mob (without targeting your mouth) no longer causes you
+      to shoot yourself.
+  - bugfix: Fixes not being able to shoot non human mobs at point blank.
+  - rscdel: Morphs no longer automatically drop the things they swallowed, you have
+      to butcher their corpse to retrieve their contents.
+  - bugfix: butchering a corpse no longer also attacks it.
+  - rscdel: Dipping cigarette (to asbsorb liquids) in a glass can now only be done
+      with an unlit cigarette. Lit cigarette now heats up the glass content (like
+      other heat sources).
+  - bugfix: Fixes trashbag not being able to pickup drinks and ammo casings.
+  - tweak: Slimes now attaches themselves to mobs via buckling.
+2015-10-16:
+  MrStonedOne:
+  - rscadd: Added a reconnect option to the file menu. This will allow you to reconnect
+      to the game server without closing and re-opening the game window. This should
+      also prevent another byond ad from playing during reconnections.
+  Xhuis:
+  - rscadd: A gamebreaking bug has been fixed with buckets. You can now wear them
+      on your head.
+  bgobandit:
+  - rscadd: The Grape Growers Consortium has complained that Nanotrasen kitchens do
+      not use their products enough. HQ has come up with a few recipes to pacify them.
+      Goddamn winos.
+2015-10-19:
+  AnturK:
+  - rscadd: Handheld T-Ray Scanners now detect critters in pipes.
+  Kor:
+  - tweak: Weapons and projectiles that are armour piercing now have an increased
+      chance to bypass riot shields.
+  - tweak: Slipping on lube now deals slightly more damage, but is concentrated on
+      a random body part, rather than spread to your entire body.
+  - tweak: Slipping on water no longer deals damage
+  - rscadd: You can now attach grenades and C4 to spears to create explosive lances.
+      This is done via table crafting. Alt+click the spear to set a war cry.
+  Shadowlight213:
+  - rscadd: In response to reports of stranded drones, Nanotrasen has added magnets
+      to drone legs. They are no longer affected by lack of gravity or spacewind!
+  - bugfix: Drones can now set Airlock access on RCDs.
+  bgobandit:
+  - rscadd: Nanotrasen loves recycling! In the highly unlikely occasion that your
+      space station accumulates gibs, scoop 'em up and bring them to chemistry to
+      recycle into soap, candles, or even delicious meat product!
+  - rscadd: L3 biohazard closets now contain bio-bag satchels for the safe collection
+      of biowaste products, such as slime extracts.
+  phil235:
+  - rscdel: Removing Smile, Swedish, Chav and Elvis mutations from genetics. These
+      mutation can still be acquired via adminspawned dna injector.
+  - rscadd: Added a dna injector for laser eyes mutation for admin use.
+  - bugfix: Fixes winter coat hood sprite appearing as a bucket.
+  - bugfix: Fixes using razor on non human shaving non existent hair.
+  - bugfix: Fixes chair deconstruction dropping too much metal.
+  - bugfix: Fixes snapcorn not giving seeds.
+  - bugfix: Fixes portable chem dispenser.
+  - tweak: Changing the transfer amount of all reagent containers (beaker, bucket,
+      glass) is now done by clicking them, similar to spray. Reagent dispensers (watertank,
+      fueltank, pepperspray dispenser) no longer have their own transfer amounts and
+      use the reagent container's transfer amount instead (except for sprays which
+      get 50u for faster refilling).
+2015-10-23:
+  Incoming5643:
+  - rscadd: 'Syndicate bomb payloads will now detonate if set on fire long enough.
+      Note that the casings for the bombs is fireproof, so if you want to set fire
+      to a bombcore you''ll need to remove it from the case first (cut all wires,
+      then crowbar it out). A reassurance from our explosives department: it is, and
+      always has been, impossible to detonate a syndicate bomb that isn''t ticking
+      with wirecutters alone.'
+  Xhuis:
+  - rscadd: Geiger counters have been added and are obtainable from autolathes and
+      EngiVends. They will measure the severity of radiation pulses while in your
+      pockets, belt, or hands. One can scan a mob's radiation level by switching to
+      Help intent and clicking on it. These counters never really discard the radiation
+      they store, and rumor has it this can be used in nefarious ways...
+  - tweak: When a mob is impacted by radiation, the radiation is now relayed to all
+      items on the mob.
+2015-10-24:
+  Kor:
+  - rscadd: The friendly gold slime reaction now spawns three mobs.
+  phil235:
+  - tweak: Changed the effects of alcohol to be more realistic. The effects of alcohol
+      now appear twice as fast. Drunkenness now scales with how much alcohol is in
+      you, not how long you've been drinking. This means drinking very little but
+      continuously no longer makes you very drunk, or confused/slurring for a long
+      time or give you alcohol poisoning. The dizziness and slurring effects now properly
+      scale with how drunk you are (and dizziness is generally more pronounced).
+2015-10-25:
+  Incoming5643:
+  - rscadd: The spell Charge has been added to the spellbook. It can be used to extend
+      the life of magic and energy weapons and even reset the cooldowns of held wizards!
+      It cannot reset your own cooldowns.
+  - rscadd: The Staff of Healing has been added to the spellbook. Heals all damage
+      and raises the dead! Can't be used on yourself however.
+  - bugfix: The exploit that allowed you to use the staff of healing on yourself by
+      suicide has been fixed.
+  Jordie0608:
+  - rscadd: You can now selectively mute non-admin players from OOC with the Ignore
+      verb in the OOC tab.
+  Tkdrg:
+  - rscadd: Added chainsaws. They can be tablecrafted using a circular saw, a plasteel
+      sheet, some cable coil, and a welding tool. Don't forget to turn it on!
+2015-10-26:
+  Fox P McCloud:
+  - tweak: Standardizes the slowdown of most spacesuits to 1 as opposed to 2.
+  Incoming5643:
+  - rscadd: 48x48 pixel mode (x1.5 zoom) has been added to the Icons menu (top left).
+      While playing in 32x32 or 64x64 will still provide a clearer looking station,
+      for those of us with resolutions that fall into the gap between the two zooms
+      this can provide a more consistant looking station than stretch to fit.
+  - rscadd: 96x96 pixel mode (x3 zoom) has also been added for our players who enjoy
+      looking at spacemen on their 4k monitors at a crisp and consistent scale.
+  - tweak: The lich spell has been subjected to some gentle nerfing. When you die
+      a string of energy will tie your new body to your old body for a short time,
+      aiding others in determining your location. The duration of this beam scales
+      with the number of deaths you've avoided.
+  - tweak: Additionally the post revival stun now also scales in this way.
+  - tweak: The spell will also fail if the item and the wizard don't share the same
+      z level, though the nature of space means the odds of the item (or the wizard)
+      looping around back to the station is pretty high.
+  - rscadd: The spell is still really good.
+2015-10-27:
+  Joan:
+  - bugfix: You can now click on things under timestop effects, instead of clicking
+      the effect and looking like a fool.
+  Kor:
+  - rscadd: Added a zombie mob that turns its kills into more zombies. Currently adminspawn
+      and xenobio only.
+  - rscadd: Using water with a red slime extract will now yield a speed potion. Using
+      the speed potion on an item of clothing will paint it red and remove its slowdown.
+  MrStonedOne:
+  - rscadd: You may now access the setup character screen when not in the lobby via
+      the game preferences verb in the preferences tab
+  - rscadd: The round end restart delay can now be configured by server operators.
+      New servers will default to 90 seconds while old servers will default to the
+      old 25 seconds until they import the config option to their server.
+2015-10-28:
+  Tkdrg:
+  - rscadd: Added a Ghost On-screen HUD. It can be toggled using the "Toggle Ghost
+      HUD" verb. Thank you Razharas for the sprites!
+  - rscadd: Ghosts can now use the "Toggle med/sec HUD" verb to see the basic secHUD
+      (jobs only) or the medHUD of humans.
+  - rscadd: Ghost will now get clickable icon alerts from events such as being put
+      in a cloner, drones being created, Nar-sie being summoned, among others. The
+      older chat messages were kept. These alerts can not be toggled.
+2015-10-29:
+  Kor:
+  - tweak: Slightly changed what items spawn on the captain vs in his locker, hopefully
+      saving some annoying inventory shuffle at roundstart.
+2015-10-30:
+  Incoming5643:
+  - rscadd: Slimepeople can now split if they contain 200 units of slime jelly, and
+      slimepeople will now slowly generate slime jelly up to 200 units provided they
+      are very well fed. Split slimepeople are NOT player controlled, but rather the
+      original slime person can swap between the two mobs at will. If one of the slimepeople
+      should die under player control, the player won't be able to swap back to their
+      living body. Splitting only creates a new body, any items you have on you are
+      not duplicated.
+  - rscadd: Slimepeople now take half damage from sources of heat, but double damage
+      from sources of cold. Lasers good, Space bad.

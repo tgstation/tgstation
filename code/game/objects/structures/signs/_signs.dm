@@ -59,25 +59,27 @@
  * The first time a pen is used on any sign, this populates GLOBAL_LIST_EMPTY(editable_sign_types), creating a global list of all the signs that you can set a sign backing to with a pen.
  */
 /proc/populate_editable_sign_types()
+	var/list/output = list()
 	for(var/s in subtypesof(/obj/structure/sign))
 		var/obj/structure/sign/potential_sign = s
 		if(!initial(potential_sign.is_editable))
 			continue
-		GLOB.editable_sign_types[initial(potential_sign.sign_change_name)] = potential_sign
-	GLOB.editable_sign_types = sortList(GLOB.editable_sign_types) //Alphabetizes the results.
+		output[initial(potential_sign.sign_change_name)] = potential_sign
+	output = sortList(output) //Alphabetizes the results.
+	return output
 
 /obj/structure/sign/wrench_act(mob/living/user, obj/item/wrench/I)
 	. = ..()
 	if(!buildable_sign)
 		return TRUE
-	user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
-		"<span class='notice'>You start unfastening [src].</span>")
+	user.visible_message(span_notice("[user] starts removing [src]..."), \
+		span_notice("You start unfastening [src]."))
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 4 SECONDS))
 		return TRUE
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-	user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
-		"<span class='notice'>You unfasten [src].</span>")
+	user.visible_message(span_notice("[user] unfastens [src]."), \
+		span_notice("You unfasten [src]."))
 	var/obj/item/sign/unwrenched_sign = new (get_turf(user))
 	if(type != /obj/structure/sign/blank) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
 		unwrenched_sign.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
@@ -86,7 +88,7 @@
 		unwrenched_sign.sign_path = type
 		unwrenched_sign.set_custom_materials(custom_materials) //This is here so picture frames and wooden things don't get messed up.
 		unwrenched_sign.is_editable = is_editable
-	unwrenched_sign.obj_integrity = obj_integrity //Transfer how damaged it is.
+	unwrenched_sign.update_integrity(get_integrity()) //Transfer how damaged it is.
 	unwrenched_sign.setDir(dir)
 	qdel(src) //The sign structure on the wall goes poof and only the sign item from unwrenching remains.
 	return TRUE
@@ -96,16 +98,16 @@
 	if(user.combat_mode)
 		return FALSE
 	if(obj_integrity == max_integrity)
-		to_chat(user, "<span class='warning'>This sign is already in perfect condition.</span>")
+		to_chat(user, span_warning("This sign is already in perfect condition."))
 		return TRUE
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
-	user.visible_message("<span class='notice'>[user] starts repairing [src]...</span>", \
-		"<span class='notice'>You start repairing [src].</span>")
+	user.visible_message(span_notice("[user] starts repairing [src]..."), \
+		span_notice("You start repairing [src]."))
 	if(!I.use_tool(src, user, 4 SECONDS, volume =50 ))
 		return TRUE
-	user.visible_message("<span class='notice'>[user] finishes repairing [src].</span>", \
-		"<span class='notice'>You finish repairing [src].</span>")
+	user.visible_message(span_notice("[user] finishes repairing [src]."), \
+		span_notice("You finish repairing [src]."))
 	obj_integrity = max_integrity
 	return TRUE
 
@@ -114,33 +116,31 @@
 	if(user.combat_mode)
 		return FALSE
 	if(obj_integrity == max_integrity)
-		to_chat(user, "<span class='warning'>This sign is already in perfect condition.</span>")
+		to_chat(user, span_warning("This sign is already in perfect condition."))
 		return TRUE
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
-	user.visible_message("<span class='notice'>[user] starts repairing [src]...</span>", \
-		"<span class='notice'>You start repairing [src].</span>")
+	user.visible_message(span_notice("[user] starts repairing [src]..."), \
+		span_notice("You start repairing [src]."))
 	if(!I.use_tool(src, user, 4 SECONDS, volume =50 ))
 		return TRUE
-	user.visible_message("<span class='notice'>[user] finishes repairing [src].</span>", \
-		"<span class='notice'>You finish repairing [src].</span>")
+	user.visible_message(span_notice("[user] finishes repairing [src]."), \
+		span_notice("You finish repairing [src]."))
 	obj_integrity = max_integrity
 	return TRUE
 
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
 	if(is_editable && istype(I, /obj/item/pen))
 		if(!length(GLOB.editable_sign_types))
-			populate_editable_sign_types()
-			if(!length(GLOB.editable_sign_types))
-				CRASH("GLOB.editable_sign_types failed to populate")
+			CRASH("GLOB.editable_sign_types failed to populate")
 		var/choice = input(user, "Select a sign type.", "Sign Customization") as null|anything in GLOB.editable_sign_types
 		if(!choice)
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still.
-			to_chat(user, "<span class='warning'>You need to stand next to the sign to change it!</span>")
+			to_chat(user, span_warning("You need to stand next to the sign to change it!"))
 			return
-		user.visible_message("<span class='notice'>[user] begins changing [src].</span>", \
-			"<span class='notice'>You begin changing [src].</span>")
+		user.visible_message(span_notice("[user] begins changing [src]."), \
+			span_notice("You begin changing [src]."))
 		if(!do_after(user, 4 SECONDS, target = src)) //Small delay for changing signs instead of it being instant, so somebody could be shoved or stunned to prevent them from doing so.
 			return
 		var/sign_type = GLOB.editable_sign_types[choice]
@@ -152,39 +152,39 @@
 		changedsign.pixel_y = pixel_y
 		changedsign.obj_integrity = obj_integrity
 		qdel(src)
-		user.visible_message("<span class='notice'>[user] finishes changing the sign.</span>", \
-			"<span class='notice'>You finish changing the sign.</span>")
+		user.visible_message(span_notice("[user] finishes changing the sign."), \
+			span_notice("You finish changing the sign."))
 		return
 	return ..()
 
 /obj/item/sign/attackby(obj/item/I, mob/user, params)
 	if(is_editable && istype(I, /obj/item/pen))
 		if(!length(GLOB.editable_sign_types))
-			populate_editable_sign_types()
-			if(!length(GLOB.editable_sign_types))
-				CRASH("GLOB.editable_sign_types failed to populate")
+			CRASH("GLOB.editable_sign_types failed to populate")
 		var/choice = input(user, "Select a sign type.", "Sign Customization") as null|anything in GLOB.editable_sign_types
 		if(!choice)
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still.
-			to_chat(user, "<span class='warning'>You need to stand next to the sign to change it!</span>")
+			to_chat(user, span_warning("You need to stand next to the sign to change it!"))
 			return
 		if(!choice)
 			return
-		user.visible_message("<span class='notice'>You begin changing [src].</span>")
+		user.visible_message(span_notice("You begin changing [src]."))
 		if(!do_after(user, 4 SECONDS, target = src))
 			return
-		var/obj/structure/sign/sign_type = GLOB.editable_sign_types[choice]
-		name = initial(sign_type.name)
-		if(sign_type != /obj/structure/sign/blank)
-			desc = "[initial(sign_type.desc)] It can be placed on a wall."
-		else
-			desc = initial(desc) //If you're changing it to a blank sign, just use obj/item/sign's description.
-		icon_state = initial(sign_type.icon_state)
-		sign_path = sign_type
-		user.visible_message("<span class='notice'>You finish changing the sign.</span>")
+		set_sign_type(GLOB.editable_sign_types[choice])
+		user.visible_message(span_notice("You finish changing the sign."))
 		return
 	return ..()
+
+/obj/item/sign/proc/set_sign_type(obj/structure/sign/fake_type)
+	name = initial(fake_type.name)
+	if(fake_type != /obj/structure/sign/blank)
+		desc = "[initial(fake_type.desc)] It can be placed on a wall."
+	else
+		desc = initial(desc)
+	icon_state = initial(fake_type.icon_state)
+	sign_path = fake_type
 
 /obj/item/sign/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -203,12 +203,16 @@
 		placed_sign.pixel_x = 32
 	else if(dir & WEST)
 		placed_sign.pixel_x = -32
-	user.visible_message("<span class='notice'>[user] fastens [src] to [target_turf].</span>", \
-		"<span class='notice'>You attach the sign to [target_turf].</span>")
+	user.visible_message(span_notice("[user] fastens [src] to [target_turf]."), \
+		span_notice("You attach the sign to [target_turf]."))
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
-	placed_sign.obj_integrity = obj_integrity
+	placed_sign.update_integrity(get_integrity())
 	placed_sign.setDir(dir)
 	qdel(src)
+
+/obj/item/sign/random/Initialize()
+	. = ..()
+	set_sign_type(GLOB.editable_sign_types[pick(GLOB.editable_sign_types)])
 
 /obj/structure/sign/nanotrasen
 	name = "\improper Nanotrasen logo sign"

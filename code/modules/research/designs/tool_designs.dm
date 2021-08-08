@@ -123,16 +123,6 @@
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
-/datum/design/crystal_stabilizer
-	name = "Supermatter Matrix Stabilizer"
-	desc = "A tool that is used to restore the stability of the Crystal Matrix by injecting it with the anomaly liquid"
-	id = "crystal_stabilizer"
-	build_path = /obj/item/crystal_stabilizer
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/glass = 4500, /datum/material/silver = 2500)
-	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
-
 /datum/design/plumbing_rcd_sci
 	name = "Research Plumbing Constructor"
 	id = "plumbing_rcd_sci"
@@ -278,3 +268,24 @@
 	materials = list(/datum/material/iron = 2000, /datum/material/silver = 1500, /datum/material/plasma = 500, /datum/material/titanium = 1500)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/wirebrush
+	name = "Wirebrush"
+	desc = "A tool to remove rust from walls."
+	id = "wirebrush"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	category = list("initial", "Tools")
+	materials = list(/datum/material/iron = 200, /datum/material/glass = 200)
+	build_path = /obj/item/wirebrush
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/wirebrush_adv
+	name = "Advanced Wirebrush"
+	desc = "An advanced wirebrush."
+	id = "wirebrush_adv"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/uranium = 200, /datum/material/plasma = 200)
+	build_path = /obj/item/wirebrush/advanced
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE

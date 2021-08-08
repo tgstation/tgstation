@@ -1,7 +1,7 @@
 /datum/round_event_control/space_dragon
 	name = "Spawn Space Dragon"
 	typepath = /datum/round_event/ghost_role/space_dragon
-	weight = 10
+	weight = 7
 	max_occurrences = 1
 	min_players = 20
 	dynamic_should_hijack = TRUE
@@ -25,7 +25,7 @@
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
 
-	var/list/candidates = get_candidates(ROLE_SPACE_DRAGON, null, ROLE_SPACE_DRAGON)
+	var/list/candidates = get_candidates(ROLE_SPACE_DRAGON, ROLE_SPACE_DRAGON)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
@@ -34,8 +34,8 @@
 
 	var/mob/living/simple_animal/hostile/space_dragon/dragon = new (pick(spawn_locs))
 	dragon.key = key
-	dragon.mind.assigned_role = "Space Dragon"
-	dragon.mind.special_role = "Space Dragon"
+	dragon.mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_dragon))
+	dragon.mind.special_role = ROLE_SPACE_DRAGON
 	dragon.mind.add_antag_datum(/datum/antagonist/space_dragon)
 	playsound(dragon, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(dragon)] has been made into a Space Dragon by an event.")

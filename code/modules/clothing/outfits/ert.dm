@@ -335,7 +335,7 @@
 		/obj/item/storage/box/survival/engineer = 1,
 )
 	belt = /obj/item/storage/belt/champion
-	glasses = /obj/item/clothing/glasses/godeye
+	glasses = /obj/item/clothing/glasses/trickblindfold
 	mask = /obj/item/clothing/mask/gas/clown_hat
 	shoes = /obj/item/clothing/shoes/clown_shoes/combat
 	l_pocket = /obj/item/food/grown/banana
@@ -537,3 +537,100 @@
 	name = "Death Commando Officer"
 
 	head = /obj/item/clothing/head/helmet/space/beret
+
+/datum/outfit/centcom/ert/marine
+	name = "Marine Commander"
+
+	id = /obj/item/card/id/advanced/centcom/ert
+	suit = /obj/item/clothing/suit/armor/vest/marine
+	suit_store = /obj/item/gun/ballistic/automatic/wt550
+	back = /obj/item/shield/riot
+	belt = /obj/item/storage/belt/military/assault/full
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
+	l_pocket = /obj/item/kitchen/knife/combat
+	r_pocket = /obj/item/lighter
+	uniform = /obj/item/clothing/under/syndicate/combat
+	mask = /obj/item/clothing/mask/cigarette/robustgold
+	head = /obj/item/clothing/head/helmet/marine
+
+/datum/outfit/centcom/ert/marine/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+	var/obj/item/radio/headset = equipper.ears
+	headset.keyslot = new /obj/item/encryptionkey/heads/captain
+	headset.recalculateChannels()
+
+/datum/outfit/centcom/ert/marine/security
+	name = "Marine Heavy"
+
+	id = /obj/item/card/id/advanced/centcom/ert/security
+	suit = /obj/item/clothing/suit/armor/vest/marine/security
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+	r_pocket = /obj/item/grenade/smokebomb
+	mask = /obj/item/clothing/mask/gas/sechailer
+	head = /obj/item/clothing/head/helmet/marine/security
+
+/datum/outfit/centcom/ert/marine/security/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	var/obj/item/radio/headset = equipper.ears
+	headset.keyslot = new /obj/item/encryptionkey/heads/hos
+	headset.recalculateChannels()
+
+/datum/outfit/centcom/ert/marine/medic
+	name = "Marine Medic"
+
+	id = /obj/item/card/id/advanced/centcom/ert/medical
+	suit = /obj/item/clothing/suit/armor/vest/marine/medic
+	suit_store = /obj/item/storage/belt/holster/detective/full/ert
+	back = /obj/item/storage/backpack/ert/medical
+	r_pocket = /obj/item/healthanalyzer
+	mask = /obj/item/food/lollipop
+	head = /obj/item/clothing/head/helmet/marine/medic
+	backpack_contents = list(
+		/obj/item/reagent_containers/hypospray/combat = 1,
+		/obj/item/storage/firstaid/regular = 1,
+		/obj/item/storage/firstaid/advanced = 1,
+)
+	uniform = /obj/item/clothing/under/syndicate/camo
+	belt = /obj/item/storage/belt/medical/paramedic
+	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
+
+/datum/outfit/centcom/ert/marine/medic/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	var/obj/item/radio/headset = equipper.ears
+	headset.keyslot = new /obj/item/encryptionkey/heads/cmo
+	headset.recalculateChannels()
+
+/datum/outfit/centcom/ert/marine/engineer
+	name = "Marine Engineer"
+
+	id = /obj/item/card/id/advanced/centcom/ert/engineer
+	suit = /obj/item/clothing/suit/armor/vest/marine/engineer
+	suit_store = /obj/item/gun/ballistic/shotgun/lethal
+	mask = /obj/item/clothing/mask/cigarette/robustgold
+	head = /obj/item/clothing/head/helmet/marine/engineer
+	back = /obj/item/deployable_turret_folded
+	uniform = /obj/item/clothing/under/syndicate/camo
+	belt = /obj/item/storage/belt/utility/full/powertools/rcd
+	glasses =  /obj/item/clothing/glasses/hud/diagnostic/sunglasses
+	r_pocket = /obj/item/rcd_ammo/large
+
+/datum/outfit/centcom/ert/marine/engineer/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	var/obj/item/radio/headset = equipper.ears
+	headset.keyslot = new /obj/item/encryptionkey/heads/ce
+	headset.recalculateChannels()

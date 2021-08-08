@@ -21,6 +21,7 @@
 /datum/addiction/opiods/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()
 	affected_carbon.remove_status_effect(STATUS_EFFECT_HIGHBLOODPRESSURE)
+	affected_carbon.set_disgust(affected_carbon.disgust * 0.5) //half their disgust to help
 
 ///Stimulants
 
@@ -109,7 +110,7 @@
 		return
 	var/mob/living/carbon/human/affected_human = affected_carbon
 	if(affected_human.gender == MALE)
-		to_chat(affected_human, "<span class='warning'>Your chin itches.</span>")
+		to_chat(affected_human, span_warning("Your chin itches."))
 		affected_human.facial_hairstyle = "Beard (Full)"
 		affected_human.update_hair()
 	//Only like gross food
@@ -121,7 +122,7 @@
 	. = ..()
 	if(!ishuman(affected_carbon))
 		return
-	to_chat(affected_carbon, "<span class='warning'>You feel yourself adapt to the darkness.</span>")
+	to_chat(affected_carbon, span_warning("You feel yourself adapt to the darkness."))
 	var/mob/living/carbon/human/affected_human = affected_carbon
 
 	var/obj/item/organ/liver/empowered_liver = affected_carbon.getorgan(/obj/item/organ/liver)
@@ -216,6 +217,9 @@
 		return
 	if(DT_PROB(65, delta_time))
 		return
+	if(affected_carbon.stat >= SOFT_CRIT)
+		return
+
 	var/obj/item/organ/organ = pick(affected_carbon.internal_organs)
 	if(organ.low_threshold)
 		to_chat(affected_carbon, organ.low_threshold_passed)
@@ -223,7 +227,7 @@
 	else if (organ.high_threshold_passed)
 		to_chat(affected_carbon, organ.high_threshold_passed)
 		return
-	to_chat(affected_carbon, "<span class='warning'>You feel a dull pain in your [organ.name].</span>")
+	to_chat(affected_carbon, span_warning("You feel a dull pain in your [organ.name]."))
 
 /datum/addiction/medicine/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()

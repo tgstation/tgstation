@@ -32,11 +32,10 @@
 	return ..()
 
 /datum/pipeline/process()
-	if(building)
+	if(!update || building)
 		return
-	if(update)
-		update = FALSE
-		reconcile_air()
+	reconcile_air()
+	//Only react if the mix has changed, and don't keep updating if it hasn't
 	update = air.react(src)
 
 ///Preps a pipeline for rebuilding, insterts it into the rebuild queue
@@ -193,51 +192,26 @@
 	var/target_temperature
 	var/target_heat_capacity
 
-	if(isopenturf(target))
 
-		var/turf/open/modeled_location = target
-		target_temperature = modeled_location.GetTemperature()
-		target_heat_capacity = modeled_location.GetHeatCapacity()
+	var/turf/modeled_location = target
+	target_temperature = modeled_location.GetTemperature()
+	target_heat_capacity = modeled_location.GetHeatCapacity()
 
-		if(modeled_location.blocks_air)
+	var/delta_temperature = air.temperature - target_temperature
+	var/sharer_heat_capacity = target_heat_capacity
 
-			if((modeled_location.heat_capacity > 0) && (partial_heat_capacity > 0))
-				var/delta_temperature = air.temperature - target_temperature
+	if((sharer_heat_capacity <= 0) || (partial_heat_capacity <= 0))
+		return TRUE
+	var/heat = thermal_conductivity * delta_temperature * (partial_heat_capacity * sharer_heat_capacity / (partial_heat_capacity + sharer_heat_capacity))
 
-				var/heat = thermal_conductivity * delta_temperature * (partial_heat_capacity * target_heat_capacity / (partial_heat_capacity + target_heat_capacity))
+	var/self_temperature_delta = - heat / total_heat_capacity
+	var/sharer_temperature_delta = heat / sharer_heat_capacity
 
-				air.temperature -= heat/total_heat_capacity
-				modeled_location.TakeTemperature(heat / target_heat_capacity)
+	air.temperature += self_temperature_delta
+	modeled_location.TakeTemperature(sharer_temperature_delta)
+	if(modeled_location.blocks_air)
+		modeled_location.temperature_expose(air, modeled_location.temperature)
 
-		else
-			var/delta_temperature = 0
-			var/sharer_heat_capacity = 0
-
-			delta_temperature = (air.temperature - target_temperature)
-			sharer_heat_capacity = target_heat_capacity
-
-			var/self_temperature_delta = 0
-			var/sharer_temperature_delta = 0
-
-			if((sharer_heat_capacity <= 0) || (partial_heat_capacity <= 0))
-				return TRUE
-			var/heat = thermal_conductivity * delta_temperature * (partial_heat_capacity * sharer_heat_capacity / (partial_heat_capacity + sharer_heat_capacity))
-
-			self_temperature_delta = - heat / total_heat_capacity
-			sharer_temperature_delta = heat / sharer_heat_capacity
-
-			air.temperature += self_temperature_delta
-			modeled_location.TakeTemperature(sharer_temperature_delta)
-
-
-	else
-		if((target.heat_capacity > 0) && (partial_heat_capacity > 0))
-			var/delta_temperature = air.temperature - target.temperature
-			//Temp share things, see superconduction for more like this
-			var/heat = thermal_conductivity*delta_temperature* \
-				(partial_heat_capacity*target.heat_capacity/(partial_heat_capacity+target.heat_capacity))
-
-			air.temperature -= heat / total_heat_capacity
 	update = TRUE
 
 /datum/pipeline/proc/return_air()
@@ -246,6 +220,7 @@
 		stack_trace("[src] has one or more null gas mixtures, which may cause bugs. Null mixtures will not be considered in reconcile_air().")
 		return removeNullsFromList(.)
 
+/// Called when the pipenet needs to update and mix together all the air mixes
 /datum/pipeline/proc/reconcile_air()
 	var/list/datum/gas_mixture/gas_mixture_list = list()
 	var/list/datum/pipeline/pipeline_list = list()
@@ -257,16 +232,11 @@
 			continue
 		gas_mixture_list += pipeline.other_airs
 		gas_mixture_list += pipeline.air
-		for(var/atmosmch in pipeline.other_atmosmch)
-			if (istype(atmosmch, /obj/machinery/atmospherics/components/binary/valve))
-				var/obj/machinery/atmospherics/components/binary/valve/considered_valve = atmosmch
-				if(considered_valve.on)
-					pipeline_list |= considered_valve.parents[1]
-					pipeline_list |= considered_valve.parents[2]
-			else if (istype(atmosmch, /obj/machinery/atmospherics/components/unary/portables_connector))
-				var/obj/machinery/atmospherics/components/unary/portables_connector/considered_connector = atmosmch
-				if(considered_connector.connected_device)
-					gas_mixture_list += considered_connector.connected_device.air_contents
+		for(var/obj/machinery/atmospherics/components/atmosmch as anything in pipeline.other_atmosmch)
+			if(!atmosmch.custom_reconcilation)
+				continue
+			pipeline_list |= atmosmch.returnPipenetsForReconcilation(src)
+			gas_mixture_list |= atmosmch.returnAirsForReconcilation(src)
 
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
@@ -274,8 +244,7 @@
 
 	var/list/total_gases = total_gas_mixture.gases
 
-	for(var/mixture in gas_mixture_list)
-		var/datum/gas_mixture/gas_mixture = mixture
+	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
 		total_gas_mixture.volume += gas_mixture.volume
 
 		// This is sort of a combined merge + heat_capacity calculation
@@ -293,7 +262,7 @@
 	total_gas_mixture.temperature = total_heat_capacity ? (total_thermal_energy / total_heat_capacity) : 0
 
 	total_gas_mixture.garbage_collect()
-	
+
 	if(total_gas_mixture.volume > 0)
 		//Update individual gas_mixtures by volume ratio
 		for(var/mixture in gas_mixture_list)

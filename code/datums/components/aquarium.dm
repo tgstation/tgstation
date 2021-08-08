@@ -247,9 +247,9 @@
 	base_layer = current_aquarium.request_layer(properties.layer_mode)
 	vc_obj.layer = base_layer
 
-/datum/component/aquarium_content/proc/on_removed(datum/source, atom/movable/mover)
+/datum/component/aquarium_content/proc/on_removed(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
-	if(mover != parent)
+	if(parent != gone)
 		return
 	remove_from_aquarium()
 

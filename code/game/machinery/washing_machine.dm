@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_CAPTAIN = /obj/item/clothing/gloves/color/captain,
 		DYE_HOP = /obj/item/clothing/gloves/color/grey,
 		DYE_HOS = /obj/item/clothing/gloves/color/black,
-		DYE_CE = /obj/item/clothing/gloves/color/black,
+		DYE_CE = /obj/item/clothing/gloves/color/chief_engineer,
 		DYE_RD = /obj/item/clothing/gloves/color/grey,
 		DYE_CMO = /obj/item/clothing/gloves/color/latex/nitrile,
 		DYE_REDCOAT = /obj/item/clothing/gloves/color/white,
@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 /obj/machinery/washing_machine/examine(mob/user)
 	. = ..()
 	if(!busy)
-		. += "<span class='notice'><b>Right-click</b> with an empty hand to start a wash cycle.</span>"
+		. += span_notice("<b>Right-click</b> with an empty hand to start a wash cycle.")
 
 /obj/machinery/washing_machine/process(delta_time)
 	if(!busy)
@@ -190,25 +190,36 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	var/dye_key_selector = dye_key_override ? dye_key_override : dying_key
 	if(undyeable)
 		return FALSE
-	if(dye_key_selector)
-		if(!GLOB.dye_registry[dye_key_selector])
-			log_runtime("Item just tried to be dyed with an invalid registry key: [dye_key_selector]")
-			return FALSE
-		var/obj/item/target_type = GLOB.dye_registry[dye_key_selector][dye_color]
-		if(target_type)
-			icon = initial(target_type.icon)
-			icon_state = initial(target_type.icon_state)
-			lefthand_file = initial(target_type.lefthand_file)
-			righthand_file = initial(target_type.righthand_file)
-			inhand_icon_state = initial(target_type.inhand_icon_state)
-			worn_icon = initial(target_type.worn_icon)
-			worn_icon_state = initial(target_type.worn_icon_state)
-			inhand_x_dimension = initial(target_type.inhand_x_dimension)
-			inhand_y_dimension = initial(target_type.inhand_y_dimension)
-			name = initial(target_type.name)
-			desc = "[initial(target_type.desc)] The colors look a little dodgy."
-			return target_type //successfully "appearance copy" dyed something; returns the target type as a hacky way of extending
-	return FALSE
+	if(!dye_key_selector)
+		return FALSE
+	if(!GLOB.dye_registry[dye_key_selector])
+		log_runtime("Item just tried to be dyed with an invalid registry key: [dye_key_selector]")
+		return FALSE
+	var/obj/item/target_type = GLOB.dye_registry[dye_key_selector][dye_color]
+	if(!target_type)
+		return FALSE
+	if(initial(target_type.greyscale_config) && initial(target_type.greyscale_colors))
+		set_greyscale(
+			colors=initial(target_type.greyscale_colors),
+			new_config=initial(target_type.greyscale_config),
+			new_worn_config=initial(target_type.greyscale_config_worn),
+			new_inhand_left=initial(target_type.greyscale_config_inhand_left),
+			new_inhand_right=initial(target_type.greyscale_config_inhand_right)
+		)
+	else
+		icon = initial(target_type.icon)
+		lefthand_file = initial(target_type.lefthand_file)
+		righthand_file = initial(target_type.righthand_file)
+		worn_icon = initial(target_type.worn_icon)
+
+	icon_state = initial(target_type.icon_state)
+	inhand_icon_state = initial(target_type.inhand_icon_state)
+	worn_icon_state = initial(target_type.worn_icon_state)
+	inhand_x_dimension = initial(target_type.inhand_x_dimension)
+	inhand_y_dimension = initial(target_type.inhand_y_dimension)
+	name = initial(target_type.name)
+	desc = "[initial(target_type.desc)] The colors look a little dodgy."
+	return target_type //successfully "appearance copy" dyed something; returns the target type as a hacky way of extending
 
 //what happens to this object when washed inside a washing machine
 /atom/movable/proc/machine_wash(obj/machinery/washing_machine/WM)
@@ -289,19 +300,19 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 	else if(!user.combat_mode)
 		if (!state_open)
-			to_chat(user, "<span class='warning'>Open the door first!</span>")
+			to_chat(user, span_warning("Open the door first!"))
 			return TRUE
 
 		if(bloody_mess)
-			to_chat(user, "<span class='warning'>[src] must be cleaned up first!</span>")
+			to_chat(user, span_warning("[src] must be cleaned up first!"))
 			return TRUE
 
 		if(contents.len >= max_wash_capacity)
-			to_chat(user, "<span class='warning'>The washing machine is full!</span>")
+			to_chat(user, span_warning("The washing machine is full!"))
 			return TRUE
 
 		if(!user.transferItemToLoc(W, src))
-			to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
+			to_chat(user, span_warning("\The [W] is stuck to your hand, you cannot put it in the washing machine!"))
 			return TRUE
 		if(W.dye_color)
 			color_source = W
@@ -315,7 +326,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(.)
 		return
 	if(busy)
-		to_chat(user, "<span class='warning'>[src] is busy!</span>")
+		to_chat(user, span_warning("[src] is busy!"))
 		return
 
 	if(user.pulling && isliving(user.pulling))
@@ -335,16 +346,20 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		update_appearance()
 
 /obj/machinery/washing_machine/attack_hand_secondary(mob/user, modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(busy)
-		to_chat(user, "<span class='warning'>[src] is busy!</span>")
+		to_chat(user, span_warning("[src] is busy!"))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(state_open)
-		to_chat(user, "<span class='warning'>Close the door first!</span>")
+		to_chat(user, span_warning("Close the door first!"))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(bloody_mess)
-		to_chat(user, "<span class='warning'>[src] must be cleaned up first!</span>")
+		to_chat(user, span_warning("[src] must be cleaned up first!"))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	busy = TRUE
 	update_appearance()
@@ -362,5 +377,5 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /obj/machinery/washing_machine/open_machine(drop = 1)
 	..()
-	density = TRUE //because machinery/open_machine() sets it to 0
+	set_density(TRUE) //because machinery/open_machine() sets it to FALSE
 	color_source = null

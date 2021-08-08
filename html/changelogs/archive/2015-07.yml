@@ -1,0 +1,418 @@
+2015-07-01:
+  Ikarrus:
+  - rscadd: Multiple gang leaders are spawned at round start, the number which depends
+      on server population
+  - rscdel: Gangsters can no longer be promoted mid-game.
+  - rscadd: Security can once again deconvert gangsters with loyalty implants
+  - rscadd: Added an Implant Breaker item to the gangtool as a purchasable item for
+      10 influence each<BR>* They are a one-use item that destroys all implants in
+      the target, including loyalty implants<BR>* They will also attempt to recruit
+      the target before destroying itself
+  - rscdel: Implanters no longer work if the target is wearing headgear. Remove them
+      first.
+  NullQuery:
+  - tweak: The crew monitoring computer, AI crew monitoring popup and the handheld
+      crew monitor now update automatically.
+  - tweak: 'Crew monitoring: The health information has been turned into a health
+      indicator. It goes from green to red. Hovering over the icon shows detailed
+      information (if available).'
+  - tweak: 'Crew monitoring: The location coordinates have been hidden. You can see
+      them by hovering over the ''Location'' column.'
+  - rscadd: 'Crew monitoring: A minimap has been added so you can easily see where
+      people are.'
+  - tweak: 'Crew monitoring: Players who are not in range of a camera are not shown
+      on the minimap.'
+  - tweak: 'Crew monitoring: AI players can quickly move to other locations or track
+      players by clicking the minimap or items in the table.'
+  - tweak: 'Crew monitoring: For AI players, health information always shows a white
+      indicator instead of green-to-red. This is a deliberate limitation to prevent
+      the AI from becoming too omnipresent.'
+  phil235:
+  - tweak: Space drug overdose no longer cause brute/brain damage but you hallucinate
+      more. Space Drug Blob now makes you hallucinate even if you don't overdose on
+      its space drug.
+  xxalpha:
+  - rscadd: 'Added a new traitor objective: steal the station''s self-destruct nuke
+      plutonium core.'
+2015-07-02:
+  Ikarrus:
+  - rscadd: Throwing reagent containers such as drinks or beakers may spill their
+      contents onto whatever they hit
+  - rscadd: Slipping while carrying items in your hand may cause ~accidents~
+  - tweak: Mounted and portable flashers can now only be burned out from overuse,
+      similar to flashes.
+  oranges:
+  - tweak: Thanks to department budget cuts we've had to remove the security cameras
+      built into officer helmets, Nanotrasen apologies for this inconvenience.
+2015-07-03:
+  Ikarrus:
+  - experiment: Added support for up to six gangs at a time. Admins may add additional
+      gangs to any round.
+  - experiment: Gang mode now has a chance to start with a third gang.
+  - rscadd: Promotion of lieutenants have been re-added
+  - rscadd: Every lieutenant promoted will lengthen the gang's recruitment cooldowns
+      by one minute.
+  - rscdel: Only gang bosses will be able to recall the shuttle from their gangtool.
+  - rscadd: A recruitment pen that has not been used for a while will accumilate charges,
+      so you are no longer punished for waiting to convert people.
+  - rscadd: Gangs are now fully functional outside of gang mode.
+  Ricotez:
+  - rscadd: 'Added two categories of mutant bodyparts for humans with the same system
+      that lizards use: ears and tails. Right now only admins can edit these.'
+  - rscadd: Updated the system that checks for which jobs your character qualifies
+      to be species-dependant. At this moment you won't notice any differences, but
+      in the future coders can use this to be more specific about which jobs a species
+      is allowed in under which circumstances.
+  - imageadd: 'Added one option to both categories, taken from the kitty ears: a cat
+      tail and cat ears.'
+  - rscadd: 'Added a new button to the VV menu drop-down list for admins: Toggle Purrbation.
+      Putting a human on purrbation will give them cat ears and a cat tail, and send
+      them the message ''You suddenly feel valid.'' Using the button a second time
+      removes the effects.'
+  - wip: 'Adding categories for tattoos and scars is in the works. (Read: I need sprites!)'
+  oranges:
+  - tweak: Engineers in nanotrasen's safety equipment department announced the release
+      of a new and improved version of the X25 taser trigger, previous triggers, which
+      suffered from a long line of misfire problems were recalled enmasse. Nanotrasen
+      refused to comment on rumours that the previous trigger design was the work
+      of a saboteur.
+2015-07-04:
+  Gun Hog:
+  - tweak: The Ore Redemption Machine now allows users to release minerals without
+      having to insert an ID first.
+  Ikarrus:
+  - bugfix: Fixed items that logically shouldn't spill, spilling their contents when
+      thrown
+  - bugfix: Fixed Bartender's non-spilling powers
+  - bugfix: Fixed thrown beakers not applying their contents onto floors
+  - bugfix: Fixed unable to transfer reagents between beakers you are holding
+  - bugfix: Fixed bombs shredding clothes that should have been protected by covering
+      clothes
+  - bugfix: Fixed gang mode.
+  MMMiracles:
+  - rscadd: Added patriotic underwear apparel due to the most god damn american holiday
+      being just around the corner.
+  - rscadd: Also adds some other stuff for those inferior countires too, I guess.
+2015-07-05:
+  AlexanderUlanH & Xhuis:
+  - rscadd: Shadowling Ascendants have a new ability to send messages to the world.
+  - bugfix: Glare now properly silences targets.
+  - bugfix: Veil now turns off held lights.
+  - tweak: Drain Thralls replaced with Drain Life, which targets all nearby humans.
+  - rscadd: Spatial Relocation replaced with Black Recuperation which lets you revive
+      a dead thrall every five minutes.
+  - rscdel: Removed Vortex.
+  - tweak: Shadowlings can now only enthrall five people before being forced to hatch;
+      Hatched shadowlings can continue to enthrall however non-hatched ones can't
+      pass the global limit.
+  - tweak: Enthralling sends a message to all nearby humans.
+  - tweak: Removed cooldown on Glacial Freeze.
+  Ikarrus:
+  - tweak: Reactive armor may now teleport user to space tiles. Be careful using it
+      around space.
+  Razharas:
+  - tweak: Firing pins can now be removed by tablecrafting a gun with a plasmacutter,
+      screwdriver and wirecutters.
+  RemieRichards:
+  - imageadd: Melee attacks with weapons now display and animation of the weapon over
+      the target.
+  - rscadd: Tablecrafting window now shows all recipies and has been split into categorized
+      tabs.
+  - rscdel: 30 item limit removed.
+  Sabbat:
+  - rscadd: Updated the cult armor rune to let you get additional equipment or abilities
+      based on what you're wearing or holding. Some nerfed versions of wizard spells
+      can be used by the cult in exchange for unique clothing, these spells require
+      the cult robes or armor in order to use. No armor choices are mandatory, you
+      will always have the option of the default choice.
+  - rscadd: Zealot - Default armor rune. If none of the required clothing is worn
+      this will be chosen automatically. Is the same as ever.
+  - rscadd: Summoner - If you are wearing the wizard robe and hat when using the armor
+      rune this choice will be available. User will receive magus robes and hat and
+      nerfed versions of the summon shard and summon shell spells.
+  - rscadd: Traveler - Available to people wearing EVA suit and helmet. Replaces the
+      EVA suit and helmet with the cult space suit and space helmet. Gives you a sword.
+  - rscadd: Marauder - Available to people wearing the captain's space suit and helmet.
+      Same as Traveler except user is given a spell of summon creature (two creatures).
+      They can and will attack the user.
+  - rscadd: Trickster - Available if wearing the RD's reactive teleport armor. Gives
+      you magus robes, a wand of doors, and a nerfed version of Blink.
+  - rscadd: Physician - Available if wearing the CMO's labcoat. Gives you a wand of
+      life.
+  TheVekter:
+  - rscadd: Ian now has a dog-bed in the HoP's office.
+  nukeop:
+  - rscadd: Uplinks now have a syndicate surgery bag containing surgery tools, a muzzle,
+      a straightjacket and a syndicate MMI.
+  - rscadd: Syndicate MMIs can only be placed in cyborgs to create an unlinked cyborg
+      with syndicate laws.
+2015-07-06:
+  Ikarrus:
+  - tweak: Increased Uzi SMG cost to 60 influence.
+  - tweak: Increased Uzi ammo cost to 40 influence.
+  - tweak: Domination attempt limit is reduced to 1 per gang while the shuttle is
+      docked with the station.
+  - tweak: Gang bosses can promote and recall the shuttle using spare gangtools
+  - bugfix: Fixed Gang bosses getting deconverted with head trauma
+  - rscadd: Lizard characters can now get random names unique from humans.
+2015-07-07:
+  Ikarrus:
+  - bugfix: Fixed bug where gang messages would occasionally fail to send.
+  - bugfix: Fixed bug that prevented implant breakers from recruiting security.
+  - tweak: Implanters are now only blocked by helmets with THICKMATERIAL
+  - rscdel: Light severity explosions no longer shred clothes.
+  MMMiracles:
+  - rscadd: Adds a new crate to cargo in the security section, for when desperate
+      times call for desperate measures.
+  NullQuery:
+  - bugfix: Crew monitoring computers now sort by department and rank again.
+  - tweak: 'Crew monitoring computer: Hovering over a dot on the minimap will now
+      jump to the appropriate entry in the table.'
+  - bugfix: sNPCs were given ID cards with blank assignments.
+2015-07-09:
+  AlexanderUlanH:
+  - rscadd: Riot Shotguns now spawn loaded with rubber pellet shells that deal high
+      stamina damage.
+  kingofkosmos:
+  - tweak: Both beakers and drinking glasses can now be be drunk from, fed to mobs
+      and splashed on mobs, turfs and most objects with harm intent.
+  nukeop:
+  - tweak: RCDs have a larger storage and can be loaded with glass, metal and plasteel.
+  - rscadd: Grilles and Windows can be made with an RCD.
+  - rscadd: Engi-Vend machine now has three RCDs.
+  - rscdel: Removed RCD as a steal objective.
+2015-07-10:
+  Ikarrus:
+  - rscadd: 'New Changeling Ability: False Armblade Sting. It creates an undroppable
+      armblade on the target temporarily. It will appear exactly like a real one,
+      except you can''t do anything with it.'
+  - tweak: Transform stings are no longer stealthy.
+2015-07-11:
+  Dorsidwarf:
+  - tweak: Due to a new Syndicate budget, uplink implants are now only 14 TC.
+  - tweak: In order to facilitate inter-agent communication, Syndicate Encryption
+      Keys have been reduced to 2TC. They retain the ability to intercept all channels
+      and speak on a private frequency.
+  Ikarrus:
+  - tweak: Robotic augmentations have been made a bit more difficult to maintain.
+2015-07-13:
+  Ikarrus:
+  - imageadd: Loyalty Implant HUD Icon has been updated.
+  duncathan:
+  - tweak: Greatly shortened the time it takes to lay pipes with the RPD and to unwrench
+      pipes in general.
+  - rscadd: Added Optical T-Ray scanners to R&D and Atmospheric Technician closets.
+      Optical T-Ray Scanners function identically to a handheld scanner.
+2015-07-14:
+  AnturK:
+  - rscadd: New species of mimic was spotted in the wilderness of space. Watch out!
+  Jordie0608:
+  - rscadd: Added a Local Narrate verb for admins.
+2015-07-17:
+  Ikarrus:
+  - bugfix: Virology is no longer all-access.
+  - rscadd: Changelings now have the ability to swap forms with another being.
+  - tweak: Halved Domination Time.
+  - tweak: Reinforced windows and windoors are a bit more resistant to fires and blasts.
+  MrStonedOne:
+  - tweak: 'Scrubbers now use power: 10w + 10w for every gas its configured to filter.
+      (60w for siphon)'
+  - rscadd: Scrubbers can now be configured to operate on a 3x3 range via the air
+      alarm at a high cost (ranging from 100w to 1000w depending on how many tiles
+      are near it that aren't blocked and how much power it's using normally)
+  - tweak: Huge portable scrubbers (like in toxins storage) now use a 3x3 range rather
+      then a higher volume rate
+  - bugfix: Fixed issue with atmos not allowing low levels of plasma to spread
+  - bugfix: Fixed issue with atmos not adding or removing plasma overlays in some
+      cases
+  - tweak: Panic siphon now uses a 3x3 area range rather then increasing the scrubbers
+      intake rate by 8x
+  - tweak: Replace air uses 3x3 range for the first stage
+  - rscadd: 'Air alarms now have 3 new environmental modes:'
+  - rscadd: Siphon - Panic siphon without the panic, operates on a 1 tile range
+  - rscadd: Contaminated - Activates all gas filters and 3x3 scrubbing mode
+  - rscadd: Refill Air - 3 times the normal vent output
+2015-07-18:
+  AlexanderUlanH:
+  - tweak: Reduced stun duration of tabling to be closer to other stuns.
+  Iamgoofball:
+  - tweak: The Bioterror Chemical Sprayer is now filled with a more deadly mix of
+      chemicals.
+  RemieRichards:
+  - tweak: Changelings now regenerate chemicals and geneticdamage while dead, but
+      only up to specific caps (50% of their max chem storage, and 50 geneticdamage)
+  - tweak: Fakedeath's length has been reduced from 80s dead (1 minute 20) to 40s
+      dead
+  - rscadd: Changelings now get to see the last 8 messages the person they absorbed
+      said, to allow them to better impersonate their victim's speech patterns
+  Steelpoint:
+  - tweak: Reduced weight of Sechailer, it now fits in boxes.
+  phil:
+  - tweak: Smoke and foam touch reactions gets buffed.
+  - rscadd: Reagent dispensers (watertank, fueltank) tells you how much reagents they
+      have left when examined.
+  - tweak: Liquid dark matter blob spore smoke now cannot throw you. The effects of
+      sorium, blob sorium, liquid dark matter and blob liquid dark matter are now
+      scaled by their volume. Sorium/LDM blob's touch now throws the mobs who are
+      close but simply moves the mobs that are further away.
+2015-07-19:
+  Gun Hog:
+  - rscadd: Nanotrasen advancements in cyborg technology now allow for integrated
+      headlamps! As such, the flashlight package normally used as a module is now
+      seamlessly merged with their systems!
+  Ikarrus:
+  - rscadd: Asimov's subject of "human beings" can now be modified by uploaders.
+  - rscadd: Eaxmining AI modules while adjacent to them will show you what laws it
+      will upload.
+  MMMiracles:
+  - soundadd: Adds a TWANG sound effect when hitting things with a guitar.
+2015-07-20:
+  AnturK:
+  - tweak: Lightning Bolt now always bounces 5 times and deals 15 to 50 burn damage
+      to each target depending on the chargeup
+  KorPaheron:
+  - rscadd: Added the Multiverse Sword, a new wizard artifact that can summon clones
+      of yourself from other universes, allowing for dangerous amounts of recursion.
+  phil235:
+  - tweak: Mechs no longer use object verbs and the exosuit interface tab. They now
+      use action buttons. Mechs now have a cycle equipment action button to change
+      weapon faster than by using the view stats window. Mechs get two special alerts
+      when their battery or health is low. Mechs now properly consume energy when
+      moving and having their lights on. Using a mech tool that takes time to act
+      now shows a progress bar (e.g. mech drill).
+  - rscadd: Mechs now have a cycle equipment action button to change weapon faster
+      than by using the view stats window.
+  - rscadd: Mechs get two special alerts when their battery or health is low.
+  - tweak: Mechs now properly consume energy when moving and having their lights on.
+  - rscadd: Using a mech tool that takes time to act now shows a progress bar (e.g.
+      mech drill).
+2015-07-21:
+  Fayrik:
+  - tweak: Syndicate Donksoft gear now costs less.
+  Xhuis:
+  - rscadd: Firelocks may now be constructed and deconstructed with standard tools.
+      Circuit boards can be produced at a standard autolathe.
+  phil235:
+  - tweak: Thrown things no longer bounces off walls, unless they're in no gravity.
+      Heavy items and mobs thrown can push the mobs and non anchored objects they
+      land on. Throwing a mob onto a mob in no gravity will push each one in opposite
+      direction. Thrown mobs landing on wall, or dense object or mob gets stunned
+      and a bit injured. The damage when mob hit a wall is nerfed.
+2015-07-23:
+  NullQuery:
+  - tweak: 'Crew monitoring: The minimap now supports scaling. You can zoom in and
+      out using the buttons. Hovering over an entry in the table centers the minimap
+      on that part of the screen.'
+  - tweak: 'Crew monitoring: If the window is wide enough the health indicator will
+      expand to show full health data (if available).'
+  - tweak: 'Crew monitoring: Clicking on the area name will now copy the coordinates
+      to your clipboard.'
+  - tweak: 'Crew monitoring: The AI can view health information again, but there is
+      a 5 second delay between updates for everyone watching.'
+  freerealestate:
+  - rscadd: Added resist hotkeys for borgs and humans. With hotkeys mode, use CTRL+C
+      or C as a human and CTRL+C, C or END as a borg. With hotkeys mode off, use CTRL+C
+      as a human and END as a borg.
+  xxalpha:
+  - bugfix: Changeling augmented eyesight night vision is now working.
+2015-07-24:
+  Incoming5643:
+  - rscadd: The spells disintegrate and flesh to stone have had their mechanics changed.
+      Using these spells will spawn a special touch weapon in a free hand (your dominant
+      hand if possible) that can then be used to inflict the spell on the target of
+      your choice. Having the touch weapon out is obvious, this is not a stealth based
+      change. Clicking the spell while the hand is out will let you return the charge
+      without using it.
+  - rscdel: The spell won't begin to recharge until the hand attack is either used
+      or returned. Additionally these changes mean you can no longer use these spells
+      while stunned or handcuffed. As a suggestion remember that the mutate spell
+      allows you to break out of cuffs very easily, and warping abilities will keep
+      you from getting cuffed to begin with!
+2015-07-25:
+  Dorsisdwarf:
+  - tweak: Due to a fire sale at Syndicate HQ, many of the more interesting traitor
+      gadgets have been cut in price dramatically. Please take this opportunity to
+      make full use, as we cannot guarantee that the sale will last!
+  bgobandit:
+  - bugfix: Under pressure from the Animal Rights Consortium, Nanotrasen has improved
+      conditions at its cat and dog breeding facilities. Cats and pugs are now much
+      more responsive to their owners.
+  duncathan:
+  - tweak: Restores RPD delay on disposals machines.
+  xxalpha:
+  - tweak: Agent IDs are now rewrittable.
+2015-07-26:
+  Phil235:
+  - rscadd: Sechailers will now break when used too often.
+  - imageadd: Mechs now have new action button sprites.
+  Steelpoint:
+  - rscadd: Security Officers now spawn with a security breathmask in their internals
+      box.
+  - imageadd: Abductor's batons now changes color with modes.
+  - imageadd: Unique sprites for Abductor hand cuffs and paper.
+  goosefraba19:
+  - imageadd: Updated the Power Monitoring Console with better alignment and colorized
+      readouts.
+2015-07-27:
+  Bgobandit:
+  - bugfix: Burgers can now be made from corgi meat again.
+  Ikarrus:
+  - rscadd: Added shutters to the armory to allow quick access when needed.
+  - bugfix: Security can now use the Brig external airlocks.
+  - rscadd: Added a join queue when the server has exceeded the population cap.
+  - tweak: Decreased the cost of Body Swap and removed it's genetic damage.
+  kingofkosmos:
+  - rscadd: Added a link to re-enter corpse to alert when your body is placed in a
+      cloning scanner.
+2015-07-28:
+  Anonus:
+  - imageadd: New gang tags for Omni and Prima gangs.
+  Chiefwaffles:
+  - rscadd: After realizing how often AIs tend to 'disappear', Central Command has
+      authorized the shipment of the Automated Announcement System to take over the
+      AI's responsibility of announcing new arrivals.
+  - rscadd: In addition, users are able to configure the messages to their liking.
+      Early testing has shown that this feature may be vulnerable to malicious external
+      elements!
+  - rscadd: The station's R&D software has been updated so it can now succesfully
+      create its own prototype AAS board once the prerequisite levels have been met.
+  Dorsisdwarf:
+  - tweak: Increased the cost of Bioterror darts to 6TC.
+  Incoming5643:
+  - experiment: Double Agents no longer know they're Double Agents and not just standard
+      Traitors.
+  xxalpha:
+  - rscdel: Removed Anti-Drop and Nutriment Pump implants from Nuclear Operative's
+      uplink.
+2015-07-29:
+  AnturK:
+  - rscadd: Aliens can now mine through asteroid rock.
+  GunHog:
+  - tweak: Cyborg headlamps have a short cooldown before reactivation when forcibly
+      deactivated.
+  - bugfix: Shadowling's Veil now shuts down headlamps for the ability's entire duration.
+  Kor:
+  - rscadd: Eating the heart of a Slaughter Demon will grant you dark powers.
+  freerealestate:
+  - bugfix: Fixed bug where copying with ctrl+C didn't work due to it being assigned
+      to resist.
+  - rscadd: Changed resist to B (hotkeys mode) and ctrl+B (either mode) instead.
+  - rscdel: Removed End resist from cyborgs.
+2015-07-30:
+  Gun Hog:
+  - tweak: The Reactivate Camera power for Malfunctining AIs now costs 10 CPU, and
+      works on the entire camera network, up to 30 cameras fixed.
+  - tweak: The Upgrade Cameras power now costs 35 CPU, upgrades all cameras in the
+      network to have EMP proofing, X-ray, and gives the AI night-vision.
+  Ikarrus:
+  - rscadd: Door Access buttons can now be emagged to remove access restrictions.
+  LordPidey:
+  - rscadd: Added a new medication, Miner's Salve.  It heals brute/burn damage over
+      time, and has the side effect of making the patient think their wounds are fully
+      healed.  It is mixed with water+iron+oil, or grind a twinkie, a sheet of metal,
+      and a sheet of plasma.
+  - rscadd: Added a grinder to the mining station.
+  Midaychi:
+  - rscadd: Random loot has been added to the derelict as salvage for drones.
+  Scones:
+  - rscadd: Adds a Rice Hat to the biogenerator.

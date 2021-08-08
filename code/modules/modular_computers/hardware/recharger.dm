@@ -20,7 +20,7 @@
 		return
 
 	if(use_power(charge_rate, charging=1))
-		holder.give_power(charge_rate * GLOB.CELLRATE)
+		holder.give_power(charge_rate JOULES)
 
 
 /obj/item/computer_hardware/recharger/apc_recharger
@@ -55,7 +55,7 @@
 /obj/item/computer_hardware/recharger/wired/can_install(obj/item/modular_computer/M, mob/living/user = null)
 	if(ismachinery(M.physical) && M.physical.anchored)
 		return ..()
-	to_chat(user, "<span class='warning'>\The [src] is incompatible with portable computers!</span>")
+	to_chat(user, span_warning("\The [src] is incompatible with portable computers!"))
 	return FALSE
 
 /obj/item/computer_hardware/recharger/wired/use_power(amount, charging=0)

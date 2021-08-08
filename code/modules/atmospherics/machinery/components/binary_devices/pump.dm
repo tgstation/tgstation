@@ -18,6 +18,7 @@
 	shift_underlay_only = FALSE
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pump"
+	vent_movement = NONE
 	///Pressure that the pump will reach when on
 	var/target_pressure = ONE_ATMOSPHERE
 	///Frequency for radio signaling
@@ -38,7 +39,7 @@
 	if(can_interact(user))
 		target_pressure = MAX_OUTPUT_PRESSURE
 		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
-		to_chat(user, "<span class='notice'>You maximize the pressure output on [src] to [target_pressure] kPa.</span>")
+		balloon_alert(user, "pressure output set to [target_pressure] kPa")
 		update_appearance()
 	return ..()
 
@@ -156,7 +157,7 @@
 /obj/machinery/atmospherics/components/binary/pump/can_unwrench(mob/user)
 	. = ..()
 	if(. && on && is_operational)
-		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		to_chat(user, span_warning("You cannot unwrench [src], turn it off first!"))
 		return FALSE
 
 

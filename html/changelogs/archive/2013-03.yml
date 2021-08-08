@@ -1,0 +1,25 @@
+2013-03-06:
+  Petethegoat:
+  - rscadd: Petethegoat says, "Added a new feature involvi-GLORF"
+  - tweak: Overhauled how grabs work. There aren't any interesting mechanical differences
+      yet, but they should be a lot more effective already. You don't have to double
+      click them anymore. Report any bugs with grabbing directly to me, or on the
+      issue tracker.
+2013-03-08:
+  Kor:
+  - rscadd: You can now construct/destroy bookcases. This is super exciting and game
+      changing.
+2013-03-13:
+  Elo001:
+  - rscadd: You can now open and close job slots for some jobs at any IDcomputer.
+      There is a cooldown when opening or closing a position.
+2013-03-14:
+  Major_sephiroth:
+  - rscadd: You can now light cigarettes with other cigarettes, and candles. And cigars.
+      Light a cigar with a candle! It's possible now!
+2013-03-28:
+  Carnie:
+  - tweak: Empty character slots in your preferences screen will now randomize. So
+      they won't initialise as bald, diaper-clad, white-guys.
+  - tweak: Reworked the savefile versioning/updating code. Your preferences data is
+      less likely to be lost.

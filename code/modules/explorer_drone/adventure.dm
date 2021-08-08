@@ -8,6 +8,7 @@
 #define ADVENTURE_DEEP_SCAN_DESCRIPTION "deep_scan_description"
 #define ADVENTURE_NODES_FIELD "nodes"
 #define ADVENTURE_TRIGGERS_FIELD "triggers"
+#define ADVENTURE_VERSION_FIELD "version"
 
 #define NODE_NAME_FIELD "name"
 #define NODE_DESCRIPTION_FIELD "description"
@@ -41,25 +42,140 @@
 #define REQ_VALUE_FIELD "value"
 #define REQ_OPERATOR_FIELD "operator"
 
-GLOBAL_LIST_EMPTY(explorer_drone_adventures)
+#define CURRENT_ADVENTURE_VERSION 1
 
+/// All possible adventures in raw form
+GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 
+/// Loads all adventures from DB
 /proc/load_adventures()
 	. = list()
-	for(var/filename in flist(ADVENTURE_DIR))
-		var/datum/adventure/adventure = try_loading_adventure(filename)
-		if(adventure)
-			. += adventure
+	if(!SSdbcore.Connect())
+		GLOB.explorer_drone_adventure_db_entries = .
+		return
+	var/datum/db_query/Query = SSdbcore.NewQuery("SELECT id,adventure_data,uploader,timestamp,approved FROM [format_table_name("text_adventures")]")
+	if(!Query.Execute())
+		qdel(Query)
+		return
+	while(Query.NextRow())
+		var/datum/adventure_db_entry/entry = new()
+		entry.id = Query.item[1]
+		entry.raw_json = Query.item[2]
+		entry.uploader = Query.item[3]
+		entry.timestamp = Query.item[4]
+		entry.approved = Query.item[5]
+		entry.extract_metadata()
+		. += entry
+	qdel(Query)
+	GLOB.explorer_drone_adventure_db_entries = .
 
-/proc/try_loading_adventure(filename)
-	var/list/json_data = json_load(ADVENTURE_DIR+filename)
+/datum/adventure_db_entry
+	/// db id or null for freshly created adventures
+	var/id
+	/// actual adventure json string
+	var/raw_json
+	/// ckey of last change user.
+	var/uploader
+	/// Time of last change.
+	var/timestamp
+	/// Unapproved adventures won't be used for exploration sites.
+	var/approved = FALSE
+	/// Was the adventure used for exploration site this round.
+	var/placed = FALSE
+
+	//Variables below are extracted from the JSON
+
+	/// json version
+	var/version
+	/// adventure name
+	var/name
+	/// required site traits to use this adventure
+	var/list/required_site_traits
+
+/// Check if the adventure usable for given exploration site traits
+/datum/adventure_db_entry/proc/valid_for_use(list/site_traits)
+	if(!raw_json || version != CURRENT_ADVENTURE_VERSION || placed)
+		return FALSE
+	if(required_site_traits && length(required_site_traits - site_traits) != 0)
+		return FALSE
+	return TRUE
+
+/// Updates this entry from db, if possible.
+/datum/adventure_db_entry/proc/refresh()
+	if(id)
+		//Check if our timestamp is fresh, if not update local and stop
+		var/datum/db_query/SelectQuery = SSdbcore.NewQuery("SELECT adventure_data,uploader,timestamp,approved FROM [format_table_name("text_adventures")] WHERE id = :id",list("id" = id))
+		if(!SelectQuery.warn_execute() || !SelectQuery.NextRow())
+			qdel(SelectQuery)
+			return
+		raw_json = SelectQuery.item[1]
+		uploader = SelectQuery.item[2]
+		timestamp = SelectQuery.item[3]
+		approved = SelectQuery.item[4]
+		extract_metadata()
+		qdel(SelectQuery)
+		return
+	// No ID, nothing to be done.
+
+/// Pushes this entry changes to DB
+/datum/adventure_db_entry/proc/save()
+	if(id)
+		//We're up to date, update db instead
+		var/datum/db_query/UpdateQuery = SSdbcore.NewQuery("UPDATE [format_table_name("text_adventures")] SET adventure_data = :adventure_data,uploader = :uploader,approved = :approved WHERE id = :id AND timestamp < NOW()",
+		list("id" = id, "adventure_data" = raw_json, "uploader" = usr.ckey, "approved" = approved))
+		UpdateQuery.warn_execute()
+		qdel(UpdateQuery)
+	else
+		// Create new entry
+		var/datum/db_query/InsertQuery = SSdbcore.NewQuery("INSERT INTO [format_table_name("text_adventures")] (adventure_data, uploader) VALUES (:raw_json, :uploader)", list("raw_json" = raw_json, "uploader" = usr.ckey))
+		if(!InsertQuery.warn_execute())
+			qdel(InsertQuery)
+			return FALSE
+		id = InsertQuery.last_insert_id
+		qdel(InsertQuery)
+	refresh()
+
+/// Deletes the local AND db entry.
+/datum/adventure_db_entry/proc/remove()
+	if(id)
+		var/datum/db_query/DelQuery = SSdbcore.NewQuery("DELETE FROM [format_table_name("text_adventures")] WHERE id = :id", list("id" = id))
+		if(!DelQuery.warn_execute())
+			qdel(DelQuery)
+			return FALSE
+		log_admin("[key_name(usr)] deleted text adventure with id : [id], name : [name]")
+		qdel(DelQuery)
+	GLOB.explorer_drone_adventure_db_entries -= src
+	qdel(src)
+	return TRUE
+
+/// Extracts fields that are used by adventure browser / generation before instantiating
+/datum/adventure_db_entry/proc/extract_metadata()
+	if(!raw_json)
+		CRASH("Trying to extract metadata from empty adventure")
+	var/list/json_data = json_decode(raw_json)
 	if(!islist(json_data))
-		CRASH("Invalid JSON in adventure file [filename]")
+		CRASH("Invalid JSON for adventure with db id:[id]")
+	version = json_data[ADVENTURE_VERSION_FIELD] || 0
+	name = json_data[ADVENTURE_NAME_FIELD]
+	required_site_traits = json_data[ADVENTURE_REQUIRED_SITE_TRAITS_FIELD]
+
+/// Creates new adventure instance
+/datum/adventure_db_entry/proc/create_adventure()
+	if(version != CURRENT_ADVENTURE_VERSION)
+		CRASH("Trying to instance outdated adventure version")
+	return try_loading_adventure()
+
+/// Parses adventure JSON and returns /datum/adventure instance on success
+/datum/adventure_db_entry/proc/try_loading_adventure()
+	var/list/json_data = json_decode(raw_json)
+	if(!islist(json_data))
+		CRASH("Invalid JSON in adventure with id:[id], name:[name]")
+
 	//Basic validation of required fields, don't even bother loading if they are missing.
 	var/static/list/required_fields = list(ADVENTURE_NAME_FIELD,ADVENTURE_STARTING_NODE_FIELD,ADVENTURE_NODES_FIELD)
 	for(var/field in required_fields)
 		if(!json_data[field])
-			CRASH("Adventure file [filename] missing [field] value")
+			CRASH("Adventure id:[id], name:[name] missing [field] value")
 
 	var/datum/adventure/loaded_adventure = new
 	//load properties
@@ -72,19 +188,19 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 	loaded_adventure.deep_scan_description = json_data[ADVENTURE_DEEP_SCAN_DESCRIPTION]
 
 	for(var/list/node_data in json_data[ADVENTURE_NODES_FIELD])
-		var/datum/adventure_node/node = try_loading_node(node_data,filename)
+		var/datum/adventure_node/node = try_loading_node(node_data)
 		if(node)
 			if(loaded_adventure.nodes[node.id])
-				CRASH("Duplicate [node.id] node in [filename] adventure")
+				CRASH("Duplicate [node.id] node in id:[id], name:[name] adventure")
 			loaded_adventure.nodes[node.id] = node
 	loaded_adventure.triggers = json_data[ADVENTURE_TRIGGERS_FIELD]
 	if(!loaded_adventure.validate())
-		CRASH("Validation failed for [filename] adventure")
+		CRASH("Validation failed for id:[id], name:[name] adventure")
 	return loaded_adventure
 
-/proc/try_loading_node(node_data,adventure_filename)
+/datum/adventure_db_entry/proc/try_loading_node(node_data)
 	if(!islist(node_data))
-		CRASH("Invalid adventure node data in [adventure_filename] adventure.")
+		CRASH("Invalid adventure node data in id:[id], name:[name] adventure.")
 	var/datum/adventure_node/fresh_node = new
 	fresh_node.id = node_data[NODE_NAME_FIELD]
 	fresh_node.description = node_data[NODE_DESCRIPTION_FIELD]
@@ -96,6 +212,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 	fresh_node.on_enter_effects = node_data[NODE_ON_ENTER_EFFECTS_FIELD]
 	fresh_node.on_exit_effects = node_data[NODE_ON_EXIT_EFFECTS_FIELD]
 	return fresh_node
+
 /// text adventure instance, holds data about nodes/choices/etc and of current play state.
 /datum/adventure
 	/// Adventure name, this organization only, not visible to users
@@ -126,8 +243,8 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 	var/previous_node_id
 	/// Assoc list of quality name = value
 	var/list/qualities
-	/// Was this adventure placed on generated exploration site already.
-	var/placed = FALSE
+	/// Delayed state properties. If not null, means adventure is in delayed action state and will contain list(delay_time,delay_message)
+	var/list/delayed_action
 
 /// Basic sanity checks to ensure broken adventures are not used.
 /datum/adventure/proc/validate()
@@ -150,9 +267,6 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 /datum/adventure/proc/initialize_qualities()
 	qualities = starting_qualities || list()
 	SEND_SIGNAL(src,COMSIG_ADVENTURE_QUALITY_INIT,qualities)
-
-/datum/adventure/proc/end_delay()
-	return
 
 /datum/adventure/proc/navigate_to_node(node_id)
 	if(current_node)
@@ -188,8 +302,6 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 		else
 			return FALSE
 
-
-
 /datum/adventure/proc/select_choice(choice_id)
 	if(!current_node || !islist(current_node.choices[choice_id]))
 		return
@@ -208,11 +320,13 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 		if(!isnum(delay_time))
 			CRASH("Invalid delay in adventure [name]")
 		SEND_SIGNAL(src,COMSIG_ADVENTURE_DELAY_START,delay_time,delay_message)
+		delayed_action = list(delay_time,delay_message)
 		addtimer(CALLBACK(src,.proc/finish_delay,exit_id),delay_time)
 		return
 	navigate_to_node(exit_id)
 
 /datum/adventure/proc/finish_delay(exit_id)
+	delayed_action = null
 	navigate_to_node(exit_id)
 	SEND_SIGNAL(src,COMSIG_ADVENTURE_DELAY_END)
 

@@ -1,4 +1,5 @@
 /datum/fantasy_affix/cosmetic_suffixes
+	name = "purely cosmetic suffix"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_GOOD | AFFIX_EVIL
 
@@ -47,6 +48,7 @@
 
 //////////// Good suffixes
 /datum/fantasy_affix/bane
+	name = "of <mobtype> slaying (random species, carbon or simple animal)"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_GOOD
 
@@ -78,6 +80,7 @@
 	return "[newName] of [initial(picked_mobtype.name)] slaying"
 
 /datum/fantasy_affix/summoning
+	name = "of <mobtype> summoning (dangerous, can pick all but megafauna tier stuff)"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_GOOD
 	weight = 5
@@ -115,11 +118,12 @@
 	return "[newName] of [initial(picked_mobtype.name)] summoning"
 
 /datum/fantasy_affix/shrapnel
+	name = "shrapnel"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_GOOD
 
-/datum/fantasy_affix/shrapnel/validate(datum/component/fantasy/comp)
-	if(isgun(comp.parent))
+/datum/fantasy_affix/shrapnel/validate(obj/item/attached)
+	if(isgun(attached))
 		return TRUE
 	return FALSE
 
@@ -149,6 +153,7 @@
 	return "[newName] of [initial(picked_projectiletype.name)] shrapnel"
 
 /datum/fantasy_affix/strength
+	name = "of strength (knockback)"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_GOOD
 
@@ -161,11 +166,37 @@
 //////////// Bad suffixes
 
 /datum/fantasy_affix/fool
+	name = "of the fool (honking)"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_EVIL
 
 /datum/fantasy_affix/fool/apply(datum/component/fantasy/comp, newName)
 	. = ..()
 	var/obj/item/master = comp.parent
-	comp.appliedComponents += master.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20)
+	comp.appliedComponents += master.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg' = 1), 50, falloff_exponent = 20)
 	return "[newName] of the fool"
+
+/datum/fantasy_affix/curse_of_hunger
+	name = "curse of hunger"
+	placement = AFFIX_SUFFIX
+	alignment = AFFIX_EVIL
+
+/datum/fantasy_affix/curse_of_hunger/validate(obj/item/attached)
+	//curse of hunger that attaches onto food has the ability to eat itself. it's hilarious.
+	if(!IS_EDIBLE(attached))
+		return TRUE
+	return TRUE
+
+/datum/fantasy_affix/curse_of_hunger/apply(datum/component/fantasy/comp, newName)
+	. = ..()
+	var/obj/item/master = comp.parent
+	var/filter_color = "#8a0c0ca1" //clarified args
+	var/new_name = pick(", eternally hungry", " of the glutton", " cursed with hunger", ", consumer of all", " of the feast")
+	master.AddElement(/datum/element/curse_announcement, "[master] is cursed with the curse of hunger!", filter_color, new_name, comp)
+	var/add_dropdel = FALSE //clarified boolean
+	comp.appliedComponents += master.AddComponent(/datum/component/curse_of_hunger, add_dropdel)
+	return newName //no spoilers!
+
+/datum/fantasy_affix/curse_of_hunger/remove(datum/component/fantasy/comp)
+	var/obj/item/master = comp.parent
+	master.RemoveElement(/datum/element/curse_announcement) //just in case

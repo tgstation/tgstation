@@ -1,9 +1,3 @@
-///Max amount of radiation that can be emitted per reaction cycle
-#define FUSION_RAD_MAX 5000
-///Maximum instability before the reaction goes endothermic
-#define FUSION_INSTABILITY_ENDOTHERMALITY   4
-///Maximum reachable fusion temperature
-#define FUSION_MAXIMUM_TEMPERATURE 1e8
 ///Speed of light, in m/s
 #define LIGHT_SPEED 299792458
 ///Calculation between the plank constant and the lambda of the lightwave
@@ -52,3 +46,7 @@
 #define HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN 3 SECONDS
 
 #define HYPERTORUS_COUNTDOWN_TIME 30 SECONDS
+
+#define HYPERTORUS_SUBCRITICAL_MOLES 2000
+#define HYPERTORUS_HYPERCRITICAL_MOLES 10000
+#define HYPERTORUS_MAX_MOLE_DAMAGE 10

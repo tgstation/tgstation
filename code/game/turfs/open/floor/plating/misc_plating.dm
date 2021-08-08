@@ -344,3 +344,8 @@
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
+/turf/open/floor/plating/elevatorshaft
+	name = "elevator shaft"
+	icon_state = "elevatorshaft"
+	base_icon_state = "elevatorshaft"

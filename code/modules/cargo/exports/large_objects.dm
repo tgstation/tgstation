@@ -3,7 +3,7 @@
 	k_elasticity = 0
 	unit_name = "crate"
 	export_types = list(/obj/structure/closet/crate)
-	exclude_types = list(/obj/structure/closet/crate/large, /obj/structure/closet/crate/wooden)
+	exclude_types = list(/obj/structure/closet/crate/large, /obj/structure/closet/crate/wooden, /obj/structure/closet/crate/mail)
 
 /datum/export/large/crate/total_printout(datum/export_report/ex, notes = TRUE) // That's why a goddamn metal crate costs that much.
 	. = ..()
@@ -110,7 +110,8 @@
 /datum/export/large/gas_canister/get_cost(obj/O)
 	var/obj/machinery/portable_atmospherics/canister/C = O
 	var/worth = cost
-	var/canister_mix = C.air_contents.gases
+	var/datum/gas_mixture/canister_mix = C.return_air()
+	var/canister_gas = canister_mix.gases
 	var/list/gases_to_check = list(
 								/datum/gas/bz,
 								/datum/gas/stimulum,
@@ -129,13 +130,13 @@
 								)
 
 	for(var/gasID in gases_to_check)
-		C.air_contents.assert_gas(gasID)
-		if(canister_mix[gasID][MOLES] > 0)
-			worth += get_gas_value(gasID, canister_mix[gasID][MOLES])
+		canister_mix.assert_gas(gasID)
+		if(canister_gas[gasID][MOLES] > 0)
+			worth += get_gas_value(gasID, canister_gas[gasID][MOLES])
 
-	C.air_contents.garbage_collect()
+	canister_mix.garbage_collect()
 	return worth
 
 /datum/export/large/gas_canister/proc/get_gas_value(datum/gas/gasType, moles)
 	var/baseValue = initial(gasType.base_value)
-	return round((baseValue/k_elasticity) * 1 - NUM_E**(-1 * k_elasticity * moles))
+	return round((baseValue/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * moles)))

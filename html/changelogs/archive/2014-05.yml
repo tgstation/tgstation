@@ -1,0 +1,58 @@
+2014-05-07:
+  /Tg/station Code Management:
+  - wip: /tg/station code is now under a feature freeze until 7th June 2014. This
+      means that the team will be concentrating on fixing bugs instead of adding features
+      for the month.
+  - bugfix: You can find more information about the feature freeze here. http://tgstation13.org/phpBB/viewtopic.php?f=5&amp;t;=273
+  - bugfix: This is the perfect time to report bugs, which you can do so here. https://github.com/tgstation/-tg-station/issues/new
+2014-05-14:
+  Ikarrus:
+  - rscadd: A recent breakthrough in Plasma Materials Research has led to the development
+      of a stronger, tougher plasteel alloy that can better resist extreme heat by
+      up to four times. A live demonstration preformed during a press conference earlier
+      today showed a segment of reinforced wall resisting an attack by Thermite. The
+      corporation also announces that upgrades to its existing stations is already
+      underway.
+2014-05-16:
+  Menshin:
+  - rscadd: 'Thanks to Nanotrasen''s Engineering division, the power wiring of the
+      station has a received a complete overhaul. Here are the highlight features
+      in CentCom report :'
+  - tweak: 'Improved way of connecting cables! Finished is the time of "laying and
+      praying" : it''s now as simple as matching ends of each cables!'
+  - tweak: Unified way of connecting machines! Every machine is connected to a powernet
+      through a node cable (it still needs to be anchored to receive power though)!
+  - tweak: Lots of improvements in the cable cutting tools! Gone is the odd magic
+      of physically separated yet still connected powernets (contact CentCom Engineering
+      Division if you still witness something weird, we always have a fired form ready
+      for our engineers!)!
+  - rscadd: Any conscientious (or not!) Station Engineer may check an "updated wiring
+      manual" at http://www.tgstation13.org/wiki/Wiring#Power_Wires
+2014-05-20:
+  Kelenius:
+  - rscadd: 'After the years of extensive research into xenobiology, and thousands
+      of scientists lost to the slimes, we have finally come to admitting that we
+      don''t have a clue how they work. However, we''ve outlined a few facts, and
+      managed to breed a new kind of slimes. They will be shipped to your station
+      on the next shifts. They are different from the ones they are used to in the
+      following:'
+  - rscadd: Their sight is better than ever, and now they can finally see things that
+      are not directly pressed against them. Beware, they may appear more aggressive!
+  - rscadd: Their memory has also become better, and they will now remember the people
+      who fed them. As a note, you need to grab the monkey or push it to show to the
+      slime that you're giving it to them, and it's not just walking in.
+  - rscadd: Apparently, not only we have studied them, but they have also studied
+      us. Slimes are now capable of showing various emotions, mimicking humans. Use
+      it to your advantage.
+  - rscadd: There are reports of slimes showing signs of sentience. Further research
+      is recommended.
+  - rscadd: 'One of the reported signs is their speech capability. Following facts
+      have been gathered: they talk more often to those who feed them; they react
+      to being called by the number, but ''slimes'' is also acceptable; they are able
+      to understand being ordered to "follow" someone, or "stop". There is a report
+      of slime releasing the assistant after a scientist shouted at it, and then calmly
+      ordered a slime to stop.'
+  - rscadd: We've made a modification of a health scanner that is intended for the
+      use on slimes. Two are available in the smartfridge.
+  - tweak: We've come to a conclusion that 5 units of reagents are not necessary to
+      cause slime core reactions. You actually only need one unit.
