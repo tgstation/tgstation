@@ -8,15 +8,15 @@
 //then you MUST update the database!
 
 /// Roundstart
-#define ROLE_TRAITOR "Traitor"
-#define ROLE_WIZARD "Wizard"
 #define ROLE_CHANGELING "Changeling"
 #define ROLE_OPERATIVE "Operative"
+#define ROLE_TRAITOR "Traitor"
+#define ROLE_WIZARD "Wizard"
 
 /// Midrounds
+#define ROLE_REV_HEAD "Head Revolutionary"
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
 #define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
-#define ROLE_REV_HEAD "Head Revolutionary"
 
 /// Latejoins
 #define ROLE_SYNDICATE_INFILTRATOR "Syndicate Infiltrator"
@@ -97,7 +97,10 @@
 /// first connection in order to play.
 GLOBAL_LIST_INIT(special_roles, list(
 	// Roundstart
+	ROLE_CHANGELING = 0,
+	ROLE_OPERATIVE = 14,
 	ROLE_TRAITOR = 0,
+	ROLE_WIZARD = 14,
 
 	// Midround
 	ROLE_SLEEPER_AGENT = 0,
@@ -106,11 +109,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_SYNDICATE_INFILTRATOR = 0,
 
 	// MOTHBLOCKS TODO: Unsorted
-
 	ROLE_BROTHER = 0,
-	ROLE_OPERATIVE = 14,
-	ROLE_CHANGELING = 0,
-	ROLE_WIZARD = 14,
 	ROLE_MALF = 0,
 	ROLE_REV = 14,
 	ROLE_ALIEN = 0,
