@@ -166,11 +166,10 @@
 
 /obj/structure/transit_tube/station/proc/finish_stopped(obj/structure/transit_tube_pod/pod)
 	pod_moving = FALSE
-	if(!QDELETED(pod))
-		var/datum/gas_mixture/floor_mixture = loc.return_air()
-		floor_mixture.archive()
-		pod.air_contents.archive()
-		pod.air_contents.share(floor_mixture, 1) //mix the pod's gas mixture with the tile it's on
+	if(QDELETED(pod))
+		return
+	var/datum/gas_mixture/floor_mixture = loc.return_air()
+	if(pod.air_contents.equalize(floor_mixture)) //equalize the pod's mix with the tile it's on
 		air_update_turf(FALSE, FALSE)
 
 /obj/structure/transit_tube/station/init_tube_dirs()
