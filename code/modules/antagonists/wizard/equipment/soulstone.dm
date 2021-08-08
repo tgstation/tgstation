@@ -59,7 +59,7 @@
 
 /obj/item/soulstone/examine(mob/user)
 	. = ..()
-	if(role_check(user)||isobserver(user))
+	if(role_check(user) || isobserver(user))
 		if(!grab_sleeping)
 			. += span_cult("A soulstone, used to capture a soul, either from dead humans or from freed shades.")
 		else
@@ -404,4 +404,3 @@
 	init_shade(T, user , shade_controller = chosen_ghost)
 	qdel(T)
 	return TRUE
-
