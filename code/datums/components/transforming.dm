@@ -161,14 +161,11 @@
 	if(isnum(throwforce_on))
 		source.throwforce = throwforce_on + (source.sharpness ? sharpened_bonus : 0)
 		source.throw_speed = 4
-	if(hitsound_on)
-		source.hitsound = hitsound_on
-	if(attack_verb_continuous_on)
-		source.attack_verb_continuous = attack_verb_continuous_on
-	if(attack_verb_simple_on)
-		source.attack_verb_simple = attack_verb_simple_on
-	if(w_class_on)
-		source.w_class = w_class_on
+
+	source.hitsound = hitsound_on
+	source.attack_verb_continuous = attack_verb_continuous_on
+	source.attack_verb_simple = attack_verb_simple_on
+	source.w_class = w_class_on
 
 	source.icon_state = "[source.icon_state]_on"
 
@@ -186,14 +183,11 @@
 	if(isnum(throwforce_on))
 		source.throwforce = initial(source.throwforce) + (source.sharpness ? sharpened_bonus : 0)
 		source.throw_speed = initial(source.throw_speed)
-	if(hitsound_on)
-		source.hitsound = initial(source.hitsound)
-	if(attack_verb_continuous_on)
-		source.attack_verb_continuous = initial(source.attack_verb_continuous)
-	if(attack_verb_simple_on)
-		source.attack_verb_simple = initial(source.attack_verb_simple)
-	if(w_class_on)
-		source.w_class = initial(source.w_class)
+
+	source.hitsound = initial(source.hitsound)
+	source.attack_verb_continuous = initial(source.attack_verb_continuous)
+	source.attack_verb_simple = initial(source.attack_verb_simple)
+	source.w_class = initial(source.w_class)
 
 	source.icon_state = initial(source.icon_state)
 
