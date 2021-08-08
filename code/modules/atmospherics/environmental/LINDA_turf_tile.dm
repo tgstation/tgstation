@@ -6,6 +6,8 @@
 
 	///list of turfs adjacent to us that air can flow onto
 	var/list/atmos_adjacent_turfs
+	///The portion we should be sharing to each individual atmos adjacent turf, typically 1/length(atmos_adjacent_turfs)
+	var/share_coeff = 1
 	///bitfield of dirs in which we are superconducitng
 	var/atmos_supeconductivity = NONE
 
@@ -239,7 +241,7 @@
 	//cache for sanic speed
 	var/list/adjacent_turfs = atmos_adjacent_turfs
 	var/datum/excited_group/our_excited_group = excited_group
-	var/adjacent_turfs_length = LAZYLEN(adjacent_turfs)
+	var/our_share_coeff = 1/(LAZYLEN(adjacent_turfs) + 1)
 
 	var/datum/gas_mixture/our_air = air
 
@@ -284,7 +286,7 @@
 
 		//air sharing
 		if(should_share_air)
-			var/difference = our_air.share(enemy_air, adjacent_turfs_length)
+			var/difference = our_air.share(enemy_air, our_share_coeff, 1 / (LAZYLEN(enemy_tile.atmos_adjacent_turfs) + 1))
 			if(difference)
 				if(difference > 0)
 					consider_pressure_difference(enemy_tile, difference)
@@ -306,7 +308,7 @@
 				EG.add_turf(src)
 				our_excited_group = excited_group
 			// shares 4/5 of our difference in moles with the atmosphere
-			our_air.share(G, 0.25)
+			our_air.share(G, 0.8, 0.8)
 			// temperature share with the atmosphere with an inflated heat capacity to simulate faster sharing with a large atmosphere
 			our_air.temperature_share(G, OPEN_HEAT_TRANSFER_COEFFICIENT, G.temperature_archived, G.heat_capacity() * 5)
 			G.garbage_collect()

@@ -242,7 +242,7 @@
 	if (!can_teleport_notifies(user))
 		return
 
-	var/list/obj/effect/portal/created = create_portal_pair(get_turf(user), get_teleport_turf(get_turf(teleport_turf)), 300, 1, null)
+	var/list/obj/effect/portal/created = create_portal_pair(get_turf(user), get_teleport_turf(get_turf(teleport_target)), 300, 1, null)
 	if(LAZYLEN(created) != 2)
 		return
 
