@@ -187,9 +187,9 @@
 	if(throw_speed_on)
 		source.throw_speed = throw_speed_on
 
-	if(attack_verb_continuous_on)
+	if(LAZYLEN(attack_verb_continuous_on))
 		source.attack_verb_continuous = attack_verb_continuous_on
-	if(attack_verb_simple_on)
+	if(LAZYLEN(attack_verb_simple_on))
 		source.attack_verb_simple = attack_verb_simple_on
 
 	source.hitsound = hitsound_on
@@ -212,9 +212,9 @@
 	if(throw_speed_on)
 		source.throw_speed = initial(source.throw_speed)
 
-	if(attack_verb_continuous_on)
+	if(LAZYLEN(attack_verb_continuous_on))
 		source.attack_verb_continuous = attack_verb_continuous_off
-	if(attack_verb_simple_off)
+	if(LAZYLEN(attack_verb_simple_off))
 		source.attack_verb_simple = attack_verb_simple_off
 
 	source.hitsound = initial(source.hitsound)
@@ -237,7 +237,8 @@
 		return FALSE
 
 	if(prob(50))
-		to_chat(user, span_warning("You accidentally cut yourself with [parent], like a doofus!"))
+		var/hurt_self_verb = LAZYLEN(attack_verb_simple_on) ? pick(attack_verb_simple_on) : "hit"
+		to_chat(user, span_warning("You trigger [parent] while holding it backwards and [hurt_self_verb] yourself, like a doofus!"))
 		user.take_bodypart_damage(10)
 		return TRUE
 	return FALSE

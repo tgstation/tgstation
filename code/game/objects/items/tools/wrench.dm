@@ -95,6 +95,7 @@
 		throwforce_on = 8, \
 		hitsound_on = hitsound, \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
+		clumsy_check = FALSE, \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /*

@@ -342,6 +342,7 @@
 	AddComponent(/datum/component/transforming, \
 		throw_speed_on = throw_speed, \
 		hitsound_on = hitsound, \
+		clumsy_check = FALSE, \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /*

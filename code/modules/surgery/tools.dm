@@ -82,6 +82,7 @@
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
+		clumsy_check = FALSE, \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /*
@@ -276,6 +277,7 @@
 		sharpness_on = sharpness, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
+		clumsy_check = FALSE, \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /*
@@ -312,6 +314,7 @@
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
+		clumsy_check = FALSE, \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /*

@@ -370,6 +370,7 @@
 		force_on = active_force, \
 		hitsound_on = hitsound, \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
+		clumsy_check = FALSE, \
 		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"), \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
@@ -581,6 +582,7 @@
 		ovens = typecacheof(list(/obj/singularity, /obj/energy_ball, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire))
 	AddComponent(/datum/component/transforming, \
 		hitsound_on = hitsound, \
+		clumsy_check = FALSE, \
 		pre_transform_callback = CALLBACK(src, .proc/attempt_transform), \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
