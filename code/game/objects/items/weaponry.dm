@@ -386,9 +386,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		start_transformed = start_extended, \
 		force_on = 20, \
 		throwforce_on = 23, \
+		sharpness_on = SHARP_EDGED, \
 		hitsound_on = 'sound/weapons/bladeslice.ogg', \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
-		sharpness_on = SHARP_EDGED, \
 		attack_verb_continuous_on = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
 		attack_verb_simple_on = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"))
 

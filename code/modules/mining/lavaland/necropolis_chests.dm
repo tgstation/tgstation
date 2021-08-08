@@ -757,6 +757,9 @@
 		transform_cooldown_time = (CLICK_CD_MELEE * 0.25), \
 		force_on = open_force, \
 		throwforce_on = open_throwforce, \
+		sharpness_on = sharpness, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
 		attack_verb_continuous_on = list("cleaves", "swipes", "slashes", "chops"), \
 		attack_verb_simple_on = list("cleave", "swipe", "slash", "chop"), \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))

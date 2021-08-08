@@ -13,23 +13,23 @@
 	/// Cooldown on transforming this item back and forth
 	var/transform_cooldown_time
 	/// Force of the weapon when active
-	var/force_on = 0
+	var/force_on
 	/// Throwforce of the weapon when active
-	var/throwforce_on = 0
+	var/throwforce_on
 	/// Weight class of the weapon when active
-	var/w_class_on = WEIGHT_CLASS_BULKY
+	var/w_class_on
 	/// The sharpness of the weapon when active
-	var/sharpness_on = NONE
+	var/sharpness_on
 	/// Hitsound played when active
-	var/hitsound_on = 'sound/weapons/blade1.ogg'
+	var/hitsound_on
 	/// List of continuous attack verbs used when the weapon is enabled
-	var/list/attack_verb_continuous_on = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	var/list/attack_verb_continuous_on
 	/// List of simple attack verbs used when the weapon is enabled
-	var/list/attack_verb_simple_on = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	var/list/attack_verb_simple_on
 	/// Whether clumsy people need to succeed an RNG check to turn it on without hurting themselves
-	var/clumsy_check = TRUE
+	var/clumsy_check
 	/// If we get sharpened with a whetstone, save the bonus here for later use if we un/redeploy
-	var/sharpened_bonus
+	var/sharpened_bonus = 0
 	/// Callback to be invoked whenever the weapon is transformed.
 	var/datum/callback/on_transform_callback
 	/// Cooldown in between transforms
@@ -37,15 +37,15 @@
 
 /datum/component/transforming/Initialize(
 		start_transformed = FALSE,
-		transform_cooldown_time,
-		force_on,
-		throwforce_on,
-		sharpness_on,
-		hitsound_on,
-		w_class_on,
+		transform_cooldown_time = 0 SECONDS,
+		force_on = 0,
+		throwforce_on = 0,
+		sharpness_on = NONE,
+		hitsound_on = 'sound/weapons/blade1.ogg',
+		w_class_on = WEIGHT_CLASS_BULKY,
 		clumsy_check = TRUE,
-		list/attack_verb_continuous_on,
-		list/attack_verb_simple_on,
+		list/attack_verb_continuous_on = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"),
+		list/attack_verb_simple_on = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"),
 		datum/callback/on_transform_callback,
 		)
 
@@ -59,10 +59,8 @@
 	src.hitsound_on = hitsound_on
 	src.w_class_on = w_class_on
 	src.clumsy_check = clumsy_check
-	if(islist(attack_verb_continuous_on))
-		src.attack_verb_continuous_on = attack_verb_continuous_on
-	if(islist(attack_verb_simple_on))
-		src.attack_verb_simple_on = attack_verb_simple_on
+	src.attack_verb_continuous_on = attack_verb_continuous_on
+	src.attack_verb_simple_on = attack_verb_simple_on
 	src.on_transform_callback = on_transform_callback
 
 	if(start_transformed)

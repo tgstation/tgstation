@@ -23,14 +23,10 @@
 	var/active_hitsound = 'sound/weapons/blade1.ogg'
 	/// Weight class while active.
 	var/active_w_class = WEIGHT_CLASS_BULKY
-	/// Continuous Attack verbs used while active.
-	var/list/active_continuous_attack_verbs
-	/// Simple attack verbs used while active.
-	var/list/active_simple_attack_verbs
 	/// The color of this energy based sword, for use in editing the icon_state.
 	var/sword_color_icon
 	/// The sharpness when active.
-	var/active_sharpness
+	var/active_sharpness = NONE
 	/// The heat given off when active.
 	var/active_heat = 3500
 
@@ -54,8 +50,6 @@
 		sharpness_on = active_sharpness, \
 		hitsound_on = active_hitsound, \
 		w_class_on = active_w_class, \
-		attack_verb_continuous_on = active_continuous_attack_verbs, \
-		attack_verb_simple_on = active_simple_attack_verbs, \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /obj/item/melee/energy/suicide_act(mob/user)
@@ -136,6 +130,17 @@
 	active_force = 150
 	active_throwforce = 30
 	active_w_class = WEIGHT_CLASS_HUGE
+
+/obj/item/melee/energy/axe/make_transformable()
+	AddComponent(/datum/component/transforming, \
+		force_on = active_force, \
+		throwforce_on = active_throwforce, \
+		sharpness_on = active_sharpness, \
+		hitsound_on = active_hitsound, \
+		w_class_on = active_w_class, \
+		attack_verb_continuous_on = attack_verb_continuous, \
+		attack_verb_simple_on = attack_verb_simple, \
+		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /obj/item/melee/energy/axe/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -273,6 +278,8 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/blade1.ogg'
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	force = 30
 	throwforce = 1 // Throwing or dropping the item deletes it.
 	throw_speed = 3

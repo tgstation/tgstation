@@ -363,14 +363,13 @@
 	var/on_inhand_icon_state = "nullrod"
 	/// The force on extension.
 	var/active_force = 10
-	/// The weight class on extension.
-	var/active_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/melee/classic_baton/telescopic/Initialize()
 	. = ..()
 	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
-		w_class_on = active_w_class, \
+		hitsound_on = hitsound, \
+		w_class_on = WEIGHT_CLASS_NORMAL, \
 		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"), \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))

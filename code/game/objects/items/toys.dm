@@ -340,7 +340,7 @@
 /obj/item/toy/sword/Initialize()
 	. = ..()
 	AddComponent(/datum/component/transforming, \
-		w_class_on = WEIGHT_CLASS_BULKY, \
+		hitsound_on = hitsound, \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /*

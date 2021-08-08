@@ -262,7 +262,15 @@
 
 /obj/item/scalpel/advanced/Initialize()
 	. = ..()
-	AddComponent(/datum/component/transforming, force_on = force + 1, on_transform_callback = CALLBACK(src, .proc/after_transform))
+	AddComponent(/datum/component/transforming, \
+		force_on = force + 1, \
+		throwforce_on = force, \
+		sharpness_on = sharpness, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		attack_verb_continuous_on = attack_verb_continuous, \
+		attack_verb_simple_on = attack_verb_simple, \
+		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /*
  * Callback for the transforming component.
