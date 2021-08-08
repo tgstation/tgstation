@@ -346,9 +346,9 @@
 	icon_state = "telebaton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	inhand_icon_state = null
 	attack_verb_continuous = list("hits", "pokes")
 	attack_verb_simple = list("hit", "poke")
-	inhand_icon_state = ""
 	worn_icon_state = "tele_baton"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
@@ -401,7 +401,7 @@
  */
 /obj/item/melee/classic_baton/telescopic/proc/after_transform(mob/user, active)
 	extended = active
-	inhand_icon_state = active ? on_inhand_icon_state : "" // When inactive, there is no inhand icon_state.
+	inhand_icon_state = active ? on_inhand_icon_state : null // When inactive, there is no inhand icon_state.
 	balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
 	playsound(user ? user : loc, on_sound, 50, TRUE)
 
@@ -412,7 +412,6 @@
 	icon_state = "contractor_baton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	inhand_icon_state = null
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NONE
@@ -422,7 +421,7 @@
 	affect_cyborg = TRUE
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 
-	on_inhand_icon_state = "contractor_baton"
+	on_inhand_icon_state = "contractor_baton_on"
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	active_force = 16
 
