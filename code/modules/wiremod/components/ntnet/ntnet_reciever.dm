@@ -17,6 +17,7 @@
 	var/datum/port/output/data_package
 	var/datum/port/output/secondary_package
 	var/datum/port/input/enc_key
+	var/datum/port/input/option/data_type_options
 
 /obj/item/circuit_component/ntnet_receive/Initialize()
 	. = ..()
@@ -36,20 +37,20 @@
 		PORT_TYPE_LIST,
 		PORT_TYPE_ATOM,
 	)
-	options = component_options
-
-/obj/item/circuit_component/ntnet_receive/set_option(option)
-	. = ..()
-	data_package.set_datatype(option)
-	secondary_package.set_datatype(option)
+	data_type_options = add_option_port("Data Type", component_options)
 
 /obj/item/circuit_component/ntnet_receive/input_received(datum/port/input/port)
 	. = ..()
-	if(. || !COMPONENT_TRIGGERED_BY(push_hid, port))
+	if(.)
 		return
-
-	var/datum/component/ntnet_interface/ntnet_interface = GetComponent(/datum/component/ntnet_interface)
-	hid.set_output(ntnet_interface.hardware_id)
+		
+	if(COMPONENT_TRIGGERED_BY(data_type_options, port))
+		data_package.set_datatype(data_type_options.input_value)
+		secondary_package.set_datatype(data_type_options.input_value)
+		
+	if(COMPONENT_TRIGGERED_BY(push_hid, port))
+		var/datum/component/ntnet_interface/ntnet_interface = GetComponent(/datum/component/ntnet_interface)
+		hid.set_output(ntnet_interface.hardware_id)
 
 /obj/item/circuit_component/ntnet_receive/proc/ntnet_receive(datum/source, datum/netdata/data)
 	SIGNAL_HANDLER
