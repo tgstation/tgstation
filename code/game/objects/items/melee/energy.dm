@@ -13,28 +13,23 @@
 	stealthy_audio = TRUE
 	w_class = WEIGHT_CLASS_SMALL
 
+	/// The color of this energy based sword, for use in editing the icon_state.
+	var/sword_color_icon
 	/// Whether our blade is active or not.
 	var/blade_active = FALSE
 	/// Force while active.
 	var/active_force = 30
 	/// Throwforce while active.
 	var/active_throwforce = 20
-	/// Hitsound while active.
-	var/active_hitsound = 'sound/weapons/blade1.ogg'
 	/// Weight class while active.
 	var/active_w_class = WEIGHT_CLASS_BULKY
-	/// The color of this energy based sword, for use in editing the icon_state.
-	var/sword_color_icon
-	/// The sharpness when active.
-	var/active_sharpness = NONE
 	/// The heat given off when active.
 	var/active_heat = 3500
 
 /obj/item/melee/energy/Initialize()
 	. = ..()
 	make_transformable()
-	if(sharpness || active_sharpness)
-		AddComponent(/datum/component/butchering, _speed = 5 SECONDS, _butcher_sound = hitsound)
+	AddComponent(/datum/component/butchering, _speed = 5 SECONDS, _butcher_sound = hitsound)
 
 /obj/item/melee/energy/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -47,8 +42,7 @@
 	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
 		throwforce_on = active_throwforce, \
-		sharpness_on = active_sharpness, \
-		hitsound_on = active_hitsound, \
+		sharpness_on = SHARP_EDGED, \
 		w_class_on = active_w_class, \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
@@ -135,8 +129,7 @@
 	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
 		throwforce_on = active_throwforce, \
-		sharpness_on = active_sharpness, \
-		hitsound_on = active_hitsound, \
+		sharpness_on = SHARP_EDGED, \
 		w_class_on = active_w_class, \
 		attack_verb_continuous_on = attack_verb_continuous, \
 		attack_verb_simple_on = attack_verb_simple, \
@@ -161,8 +154,6 @@
 	armour_penetration = 35
 	block_chance = 50
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
-
-	active_sharpness = SHARP_EDGED
 
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(blade_active)
