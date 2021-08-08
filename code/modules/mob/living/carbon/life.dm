@@ -828,7 +828,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /mob/living/carbon/proc/can_heartattack()
 	if(!needs_heart())
 		return FALSE
-	if(!getorganslot(ORGAN_SLOT_HEART))
+	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	if(!heart || (heart.organ_flags & ORGAN_SYNTHETIC))
 		return FALSE
 	return TRUE
 

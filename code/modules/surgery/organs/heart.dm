@@ -65,12 +65,12 @@
 	if(!owner.needs_heart())
 		return
 
+	var/mob/living/carbon/heart_owner = owner
+
 	if(owner.client && beating)
 		failed = FALSE
 		var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
 		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
-		var/mob/living/carbon/heart_owner = owner
-
 
 		if(heart_owner.health <= heart_owner.crit_threshold && beat != BEAT_SLOW)
 			beat = BEAT_SLOW
@@ -88,7 +88,7 @@
 			heart_owner.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
-	if(organ_flags & ORGAN_FAILING && !(HAS_TRAIT(src, TRAIT_STABLEHEART))) //heart broke, stopped beating, death imminent... unless you have veins that pump blood without a heart
+	if(organ_flags & ORGAN_FAILING && && heart_owner.can_heartattack() !(HAS_TRAIT(src, TRAIT_STABLEHEART))) //heart broke, stopped beating, death imminent... unless you have veins that pump blood without a heart
 		if(owner.stat == CONSCIOUS)
 			owner.visible_message(span_danger("[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!"), \
 				span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
