@@ -13,6 +13,10 @@
 	var/list/items_list = list()// I would use contents, but they shuffle on every activation/deactivation leading to interface inconsistencies.
 	/// You can use this var for item path, it would be converted into an item on New().
 	var/obj/item/active_item
+	/// Sound played when extending
+	var/extend_sound = 'sound/mecha/mechmove03.ogg'
+	/// Sound played when retracting
+	var/retract_sound = 'sound/mecha/mechmove03.ogg'
 
 /obj/item/organ/cyberimp/arm/Initialize()
 	. = ..()
@@ -53,7 +57,8 @@
 
 /obj/item/organ/cyberimp/arm/examine(mob/user)
 	. = ..()
-	. += span_info("[src] is assembled in the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.")
+	if(status == ORGAN_ROBOTIC)
+		. += span_info("[src] is assembled in the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.")
 
 /obj/item/organ/cyberimp/arm/screwdriver_act(mob/living/user, obj/item/screwtool)
 	. = ..()
@@ -89,7 +94,7 @@
 
 /obj/item/organ/cyberimp/arm/emp_act(severity)
 	. = ..()
-	if(. & EMP_PROTECT_SELF)
+	if(. & EMP_PROTECT_SELF || status == ORGAN_ROBOTIC)
 		return
 	if(prob(15/severity) && owner)
 		to_chat(owner, span_warning("The electromagnetic pulse causes [src] to malfunction!"))
@@ -115,13 +120,13 @@
 	if(!active_item || (active_item in src))
 		return
 
-	owner.visible_message(span_notice("[owner] retracts [active_item] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
+	owner?.visible_message(span_notice("[owner] retracts [active_item] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
 		span_notice("[active_item] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
 		span_hear("You hear a short mechanical noise."))
 
 	owner.transferItemToLoc(active_item, src, TRUE)
 	active_item = null
-	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	playsound(get_turf(owner), retract_sound, 50, TRUE)
 
 /obj/item/organ/cyberimp/arm/proc/Extend(obj/item/augment)
 	if(!(augment in src))
@@ -157,7 +162,7 @@
 	owner.visible_message(span_notice("[owner] extends [active_item] from [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
 		span_notice("You extend [active_item] from your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
 		span_hear("You hear a short mechanical noise."))
-	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	playsound(get_turf(owner), extend_sound, 50, TRUE)
 
 /obj/item/organ/cyberimp/arm/ui_action_click()
 	if((organ_flags & ORGAN_FAILING) || (!active_item && !contents.len))

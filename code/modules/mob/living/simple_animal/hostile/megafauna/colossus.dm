@@ -91,7 +91,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = clamp(((maxHealth - health)/50),0,20)
-	ranged_cooldown = world.time + 120
+	update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = 12 SECONDS))
 
 	if(client)
 		switch(chosen_attack)
@@ -108,7 +108,7 @@
 	if(enrage(target))
 		if(move_to_delay == initial(move_to_delay))
 			visible_message(span_colossus("\"<b>You can't dodge.</b>\""))
-		ranged_cooldown = world.time + 30
+		update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = 3 SECONDS))
 		telegraph()
 		dir_shots(GLOB.alldirs)
 		move_to_delay = 3
@@ -136,7 +136,7 @@
 			. = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
-	ranged_cooldown = world.time + 40
+	update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = 4 SECONDS))
 	dir_shots(GLOB.diagonals)
 	SLEEP_CHECK_DEATH(10)
 	dir_shots(GLOB.cardinals)
@@ -189,7 +189,7 @@
 	P.fire(set_angle)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
-	ranged_cooldown = world.time + 30
+	update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = 3 SECONDS))
 	var/turf/U = get_turf(src)
 	playsound(U, 'sound/magic/clockwork/invoke_general.ogg', 300, TRUE, 5)
 	for(var/T in RANGE_TURFS(12, U) - U)
@@ -197,7 +197,7 @@
 			shoot_projectile(T)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast(set_angle)
-	ranged_cooldown = world.time + 20
+	update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = 2 SECONDS))
 	var/turf/target_turf = get_turf(target)
 	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 2)
 	newtonian_move(get_dir(target_turf, src))
@@ -272,113 +272,6 @@
 		else
 			SSexplosions.medturf += target
 
-//There can only ever be one blackbox, and we want to know if there already is one when we spawn
-GLOBAL_DATUM(blackbox, /obj/machinery/smartfridge/black_box)
-//Black Box
-/obj/machinery/smartfridge/black_box
-	name = "black box"
-	desc = "A completely indestructible chunk of crystal, rumoured to predate the start of this universe. It looks like you could store things inside it."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
-	icon_state = "blackbox"
-	light_range = 8
-	max_n_of_items = INFINITY
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	pixel_y = -4
-	use_power = NO_POWER_USE
-	base_build_path = /obj/machinery/smartfridge/black_box
-	var/memory_saved = FALSE
-	var/list/stored_items = list()
-	var/list/blacklist = list()
-
-/obj/machinery/smartfridge/black_box/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
-
-/obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
-	if(!istype(O))
-		return FALSE
-	if(blacklist[O])
-		visible_message(span_boldwarning("[src] ripples as it rejects [O]. The device will not accept items that have been removed from it."))
-		return FALSE
-	return TRUE
-
-/obj/machinery/smartfridge/black_box/Initialize()
-	. = ..()
-	if(GLOB.blackbox != src)
-		return INITIALIZE_HINT_QDEL_FORCE
-	GLOB.blackbox = src
-	ReadMemory()
-
-/obj/machinery/smartfridge/black_box/process()
-	..()
-	if(!memory_saved && SSticker.current_state == GAME_STATE_FINISHED)
-		WriteMemory()
-		memory_saved = TRUE
-
-/obj/machinery/smartfridge/black_box/proc/WriteMemory()
-	var/json_file = file("data/npc_saves/Blackbox.json")
-	stored_items = list()
-
-	for(var/obj/O in (contents-component_parts))
-		stored_items += O.type
-	var/list/file_data = list()
-	file_data["data"] = stored_items
-	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
-
-/obj/machinery/smartfridge/black_box/proc/ReadMemory()
-	if(fexists("data/npc_saves/Blackbox.sav")) //legacy compatability to convert old format to new
-		var/savefile/S = new /savefile("data/npc_saves/Blackbox.sav")
-		S["stored_items"] >> stored_items
-		fdel("data/npc_saves/Blackbox.sav")
-	else
-		var/json_file = file("data/npc_saves/Blackbox.json")
-		if(!fexists(json_file))
-			return
-		var/list/json = json_decode(file2text(json_file))
-		stored_items = json["data"]
-	if(isnull(stored_items))
-		stored_items = list()
-
-	for(var/item in stored_items)
-		create_item(item)
-
-//in it's own proc to avoid issues with items that nolonger exist in the code base.
-//try catch doesn't always prevent byond runtimes from halting a proc,
-/obj/machinery/smartfridge/black_box/proc/create_item(item_type)
-	var/obj/O = new item_type(src)
-	blacklist[O] = TRUE
-
-/obj/machinery/smartfridge/black_box/Destroy(force = FALSE)
-	if(force)
-		if(GLOB.blackbox == src)
-			GLOB.blackbox = null
-		for(var/thing in src)
-			qdel(thing)
-		return ..()
-	else
-		return QDEL_HINT_LETMELIVE
-
-
-//No taking it apart
-
-/obj/machinery/smartfridge/black_box/default_deconstruction_screwdriver()
-	return
-
-/obj/machinery/smartfridge/black_box/exchange_parts()
-	return
-
-
-/obj/machinery/smartfridge/black_box/default_pry_open()
-	return
-
-
-/obj/machinery/smartfridge/black_box/default_unfasten_wrench()
-	return
-
-/obj/machinery/smartfridge/black_box/default_deconstruction_crowbar()
-	return
-
 ///Anomolous Crystal///
 
 #define ACTIVATE_TOUCH "touch"
@@ -404,12 +297,16 @@ GLOBAL_DATUM(blackbox, /obj/machinery/smartfridge/black_box)
 	density = TRUE
 	var/activation_method
 	var/list/possible_methods = list(ACTIVATE_TOUCH, ACTIVATE_SPEECH, ACTIVATE_HEAT, ACTIVATE_BULLET, ACTIVATE_ENERGY, ACTIVATE_BOMB, ACTIVATE_MOB_BUMP, ACTIVATE_WEAPON, ACTIVATE_MAGIC)
-
 	var/activation_damage_type = null
-	var/last_use_timer = 0
-	var/cooldown_add = 30
+	/// Cooldown on this crystal
+	var/cooldown_add = 3 SECONDS
+	/// Time needed to use this crystal
+	var/use_time = 0
+	/// If we are being used
+	var/active = FALSE
 	var/list/affected_targets = list()
 	var/activation_sound = 'sound/effects/break_stone.ogg'
+	COOLDOWN_DECLARE(cooldown_timer)
 
 /obj/machinery/anomalous_crystal/Initialize(mapload)
 	. = ..()
@@ -449,14 +346,30 @@ GLOBAL_DATUM(blackbox, /obj/machinery/smartfridge/black_box)
 	ActivationReaction(P.firer, P.flag, P.damage_type)
 
 /obj/machinery/anomalous_crystal/proc/ActivationReaction(mob/user, method, damtype)
-	if(world.time < last_use_timer)
+	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		return FALSE
 	if(activation_damage_type && activation_damage_type != damtype)
 		return FALSE
 	if(method != activation_method)
 		return FALSE
-	last_use_timer = (world.time + cooldown_add)
+	if(active)
+		return FALSE
+	if(use_time)
+		charge_animation()
+	COOLDOWN_START(src, cooldown_timer, cooldown_add)
 	playsound(user, activation_sound, 100, TRUE)
+	return TRUE
+
+/obj/machinery/anomalous_crystal/proc/charge_animation()
+	icon_state = "anomaly_crystal_charging"
+	active = TRUE
+	set_anchored(TRUE)
+	balloon_alert_to_viewers("charging...")
+	playsound(src, 'sound/magic/disable_tech.ogg', 50, TRUE)
+	sleep(use_time)
+	icon_state = initial(icon_state)
+	active = FALSE
+	set_anchored(FALSE)
 	return TRUE
 
 /obj/machinery/anomalous_crystal/Bumped(atom/movable/AM)
@@ -471,20 +384,21 @@ GLOBAL_DATUM(blackbox, /obj/machinery/smartfridge/black_box)
 	observer_desc = "This crystal strips and equips its targets as clowns."
 	possible_methods = list(ACTIVATE_MOB_BUMP, ACTIVATE_SPEECH)
 	activation_sound = 'sound/items/bikehorn.ogg'
+	use_time = 3 SECONDS
 
 /obj/machinery/anomalous_crystal/honk/ActivationReaction(mob/user)
-	if(..() && ishuman(user) && !(user in affected_targets))
+	if(..() && ishuman(user) && !(user in affected_targets) && (user in viewers(src)))
 		var/mob/living/carbon/human/new_clown = user
 		for(var/obj/item/to_strip in new_clown)
 			new_clown.dropItemToGround(to_strip)
 		new_clown.dress_up_as_job(SSjob.GetJobType(/datum/job/clown))
 		affected_targets.Add(new_clown)
 
-
 /obj/machinery/anomalous_crystal/theme_warp //Warps the area you're in to look like a new one
 	observer_desc = "This crystal warps the area around it to a theme."
 	activation_method = ACTIVATE_TOUCH
-	cooldown_add = 200
+	cooldown_add = 20 SECONDS
+	use_time = 5 SECONDS
 	var/terrain_theme = "winter"
 	var/NewTerrainFloors
 	var/NewTerrainWalls
@@ -505,7 +419,7 @@ GLOBAL_DATUM(blackbox, /obj/machinery/smartfridge/black_box)
 			NewFlora = list(/mob/living/simple_animal/hostile/asteroid/goldgrub)
 			florachance = 1
 		if("winter") //Snow terrain is slow to move in and cold! Get the assistants to shovel your driveway.
-			NewTerrainFloors = /turf/open/floor/grass/snow/safe
+			NewTerrainFloors = /turf/open/floor/grass/snow/actually_safe
 			NewTerrainWalls = /turf/closed/wall/mineral/wood
 			NewTerrainChairs = /obj/structure/chair/wood
 			NewTerrainTables = /obj/structure/table/glass
@@ -554,39 +468,24 @@ GLOBAL_DATUM(blackbox, /obj/machinery/smartfridge/black_box)
 /obj/machinery/anomalous_crystal/emitter //Generates a projectile when interacted with
 	observer_desc = "This crystal generates a projectile when activated."
 	activation_method = ACTIVATE_TOUCH
-	cooldown_add = 50
-	var/obj/projectile/generated_projectile = /obj/projectile/beam/emitter
+	cooldown_add = 5 SECONDS
+	var/obj/projectile/generated_projectile = /obj/projectile/colossus
 
 /obj/machinery/anomalous_crystal/emitter/Initialize()
 	. = ..()
-	generated_projectile = pick(/obj/projectile/colossus)
-
-	var/proj_name = initial(generated_projectile.name)
-	observer_desc = "This crystal generates \a [proj_name] when activated."
+	observer_desc = "This crystal generates \a [initial(generated_projectile.name)] when activated."
 
 /obj/machinery/anomalous_crystal/emitter/ActivationReaction(mob/user, method)
 	if(..())
 		var/obj/projectile/P = new generated_projectile(get_turf(src))
-		P.setDir(dir)
-		switch(dir)
-			if(NORTH)
-				P.yo = 20
-				P.xo = 0
-			if(EAST)
-				P.yo = 0
-				P.xo = 20
-			if(WEST)
-				P.yo = 0
-				P.xo = -20
-			else
-				P.yo = -20
-				P.xo = 0
-		P.fire()
+		P.firer = src
+		P.fire(dir2angle(dir))
 
 /obj/machinery/anomalous_crystal/dark_reprise //Revives anyone nearby, but turns them into shadowpeople and renders them uncloneable, so the crystal is your only hope of getting up again if you go down.
 	observer_desc = "When activated, this crystal revives anyone nearby, but turns them into Shadowpeople and makes them unclonable, making the crystal their only hope of getting up again."
 	activation_method = ACTIVATE_TOUCH
 	activation_sound = 'sound/hallucinations/growl1.ogg'
+	use_time = 3 SECONDS
 
 /obj/machinery/anomalous_crystal/dark_reprise/ActivationReaction(mob/user, method)
 	if(..())
@@ -608,6 +507,7 @@ GLOBAL_DATUM(blackbox, /obj/machinery/smartfridge/black_box)
 	observer_desc = "This crystal allows ghosts to turn into a fragile creature that can heal people."
 	activation_method = ACTIVATE_TOUCH
 	activation_sound = 'sound/effects/ghost2.ogg'
+	use_time = 5 SECONDS
 	var/ready_to_deploy = FALSE
 
 /obj/machinery/anomalous_crystal/helpers/ActivationReaction(mob/user, method)
@@ -701,6 +601,7 @@ GLOBAL_DATUM(blackbox, /obj/machinery/smartfridge/black_box)
 /obj/machinery/anomalous_crystal/possessor //Allows you to bodyjack small animals, then exit them at your leisure, but you can only do this once per activation. Because they blow up. Also, if the bodyjacked animal dies, SO DO YOU.
 	observer_desc = "When activated, this crystal allows you to take over small animals, and then exit them at the possessors leisure. Exiting the animal kills it, and if you die while possessing the animal, you die as well."
 	activation_method = ACTIVATE_TOUCH
+	use_time = 1 SECONDS
 
 /obj/machinery/anomalous_crystal/possessor/ActivationReaction(mob/user, method)
 	if(..())

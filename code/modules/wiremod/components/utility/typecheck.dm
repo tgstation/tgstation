@@ -1,3 +1,6 @@
+#define COMP_TYPECHECK_MOB "organism"
+#define COMP_TYPECHECK_HUMAN "humanoid"
+
 /**
  * # Typecheck Component
  *
@@ -43,3 +46,6 @@
 		if(COMP_TYPECHECK_HUMAN)
 			return ishuman(input_val)
 
+
+#undef COMP_TYPECHECK_MOB
+#undef COMP_TYPECHECK_HUMAN

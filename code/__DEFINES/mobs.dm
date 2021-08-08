@@ -281,9 +281,26 @@
 //ED209's ignore monkeys
 #define JUDGE_IGNOREMONKEYS (1<<4)
 
-#define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5
-
 #define SHADOW_SPECIES_LIGHT_THRESHOLD 0.2
+
+#define COOLDOWN_UPDATE_SET_MELEE "set_melee"
+#define COOLDOWN_UPDATE_ADD_MELEE "add_melee"
+#define COOLDOWN_UPDATE_SET_RANGED "set_ranged"
+#define COOLDOWN_UPDATE_ADD_RANGED "add_ranged"
+#define COOLDOWN_UPDATE_SET_ENRAGE "set_enrage"
+#define COOLDOWN_UPDATE_ADD_ENRAGE "add_enrage"
+#define COOLDOWN_UPDATE_SET_SPAWN "set_spawn"
+#define COOLDOWN_UPDATE_ADD_SPAWN "add_spawn"
+#define COOLDOWN_UPDATE_SET_HELP "set_help"
+#define COOLDOWN_UPDATE_ADD_HELP "add_help"
+#define COOLDOWN_UPDATE_SET_DASH "set_dash"
+#define COOLDOWN_UPDATE_ADD_DASH "add_dash"
+#define COOLDOWN_UPDATE_SET_TRANSFORM "set_transform"
+#define COOLDOWN_UPDATE_ADD_TRANSFORM "add_transform"
+#define COOLDOWN_UPDATE_SET_CHASER "set_chaser"
+#define COOLDOWN_UPDATE_ADD_CHASER "add_chaser"
+#define COOLDOWN_UPDATE_SET_ARENA "set_arena"
+#define COOLDOWN_UPDATE_ADD_ARENA "add_arena"
 
 // Offsets defines
 

@@ -690,6 +690,8 @@
 #define COMSIG_CARBON_GAIN_TRAUMA "carbon_gain_trauma"
 ///Called when a carbon loses a brain trauma (source = carbon, trauma = what trauma was removed)
 #define COMSIG_CARBON_LOSE_TRAUMA "carbon_lose_trauma"
+///Called when a carbon updates their health (source = carbon)
+#define COMSIG_CARBON_HEALTH_UPDATE "carbon_health_update"
 
 // simple_animal signals
 /// called when a simplemob is given sentience from a potion (target = person who sentienced)
@@ -1246,6 +1248,8 @@
 #define COMSIG_MOB_ITEM_ATTACK_QDELETED "mob_item_attack_qdeleted"
 ///from base of mob/RangedAttack(): (atom/A, modifiers)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
+///from base of mob/ranged_secondary_attack(): (atom/target, modifiers)
+#define COMSIG_MOB_ATTACK_RANGED_SECONDARY "mob_attack_ranged_secondary"
 ///From base of atom/ctrl_click(): (atom/A)
 #define COMSIG_MOB_CTRL_CLICKED "mob_ctrl_clicked"
 ///From base of mob/update_movespeed():area

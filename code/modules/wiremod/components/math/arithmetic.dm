@@ -1,3 +1,10 @@
+#define COMP_ARITHMETIC_ADD "Add"
+#define COMP_ARITHMETIC_SUBTRACT "Subtract"
+#define COMP_ARITHMETIC_MULTIPLY "Multiply"
+#define COMP_ARITHMETIC_DIVIDE "Divide"
+#define COMP_ARITHMETIC_MIN "Minimum"
+#define COMP_ARITHMETIC_MAX "Maximum"
+
 /**
  * # Arithmetic Component
  *
@@ -73,3 +80,9 @@
 
 	output.set_output(result)
 
+#undef COMP_ARITHMETIC_ADD
+#undef COMP_ARITHMETIC_SUBTRACT
+#undef COMP_ARITHMETIC_MULTIPLY
+#undef COMP_ARITHMETIC_DIVIDE
+#undef COMP_ARITHMETIC_MIN
+#undef COMP_ARITHMETIC_MAX

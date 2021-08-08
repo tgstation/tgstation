@@ -61,64 +61,8 @@
 #define COMP_COMPARISON_GREATER_THAN_OR_EQUAL ">="
 #define COMP_COMPARISON_LESS_THAN_OR_EQUAL "<="
 
-// Delay defines
-/// The minimum delay value that the delay component can have.
-#define COMP_DELAY_MIN_VALUE 0.1
-
-// Logic defines
-#define COMP_LOGIC_AND "AND"
-#define COMP_LOGIC_OR "OR"
-#define COMP_LOGIC_XOR "XOR"
-
-// Arithmetic defines
-#define COMP_ARITHMETIC_ADD "Add"
-#define COMP_ARITHMETIC_SUBTRACT "Subtract"
-#define COMP_ARITHMETIC_MULTIPLY "Multiply"
-#define COMP_ARITHMETIC_DIVIDE "Divide"
-#define COMP_ARITHMETIC_MIN "Minimum"
-#define COMP_ARITHMETIC_MAX "Maximum"
-
-// Text defines
-#define COMP_TEXT_LOWER "To Lower"
-#define COMP_TEXT_UPPER "To Upper"
-
-// Typecheck component
-#define COMP_TYPECHECK_MOB "organism"
-#define COMP_TYPECHECK_HUMAN "humanoid"
-
 // Clock component
 #define COMP_CLOCK_DELAY 0.9 SECONDS
-
-// Radio component
-#define COMP_RADIO_PUBLIC "public"
-#define COMP_RADIO_PRIVATE "private"
-
-// Sound component
-#define COMP_SOUND_BUZZ "Buzz"
-#define COMP_SOUND_BUZZ_TWO "Buzz Twice"
-#define COMP_SOUND_CHIME "Chime"
-#define COMP_SOUND_HONK "Honk"
-#define COMP_SOUND_PING "Ping"
-#define COMP_SOUND_SAD "Sad Trombone"
-#define COMP_SOUND_WARN "Warn"
-#define COMP_SOUND_SLOWCLAP "Slow Clap"
-
-// Security Arrest Console
-#define COMP_STATE_ARREST "*Arrest*"
-#define COMP_STATE_PRISONER "Incarcerated"
-#define COMP_STATE_PAROL "Paroled"
-#define COMP_STATE_DISCHARGED "Discharged"
-#define COMP_STATE_NONE "None"
-
-#define COMP_SECURITY_ARREST_AMOUNT_TO_FLAG 10
-
-// Proccall component
-#define COMP_PROC_GLOBAL "Global"
-#define COMP_PROC_OBJECT "Object"
-
-// Bar overlay component
-#define COMP_BAR_OVERLAY_VERTICAL "Vertical"
-#define COMP_BAR_OVERLAY_HORIZONTAL "Horizontal"
 
 // Shells
 
