@@ -1,6 +1,6 @@
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { Button, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, RoundGauge, Dimmer, Modal } from '../components';
+import { Button, ColorBox, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, RoundGauge, Dimmer, Modal } from '../components';
 import { Window } from '../layouts';
 
 const ID2MODULE = {
@@ -347,17 +347,21 @@ const RadCounter = (props, context) => {
     usercontam,
   } = data;
   return (
-    <Stack fill vertical>
+    <Stack fill>
       <Stack.Item>
-        {active && userrads}
+        <Section title="Radiation Magnitude">
+          {active && userrads ? userrads : "N/A"}
+        </Section>
       </Stack.Item>
       <Stack.Item>
-        {active && usercontam}
+        <Section title="Radiation Contamination">
+          {active && usercontam ? usercontam : "N/A"}
+        </Section>
       </Stack.Item>
       <Stack.Item>
         <RoundGauge
           size={3}
-          value={active ? radcount : 0}
+          value={active ? radcount : "N/A"}
           minValue={0}
           maxValue={1500}
           alertAfter={400}
