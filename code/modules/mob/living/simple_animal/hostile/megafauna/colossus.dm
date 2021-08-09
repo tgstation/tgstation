@@ -276,6 +276,7 @@
 		var/mob/living/dust_mob = target
 		if(dust_mob.stat == DEAD)
 			dust_mob.dust()
+		return
 	if(!explode_hit_objects)
 		return
 	if(isturf(target) || isobj(target))
