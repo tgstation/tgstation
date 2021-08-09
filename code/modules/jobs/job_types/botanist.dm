@@ -6,6 +6,7 @@
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
+	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/botanist
 	plasmaman_outfit = /datum/outfit/plasmaman/botany
@@ -14,7 +15,9 @@
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_BOTANIST
 	bounty_types = CIV_JOB_GROW
-	departments = DEPARTMENT_SERVICE
+	departments_list = list(
+		/datum/job_department/service,
+		)
 
 	family_heirlooms = list(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/toy/plush/beeplushie)
 
@@ -27,7 +30,7 @@
 		/obj/item/food/monkeycube/bee = 2
 	)
 
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS
 
 
 /datum/outfit/job/botanist
