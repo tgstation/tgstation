@@ -296,9 +296,9 @@
 	S.colour = mobcolour
 
 /obj/effect/mob_spawn/facehugger/create(mob/user) //Creates a squashed facehugger
-	var/mob/living/simple_animal/hostile/facehugger/dead_hugger = new(src.loc)
+	var/mob/living/simple_animal/hostile/facehugger/dead_hugger = new(loc)
 	dead_hugger.sterile = TRUE
-	dead_hugger.name = src.name
+	dead_hugger.name = name
 	dead_hugger.death()
 	qdel(src)
 
