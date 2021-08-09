@@ -129,7 +129,10 @@
 /datum/chemical_reaction/moon_rock/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/food/drug/moon_rock(location)
+		var/obj/item/food/drug/moon_rock/new_rock = new(location)
+		new_rock.pixel_x = rand(-6, 6)
+		new_rock.pixel_y = rand(-6, 6)
+
 /datum/chemical_reaction/blastoff_ampoule
 	required_reagents = list(/datum/reagent/silver = 10, /datum/reagent/toxin/cyanide = 10, /datum/reagent/lye = 5)
 	mob_react = FALSE
@@ -137,8 +140,11 @@
 
 /datum/chemical_reaction/blastoff_ampoule/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/reagent_containers/glass/blastoff_ampoule(location)
+	for(var/iteration = 1, iteration <= created_volume, iteration++)
+		var/obj/item/reagent_containers/glass/blastoff_ampoule/new_ampoule = new(location)
+		new_ampoule.pixel_x = rand(-6, 6)
+		new_ampoule.pixel_y = rand(-6, 6)
+
 /datum/chemical_reaction/saturnx_glob
 	required_reagents = list(/datum/reagent/lead = 5, /datum/reagent/consumable/nothing = 5, /datum/reagent/drug/maint/tar = 10)
 	mob_react = FALSE
@@ -146,5 +152,7 @@
 
 /datum/chemical_reaction/saturnx_glob/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/food/drug/saturnx(location)
+	for(var/iteration = 1, iteration <= created_volume, iteration++)
+		var/obj/item/food/drug/saturnx/new_glob = new(location)
+		new_glob.pixel_x = rand(-6, 6)
+		new_glob.pixel_y = rand(-6, 6)

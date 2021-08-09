@@ -11,7 +11,8 @@
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	//wow, lore
-	desc = "A hefty lead pipe.\nLead in an uncommon sight in this sector after being phased out due to employee health concerns.\nThose of a more cynical disposition assume that the NT lead ban is a scheme to prevent the metal from being diverted to Syndicate ammunition factories."
+	desc = "A hefty lead pipe.\nLead in an uncommon sight in this sector after being phased out due to employee health concerns. \
+	\nThose of a more cynical disposition assume that the NT lead ban is a scheme to prevent divertion to Syndicate ammunition factories."
 	force = 15
 	throwforce = 12
 	throw_range = 4
@@ -35,9 +36,6 @@
 
 //starts partially discharged
 /obj/item/stock_parts/cell/lead/Initialize()
+	AddElement(/datum/element/update_icon_blocker)
 	. = ..()
 	charge = rand(0.2,0.8) * maxcharge
-
-/obj/item/stock_parts/cell/lead/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_blocker)

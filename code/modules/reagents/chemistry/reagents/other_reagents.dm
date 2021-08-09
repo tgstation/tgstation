@@ -2771,9 +2771,9 @@
 	color = "#80919d"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 
-/datum/reagent/lead/on_mob_life(mob/living/carbon/M)
+/datum/reagent/lead/on_mob_life(mob/living/carbon/victim)
 	. = ..()
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5)
+	victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5)
 
 //The main feedstock for kronkaine production, also a shitty stamina healer.
 /datum/reagent/kronkus_extract
@@ -2784,8 +2784,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 5)
 
-/datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/M)
+/datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer)
 	. = ..()
-	M.adjustOrganLoss(ORGAN_SLOT_HEART, 0.3)
-	M.adjustStaminaLoss(-2, FALSE)
+	kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
+	kronkus_enjoyer.adjustStaminaLoss(-2, FALSE)
 

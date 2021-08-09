@@ -10,6 +10,7 @@
 	eatverbs = list("gnaws" = 1)
 	bite_consumption = 10
 	w_class = WEIGHT_CLASS_TINY
+	preserved_food = TRUE
 
 /obj/item/food/drug/saturnx
 	name = "saturnX glob"
@@ -48,23 +49,23 @@
 		icon_state = base_icon_state
 
 /obj/item/reagent_containers/glass/blastoff_ampoule/attack_self(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && !spillable)
-		reagent_flags |= OPENCONTAINER
-		spillable = TRUE
-		playsound(src, 'sound/items/ampoule_snap.ogg', 40)
-		update_appearance()
-		return
-	. = ..()
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) || spillable)
+		return ..()
+	reagent_flags |= OPENCONTAINER
+	spillable = TRUE
+	playsound(src, 'sound/items/ampoule_snap.ogg', 40)
+	update_appearance()
 
 /obj/item/reagent_containers/glass/blastoff_ampoule/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(!.) //if the bottle wasn't caught
-		if(QDELING(src) || !hit_atom)		//Invalid loc
-			return
-		var/obj/item/shard/ampoule_shard = new(drop_location())
-		playsound(src, "shatter", 40, TRUE)
-		transfer_fingerprints_to(ampoule_shard)
-		spillable = TRUE
-		SplashReagents(hit_atom, TRUE)
-		qdel(src)
-		hit_atom.Bumped(ampoule_shard)
-
+	. = ..()
+	if(.)
+		return
+	if(QDELING(src) || !hit_atom)	//Invalid loc
+		return
+	var/obj/item/shard/ampoule_shard = new(drop_location())
+	playsound(src, "shatter", 40, TRUE)
+	transfer_fingerprints_to(ampoule_shard)
+	spillable = TRUE
+	SplashReagents(hit_atom, TRUE)
+	qdel(src)
+	hit_atom.Bumped(ampoule_shard)
