@@ -651,7 +651,7 @@
 /area/awaymission/beach)
 "ce" = (
 /obj/effect/turf_decal/sand,
-/obj/effect/spawner/random/machinery/snackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "cf" = (

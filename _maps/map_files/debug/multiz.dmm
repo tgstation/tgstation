@@ -460,7 +460,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bT" = (
-/obj/effect/spawner/random/machinery/arcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bU" = (

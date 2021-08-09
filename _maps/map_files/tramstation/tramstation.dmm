@@ -82,7 +82,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 5
 	},
-/obj/effect/spawner/random/machinery/colavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/hallway/primary/port)
@@ -3436,7 +3436,7 @@
 /turf/open/floor/iron,
 /area/engineering/engine_smes)
 "amm" = (
-/obj/effect/spawner/random/machinery/colavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/service/bar)
@@ -6839,7 +6839,7 @@
 /turf/open/floor/iron,
 /area/service/kitchen)
 "aww" = (
-/obj/effect/spawner/random/machinery/colavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -10090,7 +10090,7 @@
 /turf/open/floor/plating/airless,
 /area/mine/explored)
 "aHn" = (
-/obj/effect/spawner/random/machinery/snackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -11417,7 +11417,7 @@
 /turf/open/floor/iron,
 /area/commons/lounge)
 "aOR" = (
-/obj/effect/spawner/random/machinery/colavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
@@ -12806,7 +12806,7 @@
 /turf/open/openspace/airless/planetary,
 /area/space)
 "aYs" = (
-/obj/effect/spawner/random/machinery/snackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -12978,7 +12978,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/effect/spawner/random/machinery/arcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/iron,
 /area/service/bar)
 "aZI" = (
@@ -22036,7 +22036,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/security/prison)
 "ewP" = (
-/obj/effect/spawner/random/machinery/colavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
@@ -26784,7 +26784,7 @@
 /turf/open/floor/carpet,
 /area/commons/vacant_room/office)
 "gsT" = (
-/obj/effect/spawner/random/machinery/arcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
 	},
@@ -42430,7 +42430,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/thinplating/dark,
-/obj/effect/spawner/random/machinery/colavend,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/exit/departure_lounge)
 "mqi" = (
@@ -44976,7 +44976,7 @@
 /turf/open/floor/iron,
 /area/commons/lounge)
 "ntM" = (
-/obj/effect/spawner/random/machinery/snackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
@@ -58363,7 +58363,7 @@
 /turf/closed/wall,
 /area/cargo/miningdock)
 "sHf" = (
-/obj/effect/spawner/random/machinery/snackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1

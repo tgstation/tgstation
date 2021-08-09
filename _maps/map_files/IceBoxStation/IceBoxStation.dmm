@@ -66,7 +66,7 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "aaA" = (
-/obj/effect/spawner/random/machinery/arcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/prison)
@@ -3701,7 +3701,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "aoF" = (
-/obj/effect/spawner/random/machinery/snackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
@@ -7094,7 +7094,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "aJv" = (
-/obj/effect/spawner/random/machinery/colavend,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/dark,
 /area/hallway/primary/central)
 "aJw" = (
@@ -7244,7 +7244,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "aKG" = (
-/obj/effect/spawner/random/machinery/snackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron/dark,
 /area/hallway/primary/central)
 "aKK" = (
@@ -7678,7 +7678,7 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "aOf" = (
-/obj/effect/spawner/random/machinery/snackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -7717,7 +7717,7 @@
 /turf/open/floor/iron/grimy,
 /area/hallway/secondary/entry)
 "aOk" = (
-/obj/effect/spawner/random/machinery/colavend,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/entry)
 "aOl" = (
@@ -7867,7 +7867,7 @@
 /turf/open/floor/iron/grimy,
 /area/hallway/secondary/entry)
 "aPy" = (
-/obj/effect/spawner/random/machinery/snackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/entry)
 "aPz" = (
@@ -8372,7 +8372,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/effect/spawner/random/machinery/arcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
@@ -9924,7 +9924,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/spawner/random/machinery/snackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "bgj" = (
@@ -27875,7 +27875,7 @@
 /turf/open/floor/wood,
 /area/service/library)
 "hgm" = (
-/obj/effect/spawner/random/machinery/colavend,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/white/side{
 	dir = 10
 	},
@@ -30308,7 +30308,7 @@
 /turf/open/floor/iron/white,
 /area/science/lab)
 "iET" = (
-/obj/effect/spawner/random/machinery/colavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/machinery/status_display/evac/directional/north,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -33779,7 +33779,7 @@
 /turf/open/floor/iron,
 /area/science/xenobiology)
 "kCG" = (
-/obj/effect/spawner/random/machinery/arcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain)
 "kCM" = (
@@ -34641,7 +34641,7 @@
 /turf/open/floor/wood,
 /area/service/library)
 "let" = (
-/obj/effect/spawner/random/machinery/snackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "lez" = (
@@ -40540,7 +40540,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/effect/spawner/random/machinery/arcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/iron,
 /area/service/bar)
 "oqO" = (
@@ -41015,7 +41015,7 @@
 /turf/open/floor/iron,
 /area/maintenance/starboard)
 "oEP" = (
-/obj/effect/spawner/random/machinery/colavend,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron,
 /area/commons/locker)
 "oEQ" = (
@@ -46915,7 +46915,7 @@
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "rRa" = (
-/obj/effect/spawner/random/machinery/colavend,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/wood,
 /area/command/meeting_room)
 "rRc" = (
@@ -47340,7 +47340,7 @@
 /turf/open/floor/plating,
 /area/engineering/main)
 "seU" = (
-/obj/effect/spawner/random/machinery/colavend,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/wood,
 /area/service/bar)
 "sfb" = (
@@ -52445,7 +52445,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown,
-/obj/effect/spawner/random/machinery/snackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
@@ -55198,7 +55198,7 @@
 	},
 /area/service/kitchen/diner)
 "wBy" = (
-/obj/effect/spawner/random/machinery/snackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/wood,
 /area/command/meeting_room)
 "wBO" = (

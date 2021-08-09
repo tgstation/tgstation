@@ -680,7 +680,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "aY" = (
-/obj/effect/spawner/random/machinery/snackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/random{
@@ -789,7 +789,7 @@
 /turf/open/floor/iron/white/side,
 /area/ruin/space/has_grav/listeningstation)
 "bh" = (
-/obj/effect/spawner/random/machinery/colavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/corner{

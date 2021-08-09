@@ -796,7 +796,7 @@
 	},
 /area/awaymission/snowdin/post/research)
 "cF" = (
-/obj/effect/spawner/random/machinery/colavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1176,7 +1176,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/research)
 "dm" = (
-/obj/effect/spawner/random/machinery/snackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

@@ -650,7 +650,7 @@
 /turf/open/floor/iron,
 /area/ctf)
 "mf" = (
-/obj/effect/spawner/random/machinery/arcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/wood,
 /area/ctf)
 "mj" = (
