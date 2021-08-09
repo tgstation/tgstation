@@ -283,7 +283,7 @@
 
 	var/origin_turf = get_turf(src)
 	if(client)
-		for(var/mob/ghost in GLOB.dead_mob_list)
+		for(var/mob/ghost as anything in GLOB.dead_mob_list)
 			if(!ghost.client || isnewplayer(ghost))
 				continue
 			if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(origin_turf, null)))
