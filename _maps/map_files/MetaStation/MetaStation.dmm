@@ -25882,16 +25882,10 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "ggm" = (
-/obj/structure/table,
-/obj/item/reagent_containers/glass/beaker{
-	pixel_x = 5
-	},
-/obj/item/reagent_containers/food/condiment/enzyme{
-	layer = 5
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/oven,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "ggE" = (
@@ -54986,6 +54980,12 @@
 	dir = 4
 	},
 /obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/food/condiment/enzyme{
+	layer = 5
+	},
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 5
+	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
