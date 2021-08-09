@@ -46,15 +46,22 @@ const CharacterProfiles = (props: {
 const PageButton: StatelessComponent<{
   currentPage: Page,
   page: Page,
+  otherActivePages?: Page[],
 
   setPage: (page: Page) => void,
 }> = (props) => {
+  const pageIsActive = props.currentPage === props.page
+    || (
+      props.otherActivePages
+        && props.otherActivePages.indexOf(props.currentPage) !== -1
+    );
+
   return (
     <Button
       align="center"
       fontSize="1.2em"
       fluid
-      selected={props.currentPage === props.page}
+      selected={pageIsActive}
       onClick={() => props.setPage(props.page)}
     >
       {props.children}
@@ -120,6 +127,7 @@ export const CharacterPreferenceWindow = (props, context) => {
                   currentPage={currentPage}
                   page={Page.Main}
                   setPage={setCurrentPage}
+                  otherActivePages={[Page.Species]}
                 >
                   Character
                 </PageButton>
