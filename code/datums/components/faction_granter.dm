@@ -37,7 +37,7 @@
 	if(used)
 		examine_list += span_notice("[parent]'s faction granting power has been used up.")
 	else
-		examine_list += span_notice("Using [parent] in your hand will grant you favor with a faction.")
+		examine_list += span_notice("Using [parent] in your hand will grant you favor with [faction_to_grant]\s")
 
 ///signal called on parent being interacted with in hand
 /datum/component/faction_granter/proc/on_self_attack(atom/source, mob/user)
