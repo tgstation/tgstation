@@ -110,6 +110,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 10
+	custom_materials = list(/datum/material/gold = 10000)
 	unfolded_type = /obj/vehicle/ridden/wheelchair/gold
 
 /obj/vehicle/ridden/wheelchair/MouseDrop(over_object, src_location, over_location)  //Lets you collapse wheelchair
