@@ -471,7 +471,7 @@
 	icon_state = "soda_dispenser"
 	base_icon_state = "soda_dispenser"
 	has_panel_overlay = FALSE
-	dispensed_temperature = (T0C + 1.35) // cold enough that ice won't melt
+	dispensed_temperature = (T0C + 1.35) // magical mystery temperature of 274.5, where ice does not melt, and water does not freeze
 	amount = 10
 	pixel_y = 6
 	layer = WALL_OBJ_LAYER
