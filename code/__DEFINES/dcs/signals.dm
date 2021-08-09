@@ -556,6 +556,7 @@
 ///Mob is trying to open the wires of a target [/atom], from /datum/wires/interactable(): (atom/target)
 #define COMSIG_TRY_WIRES_INTERACT "try_wires_interact"
 	#define COMPONENT_CANT_INTERACT_WIRES (1<<0)
+#define COMSIG_MOB_EMOTED(emote_key) "mob_emoted_[emote_key]"
 
 ///from /obj/structure/door/crush(): (mob/living/crushed, /obj/machinery/door/crushing_door)
 #define COMSIG_LIVING_DOORCRUSHED "living_doorcrush"
@@ -842,6 +843,13 @@
 	#define COMPONENT_HANDLED_GRILLING (1<<0)
 ///Called when an object is turned into another item through grilling ontop of a griddle
 #define COMSIG_GRILL_COMPLETED "item_grill_completed"
+//Called when an object is in an oven
+#define COMSIG_ITEM_BAKED "item_baked"
+	#define COMPONENT_HANDLED_BAKING (1<<0)
+	#define COMPONENT_BAKING_GOOD_RESULT (1<<1)
+	#define COMPONENT_BAKING_BAD_RESULT (1<<2)
+///Called when an object is turned into another item through baking in an oven
+#define COMSIG_BAKE_COMPLETED "item_bake_completed"
 ///Called when an armor plate is successfully applied to an object
 #define COMSIG_ARMOR_PLATED "armor_plated"
 ///Called when an item gets recharged by the ammo powerup

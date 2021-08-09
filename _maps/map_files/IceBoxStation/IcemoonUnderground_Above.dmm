@@ -778,6 +778,7 @@
 /obj/item/food/pie/cream,
 /obj/machinery/newscaster/directional/north,
 /obj/machinery/light/directional/north,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "dd" = (
@@ -7518,11 +7519,10 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "Pn" = (
-/obj/structure/table,
-/obj/item/storage/fancy/donut_box,
 /obj/machinery/requests_console/directional/north{
 	name = "Kitchen Requests Console"
 	},
+/obj/machinery/oven,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "Pp" = (
