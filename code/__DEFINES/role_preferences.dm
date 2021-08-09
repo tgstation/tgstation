@@ -7,18 +7,18 @@
 //These are synced with the Database, if you change the values of the defines
 //then you MUST update the database!
 
-/// Roundstart
+// Roundstart roles
 #define ROLE_CHANGELING "Changeling"
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
 
-/// Midrounds
+// Midround roles
 #define ROLE_REV_HEAD "Head Revolutionary"
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
 #define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
 
-/// Latejoins
+// Latejoin roles
 #define ROLE_SYNDICATE_INFILTRATOR "Syndicate Infiltrator"
 
 /// MOTHBLOCKS TODO: Unsorted
