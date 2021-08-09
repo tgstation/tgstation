@@ -159,11 +159,12 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/datum/mind/receiver = pick(get_owners())
 	if(receiver?.current)
 		if(ishuman(receiver.current))
-			var/mob/living/carbon/human/H = receiver.current
-			var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK)
+			var/mob/living/carbon/human/receiver_current = receiver.current
+			var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK, "pockets" = ITEM_SLOT_POCKETS, "hands" = ITEM_SLOT_HANDS)
 			for(var/eq_path in special_equipment)
-				var/obj/O = new eq_path
-				H.equip_in_one_of_slots(O, slots)
+				var/obj/object = new eq_path
+				if(!receiver_current.equip_in_one_of_slots(object, slots, FALSE))
+					object.forceMove(get_turf(receiver_current))
 
 /datum/objective/assassinate
 	name = "assasinate"
