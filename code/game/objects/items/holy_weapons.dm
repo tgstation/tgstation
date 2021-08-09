@@ -149,7 +149,7 @@
 /obj/item/nullrod/Initialize()
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
-	if(!GLOB.holy_weapon_type)
+	if(!GLOB.holy_weapon_type && istype(src, /obj/item/nullrod))
 		var/list/rods = list()
 		for(var/obj/item/nullrod/nullrod_type as anything in typesof(/obj/item/nullrod))
 			if(!initial(nullrod_type.menu_description))
@@ -157,9 +157,9 @@
 			rods[nullrod_type] = initial(nullrod_type.menu_description)
 		AddElement(/datum/element/subtype_picker, rods, CALLBACK(src, .proc/on_holy_weapon_picked))
 
-/obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/holy_weapon)
-	GLOB.holy_weapon_type = holy_weapon.type
-	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[holy_weapon]")
+/obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/holy_weapon_type)
+	GLOB.holy_weapon_type = holy_weapon_type
+	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[initial(holy_weapon_type.name)]")
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))

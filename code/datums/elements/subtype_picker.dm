@@ -42,6 +42,7 @@
  */
 /datum/element/subtype_picker/proc/build_radial_list()
 	built_radial_list = list()
+	name2subtype = list()
 	for(var/obj/item/subtype as anything in subtype2descriptions)
 
 		var/datum/radial_menu_choice/option = new
@@ -62,13 +63,13 @@
 /datum/element/subtype_picker/proc/pick_subtype(datum/target, mob/picker)
 
 	var/name_of_type = show_radial_menu(picker, target, built_radial_list, custom_check = CALLBACK(src, .proc/check_menu, target, picker), radius = 42, require_near = TRUE)
-	if(!name_of_type || !check_menu(picker))
+	if(!name_of_type || !check_menu(target, picker))
 		return
+
+	on_picked_callback?.Invoke(picked_subtype)
 
 	var/picked_subtype = name2subtype[name_of_type] // This needs to be on a separate var as list member access is not allowed for new
 	picked_subtype = new picked_subtype(picker.drop_location())
-
-	on_picked_callback?.Invoke(picked_subtype)
 
 	qdel(target)
 	picker.put_in_hands(picked_subtype)
