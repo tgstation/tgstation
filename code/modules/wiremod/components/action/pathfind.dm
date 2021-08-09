@@ -107,7 +107,6 @@
 			return
 		else
 			TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_PATHFIND_DIF, different_path_cooldown)
-			popleft(path) // The first step is literally where we are right now, so we dont need it
 			next_turf = get_turf(path[1])
 			output.set_output(next_turf)
 		TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME, same_path_cooldown)

@@ -10,6 +10,8 @@
 	desc = "A component that retains a variable."
 	circuit_flags = CIRCUIT_FLAG_OUTPUT_SIGNAL
 
+	var/datum/port/input/option/ram_options
+
 	/// The input to store
 	var/datum/port/input/input_port
 	/// The trigger to store the current value of the input
@@ -31,16 +33,15 @@
 		PORT_TYPE_ATOM,
 		PORT_TYPE_SIGNAL,
 	)
-	options = component_options
+	ram_options = add_option_port("RAM Options", component_options)
 
 /obj/item/circuit_component/ram/Initialize()
 	. = ..()
-	current_type = current_option
-	input_port = add_input_port("Input", current_type)
+	input_port = add_input_port("Input", PORT_TYPE_ANY)
 	trigger = add_input_port("Store", PORT_TYPE_SIGNAL)
 	clear = add_input_port("Clear", PORT_TYPE_SIGNAL)
 
-	output = add_output_port("Stored Value", current_type)
+	output = add_output_port("Stored Value", PORT_TYPE_ANY)
 
 /obj/item/circuit_component/ram/Destroy()
 	input_port = null
@@ -51,8 +52,8 @@
 
 /obj/item/circuit_component/ram/input_received(datum/port/input/port)
 	. = ..()
-	if(current_type != current_option)
-		current_type = current_option
+	if(current_type != ram_options.input_value)
+		current_type = ram_options.input_value
 		input_port.set_datatype(current_type)
 		output.set_datatype(current_type)
 

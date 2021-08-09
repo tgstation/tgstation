@@ -1,21 +1,19 @@
 import { useBackend } from '../../backend';
-import {
-  Box,
-  Button, Flex,
-} from '../../components';
-import { FUNDAMENTAL_DATA_TYPES } from './FundamentalTypes';
+import { Box, Button, Flex } from '../../components';
+import { FUNDAMENTAL_DATA_TYPES, DATATYPE_DISPLAY_HANDLERS } from './FundamentalTypes';
 import { NULL_REF } from './constants';
-
 
 export const DisplayName = (props, context) => {
   const { act } = useBackend(context);
   const { port, isOutput, componentId, portIndex, ...rest } = props;
 
-  const InputComponent = FUNDAMENTAL_DATA_TYPES[port.type || 'any'];
+  const InputComponent = FUNDAMENTAL_DATA_TYPES[port.type || 'unknown'];
+  const TypeDisplayHandler = DATATYPE_DISPLAY_HANDLERS[port.type || 'unknown'];
 
-  const hasInput = !isOutput
-    && port.connected_to === NULL_REF
-    && InputComponent;
+  const hasInput
+    = !isOutput && port.connected_to === NULL_REF && InputComponent;
+
+  const displayType = TypeDisplayHandler? TypeDisplayHandler(port) : port.type;
 
   return (
     <Box {...rest}>
@@ -23,24 +21,28 @@ export const DisplayName = (props, context) => {
         <Flex.Item>
           {(hasInput && (
             <InputComponent
-              setValue={(val, extraParams) => act('set_component_input', {
-                component_id: componentId,
-                port_id: portIndex,
-                input: val,
-                ...extraParams,
-              })}
+              setValue={(val, extraParams) =>
+                act('set_component_input', {
+                  component_id: componentId,
+                  port_id: portIndex,
+                  input: val,
+                  ...extraParams,
+                })}
               color={port.color}
               name={port.name}
-              value={port.current_data} />
+              value={port.current_data}
+              extraData={port.datatype_data}
+            />
           ))
             || (isOutput && (
               <Button
                 compact
                 color="transparent"
-                onClick={() => act('get_component_value', {
-                  component_id: componentId,
-                  port_id: portIndex,
-                })}>
+                onClick={() =>
+                  act('get_component_value', {
+                    component_id: componentId,
+                    port_id: portIndex,
+                  })}>
                 <Box color="white">{port.name}</Box>
               </Button>
             ))
@@ -51,7 +53,7 @@ export const DisplayName = (props, context) => {
             fontSize={0.75}
             opacity={0.25}
             textAlign={isOutput ? 'right' : 'left'}>
-            {port.type || 'any'}
+            {displayType || 'unknown'}
           </Box>
         </Flex.Item>
       </Flex>

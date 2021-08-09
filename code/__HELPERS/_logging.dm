@@ -205,6 +205,9 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 /proc/log_href(text)
 	WRITE_LOG(GLOB.world_href_log, "HREF: [text]")
 
+/proc/log_mob_tag(text)
+	WRITE_LOG(GLOB.world_mob_tag_log, "TAG: [text]")
+
 /proc/log_sql(text)
 	WRITE_LOG(GLOB.sql_error_log, "SQL: [text]")
 

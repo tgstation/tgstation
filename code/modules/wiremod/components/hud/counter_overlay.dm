@@ -32,8 +32,9 @@
 	image_pixel_y = add_input_port("Y-Axis Shift", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/counter_overlay/register_shell(atom/movable/shell)
-	bci = shell
-	RegisterSignal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
+	if(istype(shell, /obj/item/organ/cyberimp/bci))
+		bci = shell
+		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
 
 /obj/item/circuit_component/counter_overlay/unregister_shell(atom/movable/shell)
 	bci = null

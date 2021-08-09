@@ -1,6 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - admin: "Adds admin components that allow admins to set variables, get variables, call procs and execute sdql via circuits. To enable these components to function, an admin needs to enable the admin_only variable on a circuit."
-  - qol: "Adds more entity information to shell outputs to allow circuits to identify who used the shell."
-  - expansion: "Adds list literals."

@@ -223,6 +223,7 @@
 		"comp_radio",
 		"comp_ram",
 		"comp_random",
+		"comp_router",
 		"comp_select_query",
 		"comp_self",
 		"comp_soundemitter",
@@ -663,6 +664,7 @@
 		"door_shell",
 		"controller_shell",
 		"money_bot_shell",
+		"scanner_gate_shell",
 		"scanner_shell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
