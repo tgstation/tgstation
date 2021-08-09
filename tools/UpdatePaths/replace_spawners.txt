@@ -56,9 +56,9 @@
 /obj/effect/spawner/lootdrop/space/languagebook : /obj/effect/spawner/random/exotic/languagebook
 /obj/effect/spawner/lootdrop/space/syndiecosmetic : /obj/effect/spawner/random/exotic/syndie
 /obj/effect/spawner/lootdrop/space/fancytool : /obj/effect/spawner/random/exotic/tool
-/obj/effect/spawner/randomarcade : /obj/effect/spawner/random/machinery/arcade
-/obj/effect/spawner/randomsnackvend : /obj/effect/spawner/random/machinery/snackvend
-/obj/effect/spawner/randomcolavend : /obj/effect/spawner/random/machinery/colavend
+/obj/effect/spawner/randomarcade : /obj/effect/spawner/random/entertainment/arcade
+/obj/effect/spawner/randomsnackvend : /obj/effect/spawner/random/vending/snackvend
+/obj/effect/spawner/randomcolavend : /obj/effect/spawner/random/vending/colavend
 /obj/effect/spawner/lootdrop/arcade_boards : /obj/effect/spawner/random/techstorage/arcade_boards
 /obj/effect/spawner/lootdrop/crate_spawner : /obj/effect/spawner/random/structure/crate_abandoned
 /obj/effect/spawner/lootdrop/maintenance : /obj/effect/spawner/random/maintenance
