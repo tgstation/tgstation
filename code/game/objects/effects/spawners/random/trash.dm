@@ -159,3 +159,21 @@
 
 	decal.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 	decal.icon_state = icon_state
+
+/obj/effect/spawner/random/trash/mopbucket
+	name = "mop bucket spawner"
+	icon_state = "mopbucket"
+	lootcount = 2
+	lootdoubles = FALSE
+	loot = list(
+		/obj/structure/mopbucket = 10,
+		/obj/item/mop = 5,
+		/obj/item/clothing/suit/caution = 3,
+		/obj/item/reagent_containers/glass/bucket = 1,
+		/obj/item/reagent_containers/glass/bucket/wooden = 1,
+	)
+
+
+
+
+
