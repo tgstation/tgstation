@@ -3,6 +3,7 @@ obj/effect/spawner/random/structure
 	desc = "Now you see me, now you don't..."
 
 /obj/effect/spawner/random/structure/crate
+	name = "crate spawner"
 	icon_state = "crate"
 	loot = list(
 		/obj/structure/closet/crate/maint = 75,
@@ -15,6 +16,7 @@ obj/effect/spawner/random/structure
 	)
 
 /obj/effect/spawner/random/structure/crate_abandoned
+	name = "locked crate spawner"
 	icon_state = "crate_secure"
 	spawn_loot_chance = 20
 	loot = list(/obj/structure/closet/crate/secure/loot)
