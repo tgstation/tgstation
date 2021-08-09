@@ -214,7 +214,7 @@
 
 /obj/item/circuit_component/teleporter_control_console
 	display_name = "Teleporter Control Console"
-	display_desc = "Used to control a linked teleportation Hub and Station."
+	desc = "Used to control a linked teleportation Hub and Station."
 	circuit_flags = CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	var/datum/port/input/new_target
