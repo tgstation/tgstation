@@ -83,7 +83,7 @@ Difficulty: Extremely Hard
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
 	check_enraged()
 	projectile_speed_multiplier = 1 - enraged * 0.5
-	SetRecoveryTime(100, 100)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 10 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 10 SECONDS))
 
 	if(client)
 		switch(chosen_attack)
@@ -185,7 +185,7 @@ Difficulty: Extremely Hard
 		P.fire(rand(0, 360))
 		addtimer(CALLBACK(P, /obj/projectile/frost_orb/proc/orb_explosion, projectile_speed_multiplier), 20) // make the orbs home in after a second
 		SLEEP_CHECK_DEATH(added_delay)
-	SetRecoveryTime(40, 60)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 4 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 6 SECONDS))
 
 /// Called when the orb is exploding, shoots out projectiles
 /obj/projectile/frost_orb/proc/orb_explosion(projectile_speed_multiplier)
@@ -219,7 +219,7 @@ Difficulty: Extremely Hard
 			P.original = target
 		P.fire()
 		SLEEP_CHECK_DEATH(1)
-	SetRecoveryTime(15, 15)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 1.5 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 1.5 SECONDS))
 
 /// Shoots out ice blasts in a shotgun like pattern
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/ice_shotgun(shots = 5, list/patterns = list(list(-40, -20, 0, 20, 40), list(-30, -10, 10, 30)))
@@ -238,7 +238,7 @@ Difficulty: Extremely Hard
 				P.original = target
 			P.fire()
 		SLEEP_CHECK_DEATH(8)
-	SetRecoveryTime(15, 20)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 1.5 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 2 SECONDS))
 
 /// Checks if the demonic frost miner is ready to be enraged
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/check_enraged()
@@ -246,7 +246,7 @@ Difficulty: Extremely Hard
 		return
 	if(health > maxHealth*0.25)
 		return
-	SetRecoveryTime(80, 80)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 8 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 8 SECONDS))
 	adjustHealth(-maxHealth)
 	enraged = TRUE
 	enraging = TRUE
