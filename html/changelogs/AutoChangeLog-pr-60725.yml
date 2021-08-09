@@ -1,4 +1,0 @@
-author: "aaaa1023"
-delete-after: True
-changes: 
-  - bugfix: "fixed an error caused by toilets taking damage after they were deconstructed"

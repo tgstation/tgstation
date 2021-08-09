@@ -1,0 +1,10 @@
+author: "Krysonism"
+delete-after: True
+changes: 
+  - expansion: "Adds a new illicit drug; bLasToFF, perfect for when you want to dance."
+  - expansion: "Adds a new illicit drug; SaturnX, perfect for when you just want to disappear."
+  - expansion: "Adds a new illicit drug; Kroncaine, perfect for when you need to get shit done."
+  - expansion: "The seeds of a rare plant; the kronkus vine can now spawn in maint."
+  - expansion: "Lead batteries and pipes can now spawn in maint."
+  - rscdel: "Removed crank."
+  - balance: "Mushroom hallucinogen has a new trippy effect, but no longer makes you druggy or dizzy."
