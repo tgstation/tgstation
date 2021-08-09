@@ -13,6 +13,7 @@
 	var/spawn_all_loot = FALSE // Whether the spawner should spawn all the loot in the list
 	var/spawn_loot_chance = 100 // The chance for the spawner to create loot (ignores lootcount)
 	var/spawn_scatter_radius = 0 //determines how big of a range (in tiles) we should scatter things in.
+	var/random_pixel_offset = FALSE // Whether the items should have a random pixel_x/y offset (maxium offset distance is ±16 pixels for x/y)
 
 /obj/effect/spawner/random/Initialize(mapload)
 	. = ..()
@@ -55,12 +56,20 @@
 				var/atom/movable/spawned_loot = new lootspawn(spawn_loc)
 				spawned_loot.setDir(dir)
 
-				if (!fan_out_items)
+				if(istype(src, /obj/effect/spawner/random/trash/graffiti))
+					var/obj/effect/spawner/random/trash/graffiti/G = src
+					G.select_graffiti(spawned_loot)
+					//var/obj/graffiti = new /obj/effect/decal/cleanable/crayon(get_turf(src))
+
+				if (!fan_out_items && !random_pixel_offset)
 					if (pixel_x != 0)
 						spawned_loot.pixel_x = pixel_x
 					if (pixel_y != 0)
 						spawned_loot.pixel_y = pixel_y
-				else
+				else if (random_pixel_offset)
+					spawned_loot.pixel_x = rand(-16, 16)
+					spawned_loot.pixel_y = rand(-16, 16)
+				else if (fan_out_items)
 					if (loot_spawned)
 						spawned_loot.pixel_x = spawned_loot.pixel_y = ((!(loot_spawned%2)*loot_spawned/2)*-1)+((loot_spawned%2)*(loot_spawned+1)/2*1)
 			loot_spawned++
