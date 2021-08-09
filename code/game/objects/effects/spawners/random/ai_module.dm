@@ -1,6 +1,7 @@
 /obj/effect/spawner/random/aimodule
 	name = "AI module spawner"
 	desc = "State laws human."
+	icon_state = "circuit"
 
 /obj/effect/spawner/random/aimodule/harmless
 	name = "harmless AI module spawner"

@@ -1,9 +1,11 @@
 /obj/effect/spawner/random/clothing
 	name = "clothing loot spawner"
 	desc = "Time to look pretty."
+	icon_state = "hat"
 
 /obj/effect/spawner/random/clothing/costume
 	name = "random costume spawner"
+	icon_state = "costume"
 	loot_subtype_path = /obj/effect/spawner/costume
 	loot = list()
 
@@ -42,6 +44,7 @@
 
 /obj/effect/spawner/random/clothing/mafia_outfit
 	name = "mafia outfit spawner"
+	icon_state = "costume"
 	loot = list(
 		/obj/effect/spawner/costume/mafia = 20,
 		/obj/effect/spawner/costume/mafia/white = 5,
@@ -51,6 +54,7 @@
 
 /obj/effect/spawner/random/clothing/syndie
 	name = "syndie outfit spawner"
+	icon_state = "syndicate"
 	loot = list(
 		/obj/item/clothing/under/syndicate,
 		/obj/item/clothing/under/syndicate/skirt,
@@ -68,8 +72,7 @@
 /obj/effect/spawner/random/clothing/gloves
 	name = "random gloves"
 	desc = "These gloves are supposed to be a random color..."
-	icon = 'icons/obj/clothing/gloves.dmi'
-	icon_state = "random_gloves"
+	icon_state = "gloves"
 	loot = list(
 		/obj/item/clothing/gloves/color/orange,
 		/obj/item/clothing/gloves/color/red,
@@ -86,8 +89,7 @@
 /obj/effect/spawner/random/clothing/lizardboots
 	name = "random lizard boot quality"
 	desc = "Which ever gets picked, the lizard race loses"
-	icon = 'icons/obj/clothing/shoes.dmi'
-	icon_state = "lizardboots_green"
+	icon_state = "lizard_boots"
 	loot = list(
 		/obj/item/clothing/shoes/cowboy/lizard = 7,
 		/obj/item/clothing/shoes/cowboy/lizard/masterwork = 1

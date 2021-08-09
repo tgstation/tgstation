@@ -4,6 +4,7 @@
 
 /obj/effect/spawner/random/bureaucracy/pen
 	name = "pen spawner"
+	icon_state = "pen"
 	loot = list(
 		/obj/item/pen = 30,
 		/obj/item/pen/blue = 5,
@@ -16,6 +17,7 @@
 
 /obj/effect/spawner/random/bureaucracy/stamp
 	name = "stamp spawner"
+	icon_state = "stamp"
 	loot = list(
 		/obj/item/stamp = 3,
 		/obj/item/stamp/denied = 1,
@@ -23,6 +25,7 @@
 
 /obj/effect/spawner/random/bureaucracy/crayon
 	name = "crayon spawner"
+	icon_state = "crayon"
 	loot = list(
 		/obj/item/toy/crayon/red,
 		/obj/item/toy/crayon/orange,
@@ -36,6 +39,7 @@
 
 /obj/effect/spawner/random/bureaucracy/paper
 	name = "paper spawner"
+	icon_state = "paper"
 	loot = list(
 		/obj/item/paper = 20,
 		/obj/item/paper/pamphlet/gateway = 3,
@@ -46,4 +50,13 @@
 		/obj/item/paper/crumpled/muddy = 2,
 		/obj/item/paper/construction = 1,
 		/obj/item/paper/carbon = 1,
+	)
+
+/obj/effect/spawner/random/bureaucracy/pamphlet
+	name = "pamphlet spawner"
+	icon_state = "pamphlet"
+	loot = list(
+		/obj/item/paper/pamphlet/gateway,
+		/obj/item/paper/pamphlet/violent_video_games,
+		/obj/item/paper/pamphlet/radstorm,
 	)

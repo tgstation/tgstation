@@ -1,9 +1,11 @@
 /obj/effect/spawner/random/engineering
 	name = "engineering loot spawner"
 	desc = "All engineering related spawners go here"
+	icon_state = "toolbox"
 
 /obj/effect/spawner/random/engineering/tool
 	name = "Tool spawner"
+	icon_state = "wrench"
 	loot = list(
 		/obj/item/wrench,
 		/obj/item/wirecutters,
@@ -15,6 +17,7 @@
 
 /obj/effect/spawner/random/engineering/tool_advanced
 	name = "Advanced tool spawner"
+	icon_state = "wrench"
 	loot = list( // Mail loot spawner. Some sort of random and rare building tool. No alien tech here.
 		/obj/item/wrench/caravan,
 		/obj/item/wirecutters/caravan,
@@ -24,6 +27,7 @@
 
 /obj/effect/spawner/random/engineering/tool_rare
 	name = "Rare tool spawner"
+	icon_state = "wrench"
 	loot = list(
 		/obj/item/wrench/abductor,
 		/obj/item/wirecutters/abductor,
@@ -35,6 +39,7 @@
 
 /obj/effect/spawner/random/engineering/material_cheap
 	name = "Cheap material spawner"
+	icon_state = "cardboard"
 	loot = list(
 		/obj/item/stack/sheet/mineral/wood{amount = 30},
 		/obj/item/stack/sheet/cardboard{amount = 30},
@@ -43,6 +48,7 @@
 
 /obj/effect/spawner/random/engineering/material
 	name = "Material spawner"
+	icon_state = "metal"
 	loot = list(
 		/obj/item/stack/sheet/iron/fifty = 5,
 		/obj/item/stack/sheet/glass/fifty = 5,
@@ -53,6 +59,7 @@
 
 /obj/effect/spawner/random/engineering/material_rare
 	name = "Rare material spawner"
+	icon_state = "diamond"
 	lootcount = 3
 	loot = list( // Space loot spawner. Random selecton of a few rarer materials.
 		/obj/item/stack/sheet/runed_metal/ten = 20,

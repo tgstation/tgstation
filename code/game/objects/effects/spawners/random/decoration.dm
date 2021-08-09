@@ -1,9 +1,11 @@
 /obj/effect/spawner/random/decoration
 	name = "decoration loot spawner"
 	desc = "Time for some bling bling."
+	icon_state = "lamp"
 
 /obj/effect/spawner/random/decoration/material
 	name = "decoration material spawner"
+	icon_state = "tile"
 	loot = list(
 		/obj/item/stack/sheet/sandblock{amount = 30} = 25,
 		/obj/item/stack/sheet/mineral/wood{amount = 30} = 25,
@@ -17,6 +19,7 @@
 
 /obj/effect/spawner/random/decoration/carpet
 	name = "carpet spawner"
+	icon_state = "carpet"
 	loot = list(
 		/obj/item/stack/tile/carpet{amount = 30} = 35,
 		/obj/item/stack/tile/carpet/black{amount = 30} = 20,
@@ -27,6 +30,7 @@
 
 /obj/effect/spawner/random/decoration/ornament
 	name = "ornament spawner"
+	icon_state = "lamp"
 	loot = list(
 		/obj/item/sign = 10,
 		/obj/item/flashlight/lamp/green = 10,
@@ -38,6 +42,7 @@
 
 /obj/effect/spawner/random/decoration/generic
 	name = "generic decoration spawner"
+	icon_state = "sandstone"
 	loot = list(
 		/obj/effect/spawner/random/decoration/ornament = 35,
 		/obj/effect/spawner/random/decoration/carpet = 25,
@@ -46,8 +51,7 @@
 
 /obj/effect/spawner/random/decoration/statue
 	name = "statue spawner"
-	//icon = 'icons/obj/statue.dmi'
-	//icon_state = "random_statue"
+	icon_state = "statue"
 	loot = list(
 		/obj/structure/statue/bronze/marx = 50,
 		/obj/item/statuebust = 50,
@@ -77,8 +81,7 @@
 
 /obj/effect/spawner/random/decoration/glowstick
 	name = "random colored glowstick"
-	icon = 'icons/obj/lighting.dmi'
-	icon_state = "random_glowstick"
+	icon_state = "glowstick"
 	loot = list(
 		/obj/item/flashlight/glowstick,
 		/obj/item/flashlight/glowstick/red,

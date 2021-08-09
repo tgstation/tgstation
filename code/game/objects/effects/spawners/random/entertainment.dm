@@ -4,9 +4,7 @@
 
 /obj/effect/spawner/random/entertainment/musical_instrument
 	name = "musical instrument spawner"
-	// enable the music icons later after PR gets merged - 7/29/2021
-	//icon = 'icons/obj/musician.dmi'
-	//icon_state = "random_instrument"
+	icon_state = "eguitar"
 	loot = list(
 		/obj/item/instrument/violin = 5,
 		/obj/item/instrument/banjo = 5,
@@ -26,6 +24,7 @@
 
 /obj/effect/spawner/random/entertainment/gambling
 	name = "gambling valuables spawner"
+	icon_state = "dice"
 	loot = list(
 		/obj/item/gun/ballistic/revolver/russian = 5,
 		/obj/item/clothing/head/ushanka = 3,
@@ -38,6 +37,7 @@
 
 /obj/effect/spawner/random/entertainment/coin
 	name = "coin spawner"
+	icon_state = "coin"
 	loot = list(
 		/obj/item/coin/iron = 5,
 		/obj/item/coin/plastic = 5,
@@ -56,6 +56,7 @@
 
 /obj/effect/spawner/random/entertainment/money_small
 	name = "small money spawner"
+	icon_state = "cash"
 	lootcount = 3
 	fan_out_items = TRUE
 	loot = list(
@@ -66,6 +67,7 @@
 
 /obj/effect/spawner/random/entertainment/money
 	name = "money spawner"
+	icon_state = "cash"
 	lootcount = 3
 	fan_out_items = TRUE
 	loot = list(
@@ -78,6 +80,7 @@
 
 /obj/effect/spawner/random/entertainment/money_large
 	name = "large money spawner"
+	icon_state = "cash"
 	lootcount = 5
 	fan_out_items = TRUE
 	loot = list(
@@ -94,6 +97,7 @@
 
 /obj/effect/spawner/random/entertainment/drugs
 	name = "recreational drugs spawner"
+	icon_state = "pill"
 	loot = list(
 		/obj/item/reagent_containers/food/drinks/bottle/hooch = 50,
 		/obj/item/clothing/mask/cigarette/rollie/cannabis = 15,
@@ -104,6 +108,7 @@
 
 /obj/effect/spawner/random/entertainment/dice
 	name = "dice spawner"
+	icon_state = "dice_bag"
 	loot = list(
 		/obj/item/dice/d4,
 		/obj/item/dice/d6,
@@ -115,6 +120,7 @@
 
 /obj/effect/spawner/random/entertainment/cigarette_pack
 	name = "cigarette pack spawner"
+	icon_state = "cigarettes"
 	loot = list(
 		/obj/item/storage/fancy/cigarettes = 3,
 		/obj/item/storage/fancy/cigarettes/dromedaryco = 3,
@@ -128,6 +134,7 @@
 
 /obj/effect/spawner/random/entertainment/cigarette
 	name = "cigarette spawner"
+	icon_state = "cigarettes"
 	loot = list(
 		/obj/item/clothing/mask/cigarette/space_cigarette = 3,
 		/obj/item/clothing/mask/cigarette/rollie/cannabis = 3,
@@ -141,6 +148,7 @@
 
 /obj/effect/spawner/random/entertainment/cigar
 	name = "cigar spawner"
+	icon_state = "cigarettes"
 	loot = list(
 		/obj/item/clothing/mask/cigarette/cigar = 3,
 		/obj/item/clothing/mask/cigarette/cigar/havana = 2,
@@ -149,6 +157,7 @@
 
 /obj/effect/spawner/random/entertainment/wallet_lighter
 	name = "lighter wallet spawner"
+	icon_state = "lighter"
 	loot = list( // these fit inside a wallet
 		/obj/item/match = 10,
 		/obj/item/lighter/greyscale = 10,
@@ -157,6 +166,7 @@
 
 /obj/effect/spawner/random/entertainment/lighter
 	name = "lighter spawner"
+	icon_state = "lighter"
 	loot = list(
 		/obj/item/storage/box/matches = 10,
 		/obj/item/lighter/greyscale = 10,
@@ -165,6 +175,7 @@
 
 /obj/effect/spawner/random/entertainment/wallet_storage
 	name = "wallet contents spawner"
+	icon_state = "wallet"
 	lootcount = 1
 	loot = list(	// random photos would go here. IF I HAD ONE. :'(
 		/obj/item/lipstick/random,

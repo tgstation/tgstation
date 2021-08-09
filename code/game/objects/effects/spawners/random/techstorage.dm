@@ -1,11 +1,13 @@
 // Tech storage circuit board spawners
 /obj/effect/spawner/random/techstorage
 	name = "generic circuit board spawner"
+	icon_state = "circuit"
 	fan_out_items = TRUE
 	spawn_all_loot = TRUE
 
 /obj/effect/spawner/random/techstorage/data_disk
 	name = "data disk spawner"
+	icon_state = "disk"
 	spawn_all_loot = FALSE
 	loot = list(
 		/obj/item/disk/data = 49,

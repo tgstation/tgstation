@@ -1,9 +1,11 @@
 /obj/effect/spawner/random/contraband
 	name = "contraband loot spawner"
 	desc = "Pstttthhh! Pass it under the table."
+	icon_state = "prisoner"
 
 /obj/effect/spawner/random/contraband/armory
 	name = "armory loot spawner"
+	icon_state = "pistol"
 	loot = list(
 		/obj/item/gun/ballistic/automatic/pistol = 8,
 		/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
@@ -16,6 +18,7 @@
 
 /obj/effect/spawner/random/contraband/narcotics
 	name = "narcotics loot spawner"
+	icon_state = "pill"
 	loot = list(
 		/obj/item/reagent_containers/syringe/contraband/space_drugs,
 		/obj/item/reagent_containers/syringe/contraband/krokodil,
@@ -31,6 +34,7 @@
 
 /obj/effect/spawner/random/contraband/permabrig_weapon
 	name = "permabrig weapon spawner"
+	icon_state = "shiv"
 	loot = list(
 		/obj/item/kitchen/knife/shiv = 5,
 		/obj/item/kitchen/knife/shiv/carrot = 5,
@@ -42,6 +46,7 @@
 
 /obj/effect/spawner/random/contraband/permabrig_gear
 	name = "permabrig gear spawner"
+	icon_state = "handcuffs"
 	loot = list(
 		/obj/item/toy/crayon/spraycan,
 		/obj/item/crowbar,
@@ -56,6 +61,7 @@
 
 /obj/effect/spawner/random/contraband/prison
 	name = "prison loot spawner"
+	icon_state = "prisoner_shoes"
 	loot = list(
 		/obj/effect/spawner/random/entertainment/cigarette = 20,
 		/obj/effect/spawner/random/contraband/narcotics = 10,

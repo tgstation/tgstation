@@ -1,6 +1,7 @@
 /obj/effect/spawner/random/maintenance
 	name = "maintenance loot spawner"
 	desc = "Come on Lady Luck, spawn me a pair of sunglasses."
+	icon_state = "loot"
 	spawn_on_init = FALSE
 	// see code/_globalvars/lists/maintenance_loot.dm for loot table
 

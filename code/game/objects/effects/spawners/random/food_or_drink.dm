@@ -4,6 +4,7 @@
 
 /obj/effect/spawner/random/food_or_drink/donkpockets
 	name = "donk pocket box spawner"
+	icon_state = "donkpocket"
 	lootdoubles = FALSE
 	loot = list(
 		/obj/item/storage/box/donkpockets/donkpocketspicy,
@@ -15,26 +16,28 @@
 
 /obj/effect/spawner/random/food_or_drink/seed
 	name = "seed spawner"
+	icon_state = "seed"
 	loot = list( // The same seeds in the Supply "Seeds Crate"
-		/obj/item/seeds/chili = 1,
-		/obj/item/seeds/cotton = 1,
-		/obj/item/seeds/berry = 1,
-		/obj/item/seeds/corn = 1,
-		/obj/item/seeds/eggplant = 1,
-		/obj/item/seeds/tomato = 1,
-		/obj/item/seeds/soya = 1,
-		/obj/item/seeds/wheat = 1,
-		/obj/item/seeds/wheat/rice = 1,
-		/obj/item/seeds/carrot = 1,
-		/obj/item/seeds/sunflower = 1,
-		/obj/item/seeds/rose = 1,
-		/obj/item/seeds/chanter = 1,
-		/obj/item/seeds/potato = 1,
-		/obj/item/seeds/sugarcane = 1,
+		/obj/item/seeds/chili,
+		/obj/item/seeds/cotton,
+		/obj/item/seeds/berry,
+		/obj/item/seeds/corn,
+		/obj/item/seeds/eggplant,
+		/obj/item/seeds/tomato,
+		/obj/item/seeds/soya,
+		/obj/item/seeds/wheat,
+		/obj/item/seeds/wheat/rice,
+		/obj/item/seeds/carrot,
+		/obj/item/seeds/sunflower,
+		/obj/item/seeds/rose,
+		/obj/item/seeds/chanter,
+		/obj/item/seeds/potato,
+		/obj/item/seeds/sugarcane,
 	)
 
 /obj/effect/spawner/random/food_or_drink/rare_seed
 	lootcount = 5
+	icon_state = "seed"
 	loot = list( // /obj/item/seeds/random is not a random seed, but an exotic seed.
 		/obj/item/seeds/random = 30,
 		/obj/item/seeds/liberty = 5,
@@ -54,6 +57,7 @@
 
 /obj/effect/spawner/random/food_or_drink/three_course_meal
 	name = "three course meal spawner"
+	icon_state = "soup"
 	lootcount = 3
 	lootdoubles = FALSE
 	var/soups = list(
@@ -86,6 +90,7 @@
 
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage
 	name = "good soda spawner"
+	icon_state = "can"
 	loot = list(
 		/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 3,
 		/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 3,
@@ -104,6 +109,7 @@
 
 /obj/effect/spawner/random/food_or_drink/booze
 	name = "booze spawner"
+	icon_state = "beer"
 	loot = list(
 		/obj/item/reagent_containers/food/drinks/beer = 250,
 		/obj/item/reagent_containers/food/drinks/ale = 100,
@@ -138,6 +144,7 @@
 
 /obj/effect/spawner/random/food_or_drink/pizzaparty
 	name = "pizza bomb spawner"
+	icon_state = "pizzabox"
 	loot = list(
 		/obj/item/pizzabox/margherita = 3,
 		/obj/item/pizzabox/meat = 3,
@@ -147,6 +154,7 @@
 
 /obj/effect/spawner/random/food_or_drink/seed_vault
 	name = "seed vault seeds"
+	icon_state = "seed"
 	loot = list(
 		/obj/item/seeds/gatfruit = 10,
 		/obj/item/seeds/cherry/bomb = 10,

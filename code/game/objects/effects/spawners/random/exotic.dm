@@ -4,6 +4,7 @@ obj/effect/spawner/random/exotic
 
 /obj/effect/spawner/random/exotic/technology
 	name = "technology spawner"
+	icon_state = "disk"
 	lootcount = 2
 	loot = list( // Space loot spawner. Couple of random bits of technology-adjacent stuff including anomaly cores and BEPIS techs.
 		/obj/item/raw_anomaly_core/random,
@@ -13,6 +14,7 @@ obj/effect/spawner/random/exotic
 
 /obj/effect/spawner/random/exotic/languagebook
 	name = "language book spawner"
+	icon_state = "book"
 	loot = list( // A single roundstart species language book.
 		/obj/item/language_manual/roundstart_species = 100,
 		/obj/item/language_manual/roundstart_species/five = 3,
@@ -21,6 +23,7 @@ obj/effect/spawner/random/exotic
 
 /obj/effect/spawner/random/exotic/tool
 	name = "exotic tool spawner"
+	icon_state = "wrench"
 	loot = list( // Some sort of random and rare tool.
 		/obj/effect/spawner/random/engineering/tool_rare,
 		/obj/effect/spawner/random/medical/surgery_tool_rare,
@@ -29,6 +32,7 @@ obj/effect/spawner/random/exotic
 
 /obj/effect/spawner/random/exotic/syndie
 	name = "syndie cosmetic spawner"
+	icon_state = "syndicate"
 	lootcount = 2
 	loot = list( // A selection of cosmetic syndicate items. Just a couple. No hardsuits or weapons.
 		/obj/effect/spawner/random/clothing/syndie = 8,
@@ -38,6 +42,7 @@ obj/effect/spawner/random/exotic
 
 /obj/effect/spawner/random/exotic/antag_gear_weak
 	name = "weak antag gear "
+	icon_state = "syndi_toolbox"
 	loot = list(
 		/obj/item/storage/firstaid/regular = 45,
 		/obj/item/storage/firstaid/toxin = 35,
@@ -58,6 +63,7 @@ obj/effect/spawner/random/exotic
 
 /obj/effect/spawner/random/exotic/antag_gear
 	name = "antag gear"
+	icon_state = "esword"
 	loot = list(
 		/obj/item/storage/firstaid/tactical = 35,
 		/obj/item/book/granter/spell/summonitem = 20,
@@ -85,6 +91,7 @@ obj/effect/spawner/random/exotic
 
 /obj/effect/spawner/random/exotic/antag_gear_strong
 	name = "strong antag gear"
+	icon_state = "esword_dual"
 	loot = list(
 		/obj/item/pickaxe/drill/jackhammer = 30,
 		/obj/item/singularityhammer = 25,
@@ -106,6 +113,7 @@ obj/effect/spawner/random/exotic
 
 /obj/effect/spawner/random/exotic/snow_gear
 	name = "snow gear"
+	icon_state = "snowman"
 	loot = list(
 		/obj/item/toy/snowball = 15,
 		/obj/item/stack/sheet/mineral/snow{amount = 25} = 10,
@@ -114,7 +122,8 @@ obj/effect/spawner/random/exotic
 	)
 
 /obj/effect/spawner/random/exotic/ripley
-	name = "25% mech 75% wreckage ripley spawner"
+	name = "ripley spawner"
+	icon_state = "ripley"
 	loot = list(
 		/obj/structure/mecha_wreckage/ripley = 3,
 		/obj/vehicle/sealed/mecha/working/ripley/mining = 1,

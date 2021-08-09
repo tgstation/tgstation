@@ -3,8 +3,7 @@ obj/effect/spawner/random/structure
 	desc = "Now you see me, now you don't..."
 
 /obj/effect/spawner/random/structure/crate
-	icon = 'icons/effects/landmarks_static.dmi'
-	icon_state = "loot_site"
+	icon_state = "crate"
 	loot = list(
 		/obj/structure/closet/crate/maint = 75,
 		/obj/structure/closet/crate/trashcart/filled = 7,
@@ -16,7 +15,6 @@ obj/effect/spawner/random/structure
 	)
 
 /obj/effect/spawner/random/structure/crate_abandoned
-	icon = 'icons/effects/landmarks_static.dmi'
-	icon_state = "loot_site"
+	icon_state = "crate_secure"
 	spawn_loot_chance = 20
 	loot = list(/obj/structure/closet/crate/secure/loot)

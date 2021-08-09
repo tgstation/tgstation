@@ -1,6 +1,7 @@
 /obj/effect/spawner/random/trash
 	name = "trash spawner"
 	desc = "Ewwwwwww gross."
+	icon_state = "trash"
 
 /obj/effect/spawner/random/trash/garbage
 	name = "garbage spawner"
@@ -44,6 +45,7 @@
 
 /obj/effect/spawner/random/trash/botanical_waste
 	name = "botanical waste spawner"
+	icon_state = "peel"
 	loot = list(
 		/obj/item/grown/bananapeel = 6,
 		/obj/item/grown/corncob = 3,
@@ -52,6 +54,7 @@
 
 /obj/effect/spawner/random/trash/grille_or_waste
 	name = "grille or waste spawner"
+	icon_state = "grille"
 	loot = list(
 		/obj/structure/grille = 5,
 		/obj/item/cigbutt = 1,
@@ -68,6 +71,7 @@
 
 /obj/effect/spawner/random/trash/hobo_squat
 	name = "hobo squat spawner"
+	icon_state = "dirty_mattress"
 	spawn_all_loot = TRUE
 	loot = list(
 		/obj/structure/bed/maint,
@@ -77,6 +81,7 @@
 
 /obj/effect/spawner/random/trash/moisture_trap
 	name = "moisture trap spawner"
+	icon_state = "moisture_trap"
 	spawn_all_loot = TRUE
 	loot = list(
 		/obj/effect/spawner/random/trash/moisture,
@@ -85,7 +90,7 @@
 
 /obj/effect/spawner/random/trash/mess
 	name = "gross decal spawner"
-	icon_state = "random_trash"
+	icon_state = "vomit"
 	loot = list(
 		/obj/effect/decal/cleanable/dirt = 6,
 		/obj/effect/decal/cleanable/garbage = 3,
@@ -113,6 +118,7 @@
 
 /obj/effect/spawner/random/trash/moisture
 	name = "water hazard spawner"
+	icon_state = "caution"
 	lootcount = 2
 	spawn_scatter_radius = 1
 	loot = list( // This spawner will scatter water related items around a moist site.
@@ -127,8 +133,7 @@
 
 /obj/effect/spawner/random/graffiti
 	name = "random graffiti spawner"
-	icon = 'icons/effects/crayondecal.dmi'
-	icon_state = "random_graffiti"
+	icon_state = "rune"
 	loot = list(
 		"rune1", "rune2", "rune3", "rune4", "rune5", "rune6",
 		"amyjon", "face", "matt", "revolution", "engie", "guy",
