@@ -141,6 +141,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	/// The body temperature limit the body can take before it starts taking damage from cold.
 	var/bodytemp_cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT
 
+	///the species that body parts are surgically compatible with (found in _DEFINES/mobs.dm)
+	///current acceptable bitfields are HUMAN_BODY, ALIEN_BODY, LARVA_BODY, MONKEY_BODY, or NONE
+	var/allowed_animal_origin = HUMAN_BODY
+
+
 	///Species-only traits. Can be found in [code/__DEFINES/DNA.dm]
 	var/list/species_traits = list()
 	///Generic traits tied to having the species.
@@ -206,6 +211,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	///List of visual overlays created by handle_body()
 	var/list/body_vis_overlays = list()
+
+
 
 ///////////
 // PROCS //
