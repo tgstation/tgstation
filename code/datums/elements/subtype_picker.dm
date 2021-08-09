@@ -66,9 +66,8 @@
 	if(!name_of_type || !check_menu(target, picker))
 		return
 
+	var/picked_subtype = name2subtype[name_of_type]
 	on_picked_callback?.Invoke(picked_subtype)
-
-	var/picked_subtype = name2subtype[name_of_type] // This needs to be on a separate var as list member access is not allowed for new
 	picked_subtype = new picked_subtype(picker.drop_location())
 
 	qdel(target)
