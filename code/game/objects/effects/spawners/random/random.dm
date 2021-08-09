@@ -13,7 +13,6 @@
 	var/spawn_all_loot = FALSE // Whether the spawner should spawn all the loot in the list
 	var/spawn_loot_chance = 100 // The chance for the spawner to create loot (ignores lootcount)
 	var/spawn_scatter_radius = 0 //determines how big of a range (in tiles) we should scatter things in.
-	var/hacked = FALSE //whether it hacks the vendor on spawn (only used by vending machines for mapedits)
 
 /obj/effect/spawner/random/Initialize(mapload)
 	. = ..()
@@ -55,10 +54,6 @@
 
 				var/atom/movable/spawned_loot = new lootspawn(spawn_loc)
 				spawned_loot.setDir(dir)
-
-				if (hacked && istype(spawned_loot, /obj/machinery/vending))
-					var/obj/machinery/vending/vending = spawned_loot
-					vending.extended_inventory = hacked
 
 				if (!fan_out_items)
 					if (pixel_x != 0)
