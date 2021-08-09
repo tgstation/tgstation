@@ -131,10 +131,11 @@
 		/obj/structure/mopbucket = 2,
 	)
 
-/obj/effect/spawner/random/graffiti
+/obj/effect/spawner/random/trash/graffiti
 	name = "random graffiti spawner"
 	icon_state = "rune"
-	loot = list(
+	loot = list(/obj/effect/decal/cleanable/crayon)
+	var/graffiti_icons = list(
 		"rune1", "rune2", "rune3", "rune4", "rune5", "rune6",
 		"amyjon", "face", "matt", "revolution", "engie", "guy",
 		"end", "dwarf", "uboa", "body", "cyka", "star", "poseur tag",
@@ -147,10 +148,14 @@
 		"shotgun", "arrow", "line", "thinline", "shortline", "body", "chevron",
 		"footprint", "clawprint", "pawprint",
 	)
+	color = COLOR_WHITE //sets the color of the graffiti (used for mapedits)
+	var/random_color = TRUE //whether the graffiti will spawn with a random color (used for mapedits)
+	var/random_icon = TRUE // whether the graffiti will spawn with the same icon
 
-/obj/effect/spawner/random/graffiti/Initialize()
-	. = ..()
-	var/obj/graffiti = new /obj/effect/decal/cleanable/crayon(get_turf(src))
-	graffiti.add_atom_colour("#[random_short_color()]", FIXED_COLOUR_PRIORITY)
-	graffiti.icon_state = pick(loot)
-	return INITIALIZE_HINT_QDEL
+/obj/effect/spawner/random/trash/graffiti/proc/select_graffiti(graffiti_decal)
+	var/obj/effect/decal/cleanable/crayon/decal = graffiti_decal
+	color = random_color && "#[random_short_color()]" || color
+	icon_state = random_icon && pick(graffiti_icons) || icon_state
+
+	decal.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+	decal.icon_state = icon_state
