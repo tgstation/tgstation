@@ -251,3 +251,32 @@
   Watermelon914:
   - bugfix: Fixed circuit component options
   - code_imp: Moves most circuit component defines to their appropriate files
+2021-08-09:
+  ArcaneMusic:
+  - bugfix: Accounting machines now assign the job to the bank account, meaning that
+      new accounts can buy things without being considered budget cards.
+  Fikou, MeyHaZah, some sprites from /vg/station:
+  - balance: mining soulstone can no longer grab sleeping/unconscious people
+  - balance: voice of god can immobilize in addition to knocking down
+  - balance: anomalous crystal now has a time for it to be used, its snow theme is
+      no longer lethal, you can run from the clown one
+  - balance: lava staff is weaker and its lava is weaker
+  - balance: wand of fireball removed from ash drake loot
+  - balance: drake armor nerfed values, especially to bullet armor
+  - balance: berserker suit has more bullet armor, charge gain doubled
+  - balance: hecksuit is spaceproof, you can use it to gib corpses and heal from them
+  - balance: eye of god loses its xray, you can now use it to scan targets to lower
+      their attack speed
+  - balance: cursed katana is now an extendable organ, lower damage, attacks fauna
+      faster, has a combo system
+  - balance: staff of storms no longer makes storms, it can  create thunderbolts,
+      the thunderbolts are boosted in weather conditions
+  - balance: winter biodome is a bit harder, its antique laser has now been replaced
+      with a freeze cube in a vault
+  - balance: spellblade from bubblegum is replaced with a soulscythe
+  TheSmallBlue:
+  - bugfix: Pathfinding component should now properly go around walls every time.
+  Time-Green:
+  - bugfix: draws moth antennae when you're wearing helmets again (oops)
+  aaaa1023:
+  - bugfix: fixed an error caused by toilets taking damage after they were deconstructed
