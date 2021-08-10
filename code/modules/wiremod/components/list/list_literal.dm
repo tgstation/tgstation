@@ -8,6 +8,8 @@
 	desc = "A component that returns the value of a list at a given index. Attack in hand to increase list size, right click to decrease list size."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
+	/// The inputs used to create the list
+	var/list/datum/port/input/entry_ports = list()
 	/// The result from the output
 	var/datum/port/output/list_output
 
@@ -29,17 +31,17 @@
 
 /obj/item/circuit_component/list_literal/proc/set_list_size(new_size)
 	if(new_size <= 0)
-		for(var/datum/port/input/port in input_ports)
-			if(port != trigger_input)
-				remove_input_port(port)
+		for(var/datum/port/input/port in entry_ports)
+			remove_input_port(port)
+		entry_ports = list()
 		length = 0
 		return
 
 	while(length > new_size)
-		var/index = length(input_ports)
-		if(trigger_input)
-			index -= 1
-		remove_input_port(input_ports[index])
+		var/index = length(entry_ports)
+		var/entry_port = entry_ports[index]
+		entry_ports -= entry_port
+		remove_input_port(entry_port)
 		length--
 
 	while(length < new_size)
@@ -47,7 +49,7 @@
 		var/index = length(input_ports)
 		if(trigger_input)
 			index -= 1
-		add_input_port("Index [index+1]", PORT_TYPE_ANY, index = index+1)
+		entry_ports += add_input_port("Index [index+1]", PORT_TYPE_ANY, index = index+1)
 
 /obj/item/circuit_component/list_literal/Initialize()
 	. = ..()
@@ -76,9 +78,9 @@
 		return
 
 	var/list/new_literal = list()
-	for(var/datum/port/input/input_port as anything in input_ports)
+	for(var/datum/port/input/entry_port as anything in entry_ports)
 		// Prevents lists from merging together
-		new_literal += list(input_port.input_value)
+		new_literal += list(entry_port.input_value)
 
 	list_output.set_output(new_literal)
 

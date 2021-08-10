@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - expansion: "Added USB support to teleporter control consoles."

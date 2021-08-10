@@ -1,3 +1,6 @@
+/// The minimum delay value that the delay component can have.
+#define COMP_DELAY_MIN_VALUE 0.1
+
 /**
  * # Delay Component
  *
@@ -36,3 +39,5 @@
 		addtimer(CALLBACK(output, /datum/port/output.proc/set_output, trigger.input_value), delay*10)
 	else
 		output.set_output(trigger.input_value)
+
+#undef COMP_DELAY_MIN_VALUE

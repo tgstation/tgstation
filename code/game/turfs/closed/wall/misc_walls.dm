@@ -82,9 +82,6 @@
 /turf/closed/wall/rust/Initialize(mapload)
 	. = ..()
 	color = null
-
-/turf/closed/wall/rust/ComponentInitialize()
-	. = ..()
 	AddElement(/datum/element/rust)
 
 /turf/closed/wall/r_wall/rust
@@ -92,12 +89,9 @@
 	//and should be removed on initialize
 	color = COLOR_ORANGE_BROWN
 
-/turf/closed/wall/r_wall/Initialize(mapload)
+/turf/closed/wall/r_wall/rust/Initialize(mapload)
 	. = ..()
 	color = null
-
-/turf/closed/wall/r_wall/ComponentInitialize()
-	. = ..()
 	AddElement(/datum/element/rust)
 
 /turf/closed/wall/mineral/bronze

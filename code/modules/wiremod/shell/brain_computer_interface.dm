@@ -38,6 +38,9 @@
 	desc = "Represents an action the user can take when implanted with the brain-computer interface."
 	required_shells = list(/obj/item/organ/cyberimp/bci)
 
+	/// The icon of the button
+	var/datum/port/input/option/icon_options
+
 	/// The name to use for the button
 	var/datum/port/input/button_name
 
@@ -51,7 +54,7 @@
 	. = ..()
 
 	if (!isnull(default_icon))
-		set_option(default_icon)
+		icon_options.set_input(default_icon)
 
 	button_name = add_input_port("Name", PORT_TYPE_STRING)
 
@@ -99,7 +102,7 @@
 		"Wireless",
 	)
 
-	options = action_options
+	icon_options = add_option_port("Icon", action_options)
 
 /obj/item/circuit_component/bci_action/register_shell(atom/movable/shell)
 	var/obj/item/organ/cyberimp/bci/bci = shell
@@ -126,7 +129,7 @@
 
 /obj/item/circuit_component/bci_action/proc/update_action()
 	bci_action.name = button_name.input_value
-	bci_action.button_icon_state = "bci_[replacetextEx(lowertext(current_option), " ", "_")]"
+	bci_action.button_icon_state = "bci_[replacetextEx(lowertext(icon_options.input_value), " ", "_")]"
 
 /datum/action/innate/bci_action
 	name = "Action"

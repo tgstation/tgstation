@@ -57,6 +57,7 @@
 		"titaniumglass",
 		"gas_filter",
 		"plasmaman_gas_filter",
+		"oven_tray"
 	)
 
 /datum/techweb_node/mmi
@@ -664,6 +665,7 @@
 		"door_shell",
 		"controller_shell",
 		"money_bot_shell",
+		"scanner_gate_shell",
 		"scanner_shell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)

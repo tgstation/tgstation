@@ -1,5 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - code_imp: "Improves BCI code by removing an easily bypassable `add_to` check for circuit components and implementing proper typechecking in the addable BCI components"
-  - bugfix: "Fixed the UI notices about the supported types not showing up on all BCI components"

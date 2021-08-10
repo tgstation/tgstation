@@ -26,6 +26,8 @@
 #define PORT_TYPE_LIST "list"
 /// Table datatype. Derivative of list, contains other lists with matching columns.
 #define PORT_TYPE_TABLE "table"
+/// Options datatype. Derivative of string.
+#define PORT_TYPE_OPTION "option"
 
 // Other datatypes
 /// Atom datatype
@@ -59,60 +61,8 @@
 #define COMP_COMPARISON_GREATER_THAN_OR_EQUAL ">="
 #define COMP_COMPARISON_LESS_THAN_OR_EQUAL "<="
 
-// Delay defines
-/// The minimum delay value that the delay component can have.
-#define COMP_DELAY_MIN_VALUE 0.1
-
-// Logic defines
-#define COMP_LOGIC_AND "AND"
-#define COMP_LOGIC_OR "OR"
-#define COMP_LOGIC_XOR "XOR"
-
-// Arithmetic defines
-#define COMP_ARITHMETIC_ADD "Add"
-#define COMP_ARITHMETIC_SUBTRACT "Subtract"
-#define COMP_ARITHMETIC_MULTIPLY "Multiply"
-#define COMP_ARITHMETIC_DIVIDE "Divide"
-#define COMP_ARITHMETIC_MIN "Minimum"
-#define COMP_ARITHMETIC_MAX "Maximum"
-
-// Text defines
-#define COMP_TEXT_LOWER "To Lower"
-#define COMP_TEXT_UPPER "To Upper"
-
-// Typecheck component
-#define COMP_TYPECHECK_MOB "organism"
-#define COMP_TYPECHECK_HUMAN "humanoid"
-
 // Clock component
 #define COMP_CLOCK_DELAY 0.9 SECONDS
-
-// Radio component
-#define COMP_RADIO_PUBLIC "public"
-#define COMP_RADIO_PRIVATE "private"
-
-// Sound component
-#define COMP_SOUND_BUZZ "Buzz"
-#define COMP_SOUND_BUZZ_TWO "Buzz Twice"
-#define COMP_SOUND_CHIME "Chime"
-#define COMP_SOUND_HONK "Honk"
-#define COMP_SOUND_PING "Ping"
-#define COMP_SOUND_SAD "Sad Trombone"
-#define COMP_SOUND_WARN "Warn"
-#define COMP_SOUND_SLOWCLAP "Slow Clap"
-
-// Security Arrest Console
-#define COMP_STATE_ARREST "*Arrest*"
-#define COMP_STATE_PRISONER "Incarcerated"
-#define COMP_STATE_PAROL "Paroled"
-#define COMP_STATE_DISCHARGED "Discharged"
-#define COMP_STATE_NONE "None"
-
-#define COMP_SECURITY_ARREST_AMOUNT_TO_FLAG 10
-
-// Proccall component
-#define COMP_PROC_GLOBAL "Global"
-#define COMP_PROC_OBJECT "Object"
 
 // Shells
 
@@ -129,9 +79,9 @@
 #define SHELL_FLAG_ALLOW_FAILURE_ACTION (1<<3)
 
 // Shell capacities. These can be converted to configs very easily later
-#define SHELL_CAPACITY_SMALL 10
-#define SHELL_CAPACITY_MEDIUM 25
-#define SHELL_CAPACITY_LARGE 50
+#define SHELL_CAPACITY_SMALL 25
+#define SHELL_CAPACITY_MEDIUM 50
+#define SHELL_CAPACITY_LARGE 100
 #define SHELL_CAPACITY_VERY_LARGE 500
 
 /// The maximum range a USB cable can be apart from a source
@@ -148,3 +98,9 @@
 #define CIRCUIT_FLAG_ADMIN (1<<3)
 /// This circuit component does not show in the menu.
 #define CIRCUIT_FLAG_HIDDEN (1<<4)
+
+// Datatype flags
+/// The datatype supports manual inputs
+#define DATATYPE_FLAG_ALLOW_MANUAL_INPUT (1<<0)
+/// The datatype won't update the value when it is connected to the port
+#define DATATYPE_FLAG_AVOID_VALUE_UPDATE (1<<1)

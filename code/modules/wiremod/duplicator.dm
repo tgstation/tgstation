@@ -6,6 +6,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	PORT_TYPE_STRING,
 	PORT_TYPE_LIST,
 	PORT_TYPE_ANY,
+	PORT_TYPE_OPTION,
 ))
 
 /// Loads a circuit based on json data at a location. Can also load usb connections, such as arrest consoles.
@@ -32,6 +33,17 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		var/obj/item/circuit_component/component = load_component(type)
 		identifiers_to_circuit[identifier] = component
 		component.load_data_from_list(component_data)
+
+		var/list/input_ports_data = component_data["input_ports_stored_data"]
+		for(var/port_name in input_ports_data)
+			var/datum/port/input/port
+			var/list/port_data = input_ports_data[port_name]
+			for(var/datum/port/input/port_to_check as anything in component.input_ports)
+				if(port_to_check.name == port_name)
+					port = port_to_check
+					break
+
+			port.set_input(port_data["stored_data"])
 
 	var/list/external_objects = general_data["external_objects"]
 	for(var/identifier in external_objects)
@@ -118,6 +130,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		component_data["type"] = component.type
 
 		var/list/connections = list()
+		var/list/input_ports_stored_data = list()
 		for(var/datum/port/input/port as anything in component.input_ports)
 			var/list/connection_data = list()
 			var/datum/port/output/output_port = port.connected_port
@@ -125,12 +138,13 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 				if(isnull(port.input_value) || !(port.datatype in GLOB.circuit_dupe_whitelisted_types))
 					continue
 				connection_data["stored_data"] = port.input_value
-				connections[port.name] = connection_data
+				input_ports_stored_data[port.name] = connection_data
 				continue
 			connection_data["component_id"] = circuit_to_identifiers[output_port.connected_component]
 			connection_data["port_name"] = output_port.name
 			connections[port.name] = connection_data
 		component_data["connections"] = connections
+		component_data["input_ports_stored_data"] = input_ports_stored_data
 
 		component.save_data_to_list(component_data)
 		circuit_data[identifier] = component_data
@@ -160,14 +174,10 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	component_data["rel_x"] = rel_x
 	component_data["rel_y"] = rel_y
 
-	component_data["option"] = current_option
-
 /// Loads data from a list
 /obj/item/circuit_component/proc/load_data_from_list(list/component_data)
 	rel_x = component_data["rel_x"]
 	rel_y = component_data["rel_y"]
-
-	set_option(component_data["option"])
 
 /client/proc/load_circuit()
 	set name = "Load Circuit"

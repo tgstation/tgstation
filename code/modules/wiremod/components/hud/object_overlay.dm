@@ -13,6 +13,8 @@
 
 	required_shells = list(/obj/item/organ/cyberimp/bci)
 
+	var/datum/port/input/option/object_overlay_options
+
 	/// Target atom
 	var/datum/port/input/target
 
@@ -44,20 +46,6 @@
 
 /obj/item/circuit_component/object_overlay/populate_options()
 	var/static/component_options = list(
-		"Corners (Blue)",
-		"Corners (Red)",
-		"Circle (Blue)",
-		"Circle (Red)",
-		"Small Corners (Blue)",
-		"Small Corners (Red)",
-		"Triangle (Blue)",
-		"Triangle (Red)",
-		"HUD mark (Blue)",
-		"HUD mark (Red)"
-	)
-	options = component_options
-
-	var/static/options_to_icons = list(
 		"Corners (Blue)" = "hud_corners",
 		"Corners (Red)" = "hud_corners_red",
 		"Circle (Blue)" = "hud_circle",
@@ -69,7 +57,8 @@
 		"HUD mark (Blue)" = "hud_mark",
 		"HUD mark (Red)" = "hud_mark_red"
 	)
-	options_map = options_to_icons
+	object_overlay_options = add_option_port("Object", component_options)
+	options_map = component_options
 
 /obj/item/circuit_component/object_overlay/register_shell(atom/movable/shell)
 	if(istype(shell, /obj/item/organ/cyberimp/bci))
@@ -106,7 +95,7 @@
 	if(active_overlays[target_atom])
 		QDEL_NULL(active_overlays[target_atom])
 
-	var/image/cool_overlay = image(icon = 'icons/hud/screen_bci.dmi', loc = target_atom, icon_state = options_map[current_option], layer = RIPPLE_LAYER)
+	var/image/cool_overlay = image(icon = 'icons/hud/screen_bci.dmi', loc = target_atom, icon_state = options_map[object_overlay_options.input_value], layer = RIPPLE_LAYER)
 
 	if(image_pixel_x.input_value)
 		cool_overlay.pixel_x = image_pixel_x.input_value

@@ -231,9 +231,17 @@
 	var/static/list/people_who_want_to_play = list()
 	var/game_area = /area/ctf
 
+	/// This variable is needed because of ctf shitcode + we need to make sure we're deleting the current ctf landmark that spawned us in and not a new one.
+	var/obj/effect/landmark/ctf/ctf_landmark
+
 /obj/machinery/capture_the_flag/Initialize()
 	. = ..()
 	AddElement(/datum/element/point_of_interest)
+	ctf_landmark = GLOB.ctf_spawner
+
+/obj/machinery/capture_the_flag/Destroy()
+	ctf_landmark = null
+	return ..()
 
 /obj/machinery/capture_the_flag/process(delta_time)
 	for(var/i in spawned_mobs)
@@ -453,7 +461,11 @@
 	notify_ghosts("[name] has been activated!", source = src, action=NOTIFY_ORBIT, header = "CTF has been activated")
 
 /obj/machinery/capture_the_flag/proc/reset_the_arena()
-	new /obj/effect/landmark/ctf(get_turf(GLOB.ctf_spawner))
+	if(!ctf_landmark)
+		return
+
+	if(ctf_landmark == GLOB.ctf_spawner)
+		new /obj/effect/landmark/ctf(get_turf(GLOB.ctf_spawner))
 
 
 /obj/machinery/capture_the_flag/proc/stop_ctf()

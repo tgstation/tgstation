@@ -891,6 +891,8 @@
 	display_name = "Air Alarm"
 	desc = "Controls levels of gases and their temperature as well as all vents and scrubbers in the room."
 
+	var/datum/port/input/option/air_alarm_options
+
 	var/datum/port/input/min_2
 	var/datum/port/input/min_1
 	var/datum/port/input/max_1
@@ -919,24 +921,18 @@
 
 /obj/item/circuit_component/air_alarm/populate_options()
 	var/static/list/component_options
-	var/static/list/options_to_key
 
 	if(!component_options)
 		component_options = list(
-			"Pressure",
-			"Temperature"
-		)
-		options_to_key = list(
 			"Pressure" = "pressure",
 			"Temperature" = "temperature"
 		)
 
 		for(var/gas_id in GLOB.meta_gas_info)
-			component_options.Add(GLOB.meta_gas_info[gas_id][META_GAS_NAME])
-			options_to_key[GLOB.meta_gas_info[gas_id][META_GAS_NAME]] = gas_id2path(gas_id)
+			component_options[GLOB.meta_gas_info[gas_id][META_GAS_NAME]] = gas_id2path(gas_id)
 
-	options = component_options
-	options_map = options_to_key
+	air_alarm_options = add_option_port("Air Alarm Options", component_options)
+	options_map = component_options
 
 /obj/item/circuit_component/air_alarm/register_usb_parent(atom/movable/parent)
 	. = ..()
@@ -952,6 +948,8 @@
 
 	if(. || !connected_alarm || connected_alarm.locked)
 		return
+
+	var/current_option = air_alarm_options.input_value
 
 	if(COMPONENT_TRIGGERED_BY(request_data, port))
 		var/turf/alarm_turf = get_turf(connected_alarm)
