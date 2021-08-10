@@ -132,10 +132,10 @@
 	var/cycle_id
 
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi/payload(obj/machinery/door/airlock/airlock)
-	if(airlock.close_others)
-		log_mapping("[src] at [AREACOORD(src)] tried to set [airlock] close_others, but it's already set!")
+	if(airlock.closeOtherId)
+		log_mapping("[src] at [AREACOORD(src)] tried to set [airlock] closeOtherId, but it's already set!")
 	else
-		airlock.close_others = cycle_id
+		airlock.closeOtherId = cycle_id
 
 /obj/effect/mapping_helpers/airlock/locked
 	name = "airlock lock helper"
