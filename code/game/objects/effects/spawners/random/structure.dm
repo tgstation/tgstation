@@ -28,3 +28,11 @@ obj/effect/spawner/random/structure
 		/obj/structure/girder = 4,
 		/obj/structure/girder/displaced = 1,
 	)
+
+/obj/effect/spawner/random/structure/grille
+	name = "grille spawner"
+	icon_state = "grille"
+	loot = list(
+		/obj/structure/grille = 4,
+		/obj/structure/grille/broken = 1,
+	)
