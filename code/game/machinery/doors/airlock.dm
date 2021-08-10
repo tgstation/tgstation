@@ -112,7 +112,7 @@
 	var/aiHacking = FALSE
 	var/closeOtherId //Cyclelinking for airlocks that aren't on the same x or y coord as the target.
 	var/obj/machinery/door/airlock/closeOther
-	var/list/obj/machinery/door/airlock/closeOtherMulti = list()
+	var/list/obj/machinery/door/airlock/close_others = list()
 	var/obj/item/electronics/airlock/electronics
 	COOLDOWN_DECLARE(shockCooldown)
 	var/obj/item/note //Any papers pinned to the airlock
@@ -214,7 +214,7 @@
 /obj/machinery/door/airlock/proc/update_other_id()
 	for(var/obj/machinery/door/airlock/Airlock in GLOB.airlocks)
 		if(Airlock.closeOtherId == closeOtherId && Airlock != src)
-			closeOtherMulti += Airlock
+			close_others += Airlock
 
 /obj/machinery/door/airlock/proc/cyclelinkairlock()
 	if (cyclelinkedairlock)
@@ -349,10 +349,10 @@
 		if (cyclelinkedairlock.cyclelinkedairlock == src)
 			cyclelinkedairlock.cyclelinkedairlock = null
 		cyclelinkedairlock = null
-	if(closeOtherMulti) //remove this airlock from the list of every linked airlock
+	if(close_others) //remove this airlock from the list of every linked airlock
 		closeOtherId = null
-		for(var/obj/machinery/door/airlock/otherlock as anything in closeOtherMulti)
-			otherlock.closeOtherMulti -= src
+		for(var/obj/machinery/door/airlock/otherlock as anything in close_others)
+			otherlock.close_others -= src
 	if(id_tag)
 		for(var/obj/machinery/door_buttons/D in GLOB.machines)
 			D.removeMe(src)
@@ -379,8 +379,8 @@
 			if(!C.wearing_shock_proof_gloves())
 				new /datum/hallucination/shock(C)
 				return
-	if(closeOtherMulti)
-		for(var/obj/machinery/door/airlock/otherlock as anything in closeOtherMulti)
+	if(close_others)
+		for(var/obj/machinery/door/airlock/otherlock as anything in close_others)
 			if(!shuttledocked && !emergency && !otherlock.shuttledocked && !otherlock.emergency && allowed(user))
 				if(otherlock.operating)
 					otherlock.delayed_close_requested = TRUE
