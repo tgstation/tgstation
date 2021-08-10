@@ -150,7 +150,10 @@
 	var/containsPrize = FALSE
 
 /obj/item/food/egg/loaded
+	name = "wrapped egg"
+	desc = "A chocolate egg containing a little something special. Unwrap and enjoy!"
 	containsPrize = TRUE
+	food_reagents = list()
 
 /obj/item/food/egg/loaded/Initialize()
 	. = ..()
