@@ -173,7 +173,12 @@
 		/obj/item/reagent_containers/glass/bucket/wooden = 1,
 	)
 
-
-
-
-
+/obj/effect/spawner/random/trash/caution_sign
+	name = "caution sign spawner"
+	icon_state = "caution"
+	loot = list(
+		/obj/item/clothing/suit/caution = 40,
+		/obj/structure/holosign/wetsign = 5,
+		/obj/structure/holosign/barrier = 3,
+		/obj/structure/holosign/barrier/wetsign = 2,
+	)
