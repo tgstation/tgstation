@@ -13,7 +13,7 @@
 /////////////
 
 /area/ruin/space/way_home
-	name = "\improper \improper Salvation"
+	name = "\improper Salvation"
 	icon_state = "away"
 	always_unpowered = FALSE
 
