@@ -295,6 +295,10 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 /obj/item/integrated_circuit/ui_status(mob/user)
 	. = ..()
+
+	if (isobserver(user))
+		. = max(., UI_UPDATE)
+
 	// Extra protection because ui_state will not close the UI if they already have the ui open,
 	// as ui_state is only set during
 	if(admin_only)
