@@ -68,4 +68,4 @@
 	if(dropsound)
 		playsound(master, pick(dropsound), 30)
 	if(drop_memory)
-		fool.mind?.add_memory(MEMORY_SPAGHETTI_SPILL, list(DETAIL_VICTIM = fool))
+		fool.mind?.add_memory(MEMORY_SPAGHETTI_SPILL, list(DETAIL_PROTAGONIST = fool), story_value = STORY_VALUE_OKAY)

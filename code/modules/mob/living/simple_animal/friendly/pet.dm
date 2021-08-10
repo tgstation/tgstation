@@ -69,7 +69,7 @@
 	regenerate_icons()
 
 	for(var/mob/living/carbon/horrified_person in view(7, src))
-		horrified_person.mind?.add_memory(MEMORY_PET_DEAD, list(DETAIL_VICTIM = src))
+		horrified_person.mind?.add_memory(MEMORY_PET_DEAD, list(DETAIL_PROTAGONIST = horrified_person, DETAIL_DEUTORAGONIST = src), story_value = STORY_VALUE_AMAZING)
 
 /mob/living/simple_animal/pet/regenerate_icons()
 	cut_overlays()

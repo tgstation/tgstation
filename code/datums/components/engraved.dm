@@ -12,8 +12,10 @@
 	var/new_creation
 	///what random icon state should the engraving have
 	var/icon_state_append
+	///The story value of this piece.
+	var/story_value
 
-/datum/component/engraved/Initialize(engraved_description, new_creation)
+/datum/component/engraved/Initialize(engraved_description, new_creation, story_value)
 	. = ..()
 	if(!isclosedturf(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -23,8 +25,29 @@
 	engraved_wall.turf_flags &= ~ENGRAVABLE
 	src.engraved_description = engraved_description
 	src.new_creation = new_creation
-	var/art_value = new_creation ? rand(20, 30) : 10
-	engraved_wall.AddElement(/datum/element/art/commoner, art_value)
+	src.story_value = story_value
+
+
+	var/beauty_value
+	switch(story_value)
+		if(STORY_VALUE_SHIT)
+			beauty_value = rand(-50, 50) //Ugly or mediocre at best
+		if(STORY_VALUE_NONE)
+			beauty_value = rand(0, 100) //No inherent value
+		if(STORY_VALUE_MEH)
+			beauty_value = rand(100, 200) //Its an okay tale
+		if(STORY_VALUE_OKAY)
+			beauty_value = rand(150, 300) //Average story! most things are like this
+		if(STORY_VALUE_AMAZING)
+			beauty_value = rand(300, 600)//Really impactful stories, seeing a lost limb, losing a loved pet.
+		if(STORY_VALUE_LEGENDARY)
+			beauty_value = rand(500, 800) //Almost always a good story! this is for memories you can barely ever get, killing megafauna, doing ultimate feats!
+
+	engraved_wall.AddElement(/datum/element/art, beauty_value / ENGRAVING_BEAUTY_TO_ART_FACTOR)
+	if(new_creation)
+		engraved_wall.AddElement(/datum/element/beauty, beauty_value)
+	else
+		engraved_wall.AddElement(/datum/element/beauty, beauty_value / ENGRAVING_PERSISTENCE_BEAUTY_LOSS_FACTOR) //Old age does them harm
 	icon_state_append = rand(1, 2)
 	//must be here to allow overlays to be updated
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
@@ -67,3 +90,4 @@
 	.["y"] = engraved_wall.y
 	.["z"] = engraved_wall.z
 	.["story"] = engraved_description
+	.["story_value"] = story_value
