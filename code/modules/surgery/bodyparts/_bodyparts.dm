@@ -860,6 +860,9 @@
 	if((body_zone != BODY_ZONE_HEAD && body_zone != BODY_ZONE_CHEST))
 		should_draw_gender = FALSE
 
+	//Color we give to the limb at the end (inorganic limbs dont do this)
+	var/draw_color
+
 	if(!is_organic_limb())
 		limb.icon = icon
 		limb.icon_state = "[body_zone]" //Inorganic limbs are agender
@@ -880,46 +883,44 @@
 				aux_em_block.color = GLOB.em_block_color
 				aux.overlays += aux_em_block
 
-		return
-
-	if(should_draw_greyscale)
-		limb.icon = 'icons/mob/human_parts_greyscale.dmi'
-		if(should_draw_gender)
-			limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
-		else if(use_digitigrade)
-			limb.icon_state = "digitigrade_[use_digitigrade]_[body_zone]"
-		else
-			limb.icon_state = "[species_id]_[body_zone]"
 	else
-		limb.icon = 'icons/mob/human_parts.dmi'
-		if(should_draw_gender)
-			limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
+		if(should_draw_greyscale)
+			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
+			if(should_draw_gender)
+				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
+			else if(use_digitigrade)
+				limb.icon_state = "digitigrade_[use_digitigrade]_[body_zone]"
+			else
+				limb.icon_state = "[species_id]_[body_zone]"
 		else
-			limb.icon_state = "[species_id]_[body_zone]"
-
-	if(aux_zone)
-		aux = image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
-		. += aux
-
-	var/draw_color
-	if(should_draw_greyscale)
-		draw_color = mutation_color || species_color || (skin_tone && skintone2hex(skin_tone))
-		if(draw_color)
-			limb.color = "#[draw_color]"
-			if(aux_zone)
-				aux.color = "#[draw_color]"
-
-	if(blocks_emissive)
-		var/mutable_appearance/limb_em_block = mutable_appearance(limb.icon, limb.icon_state, plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
-		limb_em_block.dir = image_dir
-		limb_em_block.color = GLOB.em_block_color
-		limb.overlays += limb_em_block
+			limb.icon = 'icons/mob/human_parts.dmi'
+			if(should_draw_gender)
+				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
+			else
+				limb.icon_state = "[species_id]_[body_zone]"
 
 		if(aux_zone)
-			var/mutable_appearance/aux_em_block = mutable_appearance(aux.icon, aux.icon_state, plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
-			aux_em_block.dir = image_dir
-			aux_em_block.color = GLOB.em_block_color
-			aux.overlays += aux_em_block
+			aux = image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
+			. += aux
+
+		if(should_draw_greyscale)
+			draw_color = mutation_color || species_color || (skin_tone && skintone2hex(skin_tone))
+			if(draw_color)
+				limb.color = "#[draw_color]"
+				if(aux_zone)
+					aux.color = "#[draw_color]"
+
+		if(blocks_emissive)
+			var/mutable_appearance/limb_em_block = mutable_appearance(limb.icon, limb.icon_state, plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+			limb_em_block.dir = image_dir
+			limb_em_block.color = GLOB.em_block_color
+			limb.overlays += limb_em_block
+
+			if(aux_zone)
+				var/mutable_appearance/aux_em_block = mutable_appearance(aux.icon, aux.icon_state, plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+				aux_em_block.dir = image_dir
+				aux_em_block.color = GLOB.em_block_color
+				aux.overlays += aux_em_block
 
 	//Draw external organs like horns and frills
 	for(var/obj/item/organ/external/external_organ in external_organs)
