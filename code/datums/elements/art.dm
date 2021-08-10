@@ -70,11 +70,17 @@
 
 /datum/element/art/commoner/apply_moodlet(atom/source, mob/user, impress)
 	var/msg
-	var/list/haters = list(GLOB.command_positions + GLOB.security_positions + GLOB.security_sub_positions + "Quartermaster")
+	var/list/haters = list()
+	for(var/hater_department_type as anything in list(/datum/job_department/security, /datum/job_department/command))
+		var/datum/job_department/hater_department = SSjob.get_department_type(hater_department_type)
+		for(var/datum/job/hater_job as anything in hater_department.department_jobs)
+			haters += hater_job.title
+	var/datum/job/quartermaster/fucking_quartermaster = SSjob.GetJobType(/datum/job/quartermaster)
+	haters += fucking_quartermaster.title
 
 	if(!(user.mind.assigned_role.title in haters))
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
-		msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [source.p_theyre()]. So [pick("relatable", "awe-inspiring", "true", "real")]!"
+		msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [source.p_theyre()]. So [pick("relatable", "down to earth", "true", "real")]!"
 	else
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
 		msg = "Wow, [source.p_they()] sucks."

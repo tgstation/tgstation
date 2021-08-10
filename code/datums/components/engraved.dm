@@ -10,6 +10,8 @@
 	var/engraved_description
 	///whether this is a new engraving, or a persistence loaded one.
 	var/new_creation
+	///what random icon state should the engraving have
+	var/icon_state_append
 
 /datum/component/engraved/Initialize(engraved_description, new_creation)
 	. = ..()
@@ -23,7 +25,9 @@
 	src.new_creation = new_creation
 	var/art_value = new_creation ? rand(20, 30) : 10
 	engraved_wall.AddElement(/datum/element/art, art_value)
-	//ADD ENGRAVED OVERLAY HERE
+	icon_state_append = rand(1, 2)
+	//must be here to allow overlays to be updated
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
 
 /datum/component/engraved/Destroy(force, silent)
 	. = ..()
@@ -31,13 +35,20 @@
 	SSpersistence.wall_engravings -= src
 	engraved_wall.turf_flags |= ENGRAVABLE
 	parent.RemoveElement(/datum/element/art)
-	//...AND REMOVE ENGRAVED OVERLAY HERE
+	engraved_wall.update_appearance()
 
 /datum/component/engraved/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/component/engraved/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
 	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
+
+/// Used to maintain the acid overlay on the parent [/atom].
+/datum/component/engraved/proc/on_update_overlays(atom/parent_atom, list/overlays)
+	SIGNAL_HANDLER
+
+	overlays += mutable_appearance('icons/turf/wall_overlays.dmi', "engraving[icon_state_append]")
 
 ///signal called on parent being examined
 /datum/component/engraved/proc/on_examine(datum/source, mob/user, list/examine_list)

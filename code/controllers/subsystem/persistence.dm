@@ -94,7 +94,10 @@ SUBSYSTEM_DEF(persistence)
 	for(var/datum/component/engraved/engraving in wall_engravings)
 		if(!engraving.new_creation)
 			continue
-		saved_data += engraving.save_persistent()
+		var/area/engraved_area = get_area(engraving.parent)
+		if(!istype(engraved_area, /area/maintenance))
+			continue
+		saved_data += list(engraving.save_persistent())
 
 	var/json_file = file(ENGRAVING_SAVE_FILE)
 	fdel(json_file)
