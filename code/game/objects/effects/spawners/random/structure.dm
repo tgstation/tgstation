@@ -67,8 +67,14 @@ obj/effect/spawner/random/structure
 	icon_state = "table"
 	loot = list(
 		/obj/structure/table = 40,
+		/obj/structure/table/wood = 30,
 		/obj/structure/table/glass = 20,
-		/obj/structure/table/wood = 20,
-		/obj/structure/table/reinforced = 10,
-		/obj/structure/table/wood/poker = 10,
+		/obj/structure/table/reinforced = 5,
+		/obj/structure/table/wood/poker = 5,
 	)
+
+/obj/effect/spawner/random/structure/table_fancy
+	name = "table spawner"
+	icon_state = "table_fancy"
+	loot_type_path = /obj/structure/showcase
+	loot = list()
