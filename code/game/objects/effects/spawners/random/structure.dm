@@ -36,3 +36,11 @@ obj/effect/spawner/random/structure
 		/obj/structure/grille = 4,
 		/obj/structure/grille/broken = 1,
 	)
+
+/obj/effect/spawner/random/structure/lattice
+	name = "lattice spawner"
+	icon_state = "lattice"
+	loot = list(
+		/obj/structure/lattice = 4,
+		/obj/structure/lattice/catwalk = 1,
+	)
