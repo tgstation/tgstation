@@ -95,12 +95,13 @@
 /obj/item/stack/tile/mineral/bananium
 	name = "bananium tile"
 	singular_name = "bananium floor tile"
-	desc = "A tile made out of bananium, HOOOOOOOOONK!"
+	desc = "A non-slippery tile made out of bananium, HOOOOOOOOONK!"
 	icon_state = "tile_bananium"
 	inhand_icon_state = "tile-bananium"
 	turf_type = /turf/open/floor/mineral/bananium
 	mineralType = "bananium"
 	mats_per_unit = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT*0.25)
+	material_flags = MATERIAL_NO_EFFECTS //The slippery comp makes it unpractical for good clown decor. The material tiles should still slip.
 	merge_type = /obj/item/stack/tile/mineral/bananium
 
 /obj/item/stack/tile/mineral/abductor

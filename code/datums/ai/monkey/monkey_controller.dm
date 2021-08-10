@@ -43,6 +43,8 @@ have ways of interacting with a specific mob and control it.
 	RegisterSignal(new_pawn, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_paw)
+	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_ANIMAL, .proc/on_attack_animal)
+	RegisterSignal(new_pawn, COMSIG_MOB_ATTACK_ALIEN, .proc/on_attack_alien)
 	RegisterSignal(new_pawn, COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
 	RegisterSignal(new_pawn, COMSIG_ATOM_HITBY, .proc/on_hitby)
 	RegisterSignal(new_pawn, COMSIG_LIVING_START_PULL, .proc/on_startpulling)
@@ -58,7 +60,7 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey/UnpossessPawn(destroy)
 	UnregisterSignal(pawn, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_LIVING_START_PULL,\
-	COMSIG_LIVING_TRY_SYRINGE, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED, COMSIG_MOB_MOVESPEED_UPDATED))
+	COMSIG_LIVING_TRY_SYRINGE, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED, COMSIG_MOB_MOVESPEED_UPDATED, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_MOB_ATTACK_ALIEN))
 	RemoveElement(/datum/element/connect_loc_behalf, pawn, loc_connections)
 
 	return ..() //Run parent at end
@@ -206,16 +208,25 @@ have ways of interacting with a specific mob and control it.
 	if(I.force && I.damtype != STAMINA)
 		retaliate(user)
 
-/datum/ai_controller/monkey/proc/on_attack_hand(datum/source, mob/living/L)
+/datum/ai_controller/monkey/proc/on_attack_hand(datum/source, mob/living/user)
 	SIGNAL_HANDLER
 	if(prob(MONKEY_RETALIATE_PROB))
-		retaliate(L)
+		retaliate(user)
 
-
-/datum/ai_controller/monkey/proc/on_attack_paw(datum/source, mob/living/L)
+/datum/ai_controller/monkey/proc/on_attack_paw(datum/source, mob/living/user)
 	SIGNAL_HANDLER
 	if(prob(MONKEY_RETALIATE_PROB))
-		retaliate(L)
+		retaliate(user)
+
+/datum/ai_controller/monkey/proc/on_attack_animal(datum/source, mob/living/user)
+	SIGNAL_HANDLER
+	if(user.melee_damage_upper > 0 && prob(MONKEY_RETALIATE_PROB))
+		retaliate(user)
+
+/datum/ai_controller/monkey/proc/on_attack_alien(datum/source, mob/living/user)
+	SIGNAL_HANDLER
+	if(prob(MONKEY_RETALIATE_PROB))
+		retaliate(user)
 
 /datum/ai_controller/monkey/proc/on_bullet_act(datum/source, obj/projectile/Proj)
 	SIGNAL_HANDLER
