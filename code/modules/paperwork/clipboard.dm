@@ -200,12 +200,3 @@
 /obj/item/clipboard/proc/on_top_paper_change()
 	SIGNAL_HANDLER
 	update_appearance()
-
-/obj/item/clipboard/integrated
-	name = "\improper Paperwork Master's clipboard"
-	desc = "Having a pen integrated into a clipboard really streamlines a paperwork expert's job, or so they say."
-	integrated_pen = TRUE
-
-/obj/item/clipboard/integrated/Initialize()
-	pen = new /obj/item/pen
-	. = ..()
