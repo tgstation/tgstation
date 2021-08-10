@@ -79,6 +79,12 @@
 		/obj/structure/statue/diamond/ai2 = 1,
 	)
 
+/obj/effect/spawner/random/decoration/showcase
+	name = "showcase spawner"
+	icon_state = "showcase"
+	loot_type_path = /obj/structure/showcase
+	loot = list()
+
 /obj/effect/spawner/random/decoration/glowstick
 	name = "random colored glowstick"
 	icon_state = "glowstick"
