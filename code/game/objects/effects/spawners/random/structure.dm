@@ -20,3 +20,11 @@ obj/effect/spawner/random/structure
 	icon_state = "crate_secure"
 	spawn_loot_chance = 20
 	loot = list(/obj/structure/closet/crate/secure/loot)
+
+/obj/effect/spawner/random/structure/girder
+	name = "girder spawner"
+	icon_state = "girder"
+	loot = list(
+		/obj/structure/girder = 4,
+		/obj/structure/girder/displaced = 1,
+	)
