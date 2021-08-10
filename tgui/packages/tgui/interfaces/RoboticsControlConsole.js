@@ -78,16 +78,21 @@ const Cyborgs = (props, context) => {
               })} />
             <Button.Confirm
               icon="bomb"
-              disabled={!cyborg.locked_down&&!cyborg.can_blow}
-              content={!cyborg.can_blow&&cyborg.locked_down
-                ?"Arming up"
-                :"Detonate"}
-              color={cyborg.can_blow ? "bad"
-                :cyborg.locked_down ? "yellow" : "grey"}
-              onClick={() => act(cyborg.can_blow
-                ?'killbot' : "", {
-                ref: cyborg.ref,
-              })} />
+              disabled={!cyborg.locked_down && !cyborg.can_blow}
+              content={!cyborg.can_blow && cyborg.locked_down
+                ? "Arming up" : "Detonate"}
+              color={cyborg.can_blow
+                ? "bad"
+                : cyborg.locked_down
+                  ? "yellow"
+                  : "grey"}
+              onClick={() => {
+                if (cyborg.can_blow) {
+                  act('killbot', {
+                    ref: cyborg.ref,
+                  });
+                }
+              }} />
           </>
         )}>
         <LabeledList>
