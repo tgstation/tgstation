@@ -252,12 +252,28 @@
 	last_death = world.time
 
 ///document this
-/datum/mind/proc/add_memory(memory_type, extra_info, no_mood)
+/datum/mind/proc/add_memory(memory_type, extra_info, story_value, memory_flags)
 	var/story_mood = MOODLESS_MEMORY
-	if(!no_mood)
-		var/datum/component/mood/mood_component = current.GetComponent(/datum/component/mood)
-		if(mood_component)
-			story_mood = mood_component.mood_level
+	var/victim_mood = MOODLESS_MEMORY
+
+	extra_info[DETAIL_PROTAGONIST] = extra_info[DETAIL_PROTAGONIST] || current //If no victim is supplied, assume it happend to the memorizer.
+	var/atom/victim = extra_info[DETAIL_PROTAGONIST]
+	if(!(memory_flags & MEMORY_FLAG_NOLOCATION))
+		extra_info[DETAIL_WHERE] = get_area(victim)
+
+	if(!(memory_flags & MEMORY_FLAG_NOMOOD))
+		var/datum/component/mood/victim_mood_component = current.GetComponent(/datum/component/mood)
+		if(victim_mood_component)
+			victim_mood = victim_mood_component.mood_level
+
+		if(victim == current)
+			story_mood = victim_mood
+		else
+			var/datum/component/mood/memorizer_mood_component = current.GetComponent(/datum/component/mood)
+			if(memorizer_mood_component)
+				story_mood = memorizer_mood_component.mood_level
+
+	extra_info[DETAIL_PROTAGONIST_MOOD] = victim_mood
 
 	var/datum/memory/replaced_memory = memories[memory_type]
 	if(replaced_memory)
@@ -269,17 +285,17 @@
 		var/detail = extra_info[key]
 		extra_info_parsed[key] = build_story_detail(detail)
 
-	memories[memory_type] = new /datum/memory(build_story_mob(current), memory_type, extra_info_parsed, story_mood)
+	memories[memory_type] = new /datum/memory(src, build_story_mob(current), memory_type, extra_info_parsed, story_mood, story_value)
 	return memories[memory_type]
 
 ///returns the story name of a mob
 /datum/mind/proc/build_story_mob(mob/living/target)
 	if(special_role && target == current)
-		return "the [lowertext(special_role)]"
+		return "\the [lowertext(special_role)]"
 	if(assigned_role && target == current)
-		return  "the [lowertext(initial(assigned_role.title))]"
+		return  "\the [lowertext(initial(assigned_role.title))]"
 	if(isanimal(target))
-		return "the [lowertext(initial(target.name))]"
+		return "\the [target]"
 	return "someone"
 
 ///returns the story name of anything

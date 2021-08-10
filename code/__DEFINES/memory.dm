@@ -15,6 +15,23 @@
 ///moodlet set if the creature with the memory doesn't use mood (doesn't include mood line)
 #define MOODLESS_MEMORY "nope"
 
+///Factor of how beauty is divided to make the engraving art value
+#define ENGRAVING_BEAUTY_TO_ART_FACTOR 10
+//Factor on how much beauty is removed from before adding the element on old engravings
+#define ENGRAVING_PERSISTENCE_BEAUTY_LOSS_FACTOR 5
+
+///How cool a story is!
+#define STORY_VALUE_SHIT 0
+#define STORY_VALUE_NONE 1
+#define STORY_VALUE_MEH 2
+#define STORY_VALUE_OKAY 3
+#define STORY_VALUE_AMAZING 4
+#define STORY_VALUE_LEGENDARY 5
+
+//Flags for memories
+#define MEMORY_FLAG_NOLOCATION (1<<0)
+#define MEMORY_FLAG_NOMOOD	(1<<1)
+
 //These defines are for what notable event happened. they correspond to the json lists related to the memory
 ///a memory of completing a surgery.
 #define MEMORY_SUCCESSFUL_SURGERY "surgery"
@@ -76,10 +93,17 @@
 ///include a date this event happened
 #define STORY_FLAG_DATED (1<<0)
 
-///Generic memory info keys
+///Generic memory info keys. Use these whenever one of these is the case in a story, because we add extra story piece if these exist.
+///The location of the memory, add these to have a chance of it being added to the story
 #define DETAIL_WHERE "WHERE"
-#define DETAIL_VICTIM "VICTIM"
+///The main subject of the memory. Should be whoever has the biggest impact on the story. (As it grabs the memory from this person)
+#define DETAIL_PROTAGONIST "PROTAGONIST"
+///Usually used bespokely by specific memory types and not added generically, but its generaly the object used to cause the memory. E.g. a peel to slip, the food that was eaten.
 #define DETAIL_WHAT_BY "WHAT_BY"
+///Used whenever a memory has a secondary character. Used bespokely by actions.
+#define DETAIL_DEUTORAGONIST "DEUTORAGONIST"
+//Automatically obtained details
+#define DETAIL_PROTAGONIST_MOOD "VICTIM_MOOD"
 
 //Specific memory info keys
 #define DETAIL_SURGERY_TYPE "SURGERY_TYPE"

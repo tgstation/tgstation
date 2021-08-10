@@ -4,21 +4,27 @@
 /datum/memory
 	///name of the memory the user sees
 	var/name
-	///job of the person performing the event
+	///job of the person memorizing the event
 	var/memorizer
+	///job of the person memorizing the event
+	var/datum/mind/memorizer_mind
 	///the action done to the target, see memory.dm in _DEFINES
 	var/action
 	///extra information used in the memories to more accurately describe what happened. Assoc list of key -> string identifying what kind of info it is, value is an atom or string identifying the detail.
 	var/list/extra_info
-	///mood of the person performing the event when they did it. changes the description.
-	var/mood
+	///mood of the person memorizing the event when it happend. can change the style.
+	var/memorizer_mood
+	///the value of the mood in it's worth as a story, defines how beautiful art from it can be and whether or not it stays in persistence.
+	var/story_value = STORY_VALUE_NONE
 
-/datum/memory/New(memorizer, action, extra_info, mood)
+/datum/memory/New(memorizer_mind, memorizer, action, extra_info, memorizer_mood, story_value)
 	. = ..()
+	src.memorizer_mind = memorizer_mind
 	src.memorizer = memorizer
 	src.action = action
 	src.extra_info = extra_info
-	src.mood = mood
+	src.memorizer_mood = memorizer_mood
+	src.story_value = story_value
 
 	generate_memory_name()
 
@@ -65,20 +71,20 @@
 		/obj/item/skub
 	)
 
-	var/tone_down_the_randomness = FALSE
-
-	//story type dependent vars (engraving art)
 	var/list/forewords = strings(MEMORY_FILE, story_type + "_forewords")
 	var/list/somethings = strings(MEMORY_FILE, story_type + "_somethings")
 	var/list/styles = strings(MEMORY_FILE, story_type + "_styles")
-	var/list/randoms = somethings + styles
+	var/list/wheres = strings(MEMORY_FILE, "where")
 
 	//story action vars (surgery)
 	var/list/story_starts = strings(MEMORY_FILE, action + "_starts")
-
 	var/list/story_moods
-	if(mood != MOODLESS_MEMORY)
-		switch(mood)
+
+
+	var/victim_mood = extra_info[DETAIL_PROTAGONIST_MOOD]
+
+	if(victim_mood != MOODLESS_MEMORY) //How the victim felt when it all happend.
+		switch(victim_mood)
 			if(MOOD_LEVEL_HAPPY4 to MOOD_LEVEL_HAPPY2)
 				story_moods = strings(MEMORY_FILE, "happy")
 				if("[action]sad" in GLOB.string_cache[MEMORY_FILE])
@@ -94,43 +100,51 @@
 
 	//storybuilding
 
-	story_pieces.Add(pick(forewords), pick(story_starts))
-	if(prob(25))
-		var/random = pick(randoms)
-		story_pieces.Add(random)
-		if(random in styles)
-			randoms -= styles
-		tone_down_the_randomness = TRUE
+	//The forewords for this specific type of story (E.g. This engraving depicts)
+	story_pieces.Add(pick(forewords))
+	//The story start for this specific action. (E.g. The Chef carving into The Clown)
+	story_pieces.Add(pick(story_starts))
+	//The location it happend, which isn't always included, but commonly is. (E.g. in Space, while in the Bar)
+	if(extra_info[DETAIL_WHERE])
+		story_pieces.Add(wheres)
+	//Shows how the protagonist felt about it all (E.g. The Chef is looking sad as they tear into The Clown.)
 	if(LAZYLEN(story_moods))
 		story_pieces.Add(pick(story_moods))
-	if(prob(tone_down_the_randomness ? 30 : 70))
-		story_pieces.Add(pick(randoms))
+	//A nonsensical addition, using the memorizer, protagonist or even random crew / things (E.g. in the meantime, the Clown is being arrested, clutching a skub.")
+	if(prob(75))
+		story_pieces.Add(pick(somethings))
+	//Explains any unique styling the art has. e.g. (The engraving has a cubist style.)
+	if(prob(75))
+		story_pieces.Add(pick(styles))
 
-	//replacements
 
 	var/parsed_story = ""
 
 	var/mob/living/crew_member
 
-	var/mob/living/something = pick(something_pool)
+	var/atom/something = pick(something_pool) //Pick a something for the potential something line
 
-	//var/datum/antagonist/obsessed/creeper = memorizer.mind.has_antag_datum(/datum/antagonist/obsessed)
-	//if(creeper && creeper.trauma.obsession)
-	//	crew_member = creeper.trauma.obsession //ALWAYS ENGRAVE MY OBSESSION!
+	var/datum/antagonist/obsessed/creeper = memorizer_mind.has_antag_datum(/datum/antagonist/obsessed)
+	if(creeper && creeper.trauma.obsession)
+		crew_member = creeper.trauma.obsession //ALWAYS ENGRAVE MY OBSESSION!
 
 	var/list/crew_members = list()
 	for(var/mob/living/carbon/human/potential_crew_member as anything in GLOB.player_list)
 		if(potential_crew_member?.mind.assigned_role.job_flags & JOB_CREW_MEMBER)
 			crew_members += potential_crew_member
 
-
-	crew_member = pick(crew_members)
+	if(crew_members.len)
+		crew_member = pick(crew_members)
+	else
+		crew_member = "an unknown crewmember"
 
 	for(var/line in story_pieces)
 		for(var/key in extra_info)
 			var/detail = extra_info[key]
 			line = replacetext(line, "%[key]", "[detail]")
-		line = replacetext(line, "%MEMORIZER", "\improper[memorizer]")
+
+		line = replacetext(line, "%PROPER", "\proper")
+		line = replacetext(line, "%MEMORIZER", "[memorizer]")
 		line = replacetext(line, "%MOOD", pick(story_moods))
 		line = replacetext(line, "%SOMETHING", initial(something.name))
 		line = replacetext(line, "%CREWMEMBER", "the [lowertext(initial(crew_member?.mind.assigned_role.title))]")
@@ -146,7 +160,7 @@
 /datum/memory/proc/generate_memory_name()
 	var/names = strings(MEMORY_FILE, action + "_names")
 	var/line = pick(names)
-	line = replacetext(line, "%MEMORIZER", "\improper[memorizer]")
+	line = replacetext(line, "%PROTAGONIST", "[memorizer]")
 	for(var/key in extra_info)
 		var/detail = extra_info[key]
 		line = replacetext(line, "%[key]", "[detail]")
