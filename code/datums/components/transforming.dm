@@ -89,7 +89,7 @@
 /datum/component/transforming/RegisterWithParent()
 	var/obj/item/item_parent = parent
 
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/try_transform_weapon)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
 	if(item_parent.sharpness || sharpness_on)
 		RegisterSignal(parent, COMSIG_ITEM_SHARPEN_ACT, .proc/on_sharpen)
 
@@ -104,13 +104,13 @@
 /*
  * Called on [COMSIG_ITEM_ATTACK_SELF].
  *
- * Check if we can transform our weapon, and if so, call [do_transform_weapon].
- * And, if [do_transform_weapon] was successful, do a clumsy effect from [clumsy_transform_effect].
+ * Check if we can transform our weapon, and if so, call [do_transform].
+ * And, if [do_transform] was successful, do a clumsy effect from [clumsy_transform_effect].
  *
  * source - source of the signal, the item being transformed
  * user - the mob transforming the weapon
  */
-/datum/component/transforming/proc/try_transform_weapon(obj/item/source, mob/user)
+/datum/component/transforming/proc/on_attack_self(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 
 	if(!COOLDOWN_FINISHED(src, transform_cooldown))
@@ -121,8 +121,9 @@
 		if(!pre_transform_callback.Invoke(user))
 			return
 
-	if(do_transform_weapon(source, user))
+	if(do_transform(source, user))
 		clumsy_transform_effect(user)
+		. = COMPONENT_CANCEL_ATTACK_CHAIN
 
 /*
  * Transform the weapon into its alternate form, calling [toggle_active].
@@ -135,7 +136,7 @@
  *
  * returns TRUE.
  */
-/datum/component/transforming/proc/do_transform_weapon(obj/item/source, mob/user)
+/datum/component/transforming/proc/do_transform(obj/item/source, mob/user)
 	toggle_active(source)
 	if(on_transform_callback)
 		on_transform_callback.Invoke(user, active)
