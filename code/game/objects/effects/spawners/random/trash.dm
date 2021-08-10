@@ -182,3 +182,12 @@
 		/obj/structure/holosign/barrier = 3,
 		/obj/structure/holosign/barrier/wetsign = 2,
 	)
+
+
+/obj/effect/spawner/random/structure/bucket
+	name = "bucket spawner"
+	icon_state = "caution"
+	loot = list(
+		/obj/item/reagent_containers/glass/bucket,
+		/obj/item/reagent_containers/glass/bucket/wooden,
+	)
