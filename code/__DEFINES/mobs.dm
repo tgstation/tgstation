@@ -54,7 +54,11 @@
 #define ORGAN_ORGANIC   1
 #define ORGAN_ROBOTIC   2
 
+///special define for allowing all bodytypes
+#define ANY_BODYPART_ACCEPTED 0
+///non-augmented parts, most species have these
 #define BODYPART_ORGANIC   1
+///robotic parts, androids or augmented species have these
 #define BODYPART_ROBOTIC   2
 
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'

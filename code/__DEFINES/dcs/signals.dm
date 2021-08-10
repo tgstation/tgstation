@@ -263,6 +263,11 @@
 #define COMSIG_REAGENT_EXPOSE_MOB "reagent_expose_mob"
 ///from base of [/datum/reagent/proc/expose_atom]: (/turf, reac_volume)
 #define COMSIG_REAGENT_EXPOSE_TURF "reagent_expose_turf"
+///used by sterilizing reagents to make surgeries faster: (bonus_speed_mod)
+#define COMSIG_CARBON_STERILIZED "carbon_sterilized"
+///used by surgery initiator whenever it starts a surgery (selected_zone)
+#define COMSIG_SURGERY_INITIATED "surgery_initiated"
+	#define CANCEL_INITIATION (1<<0)
 
 ///from base of [/datum/controller/subsystem/materials/proc/InitializeMaterial]: (/datum/material)
 #define COMSIG_MATERIALS_INIT_MAT "SSmaterials_init_mat"

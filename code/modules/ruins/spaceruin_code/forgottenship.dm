@@ -73,7 +73,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 /obj/item/disk/surgery/forgottenship
 	name = "Advanced Surgery Disk"
 	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
-	surgeries = list(/datum/surgery/advanced/lobotomy, /datum/surgery/advanced/bioware/vein_threading, /datum/surgery/advanced/bioware/nerve_splicing)
+	surgeries = list(/datum/component/surgery/advanced/lobotomy, /datum/component/surgery/advanced/bioware/vein_threading, /datum/component/surgery/advanced/bioware/nerve_splicing)
 
 /obj/structure/fluff/empty_sleeper/syndicate/captain
 	icon_state = "sleeper_s-open"

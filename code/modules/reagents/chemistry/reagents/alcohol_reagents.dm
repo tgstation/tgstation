@@ -1,6 +1,3 @@
-#define ALCOHOL_THRESHOLD_MODIFIER 1 //Greater numbers mean that less alcohol has greater intoxication potential
-#define ALCOHOL_RATE 0.005 //The rate at which alcohol affects you
-#define ALCOHOL_EXPONENT 1.6 //The exponent applied to boozepwr to make higher volume alcohol at least a little bit damaging to the liver
 
 ////////////// I don't know who made this header before I refactored alcohols but I'm going to fucking strangle them because it was so ugly, holy Christ
 // ALCOHOLS //
@@ -82,9 +79,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/power_multiplier = boozepwr / 65 // Weak alcohol has less sterilizing power
 
-	for(var/s in exposed_carbon.surgeries)
-		var/datum/surgery/surgery = s
-		surgery.speed_modifier = max(0.1*power_multiplier, surgery.speed_modifier)
+	SEND_SIGNAL(exposed_carbon, COMSIG_CARBON_STERILIZED, 0.1*power_multiplier)
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"

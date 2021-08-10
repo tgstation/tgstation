@@ -1411,7 +1411,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/Iwound_bonus = I.wound_bonus
 
 	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are lying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
-	if((I.item_flags & SURGICAL_TOOL) && !user.combat_mode && H.body_position == LYING_DOWN && (LAZYLEN(H.surgeries) > 0))
+	if((I.item_flags & SURGICAL_TOOL) && !user.combat_mode && H.body_position == LYING_DOWN && HAS_TRAIT(H, TRAIT_SURGERY_PATIENT))
 		Iwound_bonus = CANT_WOUND
 
 	var/weakness = check_species_weakness(I, user)

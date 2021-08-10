@@ -62,11 +62,10 @@
 /obj/machinery/computer/operating/ui_data(mob/user)
 	var/list/data = list()
 	var/list/surgeries = list()
-	for(var/X in advanced_surgeries)
-		var/datum/surgery/S = X
+	for(var/datum/component/surgery/surgery_component as anything in advanced_surgeries)
 		var/list/surgery = list()
-		surgery["name"] = initial(S.name)
-		surgery["desc"] = initial(S.desc)
+		surgery["name"] = initial(surgery_component.name)
+		surgery["desc"] = initial(surgery_component.desc)
 		surgeries += list(surgery)
 	data["surgeries"] = surgeries
 
@@ -103,29 +102,29 @@
 	data["patient"]["toxLoss"] = patient.getToxLoss()
 	data["patient"]["oxyLoss"] = patient.getOxyLoss()
 	data["procedures"] = list()
-	if(patient.surgeries.len)
-		for(var/datum/surgery/procedure in patient.surgeries)
-			var/datum/surgery_step/surgery_step = procedure.get_surgery_step()
+	///i'm sorry about this usage of GetComponent, for the future this could be done in some alternate way I bet
+	var/list/patient_surgeries = patient.GetComponent(/datum/component/surgery)
+	if(patient_surgeries.len)
+		for(var/datum/component/surgery/procedure as anything in patient_surgeries)
+			var/datum/surgery_step/surgery_step = procedure.get_current_surgery_step()
 			var/chems_needed = surgery_step.get_chem_list()
 			var/alternative_step
 			var/alt_chems_needed = ""
 			if(surgery_step.repeatable)
-				var/datum/surgery_step/next_step = procedure.get_surgery_next_step()
+				var/datum/surgery_step/next_step = procedure.get_next_surgery_step()
 				if(next_step)
 					alternative_step = capitalize(next_step.name)
 					alt_chems_needed = next_step.get_chem_list()
 				else
 					alternative_step = "Finish operation"
 			data["procedures"] += list(list(
-				"name" = capitalize("[parse_zone(procedure.location)] [procedure.name]"),
+				"name" = capitalize("[parse_zone(procedure.operated_body_zone)] [procedure]"),
 				"next_step" = capitalize(surgery_step.name),
 				"chems_needed" = chems_needed,
 				"alternative_step" = alternative_step,
 				"alt_chems_needed" = alt_chems_needed
 			))
 	return data
-
-
 
 /obj/machinery/computer/operating/ui_act(action, params)
 	. = ..()

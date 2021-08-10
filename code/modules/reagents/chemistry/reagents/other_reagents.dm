@@ -975,10 +975,7 @@
 	. = ..()
 	if(!(methods & (TOUCH|VAPOR|PATCH)))
 		return
-
-	for(var/s in exposed_carbon.surgeries)
-		var/datum/surgery/surgery = s
-		surgery.speed_modifier = max(0.2, surgery.speed_modifier)
+	SEND_SIGNAL(exposed_carbon, COMSIG_CARBON_STERILIZED, 0.2)
 
 /datum/reagent/iron
 	name = "Iron"

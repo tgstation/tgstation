@@ -314,41 +314,35 @@
 	discipline_slime(user)
 
 /mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(buckled)
-		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-		if(buckled == user)
-			if(prob(60))
-				user.visible_message(span_warning("[user] attempts to wrestle \the [name] off!"), \
-					span_danger("You attempt to wrestle \the [name] off!"))
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
-
-			else
-				user.visible_message(span_warning("[user] manages to wrestle \the [name] off!"), \
-					span_notice("You manage to wrestle \the [name] off!"))
-				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-
-				discipline_slime(user)
-
-		else
-			if(prob(30))
-				buckled.visible_message(span_warning("[user] attempts to wrestle \the [name] off of [buckled]!"), \
-					span_warning("[user] attempts to wrestle \the [name] off of you!"))
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
-
-			else
-				buckled.visible_message(span_warning("[user] manages to wrestle \the [name] off of [buckled]!"), \
-					span_notice("[user] manage to wrestle \the [name] off of you!"))
-				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-
-				discipline_slime(user)
-	else
-		if(stat == DEAD && surgeries.len)
-			if(!user.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
-				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(user, modifiers))
-						return 1
+	if(!buckled)
 		if(..()) //successful attack
 			attacked += 10
+	user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
+	if(buckled == user)
+		if(prob(60))
+			user.visible_message(span_warning("[user] attempts to wrestle \the [name] off!"), \
+				span_danger("You attempt to wrestle \the [name] off!"))
+			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+
+		else
+			user.visible_message(span_warning("[user] manages to wrestle \the [name] off!"), \
+				span_notice("You manage to wrestle \the [name] off!"))
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+
+			discipline_slime(user)
+
+	else
+		if(prob(30))
+			buckled.visible_message(span_warning("[user] attempts to wrestle \the [name] off of [buckled]!"), \
+				span_warning("[user] attempts to wrestle \the [name] off of you!"))
+			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+
+		else
+			buckled.visible_message(span_warning("[user] manages to wrestle \the [name] off of [buckled]!"), \
+				span_notice("[user] manage to wrestle \the [name] off of you!"))
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+
+			discipline_slime(user)
 
 /mob/living/simple_animal/slime/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
 	if(..()) //if harm or disarm intent.
@@ -357,12 +351,6 @@
 
 
 /mob/living/simple_animal/slime/attackby(obj/item/W, mob/living/user, params)
-	if(stat == DEAD && surgeries.len)
-		var/list/modifiers = params2list(params)
-		if(!user.combat_mode || (LAZYACCESS(modifiers, RIGHT_CLICK)))
-			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user, modifiers))
-					return 1
 	if(istype(W, /obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		add_friendship(user, 1)
 		to_chat(user, span_notice("You feed the slime the plasma. It chirps happily."))

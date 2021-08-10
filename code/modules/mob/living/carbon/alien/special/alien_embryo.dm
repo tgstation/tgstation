@@ -64,12 +64,11 @@
 
 /obj/item/organ/body_egg/alien_embryo/egg_process()
 	if(stage == 6 && prob(50))
-		for(var/datum/surgery/S in owner.surgeries)
-			if(S.location == BODY_ZONE_CHEST && istype(S.get_surgery_step(), /datum/surgery_step/manipulate_organs))
-				AttemptGrow(0)
-				return
+		var/obj/item/bodypart/chest = owner.get_bodypart(BODY_ZONE_CHEST)
+		if(chest && HAS_TRAIT(chest, TRAIT_BEING_ORGAN_MANIPULATED))
+			AttemptGrow(0)
+			return
 		AttemptGrow()
-
 
 /obj/item/organ/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success=TRUE)
 	if(!owner || bursting)

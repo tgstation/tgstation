@@ -4,7 +4,7 @@
 
 	TEST_ASSERT_EQUAL(patient.get_missing_limbs().len, 0, "Patient is somehow missing limbs before surgery")
 
-	var/datum/surgery/amputation/surgery = new(patient, BODY_ZONE_R_ARM, patient.get_bodypart(BODY_ZONE_R_ARM))
+	var/datum/component/amputation/surgery = new(patient, BODY_ZONE_R_ARM, patient.get_bodypart(BODY_ZONE_R_ARM))
 
 	var/datum/surgery_step/sever_limb/sever_limb = new
 	sever_limb.success(user, patient, BODY_ZONE_R_ARM, null, surgery)
@@ -62,12 +62,12 @@
 	var/obj/item/scalpel/scalpel = allocate(/obj/item/scalpel)
 
 	var/datum/surgery_step/incise/surgery_step = new
-	var/datum/surgery/organ_manipulation/surgery_for_zero = new
+	var/datum/component/organ_manipulation/surgery_for_zero = new
 
 	INVOKE_ASYNC(surgery_step, /datum/surgery_step/proc/initiate, user, patient_zero, BODY_ZONE_CHEST, scalpel, surgery_for_zero)
 	TEST_ASSERT(surgery_for_zero.step_in_progress, "Surgery on patient zero was not initiated")
 
-	var/datum/surgery/organ_manipulation/surgery_for_one = new
+	var/datum/component/organ_manipulation/surgery_for_one = new
 
 	// Without waiting for the incision to complete, try to start a new surgery
 	TEST_ASSERT(!surgery_step.initiate(user, patient_one, BODY_ZONE_CHEST, scalpel, surgery_for_one), "Was allowed to start a second surgery without the rod of asclepius")

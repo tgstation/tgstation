@@ -325,6 +325,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CAN_USE_FLIGHT_POTION "can_use_flight_potion"
 /// This mob overrides certian SSlag_switch measures with this special trait
 #define TRAIT_BYPASS_MEASURES "bypass_lagswitch_measures"
+/// This mob has an active surgery on it
+#define TRAIT_SURGERY_PATIENT "surgery_patient"
+/// this bodypart is at the step where the surgeon manipulates organs
+#define TRAIT_BEING_ORGAN_MANIPULATED "being_organ_manipulated"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met

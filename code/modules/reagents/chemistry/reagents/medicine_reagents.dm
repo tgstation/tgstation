@@ -373,10 +373,7 @@
 
 	if(methods & (PATCH|TOUCH))
 		var/mob/living/carbon/exposed_carbon = exposed_mob
-		for(var/s in exposed_carbon.surgeries)
-			var/datum/surgery/surgery = s
-			surgery.speed_modifier = max(0.1, surgery.speed_modifier)
-
+		SEND_SIGNAL(exposed_carbon, COMSIG_CARBON_STERILIZED, 0.1)
 		if(show_message)
 			to_chat(exposed_carbon, span_danger("You feel your injuries fade away to nothing!") )
 

@@ -41,11 +41,6 @@
 		GLOB.species_list[S.id] = spath
 	sortList(GLOB.species_list, /proc/cmp_typepaths_asc)
 
-	//Surgeries
-	for(var/path in subtypesof(/datum/surgery))
-		GLOB.surgeries_list += new path()
-	sortList(GLOB.surgeries_list, /proc/cmp_typepaths_asc)
-
 	// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
 	for(var/path in subtypesof(/datum/sprite_accessory/hair_gradient))
 		var/datum/sprite_accessory/hair_gradient/H = new path()

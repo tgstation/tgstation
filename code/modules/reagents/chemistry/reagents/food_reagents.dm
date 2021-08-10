@@ -662,9 +662,7 @@
 		return
 
 	var/mob/living/carbon/exposed_carbon = exposed_mob
-	for(var/s in exposed_carbon.surgeries)
-		var/datum/surgery/surgery = s
-		surgery.speed_modifier = max(0.6, surgery.speed_modifier)
+	SEND_SIGNAL(exposed_carbon, COMSIG_CARBON_STERILIZED, 0.6)
 
 /datum/reagent/consumable/mayonnaise
 	name = "Mayonnaise"
