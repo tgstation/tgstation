@@ -45,10 +45,30 @@ obj/effect/spawner/random/structure
 		/obj/structure/lattice/catwalk = 1,
 	)
 
-/obj/effect/spawner/random/structure/table_frame
-	name = "table frame spawner"
-	icon_state = "table"
+/obj/effect/spawner/random/structure/spare_parts
+	name = "spare parts spawner"
+	icon_state = "table_parts"
 	loot = list(
 		/obj/structure/table_frame,
 		/obj/structure/table_frame/wood,
+		/obj/item/rack_parts,
+	)
+
+/obj/effect/spawner/random/structure/table_or_rack
+	name = "table or rack spawner"
+	icon_state = "rack_parts"
+	loot = list(
+		/obj/effect/spawner/random/structure/table,
+		/obj/structure/rack,
+	)
+
+/obj/effect/spawner/random/structure/table
+	name = "table spawner"
+	icon_state = "table"
+	loot = list(
+		/obj/structure/table = 40,
+		/obj/structure/table/glass = 20,
+		/obj/structure/table/wood = 20,
+		/obj/structure/table/reinforced = 10,
+		/obj/structure/table/wood/poker = 10,
 	)
