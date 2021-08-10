@@ -24,10 +24,11 @@
 	src.engraved_description = engraved_description
 	src.new_creation = new_creation
 	var/art_value = new_creation ? rand(20, 30) : 10
-	engraved_wall.AddElement(/datum/element/art, art_value)
+	engraved_wall.AddElement(/datum/element/art/commoner, art_value)
 	icon_state_append = rand(1, 2)
 	//must be here to allow overlays to be updated
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
+	engraved_wall.update_appearance()
 
 /datum/component/engraved/Destroy(force, silent)
 	. = ..()
@@ -35,13 +36,16 @@
 	SSpersistence.wall_engravings -= src
 	engraved_wall.turf_flags |= ENGRAVABLE
 	parent.RemoveElement(/datum/element/art)
-	engraved_wall.update_appearance()
+	//must be here to allow overlays to be updated
+	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
+	if(parent && !QDELING(parent))
+		var/atom/parent_atom = parent
+		parent_atom.update_appearance()
 
 /datum/component/engraved/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/component/engraved/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
 	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
 
 /// Used to maintain the acid overlay on the parent [/atom].
