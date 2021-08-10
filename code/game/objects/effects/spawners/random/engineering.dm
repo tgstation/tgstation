@@ -56,7 +56,6 @@
 		/obj/item/stack/sheet/rglass{amount = 30} = 2,
 	)
 
-
 /obj/effect/spawner/random/engineering/material_rare
 	name = "Rare material spawner"
 	icon_state = "diamond"

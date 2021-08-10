@@ -44,3 +44,11 @@ obj/effect/spawner/random/structure
 		/obj/structure/lattice = 4,
 		/obj/structure/lattice/catwalk = 1,
 	)
+
+/obj/effect/spawner/random/structure/table_frame
+	name = "table frame spawner"
+	icon_state = "table"
+	loot = list(
+		/obj/structure/table_frame,
+		/obj/structure/table_frame/wood,
+	)
