@@ -84,7 +84,7 @@ SUBSYSTEM_DEF(persistence)
 		if(!(engraved_wall.turf_flags & ENGRAVABLE))
 			continue
 
-		engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], new_creation = FALSE)
+		engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], new_creation = FALSE, engraving["story_value"])
 		successfully_loaded_engravings++
 
 	log_world("Loaded [successfully_loaded_engravings] engraved messages on map [SSmapping.config.map_name]")

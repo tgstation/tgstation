@@ -106,7 +106,7 @@
 	story_pieces.Add(pick(story_starts))
 	//The location it happend, which isn't always included, but commonly is. (E.g. in Space, while in the Bar)
 	if(extra_info[DETAIL_WHERE])
-		story_pieces.Add(wheres)
+		story_pieces.Add(pick(wheres))
 	//Shows how the protagonist felt about it all (E.g. The Chef is looking sad as they tear into The Clown.)
 	if(LAZYLEN(story_moods))
 		story_pieces.Add(pick(story_moods))
