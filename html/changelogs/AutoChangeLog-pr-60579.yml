@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Default AI behavior cooldowns have been returned back to 0,8 seconds instead of 0.1 seconds, meaning Ian will no longer disembowel you with 20 attacks in 2 seconds."

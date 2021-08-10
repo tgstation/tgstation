@@ -218,3 +218,94 @@
   - bugfix: Fixed being able to polymorph pAIs into other mobs.  It changes their
       holoform now instead.
   - bugfix: Fixed being able to polymorph mimics spawned from a staff of animate
+2021-08-07:
+  ArcaneMusic:
+  - bugfix: Wirecutters have their correct belt slot icon again.
+  Ghommie:
+  - bugfix: railings can now be vaulted/climbed over from both sides.
+  - bugfix: Folded gold wheelchairs are now actually made of gold.
+  NamelessFairy:
+  - bugfix: Adds a missing wall on CentCom in the supplypod facility
+  - bugfix: Most if not all CentCom windows should now be on plating
+  Nari Harimoto:
+  - bugfix: chapel areas now work properly, no more APCs thinking its in space on
+      tram
+  Thunder12345:
+  - code_imp: Made the Occupational Corruption Device's deadchat message less cryptic,
+      and repathed it to something more descriptive
+  Zytolg:
+  - bugfix: Missing APC in Icebox Bar Maint
+  - bugfix: Changes icebox apiary to the correct type
+  - bugfix: Icebox Disposals was unlinked under the bar table. This should fix that.
+  - bugfix: Icebox - It was stated that the new department lacks some visibility so
+      I added some windows to Upstairs Botany to help with that.
+  - bugfix: Icebox - Bar was mapped using the wrong table type, now it isn't.
+  - bugfix: Icebox - Kitchen was missing the Processor and Grinder, you can now find
+      them in the freezer and downstairs respectively.
+  - bugfix: Icebox - Changes the bot portal in the bar to the correct subtype.
+2021-08-08:
+  Mokiros:
+  - bugfix: added parentheses to properly calculate days in round time
+  Seris02:
+  - bugfix: pais will no longer get hurt by the rod of asclepius
+  Watermelon914:
+  - bugfix: Fixed circuit component options
+  - code_imp: Moves most circuit component defines to their appropriate files
+2021-08-09:
+  ArcaneMusic:
+  - bugfix: Accounting machines now assign the job to the bank account, meaning that
+      new accounts can buy things without being considered budget cards.
+  Fikou, MeyHaZah, some sprites from /vg/station:
+  - balance: mining soulstone can no longer grab sleeping/unconscious people
+  - balance: voice of god can immobilize in addition to knocking down
+  - balance: anomalous crystal now has a time for it to be used, its snow theme is
+      no longer lethal, you can run from the clown one
+  - balance: lava staff is weaker and its lava is weaker
+  - balance: wand of fireball removed from ash drake loot
+  - balance: drake armor nerfed values, especially to bullet armor
+  - balance: berserker suit has more bullet armor, charge gain doubled
+  - balance: hecksuit is spaceproof, you can use it to gib corpses and heal from them
+  - balance: eye of god loses its xray, you can now use it to scan targets to lower
+      their attack speed
+  - balance: cursed katana is now an extendable organ, lower damage, attacks fauna
+      faster, has a combo system
+  - balance: staff of storms no longer makes storms, it can  create thunderbolts,
+      the thunderbolts are boosted in weather conditions
+  - balance: winter biodome is a bit harder, its antique laser has now been replaced
+      with a freeze cube in a vault
+  - balance: spellblade from bubblegum is replaced with a soulscythe
+  TheSmallBlue:
+  - bugfix: Pathfinding component should now properly go around walls every time.
+  Time-Green:
+  - bugfix: draws moth antennae when you're wearing helmets again (oops)
+  aaaa1023:
+  - bugfix: fixed an error caused by toilets taking damage after they were deconstructed
+2021-08-10:
+  ArchPigeon:
+  - bugfix: fix reattaching of monkey bodyparts
+  Krysonism:
+  - expansion: Adds a new illicit drug; bLasToFF, perfect for when you want to dance.
+  - expansion: Adds a new illicit drug; SaturnX, perfect for when you just want to
+      disappear.
+  - expansion: Adds a new illicit drug; Kroncaine, perfect for when you need to get
+      shit done.
+  - expansion: The seeds of a rare plant; the kronkus vine can now spawn in maint.
+  - expansion: Lead batteries and pipes can now spawn in maint.
+  - rscdel: Removed crank.
+  - balance: Mushroom hallucinogen has a new trippy effect, but no longer makes you
+      druggy or dizzy.
+  Mothblocks:
+  - qol: Observers can now read circuits from anywhere.
+  - expansion: Added USB support to teleporter control consoles.
+  Nari Harimoto:
+  - bugfix: Nanotrasen architects realized they cut too many corners and left out
+      a number of airlock cycle controls on Tramstation, they have since returned
+      and fixed their mistakes
+  - bugfix: Icebox service disposals has now been professionally connected
+  - bugfix: Icebox service has now been tweaked to be up to NT standards
+  - bugfix: Pete has now been assigned to icebox freezer again
+  Triiodine:
+  - qol: NanoTrasen sent some engineers in and revised the Virology Module on Ice
+      box Station, and have also supplied standard equipment available on other station
+      labs that Ice Box had been missing. The structure changes have caused maintenance
+      to expand slightly.
