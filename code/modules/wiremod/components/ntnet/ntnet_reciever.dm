@@ -18,12 +18,11 @@
 	var/datum/port/output/secondary_package
 	var/datum/port/input/enc_key
 	var/datum/port/input/option/data_type_options
+	var/datum/port/input/option/secondary_data_type_options
 
 /obj/item/circuit_component/ntnet_receive/Initialize()
 	. = ..()
 	AddComponent(/datum/component/ntnet_interface)
-	push_hid = add_input_port("Get Hardware ID", PORT_TYPE_SIGNAL)
-	hid = add_output_port("Hardware ID", PORT_TYPE_STRING)
 	data_package = add_output_port("Data Package", PORT_TYPE_ANY)
 	secondary_package = add_output_port("Secondary Package", PORT_TYPE_ANY)
 	enc_key = add_input_port("Encryption Key", PORT_TYPE_STRING)
@@ -38,19 +37,18 @@
 		PORT_TYPE_ATOM,
 	)
 	data_type_options = add_option_port("Data Type", component_options)
+	secondary_data_type_options = add_option_port("Secondary Data Type", component_options)
 
 /obj/item/circuit_component/ntnet_receive/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return
-		
+
 	if(COMPONENT_TRIGGERED_BY(data_type_options, port))
 		data_package.set_datatype(data_type_options.input_value)
-		secondary_package.set_datatype(data_type_options.input_value)
-		
-	if(COMPONENT_TRIGGERED_BY(push_hid, port))
-		var/datum/component/ntnet_interface/ntnet_interface = GetComponent(/datum/component/ntnet_interface)
-		hid.set_output(ntnet_interface.hardware_id)
+
+	if(COMPONENT_TRIGGERED_BY(secondary_data_type_options, port))
+		secondary_package.set_datatype(secondary_data_type_options.input_value)
 
 /obj/item/circuit_component/ntnet_receive/proc/ntnet_receive(datum/source, datum/netdata/data)
 	SIGNAL_HANDLER

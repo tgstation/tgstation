@@ -12,14 +12,12 @@
 
 	network_id = __NETWORK_CIRCUITS
 
-	var/datum/port/input/target_hid
 	var/datum/port/input/data_package
 	var/datum/port/input/secondary_package
 	var/datum/port/input/enc_key
 
 /obj/item/circuit_component/ntnet_send/Initialize()
 	. = ..()
-	target_hid = add_input_port("Target Hardware ID", PORT_TYPE_STRING)
 	data_package = add_input_port("Data Package", PORT_TYPE_ANY)
 	secondary_package = add_input_port("Secondary Package", PORT_TYPE_ANY)
 	enc_key = add_input_port("Encryption Key", PORT_TYPE_STRING)
@@ -35,5 +33,5 @@
 	if(enc_key.input_value)
 		datalist["enc_key"] = enc_key.input_value
 	var/datum/netdata/data = new(datalist)
-	data.receiver_id = target_hid.input_value || __NETWORK_CIRCUITS
+	data.receiver_id =  __NETWORK_CIRCUITS
 	ntnet_send(data)
