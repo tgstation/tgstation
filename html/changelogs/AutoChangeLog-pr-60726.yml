@@ -1,0 +1,6 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - bugfix: "Icebox service disposals has now been professionally connected"
+  - bugfix: "Icebox service has now been tweaked to be up to NT standards"
+  - bugfix: "Pete has now been assigned to icebox freezer again"
