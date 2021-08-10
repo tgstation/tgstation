@@ -15,7 +15,7 @@
 		return TRUE
 	return FALSE
 
-///The true wings that you can use to fly and shit (you cant actually shit with them, but it does wing stuff)
+///The true wings that you can use to fly and shit (you cant actually shit with them)
 /obj/item/organ/external/wings/functional
 	///The flight action object
 	var/datum/action/innate/flight/fly
