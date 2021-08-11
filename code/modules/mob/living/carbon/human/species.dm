@@ -141,6 +141,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	/// The body temperature limit the body can take before it starts taking damage from cold.
 	var/bodytemp_cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT
 
+	///the species that body parts are surgically compatible with (found in _DEFINES/mobs.dm)
+	///current acceptable bitfields are HUMAN_BODY, ALIEN_BODY, LARVA_BODY, MONKEY_BODY, or NONE
+	var/allowed_animal_origin = HUMAN_BODY
+
+
 	///Species-only traits. Can be found in [code/__DEFINES/DNA.dm]
 	var/list/species_traits = list()
 	///Generic traits tied to having the species.
@@ -206,6 +211,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	///List of visual overlays created by handle_body()
 	var/list/body_vis_overlays = list()
+
+
 
 ///////////
 // PROCS //
@@ -498,7 +505,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!noggin) //Decapitated
 		return
 
-	if(HAS_TRAIT(H, TRAIT_HUSK))
+	if(HAS_TRAIT(H, TRAIT_HUSK) || HAS_TRAIT(H, TRAIT_INVISIBLE_MAN))
 		return
 	var/datum/sprite_accessory/S
 	var/list/standing = list()
@@ -672,7 +679,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  */
 /datum/species/proc/handle_body(mob/living/carbon/human/species_human)
 	species_human.remove_overlay(BODY_LAYER)
-
+	if(HAS_TRAIT(species_human, TRAIT_INVISIBLE_MAN))
+		return handle_mutant_bodyparts(species_human)
 	var/list/standing = list()
 
 	var/obj/item/bodypart/head/noggin = species_human.get_bodypart(BODY_ZONE_HEAD)
@@ -802,7 +810,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	source.remove_overlay(BODY_ADJ_LAYER)
 	source.remove_overlay(BODY_FRONT_LAYER)
 
-	if(!mutant_bodyparts)
+	if(!mutant_bodyparts || HAS_TRAIT(source, TRAIT_INVISIBLE_MAN))
 		return
 
 	var/obj/item/bodypart/head/noggin = source.get_bodypart(BODY_ZONE_HEAD)

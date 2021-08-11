@@ -1,4 +1,0 @@
-author: "TheSmallBlue"
-delete-after: True
-changes: 
-  - bugfix: "Pathfinding component should now properly go around walls every time."
