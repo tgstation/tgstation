@@ -31,7 +31,7 @@
 	var/datum/design/being_built
 	var/datum/techweb/stored_research
 	var/list/datum/design/matching_designs
-	var/selected_category
+	var/selected_category = "None"
 	var/base_price = 25
 	var/hacked_price = 50
 
@@ -90,7 +90,7 @@
 			matcolour = M.greyscale_colors,
 		)
 		data["materials"] += list(material_data)
-	if(selected_category && !length(matching_designs))
+	if(selected_category != "None" && !length(matching_designs))
 		data["designs"] = handle_designs(stored_research.researched_designs, TRUE)
 	else
 		data["designs"] = handle_designs(matching_designs, FALSE)
