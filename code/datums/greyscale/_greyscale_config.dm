@@ -261,15 +261,9 @@
 		generated_icon.GetPixel(1, 1)
 		generated_icons[icon_state] = generated_icon
 
-	var/icon/icon_bundle
-	if(!("" in generated_icons))
-		icon_bundle = icon('icons/testing/greyscale_error.dmi')
-	else
-		// This block is done like this because new icons are unable to be scaled before getting added to the rsc
-		icon_bundle = new
-		icon_bundle = fcopy_rsc(icon_bundle)
-		icon_bundle = icon(icon_bundle)
+	var/icon/icon_bundle = generated_icons[""] || icon('icons/testing/greyscale_error.dmi')
 	icon_bundle.Scale(width, height)
+	generated_icons -= ""
 
 	for(var/icon_state in generated_icons)
 		icon_bundle.Insert(generated_icons[icon_state], icon_state)
