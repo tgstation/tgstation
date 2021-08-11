@@ -4,15 +4,11 @@
 	var/gas_amount
 	var/temp_amount
 
-	/// Whether we override the temp_amount or not. Currently implemented on plasma.
-	var/override_temperature
-
-/datum/component/combustible_flooder/Initialize(gas_name, gas_amount, temp_amount, override_temperature = FALSE)
+/datum/component/combustible_flooder/Initialize(gas_name, gas_amount, temp_amount)
 
 	src.gas_name = gas_name
 	src.gas_amount = gas_amount
 	src.temp_amount = temp_amount
-	src.override_temperature = override_temperature
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby_react)
 	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, .proc/flame_react)
@@ -21,11 +17,9 @@
 	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
 	UnregisterSignal(parent, COMSIG_ATOM_FIRE_ACT)
 
-/// Do the flooding. overriden_temperature is the temperature we are overriding the initialized variable with.
-/datum/component/combustible_flooder/proc/flood(mob/user, overriden_temperature = temp_amount)
+/// Do the flooding.
+/datum/component/combustible_flooder/proc/flood(mob/user, temp_amount)
 	var/turf/open/flooded_turf = get_turf(parent)
-	if (override_temperature)
-		temp_amount = overriden_temperature
 	flooded_turf.atmos_spawn_air("[gas_name]=[gas_amount];TEMP=[temp_amount]")
 	
 	// Logging-related
@@ -52,9 +46,9 @@
 	SIGNAL_HANDLER
 
 	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		flood(overriden_temperature = exposed_temperature)
+		flood(temp_amount = exposed_temperature)
 
-/// Being attacked by something 
+/// Being attacked by something
 /datum/component/combustible_flooder/proc/attackby_react(datum/source, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER
 
