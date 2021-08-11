@@ -23212,6 +23212,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/wallmed/directional/east,
 /turf/open/floor/iron,
 /area/medical/medbay/central)
 "cYi" = (
@@ -26548,19 +26549,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/psychology)
-"dkO" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/obj/machinery/vending/wallmed/directional/west,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/maintenance/starboard/aft)
 "dkR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -162180,7 +162168,7 @@ cRq
 cSZ
 cSZ
 cWA
-dkO
+cWA
 cZQ
 cIX
 ddl
