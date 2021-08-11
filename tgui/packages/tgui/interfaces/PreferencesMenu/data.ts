@@ -63,6 +63,11 @@ export const createSetPreference = (
   });
 };
 
+export enum Window {
+  Character = 0,
+  Game = 1,
+}
+
 export type PreferencesMenuData = {
   character_preview_view: string;
   character_profiles: (CharacterProfile | null)[];
@@ -92,4 +97,6 @@ export type PreferencesMenuData = {
 
   active_name: string;
   name_to_use: string;
+
+  window: Window;
 };

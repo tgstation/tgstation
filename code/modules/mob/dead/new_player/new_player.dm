@@ -130,6 +130,7 @@
 		relevant_cap = max(hpc, epc)
 
 	if(href_list["show_preferences"])
+		client.prefs.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
 		client.prefs.ui_interact(src)
 		return TRUE
 

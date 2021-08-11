@@ -100,8 +100,8 @@ GLOBAL_VAR(preferences_species_data)
 		// Want randomjob if preferences already filled - Donkie
 	var/joblessrole = BERANDOMJOB  //defaults to 1 for fewer assistants
 
-	// 0 = character settings, 1 = game preferences
-	var/current_tab = 0
+	/// The current window, PREFERENCE_TAB_* in [`code/__DEFINES/preferences.dm`]
+	var/current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
 
 	var/unlock_content = 0
 
@@ -245,6 +245,9 @@ GLOBAL_VAR(preferences_species_data)
 		GLOB.preferences_species_data = generate_preferences_species_data()
 
 	var/list/data = list()
+
+	data["window"] = current_window
+
 	data["generated_preference_values"] = generated_preference_values
 	data["overflow_role"] = SSjob.overflow_role
 

@@ -154,3 +154,9 @@
 #define PREFERENCE_CHARACTER "character"
 /// This preference is account specific.
 #define PREFERENCE_PLAYER "player"
+
+// Values for /datum/preferences/current_tab
+/// Open the character preference window
+#define PREFERENCE_TAB_CHARACTER_PREFERENCES 0
+/// Open the game preferences window
+#define PREFERENCE_TAB_GAME_PREFERENCES 1

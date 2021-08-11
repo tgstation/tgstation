@@ -19,7 +19,7 @@
 	set name = "Game Preferences"
 	set category = "Preferences"
 	set desc = "Open Game Preferences Window"
-	usr.client.prefs.current_tab = 1
+	usr.client.prefs.current_window = PREFERENCE_TAB_GAME_PREFERENCES
 	usr.client.prefs.ui_interact(usr)
 
 /datum/verbs/menu/settings/ghost

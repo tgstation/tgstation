@@ -243,9 +243,7 @@ export const Gap = (props: {
   return <Stack.Item height={`calc(${props.amount}px + 0.2em)`} />;
 };
 
-export const JobsPage = (props, context) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
-
+export const JobsPage = () => {
   return (
     <Stack vertical fill>
       <Stack.Item>

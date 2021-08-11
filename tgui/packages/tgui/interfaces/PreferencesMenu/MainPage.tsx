@@ -7,6 +7,7 @@ import { Gender, GENDERS } from "./preferences/gender";
 import { Component, createRef } from "inferno";
 import features from "./preferences/features";
 import { FeatureValueInput } from "./preferences/features/base";
+import { logger } from "../../logging";
 
 const CLOTHING_CELL_SIZE = 32;
 const CLOTHING_SIDEBAR_ROWS = 9;
