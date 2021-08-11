@@ -294,19 +294,25 @@ export const GreyscaleModifyMenu = (props, context) => {
         <IconStatesDisplay />
         {
           !!data.unlocked
-            && <Button content="Refresh Icon File" onClick={() => act("refresh_file")} />
+            && (
+              <Box mx={1}>
+                <Button content="Refresh Icon File" onClick={() => act("refresh_file")} />
+                <Button content="Save Icon File" onClick={() => act("save_dmi")} />
+              </Box>
+            )
         }
-        <Button
-          content="Apply"
-          onClick={() => act("apply")}
-          mx={1}
-        />
-        <Button.Checkbox
-          content="Full Preview"
-          disabled={!data.generate_full_preview && !data.unlocked}
-          checked={data.generate_full_preview}
-          onClick={() => act("toggle_full_preview")}
-        />
+        <Box mx={1}>
+          <Button
+            content="Apply"
+            onClick={() => act("apply")}
+          />
+          <Button.Checkbox
+            content="Full Preview"
+            disabled={!data.generate_full_preview && !data.unlocked}
+            checked={data.generate_full_preview}
+            onClick={() => act("toggle_full_preview")}
+          />
+        </Box>
         <PreviewDisplay />
         {
           !!data.refreshing && <LoadingAnimation />

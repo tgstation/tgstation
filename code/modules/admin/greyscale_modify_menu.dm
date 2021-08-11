@@ -187,6 +187,11 @@ This is highly likely to cause a lag spike for a few seconds."},
 			SSgreyscale.RefreshConfigsFromFile()
 			queue_refresh()
 
+		if("save_dmi")
+			if(!unlocked)
+				return
+			config.SaveOutput(split_colors.Copy(1, config.expected_colors+1))
+
 		if("change_dir")
 			sprite_dir = text2dir(params["new_sprite_dir"])
 			queue_refresh()
