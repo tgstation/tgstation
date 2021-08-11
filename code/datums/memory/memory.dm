@@ -16,8 +16,10 @@
 	var/memorizer_mood
 	///the value of the mood in it's worth as a story, defines how beautiful art from it can be and whether or not it stays in persistence.
 	var/story_value = STORY_VALUE_NONE
+	///Flags of any special behavior for the memory
+	var/memory_flags = NONE
 
-/datum/memory/New(memorizer_mind, memorizer, action, extra_info, memorizer_mood, story_value)
+/datum/memory/New(memorizer_mind, memorizer, action, extra_info, memorizer_mood, story_value, memory_flags)
 	. = ..()
 	src.memorizer_mind = memorizer_mind
 	src.memorizer = memorizer
@@ -25,6 +27,7 @@
 	src.extra_info = extra_info
 	src.memorizer_mood = memorizer_mood
 	src.story_value = story_value
+	src.memory_flags = memory_flags
 
 	generate_memory_name()
 
@@ -147,13 +150,16 @@
 		line = replacetext(line, "%MEMORIZER", "[memorizer]")
 		line = replacetext(line, "%MOOD", pick(story_moods))
 		line = replacetext(line, "%SOMETHING", initial(something.name))
-		line = replacetext(line, "%CREWMEMBER", "the [lowertext(initial(crew_member?.mind.assigned_role.title))]")
+		line = replacetext(line, "%CREWMEMBER", memorizer_mind.build_story_mob(crew_member))
 
 		parsed_story += "[line] "
 
 	//after replacement section for performance
 	if(story_flags & STORY_FLAG_DATED)
-		parsed_story += "This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540]."
+		if(memory_flags & MEMORY_FLAG_NOSTATIONNAME)
+			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540]."
+		else
+			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540] on [station_name()]."
 
 	return parsed_story
 

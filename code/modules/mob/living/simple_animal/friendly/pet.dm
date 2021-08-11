@@ -68,8 +68,7 @@
 		collar_type = "[initial(collar_type)]_dead"
 	regenerate_icons()
 
-	for(var/mob/living/carbon/horrified_person in view(7, src))
-		horrified_person.mind?.add_memory(MEMORY_PET_DEAD, list(DETAIL_PROTAGONIST = horrified_person, DETAIL_DEUTORAGONIST = src), story_value = STORY_VALUE_AMAZING)
+	add_memory_in_range(src, 7, MEMORY_PET_DEAD, list(DETAIL_DEUTORAGONIST = src), story_value = STORY_VALUE_AMAZING) //Protagonist is the person memorizing it
 
 /mob/living/simple_animal/pet/regenerate_icons()
 	cut_overlays()

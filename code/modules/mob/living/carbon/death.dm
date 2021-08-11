@@ -9,6 +9,8 @@
 		INVOKE_ASYNC(src, .proc/emote, "deathgasp")
 	reagents.end_metabolization(src)
 
+	add_memory_in_range(src, 7, MEMORY_DEATH, list(DETAIL_TIME_OF_DEATH = tod, DETAIL_PROTAGONIST = src), memory_flags = MEMORY_FLAG_NOMOOD, story_value = STORY_VALUE_OKAY)
+
 	. = ..()
 
 	for(var/T in get_traumas())

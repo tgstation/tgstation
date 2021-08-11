@@ -285,18 +285,18 @@
 		var/detail = extra_info[key]
 		extra_info_parsed[key] = build_story_detail(detail)
 
-	memories[memory_type] = new /datum/memory(src, build_story_mob(current), memory_type, extra_info_parsed, story_mood, story_value)
+	memories[memory_type] = new /datum/memory(src, build_story_mob(current), memory_type, extra_info_parsed, story_mood, story_value, memory_flags)
 	return memories[memory_type]
 
 ///returns the story name of a mob
 /datum/mind/proc/build_story_mob(mob/living/target)
-	if(special_role && target == current)
-		return "\the [lowertext(special_role)]"
-	if(assigned_role && target == current)
-		return  "\the [lowertext(initial(assigned_role.title))]"
 	if(isanimal(target))
 		return "\the [target]"
-	return "someone"
+	if(target.mind?.special_role)
+		return "\the [lowertext(special_role)]"
+	if(target.mind?.assigned_role)
+		return  "\the [lowertext(initial(assigned_role.title))]"
+	return target
 
 ///returns the story name of anything
 /datum/mind/proc/build_story_detail(detail)
