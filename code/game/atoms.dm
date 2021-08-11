@@ -1772,13 +1772,13 @@
 		return null
 
 	var/materials_of_type
-	for(var/m in cached_materials)
-		if(cached_materials[m] < mat_amount)
+	for(var/material_typepath in cached_materials)
+		if(cached_materials[material_typepath] < mat_amount)
 			continue
-		var/datum/material/material = GET_MATERIAL_REF(m)
-		if(exact ? material.type != m : !istype(material, mat_type))
+		var/datum/material/material = GET_MATERIAL_REF(material_typepath)
+		if(exact ? material.type != material_typepath : !istype(material, mat_type))
 			continue
-		LAZYSET(materials_of_type, material, cached_materials[m])
+		LAZYSET(materials_of_type, material, cached_materials[material_typepath])
 
 	return materials_of_type
 

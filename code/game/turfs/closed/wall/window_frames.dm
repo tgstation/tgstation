@@ -10,11 +10,13 @@
 	opacity = FALSE
 	density = TRUE
 	blocks_air = FALSE
-	flags_1 = RAD_NO_CONTAMINATE_1
+	flags_1 = RAD_NO_CONTAMINATE_1 | ALLOW_DARK_PAINTS_1
 	rad_insulation = null
 	frill_icon = 'icons/effects/frills/window_normal_frill.dmi'
 	///Bitflag to hold state on what other objects we have
 	var/window_state = NONE
+	///what step in the construction procedure we are in
+	var/construction_state = WINDOW_FRAME_EMPTY
 	///Icon used by grilles for this window frame
 	var/grille_icon = 'icons/turf/walls/window_grille.dmi'
 	///Icon state used by grilles for this window frame
@@ -25,16 +27,195 @@
 	var/window_icon_state = "window_normal"
 	///Frill used for window frame
 
+	///what datum material our glass is made out of
+	var/glass_material = /datum/material/glass
+	///what datum material our grille is composed of
+	var/grille_material = /datum/material/iron
+	///what datum material our frame is made out of
+	var/frame_material = /datum/material/iron
+
+	var/break_sound = "shatter"
+	var/knock_sound = 'sound/effects/Glassknock.ogg'
+	var/bash_sound = 'sound/effects/Glassbash.ogg'
+	var/hit_sound = 'sound/effects/Glasshit.ogg'
 
 /turf/closed/wall/window_frame/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/climbable)
 	update_icon()
 
+	var/list/initialization_materials = list(frame_material = 2000)
+	if(window_state & WINDOW_FRAME_WITH_GRILLES)
+		initialization_materials[grille_material] = 2000
+	if(window_state & WINDOW_FRAME_WITH_WINDOW)
+		initialization_materials[window_material] = 2000
+	set_custom_materials(initialization_materials)
+
+	RegisterSignal(src, COMSIG_OBJ_PAINTED, .proc/on_painted)
+
+	if(window_state & WINDOW_FRAME_WITH_WINDOW)
+		air_update_turf(TRUE, TRUE)
+
+/turf/closed/wall/window_frame/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(!can_be_reached(user))
+		return TRUE //skip the afterattack
+
+	add_fingerprint(user)
+
+	/*
+	if(attacking_item.tool_behaviour == TOOL_WELDER)
+		if(obj_integrity < max_integrity)
+			if(!attacking_item.tool_start_check(user, amount = 0))
+				return
+
+			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+			if(attacking_item.use_tool(src, user, 40, volume = 50))
+				obj_integrity = max_integrity
+				update_nearby_icons()
+				to_chat(user, "<span class='notice'>You repair [src].</span>")
+		else
+			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
+		return
+
+	if(!(flags_1&NODECONSTRUCT_1) && !(reinf && state >= RWINDOW_FRAME_BOLTED))
+		if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
+			to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the window from":"screw the window to"] the floor...</span>")
+			if(attacking_item.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
+				set_anchored(!anchored)
+				to_chat(user, "<span class='notice'>You [anchored ? "fasten the window to":"unfasten the window from"] the floor.</span>")
+			return
+		else if(attacking_item.tool_behaviour == TOOL_WRENCH && !anchored)
+			to_chat(user, "<span class='notice'>You begin to disassemble [src]...</span>")
+			if(attacking_item.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+				var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
+				G.add_fingerprint(user)
+				playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
+				to_chat(user, "<span class='notice'>You successfully disassemble [src].</span>")
+				qdel(src)
+			return
+		else if(attacking_item.tool_behaviour == TOOL_CROWBAR && reinf && (state == WINDOW_OUT_OF_FRAME) && anchored)
+			to_chat(user, "<span class='notice'>You begin to lever the window into the frame...</span>")
+			if(attacking_item.use_tool(src, user, 100, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+				state = RWINDOW_SECURE
+				to_chat(user, "<span class='notice'>You pry the window into the frame.</span>")
+			return
+
+	return ..()
+	*/
+
+/turf/closed/wall/window_frame/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	if(!can_be_reached(user))
+		return
+	user.changeNext_move(CLICK_CD_MELEE)
+
+	if(!user.combat_mode)
+		switch(construction_state)
+			if(WINDOW_FRAME_GRILLE_UNSECURED)
+				construction_state = WINDOW_FRAME_EMPTY
+				window_state &= ~WINDOW_FRAME_WITH_GRILLES
+				var/list/new_materials = has_material_type(glass_material)
+				if(!length(new_materials))
+					stack_trace("[src] does not have any iron but had a grille!")
+				set_custom_materials(new_materials)
+				var/obj/item/stack/rods/rod = new(src, 1)
+
+		user.visible_message("<span class='notice'>[user] knocks on [src].</span>", \
+			"<span class='notice'>You knock on [src].</span>")
+		playsound(src, knocksound, 50, TRUE)
+	else
+		user.visible_message("<span class='warning'>[user] bashes [src]!</span>", \
+			"<span class='warning'>You bash [src]!</span>")
+		playsound(src, bashsound, 100, TRUE)
+
+///returns the new rods
+/turf/close/wall/window_frame/proc/remove_grille(drop_on_loc = TRUE)
+	window_state &= ~WINDOW_FRAME_WITH_GRILLES
+
+//turf/closed/wall/try_decon(obj/item/used_item, mob/user, turf/user_turf)
+
+/turf/closed/wall/window_frame/attack_tk(mob/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
+	add_fingerprint(user)
+	playsound(src, knocksound, 50, TRUE)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/turf/closed/wall/window_frame/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+	if(!can_be_reached(user))
+		return
+	return ..()
+
+/turf/closed/wall/window_frame/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	if(!can_be_reached(user))
+		return
+	user.changeNext_move(CLICK_CD_MELEE)
+
+	if(!user.combat_mode)
+		user.visible_message("<span class='notice'>[user] knocks on [src].</span>", \
+			"<span class='notice'>You knock on [src].</span>")
+		playsound(src, knocksound, 50, TRUE)
+	else
+		user.visible_message("<span class='warning'>[user] bashes [src]!</span>", \
+			"<span class='warning'>You bash [src]!</span>")
+		playsound(src, bashsound, 100, TRUE)
+
+/turf/closed/wall/window_frame/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
+
+/turf/closed/wall/window_frame/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1) //used by attack_alien, attack_animal, and attack_slime
+	if(!can_be_reached(user))
+		return
+	return ..()
+
 ///delightfully devilous seymour
 /turf/closed/wall/window_frame/set_smoothed_icon_state(new_junction)
 	. = ..()
 	update_icon()
+
+/turf/closed/wall/window_frame/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if(the_rcd.mode == RCD_DECONSTRUCT)
+		return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
+	return FALSE
+
+/turf/closed/wall/window_frame/rcd_act(mob/user, obj/item/construction/rcd/the_rcd)
+	if(the_rcd.mode == RCD_DECONSTRUCT)
+		to_chat(user, "<span class='notice'>You deconstruct the window.</span>")
+		qdel(src)
+		return TRUE
+	return FALSE
+
+/turf/closed/wall/window_frame/examine(mob/user)
+	. = ..()
+	if(window_state & (WINDOW_FRAME_WITH_WINDOW|WINDOW_FRAME_WITH_GRILLES))
+		. += "<span class='notice'>The window is fully constructed.</span>"
+	else if(window_state & WINDOW_FRAME_WITH_WINDOW)
+		. += "<span class='notice'>The window set into the frame has no reinforcement.</span>"
+	else if(window_state & WINDOW_FRAME_WITH_GRILLES)
+		. += "<span class='notice'>The window frame only has a grille set into it.</span>"
+	else
+		. += "<span class='notice'>The window frame is empty</span>"
+	/*
+	if(reinf)
+		if(anchored && state == WINDOW_SCREWED_TO_FRAME)
+			. += "<span class='notice'>The window is <b>screwed</b> to the frame.</span>"
+		else if(anchored && state == WINDOW_IN_FRAME)
+			. += "<span class='notice'>The window is <i>unscrewed</i> but <b>pried</b> into the frame.</span>"
+		else if(anchored && state == WINDOW_OUT_OF_FRAME)
+			. += "<span class='notice'>The window is out of the frame, but could be <i>pried</i> in. It is <b>screwed</b> to the floor.</span>"
+		else if(!anchored)
+			. += "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>"
+	else
+		if(anchored)
+			. += "<span class='notice'>The window is <b>screwed</b> to the floor.</span>"
+		else
+			. += "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>"
+	*/
 
 /turf/closed/wall/window_frame/update_appearance(updates)
 	. = ..()
@@ -54,7 +235,7 @@
 	window_state = WINDOW_FRAME_WITH_GRILLES
 
 /turf/closed/wall/window_frame/grille_and_window
-	window_state = WINDOW_FRAME_WITH_GRILLES | WINDOW_FRAME_WITH_WINDOW
+	window_state = WINDOW_FRAME_COMPLETE
 
 /turf/closed/wall/window_frame/titanium
 	name = "shuttle window frame"
