@@ -205,3 +205,11 @@
 		/obj/item/bikehorn/rubberducky/plasticducky = 4,
 		/obj/item/soap/omega = 1,
 	)
+
+/obj/effect/spawner/random/trash/box
+	name = "box spawner"
+	icon_state = "box"
+	loot = list(
+		/obj/structure/closet/cardboard = 9,
+		/obj/structure/closet/cardboard/metal = 1,
+	)
