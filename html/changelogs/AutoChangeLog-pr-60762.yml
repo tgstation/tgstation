@@ -1,0 +1,5 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - bugfix: "Spider midwives can no longer send commands while dead"
+  - bugfix: "Nurse spiders can no longer heal dead spiders and get a message when trying to do so."
