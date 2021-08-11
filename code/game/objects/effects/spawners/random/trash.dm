@@ -191,3 +191,17 @@
 		/obj/item/reagent_containers/glass/bucket,
 		/obj/item/reagent_containers/glass/bucket/wooden,
 	)
+
+/obj/effect/spawner/random/trash/soap
+	name = "soap spawner"
+	icon_state = "soap"
+	loot = list(
+		/obj/item/soap = 25,
+		/obj/item/bikehorn/rubberducky = 20,
+		/obj/item/soap/homemade = 20,
+		/obj/item/soap/deluxe = 15,
+		/obj/item/soap/nanotrasen = 10,
+		/obj/item/food/urinalcake = 5,
+		/obj/item/bikehorn/rubberducky/plasticducky = 4,
+		/obj/item/soap/omega = 1,
+	)
