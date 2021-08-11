@@ -75,8 +75,9 @@
 	)
 
 	var/list/forewords = strings(MEMORY_FILE, story_type + "_forewords")
-	var/list/somethings = strings(MEMORY_FILE, story_type + "_somethings")
-	var/list/styles = strings(MEMORY_FILE, story_type + "_styles")
+	var/list/somethings =strings(MEMORY_FILE, story_type + "_somethings")
+	//changeling absorbing does not have styles
+	var/list/styles = story_type == STORY_CHANGELING_ABSORB ? null : strings(MEMORY_FILE, story_type + "styles")
 	var/list/wheres = strings(MEMORY_FILE, "where")
 
 	//story action vars (surgery)
@@ -117,7 +118,7 @@
 	if(prob(75))
 		story_pieces.Add(pick(somethings))
 	//Explains any unique styling the art has. e.g. (The engraving has a cubist style.)
-	if(prob(75))
+	if(styles && prob(75))
 		story_pieces.Add(pick(styles))
 
 

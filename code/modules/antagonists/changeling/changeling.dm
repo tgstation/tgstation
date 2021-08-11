@@ -691,7 +691,7 @@
 		memory_data["name"] = stolen_memory_name
 		memory_data["story"] = stolen_memories[stolen_memory_name]
 		LAZYADD(memories, memory_data)
-	data["memories"] = list(memories)
+	data["memories"] = memories
 	data["hive_name"] = hive_name
 	data["stolen_antag_info"] = antag_memory
 	data["objectives"] = get_objectives()

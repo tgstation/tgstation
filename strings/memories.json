@@ -32,6 +32,11 @@
 		"in %WHERE.",
 		"while in %WHERE."
 	],
+	"styles":[
+		"The engraving has a cubist style.",
+		"The engraving has a minimalist style.",
+		"The engraving has a surrealist style."
+	],
 	"engravings_forewords":[
 		"The engraving depicts",
 		"Embedded in the wall is a story of",
@@ -69,12 +74,7 @@
 		"%CREWMEMBER is berating %PROTAGONIST over the ordeal.",
 		"For some reason, %CREWMEMBER is also there."
 	],
-	"engravings_styles":[
-		"The engraving has a cubist style.",
-		"The engraving has a minimalist style.",
-		"The engraving has a surrealist style."
-	],
-	"changeling_absorb_foreword":[
+	"changeling_absorb_forewords":[
 		"A story of the past reveals itself, speaking of",
 		"Deeply tangled in their mind is a memory of",
 		"You unravel a story about",

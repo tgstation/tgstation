@@ -74,21 +74,19 @@
 	for(var/datum/antagonist/antagonist_datum as anything in suckedbrain.antag_datums)
 		var/list/all_objectives = antagonist_datum.objectives.Copy()
 		if(antagonist_datum.antag_memory)
-			changeling.antag_memory += "[antagonist_datum.antag_memory]<BR>"
+			changeling.antag_memory += "[target]'s antagonist memories: [antagonist_datum.antag_memory]."
 		if(!LAZYLEN(all_objectives))
 			continue
-		changeling.antag_memory += "<B>Objectives:</B>"
+		changeling.antag_memory += " Objectives:"
 		var/obj_count = 1
 		for(var/datum/objective/objective as anything in all_objectives)
-			changeling.antag_memory += "<br><B>Objective #[obj_count++]</B>: [objective.explanation_text]"
+			changeling.antag_memory += " Objective #[obj_count++]: [objective.explanation_text]."
 			var/list/datum/mind/other_owners = objective.get_owners() - suckedbrain
 			if(!other_owners.len)
 				continue
-			changeling.antag_memory += "<ul>"
 			for(var/datum/mind/conspirator as anything in other_owners)
-				changeling.antag_memory += "<li>Conspirator: [conspirator.name]</li>"
-			changeling.antag_memory += "</ul>"
-	changeling.antag_memory += "<b>That's all [target] had.</b><BR>"
+				changeling.antag_memory += " Objective Conspirator: [conspirator.name]."
+	changeling.antag_memory += " That's all [target] had. "
 
 	//Some of target's recent speech, so the changeling can attempt to imitate them better.
 	//Recent as opposed to all because rounds tend to have a LOT of text.
