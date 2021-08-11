@@ -70,7 +70,7 @@
 /datum/objective_item/steal/nukedisc
 	name = "the nuclear authentication disk."
 	targetitem = /obj/item/disk/nuclear
-	difficulty = 5
+	difficulty = 20 //Entire elite syndicate strike teams have trouble with this one!
 	excludefromjob = list("Captain")
 
 /datum/objective_item/steal/nukedisc/check_special_completion(obj/item/disk/nuclear/N)
