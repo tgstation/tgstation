@@ -17,8 +17,8 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 	icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi'
 	var/bitfield = NONE
 	var/bits = 0
-	connections = 0
-	connection_num = NONE
+	connections = NONE
+	connection_num = 0
 	for(var/i in 1 to device_type)
 		if(!nodes[i])
 			continue
