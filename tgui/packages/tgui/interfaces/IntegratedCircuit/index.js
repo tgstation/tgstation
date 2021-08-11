@@ -15,7 +15,6 @@ import { NULL_REF, ABSOLUTE_Y_OFFSET, MOUSE_BUTTON_LEFT } from './constants';
 import { Connections } from './Connections';
 import { ObjectComponent } from './ObjectComponent';
 import { VariableMenu } from './VariableMenu';
-import { logger } from '../../logging';
 
 export class IntegratedCircuit extends Component {
   constructor() {
@@ -205,7 +204,6 @@ export class IntegratedCircuit extends Component {
     const { act } = useBackend(this.context);
     const { backgroundX, backgroundY } = this.state;
     if (backgroundX && backgroundY) {
-      logger.log(backgroundX);
       act("move_screen", {
         screen_x: backgroundX,
         screen_y: backgroundY,
@@ -237,15 +235,15 @@ export class IntegratedCircuit extends Component {
         continue;
       }
 
-      for (const port of comp.input_ports) {
-        if (port.connected_to === NULL_REF
-          || selectedPort?.ref === port.ref) continue;
-        const output_port = locations[port.connected_to];
-        connections.push({
-          color: (output_port && output_port.color) || 'blue',
-          from: output_port,
-          to: locations[port.ref],
-        });
+      for (const input of comp.input_ports) {
+        for (const output of input.connected_to) {
+          const output_port = locations[output];
+          connections.push({
+            color: (output_port && output_port.color) || 'blue',
+            from: output_port,
+            to: locations[input.ref],
+          });
+        }
       }
     }
 

@@ -8,7 +8,6 @@ import {
   Input,
   Dropdown,
 } from '../../components';
-import { logger } from '../../logging';
 
 export const VariableMenu = (props, context) => {
   const {
@@ -21,7 +20,6 @@ export const VariableMenu = (props, context) => {
     ...rest
   } = props;
 
-  logger.log(variables);
   const [name, setName] = useLocalState(context, "variable_name", null);
   const [type, setType] = useLocalState(context, "variable_type", types[1]);
 

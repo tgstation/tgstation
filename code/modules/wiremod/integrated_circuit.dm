@@ -51,7 +51,10 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// Variables stored on this integrated circuit. with a `variable_name = value` structure
 	var/list/datum/circuit_variable/circuit_variables = list()
 
+	/// The maximum amount of setters and getters a circuit can have
 	var/max_setters_and_getters = 30
+
+	/// The current setter and getter count the circuit has.
 	var/setter_and_getter_count = 0
 
 	/// X position of the examined_component
@@ -262,14 +265,17 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		var/list/component_data = list()
 		component_data["input_ports"] = list()
 		for(var/datum/port/input/port as anything in component.input_ports)
-			var/current_data = port.input_value
+			var/current_data = port.value
 			if(isatom(current_data)) // Prevent passing the name of the atom.
 				current_data = null
+			var/list/connected_to = list()
+			for(var/datum/port/output/output as anything in port.connected_ports)
+				connected_to += REF(output)
 			component_data["input_ports"] += list(list(
 				"name" = port.name,
 				"type" = port.datatype,
 				"ref" = REF(port), // The ref is the identifier to work out what it is connected to
-				"connected_to" = REF(port.connected_port),
+				"connected_to" = connected_to,
 				"color" = port.color,
 				"current_data" = current_data,
 				"datatype_data" = port.datatype_ui_data(user),
@@ -290,7 +296,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		.["components"] += list(component_data)
 
 	.["variables"] = list()
-	for(var/variable_name as anything in circuit_variables)
+	for(var/variable_name in circuit_variables)
 		var/datum/circuit_variable/variable = circuit_variables[variable_name]
 		var/list/variable_data = list()
 		variable_data["name"] = variable.name
@@ -325,6 +331,10 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 /obj/item/integrated_circuit/ui_status(mob/user)
 	. = ..()
+
+	if (isobserver(user))
+		. = max(., UI_UPDATE)
+
 	// Extra protection because ui_state will not close the UI if they already have the ui open,
 	// as ui_state is only set during
 	if(admin_only)
@@ -370,8 +380,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 			if(!input_port.can_receive_from_datatype(output_port.datatype))
 				return
-
-			input_port.register_output_port(output_port)
+			input_port.connect(output_port)
 			. = TRUE
 		if("remove_connection")
 			var/component_id = text2num(params["component_id"])
@@ -392,7 +401,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				return
 
 			var/datum/port/port = port_table[port_id]
-			port.disconnect()
+			port.disconnect_all()
 			. = TRUE
 		if("detach_component")
 			var/component_id = text2num(params["component_id"])
@@ -423,9 +432,6 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			if(!WITHIN_RANGE(port_id, component.input_ports))
 				return
 			var/datum/port/input/port = component.input_ports[port_id]
-
-			if(port.connected_port)
-				return
 
 			if(params["set_null"])
 				port.set_input(null)
@@ -468,9 +474,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				return
 
 			var/datum/port/output/port = component.output_ports[port_id]
-			var/value = port.output_value
+			var/value = port.value
 			if(isatom(value))
-				value = port.convert_value(port.output_value)
+				value = PORT_TYPE_ATOM
 			else if(isnull(value))
 				value = "null"
 			var/string_form = copytext("[value]", 1, PORT_MAX_STRING_DISPLAY)
@@ -507,7 +513,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		if("save_circuit")
 			return attempt_save_to(usr.client)
 		if("add_variable")
-			var/variable_identifier = copytext(params["variable_name"], 1, PORT_MAX_NAME_LENGTH)
+			var/variable_identifier = trim(copytext(params["variable_name"], 1, PORT_MAX_NAME_LENGTH))
 			if(variable_identifier in circuit_variables)
 				return TRUE
 			if(variable_identifier == "")

@@ -1,0 +1,4 @@
+author: "Gamer025"
+delete-after: True
+changes: 
+  - code_imp: "url_encode and decode now try to stringify inputs"

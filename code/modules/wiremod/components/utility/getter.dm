@@ -37,7 +37,7 @@
 	if(!parent)
 		return
 
-	var/variable_string = variable_name.input_value
+	var/variable_string = variable_name.value
 	if(!variable_string)
 		remove_current_variable()
 		value.set_output(null)

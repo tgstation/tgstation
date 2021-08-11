@@ -1,0 +1,5 @@
+author: "Gurkenglas"
+delete-after: True
+changes: 
+  - qol: "All circuit component input ports act as a combiner."
+  - refactor: "Circuits: set_input and set_output are now put. input_value and output_value are now value."
