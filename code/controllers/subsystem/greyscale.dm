@@ -1,12 +1,13 @@
-SUBSYSTEM_DEF(greyscale)
+PROCESSING_SUBSYSTEM_DEF(greyscale)
 	name = "Greyscale"
-	flags = SS_NO_FIRE
+	flags = SS_BACKGROUND
 	init_order = INIT_ORDER_GREYSCALE
+	wait = 3 SECONDS
 
 	var/list/datum/greyscale_config/configurations = list()
 	var/list/datum/greyscale_layer/layer_types = list()
 
-/datum/controller/subsystem/greyscale/Initialize(start_timeofday)
+/datum/controller/subsystem/processing/greyscale/Initialize(start_timeofday)
 	for(var/datum/greyscale_layer/fake_type as anything in subtypesof(/datum/greyscale_layer))
 		layer_types[initial(fake_type.layer_type)] = fake_type
 
@@ -28,11 +29,11 @@ SUBSYSTEM_DEF(greyscale)
 
 	return ..()
 
-/datum/controller/subsystem/greyscale/proc/RefreshConfigsFromFile()
+/datum/controller/subsystem/processing/greyscale/proc/RefreshConfigsFromFile()
 	for(var/i in configurations)
 		configurations[i].Refresh(TRUE)
 
-/datum/controller/subsystem/greyscale/proc/GetColoredIconByType(type, list/colors)
+/datum/controller/subsystem/processing/greyscale/proc/GetColoredIconByType(type, list/colors)
 	if(!ispath(type, /datum/greyscale_config))
 		CRASH("An invalid greyscale configuration was given to `GetColoredIconByType()`: [type]")
 	type = "[type]"
@@ -42,7 +43,7 @@ SUBSYSTEM_DEF(greyscale)
 		CRASH("Invalid colors were given to `GetColoredIconByType()`: [colors]")
 	return configurations[type].Generate(colors)
 
-/datum/controller/subsystem/greyscale/proc/ParseColorString(color_string)
+/datum/controller/subsystem/processing/greyscale/proc/ParseColorString(color_string)
 	. = list()
 	var/list/split_colors = splittext(color_string, "#")
 	for(var/color in 2 to length(split_colors))

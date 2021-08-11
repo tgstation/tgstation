@@ -1469,3 +1469,4 @@
 ///Called when the ticker sets up the game for start
 #define COMSIG_TICKER_ENTER_SETTING_UP "comsig_ticker_enter_setting_up"
 
+#define COMSIG_GREYSCALE_CONFIG_REFRESHED "greyscale_config_refreshed"
