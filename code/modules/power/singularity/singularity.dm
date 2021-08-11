@@ -415,7 +415,7 @@
 	stunned_mob.visible_message(
 		span_danger("[stunned_mob] stares blankly at the [name]!"),
 		span_userdanger("You look directly into the [name] and feel weak.")
-		)
+	)
 
 /obj/singularity/proc/emp_area()
 	empulse(src, 8, 10)
@@ -429,7 +429,7 @@
 		devastation_range = dist,
 		heavy_impact_range = dist * 2,
 		light_impact_range = dist * 4
-		)
+	)
 	qdel(src)
 	return gain
 
@@ -447,4 +447,3 @@
 /obj/singularity/deadchat_controlled/Initialize(mapload, starting_energy)
 	. = ..()
 	deadchat_plays(mode = DEMOCRACY_MODE)
-
