@@ -111,7 +111,7 @@
 				/obj/item/storage/box/matches = 3,
 				/obj/item/reagent_containers/syringe/contraband/space_drugs = 1,
 				/obj/item/reagent_containers/syringe/contraband/krokodil = 1,
-				/obj/item/reagent_containers/syringe/contraband/crank = 1,
+				/obj/item/reagent_containers/syringe/contraband/saturnx = 1,
 				/obj/item/reagent_containers/syringe/contraband/methamphetamine = 1,
 				/obj/item/reagent_containers/syringe/contraband/bath_salts = 1,
 				/obj/item/reagent_containers/syringe/contraband/fentanyl = 1,
@@ -276,8 +276,7 @@
 	return ..()
 
 /obj/effect/spawner/lootdrop/maintenance/proc/hide()
-	invisibility = INVISIBILITY_OBSERVER
-	alpha = 100
+	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/spawner/lootdrop/maintenance/proc/get_effective_lootcount()
 	var/effective_lootcount = lootcount
@@ -490,11 +489,6 @@
 				/obj/item/circuitboard/computer/teleporter,
 				/obj/item/circuitboard/machine/destructive_analyzer,
 				/obj/item/circuitboard/computer/rdconsole,
-				/obj/item/circuitboard/computer/nanite_chamber_control,
-				/obj/item/circuitboard/computer/nanite_cloud_controller,
-				/obj/item/circuitboard/machine/nanite_chamber,
-				/obj/item/circuitboard/machine/nanite_programmer,
-				/obj/item/circuitboard/machine/nanite_program_hub,
 				/obj/item/circuitboard/computer/scan_consolenew,
 				/obj/item/circuitboard/machine/dnascanner
 				)

@@ -40,59 +40,6 @@
 	slowdown = 0
 	clothing_flags = NONE
 
-/obj/item/choice_beacon/holy
-	name = "armaments beacon"
-	desc = "Contains a set of armaments for the chaplain."
-
-/obj/item/choice_beacon/holy/canUseBeacon(mob/living/user)
-	if(user.mind && user.mind.holy_role)
-		return ..()
-	else
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, TRUE)
-		return FALSE
-
-/obj/item/choice_beacon/holy/generate_display_names()
-	var/static/list/holy_item_list
-	if(!holy_item_list)
-		holy_item_list = list()
-		var/list/templist = typesof(/obj/item/storage/box/holy)
-		for(var/V in templist)
-			var/atom/A = V
-			holy_item_list[initial(A.name)] = A
-	return holy_item_list
-
-/obj/item/choice_beacon/holy/spawn_option(obj/choice,mob/living/M)
-	if(!GLOB.holy_armor_type)
-		..()
-		playsound(src, 'sound/effects/pray_chaplain.ogg', 40, TRUE)
-		SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
-		GLOB.holy_armor_type = choice
-	else
-		to_chat(M, span_warning("A selection has already been made. Self-Destructing..."))
-		return
-
-
-/obj/item/storage/box/holy/clock
-	name = "Forgotten kit"
-
-/obj/item/storage/box/holy/clock/PopulateContents()
-	new /obj/item/clothing/head/helmet/chaplain/clock(src)
-	new /obj/item/clothing/suit/armor/riot/chaplain/clock(src)
-
-/obj/item/storage/box/holy
-	name = "Templar Kit"
-
-/obj/item/storage/box/holy/PopulateContents()
-	new /obj/item/clothing/head/helmet/chaplain(src)
-	new /obj/item/clothing/suit/armor/riot/chaplain(src)
-
-/obj/item/storage/box/holy/student
-	name = "Profane Scholar Kit"
-
-/obj/item/storage/box/holy/student/PopulateContents()
-	new /obj/item/clothing/suit/armor/riot/chaplain/studentuni(src)
-	new /obj/item/clothing/head/helmet/chaplain/cage(src)
-
 /obj/item/clothing/suit/armor/riot/chaplain/studentuni
 	name = "student robe"
 	desc = "The uniform of a bygone institute of learning."
@@ -109,13 +56,6 @@
 	dynamic_hair_suffix = ""
 	worn_y_offset = 7
 
-/obj/item/storage/box/holy/sentinel
-	name = "Stone Sentinel Kit"
-
-/obj/item/storage/box/holy/sentinel/PopulateContents()
-	new /obj/item/clothing/suit/armor/riot/chaplain/ancient(src)
-	new /obj/item/clothing/head/helmet/chaplain/ancient(src)
-
 /obj/item/clothing/head/helmet/chaplain/ancient
 	name = "ancient helmet"
 	desc = "None may pass!"
@@ -127,13 +67,6 @@
 	desc = "Defend the treasure..."
 	icon_state = "knight_ancient"
 	inhand_icon_state = "knight_ancient"
-
-/obj/item/storage/box/holy/witchhunter
-	name = "Witchhunter Kit"
-
-/obj/item/storage/box/holy/witchhunter/PopulateContents()
-	new /obj/item/clothing/suit/armor/riot/chaplain/witchhunter(src)
-	new /obj/item/clothing/head/helmet/chaplain/witchunter_hat(src)
 
 /obj/item/clothing/suit/armor/riot/chaplain/witchhunter
 	name = "witchunter garb"
@@ -150,13 +83,6 @@
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEEYES|HIDEHAIR
 
-/obj/item/storage/box/holy/adept
-	name = "Divine Adept Kit"
-
-/obj/item/storage/box/holy/adept/PopulateContents()
-	new /obj/item/clothing/suit/armor/riot/chaplain/adept(src)
-	new /obj/item/clothing/head/helmet/chaplain/adept(src)
-
 /obj/item/clothing/head/helmet/chaplain/adept
 	name = "adept hood"
 	desc = "Its only heretical when others do it."
@@ -170,16 +96,6 @@
 	desc = "The ideal outfit for burning the unfaithful."
 	icon_state = "crusader"
 	inhand_icon_state = "crusader"
-
-/obj/item/storage/box/holy/follower
-	name = "Followers of the Chaplain Kit"
-
-/obj/item/storage/box/holy/follower/PopulateContents()
-	new /obj/item/clothing/suit/hooded/chaplain_hoodie/leader(src)
-	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
-	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
-	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
-	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 
 /obj/item/clothing/suit/hooded/chaplain_hoodie
 	name = "follower hoodie"
@@ -527,48 +443,10 @@
 	attack_verb_simple= list("chop", "slice", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Able to awaken a friendly spirit to provide guidance. Very effective at butchering bodies. Can be worn on the back."
-	/// If there is a ghost possessing the item
-	var/possessed = FALSE
 
-/obj/item/nullrod/scythe/talking/relaymove(mob/living/user, direction)
-	return //stops buckled message spam for the ghost.
-
-/obj/item/nullrod/scythe/talking/attack_self(mob/living/user)
-	if(possessed)
-		return
-	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		to_chat(user, span_notice("Anomalous otherworldly energies block you from awakening the blade!"))
-		return
-
-	to_chat(user, span_notice("You attempt to wake the spirit of the blade..."))
-
-	possessed = TRUE
-
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
-
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		var/mob/living/simple_animal/shade/S = new(src)
-		S.ckey = C.ckey
-		S.fully_replace_character_name(null, "The spirit of [name]")
-		S.status_flags |= GODMODE
-		S.copy_languages(user, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the user.
-		S.update_atom_languages()
-		grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue
-		var/input = sanitize_name(stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN))
-
-		if(src && input)
-			name = input
-			S.fully_replace_character_name(null, "The spirit of [input]")
-	else
-		to_chat(user, span_warning("The blade is dormant. Maybe you can try again later."))
-		possessed = FALSE
-
-/obj/item/nullrod/scythe/talking/Destroy()
-	for(var/mob/living/simple_animal/shade/S in contents)
-		to_chat(S, span_userdanger("You were destroyed!"))
-		qdel(S)
-	return ..()
+/obj/item/nullrod/scythe/talking/Initialize()
+	. = ..()
+	AddComponent(/datum/component/spirit_holding)
 
 /obj/item/nullrod/scythe/talking/chainsword
 	name = "possessed chainsaw sword"

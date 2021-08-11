@@ -215,7 +215,7 @@
 	name = "bloody egg cluster"
 	color = rgb(255, 0, 0)
 	short_desc = "You are a bloody spider."
-	directive = "You are the spawn of a visicious changeling. You have no ambitions except to wreak havoc and ensure your own survival. You are aggressive to all living beings outside of your species, including changelings."
+	directive = "You are the spawn of a vicious changeling. You have no ambitions except to wreak havoc and ensure your own survival. You are aggressive to all living beings outside of your species, including changelings."
 	cluster_type = /obj/structure/spider/eggcluster/bloody
 	potentialspawns = list(
 		/mob/living/simple_animal/hostile/giant_spider/hunter/flesh,

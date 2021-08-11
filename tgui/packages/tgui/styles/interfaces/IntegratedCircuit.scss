@@ -43,3 +43,12 @@ $bg-map: colors.$bg-map !default;
     stroke: $color-value !important;
   }
 }
+
+$border-color: #88bfff !default;
+$border-radius: base.$border-radius !default;
+
+.Datatype__Option {
+  border: base.em(1px) solid $border-color;
+  border: base.em(1px) solid rgba($border-color, 0.75);
+  border-radius: $border-radius;
+}

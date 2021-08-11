@@ -1,4 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - expansion: "added downsides to shoving too much fuel/moderator inside the machine, the cooling volume can be adjusted in the GUI to make it stronger/weaker based on the user needs"

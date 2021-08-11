@@ -6,6 +6,7 @@
 	spawn_positions = 2
 	supervisors = "the security team"
 	selection_color = "#ffe1c3"
+	exp_granted_type = EXP_TYPE_CREW
 	paycheck = PAYCHECK_PRISONER
 
 	outfit = /datum/outfit/job/prisoner

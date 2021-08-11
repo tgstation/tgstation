@@ -7,8 +7,7 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/grenade/gas_crystal/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
-	var/turf/turf_loc = get_turf(src)
-	log_grenade(user, turf_loc) //Inbuilt admin procs already handle null users
+	log_grenade(user) //Inbuilt admin procs already handle null users
 	if(user)
 		add_fingerprint(user)
 		if(msg)

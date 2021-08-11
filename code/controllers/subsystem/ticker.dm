@@ -385,7 +385,7 @@ SUBSYSTEM_DEF(ticker)
 		picked_spare_id_candidate = pick(spare_id_candidates)
 
 	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
-		if(!isliving(new_player_mob.new_character))
+		if(QDELETED(new_player_mob) || !isliving(new_player_mob.new_character))
 			CHECK_TICK
 			continue
 		var/mob/living/new_player_living = new_player_mob.new_character
@@ -393,17 +393,18 @@ SUBSYSTEM_DEF(ticker)
 			CHECK_TICK
 			continue
 		var/datum/job/player_assigned_role = new_player_living.mind.assigned_role
-		if(ishuman(new_player_living) && CONFIG_GET(flag/roundstart_traits))
-			if(new_player_mob.client.prefs.should_be_random_hardcore(player_assigned_role, new_player_living.mind))
-				new_player_mob.client.prefs.hardcore_random_setup(new_player_living)
-			SSquirks.AssignQuirks(new_player_living, new_player_mob.client)
 		if(player_assigned_role.job_flags & JOB_EQUIP_RANK)
 			SSjob.EquipRank(new_player_living, player_assigned_role, new_player_mob.client)
+		player_assigned_role.after_roundstart_spawn(new_player_living, new_player_mob.client)
 		if(picked_spare_id_candidate == new_player_mob)
 			captainless = FALSE
 			var/acting_captain = !is_captain_job(player_assigned_role)
 			SSjob.promote_to_captain(new_player_living, acting_captain)
 			OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, player_assigned_role.get_captaincy_announcement(new_player_living)))
+		if(ishuman(new_player_living) && CONFIG_GET(flag/roundstart_traits))
+			if(new_player_mob.client?.prefs?.should_be_random_hardcore(player_assigned_role, new_player_living.mind))
+				new_player_mob.client.prefs.hardcore_random_setup(new_player_living)
+			SSquirks.AssignQuirks(new_player_living, new_player_mob.client)
 		CHECK_TICK
 
 	if(captainless)
