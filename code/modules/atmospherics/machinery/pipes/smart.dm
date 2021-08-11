@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 	icon_state = "[bitfield]_[piping_layer]"
 	switch(connection_num)
 		if(0)
-			dir = 2
+			dir = SOUTH
 		if(1)
 			dir = connections
 		if(2)
@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 		if(3)
 			dir = connections
 		if(4)
-			dir = 15
+			dir = NORTH | SOUTH | EAST | WEST
 
 /obj/machinery/atmospherics/pipe/smart/SetInitDirections(init_dir)
 	if(init_dir)
