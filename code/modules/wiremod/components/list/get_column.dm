@@ -28,13 +28,13 @@
 	if(.)
 		return
 
-	var/list/input_list = received_table.input_value
-	if(!islist(input_list) || isnum(column_name.input_value))
+	var/list/input_list = received_table.value
+	if(!islist(input_list) || isnum(column_name.value))
 		return
 
 	var/list/new_list = list()
 	for(var/list/entry in input_list)
-		var/anything = entry[column_name.input_value]
+		var/anything = entry[column_name.value]
 		if(islist(anything))
 			continue
 		new_list += anything

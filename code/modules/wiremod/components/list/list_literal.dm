@@ -80,7 +80,7 @@
 	var/list/new_literal = list()
 	for(var/datum/port/input/entry_port as anything in entry_ports)
 		// Prevents lists from merging together
-		new_literal += list(entry_port.input_value)
+		new_literal += list(entry_port.value)
 
 	list_output.set_output(new_literal)
 

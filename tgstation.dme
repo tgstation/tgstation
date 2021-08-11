@@ -3749,7 +3749,6 @@
 #include "code\modules\wiremod\components\string\tonumber.dm"
 #include "code\modules\wiremod\components\string\tostring.dm"
 #include "code\modules\wiremod\components\utility\clock.dm"
-#include "code\modules\wiremod\components\utility\combiner.dm"
 #include "code\modules\wiremod\components\utility\delay.dm"
 #include "code\modules\wiremod\components\utility\ram.dm"
 #include "code\modules\wiremod\components\utility\router.dm"

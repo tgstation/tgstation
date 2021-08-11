@@ -52,8 +52,8 @@
 
 /obj/item/circuit_component/ram/input_received(datum/port/input/port)
 	. = ..()
-	if(current_type != ram_options.input_value)
-		current_type = ram_options.input_value
+	if(current_type != ram_options.value)
+		current_type = ram_options.value
 		input_port.set_datatype(current_type)
 		output.set_datatype(current_type)
 
@@ -67,6 +67,6 @@
 	if(!COMPONENT_TRIGGERED_BY(trigger, port))
 		return TRUE
 
-	var/input_val = input_port.input_value
+	var/input_val = input_port.value
 
 	output.set_output(input_val)

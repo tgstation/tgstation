@@ -168,11 +168,6 @@
 	id = "comp_health"
 	build_path = /obj/item/circuit_component/health
 
-/datum/design/component/combiner
-	name = "Combiner Component"
-	id = "comp_combiner"
-	build_path = /obj/item/circuit_component/combiner
-
 /datum/design/component/split
 	name = "Split Component"
 	id = "comp_split"

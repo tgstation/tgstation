@@ -35,7 +35,7 @@
 
 /obj/item/circuit_component/bluespace_launchpad/get_ui_notices()
 	. = ..()
-	var/current_launchpad = launchpad_id.input_value
+	var/current_launchpad = launchpad_id.value
 	if(isnull(current_launchpad))
 		return
 
@@ -79,16 +79,17 @@
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
-	if(!launchpad_id.input_value)
+
+	if(!launchpad_id.value)
 		return
 
-	var/obj/machinery/launchpad/the_pad = KEYBYINDEX(attached_console.launchpads, launchpad_id.input_value)
+	var/obj/machinery/launchpad/the_pad = KEYBYINDEX(attached_console.launchpads, launchpad_id.value)
 	if(isnull(the_pad))
 		why_fail.set_output("Invalid launchpad selected!")
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
-	the_pad.set_offset(x_pos.input_value, y_pos.input_value)
+	the_pad.set_offset(x_pos.value, y_pos.value)
 
 	if(COMPONENT_TRIGGERED_BY(port, x_pos))
 		x_pos.set_input(the_pad.x_offset, FALSE)
