@@ -66,6 +66,15 @@
 #define MEMORY_WON_REVOLUTION "won_revolution"
 /// An award ceremony of a medal
 #define MEMORY_RECEIVED_MEDAL "received_medal"
+/// A megafauna kill!
+#define MEMORY_MEGAFAUNA_KILL "megafauna_kill"
+/// Being held at gunpoint
+#define MEMORY_GUNPOINT "held_at_gunpoint"
+/// Exploding into gibs
+#define MEMORY_GIBBED "gibbed"
+/// Crushed by vending machine
+#define MEMORY_VENDING_CRUSHED "vending_crushed"
+
 
 ///YOU HAVE WRITTEN MEMORY FLAVOR TO THIS POINT//
 
@@ -106,7 +115,7 @@
 ///Usually used bespokely by specific memory types and not added generically, but its generaly the object used to cause the memory. E.g. a peel to slip, the food that was eaten.
 #define DETAIL_WHAT_BY "WHAT_BY"
 ///Used whenever a memory has a secondary character. Used bespokely by actions.
-#define DETAIL_DEUTORAGONIST "DEUTORAGONIST"
+#define DETAIL_DEUTERAGONIST "DEUTERAGONIST"
 //Automatically obtained details
 #define DETAIL_PROTAGONIST_MOOD "VICTIM_MOOD"
 

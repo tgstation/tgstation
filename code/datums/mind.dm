@@ -293,9 +293,9 @@
 	if(isanimal(target))
 		return "\the [target]"
 	if(target.mind?.special_role)
-		return "\the [lowertext(special_role)]"
+		return "\the [lowertext(target.mind?.special_role)]"
 	if(target.mind?.assigned_role)
-		return  "\the [lowertext(initial(assigned_role.title))]"
+		return  "\the [lowertext(initial(target.mind?.assigned_role.title))]"
 	return target
 
 ///returns the story name of anything

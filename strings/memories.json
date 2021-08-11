@@ -146,24 +146,24 @@
 		"The %SURGERY_TYPE of %PROTAGONIST by %PROTAGONIST."
 	],
 	"surgery_starts":[
-		"%PROTAGONIST carefully performing %SURGERY_TYPE on %DEUTORAGONIST.",
-		"%PROTAGONIST using a bone saw on %DEUTORAGONIST.",
-		"%DEUTORAGONIST being operated on by %PROTAGONIST."
+		"%PROTAGONIST carefully performing %SURGERY_TYPE on %DEUTERAGONIST",
+		"%PROTAGONIST using a bone saw on %DEUTERAGONIST",
+		"%DEUTERAGONIST being operated on by %PROTAGONIST"
 	],
 	"surgery_moods":[
 		"%PROTAGONIST %MOOD after finishing %SURGERY_TYPE.",
 		"%PROTAGONIST %MOOD as a blood splatter lands on %PROTAGONIST's face.",
 		"%PROTAGONIST %MOOD as the %SURGERY_TYPE continues.",
-		"%PROTAGONIST %MOOD as they pick apart %DEUTORAGONIST.",
-		"%PROTAGONIST %MOOD as they tear into %DEUTORAGONIST."
+		"%PROTAGONIST %MOOD as they pick apart %DEUTERAGONIST.",
+		"%PROTAGONIST %MOOD as they tear into %DEUTERAGONIST."
 	],
 	"bomb_names":[
 		"The arming of %BOMB_TYPE by %PROTAGONIST."
 	],
 	"bomb_starts":[
-		"%PROTAGONIST pressing an ominous button, causing %BOMB to begin beeping.",
-		"%PROTAGONIST slapping down a %BOMB_TYPE.",
-		"%BOMB being armed by %PROTAGONIST."
+		"%PROTAGONIST pressing an ominous button, causing %BOMB to begin beeping",
+		"%PROTAGONIST slapping down a %BOMB_TYPE",
+		"%BOMB being armed by %PROTAGONIST"
 	],
 	"bomb_moods":[
 		"%PROTAGONIST %MOOD and begins to walk away from %BOMB_TYPE.",
@@ -205,7 +205,7 @@
 		"%PROTAGONIST's heart stopping at %TIME_OF_DEATH",
 		"%PROTAGONIST having perished at %TIME_OF_DEATH",
 		"the death of %PROTAGONIST at %TIME_OF_DEATH",
-		"%PROTAGONIST seizing up and falling limp, their eyes dead and lifeless..."
+		"%PROTAGONIST seizing up and falling limp, their eyes appearing dead and lifeless"
 	],
 	"death_moods":[
 		"There shouldn't be any; this is set to be a moodless memory!"
@@ -319,16 +319,16 @@
 		"Without %LOST_LIMB, %PROTAGONIST %MOOD."
 	],
 	"pet_dead_names":[
-		"The death of %DEUTORAGONIST."
+		"The death of %DEUTERAGONIST."
 	],
 	"pet_dead_starts":[
-		"honoring %DEUTORAGONIST, the station's pet",
-		"%DEUTORAGONIST's funeral, which is attended by a group of crewmembers",
-		"a shallow hole, with %PROPER %DEUTORAGONIST inside"
+		"honoring %DEUTERAGONIST, the station's pet",
+		"%DEUTERAGONIST's funeral, which is attended by a group of crewmembers",
+		"a shallow hole, with %PROPER %DEUTERAGONIST inside"
 	],
 	"pet_dead_moods":[
-		"%PROTAGONIST %MOOD without %DEUTORAGONIST.",
-		"Without %DEUTORAGONIST, %PROTAGONIST %MOOD."
+		"%PROTAGONIST %MOOD without %DEUTERAGONIST.",
+		"Without %DEUTERAGONIST, %PROTAGONIST %MOOD."
 	],
 	"won_revolution_names":[
 		"The revolution of %STATION_NAME by %PROTAGONIST."
@@ -348,11 +348,53 @@
 	],
 	"received_medal_starts":[
 		"%PROTAGONIST receiving a %MEDAL_TYPE with the inscription \"%MEDAL_REASON\"",
-		"%PROTAGONIST accepting a %MEDAL_TYPE inscribed with \"%MEDAL_REASON\" from %DEUTORAGONIST",
-		"a %MEDAL_TYPE with the inscription \"%MEDAL_REASON\" being awarded to %PROTAGONIST by %DEUTORAGONIST"
+		"%PROTAGONIST accepting a %MEDAL_TYPE inscribed with \"%MEDAL_REASON\" from %DEUTERAGONIST",
+		"a %MEDAL_TYPE with the inscription \"%MEDAL_REASON\" being awarded to %PROTAGONIST by %DEUTERAGONIST"
 	],
 	"received_medal_moods":[
 		"%PROTAGONIST %MOOD as they receive their medal.",
 		"%PROTAGONIST %MOOD with their newly received award."
-	]
+	],
+	"megafauna_kill_names":[
+		"The slaughter of %DEUTERAGONIST."
+	],
+	"megafauna_kill_starts":[
+		"%PROTAGONIST standing with the head of %DEUTERAGONIST in their hand",
+		"%PROTAGONIST performing the final strike on %DEUTERAGONIST, taking it down",
+		"the killing of %DEUTERAGONIST, the dangerous megafauna, by %PROTAGONIST"
+	],
+	"megafauna_kill_moods":[
+		"%PROTAGONIST %MOOD as the blood lust fades from their eyes.",
+		"%PROTAGONIST %MOOD as they search the corpse for valuables."
+	],
+	"held_at_gunpoint_names":[
+		"%PROTAGONIST being held at gunpoint."
+	],
+	"held_at_gunpoint_starts":[
+		"%PROTAGONIST with %WHAT_BY pressed to their skull by %DEUTERAGONIST",
+		"%DEUTERAGONIST whipping out %WHAT_BY and pointing it at %PROTAGONIST"
+	],
+	"held_at_gunpoint_moods":[
+		"%PROTAGONIST %MOOD as they are faced with the situation.",
+		"%PROTAGONIST %MOOD as they stare down %WHAT_BY's barrel"
+	],
+	"gibbed_names":[
+		"%PROTAGONIST exploding into bits."
+	],
+	"gibbed_starts":[
+		"%PROTAGONIST exploding into little fleshy bits",
+		"%PROTAGONIST becoming flesh paste in the blink of an eye"
+	],
+	"vending_crushed_names":[
+		"%PROTAGONIST being crushed by %WHAT_BY."
+	],
+	"vending_crushed_starts":[
+		"%PROTAGONIST being crushed by the %WHAT_BY",
+		"the %WHAT_BY that crashed on top of %PROTAGONIST",
+		"the fall of %WHAT_BY onto %PROTAGONIST"
+	],
+	"vending_crushed_moods":[
+		"%PROTAGONIST %MOOD as they lie under the machine.",
+		"%PROTAGONIST %MOOD as a goodie falls out of %WHAT_BY"
+	],
 }

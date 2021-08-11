@@ -20,8 +20,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	SEND_SIGNAL(parent, COMSIG_MOB_CREAMED)
 
 	var/mob/living/the_creamed_mob = parent
-	if(the_creamed_mob.mind)
-		the_creamed_mob.mind.add_memory(MEMORY_CREAMPIED, list(DETAIL_PROTAGONIST = the_creamed_mob), story_value = STORY_VALUE_OKAY)
+	add_memory_in_range(the_creamed_mob, 7, MEMORY_CREAMPIED, list(DETAIL_PROTAGONIST = the_creamed_mob), story_value = STORY_VALUE_OKAY)
 
 	creamface = mutable_appearance('icons/effects/creampie.dmi')
 
