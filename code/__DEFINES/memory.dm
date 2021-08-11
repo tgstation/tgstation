@@ -31,6 +31,7 @@
 //Flags for memories
 #define MEMORY_FLAG_NOLOCATION (1<<0)
 #define MEMORY_FLAG_NOMOOD	(1<<1)
+#define MEMORY_FLAG_NOSTATIONNAME	(1<<1)
 
 //These defines are for what notable event happened. they correspond to the json lists related to the memory
 ///a memory of completing a surgery.
@@ -61,6 +62,10 @@
 #define MEMORY_DISMEMBERED "limb loss"
 /// A memory of seeing a pet die
 #define MEMORY_PET_DEAD "pet_dead"
+/// A memory of leading a winning revolution
+#define MEMORY_WON_REVOLUTION "won_revolution"
+/// An award ceremony of a medal
+#define MEMORY_RECEIVED_MEDAL "received_medal"
 
 ///YOU HAVE WRITTEN MEMORY FLAVOR TO THIS POINT//
 
@@ -117,4 +122,8 @@
 #define DETAIL_FOOD "FOOD"
 #define DETAIL_DRINK "DRINK"
 #define DETAIL_LOST_LIMB "LOST_LIMB"
+#define DETAIL_STATION_NAME "STATION_NAME"
+#define DETAIL_MEDAL_TYPE "MEDAL_TYPE"
+#define DETAIL_MEDAL_REASON "MEDAL_REASON"
+
 

@@ -204,7 +204,7 @@
 	"death_starts":[
 		"%PROTAGONIST's heart stopping at %TIME_OF_DEATH",
 		"%PROTAGONIST having perished at %TIME_OF_DEATH",
-		"The death of %PROTAGONIST at %TIME_OF_DEATH",
+		"the death of %PROTAGONIST at %TIME_OF_DEATH",
 		"%PROTAGONIST seizing up and falling limp, their eyes dead and lifeless..."
 	],
 	"death_moods":[
@@ -322,12 +322,37 @@
 		"The death of %DEUTORAGONIST."
 	],
 	"pet_dead_starts":[
-		"Honoring %DEUTORAGONIST, the station's pet",
+		"honoring %DEUTORAGONIST, the station's pet",
 		"%DEUTORAGONIST's funeral, which is attended by a group of crewmembers",
-		"A shallow hole, with %PROPER %DEUTORAGONIST inside"
+		"a shallow hole, with %PROPER %DEUTORAGONIST inside"
 	],
 	"pet_dead_moods":[
 		"%PROTAGONIST %MOOD without %DEUTORAGONIST.",
 		"Without %DEUTORAGONIST, %PROTAGONIST %MOOD."
+	],
+	"won_revolution_names":[
+		"The revolution of %STATION_NAME by %PROTAGONIST."
+	],
+	"won_revolution_starts":[
+		"%PROTAGONIST raising the flag of the revolution over the corpses of the former dictators",
+		"a flag waving above a pile of corpses with %PROTAGONIST standing over it",
+		"a statue of the former captain toppled over, with %PROTAGONIST next to it",
+		"a poster that says %STATION_NAME with a cross in it, hailing in a new era"
+	],
+	"won_revolution_moods":[
+		"%PROTAGONIST %MOOD at the fall of %STATION_NAME.",
+		"%PROTAGONIST %MOOD at the idea of the new era."
+	],
+	"received_medal_names":[
+		"The award ceremony of %MEDAL_TYPE to %PROTAGONIST."
+	],
+	"received_medal_starts":[
+		"%PROTAGONIST receiving a %MEDAL_TYPE with the inscription \"%MEDAL_REASON\"",
+		"%PROTAGONIST accepting a %MEDAL_TYPE inscribed with \"%MEDAL_REASON\" from %DEUTORAGONIST",
+		"a %MEDAL_TYPE with the inscription \"%MEDAL_REASON\" being awarded to %PROTAGONIST by %DEUTORAGONIST"
+	],
+	"received_medal_moods":[
+		"%PROTAGONIST %MOOD as they receive their medal.",
+		"%PROTAGONIST %MOOD with their newly received award."
 	]
 }
