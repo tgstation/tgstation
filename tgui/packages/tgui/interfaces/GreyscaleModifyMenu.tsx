@@ -313,7 +313,7 @@ export const GreyscaleModifyMenu = (props, context) => {
                   />
                   <Button
                     content="Save Icon File"
-                    tooltip="Saves the icon to a temp file in icons/testing/temp. This is useful if you want to use a generated icon elsewhere or just view a more accurate representation"
+                    tooltip="Saves the icon to a temp file in tmp/. This is useful if you want to use a generated icon elsewhere or just view a more accurate representation"
                     onClick={() => act("save_dmi")}
                   />
                 </Flex.Item>

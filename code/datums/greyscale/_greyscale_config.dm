@@ -228,7 +228,7 @@
 /// For saving a dmi to disk, useful for debug mainly
 /datum/greyscale_config/proc/SaveOutput(color_string)
 	var/icon/icon_output = GenerateBundle(color_string)
-	fcopy(icon_output, "icons/testing/temp/gags_debug_output.dmi")
+	fcopy(icon_output, "tmp/gags_debug_output.dmi")
 
 /// Actually create the icon and color it in, handles caching
 /datum/greyscale_config/proc/Generate(color_string)
