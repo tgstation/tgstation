@@ -96,7 +96,7 @@
 		data["designs"] = handle_designs(matching_designs, FALSE)
 	return data
 
-/obj/machinery/autolathe/proc/handle_designs(var/list/designs, categorycheck)
+/obj/machinery/autolathe/proc/handle_designs(list/designs, categorycheck)
 	var/list/output = list()
 	for(var/v in designs)
 		var/datum/design/D = categorycheck ? SSresearch.techweb_design_by_id(v) : v
