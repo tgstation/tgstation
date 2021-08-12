@@ -108,3 +108,9 @@
 		/obj/structure/reagent_dispensers/watertank/high = 1,
 		/obj/structure/reagent_dispensers/foamtank = 1,
 	)
+
+/obj/effect/spawner/random/engineering/vending_restock
+	name = "vending restock spawner"
+	icon_state = "vending_restock"
+	loot_subtype_path = /obj/item/vending_refill
+	loot = list()
