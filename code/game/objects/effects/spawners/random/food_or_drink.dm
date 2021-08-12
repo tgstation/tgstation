@@ -35,7 +35,7 @@
 		/obj/item/seeds/sugarcane,
 	)
 
-/obj/effect/spawner/random/food_or_drink/rare_seed
+/obj/effect/spawner/random/food_or_drink/seed_rare
 	lootcount = 5
 	icon_state = "seed"
 	loot = list( // /obj/item/seeds/random is not a random seed, but an exotic seed.

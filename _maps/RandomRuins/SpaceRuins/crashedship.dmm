@@ -813,7 +813,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/effect/spawner/random/food_or_drink/rare_seed,
+/obj/effect/spawner/random/food_or_drink/seed_rare,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/midship)
 "dg" = (
@@ -1866,7 +1866,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/effect/spawner/random/food_or_drink/rare_seed,
+/obj/effect/spawner/random/food_or_drink/seed_rare,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/midship)
 "EQ" = (
@@ -1881,7 +1881,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/effect/spawner/random/food_or_drink/rare_seed,
+/obj/effect/spawner/random/food_or_drink/seed_rare,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/midship)
 "Hy" = (
