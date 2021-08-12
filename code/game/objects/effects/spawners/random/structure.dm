@@ -162,3 +162,12 @@ obj/effect/spawner/random/structure
 		/obj/structure/chair/office/light = 1,
 		/obj/structure/chair/office = 1,
 	)
+
+/obj/effect/spawner/random/structure/chair_flipped
+	name = "flipped chair spawner"
+	loot = list(
+		/obj/item/chair/wood,
+		/obj/item/chair/stool/bar,
+		/obj/item/chair/stool,
+		/obj/item/chair,
+	)
