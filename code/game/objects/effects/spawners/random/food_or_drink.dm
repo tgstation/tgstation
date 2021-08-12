@@ -5,7 +5,6 @@
 /obj/effect/spawner/random/food_or_drink/donkpockets
 	name = "donk pocket box spawner"
 	icon_state = "donkpocket"
-	lootdoubles = FALSE
 	loot = list(
 		/obj/item/storage/box/donkpockets/donkpocketspicy,
 		/obj/item/storage/box/donkpockets/donkpocketteriyaki,
@@ -36,7 +35,7 @@
 	)
 
 /obj/effect/spawner/random/food_or_drink/seed_rare
-	lootcount = 5
+	spawn_loot_count = 5
 	icon_state = "seed"
 	loot = list( // /obj/item/seeds/random is not a random seed, but an exotic seed.
 		/obj/item/seeds/random = 30,
@@ -55,12 +54,10 @@
 		/obj/item/seeds/glowshroom/shadowshroom = 1,
 	)
 
-/obj/effect/spawner/random/food_or_drink/three_course_meal
-	name = "three course meal spawner"
+/obj/effect/spawner/random/food_or_drink/soup
+	name = "soup spawner"
 	icon_state = "soup"
-	lootcount = 3
-	lootdoubles = FALSE
-	var/soups = list(
+	loot = list(
 		/obj/item/food/soup/beet,
 		/obj/item/food/soup/sweetpotato,
 		/obj/item/food/soup/stew,
@@ -68,14 +65,22 @@
 		/obj/item/food/soup/nettle,
 		/obj/item/food/soup/meatball,
 	)
-	var/salads = list(
+
+/obj/effect/spawner/random/food_or_drink/salad
+	name = "salad spawner"
+	icon_state = "soup"
+	loot = list(
 		/obj/item/food/salad/herbsalad,
 		/obj/item/food/salad/validsalad,
 		/obj/item/food/salad/fruit,
 		/obj/item/food/salad/jungle,
 		/obj/item/food/salad/aesirsalad,
 	)
-	var/mains = list(
+
+/obj/effect/spawner/random/food_or_drink/dinner
+	name = "dinner spawner"
+	icon_state = "soup"
+	loot = list(
 		/obj/item/food/bearsteak,
 		/obj/item/food/enchiladas,
 		/obj/item/food/stewedsoymeat,
@@ -83,6 +88,17 @@
 		/obj/item/food/burger/superbite,
 		/obj/item/food/burger/fivealarm,
 	)
+
+/obj/effect/spawner/random/food_or_drink/three_course_meal
+	name = "three course meal spawner"
+	icon_state = "soup"
+	spawn_all_loot = TRUE
+	loot = list(
+		/obj/effect/spawner/random/food_or_drink/soup,
+		/obj/effect/spawner/random/food_or_drink/salad,
+		/obj/effect/spawner/random/food_or_drink/dinner,
+	)
+
 
 /obj/effect/spawner/random/food_or_drink/three_course_meal/Initialize(mapload)
 	loot = list(pick(soups) = 1,pick(salads) = 1,pick(mains) = 1)
