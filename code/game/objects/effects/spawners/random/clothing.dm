@@ -94,3 +94,26 @@
 		/obj/item/clothing/shoes/cowboy/lizard = 7,
 		/obj/item/clothing/shoes/cowboy/lizard/masterwork = 1
 	)
+
+/obj/effect/spawner/random/clothing/wardrobe_closet
+	name = "wardrobe closet spawner"
+	loot = list(
+		/obj/structure/closet/gmcloset,
+		/obj/structure/closet/chefcloset,
+		/obj/structure/closet/jcloset,
+		/obj/structure/closet/lawcloset,
+		/obj/structure/closet/wardrobe/chaplain_black,
+		/obj/structure/closet/wardrobe/red,
+		/obj/structure/closet/wardrobe/cargotech,
+		/obj/structure/closet/wardrobe/atmospherics_yellow,
+		/obj/structure/closet/wardrobe/engineering_yellow,
+		/obj/structure/closet/wardrobe/white/medical,
+		/obj/structure/closet/wardrobe/robotics_black,
+		/obj/structure/closet/wardrobe/chemistry_white,
+		/obj/structure/closet/wardrobe/genetics_white,
+		/obj/structure/closet/wardrobe/virology_white,
+		/obj/structure/closet/wardrobe/science_white,
+		/obj/structure/closet/wardrobe/botanist,
+		/obj/structure/closet/wardrobe/curator,
+		/obj/structure/closet/wardrobe/pjs,
+	)
