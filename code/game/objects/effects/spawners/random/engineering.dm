@@ -129,3 +129,9 @@
 		/obj/machinery/portable_atmospherics/pump = 1,
 		/obj/machinery/portable_atmospherics/scrubber = 1,
 	)
+
+/obj/effect/spawner/random/engineering/tracking_beacon
+	name = "tracking beacon spawner"
+	icon_state = "beacon"
+	spawn_loot_chance = 50
+	loot = list(/obj/item/beacon)
