@@ -1,3 +1,6 @@
+/// A list of all integrated circuits
+GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
+
 /**
  * # Integrated Circuitboard
  *
@@ -7,6 +10,7 @@
  */
 /obj/item/integrated_circuit
 	name = "integrated circuit"
+	desc = "By inserting components and a cell into this, wiring them up, and putting them into a shell, anyone can pretend to be a programmer."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "integrated_circuit"
 	inhand_icon_state = "electronic"
@@ -32,6 +36,9 @@
 	/// Whether the integrated circuit is locked or not. Handled by the shell.
 	var/locked = FALSE
 
+	/// Whether the integrated circuit is admin only. Disables power usage and allows admin circuits to be attached, at the cost of making it inaccessible to regular users.
+	var/admin_only = FALSE
+
 	/// The ID that is authorized to unlock/lock the shell so that the circuit can/cannot be removed.
 	var/datum/weakref/owner_id
 
@@ -49,6 +56,9 @@
 
 /obj/item/integrated_circuit/Initialize()
 	. = ..()
+
+	GLOB.integrated_circuits += src
+
 	RegisterSignal(src, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
 
 /obj/item/integrated_circuit/loaded/Initialize()
@@ -64,6 +74,7 @@
 	examined_component = null
 	owner_id = null
 	QDEL_NULL(cell)
+	GLOB.integrated_circuits -= src
 	return ..()
 
 /obj/item/integrated_circuit/examine(mob/user)
@@ -231,16 +242,20 @@
 		var/list/component_data = list()
 		component_data["input_ports"] = list()
 		for(var/datum/port/input/port as anything in component.input_ports)
-			var/current_data = port.input_value
+			var/current_data = port.value
 			if(isatom(current_data)) // Prevent passing the name of the atom.
 				current_data = null
+			var/list/connected_to = list()
+			for(var/datum/port/output/output as anything in port.connected_ports)
+				connected_to += REF(output)
 			component_data["input_ports"] += list(list(
 				"name" = port.name,
 				"type" = port.datatype,
 				"ref" = REF(port), // The ref is the identifier to work out what it is connected to
-				"connected_to" = REF(port.connected_port),
+				"connected_to" = connected_to,
 				"color" = port.color,
 				"current_data" = current_data,
+				"datatype_data" = port.datatype_ui_data(user),
 			))
 		component_data["output_ports"] = list()
 		for(var/datum/port/output/port as anything in component.output_ports)
@@ -248,14 +263,12 @@
 				"name" = port.name,
 				"type" = port.datatype,
 				"ref" = REF(port),
-				"color" = port.color
+				"color" = port.color,
 			))
 
 		component_data["name"] = component.display_name
 		component_data["x"] = component.rel_x
 		component_data["y"] = component.rel_y
-		component_data["option"] = component.current_option
-		component_data["options"] = component.options
 		component_data["removable"] = component.removable
 		.["components"] += list(component_data)
 
@@ -266,12 +279,12 @@
 		examined = examined_component.resolve()
 
 	.["examined_name"] = examined?.display_name
-	.["examined_desc"] = examined?.display_desc
+	.["examined_desc"] = examined?.desc
 	.["examined_notices"] = examined?.get_ui_notices()
 	.["examined_rel_x"] = examined_rel_x
 	.["examined_rel_y"] = examined_rel_y
 
-	.["is_admin"] = check_rights_for(user.client, R_ADMIN)
+	.["is_admin"] = check_rights_for(user.client, R_VAREDIT)
 
 /obj/item/integrated_circuit/ui_host(mob/user)
 	if(shell)
@@ -282,6 +295,20 @@
 	if(locked)
 		return FALSE
 	return ..()
+
+/obj/item/integrated_circuit/ui_status(mob/user)
+	. = ..()
+
+	if (isobserver(user))
+		. = max(., UI_UPDATE)
+
+	// Extra protection because ui_state will not close the UI if they already have the ui open,
+	// as ui_state is only set during
+	if(admin_only)
+		if(!check_rights_for(user.client, R_VAREDIT))
+			return UI_CLOSE
+		else
+			return UI_INTERACTIVE
 
 /obj/item/integrated_circuit/ui_state(mob/user)
 	if(!shell)
@@ -318,10 +345,9 @@
 			var/datum/port/input/input_port = input_component.input_ports[input_port_id]
 			var/datum/port/output/output_port = output_component.output_ports[output_port_id]
 
-			if(input_port.datatype != PORT_TYPE_ANY && !output_port.compatible_datatype(input_port.datatype))
+			if(!input_port.can_receive_from_datatype(output_port.datatype))
 				return
-
-			input_port.register_output_port(output_port)
+			input_port.connect(output_port)
 			. = TRUE
 		if("remove_connection")
 			var/component_id = text2num(params["component_id"])
@@ -342,7 +368,7 @@
 				return
 
 			var/datum/port/port = port_table[port_id]
-			port.disconnect()
+			port.disconnect_all()
 			. = TRUE
 		if("detach_component")
 			var/component_id = text2num(params["component_id"])
@@ -364,16 +390,6 @@
 			component.rel_x = min(max(-COMPONENT_MAX_POS, text2num(params["rel_x"])), COMPONENT_MAX_POS)
 			component.rel_y = min(max(-COMPONENT_MAX_POS, text2num(params["rel_y"])), COMPONENT_MAX_POS)
 			. = TRUE
-		if("set_component_option")
-			var/component_id = text2num(params["component_id"])
-			if(!WITHIN_RANGE(component_id, attached_components))
-				return
-			var/obj/item/circuit_component/component = attached_components[component_id]
-			var/option = params["option"]
-			if(!(option in component.options))
-				return
-			component.set_option(option)
-			. = TRUE
 		if("set_component_input")
 			var/component_id = text2num(params["component_id"])
 			var/port_id = text2num(params["port_id"])
@@ -384,9 +400,6 @@
 				return
 			var/datum/port/input/port = component.input_ports[port_id]
 
-			if(port.connected_port)
-				return
-
 			if(params["set_null"])
 				port.set_input(null)
 				return TRUE
@@ -396,6 +409,14 @@
 					return
 				var/obj/item/multitool/circuit/marker = usr.get_active_held_item()
 				if(!istype(marker))
+					var/client/user = usr.client
+					if(!check_rights_for(user, R_VAREDIT))
+						return TRUE
+					var/atom/marked_atom = user.holder.marked_datum
+					if(!marked_atom)
+						return TRUE
+					port.set_input(marked_atom)
+					balloon_alert(usr, "updated [port.name]'s value to marked object.")
 					return TRUE
 				if(!marker.marked_atom)
 					port.set_input(null)
@@ -405,17 +426,10 @@
 				port.set_input(marker.marked_atom)
 				return TRUE
 
-			var/user_input = params["input"]
-			switch(port.datatype)
-				if(PORT_TYPE_NUMBER)
-					port.set_input(text2num(user_input))
-				if(PORT_TYPE_ANY)
-					port.set_input(text2num(user_input) || user_input)
-				if(PORT_TYPE_STRING)
-					port.set_input(user_input)
-				if(PORT_TYPE_SIGNAL)
-					balloon_alert(usr, "triggered [port.name]")
-					port.set_input(COMPONENT_SIGNAL)
+			var/user_input = port.handle_manual_input(usr, params["input"])
+			if(isnull(user_input))
+				return TRUE
+			port.set_input(user_input)
 			. = TRUE
 		if("get_component_value")
 			var/component_id = text2num(params["component_id"])
@@ -427,9 +441,9 @@
 				return
 
 			var/datum/port/output/port = component.output_ports[port_id]
-			var/value = port.output_value
+			var/value = port.value
 			if(isatom(value))
-				value = port.convert_value(port.output_value)
+				value = PORT_TYPE_ATOM
 			else if(isnull(value))
 				value = "null"
 			var/string_form = copytext("[value]", 1, PORT_MAX_STRING_DISPLAY)
@@ -464,14 +478,7 @@
 			examined_component = null
 			. = TRUE
 		if("save_circuit")
-			var/client/saver = usr.client
-			if(!check_rights_for(saver, R_ADMIN))
-				return
-			var/temp_file = file("data/CircuitDownloadTempFile")
-			fdel(temp_file)
-			WRITE_FILE(temp_file, convert_to_json())
-			DIRECT_OUTPUT(saver, ftp(temp_file, "[display_name || "circuit"].json"))
-			. = TRUE
+			return attempt_save_to(usr.client)
 
 /obj/item/integrated_circuit/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/usb_cable, mob/user)
 	SIGNAL_HANDLER
@@ -502,4 +509,14 @@
 	if(owner_id)
 		id_card = owner_id.resolve()
 
-	return "(Shell: [shell || "*null*"], Inserter: [key_name(inserter, include_link)], Owner ID: [id_card?.name || "*null*"])"
+	return "[src] (Shell: [shell || "*null*"], Inserter: [key_name(inserter, include_link)], Owner ID: [id_card?.name || "*null*"])"
+
+/// Attempts to save a circuit to a given client
+/obj/item/integrated_circuit/proc/attempt_save_to(client/saver)
+	if(!check_rights_for(saver, R_VAREDIT))
+		return FALSE
+	var/temp_file = file("data/CircuitDownloadTempFile")
+	fdel(temp_file)
+	WRITE_FILE(temp_file, convert_to_json())
+	DIRECT_OUTPUT(saver, ftp(temp_file, "[display_name || "circuit"].json"))
+	return TRUE

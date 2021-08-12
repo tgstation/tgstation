@@ -1,9 +1,7 @@
 /**
  * # Component Port
  *
- * A base type port used by a component
- *
- * Connects to other ports. This is an abstract type that should not be instanciated
+ * A port used by a component. Connects to other ports.
  */
 /datum/port
 	/// The component this port is attached to
@@ -15,8 +13,11 @@
 	/// The port type. Ports can only connect to each other if the type matches
 	var/datatype
 
+	/// The value that's currently in the port. It's of the above type.
+	var/value
+
 	/// The default port type. Stores the original datatype of the port set on Initialize.
-	var/default_datatype
+	var/datum/circuit_datatype/datatype_handler
 
 	/// The port color. If unset, appears as blue.
 	var/color
@@ -26,89 +27,80 @@
 		qdel(src)
 		return
 	. = ..()
-	// Don't need to do src.connected_component here, but it looks inline
-	// with the other variable declarations
-	src.connected_component = to_connect
+	connected_component = to_connect
 	src.name = name
-	src.datatype = datatype
-	src.default_datatype = datatype
-	src.color = datatype_to_color()
-
-
-///Converts the datatype into an appropriate colour
-/datum/port/proc/datatype_to_color()
-	switch(datatype)
-		if(PORT_TYPE_ATOM)
-			return "purple"
-		if(PORT_TYPE_NUMBER)
-			return "green"
-		if(PORT_TYPE_STRING)
-			return "orange"
-		if(PORT_TYPE_LIST)
-			return "white"
-		if(PORT_TYPE_SIGNAL)
-			return "teal"
-		if(PORT_TYPE_TABLE)
-			return "grey"
+	set_datatype(datatype)
 
 /datum/port/Destroy(force)
+	disconnect_all()
 	connected_component = null
+	datatype_handler = null
 	return ..()
 
 /**
- * Returns the value to be set for the port
- *
- * Used for implicit conversions between outputs and inputs (e.g. number -> string)
- * and applying/removing signals on inputs
+ * Sets the port's value to value.
+ * Casts to the port's datatype (e.g. number -> string), and assumes this can be done.
  */
-/datum/port/proc/convert_value(prev_value, value_to_convert)
-	if(prev_value == value_to_convert)
-		return prev_value
-	. = value_to_convert
+/datum/port/proc/set_value(value)
+	if(src.value != value)
+		if(isatom(value))
+			UnregisterSignal(value, COMSIG_PARENT_QDELETING)
+		src.value = datatype_handler.convert_value(src, value)
+		if(isatom(value))
+			RegisterSignal(value, COMSIG_PARENT_QDELETING, .proc/null_value)
+	SEND_SIGNAL(src, COMSIG_PORT_SET_VALUE, value)
 
-	if(isnull(value_to_convert))
-		return null
+/**
+ * Updates the value of the input and calls input_received on the connected component
+ */
+/datum/port/input/proc/set_input(value)
+	set_value(value)
+	if(trigger)
+		TRIGGER_CIRCUIT_COMPONENT(connected_component, src)
 
-	switch(datatype)
-		if(PORT_TYPE_STRING)
-			// So that they can't easily get the name like this.
-			if(isatom(value_to_convert))
-				return PORT_TYPE_ATOM
-			else
-				return copytext("[value_to_convert]", 1, PORT_MAX_STRING_LENGTH)
-		if(PORT_TYPE_NUMBER)
-			if(!istext(value_to_convert) && !isnum(value_to_convert))
-				return null
-			return text2num(value_to_convert)
-
-	if(isatom(value_to_convert))
-		var/atom/atom_to_check = value_to_convert
-		if(QDELETED(atom_to_check))
-			return null
+/datum/port/output/proc/set_output(value)
+	set_value(value)
 
 /**
  * Sets the datatype of the port.
  *
  * Arguments:
- * * type_to_set - The type this port is set to.
+ * * new_type - The type this port is to be set to.
  */
 /datum/port/proc/set_datatype(type_to_set)
+	if(type_to_set == datatype)
+		return
+
+	if(datatype_handler)
+		datatype_handler.on_loss(src)
+	datatype_handler = null
+
+	var/datum/circuit_datatype/handler = GLOB.circuit_datatypes[type_to_set]
+	if(!handler || !handler.is_compatible(src))
+		type_to_set = PORT_TYPE_ANY
+		handler = GLOB.circuit_datatypes[type_to_set]
+		// We can't leave this port without a type or else it'll just keep spewing out unnecessary and unneeded runtimes as well as leaving the circuit in a broken state.
+		stack_trace("[src] port attempted to be set to an incompatible datatype! (target datatype to set: [type_to_set])")
+
 	datatype = type_to_set
-	color = datatype_to_color()
-	disconnect()
+	datatype_handler = handler
+	color = datatype_handler.color
+	datatype_handler.on_gain(src)
+	src.value = datatype_handler.convert_value(src, value)
+	SEND_SIGNAL(src, COMSIG_PORT_SET_TYPE, type_to_set)
 	if(connected_component?.parent)
 		SStgui.update_uis(connected_component.parent)
 
-/**
- * Disconnects a port from all other ports
- *
- * Called by [/obj/item/circuit_component] whenever it is disconnected from
- * an integrated circuit
- */
-/datum/port/proc/disconnect()
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_PORT_DISCONNECT)
+/datum/port/input/set_datatype(new_type)
+	for(var/datum/port/output/output as anything in connected_ports)
+		check_type(output)
+	..()
 
+/**
+ * Returns the data from the datatype
+ */
+/datum/port/proc/datatype_ui_data()
+	return datatype_handler.datatype_ui_data(src)
 
 /**
  * # Output Port
@@ -118,41 +110,67 @@
  * Sends a signal whenever the output value is changed
  */
 /datum/port/output
-	/// The output value of the port
-	var/output_value
-
-/datum/port/output/disconnect()
-	set_output(null)
-	return ..()
-
-/datum/port/output/Destroy(force)
-	output_value = null
-	return ..()
 
 /**
- * Sets the output value of the port
+ * Disconnects a port from all other ports.
  *
- * Arguments:
- * * value - The value to set it to
+ * Called by [/obj/item/circuit_component] whenever it is disconnected from
+ * an integrated circuit
  */
-/datum/port/output/proc/set_output(value)
-	if(isatom(output_value))
-		UnregisterSignal(output_value, COMSIG_PARENT_QDELETING)
-	output_value = convert_value(output_value, value)
-	if(isatom(output_value))
-		RegisterSignal(output_value, COMSIG_PARENT_QDELETING, .proc/null_output)
+/datum/port/proc/disconnect_all()
+	SEND_SIGNAL(src, COMSIG_PORT_DISCONNECT)
 
-	SEND_SIGNAL(src, COMSIG_PORT_SET_OUTPUT, output_value)
+/datum/port/input/disconnect_all()
+	..()
+	for(var/datum/port/output/output as anything in connected_ports)
+		disconnect(output)
 
-/// Signal handler proc to null the output if an atom is deleted. An update is not sent because this was not set.
-/datum/port/output/proc/null_output(datum/source)
+/datum/port/input/proc/disconnect(datum/port/output/output)
+	connected_ports -= output
+	UnregisterSignal(output, COMSIG_PORT_SET_VALUE)
+	UnregisterSignal(output, COMSIG_PORT_SET_TYPE)
+	UnregisterSignal(output, COMSIG_PORT_DISCONNECT)
+
+/// Do our part in setting all source references anywhere to null.
+/datum/port/proc/on_value_qdeleting(datum/source)
 	SIGNAL_HANDLER
-	if(output_value == source)
-		output_value = null
+	if(value == source)
+		value = null
+	else
+		stack_trace("Impossible? [src] should only receive COMSIG_PARENT_QDELETING from an atom currently in the port, not [source].")
 
-/datum/port/output/set_datatype(type_to_set)
+/**
+ * # Input Port
+ *
+ * An input port remembers connected output ports.
+ *
+ * Registers the PORT_SET_VALUE signal on each connected port,
+ * and keeps its value equal to the last such signal received.
+ */
+/datum/port/input
+	/// Whether this port triggers an update whenever an output is received.
+	var/trigger = FALSE
+
+	/// The ports this port is wired to.
+	var/list/datum/port/output/connected_ports
+
+/datum/port/input/New(obj/item/circuit_component/to_connect, name, datatype, trigger, default)
 	. = ..()
-	set_output(null)
+	set_input(default)
+	src.trigger = trigger
+	src.connected_ports = list()
+
+/**
+ * Introduces two ports to one another.
+ */
+/datum/port/input/proc/connect(datum/port/output/output)
+	connected_ports |= output
+	RegisterSignal(output, COMSIG_PORT_SET_VALUE, .proc/receive_value)
+	RegisterSignal(output, COMSIG_PORT_SET_TYPE, .proc/check_type)
+	RegisterSignal(output, COMSIG_PORT_DISCONNECT, .proc/disconnect)
+	// For signals, we don't update the input to prevent sending a signal when connecting ports.
+	if(!(datatype_handler.datatype_flags & DATATYPE_FLAG_AVOID_VALUE_UPDATE))
+		set_input(output.value)
 
 /**
  * Determines if a datatype is compatible with another port of a different type.
@@ -160,127 +178,37 @@
  * Arguments:
  * * other_datatype - The datatype to check
  */
-/datum/port/output/proc/compatible_datatype(datatype_to_check)
-	if(datatype_to_check == datatype)
-		return TRUE
-
-	switch(datatype)
-		if(PORT_TYPE_NUMBER)
-			// Can easily convert a number to string. Everything else has to use a tostring component
-			return datatype_to_check == PORT_TYPE_STRING || datatype_to_check == PORT_TYPE_SIGNAL
-		if(PORT_TYPE_SIGNAL)
-			// A signal port is just a number port but distinguishable
-			return datatype_to_check == PORT_TYPE_NUMBER
-
-	return FALSE
+/datum/port/input/proc/can_receive_from_datatype(datatype_to_check)
+	return datatype_handler.can_receive_from_datatype(datatype_to_check)
 
 /**
- * # Input Port
+ * Determines if a datatype is compatible with another port of a different type.
  *
- * An input port that can only be connected to 1 output port
- *
- * Registers a signal on the target output port to listen out for any output
- * so that an update can be sent to the attached component
- */
-/datum/port/input
-	/// The output value of the port
-	var/input_value
-
-	/// The connected output port
-	var/datum/port/output/connected_port
-
-	/// Whether this port triggers an update whenever an output is received.
-	var/trigger = FALSE
-
-	/// The default value of this input
-	var/default
-
-/datum/port/input/New(obj/item/circuit_component/to_connect, name, datatype, trigger, default)
-	. = ..()
-	src.trigger = trigger
-	src.default = default
-	set_input(default, FALSE)
-
-/**
- * Connects the input port to the output port
- *
- * Sets the input_value and registers a signal to receive future updates.
  * Arguments:
- * * port_to_register - The port to connect the input port to
+ * * other_datatype - The datatype to check
  */
-/datum/port/input/proc/register_output_port(datum/port/output/port_to_register)
-	unregister_output_port()
-
-	RegisterSignal(port_to_register, COMSIG_PORT_SET_OUTPUT, .proc/receive_output)
-	RegisterSignal(port_to_register, list(
-		COMSIG_PORT_DISCONNECT,
-		COMSIG_PARENT_QDELETING
-	), .proc/unregister_output_port)
-
-	connected_port = port_to_register
-	SEND_SIGNAL(connected_port, COMSIG_PORT_OUTPUT_CONNECT, src)
-	// For signals, we don't update the input to prevent sending a signal when connecting ports.
-	if(datatype != PORT_TYPE_SIGNAL)
-		set_input(connected_port.output_value)
-
+/datum/port/input/proc/handle_manual_input(mob/user, manual_input)
+	if(datatype_handler.datatype_flags & DATATYPE_FLAG_ALLOW_MANUAL_INPUT)
+		return datatype_handler.handle_manual_input(src, user, manual_input)
+	return null
 
 /**
- * Sets a timer depending on the value of the input_receive_delay
- *
- * The timer will call a proc that updates the value.
- * Arguments:
- * * connected_port - The connected output port
- * * new_value - The new value received from the output port
+ * Mirror value updates from connected output ports after an input_receive_delay.
  */
-/datum/port/input/proc/receive_output(datum/port/output/connected_port, new_value)
+/datum/port/input/proc/receive_value(datum/port/output/output, value)
 	SIGNAL_HANDLER
-	SScircuit_component.add_callback(CALLBACK(src, .proc/set_input, new_value))
-
-/**
- * Updates the value of the input
- *
- * It updates the value of the input and calls input_received on the connected component
- * Arguments:
- * * port_to_register - The port to connect the input port to
- */
-/datum/port/input/proc/set_input(new_value, send_update = TRUE)
-	if(isatom(input_value))
-		UnregisterSignal(input_value, COMSIG_PARENT_QDELETING)
-	input_value = convert_value(input_value, new_value)
-	if(isatom(input_value))
-		RegisterSignal(input_value, COMSIG_PARENT_QDELETING, .proc/null_output)
-
-	SEND_SIGNAL(src, COMSIG_PORT_SET_INPUT, input_value)
-	if(trigger && send_update)
-		TRIGGER_CIRCUIT_COMPONENT(connected_component, src)
+	SScircuit_component.add_callback(CALLBACK(src, .proc/set_input, value))
 
 /// Signal handler proc to null the input if an atom is deleted. An update is not sent because this was not set by anything.
-/datum/port/input/proc/null_output(datum/source)
+/datum/port/proc/null_value(datum/source)
 	SIGNAL_HANDLER
-	if(input_value == source)
-		input_value = null
+	if(value == source)
+		value = null
 
-/datum/port/input/disconnect()
-	unregister_output_port()
-	return ..()
-
-/datum/port/input/set_datatype(type_to_set)
-	. = ..()
-	set_input(default)
-
-/datum/port/input/proc/unregister_output_port()
+/**
+ * Handle type updates from connected output ports, breaking uncastable connections.
+ */
+/datum/port/input/proc/check_type(datum/port/output/output)
 	SIGNAL_HANDLER
-	if(!connected_port)
-		return
-	UnregisterSignal(connected_port, list(
-		COMSIG_PARENT_QDELETING,
-		COMSIG_PORT_SET_OUTPUT,
-		COMSIG_PORT_DISCONNECT
-	))
-	connected_port = null
-	set_input(default)
-
-/datum/port/input/Destroy()
-	unregister_output_port()
-	connected_port = null
-	return ..()
+	if(!can_receive_from_datatype(output.datatype))
+		disconnect(output)

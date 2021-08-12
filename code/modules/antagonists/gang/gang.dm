@@ -272,7 +272,7 @@
 
 /datum/antagonist/gang/purple/check_gang_objective()
 	for(var/mob/player as anything in GLOB.player_list)
-		if(!(player.mind.assigned_role.departments & DEPARTMENT_SECURITY))
+		if(!(player.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY))
 			continue
 		if(!player.suiciding && !considered_alive(player))
 			return FALSE

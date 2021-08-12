@@ -149,7 +149,7 @@
 /datum/station_trait/deathrattle_department/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
 	SIGNAL_HANDLER
 
-	if(!(job.departments & department_to_apply_to))
+	if(!(job.departments_bitflags & department_to_apply_to))
 		return
 
 	var/obj/item/implant/deathrattle/implant_to_give = new()
@@ -160,43 +160,43 @@
 /datum/station_trait/deathrattle_department/service
 	trait_flags = NONE
 	weight = 1
-	department_to_apply_to = DEPARTMENT_SERVICE
+	department_to_apply_to = DEPARTMENT_BITFLAG_SERVICE
 	department_name = "Service"
 
 /datum/station_trait/deathrattle_department/cargo
 	trait_flags = NONE
 	weight = 1
-	department_to_apply_to = DEPARTMENT_CARGO
+	department_to_apply_to = DEPARTMENT_BITFLAG_CARGO
 	department_name = "Cargo"
 
 /datum/station_trait/deathrattle_department/engineering
 	trait_flags = NONE
 	weight = 1
-	department_to_apply_to = DEPARTMENT_ENGINEERING
+	department_to_apply_to = DEPARTMENT_BITFLAG_ENGINEERING
 	department_name = "Engineering"
 
 /datum/station_trait/deathrattle_department/command
 	trait_flags = NONE
 	weight = 1
-	department_to_apply_to = DEPARTMENT_COMMAND
+	department_to_apply_to = DEPARTMENT_BITFLAG_COMMAND
 	department_name = "Command"
 
 /datum/station_trait/deathrattle_department/science
 	trait_flags = NONE
 	weight = 1
-	department_to_apply_to = DEPARTMENT_SCIENCE
+	department_to_apply_to = DEPARTMENT_BITFLAG_SCIENCE
 	department_name = "Science"
 
 /datum/station_trait/deathrattle_department/security
 	trait_flags = NONE
 	weight = 1
-	department_to_apply_to = DEPARTMENT_SECURITY
+	department_to_apply_to = DEPARTMENT_BITFLAG_SECURITY
 	department_name = "Security"
 
 /datum/station_trait/deathrattle_department/medical
 	trait_flags = NONE
 	weight = 1
-	department_to_apply_to = DEPARTMENT_MEDICAL
+	department_to_apply_to = DEPARTMENT_BITFLAG_MEDICAL
 	department_name = "Medical"
 
 /datum/station_trait/deathrattle_all

@@ -1,3 +1,6 @@
+/**
+ * Base class for all grenades.
+ */
 /obj/item/grenade
 	name = "grenade"
 	desc = "It has an adjustable timer."
@@ -14,10 +17,15 @@
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
-	var/active = 0
-	var/det_time = 50
-	var/display_timer = 1
+	///Is this grenade currently armed?
+	var/active = FALSE
+	///How long it takes for a grenade to explode after being armed
+	var/det_time = 5 SECONDS
+	///Will this state what it's det_time is when examined?
+	var/display_timer = TRUE
+	///Used in botch_check to determine how a user's clumsiness affects that user's ability to prime a grenade correctly.
 	var/clumsy_check = GRENADE_CLUMSY_FUMBLE
+	///Was sticky tape used to make this sticky?
 	var/sticky = FALSE
 	// I moved the explosion vars and behavior to base grenades because we want all grenades to call [/obj/item/grenade/proc/detonate] so we can send COMSIG_GRENADE_DETONATE
 	///how big of a devastation explosion radius on prime
@@ -34,6 +42,7 @@
 	var/shrapnel_type
 	/// the higher this number, the more projectiles are created as shrapnel
 	var/shrapnel_radius
+	///Did we add the component responsible for spawning sharpnel to this?
 	var/shrapnel_initialized
 
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
@@ -50,20 +59,26 @@
 	if(!QDELETED(src))
 		qdel(src)
 
+/**
+ * Checks for various ways to botch priming a grenade.
+ *
+ * Arguments:
+ * * mob/living/carbon/human/user - who is priming our grenade?
+ */
 /obj/item/grenade/proc/botch_check(mob/living/carbon/human/user)
+	if(sticky && prob(50)) // to add risk to sticky tape grenade cheese, no return cause we still prime as normal after.
+		to_chat(user, span_warning("What the... [src] is stuck to your hand!"))
+		ADD_TRAIT(src, TRAIT_NODROP, STICKY_NODROP)
+
 	var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)
-	if(clumsy && (clumsy_check == GRENADE_CLUMSY_FUMBLE))
-		if(prob(50))
-			to_chat(user, span_warning("Huh? How does this thing work?"))
-			arm_grenade(user, 5, FALSE)
-			return TRUE
+	if(clumsy && (clumsy_check == GRENADE_CLUMSY_FUMBLE) && prob(50))
+		to_chat(user, span_warning("Huh? How does this thing work?"))
+		arm_grenade(user, 5, FALSE)
+		return TRUE
 	else if(!clumsy && (clumsy_check == GRENADE_NONCLUMSY_FUMBLE))
 		to_chat(user, span_warning("You pull the pin on [src]. Attached to it is a pink ribbon that says, \"[span_clown("HONK")]\""))
 		arm_grenade(user, 5, FALSE)
 		return TRUE
-	else if(sticky && prob(50)) // to add risk to sticky tape grenade cheese, no return cause we still prime as normal after
-		to_chat(user, span_warning("What the... [src] is stuck to your hand!"))
-		ADD_TRAIT(src, TRAIT_NODROP, STICKY_NODROP)
 
 /obj/item/grenade/examine(mob/user)
 	. = ..()
@@ -72,7 +87,6 @@
 			. += "The timer is set to [DisplayTimeText(det_time)]."
 		else
 			. += "\The [src] is set for instant detonation."
-
 
 /obj/item/grenade/attack_self(mob/user)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
@@ -86,7 +100,7 @@
 		if(!botch_check(user)) // if they botch the prime, it'll be handled in botch_check
 			arm_grenade(user)
 
-/obj/item/grenade/proc/log_grenade(mob/user, turf/source_terf)
+/obj/item/grenade/proc/log_grenade(mob/user)
 	log_bomber(user, "has primed a", src, "for detonation")
 
 /**
@@ -94,7 +108,7 @@
  * Grenades with other triggers like remote igniters probably skip this step and go straight to [/obj/item/grenade/proc/detonate]
  */
 /obj/item/grenade/proc/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
-	log_grenade(user, get_turf(src)) //Inbuilt admin procs already handle null users
+	log_grenade(user) //Inbuilt admin procs already handle null users
 	if(user)
 		add_fingerprint(user)
 		if(msg)
@@ -149,18 +163,18 @@
 	if(time != null)
 		if(time < 3)
 			time = 3
-		det_time = round(clamp(time * 10, 0, 50))
+		det_time = round(clamp(time * 10, 0, 5 SECONDS))
 	else
 		var/previous_time = det_time
 		switch(det_time)
 			if (0)
-				det_time = 30
-			if (30)
-				det_time = 50
-			if (50)
+				det_time = 3 SECONDS
+			if (3 SECONDS)
+				det_time = 5 SECONDS
+			if (5 SECONDS)
 				det_time = 0
 		if(det_time == previous_time)
-			det_time = 50
+			det_time = 5 SECONDS
 
 /obj/item/grenade/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -169,9 +183,9 @@
 	var/obj/projectile/hit_projectile = hitby
 	if(damage && attack_type == PROJECTILE_ATTACK && hit_projectile.damage_type != STAMINA && prob(15))
 		owner.visible_message(span_danger("[attack_text] hits [owner]'s [src], setting it off! What a shot!"))
-		var/turf/source_terf = get_turf(src)
-		log_game("A projectile ([hitby]) detonated a grenade held by [key_name(owner)] at [COORD(source_terf)]")
-		message_admins("A projectile ([hitby]) detonated a grenade held by [key_name_admin(owner)] at [ADMIN_COORDJMP(source_terf)]")
+		var/turf/source_turf = get_turf(src)
+		log_game("A projectile ([hitby]) detonated a grenade held by [key_name(owner)] at [COORD(source_turf)]")
+		message_admins("A projectile ([hitby]) detonated a grenade held by [key_name_admin(owner)] at [ADMIN_COORDJMP(source_turf)]")
 		detonate()
 		return TRUE //It hit the grenade, not them
 

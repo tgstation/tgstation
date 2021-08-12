@@ -105,6 +105,19 @@
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/fingerless
 
+/obj/item/clothing/gloves/fingerless
+	name = "fingerless gloves"
+	desc = "Plain black gloves without fingertips for the hard working."
+	icon_state = "fingerless"
+	inhand_icon_state = "fingerless"
+	transfer_prints = TRUE
+	strip_delay = 40
+	equip_delay_other = 20
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	custom_price = PAYCHECK_ASSISTANT * 1.5
+	undyeable = TRUE
+
 /obj/item/clothing/gloves/color/orange
 	name = "orange gloves"
 	desc = "A pair of gloves, they don't look special in any way."

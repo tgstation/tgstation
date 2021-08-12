@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/tonumber
 	display_name = "To Number"
-	display_desc = "A component that converts its input (a string) to a number. If there's text in the input, it'll only consider it if it starts with a number. It will take that number and ignore the rest."
+	desc = "A component that converts its input (a string) to a number. If there's text in the input, it'll only consider it if it starts with a number. It will take that number and ignore the rest."
 
 	/// The input port
 	var/datum/port/input/input_port
@@ -26,4 +26,4 @@
 	if(.)
 		return
 
-	output.set_output(text2num(input_port.input_value))
+	output.set_output(text2num(input_port.value))

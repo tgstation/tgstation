@@ -304,6 +304,8 @@
  * Useful for mobs that have their abilities mapped to right click.
  */
 /mob/proc/ranged_secondary_attack(atom/target, modifiers)
+	if(SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED_SECONDARY, target, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
 
 /**
  * Middle click
@@ -346,7 +348,7 @@
 		ML.pulled(src)
 
 /mob/living/CtrlClick(mob/user)
-	if(!isliving(user) || !Adjacent(user) || user.incapacitated())
+	if(!isliving(user) || !user.CanReach(src) || user.incapacitated())
 		return ..()
 
 	if(world.time < user.next_move)
@@ -362,7 +364,7 @@
 
 /mob/living/carbon/human/CtrlClick(mob/user)
 
-	if(!ishuman(user) ||!Adjacent(user) || user.incapacitated())
+	if(!ishuman(user) || !user.CanReach(src) || user.incapacitated())
 		return ..()
 
 	if(world.time < user.next_move)

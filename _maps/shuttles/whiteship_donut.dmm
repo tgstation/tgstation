@@ -153,7 +153,9 @@
 "aC" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/wallframe/apc,
-/obj/item/circuitboard/computer/apc_control,
+/obj/item/electronics/apc{
+	name = "improper power control module"
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "aD" = (
@@ -514,7 +516,7 @@
 /area/shuttle/abandoned)
 "CQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/stack/sheet/mineral/uranium{
+/obj/item/stack/sheet/mineral/plasma{
 	amount = 15
 	},
 /turf/open/floor/plating/airless,

@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/get_column
 	display_name = "Get Column"
-	display_desc = "Gets the column of a table and returns it as a regular list."
+	desc = "Gets the column of a table and returns it as a regular list."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The list to perform the filter on
@@ -28,13 +28,13 @@
 	if(.)
 		return
 
-	var/list/input_list = received_table.input_value
-	if(!islist(input_list) || isnum(column_name.input_value))
+	var/list/input_list = received_table.value
+	if(!islist(input_list) || isnum(column_name.value))
 		return
 
 	var/list/new_list = list()
 	for(var/list/entry in input_list)
-		var/anything = entry[column_name.input_value]
+		var/anything = entry[column_name.value]
 		if(islist(anything))
 			continue
 		new_list += anything

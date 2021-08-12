@@ -4,7 +4,9 @@
 GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	PORT_TYPE_NUMBER,
 	PORT_TYPE_STRING,
+	PORT_TYPE_LIST,
 	PORT_TYPE_ANY,
+	PORT_TYPE_OPTION,
 ))
 
 /// Loads a circuit based on json data at a location. Can also load usb connections, such as arrest consoles.
@@ -18,6 +20,8 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	if(general_data["display_name"])
 		set_display_name(general_data["display_name"])
 
+	admin_only = general_data["admin_only"]
+
 	var/list/circuit_data = general_data["components"]
 	var/list/identifiers_to_circuit = list()
 	for(var/identifier in circuit_data)
@@ -29,6 +33,17 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		var/obj/item/circuit_component/component = load_component(type)
 		identifiers_to_circuit[identifier] = component
 		component.load_data_from_list(component_data)
+
+		var/list/input_ports_data = component_data["input_ports_stored_data"]
+		for(var/port_name in input_ports_data)
+			var/datum/port/input/port
+			var/list/port_data = input_ports_data[port_name]
+			for(var/datum/port/input/port_to_check as anything in component.input_ports)
+				if(port_to_check.name == port_name)
+					port = port_to_check
+					break
+
+			port.set_input(port_data["stored_data"])
 
 	var/list/external_objects = general_data["external_objects"]
 	for(var/identifier in external_objects)
@@ -69,23 +84,25 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 				port.set_input(connection_data["stored_data"])
 				continue
 
-			var/obj/item/circuit_component/connected_component = identifiers_to_circuit[connection_data["component_id"]]
-			if(!connected_component)
-				LOG_ERROR(errors, "No connected component found for [component.type] for port [connection_data["port_name"]]. (connected component identifier: [connection_data["component_id"]])")
-				continue
+			// The || list(connected_data) is for backwards compatibility with when inputs could only be connected to up to one output.
+			for(var/list/output_data in (connection_data["connected_ports"] || list(connection_data)))
+				var/obj/item/circuit_component/connected_component = identifiers_to_circuit[output_data["component_id"]]
+				if(!connected_component)
+					LOG_ERROR(errors, "No connected component found for [component.type] for port [connection_data["port_name"]]. (connected component identifier: [connection_data["component_id"]])")
+					continue
 
-			var/datum/port/output/output_port
-			var/output_port_name = connection_data["port_name"]
-			for(var/datum/port/output/port_to_check as anything in connected_component.output_ports)
-				if(port_to_check.name == output_port_name)
-					output_port = port_to_check
-					break
+				var/datum/port/output/output_port
+				var/output_port_name = output_data["port_name"]
+				for(var/datum/port/output/port_to_check as anything in connected_component.output_ports)
+					if(port_to_check.name == output_port_name)
+						output_port = port_to_check
+						break
 
-			if(!output_port)
-				LOG_ERROR(errors, "No output port found for [component.type] for port [output_port_name] on component [connected_component.type]")
-				continue
+				if(!output_port)
+					LOG_ERROR(errors, "No output port found for [component.type] for port [output_port_name] on component [connected_component.type]")
+					continue
 
-			port.register_output_port(output_port)
+				port.connect(output_port)
 
 #undef LOG_ERROR
 
@@ -115,19 +132,21 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		component_data["type"] = component.type
 
 		var/list/connections = list()
-		for(var/datum/port/input/port as anything in component.input_ports)
+		var/list/input_ports_stored_data = list()
+		for(var/datum/port/input/input as anything in component.input_ports)
 			var/list/connection_data = list()
-			var/datum/port/output/output_port = port.connected_port
-			if(!output_port)
-				if(isnull(port.input_value) || !(port.datatype in GLOB.circuit_dupe_whitelisted_types))
-					continue
-				connection_data["stored_data"] = port.input_value
-				connections[port.name] = connection_data
-				continue
-			connection_data["component_id"] = circuit_to_identifiers[output_port.connected_component]
-			connection_data["port_name"] = output_port.name
-			connections[port.name] = connection_data
+			if(!isnull(input.value) && (input.datatype in GLOB.circuit_dupe_whitelisted_types))
+				connection_data["stored_data"] = input.value
+				input_ports_stored_data[input.name] = connection_data
+			connection_data["connected_ports"] = list()
+			for(var/datum/port/output/output as anything in input.connected_ports)
+				connection_data["connected_ports"] += list(list(
+					"component_id" = circuit_to_identifiers[output.connected_component],
+					"port_name" = output.name,
+				))
+			connections[input.name] = connection_data
 		component_data["connections"] = connections
+		component_data["input_ports_stored_data"] = input_ports_stored_data
 
 		component.save_data_to_list(component_data)
 		circuit_data[identifier] = component_data
@@ -143,6 +162,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	general_data["components"] = circuit_data
 	general_data["external_objects"] = external_objects_key
 	general_data["display_name"] = display_name
+	general_data["admin_only"] = admin_only
 
 	return json_encode(general_data)
 
@@ -156,20 +176,16 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	component_data["rel_x"] = rel_x
 	component_data["rel_y"] = rel_y
 
-	component_data["option"] = current_option
-
 /// Loads data from a list
 /obj/item/circuit_component/proc/load_data_from_list(list/component_data)
 	rel_x = component_data["rel_x"]
 	rel_y = component_data["rel_y"]
 
-	set_option(component_data["option"])
-
 /client/proc/load_circuit()
 	set name = "Load Circuit"
 	set category = "Admin.Fun"
 
-	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
+	if(!check_rights(R_VAREDIT))
 		return
 
 	var/list/errors = list()
