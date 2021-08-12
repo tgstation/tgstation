@@ -215,3 +215,9 @@
 		/obj/item/toy/cards/deck/cas = 1,
 		/obj/item/toy/cards/deck/cas/black = 1,
 	)
+
+/obj/effect/spawner/random/entertainment/toy_figure
+	name = "toy figure spawner"
+	icon_state = "toy"
+	loot_subtype_path = /obj/item/toy/figure
+	loot = list()
