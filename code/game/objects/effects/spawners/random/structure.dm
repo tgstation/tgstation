@@ -1,4 +1,4 @@
-obj/effect/spawner/random/structure
+/obj/effect/spawner/random/structure
 	name = "structure spawner"
 	desc = "Now you see me, now you don't..."
 

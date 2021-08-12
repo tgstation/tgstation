@@ -1,4 +1,4 @@
-obj/effect/spawner/random/exotic
+/obj/effect/spawner/random/exotic
 	name = "exotic spawner"
 	desc = "Super duper rare stuff."
 
