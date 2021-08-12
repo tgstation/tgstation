@@ -77,7 +77,7 @@
 	if(!port_to_update)
 		CRASH("[port.type] doesn't have a linked port in [type]!")
 
-	port_to_update.set_output(port.input_value)
+	port_to_update.set_output(port.value)
 
 /obj/item/circuit_component/module/input_received(datum/port/input/port)
 	. = ..()
@@ -87,7 +87,7 @@
 	if(!port_to_update)
 		CRASH("[port.type] doesn't have a linked port in [type]!")
 
-	port_to_update.set_output(port.input_value)
+	port_to_update.set_output(port.value)
 
 /obj/item/circuit_component/module_output/Destroy()
 	attached_module = null

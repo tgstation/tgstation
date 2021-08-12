@@ -168,11 +168,6 @@
 	id = "comp_health"
 	build_path = /obj/item/circuit_component/health
 
-/datum/design/component/combiner
-	name = "Combiner Component"
-	id = "comp_combiner"
-	build_path = /obj/item/circuit_component/combiner
-
 /datum/design/component/split
 	name = "Split Component"
 	id = "comp_split"
@@ -373,6 +368,18 @@
 		/datum/material/iron = 8000,
 	)
 	build_path = /obj/item/shell/bci
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
+/datum/design/scanner_gate_shell
+	name = "Scanner Gate Shell"
+	desc = "A scanner gate shell that performs mid-depth scans on people when they pass through it."
+	id = "scanner_gate_shell"
+	materials = list(
+		/datum/material/glass = 4000,
+		/datum/material/iron = 12000,
+	)
+	build_path = /obj/item/shell/scanner_gate
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")
 

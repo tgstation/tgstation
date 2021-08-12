@@ -32,6 +32,7 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
+	burns_in_oven = TRUE
 
 /obj/item/food/bread/plain/Initialize()
 	. = ..()
