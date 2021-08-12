@@ -221,3 +221,9 @@
 	icon_state = "toy"
 	loot_subtype_path = /obj/item/toy/figure
 	loot = list()
+
+/obj/effect/spawner/random/entertainment/toy
+	name = "toy spawner"
+	icon_state = "toy"
+	loot_subtype_path = /obj/item/toy/plush
+	loot = GLOB.arcade_prize_pool
