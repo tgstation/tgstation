@@ -99,11 +99,6 @@
 		/obj/effect/spawner/random/food_or_drink/dinner,
 	)
 
-
-/obj/effect/spawner/random/food_or_drink/three_course_meal/Initialize(mapload)
-	loot = list(pick(soups) = 1,pick(salads) = 1,pick(mains) = 1)
-	. = ..()
-
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage
 	name = "good soda spawner"
 	icon_state = "can"
