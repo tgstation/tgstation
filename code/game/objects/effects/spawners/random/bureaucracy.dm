@@ -60,3 +60,11 @@
 		/obj/item/paper/pamphlet/violent_video_games,
 		/obj/item/paper/pamphlet/radstorm,
 	)
+
+/obj/effect/spawner/random/bureaucracy/briefcase
+	name = "briefcase spawner"
+	icon_state = "briefcase"
+	loot = list(
+		/obj/item/storage/briefcase = 3,
+		/obj/item/storage/secure/briefcase = 1,
+	)
