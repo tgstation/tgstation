@@ -47,7 +47,7 @@ function task-webpack {
 
 ## Runs a development server
 function task-dev-server {
-  yarn node "packages/tgui-dev-server/index.esm.js" @Args
+  yarn node --experimental-modules "packages/tgui-dev-server/index.js" @Args
 }
 
 ## Run a linter through all packages
