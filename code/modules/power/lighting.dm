@@ -273,6 +273,9 @@
 	var/bulb_emergency_pow_mul = 0.75 // the multiplier for determining the light's power in emergency mode
 	var/bulb_emergency_pow_min = 0.5 // the minimum value for the light's power in emergency mode
 
+/obj/machinery/light/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/wall_mount)
 /obj/machinery/light/broken
 	status = LIGHT_BROKEN
 	icon_state = "tube-broken"
