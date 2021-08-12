@@ -69,3 +69,12 @@
 		/obj/item/stack/sheet/plastic/fifty = 5,
 		/obj/item/stack/sheet/runed_metal/fifty = 5,
 	)
+
+/obj/effect/spawner/random/engineering/toolbox
+	name = "toolbox spawner"
+	icon_state = "toolbox"
+	loot = list(
+		/obj/item/storage/toolbox/emergency = 4,
+		/obj/item/storage/toolbox/electrical = 2,
+		/obj/item/storage/toolbox/mechanical = 2,
+	)
