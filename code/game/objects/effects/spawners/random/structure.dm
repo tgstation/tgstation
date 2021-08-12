@@ -129,3 +129,11 @@ obj/effect/spawner/random/structure
 		/obj/structure/closet/cabinet = 150,
 		/obj/structure/closet/acloset = 1,
 	)
+
+/obj/effect/spawner/random/structure/closet_hallway
+	name = "hallway closet spawner"
+	loot = list(
+		/obj/structure/closet/emcloset = 45,
+		/obj/structure/closet/firecloset = 45,
+		/obj/structure/closet = 10,
+	)
