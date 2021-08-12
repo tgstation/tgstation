@@ -7,12 +7,17 @@
 	name = "Tool spawner"
 	icon_state = "wrench"
 	loot = list(
-		/obj/item/wrench,
-		/obj/item/wirecutters,
-		/obj/item/screwdriver,
-		/obj/item/crowbar,
-		/obj/item/weldingtool,
-		/obj/item/multitool,
+		/obj/item/wrench = 2,
+		/obj/item/wirecutters = 2,
+		/obj/item/screwdriver = 2,
+		/obj/item/crowbar = 2,
+		/obj/item/weldingtool = 2,
+		/obj/item/stack/cable_coil = 2,
+		/obj/item/analyzer = 2,
+		/obj/item/t_scanner = 2,
+		/obj/item/multitool = 1,
+		/obj/item/clothing/glasses/meson = 1,
+		/obj/item/storage/belt/utility = 1,
 	)
 
 /obj/effect/spawner/random/engineering/tool_advanced
@@ -23,6 +28,7 @@
 		/obj/item/wirecutters/caravan,
 		/obj/item/screwdriver/caravan,
 		/obj/item/crowbar/red/caravan,
+		/obj/item/weldingtool/largetank,
 	)
 
 /obj/effect/spawner/random/engineering/tool_rare
