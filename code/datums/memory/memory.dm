@@ -80,27 +80,34 @@
 	var/list/styles = story_type == STORY_CHANGELING_ABSORB ? null : strings(MEMORY_FILE, story_type + "styles")
 	var/list/wheres = strings(MEMORY_FILE, "where")
 
-	//story action vars (surgery)
+
+	//story action vars
 	var/list/story_starts = strings(MEMORY_FILE, action + "_starts")
+	///The action-specific reactions with mood intercepted into it e.g. "the clown looks (story_mood_here) at the situation"
+	var/list/story_mood_sentences = strings(MEMORY_FILE, action + "_moods")
+	///Moods the mob can express e.g. "chuckles" "looks disinterested"
 	var/list/story_moods
+
 
 
 	var/victim_mood = extra_info[DETAIL_PROTAGONIST_MOOD]
 
 	if(victim_mood != MOODLESS_MEMORY) //How the victim felt when it all happend.
 		switch(victim_mood)
-			if(MOOD_LEVEL_HAPPY4 to MOOD_LEVEL_HAPPY2)
-				story_moods = strings(MEMORY_FILE, "happy")
-				if("[action]sad" in GLOB.string_cache[MEMORY_FILE])
-					story_moods += strings(MEMORY_FILE, "[action]happy")
-			if(MOOD_LEVEL_HAPPY2-1 to MOOD_LEVEL_SAD2+1)
-				story_moods = strings(MEMORY_FILE, "neutral")
-				if("[action]sad" in GLOB.string_cache[MEMORY_FILE])
-					story_moods += strings(MEMORY_FILE, "[action]neutral")
-			if(MOOD_LEVEL_SAD2 to MOOD_LEVEL_SAD4)
+			if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD2)
 				story_moods = strings(MEMORY_FILE, "sad")
 				if("[action]sad" in GLOB.string_cache[MEMORY_FILE])
 					story_moods += strings(MEMORY_FILE, "[action]sad")
+			if(MOOD_LEVEL_SAD2 to MOOD_LEVEL_HAPPY2)
+				story_moods = strings(MEMORY_FILE, "neutral")
+				if("[action]neutral" in GLOB.string_cache[MEMORY_FILE])
+					story_moods += strings(MEMORY_FILE, "[action]neutral")
+			if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY4)
+				story_moods = strings(MEMORY_FILE, "happy")
+				if("[action]happy" in GLOB.string_cache[MEMORY_FILE])
+					story_moods += strings(MEMORY_FILE, "[action]happy")
+
+
 
 	//storybuilding
 
@@ -113,7 +120,7 @@
 		story_pieces.Add(pick(wheres))
 	//Shows how the protagonist felt about it all (E.g. The Chef is looking sad as they tear into The Clown.)
 	if(LAZYLEN(story_moods))
-		story_pieces.Add(pick(story_moods))
+		story_pieces.Add(pick(story_mood_sentences))
 	//A nonsensical addition, using the memorizer, protagonist or even random crew / things (E.g. in the meantime, the Clown is being arrested, clutching a skub.")
 	if(prob(75))
 		story_pieces.Add(pick(somethings))
