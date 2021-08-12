@@ -38,7 +38,7 @@
 	for(var/turf/open/turf_fix in connected_turfs)
 		if(turf_fix.blocks_air)
 			continue
-		base_mix.parse_gas_string(turf_fix.initial_gas_mix)
+		base_mix.parse_gas_string(OPENTURF_DEFAULT_ATMOS)
 		turf_fix.copy_air(base_mix)
 		turf_fix.update_visuals()
 	qdel(src)
