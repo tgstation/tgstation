@@ -670,7 +670,7 @@
 /area/science/xenobiology)
 "cz" = (
 /obj/effect/landmark/start/hangover,
-/obj/effect/spawner/lootdrop/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
 /obj/machinery/camera{
 	c_tag = "Service-Bar 2";
 	dir = 6
@@ -2224,7 +2224,7 @@
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/siding/white,
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "iX" = (
@@ -2531,7 +2531,7 @@
 /area/mine/laborcamp)
 "kM" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
 /obj/machinery/newscaster/directional/south,
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/grimy,
@@ -3459,7 +3459,7 @@
 /area/service/theater)
 "qr" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
 "qs" = (
@@ -3956,7 +3956,7 @@
 /area/service/kitchen)
 "th" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "tn" = (
@@ -4772,7 +4772,7 @@
 /area/service/bar/atrium)
 "yu" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
 "yx" = (
@@ -5646,7 +5646,7 @@
 /turf/open/floor/iron/white,
 /area/mine/laborcamp)
 "Dv" = (
-/obj/effect/spawner/lootdrop/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
 /obj/structure/table/wood,
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
@@ -6217,7 +6217,7 @@
 /area/service/theater)
 "GG" = (
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
 "GI" = (
@@ -6373,7 +6373,7 @@
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/siding/white,
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "HO" = (
