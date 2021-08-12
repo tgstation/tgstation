@@ -165,9 +165,16 @@ obj/effect/spawner/random/structure
 
 /obj/effect/spawner/random/structure/chair_flipped
 	name = "flipped chair spawner"
+	icon_state = "chair"
 	loot = list(
 		/obj/item/chair/wood,
 		/obj/item/chair/stool/bar,
 		/obj/item/chair/stool,
 		/obj/item/chair,
 	)
+
+/obj/effect/spawner/random/structure/chair_comfy
+	name = "comfy chair spawner"
+	icon_state = "chair"
+	loot_typeof_path = /obj/structure/chair/comfy
+	loot = list()
