@@ -161,3 +161,25 @@
 		/obj/item/seeds/berry/glow = 10,
 		/obj/item/seeds/sunflower/moonflower = 8,
 	)
+
+/obj/effect/spawner/random/food_or_drink/snack
+	name = "snack spawner"
+	icon_state = "chips"
+	loot = list(
+		/obj/item/food/spacetwinkie = 5,
+		/obj/item/food/cheesiehonkers = 5,
+		/obj/item/food/candy = 5,
+	  /obj/item/food/chips = 5,
+	  /obj/item/food/sosjerky = 5,
+		/obj/item/food/no_raisin = 5,
+		/obj/item/food/peanuts = 5,
+		/obj/item/food/cnds = 5,
+		/obj/item/food/energybar = 5,
+		/obj/item/reagent_containers/food/drinks/dry_ramen = 5,
+		/obj/item/food/peanuts/random = 3,
+		/obj/item/food/cnds/random = 3,
+		/obj/item/storage/box/gum = 3,
+		/obj/item/food/syndicake = 1,
+		/obj/item/food/peanuts/ban_appeal = 1,
+		/obj/item/food/candy/bronx = 1
+	)
