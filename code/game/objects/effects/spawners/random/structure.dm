@@ -176,7 +176,7 @@ obj/effect/spawner/random/structure
 /obj/effect/spawner/random/structure/chair_comfy
 	name = "comfy chair spawner"
 	icon_state = "chair"
-	loot_typeof_path = /obj/structure/chair/comfy
+	loot_type_path = /obj/structure/chair/comfy
 	loot = list()
 
 /obj/effect/spawner/random/structure/chair_maintenance
