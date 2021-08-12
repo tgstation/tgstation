@@ -133,3 +133,43 @@
 		/obj/structure/closet/wardrobe/white,
 		/obj/structure/closet/wardrobe/grey,
 	)
+
+/obj/effect/spawner/random/clothing/backpack
+	name = "backpack spawner"
+	icon_state = "backpack"
+	loot = list(
+		/obj/item/storage/backpack,
+		/obj/item/storage/backpack/clown,
+		/obj/item/storage/backpack/explorer,
+		/obj/item/storage/backpack/mime,
+		/obj/item/storage/backpack/medic,
+		/obj/item/storage/backpack/security,
+		/obj/item/storage/backpack/industrial,
+		/obj/item/storage/backpack/botany,
+		/obj/item/storage/backpack/chemistry,
+		/obj/item/storage/backpack/genetics,
+		/obj/item/storage/backpack/science,
+		/obj/item/storage/backpack/virology,
+		/obj/item/storage/backpack/satchel,
+		/obj/item/storage/backpack/satchel/leather,
+		/obj/item/storage/backpack/satchel/eng,
+		/obj/item/storage/backpack/satchel/med,
+		/obj/item/storage/backpack/satchel/vir,
+		/obj/item/storage/backpack/satchel/chem,
+		/obj/item/storage/backpack/satchel/gen,
+		/obj/item/storage/backpack/satchel/tox,
+		/obj/item/storage/backpack/satchel/hyd,
+		/obj/item/storage/backpack/satchel/sec,
+		/obj/item/storage/backpack/satchel/explorer,
+		/obj/item/storage/backpack/duffelbag,
+		/obj/item/storage/backpack/duffelbag/med,
+		/obj/item/storage/backpack/duffelbag/explorer,
+		/obj/item/storage/backpack/duffelbag/hydroponics,
+		/obj/item/storage/backpack/duffelbag/chemistry,
+		/obj/item/storage/backpack/duffelbag/genetics,
+		/obj/item/storage/backpack/duffelbag/toxins,
+		/obj/item/storage/backpack/duffelbag/virology,
+		/obj/item/storage/backpack/duffelbag/sec,
+		/obj/item/storage/backpack/duffelbag/engineering,
+		/obj/item/storage/backpack/duffelbag/clown,
+	)
