@@ -197,3 +197,17 @@
 		/obj/item/reagent_containers/food/condiment/bbqsauce = 1,
 		/obj/item/reagent_containers/food/condiment/soysauce = 1,
 	)
+
+/obj/effect/spawner/random/food_or_drink/cups
+	name = "cup spawner"
+	icon_state = "small_box"
+	loot = list(
+		/obj/item/storage/box/drinkingglasses,
+		/obj/item/storage/box/cups,
+		/obj/item/storage/box/condimentbottles,
+	)
+
+/obj/effect/spawner/random/food_or_drink/ingredients
+	name = "food ingredients spawner"
+	icon_state = "small_box"
+	loot = list(/obj/item/storage/box/ingredients/random)
