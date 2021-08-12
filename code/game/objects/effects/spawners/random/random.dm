@@ -6,7 +6,6 @@
 	var/list/loot //a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
 	var/loot_type_path //the subtypes AND type to combine with the loot list
 	var/loot_subtype_path // the subtypes (this excludes the provided path) to combine with the loot list
-
 	var/spawn_on_init = TRUE	// Whether the spawner should immediately spawn loot and cleanup on Initialize()
 	var/spawn_loot_count = 1 //how many items will be spawned
 	var/spawn_loot_double = TRUE //if the same item can be spawned twice
