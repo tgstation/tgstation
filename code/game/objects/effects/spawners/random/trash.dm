@@ -224,3 +224,14 @@
 		/obj/effect/spawner/random/trash/box = 3,
 		/obj/structure/closet/crate/trashcart/laundry = 1,
 	)
+
+
+/obj/effect/spawner/random/trash/janitor_supplies
+	name = "janitor supplies spawner"
+	icon_state = "box_small"
+	loot = list(
+		/obj/item/storage/box/mousetraps,
+		/obj/item/storage/box/lights/tubes,
+		/obj/item/storage/box/lights/mixed,
+		/obj/item/storage/box/lights/bulbs,
+	)
