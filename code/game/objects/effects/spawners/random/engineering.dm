@@ -92,9 +92,19 @@
 	)
 
 /obj/effect/spawner/random/engineering/canister
-	name = "Air canister spawner"
+	name = "air canister spawner"
 	icon_state = "canister"
-	loot = list( // use this for emergency storage areas
+	loot = list( // use this for emergency storage areas and maint
 		/obj/machinery/portable_atmospherics/canister/air = 4,
 		/obj/machinery/portable_atmospherics/canister/oxygen = 1,
+	)
+
+/obj/effect/spawner/random/engineering/tank
+	name = "tank spawner"
+	icon_state = "tank"
+	loot = list( // use this for emergency storage areas and maint
+		/obj/structure/reagent_dispensers/fueltank = 5,
+		/obj/structure/reagent_dispensers/watertank = 3,
+		/obj/structure/reagent_dispensers/watertank/high = 1,
+		/obj/structure/reagent_dispensers/foamtank = 1,
 	)
