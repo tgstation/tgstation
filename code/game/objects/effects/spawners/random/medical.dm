@@ -104,3 +104,24 @@
 		/obj/item/surgicaldrill/alien,
 		/obj/item/cautery/alien,
 	)
+
+/obj/effect/spawner/random/medical/firstaid_rare
+	name = "rare firstaid kit spawner"
+	icon_state = "firstaid"
+	loot = list(
+		/obj/item/storage/firstaid/emergency,
+		/obj/item/storage/firstaid/medical,
+		/obj/item/storage/firstaid/advanced,
+	)
+
+/obj/effect/spawner/random/medical/firstaid
+	name = "firstaid kit spawner"
+	icon_state = "firstaid"
+	loot = list(
+		/obj/item/storage/firstaid/regular = 10,
+		/obj/item/storage/firstaid/o2 = 10,
+		/obj/item/storage/firstaid/fire = 10,
+		/obj/item/storage/firstaid/brute = 10,
+		/obj/item/storage/firstaid/toxin = 10,
+		/obj/effect/spawner/random/medical/firstaid_rare = 1,
+	)
