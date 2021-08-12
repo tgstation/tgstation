@@ -191,3 +191,11 @@ obj/effect/spawner/random/structure
 		/obj/structure/chair/wood/wings = 1,
 		/obj/structure/chair/old = 1,
 	)
+
+/obj/effect/spawner/random/structure/barricade
+	name = "barricade spawner"
+	icon_state = "barricade"
+	loot = list(
+		/obj/structure/barricade/wooden,
+		/obj/structure/barricade/wooden/crude,
+	)
