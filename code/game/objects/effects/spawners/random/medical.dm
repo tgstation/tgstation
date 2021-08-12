@@ -125,3 +125,12 @@
 		/obj/item/storage/firstaid/toxin = 10,
 		/obj/effect/spawner/random/medical/firstaid_rare = 1,
 	)
+
+/obj/effect/spawner/random/medical/patient_stretcher
+	name = "patient stretcher spawner"
+	icon_state = "rollerbed"
+	loot = list(
+		/obj/structure/bed/roller = 25,
+		/obj/vehicle/ridden/wheelchair = 24,
+		/obj/vehicle/ridden/wheelchair/gold = 1,
+	)
