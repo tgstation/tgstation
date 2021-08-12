@@ -112,3 +112,11 @@ obj/effect/spawner/random/structure
 		/obj/effect/spawner/random/structure/crate_empty = 4,
 		/obj/structure/closet/crate/secure/loot = 1,
 	)
+
+/obj/effect/spawner/random/structure/closet_private
+	name = "private closet spawner"
+	icon_state = "cabinet"
+	loot = list(
+		/obj/structure/closet/secure_closet/personal,
+		/obj/structure/closet/secure_closet/personal/cabinet,
+	)
