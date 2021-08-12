@@ -183,3 +183,17 @@
 		/obj/item/food/peanuts/ban_appeal = 1,
 		/obj/item/food/candy/bronx = 1
 	)
+
+/obj/effect/spawner/random/food_or_drink/condiment
+	name = "condiment spawner"
+	icon_state = "condiment"
+	loot = list(
+		/obj/item/reagent_containers/food/condiment/saltshaker = 3,
+		/obj/item/reagent_containers/food/condiment/peppermill = 3,
+		/obj/item/reagent_containers/food/condiment/pack/ketchup = 3,
+		/obj/item/reagent_containers/food/condiment/pack/hotsauce = 3,
+		/obj/item/reagent_containers/food/condiment/pack/astrotame = 3,
+		/obj/item/reagent_containers/food/condiment/pack/bbqsauce = 3,
+		/obj/item/reagent_containers/food/condiment/bbqsauce = 1,
+		/obj/item/reagent_containers/food/condiment/soysauce = 1,
+	)
