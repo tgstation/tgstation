@@ -200,7 +200,7 @@
 
 /obj/effect/spawner/random/food_or_drink/cups
 	name = "cup spawner"
-	icon_state = "small_box"
+	icon_state = "box_small"
 	loot = list(
 		/obj/item/storage/box/drinkingglasses,
 		/obj/item/storage/box/cups,
@@ -209,5 +209,5 @@
 
 /obj/effect/spawner/random/food_or_drink/ingredients
 	name = "food ingredients spawner"
-	icon_state = "small_box"
+	icon_state = "box_small"
 	loot = list(/obj/item/storage/box/ingredients/random)
