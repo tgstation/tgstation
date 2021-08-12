@@ -57,6 +57,7 @@
 /area/mine/eva)
 "m" = (
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron,
 /area/mine/eva)
 "n" = (
