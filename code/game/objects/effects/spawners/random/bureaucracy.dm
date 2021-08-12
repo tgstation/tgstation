@@ -68,3 +68,14 @@
 		/obj/item/storage/briefcase = 3,
 		/obj/item/storage/secure/briefcase = 1,
 	)
+
+/obj/effect/spawner/random/bureaucracy/folder
+	name = "folder spawner"
+	icon_state = "folder"
+	loot = list(
+		/obj/item/folder/blue,
+		/obj/item/folder/red,
+		/obj/item/folder/yellow,
+		/obj/item/folder/white,
+		/obj/item/folder,
+	)
