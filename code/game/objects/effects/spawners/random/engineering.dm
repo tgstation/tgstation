@@ -114,3 +114,12 @@
 	icon_state = "vending_restock"
 	loot_subtype_path = /obj/item/vending_refill
 	loot = list()
+
+/obj/effect/spawner/random/engineering/atmospherics_portable
+	name = "portable atmospherics machine spawner"
+	icon_state = "heater"
+	loot = (
+		/obj/machinery/space_heater = 8,
+		/obj/machinery/portable_atmospherics/pump = 1,
+		/obj/machinery/portable_atmospherics/scrubber = 1,
+	)
