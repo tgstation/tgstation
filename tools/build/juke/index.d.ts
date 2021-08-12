@@ -4,37 +4,15 @@
 
 import _chalk from 'chalk';
 import { SpawnOptionsWithoutStdio } from 'child_process';
+import EventEmitter from 'events';
 
-export declare class ExitCode extends Error {
-	code: number | null;
-	signal: string | null;
-	constructor(code: number | null, signal?: string | null);
-}
-export declare type ExecOptions = SpawnOptionsWithoutStdio & {
-	/**
-	 * If `true`, this exec call will not pipe its output to stdio.
-	 * @default false
-	 */
-	silent?: boolean;
-	/**
-	 * Throw an exception on non-zero exit code.
-	 * @default true
-	 */
-	throw?: boolean;
-};
-export declare type ExecReturn = {
-	/** Exit code of the program. */
-	code: number | null;
-	/** Signal received by the program which caused it to exit. */
-	signal: NodeJS.Signals | null;
-	/** Output collected from `stdout` */
-	stdout: string;
-	/** Output collected from `stderr` */
-	stderr: string;
-	/** A combined output collected from `stdout` and `stderr`. */
-	combined: string;
-};
-export declare const exec: (executable: string, args?: string[], options?: ExecOptions) => Promise<ExecReturn>;
+/**
+ * Change the current working directory of the Node.js process.
+ *
+ * Second argument is a file (or directory), relative to which chdir will be
+ * performed. This is usually `import.meta.url`.
+ */
+export declare const chdir: (directory: string, relativeTo?: string | undefined) => void;
 export declare const logger: {
 	log: (...args: unknown[]) => void;
 	error: (...args: unknown[]) => void;
@@ -44,13 +22,13 @@ export declare const logger: {
 	debug: (...args: unknown[]) => void;
 };
 export declare type ParameterType = (string | string[] | number | number[] | boolean | boolean[]);
-export declare type ParameterStringType = ("string" | "string[]" | "number" | "number[]" | "boolean" | "boolean[]");
-export declare type ParameterTypeByString<T extends ParameterStringType> = (T extends "string" ? string : T extends "string[]" ? string[] : T extends "number" ? number : T extends "number[]" ? number[] : T extends "boolean" ? boolean : T extends "boolean[]" ? boolean[] : never);
-export declare type ParameterConfig<T extends ParameterStringType> = {
+export declare type StringType = ("string" | "string[]" | "number" | "number[]" | "boolean" | "boolean[]");
+export declare type TypeByString<T extends StringType> = (T extends "string" ? string : T extends "string[]" ? string[] : T extends "number" ? number : T extends "number[]" ? number[] : T extends "boolean" ? boolean : T extends "boolean[]" ? boolean[] : never);
+export declare type ParameterConfig<T extends StringType> = {
 	/**
-	 * Parameter name, in "camelCase".
+	 * Parameter name, as it would be used in CLI.
 	 */
-	readonly name: string;
+	name?: string;
 	/**
 	 * Parameter type, one of:
 	 * - `string`
@@ -60,29 +38,35 @@ export declare type ParameterConfig<T extends ParameterStringType> = {
 	 * - `boolean`
 	 * - `boolean[]`
 	 */
-	readonly type: T;
+	type: T;
 	/**
 	 * Short flag for use in CLI, can only be a single character.
 	 */
-	readonly alias?: string;
+	alias?: string;
 };
-export declare type ParameterCreator = <T extends ParameterStringType>(config: ParameterConfig<T>) => Parameter<ParameterTypeByString<T>>;
-declare class Parameter<T extends ParameterType = any> {
-	readonly name: string;
-	readonly type: ParameterStringType;
-	readonly alias?: string | undefined;
-	constructor(name: string, type: ParameterStringType, alias?: string | undefined);
-	isString(): T extends string | string[] ? true : false;
-	isNumber(): T extends number | number[] ? true : false;
-	isBoolean(): T extends boolean | boolean[] ? true : false;
-	isArray(): T extends Array<unknown> ? true : false;
-	toKebabCase(): string;
-	toConstCase(): string;
-	toCamelCase(): string;
+export interface Parameter<T extends ParameterType = ParameterType> {
+	type: StringType;
+	name?: string;
+	alias?: string;
+	__internalType?: T;
+	isString(): this is Parameter<string | string[]>;
+	isNumber(): this is Parameter<number | number[]>;
+	isBoolean(): this is Parameter<boolean | boolean[]>;
+	isArray(): this is Parameter<string[] | number[] | boolean[]>;
+	toKebabCase(): string | undefined;
+	toConstCase(): string | undefined;
+	toCamelCase(): string | undefined;
 }
+export declare type ParameterCtor = {
+	new <T extends StringType>(config: ParameterConfig<T>): Parameter<TypeByString<T>>;
+};
+export declare const Parameter: ParameterCtor;
+export declare type ParameterCreator = <T extends StringType>(config: ParameterConfig<T>) => Parameter<TypeByString<T>>;
+export declare const createParameter: ParameterCreator;
 export declare type ExecutionContext = {
 	/** Get parameter value. */
 	get: <T extends ParameterType>(parameter: Parameter<T>) => (T extends Array<unknown> ? T : T | null);
+	args: string[];
 };
 export declare type BooleanLike = boolean | null | undefined;
 export declare type WithExecutionContext<R> = (context: ExecutionContext) => R | Promise<R>;
@@ -91,20 +75,11 @@ export declare type DependsOn = WithOptionalExecutionContext<(Target | BooleanLi
 export declare type ExecutesFn = WithExecutionContext<unknown>;
 export declare type OnlyWhenFn = WithExecutionContext<BooleanLike>;
 export declare type FileIo = WithOptionalExecutionContext<(string | BooleanLike)[]>;
-export declare type Target = {
-	name: string;
-	dependsOn: DependsOn;
-	executes?: ExecutesFn;
-	inputs: FileIo;
-	outputs: FileIo;
-	parameters: Parameter[];
-	onlyWhen?: OnlyWhenFn;
-};
 export declare type TargetConfig = {
 	/**
 	 * Target name. This parameter is required.
 	 */
-	name: string;
+	name?: string;
 	/**
 	 * Dependencies for this target. They will be ran before executing this
 	 * target, and may run in parallel.
@@ -143,12 +118,105 @@ export declare type TargetConfig = {
 	 */
 	onlyWhen?: OnlyWhenFn;
 };
+export declare class Target {
+	name?: string;
+	dependsOn: DependsOn;
+	executes?: ExecutesFn;
+	inputs: FileIo;
+	outputs: FileIo;
+	parameters: Parameter[];
+	onlyWhen?: OnlyWhenFn;
+	constructor(target: TargetConfig);
+}
 export declare type TargetCreator = (target: TargetConfig) => Target;
+export declare const createTarget: TargetCreator;
 export declare type RunnerConfig = {
 	targets?: Target[];
 	default?: Target;
 	parameters?: Parameter[];
+	singleTarget?: boolean;
 };
+export declare const runner: {
+	config: RunnerConfig;
+	targets: Target[];
+	parameters: Parameter[];
+	workers: Worker[];
+	configure(config: RunnerConfig): void;
+	start(): Promise<number>;
+};
+declare class Worker {
+	readonly target: Target;
+	readonly context: ExecutionContext;
+	readonly dependsOn: Target[];
+	dependencies: Set<Target>;
+	generator?: AsyncGenerator;
+	emitter: EventEmitter;
+	hasFailed: boolean;
+	constructor(target: Target, context: ExecutionContext, dependsOn: Target[]);
+	resolveDependency(target: Target): void;
+	rejectDependency(target: Target): void;
+	start(): void;
+	onFinish(fn: () => void): void;
+	onFail(fn: () => void): void;
+	private debugLog;
+	private process;
+}
+export declare class ExitCode extends Error {
+	code: number | null;
+	signal: string | null;
+	constructor(code: number | null, signal?: string | null);
+}
+export declare type ExecOptions = SpawnOptionsWithoutStdio & {
+	/**
+	 * If `true`, this exec call will not pipe its output to stdio.
+	 * @default false
+	 */
+	silent?: boolean;
+	/**
+	 * Throw an exception on non-zero exit code.
+	 * @default true
+	 */
+	throw?: boolean;
+};
+export declare type ExecReturn = {
+	/** Exit code of the program. */
+	code: number | null;
+	/** Signal received by the program which caused it to exit. */
+	signal: NodeJS.Signals | null;
+	/** Output collected from `stdout` */
+	stdout: string;
+	/** Output collected from `stderr` */
+	stderr: string;
+	/** A combined output collected from `stdout` and `stderr`. */
+	combined: string;
+};
+export declare const exec: (executable: string, args?: string[], options?: ExecOptions) => Promise<ExecReturn>;
+/**
+ * Unix style pathname pattern expansion.
+ *
+ * Perform a search matching a specified pattern according to the rules of
+ * the `glob` npm package. Path can be either absolute or relative, and can
+ * contain shell-style wildcards. Broken symlinks are included in the results
+ * (as in the shell). Whether or not the results are sorted depends on the
+ * file system.
+ *
+ * @returns A possibly empty list of file paths.
+ */
+export declare const glob: (globPath: string) => string[];
+export declare type RmOptions = {
+	/**
+	 * If true, perform a recursive directory removal.
+	 */
+	recursive?: boolean;
+	/**
+	 * If true, exceptions will be ignored if file or directory does not exist.
+	 */
+	force?: boolean;
+};
+/**
+ * Removes files and directories (synchronously). Supports globs.
+ */
+export declare const rm: (path: string, options?: RmOptions) => void;
 export declare const chalk: _chalk.Chalk & _chalk.ChalkFunction & {
 	supportsColor: false | _chalk.ColorSupport;
 	Level: _chalk.Level;
@@ -160,21 +228,21 @@ export declare const chalk: _chalk.Chalk & _chalk.ChalkFunction & {
 		supportsColor: false | _chalk.ColorSupport;
 	};
 };
-export declare const glob: typeof import("glob");
+export declare type SetupConfig = {
+	file: string;
+	/**
+	 * If true, CLI will only accept a single target to run and will receive all
+	 * passed arguments as is (not only flags).
+	 */
+	singleTarget?: boolean;
+};
 /**
  * Configures Juke Build and starts executing targets.
  *
  * @param config Juke Build configuration.
  * @returns Exit code of the whole runner process.
  */
-export declare const setup: (config?: RunnerConfig) => Promise<number>;
-export declare const createTarget: TargetCreator;
-export declare const createParameter: ParameterCreator;
+export declare const setup: (config: SetupConfig) => Promise<number>;
 export declare const sleep: (time: number) => Promise<unknown>;
-/**
- * Resolves a glob pattern and returns files that are safe
- * to call `stat` on.
- */
-export declare const resolveGlob: (globPath: string) => string[];
 
 export {};

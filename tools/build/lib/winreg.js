@@ -4,14 +4,14 @@
  * Adapted from `tgui/packages/tgui-dev-server/winreg.js`.
  *
  * @file
- * @copyright 2020 Aleksej Komarov
+ * @copyright 2021 Aleksej Komarov
  * @license MIT
  */
 
-const { exec } = require('child_process');
-const { promisify } = require('util');
+import { exec } from 'child_process';
+import { promisify } from 'util';
 
-const regQuery = async (path, key) => {
+export const regQuery = async (path, key) => {
   if (process.platform !== 'win32') {
     return null;
   }
@@ -39,8 +39,4 @@ const regQuery = async (path, key) => {
   catch (err) {
     return null;
   }
-};
-
-module.exports = {
-  regQuery,
 };
