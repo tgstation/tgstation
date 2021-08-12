@@ -27,6 +27,7 @@
 		/obj/item/reagent_containers/syringe/contraband/bath_salts,
 		/obj/item/reagent_containers/syringe/contraband/fentanyl,
 		/obj/item/reagent_containers/syringe/contraband/morphine,
+		/obj/item/reagent_containers/syringe/contraband/saturnx,
 		/obj/item/storage/pill_bottle/happy,
 		/obj/item/storage/pill_bottle/lsd,
 		/obj/item/storage/pill_bottle/psicodine,
