@@ -206,8 +206,3 @@
 		/obj/item/storage/box/cups,
 		/obj/item/storage/box/condimentbottles,
 	)
-
-/obj/effect/spawner/random/food_or_drink/ingredients
-	name = "food ingredients spawner"
-	icon_state = "box_small"
-	loot = list(/obj/item/storage/box/ingredients/random)
