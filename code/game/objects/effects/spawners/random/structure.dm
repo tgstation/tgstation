@@ -152,3 +152,13 @@ obj/effect/spawner/random/structure
 		/obj/structure/closet/bombcloset = 1,
 		/obj/structure/closet/mini_fridge = 1,
 	)
+
+/obj/effect/spawner/random/structure/chair
+	name = "chair spawner"
+	icon_state = "chair"
+	loot = list( // use these for office/job/hallway areas
+		/obj/structure/chair = 2,
+		/obj/structure/chair/stool = 2,
+		/obj/structure/chair/office/light = 1,
+		/obj/structure/chair/office = 1,
+	)
