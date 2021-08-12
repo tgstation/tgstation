@@ -132,8 +132,21 @@ obj/effect/spawner/random/structure
 
 /obj/effect/spawner/random/structure/closet_hallway
 	name = "hallway closet spawner"
-	loot = list(
+	loot = list( // use these for main hallways
 		/obj/structure/closet/emcloset = 45,
 		/obj/structure/closet/firecloset = 45,
 		/obj/structure/closet = 10,
+	)
+
+/obj/effect/spawner/random/structure/closet_maintenance
+	name = "maintenance closet spawner"
+	loot = list( // use these for maintenance areas
+		/obj/effect/spawner/random/structure/closet_empty = 10,
+		/obj/structure/closet/emcloset = 2,
+		/obj/structure/closet/firecloset = 2,
+		/obj/structure/closet/toolcloset = 2,
+		/obj/structure/closet/l3closet = 1,
+		/obj/structure/closet/radiation = 1,
+		/obj/structure/closet/bombcloset = 1,
+		/obj/structure/closet/mini_fridge = 1,
 	)
