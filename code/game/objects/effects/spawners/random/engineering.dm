@@ -78,3 +78,15 @@
 		/obj/item/storage/toolbox/electrical = 2,
 		/obj/item/storage/toolbox/mechanical = 2,
 	)
+
+/obj/effect/spawner/random/engineering/flashlight
+	name = "flashlight spawner"
+	icon_state = "flashlight"
+	loot = list(
+		/obj/item/flashlight = 20,
+		/obj/item/flashlight/flare = 10,
+		/obj/effect/spawner/random/decoration/glowstick = 10,
+		/obj/item/flashlight/lantern = 5,
+		/obj/item/flashlight/seclite = 4,
+		/obj/item/flashlight/lantern/jade = 1,
+	)
