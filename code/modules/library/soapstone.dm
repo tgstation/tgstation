@@ -1,3 +1,10 @@
+#define POINT_THRESHOLD_PLASTIC -INFINITY
+#define POINT_THRESHOLD_IRON 1
+#define POINT_THRESHOLD_BRONZE 15
+#define POINT_THRESHOLD_SILVER 30
+#define POINT_THRESHOLD_GOLD 45
+#define POINT_THRESHOLD_DIAMOND 60
+
 /obj/item/soapstone
 	name = "soapstone"
 	desc = "Leave informative messages for the crew, including the crew of future shifts!\nEven if out of uses, it can still be used to remove messages.\n(Not suitable for engraving on shuttles, off station or on cats. Side effects may include prompt beatings, psychotic clown incursions, and/or orbital bombardment.)"
@@ -155,19 +162,19 @@ but only permanently removed with the curator's soapstone.
 /obj/structure/chisel_message/update_icon()
 	. = ..()
 
-	var/newcolor = COLOR_SOAPSTONE_IRON
+	var/newcolor = COLOR_SOAPSTONE_PLASTIC
 	switch(like_keys.len - dislike_keys.len)
-		if(-INFINITY to -1)
+		if(POINT_THRESHOLD_PLASTIC to POINT_THRESHOLD_IRON-1)
 			newcolor = COLOR_SOAPSTONE_PLASTIC
-		if(0 to 14)
+		if(POINT_THRESHOLD_IRON to POINT_THRESHOLD_BRONZE-1)
 			newcolor = COLOR_SOAPSTONE_IRON
-		if(15 to 29)
+		if(POINT_THRESHOLD_BRONZE to POINT_THRESHOLD_SILVER-1)
 			newcolor = COLOR_SOAPSTONE_BRONZE
-		if(30 to 44)
+		if(POINT_THRESHOLD_SILVER to POINT_THRESHOLD_GOLD-1)
 			newcolor = COLOR_SOAPSTONE_SILVER
-		if(45 to 59)
+		if(POINT_THRESHOLD_GOLD to POINT_THRESHOLD_DIAMOND-1)
 			newcolor = COLOR_SOAPSTONE_GOLD
-		if(60 to INFINITY)
+		if(POINT_THRESHOLD_DIAMOND to INFINITY)
 			newcolor = COLOR_SOAPSTONE_DIAMOND
 
 	add_atom_colour("[newcolor]", FIXED_COLOUR_PRIORITY)
@@ -176,17 +183,17 @@ but only permanently removed with the curator's soapstone.
 
 /obj/structure/chisel_message/update_name()
 	switch(like_keys.len - dislike_keys.len)
-		if(-INFINITY to -1)
-			name = "[initial(name)]"
-		if(0 to 14)
+		if(POINT_THRESHOLD_PLASTIC to POINT_THRESHOLD_IRON-1)
+			name = "plastic [initial(name)]"
+		if(POINT_THRESHOLD_IRON to POINT_THRESHOLD_BRONZE-1)
 			name = "iron [initial(name)]"
-		if(15 to 29)
+		if(POINT_THRESHOLD_BRONZE to POINT_THRESHOLD_SILVER-1)
 			name = "bronze [initial(name)]"
-		if(30 to 44)
+		if(POINT_THRESHOLD_SILVER to POINT_THRESHOLD_GOLD-1)
 			name = "silver [initial(name)]"
-		if(45 to 59)
+		if(POINT_THRESHOLD_GOLD to POINT_THRESHOLD_DIAMOND-1)
 			name = "gold [initial(name)]"
-		if(60 to INFINITY)
+		if(POINT_THRESHOLD_DIAMOND to INFINITY)
 			name = "diamond [initial(name)]"
 	return ..()
 
