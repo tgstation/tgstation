@@ -97,6 +97,7 @@
 
 /obj/effect/spawner/random/clothing/wardrobe_closet
 	name = "wardrobe closet spawner"
+	icon_state = "locker_clothing"
 	loot = list(
 		/obj/structure/closet/gmcloset,
 		/obj/structure/closet/chefcloset,
@@ -116,4 +117,19 @@
 		/obj/structure/closet/wardrobe/botanist,
 		/obj/structure/closet/wardrobe/curator,
 		/obj/structure/closet/wardrobe/pjs,
+	)
+
+/obj/effect/spawner/random/clothing/wardrobe_closet_colored
+	name = "colored uniform closet spawner"
+	icon_state = "locker_clothing"
+	loot = list(
+		/obj/structure/closet/wardrobe/mixed,
+		/obj/structure/closet/wardrobe,
+		/obj/structure/closet/wardrobe/pink,
+		/obj/structure/closet/wardrobe/black,
+		/obj/structure/closet/wardrobe/green,
+		/obj/structure/closet/wardrobe/orange,
+		/obj/structure/closet/wardrobe/yellow,
+		/obj/structure/closet/wardrobe/white,
+		/obj/structure/closet/wardrobe/grey,
 	)

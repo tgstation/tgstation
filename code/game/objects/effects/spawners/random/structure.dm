@@ -132,6 +132,7 @@ obj/effect/spawner/random/structure
 
 /obj/effect/spawner/random/structure/closet_hallway
 	name = "hallway closet spawner"
+	icon_state = "locker_o2"
 	loot = list( // use these for main hallways
 		/obj/structure/closet/emcloset = 45,
 		/obj/structure/closet/firecloset = 45,
@@ -140,6 +141,7 @@ obj/effect/spawner/random/structure
 
 /obj/effect/spawner/random/structure/closet_maintenance
 	name = "maintenance closet spawner"
+	icon_state = "locker"
 	loot = list( // use these for maintenance areas
 		/obj/effect/spawner/random/structure/closet_empty = 10,
 		/obj/structure/closet/emcloset = 2,
