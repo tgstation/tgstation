@@ -276,6 +276,7 @@
 /obj/machinery/light/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/wall_mount)
+
 /obj/machinery/light/broken
 	status = LIGHT_BROKEN
 	icon_state = "tube-broken"
