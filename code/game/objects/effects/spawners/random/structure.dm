@@ -77,3 +77,13 @@ obj/effect/spawner/random/structure
 	icon_state = "table_fancy"
 	loot_type_path = /obj/structure/table/wood/fancy
 	loot = list()
+
+/obj/effect/spawner/random/structure/tank_holder
+	name = "tank holder spawner"
+	icon_state = "tank_holder"
+	loot = list(
+		/obj/structure/tank_holder/oxygen = 40,
+		/obj/structure/tank_holder/extinguisher = 40,
+		/obj/structure/tank_holder = 20,
+		/obj/structure/tank_holder/extinguisher/advanced = 1,
+	)
