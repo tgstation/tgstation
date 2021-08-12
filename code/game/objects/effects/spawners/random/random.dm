@@ -4,16 +4,17 @@
 	layer = OBJ_LAYER
 	anchored = TRUE // Stops persistent lootdrop spawns from being shoved into lockers
 	var/list/loot //a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
-	var/list/loot_type_path //the subtypes AND type to combine with the loot list
-	var/list/loot_subtype_path // the subtypes (this excludes the provided path) to combine with the loot list
-	var/lootcount = 1 //how many items will be spawned
-	var/lootdoubles = TRUE //if the same item can be spawned twice
-	var/fan_out_items = FALSE //Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
+	var/loot_type_path //the subtypes AND type to combine with the loot list
+	var/loot_subtype_path // the subtypes (this excludes the provided path) to combine with the loot list
+
 	var/spawn_on_init = TRUE	// Whether the spawner should immediately spawn loot and cleanup on Initialize()
+	var/spawn_loot_count = 1 //how many items will be spawned
+	var/spawn_loot_double = TRUE //if the same item can be spawned twice
+	var/spawn_loot_split = FALSE //Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
 	var/spawn_all_loot = FALSE // Whether the spawner should spawn all the loot in the list
-	var/spawn_loot_chance = 100 // The chance for the spawner to create loot (ignores lootcount)
+	var/spawn_loot_chance = 100 // The chance for the spawner to create loot (ignores spawn_loot_count)
 	var/spawn_scatter_radius = 0 //determines how big of a range (in tiles) we should scatter things in.
-	var/random_pixel_offset = FALSE // Whether the items should have a random pixel_x/y offset (maxium offset distance is ±16 pixels for x/y)
+	var/spawn_random_offset = FALSE // Whether the items should have a random pixel_x/y offset (maxium offset distance is ±16 pixels for x/y)
 
 /obj/effect/spawner/random/Initialize(mapload)
 	. = ..()
@@ -28,11 +29,11 @@
 		return INITIALIZE_HINT_QDEL
 
 	var/list/spawn_locations = get_spawn_locations(spawn_scatter_radius)
-	var/lootcount = isnull(lootcount_override) ? src.lootcount : lootcount_override
+	var/spawn_loot_count = isnull(lootcount_override) ? src.spawn_loot_count : lootcount_override
 
 	if(spawn_all_loot)
-		lootcount = INFINITY
-		lootdoubles = FALSE
+		spawn_loot_count = INFINITY
+		spawn_loot_double = FALSE
 
 	if(loot_type_path)
 		loot += typesof(loot_type_path)
@@ -42,11 +43,11 @@
 
 	if(loot?.len)
 		var/loot_spawned = 0
-		while((lootcount-loot_spawned) && loot.len)
+		while((spawn_loot_count-loot_spawned) && loot.len)
 			var/lootspawn = pickweight(loot)
 			while(islist(lootspawn))
 				lootspawn = pickweight(lootspawn)
-			if(!lootdoubles)
+			if(!spawn_loot_double)
 				loot.Remove(lootspawn)
 			if(lootspawn && (spawn_scatter_radius == 0 || spawn_locations.len))
 				var/turf/spawn_loc = loc
@@ -61,15 +62,15 @@
 					G.select_graffiti(spawned_loot)
 					//var/obj/graffiti = new /obj/effect/decal/cleanable/crayon(get_turf(src))
 
-				if (!fan_out_items && !random_pixel_offset)
+				if (!spawn_loot_split && !spawn_random_offset)
 					if (pixel_x != 0)
 						spawned_loot.pixel_x = pixel_x
 					if (pixel_y != 0)
 						spawned_loot.pixel_y = pixel_y
-				else if (random_pixel_offset)
+				else if (spawn_random_offset)
 					spawned_loot.pixel_x = rand(-16, 16)
 					spawned_loot.pixel_y = rand(-16, 16)
-				else if (fan_out_items)
+				else if (spawn_loot_split)
 					if (loot_spawned)
 						spawned_loot.pixel_x = spawned_loot.pixel_y = ((!(loot_spawned%2)*loot_spawned/2)*-1)+((loot_spawned%2)*(loot_spawned+1)/2*1)
 			loot_spawned++

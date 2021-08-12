@@ -23,7 +23,7 @@
 /obj/effect/spawner/random/medical/organs
 	name = "ayylien organ spawner"
 	icon_state = "eyes"
-	lootcount = 3
+	spawn_loot_count = 3
 	loot = list(
 		/obj/item/organ/heart/gland/egg = 7,
 		/obj/item/organ/heart/gland/plasma = 7,
@@ -42,7 +42,7 @@
 /obj/effect/spawner/random/medical/memeorgans
 	name = "meme organ spawner"
 	icon_state = "eyes"
-	lootcount = 5
+	spawn_loot_count = 5
 	loot = list(
 		/obj/item/organ/ears/penguin,
 		/obj/item/organ/ears/cat,

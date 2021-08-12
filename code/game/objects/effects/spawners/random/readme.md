@@ -13,11 +13,11 @@ The following variables are defined in `code/game/objects/effects/spawners/rando
 - `loot` - a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
 - `loot_type_path` - this combines the subtypes AND type list with the loot list
 - `loot_subtype_path` - this combines ONLY the subtypes (excludes the `loot_subtype_path`) with the loot list
-- `lootcount` - how many items will be spawned
-- `lootdoubles` - if the same item can be spawned twice from the loot list
-- `fan_out_items` - whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
-- `spawn_all_loot` - whether the spawner should spawn all the loot in the list (ignores `lootcount`)
-- `spawn_loot_chance` - the chance for the spawner to create loot (ignores `lootcount`)
+- `spawn_loot_count` - how many items will be spawned
+- `spawn_loot_double` - if the same item can be spawned twice from the loot list
+- `spawn_loot_split` - whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
+- `spawn_all_loot` - whether the spawner should spawn all the loot in the list (ignores `spawn_loot_count`)
+- `spawn_loot_chance` - the chance for the spawner to create loot (ignores `spawn_loot_count`)
 - `spawn_scatter_radius` - determines how big of a range (in tiles) we should scatter things in
 - `hacked` - whether a vending machine is spawned hacked (all other items ignore this)
 
@@ -29,22 +29,22 @@ These variables are set to the following default values for the base `random.dm`
 	var/list/loot_type_path
 	var/list/loot_subtype_path
 
-	var/lootcount = 1 // by default one item will be selected from the loot list
-	var/lootdoubles = TRUE // by default duplicate items CAN be spawned from the loot list
-	var/fan_out_items = FALSE // by default items will NOT spread out on the same tile
-	var/spawn_all_loot = FALSE // by default the spawner will only spawn the number of items set in lootcount
+	var/spawn_loot_count = 1 // by default one item will be selected from the loot list
+	var/spawn_loot_double = TRUE // by default duplicate items CAN be spawned from the loot list
+	var/spawn_loot_split = FALSE // by default items will NOT spread out on the same tile
+	var/spawn_all_loot = FALSE // by default the spawner will only spawn the number of items set in spawn_loot_count
 	var/spawn_loot_chance = 100 // by default the spawner has a 100% chance to spawn the item(s)
 	var/spawn_scatter_radius = 0 // by default the spawner will spawn the items ONLY on the tile it is on
 	var/hacked = FALSE // by default any vending machine that is NOT hacked
 ```
 
-However there are some categories that overwrite these default values so pay attention to the folder or category you group your spawner in.  For instance the `obj/effect/spawner/random/techstorage` category overwrites the `spawn_all_loot` and the `fan_out_items` variables.
+However there are some categories that overwrite these default values so pay attention to the folder or category you group your spawner in.  For instance the `obj/effect/spawner/random/techstorage` category overwrites the `spawn_all_loot` and the `spawn_loot_split` variables.
 
 ```dm
 // Tech storage circuit board spawners
 /obj/effect/spawner/random/techstorage
 	name = "generic circuit board spawner"
-	fan_out_items = TRUE
+	spawn_loot_split = TRUE
 	spawn_all_loot = TRUE
 ```
 
@@ -210,7 +210,7 @@ Good:
 ```dm
 /obj/effect/spawner/random/food_or_drink/donkpockets
 	name = "donk pocket box spawner"
-	lootdoubles = FALSE
+	spawn_loot_double = FALSE
 	loot = list(
 		/obj/item/storage/box/donkpockets/donkpocketspicy,
 		/obj/item/storage/box/donkpockets/donkpocketteriyaki,
@@ -232,7 +232,7 @@ Bad:
 		/obj/item/storage/box/donkpockets/donkpocketberry,
 		/obj/item/storage/box/donkpockets/donkpockethonk,
 	)
-	lootdoubles = FALSE
+	spawn_loot_double = FALSE
 ```
 
 ### Always put a comma at the last item in the `loot` list

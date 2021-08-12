@@ -30,13 +30,13 @@
 	alpha = 100
 
 /obj/effect/spawner/random/maintenance/proc/get_effective_lootcount()
-	var/effective_lootcount = lootcount
+	var/effective_lootcount = spawn_loot_count
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_FILLED_MAINT))
-		effective_lootcount = FLOOR(lootcount * 1.5, 1)
+		effective_lootcount = FLOOR(spawn_loot_count * 1.5, 1)
 
 	else if(HAS_TRAIT(SSstation, STATION_TRAIT_EMPTY_MAINT))
-		effective_lootcount = FLOOR(lootcount * 0.5, 1)
+		effective_lootcount = FLOOR(spawn_loot_count * 0.5, 1)
 
 	return effective_lootcount
 
@@ -52,28 +52,28 @@
 
 /obj/effect/spawner/random/maintenance/two
 	name = "2 x maintenance loot spawner"
-	lootcount = 2
+	spawn_loot_count = 2
 
 /obj/effect/spawner/random/maintenance/three
 	name = "3 x maintenance loot spawner"
-	lootcount = 3
+	spawn_loot_count = 3
 
 /obj/effect/spawner/random/maintenance/four
 	name = "4 x maintenance loot spawner"
-	lootcount = 4
+	spawn_loot_count = 4
 
 /obj/effect/spawner/random/maintenance/five
 	name = "5 x maintenance loot spawner"
-	lootcount = 5
+	spawn_loot_count = 5
 
 /obj/effect/spawner/random/maintenance/six
 	name = "6 x maintenance loot spawner"
-	lootcount = 6
+	spawn_loot_count = 6
 
 /obj/effect/spawner/random/maintenance/seven
 	name = "7 x maintenance loot spawner"
-	lootcount = 7
+	spawn_loot_count = 7
 
 /obj/effect/spawner/random/maintenance/eight
 	name = "8 x maintenance loot spawner"
-	lootcount = 8
+	spawn_loot_count = 8

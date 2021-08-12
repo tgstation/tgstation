@@ -66,7 +66,7 @@
 /obj/effect/spawner/random/engineering/material_rare
 	name = "Rare material spawner"
 	icon_state = "diamond"
-	lootcount = 3
+	spawn_loot_count = 3
 	loot = list( // Space loot spawner. Random selecton of a few rarer materials.
 		/obj/item/stack/sheet/runed_metal/ten = 20,
 		/obj/item/stack/sheet/mineral/diamond{amount = 15} = 15,

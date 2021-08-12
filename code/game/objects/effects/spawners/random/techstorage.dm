@@ -2,7 +2,7 @@
 /obj/effect/spawner/random/techstorage
 	name = "generic circuit board spawner"
 	icon_state = "circuit"
-	fan_out_items = TRUE
+	spawn_loot_split = TRUE
 	spawn_all_loot = TRUE
 
 /obj/effect/spawner/random/techstorage/data_disk
@@ -17,7 +17,7 @@
 /obj/effect/spawner/random/techstorage/arcade_boards
 	name = "arcade board spawner"
 	spawn_all_loot = FALSE
-	lootcount = 1
+	spawn_loot_count = 1
 	loot = list(
 		/obj/item/circuitboard/computer/arcade/amputation,
 		/obj/item/circuitboard/computer/arcade/battle,

@@ -67,8 +67,8 @@
 /obj/effect/spawner/random/entertainment/money_small
 	name = "small money spawner"
 	icon_state = "cash"
-	lootcount = 3
-	fan_out_items = TRUE
+	spawn_loot_count = 3
+	spawn_loot_split = TRUE
 	loot = list(
 		/obj/item/stack/spacecash/c1 = 5,
 		/obj/item/stack/spacecash/c10 = 3,
@@ -78,8 +78,8 @@
 /obj/effect/spawner/random/entertainment/money
 	name = "money spawner"
 	icon_state = "cash"
-	lootcount = 3
-	fan_out_items = TRUE
+	spawn_loot_count = 3
+	spawn_loot_split = TRUE
 	loot = list(
 		/obj/item/stack/spacecash/c1 = 10,
 		/obj/item/stack/spacecash/c10 = 5,
@@ -91,8 +91,8 @@
 /obj/effect/spawner/random/entertainment/money_large
 	name = "large money spawner"
 	icon_state = "cash"
-	lootcount = 5
-	fan_out_items = TRUE
+	spawn_loot_count = 5
+	spawn_loot_split = TRUE
 	loot = list(
 		/obj/item/stack/spacecash/c1 = 100,
 		/obj/item/stack/spacecash/c10 = 80,
@@ -186,7 +186,7 @@
 /obj/effect/spawner/random/entertainment/wallet_storage
 	name = "wallet contents spawner"
 	icon_state = "wallet"
-	lootcount = 1
+	spawn_loot_count = 1
 	loot = list(	// random photos would go here. IF I HAD ONE. :'(
 		/obj/item/lipstick/random,
 		/obj/item/reagent_containers/pill/maintenance,

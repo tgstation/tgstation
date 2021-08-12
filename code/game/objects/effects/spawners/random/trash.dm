@@ -106,7 +106,7 @@
 
 /obj/effect/spawner/random/trash/grime
 	name = "trash and grime spawner"
-	lootcount = 5
+	spawn_loot_count = 5
 	spawn_scatter_radius = 2
 	loot = list( // This spawner will scatter garbage around a dirty site.
 		/obj/effect/spawner/random/trash/garbage = 6,
@@ -119,7 +119,7 @@
 /obj/effect/spawner/random/trash/moisture
 	name = "water hazard spawner"
 	icon_state = "caution"
-	lootcount = 2
+	spawn_loot_count = 2
 	spawn_scatter_radius = 1
 	loot = list( // This spawner will scatter water related items around a moist site.
 		/obj/item/clothing/head/cone = 7,
@@ -163,8 +163,8 @@
 /obj/effect/spawner/random/trash/mopbucket
 	name = "mop bucket spawner"
 	icon_state = "mopbucket"
-	lootcount = 2
-	lootdoubles = FALSE
+	spawn_loot_count = 2
+	spawn_loot_double = FALSE
 	loot = list(
 		/obj/structure/mopbucket = 10,
 		/obj/item/mop = 5,

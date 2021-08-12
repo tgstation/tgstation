@@ -5,7 +5,7 @@ obj/effect/spawner/random/exotic
 /obj/effect/spawner/random/exotic/technology
 	name = "technology spawner"
 	icon_state = "disk"
-	lootcount = 2
+	spawn_loot_count = 2
 	loot = list( // Space loot spawner. Couple of random bits of technology-adjacent stuff including anomaly cores and BEPIS techs.
 		/obj/item/raw_anomaly_core/random,
 		/obj/item/disk/tech_disk/spaceloot,
@@ -33,7 +33,7 @@ obj/effect/spawner/random/exotic
 /obj/effect/spawner/random/exotic/syndie
 	name = "syndie cosmetic spawner"
 	icon_state = "syndicate"
-	lootcount = 2
+	spawn_loot_count = 2
 	loot = list( // A selection of cosmetic syndicate items. Just a couple. No hardsuits or weapons.
 		/obj/effect/spawner/random/clothing/syndie = 8,
 		/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 1,
