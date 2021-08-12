@@ -6,7 +6,7 @@ obj/effect/spawner/random/structure
 	name = "crate spawner"
 	icon_state = "crate"
 	loot = list(
-		/obj/structure/closet/crate/maint = 75,
+		/obj/effect/spawner/random/structure/crate_empty = 75,
 		/obj/structure/closet/crate/trashcart/filled = 7,
 		/obj/effect/spawner/random/trash/moisture_trap = 5,
 		/obj/effect/spawner/random/trash/hobo_squat = 3,
@@ -102,4 +102,13 @@ obj/effect/spawner/random/structure
 		/obj/structure/closet/crate/engineering = 1,
 		/obj/structure/closet/crate/engineering/electrical = 1,
 		/obj/structure/closet/crate/science = 1,
+	)
+
+/obj/effect/spawner/random/structure/crate_loot
+	name = "lootcrate spawner"
+	icon_state = "crate"
+	loot = list(
+		/obj/structure/closet/crate/maint = 15,
+		/obj/effect/spawner/random/structure/crate_empty = 4,
+		/obj/structure/closet/crate/secure/loot = 1,
 	)
