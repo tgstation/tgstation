@@ -120,3 +120,12 @@ obj/effect/spawner/random/structure
 		/obj/structure/closet/secure_closet/personal,
 		/obj/structure/closet/secure_closet/personal/cabinet,
 	)
+
+/obj/effect/spawner/random/structure/closet_empty
+	name = "empty closet spawner"
+	icon_state = "locker"
+	loot = list(
+		/obj/structure/closet = 850,
+		/obj/structure/closet/cabinet = 150,
+		/obj/structure/closet/acloset = 1,
+	)
