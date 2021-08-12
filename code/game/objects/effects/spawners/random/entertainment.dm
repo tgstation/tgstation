@@ -203,3 +203,15 @@
 		/obj/effect/spawner/random/bureaucracy/stamp,
 		/obj/effect/spawner/random/techstorage/data_disk,
 	)
+
+/obj/effect/spawner/random/entertainment/deck
+	name = "deck spawner"
+	icon_state = "deck"
+	loot = list(
+		/obj/item/toy/cards/deck = 10
+		/obj/item/toy/cards/deck/kotahi = 3,
+		/obj/item/toy/cards/deck/wizoff = 3,
+		/obj/item/toy/cards/deck/tarot = 2,
+		/obj/item/toy/cards/deck/cas = 1,
+		/obj/item/toy/cards/deck/cas/black = 1,
+	)
