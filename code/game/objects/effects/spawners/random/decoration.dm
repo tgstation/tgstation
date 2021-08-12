@@ -97,3 +97,9 @@
 		/obj/item/flashlight/glowstick/yellow,
 		/obj/item/flashlight/glowstick/pink,
 	)
+
+/obj/effect/spawner/random/decoration/paint
+	name = "paint spawner"
+	icon_state = "paint"
+	loot_subtype_path = /obj/item/paint
+	loot = list()
