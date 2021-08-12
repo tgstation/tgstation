@@ -5,7 +5,6 @@
 		return ELEMENT_INCOMPATIBLE
 	. = ..()
 	var/atom/movable/real_target = target
-	real_target.plane = OVER_FRILL_PLANE
 	//var/turf/target_to_listen_to = get_step(get_turf(real_target), turn(real_target.dir, 180))
 
 	if(real_target.pixel_x != 0 || real_target.pixel_y != 0)
@@ -24,3 +23,21 @@
 				real_target.pixel_y = 16
 
 	//target.RegisterSignal(target_to_listen_to, COMSIG_TURF_CHANGE, )
+	RegisterSignal(target, COMSIG_ATOM_DIR_CHANGE, .proc/on_dir_changed)
+
+/datum/element/wall_mount/Detach(datum/source, ...)
+	. = ..()
+	UnregisterSignal(source, COMSIG_ATOM_DIR_CHANGE)
+
+
+/datum/element/wall_mount/proc/on_dir_changed(datum/target, olddir, newdir)
+	var/atom/movable/real_target = target
+	switch(newdir)
+		if(NORTH)
+			real_target.plane = OVER_FRILL_PLANE
+		if(SOUTH)
+			real_target.plane = WALL_PLANE
+		if(EAST)
+			real_target.plane = WALL_PLANE
+		if(WEST)
+			real_target.plane = WALL_PLANE
