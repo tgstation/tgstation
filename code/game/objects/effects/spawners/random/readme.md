@@ -356,3 +356,28 @@ Bad:
 		/obj/item/stack/spacecash/c10000 = 12,
 	)
 ```
+
+### Do not put empty items in the loot list
+
+Instead use the `spawn_loot_chance` var to control the chance for the spawner to spawn nothing.
+
+Good:
+
+```dm
+/obj/effect/spawner/random/structure/crate_abandoned
+	name = "locked crate spawner"
+	spawn_loot_chance = 20
+	loot = list(/obj/structure/closet/crate/secure/loot)
+```
+
+
+Bad:
+
+```dm
+/obj/effect/spawner/lootdrop/crate_spawner
+	name = "lootcrate spawner"
+	loot = list(
+		"" = 80
+		/obj/structure/closet/crate/secure/loot = 20,
+	)
+```
