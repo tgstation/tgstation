@@ -105,27 +105,25 @@
 	var/list/obj/item/reagent_containers/glass/beakers = list()
 	var/breach_range = 7
 
-/obj/item/grenade/gas_crystal/crystal_foam/Initialize()
-	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/large/first_beaker = new(src)
-	var/obj/item/reagent_containers/glass/beaker/second_beaker = new(src)
-
-	first_beaker.reagents.add_reagent(/datum/reagent/aluminium, 75)
-	second_beaker.reagents.add_reagent(/datum/reagent/smart_foaming_agent, 25)
-	second_beaker.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 25)
-
-	beakers += first_beaker
-	beakers += second_beaker
-
 /obj/item/grenade/gas_crystal/crystal_foam/detonate(mob/living/lanced_by)
 	. = ..()
 
+	var/list/reagent_list = list()
+	var/datum/reagents/first_batch = new
+	var/datum/reagents/second_batch = new
+
+	first_batch.add_reagent(/datum/reagent/aluminium, 75)
+	second_batch.add_reagent(/datum/reagent/smart_foaming_agent, 25)
+	second_batch.add_reagent(/datum/reagent/toxin/acid/fluacid, 25)
+	reagent_list += first_batch
+	reagent_list += second_batch
+
 	var/list/datum/reagents/reactants = list()
-	for(var/obj/item/reagent_containers/glass/beaker in beakers)
-		reactants += beaker.reagents
+	for(var/batch in reagent_list)
+		reactants += batch
 
 	var/turf/detonation_turf = get_turf(src)
-	
+
 	chem_splash(detonation_turf, breach_range, reactants)
 
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
