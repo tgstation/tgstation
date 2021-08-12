@@ -84,12 +84,3 @@
 	name = "\improper Hugs-The-Feet lizard skin boots"
 	desc = "A pair of masterfully crafted lizard skin boots. Finally a good application for the station's most bothersome inhabitants."
 	icon_state = "lizardboots_blue"
-
-/obj/effect/spawner/lootdrop/lizardboots
-	name = "random lizard boot quality"
-	desc = "Which ever gets picked, the lizard race loses"
-	icon = 'icons/obj/clothing/shoes.dmi'
-	icon_state = "lizardboots_green"
-	loot = list(
-		/obj/item/clothing/shoes/cowboy/lizard = 7,
-		/obj/item/clothing/shoes/cowboy/lizard/masterwork = 1)
