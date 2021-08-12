@@ -90,3 +90,11 @@
 		/obj/item/flashlight/seclite = 4,
 		/obj/item/flashlight/lantern/jade = 1,
 	)
+
+/obj/effect/spawner/random/engineering/canister
+	name = "Air canister spawner"
+	icon_state = "canister"
+	loot = list( // use this for emergency storage areas
+		/obj/machinery/portable_atmospherics/canister/air = 4,
+		/obj/machinery/portable_atmospherics/canister/oxygen = 1,
+	)
