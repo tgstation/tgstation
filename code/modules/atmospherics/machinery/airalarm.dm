@@ -248,19 +248,15 @@
 	. = ..()
 	switch(dir)
 		if(NORTH)
-			plane = OVER_FRILL_PLANE
 			pixel_x = 0
 			pixel_y = 0
 		if(SOUTH)
-			plane = WALL_PLANE
 			pixel_x = 0
 			pixel_y = 29
 		if(EAST)
-			plane = WALL_PLANE
 			pixel_x = -2
 			pixel_y = 0
 		if(WEST)
-			plane = WALL_PLANE
 			pixel_x = 2
 			pixel_y = 0
 
