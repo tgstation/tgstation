@@ -134,3 +134,17 @@
 		/obj/vehicle/ridden/wheelchair = 24,
 		/obj/vehicle/ridden/wheelchair/gold = 1,
 	)
+
+/obj/effect/spawner/random/medical/supplies
+	name = "medical supplies spawner"
+	icon_state = "box_small"
+	loot = list(
+		/obj/item/storage/box/hug,
+		/obj/item/storage/box/pillbottles,
+		/obj/item/storage/box/bodybags,
+		/obj/item/storage/box/rxglasses,
+		/obj/item/storage/box/beakers,
+		/obj/item/storage/box/gloves,
+		/obj/item/storage/box/masks,
+		/obj/item/storage/box/syringes,
+	)
