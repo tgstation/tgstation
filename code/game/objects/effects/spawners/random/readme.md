@@ -19,15 +19,14 @@ The following variables are defined in `code/game/objects/effects/spawners/rando
 - `spawn_all_loot` - whether the spawner should spawn all the loot in the list (ignores `spawn_loot_count`)
 - `spawn_loot_chance` - the chance for the spawner to create loot (ignores `spawn_loot_count`)
 - `spawn_scatter_radius` - determines how big of a range (in tiles) we should scatter things in
-- `hacked` - whether a vending machine is spawned hacked (all other items ignore this)
 
 These variables are set to the following default values for the base `random.dm` object that all objects inherit from:
 
 ```dm
 	/// these three loot values are all empty
 	var/list/loot
-	var/list/loot_type_path
-	var/list/loot_subtype_path
+	var/loot_type_path
+	var/loot_subtype_path
 
 	var/spawn_loot_count = 1 // by default one item will be selected from the loot list
 	var/spawn_loot_double = TRUE // by default duplicate items CAN be spawned from the loot list
@@ -35,7 +34,6 @@ These variables are set to the following default values for the base `random.dm`
 	var/spawn_all_loot = FALSE // by default the spawner will only spawn the number of items set in spawn_loot_count
 	var/spawn_loot_chance = 100 // by default the spawner has a 100% chance to spawn the item(s)
 	var/spawn_scatter_radius = 0 // by default the spawner will spawn the items ONLY on the tile it is on
-	var/hacked = FALSE // by default any vending machine that is NOT hacked
 ```
 
 However there are some categories that overwrite these default values so pay attention to the folder or category you group your spawner in.  For instance the `obj/effect/spawner/random/techstorage` category overwrites the `spawn_all_loot` and the `spawn_loot_split` variables.
@@ -380,4 +378,48 @@ Bad:
 		"" = 80
 		/obj/structure/closet/crate/secure/loot = 20,
 	)
+```
+
+### Avoid making a spawner that is a duplicate
+
+We don't want copy-cat spawners that are almost identical.  Instead merge spawners together if possible.
+
+Good:
+
+```dm
+/obj/effect/spawner/random/contraband/armory
+	name = "armory loot spawner"
+	icon_state = "pistol"
+	loot = list(
+		/obj/item/gun/ballistic/automatic/pistol = 8,
+		/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
+		/obj/item/storage/box/syndie_kit/throwing_weapons = 3,
+		/obj/item/grenade/clusterbuster/teargas = 2,
+		/obj/item/grenade/clusterbuster = 2,
+		/obj/item/gun/ballistic/automatic/pistol/deagle,
+		/obj/item/gun/ballistic/revolver/mateba,
+	)
+```
+
+
+Bad:
+
+```dm
+/obj/effect/spawner/lootdrop/armory_contraband
+	loot = list(
+		/obj/item/gun/ballistic/automatic/pistol = 8,
+		/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
+		/obj/item/gun/ballistic/automatic/pistol/deagle,
+		/obj/item/gun/ballistic/revolver/mateba
+	)
+
+/obj/effect/spawner/lootdrop/armory_contraband/metastation
+	loot = list(
+		/obj/item/gun/ballistic/automatic/pistol = 8,
+		/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
+		/obj/item/storage/box/syndie_kit/throwing_weapons = 3,
+		/obj/item/gun/ballistic/automatic/pistol/deagle,
+		/obj/item/gun/ballistic/revolver/mateba
+	)
+
 ```
