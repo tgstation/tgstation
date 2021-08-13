@@ -3,6 +3,7 @@ import { Box, Button, Flex, Icon, Section, Stack, Table, Tooltip } from "../../c
 import { resolveAsset } from "../../assets";
 import { PreferencesMenuData } from "./data";
 import { useBackend, useLocalState } from "../../backend";
+import { sortBy } from "common/collections";
 
 type Keybinding = {
   name: string;
@@ -43,6 +44,10 @@ const KEY_CODE_TO_BYOND: Record<string, string> = {
   "SPACEBAR": "Space",
   "UP": "North",
 };
+
+const sortKeybindings = sortBy(([_, keybinding]: [unknown, Keybinding]) => {
+  return keybinding.name;
+});
 
 // MOTHBLOCKS TODO: The Southwest shit? _kbMap
 const formatKeyboardEvent = (event: KeyboardEvent): string => {
@@ -336,7 +341,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
                       title={category}
                     >
                       <Stack vertical fill>
-                        {Object.entries(keybindings).map(
+                        {sortKeybindings(Object.entries(keybindings)).map(
                           ([keybindingId, keybinding]) => {
                             const keys
                               = this.state.selectedKeybindings[keybindingId]
