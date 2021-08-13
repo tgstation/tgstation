@@ -80,7 +80,6 @@
 		var/obj/item/I = new path(get_turf(src))
 		if(efficient_with(I.type))
 			I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
-			I.set_custom_materials(matlist)
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 
 /**
