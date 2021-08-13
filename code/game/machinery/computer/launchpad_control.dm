@@ -92,11 +92,11 @@
 	the_pad.set_offset(x_pos.value, y_pos.value)
 
 	if(COMPONENT_TRIGGERED_BY(port, x_pos))
-		x_pos.set_input(the_pad.x_offset, FALSE)
+		x_pos.set_value(the_pad.x_offset)
 		return
 
 	if(COMPONENT_TRIGGERED_BY(port, y_pos))
-		y_pos.set_input(the_pad.y_offset, FALSE)
+		y_pos.set_value(the_pad.y_offset)
 		return
 
 	var/checks = attached_console.teleport_checks(the_pad)

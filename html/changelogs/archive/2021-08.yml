@@ -342,3 +342,20 @@
   - bugfix: Megafauna are no longer stopped by corpses and chairs.
   sqnztb:
   - bugfix: Navigation computers can now arbitrarily land on top z-level openspace.
+2021-08-13:
+  AMonkeyThatCodes:
+  - spellcheck: Areas where it makes sense now have \improper pre-fixed to them
+  Fikou:
+  - bugfix: fixes some megafauna shooting too fast
+  Ghommie:
+  - bugfix: Food preference quirks are no longer broken by species change.
+  Jordie0608:
+  - admin: Round id when a note was made in now displayed in the notes panel
+  Seris02:
+  - bugfix: dchat clogging of clientless mobs is gone
+  Wayland-Smithy:
+  - admin: Improved invisimin toggle messages.
+  - bugfix: Fixed Oingo Boingo Punch-face! not displacing airlocks.
+  - bugfix: Fixed shotgun meteorslugs not displacing airlocks.
+  - bugfix: Fixed chocolate surprise easter eggs being edible before they are unwrapped
+      and tasting like egg.

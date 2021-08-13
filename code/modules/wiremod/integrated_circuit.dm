@@ -48,11 +48,26 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// Set by the shell. Holds the reference to the owner who inserted the component into the shell.
 	var/datum/weakref/inserter_mind
 
+	/// Variables stored on this integrated circuit. with a `variable_name = value` structure
+	var/list/datum/circuit_variable/circuit_variables = list()
+
+	/// The maximum amount of setters and getters a circuit can have
+	var/max_setters_and_getters = 30
+
+	/// The current setter and getter count the circuit has.
+	var/setter_and_getter_count = 0
+
 	/// X position of the examined_component
 	var/examined_rel_x = 0
 
 	/// Y position of the examined component
 	var/examined_rel_y = 0
+
+	/// The X position of the screen. Used for adding components
+	var/screen_x = 0
+
+	/// The Y position of the screen. Used for adding components.
+	var/screen_y = 0
 
 /obj/item/integrated_circuit/Initialize()
 	. = ..()
@@ -69,6 +84,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	for(var/obj/item/circuit_component/to_delete in attached_components)
 		remove_component(to_delete)
 		qdel(to_delete)
+	QDEL_LIST(circuit_variables)
 	attached_components.Cut()
 	shell = null
 	examined_component = null
@@ -182,8 +198,8 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	if(!success)
 		return
 
-	to_add.rel_x = rand(COMPONENT_MIN_RANDOM_POS, COMPONENT_MAX_RANDOM_POS)
-	to_add.rel_y = rand(COMPONENT_MIN_RANDOM_POS, COMPONENT_MAX_RANDOM_POS)
+	to_add.rel_x = rand(COMPONENT_MIN_RANDOM_POS, COMPONENT_MAX_RANDOM_POS) - screen_x
+	to_add.rel_y = rand(COMPONENT_MIN_RANDOM_POS, COMPONENT_MAX_RANDOM_POS) - screen_y
 	to_add.parent = src
 	attached_components += to_add
 	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, .proc/component_move_handler)
@@ -191,6 +207,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 	if(shell)
 		to_add.register_shell(shell)
+	return TRUE
 
 /**
  * Adds a component to the circuitboard through a manual action.
@@ -199,7 +216,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	if (SEND_SIGNAL(src, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, to_add, user) & COMPONENT_CANCEL_ADD_COMPONENT)
 		return
 
-	add_component(to_add, user)
+	return add_component(to_add, user)
 
 /obj/item/integrated_circuit/proc/component_move_handler(obj/item/circuit_component/source)
 	SIGNAL_HANDLER
@@ -230,6 +247,12 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	return list(
 		get_asset_datum(/datum/asset/simple/circuit_assets)
 	)
+
+/obj/item/integrated_circuit/ui_static_data(mob/user)
+	. = list()
+	.["global_basic_types"] = GLOB.wiremod_basic_types
+	.["screen_x"] = screen_x
+	.["screen_y"] = screen_y
 
 /obj/item/integrated_circuit/ui_data(mob/user)
 	. = list()
@@ -271,6 +294,16 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		component_data["y"] = component.rel_y
 		component_data["removable"] = component.removable
 		.["components"] += list(component_data)
+
+	.["variables"] = list()
+	for(var/variable_name in circuit_variables)
+		var/datum/circuit_variable/variable = circuit_variables[variable_name]
+		var/list/variable_data = list()
+		variable_data["name"] = variable.name
+		variable_data["datatype"] = variable.datatype
+		variable_data["color"] = variable.color
+		.["variables"] += list(variable_data)
+
 
 	.["display_name"] = display_name
 
@@ -479,6 +512,51 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			. = TRUE
 		if("save_circuit")
 			return attempt_save_to(usr.client)
+		if("add_variable")
+			var/variable_identifier = trim(copytext(params["variable_name"], 1, PORT_MAX_NAME_LENGTH))
+			if(variable_identifier in circuit_variables)
+				return TRUE
+			if(variable_identifier == "")
+				return TRUE
+			var/variable_datatype = params["variable_datatype"]
+			if(!(variable_datatype in GLOB.wiremod_basic_types))
+				return
+
+			circuit_variables[variable_identifier] = new /datum/circuit_variable(variable_identifier, variable_datatype)
+			. = TRUE
+		if("remove_variable")
+			var/variable_identifier = params["variable_name"]
+			if(!(variable_identifier in circuit_variables))
+				return
+			var/datum/circuit_variable/variable = circuit_variables[variable_identifier]
+			if(!variable)
+				return
+			circuit_variables -= variable_identifier
+			qdel(variable)
+			. = TRUE
+		if("add_setter_or_getter")
+			if(setter_and_getter_count >= max_setters_and_getters)
+				balloon_alert(usr, "setter and getter count at maximum capacity")
+				return
+			var/designated_type = /obj/item/circuit_component/getter
+			if(params["is_setter"])
+				designated_type = /obj/item/circuit_component/setter
+			var/obj/item/circuit_component/component = new designated_type(src)
+			if(!add_component(component, usr))
+				qdel(component)
+				return
+			RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/clear_setter_or_getter)
+			setter_and_getter_count++
+		if("move_screen")
+			screen_x = text2num(params["screen_x"])
+			screen_y = text2num(params["screen_y"])
+
+/obj/item/integrated_circuit/proc/clear_setter_or_getter(datum/source)
+	SIGNAL_HANDLER
+	// This'll also be called in the Destroy() override of /obj/item/circuit_component
+	if(!QDELING(source))
+		qdel(source)
+	setter_and_getter_count--
 
 /obj/item/integrated_circuit/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/usb_cable, mob/user)
 	SIGNAL_HANDLER
