@@ -1,4 +1,0 @@
-author: "Jordie0608"
-delete-after: True
-changes: 
-  - admin: "Round id when a note was made in now displayed in the notes panel"
