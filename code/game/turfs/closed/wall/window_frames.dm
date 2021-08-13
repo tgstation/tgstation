@@ -16,15 +16,13 @@
 	///Bitflag to hold state on what other objects we have
 	var/window_state = NONE
 	///Icon used by grilles for this window frame
-	var/grille_icon = 'icons/turf/walls/window_grille.dmi'
+	var/grille_icon = 'icons/turf/walls/low_walls/window_grille.dmi'
 	///Icon state used by grilles for this window frame
 	var/grille_icon_state = "window_grille"
 	///Icon used by windows for this window frame
-	var/window_icon = 'icons/turf/walls/window_normal.dmi'
+	var/window_icon = 'icons/turf/walls/low_walls/windows/window_normal.dmi'
 	///Icon state used by windows for this window frame
 	var/window_icon_state = "window_normal"
-	///Frill used for window frame
-
 
 /turf/closed/wall/window_frame/Initialize(mapload)
 	. = ..()
