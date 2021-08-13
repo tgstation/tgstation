@@ -160,7 +160,7 @@
 
 	// The gas we want to cool/heat
 	var/datum/gas_mixture/main_port = airs[1]
-	var/datum/gas_mixture/exchange_target
+	var/datum/gas_mixture/exchange_target = airs[2]
 
 	// The difference between target and what we need to heat/cool. Positive if heating, negative if cooling.
 	var/temperature_target_delta = target_temperature - main_port.temperature
