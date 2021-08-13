@@ -53,7 +53,7 @@
 	))
 
 /**
- * Called when the shell item is used in hand(Left click or Z by default)
+ * Called when the shell item is used in hand
  */
 /obj/item/circuit_component/controller/proc/send_trigger(atom/source, mob/user)
 	SIGNAL_HANDLER
