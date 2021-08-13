@@ -34,18 +34,28 @@
 
 ///delightfully devilous seymour
 /turf/closed/wall/window_frame/set_smoothed_icon_state(new_junction)
+	if(new_junction & NORTH)
+		set_frill(FALSE)
+	else
+		set_frill(TRUE)
 	. = ..()
 	update_icon()
 
+
 /turf/closed/wall/window_frame/update_appearance(updates)
 	. = ..()
-	if(window_state & WINDOW_FRAME_WITH_WINDOW)
+	if(!(window_state & WINDOW_FRAME_WITH_WINDOW))
+		set_frill(FALSE)
+
+/turf/closed/wall/window_frame/proc/set_frill(on)
+	if(!on)
+		if(has_frill)
+			RemoveElement(/datum/element/frill, frill_icon)
+			has_frill = FALSE
+	else
 		if(!has_frill)
 			AddElement(/datum/element/frill, frill_icon)
 			has_frill = TRUE
-	else
-		RemoveElement(/datum/element/frill)
-		has_frill = FALSE
 
 /turf/closed/wall/window_frame/update_overlays()
 	. = ..()

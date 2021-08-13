@@ -34,9 +34,8 @@ GLOBAL_LIST_EMPTY(frill_objects)
 	RegisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, .proc/on_junction_change)
 
 /datum/element/frill/Detach(turf/target)
-	if(isturf(target))
-		target = get_step(target, NORTH)
-	target.vis_contents -= get_frill_object(icon_path, target.smoothing_junction, TRUE)
+	var/turf/operator_turf = isturf(target) ? get_step(target, NORTH) : target
+	operator_turf.vis_contents -= get_frill_object(icon_path, target.smoothing_junction, TRUE)
 	UnregisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE)
 	return ..()
 
