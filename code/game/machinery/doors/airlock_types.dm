@@ -211,7 +211,7 @@
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_uranium
 	var/last_event = 0
-	greyscale_colors = "#003300#003300#004400#004400#00330#6d6565#003300"
+	greyscale_colors = rgb(0,51,0)+rgb(0,51,0)+rgb(0,68,0)+rgb(0,68,0)+rgb(0,51,0)+rgb(109,101,101)+rgb(0,51,0)
 
 /obj/machinery/door/airlock/uranium/process()
 	if(world.time > last_event+20)

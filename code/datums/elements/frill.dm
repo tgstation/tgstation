@@ -34,9 +34,8 @@ GLOBAL_LIST_EMPTY(frill_objects)
 	RegisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, .proc/on_junction_change)
 
 /datum/element/frill/Detach(turf/target)
-	if(isturf(target))
-		target = get_step(target, NORTH)
-	target.vis_contents -= get_frill_object(icon_path, target.smoothing_junction, TRUE)
+	var/turf/operator_turf = isturf(target) ? get_step(target, NORTH) : target
+	operator_turf.vis_contents -= get_frill_object(icon_path, target.smoothing_junction, TRUE)
 	UnregisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE)
 	return ..()
 
@@ -46,8 +45,10 @@ GLOBAL_LIST_EMPTY(frill_objects)
 	var/turf/turf_or_movable = source
 	var/turf/operator_turf = isturf(source) ? get_step(turf_or_movable, NORTH) : turf_or_movable
 	if(operator_turf)
-		operator_turf.vis_contents -= get_frill_object(icon_path, turf_or_movable.smoothing_junction, TRUE)
-		operator_turf.vis_contents += get_frill_object(icon_path, new_junction, TRUE)
+		if(!(source.smoothing_junction & NORTH))
+			operator_turf.vis_contents -= get_frill_object(icon_path, turf_or_movable.smoothing_junction, TRUE)
+		if(!(new_junction & NORTH))
+			operator_turf.vis_contents += get_frill_object(icon_path, new_junction, TRUE)
 
 
 /atom/movable/visual/frill
