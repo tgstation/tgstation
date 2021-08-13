@@ -160,12 +160,35 @@
 
 	// The gas we want to cool/heat
 	var/datum/gas_mixture/main_port = airs[1]
+	var/datum/gas_mixture/exchange_target
 
 	// The difference between target and what we need to heat/cool. Positive if heating, negative if cooling.
 	var/temperature_target_delta = target_temperature - main_port.temperature
 
+	var/mole_efficiency = 1
+	var/mole_eff_main_port = 1
+	var/mole_eff_thermal_port = 1
+	if(cooling)
+		// Exchange target is the thing we are paired with, be it enviroment or the red port.
+		if(use_enviroment_heat)
+			exchange_target = local_turf.return_air()
+		else
+			exchange_target = airs[2]
+
+		if(exchange_target.total_moles() < 5)
+			mole_eff_thermal_port = 0.0001
+		else
+			mole_eff_thermal_port = 1 - (1 / (exchange_target.total_moles() + 1)) * 5
+
+	if(main_port.total_moles() < 5)
+		mole_eff_main_port = 0.0001
+	else
+		mole_eff_main_port = 1 - (1 / (main_port.total_moles() + 1)) * 5
+
+	mole_efficiency = min(mole_eff_main_port, mole_eff_thermal_port)
+
 	// This variable holds the (C1*C2)/(C1+C2)*(T2-T1) part of the equation.
-	var/heat_amount = temperature_target_delta * (main_port.heat_capacity() * heat_capacity / (main_port.heat_capacity() + heat_capacity))
+	var/heat_amount = mole_efficiency * temperature_target_delta * (main_port.heat_capacity() * heat_capacity / (main_port.heat_capacity() + heat_capacity))
 
 	// Motor heat is the heat added to both ports of the thermomachine at every tick.
 	var/motor_heat = 5000
@@ -188,13 +211,6 @@
 	efficiency = 1
 
 	if(cooling)
-		var/datum/gas_mixture/exchange_target
-		// Exchange target is the thing we are paired with, be it enviroment or the red port.
-		if(use_enviroment_heat)
-			exchange_target = local_turf.return_air()
-		else
-			exchange_target = airs[2]
-
 		if (exchange_target.total_moles() < 0.01)
 			skipping_work = TRUE
 			return
