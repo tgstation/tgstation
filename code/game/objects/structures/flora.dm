@@ -353,11 +353,7 @@
 /obj/item/kirbyplants/proc/generate_states()
 	random_plant_states = list()
 	for(var/i in 1 to 25)
-		var/number
-		if(i < 10)
-			number = "0[i]"
-		else
-			number = "[i]"
+		var/number = "[i]"
 		random_plant_states += "plant-[number]"
 	random_plant_states += "applebush"
 
@@ -371,7 +367,7 @@
 /obj/item/kirbyplants/photosynthetic
 	name = "photosynthetic potted plant"
 	desc = "A bioluminescent plant."
-	icon_state = "plant-09"
+	icon_state = "plant-9"
 	light_color = COLOR_BRIGHT_BLUE
 	light_range = 3
 
