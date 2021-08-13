@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - spellcheck: "DNA activators will now become expended once used, even if it hasn't activated anything."
+  - spellcheck: "Removed a space when recycling an activator at a DNA console."
