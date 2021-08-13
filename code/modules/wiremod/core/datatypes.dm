@@ -49,7 +49,7 @@ GLOBAL_LIST_INIT(circuit_datatypes, generate_circuit_datatypes())
  * * gained_port - The gained port.
  */
 /datum/circuit_datatype/proc/on_gain(datum/port/gained_port)
-	gained_port.disconnect()
+	return
 
 /**
  * Called when the datatype is removed from a port.

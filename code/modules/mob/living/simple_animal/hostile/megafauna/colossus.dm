@@ -91,7 +91,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = clamp(((maxHealth - health)/50),0,20)
-	update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = 12 SECONDS))
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = 12 SECONDS))
 
 	if(client)
 		switch(chosen_attack)
@@ -108,7 +108,7 @@
 	if(enrage(target))
 		if(move_to_delay == initial(move_to_delay))
 			visible_message(span_colossus("\"<b>You can't dodge.</b>\""))
-		update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = 3 SECONDS))
+		update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = 3 SECONDS))
 		telegraph()
 		dir_shots(GLOB.alldirs)
 		move_to_delay = 3
@@ -136,7 +136,7 @@
 			. = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
-	update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = 4 SECONDS))
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = 4 SECONDS))
 	dir_shots(GLOB.diagonals)
 	SLEEP_CHECK_DEATH(10)
 	dir_shots(GLOB.cardinals)
@@ -189,7 +189,7 @@
 	P.fire(set_angle)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
-	update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = 3 SECONDS))
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = 3 SECONDS))
 	var/turf/U = get_turf(src)
 	playsound(U, 'sound/magic/clockwork/invoke_general.ogg', 300, TRUE, 5)
 	for(var/T in RANGE_TURFS(12, U) - U)
@@ -197,7 +197,7 @@
 			shoot_projectile(T)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast(set_angle)
-	update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = 2 SECONDS))
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = 2 SECONDS))
 	var/turf/target_turf = get_turf(target)
 	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 2)
 	newtonian_move(get_dir(target_turf, src))

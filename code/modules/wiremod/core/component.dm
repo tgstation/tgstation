@@ -112,10 +112,10 @@
  */
 /obj/item/circuit_component/proc/disconnect()
 	for(var/datum/port/output/port_to_disconnect as anything in output_ports)
-		port_to_disconnect.disconnect()
+		port_to_disconnect.disconnect_all()
 
 	for(var/datum/port/input/port_to_disconnect as anything in input_ports)
-		port_to_disconnect.disconnect()
+		port_to_disconnect.disconnect_all()
 
 /**
  * Adds an input port and returns it

@@ -98,7 +98,11 @@ export class InfinitePlane extends Component {
   }
 
   handleMouseMove(event) {
-    const { onBackgroundMoved } = this.props;
+    const {
+      onBackgroundMoved,
+      initialLeft = 0,
+      initialTop = 0,
+    } = this.props;
     if (this.state.mouseDown) {
       let newX, newY;
       this.setState((state) => {
@@ -110,7 +114,7 @@ export class InfinitePlane extends Component {
         };
       });
       if (onBackgroundMoved) {
-        onBackgroundMoved(newX, newY);
+        onBackgroundMoved(newX+initialLeft, newY+initialTop);
       }
     }
   }
@@ -120,6 +124,8 @@ export class InfinitePlane extends Component {
       children,
       backgroundImage,
       imageWidth,
+      initialLeft = 0,
+      initialTop = 0,
       ...rest
     } = this.props;
     const {
@@ -127,6 +133,9 @@ export class InfinitePlane extends Component {
       top,
       zoom,
     } = this.state;
+
+    const finalLeft = initialLeft + left;
+    const finalTop = initialTop + top;
 
     return (
       <div
@@ -148,7 +157,7 @@ export class InfinitePlane extends Component {
             "height": "100%",
             "width": "100%",
             "background-image": `url("${backgroundImage}")`,
-            "background-position": `${left}px ${top}px`,
+            "background-position": `${finalLeft}px ${finalTop}px`,
             "background-repeat": "repeat",
             "background-size": `${zoom*imageWidth}px`,
           }}
@@ -158,7 +167,7 @@ export class InfinitePlane extends Component {
           onMouseMove={this.handleMouseMove}
           style={{
             "position": "fixed",
-            "transform": `translate(${left}px, ${top}px) scale(${zoom})`,
+            "transform": `translate(${finalLeft}px, ${finalTop}px) scale(${zoom})`,
             "transform-origin": "top left",
             "height": "100%",
             "width": "100%",
