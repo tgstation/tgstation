@@ -45,15 +45,15 @@
 		return
 
 	if(COMPONENT_TRIGGERED_BY(data_type_options, port))
-		data_package.set_datatype(data_type_options.input_value)
+		data_package.set_datatype(data_type_options.value)
 
 	if(COMPONENT_TRIGGERED_BY(secondary_data_type_options, port))
-		secondary_package.set_datatype(secondary_data_type_options.input_value)
+		secondary_package.set_datatype(secondary_data_type_options.value)
 
 /obj/item/circuit_component/ntnet_receive/proc/ntnet_receive(datum/source, datum/netdata/data)
 	SIGNAL_HANDLER
 
-	if(data.data["enc_key"] != enc_key.input_value)
+	if(data.data["enc_key"] != enc_key.value)
 		return
 
 	data_package.set_output(data.data["data"])
