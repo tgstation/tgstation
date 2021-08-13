@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/concat_list
 	display_name = "Concatenate List"
-	display_desc = "A component that joins up a list with a separator into a single string."
+	desc = "A component that joins up a list with a separator into a single string."
 
 	/// The input port
 	var/datum/port/input/list_port
@@ -24,22 +24,16 @@
 
 	output = add_output_port("Output", PORT_TYPE_STRING)
 
-/obj/item/circuit_component/concat_list/Destroy()
-	list_port = null
-	separator = null
-	output = null
-	return ..()
-
 /obj/item/circuit_component/concat_list/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return
 
-	var/seperator = separator.input_value
+	var/seperator = separator.value
 	if(!seperator)
 		return
 
-	var/list/list_input = list_port.input_value
+	var/list/list_input = list_port.value
 	if(!list_input)
 		return
 

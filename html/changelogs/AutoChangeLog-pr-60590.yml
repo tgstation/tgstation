@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - expansion: "Adds circuit variables, which replace the RAM component. A cog icon has been added to the top of the integrated circuit UI to access these variables."
