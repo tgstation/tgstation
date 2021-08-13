@@ -88,11 +88,6 @@
 	id = "comp_not"
 	build_path = /obj/item/circuit_component/not
 
-/datum/design/component/ram
-	name = "RAM Component"
-	id = "comp_ram"
-	build_path = /obj/item/circuit_component/ram
-
 /datum/design/component/random
 	name = "Random Component"
 	id = "comp_random"
@@ -167,11 +162,6 @@
 	name = "Health Component"
 	id = "comp_health"
 	build_path = /obj/item/circuit_component/health
-
-/datum/design/component/combiner
-	name = "Combiner Component"
-	id = "comp_combiner"
-	build_path = /obj/item/circuit_component/combiner
 
 /datum/design/component/split
 	name = "Split Component"

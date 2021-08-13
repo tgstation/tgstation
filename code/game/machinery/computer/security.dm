@@ -159,10 +159,10 @@
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
-	var/status_to_set = new_status.input_value
+	var/status_to_set = new_status.value
 
 	new_status_set.set_output(status_to_set)
-	var/list/target_table = targets.input_value
+	var/list/target_table = targets.value
 	if(!target_table)
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return

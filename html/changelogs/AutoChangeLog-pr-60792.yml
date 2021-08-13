@@ -1,0 +1,6 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - bugfix: "Paper that's on a clipboard doesn't need to be poked to realise that its appearance has changed and to properly display it on a clipboard."
+  - bugfix: "You finally figured that using a stamp on a clipboard was more important than using the pen that's currently attached to it. Congratulations!"
+  - code_imp: "Added support for preventing a pen from being removed from a clipboard."
