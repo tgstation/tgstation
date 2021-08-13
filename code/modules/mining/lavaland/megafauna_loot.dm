@@ -358,6 +358,7 @@
 	sharpness = SHARP_EDGED
 	bare_wound_bonus = 10
 	layer = MOB_LAYER
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	/// Soulscythe mob in the scythe
 	var/mob/living/simple_animal/soulscythe/soul
 	/// Are we grabbing a spirit?

@@ -66,10 +66,10 @@
 	if(COMPONENT_TRIGGERED_BY(eject, port))
 		remove_current_brain()
 	if(COMPONENT_TRIGGERED_BY(send, port))
-		if(!message.input_value)
+		if(!message.value)
 			return
 
-		var/msg_str = copytext(html_encode(message.input_value), 1, max_length)
+		var/msg_str = copytext(html_encode(message.value), 1, max_length)
 
 		var/mob/living/target = brain.brainmob
 		if(!target)

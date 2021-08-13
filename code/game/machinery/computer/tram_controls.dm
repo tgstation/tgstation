@@ -156,7 +156,7 @@
 	var/destination
 
 	for(var/obj/effect/landmark/tram/possible_destination as anything in GLOB.tram_landmarks)
-		if(possible_destination.name == new_destination.input_value)
+		if(possible_destination.name == new_destination.value)
 			destination = possible_destination
 			break
 

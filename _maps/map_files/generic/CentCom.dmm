@@ -7806,7 +7806,7 @@
 /turf/open/floor/grass,
 /area/wizard_station)
 "yM" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/structure/safe/floor,
 /obj/item/seeds/cherry/bomb,
 /turf/open/floor/wood,
@@ -14453,7 +14453,7 @@
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Tq" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/storage/toolbox/mechanical,
@@ -14493,7 +14493,7 @@
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "TK" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/structure/mirror/directional/north,
 /turf/open/floor/wood,
 /area/centcom/holding)

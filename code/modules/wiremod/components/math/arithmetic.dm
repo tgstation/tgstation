@@ -53,14 +53,14 @@
 
 	var/list/ports = arithmetic_ports.Copy()
 	var/datum/port/input/first_port = popleft(ports)
-	var/result = first_port.input_value
+	var/result = first_port.value
 
 	for(var/datum/port/input/input_port as anything in ports)
-		var/value = input_port.input_value
+		var/value = input_port.value
 		if(isnull(value))
 			continue
 
-		switch(arithmetic_option.input_value)
+		switch(arithmetic_option.value)
 			if(COMP_ARITHMETIC_ADD)
 				result += value
 			if(COMP_ARITHMETIC_SUBTRACT)
