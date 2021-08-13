@@ -42,16 +42,6 @@
 /datum/antagonist/rev/on_mindshield(mob/implanter)
 	remove_revolutionary(FALSE, implanter)
 
-/datum/antagonist/rev/head/on_mindshield(mob/implanter)
-	if(!silent)
-		owner.current.visible_message(
-			span_warning("[owner.current] seems to resist the implant!"),
-			span_warning("You feel something interfering with your mental conditioning, but you resist it!")
-		)
-	for(var/obj/item/implant/mindshield/mindshield_implant in owner.current.implants)
-		mindshield_implant.removed(owner.current, TRUE)
-		qdel(mindshield_implant)
-
 /datum/antagonist/rev/proc/equip_rev()
 	return
 
@@ -175,6 +165,16 @@
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
 	var/give_hud = TRUE
+
+/datum/antagonist/rev/head/on_mindshield(mob/implanter)
+	if(!silent)
+		owner.current.visible_message(
+			span_warning("[owner.current] seems to resist the implant!"),
+			span_warning("You feel something interfering with your mental conditioning, but you resist it!")
+		)
+	for(var/obj/item/implant/mindshield/mindshield_implant in owner.current.implants)
+		mindshield_implant.removed(owner.current, TRUE)
+		qdel(mindshield_implant)
 
 /datum/antagonist/rev/head/on_removal()
 	if(give_hud)
