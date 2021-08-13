@@ -3756,6 +3756,7 @@
 #include "code\modules\wiremod\core\marker.dm"
 #include "code\modules\wiremod\core\port.dm"
 #include "code\modules\wiremod\core\usb_cable.dm"
+#include "code\modules\wiremod\core\variable.dm"
 #include "code\modules\wiremod\datatypes\any.dm"
 #include "code\modules\wiremod\datatypes\basic.dm"
 #include "code\modules\wiremod\datatypes\entity.dm"
