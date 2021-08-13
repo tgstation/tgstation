@@ -60,12 +60,13 @@
 
 	. = ..()
 	if(merge)
-		for(var/obj/item/stack/S in loc)
-			if(can_merge(S))
-				INVOKE_ASYNC(src, .proc/merge, S)
-				//Merge can call qdel on us, so let's be safe yeah?
-				if(QDELETED(src))
-					return
+		for(var/obj/item/stack/item_stack in loc)
+			if(item_stack == src)
+				continue
+			if(can_merge(item_stack))
+				INVOKE_ASYNC(src, .proc/merge_without_del, item_stack)
+				if(is_zero_amount())
+					return INITIALIZE_HINT_QDEL
 	var/list/temp_recipes = get_main_recipes()
 	recipes = temp_recipes.Copy()
 	if(material_type)
@@ -362,14 +363,16 @@
 	return TRUE
 
 /obj/item/stack/use(used, transfer = FALSE, check = TRUE) // return 0 = borked; return 1 = had enough
-	if(check && zero_amount())
+	if(check && is_zero_amount())
+		qdel(src)
 		return FALSE
 	if(is_cyborg)
 		return source.use_charge(used * cost)
 	if (amount < used)
 		return FALSE
 	amount -= used
-	if(check && zero_amount())
+	if(check && is_zero_amount())
+		qdel(src)
 		return TRUE
 	if(length(mats_per_unit))
 		update_custom_materials()
@@ -391,11 +394,11 @@
 
 	return TRUE
 
-/obj/item/stack/proc/zero_amount()
+/// Returns TRUE if the item stack is the equivalent of a 0 amount item.
+/obj/item/stack/proc/is_zero_amount()
 	if(is_cyborg)
 		return source.energy < cost
 	if(amount < 1)
-		qdel(src)
 		return TRUE
 	return FALSE
 
@@ -428,21 +431,43 @@
 		return FALSE
 	return TRUE
 
-///Merges src into S, as much as possible. If present, the limit arg overrides S.max_amount for transfer.
-/obj/item/stack/proc/merge(obj/item/stack/S, limit)
-	if(QDELETED(S) || QDELETED(src) || S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
-		return
+/**
+ * Merges as much of src into target_stack as possible. If present, the limit arg overrides target_stack.max_amount for transfer.
+ *
+ * This calls use() without check = FALSE, preventing the item from qdeling itself if it reaches 0 stack size.
+ */
+/obj/item/stack/proc/merge_without_del(obj/item/stack/target_stack, limit)
+	// Cover edge cases where multiple stacks are being merged together and haven't been deleted properly.
+	// Also cover edge case where a stack is being merged into itself, which is supposedly possible.
+	if(QDELETED(target_stack))
+		CRASH("Stack merge attempted on qdeleted target stack.")
+	if(QDELETED(src))
+		CRASH("Stack merge attempted on qdeleted source stack.")
+	if(target_stack == src)
+		CRASH("Stack attempted to merge into itself.")
+
 	var/transfer = get_amount()
-	if(S.is_cyborg)
-		transfer = min(transfer, round((S.source.max_energy - S.source.energy) / S.cost))
+	if(target_stack.is_cyborg)
+		transfer = min(transfer, round((target_stack.source.max_energy - target_stack.source.energy) / target_stack.cost))
 	else
-		transfer = min(transfer, (limit ? limit : S.max_amount) - S.amount)
+		transfer = min(transfer, (limit ? limit : target_stack.max_amount) - target_stack.amount)
 	if(pulledby)
-		pulledby.start_pulling(S)
-	S.copy_evidences(src)
-	use(transfer, TRUE)
-	S.add(transfer)
+		pulledby.start_pulling(target_stack)
+	target_stack.copy_evidences(src)
+	use(transfer, transfer = TRUE, check = FALSE)
+	target_stack.add(transfer)
 	return transfer
+
+/**
+ * Merges as much of src into target_stack as possible. If present, the limit arg overrides target_stack.max_amount for transfer.
+ *
+ * These deletes src if the remaining amount after the transfer is 0.
+ */
+/obj/item/stack/proc/merge(obj/item/stack/target_stack, limit)
+	. = merge_without_del(target_stack, limit)
+	if(is_zero_amount())
+		qdel(src)
+	return
 
 /obj/item/stack/proc/on_entered(datum/source, atom/movable/crossing)
 	SIGNAL_HANDLER
@@ -457,7 +482,8 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/stack/attack_hand(mob/user, list/modifiers)
 	if(user.get_inactive_held_item() == src)
-		if(zero_amount())
+		if(is_zero_amount())
+			qdel(src)
 			return
 		return split_stack(user, 1)
 	else
@@ -468,8 +494,11 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 
-	if(is_cyborg || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)) || zero_amount())
+	if(is_cyborg || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(is_zero_amount())
+		qdel(src)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/max = get_amount()
 	var/stackmaterial = round(input(user, "How many sheets do you wish to take out of this stack? (Maximum [max])", "Stack Split") as null|num)
 	max = get_amount()
@@ -497,7 +526,9 @@
 			F.forceMove(user.drop_location())
 		add_fingerprint(user)
 		F.add_fingerprint(user)
-	zero_amount()
+
+	if(is_zero_amount())
+		qdel(src)
 
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
 	if(can_merge(W))

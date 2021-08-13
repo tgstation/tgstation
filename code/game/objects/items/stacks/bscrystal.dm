@@ -84,7 +84,8 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/stack/sheet/bluespace_crystal/attack_hand(mob/user, list/modifiers)
 	if(user.get_inactive_held_item() == src)
-		if(zero_amount())
+		if(is_zero_amount())
+			qdel(src)
 			return
 		var/BC = new crystal_type(src)
 		user.put_in_hands(BC)
