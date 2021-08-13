@@ -1,0 +1,4 @@
+author: "FireFlashie"
+delete-after: True
+changes: 
+  - bugfix: "Fixes changelogs parsing on linux enviroments"
