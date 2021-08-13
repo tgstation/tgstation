@@ -49,6 +49,10 @@
 #define COMSIG_WEATHER_START(event_type) "!weather_start [event_type]"
 #define COMSIG_WEATHER_WINDDOWN(event_type) "!weather_winddown [event_type]"
 #define COMSIG_WEATHER_END(event_type) "!weather_end [event_type]"
+/// An alarm of some form was sent (datum/alarm_handler/source, alarm_type, area/source_area)
+#define COMSIG_ALARM_FIRE(alarm_type) "!alarm_fire [alarm_type]"
+/// An alarm of some form was cleared (datum/alarm_handler/source, alarm_type, area/source_area)
+#define COMSIG_ALARM_CLEAR(alarm_type) "!alarm_clear [alarm_type]"
 
 /// signals from globally accessible objects
 
@@ -1381,6 +1385,11 @@
 /// Called on the merger after finishing a refresh: (list/leaving_members, list/joining_members)
 #define COMSIG_MERGER_REFRESH_COMPLETE "comsig_merger_refresh_complete"
 
+// Alarm listener datum signals
+///Sent when an alarm is fired (alarm, area/source_area)
+#define COMSIG_ALARM_TRIGGERED "comsig_alarm_triggered"
+///Send when an alarm source is cleared (alarm_type, area/source_area)
+#define COMSIG_ALARM_CLEARED "comsig_alarm_clear"
 // Vacuum signals
 /// Called on a bag being attached to a vacuum parent
 #define COMSIG_VACUUM_BAG_ATTACH "comsig_vacuum_bag_attach"
