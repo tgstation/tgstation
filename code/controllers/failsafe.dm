@@ -34,7 +34,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 	set waitfor = FALSE
 	Failsafe.Loop()
 	if (!Master || defcon == 0) //Master is gone/not responding and Failsafe just exited its loop
-		defcon = 5 //Reset defcon level as its used inside the emergency loop
+		defcon = 3 //Reset defcon level as its used inside the emergency loop
 		while (defcon > 0)
 			var/recovery_result = emergency_loop()
 			if (recovery_result == 1) //Exit emergency loop and delete self if it was able to recover MC
@@ -42,6 +42,9 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 			else if (defcon == 1) //Exit Failsafe if we weren't able to recover the MC in the last stage
 				log_game("FailSafe: Failed to recover MC while in emergency state. Failsafe exiting.")
 				message_admins(span_boldannounce("Failsafe failed criticaly while trying to recreate broken MC. Please manually fix the MC or reboot the server. Failsafe exiting now."))
+				message_admins(span_boldannounce("You can try manually calling these two procs:."))
+				message_admins(span_boldannounce("/proc/recover_all_SS_and_recreate_master: Most stuff should still function but expect instability/runtimes/broken stuff."))
+				message_admins(span_boldannounce("/proc/delete_all_SS_and_recreate_master: Most stuff will be broken but basic stuff like movement and chat should still work."))
 			else if (recovery_result == -1) //Failed to recreate MC
 				defcon--
 			sleep(initial(processing_interval)) //Wait a bit until the next try
@@ -126,23 +129,10 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 	//The goal should always be to get a new Master up and running before anything else
 	. = -1
 	switch (defcon) //The lower defcon goes the harder we try to fix the MC
-		if (4 to 5) //Try to normally recreate the MC two times
+		if (2 to 3) //Try to normally recreate the MC two times
 			. = Recreate_MC()
-		if (3) //Delete the old MC first so we don't transfer any info, in case that caused any issues
+		if (1) //Delete the old MC first so we don't transfer any info, in case that caused any issues
 			del(Master)
-			. = Recreate_MC()
-		if (2) //Recreate all SSs which will still cause data survive due to Recover(), the new Master will then find and take them from global.vars
-			del(Master)
-			var/list/subsytem_types = subtypesof(/datum/controller/subsystem)
-			sortTim(subsytem_types, /proc/cmp_subsystem_init)
-			for(var/I in subsytem_types)
-				new I
-			. = Recreate_MC()
-		if (1) //Delete all existing SS to basically start over
-			del(Master)
-			for(var/global_var in global.vars)
-				if (istype(global.vars[global_var], /datum/controller/subsystem))
-					del(global.vars[global_var])
 			. = Recreate_MC()
 
 	if (. == 1) //We were able to create a new master
@@ -153,6 +143,35 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 	else
 		log_game("FailSafe: Failsafe in emergency state and was unable to recreate MC while in defcon state [defcon_pretty()].")
 		message_admins(span_boldannounce("Failsafe in emergency state and master down, trying to recreate MC while in defcon level [defcon_pretty()] failed."))
+
+///Recreate all SSs which will still cause data survive due to Recover(), the new Master will then find and take them from global.vars
+/proc/recover_all_SS_and_recreate_master()
+	del(Master)
+	var/list/subsytem_types = subtypesof(/datum/controller/subsystem)
+	sortTim(subsytem_types, /proc/cmp_subsystem_init)
+	for(var/I in subsytem_types)
+		new I
+	. = Recreate_MC()
+	if (. == 1) //We were able to create a new master
+		SSticker.Recover(); //Recover the ticket system so the Masters runlevel gets set
+		Master.Initialize(10, FALSE, TRUE) //Need to manually start the MC, normally world.new would do this
+		to_chat(GLOB.admins, span_adminnotice("MC successfully recreated after recovering all subsystems!"))
+	else
+		message_admins(span_boldannounce("Failed to create new MC!"))
+
+///Delete all existing SS to basically start over
+/proc/delete_all_SS_and_recreate_master()
+	del(Master)
+	for(var/global_var in global.vars)
+		if (istype(global.vars[global_var], /datum/controller/subsystem))
+			del(global.vars[global_var])
+	. = Recreate_MC()
+	if (. == 1) //We were able to create a new master
+		SSticker.Recover(); //Recover the ticket system so the Masters runlevel gets set
+		Master.Initialize(10, FALSE, TRUE) //Need to manually start the MC, normally world.new would do this
+		to_chat(GLOB.admins, span_adminnotice("MC successfully recreated after deleting and recreating all subsystems!"))
+	else
+		message_admins(span_boldannounce("Failed to create new MC!"))
 
 /datum/controller/failsafe/proc/defcon_pretty()
 	return defcon
