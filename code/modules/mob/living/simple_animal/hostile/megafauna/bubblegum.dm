@@ -67,15 +67,29 @@ Difficulty: Hard
 	deathsound = 'sound/magic/enter_blood.ogg'
 	small_sprite_type = /datum/action/small_sprite/megafauna/bubblegum
 	faction = list("mining", "boss", "hell")
+	/// Actual time where enrage ends
 	var/enrage_till = 0
+	/// Duration of enrage ability
 	var/enrage_time = 70
+	/// Triple charge ability
+	var/datum/action/cooldown/mob_cooldown/triple_charge
+	/// Hallucination charge ability
+	var/datum/action/cooldown/mob_cooldown/charge/hallucination_charge/hallucination_charge
+	/// Hallucination charge surround ability
+	var/datum/action/cooldown/mob_cooldown/hallucination_charge_surround
+	/// Blood warp ability
+	var/datum/action/cooldown/mob_cooldown/blood_warp
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
 	. = ..()
-	new /datum/action/cooldown/charge/triple_charge().Grant(src)
-	new /datum/action/cooldown/charge/hallucination_charge().Grant(src)
-	new /datum/action/cooldown/charge/hallucination_charge/hallucination_surround().Grant(src)
-	new /datum/action/cooldown/blood_warp().Grant(src)
+	triple_charge = new /datum/action/cooldown/mob_cooldown/charge/triple_charge()
+	hallucination_charge = new /datum/action/cooldown/mob_cooldown/charge/hallucination_charge()
+	hallucination_charge_surround = new /datum/action/cooldown/mob_cooldown/charge/hallucination_charge/hallucination_surround()
+	blood_warp = new /datum/action/cooldown/mob_cooldown/blood_warp()
+	triple_charge.Grant(src)
+	hallucination_charge.Grant(src)
+	hallucination_charge_surround.Grant(src)
+	blood_warp.Grant(src)
 	RegisterSignal(src, COMSIG_BLOOD_WARP, .proc/blood_enrage)
 	RegisterSignal(src, COMSIG_FINISHED_CHARGE, .proc/after_charge)
 
@@ -84,19 +98,15 @@ Difficulty: Hard
 		return
 
 	if(!try_bloodattack() || prob(25 + anger_modifier))
-		var/datum/action/cooldown/BW = locate(/datum/action/cooldown/blood_warp) in actions
-		BW.Trigger(target)
+		blood_warp.Trigger(target)
 
 	if(!BUBBLEGUM_SMASH)
-		var/datum/action/cooldown/TC = locate(/datum/action/cooldown/charge/triple_charge) in actions
-		TC.Trigger(target)
+		triple_charge.Trigger(target)
 	else
 		if(prob(50 + anger_modifier))
-			var/datum/action/cooldown/HC = locate(/datum/action/cooldown/charge/hallucination_charge) in actions
-			HC.Trigger(target)
+			hallucination_charge.Trigger(target)
 		else
-			var/datum/action/cooldown/HCS = locate(/datum/action/cooldown/charge/hallucination_charge/hallucination_surround) in actions
-			HCS.Trigger(target)
+			hallucination_charge_surround.Trigger(target)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood(var/mob/target)
 	var/list/targets = list(target)
@@ -237,8 +247,7 @@ Difficulty: Hard
 	. = ..()
 	anger_modifier = clamp(((maxHealth - health)/60),0,20)
 	enrage_time = initial(enrage_time) * clamp(anger_modifier / 20, 0.5, 1)
-	var/datum/action/cooldown/charge/hallucination_charge/HC = locate(/datum/action/cooldown/charge/hallucination_charge) in actions
-	HC.enraged = BUBBLEGUM_SMASH
+	hallucination_charge.enraged = BUBBLEGUM_SMASH
 	if(. > 0 && prob(25))
 		var/obj/effect/decal/cleanable/blood/gibs/bubblegum/B = new /obj/effect/decal/cleanable/blood/gibs/bubblegum(loc)
 		if(prob(40))

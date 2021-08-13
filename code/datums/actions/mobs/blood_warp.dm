@@ -1,32 +1,32 @@
-/datum/action/cooldown/blood_warp
+/datum/action/cooldown/mob_cooldown/blood_warp
 	name = "Blood Warp"
 	icon_icon = 'icons/effects/blood.dmi'
 	button_icon_state = "floor1"
 	desc = "Allows you to teleport to blood at a clicked position."
 	cooldown_time = 0
-	text_cooldown = FALSE
-	click_to_activate = TRUE
-	shared_cooldown = MOB_SHARED_COOLDOWN
 	/// The range of turfs to try to jaunt to from around the target
 	var/pick_range = 5
+	/// The range of turfs if a client is using this ability
+	var/client_pick_range = 0
 	/// Whether or not to remove the inside of our radius from the possible pools to jaunt to
 	var/remove_inner_pools = TRUE
 
-/datum/action/cooldown/blood_warp/Activate(var/atom/target_atom)
+/datum/action/cooldown/mob_cooldown/blood_warp/Activate(var/atom/target_atom)
 	StartCooldown(100)
 	blood_warp(target_atom)
 	StartCooldown()
 
-/datum/action/cooldown/blood_warp/proc/blood_warp(var/atom/target)
+/datum/action/cooldown/mob_cooldown/blood_warp/proc/blood_warp(var/atom/target)
 	if(owner.Adjacent(target))
 		return FALSE
 	var/list/can_jaunt = get_bloodcrawlable_pools(get_turf(owner), 1)
 	if(!can_jaunt.len)
 		return FALSE
 
-	var/list/pools = get_bloodcrawlable_pools(get_turf(target), pick_range)
+	var/chosen_pick_range = get_pick_range()
+	var/list/pools = get_bloodcrawlable_pools(get_turf(target), chosen_pick_range)
 	if(remove_inner_pools)
-		var/list/pools_to_remove = get_bloodcrawlable_pools(get_turf(target), pick_range - 1)
+		var/list/pools_to_remove = get_bloodcrawlable_pools(get_turf(target), chosen_pick_range - 1)
 		pools -= pools_to_remove
 	if(!pools.len)
 		return FALSE
@@ -40,9 +40,9 @@
 	qdel(DA)
 
 	var/obj/effect/decal/cleanable/blood/found_bloodpool
-	pools = get_bloodcrawlable_pools(get_turf(target), pick_range)
+	pools = get_bloodcrawlable_pools(get_turf(target), chosen_pick_range)
 	if(remove_inner_pools)
-		var/list/pools_to_remove = get_bloodcrawlable_pools(get_turf(target), pick_range - 1)
+		var/list/pools_to_remove = get_bloodcrawlable_pools(get_turf(target), chosen_pick_range - 1)
 		pools -= pools_to_remove
 	if(pools.len)
 		shuffle_inplace(pools)
@@ -57,13 +57,15 @@
 		return TRUE
 	return FALSE
 
+/datum/action/cooldown/mob_cooldown/blood_warp/proc/get_pick_range()
+	if(owner.client)
+		return client_pick_range
+	return pick_range
+
 /proc/get_bloodcrawlable_pools(turf/T, range)
+	if(range < 0)
+		return list()
 	. = list()
 	for(var/obj/effect/decal/cleanable/nearby in view(T, range))
 		if(nearby.can_bloodcrawl_in())
 			. += nearby
-
-/datum/action/cooldown/blood_warp/targeted
-	cooldown_time = 20
-	pick_range = 1
-	remove_inner_pools = FALSE

@@ -448,6 +448,8 @@
 #include "code\datums\actions\beam_rifle.dm"
 #include "code\datums\actions\mobs\blood_warp.dm"
 #include "code\datums\actions\mobs\charge.dm"
+#include "code\datums\actions\mobs\mobcooldown.dm"
+#include "code\datums\actions\mobs\projectileattack.dm"
 #include "code\datums\ai\_ai_behavior.dm"
 #include "code\datums\ai\_ai_controller.dm"
 #include "code\datums\ai\_item_behaviors.dm"

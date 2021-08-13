@@ -629,10 +629,15 @@
 /datum/action/cooldown
 	check_flags = NONE
 	transparent_when_unavailable = FALSE
+	// The default cooldown applied when StartCooldown() is called
 	var/cooldown_time = 0
+	// The actual next time this ability can be used
 	var/next_use_time = 0
+	// Whether or not you want the cooldown for the ability to display in text form
 	var/text_cooldown = TRUE
+	// Setting for intercepting clicks before activating the ability
 	var/click_to_activate = FALSE
+	// Shares cooldowns with other cooldown abilities of the same value, not active if null
 	var/shared_cooldown
 
 /datum/action/cooldown/New()
@@ -646,8 +651,9 @@
 /datum/action/cooldown/IsAvailable()
 	return next_use_time <= world.time
 
-/datum/action/cooldown/proc/StartCooldown(override_cooldown_time, original = TRUE)
-	if(shared_cooldown && original)
+/// Starts a cooldown time, will use default cooldown time if an override is not specified, shares that cooldown with similar abilities
+/datum/action/cooldown/proc/StartCooldown(override_cooldown_time, will_share_cooldowns = TRUE)
+	if(shared_cooldown && will_share_cooldowns)
 		for(var/datum/action/cooldown/C in owner.actions - src)
 			if(shared_cooldown == C.shared_cooldown)
 				if(isnum(override_cooldown_time))
@@ -668,12 +674,17 @@
 			return
 		if(click_to_activate)
 			if(A)
+				// For automatic / mob handling
 				InterceptClickOn(owner, null, A)
 				return
-			owner.click_intercept = src
+			if(owner.click_intercept == src)
+				owner.click_intercept = null
+				to_chat(owner, "<b>[src] is no longer active</b>")
+			else
+				owner.click_intercept = src
+				to_chat(owner, "<b>You are now prepared to use [src]</b>")
 			for(var/datum/action/cooldown/C in owner.actions)
 				C.UpdateButtonIcon()
-			to_chat(owner, "<b>You are now prepared to use [src]</b>")
 			return
 		Activate(owner)
 

@@ -1,4 +1,4 @@
-/datum/action/cooldown/charge
+/datum/action/cooldown/mob_cooldown/charge
 	name = "Charge"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
@@ -22,7 +22,7 @@
 	/// Associative direction list of chargers that lets our move signal know how we are supposed to move
 	var/list/next_move_allowed = list()
 
-/datum/action/cooldown/charge/New(Target, delay, past, speed, damage, destroy)
+/datum/action/cooldown/mob_cooldown/charge/New(Target, delay, past, speed, damage, destroy)
 	. = ..()
 	if(delay)
 		charge_delay = delay
@@ -35,13 +35,16 @@
 	if(destroy)
 		destroy_objects = destroy
 
-/datum/action/cooldown/charge/Activate(atom/target_atom)
+/datum/action/cooldown/mob_cooldown/charge/Activate(atom/target_atom)
 	// start pre-cooldown so that the ability can't come up while the charge is happening
 	StartCooldown(100)
-	do_charge(owner, target_atom, charge_delay, charge_past)
+	charge_sequence(owner, target_atom, charge_delay, charge_past)
 	StartCooldown()
 
-/datum/action/cooldown/charge/proc/do_charge(atom/movable/charger, atom/target_atom, delay, past)
+/datum/action/cooldown/mob_cooldown/charge/proc/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
+	do_charge(owner, target_atom, charge_delay, charge_past)
+
+/datum/action/cooldown/mob_cooldown/charge/proc/do_charge(atom/movable/charger, atom/target_atom, delay, past)
 	if(!target_atom || target_atom == owner)
 		return
 	var/chargeturf = get_turf(target_atom)
@@ -63,6 +66,7 @@
 	SLEEP_CHECK_DEATH(delay, charger)
 	var/distance = get_dist(charger, T)
 	for(var/i in 1 to distance)
+		// Prevents movement from the user during the charge
 		SLEEP_CHECK_DEATH(charge_speed, charger)
 		next_move_allowed[charger] = get_dir(charger, T)
 		step_towards(charger, T)
@@ -74,23 +78,25 @@
 	SEND_SIGNAL(owner, COMSIG_FINISHED_CHARGE)
 	return TRUE
 
-/datum/action/cooldown/charge/proc/on_move(atom/source, atom/new_loc)
+/datum/action/cooldown/mob_cooldown/charge/proc/on_move(atom/source, atom/new_loc)
 	var/expected_dir = next_move_allowed[source]
 	if(!expected_dir)
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	var/real_dir = get_dir(source, new_loc)
 	if(!(expected_dir & real_dir))
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+	// Disable the flag for the direction we moved (this is so diagonal movements can be fully completed)
 	next_move_allowed[source] = expected_dir & ~real_dir
 	if(charging[source])
 		new /obj/effect/temp_visual/decoy/fading(source.loc, source)
 		DestroySurroundings(source)
 
-/datum/action/cooldown/charge/proc/on_moved(atom/source)
+/datum/action/cooldown/mob_cooldown/charge/proc/on_moved(atom/source)
 	if(charging[source])
+		playsound(src, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
 		DestroySurroundings(source)
 
-/datum/action/cooldown/charge/proc/DestroySurroundings(atom/movable/charger)
+/datum/action/cooldown/mob_cooldown/charge/proc/DestroySurroundings(atom/movable/charger)
 	if(!destroy_objects)
 		return
 	for(var/dir in GLOB.cardinals)
@@ -108,7 +114,7 @@
 				O.attack_animal(charger)
 				break
 
-/datum/action/cooldown/charge/proc/on_bump(atom/movable/source, atom/A)
+/datum/action/cooldown/mob_cooldown/charge/proc/on_bump(atom/movable/source, atom/A)
 	if(charging[source])
 		if(isturf(A) || isobj(A) && A.density)
 			if(isobj(A))
@@ -118,7 +124,7 @@
 		DestroySurroundings()
 		hit_target(source, A, charge_damage)
 
-/datum/action/cooldown/charge/proc/hit_target(atom/movable/source, atom/A, damage_dealt)
+/datum/action/cooldown/mob_cooldown/charge/proc/hit_target(atom/movable/source, atom/A, damage_dealt)
 	if(!isliving(A))
 		return
 	var/mob/living/L = A
@@ -129,18 +135,16 @@
 	shake_camera(L, 4, 3)
 	shake_camera(source, 2, 3)
 
-/datum/action/cooldown/charge/triple_charge
+/datum/action/cooldown/mob_cooldown/charge/triple_charge
 	name = "Triple Charge"
 	desc = "Allows you to charge three times at a chosen position."
 	charge_delay = 6
 
-/datum/action/cooldown/charge/triple_charge/Activate(var/atom/target_atom)
-	StartCooldown(100)
+/datum/action/cooldown/mob_cooldown/charge/triple_charge/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
 	for(var/i in 0 to 2)
 		do_charge(owner, target_atom, charge_delay - 2 * i, charge_past)
-	StartCooldown()
 
-/datum/action/cooldown/charge/hallucination_charge
+/datum/action/cooldown/mob_cooldown/charge/hallucination_charge
 	name = "Hallucination Charge"
 	icon_icon = 'icons/effects/bubblegum.dmi'
 	button_icon_state = "smack ya one"
@@ -152,8 +156,7 @@
 	/// Check to see if we are enraged, enraged ability does more
 	var/enraged = FALSE
 
-/datum/action/cooldown/charge/hallucination_charge/Activate(var/atom/target_atom)
-	StartCooldown(100)
+/datum/action/cooldown/mob_cooldown/charge/hallucination_charge/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
 	if(!enraged)
 		hallucination_charge(target_atom, 6, 8, 0, 6, TRUE)
 		StartCooldown(cooldown_time * 0.5)
@@ -162,14 +165,13 @@
 		hallucination_charge(target_atom, 4, 9 - 2 * i, 0, 4, TRUE)
 	for(var/i in 0 to 2)
 		do_charge(owner, target_atom, charge_delay - 2 * i, charge_past)
-	StartCooldown()
 
-/datum/action/cooldown/charge/hallucination_charge/do_charge(atom/movable/charger, atom/target_atom, delay, past)
+/datum/action/cooldown/mob_cooldown/charge/hallucination_charge/do_charge(atom/movable/charger, atom/target_atom, delay, past)
 	. = ..()
 	if(charger != owner)
 		qdel(charger)
 
-/datum/action/cooldown/charge/hallucination_charge/proc/hallucination_charge(atom/target_atom, clone_amount, delay, past, radius, use_self)
+/datum/action/cooldown/mob_cooldown/charge/hallucination_charge/proc/hallucination_charge(atom/target_atom, clone_amount, delay, past, radius, use_self)
 	var/starting_angle = rand(1, 360)
 	if(!radius)
 		return
@@ -189,13 +191,13 @@
 	if(use_self)
 		do_charge(owner, target_atom, delay, past)
 
-/datum/action/cooldown/charge/hallucination_charge/hit_target(atom/movable/source, atom/A, damage_dealt)
+/datum/action/cooldown/mob_cooldown/charge/hallucination_charge/hit_target(atom/movable/source, atom/A, damage_dealt)
 	var/applied_damage = charge_damage
 	if(source != owner)
 		applied_damage = hallucination_damage
 	. = ..(source, A, applied_damage)
 
-/datum/action/cooldown/charge/hallucination_charge/hallucination_surround
+/datum/action/cooldown/mob_cooldown/charge/hallucination_charge/hallucination_surround
 	name = "Surround Target"
 	icon_icon = 'icons/turf/walls/wall.dmi'
 	button_icon_state = "wall-0"
@@ -203,9 +205,7 @@
 	charge_delay = 6
 	charge_past = 2
 
-/datum/action/cooldown/charge/hallucination_charge/hallucination_surround/Activate(var/atom/target_atom)
-	StartCooldown(100)
+/datum/action/cooldown/mob_cooldown/charge/hallucination_charge/hallucination_surround/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
 	for(var/i in 0 to 4)
 		hallucination_charge(target_atom, 2, 8, 2, 2, FALSE)
 		do_charge(owner, target_atom, charge_delay, charge_past)
-	StartCooldown()

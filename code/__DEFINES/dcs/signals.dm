@@ -1384,3 +1384,7 @@
 //Mob ability signals
 #define COMSIG_BLOOD_WARP "mob_ability_blood_warp"
 #define COMSIG_FINISHED_CHARGE "mob_ability_charge_finished"
+#define COMSIG_PROJECTILE_FIRING_STARTED "mob_ability_started_projectile"
+#define COMSIG_PROJECTILE_FIRING_FINISHED "mob_ability_fired_projectile"
+#define COMSIG_SPIRAL_ATTACK_START "mob_spiral_attack_start"
+#define COMSIG_SPIRAL_ATTACK_FINISHED "mob_spiral_attack_finished"
