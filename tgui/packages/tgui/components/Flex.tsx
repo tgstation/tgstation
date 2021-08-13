@@ -5,6 +5,7 @@
  */
 
 import { BooleanLike, classes, pureComponentHooks } from 'common/react';
+import { forwardRef, SFC } from 'inferno';
 import { Box, BoxProps, unit } from './Box';
 
 export interface FlexProps extends BoxProps {
@@ -47,9 +48,11 @@ export const computeFlexProps = (props: FlexProps) => {
   };
 };
 
-export const Flex = (props: FlexProps) => (
-  <Box {...computeFlexProps(props)} />
-);
+export const Flex: SFC<FlexProps> & {
+  Item: SFC<FlexItemProps>,
+} = forwardRef((props: FlexProps, ref) => (
+  <Box ref={ref} {...computeFlexProps(props)} />
+)) as unknown as any; // Item will be defined later, so force the type for now
 
 Flex.defaultHooks = pureComponentHooks;
 
@@ -93,9 +96,9 @@ export const computeFlexItemProps = (props: FlexItemProps) => {
   };
 };
 
-const FlexItem = props => (
-  <Box {...computeFlexItemProps(props)} />
-);
+const FlexItem = forwardRef((props, ref) => (
+  <Box ref={ref} {...computeFlexItemProps(props)} />
+));
 
 FlexItem.defaultHooks = pureComponentHooks;
 

@@ -5,7 +5,7 @@
 // You do not need to raise this if you are adding new values that have sane defaults.
 // Only raise this value when changing the meaning/format/name/layout of an existing value
 // where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 40
+#define SAVEFILE_VERSION_MAX 41
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -93,6 +93,21 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (current_version < 40)
 		LAZYADD(key_bindings["Space"], "hold_throw_mode")
 
+	if (current_version < 41)
+		var/new_key_bindings = list()
+
+		for (var/hotkey in key_bindings)
+			if (hotkey == "Unbound")
+				continue
+
+			for (var/keybind in key_bindings[hotkey])
+				if (keybind in new_key_bindings)
+					new_key_bindings[keybind] += hotkey
+				else
+					new_key_bindings[keybind] = list(hotkey)
+
+		key_bindings = new_key_bindings
+
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	return
 
@@ -100,25 +115,25 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/check_keybindings()
 	if(!parent)
 		return
-	var/list/user_binds = list()
-	for (var/key in key_bindings)
-		for(var/kb_name in key_bindings[key])
-			user_binds[kb_name] += list(key)
+	var/list/binds_by_key = key_bindings
+	for (var/kb_name in key_bindings)
+		for(var/key in key_bindings[kb_name])
+			binds_by_key[key] += list(kb_name)
 	var/list/notadded = list()
 	for (var/name in GLOB.keybindings_by_name)
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[name]
-		if(length(user_binds[kb.name]))
+		if(length(key_bindings[kb.name]))
 			continue // key is unbound and or bound to something
 		var/addedbind = FALSE
 		if(hotkeys)
 			for(var/hotkeytobind in kb.hotkey_keys)
-				if(!length(key_bindings[hotkeytobind]) || hotkeytobind == "Unbound") //Only bind to the key if nothing else is bound expect for Unbound
-					LAZYADD(key_bindings[hotkeytobind], kb.name)
+				if(!length(binds_by_key[hotkeytobind]) || hotkeytobind == "Unbound") //Only bind to the key if nothing else is bound expect for Unbound
+					LAZYADD(key_bindings[kb.name], hotkeytobind)
 					addedbind = TRUE
 		else
 			for(var/classickeytobind in kb.classic_keys)
-				if(!length(key_bindings[classickeytobind]) || classickeytobind == "Unbound") //Only bind to the key if nothing else is bound expect for Unbound
-					LAZYADD(key_bindings[classickeytobind], kb.name)
+				if(!length(binds_by_key[classickeytobind]) || classickeytobind == "Unbound") //Only bind to the key if nothing else is bound expect for Unbound
+					LAZYADD(key_bindings[kb.name], classickeytobind)
 					addedbind = TRUE
 		if(!addedbind)
 			notadded += kb
@@ -232,6 +247,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	// Custom hotkeys
 	READ_FILE(S["key_bindings"], key_bindings)
 	check_keybindings() // this apparently fails every time and overwrites any unloaded prefs with the default values, so don't load anything after this line or it won't actually save
+	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -560,10 +576,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /proc/sanitize_keybindings(value)
 	var/list/base_bindings = sanitize_islist(value,list())
-	for(var/key in base_bindings)
-		base_bindings[key] = base_bindings[key] & GLOB.keybindings_by_name
-		if(!length(base_bindings[key]))
-			base_bindings -= key
+	for(var/keybind_name in base_bindings)
+		if (!(keybind_name in GLOB.keybindings_by_name))
+			base_bindings -= keybind_name
 	return base_bindings
 
 #undef SAVEFILE_VERSION_MAX

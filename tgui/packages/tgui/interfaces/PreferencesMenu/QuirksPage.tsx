@@ -173,7 +173,7 @@ export class QuirksPage extends Component<{}, QuirksPageState> {
   }
 
   render() {
-    const { act, data } = useBackend<PreferencesMenuData>(this.context);
+    const { act } = useBackend<PreferencesMenuData>(this.context);
 
     if (!this.state.quirkInfo) {
       return <Box>Loading quirks...</Box>;

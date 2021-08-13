@@ -5,9 +5,10 @@
  */
 
 import { BooleanLike, classes, pureComponentHooks } from 'common/react';
-import { createVNode, InfernoNode } from 'inferno';
+import { createVNode, forwardRef, InfernoNode } from 'inferno';
 import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
 import { CSS_COLORS } from '../constants';
+import { logger } from '../logging';
 
 export interface BoxProps {
   [key: string]: any;
@@ -258,7 +259,7 @@ export const computeBoxClassName = (props: BoxProps) => {
   ]);
 };
 
-export const Box = (props: BoxProps) => {
+export const Box = forwardRef((props: BoxProps, ref) => {
   const {
     as = 'div',
     className,
@@ -280,7 +281,10 @@ export const Box = (props: BoxProps) => {
     computedClassName,
     children,
     ChildFlags.UnknownChildren,
-    computedProps);
-};
+    computedProps,
+    undefined,
+    ref,
+  );
+});
 
 Box.defaultHooks = pureComponentHooks;

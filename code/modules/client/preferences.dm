@@ -39,8 +39,13 @@ GLOBAL_VAR(preferences_species_data)
 	///Whether emotes will be displayed on runechat. Requires chat_on_map to have effect. Boolean.
 	var/see_rc_emotes = TRUE
 
-	// Custom Keybindings
+	/// Custom keybindings. Map of keybind names to keyboard inputs.
+	/// For example, by default would have "swap_hands" -> list("X")
 	var/list/key_bindings = list()
+
+	/// Cached list of keybindings, mapping keys to actions.
+	/// For example, by default would have "X" -> list("swap_hands")
+	var/list/key_bindings_by_key = list()
 
 	var/tgui_fancy = TRUE
 	var/tgui_lock = FALSE
@@ -182,7 +187,10 @@ GLOBAL_VAR(preferences_species_data)
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	randomise_appearance_prefs() //let's create a random character then - rather than a fat, bald and naked man.
-	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
+
+	key_bindings = deepCopyList(GLOB.default_hotkeys) // give them default keybinds and update their movement keys
+	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
+
 	C?.set_macros()
 
 	if(!loaded_preferences_successfully)
@@ -700,6 +708,15 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 			return
 		else
 			custom_names[name_id] = sanitized_name
+
+/datum/preferences/proc/get_key_bindings_by_key(list/key_bindings)
+	var/list/output = list()
+
+	for (var/action in key_bindings)
+		for (var/key in key_bindings[action])
+			LAZYADD(output[key], action)
+
+	return output
 
 /proc/generate_preferences_species_data()
 	var/list/food_flags = FOOD_FLAGS

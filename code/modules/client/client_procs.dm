@@ -952,8 +952,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!D?.key_bindings)
 		return
 	movement_keys = list()
-	for(var/key in D.key_bindings)
-		for(var/kb_name in D.key_bindings[key])
+	for(var/kb_name in D.key_bindings)
+		for(var/key in D.key_bindings[kb_name])
 			switch(kb_name)
 				if("North")
 					movement_keys[key] = NORTH
