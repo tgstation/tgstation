@@ -21,7 +21,7 @@
 	if(.)
 		ADD_TRAIT(target, TRAIT_MINDSHIELD, IMPLANT_TRAIT)
 		target.sec_hud_set_implants()
-		SEND_SIGNAL(target, COMSIG_MINDSHIELDED_IMPLANTED, user, src)
+		SEND_SIGNAL(target, COMSIG_MINDSHIELDED_IMPLANTED, user)
 		if(!silent)
 			to_chat(target, span_notice("You feel a sense of peace and security. You are now protected from brainwashing."))
 		return TRUE
