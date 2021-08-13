@@ -36,12 +36,16 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 	if (!Master || defcon == 0) //Master is gone/not responding and Failsafe just exited its loop
 		defcon = 5 //Reset defcon level as its used inside the emergency loop
 		while (defcon > 0)
-			if (emergency_loop() == 1) //Exit emergency loop and delete self if it was able to recover MC
+			var/recovery_result = emergency_loop()
+			if (recovery_result == 1) //Exit emergency loop and delete self if it was able to recover MC
 				break
-			else if (defcon == 1)
+			else if (defcon == 1) //Exit Failsafe if we weren't able to recover the MC in the last stage
 				log_game("FailSafe: Failed to recover MC while in emergency state. Failsafe exiting.")
 				message_admins(span_boldannounce("Failsafe failed criticaly while trying to recreate broken MC. Please manually fix the MC or reboot the server. Failsafe exiting now."))
-			defcon--
+			else if (recovery_result == -1) //Failed to recreate MC
+				defcon--
+			sleep(initial(processing_interval)) //Wait a bit until the next try
+
 	if(!QDELETED(src))
 		qdel(src) //when Loop() returns, we delete ourselves and let the mc recreate us
 
