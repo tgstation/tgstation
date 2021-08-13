@@ -435,6 +435,8 @@
  * Merges as much of src into target_stack as possible. If present, the limit arg overrides target_stack.max_amount for transfer.
  *
  * This calls use() without check = FALSE, preventing the item from qdeling itself if it reaches 0 stack size.
+ *
+ * As a result, this proc can leave behind a 0 amount stack.
  */
 /obj/item/stack/proc/merge_without_del(obj/item/stack/target_stack, limit)
 	// Cover edge cases where multiple stacks are being merged together and haven't been deleted properly.
@@ -461,7 +463,7 @@
 /**
  * Merges as much of src into target_stack as possible. If present, the limit arg overrides target_stack.max_amount for transfer.
  *
- * These deletes src if the remaining amount after the transfer is 0.
+ * This proc deletes src if the remaining amount after the transfer is 0.
  */
 /obj/item/stack/proc/merge(obj/item/stack/target_stack, limit)
 	. = merge_without_del(target_stack, limit)
