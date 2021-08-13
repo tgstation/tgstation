@@ -82,7 +82,7 @@
 	update_weight()
 	update_appearance()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = .proc/on_movable_entered_occupied_turf,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -469,10 +469,16 @@
 		qdel(src)
 	return
 
-/obj/item/stack/proc/on_entered(datum/source, atom/movable/crossing)
+/// Signal handler for connect_loc element. Called when a movable enters the turf we're currently occupying. Merges if possible.
+/obj/item/stack/proc/on_movable_entered_occupied_turf(datum/source, atom/movable/arrived)
 	SIGNAL_HANDLER
-	if(!crossing.throwing && can_merge(crossing))
-		INVOKE_ASYNC(src, .proc/merge, crossing)
+
+	// Edge case. This signal will also be sent when src has entered the turf. Don't want to merge with ourselves.
+	if(arrived == src)
+		return
+
+	if(!arrived.throwing && can_merge(arrived))
+		INVOKE_ASYNC(src, .proc/merge, arrived)
 
 /obj/item/stack/hitby(atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(can_merge(hitting))
