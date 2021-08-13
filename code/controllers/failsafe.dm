@@ -34,7 +34,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 	set waitfor = FALSE
 	Failsafe.Loop()
 	if (!Master || defcon == 0) //Master is gone/not responding and Failsafe just exited its loop
-		defcon = 1 //Reset defcon level as its used inside the emergency loop
+		defcon = 5 //Reset defcon level as its used inside the emergency loop
 		while (defcon > 0)
 			if (emergency_loop() == 1) //Exit emergency loop and delete self if it was able to recover MC
 				break
