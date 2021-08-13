@@ -72,7 +72,7 @@
 	var/mutation_type = mutation
 	if(istype(mutation, /datum/mutation/human))
 		var/datum/mutation/human/HM = mutation
-		mutation_type = HM.type	
+		mutation_type = HM.type
 	if(get_mutation(mutation_type))
 		return
 	SEND_SIGNAL(holder, COMSIG_CARBON_GAIN_MUTATION, mutation_type, class)
