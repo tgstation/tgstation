@@ -45,8 +45,10 @@ GLOBAL_LIST_EMPTY(frill_objects)
 	var/turf/turf_or_movable = source
 	var/turf/operator_turf = isturf(source) ? get_step(turf_or_movable, NORTH) : turf_or_movable
 	if(operator_turf)
-		operator_turf.vis_contents -= get_frill_object(icon_path, turf_or_movable.smoothing_junction, TRUE)
-		operator_turf.vis_contents += get_frill_object(icon_path, new_junction, TRUE)
+		if(!(source.smoothing_junction & NORTH))
+			operator_turf.vis_contents -= get_frill_object(icon_path, turf_or_movable.smoothing_junction, TRUE)
+		if(!(new_junction & NORTH))
+			operator_turf.vis_contents += get_frill_object(icon_path, new_junction, TRUE)
 
 
 /atom/movable/visual/frill
