@@ -20,6 +20,11 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	if(general_data["display_name"])
 		set_display_name(general_data["display_name"])
 
+	var/list/variable_data = general_data["variables"]
+	for(var/list/variable as anything in variable_data)
+		var/variable_name = variable["name"]
+		circuit_variables[variable_name] = new /datum/circuit_variable(variable_name, variable["datatype"])
+
 	admin_only = general_data["admin_only"]
 
 	var/list/circuit_data = general_data["components"]
@@ -163,6 +168,15 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	general_data["external_objects"] = external_objects_key
 	general_data["display_name"] = display_name
 	general_data["admin_only"] = admin_only
+
+	var/list/variables = list()
+	for(var/variable_identifier in circuit_variables)
+		var/list/new_data = list()
+		var/datum/circuit_variable/variable = circuit_variables[variable_identifier]
+		new_data["name"] = variable.name
+		new_data["datatype"] = variable.datatype
+		variables += list(new_data)
+	general_data["variables"] = variables
 
 	return json_encode(general_data)
 

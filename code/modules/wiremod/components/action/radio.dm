@@ -45,7 +45,7 @@
 
 /obj/item/circuit_component/radio/input_received(datum/port/input/port)
 	. = ..()
-	freq.set_input(sanitize_frequency(freq.value, TRUE))
+	freq.set_value(sanitize_frequency(freq.value, TRUE))
 	if(.)
 		return
 	var/frequency = freq.value

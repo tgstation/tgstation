@@ -211,7 +211,7 @@
 
 /obj/item/circuit_component/module/ui_static_data(mob/user)
 	. = list()
-	.["global_port_types"] = GLOB.wiremod_types
+	.["global_port_types"] = GLOB.wiremod_basic_types
 
 /obj/item/circuit_component/module/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/circuit_component))
@@ -280,7 +280,7 @@
 
 			if(action == "set_port_type")
 				var/type = params["port_type"]
-				if(!(type in GLOB.wiremod_types))
+				if(!(type in GLOB.wiremod_basic_types))
 					return
 				component_port.set_datatype(type)
 				internal_component_port.set_datatype(type)
