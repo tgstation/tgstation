@@ -261,7 +261,7 @@
 	var/list/targets = attached_console.get_targets()
 
 	if (COMPONENT_TRIGGERED_BY(set_target_trigger, port))
-		var/target = targets[new_target.input_value]
+		var/target = targets[new_target.value]
 		if (!target)
 			on_fail.set_output(COMPONENT_SIGNAL)
 			return .

@@ -280,3 +280,82 @@
   - bugfix: draws moth antennae when you're wearing helmets again (oops)
   aaaa1023:
   - bugfix: fixed an error caused by toilets taking damage after they were deconstructed
+2021-08-10:
+  ArchPigeon:
+  - bugfix: fix reattaching of monkey bodyparts
+  Krysonism:
+  - expansion: Adds a new illicit drug; bLasToFF, perfect for when you want to dance.
+  - expansion: Adds a new illicit drug; SaturnX, perfect for when you just want to
+      disappear.
+  - expansion: Adds a new illicit drug; Kroncaine, perfect for when you need to get
+      shit done.
+  - expansion: The seeds of a rare plant; the kronkus vine can now spawn in maint.
+  - expansion: Lead batteries and pipes can now spawn in maint.
+  - rscdel: Removed crank.
+  - balance: Mushroom hallucinogen has a new trippy effect, but no longer makes you
+      druggy or dizzy.
+  Mothblocks:
+  - qol: Observers can now read circuits from anywhere.
+  - expansion: Added USB support to teleporter control consoles.
+  Nari Harimoto:
+  - bugfix: Nanotrasen architects realized they cut too many corners and left out
+      a number of airlock cycle controls on Tramstation, they have since returned
+      and fixed their mistakes
+  - bugfix: Icebox service disposals has now been professionally connected
+  - bugfix: Icebox service has now been tweaked to be up to NT standards
+  - bugfix: Pete has now been assigned to icebox freezer again
+  Triiodine:
+  - qol: NanoTrasen sent some engineers in and revised the Virology Module on Ice
+      box Station, and have also supplied standard equipment available on other station
+      labs that Ice Box had been missing. The structure changes have caused maintenance
+      to expand slightly.
+2021-08-11:
+  InsaneRed:
+  - bugfix: Fixed up distro pipes on botany of tramstation, adds 2 extra water tanks
+  Ryll/Shaps:
+  - bugfix: Default AI behavior cooldowns have been returned back to 0,8 seconds instead
+      of 0.1 seconds, meaning Ian will no longer disembowel you with 20 attacks in
+      2 seconds.
+2021-08-12:
+  EricZilla:
+  - imageadd: Centcom finally sent us new PDAs. The uh, clown one keeps looking at
+      me.
+  Fikou:
+  - bugfix: fixes cannons not working
+  Gamer025:
+  - code_imp: url_encode and decode now try to stringify inputs
+  Gamer025 & Wayland-Smithy:
+  - bugfix: Submenus like Sound and Ghost inside Settings are no longer gone
+  Gurkenglas:
+  - qol: All circuit component input ports act as a combiner.
+  - refactor: 'Circuits: set_input and set_output are now put. input_value and output_value
+      are now value.'
+  InsaneRed:
+  - rscadd: the crystallizer can now produce crystalized hyper noblium that makes
+      your clothes pressure proof! not dying to pressure from other people is not
+      guaranteed.
+  MMMiracles:
+  - bugfix: Spider midwives can no longer send commands while dead
+  - bugfix: Nurse spiders can no longer heal dead spiders and get a message when trying
+      to do so.
+  Whoneedspacee:
+  - bugfix: Megafauna are no longer stopped by corpses and chairs.
+  sqnztb:
+  - bugfix: Navigation computers can now arbitrarily land on top z-level openspace.
+2021-08-13:
+  AMonkeyThatCodes:
+  - spellcheck: Areas where it makes sense now have \improper pre-fixed to them
+  Fikou:
+  - bugfix: fixes some megafauna shooting too fast
+  Ghommie:
+  - bugfix: Food preference quirks are no longer broken by species change.
+  Jordie0608:
+  - admin: Round id when a note was made in now displayed in the notes panel
+  Seris02:
+  - bugfix: dchat clogging of clientless mobs is gone
+  Wayland-Smithy:
+  - admin: Improved invisimin toggle messages.
+  - bugfix: Fixed Oingo Boingo Punch-face! not displacing airlocks.
+  - bugfix: Fixed shotgun meteorslugs not displacing airlocks.
+  - bugfix: Fixed chocolate surprise easter eggs being edible before they are unwrapped
+      and tasting like egg.

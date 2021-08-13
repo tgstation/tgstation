@@ -29,8 +29,8 @@
 	if(.)
 		return
 
-	var/min_val = minimum.input_value || 0
-	var/max_val = maximum.input_value || 0
+	var/min_val = minimum.value || 0
+	var/max_val = maximum.value || 0
 
 	if(max_val < min_val)
 		output.set_output(0)

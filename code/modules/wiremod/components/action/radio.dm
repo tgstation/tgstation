@@ -45,27 +45,27 @@
 
 /obj/item/circuit_component/radio/input_received(datum/port/input/port)
 	. = ..()
-	freq.set_input(sanitize_frequency(freq.input_value, TRUE), FALSE)
+	freq.set_value(sanitize_frequency(freq.value, TRUE))
 	if(.)
 		return
-	var/frequency = freq.input_value
+	var/frequency = freq.value
 
 	SSradio.remove_object(src, current_freq)
 	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
 	current_freq = frequency
 
 	if(COMPONENT_TRIGGERED_BY(trigger_input, port))
-		var/datum/signal/signal = new(list("code" = round(code.input_value) || 0, "key" = parent?.owner_id))
+		var/datum/signal/signal = new(list("code" = round(code.value) || 0, "key" = parent?.owner_id))
 		radio_connection.post_signal(src, signal)
 
 /obj/item/circuit_component/radio/receive_signal(datum/signal/signal)
 	. = FALSE
 	if(!signal)
 		return
-	if(signal.data["code"] != round(code.input_value || 0))
+	if(signal.data["code"] != round(code.value || 0))
 		return
 
-	if(public_options.input_value == COMP_RADIO_PRIVATE && parent?.owner_id != signal.data["key"])
+	if(public_options.value == COMP_RADIO_PRIVATE && parent?.owner_id != signal.data["key"])
 		return
 
 	trigger_output.set_output(COMPONENT_SIGNAL)
