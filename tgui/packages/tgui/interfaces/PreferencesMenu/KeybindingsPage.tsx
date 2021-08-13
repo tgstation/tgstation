@@ -3,7 +3,6 @@ import { Box, Button, Flex, Icon, Section, Stack, Table, Tooltip } from "../../c
 import { resolveAsset } from "../../assets";
 import { PreferencesMenuData } from "./data";
 import { useBackend, useLocalState } from "../../backend";
-import { logger } from "../../logging";
 
 type Keybinding = {
   name: string;
@@ -31,6 +30,20 @@ const isStandardKey = (event: KeyboardEvent): boolean => {
     && event.key !== "Shift";
 };
 
+const KEY_CODE_TO_BYOND: Record<string, string> = {
+  "DEL": "Delete",
+  "DOWN": "South",
+  "END": "Southwest",
+  "HOME": "Northwest",
+  "INSERT": "Insert",
+  "LEFT": "West",
+  "PAGEDOWN": "Southeast",
+  "PAGEUP": "Northeast",
+  "RIGHT": "East",
+  "SPACEBAR": "Space",
+  "UP": "North",
+};
+
 // MOTHBLOCKS TODO: The Southwest shit? _kbMap
 const formatKeyboardEvent = (event: KeyboardEvent): string => {
   let text = "";
@@ -52,7 +65,8 @@ const formatKeyboardEvent = (event: KeyboardEvent): string => {
   }
 
   if (isStandardKey(event)) {
-    text += event.key.toUpperCase();
+    const key = event.key.toUpperCase();
+    text += KEY_CODE_TO_BYOND[key] || key;
   }
 
   return text;
@@ -78,11 +92,18 @@ const KeybindingButton = (props: {
 
 const ResetToDefaultButton = (props: {
   keybindingId: string,
-}) => {
+}, context) => {
+  const { act } = useBackend<PreferencesMenuData>(context);
+
   return (
     <Button
       fluid
       textAlign="center"
+      onClick={() => {
+        act("reset_keybinds_to_defaults", {
+          keybind_name: props.keybindingId,
+        });
+      }}
     >
       Reset to Defaults
     </Button>
@@ -93,6 +114,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
   categoryRefs: Record<string, RefObject<HTMLDivElement>> = {};
   keybindingsSectionRef: RefObject<HTMLDivElement> = createRef();
   keybindingOnClicks: Record<string, (() => void)[]> = {};
+  lastKeybinds?: PreferencesMenuData["keybindings"];
 
   constructor() {
     super();
@@ -114,11 +136,23 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     document.addEventListener("keydown", this.onKeyDown);
   }
 
+  componentDidUpdate() {
+    const { data } = useBackend<PreferencesMenuData>(this.context);
+
+    // keybindings is static data, so it'll pass `===` checks.
+    // This'll change when resetting to defaults.
+    if (data.keybindings !== this.lastKeybinds) {
+      this.populateSelectedKeybindings();
+    }
+  }
+
   componentWillUnmount() {
     document.removeEventListener("keydown", this.onKeyDown);
   }
 
   onKeyDown(event: KeyboardEvent) {
+    const { act } = useBackend<PreferencesMenuData>(this.context);
+
     const rebindingHotkey = this.state.rebindingHotkey;
 
     if (!rebindingHotkey) {
@@ -147,6 +181,11 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
         } else {
           selectedKeybindings[keybindName] = [formattedHotkey];
         }
+
+        act("set_keybindings", {
+          "keybind_name": keybindName,
+          "hotkeys": selectedKeybindings[keybindName],
+        });
 
         return {
           lastKeyboardEvent: null,
@@ -224,6 +263,8 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
   populateSelectedKeybindings() {
     const { data } = useBackend<PreferencesMenuData>(this.context);
 
+    this.lastKeybinds = data.keybindings;
+
     this.setState({
       selectedKeybindings: Object.fromEntries(
         Object.entries(data.keybindings)
@@ -235,8 +276,6 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
   }
 
   render() {
-    const { act } = useBackend<PreferencesMenuData>(this.context);
-
     const keybindings = this.state.keybindings;
 
     if (!keybindings) {

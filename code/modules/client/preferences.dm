@@ -188,7 +188,8 @@ GLOBAL_VAR(preferences_species_data)
 	//we couldn't load character data so just randomize the character appearance + name
 	randomise_appearance_prefs() //let's create a random character then - rather than a fat, bald and naked man.
 
-	key_bindings = deepCopyList(GLOB.default_hotkeys) // give them default keybinds and update their movement keys
+	// give them default keybinds and update their movement keys
+	key_bindings = deepCopyList(GLOB.default_hotkeys)
 	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
 
 	C?.set_macros()
@@ -709,6 +710,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 		else
 			custom_names[name_id] = sanitized_name
 
+/// Inverts the key_bindings list such that it can be used for key_bindings_by_key
 /datum/preferences/proc/get_key_bindings_by_key(list/key_bindings)
 	var/list/output = list()
 
