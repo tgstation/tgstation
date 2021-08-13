@@ -12,7 +12,7 @@
 	blocks_air = FALSE
 	flags_1 = RAD_NO_CONTAMINATE_1
 	rad_insulation = null
-	frill_icon = 'icons/effects/frills/window_normal_frill.dmi'
+	frill_icon = 'icons/effects/frills/windows/window_normal_frill.dmi'
 	///Bitflag to hold state on what other objects we have
 	var/window_state = NONE
 	///Icon used by grilles for this window frame
