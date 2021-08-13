@@ -24,6 +24,7 @@
 	///Icon state used by windows for this window frame
 	var/window_icon_state = "window_normal"
 	///Frill used for window frame
+	var/has_frill = TRUE
 
 
 /turf/closed/wall/window_frame/Initialize(mapload)
@@ -39,9 +40,12 @@
 /turf/closed/wall/window_frame/update_appearance(updates)
 	. = ..()
 	if(window_state & WINDOW_FRAME_WITH_WINDOW)
-		AddElement(/datum/element/frill, frill_icon)
+		if(!has_frill)
+			AddElement(/datum/element/frill, frill_icon)
+			has_frill = TRUE
 	else
 		RemoveElement(/datum/element/frill)
+		has_frill = FALSE
 
 /turf/closed/wall/window_frame/update_overlays()
 	. = ..()

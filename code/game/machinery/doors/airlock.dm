@@ -156,7 +156,8 @@
 	if(glass)
 		airlock_material = "glass"
 		greyscale_config = /datum/greyscale_config/airlocks/window
-		greyscale_colors = (copytext(greyscale_colors, 1, 42))
+		greyscale_colors = (copytext(greyscale_colors, 1, 43))
+		update_greyscale()
 	if(security_level > AIRLOCK_SECURITY_IRON)
 		obj_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
 		max_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
@@ -494,14 +495,12 @@
 	switch(airlock_state)
 		if(AIRLOCK_OPEN)
 			icon_state = "open"
-		if(AIRLOCK_CLOSED)
+		if(AIRLOCK_CLOSED, AIRLOCK_DENY, AIRLOCK_EMAG)
 			icon_state = "closed"
 		if(AIRLOCK_OPENING)
 			icon_state = "opening"
 		if(AIRLOCK_CLOSING)
 			icon_state = "closing"
-		if(AIRLOCK_DENY, AIRLOCK_EMAG)
-			icon_state = "nonexistenticonstate" //MADNESS
 
 /obj/machinery/door/airlock/update_overlays()
 	. = ..()
@@ -528,12 +527,6 @@
 		if(AIRLOCK_OPENING)
 			frame_state = AIRLOCK_FRAME_OPENING
 			light_state = AIRLOCK_LIGHT_OPENING
-
-	. += get_airlock_overlay(frame_state, icon, em_block = TRUE)
-	if(airlock_material)
-		. += get_airlock_overlay("[airlock_material]_[frame_state]", overlays_file, em_block = TRUE)
-	else
-		. += get_airlock_overlay("fill_[frame_state]", icon, em_block = TRUE)
 
 	if(lights && hasPower())
 		. += get_airlock_overlay("lights_[light_state]", overlays_file, em_block = FALSE)
