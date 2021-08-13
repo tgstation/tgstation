@@ -63,20 +63,23 @@
 
 /**
  * This proc copies this sheet of paper to a new
- * sheet,  Makes it nice and easy for carbon and
- * the copyer machine
+ * sheet. Used by carbon papers and the photocopier machine.
  */
-/obj/item/paper/proc/copy()
-	var/obj/item/paper/N = new(arglist(args))
-	N.info = info
-	N.color = color
-	N.update_icon_state()
-	N.stamps = stamps
-	N.stamped = stamped.Copy()
-	N.form_fields = form_fields.Copy()
-	N.field_counter = field_counter
-	copy_overlays(N, TRUE)
-	return N
+/obj/item/paper/proc/copy(paper_type = /obj/item/paper, atom/location = loc, colored = TRUE)
+	var/obj/item/paper/new_paper = new paper_type (location)
+	if(colored)
+		new_paper.color = color
+		new_paper.info = info
+	else //This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+		var/static/greyscale_info = regex("<font face=\"([PEN_FONT]|[CRAYON_FONT])\" color=", "i")
+		new_paper.info = replacetext(info, greyscale_info, "<font face=\"$1\" nocolor=")
+	new_paper.stamps = stamps?.Copy()
+	new_paper.stamped = stamped?.Copy()
+	new_paper.form_fields = form_fields.Copy()
+	new_paper.field_counter = field_counter
+	new_paper.update_icon_state()
+	copy_overlays(new_paper, TRUE)
+	return new_paper
 
 /**
  * This proc sets the text of the paper and updates the

@@ -765,6 +765,8 @@
  * as the [buckle_message_cooldown][/atom/var/buckle_message_cooldown] has expired (50 ticks)
  */
 /atom/proc/relaymove(mob/living/user, direction)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_RELAYMOVE, user, direction) & COMSIG_BLOCK_RELAYMOVE)
+		return
 	if(buckle_message_cooldown <= world.time)
 		buckle_message_cooldown = world.time + 50
 		to_chat(user, span_warning("You can't move while buckled to [src]!"))
@@ -1936,7 +1938,7 @@
  * Override this if you want custom behaviour in whatever gets hit by the rust
  */
 /atom/proc/rust_heretic_act()
-	AddComponent(/datum/component/rust)
+	AddElement(/datum/element/rust)
 
 /**
  * Used to set something as 'open' if it's being used as a supplypod

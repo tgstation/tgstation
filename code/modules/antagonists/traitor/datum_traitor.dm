@@ -182,7 +182,7 @@
 		objectives += kill_objective
 		return
 
-	if(prob(DOWNLOAD_PROB) && !(locate(/datum/objective/download) in objectives) && !(owner.assigned_role.departments & DEPARTMENT_SCIENCE))
+	if(prob(DOWNLOAD_PROB) && !(locate(/datum/objective/download) in objectives) && !(owner.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SCIENCE))
 		var/datum/objective/download/download_objective = new
 		download_objective.owner = owner
 		download_objective.gen_amount_goal()

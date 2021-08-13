@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "fixes being able to mind transfer into someone protected against it by targetting their holoparasite/guardian."

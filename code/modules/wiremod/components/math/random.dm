@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/random
 	display_name = "Random"
-	display_desc = "A component that returns random values."
+	desc = "A component that returns random values."
 
 	/// The minimum value that the random number can be
 	var/datum/port/input/minimum
@@ -29,8 +29,8 @@
 	if(.)
 		return
 
-	var/min_val = minimum.input_value || 0
-	var/max_val = maximum.input_value || 0
+	var/min_val = minimum.value || 0
+	var/max_val = maximum.value || 0
 
 	if(max_val < min_val)
 		output.set_output(0)

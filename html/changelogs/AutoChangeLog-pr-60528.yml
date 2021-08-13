@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes: 
-  - bugfix: "Fixes unremovable components counting towards overall capacity. BCIs are no longer 6 slot instead of 10"
