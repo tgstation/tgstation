@@ -53,7 +53,7 @@
 	))
 
 /**
- * Called when the shell item is used in hand, including right click.
+ * Called when the shell item is used in hand(Left click or Z by default)
  */
 /obj/item/circuit_component/controller/proc/send_trigger(atom/source, mob/user)
 	SIGNAL_HANDLER
@@ -76,6 +76,9 @@
 	entity.set_output(user)
 	alt.set_output(COMPONENT_SIGNAL)
 
+/**
+ * Called when the shell item is right-clicked in active hand
+ */
 /obj/item/circuit_component/controller/proc/send_right_signal(atom/source, mob/user)
 	SIGNAL_HANDLER
 	if(!user.Adjacent(source))
