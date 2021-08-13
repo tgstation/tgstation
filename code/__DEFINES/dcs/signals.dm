@@ -930,6 +930,9 @@
 /// called on implants, after an implant has been removed: (mob/living/source, silent, special)
 #define COMSIG_IMPLANT_REMOVED "implant_removed"
 
+/// called on implanting a mindshield: 
+#define COMSIG_MINDSHIELDED_IMPLANTED "mindshield_implanted"
+
 ///called on implants being implanted into someone with an uplink implant: (datum/component/uplink)
 #define COMSIG_IMPLANT_EXISTING_UPLINK "implant_uplink_exists"
 	//This uses all return values of COMSIG_IMPLANT_OTHER

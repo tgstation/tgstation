@@ -102,6 +102,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/remove_innate_effects(mob/living/mob_override)
 	return
 
+//This handles the antagonist being mindshielded
+/datum/antagonist/proc/on_mindshield(mob/implanter, mob/living/mob_override)
+	return
+
 // Adds the specified antag hud to the player. Usually called in an antag datum file
 /datum/antagonist/proc/add_antag_hud(antag_hud_type, antag_hud_name, mob/living/mob_override)
 	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
@@ -151,6 +155,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 			info_button.Trigger()
 	apply_innate_effects()
 	give_antag_moodies()
+	RegisterSignal(owner.current, COMSIG_MINDSHIELDED_IMPLANTED, .proc/on_mindshield)
 	if(is_banned(owner.current) && replace_banned)
 		replace_banned_player()
 	else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
