@@ -24,7 +24,7 @@
 	if(.)
 		return
 
-	var/operation = sdql_operation.input_value
+	var/operation = sdql_operation.value
 
 	if(GLOB.AdminProcCaller || !operation)
 		return TRUE

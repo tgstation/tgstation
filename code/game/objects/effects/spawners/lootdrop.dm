@@ -111,7 +111,7 @@
 				/obj/item/storage/box/matches = 3,
 				/obj/item/reagent_containers/syringe/contraband/space_drugs = 1,
 				/obj/item/reagent_containers/syringe/contraband/krokodil = 1,
-				/obj/item/reagent_containers/syringe/contraband/crank = 1,
+				/obj/item/reagent_containers/syringe/contraband/saturnx = 1,
 				/obj/item/reagent_containers/syringe/contraband/methamphetamine = 1,
 				/obj/item/reagent_containers/syringe/contraband/bath_salts = 1,
 				/obj/item/reagent_containers/syringe/contraband/fentanyl = 1,

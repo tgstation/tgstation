@@ -29,12 +29,12 @@
 	if(.)
 		return
 
-	var/list/target_list = received_table.input_value
+	var/list/target_list = received_table.value
 	if(!islist(target_list) || !length(target_list))
 		output_list.set_output(null)
 		return
 
-	var/index = target_index.input_value
+	var/index = target_index.value
 	if(index < 1 || index > length(target_list))
 		output_list.set_output(null)
 		return

@@ -13,7 +13,7 @@
 	outfit = /datum/outfit/job/geneticist
 	plasmaman_outfit = /datum/outfit/plasmaman/genetics
 	departments_list = list(
-		/datum/job_department/medical,
+		/datum/job_department/science,
 		)
 
 	paycheck = PAYCHECK_MEDIUM

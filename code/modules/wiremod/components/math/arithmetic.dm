@@ -1,3 +1,10 @@
+#define COMP_ARITHMETIC_ADD "Add"
+#define COMP_ARITHMETIC_SUBTRACT "Subtract"
+#define COMP_ARITHMETIC_MULTIPLY "Multiply"
+#define COMP_ARITHMETIC_DIVIDE "Divide"
+#define COMP_ARITHMETIC_MIN "Minimum"
+#define COMP_ARITHMETIC_MAX "Maximum"
+
 /**
  * # Arithmetic Component
  *
@@ -46,14 +53,14 @@
 
 	var/list/ports = arithmetic_ports.Copy()
 	var/datum/port/input/first_port = popleft(ports)
-	var/result = first_port.input_value
+	var/result = first_port.value
 
 	for(var/datum/port/input/input_port as anything in ports)
-		var/value = input_port.input_value
+		var/value = input_port.value
 		if(isnull(value))
 			continue
 
-		switch(arithmetic_option.input_value)
+		switch(arithmetic_option.value)
 			if(COMP_ARITHMETIC_ADD)
 				result += value
 			if(COMP_ARITHMETIC_SUBTRACT)
@@ -73,3 +80,9 @@
 
 	output.set_output(result)
 
+#undef COMP_ARITHMETIC_ADD
+#undef COMP_ARITHMETIC_SUBTRACT
+#undef COMP_ARITHMETIC_MULTIPLY
+#undef COMP_ARITHMETIC_DIVIDE
+#undef COMP_ARITHMETIC_MIN
+#undef COMP_ARITHMETIC_MAX
