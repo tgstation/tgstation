@@ -1,3 +1,6 @@
+#define COMP_TEXT_LOWER "To Lower"
+#define COMP_TEXT_UPPER "To Upper"
+
 /**
  * # Text Component
  *
@@ -5,7 +8,9 @@
  */
 /obj/item/circuit_component/textcase
 	display_name = "Text Case"
-	display_desc = "A component that makes its input uppercase or lowercase."
+	desc = "A component that makes its input uppercase or lowercase."
+
+	var/datum/port/input/option/textcase_options
 
 	/// The input port
 	var/datum/port/input/input_port
@@ -20,29 +25,24 @@
 		COMP_TEXT_LOWER,
 		COMP_TEXT_UPPER,
 	)
-	options = component_options
+	textcase_options = add_option_port("Textcase Options", component_options)
 
 /obj/item/circuit_component/textcase/Initialize()
 	. = ..()
 	input_port = add_input_port("Input", PORT_TYPE_STRING)
 	output = add_output_port("Output", PORT_TYPE_STRING)
 
-/obj/item/circuit_component/textcase/Destroy()
-	input_port = null
-	output = null
-	return ..()
-
 /obj/item/circuit_component/textcase/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return
 
-	var/value = input_port.input_value
+	var/value = input_port.value
 	if(isnull(value))
 		return
 
 	var/result
-	switch(current_option)
+	switch(textcase_options.value)
 		if(COMP_TEXT_LOWER)
 			result = lowertext(value)
 		if(COMP_TEXT_UPPER)
@@ -50,3 +50,5 @@
 
 	output.set_output(result)
 
+#undef COMP_TEXT_LOWER
+#undef COMP_TEXT_UPPER

@@ -73,20 +73,24 @@
 
 /datum/eldritch_knowledge/rust_regen/on_gain(mob/user)
 	. = ..()
-	RegisterSignal(user,COMSIG_MOVABLE_MOVED,.proc/on_move)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
 /datum/eldritch_knowledge/rust_regen/proc/on_move(mob/mover)
 	SIGNAL_HANDLER
 
-	var/atom/mover_turf = get_turf(mover)
+	var/turf/mover_turf = get_turf(mover)
 	if(HAS_TRAIT(mover_turf, TRAIT_RUSTY))
-		ADD_TRAIT(mover,TRAIT_STUNRESISTANCE,type)
+		ADD_TRAIT(mover, TRAIT_STUNRESISTANCE, type)
 		return
 
-	REMOVE_TRAIT(mover,TRAIT_STUNRESISTANCE,type)
+	REMOVE_TRAIT(mover, TRAIT_STUNRESISTANCE, type)
 
 /datum/eldritch_knowledge/rust_regen/on_life(mob/user)
 	. = ..()
+	var/turf/our_turf = get_turf(user)
+	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY) || !isliving(user))
+		return
+
 	var/mob/living/living_user = user
 	living_user.adjustBruteLoss(-2, FALSE)
 	living_user.adjustFireLoss(-2, FALSE)

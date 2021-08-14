@@ -1,4 +1,0 @@
-author: "itseasytosee"
-delete-after: True
-changes: 
-  - bugfix: "Certain non-magic ranged weapons will no longer \"appear to have a magic crystal installed\""

@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixes ridden skateboards crashing back-to-back when bumping a dense atom while another is behind them."

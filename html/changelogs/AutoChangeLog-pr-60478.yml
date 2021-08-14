@@ -1,4 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes: 
-  - code_imp: "Removes all misc files/folders from the projectiles module"

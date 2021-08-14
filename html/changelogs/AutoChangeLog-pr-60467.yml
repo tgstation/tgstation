@@ -1,4 +1,0 @@
-author: "tf-4"
-delete-after: True
-changes: 
-  - qol: "dash items like the ninja katana now give a balloon alert instead of a chat message"
