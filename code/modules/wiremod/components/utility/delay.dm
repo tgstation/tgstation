@@ -33,11 +33,11 @@
 	if(!COMPONENT_TRIGGERED_BY(trigger, port))
 		return
 
-	var/delay = delay_amount.input_value
+	var/delay = delay_amount.value
 	if(delay > COMP_DELAY_MIN_VALUE)
 		// Convert delay into deciseconds
-		addtimer(CALLBACK(output, /datum/port/output.proc/set_output, trigger.input_value), delay*10)
+		addtimer(CALLBACK(output, /datum/port/output.proc/set_output, trigger.value), delay*10)
 	else
-		output.set_output(trigger.input_value)
+		output.set_output(trigger.value)
 
 #undef COMP_DELAY_MIN_VALUE

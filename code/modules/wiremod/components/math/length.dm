@@ -25,5 +25,5 @@
 	if(.)
 		return
 
-	output.set_output(length(input_port.input_value))
+	output.set_output(length(input_port.value))
 
