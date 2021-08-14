@@ -445,6 +445,7 @@
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		pipe_color = obj_color
+	name = "[GLOB.pipe_color_name[obj_color]] [initial(name)]"
 	setPipingLayer(set_layer)
 	atmosinit()
 	var/list/nodes = pipeline_expansion()
