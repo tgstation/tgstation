@@ -111,7 +111,7 @@
 	var/list/targets = get_rebuild_targets()
 	rebuilding = FALSE
 	for(var/datum/pipeline/build_off as anything in targets)
-		build_off.build_pipeline(src)
+		build_off.build_pipeline(src) //This'll add to the expansion queue
 
 /**
  * Returns a list of new pipelines that need to be built up
