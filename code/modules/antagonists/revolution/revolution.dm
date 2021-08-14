@@ -168,12 +168,7 @@
 	var/give_hud = TRUE
 
 /datum/antagonist/rev/head/on_mindshield(mob/implanter)
-	if(!silent)
-		owner.current.visible_message(span_warning("[owner.current] seems to resist the implant!"), span_warning("You feel something interfering with your mental conditioning, but you resist it!"))
-	for(var/obj/item/implant/mindshield/mindshield_implant in owner.current.implants)
-		mindshield_implant.removed(owner.current, TRUE)
-		qdel(mindshield_implant)
-	return
+	return COMPONENT_MINDSHIELD_RESIST
 
 /datum/antagonist/rev/head/on_removal()
 	if(give_hud)
