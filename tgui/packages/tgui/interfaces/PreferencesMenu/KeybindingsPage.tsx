@@ -1,5 +1,5 @@
 import { Component, createRef, RefObject } from "inferno";
-import { Box, Button, Flex, Icon, Section, Stack, Table, Tooltip } from "../../components";
+import { Box, Button, Flex, Icon, Section, Stack, Table, Tooltip, TrackOutsideClicks } from "../../components";
 import { resolveAsset } from "../../assets";
 import { PreferencesMenuData } from "./data";
 import { useBackend, useLocalState } from "../../backend";
@@ -28,7 +28,8 @@ type KeybindingsPageState = {
 const isStandardKey = (event: KeyboardEvent): boolean => {
   return event.key !== "Alt"
     && event.key !== "Control"
-    && event.key !== "Shift";
+    && event.key !== "Shift"
+    && event.key !== "Esc";
 };
 
 const KEY_CODE_TO_BYOND: Record<string, string> = {
@@ -55,7 +56,6 @@ const sortKeybindingsByCategory = sortBy(
     return category;
   });
 
-// MOTHBLOCKS TODO: The Southwest shit? _kbMap
 const formatKeyboardEvent = (event: KeyboardEvent): string => {
   let text = "";
 
@@ -98,7 +98,7 @@ const KeybindingButton = (props: {
   onClick?: () => void,
   typingHotkey?: string,
 }) => {
-  return (
+  const child = (
     <Button
       fluid
       textAlign="center"
@@ -109,6 +109,19 @@ const KeybindingButton = (props: {
       {props.typingHotkey || props.currentHotkey || "Unbound"}
     </Button>
   );
+
+  if (props.typingHotkey) {
+    return (
+      <TrackOutsideClicks onOutsideClick={() => {
+        // Will toggle it off
+        props.onClick();
+      }}>
+        {child}
+      </TrackOutsideClicks>
+    );
+  } else {
+    return child;
+  }
 };
 
 const ResetToDefaultButton = (props: {
@@ -171,9 +184,43 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     document.removeEventListener("keydown", this.onKeyDown);
   }
 
-  onKeyDown(event: KeyboardEvent) {
+  setRebindingHotkey(value?: string) {
     const { act } = useBackend<PreferencesMenuData>(this.context);
 
+    this.setState((state) => {
+      let selectedKeybindings = state.selectedKeybindings;
+      if (!selectedKeybindings) {
+        return state;
+      }
+
+      selectedKeybindings = { ...selectedKeybindings };
+
+      const [keybindName, slot] = state.rebindingHotkey;
+
+      if (selectedKeybindings[keybindName]) {
+        selectedKeybindings[keybindName][slot] = value;
+        selectedKeybindings[keybindName] = selectedKeybindings[keybindName]
+          .filter(value => !!value);
+      } else if (!value) {
+        return;
+      } else {
+        selectedKeybindings[keybindName] = [value];
+      }
+
+      act("set_keybindings", {
+        "keybind_name": keybindName,
+        "hotkeys": selectedKeybindings[keybindName],
+      });
+
+      return {
+        lastKeyboardEvent: null,
+        rebindingHotkey: null,
+        selectedKeybindings,
+      };
+    });
+  }
+
+  onKeyDown(event: KeyboardEvent) {
     const rebindingHotkey = this.state.rebindingHotkey;
 
     if (!rebindingHotkey) {
@@ -182,39 +229,11 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
 
     event.preventDefault();
 
-    // MOTHBLOCKS TODO: Esc
     if (isStandardKey(event)) {
-      this.setState((state) => {
-        let selectedKeybindings = state.selectedKeybindings;
-        if (!selectedKeybindings) {
-          return state;
-        }
-
-        selectedKeybindings = { ...selectedKeybindings };
-
-        const [keybindName, slot] = state.rebindingHotkey;
-        const formattedHotkey = formatKeyboardEvent(event);
-
-        if (selectedKeybindings[keybindName]) {
-          selectedKeybindings[keybindName][slot] = formattedHotkey;
-          selectedKeybindings[keybindName] = selectedKeybindings[keybindName]
-            .filter(value => !!value);
-        } else {
-          selectedKeybindings[keybindName] = [formattedHotkey];
-        }
-
-        act("set_keybindings", {
-          "keybind_name": keybindName,
-          "hotkeys": selectedKeybindings[keybindName],
-        });
-
-        return {
-          lastKeyboardEvent: null,
-          rebindingHotkey: null,
-          selectedKeybindings,
-        };
-      });
-
+      this.setRebindingHotkey(formatKeyboardEvent(event));
+      return;
+    } else if (event.key === "Esc") {
+      this.setRebindingHotkey(undefined);
       return;
     }
 

@@ -1,13 +1,12 @@
 import { classes } from "common/react";
 import { sendAct, useBackend, useLocalState } from "../../backend";
-import { Box, Button, ByondUi, Dropdown, FitText, Flex, Icon, Input, LabeledList, NumberInput, Popper, Stack } from "../../components";
+import { Box, Button, ByondUi, Dropdown, FitText, Flex, Icon, Input, LabeledList, NumberInput, Popper, Stack, TrackOutsideClicks } from "../../components";
 import { createSetPreference, PreferencesMenuData } from "./data";
 import { CharacterPreview } from "./CharacterPreview";
 import { Gender, GENDERS } from "./preferences/gender";
 import { Component, createRef } from "inferno";
 import features from "./preferences/features";
 import { FeatureValueInput } from "./preferences/features/base";
-import { logger } from "../../logging";
 
 const CLOTHING_CELL_SIZE = 32;
 const CLOTHING_SIDEBAR_ROWS = 9;
@@ -40,43 +39,6 @@ class Autofocus extends Component {
   render() {
     return (
       <div ref={this.ref} tabIndex={-1}>
-        {this.props.children}
-      </div>
-    );
-  }
-}
-
-// MOTHBLOCKS TODO: Move outside this class
-class TrackOutsideClicks extends Component<{
-  onOutsideClick: () => void,
-}> {
-  ref = createRef<HTMLDivElement>();
-
-  constructor() {
-    super();
-
-    this.handleOutsideClick = this.handleOutsideClick.bind(this);
-
-    document.addEventListener("click", this.handleOutsideClick);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("click", this.handleOutsideClick);
-  }
-
-  handleOutsideClick(event: MouseEvent) {
-    if (!(event.target instanceof Node)) {
-      return;
-    }
-
-    if (this.ref.current && !this.ref.current.contains(event.target)) {
-      this.props.onOutsideClick();
-    }
-  }
-
-  render() {
-    return (
-      <div ref={this.ref}>
         {this.props.children}
       </div>
     );

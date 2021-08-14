@@ -39,4 +39,5 @@ export { Table } from './Table';
 export { Tabs } from './Tabs';
 export { TextArea } from './TextArea';
 export { TimeDisplay } from './TimeDisplay';
+export { TrackOutsideClicks } from './TrackOutsideClicks';
 export { Tooltip } from './Tooltip';
