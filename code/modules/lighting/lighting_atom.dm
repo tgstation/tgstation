@@ -80,13 +80,6 @@
 		return
 	recalculate_directional_opacity()
 
-
-/atom/movable/Moved(atom/OldLoc, Dir)
-	. = ..()
-	for (var/datum/light_source/light as anything in light_sources) // Cycle through the light sources on this atom and tell them to update.
-		light.source_atom.update_light()
-
-
 /atom/proc/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION)
 	return
 

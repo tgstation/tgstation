@@ -160,58 +160,70 @@
 
 /datum/hud/proc/update_parallax(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
-	var/client/C = screenmob.client
-	var/turf/posobj = get_turf(C.eye)
-	if(!posobj)
+	var/client/our_client = screenmob.client
+	var/turf/client_eye_turf = get_turf(our_client.eye)
+	if(!client_eye_turf)
 		return
-	var/area/areaobj = posobj.loc
+	var/area/areaobj = client_eye_turf.loc
 
 	// Update the movement direction of the parallax if necessary (for shuttles)
 	set_parallax_movedir(areaobj.parallax_movedir, FALSE, screenmob)
 
 	var/force
-	if(!C.previous_turf || (C.previous_turf.z != posobj.z))
-		C.previous_turf = posobj
+	if(!our_client.previous_turf || (our_client.previous_turf.z != client_eye_turf.z))
+		our_client.previous_turf = client_eye_turf
 		force = TRUE
 
-	if (!force && world.time < C.last_parallax_shift+C.parallax_throttle)
+	if (!force && world.time < our_client.last_parallax_shift + our_client.parallax_throttle)
 		return
 
 	//Doing it this way prevents parallax layers from "jumping" when you change Z-Levels.
-	var/offset_x = posobj.x - C.previous_turf.x
-	var/offset_y = posobj.y - C.previous_turf.y
+	var/offset_x = client_eye_turf.x - our_client.previous_turf.x
+	var/offset_y = client_eye_turf.y - our_client.previous_turf.y
 
 	if(!offset_x && !offset_y && !force)
 		return
 
-	var/last_delay = world.time - C.last_parallax_shift
-	last_delay = min(last_delay, C.parallax_throttle)
-	C.previous_turf = posobj
-	C.last_parallax_shift = world.time
+	var/last_delay = world.time - our_client.last_parallax_shift
+	last_delay = min(last_delay, our_client.parallax_throttle)
+	our_client.previous_turf = client_eye_turf
+	our_client.last_parallax_shift = world.time
 
-	for(var/thing in C.parallax_layers)
-		var/atom/movable/screen/parallax_layer/L = thing
-		L.update_status(screenmob)
-		if (L.view_sized != C.view)
-			L.update_o(C.view)
+	for(var/atom/movable/screen/parallax_layer/parallax_layer as anything in our_client.parallax_layers)
+		parallax_layer.update_status(screenmob)
+		if (parallax_layer.view_sized != our_client.view)
+			parallax_layer.update_o(our_client.view)
 
-		if(L.absolute)
-			L.offset_x = -(posobj.x - SSparallax.planet_x_offset) * L.speed
-			L.offset_y = -(posobj.y - SSparallax.planet_y_offset) * L.speed
+		if(parallax_layer.absolute)
+			parallax_layer.offset_x = -(client_eye_turf.x - SSparallax.planet_x_offset) * parallax_layer.speed
+			parallax_layer.offset_y = -(client_eye_turf.y - SSparallax.planet_y_offset) * parallax_layer.speed
 		else
-			L.offset_x -= offset_x * L.speed
-			L.offset_y -= offset_y * L.speed
+			parallax_layer.offset_x -= offset_x * parallax_layer.speed
+			parallax_layer.offset_y -= offset_y * parallax_layer.speed
 
-			if(L.offset_x > 240)
-				L.offset_x -= 480
-			if(L.offset_x < -240)
-				L.offset_x += 480
-			if(L.offset_y > 240)
-				L.offset_y -= 480
-			if(L.offset_y < -240)
-				L.offset_y += 480
+			switch(parallax_layer.offset_x)
+				if(240 to INFINITY)
+					parallax_layer.offset_x -= 480
+				if(-INFINITY to -240)
+					parallax_layer.offset_x += 480
 
-		L.screen_loc = "CENTER-7:[round(L.offset_x,1)],CENTER-7:[round(L.offset_y,1)]"
+			switch(parallax_layer.offset_y)
+				if(240 to INFINITY)
+					parallax_layer.offset_y -= 480
+				if(-INFINITY to -240)
+					parallax_layer.offset_y += 480
+			/*
+			if(parallax_layer.offset_x > 240)
+				parallax_layer.offset_x -= 480
+			if(parallax_layer.offset_x < -240)
+				parallax_layer.offset_x += 480
+			if(parallax_layer.offset_y > 240)
+				parallax_layer.offset_y -= 480
+			if(parallax_layer.offset_y < -240)
+				parallax_layer.offset_y += 480
+			*/
+
+		parallax_layer.screen_loc = "CENTER-7:[round(parallax_layer.offset_x,1)],CENTER-7:[round(parallax_layer.offset_y,1)]"
 
 /atom/movable/proc/update_parallax_contents()
 	if(length(client_mobs_in_contents))
@@ -226,6 +238,7 @@
 
 /atom/movable/screen/parallax_layer
 	icon = 'icons/effects/parallax.dmi'
+	///direct multiplier for how much this layer moves
 	var/speed = 1
 	var/offset_x = 0
 	var/offset_y = 0
@@ -283,7 +296,7 @@
 /atom/movable/screen/parallax_layer/random
 	blend_mode = BLEND_OVERLAY
 	speed = 3
-	layer = 3
+	layer = 4
 
 /atom/movable/screen/parallax_layer/random/space_gas
 	icon_state = "space_gas"
