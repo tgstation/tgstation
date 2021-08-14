@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/species
 	display_name = "Get Species"
-	display_desc = "A component that returns the species of its input."
+	desc = "A component that returns the species of its input."
 
 	/// The input port
 	var/datum/port/input/input_port
@@ -26,7 +26,7 @@
 	if(.)
 		return
 
-	var/mob/living/carbon/human/human = input_port.input_value
+	var/mob/living/carbon/human/human = input_port.value
 	if(!istype(human) || !human.has_dna())
 		output.set_output(null)
 		return
