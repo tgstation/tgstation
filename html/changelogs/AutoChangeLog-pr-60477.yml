@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - qol: "the healium crystal now fix the air instead of refilling it (that role is still available with the proto nitrate one), the crystal is not made with O2 instead of freon"
