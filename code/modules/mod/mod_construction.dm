@@ -125,7 +125,7 @@
 					balloon_alert(user, "chestplate removed")
 					chestplate = null
 					step = HELMET_STEP
-		if(GAUNTLETS)
+		if(GAUNTLETS_STEP)
 			if(istype(part, /obj/item/mod/construction/boots)) //Construct
 				if(!user.transferItemToLoc(part, src))
 					balloon_alert(user, "boots added")
@@ -160,7 +160,7 @@
 				if(part.use_tool(src, user, 0, volume=30))
 					balloon_alert(user, "assembly unsecured")
 					step = BOOTS_STEP
-		if(SCREWED_ASSEMBLY)
+		if(SCREWED_ASSEMBLY_STEP)
 			if(istype(part, /obj/item/mod/construction/armor)) //Construct
 				var/obj/item/mod/construction/armor/external_armor = part
 				if(!user.transferItemToLoc(part, src))
