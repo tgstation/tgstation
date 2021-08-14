@@ -18,32 +18,33 @@
 
 /obj/item/implant/mindshield/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
-	if(.)
-		if(target.mind?.unconvertable)
+	if(!.)
+		return FALSE
+	if(target.mind)
+		if(target.mind.unconvertable)
 			if(!silent)
 				target.visible_message(span_warning("[target] seems to resist the implant!"), span_warning("You feel something interfering with your mental conditioning, but you resist it!"))
 			removed(target, TRUE)
 			qdel(src)
 			return TRUE
-		ADD_TRAIT(target, TRAIT_MINDSHIELD, IMPLANT_TRAIT)
-		target.sec_hud_set_implants()
-		SEND_SIGNAL(target, COMSIG_MINDSHIELDED_IMPLANTED, user)
-		if(!silent)
-			to_chat(target, span_notice("You feel a sense of peace and security. You are now protected from brainwashing."))
-		return TRUE
-	return FALSE
+		SEND_SIGNAL(target.mind, COMSIG_MINDSHIELD_IMPLANTED, user)
+	ADD_TRAIT(target, TRAIT_MINDSHIELD, IMPLANT_TRAIT)
+	target.sec_hud_set_implants()
+	if(!silent)
+		to_chat(target, span_notice("You feel a sense of peace and security. You are now protected from brainwashing."))
+	return TRUE
 
 /obj/item/implant/mindshield/removed(mob/target, silent = FALSE, special = FALSE)
 	. = ..()
-	if(.)
-		if(isliving(target))
-			var/mob/living/L = target
-			REMOVE_TRAIT(L, TRAIT_MINDSHIELD, IMPLANT_TRAIT)
-			L.sec_hud_set_implants()
-		if(target.stat != DEAD && !silent)
-			to_chat(target, span_boldnotice("Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing."))
-		return TRUE
-	return FALSE
+	if(!.)
+		return FALSE
+	if(isliving(target))
+		var/mob/living/L = target
+		REMOVE_TRAIT(L, TRAIT_MINDSHIELD, IMPLANT_TRAIT)
+		L.sec_hud_set_implants()
+	if(target.stat != DEAD && !silent)
+		to_chat(target, span_boldnotice("Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing."))
+	return TRUE
 
 /obj/item/implanter/mindshield
 	name = "implanter (mindshield)"

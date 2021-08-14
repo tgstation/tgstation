@@ -931,7 +931,7 @@
 #define COMSIG_IMPLANT_REMOVED "implant_removed"
 
 /// called on implanting a mindshield: (mob/user)
-#define COMSIG_MINDSHIELDED_IMPLANTED "mindshield_implanted"
+#define COMSIG_MINDSHIELD_IMPLANTED "mindshield_implanted"
 
 ///called on implants being implanted into someone with an uplink implant: (datum/component/uplink)
 #define COMSIG_IMPLANT_EXISTING_UPLINK "implant_uplink_exists"
