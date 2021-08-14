@@ -207,6 +207,9 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(target.pixel_x != 0) //shifts the progress bar if target has an offset sprite
 		progbar.bar.pixel_x -= target.pixel_x
 
+	if(!(timed_action_flags & IGNORE_SLOWDOWNS))
+		time *= user.cached_multiplicative_actions_slowdown
+
 	var/endtime = world.time+time
 	var/starttime = world.time
 	. = TRUE
@@ -284,7 +287,8 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	var/holding = user.get_active_held_item()
 
-	delay *= user.cached_multiplicative_actions_slowdown
+	if(!(timed_action_flags & IGNORE_SLOWDOWNS))
+		delay *= user.cached_multiplicative_actions_slowdown
 
 	var/datum/progressbar/progbar
 	if(progress)
@@ -340,7 +344,8 @@ GLOBAL_LIST_EMPTY(species_list)
 		return FALSE
 	var/user_loc = user.loc
 
-	time *= user.cached_multiplicative_actions_slowdown
+	if(!(timed_action_flags & IGNORE_SLOWDOWNS))
+		time *= user.cached_multiplicative_actions_slowdown
 
 	var/drifting = FALSE
 	if(!user.Process_Spacemove(0) && user.inertia_dir)
@@ -523,9 +528,9 @@ GLOBAL_LIST_EMPTY(species_list)
 				var/turf_link = TURF_LINK(M, turf_target)
 				rendered_message = "[turf_link] [message]"
 
-			to_chat(M, rendered_message)
+			to_chat(M, rendered_message, avoid_highlighting = speaker_key == M.key)
 		else
-			to_chat(M, message)
+			to_chat(M, message, avoid_highlighting = speaker_key == M.key)
 
 //Used in chemical_mob_spawn. Generates a random mob based on a given gold_core_spawnable value.
 /proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)

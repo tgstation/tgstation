@@ -70,7 +70,7 @@ Difficulty: Hard
 	/// Actual time where enrage ends
 	var/enrage_till = 0
 	/// Duration of enrage ability
-	var/enrage_time = 70
+	var/enrage_time = 7 SECONDS
 	/// Triple charge ability
 	var/datum/action/cooldown/mob_cooldown/triple_charge
 	/// Hallucination charge ability
@@ -92,6 +92,13 @@ Difficulty: Hard
 	blood_warp.Grant(src)
 	RegisterSignal(src, COMSIG_BLOOD_WARP, .proc/blood_enrage)
 	RegisterSignal(src, COMSIG_FINISHED_CHARGE, .proc/after_charge)
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)
+	. = ..()
+	if(cooldown_updates[COOLDOWN_UPDATE_SET_ENRAGE])
+		enrage_till = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_ENRAGE]
+	if(cooldown_updates[COOLDOWN_UPDATE_ADD_ENRAGE])
+		enrage_till += cooldown_updates[COOLDOWN_UPDATE_ADD_ENRAGE]
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	if(client)

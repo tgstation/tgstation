@@ -1,4 +1,0 @@
-author: "Wayland-Smithy"
-delete-after: True
-changes: 
-  - bugfix: "Fixed some station name html encoding for plaintext handlers like: Station Charter announcements, the World Name (SS13 window title), and in Cross Server Messages both custom and news about the crews ultimate fate."

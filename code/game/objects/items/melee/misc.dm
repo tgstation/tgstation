@@ -197,7 +197,7 @@
 	/// Can we stun cyborgs?
 	var/affect_cyborg = FALSE
 	/// "On" sound, played when switching between able to stun or not.
-	var/on_sound 
+	var/on_sound
 	/// The path of the default sound to play when we stun something.
 	var/on_stun_sound = 'sound/effects/woodhit.ogg'
 	/// Do we animate the "hit" when stunning something?
@@ -274,7 +274,7 @@
 
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
-		user.visible_message("<span class ='userdanger'>You accidentally hit yourself over the head with [src]!</span>", "<span class='danger'>[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!</span>")
+		user.visible_message(span_danger("[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!"), span_userdanger("You accidentally hit yourself over the head with [src]!"))
 
 		if(iscyborg(user))
 			if(affect_cyborg)

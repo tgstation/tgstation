@@ -21,7 +21,6 @@
 		/turf/open/space,
 		/turf/open/lava,
 		/turf/open/chasm,
-		/turf/open/floor/plating/rust
 	))
 	route = PATH_RUST
 
@@ -68,27 +67,30 @@
 	next_knowledge = list(
 		/datum/eldritch_knowledge/rust_mark,
 		/datum/eldritch_knowledge/armor,
-		/datum/eldritch_knowledge/essence
+		/datum/eldritch_knowledge/essence,
 	)
 	route = PATH_RUST
 
 /datum/eldritch_knowledge/rust_regen/on_gain(mob/user)
 	. = ..()
-	RegisterSignal(user,COMSIG_MOVABLE_MOVED,.proc/on_move)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
 /datum/eldritch_knowledge/rust_regen/proc/on_move(mob/mover)
 	SIGNAL_HANDLER
 
-	if(istype(get_turf(mover),/turf/open/floor/plating/rust))
-		ADD_TRAIT(mover,TRAIT_STUNRESISTANCE,type)
-	else
-		REMOVE_TRAIT(mover,TRAIT_STUNRESISTANCE,type)
+	var/turf/mover_turf = get_turf(mover)
+	if(HAS_TRAIT(mover_turf, TRAIT_RUSTY))
+		ADD_TRAIT(mover, TRAIT_STUNRESISTANCE, type)
+		return
+
+	REMOVE_TRAIT(mover, TRAIT_STUNRESISTANCE, type)
 
 /datum/eldritch_knowledge/rust_regen/on_life(mob/user)
 	. = ..()
-	var/turf/user_loc_turf = get_turf(user)
-	if(!istype(user_loc_turf, /turf/open/floor/plating/rust) || !isliving(user))
+	var/turf/our_turf = get_turf(user)
+	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY) || !isliving(user))
 		return
+
 	var/mob/living/living_user = user
 	living_user.adjustBruteLoss(-2, FALSE)
 	living_user.adjustFireLoss(-2, FALSE)
@@ -178,7 +180,8 @@
 
 /datum/eldritch_knowledge/final/rust_final/proc/on_move(mob/mover)
 	SIGNAL_HANDLER
-	var/mover_on_rust = istype(get_turf(mover),/turf/open/floor/plating/rust)
+	var/atom/mover_turf = get_turf(mover)
+	var/mover_on_rust = HAS_TRAIT(mover_turf, TRAIT_RUSTY)
 
 	//We check if we are currently standing on a rust tile, but the immunities are not active, if so apply immunities, set immunities_active to TRUE
 	if(mover_on_rust && !immunities_active)
@@ -197,7 +200,7 @@
 /datum/eldritch_knowledge/final/rust_final/on_life(mob/user)
 	. = ..()
 	var/turf/user_loc_turf = get_turf(user)
-	if(!istype(user_loc_turf, /turf/open/floor/plating/rust) || !isliving(user) || !finished)
+	if(!HAS_TRAIT(user_loc_turf, TRAIT_RUSTY) || !isliving(user) || !finished)
 		return
 	var/mob/living/carbon/human/human_user = user
 	human_user.adjustBruteLoss(-4, FALSE)

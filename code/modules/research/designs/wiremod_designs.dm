@@ -41,7 +41,7 @@
 	. = ..()
 	if(build_path)
 		var/obj/item/circuit_component/component_path = build_path
-		desc = initial(component_path.display_desc)
+		desc = initial(component_path.desc)
 
 /datum/design/component/arithmetic
 	name = "Arithmetic Component"
@@ -88,11 +88,6 @@
 	id = "comp_not"
 	build_path = /obj/item/circuit_component/not
 
-/datum/design/component/ram
-	name = "RAM Component"
-	id = "comp_ram"
-	build_path = /obj/item/circuit_component/ram
-
 /datum/design/component/random
 	name = "Random Component"
 	id = "comp_random"
@@ -112,6 +107,11 @@
 	name = "To String Component"
 	id = "comp_tostring"
 	build_path = /obj/item/circuit_component/tostring
+
+/datum/design/component/tonumber
+	name = "To Number"
+	id = "comp_tonumber"
+	build_path = /obj/item/circuit_component/tonumber
 
 /datum/design/component/typecheck
 	name = "Typecheck Component"
@@ -163,11 +163,6 @@
 	id = "comp_health"
 	build_path = /obj/item/circuit_component/health
 
-/datum/design/component/combiner
-	name = "Combiner Component"
-	id = "comp_combiner"
-	build_path = /obj/item/circuit_component/combiner
-
 /datum/design/component/split
 	name = "Split Component"
 	id = "comp_split"
@@ -188,10 +183,15 @@
 	id = "comp_mmi"
 	build_path = /obj/item/circuit_component/mmi
 
+/datum/design/component/router
+	name = "Router Component"
+	id = "comp_router"
+	build_path = /obj/item/circuit_component/router
+
 /datum/design/component/multiplexer
 	name = "Multiplexer Component"
 	id = "comp_multiplexer"
-	build_path = /obj/item/circuit_component/multiplexer
+	build_path = /obj/item/circuit_component/router/multiplexer
 
 /datum/design/component/get_column
 	name = "Get Column Component"
@@ -213,15 +213,73 @@
 	id = "comp_select_query"
 	build_path = /obj/item/circuit_component/select
 
+/datum/design/component/pathfind
+	name = "Pathfinder"
+	id = "comp_pathfind"
+	build_path = /obj/item/circuit_component/pathfind
+
 /datum/design/component/tempsensor
-	name = "Temperature Sensor"
+	name = "Temperature Sensor Component"
 	id = "comp_tempsensor"
 	build_path = /obj/item/circuit_component/tempsensor
 
 /datum/design/component/pressuresensor
-	name = "Pressure Sensor"
+	name = "Pressure Sensor Component"
 	id = "comp_pressuresensor"
 	build_path = /obj/item/circuit_component/pressuresensor
+
+/datum/design/component/module
+	name = "Module Component"
+	id = "comp_module"
+	build_path = /obj/item/circuit_component/module
+
+/datum/design/component/ntnet_receive
+	name = "Pressure NTNet Transmitter"
+	id = "comp_ntnet_receive"
+	build_path = /obj/item/circuit_component/ntnet_receive
+
+/datum/design/component/ntnet_send
+	name = "NTNet Request Component"
+	id = "comp_ntnet_send"
+	build_path = /obj/item/circuit_component/ntnet_send
+
+/datum/design/component/list_literal
+	name = "List Literal Component"
+	id = "comp_list_literal"
+	build_path = /obj/item/circuit_component/list_literal
+
+/datum/design/component/typecast
+	name = "Typecast Component"
+	id = "comp_typecast"
+	build_path = /obj/item/circuit_component/typecast
+
+/datum/design/component/bci
+	category = list("Circuitry", "BCI Components")
+
+/datum/design/component/bci/bci_action
+	name = "BCI Action Component"
+	id = "comp_bci_action"
+	build_path = /obj/item/circuit_component/bci_action
+
+/datum/design/component/bci/object_overlay
+	name = "Object Overlay Component"
+	id = "comp_object_overlay"
+	build_path = /obj/item/circuit_component/object_overlay
+
+/datum/design/component/bci/bar_overlay
+	name = "Bar Overlay Component"
+	id = "comp_bar_overlay"
+	build_path = /obj/item/circuit_component/object_overlay/bar
+
+/datum/design/component/bci/target_intercept
+	name = "BCI Target Interceptor"
+	id = "comp_target_intercept"
+	build_path = /obj/item/circuit_component/target_intercept
+
+/datum/design/component/bci/counter_overlay
+	name = "Counter Overlay Component"
+	id = "comp_counter_overlay"
+	build_path = /obj/item/circuit_component/counter_overlay
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
@@ -237,6 +295,15 @@
 	desc = "A handheld shell with several buttons."
 	id = "controller_shell"
 	build_path = /obj/item/controller
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	materials = list(/datum/material/glass = 2000, /datum/material/iron = 7000)
+	category = list("Circuitry", "Shells")
+
+/datum/design/scanner_shell
+	name = "Scanner Shell"
+	desc = "A handheld scanner shell that can scan entities."
+	id = "scanner_shell"
+	build_path = /obj/item/wiremod_scanner
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 7000)
 	category = list("Circuitry", "Shells")
@@ -296,3 +363,35 @@
 	build_path = /obj/item/shell/airlock
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")
+
+/datum/design/bci_shell
+	name = "Brain-Computer Interface Shell"
+	desc = "An implant that can be placed in a user's head to control circuits using their brain."
+	id = "bci_shell"
+	materials = list(
+		/datum/material/glass = 2000,
+		/datum/material/iron = 8000,
+	)
+	build_path = /obj/item/shell/bci
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
+/datum/design/scanner_gate_shell
+	name = "Scanner Gate Shell"
+	desc = "A scanner gate shell that performs mid-depth scans on people when they pass through it."
+	id = "scanner_gate_shell"
+	materials = list(
+		/datum/material/glass = 4000,
+		/datum/material/iron = 12000,
+	)
+	build_path = /obj/item/shell/scanner_gate
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
+/datum/design/board/bci_implanter
+	name = "Brain-Computer Interface Manipulation Chamber"
+	desc = "A machine that, when given a brain-computer interface, will implant it into an occupant. Otherwise, will remove any brain-computer interfaces they already have."
+	id = "bci_implanter"
+	build_path = /obj/item/circuitboard/machine/bci_implanter
+	build_type = IMPRINTER | COMPONENT_PRINTER
+	category = list("Circuitry", "Core")

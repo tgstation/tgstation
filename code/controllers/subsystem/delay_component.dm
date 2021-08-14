@@ -18,6 +18,7 @@ SUBSYSTEM_DEF(circuit_component)
 		if(QDELETED(to_call))
 			continue
 
+		to_call.user = null
 		to_call.InvokeAsync()
 		qdel(to_call)
 

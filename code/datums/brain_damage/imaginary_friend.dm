@@ -105,7 +105,7 @@
 	var/gender = pick(MALE, FEMALE)
 	real_name = random_unique_name(gender)
 	name = real_name
-	human_image = get_flat_human_icon(null, pick(SSjob.occupations))
+	human_image = get_flat_human_icon(null, pick(SSjob.joinable_occupations))
 
 /mob/camera/imaginary_friend/proc/Show()
 	if(!client) //nobody home

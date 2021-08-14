@@ -79,8 +79,8 @@
 		return
 	var/datum/mind/guilty_conscience = user.mind
 	if(guilty_conscience) //sec and medical are immune to becoming guilty through attack (we don't check holy because holy shouldn't be able to attack eachother anyways)
-		var/job = guilty_conscience.assigned_role
-		if(job in (GLOB.security_positions + GLOB.medical_positions))
+		var/datum/job/job = guilty_conscience.assigned_role
+		if(job.departments_bitflags & (DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SECURITY))
 			return
 	if(declaration)
 		to_chat(owner, span_notice("[user] is now considered guilty by [GLOB.deity] from your declaration."))
@@ -107,12 +107,12 @@
 	//THE JUST (Applies over guilt except for med, so you best be careful!)
 	if(ishuman(target_creature))
 		var/mob/living/carbon/human/target_human = target_creature
-		var/job = target_human.mind?.assigned_role
+		var/datum/job/job = target_human.mind?.assigned_role
 		var/is_holy = target_human.mind?.holy_role
-		if(job in GLOB.security_positions || is_holy)
+		if(is_holy || (job?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY))
 			to_chat(honorbound_human, span_warning("There is nothing righteous in attacking the <b>just</b>."))
 			return FALSE
-		if(job in GLOB.medical_positions)
+		if(job?.departments_bitflags & DEPARTMENT_BITFLAG_MEDICAL)
 			to_chat(honorbound_human, span_warning("If you truly think this healer is not <b>innocent</b>, declare them guilty."))
 			return FALSE
 	//THE INNOCENT
@@ -143,7 +143,7 @@
 /datum/mutation/human/honorbound/proc/bullet_guilt(datum/source, obj/projectile/proj)
 	SIGNAL_HANDLER
 	var/mob/living/shot_honorbound = source
-	var/guilty_projectiles = typecacheof(list(
+	var/static/list/guilty_projectiles = typecacheof(list(
 		/obj/projectile/beam,
 		/obj/projectile/bullet,
 		/obj/projectile/magic,
@@ -272,7 +272,7 @@
 		if(!silent)
 			to_chat(user, span_warning("Followers of [GLOB.deity] cannot be evil!"))
 		return FALSE
-	if(guilty_conscience.assigned_role in GLOB.security_positions)
+	if(guilty_conscience.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
 		if(!silent)
 			to_chat(user, span_warning("Members of security are uncorruptable! You cannot declare one evil!"))
 		return FALSE

@@ -16,6 +16,12 @@
 	barefootstep = FOOTSTEP_LAVA
 	clawfootstep = FOOTSTEP_LAVA
 	heavyfootstep = FOOTSTEP_LAVA
+	/// How much fire damage we deal to living mobs stepping on us
+	var/lava_damage = 20
+	/// How many firestacks we add to living mobs stepping on us
+	var/lava_firestacks = 20
+	/// How much temperature we expose objects with
+	var/temperature_damage = 10000
 
 /turf/open/lava/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -139,7 +145,7 @@
 				O.resistance_flags &= ~FIRE_PROOF
 			if(O.armor.fire > 50) //obj with 100% fire armor still get slowly burned away.
 				O.armor = O.armor.setRating(fire = 50)
-			O.fire_act(10000, 1000 * delta_time)
+			O.fire_act(temperature_damage, 1000 * delta_time)
 			if(istype(O, /obj/structure/closet))
 				var/obj/structure/closet/C = O
 				for(var/I in C.contents)
@@ -173,9 +179,9 @@
 			ADD_TRAIT(L, TRAIT_PERMANENTLY_ONFIRE,TURF_TRAIT)
 			L.update_fire()
 
-			L.adjustFireLoss(20 * delta_time)
+			L.adjustFireLoss(lava_damage * delta_time)
 			if(L) //mobs turning into object corpses could get deleted here.
-				L.adjust_fire_stacks(20 * delta_time)
+				L.adjust_fire_stacks(lava_firestacks * delta_time)
 				L.IgniteMob()
 
 /turf/open/lava/smooth

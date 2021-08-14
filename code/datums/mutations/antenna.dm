@@ -6,7 +6,7 @@
 	text_lose_indication = "<span class='notice'>Your antenna shrinks back down.</span>"
 	instability = 5
 	difficulty = 8
-	var/obj/item/implant/radio/antenna/linked_radio
+	var/datum/weakref/radio_weakref
 
 /obj/item/implant/radio/antenna
 	name = "internal antenna organ"
@@ -21,13 +21,16 @@
 /datum/mutation/human/antenna/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	linked_radio = new(owner)
+	var/obj/item/implant/radio/antenna/linked_radio = new(owner)
 	linked_radio.implant(owner, null, TRUE, TRUE)
+	radio_weakref = WEAKREF(linked_radio)
 
 /datum/mutation/human/antenna/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	QDEL_NULL(linked_radio)
+	var/obj/item/implant/radio/antenna/linked_radio = radio_weakref.resolve()
+	if(linked_radio)
+		QDEL_NULL(linked_radio)
 
 /datum/mutation/human/antenna/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()

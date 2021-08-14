@@ -1,4 +1,0 @@
-author: "Nari Harimoto"
-delete-after: True
-changes: 
-  - qol: "Stunbatons will now harm-baton on left-click if you are in combat mode and the baton is off"

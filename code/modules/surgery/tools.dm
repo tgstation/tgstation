@@ -80,11 +80,11 @@
 	playsound(get_turf(user), 'sound/weapons/tap.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_CAUTERY)
 		tool_behaviour = TOOL_DRILL
-		to_chat(user, span_notice("You dilate the lenses of [src], it is now in drilling mode."))
+		balloon_alert(user, "lenses set to drill")
 		icon_state = "surgicaldrill_a"
 	else
 		tool_behaviour = TOOL_CAUTERY
-		to_chat(user, span_notice("You focus the lenses of [src], it is now in mending mode."))
+		balloon_alert(user, "lenses set to mend")
 		icon_state = "cautery_a"
 
 /obj/item/cautery/advanced/examine()
@@ -218,7 +218,7 @@
 
 /obj/item/surgical_drapes/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/surgery_initiator, null)
+	AddElement(/datum/element/surgery_initiator)
 
 
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
@@ -265,13 +265,13 @@
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_SCALPEL)
 		tool_behaviour = TOOL_SAW
-		to_chat(user, span_notice("You increase the power of [src], now it can cut bones."))
+		balloon_alert(user, "enabled bone-cutting mode")
 		set_light_range(2)
 		force += 1 //we don't want to ruin sharpened stuff
 		icon_state = "saw_a"
 	else
 		tool_behaviour = TOOL_SCALPEL
-		to_chat(user, span_notice("You lower the power of [src], it can no longer cut bones."))
+		balloon_alert(user, "disabled bone-cutting mode")
 		set_light_range(1)
 		force -= 1
 		icon_state = "scalpel_a"
@@ -291,11 +291,11 @@
 	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_RETRACTOR)
 		tool_behaviour = TOOL_HEMOSTAT
-		to_chat(user, span_notice("You configure the gears of [src], they are now in hemostat mode."))
+		balloon_alert(user, "gears set to clamp")
 		icon_state = "hemostat_a"
 	else
 		tool_behaviour = TOOL_RETRACTOR
-		to_chat(user, span_notice("You configure the gears of [src], they are now in retractor mode."))
+		balloon_alert(user, "gears set to retract")
 		icon_state = "retractor_a"
 
 /obj/item/retractor/advanced/examine()

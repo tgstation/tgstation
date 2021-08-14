@@ -44,6 +44,7 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	search_objects = 1 //have to find those plant trays!
 	can_be_held = TRUE
+	held_w_class = WEIGHT_CLASS_TINY
 
 	//Spaceborn beings don't get hurt by space
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -67,6 +68,8 @@
 	AddComponent(/datum/component/swarming)
 
 /mob/living/simple_animal/hostile/bee/mob_pickup(mob/living/L)
+	if(flags_1 & HOLOGRAM_1)
+		return
 	var/obj/item/clothing/head/mob_holder/destructible/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
 	var/list/reee = list(/datum/reagent/consumable/nutriment/vitamin = 5)
 	if(beegent)
@@ -87,6 +90,8 @@
 	if(beehome)
 		beehome.bees -= src
 		beehome = null
+	if((flags_1 & HOLOGRAM_1))
+		return ..()
 	var/obj/item/trash/bee/bee_to_eat = new(loc)
 	bee_to_eat.pixel_x = pixel_x
 	bee_to_eat.pixel_y = pixel_y
@@ -95,7 +100,7 @@
 		bee_to_eat.reagents.add_reagent(beegent.type, 5)
 	bee_to_eat.update_appearance()
 	beegent = null
-	..()
+	return ..()
 
 
 /mob/living/simple_animal/hostile/bee/examine(mob/user)

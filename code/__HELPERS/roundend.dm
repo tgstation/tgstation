@@ -45,7 +45,7 @@
 					var/mob/living/carbon/human/H = L
 					category = "humans"
 					if(H.mind)
-						mob_data["job"] = H.mind.assigned_role
+						mob_data["job"] = H.mind.assigned_role.title
 					else
 						mob_data["job"] = "Unknown"
 					mob_data["species"] = H.dna.species.name
@@ -183,7 +183,7 @@
 /datum/controller/subsystem/ticker/proc/HandleRandomHardcoreScore(client/player_client)
 	if(!ishuman(player_client?.mob))
 		return FALSE
-	var/mob/living/carbon/human/human_mob = player_client?.mob
+	var/mob/living/carbon/human/human_mob = player_client.mob
 	if(!human_mob.hardcore_survival_score) ///no score no glory
 		return FALSE
 
@@ -197,9 +197,9 @@
 					didthegamerwin = FALSE
 		if(!didthegamerwin)
 			return FALSE
-		player_client?.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score * 2))
+		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score * 2))
 	else if(human_mob.onCentCom())
-		player_client?.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
+		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
 
 
 /datum/controller/subsystem/ticker/proc/declare_completion()
@@ -495,7 +495,7 @@
 	var/station_vault = 0
 	///How many players joined the round.
 	var/total_players = GLOB.joined_player_list.len
-	var/list/typecache_bank = typecacheof(list(/datum/bank_account/department, /datum/bank_account/remote))
+	var/static/list/typecache_bank = typecacheof(list(/datum/bank_account/department, /datum/bank_account/remote))
 	for(var/i in SSeconomy.bank_accounts_by_id)
 		var/datum/bank_account/current_acc = SSeconomy.bank_accounts_by_id[i]
 		if(typecache_bank[current_acc.type])
@@ -542,31 +542,14 @@
  * * award: Achievement to give service department
  */
 /datum/controller/subsystem/ticker/proc/award_service(award)
-	for(var/mob/living/carbon/human/service_member as anything in GLOB.human_list)
-		if(!service_member.mind)
+	for(var/mob/living/carbon/human/human as anything in GLOB.human_list)
+		if(!human.client || !human.mind)
 			continue
-		var/datum/mind/service_mind = service_member.mind
-		if(!service_mind.assigned_role)
+		var/datum/job/human_job = human.mind.assigned_role
+		if(!(human_job.departments_bitflags & DEPARTMENT_SERVICE))
 			continue
-		for(var/job in GLOB.service_food_positions)
-			if(service_mind.assigned_role != job)
-				continue
-			//general awards
-			service_member.client?.give_award(award, service_member)
-			if(service_mind.assigned_role == "Cook")
-				var/datum/venue/restaurant = SSrestaurant.all_venues[/datum/venue/restaurant]
-				var/award_score = restaurant.total_income
-				var/award_status = service_member.client.get_award_status(/datum/award/score/chef_tourist_score)
-				if(award_score > award_status)
-					award_score -= award_status
-				service_member.client?.give_award(/datum/award/score/chef_tourist_score, service_member, award_score)
-			if(service_mind.assigned_role == "Bartender")
-				var/datum/venue/bar = SSrestaurant.all_venues[/datum/venue/bar]
-				var/award_score = bar.total_income
-				var/award_status = service_member.client.get_award_status(/datum/award/score/bartender_tourist_score)
-				if(award_score - award_status > 0)
-					award_score -= award_status
-				service_member.client?.give_award(/datum/award/score/bartender_tourist_score, service_member, award_score)
+		human_job.award_service(human.client, award)
+
 
 /datum/controller/subsystem/ticker/proc/medal_report()
 	if(GLOB.commendations.len)
@@ -677,8 +660,8 @@
 
 /proc/printplayer(datum/mind/ply, fleecheck)
 	var/jobtext = ""
-	if(ply.assigned_role)
-		jobtext = " the <b>[ply.assigned_role]</b>"
+	if(!is_unassigned_job(ply.assigned_role))
+		jobtext = " the <b>[ply.assigned_role.title]</b>"
 	var/text = "<b>[ply.key]</b> was <b>[ply.name]</b>[jobtext] and"
 	if(ply.current)
 		if(ply.current.stat == DEAD)

@@ -41,7 +41,7 @@
 	if(power_level == 6)
 		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 9e5 + coolant_temperature) / 9e5, 1) - 2700) / 400, 0), 0)
 
-	if(internal_fusion.total_moles() < 2000 || power_level <= 5)
+	if(internal_fusion.total_moles() < HYPERTORUS_SUBCRITICAL_MOLES || power_level <= 5)
 		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 1200) / 200, 0), 0)
 
 	if(internal_fusion.total_moles() > 0 && (airs[1].total_moles() && coolant_temperature < 5e5) || power_level <= 4)
@@ -50,6 +50,32 @@
 	critical_threshold_proximity += max(iron_content - 0.35, 0)
 
 	critical_threshold_proximity = min(critical_threshold_proximity_archived + (DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
+
+	if(internal_fusion.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES)
+		critical_threshold_proximity += min(max(0.001 * internal_fusion.total_moles() - 10, 0), HYPERTORUS_MAX_MOLE_DAMAGE)
+
+	if(moderator_internal.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES && !check_cracked_parts())
+		var/obj/machinery/atmospherics/components/unary/hypertorus/part = create_crack()
+		if(moderator_internal.return_pressure() >= 10000 && moderator_internal.return_pressure() < 12000)
+			explosion(
+				origin = part,
+				devastation_range = 0,
+				heavy_impact_range = 0,
+				light_impact_range = 1,
+				flame_range = 3,
+				flash_range = 3
+				)
+			spill_gases(part, moderator_internal, ratio = 0.25)
+		else if(moderator_internal.return_pressure() >= 12000)
+			explosion(
+				origin = part,
+				devastation_range = 0,
+				heavy_impact_range = 1,
+				light_impact_range = 3,
+				flame_range = 5,
+				flash_range = 5
+				)
+			spill_gases(part, moderator_internal, ratio = 0.75)
 
 	check_alert()
 
@@ -344,7 +370,7 @@
 		var/fuel_consumption = fuel_consumption_rate * delta_time
 
 		for(var/gas_id in selected_fuel.requirements)
-			internal_fusion.gases[gas_id][MOLES] -= min(fuel_list[gas_id], fuel_consumption * 0.85 / selected_fuel.fuel_consumption_multiplier)
+			internal_fusion.gases[gas_id][MOLES] -= min(fuel_list[gas_id], fuel_consumption * 0.85 * selected_fuel.fuel_consumption_multiplier)
 		for(var/gas_id in selected_fuel.primary_products)
 			internal_fusion.gases[gas_id][MOLES] += fuel_consumption * 0.5
 		//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic

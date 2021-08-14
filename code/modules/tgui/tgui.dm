@@ -58,10 +58,15 @@
 	src.interface = interface
 	if(title)
 		src.title = title
-	src.state = src_object.ui_state()
+	src.state = src_object.ui_state(user)
 	// Deprecated
 	if(ui_x && ui_y)
 		src.window_size = list(ui_x, ui_y)
+
+/datum/tgui/Destroy()
+	user = null
+	src_object = null
+	return ..()
 
 /**
  * public

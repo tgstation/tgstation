@@ -26,9 +26,16 @@
 		/obj/item/circuit_component/arrest_console_arrest,
 	))
 
+#define COMP_STATE_ARREST "*Arrest*"
+#define COMP_STATE_PRISONER "Incarcerated"
+#define COMP_STATE_PAROL "Paroled"
+#define COMP_STATE_DISCHARGED "Discharged"
+#define COMP_STATE_NONE "None"
+#define COMP_SECURITY_ARREST_AMOUNT_TO_FLAG 10
+
 /obj/item/circuit_component/arrest_console_data
 	display_name = "Security Records Data"
-	display_desc = "Outputs the security records data, where it can then be filtered with a Select Query component"
+	desc = "Outputs the security records data, where it can then be filtered with a Select Query component"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The records retrieved
@@ -43,12 +50,6 @@
 	. = ..()
 	records = add_output_port("Security Records", PORT_TYPE_TABLE)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
-
-/obj/item/circuit_component/arrest_console_data/Destroy()
-	records = null
-	on_fail = null
-	return ..()
-
 
 /obj/item/circuit_component/arrest_console_data/register_usb_parent(atom/movable/parent)
 	. = ..()
@@ -107,14 +108,14 @@
 
 /obj/item/circuit_component/arrest_console_arrest
 	display_name = "Security Records Set Status"
-	display_desc = "Receives a table to use to set people's arrest status. Table should be from the security records data component. If New Status port isn't set, the status will be decided by the options."
+	desc = "Receives a table to use to set people's arrest status. Table should be from the security records data component. If New Status port isn't set, the status will be decided by the options."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The targets to set the status of.
 	var/datum/port/input/targets
 
-	/// Sets the new status of the targets. If set to null, the status is taken from the options.
-	var/datum/port/input/new_status
+	/// Sets the new status of the targets.
+	var/datum/port/input/option/new_status
 
 	/// Returns the new status set once the setting is complete. Good for locating errors.
 	var/datum/port/output/new_status_set
@@ -141,21 +142,13 @@
 		COMP_STATE_DISCHARGED,
 		COMP_STATE_NONE,
 	)
-	options = component_options
+	new_status = add_option_port("Arrest Options", component_options)
 
 /obj/item/circuit_component/arrest_console_arrest/Initialize()
 	. = ..()
 	targets = add_input_port("Targets", PORT_TYPE_TABLE)
-	new_status = add_input_port("New Status", PORT_TYPE_STRING)
 	new_status_set = add_output_port("Set Status", PORT_TYPE_STRING)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
-
-/obj/item/circuit_component/arrest_console_arrest/Destroy()
-	targets = null
-	new_status = null
-	new_status_set = null
-	on_fail = null
-	return ..()
 
 /obj/item/circuit_component/arrest_console_arrest/input_received(datum/port/input/port)
 	. = ..()
@@ -166,12 +159,10 @@
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
-	var/status_to_set = new_status.input_value
-	if(!status_to_set || !(status_to_set in options))
-		status_to_set = current_option
+	var/status_to_set = new_status.value
 
 	new_status_set.set_output(status_to_set)
-	var/list/target_table = targets.input_value
+	var/list/target_table = targets.value
 	if(!target_table)
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
@@ -183,9 +174,11 @@
 		if(!sec_record)
 			continue
 
-		successful_set++
+		if(sec_record.fields["criminal"] != status_to_set)
+			successful_set++
+			names_of_entries += target["name"]
 		sec_record.fields["criminal"] = status_to_set
-		names_of_entries += target["name"]
+
 
 	if(successful_set > 0)
 		investigate_log("[names_of_entries.Join(", ")] have been set to [status_to_set] by [parent.get_creator()].", INVESTIGATE_RECORDS)
@@ -193,6 +186,13 @@
 			message_admins("[successful_set] security entries have been set to [status_to_set] by [parent.get_creator_admin()]. [ADMIN_COORDJMP(src)]")
 		for(var/mob/living/carbon/human/human as anything in GLOB.human_list)
 			human.sec_hud_set_security_status()
+
+#undef COMP_STATE_ARREST
+#undef COMP_STATE_PRISONER
+#undef COMP_STATE_PAROL
+#undef COMP_STATE_DISCHARGED
+#undef COMP_STATE_NONE
+#undef COMP_SECURITY_ARREST_AMOUNT_TO_FLAG
 
 /obj/machinery/computer/secure_data/syndie
 	icon_keyboard = "syndie_key"

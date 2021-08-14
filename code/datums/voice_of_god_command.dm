@@ -68,18 +68,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 		to_remove_string = "(\\L|^)([to_remove_string])(\\L|$)"
 		message = replacetext(message, regex(to_remove_string, "i"), "")
 
-	var/power_multiplier = base_multiplier
-
-	if(user.mind)
-		//Chaplains are very good at speaking with the voice of god
-		if(user.mind.assigned_role == "Chaplain")
-			power_multiplier *= 2
-		//Command staff has authority
-		if(user.mind.assigned_role in GLOB.command_positions)
-			power_multiplier *= 1.4
-		//Why are you speaking
-		if(user.mind.assigned_role == "Mime")
-			power_multiplier *= 0.5
+	var/power_multiplier = base_multiplier * (user.mind?.assigned_role.voice_of_god_power || 1)
 
 	//Cultists are closer to their gods and are more powerful, but they'll give themselves away
 	if(is_cultie)
@@ -88,7 +77,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	//Now get the proper job titles and check for matches.
 	var/job_message = get_full_job_name(message)
 	for(var/mob/living/candidate in candidates)
-		var/their_role = candidate.mind?.assigned_role
+		var/their_role = candidate.mind?.assigned_role.title
 		if(their_role && findtext(job_message, their_role))
 			specific_listeners |= candidate //focus on those with the specified job. "|=" instead "+=" so "Mrs. Capri the Captain" doesn't get affected twice.
 
@@ -131,13 +120,22 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	return
 
 /// This command knocks the listeners down.
-/datum/voice_of_god_command/paralyze
-	trigger = "drop|fall|trip|knockdown|stop|wait|stand\\s*still|hold\\s*on|halt"
+/datum/voice_of_god_command/knockdown
+	trigger = "drop|fall|trip|knockdown"
 	cooldown = COOLDOWN_STUN
 
-/datum/voice_of_god_command/paralyze/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
+/datum/voice_of_god_command/knockdown/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
 		target.Knockdown(4 SECONDS * power_multiplier)
+
+/// This command stops the listeners from moving.
+/datum/voice_of_god_command/immobilize
+	trigger = "stop|wait|stand\\s*still|hold\\s*on|halt"
+	cooldown = COOLDOWN_STUN
+
+/datum/voice_of_god_command/immobilize/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
+	for(var/mob/living/target as anything in listeners)
+		target.Immobilize(4 SECONDS * power_multiplier)
 
 /// This command makes carbon listeners throw up like Mr. Creosote.
 /datum/voice_of_god_command/vomit
@@ -154,8 +152,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	cooldown = COOLDOWN_STUN
 
 /datum/voice_of_god_command/silence/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
-	if(user.mind && (user.mind.assigned_role == "Curator" || user.mind.assigned_role == "Mime"))
-		power_multiplier *= 3
+	power_multiplier *= user.mind?.assigned_role?.voice_of_god_silence_power || 1
 	for(var/mob/living/carbon/target in listeners)
 		target.silent += (10 * power_multiplier)
 
@@ -400,7 +397,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/honk/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(user), 'sound/items/bikehorn.ogg', 300, 1), 2.5 SECONDS)
-	if(user.mind?.assigned_role == "Clown")
+	if(is_clown_job(user.mind?.assigned_role))
 		. = COOLDOWN_STUN //it slips.
 		for(var/mob/living/carbon/target in listeners)
 			target.slip(14 SECONDS * power_multiplier)

@@ -11,12 +11,14 @@
 	var/delay_multiplier = 6.7
 	/// This variable is used to specify which overlay icon is used for the wheelchair, ensures wheelchair can cover your legs
 	var/overlay_icon = "wheelchair_overlay"
+	var/image/wheels_overlay
 	///Determines the typepath of what the object folds into
 	var/foldabletype = /obj/item/wheelchair
 
 /obj/vehicle/ridden/wheelchair/Initialize()
 	. = ..()
 	make_ridable()
+	wheels_overlay = image(icon, overlay_icon, FLY_LAYER)
 	ADD_TRAIT(src, TRAIT_NO_IMMOBILIZE, INNATE_TRAIT)
 
 /obj/vehicle/ridden/wheelchair/ComponentInitialize() //Since it's technically a chair I want it to have chair properties
@@ -41,10 +43,6 @@
 	. = ..()
 	update_appearance()
 
-/obj/vehicle/ridden/wheelchair/setDir(newdir)
-	. = ..()
-	update_appearance()
-
 /obj/vehicle/ridden/wheelchair/wrench_act(mob/living/user, obj/item/I) //Attackby should stop it attacking the wheelchair after moving away during decon
 	..()
 	to_chat(user, span_notice("You begin to detach the wheels..."))
@@ -58,7 +56,7 @@
 /obj/vehicle/ridden/wheelchair/update_overlays()
 	. = ..()
 	if(has_buckled_mobs())
-		. += image(icon = icon, icon_state = overlay_icon, layer = FLY_LAYER, dir = dir)
+		. += wheels_overlay
 
 
 ///used for simple rotation component checks
@@ -112,6 +110,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 10
+	custom_materials = list(/datum/material/gold = 10000)
 	unfolded_type = /obj/vehicle/ridden/wheelchair/gold
 
 /obj/vehicle/ridden/wheelchair/MouseDrop(over_object, src_location, over_location)  //Lets you collapse wheelchair

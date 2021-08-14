@@ -42,12 +42,12 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engineerin
 
 /proc/create_area(mob/creator)
 	// Passed into the above proc as list/break_if_found
-	var/static/area_or_turf_fail_types = typecacheof(list(
+	var/static/list/area_or_turf_fail_types = typecacheof(list(
 		/turf/open/space,
 		/area/shuttle,
 		))
 	// Ignore these areas and dont let people expand them. They can expand into them though
-	var/static/blacklisted_areas = typecacheof(list(
+	var/static/list/blacklisted_areas = typecacheof(list(
 		/area/space,
 		))
 	var/list/turfs = detect_room(get_turf(creator), area_or_turf_fail_types, BP_MAX_ROOM_SIZE*2)

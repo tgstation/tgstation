@@ -2,13 +2,25 @@
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "random_loot"
 	layer = OBJ_LAYER
+	anchored = TRUE // Stops persistent lootdrop spawns from being shoved into lockers
 	var/lootcount = 1 //how many items will be spawned
 	var/lootdoubles = TRUE //if the same item can be spawned twice
 	var/list/loot //a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
 	var/fan_out_items = FALSE //Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
+	/// Whether the spawner should immediately spawn loot and cleanup on Initialize()
+	var/spawn_on_init = TRUE
 
 /obj/effect/spawner/lootdrop/Initialize(mapload)
-	..()
+	. = ..()
+
+	if(spawn_on_init)
+		spawn_loot()
+		return INITIALIZE_HINT_QDEL
+
+///If the spawner has any loot defined, randomly picks some and spawns it. Does not cleanup the spawner.
+/obj/effect/spawner/lootdrop/proc/spawn_loot(lootcount_override)
+	var/lootcount = isnull(lootcount_override) ? src.lootcount : lootcount_override
+
 	if(loot?.len)
 		var/loot_spawned = 0
 		while((lootcount-loot_spawned) && loot.len)
@@ -29,7 +41,6 @@
 					if (loot_spawned)
 						spawned_loot.pixel_x = spawned_loot.pixel_y = ((!(loot_spawned%2)*loot_spawned/2)*-1)+((loot_spawned%2)*(loot_spawned+1)/2*1)
 			loot_spawned++
-	return INITIALIZE_HINT_QDEL
 
 /obj/effect/spawner/lootdrop/donkpockets
 	name = "donk pocket box spawner"
@@ -100,7 +111,7 @@
 				/obj/item/storage/box/matches = 3,
 				/obj/item/reagent_containers/syringe/contraband/space_drugs = 1,
 				/obj/item/reagent_containers/syringe/contraband/krokodil = 1,
-				/obj/item/reagent_containers/syringe/contraband/crank = 1,
+				/obj/item/reagent_containers/syringe/contraband/saturnx = 1,
 				/obj/item/reagent_containers/syringe/contraband/methamphetamine = 1,
 				/obj/item/reagent_containers/syringe/contraband/bath_salts = 1,
 				/obj/item/reagent_containers/syringe/contraband/fentanyl = 1,
@@ -240,18 +251,53 @@
 
 /obj/effect/spawner/lootdrop/maintenance
 	name = "maintenance loot spawner"
+	desc = "Come on Lady Luck, spawn me a pair of sunglasses."
+	spawn_on_init = FALSE
 	// see code/_globalvars/lists/maintenance_loot.dm for loot table
 
+/obj/effect/spawner/lootdrop/maintenance/examine(mob/user)
+	. = ..()
+	. += span_info("This spawner has an effective loot count of [get_effective_lootcount()].")
+
 /obj/effect/spawner/lootdrop/maintenance/Initialize(mapload)
+	. = ..()
+	// There is a single callback in SSmapping to spawn all delayed maintenance loot
+	// so we don't just make one callback per loot spawner
+	GLOB.maintenance_loot_spawners += src
 	loot = GLOB.maintenance_loot
 
+	// Late loaded templates like shuttles can have maintenance loot
+	if(SSticker.current_state >= GAME_STATE_SETTING_UP)
+		spawn_loot()
+		hide()
+
+/obj/effect/spawner/lootdrop/maintenance/Destroy()
+	GLOB.maintenance_loot_spawners -= src
+	return ..()
+
+/obj/effect/spawner/lootdrop/maintenance/proc/hide()
+	invisibility = INVISIBILITY_ABSTRACT
+
+/obj/effect/spawner/lootdrop/maintenance/proc/get_effective_lootcount()
+	var/effective_lootcount = lootcount
+
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_FILLED_MAINT))
-		lootcount = FLOOR(lootcount * 1.5, 1)
+		effective_lootcount = FLOOR(lootcount * 1.5, 1)
 
 	else if(HAS_TRAIT(SSstation, STATION_TRAIT_EMPTY_MAINT))
-		lootcount = FLOOR(lootcount * 0.5, 1)
+		effective_lootcount = FLOOR(lootcount * 0.5, 1)
 
+	return effective_lootcount
+
+/obj/effect/spawner/lootdrop/maintenance/spawn_loot(lootcount_override)
+	if(isnull(lootcount_override))
+		lootcount_override = get_effective_lootcount()
 	. = ..()
+
+	// In addition, closets that are closed will have the maintenance loot inserted inside.
+	for(var/obj/structure/closet/closet in get_turf(src))
+		if(!closet.opened)
+			closet.take_contents()
 
 /obj/effect/spawner/lootdrop/maintenance/two
 	name = "2 x maintenance loot spawner"
@@ -443,11 +489,6 @@
 				/obj/item/circuitboard/computer/teleporter,
 				/obj/item/circuitboard/machine/destructive_analyzer,
 				/obj/item/circuitboard/computer/rdconsole,
-				/obj/item/circuitboard/computer/nanite_chamber_control,
-				/obj/item/circuitboard/computer/nanite_cloud_controller,
-				/obj/item/circuitboard/machine/nanite_chamber,
-				/obj/item/circuitboard/machine/nanite_programmer,
-				/obj/item/circuitboard/machine/nanite_program_hub,
 				/obj/item/circuitboard/computer/scan_consolenew,
 				/obj/item/circuitboard/machine/dnascanner
 				)

@@ -3,20 +3,24 @@
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Captain")
 	head_announce = list("Science")
-	faction = "Station"
+	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ffddff"
 	req_admin_notify = 1
 	minimal_player_age = 7
-	exp_type_department = EXP_TYPE_SCIENCE
+	exp_required_type_department = EXP_TYPE_SCIENCE
 	exp_requirements = 180
-	exp_type = EXP_TYPE_CREW
+	exp_required_type = EXP_TYPE_CREW
+	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/rd
 	plasmaman_outfit = /datum/outfit/plasmaman/research_director
-	departments = DEPARTMENT_SCIENCE | DEPARTMENT_COMMAND
+	departments_list = list(
+		/datum/job_department/science,
+		/datum/job_department/command,
+		)
 
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SCI
@@ -34,10 +38,14 @@
 
 	family_heirlooms = list(/obj/item/toy/plush/slimeplushie)
 
-/datum/job/research_director/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
-	..()
-	if(announce_captaincy)
-		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Due to staffing shortages, newly promoted Acting Captain [H.real_name] on deck!"))
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS
+
+	voice_of_god_power = 1.4 //Command staff has authority
+
+
+/datum/job/research_director/get_captaincy_announcement(mob/living/captain)
+	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"
+
 
 /datum/outfit/job/rd
 	name = "Research Director"

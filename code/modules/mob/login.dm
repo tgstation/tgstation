@@ -48,6 +48,9 @@
 	if(!client)
 		return FALSE
 
+	//We do this here to prevent hanging refs from ghostize or whatever, since if we were in another mob before this'll take care of it
+	clear_client_in_contents()
+
 	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
 
 	if (key != client.key)
@@ -92,6 +95,7 @@
 		auto_deadmin_on_login()
 
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
+	log_mob_tag("\[[tag]\] NEW OWNER: [key_name(src)]")
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
 	client.init_verbs()
 

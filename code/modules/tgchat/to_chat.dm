@@ -75,7 +75,7 @@
 	confidential = FALSE
 )
 	if(Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized)
-		to_chat_immediate(target, html, type, text)
+		to_chat_immediate(target, html, type, text, avoid_highlighting)
 		return
 
 	// Useful where the integer 0 is the entire message. Use case is enabling to_chat(target, some_boolean) while preventing to_chat(target, "")

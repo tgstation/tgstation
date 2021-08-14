@@ -189,20 +189,20 @@
 // barstaff (defined as someone who was a roundstart bartender or someone
 // with CENTCOM_BARSTAFF)
 
-/obj/structure/table/wood/bar
+/obj/structure/table/wood/shuttle_bar
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = NODECONSTRUCT_1
 	max_integrity = 1000
 	var/boot_dir = 1
 
-/obj/structure/table/wood/bar/Initialize(mapload, _buildstack)
+/obj/structure/table/wood/shuttle_bar/Initialize(mapload, _buildstack)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/structure/table/wood/bar/proc/on_entered(datum/source, atom/movable/AM)
+/obj/structure/table/wood/shuttle_bar/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	var/mob/living/M = AM
 	if(istype(M) && !M.incorporeal_move && !is_barstaff(M))
@@ -212,11 +212,11 @@
 		M.throw_at(throwtarget, 5, 1)
 		to_chat(M, span_notice("No climbing on the bar please."))
 
-/obj/structure/table/wood/bar/proc/is_barstaff(mob/living/user)
+/obj/structure/table/wood/shuttle_bar/proc/is_barstaff(mob/living/user)
 	. = FALSE
 	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.mind && H.mind.assigned_role == "Bartender")
+		var/mob/living/carbon/human/human_user = user
+		if(is_bartender_job(human_user.mind?.assigned_role))
 			return TRUE
 
 	var/obj/item/card/id/ID = user.get_idcard(FALSE)

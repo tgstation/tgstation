@@ -23,7 +23,7 @@
 	var/start_active = FALSE //If it ignores the random chance to start broken on round start
 	var/invuln = null
 	var/obj/item/camera_bug/bug = null
-	var/obj/structure/camera_assembly/assembly = null
+	var/datum/weakref/assembly_ref = null
 	var/area/myarea = null
 
 	//OTHER
@@ -40,6 +40,8 @@
 	var/upgrades = 0
 
 	var/internal_light = TRUE //Whether it can light up when an AI views it
+	///Represents a signel source of camera alarms about movement or camera tampering
+	var/datum/alarm_handler/alarm_manager
 
 /obj/machinery/camera/preset/toxins //Bomb test site in space
 	name = "Hardened Bomb-Test Camera"
@@ -56,6 +58,7 @@
 	for(var/i in network)
 		network -= i
 		network += lowertext(i)
+	var/obj/structure/camera_assembly/assembly
 	if(CA)
 		assembly = CA
 		if(assembly.xray_module)
@@ -73,6 +76,7 @@
 	else
 		assembly = new(src)
 		assembly.state = 4 //STATE_FINISHED
+	assembly_ref = WEAKREF(assembly)
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
 	if (isturf(loc))
@@ -83,6 +87,8 @@
 		toggle_cam()
 	else //this is handled by toggle_camera, so no need to update it twice.
 		update_appearance()
+
+	alarm_manager = new(src)
 
 /obj/machinery/camera/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in network)
@@ -100,11 +106,13 @@
 /obj/machinery/camera/Destroy()
 	if(can_use())
 		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
+	GLOB.cameranet.removeCamera(src)
 	GLOB.cameranet.cameras -= src
 	cancelCameraAlarm()
 	if(isarea(myarea))
-		myarea.clear_camera(src)
-	QDEL_NULL(assembly)
+		LAZYREMOVE(myarea.cameras, src)
+	QDEL_NULL(alarm_manager)
+	QDEL_NULL(assembly_ref)
 	if(bug)
 		bug.bugged_cameras -= c_tag
 		if(bug.current == src)
@@ -113,7 +121,7 @@
 	return ..()
 
 /obj/machinery/camera/examine(mob/user)
-	. += ..()
+	. = ..()
 	if(isEmpProof(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
 		. += "It has electromagnetic interference shielding installed."
 	else
@@ -204,6 +212,10 @@
 	. = ..()
 	if(!panel_open)
 		return
+	var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
+	if(!assembly)
+		assembly_ref = null
+		return
 	var/list/droppable_parts = list()
 	if(assembly.xray_module)
 		droppable_parts += assembly.xray_module
@@ -267,6 +279,9 @@
 /obj/machinery/camera/attackby(obj/item/I, mob/living/user, params)
 	// UPGRADES
 	if(panel_open)
+		var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
+		if(!assembly)
+			assembly_ref = null
 		if(I.tool_behaviour == TOOL_ANALYZER)
 			if(!isXRay(TRUE)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
 				if(!user.temporarilyRemoveItemFromInventory(I))
@@ -342,7 +357,7 @@
 		else
 			to_chat(user, span_notice("Camera bugged."))
 			bug = I
-			bug.bugged_cameras[src.c_tag] = src
+			bug.bugged_cameras[src.c_tag] = WEAKREF(src)
 		return
 
 	return ..()
@@ -364,12 +379,13 @@
 /obj/machinery/camera/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
+			var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
 			if(!assembly)
 				assembly = new()
 			assembly.forceMove(drop_location())
 			assembly.state = 1
 			assembly.setDir(dir)
-			assembly = null
+			assembly_ref = null
 		else
 			var/obj/item/I = new /obj/item/wallframe/camera (loc)
 			I.update_integrity(I.max_integrity * 0.5)
@@ -432,13 +448,11 @@
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = TRUE
-	for(var/mob/living/silicon/S in GLOB.silicon_mobs)
-		S.triggerAlarm("Camera", get_area(src), list(src), src)
+	alarm_manager.send_alarm(ALARM_CAMERA, src, src)
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = FALSE
-	for(var/mob/living/silicon/S in GLOB.silicon_mobs)
-		S.cancelAlarm("Camera", get_area(src), src)
+	alarm_manager.clear_alarm(ALARM_CAMERA)
 
 /obj/machinery/camera/proc/can_use()
 	if(!status)
