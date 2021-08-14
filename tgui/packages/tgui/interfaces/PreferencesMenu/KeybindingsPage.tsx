@@ -112,10 +112,8 @@ const KeybindingButton = (props: {
 
   if (props.typingHotkey) {
     return (
-      <TrackOutsideClicks onOutsideClick={() => {
-        // Will toggle it off
-        props.onClick();
-      }}>
+      // props.onClick will cancel it
+      <TrackOutsideClicks onOutsideClick={props.onClick}>
         {child}
       </TrackOutsideClicks>
     );
@@ -389,24 +387,28 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
                               = this.state.selectedKeybindings[keybindingId]
                                 || [];
 
+                            let name = (
+                              <Stack.Item basis="25%">
+                                {keybinding.name}
+                              </Stack.Item>
+                            );
+
+                            // MOTHBLOCKS TODO: FIX TOOLTIP
+                            // if (keybinding.description) {
+                            //   name = (
+                            //     <Tooltip
+                            //       content={
+                            //         keybinding.description
+                            //       }>
+                            //       {name}
+                            //     </Tooltip>
+                            //   );
+                            // }
+
                             return (
                               <Stack.Item key={keybindingId}>
                                 <Stack fill>
-                                  {/* <Tooltip
-                                    content={
-                                      keybinding.description
-                                      || "No description"
-                                    }
-                                  >
-                                    <Stack.Item basis="25%">
-                                      {keybinding.name}
-                                    </Stack.Item>
-                                  </Tooltip> */}
-
-                                  {/* MOTHBLOCKS TODO: FIX TOOLTIP LAG */}
-                                  <Stack.Item basis="25%">
-                                    {keybinding.name}
-                                  </Stack.Item>
+                                  {name}
 
                                   <Stack.Item grow basis="10%">
                                     <KeybindingButton

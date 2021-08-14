@@ -96,13 +96,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (current_version < 41)
 		var/new_key_bindings = list()
 
+		// MOTHBLOCKS TODO: Migrate antags
+
 		for (var/hotkey in key_bindings)
 			if (hotkey == "Unbound")
 				continue
 
 			for (var/keybind in key_bindings[hotkey])
 				if (keybind in new_key_bindings)
-					new_key_bindings[keybind] += hotkey
+					new_key_bindings[keybind] |= hotkey
 				else
 					new_key_bindings[keybind] = list(hotkey)
 
@@ -147,9 +149,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	for(var/item in notadded)
 		var/datum/keybinding/conflicted = item
 		to_chat(parent, span_danger("[conflicted.category]: [conflicted.full_name] needs updating"))
-		LAZYADD(key_bindings["Unbound"], conflicted.name) // set it to unbound to prevent this from opening up again in the future
-		save_preferences()
-
 
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")

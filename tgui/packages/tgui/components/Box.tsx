@@ -5,7 +5,7 @@
  */
 
 import { BooleanLike, classes, pureComponentHooks } from 'common/react';
-import { createVNode, forwardRef, InfernoNode } from 'inferno';
+import { createVNode, forwardRef, InfernoNode, SFC } from 'inferno';
 import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
 import { CSS_COLORS } from '../constants';
 import { logger } from '../logging';
@@ -259,7 +259,7 @@ export const computeBoxClassName = (props: BoxProps) => {
   ]);
 };
 
-export const Box = forwardRef((props: BoxProps, ref) => {
+export const Box: SFC<BoxProps> = forwardRef((props: BoxProps, ref) => {
   const {
     as = 'div',
     className,

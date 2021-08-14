@@ -1,6 +1,6 @@
 import { classes } from "common/react";
 import { sendAct, useBackend, useLocalState } from "../../backend";
-import { Box, Button, ByondUi, Dropdown, FitText, Flex, Icon, Input, LabeledList, NumberInput, Popper, Stack, TrackOutsideClicks } from "../../components";
+import { Autofocus, Box, Button, ByondUi, Dropdown, FitText, Flex, Icon, Input, LabeledList, NumberInput, Popper, Stack, TrackOutsideClicks } from "../../components";
 import { createSetPreference, PreferencesMenuData } from "./data";
 import { CharacterPreview } from "./CharacterPreview";
 import { Gender, GENDERS } from "./preferences/gender";
@@ -25,25 +25,6 @@ const KEYS_TO_NAMES = {
   undershirt: "undershirt",
   underwear: "underwear",
 };
-
-// MOTHBLOCKS TODO: Move outside this class
-class Autofocus extends Component {
-  ref = createRef<HTMLDivElement>();
-
-  componentDidMount() {
-    setTimeout(() => {
-      this.ref.current?.focus();
-    }, 1);
-  }
-
-  render() {
-    return (
-      <div ref={this.ref} tabIndex={-1}>
-        {this.props.children}
-      </div>
-    );
-  }
-}
 
 const CharacterControls = (props: {
   handleRotate: () => void,

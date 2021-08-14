@@ -4,6 +4,7 @@ import { sendAct, useBackend, useLocalState } from "../../backend";
 import { Box, Button, ByondUi, Flex, Icon, Popper, Stack } from "../../components";
 import { Window } from "../../layouts";
 import { CharacterProfile, PreferencesMenuData } from "./data";
+import { PageButton } from "./PageButton";
 import { AntagsPage } from "./AntagsPage";
 import { GamePreferencesPage } from "./GamePreferencesPage";
 import { JobsPage } from "./JobsPage";
@@ -43,32 +44,6 @@ const CharacterProfiles = (props: {
   );
 };
 
-const PageButton: StatelessComponent<{
-  currentPage: Page,
-  page: Page,
-  otherActivePages?: Page[],
-
-  setPage: (page: Page) => void,
-}> = (props) => {
-  const pageIsActive = props.currentPage === props.page
-    || (
-      props.otherActivePages
-        && props.otherActivePages.indexOf(props.currentPage) !== -1
-    );
-
-  return (
-    <Button
-      align="center"
-      fontSize="1.2em"
-      fluid
-      selected={pageIsActive}
-      onClick={() => props.setPage(props.page)}
-    >
-      {props.children}
-    </Button>
-  );
-};
-
 export const CharacterPreferenceWindow = (props, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
 
@@ -104,9 +79,8 @@ export const CharacterPreferenceWindow = (props, context) => {
       title="Character Preferences"
       width={920}
       height={770}
-      scrollable
     >
-      <Window.Content>
+      <Window.Content scrollable>
         <Stack vertical fill>
           <Stack.Item>
             <CharacterProfiles
