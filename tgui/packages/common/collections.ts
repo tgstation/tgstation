@@ -145,31 +145,31 @@ const COMPARATOR = (objA, objB) => {
  * of running each element in a collection thru each iteratee.
  *
  * Iteratees are called with one argument (value).
- *
- * @returns {any[]}
  */
-export const sortBy = (...iterateeFns) => array => {
-  if (!Array.isArray(array)) {
-    return array;
-  }
-  let length = array.length;
-  // Iterate over the array to collect criteria to sort it by
-  let mappedArray = [];
-  for (let i = 0; i < length; i++) {
-    const value = array[i];
-    mappedArray.push({
-      criteria: iterateeFns.map(fn => fn(value)),
-      value,
-    });
-  }
-  // Sort criteria using the base comparator
-  mappedArray.sort(COMPARATOR);
-  // Unwrap values
-  while (length--) {
-    mappedArray[length] = mappedArray[length].value;
-  }
-  return mappedArray;
-};
+export const sortBy = <T>(
+  ...iterateeFns: ((input: T) => unknown)[]
+) => (array: T[]): T[] => {
+    if (!Array.isArray(array)) {
+      return array;
+    }
+    let length = array.length;
+    // Iterate over the array to collect criteria to sort it by
+    let mappedArray = [];
+    for (let i = 0; i < length; i++) {
+      const value = array[i];
+      mappedArray.push({
+        criteria: iterateeFns.map(fn => fn(value)),
+        value,
+      });
+    }
+    // Sort criteria using the base comparator
+    mappedArray.sort(COMPARATOR);
+    // Unwrap values
+    while (length--) {
+      mappedArray[length] = mappedArray[length].value;
+    }
+    return mappedArray;
+  };
 
 export const sort = sortBy();
 

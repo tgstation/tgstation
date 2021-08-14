@@ -45,9 +45,15 @@ const KEY_CODE_TO_BYOND: Record<string, string> = {
   "UP": "North",
 };
 
-const sortKeybindings = sortBy(([_, keybinding]: [unknown, Keybinding]) => {
-  return keybinding.name;
-});
+const sortKeybindings = sortBy(
+  ([_, keybinding]: [string, Keybinding]) => {
+    return keybinding.name;
+  });
+
+const sortKeybindingsByCategory = sortBy(
+  ([category, _]: [string, Record<string, Keybinding>]) => {
+    return category;
+  });
 
 // MOTHBLOCKS TODO: The Southwest shit? _kbMap
 const formatKeyboardEvent = (event: KeyboardEvent): string => {
@@ -287,11 +293,23 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
       return <Box>Loading keybindings...</Box>;
     }
 
+    const keybindingEntries = sortKeybindingsByCategory(
+      Object.entries(keybindings)
+    );
+
+    keybindingEntries.push(
+      keybindingEntries.splice(
+        keybindingEntries.findIndex(([category, _]) => {
+          return category === "ADMIN";
+        }), 1
+      )[0]
+    );
+
     return (
       <Stack vertical fill>
         <Stack.Item>
           <Stack fill px={5}>
-            {Object.keys(keybindings).map(category => {
+            {keybindingEntries.map(([category, _]) => {
               return (
                 <Stack.Item key={category} grow>
                   <Button
@@ -329,7 +347,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
           }}
         >
           <Stack vertical fill px={2}>
-            {Object.entries(keybindings).map(
+            {keybindingEntries.map(
               ([category, keybindings]) => {
                 return (
                   <Stack.Item

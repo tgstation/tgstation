@@ -50,7 +50,10 @@
 
 	var/datum/asset/asset_datum = get_asset_datum(/datum/asset/simple/lobby)
 	asset_datum.send(client)
-	var/list/output = list("<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>")
+	var/list/output = list("<center>")
+
+	output += "<p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>"
+	output += "<p><a href='byond://?src=[REF(src)];show_game_preferences=1'>Game Preferences</a></p>"
 
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
 		switch(ready)
@@ -131,6 +134,11 @@
 
 	if(href_list["show_preferences"])
 		client.prefs.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
+		client.prefs.ui_interact(src)
+		return TRUE
+
+	if (href_list["show_game_preferences"])
+		client.prefs.current_window = PREFERENCE_TAB_GAME_PREFERENCES
 		client.prefs.ui_interact(src)
 		return TRUE
 

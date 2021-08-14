@@ -22,12 +22,12 @@
 
 /datum/preference_middleware/keybindings/proc/reset_keybinds_to_defaults(list/params, mob/user)
 	var/keybind_name = params["keybind_name"]
-	var/defaults = GLOB.default_hotkeys[keybind_name]
+	var/datum/keybinding/keybinding = GLOB.keybindings_by_name[keybind_name]
 
-	if (isnull(defaults))
+	if (isnull(keybinding))
 		return FALSE
 
-	preferences.key_bindings[keybind_name] = defaults
+	preferences.key_bindings[keybind_name] = preferences.hotkeys ? keybinding.hotkey_keys : keybinding.classic_keys
 	preferences.key_bindings_by_key = preferences.get_key_bindings_by_key(preferences.key_bindings)
 
 	preferences.update_static_data(user)
