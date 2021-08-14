@@ -8,7 +8,7 @@ const UIStyleInput = (props: {
 }) => {
   return (
     <Flex>
-      <Flex.Item grow>
+      <Flex.Item grow={1}>
         {props.name}
       </Flex.Item>
 

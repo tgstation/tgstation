@@ -216,9 +216,12 @@ GLOBAL_VAR(preferences_species_data)
 		ui.open()
 
 /datum/preferences/ui_state(mob/user)
-	// MOTHBLOCKS TODO: This probably means a hacker is able to edit other people's preferences.
-	// `ui_status` needs to properly filter this.
 	return GLOB.always_state
+
+// Without this, a hacker would be able to edit other people's preferences if
+// they had the ref to Topic to.
+/datum/preferences/ui_status(mob/user, datum/ui_state/state)
+	return user.client == parent ? UI_INTERACTIVE : UI_CLOSE
 
 /datum/preferences/ui_data(mob/user)
 	var/list/data = list()
@@ -537,7 +540,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 
 	var/savefile/savefile = new(path)
 	for (var/index in 1 to max_save_slots)
-		// MOTHBLOCKS TODO: This cd's to root, is this even better?
 		savefile.cd = "/character[index]"
 
 		var/name
@@ -547,7 +549,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 			profiles += null
 			continue
 
-		// MOTHBLOCKS TODO: Cached profile headshots
 		profiles += list(list(
 			"name" = name,
 		))
