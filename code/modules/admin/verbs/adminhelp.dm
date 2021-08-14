@@ -189,10 +189,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
  * * msg - The first message of this admin_help: used for the initial title of the ticket
  * * is_bwoink - Boolean operator, TRUE if this ticket was started by an admin PM
  */
-/datum/admin_help/New(msg, client/C, is_bwoink)
-	var/msg_raw = msg
+/datum/admin_help/New(msg_raw, client/C, is_bwoink)
 	//clean the input msg
-	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
+	var/msg = sanitize(copytext_char(msg_raw, 1, MAX_MESSAGE_LEN))
 	if(!msg || !C || !C.mob)
 		qdel(src)
 		return
