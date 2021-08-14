@@ -186,7 +186,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
  * Call this on its own to create a ticket, don't manually assign current_ticket
  *
  * Arguments:
- * * msg - The first message of this admin_help: used for the initial title of the ticket
+ * * msg_raw - The first message of this admin_help: used for the initial title of the ticket
  * * is_bwoink - Boolean operator, TRUE if this ticket was started by an admin PM
  */
 /datum/admin_help/New(msg_raw, client/C, is_bwoink)
