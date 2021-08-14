@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	max_temp = 400
 	reaction_type = ENDOTHERMIC_REACTION
 	energy_release = 2000000
-	requirements = list(/datum/gas/healium = 100, /datum/gas/freon = 120, /datum/gas/plasma = 50)
+	requirements = list(/datum/gas/healium = 100, /datum/gas/oxygen = 120, /datum/gas/plasma = 50)
 	products = list(/obj/item/grenade/gas_crystal/healium_crystal = 1)
 
 /datum/gas_recipe/crystallizer/proto_nitrate_grenade
