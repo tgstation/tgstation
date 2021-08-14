@@ -20,6 +20,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
+	ADD_TRAIT(target, TRAIT_MINDSHIELD, IMPLANT_TRAIT)
 	if(target.mind)
 		if(target.mind.unconvertable)
 			if(!silent)
@@ -27,11 +28,12 @@
 			removed(target, TRUE)
 			qdel(src)
 			return TRUE
-		SEND_SIGNAL(target.mind, COMSIG_MINDSHIELD_IMPLANTED, user)
-	ADD_TRAIT(target, TRAIT_MINDSHIELD, IMPLANT_TRAIT)
-	target.sec_hud_set_implants()
+		if(SEND_SIGNAL(target.mind, COMSIG_MINDSHIELD_IMPLANTED, user) & COMPONENT_MINDSHIELD_DECONVERTED)
+			if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+				target.say("I'm out! I quit! Whose kidneys are these?", forced = "They're out! They quit! Whose kidneys do they have?")
 	if(!silent)
 		to_chat(target, span_notice("You feel a sense of peace and security. You are now protected from brainwashing."))
+	target.sec_hud_set_implants()
 	return TRUE
 
 /obj/item/implant/mindshield/removed(mob/target, silent = FALSE, special = FALSE)

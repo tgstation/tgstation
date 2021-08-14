@@ -932,6 +932,7 @@
 
 /// called on implanting a mindshield: (mob/user)
 #define COMSIG_MINDSHIELD_IMPLANTED "mindshield_implanted"
+	#define COMPONENT_MINDSHIELD_DECONVERTED (1<<0)
 
 ///called on implants being implanted into someone with an uplink implant: (datum/component/uplink)
 #define COMSIG_IMPLANT_EXISTING_UPLINK "implant_uplink_exists"

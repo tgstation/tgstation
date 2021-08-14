@@ -51,8 +51,7 @@
 
 /datum/antagonist/brainwashed/on_mindshield(mob/implanter)
 	owner.remove_antag_datum(/datum/antagonist/brainwashed)
-	if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-		owner.current.say("I'm out! I quit! Whose kidneys are these?", forced = "They're out! They quit! Whose kidneys do they have?")
+	return COMPONENT_MINDSHIELD_DECONVERTED
 
 /datum/antagonist/brainwashed/admin_add(datum/mind/new_owner,mob/admin)
 	var/mob/living/carbon/C = new_owner.current

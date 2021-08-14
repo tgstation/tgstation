@@ -142,6 +142,7 @@
 /datum/antagonist/cult/on_mindshield(mob/implanter)
 	if(!silent)
 		to_chat(owner.current, span_warning("You feel something interfering with your mental conditioning, but you resist it!"))
+	return
 
 /datum/antagonist/cult/on_removal()
 	if(!silent)
