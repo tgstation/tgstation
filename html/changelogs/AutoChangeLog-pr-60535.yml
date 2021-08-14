@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - expansion: "Add crystal foam recipe to crystallizer, a crystal that when broken will release a tick foam that closes any and all breaches that it encounters (it won't refill the air tho)"
