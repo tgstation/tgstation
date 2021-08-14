@@ -55,7 +55,7 @@ jobs:
         run: |
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build --ci dm-build -DCIBUILDING -DCITESTING -DALL_MAPS
+          tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
 
   run_all_tests:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"

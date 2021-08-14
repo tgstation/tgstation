@@ -50,7 +50,7 @@ export const DmMapsIncludeTarget = new Juke.Target({
   },
 });
 
-export const DmBuildTarget = new Juke.Target({
+export const DmTarget = new Juke.Target({
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
   ],
@@ -141,7 +141,7 @@ export const TgFontTarget = new Juke.Target({
   },
 });
 
-export const TguiBuildTarget = new Juke.Target({
+export const TguiTarget = new Juke.Target({
   dependsOn: [YarnTarget],
   inputs: [
     'tgui/.yarn/install-target',
@@ -157,7 +157,7 @@ export const TguiBuildTarget = new Juke.Target({
     'tgui/public/tgui-panel.bundle.js',
   ],
   executes: async () => {
-    await yarn('run', 'webpack-cli', '--mode=production');
+    await yarn('webpack-cli', '--mode=production');
   },
 });
 
@@ -165,7 +165,7 @@ export const TguiEslintTarget = new Juke.Target({
   dependsOn: [YarnTarget],
   executes: async ({ args }) => {
     await yarn(
-      'run', 'eslint', 'packages',
+      'eslint', 'packages',
       '--fix', '--ext', '.js,.cjs,.ts,.tsx',
       ...args
     );
@@ -175,14 +175,14 @@ export const TguiEslintTarget = new Juke.Target({
 export const TguiTscTarget = new Juke.Target({
   dependsOn: [YarnTarget],
   executes: async () => {
-    await yarn('run', 'tsc');
+    await yarn('tsc');
   },
 });
 
 export const TguiTestTarget = new Juke.Target({
   dependsOn: [YarnTarget],
   executes: async ({ args }) => {
-    await yarn('run', 'jest', ...args);
+    await yarn('jest', ...args);
   },
 });
 
@@ -190,7 +190,7 @@ export const TguiLintTarget = new Juke.Target({
   dependsOn: [YarnTarget, TguiEslintTarget, TguiTscTarget, TguiTestTarget],
 });
 
-export const TguiDevServer = new Juke.Target({
+export const TguiDevTarget = new Juke.Target({
   dependsOn: [YarnTarget],
   executes: async ({ args }) => {
     await yarn('node', 'packages/tgui-dev-server/index.esm.js', ...args);
@@ -200,7 +200,7 @@ export const TguiDevServer = new Juke.Target({
 export const TguiAnalyzeTarget = new Juke.Target({
   dependsOn: [YarnTarget],
   executes: async () => {
-    await yarn('run', 'webpack-cli', '--mode=production', '--analyze');
+    await yarn('webpack-cli', '--mode=production', '--analyze');
   },
 });
 
@@ -213,7 +213,7 @@ export const LintTarget = new Juke.Target({
 });
 
 export const BuildTarget = new Juke.Target({
-  dependsOn: [TguiBuildTarget, TgFontTarget, DmBuildTarget],
+  dependsOn: [TguiTarget, TgFontTarget, DmTarget],
 });
 
 export const ServerTarget = new Juke.Target({
@@ -252,8 +252,6 @@ export const CleanTarget = new Juke.Target({
     Juke.rm('tgui/.yarn/install-state.gz');
     Juke.rm('tgui/.yarn/install-target');
     Juke.rm('tgui/.pnp.*');
-    Juke.rm('tgui/**/node_modules', { recursive: true });
-    Juke.rm('tgui/**/package-lock.json');
   },
 });
 
@@ -284,7 +282,7 @@ const prependDefines = (...defines) => {
 };
 
 export const TgsTarget = new Juke.Target({
-  dependsOn: [TguiBuildTarget, TgFontTarget],
+  dependsOn: [TguiTarget, TgFontTarget],
   executes: async () => {
     Juke.logger.info('Prepending TGS define');
     prependDefines('TGS');
