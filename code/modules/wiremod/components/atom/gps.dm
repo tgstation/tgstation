@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/gps
 	display_name = "Internal GPS"
-	display_desc = "A component that returns the xyz co-ordinates of itself."
+	desc = "A component that returns the xyz co-ordinates of itself."
 
 	/// The result from the output
 	var/datum/port/output/x_pos
@@ -20,12 +20,6 @@
 	x_pos = add_output_port("X", PORT_TYPE_NUMBER)
 	y_pos = add_output_port("Y", PORT_TYPE_NUMBER)
 	z_pos = add_output_port("Z", PORT_TYPE_NUMBER)
-
-/obj/item/circuit_component/gps/Destroy()
-	x_pos = null
-	y_pos = null
-	z_pos = null
-	return ..()
 
 /obj/item/circuit_component/gps/input_received(datum/port/input/port)
 	. = ..()

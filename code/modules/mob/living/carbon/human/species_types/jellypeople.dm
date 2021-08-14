@@ -240,14 +240,6 @@
 	spare.domutcheck()
 	spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
 
-
-	var/datum/component/nanites/owner_nanites = H.GetComponent(/datum/component/nanites)
-	if(owner_nanites)
-		//copying over nanite programs/cloud sync with 50% saturation in host and spare
-		owner_nanites.nanite_volume *= 0.5
-		spare.AddComponent(/datum/component/nanites, owner_nanites.nanite_volume)
-		SEND_SIGNAL(spare, COMSIG_NANITE_SYNC, owner_nanites, TRUE, TRUE) //The trues are to copy activation as well
-
 	H.blood_volume *= 0.45
 	H.notransform = 0
 

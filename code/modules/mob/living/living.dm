@@ -1169,6 +1169,168 @@
 	stop_pulling()
 	. = ..()
 
+// Used in polymorph code to shapeshift mobs into other creatures
+/mob/living/proc/wabbajack(randomize)
+	// If the mob has a shapeshifted form, we want to pull out the reference of the caster's original body from it.
+	// We then want to restore this original body through the shapeshift holder itself.
+	var/obj/shapeshift_holder/shapeshift = locate() in src
+	if(shapeshift)
+		shapeshift.restore()
+		if(shapeshift.stored != src) // To reduce the risk of an infinite loop.
+			return shapeshift.stored.wabbajack(randomize)
+
+	if(stat == DEAD || notransform || (GODMODE & status_flags))
+		return
+
+	notransform = TRUE
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, MAGIC_TRAIT)
+	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, MAGIC_TRAIT)
+	icon = null
+	cut_overlays()
+	invisibility = INVISIBILITY_ABSTRACT
+
+	var/list/item_contents = list()
+
+	if(iscyborg(src))
+		var/mob/living/silicon/robot/Robot = src
+		// Disconnect AI's in shells
+		if(Robot.connected_ai)
+			Robot.connected_ai.disconnect_shell()
+		if(Robot.mmi)
+			qdel(Robot.mmi)
+		Robot.notify_ai(NEW_BORG)
+	else
+		for(var/obj/item/item in src)
+			if(!dropItemToGround(item))
+				qdel(item)
+				continue
+			item_contents += item
+
+	var/mob/living/new_mob
+
+	if(!randomize)
+		randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
+	switch(randomize)
+		if("monkey")
+			new_mob = new /mob/living/carbon/human/species/monkey(loc)
+
+		if("robot")
+			var/robot = pick(
+				200 ; /mob/living/silicon/robot,
+				/mob/living/silicon/robot/model/syndicate,
+				/mob/living/silicon/robot/model/syndicate/medical,
+				/mob/living/silicon/robot/model/syndicate/saboteur,
+				200 ; /mob/living/simple_animal/drone/polymorphed,
+			)
+			new_mob = new robot(loc)
+			if(issilicon(new_mob))
+				new_mob.gender = gender
+				new_mob.invisibility = 0
+				new_mob.job = "Cyborg"
+				var/mob/living/silicon/robot/Robot = new_mob
+				Robot.lawupdate = FALSE
+				Robot.connected_ai = null
+				Robot.mmi.transfer_identity(src) //Does not transfer key/client.
+				Robot.clear_inherent_laws(announce = FALSE)
+				Robot.clear_zeroth_law(announce = FALSE)
+
+		if("slime")
+			new_mob = new /mob/living/simple_animal/slime/random(loc)
+
+		if("xeno")
+			var/xeno_type
+			if(ckey)
+				xeno_type = pick(
+					/mob/living/carbon/alien/humanoid/hunter,
+					/mob/living/carbon/alien/humanoid/sentinel,
+				)
+			else
+				xeno_type = pick(
+					/mob/living/carbon/alien/humanoid/hunter,
+					/mob/living/simple_animal/hostile/alien/sentinel,
+				)
+			new_mob = new xeno_type(loc)
+
+		if("animal")
+			var/path = pick(
+				/mob/living/simple_animal/hostile/carp,
+				/mob/living/simple_animal/hostile/bear,
+				/mob/living/simple_animal/hostile/mushroom,
+				/mob/living/simple_animal/hostile/statue,
+				/mob/living/simple_animal/hostile/retaliate/bat,
+				/mob/living/simple_animal/hostile/retaliate/goat,
+				/mob/living/simple_animal/hostile/killertomato,
+				/mob/living/simple_animal/hostile/giant_spider,
+				/mob/living/simple_animal/hostile/giant_spider/hunter,
+				/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
+				/mob/living/simple_animal/hostile/carp/ranged,
+				/mob/living/simple_animal/hostile/carp/ranged/chaos,
+				/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
+				/mob/living/simple_animal/hostile/asteroid/goliath/beast,
+				/mob/living/simple_animal/hostile/headcrab,
+				/mob/living/simple_animal/hostile/morph,
+				/mob/living/simple_animal/hostile/stickman,
+				/mob/living/simple_animal/hostile/stickman/dog,
+				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
+				/mob/living/simple_animal/hostile/gorilla,
+				/mob/living/simple_animal/parrot,
+				/mob/living/simple_animal/pet/dog/corgi,
+				/mob/living/simple_animal/crab,
+				/mob/living/simple_animal/pet/dog/pug,
+				/mob/living/simple_animal/pet/cat,
+				/mob/living/simple_animal/mouse,
+				/mob/living/simple_animal/chicken,
+				/mob/living/simple_animal/cow,
+				/mob/living/simple_animal/hostile/lizard,
+				/mob/living/simple_animal/pet/fox,
+				/mob/living/simple_animal/butterfly,
+				/mob/living/simple_animal/pet/cat/cak,
+				/mob/living/simple_animal/chick,
+			)
+			new_mob = new path(loc)
+
+		if("humanoid")
+			var/mob/living/carbon/human/new_human = new (loc)
+
+			if(prob(50))
+				var/list/chooseable_races = list()
+				for(var/speciestype in subtypesof(/datum/species))
+					var/datum/species/S = speciestype
+					if(initial(S.changesource_flags) & WABBAJACK)
+						chooseable_races += speciestype
+
+				if(length(chooseable_races))
+					new_human.set_species(pick(chooseable_races))
+
+			// Randomize everything but the species, which was already handled above.
+			new_human.randomize_human_appearance(~RANDOMIZE_SPECIES)
+			new_human.update_body()
+			new_human.update_hair()
+			new_human.update_body_parts()
+			new_human.dna.update_dna_identity()
+			new_mob = new_human
+
+	if(!new_mob)
+		return
+
+	// Some forms can still wear some items
+	for(var/obj/item/item as anything in item_contents)
+		new_mob.equip_to_appropriate_slot(item)
+
+	log_message("became [new_mob.name]([new_mob.type])", LOG_ATTACK, color="orange")
+	new_mob.set_combat_mode(TRUE)
+	wabbajack_act(new_mob)
+	to_chat(new_mob, span_warning("Your form morphs into that of a [randomize]."))
+
+	var/poly_msg = get_policy(POLICY_POLYMORPH)
+	if(poly_msg)
+		to_chat(new_mob, poly_msg)
+
+	transfer_observers_to(new_mob)
+
+	. = new_mob
+	qdel(src)
+
 // Called when we are hit by a bolt of polymorph and changed
 // Generally the mob we are currently in is about to be deleted
 /mob/living/proc/wabbajack_act(mob/living/new_mob)
