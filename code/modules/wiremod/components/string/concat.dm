@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/concat
 	display_name = "Concatenate"
-	display_desc = "A component that combines strings."
+	desc = "A component that combines strings."
 
 	/// The amount of input ports to have
 	var/input_port_amount = 4
@@ -32,7 +32,7 @@
 	ports -= trigger_input
 
 	for(var/datum/port/input/input_port as anything in ports)
-		var/value = input_port.input_value
+		var/value = input_port.value
 		if(isnull(value))
 			continue
 

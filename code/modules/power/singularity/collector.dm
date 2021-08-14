@@ -111,6 +111,7 @@
 	else if(item.GetID())
 		if(!allowed(user))
 			to_chat(user, span_danger("Access denied."))
+			return TRUE
 		if(!active)
 			to_chat(user, span_warning("The controls can only be locked when \the [src] is active!"))
 			return TRUE

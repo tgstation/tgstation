@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/module
 	display_name = "Module"
-	display_desc = "A component that has other components within it, acting like a function. Use it in your hand to control the amount of input and output ports it has, as well as being able to access the integrated circuit contained inside."
+	desc = "A component that has other components within it, acting like a function. Use it in your hand to control the amount of input and output ports it has, as well as being able to access the integrated circuit contained inside."
 
 	var/obj/item/integrated_circuit/module/internal_circuit
 
@@ -28,6 +28,7 @@
 /obj/item/integrated_circuit/module/set_display_name(new_name)
 	. = ..()
 	attached_module.display_name = new_name
+	attached_module.name = "module ([new_name])"
 
 /obj/item/integrated_circuit/module/load_component(type)
 	if(!attached_module)
@@ -47,7 +48,7 @@
 
 /obj/item/circuit_component/module_input
 	display_name = "Input"
-	display_desc = "A component that receives data from the module it is attached to"
+	desc = "A component that receives data from the module it is attached to"
 
 	removable = FALSE
 
@@ -60,7 +61,7 @@
 
 /obj/item/circuit_component/module_output
 	display_name = "Output"
-	display_desc = "A component that outputs data to the module it is attached to."
+	desc = "A component that outputs data to the module it is attached to."
 
 	removable = FALSE
 
@@ -76,7 +77,7 @@
 	if(!port_to_update)
 		CRASH("[port.type] doesn't have a linked port in [type]!")
 
-	port_to_update.set_output(port.input_value)
+	port_to_update.set_output(port.value)
 
 /obj/item/circuit_component/module/input_received(datum/port/input/port)
 	. = ..()
@@ -86,7 +87,7 @@
 	if(!port_to_update)
 		CRASH("[port.type] doesn't have a linked port in [type]!")
 
-	port_to_update.set_output(port.input_value)
+	port_to_update.set_output(port.value)
 
 /obj/item/circuit_component/module_output/Destroy()
 	attached_module = null
@@ -210,7 +211,7 @@
 
 /obj/item/circuit_component/module/ui_static_data(mob/user)
 	. = list()
-	.["global_port_types"] = GLOB.wiremod_types
+	.["global_port_types"] = GLOB.wiremod_basic_types
 
 /obj/item/circuit_component/module/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/circuit_component))
@@ -279,7 +280,7 @@
 
 			if(action == "set_port_type")
 				var/type = params["port_type"]
-				if(!(type in GLOB.wiremod_types))
+				if(!(type in GLOB.wiremod_basic_types))
 					return
 				component_port.set_datatype(type)
 				internal_component_port.set_datatype(type)
