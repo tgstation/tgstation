@@ -61,7 +61,7 @@
 
 /datum/outfit/ctf/instagib
 	name = "CTF Instagib (Solo)"
-	r_hand = /obj/item/gun/energy/laser/instakill
+	r_hand = /obj/item/gun/energy/laser/instakill/ctf
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 	icon_state = "ctf_instakill"
 	class_description = "General purpose combat class. Armed with a laser rifle and backup pistol."
@@ -99,7 +99,7 @@
 
 /datum/outfit/ctf/red/instagib
 	name = "CTF Instagib (Red)"
-	r_hand = /obj/item/gun/energy/laser/instakill/red
+	r_hand = /obj/item/gun/energy/laser/instakill/ctf/red
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 	team_radio_freq = FREQ_CTF_RED
 
@@ -134,7 +134,7 @@
 
 /datum/outfit/ctf/blue/instagib
 	name = "CTF Instagib (Blue)"
-	r_hand = /obj/item/gun/energy/laser/instakill/blue
+	r_hand = /obj/item/gun/energy/laser/instakill/ctf/blue
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 	team_radio_freq = FREQ_CTF_BLUE
 
@@ -169,7 +169,7 @@
 
 /datum/outfit/ctf/green/instagib
 	name = "CTF Instagib (Green)"
-	r_hand = /obj/item/gun/energy/laser/instakill/green
+	r_hand = /obj/item/gun/energy/laser/instakill/ctf/green
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 	team_radio_freq = FREQ_CTF_GREEN
 
@@ -204,7 +204,7 @@
 
 /datum/outfit/ctf/yellow/instagib
 	name = "CTF Instagib (Yellow)"
-	r_hand = /obj/item/gun/energy/laser/instakill/yellow
+	r_hand = /obj/item/gun/energy/laser/instakill/ctf/yellow
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 	team_radio_freq = FREQ_CTF_YELLOW
 

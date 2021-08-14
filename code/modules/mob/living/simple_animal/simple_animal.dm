@@ -192,7 +192,7 @@
 	if(damage_coeff)
 		damage_coeff = string_assoc_list(damage_coeff)
 	if(footstep_type)
-		AddComponent(/datum/component/footstep, footstep_type)
+		AddElement(/datum/element/footstep, footstep_type)
 	if(!isnull(unsuitable_cold_damage))
 		unsuitable_cold_damage = unsuitable_atmos_damage
 	if(!isnull(unsuitable_heat_damage))

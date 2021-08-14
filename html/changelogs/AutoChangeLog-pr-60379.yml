@@ -1,4 +1,0 @@
-author: "Guestify"
-delete-after: True
-changes: 
-  - bugfix: "Replaces security newscasters with non security ones in non security rooms on Tramstation"

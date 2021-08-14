@@ -41,7 +41,6 @@
 #define BIOGENERATOR (1<<4) //Uses biomass
 #define LIMBGROWER (1<<5) //Uses synthetic flesh
 #define SMELTER (1<<6) //uses various minerals
-#define NANITE_COMPILER  (1<<7) //Prints nanite disks
 /// Protolathes for offstation roles. More limited tech tree.
 #define AWAY_LATHE (1<<8)
 /// Imprinters for offstation roles. More limited tech tree.

@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/index
 	display_name = "Index List"
-	display_desc = "A component that returns the value of a list at a given index."
+	desc = "A component that returns the value of a list at a given index."
 
 	/// The input port
 	var/datum/port/input/list_port
@@ -22,19 +22,13 @@
 
 	output = add_output_port("Value", PORT_TYPE_ANY)
 
-/obj/item/circuit_component/index/Destroy()
-	list_port = null
-	index_port = null
-	output = null
-	return ..()
-
 /obj/item/circuit_component/index/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return
 
-	var/index = index_port.input_value
-	var/list/list_input = list_port.input_value
+	var/index = index_port.value
+	var/list/list_input = list_port.value
 
 	if(!islist(list_input) || !index)
 		output.set_output(null)
