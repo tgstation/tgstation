@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - bugfix: "constructed atmos devices now show the correct color in the name (no longer all grey)"
