@@ -102,25 +102,20 @@
 	name = "crystal foam"
 	desc = "A crystal with a foggy inside"
 	icon_state = "crystal_foam"
-	var/list/obj/item/reagent_containers/glass/beakers = list()
 	var/breach_range = 7
 
 /obj/item/grenade/gas_crystal/crystal_foam/detonate(mob/living/lanced_by)
 	. = ..()
 
-	var/list/reagent_list = list()
 	var/datum/reagents/first_batch = new
 	var/datum/reagents/second_batch = new
+	var/list/datum/reagents/reactants = list()
 
 	first_batch.add_reagent(/datum/reagent/aluminium, 75)
 	second_batch.add_reagent(/datum/reagent/smart_foaming_agent, 25)
 	second_batch.add_reagent(/datum/reagent/toxin/acid/fluacid, 25)
-	reagent_list += first_batch
-	reagent_list += second_batch
-
-	var/list/datum/reagents/reactants = list()
-	for(var/batch in reagent_list)
-		reactants += batch
+	reactants += first_batch
+	reactants += second_batch
 
 	var/turf/detonation_turf = get_turf(src)
 
