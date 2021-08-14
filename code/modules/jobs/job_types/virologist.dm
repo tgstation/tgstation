@@ -6,8 +6,9 @@
 	spawn_positions = 1
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
-	exp_type = EXP_TYPE_CREW
 	exp_requirements = 60
+	exp_required_type = EXP_TYPE_CREW
+	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/virologist
 	plasmaman_outfit = /datum/outfit/plasmaman/viro
@@ -19,7 +20,9 @@
 
 	display_order = JOB_DISPLAY_ORDER_VIROLOGIST
 	bounty_types = CIV_JOB_VIRO
-	departments = DEPARTMENT_MEDICAL
+	departments_list = list(
+		/datum/job_department/medical,
+		)
 
 	family_heirlooms = list(/obj/item/reagent_containers/syringe)
 
@@ -31,7 +34,7 @@
 		/obj/item/stack/sheet/mineral/uranium = 5
 	)
 
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS
 
 
 /datum/outfit/job/virologist

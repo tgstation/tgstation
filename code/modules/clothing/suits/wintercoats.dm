@@ -429,6 +429,15 @@
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/custom
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+//In case colors are changed after initialization
+/obj/item/clothing/suit/hooded/wintercoat/custom/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
+	. = ..()
+	if(hood)
+		var/list/coat_colors = SSgreyscale.ParseColorString(greyscale_colors)
+		var/list/new_coat_colors = coat_colors.Copy(1,4)
+		hood.set_greyscale(new_coat_colors) //Adopt the suit's grayscale coloring for visual clarity.
+
+//But also keep old method in case the hood is (re-)created later
 /obj/item/clothing/suit/hooded/wintercoat/custom/MakeHood()
 	. = ..()
 	var/list/coat_colors = (SSgreyscale.ParseColorString(greyscale_colors))

@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/tempsensor
 	display_name = "Temperature Sensor"
-	display_desc = "Outputs the current temperature of the tile"
+	desc = "Outputs the current temperature of the tile"
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 

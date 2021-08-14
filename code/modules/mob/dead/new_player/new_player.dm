@@ -407,26 +407,25 @@
 			SSjob.prioritized_jobs -= prioritized_job
 	dat += "<table><tr><td valign='top'>"
 	var/column_counter = 0
-	// render each category's available jobs
-	for(var/category in GLOB.position_categories)
-		// position_categories contains category names mapped to available jobs and an appropriate color
-		var/cat_color = GLOB.position_categories[category]["color"]
-		dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
-		dat += "<legend align='center' style='color: [cat_color]'>[category]</legend>"
-		var/list/dept_dat = list()
-		for(var/job in GLOB.position_categories[category]["jobs"])
-			var/datum/job/job_datum = SSjob.name_occupations[job]
-			if(job_datum && IsJobUnavailable(job_datum.title, TRUE) == JOB_AVAILABLE)
-				var/command_bold = ""
-				if(job in GLOB.command_positions)
-					command_bold = " command"
-				if(job_datum in SSjob.prioritized_jobs)
-					dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[job_datum.title] ([job_datum.current_positions])</span></a>"
-				else
-					dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[job_datum.title] ([job_datum.current_positions])</a>"
-		if(!dept_dat.len)
-			dept_dat += "<span class='nopositions'>No positions open.</span>"
-		dat += jointext(dept_dat, "")
+
+	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
+		var/department_color = department.latejoin_color
+		dat += "<fieldset style='width: 185px; border: 2px solid [department_color]; display: inline'>"
+		dat += "<legend align='center' style='color: [department_color]'>[department.department_name]</legend>"
+		var/list/dept_data = list()
+		for(var/datum/job/job_datum as anything in department.department_jobs)
+			if(IsJobUnavailable(job_datum.title, TRUE) != JOB_AVAILABLE)
+				continue
+			var/command_bold = ""
+			if(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+				command_bold = " command"
+			if(job_datum in SSjob.prioritized_jobs)
+				dept_data += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[job_datum.title] ([job_datum.current_positions])</span></a>"
+			else
+				dept_data += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[job_datum.title] ([job_datum.current_positions])</a>"
+		if(!length(dept_data))
+			dept_data += "<span class='nopositions'>No positions open.</span>"
+		dat += dept_data.Join()
 		dat += "</fieldset><br>"
 		column_counter++
 		if(column_counter > 0 && (column_counter % 3 == 0))
