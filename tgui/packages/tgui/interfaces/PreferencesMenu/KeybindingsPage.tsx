@@ -83,6 +83,16 @@ const formatKeyboardEvent = (event: KeyboardEvent): string => {
   return text;
 };
 
+const moveToBottom = (entries: [string, unknown][], findCategory: string) => {
+  entries.push(
+    entries.splice(
+      entries.findIndex(([category, _]) => {
+        return category === findCategory;
+      }), 1
+    )[0]
+  );
+};
+
 const KeybindingButton = (props: {
   currentHotkey?: string,
   onClick?: () => void,
@@ -297,13 +307,8 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
       Object.entries(keybindings)
     );
 
-    keybindingEntries.push(
-      keybindingEntries.splice(
-        keybindingEntries.findIndex(([category, _]) => {
-          return category === "ADMIN";
-        }), 1
-      )[0]
-    );
+    moveToBottom(keybindingEntries, "EMOTE");
+    moveToBottom(keybindingEntries, "ADMIN");
 
     return (
       <Stack vertical fill>
