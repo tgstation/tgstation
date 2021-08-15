@@ -139,6 +139,11 @@
 		H.remove_overlay(HALO_LAYER)
 		H.update_body()
 
+/datum/antagonist/cult/on_mindshield(mob/implanter)
+	if(!silent)
+		to_chat(owner.current, span_warning("You feel something interfering with your mental conditioning, but you resist it!"))
+	return
+
 /datum/antagonist/cult/on_removal()
 	if(!silent)
 		owner.current.visible_message(span_deconversion_message("<span class'warningplain'>[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!</span>"), null, null, null, owner.current)

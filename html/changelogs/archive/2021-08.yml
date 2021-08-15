@@ -316,3 +316,89 @@
   - bugfix: Default AI behavior cooldowns have been returned back to 0,8 seconds instead
       of 0.1 seconds, meaning Ian will no longer disembowel you with 20 attacks in
       2 seconds.
+2021-08-12:
+  EricZilla:
+  - imageadd: Centcom finally sent us new PDAs. The uh, clown one keeps looking at
+      me.
+  Fikou:
+  - bugfix: fixes cannons not working
+  Gamer025:
+  - code_imp: url_encode and decode now try to stringify inputs
+  Gamer025 & Wayland-Smithy:
+  - bugfix: Submenus like Sound and Ghost inside Settings are no longer gone
+  Gurkenglas:
+  - qol: All circuit component input ports act as a combiner.
+  - refactor: 'Circuits: set_input and set_output are now put. input_value and output_value
+      are now value.'
+  InsaneRed:
+  - rscadd: the crystallizer can now produce crystalized hyper noblium that makes
+      your clothes pressure proof! not dying to pressure from other people is not
+      guaranteed.
+  MMMiracles:
+  - bugfix: Spider midwives can no longer send commands while dead
+  - bugfix: Nurse spiders can no longer heal dead spiders and get a message when trying
+      to do so.
+  Whoneedspacee:
+  - bugfix: Megafauna are no longer stopped by corpses and chairs.
+  sqnztb:
+  - bugfix: Navigation computers can now arbitrarily land on top z-level openspace.
+2021-08-13:
+  AMonkeyThatCodes:
+  - spellcheck: Areas where it makes sense now have \improper pre-fixed to them
+  Fikou:
+  - bugfix: fixes some megafauna shooting too fast
+  Ghommie:
+  - bugfix: Food preference quirks are no longer broken by species change.
+  Jordie0608:
+  - admin: Round id when a note was made in now displayed in the notes panel
+  Seris02:
+  - bugfix: dchat clogging of clientless mobs is gone
+  Wayland-Smithy:
+  - admin: Improved invisimin toggle messages.
+  - bugfix: Fixed Oingo Boingo Punch-face! not displacing airlocks.
+  - bugfix: Fixed shotgun meteorslugs not displacing airlocks.
+  - bugfix: Fixed chocolate surprise easter eggs being edible before they are unwrapped
+      and tasting like egg.
+2021-08-14:
+  FireFlashie:
+  - bugfix: Fixes changelogs parsing on linux enviroments
+  Ghilker:
+  - bugfix: HFR fuel mixes now properly consume the correct amounts
+  GoldenAlpharex:
+  - bugfix: Paper that's on a clipboard doesn't need to be poked to realise that its
+      appearance has changed and to properly display it on a clipboard.
+  - bugfix: You finally figured that using a stamp on a clipboard was more important
+      than using the pen that's currently attached to it. Congratulations!
+  - code_imp: Added support for preventing a pen from being removed from a clipboard.
+  JohnFulpWillard:
+  - spellcheck: DNA activators will now become expended once used, even if it hasn't
+      activated anything.
+  - spellcheck: Removed a space when recycling an activator at a DNA console.
+  Krysonism:
+  - balance: liquid electricity grants more charge to ethereals.
+  - balance: Ethereal racial foods contain more liquid electricity.
+  SmArtKar:
+  - expansion: Adds 3 new NTNet components for circuits
+  Timberpoes:
+  - config: Added a config flag for mirroring the logging of certain failed logins
+      to their own file.
+  Watermelon914:
+  - expansion: Adds circuit variables, which replace the RAM component. A cog icon
+      has been added to the top of the integrated circuit UI to access these variables.
+  - code_imp: Moved all the integrated circuit core files into a new subfolder called
+      core
+2021-08-15:
+  Ghilker:
+  - bugfix: constructed atmos devices now show the correct color in the name (no longer
+      all grey)
+  - qol: the healium crystal now fix the air instead of refilling it (that role is
+      still available with the proto nitrate one), the crystal is not made with O2
+      instead of freon
+  - expansion: Add crystal foam recipe to crystallizer, a crystal that when broken
+      will release a tick foam that closes any and all breaches that it encounters
+      (it won't refill the air tho)
+  Rohesie:
+  - bugfix: Buckling to nearby objects and roundstart shuttle buckling now result
+      in the proper facing direction.
+  Wayland-Smithy:
+  - bugfix: Fixed new ticket ahelp message double sanitizing.

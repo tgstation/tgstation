@@ -41,8 +41,8 @@
  * Sets the port's value to value.
  * Casts to the port's datatype (e.g. number -> string), and assumes this can be done.
  */
-/datum/port/proc/set_value(value)
-	if(src.value != value)
+/datum/port/proc/set_value(value, force = FALSE)
+	if(src.value != value || force)
 		if(isatom(value))
 			UnregisterSignal(value, COMSIG_PARENT_QDELETING)
 		src.value = datatype_handler.convert_value(src, value)
@@ -156,7 +156,7 @@
 
 /datum/port/input/New(obj/item/circuit_component/to_connect, name, datatype, trigger, default)
 	. = ..()
-	set_input(default)
+	set_value(default)
 	src.trigger = trigger
 	src.connected_ports = list()
 

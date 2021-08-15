@@ -160,8 +160,12 @@
 /datum/fantasy_affix/strength/apply(datum/component/fantasy/comp, newName)
 	. = ..()
 	var/obj/item/master = comp.parent
-	comp.appliedComponents += master.AddComponent(/datum/component/knockback, CEILING(comp.quality/2, 1), FLOOR(comp.quality/10, 1))
+	master.AddElement(/datum/element/knockback, CEILING(comp.quality/2, 1), FLOOR(comp.quality/10, 1))
 	return "[newName] of strength"
+
+/datum/fantasy_affix/strength/remove(datum/component/fantasy/comp)
+	var/obj/item/master = comp.parent
+	master.RemoveElement(/datum/element/knockback, CEILING(comp.quality/2, 1), FLOOR(comp.quality/10, 1))
 
 //////////// Bad suffixes
 
