@@ -7,8 +7,8 @@
 	size = 16
 	tgui_id = "NtosTechweb"
 	program_icon = "atom"
-	required_access = ACCESS_HEADS
-	transfer_access = ACCESS_RD
+	required_access = ACCESS_RND
+	transfer_access = ACCESS_RND
 	/// Reference to global science techweb
 	var/datum/techweb/stored_research
 	/// Determines if the console is locked, and consequently if actions can be performed with it
