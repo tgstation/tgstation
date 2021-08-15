@@ -85,6 +85,7 @@
 		toggle_cam()
 	else //this is handled by toggle_camera, so no need to update it twice.
 		update_appearance()
+	AddElement(/datum/element/wall_mount)
 
 /obj/machinery/camera/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in network)
