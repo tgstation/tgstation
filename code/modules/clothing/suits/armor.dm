@@ -232,7 +232,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/swat/centcom
 	name = "\improper CentCom SWAT armor"
-	desc = "A suit that protects against some damage."
+	desc = "A MK.II SWAT suit with streamlined joints and armor made out of superior materials, insulated against intense heat with the complementary gas mask. Usually given to station Captains, this one has been painted CC green with complimentary gold accents."
 	icon_state = "centcom"
 	inhand_icon_state = "centcomspacesuit"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/swat/centcom
