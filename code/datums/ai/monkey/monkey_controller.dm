@@ -25,8 +25,6 @@ have ways of interacting with a specific mob and control it.
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 
-	var/datum/component/connect_loc_behalf
-
 /datum/ai_controller/monkey/angry
 
 /datum/ai_controller/monkey/angry/TryPossessPawn(atom/new_pawn)
