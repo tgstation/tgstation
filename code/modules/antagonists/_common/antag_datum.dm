@@ -103,6 +103,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return
 
 //This handles the antagonist being mindshielded
+/datum/antagonist/proc/pre_mindshield(mob/implanter, mob/living/mob_override)
+	SIGNAL_HANDLER
+	return COMPONENT_MINDSHIELD_PASSED
+
+//This handles the antagonist being mindshielded
 /datum/antagonist/proc/on_mindshield(mob/implanter, mob/living/mob_override)
 	SIGNAL_HANDLER
 	return
@@ -156,6 +161,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 			info_button.Trigger()
 	apply_innate_effects()
 	give_antag_moodies()
+	RegisterSignal(owner, COMSIG_IMPLANTING_MINDSHIELD, .proc/pre_mindshield)
 	RegisterSignal(owner, COMSIG_MINDSHIELD_IMPLANTED, .proc/on_mindshield)
 	if(is_banned(owner.current) && replace_banned)
 		replace_banned_player()
@@ -206,6 +212,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		QDEL_NULL(info_button)
 	if(!silent && owner.current)
 		farewell()
+	UnregisterSignal(owner, COMSIG_IMPLANTING_MINDSHIELD)
 	UnregisterSignal(owner, COMSIG_MINDSHIELD_IMPLANTED)
 	var/datum/team/team = get_team()
 	if(team)

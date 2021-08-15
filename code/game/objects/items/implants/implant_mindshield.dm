@@ -21,14 +21,13 @@
 	if(!.)
 		return FALSE
 	if(target.mind)
-		var/flags = SEND_SIGNAL(target.mind, COMSIG_MINDSHIELD_IMPLANTED, user)
-		if(flags & COMPONENT_MINDSHIELD_RESIST || target.mind.unconvertable)
+		if((SEND_SIGNAL(target.mind, COMSIG_IMPLANTING_MINDSHIELD, user) & COMPONENT_MINDSHIELD_RESISTED) || target.mind.unconvertable)
 			if(!silent)
 				target.visible_message(span_warning("[target] seems to resist the implant!"), span_warning("You feel something interfering with your mental conditioning, but you resist it!"))
 			removed(target, TRUE)
 			qdel(src)
 			return TRUE
-		if(flags & COMPONENT_MINDSHIELD_DECONVERTED)
+		if(SEND_SIGNAL(target.mind, COMSIG_MINDSHIELD_IMPLANTED, user) & COMPONENT_MINDSHIELD_DECONVERTED)
 			if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 				target.say("I'm out! I quit! Whose kidneys are these?", forced = "They're out! They quit! Whose kidneys do they have?")
 

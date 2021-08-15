@@ -167,8 +167,8 @@
 	var/give_flash = FALSE
 	var/give_hud = TRUE
 
-/datum/antagonist/rev/head/on_mindshield(mob/implanter)
-	return COMPONENT_MINDSHIELD_RESIST
+/datum/antagonist/rev/head/pre_mindshield(mob/implanter, mob/living/mob_override)
+	return COMPONENT_MINDSHIELD_RESISTED
 
 /datum/antagonist/rev/head/on_removal()
 	if(give_hud)
