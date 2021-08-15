@@ -23,15 +23,19 @@
 
 /obj/item/circuit_component/controller
 	display_name = "Controller"
-	display_desc = "Used to receive inputs from the controller shell. Use the shell in hand to trigger the output signal. Alt-click for the alternate signal. Right click for the extra signal."
+	desc = "Used to receive inputs from the controller shell. Use the shell in hand to trigger the output signal. Alt-click for the alternate signal. Right click for the extra signal."
 
 	/// The three separate buttons that are called in attack_hand on the shell.
 	var/datum/port/output/signal
 	var/datum/port/output/alt
 	var/datum/port/output/right
 
+	/// The entity output
+	var/datum/port/output/entity
+
 /obj/item/circuit_component/controller/Initialize()
 	. = ..()
+	entity = add_output_port("User", PORT_TYPE_ATOM)
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 	alt = add_output_port("Alternate Signal", PORT_TYPE_SIGNAL)
 	right = add_output_port("Extra Signal", PORT_TYPE_SIGNAL)
@@ -57,6 +61,7 @@
 		return
 	source.balloon_alert(user, "clicked primary button")
 	playsound(source, get_sfx("terminal_type"), 25, FALSE)
+	entity.set_output(user)
 	signal.set_output(COMPONENT_SIGNAL)
 
 /**
@@ -68,6 +73,7 @@
 		return
 	source.balloon_alert(user, "clicked alternate button")
 	playsound(source, get_sfx("terminal_type"), 25, FALSE)
+	entity.set_output(user)
 	alt.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/controller/proc/send_right_signal(atom/source, mob/user)
@@ -76,4 +82,5 @@
 		return
 	source.balloon_alert(user, "clicked extra button")
 	playsound(source, get_sfx("terminal_type"), 25, FALSE)
+	entity.set_output(user)
 	right.set_output(COMPONENT_SIGNAL)

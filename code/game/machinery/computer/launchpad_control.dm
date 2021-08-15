@@ -18,7 +18,7 @@
 
 /obj/item/circuit_component/bluespace_launchpad
 	display_name = "Bluespace Launchpad Console"
-	display_desc = "Teleports anything to and from any location on the station. Doesn't use actual GPS coordinates, but rather offsets from the launchpad itself. Can only go as far as the launchpad can go, which depends on its parts."
+	desc = "Teleports anything to and from any location on the station. Doesn't use actual GPS coordinates, but rather offsets from the launchpad itself. Can only go as far as the launchpad can go, which depends on its parts."
 
 	var/datum/port/input/launchpad_id
 	var/datum/port/input/x_pos
@@ -35,7 +35,7 @@
 
 /obj/item/circuit_component/bluespace_launchpad/get_ui_notices()
 	. = ..()
-	var/current_launchpad = launchpad_id.input_value
+	var/current_launchpad = launchpad_id.value
 	if(isnull(current_launchpad))
 		return
 
@@ -79,23 +79,24 @@
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
-	if(!launchpad_id.input_value)
+
+	if(!launchpad_id.value)
 		return
 
-	var/obj/machinery/launchpad/the_pad = KEYBYINDEX(attached_console.launchpads, launchpad_id.input_value)
+	var/obj/machinery/launchpad/the_pad = KEYBYINDEX(attached_console.launchpads, launchpad_id.value)
 	if(isnull(the_pad))
 		why_fail.set_output("Invalid launchpad selected!")
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
-	the_pad.set_offset(x_pos.input_value, y_pos.input_value)
+	the_pad.set_offset(x_pos.value, y_pos.value)
 
 	if(COMPONENT_TRIGGERED_BY(port, x_pos))
-		x_pos.set_input(the_pad.x_offset, FALSE)
+		x_pos.set_value(the_pad.x_offset)
 		return
 
 	if(COMPONENT_TRIGGERED_BY(port, y_pos))
-		y_pos.set_input(the_pad.y_offset, FALSE)
+		y_pos.set_value(the_pad.y_offset)
 		return
 
 	var/checks = attached_console.teleport_checks(the_pad)
@@ -106,9 +107,11 @@
 
 	if(COMPONENT_TRIGGERED_BY(send_trigger, port))
 		the_pad.doteleport(null, TRUE, alternate_log_name = parent.get_creator())
+		sent.set_output(COMPONENT_SIGNAL)
 
 	if(COMPONENT_TRIGGERED_BY(retrieve_trigger, port))
 		the_pad.doteleport(null, FALSE, alternate_log_name = parent.get_creator())
+		retrieved.set_output(COMPONENT_SIGNAL)
 
 /obj/machinery/computer/launchpad/attack_paw(mob/user, list/modifiers)
 	to_chat(user, span_warning("You are too primitive to use this computer!"))

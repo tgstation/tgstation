@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/not
 	display_name = "Not"
-	display_desc = "A component that inverts its input."
+	desc = "A component that inverts its input."
 
 	/// The input port
 	var/datum/port/input/input_port
@@ -25,5 +25,5 @@
 	if(.)
 		return
 
-	result.set_output(!input_port.input_value)
+	result.set_output(!input_port.value)
 

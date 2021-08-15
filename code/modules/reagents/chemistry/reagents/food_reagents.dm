@@ -408,39 +408,6 @@
 	taste_description = "bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/drug/mushroomhallucinogen
-	name = "Mushroom Hallucinogen"
-	description = "A strong hallucinogenic drug derived from certain species of mushroom."
-	color = "#E700E7" // rgb: 231, 0, 231
-	metabolization_rate = 0.2 * REAGENTS_METABOLISM
-	taste_description = "mushroom"
-	ph = 11
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/hallucinogens = 12)
-
-/datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(!M.slurring)
-		M.slurring = 1 * REM * delta_time
-	switch(current_cycle)
-		if(1 to 5)
-			M.Dizzy(5 * REM * delta_time)
-			M.set_drugginess(30 * REM * delta_time)
-			if(DT_PROB(5, delta_time))
-				M.emote(pick("twitch","giggle"))
-		if(5 to 10)
-			M.Jitter(10 * REM * delta_time)
-			M.Dizzy(10 * REM * delta_time)
-			M.set_drugginess(35 * REM * delta_time)
-			if(DT_PROB(10, delta_time))
-				M.emote(pick("twitch","giggle"))
-		if (10 to INFINITY)
-			M.Jitter(20 * REM * delta_time)
-			M.Dizzy(20 * REM * delta_time)
-			M.set_drugginess(40 * REM * delta_time)
-			if(DT_PROB(16, delta_time))
-				M.emote(pick("twitch","giggle"))
-	..()
-
 /datum/reagent/consumable/garlic //NOTE: having garlic in your blood stops vampires from biting you.
 	name = "Garlic Juice"
 	description = "Crushed garlic. Chefs love it, but it can make you smell bad."
@@ -827,7 +794,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.getorganslot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * REM * 20)
+		stomach.adjust_charge(reac_volume * 30)
 
 /datum/reagent/consumable/liquidelectricity/enriched/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(isethereal(M))

@@ -4,11 +4,11 @@
 	id_arg_index = 2
 	/// can be a mob or a species.
 	var/target_type
-	/// multiplier of the item strength for damage calculation.
+	/// multiplier of the extra damage based on the force of the item.
 	var/damage_multiplier
 	/// Added after the above.
 	var/added_damage
-	/// If it requires combat mode on to deal extra spicy damage or not.
+	/// If it requires combat mode on to deal the extra damage or not.
 	var/requires_combat_mode
 
 /datum/element/bane/Attach(datum/target, target_type, damage_multiplier=1, added_damage = 0, requires_combat_mode = TRUE)

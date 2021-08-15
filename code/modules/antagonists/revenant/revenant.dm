@@ -193,11 +193,12 @@
 
 //damage, gibbing, and dying
 /mob/living/simple_animal/revenant/proc/on_baned(obj/item/weapon, mob/living/user)
+	SIGNAL_HANDLER
 	visible_message(span_warning("[src] violently flinches!"), \
-					span_revendanger("As \the [weapon] passes through you, you feel your essence draining away!"))
+		span_revendanger("As [weapon] passes through you, you feel your essence draining away!"))
 	inhibited = TRUE
 	update_action_buttons_icon()
-	addtimer(CALLBACK(src, .proc/reset_inhibit), 30)
+	addtimer(CALLBACK(src, .proc/reset_inhibit), 3 SECONDS)
 
 /mob/living/simple_animal/revenant/proc/reset_inhibit()
 	inhibited = FALSE

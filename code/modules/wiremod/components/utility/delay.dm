@@ -1,3 +1,6 @@
+/// The minimum delay value that the delay component can have.
+#define COMP_DELAY_MIN_VALUE 0.1
+
 /**
  * # Delay Component
  *
@@ -5,7 +8,7 @@
  */
 /obj/item/circuit_component/delay
 	display_name = "Delay"
-	display_desc = "A component that delays a signal by a specified duration."
+	desc = "A component that delays a signal by a specified duration."
 
 	/// Amount to delay by
 	var/datum/port/input/delay_amount
@@ -30,9 +33,11 @@
 	if(!COMPONENT_TRIGGERED_BY(trigger, port))
 		return
 
-	var/delay = delay_amount.input_value
+	var/delay = delay_amount.value
 	if(delay > COMP_DELAY_MIN_VALUE)
 		// Convert delay into deciseconds
-		addtimer(CALLBACK(output, /datum/port/output.proc/set_output, trigger.input_value), delay*10)
+		addtimer(CALLBACK(output, /datum/port/output.proc/set_output, trigger.value), delay*10)
 	else
-		output.set_output(trigger.input_value)
+		output.set_output(trigger.value)
+
+#undef COMP_DELAY_MIN_VALUE
