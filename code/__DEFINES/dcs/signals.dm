@@ -932,12 +932,15 @@
 
 /// called as a mindshield is implanted: (mob/user)
 #define COMSIG_IMPLANTING_MINDSHIELD "implanting_mindshield"
-	#define COMPONENT_MINDSHIELD_PASSED (1<<0) // Did they successfully get mindshielded?
-	#define COMPONENT_MINDSHIELD_RESISTED (1<<1) // Did they resist the mindshield?
+	/// Did they successfully get mindshielded?
+	#define COMPONENT_MINDSHIELD_PASSED (1<<0)
+	/// Did they resist the mindshield?
+	#define COMPONENT_MINDSHIELD_RESISTED (1<<1)
 
 /// called once a mindshield is implanted: (mob/user)
 #define COMSIG_MINDSHIELD_IMPLANTED "mindshield_implanted"
-	#define COMPONENT_MINDSHIELD_DECONVERTED (1<<0) // Are we the reason for deconversion?
+	/// Are we the reason for deconversion?
+	#define COMPONENT_MINDSHIELD_DECONVERTED (1<<0)
 
 ///called on implants being implanted into someone with an uplink implant: (datum/component/uplink)
 #define COMSIG_IMPLANT_EXISTING_UPLINK "implant_uplink_exists"
