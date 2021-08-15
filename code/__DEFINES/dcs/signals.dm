@@ -933,9 +933,9 @@
 /// called as a mindshield is implanted: (mob/user)
 #define COMSIG_PRE_MINDSHIELD_IMPLANT "pre_mindshield_implant"
 	/// Did they successfully get mindshielded?
-	#define COMPONENT_MINDSHIELD_PASSED (1<<0)
+	#define COMPONENT_MINDSHIELD_PASSED (NONE)
 	/// Did they resist the mindshield?
-	#define COMPONENT_MINDSHIELD_RESISTED (1<<1)
+	#define COMPONENT_MINDSHIELD_RESISTED (1<<0)
 
 /// called once a mindshield is implanted: (mob/user)
 #define COMSIG_MINDSHIELD_IMPLANTED "mindshield_implanted"
