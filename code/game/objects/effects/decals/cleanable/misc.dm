@@ -264,6 +264,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ants"
 	beauty = -150
+	layer = LOW_OBJ_LAYER
 	var/ant_bite_damage
 	var/ant_volume
 	var/is_caltrop = FALSE
