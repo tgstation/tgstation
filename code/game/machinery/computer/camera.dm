@@ -295,6 +295,10 @@
 	RegisterSignal(src, COMSIG_CLICK, .proc/BigClick)
 	update_appearance()
 
+/obj/machinery/computer/security/telescreen/on_set_machine_stat(old_value)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS || UPDATE_ICON)
+
 // Bypass clickchain to allow humans to use the telescreen from a distance
 /obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
 	SIGNAL_HANDLER
@@ -314,7 +318,7 @@
 	cut_overlays()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	. += "[initial(icon_state)][rand(1,4)]"
+	. += "[initial(icon_state)]_program[rand(1,4)]"
 
 /obj/machinery/computer/security/telescreen/rd
 	name = "\improper Research Director's telescreen"
