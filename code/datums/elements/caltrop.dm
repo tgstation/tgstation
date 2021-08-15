@@ -89,8 +89,8 @@
 	if(!(flags & CALTROP_SILENT) && !H.has_status_effect(/datum/status_effect/caltropped))
 		H.apply_status_effect(/datum/status_effect/caltropped)
 		H.visible_message(
-			span_danger("[H] steps on [source]."),
-			span_userdanger("You step on [source]!")
+			span_danger("[H] steps over something on [source]."),
+			span_userdanger("You step over something on [source]!")
 		)
 
 	H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND)
