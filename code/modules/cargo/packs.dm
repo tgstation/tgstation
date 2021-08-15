@@ -643,7 +643,7 @@
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/gun/ballistic/automatic/wt550,
 					/obj/item/gun/ballistic/automatic/wt550)
-	crate_name = "auto rifle crate"
+	crate_name = "wt-550 auto rifle crate"
 
 /datum/supply_pack/security/armory/wt550ammo
 	name = "WT-550 Auto Rifle Ammo Crate"
@@ -653,6 +653,7 @@
 					/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9)
+	crate_name = "wt-550 auto rifle ammo crate"
 
 
 //////////////////////////////////////////////////////////////////////////////
