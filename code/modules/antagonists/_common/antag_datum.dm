@@ -102,12 +102,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/remove_innate_effects(mob/living/mob_override)
 	return
 
-//This handles the antagonist being mindshielded
+/// This is called when the antagonist is being mindshielded.
 /datum/antagonist/proc/pre_mindshield(mob/implanter, mob/living/mob_override)
 	SIGNAL_HANDLER
 	return COMPONENT_MINDSHIELD_PASSED
 
-//This handles the antagonist being mindshielded
+/// This is called when the antagonist is successfully mindshielded.
 /datum/antagonist/proc/on_mindshield(mob/implanter, mob/living/mob_override)
 	SIGNAL_HANDLER
 	return
