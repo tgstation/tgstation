@@ -215,6 +215,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.ahelp_tickets.ClientLogin(src)
 	GLOB.interviews.client_login(src)
+	GLOB.requests.client_login(src)
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
 	//Admin Authorisation
 	var/datum/admins/admin_datum = GLOB.admin_datums[ckey]
@@ -266,21 +267,21 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		var/list/joined_players = list()
 		for(var/player_ckey in GLOB.joined_player_list)
 			joined_players[player_ckey] = 1
-			
+
 		for(var/joined_player_ckey in (GLOB.directory | joined_players))
 			if (!joined_player_ckey || joined_player_ckey == ckey)
 				continue
-			
+
 			var/datum/preferences/joined_player_preferences = GLOB.preferences_datums[joined_player_ckey]
 			if(!joined_player_preferences)
 				continue //this shouldn't happen.
-				
+
 			var/client/C = GLOB.directory[joined_player_ckey]
 			var/in_round = ""
 			if (joined_players[joined_player_ckey])
 				in_round = " who has played in the current round"
 			var/message_type = "Notice"
-			
+
 			var/matches
 			if(joined_player_preferences.last_ip == address)
 				matches += "IP ([address])"
@@ -291,7 +292,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					message_type = "MULTIKEY"
 				matches += "Computer ID ([computer_id])"
 				alert_mob_dupe_login = TRUE
-			
+
 			if(matches)
 				if(C)
 					message_admins(span_danger("<B>[message_type]: </B></span><span class='notice'>Connecting player [key_name_admin(src)] has the same [matches] as [key_name_admin(C)]<b>[in_round]</b>."))
@@ -351,7 +352,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		spawn(0.5 SECONDS) //needs to run during world init, do not convert to add timer
 			alert(mob, dupe_login_message) //players get banned if they don't see this message, do not convert to tgui_alert (or even tg_alert) please.
 			to_chat(mob, span_danger(dupe_login_message))
-			
+
 
 	connection_time = world.time
 	connection_realtime = world.realtime
@@ -494,6 +495,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.interviews.client_logout(src)
+	GLOB.requests.client_logout(src)
 	SSserver_maint.UpdateHubStatus()
 	if(credits)
 		QDEL_LIST(credits)

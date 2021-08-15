@@ -482,10 +482,10 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set desc = "Hear Prayer Sounds"
 	if(!holder)
 		return
-	prefs.toggles ^= SOUND_PRAYERS
+	prefs.request_toggles ^= SOUND_REQUESTS_CHAPPRAY
 	prefs.save_preferences()
-	to_chat(usr, "<span class='infoplain'>You will [(prefs.toggles & SOUND_PRAYERS) ? "now" : "no longer"] hear a sound when prayers arrive.</span>")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Prayer Sounds", "[usr.client.prefs.toggles & SOUND_PRAYERS ? "Enabled" : "Disabled"]"))
+	to_chat(usr, "<span class='infoplain'>You will [(prefs.request_toggles & SOUND_REQUESTS_CHAPPRAY) ? "now" : "no longer"] hear a sound when prayers arrive.</span>")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Prayer Sounds", "[usr.client.prefs.request_toggles & SOUND_REQUESTS_CHAPPRAY ? "Enabled" : "Disabled"]"))
 
 /client/proc/colorasay()
 	set name = "Set Admin Say Color"

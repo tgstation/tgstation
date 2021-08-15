@@ -475,10 +475,12 @@ GLOBAL_LIST_EMPTY(species_list)
 	for(var/mob/M in GLOB.player_list)
 		var/chat_toggles = TOGGLES_DEFAULT_CHAT
 		var/toggles = TOGGLES_DEFAULT
+		var/request_toggles = TOGGLES_REQUESTS_DEFAULT
 		var/list/ignoring
 		if(M.client.prefs)
 			var/datum/preferences/prefs = M.client.prefs
 			chat_toggles = prefs.chat_toggles
+			request_toggles = prefs.request_toggles
 			toggles = prefs.toggles
 			ignoring = prefs.ignoring
 		if(admin_only)
