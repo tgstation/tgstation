@@ -1,12 +1,12 @@
 /datum/component/combustible_flooder
 	// Gas type, molar count, and temperature. All self explanatory.
-	var/gas_name
+	var/gas_id
 	var/gas_amount
 	var/temp_amount
 
-/datum/component/combustible_flooder/Initialize(gas_name, gas_amount, temp_amount)
+/datum/component/combustible_flooder/Initialize(gas_id, gas_amount, temp_amount)
 
-	src.gas_name = gas_name
+	src.gas_id = gas_id
 	src.gas_amount = gas_amount
 	src.temp_amount = temp_amount
 
@@ -20,7 +20,7 @@
 /// Do the flooding.
 /datum/component/combustible_flooder/proc/flood(mob/user, temp_amount)
 	var/turf/open/flooded_turf = get_turf(parent)
-	flooded_turf.atmos_spawn_air("[gas_name]=[gas_amount];TEMP=[temp_amount]")
+	flooded_turf.atmos_spawn_air("[gas_id]=[gas_amount];TEMP=[temp_amount]")
 	
 	// Logging-related
 	var/admin_message = "[parent] ignited in [ADMIN_VERBOSEJMP(flooded_turf)]"
