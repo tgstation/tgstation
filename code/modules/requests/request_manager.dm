@@ -109,8 +109,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			var/code = random_nukecode()
 			for(var/obj/machinery/nuclearbomb/selfdestruct/SD in GLOB.nuke_list)
 				SD.r_code = code
-			message_admins("[key_name_admin(usr)] has set the self-destruct \
-				code to \"[code]\".")
+			message_admins("[key_name_admin(usr)] has set the self-destruct code to \"[code]\".")
 		if ("toggle_pref")
 			var/pref = params["pref"] != null ? text2num(params["pref"]) : null
 			if (!pref)
