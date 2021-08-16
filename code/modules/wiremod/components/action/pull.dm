@@ -20,7 +20,7 @@
 	if(.)
 		return
 
-	var/atom/target_atom = target.input_value
+	var/atom/target_atom = target.value
 	if(!target_atom)
 		return
 
