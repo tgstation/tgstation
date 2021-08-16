@@ -226,7 +226,6 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
 
     event.preventDefault();
 
-    logger.log("cancelling next: ", keyEvent.code);
     this.cancelNextKeyUp = keyEvent.code;
 
     if (isStandardKey(event)) {
@@ -243,7 +242,6 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
   }
 
   handleKeyUp(keyEvent: KeyEvent) {
-    logger.log("cancelling next?: ", keyEvent.code, this.cancelNextKeyUp);
     if (this.cancelNextKeyUp === keyEvent.code) {
       this.cancelNextKeyUp = null;
       keyEvent.event.preventDefault();

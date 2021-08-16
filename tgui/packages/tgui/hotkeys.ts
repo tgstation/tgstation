@@ -80,7 +80,6 @@ const handlePassthrough = (key: KeyEvent) => {
   if (keyString === 'Ctrl+F') {
     return;
   }
-  logger.log("preventing?", key.event.defaultPrevented);
   // NOTE: Alt modifier is pretty bad and sticky in IE11.
   if (key.event.defaultPrevented
       || key.isModifierKey()
