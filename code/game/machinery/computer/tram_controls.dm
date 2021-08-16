@@ -9,6 +9,7 @@
 
 	light_color = LIGHT_COLOR_GREEN
 
+	///Weakref to the tram piece we control
 	var/datum/weakref/tram_ref
 
 /obj/machinery/computer/tram_controls/Initialize(mapload, obj/item/circuitboard/C)
