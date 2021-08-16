@@ -585,6 +585,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///generic atom traits
 /// Trait from [/datum/component/rust]. Its rusty and should be applying a special overlay to denote this.
 #define TRAIT_RUSTY "rust_trait"
+///stops someone from splashing their reagent_container on an object with this trait
 #define DO_NOT_SPLASH "do_not_splash"
 
 // unique trait sources, still defines
