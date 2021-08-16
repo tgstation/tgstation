@@ -1442,8 +1442,9 @@
 	if(!istype(L))
 		return
 
-	if(issilicon(L) || issilicon(src) || isanimal(L) || isanimal(src))
-		return // can't spread fire to mobs that don't catch on fire
+	// can't spread fire to mobs that don't catch on fire
+	if(HAS_TRAIT(L, TRAIT_NOFIRE_SPREAD) || HAS_TRAIT(src, TRAIT_NOFIRE_SPREAD))
+		return 
 
 	if(on_fire)
 		if(L.on_fire) // If they were also on fire
