@@ -65,6 +65,7 @@ fi
 
 # Invoke Node with all command-line arguments
 if [ "$is_vendored" = "1" ]; then
+	PATH="$(readlink -f "$NodeDir"):$PATH"
 	echo "Using vendored Node $("$NodeExe" --version)"
 else
 	echo "Using system-wide Node $("$NodeExe" --version)"
