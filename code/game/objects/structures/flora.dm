@@ -353,8 +353,7 @@
 /obj/item/kirbyplants/proc/generate_states()
 	random_plant_states = list()
 	for(var/i in 1 to 25)
-		var/number = "[i]"
-		random_plant_states += "plant-[number]"
+		random_plant_states += "plant-[i]"
 	random_plant_states += "applebush"
 
 
