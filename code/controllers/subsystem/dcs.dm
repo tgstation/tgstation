@@ -38,11 +38,15 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 		var/value
 		if(istext(key))
 			value = arguments[key]
-		if(!(istext(key) || isnum(key)))
+		if(islist(key))
+			key = get_shallow_list_id(key) //To prevent 2 lists with the same contents from creating unique elements
+		else if(!(istext(key) || isnum(key)))
 			key = REF(key)
 		key = "[key]" // Key is stringified so numbers dont break things
 		if(!isnull(value))
-			if(!(istext(value) || isnum(value)))
+			if(islist(value))
+				value = get_shallow_list_id(value) //To prevent 2 lists with the same contents from creating unique elements
+			else if(!(istext(value) || isnum(value)))
 				value = REF(value)
 			named_arguments["[key]"] = value
 		else
