@@ -1,4 +1,0 @@
-author: "Colovorat"
-delete-after: True
-changes: 
-  - bugfix: "Cyborg emergency reboot module now is no longer dropped if revive is succesful"

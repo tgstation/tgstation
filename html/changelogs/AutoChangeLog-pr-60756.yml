@@ -1,5 +1,0 @@
-author: "Couls"
-delete-after: True
-changes: 
-  - bugfix: "bright white spheres when attacking things with an item that has a light source attached"
-  - bugfix: "inventory and action buttons creating light sources"

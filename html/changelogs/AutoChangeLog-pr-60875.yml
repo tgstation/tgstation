@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "freezers will now actually protect their contents from explosions once like iamgoofball intended almost 4 years ago."

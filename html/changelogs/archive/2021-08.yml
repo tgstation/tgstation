@@ -402,3 +402,16 @@
       in the proper facing direction.
   Wayland-Smithy:
   - bugfix: Fixed new ticket ahelp message double sanitizing.
+2021-08-16:
+  Colovorat:
+  - bugfix: Cyborg emergency reboot module now is no longer dropped if revive is succesful
+  - bugfix: Controller shell extra button now works properly
+  Couls:
+  - bugfix: bright white spheres when attacking things with an item that has a light
+      source attached
+  - bugfix: inventory and action buttons creating light sources
+  Ghommie:
+  - bugfix: freezers will now actually protect their contents from explosions once
+      like iamgoofball intended almost 4 years ago.
+  Time-Green:
+  - bugfix: moths will burn
