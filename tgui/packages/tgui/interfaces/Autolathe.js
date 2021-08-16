@@ -73,8 +73,7 @@ export const Autolathe = (props, context) => {
             placeholder="Search Recipes..."
             selfClear
             onChange={(e, value) => {
-              if (value.length)
-              {
+              if (value.length) {
                 act('search', {
                   to_search: value,
                 });
@@ -105,8 +104,7 @@ export const Autolathe = (props, context) => {
               <Button
                 icon="times"
                 content="Close Category"
-                onClick={() =>
-                {
+                onClick={() => {
                   act('menu');
                   setCategory("None");
                 }} />
@@ -181,11 +179,10 @@ export const Autolathe = (props, context) => {
                           maxValue={design.maxmult}
                           disabled={design.buildable}
                           backgroundColor={design.buildable ? '#999999' : 'default'}
-                          onCommit={(e, value) =>
-                            act('make', {
-                              id: design.id,
-                              multiplier: value,
-                            })} />
+                          onCommit={(e, value) => act('make', {
+                            id: design.id,
+                            multiplier: value,
+                          })} />
                       </Table.Cell>
                       {design.cost}
                     </Table.Row>
