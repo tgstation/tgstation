@@ -59,7 +59,7 @@ task-webpack() {
 ## Runs a development server
 task-dev-server() {
   cd "${base_dir}"
-  yarn node packages/tgui-dev-server/index.esm.js "${@}"
+  yarn node --experimental-modules packages/tgui-dev-server/index.js "${@}"
 }
 
 ## Run a linter through all packages
