@@ -242,7 +242,7 @@
 		SET_BITFLAG_LIST(canSmoothWith)
 
 	// apply materials properly from the default custom_materials value
-	set_custom_materials(custom_materials)
+	set_custom_materials()
 
 	ComponentInitialize()
 	InitializeAIController()
@@ -1734,6 +1734,7 @@
 			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)
 
 	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
+
 
 /**
  * Returns the material composition of the atom.
