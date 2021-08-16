@@ -84,12 +84,38 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 	var/datum/request/request = !id ? null : requests_by_id[id]
 
 	switch(action)
+		if ("pp")
+			var/mob/M = request.owner?.mob
+			usr.client.holder.show_player_panel(M)
+		if ("vv")
+			var/mob/M = request.owner?.mob
+			usr.client.debug_variables(M)
 		if ("sm")
 			var/mob/M = request.owner?.mob
-			usr.client?.cmd_admin_subtle_message(M)
+			usr.client.cmd_admin_subtle_message(M)
 		if ("flw")
 			var/mob/M = request.owner?.mob
-			usr.client?.admin_follow(M)
+			usr.client.admin_follow(M)
+		if ("tp")
+			if(!SSticker.HasRoundStarted())
+				tgui_alert(usr,"The game hasn't started yet!")
+				return
+			var/mob/M = request.owner?.mob
+			if(!ismob(M))
+				var/datum/mind/D = M
+				if(!istype(D))
+					to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
+					return
+				else
+					D.traitor_panel()
+			else
+				usr.client.holder.show_traitor_panel(M)
+		if ("logs")
+			var/mob/M = request.owner?.mob
+			if(!ismob(M))
+				to_chat(usr, "This can only be used on instances of type /mob.", confidential = TRUE)
+				return
+			show_individual_logging_panel(M, null, null)
 		if ("smite")
 			if(!check_rights(R_FUN))
 				return
@@ -97,12 +123,12 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			if (!H || !istype(H))
 				to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human", confidential = TRUE)
 				return
-			usr.client?.smite(H)
+			usr.client.smite(H)
 		if ("rply")
 			if (request.req_type == REQUEST_PRAYER)
 				return
 			var/mob/M = request.owner?.mob
-			usr.client?.admin_headset_message(M, request.req_type == REQUEST_SYNDICATE ? RADIO_CHANNEL_SYNDICATE : RADIO_CHANNEL_CENTCOM)
+			usr.client.admin_headset_message(M, request.req_type == REQUEST_SYNDICATE ? RADIO_CHANNEL_SYNDICATE : RADIO_CHANNEL_CENTCOM)
 		if ("setcode")
 			if (request.req_type != REQUEST_NUKE)
 				return
