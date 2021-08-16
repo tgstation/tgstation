@@ -190,7 +190,8 @@ export const Autolathe = (props, context) => {
                   ) || <Table.Row><Table.Cell>{"No designs found."}</Table.Cell></Table.Row>}
               </Table>
             </Flex>
-          </Section>)}
+          </Section>
+        )}
       </Window.Content>
     </Window>
   );

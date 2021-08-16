@@ -113,23 +113,24 @@
 			unbuildable = TRUE
 		var/max_multiplier = unbuildable ? 0 : 1
 		if(ispath(D.build_path, /obj/item/stack))
-			var/datum/component/material_container/mats = GetComponent(/datum/component/material_container)
 			sheets = TRUE
-			for(var/datum/material/mat in D.materials)
-				max_multiplier = min(D.maxstack, round(mats.get_material_amount(mat)/D.materials[mat]))
-			if (max_multiplier>10 && !disabled)
-				m10 = TRUE
-			if (max_multiplier>25 && !disabled)
-				m25 = TRUE
+			if(!unbuildable)
+				var/datum/component/material_container/mats = GetComponent(/datum/component/material_container)
+				for(var/datum/material/mat in D.materials)
+					max_multiplier = min(D.maxstack, round(mats.get_material_amount(mat)/D.materials[mat]))
+				if (max_multiplier>10 && !disabled)
+					m10 = TRUE
+				if (max_multiplier>25 && !disabled)
+					m25 = TRUE
 		else
-			if(!disabled && can_build(D, 5))
-				m5 = TRUE
-			if(!disabled && can_build(D, 10))
-				m10 = TRUE
-			var/datum/component/material_container/mats = GetComponent(/datum/component/material_container)
-
-			for(var/datum/material/mat in D.materials)
-				max_multiplier = min(50, round(mats.get_material_amount(mat)/(D.materials[mat] * creation_efficiency)))
+			if(!unbuildable)
+				if(!disabled && can_build(D, 5))
+					m5 = TRUE
+				if(!disabled && can_build(D, 10))
+					m10 = TRUE
+				var/datum/component/material_container/mats = GetComponent(/datum/component/material_container)
+				for(var/datum/material/mat in D.materials)
+					max_multiplier = min(50, round(mats.get_material_amount(mat)/(D.materials[mat] * creation_efficiency)))
 
 		var/list/design = list(
 			name = D.name,
@@ -154,10 +155,12 @@
 	if(action == "menu")
 		selected_category = null
 		matching_designs.Cut()
+		. = TRUE
 
 	if(action == "category")
 		selected_category = params["selectedCategory"]
 		matching_designs.Cut()
+		. = TRUE
 
 	if(action == "search")
 		matching_designs.Cut()
@@ -166,6 +169,8 @@
 			var/datum/design/D = SSresearch.techweb_design_by_id(v)
 			if(findtext(D.name,params["to_search"]))
 				matching_designs.Add(D)
+		. = TRUE
+
 	if(action == "make")
 		if (!busy)
 			/////////////////
@@ -219,6 +224,7 @@
 				icon_state = "autolathe_n"
 				var/time = is_stack ? 32 : (32 * coeff * multiplier) ** 0.8
 				addtimer(CALLBACK(src, .proc/make_item, power, materials_used, custom_materials, multiplier, coeff, is_stack, usr), time)
+				. = TRUE
 			else
 				to_chat(usr, "<span class=\"alert\">Not enough materials for this operation.</span>")
 		else
