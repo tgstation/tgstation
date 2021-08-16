@@ -232,46 +232,50 @@
 
 /obj/effect/anomaly/bluespace/detonate()
 	var/turf/T = pick(get_area_turfs(impact_area))
-	if(T)
-			// Calculate new position (searches through beacons in world)
-		var/obj/item/beacon/chosen
-		var/list/possible = list()
-		for(var/obj/item/beacon/W in GLOB.teleportbeacons)
-			possible += W
+	if(!T)
+		return
 
-		if(possible.len > 0)
-			chosen = pick(possible)
+		// Calculate new position (searches through beacons in world)
+	var/obj/item/beacon/chosen
+	var/list/possible = list()
+	for(var/obj/item/beacon/W in GLOB.teleportbeacons)
+		possible += W
 
-		if(chosen)
-				// Calculate previous position for transition
+	if(possible.len > 0)
+		chosen = pick(possible)
 
-			var/turf/FROM = T // the turf of origin we're travelling FROM
-			var/turf/TO = get_turf(chosen) // the turf of origin we're travelling TO
+	if(chosen)
+			// Calculate previous position for transition
 
-			playsound(TO, 'sound/effects/phasein.ogg', 100, TRUE)
-			priority_announce("Massive bluespace translocation detected.", "Anomaly Alert")
+		var/turf/FROM = T // the turf of origin we're travelling FROM
+		var/turf/TO = get_turf(chosen) // the turf of origin we're travelling TO
 
-			var/list/flashers = list()
-			for(var/mob/living/carbon/C in viewers(TO, null))
-				if(C.flash_act())
-					flashers += C
+		playsound(TO, 'sound/effects/phasein.ogg', 100, TRUE)
+		priority_announce("Massive bluespace translocation detected.", "Anomaly Alert")
 
-			var/y_distance = TO.y - FROM.y
-			var/x_distance = TO.x - FROM.x
-			for (var/atom/movable/A in urange(12, FROM )) // iterate thru list of mobs in the area
-				if(istype(A, /obj/item/beacon))
-					continue // don't teleport beacons because that's just insanely stupid
-				if(A.anchored)
-					continue
+		var/list/flashers = list()
+		for(var/mob/living/carbon/C in viewers(TO, null))
+			if(C.flash_act())
+				flashers += C
 
-				var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
-				if(!A.Move(newloc) && newloc) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
-					A.forceMove(newloc)
+		var/y_distance = TO.y - FROM.y
+		var/x_distance = TO.x - FROM.x
+		for (var/atom/movable/A in urange(12, FROM )) // iterate thru list of mobs in the area
+			if(istype(A, /obj/item/beacon))
+				continue // don't teleport beacons because that's just insanely stupid
+			if(A.anchored)
+				continue
+			if(HAS_TRAIT(A, TRAIT_NO_TELEPORT)) //By definition, these cannot teleport
+				continue
 
-				if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
-					var/mob/M = A
-					if(M.client)
-						INVOKE_ASYNC(src, .proc/blue_effect, M)
+			var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
+			if(!A.Move(newloc) && newloc) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
+				A.forceMove(newloc)
+
+			if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
+				var/mob/M = A
+				if(M.client)
+					INVOKE_ASYNC(src, .proc/blue_effect, M)
 
 /obj/effect/anomaly/bluespace/proc/blue_effect(mob/M)
 	var/obj/blueeffect = new /obj(src)
