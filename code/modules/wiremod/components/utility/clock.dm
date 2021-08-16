@@ -28,7 +28,7 @@
 	if(.)
 		return
 
-	if(on.input_value)
+	if(on.value)
 		start_process()
 	else
 		stop_process()

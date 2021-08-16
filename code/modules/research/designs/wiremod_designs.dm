@@ -88,11 +88,6 @@
 	id = "comp_not"
 	build_path = /obj/item/circuit_component/not
 
-/datum/design/component/ram
-	name = "RAM Component"
-	id = "comp_ram"
-	build_path = /obj/item/circuit_component/ram
-
 /datum/design/component/random
 	name = "Random Component"
 	id = "comp_random"
@@ -168,11 +163,6 @@
 	id = "comp_health"
 	build_path = /obj/item/circuit_component/health
 
-/datum/design/component/combiner
-	name = "Combiner Component"
-	id = "comp_combiner"
-	build_path = /obj/item/circuit_component/combiner
-
 /datum/design/component/split
 	name = "Split Component"
 	id = "comp_split"
@@ -193,10 +183,15 @@
 	id = "comp_mmi"
 	build_path = /obj/item/circuit_component/mmi
 
+/datum/design/component/router
+	name = "Router Component"
+	id = "comp_router"
+	build_path = /obj/item/circuit_component/router
+
 /datum/design/component/multiplexer
 	name = "Multiplexer Component"
 	id = "comp_multiplexer"
-	build_path = /obj/item/circuit_component/multiplexer
+	build_path = /obj/item/circuit_component/router/multiplexer
 
 /datum/design/component/get_column
 	name = "Get Column Component"
@@ -237,6 +232,16 @@
 	name = "Module Component"
 	id = "comp_module"
 	build_path = /obj/item/circuit_component/module
+
+/datum/design/component/ntnet_receive
+	name = "Pressure NTNet Transmitter"
+	id = "comp_ntnet_receive"
+	build_path = /obj/item/circuit_component/ntnet_receive
+
+/datum/design/component/ntnet_send
+	name = "NTNet Request Component"
+	id = "comp_ntnet_send"
+	build_path = /obj/item/circuit_component/ntnet_send
 
 /datum/design/component/list_literal
 	name = "List Literal Component"
@@ -368,6 +373,18 @@
 		/datum/material/iron = 8000,
 	)
 	build_path = /obj/item/shell/bci
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
+/datum/design/scanner_gate_shell
+	name = "Scanner Gate Shell"
+	desc = "A scanner gate shell that performs mid-depth scans on people when they pass through it."
+	id = "scanner_gate_shell"
+	materials = list(
+		/datum/material/glass = 4000,
+		/datum/material/iron = 12000,
+	)
+	build_path = /obj/item/shell/scanner_gate
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")
 

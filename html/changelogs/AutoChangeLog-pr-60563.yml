@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - qol: "Wormhole projectors now fire blue wormholes with left mouse btton and orange ones with right mouse button."

@@ -23,8 +23,9 @@
 	clicked_atom = add_output_port("Targeted Object", PORT_TYPE_ATOM)
 
 /obj/item/circuit_component/target_intercept/register_shell(atom/movable/shell)
-	bci = shell
-	RegisterSignal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
+	if(istype(shell, /obj/item/organ/cyberimp/bci))
+		bci = shell
+		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
 
 /obj/item/circuit_component/target_intercept/unregister_shell(atom/movable/shell)
 	bci = null
@@ -61,4 +62,3 @@
 /obj/item/circuit_component/target_intercept/get_ui_notices()
 	. = ..()
 	. += create_ui_notice("Target Interception Cooldown: [DisplayTimeText(intercept_cooldown)]", "orange", "stopwatch")
-	. += create_ui_notice("Only usable in BCI circuits", "orange", "info")

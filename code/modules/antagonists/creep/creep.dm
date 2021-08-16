@@ -162,14 +162,14 @@
 		return
 	var/list/viable_coworkers = list()
 	var/list/all_coworkers = list()
-	var/our_departments = oldmind.assigned_role.departments
+	var/our_departments = oldmind.assigned_role.departments_bitflags
 	for(var/mob/living/carbon/human/human_alive in GLOB.alive_mob_list)
 		if(!human_alive.mind)
 			continue
 		if(human_alive == oldmind.current || human_alive.mind.assigned_role.faction != FACTION_STATION || human_alive.mind.has_antag_datum(/datum/antagonist/obsessed))
 			continue //the jealousy target has to have a job, and not be the obsession or obsessed.
 		all_coworkers += human_alive.mind
-		if(!(our_departments & human_alive.mind.assigned_role.departments))
+		if(!(our_departments & human_alive.mind.assigned_role.departments_bitflags))
 			continue
 		viable_coworkers += human_alive.mind
 

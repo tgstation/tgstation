@@ -11,8 +11,10 @@
 	var/butchering_enabled = TRUE
 	/// Whether or not this component is compatible with blunt tools.
 	var/can_be_blunt = FALSE
+	/// Callback for butchering
+	var/datum/callback/butcher_callback
 
-/datum/component/butchering/Initialize(_speed, _effectiveness, _bonus_modifier, _butcher_sound, disabled, _can_be_blunt)
+/datum/component/butchering/Initialize(_speed, _effectiveness, _bonus_modifier, _butcher_sound, disabled, _can_be_blunt, _butcher_callback)
 	if(_speed)
 		speed = _speed
 	if(_effectiveness)
@@ -25,6 +27,8 @@
 		butchering_enabled = FALSE
 	if(_can_be_blunt)
 		can_be_blunt = _can_be_blunt
+	if(_butcher_callback)
+		butcher_callback = _butcher_callback
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/onItemAttack)
 
@@ -126,12 +130,9 @@
 	if(butcher)
 		butcher.visible_message(span_notice("[butcher] butchers [meat]."), \
 								span_notice("You butcher [meat]."))
-	ButcherEffects(meat)
+	butcher_callback?.Invoke(butcher, meat)
 	meat.harvest(butcher)
 	meat.gib(FALSE, FALSE, TRUE)
-
-/datum/component/butchering/proc/ButcherEffects(mob/living/meat) //extra effects called on butchering, override this via subtypes
-	return
 
 ///Special snowflake component only used for the recycler.
 /datum/component/butchering/recycler

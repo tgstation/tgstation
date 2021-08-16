@@ -29,8 +29,8 @@
 	. = ..()
 	if(.)
 		return
-	var/atom/object = entity.input_value
-	var/var_name = variable_name.input_value
+	var/atom/object = entity.value
+	var/var_name = variable_name.value
 	if(!var_name || !object)
 		output_value.set_output(null)
 		return
