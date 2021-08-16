@@ -558,6 +558,8 @@
 		return
 	if(mode == BOT_IDLE)
 		return
+	if(HAS_TRAIT(TRAIT_IMMOBILIZED, MOTOR_LACK_TRAIT))
+		return
 
 	var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
 	if(!speed)//Devide by zero man bad
