@@ -1,9 +1,11 @@
 import { Component, createRef, RefObject } from "inferno";
-import { Box, Button, Flex, Icon, Section, Stack, Table, Tooltip, TrackOutsideClicks } from "../../components";
+import { Box, Button, Flex, Icon, KeyListener, Section, Stack, Table, Tooltip, TrackOutsideClicks } from "../../components";
 import { resolveAsset } from "../../assets";
 import { PreferencesMenuData } from "./data";
 import { useBackend, useLocalState } from "../../backend";
 import { sortBy } from "common/collections";
+import { logger } from "../../logging";
+import { KeyEvent } from "../../events";
 
 type Keybinding = {
   name: string;
@@ -143,6 +145,7 @@ const ResetToDefaultButton = (props: {
 };
 
 export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
+  cancelNextKeyUp?: number;
   categoryRefs: Record<string, RefObject<HTMLDivElement>> = {};
   keybindingsSectionRef: RefObject<HTMLDivElement> = createRef();
   keybindingOnClicks: Record<string, (() => void)[]> = {};
@@ -158,14 +161,13 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
       rebindingHotkey: null,
     };
 
-    this.onKeyDown = this.onKeyDown.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
   componentDidMount() {
     this.populateSelectedKeybindings();
     this.populateKeybindings();
-
-    document.addEventListener("keydown", this.onKeyDown);
   }
 
   componentDidUpdate() {
@@ -176,10 +178,6 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     if (data.keybindings !== this.lastKeybinds) {
       this.populateSelectedKeybindings();
     }
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.onKeyDown);
   }
 
   setRebindingHotkey(value?: string) {
@@ -218,7 +216,8 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     });
   }
 
-  onKeyDown(event: KeyboardEvent) {
+  handleKeyDown(keyEvent: KeyEvent) {
+    const event = keyEvent.event;
     const rebindingHotkey = this.state.rebindingHotkey;
 
     if (!rebindingHotkey) {
@@ -226,6 +225,9 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     }
 
     event.preventDefault();
+
+    logger.log("cancelling next: ", keyEvent.code);
+    this.cancelNextKeyUp = keyEvent.code;
 
     if (isStandardKey(event)) {
       this.setRebindingHotkey(formatKeyboardEvent(event));
@@ -238,6 +240,14 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     this.setState({
       lastKeyboardEvent: event,
     });
+  }
+
+  handleKeyUp(keyEvent: KeyEvent) {
+    logger.log("cancelling next?: ", keyEvent.code, this.cancelNextKeyUp);
+    if (this.cancelNextKeyUp === keyEvent.code) {
+      this.cancelNextKeyUp = null;
+      keyEvent.event.preventDefault();
+    }
   }
 
   getKeybindingOnClick(
@@ -329,6 +339,11 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
 
     return (
       <Stack vertical fill>
+        <KeyListener
+          onKeyDown={this.handleKeyDown}
+          onKeyUp={this.handleKeyUp}
+        />
+
         <Stack.Item>
           <Stack fill px={5}>
             {keybindingEntries.map(([category, _]) => {
