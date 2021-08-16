@@ -99,7 +99,7 @@ const AntagSelection = (props: {
         </Button>
       </>
     )}>
-      <Flex className={className}>
+      <Flex className={className} align="flex-end" wrap>
         {props.antagonists.map(antagonist => {
           return (
             <Flex.Item
@@ -111,7 +111,7 @@ const AntagSelection = (props: {
               ])}
               key={antagonist.key}
             >
-              <Stack align="center" height="140px" vertical>
+              <Stack align="center" vertical>
                 <Stack.Item style={{
                   "font-weight": "bold",
                   "margin-top": "auto",
@@ -166,27 +166,21 @@ const AntagSelection = (props: {
 
 export const AntagsPage = (props, context) => {
   return (
-    <Stack className="PreferencesMenu__Antags" vertical fill>
-      <Stack.Item>
-        <AntagSelection
-          name="Roundstart"
-          antagonists={antagsByCategory.get(Category.Roundstart)}
-        />
-      </Stack.Item>
+    <Box className="PreferencesMenu__Antags">
+      <AntagSelection
+        name="Roundstart"
+        antagonists={antagsByCategory.get(Category.Roundstart)}
+      />
 
-      <Stack.Item>
-        <AntagSelection
-          name="Midround"
-          antagonists={antagsByCategory.get(Category.Midround)}
-        />
-      </Stack.Item>
+      <AntagSelection
+        name="Midround"
+        antagonists={antagsByCategory.get(Category.Midround)}
+      />
 
-      <Stack.Item>
-        <AntagSelection
-          name="Latejoin"
-          antagonists={antagsByCategory.get(Category.Latejoin)}
-        />
-      </Stack.Item>
-    </Stack>
+      <AntagSelection
+        name="Latejoin"
+        antagonists={antagsByCategory.get(Category.Latejoin)}
+      />
+    </Box>
   );
 };

@@ -74,7 +74,7 @@
 /datum/antagonist/cult/get_preview_icon()
 	var/icon/icon = render_preview_outfit(preview_outfit)
 
-	// The eldritch blade is 64x64, but getFlatIcon crunches to 32x32.
+	// The longsword is 64x64, but getFlatIcon crunches to 32x32.
 	// So I'm just going to add it in post, screw it.
 
 	// Center the dude, because item icon states start from the center.

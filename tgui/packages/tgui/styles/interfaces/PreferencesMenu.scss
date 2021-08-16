@@ -20,7 +20,12 @@ $department_map: (
 .PreferencesMenu {
   &__Antags {
     &__antagSelection {
+      $antagonist_bottom_padding: 10px;
+
+      margin-bottom: -$antagonist_bottom_padding;
+
       &__antagonist {
+        padding-bottom: $antagonist_bottom_padding;
         padding-right: 20px;
 
         .antagonist-icon-parent {

@@ -10,6 +10,7 @@
 // Roundstart roles
 #define ROLE_CHANGELING "Changeling"
 #define ROLE_CULTIST "Cultist"
+#define ROLE_HERETIC "Heretic"
 #define ROLE_MALF "Malf AI"
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_TRAITOR "Traitor"
@@ -22,6 +23,7 @@
 #define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
 
 // Latejoin roles
+#define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
 #define ROLE_SYNDICATE_INFILTRATOR "Syndicate Infiltrator"
 
 /// MOTHBLOCKS TODO: Unsorted
@@ -30,7 +32,6 @@
 #define ROLE_REV_SUCCESSFUL "Victorious Revolutionary"
 #define ROLE_ALIEN "Xenomorph"
 #define ROLE_PAI "pAI"
-#define ROLE_HERETIC "Heretic"
 #define ROLE_BLOB "Blob"
 #define ROLE_NINJA "Space Ninja"
 #define ROLE_MONKEY "Monkey"
@@ -104,12 +105,14 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
 	ROLE_MALF = 0,
+	ROLE_HERETIC = 0,
 
 	// Midround
 	ROLE_MALF_MIDROUND = 0,
 	ROLE_SLEEPER_AGENT = 0,
 
 	// Latejoin
+	ROLE_HERETIC_SMUGGLER = 0,
 	ROLE_SYNDICATE_INFILTRATOR = 0,
 
 	// MOTHBLOCKS TODO: Unsorted
@@ -127,7 +130,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_INTERNAL_AFFAIRS = 0,
 	ROLE_SENTIENCE = 0,
 	ROLE_FAMILIES = 0,
-	ROLE_HERETIC = 0,
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection

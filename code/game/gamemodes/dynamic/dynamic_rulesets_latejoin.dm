@@ -144,7 +144,8 @@
 /datum/dynamic_ruleset/latejoin/heretic_smuggler
 	name = "Heretic Smuggler"
 	antag_datum = /datum/antagonist/heretic
-	antag_flag = ROLE_HERETIC
+	antag_flag = ROLE_HERETIC_SMUGGLER
+	antag_flag_override = ROLE_HERETIC
 	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain","Prisoner")
 	restricted_roles = list("AI","Cyborg")
 	required_candidates = 1
