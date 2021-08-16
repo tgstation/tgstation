@@ -5,7 +5,7 @@
 
 /obj/structure/closet/secure_closet/freezer/Destroy()
 	recursive_organ_check(src)
-	..()
+	return ..()
 
 /obj/structure/closet/secure_closet/freezer/Initialize()
 	. = ..()
