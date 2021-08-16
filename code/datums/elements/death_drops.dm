@@ -25,4 +25,9 @@
 ///signal called by the stat of the target changing
 /datum/element/death_drops/proc/on_death(mob/living/target, gibbed)
 	SIGNAL_HANDLER
-	generate_items_inside(loot, target.drop_location())
+	for(var/thing_to_spawn in loot)
+		if(loot[thing_to_spawn]) //If this is an assoc list, use the value of that to get the right amount
+			for(var/index in 1 to loot[thing_to_spawn])
+				new thing_to_spawn(target.drop_location())
+		else
+			new thing_to_spawn(target.drop_location())
