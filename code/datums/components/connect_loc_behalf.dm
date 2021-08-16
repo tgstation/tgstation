@@ -50,7 +50,14 @@
 
 /datum/component/connect_loc_behalf/proc/update_signals()
 	unregister_signals()
-
+	//You may ask yourself, isn't this just silencing an error?
+	//The answer is yes, but there's no good cheap way to fix it
+	//What happens is the tracked object or hell the listener gets say, deleted, which makes targets[old_loc] return a null
+	//The null results in a bad index, because of course it does
+	//It's not a solvable problem though, since both actions, the destroy and the move, are sourced from the same signal send
+	//And sending a signal should be agnostic of the order of listeners
+	//So we need to either pick the order agnositic, or destroy safe
+	//And I picked destroy safe. Let's hope this is the right path!
 	if(isnull(tracked.loc))
 		return
 
