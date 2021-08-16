@@ -107,7 +107,7 @@
 	greyscale_colors = "#933ea8#a92323"
 	ttone = "slip"
 
-/obj/item/pda/ordnance
+/obj/item/pda/science
 	name = "scientist PDA"
 	default_cartridge = /obj/item/cartridge/signal/ordnance
 	greyscale_config = /datum/greyscale_config/pda/stripe_thick

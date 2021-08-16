@@ -480,7 +480,7 @@
 	/obj/item/pda/detective = list(REGION_SECURITY), \
 	/obj/item/pda/warden = list(REGION_SECURITY), \
 	/obj/item/pda/janitor = list(REGION_GENERAL), \
-	/obj/item/pda/ordnance = list(REGION_RESEARCH), \
+	/obj/item/pda/science = list(REGION_RESEARCH), \
 	/obj/item/pda/heads/hop = list(REGION_COMMAND), \
 	/obj/item/pda/heads/hos = list(REGION_COMMAND), \
 	/obj/item/pda/heads/cmo = list(REGION_COMMAND), \

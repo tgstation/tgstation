@@ -44,7 +44,7 @@
 #define STOPSPRESSUREDAMAGE (1<<1) //SUIT and HEAD items which stop pressure damage. To stop you taking all pressure damage you must have both a suit and head item with this flag.
 #define BLOCK_GAS_SMOKE_EFFECT (1<<2) // blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY!
 #define MASKINTERNALS (1<<3) // mask allows internals
-#define GAS_FILTERING (1<<4) //mask filters plasma and other harmful gases
+#define GAS_FILTERING (1<<4) //mask filters toxins and other harmful gases
 #define NOSLIP (1<<5) //prevents from slipping on wet floors, in space etc
 #define NOSLIP_ICE (1<<6) //prevents from slipping on frozen floors
 #define THICKMATERIAL (1<<7) //prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
