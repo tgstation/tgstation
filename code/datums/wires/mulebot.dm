@@ -19,6 +19,15 @@
 	if(M.open)
 		return TRUE
 
+/datum/wires/mulebot/on_cut(wire, mend)
+	var/mob/living/simple_animal/bot/mulebot/M = holder
+	switch(wire)
+		if(WIRE_MOTOR1, WIRE_MOTOR2)
+			if(wires.is_cut(WIRE_MOTOR1) && wires.is_cut(WIRE_MOTOR2))
+				ADD_TRAIT(M, TRAIT_IMMOBILIZED, MOTOR_LACK_TRAIT)
+			else
+				REMOVE_TRAIT(M, TRAIT_IMMOBILIZED, MOTOR_LACK_TRAIT)
+
 /datum/wires/mulebot/on_pulse(wire)
 	var/mob/living/simple_animal/bot/mulebot/M = holder
 	if(!M.has_power(TRUE))
