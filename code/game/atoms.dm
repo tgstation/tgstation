@@ -324,20 +324,27 @@
 	SHOULD_BE_PURE(TRUE)
 	if(mover.movement_type & PHASING)
 		return TRUE
-	. = CanAllowThrough(mover, border_dir)
+	. = CanAllowThrough(mover, border_dir) //very complicated and is where most of the mojo is. many overrides
+	//however this is the only big thing i need to check for refactoring
+
 	// This is cheaper than calling the proc every time since most things dont override CanPassThrough
 	if(!mover.generic_canpass)
-		return mover.CanPassThrough(src, REVERSE_DIR(border_dir), .)
+		return mover.CanPassThrough(src, REVERSE_DIR(border_dir), .)//this can be changed with registering to a signal sent in turf/Enter
 
 /// Returns true or false to allow the mover to move through src
 /atom/proc/CanAllowThrough(atom/movable/mover, border_dir)
 	SHOULD_CALL_PARENT(TRUE)
-	//SHOULD_BE_PURE(TRUE)
+	SHOULD_BE_PURE(TRUE) //fuck you this should be pure
+	if(!density) //all dense objects are stored in the blockable contents list on the turf
+		return TRUE
+
+	//if we are dense, then check if we will let them pass anyways
 	if(mover.pass_flags & pass_flags_self)
 		return TRUE
 	if(mover.throwing && (pass_flags_self & LETPASSTHROW))
 		return TRUE
-	return !density
+
+	return FALSE
 
 /**
  * Is this atom currently located on centcom
@@ -1863,6 +1870,17 @@
 	. = density
 	density = new_value
 
+/atom/movable/set_density(new_value)
+	if(density == new_value)
+		return
+	. = ..()
+
+	if(.) //if we are dense, then add ourselves to our turfs bumpable contents list
+		for(var/turf/turf_loc in locs)
+			LAZYSET(turf_loc.bumpable_contents, src)
+	else
+		for(var/turf/turf_loc in locs)
+			LAZYREMOVE(turf_loc.bumpable_contents, src)
 
 ///Setter for the `base_pixel_x` variable to append behavior related to its changing.
 /atom/proc/set_base_pixel_x(new_value)
@@ -1883,6 +1901,30 @@
 
 	pixel_y = pixel_y + base_pixel_y - .
 
+/atom/proc/benchmark(seconds = 5)
+	var/iterations = 0
+	var/duration = seconds SECONDS
+	var/turf/our_loc = get_turf(src)
+	var/list/cache = typecacheof(/turf)
+	var/end_time = world.timeofday + duration
+
+	while(world.timeofday < end_time)
+		var/i = isturf(our_loc)
+		iterations++
+
+	message_admins("isturf(our_turf) was able to complete [iterations] iterations in [seconds] seconds!")
+	iterations = 0
+	end_time = world.timeofday + duration
+
+	while(world.timeofday < end_time)
+		var/i = is_type_in_typecache(our_loc, cache)
+		iterations++
+
+	message_admins("is_type_in_typecache(our_loc, cache) was able to complete [iterations] iterations in [seconds] seconds!")
+	iterations = 0
+	end_time = world.timeofday + duration
+
+
 /**
  * Returns true if this atom has gravity for the passed in turf
  *
@@ -1897,40 +1939,41 @@
  * * Gravity if the Z level has an SSMappingTrait for ZTRAIT_GRAVITY
  * * otherwise no gravity
  */
-/atom/proc/has_gravity(turf/T)
-	if(!T || !isturf(T))
-		T = get_turf(src)
+/atom/proc/has_gravity(turf/turf_to_check)
+	if(!isturf(turf_to_check))
+		turf_to_check = get_turf(src)
 
-	if(!T)
-		return 0
+	if(!turf_to_check)
+		return FALSE
 
 	var/list/forced_gravity = list()
-	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, T, forced_gravity)
+	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, turf_to_check, forced_gravity)
 	if(!forced_gravity.len)
-		SEND_SIGNAL(T, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
+		SEND_SIGNAL(turf_to_check, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
 	if(forced_gravity.len)
 		var/max_grav
 		for(var/i in forced_gravity)
 			max_grav = max(max_grav, i)
 		return max_grav
 
-	if(isspaceturf(T)) // Turf never has gravity
-		return 0
-	if(istype(T, /turf/open/openspace)) //openspace in a space area doesn't get gravity
-		if(istype(get_area(T), /area/space))
-			return 0
+	if(isspaceturf(turf_to_check)) // Turf never has gravity //TODOKYLER: decide whether to replace this with
+		return FALSE
+	if(istype(turf_to_check, /turf/open/openspace)) //openspace in a space area doesn't get gravity
+		if(istype(get_area(turf_to_check), /area/space))
+			return FALSE
 
-	var/area/A = get_area(T)
-	if(A.has_gravity) // Areas which always has gravity
-		return A.has_gravity
+	var/area/turfs_area = get_area(turf_to_check)
+	if(turfs_area.has_gravity) // Areas which always has gravity
+		return turfs_area.has_gravity
 	else
 		// There's a gravity generator on our z level
-		if(GLOB.gravity_generators["[T.z]"])
+		var/list/grav_gens_on_level = GLOB.gravity_generators["[turf_to_check.z]"]
+		if(grav_gens_on_level)
 			var/max_grav = 0
-			for(var/obj/machinery/gravity_generator/main/G in GLOB.gravity_generators["[T.z]"])
-				max_grav = max(G.setting,max_grav)
+			for(var/obj/machinery/gravity_generator/main/grav_gen as anything in grav_gens_on_level)
+				max_grav = max(grav_gen.setting, max_grav)
 			return max_grav
-	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)
+	return SSmapping.level_trait(turf_to_check.z, ZTRAIT_GRAVITY)
 
 /**
  * Causes effects when the atom gets hit by a rust effect from heretics
