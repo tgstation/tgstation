@@ -118,7 +118,7 @@ export const Autolathe = (props, context) => {
             <Flex direction="row" wrap="nowrap">
               <Table>
                 {designs.length
-                  && ((designs.map(design => (
+                  && (designs.map(design => (
                     <Table.Row
                       key={design.id}>
                       <Flex.Item>
@@ -186,8 +186,13 @@ export const Autolathe = (props, context) => {
                       </Table.Cell>
                       {design.cost}
                     </Table.Row>
-                  )))
-                  ) || <Table.Row><Table.Cell>{"No designs found."}</Table.Cell></Table.Row>}
+                  ))) || (
+                  <Table.Row>
+                    <Table.Cell>
+                      {"No designs found."}
+                    </Table.Cell>
+                  </Table.Row>
+                )}
               </Table>
             </Flex>
           </Section>
