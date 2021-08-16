@@ -1,4 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - bugfix: "fixed cryocells and hfr runtiming on quick consecutive wrench actions."

@@ -32,16 +32,14 @@
 	show_in_antagpanel = TRUE
 	antagpanel_category = "Other"
 	show_name_in_check_antagonists = TRUE
+	ui_name = "AntagInfoBrainwashed"
 	suicide_cry = "FOR... SOMEONE!!"
 
-/datum/antagonist/brainwashed/greet()
-	to_chat(owner, span_warning("Your mind reels as it begins focusing on a single purpose..."))
-	to_chat(owner, "<big>[span_warning("<b>Follow the Directives, at any cost!</b>")]</big>")
-	var/i = 1
-	for(var/X in objectives)
-		var/datum/objective/O = X
-		to_chat(owner, "<b>[i].</b> [O.explanation_text]")
-		i++
+/datum/antagonist/brainwashed/ui_static_data(mob/user)
+	. = ..()
+	var/list/data = list()
+	data["objectives"] = get_objectives()
+	return data
 
 /datum/antagonist/brainwashed/farewell()
 	to_chat(owner, span_warning("Your mind suddenly clears..."))
@@ -50,6 +48,10 @@
 		var/mob/living/owner_mob = owner.current
 		owner_mob.log_message("is no longer brainwashed with the objectives: [english_list(objectives)].", LOG_ATTACK)
 	owner.announce_objectives()
+
+/datum/antagonist/brainwashed/on_mindshield(mob/implanter)
+	owner.remove_antag_datum(/datum/antagonist/brainwashed)
+	return COMPONENT_MINDSHIELD_DECONVERTED
 
 /datum/antagonist/brainwashed/admin_add(datum/mind/new_owner,mob/admin)
 	var/mob/living/carbon/C = new_owner.current

@@ -84,8 +84,6 @@
 		generate() //callback is on generate() itself as sometimes generate does not add new reagents, or is not called via process
 
 /**
- * # initial_conditions
- *
  * Proc called on creation separate from the reagent datum creation to allow for signalled milk generation instead of processing milk generation
  * also useful for changing initial amounts in reagent holder (cows start with milk, gutlunches start empty)
  */
@@ -94,8 +92,6 @@
 	START_PROCESSING(SSobj, src)
 
 /**
- * # generate
- *
  * Proc called every 2 seconds from SSMobs to add whatever reagent the udder is generating.
  */
 /obj/item/udder/proc/generate()
@@ -105,9 +101,11 @@
 			on_generate_callback.Invoke(reagents.total_volume, reagents.maximum_volume)
 
 /**
- * # milk
- *
  * Proc called from attacking the component parent with the correct item, moves reagents into the glass basically.
+ *
+ * Arguments:
+ * * obj/item/reagent_containers/glass/milk_holder - what we are trying to transfer the reagents to
+ * * mob/user - who is trying to do this
  */
 /obj/item/udder/proc/milk(obj/item/reagent_containers/glass/milk_holder, mob/user)
 	if(milk_holder.reagents.total_volume >= milk_holder.volume)
@@ -129,6 +127,8 @@
 	name = "nutrient sac"
 
 /obj/item/udder/gutlunch/initial_conditions()
+	if(!udder_mob)
+		return
 	if(udder_mob.gender == FEMALE)
 		START_PROCESSING(SSobj, src)
 	RegisterSignal(udder_mob, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, .proc/on_mob_attacking)
@@ -142,13 +142,15 @@
 		//usually this would be a callback but this is a specifically gutlunch feature so fuck it, gutlunch specific proccall
 		gutlunch.regenerate_icons(reagents.total_volume, reagents.maximum_volume)
 
-///signal called on parent attacking an atom
-/obj/item/udder/proc/on_mob_attacking(mob/living/simple_animal/hostile/gutlunch, atom/target)
+/**
+ * signal called on parent attacking an atom
+*/
+/obj/item/udder/gutlunch/proc/on_mob_attacking(mob/living/simple_animal/hostile/gutlunch, atom/target)
 	SIGNAL_HANDLER
 
 	if(is_type_in_typecache(target, gutlunch.wanted_objects)) //we eats
 		generate()
-		gutlunch.visible_message(span_notice("[src] slurps up [target]."))
+		gutlunch.visible_message(span_notice("[udder_mob] slurps up [target]."))
 		qdel(target)
 	return COMPONENT_HOSTILE_NO_ATTACK //there is no longer a target to attack
 

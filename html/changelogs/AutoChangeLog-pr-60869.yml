@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - admin: "Admins can now find \"banned account in connection history\" admin alerts mirrored to the suspicious logins log file."

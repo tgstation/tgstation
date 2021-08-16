@@ -220,16 +220,18 @@
 
 /obj/item/storage/bag/plants/portaseeder
 	name = "portable seed extractor"
-	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant. Right Click to activate seed extraction."
+	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
 	icon_state = "portaseeder"
 
-/obj/item/storage/bag/plants/portaseeder/attack_hand_secondary(mob/user, list/modifiers)
+/obj/item/storage/bag/plants/portaseeder/examine(mob/user)
+	. = ..()
+	. += span_notice("Ctrl-click to activate seed extraction.")
+
+/obj/item/storage/bag/plants/portaseeder/CtrlClick(mob/user)
 	if(user.incapacitated())
 		return
-	for(var/obj/item/O in contents)
-		seedify(O, 1)
-
-	
+	for(var/obj/item/plant in contents)
+		seedify(plant, 1)
 
 // -----------------------------
 //        Sheet Snatcher
@@ -458,6 +460,7 @@
 	icon_state = "construction_bag"
 	worn_icon_state = "construction_bag"
 	desc = "A bag for storing small construction components."
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/construction/ComponentInitialize()

@@ -49,6 +49,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 	/// Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
 	var/show_to_ghosts = FALSE
 
+	//ANTAG UI
+
+	///name of the UI that will try to open, right now having nothing means this won't exist but in the future all should.
+	var/ui_name
+	///button to access antag interface
+	var/datum/action/antag_info/info_button
+
 /datum/antagonist/New()
 	GLOB.antagonists += src
 	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
@@ -95,6 +102,16 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/remove_innate_effects(mob/living/mob_override)
 	return
 
+/// This is called when the antagonist is being mindshielded.
+/datum/antagonist/proc/pre_mindshield(mob/implanter, mob/living/mob_override)
+	SIGNAL_HANDLER
+	return COMPONENT_MINDSHIELD_PASSED
+
+/// This is called when the antagonist is successfully mindshielded.
+/datum/antagonist/proc/on_mindshield(mob/implanter, mob/living/mob_override)
+	SIGNAL_HANDLER
+	return
+
 // Adds the specified antag hud to the player. Usually called in an antag datum file
 /datum/antagonist/proc/add_antag_hud(antag_hud_type, antag_hud_name, mob/living/mob_override)
 	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
@@ -133,10 +150,19 @@ GLOBAL_LIST_EMPTY(antagonists)
 		CRASH("[src] ran on_gain() without a mind")
 	if(!owner.current)
 		CRASH("[src] ran on_gain() on a mind without a mob")
+	if(ui_name)//in the future, this should entirely replace greet.
+		info_button = new(owner.current, src)
+		info_button.Grant(owner.current)
 	if(!silent)
 		greet()
+		if(ui_name)
+			to_chat(owner.current, span_big("You are \a [src]."))
+			to_chat(owner.current, span_boldnotice("For more info, read the panel. you can always come back to it using the button in the top left."))
+			info_button.Trigger()
 	apply_innate_effects()
 	give_antag_moodies()
+	RegisterSignal(owner, COMSIG_PRE_MINDSHIELD_IMPLANT, .proc/pre_mindshield)
+	RegisterSignal(owner, COMSIG_MINDSHIELD_IMPLANTED, .proc/on_mindshield)
 	if(is_banned(owner.current) && replace_banned)
 		replace_banned_player()
 	else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
@@ -182,8 +208,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 	LAZYREMOVE(owner.antag_datums, src)
 	if(!LAZYLEN(owner.antag_datums) && !soft_antag)
 		owner.current.remove_from_current_living_antags()
+	if(info_button)
+		QDEL_NULL(info_button)
 	if(!silent && owner.current)
 		farewell()
+	UnregisterSignal(owner, COMSIG_PRE_MINDSHIELD_IMPLANT)
+	UnregisterSignal(owner, COMSIG_MINDSHIELD_IMPLANTED)
 	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)
@@ -360,3 +390,48 @@ GLOBAL_LIST_EMPTY(antagonists)
 	else
 		return
 	..()
+
+///ANTAGONIST UI STUFF
+
+/datum/antagonist/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, ui_name, name)
+		ui.open()
+
+/datum/antagonist/ui_state(mob/user)
+	return GLOB.always_state
+
+///generic helper to send objectives as data through tgui. supports smart objectives too!
+/datum/antagonist/proc/get_objectives()
+	var/objective_count = 1
+	var/list/objective_data = list()
+	//all obj
+	for(var/datum/objective/objective in objectives)
+		objective_data += list(list(
+			"count" = objective_count,
+			"name" = objective.objective_name,
+			"explanation" = objective.explanation_text,
+			"complete" = objective.completed,
+		))
+		objective_count++
+	return objective_data
+
+//button for antags to review their descriptions/info
+
+/datum/action/antag_info
+	name = "Open Antag Information:"
+	button_icon_state = "round_end"
+	var/datum/antagonist/antag_datum
+
+/datum/action/antag_info/New(Target, datum/antagonist/antag_datum)
+	. = ..()
+	src.antag_datum = antag_datum
+	name += " [antag_datum.name]"
+
+/datum/action/antag_info/Trigger()
+	if(antag_datum)
+		antag_datum.ui_interact(owner)
+
+/datum/action/antag_info/IsAvailable()
+	return TRUE

@@ -10,8 +10,8 @@
 
 /datum/component/decomposition
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	/// Makes sure food only starts decomposing if a player's EVER picked it up before
-	var/handled = FALSE
+	/// Makes sure maploaded food only starts decomposing if a player's EVER picked it up before
+	var/handled = TRUE
 	/// Used to stop food in someone's hand & in storage slots from decomposing.
 	var/protected = FALSE
 	/// Used to stop the timer & check for the examine proc
@@ -23,11 +23,13 @@
 	/// Used for examining
 	var/examine_type = DECOMP_EXAM_NORMAL
 
-/datum/component/decomposition/Initialize(decomp_flags = NONE)
+/datum/component/decomposition/Initialize(mapload, decomp_flags = NONE)
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.decomp_flags = decomp_flags
+	if(mapload)
+		handled = FALSE
 
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/handle_movement)
 	RegisterSignal(parent, list(
@@ -47,6 +49,9 @@
 		time_remaining = DECOMPOSITION_TIME_GROSS
 		examine_type = DECOMP_EXAM_GROSS
 
+	handle_movement()
+
+
 /datum/component/decomposition/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ITEM_PICKUP,
@@ -57,7 +62,8 @@
 		COMSIG_PARENT_EXAMINE))
 
 /datum/component/decomposition/proc/handle_movement()
-	if(!handled) // Has someone touched this previously?
+	SIGNAL_HANDLER
+	if(!handled) // If maploaded, has someone touched this previously?
 		return
 	var/obj/food = parent // Doesn't HAVE to be food, that's just what it's intended for
 

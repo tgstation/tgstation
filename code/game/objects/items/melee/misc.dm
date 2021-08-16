@@ -274,7 +274,7 @@
 
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
-		user.visible_message("<span class ='userdanger'>You accidentally hit yourself over the head with [src]!</span>", "<span class='danger'>[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!</span>")
+		user.visible_message(span_danger("[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!"), span_userdanger("You accidentally hit yourself over the head with [src]!"))
 
 		if(iscyborg(user))
 			if(affect_cyborg)
@@ -332,7 +332,7 @@
 			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE) //bonk
 	else
 		target.Knockdown(knockdown_time)
-		target.apply_damage(stamina_damage, STAMINA)
+		target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
 		additional_effects_non_cyborg(target, user)
 
 		playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
