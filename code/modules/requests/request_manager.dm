@@ -114,8 +114,8 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			var/pref = params["pref"] != null ? text2num(params["pref"]) : null
 			if (!pref)
 				return
-			usr.client?.prefs.request_toggles ^= pref
-			usr.client?.prefs.save_preferences()
+			usr.client.prefs.request_toggles ^= pref
+			usr.client.prefs.save_preferences()
 
 /datum/request_manager/ui_data(mob/user)
 	. = list(
