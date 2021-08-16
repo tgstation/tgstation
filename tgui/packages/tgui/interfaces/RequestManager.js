@@ -4,20 +4,56 @@
  * @license MIT
  */
 
-import { Button, Section } from '../components';
+import { Button, Section, Table, Input } from '../components';
 import { Window } from '../layouts';
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { decodeHtmlEntities } from 'common/string';
+import { Popper } from '../components/Popper';
 
 export const RequestManager = (props, context) => {
   const { act, data } = useBackend(context);
   const { requests } = data;
+  const [filteredTypes, _] = useLocalState(
+    context,
+    'filteredTypes',
+    Object.fromEntries(
+      Object.entries(displayTypeMap).map(([type, _]) => [type, true])
+    )
+  );
+  const [searchText, setSearchText] = useLocalState(context, 'searchText');
+
+  // Handle filtering
+  let displayedRequests = requests.filter(
+    (request) => filteredTypes[request.req_type]
+  );
+  if (searchText) {
+    const filterText = searchText.toLowerCase();
+    displayedRequests = displayedRequests.filter(
+      (request) =>
+        decodeHtmlEntities(request.message)
+          .toLowerCase()
+          .includes(filterText)
+        || request.owner_name.toLowerCase().includes(filterText)
+    );
+  }
 
   return (
     <Window width={575} height={600}>
       <Window.Content scrollable>
-        <Section title="Requests">
-          {requests.map((request) => (
+        <Section
+          title="Requests"
+          buttons={
+            <>
+              <Input
+                value={searchText}
+                onInput={(e, value) => setSearchText(value)}
+                placeholder={'Search...'}
+                mr={1}
+              />
+              <FilterPanel />
+            </>
+          }>
+          {displayedRequests.map((request) => (
             <div className="RequestManager__row" key={request.id}>
               <div className="RequestManager__rowContents">
                 <h2 className="RequestManager__header">
@@ -81,5 +117,61 @@ const RequestControls = (props, context) => {
         </Button>
       )}
     </div>
+  );
+};
+
+const FilterPanel = (_, context) => {
+  const [filterVisible, setFilterVisible] = useLocalState(
+    context,
+    'filterVisible',
+    false
+  );
+  const [filteredTypes, setFilteredTypes] = useLocalState(
+    context,
+    'filteredTypes',
+    Object.fromEntries(
+      Object.entries(displayTypeMap).map(([type, _]) => [type, true])
+    )
+  );
+  const [searchText, setSearchText] = useLocalState(context, 'searchText');
+
+  return (
+    <Popper
+      options={{
+        placement: 'bottom-start',
+      }}
+      popperContent={
+        <div
+          className="RequestManager__filterPanel"
+          style={{
+            display: filterVisible ? 'block' : 'none',
+          }}>
+          <Table width="0">
+            {Object.keys(displayTypeMap).map((type) => {
+              return (
+                <Table.Row className="candystripe" key={type}>
+                  <Table.Cell collapsing>
+                    <RequestType requestType={type} />
+                  </Table.Cell>
+                  <Table.Cell collapsing>
+                    <Button.Checkbox
+                      checked={filteredTypes[type]}
+                      onClick={() => {
+                        filteredTypes[type] = !filteredTypes[type];
+                        setFilteredTypes(filteredTypes);
+                      }}
+                      my={0.25}
+                    />
+                  </Table.Cell>
+                </Table.Row>
+              );
+            })}
+          </Table>
+        </div>
+      }>
+      <Button icon="cog" onClick={() => setFilterVisible(!filterVisible)}>
+        Type Filter
+      </Button>
+    </Popper>
   );
 };

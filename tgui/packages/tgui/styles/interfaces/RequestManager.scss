@@ -8,11 +8,13 @@
 @use '../functions.scss';
 
 $color-prayer: colors.bg(colors.$purple) !default;
-$color-centcom: colors.bg(colors.$orange) !default;
+$color-centcom: colors.bg(colors.$yellow) !default;
 $color-syndicate: colors.bg(colors.$red) !default;
-$color-nuke: colors.bg(colors.$orange) !default;
+$color-nuke: colors.bg(colors.$yellow) !default;
 $color-muted: colors.bg(colors.$label) !default;
 $color-header: colors.bg(colors.$label) !default;
+$background-color: base.$color-bg-section !default;
+$text-color: base.$color-fg !default;
 
 .RequestManager__request_centcom,
 .RequestManager__request_nuke,
@@ -89,4 +91,16 @@ $color-header: colors.bg(colors.$label) !default;
 
 .RequestManager__row {
   position: relative;
+}
+
+.RequestManager__filterPanel {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  background-color: functions.fake-alpha($background-color, base.$color-bg);
+  background-color: $background-color;
+  color: $text-color
+}
+
+.RequestManager__filterPanel tr:not(:last-of-type) {
+  margin-bottom: 0.5rem;
 }
