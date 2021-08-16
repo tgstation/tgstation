@@ -355,10 +355,6 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
                       const offsetTop = this.categoryRefs[category]
                         .current?.offsetTop;
 
-                      if (!offsetTop) {
-                        return;
-                      }
-
                       if (!this.keybindingsSectionRef.current) {
                         return;
                       }
@@ -378,6 +374,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
           grow
           ref={this.keybindingsSectionRef}
           style={{
+            "position": "relative",
             "overflow-y": "scroll",
           }}
         >
