@@ -1,3 +1,7 @@
+#define FAST_MOTOR_SPEED 1
+#define AVERAGE_MOTOR_SPEED 2
+#define SLOW_MOTOR_SPEED 3
+
 /datum/wires/mulebot
 	holder_type = /mob/living/simple_animal/bot/mulebot
 	proper_name = "Mulebot"
@@ -28,6 +32,14 @@
 			else
 				REMOVE_TRAIT(M, TRAIT_IMMOBILIZED, MOTOR_LACK_TRAIT)
 
+			if(wires.is_cut(WIRE_MOTOR1))
+				M.speed = FAST_MOTOR_SPEED
+			else if(wires.is_cut(WIRE_MOTOR2))
+				M.speed = AVERAGE_MOTOR_SPEED
+			else
+				M.speed = SLOW_MOTOR_SPEED
+			M.update_simplemob_varspeed()
+
 /datum/wires/mulebot/on_pulse(wire)
 	var/mob/living/simple_animal/bot/mulebot/M = holder
 	if(!M.has_power(TRUE))
@@ -44,3 +56,7 @@
 			holder.visible_message(span_notice("[icon2html(M, viewers(holder))] The drive motor whines briefly."))
 		else
 			holder.visible_message(span_notice("[icon2html(M, viewers(holder))] You hear a radio crackle."))
+
+#undef FAST_MOTOR_SPEED
+#undef AVERAGE_MOTOR_SPEED
+#undef SLOW_MOTOR_SPEED
