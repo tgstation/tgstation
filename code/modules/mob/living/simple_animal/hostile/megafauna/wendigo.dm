@@ -142,6 +142,8 @@ Difficulty: Hard
 /// Slams the ground around the source throwing back enemies caught nearby, delay is for the radius increase
 /proc/wendigo_slam(atom/source, range, delay, throw_range)
 	var/turf/orgin = get_turf(source)
+	if(!orgin) 
+		return
 	var/list/all_turfs = RANGE_TURFS(range, orgin)
 	for(var/i = 0 to range)
 		playsound(orgin,'sound/effects/bamf.ogg', 600, TRUE, 10)

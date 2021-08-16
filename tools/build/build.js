@@ -16,7 +16,7 @@ import { yarn } from './lib/yarn.js';
 import Juke from './juke/index.js';
 
 Juke.chdir('../..', import.meta.url);
-Juke.setup({ file: import.meta.url });
+Juke.setup({ file: import.meta.url }).then((code) => process.exit(code));
 
 const DME_NAME = 'tgstation';
 
@@ -152,7 +152,6 @@ export const TguiTarget = new Juke.Target({
   outputs: [
     'tgui/public/tgui.bundle.css',
     'tgui/public/tgui.bundle.js',
-    'tgui/public/tgui-common.bundle.js',
     'tgui/public/tgui-panel.bundle.css',
     'tgui/public/tgui-panel.bundle.js',
   ],
@@ -193,7 +192,7 @@ export const TguiLintTarget = new Juke.Target({
 export const TguiDevTarget = new Juke.Target({
   dependsOn: [YarnTarget],
   executes: async ({ args }) => {
-    await yarn('node', 'packages/tgui-dev-server/index.esm.js', ...args);
+    await yarn('node', 'packages/tgui-dev-server/index.js', ...args);
   },
 });
 

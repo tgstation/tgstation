@@ -33,5 +33,5 @@
 	if(enc_key.value)
 		datalist["enc_key"] = enc_key.value
 	var/datum/netdata/data = new(datalist)
-	data.receiver_id =  __NETWORK_CIRCUITS
+	data.network_id =  __NETWORK_CIRCUITS
 	ntnet_send(data)

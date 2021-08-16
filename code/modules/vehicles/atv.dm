@@ -40,7 +40,10 @@
 	. = ..()
 	if(!turret)
 		return
-	turret.forceMove(get_turf(src))
+	var/turf/our_turf = get_turf(src)
+	if(!our_turf)
+		return
+	turret.forceMove(our_turf)
 	switch(dir)
 		if(NORTH)
 			turret.pixel_x = base_pixel_x
