@@ -116,7 +116,20 @@
 
 /datum/element/connect_loc_behalf/proc/on_moved(atom/movable/tracked, atom/old_loc)
 	SIGNAL_HANDLER
-	var/datum/listener = targets[old_loc][tracked]
+	var/list/objects_in_old_loc = targets[old_loc]
+	//You may ask yourself, isn't this just silencing an error?
+	//The answer is yes, but there's no good cheap way to fix it
+	//What happens is the tracked object or hell the listener gets say, deleted, which makes targets[old_loc] return a null
+	//The null results in a bad index, because of course it does
+	//It's not a solvable problem though, since both actions, the destroy and the move, are sourced from the same signal send
+	//And sending a signal should be agnostic of the order of listeners
+	//So we need to either pick the order agnositic, or destroy safe
+	//And I picked destroy safe. Let's hope this is the right path!
+	if(!objects_in_old_loc)
+		return
+	var/datum/listener = objects_in_old_loc[tracked]
+	if(!listener) //See above
+		return
 	unregister_signals(listener, tracked, old_loc)
 	update_signals(listener, tracked)
 
