@@ -265,12 +265,9 @@
 				continue // don't teleport beacons because that's just insanely stupid
 			if(A.anchored)
 				continue
-			if(HAS_TRAIT(A, TRAIT_NO_TELEPORT)) //By definition, these cannot teleport
-				continue
 
 			var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
-			if(!A.Move(newloc) && newloc) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
-				A.forceMove(newloc)
+			do_teleport(A, newloc)
 
 			if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
 				var/mob/M = A
