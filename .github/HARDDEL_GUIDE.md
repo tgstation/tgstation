@@ -94,7 +94,7 @@ Let's briefly go over the more painful ones yeah?
 
 ### Sleeping procs
 
-Any proc that calls `sleep()`, `spawn()`, or some wrapper around that like `walk()` will hang references to any var inside it. This includes the usr it started from, the src it was called on, and any vars created as a part of processing
+Any proc that calls `sleep()`, `spawn()`, or anything that creates a seperate "thread" (not technically a thread, but it's the same in these terms. Not gonna cause any race conditions tho) will hang references to any var inside it. This includes the usr it started from, the src it was called on, and any vars created as a part of processing
 
 ### Static vars
 
@@ -104,7 +104,7 @@ Any proc that calls `sleep()`, `spawn()`, or some wrapper around that like `walk
 
 Some internal BYOND procs will hold references to objects passed into them for a time after the proc is finished doing work, because they cache the returned info to make some code faster. You should never run into this issue, since we wait for what should be long enough to avoid this issue as a part of garbage collection
 
-This is what `qdel()` does by the by, it literally just means queue deletion. A reference to the object gets put into a queue, and if it still exists after 2 minutes or so, we hard delete it
+This is what `qdel()` does by the by, it literally just means queue deletion. A reference to the object gets put into a queue, and if it still exists after 5 minutes or so, we hard delete it
 
 ### Walk() procs
 
