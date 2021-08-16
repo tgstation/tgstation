@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2021 bobbahbrown (https://github.com/bobbahbrown)
+ * @license MIT
+ */
+
 import { Button, Section } from '../components';
 import { Window } from '../layouts';
 import { useBackend } from '../backend';

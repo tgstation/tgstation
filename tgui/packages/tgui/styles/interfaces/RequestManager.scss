@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2021 bobbahbrown (https://github.com/bobbahbrown)
+ * SPDX-License-Identifier: MIT
+ */
+
 @use '../base.scss';
 @use '../colors.scss';
 @use '../functions.scss';
@@ -8,8 +13,6 @@ $color-syndicate: colors.bg(colors.$red) !default;
 $color-nuke: colors.bg(colors.$orange) !default;
 $color-muted: colors.bg(colors.$label) !default;
 $color-header: colors.bg(colors.$label) !default;
-$background-color: base.$color-bg-section !default;
-$text-color: base.$color-fg !default;
 
 .RequestManager__request_centcom,
 .RequestManager__request_nuke,
