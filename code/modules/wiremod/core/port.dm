@@ -54,6 +54,8 @@
  * Updates the value of the input and calls input_received on the connected component
  */
 /datum/port/input/proc/set_input(value)
+	if(QDELETED(src)) //Pain
+		return
 	set_value(value)
 	if(trigger)
 		TRIGGER_CIRCUIT_COMPONENT(connected_component, src)
