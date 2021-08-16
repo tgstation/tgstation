@@ -1,6 +1,6 @@
 import { multiline } from 'common/string';
 import { useBackend, useLocalState, useSharedState } from '../backend';
-import { BlockQuote, Button, Dimmer, Dropdown, Modal, Section, Stack } from '../components';
+import { BlockQuote, Box, Button, Dimmer, Dropdown, Modal, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const hivestyle = {
@@ -24,7 +24,7 @@ const transformstyle = {
 };
 
 const storestyle = {
-  color: 'green',
+  color: 'lightgreen',
   fontWeight: 'bold',
 };
 
@@ -100,7 +100,7 @@ const AbilitiesSection = (props, context) => {
   const { data } = useBackend<Info>(context);
   return (
     <Section fill title="Abilities">
-      <Stack mt={-0.5} fill>
+      <Stack fill>
         <Stack.Item basis={0} grow>
           <Stack fill vertical>
             <Stack.Item basis={0} textColor="label" grow>
@@ -116,7 +116,7 @@ const AbilitiesSection = (props, context) => {
               count for objectives, kill them, or
               include their memories and speech patterns.
             </Stack.Item>
-            <Stack.Divider mb={-0.7} />
+            <Stack.Divider />
             <Stack.Item basis={0} textColor="label" grow>
               Your
               <span style={revivestyle}>
@@ -142,7 +142,7 @@ const AbilitiesSection = (props, context) => {
               also mimic (NOT REAL CLOTHING) the clothing they were wearing
               for every slot you have open.
             </Stack.Item>
-            <Stack.Divider mb={-0.7} />
+            <Stack.Divider />
             <Stack.Item basis={0} textColor="label" grow>
               The
               <span style={storestyle}>
@@ -164,15 +164,16 @@ const MemoriesSection = (props, context) => {
   const { act, data } = useBackend<Info>(context);
   const {
     memories,
+    stolen_antag_info,
   } = data;
   const [
     selectedMemory,
     setSelectedMemory,
-  ] = useSharedState(context, "memory", memories[0]);
+  ] = useSharedState(context, "memory", !!memories && memories[0] || null);
   return (
     <Section
       fill
-      scrollable={!!memories.length}
+      scrollable={!!memories}
       title="Stolen Memories"
       buttons={
         <Button
@@ -184,18 +185,22 @@ const MemoriesSection = (props, context) => {
             help you impersonate your target!
           `} />
       }>
-      {!!memories && (
-        <Dimmer mr="-100%" bold>
-          You need to absorb a victim first!
-        </Dimmer>
+      {!memories && (
+        <Box>
+          {!stolen_antag_info && (
+            <Dimmer mr="-100%" bold>
+              You need to absorb a victim first!
+            </Dimmer>
+          )}
+        </Box>
       ) || (
         <Stack vertical>
           <Stack.Item>
             <Dropdown
               selected={selectedMemory}
               options={
-                memories.map(memory => {
-                  return memory.name;
+                Object.keys(memories).map(memory => {
+                  return memories[memory];
                 })
               }
               onSelected={selected => setSelectedMemory(selected)} />
@@ -237,13 +242,13 @@ export const AntagInfoChangeling = (props, context) => {
           "backgroundImage": "none",
         }}>
         <Stack vertical fill>
-          <Stack.Item maxHeight={13.5} grow>
+          <Stack.Item maxHeight={13.2} grow>
             <IntroductionSection />
           </Stack.Item>
-          <Stack.Item grow>
+          <Stack.Item grow={4}>
             <AbilitiesSection />
           </Stack.Item>
-          <Stack.Item grow>
+          <Stack.Item grow={3}>
             <Stack fill>
               <Stack.Item grow basis={0}>
                 <MemoriesSection />
