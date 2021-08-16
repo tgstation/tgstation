@@ -14,7 +14,8 @@
 		return ELEMENT_INCOMPATIBLE
 	if(!loot)
 		stack_trace("death drops element added to [target] with NO LOOT")
-	src.loot = loot
+	if(!src.loot)
+		src.loot = loot.Copy()
 	RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
 
 /datum/element/death_drops/Detach(datum/target)

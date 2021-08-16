@@ -18,12 +18,12 @@
 	. = ..()
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
-	src.atmos_requirements = string_assoc_list(atmos_requirements.Copy())
-	RegisterSignal(target, COMSIG_LIVING_NON_STASIS_LIFE, .proc/on_non_stasis_life)
+	src.atmos_requirements = string_assoc_list(atmos_requirements)
+	RegisterSignal(target, COMSIG_LIVING_HANDLE_BREATHING, .proc/on_non_stasis_life)
 
 /datum/element/atmos_requirements/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_LIVING_NON_STASIS_LIFE)
+	UnregisterSignal(target, COMSIG_LIVING_HANDLE_BREATHING)
 
 ///signal called by the living mob's life() while non stasis
 /datum/element/atmos_requirements/proc/on_non_stasis_life(mob/living/target, delta_time = SSMOBS_DT)
