@@ -9,11 +9,14 @@
 
 // Roundstart roles
 #define ROLE_CHANGELING "Changeling"
+#define ROLE_CULTIST "Cultist"
+#define ROLE_MALF "Malf AI"
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
 
 // Midround roles
+#define ROLE_MALF_MIDROUND "Malf AI (Midround)"
 #define ROLE_REV_HEAD "Head Revolutionary"
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
 #define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
@@ -23,12 +26,10 @@
 
 /// MOTHBLOCKS TODO: Unsorted
 #define ROLE_SYNDICATE "Syndicate"
-#define ROLE_MALF "Malf AI"
 #define ROLE_REV "Revolutionary"
 #define ROLE_REV_SUCCESSFUL "Victorious Revolutionary"
 #define ROLE_ALIEN "Xenomorph"
 #define ROLE_PAI "pAI"
-#define ROLE_CULTIST "Cultist"
 #define ROLE_HERETIC "Heretic"
 #define ROLE_BLOB "Blob"
 #define ROLE_NINJA "Space Ninja"
@@ -98,11 +99,14 @@
 GLOBAL_LIST_INIT(special_roles, list(
 	// Roundstart
 	ROLE_CHANGELING = 0,
+	ROLE_CULTIST = 14,
 	ROLE_OPERATIVE = 14,
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
+	ROLE_MALF = 0,
 
 	// Midround
+	ROLE_MALF_MIDROUND = 0,
 	ROLE_SLEEPER_AGENT = 0,
 
 	// Latejoin
@@ -110,11 +114,9 @@ GLOBAL_LIST_INIT(special_roles, list(
 
 	// MOTHBLOCKS TODO: Unsorted
 	ROLE_BROTHER = 0,
-	ROLE_MALF = 0,
 	ROLE_REV = 14,
 	ROLE_ALIEN = 0,
 	ROLE_PAI = 0,
-	ROLE_CULTIST = 14,
 	ROLE_BLOB = 0,
 	ROLE_NINJA = 0,
 	ROLE_OBSESSED = 0,

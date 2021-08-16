@@ -152,14 +152,14 @@
 	else
 		to_chat(admin, span_danger("No valid nuke found!"))
 
-/datum/antagonist/nukeop/get_preview_icon(mob/living/carbon/human/dummy)
+/datum/antagonist/nukeop/get_preview_icon()
 	if (!preview_outfit)
 		return null
 
-	var/icon/final_icon = render_preview_outfit(dummy, preview_outfit)
+	var/icon/final_icon = render_preview_outfit(preview_outfit)
 
 	if (!isnull(preview_outfit_behind))
-		var/icon/teammate = render_preview_outfit(dummy, preview_outfit_behind)
+		var/icon/teammate = render_preview_outfit(preview_outfit_behind)
 		teammate.Blend(rgb(128, 128, 128, 128), ICON_MULTIPLY)
 
 		final_icon.Blend(teammate, ICON_OVERLAY, -world.icon_size / 4, 0)

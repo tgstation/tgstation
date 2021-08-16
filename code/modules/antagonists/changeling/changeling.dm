@@ -694,9 +694,9 @@
 
 	return parts.Join("<br>")
 
-/datum/antagonist/changeling/get_preview_icon(mob/living/carbon/human/dummy)
-	var/icon/final_icon = render_preview_outfit(dummy, /datum/outfit/changeling)
-	var/icon/split_icon = render_preview_outfit(dummy, /datum/outfit/job/engineer)
+/datum/antagonist/changeling/get_preview_icon()
+	var/icon/final_icon = render_preview_outfit(/datum/outfit/changeling)
+	var/icon/split_icon = render_preview_outfit(/datum/outfit/job/engineer)
 
 	final_icon.Shift(WEST, world.icon_size / 2)
 	final_icon.Shift(EAST, world.icon_size / 2)

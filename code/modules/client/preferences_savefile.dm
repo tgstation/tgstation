@@ -96,7 +96,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (current_version < 41)
 		var/new_key_bindings = list()
 
-		// MOTHBLOCKS TODO: Migrate antags
+		// MOTHBLOCKS TODO: Migrate antags, check midround antagonists preference
 
 		for (var/hotkey in key_bindings)
 			if (hotkey == "Unbound")
@@ -130,12 +130,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(hotkeys)
 			for(var/hotkeytobind in kb.hotkey_keys)
 				if(!length(binds_by_key[hotkeytobind]) || hotkeytobind == "Unbound") //Only bind to the key if nothing else is bound expect for Unbound
-					LAZYADD(key_bindings[kb.name], hotkeytobind)
+					LAZYOR(key_bindings[kb.name], hotkeytobind)
 					addedbind = TRUE
 		else
 			for(var/classickeytobind in kb.classic_keys)
 				if(!length(binds_by_key[classickeytobind]) || classickeytobind == "Unbound") //Only bind to the key if nothing else is bound expect for Unbound
-					LAZYADD(key_bindings[kb.name], classickeytobind)
+					LAZYOR(key_bindings[kb.name], classickeytobind)
 					addedbind = TRUE
 		if(!addedbind)
 			notadded += kb

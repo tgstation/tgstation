@@ -178,8 +178,8 @@
 	return ..() + "(Leader)"
 
 // MOTHBLOCKS TODO: Put some assistants behind?
-/datum/antagonist/rev/head/get_preview_icon(mob/living/carbon/human/dummy)
-	var/icon/final_icon = render_preview_outfit(dummy, preview_outfit)
+/datum/antagonist/rev/head/get_preview_icon()
+	var/icon/final_icon = render_preview_outfit(preview_outfit)
 
 	// Apply the rev head HUD, but scale up the preview icon a bit beforehand.
 	// Otherwise, the R gets cut off.

@@ -326,13 +326,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 /// Creates an icon from the preview outfit.
 /// Custom implementors of `get_preview_icon` should use this, as the
 /// result of `get_preview_icon` is expected to be the completed version.
-/datum/antagonist/proc/render_preview_outfit(mob/living/carbon/human/dummy, datum/outfit/outfit)
-	// delete_equipment() is handled by get_preview_icon() and not by callers
-	// so that they are able to cache icons without wasteful equipment deletions.
-	// This is used in, for instance, nuke ops/lone ops, which share the same icon.
-	// This is also helpful as not all antagonist icons will be humans, such as
-	// sentient diseases or aliens.
-	dummy.delete_equipment()
+/datum/antagonist/proc/render_preview_outfit(datum/outfit/outfit)
+	var/mob/living/carbon/human/dummy/consistent/dummy = new
 	dummy.equipOutfit(outfit, visualsOnly = TRUE)
 	COMPILE_OVERLAYS(dummy)
 
@@ -354,14 +349,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return icon
 
 /// Returns the icon to show on the preferences menu.
-/// A dummy is passed in. This dummy is shared between calls.
-/// It is not guaranteed to be clean, so call `delete_equipment()` yourself
-/// before you dress it.
-/datum/antagonist/proc/get_preview_icon(mob/living/carbon/human/dummy)
+/datum/antagonist/proc/get_preview_icon()
 	if (isnull(preview_outfit))
 		return null
 
-	return finish_preview_icon(render_preview_outfit(dummy, preview_outfit))
+	return finish_preview_icon(render_preview_outfit(preview_outfit))
 
 /datum/antagonist/Topic(href,href_list)
 	if(!check_rights(R_ADMIN))

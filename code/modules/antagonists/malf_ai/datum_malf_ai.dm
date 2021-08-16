@@ -187,4 +187,14 @@
 
 	return result.Join("<br>")
 
+/datum/antagonist/malf_ai/get_preview_icon()
+	var/icon/malf_ai_icon = icon('icons/mob/ai.dmi', "ai-red")
+
+	// Crop out the borders of the AI, just the face
+	malf_ai_icon.Crop(5, 27, 28, 6)
+
+	malf_ai_icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+
+	return malf_ai_icon
+
 #undef PROB_SPECIAL

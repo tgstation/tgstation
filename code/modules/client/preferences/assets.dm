@@ -47,8 +47,6 @@
 	name = "antagonists"
 
 /datum/asset/spritesheet/antagonists/register()
-	var/mob/living/carbon/human/dummy/consistent/dummy = new
-
 	var/list/generated_icons = list()
 	var/list/to_insert = list()
 
@@ -65,7 +63,7 @@
 			continue
 
 		var/datum/antagonist/antagonist = new antagonist_type
-		var/icon/preview_icon = antagonist.get_preview_icon(dummy)
+		var/icon/preview_icon = antagonist.get_preview_icon()
 
 		if (isnull(preview_icon))
 			continue
