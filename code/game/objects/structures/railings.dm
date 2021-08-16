@@ -69,7 +69,7 @@
 		to_chat(user, span_notice("You [anchored ? "fasten the railing to":"unfasten the railing from"] the floor."))
 	return TRUE
 
-/obj/structure/railing/CanPass(atom/movable/mover, border_dir)
+/obj/structure/railing/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(border_dir & dir)
 		return . || mover.throwing || mover.movement_type & (FLYING | FLOATING)
