@@ -575,9 +575,6 @@
 	if (length(client_mobs_in_contents))
 		update_parallax_contents()
 
-	for(var/datum/light_source/light as anything in light_sources)
-		light.source_atom.update_light()
-
 	move_stacks--
 	if(move_stacks > 0) //we want only the first Moved() call in the stack to send this signal, all the other ones have an incorrect old_loc
 		return
@@ -592,10 +589,11 @@
 
 // Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
 // You probably want CanPass()
-///do not call
 /atom/movable/Cross(atom/movable/AM)
-	SHOULD_NOT_OVERRIDE(TRUE)
-	CRASH("/atom/movable/Cross() was called as a deprecated proc! dont do this")
+	. = TRUE
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSS, AM)
+	SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSS_OVER, src)
+	return CanPass(AM, get_dir(src, AM))
 
 ///default byond proc that is deprecated for us in lieu of signals. do not call
 /atom/movable/Crossed(atom/movable/AM, oldloc)
@@ -636,17 +634,17 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 	CRASH("/atom/movable/Uncrossed() was called")
 
-/atom/movable/Bump(atom/obstacle)
-	if(!obstacle)
+/atom/movable/Bump(atom/A)
+	if(!A)
 		CRASH("Bump was called with no argument.")
-	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, obstacle)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, A)
 	. = ..()
 	if(!QDELETED(throwing))
-		throwing.finalize(hit = TRUE, target = obstacle)
+		throwing.hit_atom(A)
 		. = TRUE
-		if(QDELETED(obstacle))
+		if(QDELETED(A))
 			return
-	obstacle.Bumped(src)
+	A.Bumped(src)
 
 /atom/movable/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -943,7 +941,7 @@
 /atom/movable/proc/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	return FALSE
 
-/atom/movable/CanAllowThrough(atom/movable/mover, border_dir)//TODOKYLER: this is SHIT
+/atom/movable/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(mover in buckled_mobs)
 		return TRUE

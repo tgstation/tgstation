@@ -246,7 +246,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/zImpact(atom/movable/A, levels = 1, turf/prev_turf)
 	var/flags = NONE
 	var/mov_name = A.name
-	for(var/atom/thing as anything in contents)
+	for(var/i in contents)
+		var/atom/thing = i
 		flags |= thing.intercept_zImpact(A, levels)
 		if(flags & FALL_STOP_INTERCEPTING)
 			break
@@ -308,23 +309,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	return FALSE
 
-//TODOKYLER: move this shit where it all belongs
-
-/atom/movable
-	///if TRUE, this does not have special checks on whether to allow an object onto our turf
-	var/generic_can_allow_through = TRUE
-
-#define IS_BUMPABLE(atom/movable/movable) (movable.density || !movable.generic_can_allow_through)
-
-/turf
-	var/list/bumpable_contents
-
-/turf/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-
-	if(IS_BUMPABLE(arrived))
-		LAZYSET(bumpable_contents, arrived)
-
 //There's a lot of QDELETED() calls here if someone can figure out how to optimize this but not runtime when something gets deleted by a Bump/CanPass/Cross call, lemme know or go ahead and fix this mess - kevinz000
 /turf/Enter(atom/movable/mover)
 	// Do not call ..()
@@ -332,44 +316,23 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// By default byond will call Bump() on the first dense object in contents
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
 	var/atom/firstbump
-	var/canPassSelf = TRUE //TODOKYLER: this is sin why
-	var/movement_direction = get_dir(src, mover)
-	if((mover.movement_type & PHASING) || canPassSelf = CanPass(mover, movement_direction))
-
-		//var/list/cross_blocking_contents = list()
-		//SEND_SIGNAL(src, COMSIG_TURF_ENTER, mover, cross_blocking_contents) //option one (holy fuck memory usage everything overrides CanAllowThrough())
-
-		//var/list/contents_to_check = (contents - mover) - mover.loc
-
-		for(var/atom/movable/contents_movable as anything in contents)
-			if(contents_movable == mover || contents_movable == mover.loc) // Multi tile objects and moving out of other objects
-				continue
-
-			if(!contents_movable.CanPass(mover, movement_direction))
-				if(!firstbump || ((contents_movable.layer > firstbump.layer || contents_movable.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
-					firstbump = contents_movable
-					//break //TODOKYLER: maybe?
-
-		/*
-		for(var/atom/movable/contents_movable as anything in contents) //current
+	var/canPassSelf = CanPass(mover, get_dir(src, mover))
+	if(canPassSelf || (mover.movement_type & PHASING))
+		for(var/i in contents)
 			if(QDELETED(mover))
 				return FALSE //We were deleted, do not attempt to proceed with movement.
-			if(contents_movable == mover || contents_movable == mover.loc) // Multi tile objects and moving out of other objects
+			if(i == mover || i == mover.loc) // Multi tile objects and moving out of other objects
 				continue
-
-			//one override of Cross(), which is stairs. most difficulty is in CanPass(), which is also overridden once (railings)
-			// but is complicated
-			// oh god pass_flags_self and CanAllowThrough() might make this too hard
-			if(!contents_movable.Cross(mover))
-				if(mover.movement_type & PHASING)
-					mover.Bump(contents_movable)//if contents_movable.Cross(mover) returns FALSE, then Bump()
+			var/atom/movable/thing = i
+			if(!thing.Cross(mover))
+				if(QDELETED(mover)) //Mover deleted from Cross/CanPass, do not proceed.
+					return FALSE
+				if((mover.movement_type & PHASING))
+					mover.Bump(thing)
 					continue
 				else
-					if(!firstbump || ((contents_movable.layer > firstbump.layer || contents_movable.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
-						firstbump = contents_movable
-						break
-
-			*/
+					if(!firstbump || ((thing.layer > firstbump.layer || thing.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
+						firstbump = thing
 	if(QDELETED(mover)) //Mover deleted from Cross/CanPass/Bump, do not proceed.
 		return FALSE
 	if(!canPassSelf) //Even if mover is unstoppable they need to bump us.
@@ -381,7 +344,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 
 /turf/open/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
+	..()
 	//melting
 	if(isobj(arrived) && air && air.temperature > T0C)
 		var/obj/O = arrived

@@ -30,7 +30,7 @@
 
 /obj/structure/tank_holder/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(mover.throwing)
+	if(istype(mover) && mover.throwing)
 		return TRUE
 
 /obj/structure/tank_holder/examine(mob/user)
