@@ -25,7 +25,7 @@
 	if(jones)
 		return ..()
 	jones = TRUE
-	flags_1 ~= PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
 
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "kitchen cabinet"
