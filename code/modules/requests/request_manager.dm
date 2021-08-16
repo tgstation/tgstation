@@ -30,27 +30,15 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 
 /datum/request_manager/proc/pray(client/C, message, is_chaplain)
 	request_for_client(C, REQUEST_PRAYER, message)
-	for(var/client/admin in GLOB.admins)
-		if((is_chaplain && admin.prefs.request_toggles & SOUND_REQUESTS_CHAPPRAY) || admin.prefs.request_toggles & SOUND_REQUESTS_ALLPRAY)
-			SEND_SOUND(admin, sound('sound/effects/pray.ogg'))
 
 /datum/request_manager/proc/message_centcom(client/C, message)
 	request_for_client(C, REQUEST_CENTCOM, message)
-	for(var/client/admin in GLOB.admins)
-		if(admin.prefs.request_toggles & SOUND_REQUESTS_COMM)
-			SEND_SOUND(admin, 'sound/misc/notice2.ogg')
 
 /datum/request_manager/proc/message_syndicate(client/C, message)
 	request_for_client(C, REQUEST_SYNDICATE, message)
-	for(var/client/admin in GLOB.admins)
-		if(admin.prefs.request_toggles & SOUND_REQUESTS_COMM)
-			SEND_SOUND(admin, 'sound/misc/notice2.ogg')
 
 /datum/request_manager/proc/nuke_request(client/C, message)
 	request_for_client(C, REQUEST_NUKE, message)
-	for(var/client/admin in GLOB.admins)
-		if(admin.prefs.request_toggles & SOUND_REQUESTS_NUKE)
-			SEND_SOUND(admin, 'sound/misc/notice2.ogg')
 
 /datum/request_manager/proc/request_for_client(client/C, type, message)
 	var/datum/request/request = new(C, type, message)
@@ -79,7 +67,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 
 	// Get the request this relates to
 	var/id = params["id"] != null ? text2num(params["id"]) : null
-	if (!id && action != "toggle_pref") // allow toggle pref to go through without a request
+	if (!id)
 		return
 	var/datum/request/request = !id ? null : requests_by_id[id]
 
@@ -136,28 +124,10 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			for(var/obj/machinery/nuclearbomb/selfdestruct/SD in GLOB.nuke_list)
 				SD.r_code = code
 			message_admins("[key_name_admin(usr)] has set the self-destruct code to \"[code]\".")
-		if ("toggle_pref")
-			var/pref = params["pref"] != null ? text2num(params["pref"]) : null
-			if (!pref)
-				return
-			usr.client.prefs.request_toggles ^= pref
-			usr.client.prefs.save_preferences()
 
 /datum/request_manager/ui_data(mob/user)
 	. = list(
-		"requests" = list(),
-		"prefs_options" = list(
-			"Chaplain Prayers" = SOUND_REQUESTS_CHAPPRAY,
-			"All Prayers" = SOUND_REQUESTS_ALLPRAY,
-			"Nuke Code" = SOUND_REQUESTS_NUKE,
-			"Centcom/Syndicate" = SOUND_REQUESTS_COMM
-		),
-		"user_prefs" = list(
-			"[SOUND_REQUESTS_CHAPPRAY]" = user.client?.prefs.request_toggles & SOUND_REQUESTS_CHAPPRAY,
-			"[SOUND_REQUESTS_ALLPRAY]" = user.client?.prefs.request_toggles & SOUND_REQUESTS_ALLPRAY,
-			"[SOUND_REQUESTS_NUKE]" = user.client?.prefs.request_toggles & SOUND_REQUESTS_NUKE,
-			"[SOUND_REQUESTS_COMM]" = user.client?.prefs.request_toggles & SOUND_REQUESTS_COMM
-		)
+		"requests" = list()
 	)
 	for (var/ckey in requests)
 		for (var/datum/request/request as anything in requests[ckey])
