@@ -27,18 +27,17 @@
 	var/mob/living/simple_animal/bot/mulebot/M = holder
 	switch(wire)
 		if(WIRE_MOTOR1, WIRE_MOTOR2)
-			if(wires.is_cut(WIRE_MOTOR1) && wires.is_cut(WIRE_MOTOR2))
+			if(is_cut(WIRE_MOTOR1) && is_cut(WIRE_MOTOR2))
 				ADD_TRAIT(M, TRAIT_IMMOBILIZED, MOTOR_LACK_TRAIT)
 			else
 				REMOVE_TRAIT(M, TRAIT_IMMOBILIZED, MOTOR_LACK_TRAIT)
 
-			if(wires.is_cut(WIRE_MOTOR1))
-				M.speed = FAST_MOTOR_SPEED
-			else if(wires.is_cut(WIRE_MOTOR2))
-				M.speed = AVERAGE_MOTOR_SPEED
+			if(is_cut(WIRE_MOTOR1))
+				M.set_varspeed(FAST_MOTOR_SPEED)
+			else if(is_cut(WIRE_MOTOR2))
+				M.set_varspeed(AVERAGE_MOTOR_SPEED)
 			else
-				M.speed = SLOW_MOTOR_SPEED
-			M.update_simplemob_varspeed()
+				M.set_varspeed(SLOW_MOTOR_SPEED)
 
 /datum/wires/mulebot/on_pulse(wire)
 	var/mob/living/simple_animal/bot/mulebot/M = holder
