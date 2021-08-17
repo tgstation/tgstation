@@ -231,15 +231,15 @@
 		do_teleport(AM, locate(AM.x, AM.y, AM.z), 8, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/effect/anomaly/bluespace/detonate()
-	var/turf/T = pick(get_area_turfs(impact_area))
-	if(!T)
+	var/turf/target_turf = pick(get_area_turfs(impact_area))
+	if(!target_turf)
 		return
 
 		// Calculate new position (searches through beacons in world)
 	var/obj/item/beacon/chosen
 	var/list/possible = list()
-	for(var/obj/item/beacon/W in GLOB.teleportbeacons)
-		possible += W
+	for(var/obj/item/beacon/bacon in GLOB.teleportbeacons)
+		possible += bacon
 
 	if(possible.len > 0)
 		chosen = pick(possible)
@@ -247,32 +247,32 @@
 	if(chosen)
 			// Calculate previous position for transition
 
-		var/turf/FROM = T // the turf of origin we're travelling FROM
+		var/turf/FROM = target_turf // the turf of origin we're travelling FROM
 		var/turf/TO = get_turf(chosen) // the turf of origin we're travelling TO
 
 		playsound(TO, 'sound/effects/phasein.ogg', 100, TRUE)
 		priority_announce("Massive bluespace translocation detected.", "Anomaly Alert")
 
 		var/list/flashers = list()
-		for(var/mob/living/carbon/C in viewers(TO, null))
-			if(C.flash_act())
-				flashers += C
+		for(var/mob/living/carbon/humanoid in viewers(TO, null))
+			if(humanoid.flash_act())
+				flashers += humanoid
 
 		var/y_distance = TO.y - FROM.y
 		var/x_distance = TO.x - FROM.x
-		for (var/atom/movable/A in urange(12, FROM )) // iterate thru list of mobs in the area
-			if(istype(A, /obj/item/beacon))
+		for (var/atom/movable/movableatom in urange(12, FROM )) // iterate thru list of mobs in the area
+			if(istype(movableatom, /obj/item/beacon))
 				continue // don't teleport beacons because that's just insanely stupid
-			if(A.anchored)
+			if(movableatom.anchored)
 				continue
 
-			var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
-			do_teleport(A, newloc)
+			var/turf/newloc = locate(movableatom.x + x_distance, movableatom.y + y_distance, TO.z) // calculate the new place
+			do_teleport(movableatom, newloc)
 
-			if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
-				var/mob/M = A
-				if(M.client)
-					INVOKE_ASYNC(src, .proc/blue_effect, M)
+			if(ismob(movableatom) && !(movableatom in flashers)) // don't flash if we're already doing an effect
+				var/mob/misplaced_lifeform = movableatom
+				if(misplaced_lifeform.client)
+					INVOKE_ASYNC(src, .proc/blue_effect, misplaced_lifeform)
 
 /obj/effect/anomaly/bluespace/proc/blue_effect(mob/M)
 	var/obj/blueeffect = new /obj(src)
