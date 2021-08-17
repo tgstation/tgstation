@@ -5,6 +5,7 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	density = FALSE
 	stat = DEAD
+	hud_type = /datum/hud/new_player
 	hud_possible = list()
 
 	var/ready = FALSE

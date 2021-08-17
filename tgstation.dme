@@ -278,6 +278,7 @@
 #include "code\_onclick\hud\living.dm"
 #include "code\_onclick\hud\map_popups.dm"
 #include "code\_onclick\hud\movable_screen_objects.dm"
+#include "code\_onclick\hud\new_player.dm"
 #include "code\_onclick\hud\ooze.dm"
 #include "code\_onclick\hud\pai.dm"
 #include "code\_onclick\hud\parallax.dm"
