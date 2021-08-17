@@ -73,6 +73,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	CRASH("`create_default_value()` was not implemented on [type]!")
 
 /// Given a savefile, return either the saved data or an acceptable default.
+/// This will write to the savefile if a value was not found with the new value.
 /datum/preference/proc/read(savefile/savefile)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
@@ -80,7 +81,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	READ_FILE(savefile[savefile_key], value)
 
 	if (isnull(value))
-		return create_default_value()
+		var/new_value = create_default_value()
+		write(savefile, new_value)
+		return new_value
 	else
 		return deserialize(value)
 
@@ -132,7 +135,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	return savefile
 
-/// Read a /datum/preference type and return its value
+/// Read a /datum/preference type and return its value.
+/// This will write to the savefile if a value was not found with the new value.
 /datum/preferences/proc/read_preference(preference_type)
 	var/datum/preference/preference_entry = GLOB.preference_entries[preference_type]
 	if (isnull(preference_entry))
@@ -263,6 +267,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/color/deserialize(input)
 	return sanitize_hexcolor(input)
 
+// MOTHBLOCKS TODO: Randomize
 /datum/preference/color/create_default_value()
 	return "000"
 
