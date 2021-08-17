@@ -35,19 +35,19 @@
 	"styles":[
 		"The %STORY_TYPE has a generic style"
 	],
-	"engravings_styles":[
+	"engraving_styles":[
 		"The engraving has a cubist style.",
 		"The engraving has a minimalist style.",
 		"The engraving has a surrealist style."
 	],
-	"engravings_forewords":[
+	"engraving_forewords":[
 		"The engraving depicts",
 		"Embedded in the wall is a story of",
 		"In the engraving is displayed the tale of",
 		"On the wall, you see",
 		"This piece depicts"
 	],
-	"engravings_somethings":[
+	"engraving_somethings":[
 		"%PROTAGONIST can also be seen cringing at the sight of a %SOMETHING.",
 		"in the meantime, %CREWMEMBER is being arrested, clutching a %SOMETHING.",
 		"%CREWMEMBER is doing a sick ass backflip in the meantime!",

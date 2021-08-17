@@ -89,7 +89,7 @@
 /**
  * These are also memories, but they're examples of what I kinda don't want to be memories. They're stuff that I had to port
  * over to this system from the old old and they don't make for good examples
- *
+*
  * ideally these eventually get moved off this system... though engraving your bank account is so HILARIOUSLY dumb so maybe leave that one
  */
 ///your memorized code
