@@ -66,6 +66,7 @@
 	. = ..()
 	if(building)
 		setDir(ndir)
+	AddElement(/datum/element/wall_mount)
 
 /obj/structure/camera_assembly/update_icon_state()
 	icon_state = "[xray_module ? "xray" : null][initial(icon_state)]"
