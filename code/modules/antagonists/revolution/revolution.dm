@@ -39,6 +39,10 @@
 	remove_antag_hud(antag_hud_type, M)
 	handle_clown_mutation(M, removing = FALSE)
 
+/datum/antagonist/rev/on_mindshield(mob/implanter)
+	remove_revolutionary(FALSE, implanter)
+	return COMPONENT_MINDSHIELD_DECONVERTED
+
 /datum/antagonist/rev/proc/equip_rev()
 	return
 
@@ -162,6 +166,9 @@
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
 	var/give_hud = TRUE
+
+/datum/antagonist/rev/head/pre_mindshield(mob/implanter, mob/living/mob_override)
+	return COMPONENT_MINDSHIELD_RESISTED
 
 /datum/antagonist/rev/head/on_removal()
 	if(give_hud)

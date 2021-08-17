@@ -104,6 +104,18 @@
 	set_current(null)
 	return ..()
 
+
+/datum/mind/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if(NAMEOF(src, assigned_role))
+			set_assigned_role(var_value)
+			. = TRUE
+	if(!isnull(.))
+		datum_flags |= DF_VAR_EDITED
+		return
+	return ..()
+
+
 /datum/mind/proc/set_current(mob/new_current)
 	if(new_current && QDELETED(new_current))
 		CRASH("Tried to set a mind's current var to a qdeleted mob, what the fuck")
@@ -550,7 +562,7 @@
 		if (!new_job)
 			to_chat(usr, span_warning("Job not found."))
 			return
-		set_assigned_role(new_role)
+		set_assigned_role(new_job)
 
 	else if (href_list["obj_edit"] || href_list["obj_add"])
 		var/objective_pos //Edited objectives need to keep same order in antag objective list
@@ -857,6 +869,8 @@
 /datum/mind/proc/set_assigned_role(datum/job/new_role)
 	if(assigned_role == new_role)
 		return
+	if(!is_job(new_role))
+		CRASH("set_assigned_role called with invalid role: [isnull(new_role) ? "null" : new_role]")
 	. = assigned_role
 	assigned_role = new_role
 

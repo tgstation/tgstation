@@ -29,11 +29,11 @@
 	if(.)
 		return
 
-	var/separator_value = separator.input_value
+	var/separator_value = separator.value
 	if(isnull(separator_value))
 		return
 
-	var/value = input_port.input_value
+	var/value = input_port.value
 	if(isnull(value))
 		return
 

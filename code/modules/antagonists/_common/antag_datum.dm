@@ -102,6 +102,16 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/remove_innate_effects(mob/living/mob_override)
 	return
 
+/// This is called when the antagonist is being mindshielded.
+/datum/antagonist/proc/pre_mindshield(mob/implanter, mob/living/mob_override)
+	SIGNAL_HANDLER
+	return COMPONENT_MINDSHIELD_PASSED
+
+/// This is called when the antagonist is successfully mindshielded.
+/datum/antagonist/proc/on_mindshield(mob/implanter, mob/living/mob_override)
+	SIGNAL_HANDLER
+	return
+
 // Adds the specified antag hud to the player. Usually called in an antag datum file
 /datum/antagonist/proc/add_antag_hud(antag_hud_type, antag_hud_name, mob/living/mob_override)
 	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
@@ -151,6 +161,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 			info_button.Trigger()
 	apply_innate_effects()
 	give_antag_moodies()
+	RegisterSignal(owner, COMSIG_PRE_MINDSHIELD_IMPLANT, .proc/pre_mindshield)
+	RegisterSignal(owner, COMSIG_MINDSHIELD_IMPLANTED, .proc/on_mindshield)
 	if(is_banned(owner.current) && replace_banned)
 		replace_banned_player()
 	else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
@@ -200,6 +212,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 		QDEL_NULL(info_button)
 	if(!silent && owner.current)
 		farewell()
+	UnregisterSignal(owner, COMSIG_PRE_MINDSHIELD_IMPLANT)
+	UnregisterSignal(owner, COMSIG_MINDSHIELD_IMPLANTED)
 	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)

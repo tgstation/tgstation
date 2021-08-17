@@ -88,11 +88,6 @@
 	id = "comp_not"
 	build_path = /obj/item/circuit_component/not
 
-/datum/design/component/ram
-	name = "RAM Component"
-	id = "comp_ram"
-	build_path = /obj/item/circuit_component/ram
-
 /datum/design/component/random
 	name = "Random Component"
 	id = "comp_random"
@@ -168,11 +163,6 @@
 	id = "comp_health"
 	build_path = /obj/item/circuit_component/health
 
-/datum/design/component/combiner
-	name = "Combiner Component"
-	id = "comp_combiner"
-	build_path = /obj/item/circuit_component/combiner
-
 /datum/design/component/split
 	name = "Split Component"
 	id = "comp_split"
@@ -242,6 +232,16 @@
 	name = "Module Component"
 	id = "comp_module"
 	build_path = /obj/item/circuit_component/module
+
+/datum/design/component/ntnet_receive
+	name = "Pressure NTNet Transmitter"
+	id = "comp_ntnet_receive"
+	build_path = /obj/item/circuit_component/ntnet_receive
+
+/datum/design/component/ntnet_send
+	name = "NTNet Request Component"
+	id = "comp_ntnet_send"
+	build_path = /obj/item/circuit_component/ntnet_send
 
 /datum/design/component/list_literal
 	name = "List Literal Component"
