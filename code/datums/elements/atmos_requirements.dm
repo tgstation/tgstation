@@ -60,9 +60,9 @@
 		. = FALSE
 	else if(atmos_requirements["max_oxy"] && oxy > atmos_requirements["max_oxy"])
 		. = FALSE
-	else if(atmos_requirements["min_tox"] && tox < atmos_requirements["min_tox"])
+	else if(atmos_requirements["min_plas"] && plas < atmos_requirements["min_plas"])
 		. = FALSE
-	else if(atmos_requirements["max_tox"] && tox > atmos_requirements["max_tox"])
+	else if(atmos_requirements["max_plas"] && plas > atmos_requirements["max_plas"])
 		. = FALSE
 	else if(atmos_requirements["min_n2"] && n2 < atmos_requirements["min_n2"])
 		. = FALSE
