@@ -48,7 +48,7 @@
 	var/open_turf_gases = open_turf.air.gases
 	open_turf.air.assert_gases(arglist(GLOB.hardcoded_gases))
 
-	var/tox = open_turf_gases[/datum/gas/plasma][MOLES]
+	var/plas = open_turf_gases[/datum/gas/plasma][MOLES]
 	var/oxy = open_turf_gases[/datum/gas/oxygen][MOLES]
 	var/n2  = open_turf_gases[/datum/gas/nitrogen][MOLES]
 	var/co2 = open_turf_gases[/datum/gas/carbon_dioxide][MOLES]
