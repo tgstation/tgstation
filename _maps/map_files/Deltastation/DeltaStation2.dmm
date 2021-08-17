@@ -61334,6 +61334,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/iron,
 /area/engineering/main)
 "kUH" = (
@@ -77599,12 +77600,6 @@
 	pixel_y = -28
 	},
 /obj/structure/cable,
-/obj/machinery/modular_computer/console/preset/engineering{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -77613,6 +77608,9 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/east,
+/obj/machinery/computer/apc_control{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/engineering/main)
 "oVm" = (

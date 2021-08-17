@@ -1122,7 +1122,7 @@
 		return ..()
 
 /obj/item/circuitboard/machine/protolathe/department/service
-	name = "Departmental Protolathe (Machine Board) - Service"
+	name = "Departmental Protolathe - Service (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/rnd/production/protolathe/department/service
 
@@ -1145,7 +1145,7 @@
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/techfab/department/service
-	name = "\improper Departmental Techfab (Machine Board) - Service"
+	name = "\improper Departmental Techfab - Service (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/rnd/production/techfab/department/service
 
