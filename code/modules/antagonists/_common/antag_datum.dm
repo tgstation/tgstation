@@ -355,7 +355,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	icon.Scale(115, 115)
 
 	// This is probably better as a Crop, but I cannot figure it out.
-	icon.Shift(WEST, 12)
+	icon.Shift(WEST, 8)
 	icon.Shift(SOUTH, 30)
 
 	icon.Crop(1, 1, ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
