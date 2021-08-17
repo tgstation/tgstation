@@ -28679,12 +28679,6 @@
 "dvf" = (
 /turf/open/floor/wood,
 /area/commons/dorms)
-"dvg" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/fancy/donut_box,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/engineering/main)
 "dvF" = (
 /obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/tile/neutral{
@@ -51374,6 +51368,8 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/structure/table/reinforced,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/iron,
 /area/engineering/main)
 "iiE" = (
@@ -61334,7 +61330,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/iron,
 /area/engineering/main)
 "kUH" = (
@@ -64480,9 +64475,6 @@
 	},
 /area/commons/fitness/recreation)
 "lIU" = (
-/obj/structure/sign/warning/electricshock{
-	pixel_x = 32
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -64490,6 +64482,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/structure/noticeboard/directional/east,
 /turf/open/floor/iron,
 /area/engineering/main)
 "lJj" = (
@@ -77600,16 +77593,25 @@
 	pixel_y = -28
 	},
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral,
+/obj/item/radio/intercom/directional/east,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/item/radio/intercom/directional/east,
-/obj/machinery/computer/apc_control{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/frame/machine,
+/obj/item/circuitboard/machine/smes,
+/obj/item/stack/cable_coil/five,
+/obj/item/stock_parts/capacitor/adv,
+/obj/item/paper/fluff{
+	info = "The Modular Console that was here wasn't functioning, so I moved it and made another next to the lockers outside this room. I found this capacitor sitting around. Another SMES never hurt the station's power grid. <i>- Payton Parsley</i>";
+	name = "Note From Payton"
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/main)
@@ -83475,6 +83477,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/light_switch/directional/east,
+/obj/structure/sign/warning/electricshock{
+	pixel_x = 32
+	},
 /turf/open/floor/circuit/green,
 /area/engineering/main)
 "qyu" = (
@@ -99837,9 +99842,9 @@
 /turf/open/floor/wood,
 /area/service/abandoned_gambling_den)
 "uFL" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/firstaid/fire,
 /obj/effect/turf_decal/delivery,
+/obj/structure/cable,
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/iron,
 /area/engineering/main)
 "uGa" = (
@@ -109652,6 +109657,17 @@
 	},
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
+"xtK" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/iron,
+/area/engineering/main)
 "xub" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -137481,7 +137497,7 @@ wfe
 vne
 oMh
 hlI
-iit
+xtK
 gzu
 oMh
 tvp
@@ -137734,7 +137750,7 @@ vSw
 uIx
 fdT
 vrt
-dvg
+uFL
 vne
 lAU
 eMt
