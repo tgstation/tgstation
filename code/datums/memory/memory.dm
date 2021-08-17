@@ -174,14 +174,15 @@
 		if(line[length(line)] == ".")//Ended with a period, next sentence needs to start with a capital.'
 			capitalize_next_line = TRUE
 
-		parsed_story += "[line] "
+		if(line != story_pieces[story_pieces.len]) //not the last line
+			parsed_story += "[line] "
 
 	//after replacement section for performance
 	if(story_flags & STORY_FLAG_DATED)
 		if(memory_flags & MEMORY_FLAG_NOSTATIONNAME)
-			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540]."
+			parsed_story += " This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540]."
 		else
-			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540] on [station_name()]."
+			parsed_story += " This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540] on [station_name()]."
 
 	return parsed_story
 
