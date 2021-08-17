@@ -77,7 +77,7 @@
 	var/list/forewords = strings(MEMORY_FILE, story_type + "_forewords")
 	var/list/somethings =strings(MEMORY_FILE, story_type + "_somethings")
 	//changeling absorbing does not have styles
-	var/list/styles = story_type == STORY_CHANGELING_ABSORB ? null : strings(MEMORY_FILE, story_type + "_styles")
+	var/list/styles = story_type == STORY_CHANGELING_ABSORB ? null : strings(MEMORY_FILE, story_type + "styles")
 	var/list/wheres = strings(MEMORY_FILE, "where")
 
 
@@ -149,6 +149,8 @@
 	else
 		crew_member = "an unknown crewmember"
 
+	var/capitalize_next_line = FALSE
+
 	for(var/line in story_pieces)
 		for(var/key in extra_info)
 			var/detail = extra_info[key]
@@ -159,6 +161,13 @@
 		line = replacetext(line, "%MOOD", pick(story_moods))
 		line = replacetext(line, "%SOMETHING", initial(something.name))
 		line = replacetext(line, "%CREWMEMBER", memorizer_mind.build_story_mob(crew_member))
+
+		if(capitalize_next_line)
+			line = capitalize(line)
+			capitalize_next_line = FALSE
+
+		if(line[length(line)] == ".")//Ended with a period, next sentence needs to start with a capital.'
+			capitalize_next_line = TRUE
 
 		parsed_story += "[line] "
 
@@ -174,7 +183,6 @@
 /datum/memory/proc/generate_memory_name()
 	var/names = strings(MEMORY_FILE, action + "_names")
 	var/line = pick(names)
-	line = replacetext(line, "%PROTAGONIST", "[memorizer]")
 	for(var/key in extra_info)
 		var/detail = extra_info[key]
 		line = replacetext(line, "%[key]", "[detail]")
