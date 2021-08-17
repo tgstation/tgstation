@@ -38,7 +38,7 @@
 
 /datum/outfit/job/prisoner/post_equip(mob/living/carbon/human/new_prisoner, visualsOnly)
 	. = ..()
-	if(!length(SSpersistence.prison_tattoos_to_use))
+	if(!length(SSpersistence.prison_tattoos_to_use) || visualsOnly)
 		return
 	var/obj/item/bodypart/tatted_limb = pick(new_prisoner.bodyparts)
 	var/list/tattoo = pick(SSpersistence.prison_tattoos_to_use)
