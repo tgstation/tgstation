@@ -265,24 +265,20 @@
 	icon_state = "ants"
 	beauty = -150
 	layer = LOW_OBJ_LAYER
-	var/ant_bite_damage
+	var/ant_bite_damage = 0.1
 	var/ant_volume
-	var/is_caltrop = FALSE
 
 /obj/effect/decal/cleanable/ants/Initialize(mapload)
 	. = ..()
 	ant_volume = rand(3, 5)
 	reagents.add_reagent(/datum/reagent/ants, ant_volume)
+	AddComponent(/datum/component/caltrop, min_damage = 0.1, max_damage = ant_bite_damage, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES | CALTROP_UPDATE_DAMAGE), soundfile = 'sound/weapons/bite.ogg')
 	update_ant_damage()
 
 /obj/effect/decal/cleanable/ants/proc/update_ant_damage(spilled_ants)
-	if(is_caltrop)
-		RemoveComponent(/datum/element/caltrop, min_damage = 0.1, max_damage = ant_bite_damage, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = 'sound/weapons/bite.ogg')
-		is_caltrop = FALSE
 	ant_volume += spilled_ants
 	ant_bite_damage = min(10, round((ant_volume * 0.1),0.1)) // 100u ants = 10 max_damage
-	AddComponent(/datum/element/caltrop, min_damage = 0.1, max_damage = ant_bite_damage, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = 'sound/weapons/bite.ogg')
-	is_caltrop = TRUE
+	SEND_SIGNAL(src, COMSIG_CALTROP_UPDATE, ant_bite_damage)
 	switch(ant_bite_damage)
 		if(0 to 1)
 			icon_state = initial(icon_state)

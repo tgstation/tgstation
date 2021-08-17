@@ -41,6 +41,9 @@
 	else
 		RegisterSignal(get_turf(parent), COMSIG_ATOM_ENTERED, .proc/on_entered)
 
+	if(flags & CALTROP_UPDATE_DAMAGE)
+		RegisterSignal(parent, COMSIG_CALTROP_UPDATE, .proc/update_damage)
+
 /datum/component/caltrop/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
@@ -103,3 +106,8 @@
 /datum/component/caltrop/UnregisterFromParent()
 	if(ismovable(parent))
 		qdel(GetComponent(/datum/component/connect_loc_behalf))
+
+/datum/component/caltrop/proc/update_damage(datum/source, var/updated_damage)
+	SIGNAL_HANDLER
+
+	src.max_damage = max(min_damage, updated_damage)
