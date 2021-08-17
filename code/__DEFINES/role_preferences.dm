@@ -17,6 +17,7 @@
 #define ROLE_WIZARD "Wizard"
 
 // Midround roles
+#define ROLE_ALIEN "Xenomorph"
 #define ROLE_MALF_MIDROUND "Malf AI (Midround)"
 #define ROLE_REV_HEAD "Head Revolutionary"
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
@@ -31,7 +32,6 @@
 #define ROLE_SYNDICATE "Syndicate"
 #define ROLE_REV "Revolutionary"
 #define ROLE_REV_SUCCESSFUL "Victorious Revolutionary"
-#define ROLE_ALIEN "Xenomorph"
 #define ROLE_PAI "pAI"
 #define ROLE_BLOB "Blob"
 #define ROLE_NINJA "Space Ninja"
@@ -108,6 +108,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_HERETIC = 0,
 
 	// Midround
+	ROLE_ALIEN = 0,
 	ROLE_MALF_MIDROUND = 0,
 	ROLE_SLEEPER_AGENT = 0,
 	ROLE_SPACE_DRAGON = 0,
@@ -119,7 +120,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	// MOTHBLOCKS TODO: Unsorted
 	ROLE_BROTHER = 0,
 	ROLE_REV = 14,
-	ROLE_ALIEN = 0,
 	ROLE_PAI = 0,
 	ROLE_BLOB = 0,
 	ROLE_NINJA = 0,
