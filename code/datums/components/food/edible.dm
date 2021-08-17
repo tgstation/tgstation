@@ -288,7 +288,7 @@ Behavior that's still missing from this component that original food items had t
 			message_to_consumer = span_warning("You cannot force any more of \the [parent] to go down your throat!")
 			message_to_blind_consumer = message_to_consumer
 			eater.show_message(message_to_consumer, MSG_VISUAL, message_to_blind_consumer)
-			eater.visible_message(message_to_nearby_audience)
+			eater.visible_message(message_to_nearby_audience, ignored_mobs = eater)
 			//if we're too full, return because we can't eat whatever it is we're trying to eat
 			return
 		else if(fullness > 500)
@@ -307,7 +307,7 @@ Behavior that's still missing from this component that original food items had t
 		//if we're blind, we want to feel how hungrily we ate that food
 		message_to_blind_consumer = message_to_consumer
 		eater.show_message(message_to_consumer, MSG_VISUAL, message_to_blind_consumer)
-		eater.visible_message(message_to_nearby_audience)
+		eater.visible_message(message_to_nearby_audience, ignored_mobs = eater)
 
 	else //If you're feeding it to someone else.
 		if(isbrain(eater))
