@@ -144,7 +144,7 @@
 #define MACHINE_DEFAULT_ELECTRIFY_TIME 30
 
 //mass drivers and related machinery
-#define MASSDRIVER_TOXINS "toxinsdriver"
+#define MASSDRIVER_ORDNANCE "ordnancedriver"
 #define MASSDRIVER_CHAPEL "chapelgun"
 #define MASSDRIVER_DISPOSALS "trash"
 #define MASSDRIVER_SHACK "shack"

@@ -173,5 +173,7 @@
 	return
 
 /obj/effect/dummy/chameleon/Destroy()
-	master.disrupt(0)
+	if(master)
+		master.disrupt(0)
+		master = null
 	return ..()

@@ -69,7 +69,7 @@
 
 	///Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
 	///Leaving something at 0 means it's off - has no maximum.
-	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	///This damage is taken when atmos doesn't fit all the requirements above.
 	var/unsuitable_atmos_damage = 1
 
@@ -310,7 +310,7 @@
 			var/ST_gases = ST.air.gases
 			ST.air.assert_gases(arglist(GLOB.hardcoded_gases))
 
-			var/tox = ST_gases[/datum/gas/plasma][MOLES]
+			var/plas = ST_gases[/datum/gas/plasma][MOLES]
 			var/oxy = ST_gases[/datum/gas/oxygen][MOLES]
 			var/n2  = ST_gases[/datum/gas/nitrogen][MOLES]
 			var/co2 = ST_gases[/datum/gas/carbon_dioxide][MOLES]
@@ -321,9 +321,9 @@
 				. = FALSE
 			else if(atmos_requirements["max_oxy"] && oxy > atmos_requirements["max_oxy"])
 				. = FALSE
-			else if(atmos_requirements["min_tox"] && tox < atmos_requirements["min_tox"])
+			else if(atmos_requirements["min_plas"] && plas < atmos_requirements["min_plas"])
 				. = FALSE
-			else if(atmos_requirements["max_tox"] && tox > atmos_requirements["max_tox"])
+			else if(atmos_requirements["max_plas"] && plas > atmos_requirements["max_plas"])
 				. = FALSE
 			else if(atmos_requirements["min_n2"] && n2 < atmos_requirements["min_n2"])
 				. = FALSE
@@ -334,7 +334,7 @@
 			else if(atmos_requirements["max_co2"] && co2 > atmos_requirements["max_co2"])
 				. = FALSE
 		else
-			if(atmos_requirements["min_oxy"] || atmos_requirements["min_tox"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"])
+			if(atmos_requirements["min_oxy"] || atmos_requirements["min_plas"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"])
 				. = FALSE
 
 /mob/living/simple_animal/proc/environment_temperature_is_safe(datum/gas_mixture/environment)

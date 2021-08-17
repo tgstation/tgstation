@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - qol: "Observers can now read circuits from anywhere."

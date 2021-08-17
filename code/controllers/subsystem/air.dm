@@ -339,10 +339,7 @@ SUBSYSTEM_DEF(air)
 			currentrun.len--
 			if (!remake)
 				continue
-			var/list/targets = remake.get_rebuild_targets()
-			remake.rebuilding = FALSE //It's allowed to renter the queue now
-			for(var/datum/pipeline/build_off as anything in targets)
-				build_off.build_pipeline(remake) //This'll add to the expansion queue
+			remake.rebuild_pipes()
 			if (MC_TICK_CHECK)
 				return
 
