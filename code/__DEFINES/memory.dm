@@ -6,7 +6,8 @@
 #define PRISONER_TATTOO_SAVE_FILE "data/engravings/prisoner_tattoos.json"
 
 ///how many engravings will be loaded max with persistence
-#define MAX_PERSISTENT_ENGRAVINGS 20
+#define MIN_PERSISTENT_ENGRAVINGS 15
+#define MAX_PERSISTENT_ENGRAVINGS 25
 
 ///threshold for the memory being a happy one 8)
 #define MEMORY_HAPPY_THRESHOLD 7
@@ -31,7 +32,8 @@
 //Flags for memories
 #define MEMORY_FLAG_NOLOCATION (1<<0)
 #define MEMORY_FLAG_NOMOOD	(1<<1)
-#define MEMORY_FLAG_NOSTATIONNAME	(1<<1)
+#define MEMORY_FLAG_NOSTATIONNAME	(1<<2)
+#define MEMORY_FLAG_NOPERSISTENCE	(1<<3) //Memories that suck ass as persistence, apply this to all quirks.
 
 //These defines are for what notable event happened. they correspond to the json lists related to the memory
 ///a memory of completing a surgery.

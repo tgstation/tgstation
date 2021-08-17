@@ -9,13 +9,13 @@
 	///the generated story string
 	var/engraved_description
 	///whether this is a new engraving, or a persistence loaded one.
-	var/new_creation
+	var/persistent_save
 	///what random icon state should the engraving have
 	var/icon_state_append
 	///The story value of this piece.
 	var/story_value
 
-/datum/component/engraved/Initialize(engraved_description, new_creation, story_value)
+/datum/component/engraved/Initialize(engraved_description, persistent_save, story_value)
 	. = ..()
 	if(!isclosedturf(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -24,7 +24,7 @@
 	SSpersistence.wall_engravings += src
 	engraved_wall.turf_flags &= ~ENGRAVABLE
 	src.engraved_description = engraved_description
-	src.new_creation = new_creation
+	src.persistent_save = persistent_save
 	src.story_value = story_value
 
 
@@ -44,7 +44,7 @@
 			beauty_value = rand(500, 800) //Almost always a good story! this is for memories you can barely ever get, killing megafauna, doing ultimate feats!
 
 	engraved_wall.AddElement(/datum/element/art, beauty_value / ENGRAVING_BEAUTY_TO_ART_FACTOR)
-	if(new_creation)
+	if(persistent_save)
 		engraved_wall.AddElement(/datum/element/beauty, beauty_value)
 	else
 		engraved_wall.AddElement(/datum/element/beauty, beauty_value / ENGRAVING_PERSISTENCE_BEAUTY_LOSS_FACTOR) //Old age does them harm
@@ -84,10 +84,9 @@
 
 ///returns all the information SSpersistence needs in a list to load up this engraving on a future round!
 /datum/component/engraved/proc/save_persistent()
-	var/turf/closed/engraved_wall = parent
-	. = list()
-	.["x"] = engraved_wall.x
-	.["y"] = engraved_wall.y
-	.["z"] = engraved_wall.z
-	.["story"] = engraved_description
-	.["story_value"] = story_value
+	var/list/saved_data = list()
+	saved_data["story"] = engraved_description
+	saved_data["story_value"] = story_value
+
+	return list(saved_data)
+

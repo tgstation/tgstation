@@ -61,7 +61,17 @@ SUBSYSTEM_DEF(persistence)
 		return
 	var/iterations_allowed = MAX_PERSISTENT_ENGRAVINGS
 	var/successfully_loaded_engravings = 0
-	for(var/engraving in json)
+
+	var/list/viable_turfs = get_area_turfs(/area/maintenance) + get_area_turfs(/area/security/prison)
+	var/list/turfs_to_pick_from = list()
+
+	for(var/turf/T as anything in viable_turfs)
+		if(!isclosedturf(T))
+			continue
+		turfs_to_pick_from += T
+
+	for(var/engraving_index in MIN_PERSISTENT_ENGRAVINGS to MAX_PERSISTENT_ENGRAVINGS)
+		var/engraving = json[rand(1, json.len)] //This means repeats will happen for now, but its something I can live with. Just make more engravings!
 		if(!islist(engraving))
 			stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
 			continue
@@ -70,37 +80,34 @@ SUBSYSTEM_DEF(persistence)
 			break
 		iterations_allowed--
 
-		var/xvar = engraving["x"]
-		var/yvar = engraving["y"]
-		var/zvar = engraving["z"]
-
-		if(!xvar || !yvar || !zvar)
-			continue
-
-		var/turf/closed/engraved_wall = locate(xvar, yvar, zvar)
-		if(!istype(engraved_wall))
-			continue
+		var/turf/closed/engraved_wall = pick(turfs_to_pick_from)
 
 		if(!(engraved_wall.turf_flags & ENGRAVABLE))
 			continue
 
-		engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], new_creation = FALSE, engraving["story_value"])
+		engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
 		successfully_loaded_engravings++
 
+	message_admins("loaded [successfully_loaded_engravings]")
 	log_world("Loaded [successfully_loaded_engravings] engraved messages on map [SSmapping.config.map_name]")
 
 /datum/controller/subsystem/persistence/proc/save_wall_engravings()
 	var/list/saved_data = list()
 	for(var/datum/component/engraved/engraving in wall_engravings)
-		if(!engraving.new_creation)
+		if(!engraving.persistent_save)
 			continue
 		var/area/engraved_area = get_area(engraving.parent)
-		if(!istype(engraved_area, /area/maintenance))
+		if(!(engraved_area.area_flags & PERSISTENT_ENGRAVINGS))
 			continue
-		saved_data += list(engraving.save_persistent())
+		saved_data += engraving.save_persistent()
 
 	var/json_file = file(ENGRAVING_SAVE_FILE)
+	if(fexists(json_file))
+		var/list/old_json = json_decode(file2text(json_file))
+		if(old_json)
+			saved_data = old_json + saved_data //Save the old if its there
 	fdel(json_file)
+
 	WRITE_FILE(json_file, json_encode(saved_data))
 
 /datum/controller/subsystem/persistence/proc/load_prisoner_tattoos()

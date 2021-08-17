@@ -32,7 +32,7 @@
 		"in %WHERE.",
 		"while in %WHERE."
 	],
-	"styles":[
+	"engravings_styles":[
 		"The engraving has a cubist style.",
 		"The engraving has a minimalist style.",
 		"The engraving has a surrealist style."
@@ -135,11 +135,11 @@
 		"The bank ID of %PROTAGONIST, %ACCOUNT_ID."
 	],
 	"account_starts":[
-		"%PROTAGONIST flexing their last brain cells, proudly showing the lucky numbers %ACCOUNT_ID.",
+		"%PROTAGONIST flexing their last brain cells, proudly showing their lucky numbers %ACCOUNT_ID.",
 		"%ACCOUNT_ID. The numbers mason, what do they mean!?"
 	],
 	"account_moods":[
-		"%PROTAGONIST %MOOD as try to keep their drool in.",
+		"%PROTAGONIST %MOOD as they try to keep their drool in.",
 		"%PROTAGONIST %MOOD and runs from their wrangler."
 	],
 	"surgery_names":[

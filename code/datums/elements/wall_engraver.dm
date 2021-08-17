@@ -1,4 +1,4 @@
-/// An element that lets you stab people in the eyes when targeting them
+/// An element that lets you engrave walls when right click is used
 /datum/element/wall_engraver
 	element_flags = ELEMENT_DETACH
 
@@ -51,7 +51,12 @@
 		return
 	user.balloon_alert(user, "wall engraved")
 	user.do_attack_animation(wall)
-	wall.AddComponent(/datum/component/engraved, memory_to_engrave.generate_story(STORY_ENGRAVING, STORY_FLAG_DATED), story_value = memory_to_engrave.story_value)
+
+	var/do_persistent_save = TRUE
+	if(memory_to_engrave.memory_flags & MEMORY_FLAG_NOPERSISTENCE)
+		do_persistent_save = FALSE
+
+	wall.AddComponent(/datum/component/engraved, memory_to_engrave.generate_story(STORY_ENGRAVING, STORY_FLAG_DATED), persistent_save = do_persistent_save, story_value = memory_to_engrave.story_value)
 	///while someone just engraved a story "worth engraving" we should add this to SSpersistence for a possible prison tattoo
 	SSpersistence.prison_tattoos_to_save += memory_to_engrave.generate_story(STORY_TATTOO)
 	///REMOVE THE MEMORY ONCE ENGRAVED
