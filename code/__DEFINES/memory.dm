@@ -82,13 +82,9 @@
 #define MEMORY_GIBBED "gibbed"
 /// Crushed by vending machine
 #define MEMORY_VENDING_CRUSHED "vending_crushed"
+/// Dusted by SM
+#define MEMORY_SUPERMATTER_DUSTED "supermatter_dusted"
 
-
-///YOU HAVE WRITTEN MEMORY FLAVOR TO THIS POINT//
-
-
-///a memory of getting gibbed, an alternate to death
-#define MEMORY_GIBBING "gibbed"
 
 /**
  * These are also memories, but they're examples of what I kinda don't want to be memories. They're stuff that I had to port
@@ -105,7 +101,7 @@
 
 //These defines are for what the story is for, they should be defined as what part of the json file they interact with
 ///wall engraving stories
-#define STORY_ENGRAVING "engravings"
+#define STORY_ENGRAVING "engraving"
 ///changeling memory reading
 #define STORY_CHANGELING_ABSORB "changeling_absorb"
 ///tattoos

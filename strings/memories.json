@@ -32,6 +32,9 @@
 		"in %WHERE.",
 		"while in %WHERE."
 	],
+	"styles":[
+		"The %STORY_TYPE has a generic style"
+	],
 	"engravings_styles":[
 		"The engraving has a cubist style.",
 		"The engraving has a minimalist style.",
@@ -396,5 +399,17 @@
 	"vending_crushed_moods":[
 		"%PROTAGONIST %MOOD as they lie under the machine.",
 		"%PROTAGONIST %MOOD as a goodie falls out of the %WHAT_BY."
+	],
+	"supermatter_dusted_names":[
+		"The dusting of %PROTAGONIST by the %WHAT_BY."
+	],
+	"supermatter_dusted_starts":[
+		"%PROTAGONIST turning into a pile of bones after touching the %WHAT_BY",
+		"The %WHAT_BY turning %PROTAGONIST into ash",
+		"The dusting of %PROTAGONIST after they got too close to the %WHAT_BY"
+	],
+	"supermatter_dusted_moods":[
+		"%PROTAGONIST %MOOD as they faded way.",
+		"%PROTAGONIST %MOOD as they are reduced to atoms."
 	]
 }

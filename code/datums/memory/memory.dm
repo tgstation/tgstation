@@ -77,7 +77,11 @@
 	var/list/forewords = strings(MEMORY_FILE, story_type + "_forewords")
 	var/list/somethings =strings(MEMORY_FILE, story_type + "_somethings")
 	//changeling absorbing does not have styles
-	var/list/styles = story_type == STORY_CHANGELING_ABSORB ? null : strings(MEMORY_FILE, story_type + "styles")
+	var/list/styles
+	if(!story_type == STORY_CHANGELING_ABSORB)
+		styles = strings(MEMORY_FILE, "styles")
+		if("[story_type]_styles" in GLOB.string_cache[MEMORY_FILE])
+			styles += strings(MEMORY_FILE, story_type + "_styles")
 	var/list/wheres = strings(MEMORY_FILE, "where")
 
 
@@ -96,16 +100,16 @@
 		switch(victim_mood)
 			if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD2)
 				story_moods = strings(MEMORY_FILE, "sad")
-				if("[action]sad" in GLOB.string_cache[MEMORY_FILE])
-					story_moods += strings(MEMORY_FILE, "[action]sad")
+				if("[action]_sad" in GLOB.string_cache[MEMORY_FILE])
+					story_moods += strings(MEMORY_FILE, "[action]_sad")
 			if(MOOD_LEVEL_SAD2 to MOOD_LEVEL_HAPPY2)
 				story_moods = strings(MEMORY_FILE, "neutral")
-				if("[action]neutral" in GLOB.string_cache[MEMORY_FILE])
-					story_moods += strings(MEMORY_FILE, "[action]neutral")
+				if("[action]_neutral" in GLOB.string_cache[MEMORY_FILE])
+					story_moods += strings(MEMORY_FILE, "[action]_neutral")
 			if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY4)
 				story_moods = strings(MEMORY_FILE, "happy")
-				if("[action]happy" in GLOB.string_cache[MEMORY_FILE])
-					story_moods += strings(MEMORY_FILE, "[action]happy")
+				if("[action]_happy" in GLOB.string_cache[MEMORY_FILE])
+					story_moods += strings(MEMORY_FILE, "[action]_happy")
 
 
 
