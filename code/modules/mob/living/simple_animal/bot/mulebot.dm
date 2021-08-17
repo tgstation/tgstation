@@ -18,6 +18,7 @@
 	animate_movement = FORWARD_STEPS
 	health = 50
 	maxHealth = 50
+	speed = 3
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	combat_mode = TRUE //No swapping
 	buckle_lying = 0
@@ -128,8 +129,8 @@
 	return ..()
 
 /// returns true if the bot is fully powered.
-/mob/living/simple_animal/bot/mulebot/proc/has_power(bypass_open_check)
-	return (!open || bypass_open_check) && cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
+/mob/living/simple_animal/bot/mulebot/proc/has_power()
+	return cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 
 
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
@@ -146,10 +147,7 @@
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		. = ..()
-		if(open)
-			turn_off()
-		else
-			update_appearance() //this is also handled by turn_off(), so no need to call this twice.
+		update_appearance()
 	else if(istype(I, /obj/item/stock_parts/cell) && open)
 		if(cell)
 			to_chat(user, span_warning("[src] already has a power cell!"))
@@ -558,7 +556,7 @@
 		return
 	if(mode == BOT_IDLE)
 		return
-	if(HAS_TRAIT(TRAIT_IMMOBILIZED, MOTOR_LACK_TRAIT))
+	if(HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 		return
 
 	var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
@@ -838,7 +836,7 @@
 	if(!on)
 		return COMPONENT_MOB_BOT_BLOCK_PRE_STEP
 
-	if((cell && (cell.charge < cell_move_power_usage)) || !has_power((client || paicard)))
+	if((cell && (cell.charge < cell_move_power_usage)) || !has_power())
 		turn_off()
 		return COMPONENT_MOB_BOT_BLOCK_PRE_STEP
 
@@ -928,4 +926,3 @@
 
 /obj/machinery/bot_core/mulebot
 	req_access = list(ACCESS_CARGO)
-
