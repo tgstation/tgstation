@@ -104,7 +104,7 @@
 /datum/eldritch_knowledge/spell/flame_birth
 	name = "Flame Birth"
 	gain_text = "The Nightwatcher was a man of principles, and yet his power arose from the chaos he vowed to combat."
-	desc = "Short range spell that allows you to curse someone with massive sanity loss."
+	desc = "A spell that steals some health from every burning person around you."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/fiery_rebirth
 	next_knowledge = list(
