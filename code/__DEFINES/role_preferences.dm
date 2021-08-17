@@ -20,6 +20,7 @@
 #define ROLE_MALF_MIDROUND "Malf AI (Midround)"
 #define ROLE_REV_HEAD "Head Revolutionary"
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
+#define ROLE_SPACE_DRAGON "Space Dragon"
 #define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
 
 // Latejoin roles
@@ -43,7 +44,6 @@
 #define ROLE_OVERTHROW "Syndicate Mutineer" //Role removed, left here for safety.
 #define ROLE_HIVE "Hivemind Host" //Role removed, left here for safety.
 #define ROLE_OBSESSED "Obsessed"
-#define ROLE_SPACE_DRAGON "Space Dragon"
 #define ROLE_SENTIENCE "Sentience Potion Spawn"
 #define ROLE_PYROCLASTIC_SLIME "Pyroclastic Anomaly Slime"
 #define ROLE_MIND_TRANSFER "Mind Transfer Potion"
@@ -110,6 +110,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	// Midround
 	ROLE_MALF_MIDROUND = 0,
 	ROLE_SLEEPER_AGENT = 0,
+	ROLE_SPACE_DRAGON = 0,
 
 	// Latejoin
 	ROLE_HERETIC_SMUGGLER = 0,
@@ -123,7 +124,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_BLOB = 0,
 	ROLE_NINJA = 0,
 	ROLE_OBSESSED = 0,
-	ROLE_SPACE_DRAGON = 0,
 	ROLE_MONKEY = 0,
 	ROLE_REVENANT = 0,
 	ROLE_ABDUCTOR = 0,
