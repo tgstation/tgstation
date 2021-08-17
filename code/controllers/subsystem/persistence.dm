@@ -7,10 +7,12 @@ SUBSYSTEM_DEF(persistence)
 	init_order = INIT_ORDER_PERSISTENCE
 	flags = SS_NO_FIRE
 
-	///loaded wall engravings + ones created in the round
+	///instantiated wall engraving components
 	var/list/wall_engravings = list()
-	///tattoo styles saved in the database for prisoners roundstart
+	///tattoo stories that we're saving.
 	var/list/prison_tattoos_to_save = list()
+	///tattoo stories that have been selected for this round.
+	var/list/prison_tattoos_to_use = list()
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
 	var/list/saved_maps = list()
@@ -21,6 +23,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/obj/item/storage/photo_album/photo_albums
 	var/list/obj/structure/sign/painting/painting_frames = list()
 	var/list/paintings = list()
+
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadPoly()
@@ -59,7 +62,10 @@ SUBSYSTEM_DEF(persistence)
 	var/list/json = json_decode(file2text(json_file))
 	if(!json)
 		return
-	var/iterations_allowed = MAX_PERSISTENT_ENGRAVINGS
+
+	if(json["version"] < ENGRAVING_PERSISTENCE_VERSION)
+		update_wall_engravings(json)
+
 	var/successfully_loaded_engravings = 0
 
 	var/list/viable_turfs = get_area_turfs(/area/maintenance) + get_area_turfs(/area/security/prison)
@@ -70,15 +76,13 @@ SUBSYSTEM_DEF(persistence)
 			continue
 		turfs_to_pick_from += T
 
+	var/list/engraving_entries = json["entries"]
+
 	for(var/engraving_index in MIN_PERSISTENT_ENGRAVINGS to MAX_PERSISTENT_ENGRAVINGS)
-		var/engraving = json[rand(1, json.len)] //This means repeats will happen for now, but its something I can live with. Just make more engravings!
+		var/engraving = engraving_entries[rand(1, engraving_entries.len)] //This means repeats will happen for now, but its something I can live with. Just make more engravings!
 		if(!islist(engraving))
 			stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
 			continue
-
-		if(!iterations_allowed)
-			break
-		iterations_allowed--
 
 		var/turf/closed/engraved_wall = pick(turfs_to_pick_from)
 
@@ -87,28 +91,46 @@ SUBSYSTEM_DEF(persistence)
 
 		engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
 		successfully_loaded_engravings++
+		turfs_to_pick_from -= engraved_wall
 
-	message_admins("loaded [successfully_loaded_engravings]")
 	log_world("Loaded [successfully_loaded_engravings] engraved messages on map [SSmapping.config.map_name]")
 
 /datum/controller/subsystem/persistence/proc/save_wall_engravings()
 	var/list/saved_data = list()
+
+	saved_data["version"] = ENGRAVING_PERSISTENCE_VERSION
+	saved_data["entries"] = list()
+
 	for(var/datum/component/engraved/engraving in wall_engravings)
 		if(!engraving.persistent_save)
 			continue
 		var/area/engraved_area = get_area(engraving.parent)
 		if(!(engraved_area.area_flags & PERSISTENT_ENGRAVINGS))
 			continue
-		saved_data += engraving.save_persistent()
+		saved_data["entries"] += engraving.save_persistent()
 
 	var/json_file = file(ENGRAVING_SAVE_FILE)
 	if(fexists(json_file))
 		var/list/old_json = json_decode(file2text(json_file))
 		if(old_json)
-			saved_data = old_json + saved_data //Save the old if its there
+			saved_data["entries"] = old_json["entries"] + saved_data["entries"] //Save the old if its there
 	fdel(json_file)
 
 	WRITE_FILE(json_file, json_encode(saved_data))
+
+///This proc can update entries if the format has changed at some point.
+/datum/controller/subsystem/persistence/proc/update_wall_engravings(json)
+
+
+	for(var/engraving_entry in json["entries"])
+		continue //no versioning yet
+
+	//Save it to the file
+	var/json_file = file(ENGRAVING_SAVE_FILE)
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(json))
+
+	return json
 
 /datum/controller/subsystem/persistence/proc/load_prisoner_tattoos()
 	var/json_file = file(PRISONER_TATTOO_SAVE_FILE)
@@ -117,26 +139,53 @@ SUBSYSTEM_DEF(persistence)
 	var/list/json = json_decode(file2text(json_file))
 	if(!json)
 		return
+
+	if(json["version"] < TATTOO_PERSISTENCE_VERSION)
+		update_prisoner_tattoos(json)
+
 	var/datum/job/prisoner_datum = SSjob.name_occupations["Prisoner"]
 	if(!prisoner_datum)
 		return
 	var/iterations_allowed = prisoner_datum.spawn_positions
 
-	var/successfully_loaded_prisoner_tats = 0
-	for(var/tattoo in json)
-		if(!iterations_allowed)
-			break
-		iterations_allowed--
+	var/list/entries = json["entries"]
+	if(entries.len)
+		for(var/index in 1 to iterations_allowed)
+			prison_tattoos_to_use += list(entries[rand(1, entries.len)])
 
-		prison_tattoos_to_save += tattoo
-		successfully_loaded_prisoner_tats++
-
-	log_world("Loaded [successfully_loaded_prisoner_tats] prison tattoos")
+	log_world("Loaded [prison_tattoos_to_use.len] prison tattoos")
 
 /datum/controller/subsystem/persistence/proc/save_prisoner_tattoos()
 	var/json_file = file(PRISONER_TATTOO_SAVE_FILE)
+	var/list/saved_data = list()
+	var/list/entries = list()
+
+	if(fexists(json_file))
+		var/list/old_json = json_decode(file2text(json_file))
+		if(old_json)
+			entries += old_json["entries"]  //Save the old if its there
+
+	entries += prison_tattoos_to_save
+
+	saved_data["version"] = ENGRAVING_PERSISTENCE_VERSION
+	saved_data["entries"] = entries
+
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(prison_tattoos_to_save))
+	WRITE_FILE(json_file, json_encode(saved_data))
+
+///This proc can update entries if the format has changed at some point.
+/datum/controller/subsystem/persistence/proc/update_prisoner_tattoos(json)
+
+	for(var/tattoo_entry in json["entries"])
+		continue //no versioning yet
+
+	//Save it to the file
+	var/json_file = file(PRISONER_TATTOO_SAVE_FILE)
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(json))
+
+	return json
+
 
 /datum/controller/subsystem/persistence/proc/LoadTrophies()
 	if(fexists("data/npc_saves/TrophyItems.sav")) //legacy compatability to convert old format to new

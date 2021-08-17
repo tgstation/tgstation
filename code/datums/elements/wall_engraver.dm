@@ -58,5 +58,8 @@
 
 	wall.AddComponent(/datum/component/engraved, memory_to_engrave.generate_story(STORY_ENGRAVING, STORY_FLAG_DATED), persistent_save = do_persistent_save, story_value = memory_to_engrave.story_value)
 	///while someone just engraved a story "worth engraving" we should add this to SSpersistence for a possible prison tattoo
-	SSpersistence.prison_tattoos_to_save += memory_to_engrave.generate_story(STORY_TATTOO)
-	///REMOVE THE MEMORY ONCE ENGRAVED
+
+	if(do_persistent_save)
+		var/list/tattoo_entry = list()
+		tattoo_entry["story"] = memory_to_engrave.generate_story(STORY_TATTOO)
+		SSpersistence.prison_tattoos_to_save += list(tattoo_entry)
