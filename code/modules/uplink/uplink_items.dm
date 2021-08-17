@@ -993,6 +993,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer."
 	item = /obj/item/cartridge/virus/syndicate
 	cost = 6
+	purchasable_from = UPLINK_NUKE_OPS
 	restricted = TRUE
 
 /datum/uplink_item/explosives/emp
