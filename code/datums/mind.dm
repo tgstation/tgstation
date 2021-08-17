@@ -313,6 +313,8 @@
 
 	for(var/key in memories)
 		var/datum/memory/memory_iter = memories[key]
+		if(memory_iter.memory_flags & MEMORY_FLAG_ALREADY_USED) //Can't use memories multiple times
+			continue
 		choice_list[memory_iter.name] = memory_iter
 
 	var/choice = tgui_input_list(usr, "Select a memory", "Memory Selection?", choice_list)

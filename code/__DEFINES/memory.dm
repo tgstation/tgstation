@@ -38,6 +38,8 @@
 #define MEMORY_FLAG_NOMOOD	(1<<1)
 #define MEMORY_FLAG_NOSTATIONNAME	(1<<2)
 #define MEMORY_FLAG_NOPERSISTENCE	(1<<3) //Memories that suck ass as persistence, apply this to all quirks.
+#define MEMORY_FLAG_ALREADY_USED	(1<<4)
+
 
 //These defines are for what notable event happened. they correspond to the json lists related to the memory
 ///a memory of completing a surgery.

@@ -226,8 +226,8 @@
 		"The slipping of %PROTAGONIST."
 	],
 	"slipped_starts":[
-		"%PROTAGONIST tumbling right over %WHAT_BY",
-		"%PROTAGONIST not being able to keep standing when faced with %WHAT_BY",
+		"%PROTAGONIST tumbling right over a %WHAT_BY",
+		"%PROTAGONIST not being able to keep standing when faced with a %WHAT_BY",
 		"the perilous %WHAT_BY which took %PROTAGONIST down a notch"
 	],
 	"slipped_moods":[
@@ -256,7 +256,7 @@
 		"%KISSER blowing a kiss to %PROTAGONIST"
 	],
 	"kiss_moods":[
-		"%PROTAGONIST %MOOD as the kiss lands on their cheek",
+		"%PROTAGONIST %MOOD as the kiss lands on their cheek.",
 		"%PROTAGONIST %MOOD as it happen."
 	],
 	"quirk_drug_names":[
@@ -371,12 +371,12 @@
 		"%PROTAGONIST being held at gunpoint."
 	],
 	"held_at_gunpoint_starts":[
-		"%PROTAGONIST with %WHAT_BY pressed to their skull by %DEUTERAGONIST",
-		"%DEUTERAGONIST whipping out %WHAT_BY and pointing it at %PROTAGONIST"
+		"%PROTAGONIST with a %WHAT_BY pressed to their skull by %DEUTERAGONIST",
+		"%DEUTERAGONIST whipping out a %WHAT_BY and pointing it at %PROTAGONIST"
 	],
 	"held_at_gunpoint_moods":[
 		"%PROTAGONIST %MOOD as they are faced with the situation.",
-		"%PROTAGONIST %MOOD as they stare down %WHAT_BY's barrel"
+		"%PROTAGONIST %MOOD as they stare down %WHAT_BY's barrel."
 	],
 	"gibbed_names":[
 		"%PROTAGONIST exploding into bits."
@@ -386,15 +386,15 @@
 		"%PROTAGONIST becoming flesh paste in the blink of an eye"
 	],
 	"vending_crushed_names":[
-		"%PROTAGONIST being crushed by %WHAT_BY."
+		"%PROTAGONIST being crushed by a %WHAT_BY."
 	],
 	"vending_crushed_starts":[
-		"%PROTAGONIST being crushed by the %WHAT_BY",
+		"%PROTAGONIST being crushed by the a %WHAT_BY",
 		"the %WHAT_BY that crashed on top of %PROTAGONIST",
-		"the fall of %WHAT_BY onto %PROTAGONIST"
+		"the fall of a %WHAT_BY onto %PROTAGONIST"
 	],
 	"vending_crushed_moods":[
 		"%PROTAGONIST %MOOD as they lie under the machine.",
-		"%PROTAGONIST %MOOD as a goodie falls out of %WHAT_BY"
+		"%PROTAGONIST %MOOD as a goodie falls out of the %WHAT_BY."
 	]
 }
