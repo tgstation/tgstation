@@ -4,11 +4,11 @@
  * @license MIT
  */
 
-import { Button, Section, Table, Input } from '../components';
-import { Window } from '../layouts';
-import { useBackend, useLocalState } from '../backend';
 import { decodeHtmlEntities } from 'common/string';
+import { useBackend, useLocalState } from '../backend';
+import { Button, Input, Section, Table } from '../components';
 import { Popper } from '../components/Popper';
+import { Window } from '../layouts';
 
 export const RequestManager = (props, context) => {
   const { act, data } = useBackend(context);
@@ -38,7 +38,7 @@ export const RequestManager = (props, context) => {
   }
 
   return (
-    <Window width={575} height={600}>
+    <Window title="Request Manager" width={575} height={600}>
       <Window.Content scrollable>
         <Section
           title="Requests"
