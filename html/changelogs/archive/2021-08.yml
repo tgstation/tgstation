@@ -415,3 +415,17 @@
       like iamgoofball intended almost 4 years ago.
   Time-Green:
   - bugfix: moths will burn
+2021-08-17:
+  Ghommie:
+  - qol: Wormhole projectors now fire blue wormholes with left mouse btton and orange
+      ones with right mouse button.
+  GreatKingWombat:
+  - bugfix: Defined the in-hand state for the chaplains' unholy pitchfork. The in-hand
+      sprites will now actually appear.
+  SmArtKar:
+  - bugfix: NTNet Transmitter now works
+  Timberpoes:
+  - admin: Admins can now find "banned account in connection history" admin alerts
+      mirrored to the suspicious logins log file.
+  Watermelon914:
+  - bugfix: Fixed freezers protecting their contents after being exploded.
