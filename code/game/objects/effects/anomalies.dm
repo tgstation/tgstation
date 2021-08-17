@@ -260,7 +260,7 @@
 
 		var/y_distance = TO.y - FROM.y
 		var/x_distance = TO.x - FROM.x
-		for (var/atom/movable/movableatom in urange(12, FROM )) // iterate thru list of mobs in the area
+		for (var/atom/movable/movableatom in urange(12, FROM ))
 			if(istype(movableatom, /obj/item/beacon))
 				continue // don't teleport beacons because that's just insanely stupid
 			if(movableatom.anchored)
