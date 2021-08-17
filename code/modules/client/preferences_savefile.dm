@@ -117,7 +117,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/check_keybindings()
 	if(!parent)
 		return
-	var/list/binds_by_key = key_bindings
+	var/list/binds_by_key = key_bindings || list()
 	for (var/kb_name in key_bindings)
 		for(var/key in key_bindings[kb_name])
 			binds_by_key[key] += list(kb_name)
