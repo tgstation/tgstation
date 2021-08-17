@@ -46,7 +46,7 @@ export const RequestManager = (props, context) => {
             <>
               <Input
                 value={searchText}
-                onInput={(e, value) => setSearchText(value)}
+                onInput={(_, value) => setSearchText(value)}
                 placeholder={'Search...'}
                 mr={1}
               />
@@ -59,6 +59,7 @@ export const RequestManager = (props, context) => {
                 <h2 className="RequestManager__header">
                   <span className="RequestManager__headerText">
                     {request.owner_name}
+                    {request.owner === null && ' [DC]'}
                   </span>
                   <span className="RequestManager__timestamp">
                     {request.timestamp_str}
@@ -69,7 +70,7 @@ export const RequestManager = (props, context) => {
                   {decodeHtmlEntities(request.message)}
                 </div>
               </div>
-              <RequestControls request={request} />
+              {request.owner !== null && <RequestControls request={request} />}
             </div>
           ))}
         </Section>
@@ -96,7 +97,7 @@ const RequestType = (props) => {
 };
 
 const RequestControls = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, _ } = useBackend(context);
   const { request } = props;
 
   return (
@@ -133,7 +134,6 @@ const FilterPanel = (_, context) => {
       Object.entries(displayTypeMap).map(([type, _]) => [type, true])
     )
   );
-  const [searchText, setSearchText] = useLocalState(context, 'searchText');
 
   return (
     <Popper

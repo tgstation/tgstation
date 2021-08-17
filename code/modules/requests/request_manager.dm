@@ -188,7 +188,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			var/list/data = list(
 				"id" = request.id,
 				"req_type" = request.req_type,
-				"owner" = "[REF(request.owner)]",
+				"owner" = request.owner ? "[REF(request.owner)]" : null,
 				"owner_ckey" = request.owner_ckey,
 				"owner_name" = request.owner_name,
 				"message" = request.message,
