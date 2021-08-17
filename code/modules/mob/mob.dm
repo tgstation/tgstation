@@ -1319,3 +1319,52 @@
 		client.movingmob.client_mobs_in_contents -= src
 		UNSETEMPTY(client.movingmob.client_mobs_in_contents)
 		client.movingmob = null
+
+
+///Shows a tgui window with memories
+/mob/verb/memory()
+	set name = "Memories"
+	set category = "IC"
+	set desc = "View your character's memories."
+	if(mind)
+		var/datum/memory_panel/tgui  = new(usr)//create the datum
+		tgui.ui_interact(usr)//datum has a tgui component, here we open the window
+	else
+		to_chat(src, "You don't have a mind datum for some reason, so you can't look at your notes, if you had any.")
+
+GLOBAL_VAR(memory_panel_datum)
+
+/datum/memory_panel
+	var/client/holder //client of whoever is using this datum
+
+/datum/memory_panel/New(user)//user can either be a client or a mob due to byondcode(tm)
+	if (istype(user, /client))
+		var/client/user_client = user
+		holder = user_client //if its a client, assign it to holder
+	else
+		var/mob/user_mob = user
+		holder = user_mob.client //if its a mob, assign the mob's client to holder
+	GLOB.memory_panel_datum = src
+
+/datum/memory_panel/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/memory_panel/ui_close()
+	qdel(src)
+
+/datum/memory_panel/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MemoryPanel")
+		ui.open()
+
+/datum/memory_panel/ui_data(mob/user)
+	var/list/data = list()
+	var/list/memories = list()
+
+	for(var/memory_key in user?.mind.memories)
+		var/datum/memory/memory =  user.mind.memories[memory_key]
+		memories += list(list("name" = memory.name, "quality" = memory.story_value))
+
+	data["memories"] = memories
+	return data

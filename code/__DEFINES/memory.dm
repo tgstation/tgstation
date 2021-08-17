@@ -21,12 +21,12 @@
 #define ENGRAVING_PERSISTENCE_BEAUTY_LOSS_FACTOR 5
 
 ///How cool a story is!
-#define STORY_VALUE_SHIT 0
-#define STORY_VALUE_NONE 1
-#define STORY_VALUE_MEH 2
-#define STORY_VALUE_OKAY 3
-#define STORY_VALUE_AMAZING 4
-#define STORY_VALUE_LEGENDARY 5
+#define STORY_VALUE_SHIT 0 // poo icon
+#define STORY_VALUE_NONE 1 // |: face
+#define STORY_VALUE_MEH 2 // bronze star
+#define STORY_VALUE_OKAY 3 // silver star
+#define STORY_VALUE_AMAZING 4 //gold star
+#define STORY_VALUE_LEGENDARY 5 //platinum star
 
 //Flags for memories
 #define MEMORY_FLAG_NOLOCATION (1<<0)

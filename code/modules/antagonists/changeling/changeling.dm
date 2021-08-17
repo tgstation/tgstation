@@ -683,18 +683,28 @@
 
 	return parts.Join("<br>")
 
-/datum/antagonist/changeling/ui_static_data(mob/user)
+/datum/antagonist/changeling/ui_data(mob/user)
 	var/list/data = list()
-	var/list/memories
-	for(var/stolen_memory_name in stolen_memories)
-		var/list/memory_data = list()
-		memory_data["name"] = stolen_memory_name
-		memory_data["story"] = stolen_memories[stolen_memory_name]
-		LAZYADD(memories, memory_data)
+	var/list/memories = list()
+
+	for(var/memory_key in stolen_memories)
+		memories += list(list("name" = memory_key, "story" = stolen_memories[memory_key]))
+
 	data["memories"] = memories
 	data["hive_name"] = hive_name
 	data["stolen_antag_info"] = antag_memory
 	data["objectives"] = get_objectives()
+	return data
+
+/datum/memory_panel/ui_data(mob/user)
+	var/list/data = list()
+	var/list/memories = list()
+
+	for(var/memory_key as anything in user?.mind.memories)
+		var/datum/memory/memory =  user.mind.memories[memory_key]
+		memories += list(list("name" = memory.name, "quality" = memory.story_value))
+
+	data["memories"] = memories
 	return data
 
 // Changelings spawned from non-changeling headslugs (IE, due to being transformed into a headslug as a non-ling). Weaker than a normal changeling.
