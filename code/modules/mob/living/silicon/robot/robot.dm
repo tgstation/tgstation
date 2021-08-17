@@ -69,6 +69,12 @@
 	diag_hud_set_borgcell()
 	logevent("System brought online.")
 
+	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z))
+	RegisterSignal(listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
+	RegisterSignal(listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
+	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, /datum/alarm_listener/proc/prevent_alarm_changes)
+	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, /datum/alarm_listener/proc/allow_alarm_changes)
+
 /mob/living/silicon/robot/model/syndicate/Initialize()
 	. = ..()
 	laws = new /datum/ai_laws/syndicate_override()
@@ -118,6 +124,7 @@
 	QDEL_NULL(inv2)
 	QDEL_NULL(inv3)
 	QDEL_NULL(spark_system)
+	QDEL_NULL(listener)
 	cell = null
 	return ..()
 
@@ -200,15 +207,16 @@
 
 /mob/living/silicon/robot/proc/robot_alerts()
 	var/dat = ""
-	for (var/cat in alarms)
-		dat += text("<B>[cat]</B><BR>\n")
-		var/list/L = alarms[cat]
-		if (L.len)
-			for (var/alarm in L)
-				var/list/alm = L[alarm]
+	var/list/alarms = listener.alarms
+	for (var/alarm_type in alarms)
+		dat += "<B>[alarm_type]</B><BR>\n"
+		var/list/alerts = alarms[alarm_type]
+		if (length(alerts))
+			for (var/alarm in alerts)
+				var/list/alm = alerts[alarm]
 				var/area/A = alm[1]
 				dat += "<NOBR>"
-				dat += text("-- [A.name]")
+				dat += "-- [A.name]"
 				dat += "</NOBR><BR>\n"
 		else
 			dat += "-- All Systems Nominal<BR>\n"
@@ -251,7 +259,7 @@
 	if(cell)
 		. += "Charge Left: [cell.charge]/[cell.maxcharge]"
 	else
-		. += text("No Cell Inserted!")
+		. += "No Cell Inserted!"
 
 	if(model)
 		for(var/datum/robot_energy_storage/st in model.storages)
@@ -259,63 +267,13 @@
 	if(connected_ai)
 		. += "Master AI: [connected_ai.name]"
 
+/mob/living/silicon/robot/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
+	SIGNAL_HANDLER
+	queueAlarm("--- [alarm_type] alarm detected in [source_area.name]!", alarm_type)
 
-/mob/living/silicon/robot/triggerAlarm(class, area/home, cameras, obj/source)
-	if(source.z != z)
-		return
-	if(stat == DEAD)
-		return TRUE
-	var/list/our_sort = alarms[class]
-	for(var/areaname in our_sort)
-		if (areaname == home.name)
-			var/list/alarm = our_sort[areaname]
-			var/list/sources = alarm[3]
-			if (!(source in sources))
-				sources += source
-			return TRUE
-
-	var/obj/machinery/camera/cam = null
-	var/list/our_cams = null
-	if(cameras && islist(cameras))
-		our_cams = cameras
-		if (our_cams.len == 1)
-			cam = our_cams[1]
-	else if(cameras && istype(cameras, /obj/machinery/camera))
-		cam = cameras
-	our_sort[home.name] = list(home, (cam ? cam : cameras), list(source))
-	queueAlarm(text("--- [class] alarm detected in [home.name]!"), class)
-	return TRUE
-
-/mob/living/silicon/robot/freeCamera(area/home, obj/machinery/camera/cam)
-	for(var/class in alarms)
-		var/our_area = alarms[class][home.name]
-		if(!our_area)
-			continue
-		var/cams = our_area[2] //Get the cameras
-		if(!cams)
-			continue
-		if(islist(cams))
-			cams -= cam
-			if(length(cams) == 1)
-				our_area[2] = cams[1]
-		else
-			our_area[2] = null
-
-/mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
-	var/list/L = alarms[class]
-	var/cleared = FALSE
-	for (var/I in L)
-		if (I == A.name)
-			var/list/alarm = L[I]
-			var/list/srcs  = alarm[3]
-			if (origin in srcs)
-				srcs -= origin
-			if (srcs.len == 0)
-				cleared = TRUE
-				L -= I
-	if (cleared)
-		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
-	return !cleared
+/mob/living/silicon/robot/proc/alarm_cleared(datum/source, alarm_type, area/source_area)
+	SIGNAL_HANDLER
+	queueAlarm("--- [alarm_type] alarm in [source_area.name] has been cleared.", alarm_type, FALSE)
 
 /mob/living/silicon/robot/can_interact_with(atom/A)
 	if (A == modularInterface)
@@ -431,7 +389,7 @@
 
 /mob/living/silicon/robot/proc/SetLockdown(state = TRUE)
 	// They stay locked down if their wire is cut.
-	if(wires.is_cut(WIRE_LOCKDOWN))
+	if(wires?.is_cut(WIRE_LOCKDOWN))
 		state = TRUE
 	if(state)
 		throw_alert("locked", /atom/movable/screen/alert/locked)

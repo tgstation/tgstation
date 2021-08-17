@@ -74,7 +74,8 @@
 	emitterhealth = clamp((emitterhealth - amount), -50, emittermaxhealth)
 	if(emitterhealth < 0)
 		fold_in(force = TRUE)
-	to_chat(src, span_userdanger("The impact degrades your holochassis!"))
+	if (amount > 0)
+		to_chat(src, span_userdanger("The impact degrades your holochassis!"))
 	return amount
 
 /mob/living/silicon/pai/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)

@@ -6928,10 +6928,6 @@
 /obj/item/clothing/head/helmet/space/plasmaman,
 /turf/open/floor/wood,
 /area/centcom/holding)
-"wk" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/iron/dark,
-/area/centcom/supplypod)
 "wl" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood,
@@ -7810,7 +7806,7 @@
 /turf/open/floor/grass,
 /area/wizard_station)
 "yM" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/structure/safe/floor,
 /obj/item/seeds/cherry/bomb,
 /turf/open/floor/wood,
@@ -14457,7 +14453,7 @@
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Tq" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/storage/toolbox/mechanical,
@@ -14497,7 +14493,7 @@
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "TK" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/structure/mirror/directional/north,
 /turf/open/floor/wood,
 /area/centcom/holding)
@@ -14879,10 +14875,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/one)
-"XK" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/iron,
-/area/centcom/supplypod)
 "XL" = (
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/wood,
@@ -14895,7 +14887,7 @@
 /area/centcom/holding)
 "XT" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
+/turf/open/floor/plating,
 /area/centcom/supplypod)
 "Ya" = (
 /obj/structure/table/wood,
@@ -64629,7 +64621,7 @@ Yn
 NE
 NE
 NE
-XK
+XT
 aa
 aa
 aa
@@ -64886,7 +64878,7 @@ Yn
 NE
 NE
 NE
-XK
+XT
 aa
 aa
 aa
@@ -65901,8 +65893,8 @@ Yn
 Yn
 Yn
 Yn
-wk
-wk
+XT
+XT
 Yn
 Yn
 Yn
@@ -66171,7 +66163,7 @@ Yn
 NE
 NE
 NE
-XK
+XT
 aa
 aa
 aa
@@ -66428,7 +66420,7 @@ Yn
 NE
 NE
 NE
-XK
+XT
 aa
 aa
 aa
@@ -67710,10 +67702,10 @@ Yn
 Yn
 Yn
 Yn
-XK
-XK
+XT
+XT
 Yn
-aa
+Yn
 aa
 aa
 aa

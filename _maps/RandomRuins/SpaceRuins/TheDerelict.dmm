@@ -859,7 +859,7 @@
 /area/ruin/space/derelict/bridge)
 "ee" = (
 /obj/structure/window/reinforced,
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged3"
 	},

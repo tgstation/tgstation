@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes: 
-  - expansion: "You can make BCI overlay and click interceptor circutry now!"
-  - balance: "BCI now has it's own research node."
-  - bugfix: "You no longer can remove BCI core and actions from BCIs and insert them into other circutry."

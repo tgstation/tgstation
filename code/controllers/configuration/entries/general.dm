@@ -52,6 +52,9 @@
 
 /datum/config_entry/flag/log_access // log login/logout
 
+/// Config entry which special logging of failed logins under suspicious circumstances.
+/datum/config_entry/flag/log_suspicious_login
+
 /datum/config_entry/flag/log_say // log client say
 
 /datum/config_entry/flag/log_admin // log admin actions
@@ -192,6 +195,7 @@
 
 /datum/config_entry/flag/use_exp_tracking
 
+/// Enables head jobs time restrictions.
 /datum/config_entry/flag/use_exp_restrictions_heads
 
 /datum/config_entry/number/use_exp_restrictions_heads_hours
@@ -201,6 +205,7 @@
 
 /datum/config_entry/flag/use_exp_restrictions_heads_department
 
+/// Enables non-head jobs time restrictions.
 /datum/config_entry/flag/use_exp_restrictions_other
 
 /datum/config_entry/flag/use_exp_restrictions_admin_bypass
