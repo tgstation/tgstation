@@ -12,6 +12,7 @@
 #define ROLE_CULTIST "Cultist"
 #define ROLE_HERETIC "Heretic"
 #define ROLE_MALF "Malf AI"
+#define ROLE_MONKEY "Monkey"
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
@@ -20,6 +21,7 @@
 #define ROLE_ALIEN "Xenomorph"
 #define ROLE_MALF_MIDROUND "Malf AI (Midround)"
 #define ROLE_REV_HEAD "Head Revolutionary"
+#define ROLE_OBSESSED "Obsessed"
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
 #define ROLE_SPACE_DRAGON "Space Dragon"
 #define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
@@ -35,7 +37,6 @@
 #define ROLE_PAI "pAI"
 #define ROLE_BLOB "Blob"
 #define ROLE_NINJA "Space Ninja"
-#define ROLE_MONKEY "Monkey"
 #define ROLE_MONKEY_HELMET "Monkey Mind Magnification Helmet"
 #define ROLE_ABDUCTOR "Abductor"
 #define ROLE_REVENANT "Revenant"
@@ -43,7 +44,6 @@
 #define ROLE_BRAINWASHED "Brainwashed Victim"
 #define ROLE_OVERTHROW "Syndicate Mutineer" //Role removed, left here for safety.
 #define ROLE_HIVE "Hivemind Host" //Role removed, left here for safety.
-#define ROLE_OBSESSED "Obsessed"
 #define ROLE_SENTIENCE "Sentience Potion Spawn"
 #define ROLE_PYROCLASTIC_SLIME "Pyroclastic Anomaly Slime"
 #define ROLE_MIND_TRANSFER "Mind Transfer Potion"
@@ -101,15 +101,17 @@ GLOBAL_LIST_INIT(special_roles, list(
 	// Roundstart
 	ROLE_CHANGELING = 0,
 	ROLE_CULTIST = 14,
+	ROLE_HERETIC = 0,
+	ROLE_MALF = 0,
+	ROLE_MONKEY = 0,
 	ROLE_OPERATIVE = 14,
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
-	ROLE_MALF = 0,
-	ROLE_HERETIC = 0,
 
 	// Midround
 	ROLE_ALIEN = 0,
 	ROLE_MALF_MIDROUND = 0,
+	ROLE_OBSESSED = 0,
 	ROLE_SLEEPER_AGENT = 0,
 	ROLE_SPACE_DRAGON = 0,
 
@@ -123,8 +125,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_PAI = 0,
 	ROLE_BLOB = 0,
 	ROLE_NINJA = 0,
-	ROLE_OBSESSED = 0,
-	ROLE_MONKEY = 0,
 	ROLE_REVENANT = 0,
 	ROLE_ABDUCTOR = 0,
 	ROLE_INTERNAL_AFFAIRS = 0,

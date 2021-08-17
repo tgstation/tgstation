@@ -340,8 +340,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 /// Creates an icon from the preview outfit.
 /// Custom implementors of `get_preview_icon` should use this, as the
 /// result of `get_preview_icon` is expected to be the completed version.
-/datum/antagonist/proc/render_preview_outfit(datum/outfit/outfit)
-	var/mob/living/carbon/human/dummy/consistent/dummy = new
+/datum/antagonist/proc/render_preview_outfit(datum/outfit/outfit, mob/living/carbon/human/dummy)
+	dummy = dummy || new /mob/living/carbon/human/dummy/consistent
 	dummy.equipOutfit(outfit, visualsOnly = TRUE)
 	COMPILE_OVERLAYS(dummy)
 
