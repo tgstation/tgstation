@@ -278,7 +278,7 @@
 /obj/effect/decal/cleanable/ants/proc/update_ant_damage(spilled_ants)
 	ant_volume += spilled_ants
 	ant_bite_damage = min(10, round((ant_volume * 0.1),0.1)) // 100u ants = 10 max_damage
-	SEND_SIGNAL(src, COMSIG_CALTROP_UPDATE, ant_bite_damage)
+	SEND_SIGNAL(src, COMSIG_CALTROP_UPDATE, 0.1, ant_bite_damage)
 	switch(ant_bite_damage)
 		if(0 to 1)
 			icon_state = initial(icon_state)

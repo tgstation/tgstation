@@ -24,6 +24,9 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 
+	///The damage value that the caltrop should have a change to.
+	var/updated_min_damage
+	var/updated_max_damage
 
 /datum/component/caltrop/Initialize(min_damage = 0, max_damage = 0, probability = 100, flags = NONE, soundfile = null)
 	. = ..()
@@ -107,7 +110,8 @@
 	if(ismovable(parent))
 		qdel(GetComponent(/datum/component/connect_loc_behalf))
 
-/datum/component/caltrop/proc/update_damage(datum/source, var/updated_damage)
+/datum/component/caltrop/proc/update_damage(datum/source, updated_min_damage, updated_max_damage)
 	SIGNAL_HANDLER
 
-	src.max_damage = max(min_damage, updated_damage)
+	src.min_damage = updated_min_damage
+	src.max_damage = max(updated_min_damage, updated_max_damage)
