@@ -8,6 +8,7 @@
 //then you MUST update the database!
 
 // Roundstart roles
+#define ROLE_BROTHER "Blood Brother"
 #define ROLE_CHANGELING "Changeling"
 #define ROLE_CULTIST "Cultist"
 #define ROLE_HERETIC "Heretic"
@@ -40,7 +41,6 @@
 #define ROLE_MONKEY_HELMET "Monkey Mind Magnification Helmet"
 #define ROLE_ABDUCTOR "Abductor"
 #define ROLE_REVENANT "Revenant"
-#define ROLE_BROTHER "Blood Brother"
 #define ROLE_BRAINWASHED "Brainwashed Victim"
 #define ROLE_OVERTHROW "Syndicate Mutineer" //Role removed, left here for safety.
 #define ROLE_HIVE "Hivemind Host" //Role removed, left here for safety.
@@ -99,6 +99,7 @@
 /// first connection in order to play.
 GLOBAL_LIST_INIT(special_roles, list(
 	// Roundstart
+	ROLE_BROTHER = 0,
 	ROLE_CHANGELING = 0,
 	ROLE_CULTIST = 14,
 	ROLE_HERETIC = 0,
@@ -120,7 +121,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_SYNDICATE_INFILTRATOR = 0,
 
 	// MOTHBLOCKS TODO: Unsorted
-	ROLE_BROTHER = 0,
 	ROLE_REV = 14,
 	ROLE_PAI = 0,
 	ROLE_BLOB = 0,

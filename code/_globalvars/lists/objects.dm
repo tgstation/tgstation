@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(mechpad_list) //list of all /obj/machinery/mechpad
 GLOBAL_LIST(chemical_reactions_list) //list of all /datum/chemical_reaction datums indexed by their typepath. Use this for general lookup stuff
 GLOBAL_LIST(chemical_reactions_list_reactant_index) //list of all /datum/chemical_reaction datums. Used during chemical reactions. Indexed by REACTANT types
 GLOBAL_LIST(chemical_reactions_list_product_index) //list of all /datum/chemical_reaction datums. Used for the reaction lookup UI. Indexed by PRODUCT type
-GLOBAL_LIST(chemical_reagents_list) //list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
+GLOBAL_LIST_INIT(chemical_reagents_list, init_chemical_reagent_list()) //list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
 GLOBAL_LIST(chemical_reactions_results_lookup_list) //List of all reactions with their associated product and result ids. Used for reaction lookups
 GLOBAL_LIST(fake_reagent_blacklist) //List of all reagents that are parent types used to define a bunch of children - but aren't used themselves as anything.
 GLOBAL_LIST_EMPTY(tech_list) //list of all /datum/tech datums indexed by id.
