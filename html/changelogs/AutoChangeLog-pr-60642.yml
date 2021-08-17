@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Using Twisted Construction on an AI shell no longer ghosts the AI"

@@ -1,4 +1,0 @@
-author: "Gurkenglas"
-delete-after: True
-changes: 
-  - expansion: "The multiplexer component, now router, also demultiplexes across multiple outputs. Also, the indices now wrap instead of clamp."

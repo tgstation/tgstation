@@ -258,7 +258,9 @@
 	// Use a clipboard's pen, if applicable
 	if(istype(loc, /obj/item/clipboard))
 		var/obj/item/clipboard/clipboard = loc
-		if(clipboard.pen)
+		// This is just so you can still use a stamp if you're holding one. Otherwise, it'll
+		// use the clipboard's pen, if applicable.
+		if(!istype(holding, /obj/item/stamp) && clipboard.pen)
 			holding = clipboard.pen
 	if(istype(holding, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/PEN = holding
@@ -326,6 +328,7 @@
 					stampoverlay.pixel_y = rand(-3, 2)
 					add_overlay(stampoverlay)
 					LAZYADD(stamped, stamp_icon_state)
+					update_icon()
 
 				update_static_data(usr,ui)
 				var/obj/O = ui.user.get_active_held_item()

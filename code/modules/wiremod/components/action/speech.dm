@@ -30,13 +30,13 @@
 	if(TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_SPEECH))
 		return
 
-	if(message.input_value)
+	if(message.value)
 		var/atom/movable/shell = parent.shell
 		// Prevents appear as the individual component if there is a shell.
 		if(shell)
-			shell.say(message.input_value)
+			shell.say(message.value)
 			shell.log_talk(message.input_value, LOG_SAY, tag="circuit speech | Built by [parent.get_creator()].")
 		else
-			say(message.input_value)
+			say(message.value)
 			log_talk(message.input_value, LOG_SAY, tag="circuit speech | Built by [parent.get_creator()].")
 		TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_SPEECH, speech_cooldown)

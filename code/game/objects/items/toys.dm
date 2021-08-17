@@ -1427,7 +1427,7 @@
 /obj/item/toy/figure/scientist
 	name = "\improper Scientist action figure"
 	icon_state = "scientist"
-	toysay = "I call toxins."
+	toysay = "I call ordnance."
 	toysound = 'sound/effects/explosionfar.ogg'
 
 /obj/item/toy/figure/syndie

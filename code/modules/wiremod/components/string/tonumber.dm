@@ -26,4 +26,4 @@
 	if(.)
 		return
 
-	output.set_output(text2num(input_port.input_value))
+	output.set_output(text2num(input_port.value))

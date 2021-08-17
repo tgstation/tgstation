@@ -49,15 +49,15 @@
 	if(.)
 		return
 
-	var/target_X = input_X.input_value
+	var/target_X = input_X.value
 	if(isnull(target_X))
 		return
 
-	var/target_Y = input_Y.input_value
+	var/target_Y = input_Y.value
 	if(isnull(target_Y))
 		return
 
-	var/atom/path_id = id_card.input_value
+	var/atom/path_id = id_card.value
 	if(path_id && !istype(path_id, /obj/item/card/id))
 		path_id = null
 		failed.set_output(COMPONENT_SIGNAL)
@@ -107,7 +107,6 @@
 			return
 		else
 			TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_PATHFIND_DIF, different_path_cooldown)
-			popleft(path) // The first step is literally where we are right now, so we dont need it
 			next_turf = get_turf(path[1])
 			output.set_output(next_turf)
 		TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME, same_path_cooldown)

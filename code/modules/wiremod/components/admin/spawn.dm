@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/spawn_atom
 	display_name = "Spawn Atom"
-	desc = "A component that returns the value of a list at a given index."
+	desc = "Spawns an atom at a desired location"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
 
 	/// The input path to convert into a typepath
@@ -33,15 +33,15 @@
 	if(.)
 		return
 
-	var/typepath = input_path.input_value
+	var/typepath = input_path.value
 
 	if(!ispath(typepath, /atom))
 		return
 
-	var/list/params = parameters.input_value
+	var/list/params = parameters.value
 	if(!params)
 		params = list()
 
-	params.Insert(1, spawn_at.input_value)
+	params.Insert(1, spawn_at.value)
 
 	spawned_atom.set_output(new typepath(arglist(params)))
