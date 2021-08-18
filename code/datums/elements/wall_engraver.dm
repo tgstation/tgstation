@@ -35,7 +35,7 @@
 	if(!(wall.turf_flags & ENGRAVABLE))
 		user.balloon_alert(user, "wall cannot be engraved!")
 		return
-	if(!user.mind.memories)
+	if(!user.mind?.memories?.len)
 		user.balloon_alert(user, "nothing memorable to engrave!")
 		return
 	var/datum/memory/memory_to_engrave = user.mind.select_memory("engrave")

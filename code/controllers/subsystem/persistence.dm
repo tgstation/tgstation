@@ -78,20 +78,21 @@ SUBSYSTEM_DEF(persistence)
 
 	var/list/engraving_entries = json["entries"]
 
-	for(var/engraving_index in MIN_PERSISTENT_ENGRAVINGS to MAX_PERSISTENT_ENGRAVINGS)
-		var/engraving = engraving_entries[rand(1, engraving_entries.len)] //This means repeats will happen for now, but its something I can live with. Just make more engravings!
-		if(!islist(engraving))
-			stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
-			continue
+	if(engraving_entries.len)
+		for(var/engraving_index in MIN_PERSISTENT_ENGRAVINGS to MAX_PERSISTENT_ENGRAVINGS)
+			var/engraving = engraving_entries[rand(1, engraving_entries.len)] //This means repeats will happen for now, but its something I can live with. Just make more engravings!
+			if(!islist(engraving))
+				stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
+				continue
 
-		var/turf/closed/engraved_wall = pick(turfs_to_pick_from)
+			var/turf/closed/engraved_wall = pick(turfs_to_pick_from)
 
-		if(!(engraved_wall.turf_flags & ENGRAVABLE))
-			continue
+			if(!(engraved_wall.turf_flags & ENGRAVABLE))
+				continue
 
-		engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
-		successfully_loaded_engravings++
-		turfs_to_pick_from -= engraved_wall
+			engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
+			successfully_loaded_engravings++
+			turfs_to_pick_from -= engraved_wall
 
 	log_world("Loaded [successfully_loaded_engravings] engraved messages on map [SSmapping.config.map_name]")
 
