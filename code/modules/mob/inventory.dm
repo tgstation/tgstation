@@ -213,8 +213,7 @@
 		var/obj/item/stack/item_stack = I
 		var/obj/item/stack/active_stack = get_active_held_item()
 
-		if (item_stack.is_zero_amount())
-			qdel(item_stack)
+		if (item_stack.is_zero_amount(delete_if_zero = TRUE))
 			return FALSE
 
 		if (merge_stacks)

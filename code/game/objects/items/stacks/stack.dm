@@ -65,7 +65,7 @@
 				continue
 			if(can_merge(item_stack))
 				INVOKE_ASYNC(src, .proc/merge_without_del, item_stack)
-				if(is_zero_amount())
+				if(is_zero_amount(delete_if_zero = FALSE))
 					return INITIALIZE_HINT_QDEL
 	var/list/temp_recipes = get_main_recipes()
 	recipes = temp_recipes.Copy()
@@ -363,16 +363,14 @@
 	return TRUE
 
 /obj/item/stack/use(used, transfer = FALSE, check = TRUE) // return 0 = borked; return 1 = had enough
-	if(check && is_zero_amount())
-		qdel(src)
+	if(check && is_zero_amount(delete_if_zero = TRUE))
 		return FALSE
 	if(is_cyborg)
 		return source.use_charge(used * cost)
 	if (amount < used)
 		return FALSE
 	amount -= used
-	if(check && is_zero_amount())
-		qdel(src)
+	if(check && is_zero_amount(delete_if_zero = TRUE))
 		return TRUE
 	if(length(mats_per_unit))
 		update_custom_materials()
@@ -394,11 +392,18 @@
 
 	return TRUE
 
-/// Returns TRUE if the item stack is the equivalent of a 0 amount item.
-/obj/item/stack/proc/is_zero_amount()
+/**
+ * Returns TRUE if the item stack is the equivalent of a 0 amount item.
+ *
+ * Also deletes the item if delete_if_zero is TRUE and the stack does not have
+ * is_cyborg set to true.
+ */
+/obj/item/stack/proc/is_zero_amount(delete_if_zero = TRUE)
 	if(is_cyborg)
 		return source.energy < cost
 	if(amount < 1)
+		if(delete_if_zero)
+			qdel(src)
 		return TRUE
 	return FALSE
 
@@ -467,9 +472,7 @@
  */
 /obj/item/stack/proc/merge(obj/item/stack/target_stack, limit)
 	. = merge_without_del(target_stack, limit)
-	if(is_zero_amount())
-		qdel(src)
-	return
+	is_zero_amount(delete_if_zero = TRUE)
 
 /// Signal handler for connect_loc element. Called when a movable enters the turf we're currently occupying. Merges if possible.
 /obj/item/stack/proc/on_movable_entered_occupied_turf(datum/source, atom/movable/arrived)
@@ -490,8 +493,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/stack/attack_hand(mob/user, list/modifiers)
 	if(user.get_inactive_held_item() == src)
-		if(is_zero_amount())
-			qdel(src)
+		if(is_zero_amount(delete_if_zero = TRUE))
 			return
 		return split_stack(user, 1)
 	else
@@ -504,8 +506,7 @@
 
 	if(is_cyborg || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
-	if(is_zero_amount())
-		qdel(src)
+	if(is_zero_amount(delete_if_zero = TRUE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/max = get_amount()
 	var/stackmaterial = round(input(user, "How many sheets do you wish to take out of this stack? (Maximum [max])", "Stack Split") as null|num)
@@ -535,8 +536,7 @@
 		add_fingerprint(user)
 		F.add_fingerprint(user)
 
-	if(is_zero_amount())
-		qdel(src)
+	is_zero_amount(delete_if_zero = TRUE)
 
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
 	if(can_merge(W))
