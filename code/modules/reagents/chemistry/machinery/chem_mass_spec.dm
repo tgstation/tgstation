@@ -34,11 +34,13 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	///Output reagents container
 	var/obj/item/reagent_containers/beaker2
 	///multiplies the final time needed to proccess the chems depending on the laser stock part
-	var/CMS_coefficient = 1
+	var/cms_coefficient = 1
 
-/obj/machinery/chem_mass_spec/Initialize()
+/obj/machinery/chem_mass_spec/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, DO_NOT_SPLASH, src.type)
+	if(mapload)
+		beaker2 = new /obj/item/reagent_containers/glass/beaker/large(src)
 
 /obj/machinery/chem_mass_spec/Destroy()
 	QDEL_NULL(beaker1)
@@ -46,9 +48,9 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	return ..()
 
 /obj/machinery/chem_mass_spec/RefreshParts()
-	CMS_coefficient = 1
+	cms_coefficient = 1
 	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		CMS_coefficient /= laser.rating
+		cms_coefficient /= laser.rating
 
 /obj/machinery/chem_mass_spec/deconstruct(disassembled)
 	if(beaker1)
@@ -75,9 +77,6 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		update_appearance()
 		return
 
-	if(default_deconstruction_crowbar(item))
-		return
-
 	if(default_unfasten_wrench(user, item))
 		return
 
@@ -97,6 +96,10 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	if(processing_reagents)
 		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
 		return
+
+	if(default_deconstruction_crowbar(item))
+		return
+
 	if(istype(item, /obj/item/reagent_containers) && !(item.item_flags & ABSTRACT) && item.is_open_container())
 		var/obj/item/reagent_containers/beaker = item
 		if(!user.transferItemToLoc(beaker, src))
@@ -393,5 +396,5 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 			continue
 		var/inverse_purity = 1-reagent.purity
 		time += (((reagent.mass * reagent.volume) + (reagent.mass * inverse_purity * 0.1)) * 0.0035) + 10 ///Roughly 10 - 30s?
-	delay_time = (time * CMS_coefficient)
+	delay_time = (time * cms_coefficient)
 	return delay_time
