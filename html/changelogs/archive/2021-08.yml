@@ -429,3 +429,14 @@
       mirrored to the suspicious logins log file.
   Watermelon914:
   - bugfix: Fixed freezers protecting their contents after being exploded.
+2021-08-18:
+  Cyberboss:
+  - bugfix: The insufficient black market credits message now properly displays.
+  EOBGames:
+  - code_imp: Management would like to announce that in accordance with new company
+      policy, the Toxins Lab will henceforth be known as the Ordnance Lab. In addition,
+      a number of company protocols have been rewritten with this in mind.
+  Watermelon914:
+  - refactor: Refactors connect_loc_behalf and caltrops to both be components. This
+      will likely solve a lot of current issues with connect_loc_behalf as storing
+      states will be much more stable on it.
