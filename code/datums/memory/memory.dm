@@ -145,7 +145,7 @@
 
 	var/list/crew_members = list()
 	for(var/mob/living/carbon/human/potential_crew_member as anything in GLOB.player_list)
-		if(potential_crew_member?.mind.assigned_role.job_flags & JOB_CREW_MEMBER)
+		if(potential_crew_member?.mind?.assigned_role.job_flags & JOB_CREW_MEMBER)
 			crew_members += potential_crew_member
 
 	if(crew_members.len)
