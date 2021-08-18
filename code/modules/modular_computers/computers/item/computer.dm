@@ -67,7 +67,6 @@
 /obj/item/modular_computer/Destroy()
 	kill_program(forced = TRUE)
 	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(soundloop)
 	for(var/H in all_components)
 		var/obj/item/computer_hardware/CH = all_components[H]
 		if(CH.holder == src)
@@ -75,6 +74,8 @@
 			CH.holder = null
 			all_components.Remove(CH.device_type)
 			qdel(CH)
+	//Some components will actually try and interact with this, so let's do it later
+	QDEL_NULL(soundloop)
 	physical = null
 	return ..()
 

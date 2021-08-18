@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(wiremod_types, list(
+GLOBAL_LIST_INIT(wiremod_basic_types, list(
 	PORT_TYPE_ANY,
 	PORT_TYPE_STRING,
 	PORT_TYPE_NUMBER,

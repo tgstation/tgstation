@@ -13455,8 +13455,8 @@
 /area/maintenance/fore)
 "cAH" = (
 /obj/machinery/door/poddoor/shutters{
-	id = "toxinsaccess";
-	name = "Toxins Access"
+	id = "ordnanceaccess";
+	name = "Ordnance Access"
 	},
 /turf/open/floor/iron,
 /area/science/mixing)
@@ -15409,7 +15409,7 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "cRK" = (
-/obj/machinery/computer/atmos_control/tank/toxin_tank{
+/obj/machinery/computer/atmos_control/tank/plasma_tank{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -17593,7 +17593,7 @@
 /area/medical/cryo)
 "dvM" = (
 /obj/item/target/alien/anchored,
-/obj/machinery/camera/preset/toxins{
+/obj/machinery/camera/preset/ordnance{
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -18720,7 +18720,7 @@
 /area/engineering/supermatter)
 "dNG" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Toxins Lab Maintenance";
+	name = "Ordnance Test Lab Maintenance";
 	req_access_txt = "8"
 	},
 /turf/open/floor/plating,
@@ -19014,7 +19014,7 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/camera{
-	c_tag = "Science Toxins Launch 2";
+	c_tag = "Science Ordnance Test Lab 2";
 	dir = 8;
 	network = list("ss13","rd")
 	},
@@ -20297,7 +20297,7 @@
 /turf/open/floor/iron/dark,
 /area/security/brig)
 "eoI" = (
-/obj/machinery/igniter/incinerator_toxmix,
+/obj/machinery/igniter/incinerator_ordmix,
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "eoW" = (
@@ -20858,7 +20858,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "eyf" = (
-/obj/machinery/air_sensor/atmos/toxin_tank,
+/obj/machinery/air_sensor/atmos/plasma_tank,
 /turf/open/floor/engine/plasma,
 /area/engineering/atmos)
 "eyv" = (
@@ -24176,7 +24176,7 @@
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/security/telescreen/toxins{
+/obj/machinery/computer/security/telescreen/ordnance{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -25089,7 +25089,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/light/small/directional/north,
 /obj/machinery/camera{
-	c_tag = "Science Toxins Corridor";
+	c_tag = "Science Ordnance Corridor";
 	dir = 4;
 	network = list("ss13","rd")
 	},
@@ -25789,7 +25789,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "geq" = (
@@ -27597,7 +27597,7 @@
 	},
 /obj/item/crowbar,
 /obj/machinery/requests_console/directional/west{
-	department = "Toxins Test Range";
+	department = "Ordnance Test Range";
 	departmentType = 5;
 	name = "Test Range Requests Console"
 	},
@@ -28273,7 +28273,7 @@
 /area/medical/morgue)
 "hbE" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Toxins Lab Maintenance";
+	name = "Ordnance Lab Maintenance";
 	req_access_txt = "8"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -28427,7 +28427,7 @@
 /area/hallway/primary/central)
 "heZ" = (
 /obj/machinery/camera{
-	c_tag = "Science Toxins Lab";
+	c_tag = "Science Ordnance Lab";
 	dir = 1;
 	network = list("ss13","rd")
 	},
@@ -28641,7 +28641,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Science Toxins Mix";
+	c_tag = "Science Ordnance Mix";
 	dir = 1;
 	network = list("ss13","rd")
 	},
@@ -31129,7 +31129,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "ido" = (
@@ -33434,7 +33434,7 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "iSy" = (
-/obj/machinery/door/poddoor/incinerator_toxmix,
+/obj/machinery/door/poddoor/incinerator_ordmix,
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "iSE" = (
@@ -34499,8 +34499,8 @@
 /area/engineering/main)
 "jmX" = (
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "rdtoxins";
-	name = "Toxins Lab Shutters"
+	id = "rdordnance";
+	name = "Ordnance Lab Shutters"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor/heavy,
@@ -34968,6 +34968,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/storage/satellite)
+"jvq" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rdordnance";
+	name = "Ordnance Lab Shutters"
+	},
+/turf/open/floor/plating,
+/area/science/mixing)
 "jvt" = (
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
@@ -39475,7 +39484,7 @@
 /area/medical/virology)
 "kXs" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Toxins Storage Maintenance";
+	name = "Ordnance Gas Storage Maintenance";
 	req_access_txt = "8"
 	},
 /turf/open/floor/plating,
@@ -42361,8 +42370,8 @@
 	req_access_txt = "30"
 	},
 /obj/machinery/button/door/directional/north{
-	id = "rdtoxins";
-	name = "Toxins Containment Control";
+	id = "rdordnance";
+	name = "Ordnance Containment Control";
 	pixel_x = 6;
 	req_access_txt = "30"
 	},
@@ -43027,9 +43036,9 @@
 /turf/open/floor/plating,
 /area/cargo/qm)
 "mgc" = (
-/obj/machinery/button/door/incinerator_vent_toxmix{
-	id = "toxinsaccess";
-	name = "Toxins Access";
+/obj/machinery/button/door/incinerator_vent_ordmix{
+	id = "ordnanceaccess";
+	name = "Ordnance Access";
 	pixel_x = -26;
 	pixel_y = -24
 	},
@@ -44347,8 +44356,10 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "mBC" = (
-/obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/research/glass/incinerator/ordmix_exterior{
+	name = "Burn Chamber Exterior Airlock"
+	},
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "mBE" = (
@@ -44917,7 +44928,7 @@
 "mKO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/atmospherics/components/tank/toxins{
+/obj/machinery/atmospherics/components/tank/plasma{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -47782,7 +47793,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "nFK" = (
@@ -48682,7 +48693,7 @@
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "nSp" = (
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_toxmix{
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_ordmix{
 	dir = 8
 	},
 /turf/open/floor/engine,
@@ -48983,11 +48994,11 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "nXE" = (
-/obj/machinery/button/door/incinerator_vent_toxmix{
+/obj/machinery/button/door/incinerator_vent_ordmix{
 	pixel_x = 8;
 	pixel_y = -30
 	},
-/obj/machinery/button/ignition/incinerator/toxmix{
+/obj/machinery/button/ignition/incinerator/ordmix{
 	pixel_x = -6;
 	pixel_y = -30
 	},
@@ -49001,9 +49012,9 @@
 	dir = 4
 	},
 /obj/machinery/requests_console/directional/west{
-	department = "Toxins Lab";
+	department = "Ordnance Lab";
 	departmentType = 5;
-	name = "Toxins Requests Console"
+	name = "Ordnance Requests Console"
 	},
 /obj/effect/turf_decal/siding{
 	dir = 10
@@ -51039,7 +51050,7 @@
 	},
 /area/maintenance/starboard/fore)
 "oJk" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/plating,
 /area/engineering/main)
 "oJo" = (
@@ -51607,13 +51618,13 @@
 /obj/effect/turf_decal/siding{
 	dir = 4
 	},
-/obj/item/cartridge/signal/toxins{
+/obj/item/cartridge/signal/ordnance{
 	pixel_x = 6
 	},
-/obj/item/cartridge/signal/toxins{
+/obj/item/cartridge/signal/ordnance{
 	pixel_x = -6
 	},
-/obj/item/cartridge/signal/toxins{
+/obj/item/cartridge/signal/ordnance{
 	pixel_y = 6
 	},
 /turf/open/floor/iron/dark,
@@ -51904,7 +51915,7 @@
 /turf/open/floor/wood,
 /area/commons/dorms)
 "oUO" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxin_output{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/plasma_output{
 	dir = 8
 	},
 /turf/open/floor/engine/plasma,
@@ -53101,7 +53112,7 @@
 	},
 /area/engineering/atmos)
 "ppi" = (
-/obj/machinery/door/poddoor/massdriver_toxins,
+/obj/machinery/door/poddoor/massdriver_ordnance,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mixing)
@@ -53118,7 +53129,7 @@
 /area/maintenance/port/aft)
 "ppA" = (
 /obj/machinery/camera{
-	c_tag = "Science Toxins Secure";
+	c_tag = "Science Ordnance Gas Storage";
 	dir = 4;
 	network = list("ss13","rd")
 	},
@@ -54468,7 +54479,7 @@
 /turf/open/floor/iron/grimy,
 /area/service/chapel/office)
 "pOT" = (
-/obj/machinery/airlock_sensor/incinerator_toxmix{
+/obj/machinery/airlock_sensor/incinerator_ordmix{
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/components/binary/pump/on{
@@ -54513,7 +54524,7 @@
 /turf/open/floor/wood,
 /area/service/library)
 "pPt" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxin_input{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/plasma_input{
 	dir = 8
 	},
 /turf/open/floor/engine/plasma,
@@ -55101,7 +55112,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
 "qag" = (
@@ -55575,10 +55586,12 @@
 	},
 /area/service/chapel)
 "qhS" = (
-/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_ordmix{
 	pixel_x = -22
+	},
+/obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior{
+	name = "Burn Chamber Interior Airlock"
 	},
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
@@ -55786,7 +55799,7 @@
 /turf/open/floor/carpet,
 /area/service/chapel)
 "qkq" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/ordnance_mixing_input{
 	dir = 1
 	},
 /turf/open/floor/engine,
@@ -61374,8 +61387,8 @@
 /area/engineering/atmos)
 "scO" = (
 /obj/machinery/door/poddoor/shutters{
-	id = "toxinsaccess";
-	name = "Toxins Access"
+	id = "ordnanceaccess";
+	name = "Ordnance Access"
 	},
 /turf/open/floor/iron/white,
 /area/science/storage)
@@ -63431,7 +63444,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/camera{
-	c_tag = "Science Toxins Secure 2";
+	c_tag = "Science Ordnance Gas Storage 2";
 	dir = 8;
 	network = list("ss13","rd")
 	},
@@ -65329,18 +65342,18 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "rdtoxins";
-	name = "Toxins Lab Shutters"
-	},
 /obj/machinery/door/airlock/research{
-	name = "Toxins Mixing Lab";
+	name = "Ordnance Lab";
 	req_access_txt = "8"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rdordnance";
+	name = "Ordnance Lab Shutters"
+	},
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "trd" = (
@@ -66413,7 +66426,7 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/machinery/computer/security/telescreen/toxins{
+/obj/machinery/computer/security/telescreen/ordnance{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -66986,7 +66999,7 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/aisat/exterior)
 "tTJ" = (
-/obj/machinery/mass_driver/toxins,
+/obj/machinery/mass_driver/ordnance,
 /turf/open/floor/plating,
 /area/science/mixing)
 "tTK" = (
@@ -69356,7 +69369,7 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/book/manual/wiki/toxins{
+/obj/item/book/manual/wiki/ordnance{
 	pixel_x = 4;
 	pixel_y = 1
 	},
@@ -70395,7 +70408,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/research{
-	name = "Toxins Storage";
+	name = "Ordnance Gas Storage";
 	req_access_txt = "8"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -70503,18 +70516,18 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "rdtoxins";
-	name = "Toxins Lab Shutters"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/research{
-	name = "Toxins Mixing Lab";
+	name = "Ordnance Lab";
 	req_access_txt = "8"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rdordnance";
+	name = "Ordnance Lab Shutters"
+	},
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "uZF" = (
@@ -72376,7 +72389,7 @@
 	dir = 1;
 	network = list("ss13","rd")
 	},
-/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver{
+/obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver{
 	pixel_y = -24
 	},
 /turf/open/floor/iron/dark,
@@ -72935,7 +72948,7 @@
 /obj/effect/turf_decal/bot,
 /obj/item/wrench,
 /obj/machinery/camera{
-	c_tag = "Science Toxins Test";
+	c_tag = "Science Ordnance Test Lab";
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -75001,7 +75014,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/research{
-	name = "Toxins Test Lab";
+	name = "Ordnance Test Lab";
 	req_access_txt = "8"
 	},
 /obj/structure/disposalpipe/segment,
@@ -77549,7 +77562,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "xuL" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/engine/plasma,
 /area/engineering/atmos)
 "xuW" = (
@@ -77847,7 +77860,7 @@
 /turf/open/floor/plating,
 /area/security/checkpoint/customs)
 "xzs" = (
-/obj/machinery/computer/atmos_control/toxinsmix,
+/obj/machinery/computer/atmos_control/ordnancemix,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/siding{
@@ -78374,7 +78387,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "xHV" = (
-/obj/machinery/air_sensor/atmos/toxins_mixing_tank,
+/obj/machinery/air_sensor/atmos/ordnance_mixing_tank,
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "xIm" = (
@@ -111010,7 +111023,7 @@ cKH
 flD
 ipr
 gBp
-jmX
+jvq
 uGO
 gmC
 eqN
@@ -111267,7 +111280,7 @@ ayU
 ntG
 iyu
 lfh
-jmX
+jvq
 xzs
 uNE
 heZ
@@ -111781,7 +111794,7 @@ cZP
 lbj
 joB
 hSZ
-jmX
+jvq
 aWD
 uox
 gAo
@@ -112038,7 +112051,7 @@ eIk
 hMa
 mDG
 iVt
-jmX
+jvq
 dbG
 tUz
 wZN
@@ -112295,7 +112308,7 @@ hSZ
 oRD
 wMR
 sIB
-jmX
+jvq
 aWu
 him
 nXE
