@@ -684,7 +684,7 @@
 	name = "unholy pitchfork"
 	desc = "Holding this makes you look absolutely devilish."
 	icon_state = "pitchfork0"
-	worn_icon_state = "pitchfork0"
+	inhand_icon_state = "pitchfork0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	worn_icon_state = "pitchfork0"

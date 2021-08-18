@@ -84,10 +84,11 @@
 
 /datum/merger/proc/Refresh()
 	var/list/tips = list()
-	tips[origin] = NORTH|EAST|SOUTH|WEST
 	var/list/checked_turfs = list()
 	var/list/new_members = list()
-	new_members[origin] = NONE
+	if(origin)
+		tips[origin] = NORTH|EAST|SOUTH|WEST
+		new_members[origin] = NONE
 	while(length(tips))
 		var/atom/focus = tips[length(tips)]
 		var/dirs_to_check = tips[focus]

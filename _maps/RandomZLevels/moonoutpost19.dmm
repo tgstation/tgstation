@@ -3327,7 +3327,7 @@
 	name = "research director's locker";
 	req_access_txt = "201"
 	},
-/obj/item/storage/backpack/satchel/tox,
+/obj/item/storage/backpack/satchel/science,
 /obj/item/clothing/gloves/color/latex,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
@@ -3335,8 +3335,8 @@
 /area/awaymission/moonoutpost19/research)
 "hr" = (
 /obj/structure/table,
-/obj/item/cartridge/signal/toxins,
-/obj/item/cartridge/signal/toxins{
+/obj/item/cartridge/signal/ordnance,
+/obj/item/cartridge/signal/ordnance{
 	pixel_x = -4;
 	pixel_y = 2
 	},

@@ -71,7 +71,7 @@
 	if(!attached_bot)
 		return
 
-	var/to_dispense = clamp(dispense_amount.input_value, 0, attached_bot.stored_money)
+	var/to_dispense = clamp(dispense_amount.value, 0, attached_bot.stored_money)
 	if(!to_dispense)
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
