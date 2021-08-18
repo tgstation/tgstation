@@ -1,12 +1,12 @@
 /**
- * # NTNet Reciever Component
+ * # NTNet Receiver Component
  *
- * Recieves data through NTNet.
+ * Receives data through NTNet.
  */
 
 /obj/item/circuit_component/ntnet_receive
 	display_name = "NTNet Receiver"
-	desc = "Recieves data packages through NTNet. If Encryption Key is set then only signals with the same Encryption Key will be received."
+	desc = "Receives data packages through NTNet. If Encryption Key is set then only signals with the same Encryption Key will be received."
 
 	circuit_flags = CIRCUIT_FLAG_OUTPUT_SIGNAL //trigger_output
 
