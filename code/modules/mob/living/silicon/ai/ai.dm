@@ -594,7 +594,7 @@
 		if(!C.can_use())
 			continue
 
-		tempnetwork.Remove("rd", "toxins", "prison")
+		tempnetwork.Remove("rd", "ordnance", "prison")
 		if(tempnetwork.len)
 			for(var/i in C.network)
 				cameralist[i] = i
@@ -1001,9 +1001,9 @@
 	return
 
 /mob/living/silicon/ai/spawned/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
-	. = ..()
 	if(!target_ai)
 		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
+	. = ..()
 
 /mob/living/silicon/ai/proc/camera_visibility(mob/camera/ai_eye/moved_eye)
 	GLOB.cameranet.visibility(moved_eye, client, all_eyes, TRUE)

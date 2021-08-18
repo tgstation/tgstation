@@ -37,15 +37,15 @@
 	name = "Scientist"
 	jobtype = /datum/job/scientist
 
-	belt = /obj/item/pda/toxins
+	belt = /obj/item/pda/science
 	ears = /obj/item/radio/headset/headset_sci
 	uniform = /obj/item/clothing/under/rank/rnd/scientist
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit = /obj/item/clothing/suit/toggle/labcoat/science
 
 	backpack = /obj/item/storage/backpack/science
-	satchel = /obj/item/storage/backpack/satchel/tox
-	duffelbag = /obj/item/storage/backpack/duffelbag/toxins
+	satchel = /obj/item/storage/backpack/satchel/science
+	duffelbag = /obj/item/storage/backpack/duffelbag/science
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/science=1)
 
 	id_trim = /datum/id_trim/job/scientist

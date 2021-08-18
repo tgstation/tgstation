@@ -413,14 +413,14 @@
 	title = "DIY Chemical Grenades"
 	page_link = "Grenade"
 
-/obj/item/book/manual/wiki/toxins
-	name = "Toxins or: How I Learned to Stop Worrying and Love the Maxcap"
+/obj/item/book/manual/wiki/ordnance
+	name = "Ordnance for Dummies or: How I Learned to Stop Worrying and Love the Maxcap"
 	icon_state = "book6"
 	author = "Cuban Pete"
-	title = "Toxins or: How I Learned to Stop Worrying and Love the Maxcap"
+	title = "Ordnance for Dummies or: How I Learned to Stop Worrying and Love the Maxcap"
 	page_link = "Guide_to_toxins"
 
-/obj/item/book/manual/wiki/toxins/suicide_act(mob/user)
+/obj/item/book/manual/wiki/ordnance/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
 	user.visible_message(span_suicide("[user] starts dancing to the Rhumba Beat! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)

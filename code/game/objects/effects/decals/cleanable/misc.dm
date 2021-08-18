@@ -273,4 +273,4 @@
 	reagents.add_reagent(/datum/reagent/ants, rand(2, 5))
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
-	AddElement(/datum/element/caltrop, min_damage = 0.2, max_damage = 1, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = 'sound/weapons/bite.ogg')
+	AddComponent(/datum/component/caltrop, min_damage = 0.2, max_damage = 1, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = 'sound/weapons/bite.ogg')

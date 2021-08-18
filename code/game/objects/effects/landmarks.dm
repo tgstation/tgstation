@@ -490,19 +490,19 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	if(spawned_carbon.head)
 		return
 
-/obj/effect/landmark/start/hangover/JoinPlayerHere(mob/M, buckle)
+/obj/effect/landmark/start/hangover/JoinPlayerHere(mob/joining_mob, buckle)
 	. = ..()
-	make_hungover(M)
+	make_hungover(joining_mob)
 
 /obj/effect/landmark/start/hangover/closet
 	name = "hangover spawn closet"
 	icon_state = "hangover_spawn_closet"
 
-/obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/M, buckle)
-	make_hungover(M)
+/obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/joining_mob, buckle)
+	make_hungover(joining_mob)
 	for(var/obj/structure/closet/closet in contents)
 		if(closet.opened)
 			continue
-		M.forceMove(closet)
+		joining_mob.forceMove(closet)
 		return
-	..() //Call parent as fallback
+	return ..() //Call parent as fallback
