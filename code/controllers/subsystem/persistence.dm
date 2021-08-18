@@ -102,6 +102,13 @@ SUBSYSTEM_DEF(persistence)
 	saved_data["version"] = ENGRAVING_PERSISTENCE_VERSION
 	saved_data["entries"] = list()
 
+
+	var/json_file = file(ENGRAVING_SAVE_FILE)
+	if(fexists(json_file))
+		var/list/old_json = json_decode(file2text(json_file))
+		if(old_json)
+			saved_data["entries"] = old_json["entries"]
+
 	for(var/datum/component/engraved/engraving in wall_engravings)
 		if(!engraving.persistent_save)
 			continue
@@ -110,11 +117,6 @@ SUBSYSTEM_DEF(persistence)
 			continue
 		saved_data["entries"] += engraving.save_persistent()
 
-	var/json_file = file(ENGRAVING_SAVE_FILE)
-	if(fexists(json_file))
-		var/list/old_json = json_decode(file2text(json_file))
-		if(old_json)
-			saved_data["entries"] = old_json["entries"] + saved_data["entries"] //Save the old if its there
 	fdel(json_file)
 
 	WRITE_FILE(json_file, json_encode(saved_data))
