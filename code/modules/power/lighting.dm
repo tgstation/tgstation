@@ -918,7 +918,7 @@
 /obj/item/light/Initialize()
 	. = ..()
 	create_reagents(LIGHT_REAGENT_CAPACITY, INJECTABLE | DRAINABLE)
-	AddElement(/datum/element/caltrop, min_damage = force)
+	AddComponent(/datum/component/caltrop, min_damage = force)
 	update()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,

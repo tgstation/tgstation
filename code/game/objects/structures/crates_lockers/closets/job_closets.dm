@@ -278,8 +278,8 @@
 	var/static/items_inside = list(
 		/obj/item/clothing/accessory/pocketprotector = 1,
 		/obj/item/storage/backpack/science = 2,
-		/obj/item/storage/backpack/satchel/tox = 2,
-		/obj/item/storage/backpack/duffelbag/toxins = 2,
+		/obj/item/storage/backpack/satchel/science = 2,
+		/obj/item/storage/backpack/duffelbag/science = 2,
 		/obj/item/clothing/suit/hooded/wintercoat/science = 1,
 		/obj/item/clothing/under/rank/rnd/scientist = 3,
 		/obj/item/clothing/suit/toggle/labcoat/science = 3,

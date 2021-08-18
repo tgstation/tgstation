@@ -339,10 +339,10 @@
 	desc = "A telescreen that connects to the vault's camera network."
 	network = list("vault")
 
-/obj/machinery/computer/security/telescreen/toxins
+/obj/machinery/computer/security/telescreen/ordnance
 	name = "bomb test site monitor"
 	desc = "A telescreen that connects to the bomb test site's camera."
-	network = list("toxins")
+	network = list("ordnance")
 
 /obj/machinery/computer/security/telescreen/engine
 	name = "engine monitor"

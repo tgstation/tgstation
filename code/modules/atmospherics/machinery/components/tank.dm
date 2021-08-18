@@ -349,7 +349,7 @@
 /obj/machinery/atmospherics/components/tank/carbon_dioxide
 	gas_type = /datum/gas/carbon_dioxide
 
-/obj/machinery/atmospherics/components/tank/toxins
+/obj/machinery/atmospherics/components/tank/plasma
 	gas_type = /datum/gas/plasma
 
 /obj/machinery/atmospherics/components/tank/nitrogen
