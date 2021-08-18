@@ -57,7 +57,7 @@
 	if(controlled_drone)
 		.["drone_status"] = controlled_drone.drone_status
 		.["drone_name"] = controlled_drone.name
-		.["drone_integrity"] = controlled_drone.obj_integrity
+		.["drone_integrity"] = controlled_drone.get_integrity()
 		.["drone_max_integrity"] = controlled_drone.max_integrity
 		.["drone_log"] = controlled_drone.drone_log
 		.["configurable"] = controlled_drone.drone_status == EXODRONE_IDLE

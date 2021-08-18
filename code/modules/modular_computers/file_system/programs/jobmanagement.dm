@@ -37,21 +37,32 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	..()
 	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
 
+
+/datum/computer_file/program/job_management/proc/can_edit_job(datum/job/job)
+	if(!job || !(job.job_flags & JOB_CREW_MEMBER) || (job.title in blacklisted))
+		return FALSE
+	return TRUE
+
+
 /datum/computer_file/program/job_management/proc/can_open_job(datum/job/job)
-	if(!(job?.title in blacklisted))
-		if((job.total_positions <= length(GLOB.player_list) * (max_relative_positions / 100)))
-			var/delta = (world.time / 10) - GLOB.time_last_changed_position
-			if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
-				return TRUE
+	if(!can_edit_job(job))
+		return FALSE
+	if((job.total_positions <= length(GLOB.player_list) * (max_relative_positions / 100)))
+		var/delta = (world.time / 10) - GLOB.time_last_changed_position
+		if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
+			return TRUE
 	return FALSE
 
+
 /datum/computer_file/program/job_management/proc/can_close_job(datum/job/job)
-	if(!(job?.title in blacklisted))
-		if(job.total_positions > length(GLOB.player_list) * (max_relative_positions / 100))
-			var/delta = (world.time / 10) - GLOB.time_last_changed_position
-			if((change_position_cooldown < delta) || (opened_positions[job.title] > 0))
-				return TRUE
+	if(!can_edit_job(job))
+		return FALSE
+	if(job.total_positions > length(GLOB.player_list) * (max_relative_positions / 100))
+		var/delta = (world.time / 10) - GLOB.time_last_changed_position
+		if((change_position_cooldown < delta) || (opened_positions[job.title] > 0))
+			return TRUE
 	return FALSE
+
 
 /datum/computer_file/program/job_management/ui_act(action, params, datum/tgui/ui)
 	. = ..()
@@ -74,6 +85,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				GLOB.time_last_changed_position = world.time / 10
 			j.total_positions++
 			opened_positions[edit_job_target]++
+			log_game("[key_name(usr)] opened a [j.title] job position, for a total of [j.total_positions] open job slots.")
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_close_job")
@@ -86,21 +98,23 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				GLOB.time_last_changed_position = world.time / 10
 			j.total_positions--
 			opened_positions[edit_job_target]--
+			log_game("[key_name(usr)] closed a [j.title] job position, leaving [j.total_positions] open job slots.")
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_priority")
-			if(length(SSjob.prioritized_jobs) >= 5)
-				return
 			var/priority_target = params["target"]
 			var/datum/job/j = SSjob.GetJob(priority_target)
-			if(!j)
+			if(!j || !can_edit_job(j))
 				return
 			if(j.total_positions <= j.current_positions)
 				return
 			if(j in SSjob.prioritized_jobs)
 				SSjob.prioritized_jobs -= j
 			else
-				SSjob.prioritized_jobs += j
+				if(length(SSjob.prioritized_jobs) < 5)
+					SSjob.prioritized_jobs += j
+				else
+					computer.say("Error: CentCom employment protocols restrict prioritising more than 5 jobs.")
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
 
@@ -117,7 +131,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	data["authed"] = authed
 
 	var/list/pos = list()
-	for(var/j in SSjob.occupations)
+	for(var/j in SSjob.joinable_occupations)
 		var/datum/job/job = j
 		if(job.title in blacklisted)
 			continue

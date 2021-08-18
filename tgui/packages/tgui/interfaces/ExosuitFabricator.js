@@ -1,25 +1,11 @@
 import { uniqBy } from 'common/collections';
-import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, Flex, Icon, Input, NumberInput, ProgressBar, Section, Stack } from '../components';
-import { formatMoney, formatSiUnit } from '../format';
+import { Box, Button, Icon, Input, ProgressBar, Section, Stack } from '../components';
+import { Materials, MaterialAmount, MaterialFormatting } from './common/Materials';
+import { formatMoney } from '../format';
 import { Window } from '../layouts';
-
-const MATERIAL_KEYS = {
-  "iron": "sheet-metal_3",
-  "glass": "sheet-glass_3",
-  "silver": "sheet-silver_3",
-  "gold": "sheet-gold_3",
-  "diamond": "sheet-diamond",
-  "plasma": "sheet-plasma_3",
-  "uranium": "sheet-uranium",
-  "bananium": "sheet-bananium",
-  "titanium": "sheet-titanium_3",
-  "bluespace crystal": "polycrystal",
-  "plastic": "sheet-plastic_3",
-};
 
 const COLOR_NONE = 0;
 const COLOR_AVERAGE = 1;
@@ -144,7 +130,15 @@ export const ExosuitFabricator = (props, context) => {
             <Stack fill>
               <Stack.Item grow>
                 <Section fill title="Materials">
-                  <Materials />
+                  <Materials
+                    materials={data.materials || []}
+                    onEject={(ref, amount) => {
+                      act("remove_mat", {
+                        ref: ref,
+                        amount: amount,
+                      });
+                    }}
+                  />
                 </Section>
               </Stack.Item>
               <Stack.Item>
@@ -188,94 +182,6 @@ export const ExosuitFabricator = (props, context) => {
         </Stack>
       </Window.Content>
     </Window>
-  );
-};
-
-const EjectMaterial = (props, context) => {
-  const { act } = useBackend(context);
-  const { material } = props;
-  const {
-    name,
-    removable,
-    sheets,
-    ref,
-  } = material;
-  const [removeMaterials, setRemoveMaterials] = useSharedState(
-    context, 'remove_mats_' + name, 1);
-  if (removeMaterials > 1 && sheets < removeMaterials) {
-    setRemoveMaterials(sheets || 1);
-  }
-  return (
-    <>
-      <NumberInput
-        width="30px"
-        animated
-        value={removeMaterials}
-        minValue={1}
-        maxValue={sheets || 1}
-        initial={1}
-        onDrag={(e, val) => {
-          const newVal = parseInt(val, 10);
-          if (Number.isInteger(newVal)) {
-            setRemoveMaterials(newVal);
-          }
-        }} />
-      <Button
-        icon="eject"
-        disabled={!removable}
-        onClick={() => act("remove_mat", {
-          ref: ref,
-          amount: removeMaterials,
-        })} />
-    </>
-  );
-};
-
-const Materials = (props, context) => {
-  const { data } = useBackend(context);
-  const materials = data.materials || [];
-  return (
-    <Flex wrap>
-      {materials.map(material => (
-        <Flex.Item key={material.name} width="80px">
-          <MaterialAmount
-            name={material.name}
-            amount={material.amount}
-            formatsi />
-          <Box mt={1} textAlign="center">
-            <EjectMaterial material={material} />
-          </Box>
-        </Flex.Item>
-      ))}
-    </Flex>
-  );
-};
-
-const MaterialAmount = (props, context) => {
-  const {
-    name,
-    amount,
-    formatsi,
-    formatmoney,
-    color,
-    style,
-  } = props;
-  return (
-    <Flex direction="column" textAlign="center">
-      <Flex.Item>
-        <Box
-          className={classes([
-            'sheetmaterials32x32',
-            MATERIAL_KEYS[name],
-          ])}
-          style={style} />
-      </Flex.Item>
-      <Flex.Item color={color}>
-        {formatsi && formatSiUnit(amount, 0)
-          || formatmoney && formatMoney(amount)
-          || amount}
-      </Flex.Item>
-    </Flex>
   );
 };
 
@@ -478,7 +384,7 @@ const PartCategory = (props, context) => {
                   width="50px"
                   color={COLOR_KEYS[part.format[material].color]}>
                   <MaterialAmount
-                    formatmoney
+                    formatting={MaterialFormatting.Money}
                     style={{
                       transform: 'scale(0.75) translate(0%, 10%)',
                     }}
@@ -566,7 +472,7 @@ const QueueMaterials = (props, context) => {
       {Object.keys(queueMaterials).map(material => (
         <Stack.Item key={material} textAlign="center">
           <MaterialAmount
-            formatmoney
+            formatting={MaterialFormatting.Money}
             name={material}
             amount={queueMaterials[material]} />
           {!!missingMaterials[material] && (

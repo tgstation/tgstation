@@ -16,8 +16,8 @@ jobs:
       - name: Setup cache
         uses: actions/cache@v2
         with:
-          path: $HOME/SpacemanDMM
-          key: ${{ runner.os }}-spacemandmm
+          path: ~/SpacemanDMM
+          key: ${{ runner.os }}-spacemandmm-${{ secrets.CACHE_PURGE_KEY }}
       - name: Install Tools
         run: |
           pip3 install setuptools
@@ -51,16 +51,14 @@ jobs:
       - name: Setup cache
         uses: actions/cache@v2
         with:
-          path: $HOME/BYOND
-          key: ${{ runner.os }}-byond
+          path: ~/BYOND
+          key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
       - name: Compile All Maps
         run: |
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
           python3 tools/ci/template_dm_generator.py
-          tools/build/build
-        env:
-          CBT_BUILD_MODE : ALL_MAPS
+          tools/build/build dm -DCIBUILDING -DCITESTING -DALL_MAPS
 
   run_all_tests:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
@@ -79,8 +77,8 @@ jobs:
       - name: Setup cache
         uses: actions/cache@v2
         with:
-          path: $HOME/BYOND
-          key: ${{ runner.os }}-byond
+          path: ~/BYOND
+          key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
       - name: Setup database
         run: |
           sudo systemctl start mysql
@@ -98,10 +96,8 @@ jobs:
         run: |
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build
+          tools/build/build -DCIBUILDING
           bash tools/ci/run_server.sh
-        env:
-          CBT_BUILD_MODE: TEST_RUN
 
   test_windows:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"

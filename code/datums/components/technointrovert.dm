@@ -14,10 +14,11 @@
 		src.message = message
 
 /datum/component/technointrovert/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_TRY_USE_MACHINE, .proc/is_in_whitelist)
+	RegisterSignal(parent, COMSIG_TRY_USE_MACHINE, .proc/on_try_use_machine)
+	RegisterSignal(parent, COMSIG_TRY_WIRES_INTERACT, .proc/on_try_wires_interact)
 
 /datum/component/technointrovert/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_TRY_USE_MACHINE)
+	UnregisterSignal(parent, list(COMSIG_TRY_USE_MACHINE, COMSIG_TRY_WIRES_INTERACT))
 
 /datum/component/technointrovert/PostTransfer()
 	if(!ismob(parent))
@@ -29,8 +30,17 @@
 		message = friend.message
 
 /datum/component/technointrovert/proc/is_in_whitelist(datum/source, obj/machinery/machine)
-	SIGNAL_HANDLER
 	if(!is_type_in_typecache(machine, whitelist))
-		to_chat(source, "<span class='warning'>[replacetext(message, "%TARGET", machine)]</span>")
-		return COMPONENT_CANT_USE_MACHINE
+		to_chat(source, span_warning("[replacetext(message, "%TARGET", machine)]"))
+		return FALSE
+	return TRUE
 
+/datum/component/technointrovert/proc/on_try_use_machine(datum/source, obj/machinery/machine)
+	SIGNAL_HANDLER
+	if(!is_in_whitelist(source, machine))
+		return COMPONENT_CANT_USE_MACHINE_INTERACT | COMPONENT_CANT_USE_MACHINE_TOOLS
+
+/datum/component/technointrovert/proc/on_try_wires_interact(datum/source, atom/machine)
+	SIGNAL_HANDLER
+	if(ismachinery(machine) && !is_in_whitelist(source, machine))
+		return COMPONENT_CANT_INTERACT_WIRES

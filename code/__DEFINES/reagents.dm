@@ -107,7 +107,7 @@
 ///Minimum requirement for addiction buzz to be met. Addiction code only checks this once every two seconds, so this should generally be low
 #define MIN_ADDICTION_REAGENT_AMOUNT 1
 ///Nicotine requires much less in your system to be happy
-#define MIN_NICOTINE_ADDICTION_REAGENT_AMOUNT 0.1
+#define MIN_NICOTINE_ADDICTION_REAGENT_AMOUNT 0.01
 #define MAX_ADDICTION_POINTS 1000
 
 ///Addiction start/ends

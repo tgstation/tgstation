@@ -185,7 +185,7 @@ const CheckoutTab = (props, context) => {
                 Sends the ingredients instantly,
                 and locks the console longer. Doubles the price!
                 `}
-                tooltipPosition="top-left"
+                tooltipPosition="top-start"
                 onClick={() => act('express')} />
             </Stack.Item>
           </Stack>

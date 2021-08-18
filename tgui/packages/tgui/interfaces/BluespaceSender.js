@@ -36,7 +36,7 @@ export const BluespaceSender = (props, context) => {
                 mr={0.5}
                 color="transparent"
                 icon="info"
-                tooltipPosition="bottom-left"
+                tooltipPosition="bottom-start"
                 tooltip={multiline`
                 Any gas you pipe into here will be added to the Bluespace
                 Network! That means any connected Bluespace Vendor (multitool)
@@ -59,13 +59,13 @@ export const BluespaceSender = (props, context) => {
                 icon={data.on ? 'power-off' : 'times'}
                 content={data.on ? 'On' : 'Off'}
                 selected={data.on}
-                tooltipPosition="bottom-left"
+                tooltipPosition="bottom-start"
                 tooltip="Will only take in gases while on."
                 onClick={() => act('power')} />
               <Button
                 ml={0.5}
                 content="Retrieve gases"
-                tooltipPosition="bottom-left"
+                tooltipPosition="bottom-start"
                 tooltip="Will transfer any gases inside to the pipe."
                 onClick={() => act('retrieve')} />
             </>

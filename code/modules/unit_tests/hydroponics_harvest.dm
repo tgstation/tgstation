@@ -27,9 +27,8 @@
 
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
 
-	hydroponics_tray.loc = run_loc_floor_bottom_left
-	human.loc = hydroponics_tray.loc
-	human.x += 1
+	hydroponics_tray.forceMove(run_loc_floor_bottom_left)
+	human.forceMove(locate((run_loc_floor_bottom_left.x + 1), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
 	// Apples should harvest 10 apples with 10u nutrients and 4u vitamins.
 	test_seed(hydroponics_tray, planted_food_seed, human)
@@ -44,7 +43,7 @@
 	seed.set_instability(0) // Sets the seed instability to 0, to prevent mutations.
 
 	tray.myseed = seed
-	seed.loc = tray
+	seed.forceMove(tray)
 	tray.name = tray.myseed ? "[initial(tray.name)] ([tray.myseed.plantname])" : initial(tray.name)
 
 	tray.plant_health = seed.endurance

@@ -3,8 +3,8 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_resource"
 	desc = "A thin spire of slightly swaying tendrils."
-	max_integrity = 60
-	point_return = 15
+	max_integrity = BLOB_RESOURCE_MAX_HP
+	point_return = BLOB_REFUND_RESOURCE_COST
 	resistance_flags = LAVA_PROOF
 	var/resource_delay = 0
 

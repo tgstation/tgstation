@@ -250,8 +250,10 @@
 /obj/machinery/computer/security/telescreen
 	name = "\improper Telescreen"
 	desc = "Used for watching an empty arena."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/telescreens.dmi'
 	icon_state = "telescreen"
+	base_icon_state = "telescreen"
+	icon_keyboard = null
 	layer = SIGN_LAYER
 	network = list("thunder")
 	density = FALSE
@@ -273,10 +275,30 @@
 	circuit = null
 	interaction_flags_atom = NONE  // interact() is called by BigClick()
 
+/obj/machinery/computer/security/telescreen/entertainment/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/west
+	dir = EAST
+	pixel_x = -32
+
 /obj/machinery/computer/security/telescreen/entertainment/Initialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_CLICK, .proc/BigClick)
 	update_appearance()
+
+/obj/machinery/computer/security/telescreen/on_set_machine_stat(old_value)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS || UPDATE_ICON)
 
 // Bypass clickchain to allow humans to use the telescreen from a distance
 /obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
@@ -284,7 +306,7 @@
 
 	INVOKE_ASYNC(src, /atom.proc/interact, usr)
 
-obj/machinery/computer/security/telescreen/entertainment/proc/notify(on)
+/obj/machinery/computer/security/telescreen/entertainment/proc/notify(on)
 	if(on)
 		say(pick(
 			"Feats of bravery live now at the thunderdome!",
@@ -294,15 +316,15 @@ obj/machinery/computer/security/telescreen/entertainment/proc/notify(on)
 
 /obj/machinery/computer/security/telescreen/entertainment/update_overlays()
 	. = ..()
-	cut_overlays()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	. += "[initial(icon_state)][rand(1,4)]"
+	. += "[base_icon_state]_program[rand(1,4)]"
+	. += emissive_appearance(icon, "[base_icon_state]_emissive", alpha = src.alpha)
 
 /obj/machinery/computer/security/telescreen/rd
 	name = "\improper Research Director's telescreen"
 	desc = "Used for watching the AI and the RD's goons from the safety of his office."
-	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test")
+	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test", "toxins")
 
 /obj/machinery/computer/security/telescreen/research
 	name = "research telescreen"

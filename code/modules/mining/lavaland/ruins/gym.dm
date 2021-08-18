@@ -24,6 +24,7 @@
 	desc = "Just looking at this thing makes you feel tired."
 	density = TRUE
 	anchored = TRUE
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 	var/icon_state_inuse
 
 /obj/structure/weightmachine/proc/AnimateMachine(mob/living/user)
@@ -34,7 +35,7 @@
 	if(.)
 		return
 	if(obj_flags & IN_USE)
-		to_chat(user, "<span class='warning'>It's already in use - wait a bit!</span>")
+		to_chat(user, span_warning("It's already in use - wait a bit!"))
 		return
 	else
 		obj_flags |= IN_USE

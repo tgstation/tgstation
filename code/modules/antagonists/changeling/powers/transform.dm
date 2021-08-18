@@ -14,7 +14,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/glasses/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
-		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
+		to_chat(user, span_notice("You reabsorb [src] into your body."))
 		qdel(src)
 		return
 	. = ..()
@@ -26,7 +26,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/under/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
-		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
+		to_chat(user, span_notice("You reabsorb [src] into your body."))
 		qdel(src)
 		return
 	. = ..()
@@ -39,7 +39,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/suit/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
-		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
+		to_chat(user, span_notice("You reabsorb [src] into your body."))
 		qdel(src)
 		return
 	. = ..()
@@ -52,7 +52,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/head/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
-		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
+		to_chat(user, span_notice("You reabsorb [src] into your body."))
 		qdel(src)
 		return
 	. = ..()
@@ -64,7 +64,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/shoes/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
-		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
+		to_chat(user, span_notice("You reabsorb [src] into your body."))
 		qdel(src)
 		return
 	. = ..()
@@ -76,7 +76,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/gloves/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
-		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
+		to_chat(user, span_notice("You reabsorb [src] into your body."))
 		qdel(src)
 		return
 	. = ..()
@@ -88,7 +88,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
-		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
+		to_chat(user, span_notice("You reabsorb [src] into your body."))
 		qdel(src)
 		return
 	. = ..()
@@ -102,7 +102,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
-		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
+		to_chat(user, span_notice("You reabsorb [src] into your body."))
 		qdel(src)
 		return
 	. = ..()

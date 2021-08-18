@@ -36,4 +36,5 @@
 		return TRUE
 
 /datum/component/pricetag/proc/return_ratio()
+	SIGNAL_HANDLER
 	return default_profit_ratio

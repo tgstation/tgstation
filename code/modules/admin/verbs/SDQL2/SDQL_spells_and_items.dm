@@ -207,13 +207,13 @@
 #undef RAW_ADDRESS
 
 /client/proc/cmd_give_sdql_spell(mob/target in GLOB.mob_list)
-	set category = "Debug.Admin"
 	set name = "Give SDQL spell"
+	set hidden = TRUE
 	if(CONFIG_GET(flag/sdql_spells))
 		var/datum/give_sdql_spell/ui = new(usr, target)
 		ui.ui_interact(usr)
 	else
-		to_chat(usr, "<span class='warning'>SDQL spells are disabled.</span>")
+		to_chat(usr, span_warning("SDQL spells are disabled."))
 
 
 /datum/give_sdql_spell
@@ -306,7 +306,7 @@
 
 /datum/give_sdql_spell/New(_user, target)
 	if(!CONFIG_GET(flag/sdql_spells))
-		to_chat(_user, "<span class='warning'>SDQL spells are disabled.</span>")
+		to_chat(_user, span_warning("SDQL spells are disabled."))
 		qdel(src)
 		return
 	user = CLIENT_FROM_VAR(_user)
@@ -845,4 +845,4 @@
 		target_mob.mind.AddSpell(new_spell)
 	else
 		target_mob.AddSpell(new_spell)
-		to_chat(user, "<span class='danger'>Spells given to mindless mobs will not be transferred in mindswap or cloning!</span>")
+		to_chat(user, span_danger("Spells given to mindless mobs will not be transferred in mindswap or cloning!"))

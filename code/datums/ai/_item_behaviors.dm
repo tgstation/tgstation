@@ -7,7 +7,7 @@
 	var/mob/item_holder = item_pawn.loc
 	if(!istype(item_holder))
 		finish_action(controller, FALSE) //We're no longer beind held. abort abort!!
-	item_pawn.visible_message("<span class='warning'>[item_pawn] slips out of the hands of [item_holder]!</span>")
+	item_pawn.visible_message(span_warning("[item_pawn] slips out of the hands of [item_holder]!"))
 	item_holder.dropItemToGround(item_pawn, TRUE)
 	finish_action(controller, TRUE)
 
@@ -32,7 +32,7 @@
 	var/obj/item/item_pawn = controller.pawn
 	var/atom/throw_target = controller.blackboard[target_key]
 
-	item_pawn.visible_message("<span class='warning'>[item_pawn] hurls towards [throw_target]!</span>")
+	item_pawn.visible_message(span_warning("[item_pawn] hurls towards [throw_target]!"))
 	item_pawn.throw_at(throw_target, rand(4,5), 9)
 	playsound(item_pawn.loc, attack_sound, 100, TRUE)
 	controller.blackboard[throw_count_key]++
@@ -41,6 +41,10 @@
 
 /datum/ai_behavior/item_move_close_and_attack/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
+	reset_blackboard(controller, succeeded)
+
+
+/datum/ai_behavior/item_move_close_and_attack/proc/reset_blackboard(datum/ai_controller/controller, succeeded)
 	controller.blackboard[throw_count_key] = 0
 	controller.blackboard[target_key] = null
 

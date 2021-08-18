@@ -75,6 +75,10 @@
 		radio.keyslot = new radio_key
 	radio.recalculateChannels()
 
+/obj/item/implant/radio/Destroy()
+	QDEL_NULL(radio)
+	return ..()
+
 /obj/item/implant/radio/mining
 	radio_key = /obj/item/encryptionkey/headset_cargo
 

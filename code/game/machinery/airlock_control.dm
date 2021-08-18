@@ -8,6 +8,7 @@
 	var/datum/radio_frequency/radio_connection
 
 
+
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	if(!signal)
 		return

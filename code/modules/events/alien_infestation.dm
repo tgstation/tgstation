@@ -67,10 +67,15 @@
 
 	while(spawncount > 0 && vents.len && candidates.len)
 		var/obj/vent = pick_n_take(vents)
-		var/client/C = pick_n_take(candidates)
-
+		var/client/candidate_client = pick_n_take(candidates)
+		var/datum/mind/candidate_mind = candidate_client.mob.mind
+		if(!candidate_mind)
+			continue
 		var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
-		new_xeno.key = C.key
+		candidate_mind.transfer_to(new_xeno)
+		candidate_mind.set_assigned_role(SSjob.GetJobType(/datum/job/xenomorph))
+		candidate_mind.special_role = ROLE_ALIEN
+		new_xeno.move_into_vent(vent)
 
 		spawncount--
 		message_admins("[ADMIN_LOOKUPFLW(new_xeno)] has been made into an alien by an event.")

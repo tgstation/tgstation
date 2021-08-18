@@ -12,20 +12,21 @@
 	blocks_air = FALSE
 	flags_1 = RAD_NO_CONTAMINATE_1 | ALLOW_DARK_PAINTS_1
 	rad_insulation = null
-	frill_icon = 'icons/effects/frills/window_normal_frill.dmi'
+	frill_icon = 'icons/effects/frills/windows/window_normal_frill.dmi'
 	///Bitflag to hold state on what other objects we have
 	var/window_state = NONE
 	///what step in the construction procedure we are in
 	var/construction_state = WINDOW_FRAME_EMPTY
 	///Icon used by grilles for this window frame
-	var/grille_icon = 'icons/turf/walls/window_grille.dmi'
+	var/grille_icon = 'icons/turf/walls/low_walls/window_grille.dmi'
 	///Icon state used by grilles for this window frame
 	var/grille_icon_state = "window_grille"
 	///Icon used by windows for this window frame
-	var/window_icon = 'icons/turf/walls/window_normal.dmi'
+	var/window_icon = 'icons/turf/walls/low_walls/windows/window_normal.dmi'
 	///Icon state used by windows for this window frame
 	var/window_icon_state = "window_normal"
 	///Frill used for window frame
+	var/has_frill = TRUE
 
 	///what datum material our glass is made out of
 	var/glass_material = /obj/item/stack/sheet/glass
@@ -276,9 +277,20 @@
 /turf/closed/wall/window_frame/update_appearance(updates)
 	. = ..()
 	if(window_state & WINDOW_FRAME_WITH_WINDOW)
-		AddElement(/datum/element/frill, frill_icon)
+		set_frill(TRUE)
 	else
-		RemoveElement(/datum/element/frill)
+		set_frill(FALSE)
+
+
+/turf/closed/wall/window_frame/proc/set_frill(on)
+	if(!on)
+		if(has_frill)
+			RemoveElement(/datum/element/frill, frill_icon)
+			has_frill = FALSE
+	else
+		if(!has_frill)
+			AddElement(/datum/element/frill, frill_icon)
+			has_frill = TRUE
 
 /turf/closed/wall/window_frame/update_overlays()
 	. = ..()

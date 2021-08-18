@@ -21,7 +21,8 @@
 				   /obj/item/clothing/head/helmet/blueshirt = 1,
 				   /obj/item/clothing/suit/armor/vest/blueshirt = 1,
 				   /obj/item/clothing/gloves/tackler = 5,
-				   /obj/item/grenade/stingbang = 1)
+				   /obj/item/grenade/stingbang = 1,
+				   /obj/item/watertank/pepperspray = 2)
 	refill_canister = /obj/item/vending_refill/security
 	default_price = PAYCHECK_MEDIUM
 	extra_price = PAYCHECK_HARD * 1.5

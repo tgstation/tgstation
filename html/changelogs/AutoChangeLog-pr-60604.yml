@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - refactor: "refactored the thrownthing datum a little."
+  - qol: "you can now throw stuff at movables with no density, such as mobs lying on the floor, mice, APCs, light bulbs etcetera etcetera."

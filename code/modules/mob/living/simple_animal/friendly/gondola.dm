@@ -28,13 +28,12 @@
 	maxHealth = 200
 	health = 200
 	del_on_death = TRUE
-	pet_bonus = TRUE
-	pet_bonus_emote = "smiles!"
 
 	//Gondolas don't make footstep sounds
 
 /mob/living/simple_animal/pet/gondola/Initialize()
 	. = ..()
+	AddElement(/datum/element/pet_bonus, "smiles!")
 	if (!(istype(src, /mob/living/simple_animal/pet/gondola/gondolapod)))
 		CreateGondola()
 

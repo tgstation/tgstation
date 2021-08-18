@@ -7,6 +7,10 @@ If you're wanting to add easy recolors for your sprite then this is the system f
 - Blend modes; Instead of just putting layers of sprites on top of eachother you can use the more advanced blend modes.
 - Reusable configurations; You can reference greyscale sprites from within the configuration of another, allowing you to have a bunch of styles with minimal additional configuration.
 
+## Other Documents
+
+- [Basic follow along guide on hackmd](https://hackmd.io/@tgstation/GAGS-Walkthrough)
+
 ## Broad overview
 
 There are three main parts to GAGS that you'll need to be aware of when adding a new greyscale sprite:
@@ -87,6 +91,21 @@ And that's all you need to make it usable by other code:
 ```
 
 More configurations can be found in [code/datums/greyscale/greyscale_configs.dm](./greyscale_configs.dm)
+
+If you want your item to be colorable in a vending machine (or other places if there's ever any support added for that), you should do it like this:
+
+```c
+/obj/item/clothing/head/beret
+	...
+	flags_1 = IS_PLAYER_COLORABLE_1
+```
+However, **be extremely careful**, as this *requires* that you put *all* of the object's `flags_1` flags in that statement all over again. It's ugly, I know, but there's no
+better way to do this with BYOND just yet. You can put multiple flags like this (not real flags):
+```c
+/obj/item/clothing/head/beret
+	...
+	flags_1 = IS_PLAYER_COLORABLE_1 | THIS_IS_A_FAKE_FLAG | THIS_IS_ANOTHER_FAKE_FLAG
+```
 
 ## Debugging
 

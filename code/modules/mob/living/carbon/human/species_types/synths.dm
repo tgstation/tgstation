@@ -1,6 +1,6 @@
 /datum/species/synth
 	name = "Synth" //inherited from the real species, for health scanners and things
-	id = "synth"
+	id = SPECIES_SYNTH
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
 	species_traits = list(NOTRANSSTING) //all of these + whatever we inherit from the real species
@@ -32,7 +32,7 @@
 
 /datum/species/synth/military
 	name = "Military Synth"
-	id = "military_synth"
+	id = SPECIES_SYNTH_MILITARY
 	armor = 25
 	punchdamagelow = 10
 	punchdamagehigh = 19
@@ -132,6 +132,7 @@
 
 
 /datum/species/synth/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
 	if (isliving(source)) // yeah it's gonna be living but just to be clean
 		var/mob/living/L = source
 		if(fake_species && L.health > disguise_fail_health)
