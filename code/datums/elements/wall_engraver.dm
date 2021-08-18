@@ -56,11 +56,22 @@
 	if(memory_to_engrave.memory_flags & MEMORY_FLAG_NOPERSISTENCE)
 		do_persistent_save = FALSE
 
+	var/engraved_story = memory_to_engrave.generate_story(STORY_ENGRAVING, STORY_FLAG_DATED)
+
+	if(!engraved_story)
+		CRASH("Tried to submit a memory with an invalid story [memory_to_engrave]")
+
 	wall.AddComponent(/datum/component/engraved, memory_to_engrave.generate_story(STORY_ENGRAVING, STORY_FLAG_DATED), persistent_save = do_persistent_save, story_value = memory_to_engrave.story_value)
 	///while someone just engraved a story "worth engraving" we should add this to SSpersistence for a possible prison tattoo
 	memory_to_engrave.memory_flags |= MEMORY_FLAG_ALREADY_USED
 
 	if(do_persistent_save)
 		var/list/tattoo_entry = list()
-		tattoo_entry["story"] = memory_to_engrave.generate_story(STORY_TATTOO)
+
+		var/tattoo_story = memory_to_engrave.generate_story(STORY_TATTOO)
+
+		if(tattoo_story)
+			CRASH("Tried to submit a memory with an invalid story [memory_to_engrave]")
+
+		tattoo_entry["story"] = tattoo_story
 		SSpersistence.prison_tattoos_to_save += list(tattoo_entry)
