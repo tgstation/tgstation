@@ -219,6 +219,8 @@
 		"comp_module",
 		"comp_multiplexer",
 		"comp_not",
+		"comp_ntnet_receive",
+		"comp_ntnet_send",
 		"comp_pressuresensor",
 		"comp_radio",
 		"comp_random",

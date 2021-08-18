@@ -233,6 +233,16 @@
 	id = "comp_module"
 	build_path = /obj/item/circuit_component/module
 
+/datum/design/component/ntnet_receive
+	name = "Pressure NTNet Transmitter"
+	id = "comp_ntnet_receive"
+	build_path = /obj/item/circuit_component/ntnet_receive
+
+/datum/design/component/ntnet_send
+	name = "NTNet Request Component"
+	id = "comp_ntnet_send"
+	build_path = /obj/item/circuit_component/ntnet_send
+
 /datum/design/component/list_literal
 	name = "List Literal Component"
 	id = "comp_list_literal"
