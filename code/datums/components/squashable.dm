@@ -27,7 +27,7 @@
 	if(!src.on_squash_callback && squash_callback)
 		on_squash_callback = CALLBACK(parent, squash_callback)
 
-	AddElement(/datum/element/connect_loc_behalf, parent, loc_connections)
+	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
 ///Handles the squashing of the mob
 /datum/component/squashable/proc/on_entered(turf/source_turf, atom/movable/crossing_movable)
@@ -72,4 +72,4 @@
 
 /datum/component/squashable/UnregisterFromParent()
 	. = ..()
-	RemoveElement(/datum/element/connect_loc_behalf, parent, loc_connections)
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
