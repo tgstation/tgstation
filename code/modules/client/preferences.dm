@@ -64,8 +64,6 @@ GLOBAL_VAR(preferences_species_data)
 	var/pda_style = MONO
 	var/pda_color = "#808000"
 
-	var/uses_glasses_colour = 0
-
 	//character preferences
 	var/slot_randomized //keeps track of round-to-round randomization of the character slot, prevents overwriting
 	var/underwear_color = "000" //underwear color

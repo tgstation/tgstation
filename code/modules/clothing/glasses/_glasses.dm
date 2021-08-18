@@ -56,16 +56,18 @@
 
 /obj/item/clothing/glasses/AltClick(mob/user)
 	if(glass_colour_type && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.client)
-			if(H.client.prefs)
-				if(src == H.glasses)
-					H.client.prefs.uses_glasses_colour = !H.client.prefs.uses_glasses_colour
-					if(H.client.prefs.uses_glasses_colour)
-						to_chat(H, span_notice("You will now see glasses colors."))
-					else
-						to_chat(H, span_notice("You will no longer see glasses colors."))
-					H.update_glasses_color(src, 1)
+		var/mob/living/carbon/human/human_user = user
+
+		if (human_user.glasses != src)
+			return ..()
+
+		if (HAS_TRAIT_FROM(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT))
+			REMOVE_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
+			to_chat(human_user, span_notice("You will now see glasses colors."))
+		else
+			ADD_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
+			to_chat(human_user, span_notice("You will no longer see glasses colors."))
+		human_user.update_glasses_color(src, TRUE)
 	else
 		return ..()
 
@@ -81,7 +83,7 @@
 
 
 /mob/living/carbon/human/proc/update_glasses_color(obj/item/clothing/glasses/G, glasses_equipped)
-	if(client?.prefs.uses_glasses_colour && glasses_equipped)
+	if (HAS_TRAIT(src, TRAIT_SEE_GLASS_COLORS) && glasses_equipped)
 		add_client_colour(G.glass_colour_type)
 	else
 		remove_client_colour(G.glass_colour_type)
