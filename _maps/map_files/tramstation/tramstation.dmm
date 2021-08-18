@@ -376,6 +376,7 @@
 /area/security/prison)
 "acb" = (
 /obj/structure/ladder,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/nuke_storage)
 "acg" = (
@@ -13087,6 +13088,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/event_spawn,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/nuke_storage)
 "bJX" = (
@@ -13333,6 +13335,7 @@
 /obj/machinery/navbeacon/wayfinding/vault,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ai_monitored/security/armory)
 "bNb" = (
@@ -25400,6 +25403,21 @@
 	},
 /turf/open/floor/iron,
 /area/security/brig)
+"goD" = (
+/obj/effect/turf_decal/bot_white/right,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron/dark,
+/area/ai_monitored/command/nuke_storage)
 "goU" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -29063,7 +29081,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -31650,6 +31667,7 @@
 	network = list("ss13","Security")
 	},
 /obj/structure/ladder,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "iCg" = (
@@ -32148,6 +32166,7 @@
 	dir = 4
 	},
 /obj/machinery/navbeacon/wayfinding/vault,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/nuke_storage)
 "iJV" = (
@@ -35799,7 +35818,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/nuke_storage)
 "kco" = (
@@ -37561,6 +37579,10 @@
 	},
 /obj/structure/filingcabinet,
 /obj/item/folder/documents,
+/turf/open/floor/iron/dark,
+/area/ai_monitored/command/nuke_storage)
+"kGr" = (
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/nuke_storage)
 "kGu" = (
@@ -41008,7 +41030,6 @@
 /area/engineering/atmos)
 "lUT" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
@@ -42264,9 +42285,6 @@
 /area/medical/morgue)
 "muJ" = (
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /obj/machinery/camera{
 	c_tag = "Secure - Vault";
 	dir = 6
@@ -46185,11 +46203,6 @@
 	},
 /turf/open/floor/iron,
 /area/maintenance/tram/mid)
-"nXS" = (
-/obj/structure/cable,
-/obj/machinery/power/smes/engineering,
-/turf/open/floor/iron/dark,
-/area/ai_monitored/command/nuke_storage)
 "nYD" = (
 /obj/structure/chair/stool/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -47678,7 +47691,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/command/nuke_storage)
 "ozW" = (
@@ -52042,6 +52054,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ai_monitored/security/armory)
 "qaw" = (
@@ -52463,6 +52476,10 @@
 	},
 /turf/open/floor/iron,
 /area/maintenance/tram/mid)
+"qjc" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/dark,
+/area/ai_monitored/command/nuke_storage)
 "qje" = (
 /obj/machinery/door/airlock/atmos/glass{
 	name = "Atmospherics Monitoring";
@@ -59221,6 +59238,21 @@
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /turf/open/floor/iron,
 /area/engineering/main)
+"sQN" = (
+/obj/effect/turf_decal/bot_white/right,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/dark,
+/area/ai_monitored/command/nuke_storage)
 "sQP" = (
 /obj/machinery/door/airlock/atmos/glass{
 	name = "Atmospherics Testing Room";
@@ -61175,6 +61207,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ai_monitored/security/armory)
 "tzu" = (
@@ -62438,6 +62471,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ai_monitored/command/nuke_storage)
 "tXz" = (
@@ -63221,6 +63255,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/nuke_storage)
 "ukC" = (
@@ -65678,6 +65713,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ai_monitored/security/armory)
 "vip" = (
@@ -74147,10 +74183,6 @@
 "yiT" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/port/central)
-"yiU" = (
-/obj/structure/cable,
-/turf/open/floor/circuit,
-/area/ai_monitored/command/nuke_storage)
 "yja" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible{
@@ -105780,7 +105812,7 @@ aae
 tmw
 tmw
 nJc
-kkn
+goD
 fAU
 kkn
 tmw
@@ -106042,7 +106074,7 @@ dDT
 qdM
 tmw
 mmz
-onn
+qjc
 hzx
 tmw
 tmw
@@ -106549,14 +106581,14 @@ aae
 aae
 aae
 tmw
-nXS
-yiU
-yiU
+onn
+lCr
+lCr
 ozT
 kcn
 tmw
 ndn
-onn
+kGr
 fPV
 qJu
 tmw
@@ -106808,7 +106840,7 @@ aae
 tmw
 tmw
 kGp
-kkn
+sQN
 mVj
 pEG
 tmw
