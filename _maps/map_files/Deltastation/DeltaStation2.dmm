@@ -16693,6 +16693,7 @@
 "chI" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "chK" = (
@@ -64505,7 +64506,6 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_x = 32
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -100359,6 +100359,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
+"uOl" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/engineering/main)
 "uOw" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -140569,7 +140573,7 @@ bQg
 tXV
 tXV
 tXV
-tXV
+uOl
 tXV
 caE
 ign
