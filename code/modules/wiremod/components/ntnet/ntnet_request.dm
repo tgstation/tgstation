@@ -24,14 +24,6 @@
 
 /obj/item/circuit_component/ntnet_send/input_received(datum/port/input/port)
 	. = ..()
-	if(. || !data_package.value)
+	if(.)
 		return
-
-	var/list/datalist = list("data" = data_package.value)
-	if(secondary_package.value)
-		datalist["data_secondary"] = secondary_package.value
-	if(enc_key.value)
-		datalist["enc_key"] = enc_key.value
-	var/datum/netdata/data = new(datalist)
-	data.network_id =  __NETWORK_CIRCUITS
-	ntnet_send(data)
+	ntnet_send(list("data" = data_package.value, "data_secondary" = secondary_package.value, "enc_key" = enc_key.value))

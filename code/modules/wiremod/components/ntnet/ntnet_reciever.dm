@@ -22,7 +22,6 @@
 
 /obj/item/circuit_component/ntnet_receive/Initialize()
 	. = ..()
-	AddComponent(/datum/component/ntnet_interface)
 	data_package = add_output_port("Data Package", PORT_TYPE_ANY)
 	secondary_package = add_output_port("Secondary Package", PORT_TYPE_ANY)
 	enc_key = add_input_port("Encryption Key", PORT_TYPE_STRING)
@@ -49,6 +48,8 @@
 
 	if(COMPONENT_TRIGGERED_BY(secondary_data_type_options, port))
 		secondary_package.set_datatype(secondary_data_type_options.value)
+
+	return TRUE
 
 /obj/item/circuit_component/ntnet_receive/proc/ntnet_receive(datum/source, datum/netdata/data)
 	SIGNAL_HANDLER
