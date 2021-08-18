@@ -33,7 +33,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	var/obj/item/reagent_containers/beaker1
 	///Output reagents container
 	var/obj/item/reagent_containers/beaker2
-	///multiplies the final time needed to proccess the chems depending on the laser stock part
+	///multiplies the final time needed to process the chems depending on the laser stock part
 	var/cms_coefficient = 1
 
 /obj/machinery/chem_mass_spec/Initialize(mapload)
