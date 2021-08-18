@@ -344,8 +344,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 	dummy = dummy || new /mob/living/carbon/human/dummy/consistent
 	dummy.equipOutfit(outfit, visualsOnly = TRUE)
 	COMPILE_OVERLAYS(dummy)
-
-	return getFlatIcon(dummy)
+	var/icon = getFlatIcon(dummy)
+	// MOTHBLOCKS TODO: Delete this dummy after initialization is done
+	return icon
 
 /// Given an icon, will crop it to be consistent of those in the preferences menu.
 /// Not necessary, and in fact will look bad if it's anything other than a human.

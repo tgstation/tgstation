@@ -457,8 +457,9 @@
 /// Infects a random player, making them explode into a blob.
 /datum/dynamic_ruleset/midround/blob_infection
 	name = "Blob Infection"
-	antag_datum = /datum/antagonist/blob
-	antag_flag = ROLE_BLOB
+	antag_datum = /datum/antagonist/blob/infection
+	antag_flag = ROLE_BLOB_INFECTION
+	antag_flag_override = ROLE_BLOB
 	protected_roles = list("Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("Cyborg", "AI", "Positronic Brain")
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
@@ -767,8 +768,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/revenant
 	name = "Revenant"
 	antag_datum = /datum/antagonist/revenant
-	antag_flag = "Revenant"
-	antag_flag_override = ROLE_REVENANT
+	antag_flag = ROLE_REVENANT
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1

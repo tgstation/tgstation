@@ -20,7 +20,10 @@
 
 // Midround roles
 #define ROLE_ALIEN "Xenomorph"
+#define ROLE_BLOB "Blob"
+#define ROLE_BLOB_INFECTION "Blob Infection"
 #define ROLE_MALF_MIDROUND "Malf AI (Midround)"
+#define ROLE_NINJA "Space Ninja"
 #define ROLE_REV_HEAD "Head Revolutionary"
 #define ROLE_OBSESSED "Obsessed"
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
@@ -36,8 +39,6 @@
 #define ROLE_REV "Revolutionary"
 #define ROLE_REV_SUCCESSFUL "Victorious Revolutionary"
 #define ROLE_PAI "pAI"
-#define ROLE_BLOB "Blob"
-#define ROLE_NINJA "Space Ninja"
 #define ROLE_MONKEY_HELMET "Monkey Mind Magnification Helmet"
 #define ROLE_ABDUCTOR "Abductor"
 #define ROLE_REVENANT "Revenant"
@@ -111,8 +112,12 @@ GLOBAL_LIST_INIT(special_roles, list(
 
 	// Midround
 	ROLE_ALIEN = 0,
+	ROLE_BLOB = 0,
+	ROLE_BLOB_INFECTION = 0,
 	ROLE_MALF_MIDROUND = 0,
+	ROLE_NINJA = 0,
 	ROLE_OBSESSED = 0,
+	ROLE_REVENANT = 0,
 	ROLE_SLEEPER_AGENT = 0,
 	ROLE_SPACE_DRAGON = 0,
 
@@ -123,9 +128,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	// MOTHBLOCKS TODO: Unsorted
 	ROLE_REV = 14,
 	ROLE_PAI = 0,
-	ROLE_BLOB = 0,
-	ROLE_NINJA = 0,
-	ROLE_REVENANT = 0,
 	ROLE_ABDUCTOR = 0,
 	ROLE_INTERNAL_AFFAIRS = 0,
 	ROLE_SENTIENCE = 0,

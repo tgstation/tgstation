@@ -119,7 +119,8 @@
 #define INIT_ORDER_RESEARCH 75
 #define INIT_ORDER_STATION 74 //This is high priority because it manipulates a lot of the subsystems that will initialize after it.
 #define INIT_ORDER_QUIRKS 73
-#define INIT_ORDER_ASSETS 72
+#define INIT_ORDER_REAGENTS 72 //HAS to be before mapping and assets - both create objects, which creates reagents, which relies on lists made in this subsystem
+#define INIT_ORDER_ASSETS 71
 #define INIT_ORDER_EVENTS 70
 #define INIT_ORDER_IDACCESS 66
 #define INIT_ORDER_JOBS 65 // Must init before atoms, to set up properly the dynamic job lists.
@@ -127,7 +128,6 @@
 #define INIT_ORDER_AI_CONTROLLERS 55 //So the controller can get the ref
 #define INIT_ORDER_TICKER 55
 #define INIT_ORDER_TCG 55
-#define INIT_ORDER_REAGENTS 55 //HAS to be before mapping - mapping creates objects, which creates reagents, which relies on lists made in this subsystem
 #define INIT_ORDER_MAPPING 50
 #define INIT_ORDER_TIMETRACK 47
 #define INIT_ORDER_NETWORKS 45
