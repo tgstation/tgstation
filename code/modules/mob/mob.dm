@@ -1326,11 +1326,14 @@
 	set name = "Memories"
 	set category = "IC"
 	set desc = "View your character's memories."
-	if(mind)
-		var/datum/memory_panel/tgui  = new(usr)//create the datum
-		tgui.ui_interact(usr)//datum has a tgui component, here we open the window
-	else
-		to_chat(src, "You don't have a mind datum for some reason, so you can't look at your notes, if you had any.")
+	if(!mind)
+		var/fail_message = "You have no mind!"
+		if(isobserver(src))
+			fail_message += " You have to be in the current round at some point to have one."
+		to_chat(src, span_warning(fail_message))
+		return
+	var/datum/memory_panel/tgui  = new(usr)//create the datum
+	tgui.ui_interact(usr)//datum has a tgui component, here we open the window
 
 GLOBAL_VAR(memory_panel_datum)
 
