@@ -68,7 +68,6 @@ GLOBAL_VAR(preferences_species_data)
 
 	//character preferences
 	var/slot_randomized //keeps track of round-to-round randomization of the character slot, prevents overwriting
-	var/gender = MALE //gender of character (well duh)
 	var/underwear_color = "000" //underwear color
 	var/undershirt = "Nude" //undershirt type
 	var/socks = "Nude" //socks type
@@ -239,7 +238,6 @@ GLOBAL_VAR(preferences_species_data)
 	// Some of these, like job preferences, can be pretty beefy.
 	data["character_profiles"] = create_character_profiles()
 	data["character_preferences"] = compile_character_preferences(user)
-	data["character_preview_view"] = character_preview_view.assigned_map
 
 	// MOTHBLOCKS TODO: Job bans/yet to be unlocked jobs
 	data["job_preferences"] = job_preferences
@@ -261,6 +259,8 @@ GLOBAL_VAR(preferences_species_data)
 	var/list/data = list()
 
 	data["window"] = current_window
+
+	data["character_preview_view"] = character_preview_view.assigned_map
 
 	data["generated_preference_values"] = generated_preference_values
 	data["overflow_role"] = SSjob.overflow_role
@@ -617,10 +617,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 
 /// Applies the given preferences to a human mob.
 /datum/preferences/proc/apply_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE)
-	if(gender == MALE || gender == FEMALE)
-		character.body_type = gender
-	else
-		character.body_type = body_type
+	// MOTHBLOCKS TODO: Body type
+	// if(gender == MALE || gender == FEMALE)
+	// 	character.body_type = gender
+	// else
+	// 	character.body_type = body_type
 
 	character.skin_tone = skin_tone
 	character.hairstyle = hairstyle

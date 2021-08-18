@@ -407,7 +407,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return FALSE
 
 	//Character
-	READ_FILE(S["gender"], gender)
 	READ_FILE(S["body_type"], body_type)
 	READ_FILE(S["skin_tone"], skin_tone)
 	READ_FILE(S["hairstyle_name"], hairstyle)
@@ -464,8 +463,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		update_character(needs_update, S) //needs_update == savefile_version if we need an update (positive integer)
 
 	//Sanitize
-	gender = sanitize_gender(gender)
-	body_type = sanitize_gender(body_type, FALSE, FALSE, gender)
+
+	// MOTHBLOCKS TODO: Body type
+	// body_type = sanitize_gender(body_type, FALSE, FALSE, gender)
 
 	for(var/custom_name_id in GLOB.preferences_custom_names)
 		var/namedata = GLOB.preferences_custom_names[custom_name_id]
@@ -498,9 +498,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["spines"] = sanitize_inlist(features["spines"], GLOB.spines_list)
 	features["body_markings"] = sanitize_inlist(features["body_markings"], GLOB.body_markings_list)
 	features["feature_lizard_legs"] = sanitize_inlist(features["legs"], GLOB.legs_list, "Normal Legs")
-	features["moth_wings"] = sanitize_inlist(features["moth_wings"], GLOB.moth_wings_list, "Plain")
-	features["moth_antennae"] = sanitize_inlist(features["moth_antennae"], GLOB.moth_antennae_list, "Plain")
-	features["moth_markings"] = sanitize_inlist(features["moth_markings"], GLOB.moth_markings_list, "None")
 
 	persistent_scars = sanitize_integer(persistent_scars)
 
@@ -536,7 +533,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["version"] , SAVEFILE_VERSION_MAX) //load_character will sanitize any bad data, so assume up-to-date.)
 
 	//Character
-	WRITE_FILE(S["gender"] , gender)
 	WRITE_FILE(S["body_type"] , body_type)
 	WRITE_FILE(S["skin_tone"] , skin_tone)
 	WRITE_FILE(S["hairstyle_name"] , hairstyle)

@@ -434,7 +434,7 @@
 
 			var/species_type = player_client.prefs.read_preference(/datum/preference/choiced/species)
 			var/datum/species/species = new species_type
-			organic_name = species.random_name(player_client.prefs.gender, TRUE)
+			organic_name = species.random_name(player_client.prefs.read_preference(/datum/preference/choiced/gender), TRUE)
 		else
 			if(!player_client)
 				return // Disconnected while checking the appearance ban.
