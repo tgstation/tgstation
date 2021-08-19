@@ -38,6 +38,7 @@
 
 
 /obj/item/circuit_component/typecast/input_received(datum/port/input/port)
+	var/current_option = typecast_options.value
 	var/value = input_value.value
 	var/value_to_set = null
 	switch(current_option)

@@ -56,6 +56,7 @@
 
 
 /obj/item/circuit_component/select/input_received(datum/port/input/port)
+	var/current_option = comparison_options.value
 	var/list/input_list = received_table.value
 	if(!islist(input_list) || isnum(column_name.value))
 		return
