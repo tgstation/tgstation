@@ -62,8 +62,8 @@
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced/command=1)
 
 	backpack = /obj/item/storage/backpack/science
-	satchel = /obj/item/storage/backpack/satchel/tox
-	duffelbag = /obj/item/storage/backpack/duffelbag/toxins
+	satchel = /obj/item/storage/backpack/satchel/science
+	duffelbag = /obj/item/storage/backpack/duffelbag/science
 
 	skillchips = list(/obj/item/skillchip/job/research_director)
 

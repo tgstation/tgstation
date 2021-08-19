@@ -415,3 +415,46 @@
       like iamgoofball intended almost 4 years ago.
   Time-Green:
   - bugfix: moths will burn
+2021-08-17:
+  Ghommie:
+  - qol: Wormhole projectors now fire blue wormholes with left mouse btton and orange
+      ones with right mouse button.
+  GreatKingWombat:
+  - bugfix: Defined the in-hand state for the chaplains' unholy pitchfork. The in-hand
+      sprites will now actually appear.
+  SmArtKar:
+  - bugfix: NTNet Transmitter now works
+  Timberpoes:
+  - admin: Admins can now find "banned account in connection history" admin alerts
+      mirrored to the suspicious logins log file.
+  Watermelon914:
+  - bugfix: Fixed freezers protecting their contents after being exploded.
+2021-08-18:
+  Cyberboss:
+  - bugfix: The insufficient black market credits message now properly displays.
+  EOBGames:
+  - code_imp: Management would like to announce that in accordance with new company
+      policy, the Toxins Lab will henceforth be known as the Ordnance Lab. In addition,
+      a number of company protocols have been rewritten with this in mind.
+  Watermelon914:
+  - refactor: Refactors connect_loc_behalf and caltrops to both be components. This
+      will likely solve a lot of current issues with connect_loc_behalf as storing
+      states will be much more stable on it.
+2021-08-19:
+  GoldenAlpharex:
+  - bugfix: Space-proof beret now actually appears to have been made into a beret,
+      instead of a reality-bending bunch of letters.
+  Maurukas:
+  - bugfix: The intercom in Deltastation's toxin range has been relocated closer to
+      the implosion compressor
+  Moltovz:
+  - bugfix: fixed a broken bee in botany.
+  Potato-Masher:
+  - bugfix: Fixes the Deltastation Engineering console being wired to the wrong powernet,
+      allowing the Ampcheck program to function as intended.
+  - bugfix: Added a missing length of cable to the tramstation kitchen, as well as
+      the absent salt/pepper shakers.
+  SmArtKar:
+  - bugfix: Beach Biodome now has an oven and a griddle
+  jughu:
+  - bugfix: fixes wizard failing to spawn without a spellbook when you roll a d20

@@ -576,6 +576,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define LYING_DOWN_TRAIT "lying-down"
 /// Trait associated to lacking electrical power.
 #define POWER_LACK_TRAIT "power-lack"
+/// Trait associated to lacking motor movement
+#define MOTOR_LACK_TRAIT "motor-lack"
 /// Trait associated with mafia
 #define MAFIA_TRAIT "mafia"
 /// Trait associated with highlander
@@ -584,6 +586,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///generic atom traits
 /// Trait from [/datum/element/rust]. Its rusty and should be applying a special overlay to denote this.
 #define TRAIT_RUSTY "rust_trait"
+///stops someone from splashing their reagent_container on an object with this trait
 #define DO_NOT_SPLASH "do_not_splash"
 
 // unique trait sources, still defines

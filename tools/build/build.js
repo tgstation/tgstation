@@ -16,7 +16,7 @@ import { yarn } from './lib/yarn.js';
 import Juke from './juke/index.js';
 
 Juke.chdir('../..', import.meta.url);
-Juke.setup({ file: import.meta.url });
+Juke.setup({ file: import.meta.url }).then((code) => process.exit(code));
 
 const DME_NAME = 'tgstation';
 
