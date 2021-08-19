@@ -4789,7 +4789,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "kd" = (
-/obj/item/storage/backpack/satchel/tox,
+/obj/item/storage/backpack/satchel/science,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/suit/toggle/labcoat/science,
 /obj/effect/decal/cleanable/dirt,
@@ -6538,8 +6538,8 @@
 /area/awaymission/undergroundoutpost45/research)
 "nk" = (
 /obj/structure/table,
-/obj/item/cartridge/signal/toxins,
-/obj/item/cartridge/signal/toxins{
+/obj/item/cartridge/signal/ordnance,
+/obj/item/cartridge/signal/ordnance{
 	pixel_x = -4;
 	pixel_y = 2
 	},

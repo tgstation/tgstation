@@ -1,0 +1,4 @@
+author: "Pepsiman0"
+delete-after: True
+changes: 
+  - bugfix: "the chem mass spectrometer is now a proper machine that is now: buildable, deconstructable, movable and upgradable. (the research for the board is in the basic bio tech node)"

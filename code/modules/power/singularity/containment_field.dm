@@ -29,8 +29,12 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/field/containment/Destroy()
-	field_gen_1.fields -= src
-	field_gen_2.fields -= src
+	if(field_gen_1)
+		field_gen_1.fields -= src
+		field_gen_1 = null
+	if(field_gen_2)
+		field_gen_2.fields -= src
+		field_gen_2 = null
 	CanAtmosPass = ATMOS_PASS_YES
 	air_update_turf(TRUE, FALSE)
 	return ..()
