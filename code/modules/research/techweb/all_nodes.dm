@@ -259,6 +259,7 @@
 		"blood_pack",
 		"chem_dispenser",
 		"chem_heater",
+		"chem_mass_spec",
 		"chem_master",
 		"chem_pack",
 		"crewpinpointerprox",
