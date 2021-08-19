@@ -18,8 +18,8 @@
 	var/datum/port/output/output
 
 /obj/item/circuit_component/random/populate_ports()
-	minimum = add_input_port("Minimum", PORT_TYPE_NUMBER, FALSE)
-	maximum = add_input_port("Maximum", PORT_TYPE_NUMBER, FALSE)
+	minimum = add_input_port("Minimum", PORT_TYPE_NUMBER, trigger = null)
+	maximum = add_input_port("Maximum", PORT_TYPE_NUMBER, trigger = null)
 
 	output = add_output_port("Output", PORT_TYPE_NUMBER)
 

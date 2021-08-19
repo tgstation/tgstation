@@ -34,9 +34,9 @@
 	. += create_ui_notice("Maximum Range: [max_range] tiles", "orange", "info")
 
 /obj/item/circuit_component/pathfind/populate_ports()
-	input_X = add_input_port("Target X", PORT_TYPE_NUMBER, FALSE)
-	input_Y = add_input_port("Target Y", PORT_TYPE_NUMBER, FALSE)
-	id_card = add_input_port("ID Card", PORT_TYPE_ATOM, FALSE)
+	input_X = add_input_port("Target X", PORT_TYPE_NUMBER, trigger = null)
+	input_Y = add_input_port("Target Y", PORT_TYPE_NUMBER, trigger = null)
+	id_card = add_input_port("ID Card", PORT_TYPE_ATOM, trigger = null)
 
 	output = add_output_port("Next step", PORT_TYPE_ATOM)
 	finished = add_output_port("Arrived to destination", PORT_TYPE_SIGNAL)

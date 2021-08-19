@@ -128,7 +128,7 @@
 	var/obj/machinery/computer/tram_controls/computer
 
 /obj/item/circuit_component/tram_controls/populate_ports()
-	new_destination = add_input_port("Destination", PORT_TYPE_STRING, FALSE)
+	new_destination = add_input_port("Destination", PORT_TYPE_STRING, trigger = null)
 	trigger_move = add_input_port("Send Tram", PORT_TYPE_SIGNAL)
 
 	location = add_output_port("Location", PORT_TYPE_STRING)

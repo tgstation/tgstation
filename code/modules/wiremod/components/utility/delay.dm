@@ -19,7 +19,7 @@
 	var/datum/port/output/output
 
 /obj/item/circuit_component/delay/populate_ports()
-	delay_amount = add_input_port("Delay", PORT_TYPE_NUMBER, FALSE)
+	delay_amount = add_input_port("Delay", PORT_TYPE_NUMBER, trigger = null)
 	trigger = add_input_port("Trigger", PORT_TYPE_SIGNAL)
 
 	output = add_output_port("Result", PORT_TYPE_SIGNAL)

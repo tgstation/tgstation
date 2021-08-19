@@ -47,7 +47,7 @@
 	. += create_ui_notice("Maximum Range: [the_pad.range]", "orange", "plus")
 
 /obj/item/circuit_component/bluespace_launchpad/populate_ports()
-	launchpad_id = add_input_port("Launchpad ID", PORT_TYPE_NUMBER, FALSE, default = 1)
+	launchpad_id = add_input_port("Launchpad ID", PORT_TYPE_NUMBER, trigger = null, default = 1)
 	x_pos = add_input_port("X offset", PORT_TYPE_NUMBER)
 	y_pos = add_input_port("Y offset", PORT_TYPE_NUMBER)
 	send_trigger = add_input_port("Send", PORT_TYPE_SIGNAL)
