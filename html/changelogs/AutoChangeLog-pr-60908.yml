@@ -1,0 +1,5 @@
+author: "ViktorKoL"
+delete-after: True
+changes: 
+  - bugfix: "corrected Fiery Rebirth's and Curse of Corrosion's heretic research descriptions"
+  - bugfix: "fixed heretic research progression after unlocking the Lonely Ritual"
