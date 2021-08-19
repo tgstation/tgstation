@@ -97,6 +97,8 @@
 	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_SHARPEN_ACT))
 
 /datum/component/transforming/Destroy()
+	if(pre_transform_callback)
+		QDEL_NULL(pre_transform_callback)
 	if(on_transform_callback)
 		QDEL_NULL(on_transform_callback)
 	return ..()
@@ -105,9 +107,10 @@
  * Called on [COMSIG_ITEM_ATTACK_SELF].
  *
  * Check if we can transform our weapon, and if so, call [do_transform].
+ * (If we have a [pre_transform_callback], invoke it. If that callback returns a falsy value, cancel the transform.)
  * And, if [do_transform] was successful, do a clumsy effect from [clumsy_transform_effect].
  *
- * source - source of the signal, the item being transformed
+ * source - source of the signal, the item being transformed / parent
  * user - the mob transforming the weapon
  */
 /datum/component/transforming/proc/on_attack_self(obj/item/source, mob/user)
@@ -131,7 +134,7 @@
  * Invokes [on_transform_callback] if we have one, or calls [default_transform_message] if we don't.
  * Starts [transform_cooldown] if we have a set [transform_cooldown_time].
  * *
- * source - the item being transformed
+ * source - the item being transformed / parent
  * user - the mob transforming the item
  *
  * returns TRUE.
@@ -152,7 +155,7 @@
 /*
  * The default feedback message and sound effect for an item transforming.
  *
- * source - the item being transformed
+ * source - the item being transformed / parent
  * user - the mob transforming the item
  */
 /datum/component/transforming/proc/default_transform_message(obj/item/source, mob/user)
@@ -163,7 +166,7 @@
  * Toggle active between true and false, and call
  * either set_active or set_inactive depending on whichever state is toggled.
  *
- * source - the item being transformed
+ * source - the item being transformed / parent
  */
 /datum/component/transforming/proc/toggle_active(obj/item/source)
 	active = !active
@@ -176,7 +179,7 @@
  * Set our transformed item into its active state.
  * Updates all the values that were passed from init and the icon_state.
  *
- * source - the item being transformed
+ * source - the item being transformed / parent
  */
 /datum/component/transforming/proc/set_active(obj/item/source)
 	if(sharpness_on)
@@ -201,7 +204,7 @@
  * Set our transformed item into its inactive state.
  * Updates all the values back to the item's initial values.
  *
- * source - the item being un-transformed
+ * source - the item being un-transformed / parent
  */
 /datum/component/transforming/proc/set_inactive(obj/item/source)
 	if(sharpness_on)
@@ -249,7 +252,7 @@
  * We need to track our sharpened bonus here, so we correctly apply and unapply it
  * if our item's sharpness state changes from transforming.
  *
- * source - the item being sharpened
+ * source - the item being sharpened / parent
  * increment - the amount of force added
  * max - the maximum force that the item can be adjusted to.
  *
