@@ -227,8 +227,7 @@
 
 	var/obj/machinery/computer/teleporter/attached_console
 
-/obj/item/circuit_component/teleporter_control_console/Initialize()
-	. = ..()
+/obj/item/circuit_component/teleporter_control_console/populate_ports()
 
 	new_target = add_input_port("New Target", PORT_TYPE_STRING)
 	set_target_trigger = add_input_port("Set Target", PORT_TYPE_SIGNAL)

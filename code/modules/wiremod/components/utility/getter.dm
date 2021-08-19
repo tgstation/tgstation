@@ -26,8 +26,7 @@
 	variable_name.possible_options = null
 	return ..()
 
-/obj/item/circuit_component/getter/Initialize()
-	. = ..()
+/obj/item/circuit_component/getter/populate_ports()
 	value = add_output_port("Value", PORT_TYPE_ANY)
 
 /obj/item/circuit_component/getter/input_received(datum/port/input/port)

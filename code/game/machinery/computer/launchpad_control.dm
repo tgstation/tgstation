@@ -46,8 +46,7 @@
 	. += create_ui_notice("Minimum Range: [-the_pad.range]", "orange", "minus")
 	. += create_ui_notice("Maximum Range: [the_pad.range]", "orange", "plus")
 
-/obj/item/circuit_component/bluespace_launchpad/Initialize()
-	. = ..()
+/obj/item/circuit_component/bluespace_launchpad/populate_ports()
 	launchpad_id = add_input_port("Launchpad ID", PORT_TYPE_NUMBER, FALSE, default = 1)
 	x_pos = add_input_port("X offset", PORT_TYPE_NUMBER)
 	y_pos = add_input_port("Y offset", PORT_TYPE_NUMBER)
@@ -69,10 +68,6 @@
 	return ..()
 
 /obj/item/circuit_component/bluespace_launchpad/input_received(datum/port/input/port)
-	. = ..()
-
-	if(.)
-		return
 
 	if(!attached_console || length(attached_console.launchpads) == 0)
 		why_fail.set_output("No launchpads connected!")

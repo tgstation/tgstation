@@ -26,8 +26,7 @@
 	. = ..()
 	. += create_ui_notice("Maximum Brightness: [max_power]", "orange", "lightbulb")
 
-/obj/item/circuit_component/light/Initialize()
-	. = ..()
+/obj/item/circuit_component/light/populate_ports()
 	red = add_input_port("Red", PORT_TYPE_NUMBER)
 	green = add_input_port("Green", PORT_TYPE_NUMBER)
 	blue = add_input_port("Blue", PORT_TYPE_NUMBER)
@@ -37,7 +36,7 @@
 
 /obj/item/circuit_component/light/register_shell(atom/movable/shell)
 	. = ..()
-	TRIGGER_CIRCUIT_COMPONENT(src, null)
+	trigger_component()
 
 /obj/item/circuit_component/light/unregister_shell(atom/movable/shell)
 	shell.set_light_on(FALSE)

@@ -467,8 +467,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/datum/port/output/direction
 	var/obj/machinery/conveyor_switch/attached_switch
 
-/obj/item/circuit_component/conveyor_switch/Initialize()
-	. = ..()
+/obj/item/circuit_component/conveyor_switch/populate_ports()
 	direction = add_output_port("Conveyor Direction", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/conveyor_switch/get_ui_notices()

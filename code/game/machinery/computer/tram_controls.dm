@@ -127,8 +127,7 @@
 	/// The tram controls computer (/obj/machinery/computer/tram_controls)
 	var/obj/machinery/computer/tram_controls/computer
 
-/obj/item/circuit_component/tram_controls/Initialize()
-	. = ..()
+/obj/item/circuit_component/tram_controls/populate_ports()
 	new_destination = add_input_port("Destination", PORT_TYPE_STRING, FALSE)
 	trigger_move = add_input_port("Send Tram", PORT_TYPE_SIGNAL)
 

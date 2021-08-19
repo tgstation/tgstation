@@ -16,8 +16,7 @@
 
 	var/current_type
 
-/obj/item/circuit_component/typecast/Initialize()
-	. = ..()
+/obj/item/circuit_component/typecast/populate_ports()
 	current_type = typecast_options.value
 	input_value = add_input_port("Input", PORT_TYPE_ANY)
 	output_value = add_output_port("Output", current_type)

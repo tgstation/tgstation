@@ -912,8 +912,7 @@
 	var/obj/machinery/airalarm/connected_alarm
 	var/list/options_map
 
-/obj/item/circuit_component/air_alarm/Initialize()
-	. = ..()
+/obj/item/circuit_component/air_alarm/populate_ports()
 	min_2 = add_input_port("Min 2", PORT_TYPE_NUMBER)
 	min_1 = add_input_port("Min 1", PORT_TYPE_NUMBER)
 	max_1 = add_input_port("Max 1", PORT_TYPE_NUMBER)

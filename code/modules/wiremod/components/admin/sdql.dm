@@ -14,15 +14,11 @@
 	var/datum/port/output/results
 
 
-/obj/item/circuit_component/sdql_operation/Initialize()
-	. = ..()
+/obj/item/circuit_component/sdql_operation/populate_ports()
 	sdql_operation = add_input_port("SDQL String", PORT_TYPE_STRING)
 	results = add_output_port("Result", PORT_TYPE_LIST)
 
 /obj/item/circuit_component/sdql_operation/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	var/operation = sdql_operation.value
 

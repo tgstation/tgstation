@@ -167,8 +167,7 @@
 
 	var/datum/weakref/user
 
-/obj/item/circuit_component/bci_core/Initialize()
-	. = ..()
+/obj/item/circuit_component/bci_core/populate_ports()
 
 	message = add_input_port("Message", PORT_TYPE_STRING)
 	send_message_signal = add_input_port("Send Message", PORT_TYPE_SIGNAL)

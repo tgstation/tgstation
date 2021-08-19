@@ -207,8 +207,7 @@
 
 	var/obj/machinery/quantumpad/attached_pad
 
-/obj/item/circuit_component/quantumpad/Initialize()
-	. = ..()
+/obj/item/circuit_component/quantumpad/populate_ports()
 	target_pad = add_input_port("Target Pad", PORT_TYPE_ATOM)
 	failed = add_output_port("On Fail", PORT_TYPE_SIGNAL)
 

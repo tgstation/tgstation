@@ -35,8 +35,7 @@
 	)
 	router_options = add_option_port("Router Options", component_options)
 
-/obj/item/circuit_component/router/Initialize()
-	. = ..()
+/obj/item/circuit_component/router/populate_ports()
 	current_type = router_options.value
 	if(input_port_amount > 1)
 		input_selector = add_input_port("Input Selector", PORT_TYPE_NUMBER, default = 1)
