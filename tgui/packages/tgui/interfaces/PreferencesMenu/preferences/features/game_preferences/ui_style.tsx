@@ -26,6 +26,7 @@ const UIStyleInput = (props: {
 
 export const UI_style: Feature<string, string> = {
   name: "UI Style",
+  category: "UI",
 
   // MOTHBLOCKS TODO: available_ui_styles.
   // MOTHBLOCKS TODO: We don't need the server telling us the icons, we

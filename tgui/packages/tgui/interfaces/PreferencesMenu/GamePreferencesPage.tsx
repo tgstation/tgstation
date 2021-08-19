@@ -1,40 +1,80 @@
-import { binaryInsertWith } from "common/collections";
+import { binaryInsertWith, sortBy } from "common/collections";
 import { classes } from "common/react";
+import { InfernoNode } from "inferno";
 import { useBackend, useLocalState } from "../../backend";
 import { Box, Button, Divider, Flex, LabeledList, Section, Stack, Table, Tooltip } from "../../components";
+import { logger } from "../../logging";
 import { PreferencesMenuData } from "./data";
 import features from "./preferences/features";
 import { FeatureValueInput } from "./preferences/features/base";
+import { TabbedMenu } from "./TabbedMenu";
+
+type PreferenceChild = {
+  name: string,
+  children: InfernoNode,
+};
+
+const binaryInsertPreference = binaryInsertWith<PreferenceChild>(
+  (child) => child.name,
+);
+
+const sortByName = sortBy<[string, PreferenceChild[]]>(([name]) => name);
 
 export const GamePreferencesPage = (props, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
 
+  const gamePreferences: Record<string, PreferenceChild[]> = {};
+
+  for (const [featureId, value] of Object.entries(
+    data.character_preferences.game_preferences
+  )) {
+    const feature = features[featureId];
+
+    const child = (
+      <Flex align="center" key={featureId} pb={2}>
+        <Flex.Item textAlign="right" grow={1} pr={2} basis="50%">
+          {feature?.name || featureId}
+        </Flex.Item>
+
+        <Flex.Item grow={1} basis="50%">
+          {feature && <FeatureValueInput
+            feature={feature}
+            featureId={featureId}
+            value={value}
+            act={act}
+          /> || (
+            <Box as="b" color="red">
+              ...is not filled out properly!!!
+            </Box>
+          )}
+        </Flex.Item>
+      </Flex>
+    );
+
+    const entry = {
+      name: feature?.name || featureId,
+      children: child,
+    };
+
+    const category = feature?.category || "ERROR";
+
+    gamePreferences[category]
+      = binaryInsertPreference(gamePreferences[category] || [], entry);
+  }
+
+  const gamePreferenceEntries: [string, InfernoNode][] = sortByName(
+    Object.entries(gamePreferences)
+  ).map(
+    ([category, preferences]) => {
+      return [category, preferences.map(entry => entry.children)];
+    });
+
   return (
-    <Table fontSize={1.5}>
-      {/* MOTHBLOCKS TODO: Sort in *literally* any way */}
-      {/* Not ABC, since similar preferences should be together */}
-      {/* Should also support dividers */}
-      {Object.entries(data.character_preferences.game_preferences)
-        .map(([featureId, value]) => {
-          const feature = features[featureId];
-
-          return (
-            <Table.Row key={featureId}>
-              <Table.Cell textAlign="right" width="50%" verticalAlign="middle">
-                {feature.name}
-              </Table.Cell>
-
-              <Table.Cell verticalAlign="middle">
-                <FeatureValueInput
-                  feature={feature}
-                  featureId={featureId}
-                  value={value}
-                  act={act}
-                />
-              </Table.Cell>
-            </Table.Row>
-          );
-        })}
-    </Table>
+    <TabbedMenu
+      categoryEntries={gamePreferenceEntries}
+      contentProps={{
+        fontSize: 1.5,
+      }}
+    />
   );
 };

@@ -1,3 +1,4 @@
+import { BooleanLike } from "common/react";
 import { InfernoNode } from "inferno";
 import { sendAct, useLocalState } from "../../../../backend";
 import { Box, Button, Dropdown, NumberInput, Stack } from "../../../../components";
@@ -6,12 +7,8 @@ import { createSetPreference } from "../../data";
 export type Feature<T, U = T> = {
   name: string;
   createComponent: FeatureValue<T, U>;
-  scope?: FeatureScope,
+  category?: string;
 };
-
-export enum FeatureScope {
-  GamePreferences,
-}
 
 /**
  * Represents a preference.
@@ -57,6 +54,19 @@ export const createColorInput = (featureProps: FeatureValueProps<string>) => {
       </Stack>
     </Button>
   );
+};
+
+export type FeatureToggle = Feature<BooleanLike, boolean>;
+
+export const createCheckboxInput = (): FeatureValue<BooleanLike, boolean> => {
+  return (featureProps: FeatureValueProps<BooleanLike, boolean>) => {
+    return (<Button.Checkbox
+      checked={!!featureProps.value}
+      onClick={() => {
+        featureProps.handleSetValue(!featureProps.value);
+      }}
+    />);
+  };
 };
 
 export const createDropdownInput = (

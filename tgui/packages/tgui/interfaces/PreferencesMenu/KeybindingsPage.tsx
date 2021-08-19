@@ -4,8 +4,8 @@ import { resolveAsset } from "../../assets";
 import { PreferencesMenuData } from "./data";
 import { useBackend, useLocalState } from "../../backend";
 import { sortBy } from "common/collections";
-import { logger } from "../../logging";
 import { KeyEvent } from "../../events";
+import { TabbedMenu } from "./TabbedMenu";
 
 type Keybinding = {
   name: string;
@@ -146,8 +146,6 @@ const ResetToDefaultButton = (props: {
 
 export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
   cancelNextKeyUp?: number;
-  categoryRefs: Record<string, RefObject<HTMLDivElement>> = {};
-  keybindingsSectionRef: RefObject<HTMLDivElement> = createRef();
   keybindingOnClicks: Record<string, (() => void)[]> = {};
   lastKeybinds?: PreferencesMenuData["keybindings"];
 
@@ -297,10 +295,6 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     const keybindingsResponse = await fetch(resolveAsset("keybindings.json"));
     const keybindingsData: Keybindings = await keybindingsResponse.json();
 
-    for (const category of Object.keys(keybindingsData)) {
-      this.categoryRefs[category] = createRef();
-    }
-
     this.setState({
       keybindings: keybindingsData,
     });
@@ -336,150 +330,103 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     moveToBottom(keybindingEntries, "ADMIN");
 
     return (
-      <Stack vertical fill>
+      <>
         <KeyListener
           onKeyDown={this.handleKeyDown}
           onKeyUp={this.handleKeyUp}
         />
 
-        <Stack.Item>
-          <Stack fill px={5}>
-            {keybindingEntries.map(([category, _]) => {
-              return (
-                <Stack.Item key={category} grow>
-                  <Button
-                    align="center"
-                    fontSize="1.2em"
-                    fluid
-                    onClick={() => {
-                      const offsetTop = this.categoryRefs[category]
-                        .current?.offsetTop;
+        <TabbedMenu
+          categoryEntries={keybindingEntries.map(
+            ([category, keybindings]) => {
+              return [category, (
+                <Stack key={category} vertical fill>
+                  {sortKeybindings(Object.entries(keybindings)).map(
+                    ([keybindingId, keybinding]) => {
+                      const keys
+                            = this.state.selectedKeybindings[keybindingId]
+                              || [];
 
-                      if (!this.keybindingsSectionRef.current) {
-                        return;
-                      }
+                      let name = (
+                        <Stack.Item basis="25%">
+                          {keybinding.name}
+                        </Stack.Item>
+                      );
 
-                      this.keybindingsSectionRef.current.scrollTop = offsetTop;
-                    }}
-                  >
-                    {category}
-                  </Button>
-                </Stack.Item>
-              );
-            })}
-          </Stack>
-        </Stack.Item>
+                      // MOTHBLOCKS TODO: FIX TOOLTIP
+                      // if (keybinding.description) {
+                      //   name = (
+                      //     <Tooltip
+                      //       content={
+                      //         keybinding.description
+                      //       }>
+                      //       {name}
+                      //     </Tooltip>
+                      //   );
+                      // }
 
-        <Stack.Item
-          grow
-          ref={this.keybindingsSectionRef}
-          style={{
-            "position": "relative",
-            "overflow-y": "scroll",
-          }}
-        >
-          <Stack vertical fill px={2}>
-            {keybindingEntries.map(
-              ([category, keybindings]) => {
-                return (
-                  <Stack.Item
-                    key={category}
-                    ref={this.categoryRefs[category]}
-                  >
-                    <Section
-                      fill
-                      title={category}
-                    >
-                      <Stack vertical fill>
-                        {sortKeybindings(Object.entries(keybindings)).map(
-                          ([keybindingId, keybinding]) => {
-                            const keys
-                              = this.state.selectedKeybindings[keybindingId]
-                                || [];
+                      return (
+                        <Stack.Item key={keybindingId}>
+                          <Stack fill>
+                            {name}
 
-                            let name = (
-                              <Stack.Item basis="25%">
-                                {keybinding.name}
-                              </Stack.Item>
-                            );
+                            <Stack.Item grow basis="10%">
+                              <KeybindingButton
+                                currentHotkey={keys[0]}
+                                typingHotkey={this.getTypingHotkey(
+                                  keybindingId,
+                                  0,
+                                )}
+                                onClick={this.getKeybindingOnClick(
+                                  keybindingId,
+                                  0,
+                                )}
+                              />
+                            </Stack.Item>
 
-                            // MOTHBLOCKS TODO: FIX TOOLTIP
-                            // if (keybinding.description) {
-                            //   name = (
-                            //     <Tooltip
-                            //       content={
-                            //         keybinding.description
-                            //       }>
-                            //       {name}
-                            //     </Tooltip>
-                            //   );
-                            // }
+                            <Stack.Item grow basis="10%">
+                              <KeybindingButton
+                                currentHotkey={keys[1]}
+                                typingHotkey={this.getTypingHotkey(
+                                  keybindingId,
+                                  1,
+                                )}
+                                onClick={this.getKeybindingOnClick(
+                                  keybindingId,
+                                  1,
+                                )}
+                              />
+                            </Stack.Item>
 
-                            return (
-                              <Stack.Item key={keybindingId}>
-                                <Stack fill>
-                                  {name}
+                            <Stack.Item grow basis="10%">
+                              <KeybindingButton
+                                currentHotkey={keys[2]}
+                                typingHotkey={this.getTypingHotkey(
+                                  keybindingId,
+                                  2,
+                                )}
+                                onClick={this.getKeybindingOnClick(
+                                  keybindingId,
+                                  2,
+                                )}
+                              />
+                            </Stack.Item>
 
-                                  <Stack.Item grow basis="10%">
-                                    <KeybindingButton
-                                      currentHotkey={keys[0]}
-                                      typingHotkey={this.getTypingHotkey(
-                                        keybindingId,
-                                        0,
-                                      )}
-                                      onClick={this.getKeybindingOnClick(
-                                        keybindingId,
-                                        0,
-                                      )}
-                                    />
-                                  </Stack.Item>
-
-                                  <Stack.Item grow basis="10%">
-                                    <KeybindingButton
-                                      currentHotkey={keys[1]}
-                                      typingHotkey={this.getTypingHotkey(
-                                        keybindingId,
-                                        1,
-                                      )}
-                                      onClick={this.getKeybindingOnClick(
-                                        keybindingId,
-                                        1,
-                                      )}
-                                    />
-                                  </Stack.Item>
-
-                                  <Stack.Item grow basis="10%">
-                                    <KeybindingButton
-                                      currentHotkey={keys[2]}
-                                      typingHotkey={this.getTypingHotkey(
-                                        keybindingId,
-                                        2,
-                                      )}
-                                      onClick={this.getKeybindingOnClick(
-                                        keybindingId,
-                                        2,
-                                      )}
-                                    />
-                                  </Stack.Item>
-
-                                  <Stack.Item shrink>
-                                    <ResetToDefaultButton
-                                      keybindingId={keybindingId} />
-                                  </Stack.Item>
-                                </Stack>
-                              </Stack.Item>
-                            );
-                          }
-                        )}
-                      </Stack>
-                    </Section>
-                  </Stack.Item>
-                );
-              }
-            )}
-          </Stack>
-        </Stack.Item>
-      </Stack>
+                            <Stack.Item shrink>
+                              <ResetToDefaultButton
+                                keybindingId={keybindingId} />
+                            </Stack.Item>
+                          </Stack>
+                        </Stack.Item>
+                      );
+                    }
+                  )}
+                </Stack>
+              )];
+            }
+          )}
+        />
+      </>
     );
   }
 }

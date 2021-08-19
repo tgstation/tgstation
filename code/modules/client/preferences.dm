@@ -21,8 +21,6 @@ GLOBAL_VAR(preferences_species_data)
 	var/asaycolor = "#ff4500" //This won't change the color for current admins, only incoming ones.
 	/// If we spawn an ERT as an admin and choose to spawn as the briefing officer, we'll be given this outfit
 	var/brief_outfit = /datum/outfit/centcom/commander
-	var/enable_tips = TRUE
-	var/tip_delay = 500 //tip delay in milliseconds
 
 	//Antag preferences
 	var/list/be_special = list() //Special role selection

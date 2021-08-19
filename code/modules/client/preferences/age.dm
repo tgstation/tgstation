@@ -1,22 +1,10 @@
-/datum/preference/age
+/datum/preference/numeric/age
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
 	savefile_key = "age"
 	savefile_identifier = PREFERENCE_CHARACTER
 
-/datum/preference/age/deserialize(input)
-	return sanitize_integer(input, AGE_MIN, AGE_MAX, create_default_value())
+	minimum = AGE_MIN
+	maximum = AGE_MAX
 
-/datum/preference/age/serialize(input)
-	return sanitize_integer(input, AGE_MIN, AGE_MAX, create_default_value())
-
-/datum/preference/age/create_default_value()
-	return rand(AGE_MIN, AGE_MAX)
-
-/datum/preference/age/transform_value(value)
-	return text2num(value)
-
-/datum/preference/age/is_valid(value)
-	return !isnull(value) && value >= AGE_MIN && value <= AGE_MAX
-
-/datum/preference/age/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/numeric/age/apply_to_human(mob/living/carbon/human/target, value)
 	target.age = value

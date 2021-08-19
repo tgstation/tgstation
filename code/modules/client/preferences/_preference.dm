@@ -316,3 +316,47 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		possible_values[name] = final_icon
 
 	return possible_values
+
+/// A numeric preference with a minimum and maximum value
+/datum/preference/numeric
+	/// The minimum value
+	var/minimum
+
+	/// The maximum value
+	var/maximum
+
+	abstract_type = /datum/preference/numeric
+
+/datum/preference/numeric/deserialize(input)
+	return sanitize_integer(input, minimum, maximum, create_default_value())
+
+/datum/preference/numeric/serialize(input)
+	return sanitize_integer(input, minimum, maximum, create_default_value())
+
+/datum/preference/numeric/create_default_value()
+	return rand(minimum, maximum)
+
+/datum/preference/numeric/transform_value(value)
+	return text2num(value)
+
+/datum/preference/numeric/is_valid(value)
+	return !isnull(value) && value >= minimum && value <= maximum
+
+/// A prefernece whose value is always TRUE or FALSE
+/datum/preference/toggle
+	abstract_type = /datum/preference/toggle
+
+	/// The default value of the toggle, if create_default_value is not specified
+	var/default_value = TRUE
+
+/datum/preference/toggle/create_default_value()
+	return default_value
+
+/datum/preference/toggle/deserialize(input)
+	return input
+
+/datum/preference/toggle/transform_value(value)
+	return value == TRUE
+
+/datum/preference/toggle/is_valid(value)
+	return value == TRUE || value == FALSE
