@@ -42,8 +42,7 @@
 	shell.set_light_on(FALSE)
 	return ..()
 
-/obj/item/circuit_component/light/input_received(datum/port/input/port)
-	. = ..()
+/obj/item/circuit_component/light/pre_input_received(datum/port/input/port)
 	brightness.set_value(clamp(brightness.value || 0, 0, max_power))
 	red.set_value(clamp(red.value, 0, 255))
 	blue.set_value(clamp(blue.value, 0, 255))
@@ -51,9 +50,8 @@
 	var/list/hsl = rgb2hsl(red.value || 0, green.value || 0, blue.value || 0)
 	var/list/light_col = hsl2rgb(hsl[1], hsl[2], max(min_lightness, hsl[3]))
 	shell_light_color = rgb(light_col[1], light_col[2], light_col[3])
-	if(.)
-		return
 
+/obj/item/circuit_component/light/input_received(datum/port/input/port)
 	if(parent.shell)
 		set_atom_light(parent.shell)
 

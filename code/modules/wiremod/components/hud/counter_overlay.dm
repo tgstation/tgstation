@@ -43,9 +43,7 @@
 	UnregisterSignal(shell, COMSIG_ORGAN_REMOVED)
 
 /obj/item/circuit_component/counter_overlay/input_received(datum/port/input/port)
-	. = ..()
-
-	if(. || !bci)
+	if(!bci)
 		return
 
 	var/mob/living/owner = bci.owner

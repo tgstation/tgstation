@@ -221,8 +221,7 @@
 	return ..()
 
 /obj/item/circuit_component/quantumpad/input_received(datum/port/input/port)
-	. = ..()
-	if(. || !attached_pad)
+	if(!attached_pad)
 		return
 
 	var/obj/machinery/quantumpad/targeted_pad = target_pad.value

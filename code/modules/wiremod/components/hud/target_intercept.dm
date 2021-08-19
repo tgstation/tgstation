@@ -31,9 +31,7 @@
 	UnregisterSignal(shell, COMSIG_ORGAN_REMOVED)
 
 /obj/item/circuit_component/target_intercept/input_received(datum/port/input/port)
-	. = ..()
-
-	if(. || !bci)
+	if(!bci)
 		return
 
 	var/mob/living/owner = bci.owner

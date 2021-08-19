@@ -484,8 +484,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	return ..()
 
 /obj/item/circuit_component/conveyor_switch/input_received(datum/port/input/port)
-	. = ..()
-	if(. || !attached_switch)
+	if(!attached_switch)
 		return
 
 	attached_switch.update_position()

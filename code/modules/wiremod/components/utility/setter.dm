@@ -34,8 +34,7 @@
 	input_port = add_input_port("Input", PORT_TYPE_ANY)
 	trigger = add_input_port("Store", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/setter/input_received(datum/port/input/port)
-	. = ..()
+/obj/item/circuit_component/setter/pre_input_received(datum/port/input/port)
 	var/variable_string = variable_name.value
 	if(!variable_string)
 		return
@@ -48,9 +47,7 @@
 		current_type = variable.datatype
 		input_port.set_datatype(current_type)
 
-	if(.)
-		return
-
+/obj/item/circuit_component/setter/input_received(datum/port/input/port)
 	if(!COMPONENT_TRIGGERED_BY(trigger, port))
 		return TRUE
 

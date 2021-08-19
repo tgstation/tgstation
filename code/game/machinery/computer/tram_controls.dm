@@ -149,10 +149,6 @@
 	return ..()
 
 /obj/item/circuit_component/tram_controls/input_received(datum/port/input/port)
-	. = ..()
-	if (.)
-		return
-
 	if (!COMPONENT_TRIGGERED_BY(trigger_move, port))
 		return
 
@@ -163,7 +159,6 @@
 		return
 
 	var/destination
-
 	for(var/obj/effect/landmark/tram/possible_destination as anything in GLOB.tram_landmarks)
 		if(possible_destination.name == new_destination.value)
 			destination = possible_destination

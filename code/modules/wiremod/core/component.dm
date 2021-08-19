@@ -208,7 +208,10 @@
 
 
 /**
- * Called whether this circuit component should receive an input
+ * Called whether this circuit component should receive an input.
+ * If this returns false, the proc that is supposed to be triggered will not be called and an output signal will not be sent.
+ * This is to only return false if flow of execution should be stopped because something bad has happened (e.g. no power)
+ * Returning no value in input_received() is not an issue because it means flow of execution will continue even if the component failed to execute properly.
  *
  * Return value indicates whether or not
  * Arguments:

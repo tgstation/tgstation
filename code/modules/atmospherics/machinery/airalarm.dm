@@ -948,9 +948,7 @@
 	return ..()
 
 /obj/item/circuit_component/air_alarm/input_received(datum/port/input/port)
-	. = ..()
-
-	if(. || !connected_alarm || connected_alarm.locked)
+	if(!connected_alarm || connected_alarm.locked)
 		return
 
 	var/current_option = air_alarm_options.value

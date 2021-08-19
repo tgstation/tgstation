@@ -45,14 +45,11 @@
 	sound_file = add_option_port("Sound Option", component_options)
 	options_map = component_options
 
-
-/obj/item/circuit_component/soundemitter/input_received(datum/port/input/port)
-	. = ..()
+/obj/item/circuit_component/soundemitter/pre_input_received(datum/port/input/port)
 	volume.set_value(clamp(volume.value, 0, 100))
 	frequency.set_value(clamp(frequency.value, -100, 100))
-	if(.)
-		return
 
+/obj/item/circuit_component/soundemitter/input_received(datum/port/input/port)
 	if(TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_SOUNDEMITTER))
 		return
 
