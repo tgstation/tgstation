@@ -346,6 +346,9 @@
 	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_INTERACT)
 		return FALSE
 
+	if(!isliving(user))
+		return FALSE //no ghosts allowed, sorry
+
 	var/is_dextrous = FALSE
 	if(isanimal(user))
 		var/mob/living/simple_animal/user_as_animal = user
