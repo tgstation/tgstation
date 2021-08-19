@@ -193,8 +193,6 @@
 	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup. Does not inject toxin."
 	///Whether or not the tarantula is currently walking on webbing.
 	var/silk_walking = TRUE
-	///The spider's charge ability
-	var/obj/effect/proc_holder/tarantula_charge/charge
 
 /mob/living/simple_animal/hostile/giant_spider/tarantula/ranged_secondary_attack(atom/target, modifiers)
 	if(COOLDOWN_FINISHED(src, charge_cooldown))
