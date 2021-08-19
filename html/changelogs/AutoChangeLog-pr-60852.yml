@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - bugfix: "Fix fire being extinguished by pAIs, borgs, or simple animals by walking over the mob."
