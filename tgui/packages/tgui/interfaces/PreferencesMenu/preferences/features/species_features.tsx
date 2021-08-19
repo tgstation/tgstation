@@ -1,16 +1,16 @@
-import { ColorInput, Feature } from "./base";
+import { FeatureColorInput, Feature } from "./base";
 
 export const eye_color: Feature<string> = {
   name: "Eye color",
-  component: ColorInput,
+  component: FeatureColorInput,
 };
 
 export const facial_hair_color: Feature<string> = {
   name: "Facial hair color",
-  component: ColorInput,
+  component: FeatureColorInput,
 };
 
 export const hair_color: Feature<string> = {
   name: "Hair color",
-  component: ColorInput,
+  component: FeatureColorInput,
 };

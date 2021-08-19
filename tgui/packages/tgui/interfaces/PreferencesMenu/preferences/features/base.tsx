@@ -61,7 +61,7 @@ type FeatureValueProps<
   value: TReceiving;
 };
 
-export const ColorInput = (props: FeatureValueProps<string>) => {
+export const FeatureColorInput = (props: FeatureValueProps<string>) => {
   return (
     <Button onClick={() => {
       props.act("set_color_preference", {
