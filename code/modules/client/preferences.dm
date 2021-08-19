@@ -282,6 +282,7 @@ GLOBAL_VAR(preferences_species_data)
 	var/list/assets = list(
 		get_asset_datum(/datum/asset/spritesheet/antagonists),
 		get_asset_datum(/datum/asset/spritesheet/preferences),
+		get_asset_datum(/datum/asset/json/preferences),
 	)
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)

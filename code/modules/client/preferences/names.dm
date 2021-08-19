@@ -25,6 +25,7 @@
 /datum/preference/name/is_valid(value)
 	return !isnull(reject_bad_name(value))
 
+// MOTHBLOCKS TODO: constant data
 /datum/preference/name/compile_ui_data(mob/user, value)
 	return list(
 		"explanation" = explanation,

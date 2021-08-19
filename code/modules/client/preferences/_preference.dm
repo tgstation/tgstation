@@ -171,6 +171,10 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	return serialize(value)
 
+/// Returns data compiled into the preferences JSON asset
+/datum/preference/proc/compile_constant_data()
+	return null
+
 /// A preference that is a choice of one option among a fixed set.
 /// Used for preferences such as clothing.
 /datum/preference/choiced
@@ -341,6 +345,12 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /datum/preference/numeric/is_valid(value)
 	return !isnull(value) && value >= minimum && value <= maximum
+
+/datum/preference/numeric/compile_constant_data()
+	return list(
+		"minimum" = minimum,
+		"maximum" = maximum,
+	)
 
 /// A prefernece whose value is always TRUE or FALSE
 /datum/preference/toggle

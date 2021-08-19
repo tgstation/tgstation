@@ -1,5 +1,5 @@
 import { BooleanLike } from "common/react";
-import { CheckboxInput, createNumberInput, Feature, FeatureToggle } from "../base";
+import { CheckboxInput, Feature, FeatureNumberInput, FeatureToggle } from "../base";
 
 export const enable_tips: FeatureToggle = {
   name: "Enable tooltips",
@@ -10,9 +10,5 @@ export const enable_tips: FeatureToggle = {
 export const tip_delay: Feature<number> = {
   name: "Tooltip delay (in milliseconds)",
   category: "TOOLTIPS",
-  component: createNumberInput(
-    // MOTHBLOCKS TODO: Send minimum/maximum through /datum/preference/numeric
-    0,
-    5000,
-  ),
+  component: FeatureNumberInput,
 };

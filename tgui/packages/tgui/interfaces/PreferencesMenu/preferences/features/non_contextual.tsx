@@ -1,12 +1,8 @@
-import { createDropdownInput, createNumberInput, Feature } from "./base";
+import { createDropdownInput, Feature, FeatureNumberInput } from "./base";
 
 export const age: Feature<number> = {
   name: "Age",
-  component: createNumberInput(
-    // MOTHBLOCKS TODO: Put MIN_AGE/MAX_AGE on a shared file
-    17,
-    85,
-  ),
+  component: FeatureNumberInput,
 };
 
 export const uplink_loc: Feature<string> = {

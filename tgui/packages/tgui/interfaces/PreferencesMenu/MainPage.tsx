@@ -1,12 +1,14 @@
 import { classes } from "common/react";
 import { sendAct, useBackend, useLocalState } from "../../backend";
 import { Autofocus, Box, Button, ByondUi, Dropdown, FitText, Flex, Icon, Input, LabeledList, NumberInput, Popper, Stack, TrackOutsideClicks } from "../../components";
-import { createSetPreference, PreferencesMenuData } from "./data";
+import { createSetPreference, PreferencesMenuData, ServerSpeciesData } from "./data";
 import { CharacterPreview } from "./CharacterPreview";
+import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
 import { Gender, GENDERS } from "./preferences/gender";
 import { Component, createRef } from "inferno";
 import features from "./preferences/features";
 import { FeatureValueInput } from "./preferences/features/base";
+import { resolveAsset } from "../../assets";
 
 const CLOTHING_CELL_SIZE = 32;
 const CLOTHING_SIDEBAR_ROWS = 9;
@@ -398,7 +400,8 @@ export const MainPage = (props: {
           Object.fromEntries(
             Object.entries(data.character_preferences.secondary_features)
               .filter(([feature]) => {
-                return currentSpeciesData.features.indexOf(feature) !== -1;
+                return currentSpeciesData.features.indexOf(feature)
+                  !== -1;
               }))
         }
       />

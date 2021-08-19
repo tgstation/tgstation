@@ -3,25 +3,46 @@ import { ComponentType, createComponentVNode, InfernoNode } from "inferno";
 import { VNodeFlags } from "inferno-vnode-flags";
 import { sendAct, useLocalState } from "../../../../backend";
 import { Box, Button, Dropdown, NumberInput, Stack } from "../../../../components";
+import { logger } from "../../../../logging";
 import { createSetPreference } from "../../data";
+import { ServerPreferencesFetcher } from "../../ServerPreferencesFetcher";
 
-export type Feature<T, U = T> = {
+export type Feature<
+  TReceiving,
+  TSending = TReceiving,
+  TServerData = undefined,
+> = {
   name: string;
-  component: FeatureValue<T, U>;
+  component: FeatureValue<
+    TReceiving,
+    TSending,
+    TServerData
+  >;
   category?: string;
 };
 
 /**
  * Represents a preference.
- * T = The type you will be receiving
- * U = The type you will be sending
+ * TReceiving = The type you will be receiving
+ * TSending = The type you will be sending
+ * TServerData = The data the server sends through preferences.json
  */
-type FeatureValue<T, U = T>
-  = ComponentType<FeatureValueProps<T, U>>;
+type FeatureValue<
+  TReceiving,
+  TSending = TReceiving,
+  TServerData = undefined,
+>
+  = ComponentType<FeatureValueProps<
+      TReceiving,
+      TSending,
+      TServerData
+    >>;
 
-// MOTHBLOCKS TODO: Replace with real HoC's. Create them once on constructor
-// and pass in the value as a prop to the created element.
-type FeatureValueProps<T, U = T> = {
+type FeatureValueProps<
+  TReceiving,
+  TSending = TReceiving,
+  TServerData = undefined,
+> = {
   // eslint-disable-next-line react/no-unused-prop-types
   act: typeof sendAct,
 
@@ -29,9 +50,12 @@ type FeatureValueProps<T, U = T> = {
   featureId: string,
 
   // eslint-disable-next-line react/no-unused-prop-types
-  handleSetValue: (newValue: U) => void;
+  handleSetValue: (newValue: TSending) => void;
 
-  value: T;
+  // eslint-disable-next-line react/no-unused-prop-types
+  serverData: TServerData | undefined,
+
+  value: TReceiving;
 };
 
 export const ColorInput = (props: FeatureValueProps<string>) => {
@@ -96,20 +120,28 @@ export const createDropdownInput = (
   };
 };
 
-export const createNumberInput = (
+type FeatureNumericData = {
   minimum: number,
   maximum: number,
-): FeatureValue<number> => {
-  return (props: FeatureValueProps<number>) => {
-    return (<NumberInput
-      onChange={(e, value) => {
-        props.handleSetValue(value);
-      }}
-      minValue={minimum}
-      maxValue={maximum}
-      value={props.value}
-    />);
-  };
+}
+
+export type FeatureNumeric = Feature<number, number, FeatureNumericData>;
+
+export const FeatureNumberInput = (
+  props: FeatureValueProps<number, number, FeatureNumericData>
+) => {
+  if (!props.serverData) {
+    return <Box>Loading...</Box>;
+  }
+
+  return (<NumberInput
+    onChange={(e, value) => {
+      props.handleSetValue(value);
+    }}
+    minValue={props.serverData.minimum}
+    maxValue={props.serverData.maximum}
+    value={props.value}
+  />);
 };
 
 export const FeatureValueInput = (props: {
@@ -132,14 +164,21 @@ export const FeatureValueInput = (props: {
     createSetPreference(props.act, props.featureId)(newValue);
   };
 
-  return createComponentVNode(
-    VNodeFlags.ComponentUnknown,
-    feature.component,
-    {
-      act: props.act,
-      featureId: props.featureId,
+  return (
+    <ServerPreferencesFetcher
+      render={serverData => {
+        return createComponentVNode(
+          VNodeFlags.ComponentUnknown,
+          feature.component,
+          {
+            act: props.act,
+            featureId: props.featureId,
+            serverData: serverData && serverData[props.featureId],
 
-      handleSetValue: changeValue,
-      value: predictedValue,
-    });
+            handleSetValue: changeValue,
+            value: predictedValue,
+          });
+      }}
+    />
+  );
 };

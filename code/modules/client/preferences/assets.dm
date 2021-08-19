@@ -42,7 +42,7 @@
 /datum/preference/proc/get_spritesheet_key(value)
 	return "[savefile_key]___[sanitize_css_class_name(value)]"
 
-/// Assets generated for the antagoninsts panel
+/// Sprites generated for the antagonists panel
 /datum/asset/spritesheet/antagonists
 	name = "antagonists"
 
@@ -78,3 +78,18 @@
 		Insert(spritesheet_key, to_insert[spritesheet_key])
 
 	return ..()
+
+/// Sends information needed for shared details on individual preferences
+/datum/asset/json/preferences
+	name = "preferences"
+
+/datum/asset/json/preferences/generate()
+	var/list/preference_data = list()
+
+	for (var/preference_type in GLOB.preference_entries)
+		var/datum/preference/preference_entry = GLOB.preference_entries[preference_type]
+		var/data = preference_entry.compile_constant_data()
+		if (!isnull(data))
+			preference_data[preference_entry.savefile_key] = data
+
+	return preference_data
