@@ -192,10 +192,10 @@
 
 	var/result
 	if(port)
-		var/datum/callback/to_trigger = port.trigger
-		if(!to_trigger)
+		var/proc_to_call = port.trigger
+		if(!proc_to_call)
 			return FALSE
-		result = to_trigger.Invoke(port)
+		result = call(src, proc_to_call)(port)
 	else
 		result = input_received()
 

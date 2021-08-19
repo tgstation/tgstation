@@ -155,7 +155,7 @@
  */
 /datum/port/input
 	/// The proc that this trigger will call on the connected component.
-	var/datum/callback/trigger
+	var/trigger
 
 	/// The ports this port is wired to.
 	var/list/datum/port/output/connected_ports
@@ -164,12 +164,8 @@
 	. = ..()
 	set_value(default)
 	if(trigger)
-		src.trigger = CALLBACK(to_connect, trigger)
+		src.trigger = trigger
 	src.connected_ports = list()
-
-/datum/port/input/Destroy(force)
-	QDEL_NULL(trigger)
-	return ..()
 
 /**
  * Introduces two ports to one another.
