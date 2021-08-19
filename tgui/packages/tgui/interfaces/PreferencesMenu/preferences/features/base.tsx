@@ -1,3 +1,4 @@
+import { sortBy } from "common/collections";
 import { BooleanLike } from "common/react";
 import { ComponentType, createComponentVNode, InfernoNode } from "inferno";
 import { VNodeFlags } from "inferno-vnode-flags";
@@ -6,6 +7,8 @@ import { Box, Button, Dropdown, NumberInput, Stack } from "../../../../component
 import { logger } from "../../../../logging";
 import { createSetPreference } from "../../data";
 import { ServerPreferencesFetcher } from "../../ServerPreferencesFetcher";
+
+const sortChoices = sortBy<[string, InfernoNode]>(([name]) => name);
 
 export type Feature<
   TReceiving,
@@ -103,18 +106,18 @@ export const createDropdownInput = (
   dropdownProps?: Record<string, unknown>,
 ): FeatureValue<string> => {
   return (props: FeatureValueProps<string>) => {
-    // MOTHBLOCKS TODO: Sort
     return (<Dropdown
       selected={props.value}
       displayText={choices[props.value]}
       onSelected={props.handleSetValue}
       width="100%"
-      options={Object.entries(choices).map(([dataValue, label]) => {
-        return {
-          displayText: label,
-          value: dataValue,
-        };
-      })}
+      options={sortChoices(Object.entries(choices))
+        .map(([dataValue, label]) => {
+          return {
+            displayText: label,
+            value: dataValue,
+          };
+        })}
       {...dropdownProps}
     />);
   };
