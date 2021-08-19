@@ -1,4 +1,0 @@
-author: "jughu"
-delete-after: True
-changes: 
-  - bugfix: "fixes wizard failing to spawn without a spellbook when you roll a d20"
