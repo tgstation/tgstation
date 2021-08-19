@@ -31,7 +31,7 @@ export const UI_style: Feature<string, string> = {
   // MOTHBLOCKS TODO: available_ui_styles.
   // MOTHBLOCKS TODO: We don't need the server telling us the icons, we
   // can figure that out just from this fixed list.
-  createComponent: createDropdownInput({
+  component: createDropdownInput({
     Clockwork: <UIStyleInput name="Clockwork" />,
     Glass: <UIStyleInput name="Glass" />,
     Midnight: <UIStyleInput name="Midnight" />,
