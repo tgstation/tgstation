@@ -89,8 +89,6 @@
 	if(!client)
 		return
 	to_chat(heart_sender, span_nicegreen("Commendation sent!"))
-	message_admins("[key_name(heart_sender)] commended [key_name(src)] [instant ? "(instant)" : ""]")
-	log_admin("[key_name(heart_sender)] commended [key_name(src)] [instant ? "(instant)" : ""]")
 	if(instant || SSticker.current_state == GAME_STATE_FINISHED)
 		client.adjust_heart(duration)
 	else
