@@ -1,0 +1,4 @@
+author: "Improvedname"
+delete-after: True
+changes: 
+  - bugfix: "Auto rifle ammo crates have a name now"

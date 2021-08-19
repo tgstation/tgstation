@@ -17,6 +17,45 @@
 	/// Role check, if any needed
 	var/required_role = /datum/antagonist/cult
 
+/obj/item/soulstone/Initialize()
+	. = ..()
+	if(theme != THEME_HOLY)
+		RegisterSignal(src, COMSIG_BIBLE_SMACKED, .proc/on_bible_smacked)
+
+///signal called whenever a soulstone is smacked by a bible
+/obj/item/soulstone/proc/on_bible_smacked(datum/source, mob/living/user, direction)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/attempt_exorcism, user)
+
+/**
+ * attempt_exorcism: called from on_bible_smacked, takes time and if successful
+ * resets the item to a pre-possessed state
+ *
+ * Arguments:
+ * * exorcist: user who is attempting to remove the spirit
+ */
+/obj/item/soulstone/proc/attempt_exorcism(mob/exorcist)
+	if(IS_CULTIST(exorcist) || theme == THEME_HOLY)
+		return
+	balloon_alert(exorcist, span_notice("exorcising [src]..."))
+	playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
+	if(!do_after(exorcist, 4 SECONDS, target = src))
+		return
+	playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
+	required_role = null
+	theme = THEME_HOLY
+	icon_state = "purified_soulstone"
+	for(var/mob/mob_cultist in contents)
+		if(mob_cultist.mind)
+			continue
+		icon_state = "purified_soulstone2"
+		mob_cultist.mind.remove_antag_datum(/datum/antagonist/cult)
+	for(var/mob/living/simple_animal/shade/sharded_shade in src)
+		sharded_shade.icon_state = "ghost1"
+		sharded_shade.name = "Purified [initial(sharded_shade.name)]"
+	exorcist.visible_message(span_notice("[exorcist] purifies [src]!"))
+	UnregisterSignal(src, COMSIG_BIBLE_SMACKED)
+
 /obj/item/soulstone/proc/role_check(mob/who)
 	return required_role ? (who.mind && who.mind.has_antag_datum(required_role, TRUE)) : TRUE
 

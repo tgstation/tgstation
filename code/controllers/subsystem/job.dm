@@ -664,15 +664,15 @@ SUBSYSTEM_DEF(job)
 	newjob.spawn_positions = J.spawn_positions
 	newjob.current_positions = J.current_positions
 
-/atom/proc/JoinPlayerHere(mob/M, buckle)
+/atom/proc/JoinPlayerHere(mob/joining_mob, buckle)
 	// By default, just place the mob on the same turf as the marker or whatever.
-	M.forceMove(get_turf(src))
+	joining_mob.forceMove(get_turf(src))
 
-/obj/structure/chair/JoinPlayerHere(mob/M, buckle)
+/obj/structure/chair/JoinPlayerHere(mob/joining_mob, buckle)
+	. = ..()
 	// Placing a mob in a chair will attempt to buckle it, or else fall back to default.
-	if (buckle && isliving(M) && buckle_mob(M, FALSE, FALSE))
-		return
-	..()
+	if(buckle && isliving(joining_mob))
+		buckle_mob(joining_mob, FALSE, FALSE)
 
 /datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE)
 	var/atom/destination

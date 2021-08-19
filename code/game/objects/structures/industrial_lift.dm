@@ -458,6 +458,10 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 	SStramprocess.can_fire = TRUE
 	GLOB.central_tram = src
 
+/obj/structure/industrial_lift/tram/central/Destroy()
+	GLOB.central_tram = null
+	return ..()
+
 /obj/structure/industrial_lift/tram/LateInitialize()
 	. = ..()
 	find_our_location()
