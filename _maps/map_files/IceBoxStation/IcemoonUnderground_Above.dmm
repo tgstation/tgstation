@@ -8967,8 +8967,8 @@
 /obj/item/clothing/suit/hooded/bee_costume,
 /obj/item/clothing/head/beekeeper_head,
 /obj/item/clothing/head/hooded/bee_hood,
-/obj/item/queen_bee,
 /obj/item/melee/flyswatter,
+/obj/item/queen_bee/bought,
 /turf/open/floor/grass,
 /area/service/hydroponics)
 "Wt" = (
