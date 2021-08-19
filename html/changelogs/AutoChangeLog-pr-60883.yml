@@ -1,0 +1,4 @@
+author: "Krysonism"
+delete-after: True
+changes: 
+  - bugfix: "Fixed an exploit that allowed SaturnX enjoyers to become permanently invisible."
