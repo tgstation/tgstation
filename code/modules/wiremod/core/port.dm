@@ -167,6 +167,10 @@
 		src.trigger = CALLBACK(to_connect, trigger)
 	src.connected_ports = list()
 
+/datum/port/input/Destroy(force)
+	QDEL_NULL(trigger)
+	return ..()
+
 /**
  * Introduces two ports to one another.
  */
