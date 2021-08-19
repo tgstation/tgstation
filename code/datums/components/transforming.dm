@@ -226,10 +226,10 @@
 	source.icon_state = initial(source.icon_state)
 
 /*
- * If [clumsy_check] is set to TRUE, try to cause a side effect for clumsy people transforming this item.
- * Called after the transform is done.
+ * If [clumsy_check] is set to TRUE, attempt to cause a side effect for clumsy people activating this item.
+ * Called after the transform is done, meaning [active] var has already updated.
  *
- * user - the clumsy mob
+ * user - the clumsy mob, transforming our item (parent)
  *
  * Returns TRUE if side effects happened, FALSE otherwise
  */
@@ -240,9 +240,13 @@
 	if(!HAS_TRAIT(user, TRAIT_CLUMSY))
 		return FALSE
 
-	if(prob(50))
-		var/hurt_self_verb = LAZYLEN(attack_verb_simple_on) ? pick(attack_verb_simple_on) : "hit"
-		to_chat(user, span_warning("You trigger [parent] while holding it backwards and [hurt_self_verb] yourself, like a doofus!"))
+	if(active && prob(50))
+		var/hurt_self_verb_simple = LAZYLEN(attack_verb_simple_on) ? pick(attack_verb_simple_on) : "hit"
+		var/hurt_self_verb_continuous = LAZYLEN(attack_verb_continuous_on) ? pick(attack_verb_continuous_on) : "hits"
+		user.visible_message(
+			span_warning("[user] triggers [parent] while holding it backwards and [hurt_self_verb_continuous] themself, like a doofus!"),
+			span_warning("You trigger [parent] while holding it backwards and [hurt_self_verb_simple] yourself, like a doofus!")
+			)
 		user.take_bodypart_damage(10)
 		return TRUE
 	return FALSE
