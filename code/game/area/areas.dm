@@ -162,7 +162,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
 		dynamic_lighting = CONFIG_GET(flag/starlight) ? DYNAMIC_LIGHTING_ENABLED : DYNAMIC_LIGHTING_DISABLED
 
-
+	#ifdef EVENTMODE
+	requires_power = FALSE
+	has_gravity = STANDARD_GRAVITY
+	#endif
 	. = ..()
 
 	if(!IS_DYNAMIC_LIGHTING(src))
@@ -543,7 +546,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Space is not powered ever, so this returns false
  */
 /area/space/powered(chan) //Nope.avi
-	return FALSE
+	#ifdef EVENTMODE
+	return 1 //SIKE.gif
+	#endif
+	return 0
 
 /**
  * Called when the area power status changes

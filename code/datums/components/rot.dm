@@ -22,6 +22,9 @@
 	)
 
 /datum/component/rot/Initialize(delay, scaling, severity)
+	#ifdef EVENTMODE
+	return INITIALIZE_HINT_QDEL;
+	#endif
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(isliving(parent))

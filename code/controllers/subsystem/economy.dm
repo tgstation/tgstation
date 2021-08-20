@@ -60,6 +60,10 @@ SUBSYSTEM_DEF(economy)
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
 	var/temporary_total = 0
+	#ifdef EVENTMODE
+	can_fire = FALSE
+	return 1
+	#endif
 	var/delta_time = wait / (5 MINUTES)
 	departmental_payouts()
 	station_total = 0

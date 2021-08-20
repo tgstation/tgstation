@@ -77,6 +77,9 @@
  */
 
 /datum/disease/advance/New()
+	#ifdef EVENTMODE
+	QDEL_IN(src, 30)
+	return
 	Refresh()
 
 /datum/disease/advance/Destroy()
