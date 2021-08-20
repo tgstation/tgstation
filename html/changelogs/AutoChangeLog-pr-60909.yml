@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - qol: "Mulebots no longer turn off power when the panel is opened with a screwdriver."
-  - bugfix: "Player controlled mulebot mobility is now affected by motor wires."
