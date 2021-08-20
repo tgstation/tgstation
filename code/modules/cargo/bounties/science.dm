@@ -57,7 +57,15 @@
 	required_count = 4
 	wanted_types = list(/obj/item/modular_computer/tablet)
 	var/require_powered = TRUE
-	var/require_cpu = FALSE
+
+/datum/bounty/item/science/ntnet/applies_to(obj/O)
+	if(!..())
+		return FALSE
+	if(require_powered)
+		var/obj/item/modular_computer/computer = O
+		if(!istype(computer) || !computer.enabled)
+			return FALSE
+	return TRUE
 
 /datum/bounty/item/science/ntnet/laptops
 	name = "Modular Laptops"
@@ -73,18 +81,12 @@
 	required_count = 1
 	wanted_types = list(/obj/machinery/modular_computer/console)
 	require_powered = FALSE
-	require_cpu = TRUE
 
-/datum/bounty/item/science/ntnet/applies_to(obj/O)
+/datum/bounty/item/science/ntnet/console/applies_to(obj/O)
 	if(!..())
 		return FALSE
-	if(require_powered)
-		var/obj/item/modular_computer/computer = O
-		if(!istype(computer) || !computer.enabled)
-			return FALSE
-	if(require_cpu)
-		var/obj/machinery/modular_computer/computer = O
-		if(!istype(computer) || !computer.cpu)
-			return FALSE
+	var/obj/machinery/modular_computer/computer = O
+	if(!istype(computer) || !computer.cpu)
+		return FALSE
 	return TRUE
 
