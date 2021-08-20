@@ -643,17 +643,17 @@
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/gun/ballistic/automatic/wt550,
 					/obj/item/gun/ballistic/automatic/wt550)
-	crate_name = "auto rifle crate"
+	crate_name = "wt-550 auto rifle crate"
 
 /datum/supply_pack/security/armory/wt550ammo
-	name = "WT-550 Auto Rifle Ammo Crate"
+	name = "WT-550 Standard Ammo Crate"
 	desc = "Contains four 20-round magazine for the WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
 	cost = CARGO_CRATE_VALUE * 3.5
 	contains = list(/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9)
-
+	crate_name = "wt-550 standard ammo crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Engineering /////////////////////////////////////
