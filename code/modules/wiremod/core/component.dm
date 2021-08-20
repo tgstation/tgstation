@@ -57,8 +57,8 @@
 	return
 
 /// Extension of add_input_port. Simplifies the code to make an option port to reduce boilerplate
-/obj/item/circuit_component/proc/add_option_port(name, list/list_to_use)
-	return add_input_port(name, PORT_TYPE_OPTION, port_type = /datum/port/input/option, extra_args = list("possible_options" = list_to_use))
+/obj/item/circuit_component/proc/add_option_port(name, list/list_to_use, order = 0, trigger = .proc/input_received)
+	return add_input_port(name, PORT_TYPE_OPTION, order = order, trigger = trigger, port_type = /datum/port/input/option, extra_args = list("possible_options" = list_to_use))
 
 /obj/item/circuit_component/Initialize()
 	. = ..()
