@@ -85,8 +85,6 @@
 
 /atom/movable/screen/lobby/button/ready/Initialize(mapload)
 	. = ..()
-	if(!.)
-		return
 	if(SSticker.current_state > GAME_STATE_PREGAME)
 		set_button_status(FALSE)
 	else
