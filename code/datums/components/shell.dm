@@ -91,7 +91,7 @@
 
 /datum/component/shell/proc/on_object_deconstruct()
 	SIGNAL_HANDLER
-	if(!attached_circuit.admin_only)
+	if(!attached_circuit?.admin_only)
 		remove_circuit()
 
 /datum/component/shell/proc/on_attack_ghost(datum/source, mob/dead/observer/ghost)
