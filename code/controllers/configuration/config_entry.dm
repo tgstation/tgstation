@@ -148,7 +148,7 @@
 	default = list()
 	dupes_allowed = TRUE
 	/// whether the string elements will be lowercased on ValidateAndSet or not.
-	lowercase = FALSE
+	var/lowercase = FALSE
 
 /datum/config_entry/str_list/ValidateAndSet(str_val)
 	if (!VASProcCallGuard(str_val))
