@@ -21,21 +21,59 @@
 	screen_loc = "TOP,CENTER:-61"
 
 /atom/movable/screen/lobby/button
-	var/has_press_anim = FALSE
-
-/atom/movable/screen/lobby/button/MouseEntered(location,control,params)
-	. = ..()
-	icon_state = "[base_icon_state]_highlight"
-
-/atom/movable/screen/lobby/button/MouseExited()
-	. = ..()
-	icon_state = base_icon_state
+	///Do we have a unique icon state when pressed
+	var/has_pressed_state = TRUE
+	///Is the button currently enabled?
+	var/enabled = TRUE
+	///Is the button currently being pressed?
+	var/pressed = FALSE
+	///Is the button currently being hovered over with the mouse?
+	var/highlighted = FALSE
 
 /atom/movable/screen/lobby/button/Click(location, control, params)
 	. = ..()
-	if(has_press_anim)
-		flick("[base_icon_state]_pressed", src)
+	var/client/clicking_client = usr.client
+	pressed = TRUE
+	RegisterSignal(clicking_client, COMSIG_CLIENT_MOUSEUP, ./proc/check_if_pressed)
+	update_appearance(UPDATE_ICON)
 
+
+
+
+/atom/movable/screen/lobby/button/MouseEntered(location,control,params)
+	. = ..()
+	highlighted = TRUE
+	update_appearance(UPDATE_ICON)
+
+/atom/movable/screen/lobby/button/MouseExited()
+	. = ..()
+	highlighted = FALSE
+	update_appearance(UPDATE_ICON)
+
+/atom/movable/screen/lobby/button/update_icon(updates)
+	. = ..()
+	if(!enabled)
+		icon_state = "[base_icon_state]_disabled"
+	else if(pressed && has_pressed_state)
+		icon_state = "[base_icon_state]_pressed"
+	else if(highlighted)
+		icon_state = "[base_icon_state]_highlighted"
+
+/atom/movable/screen/lobby/button/proc/set_button_status(status)
+	if(status == enabled)
+		return
+	enabled = status
+	update_appearance(UPDATE_ICON)
+
+/atom/movable/screen/lobby/button/proc/check_if_pressed(client/clicker, atom/object, turf/location, control, params)
+	if(object == src)
+		Pressed(clicker)
+	pressed = FALSE
+	update_appearance(UPDATE_ICON)
+	UnregisterSignal(clicker, COMSIG_CLIENT_MOUSEUP)
+
+/atom/movable/screen/lobby/button/proc/Pressed()
+	return
 
 /atom/movable/screen/lobby/button/character_setup
 	screen_loc = "TOP:-70,CENTER:-54"
@@ -48,19 +86,18 @@
 	icon = 'icons/hud/lobby/ready.dmi'
 	icon_state = "not_ready"
 	base_icon_state = "not_ready"
-	has_press_anim = TRUE
+	has_pressed_state = FALSE
 	var/ready = FALSE
 
-/atom/movable/screen/lobby/button/ready/Click(location, control, params)
+/atom/movable/screen/lobby/button/ready/Pressed(client/clicker)
 	. = ..()
 	ready = !ready
+	flick("[base_icon_state]_pressed", src)
 	if(ready)
 		base_icon_state = "ready"
 	else
 		base_icon_state = "not_ready"
-	icon_state = base_icon_state
-
-
+	update_appearance(UPDATE_ICON)
 
 /atom/movable/screen/lobby/button/join
 	screen_loc = "TOP:-13,CENTER:-58"
@@ -73,6 +110,7 @@
 	icon = 'icons/hud/lobby/observe.dmi'
 	icon_state = "observe"
 	base_icon_state = "observe"
+	enabled = FALSE
 
 /atom/movable/screen/lobby/button/crew_manifest_button
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
