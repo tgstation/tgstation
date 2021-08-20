@@ -553,8 +553,3 @@
 				continue
 
 			C.energy_fail(rand(duration_min,duration_max))
-
-///Adds a memory to people that can see this happening, only use this for impactful or rare events to reduce overhead.
-/proc/add_memory_in_range(atom/source, range, memory_type, extra_info, story_value, memory_flags)
-	for(var/mob/living/carbon/memorizer in hearers(range, source))
-		memorizer.mind?.add_memory(memory_type, extra_info, story_value, memory_flags)
