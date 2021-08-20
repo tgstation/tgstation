@@ -50,7 +50,7 @@
 	return FALSE
 
 //******Modular Computer Bounties******
-/datum/bounty/item/science/NTNet
+/datum/bounty/item/science/ntnet
 	name = "Modular Tablets"
 	description = "Turns out that NTNet wasn't actually a fad afterall, who knew. Ship us some fully constructed tablets and send it turned on."
 	reward = CARGO_CRATE_VALUE * 6
@@ -59,14 +59,14 @@
 	var/require_powered = TRUE
 	var/require_cpu = FALSE
 
-/datum/bounty/item/science/NTNet/laptops
+/datum/bounty/item/science/ntnet/laptops
 	name = "Modular Laptops"
 	description = "Central command brass need something more powerful than a tablet, but more portable than a console. Help these old fogeys out by shipping us some working laptops. Send it turned on."
 	reward = CARGO_CRATE_VALUE * 3
 	required_count = 2
 	wanted_types = list(/obj/item/modular_computer/laptop)
 
-/datum/bounty/item/science/NTNet/console
+/datum/bounty/item/science/ntnet/console
 	name = "Modular Computer Console"
 	description = "Our big data devision needs more powerful hardware to play 'Outbomb Cuban Pe-', err, to closely monitor threats in your sector. Send us a working modular computer console."
 	reward = CARGO_CRATE_VALUE * 6
@@ -75,13 +75,16 @@
 	require_powered = FALSE
 	require_cpu = TRUE
 
-/datum/bounty/item/science/NTnet/applies_to(obj/O)
+/datum/bounty/item/science/ntnet/applies_to(obj/O)
 	if(!..())
 		return FALSE
-	var/obj/item/modular_computer/computer = O
-	if(require_powered && !computer.enabled)
-		return FALSE
-	if(require_cpu && !computer.cpu)
-		return FALSE
+	if(require_powered)
+		var/obj/item/modular_computer/computer = O
+		if(!istype(computer) || !computer.enabled)
+			return FALSE
+	if(require_cpu)
+		var/obj/machinery/modular_computer/computer = O
+		if(!istype(computer) || !computer.cpu)
+			return FALSE
 	return TRUE
 
