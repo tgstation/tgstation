@@ -65,3 +65,8 @@ Fourth argument are some memory flags, these can be used to cut story generation
 * Tattoos working on simple animals?
 * More wall engraving sprites
 * Maybe implement engravings into fantasy affixes? A certain fellow by the name of `fikou` has worked on RPG stats, that combined with engraved high quality items would be awesome.
+* readd special role text:
+```dm
+if(target.mind?.special_role)
+	return "\the [lowertext(target.mind?.special_role)]"
+```

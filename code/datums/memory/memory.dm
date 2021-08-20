@@ -132,7 +132,6 @@
 	if(styles && prob(75))
 		story_pieces.Add(pick(styles))
 
-
 	var/parsed_story = ""
 
 	var/mob/living/crew_member
