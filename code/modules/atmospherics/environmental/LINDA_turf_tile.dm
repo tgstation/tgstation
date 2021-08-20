@@ -39,18 +39,18 @@
 	var/eventturf = FALSE
 
 /turf/open/Initialize()
-    if(!blocks_air)
-        air = new
-        air.copy_from_turf(src)
-        #ifdef EVENTMODE
-        planetary_atmos = TRUE
-        #endif
-        if(planetary_atmos)
-            if(!SSair.planetary[initial_gas_mix])
-                var/datum/gas_mixture/immutable/planetary/mix = new
-                mix.parse_string_immutable(initial_gas_mix)
-                SSair.planetary[initial_gas_mix] = mix
-    . = ..()
+	if(!blocks_air)
+		air = new
+		air.copy_from_turf(src)
+		#ifdef EVENTMODE
+		planetary_atmos = TRUE
+		#endif
+		if(planetary_atmos)
+			if(!SSair.planetary[initial_gas_mix])
+				var/datum/gas_mixture/immutable/planetary/mix = new
+				mix.parse_string_immutable(initial_gas_mix)
+				SSair.planetary[initial_gas_mix] = mix
+	. = ..()
 
 /turf/open/Destroy()
 	if(active_hotspot)
