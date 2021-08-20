@@ -67,7 +67,7 @@
 ///A memory of being lit
 #define MEMORY_FIRE "fire"
 /// A memory of limb loss
-#define MEMORY_DISMEMBERED "limb loss"
+#define MEMORY_DISMEMBERED "dismembered"
 /// A memory of seeing a pet die
 #define MEMORY_PET_DEAD "pet_dead"
 /// A memory of leading a winning revolution

@@ -164,9 +164,9 @@
 		"The arming of %BOMB_TYPE by %PROTAGONIST."
 	],
 	"bomb_starts":[
-		"%PROTAGONIST pressing an ominous button, causing %BOMB to begin beeping",
+		"%PROTAGONIST pressing an ominous button, causing %BOMB_TYPE to begin beeping",
 		"%PROTAGONIST slapping down a %BOMB_TYPE",
-		"%BOMB being armed by %PROTAGONIST"
+		"%BOMB_TYPE being armed by %PROTAGONIST"
 	],
 	"bomb_moods":[
 		"%PROTAGONIST %MOOD and begins to walk away from %BOMB_TYPE.",
@@ -205,9 +205,9 @@
 		"The death of %PROTAGONIST."
 	],
 	"death_starts":[
-		"%PROTAGONIST's heart stopping at %TIME_OF_DEATH",
-		"%PROTAGONIST having perished at %TIME_OF_DEATH",
-		"the death of %PROTAGONIST at %TIME_OF_DEATH",
+		"%PROTAGONIST's heart stopping",
+		"%PROTAGONIST having perished",
+		"the death of %PROTAGONIST",
 		"%PROTAGONIST seizing up and falling limp, their eyes appearing dead and lifeless"
 	],
 	"death_moods":[

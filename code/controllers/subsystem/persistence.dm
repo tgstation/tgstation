@@ -78,20 +78,21 @@ SUBSYSTEM_DEF(persistence)
 
 	var/list/engraving_entries = json["entries"]
 
-	for(var/engraving_index in MIN_PERSISTENT_ENGRAVINGS to MAX_PERSISTENT_ENGRAVINGS)
-		var/engraving = engraving_entries[rand(1, engraving_entries.len)] //This means repeats will happen for now, but its something I can live with. Just make more engravings!
-		if(!islist(engraving))
-			stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
-			continue
+	if(engraving_entries.len)
+		for(var/engraving_index in MIN_PERSISTENT_ENGRAVINGS to MAX_PERSISTENT_ENGRAVINGS)
+			var/engraving = engraving_entries[rand(1, engraving_entries.len)] //This means repeats will happen for now, but its something I can live with. Just make more engravings!
+			if(!islist(engraving))
+				stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
+				continue
 
-		var/turf/closed/engraved_wall = pick(turfs_to_pick_from)
+			var/turf/closed/engraved_wall = pick(turfs_to_pick_from)
 
-		if(HAS_TRAIT(engraved_wall, NOT_ENGRAVABLE))
-			continue
+			if(HAS_TRAIT(engraved_wall, NOT_ENGRAVABLE))
+				continue
 
-		engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
-		successfully_loaded_engravings++
-		turfs_to_pick_from -= engraved_wall
+			engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
+			successfully_loaded_engravings++
+			turfs_to_pick_from -= engraved_wall
 
 	log_world("Loaded [successfully_loaded_engravings] engraved messages on map [SSmapping.config.map_name]")
 
@@ -101,6 +102,13 @@ SUBSYSTEM_DEF(persistence)
 	saved_data["version"] = ENGRAVING_PERSISTENCE_VERSION
 	saved_data["entries"] = list()
 
+
+	var/json_file = file(ENGRAVING_SAVE_FILE)
+	if(fexists(json_file))
+		var/list/old_json = json_decode(file2text(json_file))
+		if(old_json)
+			saved_data["entries"] = old_json["entries"]
+
 	for(var/datum/component/engraved/engraving in wall_engravings)
 		if(!engraving.persistent_save)
 			continue
@@ -109,11 +117,6 @@ SUBSYSTEM_DEF(persistence)
 			continue
 		saved_data["entries"] += engraving.save_persistent()
 
-	var/json_file = file(ENGRAVING_SAVE_FILE)
-	if(fexists(json_file))
-		var/list/old_json = json_decode(file2text(json_file))
-		if(old_json)
-			saved_data["entries"] = old_json["entries"] + saved_data["entries"] //Save the old if its there
 	fdel(json_file)
 
 	WRITE_FILE(json_file, json_encode(saved_data))
