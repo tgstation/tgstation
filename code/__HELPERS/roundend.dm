@@ -546,7 +546,7 @@
 		if(!human.client || !human.mind)
 			continue
 		var/datum/job/human_job = human.mind.assigned_role
-		if(!(human_job.departments_bitflags & DEPARTMENT_SERVICE))
+		if(!(human_job.departments_bitflags & DEPARTMENT_BITFLAG_SERVICE))
 			continue
 		human_job.award_service(human.client, award)
 

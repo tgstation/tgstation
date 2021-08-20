@@ -28234,6 +28234,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "bridge-right"
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "hmM" = (
@@ -31376,6 +31379,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "bridge-left"
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "ixK" = (
@@ -40658,6 +40664,9 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "bridge-left"
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "lOl" = (
@@ -42619,6 +42628,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/service/kitchen)
 "mDg" = (
@@ -45708,6 +45718,9 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "bridge-right"
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "nPQ" = (
@@ -46585,6 +46598,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "bridge-left"
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "ohf" = (
@@ -54488,6 +54504,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "bridge-right"
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "raw" = (
@@ -56133,6 +56152,20 @@
 	},
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
+"rHC" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Bridge Access";
+	req_access_txt = "19"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "bridge-right"
+	},
+/turf/open/floor/iron/dark,
+/area/command/bridge)
 "rHD" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -60476,6 +60509,9 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "bridge-left"
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "toF" = (
@@ -62711,6 +62747,16 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/hallway/primary/port)
+"ucr" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/food/condiment/peppermill{
+	pixel_x = 3
+	},
+/turf/open/floor/iron/cafeteria,
+/area/service/kitchen/diner)
 "ucs" = (
 /obj/machinery/door/airlock{
 	id_tag = "commissarydoor";
@@ -67879,6 +67925,26 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/research)
+"vYt" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/peppermill{
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -3
+	},
+/turf/open/floor/iron,
+/area/service/kitchen)
 "vYP" = (
 /obj/machinery/door/airlock/atmos{
 	name = "Turbine Access";
@@ -160531,7 +160597,7 @@ aGY
 uKU
 uMr
 nLg
-xzW
+ucr
 xlh
 uDS
 ahY
@@ -161551,7 +161617,7 @@ eKG
 mQU
 xoX
 lJi
-qiH
+vYt
 bHJ
 xkd
 axa
@@ -162587,7 +162653,7 @@ aGY
 eNi
 gSs
 cPk
-xzW
+ucr
 iVp
 rpR
 nMb
@@ -173121,7 +173187,7 @@ ydp
 cun
 vGu
 vGu
-lOg
+rHC
 hmH
 vGu
 fsN
