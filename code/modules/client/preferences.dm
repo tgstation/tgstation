@@ -1,8 +1,5 @@
 GLOBAL_LIST_EMPTY(preferences_datums)
 
-/// Cached object of info the client needs to represent species completely.
-GLOBAL_VAR(preferences_species_data)
-
 /datum/preferences
 	var/client/parent
 	//doohickeys for savefiles
@@ -161,6 +158,7 @@ GLOBAL_VAR(preferences_species_data)
 
 /datum/preferences/Destroy(force, ...)
 	QDEL_NULL(character_preview_view)
+	QDEL_LIST(middleware)
 	return ..()
 
 /datum/preferences/New(client/C)
@@ -248,10 +246,6 @@ GLOBAL_VAR(preferences_species_data)
 	return data
 
 /datum/preferences/ui_static_data(mob/user)
-	if (isnull(GLOB.preferences_species_data))
-		// If we do this in GLOBAL_VAR_INIT, the species list is not created yet.
-		GLOB.preferences_species_data = generate_preferences_species_data()
-
 	var/list/data = list()
 
 	data["window"] = current_window
@@ -260,9 +254,6 @@ GLOBAL_VAR(preferences_species_data)
 
 	data["generated_preference_values"] = generated_preference_values
 	data["overflow_role"] = SSjob.overflow_role
-
-	// MOTHBLOCKS TODO: Move this over to a json asset
-	data["species"] = GLOB.preferences_species_data
 
 	var/list/selected_antags = list()
 
@@ -720,35 +711,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 			LAZYADD(output[key], action)
 
 	return output
-
-/proc/generate_preferences_species_data()
-	var/list/food_flags = FOOD_FLAGS
-	var/list/species_data = list()
-
-	for (var/species_id in get_selectable_species())
-		var/species_type = GLOB.species_list[species_id]
-		var/datum/species/species = new species_type
-
-		var/list/diet = list()
-
-		if (!(TRAIT_NOHUNGER in species.inherent_traits))
-			diet = list(
-				"liked_food" = bitfield2list(species.liked_food, food_flags),
-				"disliked_food" = bitfield2list(species.disliked_food, food_flags),
-				"toxic_food" = bitfield2list(species.toxic_food, food_flags),
-			)
-
-		// MOTHBLOCKS TODO: Move this to ts/json files and unit test consistency.
-		species_data[species_id] = list(
-			"name" = species.name,
-
-			"use_skintones" = species.use_skintones,
-			"sexes" = species.sexes,
-
-			"features" = species.get_features(),
-		) + diet
-
-	return species_data
 
 /// Serializes an antag name to be used for preferences UI
 /proc/serialize_antag_name(antag_name)

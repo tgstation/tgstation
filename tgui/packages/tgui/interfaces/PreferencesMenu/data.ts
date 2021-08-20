@@ -46,7 +46,7 @@ export type ServerSpeciesData = {
   use_skintones: BooleanLike;
   sexes: BooleanLike;
 
-  features: string[];
+  enabled_features: string[];
 
   liked_food: Food[];
   disliked_food: Food[];
@@ -94,10 +94,14 @@ export type PreferencesMenuData = {
   overflow_role: string;
   selected_antags: string[];
   selected_quirks: string[];
-  species: Record<string, ServerSpeciesData>;
 
   active_name: string;
   name_to_use: string;
 
   window: Window;
+};
+
+export type ServerData = {
+  species: Record<string, ServerSpeciesData>;
+  [otheyKey: string]: unknown;
 };

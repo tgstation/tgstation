@@ -1,7 +1,7 @@
 import { useBackend } from "../../backend";
 import { Box, Button, Divider, Icon, Section, Stack, Tooltip } from "../../components";
 import { CharacterPreview } from "./CharacterPreview";
-import { createSetPreference, Food, PreferencesMenuData, ServerSpeciesData } from "./data";
+import { createSetPreference, Food, PreferencesMenuData, ServerData, ServerSpeciesData } from "./data";
 import { Feature, Species, fallbackSpecies } from "./preferences/species/base";
 
 const requireSpecies = require.context("./preferences/species");
@@ -209,12 +209,14 @@ const SpeciesFeatures = (props: {
   );
 };
 
-export const SpeciesPage = (props, context) => {
+const SpeciesPageInner = (props: {
+  species: ServerData["species"],
+}, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
   const setSpecies = createSetPreference(act, "species");
 
   let species: [string, Species & ServerSpeciesData][]
-    = Object.entries(data.species)
+    = Object.entries(props.species)
       .map(([species, serverData]) => {
         return [
           species,
@@ -316,4 +318,7 @@ export const SpeciesPage = (props, context) => {
       </Stack.Item>
     </Stack>
   );
+};
+
+export const SpeciesPage = (props, context) => {
 };

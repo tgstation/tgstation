@@ -2056,6 +2056,7 @@
 #include "code\modules\client\preferences\middleware\_middleware.dm"
 #include "code\modules\client\preferences\middleware\keybindings.dm"
 #include "code\modules\client\preferences\middleware\quirks.dm"
+#include "code\modules\client\preferences\middleware\species.dm"
 #include "code\modules\client\verbs\ooc.dm"
 #include "code\modules\client\verbs\ping.dm"
 #include "code\modules\client\verbs\reset_held_keys.dm"

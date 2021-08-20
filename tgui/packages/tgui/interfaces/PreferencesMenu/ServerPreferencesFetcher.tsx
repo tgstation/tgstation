@@ -1,13 +1,14 @@
 import { Component, InfernoNode } from "inferno";
 import { resolveAsset } from "../../assets";
+import { ServerData } from "./data";
 
 // Cache response so it's only sent once
-let fetchServerData: Promise<Record<string, unknown>> | undefined;
+let fetchServerData: Promise<ServerData> | undefined;
 
 export class ServerPreferencesFetcher extends Component<{
-  render: (serverData: Record<string, unknown> | undefined) => InfernoNode,
+  render: (serverData: ServerData | undefined) => InfernoNode,
 }, {
-  serverData?: Record<string, unknown>;
+  serverData?: ServerData;
 }> {
   constructor() {
     super();
@@ -30,7 +31,7 @@ export class ServerPreferencesFetcher extends Component<{
       });
     }
 
-    const preferencesData: Record<string, unknown>
+    const preferencesData: ServerData
       = await fetchServerData;
 
     this.setState({

@@ -287,13 +287,6 @@ export const MainPage = (props: {
   const { act, data } = useBackend<PreferencesMenuData>(context);
   const [currentClothingMenu, setCurrentClothingMenu] = useLocalState(context, "currentClothingMenu", null);
 
-  const currentSpeciesData = data.species[
-    data
-      .character_preferences
-      .misc
-      .species
-  ];
-
   const requestPreferenceData = (key: string) => {
     act("request_values", {
       preference: key,
@@ -302,114 +295,132 @@ export const MainPage = (props: {
 
   return (
     <Stack fill>
-      <Stack.Item>
-        <Stack vertical>
-          <Stack.Item>
-            <CharacterControls
-              gender={data.character_preferences.misc.gender}
-              handleOpenSpecies={props.openSpecies}
-              handleRotate={() => {
-                act("rotate");
-              }}
-              setGender={createSetPreference(act, "gender")}
-            />
-          </Stack.Item>
+      <ServerPreferencesFetcher render={(serverData) => {
+        const currentSpeciesData = serverData && serverData.species[
+          data
+            .character_preferences
+            .misc
+            .species
+        ];
 
-          <Stack.Item>
-            <CharacterPreview
-              height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}
-              id={data.character_preview_view} />
-          </Stack.Item>
-
-          <Stack.Item position="relative">
-            <NameInput
-              name={data.character_preferences.names[data.name_to_use].value}
-              handleUpdateName={createSetPreference(act, data.name_to_use)}
-            />
-          </Stack.Item>
-
-        </Stack>
-      </Stack.Item>
-
-      <Stack.Item>
-        <Stack
-          vertical
-          fill
-          width={`${CLOTHING_CELL_SIZE}px`}
-        >
-          {[
-            ...Object.entries(data.character_preferences.clothing),
-            ...Object.entries(data.character_preferences.features)
-              .filter(([featureName]) => {
-                return currentSpeciesData.features
-                  .indexOf(featureName.split("feature_")[1]) !== -1;
-              }),
-          ]
-            .map(([clothingKey, clothing]) => {
-              // MOTHBLOCKS TODO: Better nude icons, rather than X
-              return (
-                <Stack.Item key={clothingKey}>
-                  <Popper options={{
-                    placement: "bottom-start",
-                  }} popperContent={(currentClothingMenu === clothingKey
-                    && data.generated_preference_values
-                    && data.generated_preference_values[clothingKey]) && (
-                    <TrackOutsideClicks onOutsideClick={() => {
-                      setCurrentClothingMenu(null);
-                    }}>
-                      <ChoicedSelection
-                        name={KEYS_TO_NAMES[clothingKey]
-                          || `NO NAME FOR ${clothingKey}`}
-                        catalog={
-                          data.generated_preference_values[clothingKey]
-                        }
-                        selected={clothing.value}
-                        onSelect={createSetPreference(act, clothingKey)}
-                      />
-                    </TrackOutsideClicks>
-                  )}>
-                    <Button onClick={() => {
-                      setCurrentClothingMenu(
-                        currentClothingMenu === clothingKey
-                          ? null
-                          : clothingKey
-                      );
-
-                      requestPreferenceData(clothingKey);
-                    }} style={{
-                      height: `${CLOTHING_CELL_SIZE}px`,
-                      width: `${CLOTHING_CELL_SIZE}px`,
-                    }} tooltip={clothing.value} tooltipPosition="right">
-                      <Box
-                        className={classes([
-                          "preferences32x32",
-                          clothing.icon,
-                          "centered-image",
-                        ])} />
-                    </Button>
-                  </Popper>
+        return (
+          <>
+            <Stack.Item>
+              <Stack vertical>
+                <Stack.Item>
+                  <CharacterControls
+                    gender={data.character_preferences.misc.gender}
+                    handleOpenSpecies={props.openSpecies}
+                    handleRotate={() => {
+                      act("rotate");
+                    }}
+                    setGender={createSetPreference(act, "gender")}
+                  />
                 </Stack.Item>
-              );
-            })}
-        </Stack>
-      </Stack.Item>
 
-      <PreferenceList
-        act={act}
-        preferences={
-          Object.fromEntries(
-            Object.entries(data.character_preferences.secondary_features)
-              .filter(([feature]) => {
-                return currentSpeciesData.features.indexOf(feature)
-                  !== -1;
-              }))
-        }
-      />
+                <Stack.Item>
+                  <CharacterPreview
+                    height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}
+                    id={data.character_preview_view} />
+                </Stack.Item>
 
-      <PreferenceList
-        act={act}
-        preferences={data.character_preferences.non_contextual}
-      />
+                <Stack.Item position="relative">
+                  <NameInput
+                    name={
+                      data.character_preferences.names[data.name_to_use].value
+                    }
+                    handleUpdateName={
+                      createSetPreference(act, data.name_to_use)
+                    }
+                  />
+                </Stack.Item>
+
+              </Stack>
+            </Stack.Item>
+
+            <Stack.Item>
+              <Stack
+                vertical
+                fill
+                width={`${CLOTHING_CELL_SIZE}px`}
+              >
+                {[
+                  ...Object.entries(data.character_preferences.clothing),
+                  ...Object.entries(data.character_preferences.features)
+                    .filter(([featureName]) => {
+                      return currentSpeciesData.enabled_features
+                        .indexOf(featureName.split("feature_")[1]) !== -1;
+                    }),
+                ]
+                  .map(([clothingKey, clothing]) => {
+                    // MOTHBLOCKS TODO: Better nude icons, rather than X
+                    return (
+                      <Stack.Item key={clothingKey}>
+                        <Popper options={{
+                          placement: "bottom-start",
+                        }} popperContent={(currentClothingMenu === clothingKey
+                          && data.generated_preference_values
+                          && data.generated_preference_values[clothingKey])
+                          ? (
+                            <TrackOutsideClicks onOutsideClick={() => {
+                              setCurrentClothingMenu(null);
+                            }}>
+                              <ChoicedSelection
+                                name={KEYS_TO_NAMES[clothingKey]
+                                  || `NO NAME FOR ${clothingKey}`}
+                                catalog={
+                                  data.generated_preference_values[clothingKey]
+                                }
+                                selected={clothing.value}
+                                onSelect={createSetPreference(act, clothingKey)}
+                              />
+                            </TrackOutsideClicks>
+                          ) : null}>
+                          <Button onClick={() => {
+                            setCurrentClothingMenu(
+                              currentClothingMenu === clothingKey
+                                ? null
+                                : clothingKey
+                            );
+
+                            requestPreferenceData(clothingKey);
+                          }} style={{
+                            height: `${CLOTHING_CELL_SIZE}px`,
+                            width: `${CLOTHING_CELL_SIZE}px`,
+                          }} tooltip={clothing.value} tooltipPosition="right">
+                            <Box
+                              className={classes([
+                                "preferences32x32",
+                                clothing.icon,
+                                "centered-image",
+                              ])} />
+                          </Button>
+                        </Popper>
+                      </Stack.Item>
+                    );
+                  })}
+              </Stack>
+            </Stack.Item>
+
+            <PreferenceList
+              act={act}
+              preferences={
+                Object.fromEntries(
+                  Object.entries(data.character_preferences.secondary_features)
+                    .filter(([feature]) => {
+                      return currentSpeciesData.enabled_features
+                        .indexOf(feature) !== -1;
+                    }))
+              }
+            />
+
+            <PreferenceList
+              act={act}
+              preferences={data.character_preferences.non_contextual}
+            />
+          </>
+        );
+      }} />
     </Stack>
   );
 };
