@@ -22,5 +22,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 /area/awaymission/errorroom
 	name = "Super Secret Room"
 	static_lighting = FALSE
+	base_lighting_alpha = 255
+	base_lighting_color = COLOR_WHITE
 	has_gravity = STANDARD_GRAVITY
 

@@ -139,6 +139,8 @@
 	icon_state = "yellow"
 	requires_power = FALSE
 	area_flags = UNIQUE_AREA | NOTELEPORT
+	base_lighting_color = COLOR_WHITE
+	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 	network_root_id = "ALIENS"
@@ -172,6 +174,8 @@
 	name = "Capture the Flag"
 	icon_state = "yellow"
 	requires_power = FALSE
+	base_lighting_color = COLOR_WHITE
+	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 
