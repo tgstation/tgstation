@@ -1,4 +1,0 @@
-author: "BarrelOfNapkins"
-delete-after: True
-changes: 
-  - bugfix: "if a character is blind, they can feel how full they feel while eating"

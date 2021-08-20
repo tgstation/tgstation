@@ -458,3 +458,38 @@
   - bugfix: Beach Biodome now has an oven and a griddle
   jughu:
   - bugfix: fixes wizard failing to spawn without a spellbook when you roll a d20
+2021-08-20:
+  BarrelOfNapkins:
+  - bugfix: if a character is blind, they can feel how full they feel while eating
+  Fikou:
+  - bugfix: fixes service achievements
+  Ghilker:
+  - bugfix: fixes thermomachine abuse by slowing the exchange ratio based on the moles
+      amount on the ports (both if cooling, only main if not)
+  Gurkenglas:
+  - bugfix: The intern responsible for NTNet circuit components not working has been
+      sacked.
+  Improvedname:
+  - bugfix: Auto rifle ammo crates have a name now
+  Krysonism:
+  - bugfix: Fixed an exploit that allowed SaturnX enjoyers to become permanently invisible.
+  Pepsiman0:
+  - bugfix: 'the chem mass spectrometer is now a proper machine that is now: buildable,
+      deconstructable, movable and upgradable. (the research for the board is in the
+      basic bio tech node)'
+  PositiveEntropy, Kryson, TetraZeta:
+  - imageadd: Ports new Hypospray, Combat Autoinjector, Pestle, Mortar and Dropper
+      sprites from Shiptest!
+  - imageadd: Adds a new sprite for pill bottles!
+  ViktorKoL:
+  - bugfix: corrected Fiery Rebirth's and Curse of Corrosion's heretic research descriptions
+  - bugfix: fixed heretic research progression after unlocking the Lonely Ritual
+  Watermelon914:
+  - bugfix: Fixed the circuit duplicator not working.
+  Wayland-Smithy:
+  - bugfix: Fixed microwave's attack_hand_secondary return value.
+  timothymtorres:
+  - qol: Mulebots no longer turn off power when the panel is opened with a screwdriver.
+  - bugfix: Player controlled mulebot mobility is now affected by motor wires.
+  - bugfix: Fix fire being extinguished by pAIs, borgs, or simple animals by walking
+      over the mob.

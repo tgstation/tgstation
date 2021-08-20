@@ -1,4 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - bugfix: "fixes thermomachine abuse by slowing the exchange ratio based on the moles amount on the ports (both if cooling, only main if not)"
