@@ -36,7 +36,8 @@
 #define GC_CURRENTLY_BEING_QDELETED -2
 
 // Defines for the time left for an item to get its reference cleaned
-#define GARBAGE_QUEUE_FIRST_LEVEL_TIMEOUT 5 MINUTES
+#define GC_FILTER_QUEUE 5 MINUTES
+#define GC_DEL_QUEUE 10 SECONDS
 
 #define QDELING(X) (X.gc_destroyed)
 #define QDELETED(X) (!X || QDELING(X))
