@@ -9126,8 +9126,7 @@
 "brL" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -9136,32 +9135,28 @@
 /area/space/nearstation)
 "brM" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/lattice,
 /turf/open/space,
 /area/space/nearstation)
 "brN" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /turf/open/space,
 /area/space/nearstation)
 "brO" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /turf/open/space,
 /area/space/nearstation)
 "brS" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -12192,8 +12187,7 @@
 /area/ai_monitored/security/armory)
 "bNu" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -12249,8 +12243,7 @@
 /area/ai_monitored/turret_protected/ai)
 "bNB" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -15819,8 +15812,7 @@
 /area/science/robotics/lab)
 "cdV" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -16462,12 +16454,10 @@
 /area/security/brig)
 "chh" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -16563,8 +16553,7 @@
 /area/service/abandoned_gambling_den/secondary)
 "chs" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -16576,12 +16565,10 @@
 /area/space/nearstation)
 "cht" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /turf/open/space,
 /area/space/nearstation)
@@ -23404,8 +23391,7 @@
 /area/science/xenobiology)
 "cYM" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -26843,8 +26829,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4;
-	layer = 2.9
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/end,
 /mob/living/carbon/human/species/monkey,
@@ -29739,8 +29724,7 @@
 /area/science/mixing)
 "dAF" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -32945,13 +32929,12 @@
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
 "dOL" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
-	},
 /obj/item/target,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/end,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "dOM" = (
@@ -37956,8 +37939,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -43577,8 +43559,7 @@
 "fYK" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/item/reagent_containers/glass/bucket,
 /obj/effect/turf_decal/bot,
@@ -44346,8 +44327,7 @@
 /area/hallway/primary/port)
 "glT" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -46580,8 +46560,7 @@
 "gUo" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -49529,8 +49508,7 @@
 /area/maintenance/port)
 "hLN" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -49939,8 +49917,7 @@
 /area/medical/treatment_center)
 "hSx" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/machinery/door/window{
 	dir = 4;
@@ -50473,8 +50450,7 @@
 /area/service/kitchen)
 "hXG" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -50533,8 +50509,7 @@
 /area/command/heads_quarters/cmo)
 "hYA" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -52789,8 +52764,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -59173,8 +59147,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -64712,8 +64685,7 @@
 /area/ai_monitored/aisat/exterior)
 "lMG" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -67497,8 +67469,7 @@
 /area/maintenance/starboard/aft)
 "mwk" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/commons/fitness/recreation)
@@ -67853,8 +67824,7 @@
 	req_access_txt = "18"
 	},
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots{
@@ -70870,8 +70840,7 @@
 "nqe" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/item/grenade/chem_grenade/smart_metal_foam{
 	pixel_x = -4;
@@ -71248,8 +71217,7 @@
 /area/commons/vacant_room/office)
 "nvW" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -73281,8 +73249,7 @@
 /area/engineering/atmos)
 "nUj" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -73462,8 +73429,7 @@
 /area/maintenance/port)
 "nVY" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
@@ -74409,8 +74375,7 @@
 /area/cargo/office)
 "ohn" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/machinery/computer/atmos_control,
 /obj/effect/turf_decal/tile/yellow{
@@ -74510,8 +74475,7 @@
 "oiZ" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/space,
@@ -78911,8 +78875,7 @@
 /area/security/prison)
 "pmI" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/tile/neutral{
@@ -79940,8 +79903,7 @@
 /area/maintenance/disposal/incinerator)
 "pCn" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -80073,8 +80035,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -82068,8 +82029,7 @@
 /area/ai_monitored/aisat/exterior)
 "qfn" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -87067,8 +87027,7 @@
 /area/engineering/atmos)
 "rrp" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -87271,8 +87230,7 @@
 /area/command/teleporter)
 "ruZ" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/tile/neutral{
@@ -88048,8 +88006,7 @@
 /area/engineering/storage_shared)
 "rGx" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -91178,8 +91135,7 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /turf/open/floor/carpet,
 /area/command/heads_quarters/captain)
@@ -91758,8 +91714,7 @@
 /area/hallway/primary/aft)
 "sDl" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -92165,8 +92120,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -93377,8 +93331,7 @@
 	name = "command camera"
 	},
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /turf/open/floor/carpet,
 /area/command/heads_quarters/captain)
@@ -94246,8 +94199,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
@@ -99529,8 +99481,7 @@
 	},
 /obj/item/storage/lockbox/medal,
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /turf/open/floor/iron/grimy,
 /area/command/heads_quarters/captain)
@@ -100700,8 +100651,7 @@
 /area/engineering/break_room)
 "uSH" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -101560,8 +101510,7 @@
 "vgh" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -102190,8 +102139,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -102459,8 +102407,7 @@
 /area/maintenance/starboard/aft)
 "vsk" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/plasteel/twenty,
@@ -102743,8 +102690,7 @@
 /area/commons/storage/tools)
 "vxe" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -106207,8 +106153,7 @@
 "wtv" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/machinery/light/directional/south,
 /turf/open/space,
@@ -107572,8 +107517,7 @@
 "wOD" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/space,
@@ -112492,8 +112436,7 @@
 /area/service/library/abandoned)
 "yiY" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
