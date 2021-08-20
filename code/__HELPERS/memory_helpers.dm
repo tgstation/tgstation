@@ -70,6 +70,7 @@
 		return build_story_mob(target)
 	return lowertext(initial(target.name))
 
+///sane proc for giving a mob with a mind the option to select one of their memories, returns the memory selected (null otherwise)
 /datum/mind/proc/select_memory(verbage)
 
 	var/list/choice_list = list()
@@ -87,5 +88,6 @@
 		return
 	return memory_choice
 
+///small helper to clean out memories
 /datum/mind/proc/wipe_memory()
 	QDEL_LIST(memories)
