@@ -187,7 +187,7 @@
 	var/value_mode
 	var/splitter = " "
 	/// whether the key names will be lowercased on ValidateAndSet or not.
-	var/lowercase = TRUE
+	var/lowercase_key = TRUE
 
 /datum/config_entry/keyed_list/New()
 	. = ..()
@@ -205,7 +205,7 @@
 
 	if(key_pos || value_mode == VALUE_MODE_FLAG)
 		key_name = copytext(str_val, 1, key_pos)
-		if(lowercase)
+		if(lowercase_key)
 			key_name = lowertext(key_name)
 		if(key_pos)
 			key_value = copytext(str_val, key_pos + length(str_val[key_pos]))
