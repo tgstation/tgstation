@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/index_table
 	display_name = "Index Table"
-	display_desc = "Gets the row of a table using the index inputted. Will return no value if the index is invalid or a proper table is not returned."
+	desc = "Gets the row of a table using the index inputted. Will return no value if the index is invalid or a proper table is not returned."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The list to perform the filter on
@@ -29,12 +29,12 @@
 	if(.)
 		return
 
-	var/list/target_list = received_table.input_value
+	var/list/target_list = received_table.value
 	if(!islist(target_list) || !length(target_list))
 		output_list.set_output(null)
 		return
 
-	var/index = target_index.input_value
+	var/index = target_index.value
 	if(index < 1 || index > length(target_list))
 		output_list.set_output(null)
 		return

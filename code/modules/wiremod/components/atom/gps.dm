@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/gps
 	display_name = "Internal GPS"
-	display_desc = "A component that returns the xyz co-ordinates of itself."
+	desc = "A component that returns the xyz co-ordinates of itself."
 
 	/// The result from the output
 	var/datum/port/output/x_pos

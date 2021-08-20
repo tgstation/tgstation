@@ -18,6 +18,10 @@
 	. = ..()
 	toggle_id_ctf(null, game_id, automated = TRUE)//only one machine runs the victory proc, start_ctf proc would break the other machine
 
+// We don't clean up for the medisim.
+/obj/machinery/capture_the_flag/medisim/reset_the_arena()
+	return
+
 /obj/machinery/capture_the_flag/medisim/spawn_team_member(client/new_team_member)
 	. = ..()
 	if(!.)

@@ -315,11 +315,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 				to_chat(M, span_cultlarge("\"I accept this sacrifice.\""))
 			else
 				to_chat(M, span_cultlarge("\"I accept this meager sacrifice.\""))
-	
+
 	if(iscyborg(sacrificial))
 		var/construct_class = show_radial_menu(first_invoker, sacrificial, GLOB.construct_radial_images, require_near = TRUE, tooltips = TRUE)
 		if(QDELETED(sacrificial))
 			return FALSE
+		sacrificial.grab_ghost()
 		make_new_construct_from_class(construct_class, THEME_CULT, sacrificial, first_invoker, TRUE, get_turf(src))
 		var/mob/living/silicon/robot/sacriborg = sacrificial
 		sacriborg.mmi = null

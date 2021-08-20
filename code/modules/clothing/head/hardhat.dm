@@ -171,3 +171,54 @@
 	icon_state = "hardhat0_dblue"
 	inhand_icon_state = "hardhat0_dblue"
 	hat_type = "dblue"
+
+/obj/item/clothing/head/hardhat/pumpkinhead
+	name = "carved pumpkin"
+	desc = "A jack o' lantern! Believed to ward off evil spirits."
+	icon_state = "hardhat0_pumpkin"
+	inhand_icon_state = "hardhat0_pumpkin"
+	hat_type = "pumpkin"
+	clothing_flags = SNUG_FIT
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	light_range = 2 //luminosity when on
+	flags_cover = HEADCOVERSEYES
+	light_color = "#fff2bf"
+	worn_y_offset = 1
+
+/obj/item/clothing/head/hardhat/pumpkinhead/set_light_on(new_value)
+	. = ..()
+	if(isnull(.))
+		return
+	update_icon(UPDATE_OVERLAYS)
+
+/obj/item/clothing/head/hardhat/pumpkinhead/update_overlays()
+	. = ..()
+	if(light_on)
+		. += emissive_appearance(icon, "carved_pumpkin-emissive", alpha = src.alpha)
+
+/obj/item/clothing/head/hardhat/pumpkinhead/worn_overlays(isinhands)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(worn_icon, "carved_pumpkin-emissive", alpha = src.alpha, appearance_flags = KEEP_APART)
+
+/obj/item/clothing/head/hardhat/pumpkinhead/blumpkin
+	name = "carved blumpkin"
+	desc = "A very blue jack o' lantern! Believed to ward off vengeful chemists."
+	icon_state = "hardhat0_blumpkin"
+	inhand_icon_state = "hardhat0_blumpkin"
+	hat_type = "blumpkin"
+	light_color = "#76ff8e"
+
+/obj/item/clothing/head/hardhat/reindeer
+	name = "novelty reindeer hat"
+	desc = "Some fake antlers and a very fake red nose."
+	icon_state = "hardhat0_reindeer"
+	inhand_icon_state = "hardhat0_reindeer"
+	hat_type = "reindeer"
+	flags_inv = 0
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	light_range = 1 //luminosity when on
+	dynamic_hair_suffix = ""
+
+	dog_fashion = /datum/dog_fashion/head/reindeer

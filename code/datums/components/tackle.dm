@@ -387,8 +387,7 @@
 			user.emote("scream")
 			user.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic) // oopsie indeed!
 			shake_camera(user, 7, 7)
-			user.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash)
-			user.clear_fullscreen("flash", 4.5)
+			user.flash_act(1, TRUE, TRUE, length = 4.5)
 
 		if(97 to 98)
 			user.visible_message(span_danger("[user] slams skull-first into [hit] with a sound like crumpled paper, revealing a horrifying breakage in [user.p_their()] cranium! Holy shit!"), span_userdanger("You slam skull-first into [hit] and your senses are filled with warm goo flooding across your face! Your skull is open!"))
@@ -403,8 +402,7 @@
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
 			user.emote("gurgle")
 			shake_camera(user, 7, 7)
-			user.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash)
-			user.clear_fullscreen("flash", 4.5)
+			user.flash_act(1, TRUE, TRUE, length = 4.5)
 
 		if(93 to 96)
 			user.visible_message(span_danger("[user] slams face-first into [hit] with a concerning squish, immediately going limp!"), span_userdanger("You slam face-first into [hit], and immediately lose consciousness!"))
@@ -414,8 +412,7 @@
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
 			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8)
 			shake_camera(user, 6, 6)
-			user.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash)
-			user.clear_fullscreen("flash", 3.5)
+			user.flash_act(1, TRUE, TRUE, length = 3.5)
 
 		if(86 to 92)
 			user.visible_message(span_danger("[user] slams head-first into [hit], suffering major cranial trauma!"), span_userdanger("You slam head-first into [hit], and the world explodes around you!"))
@@ -427,8 +424,7 @@
 			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8)
 			user.Knockdown(40)
 			shake_camera(user, 5, 5)
-			user.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash)
-			user.clear_fullscreen("flash", 2.5)
+			user.flash_act(1, TRUE, TRUE, length = 2.5)
 
 		if(68 to 85)
 			user.visible_message(span_danger("[user] slams hard into [hit], knocking [user.p_them()] senseless!"), span_userdanger("You slam hard into [hit], knocking yourself senseless!"))

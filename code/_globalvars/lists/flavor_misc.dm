@@ -217,7 +217,7 @@ GLOBAL_LIST_INIT(scarySounds, list('sound/weapons/thudswoosh.ogg','sound/weapons
 22 Janitor
 23 Genetics
 24 Experimentor Lab
-25 Toxins
+25 Ordnance
 26 Dormitories
 27 Virology
 28 Xenobiology
@@ -237,7 +237,7 @@ GLOBAL_LIST_INIT(TAGGERLOCATIONS, list("Disposals",
 	"CMO Office", "Chemistry", "Research", "RD Office",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
 	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics",
-	"Experimentor Lab", "Toxins", "Dormitories", "Virology",
+	"Experimentor Lab", "Ordnance", "Dormitories", "Virology",
 	"Xenobiology", "Law Office","Detective's Office"))
 
 GLOBAL_LIST_INIT(station_prefixes, world.file2list("strings/station_prefixes.txt"))

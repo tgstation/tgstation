@@ -361,9 +361,9 @@
 	on = TRUE
 	icon_state = "vent_map_siphon_on-3"
 
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxin_output
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/plasma_output
 	name = "plasma tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TOX
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_PLAS
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/oxygen_output
 	name = "oxygen tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_O2
@@ -431,9 +431,9 @@
 	name = "incinerator chamber output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR
 	frequency = FREQ_ATMOS_CONTROL
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output
-	name = "toxins mixing output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TOXINS_LAB
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/ordnance_mixing_output
+	name = "ordnance mixing output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_ORDNANCE_LAB
 	frequency = FREQ_ATMOS_CONTROL
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/layer2

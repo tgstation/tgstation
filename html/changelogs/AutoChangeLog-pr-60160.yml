@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed e-bolas being unblockable, and not being able to ensnare flying/floating mobs (though kinda pointless because they ignore the slowdown)."
