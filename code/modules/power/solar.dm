@@ -239,7 +239,6 @@
 	randomise_offset(anchored ? 0 : random_offset)
 
 /obj/item/solar_assembly/attackby(obj/item/W, mob/user, params)
-	var/turf/solarturf = get_turf(src)
 	if(W.tool_behaviour == TOOL_WRENCH && isturf(loc))
 		if(isinspace())
 			to_chat(user, span_warning("You can't secure [src] here."))
@@ -253,10 +252,10 @@
 		if(!anchored)
 			to_chat(user, span_warning("You need to secure the assembly before you can add glass."))
 			return
-		for(var/obj/anchorcheck in solarturf.contents)
-			if(istype(anchorcheck, /obj/machinery/power/solar))
-				to_chat(user, span_warning("[anchorcheck] is already assembled here."))
-				return
+		var/turf/solarturf = get_turf(src)
+		if(locate(/obj/machinery/power/solar) in solarturf)
+			to_chat(user, span_warning("A solar panel is already assembled here."))
+			return
 		var/obj/item/stack/sheet/S = W
 		if(S.use(2))
 			glass_type = W.type
