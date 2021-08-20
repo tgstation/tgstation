@@ -85,6 +85,9 @@
 /obj/item/food/egg/yellow
 	icon_state = "egg-yellow"
 
+/obj/item/food/egg/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/friedegg, rand(10 SECONDS, 30 SECONDS), TRUE, TRUE)
+
 /obj/item/food/friedegg
 	name = "fried egg"
 	desc = "A fried egg, with a touch of salt and pepper."
