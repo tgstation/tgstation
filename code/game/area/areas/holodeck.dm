@@ -1,7 +1,7 @@
 /area/holodeck
 	name = "Holodeck"
 	icon_state = "Holodeck"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
 	flags_1 = NONE
 	sound_environment = SOUND_ENVIRONMENT_PADDED_CELL
 

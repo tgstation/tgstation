@@ -42,7 +42,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///Lumcount added by sources other than lighting datum objects, such as the overlay lighting component.
 	var/dynamic_lumcount = 0
 
-	var/dynamic_lighting = TRUE
+	var/always_lit = FALSE
 
 	var/tmp/lighting_corners_initialised = FALSE
 
@@ -108,9 +108,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	for(var/atom/movable/content as anything in src)
 		Entered(content, null)
 
-	var/area/A = loc
-	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
-		add_overlay(/obj/effect/fullbright)
+	if(always_lit)
+		add_overlay(GLOB.fullbright_overlay)
 
 	if(requires_activation)
 		CALCULATE_ADJACENT_TURFS(src, KILL_EXCITED)
