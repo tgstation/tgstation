@@ -95,6 +95,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	bite_consumption = 1
 	tastes = list("egg" = 4, "salt" = 1, "pepper" = 1)
+	burns_on_grill = TRUE
 	foodtypes = MEAT | FRIED | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 
