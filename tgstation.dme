@@ -831,6 +831,7 @@
 #include "code\datums\materials\meat.dm"
 #include "code\datums\materials\pizza.dm"
 #include "code\datums\memory\memory.dm"
+#include "code\datums\memory\tattoo_kit.dm"
 #include "code\datums\mergers\_merger.dm"
 #include "code\datums\mocking\client.dm"
 #include "code\datums\mood_events\_mood_event.dm"

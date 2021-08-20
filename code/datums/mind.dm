@@ -329,7 +329,7 @@
 			continue
 		choice_list[memory_iter.name] = memory_iter
 
-	var/choice = tgui_input_list(usr, "Select a memory", "Memory Selection?", choice_list)
+	var/choice = tgui_input_list(usr, "Select a memory to [verbage]", "Memory Selection?", choice_list)
 	var/datum/memory/memory_choice = choice_list[choice]
 
 	if(!memory_choice)

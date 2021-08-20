@@ -86,7 +86,7 @@ SUBSYSTEM_DEF(persistence)
 
 		var/turf/closed/engraved_wall = pick(turfs_to_pick_from)
 
-		if(!(engraved_wall.turf_flags & ENGRAVABLE))
+		if(HAS_TRAIT(engraved_wall, NOT_ENGRAVABLE))
 			continue
 
 		engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])

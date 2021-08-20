@@ -22,7 +22,7 @@
 	var/turf/closed/engraved_wall = parent
 
 	SSpersistence.wall_engravings += src
-	engraved_wall.turf_flags &= ~ENGRAVABLE
+	ADD_TRAIT(engraved_wall, NOT_ENGRAVABLE, TRAIT_GENERIC)
 	src.engraved_description = engraved_description
 	src.persistent_save = persistent_save
 	src.story_value = story_value
@@ -57,7 +57,7 @@
 	. = ..()
 	var/turf/closed/engraved_wall = parent
 	SSpersistence.wall_engravings -= src
-	engraved_wall.turf_flags |= ENGRAVABLE
+	REMOVE_TRAIT(engraved_wall, NOT_ENGRAVABLE, TRAIT_GENERIC)
 	parent.RemoveElement(/datum/element/art)
 	//must be here to allow overlays to be updated
 	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
