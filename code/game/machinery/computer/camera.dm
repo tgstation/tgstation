@@ -250,8 +250,9 @@
 /obj/machinery/computer/security/telescreen
 	name = "\improper Telescreen"
 	desc = "Used for watching an empty arena."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/telescreens.dmi'
 	icon_state = "telescreen"
+	base_icon_state = "telescreen"
 	icon_keyboard = null
 	layer = SIGN_LAYER
 	network = list("thunder")
@@ -315,10 +316,10 @@
 
 /obj/machinery/computer/security/telescreen/entertainment/update_overlays()
 	. = ..()
-	cut_overlays()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	. += "[initial(icon_state)]_program[rand(1,4)]"
+	. += "[base_icon_state]_program[rand(1,4)]"
+	. += emissive_appearance(icon, "[base_icon_state]_emissive", alpha = src.alpha)
 
 /obj/machinery/computer/security/telescreen/rd
 	name = "\improper Research Director's telescreen"
