@@ -1,0 +1,4 @@
+author: "AMonkeyThatCodes"
+delete-after: True
+changes: 
+  - bugfix: "Moving aside your mask will no longer make you impervious to disease"
