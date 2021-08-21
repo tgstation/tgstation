@@ -41,7 +41,6 @@
 /area/centcom/supplypod
 	name = "Supplypod Facility"
 	icon_state = "supplypod"
-	static_lighting = FALSE
 
 /area/centcom/supplypod/pod_storage
 	name = "Supplypod Storage"
@@ -94,12 +93,10 @@
 /area/tdome/arena
 	name = "Thunderdome Arena"
 	icon_state = "thunder"
-	static_lighting = FALSE
 
 /area/tdome/arena_source
 	name = "Thunderdome Arena Template"
 	icon_state = "thunder"
-	static_lighting = FALSE
 
 /area/tdome/tdome1
 	name = "Thunderdome (Team 1)"
@@ -174,6 +171,7 @@
 	name = "Capture the Flag"
 	icon_state = "yellow"
 	requires_power = FALSE
+	static_lighting = FALSE
 	base_lighting_color = COLOR_WHITE
 	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY

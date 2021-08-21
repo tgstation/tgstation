@@ -42,6 +42,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///Lumcount added by sources other than lighting datum objects, such as the overlay lighting component.
 	var/dynamic_lumcount = 0
 
+	///Bool, whether this turf will always be illuminated no matter what area it is in
 	var/always_lit = FALSE
 
 	var/tmp/lighting_corners_initialised = FALSE
