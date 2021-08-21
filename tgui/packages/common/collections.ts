@@ -70,7 +70,7 @@ export const map: MapFunction = <T, U>(iterateeFn) =>
 
     if (typeof collection === 'object') {
       return Object.entries(collection).map(([key, value]) => {
-        return iterateeFn(collection, key, value);
+        return iterateeFn(value, key, collection);
       });
     }
 
