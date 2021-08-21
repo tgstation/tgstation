@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Fixed several messages which were not showing properly about finding a rabbit in a hat, rattling your bones, denying sect membership or cooking sausages."
