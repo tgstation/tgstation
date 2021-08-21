@@ -1,10 +1,10 @@
 import { createPopper, OptionsGeneric } from "@popperjs/core";
-import { ArgumentTypes } from "common/types";
+import { ArgumentsOf } from "common/types";
 import { Component, findDOMfromVNode, InfernoNode, render } from "inferno";
 
 type PopperProps = {
   popperContent: InfernoNode;
-  options?: ArgumentTypes<typeof createPopper>[2];
+  options?: ArgumentsOf<typeof createPopper>[2];
   additionalStyles?: CSSProperties,
 };
 
