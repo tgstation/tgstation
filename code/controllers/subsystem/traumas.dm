@@ -190,7 +190,7 @@ SUBSYSTEM_DEF(traumas)
 		"aliens" = typecacheof(list(/turf/open/floor/plating/abductor, /turf/open/floor/plating/abductor2,
 			/turf/open/floor/mineral/abductor, /turf/closed/wall/mineral/abductor
 		)),
-		"falling" = typecacheof(list(/turf/open/chasm, /turf/open/floor/fakepit))
+		"falling" = typecacheof(list(/turf/open/chasm, /turf/open/floor/fakepit, /turf/open/openspace))
 	)
 
 	phobia_species = list("lizards" = typecacheof(list(/datum/species/lizard)),

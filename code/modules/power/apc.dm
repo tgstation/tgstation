@@ -160,6 +160,8 @@
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
 	var/obj/machinery/computer/apc_control/remote_control = null
+	///Represents a signel source of power alarms for this apc
+	var/datum/alarm_handler/alarm_manager
 
 /obj/machinery/power/apc/unlocked
 	locked = FALSE
@@ -254,17 +256,18 @@
 
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
-	area.power_light = FALSE
-	area.power_equip = FALSE
-	area.power_environ = FALSE
-	area.power_change()
-	area.poweralert(FALSE, src)
+	if(area)
+		area.power_light = FALSE
+		area.power_equip = FALSE
+		area.power_environ = FALSE
+		area.power_change()
+	QDEL_NULL(alarm_manager)
 	if(occupier)
 		malfvacate(1)
-	qdel(wires)
-	wires = null
+	if(wires)
+		QDEL_NULL(wires)
 	if(cell)
-		qdel(cell)
+		QDEL_NULL(cell)
 	if(terminal)
 		disconnect_terminal()
 	. = ..()
@@ -285,6 +288,7 @@
 /obj/machinery/power/apc/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	alarm_manager = new(src)
 
 	if(!mapload)
 		return
@@ -1273,18 +1277,18 @@
 
 	if(cell && !shorted)
 		// draw power from cell as before to power the area
-		var/cellused = min(cell.charge, GLOB.CELLRATE * lastused_total) // clamp deduction to a max, amount left in cell
+		var/cellused = min(cell.charge, lastused_total JOULES) // clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
 		if(excess > lastused_total) // if power excess recharge the cell
 										// by the same amount just used
 			cell.give(cellused)
-			add_load(cellused/GLOB.CELLRATE) // add the load used to recharge the cell
+			add_load(cellused WATTS) // add the load used to recharge the cell
 
 
 		else // no excess, and not enough per-apc
-			if((cell.charge/GLOB.CELLRATE + excess) >= lastused_total) // can we draw enough from cell+grid to cover last usage?
-				cell.charge = min(cell.maxcharge, cell.charge + GLOB.CELLRATE * excess) //recharge with what we can
+			if((cell.charge WATTS + excess) >= lastused_total) // can we draw enough from cell+grid to cover last usage?
+				cell.charge = min(cell.maxcharge, cell.charge + excess JOULES) //recharge with what we can
 				add_load(excess) // so draw what we can from the grid
 				charging = APC_NOT_CHARGING
 
@@ -1309,31 +1313,31 @@
 			equipment = autoset(equipment, AUTOSET_FORCE_OFF)
 			lighting = autoset(lighting, AUTOSET_FORCE_OFF)
 			environ = autoset(environ, AUTOSET_FORCE_OFF)
-			area.poweralert(TRUE, src)
+			alarm_manager.send_alarm(ALARM_POWER)
 		else if(cell.percent() < 15 && longtermpower < 0) // <15%, turn off lighting & equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_OFF)
 			environ = autoset(environ, AUTOSET_ON)
-			area.poweralert(TRUE, src)
+			alarm_manager.send_alarm(ALARM_POWER)
 		else if(cell.percent() < 30 && longtermpower < 0) // <30%, turn off equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
-			area.poweralert(TRUE, src)
+			alarm_manager.send_alarm(ALARM_POWER)
 		else // otherwise all can be on
 			equipment = autoset(equipment, AUTOSET_ON)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
-			area.poweralert(FALSE, src)
 			if(cell.percent() > 75)
-				area.poweralert(FALSE, src)
+				alarm_manager.clear_alarm(ALARM_POWER)
+
 
 		// now trickle-charge the cell
 		if(chargemode && charging == APC_CHARGING && operating)
 			if(excess > 0) // check to make sure we have enough to charge
 				// Max charge is capped to % per second constant
-				var/ch = min(excess*GLOB.CELLRATE, cell.maxcharge*GLOB.CHARGELEVEL)
-				add_load(ch/GLOB.CELLRATE) // Removes the power we're taking from the grid
+				var/ch = min(excess JOULES, cell.maxcharge JOULES)
+				add_load(ch WATTS) // Removes the power we're taking from the grid
 				cell.give(ch) // actually recharge the cell
 
 			else
@@ -1368,7 +1372,7 @@
 		equipment = autoset(equipment, AUTOSET_FORCE_OFF)
 		lighting = autoset(lighting, AUTOSET_FORCE_OFF)
 		environ = autoset(environ, AUTOSET_FORCE_OFF)
-		area.poweralert(TRUE, src)
+		alarm_manager.send_alarm(ALARM_POWER)
 
 	// update icon & area power if anything changed
 

@@ -26,12 +26,12 @@
 		return FALSE
 	user.visible_message(span_danger("[user] begins to plant \the [src]..."))
 	if(do_after(user, 8 SECONDS, target = user.drop_location(), progress = TRUE))
-		new /obj/structure/fluff/hedge/opaque(user.drop_location())
+		new /obj/structure/hedge/opaque(user.drop_location())
 		to_chat(user, span_notice("You plant \the [src]."))
 		qdel(src)
 
 ///the structure placed by the shrubs
-/obj/structure/fluff/hedge
+/obj/structure/hedge
 	name = "hedge"
 	desc = "A large bushy hedge."
 	icon = 'icons/obj/smooth_structures/hedge.dmi'
@@ -42,10 +42,10 @@
 	canSmoothWith = list(SMOOTH_GROUP_HEDGE_FLUFF)
 	density = TRUE
 	anchored = TRUE
-	deconstructible = FALSE
+	opacity = FALSE
 	max_integrity = 80
 
-/obj/structure/fluff/hedge/attacked_by(obj/item/I, mob/living/user)
+/obj/structure/hedge/attacked_by(obj/item/I, mob/living/user)
 	if(opacity && HAS_TRAIT(user, TRAIT_BONSAI) && I.get_sharpness())
 		to_chat(user,span_notice("You start trimming \the [src]."))
 		if(do_after(user, 3 SECONDS,target=src))
@@ -56,5 +56,5 @@
 /**
  * useful for mazes and such
  */
-/obj/structure/fluff/hedge/opaque
+/obj/structure/hedge/opaque
 	opacity = TRUE

@@ -274,7 +274,7 @@
 
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
-		user.visible_message("<span class ='userdanger'>You accidentally hit yourself over the head with [src]!</span>", "<span class='danger'>[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!</span>")
+		user.visible_message(span_danger("[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!"), span_userdanger("You accidentally hit yourself over the head with [src]!"))
 
 		if(iscyborg(user))
 			if(affect_cyborg)
@@ -664,7 +664,7 @@
 		return
 	if (is_type_in_typecache(target, ovens))
 		if (held_sausage?.roasted)
-			to_chat(span_warning("Your [held_sausage] has already been cooked!"))
+			to_chat(user, span_warning("Your [held_sausage] has already been cooked!"))
 			return
 		if (istype(target, /obj/singularity) && get_dist(user, target) < 10)
 			to_chat(user, span_notice("You send [held_sausage] towards [target]."))
