@@ -83,7 +83,7 @@
 
 /datum/element/climbable/proc/do_climb(atom/climbed_thing, mob/living/user)
 	climbed_thing.set_density(FALSE)
-	. = step(user, get_dir(user,climbed_thing.loc))
+	. = step(user, get_dir(user, get_turf(climbed_thing)))
 	climbed_thing.set_density(TRUE)
 
 ///Handles climbing onto the atom when you click-drag

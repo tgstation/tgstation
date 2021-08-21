@@ -22,6 +22,9 @@
 
 	rcd_memory = RCD_MEMORY_WALL
 
+	///amount of damage this wall can take before it is forced to deconstruct
+	var/integrity = 100
+
 	///lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/hardness = 40
 	var/slicing_duration = 100  //default time taken to slice the wall
@@ -196,7 +199,7 @@
 	var/turf/T = user.loc //get user's location for delay checks
 
 	//the istype cascade has been spread among various procs for easy overriding
-	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T))
+	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T) || try_damage(W, user, T))
 		return
 
 	return ..()
@@ -246,6 +249,9 @@
 			return TRUE
 
 	return FALSE
+
+/turf/closed/wall/proc/try_damage(obj/item/attacking_item, mob/user, turf/user_turf)
+	return //by default walls dont work like this
 
 /turf/closed/wall/singularity_pull(S, current_size)
 	..()
