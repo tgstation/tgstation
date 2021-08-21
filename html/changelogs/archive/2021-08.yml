@@ -493,3 +493,24 @@
   - bugfix: Player controlled mulebot mobility is now affected by motor wires.
   - bugfix: Fix fire being extinguished by pAIs, borgs, or simple animals by walking
       over the mob.
+2021-08-21:
+  BraveMole:
+  - code_imp: prevent possible QDEL_IN harddel
+  Gamer025:
+  - code_imp: Failsafe is more robust now and the game can actually recover from an
+      deleted MC
+  Ghilker:
+  - bugfix: fix crystallizer from getting stuck on same amount of gases, limits the
+      allowed amount of allowed gas inside by double the recipe amount per type
+  MMMiracles:
+  - bugfix: Solar assemblies can no longer be built on top of existing solar panels.
+  SpookyTheFox:
+  - bugfix: tweaked soda dispenser reagent temperatures
+  Thunder12345:
+  - admin: The add component option in view variables now uses a tgui list that can
+      be searched.
+  Time-Green:
+  - bugfix: lowered mothwings are now visible again
+  aaaa1023:
+  - spellcheck: fixed a few typos in sleeping carp "recall teachings" text. Also changed
+      a line in it to be less awkward.
