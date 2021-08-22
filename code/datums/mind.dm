@@ -702,7 +702,7 @@
 	var/datum/antagonist/traitor/traitor_datum = has_antag_datum(/datum/antagonist/traitor)
 	if(traitor_datum)
 		uplink = traitor_datum.uplink
-	else
+	if(!uplink)
 		uplink = find_syndicate_uplink(TRUE)
 	if(!uplink)
 		if(!(locate(/obj/effect/proc_holder/spell/self/special_equipment_fallback) in spell_list))
