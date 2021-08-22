@@ -167,15 +167,16 @@ Buildable meters
 			to_chat(user, span_warning("Something is hogging the tile!"))
 			return TRUE
 
-		if(pipe_count == 1 && istype(machine, /obj/machinery/atmospherics/pipe/smart) && ispath(pipe_type, /obj/machinery/atmospherics/pipe/smart) && lowertext(machine.pipe_color) != lowertext(pipe_color))
-			var/direction = machine.dir
-			if(((direction & (EAST|WEST)) || (direction & (SOUTH|NORTH))) && !ISDIAGONALDIR(direction))
-				pipe_type = /obj/machinery/atmospherics/pipe/bridge_pipe
-				if(EWCOMPONENT(direction))
-					dir = NORTH
-				if(NSCOMPONENT(direction))
-					dir = EAST
-				continue
+		if(pipe_count == 1 && ispath(pipe_type, /obj/machinery/atmospherics/pipe/smart))
+			if (!istype(machine, /obj/machinery/atmospherics/pipe/smart) || lowertext(machine.pipe_color) != lowertext(pipe_color))
+				var/direction = machine.dir
+				if(((direction & (EAST|WEST)) || (direction & (SOUTH|NORTH))) && !ISDIAGONALDIR(direction))
+					pipe_type = /obj/machinery/atmospherics/pipe/bridge_pipe
+					if(EWCOMPONENT(direction))
+						dir = NORTH
+					if(NSCOMPONENT(direction))
+						dir = EAST
+					continue
 
 		if(flags & PIPING_BRIDGE && !(machine.pipe_flags & PIPING_BRIDGE) && check_ninety_degree_dir(machine)) //continue if we are placing a bridge pipe over a normal pipe only (prevent duplicates)
 			continue
