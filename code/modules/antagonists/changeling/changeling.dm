@@ -3,13 +3,13 @@
 #define LING_ABSORB_RECENT_SPEECH 8 //The amount of recent spoken lines to gain on absorbing a mob
 
 /datum/antagonist/changeling
-	name = "Changeling"
-	roundend_category  = "changelings"
-	antagpanel_category = "Changeling"
+	name = "Thingling"
+	roundend_category  = "thinglings"
+	antagpanel_category = "Thingling"
 	job_rank = ROLE_CHANGELING
 	antag_moodlet = /datum/mood_event/focused
 	antag_hud_type = ANTAG_HUD_CHANGELING
-	antag_hud_name = "changeling"
+	antag_hud_name = "thingling"
 	hijack_speed = 0.5
 	suicide_cry = "FOR THE HIVE!!"
 	var/you_are_greet = TRUE
@@ -62,6 +62,9 @@
 		"s_store" = /obj/item/changeling,
 	)
 
+	// TEAM CODE //
+	var/datum/team/changeling/changeling_team
+
 /datum/antagonist/changeling/New()
 	. = ..()
 	for(var/datum/antagonist/changeling/C in GLOB.antagonists)
@@ -86,21 +89,39 @@
 	create_actions()
 	reset_powers()
 	create_initial_profile()
-	if(give_objectives)
-		forge_objectives()
 	owner.current.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue. We are able to transform our body after all.
+	START_PROCESSING(SSobj, src)
 	. = ..()
+	create_objectives()
+	owner.current.log_message("has been assimilated!", LOG_ATTACK, color="red")
 
 /datum/antagonist/changeling/on_removal()
 	//We'll be using this from now on
-	var/mob/living/carbon/C = owner.current
-	if(istype(C))
-		var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
+	var/mob/living/carbon/no_longer_ling = owner.current
+	if(istype(no_longer_ling))
+		var/obj/item/organ/brain/B = no_longer_ling.getorganslot(ORGAN_SLOT_BRAIN)
 		if(B && (B.decoy_override != initial(B.decoy_override)))
 			B.organ_flags |= ORGAN_VITAL
 			B.decoy_override = FALSE
 	remove_changeling_powers()
+	remove_objectives()
 	. = ..()
+
+/datum/antagonist/changeling/process(delta_time = SSMOBS_DT)
+	if(!owner || !owner.current)
+		return
+	var/mob/living/antag_mob = owner.current
+	if(iscarbon(antag_mob))
+		var/mob/living/carbon/carbon_antag = antag_mob
+		if(carbon_antag.on_fire)
+			if(carbon_antag.stat > SOFT_CRIT)
+				carbon_antag.dust(TRUE, TRUE, TRUE)
+			else
+				playsound(carbon_antag, 'sound/hallucinations/wail.ogg', 50, TRUE)
+				carbon_antag.emote("me",1,"unleashes an inhuman scream!",TRUE)
+	else
+		if(antag_mob.stat == DEAD && antag_mob.fireloss >= antag_mob.maxHealth/2)
+			antag_mob.dust(TRUE, TRUE, TRUE)
 
 /datum/antagonist/changeling/proc/reset_properties()
 	changeling_speak = 0
@@ -388,95 +409,20 @@
 	handle_clown_mutation(M, removing = FALSE)
 	UnregisterSignal(owner.current, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
 
-
 /datum/antagonist/changeling/greet()
 	if (you_are_greet)
-		to_chat(owner.current, span_boldannounce("You are a changeling! You have absorbed and taken the form of a human."))
+		to_chat(owner.current, span_boldannounce("You are a thingling! You have absorbed and taken the form of a human."))
 	to_chat(owner.current, "<b>You must complete the following tasks:</b>")
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 	owner.announce_objectives()
 
 /datum/antagonist/changeling/farewell()
-	to_chat(owner.current, span_userdanger("You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!"))
-
-
-/datum/antagonist/changeling/proc/forge_objectives()
-	//OBJECTIVES - random traitor objectives. Unique objectives "steal brain" and "identity theft".
-	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
-	//If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone
-
-	var/escape_objective_possible = TRUE
-
-	switch(competitive_objectives ? rand(1,3) : 1)
-		if(1)
-			var/datum/objective/absorb/absorb_objective = new
-			absorb_objective.owner = owner
-			absorb_objective.gen_amount_goal(6, 8)
-			objectives += absorb_objective
-		if(2)
-			var/datum/objective/absorb_most/ac = new
-			ac.owner = owner
-			objectives += ac
-		if(3)
-			var/datum/objective/absorb_changeling/ac = new
-			ac.owner = owner
-			objectives += ac
-
-	if(prob(60))
-		if(prob(85))
-			var/datum/objective/steal/steal_objective = new
-			steal_objective.owner = owner
-			steal_objective.find_target()
-			objectives += steal_objective
-		else
-			var/datum/objective/download/download_objective = new
-			download_objective.owner = owner
-			download_objective.gen_amount_goal()
-			objectives += download_objective
-
-	var/list/active_ais = active_ais()
-	if(active_ais.len && prob(100/GLOB.joined_player_list.len))
-		var/datum/objective/destroy/destroy_objective = new
-		destroy_objective.owner = owner
-		destroy_objective.find_target()
-		objectives += destroy_objective
-	else
-		if(prob(70))
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = owner
-			kill_objective.find_target()
-			objectives += kill_objective
-		else
-			var/datum/objective/maroon/maroon_objective = new
-			maroon_objective.owner = owner
-			maroon_objective.find_target()
-			objectives += maroon_objective
-
-			if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
-				var/datum/objective/escape/escape_with_identity/identity_theft = new
-				identity_theft.owner = owner
-				identity_theft.target = maroon_objective.target
-				identity_theft.update_explanation_text()
-				objectives += identity_theft
-				escape_objective_possible = FALSE
-
-	if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
-		if(prob(50))
-			var/datum/objective/escape/escape_objective = new
-			escape_objective.owner = owner
-			objectives += escape_objective
-		else
-			var/datum/objective/escape/escape_with_identity/identity_theft = new
-			identity_theft.owner = owner
-			identity_theft.find_target()
-			objectives += identity_theft
-		escape_objective_possible = FALSE
-
+	to_chat(owner.current, span_userdanger("You grow weak and lose your powers! You are no longer a thingling and are stuck in your current form!"))
 
 /datum/antagonist/changeling/admin_add(datum/mind/new_owner,mob/admin)
 	. = ..()
-	to_chat(new_owner.current, span_boldannounce("Our powers have awoken. A flash of memory returns to us...we are a changeling!"))
+	to_chat(new_owner.current, span_boldannounce("Our powers have awoken. A flash of memory returns to us...we are a thingling!"))
 
 /datum/antagonist/changeling/get_admin_commands()
 	. = ..()
