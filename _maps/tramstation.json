@@ -3,6 +3,8 @@
 	"map_name": "Tramstation",
 	"map_path": "map_files/tramstation",
 	"map_file": "tramstation.dmm",
+	"space_ruin_levels": 0,
+	"space_empty_levels": 0,
 	"shuttles": {
 		"cargo": "cargo_box",
 		"ferry": "ferry_fancy",
@@ -12,12 +14,14 @@
 	"traits": [
 		{
 			"Up": 1,
-			"Baseturf": "/turf/open/floor/plating/asteroid/airless",
+			"Baseturf": "/turf/open/floor/plating/asteroid/snow",
+			"Gravity": true,
 			"Linkage": "Cross"
 		},
 		{
 			"Down": -1,
-			"Baseturf": "/turf/open/openspace",
+			"Baseturf": "/turf/open/floor/plating/ice/smooth",
+			"Gravity": true,
 			"Linkage": "Cross"
 		}
 	],
@@ -26,7 +30,7 @@
 			"additional_cqc_areas": ["/area/service/kitchen/diner"]
 		},
 		"captain": {
-			"special_charter": "asteroid"
+			"special_charter": "moon"
 		}
 	}
 }
