@@ -3223,6 +3223,7 @@
 #include "code\modules\projectiles\guns\special\meat_hook.dm"
 #include "code\modules\projectiles\guns\special\medbeam.dm"
 #include "code\modules\projectiles\guns\special\syringe_gun.dm"
+#include "code\modules\projectiles\guns\special\thing_flamethrower.dm"
 #include "code\modules\projectiles\projectile\beams.dm"
 #include "code\modules\projectiles\projectile\bullets.dm"
 #include "code\modules\projectiles\projectile\magic.dm"

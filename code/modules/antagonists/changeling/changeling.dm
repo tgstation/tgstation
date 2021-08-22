@@ -93,7 +93,7 @@
 	START_PROCESSING(SSobj, src)
 	. = ..()
 	create_objectives()
-	owner.current.log_message("has been assimilated!", LOG_ATTACK, color="red")
+	owner.current.log_message("has been assimilated!", LOG_ATTACK, color = "red")
 
 /datum/antagonist/changeling/on_removal()
 	//We'll be using this from now on
@@ -119,6 +119,7 @@
 			else
 				playsound(carbon_antag, 'sound/hallucinations/wail.ogg', 50, TRUE)
 				carbon_antag.emote("me",1,"unleashes an inhuman scream!",TRUE)
+				carbon_antag.Stun(delta_time + 0.5 SECONDS, TRUE)
 	else
 		if(antag_mob.stat == DEAD && antag_mob.fireloss >= antag_mob.maxHealth/2)
 			antag_mob.dust(TRUE, TRUE, TRUE)
