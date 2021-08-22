@@ -24,15 +24,15 @@
 	owner = null
 	return ..()
 
-//Called on life ticks
-/datum/brain_trauma/proc/on_life(delta_time, times_fired)
+///Called on life ticks
+/datum/brain_trauma/proc/on_life(delta_time = SSMOBS_DT, times_fired)
 	return
 
-//Called on death
+///Called on death
 /datum/brain_trauma/proc/on_death()
 	return
 
-//Called when given to a mob
+///Called when given to a mob
 /datum/brain_trauma/proc/on_gain()
 	if(gain_text)
 		to_chat(owner, gain_text)

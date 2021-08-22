@@ -12,17 +12,23 @@
 	var/datum/brain_trauma/special/obsessed/trauma
 
 /datum/antagonist/obsessed/admin_add(datum/mind/new_owner,mob/admin)
-	var/mob/living/carbon/C = new_owner.current
-	if(!istype(C))
+	var/mob/living/carbon/creep = new_owner.current
+	if(!istype(creep))
 		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to at least be a carbon!")
 		return
-	if(!C.getorgan(/obj/item/organ/brain)) // If only I had a brain
+	if(!creep.getorgan(/obj/item/organ/brain)) // If only I had a brain
 		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to HAVE A BRAIN.")
 		return
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
 	log_admin("[key_name(admin)] made [key_name(new_owner)] into [name].")
+
+	var/response = tgui_alert(admin, "Pick their obsession? If none is selected, a random one will be chosen.", "Obsession Selection", list("Yes", "No"))
+	var/admin_picked_obsession
+	if(response == "Yes")
+		var/list/candidates = return_obsession_candidates(creep)
+		admin_picked_obsession = tgui_input_list(admin, "Pick a victim!", "Valid candidates", candidates)
 	//PRESTO FUCKIN MAJESTO
-	C.gain_trauma(/datum/brain_trauma/special/obsessed)//ZAP
+	creep.gain_trauma(/datum/brain_trauma/special/obsessed, TRAUMA_RESILIENCE_SURGERY, admin_picked_obsession)//ZAP
 
 /datum/antagonist/obsessed/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/creepalert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
@@ -64,8 +70,7 @@
 		objectives_left += "jealous"
 
 	for(var/i in 1 to 3)
-		var/chosen_objective = pick(objectives_left)
-		objectives_left.Remove(chosen_objective)
+		var/chosen_objective = pick_n_take(objectives_left)
 		switch(chosen_objective)
 			if("spendtime")
 				var/datum/objective/spendtime/spendtime = new
