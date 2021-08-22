@@ -201,7 +201,7 @@
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/stalker
 	next_knowledge = list(
 		/datum/eldritch_knowledge/summon/ashy,
-		/datum/eldritch_knowledge/summon/rusty,
+		/datum/eldritch_knowledge/spell/blood_siphon,
 		/datum/eldritch_knowledge/final/flesh_final
 	)
 	route = PATH_FLESH
