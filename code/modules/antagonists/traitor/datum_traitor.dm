@@ -98,7 +98,7 @@
 	objectives.Cut()
 	var/objective_count = 0
 
-	if ((GLOB.joined_player_list.len >= HIJACK_MIN_PLAYERS) && prob(HIJACK_PROB))
+	if((GLOB.joined_player_list.len >= HIJACK_MIN_PLAYERS) && prob(HIJACK_PROB))
 		is_hijacker = TRUE
 		objective_count++
 
