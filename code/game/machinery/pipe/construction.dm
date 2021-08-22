@@ -167,6 +167,10 @@ Buildable meters
 			to_chat(user, span_warning("Something is hogging the tile!"))
 			return TRUE
 
+		// skip checks if we don't overlap layers, either by being on the same layer or by something being on all layers
+		if((machine.piping_layer != piping_layer) && !((machine.pipe_flags | flags) & PIPING_ALL_LAYER))
+			continue
+
 		// If we're a smart pipe, and we're looking to share space with a potentially perpendicular kind of pipe, see if we can smartly go over it as a bridge
 		if(pipe_count == 1 && ispath(pipe_type, /obj/machinery/atmospherics/pipe/smart))
 			// If we're looking to go over another smart pipe, it must be of a different color.
@@ -182,10 +186,6 @@ Buildable meters
 
 		// skip checks if we are placing a bridge pipe over a non-bridge-pipe at 90 degrees (can't stack bridges)
 		if(flags & PIPING_BRIDGE && !(machine.pipe_flags & PIPING_BRIDGE) && check_ninety_degree_dir(machine))
-			continue
-
-		// skip checks if we don't overlap layers, either by being on the same layer or by something being on all layers
-		if((machine.piping_layer != piping_layer) && !((machine.pipe_flags | flags) & PIPING_ALL_LAYER))
 			continue
 
 		// if the pipes have any directions in common, we can't place it that way.
