@@ -53,7 +53,7 @@
 		viewing = FALSE //they are further than our viewrange they are not viewing us
 		out_of_view()
 		return//so we're not searching everything in view every tick
-	viewing = obsession in view(7, owner)
+	viewing = (obsession in view(7, owner))
 	if(!viewing)
 		out_of_view()
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/creeping, obsession.name)
