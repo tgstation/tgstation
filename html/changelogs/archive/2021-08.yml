@@ -514,3 +514,14 @@
   aaaa1023:
   - spellcheck: fixed a few typos in sleeping carp "recall teachings" text. Also changed
       a line in it to be less awkward.
+2021-08-22:
+  AMonkeyThatCodes:
+  - bugfix: Moving aside your mask will no longer make you impervious to disease
+  Arkatos:
+  - bugfix: Fixed several messages which were not showing properly about finding a
+      rabbit in a hat, rattling your bones, denying sect membership or cooking sausages.
+  Melbert:
+  - bugfix: Some mask slot items won't prevent you from breathing properly due to
+      a runtime error
+  Watermelon914:
+  - admin: Adds component removals and mass component removals to the VV menu.

@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Some mask slot items won't prevent you from breathing properly due to a runtime error"
