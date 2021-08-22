@@ -167,24 +167,29 @@ Buildable meters
 			to_chat(user, span_warning("Something is hogging the tile!"))
 			return TRUE
 
+		// If we're a smart pipe, and we're looking to share space with a potentially perpendicular kind of pipe, see if we can smartly go over it as a bridge
 		if(pipe_count == 1 && ispath(pipe_type, /obj/machinery/atmospherics/pipe/smart))
+			// If we're looking to go over another smart pipe, it must be of a different color.
 			if (!istype(machine, /obj/machinery/atmospherics/pipe/smart) || lowertext(machine.pipe_color) != lowertext(pipe_color))
-				var/direction = machine.dir
-				if(((direction & (EAST|WEST)) || (direction & (SOUTH|NORTH))) && !ISDIAGONALDIR(direction))
+				var/other_direction = machine.dir
+				if(((other_direction & (EAST|WEST)) || (other_direction & (SOUTH|NORTH))) && !ISDIAGONALDIR(other_direction))
 					pipe_type = /obj/machinery/atmospherics/pipe/bridge_pipe
-					if(EWCOMPONENT(direction))
+					if(EWCOMPONENT(other_direction))
 						dir = NORTH
-					if(NSCOMPONENT(direction))
+					if(NSCOMPONENT(other_direction))
 						dir = EAST
 					continue
 
-		if(flags & PIPING_BRIDGE && !(machine.pipe_flags & PIPING_BRIDGE) && check_ninety_degree_dir(machine)) //continue if we are placing a bridge pipe over a normal pipe only (prevent duplicates)
+		// skip checks if we are placing a bridge pipe over a non-bridge-pipe at 90 degrees (can't stack bridges)
+		if(flags & PIPING_BRIDGE && !(machine.pipe_flags & PIPING_BRIDGE) && check_ninety_degree_dir(machine))
 			continue
 
-		if((machine.piping_layer != piping_layer) && !((machine.pipe_flags | flags) & PIPING_ALL_LAYER)) //don't continue if either pipe goes across all layers
+		// skip checks if we don't overlap layers, either by being on the same layer or by something being on all layers
+		if((machine.piping_layer != piping_layer) && !((machine.pipe_flags | flags) & PIPING_ALL_LAYER))
 			continue
 
-		if(machine.GetInitDirections() & SSair.get_init_dirs(pipe_type, fixed_dir(), p_init_dir)) // matches at least one direction on either type of pipe
+		// if the pipes have any directions in common, we can't place it that way.
+		if(machine.GetInitDirections() & SSair.get_init_dirs(pipe_type, fixed_dir(), p_init_dir))
 			to_chat(user, span_warning("There is already a pipe at that location!"))
 			return TRUE
 	// no conflicts found
