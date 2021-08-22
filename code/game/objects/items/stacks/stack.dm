@@ -463,9 +463,9 @@
 	target_stack.copy_evidences(src)
 	use(transfer, transfer = TRUE, check = FALSE)
 	target_stack.add(transfer)
-	if(S.mats_per_unit != src.mats_per_unit)
-		if(S.mats_per_unit[mats_per_unit[1]] > src.mats_per_unit[mats_per_unit[1]])
-			S.mats_per_unit = src.mats_per_unit
+	if(target_stack.mats_per_unit != src.mats_per_unit)
+		if(target_stack.mats_per_unit[mats_per_unit[1]] > src.mats_per_unit[mats_per_unit[1]])
+			target_stack.mats_per_unit = src.mats_per_unit
 	return transfer
 
 /**
