@@ -430,7 +430,7 @@
 /obj/item/stack/proc/can_merge(obj/item/stack/check)
 	if(!istype(check, merge_type))
 		return FALSE
-	if(mats_per_unit != check.mats_per_unit)
+	if(mats_per_unit ~! check.mats_per_unit)
 		return FALSE
 	if(is_cyborg) // No merging cyborg stacks into other stacks
 		return FALSE
@@ -463,6 +463,9 @@
 	target_stack.copy_evidences(src)
 	use(transfer, transfer = TRUE, check = FALSE)
 	target_stack.add(transfer)
+	if(S.mats_per_unit != src.mats_per_unit)
+		if(S.mats_per_unit[mats_per_unit[1]] > src.mats_per_unit[mats_per_unit[1]])
+			S.mats_per_unit = src.mats_per_unit
 	return transfer
 
 /**
