@@ -12,10 +12,24 @@
 /obj/structure/plasticflaps/opaque
 	opacity = TRUE
 
-/obj/structure/plasticflaps/Initialize()
+/obj/structure/plasticflaps/Initialize(mapload)
 	. = ..()
 	alpha = 0
 	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, plane, dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+	air_update_turf(TRUE, TRUE)
+	if(mapload)
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/plasticflaps/LateInitialize(mapload)
+	. = ..()
+	if(mapload)
+		auto_align()
+
+/obj/structure/plasticflaps/Destroy()
+	var/atom/oldloc = loc
+	. = ..()
+	if (oldloc)
+		oldloc.air_update_turf(TRUE, FALSE)
 
 /obj/structure/plasticflaps/examine(mob/user)
 	. = ..()
@@ -109,13 +123,3 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/plastic/five(loc)
 	qdel(src)
-
-/obj/structure/plasticflaps/Initialize()
-	. = ..()
-	air_update_turf(TRUE, TRUE)
-
-/obj/structure/plasticflaps/Destroy()
-	var/atom/oldloc = loc
-	. = ..()
-	if (oldloc)
-		oldloc.air_update_turf(TRUE, FALSE)
