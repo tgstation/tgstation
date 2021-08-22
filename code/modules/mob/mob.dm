@@ -1239,7 +1239,7 @@
 	if(href_list[VV_HK_SDQL_SPELL])
 		if(!check_rights(R_DEBUG))
 			return
-		usr.client.cmd_give_sdql_spell(src)
+		usr.client.cmd_sdql_spell_menu(src)
 /**
  * extra var handling for the logging var
  */

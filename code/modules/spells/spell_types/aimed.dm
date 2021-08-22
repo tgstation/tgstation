@@ -88,6 +88,7 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/aimed/proc/ready_projectile(obj/projectile/P, atom/target, mob/user, iteration)
+	P.fired_from = src
 	return
 
 /obj/effect/proc_holder/spell/aimed/lightningbolt
@@ -172,6 +173,7 @@
 	QDEL_NULL(lockon_component)
 
 /obj/effect/proc_holder/spell/aimed/spell_cards/ready_projectile(obj/projectile/P, atom/target, mob/user, iteration)
+	. = ..()
 	if(current_target_weakref)
 		var/atom/A = current_target_weakref.resolve()
 		if(A && get_dist(A, user) < 7)
