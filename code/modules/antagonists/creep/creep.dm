@@ -30,6 +30,11 @@
 	//PRESTO FUCKIN MAJESTO
 	creep.gain_trauma(/datum/brain_trauma/special/obsessed, TRAUMA_RESILIENCE_SURGERY, admin_picked_obsession)//ZAP
 
+	//readds this as this doesn't call parent
+	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
+	log_admin("[key_name(admin)] made [key_name(new_owner)] into [name].")
+	qdel(src) //and since this is an instance that doesn't get added to new_owner, we need to get rid of this loose instance too
+
 /datum/antagonist/obsessed/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/creepalert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	var/policy = get_policy(ROLE_OBSESSED)
@@ -162,17 +167,18 @@
 		explanation_text = "Free Objective"
 
 
-/datum/objective/assassinate/jealous/proc/find_coworker(datum/mind/oldmind)//returning null = free objective
-	if(is_unassigned_job(oldmind.assigned_role))
+/datum/objective/assassinate/jealous/proc/find_coworker(datum/mind/obsession_mind)//returning null = free objective
+	if(is_unassigned_job(obsession_mind.assigned_role))
 		return
+	var/datum/antagonist/obsessed/creep = old
 	var/list/viable_coworkers = list()
 	var/list/all_coworkers = list()
-	var/our_departments = oldmind.assigned_role.departments_bitflags
+	var/our_departments = obsession_mind.assigned_role.departments_bitflags
 	for(var/mob/living/carbon/human/human_alive in GLOB.alive_mob_list)
 		if(!human_alive.mind)
 			continue
-		if(human_alive == oldmind.current || human_alive.mind.assigned_role.faction != FACTION_STATION || human_alive.mind.has_antag_datum(/datum/antagonist/obsessed))
-			continue //the jealousy target has to have a job, and not be the obsession or obsessed.
+		if(human_alive == obsession_mind.current || human_alive != target || human_alive.mind.assigned_role.faction != FACTION_STATION || human_alive.mind.has_antag_datum(/datum/antagonist/obsessed))
+			continue //the jealousy target has to have a job, and not be the obsession_mind or obsessed.
 		all_coworkers += human_alive.mind
 		if(!(our_departments & human_alive.mind.assigned_role.departments_bitflags))
 			continue
@@ -182,12 +188,14 @@
 		target = pick(viable_coworkers)
 	else if(length(all_coworkers))//find someone who works on the station
 		target = pick(all_coworkers)
-	return oldmind
+	else //there is NOBODY ELSE ON THE STATION. fine, fuck it, free objective
+		target = null
+	return obsession_mind
 
-
-/datum/objective/spendtime //spend some time around someone, handled by the obsessed trauma since that ticks
+///spend some time around someone, handled by the obsessed trauma since that ticks
+/datum/objective/spendtime
 	name = "spendtime"
-	var/timer = 1800 //5 minutes
+	var/timer = 5 MINUTES
 
 /datum/objective/spendtime/update_explanation_text()
 	if(timer == initial(timer))//just so admins can mess with it
@@ -201,7 +209,6 @@
 
 /datum/objective/spendtime/check_completion()
 	return timer <= 0 || explanation_text == "Free Objective"
-
 
 /datum/objective/hug//this objective isn't perfect. hugging the correct amount of times, then switching bodies, might fail the objective anyway. maybe i'll come back and fix this sometime.
 	name = "hugs"
