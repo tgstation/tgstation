@@ -56,21 +56,24 @@
 /datum/emote/living/carbon/human/scream/get_sound(mob/living/user)
 	if(!ishuman(user))
 		return
-	var/mob/living/carbon/human/H = user
-	if(H.mind?.miming)
+	var/mob/living/carbon/human/human = user
+	if(human.mind?.miming)
 		return
-	if(ishumanbasic(H) || isfelinid(H))
+	if(ishumanbasic(human) || isfelinid(human))
 		if(user.gender == FEMALE)
 			return pick('sound/voice/human/femalescream_1.ogg', 'sound/voice/human/femalescream_2.ogg', 'sound/voice/human/femalescream_3.ogg', 'sound/voice/human/femalescream_4.ogg', 'sound/voice/human/femalescream_5.ogg')
 		else
-			if(prob(1))
-				return 'sound/voice/human/wilhelm_scream.ogg'
-			return pick('sound/voice/human/malescream_1.ogg', 'sound/voice/human/malescream_2.ogg', 'sound/voice/human/malescream_3.ogg', 'sound/voice/human/malescream_4.ogg', 'sound/voice/human/malescream_5.ogg', 'sound/voice/human/malescream_6.ogg')
-	else if(ismoth(H))
+			if(isfelinid(human) || prob(5))
+				return 'sound/voice/human/jerry_scream.ogg'
+			else
+				if(prob(1))
+					return 'sound/voice/human/wilhelm_scream.ogg'
+				return pick('sound/voice/human/malescream_1.ogg', 'sound/voice/human/malescream_2.ogg', 'sound/voice/human/malescream_3.ogg', 'sound/voice/human/malescream_4.ogg', 'sound/voice/human/malescream_5.ogg', 'sound/voice/human/malescream_6.ogg')
+	else if(ismoth(human))
 		return 'sound/voice/moth/scream_moth.ogg'
-	else if(islizard(H))
+	else if(islizard(human))
 		return pick('sound/voice/lizard/lizard_scream_1.ogg', 'sound/voice/lizard/lizard_scream_2.ogg', 'sound/voice/lizard/lizard_scream_3.ogg')
-	else if(isethereal(H))
+	else if(isethereal(human))
 		return pick('sound/voice/ethereal/ethereal_scream_1.ogg', 'sound/voice/ethereal/ethereal_scream_2.ogg', 'sound/voice/ethereal/ethereal_scream_3.ogg')
 	else if(ismonkey(user)) //If its a monkey, override it.
 		return pick('sound/creatures/monkey/monkey_screech_1.ogg',
@@ -119,26 +122,26 @@
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/carbon/human/H = user
-	if(!istype(H) || !H.dna || !H.dna.species || !H.dna.species.can_wag_tail(H))
+	var/mob/living/carbon/human/human = user
+	if(!istype(human) || !human.dna || !human.dna.species || !human.dna.species.can_wag_tail(human))
 		return
-	if(!H.dna.species.is_wagging_tail())
-		H.dna.species.start_wagging_tail(H)
+	if(!human.dna.species.is_wagging_tail())
+		human.dna.species.start_wagging_tail(human)
 	else
-		H.dna.species.stop_wagging_tail(H)
+		human.dna.species.stop_wagging_tail(human)
 
 /datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check = TRUE , intentional)
 	if(!..())
 		return FALSE
-	var/mob/living/carbon/human/H = user
-	return H.dna && H.dna.species && H.dna.species.can_wag_tail(user)
+	var/mob/living/carbon/human/human = user
+	return human.dna && human.dna.species && human.dna.species.can_wag_tail(user)
 
 /datum/emote/living/carbon/human/wag/select_message_type(mob/user, intentional)
 	. = ..()
-	var/mob/living/carbon/human/H = user
-	if(!H.dna || !H.dna.species)
+	var/mob/living/carbon/human/human = user
+	if(!human.dna || !human.dna.species)
 		return
-	if(H.dna.species.is_wagging_tail())
+	if(human.dna.species.is_wagging_tail())
 		. = null
 
 /datum/emote/living/carbon/human/wing
@@ -149,8 +152,8 @@
 /datum/emote/living/carbon/human/wing/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(.)
-		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/external/wings/functional/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+		var/mob/living/carbon/human/human = user
+		var/obj/item/organ/external/wings/functional/wings = human.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
 		if(wings && findtext(select_message_type(user,intentional), "open"))
 			wings.open_wings()
 		else
@@ -158,8 +161,8 @@
 
 /datum/emote/living/carbon/human/wing/select_message_type(mob/user, intentional)
 	. = ..()
-	var/mob/living/carbon/human/H = user
-	if(H.dna.species.mutant_bodyparts["wings"])
+	var/mob/living/carbon/human/human = user
+	if(human.dna.species.mutant_bodyparts["wings"])
 		. = "opens " + message
 	else
 		. = "closes " + message
@@ -167,8 +170,8 @@
 /datum/emote/living/carbon/human/wing/can_run_emote(mob/user, status_check = TRUE, intentional)
 	if(!..())
 		return FALSE
-	var/mob/living/carbon/human/H = user
-	if(H.dna && H.dna.species && (H.dna.features["wings"] != "None"))
+	var/mob/living/carbon/human/human = user
+	if(human.dna && human.dna.species && (human.dna.features["wings"] != "None"))
 		return TRUE
 
 ///Snowflake emotes only for le epic chimp

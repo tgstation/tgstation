@@ -267,6 +267,7 @@
 	desc = "Tom is VERY amused."
 	inept_hunter = TRUE
 	gender = MALE
+	deathsound = 'sound/voice/human/jerry_scream.ogg'
 
 /mob/living/simple_animal/pet/cat/cak //I told you I'd do it, Remie
 	name = "Keeki"
