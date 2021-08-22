@@ -56,3 +56,5 @@ GLOBAL_LIST_EMPTY_TYPED(proj_by_path_key, /obj/projectile) // A list of projecti
 #define CALIBER_HOOK "hook"
 /// The caliber used by the changeling tentacle mutation.
 #define CALIBER_TENTACLE "tentacle"
+/// caliber used by thingling event flamers
+#define CALIBER_FUEL "fuel"
