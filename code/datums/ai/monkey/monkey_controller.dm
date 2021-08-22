@@ -113,9 +113,9 @@ have ways of interacting with a specific mob and control it.
 	blackboard[BB_MONKEY_PICKUPTARGET] = weapon
 	current_movement_target = weapon
 	if(pickpocket)
-		queue_behavior(current_behaviors, /datum/ai_behavior/monkey_equip/pickpocket)
+		queue_behavior(/datum/ai_behavior/monkey_equip/pickpocket)
 	else
-		queue_behavior(current_behaviors, /datum/ai_behavior/monkey_equip/ground)
+		queue_behavior(/datum/ai_behavior/monkey_equip/ground)
 	return TRUE
 
 /// Returns either the best weapon from the given choices or null if held weapons are better
