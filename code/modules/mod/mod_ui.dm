@@ -6,25 +6,18 @@
 
 /obj/item/mod/control/ui_data()
 	var/data = list()
-	data["control"] = name
-	data["ui_theme"] = theme.ui_theme
 	data["interface_break"] = interface_break
 	data["malfunctioning"] = malfunctioning
 	data["open"] = open
 	data["active"] = active
 	data["locked"] = locked
 	data["complexity"] = complexity
-	data["complexity_max"] = complexity_max
 	data["selected_module"] = selected_module?.name
 	data["wearer_name"] = wearer ? wearer.get_authentification_name("Unknown") : "No Occupant"
-	data["wearer_job"] = wearer ? wearer.get_assignment("Unknown","Unknown",FALSE) : "No Job"
+	data["wearer_job"] = wearer ? wearer.get_assignment("Unknown", "Unknown", FALSE) : "No Job"
 	data["ai"] = ai?.name
 	data["cell"] = cell?.name
 	data["charge"] = cell ? round(cell.percent(), 1) : 0
-	data["helmet"] = helmet?.name
-	data["chestplate"] = chestplate?.name
-	data["gauntlets"] = gauntlets?.name
-	data["boots"] = boots?.name
 	data["modules"] = list()
 	for(var/obj/item/mod/module/module as anything in modules)
 		var/list/module_data = list(
@@ -37,13 +30,24 @@
 			use_power = module.use_power_cost,
 			complexity = module.complexity,
 			cooldown_time = module.cooldown_time,
-			cooldown = COOLDOWN_TIMELEFT(module, cooldown_timer),
-			configurable = module.configurable,
+			cooldown = CEILING(COOLDOWN_TIMELEFT(module, cooldown_timer), 1 SECONDS),
 			id = module.tgui_id,
-			ref = REF(module)
+			ref = REF(module),
+			configuration_data = module.get_configuration()
 		)
+		module_data += module.add_ui_data()
 		data["modules"] += list(module_data)
-		data += module.add_ui_data()
+	return data
+
+/obj/item/mod/control/ui_static_data(mob/user)
+	var/data = list()
+	data["ui_theme"] = ui_theme
+	data["control"] = name
+	data["complexity_max"] = complexity_max
+	data["helmet"] = helmet?.name
+	data["chestplate"] = chestplate?.name
+	data["gauntlets"] = gauntlets?.name
+	data["boots"] = boots?.name
 	return data
 
 /obj/item/mod/control/ui_act(action, params)
@@ -52,6 +56,9 @@
 		return
 	if(!allowed(usr) && locked)
 		balloon_alert(usr, "insufficient access!")
+		return
+	if(malfunctioning && prob(75))
+		balloon_alert(usr, "button malfunctions!")
 		return
 	switch(action)
 		if("lock")
@@ -64,5 +71,5 @@
 			module.on_select()
 		if("configure")
 			var/obj/item/mod/module/module = locate(params["ref"]) in modules
-			module.ui_interact(usr)
+			module.configure_edit(params["key"], params["value"])
 	return TRUE

@@ -27,6 +27,8 @@
 	var/datum/mod_theme/theme = /datum/mod_theme
 	/// Looks of the MOD.
 	var/skin = "standard"
+	/// Theme of the MOD TGUI
+	var/ui_theme = "ntos"
 	/// If the suit is deployed and turned on.
 	var/active = FALSE
 	/// If the suit wire/module hatch is open.
@@ -84,6 +86,7 @@
 	slowdown = theme.slowdown_unactive
 	complexity_max = theme.complexity_max
 	skin = theme.default_skin
+	ui_theme = theme.ui_theme
 	cell_drain = theme.cell_usage
 	wires = new /datum/wires/mod(src)
 	if(length(req_access))
@@ -178,15 +181,16 @@
 	if(slot == ITEM_SLOT_BACK)
 		wearer = user
 		RegisterSignal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
-		if(wearer.ckey == "smartkar")
-			explosion(src, 1, 1, 1)
+		RegisterSignal(wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
 	else if(wearer)
-		UnregisterSignal(wearer, COMSIG_ATOM_EXITED)
+		UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_PROCESS_BORGCHARGER_OCCUPANT))
 		wearer = null
 
 /obj/item/mod/control/dropped(mob/user)
-	..()
-	wearer = null
+	. = ..()
+	if(wearer)
+		UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_PROCESS_BORGCHARGER_OCCUPANT))
+		wearer = null
 
 /obj/item/mod/control/item_action_slot_check(slot)
 	if(slot == ITEM_SLOT_BACK)
@@ -217,19 +221,23 @@
 			return ..()
 
 /obj/item/mod/control/attack_hand(mob/user)
-	if(seconds_electrified && cell.charge)
+	if(seconds_electrified && cell?.charge)
 		if(shock(user))
 			return
-	if(open && cell && loc == user)
+	if(open && loc == user)
+		if(!cell)
+			balloon_alert(user, "no cell!")
+			return
 		balloon_alert(user, "removing cell...")
 		if(do_after(user, 1.5 SECONDS, target = src))
 			balloon_alert(user, "cell removed")
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			if(!user.put_in_hands(cell))
 				cell.forceMove(drop_location())
+			return
 		else
 			balloon_alert(user, "interrupted!")
-		return
+			return
 	return ..()
 
 /obj/item/mod/control/screwdriver_act(mob/living/user, obj/item/I)
@@ -241,7 +249,7 @@
 		return FALSE
 	balloon_alert(user, "[open ? "closing" : "opening"] panel")
 	I.play_tool_sound(src, 100)
-	if(I.use_tool(src, user, 0.5 SECONDS))
+	if(I.use_tool(src, user, 1 SECONDS))
 		if(active || activating)
 			return FALSE
 		I.play_tool_sound(src, 100)
@@ -360,7 +368,7 @@
 	return TRUE
 
 /obj/item/mod/control/proc/shock(mob/living/user)
-	if(!istype(user) || cell.charge < 1)
+	if(!istype(user) || cell?.charge < 1)
 		return FALSE
 	do_sparks(5, TRUE, src)
 	var/check_range = TRUE
@@ -438,6 +446,13 @@
 		if(active)
 			INVOKE_ASYNC(src, .proc/toggle_activate, wearer, TRUE)
 		return
+
+/obj/item/mod/control/proc/on_borg_charge(datum/source, amount)
+	SIGNAL_HANDLER
+
+	if(!cell)
+		return
+	cell.give(amount)
 
 /obj/item/clothing/head/helmet/space/mod
 	name = "MOD helmet"

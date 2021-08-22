@@ -17,8 +17,6 @@
 	var/use_power_cost = 0
 	/// ID used by their TGUI
 	var/tgui_id = null
-	/// Can we be configured
-	var/configurable = FALSE
 	/// Linked MODsuit
 	var/obj/item/mod/control/mod
 	/// If we're an active module, what item are we?
@@ -93,9 +91,12 @@
 			mod.selected_module.on_deactivation()
 		mod.selected_module = src
 		if(device)
-			mod.wearer.put_in_hands(device)
-			balloon_alert(mod.wearer, "[device] extended")
-			RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
+			if(mod.wearer.put_in_hands(device))
+				balloon_alert(mod.wearer, "[device] extended")
+				RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
+			else
+				balloon_alert(mod.wearer, "can't extend [device]!")
+				return
 		else
 			balloon_alert(mod.wearer, "[src] activated, middle-click or alt-click to use")
 			RegisterSignal(mod.wearer, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/on_special_click)
@@ -165,8 +166,12 @@
 	return list()
 
 /// Creates a list of configuring options for this module
-/obj/item/mod/module/proc/add_configure_data()
+/obj/item/mod/module/proc/get_configuration()
 	return list()
+
+/// Generates an element of the get_configuration list with a display name, type and value
+/obj/item/mod/module/proc/add_ui_configuration(display_name, type, value)
+	return list("display_name" = display_name, "type" = type, "value" = value)
 
 /// Receives configure edits from the TGUI and edits the vars
 /obj/item/mod/module/proc/configure_edit(key, value)
@@ -396,7 +401,6 @@
 	use_power_cost = 80
 	incompatible_modules = list(/obj/item/mod/module/jetpack)
 	cooldown_time = 0.5 SECONDS
-	configurable = TRUE
 	var/stabilizers = FALSE
 	var/full_speed = FALSE
 	var/datum/effect_system/trail_follow/ion/ion_trail
@@ -677,7 +681,6 @@
 	incompatible_modules = list(/obj/item/mod/module/flashlight)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_light"
-	configurable = TRUE
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_color = COLOR_WHITE
 	light_range = 3
@@ -717,15 +720,17 @@
 	light_icon.color = light_color
 	. += light_icon
 
-/obj/item/mod/module/flashlight/add_configure_data()
+/obj/item/mod/module/flashlight/get_configuration()
 	. = ..()
-	.["light_color"] = "color"
-	.["light_range"] = "number"
+	.["light_color"] = add_ui_configuration("Light Color", "color", light_color)
+	.["light_range"] = add_ui_configuration("Light Range", "number", light_range)
 
 /obj/item/mod/module/flashlight/configure_edit(key, value)
 	switch(key)
 		if("light_color")
-			var/new_color = input(usr, "Pick new light color", "Flashlight Color") as color|null
+			if(value)
+				value = sanitize_hexcolor(value, 6, TRUE)
+			var/new_color = value || (input(usr, "Pick new light color", "Flashlight Color") as color|null)
 			if(new_color)
 				light_color = new_color
 				mod.wearer.update_inv_back()
@@ -773,3 +778,21 @@
 	if(!.)
 		return
 	ui_interact(mod.wearer)
+
+/obj/item/mod/module/dispenser
+	name = "MOD burger dispenser module"
+	desc = "A module that dispenses burgers."
+	module_type = MODULE_USABLE
+	complexity = 3
+	use_power_cost = 50
+	incompatible_modules = list(/obj/item/mod/module/dispenser)
+	cooldown_time = 5 SECONDS
+	var/dispense_type = /obj/item/food/burger/plain
+
+/obj/item/mod/module/dispenser/on_use()
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/dispensed = new dispense_type(mod.wearer.loc)
+	mod.wearer.put_in_hands(dispensed)
+	balloon_alert(mod.wearer, "[dispensed] dispensed")
