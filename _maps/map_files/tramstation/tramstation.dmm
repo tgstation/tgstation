@@ -1660,6 +1660,11 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hop)
+"eKk" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/hallway/secondary/entry{
+	requires_power = 0
+	})
 "eMH" = (
 /obj/structure/chair/plastic{
 	dir = 8
@@ -1698,6 +1703,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/bar)
+"eZe" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/door/airlock/titanium{
+	name = "Arrivals Shuttle Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/dark/textured_large,
+/area/hallway/secondary/entry{
+	requires_power = 0
+	})
 "feN" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 10
@@ -2906,6 +2921,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/medical/pharmacy)
+"ikd" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/hallway/secondary/entry{
+	requires_power = 0
+	})
 "ikE" = (
 /obj/structure/table/wood,
 /obj/structure/reagent_dispensers/beerkeg,
@@ -4674,6 +4695,11 @@
 /obj/item/folder/documents,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
+"nmA" = (
+/turf/closed/wall/mineral/titanium,
+/area/hallway/secondary/entry{
+	requires_power = 0
+	})
 "nmW" = (
 /obj/structure/dresser,
 /turf/open/floor/iron/grimy,
@@ -5288,6 +5314,15 @@
 /obj/structure/displaycase/labcage,
 /turf/open/floor/engine,
 /area/command/heads_quarters/rd)
+"pgP" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light/small/directional/north,
+/obj/effect/landmark/latejoin,
+/turf/open/floor/mineral/plastitanium,
+/area/hallway/secondary/entry{
+	requires_power = 0
+	})
 "phA" = (
 /obj/structure/closet/crate/large,
 /obj/machinery/space_heater,
@@ -6616,6 +6651,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating/snowed,
 /area/icemoon/underground/explored)
+"tMY" = (
+/obj/structure/fence/door/opened{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/smoothed,
+/area/icemoon/surface/outdoors)
 "tNM" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -7034,6 +7075,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
+"vyi" = (
+/turf/open/floor/mineral/titanium/white,
+/area/hallway/secondary/entry{
+	requires_power = 0
+	})
 "vzJ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
@@ -7350,6 +7396,19 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/commons/dorms)
+"wpm" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/south,
+/obj/effect/landmark/latejoin,
+/turf/open/floor/mineral/plastitanium,
+/area/hallway/secondary/entry{
+	requires_power = 0
+	})
 "wpF" = (
 /turf/open/floor/iron/smooth,
 /area/medical/medbay/central)
@@ -7609,6 +7668,18 @@
 /obj/machinery/monkey_recycler,
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
+"xgp" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/landmark/latejoin,
+/turf/open/floor/mineral/plastitanium,
+/area/hallway/secondary/entry{
+	requires_power = 0
+	})
 "xgB" = (
 /obj/machinery/telecomms/server/presets/supply,
 /turf/open/floor/plating/snowed,
@@ -7955,6 +8026,14 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
 /area/security/warden)
+"ycN" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/landmark/latejoin,
+/turf/open/floor/mineral/plastitanium,
+/area/hallway/secondary/entry{
+	requires_power = 0
+	})
 "yda" = (
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
@@ -100167,15 +100246,15 @@ kqc
 awk
 ugO
 yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
+ydx
+fOT
+pbU
+fOT
+ydx
+fOT
+pbU
+fOT
+ydx
 yeu
 yeu
 nzD
@@ -100424,15 +100503,15 @@ sfS
 yeu
 yeu
 yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
+hNU
+aEE
+aEE
+aEE
+aEE
+aEE
+aEE
+aEE
+hNU
 yeu
 yeu
 nzD
@@ -100681,15 +100760,15 @@ sfS
 yeu
 yeu
 yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
+jZU
+aEE
+nmA
+eKk
+ikd
+eKk
+nmA
+aEE
+jZU
 yeu
 yeu
 nzD
@@ -100938,15 +101017,15 @@ sfS
 wMj
 yeu
 yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
+hNU
+aEE
+eKk
+pgP
+vyi
+wpm
+eKk
+aEE
+hNU
 yeu
 yeu
 nzD
@@ -101195,15 +101274,15 @@ sfS
 yeu
 yeu
 yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
+ydx
+aEE
+ikd
+ycN
+vyi
+xgp
+ikd
+aEE
+ydx
 yeu
 yeu
 yeu
@@ -101452,15 +101531,15 @@ sfS
 yeu
 yeu
 yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
+hNU
+aEE
+eKk
+pgP
+vyi
+wpm
+eKk
+aEE
+hNU
 yeu
 yeu
 yeu
@@ -101709,15 +101788,15 @@ sfS
 yeu
 yeu
 yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
+jZU
+aEE
+nmA
+eKk
+eZe
+eKk
+nmA
+aEE
+jZU
 yeu
 yeu
 yeu
@@ -101966,15 +102045,15 @@ sfS
 yeu
 yeu
 yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
+hNU
+aEE
+aEE
+aEE
+aEE
+aEE
+aEE
+aEE
+hNU
 yeu
 yeu
 yeu
@@ -102223,15 +102302,15 @@ sfS
 yeu
 yeu
 yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
-yeu
+ydx
+fOT
+pbU
+fOT
+tMY
+fOT
+pbU
+fOT
+ydx
 yeu
 yeu
 yeu
@@ -102484,7 +102563,7 @@ yeu
 yeu
 yeu
 yeu
-yeu
+aEE
 yeu
 yeu
 yeu
@@ -102741,7 +102820,7 @@ yeu
 yeu
 yeu
 yeu
-yeu
+aEE
 yeu
 yeu
 yeu
@@ -102998,7 +103077,7 @@ yeu
 yeu
 yeu
 yeu
-yeu
+aEE
 yeu
 yeu
 yeu
@@ -103255,7 +103334,7 @@ yeu
 yeu
 yeu
 yeu
-yeu
+aEE
 yeu
 yeu
 yeu
@@ -103512,7 +103591,7 @@ sfS
 sfS
 yeu
 yeu
-yeu
+aEE
 wMj
 yeu
 yeu
