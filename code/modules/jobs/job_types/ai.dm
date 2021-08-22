@@ -19,6 +19,7 @@
 		/datum/job_department/silicon,
 		)
 	random_spawns_possible = FALSE
+	quirk_eligible = FALSE
 	job_flags = JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK | JOB_BOLD_SELECT_TEXT
 	var/do_special_check = TRUE
 
