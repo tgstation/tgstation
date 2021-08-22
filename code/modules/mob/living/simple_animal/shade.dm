@@ -68,6 +68,6 @@
 /mob/living/simple_animal/shade/attackby(obj/item/O, mob/user, params)  //Marker -Agouri
 	if(istype(O, /obj/item/soulstone))
 		var/obj/item/soulstone/SS = O
-		SS.transfer_soul("SHADE", src, user)
+		SS.capture_shade(src, user)
 	else
 		. = ..()
