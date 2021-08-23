@@ -54,7 +54,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/ghost_others = GHOST_OTHERS_DEFAULT_OPTION
 	var/ghost_hud = 1
 	var/inquisitive_ghost = 1
-	var/allow_midround_antag = 1
 	var/preferred_map = null
 	var/pda_style = MONO
 	var/pda_color = "#808000"
@@ -385,7 +384,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				antags += special_role
 
 			// MOTHBLOCKS TODO: Check antag ban(?) and age requirement
-			// (?) because antag bans are handled in all ruleset code
+			// Marked (?) because antag bans are handled in all ruleset code
 			if (toggled)
 				be_special |= antags
 			else

@@ -134,14 +134,14 @@
 
 	if(href_list["show_preferences"])
 		client.prefs.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
-		client.prefs.update_static_data()
 		client.prefs.ui_interact(src)
+		client.prefs.update_static_data()
 		return TRUE
 
 	if (href_list["show_game_preferences"])
 		client.prefs.current_window = PREFERENCE_TAB_GAME_PREFERENCES
-		client.prefs.update_static_data()
 		client.prefs.ui_interact(src)
+		client.prefs.update_static_data()
 		return TRUE
 
 	if(href_list["ready"])
