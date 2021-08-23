@@ -197,7 +197,10 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
 
       if (selectedKeybindings[keybindName]) {
         if (value) {
-          selectedKeybindings[keybindName][slot] = value;
+          selectedKeybindings[keybindName][Math.min(
+            selectedKeybindings[keybindName].length,
+            slot
+          )] = value;
         } else {
           selectedKeybindings[keybindName].splice(slot, 1);
         }
