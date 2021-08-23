@@ -34,7 +34,9 @@
 	message_query = replacetextEx_char(message_query, "SCRATCHPAD", "({[RAW_ADDRESS(src)]}.scratchpad)")
 	if(!usr) //We need to set AdminProcCaller manually because it won't be set automatically by WrapAdminProcCall if usr is null
 		GLOB.AdminProcCaller = "SDQL_SPELL_OF_[user.ckey]"
+	GLOB.AdminProcCallCount++
 	world.SDQL2_query(query_text, "[key_name(user, TRUE)] (via an SDQL spell given by [giver])", "[key_name(user)] (via an SDQL spell given by [giver])")
+	GLOB.AdminProcCallCount--
 	GLOB.AdminProcCaller = null
 
 /datum/component/sdql_executor/proc/ref_list(list/L)

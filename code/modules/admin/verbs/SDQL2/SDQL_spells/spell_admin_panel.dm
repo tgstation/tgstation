@@ -36,7 +36,7 @@
 
 	switch(action)
 		if("edit_spell")
-			var/obj/effect/proc_holder/spell/spell = locate(params["ref"])
+			var/obj/effect/proc_holder/spell/spell = locate(params["spell"])
 			if(!spell)
 				to_chat(usr, span_warning("That spell no longer exists!"))
 				return
@@ -53,7 +53,7 @@
 				return
 			usr.client?.admin_follow(owner)
 		if("vv_spell")
-			var/obj/effect/proc_holder/spell/spell = locate(params["ref"])
+			var/obj/effect/proc_holder/spell/spell = locate(params["spell"])
 			if(!spell)
 				to_chat(usr, span_warning("That spell no longer exists!"))
 				return
