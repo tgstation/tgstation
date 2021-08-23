@@ -169,7 +169,7 @@ export const TguiTscTarget = new Juke.Target({
 export const TguiTestTarget = new Juke.Target({
   parameters: [CiParameter],
   dependsOn: [YarnTarget],
-  executes: () => yarn(`tgui:test-${get(CiParameter) ? 'ci' : 'simple'}`),
+  executes: ({ get }) => yarn(`tgui:test-${get(CiParameter) ? 'ci' : 'simple'}`),
 });
 
 export const TguiLintTarget = new Juke.Target({
