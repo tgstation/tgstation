@@ -216,4 +216,5 @@
 
 /area/icemoon/underground/explored // ruins can't spawn here
 	name = "Icemoon Underground"
+	outdoors = FALSE
 	area_flags = UNIQUE_AREA | NO_ALERTS

@@ -1,18 +1,18 @@
 SUBSYSTEM_DEF(nightshift)
 	name = "Night Shift"
-	wait = 10 MINUTES
+	wait = 4 MINUTES
 
 	var/nightshift_active = FALSE
 	var/nightshift_start_time = 702000 //7:30 PM, station time
-	var/nightshift_end_time = 270000 //7:30 AM, station time
+	var/nightshift_end_time = 240000 //???? FUCK you
 	var/nightshift_first_check = 30 SECONDS
 
 	var/high_security_mode = FALSE
 	var/list/currentrun
 
 /datum/controller/subsystem/nightshift/Initialize()
-	if(!CONFIG_GET(flag/enable_night_shifts))
-		can_fire = FALSE
+	//if(!CONFIG_GET(flag/enable_night_shifts))
+	//	can_fire = FALSE
 	return ..()
 
 /datum/controller/subsystem/nightshift/fire(resumed = FALSE)
