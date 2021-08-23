@@ -36,10 +36,6 @@
 	var/clumsy_check
 	/// If we get sharpened with a whetstone, save the bonus here for later use if we un/redeploy
 	var/sharpened_bonus = 0
-	/// Callback to be invoked before the weapon is transformed. Return FALSE from this to stop the transform action.
-	var/datum/callback/pre_transform_callback
-	/// Callback to be invoked whenever the weapon is transformed.
-	var/datum/callback/on_transform_callback
 	/// Cooldown in between transforms
 	COOLDOWN_DECLARE(transform_cooldown)
 
@@ -55,8 +51,6 @@
 		clumsy_check = TRUE,
 		list/attack_verb_continuous_on,
 		list/attack_verb_simple_on,
-		datum/callback/pre_transform_callback,
-		datum/callback/on_transform_callback,
 		)
 
 	if(!isitem(parent))
@@ -80,9 +74,6 @@
 		src.attack_verb_simple_on = attack_verb_simple_on
 		attack_verb_simple_off = item_parent.attack_verb_simple
 
-	src.pre_transform_callback = pre_transform_callback
-	src.on_transform_callback = on_transform_callback
-
 	if(start_transformed)
 		toggle_active(parent)
 
@@ -96,18 +87,11 @@
 /datum/component/transforming/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_SHARPEN_ACT))
 
-/datum/component/transforming/Destroy()
-	if(pre_transform_callback)
-		QDEL_NULL(pre_transform_callback)
-	if(on_transform_callback)
-		QDEL_NULL(on_transform_callback)
-	return ..()
-
 /*
  * Called on [COMSIG_ITEM_ATTACK_SELF].
  *
  * Check if we can transform our weapon, and if so, call [do_transform].
- * (If we have a [pre_transform_callback], invoke it. If that callback returns a falsy value, cancel the transform.)
+ * Sends signal [COMSIG_TRANSFORMING_PRE_TRANSFORM], and stops the transform action if it returns [COMPONENT_BLOCK_TRANSFORM].
  * And, if [do_transform] was successful, do a clumsy effect from [clumsy_transform_effect].
  *
  * source - source of the signal, the item being transformed / parent
@@ -120,9 +104,8 @@
 		to_chat(user, span_warning("Wait a bit before trying to use [source] again!"))
 		return
 
-	if(pre_transform_callback)
-		if(!pre_transform_callback.Invoke(user))
-			return
+	if(SEND_SIGNAL(source, COMSIG_TRANSFORMING_PRE_TRANSFORM, user, active) & COMPONENT_BLOCK_TRANSFORM)
+		return
 
 	if(do_transform(source, user))
 		clumsy_transform_effect(user)
@@ -131,9 +114,9 @@
 /*
  * Transform the weapon into its alternate form, calling [toggle_active].
  *
- * Invokes [on_transform_callback] if we have one, or calls [default_transform_message] if we don't.
- * Starts [transform_cooldown] if we have a set [transform_cooldown_time].
- * *
+ * Sends signal [COMSIG_TRANSFORMING_ON_TRANSFORM], and calls [default_transform_message] if it does not return [COMPONENT_NO_DEFAULT_MESSAGE].
+ * Also starts the [transform_cooldown] if we have a set [transform_cooldown_time].
+ *
  * source - the item being transformed / parent
  * user - the mob transforming the item
  *
@@ -141,9 +124,7 @@
  */
 /datum/component/transforming/proc/do_transform(obj/item/source, mob/user)
 	toggle_active(source)
-	if(on_transform_callback)
-		on_transform_callback.Invoke(user, active)
-	else
+	if(!(SEND_SIGNAL(source, COMSIG_TRANSFORMING_ON_TRANSFORM, user, active) & COMPONENT_NO_DEFAULT_MESSAGE))
 		default_transform_message(source, user)
 
 	if(isnum(transform_cooldown_time))

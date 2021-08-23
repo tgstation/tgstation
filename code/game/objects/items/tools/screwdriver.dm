@@ -102,18 +102,21 @@
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
-		clumsy_check = FALSE, \
-		on_transform_callback = CALLBACK(src, .proc/after_transform))
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /*
- * Callback for the transforming component.
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
  * Toggles between crowbar and wirecutters and gives feedback to the user.
  */
-/obj/item/screwdriver/power/proc/after_transform(mob/user, active)
+/obj/item/screwdriver/power/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
 	tool_behaviour = (active ? TOOL_WRENCH : TOOL_SCREWDRIVER)
 	balloon_alert(user, "attached [active ? "bolt bit" : "screw bit"]")
 	playsound(user ? user : src, 'sound/items/change_drill.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/screwdriver/power/examine()
 	. = ..()

@@ -839,8 +839,8 @@
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
 		attack_verb_continuous_on = list("cleaves", "swipes", "slashes", "chops"), \
-		attack_verb_simple_on = list("cleave", "swipe", "slash", "chop"), \
-		on_transform_callback = CALLBACK(src, .proc/after_transform))
+		attack_verb_simple_on = list("cleave", "swipe", "slash", "chop"))
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /obj/item/melee/cleaving_saw/examine(mob/user)
 	. = ..()
@@ -902,16 +902,19 @@
 		target.apply_status_effect(STATUS_EFFECT_SAWBLEED, bleed_stacks_per_hit)
 
 /*
- * Callback for the transforming component.
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
  * Gives feedback and makes the nextmove after transforming much quicker.
  */
-/obj/item/melee/cleaving_saw/proc/after_transform(mob/user, active)
+/obj/item/melee/cleaving_saw/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
 	is_open = active
 	user.changeNext_move(CLICK_CD_MELEE * 0.25)
 
 	balloon_alert(user, "[active ? "opened":"closed"] [src]")
 	playsound(user ? user : src, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (is_open * 30000))
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 //Legion: Staff of Storms
 

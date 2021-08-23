@@ -234,8 +234,8 @@
 		throwforce_on = 35, \
 		throw_speed_on = 4, \
 		sharpness_on = SHARP_EDGED, \
-		w_class_on = WEIGHT_CLASS_NORMAL, \
-		on_transform_callback = CALLBACK(src, .proc/after_transform))
+		w_class_on = WEIGHT_CLASS_NORMAL)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /obj/item/pen/edagger/suicide_act(mob/user)
 	. = BRUTELOSS
@@ -246,12 +246,14 @@
 		attack_self(user)
 
 /*
- * Callback for the transforming component.
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
  * Handles swapping their icon files to edagger related icon files -
  * as they're supposed to look like a normal pen.
  */
-/obj/item/pen/edagger/proc/after_transform(mob/user, active)
+/obj/item/pen/edagger/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
 	extended = active
 	if(active)
 		name = hidden_name
@@ -271,6 +273,7 @@
 	updateEmbedding()
 	balloon_alert(user, "[hidden_name] [active ? "active":"concealed"]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/pen/survival
 	name = "survival pen"

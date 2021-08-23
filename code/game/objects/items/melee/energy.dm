@@ -51,8 +51,8 @@
 		hitsound_on = active_hitsound, \
 		w_class_on = active_w_class, \
 		attack_verb_continuous_on = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
-		attack_verb_simple_on = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"), \
-		on_transform_callback = CALLBACK(src, .proc/after_transform))
+		attack_verb_simple_on = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"))
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /obj/item/melee/energy/suicide_act(mob/user)
 	if(!blade_active)
@@ -81,7 +81,7 @@
 	add_fingerprint(user)
 
 /*
- * Callback for the transforming component.
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
  * Updates our icon to have the correct color,
  * updates the amount of heat our item gives out,
@@ -90,7 +90,9 @@
  *
  * Also gives feedback to the user and activates or deactives the glow.
  */
-/obj/item/melee/energy/proc/after_transform(mob/user, active)
+/obj/item/melee/energy/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
 	blade_active = active
 	if(active)
 		if(sword_color_icon)
@@ -108,6 +110,7 @@
 	balloon_alert(user, "[name] [active ? "enabled":"disabled"]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
 	set_light_on(active)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /// Energy axe - extremely strong.
 /obj/item/melee/energy/axe
@@ -139,8 +142,8 @@
 		throwforce_on = active_throwforce, \
 		throw_speed_on = throw_speed, \
 		sharpness_on = sharpness, \
-		w_class_on = active_w_class, \
-		on_transform_callback = CALLBACK(src, .proc/after_transform))
+		w_class_on = active_w_class)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /obj/item/melee/energy/axe/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))

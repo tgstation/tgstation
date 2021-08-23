@@ -82,18 +82,21 @@
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
-		clumsy_check = FALSE, \
-		on_transform_callback = CALLBACK(src, .proc/after_transform))
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /*
- * Callback for the transforming component.
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
  * Toggles between drill and cautery and gives feedback to the user.
  */
-/obj/item/cautery/advanced/proc/after_transform(mob/user, active)
+/obj/item/cautery/advanced/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
 	tool_behaviour = (active ? TOOL_DRILL : TOOL_CAUTERY)
 	balloon_alert(user, "lenses set to [active ? "drill" : "mend"]")
 	playsound(user ? user : src, 'sound/weapons/tap.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/cautery/advanced/examine()
 	. = ..()
@@ -277,15 +280,17 @@
 		sharpness_on = sharpness, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
-		clumsy_check = FALSE, \
-		on_transform_callback = CALLBACK(src, .proc/after_transform))
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /*
- * Callback for the transforming component.
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
  * Toggles between saw and scalpel and updates the light / gives feedback to the user.
  */
-/obj/item/scalpel/advanced/proc/after_transform(mob/user, active)
+/obj/item/scalpel/advanced/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
 	if(active)
 		tool_behaviour = TOOL_SAW
 		set_light_range(2)
@@ -295,6 +300,7 @@
 
 	balloon_alert(user, "[active ? "enabled" : "disabled"] bone-cutting mode")
 	playsound(user ? user : src, 'sound/machines/click.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/scalpel/advanced/examine()
 	. = ..()
@@ -314,18 +320,21 @@
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
-		clumsy_check = FALSE, \
-		on_transform_callback = CALLBACK(src, .proc/after_transform))
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /*
- * Callback for the transforming component.
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
  * Toggles between retractor and hemostat and gives feedback to the user.
  */
-/obj/item/retractor/advanced/proc/after_transform(mob/user, active)
+/obj/item/retractor/advanced/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
 	tool_behaviour = (active ? TOOL_HEMOSTAT : TOOL_RETRACTOR)
 	balloon_alert(user, "gears set to [active ? "clamp" : "retract"]")
 	playsound(user ? user : src, 'sound/items/change_drill.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/retractor/advanced/examine()
 	. = ..()

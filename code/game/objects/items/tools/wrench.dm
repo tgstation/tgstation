@@ -95,15 +95,17 @@
 		throwforce_on = 8, \
 		hitsound_on = hitsound, \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
-		clumsy_check = FALSE, \
-		on_transform_callback = CALLBACK(src, .proc/after_transform))
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /*
- * Callback for transforming component.
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
  * Gives it wrench behaviors when active.
  */
-/obj/item/wrench/combat/proc/after_transform(mob/user, active)
+/obj/item/wrench/combat/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
 	if(active)
 		tool_behaviour = TOOL_WRENCH
 		toolspeed = 1
@@ -113,3 +115,4 @@
 
 	balloon_alert(user, "[name] [active ? "active, woe!":"restrained"]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE

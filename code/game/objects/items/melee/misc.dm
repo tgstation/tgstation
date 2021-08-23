@@ -372,8 +372,8 @@
 		w_class_on = WEIGHT_CLASS_NORMAL, \
 		clumsy_check = FALSE, \
 		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
-		attack_verb_simple_on = list("smack", "strike", "crack", "beat"), \
-		on_transform_callback = CALLBACK(src, .proc/after_transform))
+		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/human_user = user
@@ -395,15 +395,18 @@
 		return (BRUTELOSS)
 
 /*
- * Callback for the transforming component.
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
  * Gives feedback to the user and makes it show up inhand.
  */
-/obj/item/melee/classic_baton/telescopic/proc/after_transform(mob/user, active)
+/obj/item/melee/classic_baton/telescopic/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
 	extended = active
 	inhand_icon_state = active ? on_inhand_icon_state : null // When inactive, there is no inhand icon_state.
 	balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
 	playsound(user ? user : src, on_sound, 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton
 	name = "contractor baton"
@@ -582,32 +585,35 @@
 		ovens = typecacheof(list(/obj/singularity, /obj/energy_ball, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire))
 	AddComponent(/datum/component/transforming, \
 		hitsound_on = hitsound, \
-		clumsy_check = FALSE, \
-		pre_transform_callback = CALLBACK(src, .proc/attempt_transform), \
-		on_transform_callback = CALLBACK(src, .proc/after_transform))
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_PRE_TRANSFORM, .proc/attempt_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /*
- * Callback for the transforming component.
+ * Signal proc for [COMSIG_TRANSFORMING_PRE_TRANSFORM].
  *
- * If there is a sausage attached, returns FALSE, blocking the user from transforming the stick.
+ * If there is a sausage attached, returns COMPONENT_BLOCK_TRANSFORM.
  */
-/obj/item/melee/roastingstick/proc/attempt_transform(mob/user, active)
+/obj/item/melee/roastingstick/proc/attempt_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
 	if(held_sausage)
 		to_chat(user, span_warning("You can't retract [src] while [held_sausage] is attached!"))
-		return FALSE
-
-	return TRUE
+		return COMPONENT_BLOCK_TRANSFORM
 
 /*
- * Callback for the transforming component.
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
  * Gives feedback on stick extension.
  */
-/obj/item/melee/roastingstick/proc/after_transform(mob/user, active)
+/obj/item/melee/roastingstick/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
 	extended = active
 	inhand_icon_state = active ? "nullrod" : null
 	balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
 	playsound(user ? user : src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/melee/roastingstick/attackby(atom/target, mob/user)
 	..()

@@ -220,8 +220,8 @@
 		throwforce_on = active_throwforce, \
 		throw_speed_on = active_throw_speed, \
 		hitsound_on = hitsound, \
-		clumsy_check = !can_clumsy_use, \
-		on_transform_callback = CALLBACK(src, .proc/after_transform))
+		clumsy_check = !can_clumsy_use)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /obj/item/shield/energy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return FALSE
@@ -230,13 +230,16 @@
 	return enabled
 
 /*
- * Callback for the transforming component.
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  */
-/obj/item/shield/energy/proc/after_transform(mob/user, active)
+/obj/item/shield/energy/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
 	enabled = active
 
 	balloon_alert(user, "[name] [active ? "activated":"deactivated"]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/shield/riot/tele
 	name = "telescopic shield"
@@ -264,8 +267,8 @@
 		hitsound_on = hitsound, \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
 		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
-		attack_verb_simple_on = list("smack", "strike", "crack", "beat"), \
-		on_transform_callback = CALLBACK(src, .proc/after_transform))
+		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /obj/item/shield/riot/tele/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(extended)
@@ -273,12 +276,15 @@
 	return FALSE
 
 /*
- * Callback for the transforming component.
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
  * Allows it to be placed on back slot when active.
  */
-/obj/item/shield/riot/tele/proc/after_transform(mob/user, active)
+/obj/item/shield/riot/tele/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
 	extended = active
 	slot_flags = active ? ITEM_SLOT_BACK : null
 	playsound(user ? user : src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
+	return COMPONENT_NO_DEFAULT_MESSAGE
