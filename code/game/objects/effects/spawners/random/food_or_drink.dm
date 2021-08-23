@@ -107,7 +107,7 @@
 		/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 3,
 		/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy = 2,
 		/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko = 2,
-		/obj/item/reagent_containers/food/drinks/beer/light = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/beer/light = 2,
 		/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 1,
 		/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game = 1,
 		/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb = 1,
@@ -122,9 +122,9 @@
 	name = "booze spawner"
 	icon_state = "beer"
 	loot = list(
-		/obj/item/reagent_containers/food/drinks/beer = 250,
-		/obj/item/reagent_containers/food/drinks/ale = 100,
-		/obj/item/reagent_containers/food/drinks/beer/light = 50,
+		/obj/item/reagent_containers/food/drinks/bottle/beer = 250,
+		/obj/item/reagent_containers/food/drinks/bottle/ale = 100,
+		/obj/item/reagent_containers/food/drinks/bottle/beer/light = 50,
 		/obj/item/reagent_containers/food/drinks/bottle/maltliquor = 5,
 		/obj/item/reagent_containers/food/drinks/bottle/whiskey = 5,
 		/obj/item/reagent_containers/food/drinks/bottle/gin = 5,

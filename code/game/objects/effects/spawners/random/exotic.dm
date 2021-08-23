@@ -77,7 +77,7 @@
 		/obj/item/stack/sheet/mineral/plasma{amount = 15} = 10,
 		/obj/item/stack/sheet/mineral/gold{amount = 15} = 10,
 		/obj/item/grenade/spawnergrenade/spesscarp = 7,
-		/obj/item/melee/transforming/energy/sword = 7,
+		/obj/item/melee/energy/sword = 7,
 		/obj/item/borg/upgrade/disablercooler = 7,
 		/obj/item/dnainjector/lasereyesmut = 7,
 		/obj/item/shield/energy = 6,
