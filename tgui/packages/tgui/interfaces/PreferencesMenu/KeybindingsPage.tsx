@@ -104,9 +104,9 @@ const KeybindingButton = (props: {
     <Button
       fluid
       textAlign="center"
-      captureKeys={props.typingHotkey === null}
+      captureKeys={props.typingHotkey === undefined}
       onClick={props.onClick}
-      selected={props.typingHotkey !== null}
+      selected={props.typingHotkey !== undefined}
     >
       {props.typingHotkey || props.currentHotkey || "Unbound"}
     </Button>
