@@ -4,15 +4,15 @@
 	probability = 90
 
 	telegraph_message = "<span class='warning'>Drifting particles of snow begin to dust the surrounding area..</span>"
-	telegraph_duration = 300
+	telegraph_duration = 20 SECONDS
 	telegraph_overlay = "light_snow"
 
 	weather_message = "<span class='userdanger'><i>Harsh winds pick up as dense snow begins to fall from the sky! Seek shelter!</i></span>"
 	weather_overlay = "snow_storm"
-	weather_duration_lower = 600
-	weather_duration_upper = 1500
+	weather_duration_lower = INFINITY-1
+	weather_duration_upper = INFINITY
 
-	end_duration = 100
+	end_duration = 10 SECONDS
 	end_message = "<span class='boldannounce'>The snowfall dies down, it should be safe to go outside again.</span>"
 
 	area_type = /area
@@ -25,5 +25,5 @@
 
 
 /datum/weather/snow_storm/weather_act(mob/living/L)
-	L.adjust_bodytemperature(-rand(5,15))
-
+	L.adjust_bodytemperature(-rand(35,55))
+	L.adjustFireLoss(rand(3,5))

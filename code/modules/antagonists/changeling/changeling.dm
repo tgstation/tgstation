@@ -9,7 +9,7 @@
 	job_rank = ROLE_CHANGELING
 	antag_moodlet = /datum/mood_event/focused
 	antag_hud_type = ANTAG_HUD_CHANGELING
-	antag_hud_name = "thingling"
+	antag_hud_name = "changeling"
 	hijack_speed = 0.5
 	suicide_cry = "FOR THE HIVE!!"
 	var/you_are_greet = TRUE
@@ -111,18 +111,20 @@
 	if(!owner || !owner.current)
 		return
 	var/mob/living/antag_mob = owner.current
-	if(iscarbon(antag_mob))
-		var/mob/living/carbon/carbon_antag = antag_mob
-		if(carbon_antag.on_fire)
-			if(carbon_antag.stat > SOFT_CRIT)
-				carbon_antag.dust(TRUE, TRUE, TRUE)
-			else
-				playsound(carbon_antag, 'sound/hallucinations/wail.ogg', 50, TRUE)
-				carbon_antag.emote("me",1,"unleashes an inhuman scream!",TRUE)
-				carbon_antag.Stun(delta_time + 0.5 SECONDS, TRUE)
-	else
+	if(!iscarbon(antag_mob))
 		if(antag_mob.stat == DEAD && antag_mob.fireloss >= antag_mob.maxHealth/2)
 			antag_mob.dust(TRUE, TRUE, TRUE)
+			return
+	var/mob/living/carbon/carbon_antag = antag_mob
+	if(carbon_antag.on_fire)
+		if(carbon_antag.stat > SOFT_CRIT)
+			carbon_antag.dust(TRUE, TRUE, TRUE)
+			return
+		carbon_antag.adjustFireLoss(15)
+		playsound(carbon_antag, 'sound/hallucinations/wail.ogg', 50, TRUE)
+		carbon_antag.emote("me",1,"unleashes an inhuman scream!",TRUE)
+		carbon_antag.Knockdown(delta_time SECONDS + 0.5 SECONDS, TRUE)
+
 
 /datum/antagonist/changeling/proc/reset_properties()
 	changeling_speak = 0

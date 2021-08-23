@@ -64,6 +64,7 @@ SUBSYSTEM_DEF(weather)
 
 	var/datum/weather/W = new weather_datum_type(z_levels)
 	W.telegraph()
+	return W
 
 /datum/controller/subsystem/weather/proc/make_eligible(z, possible_weather)
 	eligible_zlevels[z] = possible_weather

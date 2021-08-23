@@ -44,18 +44,29 @@ SUBSYSTEM_DEF(nightshift)
 	if(nightshift_active != night_time)
 		update_nightshift(night_time, announcing)
 
+GLOBAL_VAR(thingling_storm)
+
 /datum/controller/subsystem/nightshift/proc/update_nightshift(active, announce = TRUE, resumed = FALSE)
 	if(!resumed)
 		currentrun = GLOB.apcs_list.Copy()
 		nightshift_active = active
 		if(announce)
 			if (active)
-				announce("Good evening, crew. To reduce power consumption and stimulate the circadian rhythms of some species, all of the lights aboard the station have been dimmed for the night.")
+				announce("Night falls. Deadly temperatures will kill anyone left outside until the sun rises and the storms calm.")
+				update_lumcount(DYNAMIC_LIGHTING_ENABLED) //zero, total dorkness
+				GLOB.thingling_storm = SSweather.run_weather(/datum/weather/snow_storm, SSmapping.levels_by_trait(ZTRAIT_STATION))
 			else
-				announce("Good morning, crew. As it is now day time, all of the lights aboard the station have been restored to their former brightness.")
+				announce("The sun has risen. The outside is now safe to travel in, if you have proper equipment.")
+				update_lumcount(DYNAMIC_LIGHTING_DISABLED) //fullbright
+				var/datum/weather/ending_this_storm = GLOB.thingling_storm
+				ending_this_storm.wind_down()
 	for(var/obj/machinery/power/apc/APC as anything in currentrun)
 		currentrun -= APC
 		if (APC.area && (APC.area.type in GLOB.the_station_areas))
 			APC.set_nightshift(active)
 		if(MC_TICK_CHECK)
 			return
+
+/datum/controller/subsystem/nightshift/proc/update_lumcount(new_lighting)
+	var/area/outside = get_area_instance_from_text(/area/icemoon/surface/outdoors)
+	outside.set_dynamic_lighting(new_lighting)

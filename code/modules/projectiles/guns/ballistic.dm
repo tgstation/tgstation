@@ -78,6 +78,8 @@
 	var/magazine_wording = "magazine"
 	///Phrasing of the cartridge in examine and notification messages; ex: bullet, shell, dart, etc.
 	var/cartridge_wording = "bullet"
+	///Phrasing of the rounds in the examing messages; ex: round, charge, rocket
+	var/round_wording = "round"
 	///length between individual racks
 	var/rack_delay = 5
 	///time of the most recent rack, used for cooldown purposes
@@ -486,7 +488,7 @@
 /obj/item/gun/ballistic/examine(mob/user)
 	. = ..()
 	var/count_chambered = !(bolt_type == BOLT_TYPE_NO_BOLT || bolt_type == BOLT_TYPE_OPEN)
-	. += "It has [get_ammo(count_chambered)] round\s remaining."
+	. += "It has [get_ammo(count_chambered)] [round_wording]\s remaining."
 
 	if (!chambered)
 		. += "It does not seem to have a round chambered."

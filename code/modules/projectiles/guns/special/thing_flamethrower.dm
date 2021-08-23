@@ -9,6 +9,7 @@
 	inhand_icon_state = "flamethrower_0"
 	magazine_wording = "tank"
 	cartridge_wording = "fuel"
+	round_wording = "fuel burst"
 	casing_ejector = FALSE
 
 	fire_sound = 'sound/weapons/gun/flamethrower/flamethrower_shoot.ogg'
