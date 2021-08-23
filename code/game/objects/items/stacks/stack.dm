@@ -453,10 +453,6 @@
 	if(target_stack == src)
 		CRASH("Stack attempted to merge into itself.")
 
-	if(target_stack.mats_per_unit != src.mats_per_unit)
-		var/M
-		for(M = 1, M <= target_stack.mats_per_unit, M++)
-			target_stack.mats_per_unit[target_stack.mats_per_unit[M]] = (target_stack.mats_per_unit[target_stack.mats_per_unit[M]] * target_stack.amount + src.mats_per_unit[src.mats_per_unit[M]] * src.amount) / (target_stack.amount + src.amount)
 	var/transfer = get_amount()
 	if(target_stack.is_cyborg)
 		transfer = min(transfer, round((target_stack.source.max_energy - target_stack.source.energy) / target_stack.cost))
@@ -467,6 +463,10 @@
 	target_stack.copy_evidences(src)
 	use(transfer, transfer = TRUE, check = FALSE)
 	target_stack.add(transfer)
+	if(target_stack.mats_per_unit != src.mats_per_unit)
+		var/M
+		for(M = 1, M < target_stack.mats_per_unit, M++)
+			target_stack.mats_per_unit[target_stack.mats_per_unit[M]] = (target_stack.mats_per_unit[target_stack.mats_per_unit[M]] * target_stack.amount + src.mats_per_unit[src.mats_per_unit[M]] * transfer) / (target_stack.amount + transfer)
 	return transfer
 
 /**
