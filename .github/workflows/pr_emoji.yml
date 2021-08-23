@@ -1,13 +1,16 @@
 name: PR emoji stripper
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, edited]
+
+permissions:
+  pull-requests: write
 
 jobs:
   title_and_changelog:
     runs-on: ubuntu-20.04
     steps:
-    - uses: Wayland-Smithy/emoji-stripper-action@866e68ed5f20498ada6e9cc2e0708c81fc72f6c4
+    - uses: Wayland-Smithy/emoji-stripper-action@8f4c2fe9748bb9b02f105be4e72a1a42b0f34d84
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         title: true

@@ -201,7 +201,8 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/PauseAi(time)
 	paused_until = world.time + time
 
-/datum/ai_controller/proc/AddBehavior(behavior_type, ...)
+///Call this to add a behavior to the stack.
+/datum/ai_controller/proc/queue_behavior(behavior_type, ...)
 	var/datum/ai_behavior/behavior = GET_AI_BEHAVIOR(behavior_type)
 	if(!behavior)
 		CRASH("Behavior [behavior_type] not found.")
@@ -213,6 +214,8 @@ multiple modular subtrees with behaviors
 	arguments.Cut(1, 2)
 	if(length(arguments))
 		behavior_args[behavior_type] = arguments
+	else
+		behavior_args -= behavior_type
 
 /datum/ai_controller/proc/ProcessBehavior(delta_time, datum/ai_behavior/behavior)
 	var/list/arguments = list(delta_time, src)

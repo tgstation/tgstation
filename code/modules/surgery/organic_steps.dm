@@ -4,7 +4,7 @@
 	name = "make incision"
 	implements = list(
 		TOOL_SCALPEL = 100,
-		/obj/item/melee/transforming/energy/sword = 75,
+		/obj/item/melee/energy/sword = 75,
 		/obj/item/kitchen/knife = 65,
 		/obj/item/shard = 45,
 		/obj/item = 30) // 30% success with any sharp item.

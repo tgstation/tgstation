@@ -1646,15 +1646,15 @@
 /area/mine/living_quarters)
 "fD" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -1;
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -8
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -8967,8 +8967,8 @@
 /obj/item/clothing/suit/hooded/bee_costume,
 /obj/item/clothing/head/beekeeper_head,
 /obj/item/clothing/head/hooded/bee_hood,
-/obj/item/queen_bee,
 /obj/item/melee/flyswatter,
+/obj/item/queen_bee/bought,
 /turf/open/floor/grass,
 /area/service/hydroponics)
 "Wt" = (

@@ -27,11 +27,13 @@
 /datum/ai_behavior/break_spine
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 	action_cooldown = 0.7 SECONDS
-	var/target_key
 	var/give_up_distance = 10
 
+/datum/ai_behavior/break_spine/setup(datum/ai_controller/controller, target_key)
+	. = ..()
+	controller.current_movement_target = controller.blackboard[target_key]
 
-/datum/ai_behavior/break_spine/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/break_spine/perform(delta_time, datum/ai_controller/controller, target_key)
 	var/mob/living/batman = controller.blackboard[target_key]
 	var/mob/living/big_guy = controller.pawn //he was molded by the darkness
 
@@ -57,7 +59,7 @@
 
 	finish_action(controller, TRUE)
 
-/datum/ai_behavior/break_spine/finish_action(datum/ai_controller/controller, succeeded)
+/datum/ai_behavior/break_spine/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	if(succeeded)
 		controller.blackboard[target_key] = null
 	return ..()
@@ -65,6 +67,7 @@
 /// Use in hand the currently held item
 /datum/ai_behavior/use_in_hand
 	behavior_flags = AI_BEHAVIOR_MOVE_AND_PERFORM
+
 
 /datum/ai_behavior/use_in_hand/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
@@ -81,11 +84,15 @@
 	required_distance = 1
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 
-/datum/ai_behavior/use_on_object/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/use_on_object/setup(datum/ai_controller/controller, target_key)
+	. = ..()
+	controller.current_movement_target = controller.blackboard[target_key]
+
+/datum/ai_behavior/use_on_object/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
 	var/mob/living/pawn = controller.pawn
 	var/obj/item/held_item = pawn.get_item_by_slot(pawn.get_active_hand())
-	var/atom/target = controller.current_movement_target
+	var/atom/target = controller.blackboard[BB_MONKEY_CURRENT_PRESS_TARGET]
 
 	if(!target || !pawn.CanReach(target))
 		finish_action(controller, FALSE)
@@ -103,11 +110,17 @@
 	required_distance = 1
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 
-/datum/ai_behavior/give/perform(delta_time, datum/ai_controller/controller)
+
+/datum/ai_behavior/give/setup(datum/ai_controller/controller, target_key)
+	. = ..()
+	controller.current_movement_target = controller.blackboard[target_key]
+
+
+/datum/ai_behavior/give/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
 	var/mob/living/pawn = controller.pawn
 	var/obj/item/held_item = pawn.get_item_by_slot(pawn.get_active_hand())
-	var/atom/target = controller.current_movement_target
+	var/atom/target = controller.blackboard[target_key]
 
 	if(!target || !pawn.CanReach(target) || !isliving(target))
 		finish_action(controller, FALSE)
