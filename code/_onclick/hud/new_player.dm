@@ -189,11 +189,41 @@
 	set_button_status(TRUE)
 	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, .proc/enable_observing)
 
+
+/* This is here for a future settings menu that will come with the prefs rework, if this is not in by 2022 kill mothblocks.
+/atom/movable/screen/lobby/button/settings
+	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+	icon_state = "settings"
+	base_icon_state = "settings"
+	screen_loc = "TOP:-122,CENTER:+58"
+
+/atom/movable/screen/lobby/button/settings/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	hud.mymob.client.prefs.ShowChoices(hud.mymob)
+*/
+
+
 /atom/movable/screen/lobby/button/changelog_button
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "changelog"
 	base_icon_state = "changelog"
-	screen_loc ="TOP:-122,CENTER:+2"
+	screen_loc ="TOP:-122,CENTER:+58"
+
+
+/atom/movable/screen/lobby/button/crew_manifest
+	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+	icon_state = "crew_manifest"
+	base_icon_state = "crew_manifest"
+	screen_loc = "TOP:-122,CENTER:+30"
+
+/atom/movable/screen/lobby/button/crew_manifest/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	var/mob/dead/new_player/new_player = hud.mymob
+	new_player.ViewManifest()
 
 /atom/movable/screen/lobby/button/changelog_button/Click(location, control, params)
 	. = ..()
@@ -203,13 +233,15 @@
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "changelog"
 	base_icon_state = "changelog"
-	screen_loc = "TOP:-122,CENTER:-26"
+	screen_loc = "TOP:-122,CENTER:+2"
 
 	var/new_poll = FALSE
 
 ///Need to use New due to init
 /atom/movable/screen/lobby/button/poll/New(loc, ...)
 	. = ..()
+	if(!usr) //
+		return
 	var/mob/dead/new_player/new_player = usr
 	if(IsGuestKey(new_player.key))
 		set_button_status(FALSE)
@@ -244,10 +276,16 @@
 		new_poll = TRUE
 	else
 		new_poll = FALSE
+	update_appearance(UPDATE_OVERLAYS)
 	qdel(query_get_new_polls)
 	if(QDELETED(new_player))
 		set_button_status(FALSE)
 		return
+
+/atom/movable/screen/lobby/button/poll/update_overlays()
+	. = ..()
+	if(new_poll)
+		. += mutable_appearance('icons/hud/lobby/poll_overlay.dmi', "new_poll")
 
 /atom/movable/screen/lobby/button/poll/Click(location, control, params)
 	. = ..()
@@ -255,27 +293,3 @@
 		return
 	var/mob/dead/new_player/new_player = hud.mymob
 	new_player.handle_player_polling()
-
-/atom/movable/screen/lobby/button/settings
-	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "settings"
-	base_icon_state = "settings"
-	screen_loc = "TOP:-122,CENTER:+58"
-
-/atom/movable/screen/lobby/button/settings/Click(location, control, params)
-	. = ..()
-	if(!.)
-		return
-	hud.mymob.client.prefs.ShowChoices(hud.mymob)
-/atom/movable/screen/lobby/button/crew_manifest
-	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "crew_manifest"
-	base_icon_state = "crew_manifest"
-	screen_loc = "TOP:-122,CENTER:+30"
-
-/atom/movable/screen/lobby/button/crew_manifest/Click(location, control, params)
-	. = ..()
-	if(!.)
-		return
-	var/mob/dead/new_player/new_player = hud.mymob
-	new_player.ViewManifest()
