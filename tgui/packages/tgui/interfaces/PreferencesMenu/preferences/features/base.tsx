@@ -21,6 +21,7 @@ export type Feature<
     TSending,
     TServerData
   >;
+  // MOTHBLOCKS TODO: Descriptions
   category?: string;
 };
 
@@ -71,7 +72,9 @@ export const FeatureColorInput = (props: FeatureValueProps<string>) => {
       <Stack align="center" fill>
         <Stack.Item>
           <Box style={{
-            background: `#${props.value}`,
+            background: props.value.startsWith("#")
+              ? props.value
+              : `#${props.value}`,
             border: "2px solid white",
             "box-sizing": "content-box",
             height: "11px",

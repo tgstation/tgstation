@@ -2051,6 +2051,7 @@
 #include "code\modules\client\preferences\features.dm"
 #include "code\modules\client\preferences\gender.dm"
 #include "code\modules\client\preferences\names.dm"
+#include "code\modules\client\preferences\screentips.dm"
 #include "code\modules\client\preferences\species.dm"
 #include "code\modules\client\preferences\tooltips.dm"
 #include "code\modules\client\preferences\ui_style.dm"

@@ -109,8 +109,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	///Do we show screentips, if so, how big?
 	var/screentip_pref = TRUE
-	///Color of screentips at top of screen
-	var/screentip_color = "#ffd391"
 	///Do we show item hover outlines?
 	var/itemoutline_pref = TRUE
 
@@ -336,8 +334,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if ("set_color_preference")
 			var/requested_preference_key = params["preference"]
 
-			var/datum/preference/color/requested_preference = GLOB.preference_entries_by_key[requested_preference_key]
-			if (!istype(requested_preference))
+			var/datum/preference/requested_preference = GLOB.preference_entries_by_key[requested_preference_key]
+			if (isnull(requested_preference))
+				return FALSE
+
+			if (!istype(requested_preference, /datum/preference/color) \
+				&& !istype(requested_preference, /datum/preference/color_legacy) \
+			)
 				return FALSE
 
 			// Yielding

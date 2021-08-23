@@ -186,7 +186,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["asaycolor"], asaycolor)
 	READ_FILE(S["brief_outfit"], brief_outfit)
 	READ_FILE(S["ooccolor"], ooccolor)
-	READ_FILE(S["screentip_color"], screentip_color)
 	READ_FILE(S["lastchangelog"], lastchangelog)
 	READ_FILE(S["hotkeys"], hotkeys)
 	READ_FILE(S["chat_on_map"], chat_on_map)
@@ -259,7 +258,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Sanitize
 	asaycolor = sanitize_ooccolor(sanitize_hexcolor(asaycolor, 6, 1, initial(asaycolor)))
 	ooccolor = sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
-	screentip_color = sanitize_ooccolor(sanitize_hexcolor(screentip_color, 6, 1, initial(screentip_color)))
 	lastchangelog = sanitize_text(lastchangelog, initial(lastchangelog))
 	hotkeys = sanitize_integer(hotkeys, FALSE, TRUE, initial(hotkeys))
 	chat_on_map = sanitize_integer(chat_on_map, FALSE, TRUE, initial(chat_on_map))
@@ -336,7 +334,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["asaycolor"], asaycolor)
 	WRITE_FILE(S["brief_outfit"], brief_outfit)
 	WRITE_FILE(S["ooccolor"], ooccolor)
-	WRITE_FILE(S["screentip_color"], screentip_color)
 	WRITE_FILE(S["lastchangelog"], lastchangelog)
 	WRITE_FILE(S["hotkeys"], hotkeys)
 	WRITE_FILE(S["chat_on_map"], chat_on_map)

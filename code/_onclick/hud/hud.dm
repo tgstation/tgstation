@@ -58,6 +58,12 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	///UI for screentips that appear when you mouse over things
 	var/atom/movable/screen/screentip/screentip_text
 
+	/// The color to use for the screentips.
+	/// This is updated by the preference for cheaper reads than would be
+	/// had with a proc call, especially on one of the hottest procs in the
+	/// game (MouseEntered).
+	var/screentip_color
+
 	var/atom/movable/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = FALSE
 
@@ -88,6 +94,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
 
+	screentip_color = owner?.client?.prefs?.read_preference(/datum/preference/color/screentip_color)
 	screentip_text = new(null, src)
 	static_inventory += screentip_text
 

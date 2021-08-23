@@ -264,16 +264,30 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	return ..()
 
-/// A preference that represents an RGB color of something.
+/// A preference that represents an RGB color of something, crunched down to 3 hex numbers.
+/// Was used heavily in the past, but doesn't provide as much range and only barely conserves space.
+/datum/preference/color_legacy
+	abstract_type = /datum/preference/color_legacy
+
+/datum/preference/color_legacy/deserialize(input)
+	return sanitize_hexcolor(input)
+
+// MOTHBLOCKS TODO: Randomize, or make a var like numeric
+/datum/preference/color_legacy/create_default_value()
+	return "000"
+
+/datum/preference/color_legacy/is_valid(value)
+	return findtext(value, GLOB.is_color)
+
 /datum/preference/color
 	abstract_type = /datum/preference/color
 
 /datum/preference/color/deserialize(input)
-	return sanitize_hexcolor(input)
+	return sanitize_ooccolor(input)
 
-// MOTHBLOCKS TODO: Randomize
+// MOTHBLOCKS TODO: Randomize, or make a var like numeric
 /datum/preference/color/create_default_value()
-	return "000"
+	return COLOR_BLACK
 
 /datum/preference/color/is_valid(value)
 	return findtext(value, GLOB.is_color)
