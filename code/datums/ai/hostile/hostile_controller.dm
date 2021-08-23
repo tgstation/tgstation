@@ -187,8 +187,8 @@
 			current_movement_target = commander
 			var/mob/living/living_pawn = pawn
 			if(living_pawn.buckled)
-				LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/resist))//in case they are in bed or something
-			LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/follow))
+				queue_behavior(/datum/ai_behavior/resist)//in case they are in bed or something
+			queue_behavior(/datum/ai_behavior/follow)
 		// attack: harass whoever the commander points to
 		if(COMMAND_ATTACK)
 			pawn.visible_message(span_danger("[pawn] [blackboard[BB_HOSTILE_ATTACK_WORD]] at [commander]'s command, and [pawn.p_they()] growl[pawn.p_s()] intensely.")) // imagine getting intimidated by a corgi
@@ -218,5 +218,5 @@
 		current_movement_target = pointed_movable
 		blackboard[BB_ATTACK_TARGET] = WEAKREF(pointed_movable)
 		if(living_pawn.buckled)
-			LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/resist))//in case they are in bed or something
-		LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/attack))
+			queue_behavior(/datum/ai_behavior/resist)//in case they are in bed or something
+		queue_behavior(/datum/ai_behavior/attack)

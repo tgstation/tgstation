@@ -620,6 +620,10 @@
 	},
 /turf/open/floor/plating,
 /area/ctf)
+"lt" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/turf/open/floor/wood,
+/area/ctf)
 "lv" = (
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/iron/dark,
@@ -648,10 +652,6 @@
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/effect/decal/cleanable/shreds,
 /turf/open/floor/iron,
-/area/ctf)
-"mf" = (
-/obj/effect/spawner/random/entertainment/arcade,
-/turf/open/floor/wood,
 /area/ctf)
 "mj" = (
 /turf/open/floor/plating/grass,
@@ -721,6 +721,15 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
+/area/ctf)
+"nS" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/structure/table/reinforced/ctf,
+/turf/open/floor/iron,
 /area/ctf)
 "nT" = (
 /obj/effect/turf_decal/tile/bar{
@@ -973,17 +982,6 @@
 	resistance_flags = 64
 	},
 /turf/open/floor/plating/grass,
-/area/ctf)
-"sZ" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/structure/table/wood{
-	resistance_flags = 64
-	},
-/turf/open/floor/iron,
 /area/ctf)
 "td" = (
 /turf/closed/wall/mineral/iron,
@@ -1241,6 +1239,17 @@
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron/dark/side,
 /area/ctf)
+"xU" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/structure/table/wood{
+	resistance_flags = 64
+	},
+/turf/open/floor/iron,
+/area/ctf)
 "yf" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -1250,13 +1259,6 @@
 	},
 /obj/effect/turf_decal/tile/bar,
 /turf/open/floor/iron,
-/area/ctf)
-"yi" = (
-/obj/effect/spawner/randomarcade{
-	dir = 8;
-	resistance_flags = 64
-	},
-/turf/open/floor/wood,
 /area/ctf)
 "yp" = (
 /obj/effect/turf_decal/siding/yellow,
@@ -1632,15 +1634,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/ctf)
-"Ek" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/structure/table/reinforced/ctf,
-/turf/open/floor/iron,
 /area/ctf)
 "El" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3722,10 +3715,10 @@ Ag
 BH
 td
 Bh
-mf
-mf
-mf
-mf
+lt
+lt
+lt
+lt
 QC
 oq
 mB
@@ -3874,10 +3867,10 @@ xs
 BH
 td
 Bh
-mf
-mf
-mf
-mf
+lt
+lt
+lt
+lt
 QC
 Lr
 Ad
@@ -4177,9 +4170,9 @@ td
 BH
 El
 td
-Ek
+nS
 dO
-sZ
+xU
 Dm
 ql
 go
@@ -4255,7 +4248,7 @@ xs
 Lr
 Ux
 dO
-sZ
+xU
 Dm
 ql
 EJ
@@ -4331,7 +4324,7 @@ BH
 Lr
 nT
 dO
-sZ
+xU
 Dm
 ql
 en

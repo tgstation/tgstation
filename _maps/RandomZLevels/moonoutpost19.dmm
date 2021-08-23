@@ -2598,34 +2598,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
-"fT" = (
-/obj/structure/closet/secure_closet{
-	icon_state = "sec";
-	name = "security officer's locker";
-	req_access_txt = "201"
-	},
-/obj/item/clothing/suit/armor/vest,
-/obj/item/reagent_containers/spray/pepper,
-/obj/item/grenade/flashbang,
-/obj/item/storage/belt/security,
-/obj/item/reagent_containers/food/drinks/beer{
-	pixel_x = -3;
-	pixel_y = -2
-	},
-/obj/machinery/airalarm/unlocked{
-	pixel_y = 23;
-	req_access = null
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
 "fU" = (
 /obj/item/radio/off,
 /obj/item/screwdriver{
@@ -3319,6 +3291,30 @@
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
+	},
+/area/awaymission/moonoutpost19/research)
+"hq" = (
+/obj/structure/closet/secure_closet{
+	icon_state = "rd";
+	name = "research director's locker";
+	req_access_txt = "201"
+	},
+/obj/item/storage/backpack/satchel/science,
+/obj/item/clothing/gloves/color/latex,
+/turf/open/floor/iron/cafeteria{
+	dir = 5
+	},
+/area/awaymission/moonoutpost19/research)
+"hr" = (
+/obj/structure/table,
+/obj/item/cartridge/signal/ordnance,
+/obj/item/cartridge/signal/ordnance{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/cafeteria{
+	dir = 5
 	},
 /area/awaymission/moonoutpost19/research)
 "hs" = (
@@ -6411,18 +6407,6 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/main)
-"uB" = (
-/obj/structure/closet/secure_closet{
-	icon_state = "rd";
-	name = "research director's locker";
-	req_access_txt = "201"
-	},
-/obj/item/storage/backpack/satchel/science,
-/obj/item/clothing/gloves/color/latex,
-/turf/open/floor/iron/cafeteria{
-	dir = 5
-	},
-/area/awaymission/moonoutpost19/research)
 "vJ" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -6502,19 +6486,7 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
-"MB" = (
-/obj/structure/table,
-/obj/item/cartridge/signal/ordnance,
-/obj/item/cartridge/signal/ordnance{
-	pixel_x = -4;
-	pixel_y = 2
-	},
-/obj/machinery/firealarm/directional/north,
-/turf/open/floor/iron/cafeteria{
-	dir = 5
-	},
-/area/awaymission/moonoutpost19/research)
-"Rc" = (
+"Rf" = (
 /obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/arrivals)
@@ -6554,6 +6526,34 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"Wj" = (
+/obj/structure/closet/secure_closet{
+	icon_state = "sec";
+	name = "security officer's locker";
+	req_access_txt = "201"
+	},
+/obj/item/clothing/suit/armor/vest,
+/obj/item/reagent_containers/spray/pepper,
+/obj/item/grenade/flashbang,
+/obj/item/storage/belt/security,
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/machinery/airalarm/unlocked{
+	pixel_y = 23;
+	req_access = null
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/research)
 "Yn" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -33699,7 +33699,7 @@ gz
 eI
 eX
 ea
-uB
+hq
 hB
 hB
 hB
@@ -33956,7 +33956,7 @@ gA
 eJ
 he
 ea
-MB
+hr
 hB
 hC
 hX
@@ -35235,7 +35235,7 @@ ba
 eJ
 fa
 dZ
-fT
+Wj
 eu
 gC
 gP
@@ -42708,7 +42708,7 @@ la
 lq
 jk
 mj
-Rc
+Rf
 hJ
 ba
 ba
@@ -42965,7 +42965,7 @@ jN
 lr
 jj
 mj
-Rc
+Rf
 hI
 ba
 ba

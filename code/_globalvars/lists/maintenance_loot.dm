@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		) = 1,
 
 	list(//food
-		/obj/item/reagent_containers/food/drinks/beer = 1,
+		/obj/item/reagent_containers/food/drinks/bottle/beer = 1,
 		/obj/item/reagent_containers/food/drinks/coffee = 1,
 		) = 1,
 

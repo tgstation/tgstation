@@ -1855,31 +1855,6 @@
 	},
 /turf/open/floor/iron,
 /area/mine/living_quarters)
-"fD" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/drinks/beer{
-	pixel_x = 7;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/food/drinks/beer{
-	pixel_x = -1;
-	pixel_y = 9
-	},
-/obj/item/reagent_containers/food/drinks/beer{
-	pixel_x = -8
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 5
-	},
-/turf/open/floor/iron,
-/area/mine/living_quarters)
 "fE" = (
 /obj/structure/chair{
 	dir = 8
@@ -3357,6 +3332,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
+"nQ" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/iron,
+/area/mine/laborcamp)
 "nU" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -4460,6 +4441,31 @@
 	},
 /turf/open/floor/iron,
 /area/mine/living_quarters)
+"Pm" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -1;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -8
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/mine/living_quarters)
 "Pp" = (
 /obj/structure/bed,
 /obj/item/bedsheet/medical,
@@ -5004,12 +5010,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/mine/laborcamp)
-"Zn" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
-/turf/open/floor/iron,
 /area/mine/laborcamp)
 "Zs" = (
 /obj/machinery/light/small/directional/east,
@@ -11155,7 +11155,7 @@ vj
 Kv
 vj
 tZ
-Zn
+nQ
 Qo
 bk
 EY
@@ -16058,7 +16058,7 @@ kv
 eR
 TP
 fu
-fD
+Pm
 fJ
 cM
 cM
