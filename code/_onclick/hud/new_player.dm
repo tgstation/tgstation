@@ -231,8 +231,8 @@
 
 /atom/movable/screen/lobby/button/poll
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "changelog"
-	base_icon_state = "changelog"
+	icon_state = "poll"
+	base_icon_state = "poll"
 	screen_loc = "TOP:-122,CENTER:+2"
 
 	var/new_poll = FALSE
