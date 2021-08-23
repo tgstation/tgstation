@@ -183,9 +183,12 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
+	wound_bonus = 15
 
-	var/cooldown_check = 0 // Used interally, you don't want to modify
-
+	/// Whether this baton is active or not
+	var/extended = TRUE
+	/// Used interally, you don't want to modify
+	var/cooldown_check = 0
 	/// Default wait time until can stun again.
 	var/cooldown = (4 SECONDS)
 	/// The length of the knockdown applied to a struck living, non-cyborg mob.
@@ -196,23 +199,11 @@
 	var/stamina_damage = 55
 	/// Can we stun cyborgs?
 	var/affect_cyborg = FALSE
-	/// "On" sound, played when switching between able to stun or not.
-	var/on_sound
 	/// The path of the default sound to play when we stun something.
 	var/on_stun_sound = 'sound/effects/woodhit.ogg'
 	/// Do we animate the "hit" when stunning something?
 	var/stun_animation = TRUE
-	/// Are we on or off?
-	var/on = TRUE
 
-	var/on_icon_state // What is our sprite when turned on
-	var/off_icon_state // What is our sprite when turned off
-	var/on_inhand_icon_state // What is our in-hand sprite when turned on
-	var/force_on // Damage when on - not stunning
-	var/force_off // Damage when off - not stunning
-	var/weight_class_on // What is the new size class when turned on
-
-	wound_bonus = 15
 
 /obj/item/melee/classic_baton/Initialize()
 	. = ..()
@@ -223,15 +214,6 @@
 /// Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()
 	return
-
-/// Description for when turning the baton "on".
-/obj/item/melee/classic_baton/proc/get_on_description()
-	. = list()
-
-	.["local_on"] = "<span class ='warning'>You extend the baton.</span>"
-	.["local_off"] = "<span class ='notice'>You collapse the baton.</span>"
-
-	return .
 
 /// Default message for stunning a living, non-cyborg mob.
 /obj/item/melee/classic_baton/proc/get_stun_description(mob/living/target, mob/living/user)
@@ -269,7 +251,7 @@
 	return
 
 /obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user, params)
-	if(!on)
+	if(!extended)
 		return ..()
 
 	add_fingerprint(user)
@@ -361,94 +343,91 @@
 	name = "telescopic baton"
 	desc = "A compact yet robust personal defense weapon. Can be concealed when folded."
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "telebaton_0"
+	icon_state = "telebaton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	inhand_icon_state = null
+	attack_verb_continuous = list("hits", "pokes")
+	attack_verb_simple = list("hit", "poke")
 	worn_icon_state = "tele_baton"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NONE
 	force = 0
-	on = FALSE
-	on_sound = 'sound/weapons/batonextend.ogg'
-
-	on_icon_state = "telebaton_1"
-	off_icon_state = "telebaton_0"
-	on_inhand_icon_state = "nullrod"
-	force_on = 10
-	force_off = 0
-	weight_class_on = WEIGHT_CLASS_BULKY
 	bare_wound_bonus = 5
+	extended = FALSE
+
+	/// The sound effecte played when our baton is extended.
+	var/on_sound = 'sound/weapons/batonextend.ogg'
+	/// The inhand iconstate used when our baton is extended.
+	var/on_inhand_icon_state = "nullrod"
+	/// The force on extension.
+	var/active_force = 10
+
+/obj/item/melee/classic_baton/telescopic/Initialize()
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		force_on = active_force, \
+		hitsound_on = hitsound, \
+		w_class_on = WEIGHT_CLASS_NORMAL, \
+		clumsy_check = FALSE, \
+		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
+		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
-	var/mob/living/carbon/human/H = user
-	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
+	var/mob/living/carbon/human/human_user = user
+	var/obj/item/organ/brain/our_brain = human_user.getorgan(/obj/item/organ/brain)
 
 	user.visible_message(span_suicide("[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind."))
-	if(!on)
-		src.attack_self(user)
-	else
+	if(extended)
 		playsound(src, on_sound, 50, TRUE)
 		add_fingerprint(user)
+	else
+		attack_self(user)
+
 	sleep(3)
-	if (!QDELETED(H))
-		if(!QDELETED(B))
-			H.internal_organs -= B
-			qdel(B)
-		new /obj/effect/gibspawner/generic(H.drop_location(), H)
+	if (!QDELETED(human_user))
+		if(!QDELETED(our_brain))
+			human_user.internal_organs -= our_brain
+			qdel(our_brain)
+		new /obj/effect/gibspawner/generic(human_user.drop_location(), human_user)
 		return (BRUTELOSS)
 
-/obj/item/melee/classic_baton/telescopic/attack_self(mob/user)
-	on = !on
-	var/list/desc = get_on_description()
+/*
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
+ *
+ * Gives feedback to the user and makes it show up inhand.
+ */
+/obj/item/melee/classic_baton/telescopic/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
 
-	if(on)
-		to_chat(user, desc["local_on"])
-		icon_state = on_icon_state
-		inhand_icon_state = on_inhand_icon_state
-		w_class = weight_class_on
-		force = force_on
-		attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
-		attack_verb_simple = list("smack", "strike", "crack", "beat")
-	else
-		to_chat(user, desc["local_off"])
-		icon_state = off_icon_state
-		inhand_icon_state = null //no sprite for concealment even when in hand
-		slot_flags = ITEM_SLOT_BELT
-		w_class = WEIGHT_CLASS_SMALL
-		force = force_off
-		attack_verb_continuous = list("hits", "pokes")
-		attack_verb_simple = list("hit", "poke")
-
-	playsound(src.loc, on_sound, 50, TRUE)
-	add_fingerprint(user)
+	extended = active
+	inhand_icon_state = active ? on_inhand_icon_state : null // When inactive, there is no inhand icon_state.
+	balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
+	playsound(user ? user : src, on_sound, 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton
 	name = "contractor baton"
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "contractor_baton_0"
+	icon_state = "contractor_baton"
+	worn_icon_state = "contractor_baton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	inhand_icon_state = null
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NONE
 	force = 5
-
 	cooldown = 25
 	stamina_damage = 85
 	affect_cyborg = TRUE
-	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 
-	on_icon_state = "contractor_baton_1"
-	off_icon_state = "contractor_baton_0"
-	on_inhand_icon_state = "contractor_baton"
-	force_on = 16
-	force_off = 5
-	weight_class_on = WEIGHT_CLASS_NORMAL
+	on_inhand_icon_state = "contractor_baton_on"
+	on_sound = 'sound/weapons/contractorbatonextend.ogg'
+	active_force = 16
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton/get_wait_description()
 	return span_danger("The baton is still charging!")
@@ -582,8 +561,8 @@
 /obj/item/melee/roastingstick
 	name = "advanced roasting stick"
 	desc = "A telescopic roasting stick with a miniature shield generator designed to ensure entry into various high-tech shielded cooking ovens and firepits."
-	icon_state = "roastingstick_0"
-	inhand_icon_state = "null"
+	icon_state = "roastingstick"
+	inhand_icon_state = null
 	worn_icon_state = "tele_baton"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
@@ -591,33 +570,55 @@
 	force = 0
 	attack_verb_continuous = list("hits", "pokes")
 	attack_verb_simple = list("hit", "poke")
+	/// The sausage attatched to our stick.
 	var/obj/item/food/sausage/held_sausage
+	/// Static list of things our roasting stick can interact with.
 	var/static/list/ovens
-	var/on = FALSE
+	/// The beam that links to the oven we use
 	var/datum/beam/beam
+	/// Whether or stick is extended and can recieve sausage
+	var/extended = FALSE
 
 /obj/item/melee/roastingstick/Initialize()
 	. = ..()
 	if (!ovens)
 		ovens = typecacheof(list(/obj/singularity, /obj/energy_ball, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire))
+	AddComponent(/datum/component/transforming, \
+		hitsound_on = hitsound, \
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_PRE_TRANSFORM, .proc/attempt_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
-/obj/item/melee/roastingstick/attack_self(mob/user)
-	on = !on
-	if(on)
-		extend(user)
-	else
-		if (held_sausage)
-			to_chat(user, span_warning("You can't retract [src] while [held_sausage] is attached!"))
-			return
-		retract(user)
+/*
+ * Signal proc for [COMSIG_TRANSFORMING_PRE_TRANSFORM].
+ *
+ * If there is a sausage attached, returns COMPONENT_BLOCK_TRANSFORM.
+ */
+/obj/item/melee/roastingstick/proc/attempt_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
 
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
-	add_fingerprint(user)
+	if(held_sausage)
+		to_chat(user, span_warning("You can't retract [src] while [held_sausage] is attached!"))
+		return COMPONENT_BLOCK_TRANSFORM
+
+/*
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
+ *
+ * Gives feedback on stick extension.
+ */
+/obj/item/melee/roastingstick/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	extended = active
+	inhand_icon_state = active ? "nullrod" : null
+	balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
+	playsound(user ? user : src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/melee/roastingstick/attackby(atom/target, mob/user)
 	..()
 	if (istype(target, /obj/item/food/sausage))
-		if (!on)
+		if (!extended)
 			to_chat(user, span_warning("You must extend [src] to attach anything to it!"))
 			return
 		if (held_sausage)
@@ -641,18 +642,6 @@
 	if(held_sausage)
 		. += mutable_appearance(icon, "roastingstick_sausage")
 
-/obj/item/melee/roastingstick/proc/extend(user)
-	to_chat(user, span_warning("You extend [src]."))
-	icon_state = "roastingstick_1"
-	inhand_icon_state = "nullrod"
-	w_class = WEIGHT_CLASS_BULKY
-
-/obj/item/melee/roastingstick/proc/retract(user)
-	to_chat(user, span_notice("You collapse [src]."))
-	icon_state = "roastingstick_0"
-	inhand_icon_state = null
-	w_class = WEIGHT_CLASS_SMALL
-
 /obj/item/melee/roastingstick/handle_atom_del(atom/target)
 	if (target == held_sausage)
 		held_sausage = null
@@ -660,7 +649,7 @@
 
 /obj/item/melee/roastingstick/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	if (!on)
+	if (!extended)
 		return
 	if (is_type_in_typecache(target, ovens))
 		if (held_sausage?.roasted)
