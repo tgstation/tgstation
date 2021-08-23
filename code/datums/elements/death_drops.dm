@@ -5,6 +5,7 @@
  */
 /datum/element/death_drops
 	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	id_arg_index = 2
 	///what items the target drops when killed
 	var/list/loot
 
