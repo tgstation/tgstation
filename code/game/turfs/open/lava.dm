@@ -123,66 +123,65 @@
 
 
 /turf/open/lava/proc/burn_stuff(AM, delta_time = 1)
-	. = 0
-
 	if(is_safe())
 		return FALSE
 
 	var/thing_to_check = src
 	if (AM)
 		thing_to_check = list(AM)
-	for(var/thing in thing_to_check)
-		if(isobj(thing))
-			var/obj/O = thing
-			if((O.resistance_flags & (LAVA_PROOF|INDESTRUCTIBLE)) || O.throwing)
+	for(var/atom/movable/burn_target as anything in thing_to_check)
+		if(burn_target.movement_type & (FLYING|FLOATING) || burn_target.throwing) //YOU'RE FLYING OVER IT
+			continue
+		if(isobj(burn_target))
+			var/obj/burn_obj = burn_target
+			. = TRUE
+			if((burn_obj.resistance_flags & (LAVA_PROOF|ON_FIRE)))
 				continue
-			. = 1
-			if((O.resistance_flags & (ON_FIRE)))
-				continue
-			if(!(O.resistance_flags & FLAMMABLE))
-				O.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
-			if(O.resistance_flags & FIRE_PROOF)
-				O.resistance_flags &= ~FIRE_PROOF
-			if(O.armor.fire > 50) //obj with 100% fire armor still get slowly burned away.
-				O.armor = O.armor.setRating(fire = 50)
-			O.fire_act(temperature_damage, 1000 * delta_time)
-			if(istype(O, /obj/structure/closet))
-				var/obj/structure/closet/C = O
-				for(var/I in C.contents)
-					burn_stuff(I)
-		else if (isliving(thing))
-			. = 1
-			var/mob/living/L = thing
-			if(L.movement_type & FLYING)
-				continue //YOU'RE FLYING OVER IT
-			var/buckle_check = L.buckled
-			if(isobj(buckle_check))
-				var/obj/O = buckle_check
-				if(O.resistance_flags & LAVA_PROOF)
+			if(!(burn_obj.resistance_flags & FLAMMABLE))
+				burn_obj.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
+			if(burn_obj.resistance_flags & FIRE_PROOF)
+				burn_obj.resistance_flags &= ~FIRE_PROOF
+			if(burn_obj.armor.fire > 50) //obj with 100% fire armor still get slowly burned away.
+				burn_obj.armor = burn_obj.armor.setRating(fire = 50)
+			burn_obj.fire_act(temperature_damage, 1000 * delta_time)
+			if(istype(burn_obj, /obj/structure/closet))
+				var/obj/structure/closet/burn_closet = burn_obj
+				for(var/burn_content in burn_closet.contents)
+					burn_stuff(burn_content)
+		else if (isliving(burn_target))
+			. = TRUE
+			var/mob/living/burn_living = burn_target
+			var/atom/movable/burn_buckled = burn_living.buckled
+			if(burn_buckled)
+				if(burn_buckled.movement_type & (FLYING|FLOATING) || burn_buckled.throwing)
 					continue
-			else if(isliving(buckle_check))
-				var/mob/living/live = buckle_check
-				if(WEATHER_LAVA in live.weather_immunities)
-					continue
+				if(isobj(burn_buckled))
+					var/obj/burn_buckled_obj = burn_buckled
+					if(burn_buckled_obj.resistance_flags & LAVA_PROOF)
+						continue
+				else if(isliving(burn_buckled))
+					var/mob/living/burn_buckled_live = burn_buckled
+					if(WEATHER_LAVA in burn_buckled_live.weather_immunities)
+						continue
 
-			if(iscarbon(L))
-				var/mob/living/carbon/C = L
-				var/obj/item/clothing/S = C.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-				var/obj/item/clothing/H = C.get_item_by_slot(ITEM_SLOT_HEAD)
+			if(iscarbon(burn_living))
+				var/mob/living/carbon/burn_carbon = burn_living
+				var/obj/item/clothing/burn_suit = burn_carbon.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+				var/obj/item/clothing/burn_helmet = burn_carbon.get_item_by_slot(ITEM_SLOT_HEAD)
 
-				if(S && H && S.clothing_flags & LAVAPROTECT && H.clothing_flags & LAVAPROTECT)
+				if(burn_suit?.clothing_flags & LAVAPROTECT && burn_helmet?.clothing_flags & LAVAPROTECT)
 					return
 
-			if(WEATHER_LAVA in L.weather_immunities)
+			if(WEATHER_LAVA in burn_living.weather_immunities)
 				continue
 
-			ADD_TRAIT(L, TRAIT_PERMANENTLY_ONFIRE,TURF_TRAIT)
-			L.update_fire()
+			ADD_TRAIT(burn_living, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+			burn_living.update_fire()
 
-			L.adjustFireLoss(lava_damage * delta_time)
-			if(L) //mobs turning into object corpses could get deleted here.
-				L.adjust_fire_stacks(lava_firestacks * delta_time)
-				L.IgniteMob()
+			burn_living.adjustFireLoss(lava_damage * delta_time)
+			if(burn_living) //mobs turning into object corpses could get deleted here.
+				burn_living.adjust_fire_stacks(lava_firestacks * delta_time)
+				burn_living.IgniteMob()
 
 /turf/open/lava/smooth
 	name = "lava"
