@@ -3,6 +3,7 @@ import { Box, Button, Divider, Icon, Section, Stack, Tooltip } from "../../compo
 import { CharacterPreview } from "./CharacterPreview";
 import { createSetPreference, Food, PreferencesMenuData, ServerData, ServerSpeciesData } from "./data";
 import { Feature, Species, fallbackSpecies } from "./preferences/species/base";
+import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
 
 const requireSpecies = require.context("./preferences/species");
 
@@ -320,6 +321,16 @@ const SpeciesPageInner = (props: {
   );
 };
 
-export const SpeciesPage = (props, context) => {
-  return (<b>MOTHBLOCKS TODO: SpeciesPage</b>);
+export const SpeciesPage = () => {
+  return (
+    <ServerPreferencesFetcher
+      render={serverData => {
+        if (serverData) {
+          return <SpeciesPageInner species={serverData.species} />;
+        } else {
+          return <Box>Loading species...</Box>;
+        }
+      }}
+    />
+  );
 };
