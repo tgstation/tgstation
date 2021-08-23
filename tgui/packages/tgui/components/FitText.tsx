@@ -1,5 +1,7 @@
 import { Component, createRef, RefObject } from "inferno";
 
+const DEFAULT_ACCEPTABLE_DIFFERENCE = 5;
+
 export class FitText extends Component<{
   acceptableDifference?: number,
   maxWidth: number,
@@ -8,19 +10,13 @@ export class FitText extends Component<{
 }, {
   fontSize: number,
 }> {
-  ref: RefObject<HTMLDivElement> = createRef()
-
-  static defaultProps = {
-    acceptableDifference: 5,
-    native: {},
+  ref: RefObject<HTMLDivElement> = createRef();
+  state = {
+    fontSize: 0,
   }
 
   constructor() {
     super();
-
-    this.state = {
-      fontSize: 0,
-    };
 
     this.resize = this.resize.bind(this);
 
@@ -56,7 +52,10 @@ export class FitText extends Component<{
 
       if (difference > 0) {
         end = middle;
-      } else if (difference < this.props.acceptableDifference) {
+      } else if (
+        difference
+          < (this.props.acceptableDifference ?? DEFAULT_ACCEPTABLE_DIFFERENCE)
+      ) {
         start = middle;
       } else {
         break;
@@ -79,7 +78,7 @@ export class FitText extends Component<{
         style={{
           "font-size": `${this.state.fontSize}px`,
           ...(
-            typeof this.props.native.style === "object"
+            typeof this.props.native?.style === "object"
             && this.props.native.style
           ),
         }}>

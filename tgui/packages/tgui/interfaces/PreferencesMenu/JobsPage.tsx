@@ -74,7 +74,7 @@ const PriorityButton = (props: {
   );
 };
 
-type CreateSetPriority = (priority: JobPriority) => () => void;
+type CreateSetPriority = (priority: JobPriority | null) => () => void;
 
 const createSetPriorityCache: Record<string, CreateSetPriority> = {};
 
@@ -84,11 +84,12 @@ const createCreateSetPriorityFromName
       return createSetPriorityCache[jobName];
     }
 
-    const perPriorityCache = [];
+    const perPriorityCache: Map<JobPriority | null, () => void> = new Map();
 
-    const createSetPriority = (priority: JobPriority) => {
-      if (perPriorityCache[priority] !== undefined) {
-        return perPriorityCache[priority];
+    const createSetPriority = (priority: JobPriority | null) => {
+      const existingCallback = perPriorityCache.get(priority);
+      if (existingCallback !== undefined) {
+        return existingCallback;
       }
 
       const setPriority = () => {
@@ -100,7 +101,7 @@ const createCreateSetPriorityFromName
         });
       };
 
-      perPriorityCache[priority] = setPriority;
+      perPriorityCache.set(priority, setPriority);
       return setPriority;
     };
 
@@ -212,6 +213,16 @@ export const Department = (props: {
   const { department, name } = props;
   const jobs = jobsByDepartment.get(department);
   const className = `PreferencesMenu__Jobs__departments--${name}`;
+
+  if (!jobs) {
+    return (
+      <Stack.Item>
+        <Box as="b" color="red">
+          ERROR: Department {name} could not be found!
+        </Box>
+      </Stack.Item>
+    );
+  }
 
   return (
     <Stack.Item>

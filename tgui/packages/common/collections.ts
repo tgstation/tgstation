@@ -246,7 +246,7 @@ export const zipWith = <T, U>(iterateeFn: (...values: T[]) => U) =>
   };
 
 // MOTHBLOCKS TODO: This isn't binary insert at all, just sorted insert
-export const binaryInsertWith = <T, U>(getKey: (value: T) => U):
+export const binaryInsertWith = <T, U = unknown>(getKey: (value: T) => U):
   ((collection: readonly T[], value: T) => T[]) =>
 {
   return (collection, value) => {

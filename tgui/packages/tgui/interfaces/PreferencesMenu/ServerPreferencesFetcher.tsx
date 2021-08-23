@@ -10,13 +10,9 @@ export class ServerPreferencesFetcher extends Component<{
 }, {
   serverData?: ServerData;
 }> {
-  constructor() {
-    super();
-
-    this.state = {
-      serverData: undefined,
-    };
-  }
+  state = {
+    serverData: undefined,
+  };
 
   componentDidMount() {
     this.populateServerData();

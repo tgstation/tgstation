@@ -27,8 +27,8 @@ for (const antagKey of requireAntag.keys()) {
     binaryInsertAntag(
       antagsByCategory.get(antag.category) || [],
       {
-        key: antagKey,
         ...antag,
+        key: antagKey,
       },
     )
   );
@@ -168,17 +168,17 @@ export const AntagsPage = () => {
     <Box className="PreferencesMenu__Antags">
       <AntagSelection
         name="Roundstart"
-        antagonists={antagsByCategory.get(Category.Roundstart)}
+        antagonists={antagsByCategory.get(Category.Roundstart)!}
       />
 
       <AntagSelection
         name="Midround"
-        antagonists={antagsByCategory.get(Category.Midround)}
+        antagonists={antagsByCategory.get(Category.Midround)!}
       />
 
       <AntagSelection
         name="Latejoin"
-        antagonists={antagsByCategory.get(Category.Latejoin)}
+        antagonists={antagsByCategory.get(Category.Latejoin)!}
       />
     </Box>
   );

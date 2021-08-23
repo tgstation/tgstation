@@ -35,11 +35,17 @@ export class TabbedMenu extends Component<TabbedMenuProps> {
                       const offsetTop = this.categoryRefs[category]
                         .current?.offsetTop;
 
-                      if (!this.sectionRef.current) {
+                      if (offsetTop === undefined) {
                         return;
                       }
 
-                      this.sectionRef.current.scrollTop = offsetTop;
+                      const currentSection = this.sectionRef.current;
+
+                      if (!currentSection) {
+                        return;
+                      }
+
+                      currentSection.scrollTop = offsetTop;
                     }}
                   >
                     {category}

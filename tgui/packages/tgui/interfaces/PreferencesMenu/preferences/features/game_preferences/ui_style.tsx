@@ -1,5 +1,5 @@
 import { classes } from "common/react";
-import { createDropdownInput, createNumberInput, Feature } from "../base";
+import { createDropdownInput, Feature } from "../base";
 import { Box, Button, Dropdown, Flex, NumberInput, Stack } from "../../../../../components";
 import { AssetWithIcon } from "../../../data";
 

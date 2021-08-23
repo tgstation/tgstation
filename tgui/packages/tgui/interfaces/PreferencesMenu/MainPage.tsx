@@ -174,7 +174,8 @@ const NameInput = (props: {
   handleUpdateName: (name: string) => void,
   name: string,
 }, context) => {
-  const [lastNameBeforeEdit, setLastNameBeforeEdit] = useLocalState(context, "lastNameBeforeEdit", null);
+  const [lastNameBeforeEdit, setLastNameBeforeEdit]
+    = useLocalState<string | null>(context, "lastNameBeforeEdit", null);
   const editing = lastNameBeforeEdit === props.name;
 
   const updateName = (e, value) => {
@@ -285,7 +286,8 @@ export const MainPage = (props: {
   openSpecies: () => void,
 }, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
-  const [currentClothingMenu, setCurrentClothingMenu] = useLocalState(context, "currentClothingMenu", null);
+  const [currentClothingMenu, setCurrentClothingMenu]
+    = useLocalState<string | null>(context, "currentClothingMenu", null);
 
   const requestPreferenceData = (key: string) => {
     act("request_values", {
@@ -348,6 +350,10 @@ export const MainPage = (props: {
                   ...Object.entries(data.character_preferences.clothing),
                   ...Object.entries(data.character_preferences.features)
                     .filter(([featureName]) => {
+                      if (!currentSpeciesData) {
+                        return false;
+                      }
+
                       return currentSpeciesData.enabled_features
                         .indexOf(featureName.split("feature_")[1]) !== -1;
                     }),
@@ -408,6 +414,10 @@ export const MainPage = (props: {
                 Object.fromEntries(
                   Object.entries(data.character_preferences.secondary_features)
                     .filter(([feature]) => {
+                      if (!currentSpeciesData) {
+                        return false;
+                      }
+
                       return currentSpeciesData.enabled_features
                         .indexOf(feature) !== -1;
                     }))

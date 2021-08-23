@@ -112,7 +112,7 @@ const KeybindingButton = (props: {
     </Button>
   );
 
-  if (props.typingHotkey) {
+  if (props.typingHotkey && props.onClick) {
     return (
       // props.onClick will cancel it
       <TrackOutsideClicks onOutsideClick={props.onClick}>
@@ -149,15 +149,15 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
   keybindingOnClicks: Record<string, (() => void)[]> = {};
   lastKeybinds?: PreferencesMenuData["keybindings"];
 
+  state: KeybindingsPageState = {
+    lastKeyboardEvent: undefined,
+    keybindings: undefined,
+    selectedKeybindings: undefined,
+    rebindingHotkey: undefined,
+  };
+
   constructor() {
     super();
-
-    this.state = {
-      lastKeyboardEvent: null,
-      keybindings: null,
-      selectedKeybindings: null,
-      rebindingHotkey: null,
-    };
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
@@ -187,16 +187,22 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
         return state;
       }
 
+      if (!state.rebindingHotkey) {
+        return state;
+      }
+
       selectedKeybindings = { ...selectedKeybindings };
 
       const [keybindName, slot] = state.rebindingHotkey;
 
       if (selectedKeybindings[keybindName]) {
-        selectedKeybindings[keybindName][slot] = value;
-        selectedKeybindings[keybindName] = selectedKeybindings[keybindName]
-          .filter(value => !!value);
+        if (value) {
+          selectedKeybindings[keybindName][slot] = value;
+        } else {
+          selectedKeybindings[keybindName].splice(slot, 1);
+        }
       } else if (!value) {
-        return;
+        return state;
       } else {
         selectedKeybindings[keybindName] = [value];
       }
@@ -207,8 +213,8 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
       });
 
       return {
-        lastKeyboardEvent: null,
-        rebindingHotkey: null,
+        lastKeyboardEvent: undefined,
+        rebindingHotkey: undefined,
         selectedKeybindings,
       };
     });
@@ -241,7 +247,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
 
   handleKeyUp(keyEvent: KeyEvent) {
     if (this.cancelNextKeyUp === keyEvent.code) {
-      this.cancelNextKeyUp = null;
+      this.cancelNextKeyUp = undefined;
       keyEvent.event.preventDefault();
     }
   }
@@ -256,15 +262,15 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
 
     if (!this.keybindingOnClicks[keybindingId][slot]) {
       this.keybindingOnClicks[keybindingId][slot] = () => {
-        if (this.state.rebindingHotkey === null) {
+        if (this.state.rebindingHotkey === undefined) {
           this.setState({
-            lastKeyboardEvent: null,
+            lastKeyboardEvent: undefined,
             rebindingHotkey: [keybindingId, slot],
           });
         } else {
           this.setState({
-            lastKeyboardEvent: null,
-            rebindingHotkey: null,
+            lastKeyboardEvent: undefined,
+            rebindingHotkey: undefined,
           });
         }
       };
@@ -273,22 +279,24 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     return this.keybindingOnClicks[keybindingId][slot];
   }
 
-  getTypingHotkey(keybindingId: string, slot: number): string | null {
-    if (!this.state.rebindingHotkey) {
-      return null;
+  getTypingHotkey(keybindingId: string, slot: number): string | undefined {
+    const { lastKeyboardEvent, rebindingHotkey } = this.state;
+
+    if (!rebindingHotkey) {
+      return undefined;
     }
 
-    if (this.state.rebindingHotkey[0] !== keybindingId
-        || this.state.rebindingHotkey[1] !== slot
+    if (rebindingHotkey[0] !== keybindingId
+        || rebindingHotkey[1] !== slot
     ) {
-      return null;
+      return undefined;
     }
 
-    if (this.state.lastKeyboardEvent === null) {
+    if (lastKeyboardEvent === undefined) {
       return "...";
     }
 
-    return formatKeyboardEvent(this.state.lastKeyboardEvent);
+    return formatKeyboardEvent(lastKeyboardEvent);
   }
 
   async populateKeybindings() {
@@ -344,8 +352,8 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
                   {sortKeybindings(Object.entries(keybindings)).map(
                     ([keybindingId, keybinding]) => {
                       const keys
-                            = this.state.selectedKeybindings[keybindingId]
-                              || [];
+                        = this.state.selectedKeybindings![keybindingId]
+                          || [];
 
                       let name = (
                         <Stack.Item basis="25%">

@@ -137,15 +137,11 @@ const StatDisplay: StatelessComponent<{}> = (props) => {
 };
 
 export class QuirksPage extends Component<{}, QuirksPageState> {
-  constructor() {
-    super();
-
-    this.state = {
-      maxPositiveQuirks: 0,
-      quirkBlacklist: [],
-      quirkInfo: null,
-      selectedQuirks: [],
-    };
+  state: QuirksPageState = {
+    maxPositiveQuirks: 0,
+    quirkBlacklist: [],
+    quirkInfo: undefined,
+    selectedQuirks: [],
   }
 
   componentDidMount() {
@@ -174,12 +170,13 @@ export class QuirksPage extends Component<{}, QuirksPageState> {
 
   render() {
     const { act } = useBackend<PreferencesMenuData>(this.context);
+    const { quirkInfo } = this.state;
 
-    if (!this.state.quirkInfo) {
+    if (!quirkInfo) {
       return <Box>Loading quirks...</Box>;
     }
 
-    const quirks = Object.entries(this.state.quirkInfo);
+    const quirks = Object.entries(quirkInfo);
     quirks.sort(([_, quirkA], [__, quirkB]) => {
       if (quirkA.value === quirkB.value) {
         return (quirkA.name > quirkB.name) ? 1 : -1;
@@ -192,7 +189,7 @@ export class QuirksPage extends Component<{}, QuirksPageState> {
     let positiveQuirks = 0;
 
     for (const selectedQuirkName of this.state.selectedQuirks) {
-      const selectedQuirk = this.state.quirkInfo[selectedQuirkName];
+      const selectedQuirk = quirkInfo[selectedQuirkName];
       if (!selectedQuirk) {
         continue;
       }
@@ -205,7 +202,7 @@ export class QuirksPage extends Component<{}, QuirksPageState> {
     }
 
     const getReasonToNotAdd = (quirkName: string) => {
-      const quirk = this.state.quirkInfo[quirkName];
+      const quirk = quirkInfo[quirkName];
 
       if (
         quirk.value > 0
@@ -218,7 +215,7 @@ export class QuirksPage extends Component<{}, QuirksPageState> {
       }
 
       const selectedQuirks = this.state.selectedQuirks.map(quirkKey => {
-        return this.state.quirkInfo[quirkKey].name;
+        return quirkInfo[quirkKey].name;
       });
 
       for (const blacklist of this.state.quirkBlacklist) {
@@ -236,17 +233,17 @@ export class QuirksPage extends Component<{}, QuirksPageState> {
         }
       }
 
-      return null;
+      return undefined;
     };
 
     const getReasonToNotRemove = (quirkName: string) => {
-      const quirk = this.state.quirkInfo[quirkName];
+      const quirk = quirkInfo[quirkName];
 
       if (balance - quirk.value > 0) {
         return "You need to remove a negative quirk first!";
       }
 
-      return null;
+      return undefined;
     };
 
     return (
@@ -274,7 +271,7 @@ export class QuirksPage extends Component<{}, QuirksPageState> {
             <Stack.Item grow width="100%">
               <QuirkList
                 onClick={(quirkName, quirk) => {
-                  if (getReasonToNotAdd(quirkName) !== null) {
+                  if (getReasonToNotAdd(quirkName) !== undefined) {
                     return;
                   }
 
@@ -331,7 +328,7 @@ export class QuirksPage extends Component<{}, QuirksPageState> {
             <Stack.Item grow width="100%">
               <QuirkList
                 onClick={(quirkName, quirk) => {
-                  if (getReasonToNotRemove(quirkName) !== null) {
+                  if (getReasonToNotRemove(quirkName) !== undefined) {
                     return;
                   }
 
