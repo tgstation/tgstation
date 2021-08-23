@@ -28,11 +28,11 @@
 		var/random_number_in_range =  rand(1, total_choices_length)
 
 		if(random_number_in_range <= audible_emotes_length)
-			controller.AddBehavior(/datum/ai_behavior/perform_emote, pick(emote_hear))
+			controller.queue_behavior(/datum/ai_behavior/perform_emote, pick(emote_hear))
 		else if(random_number_in_range <= (audible_emotes_length + non_audible_emotes_length))
-			controller.AddBehavior(/datum/ai_behavior/perform_emote, pick(emote_see))
+			controller.queue_behavior(/datum/ai_behavior/perform_emote, pick(emote_see))
 		else
-			controller.AddBehavior(/datum/ai_behavior/perform_speech, pick(speak))
+			controller.queue_behavior(/datum/ai_behavior/perform_speech, pick(speak))
 
 /datum/ai_planning_subtree/random_speech/cockroach
 	speech_chance = 5

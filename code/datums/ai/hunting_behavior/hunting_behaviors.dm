@@ -11,9 +11,9 @@
 		return
 	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	if(!target || QDELETED(target))
-		controller.AddBehavior(/datum/ai_behavior/find_hunt_target, BB_CURRENT_HUNTING_TARGET, hunt_targets)
+		controller.queue_behavior(/datum/ai_behavior/find_hunt_target, BB_CURRENT_HUNTING_TARGET, hunt_targets)
 	else
-		controller.AddBehavior(/datum/ai_behavior/hunt_target, BB_CURRENT_HUNTING_TARGET, BB_HUNTING_COOLDOWN)
+		controller.queue_behavior(/datum/ai_behavior/hunt_target, BB_CURRENT_HUNTING_TARGET, BB_HUNTING_COOLDOWN)
 		return SUBTREE_RETURN_FINISH_PLANNING //If we're hunting we're too busy for anything else
 
 
