@@ -19,14 +19,14 @@ type TooltipState = {
 export class Tooltip extends Component<TooltipProps, TooltipState> {
   tooltipRef: RefObject<HTMLDivElement> = createRef();
   unsetHoverTimeout?: NodeJS.Timeout;
+    
+  state = {
+    hovered: false,
+    renderInner: false,
+  }
 
   constructor() {
     super();
-
-    this.state = {
-      hovered: false,
-      renderInner: false,
-    };
 
     this.onHover = this.onHover.bind(this);
     this.onUnhover = this.onUnhover.bind(this);
@@ -71,6 +71,10 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
     // Because this component is written in TypeScript, we will know
     // immediately if this internal variable is removed.
     const domNode = findDOMfromVNode(this.$LI, true);
+      
+    if (!domNode) {
+      return;
+    }
 
     domNode.addEventListener("mouseenter", this.onHover);
     domNode.addEventListener("mouseleave", this.onUnhover);
