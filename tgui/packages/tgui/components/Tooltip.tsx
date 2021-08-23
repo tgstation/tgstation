@@ -71,7 +71,6 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
     // Because this component is written in TypeScript, we will know
     // immediately if this internal variable is removed.
     const domNode = findDOMfromVNode(this.$LI, true);
-      
     if (!domNode) {
       return;
     }
