@@ -430,7 +430,7 @@
 /obj/item/stack/proc/can_merge(obj/item/stack/check)
 	if(!istype(check, merge_type))
 		return FALSE
-	if(mats_per_unit != check.mats_per_unit)
+	if(mats_per_unit ~! check.mats_per_unit)
 		return FALSE
 	if(is_cyborg) // No merging cyborg stacks into other stacks
 		return FALSE
@@ -453,6 +453,10 @@
 	if(target_stack == src)
 		CRASH("Stack attempted to merge into itself.")
 
+	if(target_stack.mats_per_unit != src.mats_per_unit)
+		var/M
+		for(M = 1, M <= target_stack.mats_per_unit, M++)
+			target_stack.mats_per_unit[target_stack.mats_per_unit[M]] = (target_stack.mats_per_unit[target_stack.mats_per_unit[M]] * target_stack.amount + src.mats_per_unit[src.mats_per_unit[M]] * src.amount) / (target_stack.amount + src.amount)
 	var/transfer = get_amount()
 	if(target_stack.is_cyborg)
 		transfer = min(transfer, round((target_stack.source.max_energy - target_stack.source.energy) / target_stack.cost))
