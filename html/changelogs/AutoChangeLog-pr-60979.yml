@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "The HFR now places its side components in the correct orientation when constructed by using a Multitool on the rapid HFR boxes. The core still needs rotating if your design requires it, and is best done before you step away unless you want to disassemble and move a side component."

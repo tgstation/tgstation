@@ -14,7 +14,7 @@
 /obj/item/clothing/head/helmet/thunderdome/holosuit,
 /obj/item/clothing/suit/armor/tdome/holosuit/green,
 /obj/item/clothing/under/color/green,
-/obj/item/holo/esword/green,
+/obj/item/melee/energy/sword/holographic/green,
 /turf/open/floor/holofloor/basalt,
 /area/template_noop)
 "q" = (
@@ -22,7 +22,7 @@
 /obj/item/clothing/head/helmet/thunderdome/holosuit,
 /obj/item/clothing/suit/armor/tdome/holosuit/red,
 /obj/item/clothing/under/color/red,
-/obj/item/holo/esword/red,
+/obj/item/melee/energy/sword/holographic/red,
 /turf/open/floor/holofloor/basalt,
 /area/template_noop)
 "x" = (

@@ -682,6 +682,14 @@
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stack/sheet/glass = 1)
 
+/obj/item/circuitboard/machine/chem_mass_spec
+	name = "High-Performance Liquid Chromatography (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
+	build_path = /obj/machinery/chem_mass_spec
+	req_components = list(
+	/obj/item/stock_parts/micro_laser = 1,
+	/obj/item/stack/cable_coil = 5)
+
 /obj/item/circuitboard/machine/chem_master
 	name = "ChemMaster 3000 (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL

@@ -45712,7 +45712,7 @@
 /area/engineering/main)
 "rmX" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "rmZ" = (

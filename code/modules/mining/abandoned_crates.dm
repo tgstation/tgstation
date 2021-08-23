@@ -196,7 +196,7 @@
 		if(88)
 			new /obj/item/reagent_containers/food/drinks/bottle/lizardwine(src)
 		if(89)
-			new /obj/item/melee/transforming/energy/sword/bananium(src)
+			new /obj/item/melee/energy/sword/bananium(src)
 		if(90)
 			new /obj/item/dnainjector/wackymut(src)
 		if(91)

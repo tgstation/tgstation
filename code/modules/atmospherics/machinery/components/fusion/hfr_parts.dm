@@ -483,7 +483,7 @@
 			continue
 		if(box.box_type == "body")
 			if(direction in GLOB.cardinals)
-				box.dir = DIRFLIP(direction)
+				box.dir = direction
 				parts |= box
 			continue
 	if(parts.len == 8)
