@@ -4456,7 +4456,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jx" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1

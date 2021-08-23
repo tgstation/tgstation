@@ -42952,7 +42952,7 @@
 	pixel_x = -6;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	desc = "Whatever it is, it reeks of foul, putrid froth.";
 	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing = 15);
 	name = "Delta-Down";
