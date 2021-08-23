@@ -3,10 +3,7 @@
  *
  * Used for broken glass, cactuses and four sided dice.
  */
-/datum/element/caltrop
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
-	id_arg_index = 2
-
+/datum/component/caltrop
 	///Minimum damage done when crossed
 	var/min_damage
 
@@ -27,10 +24,11 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 
-/datum/element/caltrop/Attach(datum/target, min_damage = 0, max_damage = 0, probability = 100, flags = NONE, soundfile = null)
+
+/datum/component/caltrop/Initialize(min_damage = 0, max_damage = 0, probability = 100, flags = NONE, soundfile = null)
 	. = ..()
-	if(!isatom(target))
-		return ELEMENT_INCOMPATIBLE
+	if(!isatom(parent))
+		return COMPONENT_INCOMPATIBLE
 
 	src.min_damage = min_damage
 	src.max_damage = max(min_damage, max_damage)
@@ -38,12 +36,12 @@
 	src.flags = flags
 	src.soundfile = soundfile
 
-	if(ismovable(target))
-		AddElement(/datum/element/connect_loc_behalf, target, crossed_connections)
+	if(ismovable(parent))
+		AddComponent(/datum/component/connect_loc_behalf, parent, crossed_connections)
 	else
-		RegisterSignal(get_turf(target), COMSIG_ATOM_ENTERED, .proc/on_entered)
+		RegisterSignal(get_turf(parent), COMSIG_ATOM_ENTERED, .proc/on_entered)
 
-/datum/element/caltrop/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/datum/component/caltrop/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
 	if(!prob(probability))
@@ -102,7 +100,6 @@
 		return
 	playsound(H, soundfile, 15, TRUE, -3)
 
-/datum/element/caltrop/Detach(datum/target)
-	. = ..()
-	if(ismovable(target))
-		RemoveElement(/datum/element/connect_loc_behalf, target, crossed_connections)
+/datum/component/caltrop/UnregisterFromParent()
+	if(ismovable(parent))
+		qdel(GetComponent(/datum/component/connect_loc_behalf))

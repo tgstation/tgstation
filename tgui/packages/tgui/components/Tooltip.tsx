@@ -16,13 +16,9 @@ type TooltipState = {
 };
 
 export class Tooltip extends Component<TooltipProps, TooltipState> {
-  constructor() {
-    super();
-
-    this.state = {
-      hovered: false,
-    };
-  }
+  state = {
+    hovered: false,
+  };
 
   componentDidMount() {
     // HACK: We don't want to create a wrapper, as it could break the layout
@@ -34,6 +30,10 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
     // Because this component is written in TypeScript, we will know
     // immediately if this internal variable is removed.
     const domNode = findDOMfromVNode(this.$LI, true);
+
+    if (!domNode) {
+      return;
+    }
 
     domNode.addEventListener("mouseenter", () => {
       this.setState({
