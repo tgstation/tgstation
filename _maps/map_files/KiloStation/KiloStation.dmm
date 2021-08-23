@@ -74398,7 +74398,7 @@
 	pixel_x = -6;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	desc = "A station exclusive. Consumption may result in seizures, blindness, drunkenness, or even death.";
 	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 30);
 	name = "Kilo-Kocktail";
