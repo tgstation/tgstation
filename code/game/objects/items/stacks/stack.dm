@@ -464,8 +464,9 @@
 	use(transfer, transfer = TRUE, check = FALSE)
 	target_stack.add(transfer)
 	if(target_stack.mats_per_unit != src.mats_per_unit)
-		for(i=1, i<=target_stack.mats_per_unit, i++)
-			target_stack.mats_per_unit[i] = (target_stack.mats_per_unit[i] * target_stack.amount + src.mats_per_unit[i] * src.amount) / target_stack.amount + src.amount
+		var/M
+		for(M in target_stack.mats_per_unit)
+			target_stack.mats_per_unit[M] = (target_stack.mats_per_unit[M] * target_stack.amount + src.mats_per_unit[M] * src.amount) / target_stack.amount + src.amount
 	return transfer
 
 /**
