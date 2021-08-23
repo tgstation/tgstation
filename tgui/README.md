@@ -43,11 +43,7 @@ However, if you want finer control over the installation or build process, you w
   - `bin/tgui-dev --reload` - Reload byond cache once.
   - `bin/tgui-dev --debug` - Run server with debug logging enabled.
   - `bin/tgui-dev --no-hot` - Disable hot module replacement (helps when doing development on IE8).
-- `bin/tgui-lint` - Show (and auto-fix) problems with the code.
 - `bin/tgui-sonar` - Analyze code with SonarQube.
-- `bin/tgui-test` - Run unit and integration tests.
-- `bin/tgui-analyze` - Run a bundle analyzer.
-- `bin/tgui-clean` - Clean up tgui folder.
 
 > To open a CMD or PowerShell window in any open folder, right click **while holding Shift** on any free space in the folder, then click on either `Open command window here` or `Open PowerShell window here`.
 
@@ -70,6 +66,8 @@ However, if you want finer control over the installation or build process, you w
 > ```
 
 **Via Yarn (cross-platform)**:
+
+Run `yarn install` once to install tgui dependencies.
 
 - `yarn tgui:build` - Build tgui in production mode.
   - `yarn tgui:build [options]` - Build tgui with custom webpack options.
