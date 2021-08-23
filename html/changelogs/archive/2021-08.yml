@@ -525,3 +525,10 @@
       a runtime error
   Watermelon914:
   - admin: Adds component removals and mass component removals to the VV menu.
+2021-08-23:
+  Timberpoes:
+  - bugfix: Fixed runtime in monkey AI which would prevent monkey from pickpocketing
+      weapons or picking weapons off the ground.
+  vincentiusvin:
+  - bugfix: fixes hot ice igniting using 100x the actual number of the sheets
+  - bugfix: fixes hot ice being ignitable with a condenser
