@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - refactor: "Various toggle/transforming items (energy swords / shields, the cleaving saw, switchblades - to name a few) are now handled via component (the transforming component)."
+  - code_imp: "Slightly cleaned up the code surrounding various transforming items. Comments, better vars, etc."
+  - bugfix: "The Syndicate Jaws of Life no longer become normal Jaws of Life on use"

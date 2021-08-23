@@ -474,7 +474,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 					break
 			if(dense_object)
 				continue
-			new /obj/item/reagent_containers/food/drinks/beer/almost_empty(turf_to_spawn_on)
+			new /obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty(turf_to_spawn_on)
 
 ///Spawns the mob with some drugginess/drunkeness, and some disgust.
 /obj/effect/landmark/start/hangover/proc/make_hungover(mob/hangover_mob)
@@ -490,19 +490,19 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	if(spawned_carbon.head)
 		return
 
-/obj/effect/landmark/start/hangover/JoinPlayerHere(mob/M, buckle)
+/obj/effect/landmark/start/hangover/JoinPlayerHere(mob/joining_mob, buckle)
 	. = ..()
-	make_hungover(M)
+	make_hungover(joining_mob)
 
 /obj/effect/landmark/start/hangover/closet
 	name = "hangover spawn closet"
 	icon_state = "hangover_spawn_closet"
 
-/obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/M, buckle)
-	make_hungover(M)
+/obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/joining_mob, buckle)
+	make_hungover(joining_mob)
 	for(var/obj/structure/closet/closet in contents)
 		if(closet.opened)
 			continue
-		M.forceMove(closet)
+		joining_mob.forceMove(closet)
 		return
-	..() //Call parent as fallback
+	return ..() //Call parent as fallback

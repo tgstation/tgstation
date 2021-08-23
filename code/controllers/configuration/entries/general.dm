@@ -52,6 +52,9 @@
 
 /datum/config_entry/flag/log_access // log login/logout
 
+/// Config entry which special logging of failed logins under suspicious circumstances.
+/datum/config_entry/flag/log_suspicious_login
+
 /datum/config_entry/flag/log_say // log client say
 
 /datum/config_entry/flag/log_admin // log admin actions

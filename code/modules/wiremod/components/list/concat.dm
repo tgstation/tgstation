@@ -29,11 +29,11 @@
 	if(.)
 		return
 
-	var/seperator = separator.input_value
+	var/seperator = separator.value
 	if(!seperator)
 		return
 
-	var/list/list_input = list_port.input_value
+	var/list/list_input = list_port.value
 	if(!list_input)
 		return
 
