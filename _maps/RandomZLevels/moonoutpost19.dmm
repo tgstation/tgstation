@@ -3321,30 +3321,6 @@
 	icon_state = "platingdmg3"
 	},
 /area/awaymission/moonoutpost19/research)
-"hq" = (
-/obj/structure/closet/secure_closet{
-	icon_state = "rd";
-	name = "research director's locker";
-	req_access_txt = "201"
-	},
-/obj/item/storage/backpack/satchel/tox,
-/obj/item/clothing/gloves/color/latex,
-/turf/open/floor/iron/cafeteria{
-	dir = 5
-	},
-/area/awaymission/moonoutpost19/research)
-"hr" = (
-/obj/structure/table,
-/obj/item/cartridge/signal/toxins,
-/obj/item/cartridge/signal/toxins{
-	pixel_x = -4;
-	pixel_y = 2
-	},
-/obj/machinery/firealarm/directional/north,
-/turf/open/floor/iron/cafeteria{
-	dir = 5
-	},
-/area/awaymission/moonoutpost19/research)
 "hs" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/light/small/broken/directional/north,
@@ -5643,10 +5619,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
-"mB" = (
-/obj/effect/spawner/random/entertainment/arcade,
-/turf/open/floor/iron/dark,
-/area/awaymission/moonoutpost19/arrivals)
 "mC" = (
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/poster/contraband/smoke{
@@ -6439,6 +6411,18 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/main)
+"uB" = (
+/obj/structure/closet/secure_closet{
+	icon_state = "rd";
+	name = "research director's locker";
+	req_access_txt = "201"
+	},
+/obj/item/storage/backpack/satchel/science,
+/obj/item/clothing/gloves/color/latex,
+/turf/open/floor/iron/cafeteria{
+	dir = 5
+	},
+/area/awaymission/moonoutpost19/research)
 "vJ" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -6518,6 +6502,22 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"MB" = (
+/obj/structure/table,
+/obj/item/cartridge/signal/ordnance,
+/obj/item/cartridge/signal/ordnance{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/cafeteria{
+	dir = 5
+	},
+/area/awaymission/moonoutpost19/research)
+"Rc" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/turf/open/floor/iron/dark,
+/area/awaymission/moonoutpost19/arrivals)
 "SE" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/sand/plating,
@@ -33699,7 +33699,7 @@ gz
 eI
 eX
 ea
-hq
+uB
 hB
 hB
 hB
@@ -33956,7 +33956,7 @@ gA
 eJ
 he
 ea
-hr
+MB
 hB
 hC
 hX
@@ -42708,7 +42708,7 @@ la
 lq
 jk
 mj
-mB
+Rc
 hJ
 ba
 ba
@@ -42965,7 +42965,7 @@ jN
 lr
 jj
 mj
-mB
+Rc
 hI
 ba
 ba

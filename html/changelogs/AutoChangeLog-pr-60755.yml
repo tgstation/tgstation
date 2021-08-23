@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes: 
+  - admin: "The add component option in view variables now uses a tgui list that can be searched."

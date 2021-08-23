@@ -195,6 +195,8 @@ Used by the AI doomsday and the self-destruct nuke.
 	turf_reservations = SSmapping.turf_reservations
 	used_turfs = SSmapping.used_turfs
 	holodeck_templates = SSmapping.holodeck_templates
+	transit = SSmapping.transit
+	areas_in_z = SSmapping.areas_in_z
 
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
