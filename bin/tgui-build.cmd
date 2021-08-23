@@ -1,2 +1,2 @@
 @echo off
-call "%~dp0\..\tools\build\build.cmd" --wait-on-error tgui tgui-lint tgui-test %*
+call "%~dp0\..\tools\build\build.bat" --wait-on-error tgui tgui-lint tgui-test %*

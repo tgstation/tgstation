@@ -1,2 +1,2 @@
 @echo off
-call "%~dp0\..\tools\build\build.cmd" --wait-on-error server %*
+call "%~dp0\..\tools\build\build.bat" --wait-on-error server %*
