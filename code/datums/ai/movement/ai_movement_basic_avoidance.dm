@@ -1,41 +1,33 @@
 ///Uses Byond's basic obstacle avoidance mvovement
 /datum/ai_movement/basic_avoidance
-	requires_processing = FALSE
+	requires_processing = TRUE
+	max_pathing_attempts = 10
 
-/datum/ai_movement/basic_avoidance/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
-	. = ..()
+///Put your movement behavior in here!
+/datum/ai_movement/basic_avoidance/process(delta_time)
+	for(var/datum/ai_controller/controller as anything in moving_controllers)
+		if(!COOLDOWN_FINISHED(controller, movement_cooldown))
+			continue
+		COOLDOWN_START(controller, movement_cooldown, controller.movement_delay)
 
-	controller.blackboard[BB_CURRENT_MIN_MOVE_DISTANCE] = min_distance
+		var/atom/movable/movable_pawn = controller.pawn
 
-	var/atom/movable/movable_pawn = controller.pawn
-	RegisterSignal(controller.pawn, COMSIG_LIVING_GET_PULLED, .proc/pause_moving)
-	RegisterSignal(controller.pawn, COMSIG_ATOM_NO_LONGER_PULLED, .proc/resume_moving)
+		var/can_move = TRUE
 
+		if(controller.ai_traits & STOP_MOVING_WHEN_PULLED && movable_pawn.pulledby)
+			can_move = FALSE
 
+		if(!isturf(movable_pawn.loc)) //No moving if not on a turf
+			can_move = FALSE
 
-	if(controller.ai_traits & STOP_MOVING_WHEN_PULLED && movable_pawn.pulledby)
-		return
-	walk_to(controller.pawn, current_movement_target, min_distance, controller.movement_delay)
+		var/current_loc = get_turf(movable_pawn)
 
-/datum/ai_movement/basic_avoidance/stop_moving_towards(datum/ai_controller/controller)
-	. = ..()
-	walk_to(controller.pawn, 0)
-	UnregisterSignal(controller.pawn, COMSIG_LIVING_GET_PULLED)
-	RegisterSignal(controller.pawn, COMSIG_ATOM_NO_LONGER_PULLED)
+		var/turf/target_turf = get_step_towards(movable_pawn, controller.current_movement_target)
 
+		if(!is_type_in_typecache(target_turf, GLOB.dangerous_turfs) && can_move)
+			step_to(movable_pawn, controller.current_movement_target, controller.blackboard[BB_CURRENT_MIN_MOVE_DISTANCE], controller.movement_delay)
 
-/datum/ai_movement/basic_avoidance/proc/pause_moving(datum/source, mob/living/puller)
-	SIGNAL_HANDLER
-
-	var/atom/movable/movable_pawn = source
-	walk_to(movable_pawn, 0)
-
-
-
-/datum/ai_movement/basic_avoidance/proc/resume_moving(datum/source, atom/movable/last_puller)
-	SIGNAL_HANDLER
-
-	var/atom/movable/movable_pawn = source
-	var/datum/ai_controller/controller = movable_pawn.ai_controller
-
-	walk_to(movable_pawn, controller.current_movement_target, controller.blackboard[BB_CURRENT_MIN_MOVE_DISTANCE], controller.movement_delay)
+		if(current_loc == get_turf(movable_pawn)) //Did we even move after trying to move?
+			controller.pathing_attempts++
+			if(controller.pathing_attempts >= max_pathing_attempts)
+				controller.CancelActions()

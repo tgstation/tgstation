@@ -237,7 +237,11 @@ multiple modular subtrees with behaviors
 		return
 	for(var/i in current_behaviors)
 		var/datum/ai_behavior/current_behavior = i
-		current_behavior.finish_action(src, FALSE)
+		var/list/arguments = list(src, FALSE)
+		var/list/stored_arguments = behavior_args[current_behavior.type]
+		if(stored_arguments)
+			arguments += stored_arguments
+		current_behavior.finish_action(arglist(arguments))
 
 /datum/ai_controller/proc/on_sentience_gained()
 	SIGNAL_HANDLER

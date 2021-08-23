@@ -26,10 +26,10 @@
 		basic_mob.melee_attack(target)
 
 
-/datum/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
 	if(!succeeded)
-		controller.blackboard[target_key] = null
+		controller.blackboard -= target_key
 
 /datum/ai_behavior/basic_ranged_attack
 	action_cooldown = 0.6 SECONDS
@@ -61,7 +61,7 @@
 	else
 		basic_mob.RangedAttack(target)
 
-/datum/ai_behavior/basic_ranged_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, hiding_location_key)
+/datum/ai_behavior/basic_ranged_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
 	if(!succeeded)
-		controller.blackboard[target_key] = null
+		controller.blackboard -= target_key
