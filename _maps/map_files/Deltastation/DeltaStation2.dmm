@@ -42271,7 +42271,7 @@
 	name = "---Merge conflict marker---"
 	},
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
