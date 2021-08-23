@@ -88,18 +88,21 @@ export const DreamMaker = async (dmeFile, options = {}) => {
   // Compile
   const { defines } = options;
   if (defines && defines.length > 0) {
-    const injectedContent = defines
-      .map(x => `#define ${x}\n`)
-      .join('');
-    fs.writeFileSync(`${dmeBaseName}.m.dme`, injectedContent);
-    const dmeContent = fs.readFileSync(`${dmeBaseName}.dme`);
-    fs.appendFileSync(`${dmeBaseName}.m.dme`, dmeContent);
-    await Juke.exec(dmPath, [`${dmeBaseName}.m.dme`]);
-    fs.writeFileSync(`${dmeBaseName}.dmb`, fs.readFileSync(`${dmeBaseName}.m.dmb`));
-    fs.writeFileSync(`${dmeBaseName}.rsc`, fs.readFileSync(`${dmeBaseName}.m.rsc`));
-    fs.unlinkSync(`${dmeBaseName}.m.dmb`);
-    fs.unlinkSync(`${dmeBaseName}.m.rsc`);
-    fs.unlinkSync(`${dmeBaseName}.m.dme`);
+    Juke.logger.info('Using defines:', defines.join(', '));
+    try {
+      const injectedContent = defines
+        .map(x => `#define ${x}\n`)
+        .join('');
+      fs.writeFileSync(`${dmeBaseName}.m.dme`, injectedContent);
+      const dmeContent = fs.readFileSync(`${dmeBaseName}.dme`);
+      fs.appendFileSync(`${dmeBaseName}.m.dme`, dmeContent);
+      await Juke.exec(dmPath, [`${dmeBaseName}.m.dme`]);
+      fs.writeFileSync(`${dmeBaseName}.dmb`, fs.readFileSync(`${dmeBaseName}.m.dmb`));
+      fs.writeFileSync(`${dmeBaseName}.rsc`, fs.readFileSync(`${dmeBaseName}.m.rsc`));
+    }
+    finally {
+      Juke.rm(`${dmeBaseName}.m.*`);
+    }
   }
   else {
     await Juke.exec(dmPath, [dmeFile]);
