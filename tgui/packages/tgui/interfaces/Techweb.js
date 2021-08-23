@@ -720,10 +720,8 @@ const TechNode = (props, context) => {
           <Button
             key={id}
             className={`${design_cache[k].class} Techweb__DesignIcon`}
-            // Uncomment these only when tooltip performance is improved.
-            // Reason for removal: Causes massive performance decreases
-            // tooltip={design_cache[k].name}
-            // tooltipPosition={i % 15 < 7 ? "right" : "left"}
+            tooltip={design_cache[k].name}
+            tooltipPosition={i % 15 < 7 ? "right" : "left"}
           />
         ))}
       </Box>

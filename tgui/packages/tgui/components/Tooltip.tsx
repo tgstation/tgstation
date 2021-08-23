@@ -1,9 +1,9 @@
 
 import { Placement } from '@popperjs/core';
-import { Component, findDOMfromVNode, InfernoNode } from 'inferno';
+import { Component, createRef, findDOMfromVNode, InfernoNode, RefObject } from 'inferno';
 import { Popper } from "./Popper";
 
-const DEFAULT_PLACEMENT = "top";
+const TOOLTIP_UNRENDER_TIME = 200;
 
 type TooltipProps = {
   children?: InfernoNode;
@@ -13,15 +13,52 @@ type TooltipProps = {
 
 type TooltipState = {
   hovered: boolean;
+  renderInner: boolean;
 };
 
 export class Tooltip extends Component<TooltipProps, TooltipState> {
+  tooltipRef: RefObject<HTMLDivElement> = createRef();
+  unsetHoverTimeout?: NodeJS.Timeout;
+
   constructor() {
     super();
 
     this.state = {
       hovered: false,
+      renderInner: false,
     };
+
+    this.onHover = this.onHover.bind(this);
+    this.onUnhover = this.onUnhover.bind(this);
+  }
+
+  onHover() {
+    this.setState({
+      hovered: true,
+      renderInner: true,
+    });
+
+    if (this.unsetHoverTimeout) {
+      clearTimeout(this.unsetHoverTimeout);
+    }
+  }
+
+  onUnhover() {
+    this.setState({
+      hovered: false,
+    });
+
+    this.unsetHoverTimeout = setTimeout(() => {
+      this.setState({
+        renderInner: false,
+      });
+    }, TOOLTIP_UNRENDER_TIME);
+  }
+
+  componentWillUnmount() {
+    if (this.unsetHoverTimeout) {
+      clearTimeout(this.unsetHoverTimeout);
+    }
   }
 
   componentDidMount() {
@@ -35,17 +72,24 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
     // immediately if this internal variable is removed.
     const domNode = findDOMfromVNode(this.$LI, true);
 
-    domNode.addEventListener("mouseenter", () => {
-      this.setState({
-        hovered: true,
-      });
-    });
+    domNode.addEventListener("mouseenter", this.onHover);
+    domNode.addEventListener("mouseleave", this.onUnhover);
+  }
 
-    domNode.addEventListener("mouseleave", () => {
-      this.setState({
-        hovered: false,
-      });
-    });
+  componentDidUpdate(prevProps, prevState: TooltipState) {
+    if (this.state.hovered !== prevState.hovered && this.state.hovered) {
+      const tooltip = this.tooltipRef.current;
+      if (!tooltip) {
+        return;
+      }
+
+      tooltip.style.opacity = "0";
+
+      // This forces the CSS transition to start when we set the opacity to 1
+      window.getComputedStyle(tooltip).opacity;
+
+      tooltip.style.opacity = "1";
+    }
   }
 
   render() {
@@ -55,13 +99,16 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
           placement: this.props.position || "auto",
         }}
         popperContent={
-          <div
-            className="Tooltip"
-            style={{
-              opacity: this.state.hovered ? 1 : 0,
-            }}>
-            {this.props.content}
-          </div>
+          this.state.renderInner ? (
+            <div
+              className="Tooltip"
+              ref={this.tooltipRef}
+              style={{
+                opacity: this.state.hovered ? 1 : 0,
+              }}>
+              {this.props.content}
+            </div>
+          ) : null
         }
         additionalStyles={{
           "pointer-events": "none",
