@@ -168,6 +168,7 @@
 
 /area/icemoon/surface/outdoors // weather happens here
 	name = "Icemoon Wastes"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	outdoors = TRUE
 
 /area/icemoon/surface/outdoors/noteleport // for places like the cursed spring water

@@ -6116,7 +6116,7 @@
 "rWB" = (
 /obj/machinery/exoscanner,
 /turf/open/floor/plating/snowed,
-/area/science/lab)
+/area/tcommsat/server)
 "rWG" = (
 /obj/effect/turf_decal/loading_area,
 /obj/effect/landmark/start/cargo_technician,
@@ -6220,7 +6220,7 @@
 "sub" = (
 /obj/machinery/rnd/server,
 /turf/open/floor/plating/snowed,
-/area/science/lab)
+/area/tcommsat/server)
 "swm" = (
 /obj/structure/chair/office{
 	dir = 8

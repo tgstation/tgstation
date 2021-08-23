@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(nightshift)
 	check_nightshift()
 
 /datum/controller/subsystem/nightshift/proc/announce(message)
-	priority_announce(message, sound='sound/misc/notice2.ogg', sender_override="Automated Lighting System Announcement")
+	priority_announce(message, sound='sound/misc/notice2.ogg', sender_override="Weather Update")
 
 /datum/controller/subsystem/nightshift/proc/check_nightshift()
 	var/emergency = SSsecurity_level.current_level >= SEC_LEVEL_RED
@@ -50,16 +50,17 @@ GLOBAL_VAR(thingling_storm)
 	if(!resumed)
 		currentrun = GLOB.apcs_list.Copy()
 		nightshift_active = active
-		if(announce)
-			if (active)
+		if(active)
+			if(announce)
 				announce("Night falls. Deadly temperatures will kill anyone left outside until the sun rises and the storms calm.")
-				update_lumcount(DYNAMIC_LIGHTING_ENABLED) //zero, total dorkness
-				GLOB.thingling_storm = SSweather.run_weather(/datum/weather/snow_storm, SSmapping.levels_by_trait(ZTRAIT_STATION))
-			else
+			update_lumcount(DYNAMIC_LIGHTING_ENABLED) //zero, total dorkness
+			GLOB.thingling_storm = SSweather.run_weather(/datum/weather/snow_storm, SSmapping.levels_by_trait(ZTRAIT_STATION))
+		else
+			if(announce)
 				announce("The sun has risen. The outside is now safe to travel in, if you have proper equipment.")
-				update_lumcount(DYNAMIC_LIGHTING_DISABLED) //fullbright
-				var/datum/weather/ending_this_storm = GLOB.thingling_storm
-				ending_this_storm.wind_down()
+			update_lumcount(DYNAMIC_LIGHTING_DISABLED) //fullbright
+			var/datum/weather/ending_this_storm = GLOB.thingling_storm
+			ending_this_storm?.wind_down()
 	for(var/obj/machinery/power/apc/APC as anything in currentrun)
 		currentrun -= APC
 		if (APC.area && (APC.area.type in GLOB.the_station_areas))
@@ -70,3 +71,5 @@ GLOBAL_VAR(thingling_storm)
 /datum/controller/subsystem/nightshift/proc/update_lumcount(new_lighting)
 	var/area/outside = get_area_instance_from_text(/area/icemoon/surface/outdoors)
 	outside.set_dynamic_lighting(new_lighting)
+	var/area/tcomms = get_area_instance_from_text(/area/tcommsat/server)
+	tcomms.set_dynamic_lighting(new_lighting)

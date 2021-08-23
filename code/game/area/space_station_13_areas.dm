@@ -1427,6 +1427,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/tcommsat/server
 	name = "\improper Telecomms Server Room"
 	icon_state = "tcomsatcham"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/tcommsat/server/upper
 	name = "\improper Upper Telecomms Server Room"
