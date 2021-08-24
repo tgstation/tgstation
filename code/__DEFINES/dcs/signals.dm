@@ -193,6 +193,10 @@
 #define COMSIG_ATOM_RELAYMOVE "atom_relaymove"
 	///prevents the "you cannot move while buckled! message"
 	#define COMSIG_BLOCK_RELAYMOVE (1<<0)
+///from base of datum/mutation/human/telekinesis/proc/on_ranged_attack(): (/mob/user)
+#define COMSIG_ATOM_ATTACK_TK "atom_attack_tk"
+///from base of atom/proc/attack_robot(): (/mob/user)
+#define COMSIG_ATOM_ATTACK_ROBOT "atom_attack_robot"
 
 ///from [/datum/controller/subsystem/explosions/proc/explode]: (/list(/atom, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke))
 #define COMSIG_ATOM_EXPLODE "atom_explode"

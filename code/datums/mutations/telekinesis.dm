@@ -31,4 +31,6 @@
 ///Triggers on COMSIG_MOB_ATTACK_RANGED. Usually handles stuff like picking up items at range.
 /datum/mutation/human/telekinesis/proc/on_ranged_attack(mob/source, atom/target)
 	SIGNAL_HANDLER
+	if(SEND_SIGNAL(target, COMSIG_ATOM_ATTACK_TK, source) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return
 	return target.attack_tk(source)

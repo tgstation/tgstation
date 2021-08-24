@@ -188,6 +188,9 @@
 	return TRUE
 
 /obj/machinery/door/firedoor/attack_robot(mob/user)
+	. = ..()
+	if(.)
+		return
 	return attack_ai(user)
 
 /obj/machinery/door/firedoor/attack_alien(mob/user, list/modifiers)

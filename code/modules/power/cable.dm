@@ -708,6 +708,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 GLOBAL_LIST(hub_radial_layer_list)
 
 /obj/structure/cable/multilayer/attack_robot(mob/user)
+	. = ..()
+	if(.)
+		return
 	attack_hand(user)
 
 /obj/structure/cable/multilayer/attack_hand(mob/living/user, list/modifiers)

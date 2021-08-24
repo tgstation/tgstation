@@ -150,6 +150,9 @@
 	return use(user)
 
 /obj/structure/ladder/attack_robot(mob/living/silicon/robot/R)
+	. = ..()
+	if(.)
+		return
 	if(R.Adjacent(src))
 		return use(R)
 

@@ -174,8 +174,9 @@
 	A.attack_robot(src)
 
 /atom/proc/attack_robot(mob/user)
-	attack_ai(user)
-	return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ROBOT, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
+	return attack_ai(user)
 
 /**
  * What happens when the cyborg without active module holds right-click on an item. Returns a SECONDARY_ATTACK_* value.

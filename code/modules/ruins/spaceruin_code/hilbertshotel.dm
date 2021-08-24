@@ -314,6 +314,9 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	promptExit(user)
 
 /turf/closed/indestructible/hoteldoor/attack_robot(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(get_dist(get_turf(src), get_turf(user)) <= 1)
 		promptExit(user)
 

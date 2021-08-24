@@ -43,6 +43,9 @@
 		ui_interact(user)
 
 /obj/structure/ore_box/attack_robot(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(Adjacent(user))
 		ui_interact(user)
 

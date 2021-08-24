@@ -74,6 +74,9 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	add_fingerprint(user)
 
 /obj/structure/bodycontainer/attack_robot(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!user.Adjacent(src))
 		return
 	return attack_hand(user)
@@ -224,6 +227,9 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	connected.connected = src
 
 /obj/structure/bodycontainer/crematorium/attack_robot(mob/user) //Borgs can't use crematoriums without help
+	. = ..()
+	if(.)
+		return
 	to_chat(user, span_warning("[src] is locked against you."))
 	return
 

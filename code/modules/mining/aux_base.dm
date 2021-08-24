@@ -437,6 +437,9 @@
 	anti_spam_cd = 0
 
 /obj/structure/mining_shuttle_beacon/attack_robot(mob/user)
+	. = ..()
+	if(.)
+		return
 	return attack_hand(user) //So borgies can help
 
 #undef ZONE_SET

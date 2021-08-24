@@ -241,6 +241,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	AddElement(/datum/element/bsa_blocker)
 	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/call_explode)
+	RegisterSignal(src, COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
+	RegisterSignal(src, COMSIG_ATOM_BLOB_ACT, .proc/on_blob_act)
+	RegisterSignal(src, COMSIG_ATOM_ATTACK_TK, .proc/on_attack_tk)
+	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+	RegisterSignal(src, COMSIG_ATOM_ATTACK_ROBOT, .proc/on_attack_robot)
+	RegisterSignal(src, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
+	RegisterSignal(src, COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_paw)
+	RegisterSignal(src, COMSIG_ATOM_ATTACK_ANIMAL, .proc/on_attack_animal)
+	RegisterSignal(src, COMSIG_ATOM_BUMPED, .proc/on_bumped)
 
 	soundloop = new(src, TRUE)
 	if(ispath(psyOverlay))
@@ -795,7 +804,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	return TRUE
 
-/obj/machinery/power/supermatter_crystal/bullet_act(obj/projectile/projectile)
+/obj/machinery/power/supermatter_crystal/proc/on_bullet_act(datum/source, obj/projectile/projectile, def_zone)
+	SIGNAL_HANDLER
 	var/turf/local_turf = loc
 	if(!istype(local_turf))
 		return FALSE
@@ -810,7 +820,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				has_been_powered = TRUE
 	else if(takes_damage)
 		damage += projectile.damage * bullet_energy
-	return BULLET_ACT_HIT
 
 /obj/machinery/power/supermatter_crystal/singularity_act()
 	var/gain = 100
@@ -825,7 +834,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	qdel(src)
 	return gain
 
-/obj/machinery/power/supermatter_crystal/blob_act(obj/structure/blob/blob)
+/obj/machinery/power/supermatter_crystal/proc/on_blob_act(datum/source, obj/structure/blob/blob)
+	SIGNAL_HANDLER
 	if(!blob || isspaceturf(loc)) //does nothing in space
 		return
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
@@ -839,7 +849,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			span_hear("You hear a loud crack as you are washed with a wave of heat."))
 		Consume(blob)
 
-/obj/machinery/power/supermatter_crystal/attack_tk(mob/user)
+/obj/machinery/power/supermatter_crystal/proc/on_attack_tk(datum/source, mob/user)
+	SIGNAL_HANDLER
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/jedi = user
@@ -852,13 +863,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
-/obj/machinery/power/supermatter_crystal/attack_paw(mob/user, list/modifiers)
+/obj/machinery/power/supermatter_crystal/proc/on_attack_paw(datum/source, mob/user, list/modifiers)
+	SIGNAL_HANDLER
 	dust_mob(user, cause = "monkey attack")
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/power/supermatter_crystal/attack_alien(mob/user, list/modifiers)
-	dust_mob(user, cause = "alien attack")
 
-/obj/machinery/power/supermatter_crystal/attack_animal(mob/living/simple_animal/user, list/modifiers)
+/obj/machinery/power/supermatter_crystal/proc/on_attack_animal(datum/source, mob/living/simple_animal/user)
+	SIGNAL_HANDLER
 	var/murder
 	if(!user.melee_damage_upper && !user.melee_damage_lower)
 		murder = user.friendly_verb_continuous
@@ -869,27 +881,18 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	span_userdanger("You unwisely touch [src], and your vision glows brightly as your body crumbles to dust. Oops."), \
 	"simple animal attack")
 
-/obj/machinery/power/supermatter_crystal/attack_robot(mob/user)
+/obj/machinery/power/supermatter_crystal/proc/on_attack_robot(datum/source, mob/user)
+	SIGNAL_HANDLER
 	if(Adjacent(user))
 		dust_mob(user, cause = "cyborg attack")
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/power/supermatter_crystal/attack_ai(mob/user)
-	return
-
-/obj/machinery/power/supermatter_crystal/attack_hulk(mob/user)
-	dust_mob(user, cause = "hulk attack")
-
-/obj/machinery/power/supermatter_crystal/attack_larva(mob/user)
-	dust_mob(user, cause = "larva attack")
-
-/obj/machinery/power/supermatter_crystal/attack_hand(mob/living/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/power/supermatter_crystal/proc/on_attack_hand(datum/source, mob/living/user, list/modifiers)
+	SIGNAL_HANDLER
 	if(user.incorporeal_move || user.status_flags & GODMODE)
 		return
 
-	. = TRUE
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	if(user.zone_selected != BODY_ZONE_PRECISE_MOUTH)
 		dust_mob(user, cause = "hand")
 		return
@@ -942,11 +945,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
 	Consume(nom)
 
-/obj/machinery/power/supermatter_crystal/attackby(obj/item/item, mob/living/user, params)
+/obj/machinery/power/supermatter_crystal/proc/on_attackby(datum/source, obj/item/item, mob/living/user, params)
+	SIGNAL_HANDLER
 	if(!istype(item) || (item.item_flags & ABSTRACT) || !istype(user))
 		return
 	if(istype(item, /obj/item/melee/roastingstick))
-		return ..()
+		return
 	if(istype(item, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/cig = item
 		var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)
@@ -961,33 +965,23 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			playsound(src, 'sound/effects/supermatter.ogg', 150, TRUE)
 			Consume(dust_arm)
 			qdel(item)
-			return
+			return COMPONENT_NO_AFTERATTACK
 		if(cig.lit || user.combat_mode)
 			user.visible_message(span_danger("A hideous sound echoes as [item] is ashed out on contact with \the [src]. That didn't seem like a good idea..."))
 			playsound(src, 'sound/effects/supermatter.ogg', 150, TRUE)
 			Consume(item)
 			radiation_pulse(src, 150, 4)
-			return ..()
+			return COMPONENT_NO_AFTERATTACK
 		else
 			cig.light()
 			user.visible_message(span_danger("As [user] lights \their [item] on \the [src], silence fills the room..."),\
 				span_danger("Time seems to slow to a crawl as you touch \the [src] with \the [item].</span>\n<span class='notice'>\The [item] flashes alight with an eerie energy as you nonchalantly lift your hand away from \the [src]. Damn."))
 			playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 			radiation_pulse(src, 50, 3)
-			return
+			return COMPONENT_NO_AFTERATTACK
 	if(istype(item, /obj/item/scalpel/supermatter))
-		var/obj/item/scalpel/supermatter/scalpel = item
-		to_chat(user, span_notice("You carefully begin to scrape \the [src] with \the [item]..."))
-		if(item.use_tool(src, user, 60, volume=100))
-			if (scalpel.usesLeft)
-				to_chat(user, span_danger("You extract a sliver from \the [src]. \The [src] begins to react violently!"))
-				new /obj/item/nuke_core/supermatter_sliver(drop_location())
-				matter_power += 800
-				scalpel.usesLeft--
-				if (!scalpel.usesLeft)
-					to_chat(user, span_notice("A tiny piece of \the [item] falls off, rendering it useless!"))
-			else
-				to_chat(user, span_warning("You fail to extract a sliver from \The [src]! \the [item] isn't sharp enough anymore."))
+		INVOKE_ASYNC(src, .proc/scrape_sliver, user, item)
+		return COMPONENT_NO_AFTERATTACK
 	else if(user.dropItemToGround(item))
 		user.visible_message(span_danger("As [user] touches \the [src] with \a [item], silence fills the room..."),\
 			span_userdanger("You touch \the [src] with \the [item], and everything suddenly goes silent.</span>\n<span class='notice'>\The [item] flashes into dust as you flinch away from \the [src]."),\
@@ -995,13 +989,26 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		investigate_log("has been attacked ([item]) by [key_name(user)]", INVESTIGATE_SUPERMATTER)
 		Consume(item)
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
-
 		radiation_pulse(src, 150, 4)
-
+		return COMPONENT_NO_AFTERATTACK
 	else if(Adjacent(user)) //if the item is stuck to the person, kill the person too instead of eating just the item.
 		var/vis_msg = span_danger("[user] reaches out and touches [src] with [item], inducing a resonance... [item] starts to glow briefly before the light continues up to [user]'s body. [user.p_they(TRUE)] bursts into flames before flashing into dust!")
 		var/mob_msg = span_userdanger("You reach out and touch [src] with [item]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"")
 		dust_mob(user, vis_msg, mob_msg)
+		return COMPONENT_NO_AFTERATTACK
+
+/obj/machinery/power/supermatter_crystal/proc/scrape_sliver(mob/user, obj/item/scalpel/supermatter/scalpel)
+	to_chat(user, span_notice("You carefully begin to scrape \the [src] with \the [scalpel]..."))
+	if(scalpel.use_tool(src, user, 60, volume=100))
+		if (scalpel.usesLeft)
+			to_chat(user, span_danger("You extract a sliver from \the [src]. \The [src] begins to react violently!"))
+			new /obj/item/nuke_core/supermatter_sliver(drop_location())
+			matter_power += 800
+			scalpel.usesLeft--
+			if (!scalpel.usesLeft)
+				to_chat(user, span_notice("A tiny piece of \the [scalpel] falls off, rendering it useless!"))
+		else
+			to_chat(user, span_warning("You fail to extract a sliver from \The [src]! \the [scalpel] isn't sharp enough anymore."))
 
 /obj/machinery/power/supermatter_crystal/wrench_act(mob/user, obj/item/tool)
 	..()
@@ -1009,7 +1016,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		default_unfasten_wrench(user, tool, time = 20)
 	return TRUE
 
-/obj/machinery/power/supermatter_crystal/Bumped(atom/movable/hit_object)
+/obj/machinery/power/supermatter_crystal/proc/on_bumped(datum/source, atom/movable/hit_object)
+	SIGNAL_HANDLER
 	if(isliving(hit_object))
 		hit_object.visible_message(span_danger("\The [hit_object] slams into \the [src] inducing a resonance... [hit_object.p_their()] body starts to glow and burst into flames before flashing into dust!"),
 			span_userdanger("You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\""),

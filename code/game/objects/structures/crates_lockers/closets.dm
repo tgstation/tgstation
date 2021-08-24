@@ -407,6 +407,9 @@
 	return attack_hand(user, modifiers)
 
 /obj/structure/closet/attack_robot(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(user.Adjacent(src))
 		return attack_hand(user)
 

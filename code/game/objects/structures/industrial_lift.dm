@@ -350,6 +350,9 @@ GLOBAL_LIST_EMPTY(lifts)
 	return use(user)
 
 /obj/structure/industrial_lift/attack_robot(mob/living/silicon/robot/R)
+	. = ..()
+	if(.)
+		return
 	if(R.Adjacent(src))
 		return use(R)
 

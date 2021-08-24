@@ -133,7 +133,9 @@
 	attack_target.attack_animal(src, modifiers)
 
 /atom/proc/attack_animal(mob/user, list/modifiers)
-	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return FALSE //Because the return behavior for attack_animal is inverted relative to other attack chains
+	return TRUE
 
 ///Attacked by monkey
 /atom/proc/attack_paw(mob/user, list/modifiers)

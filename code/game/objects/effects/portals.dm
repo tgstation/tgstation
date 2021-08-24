@@ -68,6 +68,9 @@
 		teleport(user)
 
 /obj/effect/portal/attack_robot(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(Adjacent(user))
 		teleport(user)
 

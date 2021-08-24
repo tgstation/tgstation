@@ -163,6 +163,9 @@
 		eyeobj.setLoc(eyeobj.loc)
 
 /obj/machinery/computer/camera_advanced/attack_robot(mob/user)
+	. = ..()
+	if(.)
+		return
 	return attack_hand(user)
 
 /obj/machinery/computer/camera_advanced/attack_ai(mob/user)

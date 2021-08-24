@@ -189,6 +189,9 @@
 	return attack_hand(user)
 
 /obj/machinery/firealarm/attack_robot(mob/user)
+	. = ..()
+	if(.)
+		return
 	return attack_hand(user)
 
 /obj/machinery/firealarm/attackby(obj/item/tool, mob/living/user, params)

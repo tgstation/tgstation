@@ -43,6 +43,9 @@
 	return interact(user)
 
 /obj/structure/signpost/attack_robot(mob/user)
+	. = ..()
+	if(.)
+		return
 	if (Adjacent(user))
 		return interact(user)
 

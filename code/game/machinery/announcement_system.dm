@@ -153,6 +153,9 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	add_fingerprint(usr)
 
 /obj/machinery/announcement_system/attack_robot(mob/living/silicon/user)
+	. = ..()
+	if(.)
+		return
 	. = attack_ai(user)
 
 /obj/machinery/announcement_system/attack_ai(mob/user)

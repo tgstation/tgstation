@@ -120,6 +120,9 @@
 		return attack_hand(user)
 
 /obj/machinery/button/attack_robot(mob/user)
+	. = ..()
+	if(.)
+		return
 	return attack_ai(user)
 
 /obj/machinery/button/proc/setup_device()
