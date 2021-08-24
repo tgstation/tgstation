@@ -44,7 +44,7 @@
 			. += examine_status
 
 /obj/structure/proc/examine_status(mob/user) //An overridable proc, mostly for falsewalls.
-	var/healthpercent = (obj_integrity/max_integrity) * 100
+	var/healthpercent = (atom_integrity/max_integrity) * 100
 	switch(healthpercent)
 		if(50 to 99)
 			return  "It looks slightly damaged."

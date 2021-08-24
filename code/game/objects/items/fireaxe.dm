@@ -60,7 +60,7 @@
 	if(wielded) //destroys windows and grilles in one hit
 		if(istype(A, /obj/structure/window) || istype(A, /obj/structure/grille))
 			var/obj/structure/W = A
-			W.obj_destruction("fireaxe")
+			W.atom_destruction("fireaxe")
 
 /*
  * Bone Axe
