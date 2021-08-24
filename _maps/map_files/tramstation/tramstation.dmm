@@ -33524,7 +33524,7 @@
 /area/ai_monitored/turret_protected/ai_upload_foyer)
 "jld" = (
 /obj/structure/table,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /turf/open/floor/iron,
 /area/security/prison)
 "jlf" = (
@@ -64523,7 +64523,7 @@
 /area/security/office)
 "uLI" = (
 /obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /obj/item/pen/fourcolor,
 /turf/open/floor/iron/grimy,
 /area/service/library)

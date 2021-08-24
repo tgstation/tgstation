@@ -27710,7 +27710,7 @@
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -31832,7 +31832,7 @@
 /area/engineering/atmos)
 "ipV" = (
 /obj/structure/table,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /turf/open/floor/iron,
 /area/commons/locker)
 "ipW" = (
@@ -43592,7 +43592,7 @@
 "moL" = (
 /obj/structure/table,
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
@@ -50488,7 +50488,7 @@
 /area/medical/treatment_center)
 "oyB" = (
 /obj/structure/table,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /turf/open/floor/iron,
 /area/commons/dorms)
 "oyN" = (
@@ -51469,7 +51469,7 @@
 /area/security/checkpoint/supply)
 "oOJ" = (
 /obj/structure/table,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
@@ -54765,7 +54765,7 @@
 /area/engineering/supermatter/room)
 "pTE" = (
 /obj/structure/table/wood/poker,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /turf/open/floor/wood,
 /area/service/bar)
 "pTP" = (
