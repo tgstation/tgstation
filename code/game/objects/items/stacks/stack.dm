@@ -464,7 +464,7 @@
 	use(transfer, transfer = TRUE, check = FALSE)
 	target_stack.add(transfer)
 	if(target_stack.mats_per_unit != mats_per_unit) // We get the average value of mats_per_unit between two stacks getting merged
-		var/list/temp_mats_list = list()
+		var/list/temp_mats_list = list() // Creating temporary list because if we manage main list shit breaks(ask lemon for better explanation)
 		for(var/mat_type in target_stack.mats_per_unit)
 			temp_mats_list[mat_type] = (target_stack.mats_per_unit[mat_type] * (target_stack.amount - transfer) + mats_per_unit[mat_type] * transfer) / target_stack.amount
 		target_stack.mats_per_unit = temp_mats_list
