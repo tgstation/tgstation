@@ -5,64 +5,6 @@
  */
 
 /**
- * Converts a given collection to an array.
- *
- * - Arrays are returned unmodified;
- * - If object was provided, keys will be discarded;
- * - Everything else will result in an empty array.
- *
- * @returns {any[]}
- */
-export const toArray = collection => {
-  if (Array.isArray(collection)) {
-    return collection;
-  }
-  if (typeof collection === 'object') {
-    const hasOwnProperty = Object.prototype.hasOwnProperty;
-    const result = [];
-    for (let i in collection) {
-      if (hasOwnProperty.call(collection, i)) {
-        result.push(collection[i]);
-      }
-    }
-    return result;
-  }
-  return [];
-};
-
-/**
- * Converts a given object to an array, and appends a key to every
- * object inside of that array.
- *
- * Example input (object):
- * ```
- * {
- *   'Foo': { info: 'Hello world!' },
- *   'Bar': { info: 'Hello world!' },
- * }
- * ```
- *
- * Example output (array):
- * ```
- * [
- *   { key: 'Foo', info: 'Hello world!' },
- *   { key: 'Bar', info: 'Hello world!' },
- * ]
- * ```
- *
- * @template T
- * @param {{ [key: string]: T }} obj Object, or in DM terms, an assoc array
- * @param {string} keyProp Property, to which key will be assigned
- * @returns {T[]} Array of keyed objects
- */
-export const toKeyedArray = (obj, keyProp = 'key') => {
-  return map((item, key) => ({
-    [keyProp]: key,
-    ...item,
-  }))(obj);
-};
-
-/**
  * Iterates over elements of collection, returning an array of all elements
  * iteratee returns truthy for. The predicate is invoked with three
  * arguments: (value, index|key, collection).
@@ -72,21 +14,40 @@ export const toKeyedArray = (obj, keyProp = 'key') => {
  *
  * @returns {any[]}
  */
-export const filter = iterateeFn => collection => {
-  if (collection === null || collection === undefined) {
-    return collection;
-  }
-  if (Array.isArray(collection)) {
-    const result = [];
-    for (let i = 0; i < collection.length; i++) {
-      const item = collection[i];
-      if (iterateeFn(item, i, collection)) {
-        result.push(item);
+export const filter = <T>(iterateeFn: (
+  input: T,
+  index: number,
+  collection: T[],
+) => boolean) =>
+    (collection: T[]): T[] => {
+      if (collection === null || collection === undefined) {
+        return collection;
       }
-    }
-    return result;
-  }
-  throw new Error(`filter() can't iterate on type ${typeof collection}`);
+      if (Array.isArray(collection)) {
+        const result: T[] = [];
+        for (let i = 0; i < collection.length; i++) {
+          const item = collection[i];
+          if (iterateeFn(item, i, collection)) {
+            result.push(item);
+          }
+        }
+        return result;
+      }
+      throw new Error(`filter() can't iterate on type ${typeof collection}`);
+    };
+
+type MapFunction = {
+  <T, U>(iterateeFn: (
+    value: T,
+    index: number,
+    collection: T[],
+  ) => U): (collection: T[]) => U[];
+
+  <T, U, K extends string | number>(iterateeFn: (
+    value: T,
+    index: K,
+    collection: Record<K, T>,
+  ) => U): (collection: Record<K, T>) => U[];
 };
 
 /**
@@ -96,32 +57,25 @@ export const filter = iterateeFn => collection => {
  *
  * If collection is 'null' or 'undefined', it will be returned "as is"
  * without emitting any errors (which can be useful in some cases).
- *
- * @returns {any[]}
  */
-export const map = iterateeFn => collection => {
-  if (collection === null || collection === undefined) {
-    return collection;
-  }
-  if (Array.isArray(collection)) {
-    const result = [];
-    for (let i = 0; i < collection.length; i++) {
-      result.push(iterateeFn(collection[i], i, collection));
+export const map: MapFunction = <T, U>(iterateeFn) =>
+  (collection: T[]): U[] => {
+    if (collection === null || collection === undefined) {
+      return collection;
     }
-    return result;
-  }
-  if (typeof collection === 'object') {
-    const hasOwnProperty = Object.prototype.hasOwnProperty;
-    const result = [];
-    for (let i in collection) {
-      if (hasOwnProperty.call(collection, i)) {
-        result.push(iterateeFn(collection[i], i, collection));
-      }
+
+    if (Array.isArray(collection)) {
+      return collection.map(iterateeFn);
     }
-    return result;
-  }
-  throw new Error(`map() can't iterate on type ${typeof collection}`);
-};
+
+    if (typeof collection === 'object') {
+      return Object.entries(collection).map(([key, value]) => {
+        return iterateeFn(value, key, collection);
+      });
+    }
+
+    throw new Error(`map() can't iterate on type ${typeof collection}`);
+  };
 
 const COMPARATOR = (objA, objB) => {
   const criteriaA = objA.criteria;
@@ -148,28 +102,35 @@ const COMPARATOR = (objA, objB) => {
  *
  * @returns {any[]}
  */
-export const sortBy = (...iterateeFns) => array => {
-  if (!Array.isArray(array)) {
-    return array;
-  }
-  let length = array.length;
-  // Iterate over the array to collect criteria to sort it by
-  let mappedArray = [];
-  for (let i = 0; i < length; i++) {
-    const value = array[i];
-    mappedArray.push({
-      criteria: iterateeFns.map(fn => fn(value)),
-      value,
-    });
-  }
-  // Sort criteria using the base comparator
-  mappedArray.sort(COMPARATOR);
-  // Unwrap values
-  while (length--) {
-    mappedArray[length] = mappedArray[length].value;
-  }
-  return mappedArray;
-};
+export const sortBy = <T>(
+  ...iterateeFns: ((input: T) => unknown)[]
+) => (array: T[]): T[] => {
+    if (!Array.isArray(array)) {
+      return array;
+    }
+    let length = array.length;
+    // Iterate over the array to collect criteria to sort it by
+    let mappedArray: {
+      criteria: unknown[],
+      value: T,
+    }[] = [];
+    for (let i = 0; i < length; i++) {
+      const value = array[i];
+      mappedArray.push({
+        criteria: iterateeFns.map(fn => fn(value)),
+        value,
+      });
+    }
+    // Sort criteria using the base comparator
+    mappedArray.sort(COMPARATOR);
+
+    // Unwrap values
+    const values: T[] = [];
+    while (length--) {
+      values[length] = mappedArray[length].value;
+    }
+    return values;
+  };
 
 export const sort = sortBy();
 
@@ -212,40 +173,38 @@ export const reduce = (reducerFn, initialValue) => array => {
  * is determined by the order they occur in the array. The iteratee is
  * invoked with one argument: value.
  */
-/* eslint-disable indent */
 export const uniqBy = <T extends unknown>(
   iterateeFn?: (value: T) => unknown
-) => (array: T[]) => {
-  const { length } = array;
-  const result = [];
-  const seen = iterateeFn ? [] : result;
-  let index = -1;
-  outer:
-  while (++index < length) {
-    let value: T | 0 = array[index];
-    const computed = iterateeFn ? iterateeFn(value) : value;
-    value = value !== 0 ? value : 0;
-    if (computed === computed) {
-      let seenIndex = seen.length;
-      while (seenIndex--) {
-        if (seen[seenIndex] === computed) {
-          continue outer;
+) => (array: T[]): T[] => {
+    const { length } = array;
+    const result: T[] = [];
+    const seen: unknown[] = iterateeFn ? [] : result;
+    let index = -1;
+    outer:
+    while (++index < length) {
+      let value: T | 0 = array[index];
+      const computed = iterateeFn ? iterateeFn(value) : value;
+      if (computed === computed) {
+        let seenIndex = seen.length;
+        while (seenIndex--) {
+          if (seen[seenIndex] === computed) {
+            continue outer;
+          }
         }
+        if (iterateeFn) {
+          seen.push(computed);
+        }
+        result.push(value);
       }
-      if (iterateeFn) {
-        seen.push(computed);
+      else if (!seen.includes(computed)) {
+        if (seen !== result) {
+          seen.push(computed);
+        }
+        result.push(value);
       }
-      result.push(value);
     }
-    else if (!seen.includes(computed)) {
-      if (seen !== result) {
-        seen.push(computed);
-      }
-      result.push(value);
-    }
-  }
-  return result;
-};
+    return result;
+  };
 /* eslint-enable indent */
 
 export const uniq = uniqBy();
@@ -261,17 +220,19 @@ type Zip<T extends unknown[][]> = {
  */
 export const zip = <T extends unknown[][]>(...arrays: T): Zip<T> => {
   if (arrays.length === 0) {
-    return;
+    return [];
   }
   const numArrays = arrays.length;
   const numValues = arrays[0].length;
-  const result = [];
+  const result: Zip<T> = [];
   for (let valueIndex = 0; valueIndex < numValues; valueIndex++) {
-    const entry = [];
+    const entry: unknown[] = [];
     for (let arrayIndex = 0; arrayIndex < numArrays; arrayIndex++) {
       entry.push(arrays[arrayIndex][valueIndex]);
     }
-    result.push(entry);
+
+    // I tried everything to remove this any, and have no idea how to do it.
+    result.push(entry as any);
   }
   return result;
 };
@@ -280,9 +241,8 @@ export const zip = <T extends unknown[][]>(...arrays: T): Zip<T> => {
  * This method is like "zip" except that it accepts iteratee to
  * specify how grouped values should be combined. The iteratee is
  * invoked with the elements of each group.
- *
- * @returns {any[]}
  */
-export const zipWith = iterateeFn => (...arrays) => {
-  return map(values => iterateeFn(...values))(zip(...arrays));
-};
+export const zipWith = <T, U>(iterateeFn: (...values: T[]) => U) =>
+  (...arrays: T[][]): U[] => {
+    return map((values: T[]) => iterateeFn(...values))(zip(...arrays));
+  };

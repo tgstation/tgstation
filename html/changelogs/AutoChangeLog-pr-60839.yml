@@ -1,4 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - bugfix: "fix crystallizer from getting stuck on same amount of gases, limits the allowed amount of allowed gas inside by double the recipe amount per type"
