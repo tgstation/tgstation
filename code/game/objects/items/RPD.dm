@@ -414,7 +414,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			else
 				mode |= n
 		if("init_dir_setting")
-			p_init_dir ^= text2dir(params["dir_flag"])
+			var/target_dir = p_init_dir ^ text2dir(params["dir_flag"])
+			// Refuse to create a smart pipe that can only connect in one direction (it would act weirdly and lack an icon)
+			if (target_dir & (target_dir - 1))
+				p_init_dir = target_dir
 		if("init_reset")
 			p_init_dir = ALL_CARDINALS
 	if(playeffect)
