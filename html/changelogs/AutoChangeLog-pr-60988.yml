@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixes the lone operative event hardly ever rolling even if the disk is left on the same place for hours because of dynamic."
