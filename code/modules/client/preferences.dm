@@ -493,6 +493,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 		client?.screen -= plane_master
 		qdel(plane_master)
 
+	client?.clear_map(assigned_map)
+
 	client = null
 	plane_masters = null
 	preferences = null
