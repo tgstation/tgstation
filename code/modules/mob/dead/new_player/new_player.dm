@@ -261,7 +261,7 @@
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
 
-	if(humanc && CONFIG_GET(flag/roundstart_traits))
+	if((job.job_flags & JOB_ASSIGN_QUIRKS) && humanc && CONFIG_GET(flag/roundstart_traits))
 		SSquirks.AssignQuirks(humanc, humanc.client)
 
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)

@@ -387,7 +387,7 @@ SUBSYSTEM_DEF(ticker)
 			CHECK_TICK
 			continue
 		var/mob/living/new_player_living = new_player_mob.new_character
-		if(!new_player_living.mind || is_unassigned_job(new_player_living.mind.assigned_role))
+		if(!new_player_living.mind)
 			CHECK_TICK
 			continue
 		var/datum/job/player_assigned_role = new_player_living.mind.assigned_role
@@ -399,7 +399,7 @@ SUBSYSTEM_DEF(ticker)
 			var/acting_captain = !is_captain_job(player_assigned_role)
 			SSjob.promote_to_captain(new_player_living, acting_captain)
 			OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, player_assigned_role.get_captaincy_announcement(new_player_living)))
-		if(ishuman(new_player_living) && CONFIG_GET(flag/roundstart_traits))
+		if((player_assigned_role.job_flags & JOB_ASSIGN_QUIRKS) && ishuman(new_player_living) && CONFIG_GET(flag/roundstart_traits))
 			if(new_player_mob.client?.prefs?.should_be_random_hardcore(player_assigned_role, new_player_living.mind))
 				new_player_mob.client.prefs.hardcore_random_setup(new_player_living)
 			SSquirks.AssignQuirks(new_player_living, new_player_mob.client)
