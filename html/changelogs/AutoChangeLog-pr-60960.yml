@@ -1,0 +1,4 @@
+author: "softcerv"
+delete-after: True
+changes: 
+  - bugfix: "stargazers can now form slime links again."
