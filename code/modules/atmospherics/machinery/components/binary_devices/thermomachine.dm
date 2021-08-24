@@ -226,9 +226,8 @@
 		if (use_enviroment_heat)
 			efficiency *= clamp(log(1.55, exchange_target.total_moles()) * 0.15, 0.65, 1)
 
-		efficiency = max(efficiency, parts_efficiency)
-
 		efficiency *= mole_efficiency
+		efficiency = max(efficiency, parts_efficiency) 
 
 		if (exchange_target.temperature > THERMOMACHINE_SAFE_TEMPERATURE && safeties)
 			on = FALSE
@@ -247,8 +246,8 @@
 		exchange_target.temperature = max((THERMAL_ENERGY(exchange_target) - (heat_amount * efficiency) + motor_heat) / exchange_target.heat_capacity(), TCMB)
 
 	if(!cooling)
-		efficiency = max(efficiency, parts_efficiency)
 		efficiency *= mole_efficiency
+		efficiency = max(efficiency, parts_efficiency)
 
 	main_port.temperature = max((THERMAL_ENERGY(main_port) + (heat_amount * efficiency)) / main_port.heat_capacity(), TCMB)
 
