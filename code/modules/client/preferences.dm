@@ -353,7 +353,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			if (new_color)
 				write_preference(requested_preference, new_color)
-				character_preview_view.update_body()
+
+				if (requested_preference.savefile_identifier == PREFERENCE_PLAYER)
+					requested_preference.apply_to_client(parent, new_color)
 
 				return TRUE
 			else

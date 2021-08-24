@@ -4,7 +4,7 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/color/screentip_color/apply_to_client(client/client, value)
-	client.mob?.hud_used?.screentip_text = value
+	client.mob?.hud_used?.screentip_color = value
 
 /datum/preference/color/screentip_color/create_default_value()
 	return "#ffd391"
