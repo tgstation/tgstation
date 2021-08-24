@@ -244,6 +244,8 @@
 			if(recipient.prefs.toggles & SOUND_ADMINHELP)
 				SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
 
+			SEND_SIGNAL(current_ticket, COMSIG_ADMIN_HELP_REPLIED)
+
 		else
 			if(holder) //sender is an admin but recipient is not. Do BIG RED TEXT
 				var/already_logged = FALSE
