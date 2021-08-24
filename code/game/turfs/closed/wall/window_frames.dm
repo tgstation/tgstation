@@ -27,6 +27,8 @@
 	var/window_icon_state = "window_normal"
 	///Frill used for window frame
 	var/has_frill = TRUE
+	///whether or not this window is reinforced and thus doesnt use the default attackby() behavior
+	var/is_reinforced = FALSE
 
 	///what glass sheet type our window is made out of
 	var/glass_material = /obj/item/stack/sheet/glass
@@ -38,9 +40,11 @@
 	var/bash_sound = 'sound/effects/Glassbash.ogg'
 	var/hit_sound = 'sound/effects/Glasshit.ogg'
 
+	uses_integrity = TRUE
+
 /turf/closed/wall/window_frame/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/climbable)
+
 	update_icon()
 
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, .proc/on_painted)
@@ -55,6 +59,8 @@
 		construction_state = max(construction_state, WINDOW_FRAME_GRILLE_ADDED)
 	if(window_state & WINDOW_FRAME_WITH_WINDOW)
 		construction_state = max(construction_state, WINDOW_FRAME_WINDOW_SECURED)
+	else
+		AddElement(/datum/element/climbable)
 
 /turf/closed/wall/window_frame/attackby(obj/item/attacking_item, mob/living/user, params)
 
@@ -80,6 +86,7 @@
 
 	else if(attacking_item.tool_behaviour == TOOL_WRENCH)
 		if(construction_state == WINDOW_FRAME_WINDOW_UNSECURED)
+			to_chat(user, "<span class='notice'>You start securing the window glass to the frame.</span>")
 			if(!attacking_item.use_tool(src, user, 40, volume = 50))
 				return
 
@@ -96,6 +103,7 @@
 			if(!attacking_item.use_tool(src, user, 40, volume = 50))
 				return
 
+			to_chat(user, "<span class='notice'>You unwrench the window glass from the frame.</span>")
 			construction_state = WINDOW_FRAME_WINDOW_UNSECURED
 			return
 
@@ -104,6 +112,11 @@
 		var/stack_name = "[adding_stack]" // in case the stack gets deleted after use()
 
 		if(is_glass_sheet(adding_stack) && !(window_state & WINDOW_FRAME_WITH_WINDOW) && adding_stack.use(sheet_amount))
+			to_chat(user, "<span class='notice'>You start to add [stack_name] to [src].")
+			if(!do_after(user, 2 SECONDS, src))
+				return
+
+			to_chat(user, "<span class='notice'>You add [stack_name] to [src].")
 			glass_material = adding_stack.type
 			window_state |= WINDOW_FRAME_WITH_WINDOW
 			construction_state = WINDOW_FRAME_WINDOW_UNSECURED
@@ -111,7 +124,6 @@
 			//LAZYADDASSOC(new_materials, GET_MATERIAL_REF(glass_material), WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 			//set_custom_materials(new_materials)
 
-			to_chat(user, "<span class='notice'>You add [stack_name] to [src].")
 			update_appearance()
 			RemoveElement(/datum/element/climbable) //cant climb through us anymore
 
@@ -134,6 +146,8 @@
 			construction_state = (window_state & WINDOW_FRAME_WITH_GRILLES) ? WINDOW_FRAME_GRILLE_ADDED : WINDOW_FRAME_EMPTY
 			window_state &= ~WINDOW_FRAME_WITH_WINDOW
 			//var/list/new_materials = custom_materials.Copy()
+			add_fingerprint(user)
+			playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 
 			to_chat(user, "<span class='notice'>You take the unsecured glass out of [src].</span>")
 
