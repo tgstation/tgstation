@@ -66,7 +66,7 @@
 	. = ..()
 	if(user.combat_mode)
 		return FALSE
-	if(obj_integrity == max_integrity)
+	if(atom_integrity == max_integrity)
 		to_chat(user, span_warning("This plaque is already in perfect condition."))
 		return TRUE
 	if(!I.tool_start_check(user, amount=0))
@@ -77,14 +77,14 @@
 		return TRUE
 	user.visible_message(span_notice("[user] finishes repairing [src]."), \
 			span_notice("You finish repairing [src]."))
-	obj_integrity = max_integrity
+	atom_integrity = max_integrity
 	return TRUE
 
 /obj/item/plaque/welder_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(user.combat_mode)
 		return FALSE
-	if(obj_integrity == max_integrity)
+	if(atom_integrity == max_integrity)
 		to_chat(user, span_warning("This plaque is already in perfect condition."))
 		return TRUE
 	if(!I.tool_start_check(user, amount=0))
@@ -95,7 +95,7 @@
 		return TRUE
 	user.visible_message(span_notice("[user] finishes repairing [src]."), \
 		span_notice("You finish repairing [src]."))
-	obj_integrity = max_integrity
+	atom_integrity = max_integrity
 	return TRUE
 
 /obj/structure/plaque/attackby(obj/item/I, mob/user, params)

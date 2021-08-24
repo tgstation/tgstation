@@ -265,7 +265,7 @@
 			if(!(machine_stat & BROKEN))
 				return
 			to_chat(user, "<span class='notice'>You repair [src].</span>")
-			obj_integrity = max_integrity
+			atom_integrity = max_integrity
 			set_machine_stat(machine_stat & ~BROKEN)
 			update_icon()
 	else

@@ -487,7 +487,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	. = ..()
 	if(user.combat_mode)
 		return FALSE
-	if(obj_integrity >= max_integrity)
+	if(atom_integrity >= max_integrity)
 		return TRUE
 	if(machine_stat & BROKEN)
 		return TRUE
@@ -495,8 +495,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		return TRUE
 	to_chat(user, span_notice("You begin repairing cracks in [src]..."))
 	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))
-		obj_integrity = min(obj_integrity + 25, max_integrity)
-		if(obj_integrity >= max_integrity)
+		atom_integrity = min(atom_integrity + 25, max_integrity)
+		if(atom_integrity >= max_integrity)
 			to_chat(user, span_notice("You've finished repairing [src]."))
 			return TRUE
 		to_chat(user, span_notice("You repair some of the cracks in [src]..."))
@@ -508,7 +508,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		return
 	SSair.start_processing_machine(src)
 
-/obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
+/obj/machinery/portable_atmospherics/canister/atom_break(damage_flag)
 	. = ..()
 	if(!.)
 		return
@@ -523,7 +523,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	var/turf/T = get_turf(src)
 	T.assume_air(expelled_gas)
 
-	obj_break()
+	atom_break()
 
 	set_density(FALSE)
 	playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
