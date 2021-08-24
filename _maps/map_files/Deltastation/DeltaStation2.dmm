@@ -74186,12 +74186,12 @@
 /area/hallway/secondary/service)
 "pAs" = (
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room";
 	req_one_access_txt = "10;24"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "engine-entrence"
 	},
 /turf/open/floor/iron,
 /area/engineering/supermatter/room)
@@ -97993,12 +97993,12 @@
 /area/hallway/primary/central/fore)
 "wGX" = (
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room";
 	req_one_access_txt = "10;24"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "engine-entrence"
 	},
 /turf/open/floor/iron,
 /area/engineering/main)
@@ -102902,6 +102902,9 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room";
 	req_one_access_txt = "10;24"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "engine-entrence"
 	},
 /turf/open/floor/iron,
 /area/engineering/main)
