@@ -10,6 +10,7 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 	device_type = QUATERNARY
 	construction_type = /obj/item/pipe/quaternary
 	pipe_state = "manifold4w"
+	var/connections = NONE
 
 /obj/machinery/atmospherics/pipe/smart/update_pipe_icon()
 	icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi'
@@ -24,6 +25,7 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 		bits++
 		// Note X_FULLPIPE == X as described in defines/atmospherics.dm
 		bitfield |= connected_dir
+	connections = bitfield
 	dir = check_binary_direction(bitfield)
 	//If we dont have enough bits to make a proper sprite, add some shortpipe bits
 	if(bits < 2)
