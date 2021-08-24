@@ -9,6 +9,7 @@ import { Component, createRef } from "inferno";
 import features from "./preferences/features";
 import { FeatureValueInput } from "./preferences/features/base";
 import { resolveAsset } from "../../assets";
+import { logger } from "../../logging";
 
 const CLOTHING_CELL_SIZE = 32;
 const CLOTHING_SIDEBAR_ROWS = 9;
@@ -19,8 +20,10 @@ const CLOTHING_SELECTION_MULTIPLIER = 5.2;
 
 // MOTHBLOCKS TODO: Put this in the datum, or perhaps derive it?
 // Actually, just put these all in the feature files.
+// ACTUALLY actually, just put it in compiled data.
 const KEYS_TO_NAMES = {
   backpack: "backpack",
+  facial_style_name: "facial hair",
   feature_moth_wings: "moth wings",
   jumpsuit_style: "jumpsuit style",
   socks: "socks",
@@ -354,8 +357,11 @@ export const MainPage = (props: {
                         return false;
                       }
 
+                      // MOTHBLOCKS TODO: This is stupid, let's figure it out
                       return currentSpeciesData.enabled_features
-                        .indexOf(featureName.split("feature_")[1]) !== -1;
+                        .indexOf(featureName) !== -1
+                        || currentSpeciesData.enabled_features
+                          .indexOf(featureName.split("feature_")[1]) !== -1;
                     }),
                 ]
                   .map(([clothingKey, clothing]) => {

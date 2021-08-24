@@ -1,8 +1,14 @@
+/// These will be shown in the character sidebar, but at the bottom.
+#define PREFERENCE_CATEGORY_FEATURES "features"
+
 /// Preferences that will be put into the 3rd list, and are not contextual.
 #define PREFERENCE_CATEGORY_NON_CONTEXTUAL "non_contextual"
 
 /// Will be put under the game preferences window.
 #define PREFERENCE_CATEGORY_GAME_PREFERENCES "game_preferences"
+
+/// These will show in the list to the right of the character preview.
+#define PREFERENCE_CATEGORY_SECONDARY_FEATURES "secondary_features"
 
 /// An assoc list list of types to instantiated `/datum/preference` instances
 GLOBAL_LIST_INIT(preference_entries, init_preference_entries())
@@ -140,7 +146,14 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preferences/proc/read_preference(preference_type)
 	var/datum/preference/preference_entry = GLOB.preference_entries[preference_type]
 	if (isnull(preference_entry))
-		CRASH("Preference type `[preference_type]` is invalid!")
+		var/extra_info = ""
+
+		// Current initializing subsystem is important to know because it might be a problem with
+		// things running pre-assets-initialization.
+		if (Master.current_runlevel == RUNLEVEL_INIT && !isnull(Master.current_initializing_subsystem))
+			extra_info = "Info was attempted to be retrieved while [Master.current_initializing_subsystem] was initializing."
+
+		CRASH("Preference type `[preference_type]` is invalid! [extra_info]")
 
 	return preference_entry.read(get_savefile_for_savefile_identifier(preference_entry.savefile_identifier))
 

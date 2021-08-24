@@ -2108,7 +2108,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if (EYECOLOR)
 				features += "eye_color"
 			if (FACEHAIR)
-				features += "facial_hair"
+				features += "facial_style_name"
 				features += "facial_hair_color"
 			if (HAIR)
 				features += "hair"

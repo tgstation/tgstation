@@ -26,10 +26,7 @@ for (const antagKey of requireAntag.keys()) {
     antag.category,
     binaryInsertAntag(
       antagsByCategory.get(antag.category) || [],
-      {
-        ...antag,
-        key: antagKey,
-      },
+      antag,
     )
   );
 }

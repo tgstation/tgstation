@@ -1,9 +1,3 @@
-// These will be shown in the character sidebar, but at the bottom.
-#define PREFERENCE_CATEGORY_FEATURES "features"
-
-// These will show in the list to the right of the character preview.
-#define PREFERENCE_CATEGORY_SECONDARY_FEATURES "secondary_features"
-
 /datum/preference/choiced/moth_antennae
 	savefile_key = "feature_moth_antennae"
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -129,6 +123,3 @@
 
 /datum/preference/color_legacy/hair_color/apply_to_human(mob/living/carbon/human/target, value)
 	target.hair_color = value
-
-#undef PREFERENCE_CATEGORY_FEATURES
-#undef PREFERENCE_CATEGORY_SECONDARY_FEATURES

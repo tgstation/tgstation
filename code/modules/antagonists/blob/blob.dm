@@ -125,6 +125,7 @@
 /datum/antagonist/blob/infection/get_preview_icon()
 	var/icon/blob_icon = ..()
 
+	// MOTHBLOCKS TODO: Make this a blob zombie
 	var/icon/human_icon = finish_preview_icon(render_preview_outfit(/datum/outfit/job/miner))
 	human_icon.ChangeOpacity(0.7)
 	blob_icon.Blend(human_icon, ICON_OVERLAY)
