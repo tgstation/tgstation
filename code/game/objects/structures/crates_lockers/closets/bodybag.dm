@@ -176,7 +176,7 @@
 	contents_pressure_protection = 1
 	contents_thermal_insulation = 1
 	foldedbag_path = /obj/item/bodybag/environmental/nanotrasen/
-	weather_protection = list(WEATHER_ALL)
+	weather_protection = list(TRAIT_WEATHER_IMMUNE)
 
 /// Securable enviro. bags
 
@@ -303,7 +303,7 @@
 	contents_pressure_protection = 1
 	contents_thermal_insulation = 1
 	foldedbag_path = /obj/item/bodybag/environmental/prisoner/syndicate
-	weather_protection = list(WEATHER_ALL)
+	weather_protection = list(TRAIT_WEATHER_IMMUNE)
 	breakout_time = 8 MINUTES
 	sinch_time = 20 SECONDS
 	// The contents of the gas to be distributed to an occupant once sinched down. Set in Initialize()

@@ -42,15 +42,6 @@
 /// Involved in checking the likelyhood of applying a wound to a mob.
 #define WOUND "wound"
 
-// Weather immunities //
-#define WEATHER_STORM "storm"
-#define TRAIT_ASHSTORM_IMMUNE "ash"
-#define WEATHER_LAVA "lava"
-#define TRAIT_RADSTORM_IMMUNE "rad"
-#define TRAIT_SNOWSTORM_IMMUNE "snow"
-#define TRAIT_VOIDSTORM_IMMUNE "void"
-#define WEATHER_ALL "all"
-
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS (1<<0)
 #define FIRELOSS (1<<1)
