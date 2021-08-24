@@ -93,33 +93,3 @@
 
 /datum/preference/choiced/moth_wings/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["moth_wings"] = value
-
-/datum/preference/color_legacy/eye_color
-	savefile_key = "eye_color"
-	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-
-/datum/preference/color_legacy/eye_color/apply_to_human(mob/living/carbon/human/target, value)
-	target.eye_color = value
-
-	var/obj/item/organ/eyes/eyes_organ = target.getorgan(/obj/item/organ/eyes)
-	if (istype(eyes_organ))
-		if (!initial(eyes_organ.eye_color))
-			eyes_organ.eye_color = value
-		eyes_organ.old_eye_color = value
-
-/datum/preference/color_legacy/facial_hair_color
-	savefile_key = "facial_hair_color"
-	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-
-/datum/preference/color_legacy/facial_hair_color/apply_to_human(mob/living/carbon/human/target, value)
-	target.facial_hair_color = value
-
-/datum/preference/color_legacy/hair_color
-	savefile_key = "hair_color"
-	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-
-/datum/preference/color_legacy/hair_color/apply_to_human(mob/living/carbon/human/target, value)
-	target.hair_color = value

@@ -10,6 +10,16 @@
 /// These will show in the list to the right of the character preview.
 #define PREFERENCE_CATEGORY_SECONDARY_FEATURES "secondary_features"
 
+// Priorities must be in order!
+/// The default priority level
+#define PREFERENCE_PRIORITY_DEFAULT 1
+
+/// The priority at which species runs, needed for external organs to apply properly
+#define PREFERENCE_PRIORITY_SPECIES 2
+
+/// The maximum preference priority, keep this updated, but don't use it for `priority`.
+#define MAX_PREFERENCE_PRIORITY 2
+
 /// An assoc list list of types to instantiated `/datum/preference` instances
 GLOBAL_LIST_INIT(preference_entries, init_preference_entries())
 
@@ -32,6 +42,19 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		output[initial(preference_type.savefile_key)] = GLOB.preference_entries[preference_type]
 	return output
 
+/// Returns a flat list of preferences in order of their priority
+/proc/get_preferences_in_priority_order()
+	var/list/preferences[MAX_PREFERENCE_PRIORITY]
+
+	for (var/preference_type in GLOB.preference_entries)
+		var/datum/preference/preference = GLOB.preference_entries[preference_type]
+		LAZYADD(preferences[preference.priority], preference)
+
+	var/list/flattened = list()
+	for (var/index in 1 to MAX_PREFERENCE_PRIORITY)
+		flattened += preferences[index]
+	return flattened
+
 /// Represents an individual preference.
 /datum/preference
 	/// The key inside the savefile to use.
@@ -52,6 +75,10 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// See the documentation in [code/__DEFINES/preferences.dm].
 	// MOTHBLOCKS TODO: Verify all are set (and valid) in unit tests.
 	var/savefile_identifier
+
+	/// The priority of when to apply this preference.
+	/// Used for when you need to rely on another preference.
+	var/priority = PREFERENCE_PRIORITY_DEFAULT
 
 /// Called on the saved input when retrieving.
 /// Input is the value inside the savefile, output is to tell other code

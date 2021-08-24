@@ -175,12 +175,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		fcopy(S, bacpath) //byond helpfully lets you use a savefile for the first arg.
 		return FALSE
 
-	for (var/preference_type in GLOB.preference_entries)
-		var/datum/preference/preference = GLOB.preference_entries[preference_type]
+	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (preference.savefile_identifier != PREFERENCE_PLAYER)
 			continue
 
-		preference.apply_to_client(parent, read_preference(preference_type))
+		preference.apply_to_client(parent, read_preference(preference.type))
 
 	//general preferences
 	READ_FILE(S["asaycolor"], asaycolor)
@@ -508,13 +507,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return FALSE
 	S.cd = "/character[default_slot]"
 
-	for (var/preference_type in GLOB.preference_entries)
-		var/datum/preference/preference = GLOB.preference_entries[preference_type]
+	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (preference.savefile_identifier != PREFERENCE_CHARACTER)
 			continue
 
 		write_preference(preference, preference.serialize(
-			read_preference(GLOB.preference_entries[preference_type]),
+			read_preference(GLOB.preference_entries[preference.type]),
 			src,
 		))
 

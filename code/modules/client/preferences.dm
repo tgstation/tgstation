@@ -412,6 +412,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return character_preview_view
 
+// MOTHBLOCKS TODO: Asset file?
 /datum/preferences/proc/generate_preference_values(datum/preference/choiced/preference)
 	var/list/values
 	var/list/choices = preference.get_choices_serialized()
@@ -439,12 +440,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/compile_character_preferences(mob/user)
 	var/list/preferences = list()
 
-	for (var/preference_type in GLOB.preference_entries)
-		var/datum/preference/preference = GLOB.preference_entries[preference_type]
-
+	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		LAZYINITLIST(preferences[preference.category])
 
-		var/value = read_preference(preference_type)
+		var/value = read_preference(preference.type)
 		var/data = preference.compile_ui_data(user, value)
 
 		preferences[preference.category][preference.savefile_key] = data
@@ -628,14 +627,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	// 		else if(firstspace == name_length)
 	// 			real_name += "[pick(GLOB.last_names)]"
 
-	for (var/preference_type in GLOB.preference_entries)
-		var/datum/preference/preference = GLOB.preference_entries[preference_type]
+	character.dna.features = features.Copy()
+
+	for (var/datum/preference/preference in get_preferences_in_priority_order())
 		if (preference.savefile_identifier != PREFERENCE_CHARACTER)
 			continue
 
-		preference.apply_to_human(character, read_preference(preference_type))
+		preference.apply_to_human(character, read_preference(preference.type))
 
-	character.dna.features = features.Copy()
 	character.dna.real_name = character.real_name
 
 	// MOTHBLOCKS TODO: What is all this for? If it doesn't include moth wings, then what is it?
