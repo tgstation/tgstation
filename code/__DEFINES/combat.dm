@@ -44,12 +44,11 @@
 
 // Weather immunities //
 #define WEATHER_STORM "storm"
-#define WEATHER_ACID "acid"
-#define WEATHER_ASH "ash"
+#define TRAIT_ASHSTORM_IMMUNE "ash"
 #define WEATHER_LAVA "lava"
-#define WEATHER_RAD "rad"
-#define WEATHER_SNOW "snow"
-#define WEATHER_VOID "void"
+#define TRAIT_RADSTORM_IMMUNE "rad"
+#define TRAIT_SNOWSTORM_IMMUNE "snow"
+#define TRAIT_VOIDSTORM_IMMUNE "void"
 #define WEATHER_ALL "all"
 
 //bitflag damage defines used for suicide_act

@@ -150,7 +150,7 @@
 	B.w_class = max_weight_of_contents
 	usr.put_in_hands(B)
 
-/// Environmental bags
+/// Environmental bags. They protect against bad weather.
 
 /obj/structure/closet/body_bag/environmental
 	name = "environmental protection bag"
@@ -161,7 +161,12 @@
 	contents_pressure_protection = 0.8
 	contents_thermal_insulation = 0.5
 	foldedbag_path = /obj/item/bodybag/environmental/
-	weather_protection = list(WEATHER_ACID, WEATHER_ASH, WEATHER_RAD, WEATHER_SNOW, WEATHER_VOID) // Does not protect against lava or the The Floor Is Lava spell.
+	var/list/weather_protection = list(TRAIT_ASHSTORM_IMMUNE, TRAIT_RADSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_VOIDSTORM_IMMUNE) // Does not protect against lava or the The Floor Is Lava spell.
+
+/obj/structure/closet/body_bag/environmental/Initialize()
+	. = ..()
+	for(var/trait in weather_protection)
+		ADD_TRAIT(src, trait, ROUNDSTART_TRAIT)
 
 /obj/structure/closet/body_bag/environmental/nanotrasen
 	name = "elite environmental protection bag"

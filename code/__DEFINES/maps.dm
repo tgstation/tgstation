@@ -40,8 +40,8 @@ require only minor tweaks.
 #define ZTRAIT_ISOLATED_RUINS "Isolated Ruins" //Placing ruins on z levels with this trait will use turf reservation instead of usual placement.
 
 // boolean - weather types that occur on the level
-#define ZTRAIT_SNOWSTORM "Weather_Snowstorm"
-#define ZTRAIT_ASHSTORM "Weather_Ashstorm"
+#define ZTRAIT_SNOWSTORM "TRAIT_SNOWSTORM_IMMUNEstorm"
+#define ZTRAIT_ASHSTORM "TRAIT_ASHSTORM_IMMUNEstorm"
 #define ZTRAIT_ACIDRAIN "Weather_Acidrain"
 #define ZTRAIT_VOIDSTORM "Weather_Voidstorm"
 
