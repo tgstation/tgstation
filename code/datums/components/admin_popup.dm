@@ -60,7 +60,7 @@
 	plane = ABOVE_HUD_PLANE
 	layer = ADMIN_POPUP_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	screen_loc = "TOP,LEFT"
+	screen_loc = "TOP-5,LEFT"
 	maptext_height = 480
 	maptext_width = 480
 	maptext = ""
