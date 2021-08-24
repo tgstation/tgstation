@@ -218,8 +218,8 @@
 /obj/machinery/photocopier/proc/make_devil_paper_copy()
 	if(!paper_copy)
 		return
-	var/obj/item/paper/contract/employment/E = paper_copy
-	var/obj/item/paper/contract/employment/C = new(loc, E.target.current)
+	var/obj/item/paper/employment_contract/E = paper_copy
+	var/obj/item/paper/employment_contract/C = new(loc, E.employee_name)
 	give_pixel_offset(C)
 
 /**
