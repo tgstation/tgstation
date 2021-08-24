@@ -1,0 +1,4 @@
+author: "AccountName5"
+delete-after: True
+changes: 
+  - bugfix: "Fixed bug that prevented you from placing vertical bridge pipes on horizontal smart pipes."
