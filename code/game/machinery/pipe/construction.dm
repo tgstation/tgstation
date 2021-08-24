@@ -168,7 +168,7 @@ Buildable meters
 			return TRUE
 
 		// skip checks if we don't overlap layers, either by being on the same layer or by something being on all layers
-		if((machine.piping_layer != piping_layer) && !((machine.pipe_flags | flags) & PIPING_ALL_LAYER))
+		if(machine.piping_layer != piping_layer && !((machine.pipe_flags | flags) & PIPING_ALL_LAYER))
 			continue
 
 		// If we're a smart pipe, and we're looking to share space with a potentially perpendicular kind of pipe, see if we can smartly go over it as a bridge
