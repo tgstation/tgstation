@@ -16,7 +16,7 @@
 		for (var/obj/item/I in lostimplant.contents())
 			I.add_mob_blood(implantee)
 		lostimplant.do_quick_empty()
-		implantee.visible_message("<span class='warning'>A bluespace pocket opens around [src] as it exits [implantee], spewing out its contents and rupturing the surrounding tissue!</span>")
+		implantee.visible_message(span_warning("A bluespace pocket opens around [src] as it exits [implantee], spewing out its contents and rupturing the surrounding tissue!"))
 		implantee.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
 		qdel(lostimplant)
 	return ..()

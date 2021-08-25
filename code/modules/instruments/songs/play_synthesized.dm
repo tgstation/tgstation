@@ -4,7 +4,7 @@
 /datum/song/proc/compile_synthesized()
 	if(!length(src.lines))
 		return
-	var/list/lines = src.lines		//cache for hyepr speed!
+	var/list/lines = src.lines //cache for hyepr speed!
 	compiled_chords = list()
 	var/list/octaves = list(3, 3, 3, 3, 3, 3, 3)
 	var/list/accents = list("n", "n", "n", "n", "n", "n", "n")
@@ -17,7 +17,7 @@
 			var/len = length(notes_tempodiv)
 			if(len >= 2)
 				tempodiv = text2num(notes_tempodiv[2])
-			if(len)			//some dunkass is going to do ,,,, to make 3 rests instead of ,/1 because there's no standardization so let's be prepared for that.
+			if(len) //some dunkass is going to do ,,,, to make 3 rests instead of ,/1 because there's no standardization so let's be prepared for that.
 				var/list/notes = splittext(notes_tempodiv[1], "-")
 				for(var/note in notes)
 					if(length(note) == 0)
@@ -29,12 +29,12 @@
 					for(var/i in 2 to length(note))
 						var/oct_acc = copytext(note, i, i + 1)
 						var/num = text2num(oct_acc)
-						if(!num)		//it's an accidental
-							accents[key] = oct_acc		//if they misspelled it/fucked up that's on them lmao, no safety checks.
-						else	//octave
+						if(!num) //it's an accidental
+							accents[key] = oct_acc //if they misspelled it/fucked up that's on them lmao, no safety checks.
+						else //octave
 							octaves[key] = clamp(num, octave_min, octave_max)
 					compiled_chord += clamp((note_offset_lookup[key] + octaves[key] * 12 + accent_lookup[accents[key]]), key_min, key_max)
-			compiled_chord += tempodiv		//this goes last
+			compiled_chord += tempodiv //this goes last
 			if(length(compiled_chord))
 				compiled_chords[++compiled_chords.len] = compiled_chord
 
@@ -47,7 +47,7 @@
 		key = clamp(key + note_shift, key_min, key_max)
 	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
 		do_hearcheck()
-	var/datum/instrument_key/K = using_instrument.samples[num2text(key)]			//See how fucking easy it is to make a number text? You don't need a complicated 9 line proc!
+	var/datum/instrument_key/K = using_instrument.samples[num2text(key)] //See how fucking easy it is to make a number text? You don't need a complicated 9 line proc!
 	//Should probably add channel limiters here at some point but I don't care right now.
 	var/channel = pop_channel()
 	if(isnull(channel))
@@ -94,7 +94,7 @@
  * Pops a channel we have reserved so we don't have to release and re-request them from SSsounds every time we play a note. This is faster.
  */
 /datum/song/proc/pop_channel()
-	if(length(channels_idle))			//just pop one off of here if we have one available
+	if(length(channels_idle)) //just pop one off of here if we have one available
 		. = text2num(channels_idle[1])
 		channels_idle.Cut(1,2)
 		return

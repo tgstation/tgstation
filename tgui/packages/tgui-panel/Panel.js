@@ -37,7 +37,7 @@ export const Panel = (props, context) => {
       <Stack fill vertical>
         <Stack.Item>
           <Section fitted>
-            <Stack mx={1} align="center">
+            <Stack mr={1} align="center">
               <Stack.Item grow overflowX="auto">
                 <ChatTabs />
               </Stack.Item>
@@ -50,7 +50,7 @@ export const Panel = (props, context) => {
                   selected={audio.visible}
                   icon="music"
                   tooltip="Music player"
-                  tooltipPosition="bottom-left"
+                  tooltipPosition="bottom-start"
                   onClick={() => audio.toggle()} />
               </Stack.Item>
               <Stack.Item>
@@ -60,7 +60,7 @@ export const Panel = (props, context) => {
                   tooltip={settings.visible
                     ? 'Close settings'
                     : 'Open settings'}
-                  tooltipPosition="bottom-left"
+                  tooltipPosition="bottom-start"
                   onClick={() => settings.toggle()} />
               </Stack.Item>
             </Stack>

@@ -18,12 +18,12 @@
 		cancel_stealth()
 	else
 		if(cell.charge <= 0)
-			to_chat(ninja, "<span class='warning'>You don't have enough power to enable Stealth!</span>")
+			to_chat(ninja, span_warning("You don't have enough power to enable Stealth!"))
 			return
 		stealth = !stealth
 		animate(ninja, alpha = 20,time = 12)
-		ninja.visible_message("<span class='warning'>[ninja.name] vanishes into thin air!</span>", \
-						"<span class='notice'>You are now mostly invisible to normal detection.</span>")
+		ninja.visible_message(span_warning("[ninja.name] vanishes into thin air!"), \
+						span_notice("You are now mostly invisible to normal detection."))
 
 /**
  * Proc called to cancel stealth.
@@ -40,7 +40,7 @@
 	if(stealth)
 		stealth = !stealth
 		animate(ninja, alpha = 255, time = 12)
-		ninja.visible_message("<span class='warning'>[ninja.name] appears from thin air!</span>", \
-						"<span class='notice'>You are now visible.</span>")
+		ninja.visible_message(span_warning("[ninja.name] appears from thin air!"), \
+						span_notice("You are now visible."))
 		return TRUE
 	return FALSE

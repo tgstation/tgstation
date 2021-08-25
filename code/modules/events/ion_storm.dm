@@ -11,7 +11,7 @@
 	var/shuffleLawsChance = 10 //chance the AI's laws are shuffled afterwards
 	var/botEmagChance = 1
 	var/ionMessage = null
-	announceWhen	= 1
+	announceWhen = 1
 	announceChance = 33
 
 /datum/round_event/ion_storm/add_law_only // special subtype that adds a law only
@@ -30,7 +30,7 @@
 	//AI laws
 	for(var/mob/living/silicon/ai/M in GLOB.alive_mob_list)
 		M.laws_sanity_check()
-		if(M.stat != DEAD && M.see_in_dark != 0)
+		if(M.stat != DEAD && !M.incapacitated())
 			if(prob(replaceLawsetChance))
 				M.laws.pick_weighted_lawset()
 

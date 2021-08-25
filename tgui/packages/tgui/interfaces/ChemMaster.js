@@ -8,8 +8,7 @@ export const ChemMaster = (props, context) => {
   return (
     <Window
       width={465}
-      height={550}
-      resizable>
+      height={550}>
       <Window.Content scrollable>
         {screen === 'analyze' && (
           <AnalysisResults />
@@ -376,6 +375,9 @@ const AnalysisResults = (props, context) => {
         </LabeledList.Item>
         <LabeledList.Item label="State">
           {analyzeVars.state}
+        </LabeledList.Item>
+        <LabeledList.Item label="pH">
+          {analyzeVars.ph}
         </LabeledList.Item>
         <LabeledList.Item label="Color">
           <ColorBox color={analyzeVars.color} mr={1} />

@@ -59,14 +59,21 @@ task-webpack() {
 ## Runs a development server
 task-dev-server() {
   cd "${base_dir}"
-  yarn node packages/tgui-dev-server/index.esm.js "${@}"
+  yarn node --experimental-modules packages/tgui-dev-server/index.js "${@}"
 }
 
 ## Run a linter through all packages
-task-eslint() {
+task-lint() {
   cd "${base_dir}"
-  yarn run eslint packages "${@}"
+  yarn run tsc
+  echo "tgui: type check passed"
+  yarn run eslint packages --ext .js,.cjs,.ts,.tsx "${@}"
   echo "tgui: eslint check passed"
+}
+
+task-test() {
+  cd "${base_dir}"
+  yarn run jest
 }
 
 ## Mr. Proper
@@ -82,9 +89,10 @@ task-clean() {
   rm -rf .yarn/cache
   rm -rf .yarn/unplugged
   rm -rf .yarn/webpack
-  rm -rf .yarn/build-state.yml
-  rm -rf .yarn/install-state.gz
-  rm -f .pnp.js
+  rm -f .yarn/build-state.yml
+  rm -f .yarn/install-state.gz
+  rm -f .yarn/install-target
+  rm -f .pnp.*
   ## NPM artifacts
   rm -rf **/node_modules
   rm -f **/package-lock.json
@@ -147,21 +155,28 @@ fi
 if [[ ${1} == '--lint' ]]; then
   shift 1
   task-install
-  task-eslint "${@}"
+  task-lint "${@}"
   exit 0
 fi
 
 if [[ ${1} == '--lint-harder' ]]; then
   shift 1
   task-install
-  task-eslint -c .eslintrc-harder.yml "${@}"
+  task-lint -c .eslintrc-harder.yml "${@}"
   exit 0
 fi
 
 if [[ ${1} == '--fix' ]]; then
   shift 1
   task-install
-  task-eslint --fix "${@}"
+  task-lint --fix "${@}"
+  exit 0
+fi
+
+if [[ ${1} == '--test' ]]; then
+  shift 1
+  task-install
+  task-test "${@}"
   exit 0
 fi
 
@@ -182,7 +197,7 @@ fi
 ## Make a production webpack build + Run eslint
 if [[ -z ${1} ]]; then
   task-install
-  task-eslint --fix
+  task-lint --fix
   task-webpack --mode=production
   exit 0
 fi

@@ -17,17 +17,13 @@
 	bolt_drop_sound = 'sound/weapons/gun/rifle/bolt_in.ogg'
 	tac_reloads = FALSE
 
-/obj/item/gun/ballistic/rifle/update_overlays()
-	. = ..()
-	. += "[icon_state]_bolt[bolt_locked ? "_locked" : ""]"
-
 /obj/item/gun/ballistic/rifle/rack(mob/user = null)
 	if (bolt_locked == FALSE)
-		to_chat(user, "<span class='notice'>You open the bolt of \the [src].</span>")
+		to_chat(user, span_notice("You open the bolt of \the [src]."))
 		playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
 		process_chamber(FALSE, FALSE, FALSE)
 		bolt_locked = TRUE
-		update_icon()
+		update_appearance()
 		return
 	drop_bolt(user)
 
@@ -38,7 +34,7 @@
 
 /obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	if (!bolt_locked && !istype(A, /obj/item/stack/sheet/cloth))
-		to_chat(user, "<span class='notice'>The bolt is closed!</span>")
+		to_chat(user, span_notice("The bolt is closed!"))
 		return
 	return ..()
 
@@ -74,7 +70,7 @@
 	if(.)
 		spread = 36
 		can_bayonet = FALSE
-		update_icon()
+		update_appearance()
 
 /obj/item/gun/ballistic/rifle/boltaction/attack_self(mob/user)
 	if(can_jam)
@@ -84,14 +80,14 @@
 				unjam_chance = 10
 			else
 				unjam_chance += 10
-				to_chat(user, "<span class='warning'>[src] is jammed!</span>")
+				to_chat(user, span_warning("[src] is jammed!"))
 				playsound(user,'sound/weapons/jammed.ogg', 75, TRUE)
 				return FALSE
 	..()
 
 /obj/item/gun/ballistic/rifle/boltaction/process_fire(mob/user)
 	if(can_jam)
-		if(chambered.BB)
+		if(chambered.loaded_projectile)
 			if(prob(jamming_chance))
 				jammed = TRUE
 			jamming_chance  += jamming_increment
@@ -104,13 +100,13 @@
 		if(bolt_locked)
 			if(istype(item, /obj/item/gun_maintenance_supplies))
 				if(do_after(user, 10 SECONDS, target = src))
-					user.visible_message("<span class='notice'>[user] finishes maintenance of [src].</span>")
+					user.visible_message(span_notice("[user] finishes maintenance of [src]."))
 					jamming_chance = 10
 					qdel(item)
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = FALSE
-	if(chambered?.BB)
+	if(chambered?.loaded_projectile)
 		process_fire(user, user, FALSE)
 		. = TRUE
 
@@ -123,6 +119,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	can_be_sawn_off = FALSE
+	can_jam = FALSE
 
 /obj/item/gun/ballistic/rifle/boltaction/brand_new
 	name = "Mosin Nagant"
@@ -166,6 +163,7 @@
 	worn_icon_state = "musket_prime"
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
 	can_misfire = FALSE
+	can_jam = FALSE
 	misfire_probability = 0
 	misfire_percentage_increment = 0
 	projectile_damage_multiplier = 1
@@ -191,6 +189,7 @@
 	item_flags = NEEDS_PERMIT | DROPDEL | ABSTRACT | NOBLUDGEON
 	flags_1 = NONE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+	show_bolt_icon = FALSE //It's a magic hand, not a rifle
 
 	mag_type = /obj/item/ammo_box/magazine/internal/arcane_barrage
 

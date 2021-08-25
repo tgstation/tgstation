@@ -21,6 +21,27 @@
 	C.toggle_throw_mode()
 	return TRUE
 
+/datum/keybinding/carbon/hold_throw_mode
+	hotkey_keys = list("Space")
+	name = "hold_throw_mode"
+	full_name = "Hold throw mode"
+	description = "Hold this to turn on throw mode, and release it to turn off throw mode"
+	category = CATEGORY_CARBON
+	keybind_signal = COMSIG_KB_CARBON_HOLDTHROWMODE_DOWN
+
+/datum/keybinding/carbon/hold_throw_mode/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/carbon/carbon_user = user.mob
+	carbon_user.throw_mode_on(THROW_MODE_HOLD)
+
+/datum/keybinding/carbon/hold_throw_mode/up(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/carbon/carbon_user = user.mob
+	carbon_user.throw_mode_off(THROW_MODE_HOLD)
 /datum/keybinding/carbon/give
 	hotkey_keys = list("G")
 	name = "Give_Item"
@@ -32,6 +53,6 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/living/carbon/C = user.mob
-	C.give()
+	var/mob/living/carbon/carbon_user = user.mob
+	carbon_user.give()
 	return TRUE

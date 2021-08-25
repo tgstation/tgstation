@@ -8,7 +8,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = HEAR_1
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=60, /datum/material/glass=30)
 	force = 2
@@ -36,24 +35,30 @@
 	. = ..()
 	if(starting_tape_type)
 		mytape = new starting_tape_type(src)
-	soundloop = new(list(src))
-	update_icon()
+	soundloop = new(src)
+	update_appearance()
+	become_hearing_sensitive()
+
+/obj/item/taperecorder/Destroy()
+	QDEL_NULL(soundloop)
+	QDEL_NULL(mytape)
+	return ..()
 
 /obj/item/taperecorder/proc/readout()
 	if(mytape)
 		if(playing)
-			return "<span class='notice'><b>PLAYING</b></span>"
+			return span_notice("<b>PLAYING</b>")
 		else
 			var/time = mytape.used_capacity / 10 //deciseconds / 10 = seconds
 			var/mins = round(time / 60)
 			var/secs = time - mins * 60
-			return "<span class='notice'><b>[mins]</b>m <b>[secs]</b>s</span>"
-	return "<span class='notice'><b>NO TAPE INSERTED</b></span>"
+			return span_notice("<b>[mins]</b>m <b>[secs]</b>s")
+	return span_notice("<b>NO TAPE INSERTED</b>")
 
 /obj/item/taperecorder/examine(mob/user)
 	. = ..()
 	if(in_range(src, user) || isobserver(user))
-		. += "<span class='notice'>The wire panel is [open_panel ? "opened" : "closed"]. The display reads:</span>"
+		. += span_notice("The wire panel is [open_panel ? "opened" : "closed"]. The display reads:")
 		. += "[readout()]"
 
 /obj/item/taperecorder/AltClick(mob/user)
@@ -86,26 +91,26 @@
 		if(!user.transferItemToLoc(I,src))
 			return
 		mytape = I
-		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+		to_chat(user, span_notice("You insert [I] into [src]."))
 		playsound(src, 'sound/items/taperecorder/taperecorder_close.ogg', 50, FALSE)
-		update_icon()
+		update_appearance()
 
 
 /obj/item/taperecorder/proc/eject(mob/user)
 	if(mytape)
 		playsound(src, 'sound/items/taperecorder/taperecorder_open.ogg', 50, FALSE)
-		to_chat(user, "<span class='notice'>You remove [mytape] from [src].</span>")
+		to_chat(user, span_notice("You remove [mytape] from [src]."))
 		stop()
 		user.put_in_hands(mytape)
 		mytape = null
-		update_icon()
+		update_appearance()
 
 /obj/item/taperecorder/fire_act(exposed_temperature, exposed_volume)
 	mytape.unspool() //Fires unspool the tape, which makes sense if you don't think about it
 	..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/taperecorder/attack_hand(mob/user)
+/obj/item/taperecorder/attack_hand(mob/user, list/modifiers)
 	if(loc != user || !mytape || !user.is_holding(src))
 		return ..()
 	eject(user)
@@ -132,12 +137,15 @@
 /obj/item/taperecorder/update_icon_state()
 	if(!mytape)
 		icon_state = "taperecorder_empty"
-	else if(recording)
+		return ..()
+	if(recording)
 		icon_state = "taperecorder_recording"
-	else if(playing)
+		return ..()
+	if(playing)
 		icon_state = "taperecorder_playing"
-	else
-		icon_state = "taperecorder_idle"
+		return ..()
+	icon_state = "taperecorder_idle"
+	return ..()
 
 
 /obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list())
@@ -166,8 +174,8 @@
 		recording = TRUE
 		say("Recording started.")
 		update_sound()
-		update_icon()
-		var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
+		update_appearance()
+		var/used = mytape.used_capacity //to stop runtimes when you eject the tape
 		var/max = mytape.max_capacity
 		while(recording && used < max)
 			mytape.used_capacity += 1 SECONDS
@@ -200,7 +208,7 @@
 		say("Playback stopped.")
 		playing = FALSE
 	time_warned = FALSE
-	update_icon()
+	update_appearance()
 	update_sound()
 
 /obj/item/taperecorder/verb/play()
@@ -217,11 +225,11 @@
 		return
 
 	playing = TRUE
-	update_icon()
+	update_appearance()
 	update_sound()
 	say("Playback started.")
 	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
-	var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
+	var/used = mytape.used_capacity //to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
 	for(var/i = 1, used <= max, sleep(playsleepseconds))
 		if(!mytape)
@@ -248,10 +256,10 @@
 
 /obj/item/taperecorder/attack_self(mob/user)
 	if(!mytape)
-		to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
+		to_chat(user, span_notice("\The [src] is empty."))
 		return
 	if(mytape.unspooled)
-		to_chat(user, "<span class='warning'>\The tape inside \the [src] is broken!</span>")
+		to_chat(user, span_warning("\The tape inside \the [src] is broken!"))
 		return
 
 	update_available_icons()
@@ -282,7 +290,7 @@
 	if(!mytape)
 		return
 	if(!canprint)
-		to_chat(usr, "<span class='warning'>The recorder can't print that fast!</span>")
+		to_chat(usr, span_warning("The recorder can't print that fast!"))
 		return
 	if(recording || playing)
 		return
@@ -372,13 +380,13 @@
 				if(loc != user)
 					return
 				tapeflip()
-				to_chat(user, "<span class='notice'>You turn \the [src] over.</span>")
+				to_chat(user, span_notice("You turn \the [src] over."))
 				playsound(src, 'sound/items/taperecorder/tape_flip.ogg', 70, FALSE)
 			if("Unwind tape")
 				if(loc != user)
 					return
 				unspool()
-				to_chat(user, "<span class='warning'>You pull out all the tape!</span>")
+				to_chat(user, span_warning("You pull out all the tape!"))
 
 /obj/item/tape/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(prob(50))
@@ -416,9 +424,9 @@
 
 /obj/item/tape/attackby(obj/item/I, mob/user, params)
 	if(unspooled && (I.tool_behaviour == TOOL_SCREWDRIVER))
-		to_chat(user, "<span class='notice'>You start winding the tape back in...</span>")
+		to_chat(user, span_notice("You start winding the tape back in..."))
 		if(I.use_tool(src, user, 120))
-			to_chat(user, "<span class='notice'>You wind the tape back in.</span>")
+			to_chat(user, span_notice("You wind the tape back in."))
 			respool()
 
 //Random colour tapes

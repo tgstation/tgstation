@@ -1,6 +1,7 @@
 /datum/computer_file/program/ntnet_dos
 	filename = "ntn_dos"
 	filedesc = "DoS Traffic Generator"
+	category = PROGRAM_CATEGORY_MISC
 	program_icon_state = "hostile"
 	extended_desc = "This advanced script can perform denial of service attacks against NTNet quantum relays. The system administrator will probably notice this. Multiple devices can run this program together against same relay for increased effect"
 	size = 20

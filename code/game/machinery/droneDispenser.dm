@@ -96,6 +96,12 @@
 	starting_amount = 0
 	cooldownTime = 600
 
+/obj/machinery/drone_dispenser/classic
+	name = "classic drone shell dispenser"
+	desc = "A hefty machine that, when supplied with iron and glass, will periodically create a classic drone shell. Does not need to be manually operated."
+	dispense_type = /obj/effect/mob_spawn/drone/classic
+	end_create_message = "dispenses a classic drone shell."
+
 // An example of a custom drone dispenser.
 // This one requires no materials and creates basic hivebots
 /obj/machinery/drone_dispenser/hivebot
@@ -120,7 +126,7 @@
 /obj/machinery/drone_dispenser/examine(mob/user)
 	. = ..()
 	if((mode == DRONE_RECHARGING) && !machine_stat && recharging_text)
-		. += "<span class='warning'>[recharging_text]</span>"
+		. += span_warning("[recharging_text]")
 
 /obj/machinery/drone_dispenser/process()
 	..()
@@ -141,12 +147,12 @@
 			if(maximum_idle && (count_shells() >= maximum_idle))
 				return // then do nothing; check again next tick
 			if(begin_create_message)
-				visible_message("<span class='notice'>[src] [begin_create_message]</span>")
+				visible_message(span_notice("[src] [begin_create_message]"))
 			if(work_sound)
 				playsound(src, work_sound, 50, TRUE)
 			mode = DRONE_PRODUCTION
 			timer = world.time + production_time
-			update_icon()
+			update_appearance()
 
 		if(DRONE_PRODUCTION)
 			materials.use_materials(using_materials)
@@ -159,20 +165,20 @@
 			if(create_sound)
 				playsound(src, create_sound, 50, TRUE)
 			if(end_create_message)
-				visible_message("<span class='notice'>[src] [end_create_message]</span>")
+				visible_message(span_notice("[src] [end_create_message]"))
 
 			mode = DRONE_RECHARGING
 			timer = world.time + cooldownTime
-			update_icon()
+			update_appearance()
 
 		if(DRONE_RECHARGING)
 			if(recharge_sound)
 				playsound(src, recharge_sound, 50, TRUE)
 			if(recharge_message)
-				visible_message("<span class='notice'>[src] [recharge_message]</span>")
+				visible_message(span_notice("[src] [recharge_message]"))
 
 			mode = DRONE_READY
-			update_icon()
+			update_appearance()
 
 /obj/machinery/drone_dispenser/proc/count_shells()
 	. = 0
@@ -183,42 +189,45 @@
 /obj/machinery/drone_dispenser/update_icon_state()
 	if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = icon_off
-	else if(mode == DRONE_RECHARGING)
+		return ..()
+	if(mode == DRONE_RECHARGING)
 		icon_state = icon_recharging
-	else if(mode == DRONE_PRODUCTION)
+		return ..()
+	if(mode == DRONE_PRODUCTION)
 		icon_state = icon_creating
-	else
-		icon_state = icon_on
+		return ..()
+	icon_state = icon_on
+	return ..()
 
 /obj/machinery/drone_dispenser/attackby(obj/item/I, mob/living/user)
 	if(I.tool_behaviour == TOOL_CROWBAR)
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		materials.retrieve_all()
 		I.play_tool_sound(src)
-		to_chat(user, "<span class='notice'>You retrieve the materials from [src].</span>")
+		to_chat(user, span_notice("You retrieve the materials from [src]."))
 
 	else if(I.tool_behaviour == TOOL_WELDER)
 		if(!(machine_stat & BROKEN))
-			to_chat(user, "<span class='warning'>[src] doesn't need repairs.</span>")
+			to_chat(user, span_warning("[src] doesn't need repairs."))
 			return
 
 		if(!I.tool_start_check(user, amount=1))
 			return
 
 		user.visible_message(
-			"<span class='notice'>[user] begins patching up [src] with [I].</span>",
-			"<span class='notice'>You begin restoring the damage to [src]...</span>")
+			span_notice("[user] begins patching up [src] with [I]."),
+			span_notice("You begin restoring the damage to [src]..."))
 
 		if(!I.use_tool(src, user, 40, volume=50, amount=1))
 			return
 
 		user.visible_message(
-			"<span class='notice'>[user] fixes [src]!</span>",
-			"<span class='notice'>You restore [src] to operation.</span>")
+			span_notice("[user] fixes [src]!"),
+			span_notice("You restore [src] to operation."))
 
 		set_machine_stat(machine_stat & ~BROKEN)
 		obj_integrity = max_integrity
-		update_icon()
+		update_appearance()
 	else
 		return ..()
 
@@ -227,7 +236,7 @@
 	if(!.)
 		return
 	if(break_message)
-		audible_message("<span class='warning'>[src] [break_message]</span>")
+		audible_message(span_warning("[src] [break_message]"))
 	if(break_sound)
 		playsound(src, break_sound, 50, TRUE)
 

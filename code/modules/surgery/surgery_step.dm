@@ -1,11 +1,11 @@
 /datum/surgery_step
 	var/name
-	var/list/implements = list()	//format is path = probability of success. alternatively
-	var/implement_type = null		//the current type of implement used. This has to be stored, as the actual typepath of the tool may not match the list type.
-	var/accept_hand = FALSE				//does the surgery step require an open hand? If true, ignores implements. Compatible with accept_any_item.
-	var/accept_any_item = FALSE			//does the surgery step accept any item? If true, ignores implements. Compatible with require_hand.
-	var/time = 10					//how long does the step take?
-	var/repeatable = FALSE				//can this step be repeated? Make shure it isn't last step, or it used in surgery with `can_cancel = 1`. Or surgion will be stuck in the loop
+	var/list/implements = list() //format is path = probability of success. alternatively
+	var/implement_type = null //the current type of implement used. This has to be stored, as the actual typepath of the tool may not match the list type.
+	var/accept_hand = FALSE //does the surgery step require an open hand? If true, ignores implements. Compatible with accept_any_item.
+	var/accept_any_item = FALSE //does the surgery step accept any item? If true, ignores implements. Compatible with require_hand.
+	var/time = 10 //how long does the step take?
+	var/repeatable = FALSE //can this step be repeated? Make shure it isn't last step, or it used in surgery with `can_cancel = 1`. Or surgion will be stuck in the loop
 	var/list/chems_needed = list()  //list of chems needed to complete the step. Even on success, the step will have no effect if there aren't the chems required in the mob.
 	var/require_all_chems = TRUE    //any on the list or all on the list?
 	var/silicons_obey_prob = FALSE
@@ -42,8 +42,8 @@
 			if(get_location_accessible(target, target_zone) || surgery.ignore_clothes)
 				initiate(user, target, target_zone, tool, surgery, try_to_fail)
 			else
-				to_chat(user, "<span class='warning'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>")
-			return TRUE	//returns TRUE so we don't stab the guy in the dick or wherever.
+				to_chat(user, span_warning("You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!"))
+			return TRUE //returns TRUE so we don't stab the guy in the dick or wherever.
 
 	if(repeatable)
 		var/datum/surgery_step/next_step = surgery.get_surgery_next_step()
@@ -75,10 +75,10 @@
 		speed_mod = tool.toolspeed
 
 	var/implement_speed_mod = 1
-	if(implement_type)	//this means it isn't a require hand or any item step.
+	if(implement_type) //this means it isn't a require hand or any item step.
 		implement_speed_mod = implements[implement_type] / 100.0
 
-	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod)
+	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod) * target.mob_surgery_speed_mod
 	var/modded_time = time * speed_mod
 
 
@@ -114,15 +114,15 @@
 	return advance
 
 /datum/surgery_step/proc/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You begin to perform surgery on [target]...</span>",
-		"<span class='notice'>[user] begins to perform surgery on [target].</span>",
-		"<span class='notice'>[user] begins to perform surgery on [target].</span>")
+	display_results(user, target, span_notice("You begin to perform surgery on [target]..."),
+		span_notice("[user] begins to perform surgery on [target]."),
+		span_notice("[user] begins to perform surgery on [target]."))
 
 /datum/surgery_step/proc/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = TRUE)
 	if(default_display_results)
-		display_results(user, target, "<span class='notice'>You succeed.</span>",
-				"<span class='notice'>[user] succeeds!</span>",
-				"<span class='notice'>[user] finishes.</span>")
+		display_results(user, target, span_notice("You succeed."),
+				span_notice("[user] succeeds!"),
+				span_notice("[user] finishes."))
 	return TRUE
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, fail_prob = 0)
@@ -135,9 +135,9 @@
 		if(75 to 99)
 			screwedmessage = " This is practically impossible in these conditions..."
 
-	display_results(user, target, "<span class='warning'>You screw up![screwedmessage]</span>",
-		"<span class='warning'>[user] screws up!</span>",
-		"<span class='notice'>[user] finishes.</span>", TRUE) //By default the patient will notice if the wrong thing has been cut
+	display_results(user, target, span_warning("You screw up![screwedmessage]"),
+		span_warning("[user] screws up!"),
+		span_notice("[user] finishes."), TRUE) //By default the patient will notice if the wrong thing has been cut
 	return FALSE
 
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)
@@ -149,21 +149,21 @@
 
 	if(require_all_chems)
 		. = TRUE
-		for(var/R in chems_needed)
-			if(!target.reagents.has_reagent(R))
+		for(var/reagent in chems_needed)
+			if(!target.reagents.has_reagent(reagent))
 				return FALSE
 	else
 		. = FALSE
-		for(var/R in chems_needed)
-			if(target.reagents.has_reagent(R))
+		for(var/reagent in chems_needed)
+			if(target.reagents.has_reagent(reagent))
 				return TRUE
 
 /datum/surgery_step/proc/get_chem_list()
 	if(!LAZYLEN(chems_needed))
 		return
 	var/list/chems = list()
-	for(var/R in chems_needed)
-		var/datum/reagent/temp = GLOB.chemical_reagents_list[R]
+	for(var/reagent in chems_needed)
+		var/datum/reagent/temp = GLOB.chemical_reagents_list[reagent]
 		if(temp)
 			var/chemname = temp.name
 			chems += chemname
@@ -174,4 +174,4 @@
 	user.visible_message(detailed_message, self_message, vision_distance = 1, ignored_mobs = target_detailed ? null : target)
 	if(!target_detailed)
 		var/you_feel = pick("a brief pain", "your body tense up", "an unnerving sensation")
-		target.show_message(vague_message, MSG_VISUAL, "<span class='notice'>You feel [you_feel] as you are operated on.</span>")
+		target.show_message(vague_message, MSG_VISUAL, span_notice("You feel [you_feel] as you are operated on."))

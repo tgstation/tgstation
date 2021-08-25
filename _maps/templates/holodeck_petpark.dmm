@@ -92,7 +92,7 @@
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "S" = (
-/obj/item/trash/plate,
+/obj/item/plate,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 1

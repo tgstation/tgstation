@@ -5,7 +5,7 @@
 	max_occurrences = 3
 
 /datum/round_event/grid_check
-	announceWhen	= 1
+	announceWhen = 1
 	startWhen = 1
 
 /datum/round_event/grid_check/announce(fake)

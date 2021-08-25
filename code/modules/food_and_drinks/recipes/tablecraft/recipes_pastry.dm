@@ -394,7 +394,7 @@
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
 		/obj/item/food/meatball = 1,
-		/datum/reagent/tranquility = 5
+		/datum/reagent/gondola_mutation_toxin = 5
 	)
 	result = /obj/item/food/donkpocket/gondola
 	subcategory = CAT_PASTRY
@@ -432,45 +432,26 @@
 	result = /obj/item/food/muffin/booberry
 	subcategory = CAT_PASTRY
 
-/datum/crafting_recipe/food/chawanmushi
-	name = "Chawanmushi"
+
+/datum/crafting_recipe/food/moffin
+	name = "Moffin"
 	reqs = list(
-		/datum/reagent/water = 5,
-		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/food/boiledegg = 2,
-		/obj/item/food/grown/mushroom/chanterelle = 1
+		/datum/reagent/consumable/milk = 5,
+		/obj/item/food/pastrybase = 1,
+		/obj/item/stack/sheet/cloth = 1,
 	)
-	result = /obj/item/food/chawanmushi
+	result = /obj/item/food/muffin/moffin
 	subcategory = CAT_PASTRY
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
-/datum/crafting_recipe/food/hotdog
-	name = "Hot dog"
-	reqs = list(
-		/datum/reagent/consumable/ketchup = 5,
-		/obj/item/food/bun = 1,
-		/obj/item/food/sausage = 1
-	)
-	result = /obj/item/food/hotdog
-	subcategory = CAT_PASTRY
-
-/datum/crafting_recipe/food/meatbun
-	name = "Meat bun"
-	reqs = list(
-		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/food/bun = 1,
-		/obj/item/food/meatball = 1,
-		/obj/item/food/grown/cabbage = 1
-	)
-	result = /obj/item/food/meatbun
-	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/khachapuri
 	name = "Khachapuri"
 	reqs = list(
-		/datum/reagent/consumable/eggyolk = 5,
-		/obj/item/food/cheesewedge = 1,
+		/datum/reagent/consumable/eggyolk = 2,
+		/datum/reagent/consumable/eggwhite = 4,
+		/obj/item/food/cheese = 1,
 		/obj/item/food/bread/plain = 1
 	)
 	result = /obj/item/food/khachapuri
@@ -493,7 +474,7 @@
 		/obj/item/food/pastrybase = 1,
 		/obj/item/paper = 1
 	)
-	parts =	list(
+	parts = list(
 		/obj/item/paper = 1
 	)
 	result = /obj/item/food/fortunecookie

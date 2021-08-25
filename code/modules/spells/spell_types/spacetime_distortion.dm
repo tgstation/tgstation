@@ -6,6 +6,7 @@
 	range = 7
 	var/list/effects
 	var/ready = TRUE
+	school = SCHOOL_EVOCATION
 	centcom_cancast = FALSE
 	sound = 'sound/effects/magic.ogg'
 	cooldown_min = 300
@@ -83,6 +84,10 @@
 /obj/effect/cross_action/spacetime_dist/Initialize(mapload)
 	. = ..()
 	setDir(pick(GLOB.cardinals))
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/cross_action/spacetime_dist/proc/walk_link(atom/movable/AM)
 	if(ismob(AM))
@@ -101,8 +106,8 @@
 	playsound(get_turf(src),sound,70,FALSE)
 	busy = FALSE
 
-/obj/effect/cross_action/spacetime_dist/Crossed(atom/movable/AM)
-	. = ..()
+/obj/effect/cross_action/spacetime_dist/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(!busy)
 		walk_link(AM)
 
@@ -113,10 +118,10 @@
 		walk_link(user)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/effect/cross_action/spacetime_dist/attack_hand(mob/user)
+/obj/effect/cross_action/spacetime_dist/attack_hand(mob/user, list/modifiers)
 	walk_link(user)
 
-/obj/effect/cross_action/spacetime_dist/attack_paw(mob/user)
+/obj/effect/cross_action/spacetime_dist/attack_paw(mob/user, list/modifiers)
 	walk_link(user)
 
 /obj/effect/cross_action/spacetime_dist/Destroy()

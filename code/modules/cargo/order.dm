@@ -51,18 +51,18 @@
 	P.info += "Order #[id]<br/>"
 	P.info += "Time of Order: [station_time_timestamp()]<br/>"
 	P.info += "Item: [pack.name]<br/>"
-	P.info += "Access Restrictions: [get_access_desc(pack.access)]<br/>"
+	P.info += "Access Restrictions: [SSid_access.get_access_desc(pack.access)]<br/>"
 	P.info += "Requested by: [orderer]<br/>"
 	if(paying_account)
 		P.info += "Paid by: [paying_account.account_holder]<br/>"
 	P.info += "Rank: [orderer_rank]<br/>"
 	P.info += "Comment: [reason]<br/>"
 
-	P.update_icon()
+	P.update_appearance()
 	return P
 
-/datum/supply_order/proc/generateManifest(obj/container, owner, packname) //generates-the-manifests.
-	var/obj/item/paper/fluff/jobs/cargo/manifest/P = new(container, id, 0)
+/datum/supply_order/proc/generateManifest(obj/container, owner, packname, cost) //generates-the-manifests.
+	var/obj/item/paper/fluff/jobs/cargo/manifest/P = new(container, id, cost)
 
 	var/station_name = (P.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
 
@@ -96,13 +96,13 @@
 			while(--lost >= 0)
 				qdel(pick(container.contents))
 
-	P.update_icon()
+	P.update_appearance()
 	P.forceMove(container)
 
 	if(istype(container, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/C = container
 		C.manifest = P
-		C.update_icon()
+		C.update_appearance()
 	else
 		container.contents += P
 
@@ -115,11 +115,11 @@
 	else
 		account_holder = "Cargo"
 	var/obj/structure/closet/crate/C = pack.generate(A, paying_account)
-	generateManifest(C, account_holder, pack)
+	generateManifest(C, account_holder, pack, pack.cost)
 	return C
 
-/datum/supply_order/proc/generateCombo(miscbox, misc_own, misc_contents)
+/datum/supply_order/proc/generateCombo(miscbox, misc_own, misc_contents, misc_cost)
 	for (var/I in misc_contents)
 		new I(miscbox)
-	generateManifest(miscbox, misc_own, "")
+	generateManifest(miscbox, misc_own, "", misc_cost)
 	return

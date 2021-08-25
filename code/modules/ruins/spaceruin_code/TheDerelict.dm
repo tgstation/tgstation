@@ -1,4 +1,4 @@
-///////////	thederelict items
+/////////// thederelict items
 
 /obj/item/paper/fluff/ruins/thederelict/equipment
 	info = "If the equipment breaks there should be enough spare parts in our engineering storage near the north east solar array."
@@ -39,7 +39,7 @@
 
 /obj/machinery/computer/monitor/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>It appears to be powered via a cable connector.</span>"
+	. += span_notice("It appears to be powered via a cable connector.")
 
 //Checks for cable connection, charges if possible.
 /obj/machinery/computer/vaultcontroller/process()

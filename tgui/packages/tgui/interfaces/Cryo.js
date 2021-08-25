@@ -26,8 +26,7 @@ export const Cryo = () => {
   return (
     <Window
       width={400}
-      height={550}
-      resizable>
+      height={550}>
       <Window.Content scrollable>
         <CryoContent />
       </Window.Content>

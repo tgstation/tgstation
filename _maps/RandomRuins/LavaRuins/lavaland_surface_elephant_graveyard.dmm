@@ -10,7 +10,7 @@
 /area/ruin/unpowered/elephant_graveyard)
 "ad" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/closet/crate/grave/lead_researcher,
+/obj/structure/closet/crate/grave/filled/lead_researcher,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/mob_spawn/human/skeleton,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
@@ -167,7 +167,6 @@
 /area/ruin/powered/graveyard_shuttle)
 "aI" = (
 /obj/effect/spawner/structure/window/shuttle,
-/obj/structure/grille,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/graveyard_shuttle)
 "aJ" = (
@@ -438,7 +437,7 @@
 /area/ruin/unpowered/elephant_graveyard)
 "bM" = (
 /obj/item/storage/fancy/cigarettes/cigpack_mindbreaker,
-/obj/structure/closet/crate/grave,
+/obj/structure/closet/crate/grave/filled,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "bN" = (
@@ -568,7 +567,7 @@
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "cl" = (
-/obj/structure/closet/crate/grave,
+/obj/structure/closet/crate/grave/filled,
 /obj/effect/mob_spawn/human/skeleton,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
@@ -628,7 +627,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
 "cw" = (
-/obj/structure/closet/crate/grave,
+/obj/structure/closet/crate/grave/filled,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mob_spawn/human/skeleton,
 /turf/open/floor/plating/asteroid/basalt/wasteland,

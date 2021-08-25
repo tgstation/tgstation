@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "tgfont",
+  "version": "1.0.0",
+  "dependencies": {
+    "fantasticon": "^1.2.2"
+  },
+  "scripts": {
+    "build": "node mkdist.cjs && fantasticon --config config.cjs"
+  }
+}

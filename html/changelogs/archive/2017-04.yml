@@ -1,0 +1,358 @@
+2017-04-01:
+  Cyberboss:
+  - bugfix: The contents of the shelterpod smart fridge work again
+  XDTM:
+  - bugfix: Facehuggers no longer rip masks from people protected by helmets.
+2017-04-02:
+  BeeSting12:
+  - bugfix: Metastation's northeast radiation collector is now connected to the grid.
+      Nanotrasen would like to apologize for any inconvenience caused to engineers,
+      but copper is expensive.
+  - rscadd: Boxstation's HoP office now has a PDA tech.
+  Cyberboss:
+  - tweak: Firedoors no longer operate automatically without power
+  - bugfix: Blood and other decals will no longer remain on turfs they shouldn't
+  - bugfix: The splashscreen is working again
+  - bugfix: False alarms are now guaranteed to actually announce something
+  Incoming5643:
+  - rscadd: Lighting visuals have been changed slightly to reduce it's cost to the
+      client. If you had trouble running the new lighting, it might run a little better
+      now.
+  MMMiracles (CereStation):
+  - rscadd: Added a patrol path for bots, includes 2 round-start securitrons placed
+      on opposite sites of station.
+  - wip: Due to map size, mulebots are still somewhat unreliable on longer distances.
+      Disposals are still advised, but mule bots are now technically an option for
+      delivery.
+  - rscadd: Added multiple status displays, extinguishers, and appropriate newscasters
+      to hallways.
+  - rscadd: A drone dispenser is now located underneath Engineering in maintenance.
+  - rscadd: Each security checkpoint now has a disposal chute that directs to a waiting
+      cell in the Brig for rapid processing of criminals. Why run half-way across
+      the station with some petty thief when you can just shove him in the criminal
+      chute and have the warden deal with him?
+  - tweak: Security's mail chute no longer leads into the armory. This was probably
+      not the best idea in hindsight.
+  - tweak: Virology has a bathroom now.
+  - tweak: Genetics monkey pen is a bit more green now.
+  - bugfix: Lawyer now has access the brig cells so he can complain more effectively.
+  - bugfix: Xenobio kill chamber is now in range of a camera.
+  - bugfix: Removed rogue bits of Vault area.
+  - bugfix: Medbay escape pod no longer juts out far enough to block the disposal's
+      path.
+  - bugfix: Captain's spare ID is now real and not just a gold ID card.
+  Penguaro:
+  - tweak: '[Meta] The Chapel Security Hatches were very intimidating. They have been
+      changed to more inviting glass doors.'
+  - bugfix: '[Meta] The maintenance tunnels in the Xeno Lab now have radiation shielding.
+      The Slime Euthanization Chamber will not have radiation shielding at this time
+      as dead slimes will not mind radiation.'
+  coiax:
+  - rscadd: Adds seperate languages to the game. Now Ratvarian, Drone, Machine, Swarmer,
+      Human (now called Galactic Common), Slime and Monkey are separate languages.
+      Each languages has its own comma prefix, for example, Galcom has the ,0 prefix,
+      while Ratvarian has the ,r prefix. If you don't understand a language when it
+      is spoken to you, you will hear a scrambled version that will vary depending
+      on the language that you're not understanding.
+  - experiment: This does not change who can understand what.
+  - rscdel: Removed the talk wheel feature.
+  - rscadd: Clicking the speech bubble icon now opens the Language Menu, allowing
+      you to review which languages you speak, their keys, and letting you set which
+      language you speak by default. Admins have additional abilities to add and remove
+      languages from mobs using this menu.
+  ktccd:
+  - bugfix: Ninja suits have received a new software update, making them able to **actually
+      steal tech levels** from R&D consoles and servers, thus avoid being forced to
+      honourably kill themselves for failing their objective.
+2017-04-05:
+  Cyberboss:
+  - bugfix: Cardboard boxes and bodybags can no longer be anchored
+  Penguaro:
+  - rscadd: '[Box] A fire alarm has been added to the Lawyer''s office.'
+  - rscadd: '[Box] Adds access for Scientists to Starboard Maintenance Areas outside
+      of Toxins.'
+  - tweak: '[Box] Adjusted Science doors to more logical access codes.'
+  QV:
+  - bugfix: Fixed taking max suffocation damage whenever oxygen was slightly low
+  RemieRichards:
+  - bugfix: Using TK on the supermatter will burn your head off violently, don't do
+      this.
+  - rscadd: 'Examining clothing with pockets will now give information about the pockets:
+      number of slots, how it is interacted with (backpack, etc.), if it has quickdraw
+      (Alt-Click) support and whether or not it is silent to interact with.'
+  coiax:
+  - bugfix: Emergency shuttles will now forget early launch authorizations if they
+      cannot launch due to a hostile environment.
+2017-04-07:
+  Qbopper:
+  - bugfix: Secure lockers will no longer have multiple lines about being broken.
+2017-04-09:
+  4dplanner:
+  - bugfix: Gas analyzers can now detect more gases in pipes
+  Joan:
+  - bugfix: Fixed a bug where getting caught between two shield generators as they
+      activated wouldn't cause you to gib and die.
+  QV:
+  - tweak: Refactored the way limbs that aren't limbs work
+  octareenroon91:
+  - bugfix: Hackable wires should work as intended again.
+2017-04-11:
+  BeeSting12:
+  - spellcheck: '"the herpes of arts and crafts" is now "The herpes of arts and crafts."'
+  Cyberboss:
+  - bugfix: Runes no longer make you/themselves/random atoms yuge
+  JJRcop:
+  - tweak: Refactors whisper, now all living mobs can use it
+  - rscadd: 'Prefix any message with # to whisper, for example, "# Man, that guy is
+      weird.", you can still use the whisper verb if you whish.'
+  - rscadd: This is compatible with languages, for example "#,r That HoS is a problem,
+      we should kill him"
+  - rscdel: 'Removes #a #b #c etc radio codes, as well as :w and .w, which used to
+      be whisper.'
+  MrStonedOne:
+  - tweak: Nightvision was heavily modified.
+  - rscadd: Nightvision has been given 3 levels of nightvisionness. (some, most, and
+      full)
+  - tweak: ghosts, aliens, guardians, night vision eyes, and statues were given all
+      3 levels in a cycling toggle
+  - tweak: thermals, and hud+NV goggles give "some" nightvisionness
+  - tweak: standalone masons are unchanged.
+  - tweak: Nightvision goggles (that aren't also sec huds or medhuds or the like)
+      give "most" nightvisionness. Nightvision masons also give "most" nightvisionness
+  - tweak: Most simple mobs with the ability to see in the dark were given "most"
+      nightvisionness, others got full nightvisionness.
+  - bugfix: Fixed certain ghost only things disappearing when disabling darkness.
+  - bugfix: Fixed ash storms not being visible when using things that modified your
+      ability to see darkness
+  - bugfix: fix a bug with the new github web processor
+  Shadowlight213:
+  - bugfix: The anime admin button will no longer cause equipped items to drop.
+  coiax:
+  - rscadd: Examining a ghost determines whether it is visible.
+2017-04-13:
+  Cyberboss:
+  - bugfix: Fixed the incorrectly named Brig APC on Box Station=
+  - spellcheck: Fixed simple animal attack grammar
+  - bugfix: Roundstart department head announcements have been fixed
+  - bugfix: Brig cell doors now properly require the correct access
+  - bugfix: Fixed a bug preventing chameleon stamps from being picked up
+  - bugfix: Fixed a bug where honey frames couldn't be picked up
+  - bugfix: Photocopied papers will now retain their stamps
+  Davidj361:
+  - bugfix: Made it so chemsprayers, peppersprays, extinguishers don't spray when
+      you click your inventory items
+  - bugfix: Spray guns now actually have their range change when changing modes between
+      spray and stream
+  - bugfix: Krav maga now gets its abilities toggled if you click the same ability
+      twice
+  - bugfix: Added a link to the bottom right of paper when writing that shows help
+      for paper writing
+  - bugfix: Fixed the shift+middle-click pointing shortcut to work for cyborgs as
+      the functionality wasn't even there
+  - bugfix: Bodies in body bags get cremated properly now
+  RemieRichards:
+  - bugfix: Constructing lattice no longer prevents space transitions.
+  Robustin:
+  - rscadd: Ranged RCD added to the game
+  - rscadd: Rapid Lighting Device (also ranged) has been added. It can create wall,
+      floor, and temporary lights of any color you desire.
+  coiax:
+  - bugfix: Cigarette branding has been fixed.
+  - rscadd: Uplift Smooth brand cigarettes now taste minty as advertised.
+  - rscdel: You can no longer inject cigarette packets to inject all cigarettes simultaneously.
+  powergaming research director:
+  - bugfix: woops i dropped the emp protection module when i made your cns rebooters
+      today, guess they're vulnerable again!
+2017-04-15:
+  Cyberboss:
+  - bugfix: Holopads can no longer be interacted with while unpowered
+  Davidj361:
+  - bugfix: Monkeys won't pickup items or rob you while they are in your stomach,
+      neither walk out of your stomach.
+  - bugfix: You can't cheat with eyewear/eye-implants when using advanced cameras
+  - bugfix: Mutant digitigrade legs re-added to the ashwalker species
+  Robustin:
+  - rscadd: The Prototype Emitter, will function like an ordinary emitter while also
+      charging a secondary power supply that will allow a buckled user to manually
+      fire the emitter. Returning to automatic fire will have the emitter continue
+      to fire at the last target struck by manual fire.
+  - rscadd: The Engineering Dance Machine, along with assorted effects/sounds.
+  coiax:
+  - bugfix: Plasmamen no longer burn to death while inside a cloning pod.
+2017-04-18:
+  BeeSting12:
+  - bugfix: Cerestation's shuttle now has a recharger.
+  - rscdel: Centcomm's thunderdome airlocks have been removed due to contestants breaking
+      out.
+  - bugfix: Deltastation's chemistry lab now has a pill bottle closet.
+  - bugfix: The shield wall generators in xenobiology on Deltastation, Boxstation,
+      Metastation, and Pubbystation can now be locked and unlocked by scientists.
+  Davidj361:
+  - bugfix: Spawned humans no longer spawn eyeless (sprite)
+  MMMiracles (Cerestation):
+  - rscadd: Departments have been given head offices for a more secure place to chill
+      in their departments.
+  - rscadd: There is now a theatre on the service asteroid.
+  - tweak: Maintenance visuals and loot have been overhauled to be more visually interesting
+      and have more scattered bits of loot.
+  - bugfix: Various fixes with missing APCs, camera coverage, and misc things.
+  QualityVan:
+  - rscadd: Some foam guns can now be suppressed
+  coiax:
+  - rscadd: Drone, monkey and swarmer language now have distinctive colours when spoken.
+  - rscadd: Since drones are allowed to interact with pAIs, pAIs in mobile chassis
+      form are no longer distorted to drone viewpoints.
+  - bugfix: The shuttle's arrival can no longer be delayed after Nar-Sie's arrival.
+      The End cannot be delayed.
+2017-04-19:
+  QualityVan:
+  - bugfix: Improved stethoscopes
+  Thunder12345:
+  - bugfix: You can no longer extract negative sheets from the ORM
+  XDTM:
+  - bugfix: APCs hacked by a malfunctioning AI are no longer immune to alien attacks.
+  - bugfix: Fixed bug where flashlight eyes weren't emitting light.
+2017-04-20:
+  Cyberboss:
+  - bugfix: Fixed mining closets having extra, unrelated items
+2017-04-22:
+  Cyberboss:
+  - bugfix: Conveyors no longer move things they aren't supposed to
+  XDTM:
+  - bugfix: Gold and Light Pink slime extracts no longer disappear before working.
+  coiax:
+  - bugfix: Fixed people understanding languages over the radio when they shouldn't.
+2017-04-23:
+  coiax:
+  - rscadd: Centcom would like to inform all employees that they have ears.
+  - rscadd: Adds "ear" organs to all carbons. These organs store ear damage and deafness.
+      A carbon without any ears is deaf. Genetic deafness functions as before.
+2017-04-25:
+  BeeSting12:
+  - bugfix: Deltastation's secure tech storage is no longer all access.
+  CoreOverload:
+  - bugfix: Disposals no longer get broken by shuttles rotation.
+  - bugfix: Wires no longer get broken by shuttles movement and rotation.
+  - bugfix: Atmospheric equipment no longer gets broken by shuttles movement and rotation.
+      Glory to the Flying Fortress of Atmosia!
+  Jalleo:
+  - rscdel: WW_maze from lavaland has been removed it wasnt that good really anyhow
+  QualityVan:
+  - bugfix: Changeling brains are now more fully vestigial
+  WJohnston:
+  - tweak: Skeletons and plasmamen's hitboxes now more closely match that of humans.
+      They are no longer full of holes and incredibly frustrating to hit, should they
+      run around naked.
+  XDTM:
+  - bugfix: Items will no longer be used on backpacks if they fail to insert when
+      they're too full.
+  - bugfix: T-Ray scans are no longer visible to bystanders.
+  - bugfix: T-Ray scans no longer allow viewers to interact with underfloor objects.
+  basilman:
+  - bugfix: fixed species with no skin dropping skin when gibbed.
+  coiax:
+  - rscadd: Examining a window now gives hints to the appropriate tool for the next
+      stage of construction/deconstruction.
+  - rscadd: You can examine a firedoor for hints on how to construct/deconstruct it.
+  - rscadd: Add an additional hint during construction where you can add plasteel
+      to make the firedoor reinforced.
+  - bugfix: Fixed easter eggs spawning during non-Easter.
+  - bugfix: Fixes stations not having holiday specific prefixes during the holidays.
+  - bugfix: Ghosts no longer drift in space.
+  - bugfix: Swarmers now only speak their own language, rather than swarmer and common.
+  - bugfix: When you are crushed by a door, it prints a visible message, instead of,
+      in some cases, silently damaging you.
+  - bugfix: The vent in the Escape Coridoor on Omega Station has been fixed.
+  - bugfix: You no longer die when turning into a monkey.
+  coiax, WJohnston:
+  - rscadd: Plasmamen lungs, also known as "plasma filters" now look different from
+      human lungs.
+  - rscadd: Plasmamen now have their own special type of bone tongue. They still sound
+      the same, it's just purple. Like them.
+2017-04-26:
+  CoreOverload:
+  - rscadd: Gas injectors are now buildable!
+  Joan:
+  - tweak: Ash Drake swoops no longer teleport the Ash Drake to your position.
+  - balance: Some other tweaks to Ash Drake attacks and patterns; discover these yourself!
+  coiax:
+  - balance: The wizard spell Rod Form now costs 3 points, up from 2.
+  flashdim:
+  - bugfix: Omega Station had two APCs not wired properly. (#26526)
+2017-04-27:
+  Gun Hog:
+  - rscadd: The GPS interface has been converted to tgui.
+  - experiment: GPS now update automatically or manually, give distance and direction
+      to a signal, and many other improvements!
+  MrStonedOne:
+  - tweak: Tweaked how things were deleted to cut down on lag from consecutive deletes
+      and provide better logging for things that cause lag when hard-deleted.
+  - tweak: Server hop verb moved to the OOC tab
+  - rscadd: Server hop verb can now be used in the lobby as well as while a ghost.
+  QualityVan:
+  - bugfix: You can hit emagged cloning pods with a medical ID to empty them
+  - rscadd: Crayons can be ground
+  - rscadd: Crayon powder can be used to color stuff
+  Shadowlight213:
+  - tweak: Heads of staff may now download the ID card modification program from NTNet.
+  bgobandit:
+  - tweak: When jumpsuits take severe damage, their suit sensors break. They can be
+      fixed by applying a cable coil.
+  coiax:
+  - rscadd: Anomalous crystals can be examined by ghosts to determine their function
+      and activation method.
+  - rscdel: Lightbringers can understand Slime and Galactic Common, and can only speak
+      Slime, as before.
+  - rscadd: The helper anomalous crystal is in the orbit list after it has been activated.
+2017-04-28:
+  Kor:
+  - rscadd: Librarians can speak any language
+  coiax, WJohnston:
+  - rscdel: Languages no longer colour their text.
+  - rscadd: Languages now have icons to identify them. Galatic Common does not have
+      an icon if understood.
+2017-04-29:
+  BeeSting12:
+  - bugfix: The emergency backup shuttle has lighting now.
+  - bugfix: Plating in deltastation's aux tool storage is no longer checkered.
+  Cobby:
+  - rscadd: Syndicate Lavabase now has more explicit instructions when it comes to
+      outing non-syndicate affiliated enemies of Nanotrasen.
+  - tweak: The GPS set tag has gone from a limit of 5 characters to 20.
+  - rscadd: The GPS can now be personalized in both name and description using a pen.
+  Joan:
+  - rscdel: Removed Mending Motor.
+  - rscadd: Added Mending Mantra, which is a script that causes you to repair nearby
+      constructs and structures as long as you continue chanting it.
+  - tweak: Mending Mantra will also heal Servants as long as they're wearing clockwork
+      armor.
+  Kor:
+  - rscdel: Removed double agents mode.
+  - rscadd: Replaced it with Internal Affairs mode.
+  Swindly:
+  - rscadd: Added organ storage bags for medical cyborgs. They can hold an organic
+      body part. Use the bag on a carbon during organ manipulation or prosthetic replacement
+      to add the held body part.
+  coiax:
+  - rscdel: Swarmer traps are no longer summoned by The Traps.
+  - balance: Wizard traps automatically disappear five minutes after being summoned.
+  - balance: Wizard traps disappear after firing, whether triggered via person or
+      something being thrown across it.
+  - balance: Wizards are immune to their own traps.
+  - tweak: The Traps are now marked as a Defensive spell, rather than an Offensive
+      spell.
+  kevinz000:
+  - experiment: Songs can now be added to disco machines with add_track(file, name,
+      length, beat). Only file is required, the other 3 should still be put in, though.
+  tacolizard forever:
+  - bugfix: Rechargers no longer flash the 'fully charged' animation before charging
+      something
+2017-04-30:
+  QualityVan:
+  - bugfix: Changelings can once again revive with their brain missing
+  XDTM:
+  - rscdel: Voice of God's Rest command now no longer makes listeners rest. It instead
+      activates the sleep command.
+  coiax:
+  - rscadd: The Bank Machine in the vault now uses the radio to announce unauthorized
+      withdrawals, rather than an endless stream of loud announcements.

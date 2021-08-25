@@ -16,7 +16,7 @@
 	. = ..()
 	if(!sample)
 		return
-	. += "<span class='notice'>You can see the following micro-organisms:</span>"
+	. += span_notice("You can see the following micro-organisms:")
 	for(var/i in sample.micro_organisms)
 		var/datum/micro_organism/MO = i
 		. += MO.get_details()
@@ -25,7 +25,7 @@
 	. = ..()
 	if(!sample || !istype(A, /obj/structure/sink))
 		return FALSE
-	to_chat(user, "<span class='notice'>You wash the sample out of [src].</span>")
+	to_chat(user, span_notice("You wash the sample out of [src]."))
 	sample = null
 
 /obj/item/petri_dish/update_overlays()
@@ -42,5 +42,21 @@
 
 /obj/item/petri_dish/proc/deposit_sample(user, datum/biological_sample/deposited_sample)
 	sample = deposited_sample
-	to_chat(user, "<span class='notice'>You deposit a sample into [src].</span>")
-	update_icon()
+	to_chat(user, span_notice("You deposit a sample into [src]."))
+	update_appearance()
+
+/// Petri dish with random sample already in it.
+/obj/item/petri_dish/random
+	var/static/list/possible_samples = list(
+		list(CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5),
+		list(CELL_LINE_TABLE_SNAKE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5),
+		list(CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7),
+		list(CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	)
+
+/obj/item/petri_dish/random/Initialize()
+	. = ..()
+	var/list/chosen = pick(possible_samples)
+	sample = new
+	sample.GenerateSample(chosen[1],chosen[2],chosen[3],chosen[4])
+	update_appearance()

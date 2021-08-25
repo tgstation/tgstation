@@ -23,7 +23,7 @@
 	deathmessage = "vanishes into thin air! It was a fake!"
 
 
-/mob/living/simple_animal/hostile/illusion/Life()
+/mob/living/simple_animal/hostile/illusion/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	if(world.time > life_span)
 		death()

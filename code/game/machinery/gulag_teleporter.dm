@@ -11,8 +11,10 @@ The console is located at computer/gulag_teleporter.dm
 	desc = "A bluespace teleporter used for teleporting prisoners to the labor camp."
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "implantchair"
+	base_icon_state = "implantchair"
 	state_open = FALSE
 	density = TRUE
+	obj_flags = NO_BUILD // Becomes undense when the door is open
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
@@ -47,7 +49,7 @@ The console is located at computer/gulag_teleporter.dm
 /obj/machinery/gulag_teleporter/interact(mob/user)
 	. = ..()
 	if(locked)
-		to_chat(user, "<span class='warning'>[src] is locked!</span>")
+		to_chat(user, span_warning("[src] is locked!"))
 		return
 	toggle_open()
 
@@ -56,7 +58,7 @@ The console is located at computer/gulag_teleporter.dm
 
 /obj/machinery/gulag_teleporter/attackby(obj/item/I, mob/user)
 	if(!occupant && default_deconstruction_screwdriver(user, "[icon_state]", "[icon_state]",I))
-		update_icon()
+		update_appearance()
 		return
 
 	if(default_deconstruction_crowbar(I))
@@ -68,22 +70,22 @@ The console is located at computer/gulag_teleporter.dm
 	return ..()
 
 /obj/machinery/gulag_teleporter/update_icon_state()
-	icon_state = initial(icon_state) + (state_open ? "_open" : "")
+	icon_state = "[base_icon_state][state_open ? "_open" : null]"
 	//no power or maintenance
 	if(machine_stat & (NOPOWER|BROKEN))
 		icon_state += "_unpowered"
 		if((machine_stat & MAINT) || panel_open)
 			icon_state += "_maintenance"
-		return
+		return ..()
 
 	if((machine_stat & MAINT) || panel_open)
 		icon_state += "_maintenance"
-		return
+		return ..()
 
 	//running and someone in there
 	if(occupant)
 		icon_state += "_occupied"
-		return
+	return ..()
 
 
 /obj/machinery/gulag_teleporter/relaymove(mob/living/user, direction)
@@ -92,7 +94,7 @@ The console is located at computer/gulag_teleporter.dm
 	if(locked)
 		if(message_cooldown <= world.time)
 			message_cooldown = world.time + 50
-			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
+			to_chat(user, span_warning("[src]'s door won't budge!"))
 		return
 	open_machine()
 
@@ -102,15 +104,15 @@ The console is located at computer/gulag_teleporter.dm
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
-		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='hear'>You hear a metallic creaking from [src].</span>")
+	user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
+		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
+		span_hear("You hear a metallic creaking from [src]."))
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
 		locked = FALSE
-		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
-			"<span class='notice'>You successfully break out of [src]!</span>")
+		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
+			span_notice("You successfully break out of [src]!"))
 		open_machine()
 
 /obj/machinery/gulag_teleporter/proc/locate_reclaimer()
@@ -120,7 +122,7 @@ The console is located at computer/gulag_teleporter.dm
 
 /obj/machinery/gulag_teleporter/proc/toggle_open()
 	if(panel_open)
-		to_chat(usr, "<span class='notice'>Close the maintenance panel first.</span>")
+		to_chat(usr, span_notice("Close the maintenance panel first."))
 		return
 
 	if(state_open)

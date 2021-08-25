@@ -16,8 +16,7 @@ export const Biogenerator = (props, context) => {
   return (
     <Window
       width={550}
-      height={420}
-      resizable>
+      height={420}>
       {!!processing && (
         <Dimmer fontSize="32px">
           <Icon name="cog" spin={1} />
@@ -86,7 +85,7 @@ export const BiogeneratorContent = (props, context) => {
           <Button
             icon="eject"
             content="Eject"
-            onClick={() => act('detach')} />
+            onClick={() => act('eject')} />
           <Button
             icon="cog"
             content="Activate"

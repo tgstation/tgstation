@@ -29,3 +29,31 @@
 	full_name = "Move East"
 	description = "Moves your character east"
 	keybind_signal = COMSIG_KB_MOVEMENT_EAST_DOWN
+
+/datum/keybinding/movement/zlevel_upwards
+	hotkey_keys = list("Northeast") // PGUP
+	name = "Upwards"
+	full_name = "Move Upwards"
+	description = "Moves your character up a z-level if possible"
+	keybind_signal = COMSIG_KB_MOVEMENT_ZLEVEL_MOVEUP_DOWN
+
+/datum/keybinding/movement/zlevel_upwards/down(client/user)
+	. = ..()
+	if(.)
+		return
+	user.mob.up()
+	return TRUE
+
+/datum/keybinding/movement/zlevel_downwards
+	hotkey_keys = list("Southeast") // PGDOWN
+	name = "Downwards"
+	full_name = "Move Downwards"
+	description = "Moves your character down a z-level if possible"
+	keybind_signal = COMSIG_KB_MOVEMENT_ZLEVEL_MOVEDOWN_DOWN
+
+/datum/keybinding/movement/zlevel_downwards/down(client/user)
+	. = ..()
+	if(.)
+		return
+	user.mob.down()
+	return TRUE

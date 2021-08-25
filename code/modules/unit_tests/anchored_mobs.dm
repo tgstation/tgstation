@@ -5,5 +5,5 @@
 		if(initial(M.anchored))
 			L += "[i]"
 	if(!L.len)
-		return			//passed!
+		return //passed!
 	Fail("The following mobs are defined as anchored. This is incompatible with the new move force/resist system and needs to be revised.: [L.Join(" ")]")

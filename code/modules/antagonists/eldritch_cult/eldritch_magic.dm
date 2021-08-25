@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash
 	name = "Ashen Passage"
 	desc = "A short range spell allowing you to pass unimpeded through a few walls."
-	school = "transmutation"
+	school = SCHOOL_FORBIDDEN
 	invocation = "ASH'N P'SSG'"
 	invocation_type = INVOCATION_WHISPER
 	charge_max = 150
@@ -33,7 +33,7 @@
 	name = "Mansus Grasp"
 	desc = "A touch spell that lets you channel the power of the Old Gods through your grip."
 	hand_path = /obj/item/melee/touch_attack/mansus_fist
-	school = "evocation"
+	school = SCHOOL_EVOCATION
 	charge_max = 100
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -47,6 +47,10 @@
 	inhand_icon_state = "mansus"
 	catchphrase = "R'CH T'H TR'TH"
 
+/obj/item/melee/touch_attack/mansus_fist/ignition_effect(atom/A, mob/user)
+	. = span_notice("[user] effortlessly snaps [user.p_their()] fingers near [A], igniting it with eldritch energies. Fucking badass!")
+	qdel(src)
+
 /obj/item/melee/touch_attack/mansus_fist/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 
 	if(!proximity_flag || target == user)
@@ -55,7 +59,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/tar = target
 		if(tar.anti_magic_check())
-			tar.visible_message("<span class='danger'>The spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
+			tar.visible_message(span_danger("The spell bounces off of [target]!"),span_danger("The spell bounces off of you!"))
 			return ..()
 	var/datum/mind/M = user.mind
 	var/datum/antagonist/heretic/cultie = M.has_antag_datum(/datum/antagonist/heretic)
@@ -79,7 +83,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
 	name = "Aggressive Spread"
 	desc = "Spreads rust onto nearby surfaces."
-	school = "transmutation"
+	school = SCHOOL_FORBIDDEN
 	charge_max = 300 //twice as long as mansus grasp
 	clothes_req = FALSE
 	invocation = "A'GRSV SPR'D"
@@ -106,7 +110,7 @@
 /obj/effect/proc_holder/spell/pointed/blood_siphon
 	name = "Blood Siphon"
 	desc = "A touch spell that heals your wounds while damaging the enemy. It has a chance to transfer wounds between you and your enemy."
-	school = "evocation"
+	school = SCHOOL_EVOCATION
 	charge_max = 150
 	clothes_req = FALSE
 	invocation = "FL'MS O'ET'RN'ITY"
@@ -123,7 +127,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/tar = target
 		if(tar.anti_magic_check())
-			tar.visible_message("<span class='danger'>The spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
+			tar.visible_message(span_danger("The spell bounces off of [target]!"),span_danger("The spell bounces off of you!"))
 			return ..()
 	var/mob/living/carbon/carbon_user = user
 	if(isliving(target))
@@ -155,7 +159,7 @@
 		return FALSE
 	if(!istype(target,/mob/living))
 		if(!silent)
-			to_chat(user, "<span class='warning'>You are unable to siphon [target]!</span>")
+			to_chat(user, span_warning("You are unable to siphon [target]!"))
 		return FALSE
 	return TRUE
 
@@ -163,6 +167,7 @@
 	name = "Patron's Reach"
 	desc = "Channels energy into your gauntlet- unleashing it creates a wave of rust in its wake."
 	proj_type = /obj/projectile/magic/spell/rust_wave
+	school = SCHOOL_FORBIDDEN
 	charge_max = 350
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -212,7 +217,7 @@
 /obj/effect/proc_holder/spell/pointed/cleave
 	name = "Cleave"
 	desc = "Causes severe bleeding on a target and several targets around them."
-	school = "transmutation"
+	school = SCHOOL_FORBIDDEN
 	charge_max = 350
 	clothes_req = FALSE
 	invocation = "CL'VE"
@@ -224,7 +229,7 @@
 
 /obj/effect/proc_holder/spell/pointed/cleave/cast(list/targets, mob/user)
 	if(!targets.len)
-		to_chat(user, "<span class='warning'>No target found in range!</span>")
+		to_chat(user, span_warning("No target found in range!"))
 		return FALSE
 	if(!can_target(targets[1], user))
 		return FALSE
@@ -238,13 +243,13 @@
 		if(target == user)
 			continue
 		if(target.anti_magic_check())
-			to_chat(user, "<span class='warning'>The spell had no effect!</span>")
-			target.visible_message("<span class='danger'>[target]'s veins flash with fire, but their magic protection repulses the blaze!</span>", \
-							"<span class='danger'>Your veins flash with fire, but your magic protection repels the blaze!</span>")
+			to_chat(user, span_warning("The spell had no effect!"))
+			target.visible_message(span_danger("[target]'s veins flash with fire, but their magic protection repulses the blaze!"), \
+							span_danger("Your veins flash with fire, but your magic protection repels the blaze!"))
 			continue
 
-		target.visible_message("<span class='danger'>[target]'s veins are shredded from within as an unholy blaze erupts from their blood!</span>", \
-							"<span class='danger'>Your veins burst from within and unholy flame erupts from your blood!</span>")
+		target.visible_message(span_danger("[target]'s veins are shredded from within as an unholy blaze erupts from their blood!"), \
+							span_danger("Your veins burst from within and unholy flame erupts from your blood!"))
 		var/obj/item/bodypart/bodypart = pick(target.bodyparts)
 		var/datum/wound/slash/critical/crit_wound = new
 		crit_wound.apply_wound(bodypart)
@@ -257,7 +262,7 @@
 		return FALSE
 	if(!istype(target,/mob/living/carbon/human))
 		if(!silent)
-			to_chat(user, "<span class='warning'>You are unable to cleave [target]!</span>")
+			to_chat(user, span_warning("You are unable to cleave [target]!"))
 		return FALSE
 	return TRUE
 
@@ -267,7 +272,7 @@
 /obj/effect/proc_holder/spell/pointed/touch/mad_touch
 	name = "Touch of Madness"
 	desc = "A touch spell that drains your enemy's sanity."
-	school = "transmutation"
+	school = SCHOOL_FORBIDDEN
 	charge_max = 150
 	clothes_req = FALSE
 	invocation_type = "none"
@@ -282,7 +287,7 @@
 		return FALSE
 	if(!istype(target,/mob/living/carbon/human))
 		if(!silent)
-			to_chat(user, "<span class='warning'>You are unable to touch [target]!</span>")
+			to_chat(user, span_warning("You are unable to touch [target]!"))
 		return FALSE
 	return TRUE
 
@@ -292,16 +297,16 @@
 		if(ishuman(targets))
 			var/mob/living/carbon/human/tar = target
 			if(tar.anti_magic_check())
-				tar.visible_message("<span class='danger'>The spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
+				tar.visible_message(span_danger("The spell bounces off of [target]!"),span_danger("The spell bounces off of you!"))
 				return
 		if(target.mind && !target.mind.has_antag_datum(/datum/antagonist/heretic))
-			to_chat(user,"<span class='warning'>[target.name] has been cursed!</span>")
+			to_chat(user,span_warning("[target.name] has been cursed!"))
 			SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 /obj/effect/proc_holder/spell/pointed/ash_final
 	name = "Nightwatcher's Rite"
 	desc = "A powerful spell that releases 5 streams of fire away from you."
-	school = "transmutation"
+	school = SCHOOL_FORBIDDEN
 	invocation = "F'RE"
 	invocation_type = INVOCATION_WHISPER
 	charge_max = 300
@@ -346,13 +351,13 @@
 
 		for(var/mob/living/L in T.contents)
 			if(L.anti_magic_check())
-				L.visible_message("<span class='danger'>The spell bounces off of [L]!</span>","<span class='danger'>The spell bounces off of you!</span>")
+				L.visible_message(span_danger("The spell bounces off of [L]!"),span_danger("The spell bounces off of you!"))
 				continue
 			if(L in hit_list || L == source)
 				continue
 			hit_list += L
 			L.adjustFireLoss(20)
-			to_chat(L, "<span class='userdanger'>You're hit by [source]'s eldritch flames!</span>")
+			to_chat(L, span_userdanger("You're hit by [source]'s eldritch flames!"))
 
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
@@ -379,6 +384,7 @@
 /obj/effect/proc_holder/spell/targeted/emplosion/eldritch
 	name = "Energetic Pulse"
 	invocation = "E'P"
+	school = SCHOOL_FORBIDDEN
 	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
@@ -391,7 +397,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/fire_cascade
 	name = "Fire Cascade"
 	desc = "Heats the air around you."
-	school = "transmutation"
+	school = SCHOOL_FORBIDDEN
 	charge_max = 300 //twice as long as mansus grasp
 	clothes_req = FALSE
 	invocation = "C'SC'DE"
@@ -430,6 +436,7 @@
 	desc = "For a minute, you will passively create a ring of fire around you."
 	invocation = "FL'MS"
 	invocation_type = INVOCATION_WHISPER
+	school = SCHOOL_FORBIDDEN
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
@@ -457,7 +464,7 @@
 	. = ..()
 	if(!has_fire_ring)
 		return
-	for(var/turf/T in range(1,current_user))
+	for(var/turf/T in RANGE_TURFS(1,current_user))
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700, 250 * delta_time, 1)
 		for(var/mob/living/livies in T.contents - current_user)
@@ -468,6 +475,7 @@
 	name = "Force Contract"
 	desc = "Forces your body to contract onto a single tile."
 	invocation_type = "none"
+	school = SCHOOL_FORBIDDEN
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
@@ -479,7 +487,7 @@
 /obj/effect/proc_holder/spell/targeted/worm_contract/cast(list/targets, mob/user)
 	. = ..()
 	if(!istype(user,/mob/living/simple_animal/hostile/eldritch/armsy))
-		to_chat(user, "<span class='userdanger'>You try to contract your muscles but nothing happens...</span>")
+		to_chat(user, span_userdanger("You try to contract your muscles but nothing happens..."))
 		return
 	var/mob/living/simple_animal/hostile/eldritch/armsy/armsy = user
 	armsy.contract_next_chain_into_single_tile()
@@ -499,6 +507,7 @@
 	desc = "Drains nearby alive people that are engulfed in flames. It heals 10 of each damage type per person. If a target is in critical condition it drains the last of their vitality, killing them."
 	invocation = "GL'RY T' TH' N'GHT'W'TCH'ER"
 	invocation_type = INVOCATION_WHISPER
+	school = SCHOOL_FORBIDDEN
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
@@ -529,7 +538,7 @@
 /obj/effect/proc_holder/spell/pointed/manse_link
 	name = "Mansus Link"
 	desc = "Piercing through reality, connecting minds. This spell allows you to add people to a Mansus Net, allowing them to communicate with each other from afar."
-	school = "transmutation"
+	school = SCHOOL_FORBIDDEN
 	charge_max = 300
 	clothes_req = FALSE
 	invocation = "PI'RC' TH' M'ND"
@@ -549,15 +558,15 @@
 
 	var/mob/living/target = targets[1]
 
-	to_chat(originator, "<span class='notice'>You begin linking [target]'s mind to yours...</span>")
-	to_chat(target, "<span class='warning'>You feel your mind being pulled... connected... intertwined with the very fabric of reality...</span>")
+	to_chat(originator, span_notice("You begin linking [target]'s mind to yours..."))
+	to_chat(target, span_warning("You feel your mind being pulled... connected... intertwined with the very fabric of reality..."))
 	if(!do_after(originator, 6 SECONDS, target))
 		return
 	if(!originator.link_mob(target))
-		to_chat(originator, "<span class='warning'>You can't seem to link [target]'s mind...</span>")
-		to_chat(target, "<span class='warning'>The foreign presence leaves your mind.</span>")
+		to_chat(originator, span_warning("You can't seem to link [target]'s mind..."))
+		to_chat(target, span_warning("The foreign presence leaves your mind."))
 		return
-	to_chat(originator, "<span class='notice'>You connect [target]'s mind to your mansus link!</span>")
+	to_chat(originator, span_notice("You connect [target]'s mind to your mansus link!"))
 
 
 /datum/action/innate/mansus_speech
@@ -583,7 +592,7 @@
 		return
 
 	if(!originator?.linked_mobs[living_owner])
-		to_chat(living_owner, "<span class='warning'>The link seems to have been severed...</span>")
+		to_chat(living_owner, span_warning("The link seems to have been severed..."))
 		Remove(living_owner)
 		return
 	if(message)
@@ -630,12 +639,12 @@
 	pixel_y = rand(-6,6)
 	pixel_x = rand(-6,6)
 	icon_state = "small_rune_[rand(12)]"
-	update_icon()
+	update_appearance()
 
 /obj/effect/proc_holder/spell/cone/staggered/entropic_plume
 	name = "Entropic Plume"
 	desc = "Spews forth a disorienting plume that causes enemies to strike each other, briefly blinds them(increasing with range) and poisons them(decreasing with range). Also spreads rust in the path of the plume."
-	school = "illusion"
+	school = SCHOOL_FORBIDDEN
 	invocation = "'NTR'P'C PL'M'"
 	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE
@@ -677,6 +686,7 @@
 	desc = "Shed your fragile form, become one with the arms, become one with the emperor."
 	invocation_type = INVOCATION_SHOUT
 	invocation = "REALITY UNCOIL!"
+	school = SCHOOL_FORBIDDEN
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
@@ -719,6 +729,7 @@
 	name = "Void Phase"
 	desc = "Let's you blink to your pointed destination, causes 3x3 aoe damage bubble around your pointed destination and your current location. It has a minimum range of 3 tiles and a maximum range of 9 tiles."
 	invocation_type = INVOCATION_WHISPER
+	school = SCHOOL_FORBIDDEN
 	invocation = "RE'L'TY PH'S'E"
 	clothes_req = FALSE
 	range = 9
@@ -754,7 +765,7 @@
 			continue
 		living_mob.adjustBruteLoss(40)
 
-	do_teleport(user,targeted_turf,TRUE,no_effects = TRUE)
+	do_teleport(user,targeted_turf,TRUE,no_effects = TRUE,channel=TELEPORT_CHANNEL_MAGIC)
 
 /obj/effect/temp_visual/voidin
 	icon = 'icons/effects/96x96.dmi'
@@ -777,6 +788,7 @@
 	desc = "Call the void, this pulls all nearby people closer to you, damages people already around you. If they are 4 tiles or closer they are also knocked down and a micro-stun is applied."
 	invocation_type = INVOCATION_WHISPER
 	invocation = "BR'NG F'RTH TH'M T' M'"
+	school = SCHOOL_FORBIDDEN
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1

@@ -8,6 +8,8 @@
 	var/trait_processes = FALSE
 	///Chance relative to other traits of its type to be picked
 	var/weight = 10
+	///Whether this trait is always enabled; generally used for debugging
+	var/force = FALSE
 	///Does this trait show in the centcom report?
 	var/show_in_report = FALSE
 	///What message to show in the centcom report?
@@ -16,6 +18,8 @@
 	var/trait_to_give
 	///What traits are incompatible with this one?
 	var/blacklist
+	///Extra flags for station traits such as it being abstract
+	var/trait_flags
 
 
 /datum/station_trait/New()

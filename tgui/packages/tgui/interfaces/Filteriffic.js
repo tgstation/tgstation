@@ -247,10 +247,9 @@ export const Filteriffic = (props, context) => {
   const [hiddenSecret, setHiddenSecret] = useLocalState(context, 'hidden', false);
   return (
     <Window
-      width={500}
-      height={500}
       title="Filteriffic"
-      resizable>
+      width={500}
+      height={500}>
       <Window.Content scrollable>
         <NoticeBox danger>
           DO NOT MESS WITH EXISTING FILTERS IF YOU DO NOT KNOW THE CONSEQUENCES.

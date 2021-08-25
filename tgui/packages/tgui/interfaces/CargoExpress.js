@@ -9,8 +9,7 @@ export const CargoExpress = (props, context) => {
   return (
     <Window
       width={600}
-      height={700}
-      resizable>
+      height={700}>
       <Window.Content scrollable>
         <InterfaceLockNoticeBox
           accessText="a QM-level ID card" />

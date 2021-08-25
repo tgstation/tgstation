@@ -1,12 +1,12 @@
 /* Utility Closets
  * Contains:
- *		Emergency Closet
- *		Fire Closet
- *		Tool Closet
- *		Radiation Closet
- *		Bombsuit Closet
- *		Hydrant
- *		First Aid
+ * Emergency Closet
+ * Fire Closet
+ * Tool Closet
+ * Radiation Closet
+ * Bombsuit Closet
+ * Hydrant
+ * First Aid
  */
 
 /*

@@ -37,8 +37,8 @@ Now then, into the breach.
 
  The air controller is, at its core, quite simple, yet it is absolutely fundamental to the atmospheric system. The air controller is the clock which triggers all continuous actions within the atmos system, such as vents distributing air or gas moving between tiles. The actions taken by the air controller are quite simple, and will be enumerated here. Much of the substance of the air ticker is due to the game's master controller, whose intricacies I will not delve into for this document. I will however go into more detail about how SSAir in particular works in Chapter 6. In any case, this is a simplified list of the air controller's actions in a single tick:
 1. Rebuild Pipenets
-    - Runs each time SSAir processes, sometimes out of order. It ensures that no pipenets sit unresolved or unbuilt
-    - Calls `build_network()` on each `/obj/machinery/atmospherics` in the `pipenets_needing_rebuilt` list
+    - Runs each time SSAir processes, sometimes out of order. It ensures that no pipeline sit unresolved or unbuilt
+    - Processes the `rebuild_queue` list into the `expansion_queue` list, and then builds a full pipeline piecemeal. We do a ton of fenagling here to reduce overrun 
 2. Pipenets
     - Updates the internal gasmixes of attached pipe machinery, and reacts the gases in a pipeline
 	- Calls `process()` on each `/datum/pipenet` in the `networks` list
@@ -50,28 +50,25 @@ Now then, into the breach.
     - This is the heart and soul of environmental atmos, see more details below
     - All you need to know right now is it manages moving gas from tile to tile
     - Calls `process_cell()` on each `/turf/open` in the `active_turfs` list
-5. Excited group cleanup
-    - Rebuilds excited groups when the structure of their turfs changes
-    - Calls `cleanup_group()` on each `/turf/open` in the `cleanup_ex_groups` list
-6. Excited groups
+5. Excited groups
     - Manages excited groups, which are core to working flow simulation
     - More details to come, they handle differences between gasmixtures when active turfs can't do the job
     - Increases the `breakdown_cooldown` and `dismantle_cooldown` for each `/datum/excited_group` in the `excited_groups` list
     - If either cooldown for a given excited group has passed its threshold
     - Calls `self_breakdown()` or `dismantle()` appropriately on the excited group.
-7. High pressure deltas
+6. High pressure deltas
     - Takes the gas movement from Active Turfs and uses it to move objects on said turfs
     - Calls `high_pressure_movements()` on each `/turf/open` in the `high_pressure_delta` list.
     - Sets each turf's `pressure_difference` to 0
-8. Hotspots
+7. Hotspots
     - These are what you might know as fire, at least the effect of it.
     - They deal with burning things, and color calculations, lots of color calculations
     - Calls `process()` on each `/obj/effect/hotspot` in the `hotspots` list
-9. Superconductivity
+8. Superconductivity
     - Moves heat through turfs that don't allow gas to pass
     - Deals with heating up the floor below windows, and some other more painful heat stuff
     - Calls `super_conduct()` on each `/turf` in the `active_super_conductivity` list
-10. Atoms
+9. Atoms
     - Processes things in the world that should know about gas changes, used to account for turfs sleeping, I'll get more into that in a bit
     - Calls `process_exposure()` on each `/atom` in the `atom_process` list
 
@@ -167,7 +164,7 @@ This is a rather large subject, we will need to cover gas flow, turf sleeping, s
 
 Active turfs are the backbone of how gas moves from tile to tile. While most of `process_cell()` should be easy enough to understand, I am going to go into some detail about archiving, since I think it's a common source of hiccups.
 
-* *`archived_cycle`* this var stores the last cycle of the atmos loop that the turf processed on. The key point to notice here is that when processing a turf, we don't share with all its neighbors, we only talk to those who haven't processed yet. This is because the remainder of `process_cell()` and especially `share()` ought to be similar in form to addition. We can add in any order we like, and we only need to add once. This is what archived gases are for by the way, they store the state of the relevant tile before any processing occurs. This isn't strictly the case unfortunately, but it's minor enough that we can ignore the effects.
+* *`archived_cycle`* this var stores the last cycle of the atmos loop that the turf processed on. The key point to notice here is that when processing a turf, we don't share with all its neighbors, we only talk to those who haven't processed yet. This is because the remainder of `process_cell()` and especially `share()` ought to be similar in form to addition. We can add in any order we like, and we only need to add once. This is what archived gases are for by the way, they store the state of the relevant tile before any processing occurs. This additive behavior isn't strictly the case unfortunately, but it's minor enough that we can ignore the effects.
 
 Alright then, with that out of the way, what is an active turf.
 
@@ -216,13 +213,11 @@ When a turf is removed from active, the excited group is broken down, as it's as
 
 Now this issue here is we'd like to keep this napping, but we don't want to `garbage_collect()` the excited group constantly.
 
-So, a new proc was added, `sleep_active_turf()`. It removes the active turf from processing, but doesn't `garbage_collect()` the group. This has some additional costs however.
+So, a new proc was added, `sleep_active_turf()`. It removes the active turf from processing, but doesn't `garbage_collect()` the group.
 
-The excited group's `garbage_collect()` proc is the real issue here. When the landscape of the map changes, we need to rebuild the groups, as we don't want to rebuild them across a wall. The old way relied on the group rebuilding itself, in `process_cell()`, but since players can cause rebuilds quite often, can't afford to just wake all the turfs up.
+You'd think this would cause issues with maintaining the shape of an excited group, however this isn't actually a priority, since `garbage_collect()` and the subsequent rebuild in `process_cell()` causes turfs that are actually active to reform, just as it always has. This has benefits, as it lessens the tendency of one group to cover a huge space, equalize all at once, and fuck with things.
 
-Thus, we have excited group cleanup, which takes all the old turfs, and reaches out to their neighbors to rebuild the group. This allows us to rebuild excited groups without relying on active turfs.
-
-There's another issue here too, how do we deal with things that react to heat? A firelock shouldn't just open because the turf that the alarm is on went to sleep. Thus, atom_process, as I mentioned before, a list of atoms with requirements and things to do. It processes them until their requirements are not met, then it removes them from its list them.
+There's another issue here however, how do we deal with things that react to heat? A firelock shouldn't just open because the turf that the alarm is on went to sleep. Thus, atom_process, as I mentioned before, a list of atoms with requirements and things to do. It processes them until their requirements are not met, then it removes them from its list them.
 
 There's one more major aspect of environmental atmos to cover, and while it's not the most misunderstood, it is the code with the worst set dressing.
 
@@ -277,7 +272,7 @@ All of these are averages by the way.
 * *`tick_overrun`* A percentage of how far past our allotted time we ran. This is what causes Time Dilation, it's bad.
 * *`ticks`* The amount of subsystem fires it takes to run through all the subprocesses once.
 
-The second line is the cost each subprocess contributed per full cycle, this is a rolling average. It'll give you a good feel for what is misbehaving.
+The second line is the cost each subprocess contributed per full cycle, this is a rolling average. It'll give you a good feel for what is misbehaving. (The only exception to this is pipenet rebuilds, the last entry. Because of its nature as something that can happen at any time, it doesn't have a rolling average, instead it just displays the time it used last process)
 
 The third line is the amount of "whatever" in each subprocess. Handy for noticing dupe bugs and crying at active turf cost. Speaking of, the last entry is the active turfs per overall cost. Not a great metric, but larger is better.
 
@@ -347,7 +342,16 @@ On that note, I'd like to be clear about something. In lines of connected pipes,
 
 Oh, and pipelines react the gas mixture inside them, thought I should mention that.
 
+### A short note on rebuilding
+
+Everything that needs a pipeline should have it before it's allowed to do any processing. This is to prevent runtimes and shitcode related things.
+
+The act of rebuilding a pipeline is quite expensive however, since it involves iterating over all the connected pipes/components.
+That's why we go to such great pains to make sure no large amount of work is allowed to happen at once. It's in an attempt to avoid the excited group settling type of lag I discussed above. It's ok for atmos to lock up for a short period if the system isn't killing the game as a whole.
+
+
 All the other behavior of pipes and pipe components are handled by atmos machinery. I'll give a brief rundown of how they're classified, but the details of each machine are left as an exercise to the reader.
+
 
 #### Pipes
 
@@ -387,9 +391,17 @@ This is for the oddballs, the one offs, the half useless things. Things that are
 
 These are the atmos machines you can move around. They interface with connectors to talk to pipelines, and can contain tanks. Not a whole lot more to discuss here.
 
+## 9. A word on processing
+
+You may have noticed that a large portion of the optimizations we do are focused around not checking to see if we need to do work.
+
+This is essentially what active turfs are built around, and it's a somewhat unfinished project. There's still quite a few things in atmos, mostly machinery, that check each fire to see if they should be doing work. There's a general pattern to solving this sort of thing by the way, centralize the ways a bit of outside code can interact with a "thing", and then when the outside code does something that might warrant processing, start processing.
+
+This attitude needs to be applied to a few large targets, and you may see it crop up when reading through the code. Keep this in mind, and make sure to respect the rules that describe how to work with the object, or things will go to shit.
+
 ## Appendix A - Glossary
 
-* *LINDA* - Our environmental gas system, created by Aranclanos, Beautiful in Spanish
+* *LINDA* - Our environmental gas system, created by Aranclanos, allegedly Beautiful in Spanish
 * *Naps* - A healthy pastime
 * *Gas mixtures* - The datums that store gas information, key to listmos and our underlying method of handling well gas
 * *Diffs* - The differences between gasmixes. We want to get rid of these over time, and clump them up with their sources so we don't need to process too many turfs

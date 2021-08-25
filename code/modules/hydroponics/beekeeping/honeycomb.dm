@@ -17,7 +17,7 @@
 	. = ..()
 	pixel_x = base_pixel_x + rand(8, -8)
 	pixel_y = base_pixel_y + rand(8, -8)
-	update_icon()
+	update_appearance()
 
 
 /obj/item/reagent_containers/honeycomb/update_overlays()
@@ -37,4 +37,4 @@
 		reagents.add_reagent(R.type,5)
 	else
 		honey_color = ""
-	update_icon()
+	update_appearance()

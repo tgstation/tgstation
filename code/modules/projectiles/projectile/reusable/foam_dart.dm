@@ -6,6 +6,7 @@
 	nodamage = TRUE
 	icon = 'icons/obj/guns/toy.dmi'
 	icon_state = "foamdart_proj"
+	base_icon_state = "foamdart_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	range = 10
 	var/modified = FALSE
@@ -18,7 +19,7 @@
 	dropped = 1
 	var/obj/item/ammo_casing/caseless/foam_dart/newcasing = new ammo_type(T)
 	newcasing.modified = modified
-	var/obj/projectile/bullet/reusable/foam_dart/newdart = newcasing.BB
+	var/obj/projectile/bullet/reusable/foam_dart/newdart = newcasing.loaded_projectile
 	newdart.modified = modified
 	if(modified)
 		newdart.damage = 5
@@ -28,7 +29,7 @@
 		newdart.pen = pen
 		pen.forceMove(newdart)
 		pen = null
-	newdart.update_icon()
+	newdart.update_appearance()
 
 
 /obj/projectile/bullet/reusable/foam_dart/Destroy()
@@ -38,6 +39,7 @@
 /obj/projectile/bullet/reusable/foam_dart/riot
 	name = "riot foam dart"
 	icon_state = "foamdart_riot_proj"
+	base_icon_state = "foamdart_riot_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
 	nodamage = FALSE
 	stamina = 25

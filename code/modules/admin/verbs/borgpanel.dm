@@ -9,7 +9,7 @@
 	if (!istype(borgo, /mob/living/silicon/robot))
 		borgo = input("Select a borg", "Select a borg", null, null) as null|anything in sortNames(GLOB.silicon_mobs)
 	if (!istype(borgo, /mob/living/silicon/robot))
-		to_chat(usr, "<span class='warning'>Borg is required for borgpanel</span>", confidential = TRUE)
+		to_chat(usr, span_warning("Borg is required for borgpanel"), confidential = TRUE)
 
 	var/datum/borgpanel/borgpanel = new(usr, borgo)
 
@@ -175,7 +175,7 @@
 						borg.radio.keyslot.independent = FALSE
 				message_admins("[key_name_admin(user)] removed the [channel] radio channel from [ADMIN_LOOKUPFLW(borg)].")
 				log_admin("[key_name(user)] removed the [channel] radio channel from [key_name(borg)].")
-			else	// We're adding a channel
+			else // We're adding a channel
 				if (!borg.radio.keyslot) // Assert that an encryption key exists
 					borg.radio.keyslot = new (borg.radio)
 				borg.radio.keyslot.channels[channel] = 1

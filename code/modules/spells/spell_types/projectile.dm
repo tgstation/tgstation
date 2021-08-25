@@ -36,7 +36,7 @@
 	trail.icon = trail_icon
 	trail.icon_state = trail_icon_state
 	//might be changed to temp overlay
-	trail.density = FALSE
+	trail.set_density(FALSE)
 	trail.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	QDEL_IN(trail, trail_lifespan)
 
@@ -65,7 +65,7 @@
 
 	var/update_projectile = FALSE //So you want to admin abuse magic bullets ? This is for you
 	//Below only apply if update_projectile is true
-	var/proj_icon = 'icons/obj/projectiles.dmi'
+	var/proj_icon = 'icons/obj/guns/projectiles.dmi'
 	var/proj_icon_state = "spell"
 	var/proj_name = "a spell projectile"
 	var/proj_trail = FALSE //if it leaves a trail

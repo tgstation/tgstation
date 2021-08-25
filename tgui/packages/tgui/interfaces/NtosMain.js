@@ -21,8 +21,7 @@ export const NtosMain = (props, context) => {
         || 'NtOS Main Menu'}
       theme={device_theme}
       width={400}
-      height={500}
-      resizable>
+      height={500}>
       <NtosWindow.Content scrollable>
         {!!has_light && (
           <Section>

@@ -1,30 +1,31 @@
 /obj/structure/closet/secure_closet/freezer
 	icon_state = "freezer"
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/jones = FALSE
 
 /obj/structure/closet/secure_closet/freezer/Destroy()
 	recursive_organ_check(src)
-	..()
+	return ..()
 
 /obj/structure/closet/secure_closet/freezer/Initialize()
 	. = ..()
 	recursive_organ_check(src)
 
 /obj/structure/closet/secure_closet/freezer/open(mob/living/user, force = FALSE)
-	if(opened || !can_open(user, force))	//dupe check just so we don't let the organs decay when someone fails to open the locker
+	if(opened || !can_open(user, force)) //dupe check just so we don't let the organs decay when someone fails to open the locker
 		return FALSE
 	recursive_organ_check(src)
 	return ..()
 
 /obj/structure/closet/secure_closet/freezer/close(mob/living/user)
-	if(..())	//if we actually closed the locker
+	if(..()) //if we actually closed the locker
 		recursive_organ_check(src)
 
 /obj/structure/closet/secure_closet/freezer/ex_act()
-	if(!jones)
-		jones = TRUE
-	else
-		..()
+	if(jones)
+		return ..()
+	jones = TRUE
+	flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
 
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "kitchen cabinet"
@@ -73,7 +74,7 @@
 /obj/structure/closet/secure_closet/freezer/gulag_fridge/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/food/drinks/beer/light(src)
+		new /obj/item/reagent_containers/food/drinks/bottle/beer/light(src)
 
 /obj/structure/closet/secure_closet/freezer/fridge
 	name = "refrigerator"

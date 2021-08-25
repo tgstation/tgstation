@@ -33,7 +33,6 @@ $font-size: 24px;
   @include meta.load-css('../components/Tabs.scss');
   @include meta.load-css('../components/Section.scss', $with: (
     'background-color': rgba(0, 0, 0, 0.1),
-    'shadow-color': rgba(0, 0, 0, 0.2),
   ));
   @include meta.load-css('../components/Button.scss', $with: (
     'color-default': #E8E4C9,

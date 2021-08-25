@@ -23,7 +23,6 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/trash/chips = 1,
 		/obj/item/trash/popcorn = 1,
 		/obj/item/trash/sosjerky = 1,
-		/obj/item/trash/plate = 1,
 		/obj/item/trash/pistachios = 1,
 
 		/obj/item/poster/random_contraband = 1,
@@ -55,7 +54,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/clothing/mask/breath = 1,
 		/obj/item/shard = 1,
 
-		/obj/item/reagent_containers/pill/maintenance = 1,
+		/obj/item/reagent_containers/pill/maintenance/achievement = 1,
 		/obj/item/toy/eightball = 1,
 		) = 8,
 
@@ -119,12 +118,12 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/assembly/timer = 1,
 		/obj/item/assembly/igniter = 1,
 		/obj/item/assembly/health = 1,
-
 		/obj/item/stack/package_wrap = 1,
 		/obj/item/stack/wrapping_paper = 1,
 		) = 1,
 
 	list(//medical and chemicals
+		/obj/item/stock_parts/cell/lead = 1,
 		/obj/item/storage/fancy/cigarettes/dromedaryco = 1,
 		/obj/item/grenade/chem_grenade/cleaner = 1,
 		/obj/item/storage/box/matches = 1,
@@ -132,10 +131,12 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/reagent_containers/glass/beaker = 1,
 		/obj/item/reagent_containers/glass/rag = 1,
 		/obj/item/reagent_containers/hypospray/medipen/pumpup = 2,
+		/obj/item/reagent_containers/glass/bottle/random_buffer = 2,
+		/obj/item/lead_pipe = 1,
 		) = 1,
 
 	list(//food
-		/obj/item/reagent_containers/food/drinks/beer = 1,
+		/obj/item/reagent_containers/food/drinks/bottle/beer = 1,
 		/obj/item/reagent_containers/food/drinks/coffee = 1,
 		) = 1,
 
@@ -198,6 +199,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/paper/fluff/stations/soap = 1, //recipes count as crafting.
 		/obj/item/plaque = 1,
 		/obj/item/storage/box/clown = 1,
+		/obj/item/seeds/kronkus = 1,
 		) = 8,
 
 	list(//medical and chemicals
@@ -237,8 +239,25 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/food/monkeycube = 1,
 		) = 8,
 
+	list(//music
+		/obj/item/instrument/violin = 5,
+		/obj/item/instrument/banjo = 5,
+		/obj/item/instrument/guitar = 5,
+		/obj/item/instrument/eguitar = 5,
+		/obj/item/instrument/glockenspiel = 5,
+		/obj/item/instrument/accordion = 5,
+		/obj/item/instrument/trumpet = 5,
+		/obj/item/instrument/saxophone = 5,
+		/obj/item/instrument/trombone = 5,
+		/obj/item/instrument/recorder = 5,
+		/obj/item/instrument/harmonica = 5,
+		/obj/item/instrument/bikehorn = 2,
+		/obj/item/instrument/violin/golden = 2,
+		/obj/item/instrument/musicalmoth = 1,
+		) = 2,
+
 	list(//fakeout items, keep this list at low relative weight
-		/obj/item/dice/d20 = 1,	//To balance out the stealth die of fates in oddities
+		/obj/item/dice/d20 = 1, //To balance out the stealth die of fates in oddities
 		/obj/item/clothing/shoes/jackboots = 1,
 		) = 1,
 ))
@@ -297,6 +316,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 	list(//misc
 		/obj/item/disk/nuclear/fake = 1,
 		/obj/item/book/granter/crafting_recipe/pipegun_prime = 1,
+		/obj/item/book/granter/crafting_recipe/trash_cannon = 1,
 		) = 1,
 
 ))
@@ -308,11 +328,16 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 		/obj/item/spear/grey_tide = 1,
 		/obj/item/shadowcloak = 1,
 		/obj/item/clothing/head/helmet/abductor = 1,
-		/obj/item/dice/d20/fate/stealth/one_use = 1,	//Looks like a d20, keep the d20 in the uncommon pool.
-		/obj/item/dice/d20/fate/stealth/cursed = 1, 	//Only rolls 1
+		/obj/item/dice/d20/fate/stealth/one_use = 1, //Looks like a d20, keep the d20 in the uncommon pool.
+		/obj/item/dice/d20/fate/stealth/cursed = 1, //Only rolls 1
 		/obj/item/clothing/shoes/jackboots/fast = 1,
 		/obj/item/clothing/suit/armor/reactive/table = 1,
-		/obj/item/storage/box/donkpockets/donkpocketgondola = 1
+		/obj/item/storage/box/donkpockets/donkpocketgondola = 1,
+		list(//music
+			/obj/item/instrument/saxophone/spectral = 1,
+			/obj/item/instrument/trumpet/spectral = 1,
+			/obj/item/instrument/trombone/spectral = 1,
+			) = 1,
 	))
 
 //Maintenance loot spawner pools
@@ -338,7 +363,6 @@ GLOBAL_LIST_INIT(ratking_trash, list(//Garbage: used by the regal rat mob when s
 			/obj/item/trash/candy,
 			/obj/item/trash/chips,
 			/obj/item/trash/pistachios,
-			/obj/item/trash/plate,
 			/obj/item/trash/popcorn,
 			/obj/item/trash/raisins,
 			/obj/item/trash/sosjerky,
@@ -349,3 +373,6 @@ GLOBAL_LIST_INIT(ratking_coins, list(//Coins: Used by the regal rat mob when spa
 			/obj/item/coin/silver,
 			/obj/item/coin/plastic,
 			/obj/item/coin/titanium))
+
+// List of all maintenance loot spawners, for easy finding at roundstart.
+GLOBAL_LIST_EMPTY(maintenance_loot_spawners)

@@ -10,6 +10,7 @@
 
 ///Default range of a sound.
 #define SOUND_RANGE 17
+#define MEDIUM_RANGE_SOUND_EXTRARANGE -5
 ///default extra range for sounds considered to be quieter
 #define SHORT_RANGE_SOUND_EXTRARANGE -9
 ///The range deducted from sound range for things that are considered silent / sneaky
@@ -77,6 +78,7 @@
 #define SOUND_ENVIRONMENT_DIZZY 24
 #define SOUND_ENVIRONMENT_PSYCHOTIC 25
 //If we ever make custom ones add them here
+#define SOUND_ENVIROMENT_PHASED list(1.8, 0.5, -1000, -4000, 0, 5, 0.1, 1, -15500, 0.007, 2000, 0.05, 0.25, 1, 1.18, 0.348, -5, 2000, 250, 0, 3, 100, 63)
 
 //"sound areas": easy way of keeping different types of areas consistent.
 #define SOUND_AREA_STANDARD_STATION SOUND_ENVIRONMENT_PARKING_LOT
@@ -94,19 +96,39 @@
 
 
 ///Announcer audio keys
-#define ANNOUNCER_AIMALF 			"announcer_aimalf"
-#define ANNOUNCER_ALIENS			"announcer_aliens"
-#define ANNOUNCER_ANIMES 			"announcer_animes"
-#define ANNOUNCER_GRANOMALIES 		"announcer_granomalies"
-#define ANNOUNCER_INTERCEPT 		"announcer_animes"
-#define ANNOUNCER_IONSTORM 			"announcer_ionstorm"
-#define ANNOUNCER_METEORS			"announcer_meteors"
-#define ANNOUNCER_OUTBREAK5			"announcer_outbreak5"
-#define ANNOUNCER_OUTBREAK7			"announcer_outbreak7"
-#define ANNOUNCER_POWEROFF			"announcer_poweroff"
-#define ANNOUNCER_POWERON			"announcer_poweron"
-#define ANNOUNCER_RADIATION			"announcer_radiation"
-#define ANNOUNCER_SHUTTLECALLED		"announcer_shuttlecalled"
-#define ANNOUNCER_SHUTTLEDOCK		"announcer_shuttledock"
-#define ANNOUNCER_SHUTTLERECALLED	"announcer_shuttlerecalled"
-#define ANNOUNCER_SPANOMALIES		"announcer_spanomalies"
+#define ANNOUNCER_AIMALF "announcer_aimalf"
+#define ANNOUNCER_ALIENS "announcer_aliens"
+#define ANNOUNCER_ANIMES "announcer_animes"
+#define ANNOUNCER_GRANOMALIES "announcer_granomalies"
+#define ANNOUNCER_INTERCEPT "announcer_intercept"
+#define ANNOUNCER_IONSTORM "announcer_ionstorm"
+#define ANNOUNCER_METEORS "announcer_meteors"
+#define ANNOUNCER_OUTBREAK5 "announcer_outbreak5"
+#define ANNOUNCER_OUTBREAK7 "announcer_outbreak7"
+#define ANNOUNCER_POWEROFF "announcer_poweroff"
+#define ANNOUNCER_POWERON "announcer_poweron"
+#define ANNOUNCER_RADIATION "announcer_radiation"
+#define ANNOUNCER_SHUTTLECALLED "announcer_shuttlecalled"
+#define ANNOUNCER_SHUTTLEDOCK "announcer_shuttledock"
+#define ANNOUNCER_SHUTTLERECALLED "announcer_shuttlerecalled"
+#define ANNOUNCER_SPANOMALIES "announcer_spanomalies"
+
+/// Global list of all of our announcer keys.
+GLOBAL_LIST_INIT(announcer_keys, list(
+	ANNOUNCER_AIMALF,
+	ANNOUNCER_ALIENS,
+	ANNOUNCER_ANIMES,
+	ANNOUNCER_GRANOMALIES,
+	ANNOUNCER_INTERCEPT,
+	ANNOUNCER_IONSTORM,
+	ANNOUNCER_METEORS,
+	ANNOUNCER_OUTBREAK5,
+	ANNOUNCER_OUTBREAK7,
+	ANNOUNCER_POWEROFF,
+	ANNOUNCER_POWERON,
+	ANNOUNCER_RADIATION,
+	ANNOUNCER_SHUTTLECALLED,
+	ANNOUNCER_SHUTTLEDOCK,
+	ANNOUNCER_SHUTTLERECALLED,
+	ANNOUNCER_SPANOMALIES,
+))

@@ -1,4 +1,4 @@
-#define PAI_MISSING_SOFTWARE_MESSAGE "<span class='warning'>You must download the required software to use this.</span>"
+#define PAI_MISSING_SOFTWARE_MESSAGE span_warning("You must download the required software to use this.")
 
 /atom/movable/screen/pai
 	icon = 'icons/hud/screen_pai.dmi'
@@ -82,15 +82,19 @@
 	icon_state = "host_monitor"
 	required_software = "host scan"
 
-/atom/movable/screen/pai/host_monitor/Click()
+/atom/movable/screen/pai/host_monitor/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
 	var/mob/living/silicon/pai/pAI = usr
+	var/list/modifiers = params2list(params)
 	if(iscarbon(pAI.card.loc))
-		pAI.hostscan.attack(pAI.card.loc, pAI)
+		if (LAZYACCESS(modifiers, RIGHT_CLICK))
+			pAI.hostscan.attack_secondary(pAI.card.loc, pAI)
+		else
+			pAI.hostscan.attack(pAI.card.loc, pAI)
 	else
-		to_chat(src, "<span class='warning'>You are not being carried by anyone!</span>")
+		to_chat(src, span_warning("You are not being carried by anyone!"))
 		return FALSE
 
 /atom/movable/screen/pai/crew_manifest
@@ -219,7 +223,7 @@
 
 // Language menu
 	using = new /atom/movable/screen/language_menu
-	using.screen_loc = ui_borg_language_menu
+	using.screen_loc = ui_pai_language_menu
 	static_inventory += using
 
 // Host Monitor
@@ -264,7 +268,7 @@
 
 // Radio
 	using = new /atom/movable/screen/pai/radio()
-	using.screen_loc = ui_borg_radio
+	using.screen_loc = ui_pai_radio
 	static_inventory += using
 
 	update_software_buttons()

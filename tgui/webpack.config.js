@@ -49,16 +49,16 @@ module.exports = (env = {}, argv) => {
       chunkLoadTimeout: 15000,
     },
     resolve: {
-      extensions: ['.js', '.jsx'],
+      extensions: ['.tsx', '.ts', '.js'],
       alias: {},
     },
     module: {
       rules: [
         {
-          test: /\.m?jsx?$/,
+          test: /\.(js|cjs|ts|tsx)$/,
           use: [
             {
-              loader: 'babel-loader',
+              loader: require.resolve('babel-loader'),
               options: createBabelConfig({ mode }),
             },
           ],
@@ -73,30 +73,31 @@ module.exports = (env = {}, argv) => {
               },
             },
             {
-              loader: 'css-loader',
+              loader: require.resolve('css-loader'),
               options: {
                 esModule: false,
               },
             },
             {
-              loader: 'sass-loader',
+              loader: require.resolve('sass-loader'),
             },
           ],
         },
         {
           test: /\.(png|jpg|svg)$/,
           use: [
-            'url-loader',
+            {
+              loader: require.resolve('url-loader'),
+              options: {
+                esModule: false,
+              },
+            },
           ],
         },
       ],
     },
     optimization: {
       emitOnErrors: false,
-      splitChunks: {
-        chunks: 'initial',
-        name: 'tgui-common',
-      },
     },
     performance: {
       hints: false,
@@ -105,6 +106,9 @@ module.exports = (env = {}, argv) => {
     cache: {
       type: 'filesystem',
       cacheLocation: path.resolve(__dirname, `.yarn/webpack/${mode}`),
+      buildDependencies: {
+        config: [__filename],
+      },
     },
     stats: createStats(true),
     plugins: [

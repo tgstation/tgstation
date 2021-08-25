@@ -24,7 +24,6 @@
 	desc = "Nutritious!"
 	icon_state = "berrypile"
 	gender = PLURAL
-	bite_consumption_mod = 2
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/berryjuice = 0)
 	tastes = list("berry" = 1)
@@ -47,6 +46,7 @@
 	name = "bunch of poison-berries"
 	desc = "Taste so good, you might die!"
 	icon_state = "poisonberrypile"
+	bite_consumption_mod = 3
 	foodtypes = FRUIT | TOXIC
 	juice_results = list(/datum/reagent/consumable/poisonberryjuice = 0)
 	tastes = list("poison-berry" = 1)
@@ -72,6 +72,7 @@
 	name = "bunch of death-berries"
 	desc = "Taste so good, you will die!"
 	icon_state = "deathberrypile"
+	bite_consumption_mod = 3
 	foodtypes = FRUIT | TOXIC
 	tastes = list("death-berry" = 1)
 	distill_reagent = null
@@ -97,93 +98,12 @@
 	seed = /obj/item/seeds/berry/glow
 	name = "bunch of glow-berries"
 	desc = "Nutritious!"
+	bite_consumption_mod = 3
 	icon_state = "glowberrypile"
 	foodtypes = FRUIT
 	tastes = list("glow-berry" = 1)
 	distill_reagent = null
 	wine_power = 60
-
-// Cherries
-/obj/item/seeds/cherry
-	name = "pack of cherry pits"
-	desc = "Careful not to crack a tooth on one... That'd be the pits."
-	icon_state = "seed-cherry"
-	species = "cherry"
-	plantname = "Cherry Tree"
-	product = /obj/item/food/grown/cherries
-	lifespan = 35
-	endurance = 35
-	maturation = 5
-	production = 5
-	growthstages = 5
-	instability = 15
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
-	icon_grow = "cherry-grow"
-	icon_dead = "cherry-dead"
-	icon_harvest = "cherry-harvest"
-	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/cherry/blue, /obj/item/seeds/cherry/bulb)
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.07, /datum/reagent/consumable/sugar = 0.07)
-
-/obj/item/food/grown/cherries
-	seed = /obj/item/seeds/cherry
-	name = "cherries"
-	desc = "Great for toppings!"
-	icon_state = "cherry"
-	gender = PLURAL
-	bite_consumption_mod = 2
-	foodtypes = FRUIT
-	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
-	tastes = list("cherry" = 1)
-	wine_power = 30
-
-// Blue Cherries
-/obj/item/seeds/cherry/blue
-	name = "pack of blue cherry pits"
-	desc = "The blue kind of cherries."
-	icon_state = "seed-bluecherry"
-	species = "bluecherry"
-	plantname = "Blue Cherry Tree"
-	product = /obj/item/food/grown/bluecherries
-	mutatelist = list()
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.07, /datum/reagent/consumable/sugar = 0.07)
-	rarity = 10
-
-/obj/item/food/grown/bluecherries
-	seed = /obj/item/seeds/cherry/blue
-	name = "blue cherries"
-	desc = "They're cherries that are blue."
-	icon_state = "bluecherry"
-	bite_consumption_mod = 2
-	foodtypes = FRUIT
-	grind_results = list(/datum/reagent/consumable/bluecherryjelly = 0)
-	tastes = list("blue cherry" = 1)
-	wine_power = 50
-
-//Cherry Bulbs
-/obj/item/seeds/cherry/bulb
-	name = "pack of cherry bulb pits"
-	desc = "The glowy kind of cherries."
-	icon_state = "seed-cherrybulb"
-	species = "cherrybulb"
-	plantname = "Cherry Bulb Tree"
-	product = /obj/item/food/grown/cherrybulbs
-	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/pink)
-	mutatelist = list()
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.07, /datum/reagent/consumable/sugar = 0.07)
-	rarity = 10
-	graft_gene = /datum/plant_gene/trait/glow/pink
-
-/obj/item/food/grown/cherrybulbs
-	seed = /obj/item/seeds/cherry/bulb
-	name = "cherry bulbs"
-	desc = "They're like little Space Christmas lights!"
-	icon_state = "cherry_bulb"
-	bite_consumption_mod = 2
-	foodtypes = FRUIT
-	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
-	tastes = list("cherry" = 1)
-	wine_power = 50
 
 // Grapes
 /obj/item/seeds/grape
@@ -234,5 +154,6 @@
 	seed = /obj/item/seeds/grape/green
 	name = "bunch of green grapes"
 	icon_state = "greengrapes"
+	bite_consumption_mod = 3
 	tastes = list("green grape" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/cognac

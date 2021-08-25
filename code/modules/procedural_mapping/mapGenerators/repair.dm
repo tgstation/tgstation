@@ -105,7 +105,7 @@ GLOBAL_VAR_INIT(reloading_map, FALSE)
 	if(!loader)
 		loader = new
 	if(cleanload)
-		..()			//Trigger mass deletion.
+		..() //Trigger mass deletion.
 	modules |= loader
 	syncModules()
 	loader.generate()

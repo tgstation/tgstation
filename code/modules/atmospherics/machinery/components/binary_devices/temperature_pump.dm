@@ -2,37 +2,35 @@
 	icon_state = "tpump_map-3"
 	name = "temperature pump"
 	desc = "A pump that moves heat from one pipeline to another. The input will get cooler, and the output will get hotter."
-
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
-
+	construction_type = /obj/item/pipe/directional
+	pipe_state = "tpump"
+	vent_movement = NONE
 	///Percent of the heat delta to transfer
 	var/heat_transfer_rate = 0
 	///Maximum allowed transfer percentage
 	var/max_heat_transfer_rate = 100
 
-	construction_type = /obj/item/pipe/directional
-	pipe_state = "tpump"
-
 /obj/machinery/atmospherics/components/binary/temperature_pump/CtrlClick(mob/user)
 	if(can_interact(user))
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/AltClick(mob/user)
 	if(can_interact(user) && !(heat_transfer_rate == max_heat_transfer_rate))
 		heat_transfer_rate = max_heat_transfer_rate
 		investigate_log("was set to [heat_transfer_rate]% by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_icon()
+		balloon_alert(user, "transfer rate set to [heat_transfer_rate]%")
+		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/update_icon_nopipes()
 	icon_state = "tpump_[on && is_operational ? "on" : "off"]-[set_overlay_offset(piping_layer)]"
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/process_atmos()
-
 	if(!on || !is_operational)
 		return
 
@@ -46,18 +44,22 @@
 
 	var/coolant_temperature_delta = remove_input.temperature - remove_output.temperature
 
-	if(coolant_temperature_delta > 0)
+	if(coolant_temperature_delta > 0 && remove_input.temperature < 1e8)
 		var/input_capacity = remove_input.heat_capacity()
 		var/output_capacity = air_output.heat_capacity()
 
 		var/cooling_heat_amount = (heat_transfer_rate * 0.01) * coolant_temperature_delta * (input_capacity * output_capacity / (input_capacity + output_capacity))
 		remove_input.temperature = max(remove_input.temperature - (cooling_heat_amount / input_capacity), TCMB)
 		remove_output.temperature = max(remove_output.temperature + (cooling_heat_amount / output_capacity), TCMB)
+		update_parents()
+
+	var/power_usage = (remove_input.temperature * 1.5 + idle_power_usage) ** (0.75 - (3e7 / max(3e7, remove_input.temperature)))
 
 	air_input.merge(remove_input)
 	air_output.merge(remove_output)
 
-	update_parents()
+	if(power_usage)
+		use_power(power_usage)
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -92,4 +94,4 @@
 			if(.)
 				heat_transfer_rate = clamp(rate, 0, max_heat_transfer_rate)
 				investigate_log("was set to [heat_transfer_rate]% by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_icon()
+	update_appearance()

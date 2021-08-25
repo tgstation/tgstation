@@ -1,0 +1,37 @@
+2013-06-02:
+  Ikarrus:
+  - tweak: To reduce costs of security equipment, mounted flashers have been adjusted
+      to use common handheld flashes as their flashbulbs. Although these flashbulbs
+      are more prone to burnout, they can easily be replaced with wirecutters.
+2013-06-04:
+  Dumpdavidson:
+  - tweak: Headsets can no longer broadcast into a channel that is disabled.<br/>Headsets
+      now have a button to turn off the power instead of the speaker. This button
+      disables all communication functions.<br/>EMPs now force affected radios off
+      for about 20 seconds.
+2013-06-06:
+  Giacom:
+  - rscadd: Emptying someone's pockets won't display a message. In theory you can
+      now pickpocket!
+2013-06-09:
+  Ikarrus:
+  - rscadd: Server operators may now allow latejoiners to become antagonists. Check
+      game_options.txt for more information.
+  - rscadd: Server operators may now set how traitors and changelings scale to population.
+      Check game_options.txt for more information.
+2013-06-15:
+  Petethegoat:
+  - tweak: Updated chemical grenades. The build process is much the same, except they
+      require an igniter-X assembly instead of a single assembly item. You can also
+      just use a cable coil to get regular grenade behaviour.
+2013-06-16:
+  Khub:
+  - rscadd: Job preferences menu now not only allows you to left-click the level (i.e.
+      [Medium]) to raise it, but also to right-click it to lower it. That means you
+      don't have to cycle through all the levels to get rid of a [Low].
+2013-06-27:
+  Ikarrus:
+  - rscadd: Nanotrasen R&amp;D released a new firmware patch for their station AIs.
+      Included among the changes is the new ability for AIs to interact with fire
+      doors. R&amp;D officials state they feel giving station AIs more influence could
+      only lead to good things.

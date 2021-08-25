@@ -12,7 +12,7 @@
 		for(var/turf/check in get_affected_turfs(central_turf,1))
 			var/area/new_area = get_area(check)
 			valid = FALSE // set to false before we check
-			if(check.flags_1 & NO_RUINS_1)
+			if(check.turf_flags & NO_RUINS)
 				break
 			for(var/type in allowed_areas)
 				if(istype(new_area, type)) // it's at least one of our types so it's whitelisted
@@ -39,7 +39,7 @@
 		loaded++
 
 		for(var/turf/T in get_affected_turfs(central_turf, 1))
-			T.flags_1 |= NO_RUINS_1
+			T.turf_flags |= NO_RUINS
 
 		new /obj/effect/landmark/ruin(central_turf, src)
 		return central_turf
@@ -52,7 +52,7 @@
 	load(placement)
 	loaded++
 	for(var/turf/T in get_affected_turfs(placement))
-		T.flags_1 |= NO_RUINS_1
+		T.turf_flags |= NO_RUINS
 	var/turf/center = locate(placement.x + round(width/2),placement.y + round(height/2),placement.z)
 	new /obj/effect/landmark/ruin(center, src)
 	return center
@@ -71,8 +71,8 @@
 
 	var/list/ruins = potentialRuins.Copy()
 
-	var/list/forced_ruins = list()		//These go first on the z level associated (same random one by default) or if the assoc value is a turf to the specified turf.
-	var/list/ruins_available = list()	//we can try these in the current pass
+	var/list/forced_ruins = list() //These go first on the z level associated (same random one by default) or if the assoc value is a turf to the specified turf.
+	var/list/ruins_available = list() //we can try these in the current pass
 
 	//Set up the starting ruin list
 	for(var/key in ruins)
@@ -87,7 +87,7 @@
 	while(budget > 0 && (ruins_available.len || forced_ruins.len))
 		var/datum/map_template/ruin/current_pick
 		var/forced = FALSE
-		var/forced_z	//If set we won't pick z level and use this one instead.
+		var/forced_z //If set we won't pick z level and use this one instead.
 		var/forced_turf //If set we place the ruin centered on the given turf
 		if(forced_ruins.len) //We have something we need to load right now, so just pick it
 			for(var/ruin in forced_ruins)

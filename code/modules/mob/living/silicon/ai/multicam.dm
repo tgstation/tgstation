@@ -38,7 +38,7 @@
 		add_overlay(highlighted ? highlighted_background : standard_background)
 
 /atom/movable/screen/movable/pic_in_pic/ai/set_view_size(width, height, do_refresh = TRUE)
-	aiEye.static_visibility_range =	(round(max(width, height) / 2) + 1)
+	aiEye.static_visibility_range = (round(max(width, height) / 2) + 1)
 	if(ai)
 		ai.camera_visibility(aiEye)
 	..()
@@ -86,7 +86,7 @@
 	name = ""
 	icon = 'icons/misc/pic_in_pic.dmi'
 	icon_state = "room_background"
-	flags_1 = NOJAUNT_1
+	flags_1 = NOJAUNT
 
 /area/ai_multicam_room
 	name = "ai_multicam_room"
@@ -130,9 +130,9 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	if(screen?.ai)
 		return screen.ai.client
 
-/mob/camera/ai_eye/pic_in_pic/setLoc(turf/T)
-	if (T)
-		forceMove(T)
+/mob/camera/ai_eye/pic_in_pic/setLoc(turf/destination)
+	if (destination)
+		abstract_move(destination)
 	else
 		moveToNullspace()
 	if(screen?.ai)
@@ -168,14 +168,14 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 			continue
 		cameras_telegraphed -= C
 		C.in_use_lights--
-		C.update_icon()
+		C.update_appearance()
 	for (var/V in add)
 		var/obj/machinery/camera/C = V
 		if(QDELETED(C))
 			continue
 		cameras_telegraphed |= C
 		C.in_use_lights++
-		C.update_icon()
+		C.update_appearance()
 
 /mob/camera/ai_eye/pic_in_pic/proc/disable_camera_telegraphing()
 	telegraph_cameras = FALSE
@@ -184,7 +184,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		if(QDELETED(C))
 			continue
 		C.in_use_lights--
-		C.update_icon()
+		C.update_appearance()
 	cameras_telegraphed.Cut()
 
 /mob/camera/ai_eye/pic_in_pic/Destroy()
@@ -196,25 +196,25 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 /mob/living/silicon/ai/proc/drop_new_multicam(silent = FALSE)
 	if(!CONFIG_GET(flag/allow_ai_multicam))
 		if(!silent)
-			to_chat(src, "<span class='warning'>This action is currently disabled. Contact an administrator to enable this feature.</span>")
+			to_chat(src, span_warning("This action is currently disabled. Contact an administrator to enable this feature."))
 		return
 	if(!eyeobj)
 		return
 	if(multicam_screens.len >= max_multicams)
 		if(!silent)
-			to_chat(src, "<span class='warning'>Cannot place more than [max_multicams] multicamera windows.</span>")
+			to_chat(src, span_warning("Cannot place more than [max_multicams] multicamera windows."))
 		return
 	var/atom/movable/screen/movable/pic_in_pic/ai/C = new /atom/movable/screen/movable/pic_in_pic/ai()
 	C.set_view_size(3, 3, FALSE)
 	C.set_view_center(get_turf(eyeobj))
 	C.set_ai(src)
 	if(!silent)
-		to_chat(src, "<span class='notice'>Added new multicamera window.</span>")
+		to_chat(src, span_notice("Added new multicamera window."))
 	return C
 
 /mob/living/silicon/ai/proc/toggle_multicam()
 	if(!CONFIG_GET(flag/allow_ai_multicam))
-		to_chat(src, "<span class='warning'>This action is currently disabled. Contact an administrator to enable this feature.</span>")
+		to_chat(src, span_warning("This action is currently disabled. Contact an administrator to enable this feature."))
 		return
 	if(multicam_on)
 		end_multicam()
@@ -225,11 +225,11 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	if(multicam_on || aiRestorePowerRoutine || !isturf(loc))
 		return
 	if(!GLOB.ai_camera_room_landmark)
-		to_chat(src, "<span class='warning'>This function is not available at this time.</span>")
+		to_chat(src, span_warning("This function is not available at this time."))
 		return
 	multicam_on = TRUE
 	refresh_multicam()
-	to_chat(src, "<span class='notice'>Multiple-camera viewing mode activated.</span>")
+	to_chat(src, span_notice("Multiple-camera viewing mode activated."))
 
 /mob/living/silicon/ai/proc/refresh_multicam()
 	reset_perspective(GLOB.ai_camera_room_landmark)
@@ -248,7 +248,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 			var/atom/movable/screen/movable/pic_in_pic/P = V
 			P.unshow_to(client)
 	reset_perspective()
-	to_chat(src, "<span class='notice'>Multiple-camera viewing mode deactivated.</span>")
+	to_chat(src, span_notice("Multiple-camera viewing mode deactivated."))
 
 
 /mob/living/silicon/ai/proc/select_main_multicam_window(atom/movable/screen/movable/pic_in_pic/ai/P)

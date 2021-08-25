@@ -12,7 +12,8 @@
 	density = TRUE
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "boh_tear"
-	layer = MASSIVE_OBJ_LAYER
+	plane = MASSIVE_OBJ_PLANE
+	plane = ABOVE_LIGHTING_PLANE
 	light_range = 6
 	move_resist = INFINITY
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
@@ -37,7 +38,7 @@
 	if(!isliving(user))
 		return
 	var/mob/living/jedi = user
-	to_chat(jedi, "<span class='userdanger'>You don't feel like you are real anymore.</span>")
+	to_chat(jedi, span_userdanger("You don't feel like you are real anymore."))
 	jedi.dust_animation()
 	jedi.spawn_dust()
 	addtimer(CALLBACK(src, /atom/proc/attack_hand, jedi), 0.5 SECONDS)

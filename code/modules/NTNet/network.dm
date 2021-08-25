@@ -56,11 +56,12 @@
 		parent.children[network_node_id] = src
 		root_devices = parent.root_devices
 		networks = parent.networks
+		networks[network_id] = src
 	else
 		network_node_id = net_id
 		parent = null
 		networks = list()
-		root_devices = list()
+		root_devices = linked_devices
 		SSnetworks.root_networks[network_id] = src
 
 	SSnetworks.networks[network_id] = src
@@ -72,6 +73,7 @@
 /// A network should NEVER be deleted.  If you don't want to show it exists just check if its
 /// empty
 /datum/ntnet/Destroy()
+	networks -= network_id
 	if(children.len > 0 || linked_devices.len > 0)
 		CRASH("Trying to delete a network with devices still in them")
 
@@ -142,19 +144,10 @@
  */
 /datum/ntnet/proc/add_interface(datum/component/ntnet_interface/interface)
 	if(interface.network)
-		if(!networks[interface.network.network_id])
-			/// If we are doing a hard jump to a new network, log it
-			log_telecomms("The device {[interface.hardware_id]} is jumping networks from '[interface.network.network_id]' to '[network_id]'")
-			interface.network.remove_interface(interface, TRUE)
-		else // we are on the same network so we just want to be aliased to another branch
-			if(!interface.alias[network_id])
-				interface.alias[network_id] = src // add to the alias list
-				linked_devices[interface.hardware_id] = interface
-			else
-				log_telecomms("The device {[interface.hardware_id]} is trying to join '[network_id]' for a second time!")
-			return
-	// we have no network
-	interface.network = src  // now we do!
+		/// If we are doing a hard jump to a new network, log it
+		log_telecomms("The device {[interface.hardware_id]} is jumping networks from '[interface.network.network_id]' to '[network_id]'")
+		interface.network.remove_interface(interface, TRUE)
+	interface.network ||= src
 	interface.alias[network_id] = src // add to the alias just to make removing easier.
 	linked_devices[interface.hardware_id] = interface
 	root_devices[interface.hardware_id] = interface
@@ -232,10 +225,10 @@
 
 
 /datum/ntnet/station_root
-	var/list/services_by_path = list()					//type = datum/ntnet_service
-	var/list/services_by_id = list()					//id = datum/ntnet_service
+	var/list/services_by_path = list() //type = datum/ntnet_service
+	var/list/services_by_id = list() //id = datum/ntnet_service
 
-	var/list/autoinit_service_paths = list()			//typepaths
+	var/list/autoinit_service_paths = list() //typepaths
 
 
 	var/list/available_station_software = list()
@@ -248,10 +241,10 @@
 	var/setting_peertopeer = TRUE
 	var/setting_communication = TRUE
 	var/setting_systemcontrol = TRUE
-	var/setting_disabled = FALSE					// Setting to 1 will disable all wireless, independently on relays status.
+	var/setting_disabled = FALSE // Setting to 1 will disable all wireless, independently on relays status.
 
-	var/intrusion_detection_enabled = TRUE 		// Whether the IDS warning system is enabled
-	var/intrusion_detection_alarm = FALSE			// Set when there is an IDS warning due to malicious (antag) software.
+	var/intrusion_detection_enabled = TRUE // Whether the IDS warning system is enabled
+	var/intrusion_detection_alarm = FALSE // Set when there is an IDS warning due to malicious (antag) software.
 
 // If new NTNet datum is spawned, it replaces the old one.
 /datum/ntnet/station_root/New(root_name)
@@ -398,7 +391,7 @@
 
 
 
-/datum/ntnet/station_root/proc/register_map_supremecy()					//called at map init to make this what station networks use.
+/datum/ntnet/station_root/proc/register_map_supremecy() //called at map init to make this what station networks use.
 	for(var/obj/machinery/ntnet_relay/R in GLOB.machines)
 		SSnetworks.relays.Add(R)
 		R.NTNet = src

@@ -32,8 +32,7 @@ export const KitchenSink = (props, context) => {
       title="Kitchen Sink"
       width={600}
       height={500}
-      theme={theme}
-      resizable>
+      theme={theme}>
       <Flex height="100%">
         <Flex.Item m={1} mr={0}>
           <Section fill fitted>

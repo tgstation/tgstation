@@ -50,10 +50,12 @@ Key procs
 	/// Currently spoken language
 	var/selected_language
 	/// Tracks the entity that owns the holder.
-	var/owner
+	var/atom/owner
 
 /// Initializes, and copies in the languages from the current atom if available.
-/datum/language_holder/New(_owner)
+/datum/language_holder/New(atom/_owner)
+	if(_owner && QDELETED(_owner))
+		CRASH("Langauge holder added to a qdeleting thing, what the fuck \ref[_owner]")
 	owner = _owner
 	if(istype(owner, /datum/mind))
 		var/datum/mind/M = owner
@@ -63,6 +65,7 @@ Key procs
 
 /datum/language_holder/Destroy()
 	QDEL_NULL(language_menu)
+	owner = null
 	return ..()
 
 /// Grants the supplied language.
@@ -82,7 +85,7 @@ Key procs
 /datum/language_holder/proc/grant_all_languages(understood = TRUE, spoken = TRUE, grant_omnitongue = TRUE, source = LANGUAGE_MIND)
 	for(var/language in GLOB.all_languages)
 		grant_language(language, understood, spoken, source)
-	if(grant_omnitongue)	// Overrides tongue limitations.
+	if(grant_omnitongue) // Overrides tongue limitations.
 		omnitongue = TRUE
 	return TRUE
 
@@ -194,8 +197,8 @@ Key procs
 
 /// Empties out the atom specific languages and updates them according to the supplied atoms language holder.
 /datum/language_holder/proc/update_atom_languages(atom/movable/thing)
-	var/datum/language_holder/from_atom = thing.get_language_holder(FALSE)	//Gets the atoms language holder
-	if(from_atom == src)	//This could happen if called on an atom without a mind.
+	var/datum/language_holder/from_atom = thing.get_language_holder(FALSE) //Gets the atoms language holder
+	if(from_atom == src) //This could happen if called on an atom without a mind.
 		return FALSE
 	for(var/language in understood_languages)
 		remove_language(language, TRUE, FALSE, LANGUAGE_ATOM)
@@ -211,7 +214,7 @@ Key procs
 /// Copies all languages from the supplied atom/language holder. Source should be overridden when you
 /// do not want the language overwritten by later atom updates or want to avoid blocked languages.
 /datum/language_holder/proc/copy_languages(datum/language_holder/from_holder, source_override)
-	if(source_override)	//No blocked languages here, for now only used by ling absorb.
+	if(source_override) //No blocked languages here, for now only used by ling absorb.
 		for(var/language in from_holder.understood_languages)
 			grant_language(language, TRUE, FALSE, source_override)
 		for(var/language in from_holder.spoken_languages)
@@ -244,8 +247,7 @@ Key procs
 							/datum/language/narsie = list(LANGUAGE_ATOM))
 
 /datum/language_holder/drone
-	understood_languages = list(/datum/language/drone = list(LANGUAGE_ATOM),
-								/datum/language/machine = list(LANGUAGE_ATOM))
+	understood_languages = list(/datum/language/drone = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/drone = list(LANGUAGE_ATOM))
 	blocked_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
 
@@ -271,6 +273,13 @@ Key procs
 
 /datum/language_holder/lizard/ash
 	selected_language = /datum/language/draconic
+
+/datum/language_holder/lizard/silver
+	understood_languages = list(/datum/language/uncommon = list(LANGUAGE_ATOM),
+								/datum/language/draconic = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/uncommon = list(LANGUAGE_ATOM),
+							/datum/language/draconic = list(LANGUAGE_ATOM))
+	selected_language = /datum/language/uncommon
 
 /datum/language_holder/monkey
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),

@@ -39,7 +39,7 @@
 	if(!tucker.transferItemToLoc(tucked, target_bed.drop_location()))
 		return
 
-	to_chat(tucker, "<span class='notice'>You lay [tucked] out on [target_bed].</span>")
+	to_chat(tucker, span_notice("You lay [tucked] out on [target_bed]."))
 	tucked.pixel_x = x_offset
 	tucked.pixel_y = y_offset
 	if(rotation_degree)

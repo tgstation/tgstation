@@ -6,14 +6,14 @@
 	volume = 200
 	var/blood_type = null
 	var/unique_blood = null
-	var/labelled = 0
+	var/labelled = FALSE
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 
 /obj/item/reagent_containers/blood/Initialize()
 	. = ..()
 	if(blood_type != null)
-		reagents.add_reagent(unique_blood ? unique_blood : /datum/reagent/blood, 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
-		update_icon()
+		reagents.add_reagent(unique_blood ? unique_blood : /datum/reagent/blood, 200, list("viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
+		update_appearance()
 
 /// Handles updating the container when the reagents change.
 /obj/item/reagent_containers/blood/on_reagent_change(datum/reagents/holder, ...)
@@ -22,14 +22,13 @@
 		blood_type = B.data["blood_type"]
 	else
 		blood_type = null
-	update_pack_name()
 	return ..()
 
-/obj/item/reagent_containers/blood/proc/update_pack_name()
+/obj/item/reagent_containers/blood/update_name(updates)
+	. = ..()
 	if(labelled)
 		return
-
-	name = "blood_pack[blood_type ? " - [blood_type]" : ""]"
+	name = "blood_pack[blood_type ? " - [blood_type]" : null]"
 
 /obj/item/reagent_containers/blood/random
 	icon_state = "random_bloodpack"
@@ -70,7 +69,7 @@
 /obj/item/reagent_containers/blood/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/pen) || istype(I, /obj/item/toy/crayon))
 		if(!user.is_literate())
-			to_chat(user, "<span class='notice'>You scribble illegibly on the label of [src]!</span>")
+			to_chat(user, span_notice("You scribble illegibly on the label of [src]!"))
 			return
 		var/t = stripped_input(user, "What would you like to label the blood pack?", name, null, 53)
 		if(!user.canUseTopic(src, BE_CLOSE))
@@ -78,10 +77,10 @@
 		if(user.get_active_held_item() != I)
 			return
 		if(t)
-			labelled = 1
+			labelled = TRUE
 			name = "blood pack - [t]"
 		else
-			labelled = 0
-			update_pack_name()
+			labelled = FALSE
+			update_name()
 	else
 		return ..()

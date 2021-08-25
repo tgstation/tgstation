@@ -41,23 +41,25 @@ Bonus
 	)
 
 /datum/symptom/vomit/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["stealth"] >= 4)
+	if(A.totalStealth() >= 4)
 		suppress_warning = TRUE
-	if(A.properties["resistance"] >= 7) //blood vomit
+	if(A.totalResistance() >= 7) //blood vomit
 		vomit_blood = TRUE
-	if(A.properties["transmittable"] >= 7) //projectile vomit
+	if(A.totalTransmittable() >= 7) //projectile vomit
 		proj_vomit = 5
 
 /datum/symptom/vomit/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(1, 2, 3, 4)
 			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, "<span class='warning'>[pick("You feel nauseated.", "You feel like you're going to throw up!")]</span>")
+				to_chat(M, span_warning("[pick("You feel nauseated.", "You feel like you're going to throw up!")]"))
 		else
 			vomit(M)
 

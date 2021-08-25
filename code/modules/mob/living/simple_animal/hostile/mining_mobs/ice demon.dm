@@ -15,7 +15,7 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = TRUE
 	ranged_message = "manifests ice"
-	ranged_cooldown_time = 30
+	ranged_cooldown_time = 1.5 SECONDS
 	minimum_distance = 3
 	retreat_distance = 3
 	maxHealth = 150
@@ -26,6 +26,7 @@
 	attack_verb_continuous = "slices"
 	attack_verb_simple = "slice"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	vision_range = 9
 	aggro_vision_range = 9
 	move_force = MOVE_FORCE_VERY_STRONG
@@ -37,29 +38,32 @@
 	deathmessage = "fades as the energies that tied it to this world dissipate."
 	deathsound = 'sound/magic/demon_dies.ogg'
 	stat_attack = HARD_CRIT
-	is_flying_animal = TRUE
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
 	/// Distance the demon will teleport from the target
 	var/teleport_distance = 3
 
+/mob/living/simple_animal/hostile/asteroid/ice_demon/Initialize()
+	. = ..()
+	AddElement(/datum/element/simple_flying)
+
 /obj/projectile/temp/basilisk/ice
 	name = "ice blast"
 	damage = 5
+	speed = 4
 	nodamage = FALSE
 	temperature = -75
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/OpenFire()
+	ranged_cooldown = world.time + ranged_cooldown_time
 	// Sentient ice demons teleporting has been linked to server crashes
 	if(client)
 		return ..()
 	if(teleport_distance <= 0)
 		return ..()
-	var/list/possible_ends = list()
-	for(var/turf/T in view(teleport_distance, target.loc) - view(teleport_distance - 1, target.loc))
-		if(isclosedturf(T))
-			continue
-		possible_ends |= T
+	var/list/possible_ends = view(teleport_distance, target.loc) - view(teleport_distance - 1, target.loc)
+	for(var/turf/closed/turf_to_remove in possible_ends)
+		possible_ends -= turf_to_remove
 	if(!possible_ends.len)
 		return ..()
 	var/turf/end = pick(possible_ends)
@@ -67,11 +71,11 @@
 	SLEEP_CHECK_DEATH(8)
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/ice_demon/Life()
+/mob/living/simple_animal/hostile/asteroid/ice_demon/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!. || target)
 		return
-	adjustHealth(-maxHealth*0.025)
+	adjustHealth(-0.0125 * maxHealth * delta_time)
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/death(gibbed)
 	move_force = MOVE_FORCE_DEFAULT

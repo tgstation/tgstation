@@ -1,19 +1,25 @@
 /* Kitchen tools
  * Contains:
- *		Fork
- *		Kitchen knives
- *		Ritual Knife
- *		Bloodletter
- *		Butcher's cleaver
- *		Combat Knife
- *		Rolling Pins
- *		Plastic Utensils
+ * Fork
+ * Kitchen knives
+ * Ritual Knife
+ * Bloodletter
+ * Butcher's cleaver
+ * Combat Knife
+ * Rolling Pins
+ * Plastic Utensils
  */
+
+#define PLASTIC_BREAK_PROBABILITY 25
 
 /obj/item/kitchen
 	icon = 'icons/obj/kitchen.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+
+/obj/item/kitchen/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_APC_SHOCKING, INNATE_TRAIT)
 
 /obj/item/kitchen/fork
 	name = "fork"
@@ -30,13 +36,16 @@
 	attack_verb_simple = list("attack", "stab", "poke")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
-	item_flags = EYE_STAB
 	sharpness = SHARP_POINTY
 	var/datum/reagent/forkload //used to eat omelette
 	custom_price = PAYCHECK_PRISONER
 
+/obj/item/kitchen/fork/Initialize()
+	. = ..()
+	AddElement(/datum/element/eyestab)
+
 /obj/item/kitchen/fork/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] stabs \the [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to take a bite out of [user.p_them()]self!</span>")
+	user.visible_message(span_suicide("[user] stabs \the [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to take a bite out of [user.p_them()]self!"))
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	return BRUTELOSS
 
@@ -46,10 +55,10 @@
 
 	if(forkload)
 		if(M == user)
-			M.visible_message("<span class='notice'>[user] eats a delicious forkful of omelette!</span>")
+			M.visible_message(span_notice("[user] eats a delicious forkful of omelette!"))
 			M.reagents.add_reagent(forkload.type, 1)
 		else
-			M.visible_message("<span class='notice'>[user] feeds [M] a delicious forkful of omelette!</span>")
+			M.visible_message(span_notice("[user] feeds [M] a delicious forkful of omelette!"))
 			M.reagents.add_reagent(forkload.type, 1)
 		icon_state = "fork"
 		forkload = null
@@ -65,13 +74,10 @@
 	throwforce = 0
 	custom_materials = list(/datum/material/plastic=80)
 	custom_price = PAYCHECK_PRISONER * 2
-	var/break_chance = 25
 
-/obj/item/kitchen/fork/plastic/afterattack(atom/target, mob/user)
-	.=..()
-	if(prob(break_chance))
-		user.visible_message("<span class='danger'>[user]'s fork snaps into tiny pieces in their hand.</span>")
-		qdel(src)
+/obj/item/kitchen/fork/plastic/Initialize()
+	. = ..()
+	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 
 /obj/item/kitchen/knife
 	name = "kitchen knife"
@@ -91,14 +97,14 @@
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
-	item_flags = EYE_STAB
-	var/bayonet = FALSE	//Can this be attached to a gun?
-	wound_bonus = -5
-	bare_wound_bonus = 10
+	var/bayonet = FALSE //Can this be attached to a gun?
+	wound_bonus = 5
+	bare_wound_bonus = 15
 	tool_behaviour = TOOL_KNIFE
 
-/obj/item/kitchen/knife/ComponentInitialize()
+/obj/item/kitchen/knife/Initialize()
 	. = ..()
+	AddElement(/datum/element/eyestab)
 	set_butchering()
 
 ///Adds the butchering component, used to override stats for special cases
@@ -106,9 +112,9 @@
 	AddComponent(/datum/component/butchering, 80 - force, 100, force - 10) //bonus chance increases depending on force
 
 /obj/item/kitchen/knife/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is slitting [user.p_their()] wrists with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide.</span>", \
-						"<span class='suicide'>[user] is slitting [user.p_their()] throat with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide.</span>", \
-						"<span class='suicide'>[user] is slitting [user.p_their()] stomach open with the [src.name]! It looks like [user.p_theyre()] trying to commit seppuku.</span>"))
+	user.visible_message(pick(span_suicide("[user] is slitting [user.p_their()] wrists with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide."), \
+						span_suicide("[user] is slitting [user.p_their()] throat with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide."), \
+						span_suicide("[user] is slitting [user.p_their()] stomach open with the [src.name]! It looks like [user.p_theyre()] trying to commit seppuku.")))
 	return (BRUTELOSS)
 
 /obj/item/kitchen/knife/plastic
@@ -125,22 +131,22 @@
 	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
 	sharpness = SHARP_EDGED
 	custom_price = PAYCHECK_PRISONER * 2
-	var/break_chance = 25
 
-/obj/item/kitchen/knife/plastic/afterattack(mob/living/carbon/user)
-	.=..()
-	if(prob(break_chance))
-		user.visible_message("<span class='danger'>[user]'s knife snaps into tiny pieces in their hand.</span>")
-		qdel(src)
+/obj/item/kitchen/knife/plastic/Initialize()
+	. = ..()
+	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 
 /obj/item/kitchen/knife/ritual
 	name = "ritual knife"
 	desc = "The unearthly energies that once powered this blade are now dormant."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "render"
-	worn_icon_state = "render"
-	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	icon = 'icons/obj/eldritch.dmi'
+	icon_state = "bone_blade"
+	inhand_icon_state = "bone_blade"
+	worn_icon_state = "bone_blade"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/kitchen/knife/bloodletter
@@ -179,12 +185,14 @@
 	attack_verb_simple = list("cleave", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_EASY * 5
+	wound_bonus = 15
 
 /obj/item/kitchen/knife/hunting
 	name = "hunting knife"
 	desc = "Despite its name, it's mainly used for cutting meat from dead prey rather than actual hunting."
 	inhand_icon_state = "huntingknife"
 	icon_state = "huntingknife"
+	wound_bonus = 10
 
 /obj/item/kitchen/knife/hunting/set_butchering()
 	AddComponent(/datum/component/butchering, 80 - force, 100, force + 10)
@@ -252,7 +260,7 @@
 	custom_materials = null
 
 /obj/item/kitchen/knife/shiv/carrot/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] forcefully drives \the [src] into [user.p_their()] eye! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] forcefully drives \the [src] into [user.p_their()] eye! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
 /obj/item/kitchen/rollingpin
@@ -272,7 +280,7 @@
 	tool_behaviour = TOOL_ROLLINGPIN
 
 /obj/item/kitchen/rollingpin/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 /* Trays  moved to /obj/item/storage/bag */
 
@@ -301,11 +309,8 @@
 	custom_price = PAYCHECK_PRISONER * 2
 	toolspeed = 75 // The plastic spoon takes 5 minutes to dig through a single mineral turf... It's one, continuous, breakable, do_after...
 
-	/// The probability of this breaking every time it's used
-	var/break_chance = 25
+/obj/item/kitchen/spoon/plastic/Initialize()
+	. = ..()
+	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 
-/obj/item/kitchen/spoon/plastic/afterattack(atom/target, mob/user)
-	.=..()
-	if(prob(break_chance))
-		user.visible_message("<span class='danger'>[user]'s spoon snaps into tiny pieces in their hand.</span>")
-		qdel(src)
+#undef PLASTIC_BREAK_PROBABILITY

@@ -34,6 +34,12 @@
 /// Flag for the mutation ref search system. Search will include advanced injector mutations
 #define SEARCH_ADV_INJ 8
 
+/// The base cooldown of the ability to copy enzymes and genetic makeup to people.
+#define ENZYME_COPY_BASE_COOLDOWN (60 SECONDS)
+
+#define RAD_PULSE_UNIQUE_IDENTITY "ui"
+#define RAD_PULSE_UNIQUE_FEATURES "uf"
+
 /obj/machinery/computer/scan_consolenew
 	name = "DNA Console"
 	desc = "Scan DNA."
@@ -85,6 +91,10 @@
 	var/rad_pulse_index = 0
 	/// World time when the enzyme pulse should complete
 	var/rad_pulse_timer = 0
+	/// Which dna string to edit with the pulse
+	var/rad_pulse_type
+	/// Cooldown for the genetic makeup transfer actions.
+	COOLDOWN_DECLARE(enzyme_copy_timer)
 
 	/// Used for setting tgui data - Whether the connected DNA Scanner is usable
 	var/can_use_scanner = FALSE
@@ -139,7 +149,7 @@
 
 	// This is for pulsing the UI element with radiation as part of genetic makeup
 	// If rad_pulse_index > 0 then it means we're attempting a rad pulse
-	if((rad_pulse_index > 0) && (rad_pulse_timer <= world.time))
+	if((rad_pulse_index > 0) && (rad_pulse_timer <= world.time) && (rad_pulse_type == RAD_PULSE_UNIQUE_IDENTITY || rad_pulse_type == RAD_PULSE_UNIQUE_FEATURES))
 		rad_pulse()
 		return
 
@@ -148,7 +158,7 @@
 	if (istype(I, /obj/item/chromosome))
 		I.forceMove(src)
 		stored_chromosomes += I
-		to_chat(user, "<span class='notice'>You insert [I].</span>")
+		to_chat(user, span_notice("You insert [I]."))
 		return
 
 	// Insert data disk if console disk slot is empty
@@ -162,7 +172,7 @@
 			eject_disk(user)
 		// Set the new diskette.
 		diskette = I
-		to_chat(user, "<span class='notice'>You insert [I].</span>")
+		to_chat(user, span_notice("You insert [I]."))
 		return
 
 	// Recycle non-activator used injectors
@@ -170,15 +180,15 @@
 	if(istype(I, /obj/item/dnainjector/activator))
 		var/obj/item/dnainjector/activator/A = I
 		if(A.used)
-			to_chat(user,"<span class='notice'>Recycled [I].</span>")
-			if(A.research)
+			to_chat(user,span_notice("Recycled [I]."))
+			if(A.research && A.filled)
 				if(prob(60))
 					var/c_typepath = generate_chromosome()
 					var/obj/item/chromosome/CM = new c_typepath (src)
 					stored_chromosomes += CM
-					to_chat(user,"<span class='notice'>[capitalize(CM.name)] added to storage.</span>")
+					to_chat(user,span_notice("[capitalize(CM.name)] added to storage."))
 				else
-					to_chat(user, "<span class='notice'>There was not enough genetic data to extract a viable chromosome.</span>")
+					to_chat(user, span_notice("There was not enough genetic data to extract a viable chromosome."))
 				if(A.crispr_charge)
 					crispr_charges++
 			qdel(I)
@@ -204,6 +214,7 @@
 	injectorready = world.time + INJECTOR_TIMEOUT
 	scrambleready = world.time + SCRAMBLE_TIMEOUT
 	jokerready = world.time + JOKER_TIMEOUT
+	COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 
 	// Set the default tgui state
 	set_default_state()
@@ -226,10 +237,7 @@
 		can_use_scanner = TRUE
 	else
 		can_use_scanner = FALSE
-		if(connected_scanner)
-			if(connected_scanner.linked_console == src)
-				connected_scanner.linked_console = null
-			connected_scanner = null
+		set_connected_scanner(null)
 		is_viable_occupant = FALSE
 
 	// Check for a viable occupant in the scanner.
@@ -284,7 +292,7 @@
 		data["radStrength"] = radstrength
 		data["radDuration"] = radduration
 		data["stdDevStr"] = radstrength * RADIATION_STRENGTH_MULTIPLIER
-		switch(RADIATION_ACCURACY_MULTIPLIER / (radduration + (connected_scanner.precision_coeff ** 2)))	//hardcoded values from a z-table for a normal distribution
+		switch(RADIATION_ACCURACY_MULTIPLIER / (radduration + (connected_scanner.precision_coeff ** 2))) //hardcoded values from a z-table for a normal distribution
 			if(0 to 0.25)
 				data["stdDevAcc"] = ">95 %"
 			if(0.25 to 0.5)
@@ -305,7 +313,8 @@
 		data["subjectRads"] = scanner_occupant.radiation/(RAD_MOB_SAFE/100)
 		data["subjectEnzymes"] = scanner_occupant.dna.unique_enzymes
 		data["isMonkey"] = ismonkey(scanner_occupant)
-		data["subjectUNI"] = scanner_occupant.dna.uni_identity
+		data["subjectUNI"] = scanner_occupant.dna.unique_identity
+		data["subjectUF"] = scanner_occupant.dna.unique_features
 		data["storage"]["occupant"] = tgui_occupant_mutations
 		//data["subjectMutations"] = tgui_occupant_mutations
 	else
@@ -328,6 +337,7 @@
 	data["injectorSeconds"] = time_to_injector
 	data["isPulsingRads"] = is_pulsing_rads
 	data["radPulseSeconds"] = time_to_pulse
+	data["geneticMakeupCooldown"] = COOLDOWN_TIMELEFT(src, enzyme_copy_timer) / 10
 
 	if(diskette != null)
 		data["hasDisk"] = TRUE
@@ -404,7 +414,7 @@
 			scanner_occupant.dna.remove_all_mutations(list(MUT_NORMAL, MUT_EXTRA))
 			scanner_occupant.dna.generate_dna_blocks()
 			scrambleready = world.time + SCRAMBLE_TIMEOUT
-			to_chat(usr,"<span class='notice'>DNA scrambled.</span>")
+			to_chat(usr,span_notice("DNA scrambled."))
 			scanner_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER*50/(connected_scanner.damage_coeff ** 2)
 			return
 
@@ -478,7 +488,7 @@
 			// GUARD CHECK - Is the occupant currently undergoing some form of
 			//  transformation? If so, we don't want to be pulsing genes.
 			if(scanner_occupant.transformation_timer)
-				to_chat(usr,"<span class='warning'>Gene pulse failed: The scanner occupant undergoing a transformation.</span>")
+				to_chat(usr,span_warning("Gene pulse failed: The scanner occupant undergoing a transformation."))
 				return
 
 			// Resolve mutation's BYOND path from the alias
@@ -506,12 +516,12 @@
 			//  X to allow highlighting logic to work on the tgui interface.
 			if(newgene == "X")
 				var/defaultseq = scanner_occupant.dna.default_mutation_genes[path]
-				defaultseq = copytext_char(defaultseq, 1, genepos) + newgene + copytext_char(defaultseq, genepos + 1)
+				defaultseq = copytext(defaultseq, 1, genepos) + newgene + copytext(defaultseq, genepos + 1)
 				scanner_occupant.dna.default_mutation_genes[path] = defaultseq
 
 			// Copy genome to scanner occupant and do some basic mutation checks as
 			//  we've increased the occupant rads
-			sequence = copytext_char(sequence, 1, genepos) + newgene + copytext_char(sequence, genepos + 1)
+			sequence = copytext(sequence, 1, genepos) + newgene + copytext(sequence, genepos + 1)
 			scanner_occupant.dna.mutation_index[path] = sequence
 			scanner_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER/connected_scanner.damage_coeff
 			scanner_occupant.domutcheck()
@@ -573,7 +583,7 @@
 		// ---------------------------------------------------------------------- //
 		// params["mutref"] - ATOM Ref of specific mutation to swap out
 		// params["source"] - The source the request came from.
-		//	Expected results:
+		// Expected results:
 		//   "occupant" - From genetic sequencer
 		//   "console" - From DNA Console storage
 		//   "disk" - From inserted diskette
@@ -710,7 +720,7 @@
 		//  referred to as a "Research" type. Expects a string with 0 or 1, which
 		//  then gets converted to a number.
 		// params["source"] - The source the request came from.
-		//	Expected results:
+		// Expected results:
 		//   "occupant" - From genetic sequencer
 		//   "console" - From DNA Console storage
 		//   "disk" - From inserted diskette
@@ -784,7 +794,7 @@
 		// ---------------------------------------------------------------------- //
 		// params["mutref"] - ATOM Ref of specific mutation to store
 		// params["source"] - The source the request came from.
-		//	Expected results:
+		// Expected results:
 		//   "occupant" - From genetic sequencer
 		//   "disk" - From inserted diskette
 		if("save_console")
@@ -808,17 +818,21 @@
 			if(!HM)
 				return
 
-			var/datum/mutation/human/A = new HM.type()
-			A.copy_mutation(HM)
+			// Saving temporary or unobtainable mutations leads to gratuitous abuse
+			if(HM.class == MUT_OTHER)
+				say("ERROR: This mutation is anomalous, and cannot be saved.")
+				return
+
+			var/datum/mutation/human/A = new HM.type(MUT_EXTRA, null, HM)
 			stored_mutations += A
-			to_chat(usr,"<span class='notice'>Mutation successfully stored.</span>")
+			to_chat(usr,span_notice("Mutation successfully stored."))
 			return
 
 		// Save a mutation to the diskette's storage buffer.
 		// ---------------------------------------------------------------------- //
 		// params["mutref"] - ATOM Ref of specific mutation to store
 		// params["source"] - The source the request came from
-		//	Expected results:
+		// Expected results:
 		//   "occupant" - From genetic sequencer
 		//   "console" - From DNA Console storage
 		if("save_disk")
@@ -829,13 +843,13 @@
 
 			// GUARD CHECK - Make sure the disk is not full
 			if(LAZYLEN(diskette.mutations) >= diskette.max_mutations)
-				to_chat(usr,"<span class='warning'>Disk storage is full.</span>")
+				to_chat(usr,span_warning("Disk storage is full."))
 				return
 
 			// GUARD CHECK - Make sure the disk isn't set to read only, as we're
 			//  attempting to write to it
 			if(diskette.read_only)
-				to_chat(usr,"<span class='warning'>Disk is set to read only mode.</span>")
+				to_chat(usr,span_warning("Disk is set to read only mode."))
 				return
 
 			var/search_flags = 0
@@ -858,10 +872,9 @@
 			if(!HM)
 				return
 
-			var/datum/mutation/human/A = new HM.type()
-			A.copy_mutation(HM)
+			var/datum/mutation/human/A = new HM.type(MUT_EXTRA, null, HM)
 			diskette.mutations += A
-			to_chat(usr,"<span class='notice'>Mutation successfully stored to disk.</span>")
+			to_chat(usr,span_notice("Mutation successfully stored to disk."))
 			return
 
 		// Completely removes a MUT_EXTRA mutation or mutation with corrupt gene
@@ -914,7 +927,7 @@
 			// GUARD CHECK - Make sure the disk isn't set to read only, as we're
 			//  attempting to write to it (via deletion)
 			if(diskette.read_only)
-				to_chat(usr,"<span class='warning'>Disk is set to read only mode.</span>")
+				to_chat(usr,span_warning("Disk is set to read only mode."))
 				return
 
 			var/bref = params["mutref"]
@@ -974,7 +987,7 @@
 
 			// If we got a new type, add it to our storage
 			stored_mutations += new result_path()
-			to_chat(usr, "<span class='boldnotice'>Success! New mutation has been added to console storage.</span>")
+			to_chat(usr, span_boldnotice("Success! New mutation has been added to console storage."))
 
 			// If it's already discovered, end here. Otherwise, add it to the list of
 			//  discovered mutations.
@@ -1000,13 +1013,13 @@
 
 			// GUARD CHECK - Make sure the disk is not full.
 			if(LAZYLEN(diskette.mutations) >= diskette.max_mutations)
-				to_chat(usr,"<span class='warning'>Disk storage is full.</span>")
+				to_chat(usr,span_warning("Disk storage is full."))
 				return
 
 			// GUARD CHECK - Make sure the disk isn't set to read only, as we're
 			//  attempting to write to it
 			if(diskette.read_only)
-				to_chat(usr,"<span class='warning'>Disk is set to read only mode.</span>")
+				to_chat(usr,span_warning("Disk is set to read only mode."))
 				return
 
 			// GUARD CHECK - We're running a research-type operation. If, for some
@@ -1036,7 +1049,7 @@
 
 			// If we got a new type, add it to our storage
 			diskette.mutations += new result_path()
-			to_chat(usr, "<span class='boldnotice'>Success! New mutation has been added to the disk.</span>")
+			to_chat(usr, span_boldnotice("Success! New mutation has been added to the disk."))
 
 			// If it's already discovered, end here. Otherwise, add it to the list of
 			//  discovered mutations
@@ -1080,7 +1093,7 @@
 			// GUARD CHECK - Make sure the disk isn't set to read only, as we're
 			//  attempting to write to it
 			if(diskette.read_only)
-				to_chat(usr,"<span class='warning'>Disk is set to read only mode.</span>")
+				to_chat(usr,span_warning("Disk is set to read only mode."))
 				return
 
 			// Convert the index to a number and clamp within the array range
@@ -1129,7 +1142,7 @@
 			// GUARD CHECK - Make sure the disk isn't set to read only, as we're
 			//  attempting to write (via deletion) to it
 			if(diskette.read_only)
-				to_chat(usr,"<span class='warning'>Disk is set to read only mode.</span>")
+				to_chat(usr,span_warning("Disk is set to read only mode."))
 				return
 
 			diskette.genetic_makeup_buffer.Cut()
@@ -1154,8 +1167,9 @@
 			// Set the new information
 			genetic_makeup_buffer[buffer_index] = list(
 				"label"="Slot [buffer_index]:[scanner_occupant.real_name]",
-				"UI"=scanner_occupant.dna.uni_identity,
+				"UI"=scanner_occupant.dna.unique_identity,
 				"UE"=scanner_occupant.dna.unique_enzymes,
+				"UF"=scanner_occupant.dna.unique_features,
 				"name"=scanner_occupant.real_name,
 				"blood_type"=scanner_occupant.dna.blood_type)
 
@@ -1195,9 +1209,12 @@
 		// params["type"] - Type of injector to create
 		//  Expected results:
 		//   "ue" - Unique Enzyme, changes name and blood type
-		//	 "ui" - Unique Identity, changes looks
-		//	 "mixed" - Combination of both ue and ui
+		//  "ui" - Unique Identity, changes looks
+		//  "uf" - Unique Features, changes mutant bodyparts and mutcolors
+		//  "mixed" - Combination of both ue and ui
 		if("makeup_injector")
+			if(!COOLDOWN_FINISHED(src, enzyme_copy_timer))
+				return
 			// Convert the index to a number and clamp within the array range, then
 			//  copy the data from the disk to that buffer
 			var/buffer_index = text2num(params["index"])
@@ -1218,7 +1235,7 @@
 					//  However, if this is the case, we can't make a complete injector and
 					//  this catches that edge case
 					if(!buffer_slot["UI"])
-						to_chat(usr,"<span class='warning'>Genetic data corrupted, unable to create injector.</span>")
+						to_chat(usr,span_warning("Genetic data corrupted, unable to create injector."))
 						return
 
 					I = new /obj/item/dnainjector/timed(loc)
@@ -1233,7 +1250,7 @@
 					//  However, if this is the case, we can't make a complete injector and
 					//  this catches that edge case
 					if(!buffer_slot["name"] || !buffer_slot["UE"] || !buffer_slot["blood_type"])
-						to_chat(usr,"<span class='warning'>Genetic data corrupted, unable to create injector.</span>")
+						to_chat(usr,span_warning("Genetic data corrupted, unable to create injector."))
 						return
 
 					I = new /obj/item/dnainjector/timed(loc)
@@ -1243,16 +1260,31 @@
 					//  the radiation generated by this injector
 					if(scanner_operational())
 						I.damage_coeff  = connected_scanner.damage_coeff
-				if("mixed")
+				if("uf")
 					// GUARD CHECK - There's currently no way to save partial genetic data.
 					//  However, if this is the case, we can't make a complete injector and
 					//  this catches that edge case
-					if(!buffer_slot["UI"] || !buffer_slot["name"] || !buffer_slot["UE"] || !buffer_slot["blood_type"])
+					if(!buffer_slot["name"] || !buffer_slot["UF"] || !buffer_slot["blood_type"])
 						to_chat(usr,"<span class='warning'>Genetic data corrupted, unable to create injector.</span>")
 						return
 
 					I = new /obj/item/dnainjector/timed(loc)
-					I.fields = list("UI"=buffer_slot["UI"],"name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "blood_type"=buffer_slot["blood_type"])
+					I.fields = list("name"=buffer_slot["name"], "UF"=buffer_slot["UF"])
+
+					// If there is a connected scanner, we can use its upgrades to reduce
+					//  the radiation generated by this injector
+					if(scanner_operational())
+						I.damage_coeff  = connected_scanner.damage_coeff
+				if("mixed")
+					// GUARD CHECK - There's currently no way to save partial genetic data.
+					//  However, if this is the case, we can't make a complete injector and
+					//  this catches that edge case
+					if(!buffer_slot["UI"] || !buffer_slot["name"] || !buffer_slot["UE"] || !buffer_slot["UF"] || !buffer_slot["blood_type"])
+						to_chat(usr,span_warning("Genetic data corrupted, unable to create injector."))
+						return
+
+					I = new /obj/item/dnainjector/timed(loc)
+					I.fields = list("UI"=buffer_slot["UI"],"name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "UF"=buffer_slot["UF"], "blood_type"=buffer_slot["blood_type"])
 
 					// If there is a connected scanner, we can use its upgrades to reduce
 					//  the radiation generated by this injector
@@ -1274,12 +1306,16 @@
 		// params["type"] - Type of genetic makeup copy to implement
 		//  Expected results:
 		//   "ue" - Unique Enzyme, changes name and blood type
-		//	 "ui" - Unique Identity, changes looks
-		//	 "mixed" - Combination of both ue and ui
+		//  "ui" - Unique Identity, changes looks
+		//  "uf" - Unique Features, changes mutant bodyparts and mutcolors
+		//  "mixed" - Combination of ue, ui, and uf
 		if("makeup_apply")
 			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			//  operational guard checks.
 			if(!can_modify_occupant())
+				return
+
+			if(!COOLDOWN_FINISHED(src, enzyme_copy_timer))
 				return
 
 			// Convert the index to a number and clamp within the array range, then
@@ -1311,8 +1347,9 @@
 		// params["type"] - Type of genetic makeup copy to implement
 		//  Expected results:
 		//   "ue" - Unique Enzyme, changes name and blood type
-		//	 "ui" - Unique Identity, changes looks
-		//	 "mixed" - Combination of both ue and ui
+		//  "ui" - Unique Identity, changes looks
+		//  "uf" - Unique Features, changes mutant bodyparts and mutcolors
+		//  "mixed" - Combination of ue, ui, and uf
 		if("makeup_delay")
 			// Convert the index to a number and clamp within the array range, then
 			//  copy the data from the disk to that buffer
@@ -1335,6 +1372,10 @@
 		// Attempts to modify the indexed element of the Unique Identity string
 		// This is a time delayed action that is handled in process()
 		// ---------------------------------------------------------------------- //
+		// params["type"] - Type of genetic makeup string to edit
+		//  Expected results:
+		//  "ui" - Unique Identity, changes looks
+		//  "uf" - Unique Features, changes mutant bodyparts and mutcolors
 		// params["index"] - The BYOND index of the Unique Identity string to
 		//  attempt to modify
 		if("makeup_pulse")
@@ -1343,9 +1384,16 @@
 			if(!can_modify_occupant())
 				return
 
-			// Set the appropriate timer and index to pulse. This is then managed
+			// Set the appropriate timer, string, and index to pulse. This is then managed
 			//  later on in process()
-			var/len = length_char(scanner_occupant.dna.uni_identity)
+			var/type = params["type"]
+			rad_pulse_type = type
+			var/len
+			switch(type)
+				if("ui")
+					len = length(scanner_occupant.dna.unique_identity)
+				if("uf")
+					len = length(scanner_occupant.dna.unique_features)
 			rad_pulse_timer = world.time + (radduration*10)
 			rad_pulse_index = WRAP(text2num(params["index"]), 1, len+1)
 			begin_processing()
@@ -1391,7 +1439,7 @@
 			// GUARD CHECK - If the name is null or blank, reject.
 			// GUARD CHECK - If the name isn't in the list of advanced injectors, we
 			//  want to reject this as it shouldn't be possible ever do this.
-			//	Unexpected result
+			// Unexpected result
 			if(!inj_name || !(inj_name in injector_selection))
 				return
 
@@ -1415,7 +1463,7 @@
 			// GUARD CHECK - If the name is null or blank, reject.
 			// GUARD CHECK - If the name isn't in the list of advanced injectors, we
 			//  want to reject this as it shouldn't be possible ever do this.
-			//	Unexpected result
+			// Unexpected result
 			if(!inj_name || !(inj_name in injector_selection))
 				return
 
@@ -1449,7 +1497,7 @@
 		if("add_advinj_mut")
 			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			//  operational guard checks.
-			// 	This is needed because this operation can only be completed from the
+			// This is needed because this operation can only be completed from the
 			//  genetic sequencer.
 			if(!can_modify_occupant())
 				return
@@ -1463,7 +1511,7 @@
 
 			// GUARD CHECK - Make sure we limit the number of mutations appropriately
 			if(LAZYLEN(injector_selection[adv_inj]) >= max_injector_mutations)
-				to_chat(usr,"<span class='warning'>Advanced injector mutation storage is full.</span>")
+				to_chat(usr,span_warning("Advanced injector mutation storage is full."))
 				return
 
 			var/mut_source = params["source"]
@@ -1500,7 +1548,7 @@
 
 			// If this would take us over the max instability, we inform the user.
 			if(instability_total > max_injector_instability)
-				to_chat(usr,"<span class='warning'>Extra mutation would make the advanced injector too instable.</span>")
+				to_chat(usr,span_warning("Extra mutation would make the advanced injector too instable."))
 				return
 
 			// If we've got here, all our checks are passed and we can successfully
@@ -1508,7 +1556,7 @@
 			var/datum/mutation/human/A = new HM.type()
 			A.copy_mutation(HM)
 			injector_selection[adv_inj] += A
-			to_chat(usr,"<span class='notice'>Mutation successfully added to advanced injector.</span>")
+			to_chat(usr,span_notice("Mutation successfully added to advanced injector."))
 			return
 
 		// Deletes a mutation from an advanced injector
@@ -1568,10 +1616,24 @@
 			//  However, if this is the case, we can't make a complete injector and
 			//  this catches that edge case
 			if(!buffer_slot["UI"])
+				to_chat(usr,span_warning("Genetic data corrupted, unable to apply genetic data."))
+				return FALSE
+			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
+			scanner_occupant.dna.unique_identity = buffer_slot["UI"]
+			scanner_occupant.updateappearance(mutations_overlay_update=1)
+			scanner_occupant.radiation += rad_increase
+			scanner_occupant.domutcheck()
+			return TRUE
+		if("uf")
+			// GUARD CHECK - There's currently no way to save partial genetic data.
+			//  However, if this is the case, we can't make a complete injector and
+			//  this catches that edge case
+			if(!buffer_slot["UF"])
 				to_chat(usr,"<span class='warning'>Genetic data corrupted, unable to apply genetic data.</span>")
 				return FALSE
-			scanner_occupant.dna.uni_identity = buffer_slot["UI"]
-			scanner_occupant.updateappearance(mutations_overlay_update=1)
+			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
+			scanner_occupant.dna.unique_features = buffer_slot["UF"]
+			scanner_occupant.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 			scanner_occupant.radiation += rad_increase
 			scanner_occupant.domutcheck()
 			return TRUE
@@ -1580,8 +1642,9 @@
 			//  However, if this is the case, we can't make a complete injector and
 			//  this catches that edge case
 			if(!buffer_slot["name"] || !buffer_slot["UE"] || !buffer_slot["blood_type"])
-				to_chat(usr,"<span class='warning'>Genetic data corrupted, unable to apply genetic data.</span>")
+				to_chat(usr,span_warning("Genetic data corrupted, unable to apply genetic data."))
 				return FALSE
+			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 			scanner_occupant.real_name = buffer_slot["name"]
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
@@ -1593,11 +1656,13 @@
 			// GUARD CHECK - There's currently no way to save partial genetic data.
 			//  However, if this is the case, we can't make a complete injector and
 			//  this catches that edge case
-			if(!buffer_slot["UI"] || !buffer_slot["name"] || !buffer_slot["UE"] || !buffer_slot["blood_type"])
-				to_chat(usr,"<span class='warning'>Genetic data corrupted, unable to apply genetic data.</span>")
+			if(!buffer_slot["UI"] || !buffer_slot["name"] || !buffer_slot["UE"] || !buffer_slot["UF"] || !buffer_slot["blood_type"])
+				to_chat(usr,span_warning("Genetic data corrupted, unable to apply genetic data."))
 				return FALSE
-			scanner_occupant.dna.uni_identity = buffer_slot["UI"]
-			scanner_occupant.updateappearance(mutations_overlay_update=1)
+			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
+			scanner_occupant.dna.unique_identity = buffer_slot["UI"]
+			scanner_occupant.dna.unique_features = buffer_slot["UF"]
+			scanner_occupant.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 			scanner_occupant.real_name = buffer_slot["name"]
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
@@ -1635,7 +1700,7 @@
 		// Check validity of occupent for DNA Modification
 		// DNA Modification:
 		//   requires DNA
-		//	   this DNA can not be bad
+		//    this DNA can not be bad
 		//   is done via radiation bursts, so radiation immune carbons are not viable
 		// And the DNA Scanner itself must have a valid scan level
 	if(scanner_occupant.has_dna() && !HAS_TRAIT(scanner_occupant, TRAIT_GENELESS) && !HAS_TRAIT(scanner_occupant, TRAIT_BADDNA) || (connected_scanner.scan_level == 3))
@@ -1662,8 +1727,7 @@
 		test_scanner = locate(/obj/machinery/dna_scannernew, get_step(src, direction))
 		if(!isnull(test_scanner))
 			if(test_scanner.is_operational)
-				connected_scanner = test_scanner
-				connected_scanner.linked_console = src
+				set_connected_scanner(test_scanner)
 				return
 			else
 				broken_scanner = test_scanner
@@ -1671,8 +1735,7 @@
 	// Ultimately, if we have a broken scanner, we'll attempt to connect to it as
 	// a fallback case, but the code above will prefer a working scanner
 	if(!isnull(broken_scanner))
-		connected_scanner = broken_scanner
-		connected_scanner.linked_console = src
+		set_connected_scanner(broken_scanner)
 
 /**
  * Called by connected DNA Scanners when their doors close.
@@ -1692,11 +1755,11 @@
 	//  we want to perform it.
 	// GUARD CHECK - Make sure we can modify the occupant, apply_genetic_makeup()
 	//  assumes we've already done this.
-	if(delayed_action && can_modify_occupant())
+	if(delayed_action && can_modify_occupant() && COOLDOWN_FINISHED(src, enzyme_copy_timer))
 		var/type = delayed_action["type"]
 		var/buffer_slot = delayed_action["buffer_slot"]
 		if(apply_genetic_makeup(type, buffer_slot))
-			to_chat(connected_scanner.occupant, "<span class='notice'>[src] activates!</span>")
+			to_chat(connected_scanner.occupant, span_notice("[src] activates!"))
 		delayed_action = null
 
 /**
@@ -2018,7 +2081,7 @@
 	var/mutation
 
 	// Assume the occupant is valid and the check has been carried out before
-	// 	calling this proc with the relevant flags.
+	// calling this proc with the relevant flags.
 	if(target_flags & SEARCH_OCCUPANT)
 		mutation = (locate(ref) in scanner_occupant.dna.mutations)
 		if(mutation)
@@ -2069,11 +2132,11 @@
 	var/length = length(input)
 	var/ran = gaussian(0, rs*RADIATION_STRENGTH_MULTIPLIER)
 	if(ran == 0)
-		ran = pick(-1,1)	//hacky, statistically should almost never happen. 0-chance makes people mad though
+		ran = pick(-1,1) //hacky, statistically should almost never happen. 0-chance makes people mad though
 	else if(ran < 0)
-		ran = round(ran)	//negative, so floor it
+		ran = round(ran) //negative, so floor it
 	else
-		ran = -round(-ran)	//positive, so ceiling it
+		ran = -round(-ran) //positive, so ceiling it
 	return num2hex(WRAP(hex2num(input)+ran, 0, 16**length), length)
 
 	/**
@@ -2086,20 +2149,38 @@
 	// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 	//  operational guard checks.
 	// If we can't, abort the procedure.
-	if(!can_modify_occupant())
+	if(!can_modify_occupant() || (rad_pulse_type != RAD_PULSE_UNIQUE_IDENTITY && rad_pulse_type != RAD_PULSE_UNIQUE_FEATURES))
 		rad_pulse_index = 0
 		end_processing()
 		return
 
-	var/len = length_char(scanner_occupant.dna.uni_identity)
-	var/num = randomize_radiation_accuracy(rad_pulse_index, radduration + (connected_scanner.precision_coeff ** 2), len) //Each manipulator level above 1 makes randomization as accurate as selected time + manipulator lvl^2																																																		 //Value is this high for the same reason as with laser - not worth the hassle of upgrading if the bonus is low
-	var/hex = copytext_char(scanner_occupant.dna.uni_identity, num, num+1)
+	var/len
+	switch(rad_pulse_type)
+		if(RAD_PULSE_UNIQUE_IDENTITY)
+			len = length(scanner_occupant.dna.unique_identity)
+		if(RAD_PULSE_UNIQUE_FEATURES)
+			len = length(scanner_occupant.dna.unique_features)
+
+	var/num = randomize_radiation_accuracy(rad_pulse_index, radduration + (connected_scanner.precision_coeff ** 2), len) //Each manipulator level above 1 makes randomization as accurate as selected time + manipulator lvl^2  //Value is this high for the same reason as with laser - not worth the hassle of upgrading if the bonus is low
+
+	var/hex
+	switch(rad_pulse_type)
+		if(RAD_PULSE_UNIQUE_IDENTITY)
+			hex = copytext(scanner_occupant.dna.unique_identity, num, num+1)
+		if(RAD_PULSE_UNIQUE_FEATURES)
+			hex = copytext(scanner_occupant.dna.unique_features, num, num+1)
+
 	hex = scramble(hex, radstrength, radduration)
 
-	scanner_occupant.dna.uni_identity = copytext_char(scanner_occupant.dna.uni_identity, 1, num) + hex + copytext_char(scanner_occupant.dna.uni_identity, num + 1)
-	scanner_occupant.updateappearance(mutations_overlay_update=1)
+	switch(rad_pulse_type)
+		if(RAD_PULSE_UNIQUE_IDENTITY)
+			scanner_occupant.dna.unique_identity = copytext(scanner_occupant.dna.unique_identity, 1, num) + hex + copytext(scanner_occupant.dna.unique_identity, num + 1)
+		if(RAD_PULSE_UNIQUE_FEATURES)
+			scanner_occupant.dna.unique_features = copytext(scanner_occupant.dna.unique_features, 1, num) + hex + copytext(scanner_occupant.dna.unique_features, num + 1)
+	scanner_occupant.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 
 	rad_pulse_index = 0
+	rad_pulse_type = null
 	end_processing()
 	return
 
@@ -2126,7 +2207,7 @@
 	if(!diskette)
 		return
 
-	to_chat(user, "<span class='notice'>You eject [diskette] from [src].</span>")
+	to_chat(user, span_notice("You eject [diskette] from [src]."))
 
 	// Reset the state to console storage.
 	tgui_view_state["storageMode"] = "console"
@@ -2136,6 +2217,21 @@
 		diskette.forceMove(drop_location())
 	diskette = null
 
+/obj/machinery/computer/scan_consolenew/proc/set_connected_scanner(new_scanner)
+	if(connected_scanner)
+		UnregisterSignal(connected_scanner, COMSIG_PARENT_QDELETING)
+		if(connected_scanner.linked_console == src)
+			connected_scanner.set_linked_console(null)
+	connected_scanner = new_scanner
+	if(connected_scanner)
+		RegisterSignal(connected_scanner, COMSIG_PARENT_QDELETING, .proc/react_to_scanner_del)
+		connected_scanner.set_linked_console(src)
+
+/obj/machinery/computer/scan_consolenew/proc/react_to_scanner_del(datum/source)
+	SIGNAL_HANDLER
+	set_connected_scanner(null)
+
+#undef ENZYME_COPY_BASE_COOLDOWN
 #undef INJECTOR_TIMEOUT
 #undef NUMBER_OF_BUFFERS
 #undef SCRAMBLE_TIMEOUT

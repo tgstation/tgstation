@@ -1,3 +1,5 @@
+#define MINING_MESSAGE_COOLDOWN 20
+
 /**********************Mineral deposits**************************/
 
 /turf/closed/mineral //wall piece
@@ -22,6 +24,8 @@
 	var/last_act = 0
 	var/scan_state = "" //Holder for the image we display when we're pinged by a mining scanner
 	var/defer_change = 0
+	// If true you can mine the mineral turf with your hands
+	var/weak_turf = FALSE
 
 /turf/closed/mineral/Initialize()
 	. = ..()
@@ -59,7 +63,7 @@
 
 /turf/closed/mineral/attackby(obj/item/I, mob/user, params)
 	if (!ISADVANCEDTOOLUSER(user))
-		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		to_chat(usr, span_warning("You don't have the dexterity to do this!"))
 		return
 
 	if(I.tool_behaviour == TOOL_MINING)
@@ -70,15 +74,31 @@
 		if(last_act + (40 * I.toolspeed) > world.time)//prevents message spam
 			return
 		last_act = world.time
-		to_chat(user, "<span class='notice'>You start picking...</span>")
+		to_chat(user, span_notice("You start picking..."))
 
 		if(I.use_tool(src, user, 40, volume=50))
 			if(ismineralturf(src))
-				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
+				to_chat(user, span_notice("You finish cutting into the rock."))
 				gets_drilled(user, TRUE)
 				SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
 	else
 		return attack_hand(user)
+
+/turf/closed/mineral/attack_hand(mob/user)
+	if(!weak_turf)
+		return ..()
+	var/turf/user_turf = user.loc
+	if (!isturf(user_turf))
+		return
+	if(last_act + MINING_MESSAGE_COOLDOWN > world.time)//prevents message spam
+		return
+	last_act = world.time
+	to_chat(user, span_notice("You start pulling out pieces of [src] with your hands..."))
+	if(!do_after(user, 15 SECONDS, target = src))
+		return
+	if(ismineralturf(src))
+		to_chat(user, span_notice("You finish pulling apart [src]."))
+		gets_drilled(user)
 
 /turf/closed/mineral/proc/gets_drilled(user, give_exp = FALSE)
 	if (mineralType && (mineralAmt > 0))
@@ -95,23 +115,25 @@
 	for(var/obj/effect/temp_visual/mining_overlay/M in src)
 		qdel(M)
 	var/flags = NONE
+	var/old_type = type
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
-	ScrapeAway(null, flags)
-	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
+	var/turf/open/mined = ScrapeAway(null, flags)
+	addtimer(CALLBACK(src, .proc/AfterChange, flags, old_type), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
+	mined.update_visuals()
 
-/turf/closed/mineral/attack_animal(mob/living/simple_animal/user)
+/turf/closed/mineral/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if((user.environment_smash & ENVIRONMENT_SMASH_WALLS) || (user.environment_smash & ENVIRONMENT_SMASH_RWALLS))
 		gets_drilled(user)
 	..()
 
-/turf/closed/mineral/attack_alien(mob/living/carbon/alien/M)
-	to_chat(M, "<span class='notice'>You start digging into the rock...</span>")
+/turf/closed/mineral/attack_alien(mob/living/carbon/alien/user, list/modifiers)
+	to_chat(user, span_notice("You start digging into the rock..."))
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
-	if(do_after(M, 40, target = src))
-		to_chat(M, "<span class='notice'>You tunnel into the rock.</span>")
-		gets_drilled(M)
+	if(do_after(user, 4 SECONDS, target = src))
+		to_chat(user, span_notice("You tunnel into the rock."))
+		gets_drilled(user)
 
 /turf/closed/mineral/attack_hulk(mob/living/carbon/human/H)
 	..()
@@ -141,16 +163,16 @@
 	ScrapeAway()
 
 /turf/closed/mineral/ex_act(severity, target)
-	..()
+	. = ..()
 	switch(severity)
-		if(3)
-			if (prob(75))
-				gets_drilled(null, FALSE)
-		if(2)
-			if (prob(90))
-				gets_drilled(null, FALSE)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			gets_drilled(null, FALSE)
+		if(EXPLODE_HEAVY)
+			if(prob(90))
+				gets_drilled(null, FALSE)
+		if(EXPLODE_LIGHT)
+			if(prob(75))
+				gets_drilled(null, FALSE)
 	return
 
 /turf/closed/mineral/random
@@ -161,6 +183,8 @@
 	var/mineralChance = 13
 
 /turf/closed/mineral/random/Initialize()
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		mineralSpawnChanceList[/obj/item/stack/ore/bananium] = 3
 
 	mineralSpawnChanceList = typelist("mineralSpawnChanceList", mineralSpawnChanceList)
 
@@ -169,8 +193,8 @@
 		var/path = pickweight(mineralSpawnChanceList)
 		if(ispath(path, /turf))
 			var/stored_flags = 0
-			if(flags_1 & NO_RUINS_1)
-				stored_flags |= NO_RUINS_1
+			if(turf_flags & NO_RUINS)
+				stored_flags |= NO_RUINS
 			var/turf/T = ChangeTurf(path,null,CHANGETURF_IGNORE_AIR)
 			T.flags_1 |= stored_flags
 
@@ -215,6 +239,14 @@
 		/obj/item/stack/ore/silver = 6, /obj/item/stack/ore/plasma = 15, /obj/item/stack/ore/iron = 40,
 		/turf/closed/mineral/gibtonite = 2, /obj/item/stack/ore/bluespace_crystal = 1)
 
+//extremely low chance of rare ores, meant mostly for populating stations with large amounts of asteroid
+/turf/closed/mineral/random/stationside
+	icon_state = "rock_nochance"
+	mineralChance = 4
+	mineralSpawnChanceList = list(
+		/obj/item/stack/ore/uranium = 1, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 3, /obj/item/stack/ore/titanium = 5,
+		/obj/item/stack/ore/silver = 4, /obj/item/stack/ore/plasma = 3, /obj/item/stack/ore/iron = 50)
+
 /turf/closed/mineral/random/volcanic
 	environment_type = "basalt"
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
@@ -241,6 +273,7 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow/icemoon
 	baseturfs = /turf/open/floor/plating/asteroid/snow/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	weak_turf = TRUE
 
 /turf/closed/mineral/random/snow/Change_Ore(ore_type, random = 0)
 	. = ..()
@@ -469,6 +502,26 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
+//yoo RED ROCK RED ROCK
+
+/turf/closed/mineral/asteroid
+	name = "iron rock"
+	icon = 'icons/turf/mining.dmi'
+	icon_state = "redrock"
+	smooth_icon = 'icons/turf/walls/red_wall.dmi'
+	base_icon_state = "red_wall"
+
+/turf/closed/mineral/random/stationside/asteroid
+	name = "iron rock"
+	icon = 'icons/turf/mining.dmi'
+	smooth_icon = 'icons/turf/walls/red_wall.dmi'
+	base_icon_state = "red_wall"
+
+/turf/closed/mineral/asteroid/porous
+	name = "porous rock"
+	desc = "This rock is filled with pockets of breathable air."
+	baseturfs = /turf/open/floor/plating/asteroid
+
 //GIBTONITE
 
 /turf/closed/mineral/gibtonite
@@ -486,7 +539,7 @@
 
 /turf/closed/mineral/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner) && stage == 1)
-		user.visible_message("<span class='notice'>[user] holds [I] to [src]...</span>", "<span class='notice'>You use [I] to locate where to cut off the chain reaction and attempt to stop it...</span>")
+		user.visible_message(span_notice("[user] holds [I] to [src]..."), span_notice("You use [I] to locate where to cut off the chain reaction and attempt to stop it..."))
 		defuse()
 	..()
 
@@ -497,7 +550,7 @@
 		name = "gibtonite deposit"
 		desc = "An active gibtonite reserve. Run!"
 		stage = GIBTONITE_ACTIVE
-		visible_message("<span class='danger'>There's gibtonite inside! It's going to explode!</span>")
+		visible_message(span_danger("There's gibtonite inside! It's going to explode!"))
 
 		var/notify_admins = !is_mining_level(z)
 
@@ -519,7 +572,7 @@
 			var/turf/bombturf = get_turf(src)
 			mineralAmt = 0
 			stage = GIBTONITE_DETONATE
-			explosion(bombturf,1,3,5, adminlog = notify_admins)
+			explosion(bombturf, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 5, adminlog = notify_admins)
 
 /turf/closed/mineral/gibtonite/proc/defuse()
 	if(stage == GIBTONITE_ACTIVE)
@@ -530,7 +583,7 @@
 		stage = GIBTONITE_STABLE
 		if(det_time < 0)
 			det_time = 0
-		visible_message("<span class='notice'>The chain reaction stopped! The gibtonite had [det_time] reactions left till the explosion!</span>")
+		visible_message(span_notice("The chain reaction stopped! The gibtonite had [det_time] reactions left till the explosion!"))
 
 /turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = FALSE)
 	if(stage == GIBTONITE_UNSTRUCK && mineralAmt >= 1) //Gibtonite deposit is activated
@@ -541,7 +594,7 @@
 		var/turf/bombturf = get_turf(src)
 		mineralAmt = 0
 		stage = GIBTONITE_DETONATE
-		explosion(bombturf,1,2,5, adminlog = FALSE)
+		explosion(bombturf, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 5, adminlog = FALSE)
 	if(stage == GIBTONITE_STABLE) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
 		var/obj/item/gibtonite/G = new (src)
 		if(det_time <= 0)
@@ -552,11 +605,12 @@
 			G.icon_state = "Gibtonite ore 2"
 
 	var/flags = NONE
-	if(defer_change)
+	var/old_type = type
+	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
-	ScrapeAway(null, flags)
-	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
-
+	var/turf/open/mined = ScrapeAway(null, flags)
+	addtimer(CALLBACK(src, .proc/AfterChange, flags, old_type), 1, TIMER_UNIQUE)
+	mined.update_visuals()
 
 /turf/closed/mineral/gibtonite/volcanic
 	environment_type = "basalt"
@@ -595,12 +649,12 @@
 
 /turf/closed/mineral/strong/attackby(obj/item/I, mob/user, params)
 	if(!ishuman(user))
-		to_chat(usr, "<span class='warning'>Only a more advanced species could break a rock such as this one!</span>")
+		to_chat(usr, span_warning("Only a more advanced species could break a rock such as this one!"))
 		return FALSE
 	if(user.mind?.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER)
 		. = ..()
 	else
-		to_chat(usr, "<span class='warning'>The rock seems to be too strong to destroy. Maybe I can break it once I become a master miner.</span>")
+		to_chat(usr, span_warning("The rock seems to be too strong to destroy. Maybe I can break it once I become a master miner."))
 
 
 /turf/closed/mineral/strong/gets_drilled(mob/user)
@@ -612,11 +666,13 @@
 	drop_ores()
 	H.client.give_award(/datum/award/achievement/skill/legendary_miner, H)
 	var/flags = NONE
+	var/old_type = type
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
-	ScrapeAway(flags=flags)
-	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
+	var/turf/open/mined = ScrapeAway(null, flags)
+	addtimer(CALLBACK(src, .proc/AfterChange, flags, old_type), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
+	mined.update_visuals()
 	H.mind?.adjust_experience(/datum/skill/mining, 100) //yay!
 
 /turf/closed/mineral/strong/proc/drop_ores()
@@ -629,4 +685,6 @@
 	return
 
 /turf/closed/mineral/strong/ex_act(severity, target)
-	return
+	return FALSE
+
+#undef MINING_MESSAGE_COOLDOWN

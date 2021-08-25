@@ -7,8 +7,7 @@ export const RequestKiosk = (props, context) => {
   return (
     <Window
       width={550}
-      height={600}
-      resizable>
+      height={600}>
       <Window.Content scrollable>
         <RequestKioskContent />
       </Window.Content>

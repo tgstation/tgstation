@@ -19,7 +19,7 @@ $bg-map: colors.$bg-map !default;
   padding: 0 0.5em;
   border-radius: $border-radius;
   background-color: $background-color;
-  transition: border-color 500ms;
+  transition: border-color 900ms ease-out;
 }
 
 .ProgressBar__fill {
@@ -30,7 +30,7 @@ $bg-map: colors.$bg-map !default;
 }
 
 .ProgressBar__fill--animated {
-  transition: background-color 500ms, width 500ms;
+  transition: background-color 900ms ease-out, width 900ms ease-out;
 }
 
 .ProgressBar__content {

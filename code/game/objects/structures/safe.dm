@@ -57,10 +57,8 @@ FLOOR SAFES
 			I.forceMove(src)
 
 /obj/structure/safe/update_icon_state()
-	if(open)
-		icon_state = "[initial(icon_state)]-open"
-	else
-		icon_state = initial(icon_state)
+	icon_state = "[initial(icon_state)][open ? "-open" : null]"
+	return ..()
 
 /obj/structure/safe/attackby(obj/item/I, mob/user, params)
 	if(open)
@@ -68,24 +66,24 @@ FLOOR SAFES
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
 			if(!user.transferItemToLoc(I, src))
-				to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the safe!</span>")
+				to_chat(user, span_warning("\The [I] is stuck to your hand, you cannot put it in the safe!"))
 				return
-			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
+			to_chat(user, span_notice("You put [I] in [src]."))
 		else
-			to_chat(user, "<span class='warning'>[I] won't fit in [src].</span>")
+			to_chat(user, span_warning("[I] won't fit in [src]."))
 	else
 		if(istype(I, /obj/item/clothing/neck/stethoscope))
 			attack_hand(user)
 			return
 		else
-			to_chat(user, "<span class='warning'>You can't put [I] into the safe while it is closed!</span>")
+			to_chat(user, span_warning("You can't put [I] into the safe while it is closed!"))
 			return
 
 /obj/structure/safe/blob_act(obj/structure/blob/B)
 	return
 
 /obj/structure/safe/ex_act(severity, target)
-	if(((severity == 2 && target == src) || severity == 1) && explosion_count < BROKEN_THRESHOLD)
+	if(((severity == EXPLODE_HEAVY && target == src) || severity == EXPLODE_DEVASTATE) && explosion_count < BROKEN_THRESHOLD)
 		explosion_count++
 		switch(explosion_count)
 			if(1)
@@ -143,17 +141,17 @@ FLOOR SAFES
 	switch(action)
 		if("open")
 			if(!check_unlocked() && !open && !broken)
-				to_chat(user, "<span class='warning'>You cannot open [src], as its lock is engaged!</span>")
+				to_chat(user, span_warning("You cannot open [src], as its lock is engaged!"))
 				return
-			to_chat(user, "<span class='notice'>You [open ? "close" : "open"] [src].</span>")
+			to_chat(user, span_notice("You [open ? "close" : "open"] [src]."))
 			open = !open
-			update_icon()
+			update_appearance()
 			return TRUE
 		if("turnright")
 			if(open)
 				return
 			if(broken)
-				to_chat(user, "<span class='warning'>The dial will not turn, as the mechanism is destroyed!</span>")
+				to_chat(user, span_warning("The dial will not turn, as the mechanism is destroyed!"))
 				return
 			var/ticks = text2num(params["num"])
 			for(var/i = 1 to ticks)
@@ -174,7 +172,7 @@ FLOOR SAFES
 			if(open)
 				return
 			if(broken)
-				to_chat(user, "<span class='warning'>The dial will not turn, as the mechanism is destroyed!</span>")
+				to_chat(user, span_warning("The dial will not turn, as the mechanism is destroyed!"))
 				return
 			var/ticks = text2num(params["num"])
 			for(var/i = 1 to ticks)
@@ -218,7 +216,7 @@ FLOOR SAFES
 		return TRUE
 	if(current_tumbler_index > number_of_tumblers)
 		locked = FALSE
-		visible_message("<span class='boldnotice'>[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</span>")
+		visible_message(span_boldnotice("[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!"))
 		return TRUE
 	locked = TRUE
 	return FALSE

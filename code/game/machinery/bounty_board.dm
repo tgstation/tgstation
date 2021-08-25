@@ -19,6 +19,22 @@ GLOBAL_LIST_EMPTY(request_list)
 	///Text of the currently written bounty
 	var/bounty_text = ""
 
+/obj/machinery/bounty_board/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/machinery/bounty_board/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/machinery/bounty_board/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/machinery/bounty_board/directional/west
+	dir = EAST
+	pixel_x = -32
+
 /obj/machinery/bounty_board/Initialize(mapload, ndir, building)
 	. = ..()
 	GLOB.allbountyboards += src
@@ -41,16 +57,16 @@ GLOBAL_LIST_EMPTY(request_list)
 		to_chat(user, "There's no account assigned with this ID.")
 		return TRUE
 	if(I.tool_behaviour == TOOL_WRENCH)
-		to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
+		to_chat(user, span_notice("You start [anchored ? "un" : ""]securing [name]..."))
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 30))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 			if(machine_stat & BROKEN)
-				to_chat(user, "<span class='warning'>The broken remains of [src] fall on the ground.</span>")
+				to_chat(user, span_warning("The broken remains of [src] fall on the ground."))
 				new /obj/item/stack/sheet/iron(loc, 3)
 				new /obj/item/shard(loc)
 			else
-				to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
+				to_chat(user, span_notice("You [anchored ? "un" : ""]secure [name]."))
 				new /obj/item/wallframe/bounty_board(loc)
 			qdel(src)
 

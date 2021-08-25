@@ -42,9 +42,9 @@
 /obj/item/energy_katana/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 
-	var/list/params = params2list(click_parameters)
+	var/list/modifiers = params2list(click_parameters)
 
-	if(params["right"] && !target.density)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) && !target.density)
 		jaunt.Teleport(user, target)
 
 /obj/item/energy_katana/pickup(mob/living/user)
@@ -111,7 +111,7 @@
 			msg = "Your Energy Katana lands at your feet!"
 
 	if(msg)
-		to_chat(user, "<span class='notice'>[msg]</span>")
+		to_chat(user, span_notice("[msg]"))
 
 /datum/action/innate/dash/ninja
 	current_charges = 3

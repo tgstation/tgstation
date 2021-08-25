@@ -1,16 +1,16 @@
 /datum/component/forensics
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	can_transfer = TRUE
-	var/list/fingerprints		//assoc print = print
-	var/list/hiddenprints		//assoc ckey = realname/gloves/ckey
-	var/list/blood_DNA			//assoc dna = bloodtype
-	var/list/fibers				//assoc print = print
+	var/list/fingerprints //assoc print = print
+	var/list/hiddenprints //assoc ckey = realname/gloves/ckey
+	var/list/blood_DNA //assoc dna = bloodtype
+	var/list/fibers //assoc print = print
 
-/datum/component/forensics/InheritComponent(datum/component/forensics/F, original)		//Use of | and |= being different here is INTENTIONAL.
-	fingerprints = fingerprints | F.fingerprints
-	hiddenprints = hiddenprints | F.hiddenprints
-	blood_DNA = blood_DNA | F.blood_DNA
-	fibers = fibers | F.fibers
+/datum/component/forensics/InheritComponent(datum/component/forensics/F, original) //Use of | and |= being different here is INTENTIONAL.
+	fingerprints = LAZY_LISTS_OR(fingerprints, F.fingerprints)
+	hiddenprints = LAZY_LISTS_OR(hiddenprints, F.hiddenprints)
+	blood_DNA = LAZY_LISTS_OR(blood_DNA, F.blood_DNA)
+	fibers = LAZY_LISTS_OR(fibers, F.fibers)
 	check_blood()
 	return ..()
 
@@ -39,7 +39,7 @@
 	return TRUE
 
 /datum/component/forensics/proc/wipe_hiddenprints()
-	return	//no.
+	return //no.
 
 /datum/component/forensics/proc/wipe_blood_DNA()
 	blood_DNA = null
@@ -63,11 +63,11 @@
 		wipe_fibers()
 		. = COMPONENT_CLEANED
 
-/datum/component/forensics/proc/add_fingerprint_list(list/_fingerprints)	//list(text)
+/datum/component/forensics/proc/add_fingerprint_list(list/_fingerprints) //list(text)
 	if(!length(_fingerprints))
 		return
 	LAZYINITLIST(fingerprints)
-	for(var/i in _fingerprints)	//We use an associative list, make sure we don't just merge a non-associative list into ours.
+	for(var/i in _fingerprints) //We use an associative list, make sure we don't just merge a non-associative list into ours.
 		fingerprints[i] = i
 	return TRUE
 
@@ -91,15 +91,15 @@
 			if(!ignoregloves)
 				H.gloves.add_fingerprint(H, TRUE) //ignoregloves = 1 to avoid infinite loop.
 				return
-		var/full_print = md5(H.dna.uni_identity)
+		var/full_print = md5(H.dna.unique_identity)
 		LAZYSET(fingerprints, full_print, full_print)
 	return TRUE
 
-/datum/component/forensics/proc/add_fiber_list(list/_fibertext)		//list(text)
+/datum/component/forensics/proc/add_fiber_list(list/_fibertext) //list(text)
 	if(!length(_fibertext))
 		return
 	LAZYINITLIST(fibers)
-	for(var/i in _fibertext)	//We use an associative list, make sure we don't just merge a non-associative list into ours.
+	for(var/i in _fibertext) //We use an associative list, make sure we don't just merge a non-associative list into ours.
 		fibers[i] = i
 	return TRUE
 
@@ -135,11 +135,11 @@
 			LAZYSET(fibers, fibertext, fibertext)
 	return TRUE
 
-/datum/component/forensics/proc/add_hiddenprint_list(list/_hiddenprints)	//list(ckey = text)
+/datum/component/forensics/proc/add_hiddenprint_list(list/_hiddenprints) //list(ckey = text)
 	if(!length(_hiddenprints))
 		return
 	LAZYINITLIST(hiddenprints)
-	for(var/i in _hiddenprints)	//We use an associative list, make sure we don't just merge a non-associative list into ours.
+	for(var/i in _hiddenprints) //We use an associative list, make sure we don't just merge a non-associative list into ours.
 		hiddenprints[i] = _hiddenprints[i]
 	return TRUE
 
@@ -161,17 +161,17 @@
 			hasgloves = "(gloves)"
 	var/current_time = time_stamp()
 	if(!LAZYACCESS(hiddenprints, M.key))
-		LAZYSET(hiddenprints, M.key, "First: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]")
+		LAZYSET(hiddenprints, M.key, "First: \[[current_time]\] \"[M.real_name]\"[hasgloves]. Ckey: [M.ckey]")
 	else
-		var/laststamppos = findtext(LAZYACCESS(hiddenprints, M.key), " Last: ")
+		var/laststamppos = findtext(LAZYACCESS(hiddenprints, M.key), "\nLast: ")
 		if(laststamppos)
 			LAZYSET(hiddenprints, M.key, copytext(hiddenprints[M.key], 1, laststamppos))
-		hiddenprints[M.key] += " Last: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]"	//made sure to be existing by if(!LAZYACCESS);else
+		hiddenprints[M.key] += "\nLast: \[[current_time]\] \"[M.real_name]\"[hasgloves]. Ckey: [M.ckey]" //made sure to be existing by if(!LAZYACCESS);else
 	var/atom/A = parent
 	A.fingerprintslast = M.ckey
 	return TRUE
 
-/datum/component/forensics/proc/add_blood_DNA(list/dna)		//list(dna_enzymes = type)
+/datum/component/forensics/proc/add_blood_DNA(list/dna) //list(dna_enzymes = type)
 	if(!length(dna))
 		return
 	LAZYINITLIST(blood_DNA)

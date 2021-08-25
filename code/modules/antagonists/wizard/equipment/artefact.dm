@@ -6,11 +6,14 @@
 /obj/item/veilrender
 	name = "veil render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast city."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "render"
-	inhand_icon_state = "knife"
-	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	icon = 'icons/obj/eldritch.dmi'
+	icon_state = "bone_blade"
+	inhand_icon_state = "bone_blade"
+	worn_icon_state = "bone_blade"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	force = 15
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
@@ -26,9 +29,9 @@
 	if(charges > 0)
 		new /obj/effect/rend(get_turf(user), spawn_type, spawn_amt, rend_desc, spawn_fast)
 		charges--
-		user.visible_message("<span class='boldannounce'>[src] hums with power as [user] deals a blow to [activate_descriptor] itself!</span>")
+		user.visible_message(span_boldannounce("[src] hums with power as [user] deals a blow to [activate_descriptor] itself!"))
 	else
-		to_chat(user, "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>")
+		to_chat(user, span_danger("The unearthly energies that powered the blade are now dormant."))
 
 /obj/effect/rend
 	name = "tear in the fabric of reality"
@@ -60,7 +63,7 @@
 
 /obj/effect/rend/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/nullrod))
-		user.visible_message("<span class='danger'>[user] seals \the [src] with \the [I].</span>")
+		user.visible_message(span_danger("[user] seals \the [src] with \the [I]."))
 		qdel(src)
 		return
 	else
@@ -87,7 +90,9 @@
 	spawn_amt = 10
 	activate_descriptor = "depression"
 	rend_desc = "Gently wafting with the sounds of endless laughter."
-	icon_state = "clownrender"
+	icon_state = "banana_blade"
+	inhand_icon_state = "banana_blade"
+	worn_icon_state = "render"
 
 /obj/item/veilrender/honkrender/honkhulkrender
 	name = "superior honk render"
@@ -96,7 +101,6 @@
 	spawn_amt = 5
 	activate_descriptor = "depression"
 	rend_desc = "Gently wafting with the sounds of mirthful grunting."
-	icon_state = "clownrender"
 
 #define TEAR_IN_REALITY_CONSUME_RANGE 3
 #define TEAR_IN_REALITY_SINGULARITY_SIZE STAGE_FOUR
@@ -112,7 +116,8 @@
 	anchored = TRUE
 	density = TRUE
 	move_resist = INFINITY
-	layer = MASSIVE_OBJ_LAYER
+	plane = MASSIVE_OBJ_PLANE
+	plane = ABOVE_LIGHTING_PLANE
 	light_range = 6
 	appearance_flags = LONG_GLIDE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
@@ -137,7 +142,7 @@
 	var/datum/component/mood/insaneinthemembrane = jedi.GetComponent(/datum/component/mood)
 	if(insaneinthemembrane.sanity < 15)
 		return //they've already seen it and are about to die, or are just too insane to care
-	to_chat(jedi, "<span class='userdanger'>OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!</span>")
+	to_chat(jedi, span_userdanger("OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!"))
 	insaneinthemembrane.sanity = 0
 	for(var/lore in typesof(/datum/brain_trauma/severe))
 		jedi.gain_trauma(lore)
@@ -158,7 +163,7 @@
 /obj/item/scrying
 	name = "scrying orb"
 	desc = "An incandescent orb of otherworldly energy, merely holding it gives you vision and hearing beyond mortal means, and staring into it lets you see the entire universe."
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state ="bluespace"
 	throw_speed = 3
 	throw_range = 7
@@ -181,7 +186,7 @@
 	var/mob/holder = get(loc, /mob)
 	if(current_owner && current_owner != holder)
 
-		to_chat(current_owner, "<span class='notice'>Your otherworldly vision fades...</span>")
+		to_chat(current_owner, span_notice("Your otherworldly vision fades..."))
 
 		REMOVE_TRAIT(current_owner, TRAIT_SIXTHSENSE, SCRYING_ORB)
 		REMOVE_TRAIT(current_owner, TRAIT_XRAY_VISION, SCRYING_ORB)
@@ -192,14 +197,14 @@
 	if(!current_owner && holder)
 		current_owner = holder
 
-		to_chat(current_owner, "<span class='notice'>You can see...everything!</span>")
+		to_chat(current_owner, span_notice("You can see...everything!"))
 
 		ADD_TRAIT(current_owner, TRAIT_SIXTHSENSE, SCRYING_ORB)
 		ADD_TRAIT(current_owner, TRAIT_XRAY_VISION, SCRYING_ORB)
 		current_owner.update_sight()
 
 /obj/item/scrying/attack_self(mob/user)
-	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
+	visible_message(span_danger("[user] stares into [src], their eyes glazing over."))
 	user.ghostize(1)
 
 /////////////////////////////////////////Necromantic Stone///////////////////
@@ -227,7 +232,7 @@
 		return
 
 	if(M.stat != DEAD)
-		to_chat(user, "<span class='warning'>This artifact can only affect the dead!</span>")
+		to_chat(user, span_warning("This artifact can only affect the dead!"))
 		return
 
 	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //excludes new players
@@ -236,19 +241,19 @@
 			break
 
 	if(!M.mind || !M.client)
-		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
+		to_chat(user, span_warning("There is no soul connected to this body..."))
 		return
 
 	check_spooky()//clean out/refresh the list
 	if(spooky_scaries.len >= 3 && !unlimited)
-		to_chat(user, "<span class='warning'>This artifact can only affect three undead at a time!</span>")
+		to_chat(user, span_warning("This artifact can only affect three undead at a time!"))
 		return
 
 	M.set_species(/datum/species/skeleton, icon_update=0)
 	M.revive(full_heal = TRUE, admin_revive = TRUE)
 	spooky_scaries |= M
-	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
-	to_chat(M, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
+	to_chat(M, "[span_userdanger("You have been revived by ")]<B>[user.real_name]!</B>")
+	to_chat(M, span_userdanger("[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!"))
 
 	equip_roman_skeleton(M)
 
@@ -281,130 +286,6 @@
 	H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
 	H.put_in_hands(new /obj/item/claymore(H), TRUE)
 	H.equip_to_slot_or_del(new /obj/item/spear(H), ITEM_SLOT_BACK)
-
-
-/obj/item/voodoo
-	name = "wicker doll"
-	desc = "Something creepy about it."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "voodoo"
-	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	var/mob/living/carbon/human/target = null
-	var/list/mob/living/carbon/human/possible = list()
-	var/obj/item/voodoo_link = null
-	var/cooldown_time = 30 //3s
-	var/cooldown = 0
-	max_integrity = 10
-	resistance_flags = FLAMMABLE
-
-/obj/item/voodoo/attackby(obj/item/I, mob/user, params)
-	if(target && cooldown < world.time)
-		if(I.get_temperature())
-			to_chat(target, "<span class='userdanger'>You suddenly feel very hot!</span>")
-			target.adjust_bodytemperature(50)
-			GiveHint(target)
-		else if(I.get_sharpness() == SHARP_POINTY)
-			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
-			target.Paralyze(40)
-			GiveHint(target)
-		else if(istype(I, /obj/item/bikehorn))
-			to_chat(target, "<span class='userdanger'>HONK</span>")
-			SEND_SOUND(target, 'sound/items/airhorn.ogg')
-			var/obj/item/organ/ears/ears = user.getorganslot(ORGAN_SLOT_EARS)
-			if(ears)
-				ears.adjustEarDamage(0, 3)
-			GiveHint(target)
-		cooldown = world.time +cooldown_time
-		return
-
-	if(!voodoo_link)
-		if(I.loc == user && istype(I) && I.w_class <= WEIGHT_CLASS_SMALL)
-			if (user.transferItemToLoc(I,src))
-				voodoo_link = I
-				to_chat(user, "You attach [I] to the doll.")
-				update_targets()
-
-/obj/item/voodoo/check_eye(mob/user)
-	if(loc != user)
-		user.reset_perspective(null)
-		user.unset_machine()
-
-/obj/item/voodoo/attack_self(mob/user)
-	if(!target && possible.len)
-		target = input(user, "Select your victim!", "Voodoo") as null|anything in sortNames(possible)
-		return
-
-	if(user.zone_selected == BODY_ZONE_CHEST)
-		if(voodoo_link)
-			target = null
-			voodoo_link.forceMove(drop_location())
-			to_chat(user, "<span class='notice'>You remove the [voodoo_link] from the doll.</span>")
-			voodoo_link = null
-			update_targets()
-			return
-
-	if(target && cooldown < world.time)
-		switch(user.zone_selected)
-			if(BODY_ZONE_PRECISE_MOUTH)
-				var/wgw =  sanitize(input(user, "What would you like the victim to say", "Voodoo", null)  as text)
-				target.say(wgw, forced = "voodoo doll")
-				log_game("[key_name(user)] made [key_name(target)] say [wgw] with a voodoo doll.")
-			if(BODY_ZONE_PRECISE_EYES)
-				user.set_machine(src)
-				user.reset_perspective(target)
-				addtimer(CALLBACK(src, .proc/reset, user), 10 SECONDS)
-			if(BODY_ZONE_R_LEG,BODY_ZONE_L_LEG)
-				to_chat(user, "<span class='notice'>You move the doll's legs around.</span>")
-				var/turf/T = get_step(target,pick(GLOB.cardinals))
-				target.Move(T)
-			if(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM)
-				target.click_random_mob()
-				GiveHint(target)
-			if(BODY_ZONE_HEAD)
-				to_chat(user, "<span class='notice'>You smack the doll's head with your hand.</span>")
-				target.Dizzy(10)
-				to_chat(target, "<span class='warning'>You suddenly feel as if your head was hit with a hammer!</span>")
-				GiveHint(target,user)
-		cooldown = world.time + cooldown_time
-
-/obj/item/voodoo/proc/reset(mob/user)
-	if(QDELETED(user))
-		return
-	user.reset_perspective(null)
-	user.unset_machine()
-
-/obj/item/voodoo/proc/update_targets()
-	possible = list()
-	if(!voodoo_link)
-		return
-	var/list/prints = voodoo_link.return_fingerprints()
-	if(!length(prints))
-		return FALSE
-	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		if(prints[md5(H.dna.uni_identity)])
-			possible |= H
-
-/obj/item/voodoo/proc/GiveHint(mob/victim,force=0)
-	if(prob(50) || force)
-		var/way = dir2text(get_dir(victim,get_turf(src)))
-		to_chat(victim, "<span class='notice'>You feel a dark presence from [way].</span>")
-	if(prob(20) || force)
-		var/area/A = get_area(src)
-		to_chat(victim, "<span class='notice'>You feel a dark presence from [A.name].</span>")
-
-/obj/item/voodoo/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] links the voodoo doll to [user.p_them()]self and sits on it, infinitely crushing [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	user.gib()
-	return(BRUTELOSS)
-
-/obj/item/voodoo/fire_act(exposed_temperature, exposed_volume)
-	if(target)
-		target.adjust_fire_stacks(20)
-		target.IgniteMob()
-		GiveHint(target,1)
-	return ..()
 
 //Provides a decent heal, need to pump every 6 seconds
 /obj/item/organ/heart/cursed/wizard

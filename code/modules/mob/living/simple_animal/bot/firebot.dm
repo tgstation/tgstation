@@ -38,19 +38,18 @@
 	var/extinguish_fires = TRUE
 	var/stationary_mode = FALSE
 
-/mob/living/simple_animal/bot/firebot/Initialize()
+/mob/living/simple_animal/bot/firebot/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	update_icon()
-	var/datum/job/engineer/J = new/datum/job/engineer
-	access_card.access += J.get_access()
-	prev_access = access_card.access
+	update_appearance(UPDATE_ICON)
+
+	// Doing this hurts my soul, but simplebot access reworks are for another day.
+	var/datum/id_trim/job/engi_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/station_engineer]
+	access_card.add_access(engi_trim.access + engi_trim.wildcard_access)
+	prev_access = access_card.access.Copy()
 
 	create_extinguisher()
-
-/mob/living/simple_animal/bot/firebot/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /mob/living/simple_animal/bot/firebot/bot_reset()
 	create_extinguisher()
@@ -62,7 +61,7 @@
 	internal_ext.max_water = INFINITY
 	internal_ext.refill()
 
-/mob/living/simple_animal/bot/firebot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/firebot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(!on)
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
@@ -72,7 +71,7 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/bot/firebot/RangedAttack(atom/A)
+/mob/living/simple_animal/bot/firebot/RangedAttack(atom/A, proximity_flag, list/modifiers)
 	if(!on)
 		return
 	if(internal_ext)
@@ -82,26 +81,26 @@
 
 /mob/living/simple_animal/bot/firebot/turn_on()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/firebot/turn_off()
 	..()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/firebot/bot_reset()
 	..()
 	target_fire = null
 	old_target_fire = null
 	ignore_list = list()
-	anchored = FALSE
-	update_icon()
+	set_anchored(FALSE)
+	update_appearance()
 
 /mob/living/simple_animal/bot/firebot/proc/soft_reset()
 	path = list()
 	target_fire = null
 	mode = BOT_IDLE
 	last_found = world.time
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/firebot/set_custom_texts()
 	text_hack = "You corrupt [name]'s safety protocols."
@@ -129,8 +128,8 @@
 	..()
 	if(emagged == 2)
 		if(user)
-			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
-		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
+			to_chat(user, span_danger("[src] buzzes and beeps."))
+		audible_message(span_danger("[src] buzzes oddly!"))
 		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(user)
 			old_target_fire = user
@@ -158,7 +157,7 @@
 			stationary_mode = !stationary_mode
 
 	update_controls()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/firebot/proc/is_burning(atom/target)
 	if(ismob(target))
@@ -238,7 +237,7 @@
 
 	if(target_fire && (get_dist(src, target_fire) > 2))
 
-		path = get_path_to(src, get_turf(target_fire), /turf/proc/Distance_cardinal, 0, 30, 1, id=access_card)
+		path = get_path_to(src, target_fire, 30, 1, id=access_card)
 		mode = BOT_MOVING
 		if(!path.len)
 			soft_reset()
@@ -292,21 +291,20 @@
 		flick("firebot1_use", user)
 	internal_ext.afterattack(target, user, null)
 
-/mob/living/simple_animal/bot/firebot/update_icon()
+/mob/living/simple_animal/bot/firebot/update_icon_state()
+	. = ..()
 	if(!on)
 		icon_state = "firebot0"
 		return
-	if(IsStun() || IsParalyzed())
+	if(IsStun() || IsParalyzed() || stationary_mode) //Bot has yellow light to indicate stationary mode.
 		icon_state = "firebots1"
-	else if(stationary_mode) //Bot has yellow light to indicate stationary mode.
-		icon_state = "firebots1"
-	else
-		icon_state = "firebot1"
+		return
+	icon_state = "firebot1"
 
 
 /mob/living/simple_animal/bot/firebot/explode()
 	on = FALSE
-	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
+	visible_message(span_boldannounce("[src] blows apart!"))
 
 	var/atom/Tsec = drop_location()
 

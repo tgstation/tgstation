@@ -10,7 +10,7 @@
 	/// Items available from this market, populated by SSblackmarket on initialization.
 	var/list/available_items = list()
 	/// Item categories available from this market, only items which are in these categories can be gotten from this market.
-	var/list/categories	= list()
+	var/list/categories = list()
 
 /// Adds item to the available items and add it's category if it is not in categories yet.
 /datum/blackmarket_market/proc/add_item(datum/blackmarket_item/item)
@@ -38,7 +38,7 @@
 		var/price = I.price + shipping[method]
 		// I can't get the price of the item and shipping in a clean way to the UI, so I have to do this.
 		if(uplink.money < price)
-			to_chat("<span class='warning'>You don't have enough credits in [uplink] for [I] with [method] shipping.</span>")
+			to_chat(user, span_warning("You don't have enough credits in [uplink] for [I] with [method] shipping."))
 			return FALSE
 
 		if(I.buy(uplink, user, method))
@@ -48,6 +48,6 @@
 
 /datum/blackmarket_market/blackmarket
 	name = "Black Market"
-	shipping = list(SHIPPING_METHOD_LTSRBT	=50,
-					SHIPPING_METHOD_LAUNCH	=10,
+	shipping = list(SHIPPING_METHOD_LTSRBT =50,
+					SHIPPING_METHOD_LAUNCH =10,
 					SHIPPING_METHOD_TELEPORT=75)

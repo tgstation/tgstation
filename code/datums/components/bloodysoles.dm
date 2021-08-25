@@ -68,6 +68,9 @@
 	bloody_shoes[last_blood_state] = new_our_bloodiness
 	pool.bloodiness = total_bloodiness - new_our_bloodiness // Give the pool the remaining blood incase we were limited
 
+	if(HAS_TRAIT(parent_atom, TRAIT_LIGHT_STEP)) //the character is agile enough to don't mess their clothing and hands just from one blood splatter at floor
+		return TRUE
+
 	parent_atom.add_blood_DNA(pool.return_blood_DNA())
 	update_icon()
 
@@ -141,19 +144,20 @@
 			add_parent_to_footprint(oldLocFP)
 			if (!(oldLocFP.exited_dirs & wielder.dir))
 				oldLocFP.exited_dirs |= wielder.dir
-				oldLocFP.update_icon()
+				oldLocFP.update_appearance()
 		else if(find_pool_by_blood_state(oldLocTurf))
 			// No footprints in the tile we left, but there was some other blood pool there. Add exit footprints on it
 			bloody_shoes[last_blood_state] -= half_our_blood
 			update_icon()
 
 			oldLocFP = new(oldLocTurf)
-			oldLocFP.blood_state = last_blood_state
-			oldLocFP.exited_dirs |= wielder.dir
-			add_parent_to_footprint(oldLocFP)
-			oldLocFP.bloodiness = half_our_blood
-			oldLocFP.add_blood_DNA(parent_atom.return_blood_DNA())
-			oldLocFP.update_icon()
+			if(!QDELETED(oldLocFP)) ///prints merged
+				oldLocFP.blood_state = last_blood_state
+				oldLocFP.exited_dirs |= wielder.dir
+				add_parent_to_footprint(oldLocFP)
+				oldLocFP.bloodiness = half_our_blood
+				oldLocFP.add_blood_DNA(parent_atom.return_blood_DNA())
+				oldLocFP.update_appearance()
 
 			half_our_blood = bloody_shoes[last_blood_state] / 2
 
@@ -167,12 +171,13 @@
 		update_icon()
 
 		var/obj/effect/decal/cleanable/blood/footprints/FP = new(get_turf(parent_atom))
-		FP.blood_state = last_blood_state
-		FP.entered_dirs |= wielder.dir
-		add_parent_to_footprint(FP)
-		FP.bloodiness = half_our_blood
-		FP.add_blood_DNA(parent_atom.return_blood_DNA())
-		FP.update_icon()
+		if(!QDELETED(FP)) ///prints merged
+			FP.blood_state = last_blood_state
+			FP.entered_dirs |= wielder.dir
+			add_parent_to_footprint(FP)
+			FP.bloodiness = half_our_blood
+			FP.add_blood_DNA(parent_atom.return_blood_DNA())
+			FP.update_appearance()
 
 
 /**
@@ -193,7 +198,7 @@
 		if((bloody_shoes[last_blood_state] / 2) >= BLOOD_FOOTPRINTS_MIN && !(pool_FP.entered_dirs & wielder.dir))
 			// If our feet are bloody enough, add an entered dir
 			pool_FP.entered_dirs |= wielder.dir
-			pool_FP.update_icon()
+			pool_FP.update_appearance()
 
 	share_blood(pool)
 

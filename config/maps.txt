@@ -34,6 +34,11 @@ map icebox
 	votable
 endmap
 
+map tramstation
+	minplayers 35
+	votable
+endmap
+
 map runtimestation
 endmap
 

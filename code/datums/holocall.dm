@@ -1,10 +1,10 @@
 #define HOLOPAD_MAX_DIAL_TIME 200
 
-#define HOLORECORD_DELAY	"delay"
-#define HOLORECORD_SAY		"say"
-#define HOLORECORD_SOUND	"sound"
-#define HOLORECORD_LANGUAGE	"lang"
-#define HOLORECORD_PRESET	"preset"
+#define HOLORECORD_DELAY "delay"
+#define HOLORECORD_SAY "say"
+#define HOLORECORD_SOUND "sound"
+#define HOLORECORD_LANGUAGE "lang"
+#define HOLORECORD_PRESET "preset"
 #define HOLORECORD_RENAME "rename"
 
 #define HOLORECORD_MAX_LENGTH 200
@@ -22,14 +22,14 @@
 //this datum manages it's own references
 
 /datum/holocall
-	var/mob/living/user	//the one that called
-	var/obj/machinery/holopad/calling_holopad	//the one that sent the call
-	var/obj/machinery/holopad/connected_holopad	//the one that answered the call (may be null)
-	var/list/dialed_holopads	//all things called, will be cleared out to just connected_holopad once answered
+	var/mob/living/user //the one that called
+	var/obj/machinery/holopad/calling_holopad //the one that sent the call
+	var/obj/machinery/holopad/connected_holopad //the one that answered the call (may be null)
+	var/list/dialed_holopads //all things called, will be cleared out to just connected_holopad once answered
 
-	var/mob/camera/ai_eye/remote/holo/eye	//user's eye, once connected
-	var/obj/effect/overlay/holo_pad_hologram/hologram	//user's hologram, once connected
-	var/datum/action/innate/end_holocall/hangup	//hangup action
+	var/mob/camera/ai_eye/remote/holo/eye //user's eye, once connected
+	var/obj/effect/overlay/holo_pad_hologram/hologram //user's hologram, once connected
+	var/datum/action/innate/end_holocall/hangup //hangup action
 
 	var/call_start_time
 	var/head_call = FALSE //calls from a head of staff autoconnect, if the receiving pad is not secure.
@@ -81,6 +81,7 @@
 	if(!QDELETED(hologram))
 		hologram.HC = null
 		QDEL_NULL(hologram)
+	hologram = null
 
 	for(var/I in dialed_holopads)
 		var/obj/machinery/holopad/H = I
@@ -253,10 +254,10 @@
 			record.caller_image = holodiskOriginal.record.caller_image
 			record.entries = holodiskOriginal.record.entries.Copy()
 			record.language = holodiskOriginal.record.language
-			to_chat(user, "<span class='notice'>You copy the record from [holodiskOriginal] to [src] by connecting the ports!</span>")
+			to_chat(user, span_notice("You copy the record from [holodiskOriginal] to [src] by connecting the ports!"))
 			name = holodiskOriginal.name
 		else
-			to_chat(user, "<span class='warning'>[holodiskOriginal] has no record on it!</span>")
+			to_chat(user, span_warning("[holodiskOriginal] has no record on it!"))
 	..()
 
 /obj/item/disk/holodisk/proc/build_record()

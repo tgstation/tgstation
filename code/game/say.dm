@@ -15,7 +15,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_SYNDICATE]" = "syndradio",
 	"[FREQ_CENTCOM]" = "centcomradio",
 	"[FREQ_CTF_RED]" = "redteamradio",
-	"[FREQ_CTF_BLUE]" = "blueteamradio"
+	"[FREQ_CTF_BLUE]" = "blueteamradio",
+	"[FREQ_CTF_GREEN]" = "greenteamradio",
+	"[FREQ_CTF_YELLOW]" = "yellowteamradio"
 	))
 
 /atom/movable/proc/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
@@ -33,12 +35,11 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 /atom/movable/proc/can_speak()
 	//SHOULD_BE_PURE(TRUE)
-	return 1
+	return TRUE
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null, list/message_mods = list())
 	var/rendered = compose_message(src, message_language, message, , spans, message_mods)
-	for(var/_AM in get_hearers_in_view(range, source))
-		var/atom/movable/AM = _AM
+	for(var/atom/movable/AM as anything in get_hearers_in_view(range, source))
 		AM.Hear(rendered, src, message_language, message, , spans, message_mods)
 
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), face_name = FALSE)
@@ -145,7 +146,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return "0"
 
 /atom/movable/proc/GetVoice()
-	return "[src]"	//Returns the atom's name, prepended with 'The' if it's not a proper noun
+	return "[src]" //Returns the atom's name, prepended with 'The' if it's not a proper noun
 
 /atom/movable/proc/IsVocal()
 	return 1

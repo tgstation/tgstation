@@ -15,14 +15,14 @@
 	var/poison_amount = 5
 	slot = ORGAN_SLOT_STOMACH_AID
 
-/obj/item/organ/cyberimp/chest/nutriment/on_life()
+/obj/item/organ/cyberimp/chest/nutriment/on_life(delta_time, times_fired)
 	if(synthesizing)
 		return
 
 	if(owner.nutrition <= hunger_threshold)
 		synthesizing = TRUE
-		to_chat(owner, "<span class='notice'>You feel less hungry...</span>")
-		owner.adjust_nutrition(50)
+		to_chat(owner, span_notice("You feel less hungry..."))
+		owner.adjust_nutrition(25 * delta_time)
 		addtimer(CALLBACK(src, .proc/synth_cool), 50)
 
 /obj/item/organ/cyberimp/chest/nutriment/proc/synth_cool()
@@ -33,7 +33,7 @@
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
 	owner.reagents.add_reagent(/datum/reagent/toxin/bad_food, poison_amount / severity)
-	to_chat(owner, "<span class='warning'>You feel like your insides are burning.</span>")
+	to_chat(owner, span_warning("You feel like your insides are burning."))
 
 
 /obj/item/organ/cyberimp/chest/nutriment/plus
@@ -55,7 +55,7 @@
 	COOLDOWN_DECLARE(reviver_cooldown)
 
 
-/obj/item/organ/cyberimp/chest/reviver/on_life()
+/obj/item/organ/cyberimp/chest/reviver/on_life(delta_time, times_fired)
 	if(reviving)
 		switch(owner.stat)
 			if(UNCONSCIOUS, HARD_CRIT)
@@ -63,7 +63,7 @@
 			else
 				COOLDOWN_START(src, reviver_cooldown, revive_cost)
 				reviving = FALSE
-				to_chat(owner, "<span class='notice'>Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)].</span>")
+				to_chat(owner, span_notice("Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)]."))
 		return
 
 	if(!COOLDOWN_FINISHED(src, reviver_cooldown) || owner.suiciding)
@@ -73,7 +73,7 @@
 		if(UNCONSCIOUS, HARD_CRIT)
 			revive_cost = 0
 			reviving = TRUE
-			to_chat(owner, "<span class='notice'>You feel a faint buzzing as your reviver implant starts patching your wounds...</span>")
+			to_chat(owner, span_notice("You feel a faint buzzing as your reviver implant starts patching your wounds..."))
 
 
 /obj/item/organ/cyberimp/chest/reviver/proc/heal()
@@ -101,19 +101,19 @@
 		reviver_cooldown += 20 SECONDS
 
 	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		if(H.stat != DEAD && prob(50 / severity) && H.can_heartattack())
-			H.set_heartattack(TRUE)
-			to_chat(H, "<span class='userdanger'>You feel a horrible agony in your chest!</span>")
+		var/mob/living/carbon/human/human_owner = owner
+		if(human_owner.stat != DEAD && prob(50 / severity) && human_owner.can_heartattack())
+			human_owner.set_heartattack(TRUE)
+			to_chat(human_owner, span_userdanger("You feel a horrible agony in your chest!"))
 			addtimer(CALLBACK(src, .proc/undo_heart_attack), 600 / severity)
 
 /obj/item/organ/cyberimp/chest/reviver/proc/undo_heart_attack()
-	var/mob/living/carbon/human/H = owner
-	if(!istype(H))
+	var/mob/living/carbon/human/human_owner = owner
+	if(!istype(human_owner))
 		return
-	H.set_heartattack(FALSE)
-	if(H.stat == CONSCIOUS)
-		to_chat(H, "<span class='notice'>You feel your heart beating again!</span>")
+	human_owner.set_heartattack(FALSE)
+	if(human_owner.stat == CONSCIOUS)
+		to_chat(human_owner, span_notice("You feel your heart beating again!"))
 
 
 /obj/item/organ/cyberimp/chest/thrusters
@@ -122,6 +122,7 @@
 	Unlike regular jetpacks, this device has no stabilization system."
 	slot = ORGAN_SLOT_THRUSTERS
 	icon_state = "imp_jetpack"
+	base_icon_state = "imp_jetpack"
 	implant_overlay = null
 	implant_color = null
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
@@ -129,14 +130,14 @@
 	var/on = FALSE
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
-/obj/item/organ/cyberimp/chest/thrusters/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/chest/thrusters/Insert(mob/living/carbon/thruster_owner, special = 0)
 	. = ..()
 	if(!ion_trail)
 		ion_trail = new
 		ion_trail.auto_process = FALSE
-	ion_trail.set_up(M)
+	ion_trail.set_up(thruster_owner)
 
-/obj/item/organ/cyberimp/chest/thrusters/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/chest/thrusters/Remove(mob/living/carbon/thruster_owner, special = 0)
 	if(on)
 		toggle(silent = TRUE)
 	..()
@@ -148,7 +149,7 @@
 	if(!on)
 		if((organ_flags & ORGAN_FAILING))
 			if(!silent)
-				to_chat(owner, "<span class='warning'>Your thrusters set seems to be broken!</span>")
+				to_chat(owner, span_warning("Your thrusters set seems to be broken!"))
 			return FALSE
 		if(allow_thrust(0.01))
 			on = TRUE
@@ -157,24 +158,23 @@
 			owner.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/cybernetic)
 			RegisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move_react)
 			if(!silent)
-				to_chat(owner, "<span class='notice'>You turn your thrusters set on.</span>")
+				to_chat(owner, span_notice("You turn your thrusters set on."))
 	else
 		ion_trail.stop()
 		UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 		owner.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/cybernetic)
 		UnregisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE)
 		if(!silent)
-			to_chat(owner, "<span class='notice'>You turn your thrusters set off.</span>")
+			to_chat(owner, span_notice("You turn your thrusters set off."))
 		on = FALSE
-	update_icon()
+	update_appearance()
 
 /obj/item/organ/cyberimp/chest/thrusters/update_icon_state()
-	if(on)
-		icon_state = "imp_jetpack-on"
-	else
-		icon_state = "imp_jetpack"
+	icon_state = "[base_icon_state][on ? "-on" : null]"
+	return ..()
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/move_react()
+	SIGNAL_HANDLER
 	if(!on)//If jet dont work, it dont work
 		return
 	if(!owner)//Don't allow jet self using
@@ -191,18 +191,19 @@
 		allow_thrust(0.01)
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/pre_move_react()
+	SIGNAL_HANDLER
 	ion_trail.oldposition = get_turf(owner)
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/allow_thrust(num)
 	if(!owner)
 		return FALSE
 
-	var/turf/T = get_turf(owner)
-	if(!T) // No more runtimes from being stuck in nullspace.
+	var/turf/owner_turf = get_turf(owner)
+	if(!owner_turf) // No more runtimes from being stuck in nullspace.
 		return FALSE
 
 	// Priority 1: use air from environment.
-	var/datum/gas_mixture/environment = T.return_air()
+	var/datum/gas_mixture/environment = owner_turf.return_air()
 	if(environment && environment.return_pressure() > 30)
 		ion_trail.generate_effect()
 		return TRUE
@@ -215,15 +216,15 @@
 		return TRUE
 
 	// Priority 3: use internals tank.
-	var/obj/item/tank/I = owner.internal
-	if(I && I.air_contents && I.air_contents.total_moles() > num)
-		var/datum/gas_mixture/removed = I.air_contents.remove(num)
+	var/datum/gas_mixture/internal_mix = owner.internal.return_air()
+	if(internal_mix && internal_mix.total_moles() > num)
+		var/datum/gas_mixture/removed = internal_mix.remove(num)
 		if(removed.total_moles() > 0.005)
-			T.assume_air(removed)
+			owner_turf.assume_air(removed)
 			ion_trail.generate_effect()
 			return TRUE
 		else
-			T.assume_air(removed)
+			owner_turf.assume_air(removed)
 			ion_trail.generate_effect()
 
 	toggle(silent = TRUE)

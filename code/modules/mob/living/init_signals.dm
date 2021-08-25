@@ -100,11 +100,15 @@
 
 /// Called when [TRAIT_FORCED_STANDING] is added to the mob.
 /mob/living/proc/on_forced_standing_trait_gain(datum/source)
+	SIGNAL_HANDLER
+
 	set_body_position(STANDING_UP)
 	set_lying_angle(0)
 
 /// Called when [TRAIT_FORCED_STANDING] is removed from the mob.
 /mob/living/proc/on_forced_standing_trait_loss(datum/source)
+	SIGNAL_HANDLER
+
 	if(resting || HAS_TRAIT(src, TRAIT_FLOORED))
 		set_lying_down()
 
@@ -153,14 +157,14 @@
 	SIGNAL_HANDLER
 	ADD_TRAIT(src, TRAIT_UI_BLOCKED, TRAIT_INCAPACITATED)
 	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, TRAIT_INCAPACITATED)
-	update_icon()
+	update_appearance()
 
 /// Called when [TRAIT_INCAPACITATED] is removed from the mob.
 /mob/living/proc/on_incapacitated_trait_loss(datum/source)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(src, TRAIT_UI_BLOCKED, TRAIT_INCAPACITATED)
 	REMOVE_TRAIT(src, TRAIT_PULL_BLOCKED, TRAIT_INCAPACITATED)
-	update_icon()
+	update_appearance()
 
 
 /// Called when [TRAIT_RESTRAINED] is added to the mob.

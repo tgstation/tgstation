@@ -205,11 +205,11 @@
 	if(playing)
 		return
 	if(!using_instrument?.ready())
-		to_chat(user, "<span class='warning'>An error has occured with [src]. Please reset the instrument.</span>")
+		to_chat(user, span_warning("An error has occured with [src]. Please reset the instrument."))
 		return
 	compile_chords()
 	if(!length(compiled_chords))
-		to_chat(user, "<span class='warning'>Song is empty.</span>")
+		to_chat(user, span_warning("Song is empty."))
 		return
 	playing = TRUE
 	updateDialog(user_playing)
@@ -265,7 +265,7 @@
  */
 /datum/song/proc/tempodiv_to_delay(tempodiv)
 	if(!tempodiv)
-		tempodiv = 1		// no division by 0. some song converters tend to use 0 for when it wants to have no div, for whatever reason.
+		tempodiv = 1 // no division by 0. some song converters tend to use 0 for when it wants to have no div, for whatever reason.
 	return max(1, round((tempo/tempodiv) / world.tick_lag, 1))
 
 /**

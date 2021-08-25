@@ -21,14 +21,15 @@
 	density = FALSE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
+	layer = ABOVE_WINDOW_LAYER
 
 	maptext_height = 26
 	maptext_width = 32
 	maptext_y = -1
 
-	var/message1 = ""	// message line 1
-	var/message2 = ""	// message line 2
-	var/index1			// display index for scrolling messages or 0 if non-scrolling
+	var/message1 = "" // message line 1
+	var/message2 = "" // message line 2
+	var/index1 // display index for scrolling messages or 0 if non-scrolling
 	var/index2
 
 /// Immediately blank the display.
@@ -156,6 +157,23 @@
 	var/mode = SD_EMERGENCY
 	var/friendc = FALSE      // track if Friend Computer mode
 	var/last_picture  // For when Friend Computer mode is undone
+
+
+/obj/machinery/status_display/evac/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/machinery/status_display/evac/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/machinery/status_display/evac/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/machinery/status_display/evac/directional/west
+	dir = EAST
+	pixel_x = -32
 
 /obj/machinery/status_display/evac/Initialize()
 	. = ..()
@@ -321,6 +339,22 @@
 		AI_EMOTION_BLUE_GLOW = "ai_sal",
 		AI_EMOTION_RED_GLOW = "ai_hal",
 	)
+
+/obj/machinery/status_display/ai/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/machinery/status_display/ai/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/machinery/status_display/ai/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/machinery/status_display/ai/directional/west
+	dir = EAST
+	pixel_x = -32
 
 /obj/machinery/status_display/ai/Initialize()
 	. = ..()

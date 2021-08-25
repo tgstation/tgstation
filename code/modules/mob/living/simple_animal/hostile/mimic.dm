@@ -24,7 +24,7 @@
 	speak_emote = list("creaks")
 	taunt_chance = 30
 
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 
 	faction = list("mimic")
@@ -47,7 +47,7 @@
 // Pickup loot
 /mob/living/simple_animal/hostile/mimic/crate/Initialize(mapload)
 	. = ..()
-	if(mapload)	//eat shit
+	if(mapload) //eat shit
 		for(var/obj/item/I in loc)
 			I.forceMove(src)
 
@@ -75,8 +75,8 @@
 		if(prob(15) && iscarbon(target))
 			var/mob/living/carbon/C = target
 			C.Paralyze(40)
-			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
-					"<span class='userdanger'>\The [src] knocks you down!</span>")
+			C.visible_message(span_danger("\The [src] knocks down \the [C]!"), \
+					span_userdanger("\The [src] knocks you down!"))
 
 /mob/living/simple_animal/hostile/mimic/crate/proc/trigger()
 	if(!attempt_open)
@@ -116,10 +116,10 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		overlay_googly_eyes = FALSE
 	CopyObject(copy, creator, destroy_original)
 
-/mob/living/simple_animal/hostile/mimic/copy/Life()
+/mob/living/simple_animal/hostile/mimic/copy/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	if(idledamage && !target && !ckey) //Objects eventually revert to normal if no one is around to terrorize
-		adjustBruteLoss(1)
+		adjustBruteLoss(0.5 * delta_time)
 	for(var/mob/living/M in contents) //a fix for animated statues from the flesh to stone spell
 		death()
 
@@ -131,6 +131,9 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/copy/ListTargets()
 	. = ..()
 	return . - creator
+
+/mob/living/simple_animal/hostile/mimic/copy/wabbajack()
+	visible_message(span_warning("[src] resists polymorphing into a new creature!"))
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/ChangeOwner(mob/owner)
 	if(owner != creator)
@@ -184,8 +187,8 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	if(knockdown_people && . && prob(15) && iscarbon(target))
 		var/mob/living/carbon/C = target
 		C.Paralyze(40)
-		C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
-				"<span class='userdanger'>\The [src] knocks you down!</span>")
+		C.visible_message(span_danger("\The [src] knocks down \the [C]!"), \
+				span_userdanger("\The [src] knocks you down!"))
 
 /mob/living/simple_animal/hostile/mimic/copy/machine
 	speak = list(
@@ -243,32 +246,32 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 			var/obj/item/ammo_casing/energy/shot = Zapgun.ammo_type[Zapgun.select]
 			if(Zapgun.cell.charge >= shot.e_cost)
 				Zapgun.cell.use(shot.e_cost)
-				Zapgun.update_icon()
+				Zapgun.update_appearance()
 				..()
 	else if(Zapstick)
 		if(Zapstick.charges)
 			Zapstick.charges--
-			Zapstick.update_icon()
+			Zapstick.update_appearance()
 			..()
 	else if(Pewgun)
 		if(Pewgun.chambered)
-			if(Pewgun.chambered.BB)
-				qdel(Pewgun.chambered.BB)
-				Pewgun.chambered.BB = null //because qdel takes too long, ensures icon update
-				Pewgun.chambered.update_icon()
+			if(Pewgun.chambered.loaded_projectile)
+				qdel(Pewgun.chambered.loaded_projectile)
+				Pewgun.chambered.loaded_projectile = null //because qdel takes too long, ensures icon update
+				Pewgun.chambered.update_appearance()
 				..()
 			else
-				visible_message("<span class='danger'>The <b>[src]</b> clears a jam!</span>")
+				visible_message(span_danger("The <b>[src]</b> clears a jam!"))
 			Pewgun.chambered.forceMove(loc) //rip revolver immersions, blame shotgun snowflake procs
 			Pewgun.chambered = null
 			if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len)
 				Pewgun.chambered = Pewgun.magazine.get_round(0)
 				Pewgun.chambered.forceMove(Pewgun)
-			Pewgun.update_icon()
+			Pewgun.update_appearance()
 		else if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len) //only true for pumpguns i think
 			Pewgun.chambered = Pewgun.magazine.get_round(0)
 			Pewgun.chambered.forceMove(Pewgun)
-			visible_message("<span class='danger'>The <b>[src]</b> cocks itself!</span>")
+			visible_message(span_danger("The <b>[src]</b> cocks itself!"))
 	else
 		ranged = 0 //BANZAIIII
 		retreat_distance = 0
@@ -304,9 +307,9 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/mimic/xenobio/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/mimic/xenobio/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
-	if(M.combat_mode)
+	if(user.combat_mode)
 		return
 	toggle_open()
 
@@ -317,7 +320,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		AM.forceMove(C)
 	return ..()
 
-/mob/living/simple_animal/hostile/mimic/xenobio/CanAllowThrough(atom/movable/mover, turf/target)
+/mob/living/simple_animal/hostile/mimic/xenobio/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(istype(mover, /obj/structure/closet))
 		return FALSE
@@ -332,14 +335,14 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	if(locked)
 		return
 	if(!opened)
-		density = FALSE
+		set_density(FALSE)
 		opened = TRUE
 		icon_state = "crateopen"
 		playsound(src, open_sound, 50, TRUE)
 		for(var/atom/movable/AM in src)
 			AM.forceMove(loc)
 	else
-		density = TRUE
+		set_density(TRUE)
 		opened = FALSE
 		icon_state = "crate"
 		playsound(src, close_sound, 50, TRUE)
@@ -403,6 +406,6 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	var/mob/living/simple_animal/hostile/mimic/xenobio/M = owner
 	M.locked = !M.locked
 	if(!M.locked)
-		to_chat(M, "<span class='warning'>You loosen up, allowing yourself to be opened and closed.</span>")
+		to_chat(M, span_warning("You loosen up, allowing yourself to be opened and closed."))
 	else
-		to_chat(M, "<span class='warning'>You stiffen up, preventing anyone from opening or closing you.</span>")
+		to_chat(M, span_warning("You stiffen up, preventing anyone from opening or closing you."))

@@ -51,7 +51,7 @@
 
 		if(!loaded)
 			if(!user.transferItemToLoc(W, src))
-				to_chat(user, "<span class='warning'>[src] is stuck to your hand!</span>")
+				to_chat(user, span_warning("[src] is stuck to your hand!"))
 				return
 			else
 				loaded = W //W.loc is src at this point.
@@ -64,13 +64,13 @@
 			loaded.amount += transfer_amount
 		else
 			return
-		update_icon()
-		to_chat(user, "<span class='notice'>You add the pipe cleaners to [src]. It now contains [loaded.amount].</span>")
+		update_appearance()
+		to_chat(user, span_notice("You add the pipe cleaners to [src]. It now contains [loaded.amount]."))
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!loaded)
 			return
 		if(ghetto && prob(10)) //Is it a ghetto RCL? If so, give it a 10% chance to fall apart
-			to_chat(user, "<span class='warning'>You attempt to loosen the securing screws on the side, but it falls apart!</span>")
+			to_chat(user, span_warning("You attempt to loosen the securing screws on the side, but it falls apart!"))
 			while(loaded.amount > 30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
 				var/diff = loaded.amount % 30
 				if(diff)
@@ -82,7 +82,7 @@
 			qdel(src)
 			return
 
-		to_chat(user, "<span class='notice'>You loosen the securing screws on the side, allowing you to lower the guiding edge and retrieve the wires.</span>")
+		to_chat(user, span_notice("You loosen the securing screws on the side, allowing you to lower the guiding edge and retrieve the wires."))
 		while(loaded.amount > 30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
 			var/diff = loaded.amount % 30
 			if(diff)
@@ -96,14 +96,14 @@
 			loaded.forceMove(get_turf(user))
 
 		loaded = null
-		update_icon()
+		update_appearance()
 	else
 		..()
 
 /obj/item/rcl/examine(mob/user)
 	. = ..()
 	if(loaded)
-		. += "<span class='info'>It contains [loaded.amount]/[max_amount] pipe cleaners.</span>"
+		. += span_info("It contains [loaded.amount]/[max_amount] pipe cleaners.")
 
 /obj/item/rcl/Destroy()
 	QDEL_NULL(loaded)
@@ -116,7 +116,7 @@
 	if(!loaded)
 		icon_state = "rcl-0"
 		inhand_icon_state = "rcl-0"
-		return
+		return ..()
 	switch(loaded.amount)
 		if(61 to INFINITY)
 			icon_state = "rcl-30"
@@ -130,12 +130,13 @@
 		else
 			icon_state = "rcl-0"
 			inhand_icon_state = "rcl-0"
+	return ..()
 
 /obj/item/rcl/proc/is_empty(mob/user, loud = 1)
-	update_icon()
+	update_appearance()
 	if(!loaded || !loaded.amount)
 		if(loud)
-			to_chat(user, "<span class='notice'>The last of the pipe cleaners unreel from [src].</span>")
+			to_chat(user, span_notice("The last of the pipe cleaners unreel from [src]."))
 		if(loaded)
 			QDEL_NULL(loaded)
 			loaded = null
@@ -187,11 +188,11 @@
 	if(!isturf(user.loc))
 		return
 	if(is_empty(user, 0))
-		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
+		to_chat(user, span_warning("\The [src] is empty!"))
 		return
 
 	if(prob(2) && ghetto) //Give ghetto RCLs a 2% chance to jam, requiring it to be reactviated manually.
-		to_chat(user, "<span class='warning'>[src]'s wires jam!</span>")
+		to_chat(user, span_warning("[src]'s wires jam!"))
 		active = FALSE
 		return
 	else
@@ -211,10 +212,10 @@
 			else
 				last = null
 		loaded.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
-		loaded.update_icon()
+		loaded.update_appearance()
 		last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
 		is_empty(user) //If we've run out, display message
-	update_icon()
+	update_appearance()
 
 
 //searches the current tile for a stub pipe_cleaner of the same colour
@@ -277,7 +278,7 @@
 	if(!isturf(user.loc))
 		return
 	if(is_empty(user, 0))
-		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
+		to_chat(user, span_warning("\The [src] is empty!"))
 		return
 
 	var/turf/T = get_turf(user)
@@ -285,7 +286,7 @@
 		return
 
 	loaded.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
-	loaded.update_icon()
+	loaded.update_appearance()
 
 	var/obj/structure/pipe_cleaner/linkingCable = findLinkingCable(user)
 	if(linkingCable)
@@ -304,11 +305,11 @@
 	loaded = new()
 	loaded.max_amount = max_amount
 	loaded.amount = max_amount
-	update_icon()
+	update_appearance()
 
 /obj/item/rcl/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/rcl/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/rcl_col))
@@ -319,7 +320,7 @@
 		to_chat(user, "Color changed to [cwname]!")
 		if(loaded)
 			loaded.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
-			loaded.update_icon()
+			loaded.update_appearance()
 		if(wiring_gui_menu)
 			wiringGuiUpdate(user)
 	else if(istype(action, /datum/action/item_action/rcl_gui))
@@ -338,7 +339,7 @@
 	if(!loaded)
 		icon_state = "rclg-0"
 		inhand_icon_state = "rclg-0"
-		return
+		return ..()
 	switch(loaded.amount)
 		if(1 to INFINITY)
 			icon_state = "rclg-1"
@@ -346,3 +347,4 @@
 		else
 			icon_state = "rclg-1"
 			inhand_icon_state = "rclg-1"
+	return ..()

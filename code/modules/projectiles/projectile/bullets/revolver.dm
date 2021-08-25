@@ -38,20 +38,20 @@
 	name = ".38 Rubber bullet"
 	damage = 10
 	stamina = 30
-	armour_penetration = -30
+	weak_against_armour = TRUE
 	ricochets_max = 6
 	ricochet_incidence_leeway = 0
 	ricochet_chance = 130
 	ricochet_decay_damage = 0.8
 	shrapnel_type = null
-	sharpness = SHARP_NONE
+	sharpness = NONE
 	embedding = null
 
 // premium .38 ammo from cargo, weak against armor, lower base damage, but excellent at embedding and causing slice wounds at close range
 /obj/projectile/bullet/c38/dumdum
 	name = ".38 DumDum bullet"
 	damage = 15
-	armour_penetration = -30
+	weak_against_armour = TRUE
 	ricochets_max = 0
 	sharpness = SHARP_EDGED
 	wound_bonus = 20

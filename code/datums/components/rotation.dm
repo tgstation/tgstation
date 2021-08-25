@@ -1,9 +1,9 @@
-#define ROTATION_ALTCLICK			(1<<0)
-#define ROTATION_WRENCH				(1<<1)
-#define ROTATION_VERBS				(1<<2)
-#define ROTATION_COUNTERCLOCKWISE	(1<<3)
-#define ROTATION_CLOCKWISE			(1<<4)
-#define ROTATION_FLIP				(1<<5)
+#define ROTATION_ALTCLICK (1<<0)
+#define ROTATION_WRENCH (1<<1)
+#define ROTATION_VERBS (1<<2)
+#define ROTATION_COUNTERCLOCKWISE (1<<3)
+#define ROTATION_CLOCKWISE (1<<4)
+#define ROTATION_FLIP (1<<5)
 
 /datum/component/simple_rotation
 	var/datum/callback/can_user_rotate //Checks if user can rotate
@@ -94,15 +94,15 @@
 	//Signals + verbs removed via UnRegister
 	. = ..()
 
-/datum/component/simple_rotation/RemoveComponent()
+/datum/component/simple_rotation/ClearFromParent()
 	remove_verbs()
-	. = ..()
+	return ..()
 
 /datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	if(rotation_flags & ROTATION_ALTCLICK)
-		examine_list += "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+		examine_list += span_notice("Alt-click to rotate it clockwise.")
 
 /datum/component/simple_rotation/proc/HandRot(datum/source, mob/user, rotation = default_rotation_direction)
 	SIGNAL_HANDLER
@@ -142,7 +142,7 @@
 	return !AM.anchored
 
 /datum/component/simple_rotation/proc/default_after_rotation(mob/user, rotation_type)
-	to_chat(user,"<span class='notice'>You [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [parent].</span>")
+	to_chat(user,span_notice("You [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [parent]."))
 
 /atom/movable/proc/simple_rotate_clockwise()
 	set name = "Rotate Clockwise"

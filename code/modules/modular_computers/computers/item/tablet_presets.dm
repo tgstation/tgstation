@@ -20,6 +20,17 @@
 	install_component(new /obj/item/computer_hardware/card_slot)
 	install_component(new /obj/item/computer_hardware/printer/mini)
 
+/obj/item/modular_computer/tablet/preset/science/Initialize()
+	. = ..()
+	var/obj/item/computer_hardware/hard_drive/small/hard_drive = new
+	install_component(new /obj/item/computer_hardware/processor_unit/small)
+	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
+	install_component(hard_drive)
+	install_component(new /obj/item/computer_hardware/card_slot)
+	install_component(new /obj/item/computer_hardware/network_card)
+	install_component(new /obj/item/computer_hardware/radio_card)
+	hard_drive.store_file(new /datum/computer_file/program/signaler)
+
 /obj/item/modular_computer/tablet/preset/cargo/Initialize()
 	. = ..()
 	var/obj/item/computer_hardware/hard_drive/small/hard_drive = new
@@ -30,10 +41,25 @@
 	install_component(new /obj/item/computer_hardware/network_card)
 	install_component(new /obj/item/computer_hardware/printer/mini)
 	hard_drive.store_file(new /datum/computer_file/program/shipping)
+	var/datum/computer_file/program/chatclient/chatprogram
+	chatprogram = new
+	hard_drive.store_file(chatprogram)
+	chatprogram.username = get_cargochat_username()
+
+/obj/item/modular_computer/tablet/preset/cargo/proc/get_cargochat_username()
+	return "cargonian_[rand(1,999)]"
+
+/obj/item/modular_computer/tablet/preset/cargo/quartermaster/get_cargochat_username()
+	return "quartermaster"
 
 /obj/item/modular_computer/tablet/preset/advanced/atmos/Initialize() //This will be defunct and will be replaced when NtOS PDAs are done
 	. = ..()
 	install_component(new /obj/item/computer_hardware/sensorpackage)
+
+/obj/item/modular_computer/tablet/preset/advanced/engineering/Initialize()
+	. = ..()
+	var/obj/item/computer_hardware/hard_drive/small/hard_drive = find_hardware_by_name("solid state drive")
+	hard_drive.store_file(new /datum/computer_file/program/supermatter_monitor)
 
 /obj/item/modular_computer/tablet/preset/advanced/command/Initialize()
 	. = ..()
@@ -41,6 +67,12 @@
 	install_component(new /obj/item/computer_hardware/sensorpackage)
 	install_component(new /obj/item/computer_hardware/card_slot/secondary)
 	hard_drive.store_file(new /datum/computer_file/program/budgetorders)
+	hard_drive.store_file(new /datum/computer_file/program/science)
+
+/obj/item/modular_computer/tablet/preset/advanced/command/engineering/Initialize()
+	. = ..()
+	var/obj/item/computer_hardware/hard_drive/small/hard_drive = find_hardware_by_name("solid state drive")
+	hard_drive.store_file(new /datum/computer_file/program/supermatter_monitor)
 
 /// Given by the syndicate as part of the contract uplink bundle - loads in the Contractor Uplink.
 /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink/Initialize()

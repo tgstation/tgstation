@@ -1,7 +1,7 @@
 #define VAT_GROWTH_RATE 4
 
 ////////////////////////////////
-//// 		VERTEBRATES		////
+//// VERTEBRATES ////
 ////////////////////////////////
 
 /datum/micro_organism/cell_line/mouse //nuisance cell line designed to complicate the growing of animal type cell lines.
@@ -197,11 +197,11 @@
 						/datum/reagent/consumable/corn_syrup = -6,
 						/datum/reagent/sulfur = -3) //sulfur repels snakes according to professor google.
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/poison/snake = 1)
+	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/snake = 1)
 
 
 ///////////////////////////////////////////
-/// 		SLIMES, OOZES & BLOBS  		///
+/// SLIMES, OOZES & BLOBS ///
 //////////////////////////////////////////
 
 /datum/micro_organism/cell_line/slime
@@ -316,7 +316,7 @@
 	resulting_atoms = list(/mob/living/simple_animal/hostile/ooze/grapes = 1)
 
 ////////////////////
-////	MISC	////
+//// MISC ////
 ////////////////////
 /datum/micro_organism/cell_line/cockroach //nuisance cell line designed to complicate the growing of slime type cell lines.
 	desc = "Blattodeoid anthropod cells"
@@ -361,7 +361,7 @@
 						/datum/reagent/consumable/nutriment/protein,
 						/datum/reagent/consumable/nutriment/vitamin,
 						/datum/reagent/consumable/nutriment/peptides,
-						/datum/reagent/consumable/liquidelectricity,
+						/datum/reagent/consumable/liquidelectricity/enriched,
 						/datum/reagent/growthserum,
 						/datum/reagent/yuck)
 
@@ -413,7 +413,7 @@
 	return ..()
 
 /datum/micro_organism/cell_line/clown/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat)
-	vat.visible_message("<span class='warning'>The biological sample in [vat] seems to have created something horrific!</span>")
+	vat.visible_message(span_warning("The biological sample in [vat] seems to have created something horrific!"))
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
 
 	var/mob/selected_mob = pick(list(/mob/living/simple_animal/hostile/retaliate/clown/mutant/slow, /mob/living/simple_animal/hostile/retaliate/clown/fleshclown))

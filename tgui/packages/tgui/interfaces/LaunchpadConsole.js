@@ -199,8 +199,7 @@ export const LaunchpadConsole = (props, context) => {
   return (
     <Window
       width={475}
-      height={260}
-      resizable>
+      height={260}>
       <Window.Content scrollable>
         {launchpads.length === 0 && (
           <NoticeBox>

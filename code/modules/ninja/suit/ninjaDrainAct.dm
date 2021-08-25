@@ -24,7 +24,7 @@
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 
-		while(ninja_gloves.candrain && cell.charge> 0 && !maxcapacity)
+		while(cell.charge> 0 && !maxcapacity)
 			drain = rand(ninja_gloves.mindrain, ninja_gloves.maxdrain)
 
 			if(cell.charge < drain)
@@ -48,7 +48,7 @@
 			playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			obj_flags |= EMAGGED
 			locked = FALSE
-			update_icon()
+			update_appearance()
 
 	return drain_total
 
@@ -65,7 +65,7 @@
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 
-		while(ninja_gloves.candrain && charge > 0 && !maxcapacity)
+		while(charge > 0 && !maxcapacity)
 			drain = rand(ninja_gloves.mindrain, ninja_gloves.maxdrain)
 
 			if(charge < drain)
@@ -95,7 +95,7 @@
 	var/drain_total = 0
 
 	if(charge)
-		if(ninja_gloves.candrain && do_after(ninja, 30, target = src))
+		if(do_after(ninja, 30, target = src))
 			drain_total = charge
 			if(ninja_suit.cell.charge + charge > ninja_suit.cell.maxcharge)
 				ninja_suit.cell.charge = ninja_suit.cell.maxcharge
@@ -103,7 +103,7 @@
 				ninja_suit.cell.give(charge)
 			charge = 0
 			corrupt()
-			update_icon()
+			update_appearance()
 
 	return drain_total
 
@@ -114,14 +114,14 @@
 
 	. = DRAIN_RD_HACK_FAILED
 
-	to_chat(ninja, "<span class='notice'>Hacking \the [src]...</span>")
+	to_chat(ninja, span_notice("Hacking \the [src]..."))
 	AI_notify_hack()
 
 	if(stored_research)
-		to_chat(ninja, "<span class='notice'>Copying files...</span>")
-		if(do_after(ninja, ninja_suit.s_delay, target = src) && ninja_gloves.candrain && src)
+		to_chat(ninja, span_notice("Copying files..."))
+		if(do_after(ninja, ninja_suit.s_delay, target = src) && src)
 			stored_research.copy_research_to(ninja_suit.stored_research)
-	to_chat(ninja, "<span class='notice'>Data analyzed. Process finished.</span>")
+	to_chat(ninja, span_notice("Data analyzed. Process finished."))
 
 //RD SERVER//
 /obj/machinery/rnd/server/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
@@ -130,14 +130,14 @@
 
 	. = DRAIN_RD_HACK_FAILED
 
-	to_chat(ninja, "<span class='notice'>Hacking \the [src]...</span>")
+	to_chat(ninja, span_notice("Hacking \the [src]..."))
 	AI_notify_hack()
 
 	if(stored_research)
-		to_chat(ninja, "<span class='notice'>Copying files...</span>")
-		if(do_after(ninja, ninja_suit.s_delay, target = src) && ninja_gloves.candrain && src)
+		to_chat(ninja, span_notice("Copying files..."))
+		if(do_after(ninja, ninja_suit.s_delay, target = src) && src)
 			stored_research.copy_research_to(ninja_suit.stored_research)
-	to_chat(ninja, "<span class='notice'>Data analyzed. Process finished.</span>")
+	to_chat(ninja, span_notice("Data analyzed. Process finished."))
 
 //SECURITY CONSOLE//
 /obj/machinery/computer/secure_data/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
@@ -207,7 +207,7 @@
 	var/drain_total = 0
 
 	var/datum/powernet/wire_powernet = powernet
-	while(ninja_gloves.candrain && !maxcapacity && src)
+	while(!maxcapacity && src)
 		drain = (round((rand(ninja_gloves.mindrain, ninja_gloves.maxdrain))/2))
 		var/drained = 0
 		if(wire_powernet && do_after(ninja ,10, target = src))
@@ -243,9 +243,9 @@
 	var/drain = 0 //Drain amount
 	var/drain_total = 0
 
-	to_chat(occupants, "[icon2html(src, occupants)]<span class='danger'>Warning: Unauthorized access through sub-route 4, block H, detected.</span>")
+	to_chat(occupants, "[icon2html(src, occupants)][span_danger("Warning: Unauthorized access through sub-route 4, block H, detected.")]")
 	if(get_charge())
-		while(ninja_gloves.candrain && cell.charge > 0 && !maxcapacity)
+		while(cell.charge > 0 && !maxcapacity)
 			drain = rand(ninja_gloves.mindrain, ninja_gloves.maxdrain)
 			if(cell.charge < drain)
 				drain = cell.charge
@@ -268,11 +268,11 @@
 	if(!ninja_suit || !ninja || !ninja_gloves || (ROLE_NINJA in faction))
 		return INVALID_DRAIN
 
-	to_chat(src, "<span class='danger'>Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2...</span>")
+	to_chat(src, span_danger("Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2..."))
 	if (do_after(ninja, 60, target = src))
 		spark_system.start()
 		playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		to_chat(src, "<span class='danger'>UPLOAD COMPLETE. NEW CYBORG MODEL DETECTED.  INSTALLING...</span>")
+		to_chat(src, span_danger("UPLOAD COMPLETE. NEW CYBORG MODEL DETECTED.  INSTALLING..."))
 		faction = list(ROLE_NINJA)
 		bubble_icon = "syndibot"
 		UnlinkSelf()
@@ -301,5 +301,5 @@
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 		playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		visible_message("<span class='danger'>[ninja] electrocutes [src] with [ninja.p_their()] touch!</span>", "<span class='userdanger'>[ninja] electrocutes you with [ninja.p_their()] touch!</span>")
+		visible_message(span_danger("[ninja] electrocutes [src] with [ninja.p_their()] touch!"), span_userdanger("[ninja] electrocutes you with [ninja.p_their()] touch!"))
 		Knockdown(3 SECONDS)

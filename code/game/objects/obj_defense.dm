@@ -1,5 +1,5 @@
 
-///the essential proc to call when an obj must receive damage of any kind.
+/// The essential proc to call when an obj must receive damage of any kind.
 /obj/proc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	if(QDELETED(src))
 		stack_trace("[src] taking damage after deletion")
@@ -15,13 +15,43 @@
 		return
 
 	. = damage_amount
-	obj_integrity = max(obj_integrity - damage_amount, 0)
+
+	update_integrity(obj_integrity - damage_amount)
+
 	//BREAKING FIRST
 	if(integrity_failure && obj_integrity <= integrity_failure * max_integrity)
 		obj_break(damage_flag)
+
 	//DESTROYING SECOND
 	if(obj_integrity <= 0)
 		obj_destruction(damage_flag)
+
+/// Proc for recovering obj_integrity. Returns the amount repaired by
+/obj/proc/repair_damage(amount)
+	if(amount <= 0) // We only recover here
+		return
+	var/new_integrity = min(max_integrity, obj_integrity + amount)
+	. = new_integrity - obj_integrity
+
+	update_integrity(new_integrity)
+
+	if(integrity_failure && obj_integrity > integrity_failure * max_integrity)
+		obj_fix()
+
+/// Handles the integrity of an object changing. This must be called instead of changing integrity directly.
+/obj/proc/update_integrity(new_value)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	var/old_value = obj_integrity
+	new_value = max(0, new_value)
+	if(obj_integrity == new_value)
+		return
+	obj_integrity = new_value
+	SEND_SIGNAL(src, COMSIG_OBJ_INTEGRITY_CHANGED, old_value, new_value)
+
+/// This mostly exists to keep obj_integrity private. Might be useful in the future.
+/obj/proc/get_integrity()
+	SHOULD_BE_PURE(TRUE)
+	return obj_integrity
 
 ///returns the damage value of the attack after processing the obj's various armor protections
 /obj/proc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration = 0)
@@ -35,7 +65,7 @@
 	var/armor_protection = 0
 	if(damage_flag)
 		armor_protection = armor.getRating(damage_flag)
-	if(armor_protection)		//Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
+	if(armor_protection) //Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
 		armor_protection = clamp(armor_protection - armour_penetration, min(armor_protection, 0), 100)
 	return round(damage_amount * (100 - armor_protection)*0.01, DAMAGE_PRECISION)
 
@@ -57,27 +87,29 @@
 /obj/ex_act(severity, target)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
-	..() //contents explosion
+
+	. = ..() //contents explosion
 	if(QDELETED(src))
 		return
 	if(target == src)
 		take_damage(INFINITY, BRUTE, BOMB, 0)
 		return
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			take_damage(INFINITY, BRUTE, BOMB, 0)
-		if(2)
+		if(EXPLODE_HEAVY)
 			take_damage(rand(100, 250), BRUTE, BOMB, 0)
-		if(3)
+		if(EXPLODE_LIGHT)
 			take_damage(rand(10, 90), BRUTE, BOMB, 0)
 
 /obj/bullet_act(obj/projectile/P)
 	. = ..()
 	playsound(src, P.hitsound, 50, TRUE)
+	var/no_damage = FALSE
+	if(!QDELETED(src) && !take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration)) //Bullet on_hit effect might have already destroyed this object
+		no_damage = TRUE
 	if(P.suppressed != SUPPRESSED_VERY)
-		visible_message("<span class='danger'>[src] is hit by \a [P]!</span>", null, null, COMBAT_MESSAGE_RANGE)
-	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
-		take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration)
+		visible_message(span_danger("[src] is hit by \a [P][no_damage ? ", which doesn't leave a mark" : ""]!"), null, null, COMBAT_MESSAGE_RANGE)
 
 ///Called to get the damage that hulks will deal to the obj.
 /obj/proc/hulk_damage()
@@ -85,7 +117,7 @@
 
 /obj/attack_hulk(mob/living/carbon/human/user)
 	..()
-	user.visible_message("<span class='danger'>[user] smashes [src]!</span>", "<span class='danger'>You smash [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_danger("[user] smashes [src]!"), span_danger("You smash [src]!"), null, COMBAT_MESSAGE_RANGE)
 	if(density)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	else
@@ -107,22 +139,22 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	return take_damage(damage_amount, damage_type, damage_flag, sound_effect, get_dir(src, user), armor_penetration)
 
-/obj/attack_alien(mob/living/carbon/alien/humanoid/user)
+/obj/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
 	if(attack_generic(user, 60, BRUTE, MELEE, 0))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
 
-/obj/attack_animal(mob/living/simple_animal/M)
-	if(!M.melee_damage_upper && !M.obj_damage)
-		M.emote("custom", message = "[M.friendly_verb_continuous] [src].")
+/obj/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(!user.melee_damage_upper && !user.obj_damage)
+		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
 		return FALSE
 	else
 		var/play_soundeffect = TRUE
-		if(M.environment_smash)
+		if(user.environment_smash)
 			play_soundeffect = FALSE
-		if(M.obj_damage)
-			. = attack_generic(M, M.obj_damage, M.melee_damage_type, MELEE, play_soundeffect, M.armour_penetration)
+		if(user.obj_damage)
+			. = attack_generic(user, user.obj_damage, user.melee_damage_type, MELEE, play_soundeffect, user.armour_penetration)
 		else
-			. = attack_generic(M, rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, MELEE, play_soundeffect, M.armour_penetration)
+			. = attack_generic(user, rand(user.melee_damage_lower,user.melee_damage_upper), user.melee_damage_type, MELEE, play_soundeffect, user.armour_penetration)
 		if(. && !play_soundeffect)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 
@@ -180,7 +212,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE) && !(resistance_flags & FIRE_PROOF))
 		resistance_flags |= ON_FIRE
 		SSfire_burning.processing[src] = src
-		update_icon()
+		update_appearance()
 		return 1
 	return ..()
 
@@ -194,7 +226,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/proc/extinguish()
 	if(resistance_flags & ON_FIRE)
 		resistance_flags &= ~ON_FIRE
-		update_icon()
+		update_appearance()
 		SSfire_burning.processing -= src
 
 ///Called when the obj is hit by a tesla bolt.
@@ -221,9 +253,15 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	SEND_SIGNAL(src, COMSIG_OBJ_DECONSTRUCT, disassembled)
 	qdel(src)
 
-///called after the obj takes damage and integrity is below integrity_failure level
+/// Called after the obj takes damage and integrity is below integrity_failure level
 /obj/proc/obj_break(damage_flag)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_OBJ_BREAK)
+
+/// Called when integrity is repaired above the breaking point having been broken before
+/obj/proc/obj_fix()
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_OBJ_FIX)
 
 ///what happens when the obj's integrity reaches zero.
 /obj/proc/obj_destruction(damage_flag)
@@ -241,7 +279,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	if(current_integrity != 0 && current_max != 0)
 		var/percentage = current_integrity / current_max
-		current_integrity = max(1, round(percentage * new_max))	//don't destroy it as a result
+		current_integrity = max(1, round(percentage * new_max)) //don't destroy it as a result
 		obj_integrity = current_integrity
 
 	max_integrity = new_max

@@ -7,7 +7,7 @@
 /// The volume of it's internal reagents the shower applies to everything it sprays.
 #define SHOWER_SPRAY_VOLUME 5
 /// How much the volume of the shower's spay reagents are amplified by when it sprays something.
-#define SHOWER_EXPOSURE_MULTIPLIER 2	// Showers effectively double exposed reagents
+#define SHOWER_EXPOSURE_MULTIPLIER 2 // Showers effectively double exposed reagents
 
 
 /obj/machinery/shower
@@ -38,12 +38,16 @@
 	. = ..()
 	create_reagents(reagent_capacity)
 	reagents.add_reagent(reagent_id, reagent_capacity)
-	soundloop = new(list(src), FALSE)
+	soundloop = new(src, FALSE)
 	AddComponent(/datum/component/plumbing/simple_demand)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/shower/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.</span>"
+	. += span_notice("[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.")
 
 /obj/machinery/shower/Destroy()
 	QDEL_NULL(soundloop)
@@ -52,10 +56,10 @@
 
 /obj/machinery/shower/interact(mob/M)
 	if(reagents.total_volume < 5)
-		to_chat(M,"<span class='notice'>\The [src] is dry.</span>")
+		to_chat(M,span_notice("\The [src] is dry."))
 		return FALSE
 	on = !on
-	update_icon()
+	update_appearance()
 	handle_mist()
 	add_fingerprint(M)
 	if(on)
@@ -70,7 +74,7 @@
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_ANALYZER)
-		to_chat(user, "<span class='notice'>The water temperature seems to be [current_temperature].</span>")
+		to_chat(user, span_notice("The water temperature seems to be [current_temperature]."))
 	else
 		return ..()
 
@@ -87,7 +91,7 @@
 
 /obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
 	..()
-	to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>")
+	to_chat(user, span_notice("You begin to adjust the temperature valve with \the [I]..."))
 	if(I.use_tool(src, user, 50))
 		switch(current_temperature)
 			if(SHOWER_NORMAL)
@@ -96,7 +100,7 @@
 				current_temperature = SHOWER_BOILING
 			if(SHOWER_BOILING)
 				current_temperature = SHOWER_NORMAL
-		user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I] to [current_temperature] temperature.</span>")
+		user.visible_message(span_notice("[user] adjusts the shower with \the [I]."), span_notice("You adjust the shower with \the [I] to [current_temperature] temperature."))
 		user.log_message("has wrenched a shower at [AREACOORD(src)] to [current_temperature].", LOG_ATTACK)
 		add_hiddenprint(user)
 	handle_mist()
@@ -105,10 +109,11 @@
 
 /obj/machinery/shower/update_overlays()
 	. = ..()
-	if(on)
-		var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
-		water_falling.color = mix_color_from_reagents(reagents.reagent_list)
-		. += water_falling
+	if(!on)
+		return
+	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
+	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
+	. += water_falling
 
 /obj/machinery/shower/proc/handle_mist()
 	// If there is no mist, and the shower was turned on (on a non-freezing temp): make mist in 5 seconds
@@ -132,8 +137,8 @@
 		qdel(mist)
 
 
-/obj/machinery/shower/Crossed(atom/movable/AM)
-	..()
+/obj/machinery/shower/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(on && reagents.total_volume)
 		wash_atom(AM)
 
@@ -151,7 +156,7 @@
 		for(var/am in loc)
 			var/atom/movable/movable_content = am
 			if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
-				wash_atom(movable_content)	// Reagent exposure is handled in wash_atom
+				wash_atom(movable_content) // Reagent exposure is handled in wash_atom
 
 		reagents.remove_any(SHOWER_SPRAY_VOLUME)
 		return
@@ -160,7 +165,7 @@
 	handle_mist()
 	if(can_refill)
 		reagents.add_reagent(reagent_id, refill_rate * delta_time)
-	update_icon()
+	update_appearance()
 	if(reagents.total_volume == reagents.maximum_volume)
 		return PROCESS_KILL
 
@@ -174,12 +179,12 @@
 	if(current_temperature == SHOWER_FREEZING)
 		if(iscarbon(L))
 			C.adjust_bodytemperature(-80, 80)
-		to_chat(L, "<span class='warning'>[src] is freezing!</span>")
+		to_chat(L, span_warning("[src] is freezing!"))
 	else if(current_temperature == SHOWER_BOILING)
 		if(iscarbon(L))
 			C.adjust_bodytemperature(35, 0, 500)
 		L.adjustFireLoss(5)
-		to_chat(L, "<span class='danger'>[src] is searing!</span>")
+		to_chat(L, span_danger("[src] is searing!"))
 
 
 /obj/structure/showerframe
@@ -204,7 +209,7 @@
 
 /obj/structure/showerframe/proc/can_be_rotated(mob/user, rotation_type)
 	if(anchored)
-		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
+		to_chat(user, span_warning("It is fastened to the floor!"))
 	return !anchored
 
 /obj/effect/mist

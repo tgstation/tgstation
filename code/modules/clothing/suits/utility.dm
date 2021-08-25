@@ -1,8 +1,8 @@
 /*
  * Contains:
- *		Fire protection
- *		Bomb protection
- *		Radiation protection
+ * Fire protection
+ * Bomb protection
+ * Radiation protection
  */
 
 /*

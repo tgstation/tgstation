@@ -16,8 +16,7 @@ export const NtosRoboControl = (props, context) => {
   return (
     <NtosWindow
       width={550}
-      height={550}
-      resizable>
+      height={550}>
       <NtosWindow.Content scrollable>
         <Section title="Robot Control Console">
           <LabeledList>
@@ -80,7 +79,7 @@ const RobotInfo = (props, context) => {
           <Button
             icon="home"
             tooltip="Travel Home."
-            tooltipPosition="bottom-left"
+            tooltipPosition="bottom-start"
             onClick={() => act('home', {
               robot: mule.mule_ref,
             })} />

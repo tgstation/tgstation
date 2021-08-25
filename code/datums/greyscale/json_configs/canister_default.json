@@ -1,0 +1,24 @@
+{
+	"": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/canister/base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/canister/post_effects",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"window-base": [
+		{
+			"type": "icon_state",
+			"icon_state": "window-base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

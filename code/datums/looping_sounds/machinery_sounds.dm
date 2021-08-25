@@ -64,6 +64,15 @@
 	mid_length = 18
 	volume = 50
 
+/datum/looping_sound/oven
+	start_sound = 'sound/machines/oven/oven_loop_start.ogg' //my immersions
+	start_length = 12
+	mid_sounds = list('sound/machines/oven/oven_loop_mid.ogg' = 1)
+	mid_length = 13
+	end_sound = 'sound/machines/oven/oven_loop_end.ogg'
+	volume = 100
+	falloff_exponent = 4
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/looping_sound/deep_fryer
@@ -116,6 +125,6 @@
 	mid_sounds = list('sound/machines/gravgen/gravgen_mid1.ogg'=1,'sound/machines/gravgen/gravgen_mid2.ogg'=1,'sound/machines/gravgen/gravgen_mid3.ogg'=1,'sound/machines/gravgen/gravgen_mid4.ogg'=1,)
 	mid_length = 1.8 SECONDS
 	extra_range = 10
-	volume = 70
+	volume = 40
 	falloff_distance = 5
 	falloff_exponent = 20

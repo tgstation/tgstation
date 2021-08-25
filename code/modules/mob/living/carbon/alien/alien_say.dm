@@ -8,7 +8,7 @@
 	var/hivemind_spans = "alien"
 	if(big_voice)
 		hivemind_spans += " big"
-	var/rendered = "<i><span class='[hivemind_spans]'>Hivemind, <span class='name'>[shown_name]</span> <span class='message'>[message_a]</span></span></i>"
+	var/rendered = "<i><span class='[hivemind_spans]'>Hivemind, [span_name("[shown_name]")] <span class='message'>[message_a]</span></span></i>"
 	for(var/mob/S in GLOB.player_list)
 		if(!S.stat && S.hivecheck())
 			to_chat(S, rendered)

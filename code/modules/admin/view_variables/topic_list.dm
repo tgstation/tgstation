@@ -9,7 +9,7 @@
 				mod_list(target, null, "list", "contents", target_index, autodetect_class = FALSE)
 			if(href_list[VV_HK_LIST_REMOVE])
 				var/variable = target[target_index]
-				var/prompt = alert("Do you want to remove item number [target_index] from list?", "Confirm", "Yes", "No")
+				var/prompt = tgui_alert(usr,"Do you want to remove item number [target_index] from list?", "Confirm", list("Yes", "No"))
 				if (prompt != "Yes")
 					return
 				target.Cut(target_index, target_index+1)
@@ -30,7 +30,7 @@
 			message_admins("[key_name_admin(src)] modified list's contents: CLEAR NULLS")
 		if(href_list[VV_HK_LIST_SET_LENGTH])
 			var/value = vv_get_value(VV_NUM)
-			if (value["class"] != VV_NUM || value["value"] > max(50000, target.len))			//safety - would rather someone not put an extra 0 and erase the server's memory lmao.
+			if (value["class"] != VV_NUM || value["value"] > max(50000, target.len)) //safety - would rather someone not put an extra 0 and erase the server's memory lmao.
 				return
 			target.len = value["value"]
 			log_world("### ListVarEdit by [src]: /list len: [target.len]")

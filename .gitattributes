@@ -2,18 +2,18 @@
 
 ## Enforce text mode and LF line breaks
 *.bat text eol=lf
-*.css text eol=lf
+*.cjs text eol=lf
 *.css text eol=lf
 *.dm text eol=lf
 *.dme text eol=lf
 *.dmf text eol=lf
 *.htm text eol=lf
 *.html text eol=lf
-*.html text eol=lf
 *.js text eol=lf
 *.json text eol=lf
 *.jsx text eol=lf
 *.md text eol=lf
+*.ps1 text eol=lf
 *.py text eol=lf
 *.scss text eol=lf
 *.sh text eol=lf
@@ -39,8 +39,6 @@
 *.dmm text eol=lf merge=dmm
 *.dmi binary merge=dmi
 
-##Force tab indents on dm files
+## Force tab indents on dm files
 *.dm whitespace=indent-with-non-tab
 
-## Force changelog merging to use union
-html/changelog.html text eol=lf merge=union

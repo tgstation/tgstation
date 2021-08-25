@@ -16,8 +16,7 @@ export const ForbiddenLore = (props, context) => {
   return (
     <Window
       width={500}
-      height={900}
-      resizable>
+      height={900}>
       <Window.Content scrollable>
         <Section title="Research Eldritch Knowledge">
           Charges left : {charges}

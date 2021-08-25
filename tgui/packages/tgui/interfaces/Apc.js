@@ -7,8 +7,7 @@ export const Apc = (props, context) => {
   return (
     <Window
       width={450}
-      height={445}
-      resizable>
+      height={445}>
       <Window.Content scrollable>
         <ApcContent />
       </Window.Content>
@@ -112,7 +111,7 @@ const ApcContent = (props, context) => {
             color={chargingStatus.color}
             buttons={(
               <Button
-                icon={data.chargeMode ? 'sync' : 'close'}
+                icon={data.chargeMode ? 'sync' : 'times'}
                 content={data.chargeMode ? 'Auto' : 'Off'}
                 disabled={locked}
                 onClick={() => act('charge')} />

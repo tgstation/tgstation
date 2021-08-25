@@ -9,8 +9,7 @@ export const AtmosAlertConsole = (props, context) => {
   return (
     <Window
       width={350}
-      height={300}
-      resizable>
+      height={300}>
       <Window.Content scrollable>
         <Section title="Alarms">
           <ul>

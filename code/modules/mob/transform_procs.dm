@@ -138,7 +138,7 @@
 	if(client)
 		R.updatename(client)
 
-	if(mind)		//TODO //TODO WHAT
+	if(mind) //TODO //TODO WHAT
 		if(!transfer_after)
 			mind.active = FALSE
 		mind.transfer_to(R)
@@ -157,7 +157,19 @@
 	R.notify_ai(NEW_BORG)
 
 	. = R
+	if(R.ckey && is_banned_from(R.ckey, "Cyborg"))
+		INVOKE_ASYNC(R, /mob/living/silicon/robot.proc/replace_banned_cyborg)
 	qdel(src)
+
+/mob/living/silicon/robot/proc/replace_banned_cyborg()
+	to_chat(src, "<b>You are job banned from cyborg! Appeal your job ban if you want to avoid this in the future!</b>")
+	ghostize(FALSE)
+
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [src]?", "[src]", null, "Cyborg", 50, src)
+	if(LAZYLEN(candidates))
+		var/mob/dead/observer/chosen_candidate = pick(candidates)
+		message_admins("[key_name_admin(chosen_candidate)] has taken control of ([key_name_admin(src)]) to replace a jobbanned player.")
+		key = chosen_candidate.key
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
@@ -208,7 +220,7 @@
 
 	var/mob/living/simple_animal/slime/new_slime
 	if(reproduce)
-		var/number = pick(14;2,3,4)	//reproduce (has a small chance of producing 3 or 4 offspring)
+		var/number = pick(14;2,3,4) //reproduce (has a small chance of producing 3 or 4 offspring)
 		var/list/babies = list()
 		for(var/i=1,i<=number,i++)
 			var/mob/living/simple_animal/slime/M = new/mob/living/simple_animal/slime(loc)
@@ -242,7 +254,7 @@
 	regenerate_icons()
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
-	for(var/t in bodyparts)	//this really should not be necessary
+	for(var/t in bodyparts) //this really should not be necessary
 		qdel(t)
 
 	var/mob/living/simple_animal/pet/dog/corgi/new_corgi = new /mob/living/simple_animal/pet/dog/corgi (loc)
@@ -282,10 +294,10 @@
 /mob/living/carbon/human/Animalize()
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
-	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in sortList(mobtypes, /proc/cmp_typepaths_asc)
+	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", sortList(mobtypes, /proc/cmp_typepaths_asc))
 
 	if(!safe_animal(mobpath))
-		to_chat(usr, "<span class='danger'>Sorry but this mob type is currently unavailable.</span>")
+		to_chat(usr, span_danger("Sorry but this mob type is currently unavailable."))
 		return
 
 	if(notransform)
@@ -308,24 +320,24 @@
 	new_mob.key = key
 	new_mob.set_combat_mode(TRUE)
 
-	to_chat(new_mob, "<span class='boldnotice'>You suddenly feel more... animalistic.</span>")
+	to_chat(new_mob, span_boldnotice("You suddenly feel more... animalistic."))
 	. = new_mob
 	qdel(src)
 
 /mob/proc/Animalize()
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
-	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in sortList(mobtypes, /proc/cmp_typepaths_asc)
+	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", sortList(mobtypes, /proc/cmp_typepaths_asc))
 
 	if(!safe_animal(mobpath))
-		to_chat(usr, "<span class='danger'>Sorry but this mob type is currently unavailable.</span>")
+		to_chat(usr, span_danger("Sorry but this mob type is currently unavailable."))
 		return
 
 	var/mob/living/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
 	new_mob.set_combat_mode(TRUE)
-	to_chat(new_mob, "<span class='boldnotice'>You feel more... animalistic.</span>")
+	to_chat(new_mob, span_boldnotice("You feel more... animalistic."))
 
 	. = new_mob
 	qdel(src)
@@ -339,7 +351,7 @@
 
 //Bad mobs! - Remember to add a comment explaining what's wrong with the mob
 	if(!MP)
-		return FALSE	//Sanity, this should never happen.
+		return FALSE //Sanity, this should never happen.
 
 	if(ispath(MP, /mob/living/simple_animal/hostile/construct))
 		return FALSE //Verbs do not appear for players.

@@ -1,4 +1,4 @@
-import { toFixed } from 'common/math';
+import { formatTime } from '../format';
 import { Component } from 'inferno';
 
 // AnimatedNumber Copypaste
@@ -57,13 +57,7 @@ export class TimeDisplay extends Component {
     if (!isSafeNumber(val)) {
       return this.state.value || null;
     }
-    // THERE IS AS YET INSUFFICIENT DATA FOR A MEANINGFUL ANSWER
-    // HH:MM:SS
-    // 00:02:13
-    const seconds = toFixed(Math.floor((val/10) % 60)).padStart(2, "0");
-    const minutes = toFixed(Math.floor((val/(10*60)) % 60)).padStart(2, "0");
-    const hours = toFixed(Math.floor((val/(10*60*60)) % 24)).padStart(2, "0");
-    const formattedValue = `${hours}:${minutes}:${seconds}`;
-    return formattedValue;
+
+    return formatTime(val);
   }
 }

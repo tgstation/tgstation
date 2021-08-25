@@ -212,7 +212,19 @@ While DM allows other ways of declaring variables, this one should be used for c
 ### Tabs, not spaces
 You must use tabs to indent your code, NOT SPACES.
 
-You may use spaces to align something, but you should tab to the block level first, then add the remaining spaces.
+Do not use tabs/spaces for indentation in the middle of a code line. Not only is this inconsistent because the size of a tab is undefined, but it means that, should the line you're aligning to change size at all, we have to adjust a ton of other code. Plus, it often time hurts readability.
+
+```dm
+// Bad
+#define SPECIES_MOTH			"moth"
+#define SPECIES_LIZARDMAN		"lizardman"
+#define SPECIES_FELINID			"felinid"
+
+// Good
+#define SPECIES_MOTH "moth"
+#define SPECIES_LIZARDMAN "lizardman"
+#define SPECIES_FELINID "felinid"
+```
 
 ### No hacky code
 Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: "I couldn't immediately think of a proper way so thus there must be no other option" is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)
@@ -370,6 +382,33 @@ The following is a list of procs, and their safe replacements.
 * `walk_away()` - `SSmovement_loop.move_away()`
 * `walk_rand()` - `SSmovement_loop.move_rand()` is random walk, `SSmovement_loop.move_to_rand()` is walk to a random place
 
+### Avoid unnecessary type checks and obscuring nulls in lists
+Typecasting in `for` loops carries an implied `istype()` check that filters non-matching types, nulls included. The `as anything` key can be used to skip the check.
+
+If we know the list is supposed to only contain the desired type then we want to skip the check not only for the small optimization it offers, but also to catch any null entries that may creep into the list.
+
+Nulls in lists tend to point to improperly-handled references, making hard deletes hard to debug. Generating a runtime in those cases is more often than not positive.
+
+This is bad:
+```DM
+var/list/bag_of_atoms = list(new /obj, new /mob, new /atom, new /atom/movable, new /atom/movable)
+var/highest_alpha = 0
+for(var/atom/thing in bag_of_atoms)
+	if(thing.alpha <= highest_alpha)
+		continue
+	highest_alpha = thing.alpha
+```
+
+This is good:
+```DM
+var/list/bag_of_atoms = list(new /obj, new /mob, new /atom, new /atom/movable, new /atom/movable)
+var/highest_alpha = 0
+for(var/atom/thing as anything in bag_of_atoms)
+	if(thing.alpha <= highest_alpha)
+		continue
+	highest_alpha = thing.alpha
+```
+
 ### Develop Secure Code
 
 * Player input must always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind
@@ -439,7 +478,7 @@ All procs that are registered to listen for signals using `RegisterSignal()` mus
 ```
 This is to ensure that it is clear the proc handles signals and turns on a lint to ensure it does not sleep.
 
-There exists `SIGNAL_HANDLER_DOES_SLEEP`, but this is only for legacy signal handlers that still sleep, new/changed code should not use this.
+Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc must be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously. 
 
 ### Enforcing parent calling
 When adding new signals to root level procs, eg;
@@ -451,6 +490,223 @@ When adding new signals to root level procs, eg;
 ```
 The `SHOULD_CALL_PARENT(TRUE)` lint should be added to ensure that overrides/child procs call the parent chain and ensure the signal is sent.
 
+### Use descriptive and obvious names
+Optimize for readability, not writability. While it is certainly easier to write `M` than `victim`, it will cause issues down the line for other developers to figure out what exactly your code is doing, even if you think the variable's purpose is obvious.
+
+#### Don't use abbreviations
+Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", etc.
+
+```dm
+// What is M? The user? The target?
+// What is A? The target? The item?
+/proc/use_item(mob/M, atom/A)
+
+// Much better!
+/proc/use_item(mob/user, atom/target)
+```
+
+Unless it is otherwise obvious, try to avoid just extending variables like "C" to "carbon"--this is slightly more helpful, but does not describe the *context* of the use of the variable.
+
+#### Naming things when typecasting
+When typecasting, keep your names descriptive:
+```dm
+var/mob/living/living_target = target
+var/mob/living/carbon/carbon_target = living_target
+```
+
+Of course, if you have a variable name that better describes the situation when typecasting, feel free to use it.
+
+Note that it's okay, semantically, to use the same variable name as the type, e.g.:
+```dm
+var/atom/atom
+var/client/client
+var/mob/mob
+```
+
+Your editor may highlight the variable names, but BYOND, and we, accept these as variable names:
+
+```dm
+// This functions properly!
+var/client/client = CLIENT_FROM_VAR(usr)
+// vvv this may be highlighted, but it's fine!
+client << browse(...)
+```
+
+#### Name things as directly as possible
+`was_called` is better than `has_been_called`. `notify` is better than `do_notification`.
+
+#### Avoid negative variable names
+`is_flying` is better than `is_not_flying`. `late` is better than `not_on_time`.
+This prevents double-negatives (such as `if (!is_not_flying)` which can make complex checks more difficult to parse.
+
+#### Exceptions to variable names
+
+Exceptions can be made in the case of inheriting existing procs, as it makes it so you can use named parameters, but *new* variable names must follow these standards. It is also welcome, and encouraged, to refactor existing procs to use clearer variable names.
+
+Naming numeral iterator variables `i` is also allowed, but do remember to [Avoid unnecessary type checks and obscuring nulls in lists](#avoid-unnecessary-type-checks-and-obscuring-nulls-in-lists), and making more descriptive variables is always encouraged.
+
+```dm
+// Bad
+for (var/datum/reagent/R as anything in reagents)
+
+// Good
+for (var/datum/reagent/deadly_reagent as anything in reagents)
+
+// Allowed, but still has the potential to not be clear. What does `i` refer to?
+for (var/i in 1 to 12)
+
+// Better
+for (var/month in 1 to 12)
+
+// Bad, only use `i` for numeral loops
+for (var/i in reagents)
+```
+
+### Icons are for image manipulation and defining an obj's `.icon` var, appearances are for everything else.
+BYOND will allow you to use a raw icon file or even an icon datum for underlays, overlays, and what not (you can even use strings to refer to an icon state on the current icon). The issue is these get converted by BYOND to appearances on every overlay insert or removal involving them, and this process requires inserting the new appearance into the global list of appearances, and informing clients about them.
+
+Converting them yourself to appearances and storing this converted value will ensure this process only has to happen once for the lifetime of the round. Helper functions exist to do most of the work for you.
+
+
+Bad:
+```dm
+/obj/machine/update_overlays(blah)
+	if (stat & broken)
+		add_overlay(icon(broken_icon))  //this icon gets created, passed to byond, converted to an appearance, then deleted.
+		return
+	if (is_on)
+		add_overlay("on") //also bad, the converstion to an appearance still has to happen
+	else
+		add_overlay(iconstate2appearance(icon, "off")) //this might seem alright, but not storing the value just moves the repeated appearance generation to this proc rather then the core overlay management. It would only be acceptable (and to some degree perferred) if this overlay is only ever added once (like in init code)
+```
+
+Good:
+```dm
+/obj/machine/update_overlays(var/blah)
+	var/static/on_overlay
+	var/static/off_overlay
+	var/static/broken_overlay
+	if(isnull(on_overlay)) //static vars initialize with global variables, meaning src is null and this won't pass integration tests unless you check.
+		on_overlay = iconstate2appearance(icon, "on")
+		off_overlay = iconstate2appearance(icon, "off")
+		broken_overlay = icon2appearance(broken_icon)
+	if (stat & broken)
+		add_overlay(broken_overlay) 
+		return
+	if (is_on)
+		add_overlay(on_overlay)
+	else
+		add_overlay(off_overlay)
+	...
+```
+
+Note: images are appearances with extra steps, and don't incur the overhead in conversion.
+
+
+### Do not abuse associated lists.
+Associated lists that could instead be variables or statically defined number indexed lists will use more memory, as associated lists have a 24 bytes per item overhead (vs 8 for lists and most vars), and are slower to search compared to static/global variables and lists with known indexes.
+
+
+Bad:
+```dm
+/obj/machine/update_overlays(var/blah)
+	var/static/our_overlays
+	if(isnull(our_overlays)
+		our_overlays = list("on" = iconstate2appearance(overlay_icon, "on"), "off" = iconstate2appearance(overlay_icon, "off"), "broken" = iconstate2appearance(overlay_icon, "broken"))
+	if (stat & broken)
+		add_overlay(our_overlays["broken"]) 
+		return
+	...
+```
+
+Good:
+```dm
+#define OUR_ON_OVERLAY 1
+#define OUR_OFF_OVERLAY 2
+#define OUR_BROKEN_OVERLAY 3
+/obj/machine/update_overlays(var/blah
+	var/static/our_overlays
+	if(isnull(our_overlays)
+		our_overlays = list(iconstate2appearance(overlay_icon, "on"), iconstate2appearance(overlay_icon, "off"), iconstate2appearance(overlay_icon, "broken"))
+	if (stat & broken)
+		add_overlay(our_overlays[OUR_BROKEN_OVERLAY])
+		return
+	...
+
+#undef OUR_ON_OVERLAY
+#undef OUR_OFF_OVERLAY
+#undef OUR_BROKEN_OVERLAY
+```
+Storing these in a flat (non-associated) list saves on memory, and using defines to reference locations in the list saves CPU time searching the list.
+
+Also good:
+```dm
+/obj/machine/update_overlays(var/blah)
+	var/static/on_overlay
+	var/static/off_overlay
+	var/static/broken_overlay
+	if(isnull(on_overlay))
+		on_overlay = iconstate2appearance(overlay_icon, "on")
+		off_overlay = iconstate2appearance(overlay_icon, "off")
+		broken_overlay = iconstate2appearance(overlay_icon, "broken")
+	if (stat & broken)
+		add_overlay(broken_overlay)
+		return
+	...
+```
+Proc variables, static variables, and global variables are resolved at compile time, so the above is equivalent to the second example, but is easier to read, and avoids the need to store a list.
+
+Note: While there has historically been a strong impulse to use associated lists for caching of computed values, this is the easy way out and leaves a lot of hidden overhead. Please keep this in mind when designing core/root systems that are intended for use by other code/coders. It's normally better for consumers of such systems to handle their own caching using vars and number indexed lists, than for you to do it using associated lists.
+
+### When passing vars through New() or Initialize()'s arguments, use src.var
+Using src.var + naming the arguments the same as the var is the most readable and intuitive way to pass arguments into a new instance's vars. The main benefit is that you do not need to give arguments odd names with prefixes and suffixes that are easily forgotten in `new()` when sending named args.
+
+This is very bad:
+```DM
+/atom/thing
+	var/is_red
+
+/atom/thing/Initialize(mapload, enable_red)
+	is_red = enable_red
+
+/proc/make_red_thing()
+	new /atom/thing(null, enable_red = TRUE)
+```
+
+Future coders using this code will have to remember two differently named variables which are near-synonyms of eachother. One of them is only used in Initialize for one line.
+
+This is bad:
+```DM
+/atom/thing
+	var/is_red
+
+/atom/thing/Initialize(mapload, _is_red)
+	is_red = _is_red
+
+/proc/make_red_thing()
+	new /atom/thing(null, _is_red = TRUE)
+```
+
+`_is_red` is being used to set `is_red` and yet means a random '_' needs to be appended to the front of the arg, same as all other args like this.
+
+This is good:
+```DM
+/atom/thing
+	var/is_red
+
+/atom/thing/Initialize(mapload, is_red)
+	src.is_red = is_red
+
+/proc/make_red_thing()
+	new /atom/thing(null, is_red = TRUE)
+```
+
+Setting `is_red` in args is simple, and directly names the variable the argument sets.
+
+### Don't create code that hangs references
+
+This is part of the larger issue of hard deletes, read this file for more info: [Guide to Harddels](HARDDEL_GUIDE.md))
+
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
 
@@ -460,11 +716,14 @@ The `SHOULD_CALL_PARENT(TRUE)` lint should be added to ensure that overrides/chi
 
 * Do not divide when you can easily convert it to multiplication. (ie `4/2` should be done as `4*0.5`)
 
+* Separating single lines into more readable blocks is not banned, however you should use it only where it makes new information more accessible, or aids maintainability. We do not have a column limit, and mass conversions will not be received well.
+
 * If you used regex to replace code during development of your code, post the regex in your PR for the benefit of future developers and downstream users.
 
 * Changes to the `/config` tree must be made in a way that allows for updating server deployments while preserving previous behaviour. This is due to the fact that the config tree is to be considered owned by the user and not necessarily updated alongside the remainder of the code. The code to preserve previous behaviour may be removed at some point in the future given the OK by maintainers.
 
 * The dlls section of tgs3.json is not designed for dlls that are purely `call()()`ed since those handles are closed between world reboots. Only put in dlls that may have to exist between world reboots.
+
 
 #### Enforced not enforced
 The following coding styles are not only not enforced at all, but are generally frowned upon to change for little to no reason:
@@ -512,38 +771,6 @@ https://file.house/zy7H.png
 Code used for the test in a readable format:
 https://pastebin.com/w50uERkG
 
-
-#### For loops without `istype`
-A name for a differing syntax for writing for-each style loops in DM. It's NOT DM's standard syntax, hence why this is considered a quirk. Take a look at this:
-```DM
-var/list/bag_of_items = list(sword, apple, coinpouch, sword, sword)
-var/obj/item/sword/best_sword
-for(var/obj/item/sword/S in bag_of_items)
-	if(!best_sword || S.damage > best_sword.damage)
-		best_sword = S
-```
-The above is a simple proc for checking all swords in a container and returning the one with the highest damage, and it uses DM's standard syntax for a for-loop by specifying a type in the variable of the for's header that DM interprets as a type to filter by. It performs this filter using `istype()` (or some internal-magic similar to `istype()` - this is BYOND, after all). This is fine in its current state for `bag_of_items`, but if `bag_of_items` contained ONLY swords, or only SUBTYPES of swords, then the above is inefficient. For example:
-```DM
-var/list/bag_of_swords = list(sword, sword, sword, sword)
-var/obj/item/sword/best_sword
-for(var/obj/item/sword/S in bag_of_swords)
-	if(!best_sword || S.damage > best_sword.damage)
-		best_sword = S
-```
-specifies a type for DM to filter by.
-
-With the previous example that's perfectly fine, we only want swords, but here the bag only contains swords? Is DM still going to try to filter because we gave it a type to filter by? YES, and here comes the inefficiency. Wherever a list (or other container, such as an atom (in which case you're technically accessing their special contents list, but that's irrelevant)) contains datums of the same datatype or subtypes of the datatype you require for your loop's body,
-you can circumvent DM's filtering and automatic `istype()` checks by writing the loop as such:
-```DM
-var/list/bag_of_swords = list(sword, sword, sword, sword)
-var/obj/item/sword/best_sword
-for(var/s in bag_of_swords)
-	var/obj/item/sword/S = s
-	if(!best_sword || S.damage > best_sword.damage)
-		best_sword = S
-```
-Of course, if the list contains data of a mixed type then the above optimisation is DANGEROUS, as it will blindly typecast all data in the list as the specified type, even if it isn't really that type, causing runtime errors.
-
 #### Dot variable
 Like other languages in the C family, DM has a `.` or "Dot" operator, used for accessing variables/members/functions of an object instance.
 eg:
@@ -568,6 +795,13 @@ This does NOT mean that you can access it everywhere like a global var. Instead,
 Isn't that confusing?
 
 There is also an undocumented keyword called `static` that has the same behaviour as global but more correctly describes BYOND's behaviour. Therefore, we always use static instead of global where we need it, as it reduces suprise when reading BYOND code.
+
+### Byond Hellspawn 
+
+Put stuff that shouldn’t work but does, or should work but doesn’t here so we don’t forget about it.
+#### Icon hell
+
+The ‘transparent’ icon state causes fucked behavior when used on turfs, for reasons unknown and unknowable
 
 ## Pull Request Process
 
@@ -602,7 +836,6 @@ Regarding sprites & sounds, you must credit the artist and possibly the codebase
 ## Banned content
 Do not add any of the following in a Pull Request or risk getting the PR closed:
 * National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
-* Code where one line of code is split across mutiple lines (except for multiple, separate strings and comments; in those cases, existing longer lines must not be split up)
 * Code adding, removing, or updating the availability of alien races/species/human mutants without prior approval. Pull requests attempting to add or remove features from said races/species/mutants require prior approval as well.
 * Code which violates GitHub's [terms of service](https://github.com/site/terms).
 
@@ -614,3 +847,5 @@ This repository uses `LF` line endings for all code as specified in the **.gitat
 Unless overridden or a non standard git binary is used the line ending settings should be applied to your clone automatically.
 
 Note: VSC requires an [extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) to take advantage of editorconfig.
+
+Github actions that require additional configuration are disabled on the repository until ACTION_ENABLER secret is created with non-empty value.

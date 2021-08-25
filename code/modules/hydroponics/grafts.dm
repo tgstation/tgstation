@@ -14,8 +14,6 @@
 	var/datum/plant_gene/stored_trait
 	///Determines the appearance of the graft. Rudimentary right now so it just picks randomly.
 	var/graft_appearance
-	///Seed that the graft was taken from, used for applying parent stats. Can be unexpectedly nulled by the parent plant getting deleted.
-	var/obj/item/seeds/parent_seed = null
 	/// The name of the plant this was taken from.
 	var/parent_name = ""
 	///The lifespan stat of the parent seed when the graft was taken.
@@ -47,10 +45,4 @@
 
 /obj/item/graft/Destroy()
 	QDEL_NULL(stored_trait)
-	return ..()
-
-/obj/item/graft/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/plant_analyzer) && !user.combat_mode)
-		var/obj/item/plant_analyzer/plant_analyzer = I
-		to_chat(user, plant_analyzer.get_graft_text(src))
 	return ..()

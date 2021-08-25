@@ -8,26 +8,25 @@
  *
  * Arguments:
  * * packet_data - Either a list() or a /datum/netdata.  If its netdata, the other args are ignored
- * * target_id - 	Target hardware id or network_id for this packet. If we are a network id, then its
+ * * target_id - Target hardware id or network_id for this packet. If we are a network id, then its
 					broadcasted to that network.
- * * passkey - 	Authentication for the packet.  If the target doesn't authenticate the packet is dropped
+ * * passkey - Authentication for the packet.  If the target doesn't authenticate the packet is dropped
  */
 /datum/proc/ntnet_send(packet_data, target_id = null, passkey = null)
 	var/datum/netdata/data = packet_data
-	if(!data) // check for easy case
-		if(!islist(packet_data) || target_id == null)
+	if(!istype(data)) // construct netdata from list()
+		if(!islist(packet_data))
 			stack_trace("ntnet_send: Bad packet creation") // hard fail as its runtime fault
 			return
 		data = new(packet_data)
 		data.receiver_id = target_id
 		data.passkey = passkey
-	if(data.receiver_id == null)
-		return NETWORK_ERROR_BAD_TARGET_ID
 	var/datum/component/ntnet_interface/NIC = GetComponent(/datum/component/ntnet_interface)
 	if(!NIC)
 		return NETWORK_ERROR_NOT_ON_NETWORK
 	data.sender_id = NIC.hardware_id
 	data.network_id = NIC.network.network_id
+	data.receiver_id ||= data.network_id
 	return SSnetworks.transmit(data)
 
 /*
@@ -43,11 +42,11 @@
  *
  */
 /datum/component/ntnet_interface
-	var/hardware_id = null				// text. this is the true ID. do not change this. stuff like ID forgery can be done manually.
-	var/id_tag = null  					// named tag, mainly used to look up mapping objects
-	var/datum/ntnet/network = null		// network we are on, we MUST be on a network or there is no point in this component
+	var/hardware_id = null // text. this is the true ID. do not change this. stuff like ID forgery can be done manually.
+	var/id_tag = null // named tag, mainly used to look up mapping objects
+	var/datum/ntnet/network = null // network we are on, we MUST be on a network or there is no point in this component
 	var/list/registered_sockets = list()// list of ports opened up on devices
-	var/list/alias = list() 			// if we live in more than one network branch
+	var/list/alias = list() // if we live in more than one network branch
 
 /**
  * Initialize for the interface

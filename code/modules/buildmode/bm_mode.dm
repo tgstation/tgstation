@@ -34,7 +34,7 @@
 	CRASH("No help defined, yell at a coder")
 
 /datum/buildmode_mode/proc/change_settings(client/c)
-	to_chat(c, "<span class='warning'>There is no configuration available for this mode</span>")
+	to_chat(c, span_warning("There is no configuration available for this mode"))
 	return
 
 /datum/buildmode_mode/proc/Reset()
@@ -70,21 +70,20 @@
 	cornerB = null
 
 /datum/buildmode_mode/proc/handle_click(client/c, params, object)
-	var/list/pa = params2list(params)
-	var/left_click = pa.Find("left")
+	var/list/modifiers = params2list(params)
 	if(use_corner_selection)
-		if(left_click)
+		if(LAZYACCESS(modifiers, LEFT_CLICK))
 			if(!cornerA)
 				cornerA = select_tile(get_turf(object), AREASELECT_CORNERA)
 				return
 			if(cornerA && !cornerB)
 				cornerB = select_tile(get_turf(object), AREASELECT_CORNERB)
-				to_chat(c, "<span class='boldwarning'>Region selected, if you're happy with your selection left click again, otherwise right click.</span>")
+				to_chat(c, span_boldwarning("Region selected, if you're happy with your selection left click again, otherwise right click."))
 				return
 			handle_selected_area(c, params)
 			deselect_region()
 		else
-			to_chat(c, "<span class='notice'>Region selection canceled!</span>")
+			to_chat(c, span_notice("Region selection canceled!"))
 			deselect_region()
 	return
 
