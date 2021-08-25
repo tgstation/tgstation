@@ -52650,6 +52650,11 @@
 	},
 /turf/open/floor/iron,
 /area/science/research)
+"pgo" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/east,
+/turf/open/floor/plating,
+/area/engineering/supermatter/room)
 "pgt" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -125877,7 +125882,7 @@ oma
 bpc
 bpc
 czV
-bpc
+pgo
 bpc
 uFM
 oma

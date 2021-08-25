@@ -38541,6 +38541,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/security/prison)
+"eDE" = (
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/engineering/supermatter/room)
 "eDP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown{
@@ -104116,6 +104121,7 @@
 /area/cargo/storage)
 "vSm" = (
 /obj/machinery/light/directional/north,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "vSn" = (
@@ -134352,7 +134358,7 @@ uZA
 xCx
 oCQ
 xPF
-otP
+eDE
 otP
 vyR
 otP

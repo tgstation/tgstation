@@ -21175,6 +21175,11 @@
 /obj/item/flashlight,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/storage/eva)
+"dhA" = (
+/obj/machinery/power/apc/auto_name/south,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/engineering/supermatter/room)
 "dhK" = (
 /obj/structure/chair/office/light{
 	dir = 4
@@ -88270,7 +88275,7 @@ wfC
 fQX
 ifh
 fQX
-wfC
+dhA
 eia
 boP
 bBM
