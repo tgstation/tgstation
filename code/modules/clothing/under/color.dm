@@ -54,13 +54,13 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
-/obj/item/clothing/under/color/grey //possibly wrong in_hand
+/obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"
 	desc = "A tasteful grey jumpsuit that reminds you of the good old days."
 	icon_state = "grey"
 	inhand_icon_state = "gy_suit"
 
-/obj/item/clothing/under/color/jumpskirt/grey //possibly wrong in_hand
+/obj/item/clothing/under/color/jumpskirt/grey
 	name = "grey jumpskirt"
 	desc = "A tasteful grey jumpskirt that reminds you of the good old days."
 	icon_state = "grey_skirt"
@@ -72,12 +72,12 @@
 	icon_state = "grey_ancient"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/color/blue //possibly wrong in_hand
+/obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"
 	icon_state = "blue"
 	inhand_icon_state = "b_suit"
 
-/obj/item/clothing/under/color/jumpskirt/blue //possibly wrong in_hand
+/obj/item/clothing/under/color/jumpskirt/blue
 	name = "blue jumpskirt"
 	icon_state = "blue_skirt"
 	inhand_icon_state = "b_suit"
@@ -92,24 +92,24 @@
 	icon_state = "green_skirt"
 	inhand_icon_state = "g_suit"
 
-/obj/item/clothing/under/color/orange //wrong in_hand
+/obj/item/clothing/under/color/orange
 	name = "orange jumpsuit"
 	desc = "Don't wear this near paranoid security officers."
 	icon_state = "orange"
 	inhand_icon_state = "o_suit"
 
-/obj/item/clothing/under/color/jumpskirt/orange //wrong in_hand
+/obj/item/clothing/under/color/jumpskirt/orange
 	name = "orange jumpskirt"
 	icon_state = "orange_skirt"
 	inhand_icon_state = "o_suit"
 
-/obj/item/clothing/under/color/pink //wrong in_hand
+/obj/item/clothing/under/color/pink
 	name = "pink jumpsuit"
 	desc = "Just looking at this makes you feel <i>fabulous</i>."
 	icon_state = "pink"
 	inhand_icon_state = "p_suit"
 
-/obj/item/clothing/under/color/jumpskirt/pink //wrong in_hand
+/obj/item/clothing/under/color/jumpskirt/pink
 	name = "pink jumpskirt"
 	icon_state = "pink_skirt"
 	inhand_icon_state = "p_suit"
@@ -154,22 +154,22 @@
 	icon_state = "darkblue_skirt"
 	inhand_icon_state = "b_suit"
 
-/obj/item/clothing/under/color/teal //wrong in_hand
+/obj/item/clothing/under/color/teal
 	name = "teal jumpsuit"
 	icon_state = "teal"
 	inhand_icon_state = "b_suit"
 
-/obj/item/clothing/under/color/jumpskirt/teal //wrong in_hand
+/obj/item/clothing/under/color/jumpskirt/teal
 	name = "teal jumpskirt"
 	icon_state = "teal_skirt"
 	inhand_icon_state = "b_suit"
 
-/obj/item/clothing/under/color/lightpurple //wrong in_hand
+/obj/item/clothing/under/color/lightpurple
 	name = "light purple jumpsuit"
 	icon_state = "lightpurple"
 	inhand_icon_state = "p_suit"
 
-/obj/item/clothing/under/color/jumpskirt/lightpurple //wrong in_hand
+/obj/item/clothing/under/color/jumpskirt/lightpurple
 	name = "light purple jumpskirt"
 	icon_state = "lightpurple_skirt"
 	inhand_icon_state = "p_suit"
@@ -194,22 +194,22 @@
 	icon_state = "lightbrown_skirt"
 	inhand_icon_state = "lb_suit"
 
-/obj/item/clothing/under/color/brown //wrong in_hand
+/obj/item/clothing/under/color/brown
 	name = "brown jumpsuit"
 	icon_state = "brown"
 	inhand_icon_state = "lb_suit"
 
-/obj/item/clothing/under/color/jumpskirt/brown //wrong in_hand
+/obj/item/clothing/under/color/jumpskirt/brown
 	name = "brown jumpskirt"
 	icon_state = "brown_skirt"
 	inhand_icon_state = "lb_suit"
 
-/obj/item/clothing/under/color/maroon //wrong in_hand
+/obj/item/clothing/under/color/maroon
 	name = "maroon jumpsuit"
 	icon_state = "maroon"
 	inhand_icon_state = "r_suit"
 
-/obj/item/clothing/under/color/jumpskirt/maroon //wrong in_hand
+/obj/item/clothing/under/color/jumpskirt/maroon
 	name = "maroon jumpskirt"
 	icon_state = "maroon_skirt"
 	inhand_icon_state = "r_suit"
