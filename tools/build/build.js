@@ -36,6 +36,10 @@ export const PortParameter = new Juke.Parameter({
 
 export const CiParameter = new Juke.Parameter({ type: 'boolean' });
 
+export const ErrorParameter = new Juke.Parameter({
+  type: 'boolean',
+})
+
 export const DmMapsIncludeTarget = new Juke.Target({
   executes: async () => {
     const folders = [
@@ -71,7 +75,7 @@ export const DmTarget = new Juke.Target({
     `${DME_NAME}.rsc`,
   ],
   executes: async ({ get }) => {
-    await DreamMaker(`${DME_NAME}.dme`, {
+    await DreamMaker(`${DME_NAME}.dme`, get(ErrorParameter), {
       defines: ['CBT', ...get(DefineParameter)],
     });
   },
@@ -84,7 +88,7 @@ export const DmTestTarget = new Juke.Target({
   ],
   executes: async ({ get }) => {
     fs.copyFileSync(`${DME_NAME}.dme`, `${DME_NAME}.test.dme`);
-    await DreamMaker(`${DME_NAME}.test.dme`, {
+    await DreamMaker(`${DME_NAME}.test.dme`, get(ErrorParameter), {
       defines: ['CBT', 'CIBUILDING', ...get(DefineParameter)],
     });
     Juke.rm('data/logs/ci', { recursive: true });

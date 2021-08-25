@@ -60,9 +60,10 @@ const getDmPath = async () => {
 
 /**
  * @param {string} dmeFile
+ * @param {boolean} error
  * @param {{ defines?: string[] }} options
  */
-export const DreamMaker = async (dmeFile, options = {}) => {
+export const DreamMaker = async (dmeFile, error = false, options = {}) => {
   const dmPath = await getDmPath();
   // Get project basename
   const dmeBaseName = dmeFile.replace(/\.dme$/, '');
@@ -85,6 +86,14 @@ export const DreamMaker = async (dmeFile, options = {}) => {
   };
   testOutputFile(`${dmeBaseName}.dmb`);
   testOutputFile(`${dmeBaseName}.rsc`);
+  var runWithWarningChecks = async (dmeFile, error, options = {}) => {
+    const execReturn = await Juke.exec(dmeFile, options);
+    if (error && execReturn.combined.match(/\d+:warning: /)) {
+      Juke.logger.error(`Compile warnings treated as errors`);
+      throw new Juke.ExitCode(2);
+    }
+    return execReturn;
+  }
   // Compile
   const { defines } = options;
   if (defines && defines.length > 0) {
@@ -105,7 +114,7 @@ export const DreamMaker = async (dmeFile, options = {}) => {
     }
   }
   else {
-    await Juke.exec(dmPath, [dmeFile]);
+    await runWithWarningChecks(dmPath, error, [dmeFile]);
   }
 };
 
