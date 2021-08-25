@@ -16,7 +16,7 @@ Juke.setup({ file: import.meta.url }).then((code) => {
   // We're using the currently available quirk in Juke Build, which
   // prevents it from exiting on Windows, to wait on errors.
   if (code !== 0 && process.argv.includes('--wait-on-error')) {
-    Juke.logger.warn('This command window can be closed.');
+    Juke.logger.error('Please inspect the error and close the window.');
     return;
   }
   process.exit(code);

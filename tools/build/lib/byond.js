@@ -112,7 +112,7 @@ export const DreamMaker = async (dmeFile, options = {}) => {
 export const DreamDaemon = async (dmbFile, ...args) => {
   const dmPath = await getDmPath();
   const baseDir = path.dirname(dmPath);
-  const ddExeName = process.platform === 'win32' ? 'dd.exe' : 'DreamDaemon';
+  const ddExeName = process.platform === 'win32' ? 'dreamdaemon.exe' : 'DreamDaemon';
   const ddExePath = baseDir === '.' ? ddExeName : path.join(baseDir, ddExeName);
   return Juke.exec(ddExePath, [dmbFile, ...args]);
 };
