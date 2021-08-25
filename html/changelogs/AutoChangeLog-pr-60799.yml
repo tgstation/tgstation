@@ -1,4 +1,0 @@
-author: "MMMiracles"
-delete-after: True
-changes: 
-  - bugfix: "Solar assemblies can no longer be built on top of existing solar panels."

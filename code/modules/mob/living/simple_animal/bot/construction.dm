@@ -414,7 +414,7 @@
 						new /obj/item/toy/sword(Tsec)
 
 		if(ASSEMBLY_FIFTH_STEP)
-			if(istype(I, /obj/item/melee/transforming/energy/sword/saber))
+			if(istype(I, /obj/item/melee/energy/sword/saber))
 				if(swordamt < 3)
 					if(!user.temporarilyRemoveItemFromInventory(I))
 						return
@@ -439,7 +439,7 @@
 				icon_state = initial(icon_state)
 				to_chat(user, span_notice("You unbolt [src]'s energy swords."))
 				for(var/IS in 1 to swordamt)
-					new /obj/item/melee/transforming/energy/sword/saber(Tsec)
+					new /obj/item/melee/energy/sword/saber(Tsec)
 
 
 //Firebot Assembly
