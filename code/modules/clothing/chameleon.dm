@@ -368,12 +368,10 @@
 /obj/item/clothing/under/chameleon
 //starts off as black
 	name = "black jumpsuit"
-	icon_state = "jumpsuit"
-	greyscale_colors = "#3f3f3f"
-	greyscale_config = /datum/greyscale_config/jumpsuit
-	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit_inhand_right
-	greyscale_config_worn = /datum/greyscale_config/jumpsuit_worn
+	icon = 'icons/obj/clothing/under/color.dmi'
+	icon_state = "black"
+	inhand_icon_state = "bl_suit"
+	worn_icon = 'icons/mob/clothing/under/color.dmi'
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = FALSE
