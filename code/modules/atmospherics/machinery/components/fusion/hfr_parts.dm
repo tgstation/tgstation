@@ -227,7 +227,7 @@
 		var/fuel_consumption = connected_core.selected_fuel.fuel_consumption_multiplier < 1 ? "Decrease" : "Increase"
 		var/fuel_production = connected_core.selected_fuel.gas_production_multiplier < 1 ? "Decrease" : "Increase"
 		product_gases += "The fuel mix will"
-		product_gases += "-[minimum_temp] the minimum cooling by a factor of [connected_core.selected_fuel.negative_temperature_multiplier]"
+		product_gases += "-[minimum_temp] the maximum cooling by a factor of [connected_core.selected_fuel.negative_temperature_multiplier]"
 		product_gases += "-[maximum_temp] the maximum heating by a factor of [connected_core.selected_fuel.positive_temperature_multiplier]"
 		product_gases += "-[energy] the energy output consumption by a factor of [1 / connected_core.selected_fuel.energy_concentration_multiplier]"
 		product_gases += "-[fuel_consumption] the fuel consumption by a factor of [connected_core.selected_fuel.fuel_consumption_multiplier]"
