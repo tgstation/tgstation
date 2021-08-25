@@ -44,7 +44,8 @@
 	return ..()
 
 /datum/component/admin_popup/proc/create_notice()
-	QDEL_NULL(admin_popup)
+	if(admin_popup)
+		qdel(admin_popup)
 	admin_popup = new
 
 	var/client/parent_client = parent
