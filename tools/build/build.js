@@ -242,8 +242,6 @@ export const CleanAllTarget = new Juke.Target({
   executes: async () => {
     Juke.logger.info('Cleaning up data/logs');
     Juke.rm('data/logs', { recursive: true });
-    Juke.logger.info('Cleaning up bootstrap cache');
-    Juke.rm('tools/bootstrap/.cache', { recursive: true });
     Juke.logger.info('Cleaning up global yarn cache');
     await yarn('cache', 'clean', '--all');
   },
