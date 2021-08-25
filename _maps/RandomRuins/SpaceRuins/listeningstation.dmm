@@ -696,11 +696,11 @@
 "aZ" = (
 /obj/structure/table,
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -4;
 	pixel_y = 14
 	},
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = 3;
 	pixel_y = 11
 	},

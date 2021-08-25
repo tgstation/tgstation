@@ -3,7 +3,7 @@
 /// <reference types="node" />
 
 import _chalk from 'chalk';
-import { SpawnOptionsWithoutStdio } from 'child_process';
+import { SpawnOptions } from 'child_process';
 import EventEmitter from 'events';
 
 /**
@@ -166,7 +166,7 @@ export declare class ExitCode extends Error {
 	signal: string | null;
 	constructor(code: number | null, signal?: string | null);
 }
-export declare type ExecOptions = SpawnOptionsWithoutStdio & {
+export declare type ExecOptions = SpawnOptions & {
 	/**
 	 * If `true`, this exec call will not pipe its output to stdio.
 	 * @default false
@@ -177,6 +177,11 @@ export declare type ExecOptions = SpawnOptionsWithoutStdio & {
 	 * @default true
 	 */
 	throw?: boolean;
+	/**
+	 * Captures stdout/stderr to be available in exec return value.
+	 * This is experimental functionality.
+	 */
+	captureOutput?: boolean;
 };
 export declare type ExecReturn = {
 	/** Exit code of the program. */
