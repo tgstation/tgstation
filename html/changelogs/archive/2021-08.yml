@@ -551,3 +551,19 @@
       constructed by using a Multitool on the rapid HFR boxes. The core still needs
       rotating if your design requires it, and is best done before you step away unless
       you want to disassemble and move a side component.
+2021-08-25:
+  AccountName5:
+  - bugfix: Fixed bug that prevented you from placing vertical bridge pipes on horizontal
+      smart pipes.
+  Colovorat:
+  - bugfix: Cables from protolathe and autolathe should merge just fine now
+  Ghommie:
+  - bugfix: roundstart offstation antagonists such as wizards and nuke ops no longer
+      have quirks (either from preferences or hardcore random) assigned to them or
+      count toward the hardcore random score.
+  - bugfix: Fixes the lone operative event hardly ever rolling even if the disk is
+      left on the same place for hours because of dynamic.
+  Kryson, AMonkeyThatCodes:
+  - imageadd: Replaces the lobby menu with sprites instead of HTML
+  softcerv:
+  - bugfix: stargazers can now form slime links again.
