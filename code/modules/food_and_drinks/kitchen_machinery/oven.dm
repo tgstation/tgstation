@@ -142,6 +142,8 @@
 	return TRUE
 
 /obj/machinery/oven/proc/update_baking_audio()
+	if(!oven_loop)
+		return
 	if(!open && used_tray?.contents.len)
 		oven_loop.start()
 	else

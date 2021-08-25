@@ -28,7 +28,7 @@
 		hal_target.client.images += fake_icon
 
 /obj/projectile/hallucination/Destroy()
-	if(hal_target.client)
+	if(hal_target?.client)
 		hal_target.client.images -= fake_icon
 	QDEL_NULL(fake_icon)
 	return ..()
