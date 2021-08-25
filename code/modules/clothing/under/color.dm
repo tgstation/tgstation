@@ -161,7 +161,7 @@
 
 /obj/item/clothing/under/color/jumpskirt/teal
 	name = "teal jumpskirt"
-		icon_state = "teal_skirt"
+	icon_state = "teal_skirt"
 	inhand_icon_state = "b_suit"
 
 /obj/item/clothing/under/color/lightpurple
