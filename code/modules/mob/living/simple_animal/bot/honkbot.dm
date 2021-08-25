@@ -334,6 +334,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 /mob/living/simple_animal/bot/honkbot/explode()
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
+	//doesn't drop cardboard nor its assembly, since its a very frail material.
 	if(prob(50))
 		drop_part(robot_arm, Tsec)
 	new bikehorn(Tsec)

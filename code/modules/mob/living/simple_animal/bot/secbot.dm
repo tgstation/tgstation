@@ -462,6 +462,7 @@ Auto Patrol: []"},
 /mob/living/simple_animal/bot/secbot/explode()
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
+	if(ranged)
 		var/obj/item/bot_assembly/ed209/Sa = new (Tsec)
 		Sa.build_step = 1
 		Sa.add_overlay("hs_hole")

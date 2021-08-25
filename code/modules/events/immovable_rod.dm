@@ -58,6 +58,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	movement_type = PHASING | FLYING
 	var/mob/living/wizard
 	var/z_original = 0
+	var/destination
 	var/notify = TRUE
 	///We can designate a specific target to aim for, in which case we'll try to snipe them rather than just flying in a random direction
 	var/atom/special_target
@@ -196,7 +197,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /obj/effect/immovablerod/Process_Spacemove()
 	return TRUE
-
 /obj/effect/immovablerod/Bump(atom/clong)
 	if(prob(10))
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
@@ -204,8 +204,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 	if(special_target && clong == special_target)
 		complete_trajectory()
-	if(isturf(clong))
-		SSexplosions.medturf += clong
 
 	// If rod meets rod, they collapse into a singularity. Yes, this means that if two wizard rods collide,
 	// they ALSO collapse into a singulo.
