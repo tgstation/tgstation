@@ -45,10 +45,6 @@
 	admin_popup.maptext_width = getviewsize(parent_client.view_size.getView())[1] * world.icon_size
 	parent_client.screen += admin_popup
 
-/datum/component/admin_popup/proc/on_mind_login(datum/mind/mind, mob/new_mob)
-	SIGNAL_HANDLER
-	create_notice()
-
 /datum/component/admin_popup/proc/delete_self()
 	SIGNAL_HANDLER
 	qdel(src)
