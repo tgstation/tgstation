@@ -137,8 +137,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/broadcast_login_logout = TRUE
 	///What outfit typepaths we've favorited in the SelectEquipment menu
 	var/list/favorite_outfits = list()
-	///If TRUE, we replace the flash effect from flashes with a solid black screen
-	var/darkened_flash = FALSE
 
 	/// A preview of the current character
 	var/atom/movable/screen/character_preview_view/character_preview_view
@@ -196,7 +194,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/ui_interact(mob/user, datum/tgui/ui)
 	// If you leave and come back, re-register the character preview
 	if (!isnull(character_preview_view) && !(character_preview_view in user.client?.screen))
-		user.client.register_map_obj(character_preview_view)
+		user.client?.register_map_obj(character_preview_view)
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
