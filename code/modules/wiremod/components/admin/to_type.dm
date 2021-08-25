@@ -24,5 +24,5 @@
 	if(.)
 		return
 
-	type_output.set_output(text2path(input_path.input_value))
+	type_output.set_output(text2path(input_path.value))
 

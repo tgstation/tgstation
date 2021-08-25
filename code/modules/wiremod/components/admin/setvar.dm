@@ -28,9 +28,9 @@
 	. = ..()
 	if(.)
 		return
-	var/atom/object = entity.input_value
-	var/var_name = variable_name.input_value
+	var/atom/object = entity.value
+	var/var_name = variable_name.value
 	if(!var_name || !object)
 		return
 
-	object.vv_edit_var(var_name, new_value.input_value)
+	object.vv_edit_var(var_name, new_value.value)

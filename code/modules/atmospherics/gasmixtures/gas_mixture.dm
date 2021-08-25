@@ -498,7 +498,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 ///Takes the amount of the gas you want to PP as an argument
 ///So I don't have to do some hacky switches/defines/magic strings
 ///eg:
-///Tox_PP = get_partial_pressure(gas_mixture.toxins)
+///Plas_PP = get_partial_pressure(gas_mixture.plasma)
 ///O2_PP = get_partial_pressure(gas_mixture.oxygen)
 
 /datum/gas_mixture/proc/get_breath_partial_pressure(gas_pressure)
