@@ -1,15 +1,7 @@
 /obj/item/clothing/under/color
 	desc = "A standard issue colored jumpsuit. Variety is the spice of life!"
 	dying_key = DYE_REGISTRY_UNDER
-	greyscale_colors = "#3f3f3f"
-	greyscale_config = /datum/greyscale_config/jumpsuit
-	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit_inhand_right
-	greyscale_config_worn = /datum/greyscale_config/jumpsuit_worn
 	icon = 'icons/obj/clothing/under/color.dmi'
-	icon_state = "jumpsuit"
-	inhand_icon_state = "jumpsuit"
-	worn_icon_state = "jumpsuit"
 	worn_icon = 'icons/mob/clothing/under/color.dmi'
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -17,7 +9,6 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
-	icon_state = "jumpskirt"
 
 /obj/item/clothing/under/color/random
 	icon_state = "random_jumpsuit"
@@ -47,10 +38,14 @@
 
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
+	icon_state = "black"
+	inhand_icon_state = "bl_suit"
 	resistance_flags = NONE
 
 /obj/item/clothing/under/color/jumpskirt/black
 	name = "black jumpskirt"
+	icon_state = "black_skirt"
+	inhand_icon_state = "bl_suit"
 
 /obj/item/clothing/under/color/black/ghost
 	item_flags = DROPDEL
@@ -62,147 +57,168 @@
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"
 	desc = "A tasteful grey jumpsuit that reminds you of the good old days."
-	greyscale_colors = "#b3b3b3"
+	icon_state = "grey"
+	inhand_icon_state = "gy_suit"
 
 /obj/item/clothing/under/color/jumpskirt/grey
 	name = "grey jumpskirt"
 	desc = "A tasteful grey jumpskirt that reminds you of the good old days."
-	greyscale_colors = "#b3b3b3"
+	icon_state = "grey_skirt"
+	inhand_icon_state = "gy_suit"
 
 /obj/item/clothing/under/color/grey/ancient
 	name = "ancient jumpsuit"
 	desc = "A terribly ragged and frayed grey jumpsuit. It looks like it hasn't been washed in over a decade."
 	icon_state = "grey_ancient"
-	inhand_icon_state = "gy_suit"
-	greyscale_config = null
-	greyscale_config_inhand_left = null
-	greyscale_config_inhand_right = null
-	greyscale_config_worn = null
 	can_adjust = FALSE
 
 /obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"
-	greyscale_colors = "#52aecc"
+	icon_state = "blue"
+	inhand_icon_state = "b_suit"
 
 /obj/item/clothing/under/color/jumpskirt/blue
 	name = "blue jumpskirt"
-	greyscale_colors = "#52aecc"
+	icon_state = "blue_skirt"
+	inhand_icon_state = "b_suit"
 
 /obj/item/clothing/under/color/green
 	name = "green jumpsuit"
-	greyscale_colors = "#9ed63a"
+	icon_state = "green"
+	inhand_icon_state = "g_suit"
 
 /obj/item/clothing/under/color/jumpskirt/green
 	name = "green jumpskirt"
-	greyscale_colors = "#9ed63a"
+	icon_state = "green_skirt"
+	inhand_icon_state = "g_suit"
 
 /obj/item/clothing/under/color/orange
 	name = "orange jumpsuit"
 	desc = "Don't wear this near paranoid security officers."
-	greyscale_colors = "#ff8c19"
+	icon_state = "orange"
+	inhand_icon_state = "o_suit"
 
 /obj/item/clothing/under/color/jumpskirt/orange
 	name = "orange jumpskirt"
-	greyscale_colors = "#ff8c19"
+	icon_state = "orange_skirt"
+	inhand_icon_state = "o_suit"
 
 /obj/item/clothing/under/color/pink
 	name = "pink jumpsuit"
 	desc = "Just looking at this makes you feel <i>fabulous</i>."
-	greyscale_colors = "#ffa69b"
+	icon_state = "pink"
+	inhand_icon_state = "p_suit"
 
 /obj/item/clothing/under/color/jumpskirt/pink
 	name = "pink jumpskirt"
-	greyscale_colors = "#ffa69b"
+	icon_state = "pink_skirt"
+	inhand_icon_state = "p_suit"
 
 /obj/item/clothing/under/color/red
 	name = "red jumpsuit"
-	greyscale_colors = "#eb0c07"
+	icon_state = "red"
+	inhand_icon_state = "r_suit"
 
 /obj/item/clothing/under/color/jumpskirt/red
 	name = "red jumpskirt"
-	greyscale_colors = "#eb0c07"
+	icon_state = "red_skirt"
+	inhand_icon_state = "r_suit"
 
 /obj/item/clothing/under/color/white
 	name = "white jumpsuit"
-	greyscale_colors = "#ffffff"
+	icon_state = "white"
+	inhand_icon_state = "w_suit"
 
 /obj/item/clothing/under/color/jumpskirt/white
 	name = "white jumpskirt"
-	greyscale_colors = "#ffffff"
+	icon_state = "white_skirt"
+	inhand_icon_state = "w_suit"
 
 /obj/item/clothing/under/color/yellow
 	name = "yellow jumpsuit"
-	greyscale_colors = "#ffe14d"
+	icon_state = "yellow"
+	inhand_icon_state = "y_suit"
 
 /obj/item/clothing/under/color/jumpskirt/yellow
 	name = "yellow jumpskirt"
-	greyscale_colors = "#ffe14d"
+	icon_state = "yellow_skirt"
+	inhand_icon_state = "y_suit"
 
 /obj/item/clothing/under/color/darkblue
 	name = "dark blue jumpsuit"
-	greyscale_colors = "#3285ba"
+	icon_state = "darkblue"
+	inhand_icon_state = "b_suit"
 
 /obj/item/clothing/under/color/jumpskirt/darkblue
 	name = "dark blue jumpskirt"
-	greyscale_colors = "#3285ba"
+	icon_state = "darkblue_skirt"
+	inhand_icon_state = "b_suit"
 
 /obj/item/clothing/under/color/teal
 	name = "teal jumpsuit"
-	greyscale_colors = "#77f3b7"
+	icon_state = "teal"
+	inhand_icon_state = "b_suit"
 
 /obj/item/clothing/under/color/jumpskirt/teal
 	name = "teal jumpskirt"
-	greyscale_colors = "#77f3b7"
+		icon_state = "teal_skirt"
+	inhand_icon_state = "b_suit"
 
 /obj/item/clothing/under/color/lightpurple
 	name = "light purple jumpsuit"
-	greyscale_colors = "#9f70cc"
+	icon_state = "lightpurple"
+	inhand_icon_state = "p_suit"
 
 /obj/item/clothing/under/color/jumpskirt/lightpurple
 	name = "light purple jumpskirt"
-	greyscale_colors = "#9f70cc"
+	icon_state = "lightpurple_skirt"
+	inhand_icon_state = "p_suit"
 
 /obj/item/clothing/under/color/darkgreen
 	name = "dark green jumpsuit"
-	greyscale_colors = "#6fbc22"
+	icon_state = "darkgreen"
+	inhand_icon_state = "g_suit"
 
 /obj/item/clothing/under/color/jumpskirt/darkgreen
 	name = "dark green jumpskirt"
-	greyscale_colors = "#6fbc22"
+	icon_state = "darkgreen_skirt"
+	inhand_icon_state = "g_suit"
 
 /obj/item/clothing/under/color/lightbrown
 	name = "light brown jumpsuit"
-	greyscale_colors = "#c59431"
+	icon_state = "lightbrown"
+	inhand_icon_state = "lb_suit"
 
 /obj/item/clothing/under/color/jumpskirt/lightbrown
 	name = "light brown jumpskirt"
-	greyscale_colors = "#c59431"
+	icon_state = "lightbrown_skirt"
+	inhand_icon_state = "lb_suit"
 
 /obj/item/clothing/under/color/brown
 	name = "brown jumpsuit"
-	greyscale_colors = "#a17229"
+	icon_state = "brown"
+	inhand_icon_state = "lb_suit"
 
 /obj/item/clothing/under/color/jumpskirt/brown
 	name = "brown jumpskirt"
-	greyscale_colors = "#a17229"
+	icon_state = "brown_skirt"
+	inhand_icon_state = "lb_suit"
 
 /obj/item/clothing/under/color/maroon
 	name = "maroon jumpsuit"
-	greyscale_colors = "#cc295f"
+	icon_state = "maroon"
+	inhand_icon_state = "r_suit"
 
 /obj/item/clothing/under/color/jumpskirt/maroon
 	name = "maroon jumpskirt"
-	greyscale_colors = "#cc295f"
+	icon_state = "maroon_skirt"
+	inhand_icon_state = "r_suit"
 
 /obj/item/clothing/under/color/rainbow
 	name = "rainbow jumpsuit"
 	desc = "A multi-colored jumpsuit!"
 	icon_state = "rainbow"
 	inhand_icon_state = "rainbow"
-	greyscale_config = null
-	greyscale_config_inhand_left = null
-	greyscale_config_inhand_right = null
-	greyscale_config_worn = null
 	can_adjust = FALSE
 	flags_1 = NONE
 
@@ -211,9 +227,5 @@
 	desc = "A multi-colored jumpskirt!"
 	icon_state = "rainbow_skirt"
 	inhand_icon_state = "rainbow"
-	greyscale_config = null
-	greyscale_config_inhand_left = null
-	greyscale_config_inhand_right = null
-	greyscale_config_worn = null
 	can_adjust = FALSE
 	flags_1 = NONE

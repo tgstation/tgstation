@@ -66,47 +66,6 @@
 	name = "Belt Worn Screwdriver"
 	icon_file = 'icons/obj/clothing/belt_overlays.dmi'
 	json_config = 'code/datums/greyscale/json_configs/screwdriver_worn.json'
-
-/datum/greyscale_config/jumpsuit
-	name = "Jumpsuit"
-	icon_file = 'icons/obj/clothing/under/color.dmi'
-	json_config = 'code/datums/greyscale/json_configs/jumpsuit.json'
-
-/datum/greyscale_config/jumpsuit_worn
-	name = "Worn Jumpsuit"
-	icon_file = 'icons/mob/clothing/under/color.dmi'
-	json_config = 'code/datums/greyscale/json_configs/jumpsuit_worn.json'
-
-/datum/greyscale_config/jumpsuit_inhand_left
-	name = "Held Jumpsuit, Left"
-	icon_file = 'icons/mob/inhands/clothing_lefthand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/jumpsuit_inhand.json'
-
-/datum/greyscale_config/jumpsuit_inhand_right
-	name = "Held Jumpsuit, Right"
-	icon_file = 'icons/mob/inhands/clothing_righthand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/jumpsuit_inhand.json'
-
-/datum/greyscale_config/jumpsuit_prison
-	name = "Prison Jumpsuit"
-	icon_file = 'icons/obj/clothing/under/color.dmi'
-	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison.json'
-
-/datum/greyscale_config/jumpsuit_prison_worn
-	name = "Worn Prison Jumpsuit"
-	icon_file = 'icons/mob/clothing/under/color.dmi'
-	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_worn.json'
-
-/datum/greyscale_config/jumpsuit_prison_inhand_left
-	name = "Held Prison Jumpsuit, Left"
-	icon_file = 'icons/mob/inhands/clothing_lefthand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_inhand.json'
-
-/datum/greyscale_config/jumpsuit_prison_inhand_right
-	name = "Held Prison Jumpsuit, Right"
-	icon_file = 'icons/mob/inhands/clothing_righthand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_inhand.json'
-
 /datum/greyscale_config/pda
 	name = "PDA"
 	icon_file = 'icons/obj/pda.dmi'
