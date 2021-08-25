@@ -1,4 +1,4 @@
-#define DEFAULT_METEOR_LIFETIME 180
+#define DEFAULT_METEOR_LIFETIME 1800
 #define MAP_EDGE_PAD 5
 
 GLOBAL_VAR_INIT(meteor_wave_delay, 625) //minimum wait between waves in tenths of seconds

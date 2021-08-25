@@ -260,7 +260,7 @@
 						break
 			if(movement_target)
 				stop_automated_movement = 1
-				SSmovement_loop.move_to(src, movement_target, 0, 0.3)
+				SSmovement_loop.move_to(src, movement_target, 0, 3)
 
 /mob/living/simple_animal/pet/cat/jerry //Holy shit we left jerry on donut ~ Arcane ~Fikou
 	name = "Jerry"

@@ -290,6 +290,6 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/Goto(target, delay, minimum_distance)
 	if(mecha)
-		SSmovement_loop.move_to(mecha, target, minimum_distance, mecha.movedelay * 0.1)
+		SSmovement_loop.move_to(mecha, target, minimum_distance, mecha.movedelay)
 	else
 		..()

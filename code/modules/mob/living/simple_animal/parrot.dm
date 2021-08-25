@@ -519,7 +519,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
-		SSmovement_loop.move_to(src, parrot_interest, 1, parrot_speed * 0.1)
+		SSmovement_loop.move_to(src, parrot_interest, 1, parrot_speed)
 		if(isStuck())
 			return
 
@@ -540,7 +540,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 			icon_state = icon_sit
 			return
 
-		SSmovement_loop.move_to(src, parrot_perch, 1, parrot_speed * 0.1)
+		SSmovement_loop.move_to(src, parrot_perch, 1, parrot_speed)
 		if(isStuck())
 			return
 
@@ -552,7 +552,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		if(!parrot_interest || !isliving(parrot_interest)) //Sanity
 			parrot_state = PARROT_WANDER
 
-		SSmovement_loop.move_away(src, parrot_interest, 1, parrot_speed * 0.1)
+		SSmovement_loop.move_away(src, parrot_interest, 1, parrot_speed)
 		if(isStuck())
 			return
 
@@ -593,7 +593,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 			L.attack_animal(src)//Time for the hurt to begin!
 		//Otherwise, fly towards the mob!
 		else
-			SSmovement_loop.move_to(src, parrot_interest, 1, parrot_speed * 0.1)
+			SSmovement_loop.move_to(src, parrot_interest, 1, parrot_speed)
 			if(isStuck())
 				return
 
@@ -990,7 +990,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		if(!ishuman(parrot_interest))
 			parrot_interest = null
 		else if(parrot_state == (PARROT_SWOOP | PARROT_ATTACK) && Adjacent(parrot_interest))
-			SSmovement_loop.move_to(src, parrot_interest, 0, parrot_speed * 0.1)
+			SSmovement_loop.move_to(src, parrot_interest, 0, parrot_speed)
 			Possess(parrot_interest)
 	..()
 

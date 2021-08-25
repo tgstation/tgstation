@@ -81,7 +81,7 @@
 					return
 				else // not next to perp
 					var/turf/olddist = get_dist(src, target)
-					SSmovement_loop.move_to(src, target, 1, 0.4)
+					SSmovement_loop.move_to(src, target, 1, 4)
 					if((get_dist(src, target)) >= (olddist))
 						frustration++
 					else

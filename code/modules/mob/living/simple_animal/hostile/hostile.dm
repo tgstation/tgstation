@@ -303,7 +303,7 @@
 			return 1
 		if(retreat_distance != null) //If we have a retreat distance, check if we need to run from our target
 			if(target_distance <= retreat_distance) //If target's closer than our retreat distance, run
-				SSmovement_loop.move_away(src, target, retreat_distance, move_to_delay * 0.1)
+				SSmovement_loop.move_away(src, target, retreat_distance, move_to_delay)
 			else
 				Goto(target,move_to_delay,minimum_distance) //Otherwise, get to our minimum distance so we chase them
 		else
@@ -335,9 +335,7 @@
 	if(target == src.target)
 		approaching_target = TRUE
 	else
-		approaching_target = FALSE
-	//Mobs deal with delay in ticks, the movement loop subsystem deals with them in deciseconds, so we convert
-	SSmovement_loop.move_to(src, target, minimum_distance, delay * 0.1)
+	SSmovement_loop.move_to(src, target, minimum_distance, delay)
 
 /mob/living/simple_animal/hostile/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()

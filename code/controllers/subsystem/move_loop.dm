@@ -16,12 +16,12 @@ SUBSYSTEM_DEF(movement_loop)
  * looptype - What sort of loop do we want to make
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  * moving - The atom we want to move
- * delay - How many seconds to wait between fires, defaults to the lowest value, 0.1
- * timeout - Time in seconds until the moveloop self expires, defaults to INFINITY
+ * delay - How many deci-seconds to wait between fires, defaults to the lowest value, 0.1
+ * timeout - Time in deci-seconds until the moveloop self expires, defaults to INFINITY
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/movement_loop/proc/start_looping(looptype, override = TRUE, atom/moving, delay = 0.1, timeout = INFINITY)
+/datum/controller/subsystem/movement_loop/proc/start_looping(looptype, override = TRUE, atom/moving, delay = 1, timeout = INFINITY)
 	PRIVATE_PROC(TRUE)
 	var/datum/move_loop/old = lookup[moving]
 	if(old)
@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(movement_loop)
 	while(running.len)
 		var/datum/move_loop/loop = running[running.len]
 		running.len--
-		loop.process(wait * 0.1) //This shouldn't get nulls, if it does, runtime
+		loop.process(wait) //This shouldn't get nulls, if it does, runtime
 		if (MC_TICK_CHECK)
 			return
 
@@ -74,8 +74,8 @@ SUBSYSTEM_DEF(movement_loop)
  * Arguments:
  * moving - The atom we want to move
  * direction - The direction we want to move in
- * delay - How many seconds to wait between fires. Defaults to the lowest value, 0.1
- * timeout - Time in seconds until the moveloop self expires. Defaults to infinity
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
@@ -89,8 +89,8 @@ SUBSYSTEM_DEF(movement_loop)
  * Arguments:
  * moving - The atom we want to move
  * chasing - The atom we want to move towards
- * delay - How many seconds to wait between fires. Defaults to the lowest value, 0.1
- * timeout - Time in seconds until the moveloop self expires. Defaults to infinity
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
@@ -105,8 +105,8 @@ SUBSYSTEM_DEF(movement_loop)
  * moving - The atom we want to move
  * chasing - The atom we want to move towards
  * min_dist - the closest we're allower to get to the target
- * delay - How many seconds to wait between fires. Defaults to the lowest value, 0.1
- * timeout - Time in seconds until the moveloop self expires. Defaults to infinity
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
@@ -121,8 +121,8 @@ SUBSYSTEM_DEF(movement_loop)
  * moving - The atom we want to move
  * chasing - The atom we want to move towards
  * max_dist - the furthest away from the target we're allowed to get
- * delay - How many seconds to wait between fires. Defaults to the lowest value, 0.1
- * timeout - Time in seconds until the moveloop self expires. Defaults to infinity
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
@@ -136,9 +136,9 @@ SUBSYSTEM_DEF(movement_loop)
  * Arguments:
  * moving - The atom we want to move
  * chasing - The atom we want to move towards
- * delay - How many seconds to wait between fires. Defaults to the lowest value, 0.1
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
  * home - Should we move towards the object at all times? Or launch towards them, but allow walls and such to take us off track. Defaults to FALSE
- * timeout - Time in seconds until the moveloop self expires. Defaults to INFINITY
+ * timeout - Time in deci-seconds until the moveloop self expires. Defaults to INFINITY
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
@@ -156,8 +156,8 @@ SUBSYSTEM_DEF(movement_loop)
  * Arguments:
  * moving - The atom we want to move
  * chasing - The atom we want to move towards
- * delay - How many seconds to wait between fires. Defaults to the lowest value, 0.1
- * timeout - Time in seconds until the moveloop self expires. Defaults to infinity
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
@@ -171,8 +171,8 @@ SUBSYSTEM_DEF(movement_loop)
  * Arguments:
  * moving - The atom we want to move
  * directions - A list of acceptable directions to try and move in. Defaults to GLOB.alldirs
- * delay - How many seconds to wait between fires. Defaults to the lowest value, 0.1
- * timeout - Time in seconds until the moveloop self expires. Defaults to infinity
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
@@ -187,8 +187,8 @@ SUBSYSTEM_DEF(movement_loop)
  *
  * Arguments:
  * moving - The atom we want to move
- * delay - How many seconds to wait between fires. Defaults to the lowest value, 0.1
- * timeout - Time in seconds until the moveloop self expires. Defaults to infinity
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
@@ -200,16 +200,16 @@ SUBSYSTEM_DEF(movement_loop)
 /datum/move_loop
 	///The thing we're moving about
 	var/atom/movable/moving
-	///Lifetime in seconds, defaults to forever
+	///Lifetime in deci-seconds, defaults to forever
 	var/lifetime = INFINITY
-	///Delay between each move in seconds
-	var/delay = 0.1
+	///Delay between each move in deci-seconds
+	var/delay = 1
 	///We use this to track the delay between movements
 	var/timer = 0
 	///The last tick we processed
 	var/lasttick = 0
 
-/datum/move_loop/proc/setup(atom/moving, delay = 0.1, timeout = INFINITY)
+/datum/move_loop/proc/setup(atom/moving, delay = 1, timeout = INFINITY)
 	if(!ismovable(moving))
 		handle_delete()
 		return FALSE
@@ -234,11 +234,11 @@ SUBSYSTEM_DEF(movement_loop)
 	SSmovement_loop.remove_from_loop(moving, src)
 
 /datum/move_loop/process(delta_time)
-	timer = round(timer + delta_time, 0.1) //Round up due to floating point shit
+	timer += delta_time
 	if(timer >= lifetime)
 		handle_delete()
 		return
-	if(round(timer - delay, 0.1) < lasttick)
+	if(timer - delay < lasttick)
 		return
 	if(SEND_SIGNAL(moving, COMSIG_MOVELOOP_PROCESS_CHECK) & MOVELOOP_STOP_PROCESSING) //Chance for the object to react
 		return

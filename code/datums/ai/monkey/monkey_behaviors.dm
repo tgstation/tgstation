@@ -132,7 +132,7 @@
 			break
 
 	if(target)
-		SSmovement_loop.move_away(living_pawn, target, MONKEY_ENEMY_VISION, 0.5)
+		SSmovement_loop.move_away(living_pawn, target, MONKEY_ENEMY_VISION, 5)
 	else
 		finish_action(controller, TRUE)
 
