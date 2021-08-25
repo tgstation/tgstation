@@ -182,6 +182,9 @@
 #define SPLASHSCREEN_PLANE 9999
 #define SPLASHSCREEN_RENDER_TARGET "SPLASHSCREEN_PLANE"
 
+#define LOBBY_BACKGROUND_LAYER 3
+#define LOBBY_BUTTON_LAYER 4
+
 ///cinematics are "below" the splash screen
 #define CINEMATIC_LAYER -1
 
