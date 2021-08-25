@@ -36,7 +36,7 @@
 	RegisterSignal(target, list(COMSIG_ATOM_VV_MODIFY_TRANSFORM, COMSIG_MOB_UPDATE_TRANSFORM), .proc/on_modify_or_update_transform)
 	var/clickbox_icon_state = icon_state
 	if(dead_state && isliving(target))
-		var/mob/living/living_target
+		var/mob/living/living_target = target
 		src.dead_state = dead_state
 		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
 		RegisterSignal(target, COMSIG_LIVING_REVIVE, .proc/on_revive)
