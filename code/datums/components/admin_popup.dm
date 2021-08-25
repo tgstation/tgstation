@@ -16,9 +16,15 @@
 
 	create_notice()
 
-	RegisterSignal(ticket, COMSIG_ADMIN_HELP_INACTIVE, .proc/delete_self)
-	RegisterSignal(ticket, COMSIG_ADMIN_HELP_REPLIED, .proc/delete_self)
-	RegisterSignal(ticket, COMSIG_PARENT_QDELETING, .proc/delete_self)
+	RegisterSignal(
+		ticket,
+		list(
+			COMSIG_ADMIN_HELP_INACTIVE,
+			COMSIG_ADMIN_HELP_REPLIED,
+			COMSIG_PARENT_QDELETING,
+		),
+		.proc/delete_self,
+	)
 
 /datum/component/admin_popup/Destroy(force, silent)
 	var/client/parent_client = parent
