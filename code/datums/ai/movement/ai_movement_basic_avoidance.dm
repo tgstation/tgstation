@@ -4,9 +4,9 @@
 
 /datum/ai_movement/basic_avoidance/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
 	. = ..()
-	walk_to(controller.pawn, current_movement_target, min_distance, controller.movement_delay)
+	SSmovement_loop.move_to(controller.pawn, current_movement_target, min_distance, controller.movement_delay)
 
 
 /datum/ai_movement/basic_avoidance/stop_moving_towards(datum/ai_controller/controller)
 	. = ..()
-	walk_to(controller.pawn, src)
+	SSmovement_loop.move_to(controller.pawn, src)
