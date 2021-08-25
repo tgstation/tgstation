@@ -177,7 +177,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 		// Current initializing subsystem is important to know because it might be a problem with
 		// things running pre-assets-initialization.
-		if (Master.current_runlevel == RUNLEVEL_INIT && !isnull(Master.current_initializing_subsystem))
+		if (!isnull(Master.current_initializing_subsystem))
 			extra_info = "Info was attempted to be retrieved while [Master.current_initializing_subsystem] was initializing."
 
 		CRASH("Preference type `[preference_type]` is invalid! [extra_info]")

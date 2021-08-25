@@ -399,7 +399,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Character
 	READ_FILE(S["body_type"], body_type)
 	READ_FILE(S["skin_tone"], skin_tone)
-	READ_FILE(S["hairstyle_name"], hairstyle)
 	READ_FILE(S["underwear_color"], underwear_color)
 	READ_FILE(S["playtime_reward_cloak"], playtime_reward_cloak)
 	READ_FILE(S["phobia"], phobia)
@@ -470,7 +469,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	randomise = SANITIZE_LIST(randomise)
 
-	hairstyle = sanitize_inlist(hairstyle, GLOB.hairstyles_list)
 	underwear_color = sanitize_hexcolor(underwear_color, 3, 0)
 	skin_tone = sanitize_inlist(skin_tone, GLOB.skin_tones)
 	playtime_reward_cloak = sanitize_integer(playtime_reward_cloak)
@@ -521,7 +519,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Character
 	WRITE_FILE(S["body_type"] , body_type)
 	WRITE_FILE(S["skin_tone"] , skin_tone)
-	WRITE_FILE(S["hairstyle_name"] , hairstyle)
 	WRITE_FILE(S["underwear_color"] , underwear_color)
 	WRITE_FILE(S["playtime_reward_cloak"] , playtime_reward_cloak)
 	WRITE_FILE(S["randomise"] , randomise)

@@ -61,7 +61,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//character preferences
 	var/slot_randomized //keeps track of round-to-round randomization of the character slot, prevents overwriting
 	var/underwear_color = "000" //underwear color
-	var/hairstyle = "Bald" //Hair type
 	var/skin_tone = "caucasian1" //Skin color
 	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "moth_antennae" = "Plain", "moth_markings" = "None")
 	var/list/randomise = list(
@@ -614,7 +613,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	// 	character.body_type = body_type
 
 	character.skin_tone = skin_tone
-	character.hairstyle = hairstyle
 	character.underwear_color = underwear_color
 
 	// MOTHBLOCKS TODO: Put this on name/real_name/apply
