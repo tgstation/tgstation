@@ -60,10 +60,12 @@ const getDmPath = async () => {
 
 /**
  * @param {string} dmeFile
- * @param {boolean} error
- * @param {{ defines?: string[] }} options
+ * @param {{
+   defines?: string[],
+   warningsAsErrors?: boolean,
+  }} options
  */
-export const DreamMaker = async (dmeFile, error = false, options = {}) => {
+export const DreamMaker = async (dmeFile, options = {}) => {
   const dmPath = await getDmPath();
   // Get project basename
   const dmeBaseName = dmeFile.replace(/\.dme$/, '');
@@ -86,9 +88,9 @@ export const DreamMaker = async (dmeFile, error = false, options = {}) => {
   };
   testOutputFile(`${dmeBaseName}.dmb`);
   testOutputFile(`${dmeBaseName}.rsc`);
-  var runWithWarningChecks = async (dmeFile, error, options = {}) => {
-    const execReturn = await Juke.exec(dmeFile, options);
-    if (error && execReturn.combined.match(/\d+:warning: /)) {
+  const runWithWarningChecks = async (dmeFile, ...args) => {
+    const execReturn = await Juke.exec(dmeFile, args);
+    if (options.warningsAsErrors && execReturn.combined.match(/\d+:warning: /)) {
       Juke.logger.error(`Compile warnings treated as errors`);
       throw new Juke.ExitCode(2);
     }
@@ -105,7 +107,7 @@ export const DreamMaker = async (dmeFile, error = false, options = {}) => {
       fs.writeFileSync(`${dmeBaseName}.m.dme`, injectedContent);
       const dmeContent = fs.readFileSync(`${dmeBaseName}.dme`);
       fs.appendFileSync(`${dmeBaseName}.m.dme`, dmeContent);
-      await Juke.exec(dmPath, [`${dmeBaseName}.m.dme`]);
+      await runWithWarningChecks(dmPath, [`${dmeBaseName}.m.dme`]);
       fs.writeFileSync(`${dmeBaseName}.dmb`, fs.readFileSync(`${dmeBaseName}.m.dmb`));
       fs.writeFileSync(`${dmeBaseName}.rsc`, fs.readFileSync(`${dmeBaseName}.m.rsc`));
     }
@@ -114,7 +116,7 @@ export const DreamMaker = async (dmeFile, error = false, options = {}) => {
     }
   }
   else {
-    await runWithWarningChecks(dmPath, error, [dmeFile]);
+    await runWithWarningChecks(dmPath, [dmeFile]);
   }
 };
 
