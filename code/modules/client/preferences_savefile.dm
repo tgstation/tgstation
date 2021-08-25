@@ -510,7 +510,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			continue
 
 		write_preference(preference, preference.serialize(
-			read_preference(GLOB.preference_entries[preference.type]),
+			read_preference(preference.type),
 			src,
 		))
 
