@@ -61,9 +61,9 @@ const getDmPath = async () => {
 /**
  * @param {string} dmeFile
  * @param {{
-   defines?: string[],
-   warningsAsErrors?: boolean,
-  }} options
+ *   defines?: string[];
+ *   warningsAsErrors?: boolean;
+ * }} options
  */
 export const DreamMaker = async (dmeFile, options = {}) => {
   const dmPath = await getDmPath();
@@ -88,7 +88,7 @@ export const DreamMaker = async (dmeFile, options = {}) => {
   };
   testOutputFile(`${dmeBaseName}.dmb`);
   testOutputFile(`${dmeBaseName}.rsc`);
-  const runWithWarningChecks = async (dmeFile, ...args) => {
+  const runWithWarningChecks = async (dmeFile, args) => {
     const execReturn = await Juke.exec(dmeFile, args);
     if (options.warningsAsErrors && execReturn.combined.match(/\d+:warning: /)) {
       Juke.logger.error(`Compile warnings treated as errors`);
