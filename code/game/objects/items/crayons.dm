@@ -250,7 +250,7 @@
 		if("select_colour")
 			. = can_change_colour && select_colour(usr)
 		if("enter_text")
-			var/txt = stripped_input(usr,"Choose what to write.", "Scribbles", default = text_buffer)
+			var/txt = input(usr, "Choose what to write.", "Scribbles", "") as text|null
 			text_buffer = crayon_text_strip(txt)
 			. = TRUE
 			paint_mode = PAINT_NORMAL
@@ -265,11 +265,8 @@
 	return FALSE
 
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
-	// these replacetexts are removing the < and > symbols after stripped_input()
-	text = replacetext(text, "&gt", "")
-	text = replacetext(text, "&lt", "")
-	text = replacetext(text, "&amp", "&") // we want to re-insert the & symbol
-	var/static/regex/crayon_regex = new /regex(@"[^\w\s!?,.=%#&+/-]", "ig")
+	text = strip_html_simple(text)
+	var/static/regex/crayon_regex = new /regex(@"[^\w!?,.=%#&+/\-]", "ig")
 	return lowertext(crayon_regex.Replace(text, ""))
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
