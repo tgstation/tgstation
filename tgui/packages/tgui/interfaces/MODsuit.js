@@ -217,9 +217,11 @@ const ConfigureScreen = (props, context) => {
       <Stack>
         {configuration_keys.map(key => {
           const data = configuration_data[key];
-          return (<Stack.Item key={data.key}>
-            {data.display_name}
-          </Stack.Item>);
+          return (
+            <Stack.Item key={data.key}>
+              {data.display_name}
+            </Stack.Item>
+          );
         })}
       </Stack>
     </Dimmer>
