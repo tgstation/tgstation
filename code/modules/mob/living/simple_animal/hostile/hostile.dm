@@ -335,6 +335,7 @@
 	if(target == src.target)
 		approaching_target = TRUE
 	else
+		approaching_target = FALSE
 	SSmovement_loop.move_to(src, target, minimum_distance, delay)
 
 /mob/living/simple_animal/hostile/adjustHealth(amount, updating_health = TRUE, forced = FALSE)

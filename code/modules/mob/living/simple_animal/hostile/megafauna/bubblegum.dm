@@ -189,7 +189,7 @@ Difficulty: Hard
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
 	SLEEP_CHECK_DEATH(delay)
 	revving_charge = FALSE
-	if(SSmovement_loop.home_onto(src, T, timeout = get_dist(src, T) * 0.1))
+	if(SSmovement_loop.home_onto(src, T, timeout = get_dist(src, T)))
 		charging = TRUE //Set it again in case this is an override
 		RegisterSignal(src, COMSIG_MOVELOOP_END, .proc/reset_charge)
 

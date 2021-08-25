@@ -86,7 +86,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	RegisterSignal(src, COMSIG_ATOM_ENTERING, .proc/on_entering_atom)
 
 	if(special_target)
-		SSmovement_loop.move_towards(src, special_target, home = TRUE)
+		SSmovement_loop.home_onto(src, special_target)
 	else
 		SSmovement_loop.move_towards(src, destination)
 
@@ -154,7 +154,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 				return
 
 			visible_message(span_danger("[src] phases into reality."))
-			SSmovement_loop.move_towards(src, special_target, home = TRUE)
+			SSmovement_loop.home_onto(src, special_target)
 
 		if(loc == target_turf)
 			complete_trajectory()
@@ -197,6 +197,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /obj/effect/immovablerod/Process_Spacemove()
 	return TRUE
+	
 /obj/effect/immovablerod/Bump(atom/clong)
 	if(prob(10))
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
@@ -310,7 +311,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/proc/go_for_a_walk(walkies_location = null)
 	if(walkies_location)
 		special_target = walkies_location
-		SSmovement_loop.move_towards(src, special_target, home = TRUE)
+		SSmovement_loop.home_onto(src, special_target)
 		return
 
 	complete_trajectory()
