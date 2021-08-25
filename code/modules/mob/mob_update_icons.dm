@@ -8,7 +8,8 @@
 	return
 
 /mob/proc/update_transform()
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_TRANSFORM)
 
 /mob/proc/update_inv_handcuffed()
 	return

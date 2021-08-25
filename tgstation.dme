@@ -710,6 +710,7 @@
 #include "code\datums\elements\bsa_blocker.dm"
 #include "code\datums\elements\chewable.dm"
 #include "code\datums\elements\cleaning.dm"
+#include "code\datums\elements\clickbox.dm"
 #include "code\datums\elements\climbable.dm"
 #include "code\datums\elements\connect_loc.dm"
 #include "code\datums\elements\crackable.dm"
