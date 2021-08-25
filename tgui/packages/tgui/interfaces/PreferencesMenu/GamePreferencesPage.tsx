@@ -30,11 +30,35 @@ export const GamePreferencesPage = (props, context) => {
   )) {
     const feature = features[featureId];
 
+    let nameInner: InfernoNode = feature?.name || featureId;
+
+    if (feature?.description) {
+      nameInner = (
+        <Box as="span" style={{
+          "border-bottom": "2px dotted rgba(255, 255, 255, 0.8)",
+        }}>
+          {nameInner}
+        </Box>
+      );
+    }
+
+    let name: InfernoNode = (
+      <Flex.Item textAlign="right" grow={1} pr={2} basis="50%">
+        {nameInner}
+      </Flex.Item>
+    );
+
+    if (feature?.description) {
+      name = (
+        <Tooltip content={feature.description} position="bottom-end">
+          {name}
+        </Tooltip>
+      );
+    }
+
     const child = (
       <Flex align="center" key={featureId} pb={2}>
-        <Flex.Item textAlign="right" grow={1} pr={2} basis="50%">
-          {feature?.name || featureId}
-        </Flex.Item>
+        {name}
 
         <Flex.Item grow={1} basis="50%">
           {feature && <FeatureValueInput

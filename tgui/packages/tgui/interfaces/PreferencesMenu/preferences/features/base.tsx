@@ -21,8 +21,9 @@ export type Feature<
     TSending,
     TServerData
   >;
-  // MOTHBLOCKS TODO: Descriptions
+  // MOTHBLOCKS TODO: Subcategory and order
   category?: string;
+  description?: string;
 };
 
 /**
