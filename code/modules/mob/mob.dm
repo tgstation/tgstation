@@ -85,6 +85,7 @@
 	initialize_actionspeed()
 	update_movespeed(TRUE)
 	become_hearing_sensitive()
+	log_mob_tag("\[[tag]\] CREATED: [key_name(src)]")
 
 /**
  * Generate the tag for this mob
@@ -972,10 +973,10 @@
  *
  * You can buckle on mobs if you're next to them since most are dense
  */
-/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE, ignore_self = FALSE)
+/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE)
 	if(M.buckled)
 		return FALSE
-	return ..(M, force, check_loc, buckle_mob_flags, ignore_self = TRUE)
+	return ..(M, force, check_loc, buckle_mob_flags)
 
 ///Call back post buckle to a mob to offset your visual height
 /mob/post_buckle_mob(mob/living/M)
@@ -1082,6 +1083,9 @@
 				// Only update if this player is a target
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
+
+	log_mob_tag("\[[tag]\] RENAMED: [key_name(src)]")
+
 	return TRUE
 
 ///Updates GLOB.data_core records with new name , see mob/living/carbon/human

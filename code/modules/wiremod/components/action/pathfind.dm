@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/pathfind
 	display_name = "Pathfinder"
-	display_desc = "When triggered, the next step to the target's location as an entity. This can be used with the direction component and the drone shell to make it move on its own. The Id Card input port is for considering ID access when pathing, it does not give the shell actual access."
+	desc = "When triggered, the next step to the target's location as an entity. This can be used with the direction component and the drone shell to make it move on its own. The Id Card input port is for considering ID access when pathing, it does not give the shell actual access."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	var/datum/port/input/input_X
@@ -107,7 +107,6 @@
 			return
 		else
 			TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_PATHFIND_DIF, different_path_cooldown)
-			popleft(path) // The first step is literally where we are right now, so we dont need it
 			next_turf = get_turf(path[1])
 			output.set_output(next_turf)
 		TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME, same_path_cooldown)

@@ -1,5 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - refactor: "Refactors the UI code of integrated circuits to be a lot less messy and much more organised and to use much better practices to allow for better features to be added."
-  - qol: "Adds dragndrop functionality to integrated circuits so that you no longer have to click to connect ports, you can drag instead."

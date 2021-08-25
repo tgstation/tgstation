@@ -75,22 +75,24 @@
 	bullet_sizzle = TRUE
 
 /turf/closed/wall/rust
-	name = "rusted wall"
-	desc = "A rusted metal wall."
-	icon = 'icons/turf/walls/rusty_wall.dmi'
-	icon_state = "rusty_wall-0"
-	base_icon_state = "rusty_wall"
-	smoothing_flags = SMOOTH_BITMASK
-	hardness = 45
+	//SDMM supports colors, this is simply for easier mapping
+	//and should be removed on initialize
+	color = COLOR_ORANGE_BROWN
+
+/turf/closed/wall/rust/Initialize(mapload)
+	. = ..()
+	color = null
+	AddElement(/datum/element/rust)
 
 /turf/closed/wall/r_wall/rust
-	name = "rusted reinforced wall"
-	desc = "A huge chunk of rusted reinforced metal."
-	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
-	icon_state = "rusty_reinforced_wall-0"
-	base_icon_state = "rusty_reinforced_wall"
-	smoothing_flags = SMOOTH_BITMASK
-	hardness = 15
+	//SDMM supports colors, this is simply for easier mapping
+	//and should be removed on initialize
+	color = COLOR_ORANGE_BROWN
+
+/turf/closed/wall/r_wall/rust/Initialize(mapload)
+	. = ..()
+	color = null
+	AddElement(/datum/element/rust)
 
 /turf/closed/wall/mineral/bronze
 	name = "clockwork wall"
@@ -102,3 +104,19 @@
 	sheet_type = /obj/item/stack/sheet/bronze
 	sheet_amount = 2
 	girder_type = /obj/structure/girder/bronze
+
+/turf/closed/wall/rock
+	name = "reinforced rock"
+	desc = "It has metal struts that need to be welded away before it can be mined."
+	icon = 'icons/turf/walls/reinforced_rock.dmi'
+	icon_state = "porous_rock-0"
+	base_icon_state = "porous_rock"
+	sheet_amount = 1
+	hardness = 50
+	girder_type = null
+	decon_type = /turf/closed/mineral/asteroid
+
+/turf/closed/wall/rock/porous
+	name = "reinforced porous rock"
+	desc = "This rock is filled with pockets of breathable air. It has metal struts to protect it from mining."
+	decon_type = /turf/closed/mineral/asteroid/porous
