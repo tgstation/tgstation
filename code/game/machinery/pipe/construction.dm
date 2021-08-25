@@ -157,25 +157,25 @@ Buildable meters
 
 	var/obj/machinery/atmospherics/fakeA = pipe_type
 	var/flags = initial(fakeA.pipe_flags)
-	var/pipe_count = 0
+	var/list/potentially_conflicting_machines = list()
+	// Work out which machines we would potentially conflict with
 	for(var/obj/machinery/atmospherics/machine in loc)
-		if(machine.piping_layer != piping_layer && !((machine.pipe_flags | flags) & PIPING_ALL_LAYER))
-			continue
-		pipe_count += 1
-	for(var/obj/machinery/atmospherics/machine in loc)
-		if((machine.pipe_flags & flags & PIPING_ONE_PER_TURF)) //Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
-			to_chat(user, span_warning("Something is hogging the tile!"))
-			return TRUE
-
 		// skip checks if we don't overlap layers, either by being on the same layer or by something being on all layers
 		if(machine.piping_layer != piping_layer && !((machine.pipe_flags | flags) & PIPING_ALL_LAYER))
 			continue
+		// Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
+		if((machine.pipe_flags & flags & PIPING_ONE_PER_TURF))
+			to_chat(user, span_warning("Something is hogging the tile!"))
+			return TRUE
+		potentially_conflicting_machines += machine
 
+	// See if we would conflict with any of the potentially interacting machines
+	for(var/obj/machinery/atmospherics/machine as anything in potentially_conflicting_machines)
 		// if the pipes have any directions in common, we can't place it that way.
 		var/our_init_dirs = SSair.get_init_dirs(pipe_type, fixed_dir(), p_init_dir)
 		if(machine.GetInitDirections() & our_init_dirs)
 			// We have a conflict!
-			if (pipe_count != 1 || !try_smart_reconfiguration(machine, our_init_dirs, user))
+			if (length(potentially_conflicting_machines) != 1 || !try_smart_reconfiguration(machine, our_init_dirs, user))
 				// No solutions found
 				to_chat(user, span_warning("There is already a pipe at that location!"))
 				return TRUE
@@ -212,8 +212,8 @@ Buildable meters
 			// Check to see whether the already placed pipe is bent or not.
 			if (ISDIAGONALDIR(other_smart_pipe.dir))
 				// The other pipe is bent, with at least two current connections. See if we can bounce off it as a bent pipe in the other direction.
-				var/opposing_dir = (other_smart_pipe.connections ^ ALL_CARDINALS) & our_init_dirs
-				if (opposing_dir & (opposing_dir - 1))
+				var/opposing_dir = our_init_dirs & ~other_smart_pipe.connections
+				if (ISNOTSTUB(opposing_dir))
 					// We only get here if both smart pipes have two directions.
 					p_init_dir = opposing_dir
 					other_smart_pipe.SetInitDirections(other_smart_pipe.connections)
@@ -249,8 +249,8 @@ Buildable meters
 					return TRUE
 			return FALSE
 		// We're not dealing with another smart pipe. See if we can become the complement of the conflicting machine.
-		var/opposing_dir = (machine.GetInitDirections() ^ ALL_CARDINALS) & our_init_dirs
-		if (opposing_dir & (opposing_dir - 1))
+		var/opposing_dir = our_init_dirs & ~machine.GetInitDirections()
+		if (ISNOTSTUB(opposing_dir))
 			// We have at least two permitted directions in the complement. Use them.
 			p_init_dir = opposing_dir
 			return TRUE
@@ -261,8 +261,8 @@ Buildable meters
 		if (our_init_dirs & other_smart_pipe.connections)
 			// We needed to go where a smart pipe already had connections, nothing further we can do
 			return FALSE
-		var/opposing_dir = (our_init_dirs ^ ALL_CARDINALS) & other_smart_pipe.GetInitDirections()
-		if (opposing_dir & (opposing_dir - 1))
+		var/opposing_dir = other_smart_pipe.GetInitDirections() & ~our_init_dirs
+		if (ISNOTSTUB(opposing_dir))
 			// At least two directions remain for that smart pipe, reconfigure it
 			other_smart_pipe.SetInitDirections(opposing_dir)
 			other_smart_pipe.update_pipe_icon()

@@ -411,14 +411,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			playeffect = FALSE
 		if("mode")
 			var/n = text2num(params["mode"])
-			if(mode & n)
-				mode &= ~n
-			else
-				mode |= n
+			mode ^= n
 		if("init_dir_setting")
 			var/target_dir = p_init_dir ^ text2dir(params["dir_flag"])
 			// Refuse to create a smart pipe that can only connect in one direction (it would act weirdly and lack an icon)
-			if (target_dir & (target_dir - 1))
+			if (ISNOTSTUB(target_dir))
 				p_init_dir = target_dir
 		if("init_reset")
 			p_init_dir = ALL_CARDINALS
@@ -484,7 +481,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						return
 					var/new_dir = (S.GetInitDirections() & ~target_differences) | target_differences
 					// Don't make a smart pipe with only one connection
-					if (!(new_dir & (new_dir - 1)))
+					if (ISSTUB(new_dir))
 						to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
 						return
 					S.SetInitDirections(new_dir)
