@@ -55,6 +55,7 @@
 	return TRUE
 
 /proc/get_chemical_reaction(id)
+	..()
 	if(!GLOB.chemical_reactions_list_reactant_index)
 		return
 	for(var/reagent in GLOB.chemical_reactions_list_reactant_index)
