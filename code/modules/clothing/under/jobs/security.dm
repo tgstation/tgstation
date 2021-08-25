@@ -193,7 +193,7 @@
 	inhand_icon_state = "spacepol"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/rank/prisoner //The orange jumpsuit uses the same in-hand icon as this, this should use the same icon but with a different name
+/obj/item/clothing/under/rank/prisoner
 	name = "prison jumpsuit"
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon = 'icons/obj/clothing/under/security.dmi'
@@ -204,7 +204,7 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/obj/item/clothing/under/rank/prisoner/skirt //The orange jumpsuit uses the same in-hand icon as this, this should use the same icon but with a different name
+/obj/item/clothing/under/rank/prisoner/skirt
 	name = "prison jumpskirt"
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "prisoner_skirt"
