@@ -532,3 +532,60 @@
   vincentiusvin:
   - bugfix: fixes hot ice igniting using 100x the actual number of the sheets
   - bugfix: fixes hot ice being ignitable with a condenser
+2021-08-24:
+  Fikou:
+  - bugfix: fixes stun baton switching exploit
+  Melbert:
+  - refactor: Various toggle/transforming items (energy swords / shields, the cleaving
+      saw, switchblades - to name a few) are now handled via component (the transforming
+      component).
+  - code_imp: Slightly cleaned up the code surrounding various transforming items.
+      Comments, better vars, etc.
+  - bugfix: The Syndicate Jaws of Life no longer become normal Jaws of Life on use
+  Pepsiman0:
+  - bugfix: you can now smash a bottle of beer or ale on someone's head
+  Wayland-Smithy:
+  - bugfix: Fixed dash abilities, like from Hiero Club, null owner refs.
+  esainane:
+  - bugfix: The HFR now places its side components in the correct orientation when
+      constructed by using a Multitool on the rapid HFR boxes. The core still needs
+      rotating if your design requires it, and is best done before you step away unless
+      you want to disassemble and move a side component.
+2021-08-25:
+  AccountName5:
+  - bugfix: Fixed bug that prevented you from placing vertical bridge pipes on horizontal
+      smart pipes.
+  Colovorat:
+  - bugfix: Cables from protolathe and autolathe should merge just fine now
+  Ghommie:
+  - bugfix: roundstart offstation antagonists such as wizards and nuke ops no longer
+      have quirks (either from preferences or hardcore random) assigned to them or
+      count toward the hardcore random score.
+  - bugfix: Fixes the lone operative event hardly ever rolling even if the disk is
+      left on the same place for hours because of dynamic.
+  Kryson, AMonkeyThatCodes:
+  - imageadd: Replaces the lobby menu with sprites instead of HTML
+  softcerv:
+  - bugfix: stargazers can now form slime links again.
+2021-08-26:
+  Ghommie:
+  - bugfix: Fixes monkey being unable to access right click functions on several objects
+      such as stacks and storages.
+  - bugfix: Outgoing comms console messages to allied stations will not be shown again
+      as incoming messages.
+  - bugfix: Fixes traits added by quirks not being removed when those are deleted
+      (like from eigenstasium).
+  Krysonism:
+  - expansion: 'The spores of a new rare mushroom occasionally spawns in maint: the
+      odious puffball! Gross.'
+  Nari Harimoto:
+  - bugfix: smart pipes will no longer occassionally be buggy when placing atmos pipes
+      across roundstart pipes
+  TiviPlus:
+  - refactor: Area based lighting can be varedited and changed now
+  Watermelon914:
+  - admin: Made admin only shells not interactable to non-admins
+  tralezab:
+  - imageadd: better fish and fish food sprites
+  wesoda25:
+  - bugfix: Repairing clothing now immediately updates the sprite
