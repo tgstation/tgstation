@@ -460,7 +460,7 @@
 			else if (tool.tool_behaviour)
 				to_chat(user, span_warning("The bolts need to be loosened first!"))
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
 
 /obj/structure/window/proc/cool_bolts()
 	if(state == RWINDOW_BOLTS_HEATED)
