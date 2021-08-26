@@ -185,12 +185,18 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 		CRASH("Preference type `[preference_type]` is invalid! [extra_info]")
 
-	return preference_entry.read(get_savefile_for_savefile_identifier(preference_entry.savefile_identifier))
+	if (preference_type in value_cache)
+		return value_cache[preference_type]
+
+	var/value = preference_entry.read(get_savefile_for_savefile_identifier(preference_entry.savefile_identifier))
+	value_cache[preference_type] = value
+	return value
 
 /// Set a /datum/preference type.
 /// Returns TRUE for a successful preference application.
 /// Returns FALSE if it is invalid.
 /datum/preferences/proc/write_preference(datum/preference/preference, preference_value)
+	value_cache[preference.type] = preference_value
 	return preference.write(get_savefile_for_savefile_identifier(preference.savefile_identifier), preference_value)
 
 /// Checks that a given value is valid.

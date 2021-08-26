@@ -179,6 +179,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (preference.savefile_identifier != PREFERENCE_PLAYER)
 			continue
 
+		value_cache -= preference.type
 		preference.apply_to_client(parent, read_preference(preference.type))
 
 	//general preferences
@@ -365,6 +366,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/needs_update = savefile_needs_update(S)
 	if(needs_update == -2) //fatal, can't load any data
 		return FALSE
+
+	// Read everything into cache
+	for (var/preference_type in GLOB.preference_entries)
+		var/datum/preference/preference = GLOB.preference_entries[preference_type]
+		if (preference.savefile_identifier != PREFERENCE_CHARACTER)
+			continue
+
+		value_cache -= value_cache
+		read_preference(preference_type)
 
 	//Character
 	READ_FILE(S["body_type"], body_type)

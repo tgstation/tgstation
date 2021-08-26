@@ -135,9 +135,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// A list of instantiated middleware
 	var/list/datum/preference_middleware/middleware = list()
 
+	/// A cache of preference entries to values.
+	/// Used to avoid expensive READ_FILE every time a preference is retrieved.
+	var/value_cache = list()
+
 /datum/preferences/Destroy(force, ...)
 	QDEL_NULL(character_preview_view)
 	QDEL_LIST(middleware)
+	value_cache = null
 	return ..()
 
 /datum/preferences/New(client/C)
