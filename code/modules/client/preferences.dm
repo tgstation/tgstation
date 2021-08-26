@@ -50,7 +50,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/ghost_hud = 1
 	var/inquisitive_ghost = 1
 	var/preferred_map = null
-	var/pda_style = MONO
 	var/pda_color = "#808000"
 
 	//character preferences
