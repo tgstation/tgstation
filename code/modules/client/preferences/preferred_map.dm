@@ -42,6 +42,9 @@
 			map_name += " (disabled)"
 		display_names[choice] = map_name
 
-	data["display_names"] = display_names
+	data[CHOICED_PREFERENCE_DISPLAY_NAMES] = display_names
 
 	return data
+
+/datum/preference/choiced/preferred_map/apply_to_client(client/client, value)
+	return

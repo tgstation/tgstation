@@ -20,6 +20,9 @@
 /// The maximum preference priority, keep this updated, but don't use it for `priority`.
 #define MAX_PREFERENCE_PRIORITY 2
 
+/// For choiced preferences, this key will be used to set display names in constant data.
+#define CHOICED_PREFERENCE_DISPLAY_NAMES "display_names"
+
 /// An assoc list list of types to instantiated `/datum/preference` instances
 GLOBAL_LIST_INIT(preference_entries, init_preference_entries())
 

@@ -147,7 +147,9 @@ export const FeatureDropdownInput = (
   }
 
   const displayNames = serverData.display_names
-    || serverData.choices.map(capitalizeFirstLetter);
+    || Object.fromEntries(
+      serverData.choices.map(choice => [choice, capitalizeFirstLetter(choice)])
+    );
 
   return (<Dropdown
     selected={props.value}

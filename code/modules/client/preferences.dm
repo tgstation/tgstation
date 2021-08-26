@@ -44,7 +44,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/db_flags
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_form = "ghost"
-	var/ghost_accs = GHOST_ACCS_DEFAULT_OPTION
 	var/ghost_hud = 1
 	var/inquisitive_ghost = 1
 	var/pda_color = "#808000"
@@ -304,6 +303,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/datum/preference/requested_preference = GLOB.preference_entries_by_key[requested_preference_key]
 			if (isnull(requested_preference))
 				return FALSE
+
+			value = requested_preference.serialize(value)
 
 			// SAFETY: `write_preference` performs validation checks
 			write_preference(requested_preference, value)

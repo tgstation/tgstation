@@ -191,7 +191,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	. = ..()
 
 	if(client) //We update our preferences in case they changed right before update_appearance was called.
-		ghost_accs = client.prefs.ghost_accs
+		ghost_accs = client.prefs.read_preference(/datum/preference/choiced/ghost_accessories)
 		ghost_others = client.prefs.read_preference(/datum/preference/choiced/ghost_others)
 
 	if(hair_overlay)

@@ -323,23 +323,6 @@ GLOBAL_LIST_INIT(ghost_forms, sortList(list("ghost","ghostking","ghostian2","ske
 			var/mob/dead/observer/O = mob
 			O.update_icon(ALL, new_form)
 
-GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON))
-
-/client/proc/pick_ghost_accs()
-	var/new_ghost_accs = tgui_alert(usr,"Do you want your ghost to show full accessories where possible, hide accessories but still use the directional sprites where possible, or also ignore the directions and stick to the default sprites?",,list("full accessories", "only directional sprites", "default sprites"))
-	if(new_ghost_accs)
-		switch(new_ghost_accs)
-			if("full accessories")
-				prefs.ghost_accs = GHOST_ACCS_FULL
-			if("only directional sprites")
-				prefs.ghost_accs = GHOST_ACCS_DIR
-			if("default sprites")
-				prefs.ghost_accs = GHOST_ACCS_NONE
-		prefs.save_preferences()
-		if(isobserver(mob))
-			var/mob/dead/observer/O = mob
-			O.update_appearance()
-
 /client/verb/pick_ghost_customization()
 	set name = "Ghost Customization"
 	set category = "Preferences"
@@ -348,10 +331,6 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 		switch(tgui_alert(usr,"Which setting do you want to change?",,list("Ghost Form","Ghost Orbit","Ghost Accessories")))
 			if("Ghost Form")
 				pick_form()
-			if("Ghost Accessories")
-				pick_ghost_accs()
-	else
-		pick_ghost_accs()
 
 /client/verb/toggle_ghost_hud_pref()
 	set name = "Toggle Ghost HUD"

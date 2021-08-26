@@ -3,7 +3,7 @@
 	if(!. || !client)
 		return FALSE
 
-	ghost_accs = client.prefs.ghost_accs
+	ghost_accs = client.prefs.read_preference(/datum/preference/choiced/ghost_accessories)
 	ghost_others = client.prefs.read_preference(/datum/preference/choiced/ghost_others)
 	var/preferred_form = null
 
