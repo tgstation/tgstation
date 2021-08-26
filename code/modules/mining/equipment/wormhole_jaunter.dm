@@ -83,16 +83,8 @@
 		activate()
 
 /obj/item/wormhole_jaunter/proc/chasm_react(mob/user)
-	var/list/L = get_destinations()
-
-	if(user.get_item_by_slot(ITEM_SLOT_BELT) == src && L.len)
-		to_chat(user, span_notice("Your [name] activates, saving you from the chasm!"))
-		SSblackbox.record_feedback("tally", "jaunter", 1, "Chasm") // chasm automatic activation
-		activate(user, FALSE, TRUE)
-	else if(!L.len)
-		to_chat(user, span_userdanger("The [src.name] found no beacons in the world to anchor a wormhole to, preventing it from saving you from the chasm.  RIP."))
-	else
-		to_chat(user, span_userdanger("[src] is not attached to your belt, preventing it from saving you from the chasm. RIP."))
+	SSblackbox.record_feedback("tally", "jaunter", 1, "Chasm") // chasm automatic activation
+	activate(user, FALSE, TRUE)
 
 //jaunter tunnel
 /obj/effect/portal/jaunt_tunnel
