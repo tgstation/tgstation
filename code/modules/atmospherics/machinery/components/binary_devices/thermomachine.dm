@@ -1,4 +1,5 @@
 #define THERMOMACHINE_SAFE_TEMPERATURE 500000
+#define THERMOMACHINE_POWER_CONVERSION 0.01
 
 /obj/machinery/atmospherics/components/binary/thermomachine
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
@@ -251,7 +252,7 @@
 
 	main_port.temperature = max((THERMAL_ENERGY(main_port) + (heat_amount * efficiency)) / main_port.heat_capacity(), TCMB)
 
-	heat_amount = max(abs(heat_amount), 1e8)
+	heat_amount = min(abs(heat_amount), 1e8) * THERMOMACHINE_POWER_CONVERSION
 	var/power_usage = 0
 	var/power_efficiency = max(efficiency, 0.4)
 	if(abs(temperature_target_delta)  > 1)
@@ -511,3 +512,4 @@
 	icon_state = "thermo_base_1"
 
 #undef THERMOMACHINE_SAFE_TEMPERATURE
+#undef THERMOMACHINE_POWER_CONVERSION
