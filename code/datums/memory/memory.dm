@@ -170,7 +170,7 @@
 			line = capitalize(line)
 			capitalize_next_line = FALSE
 
-		if(line[length(line)] == ".")//Ended with a period, next sentence needs to start with a capital.'
+		if(line[length(line)] == ". ")//Ended with a period, next sentence needs to start with a capital.'
 			capitalize_next_line = TRUE
 
 		if(line != story_pieces[story_pieces.len]) //not the last line
@@ -182,6 +182,8 @@
 			parsed_story += " This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540]."
 		else
 			parsed_story += " This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540] on [station_name()]."
+
+	parsed_story = trim_right(parsed_story)
 
 	return parsed_story
 
