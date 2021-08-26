@@ -14066,7 +14066,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/holding)
 "Qa" = (
-/obj/effect/spawner/random/entertainment/arcade,
+/obj/effect/spawner/randomarcade,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Qd" = (

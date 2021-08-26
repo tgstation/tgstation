@@ -1209,7 +1209,7 @@
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "kY" = (
@@ -1222,15 +1222,15 @@
 	req_one_access_txt = "150";
 	secure = 1
 	},
-/obj/effect/spawner/random/contraband/armory,
+/obj/effect/spawner/lootdrop/armory_contraband/metastation,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "Ia" = (
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/effect/spawner/random/maintenance,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "Il" = (
@@ -1245,7 +1245,7 @@
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/lootdrop/costume,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 

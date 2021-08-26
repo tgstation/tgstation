@@ -1752,7 +1752,7 @@
 /area/awaymission/bmpship/fore)
 "oN" = (
 /obj/structure/table,
-/obj/effect/spawner/random/exotic/technology,
+/obj/effect/spawner/lootdrop/space/fancytech,
 /turf/open/floor/carpet,
 /area/awaymission/bmpship/fore)
 "uH" = (
@@ -1768,7 +1768,7 @@
 /area/awaymission/bmpship/fore)
 "vu" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/random/entertainment/money_large,
+/obj/effect/spawner/lootdrop/space/cashmoney,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
 "vJ" = (
@@ -1819,7 +1819,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/effect/spawner/random/food_or_drink/seed_rare,
+/obj/effect/spawner/lootdrop/space/rareseed,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/midship)
 "CZ" = (
@@ -1847,7 +1847,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/effect/spawner/random/food_or_drink/seed_rare,
+/obj/effect/spawner/lootdrop/space/rareseed,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/midship)
 "Hy" = (
@@ -1889,11 +1889,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/spawner/random/exotic/technology,
+/obj/effect/spawner/lootdrop/space/fancytech,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
 "Pg" = (
-/obj/effect/spawner/random/entertainment/arcade,
+/obj/effect/spawner/randomarcade,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
 "PU" = (
@@ -1915,7 +1915,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/effect/spawner/random/food_or_drink/seed_rare,
+/obj/effect/spawner/lootdrop/space/rareseed,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/midship)
 "Xc" = (

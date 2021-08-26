@@ -1441,7 +1441,9 @@
 	dir = 4
 	},
 /obj/machinery/newscaster/security_unit/directional/west,
-/obj/effect/spawner/random/entertainment/arcade,
+/obj/effect/spawner/randomarcade{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/commons/fitness/recreation)
 "afZ" = (
@@ -3415,7 +3417,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/spawner/random/vending/colavend,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/poster/official/no_erp{
 	pixel_y = -32
@@ -5467,7 +5469,7 @@
 "ayb" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
-/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/lootdrop/costume,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
@@ -13346,7 +13348,7 @@
 /turf/open/floor/iron/dark,
 /area/science/robotics/lab)
 "bhG" = (
-/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/lootdrop/glowstick,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
@@ -13800,7 +13802,7 @@
 "bms" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bmt" = (
@@ -21271,7 +21273,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/vending/colavend,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -22443,7 +22445,7 @@
 "cgb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -26286,7 +26288,7 @@
 /area/security/checkpoint/engineering)
 "cyj" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cyl" = (
@@ -28560,7 +28562,7 @@
 /area/medical/chemistry)
 "cMc" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/command,
+/obj/effect/spawner/lootdrop/techstorage/command,
 /turf/open/floor/circuit/green{
 	luminosity = 2
 	},
@@ -28905,7 +28907,7 @@
 "cPv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -28999,7 +29001,7 @@
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "cRa" = (
-/obj/effect/spawner/random/vending/colavend,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -29223,7 +29225,7 @@
 /area/commons/toilet/restrooms)
 "cVl" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating{
@@ -29342,7 +29344,11 @@
 	name = "Core Modules";
 	req_access_txt = "20"
 	},
-/obj/effect/spawner/random/aimodule/harmful,
+/obj/effect/spawner/lootdrop/aimodule_harmful{
+	fan_out_items = 1;
+	lootcount = 2;
+	lootdoubles = 0
+	},
 /obj/item/ai_module/supplied/oxygen{
 	pixel_x = -3;
 	pixel_y = -3
@@ -29895,7 +29901,7 @@
 /area/service/chapel)
 "dlO" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/vending/snackvend,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -30604,7 +30610,7 @@
 "dAj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
-/obj/effect/spawner/random/exotic/technology,
+/obj/effect/spawner/lootdrop/space/fancytech,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -31048,7 +31054,7 @@
 "dJJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "dJU" = (
@@ -31344,7 +31350,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/cobweb,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -31362,7 +31368,7 @@
 "dQl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/lootdrop/glowstick,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -31372,7 +31378,7 @@
 /area/service/chapel)
 "dQy" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -31431,7 +31437,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "dSV" = (
-/obj/effect/spawner/random/vending/snackvend,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -31631,7 +31637,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -31716,7 +31722,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/corner,
-/obj/effect/spawner/random/vending/colavend,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "dXW" = (
@@ -32026,7 +32032,7 @@
 "eeS" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -32173,7 +32179,7 @@
 /area/hallway/primary/starboard)
 "eil" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -33144,7 +33150,7 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = 32
 	},
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "eCK" = (
@@ -33513,7 +33519,7 @@
 /area/security/prison)
 "eJR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -35023,7 +35029,7 @@
 /area/maintenance/starboard)
 "fpY" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/lootdrop/glowstick,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
@@ -35918,7 +35924,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/item/stack/sheet/iron/fifty,
-/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -36342,7 +36348,7 @@
 "fOR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -36509,7 +36515,7 @@
 /area/engineering/main)
 "fUv" = (
 /obj/effect/landmark/xeno_spawn,
-/obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
+/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "fUY" = (
@@ -36625,7 +36631,7 @@
 /area/command/bridge)
 "fWX" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/medical,
+/obj/effect/spawner/lootdrop/techstorage/medical,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -36799,7 +36805,7 @@
 /obj/structure/rack,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/iron/dark,
 /area/maintenance/port/aft)
 "gcd" = (
@@ -37034,7 +37040,7 @@
 	name = "prison intercom";
 	prison_radio = 1
 	},
-/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/iron/white,
 /area/security/prison)
 "ggo" = (
@@ -38690,7 +38696,7 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/bot,
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/effect/spawner/random/vending/snackvend,
+/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/iron/dark,
 /area/science/research)
 "gRL" = (
@@ -39171,8 +39177,8 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/effect/spawner/random/clothing/costume,
-/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/lootdrop/costume,
+/obj/effect/spawner/lootdrop/costume,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "haI" = (
@@ -39875,7 +39881,7 @@
 /area/cargo/storage)
 "hmM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -40256,7 +40262,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -40302,8 +40308,8 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/loot_site_spawner,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "hva" = (
@@ -40463,7 +40469,7 @@
 "hxI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "hym" = (
@@ -40546,7 +40552,7 @@
 "hzx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -42479,7 +42485,7 @@
 /area/engineering/atmos)
 "ion" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/security,
+/obj/effect/spawner/lootdrop/techstorage/security,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -43659,7 +43665,7 @@
 "iNm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
-/obj/effect/spawner/random/entertainment/money_large,
+/obj/effect/spawner/lootdrop/space/cashmoney,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "iNu" = (
@@ -43736,7 +43742,7 @@
 "iOZ" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "iPb" = (
@@ -44140,7 +44146,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/grille/broken,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -44590,8 +44596,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/stripes/corner,
-/obj/effect/spawner/random/maintenance,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/loot_site_spawner,
 /obj/structure/closet/cardboard,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -44733,7 +44739,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/gibs/old,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -44799,7 +44805,7 @@
 /area/engineering/break_room)
 "jgJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -44913,7 +44919,7 @@
 /area/engineering/storage/tech)
 "jjd" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/lootdrop/glowstick,
 /obj/structure/grille/broken,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -45175,7 +45181,7 @@
 /area/maintenance/starboard)
 "jpg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "jpm" = (
@@ -45904,7 +45910,7 @@
 /obj/item/seeds/ambrosia,
 /obj/item/seeds/wheat,
 /obj/item/seeds/pumpkin,
-/obj/effect/spawner/random/contraband/prison,
+/obj/effect/spawner/lootdrop/prison_contraband,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
@@ -46066,7 +46072,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/random/vending/colavend,
+/obj/effect/spawner/randomcolavend,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
@@ -46146,7 +46152,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "jJF" = (
@@ -46216,7 +46222,7 @@
 /area/hallway/primary/fore)
 "jLR" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/rnd,
+/obj/effect/spawner/lootdrop/techstorage/rnd,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -46759,7 +46765,7 @@
 /obj/item/storage/backpack/duffelbag{
 	pixel_y = 4
 	},
-/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "jVg" = (
@@ -47323,7 +47329,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/spawner/random/vending/snackvend,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron/dark,
 /area/hallway/primary/starboard)
@@ -47445,7 +47451,7 @@
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -48003,7 +48009,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/effect/spawner/random/contraband/prison,
+/obj/effect/spawner/lootdrop/prison_contraband,
 /obj/item/storage/crayons{
 	pixel_x = -6;
 	pixel_y = 1
@@ -48944,7 +48950,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/spawner/random/entertainment/arcade,
+/obj/effect/spawner/randomarcade{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/commons/fitness/recreation)
 "kKu" = (
@@ -49328,7 +49336,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/effect/spawner/random/contraband/prison,
+/obj/effect/spawner/lootdrop/prison_contraband,
 /turf/open/floor/iron/white,
 /area/security/prison/safe)
 "kRu" = (
@@ -49941,7 +49949,11 @@
 	name = "Core Modules";
 	req_access_txt = "20"
 	},
-/obj/effect/spawner/random/aimodule/harmless,
+/obj/effect/spawner/lootdrop/aimodule_harmless{
+	fan_out_items = 1;
+	lootcount = 3;
+	lootdoubles = 0
+	},
 /obj/structure/table,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -50813,8 +50825,11 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/effect/spawner/random/clothing/costume,
-/obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
+/obj/effect/spawner/lootdrop/costume{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/effect/spawner/lootdrop/minor/kittyears_or_rabbitears,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -50878,7 +50893,7 @@
 /turf/closed/wall/r_wall,
 /area/engineering/supermatter)
 "lAU" = (
-/obj/effect/spawner/random/vending/colavend,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -51624,7 +51639,7 @@
 "lRP" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/cargo/warehouse)
 "lRX" = (
@@ -51746,7 +51761,7 @@
 "lUd" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "lUB" = (
@@ -53000,7 +53015,7 @@
 /area/security/interrogation)
 "msR" = (
 /obj/structure/grille/broken,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -54834,7 +54849,7 @@
 /area/commons/storage/primary)
 "ndE" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/lootdrop/glowstick,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -54889,7 +54904,7 @@
 /area/medical/paramedic)
 "nfg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "nfh" = (
@@ -55463,7 +55478,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/iron/dark,
 /area/maintenance/port)
 "nwa" = (
@@ -55679,8 +55694,8 @@
 	name = "contraband locker";
 	req_access_txt = "3"
 	},
-/obj/effect/spawner/random/contraband/armory,
-/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/lootdrop/armory_contraband/metastation,
+/obj/effect/spawner/lootdrop/maintenance/three,
 /obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
@@ -55833,7 +55848,7 @@
 /area/commons/toilet/restrooms)
 "nFb" = (
 /obj/machinery/light/small/directional/north,
-/obj/effect/spawner/random/trash/cigbutt,
+/obj/effect/spawner/lootdrop/cigbutt,
 /turf/open/floor/plating,
 /area/security/prison)
 "nFo" = (
@@ -56266,7 +56281,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille/broken,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -56344,7 +56359,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/rack,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "nPE" = (
@@ -56732,7 +56747,7 @@
 /area/security/warden)
 "nXg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/trash/grille_or_waste,
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /obj/structure/cable,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
@@ -56805,7 +56820,7 @@
 	},
 /obj/machinery/washing_machine,
 /obj/structure/cable,
-/obj/effect/spawner/random/contraband/prison,
+/obj/effect/spawner/lootdrop/prison_contraband,
 /turf/open/floor/iron/cafeteria,
 /area/security/prison)
 "nYL" = (
@@ -57070,7 +57085,7 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "oeD" = (
-/obj/effect/spawner/random/vending/colavend,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -57552,7 +57567,7 @@
 /turf/open/floor/iron/dark,
 /area/service/library)
 "ooh" = (
-/obj/effect/spawner/random/vending/colavend,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/entry)
@@ -57912,7 +57927,7 @@
 	pixel_x = -8;
 	pixel_y = 12
 	},
-/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/lootdrop/donkpockets,
 /obj/item/storage/box/donkpockets,
 /turf/open/floor/iron/dark,
 /area/service/kitchen)
@@ -58154,7 +58169,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
-/obj/effect/spawner/random/trash/grille_or_waste,
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -58832,7 +58847,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/science/research)
 "oJS" = (
-/obj/effect/spawner/random/vending/snackvend,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -58975,7 +58990,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -59199,7 +59214,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/structure/grille/broken,
-/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "oRa" = (
@@ -59483,7 +59498,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/spawner/random/contraband/prison,
+/obj/effect/spawner/lootdrop/prison_contraband,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
@@ -60229,7 +60244,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -60680,7 +60695,7 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "prk" = (
@@ -61220,7 +61235,7 @@
 "pBm" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
-/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/lootdrop/costume,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
@@ -61431,7 +61446,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "pEP" = (
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
@@ -61554,7 +61569,7 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/directional/east,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -61572,7 +61587,7 @@
 /area/medical/psychology)
 "pHx" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/service,
+/obj/effect/spawner/lootdrop/techstorage/service,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -61847,7 +61862,7 @@
 "pMf" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
-/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/lootdrop/maintenance/two,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -62037,7 +62052,7 @@
 "pPN" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "pQa" = (
@@ -62066,7 +62081,7 @@
 "pQu" = (
 /obj/structure/closet/crate,
 /obj/item/reagent_containers/glass/bowl,
-/obj/effect/spawner/random/contraband/prison,
+/obj/effect/spawner/lootdrop/prison_contraband,
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/reagent_containers/glass/bowl,
@@ -62581,7 +62596,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate,
-/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -62589,7 +62604,7 @@
 "qbE" = (
 /obj/structure/toilet,
 /obj/machinery/light/small/directional/north,
-/obj/effect/spawner/random/contraband/prison,
+/obj/effect/spawner/lootdrop/prison_contraband,
 /turf/open/floor/vault,
 /area/security/prison)
 "qbM" = (
@@ -63757,7 +63772,7 @@
 /area/engineering/supermatter/room)
 "qCe" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/rnd_secure,
+/obj/effect/spawner/lootdrop/techstorage/rnd_secure,
 /obj/machinery/light/small/directional/south,
 /obj/machinery/status_display/shuttle{
 	pixel_y = -32
@@ -63809,7 +63824,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/spawner/random/trash/grille_or_waste,
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -64933,7 +64948,7 @@
 /area/ai_monitored/turret_protected/ai)
 "raT" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -65116,7 +65131,7 @@
 	dir = 8
 	},
 /obj/structure/closet/crate/trashcart/laundry,
-/obj/effect/spawner/random/contraband/prison,
+/obj/effect/spawner/lootdrop/prison_contraband,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/under/rank/prisoner/skirt,
@@ -65553,7 +65568,7 @@
 /turf/open/floor/iron,
 /area/command/teleporter)
 "riZ" = (
-/obj/effect/spawner/random/vending/snackvend,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -66435,7 +66450,7 @@
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/captain)
 "rCG" = (
-/obj/effect/spawner/random/trash/cigbutt,
+/obj/effect/spawner/lootdrop/cigbutt,
 /turf/open/floor/plating,
 /area/security/prison)
 "rDe" = (
@@ -66691,7 +66706,7 @@
 	icon_state = "crateopen"
 	},
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
+/obj/effect/spawner/lootdrop/minor/kittyears_or_rabbitears,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "rFD" = (
@@ -66826,7 +66841,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "rIt" = (
@@ -66960,7 +66975,7 @@
 "rKX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "rLk" = (
@@ -68114,7 +68129,7 @@
 /area/service/chapel)
 "sjK" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/carpet/green,
 /area/cargo/warehouse)
 "sjL" = (
@@ -68384,7 +68399,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/vending/colavend,
+/obj/effect/spawner/randomcolavend,
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/hallway/primary/port)
@@ -70539,7 +70554,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/candy,
 /obj/item/trash/chips,
-/obj/effect/spawner/random/contraband/prison,
+/obj/effect/spawner/lootdrop/prison_contraband,
 /obj/item/weldingtool/mini,
 /turf/open/floor/iron/grimy,
 /area/security/prison/safe)
@@ -70593,7 +70608,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/cable,
-/obj/effect/spawner/random/decorations/carpet,
+/obj/effect/spawner/lootdrop/maintenance_carpet,
 /turf/open/floor/iron,
 /area/security/prison)
 "tlv" = (
@@ -71286,7 +71301,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/vending/colavend,
+/obj/effect/spawner/randomcolavend,
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/dark,
 /area/hallway/primary/aft)
@@ -72392,7 +72407,7 @@
 /turf/open/floor/wood,
 /area/maintenance/port/fore)
 "tUR" = (
-/obj/effect/spawner/random/entertainment/arcade,
+/obj/effect/spawner/randomarcade,
 /turf/open/floor/iron/grimy,
 /area/security/prison)
 "tUT" = (
@@ -72619,7 +72634,7 @@
 /area/service/chapel)
 "tZv" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/ai,
+/obj/effect/spawner/lootdrop/techstorage/ai,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/circuit/green{
 	luminosity = 2
@@ -72656,7 +72671,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -73168,7 +73183,7 @@
 /area/space/nearstation)
 "uiZ" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/tcomms,
+/obj/effect/spawner/lootdrop/techstorage/tcomms,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -73307,7 +73322,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/lootdrop/glowstick,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plating{
@@ -73755,7 +73770,7 @@
 /area/command/gateway)
 "uvr" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/engineering,
+/obj/effect/spawner/lootdrop/techstorage/engineering,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -74658,7 +74673,7 @@
 /obj/structure/rack,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/iron/dark,
 /area/maintenance/starboard)
 "uQY" = (
@@ -74850,7 +74865,7 @@
 "uWv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/blobstart,
-/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/lootdrop/glowstick,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -75716,7 +75731,7 @@
 	name = "supply locker"
 	},
 /obj/item/clothing/shoes/sneakers/brown,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/item/clothing/under/rank/cargo/tech,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -75888,7 +75903,7 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "vnZ" = (
@@ -77284,7 +77299,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate,
-/obj/effect/spawner/random/medical/memeorgans,
+/obj/effect/spawner/lootdrop/memeorgans,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "vPi" = (
@@ -78255,7 +78270,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/cargo/warehouse)
 "wiB" = (
@@ -78789,7 +78804,7 @@
 /turf/open/floor/iron/dark,
 /area/cargo/storage)
 "wsL" = (
-/obj/effect/spawner/random/vending/snackvend,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -79260,7 +79275,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/closet/crate/bin,
-/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -79444,7 +79459,7 @@
 "wFx" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "wFL" = (
@@ -79702,7 +79717,7 @@
 /area/commons/vacant_room/commissary)
 "wMA" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -79932,7 +79947,7 @@
 /area/command/bridge)
 "wOI" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -80112,7 +80127,7 @@
 "wTg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/lootdrop/maintenance/three,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "wTh" = (
@@ -80321,7 +80336,7 @@
 "wXc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "wXD" = (
@@ -80497,7 +80512,7 @@
 /turf/open/floor/plating,
 /area/space/nearstation)
 "xaO" = (
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -80776,7 +80791,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/structure/dresser,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/spawner/random/contraband/prison,
+/obj/effect/spawner/lootdrop/prison_contraband,
 /turf/open/floor/iron,
 /area/security/prison/safe)
 "xha" = (
@@ -81843,7 +81858,7 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "xBQ" = (
@@ -82018,7 +82033,7 @@
 "xGE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner,
-/obj/effect/spawner/random/structure/crate,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -82374,7 +82389,7 @@
 	icon_state = "crateopen"
 	},
 /obj/structure/grille/broken,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "xNQ" = (

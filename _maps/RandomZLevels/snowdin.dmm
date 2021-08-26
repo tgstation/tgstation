@@ -2042,7 +2042,7 @@
 /area/awaymission/snowdin/post/hydro)
 "fT" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/random/exotic/antag_gear_weak,
+/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "fV" = (
@@ -5356,7 +5356,7 @@
 /turf/closed/wall,
 /area/awaymission/snowdin/post/secpost)
 "od" = (
-/obj/effect/spawner/random/vending/snackvend,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -8273,7 +8273,7 @@
 /area/awaymission/snowdin/cave)
 "xq" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/random/exotic/antag_gear,
+/obj/effect/spawner/lootdrop/snowdin/dungeonmid,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
@@ -9133,8 +9133,8 @@
 /area/awaymission/snowdin/post/minipost)
 "zM" = (
 /obj/structure/table/reinforced,
-/obj/effect/spawner/random/exotic/antag_gear_weak,
-/obj/effect/spawner/random/exotic/antag_gear_weak,
+/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
+/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -11225,7 +11225,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "FX" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/random/exotic/antag_gear_weak,
+/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
@@ -12013,7 +12013,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "IP" = (
-/obj/effect/spawner/random/exotic/snow_gear,
+/obj/effect/spawner/lootdrop/snowdin/dungeonmisc,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "IR" = (
@@ -12442,7 +12442,7 @@
 /area/awaymission/snowdin/post/mining_main)
 "JR" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/random/exotic/antag_gear_strong,
+/obj/effect/spawner/lootdrop/snowdin/dungeonheavy,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "JU" = (
@@ -12466,7 +12466,7 @@
 /area/awaymission/snowdin/post/mining_dock)
 "JX" = (
 /obj/machinery/light/broken/directional/west,
-/obj/effect/spawner/random/structure/crate_abandoned,
+/obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "JY" = (
@@ -12886,7 +12886,7 @@
 "Lb" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
-/obj/effect/spawner/random/exotic/antag_gear_weak,
+/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -12900,7 +12900,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "Lc" = (
-/obj/effect/spawner/random/structure/crate_abandoned,
+/obj/effect/spawner/lootdrop/crate_spawner,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -12993,7 +12993,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "LJ" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/random/exotic/antag_gear_weak,
+/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
 /turf/open/floor/plating/ice/smooth,
 /area/awaymission/snowdin/cave)
 "LK" = (
@@ -13008,7 +13008,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/post/minipost)
 "LN" = (
-/obj/effect/spawner/random/vending/colavend,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -13084,12 +13084,12 @@
 "My" = (
 /obj/structure/table/wood,
 /obj/structure/fireaxecabinet/directional/south,
-/obj/effect/spawner/random/exotic/snow_gear,
+/obj/effect/spawner/lootdrop/snowdin/dungeonmisc,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/outside)
 "MG" = (
 /obj/machinery/light/small/directional/north,
-/obj/effect/spawner/random/structure/crate_abandoned,
+/obj/effect/spawner/lootdrop/crate_spawner,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plating,
@@ -13273,7 +13273,7 @@
 /area/awaymission/snowdin/post)
 "NZ" = (
 /obj/machinery/light/small/directional/north,
-/obj/effect/spawner/random/structure/crate_abandoned,
+/obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "Ob" = (
@@ -13425,7 +13425,7 @@
 /area/awaymission/snowdin/post/secpost)
 "OZ" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/random/exotic/snow_gear,
+/obj/effect/spawner/lootdrop/snowdin/dungeonmisc,
 /turf/open/floor/plating/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
@@ -13553,7 +13553,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/snowdin/post)
 "Qk" = (
-/obj/effect/spawner/random/structure/crate_abandoned,
+/obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "Qs" = (
@@ -13592,7 +13592,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/post/garage)
 "QG" = (
-/obj/effect/spawner/random/structure/crate_abandoned,
+/obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
@@ -13755,7 +13755,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main)
 "Sz" = (
-/obj/effect/spawner/random/structure/crate_abandoned,
+/obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plating/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "SD" = (
@@ -14113,7 +14113,7 @@
 /area/awaymission/snowdin/post)
 "Ws" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/random/exotic/antag_gear_weak,
+/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "Wt" = (
@@ -14134,7 +14134,7 @@
 /area/awaymission/snowdin/post/dorm)
 "Wy" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/random/exotic/antag_gear,
+/obj/effect/spawner/lootdrop/snowdin/dungeonmid,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "WA" = (
@@ -14220,14 +14220,14 @@
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "Xa" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/random/exotic/snow_gear,
-/obj/effect/spawner/random/exotic/snow_gear,
+/obj/effect/spawner/lootdrop/snowdin/dungeonmisc,
+/obj/effect/spawner/lootdrop/snowdin/dungeonmisc,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/igloo)
 "Xc" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/random/exotic/antag_gear_weak,
-/obj/effect/spawner/random/exotic/antag_gear_weak,
+/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
+/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/igloo)
 "Xh" = (
@@ -14250,7 +14250,7 @@
 /area/awaymission/snowdin/post/mining_main/robotics)
 "Xl" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/random/exotic/antag_gear_strong,
+/obj/effect/spawner/lootdrop/snowdin/dungeonheavy,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
@@ -14292,7 +14292,7 @@
 /area/awaymission/snowdin/post/minipost)
 "Xz" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/random/exotic/antag_gear_weak,
+/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
 /turf/open/floor/plating/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
@@ -14301,7 +14301,7 @@
 /area/awaymission/snowdin/cave)
 "XD" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/random/exotic/antag_gear_weak,
+/obj/effect/spawner/lootdrop/snowdin/dungeonlite,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/igloo)
 "XH" = (
@@ -14409,7 +14409,7 @@
 /turf/open/floor/iron/grimy,
 /area/awaymission/snowdin/post/cavern2)
 "YM" = (
-/obj/effect/spawner/random/structure/crate_abandoned,
+/obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -14438,7 +14438,7 @@
 /turf/open/floor/iron/dark/snowdin,
 /area/awaymission/snowdin/cave)
 "YT" = (
-/obj/effect/spawner/random/exotic/antag_gear,
+/obj/effect/spawner/lootdrop/snowdin/dungeonmid,
 /turf/open/floor/plating/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "YX" = (

@@ -6487,7 +6487,9 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "Rf" = (
-/obj/effect/spawner/random/entertainment/arcade,
+/obj/effect/spawner/randomarcade{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "SE" = (

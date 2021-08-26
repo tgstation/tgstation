@@ -1750,7 +1750,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "Yf" = (
-/obj/effect/spawner/random/entertainment/arcade,
+/obj/effect/spawner/randomarcade,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "Zc" = (

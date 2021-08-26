@@ -621,7 +621,10 @@
 /turf/open/floor/plating,
 /area/ctf)
 "lt" = (
-/obj/effect/spawner/random/entertainment/arcade,
+/obj/effect/spawner/randomarcade{
+	dir = 8;
+	resistance_flags = 64
+	},
 /turf/open/floor/wood,
 /area/ctf)
 "lv" = (
@@ -2266,6 +2269,13 @@
 	},
 /turf/open/floor/iron,
 /area/ctf)
+"QL" = (
+/obj/effect/spawner/randomarcade{
+	dir = 4;
+	resistance_flags = 64
+	},
+/turf/open/floor/wood,
+/area/ctf)
 "QW" = (
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/effect/turf_decal/tile/blue,
@@ -3715,9 +3725,9 @@ Ag
 BH
 td
 Bh
+QL
 lt
-lt
-lt
+QL
 lt
 QC
 oq
@@ -3867,9 +3877,9 @@ xs
 BH
 td
 Bh
+QL
 lt
-lt
-lt
+QL
 lt
 QC
 Lr

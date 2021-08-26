@@ -2768,7 +2768,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "sA" = (
-/obj/effect/spawner/random/structure/crate_abandoned,
+/obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "vw" = (
@@ -2779,7 +2779,7 @@
 /area/awaymission/spacebattle/syndicate6)
 "AI" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/random/contraband/armory,
+/obj/effect/spawner/lootdrop/armory_contraband,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "BO" = (
@@ -2787,7 +2787,7 @@
 /area/awaymission/spacebattle/syndicate2)
 "Cx" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "Dv" = (
@@ -2795,7 +2795,7 @@
 /area/awaymission/spacebattle/syndicate3)
 "Ny" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "Sj" = (
