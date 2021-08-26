@@ -1,4 +1,5 @@
 // MOTHBLOCKS TODO: Only show to admins
+/// The color admins will speak in for OOC.
 /datum/preference/color/ooc_color
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "ooccolor"
