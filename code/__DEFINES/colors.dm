@@ -195,3 +195,6 @@
 #define COLOR_PRIDE_GREEN "#41FC66"
 #define COLOR_PRIDE_BLUE "#42FFF2"
 #define COLOR_PRIDE_PURPLE "#5D5DFC"
+
+/// The default color for admin say, used as a fallback when the preference is not enabled
+#define DEFAULT_ASAY_COLOR COLOR_MOSTLY_PURE_RED

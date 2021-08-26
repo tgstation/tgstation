@@ -15,7 +15,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//game-preferences
 	var/lastchangelog = "" //Saved changlog filesize to detect if there was a change
 	var/ooccolor = "#c43b23"
-	var/asaycolor = "#ff4500" //This won't change the color for current admins, only incoming ones.
 	/// If we spawn an ERT as an admin and choose to spawn as the briefing officer, we'll be given this outfit
 	var/brief_outfit = /datum/outfit/centcom/commander
 

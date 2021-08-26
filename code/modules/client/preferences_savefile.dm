@@ -182,7 +182,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		preference.apply_to_client(parent, read_preference(preference.type))
 
 	//general preferences
-	READ_FILE(S["asaycolor"], asaycolor)
 	READ_FILE(S["brief_outfit"], brief_outfit)
 	READ_FILE(S["ooccolor"], ooccolor)
 	READ_FILE(S["lastchangelog"], lastchangelog)
@@ -253,7 +252,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 
 	//Sanitize
-	asaycolor = sanitize_ooccolor(sanitize_hexcolor(asaycolor, 6, 1, initial(asaycolor)))
 	ooccolor = sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
 	lastchangelog = sanitize_text(lastchangelog, initial(lastchangelog))
 	hotkeys = sanitize_integer(hotkeys, FALSE, TRUE, initial(hotkeys))
@@ -326,7 +324,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		write_preference(preference, read_preference(preference_type))
 
 	//general preferences
-	WRITE_FILE(S["asaycolor"], asaycolor)
 	WRITE_FILE(S["brief_outfit"], brief_outfit)
 	WRITE_FILE(S["ooccolor"], ooccolor)
 	WRITE_FILE(S["lastchangelog"], lastchangelog)

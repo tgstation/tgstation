@@ -473,31 +473,3 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	to_chat(usr, "<span class='infoplain'>You will [(prefs.toggles & SOUND_PRAYERS) ? "now" : "no longer"] hear a sound when prayers arrive.</span>")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Prayer Sounds", "[usr.client.prefs.toggles & SOUND_PRAYERS ? "Enabled" : "Disabled"]"))
-
-/client/proc/colorasay()
-	set name = "Set Admin Say Color"
-	set category = "Preferences.Admin"
-	set desc = "Set the color of your ASAY messages"
-	if(!holder)
-		return
-	if(!CONFIG_GET(flag/allow_admin_asaycolor))
-		to_chat(src, "Custom Asay color is currently disabled by the server.")
-		return
-	var/new_asaycolor = input(src, "Please select your ASAY color.", "ASAY color", prefs.asaycolor) as color|null
-	if(new_asaycolor)
-		prefs.asaycolor = sanitize_ooccolor(new_asaycolor)
-		prefs.save_preferences()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set ASAY Color")
-	return
-
-/client/proc/resetasaycolor()
-	set name = "Reset your Admin Say Color"
-	set desc = "Returns your ASAY Color to default"
-	set category = "Preferences.Admin"
-	if(!holder)
-		return
-	if(!CONFIG_GET(flag/allow_admin_asaycolor))
-		to_chat(src, "<span class='infoplain'>Custom Asay color is currently disabled by the server.</span>")
-		return
-	prefs.asaycolor = initial(prefs.asaycolor)
-	prefs.save_preferences()
