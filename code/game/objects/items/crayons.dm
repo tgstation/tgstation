@@ -253,7 +253,11 @@
 			var/txt = input(usr, "Choose what to write.", "Scribbles", text_buffer) as text|null
 			if(isnull(txt))
 				return
-			text_buffer = crayon_text_strip(txt)
+			txt = crayon_text_strip(txt)
+			if(text_buffer == txt)
+				return // No valid changes.
+			text_buffer = txt
+
 			. = TRUE
 			paint_mode = PAINT_NORMAL
 			drawtype = "a"
