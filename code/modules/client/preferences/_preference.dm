@@ -76,6 +76,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	// MOTHBLOCKS TODO: Verify all are set (and valid) in unit tests.
 	var/savefile_identifier
 
+	/// List of middleware that will respond to procs.
+	var/list/middleware
+
 	/// The priority of when to apply this preference.
 	/// Used for when you need to rely on another preference.
 	var/priority = PREFERENCE_PRIORITY_DEFAULT
@@ -213,6 +216,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /// Returns data compiled into the preferences JSON asset
 /datum/preference/proc/compile_constant_data()
+	SHOULD_NOT_SLEEP(TRUE)
+
 	return null
 
 /// A preference that is a choice of one option among a fixed set.
@@ -273,19 +278,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	SHOULD_NOT_SLEEP(TRUE)
 	CRASH("`init_possible_values()` was not implemented for [type]!")
 
-/// Private.
-/// Caches a list of every possible value.
-/datum/preference/choiced/proc/cache_possible_values()
-	SHOULD_NOT_OVERRIDE(TRUE)
-	PRIVATE_PROC(TRUE)
-	RETURN_TYPE(/list)
-
-	if (isnull(cached_values))
-		cached_values = init_possible_values()
-		ASSERT(cached_values.len)
-
-	return cached_values
-
 /datum/preference/choiced/is_valid(value)
 	return value in get_choices_serialized()
 
@@ -303,6 +295,17 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		)
 
 	return ..()
+
+// MOTHBLOCKS TODO: Return icons here as well
+/datum/preference/choiced/compile_constant_data()
+	var/list/choices = list()
+
+	for (var/choice in get_choices())
+		choices += choice
+
+	return list(
+		"choices" = choices,
+	)
 
 /// A preference that represents an RGB color of something, crunched down to 3 hex numbers.
 /// Was used heavily in the past, but doesn't provide as much range and only barely conserves space.

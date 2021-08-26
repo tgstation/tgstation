@@ -325,18 +325,6 @@ GLOBAL_LIST_INIT(ghost_forms, sortList(list("ghost","ghostking","ghostian2","ske
 
 GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON))
 
-/client/proc/pick_ghost_orbit()
-	if(!is_content_unlocked())
-		tgui_alert(usr,"This setting is for accounts with BYOND premium only.")
-		return
-	var/new_orbit = input(src, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND",null) as null|anything in GLOB.ghost_orbits
-	if(new_orbit)
-		prefs.ghost_orbit = new_orbit
-		prefs.save_preferences()
-		if(isobserver(mob))
-			var/mob/dead/observer/O = mob
-			O.ghost_orbit = new_orbit
-
 /client/proc/pick_ghost_accs()
 	var/new_ghost_accs = tgui_alert(usr,"Do you want your ghost to show full accessories where possible, hide accessories but still use the directional sprites where possible, or also ignore the directions and stick to the default sprites?",,list("full accessories", "only directional sprites", "default sprites"))
 	if(new_ghost_accs)
@@ -360,8 +348,6 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 		switch(tgui_alert(usr,"Which setting do you want to change?",,list("Ghost Form","Ghost Orbit","Ghost Accessories")))
 			if("Ghost Form")
 				pick_form()
-			if("Ghost Orbit")
-				pick_ghost_orbit()
 			if("Ghost Accessories")
 				pick_ghost_accs()
 	else

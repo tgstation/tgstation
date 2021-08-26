@@ -127,6 +127,28 @@ export const createDropdownInput = (
   };
 };
 
+type FeatureChoicedServerData = {
+  choices: string[];
+};
+
+export type FeatureChoiced = Feature<string, string, FeatureChoicedServerData>
+
+export const FeatureDropdownInput = (
+  props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+) => {
+  const serverData = props.serverData;
+  if (!serverData) {
+    return null;
+  }
+
+  return (<Dropdown
+    selected={props.value}
+    onSelected={props.handleSetValue}
+    width="100%"
+    options={serverData.choices}
+  />);
+};
+
 type FeatureNumericData = {
   minimum: number,
   maximum: number,
