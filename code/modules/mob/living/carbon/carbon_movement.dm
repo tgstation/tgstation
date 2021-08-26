@@ -61,7 +61,7 @@
 
 /mob/living/carbon/on_movement_type_flag_enabled(datum/source, flag)
 	. = ..()
-	if(flag & (FLYING | FLOATING) && (movement_type & (FLYING | FLOATING) == flag))
+	if(flag & (FLYING | FLOATING) && ((movement_type & (FLYING | FLOATING)) == flag)) // If the mob wasn't already flying/floating before.
 		remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
 		REMOVE_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
