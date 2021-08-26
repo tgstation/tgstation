@@ -268,7 +268,7 @@
 
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
 	text = copytext(text, 1, MAX_MESSAGE_LEN)
-	var/static/regex/crayon_regex = new /regex(@"[^\w!?,.=%#+/\-]", "ig")
+	var/static/regex/crayon_regex = new /regex(@"[^\w!?,.=&%#+/\-]", "ig")
 	return lowertext(crayon_regex.Replace(text, ""))
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
