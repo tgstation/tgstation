@@ -567,3 +567,25 @@
   - imageadd: Replaces the lobby menu with sprites instead of HTML
   softcerv:
   - bugfix: stargazers can now form slime links again.
+2021-08-26:
+  Ghommie:
+  - bugfix: Fixes monkey being unable to access right click functions on several objects
+      such as stacks and storages.
+  - bugfix: Outgoing comms console messages to allied stations will not be shown again
+      as incoming messages.
+  - bugfix: Fixes traits added by quirks not being removed when those are deleted
+      (like from eigenstasium).
+  Krysonism:
+  - expansion: 'The spores of a new rare mushroom occasionally spawns in maint: the
+      odious puffball! Gross.'
+  Nari Harimoto:
+  - bugfix: smart pipes will no longer occassionally be buggy when placing atmos pipes
+      across roundstart pipes
+  TiviPlus:
+  - refactor: Area based lighting can be varedited and changed now
+  Watermelon914:
+  - admin: Made admin only shells not interactable to non-admins
+  tralezab:
+  - imageadd: better fish and fish food sprites
+  wesoda25:
+  - bugfix: Repairing clothing now immediately updates the sprite
