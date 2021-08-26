@@ -93,7 +93,7 @@
 					J.chasm_react(H)
 					return FALSE
 				else if(!D.len)
-					to_chat(user, span_userdanger("The [J.name] found no beacons in the world to anchor a wormhole to, preventing it from saving you from the chasm.  RIP."))
+					to_chat(H, span_userdanger("The [J.name] found no beacons in the world to anchor a wormhole to, preventing it from saving you from the chasm.  RIP."))
 	return TRUE
 
 /datum/component/chasm/proc/drop(atom/movable/AM)
