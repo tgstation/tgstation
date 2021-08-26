@@ -129,7 +129,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/proc/write(savefile/savefile, value)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	value = transform_value(value)
+	value = serialize(value)
 
 	if (!is_valid(value))
 		return FALSE
@@ -202,11 +202,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	// MOTHBLOCKS TODO: Unit test this
 	CRASH("`is_valid()` was not implemented for [type]!")
-
-/// Transforms a value before writing it. Cannot assume the data is valid.
-/// This is useful for things such as text -> number conversions.
-/datum/preference/proc/transform_value(value)
-	return value
 
 /// Returns data to be sent to users in the menu
 /datum/preference/proc/compile_ui_data(mob/user, value)
@@ -397,9 +392,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/numeric/create_default_value()
 	return rand(minimum, maximum)
 
-/datum/preference/numeric/transform_value(value)
-	return text2num(value)
-
 /datum/preference/numeric/is_valid(value)
 	return !isnull(value) && value >= minimum && value <= maximum
 
@@ -422,8 +414,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/toggle/deserialize(input)
 	return input
 
-/datum/preference/toggle/transform_value(value)
-	return value == TRUE
+/datum/preference/toggle/serialize(input)
+	return !!input
 
 /datum/preference/toggle/is_valid(value)
 	return value == TRUE || value == FALSE
