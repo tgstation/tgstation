@@ -622,7 +622,7 @@
 
 /obj/item/mod/module/rad_counter/Initialize()
 	. = ..()
-	soundloop = new(list(), FALSE, TRUE)
+	soundloop = new(src, FALSE)
 	soundloop.volume = 5
 
 /obj/item/mod/module/rad_counter/Destroy()
