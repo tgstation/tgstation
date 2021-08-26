@@ -82365,6 +82365,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/stamp/cmo,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
 "rWL" = (
