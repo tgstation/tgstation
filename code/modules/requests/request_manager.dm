@@ -147,13 +147,13 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 		if ("tp")
 			if(!SSticker.HasRoundStarted())
 				tgui_alert(usr,"The game hasn't started yet!")
-				return
+				return TRUE
 			var/mob/M = request.owner?.mob
 			if(!ismob(M))
 				var/datum/mind/D = M
 				if(!istype(D))
 					to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
-					return
+					return TRUE
 				else
 					D.traitor_panel()
 					return TRUE
@@ -164,30 +164,30 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			var/mob/M = request.owner?.mob
 			if(!ismob(M))
 				to_chat(usr, "This can only be used on instances of type /mob.", confidential = TRUE)
-				return
+				return TRUE
 			show_individual_logging_panel(M, null, null)
 			return TRUE
 		if ("smite")
 			if(!check_rights(R_FUN))
 				to_chat(usr, "Insufficient permissions to smite, you require +FUN", confidential = TRUE)
-				return
+				return TRUE
 			var/mob/living/carbon/human/H = request.owner?.mob
 			if (!H || !istype(H))
 				to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human", confidential = TRUE)
-				return
+				return TRUE
 			usr.client.smite(H)
 			return TRUE
 		if ("rply")
 			if (request.req_type == REQUEST_PRAYER)
 				to_chat(usr, "Cannot reply to a prayer", confidential = TRUE)
-				return
+				return TRUE
 			var/mob/M = request.owner?.mob
 			usr.client.admin_headset_message(M, request.req_type == REQUEST_SYNDICATE ? RADIO_CHANNEL_SYNDICATE : RADIO_CHANNEL_CENTCOM)
 			return TRUE
 		if ("setcode")
 			if (request.req_type != REQUEST_NUKE)
 				to_chat(usr, "You cannot set the nuke code for a non-nuke-code-request request!", confidential = TRUE)
-				return
+				return TRUE
 			var/code = random_nukecode()
 			for(var/obj/machinery/nuclearbomb/selfdestruct/SD in GLOB.nuke_list)
 				SD.r_code = code
