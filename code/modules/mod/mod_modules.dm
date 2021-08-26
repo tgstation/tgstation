@@ -625,6 +625,10 @@
 	soundloop = new(list(), FALSE, TRUE)
 	soundloop.volume = 5
 
+/obj/item/mod/module/rad_counter/Destroy()
+	QDEL_NULL(soundloop)
+	return ..()
+
 /obj/item/mod/module/rad_counter/on_equip()
 	soundloop.start(mod.wearer)
 	RegisterSignal(mod, COMSIG_ATOM_RAD_ACT, .proc/rad_react)
@@ -768,16 +772,6 @@
 	idle_power_cost = 2
 	incompatible_modules = list(/obj/item/mod/module/gps)
 	cooldown_time = 0.5 SECONDS
-
-/obj/item/mod/module/gps/Initialize()
-	. = ..()
-	AddComponent(/datum/component/gps/item, "MOD0", state = GLOB.inventory_state)
-
-/obj/item/mod/module/gps/on_use()
-	. = ..()
-	if(!.)
-		return
-	ui_interact(mod.wearer)
 
 /obj/item/mod/module/dispenser
 	name = "MOD burger dispenser module"
