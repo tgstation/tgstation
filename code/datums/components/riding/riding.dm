@@ -127,7 +127,7 @@
 /datum/component/riding/proc/vehicle_turned(datum/source, _old_dir, new_dir)
 	SIGNAL_HANDLER
 
-	vehicle_moved(source, new_dir)
+	vehicle_moved(source, null, new_dir)
 
 /// Check to see if we have all of the necessary bodyparts and not-falling-over statuses we need to stay onboard
 /datum/component/riding/proc/ride_check(mob/living/rider)
