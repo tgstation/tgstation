@@ -1,0 +1,4 @@
+author: "mokulus"
+delete-after: True
+changes: 
+  - code_imp: "Treat DreamMaker warnings as errors in CI"

@@ -91,7 +91,7 @@
 	/// List of family heirlooms this job can get with the family heirloom quirk. List of types.
 	var/list/family_heirlooms
 
-	/// All values = (JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT)
+	/// All values = (JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_ASSIGN_QUIRKS)
 	var/job_flags = NONE
 
 	/// Multiplier for general usage of the voice of god.
@@ -424,7 +424,7 @@
 
 /mob/living/silicon/robot/apply_prefs_job(client/player_client, datum/job/job)
 	if(mmi)
-		var/organic_name 
+		var/organic_name
 		if(GLOB.current_anonymous_theme)
 			organic_name = GLOB.current_anonymous_theme.anonymous_name(src)
 		else if(player_client.prefs.randomise[RANDOM_NAME] || CONFIG_GET(flag/force_random_names) || is_banned_from(player_client.ckey, "Appearance"))

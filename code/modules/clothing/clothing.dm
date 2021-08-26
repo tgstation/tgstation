@@ -167,6 +167,7 @@
 	if(user)
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		to_chat(user, span_notice("You fix the damage on [src]."))
+	update_appearance()
 
 /**
  * take_damage_zone() is used for dealing damage to specific bodyparts on a worn piece of clothing, meant to be called from [/obj/item/bodypart/proc/check_woundings_mods]

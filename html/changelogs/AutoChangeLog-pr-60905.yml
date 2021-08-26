@@ -1,0 +1,4 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - admin: "Add Requests Manager to view all prayers/centcom and syndicate requests/and nuke code requests within a round."
