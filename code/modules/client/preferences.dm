@@ -27,8 +27,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/max_chat_length = CHAT_MESSAGE_MAX_LENGTH
 	///Whether non-mob messages will be displayed, such as machine vendor announcements. Requires chat_on_map to have effect. Boolean.
 	var/see_chat_non_mob = TRUE
-	///Whether emotes will be displayed on runechat. Requires chat_on_map to have effect. Boolean.
-	var/see_rc_emotes = TRUE
 
 	/// Custom keybindings. Map of keybind names to keyboard inputs.
 	/// For example, by default would have "swap_hands" -> list("X")

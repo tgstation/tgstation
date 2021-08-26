@@ -2057,6 +2057,7 @@
 #include "code\modules\client\preferences\ooc.dm"
 #include "code\modules\client\preferences\pda.dm"
 #include "code\modules\client\preferences\preferred_map.dm"
+#include "code\modules\client\preferences\runechat.dm"
 #include "code\modules\client\preferences\scaling_method.dm"
 #include "code\modules\client\preferences\screentips.dm"
 #include "code\modules\client\preferences\species.dm"

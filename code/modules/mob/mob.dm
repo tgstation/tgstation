@@ -277,14 +277,14 @@
 /atom/proc/runechat_prefs_check(mob/target, visible_message_flags = NONE)
 	if(!target.client?.prefs.chat_on_map || !target.client.prefs.see_chat_non_mob)
 		return FALSE
-	if(visible_message_flags & EMOTE_MESSAGE && !target.client.prefs.see_rc_emotes)
+	if(visible_message_flags & EMOTE_MESSAGE && !target.client.prefs.read_preference(/datum/preference/toggle/see_rc_emotes))
 		return FALSE
 	return TRUE
 
 /mob/runechat_prefs_check(mob/target, visible_message_flags = NONE)
 	if(!target.client?.prefs.chat_on_map)
 		return FALSE
-	if(visible_message_flags & EMOTE_MESSAGE && !target.client.prefs.see_rc_emotes)
+	if(visible_message_flags & EMOTE_MESSAGE && !target.client.prefs.read_preference(/datum/preference/toggle/see_rc_emotes))
 		return FALSE
 	return TRUE
 
