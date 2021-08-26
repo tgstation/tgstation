@@ -96,7 +96,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///Do we show item hover outlines?
 	var/itemoutline_pref = TRUE
 
-	var/ambientocclusion = TRUE
 	///Should we automatically fit the viewport?
 	var/auto_fit_viewport = FALSE
 	///Should we be in the widescreen mode set by the config?

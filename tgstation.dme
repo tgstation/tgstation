@@ -2047,6 +2047,7 @@
 #include "code\modules\client\preferences\_preference.dm"
 #include "code\modules\client\preferences\admin.dm"
 #include "code\modules\client\preferences\age.dm"
+#include "code\modules\client\preferences\ambient_occlusion.dm"
 #include "code\modules\client\preferences\assets.dm"
 #include "code\modules\client\preferences\broadcast_login_logout.dm"
 #include "code\modules\client\preferences\clothing.dm"
