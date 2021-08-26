@@ -37,9 +37,6 @@
 
 	return destinations
 
-/obj/item/wormhole_jaunter/proc/find_beacon(mob/user)
-
-
 /obj/item/wormhole_jaunter/proc/activate(mob/user, adjacent, teleport)
 	if(!turf_check(user))
 		return
