@@ -283,7 +283,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	return value in get_choices_serialized()
 
 /datum/preference/choiced/deserialize(input)
-	return sanitize_inlist(input, get_choices())
+	return sanitize_inlist(input, get_choices(), create_default_value())
 
 /datum/preference/choiced/create_default_value()
 	return pick(get_choices())

@@ -129,6 +129,7 @@ export const createDropdownInput = <T extends string | number = string>(
 
 export type FeatureChoicedServerData = {
   choices: string[];
+  display_names?: Record<string, string>;
 };
 
 export type FeatureChoiced = Feature<string, string, FeatureChoicedServerData>
@@ -145,16 +146,19 @@ export const FeatureDropdownInput = (
     return null;
   }
 
+  const displayNames = serverData.display_names
+    || serverData.choices.map(capitalizeFirstLetter);
+
   return (<Dropdown
     selected={props.value}
     onSelected={props.handleSetValue}
     width="100%"
-    displayText={capitalizeFirstLetter(props.value)}
+    displayText={displayNames[props.value]}
     options={
       sortStrings(serverData.choices)
         .map(choice => {
           return {
-            displayText: capitalizeFirstLetter(choice),
+            displayText: displayNames[choice],
             value: choice,
           };
         })
