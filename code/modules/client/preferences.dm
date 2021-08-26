@@ -302,10 +302,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (isnull(requested_preference))
 				return FALSE
 
-			value = requested_preference.serialize(value)
-
 			// SAFETY: `write_preference` performs validation checks
-			write_preference(requested_preference, value)
+			if (!write_preference(requested_preference, value))
+				return FALSE
 
 			// Preferences could theoretically perform granular updates rather than
 			// recreating the whole thing, but this would complicate the preference
@@ -313,7 +312,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			character_preview_view.update_body()
 
 			if (requested_preference.savefile_identifier == PREFERENCE_PLAYER)
-				requested_preference.apply_to_client(parent, value)
+				requested_preference.apply_to_client(parent, read_preference(requested_preference.type))
 
 			return TRUE
 		if ("set_color_preference")
@@ -337,7 +336,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			) as color | null
 
 			if (new_color)
-				write_preference(requested_preference, new_color)
+				if (!write_preference(requested_preference, new_color))
+					return FALSE
 
 				if (requested_preference.savefile_identifier == PREFERENCE_PLAYER)
 					requested_preference.apply_to_client(parent, new_color)

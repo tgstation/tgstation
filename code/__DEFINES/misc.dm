@@ -206,15 +206,15 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define GHOST_ORBIT_PENTAGON "pentagon"
 
 //Ghost showing preferences:
-#define GHOST_ACCS_NONE 1
-#define GHOST_ACCS_DIR 50
-#define GHOST_ACCS_FULL 100
+#define GHOST_ACCS_NONE "Default sprites"
+#define GHOST_ACCS_DIR "Only directional sprites"
+#define GHOST_ACCS_FULL "Full accessories"
 
 #define GHOST_ACCS_DEFAULT_OPTION GHOST_ACCS_FULL
 
-#define GHOST_OTHERS_SIMPLE 1
-#define GHOST_OTHERS_DEFAULT_SPRITE 50
-#define GHOST_OTHERS_THEIR_SETTING 100
+#define GHOST_OTHERS_SIMPLE "White ghosts"
+#define GHOST_OTHERS_DEFAULT_SPRITE "Default sprites"
+#define GHOST_OTHERS_THEIR_SETTING "Their sprites"
 
 #define GHOST_OTHERS_DEFAULT_OPTION GHOST_OTHERS_THEIR_SETTING
 
