@@ -4,7 +4,7 @@
 	name = "make incision"
 	implements = list(
 		TOOL_SCALPEL = 100,
-		/obj/item/melee/transforming/energy/sword = 75,
+		/obj/item/melee/energy/sword = 75,
 		/obj/item/kitchen/knife = 65,
 		/obj/item/shard = 45,
 		/obj/item = 30) // 30% success with any sharp item.
@@ -27,7 +27,7 @@
 		if (!(NOBLOOD in human_target.dna.species.species_traits))
 			display_results(user, target, span_notice("Blood pools around the incision in [human_target]'s [parse_zone(target_zone)]."),
 				span_notice("Blood pools around the incision in [human_target]'s [parse_zone(target_zone)]."),
-				"")
+				span_notice("Blood pools around the incision in [human_target]'s [parse_zone(target_zone)]."))
 			var/obj/item/bodypart/target_bodypart = target.get_bodypart(target_zone)
 			if(target_bodypart)
 				target_bodypart.generic_bleedstacks += 10

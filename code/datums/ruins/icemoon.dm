@@ -115,3 +115,9 @@
 	Seem very intent on research and individual liberty, and also geology-based naming?"
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "golem_ship.dmm"
+
+/datum/map_template/ruin/icemoon/underground/mailroom
+	name = "Frozen-over Post Office"
+	id = "mailroom"
+	description = "This is where all of your paychecks went. Signed, the management."
+	suffix = "icemoon_underground_mailroom.dmm"

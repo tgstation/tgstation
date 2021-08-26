@@ -1,3 +1,10 @@
+#define POINT_THRESHOLD_PLASTIC -INFINITY
+#define POINT_THRESHOLD_IRON 1
+#define POINT_THRESHOLD_BRONZE 15
+#define POINT_THRESHOLD_SILVER 30
+#define POINT_THRESHOLD_GOLD 45
+#define POINT_THRESHOLD_DIAMOND 60
+
 /obj/item/soapstone
 	name = "soapstone"
 	desc = "Leave informative messages for the crew, including the crew of future shifts!\nEven if out of uses, it can still be used to remove messages.\n(Not suitable for engraving on shuttles, off station or on cats. Side effects may include prompt beatings, psychotic clown incursions, and/or orbital bombardment.)"
@@ -65,7 +72,7 @@
 			remove_use()
 
 /obj/item/soapstone/proc/can_use()
-	return remaining_uses == -1 || remaining_uses >= 0
+	return remaining_uses == -1 || remaining_uses > 0
 
 /obj/item/soapstone/proc/remove_use()
 	if(remaining_uses <= 0)
@@ -154,11 +161,41 @@ but only permanently removed with the curator's soapstone.
 
 /obj/structure/chisel_message/update_icon()
 	. = ..()
-	var/hash = md5(hidden_message)
-	var/newcolor = copytext_char(hash, 1, 7)
-	add_atom_colour("#[newcolor]", FIXED_COLOUR_PRIORITY)
-	set_light_color("#[newcolor]")
+
+	var/newcolor = COLOR_SOAPSTONE_PLASTIC
+	switch(like_keys.len - dislike_keys.len)
+		if(POINT_THRESHOLD_PLASTIC to POINT_THRESHOLD_IRON-1)
+			newcolor = COLOR_SOAPSTONE_PLASTIC
+		if(POINT_THRESHOLD_IRON to POINT_THRESHOLD_BRONZE-1)
+			newcolor = COLOR_SOAPSTONE_IRON
+		if(POINT_THRESHOLD_BRONZE to POINT_THRESHOLD_SILVER-1)
+			newcolor = COLOR_SOAPSTONE_BRONZE
+		if(POINT_THRESHOLD_SILVER to POINT_THRESHOLD_GOLD-1)
+			newcolor = COLOR_SOAPSTONE_SILVER
+		if(POINT_THRESHOLD_GOLD to POINT_THRESHOLD_DIAMOND-1)
+			newcolor = COLOR_SOAPSTONE_GOLD
+		if(POINT_THRESHOLD_DIAMOND to INFINITY)
+			newcolor = COLOR_SOAPSTONE_DIAMOND
+
+	add_atom_colour("[newcolor]", FIXED_COLOUR_PRIORITY)
+	set_light_color("[newcolor]")
 	set_light(1)
+
+/obj/structure/chisel_message/update_name()
+	switch(like_keys.len - dislike_keys.len)
+		if(POINT_THRESHOLD_PLASTIC to POINT_THRESHOLD_IRON-1)
+			name = "plastic [initial(name)]"
+		if(POINT_THRESHOLD_IRON to POINT_THRESHOLD_BRONZE-1)
+			name = "iron [initial(name)]"
+		if(POINT_THRESHOLD_BRONZE to POINT_THRESHOLD_SILVER-1)
+			name = "bronze [initial(name)]"
+		if(POINT_THRESHOLD_SILVER to POINT_THRESHOLD_GOLD-1)
+			name = "silver [initial(name)]"
+		if(POINT_THRESHOLD_GOLD to POINT_THRESHOLD_DIAMOND-1)
+			name = "gold [initial(name)]"
+		if(POINT_THRESHOLD_DIAMOND to INFINITY)
+			name = "diamond [initial(name)]"
+	return ..()
 
 /obj/structure/chisel_message/proc/pack()
 	var/list/data = list()
@@ -205,10 +242,15 @@ but only permanently removed with the curator's soapstone.
 	if(persists)
 		SSpersistence.SaveChiselMessage(src)
 	SSpersistence.chisel_messages -= src
-	. = ..()
+	return ..()
 
 /obj/structure/chisel_message/interact()
 	return
+
+/obj/structure/chisel_message/ui_status(mob/user)
+	if(isobserver(user)) // ignore proximity restrictions if we're an observer
+		return UI_INTERACTIVE
+	return ..()
 
 /obj/structure/chisel_message/ui_state(mob/user)
 	return GLOB.always_state
@@ -234,6 +276,10 @@ but only permanently removed with the curator's soapstone.
 		data["admin_mode"] = TRUE
 		data["creator_key"] = creator_key
 		data["creator_name"] = creator_name
+	else
+		data["admin_mode"] = FALSE
+		data["creator_key"] = null
+		data["creator_name"] = null
 
 	return data
 
@@ -278,4 +324,5 @@ but only permanently removed with the curator's soapstone.
 				qdel(src)
 				return
 
+	update_appearance()
 	persists = like_keys.len - dislike_keys.len > delete_at

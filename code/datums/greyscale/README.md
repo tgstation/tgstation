@@ -92,6 +92,21 @@ And that's all you need to make it usable by other code:
 
 More configurations can be found in [code/datums/greyscale/greyscale_configs.dm](./greyscale_configs.dm)
 
+If you want your item to be colorable in a vending machine (or other places if there's ever any support added for that), you should do it like this:
+
+```c
+/obj/item/clothing/head/beret
+	...
+	flags_1 = IS_PLAYER_COLORABLE_1
+```
+However, **be extremely careful**, as this *requires* that you put *all* of the object's `flags_1` flags in that statement all over again. It's ugly, I know, but there's no
+better way to do this with BYOND just yet. You can put multiple flags like this (not real flags):
+```c
+/obj/item/clothing/head/beret
+	...
+	flags_1 = IS_PLAYER_COLORABLE_1 | THIS_IS_A_FAKE_FLAG | THIS_IS_ANOTHER_FAKE_FLAG
+```
+
 ## Debugging
 
 If you're making a new greyscale sprite you sometimes want to be able to see how layers got generated or maybe you're just tweaking some colors. Rather than rebooting the server with every change there is a greyscale modification menu that can be found in the vv dropdown menu for the greyscale object. Here you can change colors, preview the results, and reload everything from their files.

@@ -161,7 +161,7 @@
 	if(!shock(user, 70))
 		take_damage(20, BRUTE, MELEE, 1)
 
-/obj/structure/grille/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/grille/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(!. && istype(mover, /obj/projectile))
 		return prob(30)
@@ -268,7 +268,7 @@
 	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		icon_state = "brokengrille"
-		density = FALSE
+		set_density(FALSE)
 		obj_integrity = 20
 		broken = TRUE
 		rods_amount = 1
@@ -279,7 +279,7 @@
 /obj/structure/grille/proc/repair_grille()
 	if(broken)
 		icon_state = "grille"
-		density = TRUE
+		set_density(TRUE)
 		obj_integrity = max_integrity
 		broken = FALSE
 		rods_amount = 2

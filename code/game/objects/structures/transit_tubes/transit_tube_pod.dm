@@ -149,14 +149,14 @@
 		setDir(next_dir)
 		set_glide_size(DELAY_TO_GLIDE_SIZE(enter_delay + exit_delay))
 		forceMove(next_loc) // When moving from one tube to another, skip collision and such.
-		density = current_tube.density
+		set_density(current_tube.density)
 
 		if(current_tube?.should_stop_pod(src, next_dir))
 			current_tube.pod_stopped(src, dir)
 		else
 			addtimer(CALLBACK(src, .proc/move_animation, MOVE_ANIMATION_STAGE_ONE), exit_delay)
 			return
-	density = TRUE
+	set_density(TRUE)
 	moving = FALSE
 
 	var/obj/structure/transit_tube/TT = locate(/obj/structure/transit_tube) in loc

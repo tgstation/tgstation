@@ -3,6 +3,7 @@ export const CHROMOSOME_NONE = 1;
 export const CHROMOSOME_USED = 2;
 
 export const CONSOLE_MODE_ENZYMES = 'enzymes';
+export const CONSOLE_MODE_FEATURES = 'features';
 export const CONSOLE_MODE_SEQUENCER = 'sequencer';
 export const CONSOLE_MODE_STORAGE = 'storage';
 

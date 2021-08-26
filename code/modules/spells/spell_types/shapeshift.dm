@@ -145,7 +145,8 @@
 	source = _source
 	shape = loc
 	if(!istype(shape))
-		CRASH("shapeshift holder created outside mob/living")
+		stack_trace("shapeshift holder created outside mob/living")
+		return INITIALIZE_HINT_QDEL
 	stored = caster
 	if(stored.mind)
 		stored.mind.transfer_to(shape)
@@ -179,8 +180,8 @@
 	if(A == stored && !restoring)
 		restore()
 
-/obj/shapeshift_holder/Exited(atom/movable/AM)
-	if(AM == stored && !restoring)
+/obj/shapeshift_holder/Exited(atom/movable/gone, direction)
+	if(stored == gone && !restoring)
 		restore()
 
 /obj/shapeshift_holder/proc/caster_death()

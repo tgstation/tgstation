@@ -237,9 +237,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/robot/Initialize()
 	var/obj/item/robot_model/kiltkit = loc
 	robot = kiltkit.loc
+	. = ..()
 	if(!istype(robot))
-		qdel(src)
-	return ..()
+		return INITIALIZE_HINT_QDEL
 
 /obj/item/claymore/highlander/robot/process()
 	loc.layer = LARGE_MOB_LAYER
@@ -270,19 +270,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku!"))
 	return(BRUTELOSS)
 
-/obj/item/katana/cursed
+/obj/item/katana/cursed //used by wizard events, see the tendril_loot.dm file for the miner one
 	slot_flags = null
-	item_flags = DROPDEL
-
-/obj/item/katana/cursed/equipped(mob/living/carbon/human/user)
-	. = ..()
-	if(!istype(user))
-		return
-	user.gain_trauma(/datum/brain_trauma/magic/stalker, TRAUMA_RESILIENCE_MAGIC)
-
-/obj/item/katana/cursed/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 
 /obj/item/wirerod
 	name = "wired rod"
@@ -360,6 +349,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/switchblade
 	name = "switchblade"
 	icon_state = "switchblade"
+	base_icon_state = "switchblade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharp, concealable, spring-loaded knife."
@@ -374,43 +364,30 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
 	resistance_flags = FIRE_PROOF
-	var/extended = FALSE
+	/// Whether the switchblade starts extended or not.
+	var/start_extended = FALSE
 
 /obj/item/switchblade/Initialize()
 	. = ..()
-	set_extended(extended)
-
-/obj/item/switchblade/attack_self(mob/user)
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
-	set_extended(!extended)
-
-/obj/item/switchblade/proc/set_extended(new_extended)
-	extended = new_extended
-	if(extended)
-		force = 20
-		w_class = WEIGHT_CLASS_NORMAL
-		throwforce = 23
-		icon_state = "switchblade_ext"
-		attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-		attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-		hitsound = 'sound/weapons/bladeslice.ogg'
-		sharpness = SHARP_EDGED
-	else
-		force = 3
-		w_class = WEIGHT_CLASS_SMALL
-		throwforce = 5
-		icon_state = "switchblade"
-		attack_verb_continuous = list("stubs", "pokes")
-		attack_verb_simple = list("stub", "poke")
-		hitsound = 'sound/weapons/genhit.ogg'
-		sharpness = NONE
+	AddElement(/datum/element/update_icon_updates_onmob)
+	AddComponent(/datum/component/butchering, 7 SECONDS, 100)
+	AddComponent(/datum/component/transforming, \
+		start_transformed = start_extended, \
+		force_on = 20, \
+		throwforce_on = 23, \
+		throw_speed_on = throw_speed, \
+		sharpness_on = SHARP_EDGED, \
+		hitsound_on = 'sound/weapons/bladeslice.ogg', \
+		w_class_on = WEIGHT_CLASS_NORMAL, \
+		attack_verb_continuous_on = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
+		attack_verb_simple_on = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"))
 
 /obj/item/switchblade/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS)
 
 /obj/item/switchblade/extended
-	extended = TRUE
+	start_extended = TRUE
 
 /obj/item/phone
 	name = "red phone"
@@ -643,7 +620,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "baseball_bat"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	force = 10
+	force = 12
 	wound_bonus = -10
 	throwforce = 12
 	attack_verb_continuous = list("beats", "smacks")
@@ -657,9 +634,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	if(prob(1))
 		name = "cricket bat"
-		desc = "You've got red on you."
 		icon_state = "baseball_bat_brit"
 		inhand_icon_state = "baseball_bat_brit"
+		if(prob(50))
+			desc = "You've got red on you."
+		else
+			desc = "You gotta know what a crumpet is to understand cricket."
+
+	AddElement(/datum/element/kneecapping)
 
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"
@@ -695,7 +677,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return
 	else if(!target.anchored)
 		var/whack_speed = (prob(60) ? 1 : 4)
-		target.throw_at(throw_target, rand(1, 2), whack_speed, user) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
+		target.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
 
 /obj/item/melee/baseball_bat/ablative
 	name = "metal baseball bat"

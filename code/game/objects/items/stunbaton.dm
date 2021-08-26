@@ -213,6 +213,9 @@
 		else
 			to_chat(user, span_danger("The baton is still charging!"))
 			return
+	else if(user.combat_mode && !turned_on)
+		..()
+		return
 	else
 		M.visible_message(span_warning("[user] prods [M] with [src]. Luckily it was off."), \
 					span_warning("[user] prods you with [src]. Luckily it was off."))
@@ -252,8 +255,8 @@
 
 	attack_cooldown_check = world.time + attack_cooldown
 
-	ADD_TRAIT(L, TRAIT_IWASBATONED, STATUS_EFFECT_TRAIT)
-	addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_IWASBATONED, STATUS_EFFECT_TRAIT), attack_cooldown)
+	ADD_TRAIT(L, TRAIT_IWASBATONED, user)
+	addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_IWASBATONED, user), attack_cooldown)
 
 	return 1
 

@@ -387,12 +387,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"dR" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "dU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1259,6 +1253,20 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"oX" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/tank/air,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "oZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden{
 	dir = 1
@@ -1691,11 +1699,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"ub" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "uc" = (
 /obj/structure/bookcase/random/religion,
 /obj/machinery/light/small/directional/north,
@@ -1762,6 +1765,11 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"vl" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "vE" = (
@@ -2611,6 +2619,12 @@
 /obj/item/disk/nuclear/fake,
 /obj/item/barcodescanner,
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Fb" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 1
+	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "Ff" = (
 /obj/structure/flora/ausbushes/genericbush,
@@ -3707,20 +3721,6 @@
 	dir = 6
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape)
-"Rc" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/tank/air,
-/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Rd" = (
 /obj/machinery/hydroponics/soil,
@@ -6171,7 +6171,7 @@ yc
 Rx
 Su
 YB
-dR
+Fb
 nr
 Ho
 Ho
@@ -6253,7 +6253,7 @@ yc
 Zr
 Ig
 TK
-dR
+Fb
 nr
 Ho
 Ho
@@ -6335,7 +6335,7 @@ OH
 DG
 Zf
 oZ
-dR
+Fb
 nr
 nr
 nr
@@ -6618,7 +6618,7 @@ JG
 (26,1,1) = {"
 as
 zE
-Rc
+oX
 bb
 aa
 Tm
@@ -7088,7 +7088,7 @@ Lu
 Am
 jx
 jx
-ub
+vl
 SJ
 SJ
 kt

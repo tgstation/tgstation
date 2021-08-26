@@ -247,7 +247,7 @@
 			stored.forceMove(T)
 			src.transfer_fingerprints_to(stored)
 			stored.set_anchored(FALSE)
-			stored.density = TRUE
+			stored.set_density(TRUE)
 			stored.update_appearance()
 	for(var/atom/movable/AM in src) //out, out, darned crowbar!
 		AM.forceMove(T)

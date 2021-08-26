@@ -75,33 +75,35 @@
 		return CanAStarPass(ID, to_dir, caller.pulling)
 	return TRUE //diseases, stings, etc can pass
 
-/obj/structure/plasticflaps/CanAllowThrough(atom/movable/A, turf/T)
+
+/obj/structure/plasticflaps/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(A.pass_flags & PASSFLAPS) //For anything specifically engineered to cross plastic flaps.
+	if(mover.pass_flags & PASSFLAPS) //For anything specifically engineered to cross plastic flaps.
 		return TRUE
-	if(istype(A) && (A.pass_flags & PASSGLASS))
+	if(mover.pass_flags & PASSGLASS)
 		return prob(60)
 
-	var/obj/structure/bed/B = A
-	if(istype(A, /obj/structure/bed) && (B.has_buckled_mobs() || B.density))//if it's a bed/chair and is dense or someone is buckled, it will not pass
-		return FALSE
-
-	if(istype(A, /obj/structure/closet/cardboard))
-		var/obj/structure/closet/cardboard/C = A
-		if(C.move_delay)
+	if(istype(mover, /obj/structure/bed))
+		var/obj/structure/bed/bed_mover = mover
+		if(bed_mover.density || bed_mover.has_buckled_mobs())//if it's a bed/chair and is dense or someone is buckled, it will not pass
 			return FALSE
 
-	if(ismecha(A))
+	else if(istype(mover, /obj/structure/closet/cardboard))
+		var/obj/structure/closet/cardboard/cardboard_mover = mover
+		if(cardboard_mover.move_delay)
+			return FALSE
+
+	else if(ismecha(mover))
 		return FALSE
 
-	else if(isliving(A)) // You Shall Not Pass!
-		var/mob/living/M = A
-		if(M.buckled && istype(M.buckled, /mob/living/simple_animal/bot/mulebot)) // mulebot passenger gets a free pass.
+	else if(isliving(mover)) // You Shall Not Pass!
+		var/mob/living/living_mover = mover
+		if(istype(living_mover.buckled, /mob/living/simple_animal/bot/mulebot)) // mulebot passenger gets a free pass.
 			return TRUE
 
-		var/ventcrawler = HAS_TRAIT(M, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(M, TRAIT_VENTCRAWLER_NUDE)
-		if(M.body_position == STANDING_UP && !ventcrawler && M.mob_size != MOB_SIZE_TINY) //If your not laying down, or a ventcrawler or a small creature, no pass.
-			return FALSE
+		if(living_mover.body_position == STANDING_UP && living_mover.mob_size != MOB_SIZE_TINY && !(HAS_TRAIT(living_mover, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(living_mover, TRAIT_VENTCRAWLER_NUDE)))
+			return FALSE //If you're not laying down, or a small creature, or a ventcrawler, then no pass.
+
 
 /obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

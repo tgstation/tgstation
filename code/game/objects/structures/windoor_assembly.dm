@@ -39,10 +39,10 @@
 		COMSIG_ATOM_EXIT = .proc/on_exit,
 	)
 
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/windoor_assembly/Destroy()
-	density = FALSE
+	set_density(FALSE)
 	air_update_turf(TRUE, FALSE)
 	return ..()
 
@@ -55,10 +55,10 @@
 	icon_state = "[facing]_[secure ? "secure_" : ""]windoor_assembly[state]"
 	return ..()
 
-/obj/structure/windoor_assembly/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/windoor_assembly/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 
-	if(get_dir(loc, target) == dir)
+	if(border_dir == dir)
 		return
 
 	if(istype(mover, /obj/structure/window))
@@ -74,13 +74,16 @@
 	else
 		return 1
 
-/obj/structure/windoor_assembly/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+/obj/structure/windoor_assembly/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
+
+	if(leaving == src)
+		return // Let's not block ourselves.
 
 	if (leaving.pass_flags & pass_flags_self)
 		return
 
-	if (get_dir(loc, new_location) == dir && density)
+	if (direction == dir && density)
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
@@ -258,7 +261,7 @@
 
 				if(W.use_tool(src, user, 40, volume=100) && electronics)
 
-					density = TRUE //Shouldn't matter but just incase
+					set_density(TRUE) //Shouldn't matter but just incase
 					to_chat(user, span_notice("You finish the windoor."))
 
 					if(secure)
@@ -270,7 +273,7 @@
 							windoor.icon_state = "rightsecureopen"
 							windoor.base_state = "rightsecure"
 						windoor.setDir(dir)
-						windoor.density = FALSE
+						windoor.set_density(FALSE)
 
 						if(electronics.one_access)
 							windoor.req_one_access = electronics.accesses
@@ -293,7 +296,7 @@
 							windoor.icon_state = "rightopen"
 							windoor.base_state = "right"
 						windoor.setDir(dir)
-						windoor.density = FALSE
+						windoor.set_density(FALSE)
 
 						if(electronics.one_access)
 							windoor.req_one_access = electronics.accesses

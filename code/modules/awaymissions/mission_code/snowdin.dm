@@ -4,7 +4,7 @@
 	name = "Snowdin"
 	icon_state = "awaycontent1"
 	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
 
 /area/awaymission/snowdin/outside
 	name = "Snowdin Tundra Plains"
@@ -14,7 +14,7 @@
 	name = "Snowdin Outpost"
 	icon_state = "awaycontent2"
 	requires_power = TRUE
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	static_lighting = TRUE
 
 /area/awaymission/snowdin/post/medbay
 	name = "Snowdin Outpost - Medbay"
@@ -96,12 +96,16 @@
 /area/awaymission/snowdin/igloo
 	name = "Snowdin Igloos"
 	icon_state = "awaycontent14"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	static_lighting = FALSE
+	base_lighting_alpha = 255
+	base_lighting_color = COLOR_WHITE
 
 /area/awaymission/snowdin/cave
 	name = "Snowdin Caves"
 	icon_state = "awaycontent15"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	static_lighting = FALSE
+	base_lighting_color = COLOR_WHITE
+	base_lighting_alpha = 255
 
 /area/awaymission/snowdin/cave/cavern
 	name = "Snowdin Depths"
@@ -115,18 +119,18 @@
 /area/awaymission/snowdin/base
 	name = "Snowdin Main Base"
 	icon_state = "awaycontent16"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	static_lighting = TRUE
 	requires_power = TRUE
 
 /area/awaymission/snowdin/dungeon1
 	name = "Snowdin Depths"
 	icon_state = "awaycontent17"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	static_lighting = TRUE
 
 /area/awaymission/snowdin/sekret
 	name = "Snowdin Operations"
 	icon_state = "awaycontent18"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	static_lighting = TRUE
 	requires_power = TRUE
 
 /area/shuttle/snowdin/elevator1
@@ -194,7 +198,7 @@
 			var/mob/living/L = thing
 			if(L.movement_type & FLYING)
 				continue //YOU'RE FLYING OVER IT
-			if("snow" in L.weather_immunities)
+			if(WEATHER_SNOW in L.weather_immunities)
 				continue
 
 			var/buckle_check = L.buckled
@@ -205,7 +209,7 @@
 
 			else if(isliving(buckle_check))
 				var/mob/living/live = buckle_check
-				if("snow" in live.weather_immunities)
+				if(WEATHER_SNOW in live.weather_immunities)
 					continue
 
 			L.adjustFireLoss(2)
@@ -222,7 +226,7 @@
 
 					for(var/BP in PP.bodyparts)
 						var/obj/item/bodypart/NN = BP
-						if(NN.status == BODYPART_ORGANIC && NN.species_id != "plasmaman") //getting every organic, non-plasmaman limb (augments/androids are immune to this)
+						if(NN.status == BODYPART_ORGANIC && NN.species_id != SPECIES_PLASMAMAN) //getting every organic, non-plasmaman limb (augments/androids are immune to this)
 							plasma_parts += NN
 						if(NN.status == BODYPART_ROBOTIC)
 							robo_parts += NN
@@ -491,7 +495,7 @@
 				/obj/item/dnainjector/lasereyesmut = 7,
 				/obj/item/gun/magic/wand/fireball/inert = 3,
 				/obj/item/pneumatic_cannon = 15,
-				/obj/item/melee/transforming/energy/sword = 7,
+				/obj/item/melee/energy/sword = 7,
 				/obj/item/book/granter/spell/knock = 15,
 				/obj/item/book/granter/spell/summonitem = 20,
 				/obj/item/book/granter/spell/forcewall = 17,
@@ -583,7 +587,7 @@
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE
-	faction = ROLE_SYNDICATE
+	faction = list(ROLE_SYNDICATE)
 	outfit = /datum/outfit/snowsyndie
 	short_desc = "You are a syndicate operative recently awoken from cryostasis in an underground outpost."
 	flavour_text = "You are a syndicate operative recently awoken from cryostasis in an underground outpost. Monitor Nanotrasen communications and record information. All intruders should be \

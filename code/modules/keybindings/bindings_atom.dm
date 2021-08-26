@@ -7,13 +7,8 @@
 		movement_dir = movement_dir | user.movement_keys[_key]
 	if(user.next_move_dir_add)
 		movement_dir |= user.next_move_dir_add
-		user.next_move_dir_add = 0
 	if(user.next_move_dir_sub)
 		movement_dir &= ~user.next_move_dir_sub
-		user.next_move_dir_sub = 0
-	if(!movement_dir)
-		return
-
 	// Sanity checks in case you hold left and right and up to make sure you only go up
 	if((movement_dir & NORTH) && (movement_dir & SOUTH))
 		movement_dir &= ~(NORTH|SOUTH)

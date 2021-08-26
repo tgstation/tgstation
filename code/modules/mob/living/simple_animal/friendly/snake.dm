@@ -53,10 +53,19 @@
 			living_mobs += HM
 
 	// if no tasty mice to chase, lets chase any living mob enemies in our vision range
-	if(length(mice) == 0)
-		//Filter living mobs (in range mobs) by those we consider enemies (retaliate behaviour)
-		return  living_mobs & enemies
-	return mice
+	if(length(mice))
+		return mice
+
+	var/list/actual_enemies = list()
+	for(var/datum/weakref/enemy as anything in enemies)
+		var/mob/flesh_and_blood = enemy.resolve()
+		if(!flesh_and_blood)
+			enemies -= enemy
+			continue
+		actual_enemies += flesh_and_blood
+
+	//Filter living mobs (in range mobs) by those we consider enemies (retaliate behaviour)
+	return  living_mobs & actual_enemies
 
 /mob/living/simple_animal/hostile/retaliate/snake/AttackingTarget()
 	if(istype(target, /mob/living/simple_animal/mouse))

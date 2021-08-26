@@ -16,6 +16,12 @@
 	barefootstep = FOOTSTEP_LAVA
 	clawfootstep = FOOTSTEP_LAVA
 	heavyfootstep = FOOTSTEP_LAVA
+	/// How much fire damage we deal to living mobs stepping on us
+	var/lava_damage = 20
+	/// How many firestacks we add to living mobs stepping on us
+	var/lava_firestacks = 20
+	/// How much temperature we expose objects with
+	var/temperature_damage = 10000
 
 /turf/open/lava/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -36,15 +42,15 @@
 /turf/open/lava/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
-/turf/open/lava/Entered(atom/movable/AM)
-	if(burn_stuff(AM))
+/turf/open/lava/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(burn_stuff(arrived))
 		START_PROCESSING(SSobj, src)
 
-/turf/open/lava/Exited(atom/movable/Obj, atom/newloc)
+/turf/open/lava/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(isliving(Obj))
-		var/mob/living/L = Obj
-		if(!islava(newloc))
+	if(isliving(gone))
+		var/mob/living/L = gone
+		if(!islava(get_step(src, direction)))
 			REMOVE_TRAIT(L, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
 		if(!L.on_fire)
 			L.update_fire()
@@ -139,7 +145,7 @@
 				O.resistance_flags &= ~FIRE_PROOF
 			if(O.armor.fire > 50) //obj with 100% fire armor still get slowly burned away.
 				O.armor = O.armor.setRating(fire = 50)
-			O.fire_act(10000, 1000 * delta_time)
+			O.fire_act(temperature_damage, 1000 * delta_time)
 			if(istype(O, /obj/structure/closet))
 				var/obj/structure/closet/C = O
 				for(var/I in C.contents)
@@ -156,7 +162,7 @@
 					continue
 			else if(isliving(buckle_check))
 				var/mob/living/live = buckle_check
-				if("lava" in live.weather_immunities)
+				if(WEATHER_LAVA in live.weather_immunities)
 					continue
 
 			if(iscarbon(L))
@@ -167,15 +173,15 @@
 				if(S && H && S.clothing_flags & LAVAPROTECT && H.clothing_flags & LAVAPROTECT)
 					return
 
-			if("lava" in L.weather_immunities)
+			if(WEATHER_LAVA in L.weather_immunities)
 				continue
 
 			ADD_TRAIT(L, TRAIT_PERMANENTLY_ONFIRE,TURF_TRAIT)
 			L.update_fire()
 
-			L.adjustFireLoss(20 * delta_time)
+			L.adjustFireLoss(lava_damage * delta_time)
 			if(L) //mobs turning into object corpses could get deleted here.
-				L.adjust_fire_stacks(20 * delta_time)
+				L.adjust_fire_stacks(lava_firestacks * delta_time)
 				L.IgniteMob()
 
 /turf/open/lava/smooth

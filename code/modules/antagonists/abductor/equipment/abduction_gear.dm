@@ -57,9 +57,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.update_inv_wear_suit()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
 	if(slot == ITEM_SLOT_OCLOTHING) //we only give the mob the ability to activate the vest if he's actually wearing it.
@@ -396,6 +394,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/shrink)
 	inhand_icon_state = "shrink_ray"
 	icon_state = "shrink_ray"
+	automatic_charge_overlays = FALSE
 	fire_delay = 30
 	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it? (abductors need this to be set so the gun is usable for them)
@@ -845,7 +844,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/table/optable/abductor/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER

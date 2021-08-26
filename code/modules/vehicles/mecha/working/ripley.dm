@@ -163,8 +163,8 @@
 
 	take_damage(max_integrity * 0.5, sound_effect=FALSE) //Low starting health
 
-/obj/vehicle/sealed/mecha/working/ripley/Exit(atom/movable/O)
-	if(O in cargo)
+/obj/vehicle/sealed/mecha/working/ripley/Exit(atom/movable/leaving, direction)
+	if(leaving in cargo)
 		return FALSE
 	return ..()
 

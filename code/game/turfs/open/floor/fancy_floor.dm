@@ -185,6 +185,11 @@
 	slowdown = 1.5
 	planetary_atmos = FALSE
 
+/turf/open/floor/grass/snow/actually_safe
+	slowdown = 0
+	planetary_atmos = FALSE
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+
 
 /turf/open/floor/grass/fakebasalt //Heart is not a real planeteer power
 	name = "aesthetic volcanic flooring"
@@ -757,20 +762,6 @@
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/carpet/neon/simple/pink/nodots/airless
-	initial_gas_mix = AIRLESS_ATMOS
-
-/turf/open/floor/fake_error
-	name = ""
-	desc = "Neon carpet produced when a software error occured at the production line."
-	icon = 'icons/turf/floors.dmi'
-	base_icon_state = "fake_error"
-	icon_state = "fake_error"
-
-/turf/open/floor/fake_error/update_overlays()
-	. = ..()
-	. += emissive_appearance(icon, "fake_error_glow", alpha=src.alpha)
-
-/turf/open/floor/fake_error/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/fakepit

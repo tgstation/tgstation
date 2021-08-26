@@ -64,9 +64,9 @@
 		span_notice("You climb out of [src]!"))
 	open_machine()
 
-/obj/machinery/sleeper/Exited(atom/movable/user)
-	if (!state_open && user == occupant)
-		container_resist_act(user)
+/obj/machinery/sleeper/Exited(atom/movable/gone, direction)
+	if (!state_open && gone == occupant)
+		container_resist_act(gone)
 
 /obj/machinery/sleeper/relaymove(mob/living/user, direction)
 	if (!state_open)

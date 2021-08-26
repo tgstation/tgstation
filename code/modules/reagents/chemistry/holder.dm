@@ -1169,14 +1169,15 @@
 /// Updates [/datum/reagents/var/total_volume]
 /datum/reagents/proc/update_total()
 	var/list/cached_reagents = reagent_list
-	total_volume = 0
+	. = 0 // This is a relatively hot proc.
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		if((reagent.volume < 0.05) && !is_reacting)
 			del_reagent(reagent.type)
 		else if(reagent.volume <= CHEMICAL_VOLUME_MINIMUM)//For clarity
 			del_reagent(reagent.type)
 		else
-			total_volume += reagent.volume
+			. += reagent.volume
+	total_volume = .
 	recalculate_sum_ph()
 
 /**

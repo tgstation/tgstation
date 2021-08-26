@@ -1,11 +1,5 @@
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
-/datum/asset/simple/tgui_common
-	keep_local_name = TRUE
-	assets = list(
-		"tgui-common.bundle.js" = file("tgui/public/tgui-common.bundle.js"),
-	)
-
 /datum/asset/simple/tgui
 	keep_local_name = TRUE
 	assets = list(
@@ -377,9 +371,15 @@
 				if (machine)
 					item = machine
 
-			icon_file = initial(item.icon)
-			icon_state = initial(item.icon_state)
+			// Check for GAGS support where necessary
+			var/greyscale_config = initial(item.greyscale_config)
+			var/greyscale_colors = initial(item.greyscale_colors)
+			if (greyscale_config && greyscale_colors)
+				icon_file = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
+			else
+				icon_file = initial(item.icon)
 
+			icon_state = initial(item.icon_state)
 			if(!(icon_state in icon_states(icon_file)))
 				warning("design [D] with icon '[icon_file]' missing state '[icon_state]'")
 				continue

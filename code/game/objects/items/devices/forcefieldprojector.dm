@@ -16,6 +16,10 @@
 	var/max_fields = 3
 	var/list/current_fields
 	var/field_distance_limit = 7
+	/// Time it takes to materialize a forcefield.
+	var/creation_time = 1 SECONDS
+	/// Checks to make sure the projector isn't busy with making another forcefield.
+	var/force_proj_busy = FALSE
 
 /obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
@@ -42,7 +46,17 @@
 	if(LAZYLEN(current_fields) >= max_fields)
 		to_chat(user, span_warning("[src] cannot sustain any more forcefields!"))
 		return
-
+	if(force_proj_busy)
+		to_chat(user, span_notice("[src] is busy creating a forcefield."))
+		return
+	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
+	if(creation_time)
+		force_proj_busy = TRUE
+		if(!do_after(user, creation_time, target = target))
+			force_proj_busy = FALSE
+			return
+		force_proj_busy = FALSE
+	
 	playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
 	user.visible_message(span_warning("[user] projects a forcefield!"),span_notice("You project a forcefield."))
 	var/obj/structure/projected_forcefield/F = new(T, src)
@@ -99,8 +113,9 @@
 /obj/structure/projected_forcefield/Destroy()
 	visible_message(span_warning("[src] flickers and disappears!"))
 	playsound(src,'sound/weapons/resonator_blast.ogg',25,TRUE)
-	generator.current_fields -= src
-	generator = null
+	if(generator)
+		generator.current_fields -= src
+		generator = null
 	return ..()
 
 /obj/structure/projected_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -109,4 +124,5 @@
 /obj/structure/projected_forcefield/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
-	generator.shield_integrity = max(generator.shield_integrity - damage_amount, 0)
+	if(generator)
+		generator.shield_integrity = max(generator.shield_integrity - damage_amount, 0)

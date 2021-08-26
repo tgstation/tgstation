@@ -92,7 +92,7 @@
 /obj/structure/fence/proc/update_cut_status()
 	if(!cuttable)
 		return
-	density = TRUE
+	var/new_density = TRUE
 	switch(hole_size)
 		if(NO_HOLE)
 			icon_state = initial(icon_state)
@@ -100,7 +100,8 @@
 			icon_state = "straight_cut2"
 		if(LARGE_HOLE)
 			icon_state = "straight_cut3"
-			density = FALSE
+			new_density = FALSE
+	set_density(new_density)
 
 //FENCE DOORS
 
@@ -134,7 +135,7 @@
 	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
 
 /obj/structure/fence/door/proc/update_door_status()
-	density = !density
+	set_density(!density)
 	icon_state = density ? "door_closed" : "door_opened"
 
 /obj/structure/fence/door/proc/can_open(mob/user)

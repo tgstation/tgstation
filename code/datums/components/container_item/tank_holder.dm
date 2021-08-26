@@ -26,6 +26,6 @@
 	else
 		I.forceMove(container)
 	container.tank = I
-	container.density = make_density
+	container.set_density(make_density)
 	container.icon_state = tank_holder_icon_state
 	return TRUE

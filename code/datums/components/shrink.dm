@@ -10,7 +10,7 @@
 	parent_atom.transform = parent_atom.transform.Scale(0.5,0.5)
 	olddens = parent_atom.density
 	oldopac = parent_atom.opacity
-	parent_atom.density = 0
+	parent_atom.set_density(FALSE)
 	parent_atom.set_opacity(FALSE)
 	if(isliving(parent_atom))
 		var/mob/living/L = parent_atom
@@ -30,7 +30,7 @@
 /datum/component/shrink/Destroy()
 	var/atom/parent_atom = parent
 	parent_atom.transform = parent_atom.transform.Scale(2,2)
-	parent_atom.density = olddens
+	parent_atom.set_density(olddens)
 	parent_atom.set_opacity(oldopac)
 	if(isliving(parent_atom))
 		var/mob/living/L = parent_atom

@@ -112,10 +112,10 @@
 	//humans
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		if(dna[H.dna.uni_identity])
+		if(dna[H.dna.unique_identity])
 			to_chat(user, span_notice("Humanoid data already present in local storage."))
 			return
-		dna[H.dna.uni_identity] = 1
+		dna[H.dna.unique_identity] = 1
 		to_chat(user, span_notice("Humanoid data added to local storage."))
 
 /obj/machinery/dna_vault
@@ -254,8 +254,8 @@
 			to_chat(H, span_notice("You feel resistant to airborne toxins."))
 			if(locate(/obj/item/organ/lungs) in H.internal_organs)
 				var/obj/item/organ/lungs/L = H.internal_organs_slot[ORGAN_SLOT_LUNGS]
-				L.tox_breath_dam_min = 0
-				L.tox_breath_dam_max = 0
+				L.plas_breath_dam_min = 0
+				L.plas_breath_dam_max = 0
 			ADD_TRAIT(H, TRAIT_VIRUSIMMUNE, "dna_vault")
 		if(VAULT_NOBREATH)
 			to_chat(H, span_notice("Your lungs feel great."))

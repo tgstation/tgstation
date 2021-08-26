@@ -46,5 +46,5 @@
 /turf/open/floor/plasteel/white/corner : /turf/open/floor/iron/white/corner {@OLD}
 /turf/open/floor/plasteel/white/side : /turf/open/floor/iron/white/side {@OLD}
 /turf/open/floor/plasteel/white/telecomms : /turf/open/floor/iron/white/telecomms {@OLD}
-/turf/open/floor/plasteel/yellowsiding : /turf/open/floor/iron/yellowsiding {@OLD}
-/turf/open/floor/plasteel/yellowsiding/corner : /turf/open/floor/iron/yellowsiding/corner {@OLD}
+/turf/open/floor/plasteel/yellowsiding : /turf/open/floor/iron/yellowsiding, /obj/effect/turf_decal/siding/yellow {@OLD}
+/turf/open/floor/plasteel/yellowsiding/corner : /turf/open/floor/iron/yellowsiding/corner, /obj/effect/turf_decal/siding/yellow/corner {@OLD}

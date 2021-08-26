@@ -1,5 +1,0 @@
-author: "Maurukas"
-delete-after: True
-changes: 
-  - bugfix: "Metastation has received the correct health HUDs for its new medbay"
-  - bugfix: "Camera coverage has been improved in Metastation's medbay"

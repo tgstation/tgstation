@@ -17,7 +17,7 @@
 	. = ..()
 	if(isnull(.))
 		return
-	density = anchorvalue ? initial(pipe_type.density) : FALSE
+	set_density(anchorvalue ? initial(pipe_type.density) : FALSE)
 
 /obj/structure/disposalconstruct/Initialize(mapload, _pipe_type, _dir = SOUTH, flip = FALSE, obj/make_from)
 	. = ..()

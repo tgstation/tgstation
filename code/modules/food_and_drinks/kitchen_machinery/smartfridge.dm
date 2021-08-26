@@ -12,11 +12,15 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/smartfridge
-
-	var/base_build_path = /obj/machinery/smartfridge ///What path boards used to construct it should build into when dropped. Needed so we don't accidentally have them build variants with items preloaded in them.
+	/// What path boards used to construct it should build into when dropped. Needed so we don't accidentally have them build variants with items preloaded in them.
+	var/base_build_path = /obj/machinery/smartfridge
+	/// Maximum number of items that can be loaded into the machine
 	var/max_n_of_items = 1500
+	/// If the AI is allowed to retrive items within the machine
 	var/allow_ai_retrieve = FALSE
+	/// List of items that the machine starts with upon spawn
 	var/list/initial_contents
+	/// If the machine shows an approximate number of its contents on its sprite
 	var/visible_contents = TRUE
 
 /obj/machinery/smartfridge/Initialize()
@@ -49,7 +53,8 @@
 		icon_state = "[initial(icon_state)]"
 		return ..()
 
-	switch(contents.len)
+	var/list/shown_contents = contents - component_parts
+	switch(shown_contents.len)
 		if(0)
 			icon_state = "[initial(icon_state)]"
 		if(1 to 25)
@@ -65,9 +70,6 @@
 	if(!machine_stat)
 		. += emissive_appearance(icon, "smartfridge-light-mask", alpha = src.alpha)
 
-
-
-
 /*******************
 *   Item Adding
 ********************/
@@ -77,7 +79,7 @@
 		cut_overlays()
 		if(panel_open)
 			add_overlay("[initial(icon_state)]-panel")
-		updateUsrDialog()
+		SStgui.update_uis(src)
 		return
 
 	if(default_pry_open(O))
@@ -88,20 +90,20 @@
 		return
 
 	if(default_deconstruction_crowbar(O))
-		updateUsrDialog()
+		SStgui.update_uis(src)
 		return
 
 	if(!machine_stat)
-
-		if(contents.len >= max_n_of_items)
+		var/list/shown_contents = contents - component_parts
+		if(shown_contents.len >= max_n_of_items)
 			to_chat(user, span_warning("\The [src] is full!"))
 			return FALSE
 
 		if(accept_check(O))
 			load(O)
 			user.visible_message(span_notice("[user] adds \the [O] to \the [src]."), span_notice("You add \the [O] to \the [src]."))
-			updateUsrDialog()
-			if (visible_contents)
+			SStgui.update_uis(src)
+			if(visible_contents)
 				update_appearance()
 			return TRUE
 
@@ -109,15 +111,15 @@
 			var/obj/item/storage/P = O
 			var/loaded = 0
 			for(var/obj/G in P.contents)
-				if(contents.len >= max_n_of_items)
+				if(shown_contents.len >= max_n_of_items)
 					break
 				if(accept_check(G))
 					load(G)
 					loaded++
-			updateUsrDialog()
+			SStgui.update_uis(src)
 
 			if(loaded)
-				if(contents.len >= max_n_of_items)
+				if(shown_contents.len >= max_n_of_items)
 					user.visible_message(span_notice("[user] loads \the [src] with \the [O]."), \
 						span_notice("You fill \the [src] with \the [O]."))
 				else
@@ -134,12 +136,10 @@
 
 	if(!user.combat_mode)
 		to_chat(user, span_warning("\The [src] smartly refuses [O]."))
-		updateUsrDialog()
+		SStgui.update_uis(src)
 		return FALSE
 	else
 		return ..()
-
-
 
 /obj/machinery/smartfridge/proc/accept_check(obj/item/O)
 	if(istype(O, /obj/item/food/grown/) || istype(O, /obj/item/seeds/) || istype(O, /obj/item/grown/) || istype(O, /obj/item/graft/))
@@ -166,7 +166,6 @@
 	if(!M.put_in_hands(O))
 		O.forceMove(drop_location())
 		adjust_item_drop_location(O)
-
 
 /obj/machinery/smartfridge/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -197,7 +196,6 @@
 	.["name"] = name
 	.["isdryer"] = FALSE
 
-
 /obj/machinery/smartfridge/handle_atom_del(atom/A) // Update the UIs in case something inside gets deleted
 	SStgui.update_uis(src)
 
@@ -217,32 +215,28 @@
 				desired = text2num(params["amount"])
 			else
 				desired = input("How many items?", "How many items would you like to take out?", 1) as null|num
+				if(!desired)
+					return FALSE
 
 			if(QDELETED(src) || QDELETED(usr) || !usr.Adjacent(src)) // Sanity checkin' in case stupid stuff happens while we wait for input()
 				return FALSE
 
-			if(desired == 1 && Adjacent(usr) && !issilicon(usr))
-				for(var/obj/item/O in src)
-					if(O.name == params["name"])
-						if(O in component_parts)
-							CRASH("Attempted removal of [O] component_part from vending machine via vending interface.")
-						dispense(O, usr)
-						break
-				if (visible_contents)
-					update_appearance()
-				return TRUE
-
-			for(var/obj/item/O in src)
+			for(var/obj/item/dispensed_item in src)
 				if(desired <= 0)
 					break
-				if(O.name == params["name"])
-					if(O in component_parts)
-						CRASH("Attempted removal of [O] component_part from vending machine via vending interface.")
-					dispense(O, usr)
+				// Grab the first item in contents which name matches our passed name.
+				// format_text() is used here to strip \improper and \proper from both names,
+				// which is required for correct string comparison between them.
+				if(format_text(dispensed_item.name) == format_text(params["name"]))
+					if(dispensed_item in component_parts)
+						CRASH("Attempted removal of [dispensed_item] component_part from smartfridge via smartfridge interface.")
+					dispense(dispensed_item, usr)
 					desired--
+
 			if (visible_contents)
 				update_appearance()
 			return TRUE
+
 	return FALSE
 
 
@@ -322,7 +316,8 @@
 	. = ..()
 	if(drying)
 		. += "drying_rack_drying"
-	if(contents.len)
+	var/list/shown_contents = contents - component_parts
+	if(shown_contents.len)
 		. += "drying_rack_filled"
 
 /obj/machinery/smartfridge/drying_rack/process()
@@ -452,10 +447,10 @@
 	for(var/obj/item/organ/organ in contents)
 		organ.applyOrganDamage(-repair_rate * organ.maxHealth * delta_time)
 
-/obj/machinery/smartfridge/organ/Exited(atom/movable/AM, atom/newLoc)
+/obj/machinery/smartfridge/organ/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(isorgan(AM))
-		var/obj/item/organ/O = AM
+	if(isorgan(gone))
+		var/obj/item/organ/O = gone
 		O.organ_flags &= ~ORGAN_FROZEN
 
 // -----------------------------

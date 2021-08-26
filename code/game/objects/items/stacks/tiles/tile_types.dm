@@ -894,33 +894,6 @@
 /obj/item/stack/tile/carpet/neon/simple/pink/nodots/sixty
 	amount = 60
 
-/obj/item/stack/tile/fake_error
-	name = "misproduced carpet"
-	singular_name = "misproduced carpet tile"
-	desc = "A piece of neon carpet produced under a software error."
-	icon_state = "tile-error"
-	inhand_icon_state = "tile-error"
-	turf_type = /turf/open/floor/fake_error
-	merge_type = /obj/item/stack/tile/fake_error
-	resistance_flags = FLAMMABLE
-
-/obj/item/stack/tile/fake_error/update_overlays()
-	. = ..()
-	. += emissive_appearance(icon, icon_state, alpha = alpha)
-
-/obj/item/stack/tile/fake_error/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
-	. = ..()
-	. += emissive_appearance(standing.icon, standing.icon_state, alpha = standing.alpha, appearance_flags = KEEP_APART)
-
-/obj/item/stack/tile/fake_error/ten
-	amount = 10
-
-/obj/item/stack/tile/fake_error/thirty
-	amount = 30
-
-/obj/item/stack/tile/fake_error/sixty
-	amount = 60
-
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
 	singular_name = "astral carpet tile"

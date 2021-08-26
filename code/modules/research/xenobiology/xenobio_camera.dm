@@ -412,6 +412,8 @@
 
 //Place slimes
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoTurfClickShift(mob/living/user, turf/open/T)
+	SIGNAL_HANDLER
+
 	if(!GLOB.cameranet.checkTurfVis(T))
 		to_chat(user, span_warning("Target is not near a camera. Cannot proceed."))
 		return

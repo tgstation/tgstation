@@ -77,13 +77,14 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(flags & CHANGETURF_SKIP)
 		return new path(src)
 
-	var/old_dynamic_lighting = dynamic_lighting
+	var/old_always_lit = always_lit
 	var/old_lighting_object = lighting_object
 	var/old_lighting_corner_NE = lighting_corner_NE
 	var/old_lighting_corner_SE = lighting_corner_SE
 	var/old_lighting_corner_SW = lighting_corner_SW
 	var/old_lighting_corner_NW = lighting_corner_NW
 	var/old_directional_opacity = directional_opacity
+	var/old_dynamic_lumcount = dynamic_lumcount
 	var/old_rcd_memory = rcd_memory
 
 	var/old_bp = blueprint_data
@@ -97,7 +98,18 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	changing_turf = TRUE
 	qdel(src) //Just get the side effects and call Destroy
+	//We do this here so anything that doesn't want to persist can clear itself
+	var/list/old_comp_lookup = comp_lookup?.Copy()
+	var/list/old_signal_procs = signal_procs?.Copy()
 	var/turf/W = new path(src)
+
+	// WARNING WARNING
+	// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS
+	// It's possible because turfs are fucked, and if you have one in a list and it's replaced with another one, the list ref points to the new turf
+	if(old_comp_lookup)
+		LAZYOR(W.comp_lookup, old_comp_lookup)
+	if(old_signal_procs)
+		LAZYOR(W.signal_procs, old_signal_procs)
 
 	for(var/datum/callback/callback as anything in post_change_callbacks)
 		callback.InvokeAsync(W)
@@ -118,18 +130,21 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	lighting_corner_SW = old_lighting_corner_SW
 	lighting_corner_NW = old_lighting_corner_NW
 
+	dynamic_lumcount = old_dynamic_lumcount
+
+	if(always_lit != old_always_lit)
+		if(always_lit)
+			add_overlay(GLOB.fullbright_overlay)
+		else
+			cut_overlay(GLOB.fullbright_overlay)
+
 	if(SSlighting.initialized)
 		lighting_object = old_lighting_object
 
 		directional_opacity = old_directional_opacity
 		recalculate_directional_opacity()
 
-		if (dynamic_lighting != old_dynamic_lighting)
-			if (IS_DYNAMIC_LIGHTING(src))
-				lighting_build_overlay()
-			else
-				lighting_clear_overlay()
-		else if(lighting_object && !lighting_object.needs_update)
+		if(lighting_object && !lighting_object.needs_update)
 			lighting_object.update()
 
 		for(var/turf/open/space/space_tile in RANGE_TURFS(1, src))
@@ -148,11 +163,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		var/datum/excited_group/stashed_group = excited_group
 		. = ..() //If path == type this will return us, don't bank on making a new type
 		if (!.) // changeturf failed or didn't do anything
-			QDEL_NULL(stashed_air)
 			return
 		var/turf/open/newTurf = .
 		newTurf.air.copy_from(stashed_air)
-		QDEL_NULL(stashed_air)
 		newTurf.excited = stashed_state
 		newTurf.excited_group = stashed_group
 		#ifdef VISUALIZE_ACTIVE_TURFS

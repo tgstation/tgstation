@@ -27,6 +27,7 @@
 
 /obj/item/circuit_component/bot_circuit
 	display_name = "Drone"
+	desc = "Used to send movement output signals to the drone shell."
 
 	/// The inputs to allow for the drone to move
 	var/datum/port/input/north
@@ -41,7 +42,7 @@
 	COOLDOWN_DECLARE(west_delay)
 
 	/// Delay between each movement
-	var/move_delay = COMP_CLOCK_DELAY
+	var/move_delay = 0.2 SECONDS
 
 /obj/item/circuit_component/bot_circuit/Initialize()
 	. = ..()

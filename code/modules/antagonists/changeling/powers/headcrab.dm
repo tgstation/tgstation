@@ -29,15 +29,17 @@
 	for(var/mob/living/silicon/S in range(2,user))
 		to_chat(S, span_userdanger("Your sensors are disabled by a shower of blood!"))
 		S.Paralyze(60)
-	var/turf = get_turf(user)
+	var/turf/user_turf = get_turf(user)
+	user.transfer_observers_to(user_turf) // user is about to be deleted, store orbiters on the turf
 	user.gib()
 	. = TRUE
 	sleep(5) // So it's not killed in explosion
-	var/mob/living/simple_animal/hostile/headcrab/crab = new(turf)
+	var/mob/living/simple_animal/hostile/headcrab/crab = new(user_turf)
 	for(var/obj/item/organ/I in organs)
 		I.forceMove(crab)
 	crab.origin = M
 	if(crab.origin)
 		crab.origin.active = TRUE
 		crab.origin.transfer_to(crab)
+		user_turf.transfer_observers_to(crab)
 		to_chat(crab, span_warning("You burst out of the remains of your former body in a shower of gore!"))

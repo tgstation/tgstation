@@ -450,7 +450,10 @@
 /////////////////////////////////// TRAIT PROCS ////////////////////////////////////
 
 /mob/living/proc/cure_blind(source)
-	REMOVE_TRAIT(src, TRAIT_BLIND, source)
+	if(source)
+		REMOVE_TRAIT(src, TRAIT_BLIND, source)
+	else
+		REMOVE_TRAIT_NOT_FROM(src, TRAIT_BLIND, list(QUIRK_TRAIT, EYES_COVERED, BLINDFOLD_TRAIT))
 	if(!HAS_TRAIT(src, TRAIT_BLIND))
 		update_blindness()
 

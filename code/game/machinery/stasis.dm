@@ -48,12 +48,12 @@
 		play_power_sound()
 		update_appearance()
 
-/obj/machinery/stasis/Exited(atom/movable/AM, atom/newloc)
-	if(AM == occupant)
-		var/mob/living/L = AM
+/obj/machinery/stasis/Exited(atom/movable/gone, direction)
+	if(gone == occupant)
+		var/mob/living/L = gone
 		if(IS_IN_STASIS(L))
 			thaw_them(L)
-	. = ..()
+	return ..()
 
 /obj/machinery/stasis/proc/stasis_running()
 	return stasis_enabled && is_operational
