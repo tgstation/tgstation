@@ -182,7 +182,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		preference.apply_to_client(parent, read_preference(preference.type))
 
 	//general preferences
-	READ_FILE(S["ooccolor"], ooccolor)
 	READ_FILE(S["lastchangelog"], lastchangelog)
 	READ_FILE(S["hotkeys"], hotkeys)
 	READ_FILE(S["chat_on_map"], chat_on_map)
@@ -249,7 +248,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 
 	//Sanitize
-	ooccolor = sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
 	lastchangelog = sanitize_text(lastchangelog, initial(lastchangelog))
 	hotkeys = sanitize_integer(hotkeys, FALSE, TRUE, initial(hotkeys))
 	chat_on_map = sanitize_integer(chat_on_map, FALSE, TRUE, initial(chat_on_map))
@@ -318,7 +316,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		write_preference(preference, read_preference(preference_type))
 
 	//general preferences
-	WRITE_FILE(S["ooccolor"], ooccolor)
 	WRITE_FILE(S["lastchangelog"], lastchangelog)
 	WRITE_FILE(S["hotkeys"], hotkeys)
 	WRITE_FILE(S["chat_on_map"], chat_on_map)

@@ -2053,6 +2053,7 @@
 #include "code\modules\client\preferences\gender.dm"
 #include "code\modules\client\preferences\ghost.dm"
 #include "code\modules\client\preferences\names.dm"
+#include "code\modules\client\preferences\ooc.dm"
 #include "code\modules\client\preferences\pda.dm"
 #include "code\modules\client\preferences\screentips.dm"
 #include "code\modules\client\preferences\species.dm"

@@ -14,7 +14,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	//game-preferences
 	var/lastchangelog = "" //Saved changlog filesize to detect if there was a change
-	var/ooccolor = "#c43b23"
 
 	//Antag preferences
 	var/list/be_special = list() //Special role selection
