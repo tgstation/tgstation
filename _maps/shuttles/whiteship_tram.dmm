@@ -71,9 +71,9 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 10
 	},
-/obj/effect/spawner/lootdrop/glowstick,
-/obj/effect/spawner/lootdrop/glowstick,
-/obj/effect/spawner/lootdrop/glowstick,
+/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/random/decoration/glowstick,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/abandoned/engine)
 "am" = (
@@ -196,7 +196,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
 /obj/structure/cable,
-/obj/effect/spawner/lootdrop/garbage_spawner,
+/obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/abandoned/cargo)
 "aG" = (
@@ -259,7 +259,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 1
 	},
-/obj/effect/spawner/lootdrop/cigbutt,
+/obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/abandoned/cargo)
 "aP" = (
@@ -575,7 +575,7 @@
 /obj/item/shard,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "bI" = (
@@ -592,7 +592,7 @@
 "bK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "bL" = (
@@ -661,7 +661,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/spawner/lootdrop/cigbutt,
+/obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/abandoned/cargo)
 "bV" = (
@@ -784,7 +784,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/red/directional/north,
 /obj/structure/cable,
-/obj/effect/spawner/lootdrop/garbage_spawner,
+/obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/abandoned/cargo)
 "ci" = (
@@ -838,7 +838,7 @@
 /area/shuttle/abandoned/cargo)
 "cm" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/garbage_spawner,
+/obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "cn" = (
@@ -862,7 +862,7 @@
 /obj/item/circuitboard/machine/microwave,
 /obj/item/stock_parts/micro_laser,
 /obj/item/stock_parts/manipulator,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "cp" = (
@@ -892,7 +892,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/spawner/lootdrop/garbage_spawner,
+/obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/abandoned/cargo)
 "ct" = (

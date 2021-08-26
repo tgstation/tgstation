@@ -269,7 +269,7 @@
 "aU" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/directional/south,
-/obj/effect/spawner/lootdrop/whiteship_cere_ripley,
+/obj/effect/spawner/random/exotic/ripley,
 /turf/open/floor/mech_bay_recharge_floor,
 /area/shuttle/abandoned)
 "aV" = (

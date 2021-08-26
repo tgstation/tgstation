@@ -159,7 +159,7 @@
 	pixel_x = 7;
 	pixel_y = 2
 	},
-/obj/effect/spawner/lootdrop/three_course_meal,
+/obj/effect/spawner/random/food_or_drink/three_course_meal,
 /turf/open/floor/carpet/black,
 /area/survivalpod)
 "y" = (

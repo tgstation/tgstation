@@ -238,7 +238,7 @@
 /area/hilbertshotel)
 "V" = (
 /obj/structure/table/reinforced,
-/obj/effect/spawner/lootdrop/three_course_meal,
+/obj/effect/spawner/random/food_or_drink/three_course_meal,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "Z" = (
