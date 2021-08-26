@@ -159,7 +159,7 @@
 /area/ruin/unpowered/elephant_graveyard)
 "aG" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/glowstick,
+/obj/effect/spawner/random/decoration/glowstick,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "aH" = (

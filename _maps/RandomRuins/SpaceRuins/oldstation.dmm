@@ -6209,7 +6209,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/atmo)
 "pD" = (
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "pM" = (
@@ -6290,14 +6290,14 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation)
 "rW" = (
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/has_grav/ancientstation/betastorage)
 "rX" = (
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "sy" = (
@@ -6736,7 +6736,7 @@
 /area/ruin/space/has_grav/ancientstation/atmo)
 "Ij" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "It" = (
@@ -7106,7 +7106,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/sec)
 "RR" = (
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/betastorage)
 "RX" = (
@@ -7362,7 +7362,7 @@
 /area/ruin/space/has_grav/ancientstation/betastorage)
 "YZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation)
 "Ze" = (

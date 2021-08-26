@@ -1319,7 +1319,7 @@
 /area/mine/living_quarters)
 "fz" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/minor/bowler_or_that,
+/obj/effect/spawner/random/clothing/bowler_or_that,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "fB" = (
@@ -1485,7 +1485,7 @@
 /area/science/xenobiology)
 "hd" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "he" = (
@@ -1500,12 +1500,12 @@
 /turf/open/floor/iron,
 /area/service/bar)
 "hf" = (
-/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
+/obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "hh" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
 "hj" = (
@@ -2242,7 +2242,7 @@
 /area/service/theater)
 "ly" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
 "lA" = (
@@ -2257,7 +2257,7 @@
 "lG" = (
 /obj/structure/cable,
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "lH" = (
@@ -2358,7 +2358,7 @@
 /area/maintenance/aft)
 "mg" = (
 /obj/effect/landmark/start/hangover,
-/obj/effect/spawner/lootdrop/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
 /obj/machinery/camera{
 	c_tag = "Service-Bar 2";
 	dir = 6
@@ -2731,7 +2731,7 @@
 /area/service/theater)
 "oJ" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /obj/item/pickaxe,
 /obj/item/mining_scanner,
 /obj/item/storage/bag/ore,
@@ -3340,7 +3340,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/wrench,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "rQ" = (
@@ -3351,7 +3351,7 @@
 /area/maintenance/starboard/fore)
 "rR" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "rS" = (
@@ -4075,7 +4075,7 @@
 "wh" = (
 /obj/structure/cable,
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "wj" = (
@@ -4509,7 +4509,7 @@
 	},
 /area/service/hydroponics)
 "zh" = (
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "zi" = (
@@ -4688,7 +4688,7 @@
 "Aj" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "At" = (
@@ -5332,7 +5332,7 @@
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
 "En" = (
-/obj/effect/spawner/lootdrop/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
 /obj/structure/table/wood,
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
@@ -6145,7 +6145,7 @@
 /area/mine/eva)
 "IV" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "IZ" = (
@@ -6758,7 +6758,7 @@
 /turf/open/floor/iron,
 /area/service/theater)
 "Mu" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "Mv" = (
@@ -7335,7 +7335,7 @@
 /area/mine/living_quarters)
 "Pv" = (
 /obj/structure/closet/emcloset,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "PA" = (
@@ -8256,7 +8256,7 @@
 /area/mine/laborcamp/security)
 "UN" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
 /obj/machinery/newscaster/directional/south,
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/grimy,
@@ -8381,7 +8381,7 @@
 /area/service/bar)
 "Vx" = (
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
 "VA" = (

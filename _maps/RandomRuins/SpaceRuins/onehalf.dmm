@@ -138,9 +138,9 @@
 "aC" = (
 /obj/machinery/light/directional/west,
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/obj/effect/spawner/random/exotic/syndie,
+/obj/effect/spawner/random/exotic/syndie,
+/obj/effect/spawner/random/exotic/syndie,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aD" = (
@@ -678,7 +678,7 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cg" = (
 /obj/structure/table/reinforced,
-/obj/effect/spawner/lootdrop/space/cashmoney,
+/obj/effect/spawner/random/entertainment/money_large,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "ch" = (
@@ -749,7 +749,7 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cp" = (
 /obj/structure/table/reinforced,
-/obj/effect/spawner/lootdrop/space/fancytech,
+/obj/effect/spawner/random/exotic/technology,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cq" = (
