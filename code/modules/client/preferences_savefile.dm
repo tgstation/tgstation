@@ -209,7 +209,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["itemoutline_pref"], itemoutline_pref)
 	READ_FILE(S["auto_fit_viewport"], auto_fit_viewport)
 	READ_FILE(S["widescreenpref"], widescreenpref)
-	READ_FILE(S["pixel_size"], pixel_size)
 	READ_FILE(S["menuoptions"], menuoptions)
 	READ_FILE(S["pda_color"], pda_color)
 
@@ -260,7 +259,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	itemoutline_pref = sanitize_integer(itemoutline_pref, FALSE, TRUE, initial(itemoutline_pref))
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, FALSE, TRUE, initial(auto_fit_viewport))
 	widescreenpref  = sanitize_integer(widescreenpref, FALSE, TRUE, initial(widescreenpref))
-	pixel_size = sanitize_float(pixel_size, PIXEL_SCALING_AUTO, PIXEL_SCALING_3X, 0.5, initial(pixel_size))
 	ghost_form = sanitize_inlist(ghost_form, GLOB.ghost_forms, initial(ghost_form))
 	menuoptions = SANITIZE_LIST(menuoptions)
 	be_special = SANITIZE_LIST(be_special)
@@ -329,7 +327,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["itemoutline_pref"], itemoutline_pref)
 	WRITE_FILE(S["auto_fit_viewport"], auto_fit_viewport)
 	WRITE_FILE(S["widescreenpref"], widescreenpref)
-	WRITE_FILE(S["pixel_size"], pixel_size)
 	WRITE_FILE(S["menuoptions"], menuoptions)
 	WRITE_FILE(S["pda_color"], pda_color)
 	// MOTHBLOCKS TODO: FIGURE OUT THE DUPLICATION BUG

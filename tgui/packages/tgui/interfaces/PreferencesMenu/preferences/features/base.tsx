@@ -4,7 +4,6 @@ import { ComponentType, createComponentVNode, InfernoNode } from "inferno";
 import { VNodeFlags } from "inferno-vnode-flags";
 import { sendAct, useLocalState } from "../../../../backend";
 import { Box, Button, Dropdown, NumberInput, Stack } from "../../../../components";
-import { logger } from "../../../../logging";
 import { createSetPreference } from "../../data";
 import { ServerPreferencesFetcher } from "../../ServerPreferencesFetcher";
 
@@ -171,6 +170,7 @@ export const FeatureDropdownInput = (
 type FeatureNumericData = {
   minimum: number,
   maximum: number,
+  step: number,
 }
 
 export type FeatureNumeric = Feature<number, number, FeatureNumericData>;
@@ -188,6 +188,7 @@ export const FeatureNumberInput = (
     }}
     minValue={props.serverData.minimum}
     maxValue={props.serverData.maximum}
+    step={props.serverData.step}
     value={props.value}
   />);
 };

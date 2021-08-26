@@ -390,13 +390,16 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// The maximum value
 	var/maximum
 
+	/// The step of the number, such as 1 for integers or 0.5 for half-steps.
+	var/step = 1
+
 	abstract_type = /datum/preference/numeric
 
 /datum/preference/numeric/deserialize(input)
-	return sanitize_integer(input, minimum, maximum, create_default_value())
+	return sanitize_float(input, minimum, maximum, step, create_default_value())
 
 /datum/preference/numeric/serialize(input)
-	return sanitize_integer(input, minimum, maximum, create_default_value())
+	return sanitize_float(input, minimum, maximum, step, create_default_value())
 
 /datum/preference/numeric/create_default_value()
 	return rand(minimum, maximum)
@@ -408,6 +411,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	return list(
 		"minimum" = minimum,
 		"maximum" = maximum,
+		"step" = step,
 	)
 
 /// A prefernece whose value is always TRUE or FALSE
