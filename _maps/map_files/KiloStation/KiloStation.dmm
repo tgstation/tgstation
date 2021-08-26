@@ -29224,17 +29224,6 @@
 "cVl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/crate,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 10
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating{
@@ -44145,18 +44134,6 @@
 	},
 /area/maintenance/port)
 "iUX" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 9
-	},
-/obj/structure/grille/broken,
-/obj/effect/spawner/random/structure/crate,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -66847,18 +66824,6 @@
 "rIg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj/effect/spawner/random/structure/crate,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/spawner/random/structure/crate,
@@ -70628,7 +70593,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/cable,
-/obj/effect/spawner/random/decoration/carpet,
+/obj/effect/spawner/random/decorations/carpet,
 /turf/open/floor/iron,
 /area/security/prison)
 "tlv" = (
@@ -72685,18 +72650,6 @@
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "uan" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 9
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/effect/spawner/random/structure/crate,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -79980,19 +79933,6 @@
 "wOI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/crate,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -80833,15 +80773,6 @@
 	},
 /area/hallway/primary/port)
 "xgL" = (
-/obj/machinery/light/small/directional/north,
-/obj/structure/dresser,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 6
-	},
-/obj/effect/spawner/random/contraband/prison,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/machinery/light/small/directional/north,
 /obj/structure/dresser,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

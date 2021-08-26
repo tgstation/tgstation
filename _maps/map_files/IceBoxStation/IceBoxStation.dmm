@@ -19222,13 +19222,6 @@
 /area/service/lawoffice)
 "eZB" = (
 /obj/effect/spawner/random/trash/mess,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 5
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/trash/mess,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -27425,21 +27418,6 @@
 /obj/structure/cable,
 /obj/structure/table/greyscale,
 /obj/effect/spawner/random/maintenance,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 10
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj/structure/cable,
-/obj/structure/table/greyscale,
-/obj/effect/spawner/random/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -31308,17 +31286,6 @@
 "lXk" = (
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 5
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/maintenance,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
@@ -31522,14 +31489,6 @@
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "mcO" = (
-/obj/structure/closet,
-/obj/effect/spawner/random/maintenance/two,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/two,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
@@ -35654,21 +35613,6 @@
 /turf/open/floor/iron,
 /area/science/mixing)
 "onW" = (
-/obj/machinery/light/small/directional/north,
-/obj/effect/spawner/random/maintenance,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 10
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/machinery/light/small/directional/north,
 /obj/effect/spawner/random/maintenance,
 /obj/structure/disposalpipe/segment{
@@ -46833,16 +46777,6 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/trash/mess,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
@@ -47649,13 +47583,6 @@
 /turf/open/floor/carpet,
 /area/command/heads_quarters/captain)
 "uRp" = (
-/obj/effect/spawner/random/trash/mess,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 5
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/spawner/random/trash/mess,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
@@ -48730,17 +48657,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "vHg" = (
-/obj/effect/spawner/random/contraband/prison,
-/obj/structure/closet/crate,
-/obj/item/stack/license_plates/empty/fifty,
-/obj/item/stack/license_plates/empty/fifty,
-/obj/item/stack/license_plates/empty/fifty,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 5
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/spawner/random/contraband/prison,
 /obj/structure/closet/crate,
 /obj/item/stack/license_plates/empty/fifty,

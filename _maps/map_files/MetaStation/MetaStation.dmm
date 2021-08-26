@@ -1240,22 +1240,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 6
-	},
-/obj/effect/spawner/random/structure/crate,
-/obj/machinery/light/dim{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 6
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/spawner/random/structure/crate,
 /obj/machinery/light/dim{
@@ -7052,21 +7036,6 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "bnI" = (
-/obj/effect/turf_decal/arrows/red{
-	dir = 4
-	},
-/obj/effect/spawner/random/maintenance,
-/obj/structure/cable,
-/obj/effect/turf_decal/bot_white,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/turf_decal/arrows/red{
 	dir = 4
 	},
@@ -20645,13 +20614,6 @@
 /turf/closed/wall/r_wall,
 /area/security/courtroom)
 "eZY" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/effect/spawner/random/structure/crate,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
@@ -23428,16 +23390,6 @@
 "gbs" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/effect/spawner/random/trash/mess,
-/obj/structure/cable,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/landmark/xeno_spawn,
-/obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/spawner/random/trash/mess,
 /obj/structure/cable,
@@ -24374,16 +24326,6 @@
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "guz" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/spawner/random/maintenance,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -25697,17 +25639,6 @@
 /turf/open/floor/holofloor/dark,
 /area/science/cytology)
 "gVp" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/spawner/random/maintenance,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -27213,14 +27144,6 @@
 "hDP" = (
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/maintenance,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -28156,14 +28079,6 @@
 /turf/open/floor/carpet,
 /area/commons/dorms)
 "hWa" = (
-/obj/structure/rack,
-/obj/effect/spawner/random/maintenance/two,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 10
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/two,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -38260,16 +38175,6 @@
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/disposalpipe/segment,
-/obj/effect/spawner/random/maintenance,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -38558,16 +38463,6 @@
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "lHo" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/effect/spawner/random/structure/crate,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -40426,17 +40321,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/maintenance,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -41550,20 +41434,6 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "mIa" = (
-/obj/effect/spawner/random/maintenance,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 10
-	},
-/obj/machinery/camera{
-	c_tag = "Service Maintinance"
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/spawner/random/maintenance,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -43240,17 +43110,6 @@
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
 "niM" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/spawner/random/maintenance,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -47150,28 +47009,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "oAh" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 6
-	},
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 6
-	},
-/obj/structure/closet/crate,
-/obj/item/storage/box/drinkingglasses,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -51254,14 +51091,6 @@
 "pZm" = (
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/maintenance,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -51572,17 +51401,6 @@
 	},
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/spawner/random/maintenance,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -51817,20 +51635,6 @@
 /turf/open/floor/iron,
 /area/science/mixing)
 "qji" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
-/obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/maintenance,
-/obj/effect/spawner/random/maintenance,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 10
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/bot,
@@ -55531,18 +55335,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/table/glass,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -57166,16 +56958,6 @@
 	name = "Meta-Cider"
 	},
 /obj/effect/spawner/random/maintenance,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/closet,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
-	desc = "Takes you to a whole new level of thinking.";
-	name = "Meta-Cider"
-	},
-/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "sjd" = (
@@ -57228,14 +57010,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "skX" = (
-/obj/effect/spawner/random/maintenance,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -65513,17 +65287,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/maintenance,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/central)
@@ -68077,16 +67840,6 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "vZs" = (
-/obj/effect/spawner/random/maintenance,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/spawner/random/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -71332,20 +71085,6 @@
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/starboard)
-"xio" = (
-/obj/effect/spawner/random/maintenance,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/maintenance,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "xiB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
@@ -72134,17 +71873,6 @@
 	},
 /area/cargo/qm)
 "xxU" = (
-/obj/effect/spawner/random/contraband/prison,
-/obj/structure/closet/crate,
-/obj/item/stack/license_plates/empty/fifty,
-/obj/item/stack/license_plates/empty/fifty,
-/obj/item/stack/license_plates/empty/fifty,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/spawner/random/contraband/prison,
 /obj/structure/closet/crate,
 /obj/item/stack/license_plates/empty/fifty,
@@ -73360,14 +73088,6 @@
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
 "xVD" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 10
-	},
-/obj/structure/closet,
-/obj/effect/spawner/random/maintenance/two,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/two,
@@ -92504,7 +92224,7 @@ vMx
 aoO
 ahp
 iaw
-xio
+uMF
 att
 dne
 dne
