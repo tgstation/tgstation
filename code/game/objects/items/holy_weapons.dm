@@ -155,7 +155,7 @@
 			if(!initial(nullrod_type.menu_description))
 				continue
 			rods[nullrod_type] = initial(nullrod_type.menu_description)
-		AddElement(/datum/element/subtype_picker, rods, CALLBACK(src, .proc/on_holy_weapon_picked))
+		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, .proc/on_holy_weapon_picked))
 
 /obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/holy_weapon_type)
 	GLOB.holy_weapon_type = holy_weapon_type

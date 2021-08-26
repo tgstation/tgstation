@@ -1,14 +1,10 @@
 /**
- * subtype picker element allows for an item to transform into its subtypes (this is not enforced and you can turn in whatever types, but
+ * subtype picker component allows for an item to transform into its subtypes (this is not enforced and you can turn in whatever types, but
  * i used this name as it was incredibly accurate for current usage of the behavior)
  *
  * Used for the null rod to pick the other holy weapons.
- * NOTE: this may set off a red flag as there are states on an element, but these are initialized values set by the first bespoke element.
- * further subtype_pickers of the same type will not change the states.
  */
-/datum/element/subtype_picker
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
-	id_arg_index = 2
+/datum/component/subtype_picker
 	///on Attach, it's a list of types and their menu descriptions. after building, it's a list of lists with all the data each item needs to give to the radial menu.
 	var/list/subtype2descriptions
 	///list given to the radial menu to display
@@ -18,29 +14,31 @@
 	///optional proc to callback to when the weapon is picked
 	var/datum/callback/on_picked_callback
 
-/datum/element/subtype_picker/Attach(datum/target, subtype2descriptions, on_picked_callback)
+/datum/component/subtype_picker/Initialize(subtype2descriptions, on_picked_callback)
 	. = ..()
-	if(!isitem(target))
-		return ELEMENT_INCOMPATIBLE
+	if(!isitem(parent))
+		return COMPONENT_INCOMPATIBLE
 	src.subtype2descriptions = subtype2descriptions
 	src.on_picked_callback = on_picked_callback
-	if(!built_radial_list)
-		build_radial_list()
-	RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
+	build_radial_list()
 
-/datum/element/subtype_picker/Detach(datum/target)
+/datum/component/subtype_picker/RegisterWithParent()
 	. = ..()
-	UnregisterSignal(target, COMSIG_ITEM_ATTACK_SELF)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
+
+/datum/component/subtype_picker/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 
 ///signal called by the stat of the target changing
-/datum/element/subtype_picker/proc/on_attack_self(datum/target, mob/user)
+/datum/component/subtype_picker/proc/on_attack_self(datum/target, mob/user)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, .proc/pick_subtype, target, user)
 
 /**
  * pick_subtype: turns the list of types to their description into all the data radial menus need
  */
-/datum/element/subtype_picker/proc/build_radial_list()
+/datum/component/subtype_picker/proc/build_radial_list()
 	built_radial_list = list()
 	name2subtype = list()
 	for(var/obj/item/subtype as anything in subtype2descriptions)
@@ -60,7 +58,7 @@
  * * target: parent this element is attached to that is being activated
  * * picker: user who interacted with the item
  */
-/datum/element/subtype_picker/proc/pick_subtype(datum/target, mob/picker)
+/datum/component/subtype_picker/proc/pick_subtype(datum/target, mob/picker)
 
 	var/name_of_type = show_radial_menu(picker, target, built_radial_list, custom_check = CALLBACK(src, .proc/check_menu, target, picker), radius = 42, require_near = TRUE)
 	if(!name_of_type || !check_menu(target, picker))
@@ -80,7 +78,7 @@
  * * target: parent the radial menu is from
  * * user: the mob interacting with the menu
  */
-/datum/element/subtype_picker/proc/check_menu(datum/target, mob/user)
+/datum/component/subtype_picker/proc/check_menu(datum/target, mob/user)
 	if(!istype(user))
 		return FALSE
 	if(QDELETED(target))
