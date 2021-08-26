@@ -250,7 +250,9 @@
 		if("select_colour")
 			. = can_change_colour && select_colour(usr)
 		if("enter_text")
-			var/txt = input(usr, "Choose what to write.", "Scribbles", "") as text|null
+			var/txt = input(usr, "Choose what to write.", "Scribbles", text_buffer) as text|null
+			if(isnull(txt))
+				return
 			text_buffer = crayon_text_strip(txt)
 			. = TRUE
 			paint_mode = PAINT_NORMAL
