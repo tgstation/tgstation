@@ -1,4 +1,4 @@
-import { sortBy } from "common/collections";
+import { sortBy, sortStrings } from "common/collections";
 import { BooleanLike } from "common/react";
 import { ComponentType, createComponentVNode, InfernoNode } from "inferno";
 import { VNodeFlags } from "inferno-vnode-flags";
@@ -43,7 +43,7 @@ type FeatureValue<
       TServerData
     >>;
 
-type FeatureValueProps<
+export type FeatureValueProps<
   TReceiving,
   TSending = TReceiving,
   TServerData = undefined,
@@ -104,12 +104,12 @@ export const CheckboxInput = (
   />);
 };
 
-export const createDropdownInput = (
+export const createDropdownInput = <T extends string | number = string>(
   // Map of value to display texts
-  choices: Record<string, InfernoNode>,
-  dropdownProps?: Record<string, unknown>,
-): FeatureValue<string> => {
-  return (props: FeatureValueProps<string>) => {
+  choices: Record<T, InfernoNode>,
+  dropdownProps?: Record<T, unknown>,
+): FeatureValue<T> => {
+  return (props: FeatureValueProps<T>) => {
     return (<Dropdown
       selected={props.value}
       displayText={choices[props.value]}
@@ -127,11 +127,15 @@ export const createDropdownInput = (
   };
 };
 
-type FeatureChoicedServerData = {
+export type FeatureChoicedServerData = {
   choices: string[];
 };
 
 export type FeatureChoiced = Feature<string, string, FeatureChoicedServerData>
+
+const capitalizeFirstLetter = (text: string) => (
+  text.toString().charAt(0).toUpperCase() + text.toString().slice(1)
+);
 
 export const FeatureDropdownInput = (
   props: FeatureValueProps<string, string, FeatureChoicedServerData>,
@@ -145,7 +149,16 @@ export const FeatureDropdownInput = (
     selected={props.value}
     onSelected={props.handleSetValue}
     width="100%"
-    options={serverData.choices}
+    displayText={capitalizeFirstLetter(props.value)}
+    options={
+      sortStrings(serverData.choices)
+        .map(choice => {
+          return {
+            displayText: capitalizeFirstLetter(choice),
+            value: choice,
+          };
+        })
+    }
   />);
 };
 
@@ -188,7 +201,7 @@ export const FeatureValueInput = (props: {
     props.value,
   );
 
-  const changeValue = (newValue: string) => {
+  const changeValue = (newValue: unknown) => {
     setPredictedValue(newValue);
     createSetPreference(props.act, props.featureId)(newValue);
   };

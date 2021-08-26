@@ -192,7 +192,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	if(client) //We update our preferences in case they changed right before update_appearance was called.
 		ghost_accs = client.prefs.ghost_accs
-		ghost_others = client.prefs.ghost_others
+		ghost_others = client.prefs.read_preference(/datum/preference/choiced/ghost_others)
 
 	if(hair_overlay)
 		cut_overlay(hair_overlay)
@@ -606,7 +606,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/update_sight()
 	if(client)
-		ghost_others = client.prefs.ghost_others //A quick update just in case this setting was changed right before calling the proc
+		ghost_others = client.prefs.read_preference(/datum/preference/choiced/ghost_others) //A quick update just in case this setting was changed right before calling the proc
 
 	if (!ghostvision)
 		see_invisible = SEE_INVISIBLE_LIVING
@@ -634,11 +634,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				client.images -= GLOB.ghost_images_default
 			if(GHOST_OTHERS_SIMPLE)
 				client.images -= GLOB.ghost_images_simple
-	lastsetting = client.prefs.ghost_others
+	lastsetting = client.prefs.read_preference(/datum/preference/choiced/ghost_others)
 	if(!ghostvision)
 		return
-	if(client.prefs.ghost_others != GHOST_OTHERS_THEIR_SETTING)
-		switch(client.prefs.ghost_others)
+	if(lastsetting != GHOST_OTHERS_THEIR_SETTING)
+		switch(lastsetting)
 			if(GHOST_OTHERS_DEFAULT_SPRITE)
 				client.images |= (GLOB.ghost_images_default-ghostimage_default)
 			if(GHOST_OTHERS_SIMPLE)

@@ -45,7 +45,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_form = "ghost"
 	var/ghost_accs = GHOST_ACCS_DEFAULT_OPTION
-	var/ghost_others = GHOST_OTHERS_DEFAULT_OPTION
 	var/ghost_hud = 1
 	var/inquisitive_ghost = 1
 	var/preferred_map = null

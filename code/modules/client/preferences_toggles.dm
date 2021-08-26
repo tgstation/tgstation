@@ -353,24 +353,6 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	else
 		pick_ghost_accs()
 
-/client/verb/pick_ghost_others()
-	set name = "Ghosts of Others"
-	set category = "Preferences"
-	set desc = "Change display settings for the ghosts of other players."
-	var/new_ghost_others = tgui_alert(usr,"Do you want the ghosts of others to show up as their own setting, as their default sprites or always as the default white ghost?",,list("Their Setting", "Default Sprites", "White Ghost"))
-	if(new_ghost_others)
-		switch(new_ghost_others)
-			if("Their Setting")
-				prefs.ghost_others = GHOST_OTHERS_THEIR_SETTING
-			if("Default Sprites")
-				prefs.ghost_others = GHOST_OTHERS_DEFAULT_SPRITE
-			if("White Ghost")
-				prefs.ghost_others = GHOST_OTHERS_SIMPLE
-		prefs.save_preferences()
-		if(isobserver(mob))
-			var/mob/dead/observer/O = mob
-			O.update_sight()
-
 /client/verb/toggle_ghost_hud_pref()
 	set name = "Toggle Ghost HUD"
 	set category = "Preferences"

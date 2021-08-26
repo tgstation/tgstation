@@ -4,7 +4,7 @@
 		return FALSE
 
 	ghost_accs = client.prefs.ghost_accs
-	ghost_others = client.prefs.ghost_others
+	ghost_others = client.prefs.read_preference(/datum/preference/choiced/ghost_others)
 	var/preferred_form = null
 
 	if(isAdminGhostAI(src))

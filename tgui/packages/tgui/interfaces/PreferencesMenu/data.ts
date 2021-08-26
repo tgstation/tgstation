@@ -56,7 +56,7 @@ export type ServerSpeciesData = {
 export const createSetPreference = (
   act: typeof sendAct,
   preference: string
-) => (value: string) => {
+) => (value: unknown) => {
   act("set_preference", {
     preference,
     value,
