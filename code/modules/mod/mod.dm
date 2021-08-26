@@ -159,7 +159,7 @@
 		modules -= module
 	QDEL_NULL(wires)
 	QDEL_NULL(cell)
-	..()
+	return ..()
 
 /obj/item/mod/control/process(delta_time)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
@@ -483,7 +483,7 @@
 		mod.helmet = null
 		mod.mod_parts -= src
 		QDEL_NULL(mod)
-	..()
+	return ..()
 
 /obj/item/clothing/suit/armor/mod
 	name = "MOD chestplate"
@@ -510,7 +510,7 @@
 		mod.chestplate = null
 		mod.mod_parts -= src
 		QDEL_NULL(mod)
-	..()
+	return ..()
 
 /obj/item/clothing/gloves/mod
 	name = "MOD gauntlets"
@@ -534,7 +534,7 @@
 		mod.gauntlets = null
 		mod.mod_parts -= src
 		QDEL_NULL(mod)
-	..()
+	return ..()
 
 /obj/item/clothing/gloves/mod/proc/show_overslot()
 	if(!overslot)
@@ -565,7 +565,7 @@
 		mod.boots = null
 		mod.mod_parts -= src
 		QDEL_NULL(mod)
-	..()
+	return ..()
 
 /obj/item/clothing/shoes/mod/proc/show_overslot()
 	if(!overslot)
