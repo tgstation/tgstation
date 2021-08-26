@@ -3385,7 +3385,7 @@
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/siding/white,
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "rW" = (
@@ -3550,7 +3550,7 @@
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/siding/white,
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "sR" = (

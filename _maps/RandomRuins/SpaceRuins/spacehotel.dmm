@@ -4297,7 +4297,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/bar)
 "PU" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/pool)
 "Se" = (
@@ -4310,7 +4310,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/bar)
 "SX" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/pool)

@@ -26855,7 +26855,7 @@
 	req_access_txt = "20"
 	},
 /obj/item/ai_module/supplied/protect_station,
-/obj/effect/spawner/lootdrop/aimodule_harmful,
+/obj/effect/spawner/random/aimodule/harmful,
 /obj/item/ai_module/reset/purge,
 /obj/item/ai_module/zeroth/onehuman,
 /obj/item/ai_module/supplied/oxygen,
@@ -29850,7 +29850,7 @@
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "iDa" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -30224,7 +30224,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/iron,
 /area/service/bar)
 "iJx" = (
@@ -30890,7 +30890,7 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/construction/engineering)
 "iXT" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
@@ -32000,7 +32000,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "jwG" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
@@ -35365,7 +35365,7 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "kNx" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -35554,7 +35554,7 @@
 /turf/open/floor/iron,
 /area/tcommsat/computer)
 "kTA" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
@@ -38636,7 +38636,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/thinplating/dark,
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/exit/departure_lounge)
 "mim" = (
@@ -40201,7 +40201,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 9
 	},
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/hallway/primary/port)
@@ -52307,7 +52307,7 @@
 /turf/open/floor/iron/grimy,
 /area/hallway/secondary/entry)
 "rQZ" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
 	},
@@ -54731,7 +54731,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 5
 	},
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/structure/sign/departments/restroom{
 	pixel_y = 32
 	},
@@ -55277,7 +55277,7 @@
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
 "taJ" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -58237,8 +58237,8 @@
 	req_access_txt = "20"
 	},
 /obj/item/ai_module/core/full/custom,
-/obj/effect/spawner/lootdrop/aimodule_neutral,
-/obj/effect/spawner/lootdrop/aimodule_harmless,
+/obj/effect/spawner/random/aimodule/neutral,
+/obj/effect/spawner/random/aimodule/harmless,
 /obj/item/ai_module/core/freeformcore,
 /obj/item/ai_module/core/full/asimov,
 /turf/open/floor/circuit,
@@ -59168,7 +59168,7 @@
 /area/engineering/atmos)
 "uAs" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/service,
+/obj/effect/spawner/random/techstorage/service,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
@@ -63277,7 +63277,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/tram/left)
 "wnk" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/service/bar)

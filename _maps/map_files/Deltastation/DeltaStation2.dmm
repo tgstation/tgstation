@@ -3971,7 +3971,7 @@
 /area/hallway/primary/central/aft)
 "ayh" = (
 /obj/machinery/light/directional/west,
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
@@ -10238,7 +10238,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "bFa" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -11184,7 +11184,7 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "bKa" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
@@ -14160,10 +14160,10 @@
 	name = "Core Modules";
 	req_access_txt = "20"
 	},
-/obj/effect/spawner/lootdrop/aimodule_harmful{
-	fan_out_items = 1;
-	lootcount = 2;
-	lootdoubles = 0
+/obj/effect/spawner/random/aimodule/harmful{
+	spawn_loot_split = 1;
+	spawn_loot_count = 2;
+	spawn_loot_double = 0
 	},
 /obj/item/ai_module/supplied/oxygen{
 	pixel_x = -3;
@@ -19281,7 +19281,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/randomarcade{
+/obj/effect/spawner/random/entertainment/arcade{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -21779,8 +21779,8 @@
 /area/hallway/primary/central/aft)
 "cVb" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/spawner/lootdrop/memeorgans{
-	lootcount = 1
+/obj/effect/spawner/random/medical/memeorgans{
+	spawn_loot_count = 1
 	},
 /turf/open/floor/plating,
 /area/service/library/abandoned)
@@ -24416,7 +24416,7 @@
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "dfh" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/hallway/primary/central/aft)
@@ -37269,7 +37269,7 @@
 /turf/open/floor/iron,
 /area/engineering/storage)
 "ezJ" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -37824,7 +37824,7 @@
 /turf/open/floor/iron/grimy,
 /area/commons/dorms)
 "eIC" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -39219,7 +39219,7 @@
 	},
 /area/engineering/atmos)
 "fbA" = (
-/obj/effect/spawner/randomarcade{
+/obj/effect/spawner/random/entertainment/arcade{
 	dir = 8
 	},
 /obj/machinery/status_display/evac/directional/east,
@@ -45676,7 +45676,7 @@
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/captain/private)
 "hfV" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -46886,7 +46886,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/randomarcade{
+/obj/effect/spawner/random/entertainment/arcade{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -46940,7 +46940,7 @@
 /turf/open/floor/iron/grimy,
 /area/service/chapel/office)
 "hAG" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/machinery/status_display/evac/directional/east,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral,
@@ -49167,7 +49167,7 @@
 /turf/open/floor/wood,
 /area/commons/dorms)
 "igx" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -53599,7 +53599,7 @@
 /turf/open/floor/iron,
 /area/command/teleporter)
 "jCJ" = (
-/obj/effect/spawner/randomarcade{
+/obj/effect/spawner/random/entertainment/arcade{
 	dir = 1
 	},
 /obj/machinery/light/dim/directional/south,
@@ -53917,7 +53917,7 @@
 /turf/closed/wall,
 /area/commons/fitness/recreation)
 "jHd" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -59058,7 +59058,7 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
 "lhm" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -60131,10 +60131,10 @@
 /area/hallway/secondary/entry)
 "lux" = (
 /obj/structure/table/reinforced,
-/obj/effect/spawner/lootdrop/aimodule_neutral{
-	fan_out_items = 1;
-	lootcount = 3;
-	lootdoubles = 0
+/obj/effect/spawner/random/aimodule/neutral{
+	spawn_loot_split = 1;
+	spawn_loot_count = 3;
+	spawn_loot_double = 0
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -66992,7 +66992,7 @@
 /turf/open/floor/iron/dark,
 /area/science/server)
 "nqU" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/machinery/light/directional/south,
 /obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/tile/neutral,
@@ -67577,7 +67577,7 @@
 /turf/open/floor/wood,
 /area/service/library)
 "nzp" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -68536,7 +68536,7 @@
 /area/service/abandoned_gambling_den)
 "nPR" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/arcade_boards,
+/obj/effect/spawner/random/techstorage/arcade_boards,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -68983,7 +68983,7 @@
 /turf/open/floor/iron,
 /area/commons/toilet/restrooms)
 "nVJ" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -70767,7 +70767,7 @@
 /turf/open/floor/iron/dark,
 /area/engineering/transit_tube)
 "ovM" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -71970,7 +71970,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "oMQ" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -72114,7 +72114,7 @@
 /area/hallway/primary/central/aft)
 "oOA" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/service,
+/obj/effect/spawner/random/techstorage/service,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
@@ -72938,7 +72938,7 @@
 /turf/open/floor/iron/grimy,
 /area/service/chapel)
 "pba" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/cafeteria,
 /area/security/prison)
 "pbd" = (
@@ -74375,7 +74375,7 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "pAv" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/bot,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
@@ -76791,7 +76791,7 @@
 /turf/open/floor/wood,
 /area/command/corporate_showroom)
 "qmR" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
@@ -77185,7 +77185,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "qtf" = (
-/obj/effect/spawner/randomarcade{
+/obj/effect/spawner/random/entertainment/arcade{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -77286,7 +77286,7 @@
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "qvx" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
@@ -77631,7 +77631,7 @@
 /area/service/hydroponics)
 "qBK" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/effect/spawner/randomarcade{
+/obj/effect/spawner/random/entertainment/arcade{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -79772,7 +79772,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/randomarcade{
+/obj/effect/spawner/random/entertainment/arcade{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -80694,7 +80694,7 @@
 /area/engineering/main)
 "ryz" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/randomarcade{
+/obj/effect/spawner/random/entertainment/arcade{
 	dir = 1
 	},
 /obj/machinery/light/dim/directional/south,
@@ -81258,7 +81258,7 @@
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "rGL" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -81615,10 +81615,10 @@
 	name = "Core Modules";
 	req_access_txt = "20"
 	},
-/obj/effect/spawner/lootdrop/aimodule_harmless{
-	fan_out_items = 1;
-	lootcount = 3;
-	lootdoubles = 0
+/obj/effect/spawner/random/aimodule/harmless{
+	spawn_loot_split = 1;
+	spawn_loot_count = 3;
+	spawn_loot_double = 0
 	},
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
@@ -85605,7 +85605,7 @@
 /turf/open/floor/engine/o2,
 /area/engineering/atmos)
 "sTX" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/hallway/primary/central/aft)
@@ -86538,7 +86538,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "tiu" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -91144,7 +91144,7 @@
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "uzQ" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/structure/sign/poster/official/ian{
 	pixel_y = -32
 	},
@@ -93595,7 +93595,7 @@
 /turf/open/floor/engine/vacuum,
 /area/engineering/atmos/upper)
 "vlA" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -101240,7 +101240,7 @@
 /turf/open/floor/iron,
 /area/commons/dorms)
 "xJV" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "Arrivals - Aft";

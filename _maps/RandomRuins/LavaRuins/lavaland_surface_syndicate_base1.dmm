@@ -5590,7 +5590,7 @@
 /turf/open/floor/iron,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "sw" = (
-/obj/effect/spawner/randomsnackvend{
+/obj/effect/spawner/random/vending/snackvend{
 	hacked = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -5818,7 +5818,7 @@
 /turf/open/floor/iron,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "Oq" = (
-/obj/effect/spawner/randomcolavend{
+/obj/effect/spawner/random/vending/colavend{
 	hacked = 1
 	},
 /obj/effect/decal/cleanable/dirt,

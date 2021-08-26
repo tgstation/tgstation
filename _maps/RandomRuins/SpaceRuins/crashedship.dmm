@@ -1893,7 +1893,7 @@
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
 "Pg" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
 "PU" = (

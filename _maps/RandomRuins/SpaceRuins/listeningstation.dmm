@@ -1070,7 +1070,7 @@
 /turf/template_noop,
 /area/template_noop)
 "FQ" = (
-/obj/effect/spawner/randomsnackvend{
+/obj/effect/spawner/random/vending/snackvend{
 	hacked = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1115,7 +1115,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "UL" = (
-/obj/effect/spawner/randomcolavend{
+/obj/effect/spawner/random/vending/colavend{
 	hacked = 1
 	},
 /obj/effect/decal/cleanable/dirt,

@@ -3623,7 +3623,7 @@
 /turf/open/floor/iron/grimy,
 /area/security/detectives_office)
 "aDO" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
@@ -6646,7 +6646,7 @@
 /turf/open/floor/iron,
 /area/commons/vacant_room/commissary)
 "bjJ" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -8153,7 +8153,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bBS" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron/white,
 /area/science/research)
 "bBW" = (
@@ -15094,7 +15094,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "dfX" = (
@@ -17148,7 +17148,7 @@
 "dNl" = (
 /obj/structure/table,
 /obj/item/ai_module/core/full/asimov,
-/obj/effect/spawner/lootdrop/aimodule_harmless,
+/obj/effect/spawner/random/aimodule/harmless,
 /obj/item/ai_module/core/freeformcore,
 /obj/machinery/door/window{
 	base_state = "right";
@@ -17158,7 +17158,7 @@
 	req_access_txt = "20"
 	},
 /obj/structure/window/reinforced,
-/obj/effect/spawner/lootdrop/aimodule_neutral,
+/obj/effect/spawner/random/aimodule/neutral,
 /obj/item/ai_module/core/full/custom,
 /obj/machinery/flasher/directional/north{
 	id = "AI"
@@ -18557,7 +18557,7 @@
 /turf/open/floor/carpet,
 /area/service/library)
 "eqm" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/wood,
 /area/security/office)
 "eqw" = (
@@ -19619,7 +19619,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "eJA" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -21071,7 +21071,7 @@
 /area/maintenance/port)
 "fjd" = (
 /obj/machinery/light/directional/south,
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -21865,7 +21865,7 @@
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "fzE" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron,
 /area/hallway/primary/port)
 "fzG" = (
@@ -25230,7 +25230,7 @@
 /turf/open/floor/iron/dark/telecomms,
 /area/tcommsat/server)
 "gLj" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/dark,
 /area/hallway/primary/aft)
 "gMj" = (
@@ -25464,7 +25464,7 @@
 /area/commons/dorms)
 "gRO" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/service,
+/obj/effect/spawner/random/techstorage/service,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "gSe" = (
@@ -25712,7 +25712,7 @@
 /turf/open/floor/carpet,
 /area/command/heads_quarters/captain/private)
 "gWM" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /obj/machinery/camera{
 	c_tag = "Bar - Starboard"
 	},
@@ -27988,7 +27988,7 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "hUS" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -29454,7 +29454,7 @@
 /turf/open/floor/iron,
 /area/cargo/sorting)
 "iyg" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -30218,7 +30218,7 @@
 /area/security/checkpoint/engineering)
 "iNg" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/lootdrop/memeorgans,
+/obj/effect/spawner/random/medical/memeorgans,
 /obj/structure/closet/crate/freezer,
 /turf/open/floor/iron/white,
 /area/medical/abandoned)
@@ -31042,7 +31042,7 @@
 /turf/open/floor/iron/white,
 /area/science/cytology)
 "jbg" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/security/office)
@@ -39037,7 +39037,7 @@
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "lSY" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/command)
 "lTj" = (
@@ -43746,7 +43746,7 @@
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "ntD" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
@@ -45209,7 +45209,7 @@
 /obj/machinery/flasher/directional/north{
 	id = "AI"
 	},
-/obj/effect/spawner/lootdrop/aimodule_harmful,
+/obj/effect/spawner/random/aimodule/harmful,
 /obj/item/ai_module/supplied/oxygen,
 /obj/item/ai_module/supplied/protect_station,
 /obj/item/ai_module/zeroth/onehuman,
@@ -48338,7 +48338,7 @@
 	dir = 8
 	},
 /obj/machinery/light_switch/directional/south,
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "oZv" = (
@@ -48831,7 +48831,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "pku" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -52745,7 +52745,7 @@
 /turf/open/floor/iron,
 /area/cargo/sorting)
 "qFc" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -54447,7 +54447,7 @@
 /area/maintenance/disposal/incinerator)
 "rnO" = (
 /obj/machinery/airalarm/directional/west,
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -55456,7 +55456,7 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "rGS" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/structure/sign/map/right{
 	desc = "A framed picture of the station. Clockwise from security in red at the top, you see engineering in yellow, science in purple, escape in checkered red-and-white, medbay in green, arrivals in checkered red-and-blue, and then cargo in brown.";
 	icon_state = "map-right-MS";
@@ -63956,7 +63956,7 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "uHp" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/dark,
 /area/hallway/primary/central)
@@ -65139,7 +65139,7 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "vaQ" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/machinery/camera{
 	c_tag = "Bar - Fore"
 	},
@@ -72957,7 +72957,7 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "xSB" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/prison)

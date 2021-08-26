@@ -24,7 +24,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "g" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)

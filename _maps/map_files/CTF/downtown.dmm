@@ -621,7 +621,7 @@
 /turf/open/floor/plating,
 /area/ctf)
 "lt" = (
-/obj/effect/spawner/randomarcade{
+/obj/effect/spawner/random/entertainment/arcade{
 	dir = 8;
 	resistance_flags = 64
 	},
@@ -2270,7 +2270,7 @@
 /turf/open/floor/iron,
 /area/ctf)
 "QL" = (
-/obj/effect/spawner/randomarcade{
+/obj/effect/spawner/random/entertainment/arcade{
 	dir = 4;
 	resistance_flags = 64
 	},

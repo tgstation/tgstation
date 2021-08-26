@@ -238,7 +238,7 @@
 /turf/open/floor/carpet/black,
 /area/survivalpod)
 "L" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/carpet/black,
 /area/survivalpod)
 "M" = (

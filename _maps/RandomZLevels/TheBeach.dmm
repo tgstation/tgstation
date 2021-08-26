@@ -996,7 +996,7 @@
 /area/awaymission/beach)
 "lx" = (
 /obj/effect/turf_decal/sand,
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "lA" = (
