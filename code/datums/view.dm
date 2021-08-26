@@ -29,7 +29,7 @@
 	winset(chief, "mapwindow.map", "zoom=[chief.prefs.pixel_size]")
 
 /datum/view_data/proc/setZoomMode()
-	winset(chief, "mapwindow.map", "zoom-mode=[chief.prefs.scaling_method]")
+	winset(chief, "mapwindow.map", "zoom-mode=[chief.prefs.read_preference(/datum/preference/choiced/scaling_method)]")
 
 /datum/view_data/proc/isZooming()
 	return (width || height)
