@@ -177,7 +177,10 @@ Buildable meters
 			// We have a conflict!
 			if (length(potentially_conflicting_machines) != 1 || !try_smart_reconfiguration(machine, our_init_dirs, user))
 				// No solutions found
-				to_chat(user, span_warning("There is already a pipe at that location!"))
+				if (length(potentially_conflicting_machines) != 1)
+					to_chat(user, span_warning("pipe_count is [length(potentially_conflicting_machines)], not attempting smart reconfiguration!"))
+				var/other_init_directions = machine.GetInitDirections()
+				to_chat(user, span_warning("There is already a pipe at that location: [ADMIN_VV(machine)]:[other_init_directions] [ADMIN_VV(src)]:[our_init_dirs] CONFLICT at [other_init_directions & our_init_dirs]!"))
 				return TRUE
 	// no conflicts found
 
@@ -204,6 +207,7 @@ Buildable meters
  */
 /obj/item/pipe/proc/try_smart_reconfiguration(obj/machinery/atmospherics/machine, our_init_dirs, mob/living/user)
 	// If we're a smart pipe, we might be able to solve this by placing down a more constrained version of ourselves.
+	to_chat(user, span_notice("Attempting smart pipe reconfiguration..."))
 	var/obj/machinery/atmospherics/pipe/smart/other_smart_pipe = machine
 	if(ispath(pipe_type, /obj/machinery/atmospherics/pipe/smart/))
 		// If we're conflicting with another smart pipe, see if we can negotiate.
@@ -218,7 +222,9 @@ Buildable meters
 					p_init_dir = opposing_dir
 					other_smart_pipe.SetInitDirections(other_smart_pipe.connections)
 					other_smart_pipe.update_pipe_icon()
+					to_chat(user, span_notice("Reconfiguring smart pipe (bent)!"))
 					return TRUE
+				to_chat(user, span_warning("Could not reconfigure smart pipe (bent branch) [src]:I[our_init_dirs] -> [opposing_dir] [other_smart_pipe]:C[other_smart_pipe.connections]!"))
 				// We're left with one or no available directions if we look at the complement of the other smart pipe's live connections.
 				// There's nothing further we can do.
 				return FALSE
@@ -228,47 +234,60 @@ Buildable meters
 				if(EWCOMPONENT(other_smart_pipe.dir))
 					if ((NORTH|SOUTH) & ~p_init_dir)
 						// Not allowed to connect this way
+						to_chat(user, span_warning("We're not allowed to connect vertically."))
 						return FALSE
 					if (~other_smart_pipe.GetInitDirections() & (EAST|WEST))
 						// Not allowed to reconfigure the other pipe this way
+						to_chat(user, span_warning("Other smart pipe not allowed to connect horizontally."))
 						return FALSE
 					p_init_dir = NORTH|SOUTH
 					other_smart_pipe.SetInitDirections(EAST|WEST)
 					other_smart_pipe.update_pipe_icon()
+					to_chat(user, span_notice("Reconfiguring smart pipe (to horizontal)!"))
 					return TRUE
 				if (NSCOMPONENT(other_smart_pipe.dir))
 					if ((EAST|WEST) & ~p_init_dir)
 						// Not allowed to connect this way
+						to_chat(user, span_warning("We're not allowed to connect horizontally."))
 						return FALSE
 					if (~other_smart_pipe.GetInitDirections() & (NORTH|SOUTH))
 						// Not allowed to reconfigure the other pipe this way
+						to_chat(user, span_warning("Other smart pipe not allowed to connect vertically."))
 						return FALSE
 					p_init_dir = EAST|WEST
 					other_smart_pipe.SetInitDirections(NORTH|SOUTH)
 					other_smart_pipe.update_pipe_icon()
+					to_chat(user, span_notice("Reconfiguring smart pipe (to vertical)!"))
 					return TRUE
+			to_chat(user, span_warning("Fallthrough (two smart pipes, no other case); this should never happen!"))
 			return FALSE
 		// We're not dealing with another smart pipe. See if we can become the complement of the conflicting machine.
 		var/opposing_dir = our_init_dirs & ~machine.GetInitDirections()
 		if (ISNOTSTUB(opposing_dir))
 			// We have at least two permitted directions in the complement. Use them.
 			p_init_dir = opposing_dir
+			to_chat(user, span_notice("Reconfiguring ourselves to complement of [machine.GetInitDirections()]:[opposing_dir]!"))
 			return TRUE
+		to_chat(user, span_warning("Could not reconfigure ourselves with [ADMIN_VV(src)]:[our_init_dirs] to complement of [ADMIN_VV(machine)]:I[machine.GetInitDirections()]"))
 		return FALSE
 
 	else if(istype(other_smart_pipe))
 		// We're not a smart pipe ourselves, but we are conflicting with a smart pipe. We might be able to solve this by constraining the smart pipe.
 		if (our_init_dirs & other_smart_pipe.connections)
 			// We needed to go where a smart pipe already had connections, nothing further we can do
+			to_chat(user, span_warning("We ([ADMIN_VV(src)]) would go where a smart pipe ([ADMIN_VV(other_smart_pipe)]:C[other_smart_pipe.connections]) would be!"));
 			return FALSE
 		var/opposing_dir = other_smart_pipe.GetInitDirections() & ~our_init_dirs
 		if (ISNOTSTUB(opposing_dir))
 			// At least two directions remain for that smart pipe, reconfigure it
+			to_chat(user, span_notice("Reconfiguring other smart pipe ([ADMIN_VV(other_smart_pipe)]:I[other_smart_pipe.GetInitDirections()]) to complement of [machine.GetInitDirections()]: [opposing_dir]!"))
 			other_smart_pipe.SetInitDirections(opposing_dir)
 			other_smart_pipe.update_pipe_icon()
 			return TRUE
+		to_chat(user, span_warning("Other smart pipe ([ADMIN_VV(other_smart_pipe)]) would be left with less than two directions ([opposing_dir])"))
 		return FALSE
 	// No smart pipes involved, the conflict can't be solved this way.
+	to_chat(user, span_warning("No smart pipes involved, cannot reconfigure"))
 	return FALSE
 
 /obj/item/pipe/proc/build_pipe(obj/machinery/atmospherics/A)

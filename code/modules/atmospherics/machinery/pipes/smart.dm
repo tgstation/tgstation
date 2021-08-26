@@ -42,6 +42,8 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 		while (ISSTUB(connections | bits_to_add) && (candidates >> shift) != 0)
 			bits_to_add |= candidates & (1 << shift)
 			shift += 1
+		if (ISSTUB(connections))
+			log_admin("DEBUG: [ADMIN_VV(src)] would have stub setup and be invisible. dir [dir], long pipes [bitfield], short pipes [bits_to_add], p_init_dir [initialize_directions]")
 		bitfield |= CARDINAL_TO_SHORTPIPES(bits_to_add)
 
 	icon_state = "[bitfield]_[piping_layer]"
