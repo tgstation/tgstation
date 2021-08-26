@@ -1,10 +1,10 @@
 import { toFixed } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
-import { Button, ColorBox, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, RoundGauge, Dimmer, Modal, NumberInput, Input, Flex } from '../components';
+import { Button, ColorBox, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, RoundGauge, Dimmer, NumberInput, Flex } from '../components';
 import { Window } from '../layouts';
 
-const ConfigureIntegerEntry = (props, context) => {
-  const { value, name, configureName } = props;
+const ConfigureNumberEntry = (props, context) => {
+  const { name, value, module_ref } = props;
   const { act } = useBackend(context);
   return (
     <NumberInput
@@ -13,131 +13,58 @@ const ConfigureIntegerEntry = (props, context) => {
       maxValue={50}
       stepPixelSize={5}
       width="39px"
-      onDrag={(e, value) => act('modify_configure_value', {
-        name: configureName,
-        new_data: {
-          [name]: value,
-        },
+      onChange={(e, value) => act('configure', {
+        "key": name,
+        "value": value,
+        "ref": module_ref,
       })} />
   );
 };
 
 const ConfigureBoolEntry = (props, context) => {
-  const { value, name, configureName } = props;
+  const { name, value, module_ref } = props;
   const { act } = useBackend(context);
   return (
-    <NumberInput
-      value={value}
-      minValue={-50}
-      maxValue={50}
-      stepPixelSize={5}
-      width="39px"
-      onDrag={(e, value) => act('modify_configure_value', {
-        name: configureName,
-        new_data: {
-          [name]: value,
-        },
-      })} />
+    <Button.Checkbox
+      checked={value}
+      onClick={() => act('configure', {
+        "key": name,
+        "value": !value,
+        "ref": module_ref,
+      })}
+    />
   );
 };
 
 const ConfigureColorEntry = (props, context) => {
-  const { value, configureName, name } = props;
+  const { name, value, module_ref } = props;
   const { act } = useBackend(context);
   return (
     <>
       <Button
-        icon="pencil-alt"
-        onClick={() => act('modify_color_value', {
-          name: configureName,
+        icon="paint-brush"
+        onClick={() => act('configure', {
+          "key": name,
+          "ref": module_ref,
         })} />
       <ColorBox
         color={value}
         mr={0.5} />
-      <Input
-        value={value}
-        width="90px"
-        onInput={(e, value) => act('transition_configure_value', {
-          name: configureName,
-          new_data: {
-            [name]: value,
-          },
-        })} />
     </>
   );
 };
 
 const ConfigureDataEntry = (props, context) => {
-  const { name, value, hasValue, configureName } = props;
-
+  const { name, display_name, type, value, module_ref } = props;
   const configureEntryTypes = {
-    int: <ConfigureIntegerEntry {...props} />,
+    number: <ConfigureNumberEntry {...props} />,
     bool: <ConfigureBoolEntry {...props} />,
     color: <ConfigureColorEntry {...props} />,
   };
-
   return (
-    <LabeledList.Item label={name}>
-      {configureEntryTypes[configureEntryMap[name]] || "Not Found (This is an error)"}
-      {' '}
-      {!hasValue && <Box inline color="average">(Default)</Box>}
-    </LabeledList.Item>
-  );
-};
-
-const ConfigureEntry = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { name, configureDataEntry } = props;
-  const { type, priority, ...restOfProps } = configureDataEntry;
-
-  const configureDefaults = data["configure_info"];
-
-  const targetConfigurePossibleKeys = Object.keys(configureDefaults[type]['defaults']);
-
-  return (
-    <Collapsible
-      title={name + " (" + type + ")"}
-      buttons={(
-        <>
-          <NumberInput
-            value={priority}
-            stepPixelSize={10}
-            width="60px"
-            onChange={(e, value) => act('change_priority', {
-              name: name,
-              new_priority: value,
-            })}
-          />
-          <Button.Input
-            content="Rename"
-            placeholder={name}
-            onCommit={(e, new_name) => act('rename_configure', {
-              name: name,
-              new_name: new_name,
-            })}
-            width="90px" />
-          <Button.Confirm
-            icon="minus"
-            onClick={() => act("remove_configure", { name: name })} />
-        </>
-      )}>
-      <Section level={2}>
-        <LabeledList>
-          {targetConfigurePossibleKeys.map(entryName => {
-            const defaults = configureDefaults[type]['defaults'];
-            const value = restOfProps[entryName] || defaults[entryName];
-            const hasValue = value !== defaults[entryName];
-            return (
-              <ConfigureDataEntry
-                key={entryName}
-                display_name={display_name}
-                type={type}
-                value={value} />
-            );
-          })}
-        </LabeledList>
-      </Section>
-    </Collapsible>
+    <Box>
+      {display_name}: {configureEntryTypes[type]}
+    </Box>
   );
 };
 
@@ -190,19 +117,18 @@ const LockedInterface = () => (
       size={15}
     />
     <Box fontSize="30px" color="red">
-      ERROR: INTERFACE UNRESPONSIVE.
+      ERROR: INTERFACE UNRESPONSIVE
     </Box>
   </Section>
 );
 
 const LockedModule = (props, context) => {
   const { act, data } = useBackend(context);
-  const { owner } = data;
   return (
     <Dimmer>
       <Stack>
         <Stack.Item fontSize="16px" color="blue">
-          ERROR: SUIT UNPOWERED.
+          SUIT UNPOWERED
         </Stack.Item>
       </Stack>
     </Dimmer>
@@ -210,19 +136,35 @@ const LockedModule = (props, context) => {
 };
 
 const ConfigureScreen = (props, context) => {
-  const { configuration_data } = props;
+  const { configuration_data, module_ref } = props;
   const configuration_keys = Object.keys(configuration_data);
   return (
     <Dimmer backgroundColor="rgba(0, 0, 0, 0.8)">
-      <Stack>
+      <Stack vertical>
         {configuration_keys.map(key => {
           const data = configuration_data[key];
           return (
             <Stack.Item key={data.key}>
-              {data.display_name}
+              <ConfigureDataEntry
+                name={key}
+                display_name={data.display_name}
+                type={data.type}
+                value={data.value}
+                module_ref={module_ref} />
             </Stack.Item>
           );
         })}
+        <Stack.Item>
+          <Box>
+            <Button
+              fluid
+              onClick={props.onExit}
+              icon="times"
+              textAlign="center" >
+              Exit
+            </Button>
+          </Box>
+        </Stack.Item>
       </Stack>
     </Dimmer>
   );
@@ -371,7 +313,7 @@ const InfoSection = (props, context) => {
         {info_modules.length !== 0 && info_modules.map(module => {
           const Module = ID2MODULE[module.id];
           return (
-            <Stack.Item key={module.id}>
+            <Stack.Item key={module.ref}>
               {!active && <LockedModule />}
               <Module {...module} active={active} />
             </Stack.Item>
@@ -397,13 +339,15 @@ const ModuleSection = (props, context) => {
       <Flex direction="column">
         {modules.length !== 0 && modules.map(module => {
           return (
-            <Flex.Item key={module.name} >
+            <Flex.Item key={module.ref} >
               <Collapsible
                 title={module.name} >
                 <Section>
                   {configureState === module.ref && (
                     <ConfigureScreen
-                      configuration_data={module.configuration_data} />)}
+                      configuration_data={module.configuration_data}
+                      module_ref={module.ref}
+                      onExit={() => setConfigureState(null)} />)}
                   <Table>
                     <Table.Row
                       header>
@@ -456,8 +400,7 @@ const ModuleSection = (props, context) => {
                           tooltipPosition="top" />
                       </Table.Cell>
                     </Table.Row>
-                    <Table.Row
-                      key={module.ref}>
+                    <Table.Row>
                       <Table.Cell textAlign="center">
                         {module.complexity}/{complexity_max}
                       </Table.Cell>
@@ -479,7 +422,7 @@ const ModuleSection = (props, context) => {
                       <Table.Cell
                         textAlign="center">
                         <Button
-                          onClick={() => act("select", { "ref": module.ref })}
+                          onClick={() => act('select', { "ref": module.ref })}
                           icon="bullseye"
                           selected={module.active}
                           tooltip={displayText(module.module_type)}

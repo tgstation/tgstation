@@ -30,7 +30,7 @@
 			use_power = module.use_power_cost,
 			complexity = module.complexity,
 			cooldown_time = module.cooldown_time,
-			cooldown = CEILING(COOLDOWN_TIMELEFT(module, cooldown_timer), 1 SECONDS),
+			cooldown = round(COOLDOWN_TIMELEFT(module, cooldown_timer), 1 SECONDS),
 			id = module.tgui_id,
 			ref = REF(module),
 			configuration_data = module.get_configuration()
@@ -68,8 +68,12 @@
 			toggle_activate(usr)
 		if("select")
 			var/obj/item/mod/module/module = locate(params["ref"]) in modules
+			if(!module)
+				return
 			module.on_select()
 		if("configure")
 			var/obj/item/mod/module/module = locate(params["ref"]) in modules
+			if(!module)
+				return
 			module.configure_edit(params["key"], params["value"])
 	return TRUE

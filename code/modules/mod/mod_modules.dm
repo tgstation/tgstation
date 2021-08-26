@@ -126,8 +126,6 @@
 	if(!drain_power(use_power_cost))
 		return FALSE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
-	if(cooldown_time > 0.5 SECONDS) //if longer than default cooldown we let a message happen
-		balloon_alert(mod.wearer, "cooling down...")
 	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time)
 	mod.wearer.update_inv_back()
 	return TRUE
@@ -434,7 +432,17 @@
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE)
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_SPACEMOVE)
-	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+	if(full_speed)
+		mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+
+/obj/item/mod/module/jetpack/get_configuration()
+	. = ..()
+	.["stabilizers"] = add_ui_configuration("Stabilizers", "bool", stabilizers)
+
+/obj/item/mod/module/jetpack/configure_edit(key, value)
+	switch(key)
+		if("stabilizers")
+			stabilizers = text2num(value)
 
 /obj/item/mod/module/jetpack/proc/move_react(mob/user)
 	SIGNAL_HANDLER
@@ -690,8 +698,8 @@
 	light_range = 3
 	light_power = 1
 	light_on = FALSE
-	var/base_power = 5
-	var/min_range = 1
+	var/base_power = 3
+	var/min_range = 2
 	var/max_range = 5
 
 /obj/item/mod/module/flashlight/on_activation()
@@ -732,14 +740,12 @@
 /obj/item/mod/module/flashlight/configure_edit(key, value)
 	switch(key)
 		if("light_color")
+			value = input(usr, "Pick new light color", "Flashlight Color") as color|null
 			if(value)
-				value = sanitize_hexcolor(value, 6, TRUE)
-			var/new_color = value || (input(usr, "Pick new light color", "Flashlight Color") as color|null)
-			if(new_color)
-				light_color = new_color
+				set_light_color(value)
 				mod.wearer.update_inv_back()
 		if("light_range")
-			light_range = clamp(value, min_range, max_range)
+			set_light_range(clamp(value, min_range, max_range))
 
 /obj/item/mod/module/science_scanner
 	name = "MOD science scanner module"
