@@ -33,8 +33,7 @@
 			return FALSE
 		else
 			check = TRUE
-	var/list/modifiers = params2list(click_parameters)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) || check)
+	if(user.combat_mode || check)
 		target.rust_heretic_act()
 		return TRUE
 
