@@ -8917,7 +8917,7 @@
 /area/medical/medbay/central)
 "aHO" = (
 /obj/effect/turf_decal/sand,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron/airless,
 /area/mine/explored)
 "aHQ" = (
@@ -11709,7 +11709,7 @@
 /turf/open/floor/carpet,
 /area/commons/vacant_room/office)
 "bhI" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/wood,
 /area/maintenance/central)
 "bhR" = (
@@ -12715,7 +12715,7 @@
 /area/security/processing)
 "bEP" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "bEQ" = (
@@ -17366,7 +17366,7 @@
 /turf/closed/wall/r_wall,
 /area/science/robotics/lab)
 "dys" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -23981,7 +23981,7 @@
 /turf/open/floor/iron/freezer,
 /area/medical/coldroom)
 "gga" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/item/relic,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/department/medical)
@@ -25674,7 +25674,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "gRx" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/flashlight{
 	pixel_x = 1;
@@ -29323,7 +29323,7 @@
 /area/command/heads_quarters/captain/private)
 "iqe" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "iqY" = (
@@ -38344,7 +38344,7 @@
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/rd)
 "lYF" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
@@ -42551,7 +42551,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/commons/locker)
 "nOM" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating/asteroid,
 /area/mine/explored)
 "nOP" = (
@@ -42750,7 +42750,7 @@
 /turf/closed/wall/r_wall,
 /area/security/prison)
 "nTs" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
@@ -56170,7 +56170,7 @@
 	dir = 8
 	},
 /obj/structure/closet/crate/trashcart/laundry,
-/obj/effect/spawner/lootdrop/costume,
+/obj/effect/spawner/random/clothing/costume,
 /turf/open/floor/iron/cafeteria,
 /area/commons/locker)
 "tps" = (
@@ -58808,7 +58808,7 @@
 /area/engineering/supermatter/room)
 "usp" = (
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/costume,
+/obj/effect/spawner/random/clothing/costume,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/central)
@@ -59260,7 +59260,7 @@
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
 "uBE" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/item/flashlight,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -61278,7 +61278,7 @@
 "vyP" = (
 /obj/structure/closet,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/costume,
+/obj/effect/spawner/random/clothing/costume,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "vzg" = (
@@ -67235,7 +67235,7 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "xQp" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/item/relic,
 /turf/open/floor/plating/asteroid/airless,
 /area/mine/explored)

@@ -377,7 +377,7 @@
 /obj/structure/sign/departments/xenobio{
 	pixel_x = -32
 	},
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bC" = (
@@ -732,7 +732,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/maintenance)
 "dk" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "dm" = (
@@ -1782,7 +1782,7 @@
 	},
 /area/service/hydroponics)
 "iR" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "iS" = (
@@ -2096,7 +2096,7 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "kz" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "kA" = (
@@ -5756,7 +5756,7 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "Gu" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
