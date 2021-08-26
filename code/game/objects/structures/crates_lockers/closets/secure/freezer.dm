@@ -1,10 +1,11 @@
 /obj/structure/closet/secure_closet/freezer
 	icon_state = "freezer"
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/jones = FALSE
 
 /obj/structure/closet/secure_closet/freezer/Destroy()
 	recursive_organ_check(src)
-	..()
+	return ..()
 
 /obj/structure/closet/secure_closet/freezer/Initialize()
 	. = ..()
@@ -24,6 +25,7 @@
 	if(jones)
 		return ..()
 	jones = TRUE
+	flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
 
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "kitchen cabinet"
@@ -72,7 +74,7 @@
 /obj/structure/closet/secure_closet/freezer/gulag_fridge/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/food/drinks/beer/light(src)
+		new /obj/item/reagent_containers/food/drinks/bottle/beer/light(src)
 
 /obj/structure/closet/secure_closet/freezer/fridge
 	name = "refrigerator"

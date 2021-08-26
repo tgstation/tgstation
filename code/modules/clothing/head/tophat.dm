@@ -17,7 +17,7 @@
 
 /obj/item/clothing/head/that/proc/abracadabra(obj/item/hitby_wand, mob/magician)
 	if(!COOLDOWN_FINISHED(src, rabbit_cooldown))
-		to_chat(span_warning("You can't find another rabbit in [src]! Seems another hasn't gotten lost in there yet..."))
+		to_chat(magician, span_warning("You can't find another rabbit in [src]! Seems another hasn't gotten lost in there yet..."))
 		return
 
 	COOLDOWN_START(src, rabbit_cooldown, RABBIT_CD_TIME)

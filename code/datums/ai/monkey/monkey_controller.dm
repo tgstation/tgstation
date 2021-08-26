@@ -54,25 +54,25 @@ have ways of interacting with a specific mob and control it.
 	RegisterSignal(new_pawn, COMSIG_MOB_MOVESPEED_UPDATED, .proc/update_movespeed)
 	RegisterSignal(new_pawn, COMSIG_FOOD_EATEN, .proc/on_eat)
 
-	AddElement(/datum/element/connect_loc_behalf, new_pawn, loc_connections)
+	AddComponent(/datum/component/connect_loc_behalf, new_pawn, loc_connections)
 	movement_delay = living_pawn.cached_multiplicative_slowdown
 	return ..() //Run parent at end
 
 /datum/ai_controller/monkey/UnpossessPawn(destroy)
 	UnregisterSignal(pawn, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_LIVING_START_PULL,\
 	COMSIG_LIVING_TRY_SYRINGE, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED, COMSIG_MOB_MOVESPEED_UPDATED, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_MOB_ATTACK_ALIEN))
-	RemoveElement(/datum/element/connect_loc_behalf, pawn, loc_connections)
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
 
 	return ..() //Run parent at end
 
 // Stops sentient monkeys from being knocked over like weak dunces.
 /datum/ai_controller/monkey/on_sentience_gained()
 	. = ..()
-	RemoveElement(/datum/element/connect_loc_behalf, pawn, loc_connections)
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
 
 /datum/ai_controller/monkey/on_sentience_lost()
 	. = ..()
-	AddElement(/datum/element/connect_loc_behalf, pawn, loc_connections)
+	AddComponent(/datum/component/connect_loc_behalf, pawn, loc_connections)
 
 /datum/ai_controller/monkey/able_to_run()
 	. = ..()
@@ -113,9 +113,9 @@ have ways of interacting with a specific mob and control it.
 	blackboard[BB_MONKEY_PICKUPTARGET] = weapon
 	current_movement_target = weapon
 	if(pickpocket)
-		LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_equip/pickpocket))
+		queue_behavior(/datum/ai_behavior/monkey_equip/pickpocket)
 	else
-		LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_equip/ground))
+		queue_behavior(/datum/ai_behavior/monkey_equip/ground)
 	return TRUE
 
 /// Returns either the best weapon from the given choices or null if held weapons are better
@@ -149,33 +149,6 @@ have ways of interacting with a specific mob and control it.
 		top_force = item.force
 
 	return top_force_item
-
-/datum/ai_controller/monkey/proc/TryFindFood()
-	. = FALSE
-	var/mob/living/living_pawn = pawn
-
-	// Held items
-
-	var/list/food_candidates = list()
-	for(var/obj/item as anything in living_pawn.held_items)
-		if(!item || !IsEdible(item))
-			continue
-		food_candidates += item
-
-	for(var/obj/item/candidate in oview(2, living_pawn))
-		if(!IsEdible(candidate))
-			continue
-		food_candidates += candidate
-
-	if(length(food_candidates))
-		var/obj/item/best_held = GetBestWeapon(null, living_pawn.held_items)
-		for(var/obj/item/held as anything in living_pawn.held_items)
-			if(!held || held == best_held)
-				continue
-			living_pawn.dropItemToGround(held)
-
-		AddBehavior(/datum/ai_behavior/consume, pick(food_candidates))
-		return TRUE
 
 /datum/ai_controller/monkey/proc/IsEdible(obj/item/thing)
 	if(IS_EDIBLE(thing))

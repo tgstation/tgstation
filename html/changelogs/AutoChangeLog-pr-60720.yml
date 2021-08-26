@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "Honorbound followers can now perform surgery."
+  - bugfix: "Honorbound followers can no longer punch the innocents."
