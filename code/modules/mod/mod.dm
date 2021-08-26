@@ -240,24 +240,26 @@
 			return
 	return ..()
 
-/obj/item/mod/control/screwdriver_act(mob/living/user, obj/item/I)
+/obj/item/mod/control/screwdriver_act(mob/living/user, obj/item/screwdriver)
 	if(..())
 		return TRUE
 	if(active || activating)
 		balloon_alert(user, "deactivate suit first!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
-	balloon_alert(user, "[open ? "closing" : "opening"] panel")
-	I.play_tool_sound(src, 100)
-	if(I.use_tool(src, user, 1 SECONDS))
+	balloon_alert(user, "[open ? "closing" : "opening"] panel...")
+	screwdriver.play_tool_sound(src, 100)
+	if(screwdriver.use_tool(src, user, 1 SECONDS))
 		if(active || activating)
-			return FALSE
-		I.play_tool_sound(src, 100)
+			balloon_alert(user, "deactivate suit first!")
+		screwdriver.play_tool_sound(src, 100)
 		balloon_alert(user, "panel [open ? "closed" : "opened"]")
 		open = !open
+	else
+		balloon_alert(user, "interrupted!")
 	return TRUE
 
-/obj/item/mod/control/crowbar_act(mob/living/user, obj/item/I)
+/obj/item/mod/control/crowbar_act(mob/living/user, obj/item/crowbar)
 	. = ..()
 	if(!open)
 		balloon_alert(user, "open the panel first!")
@@ -265,14 +267,15 @@
 		return FALSE
 	if(length(modules))
 		for(var/obj/item/mod/module/module as anything in modules)
+			var/list/removable_modules = list()
 			if(module.removable)
-				uninstall(module)
-				module.forceMove(drop_location())
-			else
-				balloon_alert(user, "[module] is unremovable!")
-				playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-				return
-		I.play_tool_sound(src, 100)
+				removable_modules += module
+			var/obj/item/mod/module/module_to_remove = input("Which module to remove?") as null|anything in removable_modules
+			if(!module_to_remove)
+				return FALSE
+			uninstall(module_to_remove)
+			module_to_remove.forceMove(drop_location())
+		crowbar.play_tool_sound(src, 100)
 		return TRUE
 	balloon_alert(user, "no modules!")
 	playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)

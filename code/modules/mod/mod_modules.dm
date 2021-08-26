@@ -796,3 +796,4 @@
 	var/obj/item/dispensed = new dispense_type(mod.wearer.loc)
 	mod.wearer.put_in_hands(dispensed)
 	balloon_alert(mod.wearer, "[dispensed] dispensed")
+	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
