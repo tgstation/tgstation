@@ -7,7 +7,7 @@
 	icon_state = "dicebag"
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/storage/dice/ComponentInitialize()
+/obj/item/storage/dice/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
 	storage.allow_quick_gather = TRUE
