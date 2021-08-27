@@ -81,7 +81,7 @@
 		return
 	if(silent || !isitem(eat_target)) //Don't bother reporting it for everything
 		return
-	to_chat(src, "[eat_target] cannot be eaten")
+	to_chat(src, span_warning("[eat_target] cannot be eaten!"))
 
 ///Updates the display that shows the mobs nutrition
 /mob/living/simple_animal/hostile/ooze/proc/updateNutritionDisplay()
