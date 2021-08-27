@@ -325,63 +325,68 @@
 /obj/item/toy/sword
 	name = "toy sword"
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
+	icon_state = "e_sword"
 	icon = 'icons/obj/transforming_energy.dmi'
-	icon_state = "sword0"
-	inhand_icon_state = "sword0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	var/active = 0
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("attacks", "strikes", "hits")
 	attack_verb_simple = list("attack", "strike", "hit")
+	/// Whether our sword has been multitooled to rainbow
 	var/hacked = FALSE
-	var/saber_color
+	/// The color of our fake energy sword
+	var/saber_color = "blue"
 
-/obj/item/toy/sword/attack_self(mob/user)
-	active = !( active )
-	if (active)
-		to_chat(user, span_notice("You extend the plastic blade with a quick flick of your wrist."))
-		playsound(user, 'sound/weapons/saberon.ogg', 20, TRUE)
-		if(hacked)
-			icon_state = "swordrainbow"
-			inhand_icon_state = "swordrainbow"
-		else
-			icon_state = "swordblue"
-			inhand_icon_state = "swordblue"
-		w_class = WEIGHT_CLASS_BULKY
-	else
-		to_chat(user, span_notice("You push the plastic blade back down into the handle."))
-		playsound(user, 'sound/weapons/saberoff.ogg', 20, TRUE)
-		icon_state = "sword0"
-		inhand_icon_state = "sword0"
-		w_class = WEIGHT_CLASS_SMALL
-	add_fingerprint(user)
+/obj/item/toy/sword/Initialize()
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		throw_speed_on = throw_speed, \
+		hitsound_on = hitsound, \
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
-// Copied from /obj/item/melee/transforming/energy/sword/attackby
-/obj/item/toy/sword/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/toy/sword))
-		if(HAS_TRAIT(W, TRAIT_NODROP) || HAS_TRAIT(src, TRAIT_NODROP))
-			to_chat(user, span_warning("\the [HAS_TRAIT(src, TRAIT_NODROP) ? src : W] is stuck to your hand, you can't attach it to \the [HAS_TRAIT(src, TRAIT_NODROP) ? W : src]!"))
+
+/*
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
+ *
+ * Updates our icon to have the correct color, and give some feedback.
+ */
+/obj/item/toy/sword/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	if(active)
+		icon_state = "[icon_state]_[saber_color]"
+
+	balloon_alert(user, "[active ? "flicked out":"pushed in"] [src]")
+	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 20, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
+
+// Copied from /obj/item/melee/energy/sword/attackby
+/obj/item/toy/sword/attackby(obj/item/weapon, mob/living/user, params)
+	if(istype(weapon, /obj/item/toy/sword))
+		var/obj/item/toy/sword/attatched_sword = weapon
+		if(HAS_TRAIT(weapon, TRAIT_NODROP))
+			to_chat(user, span_warning("[weapon] is stuck to your hand, you can't attach it to [src]!"))
+			return
+		else if(HAS_TRAIT(src, TRAIT_NODROP))
+			to_chat(user, span_warning("[src] is stuck to your hand, you can't attach it to [weapon]!"))
 			return
 		else
 			to_chat(user, span_notice("You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool."))
-			var/obj/item/dualsaber/toy/newSaber = new /obj/item/dualsaber/toy(user.loc)
-			if(hacked) // That's right, we'll only check the "original" "sword".
-				newSaber.hacked = TRUE
-				newSaber.saber_color = "rainbow"
-			qdel(W)
+			var/obj/item/dualsaber/toy/new_saber = new /obj/item/dualsaber/toy(user.loc)
+			if(attatched_sword.hacked || hacked)
+				new_saber.hacked = TRUE
+				new_saber.saber_color = "rainbow"
+			qdel(weapon)
 			qdel(src)
-	else if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!hacked)
+			user.put_in_hands(new_saber)
+	else if(weapon.tool_behaviour == TOOL_MULTITOOL)
+		if(hacked)
+			to_chat(user, span_warning("It's already fabulous!"))
+		else
 			hacked = TRUE
 			saber_color = "rainbow"
 			to_chat(user, span_warning("RNBW_ENGAGE"))
-
-			if(active)
-				icon_state = "swordrainbow"
-				user.update_inv_hands()
-		else
-			to_chat(user, span_warning("It's already fabulous!"))
 	else
 		return ..()
 

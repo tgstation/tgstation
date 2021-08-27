@@ -326,12 +326,16 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CAN_USE_FLIGHT_POTION "can_use_flight_potion"
 /// This mob overrides certian SSlag_switch measures with this special trait
 #define TRAIT_BYPASS_MEASURES "bypass_lagswitch_measures"
+/// Someone can safely be attacked with honorbound with ONLY a combat mode check, the trait is assuring holding a weapon and hitting won't hurt them..
+#define TRAIT_ALLOWED_HONORBOUND_ATTACK "allowed_honorbound_attack"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
 #define TRAIT_AI_BAGATTACK "bagattack"
 /// This mobs bodyparts are invisible but still clickable.
 #define TRAIT_INVISIBLE_MAN "invisible_man"
+/// Don't draw external organs/species features like wings, horns, frills and stuff
+#define TRAIT_HIDE_EXTERNAL_ORGANS "hide_external_organs"
 ///When people are floating from zero-grav or something, we can move around freely!
 #define TRAIT_FREE_FLOAT_MOVEMENT "free_float_movement"
 // You can stare into the abyss, but it does not stare back.

@@ -48,9 +48,10 @@
 /obj/item/circuit_component/radio/input_received(datum/port/input/port)
 	var/frequency = freq.value
 
-	SSradio.remove_object(src, current_freq)
-	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
-	current_freq = frequency
+	if(frequency != current_freq)
+		SSradio.remove_object(src, current_freq)
+		radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
+		current_freq = frequency
 
 	if(COMPONENT_TRIGGERED_BY(trigger_input, port))
 		var/datum/signal/signal = new(list("code" = round(code.value) || 0, "key" = parent?.owner_id))
