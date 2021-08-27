@@ -1,19 +1,19 @@
 /datum/station_alert
     /// Holder of the datum
     var/holder
-    /// List of alarm types we are listening to
+    /// List of all alarm types we are listening to
     var/list/alarm_types
-    /// Listens for alarms, provides the alarms list for our ui
+    /// Listens for alarms, provides the alarms list for our UI
     var/datum/alarm_listener/listener
     /// Title of our UI
     var/title
-	/// If UI will also show cameras connected to each alert area
-    var/camera_view = FALSE
+	/// If UI will also show and allow jumping to cameras connected to each alert area
+    var/camera_view
 
 /datum/station_alert/ui_host(mob/user)
 	return holder
 
-/datum/station_alert/New(holder, list/alarm_types, list/listener_z_level, title, camera_view)
+/datum/station_alert/New(holder, list/alarm_types, list/listener_z_level, title = "Station Alerts", camera_view = FALSE)
     src.holder = holder
     src.alarm_types = alarm_types
     src.title = title
@@ -43,9 +43,8 @@
 		var/list/alerts = alarms[alarm_type]
 		for(var/alert in alerts)
 			var/list/alarm = alerts[alert]
-			var/area/area_name = alarm[1]
 			category["alerts"] += list(list(
-				"name" = area_name,
+				"name" = get_area_name(alarm[1], TRUE),
 				"cameras" = camera_view ? length(alarm[2]) : null,
                 "sources" = camera_view ? length(alarm[3]) : null,
 				"ref" = camera_view ? REF(alert) : null,
@@ -58,20 +57,30 @@
 	if(.)
 		return
 
-	var/mob/living/silicon/ai/ai = usr
-	if(!istype(ai))
-		return
-
-	var/list/alarms = listener.alarms
-	var/list/alerts = list()
-	for(var/alarm_type in alarms)
-		alerts += alarms[alarm_type]
-
-	var/list/chosen_alert = locate(params["alert"]) in alerts
-	var/list/cameras = chosen_alert[2]
-
 	switch(action)
 		if("select_camera")
-			var/selected_camera = tgui_input_list(usr, "Choose to which camera you want to jump.", "Camera Selection", cameras)
-			ai.switchCamera(locate(selected_camera) in GLOB.cameranet.cameras)
+			var/mob/living/silicon/ai/ai = usr
+			if(!istype(ai))
+				return
+
+			var/list/alarms = listener.alarms
+			var/list/alerts = list()
+			for(var/alarm_type in alarms)
+				alerts += alarms[alarm_type]
+
+			var/list/our_alert = locate(params["alert"]) in alerts
+			var/chosen_alert = alerts[our_alert]
+			var/list/cameras = chosen_alert[2]
+			var/list/named_cameras = list()
+			for(var/obj/machinery/camera/camera in cameras)
+				named_cameras[camera.c_tag] = camera
+
+			var/chosen_camera = tgui_input_list(ai, "Choose a camera to jump to", "Camera Selection", named_cameras)
+			if(!chosen_camera)
+				return
+			var/obj/machinery/camera/selected_camera = named_cameras[chosen_camera]
+			if(!selected_camera.can_use())
+				to_chat(ai, span_warning("Camera is unavailable!"))
+				return
+			ai.switchCamera(selected_camera)
 			return TRUE

@@ -17,7 +17,7 @@
 	//We want to send an alarm if we're in one of the mining home areas
 	//Or if we're on station. Otherwise, die.
 	var/list/allowed_areas = GLOB.the_station_areas + typesof(/area/mine)
-	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), null, allowed_areas)
+	listener = new(list(ALARM_FIRE, ALARM_ATMOS, ALARM_POWER), null, allowed_areas)
 	RegisterSignal(listener, list(COMSIG_ALARM_TRIGGERED, COMSIG_ALARM_CLEARED), .proc/update_alarm_display)
 	return ..()
 

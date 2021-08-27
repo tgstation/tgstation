@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-export const StationAlertConsole = () => {
+export const StationAlertConsole = (props, context) => {
   const { data } = useBackend(context);
   const {
     cameraView,
@@ -19,7 +19,7 @@ export const StationAlertConsole = () => {
 };
 
 export const StationAlertConsoleContent = (props, context) => {
-  const { data } = useBackend(context);
+  const { act, data } = useBackend(context);
   const {
     cameraView,
     alarms = [],
@@ -41,8 +41,8 @@ export const StationAlertConsoleContent = (props, context) => {
                 align="baseline">
                 <Stack.Item grow>
                   <li className="color-average">
-                    {alert.name + !!cameraView && alert?.sources > 1 
-                    ? " (" + alert.sources + "sources)" : ""}
+                    {alert.name} {!!cameraView && alert?.sources > 1 
+                    ? " (" + alert.sources + " sources)" : ""}
                   </li>
                 </Stack.Item>
                 {!!cameraView && (      
