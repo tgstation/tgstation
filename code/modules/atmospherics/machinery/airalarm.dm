@@ -614,10 +614,10 @@
 	danger_level = max(pressure_dangerlevel, temperature_dangerlevel, gas_dangerlevel)
 
 	if(old_danger_level != danger_level)
-		apply_danger_level()
+		INVOKE_ASYNC(src, .proc/apply_danger_level)
 	if(mode == AALARM_MODE_REPLACEMENT && environment_pressure < ONE_ATMOSPHERE * 0.05)
 		mode = AALARM_MODE_SCRUBBING
-		apply_mode(src)
+		INVOKE_ASYNC(src, .proc/apply_mode, src)
 
 
 /obj/machinery/airalarm/proc/post_alert(alert_level)
