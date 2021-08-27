@@ -8,10 +8,6 @@ const UIStyleInput = (props: {
 }) => {
   return (
     <Flex>
-      <Flex.Item grow={1}>
-        {props.name}
-      </Flex.Item>
-
       <Flex.Item>
         <Box className={classes([
           "preferences64x32",
@@ -19,6 +15,10 @@ const UIStyleInput = (props: {
         ])} style={{
           "transform": "scale(0.8)",
         }} />
+      </Flex.Item>
+
+      <Flex.Item grow={1}>
+        {props.name}
       </Flex.Item>
     </Flex>
   );

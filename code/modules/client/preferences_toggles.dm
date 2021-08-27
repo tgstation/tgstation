@@ -305,33 +305,6 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings, listen_bank_card)()
 /datum/verbs/menu/settings/listen_bank_card/Get_checked(client/C)
 	return C.prefs.chat_toggles & CHAT_BANKCARD
 
-
-GLOBAL_LIST_INIT(ghost_forms, sortList(list("ghost","ghostking","ghostian2","skeleghost","ghost_red","ghost_black", \
-							"ghost_blue","ghost_yellow","ghost_green","ghost_pink", \
-							"ghost_cyan","ghost_dblue","ghost_dred","ghost_dgreen", \
-							"ghost_dcyan","ghost_grey","ghost_dyellow","ghost_dpink", "ghost_purpleswirl","ghost_funkypurp","ghost_pinksherbert","ghost_blazeit",\
-							"ghost_mellow","ghost_rainbow","ghost_camo","ghost_fire", "catghost")))
-/client/proc/pick_form()
-	if(!is_content_unlocked())
-		tgui_alert(usr,"This setting is for accounts with BYOND premium only.")
-		return
-	var/new_form = input(src, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in GLOB.ghost_forms
-	if(new_form)
-		prefs.ghost_form = new_form
-		prefs.save_preferences()
-		if(isobserver(mob))
-			var/mob/dead/observer/O = mob
-			O.update_icon(ALL, new_form)
-
-/client/verb/pick_ghost_customization()
-	set name = "Ghost Customization"
-	set category = "Preferences"
-	set desc = "Customize your ghastly appearance."
-	if(is_content_unlocked())
-		switch(tgui_alert(usr,"Which setting do you want to change?",,list("Ghost Form","Ghost Orbit","Ghost Accessories")))
-			if("Ghost Form")
-				pick_form()
-
 /client/verb/toggle_ghost_hud_pref()
 	set name = "Toggle Ghost HUD"
 	set category = "Preferences"

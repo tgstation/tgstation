@@ -129,6 +129,7 @@ export const createDropdownInput = <T extends string | number = string>(
 export type FeatureChoicedServerData = {
   choices: string[];
   display_names?: Record<string, string>;
+  icons?: Record<string, string>;
 };
 
 export type FeatureChoiced = Feature<string, string, FeatureChoicedServerData>

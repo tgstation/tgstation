@@ -11,7 +11,7 @@
 		has_unlimited_silicon_privilege = 1
 
 	if(client.prefs.unlock_content)
-		preferred_form = client.prefs.ghost_form
+		preferred_form = client.prefs.read_preference(/datum/preference/choiced/ghost_form)
 		ghost_orbit = client.prefs.read_preference(/datum/preference/choiced/ghost_orbit)
 
 	var/turf/T = get_turf(src)

@@ -302,14 +302,24 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 // MOTHBLOCKS TODO: Return icons here as well
 /datum/preference/choiced/compile_constant_data()
+	var/list/data = list()
+
 	var/list/choices = list()
 
 	for (var/choice in get_choices())
 		choices += choice
 
-	return list(
-		"choices" = choices,
-	)
+	data["choices"] = choices
+
+	if (should_generate_icons)
+		var/list/icons = list()
+
+		for (var/choice in choices)
+			icons[choice] = get_spritesheet_key(choice)
+
+		data["icons"] = icons
+
+	return data
 
 /// A preference that represents an RGB color of something, crunched down to 3 hex numbers.
 /// Was used heavily in the past, but doesn't provide as much range and only barely conserves space.
