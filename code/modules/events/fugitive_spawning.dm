@@ -61,38 +61,34 @@
 	return SUCCESSFUL_SPAWN
 
 /datum/round_event/ghost_role/fugitives/proc/gear_fugitive(mob/dead/selected, turf/landing_turf, backstory) //spawns normal fugitive
-	var/datum/mind/player_mind = new /datum/mind(selected.key)
-	player_mind.active = TRUE
-	var/mob/living/carbon/human/S = new(landing_turf)
-	player_mind.transfer_to(S)
-	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/fugitive))
-	player_mind.special_role = ROLE_FUGITIVE
-	player_mind.add_antag_datum(/datum/antagonist/fugitive)
-	var/datum/antagonist/fugitive/fugitiveantag = player_mind.has_antag_datum(/datum/antagonist/fugitive)
+	var/mob/living/carbon/human/fugitive = new(landing_turf)
+	fugitive.key = selected.key
+	fugitive.mind.set_assigned_role(SSjob.GetJobType(/datum/job/fugitive))
+	fugitive.mind.special_role = ROLE_FUGITIVE
+	fugitive.mind.add_antag_datum(/datum/antagonist/fugitive)
+	var/datum/antagonist/fugitive/fugitiveantag = fugitive.mind.add_antag_datum(/datum/antagonist/fugitive)
 	INVOKE_ASYNC(fugitiveantag, /datum/antagonist/fugitive.proc/greet, backstory) //some fugitives have a sleep on their greet, so we don't want to stop the entire antag granting proc with fluff
 
 	switch(backstory)
 		if("prisoner")
-			S.equipOutfit(/datum/outfit/prisoner)
+			fugitive.equipOutfit(/datum/outfit/prisoner)
 		if("cultist")
-			S.equipOutfit(/datum/outfit/yalp_cultist)
+			fugitive.equipOutfit(/datum/outfit/yalp_cultist)
 		if("waldo")
-			S.equipOutfit(/datum/outfit/waldo)
+			fugitive.equipOutfit(/datum/outfit/waldo)
 		if("synth")
-			S.equipOutfit(/datum/outfit/synthetic)
-	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Fugitive by an event.")
-	log_game("[key_name(S)] was spawned as a Fugitive by an event.")
-	spawned_mobs += S
-	return S
+			fugitive.equipOutfit(/datum/outfit/synthetic)
+	message_admins("[ADMIN_LOOKUPFLW(fugitive)] has been made into a Fugitive by an event.")
+	log_game("[key_name(fugitive)] was spawned as a Fugitive by an event.")
+	spawned_mobs += fugitive
+	return fugitive
 
 ///special spawn for one member. it can be used for a special mob or simply to give one normal member special items.
 /datum/round_event/ghost_role/fugitives/proc/gear_fugitive_leader(mob/dead/leader, turf/landing_turf, backstory)
-	var/datum/mind/player_mind = new /datum/mind(leader.key)
-	player_mind.active = TRUE
 	//if you want to add a fugitive with a special leader in the future, make this switch with the backstory
-	var/mob/living/carbon/human/S = gear_fugitive(leader, landing_turf, backstory)
-	var/obj/item/choice_beacon/augments/A = new(S)
-	S.put_in_hands(A)
+	var/mob/living/carbon/human/fugitive_leader = gear_fugitive(leader, landing_turf, backstory)
+	var/obj/item/choice_beacon/augments/augment = new(fugitive_leader)
+	fugitive_leader.put_in_hands(augment)
 	new /obj/item/autosurgeon(landing_turf)
 
 //security team gets called in after 10 minutes of prep to find the refugees

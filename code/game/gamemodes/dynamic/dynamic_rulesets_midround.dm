@@ -565,20 +565,17 @@
 	. = ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/generate_ruleset_body(mob/applicant)
-	var/datum/mind/player_mind = new /datum/mind(applicant.key)
-	player_mind.active = TRUE
+	var/mob/living/carbon/human/nightmare = new (pick(spawn_locs))
+	nightmare.key = applicant.key
+	nightmare.mind.set_assigned_role(SSjob.GetJobType(/datum/job/nightmare))
+	nightmare.mind.special_role = ROLE_NIGHTMARE
+	nightmare.mind.add_antag_datum(/datum/antagonist/nightmare)
+	nightmare.set_species(/datum/species/shadow/nightmare)
 
-	var/mob/living/carbon/human/S = new (pick(spawn_locs))
-	player_mind.transfer_to(S)
-	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/nightmare))
-	player_mind.special_role = ROLE_NIGHTMARE
-	player_mind.add_antag_datum(/datum/antagonist/nightmare)
-	S.set_species(/datum/species/shadow/nightmare)
-
-	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
-	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Nightmare by the midround ruleset.")
-	log_game("DYNAMIC: [key_name(S)] was spawned as a Nightmare by the midround ruleset.")
-	return S
+	playsound(nightmare, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	message_admins("[ADMIN_LOOKUPFLW(nightmare)] has been made into a Nightmare by the midround ruleset.")
+	log_game("DYNAMIC: [key_name(nightmare)] was spawned as a Nightmare by the midround ruleset.")
+	return nightmare
 
 //////////////////////////////////////////////
 //                                          //
@@ -609,20 +606,17 @@
 	. = ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/generate_ruleset_body(mob/applicant)
-	var/datum/mind/player_mind = new /datum/mind(applicant.key)
-	player_mind.active = TRUE
+	var/mob/living/simple_animal/hostile/space_dragon/dragon = new (pick(spawn_locs))
+	dragon.key = applicant.key
+	dragon.mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_dragon))
+	dragon.mind.special_role = ROLE_SPACE_DRAGON
+	dragon.mind.add_antag_datum(/datum/antagonist/space_dragon)
 
-	var/mob/living/simple_animal/hostile/space_dragon/S = new (pick(spawn_locs))
-	player_mind.transfer_to(S)
-	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_dragon))
-	player_mind.special_role = ROLE_SPACE_DRAGON
-	player_mind.add_antag_datum(/datum/antagonist/space_dragon)
-
-	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
-	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Space Dragon by the midround ruleset.")
-	log_game("DYNAMIC: [key_name(S)] was spawned as a Space Dragon by the midround ruleset.")
+	playsound(dragon, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	message_admins("[ADMIN_LOOKUPFLW(dragon)] has been made into a Space Dragon by the midround ruleset.")
+	log_game("DYNAMIC: [key_name(dragon)] was spawned as a Space Dragon by the midround ruleset.")
 	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
-	return S
+	return dragon
 
 //////////////////////////////////////////////
 //                                          //

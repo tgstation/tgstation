@@ -17,9 +17,6 @@
 
 	var/mob/dead/selected = pick(candidates)
 
-	var/datum/mind/player_mind = new /datum/mind(selected.key)
-	player_mind.active = TRUE
-
 	var/list/spawn_locs = list()
 	for(var/X in GLOB.xeno_spawn)
 		var/turf/T = X
@@ -31,14 +28,14 @@
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
 
-	var/mob/living/carbon/human/S = new ((pick(spawn_locs)))
-	player_mind.transfer_to(S)
-	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/nightmare))
-	player_mind.special_role = ROLE_NIGHTMARE
-	player_mind.add_antag_datum(/datum/antagonist/nightmare)
-	S.set_species(/datum/species/shadow/nightmare)
-	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
-	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Nightmare by an event.")
-	log_game("[key_name(S)] was spawned as a Nightmare by an event.")
-	spawned_mobs += S
+	var/mob/living/carbon/human/nightmare = new ((pick(spawn_locs)))
+	nightmare.key = selected.key
+	nightmare.mind.set_assigned_role(SSjob.GetJobType(/datum/job/nightmare))
+	nightmare.mind.special_role = ROLE_NIGHTMARE
+	nightmare.mind.add_antag_datum(/datum/antagonist/nightmare)
+	nightmare.set_species(/datum/species/shadow/nightmare)
+	playsound(nightmare, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	message_admins("[ADMIN_LOOKUPFLW(nightmare)] has been made into a Nightmare by an event.")
+	log_game("[key_name(nightmare)] was spawned as a Nightmare by an event.")
+	spawned_mobs += nightmare
 	return SUCCESSFUL_SPAWN

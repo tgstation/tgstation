@@ -219,18 +219,16 @@
 		return NOT_ENOUGH_PLAYERS
 
 	var/mob/dead/selected = pick_n_take(candidates)
-
-	var/datum/mind/player_mind = new /datum/mind(selected.key)
-	player_mind.active = TRUE
 	if(!GLOB.xeno_spawn)
 		return MAP_ERROR
-	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(pick(GLOB.xeno_spawn))
-	player_mind.transfer_to(S)
-	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/morph))
-	player_mind.special_role = ROLE_MORPH
-	player_mind.add_antag_datum(/datum/antagonist/morph)
-	SEND_SOUND(S, sound('sound/magic/mutate.ogg'))
-	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a morph by an event.")
-	log_game("[key_name(S)] was spawned as a morph by an event.")
-	spawned_mobs += S
+
+	var/mob/living/simple_animal/hostile/morph/morph = new /mob/living/simple_animal/hostile/morph(pick(GLOB.xeno_spawn))
+	morph.key = selected.key
+	morph.mind.set_assigned_role(SSjob.GetJobType(/datum/job/morph))
+	morph.mind.special_role = ROLE_MORPH
+	morph.mind.add_antag_datum(/datum/antagonist/morph)
+	SEND_SOUND(morph, sound('sound/magic/mutate.ogg'))
+	message_admins("[ADMIN_LOOKUPFLW(morph)] has been made into a morph by an event.")
+	log_game("[key_name(morph)] was spawned as a morph by an event.")
+	spawned_mobs += morph
 	return SUCCESSFUL_SPAWN
