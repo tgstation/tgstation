@@ -5,11 +5,11 @@
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/stationalert
 	light_color = LIGHT_COLOR_CYAN
-	/// Station alert datum for showing alerts
+	/// Station alert datum for showing alerts UI
 	var/datum/station_alert/alert_control
 
 /obj/machinery/computer/station_alert/Initialize()
-	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z), name)
+	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z), title = name)
 	return ..()
 
 /obj/machinery/computer/station_alert/ui_interact(mob/user)

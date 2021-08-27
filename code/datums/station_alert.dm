@@ -13,12 +13,12 @@
 /datum/station_alert/ui_host(mob/user)
 	return holder
 
-/datum/station_alert/New(holder, list/alarm_types, list/listener_z_level, title = "Station Alerts", camera_view = FALSE)
+/datum/station_alert/New(holder, list/alarm_types, list/listener_z_level, list/listener_areas, title = "Station Alerts", camera_view = FALSE)
     src.holder = holder
     src.alarm_types = alarm_types
     src.title = title
     src.camera_view = camera_view
-    listener = new(alarm_types, listener_z_level)
+    listener = new(alarm_types, listener_z_level, listener_areas)
 
 /datum/station_alert/Destroy()
     QDEL_NULL(listener)
@@ -34,6 +34,7 @@
 	var/list/data = list()
 	data["cameraView"] = camera_view
 	data["alarms"] = list()
+	var/list/nominal_types = alarm_types.Copy()
 	var/list/alarms = listener.alarms
 	for(var/alarm_type in alarms)
 		var/list/category = list(
@@ -50,6 +51,14 @@
 				"ref" = camera_view ? REF(alert) : null,
 			))
 		data["alarms"] += list(category)
+		nominal_types -= alarm_type
+	if(length(nominal_types))
+		for(var/nominal_type in nominal_types)
+			var/list/nominal_category = list(
+				"name" = nominal_type,
+				"alerts" = list(),
+			)
+			data["alarms"] += list(nominal_category)
 	return data
 
 /datum/station_alert/ui_act(action, params)

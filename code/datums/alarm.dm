@@ -114,7 +114,6 @@
 	src.allowed_z_levels = allowed_z_levels
 	src.allowed_areas = allowed_areas
 	for(var/alarm_type in alarms_to_listen_for)
-		alarms[alarm_type] = list()
 		RegisterSignal(SSdcs, COMSIG_ALARM_FIRE(alarm_type), .proc/add_alarm)
 		RegisterSignal(SSdcs, COMSIG_ALARM_CLEAR(alarm_type), .proc/clear_alarm)
 

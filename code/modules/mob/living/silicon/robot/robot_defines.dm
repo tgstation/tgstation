@@ -131,7 +131,7 @@
 
 	/// the last health before updating - to check net change in health
 	var/previous_health
-	/// Station alert datum for showing alerts
+	/// Station alert datum for showing alerts UI
 	var/datum/station_alert/alert_control
 
 /***************************************************************************************
