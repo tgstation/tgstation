@@ -176,7 +176,7 @@
 	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, ROUNDSTART_TRAIT)
 
-	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), "Station Alerts")
+	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), "Station Alerts", TRUE)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
 

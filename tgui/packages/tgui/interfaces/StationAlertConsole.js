@@ -1,11 +1,15 @@
 import { useBackend } from '../backend';
-import { Section } from '../components';
+import { Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const StationAlertConsole = () => {
+  const { data } = useBackend(context);
+  const {
+    cameraView,
+  } = data;
   return (
     <Window
-      width={345}
+      width={!!cameraView ? 390 : 345}
       height={587}>
       <Window.Content scrollable>
         <StationAlertConsoleContent />
@@ -16,111 +20,51 @@ export const StationAlertConsole = () => {
 
 export const StationAlertConsoleContent = (props, context) => {
   const { data } = useBackend(context);
-  const categories = data.alarms || [];
-  const fire = categories['Fire'];
-  const atmos = categories['Atmosphere'];
-  const power = categories['Power'];
-  const motion = categories['Motion'];
-  const burglar = categories['Burglar'];
-  const camera = categories['Camera'];
+  const {
+    cameraView,
+    alarms = [],
+  } = data;
   return (
     <>
-      {fire && (
-        <Section title="Fire Alarms">
+      {alarms.map(category => (
+        <Section key={category.name} title={category.name + " Alarms"}>
           <ul>
-            {fire.length === 0 && (
+            {category.alerts?.length === 0 && (
               <li className="color-good">
                 Systems Nominal
               </li>
             )}
-            {fire.map(alert => (
-              <li key={alert} className="color-average">
-                {alert}
-              </li>
+            {category.alerts.map(alert => (
+              <Stack 
+                key={alert.name} 
+                height="30px" 
+                align="baseline">
+                <Stack.Item grow>
+                  <li className="color-average">
+                    {alert.name + !!cameraView && alert?.sources > 1 
+                    ? " (" + alert.sources + "sources)" : ""}
+                  </li>
+                </Stack.Item>
+                {!!cameraView && (      
+                  <Stack.Item>       
+                    <Button
+                      textAlign="center"
+                      width="100px"
+                      icon={alert.cameras ? "video" : ""}
+                      disabled={!alert.cameras}
+                      content={alert.cameras === 1 
+                      ? alert.cameras + " Camera" : alert.cameras > 1
+                      ? alert.cameras + " Cameras" : "No Camera"}
+                      onClick={() => act('select_camera', {
+                        alert: alert.ref,
+                    })} />
+                  </Stack.Item>
+                )}  
+              </Stack>
             ))}
           </ul>
         </Section>
-      )}
-      {atmos && (
-        <Section title="Atmospherics Alarms">
-          <ul>
-            {atmos.length === 0 && (
-              <li className="color-good">
-                Systems Nominal
-              </li>
-            )}
-            {atmos.map(alert => (
-              <li key={alert} className="color-average">
-                {alert}
-              </li>
-            ))}
-          </ul>
-        </Section>
-      )}
-      {power && (
-        <Section title="Power Alarms">
-          <ul>
-            {power.length === 0 && (
-              <li className="color-good">
-                Systems Nominal
-              </li>
-            )}
-            {power.map(alert => (
-              <li key={alert} className="color-average">
-                {alert}
-              </li>
-            ))}
-          </ul>
-        </Section>
-      )}
-      {burglar && (
-        <Section title="Burglar Alarms">
-          <ul>
-            {burglar.length === 0 && (
-              <li className="color-good">
-                Systems Nominal
-              </li>
-            )}
-            {burglar.map(alert => (
-              <li key={alert} className="color-average">
-                {alert}
-              </li>
-            ))}
-          </ul>
-        </Section>
-      )}
-      {motion && (
-        <Section title="Motion Alarms">
-          <ul>
-            {motion.length === 0 && (
-              <li className="color-good">
-                Systems Nominal
-              </li>
-            )}
-            {motion.map(alert => (
-              <li key={alert} className="color-average">
-                {alert}
-              </li>
-            ))}
-          </ul>
-        </Section>
-      )}      
-    {camera && (
-      <Section title="Camera Alarms">
-        <ul>
-          {camera.length === 0 && (
-            <li className="color-good">
-              Systems Nominal
-            </li>
-          )}
-          {camera.map(alert => (
-            <li key={alert} className="color-average">
-              {alert}
-            </li>
-          ))}
-        </ul>
-      </Section>
-      )}
+      ))}
     </>
   );
 };

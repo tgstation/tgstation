@@ -9,7 +9,7 @@
 	var/datum/station_alert/alert_control
 
 /obj/machinery/computer/station_alert/Initialize()
-	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z), name)
+	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z), name, FALSE)
 	return ..()
 
 /obj/machinery/computer/station_alert/ui_interact(mob/user)
