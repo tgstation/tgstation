@@ -1,12 +1,12 @@
 /**
- * # NTNet Reciever Component
+ * # NTNet Receiver Component
  *
- * Recieves data through NTNet.
+ * Receives data through NTNet.
  */
 
 /obj/item/circuit_component/ntnet_receive
 	display_name = "NTNet Receiver"
-	desc = "Recieves data packages through NTNet. If Encryption Key is set then only signals with the same Encryption Key will be received."
+	desc = "Receives data packages through NTNet. If Encryption Key is set then only signals with the same Encryption Key will be received."
 
 	circuit_flags = CIRCUIT_FLAG_OUTPUT_SIGNAL //trigger_output
 
@@ -22,7 +22,6 @@
 
 /obj/item/circuit_component/ntnet_receive/Initialize()
 	. = ..()
-	AddComponent(/datum/component/ntnet_interface)
 	data_package = add_output_port("Data Package", PORT_TYPE_ANY)
 	secondary_package = add_output_port("Secondary Package", PORT_TYPE_ANY)
 	enc_key = add_input_port("Encryption Key", PORT_TYPE_STRING)
@@ -49,6 +48,8 @@
 
 	if(COMPONENT_TRIGGERED_BY(secondary_data_type_options, port))
 		secondary_package.set_datatype(secondary_data_type_options.value)
+
+	return TRUE
 
 /obj/item/circuit_component/ntnet_receive/proc/ntnet_receive(datum/source, datum/netdata/data)
 	SIGNAL_HANDLER

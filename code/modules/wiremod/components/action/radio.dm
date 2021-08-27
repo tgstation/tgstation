@@ -34,7 +34,7 @@
 	. = ..()
 	freq = add_input_port("Frequency", PORT_TYPE_NUMBER, default = FREQ_SIGNALER)
 	code = add_input_port("Code", PORT_TYPE_NUMBER, default = DEFAULT_SIGNALER_CODE)
-	TRIGGER_CIRCUIT_COMPONENT(src, null)
+	INVOKE_ASYNC(src, .proc/apply_signal_component)
 	// These are cleaned up on the parent
 	trigger_input = add_input_port("Send", PORT_TYPE_SIGNAL)
 	trigger_output = add_output_port("Received", PORT_TYPE_SIGNAL)
@@ -42,6 +42,9 @@
 /obj/item/circuit_component/radio/Destroy()
 	SSradio.remove_object(src, current_freq)
 	return ..()
+
+/obj/item/circuit_component/radio/proc/apply_signal_component()
+	TRIGGER_CIRCUIT_COMPONENT(src, null)
 
 /obj/item/circuit_component/radio/input_received(datum/port/input/port)
 	. = ..()

@@ -4302,7 +4302,7 @@ var require_glob = __commonJS({
   }
 });
 
-// pnp:/Users/style/Documents/Projects/juke-build/src/index.ts
+// pnp:/home/style/Documents/Projects/stylemistake/juke-build/src/index.ts
 __export(exports, {
   ExitCode: () => ExitCode,
   Parameter: () => Parameter,
@@ -4322,10 +4322,10 @@ __export(exports, {
 var import_chalk4 = __toModule(require_source());
 var import_module = __toModule(require("module"));
 
-// pnp:/Users/style/Documents/Projects/juke-build/package.json
-var version = "0.8.1";
+// pnp:/home/style/Documents/Projects/stylemistake/juke-build/package.json
+var version = "0.9.0";
 
-// pnp:/Users/style/Documents/Projects/juke-build/src/chdir.ts
+// pnp:/home/style/Documents/Projects/stylemistake/juke-build/src/chdir.ts
 var import_fs = __toModule(require("fs"));
 var import_path = __toModule(require("path"));
 var import_url = __toModule(require("url"));
@@ -4347,7 +4347,7 @@ var chdir = (directory, relativeTo) => {
   process.chdir(directory);
 };
 
-// pnp:/Users/style/Documents/Projects/juke-build/src/exec.ts
+// pnp:/home/style/Documents/Projects/stylemistake/juke-build/src/exec.ts
 var import_chalk = __toModule(require_source());
 var import_child_process = __toModule(require("child_process"));
 var import_fs2 = __toModule(require("fs"));
@@ -4404,25 +4404,31 @@ var exec = (executable, args = [], options = {}) => {
     if (process.env.JUKE_DEBUG) {
       console.log(import_chalk.default.grey("$", executable, ...args));
     }
-    const child = (0, import_child_process.spawn)(executable, args, spawnOptions);
+    const child = (0, import_child_process.spawn)(executable, args, __spreadValues({
+      stdio: "inherit"
+    }, spawnOptions));
     children.add(child);
     let stdout = "";
     let stderr = "";
     let combined = "";
-    child.stdout.on("data", (data) => {
-      if (!silent) {
-        process.stdout.write(data);
-      }
-      stdout += data;
-      combined += data;
-    });
-    child.stderr.on("data", (data) => {
-      if (!silent) {
-        process.stderr.write(data);
-      }
-      stderr += data;
-      combined += data;
-    });
+    if (child.stdout) {
+      child.stdout.on("data", (data) => {
+        if (!silent) {
+          process.stdout.write(data);
+        }
+        stdout += data;
+        combined += data;
+      });
+    }
+    if (child.stderr) {
+      child.stderr.on("data", (data) => {
+        if (!silent) {
+          process.stderr.write(data);
+        }
+        stderr += data;
+        combined += data;
+      });
+    }
     child.on("error", (err) => reject(err));
     child.on("exit", (code, signal) => {
       children.delete(child);
@@ -4444,7 +4450,7 @@ var exec = (executable, args = [], options = {}) => {
   });
 };
 
-// pnp:/Users/style/Documents/Projects/juke-build/src/logger.ts
+// pnp:/home/style/Documents/Projects/stylemistake/juke-build/src/logger.ts
 var import_chalk2 = __toModule(require_source());
 var logger = {
   log: (...args) => {
@@ -4469,13 +4475,13 @@ var logger = {
   }
 };
 
-// pnp:/Users/style/Documents/Projects/juke-build/src/string.ts
+// pnp:/home/style/Documents/Projects/stylemistake/juke-build/src/string.ts
 var import_stringcase = __toModule(require_lib());
 var toKebabCase = (str) => (0, import_stringcase.spinalcase)(str);
 var toCamelCase = (str) => (0, import_stringcase.camelcase)(str);
 var toConstCase = (str) => (0, import_stringcase.constcase)(str);
 
-// pnp:/Users/style/Documents/Projects/juke-build/src/parameter.ts
+// pnp:/home/style/Documents/Projects/stylemistake/juke-build/src/parameter.ts
 var Parameter = class {
   constructor(config) {
     this.type = config.type;
@@ -4512,11 +4518,11 @@ var Parameter = class {
 };
 var createParameter = (config) => new Parameter(config);
 
-// pnp:/Users/style/Documents/Projects/juke-build/src/runner.ts
+// pnp:/home/style/Documents/Projects/stylemistake/juke-build/src/runner.ts
 var import_chalk3 = __toModule(require_source());
 var import_events = __toModule(require("events"));
 
-// pnp:/Users/style/Documents/Projects/juke-build/src/argparse.ts
+// pnp:/home/style/Documents/Projects/stylemistake/juke-build/src/argparse.ts
 var stringToBoolean = (str) => str !== void 0 && str !== null && str !== "false" && str !== "0" && str !== "null";
 var prepareArgs = (args, singleTarget = false) => {
   let inGlobalContext = true;
@@ -4674,7 +4680,7 @@ var parseArgs = (args, parameters) => {
   return parameterMap;
 };
 
-// pnp:/Users/style/Documents/Projects/juke-build/src/fs.ts
+// pnp:/home/style/Documents/Projects/stylemistake/juke-build/src/fs.ts
 var import_fs3 = __toModule(require("fs"));
 var import_glob = __toModule(require_glob());
 var File = class {
@@ -4782,7 +4788,7 @@ var rm = (path2, options = {}) => {
   }
 };
 
-// pnp:/Users/style/Documents/Projects/juke-build/src/runner.ts
+// pnp:/home/style/Documents/Projects/stylemistake/juke-build/src/runner.ts
 var runner = new class Runner {
   constructor() {
     this.config = {};
@@ -5024,7 +5030,7 @@ var Worker = class {
   }
 };
 
-// pnp:/Users/style/Documents/Projects/juke-build/src/target.ts
+// pnp:/home/style/Documents/Projects/stylemistake/juke-build/src/target.ts
 var Target = class {
   constructor(target) {
     this.name = target.name;
@@ -5038,7 +5044,7 @@ var Target = class {
 };
 var createTarget = (config) => new Target(config);
 
-// pnp:/Users/style/Documents/Projects/juke-build/src/index.ts
+// pnp:/home/style/Documents/Projects/stylemistake/juke-build/src/index.ts
 var chalk4 = import_chalk4.default;
 var lastExitCode = null;
 var setup = async (config) => {
