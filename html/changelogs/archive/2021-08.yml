@@ -589,3 +589,27 @@
   - imageadd: better fish and fish food sprites
   wesoda25:
   - bugfix: Repairing clothing now immediately updates the sprite
+2021-08-27:
+  Nari Harimoto:
+  - bugfix: minor edits to some walls in icebox maint so all edges touch
+  Sealed101:
+  - bugfix: The long-presumed-missing CMO's rubber stamp has been returned to Delta
+      station's CMO office. Hail bureaucracy!
+  TiviPlus:
+  - bugfix: Fixed an exploit
+  bobbahbrown:
+  - admin: Add Requests Manager to view all prayers/centcom and syndicate requests/and
+      nuke code requests within a round.
+  esainane:
+  - spellcheck: The HFR now correctly describes the recipe cooling modifier as adjusting
+      the maximum cooling, rather than the minimum cooling.
+  - bugfix: Temperature Control Units now display their color when set or changed,
+      rather than always displaying as grey.
+  mokulus:
+  - code_imp: Treat DreamMaker warnings as errors in CI
+  timothymtorres:
+  - bugfix: Fixed crayon and spraycan text input to behave properly
+  tralezab:
+  - bugfix: Honorbound followers can now perform surgery.
+  - bugfix: Honorbound followers can no longer punch the innocents.
+  - bugfix: fixes heart attack message spam for synthetic organs!

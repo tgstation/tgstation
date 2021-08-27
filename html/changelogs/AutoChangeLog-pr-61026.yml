@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "Temperature Control Units now display their color when set or changed, rather than always displaying as grey."
