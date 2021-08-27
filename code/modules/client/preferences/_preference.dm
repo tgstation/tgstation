@@ -342,7 +342,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/color/deserialize(input)
 	return sanitize_ooccolor(input)
 
-// MOTHBLOCKS TODO: Randomize, or make a var like numeric
+// MOTHBLOCKS TODO: Randomize
 /datum/preference/color/create_default_value()
 	return COLOR_BLACK
 
