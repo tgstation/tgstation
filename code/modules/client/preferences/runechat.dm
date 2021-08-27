@@ -21,3 +21,17 @@
 
 /datum/preference/toggle/see_rc_emotes/apply_to_client(client/client, value)
 	return
+
+/datum/preference/numeric/max_chat_length
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "max_chat_length"
+	savefile_identifier = PREFERENCE_PLAYER
+
+	minimum = 1
+	maximum = CHAT_MESSAGE_MAX_LENGTH
+
+/datum/preference/numeric/max_chat_length/create_default_value()
+	return CHAT_MESSAGE_MAX_LENGTH
+
+/datum/preference/numeric/max_chat_length/apply_to_client(client/client, value)
+	return

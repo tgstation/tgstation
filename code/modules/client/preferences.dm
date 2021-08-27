@@ -20,9 +20,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/hotkeys = TRUE
 
-	///Limit preference on the size of the message. Requires chat_on_map to have effect.
-	var/max_chat_length = CHAT_MESSAGE_MAX_LENGTH
-
 	/// Custom keybindings. Map of keybind names to keyboard inputs.
 	/// For example, by default would have "swap_hands" -> list("X")
 	var/list/key_bindings = list()
