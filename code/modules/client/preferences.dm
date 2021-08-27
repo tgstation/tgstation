@@ -86,8 +86,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	///Do we show screentips, if so, how big?
 	var/screentip_pref = TRUE
-	///Do we show item hover outlines?
-	var/itemoutline_pref = TRUE
 
 	///Should we automatically fit the viewport?
 	var/auto_fit_viewport = FALSE

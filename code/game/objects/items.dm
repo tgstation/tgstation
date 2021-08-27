@@ -862,7 +862,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		if(usr.client.prefs.read_preference(/datum/preference/toggle/enable_tooltips))
 			var/timedelay = usr.client.prefs.read_preference(/datum/preference/numeric/tooltip_delay) / 100
 			tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, usr), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
-		if(usr.client.prefs.itemoutline_pref)
+		if(usr.client.prefs.read_preference(/datum/preference/toggle/item_outlines))
 			if(istype(L) && L.incapacitated())
 				apply_outline(COLOR_RED_GRAY) //if they're dead or handcuffed, let's show the outline as red to indicate that they can't interact with that right now
 			else
