@@ -68,7 +68,6 @@
 	return ..()
 
 /obj/item/circuit_component/bluespace_launchpad/input_received(datum/port/input/port)
-
 	if(!attached_console || length(attached_console.launchpads) == 0)
 		why_fail.set_output("No launchpads connected!")
 		on_fail.set_output(COMPONENT_SIGNAL)
@@ -101,11 +100,11 @@
 		return
 
 	if(COMPONENT_TRIGGERED_BY(send_trigger, port))
-		the_pad.doteleport(null, TRUE, alternate_log_name = parent.get_creator())
+		INVOKE_ASYNC(the_pad, /obj/machinery/launchpad.proc/doteleport, null, TRUE, parent.get_creator())
 		sent.set_output(COMPONENT_SIGNAL)
 
 	if(COMPONENT_TRIGGERED_BY(retrieve_trigger, port))
-		the_pad.doteleport(null, FALSE, alternate_log_name = parent.get_creator())
+		INVOKE_ASYNC(the_pad, /obj/machinery/launchpad.proc/doteleport, null, FALSE, parent.get_creator())
 		retrieved.set_output(COMPONENT_SIGNAL)
 
 /obj/machinery/computer/launchpad/attack_paw(mob/user, list/modifiers)

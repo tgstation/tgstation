@@ -186,6 +186,7 @@
  * * port - Can be null. The port that sent the input
  */
 /obj/item/circuit_component/proc/trigger_component(datum/port/input/port)
+	SHOULD_NOT_SLEEP(TRUE)
 	pre_input_received(port)
 	if(!should_receive_input(port))
 		return FALSE
@@ -218,6 +219,7 @@
  * * port - Can be null. The port that sent the input
  */
 /obj/item/circuit_component/proc/should_receive_input(datum/port/input/port)
+	SHOULD_NOT_SLEEP(TRUE)
 	if(!parent?.on)
 		return FALSE
 
@@ -237,6 +239,7 @@
 
 /// Called before input_received and should_receive_input. Used to perform behaviour that shouldn't care whether the input should be received or not.
 /obj/item/circuit_component/proc/pre_input_received(datum/port/input/port)
+	SHOULD_NOT_SLEEP(TRUE)
 	return
 
 /**
@@ -247,6 +250,7 @@
  * * port - Can be null. The port that sent the input
  */
 /obj/item/circuit_component/proc/input_received(datum/port/input/port)
+	SHOULD_NOT_SLEEP(TRUE)
 	return
 
 /// Called when this component is about to be added to an integrated_circuit.

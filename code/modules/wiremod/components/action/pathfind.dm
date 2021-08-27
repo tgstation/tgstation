@@ -44,7 +44,9 @@
 	reason_failed = add_output_port("Fail reason", PORT_TYPE_STRING)
 
 /obj/item/circuit_component/pathfind/input_received(datum/port/input/port)
+	INVOKE_ASYNC(src, .proc/perform_pathfinding, port)
 
+/obj/item/circuit_component/pathfind/proc/perform_pathfinding(datum/port/input/port)
 	var/target_X = input_X.value
 	if(isnull(target_X))
 		return
@@ -106,4 +108,3 @@
 			next_turf = get_turf(path[1])
 			output.set_output(next_turf)
 		TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME, same_path_cooldown)
-
