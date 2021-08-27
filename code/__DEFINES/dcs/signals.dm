@@ -587,6 +587,8 @@
 ///From post-can inject check of syringe after attack (mob/user)
 #define COMSIG_LIVING_TRY_SYRINGE "living_try_syringe"
 
+///from base of element/bane/activate(): (item/weapon, mob/user)
+#define COMSIG_LIVING_BANED "living_baned"
 ///Sent when bloodcrawl ends in mob/living/phasein(): (phasein_decal)
 #define COMSIG_LIVING_AFTERPHASEIN "living_phasein"
 
@@ -1425,3 +1427,10 @@
 
 /// Called on the organ when it is removed from someone (mob/living/carbon/old_owner)
 #define COMSIG_ORGAN_REMOVED "comsig_organ_removed"
+
+
+///Called when the ticker enters the pre-game phase
+#define COMSIG_TICKER_ENTER_PREGAME "comsig_ticker_enter_pregame"
+
+///Called when the ticker sets up the game for start
+#define COMSIG_TICKER_ENTER_SETTING_UP "comsig_ticker_enter_setting_up"

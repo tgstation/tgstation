@@ -125,6 +125,11 @@
 #define ABOVE_LIGHTING_PLANE 120
 #define ABOVE_LIGHTING_RENDER_TARGET "ABOVE_LIGHTING_PLANE"
 
+#define LIGHTING_PRIMARY_LAYER 15	//The layer for the main lights of the station
+#define LIGHTING_PRIMARY_DIMMER_LAYER 15.1	//The layer that dims the main lights of the station
+#define LIGHTING_SECONDARY_LAYER 16	//The colourful, usually small lights that go on top
+
+
 ///visibility + hiding of things outside of light source range
 #define BYOND_LIGHTING_PLANE 130
 #define BYOND_LIGHTING_RENDER_TARGET "BYOND_LIGHTING_PLANE"
@@ -181,6 +186,9 @@
 ///Plane of the "splash" icon used that shows on the lobby screen. Nothing should ever be above this.
 #define SPLASHSCREEN_PLANE 9999
 #define SPLASHSCREEN_RENDER_TARGET "SPLASHSCREEN_PLANE"
+
+#define LOBBY_BACKGROUND_LAYER 3
+#define LOBBY_BUTTON_LAYER 4
 
 ///cinematics are "below" the splash screen
 #define CINEMATIC_LAYER -1

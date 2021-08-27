@@ -81,6 +81,7 @@
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
+	RegisterSignal(src, COMSIG_LIVING_BANED, .proc/on_baned)
 	random_revenant_name()
 
 /mob/living/simple_animal/revenant/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, no_hands = FALSE, floor_okay=FALSE)
@@ -191,15 +192,13 @@
 	return ..()
 
 //damage, gibbing, and dying
-/mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
-	. = ..()
-	if(istype(W, /obj/item/nullrod))
-		visible_message(span_warning("[src] violently flinches!"), \
-						span_revendanger("As \the [W] passes through you, you feel your essence draining away!"))
-		adjustBruteLoss(25) //hella effective
-		inhibited = TRUE
-		update_action_buttons_icon()
-		addtimer(CALLBACK(src, .proc/reset_inhibit), 30)
+/mob/living/simple_animal/revenant/proc/on_baned(obj/item/weapon, mob/living/user)
+	SIGNAL_HANDLER
+	visible_message(span_warning("[src] violently flinches!"), \
+		span_revendanger("As [weapon] passes through you, you feel your essence draining away!"))
+	inhibited = TRUE
+	update_action_buttons_icon()
+	addtimer(CALLBACK(src, .proc/reset_inhibit), 3 SECONDS)
 
 /mob/living/simple_animal/revenant/proc/reset_inhibit()
 	inhibited = FALSE
