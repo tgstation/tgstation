@@ -75,9 +75,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/list/ignoring = list()
 
-	///Do we show screentips, if so, how big?
-	var/screentip_pref = TRUE
-
 	///Should we automatically fit the viewport?
 	var/auto_fit_viewport = FALSE
 	///The playtime_reward_cloak variable can be set to TRUE from the prefs menu only once the user has gained over 5K playtime hours. If true, it allows the user to get a cool looking roundstart cloak.
