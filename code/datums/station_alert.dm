@@ -1,28 +1,28 @@
 /datum/station_alert
-    /// Holder of the datum
-    var/holder
-    /// List of all alarm types we are listening to
-    var/list/alarm_types
-    /// Listens for alarms, provides the alarms list for our UI
-    var/datum/alarm_listener/listener
-    /// Title of our UI
-    var/title
+	/// Holder of the datum
+	var/holder
+	/// List of all alarm types we are listening to
+	var/list/alarm_types
+	/// Listens for alarms, provides the alarms list for our UI
+	var/datum/alarm_listener/listener
+	/// Title of our UI
+	var/title
 	/// If UI will also show and allow jumping to cameras connected to each alert area
-    var/camera_view
+	var/camera_view
 
 /datum/station_alert/ui_host(mob/user)
 	return holder
 
 /datum/station_alert/New(holder, list/alarm_types, list/listener_z_level, list/listener_areas, title = "Station Alerts", camera_view = FALSE)
-    src.holder = holder
-    src.alarm_types = alarm_types
-    src.title = title
-    src.camera_view = camera_view
-    listener = new(alarm_types, listener_z_level, listener_areas)
+	src.holder = holder
+	src.alarm_types = alarm_types
+	src.title = title
+	src.camera_view = camera_view
+	listener = new(alarm_types, listener_z_level, listener_areas)
 
 /datum/station_alert/Destroy()
-    QDEL_NULL(listener)
-    return ..()
+	QDEL_NULL(listener)
+	return ..()
 
 /datum/station_alert/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -47,7 +47,7 @@
 			category["alerts"] += list(list(
 				"name" = get_area_name(alarm[1], TRUE),
 				"cameras" = camera_view ? length(alarm[2]) : null,
-                "sources" = camera_view ? length(alarm[3]) : null,
+				"sources" = camera_view ? length(alarm[3]) : null,
 				"ref" = camera_view ? REF(alert) : null,
 			))
 		data["alarms"] += list(category)
