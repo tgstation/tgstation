@@ -40,7 +40,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/db_flags
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_form = "ghost"
-	var/ghost_hud = 1
 	var/pda_color = "#808000"
 
 	//character preferences

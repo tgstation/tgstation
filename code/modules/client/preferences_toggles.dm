@@ -305,18 +305,6 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings, listen_bank_card)()
 /datum/verbs/menu/settings/listen_bank_card/Get_checked(client/C)
 	return C.prefs.chat_toggles & CHAT_BANKCARD
 
-/client/verb/toggle_ghost_hud_pref()
-	set name = "Toggle Ghost HUD"
-	set category = "Preferences"
-	set desc = "Hide/Show Ghost HUD"
-
-	prefs.ghost_hud = !prefs.ghost_hud
-	to_chat(src, "<span class='infoplain'>Ghost HUD will now be [prefs.ghost_hud ? "visible" : "hidden"].</span>")
-	prefs.save_preferences()
-	if(isobserver(mob))
-		mob.hud_used.show_hud()
-	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Ghost HUD", "[prefs.ghost_hud ? "Enabled" : "Disabled"]"))
-
 //Admin Preferences
 /client/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"

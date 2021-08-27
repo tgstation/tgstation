@@ -88,6 +88,13 @@ export const ghost_form: FeatureChoiced = {
   component: GhostFormInput,
 };
 
+export const ghost_hud: FeatureToggle = {
+  name: "Ghost HUD",
+  category: "GHOST",
+  description: "Enable HUD buttons for ghosts.",
+  component: CheckboxInput,
+};
+
 export const ghost_orbit: FeatureChoiced = {
   name: "Ghost orbit",
   category: "GHOST",

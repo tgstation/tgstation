@@ -101,6 +101,16 @@
 /datum/preference/choiced/ghost_form/compile_ui_data(mob/user, value)
 	return serialize(value)
 
+/// Toggles the HUD for ghosts
+/datum/preference/toggle/ghost_hud
+	savefile_key = "ghost_hud"
+	savefile_identifier = PREFERENCE_PLAYER
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+
+/datum/preference/toggle/ghost_hud/apply_to_client(client/client, value)
+	if (isobserver(client?.mob))
+		client?.mob.hud_used?.show_hud()
+
 /// Determines what ghosts orbiting look like to you.
 // MOTHBLOCKS TODO: Support for "content unlocked" specific preferences, show in UI as disabled dropdown
 /datum/preference/choiced/ghost_orbit
