@@ -1,10 +1,9 @@
 import { multiline } from "common/string";
-import { createDropdownInput, FeatureChoiced, FeatureChoicedServerData, FeatureDropdownInput, FeatureValueProps } from "../base";
+import { CheckboxInput, createDropdownInput, FeatureChoiced, FeatureChoicedServerData, FeatureDropdownInput, FeatureToggle, FeatureValueProps } from "../base";
 import { Box, Dropdown, Flex } from "../../../../../components";
 import { classes } from "common/react";
 import { InfernoNode } from "inferno";
 import { binaryInsertWith } from "common/collections";
-import { logger } from "../../../../../logging";
 
 export const ghost_accs: FeatureChoiced = {
   name: "Ghost accessories",
@@ -107,4 +106,11 @@ export const ghost_others: FeatureChoiced = {
     their default sprites, or always as the default white ghost?
   `,
   component: FeatureDropdownInput,
+};
+
+export const inquisitive_ghost: FeatureToggle = {
+  name: "Ghost inquisitiveness",
+  category: "GHOST",
+  description: "Clicking on something as a ghost will examine it.",
+  component: CheckboxInput,
 };

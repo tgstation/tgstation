@@ -317,19 +317,6 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings, listen_bank_card)()
 		mob.hud_used.show_hud()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Ghost HUD", "[prefs.ghost_hud ? "Enabled" : "Disabled"]"))
 
-/client/verb/toggle_inquisition() // warning: unexpected inquisition
-	set name = "Toggle Inquisitiveness"
-	set desc = "Sets whether your ghost examines everything on click by default"
-	set category = "Preferences"
-
-	prefs.inquisitive_ghost = !prefs.inquisitive_ghost
-	prefs.save_preferences()
-	if(prefs.inquisitive_ghost)
-		to_chat(src, span_notice("You will now examine everything you click on."))
-	else
-		to_chat(src, span_notice("You will no longer examine things you click on."))
-	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Ghost Inquisitiveness", "[prefs.inquisitive_ghost ? "Enabled" : "Disabled"]"))
-
 //Admin Preferences
 /client/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"
