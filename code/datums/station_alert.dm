@@ -37,20 +37,20 @@
 	var/list/nominal_types = alarm_types.Copy()
 	var/list/alarms = listener.alarms
 	for(var/alarm_type in alarms)
-		var/list/category = list(
+		var/list/alarm_category = list(
 			"name" = alarm_type,
 			"alerts" = list(),
 		)
 		var/list/alerts = alarms[alarm_type]
 		for(var/alert in alerts)
-			var/list/alarm = alerts[alert]
-			category["alerts"] += list(list(
-				"name" = get_area_name(alarm[1], TRUE),
-				"cameras" = camera_view ? length(alarm[2]) : null,
-				"sources" = camera_view ? length(alarm[3]) : null,
+			var/list/alert_details = alerts[alert]
+			alarm_category["alerts"] += list(list(
+				"name" = get_area_name(alert_details[1], TRUE),
+				"cameras" = camera_view ? length(alert_details[2]) : null,
+				"sources" = camera_view ? length(alert_details[3]) : null,
 				"ref" = camera_view ? REF(alert) : null,
 			))
-		data["alarms"] += list(category)
+		data["alarms"] += list(alarm_category)
 		nominal_types -= alarm_type
 	if(length(nominal_types))
 		for(var/nominal_type in nominal_types)
@@ -78,15 +78,23 @@
 				alerts += alarms[alarm_type]
 
 			var/list/our_alert = locate(params["alert"]) in alerts
+			if(!length(our_alert))
+				return
 			var/chosen_alert = alerts[our_alert]
 			var/list/cameras = chosen_alert[2]
+			if(!length(cameras))
+				return
 			var/list/named_cameras = list()
 			for(var/obj/machinery/camera/camera in cameras)
 				named_cameras[camera.c_tag] = camera
 
-			var/chosen_camera = tgui_input_list(ai, "Choose a camera to jump to", "Camera Selection", named_cameras)
-			if(!chosen_camera)
-				return
+			var/chosen_camera
+			if(length(named_cameras) == 1)
+				chosen_camera = named_cameras[1]
+			else
+				chosen_camera = tgui_input_list(ai, "Choose a camera to jump to", "Camera Selection", named_cameras)
+				if(!chosen_camera)
+					return
 			var/obj/machinery/camera/selected_camera = named_cameras[chosen_camera]
 			if(!selected_camera.can_use())
 				to_chat(ai, span_warning("Camera is unavailable!"))
