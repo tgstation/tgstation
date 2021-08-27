@@ -11,7 +11,7 @@ export const StationAlertConsole = (props, context) => {
   } = data;
   return (
     <Window
-      width={!!cameraView ? 390 : 345}
+      width={cameraView ? 390 : 345}
       height={587}>
       <Window.Content scrollable>
         <StationAlertConsoleContent />
@@ -57,7 +57,7 @@ export const StationAlertConsoleContent = (props, context) => {
                 <Stack.Item grow>
                   <li className="color-average">
                     {alert.name} {!!cameraView && alert?.sources > 1 
-                    ? " (" + alert.sources + " sources)" : ""}
+                      ? " (" + alert.sources + " sources)" : ""}
                   </li>
                 </Stack.Item>
                 {!!cameraView && (      
@@ -68,11 +68,11 @@ export const StationAlertConsoleContent = (props, context) => {
                       icon={alert.cameras ? "video" : ""}
                       disabled={!alert.cameras}
                       content={alert.cameras === 1 
-                      ? alert.cameras + " Camera" : alert.cameras > 1
-                      ? alert.cameras + " Cameras" : "No Camera"}
+                        ? alert.cameras + " Camera" : alert.cameras > 1
+                          ? alert.cameras + " Cameras" : "No Camera"}
                       onClick={() => act('select_camera', {
                         alert: alert.ref,
-                    })} />
+                      })} />
                   </Stack.Item>
                 )}  
               </Stack>
