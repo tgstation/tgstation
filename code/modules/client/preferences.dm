@@ -18,7 +18,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//Antag preferences
 	var/list/be_special = list() //Special role selection
 
-	var/buttons_locked = FALSE
 	var/hotkeys = TRUE
 
 	///Limit preference on the size of the message. Requires chat_on_map to have effect.
