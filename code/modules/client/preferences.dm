@@ -75,8 +75,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/list/ignoring = list()
 
-	var/clientfps = -1
-
 	///Do we show screentips, if so, how big?
 	var/screentip_pref = TRUE
 

@@ -168,7 +168,7 @@ export const FeatureDropdownInput = (
   />);
 };
 
-type FeatureNumericData = {
+export type FeatureNumericData = {
   minimum: number,
   maximum: number,
   step: number,

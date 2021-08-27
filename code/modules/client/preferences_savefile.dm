@@ -70,8 +70,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			key_bindings["ShiftQ"] = list("quick_equip_suit_storage")
 
 	if(current_version < 37)
-		if(clientfps == 0)
-			clientfps = -1
+		if(read_preference(/datum/preference/numeric/fps) == 0)
+			write_preference(GLOB.preference_entries[/datum/preference/numeric/fps], -1)
 
 	if (current_version < 38)
 		var/found_block_movement = FALSE
@@ -193,7 +193,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["chat_toggles"], chat_toggles)
 	READ_FILE(S["toggles"], toggles)
 	READ_FILE(S["ignoring"], ignoring)
-	READ_FILE(S["clientfps"], clientfps)
 	READ_FILE(S["screentip_pref"], screentip_pref)
 	READ_FILE(S["auto_fit_viewport"], auto_fit_viewport)
 	READ_FILE(S["menuoptions"], menuoptions)
@@ -233,7 +232,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	hotkeys = sanitize_integer(hotkeys, FALSE, TRUE, initial(hotkeys))
 	default_slot = sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles = sanitize_integer(toggles, 0, (2**24)-1, initial(toggles))
-	clientfps = sanitize_integer(clientfps, -1, 1000, 0)
 	screentip_pref	= sanitize_integer(screentip_pref, FALSE, TRUE, initial(screentip_pref))
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, FALSE, TRUE, initial(auto_fit_viewport))
 	menuoptions = SANITIZE_LIST(menuoptions)
@@ -287,7 +285,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["toggles"], toggles)
 	WRITE_FILE(S["chat_toggles"], chat_toggles)
 	WRITE_FILE(S["ignoring"], ignoring)
-	WRITE_FILE(S["clientfps"], clientfps)
 	WRITE_FILE(S["screentip_pref"], screentip_pref)
 	WRITE_FILE(S["auto_fit_viewport"], auto_fit_viewport)
 	WRITE_FILE(S["menuoptions"], menuoptions)
@@ -325,7 +322,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (preference.savefile_identifier != PREFERENCE_CHARACTER)
 			continue
 
-		value_cache -= value_cache
+		value_cache -= preference_type
 		read_preference(preference_type)
 
 	//Character
