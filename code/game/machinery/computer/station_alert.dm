@@ -12,6 +12,10 @@
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z), title = name)
 	return ..()
 
+/obj/machinery/computer/station_alert/Destroy()
+	QDEL_NULL(alert_control)
+	return ..()
+
 /obj/machinery/computer/station_alert/ui_interact(mob/user)
 	alert_control.ui_interact(user)
 
