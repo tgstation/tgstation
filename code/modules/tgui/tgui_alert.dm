@@ -75,7 +75,6 @@
 	/// Boolean field describing if the tgui_modal was closed by the user.
 	var/closed
 
-
 /datum/tgui_modal/New(mob/user, message, title, list/buttons, timeout, autofocus)
 	src.title = title
 	src.message = message
@@ -117,7 +116,7 @@
 		"title" = title,
 		"message" = message,
 		"buttons" = buttons,
-		"autofocus" = autofocus,
+		"autofocus" = autofocus
 	)
 
 	if(timeout)
