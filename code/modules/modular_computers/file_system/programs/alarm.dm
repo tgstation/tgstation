@@ -41,14 +41,20 @@
 
 /datum/computer_file/program/alarm_monitor/ui_data(mob/user)
 	var/list/data = get_header_data()
-
 	data["alarms"] = list()
 	var/list/alarms = listener.alarms
 	for(var/alarm_type in alarms)
-		data["alarms"][alarm_type] = list()
-		for(var/area in alarms[alarm_type])
-			data["alarms"][alarm_type] += area
-
+		var/list/category = list(
+			"name" = alarm_type,
+			"alerts" = list(),
+		)
+		var/list/alerts = alarms[alarm_type]
+		for(var/alert in alerts)
+			var/list/alarm = alerts[alert]
+			category["alerts"] += list(list(
+				"name" = get_area_name(alarm[1], TRUE),
+			))
+		data["alarms"] += list(category)
 	return data
 
 /datum/computer_file/program/alarm_monitor/proc/update_alarm_display()
