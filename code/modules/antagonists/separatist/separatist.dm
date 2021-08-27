@@ -25,7 +25,7 @@
  * crewmember: new onboarding crewmember.
  * rank: new crewmember's rank.
  */
-/datum/team/nation/proc/new_possible_separatist(datum/source, mob/living/crewmember, rank)
+/datum/team/nation/proc/new_possible_separatist(mob/living/crewmember, rank)
 	SIGNAL_HANDLER
 
 	if(rank in potential_recruits)
