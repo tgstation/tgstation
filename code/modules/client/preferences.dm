@@ -87,8 +87,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/clientfps = -1
 
-	var/parallax
-
 	///Do we show screentips, if so, how big?
 	var/screentip_pref = TRUE
 	///Do we show item hover outlines?

@@ -2056,6 +2056,7 @@
 #include "code\modules\client\preferences\ghost.dm"
 #include "code\modules\client\preferences\names.dm"
 #include "code\modules\client\preferences\ooc.dm"
+#include "code\modules\client\preferences\parallax.dm"
 #include "code\modules\client\preferences\pda.dm"
 #include "code\modules\client\preferences\pixel_size.dm"
 #include "code\modules\client\preferences\preferred_map.dm"
