@@ -11,16 +11,21 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 	construction_type = /obj/item/pipe/quaternary
 	pipe_state = "manifold4w"
 	connection_num = 0
+	var/connections
 
 /obj/machinery/atmospherics/pipe/smart/update_pipe_icon()
 	icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi'
 	var/bitfield = NONE
 	var/bits = 0
+	connections = NONE
+	connection_num = 0
 	for(var/i in 1 to device_type)
 		if(!nodes[i])
 			continue
 		var/obj/machinery/atmospherics/node = nodes[i]
 		var/connected_dir = get_dir(src, node)
+		connections |= connected_dir
+		connection_num += 1
 		bits++
 		switch(connected_dir)
 			if(NORTH)
@@ -56,6 +61,17 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 					bitfield |= WEST_SHORTPIPE
 
 	icon_state = "[bitfield]_[piping_layer]"
+	switch(connection_num)
+		if(0)
+			dir = SOUTH
+		if(1)
+			dir = connections
+		if(2)
+			dir = check_binary_direction(connections)
+		if(3)
+			dir = connections
+		if(4)
+			dir = NORTH | SOUTH | EAST | WEST
 
 /obj/machinery/atmospherics/pipe/smart/SetInitDirections(init_dir)
 	if(init_dir)

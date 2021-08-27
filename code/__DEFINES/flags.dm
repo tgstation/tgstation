@@ -120,6 +120,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_ALERTS (1<<12)
 /// If blood cultists can draw runes or build structures on this AREA.
 #define CULT_PERMITTED (1<<13)
+///Whther this area is iluminated by starlight
+#define AREA_USES_STARLIGHT (1<<14)
+
 /// If engravings are persistent in this area
 #define PERSISTENT_ENGRAVINGS (1<<14)
 /*

@@ -587,6 +587,8 @@
 ///From post-can inject check of syringe after attack (mob/user)
 #define COMSIG_LIVING_TRY_SYRINGE "living_try_syringe"
 
+///from base of element/bane/activate(): (item/weapon, mob/user)
+#define COMSIG_LIVING_BANED "living_baned"
 ///Sent when bloodcrawl ends in mob/living/phasein(): (phasein_decal)
 #define COMSIG_LIVING_AFTERPHASEIN "living_phasein"
 
@@ -1177,6 +1179,17 @@
 #define COMSIG_SWAB_FOR_SAMPLES "swab_for_samples" ///Called when you try to swab something using the swabable component, includes a mutable list of what has been swabbed so far so it can be modified.
 	#define COMPONENT_SWAB_FOUND (1<<0)
 
+// /datum/component/transforming signals
+
+/// From /datum/component/transforming/proc/on_attack_self(obj/item/source, mob/user): (obj/item/source, mob/user, active)
+#define COMSIG_TRANSFORMING_PRE_TRANSFORM "transforming_pre_transform"
+	/// Return COMPONENT_BLOCK_TRANSFORM to prevent the item from transforming.
+	#define COMPONENT_BLOCK_TRANSFORM (1<<0)
+/// From /datum/component/transforming/proc/do_transform(obj/item/source, mob/user): (obj/item/source, mob/user, active)
+#define COMSIG_TRANSFORMING_ON_TRANSFORM "transforming_on_transform"
+	/// Return COMPONENT_NO_DEFAULT_MESSAGE to prevent the transforming component from displaying the default transform message / sound.
+	#define COMPONENT_NO_DEFAULT_MESSAGE (1<<0)
+
 // /datum/component/two_handed signals
 
 ///from base of datum/component/two_handed/proc/wield(mob/living/carbon/user): (/mob/user)
@@ -1414,3 +1427,10 @@
 
 /// Called on the organ when it is removed from someone (mob/living/carbon/old_owner)
 #define COMSIG_ORGAN_REMOVED "comsig_organ_removed"
+
+
+///Called when the ticker enters the pre-game phase
+#define COMSIG_TICKER_ENTER_PREGAME "comsig_ticker_enter_pregame"
+
+///Called when the ticker sets up the game for start
+#define COMSIG_TICKER_ENTER_SETTING_UP "comsig_ticker_enter_setting_up"

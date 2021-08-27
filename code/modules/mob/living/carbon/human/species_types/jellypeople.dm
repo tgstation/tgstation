@@ -755,7 +755,7 @@
 		return
 
 	var/mob/living/target = H.pulling
-	var/datum/species/jelly/stargazer/species = target
+	var/datum/species/jelly/stargazer/species = H.dna.species
 
 	to_chat(H, span_notice("You begin linking [target]'s mind to yours..."))
 	to_chat(target, span_warning("You feel a foreign presence within your mind..."))

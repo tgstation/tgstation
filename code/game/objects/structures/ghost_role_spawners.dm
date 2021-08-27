@@ -487,7 +487,7 @@
 
 /datum/outfit/syndicate_empty/battlecruiser/assault/captain
 	name = "Syndicate Battlecruiser Captain"
-	l_pocket = /obj/item/melee/transforming/energy/sword/saber/red
+	l_pocket = /obj/item/melee/energy/sword/saber/red
 	r_pocket = /obj/item/melee/classic_baton/telescopic
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	suit_store = /obj/item/gun/ballistic/revolver/mateba

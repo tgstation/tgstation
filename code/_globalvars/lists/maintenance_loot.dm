@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		) = 1,
 
 	list(//food
-		/obj/item/reagent_containers/food/drinks/beer = 1,
+		/obj/item/reagent_containers/food/drinks/bottle/beer = 1,
 		/obj/item/reagent_containers/food/drinks/coffee = 1,
 		) = 1,
 
@@ -200,6 +200,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/plaque = 1,
 		/obj/item/storage/box/clown = 1,
 		/obj/item/seeds/kronkus = 1,
+		/obj/item/seeds/odious_puffball = 1,
 		) = 8,
 
 	list(//medical and chemicals
