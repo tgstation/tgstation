@@ -460,7 +460,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if (!interviewee)
 		initialize_menus()
 
-	view_size = new(src, getScreenSize(prefs.widescreenpref))
+	view_size = new(src, getScreenSize(prefs.read_preference(/datum/preference/toggle/widescreen)))
 	view_size.resetFormat()
 	view_size.setZoomMode()
 	Master.UpdateTickRate()
