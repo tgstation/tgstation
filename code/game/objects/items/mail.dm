@@ -291,12 +291,22 @@
 		info = "<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[rand(0,9)][rand(0,9)][rand(0,9)]...'"
 		return
 	var/code = random_nukecode()
+	var/code_already_set = FALSE
 	for(var/obj/machinery/nuclearbomb/selfdestruct/self_destruct in GLOB.nuke_list)
+		if(self_destruct.r_code == "ADMIN")
+			code_already_set = TRUE
+			code = self_destruct.r_code
+			break
 		self_destruct.r_code = code
-	message_admins("Through junkmail, the self-destruct code was set to \"[code]\".")
-	info = "<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[code[rand(1,5)]][code[rand(1,5)]]...'"
+	if(code_already_set)
+		message_admins("Through junkmail, the nuclear self-destruct code was partially revealed.")
+	else
+		message_admins("Through junkmail, the self-destruct code was set to \"[code]\".")
 
-/obj/item/paper/fluff/junkmail_redpill/true //admin letter enabling players to brute force their way through the nuke code if they're so inclined.
+	info = "<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[pick_n_take(code)][pick_n_take(code)]...'"
+
+///admin letter enabling players to brute force their way through the nuke code if they're so inclined.
+/obj/item/paper/fluff/junkmail_redpill/true
 	nuclear_option_odds = 100
 
 /obj/item/paper/fluff/junkmail_generic
