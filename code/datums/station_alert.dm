@@ -7,7 +7,7 @@
     var/datum/alarm_listener/listener
     /// Title of our UI
     var/title
-	/// If UI will also show and allow jumping to cameras connected to each alert area
+    /// If UI will also show and allow jumping to cameras connected to each alert area
     var/camera_view
 
 /datum/station_alert/ui_host(mob/user)
