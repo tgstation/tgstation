@@ -43,7 +43,7 @@
 	"engraving_forewords":[
 		"The engraving depicts",
 		"Embedded in the wall is a story of",
-		"In the engraving is displayed the tale of",
+		"In the engraving you can see the tale of",
 		"On the wall, you see",
 		"This piece depicts"
 	],
@@ -146,7 +146,7 @@
 		"%PROTAGONIST %MOOD and runs from their wrangler."
 	],
 	"surgery_names":[
-		"The %SURGERY_TYPE of %PROTAGONIST by %PROTAGONIST."
+		"The %SURGERY_TYPE of %DEUTERAGONIST by %PROTAGONIST."
 	],
 	"surgery_starts":[
 		"%PROTAGONIST carefully performing %SURGERY_TYPE on %DEUTERAGONIST",
@@ -178,12 +178,12 @@
 		"feels too cool to look at %BOMB_TYPE"
 	],
 	"highfive_names":[
-		"The %HIGHFIVE_TYPE between %PROTAGONIST and %PROTAGONIST."
+		"The %HIGHFIVE_TYPE between %PROTAGONIST and %DEUTERAGONIST."
 	],
 	"highfive_starts":[
-		"%PROTAGONIST and %PROTAGONIST having a a legendary %HIGHFIVE_TYPE",
-		"%PROTAGONIST giving %PROTAGONIST a %HIGHFIVE_TYPE",
-		"%PROTAGONIST and %PROTAGONIST giving each other a %HIGHFIVE_TYPE"
+		"%PROTAGONIST and %DEUTERAGONIST having a a legendary %HIGHFIVE_TYPE",
+		"%PROTAGONIST giving %DEUTERAGONIST a %HIGHFIVE_TYPE",
+		"%PROTAGONIST and %DEUTERAGONIST giving each other a %HIGHFIVE_TYPE"
 	],
 	"highfive_moods":[
 		"%PROTAGONIST %MOOD as the %HIGHFIVE_TYPE connects.",

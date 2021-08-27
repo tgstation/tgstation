@@ -71,7 +71,8 @@
 		/mob/living/simple_animal/pet/cat/cak,
 		/mob/living/simple_animal/chick,
 		/mob/living/simple_animal/cow/wisdom,
-		/obj/item/skub
+		/obj/item/skub,
+		/obj/item/food/american_sausage
 	)
 
 	var/list/forewords = strings(MEMORY_FILE, story_type + "_forewords")
@@ -170,7 +171,7 @@
 			line = capitalize(line)
 			capitalize_next_line = FALSE
 
-		if(line[length(line)] == ". ")//Ended with a period, next sentence needs to start with a capital.'
+		if(line[length(line)] == ".")//End of sentence, next sentence needs to start with a capital.'
 			capitalize_next_line = TRUE
 
 		if(line != story_pieces[story_pieces.len]) //not the last line
@@ -179,9 +180,9 @@
 	//after replacement section for performance
 	if(story_flags & STORY_FLAG_DATED)
 		if(memory_flags & MEMORY_FLAG_NOSTATIONNAME)
-			parsed_story += " This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540]."
+			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540]."
 		else
-			parsed_story += " This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540] on [station_name()]."
+			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540] on [station_name()]."
 
 	parsed_story = trim_right(parsed_story)
 
