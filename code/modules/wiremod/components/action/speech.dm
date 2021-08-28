@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/speech
 	display_name = "Speech"
-	display_desc = "A component that sends a message. Requires a shell."
+	desc = "A component that sends a message. Requires a shell."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The message to send
@@ -22,11 +22,6 @@
 	. = ..()
 	message = add_input_port("Message", PORT_TYPE_STRING, FALSE)
 
-
-/obj/item/circuit_component/speech/Destroy()
-	message = null
-	return ..()
-
 /obj/item/circuit_component/speech/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
@@ -35,11 +30,11 @@
 	if(TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_SPEECH))
 		return
 
-	if(message.input_value)
+	if(message.value)
 		var/atom/movable/shell = parent.shell
 		// Prevents appear as the individual component if there is a shell.
 		if(shell)
-			shell.say(message.input_value)
+			shell.say(message.value)
 		else
-			say(message.input_value)
+			say(message.value)
 		TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_SPEECH, speech_cooldown)

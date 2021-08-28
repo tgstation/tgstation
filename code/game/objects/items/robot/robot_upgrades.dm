@@ -72,6 +72,7 @@
 	R.revive(full_heal = FALSE, admin_revive = FALSE)
 	R.logevent("WARN -- System recovered from unexpected shutdown.")
 	R.logevent("System brought online.")
+	return TRUE
 
 /obj/item/borg/upgrade/disablercooler
 	name = "cyborg rapid disabler cooling module"
@@ -504,10 +505,11 @@
 /obj/item/borg/upgrade/defib/backpack/proc/on_defib_instance_qdel_or_moved(obj/item/defibrillator/D)
 	SIGNAL_HANDLER
 	defib_instance = null
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
 /obj/item/borg/upgrade/defib/backpack/Destroy()
-	if(defib_instance)
+	if(!QDELETED(defib_instance))
 		QDEL_NULL(defib_instance)
 	return ..()
 

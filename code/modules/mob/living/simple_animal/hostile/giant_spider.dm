@@ -154,6 +154,9 @@
 	if(hurt_spider.health >= hurt_spider.maxHealth)
 		to_chat(src, span_warning("You can't find any wounds to wrap up."))
 		return
+	if(hurt_spider.stat == DEAD)
+		to_chat(src, span_warning("You're a nurse, not a miracle worker."))
+		return
 	visible_message(span_notice("[src] begins wrapping the wounds of [hurt_spider]."),span_notice("You begin wrapping the wounds of [hurt_spider]."))
 	is_busy = TRUE
 	if(do_after(src, 20, target = hurt_spider))
@@ -506,12 +509,14 @@
 /datum/action/innate/spider/comm
 	name = "Command"
 	desc = "Send a command to all living spiders."
+	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "command"
 
 /datum/action/innate/spider/comm/IsAvailable()
-	if(!istype(owner, /mob/living/simple_animal/hostile/giant_spider/midwife))
-		return FALSE
-	return TRUE
+	if(..())
+		if(!istype(owner, /mob/living/simple_animal/hostile/giant_spider/midwife))
+			return FALSE
+		return TRUE
 
 /datum/action/innate/spider/comm/Trigger()
 	var/input = stripped_input(owner, "Input a command for your legions to follow.", "Command", "")
@@ -550,7 +555,7 @@
  */
 /mob/living/simple_animal/hostile/giant_spider/ice
 	name = "giant ice spider"
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 	poison_type = /datum/reagent/consumable/frostoil
@@ -567,7 +572,7 @@
  */
 /mob/living/simple_animal/hostile/giant_spider/nurse/ice
 	name = "giant ice spider"
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 	poison_type = /datum/reagent/consumable/frostoil
@@ -583,7 +588,7 @@
  */
 /mob/living/simple_animal/hostile/giant_spider/hunter/ice
 	name = "giant ice spider"
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 	poison_type = /datum/reagent/consumable/frostoil

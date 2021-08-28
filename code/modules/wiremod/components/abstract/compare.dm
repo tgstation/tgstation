@@ -19,11 +19,13 @@
 	/// The result from the output
 	var/datum/port/output/result
 
+	var/list/datum/port/input/compare_ports = list()
+
 /obj/item/circuit_component/compare/Initialize()
 	. = ..()
 	for(var/port_id in 1 to input_port_amount)
 		var/letter = ascii2text(text2ascii("A") + (port_id-1))
-		add_input_port(letter, PORT_TYPE_ANY)
+		compare_ports += add_input_port(letter, PORT_TYPE_ANY)
 
 	load_custom_ports()
 	compare = add_input_port("Compare", PORT_TYPE_SIGNAL)
@@ -38,23 +40,12 @@
 /obj/item/circuit_component/compare/proc/load_custom_ports()
 	return
 
-/obj/item/circuit_component/compare/Destroy()
-	true = null
-	false = null
-	result = null
-	compare = null
-	return ..()
-
 /obj/item/circuit_component/compare/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return
 
-	var/list/ports = input_ports.Copy()
-	if(input_port_amount)
-		ports.Cut(input_port_amount+1)
-
-	var/logic_result = do_comparisons(ports)
+	var/logic_result = do_comparisons(compare_ports)
 	if(COMPONENT_TRIGGERED_BY(compare, port))
 		if(logic_result)
 			true.set_output(COMPONENT_SIGNAL)

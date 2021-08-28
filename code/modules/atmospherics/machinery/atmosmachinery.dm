@@ -63,7 +63,7 @@
 
 /obj/machinery/atmospherics/LateInitialize()
 	. = ..()
-	name = "[GLOB.pipe_color_name[pipe_color]] [name]"
+	update_name()
 
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
@@ -104,6 +104,14 @@
  */
 /obj/machinery/atmospherics/proc/destroy_network()
 	return
+
+/// This should only be called by SSair as part of the rebuild queue.
+/// Handles rebuilding pipelines after init or they've been changed.
+/obj/machinery/atmospherics/proc/rebuild_pipes()
+	var/list/targets = get_rebuild_targets()
+	rebuilding = FALSE
+	for(var/datum/pipeline/build_off as anything in targets)
+		build_off.build_pipeline(src) //This'll add to the expansion queue
 
 /**
  * Returns a list of new pipelines that need to be built up
@@ -445,6 +453,7 @@
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		pipe_color = obj_color
+	update_name()
 	setPipingLayer(set_layer)
 	atmosinit()
 	var/list/nodes = pipeline_expansion()
@@ -452,6 +461,10 @@
 		A.atmosinit()
 		A.addMember(src)
 	SSair.add_to_rebuild_queue(src)
+
+/obj/machinery/atmospherics/update_name()
+	name = "[GLOB.pipe_color_name[pipe_color]] [initial(name)]"
+	return ..()
 
 /obj/machinery/atmospherics/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(istype(arrived, /mob/living))

@@ -23,10 +23,7 @@
 
 	src.shell_flags = shell_flags || src.shell_flags
 	src.capacity = capacity || src.capacity
-	src.unremovable_circuit_components = unremovable_circuit_components
-
-	for(var/obj/item/circuit_component/circuit_component as anything in unremovable_circuit_components)
-		circuit_component.removable = FALSE
+	set_unremovable_circuit_components(unremovable_circuit_components)
 
 /datum/component/shell/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attack_by)
@@ -39,6 +36,38 @@
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
 		RegisterSignal(parent, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, .proc/on_unfasten)
 	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
+	RegisterSignal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, .proc/on_load)
+
+/datum/component/shell/proc/set_unremovable_circuit_components(list/components)
+	if(unremovable_circuit_components)
+		QDEL_LIST(unremovable_circuit_components)
+
+	unremovable_circuit_components = list()
+
+	for(var/obj/item/circuit_component/circuit_component as anything in components)
+		if(ispath(circuit_component))
+			circuit_component = new circuit_component()
+		circuit_component.removable = FALSE
+		RegisterSignal(circuit_component, COMSIG_CIRCUIT_COMPONENT_SAVE, .proc/save_component)
+		unremovable_circuit_components += circuit_component
+
+/datum/component/shell/proc/save_component(datum/source, list/objects)
+	SIGNAL_HANDLER
+	objects += parent
+
+/datum/component/shell/proc/on_load(datum/source, obj/item/integrated_circuit/circuit, list/components)
+	SIGNAL_HANDLER
+	var/list/components_in_list = list()
+	for(var/obj/item/circuit_component/component as anything in components)
+		components_in_list += component.type
+
+	for(var/obj/item/circuit_component/component as anything in unremovable_circuit_components)
+		if(component.type in components_in_list)
+			continue
+		var/new_type = component.type
+		components += new new_type()
+	set_unremovable_circuit_components(components)
+	attach_circuit(circuit)
 
 
 /datum/component/shell/UnregisterFromParent()
@@ -51,6 +80,7 @@
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_ATOM_ATTACK_GHOST,
 		COMSIG_ATOM_USB_CABLE_TRY_ATTACH,
+		COMSIG_MOVABLE_CIRCUIT_LOADED,
 	))
 
 	QDEL_NULL(attached_circuit)
@@ -61,15 +91,22 @@
 
 /datum/component/shell/proc/on_object_deconstruct()
 	SIGNAL_HANDLER
-	remove_circuit()
+	if(!attached_circuit?.admin_only)
+		remove_circuit()
 
 /datum/component/shell/proc/on_attack_ghost(datum/source, mob/dead/observer/ghost)
 	SIGNAL_HANDLER
+	if(!is_authorized(ghost))
+		return
+
 	if(attached_circuit)
 		INVOKE_ASYNC(attached_circuit, /datum.proc/ui_interact, ghost)
 
 /datum/component/shell/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
+	if(!is_authorized(user))
+		return
+
 	if(!attached_circuit)
 		examine_text += span_notice("There is no integrated circuit attached.")
 		return
@@ -96,6 +133,9 @@
  */
 /datum/component/shell/proc/on_attack_by(atom/source, obj/item/item, mob/living/attacker)
 	SIGNAL_HANDLER
+	if(!is_authorized(attacker))
+		return
+
 	if(istype(item, /obj/item/stock_parts/cell))
 		source.balloon_alert(attacker, "can't put cell in directly!")
 		return
@@ -132,7 +172,7 @@
 		source.balloon_alert(attacker, "there is already a circuitboard inside!")
 		return
 
-	if(length(logic_board.attached_components) > capacity)
+	if(length(logic_board.attached_components) - length(unremovable_circuit_components) > capacity)
 		source.balloon_alert(attacker, "this is too large to fit into [parent]!")
 		return
 
@@ -147,6 +187,9 @@
 
 /datum/component/shell/proc/on_multitool_act(atom/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
+	if(!is_authorized(user))
+		return
+
 	if(!attached_circuit)
 		return
 
@@ -164,6 +207,9 @@
  */
 /datum/component/shell/proc/on_screwdriver_act(atom/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
+	if(!is_authorized(user))
+		return
+
 	if(!attached_circuit)
 		return
 
@@ -181,9 +227,9 @@
 /**
  * Checks for when the circuitboard moves. If it moves, removes it from the component.
  */
-/datum/component/shell/proc/on_circuit_moved(obj/item/integrated_circuit/circuit, atom/new_loc)
+/datum/component/shell/proc/on_circuit_moved(obj/item/integrated_circuit/circuit, atom/old_loc)
 	SIGNAL_HANDLER
-	if(new_loc != parent)
+	if(circuit.loc != parent)
 		remove_circuit()
 
 /**
@@ -208,7 +254,7 @@
  */
 /datum/component/shell/proc/attach_circuit(obj/item/integrated_circuit/circuitboard, mob/living/user)
 	var/atom/movable/parent_atom = parent
-	if(!user.transferItemToLoc(circuitboard, parent_atom))
+	if(user && !user.transferItemToLoc(circuitboard, parent_atom))
 		return
 	locked = FALSE
 	attached_circuit = circuitboard
@@ -225,6 +271,9 @@
 
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
 		on_unfasten(parent_atom, parent_atom.anchored)
+
+	if(circuitboard.loc != parent_atom)
+		circuitboard.forceMove(parent_atom)
 
 /**
  * Removes the circuit from the component. Doesn't do any checks to see for an existing circuit so that should be done beforehand.
@@ -249,6 +298,8 @@
 
 /datum/component/shell/proc/on_atom_usb_cable_try_attach(atom/source, obj/item/usb_cable/usb_cable, mob/user)
 	SIGNAL_HANDLER
+	if(!is_authorized(user))
+		return
 
 	if (!(shell_flags & SHELL_FLAG_USB_PORT))
 		source.balloon_alert(user, "this shell has no usb ports")
@@ -260,3 +311,20 @@
 
 	usb_cable.attached_circuit = attached_circuit
 	return COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT
+
+/**
+ * Determines if a user is authorized to see the existance of this shell. Returns false if they are not
+ *
+ * Arguments:
+ * * user - The user to check if they are authorized
+ */
+/datum/component/shell/proc/is_authorized(mob/user)
+	if(shell_flags & SHELL_FLAG_CIRCUIT_FIXED)
+		return FALSE
+
+	if(attached_circuit?.admin_only)
+		if(check_rights_for(user.client, R_VAREDIT))
+			return TRUE
+		return FALSE
+
+	return TRUE
