@@ -121,7 +121,7 @@ const DemonRunes = (props, context) => {
       height="102%"
       mt="-6px"
       fill>
-      <Box className="demon__demonrune" >
+      <Box className="HellishRunes__demonrune" >
         Y<br />U<br />K<br />T<br />O<br />P<br />U<br />S<br />
         Y<br />U<br />K<br />T<br />O<br />P<br />U<br />S<br />
         Y<br />U<br />K<br />T<br />O<br />P<br />U<br />S<br />
