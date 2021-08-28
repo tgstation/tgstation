@@ -1,6 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - bugfix: "error when typing the mole efficiency (instead of 0.1 it was 0.001, didn't push the change)"
-  - bugfix: "infinite power consumption (capped)"
-  - bugfix: "efficiency not being tied to laser tiers (issue connected to infinite power consumption)"

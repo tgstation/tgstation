@@ -613,3 +613,18 @@
   - bugfix: Honorbound followers can now perform surgery.
   - bugfix: Honorbound followers can no longer punch the innocents.
   - bugfix: fixes heart attack message spam for synthetic organs!
+2021-08-28:
+  Couls:
+  - rscadd: TGUI autolathe
+  - expansion: You can now input a custom amount to print(hard limit at 50 or maximum
+      stack size)
+  - expansion: Can now search and change categories while the autolathe is busy, line
+      up those designs!
+  Ghilker:
+  - bugfix: error when typing the mole efficiency (instead of 0.1 it was 0.001, didn't
+      push the change)
+  - bugfix: infinite power consumption (capped)
+  - bugfix: efficiency not being tied to laser tiers (issue connected to infinite
+      power consumption)
+  tralezab:
+  - bugfix: fixes field generators not being interactable
