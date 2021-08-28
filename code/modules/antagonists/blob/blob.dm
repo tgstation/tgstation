@@ -125,9 +125,14 @@
 /datum/antagonist/blob/infection/get_preview_icon()
 	var/icon/blob_icon = ..()
 
-	// MOTHBLOCKS TODO: Make this a blob zombie
-	var/icon/human_icon = finish_preview_icon(render_preview_outfit(/datum/outfit/job/miner))
+	var/datum/blobstrain/reagent/reactive_spines/reactive_spines = /datum/blobstrain/reagent/reactive_spines
+	var/icon/blob_head = icon('icons/mob/blob.dmi', "blob_head")
+	blob_head.Blend(initial(reactive_spines.complementary_color), ICON_MULTIPLY)
+
+	var/icon/human_icon = render_preview_outfit(/datum/outfit/job/miner)
+	human_icon.Blend(blob_head, ICON_OVERLAY)
 	human_icon.ChangeOpacity(0.7)
-	blob_icon.Blend(human_icon, ICON_OVERLAY)
+
+	blob_icon.Blend(finish_preview_icon(human_icon), ICON_OVERLAY)
 
 	return blob_icon
