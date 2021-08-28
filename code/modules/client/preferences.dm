@@ -235,8 +235,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if (.)
 		return
 
-	var/mob/user = usr
-
 	switch (action)
 		if ("change_slot")
 			// SAFETY: `load_character` performs sanitization the slot number
@@ -486,9 +484,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 			profiles += null
 			continue
 
-		profiles += list(list(
-			"name" = name,
-		))
+		profiles += name
 
 	return profiles
 

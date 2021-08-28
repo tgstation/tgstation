@@ -3,15 +3,13 @@ import { classes } from "common/react";
 import { sendAct, useBackend, useLocalState } from "../../backend";
 import { Box, Button, ByondUi, Flex, Icon, Popper, Stack } from "../../components";
 import { Window } from "../../layouts";
-import { CharacterProfile, PreferencesMenuData } from "./data";
+import { PreferencesMenuData } from "./data";
 import { PageButton } from "./PageButton";
 import { AntagsPage } from "./AntagsPage";
-import { GamePreferencesPage } from "./GamePreferencesPage";
 import { JobsPage } from "./JobsPage";
 import { MainPage } from "./MainPage";
 import { SpeciesPage } from "./SpeciesPage";
 import { QuirksPage } from "./QuirksPage";
-import { StatelessComponent } from "inferno";
 
 enum Page {
   Antags,
@@ -24,7 +22,7 @@ enum Page {
 const CharacterProfiles = (props: {
   activeName: string,
   onClick: (index: number) => void,
-  profiles: (CharacterProfile | null)[],
+  profiles: (string | null)[],
 }) => {
   const { profiles } = props;
 
@@ -33,10 +31,10 @@ const CharacterProfiles = (props: {
       {profiles.map((profile, slot) => (
         <Stack.Item key={slot}>
           <Button
-            selected={profile?.name === props.activeName}
+            selected={profile === props.activeName}
             onClick={() => {
               props.onClick(slot);
-            }} fluid>{profile ? profile.name : "New Character"}
+            }} fluid>{profile ?? "New Character"}
           </Button>
         </Stack.Item>
       ))}

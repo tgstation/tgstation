@@ -2,10 +2,6 @@ import { BooleanLike } from "common/react";
 import { sendAct } from "../../backend";
 import { Gender } from "./preferences/gender";
 
-export type CharacterProfile = {
-  name: string;
-};
-
 export type AssetWithIcon = {
   icon: string;
   value: string;
@@ -70,7 +66,7 @@ export enum Window {
 
 export type PreferencesMenuData = {
   character_preview_view: string;
-  character_profiles: (CharacterProfile | null)[];
+  character_profiles: (string | null)[];
 
   character_preferences: {
     clothing: Record<string, AssetWithIcon>;
