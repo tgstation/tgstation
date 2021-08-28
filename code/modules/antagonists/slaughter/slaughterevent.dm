@@ -7,8 +7,6 @@
 	min_players = 20
 	dynamic_should_hijack = TRUE
 
-
-
 /datum/round_event/ghost_role/slaughter
 	minimum_required = 1
 	role_name = "slaughter demon"

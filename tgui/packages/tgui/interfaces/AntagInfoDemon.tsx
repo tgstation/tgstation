@@ -1,10 +1,7 @@
-import { useBackend, useLocalState } from '../backend';
-import { Blink, BlockQuote, Box, Dimmer, Icon, Section, Stack } from '../components';
+import { useBackend } from '../backend';
+import { Box, Section, Stack } from '../components';
 import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
-import { NONAME } from 'dns';
-import { url } from 'inspector';
-import { URL } from 'url';
 
 const backgroundstyle = {
   'background-image': `url("../assets/bg-neutral.svg")`,
@@ -14,7 +11,7 @@ const jauntstyle = {
   color: 'lightblue',
 };
 
-const rightclickstyle = {
+const injurestyle = {
   color: 'yellow',
 };
 
@@ -38,6 +35,7 @@ export const AntagInfoDemon = (props, context) => {
   const {
     fluff,
     objectives,
+    explain_attack,
   } = data;
   return (
     <Window
@@ -64,28 +62,30 @@ export const AntagInfoDemon = (props, context) => {
                   </Stack>
                 </Section>
               </Stack.Item>
-              <Stack.Item>
-                <Section fill title="Demonic Powers">
-                  <Stack vertical>
-                    <Stack.Item>
-                      <span style={jauntstyle}>Blood Jaunt:</span> 4
-                      You can dive in and out of blood to travel anywhere
-                      you need to be. You will gain a speed boost upon
-                      leaving the jaunt for surprise attacks. You can
-                      drag victims you have disabled through the blood,
-                      consuming them and restoring health.
-                    </Stack.Item>
-                    <Stack.Divider />
-                    <Stack.Item>
-                      <span style={rightclickstyle}>Monstrous strike:</span> You
-                      can launch a devastating slam attack by right-clicking,
-                      capable of smashing bones in one strike. Great for
-                      preventing the escape of your victims, as their wounds
-                      will slow them.
-                    </Stack.Item>
-                  </Stack>
-                </Section>
-              </Stack.Item>
+              {!!explain_attack && (
+                <Stack.Item>
+                  <Section fill title="Demonic Powers">
+                    <Stack vertical>
+                      <Stack.Item>
+                        <span style={jauntstyle}>Blood Jaunt:</span> You
+                        can dive in and out of blood to travel anywhere
+                        you need to be. You will gain a speed boost upon
+                        leaving the jaunt for surprise attacks. You can
+                        drag victims you have disabled through the blood,
+                        consuming them and restoring health.
+                      </Stack.Item>
+                      <Stack.Divider />
+                      <Stack.Item>
+                        <span style={injurestyle}>Monstrous strike:</span> You
+                        can launch a devastating slam attack by right-clicking,
+                        capable of smashing bones in one strike. Great for
+                        preventing the escape of your victims, as their wounds
+                        will slow them.
+                      </Stack.Item>
+                    </Stack>
+                  </Section>
+                </Stack.Item>
+              )}
             </Stack>
           </Stack.Item>
           <Stack.Item>
@@ -126,10 +126,10 @@ const DemonRunes = (props, context) => {
       mt="-6px"
       fill>
       <Box className="demon__demonrune" >
-        T<br />R<br />A<br />L<br />E<br />Z<br />A<br />B<br />
-        T<br />R<br />A<br />L<br />E<br />Z<br />A<br />B<br />
-        T<br />R<br />A<br />L<br />E<br />Z<br />A<br />B<br />
-        T<br />R<br />A<br />L<br />E<br />Z<br />A<br />B
+        Y<br />U<br />K<br />T<br />O<br />P<br />U<br />S<br />
+        Y<br />U<br />K<br />T<br />O<br />P<br />U<br />S<br />
+        Y<br />U<br />K<br />T<br />O<br />P<br />U<br />S<br />
+        Y<br />U<br />K<br />T<br />O<br />P<br />U<br />S
       </Box>
     </Section>
   );
