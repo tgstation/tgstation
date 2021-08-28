@@ -412,18 +412,20 @@ Possible to do for anyone motivated enough:
 	ringing = FALSE
 
 	for(var/datum/holocall/holocall as anything in holo_calls)
-		if(holocall.connected_holopad != src)
-			if(force_answer_call && world.time > (holocall.call_start_time + (HOLOPAD_MAX_DIAL_TIME / 2)))
-				holocall.Answer(src)
-				break
-			if(holocall.head_call && !secure)
-				holocall.Answer(src)
-				break
-			if(outgoing_call)
-				holocall.Disconnect(src)//can't answer calls while calling
-			else
-				playsound(src, 'sound/machines/twobeep.ogg', 100) //bring, bring!
-				ringing = TRUE
+		if(holocall.connected_holopad == src)
+			continue
+
+		if(force_answer_call && world.time > (holocall.call_start_time + (HOLOPAD_MAX_DIAL_TIME / 2)))
+			holocall.Answer(src)
+			break
+		if(holocall.head_call && !secure)
+			holocall.Answer(src)
+			break
+		if(outgoing_call)
+			holocall.Disconnect(src)//can't answer calls while calling
+		else
+			playsound(src, 'sound/machines/twobeep.ogg', 100) //bring, bring!
+			ringing = TRUE
 
 	update_appearance(UPDATE_ICON_STATE)
 

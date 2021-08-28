@@ -32,6 +32,8 @@
 /// The APCs power channel is automatically on.
 #define APC_CHANNEL_AUTO_ON 3
 
+#define APC_CHANNEL_IS_ON(channel) (channel >= APC_CHANNEL_ON)
+
 // APC autoset enums:
 /// The APC turns automated and manual power channels off.
 #define AUTOSET_FORCE_OFF 0
@@ -1254,10 +1256,10 @@
 		force_update = TRUE
 		return
 
-	//dont use any power from that channel if we shut it off
-	lastused_light = (area.power_usage[AREA_USAGE_LIGHT] + area.power_usage[AREA_USAGE_STATIC_LIGHT]) * (lighting > APC_CHANNEL_AUTO_OFF)
-	lastused_equip = (area.power_usage[AREA_USAGE_EQUIP] + area.power_usage[AREA_USAGE_STATIC_EQUIP]) * (equipment > APC_CHANNEL_AUTO_OFF)
-	lastused_environ = (area.power_usage[AREA_USAGE_ENVIRON] + area.power_usage[AREA_USAGE_STATIC_ENVIRON]) * (environ > APC_CHANNEL_AUTO_OFF)
+	//dont use any power from that channel if we shut that power channel off
+	lastused_light = APC_CHANNEL_IS_ON(lighting) ? area.power_usage[AREA_USAGE_LIGHT] + area.power_usage[AREA_USAGE_STATIC_LIGHT] : 0
+	lastused_equip = APC_CHANNEL_IS_ON(equipment) ? area.power_usage[AREA_USAGE_EQUIP] + area.power_usage[AREA_USAGE_STATIC_EQUIP] : 0
+	lastused_environ = APC_CHANNEL_IS_ON(environ) ? area.power_usage[AREA_USAGE_ENVIRON] + area.power_usage[AREA_USAGE_STATIC_ENVIRON] : 0
 	area.clear_usage()
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ
