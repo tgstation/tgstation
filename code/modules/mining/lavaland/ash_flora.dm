@@ -251,7 +251,6 @@
 	growthstages = 3
 	rarity = 20
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
-	resistance_flags = FIRE_PROOF
 	species = "polypore" // silence unit test
 	genes = list(/datum/plant_gene/trait/fire_resistance)
 	graft_gene = /datum/plant_gene/trait/fire_resistance

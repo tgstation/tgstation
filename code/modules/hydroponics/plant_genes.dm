@@ -29,6 +29,22 @@
 	new_gene.mutability_flags = mutability_flags
 	return new_gene
 
+/*
+ * on_new_seed is called when seed genes are initialized on the /obj/seed.
+ *
+ * new_seed - the seed being created
+ */
+/datum/plant_gene/proc/on_new_seed(obj/item/seeds/new_seed)
+	return FALSE
+
+/*
+ * on_seed_delete is called the seed that holds our gene is deleted.
+ *
+ * old_seed - the seed being destroyed
+ */
+/datum/plant_gene/proc/on_seed_delete(obj/item/seeds/old_seed)
+	return FALSE
+
 /// Reagent genes store a reagent ID and reagent ratio.
 /datum/plant_gene/reagent
 	name = "Nutriment"
@@ -93,24 +109,6 @@
 		rate = reagent.rate
 		return TRUE
 	return FALSE
-
-/datum/plant_gene/reagent/polypyr
-	name = "Polypyrylium Oligomers"
-	reagent_id = /datum/reagent/medicine/polypyr
-	rate = 0.15
-	mutability_flags = PLANT_GENE_GRAFTABLE
-
-/datum/plant_gene/reagent/liquidelectricity
-	name = "Enriched Liquid Electricity"
-	reagent_id = /datum/reagent/consumable/liquidelectricity/enriched
-	rate = 0.1
-	mutability_flags = PLANT_GENE_GRAFTABLE
-
-/datum/plant_gene/reagent/carbon
-	name = "Carbon"
-	reagent_id = /datum/reagent/carbon
-	rate = 0.1
-	mutability_flags = PLANT_GENE_GRAFTABLE
 
 /// Traits that affect the grown product.
 /datum/plant_gene/trait
@@ -180,14 +178,6 @@
 	if(examine_line)
 		RegisterSignal(our_plant, COMSIG_PARENT_EXAMINE, .proc/examine)
 
-	return TRUE
-
-/*
- * on_new_seed is called when seed genes are initialized on the /obj/seed.
- *
- * new_seed - the seed being created
- */
-/datum/plant_gene/trait/proc/on_new_seed(obj/item/seeds/new_seed)
 	return TRUE
 
 /// Add on any unique examine text to the plant's examine text.
@@ -649,6 +639,10 @@
 	if(!(new_seed.resistance_flags & FIRE_PROOF))
 		new_seed.resistance_flags |= FIRE_PROOF
 
+/datum/plant_gene/trait/fire_resistance/on_seed_delete(obj/item/seeds/old_seed)
+	if(old_seed.resistance_flags & FIRE_PROOF)
+		old_seed.resistance_flags &= ~FIRE_PROOF
+
 /datum/plant_gene/trait/fire_resistance/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
@@ -663,13 +657,11 @@
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/invasive/on_new_seed(obj/item/seeds/new_seed)
-	. = ..()
-	if(!.)
-		return FALSE
-
 	RegisterSignal(new_seed, COMSIG_PLANT_ON_GROW, .proc/try_spread)
 
-	return TRUE
+/datum/plant_gene/trait/invasive/on_seed_delete(obj/item/seeds/old_seed)
+	UnregisterSignal(old_seed, COMSIG_PLANT_ON_GROW)
+
 /*
  * Attempt to find an adjacent tray we can spread to.
  *
@@ -849,6 +841,9 @@
 	var/obj/item/food/grown/grown_plant = our_plant
 	if(istype(grown_plant))
 		grown_plant.preserved_food = TRUE
+
+/datum/plant_gene/trait/carnivory
+	name = "Obligate Carnivory"
 
 /// Plant type traits. Incompatible with one another.
 /datum/plant_gene/trait/plant_type

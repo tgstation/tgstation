@@ -237,7 +237,7 @@
 	if(!.)
 		return
 
-	RegisterSignal(our_plant, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED), .proc/stop_backfire_effect)
+	RegisterSignal(our_plant, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), .proc/stop_backfire_effect)
 
 /*
  * Begin processing the trait on backfire.
@@ -571,7 +571,11 @@
 		return
 
 	RegisterSignal(new_seed, COMSIG_PLANT_ON_GROW, .proc/try_release_gas)
-	RegisterSignal(new_seed, COMSIG_PARENT_PREQDELETED, .proc/stop_gas)
+	stinky_seed = new_seed
+
+/datum/plant_gene/trait/gas_production/on_seed_delete(obj/item/seeds/old_seed)
+	UnregisterSignal(old_seed, COMSIG_PLANT_ON_GROW)
+	stop_gas()
 
 /*
  * Whenever the plant starts to grow in a tray, check if we can release gas.
@@ -585,12 +589,11 @@
 	if(grown_tray.age < our_seed.maturation) // Start a little before it blooms
 		return
 
-	stinky_seed = our_seed
 	home_tray = grown_tray
 	START_PROCESSING(SSobj, src)
 
 /*
- * Stop the seed from releasing gas.
+ * Stop the seed from releasing gas and null all our references.
  */
 /datum/plant_gene/trait/gas_production/proc/stop_gas(datum/source)
 	SIGNAL_HANDLER
@@ -617,6 +620,28 @@
 	stank.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
 	tray_turf.assume_air(stank)
 
-/// Plant doesn't get annoyed by pests in their tray.
-/datum/plant_gene/trait/carnivory
-	name = "Obligate Carnivory"
+/// Starthistle's essential invasive spreading
+/datum/plant_gene/trait/invasive/starthistle
+	mutability_flags = PLANT_GENE_GRAFTABLE
+
+/// Jupitercup's essential carnivory
+/datum/plant_gene/trait/carnivory/jupitercup
+	mutability_flags = PLANT_GENE_GRAFTABLE
+
+/// Spaceman's Trumpet fragile Polypyrylium Oligomers
+/datum/plant_gene/reagent/polypyr
+	reagent_id = /datum/reagent/medicine/polypyr
+	rate = 0.15
+	mutability_flags = PLANT_GENE_GRAFTABLE
+
+/// Jupitercup's fragile Liquid Electricity
+/datum/plant_gene/reagent/liquidelectricity
+	reagent_id = /datum/reagent/consumable/liquidelectricity/enriched
+	rate = 0.1
+	mutability_flags = PLANT_GENE_GRAFTABLE
+
+/// Carbon Roses's fragile Carbon
+/datum/plant_gene/reagent/carbon
+	reagent_id = /datum/reagent/carbon
+	rate = 0.1
+	mutability_flags = PLANT_GENE_GRAFTABLE

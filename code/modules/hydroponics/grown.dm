@@ -74,6 +74,11 @@
 	seed.prepare_result(src)
 	transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
 
+/obj/item/food/grown/Destroy()
+	if(seed)
+		QDEL_NULL(seed)
+	return ..()
+
 /obj/item/food/grown/MakeEdible()
 	AddComponent(/datum/component/edible,\
 				initial_reagents = food_reagents,\
