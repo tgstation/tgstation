@@ -79,6 +79,7 @@
 		living_parent.log_message("is no longer being ridden by [former_rider]", LOG_ATTACK, color="pink")
 		former_rider.log_message("is no longer riding [living_parent]", LOG_ATTACK, color="pink")
 	remove_abilities(former_rider)
+
 	// We gotta reset those layers at some point, don't we?
 	former_rider.layer = MOB_LAYER
 	living_parent.layer = MOB_LAYER
@@ -146,6 +147,8 @@
 	for(var/i in ridden_creature.abilities)
 		var/obj/effect/proc_holder/proc_holder = i
 		M.RemoveAbility(proc_holder)
+		if(proc_holder.has_action)
+			proc_holder.action.Grant(ridden_creature)
 
 
 ///////Yes, I said humans. No, this won't end well...//////////
