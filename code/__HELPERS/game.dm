@@ -433,14 +433,24 @@
 
 	return result
 
-/proc/pollCandidatesForMob(Question, jobbanType, be_special_flag = 0, poll_time = 300, mob/M, ignore_category = null)
-	var/list/L = pollGhostCandidates(Question, jobbanType, be_special_flag, poll_time, ignore_category)
-	if(!M || QDELETED(M) || !M.loc)
-		return list()
-	return L
+/proc/poll_candidates_for_mob(question, jobban_type, be_special_flag = 0, poll_time = 300, mob/target_mob, ignore_category = null)
+	var/static/list/mob/currently_polling_mobs = list()
 
-/proc/pollCandidatesForMobs(Question, jobbanType, be_special_flag = 0, poll_time = 300, list/mobs, ignore_category = null)
-	var/list/L = pollGhostCandidates(Question, jobbanType, be_special_flag, poll_time, ignore_category)
+	if(currently_polling_mobs.Find(target_mob))
+		return list()
+
+	currently_polling_mobs += target_mob
+
+	var/list/possible_candidates = pollGhostCandidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
+
+	currently_polling_mobs -= target_mob
+	if(!target_mob || QDELETED(target_mob) || !target_mob.loc)
+		return list()
+
+	return possible_candidates
+
+/proc/poll_candidates_for_mobs(question, jobban_type, be_special_flag = 0, poll_time = 300, list/mobs, ignore_category = null)
+	var/list/L = pollGhostCandidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
 	var/i=1
 	for(var/v in mobs)
 		var/atom/A = v
