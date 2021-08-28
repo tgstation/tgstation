@@ -11,7 +11,7 @@
 		return 0
 
 	if(health <= HEALTH_THRESHOLD_CRIT)
-		adjustBruteLoss(2)
+		adjustOxyLoss(2)
 
 	var/plasma_used = 0
 	var/plas_detect_threshold = 0.02
