@@ -58,7 +58,7 @@
 	src.interface = interface
 	if(title)
 		src.title = title
-	src.state = src_object.ui_state()
+	src.state = src_object.ui_state(user)
 	// Deprecated
 	if(ui_x && ui_y)
 		src.window_size = list(ui_x, ui_y)
@@ -92,7 +92,6 @@
 		window.initialize(
 			fancy = user.client.prefs.tgui_fancy,
 			inline_assets = list(
-				get_asset_datum(/datum/asset/simple/tgui_common),
 				get_asset_datum(/datum/asset/simple/tgui),
 			))
 	else

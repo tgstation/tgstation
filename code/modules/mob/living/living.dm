@@ -1442,6 +1442,10 @@
 	if(!istype(L))
 		return
 
+	// can't spread fire to mobs that don't catch on fire
+	if(HAS_TRAIT(L, TRAIT_NOFIRE_SPREAD) || HAS_TRAIT(src, TRAIT_NOFIRE_SPREAD))
+		return 
+
 	if(on_fire)
 		if(L.on_fire) // If they were also on fire
 			var/firesplit = (fire_stacks + L.fire_stacks)/2

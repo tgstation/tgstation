@@ -45,11 +45,11 @@
 
 /obj/item/circuit_component/light/input_received(datum/port/input/port)
 	. = ..()
-	brightness.set_input(clamp(brightness.input_value || 0, 0, max_power), FALSE)
-	red.set_input(clamp(red.input_value, 0, 255), FALSE)
-	blue.set_input(clamp(blue.input_value, 0, 255), FALSE)
-	green.set_input(clamp(green.input_value, 0, 255), FALSE)
-	var/list/hsl = rgb2hsl(red.input_value || 0, green.input_value || 0, blue.input_value || 0)
+	brightness.set_value(clamp(brightness.value || 0, 0, max_power))
+	red.set_value(clamp(red.value, 0, 255))
+	blue.set_value(clamp(blue.value, 0, 255))
+	green.set_value(clamp(green.value, 0, 255))
+	var/list/hsl = rgb2hsl(red.value || 0, green.value || 0, blue.value || 0)
 	var/list/light_col = hsl2rgb(hsl[1], hsl[2], max(min_lightness, hsl[3]))
 	shell_light_color = rgb(light_col[1], light_col[2], light_col[3])
 	if(.)
@@ -60,9 +60,9 @@
 
 /obj/item/circuit_component/light/proc/set_atom_light(atom/movable/target_atom)
 	// Clamp anyways just for safety
-	var/bright_val = min(max(brightness.input_value || 0, 0), max_power)
+	var/bright_val = min(max(brightness.value || 0, 0), max_power)
 
 	target_atom.set_light_power(bright_val)
 	target_atom.set_light_range(bright_val)
 	target_atom.set_light_color(shell_light_color)
-	target_atom.set_light_on(!!on.input_value)
+	target_atom.set_light_on(!!on.value)

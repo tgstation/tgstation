@@ -417,7 +417,7 @@
 
 	raw_args[1] = src
 
-	if(dm != COMPONENT_DUPE_ALLOWED)
+	if(dm != COMPONENT_DUPE_ALLOWED && dm != COMPONENT_DUPE_SELECTIVE)
 		if(!dt)
 			old_comp = GetExactComponent(nt)
 		else
@@ -443,19 +443,19 @@
 						old_comp.InheritComponent(arglist(arguments))
 					else
 						old_comp.InheritComponent(new_comp, TRUE)
-				if(COMPONENT_DUPE_SELECTIVE)
-					var/list/arguments = raw_args.Copy()
-					arguments[1] = new_comp
-					var/make_new_component = TRUE
-					for(var/datum/component/existing_component as anything in GetComponents(new_type))
-						if(existing_component.CheckDupeComponent(arglist(arguments)))
-							make_new_component = FALSE
-							QDEL_NULL(new_comp)
-							break
-					if(!new_comp && make_new_component)
-						new_comp = new nt(raw_args)
 		else if(!new_comp)
 			new_comp = new nt(raw_args) // There's a valid dupe mode but there's no old component, act like normal
+	else if(dm == COMPONENT_DUPE_SELECTIVE)
+		var/list/arguments = raw_args.Copy()
+		arguments[1] = new_comp
+		var/make_new_component = TRUE
+		for(var/datum/component/existing_component as anything in GetComponents(new_type))
+			if(existing_component.CheckDupeComponent(arglist(arguments)))
+				make_new_component = FALSE
+				QDEL_NULL(new_comp)
+				break
+		if(!new_comp && make_new_component)
+			new_comp = new nt(raw_args)
 	else if(!new_comp)
 		new_comp = new nt(raw_args) // Dupes are allowed, act like normal
 
