@@ -3,7 +3,9 @@ module.exports = {
   testMatch: [
     '<rootDir>/packages/**/__tests__/*.{js,ts,tsx}',
     '<rootDir>/packages/**/*.{spec,test}.{js,ts,tsx}',
-    '!<rootDir>/packages/tgui-bench/**/*',
+  ],
+  testPathIgnorePatterns: [
+    '<rootDir>/packages/tgui-bench/suite',
   ],
   testEnvironment: 'jsdom',
   testRunner: require.resolve('jest-circus/runner'),
