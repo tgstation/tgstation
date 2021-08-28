@@ -2077,7 +2077,6 @@
 #include "code\modules\client\preferences\middleware\_middleware.dm"
 #include "code\modules\client\preferences\middleware\keybindings.dm"
 #include "code\modules\client\preferences\middleware\quirks.dm"
-#include "code\modules\client\preferences\middleware\species.dm"
 #include "code\modules\client\preferences\species_features\basic.dm"
 #include "code\modules\client\preferences\species_features\moth.dm"
 #include "code\modules\client\verbs\ooc.dm"

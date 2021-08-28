@@ -20,15 +20,11 @@ export class ServerPreferencesFetcher extends Component<{
 
   async populateServerData() {
     if (!fetchServerData) {
-      fetchServerData = fetch(
-        resolveAsset("preferences.json")
-      ).then(response => {
-        return response.json();
-      });
+      fetchServerData = fetch(resolveAsset("preferences.json"))
+        .then(response => response.json());
     }
 
-    const preferencesData: ServerData
-      = await fetchServerData;
+    const preferencesData: ServerData = await fetchServerData;
 
     this.setState({
       serverData: preferencesData,
