@@ -63,7 +63,7 @@
 		if(user.gender == FEMALE)
 			return pick('sound/voice/human/femalescream_1.ogg', 'sound/voice/human/femalescream_2.ogg', 'sound/voice/human/femalescream_3.ogg', 'sound/voice/human/femalescream_4.ogg', 'sound/voice/human/femalescream_5.ogg')
 		else
-			if(isfelinid(human) || prob(5))
+			if(isfelinid(human) && prob(5))
 				return 'sound/voice/human/jerry_scream.ogg'
 			else
 				if(prob(1))
