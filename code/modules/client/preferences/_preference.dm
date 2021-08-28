@@ -306,7 +306,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	return ..()
 
-// MOTHBLOCKS TODO: Return icons here as well
 /datum/preference/choiced/compile_constant_data()
 	var/list/data = list()
 
