@@ -99,12 +99,16 @@ const AntagSelection = (props: {
     )}>
       <Flex className={className} align="flex-end" wrap>
         {props.antagonists.map(antagonist => {
+          const isBanned = data.antag_bans.indexOf(antagonist.key) !== -1;
+
           return (
             <Flex.Item
               className={classes([
                 `${className}__antagonist`,
                 `${className}__antagonist--${
-                  predictedState.has(antagonist.key) ? "on" : "off"
+                  isBanned
+                    ? "banned"
+                    : predictedState.has(antagonist.key) ? "on" : "off"
                 }`,
               ])}
               key={antagonist.key}
@@ -121,23 +125,27 @@ const AntagSelection = (props: {
 
                 <Stack.Item align="center">
                   <Tooltip content={
-                    <>
-                      {antagonist.description.map((text, index) => {
+                    isBanned
+                      ? `You are banned from ${antagonist.name}.`
+                      : antagonist.description.map((text, index) => {
                         return (
                           <div key={index}>
                             {text}
                             {
                               index !== antagonist.description.length - 1
-                               && <Divider />
+                              && <Divider />
                             }
                           </div>
                         );
-                      })}
-                    </>
+                      })
                   } position="bottom">
                     <Box
                       className={"antagonist-icon-parent"}
                       onClick={() => {
+                        if (isBanned) {
+                          return;
+                        }
+
                         if (predictedState.has(antagonist.key)) {
                           disableAntags([antagonist.key]);
                         } else {
@@ -150,6 +158,13 @@ const AntagSelection = (props: {
                         antagonist.key,
                         "antagonist-icon",
                       ])} />
+
+                      {isBanned && (
+                        <Box className={classes([
+                          "antagonists96x96",
+                          "antagonist-banned-slash",
+                        ])} />
+                      )}
                     </Box>
                   </Tooltip>
                 </Stack.Item>

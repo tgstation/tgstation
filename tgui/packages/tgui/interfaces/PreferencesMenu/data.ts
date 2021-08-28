@@ -87,8 +87,10 @@ export type PreferencesMenuData = {
 
   keybindings: Record<string, string[]>;
   overflow_role: string;
-  selected_antags: string[];
   selected_quirks: string[];
+
+  antag_bans: string[];
+  selected_antags: string[];
 
   active_name: string;
   name_to_use: string;

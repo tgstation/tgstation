@@ -198,20 +198,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/ui_static_data(mob/user)
 	var/list/data = list()
 
-	data["window"] = current_window
-
 	data["character_preview_view"] = character_preview_view.assigned_map
-
 	data["overflow_role"] = SSjob.overflow_role
-
-	var/list/selected_antags = list()
-
-	for (var/antag in be_special)
-		selected_antags += serialize_antag_name(antag)
-
-	// MOTHBLOCKS TODO: Only send when needed, just like generated_preference_values
-	// MOTHBLOCKS TODO: Send banned/not old enough antags
-	data["selected_antags"] = selected_antags
+	data["window"] = current_window
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		data += preference_middleware.get_ui_static_data(user)
@@ -313,29 +302,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				return FALSE
 
 			return set_job_preference_level(job, level)
-		if ("set_antags")
-			var/sent_antags = params["antags"]
-			var/toggled = params["toggled"]
-
-			var/antags = list()
-
-			var/serialized_antags = get_serialized_antags()
-
-			for (var/sent_antag in sent_antags)
-				var/special_role = serialized_antags[sent_antag]
-				if (!special_role)
-					continue
-
-				antags += special_role
-
-			// MOTHBLOCKS TODO: Check antag ban(?) and age requirement
-			// Marked (?) because antag bans are handled in all ruleset code
-			if (toggled)
-				be_special |= antags
-			else
-				be_special -= antags
-
-			return TRUE
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		var/delegation = preference_middleware.action_delegations[action]
@@ -354,17 +320,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character_preview_view.register_to_client(user.client)
 
 	return character_preview_view
-
-/datum/preferences/proc/get_serialized_antags()
-	var/list/serialized_antags
-
-	if (isnull(serialized_antags))
-		serialized_antags = list()
-
-		for (var/special_role in GLOB.special_roles)
-			serialized_antags[serialize_antag_name(special_role)] = special_role
-
-	return serialized_antags
 
 /datum/preferences/proc/compile_character_preferences(mob/user)
 	var/list/preferences = list()
@@ -637,8 +592,3 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 			LAZYADD(output[key], action)
 
 	return output
-
-/// Serializes an antag name to be used for preferences UI
-/proc/serialize_antag_name(antag_name)
-	// These are sent through CSS, so they need to be safe to use as class names.
-	return lowertext(sanitize_css_class_name(antag_name))
