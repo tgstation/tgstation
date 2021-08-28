@@ -7,7 +7,7 @@ import { Box, Button, Dropdown, NumberInput, Stack } from "../../../../component
 import { createSetPreference } from "../../data";
 import { ServerPreferencesFetcher } from "../../ServerPreferencesFetcher";
 
-const sortChoices = sortBy<[string, InfernoNode]>(([name]) => name);
+export const sortChoices = sortBy<[string, InfernoNode]>(([name]) => name);
 
 export type Feature<
   TReceiving,
