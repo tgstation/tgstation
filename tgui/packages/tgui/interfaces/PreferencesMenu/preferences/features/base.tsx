@@ -20,7 +20,6 @@ export type Feature<
     TSending,
     TServerData
   >;
-  // MOTHBLOCKS TODO: Subcategory and order
   category?: string;
   description?: string;
 };

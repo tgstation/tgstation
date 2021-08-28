@@ -89,7 +89,6 @@ export type PreferencesMenuData = {
 
   job_preferences: Record<string, JobPriority>;
 
-  generated_preference_values?: Record<string, Record<string, string>>;
   keybindings: Record<string, string[]>;
   overflow_role: string;
   selected_antags: string[];

@@ -7,7 +7,7 @@ import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
 import { Gender, GENDERS } from "./preferences/gender";
 import { Component, createRef } from "inferno";
 import features from "./preferences/features";
-import { FeatureValueInput } from "./preferences/features/base";
+import { FeatureChoicedServerData, FeatureValueInput } from "./preferences/features/base";
 import { resolveAsset } from "../../assets";
 import { logger } from "../../logging";
 
@@ -69,10 +69,20 @@ const CharacterControls = (props: {
 
 const ChoicedSelection = (props: {
   name: string,
-  catalog: Record<string, string>,
+  catalog: FeatureChoicedServerData,
   selected: string,
   onSelect: (value: string) => void,
 }) => {
+  const { catalog } = props;
+
+  if (!catalog.icons) {
+    return (
+      <Box color="red">
+        Provided catalog had no icons!
+      </Box>
+    );
+  }
+
   return (
     <Box style={{
       background: "white",
@@ -94,7 +104,7 @@ const ChoicedSelection = (props: {
         <Stack.Item overflowY="scroll">
           <Autofocus>
             <Flex wrap>
-              {Object.entries(props.catalog).map(([name, image], index) => {
+              {Object.entries(catalog.icons).map(([name, image], index) => {
                 return (
                   <Flex.Item
                     key={index}
@@ -366,14 +376,19 @@ export const MainPage = (props: {
                     }),
                 ]
                   .map(([clothingKey, clothing]) => {
+                    const catalog = (
+                      serverData
+                        && serverData[clothingKey] as FeatureChoicedServerData
+                    );
+
                     // MOTHBLOCKS TODO: Better nude icons, rather than X
                     return (
                       <Stack.Item key={clothingKey}>
                         <Popper options={{
                           placement: "bottom-start",
                         }} popperContent={(currentClothingMenu === clothingKey
-                          && data.generated_preference_values
-                          && data.generated_preference_values[clothingKey])
+                          && serverData
+                          && serverData[clothingKey])
                           ? (
                             <TrackOutsideClicks onOutsideClick={() => {
                               setCurrentClothingMenu(null);
@@ -381,9 +396,7 @@ export const MainPage = (props: {
                               <ChoicedSelection
                                 name={KEYS_TO_NAMES[clothingKey]
                                   || `NO NAME FOR ${clothingKey}`}
-                                catalog={
-                                  data.generated_preference_values[clothingKey]
-                                }
+                                catalog={catalog}
                                 selected={clothing.value}
                                 onSelect={createSetPreference(act, clothingKey)}
                               />

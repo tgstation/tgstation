@@ -19,7 +19,6 @@
 				"toxic_food" = bitfield2list(species.toxic_food, food_flags),
 			)
 
-		// MOTHBLOCKS TODO: Move this to ts/json files and unit test consistency.
 		data[species_id] = list(
 			"name" = species.name,
 

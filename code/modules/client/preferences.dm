@@ -98,9 +98,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// A preview of the current character
 	var/atom/movable/screen/character_preview_view/character_preview_view
 
-	/// Cached list of generated preferences (return value of [`/datum/preference/get_choices`]).
-	var/list/generated_preference_values = list()
-
 	/// A list of instantiated middleware
 	var/list/datum/preference_middleware/middleware = list()
 
@@ -205,7 +202,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	data["character_preview_view"] = character_preview_view.assigned_map
 
-	data["generated_preference_values"] = generated_preference_values
 	data["overflow_role"] = SSjob.overflow_role
 
 	var/list/selected_antags = list()
@@ -249,18 +245,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				save_character()
 
 			character_preview_view.update_body()
-
-			return TRUE
-		if ("request_values")
-			var/requested_preference_key = params["preference"]
-
-			var/datum/preference/choiced/requested_preference = GLOB.preference_entries_by_key[requested_preference_key]
-			if (!istype(requested_preference))
-				return FALSE
-
-			if (isnull(generated_preference_values[requested_preference_key]))
-				generated_preference_values[requested_preference_key] = generate_preference_values(requested_preference)
-				update_static_data(user, ui)
 
 			return TRUE
 		if ("rotate")
