@@ -345,7 +345,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	abstract_type = /datum/preference/color
 
 /datum/preference/color/deserialize(input)
-	return sanitize_ooccolor(input)
+	return sanitize_color(input)
 
 // MOTHBLOCKS TODO: Randomize
 /datum/preference/color/create_default_value()

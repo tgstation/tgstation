@@ -124,7 +124,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		message_admins("[usr.key] has attempted to use the Set Player OOC Color verb!")
 		log_admin("[key_name(usr)] tried to set player ooc color without authorization.")
 		return
-	var/new_color = sanitize_ooccolor(newColor)
+	var/new_color = sanitize_color(newColor)
 	message_admins("[key_name_admin(usr)] has set the players' ooc color to [new_color].")
 	log_admin("[key_name_admin(usr)] has set the player ooc color to [new_color].")
 	GLOB.OOC_COLOR = new_color
