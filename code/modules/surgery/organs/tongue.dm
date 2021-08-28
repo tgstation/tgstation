@@ -91,6 +91,14 @@
 		message = lizard_kSS.Replace(message, "$1KSS")
 		message = lizard_ecks.Replace(message, "ecks$1")
 		message = lizard_eckS.Replace(message, "ECKS$1")
+	//russian adaptation ahead
+		var/static/regex/lizard_hiss_ru = new("с+", "g")
+		var/static/regex/lizard_hiSS_ru = new("С+", "g")
+		message = lizard_hiss_ru.Replace(message, "ссс")
+		message = lizard_hiSS_ru.Replace(message, "ССС")
+		message = replacetext(message, "ж", "ш")
+		message = replacetext(message, "Ж", "Ш")
+	//russian adaptation end
 	speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/organ/tongue/lizard/silver
@@ -206,6 +214,14 @@
 		message = fly_buZZ.Replace(message, "ZZZ")
 		message = replacetext(message, "s", "z")
 		message = replacetext(message, "S", "Z")
+	//russian adaptation ahead
+		var/static/regex/fly_buzz_ru = new("з+", "g")
+		var/static/regex/fly_buZZ_ru = new("З+", "g")
+		message = fly_buzz_ru.Replace(message, "ззз")
+		message = fly_buZZ_ru.Replace(message, "ЗЗЗ")
+		message = replacetext(message, "с", "з")
+		message = replacetext(message, "С", "З")
+	//russian adaptation end
 	speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/organ/tongue/fly/Initialize(mapload)
