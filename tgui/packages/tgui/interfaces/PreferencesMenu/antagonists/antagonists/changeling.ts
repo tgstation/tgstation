@@ -11,7 +11,7 @@ const Changeling: Antagonist = {
     `,
 
     multiline`
-      Transform yourself or others into different identities, and buy an
+      Transform yourself or others into different identities, and buy from an
       arsenal of biological weaponry with the DNA you collect.
     `,
   ],
