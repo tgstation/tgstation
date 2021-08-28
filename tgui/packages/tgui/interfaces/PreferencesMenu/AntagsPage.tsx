@@ -9,8 +9,10 @@ const requireAntag = require.context("./antagonists/antagonists", false, /.ts$/)
 
 const antagsByCategory = new Map<Category, Antagonist[]>();
 
+// This will break at priorities higher than 10, but that almost definitely
+// will not happen.
 const binaryInsertAntag = binaryInsertWith((antag: Antagonist) => {
-  return antag.priority || 1;
+  return `${antag.priority}_${antag.name}`;
 });
 
 for (const antagKey of requireAntag.keys()) {

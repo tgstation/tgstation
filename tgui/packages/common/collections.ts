@@ -247,22 +247,47 @@ export const zipWith = <T, U>(iterateeFn: (...values: T[]) => U) =>
     return map((values: T[]) => iterateeFn(...values))(zip(...arrays));
   };
 
-// MOTHBLOCKS TODO: This isn't binary insert at all, just sorted insert
+const binarySearch = <T, U = unknown>(
+  getKey: (value: T) => U,
+  collection: readonly T[],
+  inserting: T,
+): number => {
+  if (collection.length === 0) {
+    return 0;
+  }
+
+  const insertingKey = getKey(inserting);
+
+  let [low, high] = [0, collection.length];
+
+  // Because we have checked if the collection is empty, it's impossible
+  // for this to be used before assignment.
+  let compare: U = undefined as unknown as U;
+  let middle = 0;
+
+  while (low < high) {
+    middle = (low + high) >> 1;
+
+    compare = getKey(collection[middle]);
+
+    if (compare < insertingKey) {
+      low = middle + 1;
+    } else if (compare === insertingKey) {
+      return middle;
+    } else {
+      high = middle;
+    }
+  }
+
+  return compare > insertingKey ? middle : middle + 1;
+};
+
 export const binaryInsertWith = <T, U = unknown>(getKey: (value: T) => U):
   ((collection: readonly T[], value: T) => T[]) =>
 {
   return (collection, value) => {
     const copy = [...collection];
-    const index = copy.findIndex(currentValue => {
-      return getKey(currentValue) > getKey(value);
-    });
-
-    if (index === -1) {
-      copy.push(value);
-    } else {
-      copy.splice(index, 0, value);
-    }
-
+    copy.splice(binarySearch(getKey, collection, value), 0, value);
     return copy;
   };
 };
