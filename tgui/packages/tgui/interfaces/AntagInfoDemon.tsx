@@ -3,10 +3,6 @@ import { Box, Section, Stack } from '../components';
 import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
 
-const backgroundstyle = {
-  'background-image': `url("../assets/bg-neutral.svg")`,
-};
-
 const jauntstyle = {
   color: 'lightblue',
 };
@@ -43,7 +39,7 @@ export const AntagInfoDemon = (props, context) => {
       height={356}
       theme="syndicate">
       <Window.Content
-        style={backgroundstyle}>
+        style={{ 'background-image': 'none' }}>
         <Stack fill>
           <Stack.Item>
             <DemonRunes />
