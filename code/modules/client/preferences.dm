@@ -355,20 +355,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return character_preview_view
 
-// MOTHBLOCKS TODO: Asset file?
-/datum/preferences/proc/generate_preference_values(datum/preference/choiced/preference)
-	var/list/values
-	var/list/choices = preference.get_choices_serialized()
-
-	if (preference.should_generate_icons)
-		values = list()
-		for (var/value in choices)
-			values[value] = preference.get_spritesheet_key(value)
-	else
-		values = choices
-
-	return values
-
 /datum/preferences/proc/get_serialized_antags()
 	var/list/serialized_antags
 
