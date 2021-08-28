@@ -387,8 +387,7 @@ export const MainPage = (props: {
                         <Popper options={{
                           placement: "bottom-start",
                         }} popperContent={(currentClothingMenu === clothingKey
-                          && serverData
-                          && serverData[clothingKey])
+                          && catalog)
                           ? (
                             <TrackOutsideClicks onOutsideClick={() => {
                               setCurrentClothingMenu(null);
