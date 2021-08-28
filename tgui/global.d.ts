@@ -150,6 +150,8 @@ declare global {
      * Should be used as a parameter to winget/winset.
      */
     __windowId__: string;
+    __updateQueue__: unknown[];
+    update: (msg: unknown) => unknown;
     Byond: ByondType;
   }
 
