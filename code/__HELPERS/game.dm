@@ -433,6 +433,17 @@
 
 	return result
 
+/**
+ * Returns a list of ghosts that are eligible to take over and wish to be considered for a mob.
+ *
+ * Arguments:
+ * * question - Question to show players as part of poll
+ * * jobban_type - Type of jobban to use to filter out potential candidates.
+ * * be_special_flag - Unknown/needs further documentation.
+ * * poll_time - Length of time in deciseconds that the poll input box exists before closing.
+ * * target_mob - The mob that is being polled for.
+ * * ignore_category - Unknown/needs further documentation.
+ */
 /proc/poll_candidates_for_mob(question, jobban_type, be_special_flag = 0, poll_time = 300, mob/target_mob, ignore_category = null)
 	var/static/list/mob/currently_polling_mobs = list()
 
@@ -449,16 +460,28 @@
 
 	return possible_candidates
 
+/**
+ * Returns a list of ghosts that are eligible to take over and wish to be considered for a mob.
+ *
+ * Arguments:
+ * * question - Question to show players as part of poll
+ * * jobban_type - Type of jobban to use to filter out potential candidates.
+ * * be_special_flag - Unknown/needs further documentation.
+ * * poll_time - Length of time in deciseconds that the poll input box exists before closing.
+ * * mobs - The list of mobs being polled for. This list is mutated and invalid mobs are removed from it before the proc returns.
+ * * ignore_category - Unknown/needs further documentation.
+ */
 /proc/poll_candidates_for_mobs(question, jobban_type, be_special_flag = 0, poll_time = 300, list/mobs, ignore_category = null)
-	var/list/L = pollGhostCandidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
-	var/i=1
-	for(var/v in mobs)
-		var/atom/A = v
-		if(!A || QDELETED(A) || !A.loc)
-			mobs.Cut(i,i+1)
-		else
-			++i
-	return L
+	var/list/candidate_list = pollGhostCandidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
+
+	for(var/mob/potential_mob as anything in mobs)
+		if(QDELETED(potential_mob) || !potential_mob.loc)
+			mobs -= potential_mob
+
+	if(!length(mobs))
+		return list()
+
+	return candidate_list
 
 /proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)
