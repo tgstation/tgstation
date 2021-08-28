@@ -345,7 +345,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	dummy.equipOutfit(outfit, visualsOnly = TRUE)
 	COMPILE_OVERLAYS(dummy)
 	var/icon = getFlatIcon(dummy)
-	// MOTHBLOCKS TODO: Delete this dummy after initialization is done
+
+	// We don't want to qdel the dummy right away, since its items haven't initialized yet.
+	SSatoms.prepare_deletion(dummy)
+
 	return icon
 
 /// Given an icon, will crop it to be consistent of those in the preferences menu.
