@@ -4,4 +4,7 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/toggle/auto_fit_viewport/apply_to_client(client/client, value)
+	return
+
+/datum/preference/toggle/auto_fit_viewport/apply_to_client_updated(client/client, value)
 	INVOKE_ASYNC(client, /client/verb/fit_viewport)

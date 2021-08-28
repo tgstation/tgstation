@@ -285,7 +285,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			character_preview_view.update_body()
 
 			if (requested_preference.savefile_identifier == PREFERENCE_PLAYER)
-				requested_preference.apply_to_client(parent, read_preference(requested_preference.type))
+				requested_preference.apply_to_client_updated(parent, read_preference(requested_preference.type))
 
 			return TRUE
 		if ("set_color_preference")
@@ -313,7 +313,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					return FALSE
 
 				if (requested_preference.savefile_identifier == PREFERENCE_PLAYER)
-					requested_preference.apply_to_client(parent, new_color)
+					requested_preference.apply_to_client_updated(parent, new_color)
 
 				return TRUE
 			else

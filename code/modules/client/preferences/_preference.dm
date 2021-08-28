@@ -149,6 +149,12 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("`apply_to_client()` was not implemented for [type]!")
 
+/// Fired when the preference is updated.
+/// Calls apply_to_client by default, but can be overridden.
+/datum/preference/proc/apply_to_client_updated(client/client, value)
+	SHOULD_NOT_SLEEP(TRUE)
+	apply_to_client(client, value)
+
 /// Apply this preference onto the given human.
 /// Must be overriden by subtypes.
 // MOTHBLOCKS TODO: Unit test this
