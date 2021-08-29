@@ -20,7 +20,7 @@
 	newobjective.owner = owner
 	objectives += newobjective
 
-/datum/antagonist/slaughter/ui_static_data(mob/user)
+/datum/antagonist/imp/ui_static_data(mob/user)
 	. = ..()
 	var/list/data = list()
 	data["fluff"] = "You're an Imp, a lesser being of congealed sin summoned to serve the hierarchy of hell."
