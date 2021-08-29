@@ -84,7 +84,7 @@ no power level overlay is currently in the overlays list.
 	if(state != FG_WELDED)
 		to_chat(user, span_warning("[src] needs to be firmly secured to the floor first!"))
 		return
-	if(get_dist(src, user) >= 1)//Need to actually touch the thing to turn it on
+	if(get_dist(src, user) > 1)//Need to actually touch the thing to turn it on
 		return
 	if(active >= FG_CHARGING)
 		to_chat(user, span_warning("You are unable to turn off [src] once it is online!"))

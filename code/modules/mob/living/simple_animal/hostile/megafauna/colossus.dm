@@ -277,7 +277,7 @@
 		if(dust_mob.stat == DEAD)
 			dust_mob.dust()
 		return
-	if(!explode_hit_objects)
+	if(!explode_hit_objects || istype(target, /obj/vehicle/sealed))
 		return
 	if(isturf(target) || isobj(target))
 		if(isobj(target))
