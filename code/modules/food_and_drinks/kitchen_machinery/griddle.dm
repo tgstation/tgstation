@@ -63,6 +63,37 @@
 
 
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/storage/bag/tray))
+		var/datum/component/storage/tray_storage = I.GetComponent(/datum/component/storage)
+		if(!I.contents.len && griddled_objects.len > 0) //if the griddle has things on it and the tray is empty, put what you can into the tray
+			for(var/obj/item/grilled as anything in griddled_objects)
+				if(!griddled_objects.len)
+					return
+				if(I.contents.len >= tray_storage.max_items)
+					to_chat(user, span_notice("[I] can't fit more items!")) //tray is full
+					return
+				if(SEND_SIGNAL(I, COMSIG_TRY_STORAGE_INSERT, grilled, user))
+					ItemRemovedFromGrill(grilled)
+				else if(!SEND_SIGNAL(I, COMSIG_TRY_STORAGE_INSERT, grilled, user))
+					to_chat(user, span_notice("[I] can't hold [grilled]!")) //if an item cant enter the tray, dont touch it
+				else
+					return
+		else if(!I.contents.len)
+			to_chat(user, span_notice("You can't cook trays!")) //said if the griddle can store items but the trays empty. any other scenario does other things
+			return
+		else //place stuff from the tray onto griddle
+			var/space_left
+			for(var/obj/item/I_contents as anything in I.contents)
+				space_left = max_items - griddled_objects.len
+				if(!I.contents.len)
+					return
+				if(space_left >= 0)
+					attackby(I_contents, user, params)
+				if(space_left <= 0)
+					to_chat(user, span_notice("[src] can't fit more items!")) //griddles full
+					return
+	if(istype(I, /obj/item/storage/bag/tray)) //this extra check is needed to stop the tray from ever actually getting put on the griddle
+		return								//without this check the tray can be put on the griddle as it places its contents, no clue why
 	if(griddled_objects.len >= max_items)
 		to_chat(user, span_notice("[src] can't fit more items!"))
 		return
