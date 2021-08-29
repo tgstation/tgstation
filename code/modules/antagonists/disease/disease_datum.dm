@@ -3,6 +3,7 @@
 	roundend_category = "diseases"
 	antagpanel_category = "Biohazards"
 	show_to_ghosts = TRUE
+	ui_name = "AntagInfoDisease"
 	var/disease_name = ""
 
 /datum/antagonist/disease/on_gain()

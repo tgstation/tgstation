@@ -332,6 +332,8 @@ the new instance inside the host to be updated to the template's stats.
 	if(browser_open)
 		adaptation_menu()
 
+///start of adaption menu
+
 /mob/camera/disease/proc/adaptation_menu()
 	var/datum/disease/advance/sentient_disease/DT = disease_template
 	if(!DT)
@@ -416,6 +418,7 @@ the new instance inside the host to be updated to the template's stats.
 		examining_ability = null
 		adaptation_menu()
 
+///end of adaption menu
 
 /datum/action/innate/disease_adapt
 	name = "Adaptation Menu"
