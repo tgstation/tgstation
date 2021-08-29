@@ -97,8 +97,6 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 		"random_target_priority" = list(0, 1),
 	)
 
-	var/static/list/static_data
-
 	//base64 representations of any icons that may need to be displayed
 	var/action_icon_base64
 	var/projectile_icon_base64
