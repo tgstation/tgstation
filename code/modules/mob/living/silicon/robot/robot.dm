@@ -69,11 +69,11 @@
 	diag_hud_set_borgcell()
 	logevent("System brought online.")
 
-	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z))
-	RegisterSignal(listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
-	RegisterSignal(listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
-	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, /datum/alarm_listener/proc/prevent_alarm_changes)
-	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, /datum/alarm_listener/proc/allow_alarm_changes)
+	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z))
+	RegisterSignal(alert_control.listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
+	RegisterSignal(alert_control.listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
+	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_DEATH, /datum/alarm_listener/proc/prevent_alarm_changes)
+	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, /datum/alarm_listener/proc/allow_alarm_changes)
 
 /mob/living/silicon/robot/model/syndicate/Initialize()
 	. = ..()
@@ -124,15 +124,15 @@
 	QDEL_NULL(inv2)
 	QDEL_NULL(inv3)
 	QDEL_NULL(spark_system)
-	QDEL_NULL(listener)
+	QDEL_NULL(alert_control)
 	cell = null
 	return ..()
 
 /mob/living/silicon/robot/Topic(href, href_list)
 	. = ..()
 	//Show alerts window if user clicked on "Show alerts" in chat
-	if (href_list["showalerts"])
-		robot_alerts()
+	if(href_list["showalerts"])
+		alert_control.ui_interact(src)
 
 /mob/living/silicon/robot/get_cell()
 	return cell
@@ -204,27 +204,6 @@
 
 /mob/living/silicon/robot/proc/get_standard_name()
 	return "[(designation ? "[designation] " : "")][mmi.braintype]-[ident]"
-
-/mob/living/silicon/robot/proc/robot_alerts()
-	var/dat = ""
-	var/list/alarms = listener.alarms
-	for (var/alarm_type in alarms)
-		dat += "<B>[alarm_type]</B><BR>\n"
-		var/list/alerts = alarms[alarm_type]
-		if (length(alerts))
-			for (var/alarm in alerts)
-				var/list/alm = alerts[alarm]
-				var/area/A = alm[1]
-				dat += "<NOBR>"
-				dat += "-- [A.name]"
-				dat += "</NOBR><BR>\n"
-		else
-			dat += "-- All Systems Nominal<BR>\n"
-		dat += "<BR>\n"
-
-	var/datum/browser/alerts = new(usr, "robotalerts", "Current Station Alerts", 400, 410)
-	alerts.set_content(dat)
-	alerts.open()
 
 /mob/living/silicon/robot/proc/ionpulse()
 	if(!ionpulse_on)
