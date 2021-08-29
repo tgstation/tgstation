@@ -29,7 +29,7 @@
 
 	return data
 
-/datum/SDQL_spell_panel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/datum/SDQL_spell_panel/ui_act(action, list/params)
 	. = ..()
 	if (.)
 		return .
