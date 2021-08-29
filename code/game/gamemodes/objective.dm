@@ -161,11 +161,11 @@ GLOBAL_LIST_EMPTY(objectives)
 		if(ishuman(receiver.current))
 			var/mob/living/carbon/human/receiver_current = receiver.current
 			var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK)
-			for(var/eq_path in special_equipment)
-				var/obj/object = new eq_path
+			for(var/obj/equipment_path as anything in special_equipment)
+				var/obj/equipment_object = new equipment_path
 				if(!receiver_current.equip_in_one_of_slots(object, slots))
 					LAZYINITLIST(receiver.failed_special_equipment)
-					receiver.failed_special_equipment += eq_path
+					receiver.failed_special_equipment += equipment_path
 					receiver.try_give_equipment_fallback()
 
 /obj/effect/proc_holder/spell/self/special_equipment_fallback

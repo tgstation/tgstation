@@ -702,23 +702,24 @@
 	var/list/L = current.GetAllContents()
 	for (var/i in L)
 		var/atom/movable/I = i
-		var/datum/component/uplink/ret = I.GetComponent(/datum/component/uplink)
-		if(ret)
-			if(check_unlocked)
-				if(ret.locked)
-					continue
-			return ret
+		var/datum/component/uplink/found_uplink = I.GetComponent(/datum/component/uplink)
+		if(!found_uplink || (check_unlocked && found_uplink.locked))
+			continue
+		return found_uplink
 
+/**
+* Checks to see if the mind has an accessible uplink (their own, if they are a traitor; any unlocked uplink otherwise),
+* and gives them a fallback spell if no uplink was found
+*/
 /datum/mind/proc/try_give_equipment_fallback()
 	var/datum/component/uplink/uplink
 	var/datum/antagonist/traitor/traitor_datum = has_antag_datum(/datum/antagonist/traitor)
 	if(traitor_datum)
 		uplink = traitor_datum.uplink
 	if(!uplink)
-		uplink = find_syndicate_uplink(TRUE)
-	if(!uplink)
-		if(!(locate(/obj/effect/proc_holder/spell/self/special_equipment_fallback) in spell_list))
-			AddSpell(new /obj/effect/proc_holder/spell/self/special_equipment_fallback(null, src))
+		uplink = find_syndicate_uplink(check_unlocked = TRUE)
+	if(!uplink && !(locate(/obj/effect/proc_holder/spell/self/special_equipment_fallback) in spell_list))
+		AddSpell(new /obj/effect/proc_holder/spell/self/special_equipment_fallback(null, src))
 
 /datum/mind/proc/take_uplink()
 	qdel(find_syndicate_uplink())
