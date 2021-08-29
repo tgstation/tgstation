@@ -628,3 +628,6 @@
       power consumption)
   tralezab:
   - bugfix: fixes field generators not being interactable
+2021-08-29:
+  Fikou:
+  - bugfix: colossus bolts no longer instantly explode you if youre in a car/mech
