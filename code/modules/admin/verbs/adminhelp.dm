@@ -346,7 +346,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(initiator && initiator.current_ticket == src)
 		initiator.current_ticket = null
 
-	SEND_SIGNAL(src, COMSIG_ADMIN_HELP_INACTIVE)
+	SEND_SIGNAL(src, COMSIG_ADMIN_HELP_MADE_INACTIVE)
 
 //Mark open ticket as closed/meme
 /datum/admin_help/proc/Close(key_name = key_name_admin(usr), silent = FALSE)

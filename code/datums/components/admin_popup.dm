@@ -19,7 +19,7 @@
 	RegisterSignal(
 		ticket,
 		list(
-			COMSIG_ADMIN_HELP_INACTIVE,
+			COMSIG_ADMIN_HELP_MADE_INACTIVE,
 			COMSIG_ADMIN_HELP_REPLIED,
 			COMSIG_PARENT_QDELETING,
 		),
@@ -34,7 +34,7 @@
 
 	if (!QDELETED(ticket))
 		UnregisterSignal(ticket, list(
-			COMSIG_ADMIN_HELP_INACTIVE,
+			COMSIG_ADMIN_HELP_MADE_INACTIVE,
 			COMSIG_ADMIN_HELP_REPLIED,
 			COMSIG_PARENT_QDELETING,
 		))
@@ -77,8 +77,11 @@
 		COLOR_PURPLE,
 	)
 
-	var/last_color = 0
-	var/last_update = 0
+	/// The last color chosen in the animation, sourced from the static list colors.
+	var/last_color_index = 0
+
+	/// The `world.time` when the last color update occurred.
+	var/last_update_time = 0
 
 /atom/movable/screen/admin_popup/New(loc, ...)
 	. = ..()
@@ -96,17 +99,17 @@
 /atom/movable/screen/admin_popup/proc/update_text()
 	// Even if processing time changes, we want this to remain slow.
 	// We want to pester them into reading their ticket, not give them a seizure!
-	if (world.time - last_update < 2 SECONDS)
+	if (world.time - last_update_time < 2 SECONDS)
 		return
 
-	last_color = (last_color % colors.len) + 1
+	last_color_index = (last_color_index % colors.len) + 1
 
-	var/message = "<b style='color: [colors[last_color]]; text-align: center; font-size: 32px'>"
+	var/message = "<b style='color: [colors[last_color_index]]; text-align: center; font-size: 32px'>"
 	message += "HEY! An admin is trying to talk to you!<br>Check your chat window, and click their name to respond!"
 	message += "</b>"
 
 	maptext = MAPTEXT(message)
-	last_update = world.time
+	last_update_time = world.time
 
 /// Tries to give the target an admin popup.
 /// If it fails, will send the error to the passed admin.

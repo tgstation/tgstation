@@ -212,6 +212,8 @@
 		if(holder && recipient.holder && !current_ticket) //Both are admins, and this is not a reply to our own ticket.
 			badmin = TRUE
 		if(recipient.holder && !badmin)
+			SEND_SIGNAL(current_ticket, COMSIG_ADMIN_HELP_REPLIED)
+
 			if(holder)
 				to_chat(recipient,
 					type = MESSAGE_TYPE_ADMINPM,
@@ -243,9 +245,6 @@
 			//play the receiving admin the adminhelp sound (if they have them enabled)
 			if(recipient.prefs.toggles & SOUND_ADMINHELP)
 				SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
-
-			SEND_SIGNAL(current_ticket, COMSIG_ADMIN_HELP_REPLIED)
-
 		else
 			if(holder) //sender is an admin but recipient is not. Do BIG RED TEXT
 				var/already_logged = FALSE
