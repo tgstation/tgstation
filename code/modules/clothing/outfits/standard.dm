@@ -333,6 +333,7 @@
 	r_pocket = /obj/item/teleportation_scroll/apprentice
 	r_hand = null
 	l_hand = null
+	backpack_contents = list(/obj/item/storage/box/survival = 1)
 
 /datum/outfit/wizard/red
 	name = "Red Wizard"
