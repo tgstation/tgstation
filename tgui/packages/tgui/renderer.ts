@@ -18,8 +18,8 @@ export const suspendRenderer = () => {
   suspended = true;
 };
 
-type CreateRenderer = <T extends unknown[]>(
-  getVNode: (...args: T) => any,
+type CreateRenderer = <T extends unknown[] = [unknown]>(
+  getVNode?: (...args: T) => any,
 ) => (...args: T) => void;
 
 export const createRenderer: CreateRenderer = (getVNode) => (...args) => {
@@ -28,7 +28,12 @@ export const createRenderer: CreateRenderer = (getVNode) => (...args) => {
   if (!reactRoot) {
     reactRoot = document.getElementById('react-root');
   }
-  render(getVNode(...args), reactRoot);
+  if (getVNode) {
+    render(getVNode(...args), reactRoot);
+  }
+  else {
+    render(args[0] as any, reactRoot);
+  }
   perf.mark('render/finish');
   if (suspended) {
     return;

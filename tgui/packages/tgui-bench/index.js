@@ -43,7 +43,7 @@ const setup = async () => {
     }
     const { type, ...rest } = req.body;
     if (type === 'suite-start') {
-      console.log(`\n=> Test '${rest.file}'`);
+      console.log(`=> Test '${rest.file}'`);
       return res.send();
     }
     if (type === 'suite-cycle') {

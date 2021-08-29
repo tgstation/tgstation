@@ -131,7 +131,7 @@ module.exports = (env = {}, argv) => {
     config.entry = {
       'tgui-bench': [
         './packages/tgui-polyfill',
-        './packages/tgui-bench/suite',
+        './packages/tgui-bench/entrypoint',
       ],
     };
   }

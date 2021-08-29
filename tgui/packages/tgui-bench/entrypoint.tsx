@@ -6,7 +6,7 @@
 
 import { setupGlobalEvents } from 'tgui/events';
 import 'tgui/styles/main.scss';
-import { Benchmark } from './lib';
+import Benchmark from './lib/benchmark';
 
 const sendMessage = (obj: any) => {
   const req = new XMLHttpRequest();
@@ -27,7 +27,7 @@ const setupApp = async () => {
     ignoreWindowFocus: true,
   });
 
-  const requireTest = require.context('.', false, /\.test\./);
+  const requireTest = require.context('./tests', false, /\.test\./);
 
   for (const file of requireTest.keys()) {
     sendMessage({ type: 'suite-start', file });
@@ -46,6 +46,10 @@ const setupApp = async () => {
               type: 'suite-complete',
               message: 'Fastest is ' + this.filter('fastest').map('name'),
             });
+            resolve();
+          },
+          onError(e) {
+            sendMessage({ type: 'error', e });
             resolve();
           },
         });

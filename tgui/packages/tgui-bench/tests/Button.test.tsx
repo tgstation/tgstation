@@ -1,6 +1,8 @@
 import { linkEvent } from 'inferno';
 import { Button } from 'tgui/components';
-import { render } from './lib';
+import { createRenderer } from 'tgui/renderer';
+
+const render = createRenderer();
 
 const handleClick = () => undefined;
 
