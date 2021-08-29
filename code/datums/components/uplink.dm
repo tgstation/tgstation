@@ -95,20 +95,21 @@
 			updated_items[category] = uplink_items[category]
 
 /datum/component/uplink/proc/update_special_equipment(mob/user, updated_items)
-	if(user?.mind?.failed_special_equipment)
-		for(var/obj/item/equipment_path as anything in user.mind.failed_special_equipment)
-			var/datum/uplink_item/special_equipment/equipment_uplink_item = new
-			if(!updated_items[equipment_uplink_item.category])
-				updated_items[equipment_uplink_item.category] = list()
-			var/list/name_words = splittext(initial(equipment_path.name), " ")
-			var/capitalized_name
-			for(var/i in 1 to name_words.len)
-				name_words[i] = capitalize(name_words[i])
-			capitalized_name = name_words.Join(" ")
-			equipment_uplink_item.item = equipment_path
-			equipment_uplink_item.name = capitalized_name
-			equipment_uplink_item.desc = initial(equipment_path.desc)
-			updated_items[equipment_uplink_item.category][equipment_uplink_item.name] = equipment_uplink_item
+	if(!user?.mind?.failed_special_equipment)
+		return
+	for(var/obj/item/equipment_path as anything in user.mind.failed_special_equipment)
+		var/datum/uplink_item/special_equipment/equipment_uplink_item = new
+		if(!updated_items[equipment_uplink_item.category])
+			updated_items[equipment_uplink_item.category] = list()
+		var/list/name_words = splittext(initial(equipment_path.name), " ")
+		var/capitalized_name
+		for(var/i in 1 to name_words.len)
+			name_words[i] = capitalize(name_words[i])
+		capitalized_name = name_words.Join(" ")
+		equipment_uplink_item.item = equipment_path
+		equipment_uplink_item.name = capitalized_name
+		equipment_uplink_item.desc = initial(equipment_path.desc)
+		updated_items[equipment_uplink_item.category][equipment_uplink_item.name] = equipment_uplink_item
 
 /datum/component/uplink/proc/LoadTC(mob/user, obj/item/stack/telecrystal/TC, silent = FALSE)
 	if(!silent)
