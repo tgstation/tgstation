@@ -42,10 +42,12 @@ const setupApp = async () => {
             });
           },
           onComplete() {
-            sendMessage({
-              type: 'suite-complete',
-              message: 'Fastest is ' + this.filter('fastest').map('name'),
-            });
+            // This message is somewhat useless, but leaving it here in case
+            // someone has an idea how to show more useful data.
+            // sendMessage({
+            //   type: 'suite-complete',
+            //   message: 'Fastest is ' + this.filter('fastest').map('name'),
+            // });
             resolve();
           },
           onError(e) {
