@@ -18,8 +18,12 @@
 	desc = "A magic contract previously signed by an apprentice. In exchange for instruction in the magical arts, they are bound to answer your call for aid."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state ="scroll2"
+	var/polling = FALSE
 
 /obj/item/antag_spawner/contract/ui_interact(mob/user, datum/tgui/ui)
+	if(polling)
+		balloon_alert(teacher, "already calling an apprentice!")
+		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ApprenticeContract", name)
@@ -38,21 +42,21 @@
 
 /obj/item/antag_spawner/contract/ui_act(action, list/params)
 	. = ..()
-	if(used || !ishuman(usr))
+	if(used || polling || !ishuman(usr))
 		return
 	INVOKE_ASYNC(src, .proc/poll_for_student, usr, params["school"])
+	SStgui.close_uis(src)
 
 /obj/item/antag_spawner/contract/proc/poll_for_student(mob/living/carbon/human/teacher, apprentice_school)
+	balloon_alert(teacher, "contacting apprentice...")
+	polling = TRUE
 	var/list/candidates = pollCandidatesForMob("Do you want to play as a wizard's [apprentice_school] apprentice?", ROLE_WIZARD, ROLE_WIZARD, 15 SECONDS, src)
 	if(!LAZYLEN(candidates))
 		to_chat(teacher, span_warning("Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."))
 		return
-	if(QDELETED(src))
+	if(QDELETED(src) || used)
 		return
-	if(used)
-		if(teacher)
-			balloon_alert(teacher, "contract already used!")
-		return
+	polling = FALSE
 	used = TRUE
 	var/mob/dead/observer/student = pick(candidates)
 	spawn_antag(student.client, get_turf(src), apprentice_school, teacher.mind)

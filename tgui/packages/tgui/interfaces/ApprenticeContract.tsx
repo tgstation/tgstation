@@ -1,19 +1,27 @@
-import { BlockQuote, Button, Section, Stack } from '../components';
-import { Window } from '../layouts';
-import { resolveAsset } from '../assets';
 import { multiline } from 'common/string';
+import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
+import { BlockQuote, Box, Button, Icon, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
 export const ApprenticeContract = (props, context) => {
   return (
     <Window
       width={620}
-      height={516}
+      height={600}
       theme="wizard">
       <Window.Content>
         <Stack vertical fill>
+          <Stack.Item>
+            <Section textColor="lightgreen" fontSize="15px">
+              If you cannot reach any of your apprentices today,
+              you can feed the contract back into your spellbook to refund it.
+            </Section>
+          </Stack.Item>
           <Stack.Item grow>
             <ApprenticeSelection
+              iconName="fire"
+              fluffName="Apprentice of Destruction"
               schoolTitle="destruction"
               assetName="destruction.png"
               blurb={multiline`
@@ -21,6 +29,8 @@ export const ApprenticeContract = (props, context) => {
                 They know Magic Missile and Fireball.
               `} />
             <ApprenticeSelection
+              iconName="route"
+              fluffName="Student of Translocation"
               schoolTitle="bluespace"
               assetName="bluespace.png"
               blurb={multiline`
@@ -29,6 +39,8 @@ export const ApprenticeContract = (props, context) => {
               blink of an eye. They know Teleport and Ethereal Jaunt.
               `} />
             <ApprenticeSelection
+              iconName="medkit"
+              fluffName="Neophyte of Restoration"
               schoolTitle="healing"
               assetName="healing.png"
               blurb={multiline`
@@ -37,6 +49,8 @@ export const ApprenticeContract = (props, context) => {
               come with a Staff of Healing.
               `} />
             <ApprenticeSelection
+              iconName="user-secret"
+              fluffName="Robeless Pupil"
               schoolTitle="robeless"
               assetName="robeless.png"
               blurb={multiline`
@@ -53,6 +67,8 @@ export const ApprenticeContract = (props, context) => {
 const ApprenticeSelection = (props, context) => {
   const { act } = useBackend(context);
   const {
+    iconName,
+    fluffName,
     schoolTitle,
     assetName,
     blurb,
@@ -64,7 +80,11 @@ const ApprenticeSelection = (props, context) => {
           <Stack vertical>
             <Stack.Item>
               <img
-                src={resolveAsset(assetName)} />
+                src={resolveAsset(assetName)}
+                style={{
+                  "border-style": "solid",
+                  "border-color": "#7e90a7",
+                }} />
             </Stack.Item>
             <Stack.Item>
               <Button
@@ -79,7 +99,10 @@ const ApprenticeSelection = (props, context) => {
           </Stack>
         </Stack.Item>
         <Stack.Item grow>
-          <BlockQuote height="100%" fontSize="18px">
+          <Box fontSize="20px" height="30%">
+            <Icon name={iconName} /> {fluffName}
+          </Box>
+          <BlockQuote height="70%" fontSize="16px">
             {blurb}
           </BlockQuote>
         </Stack.Item>
