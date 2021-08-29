@@ -10,7 +10,7 @@ RPD
 #define BUILD_MODE (1<<0)
 #define WRENCH_MODE (1<<1)
 #define DESTROY_MODE (1<<2)
-
+#define REPROGRAM_MODE (1<<3)
 
 GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 	"Pipes" = list(
@@ -216,6 +216,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/transit_build_speed = 0.5 SECONDS
 	///Speed of removal of unwrenched devices
 	var/destroy_speed = 0.5 SECONDS
+	///Speed of reprogramming connectable directions of smart pipes
+	var/reprogram_speed = 0.5 SECONDS
 	///Category currently active (Atmos, disposal, transit)
 	var/category = ATMOS_CATEGORY
 	///Piping layer we are going to spawn the atmos device in
@@ -231,7 +233,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	///Stores the first transit device
 	var/static/datum/pipe_info/first_transit
 	///The modes that are allowed for the RPD
-	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
+	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE | REPROGRAM_MODE
 	/// Bitflags for upgrades
 	var/upgrade_flags
 
@@ -409,12 +411,12 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			playeffect = FALSE
 		if("mode")
 			var/n = text2num(params["mode"])
-			if(mode & n)
-				mode &= ~n
-			else
-				mode |= n
+			mode ^= n
 		if("init_dir_setting")
-			p_init_dir ^= text2dir(params["dir_flag"])
+			var/target_dir = p_init_dir ^ text2dir(params["dir_flag"])
+			// Refuse to create a smart pipe that can only connect in one direction (it would act weirdly and lack an icon)
+			if (ISNOTSTUB(target_dir))
+				p_init_dir = target_dir
 		if("init_reset")
 			p_init_dir = ALL_CARDINALS
 	if(playeffect)
@@ -456,6 +458,42 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			activate()
 			qdel(attack_target)
 		return
+
+	if(mode & REPROGRAM_MODE)
+		var/obj/machinery/atmospherics/pipe/smart/S = attack_target
+		if(istype(S))
+			if (S.dir == ALL_CARDINALS)
+				to_chat(user, span_warning("\The [S] has no unconnected directions!"))
+				return
+			var/target_init_dir = S.GetInitDirections()
+			if (target_init_dir == p_init_dir)
+				to_chat(user, span_warning("\The [S] is already in this configuration!"))
+				return
+			// Check for differences in unconnected directions
+			var/target_differences = (p_init_dir ^ target_init_dir) & ~S.connections
+			if (target_differences)
+				to_chat(user, span_notice("You start reprogramming \the [S]..."))
+				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
+				if(do_after(user, reprogram_speed, target = S))
+					// Double check to make sure that nothing has changed. If anything we were about to change is now connected, abort
+					if (target_differences & S.connections)
+						to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe in a currently connected direction."))
+						return
+					var/new_dir = (S.GetInitDirections() & ~target_differences) | target_differences
+					// Don't make a smart pipe with only one connection
+					if (ISSTUB(new_dir))
+						to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
+						return
+					S.SetInitDirections(new_dir)
+					S.update_pipe_icon()
+					user.visible_message(span_notice("[user] reprograms the \the [S]."),span_notice("You reprogram \the [S]."))
+				return
+			to_chat(user, span_warning("\The [S] is already in this configuration for its unconnected directions!"))
+			return
+		var/obj/item/pipe/quaternary/I = attack_target
+		if(istype(I) && ispath(I.pipe_type, /obj/machinery/atmospherics/pipe/smart))
+			I.p_init_dir = p_init_dir
+			I.update()
 
 	if(mode & BUILD_MODE)
 		switch(category) //if we've gotten this var, the target is valid
@@ -584,6 +622,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 #undef BUILD_MODE
 #undef DESTROY_MODE
 #undef WRENCH_MODE
+#undef REPROGRAM_MODE
 
 /obj/item/rpd_upgrade
 	name = "RPD advanced design disk"
