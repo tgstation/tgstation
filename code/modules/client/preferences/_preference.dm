@@ -205,8 +205,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Returns TRUE for a successful preference application.
 /// Returns FALSE if it is invalid.
 /datum/preferences/proc/write_preference(datum/preference/preference, preference_value)
-	value_cache[preference.type] = preference_value
-	return preference.write(get_savefile_for_savefile_identifier(preference.savefile_identifier), preference_value)
+	var/success = preference.write(get_savefile_for_savefile_identifier(preference.savefile_identifier), preference_value)
+	if (success)
+		value_cache[preference.type] = preference_value
 
 /// Checks that a given value is valid.
 /// Must be overriden by subtypes.
@@ -289,7 +290,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	CRASH("`init_possible_values()` was not implemented for [type]!")
 
 /datum/preference/choiced/is_valid(value)
-	return value in get_choices_serialized()
+	return value in get_choices()
 
 /datum/preference/choiced/deserialize(input)
 	return sanitize_inlist(input, get_choices(), create_default_value())

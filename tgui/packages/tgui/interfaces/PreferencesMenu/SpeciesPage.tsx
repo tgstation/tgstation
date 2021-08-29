@@ -1,5 +1,6 @@
 import { useBackend } from "../../backend";
 import { Box, Button, Divider, Icon, Section, Stack, Tooltip } from "../../components";
+import { logger } from "../../logging";
 import { CharacterPreview } from "./CharacterPreview";
 import { createSetPreference, Food, PreferencesMenuData, ServerData, ServerSpeciesData } from "./data";
 import { Feature, Species, fallbackSpecies } from "./preferences/species/base";
