@@ -20,7 +20,7 @@ const MemoryQuality = (props, context) => {
     return (
       <Button
         icon="poop"
-        color="brown"
+        color="transparent"
         tooltip={multiline`
           This memory is not interesting at all! It does not make for
           good art and is unlikely to pass to future generations.
@@ -29,8 +29,8 @@ const MemoryQuality = (props, context) => {
   } else if (quality === STORY_VALUE_NONE) {
     return (
       <Button
-        icon="sticky-note"
-        color="white"
+        icon="star"
+        color="transparent"
         tooltipPosition="right"
         tooltip={multiline`
           This memory pretty bland. It would make for some pretty
@@ -41,7 +41,9 @@ const MemoryQuality = (props, context) => {
     return (
       <Button
         icon="star"
-        color="brown"
+        style={{
+          "background": "linear-gradient(to right, #964B30, #D68B60, #B66B30, #D68B60, #964B30);",
+        }}
         tooltipPosition="right"
         tooltip={multiline`
           This memory is not super interesting. It could turn into
@@ -52,7 +54,9 @@ const MemoryQuality = (props, context) => {
     return (
       <Button
         icon="star"
-        color="teal"
+        style={{
+          "background": "linear-gradient(to right, #636363, #a3a3a3, #6e6e6e, #a3a3a3, #636363);",
+        }}
         tooltipPosition="right"
         tooltip={multiline`
           This memory is pretty okay! Some good stories could be told
@@ -63,7 +67,9 @@ const MemoryQuality = (props, context) => {
     return (
       <Button
         icon="star"
-        color="yellow"
+        style={{
+          "background": "linear-gradient(to right, #AA771C, #BCB68A, #B38728, #BCB68A, #AA771C);",
+        }}
         tooltipPosition="right"
         tooltip={multiline`
           This memory is great! You could tell a great story from it,
@@ -74,7 +80,9 @@ const MemoryQuality = (props, context) => {
     return (
       <Button
         icon="crown"
-        color="yellow"
+        style={{
+          "background": "linear-gradient(to right, #56A5B3, #75D4E2, #56A5B3, #75D4E2, #56A5B3)",
+        }}
         tooltipPosition="right"
         tooltip={multiline`
           This memory is the stuff of legends! It would make for
