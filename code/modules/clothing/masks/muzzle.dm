@@ -23,6 +23,5 @@
 	inhand_icon_state = "breathmuzzle"
 	body_parts_covered = NONE
 	clothing_flags = MASKINTERNALS | BLOCKS_SPEECH
-	 = 0.1
 	permeability_coefficient = 0.01
 	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
