@@ -41,8 +41,8 @@
 #define MAGIC "magic"
 /// Involved in checking the likelyhood of applying a wound to a mob.
 #define WOUND "wound"
-/// Involves being consumed
-#define VORE "vore"
+/// Involves being eaten
+#define CONSUME "consume"
 
 // Weather immunities //
 #define WEATHER_STORM "storm"

@@ -118,7 +118,7 @@
 /obj/item/food/clothing/proc/after_eat(mob/eater)
 	var/obj/item/clothing/resolved_clothing = clothing.resolve()
 	if (resolved_clothing)
-		resolved_clothing.take_damage(MOTH_EATING_CLOTHING_DAMAGE, sound_effect = FALSE, damage_flag = VORE)
+		resolved_clothing.take_damage(MOTH_EATING_CLOTHING_DAMAGE, sound_effect = FALSE, damage_flag = CONSUME)
 	else
 		qdel(src)
 
@@ -492,7 +492,7 @@ BLIND     // can't see anything
 		//so the shred survives potential turf change from the explosion.
 		addtimer(CALLBACK_NEW(/obj/effect/decal/cleanable/shreds, list(T, name)), 1)
 		deconstruct(FALSE)
-	if(damage_flag == VORE) //This allows for moths to fully consume clothing, rather than damaging it like other sources like brute
+	if(damage_flag == CONSUME) //This allows for moths to fully consume clothing, rather than damaging it like other sources like brute
 		var/turf/current_position = get_turf(src)
 		new /obj/effect/decal/cleanable/shreds(current_position, name)
 		if(isliving(loc))
