@@ -20,10 +20,15 @@
 	icon_state ="scroll2"
 	var/polling = FALSE
 
-/obj/item/antag_spawner/contract/ui_interact(mob/user, datum/tgui/ui)
+/obj/item/antag_spawner/contract/can_interact(mob/user)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(polling)
 		balloon_alert(user, "already calling an apprentice!")
-		return
+		return FALSE
+
+/obj/item/antag_spawner/contract/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ApprenticeContract", name)
