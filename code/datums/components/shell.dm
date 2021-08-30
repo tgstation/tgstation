@@ -91,16 +91,22 @@
 
 /datum/component/shell/proc/on_object_deconstruct()
 	SIGNAL_HANDLER
-	if(!attached_circuit.admin_only)
+	if(!attached_circuit?.admin_only)
 		remove_circuit()
 
 /datum/component/shell/proc/on_attack_ghost(datum/source, mob/dead/observer/ghost)
 	SIGNAL_HANDLER
+	if(!is_authorized(ghost))
+		return
+
 	if(attached_circuit)
 		INVOKE_ASYNC(attached_circuit, /datum.proc/ui_interact, ghost)
 
 /datum/component/shell/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
+	if(!is_authorized(user))
+		return
+
 	if(!attached_circuit)
 		examine_text += span_notice("There is no integrated circuit attached.")
 		return
@@ -127,6 +133,9 @@
  */
 /datum/component/shell/proc/on_attack_by(atom/source, obj/item/item, mob/living/attacker)
 	SIGNAL_HANDLER
+	if(!is_authorized(attacker))
+		return
+
 	if(istype(item, /obj/item/stock_parts/cell))
 		source.balloon_alert(attacker, "can't put cell in directly!")
 		return
@@ -178,6 +187,9 @@
 
 /datum/component/shell/proc/on_multitool_act(atom/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
+	if(!is_authorized(user))
+		return
+
 	if(!attached_circuit)
 		return
 
@@ -195,6 +207,9 @@
  */
 /datum/component/shell/proc/on_screwdriver_act(atom/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
+	if(!is_authorized(user))
+		return
+
 	if(!attached_circuit)
 		return
 
@@ -283,6 +298,8 @@
 
 /datum/component/shell/proc/on_atom_usb_cable_try_attach(atom/source, obj/item/usb_cable/usb_cable, mob/user)
 	SIGNAL_HANDLER
+	if(!is_authorized(user))
+		return
 
 	if (!(shell_flags & SHELL_FLAG_USB_PORT))
 		source.balloon_alert(user, "this shell has no usb ports")
@@ -294,3 +311,20 @@
 
 	usb_cable.attached_circuit = attached_circuit
 	return COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT
+
+/**
+ * Determines if a user is authorized to see the existance of this shell. Returns false if they are not
+ *
+ * Arguments:
+ * * user - The user to check if they are authorized
+ */
+/datum/component/shell/proc/is_authorized(mob/user)
+	if(shell_flags & SHELL_FLAG_CIRCUIT_FIXED)
+		return FALSE
+
+	if(attached_circuit?.admin_only)
+		if(check_rights_for(user.client, R_VAREDIT))
+			return TRUE
+		return FALSE
+
+	return TRUE
