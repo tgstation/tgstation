@@ -42,7 +42,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///Lumcount added by sources other than lighting datum objects, such as the overlay lighting component.
 	var/dynamic_lumcount = 0
 
-	var/dynamic_lighting = TRUE
+	///Bool, whether this turf will always be illuminated no matter what area it is in
+	var/always_lit = FALSE
 
 	var/tmp/lighting_corners_initialised = FALSE
 
@@ -108,9 +109,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	for(var/atom/movable/content as anything in src)
 		Entered(content, null)
 
-	var/area/A = loc
-	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
-		add_overlay(/obj/effect/fullbright)
+	if(always_lit)
+		add_overlay(GLOB.fullbright_overlay)
 
 	if(requires_activation)
 		CALCULATE_ADJACENT_TURFS(src, KILL_EXCITED)
@@ -586,10 +586,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		V.icon_state = "vomitpurp_[pick(1,4)]"
 	else if (toxvomit == VOMIT_TOXIC)
 		V.icon_state = "vomittox_[pick(1,4)]"
-	else if (toxvomit == VOMIT_NANITE)
-		V.name = "metallic slurry"
-		V.desc = "A puddle of metallic slurry that looks vaguely like very fine sand. It almost seems like it's moving..."
-		V.icon_state = "vomitnanite_[pick(1,4)]"
 	if (purge_ratio && iscarbon(M))
 		clear_reagents_to_vomit_pool(M, V, purge_ratio)
 

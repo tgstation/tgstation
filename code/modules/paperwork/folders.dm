@@ -26,7 +26,7 @@
 
 /obj/item/folder/examine()
 	. = ..()
-	if(contents)
+	if(length(contents))
 		. += span_notice("Right-click to remove [contents[1]].")
 
 /obj/item/folder/proc/rename(mob/user)

@@ -23,7 +23,7 @@
 	status_flags = CANPUSH
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 250 //Weak to cold
 	maxbodytemp = INFINITY
 	faction = list("hell")
@@ -282,7 +282,7 @@
 
 	if(new_stat == DEAD)
 		return
-	// Someone we've eaten has spontaneously revived; maybe nanites, maybe a changeling
+	// Someone we've eaten has spontaneously revived; maybe regen coma, maybe a changeling
 	victim.forceMove(get_turf(src))
 	victim.exit_blood_effect()
 	victim.visible_message(span_warning("[victim] falls out of the air, covered in blood, with a confused look on their face."))

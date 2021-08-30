@@ -590,9 +590,10 @@ generate/load female uniform sprites matching all previously decided variables
 		var/obj/item/bodypart/BP = X
 		. += "-[BP.body_zone]"
 
-		for(var/obj/item/organ/external/organ in BP.external_organs)
-			if(organ.can_draw_on_bodypart(src)) //make sure we're drawn before generating a key
-				. += "([organ.cache_key])"
+		if(!HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
+			for(var/obj/item/organ/external/organ as anything in BP.external_organs)
+				if(organ.can_draw_on_bodypart(src)) //make sure we're drawn before generating a key
+					. += "([organ.cache_key])"
 
 		if(BP.status == BODYPART_ORGANIC)
 			. += "-organic"
@@ -607,6 +608,9 @@ generate/load female uniform sprites matching all previously decided variables
 
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "-husk"
+
+	if(HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
+		. += "-invisible"
 
 /mob/living/carbon/human/load_limb_from_cache()
 	..()

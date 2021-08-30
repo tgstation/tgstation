@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/mmi
 	display_name = "Man-Machine Interface"
-	display_desc = "A component that allows MMI to enter shells to send output signals."
+	desc = "A component that allows MMI to enter shells to send output signals."
 
 	/// The message to send to the MMI in the shell.
 	var/datum/port/input/message
@@ -53,16 +53,6 @@
 
 /obj/item/circuit_component/mmi/Destroy()
 	remove_current_brain()
-	message = null
-	send = null
-	eject = null
-	north = null
-	east = null
-	south = null
-	west = null
-	attack = null
-	secondary_attack = null
-	clicked_atom = null
 	return ..()
 
 /obj/item/circuit_component/mmi/input_received(datum/port/input/port)
@@ -76,10 +66,10 @@
 	if(COMPONENT_TRIGGERED_BY(eject, port))
 		remove_current_brain()
 	if(COMPONENT_TRIGGERED_BY(send, port))
-		if(!message.input_value)
+		if(!message.value)
 			return
 
-		var/msg_str = copytext(html_encode(message.input_value), 1, max_length)
+		var/msg_str = copytext(html_encode(message.value), 1, max_length)
 
 		var/mob/living/target = brain.brainmob
 		if(!target)

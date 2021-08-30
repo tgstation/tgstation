@@ -144,7 +144,7 @@
 	if(A)
 		A.on_found(finder)
 
-/obj/item/grenade/chem_grenade/log_grenade(mob/user, turf/T)
+/obj/item/grenade/chem_grenade/log_grenade(mob/user)
 	var/reagent_string = ""
 	var/beaker_number = 1
 	for(var/obj/exploded_beaker in beakers)
@@ -157,8 +157,7 @@
 		log_bomber(user, "primed a", src, "containing:[reagent_string]")
 
 /obj/item/grenade/chem_grenade/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
-	var/turf/T = get_turf(src)
-	log_grenade(user, T) //Inbuilt admin procs already handle null users
+	log_grenade(user) //Inbuilt admin procs already handle null users
 	if(user)
 		add_fingerprint(user)
 		if(msg)
