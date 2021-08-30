@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
-import { multiline } from 'common/string';
-import { BlockQuote, Button, Dimmer, Section, Stack, Box } from '../components';
+import { Section, Stack, Box } from '../components';
 import { Window } from '../layouts';
+import { BooleanLike } from 'common/react';
 
 const hereticstyle = {
   fontWeight: 'bold',
@@ -16,7 +16,7 @@ type Objective = {
 
 type Info = {
   total_sacrifices: number;
-  ascended: Boolean;
+  ascended: BooleanLike;
   objectives: Objective[];
 };
 
