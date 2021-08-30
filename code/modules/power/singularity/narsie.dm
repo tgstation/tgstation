@@ -255,7 +255,7 @@
 ///Called only if the crew managed to destroy narsie at the very last second for [/proc/begin_the_end()]
 /proc/narsie_last_second_win()
 	set_security_level("red")
-	SSshuttle.clearHostileEnvironment()
+	SSshuttle.clearHostileEnvironment(GLOB.cult_narsie)
 	SSshuttle.lockdown = FALSE
 	INVOKE_ASYNC(GLOBAL_PROC, .proc/cult_ending_helper, 2)
 
