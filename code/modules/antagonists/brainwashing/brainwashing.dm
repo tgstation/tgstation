@@ -45,7 +45,8 @@
 
 /datum/antagonist/brainwashed/apply_innate_effects(mob/living/mob_override)
 	. = ..()
-	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
+	var/mob/living/current_mob = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, current_mob)
 
 /datum/antagonist/brainwashed/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/current_mob = mob_override || owner.current
