@@ -2101,7 +2101,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/list/features = list()
 
 	for (var/body_part in mutant_bodyparts)
-		features += body_part
+		switch (body_part)
+			// MOTHBLOCKS TODO: UGGGGGGGGH this feature stuff is stupid
+			if ("tail_lizard")
+				features += "feature_lizard_tail"
+			else
+				features += body_part
 
 	for (var/trait in species_traits)
 		switch (trait)

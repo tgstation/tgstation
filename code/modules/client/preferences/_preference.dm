@@ -92,6 +92,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// This is useful either for more optimal data saving or for migrating
 /// older data.
 /// Must be overridden by subtypes.
+// MOTHBLOCKS TODO: It's also called by the UI, but probably shouldn't be
 /datum/preference/proc/deserialize(input)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
@@ -132,12 +133,10 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/proc/write(savefile/savefile, value)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	value = serialize(value)
-
 	if (!is_valid(value))
 		return FALSE
 
-	WRITE_FILE(savefile[savefile_key], value)
+	WRITE_FILE(savefile[savefile_key], serialize(value))
 	return TRUE
 
 /// Apply this preference onto the given client.
@@ -205,9 +204,12 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Returns TRUE for a successful preference application.
 /// Returns FALSE if it is invalid.
 /datum/preferences/proc/write_preference(datum/preference/preference, preference_value)
-	var/success = preference.write(get_savefile_for_savefile_identifier(preference.savefile_identifier), preference_value)
+	var/savefile = get_savefile_for_savefile_identifier(preference.savefile_identifier)
+	var/new_value = preference.deserialize(preference_value)
+	var/success = preference.write(savefile, new_value)
 	if (success)
-		value_cache[preference.type] = preference_value
+		value_cache[preference.type] = new_value
+	return success
 
 /// Checks that a given value is valid.
 /// Must be overriden by subtypes.
@@ -441,9 +443,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	return default_value
 
 /datum/preference/toggle/deserialize(input)
-	return input
-
-/datum/preference/toggle/serialize(input)
 	return !!input
 
 /datum/preference/toggle/is_valid(value)

@@ -25,7 +25,6 @@ const KEYS_TO_NAMES = {
   backpack: "backpack",
   facial_style_name: "facial hair",
   feature_moth_wings: "moth wings",
-  feature_lizard_tail: "tail",
   hairstyle_name: "hair style",
   jumpsuit_style: "jumpsuit style",
   socks: "socks",

@@ -411,6 +411,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 
 	client?.register_map_obj(src)
 
+// MOTHBLOCKS TODO: Cache until names change
 /datum/preferences/proc/create_character_profiles()
 	var/list/profiles = list()
 
