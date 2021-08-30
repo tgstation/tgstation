@@ -31,6 +31,8 @@ multiple modular subtrees with behaviors
 	COOLDOWN_DECLARE(failed_planning_cooldown)
 	///All subtrees this AI has available, will run them in order, so make sure they're in the order you want them to run. On initialization of this type, it will start as a typepath(s) and get converted to references of ai_subtrees found in SSai_controllers when init_subtrees() is called
 	var/list/planning_subtrees
+	///Can the controller currently create a new plan?
+	var/can_currently_plan = TRUE
 
 	// Movement related things here
 	///Reference to the movement datum we use. Is a type on initialize but becomes a ref afterwards.
@@ -190,6 +192,14 @@ multiple modular subtrees with behaviors
 		for(var/datum/ai_planning_subtree/subtree as anything in planning_subtrees)
 			if(subtree.SelectBehaviors(src, delta_time) == SUBTREE_RETURN_FINISH_PLANNING)
 				break
+
+	var/can_start_planning = TRUE
+	for(var/datum/ai_behavior/ai_behavior as anything in current_behaviors)
+		if(ai_behavior.behavior_flags & AI_BEHAVIOR_ALLOWS_REPLANNING)
+			continue
+		can_start_planning = FALSE
+	can_currently_plan = can_start_planning
+
 
 ///This proc handles changing ai status, and starts/stops processing if required.
 /datum/ai_controller/proc/set_ai_status(new_ai_status)

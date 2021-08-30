@@ -128,6 +128,12 @@
 		gets_drilled(user)
 	..()
 
+/turf/closed/mineral/attack_basic_mob(mob/living/basic/user, list/modifiers)
+	. = ..()
+	if((user.environment_smash & ENVIRONMENT_SMASH_WALLS) || (user.environment_smash & ENVIRONMENT_SMASH_RWALLS))
+		gets_drilled(user)
+	..()
+
 /turf/closed/mineral/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	to_chat(user, span_notice("You start digging into the rock..."))
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)

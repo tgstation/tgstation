@@ -24,3 +24,11 @@
 	if(behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT) //If this was a movement task, reset our movement target.
 		controller.current_movement_target = null
 		controller.ai_movement.stop_moving_towards(controller)
+	if(!controller.can_currently_plan)
+		var/can_start_planning = TRUE
+		for(var/datum/ai_behavior/ai_behavior as anything in controller.current_behaviors)
+			if(ai_behavior.behavior_flags & AI_BEHAVIOR_ALLOWS_REPLANNING)
+				continue
+			can_start_planning = FALSE
+		controller.can_currently_plan = can_start_planning
+

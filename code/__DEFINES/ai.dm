@@ -23,6 +23,8 @@
 #define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)
 ///Does this task let you perform the action while you move closer? (Things like moving and shooting)
 #define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<1)
+///This task does not prevent re-planning.
+#define AI_BEHAVIOR_ALLOWS_REPLANNING (1<<2)
 
 ///AI flags
 #define STOP_MOVING_WHEN_PULLED (1<<0)
@@ -180,7 +182,11 @@
 
 ///Basic Mob Keys
 
+///General basic mob vars
+#define BB_ENVIRONMENT_SMASH "BB_environment_smash"
+
 ///Targetting subtrees
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
 #define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
 #define BB_TARGETTING_DATUM "targetting_datum"
+

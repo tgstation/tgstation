@@ -132,7 +132,7 @@
 /atom/proc/attack_animal(mob/user, list/modifiers)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user)
 
-/atom/proc/attack_basic_mob(mob/user, list/modifiers)
+/atom/proc/attack_basic_mob(mob/living/basic/user, list/modifiers)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_BASIC_MOB, user)
 
 ///Attacked by monkey

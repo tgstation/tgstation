@@ -146,6 +146,9 @@
 /obj/structure/ladder/attack_slime(mob/user)
 	return use(user)
 
+/obj/structure/ladder/attack_basic_mob(mob/living/basic/user, list/modifiers)
+	return use(user)
+
 /obj/structure/ladder/attackby(obj/item/W, mob/user, params)
 	return use(user)
 

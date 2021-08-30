@@ -82,9 +82,32 @@
 		var/animal_damage = rand(user.melee_damage_lower,user.melee_damage_upper)
 		if(user.obj_damage)
 			animal_damage = user.obj_damage
+		///Whoever did this, your moms a ho.
 		animal_damage = min(animal_damage, 20*user.environment_smash)
 		log_combat(user, src, "attacked")
 		attack_generic(user, animal_damage, user.melee_damage_type, MELEE, play_soundeffect)
+		return 1
+
+/obj/vehicle/sealed/mecha/attack_alien(mob/living/user, list/modifiers)
+	log_message("Attack by alien. Attacker - [user].", LOG_MECHA, color="red")
+	playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
+	attack_generic(user, rand(user.melee_damage_lower, user.melee_damage_upper), BRUTE, MELEE, 0)
+
+/obj/vehicle/sealed/mecha/attack_basic_mob(mob/living/basic/user, list/modifiers)
+	log_message("Attack by basic mob. Attacker - [user].", LOG_MECHA, color="red")
+	if(!user.melee_damage_upper && !user.obj_damage)
+		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
+		return 0
+	else
+		var/play_soundeffect = 1
+		if(user.environment_smash)
+			play_soundeffect = 0
+			playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+		var/basic_damage = rand(user.melee_damage_lower,user.melee_damage_upper)
+		if(user.obj_damage)
+			basic_damage = user.obj_damage
+		log_combat(user, src, "attacked")
+		attack_generic(user, basic_damage, user.melee_damage_type, MELEE, play_soundeffect)
 		return 1
 
 

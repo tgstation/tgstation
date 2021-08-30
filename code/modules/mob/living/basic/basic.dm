@@ -83,8 +83,6 @@
 	///Sentience type, for slime potions. SHOULD BE AN ELEMENT BUT I DONT CARE ABOUT IT FOR NOW
 	var/sentience_type = SENTIENCE_ORGANIC
 
-
-
 /mob/living/basic/Initialize(mapload)
 	. = ..()
 
