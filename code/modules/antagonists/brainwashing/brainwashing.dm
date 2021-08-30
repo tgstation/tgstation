@@ -43,11 +43,12 @@
 	data["objectives"] = get_objectives()
 	return data
 
-/datum/antagonist/brainwashed/greet()
+/datum/antagonist/brainwashed/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
 
-/datum/antagonist/brainwashed/farewell()
+/datum/antagonist/brainwashed/remove_innate_effects(mob/living/mob_override)
+	. = ..()
 	to_chat(owner, span_warning("Your mind suddenly clears..."))
 	to_chat(owner, "<big>[span_warning("<b>You feel the weight of the Directives disappear! You no longer have to obey them.</b>")]</big>")
 	remove_antag_hud(antag_hud_type, owner.current)
