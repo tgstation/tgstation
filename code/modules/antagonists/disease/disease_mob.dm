@@ -337,6 +337,10 @@ the new instance inside the host to be updated to the template's stats.
 /mob/camera/disease/proc/adaptation_menu()
 	to_chat(usr, "NOPE")
 
+//TODO:
+//send data for whether you've picked your first host, lock adaption menu if you haven't yet
+//have an area where infected victims are listed
+
 /mob/camera/disease/Topic(href, list/href_list)
 	..()
 	if(href_list["close"])
