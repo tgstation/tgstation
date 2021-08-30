@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - bugfix: "Traitors that are unable to receive equipment required for specific objectives will be able to order that equipment from the uplink. Other antagonists that are unable to receive such equipment can call in a pod containing that equipment, unless they somehow have an unlocked uplink on their person, in which case they can order it from the uplink."
