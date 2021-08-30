@@ -1,7 +1,0 @@
-author: "IndieanaJones"
-delete-after: True
-changes: 
-  - expansion: "Spider nurses and broodmothers can now place down sealed webs by webbing an already webbed tile, allowing them to make weak walls."
-  - qol: "Tarantulas now use right-click to charge as opposed to a button ability.  Said button ability is now removed."
-  - balance: "Spiders have received some slight balance changes to make them less oppressive when they have the upper hand whilst letting them slightly handle atmos changes.  One major change is that broodmothers now take 15 seconds to lay eggs as opposed to 10 seconds."
-  - qol: "Spiders can see further in the dark now."

@@ -1,5 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - refactor: "Cyborg Station Alerts UI now uses tgui."
-  - refactor: "AI Station Alerts UI now uses tgui."
