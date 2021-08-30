@@ -438,12 +438,12 @@ SEE_PIXELS// if an object is located on an unlit area, but some of its pixels ar
 BLIND     // can't see anything
 */
 
-/proc/generate_female_clothing(t_color, icon, type, greyscale_colors)
+/proc/generate_female_clothing(index, t_color, icon, type, greyscale_colors)
 	var/icon/female_clothing_icon = icon("icon"=icon, "icon_state"=t_color)
 	var/icon/female_s = icon("icon"='icons/mob/clothing/under/masking_helpers.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
 	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
 	female_clothing_icon = fcopy_rsc(female_clothing_icon)
-	GLOB.female_clothing_icons[t_color + greyscale_colors] = female_clothing_icon
+	GLOB.female_clothing_icons[index] = female_clothing_icon
 
 /obj/item/clothing/proc/weldingvisortoggle(mob/user) //proc to toggle welding visors on helmets, masks, goggles, etc.
 	if(!can_use(user))

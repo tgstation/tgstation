@@ -432,11 +432,11 @@ There are several things that need to be remembered:
 		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
 /proc/wear_female_version(t_color, icon, layer, type, greyscale_colors)
-	var/index = t_color + greyscale_colors
+	var/index = "[t_color]-[greyscale_colors]"
 	var/icon/female_clothing_icon = GLOB.female_clothing_icons[index]
 	if(!female_clothing_icon) //Create standing/laying icons if they don't exist
-		generate_female_clothing(t_color, icon, type, greyscale_colors)
-	return mutable_appearance(GLOB.female_clothing_icons[t_color + greyscale_colors], layer = -layer)
+		generate_female_clothing(index, t_color, icon, type, greyscale_colors)
+	return mutable_appearance(GLOB.female_clothing_icons[index], layer = -layer)
 
 /mob/living/carbon/human/proc/get_overlays_copy(list/unwantedLayers)
 	var/list/out = new
