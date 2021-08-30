@@ -22,7 +22,7 @@
 
 /obj/item/antag_spawner/contract/ui_interact(mob/user, datum/tgui/ui)
 	if(polling)
-		balloon_alert(teacher, "already calling an apprentice!")
+		balloon_alert(user, "already calling an apprentice!")
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -51,12 +51,12 @@
 	balloon_alert(teacher, "contacting apprentice...")
 	polling = TRUE
 	var/list/candidates = pollCandidatesForMob("Do you want to play as a wizard's [apprentice_school] apprentice?", ROLE_WIZARD, ROLE_WIZARD, 15 SECONDS, src)
+	polling = FALSE
 	if(!LAZYLEN(candidates))
 		to_chat(teacher, span_warning("Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."))
 		return
 	if(QDELETED(src) || used)
 		return
-	polling = FALSE
 	used = TRUE
 	var/mob/dead/observer/student = pick(candidates)
 	spawn_antag(student.client, get_turf(src), apprentice_school, teacher.mind)
