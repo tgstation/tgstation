@@ -1,0 +1,4 @@
+author: "Colovorat"
+delete-after: True
+changes: 
+  - bugfix: "Cables from protolathe and autolathe should merge just fine now"
