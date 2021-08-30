@@ -200,7 +200,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtypes = GROSS | MEAT | RAW
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
-	semi_preserved_food = TRUE
+	decomp_req_handle = TRUE
 
 /obj/item/food/deadmouse/Initialize()
 	. = ..()
