@@ -19,6 +19,48 @@
 
 	. = ..()
 
+/datum/antagonist/disease/ui_static_data(mob/user)
+	var/list/data = list()
+	//will sometimes be null but will always have an owner if this data is being requested
+	var/mob/camera/disease/disease_mob = owner.current
+	//will sometimes be null like above, in that case we shouldn't send related data for that
+	var/datum/disease/advance/sentient_disease/disease_template = disease_mob?.disease_template
+	data["objectives"] = get_objectives()
+	//total disease stats
+	data["resist"] = disease_template ? disease_template.totalResistance() : "YOU'RE TOAST!"
+	data["stealth"] = disease_template ? disease_template.totalStealth() : "YOU'RE TOAST!"
+	data["speed"] = disease_template ? disease_template.totalStageSpeed() : "YOU'RE TOAST!"
+	data["transmit"] = disease_template ? disease_template.totalTransmittable() : "YOU'RE TOAST!"
+	data["cure"] = disease_template ? disease_template.cure_text : "YOU'VE BEEN CURED."
+	var/list/abilities_data = list()
+	for(var/datum/disease_ability/ability as anything in GLOB.disease_ability_singletons)
+		var/list/single_ability_data = list(
+			"purchased" = disease_mob.purchased_abilities[ability] ? TRUE : FALSE,
+			"cost" = ability.cost,
+			"total_requirement" = ability.required_total_points,
+			"name" = ability.name,
+			"category" = ability.category,
+			"desc" = ability.desc,
+			//stat block for this ability
+			"resist"= ability.resistance,
+			"stealth"= ability.stealth,
+			"speed"= ability.stage_speed,
+			"transmit"= ability.transmittable,
+		)
+		abilities_data += list(single_ability_data)
+	data["abilities"] = abilities_data
+	return data
+
+/datum/antagonist/disease/ui_data(mob/user)
+	var/list/data = list()
+	//will sometimes be null but will always have an owner if this data is being requested
+	var/mob/camera/disease/disease_mob = owner.current
+	//point costs live update as you do things in the world
+	data["points"] = disease_mob ? disease_mob.total_points : 0
+	data["total_points"] = disease_mob ? disease_mob.total_points : 0
+
+	return data
+
 /datum/antagonist/disease/greet()
 	to_chat(owner.current, span_notice("You are the [owner.special_role]!"))
 	to_chat(owner.current, span_notice("Infect members of the crew to gain adaptation points, and spread your infection further."))

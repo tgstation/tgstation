@@ -19,7 +19,6 @@ new /datum/disease_ability/symptom/medium/vomit,
 new /datum/disease_ability/symptom/medium/voice_change,
 new /datum/disease_ability/symptom/medium/visionloss,
 new /datum/disease_ability/symptom/medium/deafness,
-new /datum/disease_ability/symptom/powerful/narcolepsy,
 new /datum/disease_ability/symptom/medium/fever,
 new /datum/disease_ability/symptom/medium/chills,
 new /datum/disease_ability/symptom/medium/headache,
@@ -34,6 +33,7 @@ new /datum/disease_ability/symptom/medium/heal/mind_restoration,
 new /datum/disease_ability/symptom/powerful/fire,
 new /datum/disease_ability/symptom/powerful/flesh_eating,
 new /datum/disease_ability/symptom/powerful/genetic_mutation,
+new /datum/disease_ability/symptom/powerful/narcolepsy,
 new /datum/disease_ability/symptom/powerful/inorganic_adaptation,
 new /datum/disease_ability/symptom/powerful/heal/starlight,
 new /datum/disease_ability/symptom/powerful/heal/oxygen,
@@ -44,7 +44,7 @@ new /datum/disease_ability/symptom/powerful/heal/water,
 new /datum/disease_ability/symptom/powerful/heal/plasma,
 new /datum/disease_ability/symptom/powerful/heal/radiation,
 new /datum/disease_ability/symptom/powerful/heal/coma,
-new /datum/disease_ability/symptom/powerful/youth
+new /datum/disease_ability/symptom/powerful/heal/youth
 ))
 
 /datum/disease_ability
@@ -52,9 +52,11 @@ new /datum/disease_ability/symptom/powerful/youth
 	var/cost = 0
 	var/required_total_points = 0
 	var/start_with = FALSE
-	var/short_desc = ""
-	var/long_desc = ""
-	var/stat_block = ""
+	var/desc = ""
+	var/stealth = 0
+	var/resistance = 0
+	var/stage_speed = 0
+	var/transmittable = 0
 	var/threshold_block = list()
 	var/category = ""
 
@@ -64,10 +66,7 @@ new /datum/disease_ability/symptom/powerful/youth
 /datum/disease_ability/New()
 	..()
 	if(symptoms)
-		var/stealth = 0
-		var/resistance = 0
-		var/stage_speed = 0
-		var/transmittable = 0
+
 		for(var/T in symptoms)
 			var/datum/symptom/S = T
 			stealth += initial(S.stealth)
@@ -75,13 +74,10 @@ new /datum/disease_ability/symptom/powerful/youth
 			stage_speed += initial(S.stage_speed)
 			transmittable += initial(S.transmittable)
 			threshold_block += initial(S.threshold_descs)
-			stat_block = "Resistance: [resistance]<br>Stealth: [stealth]<br>Stage Speed: [stage_speed]<br>Transmissibility: [transmittable]<br><br>"
 			if(symptoms.len == 1) //lazy boy's dream
 				name = initial(S.name)
-				if(short_desc == "")
-					short_desc = initial(S.desc)
-				if(long_desc == "")
-					long_desc = initial(S.desc)
+				if(desc == "")
+					desc = initial(S.desc)
 
 /datum/disease_ability/proc/CanBuy(mob/camera/disease/D)
 	if(world.time < D.next_adaptation_time)
@@ -159,9 +155,7 @@ new /datum/disease_ability/symptom/powerful/youth
 	cost = 0
 	required_total_points = 0
 	start_with = TRUE
-	short_desc = "Force the host you are following to cough, spreading your infection to those nearby."
-	long_desc = "Force the host you are following to cough with extra force, spreading your infection to those within two meters of your host even if your transmissibility is low.<br>Cooldown: 10 seconds"
-
+	desc = "Force the host you are following to sneeze, spreading your infection to those in front of them."
 
 /datum/action/cooldown/disease_cough
 	name = "Cough"
@@ -194,8 +188,7 @@ new /datum/disease_ability/symptom/powerful/youth
 	actions = list(/datum/action/cooldown/disease_sneeze)
 	cost = 2
 	required_total_points = 3
-	short_desc = "Force the host you are following to sneeze, spreading your infection to those in front of them."
-	long_desc = "Force the host you are following to sneeze with extra force, spreading your infection to any victims in a 4 meter cone in front of your host.<br>Cooldown: 20 seconds"
+	desc = "Force the host you are following to sneeze, spreading your infection to those in front of them."
 
 /datum/action/cooldown/disease_sneeze
 	name = "Sneeze"
@@ -232,8 +225,7 @@ new /datum/disease_ability/symptom/powerful/youth
 	actions = list(/datum/action/cooldown/disease_infect)
 	cost = 2
 	required_total_points = 3
-	short_desc = "Cause all objects your host is touching to become infectious for a limited time, spreading your infection to anyone who touches them."
-	long_desc = "Cause the host you are following to excrete an infective substance from their pores, causing all objects touching their skin to transmit your infection to anyone who touches them for the next 30 seconds. This includes the floor, if they are not wearing shoes, and any items they are holding, if they are not wearing gloves.<br>Cooldown: 40 seconds"
+	desc = "For a while, objects your host touches becomes contagious. Contagious objects infect whomever handles them."
 
 /datum/action/cooldown/disease_infect
 	name = "Secrete Infection"
@@ -274,98 +266,94 @@ new /datum/disease_ability/symptom/powerful/youth
 /datum/disease_ability/symptom/mild
 	cost = 2
 	required_total_points = 4
-	category = "Symptom (Weak)"
+	category = "Minor"
 
 /datum/disease_ability/symptom/medium
 	cost = 4
 	required_total_points = 8
-	category = "Symptom"
+	category = "Intermediate"
 
 /datum/disease_ability/symptom/medium/heal
 	cost = 5
-	category = "Symptom (+)"
+	category = "Heal"
 
 /datum/disease_ability/symptom/powerful
 	cost = 4
 	required_total_points = 16
-	category = "Symptom (Strong)"
+	category = "Major"
 
 /datum/disease_ability/symptom/powerful/heal
 	cost = 8
-	category = "Symptom (Strong+)"
+	category = "Major Heal"
 
 /******MILD******/
 
 /datum/disease_ability/symptom/mild/cough
 	name = "Involuntary Coughing"
 	symptoms = list(/datum/symptom/cough)
-	short_desc = "Cause victims to cough intermittently."
-	long_desc = "Cause victims to cough intermittently, spreading your infection."
+	desc = "Cause victims to cough intermittently, spreading your infection. Good starting point."
 
 /datum/disease_ability/symptom/mild/sneeze
 	name = "Involuntary Sneezing"
 	symptoms = list(/datum/symptom/sneeze)
-	short_desc = "Cause victims to sneeze intermittently."
-	long_desc = "Cause victims to sneeze intermittently, spreading your infection and also increasing transmissibility and resistance, at the cost of stealth."
+	desc = "Cause victims to sneeze intermittently, spreading your infection. Another good starting point."
 
 /******MEDIUM******/
 
 /datum/disease_ability/symptom/medium/shedding
 	symptoms = list(/datum/symptom/shedding)
+	desc = "The virus causes rapid shedding of head and body hair. Great for stats, but you may get cured by a baldie."
 
 /datum/disease_ability/symptom/medium/beard
 	symptoms = list(/datum/symptom/beard)
-	short_desc = "Cause all victims to grow a luscious beard."
-	long_desc = "Cause all victims to grow a luscious beard. Ineffective against Santa Claus."
+	desc = "Cause all victims to grow a luscious beard. Ineffective against Santa Claus."
 
 /datum/disease_ability/symptom/medium/hallucigen
 	symptoms = list(/datum/symptom/hallucigen)
-	short_desc = "Cause victims to hallucinate."
-	long_desc = "Cause victims to hallucinate. Decreases stats, especially resistance."
+	desc = "Cause victims to hallucinate. Decreases stats, especially resistance, but is otherwise very strong."
 
 /datum/disease_ability/symptom/medium/choking
 	symptoms = list(/datum/symptom/choking)
-	short_desc = "Cause victims to choke."
-	long_desc = "Cause victims to choke, threatening asphyxiation. Decreases stats, especially transmissibility."
+	desc = "Cause victims to choke, threatening asphyxiation. Decreases stats, especially transmissibility."
 
 /datum/disease_ability/symptom/medium/confusion
 	symptoms = list(/datum/symptom/confusion)
-	short_desc = "Cause victims to become confused."
-	long_desc = "Cause victims to become confused intermittently."
+	desc = "Cause victims to become confused intermittently. Very annoying, will make people try to cure you."
 
 /datum/disease_ability/symptom/medium/vomit
 	symptoms = list(/datum/symptom/vomit)
-	short_desc = "Cause victims to vomit."
-	long_desc = "Cause victims to vomit. Slightly increases transmissibility. Vomiting also also causes the victims to lose nutrition and removes some toxin damage."
+	desc = "Cause victims to vomit. Vomiting also also causes the victims to lose nutrition and removes some toxin damage."
 
 /datum/disease_ability/symptom/medium/voice_change
 	symptoms = list(/datum/symptom/voice_change)
-	short_desc = "Change the voice of victims."
-	long_desc = "Change the voice of victims, causing confusion in communications."
+	desc = "Change the voice of victims, causing confusion in communications, and a headache for security."
 
 /datum/disease_ability/symptom/medium/visionloss
 	symptoms = list(/datum/symptom/visionloss)
-	short_desc = "Damage the eyes of victims, eventually causing blindness."
-	long_desc = "Damage the eyes of victims, eventually causing blindness. Decreases all stats."
+	desc = "Damage the eyes of victims, eventually causing blindness. Decreases all stats."
 
 /datum/disease_ability/symptom/medium/deafness
+	desc = "The virus causes inflammation of the eardrums, causing intermittent deafness."
 	symptoms = list(/datum/symptom/deafness)
 
 /datum/disease_ability/symptom/medium/fever
+	desc = "The virus causes a febrile response from the host, raising its body temperature."
 	symptoms = list(/datum/symptom/fever)
 
 /datum/disease_ability/symptom/medium/chills
+	desc = "The virus inhibits the body's thermoregulation, cooling the body down."
 	symptoms = list(/datum/symptom/chills)
 
 /datum/disease_ability/symptom/medium/headache
+	desc = "The virus causes inflammation inside the brain, causing constant headaches."
 	symptoms = list(/datum/symptom/headache)
 
 /datum/disease_ability/symptom/medium/viraladaptation
 	symptoms = list(/datum/symptom/viraladaptation)
-	short_desc = "Cause your infection to become more resistant to detection and eradication."
-	long_desc = "Cause your infection to mimic the function of normal body cells, becoming much harder to spot and to eradicate, but reducing its speed."
+	desc = "Cause your infection to become more resistant to detection and eradication."
 
 /datum/disease_ability/symptom/medium/viralevolution
+	desc = "The virus sets stage speed and transmission to overdrive, at the cost of lowering defensive stats. Burn bright, burn out!"
 	symptoms = list(/datum/symptom/viralevolution)
 
 /datum/disease_ability/symptom/medium/polyvitiligo
@@ -376,18 +364,15 @@ new /datum/disease_ability/symptom/powerful/youth
 
 /datum/disease_ability/symptom/medium/itching
 	symptoms = list(/datum/symptom/itching)
-	short_desc = "Cause victims to itch."
-	long_desc = "Cause victims to itch, increasing all stats except stealth."
+	desc = "Cause victims to itch, increasing all stats except stealth. You monster."
 
 /datum/disease_ability/symptom/medium/heal/weight_loss
 	symptoms = list(/datum/symptom/weight_loss)
-	short_desc = "Cause victims to lose weight."
-	long_desc = "Cause victims to lose weight, and make it almost impossible for them to gain nutrition from food. Reduced nutrition allows your infection to spread more easily from hosts, especially by sneezing."
+	desc = "Cause victims to lose weight, and struggle with gaining it. Helps your infection spread, especially by sneezing."
 
 /datum/disease_ability/symptom/medium/heal/sensory_restoration
 	symptoms = list(/datum/symptom/sensory_restoration)
-	short_desc = "Regenerate eye and ear damage of victims."
-	long_desc = "Regenerate eye and ear damage of victims."
+	desc = "The virus restores sensory cells that the body cannot normally regenerate."
 
 /datum/disease_ability/symptom/medium/heal/mind_restoration
 	symptoms = list(/datum/symptom/mind_restoration)
@@ -396,12 +381,14 @@ new /datum/disease_ability/symptom/powerful/youth
 
 /datum/disease_ability/symptom/powerful/fire
 	symptoms = list(/datum/symptom/fire)
+	desc = "The virus turns fat into an extremely flammable compound, and spikes the body's temperature. Result? COMBUSTION!"
 
 /datum/disease_ability/symptom/powerful/flesh_eating
 	symptoms = list(/datum/symptom/flesh_eating)
 
 /datum/disease_ability/symptom/powerful/genetic_mutation
 	symptoms = list(/datum/symptom/genetic_mutation)
+		desc = "The virus activates dormant mutations in the victim. Almost always incredibly debilitating, if not lethal."
 	cost = 8
 
 /datum/disease_ability/symptom/powerful/inorganic_adaptation
@@ -409,11 +396,6 @@ new /datum/disease_ability/symptom/powerful/youth
 
 /datum/disease_ability/symptom/powerful/narcolepsy
 	symptoms = list(/datum/symptom/narcolepsy)
-
-/datum/disease_ability/symptom/powerful/youth
-	symptoms = list(/datum/symptom/youth)
-	short_desc = "Cause victims to become eternally young."
-	long_desc = "Cause victims to become eternally young. Provides boosts to all stats except transmissibility."
 
 /****HEALING SUBTYPE****/
 
@@ -428,22 +410,27 @@ new /datum/disease_ability/symptom/powerful/youth
 
 /datum/disease_ability/symptom/powerful/heal/metabolism
 	symptoms = list(/datum/symptom/heal/metabolism)
-	short_desc = "Increase the metabolism of victims, causing them to process chemicals and grow hungry faster."
-	long_desc = "Increase the metabolism of victims, causing them to process chemicals twice as fast and grow hungry more quickly."
+	desc = "Increase the metabolism of victims, causing them to process chemicals twice as fast and grow hungry more quickly."
 
 /datum/disease_ability/symptom/powerful/heal/dark
 	symptoms = list(/datum/symptom/heal/darkness)
+	desc = "The virus mends the host in low light conditions. Most effective against brute damage."
 
 /datum/disease_ability/symptom/powerful/heal/water
 	symptoms = list(/datum/symptom/heal/water)
+	desc = "The virus uses water it comes into contact with to heal the host. Better with holy water and against burns."
 
 /datum/disease_ability/symptom/powerful/heal/plasma
 	symptoms = list(/datum/symptom/heal/plasma)
 
 /datum/disease_ability/symptom/powerful/heal/radiation
 	symptoms = list(/datum/symptom/heal/radiation)
+	desc = "The virus uses radiation to fix damage through dna mutations. I told you supermatter parties are good for you!"
 
 /datum/disease_ability/symptom/powerful/heal/coma
 	symptoms = list(/datum/symptom/heal/coma)
-	short_desc = "Cause victims to fall into a healing coma when hurt."
-	long_desc = "Cause victims to fall into a healing coma when hurt."
+	desc = "Cause victims to fall into a healing coma when hurt. Despite being helpful, this will piss some people off."
+
+/datum/disease_ability/symptom/powerful/heal/youth
+	symptoms = list(/datum/symptom/youth)
+	desc = "Cause victims to become eternally young. Provides boosts to all stats except transmissibility."

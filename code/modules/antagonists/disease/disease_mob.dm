@@ -335,51 +335,7 @@ the new instance inside the host to be updated to the template's stats.
 ///start of adaption menu
 
 /mob/camera/disease/proc/adaptation_menu()
-	var/datum/disease/advance/sentient_disease/DT = disease_template
-	if(!DT)
-		return
-	var/list/dat = list()
-
-	if(examining_ability)
-		dat += "<a href='byond://?src=[REF(src)];main_menu=1'>Back</a><br>"
-		dat += "<h1>[examining_ability.name]</h1>"
-		dat += "[examining_ability.stat_block][examining_ability.long_desc][examining_ability.threshold_block]"
-		for(var/entry in examining_ability.threshold_block)
-			dat += "<b>[entry]</b>: [examining_ability.threshold_block[entry]]<br>"
-	else
-		dat += "<h1>Disease Statistics</h1><br>\
-			Resistance: [DT.totalResistance()]<br>\
-			Stealth: [DT.totalStealth()]<br>\
-			Stage Speed: [DT.totalStageSpeed()]<br>\
-			Transmissibility: [DT.totalTransmittable()]<hr>\
-			Cure: [DT.cure_text]"
-		dat += "<hr><h1>Adaptations</h1>\
-			Points: [points] / [total_points]\
-			<table border=1>\
-			<tr><td>Cost</td><td></td><td>Unlock</td><td width='180px'>Name</td><td>Type</td><td>Description</td></tr>"
-		for(var/V in GLOB.disease_ability_singletons)
-			var/datum/disease_ability/A = V
-			var/purchase_text
-			if(unpurchased_abilities[A])
-				if(A.CanBuy(src))
-					purchase_text = "<a href='byond://?src=[REF(src)];buy_ability=[REF(A)]'>Purchase</a>"
-				else
-					purchase_text = "<span class='linkOff'>Purchase</span>"
-			else
-				if(A.CanRefund(src))
-					purchase_text = "<a href='byond://?src=[REF(src)];refund_ability=[REF(A)]'>Refund</a>"
-				else
-					purchase_text = "<span class='linkOff'>Refund</span>"
-			dat += "<tr><td>[A.cost]</td><td>[purchase_text]</td><td>[A.required_total_points]</td><td><a href='byond://?src=[REF(src)];examine_ability=[REF(A)]'>[A.name]</a></td><td>[A.category]</td><td>[A.short_desc]</td></tr>"
-
-		dat += "</table><br>Infect many hosts at once to gain adaptation points.<hr><h1>Infected Hosts</h1>"
-		for(var/V in hosts)
-			var/mob/living/L = V
-			dat += "<br><a href='byond://?src=[REF(src)];follow_instance=[REF(L)]'>[L.real_name]</a>"
-
-	browser.set_content(dat.Join())
-	browser.open()
-	browser_open = TRUE
+	to_chat(usr, "NOPE")
 
 /mob/camera/disease/Topic(href, list/href_list)
 	..()

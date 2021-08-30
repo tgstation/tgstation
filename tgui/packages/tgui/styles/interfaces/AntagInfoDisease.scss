@@ -1,0 +1,13 @@
+/**
+ * Copyright (c) 2021 Arm A. Hammer
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../colors.scss';
+@use '../base.scss';
+
+.AntagInfoDisease__purchased {
+  background-color: rgba(36, 119, 33, 0.5);
+  border-color: rgb(0, 170, 51);
+  border-style: dotted;
+}

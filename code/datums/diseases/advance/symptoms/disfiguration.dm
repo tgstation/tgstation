@@ -17,7 +17,7 @@ BONUS
 /datum/symptom/disfiguration
 
 	name = "Disfiguration"
-	desc = "The virus liquefies facial muscles, disfiguring the host."
+	desc = "The virus liquefies facial muscles, disfiguring the host. Horrifying to witness, horrifying to experience."
 	stealth = 2
 	resistance = 0
 	stage_speed = 3

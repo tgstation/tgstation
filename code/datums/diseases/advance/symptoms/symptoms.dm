@@ -9,7 +9,7 @@
 	var/resistance = 0
 	var/stage_speed = 0
 	var/transmittable = 0
-	// The type level of the symptom. Higher is harder to generate.
+	/// The type level of the symptom. Higher is harder to generate.
 	var/level = 0
 	// The severity level of the symptom. Higher is more dangerous.
 	var/severity = 0
