@@ -68,8 +68,6 @@
 				left_part = medicalAnalysis()
 			if("doorjack")
 				left_part = softwareDoor()
-			if("loudness")
-				left_part = softwareLoudness()
 			if("hostscan")
 				left_part = softwareHostScan()
 
@@ -264,8 +262,9 @@
 
 
 			if("loudness")
-				if(subscreen == 1) // Open Instrument
-					internal_instrument.interact(src)
+				if(!internal_instrument)
+					internal_instrument = new(src)
+				internal_instrument.interact(src) // Open Instrument
 
 			if("internalgps")
 				if(!internal_gps)
@@ -572,12 +571,4 @@
 	dat += "</ul>"
 	dat += "<br><br>"
 	dat += "Messages: <hr> [aiPDA.tnote]"
-	return dat
-
-// Loudness Booster
-/mob/living/silicon/pai/proc/softwareLoudness()
-	if(!internal_instrument)
-		internal_instrument = new(src)
-	var/dat = "<h3>Sound Synthesizer</h3>"
-	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=1'>Open Synthesizer Interface</a><br>"
 	return dat
