@@ -1,0 +1,4 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - bugfix: "the emitter area around the SM chamber now has APCs, so no more infinate power for the thermomachines and other equipment"
