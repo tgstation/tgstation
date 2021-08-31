@@ -23,15 +23,16 @@
 	adjust_charge(-0.8 * (damage / 5) * delta_time) //at 100 damage ethereals will loose 16 charge per second
 	handle_charge(owner, delta_time, times_fired)
 	var/mob/living/carbon/organ_owner = owner
-	if (prob(15))
+	if (prob(7))
 		to_chat(owner, "<span class='warning'>You feel a jolt of elecricity from your abdomen!</span>")
 	if(!(organ_flags & ORGAN_FAILING))
 		return
 	if(organ_owner)
 		organ_owner.adjustToxLoss(0.65 * delta_time, TRUE, TRUE)
-	crystal_charge = ETHEREAL_CHARGE_NONE
-	if (prob(7))
-		to_chat(owner,"<span class='userdanger'>You feel your life draining as your battery fails to contain any charge!</span>")
+	if (crystal_charge > ETHEREAL_CHARGE_NONE)
+		crystal_charge = ETHEREAL_CHARGE_NONE
+		if (prob(40))
+			to_chat(owner,"<span class='userdanger'>You feel your life draining as your battery fails to contain any charge!</span>")
 	
 
 /obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/carbon, special = 0)
