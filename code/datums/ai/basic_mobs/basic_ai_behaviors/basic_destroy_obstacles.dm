@@ -34,7 +34,7 @@
 		for(var/obj/object_in_direction in turf_in_direction.contents)
 			if(!object_in_direction.Adjacent(mob_pawn))
 				continue
-			if((ismachinery(object_in_direction) || isstructure(object_in_direction)) && object_in_direction.density && mob_pawn.environment_smash >= ENVIRONMENT_SMASH_STRUCTURES && !object_in_direction.IsObscured())
-				mob_pawn.attack_basic_mob(src)
+			if((ismachinery(object_in_direction) || isstructure(object_in_direction)) && object_in_direction.density && mob_pawn.environment_smash & ENVIRONMENT_SMASH_STRUCTURES && !object_in_direction.IsObscured())
+				object_in_direction.attack_basic_mob(mob_pawn)
 				break
 

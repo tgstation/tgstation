@@ -88,11 +88,6 @@
 		attack_generic(user, animal_damage, user.melee_damage_type, MELEE, play_soundeffect)
 		return 1
 
-/obj/vehicle/sealed/mecha/attack_alien(mob/living/user, list/modifiers)
-	log_message("Attack by alien. Attacker - [user].", LOG_MECHA, color="red")
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
-	attack_generic(user, rand(user.melee_damage_lower, user.melee_damage_upper), BRUTE, MELEE, 0)
-
 /obj/vehicle/sealed/mecha/attack_basic_mob(mob/living/basic/user, list/modifiers)
 	log_message("Attack by basic mob. Attacker - [user].", LOG_MECHA, color="red")
 	if(!user.melee_damage_upper && !user.obj_damage)
