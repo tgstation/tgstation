@@ -1,0 +1,4 @@
+author: "SpaceDragon00"
+delete-after: True
+changes: 
+  - admin: "Admins can click a category in the banning panel to toggle all checkboxes within that category"
