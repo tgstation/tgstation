@@ -2105,6 +2105,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		switch (body_part)
 			if ("body_markings")
 				features += "feature_lizard_body_markings"
+			if ("legs")
+				features += "feature_lizard_legs"
 			if ("spines")
 				features += "feature_lizard_spines"
 			if ("tail_lizard")

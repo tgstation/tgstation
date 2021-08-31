@@ -24,18 +24,6 @@
 
 	return values
 
-/datum/preference/choiced/lizard_horns
-	savefile_key = "feature_lizard_horns"
-	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_FEATURES
-	should_generate_icons = TRUE
-
-/datum/preference/choiced/lizard_horns/init_possible_values()
-	return generate_lizard_side_shots(GLOB.horns_list, "horns")
-
-/datum/preference/choiced/lizard_horns/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["horns"] = value
-
 /datum/preference/choiced/lizard_body_markings
 	savefile_key = "feature_lizard_body_markings"
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -71,6 +59,53 @@
 
 /datum/preference/choiced/lizard_body_markings/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["body_markings"] = value
+
+/datum/preference/choiced/lizard_frills
+	savefile_key = "feature_lizard_frills"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_FEATURES
+	should_generate_icons = TRUE
+
+/datum/preference/choiced/lizard_frills/init_possible_values()
+	return generate_lizard_side_shots(GLOB.frills_list, "frills")
+
+/datum/preference/choiced/lizard_frills/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["frills"] = value
+
+/datum/preference/choiced/lizard_horns
+	savefile_key = "feature_lizard_horns"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_FEATURES
+	should_generate_icons = TRUE
+
+/datum/preference/choiced/lizard_horns/init_possible_values()
+	return generate_lizard_side_shots(GLOB.horns_list, "horns")
+
+/datum/preference/choiced/lizard_horns/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["horns"] = value
+
+/datum/preference/choiced/lizard_legs
+	savefile_key = "feature_lizard_legs"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+
+/datum/preference/choiced/lizard_legs/init_possible_values()
+	return assoc_to_keys(GLOB.legs_list)
+
+/datum/preference/choiced/lizard_legs/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["legs"] = value
+
+/datum/preference/choiced/lizard_snout
+	savefile_key = "feature_lizard_snout"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_FEATURES
+	should_generate_icons = TRUE
+
+/datum/preference/choiced/lizard_snout/init_possible_values()
+	return generate_lizard_side_shots(GLOB.snouts_list, "snout", include_snout = FALSE)
+
+/datum/preference/choiced/lizard_snout/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["snout"] = value
 
 /datum/preference/choiced/lizard_spines
 	savefile_key = "feature_lizard_spines"

@@ -168,6 +168,7 @@
 	layers = EXTERNAL_ADJACENT
 
 	feature_key = "frills"
+	preference = "feature_lizard_frills"
 
 	dna_block = DNA_FRILLS_BLOCK
 
@@ -187,6 +188,7 @@
 	layers = EXTERNAL_ADJACENT
 
 	feature_key = "snout"
+	preference = "feature_lizard_snout"
 
 	dna_block = DNA_SNOUT_BLOCK
 

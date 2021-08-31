@@ -520,15 +520,6 @@
 	for(var/thing in flat_list)
 		.[thing] = TRUE
 
-/// Turns an associative list into a flat list of keys
-/proc/assoc_to_keys(list/list)
-	var/list/keys = list()
-
-	for (var/key in list)
-		keys += key
-
-	return keys
-
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)
 
@@ -563,11 +554,12 @@
 		else
 			L1[key] = other_value
 
-/proc/assoc_list_strip_value(list/input)
-	var/list/ret = list()
+/// Turns an associative list into a flat list of keys
+/proc/assoc_to_keys(list/input)
+	var/list/keys = list()
 	for(var/key in input)
-		ret += key
-	return ret
+		keys += key
+	return keys
 
 /proc/compare_list(list/l,list/d)
 	if(!islist(l) || !islist(d))

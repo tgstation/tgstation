@@ -324,10 +324,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["phobia"], phobia)
 	READ_FILE(S["randomise"],  randomise)
 	READ_FILE(S["feature_ethcolor"], features["ethcolor"])
-	READ_FILE(S["feature_lizard_snout"], features["snout"])
-	READ_FILE(S["feature_lizard_frills"], features["frills"])
-	READ_FILE(S["feature_lizard_body_markings"], features["body_markings"])
-	READ_FILE(S["feature_lizard_legs"], features["legs"])
 	READ_FILE(S["persistent_scars"] , persistent_scars)
 	if(!CONFIG_GET(flag/join_with_mutant_humans))
 		features["tail_human"] = "none"
@@ -387,13 +383,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	playtime_reward_cloak = sanitize_integer(playtime_reward_cloak)
 	features["ethcolor"] = copytext_char(features["ethcolor"], 1, 7)
 	features["tail_human"] = sanitize_inlist(features["tail_human"], GLOB.tails_list_human, "None")
-	features["snout"] = sanitize_inlist(features["snout"], GLOB.snouts_list)
-	features["horns"] = sanitize_inlist(features["horns"], GLOB.horns_list)
 	features["ears"] = sanitize_inlist(features["ears"], GLOB.ears_list, "None")
-	features["frills"] = sanitize_inlist(features["frills"], GLOB.frills_list)
-	features["spines"] = sanitize_inlist(features["spines"], GLOB.spines_list)
-	features["body_markings"] = sanitize_inlist(features["body_markings"], GLOB.body_markings_list)
-	features["feature_lizard_legs"] = sanitize_inlist(features["legs"], GLOB.legs_list, "Normal Legs")
 
 	persistent_scars = sanitize_integer(persistent_scars)
 
@@ -433,11 +423,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["phobia"], phobia)
 	WRITE_FILE(S["feature_ethcolor"] , features["ethcolor"])
 	WRITE_FILE(S["feature_human_tail"] , features["tail_human"])
-	WRITE_FILE(S["feature_lizard_snout"] , features["snout"])
 	WRITE_FILE(S["feature_human_ears"] , features["ears"])
-	WRITE_FILE(S["feature_lizard_frills"] , features["frills"])
-	WRITE_FILE(S["feature_lizard_body_markings"] , features["body_markings"])
-	WRITE_FILE(S["feature_lizard_legs"] , features["legs"])
 	WRITE_FILE(S["persistent_scars"] , persistent_scars)
 
 	//Custom names

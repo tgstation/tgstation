@@ -15,13 +15,18 @@ export const hair_color: Feature<string> = {
   component: FeatureColorInput,
 };
 
-export const feature_lizard_tail: FeatureChoiced = {
-  name: "Tail",
+export const feature_lizard_legs: FeatureChoiced = {
+  name: "Legs",
   component: FeatureDropdownInput,
 };
 
 export const feature_lizard_spines: FeatureChoiced = {
   name: "Spines",
+  component: FeatureDropdownInput,
+};
+
+export const feature_lizard_tail: FeatureChoiced = {
+  name: "Tail",
   component: FeatureDropdownInput,
 };
 
