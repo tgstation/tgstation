@@ -2080,6 +2080,7 @@
 #include "code\modules\client\preferences\middleware\keybindings.dm"
 #include "code\modules\client\preferences\middleware\quirks.dm"
 #include "code\modules\client\preferences\species_features\basic.dm"
+#include "code\modules\client\preferences\species_features\ethereal.dm"
 #include "code\modules\client\preferences\species_features\felinid.dm"
 #include "code\modules\client\preferences\species_features\lizard.dm"
 #include "code\modules\client\preferences\species_features\moth.dm"

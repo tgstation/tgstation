@@ -323,7 +323,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["playtime_reward_cloak"], playtime_reward_cloak)
 	READ_FILE(S["phobia"], phobia)
 	READ_FILE(S["randomise"],  randomise)
-	READ_FILE(S["feature_ethcolor"], features["ethcolor"])
 	READ_FILE(S["persistent_scars"] , persistent_scars)
 
 	//Custom names
@@ -367,15 +366,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(!custom_names[custom_name_id])
 			custom_names[custom_name_id] = get_default_name(custom_name_id)
 
-	if(!features["ethcolor"] || features["ethcolor"] == "#000")
-		features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
-
 	randomise = SANITIZE_LIST(randomise)
 
 	underwear_color = sanitize_hexcolor(underwear_color, 3, 0)
 	skin_tone = sanitize_inlist(skin_tone, GLOB.skin_tones)
 	playtime_reward_cloak = sanitize_integer(playtime_reward_cloak)
-	features["ethcolor"] = copytext_char(features["ethcolor"], 1, 7)
 
 	persistent_scars = sanitize_integer(persistent_scars)
 
@@ -413,7 +408,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["playtime_reward_cloak"] , playtime_reward_cloak)
 	WRITE_FILE(S["randomise"] , randomise)
 	WRITE_FILE(S["phobia"], phobia)
-	WRITE_FILE(S["feature_ethcolor"] , features["ethcolor"])
 	WRITE_FILE(S["persistent_scars"] , persistent_scars)
 
 	//Custom names

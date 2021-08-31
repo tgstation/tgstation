@@ -1,4 +1,4 @@
-// MOTHBLOCKS TODO: join_with_mutant_humans
+// MOTHBLOCKS TODO: join_with_mutant_humans, probably just remove this
 /datum/preference/choiced/tail_human
 	savefile_key = "feature_human_tail"
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -14,7 +14,7 @@
 	var/datum/sprite_accessory/tails/human/cat/tail = /datum/sprite_accessory/tails/human/cat
 	return initial(tail.name)
 
-// MOTHBLOCKS TODO: join_with_mutant_humans
+// MOTHBLOCKS TODO: join_with_mutant_humans, probably just remove this
 /datum/preference/choiced/ears
 	savefile_key = "feature_human_ears"
 	savefile_identifier = PREFERENCE_CHARACTER
