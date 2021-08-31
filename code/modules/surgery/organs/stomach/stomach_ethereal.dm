@@ -6,6 +6,10 @@
 	var/crystal_charge = ETHEREAL_CHARGE_FULL
 	///used to keep ethereals from spam draining power sources
 	var/drain_time = 0
+	low_threshold_passed = "<span class='info'>You can feel your power draining as a feeling of pins and needles fills your abdomen.</span>"
+	high_threshold_passed = "<span class='warning'>Your abdomen is filled with the feeling of shocks and elecric discharges!</span>"
+	high_threshold_cleared = "<span class='info'>The eletric feeling in your stomach seems to fade away, leaving behind a feeling of pins and needles</span>"
+	low_threshold_cleared = "<span class='info'>The pins and needles feeling seems to die out as your charge starts to feel far more stable.</span>"
 
 /obj/item/organ/stomach/ethereal/on_life(delta_time, times_fired)
 	. = ..()
