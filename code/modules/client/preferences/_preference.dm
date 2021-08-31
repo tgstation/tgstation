@@ -158,12 +158,13 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	apply_to_client(client, value)
 
 /// Apply this preference onto the given human.
+/// Must be overriden by subtypes.
 /// Called when the savefile_identifier == PREFERENCE_CHARACTER.
 // MOTHBLOCKS TODO: Unit test this
 /datum/preference/proc/apply_to_human(mob/living/carbon/human/target, value)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
-	return
+	CRASH("`apply_to_human()` was not implemented for [type]!")
 
 /// Returns which savefile to use for a given savefile identifier
 /datum/preferences/proc/get_savefile_for_savefile_identifier(savefile_identifier)
