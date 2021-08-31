@@ -9,6 +9,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	obj_flags = UNIQUE_RENAME
+	material_flags = MATERIAL_NO_EFFECTS
 	grind_results = list()
 	///List of reagents this food gets on creation
 	var/list/food_reagents
