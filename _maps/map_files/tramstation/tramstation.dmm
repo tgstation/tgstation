@@ -58580,7 +58580,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/machinery/button/door/directional/west,
+/obj/machinery/button/door/directional/west{
+	id = "left_tram_lower";
+	req_access_txt = "12"
+	},
 /turf/open/floor/iron,
 /area/maintenance/tram/mid)
 "uxR" = (
