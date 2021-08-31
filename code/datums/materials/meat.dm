@@ -17,6 +17,8 @@
 
 /datum/material/meat/on_removed(atom/source, amount, material_flags)
 	. = ..()
+	if(material_flags & MATERIAL_NO_EFFECTS)
+		return
 	qdel(source.GetComponent(/datum/component/edible))
 
 /datum/material/meat/on_applied_obj(obj/O, amount, material_flags)
