@@ -2103,6 +2103,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	for (var/body_part in mutant_bodyparts)
 		// MOTHBLOCKS TODO: UGGGGGGGGH this feature stuff is stupid
 		switch (body_part)
+			if ("body_markings")
+				features += "feature_lizard_body_markings"
 			if ("spines")
 				features += "feature_lizard_spines"
 			if ("tail_lizard")
