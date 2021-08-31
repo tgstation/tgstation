@@ -22,9 +22,15 @@
 	if(damage < low_threshold)
 		return
 	adjust_charge(-0.8 * drainmodifer * delta_time)
+	handle_charge(owner, delta_time, times_fired)
 	if (prob(10))
 		to_chat(M, "<span class='warning'>You feel a jolt of elecricity from your abdomen!</span>")
-		
+	if(!(organ_flags & ORGAN_FAILING))
+		return
+	carbon.apply_damage(0.65 * delta_time, TOX, null, null, carbon)
+	crystal_charge = ETHEREAL_CHARGE_NONE
+	if (prob(10))
+		to_chat(M, "<span class='userdanger'>You feel your life draining as your battery fails to contain any charge!</span>")
 	
 
 /obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/carbon, special = 0)
@@ -66,8 +72,9 @@
 		if(-INFINITY to ETHEREAL_CHARGE_NONE)
 			SEND_SIGNAL(carbon, COMSIG_ADD_MOOD_EVENT, "charge", /datum/mood_event/decharged)
 			carbon.throw_alert("ethereal_charge", /atom/movable/screen/alert/emptycell/ethereal)
-			if(carbon.health > 10.5)
+			if(carbon.health > 10.5 && !(organ_flags & ORGAN_FAILING)) //special interaction for failiure
 				carbon.apply_damage(0.65, TOX, null, null, carbon)
+				damage += (0.5 * damagemodifer)
 		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
 			SEND_SIGNAL(carbon, COMSIG_ADD_MOOD_EVENT, "charge", /datum/mood_event/decharged)
 			carbon.throw_alert("ethereal_charge", /atom/movable/screen/alert/lowcell/ethereal, 3)
