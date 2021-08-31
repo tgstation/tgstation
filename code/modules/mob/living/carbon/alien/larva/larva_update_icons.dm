@@ -21,7 +21,7 @@
 	else
 		icon_state = "larva[state]"
 
-/mob/living/carbon/alien/larva/update_transform() //All this is handled in update_icons()
+/mob/living/carbon/alien/larva/_update_transform() //All this is handled in update_icons()
 	. = ..()
 	update_icons()
 
