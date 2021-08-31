@@ -34,7 +34,7 @@
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
 #define ROLE_SYNDICATE_INFILTRATOR "Syndicate Infiltrator"
 
-/// MOTHBLOCKS TODO: Unsorted
+// MOTHBLOCKS TODO: Unsorted
 #define ROLE_SYNDICATE "Syndicate"
 #define ROLE_REV "Revolutionary"
 #define ROLE_REV_SUCCESSFUL "Victorious Revolutionary"
