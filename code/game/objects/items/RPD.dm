@@ -479,7 +479,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					if (target_differences & S.connections)
 						to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe in a currently connected direction."))
 						return
-					var/new_dir = (S.GetInitDirections() & ~target_differences) | target_differences
+					var/old_dir = S.GetInitDirections()
+					var/new_dir = (old_dir & ~target_differences) | (p_init_dir & target_differences)
 					// Don't make a smart pipe with only one connection
 					if (ISSTUB(new_dir))
 						to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
