@@ -37,7 +37,12 @@
 /datum/preference/name/real_name
 	explanation = "Name"
 	savefile_key = "real_name"
+	priority = PREFERENCE_PRIORITY_NAMES
 
-/datum/preference/name/real_name/create_default_value()
-	// MOTHBLOCKS TODO: Use gender and species
-	return random_unique_name()
+/datum/preference/name/real_name/create_informed_default_value(datum/preferences/preferences)
+	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	var/gender = preferences.read_preference(/datum/preference/choiced/gender)
+
+	var/datum/species/species = new species_type
+
+	return species.random_name(gender, unique = TRUE)

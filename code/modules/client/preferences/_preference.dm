@@ -2,11 +2,17 @@
 /// The default priority level
 #define PREFERENCE_PRIORITY_DEFAULT 1
 
-/// The priority at which species runs, needed for external organs to apply properly
+/// The priority at which species runs, needed for external organs to apply properly.
 #define PREFERENCE_PRIORITY_SPECIES 2
 
+/// The priority at which gender is determined, needed for proper randomization.
+#define PREFERENCE_PRIORITY_GENDER 3
+
+/// The priority at which names are decided, needed for proper randomization.
+#define PREFERENCE_PRIORITY_NAMES 4
+
 /// The maximum preference priority, keep this updated, but don't use it for `priority`.
-#define MAX_PREFERENCE_PRIORITY 2
+#define MAX_PREFERENCE_PRIORITY 4
 
 /// For choiced preferences, this key will be used to set display names in constant data.
 #define CHOICED_PREFERENCE_DISPLAY_NAMES "display_names"
@@ -80,11 +86,16 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// This is useful either for more optimal data saving or for migrating
 /// older data.
 /// Must be overridden by subtypes.
+/// Can return /datum/mark_call_create_default_value.
 // MOTHBLOCKS TODO: It's also called by the UI, but probably shouldn't be
 /datum/preference/proc/deserialize(input)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("`deserialize()` was not implemented on [type]!")
+
+/// A marker datum that, when returned from /datum/preference/deserialize,
+/// will call create_informed_default_value, then create_default_value.
+/datum/mark_call_create_default_value
 
 /// Called on the input while saving.
 /// Input is the current value, output is what to save in the savefile.
@@ -94,11 +105,19 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /// Produce a potentially random value for when no value for this preference is
 /// found in the savefile.
-/// Must be overriden by subtypes.
+/// Either this or create_informed_default_value must be overriden by subtypes.
 /datum/preference/proc/create_default_value()
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("`create_default_value()` was not implemented on [type]!")
+
+/// Produce a potentially random value for when no value for this preference is
+/// found in the savefile.
+/// Unlike create_default_value(), will provide the preferences object if you
+/// need to use it.
+/// If not overriden, will call create_default_value() instead.
+/datum/preference/proc/create_informed_default_value(datum/preferences/preferences)
+	return create_default_value()
 
 /// Given a savefile, return either the saved data or an acceptable default.
 /// This will write to the savefile if a value was not found with the new value.
@@ -109,9 +128,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	READ_FILE(savefile[savefile_key], value)
 
 	if (isnull(value))
-		var/new_value = create_default_value()
-		write(savefile, new_value)
-		return new_value
+		return /datum/mark_call_create_default_value
 	else
 		return deserialize(value)
 
@@ -185,6 +202,12 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		return value_cache[preference_type]
 
 	var/value = preference_entry.read(get_savefile_for_savefile_identifier(preference_entry.savefile_identifier))
+	if (value == /datum/mark_call_create_default_value)
+		value = preference_entry.create_informed_default_value(src)
+		if (write_preference(preference_entry, value))
+			return value
+		else
+			CRASH("Couldn't write the default value for [preference_type] (received [value])")
 	value_cache[preference_type] = value
 	return value
 
