@@ -8,8 +8,8 @@
 	var/drain_time = 0
 	var/damagemodifer = 0.5
 	low_threshold_passed = "<span class='info'>You can feel your power draining as a feeling of pins and needles fills your abdomen.</span>"
-	high_threshold_passed = "<span class='warning'>Your abdomen is filled with the feeling of shocks and elecric discharges!</span>"
-	high_threshold_cleared = "<span class='info'>The eletric feeling in your stomach seems to fade away, leaving behind a feeling of pins and needles</span>"
+	high_threshold_passed = "<span class='warning'>Your abdomen is filled with the feeling of shocks and electric discharges!</span>"
+	high_threshold_cleared = "<span class='info'>The electric feeling in your stomach seems to fade away, leaving behind a feeling of pins and needles</span>"
 	low_threshold_cleared = "<span class='info'>The pins and needles feeling seems to die out as your charge starts to feel far more stable.</span>"
 
 /obj/item/organ/stomach/ethereal/on_life(delta_time, times_fired)
@@ -30,7 +30,7 @@
 	if(organ_owner)
 		organ_owner.adjustToxLoss(0.65 * delta_time, TRUE, TRUE)
 	crystal_charge = ETHEREAL_CHARGE_NONE
-	if (prob(3))
+	if (prob(7))
 		to_chat(owner,"<span class='userdanger'>You feel your life draining as your battery fails to contain any charge!</span>")
 	
 
@@ -127,7 +127,7 @@
 		damage += (40 * damagemodifer)
 		if(prob(10)) //chance of battery failing instantly, heart disease effect removed in favor of this better thing
 			to_chat(carbon, span_userdanger("You collapse in pain as you feel your battery burst open from the charge!"))
-			damage = 105
+			damage += 200
 			carbon.emote("Scream")
 			carbon.AdjustUnconscious(2.5 SECONDS)
 			carbon.visible_message(span_danger("[carbon] collapses in utter agony!"))
