@@ -770,15 +770,6 @@
 	mod.wearer.research_scanner--
 	mod.helmet.clothing_flags &= ~SCAN_REAGENTS
 
-/obj/item/mod/module/gps
-	name = "MOD internal GPS module"
-	desc = "A module that serves as a built-in GPS."
-	module_type = MODULE_USABLE
-	complexity = 1
-	idle_power_cost = 2
-	incompatible_modules = list(/obj/item/mod/module/gps)
-	cooldown_time = 0.5 SECONDS
-
 /obj/item/mod/module/dispenser
 	name = "MOD burger dispenser module"
 	desc = "A module that dispenses burgers."
@@ -797,3 +788,14 @@
 	mod.wearer.put_in_hands(dispensed)
 	balloon_alert(mod.wearer, "[dispensed] dispensed")
 	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
+
+/obj/item/mod/module/gps
+	name = "MOD internal GPS module"
+	desc = "A module that serves as a built-in GPS signal."
+	complexity = 1
+	idle_power_cost = 1
+	incompatible_modules = list(/obj/item/mod/module/gps)
+
+/obj/item/mod/module/gps/Initialize()
+	. = ..()
+	AddComponent(/datum/component/gps, "MOD0")
