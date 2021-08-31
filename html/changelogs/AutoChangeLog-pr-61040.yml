@@ -1,5 +1,0 @@
-author: "Shroopy"
-delete-after: True
-changes: 
-  - bugfix: "Female uniforms now update color correctly."
-  - code_imp: "Female clothing generation now takes greyscale_colors as an arg, which is null by default if the clothing item doesn't use GAGS."
