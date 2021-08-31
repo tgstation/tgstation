@@ -6,6 +6,7 @@
 	var/crystal_charge = ETHEREAL_CHARGE_FULL
 	///used to keep ethereals from spam draining power sources
 	var/drain_time = 0
+	var/damagemodifer = 1
 	var/drainmodifer = damage / 5 //at 100 damage ethereals will loose 16 charge per second
 	low_threshold_passed = "<span class='info'>You can feel your power draining as a feeling of pins and needles fills your abdomen.</span>"
 	high_threshold_passed = "<span class='warning'>Your abdomen is filled with the feeling of shocks and elecric discharges!</span>"
@@ -79,10 +80,12 @@
 			SEND_SIGNAL(carbon, COMSIG_ADD_MOOD_EVENT, "charge", /datum/mood_event/overcharged)
 			carbon.throw_alert("ethereal_overcharge", /atom/movable/screen/alert/ethereal_overcharge, 1)
 			carbon.apply_damage(0.2, TOX, null, null, carbon)
+			damage += (1 * damagemodifer)
 		if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
 			SEND_SIGNAL(carbon, COMSIG_ADD_MOOD_EVENT, "charge", /datum/mood_event/supercharged)
 			carbon.throw_alert("ethereal_overcharge", /atom/movable/screen/alert/ethereal_overcharge, 2)
 			carbon.apply_damage(0.325 * delta_time, TOX, null, null, carbon)
+			damage += (4 * damagemodifer)
 			if(DT_PROB(5, delta_time)) // 5% each seacond for ethereals to explosively release excess energy if it reaches dangerous levels
 				discharge_process(carbon)
 		else
@@ -111,11 +114,12 @@
 		adjust_charge(ETHEREAL_CHARGE_FULL - crystal_charge)
 		to_chat(carbon, span_warning("You violently discharge energy!"))
 		carbon.visible_message(span_danger("[carbon] violently discharges energy!"))
-
-		if(prob(10)) //chance of developing heart disease to dissuade overcharging oneself
-			var/datum/disease/D = new /datum/disease/heart_failure
-			carbon.ForceContractDisease(D)
-			to_chat(carbon, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
-			carbon.playsound_local(carbon, 'sound/effects/singlebeat.ogg', 100, 0)
-
+		damage += (40 * damagemodifer)
+		if(prob(10)) //chance of battery failing instantly, heart disease effect removed in favor of this better thing
+			to_chat(carbon, span_userdanger("You collapse in pain as you feel your battery burst open from the charge!"))
+			damage = 100
+			carbon.emote("Scream")
+			carbon.AdjustUnconscious(2.5 SECONDS)
+			carbon.visible_message(span_danger("[carbon] collapses in utter agony!"))
 		carbon.Paralyze(100)
+		
