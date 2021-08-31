@@ -143,12 +143,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	save_character() //let's save this new random character so it doesn't keep generating new ones.
 	menuoptions = list()
 
-/datum/preferences/proc/ShowChoices(mob/user)
-	if(!user || !user.client)
-		return
-	// MOTHBLOCKS TODO: ShowChoices
-	CRASH("NYI: ShowChoices")
-
 /datum/preferences/ui_interact(mob/user, datum/tgui/ui)
 	// If you leave and come back, re-register the character preview
 	if (!isnull(character_preview_view) && !(character_preview_view in user.client?.screen))
