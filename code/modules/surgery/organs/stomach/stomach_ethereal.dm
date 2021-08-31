@@ -23,14 +23,14 @@
 	adjust_charge(-0.8 * (damage / 5) * delta_time) //at 100 damage ethereals will loose 16 charge per second
 	handle_charge(owner, delta_time, times_fired)
 	var/mob/living/carbon/organ_owner = owner
-	if (prob(50))
+	if (prob(15))
 		to_chat(owner, "<span class='warning'>You feel a jolt of elecricity from your abdomen!</span>")
 	if(!(organ_flags & ORGAN_FAILING))
 		return
 	if(organ_owner)
 		organ_owner.adjustToxLoss(0.65 * delta_time, TRUE, TRUE)
 	crystal_charge = ETHEREAL_CHARGE_NONE
-	if (prob(60))
+	if (prob(3))
 		to_chat(owner,"<span class='userdanger'>You feel your life draining as your battery fails to contain any charge!</span>")
 	
 
@@ -127,7 +127,7 @@
 		damage += (40 * damagemodifer)
 		if(prob(10)) //chance of battery failing instantly, heart disease effect removed in favor of this better thing
 			to_chat(carbon, span_userdanger("You collapse in pain as you feel your battery burst open from the charge!"))
-			damage = 100
+			damage = 105
 			carbon.emote("Scream")
 			carbon.AdjustUnconscious(2.5 SECONDS)
 			carbon.visible_message(span_danger("[carbon] collapses in utter agony!"))
