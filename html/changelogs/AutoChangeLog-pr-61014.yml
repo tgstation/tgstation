@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "trash cannons now accept any oxygen tank, not just red ones"
