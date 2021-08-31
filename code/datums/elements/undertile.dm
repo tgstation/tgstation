@@ -107,6 +107,18 @@
 	target.real_loc = null
 	LAZYREMOVE(target.loc.nullspaced_contents, target)
 
+/mob/living/proc/benchmark_client_images(amount = 10000)
+	if(!client)
+		return
+	for(var/i in 1 to amount)
+		var/image/img = image(icon, src, icon_state, pixel_x = rand(-20,20), pixel_y = rand(-20,20))
+		client.images += img
+
+/mob/living/proc/remove_images()
+	if(!client)
+		return
+
+	client.images.Cut()
 
 /atom/movable/proc/count_all_vis_contents()
 	. = 0
@@ -184,11 +196,11 @@
 	total_movables_plus_vis_contents = total_non_vis_contents_movables + total_vis_contents
 
 	message_admins("[src] with an adjusted view of [used_sendmaps_scan_viewsize] makes SendMaps process [total_movables_plus_vis_contents] movables every tick, [total_non_vis_contents_movables] \
-	 arent vis_contents. of the non vis_contents movables, [movables_in_turf_range] are on turfs, [movables_in_screen] are in \
-	 client.screen, and [movables_in_mob_contents] are in the client mob. \
-	 [total_vis_contents] of the total movables count are vis_contents and [vis_contents_on_movables] of those are on movables and [vis_contents_on_turfs] are on turfs.")
+	arent vis_contents. of the non vis_contents movables, [movables_in_turf_range] are on turfs, [movables_in_screen] are in \
+	client.screen, and [movables_in_mob_contents] are in the client mob. \
+	[total_vis_contents] of the total movables count are vis_contents and [vis_contents_on_movables] of those are on movables and [vis_contents_on_turfs] are on turfs.")
 
 	message_admins("there are [total_turfs_in_range] turfs in range, [images_in_client_images] images in client.images, \
-	 and [obscured_movables] of the [movables_in_turf_range] total turf contents movables cannot be seen by the client. \
-	 [invisible_movables_in_range] movables are invisible to the client regardless of line of sight. \
-	 [seen_areas] areas are in range.")
+	and [obscured_movables] of the [movables_in_turf_range] total turf contents movables cannot be seen by the client. \
+	[invisible_movables_in_range] movables are invisible to the client regardless of line of sight. \
+	[seen_areas] areas are in range.")
