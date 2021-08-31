@@ -15,11 +15,19 @@
 		C.prefs.menuoptions[type] = !checked
 		winset(C, "[verbpath]", "is-checked = [!checked]")
 
-/datum/verbs/menu/settings/verb/setup_character()
+/datum/verbs/menu/settings/verb/setup_game()
 	set name = "Game Preferences"
 	set category = "Preferences"
 	set desc = "Open Game Preferences Window"
 	usr.client.prefs.current_window = PREFERENCE_TAB_GAME_PREFERENCES
+	usr.client.prefs.ui_interact(usr)
+	usr.client.prefs.update_static_data()
+
+/datum/verbs/menu/settings/verb/setup_character()
+	set name = "Character Preferences"
+	set category = "Preferences"
+	set desc = "Open Character Preferences Window"
+	usr.client.prefs.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
 	usr.client.prefs.ui_interact(usr)
 	usr.client.prefs.update_static_data()
 
