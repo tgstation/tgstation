@@ -1,6 +1,3 @@
-// MOTHBLOCKS TODO: Don't show any of these when you're not an admin.
-
-// MOTHBLOCKS TODO: Don't show this when allow_admin_asaycolor is not enabled.
 /datum/preference/color/asay_color
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "asaycolor"
@@ -11,6 +8,9 @@
 
 /datum/preference/color/asay_color/create_default_value()
 	return DEFAULT_ASAY_COLOR
+
+/datum/preference/color/asay_color/is_accessible(datum/preferences/preferences)
+	return is_admin(preferences.parent) && CONFIG_GET(flag/allow_admin_asaycolor)
 
 /// What outfit to equip when spawning as a briefing officer for an ERT
 /datum/preference/choiced/brief_outfit
@@ -36,3 +36,6 @@
 
 /datum/preference/choiced/brief_outfit/apply_to_client(client/client, value)
 	return
+
+/datum/preference/choiced/brief_outfit/is_accessible(datum/preferences/preferences)
+	return is_admin(preferences.parent)

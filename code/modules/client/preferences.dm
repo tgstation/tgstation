@@ -225,6 +225,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	switch (action)
 		if ("change_slot")
+			// Save existing character
+			save_character()
+
 			// SAFETY: `load_character` performs sanitization the slot number
 			if (!load_character(params["slot"]))
 				apply_character_randomization_prefs()
@@ -293,7 +296,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (job.faction != FACTION_STATION)
 				return FALSE
 
-			return set_job_preference_level(job, level)
+			if (!set_job_preference_level(job, level))
+				return FALSE
+
+			character_preview_view.update_body()
+			return TRUE
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		var/delegation = preference_middleware.action_delegations[action]
@@ -303,6 +310,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return FALSE
 
 /datum/preferences/ui_close(mob/user)
+	save_character()
 	save_preferences()
 	QDEL_NULL(character_preview_view)
 
@@ -429,17 +437,12 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	if (!job)
 		return FALSE
 
-	if (level == JP_HIGH) // to high
-		//Set all other high to medium
-		for(var/j in job_preferences)
-			if(job_preferences[j] == JP_HIGH)
-				job_preferences[j] = JP_MEDIUM
-				//technically break here
+	if (level == JP_HIGH)
+		for(var/other_job in job_preferences)
+			if(job_preferences[other_job] == JP_HIGH)
+				job_preferences[other_job] = JP_MEDIUM
 
-	if (isnull(job_preferences[job.title]))
-		job_preferences[job.title] = level
-	else
-		job_preferences -= job.title
+	job_preferences[job.title] = level
 
 	return TRUE
 
