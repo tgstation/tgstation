@@ -588,6 +588,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(I.flags_inv & HIDEHAIR)
 			hair_hidden = TRUE
 
+	if(H.w_uniform)
+		var/obj/item/I = H.w_uniform
+		if(isclothing(I))
+			var/obj/item/clothing/C = I
+			dynamic_hair_suffix = C.dynamic_hair_suffix
+		if(I.flags_inv & HIDEHAIR)
+			hair_hidden = TRUE
+
 	if(H.wear_mask)
 		var/obj/item/I = H.wear_mask
 		if(!dynamic_hair_suffix && isclothing(I)) //head > mask in terms of head hair

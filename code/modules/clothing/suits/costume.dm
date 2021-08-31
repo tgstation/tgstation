@@ -429,7 +429,7 @@
 	desc = "The jacket of a mad dog."
 	icon_state = "MajimaJacket"
 	inhand_icon_state = "MajimaJacket"
-	body_parts_covered = ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/suit/dutch
 	name = "dutch's jacket"
@@ -437,3 +437,67 @@
 	icon_state = "DutchJacket"
 	inhand_icon_state = "DutchJacket"
 	body_parts_covered = ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/driscoll
+	name = "driscoll poncho"
+	desc = "Keeping you warm in the harsh cold of space."
+	icon_state = "driscoll_suit"
+	inhand_icon_state = "driscoll_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/irs
+	name = "internal revenue service jacket"
+	desc = "I'm crazy enough to take on The Owl, but the IRS? Nooo thank you!"
+	icon_state = "irs_suit"
+	inhand_icon_state = "irs_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/osi
+	name = "O.S.I. body armor"
+	desc = "You're beyond good and evil, super man. You work for the government. And you're a tool, boy, a tool! Built for a single purpose by the United States of shut your third fucking damn eye for a fucking reason! You can't teach a hammer to love nails, son. That dog don't hunt!"
+	icon_state = "osi_suit"
+	inhand_icon_state = "osi_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/tmc
+	name = "Lost M.C. cut"
+	desc = "Making sure everyone knows you're in the best biker gang this side of Alderney."
+	icon_state = "tmc_suit"
+	inhand_icon_state = "tmc_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/pg
+	name = "powder ganger jacket"
+	desc = "Remind Security of their mistakes in giving prisoners blasting charges."
+	icon_state = "pg_suit"
+	inhand_icon_state = "pg_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/deckers
+	name = "decker hoodie"
+	desc = "Based? Based on what?"
+	icon_state = "decker_suit"
+	inhand_icon_state = "decker_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/morningstar
+	name = "morningstar coat"
+	desc = "This coat costs more than you've ever made in your entire life."
+	icon_state = "morningstar_suit"
+	inhand_icon_state = "morningstar_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/saints
+	name = "Third Street Saints fur coat"
+	desc = "Rated 10 out of 10 in Cosmo for best coat brand."
+	icon_state = "saints_suit"
+	inhand_icon_state = "saints_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/phantom
+	name = "phantom thief coat"
+	desc = "Your foes will never see you coming in this stealthy yet stylish getup."
+	icon_state = "phantom_suit"
+	inhand_icon_state = "phantom_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS

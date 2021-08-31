@@ -41,9 +41,10 @@
 	team_to_use.add_member(user.mind)
 	for(var/threads in team_to_use.free_clothes)
 		new threads(get_turf(user))
+	for(var/threads in team_to_use.current_theme.bonus_items)
+		new threads(get_turf(user))
 	if (!isnull(handler) && !handler.gangbangers.Find(user.mind)) // if we have a handler and they're not tracked by it
 		handler.gangbangers += user.mind
-	team_to_use.adjust_points(30)
 
 /// Checks if the user is trying to use the package of the family they are in, and if not, adds them to the family, with some differing processing depending on whether the user is already a family member.
 /obj/item/gang_induction_package/proc/attempt_join_gang(mob/living/user)
@@ -53,7 +54,6 @@
 			if(is_gangster.my_gang == team_to_use)
 				return
 			else
-				is_gangster.my_gang.adjust_points(-30)
 				is_gangster.my_gang.remove_member(user.mind)
 				user.mind.remove_antag_datum(/datum/antagonist/gang)
 				add_to_gang(user)

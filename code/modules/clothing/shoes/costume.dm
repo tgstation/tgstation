@@ -63,3 +63,27 @@
 	desc = "They got me for my foams!"
 	icon_state = "SwagShoes"
 	inhand_icon_state = "SwagShoes"
+
+/obj/item/clothing/shoes/phantom
+	name = "Phantom Shoes"
+	desc = "Excellent for when you need to do cool flashy flips."
+	icon_state = "phantom_shoes"
+	inhand_icon_state = "phantom_shoes"
+
+/obj/item/clothing/shoes/saints
+	name = "Saints sneakers"
+	desc = "Officially branded Saints sneakers. Incredibly valuable!"
+	icon_state = "saints_shoes"
+	inhand_icon_state = "saints_shoes"
+
+/obj/item/clothing/shoes/morningstar
+	name = "Morningstar boots"
+	desc = "The most expensive boots on this station. Wearing them dropped the value by about 50%."
+	icon_state = "morningstar_shoes"
+	inhand_icon_state = "morningstar_shoes"
+
+/obj/item/clothing/shoes/deckers
+	name = "Deckers rollerskates"
+	desc = "t3h c00L3st sh03z j00'LL 3v3r f1nd."
+	icon_state = "decker_shoes"
+	inhand_icon_state = "decker_shoes"

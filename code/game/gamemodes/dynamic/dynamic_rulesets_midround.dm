@@ -251,14 +251,20 @@
 	antag_flag = ROLE_FAMILIES
 	protected_roles = list("Prisoner", "Head of Personnel")
 	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	required_candidates = 6 // gotta have 'em ALL
 	weight = 1
 	cost = 25
-	requirements = list(101,101,101,101,101,80,50,30,10,10)
+	requirements = list(101, //0-5 pop
+						101, //6-11 pop
+						101, //12-17 pop
+						80,  //18-23 pop
+						70,  //24-29 pop
+						60,  //30-35 pop
+						50,  //36-41 pop
+						40,  //42-47 pop
+						30,  //48-53 pop
+						20)  //54+ pop
 	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/families)
-	minimum_players = 36
-	antag_cap = 6
 	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
 	var/datum/gang_handler/handler
 
@@ -275,11 +281,6 @@
 		else if(HAS_TRAIT(player, TRAIT_MINDSHIELD))
 			candidates -= player
 
-/datum/dynamic_ruleset/midround/families/acceptable(population = 0, threat_level = 0)
-	. = ..()
-	if(GLOB.deaths_during_shift > round(mode.roundstart_pop_ready / 2))
-		return FALSE
-
 
 /datum/dynamic_ruleset/midround/families/ready(forced = FALSE)
 	if (required_candidates > living_players.len)
@@ -289,7 +290,6 @@
 /datum/dynamic_ruleset/midround/families/pre_execute()
 	..()
 	handler = new /datum/gang_handler(candidates,restricted_roles)
-	handler.gangs_to_generate = (antag_cap[indice_pop] / 2)
 	handler.gang_balance_cap = clamp((indice_pop - 3), 2, 5) // gang_balance_cap by indice_pop: (2,2,2,2,2,3,4,5,5,5)
 	handler.midround_ruleset = TRUE
 	handler.use_dynamic_timing = TRUE

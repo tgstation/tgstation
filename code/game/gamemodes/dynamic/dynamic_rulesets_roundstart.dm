@@ -495,20 +495,25 @@
 	antag_flag = ROLE_FAMILIES
 	protected_roles = list("Prisoner", "Head of Personnel")
 	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	required_candidates = 6 // gotta have 'em ALL
 	weight = 2
 	cost = 30
-	requirements = list(101,101,101,101,101,70,40,10,10,10)
+	requirements = list(101, //0-5 pop
+						101, //6-11 pop
+						101, //12-17 pop
+						80,  //18-23 pop
+						70,  //24-29 pop
+						60,  //30-35 pop
+						50,  //36-41 pop
+						40,  //42-47 pop
+						30,  //48-53 pop
+						20)  //54+ pop
 	flags = HIGH_IMPACT_RULESET
-	minimum_players = 36
-	antag_cap = 6
 	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
 	var/datum/gang_handler/handler
 
 /datum/dynamic_ruleset/roundstart/families/pre_execute(population)
 	..()
 	handler = new /datum/gang_handler(candidates,restricted_roles)
-	handler.gangs_to_generate = (get_antag_cap(population) / 2)
 	handler.gang_balance_cap = clamp((indice_pop - 3), 2, 5) // gang_balance_cap by indice_pop: (2,2,2,2,2,3,4,5,5,5)
 	handler.use_dynamic_timing = TRUE
 	return handler.pre_setup_analogue()

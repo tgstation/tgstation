@@ -276,6 +276,60 @@
 	inhand_icon_state = "DutchUniform"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/irs
+	name = "internal revenue service outfit"
+	icon_state = "irs_jumpsuit"
+	inhand_icon_state = "irs_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/osi
+	name = "O.S.I. jumpsuit"
+	icon_state = "osi_jumpsuit"
+	inhand_icon_state = "osi_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/tmc
+	name = "Lost MC clothing"
+	icon_state = "tmc_jumpsuit"
+	inhand_icon_state = "tmc_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/pg
+	name = "powder ganger prison jumpsuit"
+	icon_state = "pg_jumpsuit"
+	inhand_icon_state = "pg_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/driscoll
+	name = "O'Driscoll outfit"
+	icon_state = "driscoll_jumpsuit"
+	inhand_icon_state = "driscoll_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/deckers
+	name = "deckers outfit"
+	icon_state = "decker_jumpsuit"
+	inhand_icon_state = "decker_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/morningstar
+	name = "Morningstar suit"
+	icon_state = "morningstar_jumpsuit"
+	inhand_icon_state = "morningstar_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/saints
+	name = "Saints outfit"
+	icon_state = "saints_jumpsuit"
+	inhand_icon_state = "saints_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/phantom
+	name = "Phantom Thief outfit"
+	icon_state = "phantom_jumpsuit"
+	inhand_icon_state = "phantom_jumpsuit"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/costume/swagoutfit
 	name = "Swag outfit"
 	desc = "Why don't you go secure some bitches?"
