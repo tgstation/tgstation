@@ -24352,6 +24352,11 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/carpet,
 /area/service/theater)
+"geN" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/east,
+/turf/open/floor/plating,
+/area/engineering/supermatter/room)
 "geR" = (
 /obj/machinery/door/airlock{
 	id_tag = "Cabin6";
@@ -119735,7 +119740,7 @@ oma
 bpc
 bpc
 czV
-bpc
+geN
 bpc
 uFM
 oma

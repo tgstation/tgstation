@@ -49779,6 +49779,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/security/execution/transfer)
+"ilL" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
+/turf/open/floor/plating,
+/area/engineering/supermatter/room)
 "ilU" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -95420,6 +95425,7 @@
 /area/engineering/main)
 "vSm" = (
 /obj/machinery/light/directional/north,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "vSn" = (
@@ -124782,7 +124788,7 @@ uZA
 xCx
 oCQ
 xPF
-otP
+ilL
 otP
 vyR
 otP
