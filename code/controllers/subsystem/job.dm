@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(job)
 	flags = SS_NO_FIRE
 
 	/// List of all jobs.
-	var/list/datum/job/all_occupations = list() 
+	var/list/datum/job/all_occupations = list()
 	/// List of jobs that can be joined through the starting menu.
 	var/list/datum/job/joinable_occupations = list()
 	/// Dictionary of all jobs, keys are titles.
@@ -174,6 +174,7 @@ SUBSYSTEM_DEF(job)
 	return name_occupations[rank]
 
 /datum/controller/subsystem/job/proc/GetJobType(jobtype)
+	RETURN_TYPE(/datum/job)
 	if(!length(all_occupations))
 		SetupOccupations()
 	return type_occupations[jobtype]
