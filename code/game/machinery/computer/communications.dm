@@ -43,14 +43,12 @@
 
 	///how many uses the console has done of toggling the emergency access
 	var/toggle_uses = 0
-	///the minimum cooldown of toggling the emergency access IN SECONDS
-	var/toggle_cooldown = 3
+	///the cooldown of toggling the emergency access IN SECONDS
+	var/toggle_cooldown_seconds = 30
 	///how many uses can you toggle emergency access with before cooldowns start occuring BOTH ENABLE/DISABLE
-	var/toggle_max_uses = 6
+	var/toggle_max_uses = 3
 	///when emergency access was last toggled
 	var/time_last_toggled
-	///how long one must wait without toggling to reset toggle_uses IN SECONDS
-	var/time_toggle_reset = 30
 
 /obj/machinery/computer/communications/Initialize()
 	. = ..()
@@ -379,15 +377,19 @@
 			minor_announce("Due to staff shortages, your station has been approved for delivery of access codes to secure the Captain's Spare ID. Delivery via drop pod at [get_area(pod_location)]. ETA 120 seconds.")
 
 /obj/machinery/computer/communications/proc/emergency_access_cooldown(mob/user)
-	++toggle_uses //add a use
-	if((time_last_toggled + time_toggle_reset SECONDS) < world.time) // after you havent pushed this for awhile, reset the cooldown and uses
-		toggle_uses = 1 //we just used this so we reset to 1, not 0
-		toggle_cooldown = 3 //original cooldown, change this to whatever you change the var to be
-	if(toggle_uses >= toggle_max_uses)
-		if((time_last_toggled + toggle_cooldown SECONDS) > world.time) //if were still in cooldown, let you know, and double the cooldown
-			toggle_cooldown *= 2
-			to_chat(user, span_warning("Emergency Access is still in Cooldown!"))
+	if(toggle_uses == toggle_max_uses)
+		to_chat(user, span_warning("This was your third free use without cooldown, you will not be able to use this again for [toggle_cooldown_seconds] seconds."))
+
+	if(toggle_uses > toggle_max_uses)
+		if((time_last_toggled + toggle_cooldown_seconds SECONDS) >= world.time)
+			to_chat(user, span_warning("Emergency Access is still in Cooldown! Once cooldown ends you will get [toggle_max_uses] free uses without cooldown again."))
 			return TRUE //dont use the button, we are in cooldown
+
+	if((time_last_toggled + toggle_cooldown_seconds SECONDS) < world.time) // after you havent pushed this for awhile, reset the uses
+		toggle_uses = 0
+
+	++toggle_uses //add a use
+
 	time_last_toggled = world.time
 	return FALSE //if we are not in cooldown, allow using the button
 
