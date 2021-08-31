@@ -41,11 +41,16 @@
 	/// The last lines used for changing the status display
 	var/static/last_status_display
 
-	var/toggle_uses = 0 //how many uses the console has done of toggling the emergency access
-	var/toggle_cooldown = 3 //the minimum cooldown of toggling the emergency access IN SECONDS
-	var/toggle_max_uses = 6 //how many uses can you toggle emergency access with before cooldowns start occuring BOTH ENABLE/DISABLE
-	var/time_last_toggled //when emergency access was last toggled
-	var/time_toggle_reset = 30 //how long one must wait without toggling to reset toggle_uses IN SECONDS
+	///how many uses the console has done of toggling the emergency access
+	var/toggle_uses = 0
+	///the minimum cooldown of toggling the emergency access IN SECONDS
+	var/toggle_cooldown = 3
+	///how many uses can you toggle emergency access with before cooldowns start occuring BOTH ENABLE/DISABLE
+	var/toggle_max_uses = 6
+	///when emergency access was last toggled
+	var/time_last_toggled
+	///how long one must wait without toggling to reset toggle_uses IN SECONDS
+	var/time_toggle_reset = 30
 
 /obj/machinery/computer/communications/Initialize()
 	. = ..()
