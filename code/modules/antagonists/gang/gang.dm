@@ -42,14 +42,13 @@
 	if we don't have a "handler" var, and a gang_handler exists, we need to grab it, since our "handler" is null.
 	if the gang exists, we need to join it; if the gang doesn't exist, we need to make it. */
 	var/found_gang = FALSE
-	if(!starter_gangster) // if they're a starter gangster according to the handler, we don't need to check this shit
-		for(var/datum/team/gang/G in GLOB.antagonist_teams)
-			if(G.my_gang_datum.handler) // if one of the gangs in the gang list has a handler, nab that
-				handler = G.my_gang_datum.handler
-			if(G.name == gang_name)
-				my_gang = G
-				found_gang = TRUE
-				break
+	for(var/datum/team/gang/G in GLOB.antagonist_teams)
+		if(G.my_gang_datum.handler) // if one of the gangs in the gang list has a handler, nab that
+			handler = G.my_gang_datum.handler
+		if(G.name == gang_name)
+			my_gang = G
+			found_gang = TRUE
+			break
 	if(!found_gang)
 		var/new_gang = new /datum/team/gang()
 		my_gang = new_gang
@@ -192,27 +191,6 @@
 		return FALSE
 	var/mob/living/carbon/human/H = owner
 	if(H.stat)
-		return FALSE
-
-	var/gang_balance_cap // we need some stuff to fall back on if we're handlerless
-	if(my_gang_datum.handler)
-		gang_balance_cap = my_gang_datum.handler.gang_balance_cap
-	else
-		gang_balance_cap = 5 //just a filler default value
-
-	var/lowest_gang_count = my_gang_datum.my_gang.members.len
-	for(var/datum/team/gang/TT in GLOB.antagonist_teams)
-		var/alive_gangsters = 0
-		for(var/datum/mind/gangers in TT.members)
-			if(ishuman(gangers.current) && gangers.current.client && !gangers.current.stat)
-				alive_gangsters++
-		if(!alive_gangsters || TT.members.len <= 1) // Dead or inactive gangs don't count towards the cap.
-			continue
-		if(TT != my_gang_datum.my_gang)
-			if(alive_gangsters < lowest_gang_count)
-				lowest_gang_count = alive_gangsters
-	if(my_gang_datum.my_gang.members.len >= (lowest_gang_count + gang_balance_cap))
-		to_chat(H, "Your gang is pretty packed right now. You don't need more members just yet. If the other families expand, you can recruit more members.")
 		return FALSE
 	to_chat(H, "You pull an induction package from your pockets and place it on the ground.")
 	var/obj/item/gang_induction_package/GP = new(get_turf(H))
