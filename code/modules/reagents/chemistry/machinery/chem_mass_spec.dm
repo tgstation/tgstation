@@ -112,7 +112,6 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	update_appearance()
-	return
 
 /obj/machinery/chem_mass_spec/AltClick(mob/living/user)
 	. = ..()
