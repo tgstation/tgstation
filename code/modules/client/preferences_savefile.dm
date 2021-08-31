@@ -269,7 +269,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (preference.savefile_identifier != PREFERENCE_PLAYER)
 			continue
 
-		write_preference(preference, read_preference(preference_type))
+		if (preference_type in value_cache)
+			write_preference(preference, preference.serialize(value_cache[preference_type]))
 
 	//general preferences
 	WRITE_FILE(S["lastchangelog"], lastchangelog)
@@ -397,7 +398,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (preference.savefile_identifier != PREFERENCE_CHARACTER)
 			continue
 
-		write_preference(preference, read_preference(preference.type))
+		if (preference.type in value_cache)
+			write_preference(preference, preference.serialize(value_cache[preference.type]))
 
 	WRITE_FILE(S["version"] , SAVEFILE_VERSION_MAX) //load_character will sanitize any bad data, so assume up-to-date.)
 
