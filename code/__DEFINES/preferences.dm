@@ -1,12 +1,12 @@
 
-//Preference toggles
+// Legacy preference toggles.
+// !!! DO NOT ADD ANY NEW ONES HERE !!!
+// Use `/datum/preference/toggle` instead.
 #define SOUND_ADMINHELP (1<<0)
 #define SOUND_MIDI (1<<1)
 #define SOUND_AMBIENCE (1<<2)
 #define SOUND_LOBBY (1<<3)
 #define MEMBER_PUBLIC (1<<4)
-// #define INTENT_STYLE (1<<5) - intents no longer exist
-#define MIDROUND_ANTAG (1<<6)
 #define SOUND_INSTRUMENTS (1<<7)
 #define SOUND_SHIP_AMBIENCE (1<<8)
 #define SOUND_PRAYERS (1<<9)
@@ -25,15 +25,16 @@
 #define SOUND_COMBATMODE (1<<22)
 #define SPLIT_ADMIN_TABS (1<<23)
 
-#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SOUND_ENDOFROUND|MEMBER_PUBLIC|MIDROUND_ANTAG|SOUND_INSTRUMENTS|SOUND_SHIP_AMBIENCE|SOUND_PRAYERS|SOUND_ANNOUNCEMENTS|SOUND_COMBATMODE)
+#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SOUND_ENDOFROUND|MEMBER_PUBLIC|SOUND_INSTRUMENTS|SOUND_SHIP_AMBIENCE|SOUND_PRAYERS|SOUND_ANNOUNCEMENTS|SOUND_COMBATMODE)
 
-//Chat toggles
+// Legacy chat toggles.
+// !!! DO NOT ADD ANY NEW ONES HERE !!!
+// Use `/datum/preference/toggle` instead.
 #define CHAT_OOC (1<<0)
 #define CHAT_DEAD (1<<1)
 #define CHAT_GHOSTEARS (1<<2)
 #define CHAT_GHOSTSIGHT (1<<3)
 #define CHAT_PRAYER (1<<4)
-#define CHAT_RADIO (1<<5)
 #define CHAT_PULLR (1<<6)
 #define CHAT_GHOSTWHISPER (1<<7)
 #define CHAT_GHOSTPDA (1<<8)
@@ -42,7 +43,7 @@
 #define CHAT_GHOSTLAWS (1<<11)
 #define CHAT_LOGIN_LOGOUT (1<<12)
 
-#define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_PULLR|CHAT_GHOSTWHISPER|CHAT_GHOSTPDA|CHAT_GHOSTRADIO|CHAT_BANKCARD|CHAT_GHOSTLAWS|CHAT_LOGIN_LOGOUT)
+#define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_PULLR|CHAT_GHOSTWHISPER|CHAT_GHOSTPDA|CHAT_GHOSTRADIO|CHAT_BANKCARD|CHAT_GHOSTLAWS|CHAT_LOGIN_LOGOUT)
 
 #define PARALLAX_INSANE "Insane"
 #define PARALLAX_HIGH "High"
@@ -154,3 +155,15 @@
 #define PREFERENCE_TAB_CHARACTER_PREFERENCES 0
 /// Open the game preferences window
 #define PREFERENCE_TAB_GAME_PREFERENCES 1
+
+/// These will be shown in the character sidebar, but at the bottom.
+#define PREFERENCE_CATEGORY_FEATURES "features"
+
+/// Preferences that will be put into the 3rd list, and are not contextual.
+#define PREFERENCE_CATEGORY_NON_CONTEXTUAL "non_contextual"
+
+/// Will be put under the game preferences window.
+#define PREFERENCE_CATEGORY_GAME_PREFERENCES "game_preferences"
+
+/// These will show in the list to the right of the character preview.
+#define PREFERENCE_CATEGORY_SECONDARY_FEATURES "secondary_features"

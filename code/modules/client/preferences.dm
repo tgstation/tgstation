@@ -238,6 +238,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/requested_preference_key = params["preference"]
 			var/value = params["value"]
 
+			for (var/datum/preference_middleware/preference_middleware as anything in middleware)
+				if (preference_middleware.pre_set_preference(usr, requested_preference_key, value))
+					return TRUE
+
 			var/datum/preference/requested_preference = GLOB.preference_entries_by_key[requested_preference_key]
 			if (isnull(requested_preference))
 				return FALSE
@@ -328,6 +332,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var/data = preference.compile_ui_data(user, value)
 
 		preferences[preference.category][preference.savefile_key] = data
+
+	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
+		var/list/append_character_preferences = preference_middleware.get_character_preferences(user)
+		if (isnull(append_character_preferences))
+			continue
+
+		for (var/category in append_character_preferences)
+			if (category in preferences)
+				preferences[category] += append_character_preferences[category]
+			else
+				preferences[category] = append_character_preferences[category]
 
 	return preferences
 

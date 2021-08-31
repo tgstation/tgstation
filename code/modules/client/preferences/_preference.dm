@@ -1,15 +1,3 @@
-/// These will be shown in the character sidebar, but at the bottom.
-#define PREFERENCE_CATEGORY_FEATURES "features"
-
-/// Preferences that will be put into the 3rd list, and are not contextual.
-#define PREFERENCE_CATEGORY_NON_CONTEXTUAL "non_contextual"
-
-/// Will be put under the game preferences window.
-#define PREFERENCE_CATEGORY_GAME_PREFERENCES "game_preferences"
-
-/// These will show in the list to the right of the character preview.
-#define PREFERENCE_CATEGORY_SECONDARY_FEATURES "secondary_features"
-
 // Priorities must be in order!
 /// The default priority level
 #define PREFERENCE_PRIORITY_DEFAULT 1

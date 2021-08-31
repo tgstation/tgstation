@@ -38,3 +38,11 @@
 /// Append all of these into /datum/asset/json/preferences.
 /datum/preference_middleware/proc/get_constant_data()
 	return null
+
+/// Merge this into the result of compile_character_preferences.
+/datum/preference_middleware/proc/get_character_preferences(mob/user)
+	return null
+
+/// Called every set_preference, returns TRUE if this handled it.
+/datum/preference_middleware/proc/pre_set_preference(mob/user, preference, value)
+	return FALSE

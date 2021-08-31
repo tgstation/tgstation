@@ -102,6 +102,17 @@ export const CheckboxInput = (
   />);
 };
 
+export const CheckboxInputInverse = (
+  props: FeatureValueProps<BooleanLike, boolean>
+) => {
+  return (<Button.Checkbox
+    checked={!props.value}
+    onClick={() => {
+      props.handleSetValue(!props.value);
+    }}
+  />);
+};
+
 export const createDropdownInput = <T extends string | number = string>(
   // Map of value to display texts
   choices: Record<T, InfernoNode>,

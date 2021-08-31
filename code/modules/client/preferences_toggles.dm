@@ -141,17 +141,6 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings/ghost/chatterbox/events, toggle_arriv
 /datum/verbs/menu/settings/ghost/chatterbox/events/toggle_arrivalrattle/Get_checked(client/C)
 	return !(C.prefs.toggles & DISABLE_ARRIVALRATTLE)
 
-TOGGLE_CHECKBOX(/datum/verbs/menu/settings/ghost, togglemidroundantag)()
-	set name = "Toggle Midround Antagonist"
-	set category = "Preferences"
-	set desc = "Midround Antagonist"
-	usr.client.prefs.toggles ^= MIDROUND_ANTAG
-	usr.client.prefs.save_preferences()
-	to_chat(usr, "<span class='infoplain'>You will [(usr.client.prefs.toggles & MIDROUND_ANTAG) ? "now" : "no longer"] be considered for midround antagonist positions.</span>")
-	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Midround Antag", "[usr.client.prefs.toggles & MIDROUND_ANTAG ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/datum/verbs/menu/settings/ghost/togglemidroundantag/Get_checked(client/C)
-	return C.prefs.toggles & MIDROUND_ANTAG
-
 /datum/verbs/menu/settings/sound
 	name = "Sound"
 
@@ -335,17 +324,6 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings, listen_bank_card)()
 	prefs.save_preferences()
 	to_chat(usr, "<span class='infoplain'>You will [(prefs.toggles & ANNOUNCE_LOGIN) ? "now" : "no longer"] have an announcement to other admins when you login.</span>")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Login Announcement", "[prefs.toggles & ANNOUNCE_LOGIN ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/toggle_hear_radio()
-	set name = "Show/Hide Radio Chatter"
-	set category = "Preferences.Admin"
-	set desc = "Toggle seeing radiochatter from nearby radios and speakers"
-	if(!holder)
-		return
-	prefs.chat_toggles ^= CHAT_RADIO
-	prefs.save_preferences()
-	to_chat(usr, "You will [(prefs.chat_toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from nearby radios or speakers")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Radio Chatter", "[prefs.chat_toggles & CHAT_RADIO ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_split_admin_tabs()
 	set name = "Toggle Split Admin Tabs"
