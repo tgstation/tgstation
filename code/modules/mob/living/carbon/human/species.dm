@@ -429,9 +429,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/mob/living/carbon/human/human = C
 		for(var/obj/item/organ/external/organ_path as anything in external_organs)
 			//Load a persons preferences from DNA
-			var/preference_name = human.dna.features[initial(organ_path.preference)]
+			var/feature_key_name = human.dna.features[initial(organ_path.feature_key)]
 
-			var/obj/item/organ/external/new_organ = new organ_path(null, preference_name, human.body_type)
+			var/obj/item/organ/external/new_organ = new organ_path(null, feature_key_name, human.body_type)
 
 			new_organ.Insert(human)
 
@@ -2111,6 +2111,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				features += "feature_lizard_tail"
 			else
 				features += body_part
+
+	for (var/obj/item/organ/external/organ_type as anything in external_organs)
+		var/preference = initial(organ_type.preference)
+		if (!isnull(preference))
+			features += preference
 
 	for (var/trait in species_traits)
 		switch (trait)

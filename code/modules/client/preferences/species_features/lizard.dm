@@ -1,3 +1,41 @@
+/proc/generate_lizard_side_shots(list/sprite_accessories, key, include_snout = TRUE)
+	var/list/values = list()
+
+	// MOTHBLOCKS TODO: Eyes overlay
+	var/icon/lizard = icon('icons/mob/human_parts_greyscale.dmi', "lizard_head_m", EAST)
+
+	if (include_snout)
+		lizard.Blend(icon('icons/mob/mutant_bodyparts.dmi', "m_snout_round_ADJ", EAST), ICON_OVERLAY)
+
+	for (var/name in sprite_accessories)
+		var/datum/sprite_accessory/sprite_accessory = sprite_accessories[name]
+
+		var/icon/final_icon = icon(lizard)
+
+		if (sprite_accessory.icon_state != "none")
+			var/icon/accessory_icon = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", EAST)
+			final_icon.Blend(accessory_icon, ICON_OVERLAY)
+
+		final_icon.Crop(11, 20, 23, 32)
+		final_icon.Scale(32, 32)
+		final_icon.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+
+		values[name] = final_icon
+
+	return values
+
+/datum/preference/choiced/lizard_horns
+	savefile_key = "feature_lizard_horns"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_FEATURES
+	should_generate_icons = TRUE
+
+/datum/preference/choiced/lizard_horns/init_possible_values()
+	return generate_lizard_side_shots(GLOB.horns_list, "horns")
+
+/datum/preference/choiced/lizard_horns/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["horns"] = value
+
 /datum/preference/choiced/lizard_body_markings
 	savefile_key = "feature_lizard_body_markings"
 	savefile_identifier = PREFERENCE_CHARACTER
