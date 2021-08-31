@@ -7,7 +7,6 @@
 	///used to keep ethereals from spam draining power sources
 	var/drain_time = 0
 	var/damagemodifer = 1
-	var/drainmodifer = damage / 5 //at 100 damage ethereals will loose 16 charge per second
 	low_threshold_passed = "<span class='info'>You can feel your power draining as a feeling of pins and needles fills your abdomen.</span>"
 	high_threshold_passed = "<span class='warning'>Your abdomen is filled with the feeling of shocks and elecric discharges!</span>"
 	high_threshold_cleared = "<span class='info'>The eletric feeling in your stomach seems to fade away, leaving behind a feeling of pins and needles</span>"
@@ -21,16 +20,18 @@
 		damage = maxHealth
 	if(damage < low_threshold)
 		return
-	adjust_charge(-0.8 * drainmodifer * delta_time)
+	adjust_charge(-0.8 * (damage / 5) * delta_time) //at 100 damage ethereals will loose 16 charge per second
 	handle_charge(owner, delta_time, times_fired)
+	var/mob/living/carbon/organ_owner = owner
 	if (prob(10))
-		to_chat(M, "<span class='warning'>You feel a jolt of elecricity from your abdomen!</span>")
+		to_chat(owner, "<span class='warning'>You feel a jolt of elecricity from your abdomen!</span>")
 	if(!(organ_flags & ORGAN_FAILING))
 		return
-	carbon.apply_damage(0.65 * delta_time, TOX, null, null, carbon)
+	if(organ_owner)
+		organ_owner.adjustToxLoss(0.65 * delta_time, TRUE, TRUE)
 	crystal_charge = ETHEREAL_CHARGE_NONE
 	if (prob(10))
-		to_chat(M, "<span class='userdanger'>You feel your life draining as your battery fails to contain any charge!</span>")
+		to_chat(owner,"<span class='userdanger'>You feel your life draining as your battery fails to contain any charge!</span>")
 	
 
 /obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/carbon, special = 0)
