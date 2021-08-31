@@ -81,13 +81,13 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	var/priority = PREFERENCE_PRIORITY_DEFAULT
 
 /// Called on the saved input when retrieving.
+/// Also called by the value sent from the user through UI. Do not trust it.
 /// Input is the value inside the savefile, output is to tell other code
 /// what the value is.
 /// This is useful either for more optimal data saving or for migrating
 /// older data.
 /// Must be overridden by subtypes.
 /// Can return /datum/mark_call_create_default_value.
-// MOTHBLOCKS TODO: It's also called by the UI, but probably shouldn't be
 /datum/preference/proc/deserialize(input)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
