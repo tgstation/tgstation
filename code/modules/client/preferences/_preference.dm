@@ -215,6 +215,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// This will, for instance, update the character preference view.
 /// Performs sanity checks.
 /datum/preferences/proc/update_preference(datum/preference/preference, new_value)
+	if (!preference.is_accessible(src))
+		return FALSE
+
 	if (!write_preference(preference, new_value))
 		return FALSE
 
@@ -246,6 +249,11 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	SHOULD_NOT_SLEEP(TRUE)
 
 	return null
+
+/// Returns whether or not this preference is accessible.
+/// If FALSE, will not show in the UI and will not be editable (by update_preference).
+/datum/preference/proc/is_accessible(datum/preferences/preferences)
+	return TRUE
 
 /// A preference that is a choice of one option among a fixed set.
 /// Used for preferences such as clothing.

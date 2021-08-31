@@ -317,6 +317,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/preferences = list()
 
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
+		if (!preference.is_accessible(src))
+			continue
+
 		LAZYINITLIST(preferences[preference.category])
 
 		var/value = read_preference(preference.type)

@@ -1,4 +1,3 @@
-// MOTHBLOCKS TODO: Config locked to preference_map_voting
 /// During map rotation, this will help determine the chosen map.
 /datum/preference/choiced/preferred_map
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
@@ -45,6 +44,9 @@
 	data[CHOICED_PREFERENCE_DISPLAY_NAMES] = display_names
 
 	return data
+
+/datum/preference/choiced/preferred_map/is_accessible(datum/preferences/preferences)
+	return CONFIG_GET(flag/preference_map_voting)
 
 /datum/preference/choiced/preferred_map/apply_to_client(client/client, value)
 	return
