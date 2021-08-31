@@ -347,9 +347,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/color_legacy/deserialize(input)
 	return sanitize_hexcolor(input)
 
-// MOTHBLOCKS TODO: Randomize, or make a var like numeric
 /datum/preference/color_legacy/create_default_value()
-	return "000"
+	return random_short_color()
 
 /datum/preference/color_legacy/is_valid(value)
 	var/static/regex/is_legacy_color = regex(@"^[0-9a-fA-F]{3}$")
@@ -361,9 +360,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/color/deserialize(input)
 	return sanitize_color(input)
 
-// MOTHBLOCKS TODO: Randomize
 /datum/preference/color/create_default_value()
-	return COLOR_BLACK
+	return random_color()
 
 /datum/preference/color/is_valid(value)
 	return findtext(value, GLOB.is_color)

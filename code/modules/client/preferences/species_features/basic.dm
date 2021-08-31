@@ -36,6 +36,9 @@
 			eyes_organ.eye_color = value
 		eyes_organ.old_eye_color = value
 
+/datum/preference/color_legacy/eye_color/create_default_value()
+	return random_eye_color()
+
 /datum/preference/choiced/facial_hairstyle
 	savefile_key = "facial_style_name"
 	savefile_identifier = PREFERENCE_CHARACTER
