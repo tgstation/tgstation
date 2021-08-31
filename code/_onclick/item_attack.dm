@@ -310,7 +310,7 @@
 	if(hit_area)
 		message_hit_area = " in the [hit_area]"
 	var/attack_message_spectator = "[src] [message_verb_continuous][message_hit_area] with [I]!"
-	var/attack_message_victim = "You're [message_verb_continuous][message_hit_area] with [I]!"
+	var/attack_message_victim = "Something [message_verb_continuous] you[message_hit_area] with [I]!"
 	var/attack_message_attacker = "You [message_verb_simple] [src][message_hit_area] with [I]!"
 	if(user in viewers(src, null))
 		attack_message_spectator = "[user] [message_verb_continuous] [src][message_hit_area] with [I]!"
