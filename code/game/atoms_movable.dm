@@ -84,7 +84,8 @@
 	var/contents_thermal_insulation = 0
 	/// The degree of pressure protection that mobs in list/contents have from the external environment, between 0 and 1
 	var/contents_pressure_protection = 0
-
+	///what loc we "should" be in if we are nullspaced
+	var/atom/real_loc
 
 /atom/movable/Initialize(mapload)
 	. = ..()

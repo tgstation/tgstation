@@ -137,7 +137,7 @@
 
 /obj/machinery/atmospherics/components/binary/circulator/can_be_node(obj/machinery/atmospherics/target)
 	if(anchored)
-		return ..(target)
+		return ..()
 	return FALSE
 
 /obj/machinery/atmospherics/components/binary/circulator/multitool_act(mob/living/user, obj/item/I)

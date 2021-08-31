@@ -27,7 +27,7 @@
 	. = ..()
 
 	if(hide)
-		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
+		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, nullspace_contents = TRUE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
 
 /obj/machinery/atmospherics/pipe/nullifyNode(i)
 	var/obj/machinery/atmospherics/oldN = nodes[i]
@@ -46,8 +46,8 @@
 
 /obj/machinery/atmospherics/pipe/proc/releaseAirToTurf()
 	if(air_temporary)
-		var/turf/T = loc
-		T.assume_air(air_temporary)
+		var/atom/atom_loc = real_loc ? real_loc : loc
+		atom_loc.assume_air(air_temporary)
 
 /obj/machinery/atmospherics/pipe/return_air()
 	if(air_temporary)
@@ -83,7 +83,7 @@
 
 	releaseAirToTurf()
 
-	var/turf/T = loc
+	var/turf/T = real_loc || loc
 	for(var/obj/machinery/meter/meter in T)
 		if(meter.target == src)
 			var/obj/item/pipe_meter/PM = new (T)
@@ -99,7 +99,7 @@
 		if(!nodes[i])
 			continue
 		var/obj/machinery/atmospherics/node = nodes[i]
-		var/connected_dir = get_dir(src, node)
+		var/connected_dir = get_dir(real_loc || src, node.real_loc || node)
 		connections |= connected_dir
 	bitfield = CARDINAL_TO_FULLPIPES(connections)
 	bitfield |= CARDINAL_TO_SHORTPIPES(initialize_directions & ~connections)

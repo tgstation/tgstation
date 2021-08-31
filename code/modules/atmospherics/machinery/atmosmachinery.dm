@@ -58,6 +58,8 @@
 	///The bitflag that's being checked on ventcrawling. Default is to allow ventcrawling and seeing pipes.
 	var/vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE
 
+	var/Ahas_ever_had_nodes_set = FALSE
+
 /obj/machinery/atmospherics/LateInitialize()
 	. = ..()
 	update_name()
@@ -169,12 +171,15 @@
  */
 /obj/machinery/atmospherics/proc/atmosinit(list/node_connects)
 	if(!node_connects) //for pipes where order of nodes doesn't matter
-		node_connects = getNodeConnects()
+		node_connects = getNodeConnects()//list of length 1-device_type containing the directions this atmos machine tries to connect to
 
 	for(var/i in 1 to device_type)
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[i]))
+		var/turf/associated_loc_to_check = get_step((real_loc || src), node_connects[i])
+		var/list/stuff_in_associated_loc = associated_loc_to_check.nullspaced_contents | associated_loc_to_check.contents
+		for(var/obj/machinery/atmospherics/target in stuff_in_associated_loc)
 			if(can_be_node(target, i))
 				nodes[i] = target
+				Ahas_ever_had_nodes_set = TRUE
 				break
 	update_appearance()
 
@@ -211,8 +216,12 @@
  * * prompted_layer - the piping_layer we are inside
  */
 /obj/machinery/atmospherics/proc/findConnecting(direction, prompted_layer)
-	for(var/obj/machinery/atmospherics/target in get_step_multiz(src, direction))
-		if(!(target.initialize_directions & get_dir(target,src)) && !istype(target, /obj/machinery/atmospherics/pipe/multiz))
+	var/turf/adjacent_loc = get_step_multiz(real_loc || src, direction)
+	if(!adjacent_loc)
+		return
+	var/list/contents_to_check = adjacent_loc.nullspaced_contents ? adjacent_loc.nullspaced_contents.Copy() + contents : contents
+	for(var/obj/machinery/atmospherics/target in contents_to_check)
+		if(!(target.initialize_directions & get_dir(target.real_loc || target, real_loc || src)) && !istype(target, /obj/machinery/atmospherics/pipe/multiz))
 			continue
 		if(connection_check(target, prompted_layer))
 			return target
@@ -237,8 +246,8 @@
  * Arguments:
  * * obj/machinery/atmospherics/target - the machinery we want to connect to
  */
-/obj/machinery/atmospherics/proc/check_init_directions(obj/machinery/atmospherics/target)
-	if((initialize_directions & get_dir(src, target) && target.initialize_directions & get_dir(target,src)) || istype(target, /obj/machinery/atmospherics/pipe/multiz))
+/obj/machinery/atmospherics/proc/check_init_directions(obj/machinery/atmospherics/target)//TODOKYLER: nullspacify this for pipes
+	if((initialize_directions & get_dir(real_loc || src, target.real_loc || target) && target.initialize_directions & get_dir(target.real_loc || target, real_loc || src)) || istype(target, /obj/machinery/atmospherics/pipe/multiz))
 		return TRUE
 	return FALSE
 
@@ -252,8 +261,14 @@
 /obj/machinery/atmospherics/proc/isConnectable(obj/machinery/atmospherics/target, given_layer)
 	if(isnull(given_layer))
 		given_layer = piping_layer
-	if(check_connectable_layer(target, given_layer) && target.loc != loc && check_connectable_color(target))
-		return TRUE
+	if(check_connectable_layer(target, given_layer) && check_connectable_color(target))
+		if(real_loc && real_loc != (target.real_loc || target.loc))
+			return TRUE
+		else if(real_loc)//if real_loc is not null then dont check our loc since that is null
+			return FALSE
+
+		if(loc != (target.real_loc || target.loc))
+			return TRUE
 	return FALSE
 
 /**
@@ -418,7 +433,7 @@
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(can_unwrench)
-			var/obj/item/pipe/stored = new construction_type(loc, null, dir, src, pipe_color)
+			var/obj/item/pipe/stored = new construction_type(real_loc ? real_loc : loc, null, dir, src, pipe_color)
 			stored.setPipingLayer(piping_layer)
 			if(!disassembled)
 				stored.take_damage(stored.max_integrity * 0.5, sound_effect=FALSE)

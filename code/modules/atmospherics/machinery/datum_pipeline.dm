@@ -73,16 +73,16 @@
 
 	if(!air)
 		air = new
-	var/list/possible_expansions = list(base)
+	var/list/possible_expansions = list(base)//4 way manifold (blue air supply pipe)
 	while(possible_expansions.len)
 		for(var/obj/machinery/atmospherics/borderline in possible_expansions)
 			var/list/result = borderline.pipeline_expansion(src)
-			if(!result?.len)
+			if(!length(result))
 				possible_expansions -= borderline
-				continue
-			for(var/obj/machinery/atmospherics/considered_device in result)
+				continue//this is skipped
+			for(var/obj/machinery/atmospherics/considered_device in result)// list(null, grey air vent, null, null)
 				if(!istype(considered_device, /obj/machinery/atmospherics/pipe))
-					considered_device.setPipenet(src, borderline)
+					considered_device.setPipenet(src, borderline)//for the list of adjacent (to the input atmos machine) atmos machines we can expand to, set us as its pipenet
 					addMachineryMember(considered_device)
 					continue
 				var/obj/machinery/atmospherics/pipe/item = considered_device

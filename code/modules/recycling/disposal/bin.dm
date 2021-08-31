@@ -46,7 +46,8 @@
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
 /obj/machinery/disposal/proc/trunk_check()
-	trunk = locate() in loc
+	var/turf/turf_to_check = get_turf(real_loc || src)
+	trunk = locate() in (turf_to_check.nullspaced_contents | turf_to_check.contents)
 	if(!trunk)
 		pressure_charging = FALSE
 		flush = FALSE
@@ -213,7 +214,7 @@
 	sleep(5)
 	if(QDELETED(src))
 		return
-	var/obj/structure/disposalholder/H = new(src)
+	var/obj/structure/disposalholder/H = new(real_loc || src)
 	newHolderDestination(H)
 	H.init(src)
 	air_contents = new()
@@ -229,7 +230,7 @@
 /obj/machinery/disposal/proc/flushAnimation()
 	flick("[icon_state]-flush", src)
 
-// called when holder is expelled from a disposal
+/// called when holder is expelled from a disposal
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
 	H.active = FALSE
 
@@ -237,11 +238,11 @@
 
 	pipe_eject(H)
 
-	H.vent_gas(loc)
+	H.vent_gas(real_loc || loc)
 	qdel(H)
 
 /obj/machinery/disposal/deconstruct(disassembled = TRUE)
-	var/turf/T = loc
+	var/turf/T = real_loc || loc
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(stored)
 			stored.forceMove(T)
@@ -466,7 +467,8 @@
 
 /obj/machinery/disposal/delivery_chute/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
-	trunk = locate() in loc
+	var/turf/loc_to_check = get_turf(real_loc || loc)
+	trunk = locate() in loc_to_check.nullspaced_contents | loc_to_check.contents
 	if(trunk)
 		trunk.linked = src // link the pipe trunk to self
 

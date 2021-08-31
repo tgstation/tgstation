@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	GLOB.cable_list += src //add it to the global cable list
 	Connect_cable()
-	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, nullspace_contents = TRUE)
 	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
 
 /obj/structure/cable/proc/on_rat_eat(mob/living/simple_animal/hostile/regalrat/king)
@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(clear_before_updating)
 		linked_dirs = 0
 	var/obj/machinery/power/search_parent
-	for(var/obj/machinery/power/P in loc)
+	for(var/obj/machinery/power/P in real_loc || loc)
 		if(istype(P, /obj/machinery/power/terminal))
 			under_thing = UNDER_TERMINAL
 			search_parent = P
@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			search_parent = P
 			break
 	for(var/check_dir in GLOB.cardinals)
-		var/TB = get_step(src, check_dir)
+		var/TB = get_step(real_loc || src, check_dir)
 		//don't link from smes to its terminal
 		if(under_thing)
 			switch(under_thing)
@@ -104,8 +104,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	for(var/check_dir in GLOB.cardinals)
 		var/inverse = turn(check_dir, 180)
 		if(linked_dirs & check_dir)
-			var/TB = get_step(loc, check_dir)
-			for(var/obj/structure/cable/C in TB)
+			var/turf/adjacent_turf = get_step(real_loc || loc, check_dir)
+			var/list/contents_to_check = adjacent_turf.nullspaced_contents | adjacent_turf.contents
+			for(var/obj/structure/cable/C in contents_to_check)
 				if(cable_layer & C.cable_layer)
 					C.linked_dirs &= ~inverse
 					C.update_appearance()
@@ -139,7 +140,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			dir_icon_list += "[check_dir]"
 	var/dir_string = dir_icon_list.Join("-")
 	if(dir_icon_list.len > 1)
-		for(var/obj/O in loc)
+		var/atom/loc_to_check = real_loc || loc
+		var/list/contents_to_check = loc_to_check.nullspaced_contents | loc_to_check.contents
+		for(var/obj/O in contents_to_check)
 			if(GLOB.wire_node_generating_types[O.type])
 				dir_string = "[dir_string]-node"
 				break
@@ -160,14 +163,14 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
-	var/turf/T = get_turf(src)
+	var/turf/T = get_turf(real_loc || src)
 	if(T.intact)
 		return
 	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if (shock(user, 50))
 			return
 		user.visible_message(span_notice("[user] cuts the cable."), span_notice("You cut the cable."))
-		investigate_log("was cut by [key_name(usr)] in [AREACOORD(src)]", INVESTIGATE_WIRES)
+		investigate_log("was cut by [key_name(usr)] in [AREACOORD(real_loc || src)]", INVESTIGATE_WIRES)
 		deconstruct()
 		return
 
@@ -261,9 +264,10 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	var/inverse_dir = (!direction)? 0 : turn(direction, 180) //flip the direction, to match with the source position on its turf
 
-	var/turf/TB  = get_step(src, direction)
+	var/turf/TB  = get_step(real_loc || src, direction)
 
-	for(var/obj/structure/cable/C in TB)
+	var/list/contents_to_check = TB.nullspaced_contents | TB.contents
+	for(var/obj/structure/cable/C in contents_to_check)
 		if(!C)
 			continue
 
@@ -325,11 +329,11 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/structure/cable/proc/get_cable_connections(powernetless_only)
 	. = list()
-	var/turf/T = get_turf(src)
+	var/turf/T = get_turf(real_loc || src)
 	for(var/check_dir in GLOB.cardinals)
 		if(linked_dirs & check_dir)
-			T = get_step(src, check_dir)
-			for(var/obj/structure/cable/C in T)
+			T = get_step(real_loc || src, check_dir)
+			for(var/obj/structure/cable/C in (T.nullspaced_contents | T.contents))
 				if(cable_layer & C.cable_layer)
 					. += C
 
@@ -337,13 +341,15 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	. = list()
 	var/turf/T
 	for(var/check_dir in GLOB.cardinals)
-		T = get_step(src, check_dir)
-		for(var/obj/structure/cable/C in T.contents - src)
+		T = get_step(real_loc || src, check_dir)
+		for(var/obj/structure/cable/C in (T.nullspaced_contents | T.contents) - src)
 			. += C
 
 /obj/structure/cable/proc/get_machine_connections(powernetless_only)
 	. = list()
-	for(var/obj/machinery/power/P in get_turf(src))
+	var/turf/loc_to_check = get_turf(real_loc || src)
+	var/list/contents_to_check = loc_to_check.nullspaced_contents | loc_to_check.contents
+	for(var/obj/machinery/power/P in contents_to_check)
 		if(!powernetless_only || !P.powernet)
 			if(P.anchored)
 				. += P
@@ -376,8 +382,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/list/P_list = list()
 	for(var/dir_check in GLOB.cardinals)
 		if(linked_dirs & dir_check)
-			T1 = get_step(loc, dir_check)
-			P_list += locate(/obj/structure/cable) in T1
+			T1 = get_step(real_loc || loc, dir_check)
+			P_list += locate(/obj/structure/cable) in (T1.nullspaced_contents | T1.contents)
 
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
 	if(remove)
@@ -579,7 +585,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		to_chat(user, span_warning("You can't lay cable at a place that far away!"))
 		return
 
-	for(var/obj/structure/cable/C in T)
+	var/list/contents_to_check = T.nullspaced_contents | T.contents
+	for(var/obj/structure/cable/C in contents_to_check)
 		if(C.cable_layer & target_layer)
 			to_chat(user, span_warning("There's already a cable at that position!"))
 			return
@@ -598,7 +605,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	if(C.shock(user, 50))
 		if(prob(50)) //fail
-			new /obj/item/stack/cable_coil(get_turf(C), 1)
+			new /obj/item/stack/cable_coil(get_turf(C.real_loc || C), 1)
 			C.deconstruct()
 
 	return C
@@ -674,8 +681,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/multilayer/Initialize(mapload)
 	. = ..()
 
-	var/turf/T = get_turf(src)
-	for(var/obj/structure/cable/C in T.contents - src)
+	var/turf/T = get_turf(real_loc || src)
+	for(var/obj/structure/cable/C in (T.nullspaced_contents | T.contents) - src)
 		if(C.cable_layer & cable_layer)
 			C.deconstruct() // remove adversary cable
 	if(!mapload)

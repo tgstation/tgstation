@@ -188,13 +188,13 @@
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf
 /obj/machinery/power/proc/connect_to_network()
-	var/turf/T = src.loc
+	var/turf/T = real_loc || src.loc
 	if(!T || !istype(T))
 		return FALSE
 
 	var/obj/structure/cable/C = T.get_cable_node(machinery_layer) //check if we have a node cable on the machine turf, the first found is picked
 	if(!C || !C.powernet)
-		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in T
+		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in (T.contents | T.nullspaced_contents)
 		if(!term || !term.powernet)
 			return FALSE
 		else
@@ -219,7 +219,7 @@
 		var/turf/T = user.loc
 		if(T.intact || !isfloorturf(T))
 			return
-		if(get_dist(src, user) > 1)
+		if(get_dist(real_loc || src, user) > 1)
 			return
 		coil.place_turf(T, user)
 	else
@@ -237,7 +237,7 @@
 	var/turf/T
 
 	for(var/card in GLOB.cardinals)
-		T = get_step(loc,card)
+		T = get_step(real_loc || loc,card)
 
 		for(var/obj/structure/cable/C in T)
 			if(C.powernet)
@@ -252,7 +252,7 @@
 	var/turf/T
 
 	for(var/card in GLOB.cardinals)
-		T = get_step(loc,card)
+		T = get_step(real_loc || loc,card)
 
 		for(var/obj/structure/cable/C in T)
 			. += C
@@ -261,7 +261,7 @@
 //returns all the NODES (O-X) cables WITHOUT a powernet in the turf the machine is located at
 /obj/machinery/power/proc/get_indirect_connections()
 	. = list()
-	for(var/obj/structure/cable/C in loc)
+	for(var/obj/structure/cable/C in real_loc || loc)
 		if(C.powernet)
 			continue
 		. += C
@@ -370,7 +370,7 @@
 		return FALSE //feckin mechs are dumb
 
 	if(dist_check)
-		if(!in_range(source, victim))
+		if(!in_range(source.real_loc || source, victim))
 			return FALSE
 
 	if(victim.wearing_shock_proof_gloves())
@@ -420,7 +420,8 @@
 /turf/proc/get_cable_node(machinery_layer = MACHINERY_LAYER_1)
 	if(!can_have_cabling())
 		return null
-	for(var/obj/structure/cable/C in src)
+	var/list/contents_to_check = nullspaced_contents | contents
+	for(var/obj/structure/cable/C in contents_to_check)
 		if(C.machinery_layer & machinery_layer)
 			C.update_appearance()
 			return C

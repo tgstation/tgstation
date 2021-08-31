@@ -72,7 +72,7 @@
 		if(!nodes[i])
 			continue
 		var/obj/machinery/atmospherics/node = nodes[i]
-		var/node_dir = get_dir(src, node)
+		var/node_dir = get_dir(real_loc || src, node.real_loc || node)
 		var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "intact_[node_dir]_[underlay_pipe_layer]")
 		pipe_appearance.color = node.pipe_color
 		underlays += pipe_appearance
@@ -156,8 +156,11 @@
 		return list(nodes[parents.Find(reference)])
 	return ..()
 
-/obj/machinery/atmospherics/components/setPipenet(datum/pipeline/reference, obj/machinery/atmospherics/A)
-	parents[nodes.Find(A)] = reference
+/obj/machinery/atmospherics/components/setPipenet(datum/pipeline/reference, obj/machinery/atmospherics/adjacent_atmos_machine)
+	parents[nodes.Find(adjacent_atmos_machine)] = reference
+	//TODOKYLER: this runtimes with list index out of bounds error because nodes.Find(adjacent_atmos_machine) returns 0 when it isnt there
+	//this means that nodes isnt being set correctly. its just list(null). device_type is 1 though so this is the correct length, but it should have adjacent_atmos_machine in it
+	//we appear to be in adjacent_atmos_machine's nodes list but they arent in our list
 
 /obj/machinery/atmospherics/components/returnPipenet(obj/machinery/atmospherics/A = nodes[1]) //returns parents[1] if called without argument
 	return parents[nodes.Find(A)]

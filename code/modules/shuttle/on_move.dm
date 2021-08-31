@@ -239,7 +239,8 @@ All ShuttleMove procs go here
 			var/obj/machinery/atmospherics/node = nodes[i]
 			var/connected = FALSE
 			for(var/D in GLOB.cardinals)
-				if(node in get_step(src, D))
+				var/turf/turf_to_check = get_step(real_loc || src, D)
+				if(node in turf_to_check.nullspaced_contents | turf_to_check.contents)
 					connected = TRUE
 					break
 

@@ -403,7 +403,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return new_baseturfs
 
 /turf/proc/levelupdate()
-	for(var/obj/O in src)
+	for(var/obj/O in contents)
+		if(O.flags_1 & INITIALIZED_1)
+			SEND_SIGNAL(O, COMSIG_OBJ_HIDE, intact)
+	for(var/obj/O in nullspaced_contents)
 		if(O.flags_1 & INITIALIZED_1)
 			SEND_SIGNAL(O, COMSIG_OBJ_HIDE, intact)
 

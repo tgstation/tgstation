@@ -42,7 +42,7 @@
 		if(initialize_dirs & DISP_DIR_FLIP)
 			dpdir |= turn(dir, 180)
 
-	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, nullspace_contents = TRUE)
 
 // pipe is deleted
 // ensure if holder is present, it is expelled
@@ -50,7 +50,7 @@
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
 		H.active = FALSE
-		expel(H, get_turf(src), 0)
+		expel(H, get_turf(real_loc || src), 0)
 	stored = null //The qdel is handled in expel()
 	return ..()
 
@@ -69,26 +69,26 @@
 /obj/structure/disposalpipe/proc/transfer(obj/structure/disposalholder/H)
 	return transfer_to_dir(H, nextdir(H))
 
-/obj/structure/disposalpipe/proc/transfer_to_dir(obj/structure/disposalholder/H, nextdir)
-	H.setDir(nextdir)
-	var/turf/T = H.nextloc()
-	var/obj/structure/disposalpipe/P = H.findpipe(T)
+/obj/structure/disposalpipe/proc/transfer_to_dir(obj/structure/disposalholder/holder, nextdir)
+	holder.setDir(nextdir)
+	var/turf/T = holder.nextloc()
+	var/obj/structure/disposalpipe/next_pipe = holder.findpipe(T)
 
-	if(!P) // if there wasn't a pipe, then they'll be expelled.
+	if(!next_pipe) // if there wasn't a pipe, then they'll be expelled.
 		return
 	// find other holder in next loc, if inactive merge it with current
-	var/obj/structure/disposalholder/H2 = locate() in P
+	var/obj/structure/disposalholder/H2 = locate() in next_pipe
 	if(H2 && !H2.active)
-		H.merge(H2)
+		holder.merge(H2)
 
-	H.forceMove(P)
-	return P
+	holder.forceMove(next_pipe.real_loc || next_pipe)
+	return next_pipe
 
 // expel the held objects into a turf
 // called when there is a break in the pipe
 /obj/structure/disposalpipe/proc/expel(obj/structure/disposalholder/H, turf/T, direction)
 	if(!T)
-		T = get_turf(src)
+		T = get_turf(real_loc || src)
 	var/turf/target
 	var/eject_range = 5
 	var/turf/open/floor/floorturf
@@ -118,7 +118,7 @@
 
 // pipe affected by explosion
 /obj/structure/disposalpipe/contents_explosion(severity, target)
-	var/obj/structure/disposalholder/H = locate() in src
+	var/obj/structure/disposalholder/H = locate() in real_loc.nullspaced_contents | real_loc.contents
 	H?.contents_explosion(severity, target)
 
 
@@ -146,12 +146,12 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
 			if(stored)
-				stored.forceMove(loc)
+				stored.forceMove(real_loc || loc)
 				transfer_fingerprints_to(stored)
 				stored.setDir(dir)
 				stored = null
 		else
-			var/turf/T = get_turf(src)
+			var/turf/T = get_turf(real_loc || src)
 			for(var/D in GLOB.cardinals)
 				if(D & dpdir)
 					var/obj/structure/disposalpipe/broken/P = new(T)
@@ -232,8 +232,8 @@
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
 	linked = null
-	var/turf/T = get_turf(src)
-	var/obj/machinery/disposal/D = locate() in T
+	var/turf/T = get_turf(real_loc || src)
+	var/obj/machinery/disposal/D = locate() in T.nullspaced_contents | T.contents
 	if(D)
 		linked = D
 		if (!D.trunk)

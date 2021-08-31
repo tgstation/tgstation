@@ -86,6 +86,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_directional_opacity = directional_opacity
 	var/old_dynamic_lumcount = dynamic_lumcount
 	var/old_rcd_memory = rcd_memory
+	var/list/old_nullspaced_contents = nullspaced_contents?.Copy()
 
 	var/old_bp = blueprint_data
 	blueprint_data = null
@@ -110,6 +111,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		LAZYOR(W.comp_lookup, old_comp_lookup)
 	if(old_signal_procs)
 		LAZYOR(W.signal_procs, old_signal_procs)
+	if(old_nullspaced_contents)
+		LAZYOR(W.nullspaced_contents, old_nullspaced_contents)
 
 	for(var/datum/callback/callback as anything in post_change_callbacks)
 		callback.InvokeAsync(W)

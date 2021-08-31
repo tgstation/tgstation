@@ -156,6 +156,8 @@
 	var/atom/orbit_target
 	///AI controller that controls this atom. type on init, then turned into an instance during runtime
 	var/datum/ai_controller/ai_controller
+	///stuff that is supposed to be located in us but might not actually be. meant for things that get nullspaced for performance reasons but are still associated with us
+	var/list/nullspaced_contents
 
 /**
  * Called when an atom is created in byond (built in engine proc)
@@ -1309,11 +1311,17 @@
 	. += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(dir) || dir]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
 
 ///Where atoms should drop if taken from this atom
-/atom/proc/drop_location()
-	var/atom/L = loc
+/atom/proc/drop_location(atom/forced_loc)
+	var/atom/L = forced_loc || loc
 	if(!L)
 		return null
 	return L.AllowDrop() ? L : L.drop_location()
+
+/atom/movable/drop_location(atom/forced_loc)
+	if(real_loc)
+		forced_loc = real_loc
+	. = ..()
+
 
 /atom/proc/vv_auto_rename(newname)
 	name = newname
