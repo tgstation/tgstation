@@ -140,6 +140,7 @@
 			return FALSE
 
 /obj/effect/proc_holder/spell/aimed/firebreath/ready_projectile(obj/projectile/P, atom/target, mob/user, iteration)
+	. = ..()
 	if(!istype(P, /obj/projectile/magic/aoe/fireball))
 		return
 	var/obj/projectile/magic/aoe/fireball/F = P

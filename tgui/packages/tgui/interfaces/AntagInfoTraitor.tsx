@@ -96,7 +96,8 @@ const EmployerSection = (props, context) => {
           icon="hammer"
           tooltip={multiline`
             This is a gameplay suggestion for bored traitors.
-            You don't have to follow it... kinda like spacelaw!`}
+            You don't have to follow it, unless you want some
+            ideas for how to spend the round.`}
           tooltipPosition="bottom-start">
           Policy
         </Button>

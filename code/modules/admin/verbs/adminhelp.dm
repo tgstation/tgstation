@@ -186,12 +186,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
  * Call this on its own to create a ticket, don't manually assign current_ticket
  *
  * Arguments:
- * * msg - The title of the ticket: usually the ahelp text
+ * * msg_raw - The first message of this admin_help: used for the initial title of the ticket
  * * is_bwoink - Boolean operator, TRUE if this ticket was started by an admin PM
  */
-/datum/admin_help/New(msg, client/C, is_bwoink)
+/datum/admin_help/New(msg_raw, client/C, is_bwoink)
 	//clean the input msg
-	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
+	var/msg = sanitize(copytext_char(msg_raw, 1, MAX_MESSAGE_LEN))
 	if(!msg || !C || !C.mob)
 		qdel(src)
 		return
@@ -219,7 +219,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		AddInteraction("<font color='blue'>[key_name_admin(usr)] PM'd [LinkedReplyName()]</font>")
 		message_admins("<font color='blue'>Ticket [TicketHref("#[id]")] created</font>")
 	else
-		MessageNoRecipient(msg)
+		MessageNoRecipient(msg_raw)
 
 		//send it to TGS if nobody is on and tell us how many were on
 		var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [msg]")
@@ -253,6 +253,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	. = ADMIN_FULLMONTY_NONAME(initiator.mob)
 	if(state == AHELP_ACTIVE)
 		. += ClosureLinks(ref_src)
+
+		if (CONFIG_GET(flag/popup_admin_pm))
+			. += " (<A HREF='?_src_=holder;[HrefToken(TRUE)];adminpopup=[REF(initiator)]'>POPUP</A>)"
 
 //private
 /datum/admin_help/proc/ClosureLinks(ref_src)
@@ -344,6 +347,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	GLOB.ahelp_tickets.active_tickets -= src
 	if(initiator && initiator.current_ticket == src)
 		initiator.current_ticket = null
+
+	SEND_SIGNAL(src, COMSIG_ADMIN_HELP_MADE_INACTIVE)
 
 //Mark open ticket as closed/meme
 /datum/admin_help/proc/Close(key_name = key_name_admin(usr), silent = FALSE)

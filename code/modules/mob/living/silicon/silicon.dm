@@ -43,7 +43,7 @@
 	var/updating = FALSE //portable camera camerachunk update
 
 	var/hack_software = FALSE //Will be able to use hacking actions
-	var/interaction_range = 7 //wireless control range
+	interaction_range = 7 //wireless control range
 	var/obj/item/pda/ai/aiPDA
 
 /mob/living/silicon/Initialize()
@@ -59,6 +59,7 @@
 	add_sensors()
 	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, SPECIES_TRAIT)
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)

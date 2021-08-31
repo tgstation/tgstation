@@ -71,7 +71,7 @@
 /obj/item/clothing/suit/toggle/labcoat/science
 	name = "scientist labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a purple stripe on the shoulder."
-	icon_state = "labcoat_tox"
+	icon_state = "labcoat_sci"
 
 /obj/item/clothing/suit/toggle/labcoat/roboticist
 	name = "roboticist labcoat"

@@ -125,7 +125,8 @@
 	dequeue()
 	can_fire = 0
 	flags |= SS_NO_FIRE
-	Master.subsystems -= src
+	if (Master)
+		Master.subsystems -= src
 	return ..()
 
 
@@ -219,9 +220,9 @@
 		queue_next.queue_prev = queue_prev
 	if (queue_prev)
 		queue_prev.queue_next = queue_next
-	if (src == Master.queue_tail)
+	if (Master && (src == Master.queue_tail))
 		Master.queue_tail = queue_prev
-	if (src == Master.queue_head)
+	if (Master && (src == Master.queue_head))
 		Master.queue_head = queue_next
 	queued_time = 0
 	if (state == SS_QUEUED)

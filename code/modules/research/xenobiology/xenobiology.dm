@@ -125,22 +125,22 @@
 		if(SLIME_ACTIVATE_MINOR)
 			user.visible_message(span_warning("[user] starts shaking!"),span_notice("Your [name] starts pulsing gently..."))
 			if(do_after(user, 40, target = user))
-				var/mob/living/simple_animal/S = create_random_mob(user.drop_location(), FRIENDLY_SPAWN)
-				S.faction |= "neutral"
+				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), FRIENDLY_SPAWN)
+				spawned_mob.faction |= "neutral"
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-				user.visible_message(span_warning("[user] spits out [S]!"), span_notice("You spit out [S]!"))
+				user.visible_message(span_warning("[user] spits out [spawned_mob]!"), span_notice("You spit out [spawned_mob]!"))
 				return 300
 
 		if(SLIME_ACTIVATE_MAJOR)
 			user.visible_message(span_warning("[user] starts shaking violently!"),span_warning("Your [name] starts pulsing violently..."))
 			if(do_after(user, 50, target = user))
-				var/mob/living/simple_animal/S = create_random_mob(user.drop_location(), HOSTILE_SPAWN)
+				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), HOSTILE_SPAWN)
 				if(!user.combat_mode)
-					S.faction |= "neutral"
+					spawned_mob.faction |= "neutral"
 				else
-					S.faction |= "slime"
+					spawned_mob.faction |= "slime"
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-				user.visible_message(span_warning("[user] spits out [S]!"), span_warning("You spit out [S]!"))
+				user.visible_message(span_warning("[user] spits out [spawned_mob]!"), span_warning("You spit out [spawned_mob]!"))
 				return 600
 
 /obj/item/slime_extract/silver

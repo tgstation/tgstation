@@ -159,11 +159,39 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/datum/mind/receiver = pick(get_owners())
 	if(receiver?.current)
 		if(ishuman(receiver.current))
-			var/mob/living/carbon/human/H = receiver.current
+			var/mob/living/carbon/human/receiver_current = receiver.current
 			var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK)
-			for(var/eq_path in special_equipment)
-				var/obj/O = new eq_path
-				H.equip_in_one_of_slots(O, slots)
+			for(var/obj/equipment_path as anything in special_equipment)
+				var/obj/equipment_object = new equipment_path
+				if(!receiver_current.equip_in_one_of_slots(equipment_object, slots))
+					LAZYINITLIST(receiver.failed_special_equipment)
+					receiver.failed_special_equipment += equipment_path
+					receiver.try_give_equipment_fallback()
+
+/obj/effect/proc_holder/spell/self/special_equipment_fallback
+	name = "Request Objective-specific Equipment"
+	desc = "Call down a supply pod containing the equipment required for specific objectives."
+	action_icon = 'icons/obj/device.dmi'
+	action_icon_state = "beacon"
+	charge_max = 0
+	clothes_req = FALSE
+	nonabstract_req = TRUE
+	phase_allowed = TRUE
+	antimagic_allowed = TRUE
+	invocation_type = "none"
+
+/obj/effect/proc_holder/spell/self/special_equipment_fallback/cast(list/targets, mob/user)
+	var/datum/mind/mind = user.mind
+	if(!mind)
+		CRASH("[src] has no owner!")
+	if(mind.failed_special_equipment?.len)
+		podspawn(list(
+			"target" = get_turf(user),
+			"style" = STYLE_SYNDICATE,
+			"spawn" = mind.failed_special_equipment
+		))
+		mind.failed_special_equipment = null
+	mind.RemoveSpell(src)
 
 /datum/objective/assassinate
 	name = "assasinate"

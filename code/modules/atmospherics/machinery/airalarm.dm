@@ -178,7 +178,7 @@
 	name = "chamber air alarm"
 	locked = FALSE
 	req_access = null
-	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_TOXINS)
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_ORDNANCE)
 
 /obj/machinery/airalarm/all_access
 	name = "all-access air alarm"
@@ -858,7 +858,9 @@
 	return FALSE
 
 /obj/machinery/airalarm/AltClick(mob/user)
-	..()
+	. = ..()
+	if(!can_interact(user))
+		return
 	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
 		return
 	else
