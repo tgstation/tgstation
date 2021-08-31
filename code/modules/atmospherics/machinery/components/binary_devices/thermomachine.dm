@@ -1,4 +1,5 @@
 #define THERMOMACHINE_SAFE_TEMPERATURE 500000
+#define THERMOMACHINE_POWER_CONVERSION 0.01
 
 /obj/machinery/atmospherics/components/binary/thermomachine
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
@@ -40,6 +41,8 @@
 
 	// Efficiency dictates how much we throttle the heat exchange process.
 	var/efficiency = 1
+	///Efficiency minimum amount, min 0.25, max 1 (works best on higher laser tiers)
+	var/parts_efficiency = 1
 
 /obj/machinery/atmospherics/components/binary/thermomachine/Initialize()
 	. = ..()
@@ -77,7 +80,7 @@
 		calculated_laser_rating += laser.rating
 	min_temperature = max(T0C - (base_cooling + calculated_laser_rating * 15), TCMB) //73.15K with T1 stock parts
 	max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
-
+	parts_efficiency = min(calculated_laser_rating * 0.125, 1)
 
 /obj/machinery/atmospherics/components/binary/thermomachine/update_icon_state()
 	switch(target_temperature)
@@ -199,14 +202,14 @@
 			exchange_target = airs[2]
 
 		if(exchange_target.total_moles() < 5)
-			mole_eff_thermal_port = 0.001
+			mole_eff_thermal_port = 0.1
 		else
-			mole_eff_thermal_port = 1 - (1 / (exchange_target.total_moles() + 1)) * 5
+			mole_eff_thermal_port = max(1 - (1 / (exchange_target.total_moles() + 1)) * 5, 0.1)
 
 	if(main_port.total_moles() < 5)
-		mole_eff_main_port = 0.001
+		mole_eff_main_port = 0.1
 	else
-		mole_eff_main_port = 1 - (1 / (main_port.total_moles() + 1)) * 5
+		mole_eff_main_port = max(1 - (1 / (main_port.total_moles() + 1)) * 5, 0.1)
 
 	mole_efficiency = min(mole_eff_main_port, mole_eff_thermal_port)
 
@@ -225,6 +228,7 @@
 			efficiency *= clamp(log(1.55, exchange_target.total_moles()) * 0.15, 0.65, 1)
 
 		efficiency *= mole_efficiency
+		efficiency = max(efficiency, parts_efficiency) 
 
 		if (exchange_target.temperature > THERMOMACHINE_SAFE_TEMPERATURE && safeties)
 			on = FALSE
@@ -244,17 +248,17 @@
 
 	if(!cooling)
 		efficiency *= mole_efficiency
+		efficiency = max(efficiency, parts_efficiency)
 
 	main_port.temperature = max((THERMAL_ENERGY(main_port) + (heat_amount * efficiency)) / main_port.heat_capacity(), TCMB)
 
-	heat_amount = abs(heat_amount)
+	heat_amount = min(abs(heat_amount), 1e8) * THERMOMACHINE_POWER_CONVERSION
 	var/power_usage = 0
+	var/power_efficiency = max(efficiency, 0.4)
 	if(abs(temperature_target_delta)  > 1)
-		power_usage = (heat_amount * 0.35 + idle_power_usage) ** (1.25 - (5e7 * efficiency) / (max(5e7, heat_amount)))
+		power_usage = (heat_amount * 0.05 + idle_power_usage) ** (1.05 - (5e7 * power_efficiency) / (max(5e7, heat_amount)))
 	else
 		power_usage = idle_power_usage
-	if(power_usage > 1e6)
-		power_usage *= efficiency
 
 	use_power(power_usage)
 	update_appearance()
@@ -508,3 +512,4 @@
 	icon_state = "thermo_base_1"
 
 #undef THERMOMACHINE_SAFE_TEMPERATURE
+#undef THERMOMACHINE_POWER_CONVERSION

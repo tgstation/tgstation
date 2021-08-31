@@ -2035,3 +2035,16 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 1
 	purchasable_from = UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
+
+// Special equipment (Dynamically fills in uplink component)
+/datum/uplink_item/special_equipment
+	category = "Objective-Specific Equipment"
+	name = "Objective-Specific Equipment"
+	desc = "Equipment necessary for accomplishing specific objectives. If you are seeing this, something has gone wrong."
+	limited_stock = 1
+	illegal_tech = FALSE
+
+/datum/uplink_item/special_equipment/purchase(mob/user, datum/component/uplink/U)
+	..()
+	if(user?.mind?.failed_special_equipment)
+		user.mind.failed_special_equipment -= item
