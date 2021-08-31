@@ -325,12 +325,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["randomise"],  randomise)
 	READ_FILE(S["feature_ethcolor"], features["ethcolor"])
 	READ_FILE(S["persistent_scars"] , persistent_scars)
-	if(!CONFIG_GET(flag/join_with_mutant_humans))
-		features["tail_human"] = "none"
-		features["ears"] = "none"
-	else
-		READ_FILE(S["feature_human_tail"], features["tail_human"])
-		READ_FILE(S["feature_human_ears"], features["ears"])
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)
@@ -382,8 +376,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	skin_tone = sanitize_inlist(skin_tone, GLOB.skin_tones)
 	playtime_reward_cloak = sanitize_integer(playtime_reward_cloak)
 	features["ethcolor"] = copytext_char(features["ethcolor"], 1, 7)
-	features["tail_human"] = sanitize_inlist(features["tail_human"], GLOB.tails_list_human, "None")
-	features["ears"] = sanitize_inlist(features["ears"], GLOB.ears_list, "None")
 
 	persistent_scars = sanitize_integer(persistent_scars)
 
@@ -422,8 +414,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["randomise"] , randomise)
 	WRITE_FILE(S["phobia"], phobia)
 	WRITE_FILE(S["feature_ethcolor"] , features["ethcolor"])
-	WRITE_FILE(S["feature_human_tail"] , features["tail_human"])
-	WRITE_FILE(S["feature_human_ears"] , features["ears"])
 	WRITE_FILE(S["persistent_scars"] , persistent_scars)
 
 	//Custom names
