@@ -87,13 +87,13 @@
 /datum/antagonist/gang/greet()
 	to_chat(owner.current, "<B>As you're the first gangster, your uniform and spraycan are in your inventory!</B>")
 
-	to_chat(owner.current, "<B><font size=3 color=red>[gang_name] for life!</font></B>")
-	to_chat(owner.current, "<B><font size=2 color=red>You're a member of the [gang_name] now!<br>Tag turf with a spraycan, wear your group's colors, and recruit more gangsters with the Induction Packages!</font></B>")
-	to_chat(owner.current, "<B><font size=6 color=red>You are still a team-oriented antagonist! Do what is best for your gang.</font></B>")
-	to_chat(owner.current, "<B><font size=6 color=red>You are still a team-oriented antagonist! Do what is best for your gang and it's objective.</font></B>")
+	to_chat(owner.current, "<B><font size=6 color=red>[gang_name] for life!</font></B>")
+	to_chat(owner.current, "<B><font size=2 color=red>You're a member of the [gang_name] now!<br>Tag turf with a spraycan, wear your group's colors, and recruit more gangsters with the Induction Packages! Use your cell phone to communicate with fellow gangsters!</font></B>")
+	to_chat(owner.current, "<B><font size=2 color=red>You are still a team-oriented antagonist! Do what is best for your gang.</font></B>")
 	var/assigned_objective = my_gang.current_theme.gang_objectives[src.type]
 	if(!assigned_objective)
 		assigned_objective = "ERROR, FILE A REPORT WITH THIS INFO: Gang Name: [gang_name], Theme Name: [my_gang.current_theme.name]"
+	owner.store_memory("<b>Family's Objective:</b> [assigned_objective]")
 	to_chat(owner.current, "<B><font size=4 color=red>Family's Objective:</B> [assigned_objective]</font>")
 
 /datum/antagonist/gang/apply_innate_effects(mob/living/mob_override)
@@ -118,6 +118,14 @@
 			"right pocket" = ITEM_SLOT_RPOCKET,
 			"hands" = ITEM_SLOT_HANDS
 		)
+		var/obj/item/gangster_cellphone/phone = new()
+		phone.gang_id = gang_name
+		phone.name = "[gang_name] branded cell phone"
+		var/mob/living/carbon/human/gangster_human = owner.current
+		var/phone_equipped = gangster_human.equip_in_one_of_slots(phone, slots)
+		if(!phone_equipped)
+			to_chat(owner.current, "Your [phone] has been placed at your feet.")
+			phone.forceMove(get_turf(gangster_human))
 		for(var/clothing in my_gang.free_clothes)
 			var/obj/O = new clothing(owner.current)
 			var/mob/living/carbon/human/H = owner.current
