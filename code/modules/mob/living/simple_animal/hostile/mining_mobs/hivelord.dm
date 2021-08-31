@@ -37,7 +37,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord/Initialize()
 	. = ..()
 	if(has_clickbox)
-		AddElement(/datum/element/clickbox, icon_state = "hivelord", max_scale = INFINITY, dead_state = "hivelord_dead") //they writhe so much.
+		AddComponent(/datum/component/clickbox, icon_state = "hivelord", max_scale = INFINITY, dead_state = "hivelord_dead") //they writhe so much.
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	if(world.time >= ranged_cooldown)
@@ -99,7 +99,7 @@
 	addtimer(CALLBACK(src, .proc/death), 100)
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
-	AddElement(/datum/element/clickbox, icon_state = clickbox_state, max_scale = clickbox_max_scale)
+	AddComponent(/datum/component/clickbox, icon_state = clickbox_state, max_scale = clickbox_max_scale)
 
 //Legion
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion

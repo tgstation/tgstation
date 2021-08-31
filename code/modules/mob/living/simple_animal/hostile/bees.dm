@@ -64,7 +64,7 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	generate_bee_visuals()
 	AddElement(/datum/element/simple_flying)
-	AddElement(/datum/element/clickbox, x_offset = -2, y_offset = -2)
+	AddComponent(/datum/component/clickbox, x_offset = -2, y_offset = -2)
 	AddComponent(/datum/component/swarming)
 
 /mob/living/simple_animal/hostile/bee/mob_pickup(mob/living/L)
