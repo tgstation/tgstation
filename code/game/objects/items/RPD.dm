@@ -479,12 +479,28 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					if (target_differences & S.connections)
 						to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe in a currently connected direction."))
 						return
-					var/new_dir = (S.GetInitDirections() & ~target_differences) | target_differences
+					var/old_dir = S.GetInitDirections()
+					var/new_dir = (old_dir & ~target_differences) | target_differences
 					// Don't make a smart pipe with only one connection
 					if (ISSTUB(new_dir))
 						to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
 						return
 					S.SetInitDirections(new_dir)
+					// We can never disconnect from existing connections, but we can connect to previously unconnected directions
+					var/newly_permitted_connections = new_dir & ~old_dir
+					if(newly_permitted_connections)
+						// We're allowed to connect in new directions. Recompute our nodes
+						// Disconnect from everything that is currently connected
+						for (var/i in 1 to S.device_type)
+							S.nullifyNode(i)
+						// Get our new connections
+						S.atmosinit()
+						// Connect to our new connections
+						for (var/obj/machinery/atmospherics/O in S.nodes)
+							O.atmosinit()
+							O.addMember(src)
+						SSair.add_to_rebuild_queue(S)
+					// Finally, update our internal state - update_pipe_icon also updates dir and connections
 					S.update_pipe_icon()
 					user.visible_message(span_notice("[user] reprograms the \the [S]."),span_notice("You reprogram \the [S]."))
 				return
