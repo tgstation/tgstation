@@ -303,12 +303,6 @@ export const MainPage = (props: {
   const [currentClothingMenu, setCurrentClothingMenu]
     = useLocalState<string | null>(context, "currentClothingMenu", null);
 
-  const requestPreferenceData = (key: string) => {
-    act("request_values", {
-      preference: key,
-    });
-  };
-
   return (
     <Stack fill>
       <ServerPreferencesFetcher render={(serverData) => {
@@ -407,8 +401,6 @@ export const MainPage = (props: {
                                 ? null
                                 : clothingKey
                             );
-
-                            requestPreferenceData(clothingKey);
                           }} style={{
                             height: `${CLOTHING_CELL_SIZE}px`,
                             width: `${CLOTHING_CELL_SIZE}px`,
