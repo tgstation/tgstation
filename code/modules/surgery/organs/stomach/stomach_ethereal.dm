@@ -17,6 +17,8 @@
 	. = ..()
 	adjust_charge(-ETHEREAL_CHARGE_FACTOR * delta_time)
 	handle_charge(owner, delta_time, times_fired)
+	if(damage > maxHealth)//cap battery damage
+		damage = maxHealth
 	if(damage < low_threshold)
 		return
 	adjust_charge(-0.8 * drainmodifer * delta_time)
