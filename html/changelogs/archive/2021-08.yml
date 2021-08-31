@@ -684,3 +684,28 @@
       my eyes the goggles do nothing
   tralezab:
   - spellcheck: Changed the wording on antag panel policy a little bit.
+2021-08-31:
+  AMonekyThatCodes:
+  - refactor: Adds basic mobs, a replacement for simple mobs that will hopefully destroy
+      the subtype. This is so far applied to cockroaches (and their variants)
+  JohnFulpWillard:
+  - bugfix: Hardcore random traitors now get their hardcore random points for greentexting.
+  Mothblocks:
+  - admin: Admins can now give players a popup if they are not responding to tickets.
+  Shroopy:
+  - bugfix: Female uniforms now update color correctly.
+  - code_imp: Female clothing generation now takes greyscale_colors as an arg, which
+      is null by default if the clothing item doesn't use GAGS.
+  Y0SH1M4S73R:
+  - bugfix: Traitors that are unable to receive equipment required for specific objectives
+      will be able to order that equipment from the uplink. Other antagonists that
+      are unable to receive such equipment can call in a pod containing that equipment,
+      unless they somehow have an unlocked uplink on their person, in which case they
+      can order it from the uplink.
+  YakumoChen:
+  - bugfix: Naive clowns now worry less about their "sleeping" pets.
+  aaaa1023:
+  - spellcheck: fixed misspellings of "aggression" in the descriptions of Gelatinous
+      Ooze, NT combat defib and misspelling in heretic rust spell.
+  dragomagol:
+  - admin: gives brainwash victims a hud icon
