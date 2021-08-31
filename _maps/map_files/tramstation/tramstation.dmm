@@ -52699,7 +52699,7 @@
 /obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
-/mob/living/simple_animal/hostile/cockroach,
+/mob/living/basic/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
 "sbo" = (

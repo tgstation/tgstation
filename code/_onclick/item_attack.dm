@@ -258,6 +258,12 @@
 	else
 		return ..()
 
+/mob/living/basic/attacked_by(obj/item/I, mob/living/user)
+	if(!attack_threshold_check(I.force, I.damtype, MELEE, FALSE))
+		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), TRUE, -1)
+	else
+		return ..()
+
 /**
  * Last proc in the [/obj/item/proc/melee_attack_chain]
  *
