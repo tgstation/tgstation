@@ -246,17 +246,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (isnull(requested_preference))
 				return FALSE
 
-			// SAFETY: `write_preference` performs validation checks
-			if (!write_preference(requested_preference, value))
+			// SAFETY: `update_preference` performs validation checks
+			if (!update_preference(requested_preference, value))
 				return FALSE
-
-			// Preferences could theoretically perform granular updates rather than
-			// recreating the whole thing, but this would complicate the preference
-			// API while adding the potential for drift.
-			character_preview_view.update_body()
-
-			if (requested_preference.savefile_identifier == PREFERENCE_PLAYER)
-				requested_preference.apply_to_client_updated(parent, read_preference(requested_preference.type))
 
 			return TRUE
 		if ("set_color_preference")
@@ -271,24 +263,25 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			)
 				return FALSE
 
+			var/default_value = read_preference(requested_preference.type)
+			if (istype(requested_preference, /datum/preference/color_legacy))
+				default_value = expand_three_digit_color(default_value)
+
 			// Yielding
 			var/new_color = input(
 				usr,
 				"Select new color",
 				null,
-				read_preference(requested_preference.type) || COLOR_WHITE,
+				default_value || COLOR_WHITE,
 			) as color | null
 
-			if (new_color)
-				if (!write_preference(requested_preference, new_color))
-					return FALSE
-
-				if (requested_preference.savefile_identifier == PREFERENCE_PLAYER)
-					requested_preference.apply_to_client_updated(parent, new_color)
-
-				return TRUE
-			else
+			if (!new_color)
 				return FALSE
+
+			if (!update_preference(requested_preference, new_color))
+				return FALSE
+
+			return TRUE
 		if ("set_job_preference")
 			var/job_title = params["job"]
 			var/level = params["level"]

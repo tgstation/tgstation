@@ -211,6 +211,20 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		value_cache[preference.type] = new_value
 	return success
 
+/// Similar to write_preference, but will be treated as an update.
+/// This will, for instance, update the character preference view.
+/// Performs sanity checks.
+/datum/preferences/proc/update_preference(datum/preference/preference, new_value)
+	if (!write_preference(preference, new_value))
+		return FALSE
+
+	if (preference.savefile_identifier == PREFERENCE_PLAYER)
+		preference.apply_to_client_updated(parent, read_preference(preference.type))
+	else
+		character_preview_view.update_body()
+
+	return TRUE
+
 /// Checks that a given value is valid.
 /// Must be overriden by subtypes.
 /// Any type can be passed through.
@@ -342,7 +356,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	return "000"
 
 /datum/preference/color_legacy/is_valid(value)
-	return findtext(value, GLOB.is_color)
+	var/static/regex/is_legacy_color = regex(@"^[0-9a-fA-F]{3}$")
+	return findtext(value, is_legacy_color)
 
 /datum/preference/color
 	abstract_type = /datum/preference/color

@@ -520,6 +520,15 @@
 	for(var/thing in flat_list)
 		.[thing] = TRUE
 
+/// Turns an associative list into a flat list of keys
+/proc/assoc_to_keys(list/list)
+	var/list/keys = list()
+
+	for (var/key in list)
+		keys += key
+
+	return keys
+
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)
 

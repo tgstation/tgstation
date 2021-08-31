@@ -16,6 +16,16 @@ export const hair_color: Feature<string> = {
 };
 
 export const feature_lizard_tail: FeatureChoiced = {
-  name: "Lizard tail",
+  name: "Tail",
   component: FeatureDropdownInput,
+};
+
+export const feature_lizard_spines: FeatureChoiced = {
+  name: "Spines",
+  component: FeatureDropdownInput,
+};
+
+export const feature_mcolor: Feature<string> = {
+  name: "Mutant color",
+  component: FeatureColorInput,
 };

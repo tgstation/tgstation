@@ -2101,8 +2101,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/list/features = list()
 
 	for (var/body_part in mutant_bodyparts)
+		// MOTHBLOCKS TODO: UGGGGGGGGH this feature stuff is stupid
 		switch (body_part)
-			// MOTHBLOCKS TODO: UGGGGGGGGH this feature stuff is stupid
+			if ("spines")
+				features += "feature_lizard_spines"
 			if ("tail_lizard")
 				features += "feature_lizard_tail"
 			else
@@ -2112,6 +2114,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		switch (trait)
 			if (EYECOLOR)
 				features += "eye_color"
+			if (MUTCOLORS)
+				features += "feature_mcolor"
 			if (FACEHAIR)
 				features += "facial_style_name"
 				features += "facial_hair_color"
