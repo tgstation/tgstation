@@ -55,7 +55,9 @@
 			to_chat(owner, span_notice("You are not holding any items, your hands relax..."))
 			active = FALSE
 			return
-		for(var/obj/item/held_item in owner.held_items)
+		for(var/obj/item/held_item as anything in owner.held_items)
+			if(!held_item)
+				continue
 			stored_items += held_item
 			to_chat(owner, span_notice("Your [owner.get_held_index_name(owner.get_held_index_of_item(held_item))]'s grip tightens."))
 			ADD_TRAIT(held_item, TRAIT_NODROP, IMPLANT_TRAIT)
@@ -74,8 +76,6 @@
 	if(active)
 		release_items()
 	for(var/obj/item/stored_item as anything in stored_items)
-		if(!stored_item)
-			continue
 		throw_target = pick(oview(range))
 		stored_item.throw_at(throw_target, range, 2)
 		to_chat(owner, span_warning("Your [owner.get_held_index_name(owner.get_held_index_of_item(stored_item))] spasms and throws the [stored_item.name]!"))
