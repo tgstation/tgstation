@@ -73,7 +73,9 @@
 	var/atom/throw_target
 	if(active)
 		release_items()
-	for(var/obj/item/stored_item in stored_items)
+	for(var/obj/item/stored_item as anything in stored_items)
+		if(!stored_item)
+			continue
 		throw_target = pick(oview(range))
 		stored_item.throw_at(throw_target, range, 2)
 		to_chat(owner, span_warning("Your [owner.get_held_index_name(owner.get_held_index_of_item(stored_item))] spasms and throws the [stored_item.name]!"))
