@@ -5084,7 +5084,6 @@
 /area/medical/virology)
 "atA" = (
 /obj/structure/rack,
-/obj/item/storage/box/beakers,
 /obj/item/wrench,
 /obj/item/kitchen/knife,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -9025,10 +9024,6 @@
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/north,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/science,
-/obj/item/clothing/glasses/science,
 /turf/open/floor/iron/white,
 /area/science/research)
 "aHY" = (
