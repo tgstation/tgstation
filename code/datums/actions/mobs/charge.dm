@@ -93,7 +93,7 @@
 
 /datum/action/cooldown/mob_cooldown/charge/proc/on_moved(atom/source)
 	if(charging[source])
-		playsound(src, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
+		playsound(source, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
 		DestroySurroundings(source)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/DestroySurroundings(atom/movable/charger)
@@ -116,6 +116,8 @@
 
 /datum/action/cooldown/mob_cooldown/charge/proc/on_bump(atom/movable/source, atom/A)
 	if(charging[source])
+		if(owner == A)
+			return
 		if(isturf(A) || isobj(A) && A.density)
 			if(isobj(A))
 				SSexplosions.med_mov_atom += A
@@ -155,6 +157,8 @@
 	var/hallucination_damage = 15
 	/// Check to see if we are enraged, enraged ability does more
 	var/enraged = FALSE
+	/// Check to see if we should spawn blood
+	var/spawn_blood = FALSE
 
 /datum/action/cooldown/mob_cooldown/charge/hallucination_charge/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
 	if(!enraged)
@@ -187,6 +191,11 @@
 			self_placed = TRUE
 			continue
 		var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/B = new /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination(place)
+		B.appearance = owner.appearance
+		B.name = "[owner]'s hallucination"
+		B.alpha = 127.5
+		B.move_through_mob = owner
+		B.spawn_blood = spawn_blood
 		INVOKE_ASYNC(src, .proc/do_charge, B, target_atom, delay, past)
 	if(use_self)
 		do_charge(owner, target_atom, delay, past)

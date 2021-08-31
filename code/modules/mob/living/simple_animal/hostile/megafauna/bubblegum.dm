@@ -67,18 +67,20 @@ Difficulty: Hard
 	deathsound = 'sound/magic/enter_blood.ogg'
 	small_sprite_type = /datum/action/small_sprite/megafauna/bubblegum
 	faction = list("mining", "boss", "hell")
+	/// Check to see if we should spawn blood
+	var/spawn_blood = TRUE
 	/// Actual time where enrage ends
 	var/enrage_till = 0
 	/// Duration of enrage ability
 	var/enrage_time = 7 SECONDS
 	/// Triple charge ability
-	var/datum/action/cooldown/mob_cooldown/triple_charge
+	var/datum/action/cooldown/mob_cooldown/charge/triple_charge/triple_charge
 	/// Hallucination charge ability
 	var/datum/action/cooldown/mob_cooldown/charge/hallucination_charge/hallucination_charge
 	/// Hallucination charge surround ability
-	var/datum/action/cooldown/mob_cooldown/hallucination_charge_surround
+	var/datum/action/cooldown/mob_cooldown/charge/hallucination_charge/hallucination_surround/hallucination_charge_surround
 	/// Blood warp ability
-	var/datum/action/cooldown/mob_cooldown/blood_warp
+	var/datum/action/cooldown/mob_cooldown/blood_warp/blood_warp
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
 	. = ..()
@@ -90,6 +92,8 @@ Difficulty: Hard
 	hallucination_charge.Grant(src)
 	hallucination_charge_surround.Grant(src)
 	blood_warp.Grant(src)
+	hallucination_charge.spawn_blood = TRUE
+	hallucination_charge_surround.spawn_blood = TRUE
 	RegisterSignal(src, COMSIG_BLOOD_WARP, .proc/blood_enrage)
 	RegisterSignal(src, COMSIG_FINISHED_CHARGE, .proc/after_charge)
 
@@ -286,18 +290,14 @@ Difficulty: Hard
 	severity = EXPLODE_LIGHT // puny mortals
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination))
-		return TRUE
-
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
 	update_approach()
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Moved(atom/OldLoc, Dir, Forced = FALSE)
 	. = ..()
-	new /obj/effect/decal/cleanable/blood/bubblegum(src.loc)
+	if(spawn_blood)
+		new /obj/effect/decal/cleanable/blood/bubblegum(src.loc)
 	playsound(src, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination
@@ -314,19 +314,16 @@ Difficulty: Hard
 	deathmessage = "Explodes into a pool of blood!"
 	deathsound = 'sound/effects/splat.ogg'
 	true_spawn = FALSE
+	var/move_through_mob
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Initialize()
 	. = ..()
 	toggle_ai(AI_OFF)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Destroy()
-	new /obj/effect/decal/cleanable/blood(get_turf(src))
+	if(spawn_blood)
+		new /obj/effect/decal/cleanable/blood(get_turf(src))
 	. = ..()
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum)) // hallucinations should not be stopping bubblegum or eachother
-		return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Life(delta_time = SSMOBS_DT, times_fired)
 	return
