@@ -37,7 +37,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/slot_randomized //keeps track of round-to-round randomization of the character slot, prevents overwriting
 	var/underwear_color = "000" //underwear color
 	var/skin_tone = "caucasian1" //Skin color
-	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "moth_antennae" = "Plain", "moth_markings" = "None")
 	var/list/randomise = list(
 		RANDOM_UNDERWEAR = TRUE,
 		RANDOM_UNDERWEAR_COLOR = TRUE,
@@ -502,7 +501,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	// 		else if(firstspace == name_length)
 	// 			real_name += "[pick(GLOB.last_names)]"
 
-	character.dna.features = features.Copy()
+	character.dna.features = list()
 
 	for (var/datum/preference/preference in get_preferences_in_priority_order())
 		if (preference.savefile_identifier != PREFERENCE_CHARACTER)
@@ -511,14 +510,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 		preference.apply_to_human(character, read_preference(preference.type))
 
 	character.dna.real_name = character.real_name
-
-	// MOTHBLOCKS TODO: What is all this for? If it doesn't include moth wings, then what is it?
-	// Is it the same problem with cloning moths not giving wings? Oversight?
-
-	// if(species.mutant_bodyparts["tail_lizard"])
-	// 	character.dna.species.mutant_bodyparts["tail_lizard"] = species.mutant_bodyparts["tail_lizard"]
-	// if(species.mutant_bodyparts["spines"])
-	// 	character.dna.species.mutant_bodyparts["spines"] = species.mutant_bodyparts["spines"]
 
 	if(icon_updates)
 		character.update_body()
