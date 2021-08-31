@@ -806,6 +806,7 @@
 "aep" = (
 /obj/structure/table/wood,
 /obj/item/folder/yellow,
+/obj/item/stamp/law,
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "aeq" = (
@@ -37572,6 +37573,7 @@
 /area/science/storage)
 "lGl" = (
 /obj/structure/rack,
+/obj/item/book/manual/wiki/robotics_cyborgs,
 /obj/item/storage/toolbox/mechanical{
 	pixel_x = -3;
 	pixel_y = 3
@@ -58598,7 +58600,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/machinery/button/door/directional/west,
+/obj/machinery/button/door/directional/west{
+	id = "left_tram_lower";
+	req_access_txt = "12"
+	},
 /turf/open/floor/iron,
 /area/maintenance/tram/mid)
 "uxR" = (
@@ -59820,6 +59825,11 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
+/obj/item/book/manual/wiki/surgery{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/book/manual/wiki/medicine,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "uYT" = (
@@ -63011,7 +63021,7 @@
 	pixel_y = 2
 	},
 /obj/item/aicard,
-/obj/item/ai_module/core,
+/obj/item/circuitboard/aicore,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/rd)
 "wmS" = (
@@ -68254,6 +68264,13 @@
 	},
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
+	},
+/obj/item/experi_scanner{
+	pixel_x = 5
+	},
+/obj/item/experi_scanner,
+/obj/item/experi_scanner{
+	pixel_x = -5
 	},
 /turf/open/floor/iron/white,
 /area/science/research)
