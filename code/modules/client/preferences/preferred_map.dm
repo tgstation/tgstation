@@ -47,6 +47,3 @@
 
 /datum/preference/choiced/preferred_map/is_accessible(datum/preferences/preferences)
 	return CONFIG_GET(flag/preference_map_voting)
-
-/datum/preference/choiced/preferred_map/apply_to_client(client/client, value)
-	return

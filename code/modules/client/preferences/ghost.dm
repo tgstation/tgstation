@@ -180,6 +180,3 @@
 	savefile_key = "inquisitive_ghost"
 	savefile_identifier = PREFERENCE_PLAYER
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-
-/datum/preference/toggle/inquisitive_ghost/apply_to_client(client/client, value)
-	return

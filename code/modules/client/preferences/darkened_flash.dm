@@ -4,6 +4,3 @@
 	default_value = FALSE
 	savefile_key = "darkened_flash"
 	savefile_identifier = PREFERENCE_PLAYER
-
-/datum/preference/toggle/darkened_flash/apply_to_client(client/client, value)
-	return

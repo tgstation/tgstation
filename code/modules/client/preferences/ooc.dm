@@ -7,6 +7,3 @@
 
 /datum/preference/color/ooc_color/create_default_value()
 	return "#c43b23"
-
-/datum/preference/color/ooc_color/apply_to_client(client/client, value)
-	return

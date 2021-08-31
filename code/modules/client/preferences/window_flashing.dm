@@ -3,6 +3,3 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "windowflashing"
 	savefile_identifier = PREFERENCE_PLAYER
-
-/datum/preference/toggle/window_flashing/apply_to_client(client/client, value)
-	return

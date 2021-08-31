@@ -3,9 +3,6 @@
 	savefile_key = "asaycolor"
 	savefile_identifier = PREFERENCE_PLAYER
 
-/datum/preference/color/asay_color/apply_to_client(client/client, value)
-	return
-
 /datum/preference/color/asay_color/create_default_value()
 	return DEFAULT_ASAY_COLOR
 
@@ -33,9 +30,6 @@
 
 /datum/preference/choiced/brief_outfit/init_possible_values()
 	return subtypesof(/datum/outfit)
-
-/datum/preference/choiced/brief_outfit/apply_to_client(client/client, value)
-	return
 
 /datum/preference/choiced/brief_outfit/is_accessible(datum/preferences/preferences)
 	return is_admin(preferences.parent)
