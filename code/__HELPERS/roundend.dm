@@ -189,10 +189,8 @@
 
 	if(human_mob.mind && (human_mob.mind.special_role || length(human_mob.mind.antag_datums) > 0))
 		var/didthegamerwin = TRUE
-		for(var/a in human_mob.mind.antag_datums)
-			var/datum/antagonist/antag_datum = a
-			for(var/i in antag_datum.objectives)
-				var/datum/objective/objective_datum = i
+		for(var/datum/antagonist/antag_datums as anything in human_mob.mind.antag_datums)
+			for(var/datum/objective/objective_datum as anything in antag_datums.objectives)
 				if(!objective_datum.check_completion())
 					didthegamerwin = FALSE
 		if(!didthegamerwin)

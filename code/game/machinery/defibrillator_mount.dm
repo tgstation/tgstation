@@ -98,6 +98,7 @@
 
 //defib interaction
 /obj/machinery/defibrillator_mount/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
 	if(!defib)
 		to_chat(user, span_warning("There's no defibrillator unit loaded!"))
 		return

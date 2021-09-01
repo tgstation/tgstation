@@ -1,3 +1,5 @@
+///This code needs to be removed at some point as it doesn't actually utilize the AI.
+
 /datum/ai_controller/hostile_friend
 	blackboard = list(
 		BB_HOSTILE_ORDER_MODE = null,
@@ -131,6 +133,7 @@
 	if(!choice || !check_menu(clicker))
 		return
 	set_command_mode(clicker, choice)
+
 
 /datum/ai_controller/hostile_friend/proc/check_menu(mob/user)
 	if(!istype(user))
