@@ -157,6 +157,7 @@
 		"wirebrush",
 		"wirecutters",
 		"wrench",
+		"pipe_sealant",
 	)
 
 /datum/techweb_node/basic_medical

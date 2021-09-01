@@ -1213,3 +1213,13 @@
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
 	build_path = /obj/item/assembly/control
 	category = list("initial","Misc")
+
+/datum/design/pipe_sealant
+	name = "Pipe sealant"
+	id = "pipe_sealant"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 100, /datum/material/plasma = 150)
+	build_path = /obj/item/stack/pipe_sealant
+	category = list("initial","Tools")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	maxstack = 10

@@ -45,7 +45,7 @@
 	return list(parent)
 
 /obj/machinery/atmospherics/pipe/proc/releaseAirToTurf()
-	if(air_temporary)
+	if(air_temporary && !sealed)
 		var/turf/T = loc
 		T.assume_air(air_temporary)
 
@@ -64,11 +64,15 @@
 		return air_temporary.remove(amount)
 	return parent.air.remove(amount)
 
-/obj/machinery/atmospherics/pipe/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/pipe_meter))
-		var/obj/item/pipe_meter/meter = W
+/obj/machinery/atmospherics/pipe/attackby(obj/item/tool, mob/user, params)
+	if(istype(tool, /obj/item/pipe_meter))
+		var/obj/item/pipe_meter/meter = tool
 		user.dropItemToGround(meter)
 		meter.setAttachLayer(piping_layer)
+	if(istype(tool, /obj/item/stack/pipe_sealant))
+		var/obj/item/stack/pipe_sealant/seal = tool
+		if(!sealed && do_after(user, 3 SECONDS, src) && seal.use(1))
+			seal_pipe()
 	else
 		return ..()
 
@@ -110,6 +114,13 @@
 	update_pipe_icon()
 	update_layer()
 
+/obj/machinery/atmospherics/pipe/update_overlays()
+	. = ..()
+	if(sealed)
+		var/mutable_appearance/seal = mutable_appearance('icons/obj/atmospherics/pipes/pipe_sealant.dmi', "pipe_sealant")
+		PIPING_LAYER_DOUBLE_SHIFT(seal, piping_layer)
+		. += seal
+
 /obj/machinery/atmospherics/proc/update_node_icon()
 	for(var/i in 1 to device_type)
 		if(nodes[i])
@@ -125,3 +136,7 @@
 		pipe_color = paint_color
 		update_node_icon()
 	return paintable
+
+/obj/machinery/atmospherics/pipe/proc/seal_pipe()
+	sealed = TRUE
+	update_appearance()
