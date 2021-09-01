@@ -11,9 +11,9 @@
 
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/bci_core,
-		new /obj/item/circuit_component/bci_action("One"),
-		new /obj/item/circuit_component/bci_action("Two"),
-		new /obj/item/circuit_component/bci_action("Three"),
+		new /obj/item/circuit_component/bci_action(null, "One"),
+		new /obj/item/circuit_component/bci_action(null, "Two"),
+		new /obj/item/circuit_component/bci_action(null, "Three"),
 	), SHELL_CAPACITY_SMALL)
 
 /obj/item/organ/cyberimp/bci/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
@@ -33,13 +33,13 @@
 	else
 		return ..()
 
-/obj/item/circuit_component/bci
-	display_name = "Brain-Computer Interface"
-	display_desc = "Used to receive inputs for the brain-computer interface. User is presented with three buttons."
-
 /obj/item/circuit_component/bci_action
 	display_name = "BCI Action"
-	display_desc = "Represents an action the user can take when implanted with the brain-computer interface."
+	desc = "Represents an action the user can take when implanted with the brain-computer interface."
+	required_shells = list(/obj/item/organ/cyberimp/bci)
+
+	/// The icon of the button
+	var/datum/port/input/option/icon_options
 
 	/// The name to use for the button
 	var/datum/port/input/button_name
@@ -54,7 +54,7 @@
 	. = ..()
 
 	if (!isnull(default_icon))
-		set_option(default_icon)
+		icon_options.set_input(default_icon)
 
 	button_name = add_input_port("Name", PORT_TYPE_STRING)
 
@@ -102,7 +102,7 @@
 		"Wireless",
 	)
 
-	options = action_options
+	icon_options = add_option_port("Icon", action_options)
 
 /obj/item/circuit_component/bci_action/register_shell(atom/movable/shell)
 	var/obj/item/organ/cyberimp/bci/bci = shell
@@ -128,8 +128,8 @@
 		update_action()
 
 /obj/item/circuit_component/bci_action/proc/update_action()
-	bci_action.name = button_name.input_value
-	bci_action.button_icon_state = "bci_[replacetextEx(lowertext(current_option), " ", "_")]"
+	bci_action.name = button_name.value
+	bci_action.button_icon_state = "bci_[replacetextEx(lowertext(icon_options.value), " ", "_")]"
 
 /datum/action/innate/bci_action
 	name = "Action"
@@ -155,7 +155,7 @@
 
 /obj/item/circuit_component/bci_core
 	display_name = "BCI Core"
-	display_desc = "Controls the core operations of the BCI."
+	desc = "Controls the core operations of the BCI."
 
 	/// A reference to the action button to look at charge/get info
 	var/datum/action/innate/bci_charge_action/charge_action
@@ -205,7 +205,7 @@
 		return .
 
 	if (COMPONENT_TRIGGERED_BY(send_message_signal, port))
-		var/sent_message = trim(message.input_value)
+		var/sent_message = trim(message.value)
 		if (!sent_message)
 			return
 
@@ -394,12 +394,15 @@
 	if (. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return .
 
+	if(!user.Adjacent(src))
+		return
+
 	if (locked)
 		balloon_alert(user, "it's locked!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/obj/item/organ/cyberimp/bci/bci_to_implant_resolved = bci_to_implant?.resolve()
-	if (isnull(bci_to_implant_resolved) && user.Adjacent(src))
+	if (isnull(bci_to_implant_resolved))
 		balloon_alert(user, "no bci inserted!")
 	else
 		user.put_in_hands(bci_to_implant_resolved)
@@ -524,7 +527,7 @@
 	if (!isnull(message))
 		if (COOLDOWN_FINISHED(src, message_cooldown))
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
-			balloon_alert(user, "it won't budge!")
+			balloon_alert(user, message)
 
 		return
 

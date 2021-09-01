@@ -47,7 +47,7 @@
 			victim.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_EARS,ORGAN_SLOT_EYES,ORGAN_SLOT_LIVER,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_HEART),25)
 
 /datum/eldritch_knowledge/spell/area_conversion
-	name = "Agressive Spread"
+	name = "Aggressive Spread"
 	desc = "Spreads rust to nearby surfaces. Already rusted surfaces are destroyed."
 	gain_text = "All wise men know well not to touch the Bound King."
 	cost = 1
@@ -73,20 +73,24 @@
 
 /datum/eldritch_knowledge/rust_regen/on_gain(mob/user)
 	. = ..()
-	RegisterSignal(user,COMSIG_MOVABLE_MOVED,.proc/on_move)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
 /datum/eldritch_knowledge/rust_regen/proc/on_move(mob/mover)
 	SIGNAL_HANDLER
 
-	var/atom/mover_turf = get_turf(mover)
+	var/turf/mover_turf = get_turf(mover)
 	if(HAS_TRAIT(mover_turf, TRAIT_RUSTY))
-		ADD_TRAIT(mover,TRAIT_STUNRESISTANCE,type)
+		ADD_TRAIT(mover, TRAIT_STUNRESISTANCE, type)
 		return
 
-	REMOVE_TRAIT(mover,TRAIT_STUNRESISTANCE,type)
+	REMOVE_TRAIT(mover, TRAIT_STUNRESISTANCE, type)
 
 /datum/eldritch_knowledge/rust_regen/on_life(mob/user)
 	. = ..()
+	var/turf/our_turf = get_turf(user)
+	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY) || !isliving(user))
+		return
+
 	var/mob/living/living_user = user
 	living_user.adjustBruteLoss(-2, FALSE)
 	living_user.adjustFireLoss(-2, FALSE)

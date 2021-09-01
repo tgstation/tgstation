@@ -122,13 +122,14 @@
 /obj/machinery/food_cart/obj_break(damage_flag)
 	. = ..()
 	pack_up()
-	if(cart_griddle)
+	if(!QDELETED(cart_griddle))
 		QDEL_NULL(cart_griddle)
-	if(cart_smartfridge)
+	if(!QDELETED(cart_smartfridge))
 		QDEL_NULL(cart_smartfridge)
-	if(cart_table)
+	if(!QDELETED(cart_table))
 		QDEL_NULL(cart_table)
-	QDEL_NULL(cart_tent)
+	if(!QDELETED(cart_tent))
+		QDEL_NULL(cart_tent)
 
 /obj/effect/food_cart_stand
 	name = "food cart tent"

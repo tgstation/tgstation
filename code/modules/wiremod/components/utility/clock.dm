@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/clock
 	display_name = "Clock"
-	display_desc = "A component that repeatedly fires."
+	desc = "A component that repeatedly fires."
 
 	/// Whether the clock is on or not
 	var/datum/port/input/on
@@ -28,7 +28,7 @@
 	if(.)
 		return
 
-	if(on.input_value)
+	if(on.value)
 		start_process()
 	else
 		stop_process()
