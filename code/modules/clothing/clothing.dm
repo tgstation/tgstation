@@ -497,7 +497,7 @@ BLIND     // can't see anything
 		new /obj/effect/decal/cleanable/shreds(current_position, name)
 		if(isliving(loc))
 			var/mob/living/possessing_mob = loc
-			possessing_mob.visible_message(span_danger("[src] is consumed until naught but shreds remains!"), span_warning("<b>[src] falls apart into little bits!</b>"))
+			possessing_mob.visible_message(span_danger("[src] is consumed until naught but shreds remains!"), span_boldwarning("[src] falls apart into little bits!"))
 		deconstruct(FALSE)
 	else if(!(damage_flag in list(ACID, FIRE)))
 		body_parts_covered = NONE
