@@ -1,10 +1,10 @@
 
 /// Called whenever the mob is to be resized or when lying/standing up for carbons.
 /mob/living/update_transform()
-	_update_transform() // carbon mobs do it differently than silicons and simple animals.
-	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_TRANSFORM) // ...and we want the signal to be sent last.
+	perform_update_transform() // carbon mobs do it differently than silicons and simple animals.
+	SEND_SIGNAL(src, COMSIG_LIVING_POST_UPDATE_TRANSFORM) // ...and we want the signal to be sent last.
 
-/mob/living/proc/_update_transform()
+/mob/living/proc/perform_update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
 	var/changed = FALSE
 

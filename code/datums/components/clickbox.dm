@@ -33,12 +33,13 @@
 	src.max_scale = max_scale
 	src.min_scale = min_scale
 
-	RegisterSignal(parent, list(COMSIG_ATOM_VV_MODIFY_TRANSFORM, COMSIG_MOB_UPDATE_TRANSFORM), .proc/on_modify_or_update_transform)
+	RegisterSignal(parent, COMSIG_ATOM_VV_MODIFY_TRANSFORM, .proc/on_modify_or_update_transform)
 
 	var/clickbox_icon_state = icon_state
 	if(dead_state && isliving(parent))
 		var/mob/living/living_parent = parent
 		src.dead_state = dead_state
+		RegisterSignal(living_parent, COMSIG_LIVING_POST_UPDATE_TRANSFORM, .proc/on_modify_or_update_transform)
 		RegisterSignal(living_parent, COMSIG_LIVING_DEATH, .proc/on_death)
 		RegisterSignal(living_parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
 		if(living_parent.stat == DEAD)
@@ -47,7 +48,7 @@
 
 /datum/component/clickbox/UnregisterFromParent()
 	var/atom/movable/mov_parent = parent
-	UnregisterSignal(mov_parent, list(COMSIG_ATOM_VV_MODIFY_TRANSFORM, COMSIG_MOB_UPDATE_TRANSFORM, COMSIG_LIVING_DEATH, COMSIG_LIVING_REVIVE))
+	UnregisterSignal(mov_parent, list(COMSIG_ATOM_VV_MODIFY_TRANSFORM, COMSIG_LIVING_POST_UPDATE_TRANSFORM, COMSIG_LIVING_DEATH, COMSIG_LIVING_REVIVE))
 	mov_parent.underlays -= clickbox_undelay
 
 /// Removes the old underlay and adds a new one if conditions are met. The underlay is scaled up/down if necessary

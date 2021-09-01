@@ -566,7 +566,7 @@
 #define COMSIG_MOB_EMOTED(emote_key) "mob_emoted_[emote_key]"
 
 ///from base of mob/update_transform()
-#define COMSIG_MOB_UPDATE_TRANSFORM "mob_update_transform"
+#define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
 
 ///from /obj/structure/door/crush(): (mob/living/crushed, /obj/machinery/door/crushing_door)
 #define COMSIG_LIVING_DOORCRUSHED "living_doorcrush"
