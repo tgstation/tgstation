@@ -536,7 +536,7 @@
 	new /obj/item/organ/cyberimp/arm/flash(src)
 	new /obj/item/organ/cyberimp/arm/baton/robo(src)
 	new /obj/item/organ/cyberimp/arm/gun/laser(src)
-	new //obj/item/autosurgeon/organ/syndicate(src)
+	new /obj/item/autosurgeon/organ/syndicate(src)
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
