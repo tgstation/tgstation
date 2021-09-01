@@ -294,12 +294,12 @@
 
 	data["waste_remove"] = connected_core.waste_remove
 	data["filter_types"] = list()
-	data["filter_types"] += list(list("name" = "Nothing", "path" = "", "selected" = !connected_core.filter_type))
 	for(var/path in GLOB.meta_gas_info)
 		var/list/gas = GLOB.meta_gas_info[path]
-		data["filter_types"] += list(list("name" = gas[META_GAS_NAME], "id" = gas[META_GAS_ID], "selected" = (path == gas_id2path(connected_core.filter_type))))
+		data["filter_types"] += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in connected_core.moderator_scrubbing)))
 
 	data["cooling_volume"] = connected_core.airs[1].volume
+	data["mod_filtering_rate"] = connected_core.moderator_filtering_rate
 
 	return data
 
@@ -357,14 +357,15 @@
 			connected_core.waste_remove = !connected_core.waste_remove
 			. = TRUE
 		if("filter")
-			connected_core.filter_type = null
-			var/filter_name = "nothing"
-			var/gas = gas_id2path(params["mode"])
-			if(gas in GLOB.meta_gas_info)
-				connected_core.filter_type = gas
-				filter_name = GLOB.meta_gas_info[gas][META_GAS_NAME]
-			investigate_log("was set to filter [filter_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
+			connected_core.moderator_scrubbing ^= gas_id2path(params["mode"])
 			. = TRUE
+		if("mod_filtering_rate")
+			var/mod_filtering_rate = params["mod_filtering_rate"]
+			if(text2num(mod_filtering_rate) != null)
+				mod_filtering_rate = text2num(mod_filtering_rate)
+				. = TRUE
+			if(.)
+				connected_core.moderator_filtering_rate = clamp(mod_filtering_rate, 5, 200)
 		if("fuel")
 			connected_core.selected_fuel = null
 			var/fuel_mix = "nothing"
