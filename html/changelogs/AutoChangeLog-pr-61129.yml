@@ -1,8 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes: 
-  - bugfix: "Tramstation: Restored the missing law office stamp. Hail bureaucracy!"
-  - bugfix: "Tramstation: Replaced the Core AI module in RD's office with an AI Core circuitboard. You can actually build a new AI with this!"
-  - bugfix: "Tramstation: RnD now comes with three Experi-scanners. You no longer have an excuse for not scanning those toilets."
-  - bugfix: "Tramstation: Fixed a non-functional shutters button in left-side tram underpass."
-  - rscadd: "Tramstation: Book manuals have been shipped to Robotics and Medbay Treatment Center."

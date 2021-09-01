@@ -1,4 +1,0 @@
-author: "AlinaStarkova"
-delete-after: True
-changes: 
-  - bugfix: "Maint areas have been cleaned up to properly cover maint, minor tiles and airlocks which had space areas were fixed to have an actual maint area"
