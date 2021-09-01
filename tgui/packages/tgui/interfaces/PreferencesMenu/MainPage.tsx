@@ -11,8 +11,8 @@ import { FeatureChoicedServerData, FeatureValueInput } from "./preferences/featu
 import { resolveAsset } from "../../assets";
 import { logger } from "../../logging";
 
-const CLOTHING_CELL_SIZE = 32;
-const CLOTHING_SIDEBAR_ROWS = 9;
+const CLOTHING_CELL_SIZE = 48;
+const CLOTHING_SIDEBAR_ROWS = 7;
 
 const CLOTHING_SELECTION_CELL_SIZE = 48;
 const CLOTHING_SELECTION_WIDTH = 5.4;
@@ -264,7 +264,7 @@ const PreferenceList = (props: {
   /* MOTHBLOCKS TODO: Overflow */
   /* MOTHBLOCKS TODO: Sort it */
   return (
-    <Stack.Item basis="30%" grow style={{
+    <Stack.Item basis="50%" grow style={{
       background: "rgba(0, 0, 0, 0.5)",
       padding: "4px",
     }}>
@@ -281,7 +281,11 @@ const PreferenceList = (props: {
           }
 
           return (
-            <LabeledList.Item key={featureId} label={feature.name}>
+            <LabeledList.Item
+              key={featureId}
+              label={feature.name}
+              verticalAlign="middle"
+            >
               <FeatureValueInput
                 act={props.act}
                 feature={feature}
@@ -304,127 +308,133 @@ export const MainPage = (props: {
     = useLocalState<string | null>(context, "currentClothingMenu", null);
 
   return (
-    <Stack fill>
-      <ServerPreferencesFetcher render={(serverData) => {
-        const currentSpeciesData = serverData && serverData.species[
-          data
-            .character_preferences
-            .misc
-            .species
-        ];
+    <ServerPreferencesFetcher render={(serverData) => {
+      const currentSpeciesData = serverData && serverData.species[
+        data
+          .character_preferences
+          .misc
+          .species
+      ];
 
-        return (
-          <>
-            <Stack.Item>
-              <Stack vertical>
-                <Stack.Item>
-                  <CharacterControls
-                    gender={data.character_preferences.misc.gender}
-                    handleOpenSpecies={props.openSpecies}
-                    handleRotate={() => {
-                      act("rotate");
-                    }}
-                    setGender={createSetPreference(act, "gender")}
-                  />
-                </Stack.Item>
+      return (
+        <Stack fill>
+          <Stack.Item>
+            <Stack vertical>
+              <Stack.Item>
+                <CharacterControls
+                  gender={data.character_preferences.misc.gender}
+                  handleOpenSpecies={props.openSpecies}
+                  handleRotate={() => {
+                    act("rotate");
+                  }}
+                  setGender={createSetPreference(act, "gender")}
+                />
+              </Stack.Item>
 
-                <Stack.Item>
-                  <CharacterPreview
-                    height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}
-                    id={data.character_preview_view} />
-                </Stack.Item>
+              <Stack.Item>
+                <CharacterPreview
+                  height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}
+                  id={data.character_preview_view} />
+              </Stack.Item>
 
-                <Stack.Item position="relative">
-                  <NameInput
-                    name={
-                      data.character_preferences.names[data.name_to_use].value
+              <Stack.Item position="relative">
+                <NameInput
+                  name={
+                    data.character_preferences.names[data.name_to_use].value
+                  }
+                  handleUpdateName={
+                    createSetPreference(act, data.name_to_use)
+                  }
+                />
+              </Stack.Item>
+
+            </Stack>
+          </Stack.Item>
+
+          <Stack.Item>
+            <Stack
+              vertical
+              fill
+              width={`${CLOTHING_CELL_SIZE}px`}
+            >
+              {[
+                ...Object.entries(data.character_preferences.clothing),
+                ...Object.entries(data.character_preferences.features)
+                  .filter(([featureName]) => {
+                    if (!currentSpeciesData) {
+                      return false;
                     }
-                    handleUpdateName={
-                      createSetPreference(act, data.name_to_use)
-                    }
-                  />
-                </Stack.Item>
 
-              </Stack>
-            </Stack.Item>
-
-            <Stack.Item>
-              <Stack
-                vertical
-                fill
-                width={`${CLOTHING_CELL_SIZE}px`}
-              >
-                {[
-                  ...Object.entries(data.character_preferences.clothing),
-                  ...Object.entries(data.character_preferences.features)
-                    .filter(([featureName]) => {
-                      if (!currentSpeciesData) {
-                        return false;
-                      }
-
-                      // MOTHBLOCKS TODO: This is stupid, let's figure it out
-                      return currentSpeciesData.enabled_features
-                        .indexOf(featureName) !== -1
+                    // MOTHBLOCKS TODO: This is stupid, let's figure it out
+                    return currentSpeciesData.enabled_features
+                      .indexOf(featureName) !== -1
                         || currentSpeciesData.enabled_features
                           .indexOf(featureName.split("feature_")[1]) !== -1;
-                    }),
-                ]
-                  .map(([clothingKey, clothing]) => {
-                    const catalog = (
-                      serverData
+                  }),
+              ]
+                .map(([clothingKey, clothing]) => {
+                  const catalog = (
+                    serverData
                         && serverData[clothingKey] as FeatureChoicedServerData
-                    );
+                  );
 
-                    // MOTHBLOCKS TODO: Better nude icons, rather than X
-                    return (
-                      <Stack.Item key={clothingKey}>
-                        <Popper options={{
-                          placement: "bottom-start",
-                        }} popperContent={(currentClothingMenu === clothingKey
+                  // MOTHBLOCKS TODO: Better nude icons, rather than X
+                  return (
+                    <Stack.Item key={clothingKey}>
+                      <Popper options={{
+                        placement: "bottom-start",
+                      }} popperContent={(currentClothingMenu === clothingKey
                           && catalog)
-                          ? (
-                            <TrackOutsideClicks onOutsideClick={() => {
-                              setCurrentClothingMenu(null);
-                            }}>
-                              <ChoicedSelection
-                                name={KEYS_TO_NAMES[clothingKey]
+                        ? (
+                          <TrackOutsideClicks onOutsideClick={() => {
+                            setCurrentClothingMenu(null);
+                          }}>
+                            <ChoicedSelection
+                              name={KEYS_TO_NAMES[clothingKey]
                                   || `NO NAME FOR ${clothingKey}`}
-                                catalog={catalog}
-                                selected={clothing.value}
-                                onSelect={createSetPreference(act, clothingKey)}
-                              />
-                            </TrackOutsideClicks>
-                          ) : null}>
-                          <Button onClick={() => {
-                            setCurrentClothingMenu(
-                              currentClothingMenu === clothingKey
-                                ? null
-                                : clothingKey
-                            );
-                          }} style={{
-                            height: `${CLOTHING_CELL_SIZE}px`,
-                            width: `${CLOTHING_CELL_SIZE}px`,
-                          }} tooltip={clothing.value} tooltipPosition="right">
-                            <Box
-                              className={classes([
-                                "preferences32x32",
-                                clothing.icon,
-                                "centered-image",
-                              ])} />
-                          </Button>
-                        </Popper>
-                      </Stack.Item>
-                    );
-                  })}
-              </Stack>
-            </Stack.Item>
+                              catalog={catalog}
+                              selected={clothing.value}
+                              onSelect={createSetPreference(act, clothingKey)}
+                            />
+                          </TrackOutsideClicks>
+                        ) : null}>
+                        <Button onClick={() => {
+                          setCurrentClothingMenu(
+                            currentClothingMenu === clothingKey
+                              ? null
+                              : clothingKey
+                          );
+                        }} style={{
+                          height: `${CLOTHING_CELL_SIZE}px`,
+                          width: `${CLOTHING_CELL_SIZE}px`,
+                        }} tooltip={clothing.value} tooltipPosition="right">
+                          <Box
+                            className={classes([
+                              "preferences32x32",
+                              clothing.icon,
+                              "centered-image",
+                            ])}
+                            style={{
+                              transform: "translateX(-50%) translateY(-50%) scale(1.3)",
+                            }}
+                          />
+                        </Button>
+                      </Popper>
+                    </Stack.Item>
+                  );
+                })}
+            </Stack>
+          </Stack.Item>
 
-            <PreferenceList
-              act={act}
-              preferences={
-                Object.fromEntries(
-                  Object.entries(data.character_preferences.secondary_features)
-                    .filter(([feature]) => {
+          <Stack.Item grow basis={0}>
+            <Stack vertical fill>
+              <PreferenceList
+                act={act}
+                preferences={
+                  Object.fromEntries(
+                    Object.entries(
+                      data.character_preferences.secondary_features
+                    ).filter(([feature]) => {
                       if (!currentSpeciesData) {
                         return false;
                       }
@@ -432,16 +442,17 @@ export const MainPage = (props: {
                       return currentSpeciesData.enabled_features
                         .indexOf(feature) !== -1;
                     }))
-              }
-            />
+                }
+              />
 
-            <PreferenceList
-              act={act}
-              preferences={data.character_preferences.non_contextual}
-            />
-          </>
-        );
-      }} />
-    </Stack>
+              <PreferenceList
+                act={act}
+                preferences={data.character_preferences.non_contextual}
+              />
+            </Stack>
+          </Stack.Item>
+        </Stack>
+      );
+    }} />
   );
 };
