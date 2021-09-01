@@ -945,28 +945,29 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	for(var/word in words)
 		word = piglatin_word(word)
 	text = words.Join(" ")
+	text = capitalize(text)
 	return text
 
 ///takes "word", and returns it piglatinized.
 /proc/piglatin_word(word)
 	if(length(word) == 1)
 		return word
-	var/first_letter = copytext(text, 1, 2)
-	var/first_two_letters = copytext(word, text, 1, 3)
+	var/first_letter = copytext(word, 1, 2)
+	var/first_two_letters = copytext(word, 1, 3)
 	var/first_word_is_vowel = first_letter in list("a", "e", "i", "o", "u")
-	var/second_word_is_vowel = copytext(text, 2, 3) in list("a", "e", "i", "o", "u")
+	var/second_word_is_vowel = copytext(word, 2, 3) in list("a", "e", "i", "o", "u")
 	//If a word starts with a vowel add the word "way" at the end of the word.
 	if(first_word_is_vowel)
 		return word + "way"
 	//If a word starts with a consonant and a vowel, put the first letter of the word at the end of the word and add "ay."
 	if(!first_word_is_vowel && second_word_is_vowel)
-		word = copytext(word, text, 1, 2)
-		word + first_letter
+		word = copytext(word, 1, 2)
+		word += first_letter
 		return word
 	//If a word starts with two consonants move the two consonants to the end of the word and add "ay."
 	if(!first_word_is_vowel && !second_word_is_vowel)
-		word = copytext(word, text, 3, length(word) + 1)
-		word + first_two_letters
+		word = copytext(word, 3, length(word) + 1)
+		word += first_two_letters
 		return word
 	//otherwise unmutated
 	return word
