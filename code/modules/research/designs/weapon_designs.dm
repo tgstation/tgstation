@@ -161,7 +161,6 @@
 	build_path = /obj/item/gun/syringe/rapidsyringe
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL //uwu
-	autolathe_exportable = FALSE
 
 /datum/design/temp_gun
 	name = "Temperature Gun Part Kit"
