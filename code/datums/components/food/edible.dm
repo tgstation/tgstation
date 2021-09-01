@@ -45,6 +45,7 @@ Behavior that's still missing from this component that original food items had t
 	///The type of atom this creates when the object is microwaved.
 	var/atom/microwaved_type
 
+
 /datum/component/edible/Initialize(
 	list/initial_reagents,
 	food_flags = NONE,
@@ -73,7 +74,7 @@ Behavior that's still missing from this component that original food items had t
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc_behalf, parent, loc_connections)
+	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
@@ -275,20 +276,40 @@ Behavior that's still missing from this component that original food items had t
 		if(IsFoodGone(owner, feeder))
 			return
 		var/eatverb = pick(eatverbs)
+
+		var/message_to_nearby_audience = ""
+		var/message_to_consumer = ""
+		var/message_to_blind_consumer = ""
+
 		if(junkiness && eater.satiety < -150 && eater.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(eater, TRAIT_VORACIOUS))
 			to_chat(eater, span_warning("You don't feel like eating any more junk food at the moment!"))
 			return
-		else if(fullness <= 50)
-			eater.visible_message(span_notice("[eater] hungrily [eatverb]s \the [parent], gobbling it down!"), span_notice("You hungrily [eatverb] \the [parent], gobbling it down!"))
-		else if(fullness > 50 && fullness < 150)
-			eater.visible_message(span_notice("[eater] hungrily [eatverb]s \the [parent]."), span_notice("You hungrily [eatverb] \the [parent]."))
-		else if(fullness > 150 && fullness < 500)
-			eater.visible_message(span_notice("[eater] [eatverb]s \the [parent]."), span_notice("You [eatverb] \the [parent]."))
-		else if(fullness > 500 && fullness < 600)
-			eater.visible_message(span_notice("[eater] unwillingly [eatverb]s a bit of \the [parent]."), span_notice("You unwillingly [eatverb] a bit of \the [parent]."))
 		else if(fullness > (600 * (1 + eater.overeatduration / (4000 SECONDS)))) // The more you eat - the more you can eat
-			eater.visible_message(span_warning("[eater] cannot force any more of \the [parent] to go down [eater.p_their()] throat!"), span_warning("You cannot force any more of \the [parent] to go down your throat!"))
+			message_to_nearby_audience = span_warning("[eater] cannot force any more of \the [parent] to go down [eater.p_their()] throat!")
+			message_to_consumer = span_warning("You cannot force any more of \the [parent] to go down your throat!")
+			message_to_blind_consumer = message_to_consumer
+			eater.show_message(message_to_consumer, MSG_VISUAL, message_to_blind_consumer)
+			eater.visible_message(message_to_nearby_audience, ignored_mobs = eater)
+			//if we're too full, return because we can't eat whatever it is we're trying to eat
 			return
+		else if(fullness > 500)
+			message_to_nearby_audience = span_notice("[eater] unwillingly [eatverb]s a bit of \the [parent].")
+			message_to_consumer = span_notice("You unwillingly [eatverb] a bit of \the [parent].")
+		else if(fullness > 150)
+			message_to_nearby_audience = span_notice("[eater] [eatverb]s \the [parent].")
+			message_to_consumer = span_notice("You [eatverb] \the [parent].")
+		else if(fullness > 50)
+			message_to_nearby_audience = span_notice("[eater] hungrily [eatverb]s \the [parent].")
+			message_to_consumer = span_notice("You hungrily [eatverb] \the [parent].")
+		else
+			message_to_nearby_audience = span_notice("[eater] hungrily [eatverb]s \the [parent], gobbling it down!")
+			message_to_consumer = span_notice("You hungrily [eatverb] \the [parent], gobbling it down!")
+
+		//if we're blind, we want to feel how hungrily we ate that food
+		message_to_blind_consumer = message_to_consumer
+		eater.show_message(message_to_consumer, MSG_VISUAL, message_to_blind_consumer)
+		eater.visible_message(message_to_nearby_audience, ignored_mobs = eater)
+
 	else //If you're feeding it to someone else.
 		if(isbrain(eater))
 			to_chat(feeder, span_warning("[eater] doesn't seem to have a mouth!"))

@@ -152,7 +152,7 @@
 
 /obj/item/storage/firstaid/fire
 	name = "burn treatment kit"
-	desc = "A specialized medical kit for when the toxins lab <i>-spontaneously-</i> burns down."
+	desc = "A specialized medical kit for when the ordnance lab <i>-spontaneously-</i> burns down."
 	icon_state = "ointment"
 	inhand_icon_state = "firstaid-ointment"
 	damagetype_healed = BURN

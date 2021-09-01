@@ -55,7 +55,7 @@
 	if(ismovable(target))
 		var/atom/movable/M = target
 		var/atom/throw_target = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
-		M.safe_throw_at(throw_target, 3, 2)
+		M.safe_throw_at(throw_target, 3, 2, force = MOVE_FORCE_EXTREMELY_STRONG)
 
 /obj/projectile/bullet/shotgun_meteorslug/Initialize()
 	. = ..()
