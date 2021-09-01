@@ -395,6 +395,7 @@
 	icon = 'icons/obj/smooth_structures/plasmaglass_table.dmi'
 	icon_state = "plasmaglass_table-0"
 	base_icon_state = "plasmaglass_table"
+	custom_materials = list(/datum/material/alloy/plasmaglass = 2000)
 	buildstack = /obj/item/stack/sheet/plasmaglass
 	max_integrity = 100
 
@@ -566,6 +567,7 @@
 	icon = 'icons/obj/smooth_structures/rglass_table.dmi'
 	icon_state = "rglass_table-0"
 	base_icon_state = "rglass_table"
+	custom_materials = list(/datum/material/glass = 2000, /datum/material/iron = 2000)
 	buildstack = /obj/item/stack/sheet/rglass
 	max_integrity = 150
 
@@ -575,6 +577,7 @@
 	icon = 'icons/obj/smooth_structures/rplasmaglass_table.dmi'
 	icon_state = "rplasmaglass_table-0"
 	base_icon_state = "rplasmaglass_table"
+	custom_materials = list(/datum/material/alloy/plasmaglass = 2000, /datum/material/iron = 2000)
 	buildstack = /obj/item/stack/sheet/plasmarglass
 
 /obj/structure/table/reinforced/titaniumglass
@@ -583,6 +586,7 @@
 	icon = 'icons/obj/smooth_structures/titaniumglass_table.dmi'
 	icon_state = "titaniumglass_table-o"
 	base_icon_state = "titaniumglass_table"
+	custom_materials = list(/datum/material/alloy/titaniumglass = 2000)
 	buildstack = /obj/item/stack/sheet/titaniumglass
 	max_integrity = 250
 
@@ -592,6 +596,7 @@
 	icon = 'icons/obj/smooth_structures/plastitaniumglass_table.dmi'
 	icon_state = "plastitaniumglass_table-0"
 	base_icon_state = "plastitaniumglass_table"
+	custom_materials = list(/datum/material/alloy/plastitaniumglass = 2000)
 	buildstack = /obj/item/stack/sheet/plastitaniumglass
 	max_integrity = 300
 
