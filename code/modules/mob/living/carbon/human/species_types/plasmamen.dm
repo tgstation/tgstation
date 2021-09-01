@@ -52,8 +52,7 @@
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	var/atmos_sealed = CanIgniteMob(H) && (isclothing(H.wear_suit) && H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE) && (isclothing(H.head) && H.head.clothing_flags & STOPSPRESSUREDAMAGE)
 	var/flammable_limb = FALSE
-	for(var/any_bodypart as anything in H.bodyparts)//If any plasma based limb is found the plasmaman will attempt to autoignite
-		var/obj/item/bodypart/found_bodypart = any_bodypart
+	for(var/obj/item/bodypart/found_bodypart as anything in H.bodyparts)//If any plasma based limb is found the plasmaman will attempt to autoignite
 		if(found_bodypart.status == BODYPART_ORGANIC && (found_bodypart.species_id == SPECIES_PLASMAMAN || HAS_TRAIT(found_bodypart, TRAIT_PLASMABURNT))) //Allows for "donated" limbs and augmented limbs to prevent autoignition
 			flammable_limb = TRUE
 			break
