@@ -394,11 +394,6 @@
 		new /obj/effect/gibspawner/generic(human_user.drop_location(), human_user)
 		return (BRUTELOSS)
 
-/obj/item/melee/classic_baton/robo
-	name = "electric arm"
-	icon_state = "elecarm"
-	on_stun_sound = "sound/weapons/egloves.ogg"
-
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *

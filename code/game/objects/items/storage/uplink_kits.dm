@@ -534,7 +534,6 @@
 	new /obj/item/organ/cyberimp/arm/esword(src)
 	new /obj/item/organ/cyberimp/arm/medibeam(src)
 	new /obj/item/organ/cyberimp/arm/flash(src)
-	new /obj/item/organ/cyberimp/arm/baton/robo(src)
 	new /obj/item/organ/cyberimp/arm/gun/laser(src)
 	new /obj/item/autosurgeon/organ/syndicate(src)
 
