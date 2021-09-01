@@ -43,6 +43,9 @@
 		new threads(get_turf(user))
 	for(var/threads in team_to_use.current_theme.bonus_items)
 		new threads(get_turf(user))
+	var/obj/item/gangster_cellphone/phone = new(get_turf(user))
+	phone.gang_id = team_to_use.my_gang_datum.gang_name
+	phone.name = "[team_to_use.my_gang_datum.gang_name] branded cell phone"
 	if (!isnull(handler) && !handler.gangbangers.Find(user.mind)) // if we have a handler and they're not tracked by it
 		handler.gangbangers += user.mind
 

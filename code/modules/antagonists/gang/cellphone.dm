@@ -41,11 +41,9 @@ GLOBAL_LIST_EMPTY(gangster_cell_phones)
 	for(var/obj/item/gangster_cellphone/brick in GLOB.gangster_cell_phones)
 		if(brick.gang_id == gang_id)
 			brick.say_message(message, speaker)
-
-/obj/item/gangster_cellphone/proc/say_message(message, atom/movable/speaker)
-	for(var/mob/living/carbon/human/hugh_mann in get_turf(src))
-		to_chat(hugh_mann, "<b>[speaker.name]</b> \[CELL: [gang_id]\] says, \"[message]\"")
-	for(var/mob/player_mob as anything in GLOB.player_list)
+	for(var/mob/dead/observer/player_mob in GLOB.player_list)
+		if(!istype(player_mob, /mob/dead/observer))
+			continue
 		if(QDELETED(player_mob)) //Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
 			continue //Remove if underlying cause (likely byond issue) is fixed. See TG PR #49004.
 		if(player_mob.stat != DEAD) //not dead, not important
@@ -54,3 +52,8 @@ GLOBAL_LIST_EMPTY(gangster_cell_phones)
 			if(!(player_mob.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
 				continue
 		to_chat(player_mob, "<b>[speaker.name]</b> \[CELL: [gang_id]\] says, \"[message]\"")
+
+/obj/item/gangster_cellphone/proc/say_message(message, atom/movable/speaker)
+	for(var/mob/living/carbon/human/hugh_mann in get_turf(src))
+		to_chat(hugh_mann, "<b>[speaker.name]</b> \[CELL: [gang_id]\] says, \"[message]\"")
+
