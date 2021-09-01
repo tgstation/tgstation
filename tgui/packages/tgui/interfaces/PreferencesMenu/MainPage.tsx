@@ -10,6 +10,7 @@ import features from "./preferences/features";
 import { FeatureChoicedServerData, FeatureValueInput } from "./preferences/features/base";
 import { resolveAsset } from "../../assets";
 import { logger } from "../../logging";
+import { sortBy } from "common/collections";
 
 const CLOTHING_CELL_SIZE = 48;
 const CLOTHING_SIDEBAR_ROWS = 7;
@@ -257,44 +258,51 @@ const NameInput = (props: {
   );
 };
 
+const sortPreferences = sortBy<[string, unknown]>(
+  ([featureId, _]) => {
+    const feature = features[featureId];
+    return feature?.name;
+  });
+
 const PreferenceList = (props: {
   act: typeof sendAct,
   preferences: Record<string, unknown>,
 }) => {
-  /* MOTHBLOCKS TODO: Overflow */
-  /* MOTHBLOCKS TODO: Sort it */
   return (
     <Stack.Item basis="50%" grow style={{
       background: "rgba(0, 0, 0, 0.5)",
       padding: "4px",
     }}>
       <LabeledList>
-        { Object.entries(props.preferences).map(([featureId, value]) => {
-          const feature = features[featureId];
+        {
+          sortPreferences(Object.entries(props.preferences))
+            .map(([featureId, value]) => {
+              const feature = features[featureId];
 
-          if (feature === undefined) {
-            return (
-              <Stack.Item key={featureId}>
-                <b>Feature {featureId} is not recognized.</b>
-              </Stack.Item>
-            );
-          }
+              if (feature === undefined) {
+                return (
+                  <Stack.Item key={featureId}>
+                    <b>Feature {featureId} is not recognized.</b>
+                  </Stack.Item>
+                );
+              }
 
-          return (
-            <LabeledList.Item
-              key={featureId}
-              label={feature.name}
-              verticalAlign="middle"
-            >
-              <FeatureValueInput
-                act={props.act}
-                feature={feature}
-                featureId={featureId}
-                value={value}
-              />
-            </LabeledList.Item>
-          );
-        })}
+              return (
+                <LabeledList.Item
+                  key={featureId}
+                  label={feature.name}
+                  verticalAlign="middle"
+                >
+                  <FeatureValueInput
+                    act={props.act}
+                    feature={feature}
+                    featureId={featureId}
+                    value={value}
+                  />
+                </LabeledList.Item>
+              );
+            })
+        }
       </LabeledList>
     </Stack.Item>
   );
