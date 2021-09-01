@@ -858,7 +858,9 @@
 	return FALSE
 
 /obj/machinery/airalarm/AltClick(mob/user)
-	..()
+	. = ..()
+	if(!can_interact(user))
+		return
 	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
 		return
 	else

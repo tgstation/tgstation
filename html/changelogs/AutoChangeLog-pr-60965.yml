@@ -1,4 +1,0 @@
-author: "wesoda25"
-delete-after: True
-changes: 
-  - bugfix: "Repairing clothing now immediately updates the sprite"
