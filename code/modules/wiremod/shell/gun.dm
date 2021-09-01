@@ -8,8 +8,6 @@
 	desc = "A gun that fires projectiles able to control circuitry. It can recharge using power from an attached circuit."
 	icon = 'icons/obj/wiremod.dmi'
 	icon_state = "setup_gun"
-	inhand_icon_state = "wiremod_gun"
-	worn_icon_state = "wiremod_gun"
 	ammo_type = list(/obj/item/ammo_casing/energy/wiremod_gun)
 	cell_type = /obj/item/stock_parts/cell/emproof/wiremod_gun
 	item_flags = NONE
@@ -57,7 +55,8 @@
 
 /obj/item/circuit_component/wiremod_gun/register_shell(atom/movable/shell)
 	RegisterSignal(shell, COMSIG_PROJECTILE_ON_HIT, .proc/handle_shot)
-	RegisterSignal(shell, COMSIG_GUN_CHAMBER_PROCESSED, .proc/handle_chamber)
+	if(istype(shell, /obj/item/gun/energy))
+		RegisterSignal(shell, COMSIG_GUN_CHAMBER_PROCESSED, .proc/handle_chamber)
 
 /obj/item/circuit_component/wiremod_gun/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, list(COMSIG_PROJECTILE_ON_HIT, COMSIG_GUN_CHAMBER_PROCESSED))
@@ -79,7 +78,7 @@
 /obj/item/circuit_component/wiremod_gun/proc/handle_chamber(atom/source)
 	SIGNAL_HANDLER
 
-	if(!istype(source, /obj/item/gun/energy) || !parent?.cell)
+	if(!parent?.cell)
 		return
 	var/obj/item/gun/energy/fired_gun = source
 	var/totransfer = min(100, parent.cell.charge)
