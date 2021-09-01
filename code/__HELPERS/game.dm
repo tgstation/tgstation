@@ -444,7 +444,7 @@
  * * target_mob - The mob that is being polled for.
  * * ignore_category - Unknown/needs further documentation.
  */
-/proc/poll_candidates_for_mob(question, jobban_type, be_special_flag = 0, poll_time = 300, mob/target_mob, ignore_category = null)
+/proc/poll_candidates_for_mob(question, jobban_type, be_special_flag = 0, poll_time = 30 SECONDS, mob/target_mob, ignore_category = null)
 	var/static/list/mob/currently_polling_mobs = list()
 
 	if(currently_polling_mobs.Find(target_mob))
@@ -471,7 +471,7 @@
  * * mobs - The list of mobs being polled for. This list is mutated and invalid mobs are removed from it before the proc returns.
  * * ignore_category - Unknown/needs further documentation.
  */
-/proc/poll_candidates_for_mobs(question, jobban_type, be_special_flag = 0, poll_time = 300, list/mobs, ignore_category = null)
+/proc/poll_candidates_for_mobs(question, jobban_type, be_special_flag = 0, poll_time = 30 SECONDS, list/mobs, ignore_category = null)
 	var/list/candidate_list = pollGhostCandidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
 
 	for(var/mob/potential_mob as anything in mobs)

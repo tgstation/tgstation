@@ -185,7 +185,7 @@
 	//we need to spawn the mob first so that we can use it in poll_candidates_for_mob, we will move it from nullspace down the code
 	var/mob/living/summoned = new mob_to_summon(loc)
 	message_admins("[summoned.name] is being summoned by [user.real_name] in [loc]")
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [summoned.real_name]", ROLE_HERETIC, FALSE, 100, summoned)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [summoned.real_name]", ROLE_HERETIC, FALSE, 10 SECONDS, summoned)
 	if(!LAZYLEN(candidates))
 		to_chat(user,span_warning("No ghost could be found..."))
 		qdel(summoned)
