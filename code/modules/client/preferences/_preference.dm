@@ -87,15 +87,11 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// This is useful either for more optimal data saving or for migrating
 /// older data.
 /// Must be overridden by subtypes.
-/// Can return /datum/mark_call_create_default_value.
+/// Can return null if no value was found.
 /datum/preference/proc/deserialize(input)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("`deserialize()` was not implemented on [type]!")
-
-/// A marker datum that, when returned from /datum/preference/deserialize,
-/// will call create_informed_default_value, then create_default_value.
-/datum/mark_call_create_default_value
 
 /// Called on the input while saving.
 /// Input is the current value, output is what to save in the savefile.
@@ -128,7 +124,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	READ_FILE(savefile[savefile_key], value)
 
 	if (isnull(value))
-		return /datum/mark_call_create_default_value
+		return null
 	else
 		return deserialize(value)
 
@@ -200,7 +196,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		return value_cache[preference_type]
 
 	var/value = preference_entry.read(get_savefile_for_savefile_identifier(preference_entry.savefile_identifier))
-	if (value == /datum/mark_call_create_default_value)
+	if (isnull(value))
 		value = preference_entry.create_informed_default_value(src)
 		if (write_preference(preference_entry, value))
 			return value
