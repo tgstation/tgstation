@@ -30,10 +30,9 @@
 /obj/item/gun/chem/can_shoot()
 	return syringes_left
 
-/obj/item/gun/chem/process_chamber()
+/obj/item/gun/chem/handle_chamber()
 	if(chambered && !chambered.loaded_projectile && syringes_left)
 		chambered.newshot()
-	return ..()
 
 /obj/item/gun/chem/process()
 	if(syringes_left >= max_syringes)

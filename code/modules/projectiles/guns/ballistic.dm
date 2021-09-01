@@ -210,7 +210,7 @@
 		. += "[icon_state]_mag_[capacity_number]"
 
 
-/obj/item/gun/ballistic/process_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
+/obj/item/gun/ballistic/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)
 		return
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
@@ -224,7 +224,6 @@
 			chambered = null
 	if (chamber_next_round && (magazine?.max_ammo > 1))
 		chamber_round()
-	return ..()
 
 ///Used to chamber a new round and eject the old one
 /obj/item/gun/ballistic/proc/chamber_round(keep_bullet = FALSE, spin_cylinder, replace_new_round)

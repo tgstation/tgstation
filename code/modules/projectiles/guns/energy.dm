@@ -154,13 +154,12 @@
 			if(!chambered.loaded_projectile)
 				chambered.newshot()
 
-/obj/item/gun/energy/process_chamber()
+/obj/item/gun/energy/handle_chamber()
 	if(chambered && !chambered.loaded_projectile) //if loaded_projectile is null, i.e the shot has been fired...
 		var/obj/item/ammo_casing/energy/shot = chambered
 		cell.use(shot.e_cost)//... drain the cell cell
 	chambered = null //either way, released the prepared shot
 	recharge_newshot() //try to charge a new shot
-	return ..()
 
 /obj/item/gun/energy/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(!chambered && can_shoot())
