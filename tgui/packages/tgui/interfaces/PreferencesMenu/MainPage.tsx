@@ -317,9 +317,9 @@ export const MainPage = (props: {
       ];
 
       return (
-        <Stack fill>
-          <Stack.Item>
-            <Stack vertical>
+        <Stack height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}>
+          <Stack.Item fill>
+            <Stack vertical fill>
               <Stack.Item>
                 <CharacterControls
                   gender={data.character_preferences.misc.gender}
@@ -331,9 +331,9 @@ export const MainPage = (props: {
                 />
               </Stack.Item>
 
-              <Stack.Item>
+              <Stack.Item grow>
                 <CharacterPreview
-                  height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}
+                  height="100%"
                   id={data.character_preview_view} />
               </Stack.Item>
 
@@ -351,12 +351,11 @@ export const MainPage = (props: {
             </Stack>
           </Stack.Item>
 
-          <Stack.Item>
-            <Stack
-              vertical
-              fill
-              width={`${CLOTHING_CELL_SIZE}px`}
-            >
+          <Stack.Item
+            fill
+            width={`${(CLOTHING_CELL_SIZE * 2) + 15}px`}
+          >
+            <Stack height="100%" vertical wrap>
               {[
                 ...Object.entries(data.character_preferences.clothing),
                 ...Object.entries(data.character_preferences.features)
@@ -380,7 +379,7 @@ export const MainPage = (props: {
 
                   // MOTHBLOCKS TODO: Better nude icons, rather than X
                   return (
-                    <Stack.Item key={clothingKey}>
+                    <Stack.Item key={clothingKey} mt={0.5} px={0.5}>
                       <Popper options={{
                         placement: "bottom-start",
                       }} popperContent={(currentClothingMenu === clothingKey
