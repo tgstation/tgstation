@@ -266,6 +266,16 @@
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstack = null //No buildstack, so generate from mat datums
 
+/obj/structure/table/plasmarglass
+	name = "Reinforced Plasmaglass Table"
+	desc = "A reinforced version of the plasma glass table."
+	icon = 'icons/obj/smooth_structures/rplasmaglass_table.dmi'
+	icon_state = "rplasmaglass_table-0"
+	base_icon_state = "rplasmaglass_table"
+	custom_materials = list(/datum/material/plasma = 2000, /datum/material/iron = 1000)
+	buildstack = /obj/item/stack/sheet/plasmarglass
+	max_integrity = 150
+
 ///Table on wheels
 /obj/structure/table/rolling
 	name = "Rolling table"
