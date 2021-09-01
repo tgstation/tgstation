@@ -16,7 +16,6 @@
 		"basic_scanning",
 		"bepis",
 		"bucket",
-		"bag_holding", //test stuff, to be removed
 		"c-reader",
 		"circuit_imprinter",
 		"circuit_imprinter_offstation",
