@@ -375,8 +375,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	src.preferences = preferences
 
 /atom/movable/screen/character_preview_view/Destroy()
-	. = ..()
-
 	QDEL_NULL(body)
 
 	for (var/plane_master in plane_masters)
@@ -384,10 +382,15 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 		qdel(plane_master)
 
 	client?.clear_map(assigned_map)
+	client?.screen -= src
+
+	preferences.character_preview_view = null
 
 	client = null
 	plane_masters = null
 	preferences = null
+
+	return ..()
 
 /// Updates the currently displayed body
 /atom/movable/screen/character_preview_view/proc/update_body()
