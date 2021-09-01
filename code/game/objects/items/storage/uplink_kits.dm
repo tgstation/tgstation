@@ -527,6 +527,17 @@
 	new /obj/item/stamp/chameleon(src)
 	new /obj/item/pda/chameleon(src)
 
+/obj/item/storage/box/syndie_kit/roboimplants
+	name = "cybernetic surplus kit"
+
+/obj/item/storage/box/syndie_kit/roboimplants/PopulateContents()
+	new /obj/item/organ/cyberimp/arm/esword(src)
+	new /obj/item/organ/cyberimp/arm/medibeam(src)
+	new /obj/item/organ/cyberimp/arm/flash(src)
+	new /obj/item/organ/cyberimp/arm/baton/robo(src)
+	new /obj/item/organ/cyberimp/arm/gun/laser(src)
+	new //obj/item/autosurgeon/organ/syndicate(src)
+
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
 /obj/item/storage/box/syndie_kit/throwing_weapons/PopulateContents()

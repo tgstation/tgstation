@@ -1927,12 +1927,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	restricted_roles = list("Clown")
 	illegal_tech = FALSE
 
-/datum/uplink_item/role_restricted/laser_arm
-	name = "Laser Arm Implant"
-	desc = "An implant that grants you a recharging laser gun inside your arm. Weak to EMPs. Comes with a syndicate autosurgeon for immediate self-application."
-	cost = 10
-	item = /obj/item/autosurgeon/organ/syndicate/laser_arm
-	restricted_roles = list("Roboticist", "Research Director")
+/datum/uplink_item/role_restricted/cybernetic_arm_implants
+	name = "Cybernetics Surplus Kit"
+	desc = "A set of discontinued implants made for combat, including the following, hardlight blade, photon projector, medibeam, laser arm, stunarm for your stealth operations, comes with a single use syndicate autosurgeon for immediate self-application of one of the cybernetics."
+	cost = 20
+	item = /obj/item/storage/box/syndie_kit/roboimplants
+	restricted_roles =list("Roboticist", "Research Director")
 
 /datum/uplink_item/role_restricted/bureaucratic_error_remote
 	name = "Organic Resources Disturbance Inducer"

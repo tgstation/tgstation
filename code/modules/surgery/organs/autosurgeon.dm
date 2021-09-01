@@ -93,10 +93,9 @@
 	uses = 1
 	starting_organ = /obj/item/organ/cyberimp/eyes/hud/medical
 
-/obj/item/autosurgeon/organ/syndicate/laser_arm
-	desc = "A single use autosurgeon that contains a combat arms-up laser augment. A screwdriver can be used to remove it, but implants can't be placed back in."
+/obj/item/autosurgeon/organ/syndicate
+	desc = "A single use autosurgeon that contains a slot for a implant. A screwdriver can be used to remove it, but implants can't be placed back in."
 	uses = 1
-	starting_organ = /obj/item/organ/cyberimp/arm/gun/laser
 
 /obj/item/autosurgeon/organ/syndicate/thermal_eyes
 	starting_organ = /obj/item/organ/eyes/robotic/thermals
