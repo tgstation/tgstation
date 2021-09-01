@@ -8,3 +8,4 @@
 	max_amount = 10
 	singular_name = "pipe sealant"
 	novariants = TRUE
+	merge_type = /obj/item/stack/pipe_sealant
