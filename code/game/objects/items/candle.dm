@@ -14,6 +14,8 @@
 	var/lit = FALSE
 	var/infinite = FALSE
 	var/start_lit = FALSE
+	/// Pollutant type for scented candles
+	var/scented_type
 
 /obj/item/candle/Initialize()
 	. = ..()
@@ -80,3 +82,43 @@
 	start_lit = TRUE
 
 #undef CANDLE_LUMINOSITY
+
+/obj/item/storage/fancy/candle_box/vanilla
+	name = "vanilla candle pack"
+	spawn_type = /obj/item/candle/vanilla
+
+/obj/item/storage/fancy/candle_box/pear
+	name = "pear candle pack"
+	spawn_type = /obj/item/candle/pear
+
+/obj/item/storage/fancy/candle_box/amber
+	name = "amber candle pack"
+	spawn_type = /obj/item/candle/amber
+
+/obj/item/storage/fancy/candle_box/jasmine
+	name = "jasmine candle pack"
+	spawn_type = /obj/item/candle/jasmine
+
+/obj/item/storage/fancy/candle_box/mint
+	name = "mint candle pack"
+	spawn_type = /obj/item/candle/mint
+
+/obj/item/candle/vanilla
+	name = "vanilla scented candle"
+	scented_type = /datum/pollutant/fragrance/vanilla
+
+/obj/item/candle/pear
+	name = "pear scented candle"
+	scented_type = /datum/pollutant/fragrance/pear
+
+/obj/item/candle/amber
+	name = "amber scented candle"
+	scented_type = /datum/pollutant/fragrance/amber
+
+/obj/item/candle/jasmine
+	name = "jasmine scented candle"
+	scented_type = /datum/pollutant/fragrance/jasmine
+
+/obj/item/candle/mint
+	name = "mint scented candle"
+	scented_type = /datum/pollutant/fragrance/mint

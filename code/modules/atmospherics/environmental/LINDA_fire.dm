@@ -129,6 +129,7 @@
 			volume = affected.reaction_results["fire"]*FIRE_GROWTH_RATE
 			location.assume_air(affected)
 
+	location.PolluteListTurf(list(/datum/pollutant/smoke = 15, /datum/pollutant/carbon_air_pollution = 5), POLLUTION_ACTIVE_EMITTER_CAP)
 	// Handles the burning of atoms.
 	for(var/A in location)
 		var/atom/AT = A

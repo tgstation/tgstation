@@ -10,16 +10,18 @@
 
 
 #define OPENSPACE_LAYER 600 //Openspace layer over all
-#define OPENSPACE_PLANE -9 //Openspace plane below all turfs
-#define OPENSPACE_BACKDROP_PLANE -8 //Black square just over openspace plane to guaranteed cover all in openspace turf
+#define OPENSPACE_PLANE -10 //Openspace plane below all turfs
+#define OPENSPACE_BACKDROP_PLANE -9 //Black square just over openspace plane to guaranteed cover all in openspace turf
 
 
-#define FLOOR_PLANE -7
+#define FLOOR_PLANE -8
 #define FLOOR_PLANE_RENDER_TARGET "FLOOR_PLANE"
-#define OVER_TILE_PLANE -6
-#define WALL_PLANE -5
-#define GAME_PLANE -4
+#define OVER_TILE_PLANE -7
+#define WALL_PLANE -6
+#define GAME_PLANE -5
 #define GAME_PLANE_RENDER_TARGET "GAME_PLANE"
+#define MOUSE_TRANSPARENT_PLANE -4
+#define MOUSE_TRANSPARENT_PLANE_RENDER_TARGET "MOUSE_TRANSPARENT_PLANE"
 #define UNDER_FRILL_PLANE -3
 #define UNDER_FRILL_RENDER_TARGET "UNDER_FRILL_PLANE"
 #define FRILL_PLANE -2

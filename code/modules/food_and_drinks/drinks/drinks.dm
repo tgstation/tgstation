@@ -240,6 +240,10 @@
 	isGlass = FALSE
 	foodtype = BREAKFAST
 
+/obj/item/reagent_containers/food/drinks/coffee/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/temporary_pollution_emission, /datum/pollutant/food/coffee, 5, 3 MINUTES)
+
 /obj/item/reagent_containers/food/drinks/ice
 	name = "ice cup"
 	desc = "Careful, cold ice, do not chew."
@@ -270,6 +274,10 @@
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
 	list_reagents = list(/datum/reagent/consumable/tea = 30)
 
+/obj/item/reagent_containers/food/drinks/mug/tea/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/temporary_pollution_emission, /datum/pollutant/food/tea, 5, 3 MINUTES)
+
 /obj/item/reagent_containers/food/drinks/mug/coco
 	name = "Dutch hot coco"
 	desc = "Made in Space South America."
@@ -278,6 +286,9 @@
 	resistance_flags = FREEZE_PROOF
 	custom_price = PAYCHECK_ASSISTANT * 1.2
 
+/obj/item/reagent_containers/food/drinks/mug/coco/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/temporary_pollution_emission, /datum/pollutant/food/chocolate, 5, 3 MINUTES)
 
 /obj/item/reagent_containers/food/drinks/dry_ramen
 	name = "cup ramen"

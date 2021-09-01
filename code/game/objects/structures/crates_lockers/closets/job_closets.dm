@@ -68,7 +68,8 @@
 	new /obj/item/clothing/shoes/galoshes(src)
 	new /obj/item/watertank/janitor(src)
 	new /obj/item/storage/belt/janitor(src)
-
+	new /obj/item/air_refresher(src)
+	new /obj/item/air_refresher(src)
 
 /obj/structure/closet/lawcloset
 	name = "legal closet"

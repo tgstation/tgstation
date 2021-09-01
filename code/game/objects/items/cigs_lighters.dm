@@ -44,6 +44,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(lit || burnt)
 		return
 
+	var/turf/my_turf = get_turf(src)
+	my_turf.PolluteTurf(/datum/pollutant/sulphur, 5)
 	playsound(src, 'sound/items/match_strike.ogg', 15, TRUE)
 	lit = TRUE
 	icon_state = "match_lit"
@@ -159,7 +161,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/smoke_all = FALSE
 	/// How much damage this deals to the lungs per drag.
 	var/lung_harm = 1
-
+	/// What type of pollution does this produce on smoking, changed to weed pollution sometimes
+	var/pollution_type = /datum/pollutant/smoke
 
 /obj/item/clothing/mask/cigarette/Initialize()
 	. = ..()
@@ -234,6 +237,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		e.start()
 		qdel(src)
 		return
+	if(reagents.has_reagent(/datum/reagent/drug/cannabis))
+		pollution_type = /datum/pollutant/smoke/cannabis
 	// allowing reagents to react after being lit
 	reagents.flags &= ~(NO_REACT)
 	reagents.handle_reactions()
@@ -301,6 +306,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			extinguish()
 			return
 
+	location.PolluteTurf(pollution_type, 10)
 	smoketime -= delta_time * (1 SECONDS)
 	if(smoketime <= 0)
 		new type_butt(location)
@@ -1066,6 +1072,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	//Time to start puffing those fat vapes, yo.
 	COOLDOWN_START(src, drag_cooldown, dragtime)
+	//open flame removed because vapes are a closed system, they won't light anything on fire
+	var/turf/my_turf = get_turf(src)
+	my_turf.PolluteTurf(/datum/pollutant/smoke/vape, 10)
 	if(obj_flags & EMAGGED)
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
 		s.set_up(reagents, 4, 24, loc)

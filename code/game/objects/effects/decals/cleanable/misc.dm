@@ -94,6 +94,7 @@
 /obj/effect/decal/cleanable/greenglow/filled/Initialize()
 	. = ..()
 	reagents.add_reagent(pick(/datum/reagent/uranium, /datum/reagent/uranium/radium), 5)
+	AddElement(/datum/element/pollution_emitter, /datum/pollutant/chemical_vapors, 10)
 
 /obj/effect/decal/cleanable/greenglow/ecto
 	name = "ectoplasmic puddle"
@@ -136,6 +137,10 @@
 	icon_state = "vomit_1"
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 	beauty = -150
+
+/obj/effect/decal/cleanable/vomit/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	AddElement(/datum/element/pollution_emitter, /datum/pollutant/decaying_waste, 10)
 
 /obj/effect/decal/cleanable/vomit/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -225,6 +230,10 @@
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
 
+/obj/effect/decal/cleanable/insectguts/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	AddElement(/datum/element/pollution_emitter, /datum/pollutant/decaying_waste, 10)
+
 /obj/effect/decal/cleanable/confetti
 	name = "confetti"
 	desc = "Tiny bits of colored paper thrown about for the janitor to enjoy!"
@@ -257,6 +266,7 @@
 /obj/effect/decal/cleanable/garbage/Initialize()
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 15)
+	AddElement(/datum/element/pollution_emitter, /datum/pollutant/decaying_waste, 30)
 
 /obj/effect/decal/cleanable/ants
 	name = "space ants"

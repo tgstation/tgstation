@@ -6,6 +6,8 @@
 	var/barefootstep = null
 	var/clawfootstep = null
 	var/heavyfootstep = null
+	///Pollution of this turf
+	var/datum/pollution/pollution
 
 //direction is direction of travel of A
 /turf/open/zPassIn(atom/movable/A, direction, turf/source)
@@ -284,4 +286,18 @@
 	if(gas_change)
 		air.garbage_collect()
 		air_update_turf(FALSE, FALSE)
+
+/turf/open/PolluteTurf(pollution_type, amount, cap)
+	if(!pollution)
+		pollution = new(src)
+	if(cap && pollution.total_amount >= cap)
+		return
+	pollution.AddPollutant(pollution_type, amount)
+
+/turf/open/PolluteListTurf(list/pollutions, cap)
+	if(!pollution)
+		pollution = new(src)
+	if(cap && pollution.total_amount >= cap)
+		return
+	pollution.AddPollutantList(pollutions)
 

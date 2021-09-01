@@ -184,6 +184,7 @@
 	setDir(pick(1,2,4,8))
 	add_blood_DNA(list("Non-human DNA" = random_blood_type()))
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 10)
+	AddElement(/datum/element/pollution_emitter, /datum/pollutant/decaying_waste, 30)
 	dry()
 
 /obj/effect/decal/cleanable/blood/drip

@@ -107,3 +107,5 @@
 	var/can_be_shoved_into = FALSE
 
 	COOLDOWN_DECLARE(bleeding_message_cd)
+	/// Cooldown for the next smell
+	var/next_smell = 0

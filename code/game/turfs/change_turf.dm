@@ -160,11 +160,15 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		var/datum/gas_mixture/stashed_air = new()
 		stashed_air.copy_from(air)
 		var/stashed_state = excited
+		var/datum/pollution/stashed_pollution = pollution
 		var/datum/excited_group/stashed_group = excited_group
 		. = ..() //If path == type this will return us, don't bank on making a new type
 		if (!.) // changeturf failed or didn't do anything
 			return
 		var/turf/open/newTurf = .
+		if(stashed_pollution)
+			newTurf.pollution = stashed_pollution
+			stashed_pollution.HandleOverlay()
 		newTurf.air.copy_from(stashed_air)
 		newTurf.excited = stashed_state
 		newTurf.excited_group = stashed_group
@@ -176,6 +180,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			if(stashed_group.should_display || SSair.display_all_groups)
 				stashed_group.display_turf(newTurf)
 	else
+		if(pollution)
+			qdel(pollution)
 		SSair.remove_from_active(src) //Clean up wall excitement, and refresh excited groups
 		if(ispath(path,/turf/closed))
 			flags |= CHANGETURF_RECALC_ADJACENT

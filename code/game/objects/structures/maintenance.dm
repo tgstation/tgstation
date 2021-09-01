@@ -36,6 +36,7 @@ at the cost of risking a vicious bite.**/
 		hidden_item = new picked_item(src)
 	loot = null
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOIST, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 20)
+	AddElement(/datum/element/pollution_emitter, /datum/pollutant/decaying_waste, 30)
 
 /obj/structure/moisture_trap/Destroy()
 	if(hidden_item)

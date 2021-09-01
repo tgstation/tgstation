@@ -16,7 +16,10 @@
 	///Do we use the large steam sprite?
 	var/use_large_steam_sprite = FALSE
 
-/datum/component/grillable/Initialize(cook_result, required_cook_time, positive_result, use_large_steam_sprite)
+	/// What type of pollutant we spread around as we are grilleed, can be none
+	var/pollutant_type // SKYRAT EDIT ADDITION
+
+/datum/component/grillable/Initialize(cook_result, required_cook_time, positive_result, use_large_steam_sprite, pollutant_type)
 	. = ..()
 	if(!isitem(parent)) //Only items support grilling at the moment
 		return COMPONENT_INCOMPATIBLE
@@ -25,6 +28,7 @@
 	src.required_cook_time = required_cook_time
 	src.positive_result = positive_result
 	src.use_large_steam_sprite = use_large_steam_sprite
+	src.pollutant_type = pollutant_type
 
 	RegisterSignal(parent, COMSIG_ITEM_GRILLED, .proc/OnGrill)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
@@ -47,7 +51,9 @@
 	SIGNAL_HANDLER
 
 	. = COMPONENT_HANDLED_GRILLING
-
+	if(pollutant_type)
+		var/turf/parent_turf = get_turf(parent)
+		parent_turf.PolluteTurf(pollutant_type, 10)
 	current_cook_time += delta_time * 10 //turn it into ds
 	if(current_cook_time >= required_cook_time)
 		FinishGrilling(used_grill)

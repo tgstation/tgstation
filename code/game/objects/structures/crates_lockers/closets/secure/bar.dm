@@ -15,3 +15,5 @@
 		new /obj/item/reagent_containers/food/drinks/bottle/beer( src )
 	new /obj/item/etherealballdeployer(src)
 	new /obj/item/roulette_wheel_beacon(src)
+	new /obj/item/storage/fancy/candle_box(src)
+	new /obj/item/storage/fancy/candle_box(src)
