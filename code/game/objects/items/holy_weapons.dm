@@ -119,11 +119,13 @@
 	icon_state = "chaplain_hoodie_leader"
 	inhand_icon_state = "chaplain_hoodie_leader"
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood/leader
+	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80, WOUND = 20) //the other chaplain armors also have this wound armor, as they inherit it from riot suits
 
 /obj/item/clothing/head/hooded/chaplain_hood/leader
 	name = "leader hood"
 	desc = "I mean, you don't /have/ to seek bling water. I just think you should."
 	icon_state = "chaplain_hood_leader"
+	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80, WOUND = 10) //the other chaplain helmets also have this wound armor, as they inherit it from helmets (but NOT the increased wound armor of riot helmets, as they're not subtypes of those)
 
 
 // CHAPLAIN NULLROD AND CUSTOM WEAPONS //
