@@ -22,6 +22,7 @@
 	materials = list(/datum/material/iron = 4500, /datum/material/silver = 2500, /datum/material/titanium = 3500)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	autolathe_exportable = FALSE
 
 /datum/design/exwelder
 	name = "Experimental Welding Tool"
