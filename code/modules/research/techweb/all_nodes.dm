@@ -142,6 +142,7 @@
 		"normtrash",
 		"petri_dish",
 		"pipe_painter",
+		"pipe_sealant",
 		"plant_analyzer",
 		"plunger",
 		"pushbroom",
@@ -157,7 +158,6 @@
 		"wirebrush",
 		"wirecutters",
 		"wrench",
-		"pipe_sealant",
 	)
 
 /datum/techweb_node/basic_medical
