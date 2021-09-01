@@ -56,7 +56,7 @@
 			if(used)
 				to_chat(H, span_warning("You already used this contract!"))
 				return
-			var/list/candidates = pollCandidatesForMob("Do you want to play as a wizard's [href_list["school"]] apprentice?", ROLE_WIZARD, ROLE_WIZARD, 150, src)
+			var/list/candidates = poll_candidates_for_mob("Do you want to play as a wizard's [href_list["school"]] apprentice?", ROLE_WIZARD, ROLE_WIZARD, 15 SECONDS, src)
 			if(LAZYLEN(candidates))
 				if(QDELETED(src))
 					return
@@ -244,7 +244,7 @@
 		return
 	if(used)
 		return
-	var/list/candidates = pollCandidatesForMob("Do you want to play as a [initial(demon_type.name)]?", ROLE_ALIEN, ROLE_ALIEN, 50, src)
+	var/list/candidates = poll_candidates_for_mob("Do you want to play as a [initial(demon_type.name)]?", ROLE_ALIEN, ROLE_ALIEN, 5 SECONDS, src)
 	if(LAZYLEN(candidates))
 		if(used || QDELETED(src))
 			return
