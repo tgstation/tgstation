@@ -7,7 +7,7 @@
 	///used to keep ethereals from spam draining power sources
 	var/drain_time = 0
 	var/damagemodifer = 0.5
-	STANDARD_ORGAN_DECAY * 0.9 // fails around 16.5 minutes, lungs are one of the last organs to die (of the ones we have)
+	decay_factor = STANDARD_ORGAN_DECAY * 0.9 // fails around 16.5 minutes, lungs are one of the last organs to die (of the ones we have)
 	low_threshold_passed = "<span class='info'>You can feel your power draining as a feeling of pins and needles fills your abdomen.</span>"
 	high_threshold_passed = "<span class='warning'>Your abdomen is filled with the feeling of shocks and electric discharges!</span>"
 	high_threshold_cleared = "<span class='info'>The electric feeling in your stomach seems to fade away, leaving behind a feeling of pins and needles.</span>"
