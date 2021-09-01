@@ -145,7 +145,7 @@
 		contents += secret
 
 /obj/structure/toilet/greyscale
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstacktype = null
 
 /obj/structure/urinal
@@ -458,7 +458,7 @@
 
 /obj/structure/sink/greyscale
 	icon_state = "sink_greyscale"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstacktype = null
 
 /obj/structure/sinkframe
@@ -467,7 +467,7 @@
 	icon_state = "sink_frame"
 	desc = "A sink frame, that needs a water recycler to finish construction."
 	anchored = FALSE
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 /obj/structure/sinkframe/ComponentInitialize()
 	. = ..()

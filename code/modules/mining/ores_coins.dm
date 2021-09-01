@@ -14,6 +14,7 @@
 	inhand_icon_state = "ore"
 	full_w_class = WEIGHT_CLASS_BULKY
 	singular_name = "ore chunk"
+	material_flags = MATERIAL_EFFECTS
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 	var/mine_experience = 5 //How much experience do you get for mining this ore?
@@ -75,7 +76,7 @@
 	inhand_icon_state = "Uranium ore"
 	singular_name = "uranium ore chunk"
 	points = 30
-	material_flags = MATERIAL_NO_EFFECTS
+	material_flags = NONE
 	mats_per_unit = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 	mine_experience = 6
@@ -352,7 +353,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 400)
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cooldown = 0

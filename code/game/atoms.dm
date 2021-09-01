@@ -1744,7 +1744,7 @@
 		custom_materials = null
 		return
 
-	if(!(material_flags & MATERIAL_NO_EFFECTS))
+	if(material_flags & MATERIAL_EFFECTS)
 		for(var/x in materials)
 			var/datum/material/custom_material = GET_MATERIAL_REF(x)
 			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)
