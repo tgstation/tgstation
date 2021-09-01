@@ -6,6 +6,7 @@
 		return
 	if(obj_integrity <= 0)
 		stack_trace("[src] taking damage while having <= 0 integrity")
+		return
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
 	if(resistance_flags & INDESTRUCTIBLE)
