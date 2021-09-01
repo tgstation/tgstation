@@ -545,14 +545,20 @@ GLOBAL_LIST_EMPTY(species_list)
 					mob_spawn_meancritters += T
 				if(FRIENDLY_SPAWN)
 					mob_spawn_nicecritters += T
+		for(var/mob/living/basic/basic_mob as anything in typesof(/mob/living/basic))
+			switch(initial(basic_mob.gold_core_spawnable))
+				if(HOSTILE_SPAWN)
+					mob_spawn_meancritters += basic_mob
+				if(FRIENDLY_SPAWN)
+					mob_spawn_nicecritters += basic_mob
 
 	var/chosen
 	if(mob_class == FRIENDLY_SPAWN)
 		chosen = pick(mob_spawn_nicecritters)
 	else
 		chosen = pick(mob_spawn_meancritters)
-	var/mob/living/simple_animal/C = new chosen(spawn_location)
-	return C
+	var/mob/living/spawned_mob = new chosen(spawn_location)
+	return spawned_mob
 
 /proc/passtable_on(target, source)
 	var/mob/living/L = target

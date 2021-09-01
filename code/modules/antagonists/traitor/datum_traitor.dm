@@ -50,6 +50,12 @@
 
 /datum/antagonist/traitor/on_gain()
 	owner.special_role = job_rank
+
+	if(give_uplink)
+		owner.give_uplink(silent = TRUE, antag_datum = src)
+
+	uplink = owner.find_syndicate_uplink()
+
 	if(give_objectives)
 		forge_traitor_objectives()
 		forge_ending_objective()
@@ -59,11 +65,6 @@
 	pick_employer(faction)
 
 	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
-
-	if(give_uplink)
-		owner.give_uplink(silent = TRUE, antag_datum = src)
-
-	uplink = owner.find_syndicate_uplink()
 
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
@@ -107,7 +108,7 @@
 	// for(in...to) loops iterate inclusively, so to reach objective_limit we need to loop to objective_limit - 1
 	// This does not give them 1 fewer objectives than intended.
 	for(var/i in objective_count to objective_limit - 1)
-		objectives += forge_single_generic_objective()
+		forge_single_generic_objective()
 
 
 /**
@@ -213,7 +214,7 @@
 	data["phrases"] = jointext(GLOB.syndicate_code_phrase, ", ")
 	data["responses"] = jointext(GLOB.syndicate_code_response, ", ")
 	data["theme"] = traitor_flavor["ui_theme"]
-	data["code"] = uplink.unlock_code
+	data["code"] = uplink?.unlock_code
 	data["intro"] = traitor_flavor["introduction"]
 	data["allies"] = traitor_flavor["allies"]
 	data["goal"] = traitor_flavor["goal"]

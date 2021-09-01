@@ -570,7 +570,7 @@
 	name = "containment blast door"
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology)
+/area/maintenance/aft)
 "cq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1274,6 +1274,9 @@
 	},
 /turf/open/floor/iron,
 /area/mine/living_quarters)
+"fq" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft)
 "fr" = (
 /obj/structure/table,
 /turf/open/floor/carpet,
@@ -5351,7 +5354,7 @@
 	name = "Xenobio Pen 6 Blast Door"
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology)
+/area/maintenance/aft)
 "Eg" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -8176,6 +8179,15 @@
 	},
 /turf/open/floor/iron,
 /area/mine/eva)
+"Us" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio1";
+	name = "Xenobio Pen 1 Blast Door"
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "Uv" = (
 /obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/tile/brown{
@@ -8679,6 +8691,10 @@
 /obj/item/food/pie/cream,
 /turf/open/floor/carpet,
 /area/service/theater)
+"XS" = (
+/obj/structure/sign/warning/electricshock,
+/turf/closed/wall/r_wall,
+/area/maintenance/aft)
 "XV" = (
 /obj/structure/sign/warning,
 /turf/closed/wall,
@@ -43882,8 +43898,8 @@ pO
 pO
 rE
 pO
-GX
-GX
+ts
+ts
 TA
 ts
 ts
@@ -44145,7 +44161,7 @@ RJ
 Ra
 Fh
 kM
-GX
+ts
 ps
 ts
 ts
@@ -44402,7 +44418,7 @@ QP
 wQ
 wQ
 Ss
-GX
+ts
 hS
 Bx
 Bx
@@ -44659,7 +44675,7 @@ QP
 uM
 YM
 Kx
-GX
+ts
 GG
 ts
 BR
@@ -48507,13 +48523,13 @@ zt
 mA
 Cp
 Yn
-Dg
+fK
 Sx
-Dg
+fK
 HU
-Dg
-Dg
-Bt
+fK
+fK
+fK
 LJ
 Ce
 Bt
@@ -51368,34 +51384,34 @@ Fp
 Fp
 hM
 Fa
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
 Fa
 ZP
 hM
@@ -51625,7 +51641,7 @@ Fp
 Fp
 hM
 Fa
-Qv
+fq
 jw
 Wb
 Wb
@@ -51652,7 +51668,7 @@ Wb
 JH
 jb
 Wb
-xj
+Us
 Fa
 XN
 hM
@@ -51882,7 +51898,7 @@ Fp
 Fp
 hM
 Fa
-Qv
+fq
 xt
 Wb
 jJ
@@ -51909,7 +51925,7 @@ Wb
 JH
 Wb
 Wb
-xj
+Us
 Fa
 hM
 hM
@@ -52139,7 +52155,7 @@ Fp
 Fp
 hM
 Fa
-Qv
+fq
 sv
 Wb
 Wb
@@ -52166,7 +52182,7 @@ Wb
 sF
 Wb
 jJ
-xj
+Us
 Xp
 hM
 ak
@@ -52396,7 +52412,7 @@ ak
 Fp
 hM
 xH
-Qv
+fq
 Qv
 LM
 IZ
@@ -52423,7 +52439,7 @@ FG
 TK
 GR
 xj
-LM
+XS
 Xp
 hM
 hM
@@ -52653,7 +52669,7 @@ ak
 Fp
 hM
 Fa
-Qv
+fq
 RN
 JA
 Nw
@@ -52680,7 +52696,7 @@ Za
 ct
 Os
 Za
-Qv
+fq
 Xp
 sX
 hM
@@ -52910,7 +52926,7 @@ Et
 Fp
 hM
 EQ
-Qv
+fq
 Fx
 ZY
 ki
@@ -53167,7 +53183,7 @@ Fp
 Fp
 hM
 Fa
-Qv
+fq
 wg
 Cl
 Cc
@@ -53194,7 +53210,7 @@ hJ
 si
 Gz
 Qb
-Qv
+fq
 Xp
 MD
 hM
@@ -53424,7 +53440,7 @@ Fp
 Fp
 hM
 Fa
-Qv
+fq
 YE
 zz
 cA
@@ -53451,7 +53467,7 @@ lq
 WG
 Gs
 ZK
-LM
+XS
 zE
 Fa
 hM
@@ -53681,7 +53697,7 @@ Fp
 Fp
 hM
 Fa
-Qv
+fq
 rS
 GB
 JT
@@ -53938,7 +53954,7 @@ Fp
 Fp
 hM
 Fa
-Qv
+fq
 NJ
 GB
 MA
@@ -54195,11 +54211,11 @@ Fp
 hM
 hM
 Fa
-Qv
-Qv
+fq
+fq
 Ww
-Qv
-Qv
+fq
+fq
 tK
 Qv
 Sd
@@ -54456,30 +54472,30 @@ Fa
 Ls
 Vi
 pG
-Qv
-Qv
-Qv
+fq
+fq
+fq
 MM
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
+fq
 Fa
 Xp
 hM

@@ -781,7 +781,9 @@
 	return FALSE
 
 /obj/machinery/power/apc/AltClick(mob/user)
-	..()
+	. = ..()
+	if(!can_interact(user))
+		return
 	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
 		return
 	else
