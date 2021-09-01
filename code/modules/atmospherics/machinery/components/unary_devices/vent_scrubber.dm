@@ -249,6 +249,9 @@
 	if(length(filter_types) == old_filter_length && old_scrubbing == scrubbing && old_widenet == widenet)
 		return
 
+	idle_power_usage = initial(idle_power_usage)
+	active_power_usage = initial(idle_power_usage)
+
 	var/new_power_usage = 0
 	if(scrubbing == SCRUBBING)
 		new_power_usage = idle_power_usage + idle_power_usage * length(filter_types)
@@ -260,7 +263,7 @@
 	if(widenet)
 		new_power_usage += new_power_usage * (length(adjacent_turfs) * (length(adjacent_turfs) / 2))
 
-	use_power(new_power_usage)
+	update_mode_power_usage(scrubbing == SCRUBBING ? IDLE_POWER_USE : ACTIVE_POWER_USE, new_power_usage)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/power_change()
 	. = ..()
