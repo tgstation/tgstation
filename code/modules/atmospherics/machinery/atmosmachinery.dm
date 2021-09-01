@@ -219,7 +219,7 @@
 	var/turf/adjacent_loc = get_step_multiz(real_loc || src, direction)
 	if(!adjacent_loc)
 		return
-	var/list/contents_to_check = adjacent_loc.nullspaced_contents ? adjacent_loc.nullspaced_contents.Copy() + contents : contents
+	var/list/contents_to_check = adjacent_loc.nullspaced_contents | adjacent_loc.contents
 	for(var/obj/machinery/atmospherics/target in contents_to_check)
 		if(!(target.initialize_directions & get_dir(target.real_loc || target, real_loc || src)) && !istype(target, /obj/machinery/atmospherics/pipe/multiz))
 			continue
