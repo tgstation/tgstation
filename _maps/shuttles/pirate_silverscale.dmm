@@ -358,14 +358,14 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/melee/transforming/energy/sword/saber/purple{
+/obj/item/melee/energy/sword/saber/purple{
 	pixel_y = 12
 	},
-/obj/item/melee/transforming/energy/sword/saber/purple{
+/obj/item/melee/energy/sword/saber/purple{
 	pixel_x = 8;
 	pixel_y = 7
 	},
-/obj/item/melee/transforming/energy/sword/saber/purple{
+/obj/item/melee/energy/sword/saber/purple{
 	pixel_x = 17
 	},
 /turf/open/floor/pod/dark,
