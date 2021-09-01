@@ -57,6 +57,7 @@
 #define UNINTELLIGIBLE /datum/mutation/human/unintelligible
 #define VOID /datum/mutation/human/void
 #define WACKY /datum/mutation/human/wacky
+#define PIGLATIN /datum/mutation/human/piglatin
 #define XRAY /datum/mutation/human/xray
 
 #define BURDENED /datum/mutation/human/burdened
