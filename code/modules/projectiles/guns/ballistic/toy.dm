@@ -47,7 +47,7 @@
 	gun_flags = TOY_FIREARM_OVERLAY
 
 /obj/item/gun/ballistic/shotgun/toy/process_chamber(empty_chamber = 0)
-	..()
+	. = ..()
 	if(chambered && !chambered.loaded_projectile)
 		qdel(chambered)
 

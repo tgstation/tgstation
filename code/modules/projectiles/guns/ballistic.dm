@@ -224,6 +224,7 @@
 			chambered = null
 	if (chamber_next_round && (magazine?.max_ammo > 1))
 		chamber_round()
+	return ..()
 
 ///Used to chamber a new round and eject the old one
 /obj/item/gun/ballistic/proc/chamber_round(keep_bullet = FALSE, spin_cylinder, replace_new_round)

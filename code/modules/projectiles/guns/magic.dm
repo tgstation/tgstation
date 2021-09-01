@@ -49,6 +49,7 @@
 	if(chambered && !chambered.loaded_projectile) //if BB is null, i.e the shot has been fired...
 		charges--//... drain a charge
 		recharge_newshot()
+	return ..()
 
 /obj/item/gun/magic/Initialize()
 	. = ..()

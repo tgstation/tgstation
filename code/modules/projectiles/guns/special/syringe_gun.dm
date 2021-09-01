@@ -37,6 +37,7 @@
 	if(chambered && !chambered.loaded_projectile) //we just fired
 		recharge_newshot()
 	update_appearance()
+	return ..()
 
 /obj/item/gun/syringe/examine(mob/user)
 	. = ..()
