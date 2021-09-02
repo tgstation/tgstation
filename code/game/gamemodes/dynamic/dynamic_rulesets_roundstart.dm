@@ -497,16 +497,7 @@
 	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Research Director")
 	weight = 3
 	cost = 10
-	requirements = list(101, //0-5 pop
-						101, //6-11 pop
-						101, //12-17 pop
-						40,  //18-23 pop
-						40,  //24-29 pop
-						30,  //30-35 pop
-						20,  //36-41 pop
-						20,  //42-47 pop
-						10,  //48-53 pop
-						10)  //54+ pop
+	requirements = list(101,101,40,40,30,20,10,10,10,10)
 	flags = HIGH_IMPACT_RULESET
 	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
 	var/datum/gang_handler/handler
