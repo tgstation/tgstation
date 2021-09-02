@@ -251,18 +251,18 @@
 	antag_flag = ROLE_FAMILIES
 	protected_roles = list("Prisoner", "Head of Personnel")
 	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Research Director")
-	weight = 1
-	cost = 25
+	weight = 4
+	cost = 10
 	requirements = list(101, //0-5 pop
 						101, //6-11 pop
 						101, //12-17 pop
-						80,  //18-23 pop
-						70,  //24-29 pop
-						60,  //30-35 pop
-						50,  //36-41 pop
-						40,  //42-47 pop
-						30,  //48-53 pop
-						20)  //54+ pop
+						40,  //18-23 pop
+						40,  //24-29 pop
+						30,  //30-35 pop
+						20,  //36-41 pop
+						20,  //42-47 pop
+						10,  //48-53 pop
+						10)  //54+ pop
 	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/families)
 	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
