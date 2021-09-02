@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - qol: "Cayenne can once again strip people."
+  - bugfix: "Cayenne no longer deletes the nuke disk when putting it back down."
