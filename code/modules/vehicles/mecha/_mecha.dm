@@ -578,8 +578,9 @@
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		target = pick(oview(1,src))
 
-	target.mech_melee_attack(src, user)
-	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
+	if(force)
+		target.mech_melee_attack(src, user)
+		TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
 
 /obj/vehicle/sealed/mecha/proc/on_middlemouseclick(mob/user, atom/target, params)
 	SIGNAL_HANDLER
