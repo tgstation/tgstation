@@ -14,6 +14,7 @@
 	There's been recent reports about suspected gang activity between the Grove Street Families and the Ballas in your sector of space tonight. \
 	Keep an ear out and stay cool out there! Make love, not war, I say!"
 	involved_gangs = list(/datum/antagonist/gang/green, /datum/antagonist/gang/purple)
+	starting_gangsters = 5
 	gang_objectives = list(
 
 		/datum/antagonist/gang/green = "Yo, what's good, man? \
@@ -67,6 +68,7 @@
 	description = "You're listening to the 108.9 Swing, all jazz, all night long, no advertising. We'd like to take this time to remind you to avoid smoky backrooms and \
 	suspicious individuals in suits and hats. Don't make a deal you can't pay back."
 	involved_gangs = list(/datum/antagonist/gang/russian_mafia, /datum/antagonist/gang/italian_mob)
+	starting_gangsters = 5
 	gang_objectives = list(
 
 		/datum/antagonist/gang/russian_mafia = "Hello, comrade. Our numbers are going down. We need you to bring those numbers up. \
@@ -85,6 +87,7 @@
 	Word on the street is, there's a bunch of costumed supervilliany going on in the area! Keep an eye out for any evil laughs, dramatic reveals, and gaudy costumes!  \
 	However, if you have any sightings of the fabled O.S.I. agents, please send in a call to our number at 867-5309! People may call me insane, but I swear they're real!"
 	involved_gangs = list(/datum/antagonist/gang/henchmen, /datum/antagonist/gang/osi)
+	starting_gangsters = 5
 	gang_objectives = list(
 
 		/datum/antagonist/gang/henchmen = "HENCHMEN! It is me, your boss, <b>THE MONARCH!</b> I have sent you to this pitiful station with one goal, and one goal only! \
@@ -108,6 +111,7 @@
 	And from the new Radical camp with the position 'all SMT franchise games count', we've got a representative from the Phantom Thieves of Hearts!  \
 	We'll be right back with the debate after this word from our sponsors!"
 	involved_gangs = list(/datum/antagonist/gang/jackbros, /datum/antagonist/gang/phantom)
+	starting_gangsters = 5
 	gang_objectives = list(
 
 		/datum/antagonist/gang/jackbros = "He-hello, friend-hos! We've got a nice chilly station out in space tonight! \
@@ -129,6 +133,7 @@
 	Remember cowboys and cowgirls, just 'cuz ya hear it on my radio station doesn't mean you should go doin' it! \
 	If ya see any LARPin' banditos and train robbers, make sure to tell the local Sheriff's Department!"
 	involved_gangs = list(/datum/antagonist/gang/dutch, /datum/antagonist/gang/driscoll)
+	starting_gangsters = 5
 	gang_objectives = list(
 
 		/datum/antagonist/gang/dutch = "Listen here fellas, I got a <B>plan.</B> \
@@ -152,7 +157,7 @@
 	from today's sponsor, Majima Construction: We Build Shit!"
 	involved_gangs = list(/datum/antagonist/gang/yakuza, /datum/antagonist/gang/irs)
 	bonus_first_gangster_items = list(/obj/item/storage/secure/briefcase/syndie) // the cash
-	starting_gangsters = 4
+	starting_gangsters = 5
 	gang_objectives = list(
 
 		/datum/antagonist/gang/yakuza = "Welcome to the station, new recruit. We here at Majima Construction are a legitimate enterprise, yadda yadda yadda. \
