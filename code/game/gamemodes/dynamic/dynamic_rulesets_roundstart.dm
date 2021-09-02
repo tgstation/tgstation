@@ -496,7 +496,7 @@
 	protected_roles = list("Prisoner", "Head of Personnel")
 	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Research Director")
 	weight = 3
-	cost = 10
+	cost = 19
 	requirements = list(101,101,40,40,30,20,10,10,10,10)
 	flags = HIGH_IMPACT_RULESET
 	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
