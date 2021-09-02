@@ -156,3 +156,6 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datu
 
 /// How often can we annoy the player about their bleeding? This duration is extended if it's not serious bleeding
 #define BLEEDING_MESSAGE_BASE_CD 10 SECONDS
+
+/// Skeletons and other BIO_ONLY_BONE creatures respond much better to bone gel and can have severe and critical bone wounds healed by bone gel alone. The duration it takes to heal is also multiplied by this, lucky them!
+#define WOUND_BONE_BIO_BONE_GEL_MULT 0.25
