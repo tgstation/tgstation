@@ -118,7 +118,7 @@
 /obj/item/food/clothing/proc/after_eat(mob/eater)
 	var/obj/item/clothing/resolved_clothing = clothing.resolve()
 	if (resolved_clothing)
-		resolved_clothing.take_damage(MOTH_EATING_CLOTHING_DAMAGE, sound_effect = FALSE)
+		resolved_clothing.take_damage(MOTH_EATING_CLOTHING_DAMAGE, sound_effect = FALSE, damage_flag = CONSUME)
 	else
 		qdel(src)
 
@@ -492,13 +492,20 @@ BLIND     // can't see anything
 		//so the shred survives potential turf change from the explosion.
 		addtimer(CALLBACK_NEW(/obj/effect/decal/cleanable/shreds, list(T, name)), 1)
 		deconstruct(FALSE)
+	if(damage_flag == CONSUME) //This allows for moths to fully consume clothing, rather than damaging it like other sources like brute
+		var/turf/current_position = get_turf(src)
+		new /obj/effect/decal/cleanable/shreds(current_position, name)
+		if(isliving(loc))
+			var/mob/living/possessing_mob = loc
+			possessing_mob.visible_message(span_danger("[src] is consumed until naught but shreds remains!"), span_boldwarning("[src] falls apart into little bits!"))
+		deconstruct(FALSE)
 	else if(!(damage_flag in list(ACID, FIRE)))
 		body_parts_covered = NONE
 		slot_flags = NONE
 		update_clothes_damaged_state(CLOTHING_SHREDDED)
 		if(isliving(loc))
 			var/mob/living/M = loc
-			if(src in M.get_equipped_items(FALSE)) //make sure they were wearing it and not attacking the item in their hands / eating it if they were a moth.
+			if(src in M.get_equipped_items(FALSE)) //make sure they were wearing it and not attacking the item in their hands
 				M.visible_message(span_danger("[M]'s [src.name] fall[p_s()] off, [p_theyre()] completely shredded!"), span_warning("<b>Your [src.name] fall[p_s()] off, [p_theyre()] completely shredded!</b>"), vision_distance = COMBAT_MESSAGE_RANGE)
 				M.dropItemToGround(src)
 			else
