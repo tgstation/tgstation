@@ -1,6 +1,6 @@
 ## MAPS
 
-/tg/station currently has in rotation five maps.
+/tg/station currently has five maps in rotation.
 
 * [MetaStation](https://tgstation13.org/wiki/MetaStation)
 * [DeltaStation](https://tgstation13.org/wiki/DeltaStation)
@@ -20,7 +20,10 @@ Outdated, removed or not in rotation maps.
 * [EfficiencyStation](https://tgstation13.org/wiki/EfficiencyStation)
 * [MiniStation](https://tgstation13.org/wiki/MiniStation)
 * [OmegaStation](https://tgstation13.org/wiki/OmegaStation)
-* [RuntimeStation(Debugging)](https://tgstation13.org/wiki/RuntimeStation)
+
+Debug maps.
+* [RuntimeStation](https://tgstation13.org/wiki/RuntimeStation)
+* [MultiZ](https://tgstation13.org/wiki/MultiZ)
 
 All maps have their own code file that is in the base of the _maps directory. Maps are loaded dynamically when the game starts. Follow this guideline when adding your own map, to your fork, for easy compatibility.
 
