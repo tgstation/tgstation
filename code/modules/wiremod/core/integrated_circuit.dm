@@ -278,7 +278,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				"connected_to" = connected_to,
 				"color" = port.color,
 				"current_data" = current_data,
-				"datatype_data" = port.datatype_ui_data(user),
+				"datatype_data" = port.datatype_ui_data(user)
 			))
 		component_data["output_ports"] = list()
 		for(var/datum/port/output/port as anything in component.output_ports)
@@ -293,6 +293,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		component_data["x"] = component.rel_x
 		component_data["y"] = component.rel_y
 		component_data["removable"] = component.removable
+		component_data["color"] = component.ui_color
 		.["components"] += list(component_data)
 
 	.["variables"] = list()

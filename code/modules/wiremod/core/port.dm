@@ -57,12 +57,12 @@
 /**
  * Updates the value of the input and calls input_received on the connected component
  */
-/datum/port/input/proc/set_input(value)
+/datum/port/input/proc/set_input(value, list/return_values)
 	if(QDELETED(src)) //Pain
 		return
 	set_value(value)
 	if(trigger)
-		connected_component.trigger_component(src)
+		connected_component.trigger_component(src, return_values)
 
 /datum/port/output/proc/set_output(value)
 	set_value(value)
