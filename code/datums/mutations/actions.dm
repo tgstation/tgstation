@@ -96,68 +96,6 @@
 	if(direction_text)
 		to_chat(user,span_notice("You consider [tracking_target]'s scent. The trail leads <b>[direction_text].</b>"))
 
-/datum/mutation/human/firebreath
-	name = "Fire Breath"
-	desc = "An ancient mutation that gives lizards breath of fire."
-	quality = POSITIVE
-	difficulty = 12
-	locked = TRUE
-	text_gain_indication = "<span class='notice'>Your throat is burning!</span>"
-	text_lose_indication = "<span class='notice'>Your throat is cooling down.</span>"
-	power = /obj/effect/proc_holder/spell/aimed/firebreath
-	instability = 30
-	energy_coeff = 1
-	power_coeff = 1
-
-/datum/mutation/human/firebreath/modify()
-	if(power)
-		var/obj/effect/proc_holder/spell/aimed/firebreath/S = power
-		S.strength = GET_MUTATION_POWER(src)
-
-/obj/effect/proc_holder/spell/aimed/firebreath
-	name = "Fire Breath"
-	desc = "You can breathe fire at a target."
-	school = SCHOOL_EVOCATION
-	charge_max = 600
-	clothes_req = FALSE
-	range = 20
-	projectile_type = /obj/projectile/magic/aoe/fireball/firebreath
-	base_icon_state = "fireball"
-	action_icon_state = "fireball0"
-	sound = 'sound/magic/demon_dies.ogg' //horrifying lizard noises
-	active_msg = "You built up heat in your mouth."
-	deactive_msg = "You swallow the flame."
-	var/strength = 1
-
-/obj/effect/proc_holder/spell/aimed/firebreath/before_cast(list/targets)
-	. = ..()
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		if(C.is_mouth_covered())
-			C.adjust_fire_stacks(2)
-			C.IgniteMob()
-			to_chat(C,span_warning("Something in front of your mouth caught fire!"))
-			return FALSE
-
-/obj/effect/proc_holder/spell/aimed/firebreath/ready_projectile(obj/projectile/P, atom/target, mob/user, iteration)
-	. = ..()
-	if(!istype(P, /obj/projectile/magic/aoe/fireball))
-		return
-	var/obj/projectile/magic/aoe/fireball/F = P
-	switch(strength)
-		if(1 to 3)
-			F.exp_light = strength-1
-		if(4 to INFINITY)
-			F.exp_heavy = strength-3
-	F.exp_fire += strength
-
-/obj/projectile/magic/aoe/fireball/firebreath
-	name = "fire breath"
-	exp_heavy = 0
-	exp_light = 0
-	exp_flash = 0
-	exp_fire= 4
-
 /datum/mutation/human/void
 	name = "Void Magnet"
 	desc = "A rare genome that attracts odd forces not usually observed."
