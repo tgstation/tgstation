@@ -15,7 +15,7 @@
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
-	var/max_range = 5
+	var/max_range = 7
 
 /obj/item/circuit_component/tostring/Initialize()
 	. = ..()
