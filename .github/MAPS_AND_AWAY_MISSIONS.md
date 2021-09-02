@@ -1,7 +1,6 @@
 ## MAPS
 
 /tg/station currently has five maps in rotation.
-
 * [MetaStation](https://tgstation13.org/wiki/MetaStation)
 * [DeltaStation](https://tgstation13.org/wiki/DeltaStation)
 * [IceboxStation](https://tgstation13.org/wiki/IceboxStation)
