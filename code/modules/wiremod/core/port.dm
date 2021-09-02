@@ -204,7 +204,7 @@
  */
 /datum/port/input/proc/receive_value(datum/port/output/output, value)
 	SIGNAL_HANDLER
-	SScircuit_component.add_callback(CALLBACK(src, .proc/set_input, value))
+	SScircuit_component.add_callback(src, CALLBACK(src, .proc/set_input, value))
 
 /// Signal handler proc to null the input if an atom is deleted. An update is not sent because this was not set by anything.
 /datum/port/proc/null_value(datum/source)
