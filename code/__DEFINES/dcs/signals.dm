@@ -346,6 +346,16 @@
 #define COMSIG_LIVING_TRY_PUT_IN_HAND "living_try_put_in_hand"
 	/// Can't pick up
 	#define COMPONENT_LIVING_CANT_PUT_IN_HAND (1<<0)
+/// from /atom/proc/atom_break: ()
+#define COMSIG_ATOM_BREAK "atom_break"
+/// from base of [/atom/proc/atom_fix]: ()
+#define COMSIG_ATOM_FIX "atom_fix"
+///from base of [/atom/proc/update_integrity]: (old_value, new_value)
+#define COMSIG_ATOM_INTEGRITY_CHANGED "atom_integrity_changed"
+///from base of [/atom/proc/take_damage]: (damage_amount, damage_type, damage_flag, sound_effect, attack_dir, aurmor_penetration)
+#define COMSIG_ATOM_TAKE_DAMAGE "atom_take_damage"
+	/// Return bitflags for the above signal which prevents the atom taking any damage.
+	#define COMPONENT_NO_TAKE_DAMAGE (1<<0)
 
 /// from /datum/component/singularity/proc/can_move(), as well as /obj/energy_ball/proc/can_move()
 /// if a callback returns `SINGULARITY_TRY_MOVE_BLOCK`, then the singularity will not move to that turf
@@ -717,13 +727,6 @@
 #define COMSIG_TABLE_SLAMMED "table_slammed"
 
 // /obj signals
-
-///from base of [/obj/proc/take_damage]: (damage_amount, damage_type, damage_flag, sound_effect, attack_dir, aurmor_penetration)
-#define COMSIG_ATOM_TAKE_DAMAGE "obj_take_damage"
-	/// Return bitflags for the above signal which prevents the object taking any damage.
-	#define COMPONENT_NO_TAKE_DAMAGE (1<<0)
-///from base of [/obj/proc/update_integrity]: (old_value, new_value)
-#define COMSIG_ATOM_INTEGRITY_CHANGED "obj_integrity_changed"
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
 ///from base of code/game/machinery
@@ -732,10 +735,6 @@
 #define COMSIG_OBJ_HIDE "obj_hide"
 /// from /obj/item/toy/crayon/spraycan/afterattack: (color_is_dark)
 #define COMSIG_OBJ_PAINTED "obj_painted"
-/// from /obj/proc/atom_break: ()
-#define COMSIG_ATOM_BREAK "atom_break"
-/// from base of [/obj/proc/atom_fix]: ()
-#define COMSIG_ATOM_FIX "atom_fix"
 
 // /obj/machinery signals
 
