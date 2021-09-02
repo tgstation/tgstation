@@ -7,7 +7,7 @@
 * [KiloStation](https://tgstation13.org/wiki/KiloStation)
 * [TramStation](https://tgstation13.org/wiki/Tramstation)
 
-Outdated, removed or not in rotation maps.
+Outdated or removed maps.
 * [BoxStation](https://tgstation13.org/wiki/Boxstation)
 * [PubbyStation](https://tgstation13.org/wiki/PubbyStation)
 * [DonutStation](https://tgstation13.org/wiki/Donutstation)
