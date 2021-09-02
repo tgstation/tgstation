@@ -94,24 +94,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		LAZYADD(key_bindings["Space"], "hold_throw_mode")
 
 	if (current_version < 41)
-		var/new_key_bindings = list()
+		migrate_preferences_to_tgui_prefs_menu()
 
-		// MOTHBLOCKS TODO: Migrate antags, check midround antagonists preference
-
-		for (var/hotkey in key_bindings)
-			if (hotkey == "Unbound")
-				continue
-
-			for (var/keybind in key_bindings[hotkey])
-				if (keybind in new_key_bindings)
-					new_key_bindings[keybind] |= hotkey
-				else
-					new_key_bindings[keybind] = list(hotkey)
-
-		key_bindings = new_key_bindings
-
-/datum/preferences/proc/update_character(current_version, savefile/S)
-	return
+/datum/preferences/proc/update_character(current_version, savefile/savefile)
+	if (current_version < 41)
+		migrate_character_to_tgui_prefs_menu()
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()

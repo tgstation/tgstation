@@ -99,50 +99,16 @@
 #define JP_HIGH 3
 
 //randomised elements
-#define RANDOM_HARDCORE "random_hardcore"
-#define RANDOM_NAME "random_name"
-#define RANDOM_NAME_ANTAG "random_name_antag"
-#define RANDOM_BODY "random_body"
-#define RANDOM_BODY_ANTAG "random_body_antag"
-#define RANDOM_SPECIES "random_species"
-#define RANDOM_GENDER "random_gender"
-#define RANDOM_GENDER_ANTAG "random_gender_antag"
-#define RANDOM_AGE "random_age"
-#define RANDOM_AGE_ANTAG "random_age_antag"
-#define RANDOM_UNDERWEAR "random_underwear"
-#define RANDOM_UNDERWEAR_COLOR "random_underwear_color"
-#define RANDOM_UNDERSHIRT "random_undershirt"
-#define RANDOM_SOCKS "random_socks"
-#define RANDOM_BACKPACK "random_backpack"
-#define RANDOM_JUMPSUIT_STYLE "random_jumpsuit_style"
-#define RANDOM_HAIRSTYLE "random_hairstyle"
-#define RANDOM_HAIR_COLOR "random_hair_color"
-#define RANDOM_FACIAL_HAIR_COLOR "random_facial_hair_color"
-#define RANDOM_FACIAL_HAIRSTYLE "random_facial_hairstyle"
-#define RANDOM_SKIN_TONE "random_skin_tone"
-#define RANDOM_EYE_COLOR "random_eye_color"
+#define RANDOM_ANTAG_ONLY 1
+#define RANDOM_DISABLED 2
+#define RANDOM_ENABLED 3
 
 //recommened client FPS
 #define RECOMMENDED_FPS 40
 
 // randomise_appearance_prefs() and randomize_human_appearance() proc flags
-#define RANDOMIZE_GENDER (1<<0)
-#define RANDOMIZE_SPECIES (1<<1)
-#define RANDOMIZE_NAME (1<<2)
-#define RANDOMIZE_AGE (1<<3)
-#define RANDOMIZE_UNDERWEAR (1<<4)
-#define RANDOMIZE_UNDERWEAR_COLOR (1<<5)
-#define RANDOMIZE_UNDERSHIRT (1<<6)
-#define RANDOMIZE_SOCKS (1<<7)
-#define RANDOMIZE_BACKPACK (1<<8)
-#define RANDOMIZE_JUMPSUIT_STYLE (1<<9)
-#define RANDOMIZE_HAIRSTYLE (1<<10)
-#define RANDOMIZE_FACIAL_HAIRSTYLE (1<<11)
-#define RANDOMIZE_HAIR_COLOR (1<<12)
-#define RANDOMIZE_FACIAL_HAIR_COLOR (1<<13)
-#define RANDOMIZE_SKIN_TONE (1<<14)
-#define RANDOMIZE_EYE_COLOR (1<<15)
-#define RANDOMIZE_FEATURES (1<<16)
+#define RANDOMIZE_SPECIES (1<<0)
+#define RANDOMIZE_NAME (1<<1)
 
 // Values for /datum/preference/savefile_identifier
 /// This preference is character specific.

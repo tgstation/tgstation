@@ -2,6 +2,7 @@
 	savefile_key = "feature_human_tail"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	can_randomize = FALSE
 
 /datum/preference/choiced/tail_human/init_possible_values()
 	return assoc_to_keys(GLOB.tails_list_human)
@@ -17,6 +18,7 @@
 	savefile_key = "feature_human_ears"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	can_randomize = FALSE
 
 /datum/preference/choiced/ears/init_possible_values()
 	return assoc_to_keys(GLOB.ears_list)

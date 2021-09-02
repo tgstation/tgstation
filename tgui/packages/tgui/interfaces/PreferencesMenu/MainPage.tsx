@@ -1,8 +1,9 @@
 import { classes } from "common/react";
 import { sendAct, useBackend, useLocalState } from "../../backend";
 import { Autofocus, Box, Button, ByondUi, Dropdown, FitText, Flex, Icon, Input, LabeledList, NumberInput, Popper, Stack, TrackOutsideClicks } from "../../components";
-import { createSetPreference, PreferencesMenuData, ServerSpeciesData } from "./data";
+import { AssetWithIcon, createSetPreference, PreferencesMenuData, RandomSetting, ServerSpeciesData } from "./data";
 import { CharacterPreview } from "./CharacterPreview";
+import { RandomizationButton } from "./RandomizationButton";
 import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
 import { Gender, GENDERS } from "./preferences/gender";
 import { Component, createRef } from "inferno";
@@ -10,7 +11,8 @@ import features from "./preferences/features";
 import { FeatureChoicedServerData, FeatureValueInput } from "./preferences/features/base";
 import { resolveAsset } from "../../assets";
 import { logger } from "../../logging";
-import { sortBy } from "common/collections";
+import { filterMap, sortBy } from "common/collections";
+import { exhaustiveCheck } from "common/exhaustive";
 
 const CLOTHING_CELL_SIZE = 48;
 const CLOTHING_SIDEBAR_ROWS = 7;
@@ -258,6 +260,104 @@ const NameInput = (props: {
   );
 };
 
+const MainFeature = (props: {
+  catalog: FeatureChoicedServerData,
+  currentValue: AssetWithIcon,
+  isOpen: boolean,
+  handleClose: () => void,
+  handleOpen: () => void,
+  handleSelect: (newClothing: string) => void,
+  name: string,
+  randomization?: RandomSetting,
+  setRandomization: (newSetting: RandomSetting) => void,
+}) => {
+  const {
+    catalog,
+    currentValue,
+    isOpen,
+    handleOpen,
+    handleClose,
+    handleSelect,
+    name,
+    randomization,
+    setRandomization,
+  } = props;
+
+  return (
+    <Popper options={{
+      placement: "bottom-start",
+    }} popperContent={isOpen && (
+      <TrackOutsideClicks onOutsideClick={props.handleClose}>
+        <ChoicedSelection
+          name={name}
+          catalog={catalog}
+          selected={currentValue.value}
+          onSelect={handleSelect}
+        />
+      </TrackOutsideClicks>
+    )}>
+      <Button
+        onClick={() => {
+          if (isOpen) {
+            handleClose();
+          } else {
+            handleOpen();
+          }
+        }}
+        style={{
+          height: `${CLOTHING_CELL_SIZE}px`,
+          width: `${CLOTHING_CELL_SIZE}px`,
+        }}
+        position="relative"
+        tooltip={currentValue.value}
+        tooltipPosition="right"
+      >
+        <Box
+          className={classes([
+            "preferences32x32",
+            currentValue.icon,
+            "centered-image",
+          ])}
+          style={{
+            transform: randomization
+              ? "translateX(-70%) translateY(-70%) scale(1.1)"
+              : "translateX(-50%) translateY(-50%) scale(1.3)",
+          }}
+        />
+
+        {(randomization && <RandomizationButton
+          dropdownProps={{
+            dropdownStyle: {
+              bottom: 0,
+              position: "absolute",
+              right: "1px",
+            },
+
+            onOpen: (event) => {
+              // We're a button inside a button.
+              // Did you know that's against the W3C standard? :)
+              event.cancelBubble = true;
+              event.stopPropagation();
+            },
+          }}
+          setValue={props.setRandomization}
+          value={randomization}
+        />)}
+      </Button>
+    </Popper>
+  );
+};
+
+const createSetRandomization = (
+  act: typeof sendAct,
+  preference: string,
+) => (newSetting: RandomSetting) => {
+  act("set_random_preference", {
+    preference,
+    value: newSetting,
+  });
+};
+
 const sortPreferences = sortBy<[string, unknown]>(
   ([featureId, _]) => {
     const feature = features[featureId];
@@ -267,6 +367,7 @@ const sortPreferences = sortBy<[string, unknown]>(
 const PreferenceList = (props: {
   act: typeof sendAct,
   preferences: Record<string, unknown>,
+  randomizations: Record<string, RandomSetting>,
 }) => {
   return (
     <Stack.Item basis="50%" grow style={{
@@ -278,6 +379,7 @@ const PreferenceList = (props: {
           sortPreferences(Object.entries(props.preferences))
             .map(([featureId, value]) => {
               const feature = features[featureId];
+              const randomSetting = props.randomizations[featureId];
 
               if (feature === undefined) {
                 return (
@@ -293,12 +395,28 @@ const PreferenceList = (props: {
                   label={feature.name}
                   verticalAlign="middle"
                 >
-                  <FeatureValueInput
-                    act={props.act}
-                    feature={feature}
-                    featureId={featureId}
-                    value={value}
-                  />
+                  <Stack fill>
+                    {randomSetting && (
+                      <Stack.Item>
+                        <RandomizationButton
+                          setValue={createSetRandomization(
+                            props.act,
+                            featureId,
+                          )}
+                          value={randomSetting}
+                        />
+                      </Stack.Item>
+                    )}
+
+                    <Stack.Item grow>
+                      <FeatureValueInput
+                        act={props.act}
+                        feature={feature}
+                        featureId={featureId}
+                        value={value}
+                      />
+                    </Stack.Item>
+                  </Stack>
                 </LabeledList.Item>
               );
             })
@@ -323,6 +441,69 @@ export const MainPage = (props: {
           .misc
           .species
       ];
+
+      const contextualPreferences = Object.fromEntries(
+        Object.entries(
+          data.character_preferences.secondary_features
+        ).filter(([feature]) => {
+          if (!currentSpeciesData) {
+            return false;
+          }
+
+          return currentSpeciesData.enabled_features
+            .indexOf(feature) !== -1;
+        })
+      );
+
+      const mainFeatures = [
+        ...Object.entries(data.character_preferences.clothing),
+        ...Object.entries(data.character_preferences.features)
+          .filter(([featureName]) => {
+            if (!currentSpeciesData) {
+              return false;
+            }
+
+            // MOTHBLOCKS TODO: This is stupid, let's figure it out
+            return currentSpeciesData.enabled_features
+              .indexOf(featureName) !== -1
+                || currentSpeciesData.enabled_features
+                  .indexOf(featureName.split("feature_")[1]) !== -1;
+          }),
+      ];
+
+      const getRandomization = (
+        preferences: Record<string, unknown>
+      ): Record<string, RandomSetting> => {
+        if (!serverData) {
+          return {};
+        }
+
+        return Object.fromEntries(filterMap(
+          Object.keys(preferences), preferenceKey => {
+            if (serverData.random.randomizable.indexOf(preferenceKey) === -1) {
+              return undefined;
+            }
+
+            if (
+              data.character_preferences.non_contextual.random_body
+                === RandomSetting.Disabled
+            ) {
+              return undefined;
+            }
+
+            return [
+              preferenceKey,
+              data.character_preferences.randomization[preferenceKey]
+                || RandomSetting.Disabled,
+            ];
+          }));
+      };
+
+      const randomizationOfMainFeatures
+        = getRandomization(Object.fromEntries(mainFeatures));
+
+      const nonContextualPreferences
+        = data.character_preferences.non_contextual;
 
       return (
         <Stack height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}>
@@ -364,69 +545,36 @@ export const MainPage = (props: {
             width={`${(CLOTHING_CELL_SIZE * 2) + 15}px`}
           >
             <Stack height="100%" vertical wrap>
-              {[
-                ...Object.entries(data.character_preferences.clothing),
-                ...Object.entries(data.character_preferences.features)
-                  .filter(([featureName]) => {
-                    if (!currentSpeciesData) {
-                      return false;
-                    }
-
-                    // MOTHBLOCKS TODO: This is stupid, let's figure it out
-                    return currentSpeciesData.enabled_features
-                      .indexOf(featureName) !== -1
-                        || currentSpeciesData.enabled_features
-                          .indexOf(featureName.split("feature_")[1]) !== -1;
-                  }),
-              ]
+              {mainFeatures
                 .map(([clothingKey, clothing]) => {
                   const catalog = (
                     serverData
                         && serverData[clothingKey] as FeatureChoicedServerData
                   );
 
-                  // MOTHBLOCKS TODO: Better nude icons, rather than X
-                  return (
+                  return catalog && (
                     <Stack.Item key={clothingKey} mt={0.5} px={0.5}>
-                      <Popper options={{
-                        placement: "bottom-start",
-                      }} popperContent={(currentClothingMenu === clothingKey
-                          && catalog)
-                        ? (
-                          <TrackOutsideClicks onOutsideClick={() => {
-                            setCurrentClothingMenu(null);
-                          }}>
-                            <ChoicedSelection
-                              name={KEYS_TO_NAMES[clothingKey]
-                                  || `NO NAME FOR ${clothingKey}`}
-                              catalog={catalog}
-                              selected={clothing.value}
-                              onSelect={createSetPreference(act, clothingKey)}
-                            />
-                          </TrackOutsideClicks>
-                        ) : null}>
-                        <Button onClick={() => {
-                          setCurrentClothingMenu(
-                            currentClothingMenu === clothingKey
-                              ? null
-                              : clothingKey
-                          );
-                        }} style={{
-                          height: `${CLOTHING_CELL_SIZE}px`,
-                          width: `${CLOTHING_CELL_SIZE}px`,
-                        }} tooltip={clothing.value} tooltipPosition="right">
-                          <Box
-                            className={classes([
-                              "preferences32x32",
-                              clothing.icon,
-                              "centered-image",
-                            ])}
-                            style={{
-                              transform: "translateX(-50%) translateY(-50%) scale(1.3)",
-                            }}
-                          />
-                        </Button>
-                      </Popper>
+                      <MainFeature
+                        catalog={catalog}
+                        currentValue={clothing}
+                        isOpen={
+                          currentClothingMenu === clothingKey
+                        }
+                        handleClose={() => {
+                          setCurrentClothingMenu(null);
+                        }}
+                        handleOpen={() => {
+                          setCurrentClothingMenu(clothingKey);
+                        }}
+                        handleSelect={createSetPreference(act, clothingKey)}
+                        name={KEYS_TO_NAMES[clothingKey]
+                          || `NO NAME FOR ${clothingKey}`}
+                        randomization={randomizationOfMainFeatures[clothingKey]}
+                        setRandomization={createSetRandomization(
+                          act,
+                          clothingKey,
+                        )}
+                      />
                     </Stack.Item>
                   );
                 })}
@@ -437,24 +585,14 @@ export const MainPage = (props: {
             <Stack vertical fill>
               <PreferenceList
                 act={act}
-                preferences={
-                  Object.fromEntries(
-                    Object.entries(
-                      data.character_preferences.secondary_features
-                    ).filter(([feature]) => {
-                      if (!currentSpeciesData) {
-                        return false;
-                      }
-
-                      return currentSpeciesData.enabled_features
-                        .indexOf(feature) !== -1;
-                    }))
-                }
+                randomizations={getRandomization(contextualPreferences)}
+                preferences={contextualPreferences}
               />
 
               <PreferenceList
                 act={act}
-                preferences={data.character_preferences.non_contextual}
+                randomizations={getRandomization(nonContextualPreferences)}
+                preferences={nonContextualPreferences}
               />
             </Stack>
           </Stack.Item>

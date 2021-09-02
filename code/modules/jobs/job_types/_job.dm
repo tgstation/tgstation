@@ -389,29 +389,38 @@
 
 
 /mob/living/carbon/human/apply_prefs_job(client/player_client, datum/job/job)
-	// var/fully_randomize = GLOB.current_anonymous_theme || player_client.prefs.should_be_random_hardcore(job, player_client.mob.mind) || is_banned_from(player_client.ckey, "Appearance")
+	var/fully_randomize = GLOB.current_anonymous_theme || player_client.prefs.should_be_random_hardcore(job, player_client.mob.mind) || is_banned_from(player_client.ckey, "Appearance")
 	if(!player_client)
 		return // Disconnected while checking for the appearance ban.
-	// MOTHBLOCKS TODO: All this random shit
-	// if(fully_randomize)
-	// 	if(CONFIG_GET(flag/enforce_human_authority) && (job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
-	// 		if(player_client.prefs.pref_species.id != SPECIES_HUMAN)
-	// 			player_client.prefs.pref_species = new /datum/species/human
-	// 		player_client.prefs.randomise_appearance_prefs(~RANDOMIZE_SPECIES)
-	// 	else
-	// 		player_client.prefs.randomise_appearance_prefs()
-	// 	player_client.prefs.apply_prefs_to(src)
-	// 	if(GLOB.current_anonymous_theme)
-	// 		fully_replace_character_name(null, GLOB.current_anonymous_theme.anonymous_name(src))
-	// else
-	var/is_antag = (player_client.mob.mind in GLOB.pre_setup_antags)
-		// if(CONFIG_GET(flag/enforce_human_authority) && (job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
-		// 	player_client.prefs.randomise[RANDOM_SPECIES] = FALSE
-		// 	if(player_client.prefs.pref_species.id != SPECIES_HUMAN)
-		// 		player_client.prefs.pref_species = new /datum/species/human
-	player_client.prefs.safe_transfer_prefs_to(src, TRUE, is_antag)
-		// if(CONFIG_GET(flag/force_random_names))
-		// 	player_client.prefs.real_name = player_client.prefs.pref_species.random_name(player_client.prefs.gender, TRUE)
+
+	var/require_human = CONFIG_GET(flag/enforce_human_authority) && (job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+
+	if(fully_randomize)
+		if(require_human)
+			player_client.prefs.randomise_appearance_prefs(~RANDOMIZE_SPECIES)
+		else
+			player_client.prefs.randomise_appearance_prefs()
+
+		player_client.prefs.apply_prefs_to(src)
+
+		if (require_human)
+			set_species(/datum/species/human)
+
+		if(GLOB.current_anonymous_theme)
+			fully_replace_character_name(null, GLOB.current_anonymous_theme.anonymous_name(src))
+	else
+		var/is_antag = (player_client.mob.mind in GLOB.pre_setup_antags)
+		if(require_human)
+			player_client.prefs.randomise["species"] = FALSE
+		player_client.prefs.safe_transfer_prefs_to(src, TRUE, is_antag)
+		if (require_human)
+			set_species(/datum/species/human)
+		if(CONFIG_GET(flag/force_random_names))
+			var/species_type = player_client.prefs.read_preference(/datum/preference/choiced/species)
+			var/datum/species/species = new species_type
+
+			var/gender = player_client.prefs.read_preference(/datum/preference/choiced/gender)
+			real_name = species.random_name(gender, TRUE)
 	dna.update_dna_identity()
 
 
@@ -428,7 +437,9 @@
 		var/organic_name
 		if(GLOB.current_anonymous_theme)
 			organic_name = GLOB.current_anonymous_theme.anonymous_name(src)
-		else if(player_client.prefs.randomise[RANDOM_NAME] || CONFIG_GET(flag/force_random_names) || is_banned_from(player_client.ckey, "Appearance"))
+		// MOTHBLOCKS TODO: This randomise name check
+		// else if(player_client.prefs.randomise[RANDOM_NAME] || CONFIG_GET(flag/force_random_names) || is_banned_from(player_client.ckey, "Appearance"))
+		else if (FALSE)
 			if(!player_client)
 				return // Disconnected while checking the appearance ban.
 

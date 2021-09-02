@@ -49,6 +49,12 @@ export type ServerSpeciesData = {
   toxic_food: Food[];
 };
 
+export enum RandomSetting {
+  AntagOnly = 1,
+  Disabled = 2,
+  Enabled = 3,
+}
+
 export const createSetPreference = (
   act: typeof sendAct,
   preference: string
@@ -72,7 +78,10 @@ export type PreferencesMenuData = {
     clothing: Record<string, AssetWithIcon>;
     features: Record<string, AssetWithIcon>;
     game_preferences: Record<string, unknown>;
-    non_contextual: Record<string, unknown>;
+    non_contextual: {
+      random_body: RandomSetting,
+      [otherKey: string]: unknown;
+    };
     secondary_features: Record<string, unknown>;
 
     names: Record<string, Name>;
@@ -81,6 +90,8 @@ export type PreferencesMenuData = {
       gender: Gender;
       species: string;
     };
+
+    randomization: Record<string, RandomSetting>;
   };
 
   job_preferences: Record<string, JobPriority>;
@@ -99,6 +110,9 @@ export type PreferencesMenuData = {
 };
 
 export type ServerData = {
+  random: {
+    randomizable: string[];
+  };
   species: Record<string, ServerSpeciesData>;
   [otheyKey: string]: unknown;
 };

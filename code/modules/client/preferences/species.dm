@@ -3,6 +3,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "species"
 	priority = PREFERENCE_PRIORITY_SPECIES
+	randomize_by_default = FALSE
 
 // MOTHBLOCKS TODO: What is keyed_list/roundstart_no_hard_check?
 /datum/preference/choiced/species/deserialize(input)

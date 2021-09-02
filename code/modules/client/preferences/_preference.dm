@@ -80,6 +80,16 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// Used for when you need to rely on another preference.
 	var/priority = PREFERENCE_PRIORITY_DEFAULT
 
+	/// If set, will be available to randomize, but only if the preference
+	/// is for PREFERENCE_CHARACTER.
+	var/can_randomize = TRUE
+
+	/// If randomizable (PREFERENCE_CHARACTER and can_randomize), whether
+	/// or not to enable randomization by default.
+	/// This doesn't mean it'll always be random, but rather if a player
+	/// DOES have random body on, will this already be randomized?
+	var/randomize_by_default = TRUE
+
 /// Called on the saved input when retrieving.
 /// Also called by the value sent from the user through UI. Do not trust it.
 /// Input is the value inside the savefile, output is to tell other code
@@ -99,21 +109,31 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	SHOULD_NOT_SLEEP(TRUE)
 	return input
 
-/// Produce a potentially random value for when no value for this preference is
-/// found in the savefile.
+/// Produce a default, potentially random value for when no value for this
+/// preference is found in the savefile.
 /// Either this or create_informed_default_value must be overriden by subtypes.
 /datum/preference/proc/create_default_value()
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("`create_default_value()` was not implemented on [type]!")
 
-/// Produce a potentially random value for when no value for this preference is
-/// found in the savefile.
+/// Produce a default, potentially random value for when no value for this
+/// preference is found in the savefile.
 /// Unlike create_default_value(), will provide the preferences object if you
 /// need to use it.
 /// If not overriden, will call create_default_value() instead.
 /datum/preference/proc/create_informed_default_value(datum/preferences/preferences)
 	return create_default_value()
+
+/// Produce a random value for the purposes of character randomization.
+/// Will just create a default value by default.
+/datum/preference/proc/create_random_value(datum/preferences/preferences)
+	return create_informed_default_value(preferences)
+
+/// Returns whether or not a preference can be randomized.
+/datum/preference/proc/is_randomizable()
+	SHOULD_NOT_OVERRIDE(TRUE)
+	return savefile_identifier == PREFERENCE_CHARACTER && can_randomize
 
 /// Given a savefile, return either the saved data or an acceptable default.
 /// This will write to the savefile if a value was not found with the new value.

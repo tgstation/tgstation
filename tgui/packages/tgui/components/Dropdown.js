@@ -6,6 +6,7 @@
 
 import { classes } from 'common/react';
 import { Component } from 'inferno';
+import { logger } from '../logging';
 import { Box } from './Box';
 import { Icon } from './Icon';
 
@@ -81,11 +82,13 @@ export class Dropdown extends Component {
       iconSpin,
       clipSelectedText = true,
       color = 'default',
+      dropdownStyle,
       over,
       noscroll,
       nochevron,
       width,
       onClick,
+      onOpen,
       selected,
       disabled,
       displayText,
@@ -114,7 +117,7 @@ export class Dropdown extends Component {
     ) : null;
 
     return (
-      <div className="Dropdown">
+      <div className="Dropdown" style={dropdownStyle}>
         <Box
           width={width}
           className={classes([
@@ -125,11 +128,15 @@ export class Dropdown extends Component {
             className,
           ])}
           {...rest}
-          onClick={() => {
+          onClick={(event) => {
             if (disabled && !this.state.open) {
               return;
             }
             this.setOpen(!this.state.open);
+
+            if (props.onOpen) {
+              props.onOpen(event);
+            }
           }}>
           {icon && (
             <Icon

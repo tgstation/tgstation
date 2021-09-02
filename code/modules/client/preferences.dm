@@ -37,20 +37,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/slot_randomized //keeps track of round-to-round randomization of the character slot, prevents overwriting
 	var/underwear_color = "000" //underwear color
 	var/skin_tone = "caucasian1" //Skin color
-	var/list/randomise = list(
-		RANDOM_UNDERWEAR = TRUE,
-		RANDOM_UNDERWEAR_COLOR = TRUE,
-		RANDOM_UNDERSHIRT = TRUE,
-		RANDOM_SOCKS = TRUE,
-		RANDOM_BACKPACK = TRUE,
-		RANDOM_JUMPSUIT_STYLE = TRUE,
-		RANDOM_HAIRSTYLE = TRUE,
-		RANDOM_HAIR_COLOR = TRUE,
-		RANDOM_FACIAL_HAIRSTYLE = TRUE,
-		RANDOM_FACIAL_HAIR_COLOR = TRUE,
-		RANDOM_SKIN_TONE = TRUE,
-		RANDOM_EYE_COLOR = TRUE,
-		)
+
+	// MOTHBLOCKS TODO: Default values
+	var/list/randomise = list()
 	var/phobia = "spiders"
 
 	var/list/custom_names = list()
@@ -222,7 +211,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			// SAFETY: `load_character` performs sanitization the slot number
 			if (!load_character(params["slot"]))
-				apply_character_randomization_prefs()
+				randomise_appearance_prefs()
 				save_character()
 
 			character_preview_view.update_body()
@@ -519,7 +508,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 
 	character.dna.features = list()
 
-	for (var/datum/preference/preference in get_preferences_in_priority_order())
+	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (preference.savefile_identifier != PREFERENCE_CHARACTER)
 			continue
 
@@ -535,7 +524,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 
 /// Returns whether the parent mob should have the random hardcore settings enabled. Assumes it has a mind.
 /datum/preferences/proc/should_be_random_hardcore(datum/job/job, datum/mind/mind)
-	if(!randomise[RANDOM_HARDCORE])
+	// if(!randomise[RANDOM_HARDCORE])
+	// 	return FALSE
+	// MOTHBLOCKS TODO: Random hardcore as its own option
+	if (TRUE)
 		return FALSE
 	if(job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND) //No command staff
 		return FALSE
