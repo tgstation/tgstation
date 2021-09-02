@@ -340,8 +340,8 @@ const MainFeature = (props: {
               event.stopPropagation();
             },
           }}
-          setValue={props.setRandomization}
           value={randomization}
+          setValue={setRandomization}
         />)}
       </Button>
     </Popper>
@@ -471,6 +471,9 @@ export const MainPage = (props: {
           }),
       ];
 
+      const randomBodyEnabled
+        = data.character_preferences.non_contextual.random_body;
+
       const getRandomization = (
         preferences: Record<string, unknown>
       ): Record<string, RandomSetting> => {
@@ -484,10 +487,7 @@ export const MainPage = (props: {
               return undefined;
             }
 
-            if (
-              data.character_preferences.non_contextual.random_body
-                === RandomSetting.Disabled
-            ) {
+            if (randomBodyEnabled === RandomSetting.Disabled) {
               return undefined;
             }
 
@@ -503,7 +503,14 @@ export const MainPage = (props: {
         = getRandomization(Object.fromEntries(mainFeatures));
 
       const nonContextualPreferences
-        = data.character_preferences.non_contextual;
+        = {
+          ...data.character_preferences.non_contextual,
+        };
+
+      if (randomBodyEnabled !== RandomSetting.Disabled) {
+        nonContextualPreferences["random_species"]
+          = data.character_preferences.randomization["species"];
+      }
 
       return (
         <Stack height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}>
