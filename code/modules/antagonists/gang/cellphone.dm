@@ -5,9 +5,9 @@ GLOBAL_LIST_EMPTY(gangster_cell_phones)
 	desc = "TODO: funny joke about the 80s, brick phones"
 	icon = 'icons/obj/gang/cell_phone.dmi'
 	icon_state = "phone_off"
+	throwforce = 15 // these things are dense as fuck
 	var/gang_id = "Grove Street Families"
 	var/activated = FALSE
-	var/hear_range = 2
 
 /obj/item/gangster_cellphone/Initialize()
 	. = ..()
@@ -33,7 +33,7 @@ GLOBAL_LIST_EMPTY(gangster_cell_phones)
 	. = ..()
 	if(!activated)
 		return
-	if(get_dist(speaker, src) > hear_range)
+	if(get_turf(speaker) != get_turf(src))
 		return
 	broadcast_message(raw_message, speaker)
 
@@ -51,9 +51,11 @@ GLOBAL_LIST_EMPTY(gangster_cell_phones)
 		if(get_dist(player_mob, src) > 7 || player_mob.z != z) //they're out of range of normal hearing
 			if(!(player_mob.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
 				continue
-		to_chat(player_mob, "<b>[speaker.name]</b> \[CELL: [gang_id]\] says, \"[message]\"")
+		to_chat(player_mob, span_gangradio("<b>[speaker.name]</b> \[CELL: [gang_id]\] says, \"[message]\""))
 
 /obj/item/gangster_cellphone/proc/say_message(message, atom/movable/speaker)
 	for(var/mob/living/carbon/human/hugh_mann in get_turf(src))
-		to_chat(hugh_mann, "<b>[speaker.name]</b> \[CELL: [gang_id]\] says, \"[message]\"")
+		if(HAS_TRAIT(hugh_mann, TRAIT_DEAF))
+			continue
+		to_chat(hugh_mann, span_gangradio("<b>[speaker.name]</b> \[CELL: [gang_id]\] says, \"[message]\""))
 
