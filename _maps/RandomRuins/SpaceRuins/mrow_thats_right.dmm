@@ -469,8 +469,8 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bx" = (
 /obj/structure/rack,
-/obj/item/melee/baton/cattleprod,
-/obj/item/melee/baton/cattleprod,
+/obj/item/melee/baton/security/cattleprod,
+/obj/item/melee/baton/security/cattleprod,
 /obj/item/restraints/handcuffs,
 /obj/item/restraints/handcuffs,
 /turf/open/floor/carpet,

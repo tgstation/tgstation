@@ -84,7 +84,7 @@
 
 /obj/item/clothing/suit/bio_suit/cmo/Initialize()
 	. = ..()
-	allowed += list(/obj/item/melee/classic_baton/telescopic)
+	allowed += list(/obj/item/melee/baton/telescopic)
 
 //Plague Dr mask can be found in clothing/masks/gasmask.dm
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit
