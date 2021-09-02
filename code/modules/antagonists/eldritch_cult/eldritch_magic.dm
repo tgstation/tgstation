@@ -85,7 +85,7 @@
 		for(var/X in knowledge)
 			var/datum/eldritch_knowledge/EK = knowledge[X]
 			if(EK.on_mansus_grasp_secondary(target, user, proximity_flag, click_parameters))
-			use_charge = TRUE
+				use_charge = TRUE
 
 	for(var/X in knowledge)
 		var/datum/eldritch_knowledge/EK = knowledge[X]
