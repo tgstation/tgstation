@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - qol: "RPD defaul pipe color is now green, grey has been renamed to omni and the two colors are moved to the first and last places of the RPD ui"
