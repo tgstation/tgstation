@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "Opening a toilet's cistern will no longer strike the toilet with the crowbar."
