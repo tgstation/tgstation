@@ -104,7 +104,8 @@
 /datum/eldritch_knowledge/proc/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
 	return FALSE
 
-
+/datum/eldritch_knowledge/proc/on_mansus_grasp_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	return FALSE
 /**
  * Sickly blade act
  *

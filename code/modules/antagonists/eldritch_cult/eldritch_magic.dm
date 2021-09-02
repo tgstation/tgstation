@@ -52,6 +52,14 @@
 	qdel(src)
 
 /obj/item/melee/touch_attack/mansus_fist/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	mansus_attack(target, user, proximity_flag, click_parameters, FALSE)
+
+/obj/item/melee/touch_attack/mansus_fist/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters, secondary)
+	mansus_attack(target, user, proximity_flag, click_parameters, TRUE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/melee/touch_attack/mansus_fist/proc/mansus_attack(atom/target, mob/user, proximity_flag, click_parameters, secondary)
+	. = ..()
 
 	if(!proximity_flag || target == user)
 		return
@@ -73,12 +81,20 @@
 		C.adjustStaminaLoss(80)
 	var/list/knowledge = cultie.get_all_knowledge()
 
+	if(secondary)
+		for(var/X in knowledge)
+			var/datum/eldritch_knowledge/EK = knowledge[X]
+			if(EK.on_mansus_grasp_secondary(target, user, proximity_flag, click_parameters))
+			use_charge = TRUE
+
 	for(var/X in knowledge)
 		var/datum/eldritch_knowledge/EK = knowledge[X]
 		if(EK.on_mansus_grasp(target, user, proximity_flag, click_parameters))
 			use_charge = TRUE
+
 	if(use_charge)
-		return ..()
+		user.say(catchphrase, forced = "spell")
+		qdel(src)
 
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
 	name = "Aggressive Spread"

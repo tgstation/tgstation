@@ -26,17 +26,17 @@
 
 /datum/eldritch_knowledge/rust_fist/on_mansus_grasp(atom/target, mob/living/user, proximity_flag, click_parameters)
 	. = ..()
-	var/check = FALSE
 	if(ismob(target))
 		var/mob/living/mobster = target
 		if(!(mobster.mob_biotypes & MOB_ROBOTIC))
 			return FALSE
 		else
-			check = TRUE
-	var/list/modifiers = params2list(click_parameters)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) || check)
-		target.rust_heretic_act()
-		return TRUE
+			target.rust_heretic_act()
+			return TRUE
+
+/datum/eldritch_knowledge/rust_fist/on_mansus_grasp_secondary(atom/target, mob/living/user, proximity_flag, click_parameters)
+	target.rust_heretic_act()
+	return TRUE
 
 /datum/eldritch_knowledge/rust_fist/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
