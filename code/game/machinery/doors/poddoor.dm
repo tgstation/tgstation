@@ -1,9 +1,3 @@
-
-//blast door (de)construction states
-#define BLASTDOOR_NEEDS_WIRES 0
-#define BLASTDOOR_NEEDS_ELECTRONICS 1
-#define BLASTDOOR_FINISHED 2
-
 /obj/machinery/door/poddoor
 	name = "blast door"
 	desc = "A heavy duty blast door that opens mechanically."
@@ -43,30 +37,35 @@
 
 		else if(W.tool_behaviour == TOOL_CROWBAR && deconstruction == BLASTDOOR_FINISHED)
 			to_chat(user, span_notice("You start to remove the airlock electronics."))
-			if(do_after(user, 10 SECONDS, target = src))
+			if(W.use_tool(src, user, 100, volume=50))
 				new /obj/item/electronics/airlock(loc)
 				id = null
 				deconstruction = BLASTDOOR_NEEDS_ELECTRONICS
+				to_chat(user, span_notice("You remove the airlock electronics."))
+			return TRUE
 
 		else if(W.tool_behaviour == TOOL_WIRECUTTER && deconstruction == BLASTDOOR_NEEDS_ELECTRONICS)
 			to_chat(user, span_notice("You start to remove the internal cables."))
-			if(do_after(user, 10 SECONDS, target = src))
+			if(W.use_tool(src, user, 100, volume=50))
 				var/datum/crafting_recipe/recipe = locate(recipe_type) in GLOB.crafting_recipes
 				var/amount = recipe.reqs[/obj/item/stack/cable_coil]
 				new /obj/item/stack/cable_coil(loc, amount)
 				deconstruction = BLASTDOOR_NEEDS_WIRES
+				to_chat(user, span_notice("You remove the internal cables."))
+			return TRUE
 
 		else if(W.tool_behaviour == TOOL_WELDER && deconstruction == BLASTDOOR_NEEDS_WIRES)
 			if(!W.tool_start_check(user, amount=0))
 				return
 
 			to_chat(user, span_notice("You start tearing apart the [src]."))
-			playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
-			if(do_after(user, 15 SECONDS, target = src))
+			if(W.use_tool(src, user, 150, volume=50))
 				var/datum/crafting_recipe/recipe = locate(recipe_type) in GLOB.crafting_recipes
 				var/amount = recipe.reqs[/obj/item/stack/sheet/plasteel]
 				new /obj/item/stack/sheet/plasteel(loc, amount)
 				qdel(src)
+				to_chat(user, span_notice("You tear the [src] apart."))
+			return TRUE
 
 /obj/machinery/door/poddoor/examine(mob/user)
 	. = ..()
