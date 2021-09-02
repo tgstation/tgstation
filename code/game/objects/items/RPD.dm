@@ -460,6 +460,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		return
 
 	if(mode & REPROGRAM_MODE)
+		// If this is a placed smart pipe, try to reprogram it
 		var/obj/machinery/atmospherics/pipe/smart/S = attack_target
 		if(istype(S))
 			if (S.dir == ALL_CARDINALS)
@@ -471,43 +472,46 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				return
 			// Check for differences in unconnected directions
 			var/target_differences = (p_init_dir ^ target_init_dir) & ~S.connections
-			if (target_differences)
-				to_chat(user, span_notice("You start reprogramming \the [S]..."))
-				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-				if(do_after(user, reprogram_speed, target = S))
-					// Double check to make sure that nothing has changed. If anything we were about to change is now connected, abort
-					if (target_differences & S.connections)
-						to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe in a currently connected direction."))
-						return
-					var/old_dir = S.GetInitDirections()
-					var/new_dir = (old_dir & ~target_differences) | target_differences
-					// Don't make a smart pipe with only one connection
-					if (ISSTUB(new_dir))
-						to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
-						return
-					S.SetInitDirections(new_dir)
-					// We can never disconnect from existing connections, but we can connect to previously unconnected directions
-					var/newly_permitted_connections = new_dir & ~old_dir
-					if(newly_permitted_connections)
-						// We're allowed to connect in new directions. Recompute our nodes
-						// Disconnect from everything that is currently connected
-						for (var/i in 1 to S.device_type)
-							S.nullifyNode(i)
-						// Get our new connections
-						S.atmosinit()
-						// Connect to our new connections
-						for (var/obj/machinery/atmospherics/O in S.nodes)
-							O.atmosinit()
-							O.addMember(src)
-						SSair.add_to_rebuild_queue(S)
-					// Finally, update our internal state - update_pipe_icon also updates dir and connections
-					S.update_pipe_icon()
-					user.visible_message(span_notice("[user] reprograms the \the [S]."),span_notice("You reprogram \the [S]."))
+			if (!target_differences)
+				to_chat(user, span_warning("\The [S] is already in this configuration for its unconnected directions!"))
 				return
-			to_chat(user, span_warning("\The [S] is already in this configuration for its unconnected directions!"))
+			to_chat(user, span_notice("You start reprogramming \the [S]..."))
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
+			if(!do_after(user, reprogram_speed, target = S))
+				return
+			// Double check to make sure that nothing has changed. If anything we were about to change is now connected, abort
+			if (target_differences & S.connections)
+				to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe in a currently connected direction."))
+				return
+			var/old_dir = S.GetInitDirections()
+			var/new_dir = (old_dir & ~target_differences) | target_differences
+			// Don't make a smart pipe with only one connection
+			if (ISSTUB(new_dir))
+				to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
+				return
+			S.SetInitDirections(new_dir)
+			// We can never disconnect from existing connections, but we can connect to previously unconnected directions
+			var/newly_permitted_connections = new_dir & ~old_dir
+			if(newly_permitted_connections)
+				// We're allowed to connect in new directions. Recompute our nodes
+				// Disconnect from everything that is currently connected
+				for (var/i in 1 to S.device_type)
+					S.nullifyNode(i)
+				// Get our new connections
+				S.atmosinit()
+				// Connect to our new connections
+				for (var/obj/machinery/atmospherics/O in S.nodes)
+					O.atmosinit()
+					O.addMember(src)
+				SSair.add_to_rebuild_queue(S)
+			// Finally, update our internal state - update_pipe_icon also updates dir and connections
+			S.update_pipe_icon()
+			user.visible_message(span_notice("[user] reprograms the \the [S]."),span_notice("You reprogram \the [S]."))
 			return
+		// If this is an unplaced smart pipe, try to reprogram it
 		var/obj/item/pipe/quaternary/I = attack_target
 		if(istype(I) && ispath(I.pipe_type, /obj/machinery/atmospherics/pipe/smart))
+			// An unplaced pipe never has any existing connections, so just directly assign the new configuration
 			I.p_init_dir = p_init_dir
 			I.update()
 
