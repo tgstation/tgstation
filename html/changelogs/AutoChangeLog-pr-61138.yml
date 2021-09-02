@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - bugfix: "Fixed scanner gates not functioning when anchored and also fixed their examine text not saying they need to be anchored."
