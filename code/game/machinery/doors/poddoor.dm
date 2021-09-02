@@ -25,7 +25,6 @@
 			to_chat(user, span_warning("You need to open [src] before opening its maintenance panel."))
 			return
 		else if(default_deconstruction_screwdriver(user, icon_state, icon_state, W))
-			to_chat(user, span_notice("You [panel_open ? "open" : "close"] the maintenance hatch of [src]."))
 			return TRUE
 
 	if(panel_open)
