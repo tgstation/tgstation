@@ -23,6 +23,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!can_speak())
 		return
+	if(sanitize)
+		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(message == "" || !message)
 		return
 	spans |= speech_span
