@@ -47,7 +47,7 @@
 
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner.real_name]'s imaginary friend?", ROLE_PAI, null, 75, friend, POLL_IGNORE_IMAGINARYFRIEND)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [owner.real_name]'s imaginary friend?", ROLE_PAI, null, 7.5 SECONDS, friend, POLL_IGNORE_IMAGINARYFRIEND)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		friend.key = C.key
@@ -89,6 +89,9 @@
 		to_chat(src, span_notice("You cannot directly influence the world around you, but you can see what [owner] cannot."))
 
 /mob/camera/imaginary_friend/Initialize(mapload, _trauma)
+	if(!_trauma)
+		stack_trace("Imaginary friend created without trauma, wtf")
+		return INITIALIZE_HINT_QDEL
 	. = ..()
 
 	trauma = _trauma
@@ -131,7 +134,7 @@
 	client.images |= current_image
 
 /mob/camera/imaginary_friend/Destroy()
-	if(owner.client)
+	if(owner?.client)
 		owner.client.images.Remove(human_image)
 	if(client)
 		client.images.Remove(human_image)

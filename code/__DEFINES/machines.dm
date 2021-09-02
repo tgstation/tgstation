@@ -7,14 +7,19 @@
 #define AREA_USAGE_STATIC_LIGHT 5
 #define AREA_USAGE_STATIC_ENVIRON 6
 #define AREA_USAGE_LEN AREA_USAGE_STATIC_ENVIRON // largest idx
+
 /// Index of the first dynamic usage channel
 #define AREA_USAGE_DYNAMIC_START AREA_USAGE_EQUIP
 /// Index of the last dynamic usage channel
 #define AREA_USAGE_DYNAMIC_END AREA_USAGE_ENVIRON
+
 /// Index of the first static usage channel
 #define AREA_USAGE_STATIC_START AREA_USAGE_STATIC_EQUIP
 /// Index of the last static usage channel
 #define AREA_USAGE_STATIC_END AREA_USAGE_STATIC_ENVIRON
+
+#define DYNAMIC_TO_STATIC_CHANNEL(dyn_channel) (dyn_channel + (AREA_USAGE_STATIC_START - AREA_USAGE_DYNAMIC_START))
+#define STATIC_TO_DYNAMIC_CHANNEL(static_channel) (static_channel - (AREA_USAGE_STATIC_START - AREA_USAGE_DYNAMIC_START))
 
 
 //Power use
@@ -144,7 +149,7 @@
 #define MACHINE_DEFAULT_ELECTRIFY_TIME 30
 
 //mass drivers and related machinery
-#define MASSDRIVER_TOXINS "toxinsdriver"
+#define MASSDRIVER_ORDNANCE "ordnancedriver"
 #define MASSDRIVER_CHAPEL "chapelgun"
 #define MASSDRIVER_DISPOSALS "trash"
 #define MASSDRIVER_SHACK "shack"
@@ -196,3 +201,12 @@
 #define AIRALARM_BUILD_NO_WIRES 1
 /// Air alarm has all components but isn't completed
 #define AIRALARM_BUILD_COMPLETE 2
+
+///TLV datums wont check limits set to this
+#define TLV_DONT_CHECK -1
+///the gas mixture is within the bounds of both warning and hazard limits
+#define TLV_NO_DANGER 0
+///the gas value is outside the warning limit but within the hazard limit, the air alarm will go into warning mode
+#define TLV_OUTSIDE_WARNING_LIMIT 1
+///the gas is outside the hazard limit, the air alarm will go into hazard mode
+#define TLV_OUTSIDE_HAZARD_LIMIT 2

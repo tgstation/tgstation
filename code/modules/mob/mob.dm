@@ -334,7 +334,7 @@
  * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
  */
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE, initial = FALSE)
-	if(!istype(W))
+	if(!istype(W) || QDELETED(W)) //This qdeleted is to prevent stupid behavior with things that qdel during init, like say stacks
 		return FALSE
 	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self))
 		if(qdel_on_fail)
@@ -1005,6 +1005,15 @@
 	if(mob_dna?.check_mutation(TK) && tkMaxRangeCheck(src, A))
 		return TRUE
 
+	//range check
+	if(!interaction_range)
+		return TRUE
+	var/turf/our_turf = get_turf(src)
+	var/turf/their_turf = get_turf(A)
+	if (!our_turf || !their_turf)
+		return FALSE
+	return ISINRANGE(their_turf.x, our_turf.x - interaction_range, our_turf.x + interaction_range) && ISINRANGE(their_turf.y, our_turf.y - interaction_range, our_turf.y + interaction_range)
+
 ///Can the mob use Topic to interact with machines
 /mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
 	return
@@ -1239,7 +1248,7 @@
 	if(href_list[VV_HK_SDQL_SPELL])
 		if(!check_rights(R_DEBUG))
 			return
-		usr.client.cmd_give_sdql_spell(src)
+		usr.client.cmd_sdql_spell_menu(src)
 /**
  * extra var handling for the logging var
  */

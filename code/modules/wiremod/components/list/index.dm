@@ -27,8 +27,8 @@
 	if(.)
 		return
 
-	var/index = index_port.input_value
-	var/list/list_input = list_port.input_value
+	var/index = index_port.value
+	var/list/list_input = list_port.value
 
 	if(!islist(list_input) || !index)
 		output.set_output(null)

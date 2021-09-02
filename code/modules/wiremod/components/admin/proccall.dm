@@ -1,3 +1,7 @@
+#define COMP_PROC_GLOBAL "Global"
+#define COMP_PROC_OBJECT "Object"
+
+
 /**
  * # Proc Call Component
  *
@@ -44,16 +48,16 @@
 		return
 
 	var/called_on
-	if(proccall_options.input_value == COMP_PROC_OBJECT)
-		called_on = entity.input_value
+	if(proccall_options.value == COMP_PROC_OBJECT)
+		called_on = entity.value
 	else
 		called_on = GLOBAL_PROC
 
 	if(!called_on)
 		return
 
-	var/to_invoke = proc_name.input_value
-	var/params = arguments.input_value || list()
+	var/to_invoke = proc_name.value
+	var/params = arguments.value || list()
 
 	if(!to_invoke)
 		return
@@ -63,3 +67,6 @@
 	GLOB.AdminProcCaller = null
 
 	output_value.set_output(result)
+
+#undef COMP_PROC_GLOBAL
+#undef COMP_PROC_OBJECT

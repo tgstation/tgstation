@@ -5,14 +5,16 @@ import {
   Stack,
   Box,
   Button,
+  Section,
 } from '../../components';
 import { Component } from 'inferno';
-import { Window } from '../../layouts';
+import { Layout, Window } from '../../layouts';
 import { resolveAsset } from '../../assets';
 import { CircuitInfo } from './CircuitInfo';
 import { NULL_REF, ABSOLUTE_Y_OFFSET, MOUSE_BUTTON_LEFT } from './constants';
 import { Connections } from './Connections';
 import { ObjectComponent } from './ObjectComponent';
+import { VariableMenu } from './VariableMenu';
 
 export class IntegratedCircuit extends Component {
   constructor() {
@@ -25,9 +27,11 @@ export class IntegratedCircuit extends Component {
       zoom: 1,
       backgroundX: 0,
       backgroundY: 0,
+      menuOpen: false,
     };
     this.handlePortLocation = this.handlePortLocation.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleMouseUp = this.handleMouseUp.bind(this);
     this.handlePortClick = this.handlePortClick.bind(this);
     this.handlePortRightClick = this.handlePortRightClick.bind(this);
     this.handlePortUp = this.handlePortUp.bind(this);
@@ -132,9 +136,11 @@ export class IntegratedCircuit extends Component {
   }
 
   handlePortDrag(event) {
+    const { data } = useBackend(this.context);
+    const { screen_x, screen_y } = data;
     this.setState((state) => ({
-      mouseX: event.clientX - state.backgroundX,
-      mouseY: event.clientY - state.backgroundY,
+      mouseX: event.clientX - (state.backgroundX || screen_x),
+      mouseY: event.clientY - (state.backgroundY || screen_y),
     }));
   }
 
@@ -169,14 +175,21 @@ export class IntegratedCircuit extends Component {
       backgroundX: newX,
       backgroundY: newY,
     });
+    if (this.state.menuOpen) {
+      this.setState({
+        menuOpen: false,
+      });
+    }
   }
 
   componentDidMount() {
     window.addEventListener('mousedown', this.handleMouseDown);
+    window.addEventListener('mouseup', this.handleMouseUp);
   }
 
   componentWillUnmount() {
     window.removeEventListener('mousedown', this.handleMouseDown);
+    window.removeEventListener('mouseup', this.handleMouseUp);
   }
 
   handleMouseDown(event) {
@@ -184,6 +197,17 @@ export class IntegratedCircuit extends Component {
     const { examined_name } = data;
     if (examined_name) {
       act('remove_examined_component');
+    }
+  }
+
+  handleMouseUp(event) {
+    const { act } = useBackend(this.context);
+    const { backgroundX, backgroundY } = this.state;
+    if (backgroundX && backgroundY) {
+      act("move_screen", {
+        screen_x: backgroundX,
+        screen_y: backgroundY,
+      });
     }
   }
 
@@ -197,9 +221,13 @@ export class IntegratedCircuit extends Component {
       examined_notices,
       examined_rel_x,
       examined_rel_y,
+      screen_x,
+      screen_y,
       is_admin,
+      variables,
+      global_basic_types,
     } = data;
-    const { locations, selectedPort } = this.state;
+    const { locations, selectedPort, menuOpen } = this.state;
     const connections = [];
 
     for (const comp of components) {
@@ -207,15 +235,15 @@ export class IntegratedCircuit extends Component {
         continue;
       }
 
-      for (const port of comp.input_ports) {
-        if (port.connected_to === NULL_REF
-          || selectedPort?.ref === port.ref) continue;
-        const output_port = locations[port.connected_to];
-        connections.push({
-          color: (output_port && output_port.color) || 'blue',
-          from: output_port,
-          to: locations[port.ref],
-        });
+      for (const input of comp.input_ports) {
+        for (const output of input.connected_to) {
+          const output_port = locations[output];
+          connections.push({
+            color: (output_port && output_port.color) || 'blue',
+            from: output_port,
+            to: locations[input.ref],
+          });
+        }
       }
     }
 
@@ -254,6 +282,18 @@ export class IntegratedCircuit extends Component {
                   onChange={(e, value) => act("set_display_name", { display_name: value })}
                 />
               </Stack.Item>
+              <Stack.Item basis="24px">
+                <Button
+                  position="absolute"
+                  top={0}
+                  color="transparent"
+                  icon="cog"
+                  selected={menuOpen}
+                  onClick={() => this.setState((state) => ({
+                    menuOpen: !state.menuOpen,
+                  }))}
+                />
+              </Stack.Item>
               {!!is_admin && (
                 <Stack.Item>
                   <Button
@@ -280,6 +320,8 @@ export class IntegratedCircuit extends Component {
             imageWidth={900}
             onZoomChange={this.handleZoomChange}
             onBackgroundMoved={this.handleBackgroundMoved}
+            initialLeft={screen_x}
+            initialTop={screen_y}
           >
             {components.map(
               (comp, index) =>
@@ -308,6 +350,35 @@ export class IntegratedCircuit extends Component {
               desc={examined_desc}
               notices={examined_notices}
             />
+          )}
+          {!!menuOpen && (
+            <Box
+              position="absolute"
+              bottom={0}
+              left={0}
+              height="50%"
+              minHeight="300px"
+              width="100%"
+              backgroundColor="#202020"
+            >
+              <VariableMenu
+                variables={variables}
+                types={global_basic_types}
+                onAddVariable={(name, type, event) => act("add_variable", {
+                  variable_name: name,
+                  variable_datatype: type,
+                })}
+                onRemoveVariable={(name, event) => act("remove_variable", {
+                  variable_name: name,
+                })}
+                handleAddSetter={(e) => act("add_setter_or_getter", {
+                  is_setter: true,
+                })}
+                handleAddGetter={(e) => act("add_setter_or_getter", {
+                  is_setter: false,
+                })}
+              />
+            </Box>
           )}
         </Window.Content>
       </Window>
