@@ -117,5 +117,7 @@
 
 /obj/machinery/computer/AltClick(mob/user)
 	. = ..()
+	if(!can_interact(user))
+		return
 	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational)
 		return

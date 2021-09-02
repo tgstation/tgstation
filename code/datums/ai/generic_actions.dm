@@ -259,3 +259,25 @@
 /datum/ai_behavior/follow/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.blackboard[BB_FOLLOW_TARGET] = null
+
+
+
+/datum/ai_behavior/perform_emote
+
+/datum/ai_behavior/perform_emote/perform(delta_time, datum/ai_controller/controller, emote)
+	var/mob/living/living_pawn = controller.pawn
+	if(!istype(living_pawn))
+		return
+	living_pawn.manual_emote(emote)
+	finish_action(controller, TRUE)
+
+/datum/ai_behavior/perform_speech
+
+/datum/ai_behavior/perform_speech/perform(delta_time, datum/ai_controller/controller, speech)
+	var/mob/living/living_pawn = controller.pawn
+	if(!istype(living_pawn))
+		return
+	living_pawn.say(speech, forced = "AI Controller")
+	finish_action(controller, TRUE)
+
+

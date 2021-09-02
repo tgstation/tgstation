@@ -1,3 +1,88 @@
+
+/// The essential proc to call when an obj must receive damage of any kind.
+/obj/proc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
+	if(QDELETED(src))
+		stack_trace("[src] taking damage after deletion")
+		return
+	if(obj_integrity <= 0)
+		stack_trace("[src] taking damage while having <= 0 integrity")
+		return
+	if(sound_effect)
+		play_attack_sound(damage_amount, damage_type, damage_flag)
+	if(resistance_flags & INDESTRUCTIBLE)
+		return
+	damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
+	if(damage_amount < DAMAGE_PRECISION)
+		return
+	if(SEND_SIGNAL(src, COMSIG_OBJ_TAKE_DAMAGE, damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration) & COMPONENT_NO_TAKE_DAMAGE)
+		return
+
+	. = damage_amount
+
+	update_integrity(obj_integrity - damage_amount)
+
+	//BREAKING FIRST
+	if(integrity_failure && obj_integrity <= integrity_failure * max_integrity)
+		obj_break(damage_flag)
+
+	//DESTROYING SECOND
+	if(obj_integrity <= 0)
+		obj_destruction(damage_flag)
+
+/// Proc for recovering obj_integrity. Returns the amount repaired by
+/obj/proc/repair_damage(amount)
+	if(amount <= 0) // We only recover here
+		return
+	var/new_integrity = min(max_integrity, obj_integrity + amount)
+	. = new_integrity - obj_integrity
+
+	update_integrity(new_integrity)
+
+	if(integrity_failure && obj_integrity > integrity_failure * max_integrity)
+		obj_fix()
+
+/// Handles the integrity of an object changing. This must be called instead of changing integrity directly.
+/obj/proc/update_integrity(new_value)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	var/old_value = obj_integrity
+	new_value = max(0, new_value)
+	if(obj_integrity == new_value)
+		return
+	obj_integrity = new_value
+	SEND_SIGNAL(src, COMSIG_OBJ_INTEGRITY_CHANGED, old_value, new_value)
+
+/// This mostly exists to keep obj_integrity private. Might be useful in the future.
+/obj/proc/get_integrity()
+	SHOULD_BE_PURE(TRUE)
+	return obj_integrity
+
+///returns the damage value of the attack after processing the obj's various armor protections
+/obj/proc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration = 0)
+	if(damage_flag == MELEE && damage_amount < damage_deflection)
+		return 0
+	switch(damage_type)
+		if(BRUTE)
+		if(BURN)
+		else
+			return 0
+	var/armor_protection = 0
+	if(damage_flag)
+		armor_protection = armor.getRating(damage_flag)
+	if(armor_protection) //Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
+		armor_protection = clamp(armor_protection - armour_penetration, min(armor_protection, 0), 100)
+	return round(damage_amount * (100 - armor_protection)*0.01, DAMAGE_PRECISION)
+
+///the sound played when the obj is damaged.
+/obj/proc/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(src, 'sound/weapons/smash.ogg', 50, TRUE)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+		if(BURN)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+
 /obj/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	..()
 	take_damage(AM.throwforce, BRUTE, MELEE, 1, get_dir(src, AM))
@@ -51,6 +136,18 @@
 /obj/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
 	if(attack_generic(user, 60, BRUTE, MELEE, 0))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
+
+/obj/attack_basic_mob(mob/living/basic/user, list/modifiers)
+	if(!user.melee_damage_upper && !user.obj_damage) //No damage
+		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
+		return FALSE
+	else
+		if(user.obj_damage)
+			. = attack_generic(user, user.obj_damage, user.melee_damage_type, MELEE, TRUE, user.armour_penetration)
+		else
+			. = attack_generic(user, rand(user.melee_damage_lower,user.melee_damage_upper), user.melee_damage_type, MELEE,TRUE, user.armour_penetration)
+		if(.)
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 
 /obj/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(!user.melee_damage_upper && !user.obj_damage)

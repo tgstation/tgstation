@@ -213,6 +213,7 @@
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT) //protects pilots from ashstorms.
 
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/ejectee in occupants)

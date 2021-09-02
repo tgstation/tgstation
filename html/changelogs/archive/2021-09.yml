@@ -1,0 +1,68 @@
+2021-09-01:
+  AlinaStarkova:
+  - bugfix: Maint areas have been cleaned up to properly cover maint, minor tiles
+      and airlocks which had space areas were fixed to have an actual maint area
+  ArcaneMusic:
+  - bugfix: Meat steaks now have protein as expected.
+  Ghommie:
+  - bugfix: fixes people catching fire when using jump or rocket boots to leap over
+      a gap of lava.
+  - refactor: refactored lava burn and weather immunities code.
+  - bugfix: Fixed the anti-drop implant not removing the nodrop trait on held items
+      if they're somehow dropped.
+  - bugfix: fixes wormhole jaunter portals floating in space.
+  - bugfix: balloon alerts no longer become transparent, scale up/down or get colored
+      alongside their holder.
+  - bugfix: Hostile mobs will always face their targets when shooting.
+  - spellcheck: Corrected a possessive case in the text of the ancient note found
+      in the ice library ruin.
+  Nari Harimoto:
+  - bugfix: Nanotrasen expert roboticists have found an error in cyborg programming
+      which allows them to interact with things farther than they are supposed to.
+      some of those errors have been squashed.
+  - refactor: can_interact() now has a few less unnesscary overrides and now properly
+      checks for range such. and hotkeys are also now respected with can_interact()
+  - bugfix: the emitter area around the SM chamber now has APCs, so no more infinate
+      power for the thermomachines and other equipment
+  Sealed101:
+  - bugfix: 'Tramstation: Restored the missing law office stamp. Hail bureaucracy!'
+  - bugfix: 'Tramstation: Replaced the Core AI module in RD''s office with an AI Core
+      circuitboard. You can actually build a new AI with this!'
+  - bugfix: 'Tramstation: RnD now comes with three Experi-scanners. You no longer
+      have an excuse for not scanning those toilets.'
+  - bugfix: 'Tramstation: Fixed a non-functional shutters button in left-side tram
+      underpass.'
+  - rscadd: 'Tramstation: Book manuals have been shipped to Robotics and Medbay Treatment
+      Center.'
+  SpaceDragon00:
+  - admin: Admins can click a category in the banning panel to toggle all checkboxes
+      within that category
+  esainane:
+  - spellcheck: Fix grammar when attacked by an unknown assailant
+  - spellcheck: Fix typo in Sparkler description
+  timothymtorres:
+  - bugfix: Fix staff of lava not terraforming lava properly
+  tralezab:
+  - bugfix: fixes a broken antag panel that rarely showed up
+  - bugfix: trash cannons now accept any oxygen tank, not just red ones
+  - bugfix: Any instance where you'd see "illusion" as a school of magic is now "translocation".
+      the illusion school has been dead for awhile now!
+2021-09-02:
+  ArcaneDefence:
+  - bugfix: Plasmamen that have all of their limbs replaced with non-plasma alternatives
+      will not autoignite in flammable environments.
+  - bugfix: Moths have finally figured out how to finish eating clothes again, rather
+      than infinitely eating a singular sock.
+  GoblinBackwards:
+  - bugfix: Doors, reinforced windows, lockers, mass spectrometers and lockers can
+      now be attacked with right click
+  Timberpoes:
+  - bugfix: Fixes a logic error in ID cards which could cause their accesses to be
+      unintentionally overwritten.
+  - bugfix: Fix oversight allowing players to spam observers with notifications for
+      ghost roles.
+  magatsuchi:
+  - spellcheck: fixed a single typo
+  tralezab:
+  - spellcheck: going postal now uses the correct ui theme and isn't confused with
+      tiger cooperative

@@ -328,3 +328,32 @@
 	. = ..()
 	if(.)
 		investigate_log("was planted by [key_name(user)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
+
+/obj/item/seeds/odious_puffball
+	name = "pack of odious pullball spores"
+	desc = "These spores reek! Disgusting."
+	icon_state = "seed-odiouspuffball"
+	species = "odiouspuffball"
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	icon_grow = "odiouspuffball-grow"
+	icon_dead = "odiouspuffball-dead"
+	icon_harvest = "odiouspuffball-harvest"
+	plantname = "Odious Puffballs"
+	maturation = 3
+	production = 8
+	potency = 30
+	instability = 65
+	growthstages = 3
+	product = /obj/item/food/grown/mushroom/odious_puffball
+	genes = list(/datum/plant_gene/trait/smoke, /datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/squash)
+	reagents_add = list(/datum/reagent/toxin/spore = 0.2, /datum/reagent/consumable/nutriment = 0.04)
+	rarity = 35
+	graft_gene = /datum/plant_gene/trait/smoke
+
+/obj/item/food/grown/mushroom/odious_puffball
+	seed = /obj/item/seeds/odious_puffball
+	name = "odious puffball"
+	desc = "<I>Lycoperdon Faetidus</I>: This puffball is considered a great nuisance not only because of the highly irritating nature of its spores, but also because of its considerable size and unsightly appearance."
+	icon_state = "odious_puffball"
+	tastes = list("rotten garlic" = 2, "mushroom" = 1, "spores" = 1)
+	wine_power = 50

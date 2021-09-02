@@ -343,16 +343,11 @@
 	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE)) // Check if the machine is broken, and if we can still interact with it if so
 		return FALSE
 
-	if(isAdminGhostAI(user))
-		return TRUE //if you're an admin, you probably know what you're doing (or at least have permission to do what you're doing)
-
-	if(!isliving(user))
-		return FALSE //no ghosts in the machine allowed, sorry
-
 	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_INTERACT)
 		return FALSE
 
-	var/mob/living/living_user = user
+	if(!isliving(user))
+		return FALSE //no ghosts allowed, sorry
 
 	var/is_dextrous = FALSE
 	if(isanimal(user))
@@ -370,10 +365,9 @@
 		if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN) && !(interaction_flags_machine & INTERACT_MACHINE_OPEN_SILICON))
 			return FALSE
 
-		return TRUE //silicons don't care about petty mortal concerns like needing to be next to a machine to use it
+		return user.can_interact_with(src) //AIs don't care about petty mortal concerns like needing to be next to a machine to use it, but borgs do care somewhat
 
-	if(living_user.incapacitated()) //idk why silicons aren't supposed to care about incapacitation when interacting with machines, but it was apparently like this before
-		return FALSE
+	. = ..()
 
 	if((interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SIGHT) && user.is_blind())
 		to_chat(user, span_warning("This machine requires sight to use."))
@@ -384,11 +378,6 @@
 
 	if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON) //if the user was a silicon, we'd have returned out earlier, so the user must not be a silicon
 		return FALSE
-
-	if(!Adjacent(user)) // Next make sure we are next to the machine unless we have telekinesis
-		var/mob/living/carbon/carbon_user = living_user
-		if(!istype(carbon_user) || !carbon_user.has_dna() || !carbon_user.dna.check_mutation(TK))
-			return FALSE
 
 	return TRUE // If we passed all of those checks, woohoo! We can interact with this machine.
 
