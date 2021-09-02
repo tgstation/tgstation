@@ -59,8 +59,6 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/melee/touch_attack/mansus_fist/proc/mansus_attack(atom/target, mob/user, proximity_flag, click_parameters, secondary)
-	. = ..()
-
 	if(!proximity_flag || target == user)
 		return
 	playsound(user, 'sound/items/welder.ogg', 75, TRUE)
@@ -68,7 +66,7 @@
 		var/mob/living/carbon/human/tar = target
 		if(tar.anti_magic_check())
 			tar.visible_message(span_danger("The spell bounces off of [target]!"),span_danger("The spell bounces off of you!"))
-			return ..()
+			return
 	var/datum/mind/M = user.mind
 	var/datum/antagonist/heretic/cultie = M.has_antag_datum(/datum/antagonist/heretic)
 
