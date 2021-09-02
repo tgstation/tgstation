@@ -31,8 +31,9 @@
 	attempt_join_gang(user)
 
 /// Adds the user to the family that this package corresponds to, dispenses the free_clothes of that family, and adds them to the handler if it exists.
-/obj/item/gang_induction_package/proc/add_to_gang(mob/living/user)
+/obj/item/gang_induction_package/proc/add_to_gang(mob/living/user, original_name)
 	var/datum/antagonist/gang/swappin_sides = new gang_to_use()
+	swappin_sides.original_name = original_name
 	swappin_sides.handler = handler
 	user.mind.add_antag_datum(swappin_sides, team_to_use)
 	var/policy = get_policy(ROLE_FAMILIES)
@@ -57,9 +58,10 @@
 			if(is_gangster.my_gang == team_to_use)
 				return
 			else
+				var/real_name_backup = is_gangster.original_name
 				is_gangster.my_gang.remove_member(user.mind)
 				user.mind.remove_antag_datum(/datum/antagonist/gang)
-				add_to_gang(user)
+				add_to_gang(user, real_name_backup)
 				qdel(src)
 		else
 			add_to_gang(user)

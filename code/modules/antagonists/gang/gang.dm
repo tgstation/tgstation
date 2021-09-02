@@ -20,6 +20,10 @@
 	var/datum/action/cooldown/spawn_induction_package/package_spawner = new()
 	/// Whether or not this family member is the first of their family.
 	var/starter_gangster = FALSE
+	/// The gangster's original real name. Used for renaming stuff, kept between gang switches.
+	var/original_name
+	/// Type of team to create when creating the gang in the first place. Used for renames.
+	var/gang_team_type = /datum/team/gang
 
 	/// A reference to the handler datum that manages the families gamemode. In case of no handler (admin-spawned during round), this will be null; this is fine.
 	var/datum/gang_handler/handler
@@ -50,7 +54,7 @@
 			found_gang = TRUE
 			break
 	if(!found_gang)
-		var/new_gang = new /datum/team/gang()
+		var/new_gang = new gang_team_type()
 		my_gang = new_gang
 		if(handler) // if we have a handler, the handler should track this gang
 			handler.gangs += my_gang
@@ -63,6 +67,9 @@
 		starter_gangster = TRUE
 
 /datum/antagonist/gang/on_gain()
+	if(!original_name)
+		original_name = owner.current.real_name
+	my_gang.rename_gangster(owner, original_name) // fully_replace_character_name
 	if(starter_gangster)
 		equip_gangster_in_inventory()
 	var/datum/atom_hud/H = GLOB.huds[ANTAG_HUD_GANGSTER]
@@ -158,6 +165,11 @@
 	var/datum/antagonist/gang/my_gang_datum
 	/// The current theme. Used to pull important stuff such as spawning equipment and objectives.
 	var/datum/gang_theme/current_theme
+
+/// Allow gangs to have custom naming schemes for their gangsters.
+/datum/team/gang/proc/rename_gangster(datum/mind/gangster, original_name)
+	gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
 
 /datum/team/gang/roundend_report()
 	var/list/report = list()
@@ -339,6 +351,15 @@
 						/obj/item/clothing/under/suit/henchmen,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Monarch"
+	gang_team_type = /datum/team/gang/henchmen
+
+/datum/team/gang/henchmen
+	var/henchmen_count = 0
+
+/datum/team/gang/henchmen/rename_gangster(datum/mind/gangster, original_name)
+	henchmen_count++
+	gangster.current.fully_replace_character_name(gangster.current.real_name, "Number [henchmen_count]")
+	return
 
 /datum/antagonist/gang/yakuza
 	show_in_antagpanel = TRUE
@@ -409,6 +430,13 @@
 							/obj/item/clothing/head/irs,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "IRS"
+	gang_team_type = /datum/team/gang/irs
+
+/datum/team/gang/irs/rename_gangster(datum/mind/gangster, original_name)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	gangster.current.fully_replace_character_name(gangster.current.real_name, "Revenue Agent [lasttname.match]")
+	return
 
 /datum/antagonist/gang/osi
 	show_in_antagpanel = TRUE
@@ -424,6 +452,13 @@
 							/obj/item/clothing/glasses/sunglasses/osi,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "OSI"
+	gang_team_type = /datum/team/gang/osi
+
+/datum/team/gang/osi/rename_gangster(datum/mind/gangster, original_name)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	gangster.current.fully_replace_character_name(gangster.current.real_name, "Special Agent [lasttname.match]")
+	return
 
 /datum/antagonist/gang/tmc
 	show_in_antagpanel = TRUE
