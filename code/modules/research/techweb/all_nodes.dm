@@ -663,8 +663,8 @@
 	prereq_ids = list("basic_circuitry", "engineering")
 	design_ids = list(
 		"bot_shell",
-		"door_shell",
 		"controller_shell",
+		"door_shell",
 		"gun_shell",
 		"money_bot_shell",
 		"scanner_gate_shell",
