@@ -47,3 +47,22 @@
   - bugfix: trash cannons now accept any oxygen tank, not just red ones
   - bugfix: Any instance where you'd see "illusion" as a school of magic is now "translocation".
       the illusion school has been dead for awhile now!
+2021-09-02:
+  ArcaneDefence:
+  - bugfix: Plasmamen that have all of their limbs replaced with non-plasma alternatives
+      will not autoignite in flammable environments.
+  - bugfix: Moths have finally figured out how to finish eating clothes again, rather
+      than infinitely eating a singular sock.
+  GoblinBackwards:
+  - bugfix: Doors, reinforced windows, lockers, mass spectrometers and lockers can
+      now be attacked with right click
+  Timberpoes:
+  - bugfix: Fixes a logic error in ID cards which could cause their accesses to be
+      unintentionally overwritten.
+  - bugfix: Fix oversight allowing players to spam observers with notifications for
+      ghost roles.
+  magatsuchi:
+  - spellcheck: fixed a single typo
+  tralezab:
+  - spellcheck: going postal now uses the correct ui theme and isn't confused with
+      tiger cooperative
