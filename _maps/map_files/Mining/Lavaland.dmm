@@ -1857,15 +1857,15 @@
 /area/mine/living_quarters)
 "fD" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -1;
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -8
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -3586,6 +3586,9 @@
 	name = "Labor Camp External Airlock";
 	opacity = 0
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "ss" = (
@@ -4926,6 +4929,15 @@
 	},
 /turf/open/floor/iron,
 /area/mine/living_quarters)
+"XZ" = (
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "Labor Camp External Airlock";
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/mine/laborcamp)
 "Ym" = (
 /obj/structure/chair{
 	dir = 8
@@ -13454,7 +13466,7 @@ aD
 aD
 aD
 aD
-sq
+XZ
 Zs
 sq
 vH
