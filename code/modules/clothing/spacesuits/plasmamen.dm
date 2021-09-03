@@ -107,10 +107,10 @@
 			to_chat(user, span_warning("Seems like someone already drew something on this helmet's visor!"))
 		return
 	var/obj/item/clothing/hitting_clothing = hitting_item
-	if(hitting_clothing.clothing_flags & PLASMAMAN_HELMET_EXEMPT)
-		to_chat(user, span_notice("You cannot place [hitting_clothing.name] on helmet!"))
-		return
 	if(istype(hitting_clothing, /obj/item/clothing/head))
+		if(hitting_clothing.clothing_flags & PLASMAMAN_HELMET_EXEMPT)
+			to_chat(user, span_notice("You cannot place [hitting_clothing.name] on helmet!"))
+			return
 		if(!attached_hat)
 			attached_hat = hitting_clothing
 			to_chat(user, span_notice("You placed [hitting_clothing.name] on helmet!"))
