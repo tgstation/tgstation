@@ -79,31 +79,32 @@
 	var/obj/item/target = controller.blackboard[BB_MONKEY_PICKUPTARGET]
 
 	var/mob/living/victim = target.loc
+	var/mob/living/living_pawn = controller.pawn
 
-	if(!istype(victim))
+	if(!istype(victim) || !living_pawn.CanReach(victim))
 		finish_action(controller, FALSE)
 		return
 
-	var/mob/living/living_pawn = controller.pawn
 
-	victim.visible_message("<span class='warning'>[living_pawn] starts trying to take [target] from [victim]!</span>", "<span class='danger'>[living_pawn] tries to take [target]!</span>")
+
+	victim.visible_message(span_warning("[living_pawn] starts trying to take [target] from [victim]!"), span_danger("[living_pawn] tries to take [target]!"))
 
 	controller.blackboard[BB_MONKEY_PICKPOCKETING] = TRUE
 
 	var/success = FALSE
 
-	if(do_mob(living_pawn, victim, MONKEY_ITEM_SNATCH_DELAY) && target)
+	if(do_mob(living_pawn, victim, MONKEY_ITEM_SNATCH_DELAY) && target && living_pawn.CanReach(victim))
 
 		for(var/obj/item/I in victim.held_items)
 			if(I == target)
-				victim.visible_message("<span class='danger'>[living_pawn] snatches [target] from [victim].</span>", "<span class='userdanger'>[living_pawn] snatched [target]!</span>")
+				victim.visible_message(span_danger("[living_pawn] snatches [target] from [victim]."), span_userdanger("[living_pawn] snatched [target]!"))
 				if(victim.temporarilyRemoveItemFromInventory(target))
 					if(!QDELETED(target) && !equip_item(controller))
 						target.forceMove(living_pawn.drop_location())
 						success = TRUE
 						break
 				else
-					victim.visible_message("<span class='danger'>[living_pawn] tried to snatch [target] from [victim], but failed!</span>", "<span class='userdanger'>[living_pawn] tried to grab [target]!</span>")
+					victim.visible_message(span_danger("[living_pawn] tried to snatch [target] from [victim], but failed!"), span_userdanger("[living_pawn] tried to grab [target]!"))
 
 	finish_action(controller, success) //We either fucked up or got the item.
 
@@ -211,7 +212,7 @@
 			controller.blackboard[BB_MONKEY_GUN_WORKED] = TRUE // 'worked'
 
 	// no de-aggro
-	if(controller.blackboard[BB_MONKEY_AGRESSIVE])
+	if(controller.blackboard[BB_MONKEY_AGGRESSIVE])
 		return
 
 	if(DT_PROB(MONKEY_HATRED_REDUCTION_PROB, delta_time))
@@ -227,19 +228,19 @@
 /datum/ai_behavior/disposal_mob
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM //performs to increase frustration
 
-/datum/ai_behavior/disposal_mob/finish_action(datum/ai_controller/controller, succeeded)
+/datum/ai_behavior/disposal_mob/finish_action(datum/ai_controller/controller, succeeded, attack_target_key, disposal_target_key)
 	. = ..()
-	controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = null //Reset attack target
+	controller.blackboard[attack_target_key] = null //Reset attack target
 	controller.blackboard[BB_MONKEY_DISPOSING] = FALSE //No longer disposing
-	controller.blackboard[BB_MONKEY_TARGET_DISPOSAL] = null //No target disposal
+	controller.blackboard[disposal_target_key] = null //No target disposal
 
-/datum/ai_behavior/disposal_mob/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/disposal_mob/perform(delta_time, datum/ai_controller/controller, attack_target_key, disposal_target_key)
 	. = ..()
 
 	if(controller.blackboard[BB_MONKEY_DISPOSING]) //We are disposing, don't do ANYTHING!!!!
 		return
 
-	var/mob/living/target = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
+	var/mob/living/target = controller.blackboard[attack_target_key]
 	var/mob/living/living_pawn = controller.pawn
 
 	controller.current_movement_target = target
@@ -249,24 +250,24 @@
 			target.grabbedby(living_pawn)
 		return //Do the rest next turn
 
-	var/obj/machinery/disposal/disposal = controller.blackboard[BB_MONKEY_TARGET_DISPOSAL]
+	var/obj/machinery/disposal/disposal = controller.blackboard[disposal_target_key]
 	controller.current_movement_target = disposal
 
 	if(living_pawn.Adjacent(disposal))
-		INVOKE_ASYNC(src, .proc/try_disposal_mob, controller) //put him in!
+		INVOKE_ASYNC(src, .proc/try_disposal_mob, controller, attack_target_key, disposal_target_key) //put him in!
 	else //This means we might be getting pissed!
 		return
 
-/datum/ai_behavior/disposal_mob/proc/try_disposal_mob(datum/ai_controller/controller)
+/datum/ai_behavior/disposal_mob/proc/try_disposal_mob(datum/ai_controller/controller, attack_target_key, disposal_target_key)
 	var/mob/living/living_pawn = controller.pawn
-	var/mob/living/target = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
-	var/obj/machinery/disposal/disposal = controller.blackboard[BB_MONKEY_TARGET_DISPOSAL]
+	var/mob/living/target = controller.blackboard[attack_target_key]
+	var/obj/machinery/disposal/disposal = controller.blackboard[disposal_target_key]
 
 	controller.blackboard[BB_MONKEY_DISPOSING] = TRUE
 
 	if(target && disposal?.stuff_mob_in(target, living_pawn))
 		disposal.flush()
-	finish_action(controller, TRUE)
+	finish_action(controller, TRUE, attack_target_key, disposal_target_key)
 
 
 /datum/ai_behavior/recruit_monkeys/perform(delta_time, datum/ai_controller/controller)

@@ -12,23 +12,25 @@
 	var/inspiration_available = TRUE //If this banner can be used to inspire crew
 	var/morale_time = 0
 	var/morale_cooldown = 600 //How many deciseconds between uses
-	var/list/job_loyalties //Mobs with any of these assigned roles will be inspired
-	var/list/role_loyalties //Mobs with any of these special roles will be inspired
+	/// Mobs with assigned roles whose department bitflags match these will be inspired.
+	var/job_loyalties = NONE
+	/// Mobs with any of these special roles will be inspired
+	var/list/role_loyalties
 	var/warcry
 
 /obj/item/banner/examine(mob/user)
 	. = ..()
 	if(inspiration_available)
-		. += "<span class='notice'>Activate it in your hand to inspire nearby allies of this banner's allegiance!</span>"
+		. += span_notice("Activate it in your hand to inspire nearby allies of this banner's allegiance!")
 
 /obj/item/banner/attack_self(mob/living/carbon/human/user)
 	if(!inspiration_available)
 		return
 	if(morale_time > world.time)
-		to_chat(user, "<span class='warning'>You aren't feeling inspired enough to flourish [src] again yet.</span>")
+		to_chat(user, span_warning("You aren't feeling inspired enough to flourish [src] again yet."))
 		return
 	user.visible_message("<span class='big notice'>[user] flourishes [src]!</span>", \
-	"<span class='notice'>You raise [src] skywards, inspiring your allies!</span>")
+	span_notice("You raise [src] skywards, inspiring your allies!"))
 	playsound(src, "rustle", 100, FALSE)
 	if(warcry)
 		user.say("[warcry]", forced="banner")
@@ -38,14 +40,14 @@
 	morale_time = world.time + morale_cooldown
 
 	var/list/inspired = list()
-	var/has_job_loyalties = LAZYLEN(job_loyalties)
+	var/has_job_loyalties = job_loyalties != NONE
 	var/has_role_loyalties = LAZYLEN(role_loyalties)
 	inspired += user //The user is always inspired, regardless of loyalties
 	for(var/mob/living/carbon/human/H in range(4, get_turf(src)))
 		if(H.stat == DEAD || H == user)
 			continue
 		if(H.mind && (has_job_loyalties || has_role_loyalties))
-			if(has_job_loyalties && (H.mind.assigned_role in job_loyalties))
+			if(has_job_loyalties && (H.mind.assigned_role.departments_bitflags & job_loyalties))
 				inspired += H
 			else if(has_role_loyalties && (H.mind.special_role in role_loyalties))
 				inspired += H
@@ -55,7 +57,7 @@
 	for(var/V in inspired)
 		var/mob/living/carbon/human/H = V
 		if(H != user)
-			to_chat(H, "<span class='notice'>Your confidence surges as [user] flourishes [user.p_their()] [name]!</span>")
+			to_chat(H, span_notice("Your confidence surges as [user] flourishes [user.p_their()] [name]!"))
 		inspiration(H)
 		special_inspiration(H)
 
@@ -86,7 +88,7 @@
 
 /obj/item/banner/security/Initialize()
 	. = ..()
-	job_loyalties = GLOB.security_positions
+	job_loyalties = DEPARTMENT_BITFLAG_SECURITY
 
 /obj/item/banner/security/mundane
 	inspiration_available = FALSE
@@ -110,7 +112,7 @@
 
 /obj/item/banner/medical/Initialize()
 	. = ..()
-	job_loyalties = GLOB.medical_positions
+	job_loyalties = DEPARTMENT_BITFLAG_MEDICAL
 
 /obj/item/banner/medical/mundane
 	inspiration_available = FALSE
@@ -142,13 +144,13 @@
 
 /obj/item/banner/science/Initialize()
 	. = ..()
-	job_loyalties = GLOB.science_positions
+	job_loyalties = DEPARTMENT_BITFLAG_SCIENCE
 
 /obj/item/banner/science/mundane
 	inspiration_available = FALSE
 
 /obj/item/banner/science/check_inspiration(mob/living/carbon/human/H)
-	return H.on_fire //Sciencia is pleased by dedication to the art of Toxins
+	return H.on_fire //Sciencia is pleased by dedication to the art of Ordnance
 
 /datum/crafting_recipe/science_banner
 	name = "Sciencia Banner"
@@ -169,7 +171,7 @@
 
 /obj/item/banner/cargo/Initialize()
 	. = ..()
-	job_loyalties = GLOB.supply_positions
+	job_loyalties = DEPARTMENT_BITFLAG_CARGO
 
 /obj/item/banner/cargo/mundane
 	inspiration_available = FALSE
@@ -193,7 +195,7 @@
 
 /obj/item/banner/engineering/Initialize()
 	. = ..()
-	job_loyalties = GLOB.engineering_positions
+	job_loyalties = DEPARTMENT_BITFLAG_ENGINEERING
 
 /obj/item/banner/engineering/mundane
 	inspiration_available = FALSE
@@ -217,7 +219,7 @@
 
 /obj/item/banner/command/Initialize()
 	. = ..()
-	job_loyalties = GLOB.command_positions
+	job_loyalties = DEPARTMENT_BITFLAG_COMMAND
 
 /obj/item/banner/command/mundane
 	inspiration_available = FALSE
@@ -326,7 +328,7 @@
 	. = ..()
 	if(staffcooldown + staffwait > world.time)
 		return
-	user.visible_message("<span class='notice'>[user] chants deeply and waves [user.p_their()] staff!</span>")
+	user.visible_message(span_notice("[user] chants deeply and waves [user.p_their()] staff!"))
 	if(do_after(user, 2 SECONDS, src))
 		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
 	staffcooldown = world.time

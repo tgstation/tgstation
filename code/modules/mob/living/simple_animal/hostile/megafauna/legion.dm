@@ -38,7 +38,7 @@
 	del_on_death = TRUE
 	retreat_distance = 5
 	minimum_distance = 5
-	ranged_cooldown_time = 20
+	ranged_cooldown_time = 2 SECONDS
 	gps_name = "Echoing Signal"
 	achievement_type = /datum/award/achievement/boss/legion_kill
 	crusher_achievement_type = /datum/award/achievement/boss/legion_crusher
@@ -84,7 +84,7 @@
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(charging)
 		return
-	ranged_cooldown = world.time + ranged_cooldown_time
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = ranged_cooldown_time), ignore_staggered = TRUE)
 
 	if(client)
 		switch(chosen_attack)
@@ -117,7 +117,7 @@
 
 ///Attack proc. Gives legion some movespeed buffs and switches the AI to melee. At lower sizes, this also throws the skull at the player.
 /mob/living/simple_animal/hostile/megafauna/legion/proc/charge_target()
-	visible_message("<span class='warning'><b>[src] charges!</b></span>")
+	visible_message(span_warning("<b>[src] charges!</b>"))
 	SpinAnimation(speed = 20, loops = 3, parallel = FALSE)
 	ranged = FALSE
 	retreat_distance = 0
@@ -203,7 +203,7 @@
 			last_legion = FALSE
 			break
 	if(last_legion)
-		loot = list(/obj/item/staff/storm)
+		loot = list(/obj/item/storm_staff)
 		elimination = FALSE
 	else if(prob(20)) //20% chance for sick lootz.
 		loot = list(/obj/structure/closet/crate/necropolis/tendril)
@@ -234,7 +234,7 @@
 			pixel_y = 0
 			maxHealth = 200
 	adjustHealth(0) //Make the health HUD look correct.
-	visible_message("<span class='boldannounce'>This is getting out of hands. Now there are three of them!</span>")
+	visible_message(span_boldannounce("This is getting out of hands. Now there are three of them!"))
 	for(var/i in 1 to 2) //Create three skulls in total
 		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(loc)
 		L.setVarsAfterSplit(src)
@@ -250,72 +250,6 @@
 	pixel_y = L.pixel_y
 	faction = L.faction.Copy()
 	GiveTarget(L.target)
-
-//Loot
-
-/obj/item/staff/storm
-	name = "staff of storms"
-	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
-	icon_state = "staffofstorms"
-	inhand_icon_state = "staffofstorms"
-	icon = 'icons/obj/guns/magic.dmi'
-	slot_flags = ITEM_SLOT_BACK
-	w_class = WEIGHT_CLASS_BULKY
-	force = 25
-	damtype = BURN
-	hitsound = 'sound/weapons/sear.ogg'
-	wound_bonus = -40
-	bare_wound_bonus = 20
-	var/storm_type = /datum/weather/ash_storm
-	var/storm_nextuse = 0
-	var/staff_cooldown = 20 SECONDS // The minimum time between uses.
-	var/storm_telegraph_duration = 10 SECONDS
-	var/storm_duration = 10 SECONDS
-	var/static/list/excluded_areas = list()
-
-/obj/item/staff/storm/attack_self(mob/user)
-	if(storm_nextuse > world.time)
-		to_chat(user, "<span class='warning'>The staff is still recharging!</span>")
-		return
-
-	var/area/user_area = get_area(user)
-	var/turf/user_turf = get_turf(user)
-	if(!user_area || !user_turf || (user_area.type in excluded_areas))
-		to_chat(user, "<span class='warning'>Something is preventing you from using the staff here.</span>")
-		return
-	var/datum/weather/A
-	for(var/V in SSweather.processing)
-		var/datum/weather/W = V
-		if((user_turf.z in W.impacted_z_levels) && W.area_type == user_area.type)
-			A = W
-			break
-
-	if(A)
-		if(A.stage != END_STAGE)
-			if(A.stage == WIND_DOWN_STAGE)
-				to_chat(user, "<span class='warning'>The storm is already ending! It would be a waste to use the staff now.</span>")
-				return
-			user.visible_message("<span class='warning'>[user] holds [src] skywards as an orange beam travels into the sky!</span>", \
-			"<span class='notice'>You hold [src] skyward, dispelling the storm!</span>")
-			playsound(user, 'sound/magic/staff_change.ogg', 200, FALSE)
-			A.wind_down()
-			log_game("[user] ([key_name(user)]) has dispelled a storm at [AREACOORD(user_turf)]")
-			return
-	else
-		A = new storm_type(list(user_turf.z))
-		A.name = "staff storm"
-		log_game("[user] ([key_name(user)]) has summoned [A] at [AREACOORD(user_turf)]")
-		if (is_special_character(user))
-			message_admins("[A] has been summoned in [ADMIN_VERBOSEJMP(user_turf)] by [ADMIN_LOOKUPFLW(user)], a non-antagonist")
-		A.area_type = user_area.type
-		A.telegraph_duration = storm_telegraph_duration
-		A.end_duration = storm_duration
-
-	user.visible_message("<span class='warning'>[user] holds [src] skywards as red lightning crackles into the sky!</span>", \
-	"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
-	playsound(user, 'sound/magic/staff_change.ogg', 200, FALSE)
-	A.telegraph()
-	storm_nextuse = world.time + staff_cooldown
 
 ///A basic turret that shoots at nearby mobs. Intended to be used for the legion megafauna.
 /obj/structure/legionturret

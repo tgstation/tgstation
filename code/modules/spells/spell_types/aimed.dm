@@ -17,11 +17,11 @@
 		return
 	var/msg
 	if(!can_cast(user))
-		msg = "<span class='warning'>You can no longer cast [name]!</span>"
+		msg = span_warning("You can no longer cast [name]!")
 		remove_ranged_ability(msg)
 		return
 	if(active)
-		msg = "<span class='notice'>[deactive_msg]</span>"
+		msg = span_notice("[deactive_msg]")
 		if(charge_type == "recharge")
 			var/refund_percent = current_amount/projectile_amount
 			charge_counter = charge_max * refund_percent
@@ -29,7 +29,7 @@
 		remove_ranged_ability(msg)
 		on_deactivation(user)
 	else
-		msg = "<span class='notice'>[active_msg] <B>Left-click to shoot it at a target!</B></span>"
+		msg = span_notice("[active_msg] <B>Left-click to shoot it at a target!</B>")
 		current_amount = projectile_amount
 		add_ranged_ability(user, msg, TRUE)
 		on_activation(user)
@@ -88,6 +88,7 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/aimed/proc/ready_projectile(obj/projectile/P, atom/target, mob/user, iteration)
+	P.fired_from = src
 	return
 
 /obj/effect/proc_holder/spell/aimed/lightningbolt
@@ -156,7 +157,7 @@
 
 /obj/effect/proc_holder/spell/aimed/spell_cards/on_activation(mob/M)
 	QDEL_NULL(lockon_component)
-	lockon_component = M.AddComponent(/datum/component/lockon_aiming, 5, typecacheof(list(/mob/living)), 1, null, CALLBACK(src, .proc/on_lockon_component))
+	lockon_component = M.AddComponent(/datum/component/lockon_aiming, 5, GLOB.typecache_living, 1, null, CALLBACK(src, .proc/on_lockon_component))
 
 /obj/effect/proc_holder/spell/aimed/spell_cards/proc/on_lockon_component(list/locked_weakrefs)
 	if(!length(locked_weakrefs))
@@ -172,6 +173,7 @@
 	QDEL_NULL(lockon_component)
 
 /obj/effect/proc_holder/spell/aimed/spell_cards/ready_projectile(obj/projectile/P, atom/target, mob/user, iteration)
+	. = ..()
 	if(current_target_weakref)
 		var/atom/A = current_target_weakref.resolve()
 		if(A && get_dist(A, user) < 7)

@@ -15,7 +15,7 @@
 	volume = 100
 	force = 15 //Smashing bottles over someone's head hurts.
 	throwforce = 15
-	inhand_icon_state = "broken_beer" //Generic held-item sprite until unique ones are made.
+	inhand_icon_state = "beer" //Generic held-item sprite until unique ones are made.
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	isGlass = TRUE
@@ -23,10 +23,6 @@
 	age_restricted = TRUE // wrryy can't set an init value to see if foodtype contains ALCOHOL so here we go
 	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	var/bottle_knockdown_duration = 1.3 SECONDS
-
-/obj/item/reagent_containers/food/drinks/bottle/update_overlays()
-	. = ..()
-	. += "[initial(icon_state)]shine"
 
 /obj/item/reagent_containers/food/drinks/bottle/small
 	name = "small glass bottle"
@@ -70,7 +66,7 @@
 		return ..()
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
+		to_chat(user, span_warning("You don't want to harm [target]!"))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 	if(!isliving(target) || !isGlass)
@@ -116,11 +112,11 @@
 
 	//Display an attack message.
 	if(target != user)
-		target.visible_message("<span class='danger'>[user] hits [target][head_attack_message] with a bottle of [src.name]!</span>", \
-				"<span class='userdanger'>[user] hits you [head_attack_message] with a bottle of [src.name]!</span>")
+		target.visible_message(span_danger("[user] hits [target][head_attack_message] with a bottle of [src.name]!"), \
+				span_userdanger("[user] hits you [head_attack_message] with a bottle of [src.name]!"))
 	else
-		target.visible_message("<span class='danger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>", \
-				"<span class='userdanger'>You hit yourself with a bottle of [src.name][head_attack_message]!</span>")
+		target.visible_message(span_danger("[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!"), \
+				span_userdanger("You hit yourself with a bottle of [src.name][head_attack_message]!"))
 
 	//Attack logs
 	log_combat(user, target, "attacked", src)
@@ -144,7 +140,9 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	inhand_icon_state = "beer"
+	inhand_icon_state = "broken_beer"
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("stabs", "slashes", "attacks")
 	attack_verb_simple = list("stab", "slash", "attack")
@@ -154,6 +152,32 @@
 /obj/item/broken_bottle/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 200, 55)
+
+/obj/item/reagent_containers/food/drinks/bottle/beer
+	name = "space beer"
+	desc = "Beer. In space."
+	icon_state = "beer"
+	volume = 30
+	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
+	foodtype = GRAIN | ALCOHOL
+	custom_price = PAYCHECK_EASY
+
+/obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty
+	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 1)
+
+/obj/item/reagent_containers/food/drinks/bottle/beer/light
+	name = "Carp Lite"
+	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."
+	list_reagents = list(/datum/reagent/consumable/ethanol/beer/light = 30)
+
+/obj/item/reagent_containers/food/drinks/bottle/ale
+	name = "Magm-Ale"
+	desc = "A true dorf's drink of choice."
+	icon_state = "alebottle"
+	volume = 30
+	list_reagents = list(/datum/reagent/consumable/ethanol/ale = 30)
+	foodtype = GRAIN | ALCOHOL
+	custom_price = PAYCHECK_EASY
 
 /obj/item/reagent_containers/food/drinks/bottle/gin
 	name = "Griffeater gin"
@@ -489,8 +513,56 @@
 	name = "Eau d' Dandy Brut Champagne"
 	desc = "Finely sourced from only the most pretentious French vineyards."
 	icon_state = "champagne_bottle"
+	base_icon_state = "champagne_bottle"
+	reagent_flags = TRANSPARENT
+	spillable = FALSE
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/ethanol/champagne = 100)
+
+
+/obj/item/reagent_containers/food/drinks/bottle/champagne/attack_self(mob/user)
+	if(spillable)
+		return ..()
+	balloon_alert(user, "fiddling with cork...")
+	if(do_after(user, 1 SECONDS, src))
+		return pop_cork(user)
+
+/obj/item/reagent_containers/food/drinks/bottle/champagne/update_icon_state()
+	. = ..()
+	if(spillable)
+		icon_state = "[base_icon_state]_popped"
+	else
+		icon_state = base_icon_state
+
+/obj/item/reagent_containers/food/drinks/bottle/champagne/proc/pop_cork(mob/user)
+	user.visible_message(span_danger("[user] loosens the cork of [src] causing it to pop out of the bottle with great force."), \
+		span_nicegreen("You elegantly loosen the cork of [src] causing it to pop out of the bottle with great force."))
+	reagents.flags |= OPENCONTAINER
+	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
+	spillable = TRUE
+	update_appearance()
+	var/obj/item/champagne_cork/popped_cork = new(user.loc)
+	popped_cork.might_of_the_sun_king = TRUE
+	var/turf/pop_target = get_edge_target_turf(popped_cork, user.dir)
+	popped_cork.throw_at(target = pop_target, thrower = user, speed = 2, range = 7, spin = FALSE)
+
+/obj/item/champagne_cork
+	name = "champagne cork"
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "champagne_cork"
+	force = 0
+	throwforce = 10
+	///this var determines if the cork will knockdown on impact.
+	var/might_of_the_sun_king = FALSE
+
+/obj/item/champagne_cork/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(!iscarbon(hit_atom) || !might_of_the_sun_king)
+		return
+
+	var/mob/living/carbon/champagne_victim = hit_atom
+	champagne_victim.Knockdown(20)
+	might_of_the_sun_king = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/blazaam
 	name = "Ginbad's Blazaam"
@@ -517,6 +589,14 @@
 	icon_state = "moonshinebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/moonshine = 100)
 
+/obj/item/reagent_containers/food/drinks/bottle/mushi_kombucha
+	name = "Solzara Brewing Company Mushi Kombucha"
+	desc = "Best drunk over ice to savour the mushroomy flavour."
+	icon_state = "shroomy_bottle"
+	volume = 30
+	list_reagents = list(/datum/reagent/consumable/ethanol/mushi_kombucha = 30)
+	isGlass = FALSE
+
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/food/drinks/bottle/molotov
 	name = "molotov cocktail"
@@ -525,7 +605,7 @@
 	list_reagents = list()
 	var/list/accelerants = list( /datum/reagent/consumable/ethanol, /datum/reagent/fuel, /datum/reagent/clf3, /datum/reagent/phlogiston,
 							/datum/reagent/napalm, /datum/reagent/hellwater, /datum/reagent/toxin/plasma, /datum/reagent/toxin/spore_burning)
-	var/active = 0
+	var/active = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/molotov/CheckParts(list/parts_list)
 	..()
@@ -555,7 +635,7 @@
 		active = TRUE
 		log_bomber(user, "has primed a", src, "for detonation")
 
-		to_chat(user, "<span class='info'>You light [src] on fire.</span>")
+		to_chat(user, span_info("You light [src] on fire."))
 		add_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
 		if(!isGlass)
 			addtimer(CALLBACK(src, .proc/explode), 5 SECONDS)
@@ -575,11 +655,13 @@
 /obj/item/reagent_containers/food/drinks/bottle/molotov/attack_self(mob/user)
 	if(active)
 		if(!isGlass)
-			to_chat(user, "<span class='danger'>The flame's spread too far on it!</span>")
+			to_chat(user, span_danger("The flame's spread too far on it!"))
 			return
-		to_chat(user, "<span class='info'>You snuff out the flame on [src].</span>")
+		to_chat(user, span_info("You snuff out the flame on [src]."))
 		cut_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
-		active = 0
+		active = FALSE
+		return
+	return ..()
 
 /obj/item/reagent_containers/food/drinks/bottle/pruno
 	name = "pruno mix"
@@ -631,7 +713,7 @@
 	desc = "Fermented prison wine made from fruit, sugar, and despair. You probably shouldn't drink this around Security."
 	icon_state = "trashbag1" // pruno releases air as it ferments, we don't want to simulate this in atmos, but we can make it look like it did
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
-		to_chat(M, "<span class='info'>A pungent smell emanates from [src], like fruit puking out its guts.</span>")
+		to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
 		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
 
 /obj/item/reagent_containers/food/drinks/colocup/lean

@@ -643,6 +643,54 @@ Proc variables, static variables, and global variables are resolved at compile t
 
 Note: While there has historically been a strong impulse to use associated lists for caching of computed values, this is the easy way out and leaves a lot of hidden overhead. Please keep this in mind when designing core/root systems that are intended for use by other code/coders. It's normally better for consumers of such systems to handle their own caching using vars and number indexed lists, than for you to do it using associated lists.
 
+### When passing vars through New() or Initialize()'s arguments, use src.var
+Using src.var + naming the arguments the same as the var is the most readable and intuitive way to pass arguments into a new instance's vars. The main benefit is that you do not need to give arguments odd names with prefixes and suffixes that are easily forgotten in `new()` when sending named args.
+
+This is very bad:
+```DM
+/atom/thing
+	var/is_red
+
+/atom/thing/Initialize(mapload, enable_red)
+	is_red = enable_red
+
+/proc/make_red_thing()
+	new /atom/thing(null, enable_red = TRUE)
+```
+
+Future coders using this code will have to remember two differently named variables which are near-synonyms of eachother. One of them is only used in Initialize for one line.
+
+This is bad:
+```DM
+/atom/thing
+	var/is_red
+
+/atom/thing/Initialize(mapload, _is_red)
+	is_red = _is_red
+
+/proc/make_red_thing()
+	new /atom/thing(null, _is_red = TRUE)
+```
+
+`_is_red` is being used to set `is_red` and yet means a random '_' needs to be appended to the front of the arg, same as all other args like this.
+
+This is good:
+```DM
+/atom/thing
+	var/is_red
+
+/atom/thing/Initialize(mapload, is_red)
+	src.is_red = is_red
+
+/proc/make_red_thing()
+	new /atom/thing(null, is_red = TRUE)
+```
+
+Setting `is_red` in args is simple, and directly names the variable the argument sets.
+
+### Don't create code that hangs references
+
+This is part of the larger issue of hard deletes, read this file for more info: [Guide to Harddels](HARDDEL_GUIDE.md))
 
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
@@ -733,6 +781,13 @@ Isn't that confusing?
 
 There is also an undocumented keyword called `static` that has the same behaviour as global but more correctly describes BYOND's behaviour. Therefore, we always use static instead of global where we need it, as it reduces suprise when reading BYOND code.
 
+### Byond Hellspawn 
+
+Put stuff that shouldn’t work but does, or should work but doesn’t here so we don’t forget about it.
+#### Icon hell
+
+The ‘transparent’ icon state causes fucked behavior when used on turfs, for reasons unknown and unknowable
+
 ## Pull Request Process
 
 There is no strict process when it comes to merging pull requests. Pull requests will sometimes take a while before they are looked at by a maintainer; the bigger the change, the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be courteous and respectful. Here are some helpful ways to make it easier for you and for the maintainers when making a pull request.
@@ -777,3 +832,5 @@ This repository uses `LF` line endings for all code as specified in the **.gitat
 Unless overridden or a non standard git binary is used the line ending settings should be applied to your clone automatically.
 
 Note: VSC requires an [extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) to take advantage of editorconfig.
+
+Github actions that require additional configuration are disabled on the repository until ACTION_ENABLER secret is created with non-empty value.

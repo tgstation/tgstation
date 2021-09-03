@@ -13,6 +13,7 @@
 #define PINEAPPLE (1<<12)
 #define BREAKFAST (1<<13)
 #define CLOTH (1<<14)
+#define NUTS (1<<15)
 
 #define DRINK_NICE 1
 #define DRINK_GOOD 2
@@ -86,3 +87,4 @@
 #define ICE_CREAM_BLAND "bland"
 
 #define DEFAULT_MAX_ICE_CREAM_SCOOPS 3
+

@@ -207,6 +207,9 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(target.pixel_x != 0) //shifts the progress bar if target has an offset sprite
 		progbar.bar.pixel_x -= target.pixel_x
 
+	if(!(timed_action_flags & IGNORE_SLOWDOWNS))
+		time *= user.cached_multiplicative_actions_slowdown
+
 	var/endtime = world.time+time
 	var/starttime = world.time
 	. = TRUE
@@ -284,7 +287,8 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	var/holding = user.get_active_held_item()
 
-	delay *= user.cached_multiplicative_actions_slowdown
+	if(!(timed_action_flags & IGNORE_SLOWDOWNS))
+		delay *= user.cached_multiplicative_actions_slowdown
 
 	var/datum/progressbar/progbar
 	if(progress)
@@ -340,7 +344,8 @@ GLOBAL_LIST_EMPTY(species_list)
 		return FALSE
 	var/user_loc = user.loc
 
-	time *= user.cached_multiplicative_actions_slowdown
+	if(!(timed_action_flags & IGNORE_SLOWDOWNS))
+		time *= user.cached_multiplicative_actions_slowdown
 
 	var/drifting = FALSE
 	if(!user.Process_Spacemove(0) && user.inertia_dir)
@@ -354,7 +359,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(interaction_key)
 		var/current_interaction_count = LAZYACCESS(user.do_afters, interaction_key) || 0
 		if(current_interaction_count >= max_interact_count) //We are at our peak
-			to_chat(user, "<span class='warning'>You can't do this at the moment!</span>")
+			to_chat(user, span_warning("You can't do this at the moment!"))
 			return
 		LAZYSET(user.do_afters, interaction_key, current_interaction_count + 1)
 
@@ -465,7 +470,7 @@ GLOBAL_LIST_EMPTY(species_list)
 // Displays a message in deadchat, sent by source. source is not linkified, message is, to avoid stuff like character names to be linkified.
 // Automatically gives the class deadsay to the whole message (message + source)
 /proc/deadchat_broadcast(message, source=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR, admin_only=FALSE)
-	message = "<span class='deadsay'>[source]<span class='linkify'>[message]</span></span>"
+	message = span_deadsay("[source]<span class='linkify'>[message]</span>")
 
 	for(var/mob/M in GLOB.player_list)
 		var/chat_toggles = TOGGLES_DEFAULT_CHAT
@@ -480,7 +485,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			if (!M.client.holder)
 				return
 			else
-				message += "<span class='deadsay'> (This is viewable to admins only).</span>"
+				message += span_deadsay(" (This is viewable to admins only).")
 		var/override = FALSE
 		if(M.client.holder && (chat_toggles & CHAT_DEAD))
 			override = TRUE
@@ -523,9 +528,9 @@ GLOBAL_LIST_EMPTY(species_list)
 				var/turf_link = TURF_LINK(M, turf_target)
 				rendered_message = "[turf_link] [message]"
 
-			to_chat(M, rendered_message)
+			to_chat(M, rendered_message, avoid_highlighting = speaker_key == M.key)
 		else
-			to_chat(M, message)
+			to_chat(M, message, avoid_highlighting = speaker_key == M.key)
 
 //Used in chemical_mob_spawn. Generates a random mob based on a given gold_core_spawnable value.
 /proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)
@@ -540,14 +545,20 @@ GLOBAL_LIST_EMPTY(species_list)
 					mob_spawn_meancritters += T
 				if(FRIENDLY_SPAWN)
 					mob_spawn_nicecritters += T
+		for(var/mob/living/basic/basic_mob as anything in typesof(/mob/living/basic))
+			switch(initial(basic_mob.gold_core_spawnable))
+				if(HOSTILE_SPAWN)
+					mob_spawn_meancritters += basic_mob
+				if(FRIENDLY_SPAWN)
+					mob_spawn_nicecritters += basic_mob
 
 	var/chosen
 	if(mob_class == FRIENDLY_SPAWN)
 		chosen = pick(mob_spawn_nicecritters)
 	else
 		chosen = pick(mob_spawn_meancritters)
-	var/mob/living/simple_animal/C = new chosen(spawn_location)
-	return C
+	var/mob/living/spawned_mob = new chosen(spawn_location)
+	return spawned_mob
 
 /proc/passtable_on(target, source)
 	var/mob/living/L = target

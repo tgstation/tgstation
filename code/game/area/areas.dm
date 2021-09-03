@@ -19,9 +19,11 @@
 	var/fire = FALSE
 	///How many fire alarm sources do we have?
 	var/triggered_firealarms = 0
-	///Whether there is an atmos alarm in this area
-	var/atmosalm = FALSE
-	var/poweralm = FALSE
+	///Alarm type to count of sources. Not usable for ^ because we handle fires differently
+	var/list/active_alarms = list()
+	///We use this just for fire alarms, because they're area based right now so one alarm going poof shouldn't prevent you from clearing your alarms listing
+	var/datum/alarm_handler/alarm_manager
+
 	var/lightswitch = TRUE
 
 	/// All beauty in this area combined, only includes indoor area.
@@ -90,6 +92,9 @@
 	///Used to decide what the maximum time between ambience is
 	var/max_ambience_cooldown = 90 SECONDS
 
+	var/list/air_vent_info = list()
+	var/list/air_scrub_info = list()
+
 /**
  * A list of teleport locations
  *
@@ -133,6 +138,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if (area_flags & UNIQUE_AREA)
 		GLOB.areas_by_type[type] = src
 	power_usage = new /list(AREA_USAGE_LEN) // Some atoms would like to use power in Initialize()
+	alarm_manager = new(src) // just in case
 	return ..()
 
 /*
@@ -147,6 +153,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	icon_state = ""
 	if(!ambientsounds)
 		ambientsounds = GLOB.ambience_assoc[ambience_index]
+
+	if(area_flags & AREA_USES_STARLIGHT)
+		static_lighting = CONFIG_GET(flag/starlight)
+
 	if(requires_power)
 		luminosity = 0
 	else
@@ -154,21 +164,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		power_equip = TRUE
 		power_environ = TRUE
 
-		if(dynamic_lighting == DYNAMIC_LIGHTING_FORCED)
-			dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+		if(static_lighting)
 			luminosity = 0
-		else if(dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
-			dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	if(dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
-		dynamic_lighting = CONFIG_GET(flag/starlight) ? DYNAMIC_LIGHTING_ENABLED : DYNAMIC_LIGHTING_DISABLED
-
 
 	. = ..()
 
-	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
-
-	if(!IS_DYNAMIC_LIGHTING(src))
-		add_overlay(/obj/effect/fullbright)
+	if(!static_lighting)
+		blend_mode = BLEND_MULTIPLY
 
 	reg_in_areas_in_z()
 
@@ -176,6 +178,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(!network_root_id)
 			network_root_id = STATION_NETWORK_ROOT // default to station root because this might be created with a blueprint
 		SSnetworks.assign_area_network_id(src)
+
+	update_base_lighting()
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -232,87 +236,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		GLOB.areas_by_type[type] = null
 	GLOB.sortedAreas -= src
 	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(alarm_manager)
 	return ..()
-
-/**
- * Generate a power alert for this area
- *
- * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
- */
-/area/proc/poweralert(state, obj/source)
-	if (area_flags & NO_ALERTS)
-		return
-	if (state != poweralm)
-		poweralm = state
-		if(istype(source)) //Only report power alarms on the z-level where the source is located.
-			for (var/item in GLOB.silicon_mobs)
-				var/mob/living/silicon/aiPlayer = item
-				if (!state)
-					aiPlayer.cancelAlarm("Power", src, source)
-				else
-					aiPlayer.triggerAlarm("Power", src, cameras, source)
-
-			for (var/item in GLOB.alert_consoles)
-				var/obj/machinery/computer/station_alert/a = item
-				if(!state)
-					a.cancelAlarm("Power", src, source)
-				else
-					a.triggerAlarm("Power", src, cameras, source)
-
-			for (var/item in GLOB.drones_list)
-				var/mob/living/simple_animal/drone/D = item
-				if(!state)
-					D.cancelAlarm("Power", src, source)
-				else
-					D.triggerAlarm("Power", src, cameras, source)
-			for(var/item in GLOB.alarmdisplay)
-				var/datum/computer_file/program/alarm_monitor/p = item
-				if(!state)
-					p.cancelAlarm("Power", src, source)
-				else
-					p.triggerAlarm("Power", src, cameras, source)
-
-/**
- * Generate an atmospheric alert for this area
- *
- * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
- */
-/area/proc/atmosalert(isdangerous, obj/source)
-	if (area_flags & NO_ALERTS)
-		return
-	if(isdangerous != atmosalm)
-		if(isdangerous)
-
-			for (var/item in GLOB.silicon_mobs)
-				var/mob/living/silicon/aiPlayer = item
-				aiPlayer.triggerAlarm("Atmosphere", src, cameras, source)
-			for (var/item in GLOB.alert_consoles)
-				var/obj/machinery/computer/station_alert/a = item
-				a.triggerAlarm("Atmosphere", src, cameras, source)
-			for (var/item in GLOB.drones_list)
-				var/mob/living/simple_animal/drone/D = item
-				D.triggerAlarm("Atmosphere", src, cameras, source)
-			for(var/item in GLOB.alarmdisplay)
-				var/datum/computer_file/program/alarm_monitor/p = item
-				p.triggerAlarm("Atmosphere", src, cameras, source)
-
-		else
-			for (var/item in GLOB.silicon_mobs)
-				var/mob/living/silicon/aiPlayer = item
-				aiPlayer.cancelAlarm("Atmosphere", src, source)
-			for (var/item in GLOB.alert_consoles)
-				var/obj/machinery/computer/station_alert/a = item
-				a.cancelAlarm("Atmosphere", src, source)
-			for (var/item in GLOB.drones_list)
-				var/mob/living/simple_animal/drone/D = item
-				D.cancelAlarm("Atmosphere", src, source)
-			for(var/item in GLOB.alarmdisplay)
-				var/datum/computer_file/program/alarm_monitor/p = item
-				p.cancelAlarm("Atmosphere", src, source)
-
-		atmosalm = isdangerous
-		return TRUE
-	return FALSE
 
 /**
  * Try to close all the firedoors in the area
@@ -351,19 +276,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		for(var/item in firealarms)
 			var/obj/machinery/firealarm/F = item
 			F.update_appearance()
-	if (!(area_flags & NO_ALERTS)) //Check here instead at the start of the proc so that fire alarms can still work locally even in areas that don't send alerts
-		for (var/item in GLOB.alert_consoles)
-			var/obj/machinery/computer/station_alert/a = item
-			a.triggerAlarm("Fire", src, cameras, source)
-		for (var/item in GLOB.silicon_mobs)
-			var/mob/living/silicon/aiPlayer = item
-			aiPlayer.triggerAlarm("Fire", src, cameras, source)
-		for (var/item in GLOB.drones_list)
-			var/mob/living/simple_animal/drone/D = item
-			D.triggerAlarm("Fire", src, cameras, source)
-		for(var/item in GLOB.alarmdisplay)
-			var/datum/computer_file/program/alarm_monitor/p = item
-			p.triggerAlarm("Fire", src, cameras, source)
+	alarm_manager.send_alarm(ALARM_FIRE, source)
 	START_PROCESSING(SSobj, src)
 
 /**
@@ -392,32 +305,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		for(var/item in firealarms)
 			var/obj/machinery/firealarm/F = item
 			F.update_appearance()
-	if (!(area_flags & NO_ALERTS)) //Check here instead at the start of the proc so that fire alarms can still work locally even in areas that don't send alerts
-		for (var/item in GLOB.silicon_mobs)
-			var/mob/living/silicon/aiPlayer = item
-			aiPlayer.cancelAlarm("Fire", src, source)
-		for (var/item in GLOB.alert_consoles)
-			var/obj/machinery/computer/station_alert/a = item
-			a.cancelAlarm("Fire", src, source)
-		for (var/item in GLOB.drones_list)
-			var/mob/living/simple_animal/drone/D = item
-			D.cancelAlarm("Fire", src, source)
-		for(var/item in GLOB.alarmdisplay)
-			var/datum/computer_file/program/alarm_monitor/p = item
-			p.cancelAlarm("Fire", src, source)
+	alarm_manager.clear_alarm(ALARM_FIRE, source)
 	STOP_PROCESSING(SSobj, src)
-
-///Get rid of any dangling camera refs
-/area/proc/clear_camera(obj/machinery/camera/cam)
-	LAZYREMOVE(cameras, cam)
-	for (var/mob/living/silicon/aiPlayer as anything in GLOB.silicon_mobs)
-		aiPlayer.freeCamera(src, cam)
-	for (var/obj/machinery/computer/station_alert/comp as anything in GLOB.alert_consoles)
-		comp.freeCamera(src, cam)
-	for (var/mob/living/simple_animal/drone/drone_on as anything in GLOB.drones_list)
-		drone_on.freeCamera(src, cam)
-	for(var/datum/computer_file/program/alarm_monitor/monitor as anything in GLOB.alarmdisplay)
-		monitor.freeCamera(src, cam)
 
 /**
  * If 100 ticks has elapsed, toggle all the firedoors closed again
@@ -452,14 +341,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	//Trigger alarm effect
 	set_fire_alarm_effect()
 	//Lockdown airlocks
-	for(var/obj/machinery/door/DOOR in src)
-		close_and_lock_door(DOOR)
-
-	for (var/i in GLOB.silicon_mobs)
-		var/mob/living/silicon/SILICON = i
-		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
-			//Cancel silicon alert after 1 minute
-			addtimer(CALLBACK(SILICON, /mob/living/silicon.proc/cancelAlarm,"Burglar",src,trigger), 600)
+	for(var/obj/machinery/door/door in src)
+		close_and_lock_door(door)
 
 /**
  * Trigger the fire alarm visual affects in an area
@@ -552,8 +435,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Updates the area icon, calls power change on all machinees in the area, and sends the `COMSIG_AREA_POWER_CHANGE` signal.
  */
 /area/proc/power_change()
-	for(var/obj/machinery/M in src) // for each machine in the area
-		M.power_change() // reverify power status (to update icons etc.)
 	SEND_SIGNAL(src, COMSIG_AREA_POWER_CHANGE)
 	update_appearance()
 
@@ -572,13 +453,28 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			power_usage[powerchannel] += value
 
 /**
- * Clear all power usage in area
+ * Remove a static amount of power load to an area
  *
- * Clears all power used for equipment, light and environment channels
+ * Possible channels
+ * *AREA_USAGE_STATIC_EQUIP
+ * *AREA_USAGE_STATIC_LIGHT
+ * *AREA_USAGE_STATIC_ENVIRON
+ */
+/area/proc/removeStaticPower(value, powerchannel)
+	switch(powerchannel)
+		if(AREA_USAGE_STATIC_START to AREA_USAGE_STATIC_END)
+			power_usage[powerchannel] -= value
+
+/**
+ * Clear all non-static power usage in area
+ *
+ * Clears all power used for the dynamic equipment, light and environment channels
  */
 /area/proc/clear_usage()
-	for(var/i in AREA_USAGE_DYNAMIC_START to AREA_USAGE_DYNAMIC_END)
-		power_usage[i] = 0
+	power_usage[AREA_USAGE_EQUIP] = 0
+	power_usage[AREA_USAGE_LIGHT] = 0
+	power_usage[AREA_USAGE_ENVIRON] = 0
+
 
 /**
  * Add a power value amount to the stored used_x variables
@@ -588,7 +484,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(AREA_USAGE_DYNAMIC_START to AREA_USAGE_DYNAMIC_END)
 			power_usage[chan] += amount
 
-
 /**
  * Call back when an atom enters an area
  *
@@ -596,21 +491,26 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  *
  * If the area has ambience, then it plays some ambience music to the ambience channel
  */
-/area/Entered(atom/movable/M)
+/area/Entered(atom/movable/arrived, area/old_area)
 	set waitfor = FALSE
-	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, M)
-	for(var/atom/movable/recipient as anything in M.area_sensitive_contents)
+	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, arrived, old_area)
+	if(!LAZYACCESS(arrived.important_recursive_contents, RECURSIVE_CONTENTS_AREA_SENSITIVE))
+		return
+	for(var/atom/movable/recipient as anything in arrived.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		SEND_SIGNAL(recipient, COMSIG_ENTER_AREA, src)
-	if(!isliving(M))
+
+	if(!isliving(arrived))
 		return
 
-	var/mob/living/L = M
+	var/mob/living/L = arrived
 	if(!L.ckey)
 		return
 
 	//Ship ambience just loops if turned on.
 	if(L.client?.prefs.toggles & SOUND_SHIP_AMBIENCE)
 		SEND_SOUND(L, sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
+
+
 
 ///Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
 /area/proc/update_beauty()
@@ -628,9 +528,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  *
  * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to a list of atoms)
  */
-/area/Exited(atom/movable/M)
-	SEND_SIGNAL(src, COMSIG_AREA_EXITED, M)
-	for(var/atom/movable/recipient as anything in M.area_sensitive_contents)
+/area/Exited(atom/movable/gone, direction)
+	SEND_SIGNAL(src, COMSIG_AREA_EXITED, gone, direction)
+	if(!LAZYACCESS(gone.important_recursive_contents, RECURSIVE_CONTENTS_AREA_SENSITIVE))
+		return
+	for(var/atom/movable/recipient as anything in gone.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src)
 
 
@@ -676,3 +578,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /// A hook so areas can modify the incoming args (of what??)
 /area/proc/PlaceOnTopReact(list/new_baseturfs, turf/fake_turf_type, flags)
 	return flags
+
+
+/// Called when a living mob that spawned here, joining the round, receives the player client.
+/area/proc/on_joining_game(mob/living/boarder)
+	return

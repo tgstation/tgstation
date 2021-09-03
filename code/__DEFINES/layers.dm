@@ -50,6 +50,8 @@
 #define GAS_FILTER_LAYER 2.48
 #define GAS_PUMP_LAYER 2.49
 #define LOW_OBJ_LAYER 2.5
+///catwalk overlay of /turf/open/floor/plating/plating_catwalk
+#define CATWALK_LAYER 2.51
 #define LOW_SIGIL_LAYER 2.52
 #define SIGIL_LAYER 2.54
 #define HIGH_PIPE_LAYER 2.55
@@ -111,7 +113,7 @@
 #define FRILL_MASK_RENDER_TARGET "*FRILL_MASK_PLANE"
 
 //---------- LIGHTING -------------
-///Normal 1 per turf dynamic lighting objects
+///Normal 1 per turf dynamic lighting underlays
 #define LIGHTING_PLANE 100
 #define LIGHTING_RENDER_TARGET "LIGHT_PLANE"
 
@@ -122,6 +124,11 @@
 ///Things that should render ignoring lighting
 #define ABOVE_LIGHTING_PLANE 120
 #define ABOVE_LIGHTING_RENDER_TARGET "ABOVE_LIGHTING_PLANE"
+
+#define LIGHTING_PRIMARY_LAYER 15	//The layer for the main lights of the station
+#define LIGHTING_PRIMARY_DIMMER_LAYER 15.1	//The layer that dims the main lights of the station
+#define LIGHTING_SECONDARY_LAYER 16	//The colourful, usually small lights that go on top
+
 
 ///visibility + hiding of things outside of light source range
 #define BYOND_LIGHTING_PLANE 130
@@ -176,9 +183,14 @@
 ///1000 is an unimportant number, it's just to normalize copied layers
 #define RADIAL_CONTENT_LAYER 1000
 
+#define ADMIN_POPUP_LAYER 1
+
 ///Plane of the "splash" icon used that shows on the lobby screen. Nothing should ever be above this.
 #define SPLASHSCREEN_PLANE 9999
 #define SPLASHSCREEN_RENDER_TARGET "SPLASHSCREEN_PLANE"
+
+#define LOBBY_BACKGROUND_LAYER 3
+#define LOBBY_BUTTON_LAYER 4
 
 ///cinematics are "below" the splash screen
 #define CINEMATIC_LAYER -1

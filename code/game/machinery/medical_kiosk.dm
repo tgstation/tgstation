@@ -104,19 +104,19 @@
 	if(istype(O, /obj/item/scanner_wand))
 		var/obj/item/scanner_wand/W = O
 		if(scanner_wand)
-			to_chat(user, "<span class='warning'>There's already a scanner wand in [src]!</span>")
+			to_chat(user, span_warning("There's already a scanner wand in [src]!"))
 			return
 		if(HAS_TRAIT(O, TRAIT_NODROP) || !user.transferItemToLoc(O, src))
-			to_chat(user, "<span class='warning'>[O] is stuck to your hand!</span>")
+			to_chat(user, span_warning("[O] is stuck to your hand!"))
 			return
-		user.visible_message("<span class='notice'>[user] snaps [O] onto [src]!</span>", \
-		"<span class='notice'>You press [O] into the side of [src], clicking into place.</span>")
+		user.visible_message(span_notice("[user] snaps [O] onto [src]!"), \
+		span_notice("You press [O] into the side of [src], clicking into place."))
 		//This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
 		if(W.selected_target)
 			if(!(altPatient == W.return_patient()))
 				clearScans()
 			altPatient = W.return_patient()
-			user.visible_message("<span class='notice'>[W.return_patient()] has been set as the current patient.</span>")
+			user.visible_message(span_notice("[W.return_patient()] has been set as the current patient."))
 			W.selected_target = null
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		scanner_wand = O
@@ -127,14 +127,14 @@
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	if(!scanner_wand)
-		to_chat(user, "<span class='warning'>The scanner wand is currently removed from the machine.</span>")
+		to_chat(user, span_warning("The scanner wand is currently removed from the machine."))
 		return
 	if(!user.put_in_hands(scanner_wand))
-		to_chat(user, "<span class='warning'>The scanner wand falls to the floor.</span>")
+		to_chat(user, span_warning("The scanner wand falls to the floor."))
 		scanner_wand = null
 		return
-	user.visible_message("<span class='notice'>[user] unhooks the [scanner_wand] from [src].</span>", \
-	"<span class='notice'>You detach the [scanner_wand] from [src].</span>")
+	user.visible_message(span_notice("[user] unhooks the [scanner_wand] from [src]."), \
+	span_notice("You detach the [scanner_wand] from [src]."))
 	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
 	scanner_wand = null
 
@@ -147,8 +147,8 @@
 	if(obj_flags & EMAGGED)
 		return
 	if(user)
-		user.visible_message("<span class='warning'>[user] waves a suspicious card by the [src]'s biometric scanner!</span>",
-	"<span class='notice'>You overload the sensory electronics, the diagnostic readouts start jittering across the screen..</span>")
+		user.visible_message(span_warning("[user] waves a suspicious card by the [src]'s biometric scanner!"),
+	span_notice("You overload the sensory electronics, the diagnostic readouts start jittering across the screen.."))
 	obj_flags |= EMAGGED
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.obj_flags |= EMAGGED //Mirrors emag status onto the board as well.
@@ -157,14 +157,14 @@
 /obj/machinery/medical_kiosk/examine(mob/user)
 	. = ..()
 	if(scanner_wand == null)
-		. += "<span class='notice'>\The [src] is missing its scanner.</span>"
+		. += span_notice("\The [src] is missing its scanner.")
 	else
-		. += "<span class='notice'>\The [src] has its scanner clipped to the side. Alt-Click to remove.</span>"
+		. += span_notice("\The [src] has its scanner clipped to the side. Alt-Click to remove.")
 
 /obj/machinery/medical_kiosk/ui_interact(mob/user, datum/tgui/ui)
 	var/patient_distance = 0
 	if(!ishuman(user))
-		to_chat(user, "<span class='warning'>[src] is unable to interface with non-humanoids!</span>")
+		to_chat(user, span_warning("[src] is unable to interface with non-humanoids!"))
 		if (ui)
 			ui.close()
 		return

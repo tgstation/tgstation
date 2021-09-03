@@ -104,7 +104,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 			add_hud_to(mob)
 
 /datum/atom_hud/alternate_appearance/basic/everyone/mobShouldSee(mob/M)
-	return !isobserver(M)
+	return !isdead(M)
 
 /datum/atom_hud/alternate_appearance/basic/silicons
 
@@ -166,7 +166,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 			add_hud_to(mob)
 
 /datum/atom_hud/alternate_appearance/basic/blessed_aware/mobShouldSee(mob/M)
-	if(M.mind && (M.mind.assigned_role == "Chaplain"))
+	if(M.mind?.holy_role)
 		return TRUE
 	if (istype(M, /mob/living/simple_animal/hostile/construct/wraith))
 		return TRUE

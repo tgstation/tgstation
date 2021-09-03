@@ -16,7 +16,7 @@
 	faction = list("nether")
 	speak_emote = list("screams")
 	gold_core_spawnable = HOSTILE_SPAWN
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/phaser = TRUE
@@ -47,10 +47,10 @@
 		return
 	var/turf/T = get_turf(N)
 	if (N.can_be_seen(T) || !do_after(N, 60, target = T))
-		to_chat(N, "<span class='warning'>You can't phase in or out while being observed and you must stay still!</span>")
+		to_chat(N, span_warning("You can't phase in or out while being observed and you must stay still!"))
 		return
 	if (get_dist(N, T) != 0 || N.can_be_seen(T))
-		to_chat(N, "<span class='warning'>Action cancelled, as you moved while reappearing or someone is now viewing your location.</span>")
+		to_chat(N, span_warning("Action cancelled, as you moved while reappearing or someone is now viewing your location."))
 		return
 	if(N.is_phased)
 		holder = N.loc
@@ -159,17 +159,17 @@
 /obj/structure/spawner/nether/examine(mob/user)
 	. = ..()
 	if(isskeleton(user) || iszombie(user))
-		. += "A direct link to another dimension full of creatures very happy to see you. <span class='nicegreen'>You can see your house from here!</span>"
+		. += "A direct link to another dimension full of creatures very happy to see you. [span_nicegreen("You can see your house from here!")]"
 	else
-		. += "A direct link to another dimension full of creatures not very happy to see you. <span class='warning'>Entering the link would be a very bad idea.</span>"
+		. += "A direct link to another dimension full of creatures not very happy to see you. [span_warning("Entering the link would be a very bad idea.")]"
 
 /obj/structure/spawner/nether/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(isskeleton(user) || iszombie(user))
-		to_chat(user, "<span class='notice'>You don't feel like going home yet...</span>")
+		to_chat(user, span_notice("You don't feel like going home yet..."))
 	else
-		user.visible_message("<span class='warning'>[user] is violently pulled into the link!</span>", \
-							"<span class='userdanger'>Touching the portal, you are quickly pulled through into a world of unimaginable horror!</span>")
+		user.visible_message(span_warning("[user] is violently pulled into the link!"), \
+							span_userdanger("Touching the portal, you are quickly pulled through into a world of unimaginable horror!"))
 		contents.Add(user)
 
 /obj/structure/spawner/nether/process(delta_time)
@@ -183,5 +183,5 @@
 				blank = new(loc)
 				blank.name = "[M]"
 				blank.desc = "It's [M], but [M.p_their()] flesh has an ashy texture, and [M.p_their()] face is featureless save an eerie smile."
-				src.visible_message("<span class='warning'>[M] reemerges from the link!</span>")
+				src.visible_message(span_warning("[M] reemerges from the link!"))
 				qdel(M)

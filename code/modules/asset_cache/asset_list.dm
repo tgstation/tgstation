@@ -11,6 +11,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset
 	var/_abstract = /datum/asset
+	var/cached_url_mappings
 
 /datum/asset/New()
 	GLOB.asset_datums[type] = src
@@ -18,6 +19,13 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset/proc/get_url_mappings()
 	return list()
+
+/// Returns a cached tgui message of URL mappings
+/datum/asset/proc/get_serialized_url_mappings()
+	if (isnull(cached_url_mappings))
+		cached_url_mappings = TGUI_CREATE_MESSAGE("asset/mappings", get_url_mappings())
+
+	return cached_url_mappings
 
 /datum/asset/proc/register()
 	return
@@ -253,7 +261,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/item_filename
 
 /datum/asset/changelog_item/New(date)
-	item_filename = sanitize_filename("[date].yml")
+	item_filename = SANITIZE_FILENAME("[date].yml")
 	SSassets.transport.register_asset(item_filename, file("html/changelogs/archive/" + item_filename))
 
 /datum/asset/changelog_item/send(client)
@@ -294,7 +302,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 				continue
 			asset = fcopy_rsc(asset) //dedupe
 			var/prefix2 = (directions.len > 1) ? "[dir2text(direction)]." : ""
-			var/asset_name = sanitize_filename("[prefix].[prefix2][icon_state_name].png")
+			var/asset_name = SANITIZE_FILENAME("[prefix].[prefix2][icon_state_name].png")
 			if (generic_icon_names)
 				asset_name = "[generate_asset_name(asset)].png"
 

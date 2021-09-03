@@ -4,6 +4,7 @@
  */
 
 @use 'sass:color';
+@use 'sass:math';
 @use '~tgui/styles/base.scss';
 @use '~tgui/styles/colors.scss';
 
@@ -62,7 +63,7 @@ $color-bg-section: base.$color-bg-section !default;
     content: '';
     display: block;
     margin-top: -0.75em;
-    border-bottom: (1em / 6) solid colors.$red;
+    border-bottom: math.div(1em, 6) solid colors.$red;
   }
 }
 
@@ -82,7 +83,7 @@ $color-bg-section: base.$color-bg-section !default;
 
 .ChatMessage--highlighted {
   position: relative;
-  border-left: (1em / 6) solid rgba(255, 221, 68);
+  border-left: math.div(1em, 6) solid rgba(255, 221, 68);
   padding-left: 0.5em;
 
   &:after {

@@ -11,8 +11,12 @@
 	var/shift_underlay_only = TRUE
 	///Stores the component pipeline
 	var/list/datum/pipeline/parents
+	///If this is queued for a rebuild this var signifies whether parents should be updated after it's done
+	var/update_parents_after_rebuild = FALSE
 	///Stores the component gas mixture
 	var/list/datum/gas_mixture/airs
+	///Handles whether the custom reconcilation handling should be used
+	var/custom_reconcilation = FALSE
 
 /obj/machinery/atmospherics/components/New()
 	parents = new(device_type)
@@ -21,6 +25,8 @@
 	..()
 
 	for(var/i in 1 to device_type)
+		if(airs[i])
+			continue
 		var/datum/gas_mixture/A = new
 		A.volume = 200
 		airs[i] = A
@@ -60,46 +66,44 @@
 
 	var/connected = 0 //Direction bitset
 
+	var/underlay_pipe_layer = shift_underlay_only ? piping_layer : 3
+
 	for(var/i in 1 to device_type) //adds intact pieces
 		if(!nodes[i])
 			continue
 		var/obj/machinery/atmospherics/node = nodes[i]
-		var/image/img = get_pipe_underlay("pipe_intact", get_dir(src, node), pipe_color)
-		underlays += img
-		connected |= img.dir
+		var/node_dir = get_dir(src, node)
+		var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "intact_[node_dir]_[underlay_pipe_layer]")
+		pipe_appearance.color = node.pipe_color
+		underlays += pipe_appearance
+		connected |= node_dir
 
 	for(var/direction in GLOB.cardinals)
 		if((initialize_directions & direction) && !(connected & direction))
-			underlays += get_pipe_underlay("pipe_exposed", direction, pipe_color)
+			var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "exposed_[direction]_[underlay_pipe_layer]")
+			pipe_appearance.color = pipe_color
+			underlays += pipe_appearance
 
 	if(!shift_underlay_only)
 		PIPING_LAYER_SHIFT(src, piping_layer)
 	return ..()
-
-/**
- * Called by update_icon() when showpipe is TRUE, set the image for the underlay pipe
- * Arguments:
- * * -state: icon_state of the selected pipe
- * * -dir: direction of the pipe
- * * -color: color of the pipe
- */
-/obj/machinery/atmospherics/components/proc/get_pipe_underlay(state, dir, color = null)
-	if(color)
-		. = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', state, dir, color, piping_layer = shift_underlay_only ? piping_layer : 3)
-	else
-		. = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', state, dir, piping_layer = shift_underlay_only ? piping_layer : 3)
 
 // Pipenet stuff; housekeeping
 
 /obj/machinery/atmospherics/components/nullifyNode(i)
 	if(parents[i])
 		nullifyPipenet(parents[i])
-	QDEL_NULL(airs[i])
+	airs[i] = null
 	return ..()
 
 /obj/machinery/atmospherics/components/on_construction()
 	. = ..()
 	update_parents()
+
+/obj/machinery/atmospherics/components/rebuild_pipes()
+	. = ..()
+	if(update_parents_after_rebuild)
+		update_parents()
 
 /obj/machinery/atmospherics/components/get_rebuild_targets()
 	var/list/to_return = list()
@@ -193,6 +197,11 @@
  * This way gases won't get stuck
  */
 /obj/machinery/atmospherics/components/proc/update_parents()
+	if(!SSair.initialized)
+		return
+	if(rebuilding)
+		update_parents_after_rebuild = TRUE
+		return
 	for(var/i in 1 to device_type)
 		var/datum/pipeline/parent = parents[i]
 		if(!parent)
@@ -206,12 +215,22 @@
 	for(var/i in 1 to device_type)
 		. += returnPipenet(nodes[i])
 
+/// When this machine is in a pipenet that is reconciling airs, this proc can add pipelines to the calculation.
+/// Can be either a list of pipenets or a single pipenet.
+/obj/machinery/atmospherics/components/proc/returnPipenetsForReconcilation(datum/pipeline/requester)
+	return list()
+
+/// When this machine is in a pipenet that is reconciling airs, this proc can add airs to the calculation.
+/// Can be either a list of airs or a single air mix.
+/obj/machinery/atmospherics/components/proc/returnAirsForReconcilation(datum/pipeline/requester)
+	return list()
+
 // UI Stuff
 
 /obj/machinery/atmospherics/components/ui_status(mob/user)
 	if(allowed(user))
 		return ..()
-	to_chat(user, "<span class='danger'>Access denied.</span>")
+	to_chat(user, span_danger("Access denied."))
 	return UI_CLOSE
 
 // Tool acts

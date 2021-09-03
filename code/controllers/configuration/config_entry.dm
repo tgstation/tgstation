@@ -6,35 +6,55 @@
 #define KEY_MODE_TYPE 1
 
 /datum/config_entry
-	var/name //read-only, this is determined by the last portion of the derived entry type
+	/// Read-only, this is determined by the last portion of the derived entry type
+	var/name
+	/// The configured value for this entry. This shouldn't be initialized in code, instead set default
 	var/config_entry_value
-	var/default //read-only, just set value directly
-
-	var/resident_file //the file which this was loaded from, if any
-	var/modified = FALSE //set to TRUE if the default has been overridden by a config entry
-
-	var/deprecated_by //the /datum/config_entry type that supercedes this one
-
+	/// Read-only default value for this config entry, used for resetting value to defaults when necessary. This is what config_entry_value is initially set to
+	var/default
+	/// The file which this was loaded from, if any
+	var/resident_file
+	/// Set to TRUE if the default has been overridden by a config entry
+	var/modified = FALSE
+	/// The config name of a configuration type that depricates this, if it exists
+	var/deprecated_by
+	/// The /datum/config_entry type that supercedes this one
 	var/protection = NONE
-	var/abstract_type = /datum/config_entry //do not instantiate if type matches this
-
-	var/vv_VAS = TRUE //Force validate and set on VV. VAS proccall guard will run regardless.
-
+	/// Do not instantiate if type matches this
+	var/abstract_type = /datum/config_entry
+	/// Force validate and set on VV. VAS proccall guard will run regardless.
+	var/vv_VAS = TRUE
+	/// Controls if error is thrown when duplicate configuration values for this entry type are encountered
 	var/dupes_allowed = FALSE
+	/// Stores the original protection configuration, used for set_default()
+	var/default_protection
 
 /datum/config_entry/New()
 	if(type == abstract_type)
 		CRASH("Abstract config entry [type] instatiated!")
 	name = lowertext(type2top(type))
-	if(islist(config_entry_value))
-		var/list/L = config_entry_value
-		default = L.Copy()
-	else
-		default = config_entry_value
+	default_protection = protection
+	set_default()
 
 /datum/config_entry/Destroy()
 	config.RemoveEntry(src)
 	return ..()
+
+/**
+ * Returns the value of the configuration datum to its default, used for resetting a config value. Note this also sets the protection back to default.
+ */
+/datum/config_entry/proc/set_default()
+	if ((protection & CONFIG_ENTRY_LOCKED) && IsAdminAdvancedProcCall())
+		log_admin_private("[key_name(usr)] attempted to reset locked config entry [type] to its default")
+		return
+	if (islist(default))
+		var/list/L = default
+		config_entry_value = L.Copy()
+	else
+		config_entry_value = default
+	protection = default_protection
+	resident_file = null
+	modified = FALSE
 
 /datum/config_entry/can_vv_get(var_name)
 	. = ..()
@@ -58,9 +78,9 @@
 	return ..()
 
 /datum/config_entry/proc/VASProcCallGuard(str_val)
-	. = !((protection & CONFIG_ENTRY_LOCKED) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "ValidateAndSet" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
+	. = !((protection & CONFIG_ENTRY_LOCKED) && IsAdminAdvancedProcCall())
 	if(!.)
-		log_admin_private("Config set of [type] to [str_val] attempted by [key_name(usr)]")
+		log_admin_private("[key_name(usr)] attempted to set locked config entry [type] to '[str_val]'")
 
 /datum/config_entry/proc/ValidateAndSet(str_val)
 	VASProcCallGuard(str_val)
@@ -73,9 +93,11 @@
 	return
 
 /datum/config_entry/string
-	config_entry_value = ""
+	default = ""
 	abstract_type = /datum/config_entry/string
 	var/auto_trim = TRUE
+	/// whether the string will be lowercased on ValidateAndSet or not.
+	var/lowercase = FALSE
 
 /datum/config_entry/string/vv_edit_var(var_name, var_value)
 	return var_name != NAMEOF(src, auto_trim) && ..()
@@ -84,10 +106,12 @@
 	if(!VASProcCallGuard(str_val))
 		return FALSE
 	config_entry_value = auto_trim ? trim(str_val) : str_val
+	if(lowercase)
+		config_entry_value = lowertext(config_entry_value)
 	return TRUE
 
 /datum/config_entry/number
-	config_entry_value = 0
+	default = 0
 	abstract_type = /datum/config_entry/number
 	var/integer = TRUE
 	var/max_val = INFINITY
@@ -109,7 +133,7 @@
 	return !(var_name in banned_edits) && ..()
 
 /datum/config_entry/flag
-	config_entry_value = FALSE
+	default = FALSE
 	abstract_type = /datum/config_entry/flag
 
 /datum/config_entry/flag/ValidateAndSet(str_val)
@@ -121,20 +145,22 @@
 /// List config entry, used for configuring a list of strings
 /datum/config_entry/str_list
 	abstract_type = /datum/config_entry/str_list
-	config_entry_value = list()
+	default = list()
 	dupes_allowed = TRUE
+	/// whether the string elements will be lowercased on ValidateAndSet or not.
+	var/lowercase = FALSE
 
 /datum/config_entry/str_list/ValidateAndSet(str_val)
 	if (!VASProcCallGuard(str_val))
 		return FALSE
 	str_val = trim(str_val)
 	if (str_val != "")
-		config_entry_value += str_val
+		config_entry_value += lowercase ? lowertext(str_val) : str_val
 	return TRUE
 
 /datum/config_entry/number_list
 	abstract_type = /datum/config_entry/number_list
-	config_entry_value = list()
+	default = list()
 
 /datum/config_entry/number_list/ValidateAndSet(str_val)
 	if(!VASProcCallGuard(str_val))
@@ -154,12 +180,14 @@
 
 /datum/config_entry/keyed_list
 	abstract_type = /datum/config_entry/keyed_list
-	config_entry_value = list()
+	default = list()
 	dupes_allowed = TRUE
 	vv_VAS = FALSE //VAS will not allow things like deleting from lists, it'll just bug horribly.
 	var/key_mode
 	var/value_mode
 	var/splitter = " "
+	/// whether the key names will be lowercased on ValidateAndSet or not.
+	var/lowercase_key = TRUE
 
 /datum/config_entry/keyed_list/New()
 	. = ..()
@@ -176,7 +204,9 @@
 	var/key_value = null
 
 	if(key_pos || value_mode == VALUE_MODE_FLAG)
-		key_name = lowertext(copytext(str_val, 1, key_pos))
+		key_name = copytext(str_val, 1, key_pos)
+		if(lowercase_key)
+			key_name = lowertext(key_name)
 		if(key_pos)
 			key_value = copytext(str_val, key_pos + length(str_val[key_pos]))
 		var/new_key

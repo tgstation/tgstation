@@ -333,7 +333,7 @@
 							/datum/reagent/consumable/ethanol/bug_spray = -4)
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/mob/living/simple_animal/hostile/cockroach = 5)
+	resulting_atoms = list(/mob/living/basic/cockroach = 5)
 
 /datum/micro_organism/cell_line/pine
 	desc = "Coniferous plant cells"
@@ -413,7 +413,7 @@
 	return ..()
 
 /datum/micro_organism/cell_line/clown/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat)
-	vat.visible_message("<span class='warning'>The biological sample in [vat] seems to have created something horrific!</span>")
+	vat.visible_message(span_warning("The biological sample in [vat] seems to have created something horrific!"))
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
 
 	var/mob/selected_mob = pick(list(/mob/living/simple_animal/hostile/retaliate/clown/mutant/slow, /mob/living/simple_animal/hostile/retaliate/clown/fleshclown))

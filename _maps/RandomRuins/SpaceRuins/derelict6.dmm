@@ -307,7 +307,7 @@
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/unpowered)
 "bd" = (
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar/directional/east,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1

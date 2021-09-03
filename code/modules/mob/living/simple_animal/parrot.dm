@@ -28,7 +28,7 @@
 
 /mob/living/simple_animal/parrot
 	name = "parrot"
-	desc = "The parrot squawks, \"It's a Parrot! BAWWK!\"" //'
+	desc = "The parrot squawks, \"They're a Parrot! BAWWK!\"" //'
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "parrot_fly"
 	icon_living = "parrot_fly"
@@ -42,7 +42,7 @@
 	speak = list("Hi!","Hello!","Cracker?","BAWWWWK george mellons griffing me!")
 	speak_emote = list("squawks","says","yells")
 	emote_hear = list("squawks.","bawks!")
-	emote_see = list("flutters its wings.")
+	emote_see = list("flutters their wings.")
 
 	speak_chance = 1 //1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
@@ -133,7 +133,10 @@
 /mob/living/simple_animal/parrot/examine(mob/user)
 	. = ..()
 	if(stat)
-		. += pick("This parrot is no more.", "This is a late parrot.", "This is an ex-parrot.")
+		if(HAS_TRAIT(user, TRAIT_NAIVE))
+			. += pick("It seems tired and shagged out after a long squawk.", "It seems to be pining for the fjords.", "It's resting. It's a beautiful bird. Lovely plumage.")
+		else
+			. += pick("This parrot is no more.","This is a late parrot.","This is an ex-parrot.")
 
 /mob/living/simple_animal/parrot/death(gibbed)
 	if(held_item)
@@ -203,7 +206,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		return FALSE
 
 	if (!istype(equipping, /obj/item/radio/headset))
-		to_chat(user, "<span class='warning'>[equipping] won't fit!</span>")
+		to_chat(user, span_warning("[equipping] won't fit!"))
 		return FALSE
 
 	return TRUE
@@ -226,7 +229,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	parrot_source.ears = radio
 
-	to_chat(user, "<span class='notice'>You fit [radio] onto [source].</span>")
+	to_chat(user, span_notice("You fit [radio] onto [source]."))
 
 	parrot_source.available_channels.Cut()
 
@@ -346,7 +349,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 			adjustBruteLoss(-10)
 		speak_chance *= 1.27 // 20 crackers to go from 1% to 100%
 		speech_shuffle_rate += 10
-		to_chat(user, "<span class='notice'>[src] eagerly devours the cracker.</span>")
+		to_chat(user, span_notice("[src] eagerly devours the cracker."))
 	..()
 	return
 
@@ -513,7 +516,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 				if(!parrot_perch || parrot_interest.loc != parrot_perch.loc)
 					held_item = parrot_interest
 					parrot_interest.forceMove(src)
-					visible_message("<span class='notice'>[src] grabs [held_item]!</span>", "<span class='notice'>You grab [held_item]!</span>", "<span class='hear'>You hear the sounds of wings flapping furiously.</span>")
+					visible_message(span_notice("[src] grabs [held_item]!"), span_notice("You grab [held_item]!"), span_hear("You hear the sounds of wings flapping furiously."))
 
 			parrot_interest = null
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
@@ -691,7 +694,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		return -1
 
 	if(held_item)
-		to_chat(src, "<span class='warning'>You are already holding [held_item]!</span>")
+		to_chat(src, span_warning("You are already holding [held_item]!"))
 		return 1
 
 	for(var/obj/item/I in view(1,src))
@@ -704,10 +707,10 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 			held_item = I
 			I.forceMove(src)
-			visible_message("<span class='notice'>[src] grabs [held_item]!</span>", "<span class='notice'>You grab [held_item]!</span>", "<span class='hear'>You hear the sounds of wings flapping furiously.</span>")
+			visible_message(span_notice("[src] grabs [held_item]!"), span_notice("You grab [held_item]!"), span_hear("You hear the sounds of wings flapping furiously."))
 			return held_item
 
-	to_chat(src, "<span class='warning'>There is nothing of interest to take!</span>")
+	to_chat(src, span_warning("There is nothing of interest to take!"))
 	return 0
 
 /mob/living/simple_animal/parrot/proc/steal_from_mob()
@@ -719,7 +722,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		return -1
 
 	if(held_item)
-		to_chat(src, "<span class='warning'>You are already holding [held_item]!</span>")
+		to_chat(src, span_warning("You are already holding [held_item]!"))
 		return 1
 
 	var/obj/item/stolen_item = null
@@ -733,10 +736,10 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		if(stolen_item)
 			C.transferItemToLoc(stolen_item, src, TRUE)
 			held_item = stolen_item
-			visible_message("<span class='notice'>[src] grabs [held_item] out of [C]'s hand!</span>", "<span class='notice'>You snag [held_item] out of [C]'s hand!</span>", "<span class='hear'>You hear the sounds of wings flapping furiously.</span>")
+			visible_message(span_notice("[src] grabs [held_item] out of [C]'s hand!"), span_notice("You snag [held_item] out of [C]'s hand!"), span_hear("You hear the sounds of wings flapping furiously."))
 			return held_item
 
-	to_chat(src, "<span class='warning'>There is nothing of interest to take!</span>")
+	to_chat(src, span_warning("There is nothing of interest to take!"))
 	return 0
 
 /mob/living/simple_animal/parrot/verb/drop_held_item_player()
@@ -761,7 +764,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	if(!held_item)
 		if(src == usr) //So that other mobs won't make this message appear when they're bludgeoning you.
-			to_chat(src, "<span class='warning'>You have nothing to drop!</span>")
+			to_chat(src, span_warning("You have nothing to drop!"))
 		return 0
 
 
@@ -780,11 +783,11 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 			var/obj/item/grenade/G = held_item
 			G.forceMove(drop_location())
 			G.detonate()
-			to_chat(src, "<span class='danger'>You let go of [held_item]!</span>")
+			to_chat(src, span_danger("You let go of [held_item]!"))
 			held_item = null
 			return 1
 
-	to_chat(src, "<span class='notice'>You drop [held_item].</span>")
+	to_chat(src, span_notice("You drop [held_item]."))
 
 	held_item.forceMove(drop_location())
 	held_item = null
@@ -806,7 +809,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 					icon_state = icon_sit
 					parrot_state = PARROT_PERCH
 					return
-	to_chat(src, "<span class='warning'>There is no perch nearby to sit on!</span>")
+	to_chat(src, span_warning("There is no perch nearby to sit on!"))
 	return
 
 /mob/living/simple_animal/parrot/Moved(oldLoc, dir)
@@ -831,12 +834,12 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 				continue
 			perch_on_human(H)
 			return
-		to_chat(src, "<span class='warning'>There is nobody nearby that you can sit on!</span>")
+		to_chat(src, span_warning("There is nobody nearby that you can sit on!"))
 	else
 		icon_state = icon_living
 		parrot_state = PARROT_WANDER
 		if(buckled)
-			to_chat(src, "<span class='notice'>You are no longer sitting on [buckled]'s shoulder.</span>")
+			to_chat(src, span_notice("You are no longer sitting on [buckled]'s shoulder."))
 			buckled.unbuckle_mob(src, TRUE)
 		buckled = null
 		pixel_x = initial(pixel_x)
@@ -853,7 +856,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		pixel_x = pick(-8,8) //pick left or right shoulder
 		icon_state = icon_sit
 		parrot_state = PARROT_PERCH
-		to_chat(src, "<span class='notice'>You sit on [H]'s shoulder.</span>")
+		to_chat(src, span_notice("You sit on [H]'s shoulder."))
 
 
 /mob/living/simple_animal/parrot/proc/toggle_mode()
@@ -870,7 +873,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	else
 		melee_damage_upper = parrot_damage_upper
 		set_combat_mode(TRUE)
-	to_chat(src, "<span class='notice'>You will now [combat_mode ? "Harm" : "Help"] others.</span>")
+	to_chat(src, span_notice("You will now [combat_mode ? "Harm" : "Help"] others."))
 	return
 
 /*
@@ -1002,4 +1005,4 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	forceMove(H)
 	H.ForceContractDisease(P, FALSE)
 	parrot_interest = null
-	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
+	H.visible_message(span_danger("[src] dive bombs into [H]'s chest and vanishes!"), span_userdanger("[src] dive bombs into your chest, vanishing! This can't be good!"))

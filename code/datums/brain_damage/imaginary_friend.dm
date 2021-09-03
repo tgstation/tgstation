@@ -47,7 +47,7 @@
 
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner.real_name]'s imaginary friend?", ROLE_PAI, null, 75, friend, POLL_IGNORE_IMAGINARYFRIEND)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [owner.real_name]'s imaginary friend?", ROLE_PAI, null, 7.5 SECONDS, friend, POLL_IGNORE_IMAGINARYFRIEND)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		friend.key = C.key
@@ -84,11 +84,14 @@
 	Show()
 
 /mob/camera/imaginary_friend/proc/greet()
-		to_chat(src, "<span class='notice'><b>You are the imaginary friend of [owner]!</b></span>")
-		to_chat(src, "<span class='notice'>You are absolutely loyal to your friend, no matter what.</span>")
-		to_chat(src, "<span class='notice'>You cannot directly influence the world around you, but you can see what [owner] cannot.</span>")
+		to_chat(src, span_notice("<b>You are the imaginary friend of [owner]!</b>"))
+		to_chat(src, span_notice("You are absolutely loyal to your friend, no matter what."))
+		to_chat(src, span_notice("You cannot directly influence the world around you, but you can see what [owner] cannot."))
 
 /mob/camera/imaginary_friend/Initialize(mapload, _trauma)
+	if(!_trauma)
+		stack_trace("Imaginary friend created without trauma, wtf")
+		return INITIALIZE_HINT_QDEL
 	. = ..()
 
 	trauma = _trauma
@@ -105,7 +108,7 @@
 	var/gender = pick(MALE, FEMALE)
 	real_name = random_unique_name(gender)
 	name = real_name
-	human_image = get_flat_human_icon(null, pick(SSjob.occupations))
+	human_image = get_flat_human_icon(null, pick(SSjob.joinable_occupations))
 
 /mob/camera/imaginary_friend/proc/Show()
 	if(!client) //nobody home
@@ -131,7 +134,7 @@
 	client.images |= current_image
 
 /mob/camera/imaginary_friend/Destroy()
-	if(owner.client)
+	if(owner?.client)
 		owner.client.images.Remove(human_image)
 	if(client)
 		client.images.Remove(human_image)
@@ -143,7 +146,7 @@
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "<span class='boldwarning'>You cannot send IC messages (muted).</span>")
+			to_chat(src, span_boldwarning("You cannot send IC messages (muted)."))
 			return
 		if (!(ignore_spam || forced) && src.client.handle_spam_prevention(message,MUTE_IC))
 			return
@@ -163,8 +166,8 @@
 
 	src.log_talk(message, LOG_SAY, tag="imaginary friend")
 
-	var/rendered = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[say_quote(message)]</span></span>"
-	var/dead_rendered = "<span class='game say'><span class='name'>[name] (Imaginary friend of [owner])</span> <span class='message'>[say_quote(message)]</span></span>"
+	var/rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[say_quote(message)]</span></span>"
+	var/dead_rendered = "<span class='game say'>[span_name("[name] (Imaginary friend of [owner])")] <span class='message'>[say_quote(message)]</span></span>"
 
 	to_chat(owner, "[rendered]")
 	to_chat(src, "[rendered]")
@@ -263,9 +266,9 @@
 	desc = "The previous host of this body."
 
 /mob/camera/imaginary_friend/trapped/greet()
-	to_chat(src, "<span class='notice'><b>You have managed to hold on as a figment of the new host's imagination!</b></span>")
-	to_chat(src, "<span class='notice'>All hope is lost for you, but at least you may interact with your host. You do not have to be loyal to them.</span>")
-	to_chat(src, "<span class='notice'>You cannot directly influence the world around you, but you can see what the host cannot.</span>")
+	to_chat(src, span_notice("<b>You have managed to hold on as a figment of the new host's imagination!</b>"))
+	to_chat(src, span_notice("All hope is lost for you, but at least you may interact with your host. You do not have to be loyal to them."))
+	to_chat(src, span_notice("You cannot directly influence the world around you, but you can see what the host cannot."))
 
 /mob/camera/imaginary_friend/trapped/setup_friend()
 	real_name = "[owner.real_name]?"

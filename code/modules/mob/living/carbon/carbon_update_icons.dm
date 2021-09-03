@@ -57,9 +57,8 @@
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			I.screen_loc = ui_hand_position(get_held_index_of_item(I))
 			client.screen += I
-			if(observers?.len)
-				for(var/M in observers)
-					var/mob/dead/observe = M
+			if(length(observers))
+				for(var/mob/dead/observe as anything in observers)
 					if(observe.client && observe.client.eye == src)
 						observe.client.screen += I
 					else
@@ -168,7 +167,13 @@
 /mob/living/carbon/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
-		overlays_standing[HANDCUFF_LAYER] = mutable_appearance('icons/mob/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
+		var/mutable_appearance/handcuff_overlay = mutable_appearance('icons/mob/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
+		if(handcuffed.blocks_emissive)
+			var/mutable_appearance/handcuff_blocker = mutable_appearance('icons/mob/mob.dmi', "handcuff1", plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+			handcuff_blocker.color = GLOB.em_block_color
+			handcuff_overlay.overlays += handcuff_blocker
+
+		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
 		apply_overlay(HANDCUFF_LAYER)
 
 
@@ -203,9 +208,17 @@
 //Overlays for the worn overlay so you can overlay while you overlay
 //eg: ammo counters, primed grenade flashing, etc.
 //"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
-/obj/item/proc/worn_overlays(isinhands = FALSE, icon_file)
-	. = list()
+/obj/item/proc/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
+	SHOULD_CALL_PARENT(TRUE)
+	RETURN_TYPE(/list)
 
+	. = list()
+	if(!blocks_emissive)
+		return
+
+	var/mutable_appearance/blocker_overlay = mutable_appearance(standing.icon, standing.icon_state, plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+	blocker_overlay.color = GLOB.em_block_color
+	. += blocker_overlay
 
 /mob/living/carbon/update_body()
 	update_body_parts()
@@ -235,9 +248,10 @@
 
 	//GENERATE NEW LIMBS
 	var/list/new_limbs = list()
+	var/draw_features = !HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		new_limbs += BP.get_limb_icon()
+		new_limbs += BP.get_limb_icon(draw_external_organs = draw_features)
 	if(new_limbs.len)
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
 		limb_icon_cache[icon_render_key] = new_limbs

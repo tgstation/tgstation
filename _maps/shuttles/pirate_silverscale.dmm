@@ -113,7 +113,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "hu" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "hW" = (
@@ -358,14 +358,14 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/melee/transforming/energy/sword/saber/purple{
+/obj/item/melee/energy/sword/saber/purple{
 	pixel_y = 12
 	},
-/obj/item/melee/transforming/energy/sword/saber/purple{
+/obj/item/melee/energy/sword/saber/purple{
 	pixel_x = 8;
 	pixel_y = 7
 	},
-/obj/item/melee/transforming/energy/sword/saber/purple{
+/obj/item/melee/energy/sword/saber/purple{
 	pixel_x = 17
 	},
 /turf/open/floor/pod/dark,
@@ -661,7 +661,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "QI" = (
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "QO" = (

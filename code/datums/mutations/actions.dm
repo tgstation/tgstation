@@ -46,7 +46,7 @@
 
 	if(cached_gases[/datum/gas/miasma])
 		user.adjust_disgust(sensitivity * 45)
-		to_chat(user, "<span class='warning'>With your overly sensitive nose, you get a whiff of stench and feel sick! Try moving to a cleaner area!</span>")
+		to_chat(user, span_warning("With your overly sensitive nose, you get a whiff of stench and feel sick! Try moving to a cleaner area!"))
 		return
 
 	var/atom/sniffed = user.get_active_held_item()
@@ -56,45 +56,45 @@
 		var/list/prints = sniffed.return_fingerprints()
 		if(prints)
 			for(var/mob/living/carbon/C in GLOB.carbon_list)
-				if(prints[md5(C.dna.uni_identity)])
+				if(prints[md5(C.dna.unique_identity)])
 					possible |= C
 		if(!length(possible))
-			to_chat(user,"<span class='warning'>Despite your best efforts, there are no scents to be found on [sniffed]...</span>")
+			to_chat(user,span_warning("Despite your best efforts, there are no scents to be found on [sniffed]..."))
 			return
 		tracking_target = input(user, "Choose a scent to remember.", "Scent Tracking") as null|anything in sortNames(possible)
 		if(!tracking_target)
 			if(!old_target)
-				to_chat(user,"<span class='warning'>You decide against remembering any scents. Instead, you notice your own nose in your peripheral vision. This goes on to remind you of that one time you started breathing manually and couldn't stop. What an awful day that was.</span>")
+				to_chat(user,span_warning("You decide against remembering any scents. Instead, you notice your own nose in your peripheral vision. This goes on to remind you of that one time you started breathing manually and couldn't stop. What an awful day that was."))
 				return
 			tracking_target = old_target
 			on_the_trail(user)
 			return
-		to_chat(user,"<span class='notice'>You pick up the scent of [tracking_target]. The hunt begins.</span>")
+		to_chat(user,span_notice("You pick up the scent of [tracking_target]. The hunt begins."))
 		on_the_trail(user)
 		return
 
 	if(!tracking_target)
-		to_chat(user,"<span class='warning'>You're not holding anything to smell, and you haven't smelled anything you can track. You smell your skin instead; it's kinda salty.</span>")
+		to_chat(user,span_warning("You're not holding anything to smell, and you haven't smelled anything you can track. You smell your skin instead; it's kinda salty."))
 		return
 
 	on_the_trail(user)
 
 /obj/effect/proc_holder/spell/targeted/olfaction/proc/on_the_trail(mob/living/user)
 	if(!tracking_target)
-		to_chat(user,"<span class='warning'>You're not tracking a scent, but the game thought you were. Something's gone wrong! Report this as a bug.</span>")
+		to_chat(user,span_warning("You're not tracking a scent, but the game thought you were. Something's gone wrong! Report this as a bug."))
 		return
 	if(tracking_target == user)
-		to_chat(user,"<span class='warning'>You smell out the trail to yourself. Yep, it's you.</span>")
+		to_chat(user,span_warning("You smell out the trail to yourself. Yep, it's you."))
 		return
 	if(usr.z < tracking_target.z)
-		to_chat(user,"<span class='warning'>The trail leads... way up above you? Huh. They must be really, really far away.</span>")
+		to_chat(user,span_warning("The trail leads... way up above you? Huh. They must be really, really far away."))
 		return
 	else if(usr.z > tracking_target.z)
-		to_chat(user,"<span class='warning'>The trail leads... way down below you? Huh. They must be really, really far away.</span>")
+		to_chat(user,span_warning("The trail leads... way down below you? Huh. They must be really, really far away."))
 		return
 	var/direction_text = "[dir2text(get_dir(usr, tracking_target))]"
 	if(direction_text)
-		to_chat(user,"<span class='notice'>You consider [tracking_target]'s scent. The trail leads <b>[direction_text].</b></span>")
+		to_chat(user,span_notice("You consider [tracking_target]'s scent. The trail leads <b>[direction_text].</b>"))
 
 /datum/mutation/human/firebreath
 	name = "Fire Breath"
@@ -136,10 +136,11 @@
 		if(C.is_mouth_covered())
 			C.adjust_fire_stacks(2)
 			C.IgniteMob()
-			to_chat(C,"<span class='warning'>Something in front of your mouth caught fire!</span>")
+			to_chat(C,span_warning("Something in front of your mouth caught fire!"))
 			return FALSE
 
 /obj/effect/proc_holder/spell/aimed/firebreath/ready_projectile(obj/projectile/P, atom/target, mob/user, iteration)
+	. = ..()
 	if(!istype(P, /obj/projectile/magic/aoe/fireball))
 		return
 	var/obj/projectile/magic/aoe/fireball/F = P
@@ -226,7 +227,7 @@
 			if(BP.dismemberable)
 				parts += BP
 	if(!parts.len)
-		to_chat(usr, "<span class='notice'>You can't shed any more limbs!</span>")
+		to_chat(usr, span_notice("You can't shed any more limbs!"))
 		return
 
 	var/obj/item/bodypart/BP = pick(parts)
@@ -267,7 +268,7 @@
 			break
 
 	if(!tongue)
-		to_chat(C, "<span class='notice'>You don't have a tongue to shoot!</span>")
+		to_chat(C, span_notice("You don't have a tongue to shoot!"))
 		return
 
 	tongue.Remove(C, special = TRUE)
@@ -305,7 +306,7 @@
 
 /obj/item/hardened_spike/unembedded()
 	var/turf/T = get_turf(src)
-	visible_message("<span class='warning'>[src] cracks and twists, changing shape!</span>")
+	visible_message(span_warning("[src] cracks and twists, changing shape!"))
 	for(var/i in contents)
 		var/obj/o = i
 		o.forceMove(T)
@@ -344,11 +345,11 @@
 	chems = new
 	chems.transfered = embedded_mob
 	chems.spikey = src
-	to_chat(fired_by, "<span class='notice'>Link established! Use the \"Transfer Chemicals\" ability to send your chemicals to the linked target!</span>")
+	to_chat(fired_by, span_notice("Link established! Use the \"Transfer Chemicals\" ability to send your chemicals to the linked target!"))
 	chems.Grant(fired_by)
 
 /obj/item/hardened_spike/chem/unembedded()
-	to_chat(fired_by, "<span class='warning'>Link lost!</span>")
+	to_chat(fired_by, span_warning("Link lost!"))
 	QDEL_NULL(chems)
 	..()
 
@@ -367,14 +368,14 @@
 		return
 	var/mob/living/carbon/human/transferer = owner
 
-	to_chat(transfered, "<span class='warning'>You feel a tiny prick!</span>")
+	to_chat(transfered, span_warning("You feel a tiny prick!"))
 	transferer.reagents.trans_to(transfered, transferer.reagents.total_volume, 1, 1, 0, transfered_by = transferer)
 
 	var/obj/item/bodypart/L = spikey.checkembedded()
 
 	//this is where it would deal damage, if it transfers chems it removes itself so no damage
 	spikey.forceMove(get_turf(L))
-	transfered.visible_message("<span class='notice'>[spikey] falls out of [transfered]!</span>")
+	transfered.visible_message(span_notice("[spikey] falls out of [transfered]!"))
 
 //spider webs
 /datum/mutation/human/webbing
@@ -407,20 +408,20 @@
 /obj/effect/proc_holder/spell/self/lay_genetic_web/cast(list/targets, mob/user = usr)
 	var/failed = FALSE
 	if(!isturf(user.loc))
-		to_chat(user, "<span class='warning'>You can't lay webs here!</span>")
+		to_chat(user, span_warning("You can't lay webs here!"))
 		failed = TRUE
 	var/turf/T = get_turf(user)
 	var/obj/structure/spider/stickyweb/genetic/W = locate() in T
 	if(W)
-		to_chat(user, "<span class='warning'>There's already a web here!</span>")
+		to_chat(user, span_warning("There's already a web here!"))
 		failed = TRUE
 	if(failed)
 		revert_cast(user)
 		return FALSE
 
-	user.visible_message("<span class='notice'>[user] begins to secrete a sticky substance.</span>","<span class='notice'>You begin to lay a web.</span>")
+	user.visible_message(span_notice("[user] begins to secrete a sticky substance."),span_notice("You begin to lay a web."))
 	if(!do_after(user, 4 SECONDS, target = T))
-		to_chat(user, "<span class='warning'>Your web spinning was interrupted!</span>")
+		to_chat(user, span_warning("Your web spinning was interrupted!"))
 		return
 	else
 		new /obj/structure/spider/stickyweb/genetic(T, user)

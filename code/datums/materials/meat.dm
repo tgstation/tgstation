@@ -4,6 +4,7 @@
 	desc = "Meat"
 	id = /datum/material/meat // So the bespoke versions are categorized under this
 	color = rgb(214, 67, 67)
+	greyscale_colors = rgb(214, 67, 67)
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/meat
 	value_per_unit = 0.05
@@ -16,6 +17,8 @@
 
 /datum/material/meat/on_removed(atom/source, amount, material_flags)
 	. = ..()
+	if(material_flags & MATERIAL_NO_EFFECTS)
+		return
 	qdel(source.GetComponent(/datum/component/edible))
 
 /datum/material/meat/on_applied_obj(obj/O, amount, material_flags)

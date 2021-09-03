@@ -41,6 +41,8 @@
 #define MAGIC "magic"
 /// Involved in checking the likelyhood of applying a wound to a mob.
 #define WOUND "wound"
+/// Involves being eaten
+#define CONSUME "consume"
 
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS (1<<0)

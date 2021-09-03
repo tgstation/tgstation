@@ -29,7 +29,7 @@
 	del_on_death = 1
 	loot = list(/obj/effect/mob_spawn/human/clown/corpse)
 
-	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 270
 	maxbodytemp = 370
 	unsuitable_atmos_damage = 10
@@ -168,6 +168,7 @@
 	icon_state = "honkhulk"
 	icon_living = "honkhulk"
 	move_resist = INFINITY
+	gender = MALE
 	response_help_continuous = "tries desperately to appease"
 	response_help_simple = "try desperately to appease"
 	response_disarm_continuous = "foolishly pushes"
@@ -196,6 +197,7 @@
 	desc = "A real lunkhead who somehow gets all the girls."
 	icon_state = "chlown"
 	icon_living = "chlown"
+	gender = MALE
 	response_help_continuous = "submits to"
 	response_help_simple = "submit to"
 	response_disarm_continuous = "tries to assert dominance over"
@@ -348,7 +350,7 @@
 
 	if(IS_EDIBLE(potential_food))
 		if(prank_pouch.len >= 8)
-			to_chat(src, "<span class='warning'>Your prank pouch is filled to the brim! You don't think you can swallow any more morsels right now.</span>")
+			to_chat(src, span_warning("Your prank pouch is filled to the brim! You don't think you can swallow any more morsels right now."))
 			return FALSE
 		return TRUE
 
@@ -359,7 +361,7 @@
 								/obj/item/food/grown/tomato,
 								/obj/item/food/meatclown)
 
-	visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", "<span class='notice'>You eat [eaten_atom].</span>")
+	visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", span_notice("You eat [eaten_atom]."))
 	if(is_type_in_list(eaten_atom, funny_items))
 		eaten_atom.forceMove(src)
 		prank_pouch += eaten_atom
@@ -382,9 +384,9 @@
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/Exited(atom/movable/AM, atom/newLoc)
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/Exited(atom/movable/gone, direction)
 	. = ..()
-	prank_pouch -= AM
+	prank_pouch -= gone
 
 ///This ability will let you fire one random item from your pouch,
 /obj/effect/proc_holder/regurgitate
@@ -405,10 +407,10 @@
 /obj/effect/proc_holder/regurgitate/fire(mob/living/carbon/user)
 	if(active)
 		user.icon_state = initial(user.icon_state)
-		remove_ranged_ability("<span class='notice'>Your throat muscles relax.</span>")
+		remove_ranged_ability(span_notice("Your throat muscles relax."))
 	else
 		user.icon_state = "glutton_tongue"
-		add_ranged_ability(user, "<span class='notice'>Your throat muscles tense up. <B>Left-click to regurgitate a funny morsel!</B></span>", TRUE)
+		add_ranged_ability(user, span_notice("Your throat muscles tense up. <B>Left-click to regurgitate a funny morsel!</B>"), TRUE)
 
 /obj/effect/proc_holder/regurgitate/InterceptClickOn(mob/living/caller, params, atom/target)
 	. = ..()
@@ -424,7 +426,7 @@
 	if(!pouch_owner.prank_pouch.len)
 		//active = FALSE
 		pouch_owner.icon_state = "glutton"
-		remove_ranged_ability("<span class='notice'>Your prank pouch is empty,.</span>")
+		remove_ranged_ability(span_notice("Your prank pouch is empty,."))
 		return
 
 	var/obj/item/projected_morsel = pick(pouch_owner.prank_pouch)

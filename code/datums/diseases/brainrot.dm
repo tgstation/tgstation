@@ -25,7 +25,7 @@
 			if(DT_PROB(1, delta_time))
 				affected_mob.emote("yawn")
 			if(DT_PROB(1, delta_time))
-				to_chat(affected_mob, "<span class='danger'>You don't feel like yourself.</span>")
+				to_chat(affected_mob, span_danger("You don't feel like yourself."))
 			if(DT_PROB(2.5, delta_time))
 				affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 170)
 		if(3)
@@ -36,7 +36,7 @@
 			if(DT_PROB(5, delta_time))
 				affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2, 170)
 				if(prob(2))
-					to_chat(affected_mob, "<span class='danger'>Your try to remember something important...but can't.</span>")
+					to_chat(affected_mob, span_danger("Your try to remember something important...but can't."))
 
 		if(4)
 			if(DT_PROB(1, delta_time))
@@ -46,11 +46,11 @@
 			if(DT_PROB(7.5, delta_time))
 				affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 170)
 				if(prob(2))
-					to_chat(affected_mob, "<span class='danger'>Strange buzzing fills your head, removing all thoughts.</span>")
+					to_chat(affected_mob, span_danger("Strange buzzing fills your head, removing all thoughts."))
 			if(DT_PROB(1.5, delta_time))
-				to_chat(affected_mob, "<span class='danger'>You lose consciousness...</span>")
-				affected_mob.visible_message("<span class='warning'>[affected_mob] suddenly collapses!</span>", \
-											"<span class='userdanger'>You suddenly collapse!</span>")
+				to_chat(affected_mob, span_danger("You lose consciousness..."))
+				affected_mob.visible_message(span_warning("[affected_mob] suddenly collapses!"), \
+											span_userdanger("You suddenly collapse!"))
 				affected_mob.Unconscious(rand(100, 200))
 				if(prob(1))
 					affected_mob.emote("snore")

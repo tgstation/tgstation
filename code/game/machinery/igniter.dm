@@ -14,8 +14,8 @@
 	var/id = null
 	var/on = FALSE
 
-/obj/machinery/igniter/incinerator_toxmix
-	id = INCINERATOR_TOXMIX_IGNITER
+/obj/machinery/igniter/incinerator_ordmix
+	id = INCINERATOR_ORDMIX_IGNITER
 
 /obj/machinery/igniter/incinerator_atmos
 	id = INCINERATOR_ATMOS_IGNITER
@@ -85,8 +85,8 @@
 	dir = EAST
 	pixel_x = -26
 
-/obj/machinery/sparker/toxmix
-	id = INCINERATOR_TOXMIX_IGNITER
+/obj/machinery/sparker/ordmix
+	id = INCINERATOR_ORDMIX_IGNITER
 
 /obj/machinery/sparker/Initialize()
 	. = ..()
@@ -115,9 +115,9 @@
 		add_fingerprint(user)
 		disable = !disable
 		if (disable)
-			user.visible_message("<span class='notice'>[user] disables \the [src]!</span>", "<span class='notice'>You disable the connection to \the [src].</span>")
+			user.visible_message(span_notice("[user] disables \the [src]!"), span_notice("You disable the connection to \the [src]."))
 		if (!disable)
-			user.visible_message("<span class='notice'>[user] reconnects \the [src]!</span>", "<span class='notice'>You fix the connection to \the [src].</span>")
+			user.visible_message(span_notice("[user] reconnects \the [src]!"), span_notice("You fix the connection to \the [src]."))
 		update_appearance()
 	else
 		return ..()

@@ -47,18 +47,35 @@
 	return L
 
 /datum/sprite_accessory
-	var/icon //the icon file the accessory is located in
-	var/icon_state //the icon_state of the accessory
-	var/name //the preview name of the accessory
-	var/gender = NEUTER //Determines if the accessory will be skipped or included in random hair generations
-	var/gender_specific //Something that can be worn by either gender, but looks different on each
-	var/use_static //determines if the accessory will be skipped by color preferences
-	var/color_src = MUTCOLORS //Currently only used by mutantparts so don't worry about hair and stuff. This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
-	var/hasinner //Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
-	var/locked = FALSE //Is this part locked from roundstart selection? Used for parts that apply effects
+	/// The icon file the accessory is located in.
+	var/icon
+	/// The icon_state of the accessory.
+	var/icon_state
+	/// The preview name of the accessory.
+	var/name
+	/// Determines if the accessory will be skipped or included in random hair generations.
+	var/gender = NEUTER
+	/// Something that can be worn by either gender, but looks different on each.
+	var/gender_specific
+	/// Determines if the accessory will be skipped by color preferences.
+	var/use_static
+	/**
+	 * Currently only used by mutantparts so don't worry about hair and stuff.
+	 * This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
+	 */
+	var/color_src = MUTCOLORS
+	/// Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
+	var/hasinner
+	/// Is this part locked from roundstart selection? Used for parts that apply effects.
+	var/locked = FALSE
+	/// Should we center the sprite?
+	var/center = FALSE
+	/// The width of the sprite in pixels. Used to center it if necessary.
 	var/dimension_x = 32
+	/// The height of the sprite in pixels. Used to center it if necessary.
 	var/dimension_y = 32
-	var/center = FALSE //Should we center the sprite?
+	/// Should this sprite block emissives?
+	var/em_block = FALSE
 
 //////////////////////
 // Hair Definitions //
@@ -779,6 +796,69 @@
 	name = "Wisp"
 	icon_state = "hair_wisp"
 
+/*
+/////////////////////////////////////
+/  =---------------------------=    /
+/  == Gradient Hair Definitions ==  /
+/  =---------------------------=    /
+/////////////////////////////////////
+*/
+
+/datum/sprite_accessory/hair_gradient
+	icon = 'icons/mob/hair_gradients.dmi'
+
+/datum/sprite_accessory/hair_gradient/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/hair_gradient/fadeup
+	name = "Fade Up"
+	icon_state = "fadeup"
+
+/datum/sprite_accessory/hair_gradient/fadedown
+	name = "Fade Down"
+	icon_state = "fadedown"
+
+/datum/sprite_accessory/hair_gradient/vertical_split
+	name = "Vertical Split"
+	icon_state = "vsplit"
+
+/datum/sprite_accessory/hair_gradient/_split
+	name = "Horizontal Split"
+	icon_state = "bottomflat"
+
+/datum/sprite_accessory/hair_gradient/reflected
+	name = "Reflected"
+	icon_state = "reflected_high"
+
+/datum/sprite_accessory/hair_gradient/reflected_inverse
+	name = "Reflected Inverse"
+	icon_state = "reflected_inverse_high"
+
+/datum/sprite_accessory/hair_gradient/wavy
+	name = "Wavy"
+	icon_state = "wavy"
+
+/datum/sprite_accessory/hair_gradient/long_fade_up
+	name = "Long Fade Up"
+	icon_state = "long_fade_up"
+
+/datum/sprite_accessory/hair_gradient/long_fade_down
+	name = "Long Fade Down"
+	icon_state = "long_fade_down"
+
+/datum/sprite_accessory/hair_gradient/short_fade_up
+	name = "Short Fade Up"
+	icon_state = "short_fade_up"
+
+/datum/sprite_accessory/hair_gradient/short_fade_down
+	name = "Short Fade Down"
+	icon_state = "short_fade_down"
+
+/datum/sprite_accessory/hair_gradient/wavy_spike
+	name = "Spiked Wavy"
+	icon_state = "wavy_spiked"
+
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////
@@ -786,6 +866,7 @@
 /datum/sprite_accessory/facial_hair
 	icon = 'icons/mob/human_face.dmi'
 	gender = MALE // barf (unless you're a dorf, dorfs dig chix w/ beards :P)
+	em_block = TRUE
 
 // please make sure they're sorted alphabetically and categorized
 
@@ -941,6 +1022,7 @@
 /datum/sprite_accessory/underwear
 	icon = 'icons/mob/clothing/underwear.dmi'
 	use_static = FALSE
+	em_block = TRUE
 
 
 //MALE UNDERWEAR
@@ -1117,6 +1199,7 @@
 
 /datum/sprite_accessory/undershirt
 	icon = 'icons/mob/clothing/underwear.dmi'
+	em_block = TRUE
 
 /datum/sprite_accessory/undershirt/nude
 	name = "Nude"
@@ -1401,12 +1484,21 @@
 
 /datum/sprite_accessory/socks
 	icon = 'icons/mob/clothing/underwear.dmi'
+	em_block = TRUE
 
 /datum/sprite_accessory/socks/nude
 	name = "Nude"
 	icon_state = null
 
 // please make sure they're sorted alphabetically and categorized
+
+/datum/sprite_accessory/socks/ace_knee
+	name = "Knee-high (Ace)"
+	icon_state = "ace_knee"
+
+/datum/sprite_accessory/socks/bee_knee
+	name = "Knee-high (Bee)"
+	icon_state = "bee_knee"
 
 /datum/sprite_accessory/socks/black_knee
 	name = "Knee-high (Black)"
@@ -1439,10 +1531,6 @@
 /datum/sprite_accessory/socks/white_knee
 	name = "Knee-high (White)"
 	icon_state = "white_knee"
-
-/datum/sprite_accessory/socks/bee_knee
-	name = "Knee-high (Bee)"
-	icon_state = "bee_knee"
 
 /datum/sprite_accessory/socks/black_norm
 	name = "Normal (Black)"
@@ -1496,6 +1584,14 @@
 	name = "Stockings (Yellow)"
 	icon_state = "stockings_yellow"
 
+/datum/sprite_accessory/socks/ace_thigh
+	name = "Thigh-high (Ace)"
+	icon_state = "ace_thigh"
+
+/datum/sprite_accessory/socks/bee_thigh
+	name = "Thigh-high (Bee)"
+	icon_state = "bee_thigh"
+
 /datum/sprite_accessory/socks/black_thigh
 	name = "Thigh-high (Black)"
 	icon_state = "black_thigh"
@@ -1527,10 +1623,6 @@
 /datum/sprite_accessory/socks/white_thigh
 	name = "Thigh-high (White)"
 	icon_state = "white_thigh"
-
-/datum/sprite_accessory/socks/bee_thigh
-	name = "Thigh-high (Bee)"
-	icon_state = "bee_thigh"
 
 /datum/sprite_accessory/socks/thocks
 	name = "Thocks"
@@ -1564,9 +1656,11 @@
 
 /datum/sprite_accessory/tails
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	em_block = TRUE
 
 /datum/sprite_accessory/tails_animated
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	em_block = TRUE
 
 /datum/sprite_accessory/tails/lizard/smooth
 	name = "Smooth"
@@ -1625,6 +1719,7 @@
 
 /datum/sprite_accessory/snouts
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	em_block = TRUE
 
 /datum/sprite_accessory/snouts/sharp
 	name = "Sharp"
@@ -1644,6 +1739,7 @@
 
 /datum/sprite_accessory/horns
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	em_block = TRUE
 
 /datum/sprite_accessory/horns/none
 	name = "None"
@@ -1671,6 +1767,7 @@
 
 /datum/sprite_accessory/ears
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	em_block = TRUE
 
 /datum/sprite_accessory/ears/none
 	name = "None"
@@ -1688,14 +1785,16 @@
 
 /datum/sprite_accessory/wings
 	icon = 'icons/mob/clothing/wings.dmi'
+	em_block = TRUE
 
 /datum/sprite_accessory/wings_open
 	icon = 'icons/mob/clothing/wings.dmi'
+	em_block = TRUE
 
 /datum/sprite_accessory/wings/angel
 	name = "Angel"
 	icon_state = "angel"
-	color_src = 0
+	color_src = FALSE
 	dimension_x = 46
 	center = TRUE
 	dimension_y = 34
@@ -1704,7 +1803,7 @@
 /datum/sprite_accessory/wings_open/angel
 	name = "Angel"
 	icon_state = "angel"
-	color_src = 0
+	color_src = FALSE
 	dimension_x = 46
 	center = TRUE
 	dimension_y = 34
@@ -1727,7 +1826,7 @@
 /datum/sprite_accessory/wings/megamoth
 	name = "Megamoth"
 	icon_state = "megamoth"
-	color_src = 0
+	color_src = FALSE
 	dimension_x = 96
 	center = TRUE
 	dimension_y = 32
@@ -1736,7 +1835,7 @@
 /datum/sprite_accessory/wings_open/megamoth
 	name = "Megamoth"
 	icon_state = "megamoth"
-	color_src = 0
+	color_src = FALSE
 	dimension_x = 96
 	center = TRUE
 	dimension_y = 32
@@ -1744,7 +1843,7 @@
 /datum/sprite_accessory/wings/mothra
 	name = "Mothra"
 	icon_state = "mothra"
-	color_src = 0
+	color_src = FALSE
 	dimension_x = 96
 	center = TRUE
 	dimension_y = 32
@@ -1753,7 +1852,58 @@
 /datum/sprite_accessory/wings_open/mothra
 	name = "Mothra"
 	icon_state = "mothra"
-	color_src = 0
+	color_src = FALSE
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+
+/datum/sprite_accessory/wings/skeleton
+	name = "Skeleton"
+	icon_state = "skele"
+	color_src = FALSE
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+	locked = TRUE
+
+/datum/sprite_accessory/wings_open/skeleton
+	name = "Skeleton"
+	icon_state = "skele"
+	color_src = FALSE
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+
+/datum/sprite_accessory/wings/robotic
+	name = "Robotic"
+	icon_state = "robotic"
+	color_src = FALSE
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+	locked = TRUE
+
+/datum/sprite_accessory/wings_open/robotic
+	name = "Robotic"
+	icon_state = "robotic"
+	color_src = FALSE
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+
+/datum/sprite_accessory/wings/fly
+	name = "Fly"
+	icon_state = "fly"
+	color_src = FALSE
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+	locked = TRUE
+
+/datum/sprite_accessory/wings_open/fly
+	name = "Fly"
+	icon_state = "fly"
+	color_src = FALSE
 	dimension_x = 96
 	center = TRUE
 	dimension_y = 32
@@ -1779,9 +1929,11 @@
 
 /datum/sprite_accessory/spines
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	em_block = TRUE
 
 /datum/sprite_accessory/spines_animated
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	em_block = TRUE
 
 /datum/sprite_accessory/spines/none
 	name = "None"
@@ -1833,6 +1985,7 @@
 
 /datum/sprite_accessory/legs //legs are a special case, they aren't actually sprite_accessories but are updated with them.
 	icon = null //These datums exist for selecting legs on preference, and little else
+	em_block = TRUE
 
 /datum/sprite_accessory/legs/none
 	name = "Normal Legs"
@@ -1843,6 +1996,7 @@
 /datum/sprite_accessory/caps
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	color_src = HAIR
+	em_block = TRUE
 
 /datum/sprite_accessory/caps/round
 	name = "Round"
@@ -1851,6 +2005,7 @@
 /datum/sprite_accessory/moth_wings
 	icon = 'icons/mob/moth_wings.dmi'
 	color_src = null
+	em_block = TRUE
 
 /datum/sprite_accessory/moth_wings/plain
 	name = "Plain"

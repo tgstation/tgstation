@@ -413,42 +413,47 @@
 		if(amount) //don't spam up the chat for continuous stuns
 			if(priority_absorb_key["visible_message"] || priority_absorb_key["self_message"])
 				if(priority_absorb_key["visible_message"] && priority_absorb_key["self_message"])
-					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>", "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
+					visible_message(span_warning("[src][priority_absorb_key["visible_message"]]"), span_boldwarning("[priority_absorb_key["self_message"]]"))
 				else if(priority_absorb_key["visible_message"])
-					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>")
+					visible_message(span_warning("[src][priority_absorb_key["visible_message"]]"))
 				else if(priority_absorb_key["self_message"])
-					to_chat(src, "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
+					to_chat(src, span_boldwarning("[priority_absorb_key["self_message"]]"))
 			priority_absorb_key["stuns_absorbed"] += amount
 		return TRUE
 
-/////////////////////////////////// DISABILITIES ////////////////////////////////////
-/mob/living/proc/add_quirk(quirktype, spawn_effects) //separate proc due to the way these ones are handled
+/mob/living/proc/add_quirk(quirktype) //separate proc due to the way these ones are handled
 	if(HAS_TRAIT(src, quirktype))
 		return
-	var/datum/quirk/T = quirktype
-	var/qname = initial(T.name)
+	var/datum/quirk/quirk = quirktype
+	var/qname = initial(quirk.name)
 	if(!SSquirks || !SSquirks.quirks[qname])
 		return
-	new quirktype (src, spawn_effects)
-	return TRUE
+	quirk = new quirktype()
+	if(quirk.add_to_holder(src))
+		return TRUE
+	qdel(quirk)
+	return FALSE
 
 /mob/living/proc/remove_quirk(quirktype)
-	for(var/datum/quirk/Q in roundstart_quirks)
-		if(Q.type == quirktype)
-			qdel(Q)
+	for(var/datum/quirk/quirk in quirks)
+		if(quirk.type == quirktype)
+			qdel(quirk)
 			return TRUE
 	return FALSE
 
 /mob/living/proc/has_quirk(quirktype)
-	for(var/datum/quirk/Q in roundstart_quirks)
-		if(Q.type == quirktype)
+	for(var/datum/quirk/quirk in quirks)
+		if(quirk.type == quirktype)
 			return TRUE
 	return FALSE
 
 /////////////////////////////////// TRAIT PROCS ////////////////////////////////////
 
 /mob/living/proc/cure_blind(source)
-	REMOVE_TRAIT(src, TRAIT_BLIND, source)
+	if(source)
+		REMOVE_TRAIT(src, TRAIT_BLIND, source)
+	else
+		REMOVE_TRAIT_NOT_FROM(src, TRAIT_BLIND, list(QUIRK_TRAIT, EYES_COVERED, BLINDFOLD_TRAIT))
 	if(!HAS_TRAIT(src, TRAIT_BLIND))
 		update_blindness()
 

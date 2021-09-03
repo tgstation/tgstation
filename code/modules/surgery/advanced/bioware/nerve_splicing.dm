@@ -18,14 +18,14 @@
 	time = 155
 
 /datum/surgery_step/splice_nerves/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You start splicing together [target]'s nerves.</span>",
-		"<span class='notice'>[user] starts splicing together [target]'s nerves.</span>",
-		"<span class='notice'>[user] starts manipulating [target]'s nervous system.</span>")
+	display_results(user, target, span_notice("You start splicing together [target]'s nerves."),
+		span_notice("[user] starts splicing together [target]'s nerves."),
+		span_notice("[user] starts manipulating [target]'s nervous system."))
 
 /datum/surgery_step/splice_nerves/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	display_results(user, target, "<span class='notice'>You successfully splice [target]'s nervous system!</span>",
-		"<span class='notice'>[user] successfully splices [target]'s nervous system!</span>",
-		"<span class='notice'>[user] finishes manipulating [target]'s nervous system.</span>")
+	display_results(user, target, span_notice("You successfully splice [target]'s nervous system!"),
+		span_notice("[user] successfully splices [target]'s nervous system!"),
+		span_notice("[user] finishes manipulating [target]'s nervous system."))
 	new /datum/bioware/spliced_nerves(target)
 	return ..()
 

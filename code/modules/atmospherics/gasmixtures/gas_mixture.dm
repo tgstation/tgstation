@@ -3,19 +3,7 @@ What are the archived variables for?
 Calculations are done using the archived variables with the results merged into the regular variables.
 This prevents race conditions that arise based on the order of tile processing.
 */
-#define MINIMUM_HEAT_CAPACITY 0.0003
-#define MINIMUM_MOLE_COUNT 0.01
-#define MOLAR_ACCURACY  1E-4
-/**
- *I feel the need to document what happens here. Basically this is used
- *catch rounding errors, and make gas go away in small portions.
- *People have raised it to higher levels in the past, do not do this. Consider this number a soft limit
- *If you're making gasmixtures that have unexpected behavior related to this value, you're doing something wrong.
- *
- *On an unrelated note this may cause a bug that creates negative gas, related to round(). When it has a second arg it will round up.
- *So for instance round(0.5, 1) == 1. I've hardcoded a fix for this into share, by forcing the garbage collect.
- *Any other attempts to fix it just killed atmos. I leave this to a greater man then I
- */
+
 #define QUANTIZE(variable) (round((variable), (MOLAR_ACCURACY)))
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
@@ -37,9 +25,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/tmp/temperature_archived = 0
 	var/volume = CELL_VOLUME //liters
 	var/last_share = 0
+	/// The fire key contains information that might determine the volume of hotspots.
 	var/list/reaction_results
-	var/list/analyzer_results //used for analyzer feedback - not initialized until its used
-	var/gc_share = FALSE // Whether to call garbage_collect() on the sharer during shares, used for immutable mixtures
+	/// Used for analyzer feedback - not initialized until its used
+	var/list/analyzer_results
+	/// Whether to call garbage_collect() on the sharer during shares, used for immutable mixtures
+	var/gc_share = FALSE
 
 /datum/gas_mixture/New(volume)
 	gases = new
@@ -259,7 +250,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			var/total_moles = gases[gas_id][MOLES] + other.gases[gas_id][MOLES]
 			gases[gas_id][MOLES] = total_moles * (volume/total_volume)
 			other.gases[gas_id][MOLES] = total_moles * (other.volume/total_volume)
-
+	garbage_collect()
+	other.garbage_collect()
 
 ///Creates new, identical gas mixture
 ///Returns: duplicate gas mixture
@@ -506,7 +498,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 ///Takes the amount of the gas you want to PP as an argument
 ///So I don't have to do some hacky switches/defines/magic strings
 ///eg:
-///Tox_PP = get_partial_pressure(gas_mixture.toxins)
+///Plas_PP = get_partial_pressure(gas_mixture.plasma)
 ///O2_PP = get_partial_pressure(gas_mixture.oxygen)
 
 /datum/gas_mixture/proc/get_breath_partial_pressure(gas_pressure)

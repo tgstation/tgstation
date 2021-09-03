@@ -1,13 +1,14 @@
 /datum/job/chemist
 	title = "Chemist"
 	department_head = list("Chief Medical Officer")
-	faction = "Station"
+	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
-	exp_type = EXP_TYPE_CREW
 	exp_requirements = 60
+	exp_required_type = EXP_TYPE_CREW
+	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/chemist
 	plasmaman_outfit = /datum/outfit/plasmaman/chemist
@@ -19,16 +20,21 @@
 
 	display_order = JOB_DISPLAY_ORDER_CHEMIST
 	bounty_types = CIV_JOB_CHEM
-	departments = DEPARTMENT_MEDICAL
+	departments_list = list(
+		/datum/job_department/medical,
+	)
 
 	family_heirlooms = list(/obj/item/book/manual/wiki/chemistry, /obj/item/ph_booklet)
 
 	mail_goodies = list(
-		/datum/reagent/flash_powder = 15,
-		/datum/reagent/exotic_stabilizer = 5,
-		/datum/reagent/toxin/leadacetate = 5,
+		/obj/item/reagent_containers/glass/bottle/flash_powder = 15,
+		/obj/item/reagent_containers/glass/bottle/exotic_stabilizer = 5,
+		/obj/item/reagent_containers/glass/bottle/leadacetate = 5,
 		/obj/item/paper/secretrecipe = 1
 	)
+
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+
 
 /datum/outfit/job/chemist
 	name = "Chemist"

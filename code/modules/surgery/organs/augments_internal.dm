@@ -35,7 +35,7 @@
 		return
 	var/stun_amount = 200/severity
 	owner.Stun(stun_amount)
-	to_chat(owner, "<span class='warning'>Your body seizes up!</span>")
+	to_chat(owner, span_warning("Your body seizes up!"))
 
 
 /obj/item/organ/cyberimp/brain/anti_drop
@@ -50,22 +50,21 @@
 /obj/item/organ/cyberimp/brain/anti_drop/ui_action_click()
 	active = !active
 	if(active)
-		for(var/obj/item/held_item in owner.held_items)
-			stored_items += held_item
-
 		var/list/hold_list = owner.get_empty_held_indexes()
 		if(LAZYLEN(hold_list) == owner.held_items.len)
-			to_chat(owner, "<span class='notice'>You are not holding any items, your hands relax...</span>")
+			to_chat(owner, span_notice("You are not holding any items, your hands relax..."))
 			active = FALSE
-			stored_items = list()
-		else
-			for(var/obj/item/stored_item in stored_items)
-				to_chat(owner, "<span class='notice'>Your [owner.get_held_index_name(owner.get_held_index_of_item(stored_item))]'s grip tightens.</span>")
-				ADD_TRAIT(stored_item, TRAIT_NODROP, IMPLANT_TRAIT)
-
+			return
+		for(var/obj/item/held_item as anything in owner.held_items)
+			if(!held_item)
+				continue
+			stored_items += held_item
+			to_chat(owner, span_notice("Your [owner.get_held_index_name(owner.get_held_index_of_item(held_item))]'s grip tightens."))
+			ADD_TRAIT(held_item, TRAIT_NODROP, IMPLANT_TRAIT)
+			RegisterSignal(held_item, COMSIG_ITEM_DROPPED, .proc/on_held_item_dropped)
 	else
 		release_items()
-		to_chat(owner, "<span class='notice'>Your hands relax...</span>")
+		to_chat(owner, span_notice("Your hands relax..."))
 
 
 /obj/item/organ/cyberimp/brain/anti_drop/emp_act(severity)
@@ -76,16 +75,17 @@
 	var/atom/throw_target
 	if(active)
 		release_items()
-	for(var/obj/item/stored_item in stored_items)
+	for(var/obj/item/stored_item as anything in stored_items)
 		throw_target = pick(oview(range))
 		stored_item.throw_at(throw_target, range, 2)
-		to_chat(owner, "<span class='warning'>Your [owner.get_held_index_name(owner.get_held_index_of_item(stored_item))] spasms and throws the [stored_item.name]!</span>")
+		to_chat(owner, span_warning("Your [owner.get_held_index_name(owner.get_held_index_of_item(stored_item))] spasms and throws the [stored_item.name]!"))
 	stored_items = list()
 
 
 /obj/item/organ/cyberimp/brain/anti_drop/proc/release_items()
-	for(var/obj/item/stored_item in stored_items)
+	for(var/obj/item/stored_item as anything in stored_items)
 		REMOVE_TRAIT(stored_item, TRAIT_NODROP, IMPLANT_TRAIT)
+		UnregisterSignal(stored_item, COMSIG_ITEM_DROPPED)
 	stored_items = list()
 
 
@@ -93,6 +93,12 @@
 	if(active)
 		ui_action_click()
 	..()
+
+/obj/item/organ/cyberimp/brain/anti_drop/proc/on_held_item_dropped(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(source, TRAIT_NODROP, IMPLANT_TRAIT)
+	UnregisterSignal(source, COMSIG_ITEM_DROPPED)
+	stored_items -= source
 
 /obj/item/organ/cyberimp/brain/anti_stun
 	name = "CNS Rebooter implant"
@@ -155,7 +161,7 @@
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
 	if(prob(60/severity))
-		to_chat(owner, "<span class='warning'>Your breathing tube suddenly closes!</span>")
+		to_chat(owner, span_warning("Your breathing tube suddenly closes!"))
 		owner.losebreath += 2
 
 //BOX O' IMPLANTS

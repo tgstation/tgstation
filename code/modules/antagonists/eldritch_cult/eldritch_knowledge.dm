@@ -39,7 +39,7 @@
  * This proc is called whenever a new eldritch knowledge is added to an antag datum
  */
 /datum/eldritch_knowledge/proc/on_gain(mob/user)
-	to_chat(user, "<span class='warning'>[gain_text]</span>")
+	to_chat(user, span_warning("[gain_text]"))
 	return
 /**
  * What happens when you loose this
@@ -156,12 +156,12 @@
 	var/list/compiled_list = list()
 
 	for(var/mob/living/carbon/human/human_to_check as anything in GLOB.human_list)
-		if(fingerprints[md5(human_to_check.dna.uni_identity)])
+		if(fingerprints[md5(human_to_check.dna.unique_identity)])
 			compiled_list |= human_to_check.real_name
 			compiled_list[human_to_check.real_name] = human_to_check
 
 	if(compiled_list.len == 0)
-		to_chat(user, "<span class='warning'>These items don't possess the required fingerprints or DNA.</span>")
+		to_chat(user, span_warning("These items don't possess the required fingerprints or DNA."))
 		return FALSE
 
 	var/chosen_mob = input("Select the person you wish to curse","Your target") as null|anything in sortList(compiled_list, /proc/cmp_mob_realname_dsc)
@@ -182,12 +182,12 @@
 	var/mob/living/mob_to_summon
 
 /datum/eldritch_knowledge/summon/on_finished_recipe(mob/living/user, list/atoms, loc)
-	//we need to spawn the mob first so that we can use it in pollCandidatesForMob, we will move it from nullspace down the code
+	//we need to spawn the mob first so that we can use it in poll_candidates_for_mob, we will move it from nullspace down the code
 	var/mob/living/summoned = new mob_to_summon(loc)
 	message_admins("[summoned.name] is being summoned by [user.real_name] in [loc]")
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [summoned.real_name]", ROLE_HERETIC, FALSE, 100, summoned)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [summoned.real_name]", ROLE_HERETIC, FALSE, 10 SECONDS, summoned)
 	if(!LAZYLEN(candidates))
-		to_chat(user,"<span class='warning'>No ghost could be found...</span>")
+		to_chat(user,span_warning("No ghost could be found..."))
 		qdel(summoned)
 		return FALSE
 	var/mob/dead/observer/picked_candidate = pick(candidates)
@@ -258,7 +258,7 @@
 	for(var/obj/item/living_heart/heart in atoms)
 
 		if(heart.target && heart.target.stat == DEAD)
-			to_chat(carbon_user,"<span class='danger'>Your patrons accepts your offer..</span>")
+			to_chat(carbon_user,span_danger("Your patrons accepts your offer.."))
 			var/mob/living/carbon/human/current_target = heart.target
 			current_target.gib()
 			heart.target = null
@@ -289,13 +289,13 @@
 						break
 				if(!targeted)
 					break
-				targets["[targeted.current.real_name] the [targeted.assigned_role][is_teammate ? " (ally)" : ""]"] = targeted.current
+				targets["[targeted.current.real_name] the [targeted.assigned_role.title][is_teammate ? " (ally)" : ""]"] = targeted.current
 			heart.target = targets[input(user,"Choose your next target","Target") in targets]
 			qdel(temp_objective)
 			if(heart.target)
-				to_chat(user,"<span class='warning'>Your new target has been selected, go and sacrifice [heart.target.real_name]!</span>")
+				to_chat(user,span_warning("Your new target has been selected, go and sacrifice [heart.target.real_name]!"))
 			else
-				to_chat(user, "<span class='warning'>target could not be found for living heart.</span>")
+				to_chat(user, span_warning("target could not be found for living heart."))
 
 /datum/eldritch_knowledge/spell/basic/cleanup_atoms(list/atoms)
 	return
@@ -315,5 +315,5 @@
 	gain_text = "Their hand is at your throat, yet you see Them not."
 	cost = 0
 	required_atoms = list(/obj/item/organ/eyes,/obj/item/stack/sheet/animalhide/human,/obj/item/storage/book/bible,/obj/item/pen)
-	result_atoms = list(/obj/item/forbidden_book)
+	result_atoms = list(/obj/item/forbidden_book/ritual)
 	route = "Start"

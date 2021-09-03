@@ -1,11 +1,12 @@
 /datum/job/mime
 	title = "Mime"
 	department_head = list("Head of Personnel")
-	faction = "Station"
+	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
+	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/mime
 	plasmaman_outfit = /datum/outfit/plasmaman/mime
@@ -14,7 +15,9 @@
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_MIME
-	departments = DEPARTMENT_SERVICE
+	departments_list = list(
+		/datum/job_department/service,
+		)
 
 	family_heirlooms = list(/obj/item/food/baguette)
 
@@ -25,8 +28,18 @@
 		/obj/item/book/mimery = 1,
 	)
 
-/datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
-	H.apply_pref_name("mime", M.client)
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+
+	voice_of_god_power = 0.5 //Why are you speaking
+	voice_of_god_silence_power = 3
+
+
+/datum/job/mime/after_spawn(mob/living/spawned, client/player_client)
+	. = ..()
+	if(!ishuman(spawned))
+		return
+	spawned.apply_pref_name("mime", player_client)
+
 
 /datum/outfit/job/mime
 	name = "Mime"
@@ -86,7 +99,7 @@
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_box(null))
 		else
 			return
-	to_chat(user, "<span class='warning'>The book disappears into thin air.</span>")
+	to_chat(user, span_warning("The book disappears into thin air."))
 	qdel(src)
 
 /**

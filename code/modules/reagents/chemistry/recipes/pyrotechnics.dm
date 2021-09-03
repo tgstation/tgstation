@@ -131,13 +131,13 @@
 				deity = GLOB.deity
 			else
 				deity = "Christ"
-			to_chat(R, "<span class='userdanger'>The power of [deity] compels you!</span>")
+			to_chat(R, span_userdanger("The power of [deity] compels you!"))
 			R.stun(20)
 			R.reveal(100)
 			R.adjustHealth(50)
 		for(var/mob/living/carbon/C in get_hearers_in_view(effective_size,T))
 			if(IS_CULTIST(C))
-				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
+				to_chat(C, span_userdanger("The divine explosion sears you!"))
 				C.Paralyze(40)
 				C.adjust_fire_stacks(5)
 				C.IgniteMob()
@@ -594,3 +594,8 @@
 	thermic_constant= -1
 	H_ion_release = -0.02
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
+
+/datum/chemical_reaction/reagent_explosion/patriotism_overload
+	required_reagents = list(/datum/reagent/consumable/ethanol/planet_cracker = 1, /datum/reagent/consumable/ethanol/triumphal_arch = 1)
+	strengthdiv = 20
+	mix_message = "<span class='boldannounce'>The two patriotic drinks instantly reject each other!</span>"

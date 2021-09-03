@@ -70,19 +70,19 @@
 		return
 
 	else if(trapped == SPOOKY_SKELETON)
-		visible_message("<span class='userdanger'><font size='5'>BOO!</font></span>")
+		visible_message(span_userdanger("<font size='5'>BOO!</font>"))
 		playsound(loc, 'sound/spookoween/girlscream.ogg', 300, TRUE)
 		trapped = 0
 		QDEL_IN(trapped_mob, 90)
 
 	else if(trapped == HOWLING_GHOST)
-		visible_message("<span class='userdanger'><font size='5'>[pick("OooOOooooOOOoOoOOooooOOOOO", "BooOOooOooooOOOO", "BOO!", "WoOOoOoooOooo")]</font></span>")
+		visible_message(span_userdanger("<font size='5'>[pick("OooOOooooOOOoOoOOooooOOOOO", "BooOOooOooooOOOO", "BOO!", "WoOOoOoooOooo")]</font>"))
 		playsound(loc, 'sound/spookoween/ghosty_wind.ogg', 300, TRUE)
 		new /mob/living/simple_animal/shade/howling_ghost(loc)
 		trapped = 0
 
 	else if(trapped == SCARY_BATS)
-		visible_message("<span class='userdanger'><font size='5'>Protect your hair!</font></span>")
+		visible_message(span_userdanger("<font size='5'>Protect your hair!</font>"))
 		playsound(loc, 'sound/spookoween/bats.ogg', 300, TRUE)
 		var/number = rand(1,3)
 		for(var/i=0,i < number,i++)
@@ -90,15 +90,15 @@
 		trapped = 0
 
 	else if(trapped == ANGRY_FAITHLESS)
-		visible_message("<span class='userdanger'>The closet bursts open!</span>")
-		visible_message("<span class='userdanger'><font size='5'>THIS BEING RADIATES PURE EVIL! YOU BETTER RUN!!!</font></span>")
+		visible_message(span_userdanger("The closet bursts open!"))
+		visible_message(span_userdanger("<font size='5'>THIS BEING RADIATES PURE EVIL! YOU BETTER RUN!!!</font>"))
 		playsound(loc, 'sound/hallucinations/wail.ogg', 300, TRUE)
 		var/mob/living/simple_animal/hostile/faithless/F = new(loc)
 		trapped = 0
 		QDEL_IN(F, 120)
 
 	else if(trapped == INSANE_CLOWN)
-		visible_message("<span class='userdanger'><font size='5'>...</font></span>")
+		visible_message(span_userdanger("<font size='5'>...</font>"))
 		playsound(loc, 'sound/spookoween/scary_clown_appear.ogg', 300, TRUE)
 		spawn_atom_to_turf(/mob/living/simple_animal/hostile/clown_insane, loc, 1, FALSE)
 		trapped = 0
@@ -188,7 +188,7 @@
 	maxHealth = INFINITY
 	health = INFINITY
 	emote_see = list("silently stares")
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 0
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -249,11 +249,11 @@
 /mob/living/simple_animal/hostile/clown_insane/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/nullrod))
 		if(prob(5))
-			visible_message("<span class='notice'>[src] finally found the peace it deserves. <i>You hear honks echoing off into the distance.</i></span>")
+			visible_message(span_notice("[src] finally found the peace it deserves. <i>You hear honks echoing off into the distance.</i>"))
 			playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, TRUE)
 			qdel(src)
 		else
-			visible_message("<span class='danger'>[src] seems to be resisting the effect!</span>")
+			visible_message(span_danger("[src] seems to be resisting the effect!"))
 		return
 	return ..()
 

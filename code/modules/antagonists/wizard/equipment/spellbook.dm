@@ -37,7 +37,7 @@
 		if(initial(S.name) != initial(aspell.name)) // Not using directly in case it was learned from one spellbook then upgraded in another
 			continue
 		if(aspell.spell_level >= aspell.level_max)
-			to_chat(user,  "<span class='warning'>This spell cannot be improved further!</span>")
+			to_chat(user,  span_warning("This spell cannot be improved further!"))
 			return FALSE
 
 		aspell.name = initial(aspell.name)
@@ -48,21 +48,21 @@
 		var/newname = "ERROR"
 		switch(aspell.spell_level)
 			if(1)
-				to_chat(user, "<span class='notice'>You have improved [aspell.name] into Efficient [aspell.name].</span>")
+				to_chat(user, span_notice("You have improved [aspell.name] into Efficient [aspell.name]."))
 				newname = "Efficient [aspell.name]"
 			if(2)
-				to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Quickened [aspell.name].</span>")
+				to_chat(user, span_notice("You have further improved [aspell.name] into Quickened [aspell.name]."))
 				newname = "Quickened [aspell.name]"
 			if(3)
-				to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Free [aspell.name].</span>")
+				to_chat(user, span_notice("You have further improved [aspell.name] into Free [aspell.name]."))
 				newname = "Free [aspell.name]"
 			if(4)
-				to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Instant [aspell.name].</span>")
+				to_chat(user, span_notice("You have further improved [aspell.name] into Instant [aspell.name]."))
 				newname = "Instant [aspell.name]"
 		aspell.name = newname
 		name = newname
 		if(aspell.spell_level >= aspell.level_max)
-			to_chat(user, "<span class='warning'>This spell cannot be strengthened any further!</span>")
+			to_chat(user, span_warning("This spell cannot be strengthened any further!"))
 		//we'll need to update the cooldowns for the spellbook
 		GetInfo()
 		log_spellbook("[key_name(user)] improved their knowledge of [src] to level [aspell.spell_level] for [cost] points")
@@ -72,11 +72,13 @@
 	log_spellbook("[key_name(user)] learned [src] for [cost] points")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	user.mind.AddSpell(S)
-	to_chat(user, "<span class='notice'>You have learned [S.name].</span>")
+	to_chat(user, span_notice("You have learned [S.name]."))
 	return TRUE
 
 /datum/spellbook_entry/proc/CanRefund(mob/living/carbon/human/user,obj/item/spellbook/book)
 	if(!refundable)
+		return FALSE
+	if(!book.can_refund)
 		return FALSE
 	if(!S)
 		S = new spell_type()
@@ -88,7 +90,7 @@
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user,obj/item/spellbook/book) //return point value or -1 for failure
 	var/area/wizard_station/A = GLOB.areas_by_type[/area/wizard_station]
 	if(!(user in A.contents))
-		to_chat(user, "<span class='warning'>You can only refund spells at the wizard lair!</span>")
+		to_chat(user, span_warning("You can only refund spells at the wizard lair!"))
 		return -1
 	if(!S)
 		S = new spell_type()
@@ -554,7 +556,7 @@
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	new /datum/round_event/wizard/ghost()
 	times++
-	to_chat(user, "<span class='notice'>You have cast summon ghosts!</span>")
+	to_chat(user, span_notice("You have cast summon ghosts!"))
 	playsound(get_turf(user), 'sound/effects/ghost2.ogg', 50, TRUE)
 	return TRUE
 
@@ -577,7 +579,7 @@
 	rightandwrong(SUMMON_GUNS, user, 10)
 	times++
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
-	to_chat(user, "<span class='notice'>You have cast summon guns!</span>")
+	to_chat(user, span_notice("You have cast summon guns!"))
 	return TRUE
 
 /datum/spellbook_entry/summon/magic
@@ -599,7 +601,7 @@
 	rightandwrong(SUMMON_MAGIC, user, 10)
 	times++
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
-	to_chat(user, "<span class='notice'>You have cast summon magic!</span>")
+	to_chat(user, span_notice("You have cast summon magic!"))
 	return TRUE
 
 /datum/spellbook_entry/summon/events
@@ -623,7 +625,7 @@
 	summonevents()
 	times++
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
-	to_chat(user, "<span class='notice'>You have cast summon events.</span>")
+	to_chat(user, span_notice("You have cast summon events."))
 	return TRUE
 
 /datum/spellbook_entry/summon/events/GetInfo()
@@ -644,7 +646,7 @@
 	if(!message)
 		return FALSE
 	curse_of_madness(user, message)
-	to_chat(user, "<span class='notice'>You have cast the curse of insanity!</span>")
+	to_chat(user, span_notice("You have cast the curse of insanity!"))
 	playsound(user, 'sound/magic/mandswap.ogg', 50, TRUE)
 	return TRUE
 
@@ -660,7 +662,16 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
 	var/uses = 10
-	var/temp = null
+
+	/// The bonus that you get from going semi-random.
+	var/semi_random_bonus = 2
+
+	/// The bonus that you get from going full random.
+	var/full_random_bonus = 5
+
+	/// Determines if this spellbook can refund anything.
+	var/can_refund = TRUE
+
 	var/mob/living/carbon/human/owner
 	var/list/entries = list()
 
@@ -677,31 +688,35 @@
 
 /obj/item/spellbook/attack_self(mob/user)
 	if(!owner)
-		to_chat(user, "<span class='notice'>You bind the spellbook to yourself.</span>")
+		to_chat(user, span_notice("You bind the spellbook to yourself."))
 		owner = user
 		return
 	if(user != owner)
-		if(user.mind.special_role == "apprentice")
+		if(user.mind.special_role == ROLE_WIZARD_APPRENTICE)
 			to_chat(user, "If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not.")
 		else
-			to_chat(user, "<span class='warning'>The [name] does not recognize you as its owner and refuses to open!</span>")
+			to_chat(user, span_warning("The [name] does not recognize you as its owner and refuses to open!"))
 		return
 	. = ..()
 
 /obj/item/spellbook/attackby(obj/item/O, mob/user, params)
+	if(!can_refund)
+		to_chat(user, span_warning("You can't refund anything!"))
+		return
+
 	if(istype(O, /obj/item/antag_spawner/contract))
 		var/obj/item/antag_spawner/contract/contract = O
 		if(contract.used)
-			to_chat(user, "<span class='warning'>The contract has been used, you can't get your points back now!</span>")
+			to_chat(user, span_warning("The contract has been used, you can't get your points back now!"))
 		else
-			to_chat(user, "<span class='notice'>You feed the contract back into the spellbook, refunding your points.</span>")
+			to_chat(user, span_notice("You feed the contract back into the spellbook, refunding your points."))
 			uses += 2
 			for(var/datum/spellbook_entry/item/contract/CT in entries)
 				if(!isnull(CT.limit))
 					CT.limit++
 			qdel(O)
 	else if(istype(O, /obj/item/antag_spawner/slaughter_demon))
-		to_chat(user, "<span class='notice'>On second thought, maybe summoning a demon is a bad idea. You refund your points.</span>")
+		to_chat(user, span_notice("On second thought, maybe summoning a demon is a bad idea. You refund your points."))
 		if(istype(O, /obj/item/antag_spawner/slaughter_demon/laughter))
 			uses += 1
 			for(var/datum/spellbook_entry/item/hugbottle/HB in entries)
@@ -734,6 +749,8 @@
 	var/list/data = list()
 	data["owner"] = owner
 	data["points"] = uses
+	data["semi_random_bonus"] = initial(uses) + semi_random_bonus
+	data["full_random_bonus"] = initial(uses) + full_random_bonus
 	return data
 
 //This is a MASSIVE amount of data, please be careful if you remove it from static.
@@ -763,7 +780,7 @@
 		return
 	var/mob/living/carbon/human/wizard = usr
 	if(!istype(wizard))
-		to_chat(wizard, "<span class='warning'>The book doesn't seem to listen to lower life forms.</span>")
+		to_chat(wizard, span_warning("The book doesn't seem to listen to lower life forms."))
 		return
 	switch(action)
 		if("purchase")
@@ -785,14 +802,14 @@
 			update_static_data(wizard) //update statics!
 	//actions that are only available if you have full spell points
 	if(uses < initial(uses))
-		to_chat(wizard, "<span class='warning'>You need to have all your spell points to do this!</span>")
+		to_chat(wizard, span_warning("You need to have all your spell points to do this!"))
 		return
 	switch(action)
 		if("semirandomize")
-			semirandomize(wizard)
+			semirandomize(wizard, semi_random_bonus)
 			update_static_data(wizard) //update statics!
 		if("randomize")
-			randomize(wizard)
+			randomize(wizard, full_random_bonus)
 			update_static_data(wizard) //update statics!
 		else //some loadout
 			wizard_loadout(wizard, action)
@@ -829,7 +846,7 @@
 	if(uses)
 		stack_trace("Wizard Loadout \"[loadout]\" does not use 10 wizard spell slots. Stop scamming players out.")
 
-/obj/item/spellbook/proc/semirandomize(mob/living/carbon/human/wizard)
+/obj/item/spellbook/proc/semirandomize(mob/living/carbon/human/wizard, bonus_to_give = 0)
 	var/list/needed_cats = list("Offensive", "Mobility")
 	var/list/shuffled_entries = shuffle(entries)
 	for(var/i in 1 to 2)
@@ -845,15 +862,20 @@
 					uses -= entry.cost
 				break
 	//we have given two specific category spells to the wizard. the rest are completely random!
-	randomize(wizard)
+	randomize(wizard, bonus_to_give = bonus_to_give)
 
-/obj/item/spellbook/proc/randomize(mob/living/carbon/human/wizard)
+/obj/item/spellbook/proc/randomize(mob/living/carbon/human/wizard, bonus_to_give = 0)
 	var/list/entries_copy = entries.Copy()
-	while(uses > 0)
-		var/datum/spellbook_entry/entry = pick_n_take(entries_copy)
-		if(entry?.CanBuy(wizard,src))
-			if(entry.Buy(wizard,src))
-				entry.refundable = FALSE //once you go random, you never go back
-				if(entry.limit)
-					entry.limit--
-				uses -= entry.cost
+	uses += bonus_to_give
+	while(uses > 0 && length(entries_copy))
+		var/datum/spellbook_entry/entry = pick(entries_copy)
+		if(!entry?.CanBuy(wizard,src) || !entry.Buy(wizard,src))
+			entries_copy -= entry
+			continue
+
+		entry.refundable = FALSE //once you go random, you never go back
+		if(entry.limit)
+			entry.limit--
+		uses -= entry.cost
+
+	can_refund = FALSE

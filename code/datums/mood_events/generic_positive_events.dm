@@ -153,7 +153,7 @@
 	mood_change = 5
 
 /datum/mood_event/sacrifice_good
-	description ="<span class='nicegreen'>The gods are pleased with this offering!</span>\n"
+	description = "<span class='nicegreen'>The gods are pleased with this offering!</span>\n"
 	mood_change = 5
 	timeout = 3 MINUTES
 
@@ -186,13 +186,6 @@
 	description = "<span class='nicegreen'>What a peculiar emblem.  It makes me feel hopeful for my future.</span>\n"
 	mood_change = 10
 
-/datum/mood_event/nanite_happiness
-	description = "<span class='nicegreen robot'>+++++++HAPPINESS ENHANCEMENT+++++++</span>\n"
-	mood_change = 7
-
-/datum/mood_event/nanite_happiness/add_effects(message)
-	description = "<span class='nicegreen robot'>+++++++[message]+++++++</span>\n"
-
 /datum/mood_event/area
 	description = "" //Fill this out in the area
 	mood_change = 0
@@ -207,7 +200,7 @@
 
 /datum/mood_event/holy_consumption
 	description = "<span class='nicegreen'>Truly, that was the food of the Divine!</span>\n"
-	mood_change = 5
+	mood_change = 1 // 1 + 5 from it being liked food makes it as good as jolly
 	timeout = 3 MINUTES
 
 /datum/mood_event/high_five
@@ -246,3 +239,13 @@
 /datum/mood_event/honorbound
 	description = "<span class='nicegreen'>Following my honorbound code is fulfilling!</span>\n"
 	mood_change = 4
+
+/datum/mood_event/et_pieces
+	description = "<span class='abductor'>Mmm... I love peanut butter...</span>\n"
+	mood_change = 50
+	timeout = 10 MINUTES
+
+/datum/mood_event/memories_of_home
+	description = "<span class='nicegreen'>This taste seems oddly nostalgic...</span>\n"
+	mood_change = 3
+	timeout = 5 MINUTES

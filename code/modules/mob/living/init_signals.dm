@@ -100,11 +100,15 @@
 
 /// Called when [TRAIT_FORCED_STANDING] is added to the mob.
 /mob/living/proc/on_forced_standing_trait_gain(datum/source)
+	SIGNAL_HANDLER
+
 	set_body_position(STANDING_UP)
 	set_lying_angle(0)
 
 /// Called when [TRAIT_FORCED_STANDING] is removed from the mob.
 /mob/living/proc/on_forced_standing_trait_loss(datum/source)
+	SIGNAL_HANDLER
+
 	if(resting || HAS_TRAIT(src, TRAIT_FLOORED))
 		set_lying_down()
 
@@ -187,12 +191,12 @@
 		clear_alert("succumb")
 
 ///From [element/movetype_handler/on_movement_type_trait_gain()]
-/mob/living/proc/on_movement_type_flag_enabled(datum/source, trait)
+/mob/living/proc/on_movement_type_flag_enabled(datum/source, flag, old_movement_type)
 	SIGNAL_HANDLER
 	update_movespeed(FALSE)
 
 ///From [element/movetype_handler/on_movement_type_trait_loss()]
-/mob/living/proc/on_movement_type_flag_disabled(datum/source, trait)
+/mob/living/proc/on_movement_type_flag_disabled(datum/source, flag, old_movement_type)
 	SIGNAL_HANDLER
 	update_movespeed(FALSE)
 

@@ -1,6 +1,6 @@
 /datum/species/dullahan
 	name = "Dullahan"
-	id = "dullahan"
+	id = SPECIES_DULLAHAN
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
@@ -9,6 +9,7 @@
 		TRAIT_NOHUNGER,
 		TRAIT_NOBREATH,
 	)
+	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
 	use_skintones = TRUE
 	mutantbrain = /obj/item/organ/brain/dullahan
@@ -29,7 +30,7 @@
 
 /datum/species/dullahan/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
-	H.flags_1 &= ~HEAR_1
+	REMOVE_TRAIT(src, TRAIT_HEARING_SENSITIVE, TRAIT_GENERIC)
 	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
 		head.drop_limb()
@@ -43,7 +44,7 @@
 	H.set_safe_hunger_level()
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/H)
-	H.flags_1 |= HEAR_1
+	H.become_hearing_sensitive()
 	H.reset_perspective(H)
 	if(myhead)
 		var/obj/item/dullahan_relay/DR = myhead
@@ -120,7 +121,6 @@
 /obj/item/dullahan_relay
 	name = "dullahan relay"
 	var/mob/living/owner
-	flags_1 = HEAR_1
 
 /obj/item/dullahan_relay/Initialize(mapload, mob/living/carbon/human/new_owner)
 	. = ..()
@@ -132,6 +132,7 @@
 	RegisterSignal(src, COMSIG_ATOM_HEARER_IN_VIEW, .proc/include_owner)
 	RegisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS, .proc/unlist_head)
 	RegisterSignal(owner, COMSIG_LIVING_REVIVE, .proc/retrieve_head)
+	become_hearing_sensitive(ROUNDSTART_TRAIT)
 
 /obj/item/dullahan_relay/process()
 	if(!istype(loc, /obj/item/bodypart/head) || QDELETED(owner))
@@ -143,18 +144,18 @@
 	if(user.client.eye == src)
 		return COMPONENT_ALLOW_EXAMINATE
 
-//Adds the owner to the list of hearers in hearers_in_view(), for visible/hearable on top of say messages
-/obj/item/dullahan_relay/proc/include_owner(datum/source, list/processing_list, list/hearers)
+///Adds the owner to the list of hearers in hearers_in_view(), for visible/hearable on top of say messages
+/obj/item/dullahan_relay/proc/include_owner(datum/source, list/hearers)
 	SIGNAL_HANDLER
 	if(!QDELETED(owner))
 		hearers += owner
 
-//Stops dullahans from gibbing when regenerating limbs
+///Stops dullahans from gibbing when regenerating limbs
 /obj/item/dullahan_relay/proc/unlist_head(datum/source, noheal = FALSE, list/excluded_zones)
 	SIGNAL_HANDLER
 	excluded_zones |= BODY_ZONE_HEAD
 
-//Retrieving the owner's head for better ahealing.
+///Retrieving the owner's head for better ahealing.
 /obj/item/dullahan_relay/proc/retrieve_head(datum/source, full_heal, admin_revive)
 	SIGNAL_HANDLER
 	if(admin_revive)
@@ -171,4 +172,4 @@
 			D.myhead = null
 			owner.gib()
 	owner = null
-	..()
+	return ..()

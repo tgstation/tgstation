@@ -21,7 +21,7 @@
 	/area/ai_monitored/turret_protected/ai, /area/commons/storage/emergency/starboard, /area/commons/storage/emergency/port, /area/shuttle, /area/security/prison/safe, /area/security/prison/toilet)
 	target_trait = ZTRAIT_STATION
 
-	immunity_type = RAD
+	immunity_type = TRAIT_RADSTORM_IMMUNE
 
 /datum/weather/rad_storm/telegraph()
 	..()
@@ -35,12 +35,13 @@
 			var/mob/living/carbon/human/H = L
 			if(H.dna && !HAS_TRAIT(H, TRAIT_GENELESS))
 				if(prob(max(0,100-resist)))
-					H.randmuti()
+					H.random_mutate_unique_identity()
+					H.random_mutate_unique_features()
 					if(prob(50))
 						if(prob(90))
-							H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
+							H.easy_random_mutate(NEGATIVE+MINOR_NEGATIVE)
 						else
-							H.easy_randmut(POSITIVE)
+							H.easy_random_mutate(POSITIVE)
 						H.domutcheck()
 		L.rad_act(20)
 

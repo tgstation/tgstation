@@ -28,13 +28,13 @@
 		var/area/A = get_area(user)
 		if(istype(A, /area/wizard_station))
 			add_fingerprint(user)
-			to_chat(user, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].</span>")
+			to_chat(user, span_warning("You know better than to violate the security of The Den, best wait until you leave to use [src]."))
 			return
 		else
 			no_den_usage = 0
 	if(checks_antimagic && user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE))
 		add_fingerprint(user)
-		to_chat(user, "<span class='warning'>Something is interfering with [src].</span>")
+		to_chat(user, span_warning("Something is interfering with [src]."))
 		return
 	. = ..()
 
@@ -45,7 +45,7 @@
 	if (charges && chambered && !chambered.loaded_projectile)
 		chambered.newshot()
 
-/obj/item/gun/magic/process_chamber()
+/obj/item/gun/magic/handle_chamber()
 	if(chambered && !chambered.loaded_projectile) //if BB is null, i.e the shot has been fired...
 		charges--//... drain a charge
 		recharge_newshot()
@@ -53,7 +53,8 @@
 /obj/item/gun/magic/Initialize()
 	. = ..()
 	charges = max_charges
-	chambered = new ammo_type(src)
+	if(ammo_type)
+		chambered = new ammo_type(src)
 	if(can_charge)
 		START_PROCESSING(SSobj, src)
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)
@@ -80,10 +81,10 @@
 
 
 /obj/item/gun/magic/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	to_chat(user, "<span class='warning'>The [name] whizzles quietly.</span>")
+	to_chat(user, span_warning("The [name] whizzles quietly."))
 
 /obj/item/gun/magic/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is twisting [src] above [user.p_their()] head, releasing a magical blast! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is twisting [src] above [user.p_their()] head, releasing a magical blast! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, fire_sound, 50, TRUE, -1)
 	return (FIRELOSS)
 

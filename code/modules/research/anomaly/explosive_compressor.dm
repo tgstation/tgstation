@@ -8,7 +8,7 @@
  *
  * The explosive compressor machine used in anomaly core production.
  *
- * Uses the standard toxins/tank explosion scaling to compress raw anomaly cores into completed ones. The required explosion radius increases as more cores of that type are created.
+ * Uses the standard ordnance/tank explosion scaling to compress raw anomaly cores into completed ones. The required explosion radius increases as more cores of that type are created.
  */
 /obj/machinery/research/explosive_compressor
 	name = "implosion compressor"
@@ -40,8 +40,8 @@
 
 /obj/machinery/research/explosive_compressor/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Ctrl-Click to remove an inserted core.</span>"
-	. += "<span class='notice'>Click with an empty hand to gather information about the required radius of an inserted core. Insert a ready TTV to start the implosion process if a core is inserted.</span>"
+	. += span_notice("Ctrl-Click to remove an inserted core.")
+	. += span_notice("Click with an empty hand to gather information about the required radius of an inserted core. Insert a ready TTV to start the implosion process if a core is inserted.")
 
 /obj/machinery/research/explosive_compressor/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
@@ -52,7 +52,7 @@
 	if(.)
 		return
 	if(!inserted_core)
-		to_chat(user, "<span class='warning'>There is no core inserted.</span>")
+		to_chat(user, span_warning("There is no core inserted."))
 		return
 	if(last_requirements_say + 3 SECONDS > world.time)
 		return
@@ -64,13 +64,13 @@
 	if(!istype(user) || !user.Adjacent(src) || !(user.mobility_flags & MOBILITY_USE))
 		return
 	if(!inserted_core)
-		to_chat(user, "<span class='warning'>There is no core inserted.</span>")
+		to_chat(user, span_warning("There is no core inserted."))
 		return
 	if(testing)
-		to_chat(user, "<span class='warning'>You can't remove [inserted_core] from [src] while [p_theyre()] in testing mode.</span>")
+		to_chat(user, span_warning("You can't remove [inserted_core] from [src] while [p_theyre()] in testing mode."))
 		return
 	inserted_core.forceMove(get_turf(user))
-	to_chat(user, "<span class='notice'>You remove [inserted_core] from [src].</span>")
+	to_chat(user, span_notice("You remove [inserted_core] from [src]."))
 	user.put_in_hands(inserted_core)
 	inserted_core = null
 
@@ -108,34 +108,34 @@
 	. = ..()
 	if(istype(tool, /obj/item/raw_anomaly_core))
 		if(inserted_core)
-			to_chat(user, "<span class='warning'>There is already a core in [src].</span>")
+			to_chat(user, span_warning("There is already a core in [src]."))
 			return
 		if(testing)
-			to_chat(user, "<span class='warning'>You can't insert [tool] into [src] while [p_theyre()] in testing mode.</span>")
+			to_chat(user, span_warning("You can't insert [tool] into [src] while [p_theyre()] in testing mode."))
 			return
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, "<span class='warning'>[tool] is stuck to your hand.</span>")
+			to_chat(user, span_warning("[tool] is stuck to your hand."))
 			return
 		inserted_core = tool
-		to_chat(user, "<span class='notice'>You insert [tool] into [src].</span>")
+		to_chat(user, span_notice("You insert [tool] into [src]."))
 		return
 	if(istype(tool, /obj/item/transfer_valve))
 		// If they don't have a bomb core inserted, don't let them insert this. If they do, insert and do implosion.
 		if(!inserted_core)
-			to_chat(user, "<span class='warning'>There is no core inserted in [src]. What would be the point of detonating an implosion without a core?</span>")
+			to_chat(user, span_warning("There is no core inserted in [src]. What would be the point of detonating an implosion without a core?"))
 			return
 		if(testing)
-			to_chat(user, "<span class='warning'>You can't insert [tool] into [src] while [p_theyre()] in testing mode.</span>")
+			to_chat(user, span_warning("You can't insert [tool] into [src] while [p_theyre()] in testing mode."))
 			return
 		var/obj/item/transfer_valve/valve = tool
 		if(!valve.ready())
-			to_chat(user, "<span class='warning'>[valve] is incomplete.</span>")
+			to_chat(user, span_warning("[valve] is incomplete."))
 			return
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, "<span class='warning'>[tool] is stuck to your hand.</span>")
+			to_chat(user, span_warning("[tool] is stuck to your hand."))
 			return
 		inserted_bomb = tool
-		to_chat(user, "<span class='notice'>You insert [tool] and press the start button.</span>")
+		to_chat(user, span_notice("You insert [tool] and press the start button."))
 		start_test()
 
 

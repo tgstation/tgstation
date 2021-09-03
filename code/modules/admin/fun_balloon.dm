@@ -28,7 +28,7 @@
 	return
 
 /obj/effect/fun_balloon/proc/pop()
-	visible_message("<span class='notice'>[src] pops!</span>")
+	visible_message(span_notice("[src] pops!"))
 	playsound(get_turf(src), pop_sound_effect, 50, TRUE, -1)
 	qdel(src)
 
@@ -88,7 +88,7 @@
 			bodies += possessable
 
 	var/question = "Would you like to be [group_name]?"
-	var/list/candidates = pollCandidatesForMobs(question, ROLE_PAI, FALSE, 100, bodies)
+	var/list/candidates = poll_candidates_for_mobs(question, ROLE_PAI, FALSE, 10 SECONDS, bodies)
 	while(LAZYLEN(candidates) && LAZYLEN(bodies))
 		var/mob/dead/observer/C = pick_n_take(candidates)
 		var/mob/living/body = pick_n_take(bodies)
@@ -119,7 +119,7 @@
 		var/turf/T = find_safe_turf()
 		new /obj/effect/temp_visual/gravpush(get_turf(M))
 		M.forceMove(T)
-		to_chat(M, "<span class='notice'>Pop!</span>", confidential = TRUE)
+		to_chat(M, span_notice("Pop!"), confidential = TRUE)
 
 // ----------- Station Crash
 // Can't think of anywhere better to put it right now

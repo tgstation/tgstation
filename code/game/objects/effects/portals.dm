@@ -17,6 +17,8 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	anchored = TRUE
+	density = TRUE // dense for receiving bumbs
+	layer = HIGH_OBJ_LAYER
 	var/mech_sized = FALSE
 	var/obj/effect/portal/linked
 	var/hardlinked = TRUE //Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
@@ -28,6 +30,7 @@
 	var/allow_anchored = FALSE
 	var/innate_accuracy_penalty = 0
 	var/last_effect = 0
+	/// Does this portal bypass teleport restrictions? like TRAIT_NO_TELEPORT and NOTELEPORT flags.
 	var/force_teleport = FALSE
 
 /obj/effect/portal/anom
@@ -44,30 +47,32 @@
 			return FALSE
 	return ..()
 
+/obj/effect/portal/newtonian_move() // Prevents portals spawned by jaunter/handtele from floating into space when relocated to an adjacent tile.
+	return TRUE
+
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
 	if(user && Adjacent(user))
-		user.forceMove(get_turf(src))
+		teleport(user)
 		return TRUE
 
-/obj/effect/portal/attack_tk(mob/user)
-	return
+/obj/effect/portal/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(HAS_TRAIT(mover, TRAIT_NO_TELEPORT) && !force_teleport)
+		return TRUE
 
-/obj/effect/portal/proc/on_entered(atom/newloc, atom/movable/entering_movable, atom/oldloc)
-	SIGNAL_HANDLER
-	if(isobserver(entering_movable))
-		return
-	if(linked && (get_turf(oldloc) == get_turf(linked)))
-		return
-	teleport(entering_movable)
+/obj/effect/portal/Bumped(atom/movable/bumper)
+	teleport(bumper)
 
 /obj/effect/portal/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
-	if(get_turf(user) == get_turf(src))
-		teleport(user)
 	if(Adjacent(user))
-		user.forceMove(get_turf(src))
+		teleport(user)
+
+/obj/effect/portal/attack_robot(mob/living/user)
+	if(Adjacent(user))
+		teleport(user)
 
 /obj/effect/portal/Initialize(mapload, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
 	. = ..()
@@ -83,10 +88,6 @@
 	hardlinked = automatic_link
 	if(isturf(hard_target_override))
 		hard_target = hard_target_override
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /obj/effect/portal/singularity_pull()
 	return

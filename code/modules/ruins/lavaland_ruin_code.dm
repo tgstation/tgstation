@@ -93,12 +93,12 @@
 	var/obj/item/stack/stuff_stack = I
 	var/species = golem_shell_species_types[stuff_stack.merge_type]
 	if(!species)
-		to_chat(user, "<span class='warning'>You can't build a golem out of this kind of material!</span>")
+		to_chat(user, span_warning("You can't build a golem out of this kind of material!"))
 		return
 	if(!stuff_stack.use(10))
-		to_chat(user, "<span class='warning'>You need at least ten sheets to finish a golem!</span>")
+		to_chat(user, span_warning("You need at least ten sheets to finish a golem!"))
 		return
-	to_chat(user, "<span class='notice'>You finish up the golem shell with ten sheets of [stuff_stack].</span>")
+	to_chat(user, span_notice("You finish up the golem shell with ten sheets of [stuff_stack]."))
 	new shell_type(get_turf(src), species, user)
 	qdel(src)
 
@@ -120,7 +120,7 @@
 	flavour_text = "Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. Continue your research as best you can, and try to keep a low profile."
 	important_info = "The base is rigged with explosives, DO NOT abandon it or let it fall into enemy hands!"
 	outfit = /datum/outfit/lavaland_syndicate
-	assignedrole = "Lavaland Syndicate"
+	spawner_job_path = /datum/job/lavaland_syndicate
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/special(mob/living/new_spawn)
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
@@ -162,7 +162,7 @@
 
 /datum/outfit/lavaland_syndicate/comms
 	name = "Lavaland Syndicate Comms Agent"
-	r_hand = /obj/item/melee/transforming/energy/sword/saber
+	r_hand = /obj/item/melee/energy/sword/saber
 	mask = /obj/item/clothing/mask/chameleon/gps
 	suit = /obj/item/clothing/suit/armor/vest
 

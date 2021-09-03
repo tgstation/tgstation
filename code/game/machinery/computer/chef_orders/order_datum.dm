@@ -146,6 +146,30 @@
 	category_index = CATEGORY_MILK_EGGS
 	item_instance = /obj/item/food/spidereggs
 
+/datum/orderable_item/moonfish_eggs
+	name = "Moonfish Eggs"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/moonfish_eggs
+	cost_per_order = 30
+
+/datum/orderable_item/desert_snails
+	name = "Canned Desert Snails"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/desert_snails
+	cost_per_order = 20
+
+/datum/orderable_item/canned_jellyfish
+	name = "Canned Gunner Jellyfish"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/canned_jellyfish
+	cost_per_order = 20
+
+/datum/orderable_item/canned_larvae
+	name = "Canned Larvae"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/larvae
+	cost_per_order = 20
+
 //Reagents
 
 /datum/orderable_item/flour
@@ -195,3 +219,15 @@
 	category_index = CATEGORY_SAUCES_REAGENTS
 	item_instance = /obj/item/reagent_containers/food/condiment/bbqsauce
 	cost_per_order = 60
+
+/datum/orderable_item/vinegar
+	name = "Vinegar"
+	category_index = CATEGORY_SAUCES_REAGENTS
+	item_instance = /obj/item/reagent_containers/food/condiment/vinegar
+	cost_per_order = 30
+
+/datum/orderable_item/quality_oil
+	name = "Quality Oil"
+	category_index = CATEGORY_SAUCES_REAGENTS
+	item_instance = /obj/item/reagent_containers/food/condiment/quality_oil
+	cost_per_order = 120 //Extra Virgin, just like you, the reader

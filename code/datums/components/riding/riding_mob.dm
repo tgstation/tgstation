@@ -62,11 +62,17 @@
 	if(!kick_us_off)
 		return TRUE
 
-	rider.visible_message("<span class='warning'>[rider] falls off of [living_parent]!</span>", \
-					"<span class='warning'>You fall off of [living_parent]!</span>")
+	rider.visible_message(span_warning("[rider] falls off of [living_parent]!"), \
+					span_warning("You fall off of [living_parent]!"))
 	rider.Paralyze(1 SECONDS)
 	rider.Knockdown(4 SECONDS)
 	living_parent.unbuckle_mob(rider)
+
+/datum/component/riding/creature/vehicle_mob_buckle(datum/source, mob/living/rider, force = FALSE)
+	// Ensure that the /mob/post_buckle_mob(mob/living/M) does not mess us up with layers
+	// If we do not do this override we'll be stuck with the above proc (+ 0.1)-ing our rider's layer incorrectly
+	rider.layer = initial(rider.layer)
+	return ..()
 
 /datum/component/riding/creature/vehicle_mob_unbuckle(mob/living/living_parent, mob/living/former_rider, force = FALSE)
 	if(istype(living_parent) && istype(former_rider))
@@ -84,7 +90,7 @@
 	if(!keycheck(user))
 		if(ispath(keytype, /obj/item))
 			var/obj/item/key = keytype
-			to_chat(user, "<span class='warning'>You need a [initial(key.name)] to ride [movable_parent]!</span>")
+			to_chat(user, span_warning("You need a [initial(key.name)] to ride [movable_parent]!"))
 		return COMPONENT_DRIVER_BLOCK_MOVE
 	var/mob/living/living_parent = parent
 	var/turf/next = get_step(living_parent, direction)
@@ -105,12 +111,12 @@
 	rider.Move(targetm)
 	rider.Knockdown(3 SECONDS)
 	if(gentle)
-		rider.visible_message("<span class='warning'>[rider] is thrown clear of [movable_parent]!</span>", \
-		"<span class='warning'>You're thrown clear of [movable_parent]!</span>")
+		rider.visible_message(span_warning("[rider] is thrown clear of [movable_parent]!"), \
+		span_warning("You're thrown clear of [movable_parent]!"))
 		rider.throw_at(target, 8, 3, movable_parent, gentle = TRUE)
 	else
-		rider.visible_message("<span class='warning'>[rider] is thrown violently from [movable_parent]!</span>", \
-		"<span class='warning'>You're thrown violently from [movable_parent]!</span>")
+		rider.visible_message(span_warning("[rider] is thrown violently from [movable_parent]!"), \
+		span_warning("You're thrown violently from [movable_parent]!"))
 		rider.throw_at(target, 14, 5, movable_parent, gentle = FALSE)
 
 /// If we're a cyborg or animal and we spin, we yeet whoever's on us off us
@@ -155,7 +161,7 @@
 		human_parent.buckle_lying = 0
 		// the riding mob is made nondense so they don't bump into any dense atoms the carrier is pulling,
 		// since pulled movables are moved before buckled movables
-		riding_mob.density = FALSE
+		riding_mob.set_density(FALSE)
 	else if(ride_check_flags & CARRIER_NEEDS_ARM) // fireman
 		human_parent.buckle_lying = 90
 
@@ -179,7 +185,7 @@
 	unequip_buckle_inhands(parent)
 	var/mob/living/carbon/human/H = parent
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
-	former_rider.density = TRUE
+	former_rider.set_density(!former_rider.body_position)
 	return ..()
 
 /// If the carrier shoves the person they're carrying, force the carried mob off
@@ -199,9 +205,9 @@
 		human_parent.unbuckle_mob(rider)
 		rider.Paralyze(1 SECONDS)
 		rider.Knockdown(4 SECONDS)
-		human_parent.visible_message("<span class='danger'>[rider] topples off of [human_parent] as they both fall to the ground!</span>", \
-					"<span class='warning'>You fall to the ground, bringing [rider] with you!</span>", "<span class='hear'>You hear two consecutive thuds.</span>", COMBAT_MESSAGE_RANGE, ignored_mobs=rider)
-		to_chat(rider, "<span class='danger'>[human_parent] falls to the ground, bringing you with [human_parent.p_them()]!</span>")
+		human_parent.visible_message(span_danger("[rider] topples off of [human_parent] as they both fall to the ground!"), \
+					span_warning("You fall to the ground, bringing [rider] with you!"), span_hear("You hear two consecutive thuds."), COMBAT_MESSAGE_RANGE, ignored_mobs=rider)
+		to_chat(rider, span_danger("[human_parent] falls to the ground, bringing you with [human_parent.p_them()]!"))
 
 /datum/component/riding/creature/human/handle_vehicle_layer(dir)
 	var/atom/movable/AM = parent
@@ -235,8 +241,8 @@
 	AM.unbuckle_mob(dismounted_rider)
 	dismounted_rider.Paralyze(1 SECONDS)
 	dismounted_rider.Knockdown(4 SECONDS)
-	dismounted_rider.visible_message("<span class='warning'>[AM] pushes [dismounted_rider] off of [AM.p_them()]!</span>", \
-						"<span class='warning'>[AM] pushes you off of [AM.p_them()]!</span>")
+	dismounted_rider.visible_message(span_warning("[AM] pushes [dismounted_rider] off of [AM.p_them()]!"), \
+						span_warning("[AM] pushes you off of [AM.p_them()]!"))
 
 
 //Now onto cyborg riding//
@@ -250,7 +256,7 @@
 	var/mob/living/carbon/carbonuser = user
 	if(!carbonuser.usable_hands)
 		Unbuckle(user)
-		to_chat(user, "<span class='warning'>You can't grab onto [robot_parent] with no hands!</span>")
+		to_chat(user, span_warning("You can't grab onto [robot_parent] with no hands!"))
 
 /datum/component/riding/creature/cyborg/handle_vehicle_layer(dir)
 	var/atom/movable/robot_parent = parent

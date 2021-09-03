@@ -199,6 +199,23 @@ SUBSYSTEM_DEF(air)
 	currentpart = SSAIR_PIPENETS
 	SStgui.update_uis(SSair) //Lightning fast debugging motherfucker
 
+/datum/controller/subsystem/air/Recover()
+	excited_groups = SSair.excited_groups
+	active_turfs = SSair.active_turfs
+	hotspots = SSair.hotspots
+	networks = SSair.networks
+	rebuild_queue = SSair.rebuild_queue
+	expansion_queue = SSair.expansion_queue
+	atmos_machinery = SSair.atmos_machinery
+	pipe_init_dirs_cache = SSair.pipe_init_dirs_cache
+	gas_reactions = SSair.gas_reactions
+	atmos_gen = SSair.atmos_gen
+	planetary = SSair.planetary
+	active_super_conductivity = SSair.active_super_conductivity
+	high_pressure_delta = SSair.high_pressure_delta
+	atom_process = SSair.atom_process
+	currentrun = SSair.currentrun
+	queued_for_activation = SSair.queued_for_activation
 
 /datum/controller/subsystem/air/proc/process_pipenets(resumed = FALSE)
 	if (!resumed)
@@ -339,10 +356,7 @@ SUBSYSTEM_DEF(air)
 			currentrun.len--
 			if (!remake)
 				continue
-			var/list/targets = remake.get_rebuild_targets()
-			remake.rebuilding = FALSE //It's allowed to renter the queue now
-			for(var/datum/pipeline/build_off as anything in targets)
-				build_off.build_pipeline(remake) //This'll add to the expansion queue
+			remake.rebuild_pipes()
 			if (MC_TICK_CHECK)
 				return
 
@@ -509,7 +523,7 @@ SUBSYSTEM_DEF(air)
 			CHECK_TICK
 
 		var/msg = "HEY! LISTEN! [DisplayTimeText(world.timeofday - timer)] were wasted processing [starting_ats] turf(s) (connected to [ending_ats - starting_ats] other turfs) with atmos differences at round start."
-		to_chat(world, "<span class='boldannounce'>[msg]</span>")
+		to_chat(world, span_boldannounce("[msg]"))
 		warning(msg)
 
 /turf/open/proc/resolve_active_graph()
