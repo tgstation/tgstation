@@ -885,7 +885,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	SIGNAL_HANDLER
 	if(Adjacent(user))
 		dust_mob(user, cause = "cyborg attack")
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/power/supermatter_crystal/proc/on_attack_hand(datum/source, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
