@@ -1,5 +1,10 @@
 //Suits for the pink and grey skeletons! //EVA version no longer used in favor of the Jumpsuit version
-
+GLOBAL_LIST_INIT(plasmaman_hat_blacklist, typecacheof(list(
+	/obj/item/clothing/head/helmet,
+	/obj/item/clothing/head/welding,
+	/obj/item/clothing/head/hardhat,
+	/obj/item/clothing/head/bio_hood,
+	)))
 
 /obj/item/clothing/suit/space/eva/plasmaman
 	name = "EVA plasma envirosuit"
@@ -55,6 +60,7 @@
 	var/smile_color = "#FF0000"
 	var/visor_icon = "envisor"
 	var/smile_state = "envirohelm_smile"
+	var/obj/item/clothing/head/attached_hat
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_welding_screen/plasmaman)
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
@@ -65,6 +71,13 @@
 	. = ..()
 	visor_toggling()
 	update_appearance()
+
+/obj/item/clothing/head/helmet/space/plasmaman/examine()
+	. = ..()
+	if(attached_hat)
+		. += span_notice("There's [attached_hat.name] placed on the helmet. Right-click to remove it.")
+	else
+		. += span_notice("There's nothing placed on the helmet.")
 
 /obj/item/clothing/head/helmet/space/plasmaman/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
@@ -85,11 +98,11 @@
 	. = ..()
 	. += visor_icon
 
-/obj/item/clothing/head/helmet/space/plasmaman/attackby(obj/item/C, mob/living/user)
+/obj/item/clothing/head/helmet/space/plasmaman/attackby(obj/item/hitting_item, mob/living/user)
 	. = ..()
-	if(istype(C, /obj/item/toy/crayon))
+	if(istype(hitting_item, /obj/item/toy/crayon))
 		if(smile == FALSE)
-			var/obj/item/toy/crayon/CR = C
+			var/obj/item/toy/crayon/CR = hitting_item
 			to_chat(user, span_notice("You start drawing a smiley face on the helmet's visor.."))
 			if(do_after(user, 25, target = src))
 				smile = TRUE
@@ -98,6 +111,17 @@
 				update_appearance()
 		else
 			to_chat(user, span_warning("Seems like someone already drew something on this helmet's visor!"))
+	if(is_type_in_typecache(hitting_item, GLOB.plasmaman_hat_blacklist))
+		to_chat(user, span_notice("You cannot place [hitting_item.name] on helmet!"))
+		return
+	if(istype(hitting_item, /obj/item/clothing/head/))
+		if(!attached_hat)
+			attached_hat = hitting_item
+			to_chat(user, span_notice("You placed [hitting_item.name] on helmet!"))
+			hitting_item.forceMove(src)
+			update_appearance()
+		else
+			to_chat(user, span_notice("There's already something placed on helmet!"))
 
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
@@ -105,6 +129,9 @@
 		var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/head/plasmaman_head.dmi', smile_state)
 		M.color = smile_color
 		. += M
+	if(!isinhands && attached_hat)
+		. += attached_hat.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head.dmi')
+		//. += mutable_appearance('icons/mob/clothing/head.dmi', attached_hat.icon_state)
 	if(!isinhands && !up)
 		. += mutable_appearance('icons/mob/clothing/head/plasmaman_head.dmi', visor_icon)
 	else
@@ -134,6 +161,13 @@
 
 	update_action_buttons()
 
+/obj/item/clothing/head/helmet/space/plasmaman/attack_hand_secondary(mob/user)
+	if(src.attached_hat)
+		user.put_in_active_hand(src.attached_hat)
+		to_chat(user, span_notice("You removed [attached_hat.name] from helmet!"))
+		attached_hat = null
+		update_appearance()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 /obj/item/clothing/head/helmet/space/plasmaman/security
 	name = "security plasma envirosuit helmet"
 	desc = "A plasmaman containment helmet designed for security officers, protecting them from burning alive, alongside other undesirables."
