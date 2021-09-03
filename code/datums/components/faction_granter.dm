@@ -1,4 +1,3 @@
-#define DEFAULT_GRANT_MESSAGE "You have become friends with "
 
 /**
  * ## faction granter component!
@@ -17,14 +16,12 @@
 	///boolean on whether it has been used
 	var/used = FALSE
 
-/datum/component/faction_granter/Initialize(faction_to_grant, holy_role_required = NONE, grant_message = DEFAULT_GRANT_MESSAGE)
+/datum/component/faction_granter/Initialize(faction_to_grant, holy_role_required = NONE, grant_message)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.faction_to_grant = faction_to_grant
 	src.holy_role_required = holy_role_required
 	src.grant_message = grant_message
-	if(grant_message == DEFAULT_GRANT_MESSAGE)
-		grant_message += faction_to_grant
 
 /datum/component/faction_granter/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_self_attack)
@@ -54,5 +51,3 @@
 	to_chat(user, grant_message)
 	user.faction |= faction_to_grant
 	used = TRUE
-
-#undef DEFAULT_GRANT_MESSAGE
