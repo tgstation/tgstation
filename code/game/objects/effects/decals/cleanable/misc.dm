@@ -272,13 +272,12 @@
 	. = ..()
 	ant_volume = rand(3, 5)
 	reagents.add_reagent(/datum/reagent/ants, ant_volume)
-	AddComponent(/datum/component/caltrop, min_damage = 0.1, max_damage = ant_bite_damage, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES | CALTROP_UPDATE_DAMAGE), soundfile = 'sound/weapons/bite.ogg')
 	update_ant_damage()
 
 /obj/effect/decal/cleanable/ants/proc/update_ant_damage(spilled_ants)
 	ant_volume += spilled_ants
 	ant_bite_damage = min(10, round((ant_volume * 0.1),0.1)) // 100u ants = 10 max_damage
-	SEND_SIGNAL(src, COMSIG_CALTROP_UPDATE, 0.1, ant_bite_damage)
+	AddComponent(/datum/component/caltrop, min_damage = 0.1, max_damage = ant_bite_damage, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = 'sound/weapons/bite.ogg')
 	switch(ant_bite_damage)
 		if(0 to 1)
 			icon_state = initial(icon_state)

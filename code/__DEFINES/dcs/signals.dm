@@ -1426,10 +1426,6 @@
 /// Called on the organ when it is removed from someone (mob/living/carbon/old_owner)
 #define COMSIG_ORGAN_REMOVED "comsig_organ_removed"
 
-// Caltrop Signals
-/// Called when a caltrop with the CALTROP_UPDATE_DAMAGE flag gets its damage updated. For example, (/obj/effect/decal/cleanable/ants)
-#define COMSIG_CALTROP_UPDATE "comsig_caltrop_update"
-
 ///Called when the ticker enters the pre-game phase
 #define COMSIG_TICKER_ENTER_PREGAME "comsig_ticker_enter_pregame"
 

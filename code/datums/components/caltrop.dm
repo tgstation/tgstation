@@ -24,9 +24,8 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 
-	///The damage value that the caltrop should have a change to.
-	var/updated_min_damage
-	var/updated_max_damage
+	///So we can update ant damage
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
 /datum/component/caltrop/Initialize(min_damage = 0, max_damage = 0, probability = 100, flags = NONE, soundfile = null)
 	. = ..()
@@ -44,8 +43,20 @@
 	else
 		RegisterSignal(get_turf(parent), COMSIG_ATOM_ENTERED, .proc/on_entered)
 
-	if(flags & CALTROP_UPDATE_DAMAGE)
-		RegisterSignal(parent, COMSIG_CALTROP_UPDATE, .proc/update_damage)
+// Inherit the new values passed to the component
+/datum/component/caltrop/InheritComponent(datum/component/caltrop/new_comp, original, min_damage, max_damage, probability, flags, soundfile)
+	if(!original)
+		return
+	if(min_damage)
+		src.min_damage = min_damage
+	if(max_damage)
+		src.max_damage = max_damage
+	if(probability)
+		src.probability = probability
+	if(flags)
+		src.flags = flags
+	if(soundfile)
+		src.soundfile = soundfile
 
 /datum/component/caltrop/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
@@ -109,9 +120,3 @@
 /datum/component/caltrop/UnregisterFromParent()
 	if(ismovable(parent))
 		qdel(GetComponent(/datum/component/connect_loc_behalf))
-
-/datum/component/caltrop/proc/update_damage(datum/source, updated_min_damage, updated_max_damage)
-	SIGNAL_HANDLER
-
-	src.min_damage = updated_min_damage
-	src.max_damage = max(updated_min_damage, updated_max_damage)
