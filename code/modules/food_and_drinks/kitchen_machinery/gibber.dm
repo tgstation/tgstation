@@ -12,7 +12,7 @@
 	var/operating = FALSE //Is it on?
 	var/dirty = FALSE // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears
-	var/meat_produced = 0
+	var/meat_produced = 2
 	var/ignore_clothing = FALSE
 
 
