@@ -1,5 +1,5 @@
 /**
- * # engraved component!
+ * ### engraved component!
  *
  * component for walls that applies an engraved overlay and lets you examine it to read a story (+ art element yay)
  * new creations will get a high art value, cross round scrawlings will get a low one.

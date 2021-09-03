@@ -34,12 +34,16 @@
 #define STORY_VALUE_LEGENDARY 5 //platinum star
 
 //Flags for memories
+///this memory doesn't have a location, emit that
 #define MEMORY_FLAG_NOLOCATION (1<<0)
+///this memory's protagonist for one reason or another doesn't have a mood, emit that
 #define MEMORY_FLAG_NOMOOD	(1<<1)
+///this memory shouldn't include the station name (example: revolution memory)
 #define MEMORY_FLAG_NOSTATIONNAME	(1<<2)
-#define MEMORY_FLAG_NOPERSISTENCE	(1<<3) //Memories that suck ass as persistence, apply this to all quirks.
+//this memory is REALLY shit and should never be saved in persistence, basically apply this to all quirks.
+#define MEMORY_FLAG_NOPERSISTENCE	(1<<3)
+///this memory has already been engraved, and cannot be selected for engraving again.
 #define MEMORY_FLAG_ALREADY_USED	(1<<4)
-
 
 //These defines are for what notable event happened. they correspond to the json lists related to the memory
 ///a memory of completing a surgery.
@@ -122,7 +126,7 @@
 //Automatically obtained details
 #define DETAIL_PROTAGONIST_MOOD "VICTIM_MOOD"
 
-//Specific memory info keys
+//Specific memory info keys. they are used to replace json strings with memory specific data!
 #define DETAIL_SURGERY_TYPE "SURGERY_TYPE"
 #define DETAIL_TIME_OF_DEATH "TIME_OF_DEATH"
 #define DETAIL_ALLERGY_TYPE "ALLERGY_TYPE"

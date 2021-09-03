@@ -82,8 +82,6 @@
 	var/choice = tgui_input_list(usr, "Select a memory to [verbage]", "Memory Selection?", choice_list)
 	var/datum/memory/memory_choice = choice_list[choice]
 
-	if(!memory_choice)
-		return
 	return memory_choice
 
 ///small helper to clean out memories
