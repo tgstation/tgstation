@@ -28,6 +28,7 @@
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
+	toxic_food = ETHEREAL | TOXIC
 	disliked_food = GRAIN | DAIRY | CLOTH
 	liked_food = GROSS | MEAT
 	inert_mutation = FIREBREATH
