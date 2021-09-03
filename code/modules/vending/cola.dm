@@ -14,7 +14,13 @@
 					/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,
 					/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 10,
 					/obj/item/reagent_containers/food/drinks/waterbottle = 10,
-					/obj/item/reagent_containers/food/drinks/bottle/mushi_kombucha = 3)
+					/obj/item/reagent_containers/food/drinks/bottle/mushi_kombucha = 3,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/rattsi = 10,
+		            /obj/item/reagent_containers/food/drinks/soda_bottle/space_raid = 10,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/spring_nya = 10,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/electro = 10,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/plazz = 10,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/fuzznet = 10,)
 	contraband = list(/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko = 6,
 		              /obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 6)
 	premium = list(/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1,
@@ -93,4 +99,19 @@
 	product_slogans = "~Shake me up some of that Shambler's Juice!~"
 	product_ads = "Refreshing!;Jyrbv dv lg jfdv fw kyrk Jyrdscvi'j Alztv!;Over 1 trillion souls drank!;Thirsty? Nyp efk uizeb kyv uribevjj?;Kyv Jyrdscvi uizebj kyv ezxyk!;Drink up!;Krjkp."
 	light_mask = "shamblers-light-mask"
+	light_color = COLOR_MOSTLY_PURE_PINK
+
+/obj/machinery/vending/cola/exoticdrink
+	name = "\improper Exotic Drink Vendor"
+	desc = "A bizarre soda machine manufactured in Space Japan, it's got everything!"
+	icon_state = "exoticdrink"
+	products = list(/obj/item/reagent_containers/food/drinks/soda_bottle/rattsi = 10,
+		            /obj/item/reagent_containers/food/drinks/soda_bottle/space_raid = 10,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/spring_nya = 10,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/electro = 10,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/plazz = 10,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/fuzznet = 10,)
+	product_slogans = "Drinks from across the galaxy!"
+	product_ads = "Exotic drinks! Your one stop shop for refreshment that is literally out of this world!"
+	light_mask = "red_cola-light-mask"
 	light_color = COLOR_MOSTLY_PURE_PINK

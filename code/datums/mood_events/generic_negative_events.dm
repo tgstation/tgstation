@@ -346,3 +346,34 @@
 	description = "<span class='boldwarning'>I can hardly breathe with all this HERESY going on!</span>\n"
 	mood_change = -5
 	timeout = 5 MINUTES
+
+/datum/mood_event/space_raid_fail
+	description = "<span class='warning'>The Terra Raiders won with this stuff? I call foul! More like the Terra CHEATERS!</span>\n"
+	mood_change = -3
+	timeout = 3 MINUTES
+
+/datum/mood_event/rattsi_fail
+	description = "<span class='warning'>eeeehh Yuck! It tastes just like how a mortuary smells</span>\n"
+	mood_change = -3
+	timeout = 3 MINUTES
+
+/datum/mood_event/spring_nya_fail
+	description = "<span class='warning'>Milk and sugar!? Terrible combo, I can feel my insides chastising me.</span>\n"
+	mood_change = -3
+	timeout = 3 MINUTES
+
+/datum/mood_event/fuzznet_fail
+	description = "<span class='warning'>Drinking that felt like someone dried out my entire throat</span>\n"
+	mood_change = -3
+	timeout = 3 MINUTES
+
+/datum/mood_event/electro_fail
+	description = "<span class='warning'>It did NOT taste like it smelled</span>\n"
+	mood_change = -3
+	timeout = 3 MINUTES
+
+/datum/mood_event/plazz_fail
+	description = "<span class='warning'>It feels like my insides are on fire!</span>\n"
+	mood_change = -3
+	timeout = 3 MINUTES
+

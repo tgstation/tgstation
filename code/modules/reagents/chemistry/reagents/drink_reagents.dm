@@ -1043,3 +1043,129 @@
 		M.adjustOxyLoss(-0.5 * REM * delta_time, 0)
 	..()
 	. = TRUE
+
+/datum/reagent/consumable/space_raid
+	name = "Spaceraid"
+	description = "Humans are winners, and winners drink Spaceraid!"
+	color = "#DEC407"
+	taste_description = "citrus"
+	glass_icon_state  = "lemonglass"
+	glass_name = "glass of spaceraid"
+	glass_desc = "Raid your innards so you can win in Space!"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/space_raid/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(ishumanbasic(M))
+		M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "space_raid", /datum/mood_event/space_raid)
+	else
+		M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+		M.vomit(10)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "space_raid_fail", /datum/mood_event/space_raid_fail)
+		..()
+	. = TRUE
+
+	/datum/reagent/consumable/rattsi
+	name = "Rattsi"
+	description = "I'll take a Rattsi!"
+	color = "#100800"
+	taste_description = "carbonated rodents"
+	glass_icon_state  = "spacecola"
+	glass_name = "glass of rattsi"
+	glass_desc = "Distinctly Reptilian!"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/rattsi/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(islizard(M))
+		M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "rattsi", /datum/mood_event/rattsi)
+	else
+		M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+		M.vomit(10)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "rattsi_fail", /datum/mood_event/rattsi_fail)
+		..()
+	. = TRUE
+
+/datum/reagent/consumable/spring_nya
+	name = "Sping Nya"
+	description = "Supuringu Nya!"
+	color = "#D0E1E1"
+	taste_description = "very sugary milk"
+	glass_icon_state  = "space-up_glass"
+	glass_name = "glass of spring nya"
+	glass_desc = "Restore your staminya!"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/spring_nya/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(isfelinid(M))
+		M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "spring_nya", /datum/mood_event/spring_nya)
+	else
+		M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+		M.vomit(10)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "spring_nya_fail", /datum/mood_event/spring_nya_fail)
+		..()
+	. = TRUE
+
+/datum/reagent/consumable/fuzznet
+	name = "Fuzznet"
+	description = "Break out the Fuzznet!"
+	color = "#DBAC1E"
+	taste_description = "fibrous water"
+	glass_icon_state  = "lemonlime"
+	glass_name = "glass of fuzznet"
+	glass_desc = "Tastes like a blanket!"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/fuzznet/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(ismoth(M))
+		M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "fuzznet", /datum/mood_event/fuzznet)
+	else
+		M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+		M.vomit(10)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "fuzznet_fail", /datum/mood_event/fuzznet_fail)
+		..()
+	. = TRUE
+
+/datum/reagent/consumable/electro
+	name = "Electro"
+	description = "I can definitely drop to this one!"
+	color = "#FF0080"
+	taste_description = "television static"
+	glass_icon_state  = "shamblerjuice"
+	glass_name = "glass of electro"
+	glass_desc = "Ahhh that is sick that mate!"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/electro/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(isethereal(M))
+		M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "electro", /datum/mood_event/electro)
+	else
+		M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+		M.vomit(10)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "electro_fail", /datum/mood_event/electro_fail)
+		..()
+	. = TRUE
+
+/datum/reagent/consumable/plazz
+	name = "Plazz"
+	description = "The drink for space skeletons!"
+	color = "#9A2770"
+	taste_description = "plasma and early space age nostalgia"
+	glass_icon_state  = "shamblerjuice"
+	glass_name = "glass of plazz"
+	glass_desc = "Don't be a spazz, drink some Plazz!"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/plazz/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(isplasmaman(M))
+		M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "plazz", /datum/mood_event/plazz)
+	else
+		M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+		M.vomit(10)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "plazz_fail", /datum/mood_event/plazz_fail)
+		..()
+	. = TRUE
