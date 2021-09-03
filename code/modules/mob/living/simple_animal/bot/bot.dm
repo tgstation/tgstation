@@ -944,7 +944,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		eject += "<BR>"
 	return eject
 
-/mob/living/simple_animal/bot/proc/insertpai(mob/user, obj/item/paicard/card)
+/mob/living/simple_animal/bot/proc/insertpai(mob/living/user, obj/item/paicard/card)
 	if(paicard)
 		to_chat(user, span_warning("A [paicard] is already inserted!"))
 	else if(allow_pai && !key)

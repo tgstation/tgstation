@@ -574,7 +574,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 	return threatcount
 
-/obj/machinery/porta_turret/proc/in_faction(mob/target)
+/obj/machinery/porta_turret/proc/in_faction(mob/living/target)
 	for(var/faction1 in faction)
 		if(faction1 in target.faction)
 			return TRUE

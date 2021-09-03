@@ -44,11 +44,11 @@
 	. = ..()
 	if(linger && target != original)
 		return FALSE
-	if(ismob(target) && !direct_target) //Unsure about the direct target, i guess it could always skip these.
-		var/mob/M = target
-		if(M.anti_magic_check(check_antimagic, check_holy))
+	if(isliving(target) && !direct_target) //Unsure about the direct target, i guess it could always skip these.
+		var/mob/living/living_target = target
+		if(living_target.anti_magic_check(check_antimagic, check_holy))
 			return FALSE
-		if(ignored_factions?.len && faction_check(M.faction,ignored_factions))
+		if(ignored_factions?.len && faction_check(living_target.faction,ignored_factions))
 			return FALSE
 
 

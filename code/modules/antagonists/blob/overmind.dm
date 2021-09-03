@@ -18,7 +18,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	layer = FLY_LAYER
 	see_invisible = SEE_INVISIBLE_LIVING
 	pass_flags = PASSBLOB
-	faction = list(ROLE_BLOB)
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	hud_type = /datum/hud/blob_overmind
 	var/obj/structure/blob/special/core/blob_core = null // The blob overmind's core

@@ -163,21 +163,24 @@
 	set category = "Object"
 	set name = "Summon Stick Minions"
 	set src in usr
+
 	if(!isliving(usr))
 		return
+
+	var/mob/living/living_user = usr
+
 	if(!robe_charge)
-		to_chat(usr, span_warning("The robe's internal magic supply is still recharging!"))
+		to_chat(living_user, span_warning("The robe's internal magic supply is still recharging!"))
 		return
 
-	usr.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
+	living_user.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
 	playsound(src.loc, 'sound/magic/summon_magic.ogg', 50, TRUE, TRUE)
-	var/mob/living/M = new /mob/living/simple_animal/hostile/stickman(get_turf(usr))
-	var/list/factions = usr.faction
-	M.faction = factions
+	var/mob/living/simple_animal/hostile/stickman/chromie = new (get_turf(usr))
+	chromie.faction = living_user.faction.Copy()
 	src.robe_charge = FALSE
 	sleep(30)
 	src.robe_charge = TRUE
-	to_chat(usr, span_notice("The robe hums, its internal magic supply restored."))
+	to_chat(living_user, span_notice("The robe hums, its internal magic supply restored."))
 
 
 //Shielded Armour

@@ -13,8 +13,8 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = NODECONSTRUCT_1
 
-/obj/machinery/computer/shuttle/syndicate/allowed(mob/M)
-	if(issilicon(M) && !(ROLE_SYNDICATE in M.faction))
+/obj/machinery/computer/shuttle/syndicate/allowed(mob/living/target)
+	if(issilicon(target) && !(ROLE_SYNDICATE in target.faction))
 		return FALSE
 	return ..()
 
