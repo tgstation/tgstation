@@ -1,10 +1,4 @@
 //Suits for the pink and grey skeletons! //EVA version no longer used in favor of the Jumpsuit version
-GLOBAL_LIST_INIT(plasmaman_hat_blacklist, typecacheof(list(
-	/obj/item/clothing/head/helmet,
-	/obj/item/clothing/head/welding,
-	/obj/item/clothing/head/hardhat,
-	/obj/item/clothing/head/bio_hood,
-	)))
 
 /obj/item/clothing/suit/space/eva/plasmaman
 	name = "EVA plasma envirosuit"
@@ -111,10 +105,10 @@ GLOBAL_LIST_INIT(plasmaman_hat_blacklist, typecacheof(list(
 				update_appearance()
 		else
 			to_chat(user, span_warning("Seems like someone already drew something on this helmet's visor!"))
-	if(is_type_in_typecache(hitting_item, GLOB.plasmaman_hat_blacklist))
+	if(hitting_item.flags & PLASMAMAN_HELMET_EXEMPT)
 		to_chat(user, span_notice("You cannot place [hitting_item.name] on helmet!"))
 		return
-	if(istype(hitting_item, /obj/item/clothing/head/))
+	if(!hitting_item.flags & PLASMAMAN_HELMET_EXEMPT)
 		if(!attached_hat)
 			attached_hat = hitting_item
 			to_chat(user, span_notice("You placed [hitting_item.name] on helmet!"))
