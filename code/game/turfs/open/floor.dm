@@ -307,7 +307,7 @@
 			if(new_airlock.electronics.unres_sides)
 				new_airlock.unres_sides = new_airlock.electronics.unres_sides
 			if(new_airlock.electronics.passed_name)
-				new_airlock.name = new_airlock.electronics.passed_name
+				new_airlock.name = sanitize(new_airlock.electronics.passed_name)
 			if(new_airlock.electronics.passed_cycle_id)
 				new_airlock.closeOtherId = new_airlock.electronics.passed_cycle_id
 				new_airlock.update_other_id()

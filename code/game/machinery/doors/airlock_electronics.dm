@@ -87,7 +87,7 @@
 			accesses -= SSid_access.get_region_access_list(list(region))
 			. = TRUE
 		if("passedName")
-			var/new_name = trim(params["passedName"], 30)
+			var/new_name = trim("[params["passedName"]]", 30)
 			passed_name = new_name
 			. = TRUE
 		if("passedCycleId")

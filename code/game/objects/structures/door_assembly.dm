@@ -260,7 +260,7 @@
 				if(created_name)
 					door.name = created_name
 				else if(electronics.passed_name)
-					door.name = electronics.passed_name
+					door.name = sanitize(electronics.passed_name)
 				else
 					door.name = base_name
 				if(electronics.passed_cycle_id)
