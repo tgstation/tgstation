@@ -3,7 +3,8 @@
 /**
  * ## faction granter component!
  *
- * component attached to items to allow them to be used
+ * component attached to items, lets them be used in hand once to add yourself to a certain faction
+ * one good example is the chaplain plushie that grants you the carp faction, making you friendly with them.
  */
 /datum/component/faction_granter
 	///whichever faction the parent adds upon using in hand
@@ -15,12 +16,14 @@
 	///boolean on whether it has been used
 	var/used = FALSE
 
-/datum/component/faction_granter/Initialize(faction_to_grant, holy_role_required = FALSE, grant_message = "You have become friends with ")
+/datum/component/faction_granter/Initialize(faction_to_grant, holy_role_required = FALSE, grant_message = DEFAULT_GRANT_MESSAGE)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.faction_to_grant = faction_to_grant
 	src.holy_role_required = holy_role_required
 	src.grant_message = grant_message
+	if(grant_message == DEFAULT_GRANT_MESSAGE)
+		grant_message += faction_to_grant
 
 /datum/component/faction_granter/RegisterWithParent()
 	. = ..()
@@ -35,7 +38,7 @@
 /datum/component/faction_granter/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(used)
-		examine_list += span_notice("[parent]'s faction granting power has been used up.")
+		examine_list += span_notice("[parent]'s favor granting power has been used up.")
 	else
 		examine_list += span_notice("Using [parent] in your hand will grant you favor with [faction_to_grant]\s")
 
@@ -48,9 +51,9 @@
 	if(holy_role_required && user.mind?.holy_role >= HOLY_ROLE_PRIEST)
 		to_chat(user, span_warning("You are not holy enough to invoke the power of [parent]!"))
 		return
-	if(grant_message == DEFAULT_GRANT_MESSAGE)
-		grant_message += faction_to_grant
 
 	to_chat(user, grant_message)
 	user.faction |= faction_to_grant
 	used = TRUE
+
+#undef DEFAULT_GRANT_MESSAGE

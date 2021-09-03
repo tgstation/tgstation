@@ -1,3 +1,7 @@
+//the default chemical transfer messages if they aren't set
+#define DEFAULT_ATTACKER_MESSAGE span_notice("You transfer your chemicals to %VICTIM.")
+#define DEFAULT_VICTIM_MESSAGE span_userdanger("Chemicals have been transferred into you from %ATTACKER!")
+
 /**
  * ## chemical transfer element!
  *
@@ -17,7 +21,7 @@
 	///message victim gets when the chemical transfer procs
 	var/victim_message
 
-/datum/element/chemical_transfer/Attach(datum/target, attacker_message = span_notice("You transfer your chemicals to %VICTIM."), victim_message = span_userdanger("Chemicals have been transferred into you from %ATTACKER!"), transfer_prob = 100)
+/datum/element/chemical_transfer/Attach(datum/target, attacker_message = DEFAULT_ATTACKER_MESSAGE, victim_message = DEFAULT_VICTIM_MESSAGE, transfer_prob = 100)
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
@@ -57,3 +61,6 @@
 	transfer_attacker.reagents?.trans_to(transfer_victim, transfer_attacker.reagents.total_volume, 1, 1, 0, transfered_by = transfer_attacker)
 	to_chat(transfer_attacker, built_attacker_message)
 	to_chat(transfer_victim, built_victim_message)
+
+#undef DEFAULT_ATTACKER_MESSAGE
+#undef DEFAULT_VICTIM_MESSAGE
