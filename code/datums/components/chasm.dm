@@ -84,16 +84,16 @@
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			if(istype(H.belt, /obj/item/wormhole_jaunter))
-				var/obj/item/wormhole_jaunter/Jaunter = H.belt
-				var/list/Destinations = Jaunter.get_destinations()
+				var/obj/item/wormhole_jaunter/jaunter = H.belt
+				var/list/destinations = jaunter.get_destinations()
 
-				if(Destinations.len)
-					to_chat(H, span_notice("Your [Jaunter.name] activates, saving you from the chasm!"))
+				if(destinations.len)
+					to_chat(H, span_notice("Your [jaunter.name] activates, saving you from the chasm!"))
 					H.visible_message(span_boldwarning("[H] falls into [parent]!")) //To freak out any bystanders
-					Jaunter.chasm_react(H)
+					jaunter.chasm_react(H)
 					return FALSE
-				else if(!Destinations.len)
-					to_chat(H, span_userdanger("The [Jaunter.name] found no beacons in the world to anchor a wormhole to, preventing it from saving you from the chasm.  RIP."))
+				else if(!destinations.len)
+					to_chat(H, span_userdanger("The [jaunter.name] found no beacons in the world to anchor a wormhole to, preventing it from saving you from the chasm.  RIP."))
 	return TRUE
 
 /datum/component/chasm/proc/drop(atom/movable/AM)

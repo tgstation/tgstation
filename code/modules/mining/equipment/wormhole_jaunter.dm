@@ -41,20 +41,20 @@
 	if(!turf_check(user))
 		return
 
-	var/list/L = get_destinations()
-	if(!L.len)
+	var/list/destinations = get_destinations()
+	if(!destinations.len)
 		if(user)
 			to_chat(user, span_notice("The [src.name] found no beacons in the world to anchor a wormhole to."))
 		else
 			visible_message(span_notice("The [src.name] found no beacons in the world to anchor a wormhole to!"))
 		return
 
-	var/chosen_beacon = pick(L)
-	var/obj/effect/portal/jaunt_tunnel/Tunnel = new (get_turf(src), 100, null, FALSE, get_turf(chosen_beacon))
+	var/chosen_beacon = pick(destinations)
+	var/obj/effect/portal/jaunt_tunnel/tunnel = new (get_turf(src), 100, null, FALSE, get_turf(chosen_beacon))
 	if(teleport)
-		Tunnel.teleport(user)
+		tunnel.teleport(user)
 	else if(adjacent)
-		try_move_adjacent(Tunnel)
+		try_move_adjacent(tunnel)
 
 	playsound(src,'sound/effects/sparks4.ogg',50,TRUE)
 	qdel(src)
