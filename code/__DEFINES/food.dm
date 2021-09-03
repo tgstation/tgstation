@@ -14,7 +14,7 @@
 #define BREAKFAST (1<<13)
 #define CLOTH (1<<14)
 #define NUTS (1<<15)
-#define ETHEREAL (1<<16) //i don't know what the fuck (1<<16) means but there is a pattern here so lets just go with that i guess
+#define ETHEREAL (1<<16) 
 
 #define DRINK_NICE 1
 #define DRINK_GOOD 2
