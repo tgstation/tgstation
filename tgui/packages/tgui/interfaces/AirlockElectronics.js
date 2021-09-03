@@ -61,6 +61,7 @@ export const AirlockElectronics = (props, context) => {
             <LabeledList.Item
               label="Airlock Name">
               <Input fluid
+                maxLength={30}
                 value={passedName}
                 onChange={(e, value) => act('passedName', {
                   passedName: value,
@@ -69,6 +70,7 @@ export const AirlockElectronics = (props, context) => {
             <LabeledList.Item
               label="Cycling Id">
               <Input fluid
+                maxLength={30}
                 value={passedCycleId}
                 onChange={(e, value) => act('passedCycleId', {
                   passedCycleId: value,

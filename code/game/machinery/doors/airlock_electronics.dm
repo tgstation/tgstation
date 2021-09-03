@@ -87,10 +87,12 @@
 			accesses -= SSid_access.get_region_access_list(list(region))
 			. = TRUE
 		if("passedName")
-			passed_name = params["passedName"]
+			var/new_name = trim(params["passedName"], 30)
+			passed_name = new_name
 			. = TRUE
 		if("passedCycleId")
-			passed_cycle_id = params["passedCycleId"]
+			var/new_cycle_id = trim(params["passedCycleId"], 30)
+			passed_cycle_id = new_cycle_id
 			. = TRUE
 
 /obj/item/electronics/airlock/ui_host()
