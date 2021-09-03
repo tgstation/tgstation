@@ -517,4 +517,15 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		to_chat(user,"<span class='bounty'>[SSeconomy.inflation_value()] is the inflation value.</span>")
 	return TRUE//did the coin flip? useful for suicide_act
 
+
+///Coins used in the dutchmen money bag.
+/obj/item/coin/silver/doubloon
+	name = "doubloon"
+
+/obj/item/coin/gold/doubloon
+	name = "doubloon"
+
+/obj/item/coin/adamantine/doubloon
+	name = "doubloon"
+
 #undef ORESTACK_OVERLAYS_MAX
