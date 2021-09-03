@@ -2,6 +2,7 @@
 	name = "Dullahan"
 	id = SPECIES_DULLAHAN
 	default_color = "FFFFFF"
+	toxic_food = ETHEREAL | TOXIC
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
