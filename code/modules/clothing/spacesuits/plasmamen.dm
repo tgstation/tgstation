@@ -131,7 +131,6 @@ GLOBAL_LIST_INIT(plasmaman_hat_blacklist, typecacheof(list(
 		. += M
 	if(!isinhands && attached_hat)
 		. += attached_hat.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head.dmi')
-		//. += mutable_appearance('icons/mob/clothing/head.dmi', attached_hat.icon_state)
 	if(!isinhands && !up)
 		. += mutable_appearance('icons/mob/clothing/head/plasmaman_head.dmi', visor_icon)
 	else
