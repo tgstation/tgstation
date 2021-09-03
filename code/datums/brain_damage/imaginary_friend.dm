@@ -70,8 +70,7 @@
 	var/image/current_image
 	var/hidden = FALSE
 	var/move_delay = 0
-	var/mob/living/carbon/owner
-	var/datum/brain_trauma/special/imaginary_friend/trauma
+	var/mob/living/owner
 
 	var/datum/action/innate/imaginary_join/join
 	var/datum/action/innate/imaginary_hide/hide
@@ -88,16 +87,20 @@
 		to_chat(src, span_notice("You are absolutely loyal to your friend, no matter what."))
 		to_chat(src, span_notice("You cannot directly influence the world around you, but you can see what [owner] cannot."))
 
-/mob/camera/imaginary_friend/Initialize(mapload, _trauma)
-	if(!_trauma)
-		stack_trace("Imaginary friend created without trauma, wtf")
-		return INITIALIZE_HINT_QDEL
+/**
+ * Arguments:
+ * * imaginary_friend_owner - The living mob that owns the imaginary friend.
+ * * appearance_from_prefs - If this is a valid set of prefs, the appearance of the imaginary friend is based on these prefs.
+ */
+/mob/camera/imaginary_friend/Initialize(mapload, mob/living/imaginary_friend_owner, datum/preferences/appearance_from_prefs = null)
 	. = ..()
 
-	trauma = _trauma
-	owner = trauma.owner
+	owner = imaginary_friend_owner
 
-	INVOKE_ASYNC(src, .proc/setup_friend)
+	if(appearance_from_prefs)
+		INVOKE_ASYNC(src, .proc/setup_friend_from_prefs, appearance_from_prefs)
+	else
+		INVOKE_ASYNC(src, .proc/setup_friend)
 
 	join = new
 	join.Grant(src)
@@ -109,6 +112,43 @@
 	real_name = random_unique_name(gender)
 	name = real_name
 	human_image = get_flat_human_icon(null, pick(SSjob.joinable_occupations))
+
+/**
+ * Sets up the imaginary friend's name and look using a set of datum preferences.
+ *
+ * Arguments:
+ * * appearance_from_prefs - If this is a valid set of prefs, the appearance of the imaginary friend is based on the currently selected character in them. Otherwise, it's random.
+ */
+/mob/camera/imaginary_friend/proc/setup_friend_from_prefs(datum/preferences/appearance_from_prefs)
+	if(!istype(appearance_from_prefs))
+		stack_trace("Attempted to create imaginary friend appearance from null prefs. Using random appearance.")
+		setup_friend()
+		return
+
+	real_name = appearance_from_prefs.real_name
+	name = real_name
+
+	// Determine what job is marked as 'High' priority.
+	var/datum/job/appearance_job
+	var/highest_pref = 0
+	for(var/job in appearance_from_prefs.job_preferences)
+		var/this_pref = appearance_from_prefs.job_preferences[job]
+		if(this_pref > highest_pref)
+			appearance_job = SSjob.GetJob(job)
+			highest_pref = this_pref
+
+	if(!appearance_job)
+		appearance_job = SSjob.GetJob("Assistant")
+
+	if(istype(appearance_job, /datum/job/ai))
+		human_image = icon('icons/mob/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.preferred_ai_core_display), dir = SOUTH)
+		return
+
+	if(istype(appearance_job, /datum/job/cyborg))
+		human_image = icon('icons/mob/robots.dmi', icon_state = "robot")
+		return
+
+	human_image = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
 
 /mob/camera/imaginary_friend/proc/Show()
 	if(!client) //nobody home
@@ -185,12 +225,17 @@
 /mob/camera/imaginary_friend/Move(NewLoc, Dir = 0)
 	if(world.time < move_delay)
 		return FALSE
+	setDir(Dir)
 	if(get_dist(src, owner) > 9)
 		recall()
 		move_delay = world.time + 10
 		return FALSE
 	abstract_move(NewLoc)
 	move_delay = world.time + 1
+
+/mob/camera/imaginary_friend/keybind_face_direction(direction)
+	. = ..()
+	Show()
 
 /mob/camera/imaginary_friend/abstract_move(atom/destination)
 	. = ..()
