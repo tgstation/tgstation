@@ -619,7 +619,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 	return ..()
 
-/datum/everyone_is_a_traitor_controller/proc/make_traitor(mob/living/player)
+/datum/everyone_is_a_traitor_controller/proc/make_traitor(datum/source, mob/living/player)
 	if(player.stat == DEAD || !player.mind)
 		return
 	if(!(ishuman(player) || issilicon(player)) || ispAI(player))
