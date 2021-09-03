@@ -15,6 +15,14 @@
 	flags_1 = NODECONSTRUCT_1
 	bolts = FALSE
 	var/static/mutable_appearance/nest_overlay = mutable_appearance('icons/mob/alien.dmi', "nestoverlay", LYING_MOB_LAYER)
+	var/list/bed_traits = list(
+		TRAIT_HANDS_BLOCKED,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NOBREATH,
+		TRAIT_NOHARDCRIT,
+		TRAIT_FORBID_SUCCUMB
+	)
 
 /obj/structure/bed/nest/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
 	if(has_buckled_mobs())
@@ -65,14 +73,16 @@
 			span_hear("You hear squelching..."))
 
 /obj/structure/bed/nest/post_buckle_mob(mob/living/M)
-	ADD_TRAIT(M, TRAIT_HANDS_BLOCKED, type)
+	for(var/trait in bed_traits)
+		ADD_TRAIT(M, trait, type)
 	M.pixel_y = M.base_pixel_y
 	M.pixel_x = M.base_pixel_x + 2
 	M.layer = BELOW_MOB_LAYER
 	add_overlay(nest_overlay)
 
 /obj/structure/bed/nest/post_unbuckle_mob(mob/living/M)
-	REMOVE_TRAIT(M, TRAIT_HANDS_BLOCKED, type)
+	for(var/trait in bed_traits)
+		REMOVE_TRAIT(M, trait, type)
 	M.pixel_x = M.base_pixel_x + M.body_position_pixel_x_offset
 	M.pixel_y = M.base_pixel_y + M.body_position_pixel_y_offset
 	M.layer = initial(M.layer)

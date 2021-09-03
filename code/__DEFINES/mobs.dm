@@ -419,7 +419,7 @@
 #define SWARMER_LIGHT_ON (1<<0)
 
 /// Returns whether or not the given mob can succumb
-#define CAN_SUCCUMB(target) (HAS_TRAIT(target, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(target, TRAIT_NODEATH))
+#define CAN_SUCCUMB(target) (HAS_TRAIT(target, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(target, TRAIT_NODEATH) && !HAS_TRAIT(target, TRAIT_FORBID_SUCCUMB))
 
 // Body position defines.
 /// Mob is standing up, usually associated with lying_angle value of 0.
