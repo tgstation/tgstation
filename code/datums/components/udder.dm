@@ -60,6 +60,8 @@
  */
 /obj/item/udder
 	name = "udder"
+	///typepath of reagent produced by the udder
+	var/reagent_produced_typepath = /datum/reagent/consumable/milk
 	///how much the udder holds
 	var/size = 50
 	///mob that has the udder component
@@ -88,7 +90,7 @@
  * also useful for changing initial amounts in reagent holder (cows start with milk, gutlunches start empty)
  */
 /obj/item/udder/proc/initial_conditions()
-	reagents.add_reagent(/datum/reagent/consumable/milk, 20)
+	reagents.add_reagent(reagent_produced_typepath, 20)
 	START_PROCESSING(SSobj, src)
 
 /**
@@ -96,7 +98,7 @@
  */
 /obj/item/udder/proc/generate()
 	if(prob(5))
-		reagents.add_reagent(/datum/reagent/consumable/milk, rand(5, 10))
+		reagents.add_reagent(reagent_produced_typepath, rand(5, 10))
 		if(on_generate_callback)
 			on_generate_callback.Invoke(reagents.total_volume, reagents.maximum_volume)
 
