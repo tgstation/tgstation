@@ -77,7 +77,7 @@
 		available_hardcore_quirks -= picked_quirk
 
 
-/datum/preferences/proc/update_preview_icon(mob/living/carbon/human/dummy/mannequin)
+/datum/preferences/proc/render_new_preview_appearance(mob/living/carbon/human/dummy/mannequin)
 	// Determine what job is marked as 'High' priority, and dress them up as such.
 	var/datum/job/previewJob
 	var/highest_pref = 0
@@ -86,15 +86,12 @@
 			previewJob = SSjob.GetJob(job)
 			highest_pref = job_preferences[job]
 
-	// MOTHBLOCKS TODO: Silicons
-	// if(previewJob)
-	// 	// Silicons only need a very basic preview since there is no customization for them.
-	// 	if(istype(previewJob,/datum/job/ai))
-	// 		parent.show_character_previews(image('icons/mob/ai.dmi', icon_state = resolve_ai_icon(preferred_ai_core_display), dir = SOUTH))
-	// 		return
-	// 	if(istype(previewJob,/datum/job/cyborg))
-	// 		parent.show_character_previews(image('icons/mob/robots.dmi', icon_state = "robot", dir = SOUTH))
-	// 		return
+	if(previewJob)
+		// Silicons only need a very basic preview since there is no customization for them.
+		if (istype(previewJob,/datum/job/ai))
+			return image('icons/mob/ai.dmi', icon_state = resolve_ai_icon(preferred_ai_core_display), dir = SOUTH)
+		if (istype(previewJob,/datum/job/cyborg))
+			return image('icons/mob/robots.dmi', icon_state = "robot", dir = SOUTH)
 
 	// Set up the dummy for its photoshoot
 	apply_prefs_to(mannequin, TRUE)
@@ -104,3 +101,4 @@
 		mannequin.dress_up_as_job(previewJob, TRUE)
 
 	COMPILE_OVERLAYS(mannequin)
+	return mannequin.appearance

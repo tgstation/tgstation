@@ -384,8 +384,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 /// Updates the currently displayed body
 /atom/movable/screen/character_preview_view/proc/update_body()
 	create_body()
-	preferences.update_preview_icon(body)
-	appearance = body.appearance
+	appearance = preferences.render_new_preview_appearance(body)
 
 /atom/movable/screen/character_preview_view/proc/create_body()
 	QDEL_NULL(body)
