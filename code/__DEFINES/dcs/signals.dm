@@ -250,6 +250,9 @@
 ///from base of atom/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 #define COMSIG_ATOM_HITBY "atom_hitby"
 
+///When the transform or an atom is varedited through vv topic.
+#define COMSIG_ATOM_VV_MODIFY_TRANSFORM "atom_vv_modify_transform"
+
 //from base of atom/movable/on_enter_storage(): (datum/component/storage/concrete/master_storage)
 #define COMSIG_STORAGE_ENTERED "storage_entered"
 //from base of atom/movable/on_exit_storage(): (datum/component/storage/concrete/master_storage)
@@ -568,6 +571,9 @@
 #define COMSIG_TRY_WIRES_INTERACT "try_wires_interact"
 	#define COMPONENT_CANT_INTERACT_WIRES (1<<0)
 #define COMSIG_MOB_EMOTED(emote_key) "mob_emoted_[emote_key]"
+
+///from base of mob/update_transform()
+#define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
 
 ///from /obj/structure/door/crush(): (mob/living/crushed, /obj/machinery/door/crushing_door)
 #define COMSIG_LIVING_DOORCRUSHED "living_doorcrush"
