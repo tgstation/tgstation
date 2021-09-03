@@ -73,9 +73,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	// MOTHBLOCKS TODO: Verify all are set (and valid) in unit tests.
 	var/savefile_identifier
 
-	/// List of middleware that will respond to procs.
-	var/list/middleware
-
 	/// The priority of when to apply this preference.
 	/// Used for when you need to rely on another preference.
 	var/priority = PREFERENCE_PRIORITY_DEFAULT
@@ -89,6 +86,14 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// This doesn't mean it'll always be random, but rather if a player
 	/// DOES have random body on, will this already be randomized?
 	var/randomize_by_default = TRUE
+
+	/// If the selected species has this in its /datum/species/mutant_bodyparts,
+	/// will show the feature as selectable.
+	var/relevant_mutant_bodypart = null
+
+	/// If the selected species has this in its /datum/species/species_traits,
+	/// will show the feature as selectable.
+	var/relevant_species_trait = null
 
 /// Called on the saved input when retrieving.
 /// Also called by the value sent from the user through UI. Do not trust it.

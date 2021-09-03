@@ -16,7 +16,8 @@ export const random_body: Feature<RandomSetting> = {
           />
         </Stack.Item>
 
-        {/* MOTHBLOCKS TODO: */}
+        {/* MOTHBLOCKS TODO:
+          This probably warrants an actual context component */}
         <Stack.Item>
           <Button>
             Randomize

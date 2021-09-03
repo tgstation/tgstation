@@ -3,6 +3,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	can_randomize = FALSE
+	relevant_mutant_bodypart = "tail_human"
 
 /datum/preference/choiced/tail_human/init_possible_values()
 	return assoc_to_keys(GLOB.tails_list_human)
@@ -19,6 +20,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	can_randomize = FALSE
+	relevant_mutant_bodypart = "ears"
 
 /datum/preference/choiced/ears/init_possible_values()
 	return assoc_to_keys(GLOB.ears_list)

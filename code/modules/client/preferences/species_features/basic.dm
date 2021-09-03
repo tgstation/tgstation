@@ -26,6 +26,7 @@
 	savefile_key = "eye_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	relevant_species_trait = EYECOLOR
 
 /datum/preference/color_legacy/eye_color/apply_to_human(mob/living/carbon/human/target, value)
 	target.eye_color = value
@@ -44,6 +45,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
 	should_generate_icons = TRUE
+	relevant_species_trait = FACEHAIR
 
 /datum/preference/choiced/facial_hairstyle/init_possible_values()
 	return generate_possible_values_for_sprite_accessories_on_head(GLOB.facial_hairstyles_list)
@@ -55,6 +57,7 @@
 	savefile_key = "facial_hair_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	relevant_species_trait = FACEHAIR
 
 /datum/preference/color_legacy/facial_hair_color/apply_to_human(mob/living/carbon/human/target, value)
 	target.facial_hair_color = value
@@ -63,6 +66,7 @@
 	savefile_key = "hair_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	relevant_species_trait = HAIR
 
 /datum/preference/color_legacy/hair_color/apply_to_human(mob/living/carbon/human/target, value)
 	target.hair_color = value
@@ -72,6 +76,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
 	should_generate_icons = TRUE
+	relevant_species_trait = HAIR
 
 /datum/preference/choiced/hairstyle/init_possible_values()
 	return generate_possible_values_for_sprite_accessories_on_head(GLOB.hairstyles_list)

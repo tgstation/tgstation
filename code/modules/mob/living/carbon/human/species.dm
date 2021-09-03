@@ -2100,40 +2100,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/get_features()
 	var/list/features = list()
 
-	for (var/body_part in mutant_bodyparts)
-		// MOTHBLOCKS TODO: UGGGGGGGGH this feature stuff is stupid
-		switch (body_part)
-			if ("body_markings")
-				features += "feature_lizard_body_markings"
-			if ("ears")
-				features += "feature_human_ears"
-			if ("legs")
-				features += "feature_lizard_legs"
-			if ("spines")
-				features += "feature_lizard_spines"
-			if ("tail_lizard")
-				features += "feature_lizard_tail"
-			if ("tail_human")
-				features += "feature_human_tail"
-			else
-				features += body_part
+	for (var/preference_type in GLOB.preference_entries)
+		var/datum/preference/preference = GLOB.preference_entries[preference_type]
+
+		if ( \
+			(preference.relevant_mutant_bodypart in mutant_bodyparts) \
+			|| (preference.relevant_species_trait in species_traits) \
+		)
+			features += preference.savefile_key
 
 	for (var/obj/item/organ/external/organ_type as anything in external_organs)
 		var/preference = initial(organ_type.preference)
 		if (!isnull(preference))
 			features += preference
-
-	for (var/trait in species_traits)
-		switch (trait)
-			if (EYECOLOR)
-				features += "eye_color"
-			if (MUTCOLORS)
-				features += "feature_mcolor"
-			if (FACEHAIR)
-				features += "facial_style_name"
-				features += "facial_hair_color"
-			if (HAIR)
-				features += "hairstyle_name"
-				features += "hair_color"
 
 	return features
