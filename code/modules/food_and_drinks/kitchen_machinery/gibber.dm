@@ -22,7 +22,7 @@
 
 /obj/machinery/gibber/RefreshParts()
 	gibtime = 40
-	meat_produced = 2
+	meat_produced = initial(meat_produced)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		meat_produced += B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
