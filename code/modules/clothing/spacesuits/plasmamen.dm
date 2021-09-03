@@ -105,17 +105,19 @@
 				update_appearance()
 		else
 			to_chat(user, span_warning("Seems like someone already drew something on this helmet's visor!"))
-	if(hitting_item.flags & PLASMAMAN_HELMET_EXEMPT)
-		to_chat(user, span_notice("You cannot place [hitting_item.name] on helmet!"))
-		return
-	if(!hitting_item.flags & PLASMAMAN_HELMET_EXEMPT)
-		if(!attached_hat)
-			attached_hat = hitting_item
-			to_chat(user, span_notice("You placed [hitting_item.name] on helmet!"))
-			hitting_item.forceMove(src)
-			update_appearance()
-		else
-			to_chat(user, span_notice("There's already something placed on helmet!"))
+	if(isclothing(hitting_item))
+		var/obj/item/clothing/hitting_clothing = hitting_item
+		if(hitting_clothing.clothing_flags & PLASMAMAN_HELMET_EXEMPT)
+			to_chat(user, span_notice("You cannot place [hitting_clothing.name] on helmet!"))
+			return
+		if(istype(hitting_clothing, /obj/item/clothing/head))
+			if(!attached_hat)
+				attached_hat = hitting_clothing
+				to_chat(user, span_notice("You placed [hitting_clothing.name] on helmet!"))
+				hitting_clothing.forceMove(src)
+				update_appearance()
+			else
+				to_chat(user, span_notice("There's already something placed on helmet!"))
 
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
