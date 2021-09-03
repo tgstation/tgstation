@@ -63,7 +63,7 @@
 				var/datum/crafting_recipe/recipe = locate(recipe_type) in GLOB.crafting_recipes
 				var/amount = recipe.reqs[/obj/item/stack/sheet/plasteel]
 				new /obj/item/stack/sheet/plasteel(loc, amount)
-				balloon_alert(user, "torn apart")
+				user.balloon_alert(user, "torn apart")
 				qdel(src)
 			return TRUE
 
