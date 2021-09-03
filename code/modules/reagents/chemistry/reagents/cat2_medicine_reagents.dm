@@ -516,7 +516,7 @@
 
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/user)
 	. = ..()
-	user.balloon_alert(user, "Your heart begins to beat with great force!")
+	user.balloon_alert(user, "your heart beats with a great force")
 	ADD_TRAIT(user, TRAIT_STABLEHEART, type)
 	ADD_TRAIT(user, TRAIT_NOHARDCRIT,type)
 	ADD_TRAIT(user, TRAIT_NOSOFTCRIT,type)
@@ -550,7 +550,7 @@
 	. = ..()
 
 /datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/user)
-	user.balloon_alert(user, "Your heart relaxes and begins to beat calmly.")
+	user.balloon_alert(user, "your heart relaxes")
 	REMOVE_TRAIT(user, TRAIT_STABLEHEART, type)
 	REMOVE_TRAIT(user, TRAIT_NOHARDCRIT,type)
 	REMOVE_TRAIT(user, TRAIT_NOSOFTCRIT,type)
