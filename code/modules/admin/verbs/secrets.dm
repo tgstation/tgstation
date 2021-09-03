@@ -620,6 +620,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	return ..()
 
 /datum/everyone_is_a_traitor_controller/proc/make_traitor(datum/source, mob/living/player)
+	SIGNAL_HANDLER
 	if(player.stat == DEAD || !player.mind)
 		return
 	if(!(ishuman(player) || issilicon(player)) || ispAI(player))
