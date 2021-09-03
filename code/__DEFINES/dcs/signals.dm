@@ -888,9 +888,6 @@
 	///stops the bible chain from continuing. When all of the effects of the bible smacking have been moved to a signal we can kill this
 	#define COMSIG_END_BIBLE_CHAIN (1<<0)
 
-///from base of [obj/item/stock_parts/cell/use]: (amount)
-#define COMSIG_CELL_POWER_USED "cell_power_used"
-
 /// Admin helps
 /// From /datum/admin_help/RemoveActive().
 /// Fired when an adminhelp is made inactive either due to closing or resolving.

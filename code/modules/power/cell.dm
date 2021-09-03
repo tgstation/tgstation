@@ -82,7 +82,6 @@
 	charge = (charge - amount)
 	if(!istype(loc, /obj/machinery/power/apc))
 		SSblackbox.record_feedback("tally", "cell_used", 1, type)
-		SEND_SIGNAL(src, COMSIG_CELL_POWER_USED, amount)
 	return TRUE
 
 // recharge the cell
