@@ -310,7 +310,6 @@
 /obj/machinery/rnd/production/Topic(raw, ls)
 	if(..())
 		return
-	add_fingerprint(usr)
 	usr.set_machine(src)
 	if(ls["switch_screen"])
 		screen = text2num(ls["switch_screen"])
