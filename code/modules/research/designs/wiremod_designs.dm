@@ -308,6 +308,15 @@
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 7000)
 	category = list("Circuitry", "Shells")
 
+/datum/design/gun_shell
+	name = "Gun Shell"
+	desc = "A handheld shell that can fire projectiles to output entities."
+	id = "gun_shell"
+	build_path = /obj/item/gun/energy/wiremod_gun
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000, /datum/material/plasma = 100)
+	category = list("Circuitry", "Shells")
+
 /datum/design/bot_shell
 	name = "Bot Shell"
 	desc = "An immobile shell that can store more components. Has a USB port to be able to connect to computers and machines."
