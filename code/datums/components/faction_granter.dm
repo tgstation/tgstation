@@ -7,6 +7,7 @@
  * one good example is the chaplain plushie that grants you the carp faction, making you friendly with them.
  */
 /datum/component/faction_granter
+	dupe_mode = COMPONENT_DUPE_ALLOWED
 	///whichever faction the parent adds upon using in hand
 	var/faction_to_grant
 	///whether you need to be holy to get the faction.
