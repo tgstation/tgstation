@@ -5,17 +5,20 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/moth_antennae/init_possible_values()
-	var/list/icon/values = possible_values_for_sprite_accessory_list_for_body_part(
-		GLOB.moth_antennae_list,
-		"moth_antennae",
-		list("FRONT"),
-	)
+	var/list/values = list()
 
-	// MOTHBLOCKS TODO: Zoom in, because they're small
+	var/icon/moth_head = icon('icons/mob/human_parts.dmi', "moth_head_m")
+	moth_head.Blend(icon('icons/mob/human_face.dmi', "motheyes"), ICON_OVERLAY)
 
-	// Moth wings are in a stupid dimension
-	for (var/name in values)
-		values[name].Crop(1, 1, 32, 32)
+	for (var/antennae_name in GLOB.moth_antennae_list)
+		var/datum/sprite_accessory/antennae = GLOB.moth_antennae_list[antennae_name]
+
+		var/icon/icon_with_antennae = new(moth_head)
+		icon_with_antennae.Blend(icon('icons/mob/moth_antennae.dmi', "m_moth_antennae_[antennae.icon_state]_FRONT"), ICON_OVERLAY)
+		icon_with_antennae.Scale(64, 64)
+		icon_with_antennae.Crop(15, 64, 15 + 31, 64 - 31)
+
+		values[antennae.name] = icon_with_antennae
 
 	return values
 
