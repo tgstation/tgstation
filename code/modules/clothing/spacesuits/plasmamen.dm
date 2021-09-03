@@ -105,19 +105,19 @@
 				update_appearance()
 		else
 			to_chat(user, span_warning("Seems like someone already drew something on this helmet's visor!"))
-	if(isclothing(hitting_item))
-		var/obj/item/clothing/hitting_clothing = hitting_item
-		if(hitting_clothing.clothing_flags & PLASMAMAN_HELMET_EXEMPT)
-			to_chat(user, span_notice("You cannot place [hitting_clothing.name] on helmet!"))
-			return
-		if(istype(hitting_clothing, /obj/item/clothing/head))
-			if(!attached_hat)
-				attached_hat = hitting_clothing
-				to_chat(user, span_notice("You placed [hitting_clothing.name] on helmet!"))
-				hitting_clothing.forceMove(src)
-				update_appearance()
-			else
-				to_chat(user, span_notice("There's already something placed on helmet!"))
+		return
+	var/obj/item/clothing/hitting_clothing = hitting_item
+	if(hitting_clothing.clothing_flags & PLASMAMAN_HELMET_EXEMPT)
+		to_chat(user, span_notice("You cannot place [hitting_clothing.name] on helmet!"))
+		return
+	if(istype(hitting_clothing, /obj/item/clothing/head))
+		if(!attached_hat)
+			attached_hat = hitting_clothing
+			to_chat(user, span_notice("You placed [hitting_clothing.name] on helmet!"))
+			hitting_clothing.forceMove(src)
+			update_appearance()
+		else
+			to_chat(user, span_notice("There's already something placed on helmet!"))
 
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
@@ -157,12 +157,14 @@
 	update_action_buttons()
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_hand_secondary(mob/user)
+	. = ..()
 	if(src.attached_hat)
 		user.put_in_active_hand(src.attached_hat)
 		to_chat(user, span_notice("You removed [attached_hat.name] from helmet!"))
 		attached_hat = null
 		update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/item/clothing/head/helmet/space/plasmaman/security
 	name = "security plasma envirosuit helmet"
 	desc = "A plasmaman containment helmet designed for security officers, protecting them from burning alive, alongside other undesirables."
