@@ -204,7 +204,7 @@
 			return FALSE
 		result = call(src, proc_to_call)(port, return_values)
 	else
-		result = input_received(return_values)
+		result = input_received(null, return_values)
 
 	if(result)
 		return FALSE
