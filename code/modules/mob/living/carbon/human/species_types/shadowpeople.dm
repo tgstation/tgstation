@@ -15,6 +15,7 @@
 	inherent_factions = list("faithless")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	mutanteyes = /obj/item/organ/eyes/night_vision
+	toxic_food = ETHEREAL | TOXIC
 	species_language_holder = /datum/language_holder/shadowpeople
 
 
