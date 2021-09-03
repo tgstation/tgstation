@@ -1,5 +1,0 @@
-author: "Fikou, PositiveEntropy"
-delete-after: True
-changes: 
-  - expansion: "adds a gun circuit shell"
-  - qol: "to string circuit component should now see everything in normal view range"

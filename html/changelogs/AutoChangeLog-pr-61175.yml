@@ -1,5 +1,0 @@
-author: "CRITAWAKETS"
-delete-after: True
-changes: 
-  - rscadd: "Added in a new sock type, Thigh-high and Knee-high ace socks."
-  - bugfix: "Bee socks are now properly ordered in the code."
