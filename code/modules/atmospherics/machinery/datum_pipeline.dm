@@ -179,10 +179,21 @@
 /datum/pipeline/proc/temporarily_store_air()
 	//Update individual gas_mixtures by volume ratio
 
+	var/sealed_volume = 0
+
+	for(var/obj/machinery/atmospherics/pipe/member as anything in members)
+		if(!member.sealed)
+			continue
+		sealed_volume += member.volume
+
 	for(var/obj/machinery/atmospherics/pipe/member in members)
+		if(member.sealed)
+			continue
 		member.air_temporary = new
-		member.air_temporary.volume = member.volume
-		member.air_temporary.copy_from(air, member.volume / air.volume)
+		member.air_temporary.volume = member.volume + sealed_volume
+		member.air_temporary.copy_from(air, (member.volume + sealed_volume) / air.volume)
+		if(sealed_volume > 0)
+			sealed_volume = 0
 
 		member.air_temporary.temperature = air.temperature
 
