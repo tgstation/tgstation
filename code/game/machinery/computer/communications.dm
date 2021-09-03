@@ -1,4 +1,5 @@
 #define IMPORTANT_ACTION_COOLDOWN (60 SECONDS)
+#define EMERGENCY_ACCESS_COOLDOWN (30 SECONDS)
 #define MAX_STATUS_LINE_LENGTH 40
 
 #define STATE_BUYING_SHUTTLE "buying_shuttle"
@@ -18,6 +19,7 @@
 
 	/// Cooldown for important actions, such as messaging CentCom or other sectors
 	COOLDOWN_DECLARE(static/important_action_cooldown)
+	COOLDOWN_DECLARE(static/emergency_access_cooldown)
 
 	/// The current state of the UI
 	var/state = STATE_MAIN
@@ -43,12 +45,10 @@
 
 	///how many uses the console has done of toggling the emergency access
 	var/toggle_uses = 0
-	///the cooldown of toggling the emergency access IN SECONDS
-	var/toggle_cooldown_seconds = 30
 	///how many uses can you toggle emergency access with before cooldowns start occuring BOTH ENABLE/DISABLE
 	var/toggle_max_uses = 3
-	///when emergency access was last toggled
-	var/time_last_toggled
+	///when was emergency access last toggled
+	var/last_toggled
 
 /obj/machinery/computer/communications/Initialize()
 	. = ..()
@@ -377,20 +377,21 @@
 			minor_announce("Due to staff shortages, your station has been approved for delivery of access codes to secure the Captain's Spare ID. Delivery via drop pod at [get_area(pod_location)]. ETA 120 seconds.")
 
 /obj/machinery/computer/communications/proc/emergency_access_cooldown(mob/user)
-	if(toggle_uses == toggle_max_uses)
-		to_chat(user, span_warning("This was your third free use without cooldown, you will not be able to use this again for [toggle_cooldown_seconds] seconds."))
+	if(toggle_uses == toggle_max_uses) //you have used up 3 free uses already, do it one more time and start a cooldown
+		to_chat(user, span_warning("This was your third free use without cooldown, you will not be able to use this again for [DisplayTimeText(EMERGENCY_ACCESS_COOLDOWN)]."))
+		COOLDOWN_START(src, emergency_access_cooldown, EMERGENCY_ACCESS_COOLDOWN)
+		++toggle_uses //add a use so that this if() is false the next time you try this button
+		return FALSE
 
-	if(toggle_uses > toggle_max_uses)
-		if((time_last_toggled + toggle_cooldown_seconds SECONDS) >= world.time)
-			to_chat(user, span_warning("Emergency Access is still in Cooldown! Once cooldown ends you will get [toggle_max_uses] free uses without cooldown again."))
-			return TRUE //dont use the button, we are in cooldown
-
-	if((time_last_toggled + toggle_cooldown_seconds SECONDS) < world.time) // after you havent pushed this for awhile, reset the uses
-		toggle_uses = 0
+	if(!COOLDOWN_FINISHED(src, emergency_access_cooldown))
+		var/time_left = DisplayTimeText(COOLDOWN_TIMELEFT(src, emergency_access_cooldown), 1)
+		to_chat(user, span_warning("Emergency Access is still in cooldown for [time_left]!"))
+		return TRUE //dont use the button, we are in cooldown
+	else if((last_toggled + EMERGENCY_ACCESS_COOLDOWN) < world.time)
+		toggle_uses = 0 //either cooldown is done, or we just havent touched it in 30 seconds, either way reset uses
 
 	++toggle_uses //add a use
-
-	time_last_toggled = world.time
+	last_toggled = world.time
 	return FALSE //if we are not in cooldown, allow using the button
 
 /obj/machinery/computer/communications/ui_data(mob/user)
@@ -676,6 +677,7 @@
 		possible_answers = new_possible_answers
 
 #undef IMPORTANT_ACTION_COOLDOWN
+#undef EMERGENCY_ACCESS_COOLDOWN
 #undef MAX_STATUS_LINE_LENGTH
 #undef STATE_BUYING_SHUTTLE
 #undef STATE_CHANGING_STATUS
