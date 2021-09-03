@@ -17,7 +17,7 @@
 	///boolean on whether it has been used
 	var/used = FALSE
 
-/datum/component/faction_granter/Initialize(faction_to_grant, holy_role_required = FALSE, grant_message = DEFAULT_GRANT_MESSAGE)
+/datum/component/faction_granter/Initialize(faction_to_grant, holy_role_required = NONE, grant_message = DEFAULT_GRANT_MESSAGE)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.faction_to_grant = faction_to_grant
@@ -27,12 +27,10 @@
 		grant_message += faction_to_grant
 
 /datum/component/faction_granter/RegisterWithParent()
-	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_self_attack)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/component/faction_granter/UnregisterFromParent()
-	. = ..()
 	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_PARENT_EXAMINE))
 
 ///signal called on parent being examined
@@ -49,7 +47,7 @@
 	if(used)
 		to_chat(user, span_warning("The power of [parent] has been used up!"))
 		return
-	if(holy_role_required && user.mind?.holy_role >= HOLY_ROLE_PRIEST)
+	if(user.mind?.holy_role >= holy_role_required)
 		to_chat(user, span_warning("You are not holy enough to invoke the power of [parent]!"))
 		return
 
