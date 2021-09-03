@@ -2,6 +2,7 @@
 	name = "Mushroomperson"
 	id = SPECIES_MUSHROOM
 	mutant_bodyparts = list("caps" = "Round")
+	toxic_food = ETHEREAL | TOXIC
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	fixed_mut_color = "DBBF92"
