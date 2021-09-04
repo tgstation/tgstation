@@ -307,12 +307,6 @@
 	treat_text = "Recommended application of topical ointment or regenerative mesh to affected region."
 	examine_desc = "appears slightly blackened, with the skin blistering and peeling off"
 	occur_text = "blisters, with the skin blackened and peeling"
-	severity = WOUND_SEVERITY_MODERATE
-	damage_mulitplier_penalty = 1.1
-	threshold_minimum = 40
-	threshold_penalty = 30 // burns cause significant decrease in limb integrity compared to other wounds
-	status_effect_type = /datum/status_effect/wound/burn/moderate
-	flesh_damage = 5
 	scar_keyword = "frostbitemoderate"
 
 /datum/wound/burn/severe/frostbite
@@ -321,14 +315,6 @@
 	treat_text = "Recommended immediate disinfection and excision of any infected skin, followed by bandaging and ointment."
 	examine_desc = "is discolored with a blue-gray coloration, and is covered in blood blisters"
 	occur_text = "breaks out into blood blisters, and a bluish-grey color"
-	severity = WOUND_SEVERITY_SEVERE
-	damage_mulitplier_penalty = 1.2
-	threshold_minimum = 80
-	threshold_penalty = 40
-	status_effect_type = /datum/status_effect/wound/burn/severe
-	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
-	infestation_rate = 0.07 // appx 9 minutes to reach sepsis without any treatment
-	flesh_damage = 12.5
 	scar_keyword = "frostbitesevere"
 
 /datum/wound/burn/critical/frostbite
@@ -337,13 +323,4 @@
 	treat_text = "Immediate surgical debriding of any infected skin, followed by potent tissue regeneration formula and bandaging."
 	examine_desc = "is charcoal black, and starting to fall off."
 	occur_text = "becomes charcoal black and mummifies"
-	severity = WOUND_SEVERITY_CRITICAL
-	damage_mulitplier_penalty = 1.3
-	sound_effect = 'sound/effects/wounds/sizzle2.ogg'
-	threshold_minimum = 140
-	threshold_penalty = 80
-	status_effect_type = /datum/status_effect/wound/burn/critical
-	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
-	infestation_rate = 0.075 // appx 4.33 minutes to reach sepsis without any treatment
-	flesh_damage = 20
 	scar_keyword = "frostbitecritical"
