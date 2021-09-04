@@ -1,0 +1,5 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - bugfix: "you can no longer print from a protolathe at a distance, and the operating computer tgui will grey out if you walk away again"
+  - bugfix: "Admins can now use their godly powers of AdminGhostAI to interact with every machine again"
