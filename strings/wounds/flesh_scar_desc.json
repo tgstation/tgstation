@@ -77,6 +77,22 @@
 		"unmistakeable splotches of dead tissue from serious burns"
 	],
 
+	"frostbitemoderate": [
+		"small amoeba-shaped skinmarks",
+		"a faded streak of depressed skin"
+	],
+
+	"frostbitesevere": [
+		"a large, jagged patch of faded skin",
+		"random spots of shiny, smooth skin",
+		"spots of taut, leathery skin"
+	],
+
+	"frostbitecritical": [
+		"massive, disfiguring keloid scars",
+		"several long streaks of badly discolored and malformed skin",
+		"unmistakeable splotches of dead tissue from serious burns"
+	],
 
 	"dismember": [
 		"is several skintone shades paler than the rest of the body",

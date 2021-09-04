@@ -58,7 +58,8 @@ GLOBAL_LIST_INIT(global_wound_types, list(WOUND_BLUNT = list(/datum/wound/blunt/
 GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate,
 	/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate,
 	/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate,
-	/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate))
+	/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate,
+	/datum/wound/burn/critical/frostbite, /datum/wound/burn/severe/frostbite, /datum/wound/burn/moderate/frostbite))
 
 
 // ~burn wound infection defines
