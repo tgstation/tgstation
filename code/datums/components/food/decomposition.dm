@@ -20,14 +20,17 @@
 	var/time_remaining = DECOMPOSITION_TIME
 	/// Used to give raw/gross food lower timers
 	var/decomp_flags
+	/// Use for determining what kind of item the food decomposes into.
+	var/decomp_result
 	/// Used for examining
 	var/examine_type = DECOMP_EXAM_NORMAL
 
-/datum/component/decomposition/Initialize(mapload, decomp_flags = NONE)
+/datum/component/decomposition/Initialize(mapload, decomp_flags = NONE, decomp_result)
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.decomp_flags = decomp_flags
+	src.decomp_result = decomp_result
 	if(mapload)
 		handled = FALSE
 
@@ -105,7 +108,7 @@
 /datum/component/decomposition/proc/decompose()
 	var/obj/decomp = parent //Lets us spawn things at decomp
 	new /obj/effect/decal/cleanable/ants(decomp.loc)
-	new /obj/item/food/badrecipe/moldy(decomp.loc)
+	new decomp_result(decomp.loc)
 	decomp.visible_message("<span class='notice'>[decomp] gets overtaken by mold and ants! Gross!</span>")
 	qdel(decomp)
 	return

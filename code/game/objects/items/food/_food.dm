@@ -41,6 +41,8 @@
 	var/venue_value
 	///Food that's immune to decomposition.
 	var/preserved_food = FALSE
+	///What our food decomposes into.
+	var/decomp_type = /obj/item/food/badrecipe/moldy
 
 /obj/item/food/Initialize(mapload)
 	. = ..()
@@ -100,4 +102,4 @@
 ///This proc makes things decompose. Set preserved_food to TRUE to make it never decompose.
 /obj/item/food/proc/MakeDecompose(mapload)
 	if(!preserved_food)
-		AddComponent(/datum/component/decomposition, mapload, decomp_flags = foodtypes)
+		AddComponent(/datum/component/decomposition, mapload, decomp_flags = foodtypes, decomp_result = decomp_type)

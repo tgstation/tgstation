@@ -48,18 +48,20 @@
 	foodtypes = GRAIN
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	venue_value = FOOD_PRICE_TRASH
+	decomp_type = /obj/item/food/breadslice/moldy
 
 /obj/item/food/breadslice/plain/Initialize()
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
 /obj/item/food/breadslice/moldy
-	name = "moldy bread slice"
+	name = "moldy 'bread' slice"
 	desc = "Entire stations have been ripped apart over arguing whether this is still good to eat."
 	icon_state = "moldybreadslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/mold = 10)
 	tastes = list("decaying fungus" = 1)
 	foodtypes = GROSS
+	preserved_food = TRUE
 
 /obj/item/food/breadslice/moldy/Initialize()
 	. = ..()
