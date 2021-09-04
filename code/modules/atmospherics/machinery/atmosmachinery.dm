@@ -57,7 +57,7 @@
 
 	///The bitflag that's being checked on ventcrawling. Default is to allow ventcrawling and seeing pipes.
 	var/vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE
-
+	///Check if the pipe is sealed, so that it won't spill gases or throw the user away from it
 	var/sealed = FALSE
 
 /obj/machinery/atmospherics/LateInitialize()
