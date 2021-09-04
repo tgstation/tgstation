@@ -376,6 +376,14 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "abN" = (
+/obj/structure/rack,
+/obj/item/storage/belt/military/rocket/full{
+	pixel_y = -5
+	},
+/obj/item/storage/belt/military/rocket/full,
+/obj/item/storage/belt/military/rocket/full{
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "acd" = (
@@ -392,7 +400,14 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "aci" = (
-/obj/vehicle/ridden/secway,
+/obj/structure/rack,
+/obj/item/gun/ballistic/rocketlauncher/secuirty{
+	pixel_y = -5
+	},
+/obj/item/gun/ballistic/rocketlauncher/secuirty,
+/obj/item/gun/ballistic/rocketlauncher/secuirty{
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "ack" = (
@@ -20060,7 +20075,6 @@
 "fsz" = (
 /obj/structure/rack,
 /obj/machinery/airalarm/directional/north,
-/obj/item/gun/energy/ionrifle,
 /obj/item/gun/energy/temperature/security,
 /obj/item/clothing/suit/hooded/ablative,
 /obj/effect/turf_decal/tile/neutral{
@@ -34368,10 +34382,7 @@
 /turf/open/floor/engine,
 /area/science/genetics)
 "nxy" = (
-/obj/structure/rack,
 /obj/machinery/firealarm/directional/north,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -34382,6 +34393,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/vehicle/ridden/secway,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "nxB" = (

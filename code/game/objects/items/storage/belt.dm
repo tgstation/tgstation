@@ -499,6 +499,32 @@
 		/obj/item/ammo_box/magazine/wt550m9 = 4,
 	), src)
 
+/obj/item/storage/belt/military/rocket
+	name = "rocket storage rig"
+	desc = "A storage rig configured to hold up to seven of your most valued rockets!"
+	icon_state = "explorer2"
+	worn_icon_state = "explorer2"
+
+/obj/item/storage/belt/military/rocket/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 7
+	STR.display_numerical_stacking = TRUE
+	STR.max_combined_w_class = 30
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.set_holdable(list(
+		/obj/item/ammo_casing/caseless/rocket
+		))
+
+/obj/item/storage/belt/military/rocket/full/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/ammo_casing/caseless/rocket/smoke = 2,
+		/obj/item/ammo_casing/caseless/rocket/sabot = 2,
+		/obj/item/ammo_casing/caseless/rocket/smoke/phosphor = 1,
+		/obj/item/ammo_casing/caseless/rocket/smoke/sleeping = 1,
+		/obj/item/ammo_casing/caseless/rocket/emp = 1,
+	), src)
+
 /obj/item/storage/belt/grenade
 	name = "grenadier belt"
 	desc = "A belt for holding grenades."

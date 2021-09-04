@@ -13719,7 +13719,6 @@
 /area/ai_monitored/security/armory)
 "bXR" = (
 /obj/structure/rack,
-/obj/item/gun/energy/ionrifle,
 /obj/item/clothing/suit/hooded/ablative,
 /obj/item/gun/energy/temperature/security,
 /obj/effect/turf_decal/tile/neutral{
@@ -14547,31 +14546,23 @@
 	c_tag = "Armory - Interior";
 	dir = 1
 	},
-/obj/structure/table/reinforced,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/machinery/power/apc/auto_name/south,
+/obj/structure/rack,
+/obj/item/storage/belt/military/rocket/full{
+	pixel_y = -5
+	},
+/obj/item/storage/belt/military/rocket/full,
+/obj/item/storage/belt/military/rocket/full{
+	pixel_y = 5
+	},
 /turf/open/floor/iron,
 /area/ai_monitored/security/armory)
 "cbL" = (
 /obj/structure/reagent_dispensers/peppertank/directional/east,
-/obj/structure/table/reinforced,
-/obj/item/clothing/mask/gas/sechailer{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/flashlight/seclite,
-/obj/item/flashlight/seclite,
-/obj/item/flashlight/seclite,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -14581,6 +14572,14 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/gun/ballistic/rocketlauncher/secuirty{
+	pixel_y = -5
+	},
+/obj/item/gun/ballistic/rocketlauncher/secuirty,
+/obj/item/gun/ballistic/rocketlauncher/secuirty{
+	pixel_y = 5
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)

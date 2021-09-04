@@ -70,6 +70,77 @@
 	else
 		explosion(target, light_impact_range = 2, flame_range = 3, flash_range = 4)
 
+/// Tacticool (Useless) ammo for the PML and subtypes
+/obj/projectile/bullet/a84mm/sabot
+	name = "\improper APCBCFSDSGLAT missile"
+	desc = "Pray this isn't coming straigh at you."
+	icon_state = "84mm-sabot"
+	damage = 150
+	anti_armour_damage = 200
+	wound_bonus = 50
+	projectile_piercing = PASSMOB //Look up modern tank APFSDS shells to see why for this one
+	ricochets_max = 5
+	ricochet_chance = 120
+	ricochet_auto_aim_range = 3
+	ricochet_incidence_leeway = 70
+	paralyze = 100
+
+/obj/projectile/bullet/a84mm/sabot/do_boom(atom/target)
+	explosion(target, flash_range = 2) //Shells so goddamn powerful, they create a flash of light with everything they impact
+
+/obj/projectile/bullet/a84mm/emp
+	name = "\improper GLEMPS missile"
+	desc = "Point at ai, fire, pray."
+	icon_state = "84mm-emp"
+	damage = 30
+	anti_armour_damage = 0
+	dismemberment = 0
+	paralyze = 50
+
+/obj/projectile/bullet/a84mm/emp/do_boom(atom/target)
+	empulse(target, 2, 5)
+
+/obj/projectile/bullet/a84mm/smoke
+	name = "\improper HVSD missile"
+	desc = "Tactically fast smoke in 30 minutes or its free!"
+	icon_state = "84mm-smoke"
+	damage = 40 //Fuckin' ow dude, you just got direct hit by a rocket
+	anti_armour_damage = 0
+	dismemberment = 0 //You aren't going to be delimbed by a really fast smoke grenade
+	paralyze = 100 //You have been direct hit by a missile
+
+/obj/projectile/bullet/a84mm/smoke/do_boom(atom/target)
+	playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
+	var/datum/effect_system/smoke_spread/bad/smoke = new
+	smoke.set_up(7, src) //Big smoke, you're using a rocket for a reason
+	smoke.start()
+	qdel(smoke)
+
+/obj/projectile/bullet/a84mm/smoke/phosphor
+	name = "\improper HVWP missile"
+	desc = "Nothing beats the smell."
+	icon_state = "84mm-coldsmoke"
+
+/obj/projectile/bullet/a84mm/smoke/phosphor/do_boom(atom/target)
+	playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
+	var/datum/effect_system/smoke_spread/freezing/smoke = new
+	smoke.set_up(7, src)
+	smoke.start()
+	qdel(smoke)
+	explosion(target, flame_range = 7, flash_range = 2)
+
+/obj/projectile/bullet/a84mm/smoke/sleeping
+	name = "\improper RCSD missile"
+	desc = "What's this sleep gas stuff made of anyway?"
+	icon_state = "84mm-sleepsmoke"
+
+/obj/projectile/bullet/a84mm/smoke/sleeping/do_boom(atom/target)
+	playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
+	var/datum/effect_system/smoke_spread/sleeping/smoke = new
+	smoke.set_up(5, src)
+	smoke.start()
+	qdel(smoke)
+
 /// Mech BRM-6 missile
 /obj/projectile/bullet/a84mm_br
 	name ="\improper HE missile"

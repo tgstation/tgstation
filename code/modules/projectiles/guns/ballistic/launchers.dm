@@ -78,6 +78,14 @@
 	desc = "A reusable rocket propelled grenade launcher. This one has been fitted with a special coolant loop to avoid embarassing teamkill 'accidents' from backblast."
 	backblast = FALSE
 
+/obj/item/gun/ballistic/rocketlauncher/secuirty
+	name = "\improper UPL-550"
+	desc = "A nanotrasen made 'utility launcher' which in reality, is just a fancy way to say legalized rocket launcher."
+	icon_state = "rocketlauncher-sec"
+	inhand_icon_state = "rocketlauncher-sec"
+	pin = /obj/item/firing_pin/implant/mindshield
+	mag_type = /obj/item/ammo_box/magazine/internal/rocketlauncher/smoke
+
 /obj/item/gun/ballistic/rocketlauncher/afterattack()
 	. = ..()
 	magazine.get_round(FALSE) //Hack to clear the mag after it's fired

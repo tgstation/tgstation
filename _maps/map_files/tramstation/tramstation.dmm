@@ -6808,8 +6808,14 @@
 	dir = 8
 	},
 /obj/structure/rack,
-/obj/item/storage/toolbox/drone,
 /obj/machinery/firealarm/directional/north,
+/obj/item/gun/ballistic/rocketlauncher/secuirty{
+	pixel_y = -5
+	},
+/obj/item/gun/ballistic/rocketlauncher/secuirty,
+/obj/item/gun/ballistic/rocketlauncher/secuirty{
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "azF" = (
@@ -52108,11 +52114,16 @@
 	dir = 8
 	},
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet,
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4,
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2,
+/obj/item/storage/belt/military/rocket/full{
+	pixel_y = -5
+	},
+/obj/item/storage/belt/military/rocket/full,
+/obj/item/storage/belt/military/rocket/full{
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "rNP" = (
@@ -52498,7 +52509,6 @@
 	},
 /obj/structure/rack,
 /obj/item/clothing/suit/hooded/ablative,
-/obj/item/gun/energy/ionrifle,
 /obj/item/gun/energy/temperature/security,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)

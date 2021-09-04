@@ -15,3 +15,7 @@
 	ammo_type = /obj/item/ammo_casing/caseless/rocket
 	caliber = CALIBER_84MM
 	max_ammo = 1
+
+/obj/item/ammo_box/magazine/internal/rocketlauncher/smoke
+	name = "rocket launcher internal magazine"
+	ammo_type = /obj/item/ammo_casing/caseless/rocket/smoke

@@ -2647,6 +2647,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/rack,
+/obj/item/gun/energy/temperature/security,
+/obj/item/clothing/suit/hooded/ablative,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "akF" = (
@@ -12697,7 +12700,6 @@
 /turf/open/floor/iron/dark,
 /area/science/lab)
 "bdK" = (
-/obj/structure/rack,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -12706,11 +12708,14 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_x = -4;
-	pixel_y = 4
+/obj/structure/rack,
+/obj/item/storage/belt/military/rocket/full{
+	pixel_y = -5
 	},
-/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/storage/belt/military/rocket/full,
+/obj/item/storage/belt/military/rocket/full{
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "bdN" = (
@@ -59628,10 +59633,6 @@
 /area/security/prison)
 "oUz" = (
 /obj/structure/rack,
-/obj/item/gun/energy/ionrifle{
-	pixel_y = 4
-	},
-/obj/item/gun/energy/temperature/security,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -59640,7 +59641,13 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/item/radio/intercom/directional/south,
-/obj/item/clothing/suit/hooded/ablative,
+/obj/item/gun/ballistic/rocketlauncher/secuirty{
+	pixel_y = -5
+	},
+/obj/item/gun/ballistic/rocketlauncher/secuirty,
+/obj/item/gun/ballistic/rocketlauncher/secuirty{
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "oUO" = (

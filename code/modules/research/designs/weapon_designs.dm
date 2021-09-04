@@ -172,6 +172,56 @@
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/rocket
+	name = "APCBCFSDSGLATM"
+	desc = "A special missile that fires a plasteel core rod at high speeds."
+	id = "rocket_sabot"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 7000, /datum/material/glass = 2000, /datum/material/plasma = 5000, /datum/material/silver = 3000)
+	build_path = /obj/item/ammo_casing/caseless/rocket/sabot
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/rocket/emp
+	name = "GLEMPS"
+	desc = "Custom made missile that creates a large emp in the area it is fired upon."
+	id = "rocket_emp"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 7000, /datum/material/glass = 2000, /datum/material/plasma = 5000, /datum/material/uranium = 2000)
+	build_path = /obj/item/ammo_casing/caseless/rocket/sabot
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/rocket/smoke
+	name = "HVSD"
+	desc = "Basic missile that creates a cloud of vision blocking smoke on impact."
+	id = "rocket_smoke"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 7000, /datum/material/glass = 2000, /datum/material/plasma = 5000)
+	build_path = /obj/item/ammo_casing/caseless/rocket/smoke
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/rocket/smoke/phosphor
+	name = "HVWP"
+	desc = "Dangerous missile that creates a flash of fire and smoke upon detonation."
+	id = "rocket_smoke_phosphor"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 7000, /datum/material/glass = 10000, /datum/material/plasma = 10000)
+	build_path = /obj/item/ammo_casing/caseless/rocket/smoke/phosphor
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/rocket/smoke/sleeping
+	name = "RCSD"
+	desc = "Riot control grade missile that quickly puts an upset crowd to rest."
+	id = "rocket_smoke_sleep"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 7000, /datum/material/glass = 2000, /datum/material/plasma = 10000, /datum/material/silver = 4000)
+	build_path = /obj/item/ammo_casing/caseless/rocket/smoke/sleeping
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/large_grenade
 	name = "Large Grenade"
 	desc = "A grenade that affects a larger area and use larger containers."

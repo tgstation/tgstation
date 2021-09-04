@@ -551,17 +551,16 @@
 /area/ai_monitored/security/armory)
 "aer" = (
 /obj/structure/rack,
-/obj/item/storage/box/flashes{
-	pixel_x = 3
-	},
-/obj/item/storage/box/teargas{
-	pixel_x = 1;
-	pixel_y = -2
-	},
-/obj/item/gun/grenadelauncher,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/item/gun/ballistic/rocketlauncher/secuirty{
+	pixel_y = -5
+	},
+/obj/item/gun/ballistic/rocketlauncher/secuirty,
+/obj/item/gun/ballistic/rocketlauncher/secuirty{
+	pixel_y = 5
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
@@ -1675,7 +1674,6 @@
 /area/ai_monitored/security/armory)
 "alZ" = (
 /obj/structure/rack,
-/obj/item/gun/energy/ionrifle,
 /obj/item/gun/energy/temperature/security,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -6682,8 +6680,13 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/storage/belt/military/rocket/full{
+	pixel_y = -5
+	},
+/obj/item/storage/belt/military/rocket/full,
+/obj/item/storage/belt/military/rocket/full{
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "bgC" = (
@@ -63965,6 +63968,15 @@
 	dir = 8
 	},
 /obj/machinery/light_switch/directional/east,
+/obj/structure/rack,
+/obj/item/storage/box/flashes{
+	pixel_x = 3
+	},
+/obj/item/storage/box/teargas{
+	pixel_x = 1;
+	pixel_y = -2
+	},
+/obj/item/gun/grenadelauncher,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "uDt" = (
