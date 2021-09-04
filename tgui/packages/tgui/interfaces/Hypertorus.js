@@ -30,6 +30,7 @@ export const Hypertorus = (props, context) => {
     start_power,
     start_cooling,
     start_fuel,
+    start_moderator,
     internal_fusion_temperature,
     moderator_internal_temperature,
     internal_output_temperature,
@@ -85,6 +86,16 @@ export const Hypertorus = (props, context) => {
                 content={data.start_fuel ? 'On' : 'Off'}
                 selected={data.start_fuel}
                 onClick={() => act('start_fuel')} />
+            </Stack.Item>
+            <Stack.Item color="label">
+              {'Start moderator injection: '}
+              <Button
+                disabled={start_power === 0
+                  || start_cooling === 0}
+                icon={data.start_moderator ? 'power-off' : 'times'}
+                content={data.start_moderator ? 'On' : 'Off'}
+                selected={data.start_moderator}
+                onClick={() => act('start_moderator')} />
             </Stack.Item>
           </Stack>
         </Section>

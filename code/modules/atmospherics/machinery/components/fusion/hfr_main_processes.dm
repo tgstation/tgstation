@@ -137,24 +137,18 @@
 	linked_output.update_parents()
 	linked_moderator.update_parents()
 
-	if(!start_fuel)
-		return
+	if(start_moderator && linked_moderator.airs[1].total_moles())
+		moderator_internal.merge(linked_moderator.airs[1].remove(moderator_injection_rate * 0.1))
+		linked_moderator.update_parents()
 
-	if(!selected_fuel)
-		return
-
-	//Start by storing the gasmix of the inputs inside the internal_fusion and moderator_internal
-	if(!check_gas_requirements())
-		return
-
-	for(var/gas_type in selected_fuel.requirements)
-		internal_fusion.assert_gas(gas_type)
-		internal_fusion.merge(linked_input.airs[1].remove_specific(gas_type, linked_input.airs[1].gases[gas_type][MOLES] * fuel_injection_rate * 0.1))
-
-	if(!linked_moderator.airs[1].total_moles())
-		return
-
-	moderator_internal.merge(linked_moderator.airs[1].remove(moderator_injection_rate * 0.1))
+	if(start_fuel && selected_fuel)
+		//Start by storing the gasmix of the inputs inside the internal_fusion and moderator_internal
+		if(!check_gas_requirements())
+			return
+		for(var/gas_type in selected_fuel.requirements)
+			internal_fusion.assert_gas(gas_type)
+			internal_fusion.merge(linked_input.airs[1].remove_specific(gas_type, linked_input.airs[1].gases[gas_type][MOLES] * fuel_injection_rate * 0.1))
+			linked_input.update_parents()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/process(delta_time)
 	fusion_process(delta_time)

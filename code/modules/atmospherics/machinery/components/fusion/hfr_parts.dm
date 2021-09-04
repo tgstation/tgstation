@@ -286,6 +286,7 @@
 	data["start_power"] = connected_core.start_power
 	data["start_cooling"] = connected_core.start_cooling
 	data["start_fuel"] = connected_core.start_fuel
+	data["start_moderator"] = connected_core.start_moderator
 
 	data["internal_fusion_temperature"] = connected_core.fusion_temperature
 	data["moderator_internal_temperature"] = connected_core.moderator_temperature
@@ -317,6 +318,9 @@
 			. = TRUE
 		if("start_fuel")
 			connected_core.start_fuel = !connected_core.start_fuel
+			. = TRUE
+		if("start_moderator")
+			connected_core.start_moderator = !connected_core.start_moderator
 			. = TRUE
 		if("heating_conductor")
 			var/heating_conductor = params["heating_conductor"]
