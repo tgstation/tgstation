@@ -77,10 +77,7 @@
 		investigate_log("[key_name(usr)] built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at \a [src]([type]).")
 	for(var/i in 1 to amount)
-		var/obj/item/I = new path(get_turf(src))
-		if(efficient_with(I.type))
-			I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
-			I.set_custom_materials(matlist)
+		new path(get_turf(src))
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 
 /**

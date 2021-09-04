@@ -5680,7 +5680,7 @@
 /area/syndicate_mothership/control)
 "tx" = (
 /obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /turf/open/floor/iron/grimy,
 /area/centcom/ferry)
 "ty" = (
@@ -7385,7 +7385,7 @@
 /area/wizard_station)
 "xy" = (
 /obj/structure/table/wood/fancy,
-/obj/item/storage/pill_bottle/dice{
+/obj/item/storage/dice{
 	icon_state = "magicdicebag"
 	},
 /turf/open/floor/carpet,

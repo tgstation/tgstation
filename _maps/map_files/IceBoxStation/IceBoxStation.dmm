@@ -125,7 +125,7 @@
 /area/security/prison)
 "aaO" = (
 /obj/structure/table,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /turf/open/floor/iron,
 /area/security/prison)
 "aaP" = (
@@ -38852,7 +38852,7 @@
 /area/service/kitchen)
 "pVh" = (
 /obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /turf/open/floor/iron,
 /area/commons/dorms)
 "pVj" = (

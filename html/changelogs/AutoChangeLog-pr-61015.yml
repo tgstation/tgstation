@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - rscdel: "You can no longer store dice in pill bottles and pills in dice bags."
+  - bugfix: "fixes getting scared of dice bags if you have a medical phobia."
