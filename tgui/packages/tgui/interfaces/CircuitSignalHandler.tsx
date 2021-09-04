@@ -55,7 +55,7 @@ export class CircuitSignalHandler
     } = data;
     return (
       <Window width={600} height={300}>
-        <Window.Content scrollable>
+        <Window.Content>
           <Stack vertical fill>
             <Stack.Item>
               <Input
@@ -68,7 +68,7 @@ export class CircuitSignalHandler
             <Stack.Item grow>
               <Stack width="100%" height="100%">
                 <Stack.Item basis="50%">
-                  <Section title="Responses" fill>
+                  <Section title="Responses" fill scrollable>
                     <Stack vertical>
                       {responseList.map((val, index) => (
                         <Entry
@@ -111,7 +111,7 @@ export class CircuitSignalHandler
                   </Section>
                 </Stack.Item>
                 <Stack.Item basis="50%">
-                  <Section title="Parameters" fill>
+                  <Section title="Parameters" fill scrollable>
                     <Stack vertical>
                       {parameterList.map((val, index) => (
                         <Entry
