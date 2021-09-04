@@ -15,7 +15,7 @@ jobs:
           path: ~/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm-${{ secrets.CACHE_PURGE_KEY }}
       - name: Install SpacemanDMM
-        run: bash tools/ci/install_spaceman_dmm.sh dmdoc
+        run: bash tools/ci/build_spaceman_dmm.sh dmdoc
       - name: Generate documentation
         run: |
           ~/dmdoc
