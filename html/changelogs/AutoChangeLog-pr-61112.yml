@@ -1,0 +1,7 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - qol: "The pAI signaler is now a proper internal signaler and will feel much easier to use."
+  - bugfix: "Fixed the pAI Host Scan being unable to work from within a PDA or anywhere that wasn't your hands or your pockets."
+  - spellcheck: "Fixed typoes in the pAI interface related to signaler being written \"signaller\""
+  - code_imp: "Improved the pAI code, mostly around the softwares."
