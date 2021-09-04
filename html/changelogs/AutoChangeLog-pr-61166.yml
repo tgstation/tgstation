@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - code_imp: "Replaced the MATERIAL_NO_EFFECTS material flag with MATERIAL_EFFECTS."
+  - bugfix: "No more gazillions of atoms having the beauty element."
