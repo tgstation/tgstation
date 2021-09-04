@@ -34,7 +34,7 @@
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/on_multitool_act)
 		RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/on_object_deconstruct)
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
-		RegisterSignal(parent, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, .proc/on_unfasten)
+		RegisterSignal(parent, COMSIG_MOVABLE_SET_ANCHORED, .proc/on_set_anchored)
 	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
 	RegisterSignal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, .proc/on_load)
 
@@ -76,7 +76,7 @@
 		COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
 		COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
 		COMSIG_OBJ_DECONSTRUCT,
-		COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH,
+		COMSIG_MOVABLE_SET_ANCHORED,
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_ATOM_ATTACK_GHOST,
 		COMSIG_ATOM_USB_CABLE_TRY_ATTACH,
@@ -102,7 +102,7 @@
 	if(attached_circuit)
 		INVOKE_ASYNC(attached_circuit, /datum.proc/ui_interact, ghost)
 
-/datum/component/shell/proc/on_examine(datum/source, mob/user, list/examine_text)
+/datum/component/shell/proc/on_examine(atom/movable/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 	if(!is_authorized(user))
 		return
@@ -115,19 +115,22 @@
 	examine_text += span_notice("The cover panel to the integrated circuit is [locked? "locked" : "unlocked"].")
 	var/obj/item/stock_parts/cell/cell = attached_circuit.cell
 	examine_text += span_notice("The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
+	if((shell_flags & SHELL_FLAG_REQUIRE_ANCHOR) && !source.anchored)
+		examine_text += span_notice("The integrated circuit is non-functional whilst the shell is unanchored.")
 
 	if (shell_flags & SHELL_FLAG_USB_PORT)
 		examine_text += span_notice("There is a <b>USB port</b> on the front.")
 
 /**
- * Called when the shell is wrenched.
+ * Called when the shell is anchored.
  *
  * Only applies if the shell has SHELL_FLAG_REQUIRE_ANCHOR.
  * Disables the integrated circuit if unanchored, otherwise enable the circuit.
  */
-/datum/component/shell/proc/on_unfasten(atom/source, anchored)
+/datum/component/shell/proc/on_set_anchored(atom/movable/source, previous_value)
 	SIGNAL_HANDLER
-	attached_circuit?.on = anchored
+	attached_circuit?.on = source.anchored
+
 /**
  * Called when an item hits the parent. This is the method to add the circuitboard to the component.
  */
@@ -270,7 +273,7 @@
 	attached_circuit.locked = FALSE
 
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
-		on_unfasten(parent_atom, parent_atom.anchored)
+		attached_circuit.on = parent_atom.anchored
 
 	if(circuitboard.loc != parent_atom)
 		circuitboard.forceMove(parent_atom)

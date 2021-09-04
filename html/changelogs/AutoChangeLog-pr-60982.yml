@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Using a soulstone on a construct shell no longer destroys it and the shade if no option for the construct mob type is taken."
