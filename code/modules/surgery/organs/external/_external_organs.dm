@@ -207,6 +207,7 @@
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 
 	feature_key = "moth_antennae"
+	preference = "feature_moth_antennae"
 
 	dna_block = DNA_MOTH_ANTENNAE_BLOCK
 

@@ -63,11 +63,3 @@
 	human_mob.dna.features["wings"] = wings
 	human_mob.dna.features["moth_wings"] = wings
 	human_mob.update_body()
-
-/datum/species/moth/get_features()
-	var/list/features = ..()
-
-	features += "moth_antennae"
-	features += "moth_wings"
-
-	return features

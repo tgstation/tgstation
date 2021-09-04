@@ -393,11 +393,9 @@ export const MainPage = (props: {
               return false;
             }
 
-            // MOTHBLOCKS TODO: This is stupid, let's figure it out
-            return currentSpeciesData.enabled_features
-              .indexOf(featureName) !== -1
-                || currentSpeciesData.enabled_features
-                  .indexOf(featureName.split("feature_")[1]) !== -1;
+            return currentSpeciesData
+              .enabled_features
+              .indexOf(featureName) !== -1;
           }),
       ];
 

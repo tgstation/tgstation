@@ -158,6 +158,7 @@
 ///Moth wings! They can flutter in low-grav and burn off in heat
 /obj/item/organ/external/wings/moth
 	feature_key = "moth_wings"
+	preference = "feature_moth_wings"
 	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
 
 	dna_block = DNA_MOTH_WINGS_BLOCK
