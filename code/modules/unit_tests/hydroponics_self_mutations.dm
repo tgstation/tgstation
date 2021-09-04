@@ -1,4 +1,6 @@
 /// Unit test to ensure plants can't self-mutate into themselves.
+/datum/unit_test/hydroponics_self_mutation
+
 /datum/unit_test/hydroponics_self_mutation/Run()
 	var/list/all_seeds = subtypesof(/obj/item/seeds)
 
