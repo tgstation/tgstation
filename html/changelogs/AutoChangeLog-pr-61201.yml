@@ -1,4 +1,0 @@
-author: "aaaa1023"
-delete-after: True
-changes: 
-  - bugfix: "Mice no longer become invisible when splatted by a mousetrap."

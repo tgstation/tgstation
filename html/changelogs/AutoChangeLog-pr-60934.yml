@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - refactor: "Refactored how components are triggered and how ports can now be ordered."

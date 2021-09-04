@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "bees, hivelord, its brood and legion skulls no longer use the MOUSE_OPACITY_OPAQUE setting that makes the invisible portions of their icons count toward mouse clicks, which can get in the way of players trying to click stuff below their layer. Instead, to be easier to click on, they use a component that gives them a near-invisible underlay."
