@@ -94,7 +94,7 @@
 	if(preview_job)
 		// Silicons only need a very basic preview since there is no customization for them.
 		if (istype(preview_job,/datum/job/ai))
-			return image('icons/mob/ai.dmi', icon_state = resolve_ai_icon(preferred_ai_core_display), dir = SOUTH)
+			return image('icons/mob/ai.dmi', icon_state = resolve_ai_icon(read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
 		if (istype(preview_job,/datum/job/cyborg))
 			return image('icons/mob/robots.dmi', icon_state = "robot", dir = SOUTH)
 

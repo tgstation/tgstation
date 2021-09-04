@@ -310,18 +310,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["randomise"],  randomise)
 	READ_FILE(S["persistent_scars"] , persistent_scars)
 
-	READ_FILE(S["preferred_ai_core_display"], preferred_ai_core_display)
-	READ_FILE(S["prefered_security_department"], prefered_security_department)
-
-	// This is the version when the random security department was removed.
-	// When the minimum is higher than that version, it's impossible for someone to have the "Random" department.
-	#if SAVEFILE_VERSION_MIN > 40
-	#warn The prefered_security_department check in preferences_savefile.dm is no longer necessary.
-	#endif
-
-	if (!(prefered_security_department in GLOB.security_depts_prefs))
-		prefered_security_department = SEC_DEPT_NONE
-
 	//Jobs
 	READ_FILE(S["joblessrole"], joblessrole)
 	//Load prefs
@@ -376,6 +364,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	WRITE_FILE(S["version"] , SAVEFILE_VERSION_MAX) //load_character will sanitize any bad data, so assume up-to-date.)
 
+	// This is the version when the random security department was removed.
+	// When the minimum is higher than that version, it's impossible for someone to have the "Random" department.
+	#if SAVEFILE_VERSION_MIN > 40
+	#warn The prefered_security_department check in code/modules/client/preferences/security_department.dm is no longer necessary.
+	#endif
+
 	//Character
 	WRITE_FILE(S["body_type"] , body_type)
 	WRITE_FILE(S["skin_tone"] , skin_tone)
@@ -384,9 +378,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["randomise"] , randomise)
 	WRITE_FILE(S["phobia"], phobia)
 	WRITE_FILE(S["persistent_scars"] , persistent_scars)
-
-	WRITE_FILE(S["preferred_ai_core_display"] ,  preferred_ai_core_display)
-	WRITE_FILE(S["prefered_security_department"] , prefered_security_department)
 
 	//Jobs
 	WRITE_FILE(S["joblessrole"] , joblessrole)

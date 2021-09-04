@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 
 /// Returns the department this mob was assigned to, if any.
 /datum/job/security_officer/proc/setup_department(mob/living/carbon/human/spawning, client/player_client)
-	var/department = player_client?.prefs?.prefered_security_department
+	var/department = player_client?.prefs?.read_preference(/datum/preference/choiced/security_department)
 	if (!isnull(department))
 		department = get_my_department(spawning, department)
 

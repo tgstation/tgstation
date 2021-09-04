@@ -55,7 +55,7 @@
 	var/datum/client_interface/mock_client = new
 
 	mock_client.prefs = new
-	mock_client.prefs.prefered_security_department = preference
+	mock_client.prefs.write_preference(/datum/preference/choiced/security_department, preference)
 
 	var/mob/living/carbon/human/new_character = allocate(/mob/living/carbon/human)
 	new_character.mind_initialize()
