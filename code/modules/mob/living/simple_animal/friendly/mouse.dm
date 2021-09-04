@@ -34,7 +34,9 @@
 
 /mob/living/simple_animal/mouse/Initialize()
 	. = ..()
-	AddElement(/datum/element/animal_variety, "mouse", pick("brown","gray","white"), FALSE)
+	if(body_color == null)
+		body_color = pick("brown","gray","white")
+	AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
 	add_cell_sample()
 

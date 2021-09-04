@@ -153,7 +153,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		attached_component.register_shell(shell)
 		// Their input ports may be updated with user values, but the outputs haven't updated
 		// because on is FALSE
-		TRIGGER_CIRCUIT_COMPONENT(attached_component, null)
+		attached_component.trigger_component()
 
 /**
  * Unregisters the current shell attached to this circuit.
