@@ -27931,7 +27931,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/pill_bottle/dice{
+/obj/item/storage/dice{
 	pixel_x = -4
 	},
 /obj/item/pen/red{
@@ -36143,7 +36143,7 @@
 /obj/item/toy/cards/deck{
 	pixel_x = -9
 	},
-/obj/item/storage/pill_bottle/dice{
+/obj/item/storage/dice{
 	pixel_x = -8;
 	pixel_y = 11
 	},

@@ -66,3 +66,56 @@
   tralezab:
   - spellcheck: going postal now uses the correct ui theme and isn't confused with
       tiger cooperative
+2021-09-03:
+  ArcaneDefence:
+  - bugfix: Opening a toilet's cistern will no longer strike the toilet with the crowbar.
+  BraveMole:
+  - bugfix: Fix dir delay when riding something and turning
+  CRITAWAKETS:
+  - rscadd: Added in a new sock type, Thigh-high and Knee-high ace socks.
+  - bugfix: Bee socks are now properly ordered in the code.
+  Fikou:
+  - bugfix: fixed non-combat mechs doing 0 damage
+  Fikou, PositiveEntropy:
+  - expansion: adds a gun circuit shell
+  - qol: to string circuit component should now see everything in normal view range
+  Ghilker:
+  - qol: RPD defaul pipe color is now green, grey has been renamed to omni and the
+      two colors are moved to the first and last places of the RPD ui
+  Ghommie:
+  - bugfix: Using a soulstone on a construct shell no longer destroys it and the shade
+      if no option for the construct mob type is taken.
+  - bugfix: Fixed the Bloodcrawl spell not ejecting users if somehow lost.
+  JohnFulpWillard:
+  - bugfix: traitors now get objectives again.
+  - qol: Cayenne can once again strip people.
+  - bugfix: Cayenne no longer deletes the nuke disk when putting it back down.
+  Krysonism:
+  - bugfix: fixed a few small sprites issues with the lobby menu.
+  TiviPlus:
+  - bugfix: Mechs with no damage will no longer punch
+  - bugfix: Fix atv covers not appearing
+  Watermelon914:
+  - bugfix: Fixed scanner gates not functioning when anchored and also fixed their
+      examine text not saying they need to be anchored.
+  esainane:
+  - bugfix: Vent and scrubber names once again contain their unique ID tags
+  - bugfix: When something is disconnected from a smart pipe, the smart pipe now immediately
+      frees up connectivity in that direction for other pipes or components to use.
+  maxymax13:
+  - imageadd: resprited pens and paper bins
+  - imageadd: four color pen now has a sprite
+2021-09-04:
+  Ghommie:
+  - bugfix: bees, hivelord, its brood and legion skulls no longer use the MOUSE_OPACITY_OPAQUE
+      setting that makes the invisible portions of their icons count toward mouse
+      clicks, which can get in the way of players trying to click stuff below their
+      layer. Instead, to be easier to click on, they use a component that gives them
+      a near-invisible underlay.
+  - bugfix: Fixed the protect objective always failing.
+  TiviPlus:
+  - bugfix: patched mechs being slow randomly after phasing
+  Watermelon914:
+  - refactor: Refactored how components are triggered and how ports can now be ordered.
+  aaaa1023:
+  - bugfix: Mice no longer become invisible when splatted by a mousetrap.

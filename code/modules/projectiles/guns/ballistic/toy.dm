@@ -46,8 +46,8 @@
 	pb_knockback = 0
 	gun_flags = TOY_FIREARM_OVERLAY
 
-/obj/item/gun/ballistic/shotgun/toy/process_chamber(empty_chamber = 0)
-	..()
+/obj/item/gun/ballistic/shotgun/toy/handle_chamber()
+	. = ..()
 	if(chambered && !chambered.loaded_projectile)
 		qdel(chambered)
 
