@@ -25,6 +25,11 @@
 	)
 
 /obj/structure/bed/nest/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
+
+	if(user.buckled)
+		to_chat(user, span_warning("You can't seem to reach \the [buckled_mob.name]!"))
+		return
+
 	if(has_buckled_mobs())
 		for(var/buck in buckled_mobs) //breaking a nest releases all the buckled mobs, because the nest isn't holding them down anymore
 			var/mob/living/M = buck
@@ -39,18 +44,17 @@
 					span_notice("[user.name] pulls you free from the gelatinous resin."),\
 					span_hear("You hear squelching..."))
 			else
-				M.visible_message(span_warning("[M.name] struggles to break free from the gelatinous resin!"),\
-					span_notice("You struggle to break free from the gelatinous resin... (Stay still for two minutes.)"),\
-					span_hear("You hear squelching..."))
-				if(!do_after(M, 1200, target = src))
-					if(M?.buckled)
-						to_chat(M, span_warning("You fail to unbuckle yourself!"))
-					return
-				if(!M.buckled)
-					return
-				M.visible_message(span_warning("[M.name] breaks free from the gelatinous resin!"),\
-					span_notice("You break free from the gelatinous resin!"),\
-					span_hear("You hear squelching..."))
+				if(prob(1))
+					var/list/possible_flavortext = list(
+						"Well this fucking sucks.",
+						"Wish I had a bootknife. Joe from Security has a bootknife...",
+						"This was cooler on holotape.",
+						"What kind of cruel god would allow this to happen?",
+						"Stepbro, I'm stuck!"
+					)
+					to_chat(M, span_warning(pick(possible_flavortext)))
+				else
+					to_chat(M, span_warning("No matter how much you move, you can't seem to unstuck yourself!"))
 
 			unbuckle_mob(M)
 			add_fingerprint(user)

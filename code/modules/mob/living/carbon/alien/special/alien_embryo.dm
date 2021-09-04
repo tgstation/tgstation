@@ -49,7 +49,7 @@
 			if(DT_PROB(2, delta_time))
 				to_chat(owner, span_danger("Your stomach hurts."))
 				if(prob(20))
-					owner.adjustToxLoss(1)
+					owner.adjustBruteLoss(1)
 		if(6)
 			to_chat(owner, span_danger("You feel something tearing its way out of your chest..."))
 			owner.adjustBruteLoss(5 * delta_time)
@@ -59,7 +59,7 @@
 	if(stage >= 6)
 		return
 	if(owner && owner.stat != DEAD)
-		stage++
+		stage += istype(owner.buckled,/obj/structure/bed/nest) ? 2 : 1
 	if(stage < 6)
 		INVOKE_ASYNC(src, .proc/RefreshInfectionImage)
 		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)
