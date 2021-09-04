@@ -83,7 +83,7 @@
 	ricochet_chance = 120
 	ricochet_auto_aim_range = 3
 	ricochet_incidence_leeway = 70
-	paralyze = 100
+	knockdown = 100
 
 /obj/projectile/bullet/a84mm/sabot/do_boom(atom/target)
 	explosion(target, flash_range = 2) //Shells so goddamn powerful, they create a flash of light with everything they impact
@@ -95,7 +95,7 @@
 	damage = 30
 	anti_armour_damage = 0
 	dismemberment = 0
-	paralyze = 50
+	knockdown = 50
 
 /obj/projectile/bullet/a84mm/emp/do_boom(atom/target)
 	empulse(target, 2, 5)
@@ -107,7 +107,7 @@
 	damage = 40 //Fuckin' ow dude, you just got direct hit by a rocket
 	anti_armour_damage = 0
 	dismemberment = 0 //You aren't going to be delimbed by a really fast smoke grenade
-	paralyze = 100 //You have been direct hit by a missile
+	knockdown = 100 //You have been direct hit by a missile
 
 /obj/projectile/bullet/a84mm/smoke/do_boom(atom/target)
 	playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
