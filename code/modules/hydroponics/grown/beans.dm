@@ -37,7 +37,7 @@
 	plantname = "Koibean Plants"
 	product = /obj/item/food/grown/koibeans
 	potency = 10
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/toxin/carpotoxin = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
 	rarity = 20
 
