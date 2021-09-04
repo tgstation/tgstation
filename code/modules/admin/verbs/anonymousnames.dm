@@ -113,7 +113,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 			continue
 		var/old_name = player.real_name //before restoration
 		if(issilicon(player))
-			player.apply_pref_name("[isAI(player) ? "ai" : "cyborg"]", player.client)
+			player.apply_pref_name("[isAI(player) ? /datum/preference/name/ai : /datum/preference/name/cyborg]", player.client)
 		else
 			player.client.prefs.sanitize_chosen_prefs() // Just in case they changed unlawfully.
 			player.client.prefs.apply_prefs_to(player) // This is not sound logic, as the prefs may have changed since then.

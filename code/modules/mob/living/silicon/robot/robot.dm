@@ -193,8 +193,8 @@
 		changed_name = GLOB.current_anonymous_theme.anonymous_ai_name(FALSE)
 	else if(custom_name)
 		changed_name = custom_name
-	else if(pref_source && pref_source.prefs.custom_names["cyborg"] != DEFAULT_CYBORG_NAME)
-		apply_pref_name("cyborg", pref_source)
+	else if(pref_source && pref_source.prefs.read_preference(/datum/preference/name/cyborg) != DEFAULT_CYBORG_NAME)
+		apply_pref_name(/datum/preference/name/cyborg, pref_source)
 		return //built in camera handled in proc
 	else
 		changed_name = get_standard_name()

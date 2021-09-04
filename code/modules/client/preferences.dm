@@ -42,7 +42,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/randomise = list()
 	var/phobia = "spiders"
 
-	var/list/custom_names = list()
 	var/preferred_ai_core_display = "Blue"
 	var/prefered_security_department = SEC_DEPT_NONE
 
@@ -102,9 +101,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	for (var/middleware_type in subtypesof(/datum/preference_middleware))
 		middleware += new middleware_type(src)
-
-	for(var/custom_name_id in GLOB.preferences_custom_names)
-		custom_names[custom_name_id] = get_default_name(custom_name_id)
 
 	if(istype(C))
 		if(!IsGuestKey(C.key))
@@ -167,8 +163,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	data["job_preferences"] = job_preferences
 
 	data["active_name"] = read_preference(/datum/preference/name/real_name)
-
-	data["name_to_use"] = "real_name" // MOTHBLOCKS TODO: Change to AI name, clown name, etc depending on circumstances
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		data += preference_middleware.get_ui_data(user)
@@ -555,25 +549,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 		if("bible")
 			return DEFAULT_BIBLE
 	return random_unique_name()
-
-/datum/preferences/proc/ask_for_custom_name(mob/user,name_id)
-	var/namedata = GLOB.preferences_custom_names[name_id]
-	if(!namedata)
-		return
-
-	var/raw_name = input(user, "Choose your character's [namedata["qdesc"]]:","Character Preference") as text|null
-	if(!raw_name)
-		if(namedata["allow_null"])
-			custom_names[name_id] = get_default_name(name_id)
-		else
-			return
-	else
-		var/sanitized_name = reject_bad_name(raw_name,namedata["allow_numbers"])
-		if(!sanitized_name)
-			to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, [namedata["allow_numbers"] ? "0-9, " : ""]-, ' and . It must not contain any words restricted by IC chat and name filters.</font>")
-			return
-		else
-			custom_names[name_id] = sanitized_name
 
 /// Inverts the key_bindings list such that it can be used for key_bindings_by_key
 /datum/preferences/proc/get_key_bindings_by_key(list/key_bindings)

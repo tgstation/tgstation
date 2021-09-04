@@ -313,11 +313,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["randomise"],  randomise)
 	READ_FILE(S["persistent_scars"] , persistent_scars)
 
-	//Custom names
-	for(var/custom_name_id in GLOB.preferences_custom_names)
-		var/savefile_slot_name = custom_name_id + "_name" //TODO remove this
-		READ_FILE(S[savefile_slot_name], custom_names[custom_name_id])
-
 	READ_FILE(S["preferred_ai_core_display"], preferred_ai_core_display)
 	READ_FILE(S["prefered_security_department"], prefered_security_department)
 
@@ -347,12 +342,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	// MOTHBLOCKS TODO: Body type
 	// body_type = sanitize_gender(body_type, FALSE, FALSE, gender)
-
-	for(var/custom_name_id in GLOB.preferences_custom_names)
-		var/namedata = GLOB.preferences_custom_names[custom_name_id]
-		custom_names[custom_name_id] = reject_bad_name(custom_names[custom_name_id],namedata["allow_numbers"])
-		if(!custom_names[custom_name_id])
-			custom_names[custom_name_id] = get_default_name(custom_name_id)
 
 	randomise = SANITIZE_LIST(randomise)
 
@@ -398,11 +387,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["randomise"] , randomise)
 	WRITE_FILE(S["phobia"], phobia)
 	WRITE_FILE(S["persistent_scars"] , persistent_scars)
-
-	//Custom names
-	for(var/custom_name_id in GLOB.preferences_custom_names)
-		var/savefile_slot_name = custom_name_id + "_name" //TODO remove this
-		WRITE_FILE(S[savefile_slot_name],custom_names[custom_name_id])
 
 	WRITE_FILE(S["preferred_ai_core_display"] ,  preferred_ai_core_display)
 	WRITE_FILE(S["prefered_security_department"] , prefered_security_department)

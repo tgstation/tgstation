@@ -38,7 +38,7 @@
 	. = ..()
 	if(!ishuman(spawned))
 		return
-	spawned.apply_pref_name("clown", player_client)
+	spawned.apply_pref_name(/datum/preference/name/clown, player_client)
 
 
 /datum/outfit/job/clown

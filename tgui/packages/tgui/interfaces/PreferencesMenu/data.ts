@@ -33,7 +33,7 @@ export enum JobPriority {
 
 export type Name = {
   explanation: string;
-  value: string;
+  group: string;
 };
 
 export type ServerSpeciesData = {
@@ -84,7 +84,7 @@ export type PreferencesMenuData = {
     };
     secondary_features: Record<string, unknown>;
 
-    names: Record<string, Name>;
+    names: Record<string, string>;
 
     misc: {
       gender: Gender;
@@ -110,6 +110,9 @@ export type PreferencesMenuData = {
 };
 
 export type ServerData = {
+  names: {
+    types: Record<string, Name>;
+  };
   random: {
     randomizable: string[];
   };

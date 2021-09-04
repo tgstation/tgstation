@@ -140,7 +140,7 @@
 
 	create_eye()
 	if(client)
-		INVOKE_ASYNC(src, .proc/apply_pref_name,"ai",client)
+		INVOKE_ASYNC(src, .proc/apply_pref_name, /datum/preference/name/ai, client)
 
 	INVOKE_ASYNC(src, .proc/set_core_display_icon)
 
