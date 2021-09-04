@@ -8033,7 +8033,7 @@
 /area/mine/storage)
 "TG" = (
 /obj/structure/table/wood/poker,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
 "TH" = (
