@@ -318,10 +318,100 @@
  * Create the explosion + the gas emission before deleting the machine core.
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/meltdown()
-	explosion(src, light_impact_range = power_level * 5, flash_range = power_level * 6, adminlog = TRUE, ignorecap = TRUE)
-	radiation_pulse(loc, power_level * 7000, (1 / (power_level + 5)), TRUE)
-	empulse(loc, power_level * 5, power_level * 7, TRUE)
-	var/list/around_turfs = circlerangeturfs(src, power_level * 5)
+	var/flash_explosion = 0
+	var/light_impact_explosion = 0
+	var/heavy_impact_explosion = 0
+	var/devastating_explosion = 0
+	var/emp_pulse = FALSE
+	var/rad_pulse = FALSE
+	var/emp_light_size = 0
+	var/emp_heavy_size = 0
+	var/rad_pulse_size = 0
+	var/rad_pulse_strenght = 0
+	var/gas_spread = 0
+	var/gas_pockets = 0
+	var/critical = FALSE
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_BASE_EXPLOSION)
+		flash_explosion = power_level * 3
+		light_impact_explosion = power_level * 2
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_MEDIUM_EXPLOSION)
+		flash_explosion = power_level * 6
+		light_impact_explosion = power_level * 5
+		heavy_impact_explosion = power_level * 0.5
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_DEVASTATING_EXPLOSION)
+		flash_explosion = power_level * 8
+		light_impact_explosion = power_level * 7
+		heavy_impact_explosion = power_level * 2
+		devastating_explosion = power_level
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_RADIATION_PULSE)
+		rad_pulse = TRUE
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_EMP)
+		emp_pulse = TRUE
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_MINIMUM_SPREAD)
+		if(emp_pulse)
+			emp_light_size = power_level * 3
+			emp_heavy_size = power_level * 1
+		if(rad_pulse)
+			rad_pulse_size = (1 / (power_level + 1))
+			rad_pulse_strenght = power_level * 3000
+		gas_pockets = 5
+		gas_spread = power_level * 2
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_MEDIUM_SPREAD)
+		if(emp_pulse)
+			emp_light_size = power_level * 5
+			emp_heavy_size = power_level * 3
+		if(rad_pulse)
+			rad_pulse_size = (1 / (power_level + 3))
+			rad_pulse_strenght = power_level * 5000
+		gas_pockets = 7
+		gas_spread = power_level * 4
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_BIG_SPREAD)
+		if(emp_pulse)
+			emp_light_size = power_level * 7
+			emp_heavy_size = power_level * 5
+		if(rad_pulse)
+			rad_pulse_size = (1 / (power_level + 5))
+			rad_pulse_strenght = power_level * 7000
+		gas_pockets = 10
+		gas_spread = power_level * 6
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_MASSIVE_SPREAD)
+		if(emp_pulse)
+			emp_light_size = power_level * 9
+			emp_heavy_size = power_level * 7
+		if(rad_pulse)
+			rad_pulse_size = (1 / (power_level + 7))
+			rad_pulse_strenght = power_level * 9000
+		gas_pockets = 15
+		gas_spread = power_level * 8
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_CRITICAL_MELTDOWN)
+		critical = TRUE
+		Cinematic(CINEMATIC_SELFDESTRUCT,world)
+
+	explosion(
+		origin = src,
+		devastation_range = critical ? devastating_explosion * 2 : devastating_explosion,
+		heavy_impact_range = critical ?  heavy_impact_explosion * 2 : heavy_impact_explosion,
+		light_impact_range = light_impact_explosion,
+		flash_range = flash_explosion,
+		adminlog = TRUE,
+		ignorecap = TRUE
+		)
+
+	radiation_pulse(
+		source = loc,
+		intensity = rad_pulse_strenght,
+		range_modifier = rad_pulse_size,
+		log = TRUE
+		)
+
+	empulse(
+		epicenter = loc,
+		heavy_range = critical ? emp_heavy_size * 2 : emp_heavy_size,
+		light_range = critical ? emp_light_size * 2 : emp_heavy_size,
+		log = TRUE
+		)
+
+	var/list/around_turfs = circlerangeturfs(src, gas_spread)
 	for(var/turf/turf as anything in around_turfs)
 		if(isclosedturf(turf) || isspaceturf(turf))
 			around_turfs -= turf
@@ -330,8 +420,8 @@
 	if(internal_fusion.total_moles() > 0)
 		remove_fusion = internal_fusion.remove_ratio(0.2)
 		var/datum/gas_mixture/remove
-		for(var/i in 1 to 10)
-			remove = remove_fusion.remove_ratio(0.1)
+		for(var/i in 1 to gas_pockets)
+			remove = remove_fusion.remove_ratio(1/gas_pockets)
 			var/turf/local = pick(around_turfs)
 			local.assume_air(remove)
 		loc.assume_air(internal_fusion)
@@ -339,8 +429,8 @@
 	if(moderator_internal.total_moles() > 0)
 		remove_moderator = moderator_internal.remove_ratio(0.2)
 		var/datum/gas_mixture/remove
-		for(var/i in 1 to 10)
-			remove = remove_moderator.remove_ratio(0.1)
+		for(var/i in 1 to gas_pockets)
+			remove = remove_moderator.remove_ratio(1/gas_pockets)
 			var/turf/local = pick(around_turfs)
 			local.assume_air(remove)
 		loc.assume_air(moderator_internal)
