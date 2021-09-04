@@ -21,7 +21,7 @@
 	if(damage < low_threshold)
 		handle_charge(owner, delta_time, times_fired)
 		return
-	adjust_charge(-0.8 * (damage / 5) * delta_time) //at 100 damage ethereals will loose 16 charge per second
+	adjust_charge(-ETHEREAL_CHARGE_FACTOR * (damage / 5) * delta_time) //at 100 damage ethereals will loose 16 charge per second
 	handle_charge(owner, delta_time, times_fired)
 	var/mob/living/carbon/organ_owner = owner
 	if (prob(7))
