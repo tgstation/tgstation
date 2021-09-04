@@ -65,7 +65,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/playtime_reward_cloak = FALSE
 
 	var/list/exp = list()
-	var/list/menuoptions
 
 	var/action_buttons_screen_locs = list()
 
@@ -124,7 +123,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(!loaded_preferences_successfully)
 		save_preferences()
 	save_character() //let's save this new random character so it doesn't keep generating new ones.
-	menuoptions = list()
 
 /datum/preferences/ui_interact(mob/user, datum/tgui/ui)
 	// If you leave and come back, re-register the character preview

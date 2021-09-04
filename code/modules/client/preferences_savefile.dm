@@ -180,7 +180,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["chat_toggles"], chat_toggles)
 	READ_FILE(S["toggles"], toggles)
 	READ_FILE(S["ignoring"], ignoring)
-	READ_FILE(S["menuoptions"], menuoptions)
 
 	// OOC commendations
 	READ_FILE(S["hearted_until"], hearted_until)
@@ -216,7 +215,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	hotkeys = sanitize_integer(hotkeys, FALSE, TRUE, initial(hotkeys))
 	default_slot = sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles = sanitize_integer(toggles, 0, (2**24)-1, initial(toggles))
-	menuoptions = SANITIZE_LIST(menuoptions)
 	be_special = SANITIZE_LIST(be_special)
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
@@ -267,7 +265,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["toggles"], toggles)
 	WRITE_FILE(S["chat_toggles"], chat_toggles)
 	WRITE_FILE(S["ignoring"], ignoring)
-	WRITE_FILE(S["menuoptions"], menuoptions)
 	// MOTHBLOCKS TODO: FIGURE OUT THE DUPLICATION BUG
 	// WRITE_FILE(S["key_bindings"], key_bindings)
 	WRITE_FILE(S["hearted_until"], (hearted_until > world.realtime ? hearted_until : null))
