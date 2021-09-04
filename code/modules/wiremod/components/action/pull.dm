@@ -11,15 +11,10 @@
 	var/datum/port/input/target
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
-/obj/item/circuit_component/pull/Initialize()
-	. = ..()
+/obj/item/circuit_component/pull/populate_ports()
 	target = add_input_port("Target", PORT_TYPE_ATOM)
 
 /obj/item/circuit_component/pull/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
-
 	var/atom/target_atom = target.value
 	if(!target_atom)
 		return
@@ -28,4 +23,4 @@
 	if(!istype(shell) || get_dist(shell, target_atom) > 1 || shell.z != target_atom.z)
 		return
 
-	shell.start_pulling(target_atom)
+	INVOKE_ASYNC(shell, /atom/movable.proc/start_pulling, target_atom)

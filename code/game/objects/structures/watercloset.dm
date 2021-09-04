@@ -103,6 +103,7 @@
 			user.visible_message(span_notice("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!"), span_notice("You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!"), span_hear("You hear grinding porcelain."))
 			cistern = !cistern
 			update_appearance()
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 	else if(I.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
 		I.play_tool_sound(src)
 		deconstruct()
@@ -145,7 +146,7 @@
 		contents += secret
 
 /obj/structure/toilet/greyscale
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstacktype = null
 
 /obj/structure/urinal
@@ -458,7 +459,7 @@
 
 /obj/structure/sink/greyscale
 	icon_state = "sink_greyscale"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstacktype = null
 
 /obj/structure/sinkframe
@@ -467,7 +468,7 @@
 	icon_state = "sink_frame"
 	desc = "A sink frame, that needs a water recycler to finish construction."
 	anchored = FALSE
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 /obj/structure/sinkframe/ComponentInitialize()
 	. = ..()

@@ -24,6 +24,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	max_integrity = 300
 	armor = list(MELEE = 20, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
+	force = 5
 	movedelay = 1 SECONDS
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
@@ -213,6 +214,7 @@
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT) //protects pilots from ashstorms.
 
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/ejectee in occupants)
@@ -576,8 +578,9 @@
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		target = pick(oview(1,src))
 
-	target.mech_melee_attack(src, user)
-	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
+	if(force)
+		target.mech_melee_attack(src, user)
+		TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
 
 /obj/vehicle/sealed/mecha/proc/on_middlemouseclick(mob/user, atom/target, params)
 	SIGNAL_HANDLER
@@ -712,7 +715,6 @@
 /obj/vehicle/sealed/mecha/Bump(atom/obstacle)
 	. = ..()
 	if(phasing) //Theres only one cause for phasing canpass fails
-		addtimer(VARSET_CALLBACK(src, movedelay, TRUE), movedelay*3)
 		to_chat(occupants, "[icon2html(src, occupants)][span_warning("A dull, universal force is preventing you from [phasing] here!")]")
 		spark_system.start()
 		return
