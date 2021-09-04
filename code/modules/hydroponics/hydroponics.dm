@@ -120,7 +120,7 @@
 		return myseed.bullet_act(Proj)
 	else if(istype(Proj , /obj/projectile/energy/florarevolution))
 		if(myseed)
-			if(LAZYEN(myseed.mutatelist))
+			if(LAZYLEN(myseed.mutatelist))
 				myseed.set_instability(myseed.instability/2)
 		mutatespecie()
 	else
