@@ -302,7 +302,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		read_preference(preference_type)
 
 	//Character
-	READ_FILE(S["body_type"], body_type)
 	READ_FILE(S["skin_tone"], skin_tone)
 	READ_FILE(S["underwear_color"], underwear_color)
 	READ_FILE(S["playtime_reward_cloak"], playtime_reward_cloak)
@@ -324,10 +323,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		update_character(needs_update, S) //needs_update == savefile_version if we need an update (positive integer)
 
 	//Sanitize
-
-	// MOTHBLOCKS TODO: Body type
-	// body_type = sanitize_gender(body_type, FALSE, FALSE, gender)
-
 	randomise = SANITIZE_LIST(randomise)
 
 	underwear_color = sanitize_hexcolor(underwear_color, 3, 0)
@@ -371,7 +366,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	#endif
 
 	//Character
-	WRITE_FILE(S["body_type"] , body_type)
 	WRITE_FILE(S["skin_tone"] , skin_tone)
 	WRITE_FILE(S["underwear_color"] , underwear_color)
 	WRITE_FILE(S["playtime_reward_cloak"] , playtime_reward_cloak)

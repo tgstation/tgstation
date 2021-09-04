@@ -69,8 +69,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/hearted
 	///If we have a hearted commendations, we honor it every time the player loads preferences until this time has been passed
 	var/hearted_until
-	/// Agendered spessmen can choose whether to have a male or female bodytype
-	var/body_type
 	/// If we have persistent scars enabled
 	var/persistent_scars = TRUE
 	///What outfit typepaths we've favorited in the SelectEquipment menu
@@ -475,12 +473,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 
 /// Applies the given preferences to a human mob.
 /datum/preferences/proc/apply_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE)
-	// MOTHBLOCKS TODO: Body type
-	// if(gender == MALE || gender == FEMALE)
-	// 	character.body_type = gender
-	// else
-	// 	character.body_type = body_type
-
 	character.skin_tone = skin_tone
 	character.underwear_color = underwear_color
 
