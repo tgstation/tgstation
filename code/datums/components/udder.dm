@@ -10,10 +10,10 @@
 	var/datum/callback/on_milk_callback
 
 //udder and custom_milk_reagent are typepaths, not reference
-/datum/component/udder/Initialize(udder_type = /obj/item/udder, custom_milk_reagent, on_milk_callback, on_generate_callback)
+/datum/component/udder/Initialize(udder_type = /obj/item/udder, reagent_produced_typepath = /datum/reagent/consumable/milk, on_milk_callback, on_generate_callback)
 	if(!isliving(parent)) //technically is possible to drop this on carbons... but you wouldn't do that to me, would you?
 		return COMPONENT_INCOMPATIBLE
-	udder = new udder_type(null, parent, on_generate_callback, custom_milk_reagent)
+	udder = new udder_type(null, parent, on_generate_callback, reagent_produced_typepath)
 	src.on_milk_callback = on_milk_callback
 
 /datum/component/udder/RegisterWithParent()
@@ -70,12 +70,11 @@
 	///optional proc to callback to when the udder generates milk
 	var/datum/callback/on_generate_callback
 
-/obj/item/udder/Initialize(mapload, udder_mob, on_generate_callback, custom_milk_reagent)
+/obj/item/udder/Initialize(mapload, udder_mob, on_generate_callback, reagent_produced_typepath)
 	src.udder_mob = udder_mob
 	src.on_generate_callback = on_generate_callback
 	create_reagents(size, REAGENT_HOLDER_ALIVE)
-	if(custom_milk_reagent)
-		reagent_produced_typepath = custom_milk_reagent
+	src.reagent_produced_typepath = reagent_produced_typepath ? reagent_produced_typepath : initial(src.reagent_produced_typepath)
 	initial_conditions()
 	. = ..()
 
