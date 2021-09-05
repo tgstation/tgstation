@@ -2,7 +2,7 @@
 	if(silent)
 		to_chat(src, span_warning("Communication circuits remain uninitialized."))
 	else
-		..(message)
+		..()
 
 /mob/living/silicon/pai/binarycheck()
 	return radio?.translate_binary

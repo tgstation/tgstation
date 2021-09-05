@@ -339,10 +339,10 @@
 /obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff)
 	if(drying || forceoff)
 		drying = FALSE
-		use_power = IDLE_POWER_USE
+		update_use_power(IDLE_POWER_USE)
 	else
 		drying = TRUE
-		use_power = ACTIVE_POWER_USE
+		update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
 
 /obj/machinery/smartfridge/drying_rack/proc/rack_dry(obj/item/target)

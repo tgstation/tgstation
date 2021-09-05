@@ -4,9 +4,12 @@
 	if(QDELETED(src))
 		stack_trace("[src] taking damage after deletion")
 		return
+	if(obj_integrity <= 0)
+		stack_trace("[src] taking damage while having <= 0 integrity")
+		return
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
-	if((resistance_flags & INDESTRUCTIBLE) || obj_integrity <= 0)
+	if(resistance_flags & INDESTRUCTIBLE)
 		return
 	damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
 	if(damage_amount < DAMAGE_PRECISION)

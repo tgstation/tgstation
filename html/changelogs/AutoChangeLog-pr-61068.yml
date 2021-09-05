@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the anti-drop implant not removing the nodrop trait on held items if they're somehow dropped."

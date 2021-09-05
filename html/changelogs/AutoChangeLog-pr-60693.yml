@@ -1,5 +1,0 @@
-author: "Nari Harimoto"
-delete-after: True
-changes: 
-  - bugfix: "Nanotrasen expert roboticists have found an error in cyborg programming which allows them to interact with things farther than they are supposed to. some of those errors have been squashed."
-  - refactor: "can_interact() now has a few less unnesscary overrides and now properly checks for range such. and hotkeys are also now respected with can_interact()"

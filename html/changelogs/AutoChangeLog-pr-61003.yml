@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "fixes people catching fire when using jump or rocket boots to leap over a gap of lava."
-  - refactor: "refactored lava burn and weather immunities code."

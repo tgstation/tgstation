@@ -33,7 +33,7 @@ RSF
 	///An associated list of atoms and charge costs. This can contain a seperate list, as long as it's associated item is an object
 	var/list/cost_by_item = list(/obj/item/reagent_containers/food/drinks/drinkingglass = 20,
 								/obj/item/paper = 10,
-								/obj/item/storage/pill_bottle/dice = 200,
+								/obj/item/storage/dice = 200,
 								/obj/item/pen = 50,
 								/obj/item/clothing/mask/cigarette = 10,
 								)

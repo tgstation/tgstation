@@ -210,7 +210,7 @@
 		var/obj/item/food/donkpocket/warm/W = new(src)
 		load(W)
 	if(prob(50))
-		var/obj/item/storage/pill_bottle/dice/D = new(src)
+		var/obj/item/storage/dice/D = new(src)
 		load(D)
 	else
 		var/obj/item/instrument/guitar/G = new(src)

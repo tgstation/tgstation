@@ -349,7 +349,7 @@
 	icon_state = "knight_greyscale"
 	inhand_icon_state = "knight_greyscale"
 	armor = list(MELEE = 35, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 10, RAD = 10, FIRE = 40, ACID = 40)
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
@@ -406,7 +406,7 @@
 	icon_state = "h2helmet"
 	inhand_icon_state = "h2helmet"
 	armor = list(MELEE = 25, BULLET = 20, LASER = 30, ENERGY = 30, BOMB = 85, BIO = 10, RAD = 50, FIRE = 65, ACID = 40, WOUND = 15)
-	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
@@ -459,7 +459,7 @@
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	RegisterSignal(magnification, COMSIG_SPECIES_LOSS, .proc/make_fall_off)
 	polling = TRUE
-	var/list/candidates = pollCandidatesForMob("Do you want to play as a mind magnified monkey?", ROLE_SENTIENCE, ROLE_SENTIENCE, 50, magnification, POLL_IGNORE_SENTIENCE_POTION)
+	var/list/candidates = poll_candidates_for_mob("Do you want to play as a mind magnified monkey?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, magnification, POLL_IGNORE_SENTIENCE_POTION)
 	polling = FALSE
 	if(!magnification)
 		return
