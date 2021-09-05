@@ -1090,3 +1090,24 @@
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/simple_owner = owner
 		simple_owner.ranged_cooldown_time /= 2.5
+
+/datum/status_effect/freezing_blast
+	id = "freezing_blast"
+	alert_type = /atom/movable/screen/alert/status_effect/freezing_blast
+	duration = 5 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+
+/atom/movable/screen/alert/status_effect/freezing_blast
+	name = "Freezing Blast"
+	desc = "You've been struck by a freezing blast! Your body moves more slowly!"
+	icon_state = "frozen"
+
+/datum/status_effect/freezing_blast/on_apply()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/freezing_blast, update = TRUE)
+	return ..()
+
+/datum/status_effect/freezing_blast/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/freezing_blast, update = TRUE)
+
+/datum/movespeed_modifier/freezing_blast
+	multiplicative_slowdown = 1
