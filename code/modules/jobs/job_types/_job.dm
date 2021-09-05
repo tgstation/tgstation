@@ -268,6 +268,11 @@
 		holder = "[uniform]"
 	uniform = text2path(holder)
 
+	var/client/client = GLOB.directory[ckey(H.mind?.key)]
+
+	if(client?.is_veteran() && client?.prefs.read_preference(/datum/preference/toggle/playtime_reward_cloak))
+		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
+
 /datum/outfit/job/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
@@ -295,9 +300,6 @@
 		PDA.owner = H.real_name
 		PDA.ownjob = J.title
 		PDA.update_label()
-
-	if(H.client?.prefs.playtime_reward_cloak)
-		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
 
 
 /datum/outfit/job/get_chameleon_disguise_info()
