@@ -1,4 +1,4 @@
-import { Species } from "./base";
+import { createLanguagePerk, Species } from "./base";
 
 const Ethereal: Species = {
   description: "Coming from the planet of Sprout, the theocratic ethereals are \
@@ -23,7 +23,7 @@ const Ethereal: Species = {
       name: "Heat Resistance",
       description: "Ethereals have much better tolerance for high \
         temperatures.",
-    }],
+    }, createLanguagePerk("Voltaic")],
     neutral: [{
       icon: "tint",
       name: "Liquid Electricity",

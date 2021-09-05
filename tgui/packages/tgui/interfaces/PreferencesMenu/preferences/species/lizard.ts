@@ -1,4 +1,4 @@
-import { Species } from "./base";
+import { createLanguagePerk, Species } from "./base";
 
 const Lizard: Species = {
   description: "The militaristic hail originally from Tizira, but have grown \
@@ -6,7 +6,7 @@ const Lizard: Species = {
     empire: though now they must contend with their younger, more \
     technologically advanced human neighbours.",
   features: {
-    good: [],
+    good: [createLanguagePerk("Draconic")],
     neutral: [{
       icon: "thermometer-empty",
       name: "Cold-blooded",

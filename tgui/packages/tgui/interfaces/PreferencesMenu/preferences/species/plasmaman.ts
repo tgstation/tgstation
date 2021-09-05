@@ -1,4 +1,4 @@
-import { Species } from "./base";
+import { createLanguagePerk, Species } from "./base";
 
 const Plasmaman: Species = {
   description: "Found on the Icemoon of Freyja, plasmamen consist of colonial \
@@ -32,7 +32,7 @@ const Plasmaman: Species = {
       name: "Protective Helmet",
       description: "Plasmamen's helmets provide them shielding from the \
         flashes of welding, as well as a flashlight.",
-    }],
+    }, createLanguagePerk("Calcic")],
     neutral: [],
     bad: [{
       icon: "fire",

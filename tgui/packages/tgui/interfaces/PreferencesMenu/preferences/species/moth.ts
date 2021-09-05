@@ -1,4 +1,4 @@
-import { Species } from "./base";
+import { createLanguagePerk, Species } from "./base";
 
 const Moth: Species = {
   description: "Hailing from a planet that was lost long ago, the moths travel \
@@ -14,7 +14,7 @@ const Moth: Species = {
       icon: "tshirt",
       name: "Meal Plan",
       description: "Moths can eat clothes for nourishment.",
-    }],
+    }, createLanguagePerk("Moffic")],
     neutral: [],
     bad: [{
       icon: "fire",

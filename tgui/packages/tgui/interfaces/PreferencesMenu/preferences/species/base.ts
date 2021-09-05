@@ -1,9 +1,7 @@
 // MOTHBLOCKS TODO: The stupid halloween races
-
 export type Species = {
   description: string;
   features: {
-    // MOTHBLOCKS TODO: Add side language as a perk to all nonhumans
     good: Feature[],
     neutral: Feature[],
     bad: Feature[],
@@ -31,4 +29,13 @@ export const fallbackSpecies: Species = {
   },
   icon: "wrench",
   lore: "LORE MASTER, I NEED LORE, HELP",
+};
+
+export const createLanguagePerk = (language: string): Feature => {
+  return {
+    icon: "comment",
+    name: "Native Speaker",
+    description:
+      `Alongside Galactic Common, gain the ability to speak ${language}.`,
+  };
 };

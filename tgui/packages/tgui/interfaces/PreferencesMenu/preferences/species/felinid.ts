@@ -1,4 +1,4 @@
-import { Species } from "./base";
+import { createLanguagePerk, Species } from "./base";
 
 const Felinid: Species = {
   description: "Felinids are one of the many types of bespoke genetic \
@@ -9,7 +9,7 @@ const Felinid: Species = {
       icon: "grin-tongue",
       name: "Grooming",
       description: "Felinids can lick wounds to reduce bleeding.",
-    }],
+    }, createLanguagePerk("Nekomimetic")],
     neutral: [],
     bad: [{
       icon: "assistive-listening-systems",
