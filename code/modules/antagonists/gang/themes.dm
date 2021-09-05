@@ -270,3 +270,50 @@
 		It has been disguised as the nuclear authentication disk and entrusted to the Captain. Your objective is simple. \
 		<B>Get that fucking disk.</B> You have been provided with a Pinpointer to assist in this task.",
 	)
+
+/datum/gang_theme/third_world_war
+	name = "Third World War"
+	description = "Thanks for tuning in to the History Channel, funded with the help of listeners like you. Tonight, we're going to talk about the Third World War on Earth during the 21st century, \
+	involving the Allies coalition, the Soviet Union, and a third independent power known only as Yuri's Army. The three powers fought all across the globe for complete world \
+	domination, utilizing many advanced techniques and cutting edge technology to their advantage. Rumors of mind control and time travel were greatly exaggerated, however, and the \
+	Allies won the war, securing global peace after rolling tanks through Moscow."
+	involved_gangs = list(/datum/antagonist/gang/allies, /datum/antagonist/gang/soviet, /datum/antagonist/gang/yuri)
+	gang_objectives = list(
+
+		/datum/antagonist/gang/allies = "Welcome back, Commander. We have activated the last remnants of the Allied forces in your sector, \
+		and you must build up forces to stop the Soviet and Yuri incursion in the sector. This station will prove to be a valuable asset. \
+		<B>Establish a capitalist democracy on this station with free and fair elections, and most importantly a standing military force under Allied control.</B> Good luck, Commander.",
+
+		/datum/antagonist/gang/soviet = "Welcome back, Comrade General. The Soviet Union has identified this sector of land as valuable territory for the war effort, \
+		and you are tasked with developing this sector for Soviet control and development. This station will serve the Soviet Union. \
+		<B>Establish a Soviet controlled communist satellite state on this station with a Central Committee, and most importantly a branch of the Red Army.</B> Good luck, Commander.",
+
+		/datum/antagonist/gang/yuri = "Yuri is Master! Yuri has identified this station as teeming with psychic energy, \
+		and you must secure it for him. This station will serve Yuri, the one true psychic master, \
+		<B>Establish complete dictatorial control of the station for Yuri. All will obey. Yuri is master.</B> Good luck, Initiate."
+	)
+
+/datum/gang_theme/united_states_of_america
+	name = "The Republic For Which It Stands"
+	description = "Thanks for tuning in to the History Channel, funded with the help of listeners like you. Tonight, we're going to talk about the United States of America.\
+	The United States was a failed country, lasting only 250 years before collapsing and fracturing due to the stress caused by a deadly pandemic sweeping the nation. \
+	Poor healthcare access and subpar education resulted in the collapse of the federal government, and states quickly became independent actors. \
+	Alongside this, every single alphabet agency declared itself the rightful new Federal Government of the United States of America, resulting in a bloody power struggle."
+	involved_gangs = list(/datum/antagonist/gang/allies, /datum/antagonist/gang/osi, /datum/antagonist/gang/irs)
+	gang_objectives = list(
+
+		/datum/antagonist/gang/allies = "Welcome back, Commander. Your task today is simple. Allies High Command has designated this station as the new capitol of the \
+		recently reformed United States of America under the complete umbrella of the Allies coalition. You are to assist and manage the operations on the station. \
+		<B>Re-establish the United States of America with this station as it's capitol, under Allies control. Then, establish a military force to deal with any pretenders to America or \
+		any potential Soviet attacks.</B>",
+
+		/datum/antagonist/gang/osi = "Welcome to the new America, agent! After the second American Civil War became visible instead of invisible, our country fell into deep, \
+		deep despair and damage. However, it's time for it to re-emerge like a glorious phoenix rising from the ashes. This station will serve as the new capitol of the United States \
+		of America! <B>Re-establish the United States of America with this station as it's capitol, under O.S.I. control. Then, begin rooting out America's enemies and any \
+		potential forces attempting to seize control of America or pretend to be America.</B>",
+
+		/datum/antagonist/gang/irs = "Thank you for clocking in today, agent. The situation is dire, however. We have been unable to collect taxes due to \
+		the US's supposed collapse during the Pandemic long ago. We are way behind on our tax collection, but we cannot collect taxes until the United States is formed again. \
+		<B>Re-establish the United States of America with this station as it's capitol, under IRS control. Then, begin collecting taxes and back taxes while protecting the Government from \
+		any dangers that may come it's way.</B>"
+	)

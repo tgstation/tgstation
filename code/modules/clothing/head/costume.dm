@@ -152,3 +152,15 @@
 	name = "Saints hat"
 	icon_state = "saints_hat"
 	inhand_icon_state = "saints_hat"
+
+/obj/item/clothing/head/allies
+	name = "allies helmet"
+	icon_state = "allies_helmet"
+	inhand_icon_state = "allies_helmet"
+
+/obj/item/clothing/head/yuri
+	name = "yuri initiate helmet"
+	icon_state = "yuri_helmet"
+	inhand_icon_state = "yuri_helmet"
+	clothing_flags = SNUG_FIT
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT

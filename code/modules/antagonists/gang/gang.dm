@@ -575,3 +575,45 @@
 							/obj/item/clothing/shoes/phantom,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "PhantomThieves"
+
+/datum/antagonist/gang/allies
+	show_in_antagpanel = TRUE
+	name = "Allies G.I."
+	roundend_category = "Allies"
+	gang_name = "Allies"
+	gang_id = "ALLIES"
+	free_clothes = list(/obj/item/clothing/suit/allies,
+							/obj/item/clothing/under/costume/allies,
+							/obj/item/clothing/head/allies,
+							/obj/item/clothing/gloves/color/black,
+							/obj/item/clothing/shoes/jackboots,
+						/obj/item/toy/crayon/spraycan)
+	antag_hud_name = "Allies"
+
+/datum/antagonist/gang/soviet
+	show_in_antagpanel = TRUE
+	name = "Soviet Conscript"
+	roundend_category = "Soviets"
+	gang_name = "Soviets"
+	gang_id = "SOV"
+	free_clothes = list(/obj/item/clothing/suit/soviet,
+							/obj/item/clothing/under/costume/soviet_families,
+							/obj/item/clothing/head/ushanka/soviet,
+							/obj/item/clothing/gloves/color/black,
+							/obj/item/clothing/shoes/jackboots,
+						/obj/item/toy/crayon/spraycan)
+	antag_hud_name = "Soviets"
+
+/datum/antagonist/gang/yuri
+	show_in_antagpanel = TRUE
+	name = "Yuri Initiate"
+	roundend_category = "Yuri's Army"
+	gang_name = "Yuri's Army"
+	gang_id = "YR"
+	free_clothes = list(/obj/item/clothing/suit/yuri,
+							/obj/item/clothing/under/costume/yuri,
+							/obj/item/clothing/head/yuri,
+							/obj/item/clothing/gloves/color/black,
+							/obj/item/clothing/shoes/jackboots,
+						/obj/item/toy/crayon/spraycan)
+	antag_hud_name = "YuriArmy"

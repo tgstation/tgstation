@@ -501,3 +501,24 @@
 	icon_state = "phantom_suit"
 	inhand_icon_state = "phantom_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/allies
+	name = "allies body armor"
+	desc = "How 'bout some action!? Sponsored by DonkSoft Co. for historical reenactment of the Third World War!"
+	icon_state = "allies_armor"
+	inhand_icon_state = "allies_armor"
+	body_parts_covered = CHEST|GROIN
+
+/obj/item/clothing/suit/soviet
+	name = "soviet armored coat"
+	desc = "Conscript reporting! Sponsored by DonkSoft Co. for historical reenactment of the Third World War!"
+	icon_state = "soviet_suit"
+	inhand_icon_state = "soviet_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/yuri
+	name = "yuri initiate coat"
+	desc = "Yuri is master! Sponsored by DonkSoft Co. for historical reenactment of the Third World War!"
+	icon_state = "yuri_coat"
+	inhand_icon_state = "yuri_coat"
+	body_parts_covered = CHEST|GROIN|ARMS

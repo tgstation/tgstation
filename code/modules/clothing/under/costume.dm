@@ -330,6 +330,24 @@
 	inhand_icon_state = "phantom_jumpsuit"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/allies
+	name = "allies tanktop"
+	icon_state = "allies_uniform"
+	inhand_icon_state = "allies_uniform"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/soviet_families
+	name = "soviet conscript uniform"
+	icon_state = "soviet_uniform"
+	inhand_icon_state = "soviet_uniform"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/yuri
+	name = "yuri initiate jumpsuit"
+	icon_state = "yuri_uniform"
+	inhand_icon_state = "yuri_uniform"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/costume/swagoutfit
 	name = "Swag outfit"
 	desc = "Why don't you go secure some bitches?"
