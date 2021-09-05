@@ -18,6 +18,4 @@
 
 /datum/preference/choiced/skin_tone/is_accessible(datum/preferences/preferences)
 	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
-	// var/datum/species/species = new species_type
-	// return species.use_skintones
 	return initial(species_type.use_skintones)
