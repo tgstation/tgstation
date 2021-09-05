@@ -95,6 +95,8 @@
 		if (isnull(preview_icon))
 			continue
 
+		qdel(antagonist)
+
 		// preview_icons are not scaled at this stage INTENTIONALLY.
 		// If an icon is not prepared to be scaled to that size, it looks really ugly, and this
 		// makes it harder to figure out what size it *actually* is.
