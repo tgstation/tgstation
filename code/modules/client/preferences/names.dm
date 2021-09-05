@@ -21,7 +21,7 @@
 	// Only real_name applies directly, everything else is applied by something else
 	return
 
-/datum/preference/name/deserialize(input)
+/datum/preference/name/deserialize(input, datum/preferences/preferences)
 	return reject_bad_name(input)
 
 /datum/preference/name/serialize(input)

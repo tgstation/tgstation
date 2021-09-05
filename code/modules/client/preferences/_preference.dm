@@ -357,7 +357,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/choiced/is_valid(value)
 	return value in get_choices()
 
-/datum/preference/choiced/deserialize(input)
+/datum/preference/choiced/deserialize(input, datum/preferences/preferences)
 	return sanitize_inlist(input, get_choices(), create_default_value())
 
 /datum/preference/choiced/create_default_value()
@@ -397,7 +397,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/color_legacy
 	abstract_type = /datum/preference/color_legacy
 
-/datum/preference/color_legacy/deserialize(input)
+/datum/preference/color_legacy/deserialize(input, datum/preferences/preferences)
 	return sanitize_hexcolor(input)
 
 /datum/preference/color_legacy/create_default_value()
@@ -410,7 +410,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/color
 	abstract_type = /datum/preference/color
 
-/datum/preference/color/deserialize(input)
+/datum/preference/color/deserialize(input, datum/preferences/preferences)
 	return sanitize_color(input)
 
 /datum/preference/color/create_default_value()
@@ -475,7 +475,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	abstract_type = /datum/preference/numeric
 
-/datum/preference/numeric/deserialize(input)
+/datum/preference/numeric/deserialize(input, datum/preferences/preferences)
 	return sanitize_float(input, minimum, maximum, step, create_default_value())
 
 /datum/preference/numeric/serialize(input)
@@ -504,7 +504,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/toggle/create_default_value()
 	return default_value
 
-/datum/preference/toggle/deserialize(input)
+/datum/preference/toggle/deserialize(input, datum/preferences/preferences)
 	return !!input
 
 /datum/preference/toggle/is_valid(value)

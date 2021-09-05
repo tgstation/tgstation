@@ -15,7 +15,7 @@
 	savefile_key = "brief_outfit"
 	savefile_identifier = PREFERENCE_PLAYER
 
-/datum/preference/choiced/brief_outfit/deserialize(input)
+/datum/preference/choiced/brief_outfit/deserialize(input, datum/preferences/preferences)
 	var/path = text2path(input)
 	if (!ispath(path, /datum/outfit))
 		return create_default_value()

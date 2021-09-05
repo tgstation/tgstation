@@ -6,7 +6,7 @@
 	randomize_by_default = FALSE
 
 // MOTHBLOCKS TODO: What is keyed_list/roundstart_no_hard_check?
-/datum/preference/choiced/species/deserialize(input)
+/datum/preference/choiced/species/deserialize(input, datum/preferences/preferences)
 	return GLOB.species_list[sanitize_inlist(input, get_choices_serialized(), "human")]
 
 /datum/preference/choiced/species/serialize(input)
