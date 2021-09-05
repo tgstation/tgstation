@@ -3,7 +3,7 @@
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	department_head = list("Captain")
 	head_announce = list(RADIO_CHANNEL_SECURITY)
-	faction = FACTION_STATION
+	faction = TRAIT_FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the captain"

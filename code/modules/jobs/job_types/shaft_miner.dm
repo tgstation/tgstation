@@ -1,7 +1,7 @@
 /datum/job/shaft_miner
 	title = "Shaft Miner"
 	department_head = list("Head of Personnel")
-	faction = FACTION_STATION
+	faction = TRAIT_FACTION_STATION
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = "the quartermaster and the head of personnel"

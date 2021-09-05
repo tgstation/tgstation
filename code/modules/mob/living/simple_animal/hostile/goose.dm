@@ -28,7 +28,7 @@
 	attack_sound = "goose"
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	speak_emote = list("honks")
-	faction = list("neutral")
+	faction = list(TRAIT_FACTION_NEUTRAL)
 	attack_same = TRUE
 	gold_core_spawnable = HOSTILE_SPAWN
 	var/random_retaliate = TRUE

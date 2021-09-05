@@ -91,6 +91,8 @@
 
 ///From base of datum/proc/faction_check(): (factions, exact_match, target)
 #define COMSIG_PARENT_FACTION_CHECK "parent_faction_check"
+/// Ditto, but for the target who's being checked.
+#define COMSIG_PARENT_FACTION_CHECKED "parent_faction_checked"
 
 ///Subsystem signals
 ///From base of datum/controller/subsystem/Initialize: (start_timeofday)

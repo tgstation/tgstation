@@ -724,7 +724,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	stun_projectile_sound = 'sound/weapons/gun/pistol/shot.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
-	faction = list(ROLE_SYNDICATE)
+	faction = list(TRAIT_FACTION_SYNDICATE)
 	desc = "A ballistic machine gun auto-turret."
 
 /obj/machinery/porta_turret/syndicate/ComponentInitialize()
@@ -758,7 +758,7 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/syndicate/energy/raven
 	stun_projectile =  /obj/projectile/beam/laser
 	stun_projectile_sound = 'sound/weapons/laser.ogg'
-	faction = list("neutral","silicon","turret")
+	faction = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_SILICON, TRAIT_FACTION_TURRET)
 
 /obj/machinery/porta_turret/syndicate/pod
 	integrity_failure = 0.5
@@ -788,7 +788,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	max_integrity = 100
 
 /obj/machinery/porta_turret/ai
-	faction = list("silicon")
+	faction = list(TRAIT_FACTION_SILICON)
 	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_HEADS
 
 /obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
@@ -801,7 +801,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	lethal_projectile = /obj/projectile/plasma/turret
 	lethal_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
 	mode = TURRET_LETHAL //It would be useless in stun mode anyway
-	faction = list("neutral","silicon","turret") //Minebots, medibots, etc that should not be shot.
+	faction = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_SILICON, TRAIT_FACTION_TURRET) //Minebots, medibots, etc that should not be shot.
 
 /obj/machinery/porta_turret/aux_base/assess_perp(mob/living/carbon/human/perp)
 	return 0 //Never shoot humanoids. You are on your own if Ashwalkers or the like attack!
@@ -830,7 +830,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	stun_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
-	faction = list("neutral","silicon","turret")
+	faction = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_SILICON, TRAIT_FACTION_TURRET)
 	mode = TURRET_LETHAL
 
 /obj/machinery/porta_turret/centcom_shuttle/ComponentInitialize()
@@ -850,7 +850,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	desc = "A turret built with substandard parts and run down further with age. Still capable of delivering lethal lasers to the odd space carp, but not much else."
 	stun_projectile = /obj/projectile/beam/weak/penetrator
 	lethal_projectile = /obj/projectile/beam/weak/penetrator
-	faction = list("neutral","silicon","turret")
 
 ////////////////////////
 //Turret Control Panel//

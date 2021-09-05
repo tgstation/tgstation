@@ -279,4 +279,7 @@
 		factions = GET_TRAITS_IN_LIST(datum_target, GLOB.faction_traits)
 	var/list/match_list = GET_TRAITS_IN_LIST(src, factions)
 	var/does_match = exact_match ? (length(match_list) == length(GET_TRAITS_IN_LIST(src, GLOB.faction_traits))) : length(match_list)
-	return (does_match || SEND_SIGNAL(src, COMSIG_PARENT_FACTION_CHECK, factions, exact_match, datum_target))
+	if(does_match || SEND_SIGNAL(src, COMSIG_PARENT_FACTION_CHECK, factions, exact_match, datum_target))
+		return TRUE
+	if(datum_target && SEND_SIGNAL(datum_target, COMSIG_PARENT_FACTION_CHECKED, src, exact_match))
+		return TRUE

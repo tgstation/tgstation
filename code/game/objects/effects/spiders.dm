@@ -147,7 +147,7 @@
 	show_flavour = FALSE
 	short_desc = "You are a spider."
 	important_info = "Follow your directives at all costs."
-	faction = list("spiders")
+	faction = list(TRAIT_FACTION_SPIDER)
 	spawner_job_path = /datum/job/spider
 	banType = ROLE_ALIEN
 	ready = FALSE

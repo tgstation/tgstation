@@ -22,7 +22,7 @@
 	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 	speech_span = SPAN_ROBOT
-	faction = list("neutral", "silicon" , "turret")
+	faction = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_SILICON, TRAIT_FACTION_TURRET)
 	light_system = MOVABLE_LIGHT
 	light_range = 3
 	light_power = 0.9

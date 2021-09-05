@@ -189,4 +189,4 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	projectiletype = /obj/projectile/beam/laser
 	projectilesound = 'sound/weapons/laser.ogg'
 	loot = list(/obj/effect/gibspawner/human)
-	faction = list(ROLE_DEATHSQUAD)
+	faction = list(TRAIT_FACTION_NANOTRASEN)

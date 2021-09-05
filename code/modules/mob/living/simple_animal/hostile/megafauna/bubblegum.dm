@@ -75,7 +75,7 @@ Difficulty: Hard
 							   /datum/action/innate/megafauna_attack/hallucination_surround,
 							   /datum/action/innate/megafauna_attack/blood_warp)
 	small_sprite_type = /datum/action/small_sprite/megafauna/bubblegum
-	faction = list("mining", "boss", "hell")
+	faction = list(TRAIT_FACTION_MINING, TRAIT_FACTION_BOSS, TRAIT_FACTION_HELL)
 
 /datum/action/innate/megafauna_attack/triple_charge
 	name = "Triple Charge"

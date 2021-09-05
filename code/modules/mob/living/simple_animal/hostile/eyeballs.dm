@@ -29,7 +29,7 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 	gold_core_spawnable = HOSTILE_SPAWN
-	faction = list("spooky")
+	faction = list(TRAIT_FACTION_HOSTILE)
 	del_on_death = 1
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS

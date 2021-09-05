@@ -1,7 +1,7 @@
 /datum/job/psychologist
 	title = "Psychologist"
 	department_head = list("Head of Personnel","Chief Medical Officer")
-	faction = FACTION_STATION
+	faction = TRAIT_FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel and the chief medical officer"

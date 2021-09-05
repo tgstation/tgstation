@@ -28,7 +28,7 @@
 	unsuitable_atmos_damage = 5
 	robust_searching = 1
 	stat_attack = HARD_CRIT
-	faction = list("skeleton")
+	faction = list(TRAIT_FACTION_SKELETON)
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	deathmessage = "collapses into a pile of bones!"

@@ -15,7 +15,6 @@
 	response_help_simple = "brush"
 	response_disarm_continuous = "pushes"
 	response_disarm_simple = "push"
-	faction = list("hostile")
 	speed = 1
 	maxHealth = 250
 	health = 250
@@ -91,7 +90,7 @@
 	response_help_simple = "rub"
 	loot = list(/obj/item/stack/rods)
 	speak_emote = list("polls")
-	faction = list()
+	faction = null // To it, everyone is naughty.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	is_tree = FALSE
 

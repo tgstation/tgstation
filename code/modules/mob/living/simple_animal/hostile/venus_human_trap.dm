@@ -126,7 +126,7 @@
 	/// copied over from the code from eyeballs (the mob) to make it easier for venus human traps to see in kudzu that doesn't have the transparency mutation
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	faction = list("hostile","vines","plants")
+	faction = list(TRAIT_FACTION_HOSTILE, TRAIT_FACTION_PLANTS)
 	initial_language_holder = /datum/language_holder/venus
 	unique_name = TRUE
 	/// A list of all the plant's vines

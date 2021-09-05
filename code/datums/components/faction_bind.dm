@@ -4,7 +4,7 @@
 	var/block_innate_factions = FALSE
 	var/trait_source
 
-/datum/component/faction_bind/Initialize(datum/faction_master, block_innate_factions = FALSE, trait_source)
+/datum/component/faction_bind/Initialize(datum/faction_master, trait_source, block_innate_factions = FALSE)
 	if(!istype(faction_master) || !trait_source)
 		return COMPONENT_INCOMPATIBLE
 
@@ -19,6 +19,7 @@
 		ADD_TRAIT(parent, TRAIT_INNATE_FACTIONS_BLOCKED, trait_source)
 
 	RegisterSignal(parent, COMSIG_PARENT_FACTION_CHECK, .proc/on_parent_faction_check)
+	RegisterSignal(parent, COMSIG_PARENT_FACTION_CHECKED, .proc/on_parent_faction_checked)
 	RegisterSignal(faction_master, COMSIG_PARENT_QDELETING, .proc/on_faction_master_qdeleting)
 	ADD_TRAIT(parent, TRAIT_FACTION_MASTER(faction_master), trait_source)
 
@@ -27,7 +28,7 @@
 		return ..()
 
 	UnregisterSignal(faction_master, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(parent, COMSIG_PARENT_FACTION_CHECK)
+	UnregisterSignal(parent, list(COMSIG_PARENT_FACTION_CHECK, COMSIG_PARENT_FACTION_CHECKED))
 
 	if(block_innate_factions && isliving(parent))
 		REMOVE_TRAIT(parent, TRAIT_INNATE_FACTIONS_BLOCKED, trait_source)
@@ -51,7 +52,18 @@
 
 /datum/component/faction_bind/proc/on_parent_faction_check(datum/source, factions, exact_match, datum/target)
 	SIGNAL_HANDLER
+	if(target == faction_master)
+		return TRUE
 	if(target && !exact_match && HAS_TRAIT(target, TRAIT_FACTION_MASTER(faction_master)))
 		return TRUE
-	if(faction_master.faction_check(factions, exact_match))
+	if(faction_master.faction_check(target || factions, exact_match))
+		return TRUE
+
+/datum/component/faction_bind/proc/on_parent_faction_checked(datum/source, datum/checker, exact_match)
+	SIGNAL_HANDLER
+	if(checker == faction_master)
+		return TRUE
+	if(!exact_match && HAS_TRAIT(checker, TRAIT_FACTION_MASTER(faction_master)))
+		return TRUE
+	if(checker.faction_check(faction_master, exact_match))
 		return TRUE

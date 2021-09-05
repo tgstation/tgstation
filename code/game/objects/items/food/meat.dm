@@ -415,7 +415,7 @@
 	M.gib(null, TRUE, null, TRUE)
 
 /obj/item/food/monkeycube/syndicate
-	faction = list("neutral", ROLE_SYNDICATE)
+	faction = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_SYNDICATE)
 
 /obj/item/food/monkeycube/gorilla
 	name = "gorilla cube"

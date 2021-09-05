@@ -1,7 +1,7 @@
 /mob/living/carbon/human/species/monkey
 	race = /datum/species/monkey
 	ai_controller = /datum/ai_controller/monkey
-	faction = list("neutral", "monkey")
+	faction = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_MONKEY)
 
 /mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	if (cubespawned)

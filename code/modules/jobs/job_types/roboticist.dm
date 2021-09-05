@@ -1,7 +1,7 @@
 /datum/job/roboticist
 	title = "Roboticist"
 	department_head = list("Research Director")
-	faction = FACTION_STATION
+	faction = TRAIT_FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the research director"

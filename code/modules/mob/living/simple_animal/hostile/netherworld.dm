@@ -13,7 +13,7 @@
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH // I always thought they bit. Guess I was wrong.
-	faction = list("nether")
+	faction = list(TRAIT_FACTION_NETHER)
 	speak_emote = list("screams")
 	gold_core_spawnable = HOSTILE_SPAWN
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -150,7 +150,7 @@
 	icon = 'icons/mob/nest.dmi'
 	spawn_text = "crawls through"
 	mob_types = list(/mob/living/simple_animal/hostile/netherworld/migo, /mob/living/simple_animal/hostile/netherworld, /mob/living/simple_animal/hostile/netherworld/blankbody)
-	faction = list("nether")
+	faction = list(TRAIT_FACTION_NETHER)
 
 /obj/structure/spawner/nether/Initialize()
 	.=..()

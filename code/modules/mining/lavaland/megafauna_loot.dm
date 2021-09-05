@@ -576,7 +576,7 @@
 	health = 200
 	gender = NEUTER
 	mob_biotypes = MOB_SPIRIT
-	faction = list()
+	faction = null
 	/// Blood level, used for movement and abilities in a soulscythe
 	var/blood_level = MAX_BLOOD_LEVEL
 

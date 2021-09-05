@@ -196,7 +196,7 @@
 // --------------------- Syndicate Assault
 /mob/living/silicon/robot/model/syndicate
 	icon_state = "synd_sec"
-	faction = list(ROLE_SYNDICATE)
+	faction = list(TRAIT_FACTION_SYNDICATE)
 	bubble_icon = "syndibot"
 	req_access = list(ACCESS_SYNDICATE)
 	lawupdate = FALSE

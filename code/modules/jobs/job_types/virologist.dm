@@ -1,7 +1,7 @@
 /datum/job/virologist
 	title = "Virologist"
 	department_head = list("Chief Medical Officer")
-	faction = FACTION_STATION
+	faction = TRAIT_FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the chief medical officer"

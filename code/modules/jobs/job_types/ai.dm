@@ -1,7 +1,7 @@
 /datum/job/ai
 	title = "AI"
 	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
-	faction = FACTION_STATION
+	faction = TRAIT_FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "your laws"

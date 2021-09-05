@@ -256,7 +256,7 @@
 	move_to_delay = 2
 	del_on_death = 1
 	deathmessage = "crumbles away!"
-	faction = list()
+	faction = null
 	ranged = FALSE
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/body = null
 

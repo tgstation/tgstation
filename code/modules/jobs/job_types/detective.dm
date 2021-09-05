@@ -2,7 +2,7 @@
 	title = "Detective"
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Head of Security")
-	faction = FACTION_STATION
+	faction = TRAIT_FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of security"

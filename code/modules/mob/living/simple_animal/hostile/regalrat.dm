@@ -24,7 +24,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	unique_name = TRUE
-	faction = list("rat")
+	faction = list(TRAIT_FACTION_RAT)
 	///The spell that the rat uses to generate miasma
 	var/datum/action/cooldown/domain
 	///The Spell that the rat uses to recruit/convert more rats.
@@ -225,7 +225,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	faction = list("rat")
+	faction = list(TRAIT_FACTION_RAT)
 
 /mob/living/simple_animal/hostile/rat/Initialize()
 	. = ..()
