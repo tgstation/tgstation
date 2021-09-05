@@ -302,7 +302,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		read_preference(preference_type)
 
 	//Character
-	READ_FILE(S["skin_tone"], skin_tone)
 	READ_FILE(S["randomise"],  randomise)
 	READ_FILE(S["persistent_scars"] , persistent_scars)
 
@@ -321,8 +320,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Sanitize
 	randomise = SANITIZE_LIST(randomise)
-
-	skin_tone = sanitize_inlist(skin_tone, GLOB.skin_tones)
 
 	persistent_scars = sanitize_integer(persistent_scars)
 
@@ -361,7 +358,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	#endif
 
 	//Character
-	WRITE_FILE(S["skin_tone"] , skin_tone)
 	WRITE_FILE(S["randomise"] , randomise)
 	WRITE_FILE(S["persistent_scars"] , persistent_scars)
 
