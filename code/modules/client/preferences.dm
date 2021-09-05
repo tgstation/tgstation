@@ -442,27 +442,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	if(GetQuirkBalance() < 0)
 		all_quirks = list()
 
-/// Sanitization checks to be performed before using these preferences.
-/datum/preferences/proc/sanitize_chosen_prefs()
-	// MOTHBLOCKS TODO: sanitize_chosen_prefs
-	// Most likely remove this in favor of prefs themselves sanitizing
-
-	// if(!(pref_species.id in GLOB.roundstart_races) && !(pref_species.id in (CONFIG_GET(keyed_list/roundstart_no_hard_check))))
-	// 	pref_species = new /datum/species/human
-	// 	save_character()
-
-	// if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == SPECIES_HUMAN))
-	// 	var/firstspace = findtext(real_name, " ")
-	// 	var/name_length = length(real_name)
-	// 	if(!firstspace) //we need a surname
-	// 		real_name += " [pick(GLOB.last_names)]"
-	// 	else if(firstspace == name_length)
-	// 		real_name += "[pick(GLOB.last_names)]"
-
 /// Sanitizes the preferences, applies the randomization prefs, and then applies the preference to the human mob.
 /datum/preferences/proc/safe_transfer_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE, is_antag = FALSE)
 	apply_character_randomization_prefs(is_antag)
-	sanitize_chosen_prefs()
 	apply_prefs_to(character, icon_updates)
 
 /// Applies the given preferences to a human mob.
