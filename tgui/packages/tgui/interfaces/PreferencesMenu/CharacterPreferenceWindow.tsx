@@ -20,7 +20,7 @@ enum Page {
 }
 
 const CharacterProfiles = (props: {
-  activeName: string,
+  activeSlot: number,
   onClick: (index: number) => void,
   profiles: (string | null)[],
 }) => {
@@ -31,7 +31,7 @@ const CharacterProfiles = (props: {
       {profiles.map((profile, slot) => (
         <Stack.Item key={slot}>
           <Button
-            selected={profile === props.activeName}
+            selected={slot === props.activeSlot}
             onClick={() => {
               props.onClick(slot);
             }} fluid>{profile ?? "New Character"}
@@ -82,7 +82,7 @@ export const CharacterPreferenceWindow = (props, context) => {
         <Stack vertical fill>
           <Stack.Item>
             <CharacterProfiles
-              activeName={data.active_name}
+              activeSlot={data.active_slot - 1}
               onClick={(slot) => {
                 act("change_slot", {
                   slot: slot + 1,

@@ -115,7 +115,7 @@ export type PreferencesMenuData = {
   antag_bans: string[];
   selected_antags: string[];
 
-  active_name: string;
+  active_slot: number;
   name_to_use: string;
 
   window: Window;

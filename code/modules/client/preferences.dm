@@ -149,7 +149,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// MOTHBLOCKS TODO: Job bans/yet to be unlocked jobs
 	data["job_preferences"] = job_preferences
 
-	data["active_name"] = read_preference(/datum/preference/name/real_name)
+	data["active_slot"] = default_slot
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		data += preference_middleware.get_ui_data(user)
