@@ -119,15 +119,9 @@
 
 /obj/structure/closet/proc/animate_door(closing = FALSE)
 	if(door_anim_time)
-<<<<<<< HEAD
 		if(!door_obj)
 			door_obj = new
 		vis_contents += door_obj
-=======
-		if(!door_obj) 
-				door_obj = new
-		vis_contents |= door_obj
->>>>>>> 3e877181de3f9fd41ca8a573bbf3fdaa984b28fd
 		door_obj.icon = icon
 		door_obj.icon_state = "[icon_door || icon_state]_door"
 		is_animating_door = TRUE
