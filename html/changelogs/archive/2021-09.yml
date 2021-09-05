@@ -119,3 +119,51 @@
   - refactor: Refactored how components are triggered and how ports can now be ordered.
   aaaa1023:
   - bugfix: Mice no longer become invisible when splatted by a mousetrap.
+2021-09-05:
+  Ghommie:
+  - code_imp: Replaced the MATERIAL_NO_EFFECTS material flag with MATERIAL_EFFECTS.
+  - bugfix: No more gazillions of atoms having the beauty element.
+  - bugfix: Fixed mindshield implants not retroactively working against slime or mansus
+      links.
+  - bugfix: Fixed stargazers that were either mindshielded, dead or protected against
+      psych magick by the time they became what they are not receiving the slime link
+      speech ability.
+  - bugfix: Stargazers will no permanently longer lose their slime link speech ability
+      upon death.
+  - bugfix: Fixed a regression that removed easy access to milk cartons from skeleton
+      pirates.
+  GoldenAlpharex:
+  - qol: The pAI signaler is now a proper internal signaler and will feel much easier
+      to use.
+  - bugfix: Fixed the pAI Host Scan being unable to work from within a PDA or anywhere
+      that wasn't your hands or your pockets.
+  - spellcheck: Fixed typoes in the pAI interface related to signaler being written
+      "signaller"
+  - code_imp: Improved the pAI code, mostly around the softwares.
+  MrStonedOne:
+  - bugfix: Discord new round notifications will no longer come shortly before the
+      round starts. You should now have enough time to actually ready up before round
+      start.
+  Nari Harimoto:
+  - bugfix: Emergency Access can no longer be spammed to cause sound and text pain
+  - bugfix: you can no longer print from a protolathe at a distance, and the operating
+      computer tgui will grey out if you walk away again
+  - bugfix: Admins can now use their godly powers of AdminGhostAI to interact with
+      every machine again
+  Sealed101:
+  - bugfix: Detective vests can store detective's (and nukeops agent) holsters.
+  Timberpoes:
+  - bugfix: Maint sect night vision eyes trait now correctly make your eyes show as
+      glowing an unnatural red when examined instead of doing nothing.
+  - qol: Tweaks the logic for the cultist glowy red eye trait, allowing admins to
+      add this to players to make them appear as if they were cultists when examined,
+      without actually forcing them to make that person a full blown cultist. The
+      cultist glowy red eye message has been modified as a result, and now examines
+      as "... glowing with an unnatural red aura!"
+  aaaa1023:
+  - qol: Defib mounts are now removed from the wall by right clicking with a wrench
+      while not on combat mode.
+  - bugfix: You will no longer smack defib mounts when removing them from the wall.
+  tralezab:
+  - rscdel: You can no longer store dice in pill bottles and pills in dice bags.
+  - bugfix: fixes getting scared of dice bags if you have a medical phobia.
