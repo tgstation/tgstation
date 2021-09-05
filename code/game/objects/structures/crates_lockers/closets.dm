@@ -73,6 +73,7 @@
 
 /obj/structure/closet/Destroy()
 	dump_contents()
+	QDEL_NULL(door_obj)
 	return ..()
 
 /obj/structure/closet/update_appearance(updates=ALL)
@@ -118,8 +119,9 @@
 
 /obj/structure/closet/proc/animate_door(closing = FALSE)
 	if(door_anim_time)
-		if(!door_obj) door_obj = new
-		vis_contents |= door_obj
+		if(!door_obj)
+			door_obj = new
+		vis_contents += door_obj
 		door_obj.icon = icon
 		door_obj.icon_state = "[icon_door || icon_state]_door"
 		is_animating_door = TRUE
@@ -138,7 +140,7 @@
 				animate(door_obj, transform = door_transform, icon_state = door_state, layer = door_layer, time = world.tick_lag, flags = ANIMATION_END_NOW)
 			else
 				animate(transform = door_transform, icon_state = door_state, layer = door_layer, time = world.tick_lag)
-		addtimer(CALLBACK(src,.proc/end_door_animation),door_anim_time,TIMER_UNIQUE|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src,.proc/end_door_animation),door_anim_time,TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_CLIENT_TIME)
 
 /obj/structure/closet/proc/end_door_animation()
 	is_animating_door = FALSE
