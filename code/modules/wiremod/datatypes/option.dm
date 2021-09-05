@@ -4,7 +4,8 @@
 /datum/port/input/option/New(obj/item/circuit_component/to_connect, name, datatype, order = 1, trigger = null, default = null, possible_options)
 	. = ..()
 	src.possible_options = possible_options
-	set_value(default)
+	if(length(possible_options))
+		set_value(possible_options[1])
 
 /datum/circuit_datatype/option
 	datatype = PORT_TYPE_OPTION
