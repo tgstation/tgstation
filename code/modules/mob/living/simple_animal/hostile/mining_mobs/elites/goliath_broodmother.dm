@@ -206,7 +206,7 @@
 /obj/effect/temp_visual/goliath_tentacle/broodmother/trip()
 	var/latched = FALSE
 	for(var/mob/living/L in loc)
-		if((!QDELETED(spawner) && spawner.faction_check_mob(L)) || L.stat == DEAD)
+		if((!QDELETED(spawner) && spawner.faction_check(L)) || L.stat == DEAD)
 			continue
 		visible_message(span_danger("[src] grabs hold of [L]!"))
 		L.Stun(10)

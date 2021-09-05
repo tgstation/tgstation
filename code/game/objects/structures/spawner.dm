@@ -17,10 +17,12 @@
 
 /obj/structure/spawner/Initialize()
 	. = ..()
+	for(var/faction_trait in faction)
+		ADD_TRAIT(src, faction_trait, INNATE_TRAIT)
 	AddComponent(spawner_type, mob_types, spawn_time, faction, spawn_text, max_mobs)
 
 /obj/structure/spawner/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(faction_check(faction, user.faction, FALSE) && !user.client)
+	if(user.faction_check(src) && !user.client)
 		return
 	return ..()
 

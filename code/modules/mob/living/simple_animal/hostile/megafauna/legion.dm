@@ -280,12 +280,12 @@
 
 ///Handles an extremely basic AI
 /obj/structure/legionturret/proc/set_up_shot()
-	for(var/mob/living/L in oview(9, src))
-		if(L.stat == DEAD || L.stat == UNCONSCIOUS)
+	for(var/mob/living/living_target in oview(9, src))
+		if(living_target.stat == DEAD || living_target.stat == UNCONSCIOUS)
 			continue
-		if(faction_check(faction, L.faction))
+		if(living_target.faction_check(faction))
 			continue
-		fire(L)
+		fire(living_target)
 		return
 	fire(get_edge_target_turf(src, pick(GLOB.cardinals)))
 

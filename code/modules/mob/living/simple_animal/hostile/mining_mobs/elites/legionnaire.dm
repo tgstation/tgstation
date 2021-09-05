@@ -148,7 +148,7 @@
 	var/list/hit_things = list()
 	var/throwtarget = get_edge_target_turf(src, move_dir)
 	for(var/mob/living/L in T.contents - hit_things - src)
-		if(faction_check_mob(L))
+		if(faction_check(L))
 			return
 		hit_things += L
 		visible_message(span_boldwarning("[src] tramples and kicks [L]!"))

@@ -89,6 +89,9 @@
 /// fires on the target datum when an element is attached to it  (/datum/element)
 #define COMSIG_ELEMENT_DETACH "element_detach"
 
+///From base of datum/proc/faction_check(): (factions, exact_match, target)
+#define COMSIG_PARENT_FACTION_CHECK "parent_faction_check"
+
 ///Subsystem signals
 ///From base of datum/controller/subsystem/Initialize: (start_timeofday)
 #define COMSIG_SUBSYSTEM_POST_INITIALIZE "subsystem_post_initialize"

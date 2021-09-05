@@ -2151,35 +2151,15 @@
 
 	return exp_list
 
-/**
- * Check if the other mob has any factions the same as us
- *
- * If exact match is set, then all our factions must match exactly
- */
-/mob/living/proc/faction_check_mob(mob/living/target, exact_match)
-	if(exact_match) //if we need an exact match, we need to do some bullfuckery.
-		var/list/faction_src = faction.Copy()
-		var/list/faction_target = target.faction.Copy()
-		if(!("[REF(src)]" in faction_target)) //if they don't have our ref faction, remove it from our factions list.
-			faction_src -= "[REF(src)]" //if we don't do this, we'll never have an exact match.
-		if(!("[REF(target)]" in faction_src))
-			faction_target -= "[REF(target)]" //same thing here.
-		return faction_check(faction_src, faction_target, TRUE)
-	return faction_check(faction, target.faction, FALSE)
-
 /*
- * Compare two lists of factions, returning true if any match
- *
- * If exact match is passed through we only return true if both faction lists match equally
+ * Compare the factions of src with either a list of factions or those of another datum, returning true if they match.
+ * If exact_match is set, then the target must be part of all factions src is part of (minus user ref ones).
  */
-/proc/faction_check(list/faction_A, list/faction_B, exact_match)
-	var/list/match_list
-	if(exact_match)
-		match_list = faction_A&faction_B //only items in both lists
-		var/length = LAZYLEN(match_list)
-		if(length)
-			return (length == LAZYLEN(faction_A)) //if they're not the same len(gth) or we don't have a len, then this isn't an exact match.
-	else
-		match_list = faction_A&faction_B
-		return LAZYLEN(match_list)
-	return FALSE
+/datum/proc/faction_check(factions, exact_match)
+	var/datum/datum_target
+	if(istype(factions, /datum)) // We are comparing the factions of two datums.
+		datum_target = factions
+		factions = GET_TRAITS_IN_LIST(datum_target, GLOB.faction_traits)
+	var/list/match_list = GET_TRAITS_IN_LIST(src, factions)
+	var/does_match = exact_match ? (length(match_list) == length(GET_TRAITS_IN_LIST(src, GLOB.faction_traits))) : length(match_list)
+	return (does_match || SEND_SIGNAL(src, COMSIG_PARENT_FACTION_CHECK, factions, exact_match, datum_target))

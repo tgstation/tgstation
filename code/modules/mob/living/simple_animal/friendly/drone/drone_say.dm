@@ -17,7 +17,7 @@
 		var/mob/living/simple_animal/drone/D = i
 		if(istype(D) && D.stat != DEAD)
 			if(faction_checked_mob)
-				if(D.faction_check_mob(faction_checked_mob, exact_faction_match))
+				if(D.faction_check(faction_checked_mob, exact_faction_match))
 					to_chat(D, msg)
 			else
 				to_chat(D, msg)

@@ -48,7 +48,7 @@
 		var/mob/living/living_target = target
 		if(living_target.anti_magic_check(check_antimagic, check_holy))
 			return FALSE
-		if(ignored_factions?.len && faction_check(living_target.faction,ignored_factions))
+		if(ignored_factions?.len && living_target.faction_check(ignored_factions))
 			return FALSE
 
 

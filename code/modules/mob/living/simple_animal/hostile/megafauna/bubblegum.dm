@@ -201,7 +201,7 @@ Difficulty: Hard
 	. = list()
 	for(var/mob/living/L in targets)
 		var/list/bloodpool = get_pools(get_turf(L), 0)
-		if(bloodpool.len && (!faction_check_mob(L) || L.stat == DEAD))
+		if(bloodpool.len && (!faction_check(L) || L.stat == DEAD))
 			. += L
 
 /**
@@ -265,7 +265,7 @@ Difficulty: Hard
 		new /obj/effect/temp_visual/bubblegum_hands/leftsmack(T)
 	SLEEP_CHECK_DEATH(4)
 	for(var/mob/living/L in T)
-		if(!faction_check_mob(L))
+		if(!faction_check(L))
 			to_chat(L, span_userdanger("[src] rends you!"))
 			playsound(T, attack_sound, 100, TRUE, -1)
 			var/limb_to_hit = L.get_bodypart(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
@@ -281,7 +281,7 @@ Difficulty: Hard
 		new /obj/effect/temp_visual/bubblegum_hands/leftthumb(T)
 	SLEEP_CHECK_DEATH(6)
 	for(var/mob/living/L in T)
-		if(!faction_check_mob(L))
+		if(!faction_check(L))
 			if(L.stat != CONSCIOUS)
 				to_chat(L, span_userdanger("[src] drags you through the blood!"))
 				playsound(T, 'sound/magic/enter_blood.ogg', 100, TRUE, -1)

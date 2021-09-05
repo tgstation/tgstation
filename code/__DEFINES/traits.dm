@@ -119,6 +119,11 @@
 		: FALSE)
 #define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (length(target.status_traits[trait] - source) > 0) : FALSE) : FALSE)
 
+#define GET_TRAITS_IN_LIST(target, list) (\
+	(target.status_traits && islist(list)) ?\
+		(target.status_traits & list)\
+		: FALSE)
+
 /*
 Remember to update _globalvars/traits.dm if you're adding/removing/renaming traits.
 */
@@ -412,6 +417,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RADSTORM_IMMUNE "radstorm_immune"
 #define TRAIT_VOIDSTORM_IMMUNE "voidstorm_immune"
 #define TRAIT_WEATHER_IMMUNE "weather_immune" //Immune to ALL weather effects.
+
+/// Faction traits.
 
 //non-mob traits
 /// Used for limb-based paralysis, where replacing the limb will fix it.
