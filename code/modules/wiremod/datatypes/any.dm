@@ -7,4 +7,7 @@
 	return TRUE
 
 /datum/circuit_datatype/any/handle_manual_input(datum/port/input/port, mob/user, user_input)
-	return text2num(user_input) || user_input
+	var/result = text2num(user_input)
+	if(isnull(result))
+		return user_input
+	return result
