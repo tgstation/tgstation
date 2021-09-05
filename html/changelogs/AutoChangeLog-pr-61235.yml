@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Durathread, Jupiter Cups, Fairy Grass, and a few other plants can no longer hard species mutate into themselves."
