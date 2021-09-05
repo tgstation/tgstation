@@ -409,13 +409,11 @@ export const Hypertorus = (props, context) => {
   const { act, data } = useBackend(context);
   return (
     <Window
-      title="Fusion Reactor"
+      title="Hypertorus Fusion Reactor control panel"
       width={500}
       height={600}>
       <Window.Content scrollable>
-        <Section title="Hypertorus Fusion Reactor control panel">
-          <HypertorusTabs />
-        </Section>
+        <HypertorusTabs />
       </Window.Content>
     </Window>
   );
