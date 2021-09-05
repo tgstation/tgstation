@@ -303,7 +303,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Character
 	READ_FILE(S["skin_tone"], skin_tone)
-	READ_FILE(S["underwear_color"], underwear_color)
 	READ_FILE(S["randomise"],  randomise)
 	READ_FILE(S["persistent_scars"] , persistent_scars)
 
@@ -323,7 +322,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Sanitize
 	randomise = SANITIZE_LIST(randomise)
 
-	underwear_color = sanitize_hexcolor(underwear_color, 3, 0)
 	skin_tone = sanitize_inlist(skin_tone, GLOB.skin_tones)
 
 	persistent_scars = sanitize_integer(persistent_scars)
@@ -364,7 +362,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Character
 	WRITE_FILE(S["skin_tone"] , skin_tone)
-	WRITE_FILE(S["underwear_color"] , underwear_color)
 	WRITE_FILE(S["randomise"] , randomise)
 	WRITE_FILE(S["persistent_scars"] , persistent_scars)
 

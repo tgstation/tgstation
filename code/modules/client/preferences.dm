@@ -35,7 +35,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	//character preferences
 	var/slot_randomized //keeps track of round-to-round randomization of the character slot, prevents overwriting
-	var/underwear_color = "000" //underwear color
 	var/skin_tone = "caucasian1" //Skin color
 
 	// MOTHBLOCKS TODO: Default values
@@ -470,7 +469,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 /// Applies the given preferences to a human mob.
 /datum/preferences/proc/apply_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE)
 	character.skin_tone = skin_tone
-	character.underwear_color = underwear_color
 
 	// MOTHBLOCKS TODO: Put this on name/real_name/apply
 	// if(roundstart_checks)

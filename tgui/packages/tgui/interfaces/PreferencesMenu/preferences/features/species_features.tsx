@@ -44,3 +44,8 @@ export const feature_mcolor: Feature<string> = {
   name: "Mutant color",
   component: FeatureColorInput,
 };
+
+export const underwear_color: Feature<string> = {
+  name: "Underwear color",
+  component: FeatureColorInput,
+};
