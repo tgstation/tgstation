@@ -16,7 +16,7 @@
 #define PREFERENCE_PRIORITY_NAMES 5
 
 /// The maximum preference priority, keep this updated, but don't use it for `priority`.
-#define MAX_PREFERENCE_PRIORITY 5
+#define MAX_PREFERENCE_PRIORITY PREFERENCE_PRIORITY_NAMES
 
 /// For choiced preferences, this key will be used to set display names in constant data.
 #define CHOICED_PREFERENCE_DISPLAY_NAMES "display_names"
@@ -287,6 +287,13 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Returns whether or not this preference is accessible.
 /// If FALSE, will not show in the UI and will not be editable (by update_preference).
 /datum/preference/proc/is_accessible(datum/preferences/preferences)
+	if (!isnull(relevant_mutant_bodypart) || !isnull(relevant_species_trait))
+		var/species_type = preferences.read_preference(/datum/preference/choiced/species)
+
+		var/datum/species/species = new species_type
+		if (!(savefile_key in species.get_features()))
+			return FALSE
+
 	return TRUE
 
 /// A preference that is a choice of one option among a fixed set.

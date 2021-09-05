@@ -8,7 +8,6 @@
 /datum/preference_middleware/quirks/get_ui_assets()
 	return list(
 		get_asset_datum(/datum/asset/spritesheet/quirks),
-		get_asset_datum(/datum/asset/json/quirk_info),
 	)
 
 // MOTHBLOCKS TODO: Only when requested
@@ -23,6 +22,23 @@
 	data["selected_quirks"] = selected_quirks
 
 	return data
+
+/datum/preference_middleware/quirks/get_constant_data()
+	var/list/quirk_info = list()
+
+	for (var/quirk_name in SSquirks.quirks)
+		var/datum/quirk/quirk = SSquirks.quirks[quirk_name]
+		quirk_info[sanitize_css_class_name(quirk_name)] = list(
+			"description" = initial(quirk.desc),
+			"name" = quirk_name,
+			"value" = initial(quirk.value),
+		)
+
+	return list(
+		"max_positive_quirks" = MAX_QUIRKS,
+		"quirk_info" = quirk_info,
+		"quirk_blacklist" = SSquirks.quirk_blacklist,
+	)
 
 /datum/preference_middleware/quirks/proc/give_quirk(list/params, mob/user)
 	var/quirk_name = params["quirk"]
@@ -78,24 +94,3 @@
 		Insert(spritesheet_key, to_insert[spritesheet_key])
 
 	return ..()
-
-/// A generated list of all quirk names and descriptions.
-/datum/asset/json/quirk_info
-	name = "quirk_info"
-
-/datum/asset/json/quirk_info/generate()
-	var/list/quirk_info = list()
-
-	for (var/quirk_name in SSquirks.quirks)
-		var/datum/quirk/quirk = SSquirks.quirks[quirk_name]
-		quirk_info[sanitize_css_class_name(quirk_name)] = list(
-			"description" = initial(quirk.desc),
-			"name" = quirk_name,
-			"value" = initial(quirk.value),
-		)
-
-	return list(
-		"max_positive_quirks" = MAX_QUIRKS,
-		"quirk_info" = quirk_info,
-		"quirk_blacklist" = SSquirks.quirk_blacklist,
-	)

@@ -372,18 +372,8 @@ export const MainPage = (props: {
           .species
       ];
 
-      const contextualPreferences = Object.fromEntries(
-        Object.entries(
-          data.character_preferences.secondary_features
-        ).filter(([feature]) => {
-          if (!currentSpeciesData) {
-            return false;
-          }
-
-          return currentSpeciesData.enabled_features
-            .indexOf(feature) !== -1;
-        })
-      );
+      const contextualPreferences
+        = data.character_preferences.secondary_features || [];
 
       const mainFeatures = [
         ...Object.entries(data.character_preferences.clothing),

@@ -305,7 +305,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["skin_tone"], skin_tone)
 	READ_FILE(S["underwear_color"], underwear_color)
 	READ_FILE(S["playtime_reward_cloak"], playtime_reward_cloak)
-	READ_FILE(S["phobia"], phobia)
 	READ_FILE(S["randomise"],  randomise)
 	READ_FILE(S["persistent_scars"] , persistent_scars)
 
@@ -370,7 +369,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["underwear_color"] , underwear_color)
 	WRITE_FILE(S["playtime_reward_cloak"] , playtime_reward_cloak)
 	WRITE_FILE(S["randomise"] , randomise)
-	WRITE_FILE(S["phobia"], phobia)
 	WRITE_FILE(S["persistent_scars"] , persistent_scars)
 
 	//Jobs

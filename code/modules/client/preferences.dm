@@ -40,7 +40,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	// MOTHBLOCKS TODO: Default values
 	var/list/randomise = list()
-	var/phobia = "spiders"
 
 	//Quirk list
 	var/list/all_quirks = list()
@@ -515,27 +514,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 		if(antag.get_team()) //No team antags
 			return FALSE
 	return TRUE
-
-
-/datum/preferences/proc/get_default_name(name_id)
-	switch(name_id)
-		if("human")
-			return random_unique_name()
-		if("ai")
-			return pick(GLOB.ai_names)
-		if("cyborg")
-			return DEFAULT_CYBORG_NAME
-		if("clown")
-			return pick(GLOB.clown_names)
-		if("mime")
-			return pick(GLOB.mime_names)
-		if("religion")
-			return pick(GLOB.religion_names)
-		if("deity")
-			return DEFAULT_DEITY
-		if("bible")
-			return DEFAULT_BIBLE
-	return random_unique_name()
 
 /// Inverts the key_bindings list such that it can be used for key_bindings_by_key
 /datum/preferences/proc/get_key_bindings_by_key(list/key_bindings)

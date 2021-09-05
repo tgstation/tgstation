@@ -185,8 +185,7 @@
 	var/phobia
 
 /datum/quirk/phobia/add()
-	if(!phobia && quirk_holder.client?.prefs.phobia)
-		phobia = quirk_holder.client?.prefs.phobia
+	phobia = phobia || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/phobia)
 
 	if(phobia)
 		var/mob/living/carbon/human/human_holder = quirk_holder
@@ -195,7 +194,7 @@
 /datum/quirk/phobia/post_add()
 	if(!phobia)
 		var/mob/living/carbon/human/human_holder = quirk_holder
-		phobia = human_holder.client.prefs.phobia
+		phobia = human_holder.client.prefs.read_preference(/datum/preference/choiced/phobia)
 		human_holder.gain_trauma(new /datum/brain_trauma/mild/phobia(phobia), TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/phobia/remove()

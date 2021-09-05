@@ -141,7 +141,6 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks)
 	var/list/new_quirks = list()
 	var/list/positive_quirks = list()
-	var/list/negative_quirks = list()
 	var/balance = 0
 
 	for (var/quirk_name in quirks)
@@ -175,8 +174,6 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 				continue
 
 			positive_quirks[quirk_name] = value
-		else
-			negative_quirks[quirk_name] = value
 
 		balance += value
 		new_quirks += quirk_name

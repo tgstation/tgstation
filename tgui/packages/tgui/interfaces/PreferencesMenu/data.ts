@@ -49,6 +49,18 @@ export type ServerSpeciesData = {
   toxic_food: Food[];
 };
 
+export type Quirk = {
+  description: string;
+  name: string;
+  value: number;
+};
+
+export type QuirkInfo = {
+  max_positive_quirks: number;
+  quirk_info: Record<string, Quirk>;
+  quirk_blacklist: string[][];
+};
+
 export enum RandomSetting {
   AntagOnly = 1,
   Disabled = 2,
@@ -113,6 +125,7 @@ export type ServerData = {
   names: {
     types: Record<string, Name>;
   };
+  quirks: QuirkInfo,
   random: {
     randomizable: string[];
   };
