@@ -197,10 +197,10 @@
 	if(light_on)
 		. += emissive_appearance(icon, "carved_pumpkin-emissive", alpha = src.alpha)
 
-/obj/item/clothing/head/hardhat/pumpkinhead/worn_overlays(isinhands)
+/obj/item/clothing/head/hardhat/pumpkinhead/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
-	if(!isinhands)
-		. += emissive_appearance(worn_icon, "carved_pumpkin-emissive", alpha = src.alpha, appearance_flags = KEEP_APART)
+	if(light_on && !isinhands)
+		. += emissive_appearance(icon_file, "carved_pumpkin-emissive", alpha = src.alpha)
 
 /obj/item/clothing/head/hardhat/pumpkinhead/blumpkin
 	name = "carved blumpkin"
