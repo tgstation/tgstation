@@ -45,9 +45,9 @@
 	holder.selected_language = /datum/language/piratespeak
 
 /datum/antagonist/pirate/remove_innate_effects(mob/living/mob_override)
-	. = ..()
 	var/mob/living/owner_mob = mob_override || owner.current
 	owner_mob.remove_language(/datum/language/piratespeak, TRUE, TRUE, LANGUAGE_PIRATE)
+	return ..()
 
 /datum/team/pirate
 	name = "Pirate crew"
