@@ -928,6 +928,14 @@
 	taste_description = "milky batter"
 	color = "#fccc98"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	
+/datum/reagent/consumable/unfried_egg // Made with salt and pepper to keep the white & yolk seperate till needed
+	name = "Unfried Egg"
+	description = "A seasoned raw double yolk egg."
+	taste_description = "seasoned egg"
+	nutriment_factor = 4 * REAGENTS_METABOLISM
+	color = "#FFF6EB"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED	
 
 /datum/reagent/consumable/korta_flour
 	name = "Korta Flour"
