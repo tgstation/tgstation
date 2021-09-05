@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - balance: "Projectiles fired by the watchers on lavaland will now deal damage and apply a short slowdown to carbons."
