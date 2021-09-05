@@ -94,6 +94,14 @@
 	tastes = list("egg" = 4, "salt" = 1, "pepper" = 1)
 	foodtypes = MEAT | FRIED | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
+	
+/obj/item/food/unfriedegg
+	name = "Unfried Egg"
+	desc = "A raw egg begging to be fried"
+	icon_state = "unfriedegg"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("egg" = 4, "salt" = 1, "pepper" = 1)
+	burns_on_grill = FALSE
 
 /obj/item/food/boiledegg
 	name = "boiled egg"
