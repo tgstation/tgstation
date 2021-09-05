@@ -152,7 +152,16 @@
 					/obj/item/clothing/suit/phantom = 20,
 					/obj/item/clothing/under/costume/phantom = 20,
 					/obj/item/clothing/glasses/sunglasses/phantom = 20,
-					/obj/item/clothing/shoes/phantom = 20)
+					/obj/item/clothing/shoes/phantom = 20,
+					/obj/item/clothing/suit/allies = 20,
+					/obj/item/clothing/under/costume/allies = 20,
+					/obj/item/clothing/head/allies = 20,
+					/obj/item/clothing/suit/soviet = 20,
+					/obj/item/clothing/under/costume/soviet_families = 20,
+					/obj/item/clothing/head/ushanka/soviet = 20,
+					/obj/item/clothing/suit/yuri = 20,
+					/obj/item/clothing/under/costume/yuri = 20,
+					/obj/item/clothing/head/yuri = 20)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 1,
 					  /obj/item/clothing/under/syndicate/tacticool/skirt = 1,
 		              /obj/item/clothing/mask/balaclava = 1,
