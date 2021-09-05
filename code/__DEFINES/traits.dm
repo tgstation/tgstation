@@ -419,6 +419,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WEATHER_IMMUNE "weather_immune" //Immune to ALL weather effects.
 
 /// Faction traits.
+#define TRAIT_INNATE_FACTIONS_BLOCKED "innate_factions_blocked"
+#define TRAIT_FACTION_MASTER(datum) "faction_master_[REF(datum)]"
 
 //non-mob traits
 /// Used for limb-based paralysis, where replacing the limb will fix it.
