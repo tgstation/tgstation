@@ -470,16 +470,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 /datum/preferences/proc/apply_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE)
 	character.skin_tone = skin_tone
 
-	// MOTHBLOCKS TODO: Put this on name/real_name/apply
-	// if(roundstart_checks)
-	// 	if(CONFIG_GET(flag/humans_need_surnames) && (read_preference(/datum/preference/choiced/species) == /datum/species/human))
-	// 		var/firstspace = findtext(real_name, " ")
-	// 		var/name_length = length(real_name)
-	// 		if(!firstspace) //we need a surname
-	// 			real_name += " [pick(GLOB.last_names)]"
-	// 		else if(firstspace == name_length)
-	// 			real_name += "[pick(GLOB.last_names)]"
-
 	character.dna.features = list()
 
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())

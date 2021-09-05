@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// older data.
 /// Must be overridden by subtypes.
 /// Can return null if no value was found.
-/datum/preference/proc/deserialize(input)
+/datum/preference/proc/deserialize(input, datum/preferences/preferences)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("`deserialize()` was not implemented on [type]!")
@@ -146,7 +146,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /// Given a savefile, return either the saved data or an acceptable default.
 /// This will write to the savefile if a value was not found with the new value.
-/datum/preference/proc/read(savefile/savefile)
+/datum/preference/proc/read(savefile/savefile, datum/preferences/preferences)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/value
@@ -155,7 +155,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	if (isnull(value))
 		return null
 	else
-		return deserialize(value)
+		return deserialize(value, preferences)
 
 /// Given a savefile, writes the inputted value.
 /// Returns TRUE for a successful application.
@@ -224,7 +224,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	if (preference_type in value_cache)
 		return value_cache[preference_type]
 
-	var/value = preference_entry.read(get_savefile_for_savefile_identifier(preference_entry.savefile_identifier))
+	var/value = preference_entry.read(get_savefile_for_savefile_identifier(preference_entry.savefile_identifier), src)
 	if (isnull(value))
 		value = preference_entry.create_informed_default_value(src)
 		if (write_preference(preference_entry, value))
@@ -239,7 +239,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Returns FALSE if it is invalid.
 /datum/preferences/proc/write_preference(datum/preference/preference, preference_value)
 	var/savefile = get_savefile_for_savefile_identifier(preference.savefile_identifier)
-	var/new_value = preference.deserialize(preference_value)
+	var/new_value = preference.deserialize(preference_value, src)
 	var/success = preference.write(savefile, new_value)
 	if (success)
 		value_cache[preference.type] = new_value
