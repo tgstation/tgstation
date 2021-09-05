@@ -1627,6 +1627,7 @@
 #include "code\modules\admin\smites\fat.dm"
 #include "code\modules\admin\smites\fireball.dm"
 #include "code\modules\admin\smites\gib.dm"
+#include "code\modules\admin\smites\imaginary_friend_special.dm"
 #include "code\modules\admin\smites\immerse.dm"
 #include "code\modules\admin\smites\knot_shoes.dm"
 #include "code\modules\admin\smites\lightning.dm"
