@@ -22,13 +22,17 @@
 	/// The port color. If unset, appears as blue.
 	var/color
 
-/datum/port/New(obj/item/circuit_component/to_connect, name, datatype)
+	/// The weight of the port. Determines the
+	var/order = 1
+
+/datum/port/New(obj/item/circuit_component/to_connect, name, datatype, order = 1)
 	if(!to_connect)
 		qdel(src)
 		return
 	. = ..()
 	connected_component = to_connect
 	src.name = name
+	src.order = order
 	set_datatype(datatype)
 
 /datum/port/Destroy(force)
@@ -58,7 +62,7 @@
 		return
 	set_value(value)
 	if(trigger)
-		TRIGGER_CIRCUIT_COMPONENT(connected_component, src)
+		connected_component.trigger_component(src)
 
 /datum/port/output/proc/set_output(value)
 	set_value(value)
@@ -150,16 +154,17 @@
  * and keeps its value equal to the last such signal received.
  */
 /datum/port/input
-	/// Whether this port triggers an update whenever an output is received.
-	var/trigger = FALSE
+	/// The proc that this trigger will call on the connected component.
+	var/trigger
 
 	/// The ports this port is wired to.
 	var/list/datum/port/output/connected_ports
 
-/datum/port/input/New(obj/item/circuit_component/to_connect, name, datatype, trigger, default)
+/datum/port/input/New(obj/item/circuit_component/to_connect, name, datatype, order = 1, trigger = null, default = null)
 	. = ..()
 	set_value(default)
-	src.trigger = trigger
+	if(trigger)
+		src.trigger = trigger
 	src.connected_ports = list()
 
 /**

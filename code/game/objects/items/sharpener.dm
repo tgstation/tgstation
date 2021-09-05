@@ -33,7 +33,7 @@
 	if(requires_sharpness && !I.get_sharpness())
 		to_chat(user, span_warning("You can only sharpen items that are already sharp, such as knives!"))
 		return
-	if(is_type_in_list(I, list(/obj/item/melee/transforming/energy, /obj/item/dualsaber))) //You can't sharpen the photons in energy meelee weapons
+	if(is_type_in_list(I, list(/obj/item/melee/energy, /obj/item/dualsaber))) //You can't sharpen the photons in energy meelee weapons
 		to_chat(user, span_warning("You don't think \the [I] will be the thing getting modified if you use it on \the [src]!"))
 		return
 

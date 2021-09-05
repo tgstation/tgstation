@@ -64,8 +64,7 @@
 	/// Called when the airlock is unbolted
 	var/datum/port/output/unbolted
 
-/obj/item/circuit_component/airlock/Initialize()
-	. = ..()
+/obj/item/circuit_component/airlock/populate_ports()
 	// Input Signals
 	bolt = add_input_port("Bolt", PORT_TYPE_SIGNAL)
 	unbolt = add_input_port("Unbolt", PORT_TYPE_SIGNAL)
@@ -116,9 +115,6 @@
 	closed.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/airlock/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	if(!attached_airlock)
 		return

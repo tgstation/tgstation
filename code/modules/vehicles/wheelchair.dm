@@ -78,7 +78,7 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/hand)
 
 /obj/vehicle/ridden/wheelchair/gold
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
 	desc = "Damn, he's been through a lot."
 	icon_state = "gold_wheelchair"
 	overlay_icon = "gold_wheelchair_overlay"

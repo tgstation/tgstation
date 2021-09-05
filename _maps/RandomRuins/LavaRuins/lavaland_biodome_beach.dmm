@@ -651,21 +651,21 @@
 /obj/item/reagent_containers/food/drinks/ice,
 /obj/item/reagent_containers/food/drinks/colocup,
 /obj/item/reagent_containers/food/drinks/colocup,
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	desc = "Beer advertised to be the best in space.";
 	name = "Masterbrand Beer"
 	},
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	desc = "Beer advertised to be the best in space.";
 	name = "Masterbrand Beer"
 	},
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	desc = "Beer advertised to be the best in space.";
 	name = "Masterbrand Beer"
 	},
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "tn" = (
@@ -690,7 +690,7 @@
 "vf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/table/wood/poker,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /obj/item/stack/spacecash/c1000,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -878,7 +878,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "Cv" = (
-/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "CE" = (
@@ -1052,10 +1052,10 @@
 	},
 /area/ruin/powered/beach)
 "HW" = (
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
 /obj/item/vending_refill/cigarette,
 /obj/item/vending_refill/boozeomat,
 /obj/structure/closet/secure_closet{
@@ -1065,16 +1065,16 @@
 	},
 /obj/item/storage/backpack/duffelbag,
 /obj/item/etherealballdeployer,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
 /obj/item/reagent_containers/food/drinks/colocup,
 /obj/item/reagent_containers/food/drinks/colocup,
 /obj/item/reagent_containers/food/drinks/colocup,

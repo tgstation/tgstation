@@ -1,0 +1,4 @@
+author: "Improvedname"
+delete-after: True
+changes: 
+  - bugfix: "Gibbers now produce 3 pieces of meat at tier 1 again"

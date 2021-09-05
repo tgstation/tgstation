@@ -1,4 +1,0 @@
-author: "Gamer025"
-delete-after: True
-changes: 
-  - code_imp: "Failsafe is more robust now and the game can actually recover from an deleted MC"

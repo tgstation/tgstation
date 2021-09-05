@@ -173,6 +173,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 				if(start_point.z != end_point.z || (range > 0 && get_dist(start_point, end_point) > range))
 					continue
 			device.receive_signal(signal)
+			CHECK_TICK
 
 /datum/radio_frequency/proc/add_listener(obj/device, filter as text|null)
 	if (!filter)
