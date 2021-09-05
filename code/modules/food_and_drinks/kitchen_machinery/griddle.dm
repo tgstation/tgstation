@@ -44,16 +44,31 @@
 /obj/machinery/griddle/proc/on_expose_reagent(atom/parent_atom, datum/reagent/exposing_reagent, reac_volume)
 	SIGNAL_HANDLER
 
-	if(griddled_objects.len >= max_items || !istype(exposing_reagent, /datum/reagent/consumable/pancakebatter) || reac_volume < 5)
-		return NONE //make sure you have space... it's actually batter... and a proper amount of it.
+	if(griddled_objects.len < max_items || istype(exposing_reagent, /datum/reagent/consumable/pancakebatter) || reac_volume >= 5)
+		//make sure you have space... it's actually batter... and a proper amount of it.
 
-	for(var/pancakes in 1 to FLOOR(reac_volume, 5) step 5) //this adds as many pancakes as you possibly could make, with 5u needed per pancake
-		var/obj/item/food/pancakes/raw/new_pancake = new(src)
-		new_pancake.pixel_x = rand(16,-16)
-		new_pancake.pixel_y = rand(16,-16)
-		AddToGrill(new_pancake)
-		if(griddled_objects.len >= max_items)
-			break
+		for(var/pancakes in 1 to FLOOR(reac_volume, 5) step 5) //this adds as many pancakes as you possibly could make, with 5u needed per pancake
+			var/obj/item/food/pancakes/raw/new_pancake = new(src)
+			new_pancake.pixel_x = rand(16,-16)
+			new_pancake.pixel_y = rand(16,-16)
+			AddToGrill(new_pancake)
+			if(griddled_objects.len >= max_items)
+				break
+				
+	else if(griddled_objects.len < max_items || istype(exposing_reagent, /datum/reagent/consumable/unfried_egg) || reac_volume >= 6)
+		//make sure you have space... it's actually unfried egg (not unmixed egg and yolk)... and a proper amount of it.
+
+		for(var/eggs in 1 to FLOOR(reac_volume, 6) step 6) //this adds as many fried eggs as you possibly could make, with 6u needed per pancake
+			var/obj/item/food/unfriedegg/new_unfriedegg = new(src)
+			new_unfriedegg.pixel_x = rand(16,-16)
+			new_unfriedegg.pixel_y = rand(16,-16)
+			AddToGrill(new_unfriedegg)
+			if(griddled_objects.len >= max_items)
+				break	
+	
+	else
+		return NONE // Not a grillable reagent
+		
 	visible_message(span_notice("[exposing_reagent] begins to cook on [src]."))
 	return NONE
 
