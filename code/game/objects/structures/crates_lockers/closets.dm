@@ -118,7 +118,8 @@
 
 /obj/structure/closet/proc/animate_door(closing = FALSE)
 	if(door_anim_time)
-		if(!door_obj) door_obj = new
+		if(!door_obj) 
+				door_obj = new
 		vis_contents |= door_obj
 		door_obj.icon = icon
 		door_obj.icon_state = "[icon_door || icon_state]_door"
