@@ -50,17 +50,18 @@
 	has_filter = TRUE
 	return TRUE
 
-/obj/item/clothing/mask/gas/attack_self_secondary(mob/user, modifiers)
+/obj/item/clothing/mask/gas/attack_hand_secondary(mob/user, list/modifiers)
 	if(!has_filter || !max_filters)
-		return ..()
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	for(var/i in 1 to max_filters)
 		var/obj/item/gas_filter/filter = locate() in src
 		if(!filter)
 			continue
-		user.transferItemToLoc(filter, user.loc)
+		user.put_in_hands(filter)
 		LAZYREMOVE(gas_filters, filter)
 	if(LAZYLEN(gas_filters) <= 0)
 		has_filter = FALSE
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 ///Check _masks.dm for this one
 /obj/item/clothing/mask/gas/consume_filter(datum/gas_mixture/breath)
