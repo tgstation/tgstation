@@ -457,6 +457,8 @@
 			age_text = "middle-aged"
 		if(56 to 75)
 			age_text = "rather old"
-		if(76 to INFINITY)
+		if(76 to 100)
 			age_text = "very old"
+		if(101 to INFINITY)
+			age_text = "withering away"
 	. += list(span_notice("[p_they(TRUE)] appear[p_s()] to be [age_text]."))
