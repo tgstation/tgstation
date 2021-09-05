@@ -15,7 +15,7 @@
 		return TRUE
 	return FALSE
 
-///The true wings that you can use to fly and shit (you cant actually shit with them, but it does wing stuff)
+///The true wings that you can use to fly and shit (you cant actually shit with them)
 /obj/item/organ/external/wings/functional
 	///The flight action object
 	var/datum/action/innate/flight/fly
@@ -185,13 +185,6 @@
 
 	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOVABLE_PRE_MOVE))
 	REMOVE_TRAIT(organ_owner, TRAIT_FREE_FLOAT_MOVEMENT, src)
-
-///For moth antennae and wings we make an exception. If their features are burnt, we only update our original sprite
-/obj/item/organ/external/wings/moth/set_sprite(sprite)
-	if(!burnt)
-		return ..() //no one listens to the return value, I just need to call the parent proc and end the code
-
-	original_sprite = sprite
 
 ///Check if we can flutter around
 /obj/item/organ/external/wings/moth/proc/update_float_move()

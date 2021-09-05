@@ -74,7 +74,7 @@
 	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
-	AI.ai_alerts()
+	AI.alert_control.ui_interact(AI)
 
 /atom/movable/screen/ai/announcement
 	name = "Make Vox Announcement"

@@ -117,10 +117,14 @@
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/unregister_signals(only_signals = FALSE)
 	SIGNAL_HANDLER
-	UnregisterSignal(linked_interface, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(linked_input, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(linked_output, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(linked_moderator, COMSIG_PARENT_QDELETING)
+	if(linked_interface)
+		UnregisterSignal(linked_interface, COMSIG_PARENT_QDELETING)
+	if(linked_input)
+		UnregisterSignal(linked_input, COMSIG_PARENT_QDELETING)
+	if(linked_output)
+		UnregisterSignal(linked_output, COMSIG_PARENT_QDELETING)
+	if(linked_moderator)
+		UnregisterSignal(linked_moderator, COMSIG_PARENT_QDELETING)
 	for(var/obj/machinery/hypertorus/corner/corner in corners)
 		UnregisterSignal(corner, COMSIG_PARENT_QDELETING)
 	if(!only_signals)
@@ -184,7 +188,8 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return FALSE
 	if(use_power == ACTIVE_POWER_USE)
-		active_power_usage = ((power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
+		update_mode_power_usage(ACTIVE_POWER_USE, (power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
+
 	return TRUE
 
 ///Checks if the gases in the input are the ones needed by the recipe

@@ -524,7 +524,7 @@
 	if(!..())
 		if(ismovable(hit_atom))
 			var/atom/movable/AM = hit_atom
-			AM.safe_throw_at(get_edge_target_turf(AM,get_dir(src, AM)), clamp(round(throwforce/5), 2, 20), 2) //Throws them equal to damage/5, with a min range of 2 and max range of 20
+			AM.safe_throw_at(get_edge_target_turf(AM,get_dir(src, AM)), clamp(round(throwforce/5), 2, 20), 2, force = MOVE_FORCE_EXTREMELY_STRONG) //Throws them equal to damage/5, with a min range of 2 and max range of 20
 		qdel(src)
 
 ///dark honk weapons

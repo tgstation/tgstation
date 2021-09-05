@@ -16,8 +16,8 @@
 	failed_last_breath = FALSE
 	clear_alert("too_much_oxy")
 	clear_alert("not_enough_oxy")
-	clear_alert("too_much_tox")
-	clear_alert("not_enough_tox")
+	clear_alert("too_much_plas")
+	clear_alert("not_enough_plas")
 	clear_alert("nitro")
 	clear_alert("too_much_nitro")
 	clear_alert("not_enough_nitro")

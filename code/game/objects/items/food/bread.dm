@@ -32,6 +32,7 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
+	burns_in_oven = TRUE
 
 /obj/item/food/bread/plain/Initialize()
 	. = ..()
@@ -262,6 +263,9 @@
 
 
 /obj/item/food/deepfryholder/Initialize(mapload, obj/item/fried)
+	if(!fried)
+		stack_trace("A deepfried object was created with no fried target")
+		return INITIALIZE_HINT_QDEL
 	. = ..()
 	name = fried.name //We'll determine the other stuff when it's actually removed
 	appearance = fried.appearance

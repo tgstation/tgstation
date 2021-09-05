@@ -29,8 +29,7 @@
 	var/list/active_overlays = list()
 	var/list/options_map
 
-/obj/item/circuit_component/object_overlay/Initialize()
-	. = ..()
+/obj/item/circuit_component/object_overlay/populate_ports()
 	target = add_input_port("Target", PORT_TYPE_ATOM)
 
 	signal_on = add_input_port("Create Overlay", PORT_TYPE_SIGNAL)
@@ -70,13 +69,11 @@
 	UnregisterSignal(shell, COMSIG_ORGAN_REMOVED)
 
 /obj/item/circuit_component/object_overlay/input_received(datum/port/input/port)
-	. = ..()
-
-	if(. || !bci)
+	if(!bci)
 		return
 
 	var/mob/living/owner = bci.owner
-	var/atom/target_atom = target.input_value
+	var/atom/target_atom = target.value
 
 	if(!owner || !istype(owner) || !owner.client || !target_atom)
 		return
@@ -95,13 +92,13 @@
 	if(active_overlays[target_atom])
 		QDEL_NULL(active_overlays[target_atom])
 
-	var/image/cool_overlay = image(icon = 'icons/hud/screen_bci.dmi', loc = target_atom, icon_state = options_map[object_overlay_options.input_value], layer = RIPPLE_LAYER)
+	var/image/cool_overlay = image(icon = 'icons/hud/screen_bci.dmi', loc = target_atom, icon_state = options_map[object_overlay_options.value], layer = RIPPLE_LAYER)
 
-	if(image_pixel_x.input_value)
-		cool_overlay.pixel_x = image_pixel_x.input_value
+	if(image_pixel_x.value)
+		cool_overlay.pixel_x = image_pixel_x.value
 
-	if(image_pixel_y.input_value)
-		cool_overlay.pixel_y = image_pixel_y.input_value
+	if(image_pixel_y.value)
+		cool_overlay.pixel_y = image_pixel_y.value
 
 	var/alt_appearance = WEAKREF(target_atom.add_alt_appearance(
 		/datum/atom_hud/alternate_appearance/basic/one_person,

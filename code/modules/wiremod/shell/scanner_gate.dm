@@ -45,8 +45,7 @@
 
 	var/obj/structure/scanner_gate_shell/attached_gate
 
-/obj/item/circuit_component/scanner_gate/Initialize()
-	. = ..()
+/obj/item/circuit_component/scanner_gate/populate_ports()
 	scanned = add_output_port("Scanned Object", PORT_TYPE_ATOM)
 
 /obj/item/circuit_component/scanner_gate/register_shell(atom/movable/shell)

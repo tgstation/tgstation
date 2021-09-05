@@ -77,7 +77,7 @@
 		icon_state += "_up"
 		to_chat(user, span_notice("You push \the [src] out of the way."))
 		gas_transfer_coefficient = null
-		permeability_coefficient = null
+		permeability_coefficient = 1
 		clothing_flags &= ~visor_flags
 		flags_inv &= ~visor_flags_inv
 		flags_cover &= ~visor_flags_cover

@@ -1,0 +1,5 @@
+author: "aaaa1023"
+delete-after: True
+changes: 
+  - qol: "Defib mounts are now removed from the wall by right clicking with a wrench while not on combat mode."
+  - bugfix: "You will no longer smack defib mounts when removing them from the wall."

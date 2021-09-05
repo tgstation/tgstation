@@ -26,6 +26,13 @@
 		/obj/item/circuit_component/arrest_console_arrest,
 	))
 
+#define COMP_STATE_ARREST "*Arrest*"
+#define COMP_STATE_PRISONER "Incarcerated"
+#define COMP_STATE_PAROL "Paroled"
+#define COMP_STATE_DISCHARGED "Discharged"
+#define COMP_STATE_NONE "None"
+#define COMP_SECURITY_ARREST_AMOUNT_TO_FLAG 10
+
 /obj/item/circuit_component/arrest_console_data
 	display_name = "Security Records Data"
 	desc = "Outputs the security records data, where it can then be filtered with a Select Query component"
@@ -39,8 +46,7 @@
 
 	var/obj/machinery/computer/secure_data/attached_console
 
-/obj/item/circuit_component/arrest_console_data/Initialize()
-	. = ..()
+/obj/item/circuit_component/arrest_console_data/populate_ports()
 	records = add_output_port("Security Records", PORT_TYPE_TABLE)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
@@ -68,9 +74,6 @@
 
 
 /obj/item/circuit_component/arrest_console_data/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	if(!attached_console || !attached_console.authenticated)
 		on_fail.set_output(COMPONENT_SIGNAL)
@@ -137,25 +140,21 @@
 	)
 	new_status = add_option_port("Arrest Options", component_options)
 
-/obj/item/circuit_component/arrest_console_arrest/Initialize()
-	. = ..()
+/obj/item/circuit_component/arrest_console_arrest/populate_ports()
 	targets = add_input_port("Targets", PORT_TYPE_TABLE)
 	new_status_set = add_output_port("Set Status", PORT_TYPE_STRING)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/arrest_console_arrest/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	if(!attached_console || !attached_console.authenticated)
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
-	var/status_to_set = new_status.input_value
+	var/status_to_set = new_status.value
 
 	new_status_set.set_output(status_to_set)
-	var/list/target_table = targets.input_value
+	var/list/target_table = targets.value
 	if(!target_table)
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
@@ -179,6 +178,13 @@
 			message_admins("[successful_set] security entries have been set to [status_to_set] by [parent.get_creator_admin()]. [ADMIN_COORDJMP(src)]")
 		for(var/mob/living/carbon/human/human as anything in GLOB.human_list)
 			human.sec_hud_set_security_status()
+
+#undef COMP_STATE_ARREST
+#undef COMP_STATE_PRISONER
+#undef COMP_STATE_PAROL
+#undef COMP_STATE_DISCHARGED
+#undef COMP_STATE_NONE
+#undef COMP_SECURITY_ARREST_AMOUNT_TO_FLAG
 
 /obj/machinery/computer/secure_data/syndie
 	icon_keyboard = "syndie_key"

@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a regression that removed easy access to milk cartons from skeleton pirates."
