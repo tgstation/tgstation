@@ -929,7 +929,7 @@
 	color = "#fccc98"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	
-/datum/reagent/consumable/unfried_egg // Made with salt and pepper to keep the white & yolk seperate till needed
+/datum/reagent/consumable/unfriedegg // Made with salt and pepper to keep the white & yolk seperate till needed
 	name = "Unfried Egg"
 	description = "A seasoned raw double yolk egg."
 	taste_description = "seasoned egg"
