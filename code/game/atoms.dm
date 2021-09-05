@@ -1606,6 +1606,8 @@
 		tag = "UNKNOWN"
 
 	source.log_talk(message, message_type, tag="[tag] to [key_name(target)]")
+	if(source != target)
+		target.log_talk(message, LOG_VICTIM, tag="[tag] from [key_name(source)]", log_globally=FALSE)
 
 /**
  * Log a combat message in the attack log
@@ -1618,6 +1620,7 @@
  * * addition - is any additional text, which will be appended to the rest of the log line
  */
 /proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null)
+	var/ssource = key_name(user)
 	var/starget = key_name(target)
 
 	var/mob/living/living_target = target
@@ -1634,6 +1637,10 @@
 
 	var/message = "has [what_done] [starget][postfix]"
 	user.log_message(message, LOG_ATTACK, color="red")
+
+	if(user != target)
+		var/reverse_message = "has been [what_done] by [ssource][postfix]"
+		target.log_message(reverse_message, LOG_VICTIM, color="orange", log_globally=FALSE)
 
 /**
  * log_wound() is for when someone is *attacked* and suffers a wound. Note that this only captures wounds from damage, so smites/forced wounds aren't logged, as well as demotions like cuts scabbing over
