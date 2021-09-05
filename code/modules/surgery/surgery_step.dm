@@ -177,6 +177,6 @@
 		target.show_message(vague_message, MSG_VISUAL, span_notice("You feel [you_feel] as you are operated on."))
 
 /datum/surgery_step/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE)
-		to_chat(target, pain_message)
-		if(prob(30) && !mechanical_surgery)
-			INVOKE_ASYNC(target, /mob.proc/emote, "scream") //i have no idea what async does but i'm copying it from dismemberment
+	to_chat(target, pain_message)
+	if(prob(30) && !mechanical_surgery)
+		INVOKE_ASYNC(target, /mob.proc/emote, "scream") //i have no idea what async does but i'm copying it from dismemberment
