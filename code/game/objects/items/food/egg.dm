@@ -94,6 +94,7 @@
 	tastes = list("egg" = 4, "salt" = 1, "pepper" = 1)
 	foodtypes = MEAT | FRIED | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
+	burns_on_grill = TRUE
 	
 /obj/item/food/unfriedegg
 	name = "Unfried Egg"
