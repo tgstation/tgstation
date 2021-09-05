@@ -159,6 +159,10 @@
 	results = list(/datum/reagent/consumable/pancakebatter = 15)
 	required_reagents = list(/datum/reagent/consumable/eggyolk = 6, /datum/reagent/consumable/eggwhite = 12, /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/flour = 5)
 
+/datum/chemical_reaction/food/unfriedegg
+	results = list(/datum/reagent/consumable/pancakebatter = 6)
+	required_reagents = list(/datum/reagent/consumable/eggyolk = 2, /datum/reagent/consumable/eggwhite = 4, /datum/reagent/consumable/blackpepper = 1, /datum/reagent/consumable/salt = 1)
+
 /datum/chemical_reaction/food/ricebowl
 	required_reagents = list(/datum/reagent/consumable/rice = 10, /datum/reagent/water = 10)
 	required_container = /obj/item/reagent_containers/glass/bowl
