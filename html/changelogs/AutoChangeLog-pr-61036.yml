@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "The transparent area of the image used by imaginary friend mobs should no longer catch clicks."

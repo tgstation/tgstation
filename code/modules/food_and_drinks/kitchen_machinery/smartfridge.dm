@@ -308,7 +308,7 @@
 	if(!powered())
 		toggle_drying(TRUE)
 
-/obj/machinery/smartfridge/drying_rack/load(/obj/item/dried_object) //For updating the filled overlay
+/obj/machinery/smartfridge/drying_rack/load(obj/item/dried_object) //For updating the filled overlay
 	. = ..()
 	update_appearance()
 
