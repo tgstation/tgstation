@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fixes a logic error in ID cards which could cause their accesses to be unintentionally overwritten."

@@ -12,6 +12,8 @@
 /obj/vehicle/ridden/atv/Initialize()
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/atv)
+	if(!atvcover)
+		atvcover = mutable_appearance(icon, "atvcover", MOB_LAYER + 0.1)
 
 /obj/vehicle/ridden/atv/post_buckle_mob(mob/living/M)
 	add_overlay(atvcover)

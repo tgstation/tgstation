@@ -47,3 +47,123 @@
   - bugfix: trash cannons now accept any oxygen tank, not just red ones
   - bugfix: Any instance where you'd see "illusion" as a school of magic is now "translocation".
       the illusion school has been dead for awhile now!
+2021-09-02:
+  ArcaneDefence:
+  - bugfix: Plasmamen that have all of their limbs replaced with non-plasma alternatives
+      will not autoignite in flammable environments.
+  - bugfix: Moths have finally figured out how to finish eating clothes again, rather
+      than infinitely eating a singular sock.
+  GoblinBackwards:
+  - bugfix: Doors, reinforced windows, lockers, mass spectrometers and lockers can
+      now be attacked with right click
+  Timberpoes:
+  - bugfix: Fixes a logic error in ID cards which could cause their accesses to be
+      unintentionally overwritten.
+  - bugfix: Fix oversight allowing players to spam observers with notifications for
+      ghost roles.
+  magatsuchi:
+  - spellcheck: fixed a single typo
+  tralezab:
+  - spellcheck: going postal now uses the correct ui theme and isn't confused with
+      tiger cooperative
+2021-09-03:
+  ArcaneDefence:
+  - bugfix: Opening a toilet's cistern will no longer strike the toilet with the crowbar.
+  BraveMole:
+  - bugfix: Fix dir delay when riding something and turning
+  CRITAWAKETS:
+  - rscadd: Added in a new sock type, Thigh-high and Knee-high ace socks.
+  - bugfix: Bee socks are now properly ordered in the code.
+  Fikou:
+  - bugfix: fixed non-combat mechs doing 0 damage
+  Fikou, PositiveEntropy:
+  - expansion: adds a gun circuit shell
+  - qol: to string circuit component should now see everything in normal view range
+  Ghilker:
+  - qol: RPD defaul pipe color is now green, grey has been renamed to omni and the
+      two colors are moved to the first and last places of the RPD ui
+  Ghommie:
+  - bugfix: Using a soulstone on a construct shell no longer destroys it and the shade
+      if no option for the construct mob type is taken.
+  - bugfix: Fixed the Bloodcrawl spell not ejecting users if somehow lost.
+  JohnFulpWillard:
+  - bugfix: traitors now get objectives again.
+  - qol: Cayenne can once again strip people.
+  - bugfix: Cayenne no longer deletes the nuke disk when putting it back down.
+  Krysonism:
+  - bugfix: fixed a few small sprites issues with the lobby menu.
+  TiviPlus:
+  - bugfix: Mechs with no damage will no longer punch
+  - bugfix: Fix atv covers not appearing
+  Watermelon914:
+  - bugfix: Fixed scanner gates not functioning when anchored and also fixed their
+      examine text not saying they need to be anchored.
+  esainane:
+  - bugfix: Vent and scrubber names once again contain their unique ID tags
+  - bugfix: When something is disconnected from a smart pipe, the smart pipe now immediately
+      frees up connectivity in that direction for other pipes or components to use.
+  maxymax13:
+  - imageadd: resprited pens and paper bins
+  - imageadd: four color pen now has a sprite
+2021-09-04:
+  Ghommie:
+  - bugfix: bees, hivelord, its brood and legion skulls no longer use the MOUSE_OPACITY_OPAQUE
+      setting that makes the invisible portions of their icons count toward mouse
+      clicks, which can get in the way of players trying to click stuff below their
+      layer. Instead, to be easier to click on, they use a component that gives them
+      a near-invisible underlay.
+  - bugfix: Fixed the protect objective always failing.
+  TiviPlus:
+  - bugfix: patched mechs being slow randomly after phasing
+  Watermelon914:
+  - refactor: Refactored how components are triggered and how ports can now be ordered.
+  aaaa1023:
+  - bugfix: Mice no longer become invisible when splatted by a mousetrap.
+2021-09-05:
+  Ghommie:
+  - code_imp: Replaced the MATERIAL_NO_EFFECTS material flag with MATERIAL_EFFECTS.
+  - bugfix: No more gazillions of atoms having the beauty element.
+  - bugfix: Fixed mindshield implants not retroactively working against slime or mansus
+      links.
+  - bugfix: Fixed stargazers that were either mindshielded, dead or protected against
+      psych magick by the time they became what they are not receiving the slime link
+      speech ability.
+  - bugfix: Stargazers will no permanently longer lose their slime link speech ability
+      upon death.
+  - bugfix: Fixed a regression that removed easy access to milk cartons from skeleton
+      pirates.
+  GoldenAlpharex:
+  - qol: The pAI signaler is now a proper internal signaler and will feel much easier
+      to use.
+  - bugfix: Fixed the pAI Host Scan being unable to work from within a PDA or anywhere
+      that wasn't your hands or your pockets.
+  - spellcheck: Fixed typoes in the pAI interface related to signaler being written
+      "signaller"
+  - code_imp: Improved the pAI code, mostly around the softwares.
+  MrStonedOne:
+  - bugfix: Discord new round notifications will no longer come shortly before the
+      round starts. You should now have enough time to actually ready up before round
+      start.
+  Nari Harimoto:
+  - bugfix: Emergency Access can no longer be spammed to cause sound and text pain
+  - bugfix: you can no longer print from a protolathe at a distance, and the operating
+      computer tgui will grey out if you walk away again
+  - bugfix: Admins can now use their godly powers of AdminGhostAI to interact with
+      every machine again
+  Sealed101:
+  - bugfix: Detective vests can store detective's (and nukeops agent) holsters.
+  Timberpoes:
+  - bugfix: Maint sect night vision eyes trait now correctly make your eyes show as
+      glowing an unnatural red when examined instead of doing nothing.
+  - qol: Tweaks the logic for the cultist glowy red eye trait, allowing admins to
+      add this to players to make them appear as if they were cultists when examined,
+      without actually forcing them to make that person a full blown cultist. The
+      cultist glowy red eye message has been modified as a result, and now examines
+      as "... glowing with an unnatural red aura!"
+  aaaa1023:
+  - qol: Defib mounts are now removed from the wall by right clicking with a wrench
+      while not on combat mode.
+  - bugfix: You will no longer smack defib mounts when removing them from the wall.
+  tralezab:
+  - rscdel: You can no longer store dice in pill bottles and pills in dice bags.
+  - bugfix: fixes getting scared of dice bags if you have a medical phobia.

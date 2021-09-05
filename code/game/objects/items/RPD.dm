@@ -207,7 +207,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	///Is the device of the flipped type?
 	var/p_flipped = FALSE
 	///Color of the device we are going to spawn
-	var/paint_color = "grey"
+	var/paint_color = "green"
 	///Speed of building atmos devices
 	var/atmos_build_speed = 0.5 SECONDS
 	///Speed of building disposal devices

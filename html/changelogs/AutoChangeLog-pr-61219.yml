@@ -1,0 +1,4 @@
+author: "Improvedname"
+delete-after: True
+changes: 
+  - rscadd: "RD/Roboticists/Cmo/Doctors can now buy a syndi brand MMi from their uplink for 2 tc"

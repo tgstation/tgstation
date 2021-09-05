@@ -24141,7 +24141,7 @@
 	pixel_x = 2;
 	pixel_y = 8
 	},
-/obj/item/storage/pill_bottle/dice{
+/obj/item/storage/dice{
 	pixel_x = -4;
 	pixel_y = 2
 	},
@@ -31731,7 +31731,7 @@
 /area/maintenance/aft)
 "dNe" = (
 /obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -35104,7 +35104,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "ecH" = (
 /obj/structure/table,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron,
@@ -43948,7 +43948,7 @@
 /area/service/library)
 "gAD" = (
 /obj/structure/table/wood/poker,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /obj/effect/spawner/lootdrop/space/cashmoney,
 /turf/open/floor/iron/grimy,
 /area/service/abandoned_gambling_den)
@@ -59932,7 +59932,7 @@
 /obj/item/toy/beach_ball/holoball/dodgeball,
 /obj/effect/spawner/lootdrop/prison_contraband,
 /obj/item/instrument/harmonica,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /obj/item/toy/cards/deck/tarot,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
@@ -63182,7 +63182,7 @@
 /area/commons/fitness/recreation)
 "mnS" = (
 /obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /turf/open/floor/carpet,
 /area/service/library/abandoned)
 "mnX" = (
@@ -78137,7 +78137,7 @@
 /area/maintenance/starboard/aft)
 "qGH" = (
 /obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/structure/window/reinforced{
 	dir = 8

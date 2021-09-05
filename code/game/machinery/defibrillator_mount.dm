@@ -167,7 +167,7 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/defibrillator_mount/wrench_act(mob/living/user, obj/item/wrench/W)
+/obj/machinery/defibrillator_mount/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(!wallframe_type)
 		return ..()
 	if(user.combat_mode)
@@ -178,9 +178,9 @@
 		return TRUE
 	new wallframe_type(get_turf(src))
 	qdel(src)
-	W.play_tool_sound(user)
+	tool.play_tool_sound(user)
 	to_chat(user, span_notice("You remove [src] from the wall."))
-
+	return TRUE
 
 /obj/machinery/defibrillator_mount/AltClick(mob/living/carbon/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))

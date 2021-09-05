@@ -1,0 +1,6 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - rscadd: "You can now pour ants back onto the ground, with the more ants you pour leading to more damage!"
+  - balance: "Ants now do more damage, however they require more sugar in order to breed."
+  - imageadd: "The ant decal now has a couple shiny new sprites!"

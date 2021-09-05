@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - admin: "Added a new smite for admins that allows them to give any mob a permanent imaginary friend of the admin's choosing, including additional customisation for the looks allowing the imaginary friend to take on the appearance of the player inserted into it."
