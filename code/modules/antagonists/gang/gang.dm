@@ -69,7 +69,7 @@
 /datum/antagonist/gang/on_gain()
 	if(!original_name)
 		original_name = owner.current.real_name
-	my_gang.rename_gangster(owner, original_name) // fully_replace_character_name
+	my_gang.rename_gangster(owner, original_name, starter_gangster) // fully_replace_character_name
 	if(starter_gangster)
 		equip_gangster_in_inventory()
 	var/datum/atom_hud/H = GLOB.huds[ANTAG_HUD_GANGSTER]
@@ -167,7 +167,7 @@
 	var/datum/gang_theme/current_theme
 
 /// Allow gangs to have custom naming schemes for their gangsters.
-/datum/team/gang/proc/rename_gangster(datum/mind/gangster, original_name)
+/datum/team/gang/proc/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
 	gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
 	return
 
@@ -356,7 +356,7 @@
 /datum/team/gang/henchmen
 	var/henchmen_count = 0
 
-/datum/team/gang/henchmen/rename_gangster(datum/mind/gangster, original_name)
+/datum/team/gang/henchmen/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
 	henchmen_count++
 	gangster.current.fully_replace_character_name(gangster.current.real_name, "Number [henchmen_count]")
 	return
@@ -432,7 +432,7 @@
 	antag_hud_name = "IRS"
 	gang_team_type = /datum/team/gang/irs
 
-/datum/team/gang/irs/rename_gangster(datum/mind/gangster, original_name)
+/datum/team/gang/irs/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
 	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
 	lasttname.Find(original_name)
 	gangster.current.fully_replace_character_name(gangster.current.real_name, "Revenue Agent [lasttname.match]")
@@ -454,7 +454,7 @@
 	antag_hud_name = "OSI"
 	gang_team_type = /datum/team/gang/osi
 
-/datum/team/gang/osi/rename_gangster(datum/mind/gangster, original_name)
+/datum/team/gang/osi/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
 	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
 	lasttname.Find(original_name)
 	gangster.current.fully_replace_character_name(gangster.current.real_name, "Special Agent [lasttname.match]")
@@ -589,6 +589,16 @@
 							/obj/item/clothing/shoes/jackboots,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Allies"
+	gang_team_type = /datum/team/gang/allies
+
+/datum/team/gang/allies/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Commander [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Private [lasttname.match]")
+	return
 
 /datum/antagonist/gang/soviet
 	show_in_antagpanel = TRUE
@@ -603,6 +613,16 @@
 							/obj/item/clothing/shoes/jackboots,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Soviets"
+	gang_team_type = /datum/team/gang/soviet
+
+/datum/team/gang/soviet/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Comrade General [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Conscript [lasttname.match]")
+	return
 
 /datum/antagonist/gang/yuri
 	show_in_antagpanel = TRUE
@@ -617,3 +637,13 @@
 							/obj/item/clothing/shoes/jackboots,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "YuriArmy"
+	gang_team_type = /datum/team/gang/yuri
+
+/datum/team/gang/yuri/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Initiate Prime [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Initiate [lasttname.match]")
+	return
