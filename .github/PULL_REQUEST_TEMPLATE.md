@@ -11,7 +11,7 @@
 
 ## Changelog
 
-<!-- If your PR modifies aspects of the game that can be concretely observed by players you should add a changelog. If your change does NOT meet this description, remove this section. -->
+<!-- If your PR modifies aspects of the game that can be concretely observed by players or admins you should add a changelog. If your change does NOT meet this description, remove this section. -->
 
 :cl:
 add: Added new mechanics or gameplay changes
