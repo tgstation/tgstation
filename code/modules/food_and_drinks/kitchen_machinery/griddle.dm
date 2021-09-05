@@ -55,7 +55,7 @@
 			if(griddled_objects.len >= max_items)
 				break
 				
-	else if(griddled_objects.len < max_items || istype(exposing_reagent, /datum/reagent/consumable/unfried_egg) || reac_volume >= 6)
+	else if(griddled_objects.len < max_items || istype(exposing_reagent, /datum/reagent/consumable/unfriedegg) || reac_volume >= 6)
 		//make sure you have space... it's actually unfried egg (not unmixed egg and yolk)... and a proper amount of it.
 
 		for(var/eggs in 1 to FLOOR(reac_volume, 6) step 6) //this adds as many fried eggs as you possibly could make, with 6u needed per pancake
