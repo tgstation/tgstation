@@ -44,7 +44,7 @@
 /obj/machinery/griddle/proc/on_expose_reagent(atom/parent_atom, datum/reagent/exposing_reagent, reac_volume)
 	SIGNAL_HANDLER
 
-	if(griddled_objects.len < max_items || istype(exposing_reagent, /datum/reagent/consumable/pancakebatter) || reac_volume >= 5)
+	if(griddled_objects.len < max_items && istype(exposing_reagent, /datum/reagent/consumable/pancakebatter) && reac_volume >= 5)
 		//make sure you have space... it's actually batter... and a proper amount of it.
 
 		for(var/pancakes in 1 to FLOOR(reac_volume, 5) step 5) //this adds as many pancakes as you possibly could make, with 5u needed per pancake
@@ -55,7 +55,7 @@
 			if(griddled_objects.len >= max_items)
 				break
 				
-	else if(griddled_objects.len < max_items || istype(exposing_reagent, /datum/reagent/consumable/unfriedegg) || reac_volume >= 6)
+	else if(griddled_objects.len < max_items && istype(exposing_reagent, /datum/reagent/consumable/unfriedegg) && reac_volume >= 6)
 		//make sure you have space... it's actually unfried egg (not unmixed egg and yolk)... and a proper amount of it.
 
 		for(var/eggs in 1 to FLOOR(reac_volume, 6) step 6) //this adds as many fried eggs as you possibly could make, with 6u needed per pancake
