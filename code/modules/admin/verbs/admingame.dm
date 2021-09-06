@@ -60,7 +60,7 @@
 	//Default to client logs if available
 	var/source = LOGSRC_MOB
 	if(M.client)
-		source = LOGSRC_CLIENT
+		source = LOGSRC_CKEY
 	body += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_src=[source]'>LOGS</a>\] <br>"
 
 	body += "<b>Mob type</b> = [M.type]<br><br>"
