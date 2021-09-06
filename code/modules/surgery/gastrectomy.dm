@@ -33,7 +33,7 @@
 	display_results(user, target, span_notice("You begin to cut out a damaged piece of [target]'s stomach..."),
 		span_notice("[user] begins to make an incision in [target]."),
 		span_notice("[user] begins to make an incision in [target]."))
-	display_pain(target, span_userdanger("You feel a horrible stab in your gut!"))
+	display_pain(target, "You feel a horrible stab in your gut!")
 
 /datum/surgery_step/gastrectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/mob/living/carbon/human/target_human = target
@@ -41,7 +41,7 @@
 	display_results(user, target, span_notice("You successfully remove the damaged part of [target]'s stomach."),
 		span_notice("[user] successfully removes the damaged part of [target]'s stomach."),
 		span_notice("[user] successfully removes the damaged part of [target]'s stomach."))
-	display_pain(target, span_userdanger("The pain in your gut ebbs and fades somewhat."))
+	display_pain(target, "The pain in your gut ebbs and fades somewhat.")
 	return ..()
 
 /datum/surgery_step/gastrectomy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery)
@@ -50,5 +50,5 @@
 	display_results(user, target, span_warning("You cut the wrong part of [target]'s stomach!"),
 		span_warning("[user] cuts the wrong part of [target]'s stomach!"),
 		span_warning("[user] cuts the wrong part of [target]'s stomach!"))
-	display_pain(target, span_userdanger("Your stomach throbs with pain; it's not getting any better!"))
+	display_pain(target, "Your stomach throbs with pain; it's not getting any better!")
 
