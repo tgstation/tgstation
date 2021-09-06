@@ -31,6 +31,7 @@
 	savefile_key = "feature_lizard_body_markings"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
+	main_feature_name = "Body markings"
 	should_generate_icons = TRUE
 	relevant_mutant_bodypart = "body_markings"
 
@@ -68,6 +69,7 @@
 	savefile_key = "feature_lizard_frills"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
+	main_feature_name = "Frills"
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/lizard_frills/init_possible_values()
@@ -80,6 +82,7 @@
 	savefile_key = "feature_lizard_horns"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
+	main_feature_name = "Horns"
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/lizard_horns/init_possible_values()
@@ -104,6 +107,7 @@
 	savefile_key = "feature_lizard_snout"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
+	main_feature_name = "Snout"
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/lizard_snout/init_possible_values()

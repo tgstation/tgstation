@@ -22,20 +22,6 @@ const CLOTHING_SELECTION_CELL_SIZE = 48;
 const CLOTHING_SELECTION_WIDTH = 5.4;
 const CLOTHING_SELECTION_MULTIPLIER = 5.2;
 
-// MOTHBLOCKS TODO: Put this in the datum, or perhaps derive it?
-// Actually, just put these all in the feature files.
-// ACTUALLY actually, just put it in compiled data.
-const KEYS_TO_NAMES = {
-  backpack: "backpack",
-  facial_style_name: "facial hair",
-  feature_moth_wings: "moth wings",
-  hairstyle_name: "hair style",
-  jumpsuit_style: "jumpsuit style",
-  socks: "socks",
-  undershirt: "undershirt",
-  underwear: "underwear",
-};
-
 const CharacterControls = (props: {
   handleRotate: () => void,
   handleOpenSpecies: () => void,
@@ -101,7 +87,7 @@ const ChoicedSelection = (props: {
             "border-bottom": "1px solid #888",
             "font-size": "14px",
             "text-align": "center",
-          }}>Select {props.name}
+          }}>Select {props.name.toLowerCase()}
           </Box>
         </Stack.Item>
 
@@ -189,13 +175,14 @@ const GenderButton = (props: {
 };
 
 const MainFeature = (props: {
-  catalog: FeatureChoicedServerData,
+  catalog: FeatureChoicedServerData & {
+    name: string,
+  },
   currentValue: AssetWithIcon,
   isOpen: boolean,
   handleClose: () => void,
   handleOpen: () => void,
   handleSelect: (newClothing: string) => void,
-  name: string,
   randomization?: RandomSetting,
   setRandomization: (newSetting: RandomSetting) => void,
 }) => {
@@ -206,7 +193,6 @@ const MainFeature = (props: {
     handleOpen,
     handleClose,
     handleSelect,
-    name,
     randomization,
     setRandomization,
   } = props;
@@ -217,7 +203,7 @@ const MainFeature = (props: {
     }} popperContent={isOpen && (
       <TrackOutsideClicks onOutsideClick={props.handleClose}>
         <ChoicedSelection
-          name={name}
+          name={catalog.name}
           catalog={catalog}
           selected={currentValue.value}
           onSelect={handleSelect}
@@ -237,7 +223,7 @@ const MainFeature = (props: {
           width: `${CLOTHING_CELL_SIZE}px`,
         }}
         position="relative"
-        tooltip={currentValue.value}
+        tooltip={catalog.name}
         tooltipPosition="right"
       >
         <Box
@@ -487,7 +473,10 @@ export const MainPage = (props: {
                   .map(([clothingKey, clothing]) => {
                     const catalog = (
                       serverData
-                          && serverData[clothingKey] as FeatureChoicedServerData
+                          && serverData[clothingKey] as
+                            FeatureChoicedServerData & {
+                              name: string,
+                            }
                     );
 
                     return catalog && (
@@ -505,8 +494,6 @@ export const MainPage = (props: {
                             setCurrentClothingMenu(clothingKey);
                           }}
                           handleSelect={createSetPreference(act, clothingKey)}
-                          name={KEYS_TO_NAMES[clothingKey]
-                            || `NO NAME FOR ${clothingKey}`}
                           randomization={
                             randomizationOfMainFeatures[clothingKey]
                           }

@@ -306,6 +306,12 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	var/list/cached_values
 
+	/// If the preference is a main feature (PREFERENCE_CATEGORY_FEATURES or PREFERENCE_CATEGORY_CLOTHING)
+	/// this is the name of the feature that will be presented.
+	// MOTHBLOCKS TODO: Unit test that everything that's a main feature has this
+	// and vice versa.
+	var/main_feature_name
+
 	abstract_type = /datum/preference/choiced
 
 /// Returns a list of every possible value.
@@ -389,6 +395,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 			icons[choice] = get_spritesheet_key(choice)
 
 		data["icons"] = icons
+
+	if (!isnull(main_feature_name))
+		data["name"] = main_feature_name
 
 	return data
 
