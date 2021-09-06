@@ -99,6 +99,7 @@
 			igniter.forceMove(T)
 			igniter = null
 		if(beaker)
+			playsound(user, 'sound/weapons/gun/flamethrower/flamethrower_unload.ogg', 50, TRUE)
 			beaker.forceMove(T)
 			beaker = null
 		new /obj/item/stack/rods(T)
@@ -128,6 +129,7 @@
 			if(user.transferItemToLoc(W,src))
 				beaker.forceMove(get_turf(src))
 				beaker = W
+				playsound(user, 'sound/weapons/gun/flamethrower/flamethrower_reload.ogg', 50, TRUE)
 				to_chat(user, "<span class='notice'>You swap the fuel container in [src]!</span>")
 			return
 		if(!user.transferItemToLoc(W, src))
@@ -144,6 +146,7 @@
 
 /obj/item/flamethrower/AltClick(mob/user)
 	if(beaker && isliving(user) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+		playsound(user, 'sound/weapons/gun/flamethrower/flamethrower_unload.ogg', 50, TRUE)
 		user.put_in_hands(beaker)
 		beaker = null
 		to_chat(user, "<span class='notice'>You remove the fuel container from [src]!</span>")
@@ -197,8 +200,9 @@
 	beaker_reagents.trans_to(my_fraction, release_amount, no_react = TRUE)
 	power = my_fraction.get_total_accelerant_quality() * FLAMETHROWER_POWER_MULTIPLIER
 	if(power < REQUIRED_POWER_TO_FIRE_FLAMETHROWER)
+		playsound(src, 'sound/weapons/gun/flamethrower/flamethrower_empty.ogg', 50, TRUE)
 		return
-	playsound(src, 'sound/effects/spray.ogg', 10, TRUE, -3)
+	playsound(src, 'sound/weapons/gun/flamethrower/flamethrower_shoot.ogg', 50, TRUE)
 	operating = TRUE
 	var/turfs_flamed = 0
 	var/turf/previousturf = get_turf(src)
