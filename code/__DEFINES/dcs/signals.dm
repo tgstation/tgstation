@@ -1253,8 +1253,6 @@
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"
 ///from monkey CtrlClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
-///from xenobio CtrlClickOn(): (/mob)
-#define COMSIG_XENO_CLICK_CTRL "xeno_click_ctrl"
 
 
 // /datum/component/container_item

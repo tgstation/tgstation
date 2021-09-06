@@ -119,7 +119,7 @@
 		hotkey_help.Grant(user)
 		actions += hotkey_help
 
-	RegisterSignal(user, COMSIG_XENO_CLICK_CTRL, .proc/on_ctrl_click)
+	RegisterSignal(user, list(COMSIG_XENO_SLIME_CLICK_CTRL, COMSIG_XENO_TURF_CLICK_CTRL, COMSIG_XENO_MONKEY_CLICK_CTRL, COMSIG_MOB_CTRL_CLICKED), .proc/on_ctrl_click)
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT, .proc/XenoSlimeClickAlt)
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, .proc/XenoSlimeClickShift)
 	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, .proc/XenoTurfClickShift)
@@ -132,7 +132,7 @@
 				connected_recycler.connected += src
 
 /obj/machinery/computer/camera_advanced/xenobio/remove_eye_control(mob/living/user)
-	UnregisterSignal(user, COMSIG_XENO_CLICK_CTRL)
+	UnregisterSignal(user, list(COMSIG_XENO_SLIME_CLICK_CTRL, COMSIG_XENO_TURF_CLICK_CTRL, COMSIG_XENO_MONKEY_CLICK_CTRL, COMSIG_MOB_CTRL_CLICKED))
 	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT)
 	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT)
 	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT)
@@ -351,9 +351,19 @@
 	SEND_SIGNAL(user, COMSIG_XENO_TURF_CLICK_SHIFT, src)
 	..()
 
-//Places and picks up monkies, scans slimes
+//scans slimes
 /mob/living/simple_animal/slime/CtrlClick(mob/user)
-	SEND_SIGNAL(user, COMSIG_XENO_CLICK_CTRL, src)
+	SEND_SIGNAL(user, COMSIG_XENO_SLIME_CLICK_CTRL, src)
+	..()
+
+//picks up dead monkies
+/mob/living/carbon/human/species/monkey/CtrlClick(mob/user)
+	SEND_SIGNAL(user, COMSIG_XENO_MONKEY_CLICK_CTRL, src)
+	..()
+
+//places monkies
+/turf/open/CtrlClick(mob/user)
+	SEND_SIGNAL(user, COMSIG_XENO_TURF_CLICK_CTRL, src)
 	..()
 
 /obj/machinery/computer/camera_advanced/xenobio/proc/on_ctrl_click(datum/source, atom/clicked_atom)
