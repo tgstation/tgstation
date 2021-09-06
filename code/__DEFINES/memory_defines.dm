@@ -40,7 +40,7 @@
 #define MEMORY_FLAG_NOMOOD	(1<<1)
 ///this memory shouldn't include the station name (example: revolution memory)
 #define MEMORY_FLAG_NOSTATIONNAME	(1<<2)
-//this memory is REALLY shit and should never be saved in persistence, basically apply this to all quirks.
+///this memory is REALLY shit and should never be saved in persistence, basically apply this to all quirks.
 #define MEMORY_FLAG_NOPERSISTENCE	(1<<3)
 ///this memory has already been engraved, and cannot be selected for engraving again.
 #define MEMORY_FLAG_ALREADY_USED	(1<<4)
@@ -123,7 +123,7 @@
 #define DETAIL_WHAT_BY "WHAT_BY"
 ///Used whenever a memory has a secondary character. Used bespokely by actions.
 #define DETAIL_DEUTERAGONIST "DEUTERAGONIST"
-//Automatically obtained details
+///Automatically obtained details
 #define DETAIL_PROTAGONIST_MOOD "VICTIM_MOOD"
 
 //Specific memory info keys. they are used to replace json strings with memory specific data!
