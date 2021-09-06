@@ -25,8 +25,6 @@
 	basic_mob_flags = DEL_ON_DEATH
 	faction = list("hostile")
 
-	environment_smash = ALL
-
 	ai_controller = /datum/ai_controller/basic_controller/cockroach
 
 /mob/living/basic/cockroach/Initialize()

@@ -24,7 +24,3 @@
 /datum/ai_controller/basic_controller/proc/update_speed(mob/living/basic/basic_mob)
 	SIGNAL_HANDLER
 	movement_delay = basic_mob.cached_multiplicative_slowdown
-
-/datum/ai_controller/basic_controller/proc/update_environt_smash(mob/living/basic/basic_mob)
-	SIGNAL_HANDLER
-	blackboard[BB_ENVIRONMENT_SMASH] = basic_mob.environment_smash

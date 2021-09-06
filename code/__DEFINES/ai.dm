@@ -182,9 +182,6 @@
 
 ///Basic Mob Keys
 
-///General basic mob vars
-#define BB_ENVIRONMENT_SMASH "BB_environment_smash"
-
 ///Targetting subtrees
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
 #define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
