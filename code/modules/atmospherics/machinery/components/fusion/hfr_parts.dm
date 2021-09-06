@@ -322,37 +322,32 @@
 			var/heating_conductor = params["heating_conductor"]
 			if(text2num(heating_conductor) != null)
 				heating_conductor = text2num(heating_conductor)
-				. = TRUE
-			if(.)
 				connected_core.heating_conductor = clamp(heating_conductor, 50, 500)
+				. = TRUE
 		if("magnetic_constrictor")
 			var/magnetic_constrictor = params["magnetic_constrictor"]
 			if(text2num(magnetic_constrictor) != null)
 				magnetic_constrictor = text2num(magnetic_constrictor)
-				. = TRUE
-			if(.)
 				connected_core.magnetic_constrictor = clamp(magnetic_constrictor, 50, 1000)
+				. = TRUE
 		if("fuel_injection_rate")
 			var/fuel_injection_rate = params["fuel_injection_rate"]
 			if(text2num(fuel_injection_rate) != null)
 				fuel_injection_rate = text2num(fuel_injection_rate)
-				. = TRUE
-			if(.)
 				connected_core.fuel_injection_rate = clamp(fuel_injection_rate, 5, 1500)
+				. = TRUE
 		if("moderator_injection_rate")
 			var/moderator_injection_rate = params["moderator_injection_rate"]
 			if(text2num(moderator_injection_rate) != null)
 				moderator_injection_rate = text2num(moderator_injection_rate)
-				. = TRUE
-			if(.)
 				connected_core.moderator_injection_rate = clamp(moderator_injection_rate, 5, 1500)
+				. = TRUE
 		if("current_damper")
 			var/current_damper = params["current_damper"]
 			if(text2num(current_damper) != null)
 				current_damper = text2num(current_damper)
-				. = TRUE
-			if(.)
 				connected_core.current_damper = clamp(current_damper, 0, 1000)
+				. = TRUE
 		if("waste_remove")
 			connected_core.waste_remove = !connected_core.waste_remove
 			. = TRUE
@@ -363,9 +358,8 @@
 			var/mod_filtering_rate = params["mod_filtering_rate"]
 			if(text2num(mod_filtering_rate) != null)
 				mod_filtering_rate = text2num(mod_filtering_rate)
-				. = TRUE
-			if(.)
 				connected_core.moderator_filtering_rate = clamp(mod_filtering_rate, 5, 200)
+				. = TRUE
 		if("fuel")
 			connected_core.selected_fuel = null
 			var/fuel_mix = "nothing"
@@ -387,9 +381,8 @@
 			var/cooling_volume = params["cooling_volume"]
 			if(text2num(cooling_volume) != null)
 				cooling_volume = text2num(cooling_volume)
-				. = TRUE
-			if(.)
 				connected_core.airs[1].volume = clamp(cooling_volume, 50, 2000)
+				. = TRUE
 
 /obj/machinery/hypertorus/corner
 	name = "HFR corner"
