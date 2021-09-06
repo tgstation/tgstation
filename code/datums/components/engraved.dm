@@ -64,13 +64,13 @@
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	//supporting component transfer means putting these here instead of initialize
 	SSpersistence.wall_engravings += src
-	ADD_TRAIT(engraved_wall, NOT_ENGRAVABLE, TRAIT_GENERIC)
+	ADD_TRAIT(parent, NOT_ENGRAVABLE, TRAIT_GENERIC)
 
 /datum/component/engraved/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
 	//supporting component transfer means putting these here instead of destroy
 	SSpersistence.wall_engravings -= src
-	REMOVE_TRAIT(engraved_wall, NOT_ENGRAVABLE, TRAIT_GENERIC)
+	REMOVE_TRAIT(parent, NOT_ENGRAVABLE, TRAIT_GENERIC)
 
 /// Used to maintain the acid overlay on the parent [/atom].
 /datum/component/engraved/proc/on_update_overlays(atom/parent_atom, list/overlays)
