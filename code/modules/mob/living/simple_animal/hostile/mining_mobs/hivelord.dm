@@ -41,7 +41,7 @@
 		A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 		A.GiveTarget(target)
 		A.friends = friends
-		A.faction = faction.Copy()
+		A.AddComponent(/datum/component/faction_bind, src, MINION_MOB_SPAWN_TRAIT)
 		ranged_cooldown = world.time + ranged_cooldown_time
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
@@ -263,7 +263,7 @@
 	vision_range = 5
 	aggro_vision_range = 9
 	speed = 3
-	faction = list(TRAIT_FACTION_MINING)
+	innate_factions = list(TRAIT_FACTION_MINING)
 	weather_immunities = list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE)
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
@@ -273,7 +273,7 @@
 
 /mob/living/simple_animal/hostile/big_legion/Initialize()
 	.=..()
-	AddComponent(/datum/component/spawner, list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion), 200, faction, "peels itself off from", 3)
+	AddComponent(/datum/component/spawner, list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion), 200, innate_factions, "peels itself off from", 3)
 
 //Tendril-spawned Legion remains, the charred skeletons of those whose bodies sank into laval or fell into chasms.
 /obj/effect/mob_spawn/human/corpse/charredskeleton

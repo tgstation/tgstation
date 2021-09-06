@@ -421,7 +421,7 @@
 		soul.ckey = picked_ghost.ckey
 		soul.copy_languages(user, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the user.
 		soul.update_atom_languages()
-		soul.faction = list("[REF(user)]")
+		soul.AddComponent(/datum/component/faction_bind, user, SOULSCYTHE_TRAIT, TRUE, FALSE)
 		balloon_alert(user, "the scythe glows up")
 		add_overlay("soulscythe_gem")
 		density = TRUE
@@ -576,7 +576,7 @@
 	health = 200
 	gender = NEUTER
 	mob_biotypes = MOB_SPIRIT
-	faction = null
+	innate_factions = null
 	/// Blood level, used for movement and abilities in a soulscythe
 	var/blood_level = MAX_BLOOD_LEVEL
 
@@ -820,7 +820,7 @@
 	/// Whether the saw is open or not
 	var/is_open = FALSE
 	/// List of factions we deal bonus damage to
-	var/list/nemesis_factions = list("mining", "boss")
+	var/list/nemesis_factions = list(TRAIT_FACTION_MINING, TRAIT_FACTION_BOSS)
 	/// Amount of damage we deal to the above factions
 	var/faction_bonus_force = 30
 	/// Whether the cleaver is actively AoE swiping something.
@@ -865,13 +865,10 @@
 	if(!is_open || swiping || !target.density || get_turf(target) == get_turf(user))
 		if(!is_open)
 			faction_bonus_force = 0
-		var/is_nemesis_faction = FALSE
-		for(var/found_faction in target.faction)
-			if(found_faction in nemesis_factions)
-				is_nemesis_faction = TRUE
-				force += faction_bonus_force
-				nemesis_effects(user, target)
-				break
+		var/is_nemesis_faction = target.faction_check(nemesis_factions)
+		if(is_nemesis_faction)
+			force += faction_bonus_force
+			nemesis_effects(user, target)
 		. = ..()
 		if(is_nemesis_faction)
 			force -= faction_bonus_force

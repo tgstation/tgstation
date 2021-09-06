@@ -38,7 +38,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	faction = list(TRAIT_FACTION_CARP)
+	innate_factions = list(TRAIT_FACTION_CARP)
 	pressure_resistance = 200
 	gold_core_spawnable = HOSTILE_SPAWN
 	/// If the carp uses random coloring
@@ -210,7 +210,7 @@
 	speak_emote = list("squeaks")
 	ai_controller = null
 	gold_core_spawnable = NO_SPAWN
-	faction = list(TRAIT_FACTION_NEUTRAL)
+	innate_factions = list(TRAIT_FACTION_NEUTRAL)
 	health = 200
 	icon_dead = "magicarp_dead"
 	icon_gib = "magicarp_gib"
@@ -232,7 +232,7 @@
 	speak_emote = list("squeaks")
 	ai_controller = null
 	gold_core_spawnable = NO_SPAWN
-	faction = list(TRAIT_FACTION_SYNDICATE)
+	innate_factions = list(TRAIT_FACTION_SYNDICATE)
 	rarechance = 10
 	/// Keeping track of the nuke disk for the functionality of storing it.
 	var/obj/item/disk/nuclear/disky

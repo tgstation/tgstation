@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile
-	faction = list(TRAIT_FACTION_HOSTILE)
+	innate_factions = list(TRAIT_FACTION_HOSTILE)
 	stop_automated_movement_when_pulled = 0
 	obj_damage = 40
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //Bitflags. Set to ENVIRONMENT_SMASH_STRUCTURES to break closets,tables,racks, etc; ENVIRONMENT_SMASH_WALLS for walls; ENVIRONMENT_SMASH_RWALLS for rwalls
@@ -241,7 +241,7 @@
 
 		if(istype(the_target, /obj/machinery/porta_turret))
 			var/obj/machinery/porta_turret/P = the_target
-			if(P.in_faction(src)) //Don't attack if the turret is in the same faction
+			if(P.faction_check(src)) //Don't attack if the turret is in the same faction
 				return FALSE
 			if(P.has_cover &&!P.raised) //Don't attack invincible turrets
 				return FALSE

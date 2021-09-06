@@ -48,7 +48,7 @@
 	friendly_verb_continuous = "pinches"
 	friendly_verb_simple = "pinch"
 	speed = 0
-	faction = list(TRAIT_FACTION_SWARMER)
+	innate_factions = list(TRAIT_FACTION_SWARMER)
 	AIStatus = AI_OFF
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_TINY

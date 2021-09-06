@@ -3,7 +3,7 @@
 	icon = 'icons/mob/alien.dmi'
 	gender = FEMALE //All xenos are girls!!
 	dna = null
-	faction = list(TRAIT_FACTION_ALIEN)
+	innate_factions = list(TRAIT_FACTION_ALIEN)
 	sight = SEE_MOBS
 	see_in_dark = 4
 	verb_say = "hisses"

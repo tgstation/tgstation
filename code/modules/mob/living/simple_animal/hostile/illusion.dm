@@ -15,7 +15,7 @@
 	maxHealth = 100
 	health = 100
 	speed = 0
-	faction = list(TRAIT_FACTION_ILLUSION)
+	innate_factions = list(TRAIT_FACTION_ILLUSION)
 	var/life_span = INFINITY //how long until they despawn
 	var/mob/living/parent_mob
 	var/multiply_chance = 0 //if we multiply on hit
@@ -38,7 +38,6 @@
 	melee_damage_lower = damage
 	melee_damage_upper = damage
 	multiply_chance = replicate
-	faction -= "neutral"
 	transform = initial(transform)
 	pixel_x = base_pixel_x
 	pixel_y = base_pixel_y
@@ -58,7 +57,7 @@
 		if(L.stat == DEAD)
 			return
 		var/mob/living/simple_animal/hostile/illusion/M = new(loc)
-		M.faction = faction.Copy()
+		M.reset_innate_factions(innate_factions)
 		M.Copy_Parent(parent_mob, 80, health/2, melee_damage_upper, multiply_chance/2)
 		M.GiveTarget(L)
 
@@ -76,3 +75,15 @@
 
 /mob/living/simple_animal/hostile/illusion/escape/AttackingTarget()
 	return FALSE
+
+/// Subtype found on ice moon. I don't even know what it's, honestly.
+/mob/living/simple_animal/hostile/illusion/village_elder
+	name = "Village Elder"
+	deathmessage = "disperses into the air in a cloud of red mist, you feel slightly more at ease."
+	desc = "You can't quite make out what you're seeing."
+	innate_factions = list(TRAIT_FACTION_CULT)
+	health = 500
+	maxHealth = 500
+	melee_damage_lower = 10
+	melee_damage_upper = 30
+

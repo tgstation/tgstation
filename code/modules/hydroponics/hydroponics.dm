@@ -865,8 +865,8 @@
 /obj/machinery/hydroponics/proc/spawnplant() // why would you put strange reagent in a hydro tray you monster I bet you also feed them blood
 	var/list/livingplants = list(/mob/living/simple_animal/hostile/tree, /mob/living/simple_animal/hostile/killertomato)
 	var/chosen = pick(livingplants)
-	var/mob/living/simple_animal/hostile/C = new chosen
-	C.faction = list("plants")
+	var/mob/living/simple_animal/hostile/plant = new chosen
+	plant.reset_innate_factions(TRAIT_FACTION_PLANTS)
 
 ///////////////////////////////////////////////////////////////////////////////
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!

@@ -445,9 +445,6 @@
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 
-/datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
-	H.faction |= ROLE_SYNDICATE
-
 /obj/effect/mob_spawn/human/syndicate/battlecruiser
 	name = "Syndicate Battlecruiser Ship Operative"
 	short_desc = "You are a crewmember aboard the syndicate flagship: the SBC Starfury."
@@ -685,9 +682,6 @@
 	outfit = /datum/outfit/syndicatespace/syndicrew
 	spawner_job_path = /datum/job/syndicate_cybersun
 
-/datum/outfit/syndicatespace/syndicrew/post_equip(mob/living/carbon/human/H)
-	H.faction |= ROLE_SYNDICATE
-
 /obj/effect/mob_spawn/human/syndicatespace/special(mob/living/new_spawn)
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
 	var/datum/job/spawn_job = SSjob.GetJobType(spawner_job_path)
@@ -702,9 +696,6 @@
 	important_info = "Protect the ship and secret documents in your backpack with your own life."
 	outfit = /datum/outfit/syndicatespace/syndicaptain
 	spawner_job_path = /datum/job/syndicate_cybersun_captain
-
-/datum/outfit/syndicatespace/syndicaptain/post_equip(mob/living/carbon/human/H)
-	H.faction |= ROLE_SYNDICATE
 
 /obj/effect/mob_spawn/human/syndicatespace/captain/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate/captain(get_turf(src))

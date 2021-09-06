@@ -190,7 +190,7 @@
 	var/mob/living/simple_animal/hostile/asteroid/elite/herald/mirror/new_mirror = new /mob/living/simple_animal/hostile/asteroid/elite/herald/mirror(loc)
 	my_mirror = new_mirror
 	my_mirror.my_master = src
-	my_mirror.faction = faction.Copy()
+	my_mirror.AddComponent(/datum/component/faction_bind, src, MINION_MOB_SPAWN_TRAIT)
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/mirror
 	name = "herald's mirror"

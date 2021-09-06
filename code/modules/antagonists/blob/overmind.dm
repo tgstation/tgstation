@@ -147,26 +147,25 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /mob/camera/blob/proc/victory()
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
-	for(var/i in GLOB.mob_living_list)
-		var/mob/living/L = i
-		var/turf/T = get_turf(L)
-		if(!T || !is_station_level(T.z))
+	for(var/mob/living/living_mob as anything in GLOB.mob_living_list)
+		var/turf/mob_turf = get_turf(living_mob)
+		if(!mob_turf || !is_station_level(mob_turf.z))
 			continue
 
-		if(L in GLOB.overminds || (L.pass_flags & PASSBLOB))
+		if((living_mob in GLOB.overminds) || (living_mob.pass_flags & PASSBLOB))
 			continue
 
-		var/area/Ablob = get_area(T)
+		var/area/blob_area = get_area(mob_turf)
 
-		if(!(Ablob.area_flags & BLOBS_ALLOWED))
+		if(!(blob_area.area_flags & BLOBS_ALLOWED))
 			continue
 
-		if(!(ROLE_BLOB in L.faction))
-			playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
-			L.death()
-			new/mob/living/simple_animal/hostile/blob/blobspore(T)
+		if(!living_mob.faction_check(TRAIT_FACTION_BLOB))
+			playsound(living_mob, 'sound/effects/splat.ogg', 50, TRUE)
+			living_mob.death()
+			new/mob/living/simple_animal/hostile/blob/blobspore(mob_turf)
 		else
-			L.fully_heal(admin_revive = FALSE)
+			living_mob.fully_heal(admin_revive = FALSE)
 
 		for(var/area/A in GLOB.sortedAreas)
 			if(!(A.type in GLOB.the_station_areas))

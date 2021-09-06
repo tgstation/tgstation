@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	achievement_type = /datum/award/achievement/boss/swarmer_beacon_kill
 	crusher_achievement_type = /datum/award/achievement/boss/swarmer_beacon_crusher
 	score_achievement_type = /datum/award/score/swarmer_beacon_score
-	faction = list(TRAIT_FACTION_MINING, TRAIT_FACTION_BOSS, TRAIT_FACTION_SWARMER)
+	innate_factions = list(TRAIT_FACTION_MINING, TRAIT_FACTION_BOSS, TRAIT_FACTION_SWARMER)
 	weather_immunities = list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE)
 	stop_automated_movement = TRUE
 	wander = FALSE
@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 //This is an Abstract Base, it re-enables AI, but does not give the swarmer any goals/targets
 /mob/living/simple_animal/hostile/swarmer/ai
 	wander = 1
-	faction = list(TRAIT_FACTION_SWARMER, TRAIT_FACTION_MINING)
+	innate_factions = list(TRAIT_FACTION_SWARMER, TRAIT_FACTION_MINING)
 	weather_immunities = list(TRAIT_ASHSTORM_IMMUNE) //wouldn't be fun otherwise
 	AIStatus = AI_ON
 

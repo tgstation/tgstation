@@ -23,7 +23,7 @@
 	speak_emote = list("chitters")
 
 	basic_mob_flags = DEL_ON_DEATH
-	faction = list(TRAIT_FACTION_HOSTILE)
+	innate_factions = list(TRAIT_FACTION_HOSTILE)
 
 	ai_controller = /datum/ai_controller/basic_controller/cockroach
 

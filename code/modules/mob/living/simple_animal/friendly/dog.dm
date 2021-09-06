@@ -513,7 +513,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	icon_state = "narsian"
 	icon_living = "narsian"
 	icon_dead = "narsian_dead"
-	faction = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_CULT)
+	innate_factions = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_CULT)
 	gold_core_spawnable = NO_SPAWN
 	nofur = TRUE
 	unique_pet = TRUE

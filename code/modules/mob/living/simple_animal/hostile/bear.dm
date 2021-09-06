@@ -42,7 +42,7 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 
-	faction = list(TRAIT_FACTION_RUSSIAN)
+	innate_factions = list(TRAIT_FACTION_RUSSIAN)
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
@@ -131,7 +131,7 @@
 	icon_living = "butterbear"
 	icon_dead = "butterbear_dead"
 	desc = "I can't believe its not a bear!"
-	faction = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_RUSSIAN)
+	innate_factions = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_RUSSIAN)
 	obj_damage = 11
 	melee_damage_lower = 1
 	melee_damage_upper = 1

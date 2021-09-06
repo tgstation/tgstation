@@ -127,7 +127,7 @@
 			return
 		var/mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/newchild = new /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child(loc)
 		newchild.GiveTarget(target)
-		newchild.faction = faction.Copy()
+		newchild.AddComponent(/datum/component/faction_bind, src, MINION_MOB_SPAWN_TRAIT)
 		visible_message(span_boldwarning("[newchild] appears below [src]!"))
 		newchild.mother = src
 		children_list += newchild

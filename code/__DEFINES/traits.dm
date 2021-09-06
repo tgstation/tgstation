@@ -459,10 +459,18 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FACTION_SWARMER "faction_swarmer"
 #define TRAIT_FACTION_ASHWALKER "faction_ashwalker"
 #define TRAIT_FACTION_NINJA "faction_ninja"
+#define TRAIT_FACTION_GREYTIDE "faction_greytide"
+#define TRAIT_FACTION_LAZARUS "faction_lazarus"
+#define TRAIT_FACTION_CHEMICAL "faction_chemical"
 ///Used in the faction_bind component to temporarily remove innate faction traits from living mobs.
 #define TRAIT_INNATE_FACTIONS_BLOCKED "innate_factions_blocked"
 ///Custom factions also used in faction_bind so entities with the same master won't be hostile to each other.
-#define TRAIT_FACTION_MASTER(datum) "faction_master_[REF(datum)]"
+#define TRAIT_FACTION_MASTER(datum) "faction_friend_[REF(datum)]"
+
+///CTF team trait macro.
+#define TRAIT_CTF(team) "ctf [team]"
+///Arena team trait macro
+#define TRAIT_ARENA(team) "arena [team]"
 
 //non-mob traits
 /// Used for limb-based paralysis, where replacing the limb will fix it.
@@ -658,7 +666,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
-#define STATUE_MUTE "statue"
+#define PETRIFIED_STATUE_TRAIT "petrified_statue"
 #define CHANGELING_DRAIN "drain"
 #define ABYSSAL_GAZE_BLIND "abyssal_gaze"
 #define HIGHLANDER "highlander"
@@ -687,6 +695,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SABRE_SUICIDE_TRAIT "sabre-suicide"
 #define ABDUCTOR_VEST_TRAIT "abductor-vest"
 #define CAPTURE_THE_FLAG_TRAIT "capture-the-flag"
+#define ARENA_TRAIT "arena"
 #define EYE_OF_GOD_TRAIT "eye-of-god"
 #define SHAMEBRERO_TRAIT "shamebrero"
 #define CHRONOSUIT_TRAIT "chronosuit"
@@ -718,7 +727,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define WARPWHISTLE_TRAIT "warpwhistle"
 ///Turf trait for when a turf is transparent
 #define TURF_Z_TRANSPARENT_TRAIT "turf_z_transparent"
-/// Trait applied by [/datum/component/soulstoned]
+/// Trait applied by [/datum/component/soulstoned] and [/obj/item/soulstone]
 #define SOULSTONE_TRAIT "soulstone"
 /// Trait applied to slimes by low temperature
 #define SLIME_COLD "slime-cold"
@@ -744,6 +753,33 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define DRONE_SHY_TRAIT "drone_shy"
 /// Pacifism trait given by stabilized light pink extracts.
 #define STABILIZED_LIGHT_PINK_TRAIT "stabilized_light_pink"
+/// Granted by [/simple_animal/bot/proc/insertpai()] and revoked by [simple_animal/bot/proc/ejectpai()]
+#define PAI_CONTROLLED_BOT_TRAIT "pai_controlled_bot"
+/// From movables animated by /atom/proc/animate_atom_living.
+#define ANIMATED_ATOM_LIVING_TRAIT "animated_atom_living"
+/// Given to minions such as hivelord broods, legion skulls, baby goliaths and herald mirrors when spawned by their master.
+#define MINION_MOB_SPAWN_TRAIT "minion_mob_spawn"
+/// From carps spawned from dehydrated carps.
+#define DEHYDRATED_CARP_SPAWN_TRAIT "dehydrated_carp_spawn"
+/// From [/obj/item/slimecross/burning/gold].
+#define BURNING_GOLD_SLIME_TRAIT "burning_gold_slime_trait"
+#define CARP_SIE_BLESSING_TRAIT "carp-sie_blessing"
+#define GREY_TIDE_SPEAR_TRAIT "grey_tide_spear"
+#define LOVE_POTION_TRAIT "love_potion"
+#define LAZARUS_TRAIT "lazarus"
+#define SOULSCYTHE_TRAIT "soulscythe"
+#define TUMOR_SHARD_TRAIT "tumor_shard"
+#define MIND_ENSLAVED_TRAIT "mind_enslaved"
+#define MIND_SLAVER_TRAIT(enslaved) "mind_slaver_[REF(enslaved)]"
+#define ANIMAL_TAMED_TRAIT "animal_tamed"
+/// From [/datum/reagent/rat_spit/overdose_start()]
+#define RAT_SPIT_OD_TRAIT "rat_spit_od"
+/// Given to flesh ghouls made by heretics
+#define FLESH_GHOUL_TRAIT "flesh_ghoul"
+/// From [/datum/chemical_reaction/proc/chemical_mob_spawn()]
+#define CHEMICAL_MOB_SPAWN_TRAIT "chemical_mob_spawn"
+/// Given to cult constructs built with soulstones.
+#define CONSTRUCT_BUILT_TRAIT "construct_built"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
@@ -763,6 +799,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define AI_ANCHOR_TRAIT "ai_anchor"
 /// Trait from [/datum/antagonist/nukeop/clownop]
 #define CLOWNOP_TRAIT "clownop"
+/// Trait from [/datum/antagonist/heretic]
+#define HERETIC_TRAIT "heretic"
+/// From [/datum/antagonist/wizard]
 
 ///Traits given by station traits
 #define STATION_TRAIT_BANANIUM_SHIPMENTS "station_trait_bananium_shipments"

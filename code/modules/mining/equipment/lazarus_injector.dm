@@ -41,18 +41,21 @@
 		to_chat(user, span_info("[src] is only effective on the dead."))
 		return
 
-	target_animal.faction = list("neutral")
 	target_animal.revive(full_heal = TRUE, admin_revive = TRUE)
 	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/target_hostile = target_animal
 		if(malfunctioning)
-			target_hostile.faction |= list("lazarus", "[REF(user)]")
+			target_hostile.reset_innate_factions(TRAIT_FACTION_LAZARUS)
+			target_hostile.AddComponent(/datum/component/faction_bind, user, LAZARUS_TRAIT, do_faction_check = FALSE)
 			target_hostile.robust_searching = TRUE
 			target_hostile.friends += user
 			target_hostile.attack_same = TRUE
 			log_game("[key_name(user)] has revived hostile mob [key_name(target)] with a malfunctioning lazarus injector")
 		else
 			target_hostile.attack_same = FALSE
+			target_hostile.reset_innate_factions(TRAIT_FACTION_NEUTRAL)
+	else
+		target_animal.reset_innate_factions(TRAIT_FACTION_NEUTRAL)
 	loaded = FALSE
 	user.visible_message(span_notice("[user] injects [target_animal] with [src], reviving it."))
 	SSblackbox.record_feedback("tally", "lazarus_injector", 1, target_animal.type)

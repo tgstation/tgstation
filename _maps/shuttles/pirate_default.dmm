@@ -434,16 +434,11 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aQ" = (
-/obj/machinery/porta_turret/syndicate/energy{
-	dir = 1;
-	faction = list("pirate")
-	},
+/obj/machinery/porta_turret/syndicate/energy/pirate,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "aR" = (
-/obj/machinery/porta_turret/syndicate/energy{
-	faction = list("pirate")
-	},
+/obj/machinery/porta_turret/syndicate/energy/pirate,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/pirate)
 "aS" = (
@@ -830,10 +825,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "df" = (
-/obj/machinery/porta_turret/syndicate/energy{
-	dir = 4;
-	faction = list("pirate")
-	},
+/obj/machinery/porta_turret/syndicate/energy/pirate,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/pirate)
 "dy" = (
@@ -1026,10 +1018,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/pirate)
 "wR" = (
-/obj/machinery/porta_turret/syndicate/energy{
-	dir = 8;
-	faction = list("pirate")
-	},
+/obj/machinery/porta_turret/syndicate/energy/pirate,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/pirate)
 "yi" = (

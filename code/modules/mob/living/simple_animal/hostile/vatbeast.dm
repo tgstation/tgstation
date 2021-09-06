@@ -40,7 +40,7 @@
 	can_buckle = TRUE
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/vatbeast)
-	faction = list(TRAIT_FACTION_NEUTRAL)
+	innate_factions = list(TRAIT_FACTION_NEUTRAL)
 
 /mob/living/simple_animal/hostile/vatbeast/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_VATBEAST, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

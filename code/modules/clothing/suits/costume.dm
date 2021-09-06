@@ -236,12 +236,11 @@
 /obj/item/clothing/head/hooded/carp_hood/equipped(mob/living/carbon/human/user, slot)
 	..()
 	if (slot == ITEM_SLOT_HEAD)
-		user.faction |= "carp"
+		ADD_TRAIT(user, TRAIT_FACTION_CARP, HELMET_TRAIT)
 
 /obj/item/clothing/head/hooded/carp_hood/dropped(mob/living/carbon/human/user)
 	..()
-	if (user.head == src)
-		user.faction -= "carp"
+	REMOVE_TRAIT(user, TRAIT_FACTION_CARP, HELMET_TRAIT)
 
 /obj/item/clothing/suit/hooded/ian_costume //It's Ian, rub his bell- oh god what happened to his inside parts?
 	name = "corgi costume"

@@ -12,17 +12,14 @@
 		return TRUE
 	if(placement_override == BLOB_NORMAL_PLACEMENT)
 		if(!pop_override)
-			for(var/mob/living/M in range(7, src))
-				if(ROLE_BLOB in M.faction)
+			for(var/mob/living/spectator in view(13, src))
+				if(spectator.faction_check(TRAIT_FACTION_BLOB))
 					continue
-				if(M.client)
-					to_chat(src, span_warning("There is someone too close to place your blob core!"))
-					return FALSE
-			for(var/mob/living/M in view(13, src))
-				if(ROLE_BLOB in M.faction)
-					continue
-				if(M.client)
-					to_chat(src, span_warning("Someone could see your blob core from here!"))
+				if(spectator.client)
+					if(spectator in view(7, src))
+						to_chat(src, span_warning("There is someone too close to place your blob core!"))
+					else
+						to_chat(src, span_warning("Someone could see your blob core from here!"))
 					return FALSE
 		var/turf/T = get_turf(src)
 		if(T.density)
@@ -219,12 +216,12 @@
 		return
 	if(can_buy(BLOB_EXPAND_COST))
 		var/attacksuccess = FALSE
-		for(var/mob/living/L in T)
-			if(ROLE_BLOB in L.faction) //no friendly/dead fire
+		for(var/mob/living/living_mob in T)
+			if(living_mob.faction_check(TRAIT_FACTION_BLOB)) //no friendly/dead fire
 				continue
-			if(L.stat != DEAD)
+			if(living_mob.stat != DEAD)
 				attacksuccess = TRUE
-			blobstrain.attack_living(L, possibleblobs)
+			blobstrain.attack_living(living_mob, possibleblobs)
 		var/obj/structure/blob/B = locate() in T
 		if(B)
 			if(attacksuccess) //if we successfully attacked a turf with a blob on it, only give an attack refund

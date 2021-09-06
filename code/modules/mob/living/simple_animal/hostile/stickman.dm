@@ -25,7 +25,7 @@
 	combat_mode = TRUE
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 7.5
-	faction = list(TRAIT_FACTION_HOSTILE, TRAIT_FACTION_STICKMAN)
+	innate_factions = list(TRAIT_FACTION_HOSTILE, TRAIT_FACTION_STICKMAN)
 	check_friendly_fire = 1
 	status_flags = CANPUSH
 	var/datum/action/boss/wizard_summon_minions/changesummons = /datum/action/boss/wizard_summon_minions

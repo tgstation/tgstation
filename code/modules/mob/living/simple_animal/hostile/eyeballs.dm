@@ -29,7 +29,7 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 	gold_core_spawnable = HOSTILE_SPAWN
-	faction = list(TRAIT_FACTION_HOSTILE)
+	innate_factions = list(TRAIT_FACTION_HOSTILE)
 	del_on_death = 1
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
@@ -38,3 +38,8 @@
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+
+/// Used in the Nar Nar shuttle.
+/mob/living/simple_animal/hostile/eyeball/cult_shuttle
+	innate_factions = list(TRAIT_FACTION_CULT)
+	gold_core_spawnable = NO_SPAWN

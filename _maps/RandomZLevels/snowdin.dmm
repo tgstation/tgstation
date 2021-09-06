@@ -8020,10 +8020,8 @@
 	},
 /area/awaymission/snowdin/cave)
 "wm" = (
-/obj/machinery/porta_turret/centcom_shuttle/weak{
-	desc = "A turret built with substandard parts and run down further with age.";
-	dir = 9;
-	faction = list("pirate")
+/obj/machinery/porta_turret/centcom_shuttle/weak/old_pirate{;
+	dir = 9
 	},
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/snowdin/cave)

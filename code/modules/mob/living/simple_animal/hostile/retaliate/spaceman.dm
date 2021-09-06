@@ -49,7 +49,7 @@
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	faction = list(TRAIT_FACTION_NANOTRASEN)
+	innate_factions = list(TRAIT_FACTION_NANOTRASEN)
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	sentience_type = SENTIENCE_HUMANOID
 	combat_mode = TRUE

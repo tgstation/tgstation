@@ -126,8 +126,6 @@
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 
 /datum/outfit/pirate/post_equip(mob/living/carbon/human/equipped)
-	equipped.faction |= "pirate"
-
 	var/obj/item/radio/outfit_radio = equipped.ears
 	if(outfit_radio)
 		outfit_radio.set_frequency(FREQ_SYNDICATE)

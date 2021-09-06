@@ -442,16 +442,7 @@
 /area/ruin/powered)
 "PQ" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/mob/living/simple_animal/hostile/illusion{
-	deathmessage = "disperses into the air in a cloud of red mist, you feel slightly more at ease.";
-	desc = "You can't quite make out what you're seeing.";
-	faction = list("cult");
-	health = 500;
-	maxHealth = 500;
-	melee_damage_lower = 10;
-	melee_damage_upper = 30;
-	name = "Village Elder"
-	},
+/mob/living/simple_animal/hostile/illusion/village_elder,
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "Qh" = (

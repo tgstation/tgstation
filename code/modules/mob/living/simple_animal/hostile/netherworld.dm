@@ -13,7 +13,7 @@
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH // I always thought they bit. Guess I was wrong.
-	faction = list(TRAIT_FACTION_NETHER)
+	innate_factions = list(TRAIT_FACTION_NETHER)
 	speak_emote = list("screams")
 	gold_core_spawnable = HOSTILE_SPAWN
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -87,6 +87,12 @@
 				if(mechamob.client && !mechamob.is_blind())
 					return mechamob
 	return null
+
+///Subtype used in the wizard shuttle on CentCom.
+/mob/living/simple_animal/hostile/netherworld/wizard
+	name = "Experiment 35b"
+	innate_factions = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_HOSTILE)
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/netherworld/migo
 	name = "mi-go"

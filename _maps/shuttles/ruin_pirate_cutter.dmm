@@ -65,9 +65,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "eL" = (
-/obj/machinery/porta_turret/syndicate/pod{
-	dir = 10;
-	faction = list("pirate")
+/obj/machinery/porta_turret/syndicate/pod/pirate{
+	dir = 10
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)
@@ -230,10 +229,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/mob/living/simple_animal/parrot{
-	faction = list("pirate");
-	name = "Pegwing"
-	},
+/mob/living/simple_animal/parrot/pegwing,
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "kY" = (
@@ -244,9 +240,8 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "le" = (
-/obj/machinery/porta_turret/syndicate/pod{
-	dir = 5;
-	faction = list("pirate")
+/obj/machinery/porta_turret/syndicate/pod/pirate{
+	dir = 5
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)
@@ -424,9 +419,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "qo" = (
-/obj/machinery/porta_turret/syndicate/pod{
-	dir = 6;
-	faction = list("pirate")
+/obj/machinery/porta_turret/syndicate/pod/pirate{
+	dir = 6
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)
@@ -996,9 +990,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "Yj" = (
-/obj/machinery/porta_turret/syndicate/pod{
-	dir = 9;
-	faction = list("pirate")
+/obj/machinery/porta_turret/syndicate/pod/pirate{
+	dir = 9
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)

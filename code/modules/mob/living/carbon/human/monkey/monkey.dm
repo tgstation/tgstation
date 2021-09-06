@@ -1,7 +1,7 @@
 /mob/living/carbon/human/species/monkey
 	race = /datum/species/monkey
 	ai_controller = /datum/ai_controller/monkey
-	faction = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_MONKEY)
+	innate_factions = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_MONKEY)
 
 /mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	if (cubespawned)
@@ -27,6 +27,9 @@
 		equip_to_slot_or_del(helmet,ITEM_SLOT_HEAD)
 		helmet.attack_self(src) // todo encapsulate toggle
 
+
+/mob/living/carbon/human/species/monkey/syndicate
+	innate_factions = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_MONKEY, TRAIT_FACTION_SYNDICATE)
 
 /mob/living/carbon/human/species/monkey/punpun //except for a few special persistence features, pun pun is just a normal monkey
 	name = "Pun Pun" //C A N O N

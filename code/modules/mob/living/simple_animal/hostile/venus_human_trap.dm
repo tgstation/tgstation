@@ -79,13 +79,13 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/effect/ebeam/vine/proc/on_entered(datum/source, atom/movable/AM)
+/obj/effect/ebeam/vine/proc/on_entered(datum/source, atom/movable/entered)
 	SIGNAL_HANDLER
-	if(isliving(AM))
-		var/mob/living/L = AM
-		if(!isvineimmune(L))
-			L.adjustBruteLoss(5)
-			to_chat(L, span_alert("You cut yourself on the thorny vines."))
+	if(isliving(entered))
+		var/mob/living/living_entered = entered
+		if(!living_entered.faction_check(TRAIT_FACTION_PLANTS))
+			living_entered.adjustBruteLoss(5)
+			to_chat(living_entered, span_alert("You cut yourself on the thorny vines."))
 
 /**
  * Venus Human Trap
@@ -126,7 +126,7 @@
 	/// copied over from the code from eyeballs (the mob) to make it easier for venus human traps to see in kudzu that doesn't have the transparency mutation
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	faction = list(TRAIT_FACTION_HOSTILE, TRAIT_FACTION_PLANTS)
+	innate_factions = list(TRAIT_FACTION_HOSTILE, TRAIT_FACTION_PLANTS)
 	initial_language_holder = /datum/language_holder/venus
 	unique_name = TRUE
 	/// A list of all the plant's vines

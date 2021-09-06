@@ -236,9 +236,9 @@
 
 
 /obj/structure/blob/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(ROLE_BLOB in user.faction) //sorry, but you can't kill the blob as a blobbernaut
+	if(user.faction_check(TRAIT_FACTION_BLOB)) //sorry, but you can't kill the blob as a blobbernaut
 		return
-	..()
+	return ..()
 
 /obj/structure/blob/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

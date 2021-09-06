@@ -14,7 +14,7 @@
 	flags_1 = NODECONSTRUCT_1
 
 /obj/machinery/computer/shuttle/syndicate/allowed(mob/living/target)
-	if(issilicon(target) && !(ROLE_SYNDICATE in target.faction))
+	if(issilicon(target) && !target.faction_check(ROLE_SYNDICATE))
 		return FALSE
 	return ..()
 

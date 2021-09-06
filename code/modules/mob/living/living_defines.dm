@@ -174,4 +174,4 @@
 	var/body_position_pixel_y_offset = 0
 
 	/// A list of innate faction traits that are added to the mob on init.
-	var/list/faction = list("neutral")
+	var/list/innate_factions = list(TRAIT_FACTION_NEUTRAL)

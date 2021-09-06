@@ -74,6 +74,15 @@
 	desc = "It's Officer Pingsky! Delegated to satellite guard duty for harbouring anti-human sentiment."
 	radio_channel = RADIO_CHANNEL_AI_PRIVATE
 
+/// Found on the research away mission.
+/mob/living/simple_animal/bot/secbot/beepsky/genesky
+	name = "Officer Genesky"
+	desc = "A beefy variant of the standard securitron model."
+	emagged = TRUE
+	innate_factions = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_SILICON, TRAIT_FACTION_TURRET, TRAIT_FACTION_NANOTRASEN)
+	health = 50
+	maxHealth = 50
+
 /mob/living/simple_animal/bot/secbot/Initialize()
 	. = ..()
 	weapon = new baton_type()

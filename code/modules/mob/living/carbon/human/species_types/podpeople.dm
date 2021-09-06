@@ -10,7 +10,7 @@
 		TRAIT_PLANT_SAFE,
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
-	inherent_factions = list("plants", "vines")
+	inherent_factions = list(TRAIT_FACTION_PLANTS)
 	attack_verb = "slash"
 	attack_effect = ATTACK_EFFECT_CLAW
 	attack_sound = 'sound/weapons/slice.ogg'

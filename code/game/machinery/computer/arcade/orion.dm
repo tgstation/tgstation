@@ -491,7 +491,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/orion
 	name = "spaceport security"
 	desc = "Premier corporate security forces for all spaceports found along the Orion Trail."
-	faction = list(TRAIT_FACTION_ORION)
+	innate_factions = list(TRAIT_FACTION_ORION)
 	loot = list()
 	del_on_death = TRUE
 

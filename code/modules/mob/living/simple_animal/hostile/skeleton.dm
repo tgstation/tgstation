@@ -28,7 +28,7 @@
 	unsuitable_atmos_damage = 5
 	robust_searching = 1
 	stat_attack = HARD_CRIT
-	faction = list(TRAIT_FACTION_SKELETON)
+	innate_factions = list(TRAIT_FACTION_SKELETON)
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	deathmessage = "collapses into a pile of bones!"
@@ -121,3 +121,11 @@
 /mob/living/simple_animal/hostile/skeleton/plasmaminer/Initialize()
 	. = ..()
 	set_light(2)
+
+/// Used in the snow cabin away mission.
+/mob/living/simple_animal/hostile/skeleton/ratty
+	name = "sewer skeleton"
+	desc = "Oh shit!"
+	innate_factions = list(TRAIT_FACTION_SKELETON, TRAIT_FACTION_RAT)
+	gold_core_spawnable = NO_SPAWN
+	wander = FALSE

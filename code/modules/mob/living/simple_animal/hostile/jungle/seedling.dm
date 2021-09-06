@@ -50,11 +50,9 @@
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	nondirectional_sprite = TRUE
 
-/obj/projectile/seedling/Bump(atom/A)//Stops seedlings from destroying other jungle mobs through FF
-	if(isliving(A))
-		var/mob/living/L = A
-		if("jungle" in L.faction)
-			return FALSE
+/obj/projectile/seedling/Bump(atom/target)//Stops seedlings from destroying other jungle mobs through FF
+	if(isliving(target) && faction_check(target))
+		return FALSE
 	return ..()
 
 /obj/effect/temp_visual/solarbeam_killsat

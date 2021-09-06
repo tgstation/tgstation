@@ -32,7 +32,7 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	dextrous = TRUE
 	held_items = list(null, null)
-	faction = list(TRAIT_FACTION_JUNGLE)
+	innate_factions = list(TRAIT_FACTION_JUNGLE)
 	robust_searching = TRUE
 	stat_attack = HARD_CRIT
 	minbodytemp = 270

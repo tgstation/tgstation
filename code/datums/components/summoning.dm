@@ -67,7 +67,7 @@
 		H.friends += summoner // do not attack our summon boy
 	spawned_mobs += L
 	if(faction != null)
-		L.faction = faction
+		L.reset_innate_factions(faction)
 	RegisterSignal(L, COMSIG_LIVING_DEATH, .proc/on_spawned_death) // so we can remove them from the list, etc (for mobs with corpses)
 	playsound(spawn_location,spawn_sound, 50, TRUE)
 	spawn_location.visible_message(span_danger("[L] [spawn_text]."))

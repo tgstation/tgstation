@@ -64,6 +64,7 @@
 	if(give_equipment)
 		equip_cultist(TRUE)
 	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
+	ADD_TRAIT(owner, TRAIT_FACTION_CULT, CULT_TRAIT)
 
 	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
 		current.client.images += cult_team.blood_target_image
@@ -105,7 +106,6 @@
 		current = mob_override
 	add_antag_hud(antag_hud_type, antag_hud_name, current)
 	handle_clown_mutation(current, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-	current.faction |= "cult"
 	current.grant_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
 	if(!cult_team.cult_master)
 		vote.Grant(current)
@@ -125,7 +125,6 @@
 		current = mob_override
 	remove_antag_hud(antag_hud_type, current)
 	handle_clown_mutation(current, removing = FALSE)
-	current.faction -= "cult"
 	current.remove_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
 	vote.Remove(current)
 	communion.Remove(current)
@@ -151,6 +150,7 @@
 		owner.current.log_message("has renounced the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
 	if(cult_team.blood_target && cult_team.blood_target_image && owner.current.client)
 		owner.current.client.images -= cult_team.blood_target_image
+	REMOVE_TRAIT(owner, TRAIT_FACTION_CULT, CULT_TRAIT)
 	. = ..()
 
 /datum/antagonist/cult/admin_add(datum/mind/new_owner,mob/admin)

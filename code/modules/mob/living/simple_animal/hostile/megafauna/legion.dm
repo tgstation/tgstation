@@ -111,7 +111,7 @@
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
 	A.GiveTarget(target)
 	A.friends = friends
-	A.faction = faction
+	A.AddComponent(/datum/component/faction_bind, src, MINION_MOB_SPAWN_TRAIT)
 
 //CHARGE
 
@@ -248,7 +248,7 @@
 	icon = L.icon
 	pixel_x = L.pixel_x
 	pixel_y = L.pixel_y
-	faction = L.faction.Copy()
+	reset_innate_factions(L.innate_factions)
 	GiveTarget(L.target)
 
 ///A basic turret that shoots at nearby mobs. Intended to be used for the legion megafauna.

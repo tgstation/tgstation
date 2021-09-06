@@ -106,6 +106,7 @@
 	var/special_role_name = ROLE_NUCLEAR_OPERATIVE ///The name of the special role given to the recruit
 	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/no_crystals ///The applied outfit
 	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop ///The antag datam applied
+	var/datum/job/job_to_assign = /datum/job/nuclear_operative
 	/// Style used by the droppod
 	var/pod_style = STYLE_SYNDICATE
 
@@ -155,6 +156,7 @@
 
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
 	op_mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
+	op_mind.set_assigned_role(SSjob.GetJobType(job_to_assign))
 	op_mind.special_role = special_role_name
 	nukie.forceMove(pod)
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
@@ -166,6 +168,7 @@
 	special_role_name = ROLE_CLOWN_OPERATIVE
 	outfit = /datum/outfit/syndicate/clownop/no_crystals
 	antag_datum = /datum/antagonist/nukeop/clownop
+	job_to_assign = /datum/job/clown_operative
 	pod_style = STYLE_HONK
 
 //////SYNDICATE BORG

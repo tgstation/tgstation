@@ -6,9 +6,7 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/academy/headmaster)
 "ac" = (
-/mob/living/simple_animal/hostile/carp/ranged{
-	faction = list("wizard")
-	},
+/mob/living/simple_animal/hostile/carp/ranged/wiz_friendly,
 /turf/open/space,
 /area/space/nearstation)
 "ad" = (
@@ -128,9 +126,7 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "aK" = (
-/mob/living/simple_animal/hostile/morph{
-	faction = list("skeleton")
-	},
+/mob/living/simple_animal/hostile/morph/skellie_friendly,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "aL" = (

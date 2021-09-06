@@ -31,23 +31,22 @@
 	name = "Syndicate Operative - Reinforcement"
 	tc = 0
 
-/datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
-	var/obj/item/radio/R = H.ears
-	R.set_frequency(FREQ_SYNDICATE)
-	R.freqlock = TRUE
+/datum/outfit/syndicate/post_equip(mob/living/carbon/human/human_target)
+	var/obj/item/radio/radio = human_target.ears
+	radio.set_frequency(FREQ_SYNDICATE)
+	radio.freqlock = TRUE
 	if(command_radio)
-		R.command = TRUE
+		radio.command = TRUE
 
 	if(ispath(uplink_type, /obj/item/uplink/nuclear) || tc) // /obj/item/uplink/nuclear understands 0 tc
-		var/obj/item/U = new uplink_type(H, H.key, tc)
-		H.equip_to_slot_or_del(U, ITEM_SLOT_BACKPACK)
+		var/obj/item/uplink = new uplink_type(human_target, human_target.key, tc)
+		human_target.equip_to_slot_or_del(uplink, ITEM_SLOT_BACKPACK)
 
-	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(H)
-	W.implant(H)
-	var/obj/item/implant/explosive/E = new/obj/item/implant/explosive(H)
-	E.implant(H)
-	H.faction |= ROLE_SYNDICATE
-	H.update_icons()
+	var/obj/item/implant/weapons_auth/auth = new (human_target)
+	auth.implant(human_target)
+	var/obj/item/implant/explosive/microbomb = new (human_target)
+	microbomb.implant(human_target)
+	human_target.update_icons()
 
 /datum/outfit/syndicate/full
 	name = "Syndicate Operative - Full Kit"

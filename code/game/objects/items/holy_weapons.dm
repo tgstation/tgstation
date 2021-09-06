@@ -627,7 +627,7 @@
 	if(used_blessing)
 	else if(user.mind && (user.mind.holy_role))
 		to_chat(user, span_boldnotice("You are blessed by Carp-Sie. Wild space carp will no longer attack you."))
-		user.faction |= "carp"
+		ADD_TRAIT(user.mind, TRAIT_FACTION_CARP, CARP_SIE_BLESSING_TRAIT)
 		used_blessing = TRUE
 
 /obj/item/nullrod/claymore/bostaff //May as well make it a "claymore" and inherit the blocking

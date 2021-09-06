@@ -268,7 +268,7 @@
 
 	var/mob/living/simple_animal/S = targets[1]
 	S.add_atom_colour("#990000", FIXED_COLOUR_PRIORITY)
-	S.faction = list("cult")
+	S.reset_innate_factions(TRAIT_FACTION_CULT)
 	playsound(get_turf(S), 'sound/effects/ghost.ogg', 100, TRUE)
 	new /obj/effect/temp_visual/cult/sac(get_turf(S))
 
@@ -281,22 +281,22 @@
 			to_chat(user, span_warning("Target is not a lesser creature!"))
 		return FALSE
 
-	var/mob/living/simple_animal/S = target
-	if(S.mind)
+	var/mob/living/simple_animal/animal_target = target
+	if(animal_target.mind)
 		if(!silent)
-			to_chat(user, span_warning("[S] is too intelligent to dominate!"))
+			to_chat(user, span_warning("[animal_target] is too intelligent to dominate!"))
 		return FALSE
-	if(S.stat)
+	if(animal_target.stat)
 		if(!silent)
-			to_chat(user, span_warning("[S] is dead!"))
+			to_chat(user, span_warning("[animal_target] is dead!"))
 		return FALSE
-	if(S.sentience_type != SENTIENCE_ORGANIC)
+	if(animal_target.sentience_type != SENTIENCE_ORGANIC)
 		if(!silent)
-			to_chat(user, span_warning("[S] cannot be dominated!"))
+			to_chat(user, span_warning("[animal_target] cannot be dominated!"))
 		return FALSE
-	if("cult" in S.faction)
+	if(user.faction_check(animal_target))
 		if(!silent)
-			to_chat(user, span_warning("[S] is already serving Nar'Sie!"))
+			to_chat(user, span_warning("[animal_target] is already serving Nar'Sie!"))
 		return FALSE
 	return TRUE
 

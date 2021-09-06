@@ -44,7 +44,7 @@
 
 	if(istype(the_target, /obj/machinery/porta_turret)) //Cringe turret! kill it!
 		var/obj/machinery/porta_turret/P = the_target
-		if(P.in_faction(living_mob)) //Don't attack if the turret is in the same faction
+		if(P.faction_check(living_mob)) //Don't attack if the turret is in the same faction
 			return FALSE
 		if(P.has_cover && !P.raised) //Don't attack invincible turrets
 			return FALSE

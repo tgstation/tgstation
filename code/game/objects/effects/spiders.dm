@@ -391,7 +391,7 @@
 				else
 					grow_as = pick(/mob/living/simple_animal/hostile/giant_spider, /mob/living/simple_animal/hostile/giant_spider/hunter, /mob/living/simple_animal/hostile/giant_spider/nurse)
 			var/mob/living/simple_animal/hostile/giant_spider/S = new grow_as(src.loc)
-			S.faction = faction.Copy()
+			S.reset_innate_factions(faction)
 			S.directive = directive
 			qdel(src)
 

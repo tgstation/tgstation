@@ -466,10 +466,11 @@
 		add_antag_datum(N,converter.nuke_team)
 
 
-	enslaved_to = creator
+	if(enslaved_to != creator)
+		enslaved_to = creator
 
-	current.faction |= creator.faction
-	creator.faction |= current.faction
+		current.AddComponent(/datum/component/faction_bind, creator, MIND_ENSLAVED_TRAIT)
+		creator.AddComponent(/datum/component/faction_bind, current, MIND_SLAVER_TRAIT(current))
 
 	if(creator.mind.special_role)
 		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")

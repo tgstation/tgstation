@@ -265,7 +265,7 @@
 
 //BORG//
 /mob/living/silicon/robot/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
-	if(!ninja_suit || !ninja || !ninja_gloves || (ROLE_NINJA in faction))
+	if(!ninja_suit || !ninja || !ninja_gloves || HAS_TRAIT(src, TRAIT_FACTION_NINJA))
 		return INVALID_DRAIN
 
 	to_chat(src, span_danger("Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2..."))
@@ -273,7 +273,7 @@
 		spark_system.start()
 		playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		to_chat(src, span_danger("UPLOAD COMPLETE. NEW CYBORG MODEL DETECTED.  INSTALLING..."))
-		faction = list(TRAIT_FACTION_NINJA)
+		reset_innate_factions(list(TRAIT_FACTION_NINJA))
 		bubble_icon = "syndibot"
 		UnlinkSelf()
 		ionpulse = TRUE

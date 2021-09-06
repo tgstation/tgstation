@@ -139,9 +139,6 @@
 	implants = list(/obj/item/implant/weapons_auth)
 	id_trim = /datum/id_trim/chameleon/operative
 
-/datum/outfit/lavaland_syndicate/post_equip(mob/living/carbon/human/H)
-	H.faction |= ROLE_SYNDICATE
-
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms
 	name = "Syndicate Comms Agent"
 	short_desc = "You are a syndicate comms agent, employed in a top secret research facility developing biological weapons."

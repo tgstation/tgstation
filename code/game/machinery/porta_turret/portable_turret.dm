@@ -90,7 +90,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	/// Determines if the turret is on
 	var/on = TRUE
 	/// Same faction mobs will never be shot at, no matter the other settings
-	var/list/faction = list("turret")
+	var/list/faction = list(TRAIT_FACTION_TURRET)
 	/// The spark system, used for generating... sparks?
 	var/datum/effect_system/spark_spread/spark_system
 	/// Linked turret control panel of the turret
@@ -115,6 +115,9 @@ DEFINE_BITFIELD(turret_flags, list(
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
+
+	for(var/faction_trait in faction)
+		ADD_TRAIT(src, faction_trait, INNATE_TRAIT)
 
 	setup()
 	if(has_cover)
@@ -433,7 +436,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		if(turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS)//if it's set to check for simple animals
 			if(isanimal(A))
 				var/mob/living/simple_animal/SA = A
-				if(SA.stat || in_faction(SA)) //don't target if dead or in faction
+				if(SA.stat || faction_check(SA)) //don't target if dead or in faction
 					continue
 				targets += SA
 				continue
@@ -448,7 +451,7 @@ DEFINE_BITFIELD(turret_flags, list(
 				targets += sillycone
 				continue
 
-			if(sillycone.stat || in_faction(sillycone))
+			if(sillycone.stat || faction_check(sillycone))
 				continue
 
 			if(iscyborg(sillycone))
@@ -467,12 +470,12 @@ DEFINE_BITFIELD(turret_flags, list(
 				continue
 
 			//if the target is a human and not in our faction, analyze threat level
-			if(ishuman(C) && !in_faction(C))
+			if(ishuman(C) && !faction_check(C))
 
 				if(assess_perp(C) >= 4)
 					targets += C
 			else if(turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS) //non humans who are not simple animals (xenos etc)
-				if(!in_faction(C))
+				if(!faction_check(C))
 					targets += C
 
 	for(var/A in GLOB.mechas_list)
@@ -480,7 +483,7 @@ DEFINE_BITFIELD(turret_flags, list(
 			var/obj/vehicle/sealed/mecha/mech = A
 			for(var/O in mech.occupants)
 				var/mob/living/occupant = O
-				if(!in_faction(occupant)) //If there is a user and they're not in our faction
+				if(!faction_check(occupant)) //If there is a user and they're not in our faction
 					if(assess_perp(occupant) >= 4)
 						targets += mech
 
@@ -573,12 +576,6 @@ DEFINE_BITFIELD(turret_flags, list(
 		threatcount += 4
 
 	return threatcount
-
-/obj/machinery/porta_turret/proc/in_faction(mob/living/target)
-	for(var/faction1 in faction)
-		if(faction1 in target.faction)
-			return TRUE
-	return FALSE
 
 /obj/machinery/porta_turret/proc/target(atom/movable/target)
 	if(target)
@@ -746,6 +743,9 @@ DEFINE_BITFIELD(turret_flags, list(
 	lethal_projectile_sound = 'sound/weapons/laser.ogg'
 	desc = "An energy blaster auto-turret."
 
+/obj/machinery/porta_turret/syndicate/energy/pirate
+	faction = list(TRAIT_FACTION_PIRATE)
+
 /obj/machinery/porta_turret/syndicate/energy/heavy
 	icon_state = "standard_lethal"
 	base_icon_state = "standard"
@@ -765,6 +765,9 @@ DEFINE_BITFIELD(turret_flags, list(
 	max_integrity = 40
 	stun_projectile = /obj/projectile/bullet/syndicate_turret
 	lethal_projectile = /obj/projectile/bullet/syndicate_turret
+
+/obj/machinery/porta_turret/syndicate/pod/pirate
+	faction = list(TRAIT_FACTION_PIRATE)
 
 /obj/machinery/porta_turret/syndicate/shuttle
 	scan_range = 9
@@ -851,6 +854,10 @@ DEFINE_BITFIELD(turret_flags, list(
 	stun_projectile = /obj/projectile/beam/weak/penetrator
 	lethal_projectile = /obj/projectile/beam/weak/penetrator
 
+/// Found in snowdin.
+/obj/machinery/porta_turret/centcom_shuttle/weak/old_pirate
+	desc = "A turret built with substandard parts and run down further with age."
+	faction = list(TRAIT_FACTION_PIRATE)
 ////////////////////////
 //Turret Control Panel//
 ////////////////////////

@@ -191,7 +191,8 @@
 	else
 		podman.ckey = ckey_holder
 	podman.gender = blood_gender
-	podman.faction |= factions
+	for(var/faction_trait in factions)
+		podman.add_innate_faction(faction_trait)
 	if(!features["mcolor"])
 		features["mcolor"] = "#59CE00"
 	for(var/V in quirks)

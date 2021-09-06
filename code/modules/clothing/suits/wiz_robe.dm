@@ -175,13 +175,15 @@
 
 	living_user.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
 	playsound(src.loc, 'sound/magic/summon_magic.ogg', 50, TRUE, TRUE)
-	var/mob/living/simple_animal/hostile/stickman/chromie = new (get_turf(usr))
-	chromie.faction = living_user.faction.Copy()
-	src.robe_charge = FALSE
-	sleep(30)
-	src.robe_charge = TRUE
-	to_chat(living_user, span_notice("The robe hums, its internal magic supply restored."))
+	var/mob/living/simple_animal/hostile/stickman/chromie = new (get_turf(living_user))
+	chromie.AddComponent(/datum/component/faction_bind, living_user, MINION_MOB_SPAWN_TRAIT)
+	robe_charge = FALSE
+	addtimer(CALLBACK(src, .proc/recharge_robe), 3 SECONDS)
 
+/obj/item/clothing/suit/wizrobe/paper/proc/recharge_robe()
+	robe_charge = TRUE
+	if(isliving(loc))
+		to_chat(loc, span_notice("The robe hums, its internal magic supply restored."))
 
 //Shielded Armour
 

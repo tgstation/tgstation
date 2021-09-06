@@ -27,7 +27,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 
-	faction = list(TRAIT_FACTION_MIMIC)
+	innate_factions = list(TRAIT_FACTION_MIMIC)
 	move_to_delay = 9
 	del_on_death = 1
 	///A cap for items in the mimic. Prevents the mimic from eating enough stuff to cause lag when opened.
@@ -139,7 +139,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	if(owner != creator)
 		LoseTarget()
 		creator = owner
-		faction |= "[REF(owner)]"
+		AddComponent(/datum/component/faction_bind, owner, ANIMATED_ATOM_LIVING_TRAIT, highlander = TRUE)
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CheckObject(obj/O)
 	if((isitem(O) || isstructure(O)) && !is_type_in_list(O, GLOB.protected_objects))
@@ -173,7 +173,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		maxHealth = health
 		if(user)
 			creator = user
-			faction += "[REF(creator)]" // very unique
+			AddComponent(/datum/component/faction_bind, user, ANIMATED_ATOM_LIVING_TRAIT, highlander = TRUE)
 		if(destroy_original)
 			qdel(O)
 		return 1

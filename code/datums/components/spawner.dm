@@ -49,5 +49,5 @@
 	L.flags_1 |= (P.flags_1 & ADMIN_SPAWNED_1)
 	spawned_mobs += L
 	L.nest = src
-	L.faction = src.faction
+	L.reset_innate_factions(faction)
 	P.visible_message(span_danger("[L] [spawn_text] [P]."))

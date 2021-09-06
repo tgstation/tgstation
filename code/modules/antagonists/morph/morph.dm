@@ -201,6 +201,10 @@
 			return
 	return ..()
 
+/// Version found on the wizard academy.
+/mob/living/simple_animal/hostile/morph/skellie_friendly
+	innate_factions = list(TRAIT_FACTION_SKELETON)
+
 //Spawn Event
 
 /datum/round_event_control/morph

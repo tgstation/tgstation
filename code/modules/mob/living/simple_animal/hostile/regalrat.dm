@@ -24,7 +24,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	unique_name = TRUE
-	faction = list(TRAIT_FACTION_RAT)
+	innate_factions = list(TRAIT_FACTION_RAT)
 	///The spell that the rat uses to generate miasma
 	var/datum/action/cooldown/domain
 	///The Spell that the rat uses to recruit/convert more rats.
@@ -189,8 +189,7 @@
 		if(M.mind && M.stat == CONSCIOUS)
 			M.mind.transfer_to(new_rat)
 		if(istype(owner,/mob/living/simple_animal/hostile/regalrat))
-			var/mob/living/simple_animal/hostile/regalrat/giantrat = owner
-			new_rat.faction = giantrat.faction
+			new_rat.AddComponent(/datum/component/faction_bind, owner, MINION_MOB_SPAWN_TRAIT, TRUE)
 		qdel(M)
 	if(!something_from_nothing)
 		if(LAZYLEN(SSmobs.cheeserats) >= cap)
@@ -225,7 +224,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	faction = list(TRAIT_FACTION_RAT)
+	innate_factions = list(TRAIT_FACTION_RAT)
 
 /mob/living/simple_animal/hostile/rat/Initialize()
 	. = ..()
@@ -340,7 +339,7 @@
 	var/mob/living/carbon/victim = M
 	if (istype(victim))
 		to_chat(victim, span_userdanger("With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!"))
-		victim.faction |= "rat"
+		ADD_TRAIT(victim, TRAIT_FACTION_RAT, RAT_SPIT_OD_TRAIT)
 		victim.vomit()
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 

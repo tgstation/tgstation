@@ -18,7 +18,7 @@
 	health = 120
 	maxHealth = 120
 	initial_language_holder = /datum/language_holder/drone/syndicate
-	faction = list(TRAIT_FACTION_SYNDICATE)
+	innate_factions = list(TRAIT_FACTION_SYNDICATE)
 	speak_emote = list("hisses")
 	bubble_icon = "syndibot"
 	heavy_emp_damage = 10

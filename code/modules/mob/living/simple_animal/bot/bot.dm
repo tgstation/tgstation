@@ -22,7 +22,7 @@
 	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 	speech_span = SPAN_ROBOT
-	faction = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_SILICON, TRAIT_FACTION_TURRET)
+	innate_factions = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_SILICON, TRAIT_FACTION_TURRET)
 	light_system = MOVABLE_LIGHT
 	light_range = 3
 	light_power = 0.9
@@ -87,6 +87,8 @@
 	"Proceeding to AI waypoint", "Navigating to Delivery Location", "Navigating to Home", \
 	"Waiting for clear path", "Calculating navigation path", "Pinging beacon network", "Unable to reach destination", "Chasing filth")
 	var/datum/atom_hud/data/bot_path/path_hud = new /datum/atom_hud/data/bot_path()
+	/// Component added in insertpai() and removed in ejectpai()
+	var/datum/component/faction_bind/pai_master_faction
 	var/path_image_icon = 'icons/mob/aibots.dmi'
 	var/path_image_icon_state = "path_indicator"
 	var/path_image_color = "#FFFFFF"
@@ -958,7 +960,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				to_chat(src, span_notice("You sense your form change as you are uploaded into [src]."))
 				bot_name = name
 				name = paicard.pai.name
-				faction = user.faction.Copy()
+				pai_master_faction = AddComponent(/datum/component/faction_bind, user, PAI_CONTROLLED_BOT_TRAIT, TRUE)
 				log_combat(user, paicard.pai, "uploaded to [bot_name],")
 				return TRUE
 			else
@@ -986,7 +988,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 			to_chat(paicard.pai, span_notice("You feel your control fade as [paicard] ejects from [bot_name]."))
 		paicard = null
 		name = bot_name
-		faction = initial(faction)
+		if(pai_master_faction)
+			QDEL_NULL(pai_master_faction)
 
 /mob/living/simple_animal/bot/proc/ejectpairemote(mob/user)
 	if(bot_core.allowed(user) && paicard)
@@ -1018,7 +1021,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		ejectpai(0)
 
 /mob/living/simple_animal/bot/sentience_act()
-	faction -= "silicon"
+	remove_innate_faction(TRAIT_FACTION_SILICON)
 
 /mob/living/simple_animal/bot/proc/set_path(list/newpath)
 	path = newpath ? newpath : list()

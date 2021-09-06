@@ -41,7 +41,7 @@
 	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 7.5
-	faction = list(TRAIT_FACTION_SYNDICATE)
+	innate_factions = list(TRAIT_FACTION_SYNDICATE)
 	check_friendly_fire = 1
 	status_flags = CANPUSH
 	del_on_death = 1
@@ -305,7 +305,7 @@
 	attack_verb_simple = "cut"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	faction = list(TRAIT_FACTION_SYNDICATE)
+	innate_factions = list(TRAIT_FACTION_SYNDICATE)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	mob_size = MOB_SIZE_TINY

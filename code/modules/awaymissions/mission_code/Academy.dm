@@ -91,7 +91,6 @@
 	var/mob/living/current_wizard = null
 	var/next_check = 0
 	var/cooldown = 600
-	var/faction = ROLE_WIZARD
 	var/braindead_check = 0
 
 /obj/structure/academy_wizard_spawner/New()
@@ -105,8 +104,8 @@
 /obj/structure/academy_wizard_spawner/process()
 	if(next_check < world.time)
 		if(!current_wizard)
-			for(var/mob/living/L in GLOB.player_list)
-				if(L.z == src.z && L.stat != DEAD && !(faction in L.faction))
+			for(var/mob/living/player in GLOB.player_list)
+				if(player.z == z && player.stat != DEAD && !player.faction_check(TRAIT_FACTION_WIZARD))
 					summon_wizard()
 					break
 		else

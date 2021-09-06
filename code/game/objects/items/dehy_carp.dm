@@ -34,18 +34,14 @@
 	if(!src || QDELETED(src))//we got toasted while animating
 		return
 	//Make space carp
-	var/mob/living/simple_animal/hostile/carp/M = new mobtype(get_turf(src), owner)
+	var/mob/living/simple_animal/hostile/carp/carpie = new mobtype(get_turf(src), owner)
 	//Make carp non-hostile to user, and their allies
 	if(owner)
-		var/list/factions = owner.faction.Copy()
-		for(var/F in factions)
-			if(F == "neutral")
-				factions -= F
-		M.faction = factions
-	if (!owner || owner.faction != M.faction)
+		carpie.AddComponent(/datum/component/faction_bind, owner, DEHYDRATED_CARP_SPAWN_TRAIT, blacklist = list(TRAIT_FACTION_NEUTRAL))
+	if (!owner)
 		visible_message(span_warning("You have a bad feeling about this.")) //welcome to the hostile carp enjoy your die
 	else
-		visible_message(span_notice("The newly grown [M.name] looks up at you with friendly eyes."))
+		visible_message(span_notice("The newly grown [carpie.name] looks up at you with friendly eyes."))
 	qdel(src)
 
 /obj/item/toy/plush/carpplushie/dehy_carp/suicide_act(mob/user)
@@ -69,6 +65,6 @@
 
 		if(!QDELETED(src))
 			var/mob/living/M = new mobtype(get_turf(src))
-			M.faction = list("neutral")
+			M.reset_innate_factions(TRAIT_FACTION_NEUTRAL)
 			qdel(src)
 	return BRUTELOSS

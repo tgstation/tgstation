@@ -171,7 +171,7 @@
 		visible_message(span_boldwarning("[src]'s head flies off!"))
 		var/mob/living/simple_animal/hostile/asteroid/elite/legionnairehead/newhead = new /mob/living/simple_animal/hostile/asteroid/elite/legionnairehead(loc)
 		newhead.GiveTarget(target)
-		newhead.faction = faction.Copy()
+		newhead.AddComponent(/datum/component/faction_bind, src, MINION_MOB_SPAWN_TRAIT)
 		myhead = newhead
 		myhead.body = src
 		if(health < maxHealth * 0.25)
@@ -256,7 +256,7 @@
 	move_to_delay = 2
 	del_on_death = 1
 	deathmessage = "crumbles away!"
-	faction = null
+	innate_factions = null
 	ranged = FALSE
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/body = null
 
@@ -328,10 +328,10 @@
 /obj/item/crusher_trophy/legionnaire_spine/on_mark_detonation(mob/living/target, mob/living/user)
 	if(!rand(1, 100) <= bonus_value || target.stat == DEAD)
 		return
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(user.loc)
-	A.GiveTarget(target)
-	A.friends += user
-	A.faction = user.faction.Copy()
+	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/minion = new (user.loc)
+	minion.GiveTarget(target)
+	minion.friends += user
+	minion.AddComponent(/datum/component/faction_bind, user, MINION_MOB_SPAWN_TRAIT, TRUE)
 
 /obj/item/crusher_trophy/legionnaire_spine/attack_self(mob/user)
 	if(!isliving(user))
@@ -344,5 +344,5 @@
 	LivingUser.visible_message(span_boldwarning("[LivingUser] shakes the [src] and summons a legion skull!"))
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/LegionSkull = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(LivingUser.loc)
 	LegionSkull.friends += LivingUser
-	LegionSkull.faction = LivingUser.faction.Copy()
+	LegionSkull.AddComponent(/datum/component/faction_bind, user, MINION_MOB_SPAWN_TRAIT, TRUE)
 	next_use_time = world.time + 4 SECONDS

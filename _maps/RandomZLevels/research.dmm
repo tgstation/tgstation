@@ -3691,14 +3691,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/mob/living/simple_animal/bot/secbot/beepsky{
-	desc = "A beefy variant of the standard securitron model.";
-	emagged = 1;
-	faction = list("nanotrasenprivate");
-	health = 50;
-	maxHealth = 50;
-	name = "Officer Genesky"
-	},
+/mob/living/simple_animal/bot/secbot/beepsky/genesky,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
 "ik" = (

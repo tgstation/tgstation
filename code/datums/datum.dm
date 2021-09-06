@@ -272,14 +272,21 @@
  * Compare the factions of src with either a list of factions or those of another datum, returning true if they match.
  * If exact_match is set, then the target must be part of all factions src is part of (minus user ref ones).
  */
-/datum/proc/faction_check(factions, exact_match)
+/datum/proc/faction_check(factions, exact_match, blacklist)
 	var/datum/datum_target
+	var/list/factions_list = GLOB.faction_traits - blacklist
 	if(istype(factions, /datum)) // We are comparing the factions of two datums.
 		datum_target = factions
-		factions = GET_TRAITS_IN_LIST(datum_target, GLOB.faction_traits)
-	var/list/match_list = GET_TRAITS_IN_LIST(src, factions)
-	var/does_match = exact_match ? (length(match_list) == length(GET_TRAITS_IN_LIST(src, GLOB.faction_traits))) : length(match_list)
+		factions = datum_target.get_faction_traits(factions_list)
+	else if(!islist(factions))
+		factions = list(factions)
+	var/src_factions = get_faction_traits(factions_list)
+	var/list/matches = (src_factions && factions) ? (src_factions & factions) : null
+	var/does_match = exact_match ? (length(matches) == length(src_factions)) : length(matches)
 	if(does_match || SEND_SIGNAL(src, COMSIG_PARENT_FACTION_CHECK, factions, exact_match, datum_target))
 		return TRUE
 	if(datum_target && SEND_SIGNAL(datum_target, COMSIG_PARENT_FACTION_CHECKED, src, exact_match))
 		return TRUE
+
+/datum/proc/get_faction_traits(list/factions_list)
+	return GET_TRAITS_IN_LIST(src, factions_list)

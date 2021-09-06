@@ -173,7 +173,7 @@
 				var/mob/living/simple_animal/hostile/statue/S = new(P.loc, owner)
 				S.name = "statue of [L.name]"
 				if(owner)
-					S.faction = list("[REF(owner)]")
+					S.AddComponent(/datum/component/faction_bind, owner, ANIMATED_ATOM_LIVING_TRAIT, do_faction_check = FALSE)
 				S.icon = P.icon
 				S.icon_state = P.icon_state
 				S.copy_overlays(P, TRUE)

@@ -62,7 +62,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	faction = list(TRAIT_FACTION_CARP)
+	innate_factions = list(TRAIT_FACTION_CARP)
 	pressure_resistance = 200
 	/// Current time since the the last rift was activated.  If set to -1, does not increment.
 	var/riftTimer = 0
@@ -586,7 +586,7 @@
 /obj/structure/carp_rift/process(delta_time)
 	// Heal carp on our loc.
 	for(var/mob/living/simple_animal/hostile/hostilehere in loc)
-		if("carp" in hostilehere.faction)
+		if(hostilehere.faction_check(TRAIT_FACTION_CARP))
 			hostilehere.adjustHealth(-5 * delta_time)
 			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(hostilehere))
 			H.color = "#0000FF"

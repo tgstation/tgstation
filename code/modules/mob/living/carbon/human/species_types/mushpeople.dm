@@ -16,7 +16,7 @@
 		TRAIT_NOBREATH,
 		TRAIT_NOFLASH,
 	)
-	inherent_factions = list("mushroom")
+	inherent_factions = list(TRAIT_FACTION_MUSHROOM)
 	speedmod = 1.5 //faster than golems but not by much
 
 	punchdamagelow = 6

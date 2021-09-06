@@ -34,7 +34,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 25
 	combat_mode = TRUE
-	faction = list(TRAIT_FACTION_SPIDER)
+	innate_factions = list(TRAIT_FACTION_SPIDER)
 	pass_flags = PASSTABLE
 	move_to_delay = 6
 	attack_verb_continuous = "bites"
@@ -473,7 +473,7 @@
 					var/egg_choice = enriched ? /obj/effect/mob_spawn/spider/enriched : /obj/effect/mob_spawn/spider
 					var/obj/effect/mob_spawn/spider/new_eggs = new egg_choice(get_turf(spider))
 					new_eggs.directive = spider.directive
-					new_eggs.faction = spider.faction
+					new_eggs.faction = spider.innate_factions
 					if(enriched)
 						spider.fed--
 					UpdateButtonIcon(TRUE)

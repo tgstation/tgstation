@@ -34,7 +34,7 @@
 	W.implant(H)
 	var/obj/item/implant/explosive/E = new/obj/item/implant/explosive(H)
 	E.implant(H)
-	H.faction |= ROLE_SYNDICATE
+	H.add_innate_faction(TRAIT_FACTION_SYNDICATE)
 	H.update_icons()
 
 /obj/item/paper/fluff/vr/fluke_ops

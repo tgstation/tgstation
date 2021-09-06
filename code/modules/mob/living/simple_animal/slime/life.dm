@@ -316,31 +316,25 @@
 			if(will_hunt() && hungry || attacked || rabid) // Only add to the list if we need to
 				var/list/targets = list()
 
-				for(var/mob/living/L in view(7,src))
+				for(var/mob/living/living_candidate in view(7,src))
 
-					if(isslime(L) || L.stat == DEAD) // Ignore other slimes and dead mobs
+					if(isslime(living_candidate) || living_candidate.stat == DEAD) // Ignore other slimes and dead mobs
 						continue
 
-					if(L in Friends) // No eating friends!
+					//slimes are neutral so other mobs don't target them, but they can target neutral mobs
+					if((living_candidate in Friends) || HAS_TRAIT(living_candidate, TRAIT_FACTION_NEUTRAL))
 						continue
 
-					var/ally = FALSE
-					for(var/F in faction)
-						if(F == "neutral") //slimes are neutral so other mobs not target them, but they can target neutral mobs
-							continue
-						if(F in L.faction)
-							ally = TRUE
-							break
-					if(ally)
+					if(faction_check(living_candidate))
 						continue
 
-					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
-						targets += L // Possible target found!
+					if(issilicon(living_candidate) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
+						targets += living_candidate // Possible target found!
 
-					if(locate(/mob/living/simple_animal/slime) in L.buckled_mobs) // Only one slime can latch on at a time.
+					if(locate(/mob/living/simple_animal/slime) in living_candidate.buckled_mobs) // Only one slime can latch on at a time.
 						continue
 
-					targets += L // Possible target found!
+					targets += living_candidate // Possible target found!
 
 				if(targets.len > 0)
 					if(attacked || rabid || hungry == 2)

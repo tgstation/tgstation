@@ -53,7 +53,7 @@
 	threat.answer_callback = CALLBACK(GLOBAL_PROC, .proc/pirates_answered, threat, payoff, ship_name, initial_send_time, response_max_time, ship_template)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/spawn_pirates, threat, ship_template, FALSE), response_max_time)
 	SScommunications.send_message(threat,unique = TRUE)
-	
+
 /proc/pirates_answered(datum/comm_message/threat, payoff, ship_name, initial_send_time, response_max_time, ship_template)
 	if(world.time > initial_send_time + response_max_time)
 		priority_announce("Too late to beg for mercy!",sender_override = ship_name)
@@ -424,7 +424,7 @@
 	var/mob/living/carbon/human/H = AM
 	if(H.stat != CONSCIOUS || !H.mind) //mint condition only
 		return 0
-	else if("pirate" in H.faction) //can't ransom your fellow pirates to CentCom!
+	else if(H.faction_check(TRAIT_FACTION_PIRATE)) //can't ransom your fellow pirates to CentCom!
 		return 0
 	else if(H.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 		return 3000

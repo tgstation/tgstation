@@ -32,7 +32,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 
-	faction = list(TRAIT_FACTION_STATUE)
+	innate_factions = list(TRAIT_FACTION_STATUE)
 	move_to_delay = 0 // Very fast
 
 	animate_movement = NO_STEPS // Do not animate movement, you jump around as you're a scary statue.
@@ -232,4 +232,17 @@
 		target.update_sight()
 
 /mob/living/simple_animal/hostile/statue/sentience_act()
-	faction -= "neutral"
+	remove_innate_faction(TRAIT_FACTION_NEUTRAL)
+
+/// Used in the snow cabin away mission.
+/mob/living/simple_animal/hostile/statue/snowman
+	name = "Frosty"
+	desc = "Just a snowman. Just a snowman. Oh god, it's just a snowman."
+	icon_state = "snowman"
+	icon_living = "snowman"
+	icon_dead = "snowman"
+	maxHealth = 5000
+	health = 5000
+	loot = list(/obj/item/dnainjector/geladikinesis)
+	melee_damage_upper = 65
+	melee_damage_lower = 65

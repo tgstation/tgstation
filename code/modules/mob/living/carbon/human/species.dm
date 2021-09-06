@@ -438,8 +438,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.dna.remove_all_mutations() // Radiation immune mobs can't get mutations normally
 
 	if(inherent_factions)
-		for(var/i in inherent_factions)
-			C.faction += i //Using +=/-= for this in case you also gain the faction from a different source.
+		for(var/faction_trait in inherent_factions)
+			ADD_TRAIT(C, faction_trait, SPECIES_TRAIT)
 
 	if(flying_species && isnull(fly))
 		fly = new
@@ -482,8 +482,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.dna.default_mutation_genes[new_species.inert_mutation] = C.dna.mutation_index[new_species.inert_mutation]
 
 	if(inherent_factions)
-		for(var/i in inherent_factions)
-			C.faction -= i
+		for(var/faction_trait in inherent_factions)
+			REMOVE_TRAIT(C, faction_trait, SPECIES_TRAIT)
 
 	clear_tail_moodlets(C)
 

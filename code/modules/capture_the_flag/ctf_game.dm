@@ -70,7 +70,7 @@
 	if(!is_ctf_target(user) && !anyonecanpickup)
 		to_chat(user, span_warning("Non-players shouldn't be moving the flag!"))
 		return
-	if(team in user.faction)
+	if(HAS_TRAIT(user, TRAIT_CTF(team)))
 		to_chat(user, span_warning("You can't move your own flag!"))
 		return
 	if(loc == user)
@@ -348,7 +348,7 @@
 
 //does not add to recently dead, because it dusts and that triggers ctf_qdelled_player
 /obj/machinery/capture_the_flag/proc/ctf_dust_old(mob/living/body)
-	if(isliving(body) && (team in body.faction))
+	if(isliving(body) && HAS_TRAIT(body, TRAIT_CTF(team)))
 		var/turf/T = get_turf(body)
 		if(ammo_type)
 			new ammo_type(T)
@@ -392,9 +392,9 @@
 	new_team_member.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
 	M.set_species(/datum/species/synth)
 	M.key = new_team_member.key
-	M.faction += team
 	M.equipOutfit(chosen_class)
 	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/ctf_qdelled_player) //just in case CTF has some map hazards (read: chasms). bit shorter than dust
+	ADD_TRAIT(M, TRAIT_CTF(team), CAPTURE_THE_FLAG_TRAIT)
 	for(var/trait in player_traits)
 		ADD_TRAIT(M, trait, CAPTURE_THE_FLAG_TRAIT)
 	spawned_mobs[M] = chosen_class
@@ -510,12 +510,12 @@
 /obj/structure/trap/ctf/examine(mob/user)
 	return
 
-/obj/structure/trap/ctf/trap_effect(mob/living/L)
-	if(!is_ctf_target(L))
+/obj/structure/trap/ctf/trap_effect(mob/living/target)
+	if(!is_ctf_target(target))
 		return
-	if(!(src.team in L.faction))
-		to_chat(L, span_danger("<B>Stay out of the enemy spawn!</B>"))
-		L.death()
+	if(!HAS_TRAIT(target, TRAIT_CTF(team)))
+		to_chat(target, span_danger("<B>Stay out of the enemy spawn!</B>"))
+		target.death()
 
 /obj/structure/trap/ctf/red
 	team = RED_TEAM

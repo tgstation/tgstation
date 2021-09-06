@@ -148,20 +148,19 @@
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=15, force_wielded=25, icon_wielded="[icon_prefix]1")
 
-/obj/item/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
+/obj/item/spear/grey_tide/afterattack(atom/movable/target, mob/living/user, proximity)
 	. = ..()
-	if(!proximity)
+	if(!proximity || !isliving(target))
 		return
-	user.faction |= "greytide([REF(user)])"
-	if(isliving(AM))
-		var/mob/living/L = AM
-		if(istype (L, /mob/living/simple_animal/hostile/illusion))
-			return
-		if(!L.stat && prob(50))
-			var/mob/living/simple_animal/hostile/illusion/M = new(user.loc)
-			M.faction = user.faction.Copy()
-			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
-			M.GiveTarget(L)
+	ADD_TRAIT(user, TRAIT_FACTION_GREYTIDE, GREY_TIDE_SPEAR_TRAIT)
+	var/mob/living/living_target = target
+	if(istype (living_target, /mob/living/simple_animal/hostile/illusion))
+		return
+	if(!living_target.stat && prob(50))
+		var/mob/living/simple_animal/hostile/illusion/user_copy = new(user.loc)
+		user_copy.AddComponent(/datum/component/faction_bind, user, GREY_TIDE_SPEAR_TRAIT, TRUE)
+		user_copy.Copy_Parent(user, 100, user.health/2.5, 12, 30)
+		user_copy.GiveTarget(living_target)
 
 /*
  * Bone Spear

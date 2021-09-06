@@ -970,14 +970,13 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/carp
 
 /obj/item/clothing/head/helmet/space/hardsuit/carp/equipped(mob/living/carbon/human/user, slot)
-	..()
+	. = ..()
 	if (slot == ITEM_SLOT_HEAD)
-		user.faction |= "carp"
+		ADD_TRAIT(user, TRAIT_FACTION_CARP, HELMET_TRAIT)
 
 /obj/item/clothing/head/helmet/space/hardsuit/carp/dropped(mob/living/carbon/human/user)
-	..()
-	if (user.head == src)
-		user.faction -= "carp"
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_FACTION_CARP, HELMET_TRAIT)
 
 /obj/item/clothing/suit/space/hardsuit/carp/old
 	name = "battered carp space suit"

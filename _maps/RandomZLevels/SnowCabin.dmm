@@ -1945,9 +1945,7 @@
 /area/awaymission/cabin/caves/mountain)
 "fL" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/mouse{
-	faction = list("sewer")
-	},
+/mob/living/simple_animal/mouse,
 /turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "fM" = (
@@ -3062,12 +3060,7 @@
 /area/awaymission/cabin/caves/sovietcave)
 "iq" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/mob/living/simple_animal/hostile/hivebot/range{
-	desc = "Looks like he's been left behind.";
-	faction = list("russian");
-	maxHealth = 5;
-	name = "soviet machine"
-	},
+/mob/living/simple_animal/hostile/hivebot/range/soviet,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
@@ -4101,12 +4094,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs,
-/mob/living/simple_animal/hostile/skeleton{
-	desc = "Oh shit!";
-	dir = 1;
-	faction = list("sewer");
-	name = "sewer skeleton";
-	wander = 0
+/mob/living/simple_animal/hostile/skeleton/ratty{
+	dir = 1
 	},
 /turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
@@ -4235,19 +4224,7 @@
 	desc = "It looks like fancy glitter to me.";
 	name = "icy wind"
 	},
-/mob/living/simple_animal/hostile/statue{
-	desc = "Just a snowman. Just a snowman. Oh god, it's just a snowman.";
-	faction = list("statue","mining");
-	health = 5000;
-	icon_dead = "snowman";
-	icon_living = "snowman";
-	icon_state = "snowman";
-	loot = list(/obj/item/dnainjector/geladikinesis);
-	maxHealth = 5000;
-	melee_damage_lower = 65;
-	melee_damage_upper = 65;
-	name = "Frosty"
-	},
+/mob/living/simple_animal/hostile/statue/snowman,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/cabin/caves)
 "lr" = (

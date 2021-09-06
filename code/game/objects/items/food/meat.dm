@@ -379,7 +379,7 @@
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
 	var/mob/living/bananas = new spawned_mob(drop_location(), TRUE, spammer)
 	if(faction)
-		bananas.faction = faction
+		bananas.reset_innate_factions(faction)
 	if (!QDELETED(bananas))
 		visible_message(span_notice("[src] expands!"))
 		bananas.log_message("Spawned via [src] at [AREACOORD(src)], Last attached mob: [key_name(spammer)].", LOG_ATTACK)
@@ -415,7 +415,7 @@
 	M.gib(null, TRUE, null, TRUE)
 
 /obj/item/food/monkeycube/syndicate
-	faction = list(TRAIT_FACTION_NEUTRAL, TRAIT_FACTION_SYNDICATE)
+	spawned_mob = /mob/living/carbon/human/species/monkey/syndicate
 
 /obj/item/food/monkeycube/gorilla
 	name = "gorilla cube"

@@ -191,7 +191,7 @@
 	oldbody.client.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
 	M.set_species(/datum/species/human) // Could use setting per team
 	M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
-	M.faction += team //In case anyone wants to add team based stuff to arena special effects
+	ADD_TRAIT(M, TRAIT_ARENA(team), ARENA_TRAIT) //In case anyone wants to add team based stuff to arena special effects
 	M.key = ckey
 
 	var/datum/atom_hud/antag/team_hud = team_huds[team]

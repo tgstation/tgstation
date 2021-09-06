@@ -42,12 +42,13 @@
 	GLOB.reality_smash_track.AddMind(owner)
 	START_PROCESSING(SSprocessing, src)
 	RegisterSignal(owner.current, COMSIG_LIVING_DEATH, .proc/on_death)
+	ADD_TRAIT(owner, TRAIT_FACTION_HERETIC, HERETIC_TRAIT)
 	if(give_equipment)
 		equip_cultist()
 	return ..()
 
 /datum/antagonist/heretic/on_removal()
-
+	REMOVE_TRAIT(owner, TRAIT_FACTION_HERETIC, HERETIC_TRAIT)
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/eldritch_knowledge/knowledge = researched_knowledge[knowledge_index]
 		knowledge.on_lose(owner.current)
@@ -154,7 +155,6 @@
 		current = mob_override
 	add_antag_hud(antag_hud_type, antag_hud_name, current)
 	handle_clown_mutation(current, mob_override ? null : "Ancient knowledge described in the book allows you to overcome your clownish nature, allowing you to use complex items effectively.")
-	current.faction |= "heretics"
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -163,7 +163,6 @@
 		current = mob_override
 	remove_antag_hud(antag_hud_type, current)
 	handle_clown_mutation(current, removing = FALSE)
-	current.faction -= "heretics"
 
 /datum/antagonist/heretic/get_admin_commands()
 	. = ..()

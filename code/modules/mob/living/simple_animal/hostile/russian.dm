@@ -24,7 +24,7 @@
 				/obj/item/kitchen/knife)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 7.5
-	faction = list(TRAIT_FACTION_RUSSIAN)
+	innate_factions = list(TRAIT_FACTION_RUSSIAN)
 	status_flags = CANPUSH
 	del_on_death = 1
 

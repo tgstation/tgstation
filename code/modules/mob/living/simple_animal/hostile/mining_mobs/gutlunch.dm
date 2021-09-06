@@ -11,7 +11,7 @@
 	emote_hear = list("trills.")
 	emote_see = list("sniffs.", "burps.")
 	weather_immunities = list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE)
-	faction = list(TRAIT_FACTION_MINING, TRAIT_FACTION_ASHWALKER)
+	innate_factions = list(TRAIT_FACTION_MINING, TRAIT_FACTION_ASHWALKER)
 	density = FALSE
 	speak_chance = 1
 	turns_per_move = 8
@@ -123,7 +123,7 @@
 	else
 		L = new /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen(loc)
 	mind?.transfer_to(L)
-	L.faction = faction
+	L.reset_innate_factions(innate_factions)
 	L.setDir(dir)
 	L.Stun(20, ignore_canstun = TRUE)
 	visible_message(span_notice("[src] grows up into [L]."))

@@ -148,13 +148,10 @@
 /datum/antagonist/wizard/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	add_antag_hud(antag_hud_type, antag_hud_name, M)
-	M.faction |= ROLE_WIZARD
 
 /datum/antagonist/wizard/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	remove_antag_hud(antag_hud_type, M)
-	M.faction -= ROLE_WIZARD
-
 
 /datum/antagonist/wizard/get_admin_commands()
 	. = ..()

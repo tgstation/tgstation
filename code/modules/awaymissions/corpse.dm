@@ -107,7 +107,7 @@
 			var/mob/living/carbon/human/hoomie = M
 			hoomie.body_type = mob_gender
 	if(faction)
-		M.faction = faction
+		M.reset_innate_factions(faction)
 	if(disease)
 		M.ForceContractDisease(new disease)
 	if(death)

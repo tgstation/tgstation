@@ -7,7 +7,8 @@
 	medhud.add_to_hud(src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
-	faction += "[REF(src)]"
+	for(var/faction_trait in innate_factions)
+		ADD_TRAIT(src, faction_trait, INNATE_TRAIT)
 	GLOB.mob_living_list += src
 
 /mob/living/ComponentInitialize()
@@ -2150,3 +2151,26 @@
 		exp_list[mind.assigned_role.title] = minutes
 
 	return exp_list
+
+/// Used to reset the innate faction traits of a living mob to a new list of factions.
+/mob/living/proc/reset_innate_factions(list/new_innate_factions)
+	if(istext(new_innate_factions)) // Changed to a single faction.
+		new_innate_factions = list(new_innate_factions)
+	if(!HAS_TRAIT(src, TRAIT_INNATE_FACTIONS_BLOCKED))
+		for(var/faction_trait in innate_factions)
+			REMOVE_TRAIT(src, faction_trait, INNATE_TRAIT)
+		for(var/faction_trait in new_innate_factions)
+			ADD_TRAIT(src, faction_trait, INNATE_TRAIT)
+	innate_factions = new_innate_factions.Copy()
+
+/// Adds a new innate faction to src.
+/mob/living/proc/add_innate_faction(faction_trait)
+	if(!HAS_TRAIT(src, TRAIT_INNATE_FACTIONS_BLOCKED))
+		ADD_TRAIT(src, faction_trait, INNATE_TRAIT)
+	LAZYOR(innate_factions, faction_trait)
+
+/// Removes an innate faction from src.
+/mob/living/proc/remove_innate_faction(faction_trait)
+	REMOVE_TRAIT(src, faction_trait, INNATE_TRAIT)
+	LAZYREMOVE(innate_factions, faction_trait)
+

@@ -803,6 +803,7 @@
 	id = "pinkdamagetracker"
 	duration = -1
 	alert_type = null
+	var/datum/status_effect/stabilized/pink/master
 	var/damage = 0
 	var/lasthealth
 
@@ -811,51 +812,54 @@
 		damage += (lasthealth - owner.health)
 	lasthealth = owner.health
 
+/datum/status_effect/pinkdamagetracker/on_remove()
+	master.trackers -= src
+	master = null
+
 /datum/status_effect/stabilized/pink
 	id = "stabilizedpink"
 	colour = "pink"
-	var/list/mobs = list()
-	var/faction_name
+	var/list/trackers = list()
+	var/peace_broken = FALSE
 
 /datum/status_effect/stabilized/pink/on_apply()
-	faction_name = owner.real_name
+	RegisterSignal(owner, COMSIG_PARENT_FACTION_CHECKED, .proc/on_faction_checked)
 	return ..()
 
 /datum/status_effect/stabilized/pink/tick()
-	for(var/mob/living/simple_animal/M in view(7,get_turf(owner)))
-		if(!(M in mobs))
-			mobs += M
-			M.apply_status_effect(/datum/status_effect/pinkdamagetracker)
-			M.faction |= faction_name
-	for(var/mob/living/simple_animal/M in mobs)
-		if(!(M in view(7,get_turf(owner))))
-			M.faction -= faction_name
-			M.remove_status_effect(/datum/status_effect/pinkdamagetracker)
-			mobs -= M
-		var/datum/status_effect/pinkdamagetracker/C = M.has_status_effect(/datum/status_effect/pinkdamagetracker)
-		if(istype(C) && C.damage > 0)
-			C.damage = 0
+	var/list/view_contents = view(7,get_turf(owner))
+	for(var/mob/living/simple_animal/animal in view_contents)
+		if(!animal.has_status_effect(/datum/status_effect/pinkdamagetracker))
+			var/datum/status_effect/pinkdamagetracker/tracker = animal.apply_status_effect(/datum/status_effect/pinkdamagetracker)
+			tracker.master = src
+	for(var/datum/status_effect/pinkdamagetracker/tracker as anything in trackers)
+		if(!(tracker.owner in view_contents))
+			tracker.owner.remove_status_effect(/datum/status_effect/pinkdamagetracker)
+			continue
+		if(tracker?.damage > 0)
+			tracker.damage = 0
 			owner.apply_status_effect(/datum/status_effect/brokenpeace)
-	var/HasFaction = FALSE
-	for(var/i in owner.faction)
-		if(i == faction_name)
-			HasFaction = TRUE
 
-	if(HasFaction && owner.has_status_effect(/datum/status_effect/brokenpeace))
-		owner.faction -= faction_name
+	if(!peace_broken && owner.has_status_effect(/datum/status_effect/brokenpeace))
+		peace_broken = TRUE
 		to_chat(owner, span_userdanger("The peace has been broken! Hostile creatures will now react to you!"))
-	if(!HasFaction && !owner.has_status_effect(/datum/status_effect/brokenpeace))
+	else if(peace_broken && !owner.has_status_effect(/datum/status_effect/brokenpeace))
+		peace_broken = FALSE
 		to_chat(owner, span_notice("[linked_extract] pulses, generating a fragile aura of peace."))
-		owner.faction |= faction_name
 	return ..()
 
+/datum/status_effect/stabilized/pink/proc/on_faction_checked(datum/source, datum/checker, exact_match)
+	SIGNAL_HANDLER
+	if(!isanimal(checker) || owner.has_status_effect(/datum/status_effect/brokenpeace))
+		return FALSE
+	var/mob/living/simple_animal/animal_checker = checker
+	if(animal_checker.has_status_effect(/datum/status_effect/pinkdamagetracker))
+		return TRUE
+
 /datum/status_effect/stabilized/pink/on_remove()
-	for(var/mob/living/simple_animal/M in mobs)
-		M.faction -= faction_name
-		M.remove_status_effect(/datum/status_effect/pinkdamagetracker)
-	for(var/i in owner.faction)
-		if(i == faction_name)
-			owner.faction -= faction_name
+	for(var/datum/status_effect/pinkdamagetracker/tracker as anything in trackers)
+		tracker.owner.remove_status_effect(/datum/status_effect/pinkdamagetracker)
+	trackers = null
 
 /datum/status_effect/stabilized/oil
 	id = "stabilizedoil"

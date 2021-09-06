@@ -54,13 +54,13 @@
 		humie.ghostize(0)
 		humie.key = chosen_candidate.key
 
-	ADD_TRAIT(humie, TRAIT_MUTE, MAGIC_TRAIT)
+	ADD_TRAIT(humie, TRAIT_MUTE, FLESH_GHOUL_TRAIT)
 	log_game("[key_name_admin(humie)] has become a voiceless dead, their master is [user.real_name]")
 	humie.revive(full_heal = TRUE, admin_revive = TRUE)
 	humie.setMaxHealth(MUTE_MAX_HEALTH)
 	humie.health = MUTE_MAX_HEALTH // Voiceless dead are much tougher than ghouls
 	humie.become_husk()
-	humie.faction |= "heretics"
+	ADD_TRAIT(humie, TRAIT_FACTION_HERETIC, FLESH_GHOUL_TRAIT)
 	humie.apply_status_effect(/datum/status_effect/ghoul)
 
 	var/datum/antagonist/heretic_monster/heretic_monster = humie.mind.add_antag_datum(/datum/antagonist/heretic_monster)
@@ -116,7 +116,7 @@
 	human_target.health = GHOUL_MAX_HEALTH
 	human_target.become_husk()
 	human_target.apply_status_effect(/datum/status_effect/ghoul)
-	human_target.faction |= "heretics"
+	ADD_TRAIT(human_target, TRAIT_FACTION_HERETIC, FLESH_GHOUL_TRAIT)
 	var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	heretic_monster.set_owner(master)

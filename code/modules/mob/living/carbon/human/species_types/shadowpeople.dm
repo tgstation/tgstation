@@ -12,7 +12,7 @@
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_NOBREATH,
 	)
-	inherent_factions = list("faithless")
+	inherent_factions = list(TRAIT_FACTION_SHADOW)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	mutanteyes = /obj/item/organ/eyes/night_vision
 	species_language_holder = /datum/language_holder/shadowpeople

@@ -536,3 +536,11 @@
 ///Can this mob hold items
 /mob/proc/can_hold_items(obj/item/I)
 	return length(held_items)
+
+/mob/get_faction_traits(list/factions_list)
+	. = ..()
+	if(!mind)
+		return
+	var/list/mind_faction_traits = GET_TRAITS_IN_LIST(mind, factions_list)
+	if(mind_faction_traits)
+		LAZYOR(., mind_faction_traits)

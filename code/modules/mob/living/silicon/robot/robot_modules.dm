@@ -535,12 +535,12 @@
 /obj/item/robot_model/syndicate/rebuild_modules()
 	..()
 	var/mob/living/silicon/robot/Syndi = loc
-	Syndi.faction  -= "silicon" //ai turrets
+	Syndi.remove_innate_faction(TRAIT_FACTION_SILICON)
 
 /obj/item/robot_model/syndicate/remove_module(obj/item/I, delete_after)
 	..()
 	var/mob/living/silicon/robot/Syndi = loc
-	Syndi.faction += "silicon" //ai is your bff now!
+	Syndi.add_innate_faction(TRAIT_FACTION_SILICON)
 
 // --------------------- Syndicate Medical
 /obj/item/robot_model/syndicate_medical

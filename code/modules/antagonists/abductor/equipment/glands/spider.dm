@@ -7,8 +7,15 @@
 	mind_control_uses = 2
 	mind_control_duration = 2400
 
+/obj/item/organ/heart/gland/spiderman/Insert(mob/living/carbon/target, special = FALSE)
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_FACTION_SPIDER, type)
+
+/obj/item/organ/heart/gland/spiderman/Remove(mob/living/carbon/target, special = FALSE)
+	REMOVE_TRAIT(owner, TRAIT_FACTION_SPIDER, type)
+	return ..()
+
 /obj/item/organ/heart/gland/spiderman/activate()
 	to_chat(owner, span_warning("You feel something crawling in your skin."))
-	owner.faction |= "spiders"
 	var/obj/structure/spider/spiderling/S = new(owner.drop_location())
 	S.directive = "Protect your nest inside [owner.real_name]."

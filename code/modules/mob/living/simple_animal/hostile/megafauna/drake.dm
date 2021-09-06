@@ -582,7 +582,7 @@
 	name = "lesser ash drake"
 	maxHealth = 200
 	health = 200
-	faction = list(TRAIT_FACTION_NEUTRAL)
+	innate_factions = list(TRAIT_FACTION_NEUTRAL)
 	obj_damage = 80
 	melee_damage_upper = 30
 	melee_damage_lower = 30

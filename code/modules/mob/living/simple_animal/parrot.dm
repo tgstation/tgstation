@@ -1006,3 +1006,9 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	H.ForceContractDisease(P, FALSE)
 	parrot_interest = null
 	H.visible_message(span_danger("[src] dive bombs into [H]'s chest and vanishes!"), span_userdanger("[src] dive bombs into your chest, vanishing! This can't be good!"))
+
+
+/mob/living/simple_animal/parrot/pegwing
+	name = "Pegwing"
+	innate_factions = list(TRAIT_FACTION_PIRATE)
+	gold_core_spawnable = NO_SPAWN

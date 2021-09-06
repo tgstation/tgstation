@@ -8235,9 +8235,7 @@
 /area/wizard_station)
 "zQ" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/mob/living/simple_animal/hostile/netherworld{
-	name = "Experiment 35b"
-	},
+/mob/living/simple_animal/hostile/netherworld/wizard,
 /turf/open/floor/grass,
 /area/wizard_station)
 "zV" = (
@@ -8692,7 +8690,6 @@
 "Bg" = (
 /mob/living/simple_animal/bot/medbot/mysterious{
 	desc = "If you don't accidentally blow yourself up from time to time you're not really a wizard anyway.";
-	faction = list("neutral","silicon","creature");
 	name = "Nobody's Perfect"
 	},
 /turf/open/floor/engine/cult,

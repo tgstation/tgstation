@@ -79,3 +79,8 @@
 	icon_living = "evilkreb"
 	icon_dead = "evilkreb_dead"
 	gold_core_spawnable = NO_SPAWN
+
+/// Used in the abandoned space zoo...
+/mob/living/simple_animal/crab/carp_friendly
+	innate_factions = list(TRAIT_FACTION_CARP)
+	gold_core_spawnable = NO_SPAWN

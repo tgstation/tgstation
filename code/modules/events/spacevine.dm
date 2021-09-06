@@ -93,12 +93,12 @@
 /datum/spacevine_mutation/toxicity/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
 	if(issilicon(crosser))
 		return
-	if(prob(severity) && istype(crosser) && !isvineimmune(crosser))
+	if(prob(severity) && istype(crosser) && !crosser.faction_check(TRAIT_FACTION_PLANTS))
 		to_chat(crosser, span_alert("You accidentally touch the vine and feel a strange sensation."))
 		crosser.adjustToxLoss(5)
 
 /datum/spacevine_mutation/toxicity/on_eat(obj/structure/spacevine/holder, mob/living/eater)
-	if(!isvineimmune(eater))
+	if(!eater.faction_check(TRAIT_FACTION_PLANTS))
 		eater.adjustToxLoss(5)
 
 /datum/spacevine_mutation/explosive  //OH SHIT IT CAN CHAINREACT RUN!!!
@@ -150,7 +150,7 @@
 /// Checks mobs on spread-target's turf to see if they should be hit by a damaging proc or not.
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/structure/spacevine/holder, turf/target, mob/living)
 	for(var/mob/living/M in target)
-		if(!isvineimmune(M) && M.stat != DEAD) // Don't kill immune creatures. Dead check to prevent log spam when a corpse is trapped between vine eaters.
+		if(!M.faction_check(TRAIT_FACTION_PLANTS) && M.stat != DEAD) // Don't kill immune creatures. Dead check to prevent log spam when a corpse is trapped between vine eaters.
 			aggrospread_act(holder, M)
 
 /// What happens if an aggr spreading vine buckles a mob.
@@ -271,13 +271,13 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/thorns/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
-	if(prob(severity) && istype(crosser) && !isvineimmune(crosser))
+	if(prob(severity) && istype(crosser) && !crosser.faction_check(TRAIT_FACTION_PLANTS))
 		var/mob/living/M = crosser
 		M.adjustBruteLoss(5)
 		to_chat(M, span_alert("You cut yourself on the thorny vines."))
 
 /datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
-	if(prob(severity) && istype(hitter) && !isvineimmune(hitter))
+	if(prob(severity) && istype(hitter) && !hitter.faction_check(TRAIT_FACTION_PLANTS))
 		var/mob/living/M = hitter
 		M.adjustBruteLoss(5)
 		to_chat(M, span_alert("You cut yourself on the thorny vines."))
@@ -544,7 +544,7 @@
 				break //only capture one mob at a time
 
 /obj/structure/spacevine/proc/entangle(mob/living/V)
-	if(!V || isvineimmune(V))
+	if(!V || V.faction_check(TRAIT_FACTION_PLANTS))
 		return
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_buckle(src, V)
@@ -585,12 +585,5 @@
 
 /obj/structure/spacevine/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(isvineimmune(mover))
+	if(mover.faction_check(TRAIT_FACTION_PLANTS))
 		return TRUE
-
-/proc/isvineimmune(atom/A)
-	if(isliving(A))
-		var/mob/living/M = A
-		if(("vines" in M.faction) || ("plants" in M.faction))
-			return TRUE
-	return FALSE

@@ -46,9 +46,9 @@
 	var/obj/item/pda/ai/aiPDA
 
 /mob/living/silicon/Initialize()
+	LAZYOR(innate_factions, TRAIT_FACTION_SILICON)
 	. = ..()
 	GLOB.silicon_mobs += src
-	faction += "silicon"
 	if(ispath(radio))
 		radio = new radio(src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)

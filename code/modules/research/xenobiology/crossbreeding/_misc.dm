@@ -170,32 +170,32 @@ Slimecrossing Items
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "capturedevice"
 
-/obj/item/capturedevice/attack(mob/living/M, mob/user)
+/obj/item/capturedevice/attack(mob/living/target, mob/user)
 	if(length(contents))
 		to_chat(user, span_warning("The device already has something inside."))
 		return
-	if(!isanimal(M))
+	if(!isanimal(target))
 		to_chat(user, span_warning("The capture device only works on simple creatures."))
 		return
-	if(M.mind)
-		to_chat(user, span_notice("You offer the device to [M]."))
-		if(tgui_alert(M, "Would you like to enter [user]'s capture device?", "Gold Capture Device", list("Yes", "No")) == "Yes")
-			if(user.canUseTopic(src, BE_CLOSE) && user.canUseTopic(M, BE_CLOSE))
-				to_chat(user, span_notice("You store [M] in the capture device."))
-				to_chat(M, span_notice("The world warps around you, and you're suddenly in an endless void, with a window to the outside floating in front of you."))
-				store(M, user)
+	if(target.mind)
+		to_chat(user, span_notice("You offer the device to [target]."))
+		if(tgui_alert(target, "Would you like to enter [user]'s capture device?", "Gold Capture Device", list("Yes", "No")) == "Yes")
+			if(user.canUseTopic(src, BE_CLOSE) && user.canUseTopic(target, BE_CLOSE))
+				to_chat(user, span_notice("You store [target] in the capture device."))
+				to_chat(target, span_notice("The world warps around you, and you're suddenly in an endless void, with a window to the outside floating in front of you."))
+				store(target, user)
 			else
-				to_chat(user, span_warning("You were too far away from [M]."))
-				to_chat(M, span_warning("You were too far away from [user]."))
+				to_chat(user, span_warning("You were too far away from [target]."))
+				to_chat(target, span_warning("You were too far away from [user]."))
 		else
-			to_chat(user, span_warning("[M] refused to enter the device."))
+			to_chat(user, span_warning("[target] refused to enter the device."))
 			return
 	else
-		if(istype(M, /mob/living/simple_animal/hostile) && !("neutral" in M.faction))
+		if(istype(target, /mob/living/simple_animal/hostile) && !target.faction_check(TRAIT_FACTION_NEUTRAL))
 			to_chat(user, span_warning("This creature is too aggressive to capture."))
 			return
-	to_chat(user, span_notice("You store [M] in the capture device."))
-	store(M)
+	to_chat(user, span_notice("You store [target] in the capture device."))
+	store(target)
 
 /obj/item/capturedevice/attack_self(mob/user)
 	if(contents.len)
