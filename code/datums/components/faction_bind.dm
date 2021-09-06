@@ -101,6 +101,6 @@
 	if(!exact_match && HAS_TRAIT(checker, TRAIT_FACTION_MASTER(faction_master)))
 		return TRUE
 	if(do_faction_check)
-		do_faction_check = TRUE
-		. = checker.faction_check(faction_master, exact_match, blacklist)
 		do_faction_check = FALSE
+		. = checker.faction_check(faction_master, exact_match, blacklist)
+		do_faction_check = TRUE
