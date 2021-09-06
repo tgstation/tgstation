@@ -239,9 +239,6 @@
 		to_chat(user, "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>")
 		return TRUE
 
-	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", O))
-		return TRUE
-
 	if(default_deconstruction_crowbar(O))
 		return TRUE
 
@@ -268,8 +265,28 @@
 		busy = FALSE
 		return TRUE
 
+	if(panel_open)
+		balloon_alert(user, "panel is open!")
+		return FALSE
+
 	return ..()
 
+/obj/machinery/autolathe/attackby_secondary(obj/item/O, mob/living/user, params)
+	if (busy)
+		to_chat(user, "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>")
+		return TRUE
+
+	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", O))
+		return FALSE
+
+	if(machine_stat)
+		return TRUE
+
+	if(panel_open)
+		balloon_alert(user, "panel is open!")
+		return FALSE
+
+	return ..()
 
 /obj/machinery/autolathe/proc/AfterMaterialInsert(obj/item/item_inserted, id_inserted, amount_inserted)
 	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
