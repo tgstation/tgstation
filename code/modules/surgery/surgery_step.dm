@@ -184,6 +184,7 @@
  * * mechanical_surgery - Boolean flag that represents if a surgery step is done on a mechanical limb (therefore does not force scream)
  */
 /datum/surgery_step/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE)
-	to_chat(target, span_userdanger("[pain_message]")
-	if(prob(30) && !mechanical_surgery)
-		INVOKE_ASYNC(target, /mob.proc/emote, "scream") //i have no idea what async does but i'm copying it from dismemberment
+	if(target.stat < UNCONSCIOUS)
+		to_chat(target, span_userdanger("[pain_message]"))
+		if(prob(30) && !mechanical_surgery)
+			INVOKE_ASYNC(target, /mob.proc/emote, "scream") //i have no idea what async does but i'm copying it from dismemberment
