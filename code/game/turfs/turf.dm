@@ -669,3 +669,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/PolluteListTurf(list/pollutions, cap)
 	return
+
+/turf/proc/IgniteTurf(power)
+	return

@@ -84,6 +84,7 @@
 	burning_temperature = 4500//plasma is hot!!
 	burning_volume = 0.3//But burns fast
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	accelerant_quality = 10
 
 /datum/reagent/toxin/plasma/on_new(data)
 	. = ..()
@@ -423,6 +424,7 @@
 	taste_description = "burning"
 	ph = 13
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	accelerant_quality = 10
 
 /datum/reagent/toxin/spore_burning/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_fire_stacks(2 * REM * delta_time)

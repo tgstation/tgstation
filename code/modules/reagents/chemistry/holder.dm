@@ -150,6 +150,12 @@
 	my_atom = null
 	return ..()
 
+/datum/reagents/proc/get_total_accelerant_quality()
+	var/quality = 0
+	for(var/datum/reagent/reagent as anything in reagent_list)
+		quality += reagent.volume * reagent.accelerant_quality
+	return quality
+
 /**
  * Adds a reagent to this holder
  *

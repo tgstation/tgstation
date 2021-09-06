@@ -8,6 +8,8 @@
 	var/heavyfootstep = null
 	///Pollution of this turf
 	var/datum/pollution/pollution
+	///Reference to the turf fire on the turf
+	var/obj/effect/abstract/turf_fire/turf_fire
 
 //direction is direction of travel of A
 /turf/open/zPassIn(atom/movable/A, direction, turf/source)
@@ -301,3 +303,10 @@
 		return
 	pollution.AddPollutantList(pollutions)
 
+/turf/open/IgniteTurf(power)
+	if(turf_fire)
+		turf_fire.AddPower(power)
+		return
+	if(isgroundlessturf(src) || isspaceturf(src))
+		return
+	new /obj/effect/abstract/turf_fire(src, power)

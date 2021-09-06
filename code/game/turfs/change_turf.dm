@@ -157,6 +157,12 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 /turf/open/ChangeTurf(path, list/new_baseturfs, flags) //Resist the temptation to make this default to keeping air.
 	if ((flags & CHANGETURF_INHERIT_AIR) && ispath(path, /turf/open))
+		var/turf_fire_ref
+		if(turf_fire)
+			if(ispath(path, /turf/open/openspace) || ispath(path, /turf/open/space))
+				qdel(turf_fire)
+			else
+				turf_fire_ref = turf_fire
 		var/datum/gas_mixture/stashed_air = new()
 		stashed_air.copy_from(air)
 		var/stashed_state = excited
@@ -166,6 +172,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		if (!.) // changeturf failed or didn't do anything
 			return
 		var/turf/open/newTurf = .
+		newTurf.turf_fire = turf_fire_ref
 		if(stashed_pollution)
 			newTurf.pollution = stashed_pollution
 			stashed_pollution.HandleOverlay()
@@ -182,6 +189,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	else
 		if(pollution)
 			qdel(pollution)
+		if(turf_fire)
+			qdel(turf_fire)
 		SSair.remove_from_active(src) //Clean up wall excitement, and refresh excited groups
 		if(ispath(path,/turf/closed))
 			flags |= CHANGETURF_RECALC_ADJACENT
