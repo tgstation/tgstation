@@ -718,7 +718,7 @@
 		if(!T || !istype(T.loc, area_type))
 			continue
 		for (var/atom/movable/movable as anything in T)
-			if (length(movable.client_mobs_in_contents))
+			if (LAZYACCESS(movable.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS))
 				movable.update_parallax_contents()
 
 /obj/docking_port/mobile/proc/check_transit_zone()

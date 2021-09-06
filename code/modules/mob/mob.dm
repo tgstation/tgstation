@@ -1344,6 +1344,5 @@
 ///Clears the client in contents list of our current "eye". Prevents hard deletes
 /mob/proc/clear_client_in_contents()
 	if(client?.movingmob) //In the case the client was transferred to another mob and not deleted.
-		client.movingmob.client_mobs_in_contents -= src
-		UNSETEMPTY(client.movingmob.client_mobs_in_contents)
+		LAZYREMOVEASSOC(client.movingmob.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, src)
 		client.movingmob = null

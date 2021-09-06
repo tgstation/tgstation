@@ -47,8 +47,8 @@ SUBSYSTEM_DEF(parallax)
 				return
 			continue
 		if(!isnull(processing_client.movingmob))
-			LAZYREMOVE(processing_client.movingmob.client_mobs_in_contents, processing_client.mob)
-		LAZYADD(movable_eye.client_mobs_in_contents, processing_client.mob)
+			LAZYREMOVEASSOC(processing_client.movingmob.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, processing_client.mob)
+		LAZYADDASSOCLIST(movable_eye.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, processing_client.mob)
 		processing_client.movingmob = movable_eye
 		if (MC_TICK_CHECK)
 			return

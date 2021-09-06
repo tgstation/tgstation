@@ -214,10 +214,9 @@
 		L.screen_loc = "CENTER-7:[round(L.offset_x,1)],CENTER-7:[round(L.offset_y,1)]"
 
 /atom/movable/proc/update_parallax_contents()
-	if(length(client_mobs_in_contents))
-		for(var/mob/client_mob as anything in client_mobs_in_contents)
-			if(length(client_mob?.client?.parallax_layers) && client_mob.hud_used)
-				client_mob.hud_used.update_parallax()
+	for(var/mob/client_mob as anything in LAZYACCESS(important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS))
+		if(length(client_mob?.client?.parallax_layers) && client_mob.hud_used)
+			client_mob.hud_used.update_parallax()
 
 /mob/proc/update_parallax_teleport() //used for arrivals shuttle
 	if(client?.eye && hud_used && length(client.parallax_layers))
