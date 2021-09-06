@@ -9,7 +9,6 @@
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	obj_flags = UNIQUE_RENAME
-	material_flags = MATERIAL_NO_EFFECTS
 	grind_results = list()
 	///List of reagents this food gets on creation
 	var/list/food_reagents
@@ -41,6 +40,8 @@
 	var/venue_value
 	///Food that's immune to decomposition.
 	var/preserved_food = FALSE
+	///Food that needs to be picked up in order to decompose.
+	var/decomp_req_handle = FALSE
 
 /obj/item/food/Initialize(mapload)
 	. = ..()
@@ -98,6 +99,7 @@
 	return
 
 ///This proc makes things decompose. Set preserved_food to TRUE to make it never decompose.
+///Set decomp_req_handle to TRUE to only make it decompose when someone picks it up.
 /obj/item/food/proc/MakeDecompose(mapload)
 	if(!preserved_food)
-		AddComponent(/datum/component/decomposition, mapload, decomp_flags = foodtypes)
+		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes)

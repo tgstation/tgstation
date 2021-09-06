@@ -262,15 +262,28 @@
 	name = "space ants"
 	desc = "A small colony of space ants. They're normally used to the vacuum of space, so they can't climb too well."
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "spaceants"
+	icon_state = "ants"
 	beauty = -150
+	layer = LOW_OBJ_LAYER
+	var/ant_bite_damage = 0.1
+	var/ant_volume
 
 /obj/effect/decal/cleanable/ants/Initialize(mapload)
 	. = ..()
-	var/scale = (rand(6, 8) / 10) + (rand(2, 5) / 50)
-	transform = matrix(transform, scale, scale, MATRIX_SCALE)
-	setDir(pick(GLOB.cardinals))
-	reagents.add_reagent(/datum/reagent/ants, rand(2, 5))
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
-	AddComponent(/datum/component/caltrop, min_damage = 0.2, max_damage = 1, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = 'sound/weapons/bite.ogg')
+	ant_volume = rand(3, 5)
+	reagents.add_reagent(/datum/reagent/ants, ant_volume)
+	update_ant_damage()
+
+/obj/effect/decal/cleanable/ants/proc/update_ant_damage(spilled_ants)
+	ant_volume += spilled_ants
+	ant_bite_damage = min(10, round((ant_volume * 0.1),0.1)) // 100u ants = 10 max_damage
+	AddComponent(/datum/component/caltrop, min_damage = 0.1, max_damage = ant_bite_damage, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = 'sound/weapons/bite.ogg')
+	switch(ant_bite_damage)
+		if(0 to 1)
+			icon_state = initial(icon_state)
+		if(1.1 to 4)
+			icon_state = "[initial(icon_state)]_2"
+		if(4.1 to 7)
+			icon_state = "[initial(icon_state)]_3"
+		if(7.1 to 10)
+			icon_state = "[initial(icon_state)]_4"
