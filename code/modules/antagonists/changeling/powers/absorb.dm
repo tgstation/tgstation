@@ -110,7 +110,7 @@
 		for(var/spoken_memory in say_log)
 			if(recent_speech.len >= LING_ABSORB_RECENT_SPEECH)
 				break
-			recent_speech[spoken_memory] = say_log[spoken_memory]
+			recent_speech[spoken_memory] = splittext(say_log[spoken_memory], "\"", 1, 0, TRUE)[3]
 
 	if(recent_speech.len)
 		changeling.antag_memory += "<B>Some of [target]'s speech patterns, we should study these to better impersonate [target.p_them()]!</B><br>"
