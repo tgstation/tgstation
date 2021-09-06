@@ -295,7 +295,7 @@
 
 	src.active = active
 	inhand_icon_state = active ? on_inhand_icon_state : null // When inactive, there is no inhand icon_state.
-	balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
+	balloon_alert(user, active ? "extended" : "collapsed")
 	playsound(user ? user : src, on_sound, 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -453,14 +453,14 @@
 /obj/item/melee/baton/security/attack_self(mob/user)
 	if(cell?.charge >= cell_hit_cost)
 		active = !active
-		balloon_alert(user, "[src] is now [active ? "on" : "off"].")
+		balloon_alert(user, "turned [active ? "on" : "off"]")
 		playsound(src, "sparks", 75, TRUE, -1)
 	else
 		active = FALSE
 		if(!cell)
-			balloon_alert(user, "[src] has no power source!")
+			balloon_alert(user, "no power source!")
 		else
-			balloon_alert(user, "[src] is out of charge.")
+			balloon_alert(user, "out of charge!")
 	update_appearance()
 	add_fingerprint(user)
 
