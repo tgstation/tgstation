@@ -104,6 +104,10 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_CELL, cell_to_set)
 	cell = cell_to_set
 
+/obj/item/integrated_circuit/proc/set_locked(new_value)
+	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_LOCKED, new_value)
+	locked = new_value
+
 /obj/item/integrated_circuit/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(istype(I, /obj/item/circuit_component))
