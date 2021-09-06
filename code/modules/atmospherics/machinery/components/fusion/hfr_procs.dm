@@ -390,6 +390,30 @@
 		gas_pockets = 15
 		gas_spread = power_level * 8
 
+	var/list/around_turfs = circlerangeturfs(src, gas_spread)
+	for(var/turf/turf as anything in around_turfs)
+		if(isclosedturf(turf) || isspaceturf(turf))
+			around_turfs -= turf
+			continue
+	var/datum/gas_mixture/remove_fusion
+	if(internal_fusion.total_moles() > 0)
+		remove_fusion = internal_fusion.remove_ratio(0.2)
+		var/datum/gas_mixture/remove
+		for(var/i in 1 to gas_pockets)
+			remove = remove_fusion.remove_ratio(1/gas_pockets)
+			var/turf/local = pick(around_turfs)
+			local.assume_air(remove)
+		loc.assume_air(internal_fusion)
+	var/datum/gas_mixture/remove_moderator
+	if(moderator_internal.total_moles() > 0)
+		remove_moderator = moderator_internal.remove_ratio(0.2)
+		var/datum/gas_mixture/remove
+		for(var/i in 1 to gas_pockets)
+			remove = remove_moderator.remove_ratio(1/gas_pockets)
+			var/turf/local = pick(around_turfs)
+			local.assume_air(remove)
+		loc.assume_air(moderator_internal)
+
 	//Max explosion ranges: devastation = 12, heavy = 24, light = 42
 	explosion(
 		origin = src,
@@ -417,29 +441,6 @@
 			log = TRUE
 			)
 
-	var/list/around_turfs = circlerangeturfs(src, gas_spread)
-	for(var/turf/turf as anything in around_turfs)
-		if(isclosedturf(turf) || isspaceturf(turf))
-			around_turfs -= turf
-			continue
-	var/datum/gas_mixture/remove_fusion
-	if(internal_fusion.total_moles() > 0)
-		remove_fusion = internal_fusion.remove_ratio(0.2)
-		var/datum/gas_mixture/remove
-		for(var/i in 1 to gas_pockets)
-			remove = remove_fusion.remove_ratio(1/gas_pockets)
-			var/turf/local = pick(around_turfs)
-			local.assume_air(remove)
-		loc.assume_air(internal_fusion)
-	var/datum/gas_mixture/remove_moderator
-	if(moderator_internal.total_moles() > 0)
-		remove_moderator = moderator_internal.remove_ratio(0.2)
-		var/datum/gas_mixture/remove
-		for(var/i in 1 to gas_pockets)
-			remove = remove_moderator.remove_ratio(1/gas_pockets)
-			var/turf/local = pick(around_turfs)
-			local.assume_air(remove)
-		loc.assume_air(moderator_internal)
 	qdel(src)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_cracked_parts()
