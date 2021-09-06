@@ -381,8 +381,8 @@
 	if(!dc)
 		return null
 	. = dc[c_type]
-	if(. && !length(.))
-		return list(.)
+	if(!length(.))
+		return . ? list(.) : list()
 
 /**
  * Creates an instance of `new_type` in the datum and attaches to it as parent
