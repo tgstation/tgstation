@@ -187,4 +187,4 @@
 	if(target.stat < UNCONSCIOUS)
 		to_chat(target, span_userdanger("[pain_message]"))
 		if(prob(30) && !mechanical_surgery)
-			INVOKE_ASYNC(target, /mob.proc/emote, "scream") //i have no idea what async does but i'm copying it from dismemberment
+			target.emote("scream")
