@@ -330,7 +330,7 @@
 	var/rad_pulse_strength = 0
 	var/gas_spread = 0
 	var/gas_pockets = 0
-	var/critical = FALSE
+	var/critical = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_CRITICAL_MELTDOWN
 
 	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_BASE_EXPLOSION)
 		flash_explosion = power_level * 3
@@ -387,10 +387,7 @@
 		gas_pockets = 15
 		gas_spread = power_level * 8
 
-	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_CRITICAL_MELTDOWN)
-		critical = TRUE
-		Cinematic(CINEMATIC_SELFDESTRUCT,world)
-
+	//Max explosion ranges: devastation = 12, heavy = 24, light = 42
 	explosion(
 		origin = src,
 		devastation_range = critical ? devastating_explosion * 2 : devastating_explosion,
