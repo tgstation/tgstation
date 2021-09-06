@@ -123,7 +123,7 @@
 #define DETAIL_WHAT_BY "WHAT_BY"
 ///Used whenever a memory has a secondary character. Used bespokely by actions.
 #define DETAIL_DEUTERAGONIST "DEUTERAGONIST"
-//Automatically obtained details
+///Automatically obtained details
 #define DETAIL_PROTAGONIST_MOOD "VICTIM_MOOD"
 
 //Specific memory info keys. they are used to replace json strings with memory specific data!
