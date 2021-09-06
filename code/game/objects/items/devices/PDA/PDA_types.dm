@@ -166,7 +166,7 @@
 /obj/item/pda/quartermaster
 	name = "quartermaster PDA"
 	default_cartridge = /obj/item/cartridge/quartermaster
-	inserted_item = /obj/item/pen/fountain
+	inserted_item = /obj/item/pen/survival
 	greyscale_config = /datum/greyscale_config/pda/stripe_thick
 	greyscale_colors = "#e39751#a92323#a23e3e"
 
