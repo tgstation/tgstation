@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes: 
-  - bugfix: "Better tools now deconstruct blast doors and shutters quicker like they actually should. Each deconstruction step now provides a message upon completion as well as uses the tool's sounds!"

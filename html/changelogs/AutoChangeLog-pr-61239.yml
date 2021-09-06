@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - admin: "ticket panel is wider, resolve button should now stay on the same line"
