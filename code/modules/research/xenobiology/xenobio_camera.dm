@@ -351,6 +351,11 @@
 	SEND_SIGNAL(user, COMSIG_XENO_TURF_CLICK_SHIFT, src)
 	..()
 
+//Places and picks up monkies, scans slimes
+/mob/living/simple_animal/slime/CtrlClick(mob/user)
+	SEND_SIGNAL(user, COMSIG_MOB_CTRL_CLICKED, src)
+	..()
+
 /obj/machinery/computer/camera_advanced/xenobio/proc/on_ctrl_click(datum/source, atom/clicked_atom)
 	SIGNAL_HANDLER
 	if(ismonkey(clicked_atom))
