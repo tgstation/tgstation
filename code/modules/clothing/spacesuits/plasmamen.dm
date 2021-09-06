@@ -111,13 +111,13 @@
 		if(hitting_clothing.clothing_flags & PLASMAMAN_HELMET_EXEMPT)
 			to_chat(user, span_notice("You cannot place [hitting_clothing.name] on helmet!"))
 			return
-		if(!attached_hat)
-			attached_hat = hitting_clothing
-			to_chat(user, span_notice("You placed [hitting_clothing.name] on helmet!"))
-			hitting_clothing.forceMove(src)
-			update_appearance()
-		else
+		if(attached_hat)
 			to_chat(user, span_notice("There's already something placed on helmet!"))
+			return
+		attached_hat = hitting_clothing
+		to_chat(user, span_notice("You placed [hitting_clothing.name] on helmet!"))
+		hitting_clothing.forceMove(src)
+		update_appearance()
 
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
@@ -157,13 +157,14 @@
 	update_action_buttons()
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_hand_secondary(mob/user)
-	. = ..()
-	if(src.attached_hat)
-		user.put_in_active_hand(src.attached_hat)
-		to_chat(user, span_notice("You removed [attached_hat.name] from helmet!"))
-		attached_hat = null
-		update_appearance()
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	..()
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!attached_hat)
+		return
+	user.put_in_active_hand(attached_hat)
+	to_chat(user, span_notice("You removed [attached_hat.name] from helmet!"))
+	attached_hat = null
+	update_appearance()
 
 /obj/item/clothing/head/helmet/space/plasmaman/security
 	name = "security plasma envirosuit helmet"
