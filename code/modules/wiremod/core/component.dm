@@ -16,6 +16,9 @@
 	/// The name of the component shown on the UI
 	var/display_name = "Generic"
 
+	/// The colour this circuit component appears in the UI
+	var/ui_color = "blue"
+
 	/// The integrated_circuit that this component is attached to.
 	var/obj/item/integrated_circuit/parent
 
@@ -70,6 +73,8 @@
 		trigger_input = add_input_port("Trigger", PORT_TYPE_SIGNAL, order = 2)
 	if(circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL)
 		trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL, order = 2)
+	if(circuit_flags & CIRCUIT_FLAG_INSTANT)
+		ui_color = "orange"
 
 
 /obj/item/circuit_component/Destroy()
@@ -184,8 +189,9 @@
  * Return value indicates whether the trigger was successful or not.
  * Arguments:
  * * port - Can be null. The port that sent the input
+ * * return_values - Only defined if the component is receiving an input due to instant execution. Contains the values to be returned once execution has stopped.
  */
-/obj/item/circuit_component/proc/trigger_component(datum/port/input/port)
+/obj/item/circuit_component/proc/trigger_component(datum/port/input/port, list/return_values)
 	SHOULD_NOT_SLEEP(TRUE)
 	pre_input_received(port)
 	if(!should_receive_input(port))
@@ -196,9 +202,9 @@
 		var/proc_to_call = port.trigger
 		if(!proc_to_call)
 			return FALSE
-		result = call(src, proc_to_call)(port)
+		result = call(src, proc_to_call)(port, return_values)
 	else
-		result = input_received()
+		result = input_received(null, return_values)
 
 	if(result)
 		return FALSE
@@ -248,8 +254,9 @@
  * Return value indicates that the circuit should not send an output signal.
  * Arguments:
  * * port - Can be null. The port that sent the input
+ * * return_values - Only defined if the component is receiving an input due to instant execution. Contains the values to be returned once execution has stopped.
  */
-/obj/item/circuit_component/proc/input_received(datum/port/input/port)
+/obj/item/circuit_component/proc/input_received(datum/port/input/port, list/return_values)
 	SHOULD_NOT_SLEEP(TRUE)
 	return
 
@@ -273,6 +280,9 @@
  */
 /obj/item/circuit_component/proc/get_ui_notices()
 	. = list()
+
+	if(circuit_flags & CIRCUIT_FLAG_INSTANT)
+		. += create_ui_notice("Instant Execution", "red", "tachometer-alt")
 
 	if(!removable)
 		. += create_ui_notice("Unremovable", "red", "lock")
