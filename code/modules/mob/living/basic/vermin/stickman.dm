@@ -22,7 +22,7 @@
 /mob/living/basic/stickman/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/basic_body_temp_sensitive)
-	AddElement(/datum/element/basic_atmos_sensitive, list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0), 7.5)
+	AddElement(/datum/element/atmos_requirements, list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0), 7.5)
 
 /datum/ai_controller/basic_controller/stickman
 	blackboard = list(

@@ -723,7 +723,6 @@
 #include "code\datums\elements\atmos_sensitive.dm"
 #include "code\datums\elements\backblast.dm"
 #include "code\datums\elements\bane.dm"
-#include "code\datums\elements\basic_atmos_sensitive.dm"
 #include "code\datums\elements\basic_body_temp_sensitive.dm"
 #include "code\datums\elements\beauty.dm"
 #include "code\datums\elements\bed_tucking.dm"
