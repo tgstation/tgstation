@@ -152,6 +152,7 @@
 	name = "captain PDA"
 	default_cartridge = /obj/item/cartridge/captain
 	inserted_item = /obj/item/pen/fountain/captain
+	greyscale_config = /datum/greyscale_config/pda/captain
 	greyscale_colors = "#1A6197#FF0000#FFFFFF#F2CA54"
 
 /obj/item/pda/captain/Initialize()
