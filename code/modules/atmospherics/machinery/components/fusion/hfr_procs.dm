@@ -294,6 +294,7 @@
 		return
 	final_countdown = TRUE
 
+	var/critical = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_CRITICAL_MELTDOWN
 	var/speaking = "[emergency_alert] The Hypertorus fusion reactor has reached critical integrity failure. Emergency magnetic dampeners online."
 	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
 	for(var/i in HYPERTORUS_COUNTDOWN_TIME to 0 step -10)
@@ -305,6 +306,8 @@
 			sleep(10)
 			continue
 		else if(i > 50)
+			if(i == 10 SECONDS && critical)
+				sound_to_playing_players('sound/machines/hypertorus/HFR_critical_explosion.ogg')
 			speaking = "[DisplayTimeText(i, TRUE)] remain before total integrity failure."
 		else
 			speaking = "[i*0.1]..."
