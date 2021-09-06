@@ -212,19 +212,21 @@
 	if(dash_toggled && !proximity)
 		jaunt.Teleport(user, target)
 		return
-	if(proximity)
-		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if(H.stat != CONSCIOUS)
-				var/obj/item/soulstone/SS = new /obj/item/soulstone(src)
-				SS.attack(H, user)
-				if(!LAZYLEN(SS.contents))
-					qdel(SS)
-		if(istype(target, /obj/structure/constructshell) && contents.len)
-			var/obj/item/soulstone/SS = contents[1]
-			if(istype(SS))
-				SS.transfer_soul("CONSTRUCT",target,user)
-				qdel(SS)
+	if(!proximity)
+		return
+	if(ishuman(target))
+		var/mob/living/carbon/human/human_target = target
+		if(human_target.stat != CONSCIOUS)
+			var/obj/item/soulstone/stone = new /obj/item/soulstone(src)
+			stone.attack(human_target, user)
+			if(!LAZYLEN(stone.contents))
+				qdel(stone)
+	if(istype(target, /obj/structure/constructshell) && contents.len)
+		var/obj/item/soulstone/stone = contents[1]
+		if(!istype(stone))
+			stone.forceMove(drop_location())
+		else if(!stone.transfer_to_construct(target, user) && !(locate(/mob/living/simple_animal/shade) in stone))
+			qdel(stone)
 
 /datum/action/innate/dash/cult
 	name = "Rend the Veil"

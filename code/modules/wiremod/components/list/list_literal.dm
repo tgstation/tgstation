@@ -49,10 +49,9 @@
 		var/index = length(input_ports)
 		if(trigger_input)
 			index -= 1
-		entry_ports += add_input_port("Index [index+1]", PORT_TYPE_ANY, index = index+1)
+		entry_ports += add_input_port("Index [index+1]", PORT_TYPE_ANY)
 
-/obj/item/circuit_component/list_literal/Initialize()
-	. = ..()
+/obj/item/circuit_component/list_literal/populate_ports()
 	set_list_size(default_list_size)
 	list_output = add_output_port("Value", PORT_TYPE_LIST)
 
@@ -73,9 +72,6 @@
 	balloon_alert(user, "new size is now [length]")
 
 /obj/item/circuit_component/list_literal/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	var/list/new_literal = list()
 	for(var/datum/port/input/entry_port as anything in entry_ports)
