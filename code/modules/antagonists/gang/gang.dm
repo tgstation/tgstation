@@ -105,13 +105,15 @@
 
 /datum/antagonist/gang/apply_innate_effects(mob/living/mob_override)
 	..()
-	package_spawner.Grant(owner.current)
-	package_spawner.my_gang_datum = src
+	if(starter_gangster)
+		package_spawner.Grant(owner.current)
+		package_spawner.my_gang_datum = src
 	var/mob/living/M = mob_override || owner.current
 	add_antag_hud(antag_hud_type, antag_hud_name, M)
 
 /datum/antagonist/gang/remove_innate_effects(mob/living/mob_override)
-	package_spawner.Remove(owner.current)
+	if(starter_gangster)
+		package_spawner.Remove(owner.current)
 	var/mob/living/M = mob_override || owner.current
 	remove_antag_hud(antag_hud_type, M)
 	..()
@@ -215,6 +217,7 @@
 	to_chat(H, "You pull an induction package from your pockets and place it on the ground.")
 	var/obj/item/gang_induction_package/GP = new(get_turf(H))
 	GP.name = "\improper [my_gang_datum.name] signup package"
+	GP.desc = "The book reads:<br>[my_gang_datum.my_gang.current_theme.gang_objectives[my_gang_datum.type]]"
 	GP.handler = my_gang_datum.handler
 	GP.gang_to_use = my_gang_datum.type
 	GP.team_to_use = my_gang_datum.my_gang
@@ -237,6 +240,16 @@
 						/obj/item/clothing/under/color/red,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Triad"
+	gang_team_type = /datum/team/gang/red
+
+/datum/team/gang/red/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Master [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
 
 /datum/antagonist/gang/purple
 	show_in_antagpanel = TRUE
@@ -255,6 +268,17 @@
 						/obj/item/clothing/under/color/lightpurple,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Ballas"
+	gang_team_type = /datum/team/gang/purple
+
+/datum/team/gang/purple/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Leader [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
+
 
 /datum/antagonist/gang/green
 	show_in_antagpanel = TRUE
@@ -272,6 +296,16 @@
 						/obj/item/clothing/under/color/darkgreen,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Grove"
+	gang_team_type = /datum/team/gang/green
+
+/datum/team/gang/green/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Big [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
 
 /datum/antagonist/gang/russian_mafia
 	show_in_antagpanel = TRUE
@@ -288,6 +322,16 @@
 						/obj/item/clothing/under/suit/white,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Russian"
+	gang_team_type = /datum/team/gang/russian_mafia
+
+/datum/team/gang/russian_mafia/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Don [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
 
 /datum/antagonist/gang/italian_mob
 	show_in_antagpanel = TRUE
@@ -303,7 +347,16 @@
 						/obj/item/clothing/under/suit/checkered,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Italian"
+	gang_team_type = /datum/team/gang/russian_mafia
 
+/datum/team/gang/russian_mafia/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Boss [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
 
 /datum/antagonist/gang/tunnel_snakes
 	show_in_antagpanel = TRUE
@@ -318,6 +371,16 @@
 						/obj/item/clothing/under/pants/classicjeans,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Snakes"
+	gang_team_type = /datum/team/gang/tunnel_snakes
+
+/datum/team/gang/tunnel_snakes/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "King Cobra [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
 
 /datum/antagonist/gang/vagos
 	show_in_antagpanel = TRUE
@@ -334,6 +397,17 @@
 						/obj/item/clothing/under/color/yellow,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Vagos"
+	gang_team_type = /datum/team/gang/vagos
+
+/datum/team/gang/vagos/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Boss [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
+
 
 /datum/antagonist/gang/henchmen
 	show_in_antagpanel = TRUE
@@ -381,6 +455,16 @@
 						/obj/item/clothing/head/hardhat,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Tojo"
+	gang_team_type = /datum/team/gang/yakuza
+
+/datum/team/gang/yakuza/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Patriarch [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
 
 /datum/antagonist/gang/jackbros
 	show_in_antagpanel = TRUE
@@ -398,6 +482,17 @@
 						/obj/item/clothing/head/jackbros,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "JackFrost"
+	gang_team_type = /datum/team/gang/jackbros
+
+/datum/team/gang/jackbros/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "King Frost [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
+
 
 /datum/antagonist/gang/dutch
 	show_in_antagpanel = TRUE
@@ -415,6 +510,17 @@
 						/obj/item/clothing/suit/dutch,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Dutch"
+	gang_team_type = /datum/team/gang/dutch
+
+/datum/team/gang/dutch/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Head Cowboy [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
+
 
 /datum/antagonist/gang/irs
 	show_in_antagpanel = TRUE
@@ -435,7 +541,10 @@
 /datum/team/gang/irs/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
 	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
 	lasttname.Find(original_name)
-	gangster.current.fully_replace_character_name(gangster.current.real_name, "Revenue Agent [lasttname.match]")
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Revenue Supervisor [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Revenue Agent [lasttname.match]")
 	return
 
 /datum/antagonist/gang/osi
@@ -457,7 +566,10 @@
 /datum/team/gang/osi/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
 	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
 	lasttname.Find(original_name)
-	gangster.current.fully_replace_character_name(gangster.current.real_name, "Special Agent [lasttname.match]")
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "General [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Special Agent [lasttname.match]")
 	return
 
 /datum/antagonist/gang/tmc
@@ -474,6 +586,16 @@
 							/obj/item/clothing/head/tmc,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "LostMC"
+	gang_team_type = /datum/team/gang/tmc
+
+/datum/team/gang/tmc/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "President [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
 
 /datum/antagonist/gang/pg
 	show_in_antagpanel = TRUE
@@ -489,6 +611,17 @@
 							/obj/item/clothing/head/pg,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "PowderGang"
+	gang_team_type = /datum/team/gang/pg
+
+/datum/team/gang/pg/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "President [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
+
 
 /datum/antagonist/gang/driscoll
 	show_in_antagpanel = TRUE
@@ -506,7 +639,16 @@
 							/obj/item/clothing/shoes/cowboy,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Drill"
+	gang_team_type = /datum/team/gang/driscoll
 
+/datum/team/gang/driscoll/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Head Outlaw [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
 
 /datum/antagonist/gang/deckers
 	show_in_antagpanel = TRUE
@@ -524,6 +666,17 @@
 							/obj/item/clothing/shoes/deckers,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Deckers"
+	gang_team_type = /datum/team/gang/deckers
+
+/datum/team/gang/deckers/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Master Hacker [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
+
 
 /datum/antagonist/gang/morningstar
 	show_in_antagpanel = TRUE
@@ -541,6 +694,16 @@
 							/obj/item/clothing/shoes/morningstar,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "MorningStar"
+	gang_team_type = /datum/team/gang/morningstar
+
+/datum/team/gang/morningstar/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Chief Executive Officer [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
 
 /datum/antagonist/gang/saints
 	show_in_antagpanel = TRUE
@@ -558,6 +721,17 @@
 							/obj/item/clothing/shoes/saints,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "TheSaints"
+	gang_team_type = /datum/team/gang/saints
+
+/datum/team/gang/saints/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Boss [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
+
 
 /datum/antagonist/gang/phantom
 	show_in_antagpanel = TRUE
@@ -575,6 +749,16 @@
 							/obj/item/clothing/shoes/phantom,
 						/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "PhantomThieves"
+	gang_team_type = /datum/team/gang/phantom
+
+/datum/team/gang/phantom/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Joker [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
 
 /datum/antagonist/gang/allies
 	show_in_antagpanel = TRUE
