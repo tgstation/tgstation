@@ -7,7 +7,8 @@
 	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
-	idle_power_usage = 0
+	idle_power_usage = 5000
+	use_power = NO_POWER_USE
 	///The amount of water in the tray (max 100)
 	var/waterlevel = 100
 	///The maximum amount of water in the tray
@@ -119,11 +120,16 @@
 		return myseed.bullet_act(Proj)
 	else if(istype(Proj , /obj/projectile/energy/florarevolution))
 		if(myseed)
-			if(myseed.mutatelist.len > 0)
+			if(LAZYLEN(myseed.mutatelist))
 				myseed.set_instability(myseed.instability/2)
 		mutatespecie()
 	else
 		return ..()
+
+/obj/machinery/hydroponics/power_change()
+	. = ..()
+	if(machine_stat & NOPOWER && self_sustaining)
+		self_sustaining = FALSE
 
 /obj/machinery/hydroponics/process(delta_time)
 	var/needs_update = 0 // Checks if the icon needs updating so we don't redraw empty trays every time
@@ -132,8 +138,8 @@
 		myseed.forceMove(src)
 
 	if(!powered() && self_sustaining)
-		visible_message(span_warning("[name]'s auto-grow functionality shuts off!"))
-		idle_power_usage = 0
+		visible_message("<span class='warning'>[name]'s auto-grow functionality shuts off!</span>")
+		update_use_power(NO_POWER_USE)
 		self_sustaining = FALSE
 		update_appearance()
 
@@ -245,7 +251,7 @@
 				var/mutation_chance = myseed.instability - 75
 				mutate(0, 0, 0, 0, 0, 0, 0, mutation_chance, 0) //Scaling odds of a random trait or chemical
 			if(myseed.instability >= 60)
-				if(prob((myseed.instability)/2) && !self_sustaining && length(myseed.mutatelist)) //Minimum 30%, Maximum 50% chance of mutating every age tick when not on autogrow.
+				if(prob((myseed.instability)/2) && !self_sustaining && LAZYLEN(myseed.mutatelist)) //Minimum 30%, Maximum 50% chance of mutating every age tick when not on autogrow.
 					mutatespecie()
 					myseed.set_instability(myseed.instability/2)
 			if(myseed.instability >= 40)
@@ -419,7 +425,7 @@
 		return
 
 	var/oldPlantName = myseed.plantname
-	if(myseed.mutatelist.len > 0)
+	if(LAZYLEN(myseed.mutatelist))
 		var/mutantseed = pick(myseed.mutatelist)
 		qdel(myseed)
 		myseed = null
@@ -709,7 +715,7 @@
 		if(myseed.endurance <= 20)
 			to_chat(user, span_warning("[myseed.plantname] isn't hardy enough to sequence it's mutation!"))
 			return
-		if(!myseed.mutatelist)
+		if(!LAZYLEN(myseed.mutatelist))
 			to_chat(user, span_warning("[myseed.plantname] has nothing else to mutate into!"))
 			return
 		else
@@ -767,12 +773,14 @@
 		return
 	if(!powered())
 		to_chat(user, span_warning("[name] has no power."))
+		update_use_power(NO_POWER_USE)
 		return
 	if(!anchored)
 		return
 	self_sustaining = !self_sustaining
-	idle_power_usage = self_sustaining ? 5000 : 0
+	update_use_power(self_sustaining ? IDLE_POWER_USE : NO_POWER_USE)
 	to_chat(user, "<span class='notice'>You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""].")
+
 	update_appearance()
 
 /obj/machinery/hydroponics/AltClick(mob/user)
@@ -809,7 +817,7 @@
 		desc = initial(desc)
 		TRAY_NAME_UPDATE
 		if(self_sustaining) //No reason to pay for an empty tray.
-			idle_power_usage = 0
+			update_use_power(NO_POWER_USE)
 			self_sustaining = FALSE
 	update_appearance()
 

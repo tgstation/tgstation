@@ -5,6 +5,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
 	rcd_memory = null
+	material_flags = MATERIAL_EFFECTS
 	var/last_event = 0
 	var/active = null
 

@@ -167,6 +167,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 		return
 	if(!cell.use(charge_per_use))
 		to_chat(user,span_warning("[src] battery ran dry!"))
+		return
 	ADD_TRAIT(user,TRAIT_IMMOBILIZED,src)
 	to_chat(user,span_notice("You begin to charge [src]"))
 	inhand_icon_state = "firelance_charging"

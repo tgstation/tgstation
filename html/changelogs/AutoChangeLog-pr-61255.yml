@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Disposal outlets no longer constantly shoot you out at an incredibly dangerous speed, and no longer deal a base 35 damage + guaranteed dislocation/likely hairline fracture when you hit a wall or other person. Instead, they're back to the old 10 brute damage they were at last year, though you can still multitool/emag them to make them shoot out things faster...."

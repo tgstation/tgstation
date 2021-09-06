@@ -265,7 +265,7 @@
 		new material_drop(loc, material_drop_amount)
 	qdel(src)
 
-/obj/structure/closet/obj_break(damage_flag)
+/obj/structure/closet/atom_break(damage_flag)
 	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		bust_open()
@@ -479,13 +479,14 @@
 	open()
 
 /obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	. = ..()
 
 	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
 		return
 
 	if(!opened && secure)
 		togglelock(user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(secure && !broken)
