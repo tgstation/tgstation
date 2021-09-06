@@ -381,7 +381,7 @@
 	if(!dc)
 		return null
 	. = dc[c_type]
-	if(!length(.))
+	if(. && !length(.))
 		return list(.)
 
 /**
@@ -450,7 +450,7 @@
 		arguments[1] = new_comp
 		var/make_new_component = TRUE
 		for(var/datum/component/existing_component as anything in GetComponents(new_type))
-			if(existing_component?.CheckDupeComponent(arglist(arguments)))
+			if(existing_component.CheckDupeComponent(arglist(arguments)))
 				make_new_component = FALSE
 				QDEL_NULL(new_comp)
 				break
