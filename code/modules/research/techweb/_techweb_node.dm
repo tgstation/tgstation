@@ -36,8 +36,8 @@
 	var/list/required_experiments = list()
 	/// If completed, these experiments give a specific point amount discount to the node.area
 	var/list/discount_experiments = list()
-	/// Prevents discounts from completed discount experiments applying indefinitely
-	var/applied_discount = FALSE
+	/// When we apply a discount to a node we add the experiment for it here to prevent excess discount applications
+	var/list/discount_used = list()
 
 /datum/techweb_node/error_node
 	id = "ERROR"
@@ -71,7 +71,7 @@
 	VARSET_TO_LIST(., research_costs)
 	VARSET_TO_LIST(., category)
 	VARSET_TO_LIST(., required_experiments)
-	VARSET_TO_LIST(., applied_discount)
+	VARSET_TO_LIST(., discount_used)
 
 /datum/techweb_node/deserialize_list(list/input, list/options)
 	if(!input["id"])
@@ -88,7 +88,7 @@
 	VARSET_FROM_LIST(input, research_costs)
 	VARSET_FROM_LIST(input, category)
 	VARSET_FROM_LIST(input, required_experiments)
-	VARSET_FROM_LIST(input, applied_discount)
+	VARSET_FROM_LIST(input, discount_used)
 	Initialize()
 	return src
 
@@ -113,12 +113,11 @@
 			for(var/booster in boostlist)
 				if(actual_costs[booster])
 					actual_costs[booster] -= boostlist[booster]
-		if(!applied_discount)
-			for(var/cost_type in actual_costs)
-				for(var/experiment_type in discount_experiments)
-					if(host.completed_experiments[experiment_type]) //do we have this discount_experiment unlocked?
-						actual_costs[cost_type] -= discount_experiments[experiment_type]
-						applied_discount = TRUE
+		for(var/cost_type in actual_costs)
+			for(var/experiment_type in discount_experiments)
+				if(host.completed_experiments[experiment_type] && !discount_used[experiment_type]) //do we have this discount_experiment unlocked AND it wasn't applied already?
+					actual_costs[cost_type] -= discount_experiments[experiment_type]
+					discount_used[experiment_type] = experiment_type
 		return actual_costs
 	else
 		return research_costs
