@@ -262,7 +262,7 @@
 		return TRUE
 
 	if(panel_open)
-		balloon_alert(user, "panel is open!")
+		balloon_alert(user, "close the panel first!")
 		return FALSE
 
 	return ..()
@@ -273,13 +273,13 @@
 		return TRUE
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", O))
-		return FALSE
+		return FALSE //returning this as FALSE prevents the screwdriver from being immediately eaten by the autolathe after you screw the panel open/closed. why? don't ask me
 
 	if(machine_stat)
 		return TRUE
 
 	if(panel_open)
-		balloon_alert(user, "panel is open!")
+		balloon_alert(user, "close the panel first!")
 		return FALSE
 
 	return ..()
