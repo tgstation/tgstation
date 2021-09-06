@@ -70,6 +70,7 @@
 
 /obj/effect/abstract/turf_fire/proc/process_waste()
 	var/turf/open/open_turf = loc
+	open_turf.PolluteListTurf(list(/datum/pollutant/smoke = 15, /datum/pollutant/carbon_air_pollution = 5), POLLUTION_ACTIVE_EMITTER_CAP)
 	if(open_turf.planetary_atmos)
 		return TRUE
 	var/list/air_gases = open_turf.air?.gases
