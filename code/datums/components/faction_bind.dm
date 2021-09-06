@@ -9,6 +9,9 @@
 /datum/component/faction_bind/Initialize(datum/faction_master, trait_source, block_innate_factions = FALSE, do_faction_check = TRUE, list/blacklist, highlander = FALSE)
 	if(!istype(faction_master) || !trait_source)
 		return COMPONENT_INCOMPATIBLE
+	if(faction_master == parent) // This will cause infinite recursions. Abort.
+		stack_trace("a faction_bind comp with faction_master and parent being the same was about to be added (trait_source: [trait_source]).")
+		return COMPONENT_INCOMPATIBLE
 
 	src.faction_master = faction_master
 	src.block_innate_factions = block_innate_factions
