@@ -5,6 +5,7 @@
 	var/trait_source
 	var/do_faction_check = TRUE
 	var/list/blacklist
+	var/currently_looping = FALSE
 
 /datum/component/faction_bind/Initialize(datum/faction_master, trait_source, block_innate_factions = FALSE, do_faction_check = TRUE, list/blacklist, highlander = FALSE)
 	if(!istype(faction_master) || !trait_source)
@@ -88,8 +89,10 @@
 		return TRUE
 	if(target && !exact_match && HAS_TRAIT(target, TRAIT_FACTION_MASTER(faction_master)))
 		return TRUE
-	if(do_faction_check && faction_master.faction_check(target || factions, exact_match, blacklist))
-		return TRUE
+	if(do_faction_check)
+		do_faction_check = FALSE // Temporarily set it to false to avoid possible loops.
+		. = faction_master.faction_check(target || factions, exact_match, blacklist)
+		do_faction_check = TRUE
 
 /datum/component/faction_bind/proc/on_parent_faction_checked(datum/source, datum/checker, exact_match)
 	SIGNAL_HANDLER
@@ -97,5 +100,7 @@
 		return TRUE
 	if(!exact_match && HAS_TRAIT(checker, TRAIT_FACTION_MASTER(faction_master)))
 		return TRUE
-	if(do_faction_check && checker.faction_check(faction_master, exact_match, blacklist))
-		return TRUE
+	if(do_faction_check)
+		do_faction_check = TRUE
+		. = checker.faction_check(faction_master, exact_match, blacklist)
+		do_faction_check = FALSE
