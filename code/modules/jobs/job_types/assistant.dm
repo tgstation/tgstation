@@ -3,7 +3,7 @@ Assistant
 */
 /datum/job/assistant
 	title = "Assistant"
-	faction = TRAIT_FACTION_STATION
+	faction_trait = TRAIT_FACTION_STATION
 	total_positions = 5
 	spawn_positions = 5
 	supervisors = "absolutely everyone"

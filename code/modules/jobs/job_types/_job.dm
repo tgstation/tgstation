@@ -17,7 +17,7 @@
 	var/auto_deadmin_role_flags = NONE
 
 	/// Players will be allowed to spawn in as jobs that are set to "Station"
-	var/faction = FACTION_NONE
+	var/faction_trait
 
 	/// How many players can be this job
 	var/total_positions = 0

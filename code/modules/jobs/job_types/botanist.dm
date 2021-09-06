@@ -1,7 +1,7 @@
 /datum/job/botanist
 	title = "Botanist"
 	department_head = list("Head of Personnel")
-	faction = TRAIT_FACTION_STATION
+	faction_trait = TRAIT_FACTION_STATION
 	total_positions = 3
 	spawn_positions = 2
 	supervisors = "the head of personnel"

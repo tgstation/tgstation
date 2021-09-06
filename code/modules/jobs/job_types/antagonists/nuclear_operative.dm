@@ -1,6 +1,6 @@
 /datum/job/nuclear_operative
 	title = ROLE_NUCLEAR_OPERATIVE
-	faction = TRAIT_FACTION_SYNDICATE
+	faction_trait = TRAIT_FACTION_SYNDICATE
 
 
 /datum/job/nuclear_operative/get_roundstart_spawn_point()

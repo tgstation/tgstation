@@ -1,7 +1,7 @@
 /datum/job/prisoner
 	title = "Prisoner"
 	department_head = list("The Security Team")
-	faction = TRAIT_FACTION_STATION
+	faction_trait = TRAIT_FACTION_STATION
 	total_positions = 0
 	spawn_positions = 2
 	supervisors = "the security team"

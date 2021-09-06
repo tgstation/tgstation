@@ -1,7 +1,7 @@
 /datum/job/atmospheric_technician
 	title = "Atmospheric Technician"
 	department_head = list("Chief Engineer")
-	faction = TRAIT_FACTION_STATION
+	faction_trait = TRAIT_FACTION_STATION
 	total_positions = 3
 	spawn_positions = 2
 	supervisors = "the chief engineer"

@@ -859,6 +859,10 @@
 	if(!is_job(new_role))
 		CRASH("set_assigned_role called with invalid role: [isnull(new_role) ? "null" : new_role]")
 	. = assigned_role
+	if(assigned_role?.faction_trait)
+		REMOVE_TRAIT(src, assigned_role.faction_trait, JOB_TRAIT)
+	if(new_role.faction_trait)
+		ADD_TRAIT(src, assigned_role.faction_trait, JOB_TRAIT)
 	assigned_role = new_role
 
 
