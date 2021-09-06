@@ -88,7 +88,7 @@
 /obj/item/pda/security
 	name = "security PDA"
 	default_cartridge = /obj/item/cartridge/security
-	greyscale_colors = "#cc4242#5160b2"
+	greyscale_colors = "#cc4242#0000cc"
 
 /obj/item/pda/detective
 	name = "detective PDA"
@@ -99,7 +99,7 @@
 	name = "warden PDA"
 	default_cartridge = /obj/item/cartridge/security
 	greyscale_config = /datum/greyscale_config/pda/stripe_split
-	greyscale_colors = "#cc4242#5160b2#666666"
+	greyscale_colors = "#cc4242#0000cc#666666"
 
 /obj/item/pda/janitor
 	name = "janitor PDA"
@@ -128,7 +128,7 @@
 	name = "head of security PDA"
 	default_cartridge = /obj/item/cartridge/hos
 	greyscale_config = /datum/greyscale_config/pda/head
-	greyscale_colors = "#cc4242#5160b2"
+	greyscale_colors = "#cc4242#0000cc"
 
 /obj/item/pda/heads/ce
 	name = "chief engineer PDA"
@@ -163,19 +163,19 @@
 /obj/item/pda/cargo
 	name = "cargo technician PDA"
 	default_cartridge = /obj/item/cartridge/quartermaster
-	greyscale_colors = "#D6B328#6C3BA1"
+	greyscale_colors = "#D6B328#6506ca"
 
 /obj/item/pda/quartermaster
 	name = "quartermaster PDA"
 	default_cartridge = /obj/item/cartridge/quartermaster
 	inserted_item = /obj/item/pen/survival
 	greyscale_config = /datum/greyscale_config/pda/stripe_thick
-	greyscale_colors = "#D6B328#6C3BA1#7f6545"
+	greyscale_colors = "#D6B328#6506ca#927444"
 
 /obj/item/pda/shaftminer
 	name = "shaft miner PDA"
 	greyscale_config = /datum/greyscale_config/pda/stripe_thick
-	greyscale_colors = "#7f6545#D6B328#6C3BA1"
+	greyscale_colors = "#927444#D6B328#6C3BA1"
 
 /obj/item/pda/syndicate
 	default_cartridge = /obj/item/cartridge/virus/syndicate
@@ -205,7 +205,7 @@
 /obj/item/pda/roboticist
 	name = "roboticist PDA"
 	greyscale_config = /datum/greyscale_config/pda/stripe_split
-	greyscale_colors = "#484848#355FAC#d33725"
+	greyscale_colors = "#484848#0099cc#d33725"
 	default_cartridge = /obj/item/cartridge/roboticist
 
 /obj/item/pda/curator
