@@ -617,7 +617,7 @@
 	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
 	lasttname.Find(original_name)
 	if(starter_gangster)
-		gangster.current.fully_replace_character_name(gangster.current.real_name, "Head Prisoner [lasttname.match]")
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Head Convict [lasttname.match]")
 	else
 		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
 	return
