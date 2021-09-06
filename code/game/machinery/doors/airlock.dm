@@ -599,7 +599,7 @@
 /obj/machinery/door/airlock/examine(mob/user)
 	. = ..()
 	if(closeOtherId)
-		. += span_warning("This airlock cycles on ID: [closeOtherId].")
+		. += span_warning("This airlock cycles on ID: [sanitize(closeOtherId)].")
 	else if(!closeOtherId)
 		. += span_warning("This airlock does not cycle.")
 	if(obj_flags & EMAGGED)
