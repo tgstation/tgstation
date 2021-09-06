@@ -42,9 +42,9 @@
 /datum/action/boss/wizard_summon_minions/Trigger()
 	if(summoned_minions <= 6 && ..())
 		var/list/minions = list(
-		/mob/living/simple_animal/hostile/stickman,
-		/mob/living/simple_animal/hostile/stickman/ranged,
-		/mob/living/simple_animal/hostile/stickman/dog)
+		/mob/living/basic/stickman,
+		/mob/living/basic/stickman/ranged,
+		/mob/living/basic/stickman/dog)
 		var/list/directions = GLOB.cardinals.Copy()
 		for(var/i in 1 to 3)
 			var/minions_chosen = pick_n_take(minions)

@@ -162,7 +162,6 @@
 /obj/item/clothing/suit/wizrobe/paper/verb/stickmen()
 	set category = "Object"
 	set name = "Summon Stick Minions"
-	set src in usr
 	if(!isliving(usr))
 		return
 	if(!robe_charge)
@@ -170,13 +169,12 @@
 		return
 
 	usr.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
-	playsound(src.loc, 'sound/magic/summon_magic.ogg', 50, TRUE, TRUE)
-	var/mob/living/M = new /mob/living/simple_animal/hostile/stickman(get_turf(usr))
-	var/list/factions = usr.faction
-	M.faction = factions
-	src.robe_charge = FALSE
+	playsound(loc, 'sound/magic/summon_magic.ogg', 50, TRUE, TRUE)
+	var/mob/living/M = new /mob/living/basic/stickman(get_turf(usr))
+	M.faction += list("[REF(usr)]")
+	robe_charge = FALSE
 	sleep(30)
-	src.robe_charge = TRUE
+	robe_charge = TRUE
 	to_chat(usr, span_notice("The robe hums, its internal magic supply restored."))
 
 
