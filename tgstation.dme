@@ -932,6 +932,7 @@
 #include "code\datums\wounds\slash.dm"
 #include "code\datums\wounds\scars\_scars.dm"
 #include "code\game\alternate_appearance.dm"
+#include "code\game\atom_defense.dm"
 #include "code\game\atoms.dm"
 #include "code\game\atoms_movable.dm"
 #include "code\game\communications.dm"

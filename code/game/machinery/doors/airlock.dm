@@ -152,10 +152,10 @@
 	if(glass)
 		airlock_material = "glass"
 	if(security_level > AIRLOCK_SECURITY_IRON)
-		obj_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
+		atom_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
 		max_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
 	else
-		obj_integrity = normal_integrity
+		atom_integrity = normal_integrity
 		max_integrity = normal_integrity
 	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_IRON)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
@@ -552,12 +552,12 @@
 
 	if(hasPower())
 		if(frame_state == AIRLOCK_FRAME_CLOSED)
-			if(obj_integrity < integrity_failure * max_integrity)
+			if(atom_integrity < integrity_failure * max_integrity)
 				. += get_airlock_overlay("sparks_broken", overlays_file, em_block = FALSE)
-			else if(obj_integrity < (0.75 * max_integrity))
+			else if(atom_integrity < (0.75 * max_integrity))
 				. += get_airlock_overlay("sparks_damaged", overlays_file, em_block = FALSE)
 		else if(frame_state == AIRLOCK_FRAME_OPEN)
-			if(obj_integrity < (0.75 * max_integrity))
+			if(atom_integrity < (0.75 * max_integrity))
 				. += get_airlock_overlay("sparks_open", overlays_file, em_block = FALSE)
 
 	if(note)
@@ -967,14 +967,14 @@
 			to_chat(user, span_warning("[src] is blocked by a seal!"))
 			return
 
-		if(obj_integrity < max_integrity)
+		if(atom_integrity < max_integrity)
 			if(!W.tool_start_check(user, amount=0))
 				return
 			user.visible_message(span_notice("[user] begins welding the airlock."), \
 							span_notice("You begin repairing the airlock..."), \
 							span_hear("You hear welding."))
 			if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
-				obj_integrity = max_integrity
+				atom_integrity = max_integrity
 				set_machine_stat(machine_stat & ~BROKEN)
 				user.visible_message(span_notice("[user] finishes welding [src]."), \
 									span_notice("You finish repairing the airlock."))
@@ -1306,10 +1306,10 @@
 		add_hiddenprint(user)
 
 /obj/machinery/door/airlock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
-	if((damage_amount >= obj_integrity) && (damage_flag == BOMB))
+	if((damage_amount >= atom_integrity) && (damage_flag == BOMB))
 		flags_1 |= NODECONSTRUCT_1  //If an explosive took us out, don't drop the assembly
 	. = ..()
-	if(obj_integrity < (0.75 * max_integrity))
+	if(atom_integrity < (0.75 * max_integrity))
 		update_appearance()
 
 

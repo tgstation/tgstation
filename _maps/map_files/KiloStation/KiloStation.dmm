@@ -7115,7 +7115,7 @@
 	dir = 4;
 	icon_state = "rightsecure";
 	name = "Primary AI Core Access";
-	obj_integrity = 300;
+	atom_integrity = 300;
 	req_access_txt = "16"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -22432,7 +22432,7 @@
 	dir = 8;
 	icon_state = "leftsecure";
 	name = "Primary AI Core Access";
-	obj_integrity = 300;
+	atom_integrity = 300;
 	req_access_txt = "16"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -51722,7 +51722,7 @@
 	icon_state = "leftsecure";
 	layer = 4.1;
 	name = "Tertiary AI Core Access";
-	obj_integrity = 300;
+	atom_integrity = 300;
 	pixel_x = -3;
 	req_access_txt = "16"
 	},
@@ -74657,7 +74657,7 @@
 	icon_state = "rightsecure";
 	layer = 4.1;
 	name = "Secondary AI Core Access";
-	obj_integrity = 300;
+	atom_integrity = 300;
 	pixel_x = 4;
 	req_access_txt = "16"
 	},

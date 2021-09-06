@@ -32485,7 +32485,7 @@
 	dir = 1;
 	icon_state = "rightsecure";
 	name = "Primary AI Core Access";
-	obj_integrity = 300;
+	atom_integrity = 300;
 	req_access_txt = "16"
 	},
 /turf/open/floor/iron/dark,
