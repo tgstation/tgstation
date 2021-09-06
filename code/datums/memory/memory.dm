@@ -36,7 +36,7 @@
 
 	//entirely independent vars (not related to the action or story type)
 
-	var/list/something_pool = list(
+	var/static/list/something_pool = list(
 		/mob/living/simple_animal/hostile/carp,
 		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/hostile/mushroom,

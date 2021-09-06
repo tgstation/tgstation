@@ -363,7 +363,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HOT_SPRING_CURSED "hot_spring_cursed"
 
 /// If something has been engraved/cannot be engraved
-#define NOT_ENGRAVABLE "not_engravable"
+#define TRAIT_NOT_ENGRAVABLE "not_engravable"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
