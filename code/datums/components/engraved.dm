@@ -52,7 +52,6 @@
 
 /datum/component/engraved/Destroy(force, silent)
 	. = ..()
-	var/turf/closed/engraved_wall = parent
 	parent.RemoveElement(/datum/element/art)
 	//must be here to allow overlays to be updated
 	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
