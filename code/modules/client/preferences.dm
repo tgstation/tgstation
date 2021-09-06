@@ -354,7 +354,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	client?.clear_map(assigned_map)
 	client?.screen -= src
 
-	preferences.character_preview_view = null
+	preferences?.character_preview_view = null
 
 	client = null
 	plane_masters = null

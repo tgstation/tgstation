@@ -74,7 +74,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// What savefile should this preference be read from?
 	/// Valid values are PREFERENCE_CHARACTER and PREFERENCE_PLAYER.
 	/// See the documentation in [code/__DEFINES/preferences.dm].
-	// MOTHBLOCKS TODO: Verify all are set (and valid) in unit tests.
 	var/savefile_identifier
 
 	/// The priority of when to apply this preference.
@@ -150,7 +149,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/value
-	READ_FILE(savefile[savefile_key], value)
+
+	if (!isnull(savefile))
+		READ_FILE(savefile[savefile_key], value)
 
 	if (isnull(value))
 		return null
@@ -166,7 +167,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	if (!is_valid(value))
 		return FALSE
 
-	WRITE_FILE(savefile[savefile_key], serialize(value))
+	if (!isnull(savefile))
+		WRITE_FILE(savefile[savefile_key], serialize(value))
+
 	return TRUE
 
 /// Apply this preference onto the given client.
@@ -185,7 +188,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Apply this preference onto the given human.
 /// Must be overriden by subtypes.
 /// Called when the savefile_identifier == PREFERENCE_CHARACTER.
-// MOTHBLOCKS TODO: Unit test this
 /datum/preference/proc/apply_to_human(mob/living/carbon/human/target, value)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
@@ -194,6 +196,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Returns which savefile to use for a given savefile identifier
 /datum/preferences/proc/get_savefile_for_savefile_identifier(savefile_identifier)
 	RETURN_TYPE(/savefile)
+
+	if (!parent)
+		return null
 
 	var/savefile/savefile = new /savefile(path)
 
@@ -234,7 +239,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	value_cache[preference_type] = value
 	return value
 
-/// Set a /datum/preference type.
+/// Set a /datum/preference entry.
 /// Returns TRUE for a successful preference application.
 /// Returns FALSE if it is invalid.
 /datum/preferences/proc/write_preference(datum/preference/preference, preference_value)
@@ -268,8 +273,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/proc/is_valid(value)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
-
-	// MOTHBLOCKS TODO: Unit test this
 	CRASH("`is_valid()` was not implemented for [type]!")
 
 /// Returns data to be sent to users in the menu
@@ -355,7 +358,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// - A flat list of raw values, such as list(MALE, FEMALE, PLURAL).
 /// - An assoc list of raw values to atoms/icons, in which case
 /// icons will be generated.
-// MOTHBLOCKS TODO: Unit test this
 /datum/preference/choiced/proc/init_possible_values()
 	SHOULD_NOT_SLEEP(TRUE)
 	CRASH("`init_possible_values()` was not implemented for [type]!")

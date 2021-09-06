@@ -74,6 +74,7 @@
 #include "outfit_sanity.dm"
 #include "pills.dm"
 #include "plantgrowth_tests.dm"
+#include "preferences.dm"
 #include "projectiles.dm"
 #include "rcd.dm"
 #include "reagent_id_typos.dm"
