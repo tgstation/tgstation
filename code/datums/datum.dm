@@ -285,8 +285,7 @@
 	var/does_match = exact_match ? (length(matches) == length(src_factions)) : length(matches)
 	if(does_match || SEND_SIGNAL(src, COMSIG_PARENT_FACTION_CHECK, factions, exact_match, datum_target))
 		return TRUE
-	if(datum_target && SEND_SIGNAL(datum_target, COMSIG_PARENT_FACTION_CHECKED, src, exact_match))
-		return TRUE
+	return (datum_target && SEND_SIGNAL(datum_target, COMSIG_PARENT_FACTION_CHECKED, src, exact_match))
 
 /datum/proc/get_faction_traits(list/factions_list)
 	return GET_TRAITS_IN_LIST(src, factions_list)
