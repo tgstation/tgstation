@@ -111,6 +111,32 @@ const createCreateSetPriorityFromName
     return createSetPriority;
   };
 
+const PriorityHeaders = () => {
+  const className = "PreferencesMenu__Jobs__PriorityHeader";
+
+  return (
+    <Stack>
+      <Stack.Item grow />
+
+      <Stack.Item className={className}>
+        Off
+      </Stack.Item>
+
+      <Stack.Item className={className}>
+        Low
+      </Stack.Item>
+
+      <Stack.Item className={className}>
+        Medium
+      </Stack.Item>
+
+      <Stack.Item className={className}>
+        High
+      </Stack.Item>
+    </Stack>
+  );
+};
+
 const PriorityButtons = (props: {
   createSetPriority: CreateSetPriority,
   isOverflow: boolean,
@@ -341,10 +367,14 @@ export const JobsPage = () => {
       <JoblessRoleDropdown />
 
       <Stack vertical fill>
+        <Gap amount={22} />
+
         <Stack.Item>
           <Stack fill className="PreferencesMenu__Jobs">
             <Stack.Item>
               <Gap amount={66} />
+
+              <PriorityHeaders />
 
               <Department
                 department={Departments.Engineering}
@@ -370,6 +400,7 @@ export const JobsPage = () => {
             </Stack.Item>
 
             <Stack.Item>
+              <PriorityHeaders />
               <Department department={Departments.Captain} name="Captain" />
               <Gap amount={6} />
               <Department department={Departments.Service} name="Service" />
@@ -379,6 +410,8 @@ export const JobsPage = () => {
 
             <Stack.Item>
               <Gap amount={66} />
+
+              <PriorityHeaders />
 
               <Department
                 department={Departments.Security}

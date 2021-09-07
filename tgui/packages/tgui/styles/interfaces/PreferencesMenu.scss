@@ -186,6 +186,16 @@ $department_map: (
         }
       }
     }
+
+    &__PriorityHeader {
+      font-weight: bold;
+      transform:
+        translateX(-4px)
+        translateY(-8px)
+        rotate(315deg);
+      white-space: nowrap;
+      width: 19px;
+    }
   }
 
   &__Quirks {
