@@ -188,9 +188,22 @@
 	if(istype(mymob) && mymob.client?.prefs?.ambientocclusion)
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
 
-/atom/movable/screen/plane_master/mouse_transparent
-	name = "mouse transparent plane master"
-	plane = MOUSE_TRANSPARENT_PLANE
+/atom/movable/screen/plane_master/pollution
+	name = "pollution plane master"
+	plane = POLLUTION_PLANE
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/atom/movable/screen/plane_master/pollution/backdrop(mob/mymob)
+	if(!mymob)
+		CRASH("Plane master backdrop called without a mob attached.")
+	remove_filter("pollution_mask")
+	add_filter("pollution_mask", 1, alpha_mask_filter(render_source = POLLUTION_MASK_RENDER_TARGET, flags = MASK_INVERSE))
+
+/atom/movable/screen/plane_master/pollution_mask
+	name = "pollution mask plane master"
+	plane = POLLUTION_MASK_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+	render_target = POLLUTION_MASK_RENDER_TARGET
