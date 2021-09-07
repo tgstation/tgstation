@@ -19,6 +19,8 @@
 /datum/component/faction_granter/Initialize(faction_to_grant, holy_role_required = NONE, grant_message)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
+	if(!grant_message) //Yes we could do this in the init call with default args, but it scares people
+		grant_message = "You have become friends with [faction_to_grant]"
 	src.faction_to_grant = faction_to_grant
 	src.holy_role_required = holy_role_required
 	src.grant_message = grant_message
