@@ -26,22 +26,15 @@
 	var/being_held_open = FALSE
 	/// The merger id used to create/get the merger group in charge of handling tanks that share an internal gas storage
 	var/merger_id = "firelock"
-	/// The typecache of types which are allowed to merge internal storage
-	var/static/list/merger_typecache
-	///stores the merger datum if we are the owner
-	var/datum/merger/our_merger
 	///Don't register the turfs signal more than once
 	var/registered_turfs = FALSE
-
+	///Stops the firealarm from reopening the door if there is an hazard nearby
 	var/hazard = FALSE
 
 /obj/machinery/door/firedoor/Initialize()
 	. = ..()
 	var/area/my_area = get_area(src)
 	LAZYADD(my_area.firedoors, src)
-
-	if(!merger_typecache)
-		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
 
 	RegisterSignal(src, COMSIG_MERGER_ADDING, .proc/MergerAdding)
 	RegisterSignal(src, COMSIG_MERGER_REMOVING, .proc/MergerRemoving)
@@ -50,7 +43,7 @@
 
 /obj/machinery/door/firedoor/LateInitialize()
 	. = ..()
-	GetMergeGroup(merger_id, merger_typecache)
+	GetMergeGroup(merger_id, allowed_types = list(/obj/machinery/door/firedoor))
 
 ///////////////////////////////////////////////////////////////////
 // Merger handling
@@ -73,7 +66,6 @@
 	var/turf/open/turf1 = get_step(src, dir)
 	var/turf/open/turf2 = get_step(src, turn(dir, 180))
 	if(merger.origin != src)
-		our_merger = null
 		registered_turfs = FALSE
 		UnregisterSignal(turf1, COMSIG_TURF_EXPOSE)
 		UnregisterSignal(turf2, COMSIG_TURF_EXPOSE)
@@ -83,7 +75,6 @@
 		RegisterSignal(turf1, COMSIG_TURF_EXPOSE, .proc/check_closing)
 		RegisterSignal(turf2, COMSIG_TURF_EXPOSE, .proc/check_closing)
 		registered_turfs = TRUE
-		our_merger = merger
 
 ///Check if the temperature and pressure changes are enough to cause body damage
 /obj/machinery/door/firedoor/proc/check_closing(datum/source, datum/gas_mixture/environment, exposed_temperature)
@@ -97,13 +88,14 @@
 	if(environment_pressure > HAZARD_LOW_PRESSURE && environment_pressure < HAZARD_HIGH_PRESSURE)
 		pressure_hazard = FALSE
 
+	var/datum/merger/merge_group = GetMergeGroup(merger_id, allowed_types = list(/obj/machinery/door/firedoor))
 	if(!temperature_hazard && !pressure_hazard)
-		for(var/obj/machinery/door/firedoor/considered_door as anything in our_merger.members)
+		for(var/obj/machinery/door/firedoor/considered_door as anything in merge_group.members)
 			considered_door.hazard = FALSE
 			INVOKE_ASYNC(considered_door, .proc/open)
 		return
 
-	for(var/obj/machinery/door/firedoor/considered_door as anything in our_merger.members)
+	for(var/obj/machinery/door/firedoor/considered_door as anything in merge_group.members)
 		considered_door.hazard = TRUE
 		INVOKE_ASYNC(considered_door, .proc/close)
 
