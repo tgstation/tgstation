@@ -1341,9 +1341,9 @@
 			fail_message += " You have to be in the current round at some point to have one."
 		to_chat(src, span_warning(fail_message))
 		return
-	if(!memory_panel)
-		memory_panel = new(usr, mind)
-	memory_panel.ui_interact(usr)
+	if(!mind.memory_panel)
+		mind.memory_panel = new(usr, mind)
+	mind.memory_panel.ui_interact(usr)
 
 /datum/memory_panel
 	var/datum/mind/mind_reference
