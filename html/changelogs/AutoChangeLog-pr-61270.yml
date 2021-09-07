@@ -1,0 +1,4 @@
+author: "CodeMonkey"
+delete-after: True
+changes: 
+  - bugfix: "Robot tourists now stop attacking you after they show you who's boss."
