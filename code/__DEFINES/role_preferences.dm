@@ -19,28 +19,33 @@
 #define ROLE_WIZARD "Wizard"
 
 // Midround roles
+#define ROLE_ABDUCTOR "Abductor"
 #define ROLE_ALIEN "Xenomorph"
 #define ROLE_BLOB "Blob"
 #define ROLE_BLOB_INFECTION "Blob Infection"
 #define ROLE_MALF_MIDROUND "Malf AI (Midround)"
+#define ROLE_NIGHTMARE "Nightmare"
 #define ROLE_NINJA "Space Ninja"
 #define ROLE_REV_HEAD "Head Revolutionary"
 #define ROLE_OBSESSED "Obsessed"
+#define ROLE_OPERATIVE_MIDROUND "Operative (Midround)"
+#define ROLE_SENTIENT_DISEASE "Sentient Disease"
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
 #define ROLE_SPACE_DRAGON "Space Dragon"
+#define ROLE_SPIDER "Spider"
+#define ROLE_SWARMER "Swarmer"
 #define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
 
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
 #define ROLE_SYNDICATE_INFILTRATOR "Syndicate Infiltrator"
 
-// MOTHBLOCKS TODO: Unsorted
+// Other roles
 #define ROLE_SYNDICATE "Syndicate"
 #define ROLE_REV "Revolutionary"
 #define ROLE_REV_SUCCESSFUL "Victorious Revolutionary"
 #define ROLE_PAI "pAI"
 #define ROLE_MONKEY_HELMET "Monkey Mind Magnification Helmet"
-#define ROLE_ABDUCTOR "Abductor"
 #define ROLE_REVENANT "Revenant"
 #define ROLE_BRAINWASHED "Brainwashed Victim"
 #define ROLE_OVERTHROW "Syndicate Mutineer" //Role removed, left here for safety.
@@ -61,17 +66,14 @@
 #define ROLE_NUCLEAR_OPERATIVE "Nuclear Operative"
 #define ROLE_CLOWN_OPERATIVE "Clown Operative"
 #define ROLE_LONE_OPERATIVE "Lone Operative"
-#define ROLE_NIGHTMARE "Nightmare"
 #define ROLE_WIZARD_APPRENTICE "apprentice"
 #define ROLE_SLAUGHTER_DEMON "Slaughter Demon"
-#define ROLE_SENTIENT_DISEASE "Sentient Disease"
 #define ROLE_MORPH "Morph"
 #define ROLE_SANTA "Santa"
 #define ROLE_FUGITIVE "Fugitive"
 
 //Spawner roles
 #define ROLE_GHOST_ROLE "Ghost Role"
-#define ROLE_SPIDER "Spider"
 #define ROLE_EXILE "Exile"
 #define ROLE_FUGITIVE_HUNTER "Fugitive Hunter"
 #define ROLE_ESCAPED_PRISONER "Escaped Prisoner"
@@ -111,6 +113,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_WIZARD = 14,
 
 	// Midround
+	ROLE_ABDUCTOR = 0,
 	ROLE_ALIEN = 0,
 	ROLE_BLOB = 0,
 	ROLE_BLOB_INFECTION = 0,
@@ -118,17 +121,19 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_NINJA = 0,
 	ROLE_OBSESSED = 0,
 	ROLE_REVENANT = 0,
+	ROLE_SENTIENT_DISEASE = 0,
 	ROLE_SLEEPER_AGENT = 0,
 	ROLE_SPACE_DRAGON = 0,
+	ROLE_SPIDER = 0,
+	ROLE_SWARMER = 0,
 
 	// Latejoin
 	ROLE_HERETIC_SMUGGLER = 0,
 	ROLE_SYNDICATE_INFILTRATOR = 0,
 
-	// MOTHBLOCKS TODO: Unsorted
+	// I'm not too sure why these are here, but they're not moving.
 	ROLE_REV = 14,
 	ROLE_PAI = 0,
-	ROLE_ABDUCTOR = 0,
 	ROLE_INTERNAL_AFFAIRS = 0,
 	ROLE_SENTIENCE = 0,
 	ROLE_FAMILIES = 0,

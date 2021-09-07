@@ -10,7 +10,7 @@
 
 /datum/antagonist/swarmer
 	name = "Swarmer"
-	job_rank = ROLE_ALIEN
+	job_rank = ROLE_SWARMER
 	show_to_ghosts = TRUE
 	show_in_antagpanel = FALSE
 	prevent_roundtype_conversion = FALSE
@@ -31,6 +31,9 @@
 
 /datum/antagonist/swarmer/get_team()
 	return swarmer_team
+
+/datum/antagonist/swarmer/get_preview_icon()
+	return finish_preview_icon(icon('icons/mob/swarmer.dmi', "swarmer"))
 
 //SWARMER
 /mob/living/simple_animal/hostile/swarmer/mind_initialize()

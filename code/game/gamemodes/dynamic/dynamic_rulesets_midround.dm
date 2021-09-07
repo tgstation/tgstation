@@ -398,7 +398,8 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear
 	name = "Nuclear Assault"
-	antag_flag = ROLE_OPERATIVE
+	antag_flag = ROLE_OPERATIVE_MIDROUND
+	antag_flag_override = ROLE_OPERATIVE
 	antag_datum = /datum/antagonist/nukeop
 	enemy_roles = list("AI", "Cyborg", "Security Officer", "Warden","Detective","Head of Security", "Captain")
 	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
@@ -635,8 +636,8 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors
 	name = "Abductors"
-	antag_flag = "Abductor"
-	antag_flag_override = ROLE_ABDUCTOR
+	antag_datum = /datum/antagonist/abductor
+	antag_flag = ROLE_ABDUCTOR
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 2
@@ -674,8 +675,7 @@
 /datum/dynamic_ruleset/midround/swarmers
 	name = "Swarmers"
 	antag_datum = /datum/antagonist/swarmer
-	antag_flag = "Swarmer"
-	antag_flag_override = ROLE_ALIEN
+	antag_flag = ROLE_SWARMER
 	required_type = /mob/dead/observer
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
@@ -709,8 +709,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja
 	name = "Space Ninja"
 	antag_datum = /datum/antagonist/ninja
-	antag_flag = "Space Ninja"
-	antag_flag_override = ROLE_NINJA
+	antag_flag = ROLE_NINJA
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
@@ -748,8 +747,7 @@
 
 /datum/dynamic_ruleset/midround/spiders
 	name = "Spiders"
-	antag_flag = "Spider"
-	antag_flag_override = ROLE_ALIEN
+	antag_flag = ROLE_SPIDER
 	required_type = /mob/dead/observer
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
@@ -814,8 +812,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease
 	name = "Sentient Disease"
 	antag_datum = /datum/antagonist/disease
-	antag_flag = "Sentient Disease"
-	antag_flag_override = ROLE_ALIEN
+	antag_flag = ROLE_SENTIENT_DISEASE
 	required_candidates = 1
 	weight = 4
 	cost = 10
