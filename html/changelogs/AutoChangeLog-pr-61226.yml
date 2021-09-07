@@ -1,4 +1,0 @@
-author: "AlinaStarkova"
-delete-after: True
-changes: 
-  - expansion: "You can now set an Airlocks name and cycle ID in the RCD airlock settings menu, or by clicking on an airlock control board and making an airlock manually, this allows you to make airlocks that can cycle with each other. examine an airlock to see what, if any, ID they are set to cycle on (linear 1x3 airlocks to space currently do not use cycleIDs)"

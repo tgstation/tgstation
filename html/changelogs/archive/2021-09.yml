@@ -218,3 +218,40 @@
   - bugfix: Fixed xenos will now take damage while in crit state
   tralezab:
   - bugfix: fixed traitors randomly spawning incredibly bugged.
+2021-09-07:
+  AlinaStarkova:
+  - expansion: You can now set an Airlocks name and cycle ID in the RCD airlock settings
+      menu, or by clicking on an airlock control board and making an airlock manually,
+      this allows you to make airlocks that can cycle with each other. examine an
+      airlock to see what, if any, ID they are set to cycle on (linear 1x3 airlocks
+      to space currently do not use cycleIDs)
+  Ghilker:
+  - expansion: HFR - different fuel mixes will have different meltdowns (higher the
+      effort, bigger and badder the result)
+  Nari Harimoto:
+  - qol: Disposals mapped into every map have been redone from the ground up to be
+      fully functional and usable
+  - bugfix: All of Disposals now works, no infinate loops, no random pipes shooting
+      into a room, no sections inaccessible due to a wrong junction
+  QuarianCommando:
+  - expansion: Added five new table variants - Plasmaglass, Reinforced Plasmaglass,
+      Reinforced Glass, Plastitanium Glass, and Titaniumglass.
+  - bugfix: Attempting to create a table with the aforementioned materials will no
+      longer result in a normal metal table.
+  Ryll/Shaps:
+  - bugfix: Disposal outlets no longer constantly shoot you out at an incredibly dangerous
+      speed, and no longer deal a base 35 damage + guaranteed dislocation/likely hairline
+      fracture when you hit a wall or other person. Instead, they're back to the old
+      10 brute damage they were at last year, though you can still multitool/emag
+      them to make them shoot out things faster....
+  SpaceDragon00:
+  - bugfix: Firelance can no longer be used when out of battery
+  Watermelon914:
+  - expansion: Adds instant circuit components that execute instantly and are colour-coded
+      orange to be used in handling events. Adds an airlock access event to determine
+      who is able to open a door.
+  Y0SH1M4S73R:
+  - bugfix: Admins will no longer receive erroneous SDQL spell parse errors when loading
+      a json file that contains projectile var overrides or touch attack var overrides
+  tralezab:
+  - rscadd: Pig Latin mutation
