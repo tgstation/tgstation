@@ -50,7 +50,7 @@
 			to_chat(user, span_notice("\The [src] found no beacons in the world to anchor a wormhole to."))
 		else
 			visible_message(span_notice("\The [src] found no beacons in the world to anchor a wormhole to!"))
-		return TRUE
+		return TRUE // used for chasm code
 
 	var/list/destinations = get_destinations()
 	var/chosen_beacon = pick(destinations)
@@ -63,7 +63,7 @@
 
 	playsound(src,'sound/effects/sparks4.ogg',50,TRUE)
 	qdel(src)
-	return FALSE
+	return FALSE // used for chasm code
 
 /obj/item/wormhole_jaunter/emp_act(power)
 	. = ..()
@@ -78,7 +78,7 @@
 
 	var/mob/M = loc
 	if(istype(M) && triggered)
-		M.visible_message(span_warning("Your [src] overloads and activates!"))
+		M.visible_message(span_warning("Your [src.name] overloads and activates!"))
 		SSblackbox.record_feedback("tally", "jaunter", 1, "EMP") // EMP accidental activation
 		activate(M, FALSE, TRUE)
 	else if(triggered)
@@ -86,14 +86,15 @@
 		activate()
 
 /obj/item/wormhole_jaunter/proc/chasm_react(mob/user)
-	var/can_jaunter_teleport = activate(user, FALSE, TRUE)
-	if(can_jaunter_teleport)
-		to_chat(user, span_notice("Your [src] activates, saving you from the chasm!"))
+	var/fall_into_chasm = activate(user, FALSE, TRUE)
+
+	if(fall_into_chasm)
+		to_chat(user, span_userdanger("\The [src] found no beacons in the world to anchor a wormhole to, preventing it from saving you from the chasm. RIP."))
+	else
+		to_chat(user, span_notice("Your [src.name] activates, saving you from the chasm!"))
 		user.visible_message(span_boldwarning("[user] falls into the chasm!")) //To freak out any bystanders
 		SSblackbox.record_feedback("tally", "jaunter", 1, "Chasm") // chasm automatic activation
-	else
-		to_chat(user, span_userdanger("\The [src] found no beacons in the world to anchor a wormhole to, preventing it from saving you from the chasm. RIP."))
-	return can_jaunter_teleport
+	return fall_into_chasm
 
 //jaunter tunnel
 /obj/effect/portal/jaunt_tunnel
