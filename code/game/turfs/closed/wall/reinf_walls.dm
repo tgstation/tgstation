@@ -45,7 +45,7 @@
 	if(!user.environment_smash)
 		return
 	if(user.environment_smash & ENVIRONMENT_SMASH_RWALLS)
-		dismantle_wall(1)
+		dismantle_wall(TRUE)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
@@ -57,7 +57,7 @@
 	if(!user.environment_smash)
 		return
 	if(user.environment_smash & ENVIRONMENT_SMASH_RWALLS)
-		dismantle_wall(1)
+		dismantle_wall(TRUE)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)

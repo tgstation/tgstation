@@ -113,7 +113,7 @@
 			if(do_after(user, 2 SECONDS, target = src))
 				glass.use(2)
 				broken = FALSE
-				obj_integrity = max_integrity
+				atom_integrity = max_integrity
 				update_appearance()
 			return TRUE
 	else
@@ -230,7 +230,7 @@
 		ui = new(user, src, "Aquarium", name)
 		ui.open()
 
-/obj/structure/aquarium/obj_break(damage_flag)
+/obj/structure/aquarium/atom_break(damage_flag)
 	. = ..()
 	if(!broken)
 		aquarium_smash()

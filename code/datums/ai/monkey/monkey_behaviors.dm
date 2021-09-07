@@ -212,7 +212,7 @@
 			controller.blackboard[BB_MONKEY_GUN_WORKED] = TRUE // 'worked'
 
 	// no de-aggro
-	if(controller.blackboard[BB_MONKEY_AGRESSIVE])
+	if(controller.blackboard[BB_MONKEY_AGGRESSIVE])
 		return
 
 	if(DT_PROB(MONKEY_HATRED_REDUCTION_PROB, delta_time))

@@ -44,8 +44,6 @@
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
-	/// Protection against weather that being inside of it provides.
-	var/list/weather_protection = null
 	/// How close being inside of the thing provides complete pressure safety. Must be between 0 and 1!
 	contents_pressure_protection = 0
 	/// How insulated the thing is, for the purposes of calculating body temperature. Must be between 0 and 1!
@@ -92,10 +90,9 @@
 	. = new_overlays
 	if(enable_door_overlay)
 		if(opened && has_opened_overlay)
-			. += "[icon_door_override ? icon_door : icon_state]_open"
-			var/mutable_appearance/door_blocker = mutable_appearance(icon, "[icon_door || icon_state]_open", plane = EMISSIVE_PLANE)
-			door_blocker.color = GLOB.em_block_color
-			. += door_blocker // If we don't do this the door doesn't block emissives and it looks weird.
+			var/mutable_appearance/door_overlay = mutable_appearance(icon, "[icon_door_override ? icon_door : icon_state]_open", alpha = src.alpha)
+			. += door_overlay
+			door_overlay.overlays += emissive_blocker(door_overlay.icon, door_overlay.icon_state, alpha = door_overlay.alpha) // If we don't do this the door doesn't block emissives and it looks weird.
 		else if(has_closed_overlay)
 			. += "[icon_door || icon_state]_door"
 
@@ -267,7 +264,7 @@
 		new material_drop(loc, material_drop_amount)
 	qdel(src)
 
-/obj/structure/closet/obj_break(damage_flag)
+/obj/structure/closet/atom_break(damage_flag)
 	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		bust_open()
@@ -481,13 +478,14 @@
 	open()
 
 /obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	. = ..()
 
 	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
 		return
 
 	if(!opened && secure)
 		togglelock(user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(secure && !broken)

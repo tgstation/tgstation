@@ -114,8 +114,6 @@
 	var/list/guaranteed_butcher_results = null ///these will always be yielded from butchering
 	var/butcher_difficulty = 0 ///effectiveness prob. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier
 
-	var/list/weather_immunities
-
 	var/stun_absorption = null ///converted to a list of stun absorption sources this mob has when one is added
 
 	var/blood_volume = 0 ///how much blood the mob has

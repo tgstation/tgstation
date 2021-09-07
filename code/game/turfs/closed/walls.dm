@@ -32,7 +32,6 @@
 
 	var/list/dent_decals
 
-
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
 	if(is_station_level(z))
@@ -49,6 +48,8 @@
 		fixed_underlay = string_assoc_list(fixed_underlay)
 		underlays += underlay_appearance
 
+/turf/closed/wall/atom_destruction(damage_flag)
+	dismantle_wall(TRUE, FALSE)
 
 /turf/closed/wall/Destroy()
 	if(is_station_level(z))
@@ -130,7 +131,7 @@
 	user.do_attack_animation(src)
 	if((user.environment_smash & ENVIRONMENT_SMASH_WALLS) || (user.environment_smash & ENVIRONMENT_SMASH_RWALLS))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-		dismantle_wall(1)
+		dismantle_wall(TRUE)
 		return
 
 /turf/closed/wall/attack_basic_mob(mob/living/simple_animal/user, list/modifiers)
@@ -138,7 +139,7 @@
 	user.do_attack_animation(src)
 	if((user.environment_smash & ENVIRONMENT_SMASH_WALLS) || (user.environment_smash & ENVIRONMENT_SMASH_RWALLS))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-		dismantle_wall(1)
+		dismantle_wall(TRUE)
 		return
 
 /turf/closed/wall/attack_hulk(mob/living/carbon/user)

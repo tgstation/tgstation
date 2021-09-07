@@ -8,7 +8,7 @@
 
 /obj/vehicle/sealed/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(. && obj_integrity > 0)
+	if(. && atom_integrity > 0)
 		spark_system.start()
 		switch(damage_flag)
 			if(FIRE)
@@ -21,7 +21,7 @@
 			to_chat(occupants, "[icon2html(src, occupants)][span_userdanger("Taking damage!")]")
 		log_message("Took [damage_amount] points of damage. Damage type: [damage_type]", LOG_MECHA)
 
-/obj/vehicle/sealed/mecha/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/vehicle/sealed/mecha/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	. = ..()
 	if(!damage_amount)
 		return 0
@@ -92,7 +92,7 @@
 	log_message("Attack by basic mob. Attacker - [user].", LOG_MECHA, color="red")
 	if(!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
-		return 0
+		return FALSE
 	else
 		var/play_soundeffect = 1
 		if(user.environment_smash)
@@ -103,7 +103,7 @@
 			basic_damage = user.obj_damage
 		log_combat(user, src, "attacked")
 		attack_generic(user, basic_damage, user.melee_damage_type, MELEE, play_soundeffect)
-		return 1
+		return TRUE
 
 
 /obj/vehicle/sealed/mecha/hulk_damage()
@@ -329,12 +329,12 @@
 		clear_internal_damage(MECHA_INT_TANK_BREACH)
 		to_chat(user, span_notice("You repair the damaged gas tank."))
 		return
-	if(obj_integrity < max_integrity)
+	if(atom_integrity < max_integrity)
 		if(!W.use_tool(src, user, 0, volume=50, amount=1))
 			return
 		user.visible_message(span_notice("[user] repairs some damage to [name]."), span_notice("You repair some damage to [src]."))
-		obj_integrity += min(10, max_integrity-obj_integrity)
-		if(obj_integrity == max_integrity)
+		atom_integrity += min(10, max_integrity-atom_integrity)
+		if(atom_integrity == max_integrity)
 			to_chat(user, span_notice("It looks to be fully repaired now."))
 		return
 	to_chat(user, span_warning("The [name] is at full integrity!"))
@@ -357,7 +357,7 @@
 		. = ..()
 
 /obj/vehicle/sealed/mecha/proc/full_repair(charge_cell)
-	obj_integrity = max_integrity
+	atom_integrity = max_integrity
 	if(cell && charge_cell)
 		cell.charge = cell.maxcharge
 	if(internal_damage & MECHA_INT_FIRE)
@@ -386,7 +386,7 @@
 				visual_effect_icon = ATTACK_EFFECT_MECHTOXIN
 	..()
 
-/obj/vehicle/sealed/mecha/obj_destruction()
+/obj/vehicle/sealed/mecha/atom_destruction()
 	if(wreckage)
 		var/mob/living/silicon/ai/AI
 		for(var/crew in occupants)
