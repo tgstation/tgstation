@@ -3147,7 +3147,6 @@
 #include "code\modules\pollution\air_freshener.dm"
 #include "code\modules\pollution\perfumes.dm"
 #include "code\modules\pollution\pollutant_datum.dm"
-#include "code\modules\pollution\pollutants_generic.dm"
 #include "code\modules\pollution\pollution_datum.dm"
 #include "code\modules\pollution\pollutants\pollutants_cooking.dm"
 #include "code\modules\pollution\pollutants\pollutants_drugs.dm"
