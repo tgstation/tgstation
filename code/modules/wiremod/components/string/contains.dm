@@ -12,7 +12,7 @@
 	var/datum/port/input/needle
 	var/datum/port/input/haystack
 
-/obj/item/circuit_component/compare/contains/load_custom_ports()
+/obj/item/circuit_component/compare/contains/populate_custom_ports()
 	needle = add_input_port("Needle", PORT_TYPE_STRING)
 	haystack = add_input_port("Haystack", PORT_TYPE_STRING)
 

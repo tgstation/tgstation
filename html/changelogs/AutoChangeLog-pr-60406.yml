@@ -1,5 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - bugfix: "fixes hot ice igniting using 100x the actual number of the sheets"
-  - bugfix: "fixes hot ice being ignitable with a condenser"

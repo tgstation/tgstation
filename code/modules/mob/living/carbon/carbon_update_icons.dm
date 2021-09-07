@@ -1,5 +1,5 @@
 //IMPORTANT: Multiple animate() calls do not stack well, so try to do them all at once if you can.
-/mob/living/carbon/update_transform()
+/mob/living/carbon/perform_update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
 	var/final_pixel_y = pixel_y
 	var/final_dir = dir

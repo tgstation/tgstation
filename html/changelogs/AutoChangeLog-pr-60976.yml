@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fixed runtime in monkey AI which would prevent monkey from pickpocketing weapons or picking weapons off the ground."

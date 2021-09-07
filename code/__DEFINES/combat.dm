@@ -41,16 +41,8 @@
 #define MAGIC "magic"
 /// Involved in checking the likelyhood of applying a wound to a mob.
 #define WOUND "wound"
-
-// Weather immunities //
-#define WEATHER_STORM "storm"
-#define WEATHER_ACID "acid"
-#define WEATHER_ASH "ash"
-#define WEATHER_LAVA "lava"
-#define WEATHER_RAD "rad"
-#define WEATHER_SNOW "snow"
-#define WEATHER_VOID "void"
-#define WEATHER_ALL "all"
+/// Involves being eaten
+#define CONSUME "consume"
 
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS (1<<0)
