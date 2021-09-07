@@ -142,5 +142,11 @@
 	if(attached_bot)
 		total_money.set_output(attached_bot.stored_money)
 
+/**
+ * Locks the attached bot when the circuit is locked.
+ *
+ * Arguments:
+ * * new_value - A boolean that determines if the circuit is locked or not.
+ **/
 /obj/item/circuit_component/money_bot/proc/on_set_locked(datum/source, new_value)
 	attached_bot.locked = new_value

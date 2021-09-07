@@ -73,5 +73,11 @@
 	scanned.set_output(passed)
 	trigger_output.set_output(COMPONENT_SIGNAL)
 
+/**
+ * Locks the attached bot when the circuit is locked.
+ *
+ * Arguments:
+ * * new_value - A boolean that determines if the circuit is locked or not.
+ **/
 /obj/item/circuit_component/scanner_gate/proc/on_set_locked(datum/source, new_value)
 	attached_gate.locked = new_value
