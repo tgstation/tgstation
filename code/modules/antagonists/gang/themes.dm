@@ -26,6 +26,26 @@
 		Make sure to get to them before those damn mafiosos do."
 	)
 
+/datum/gang_theme/the_big_game
+	name = "The Big Game"
+	description = "You're listening to SPORTS DAILY with John Dadden, and we're here LIVE covering the FINAL DAY of THE BIG GAME MMDXXXVIII! The teams playing tonight to decide \
+	who takes home THE BIG GAME MMDXXXVIII cup are the Sybil Slickers and the Basil Boys! It's currently a toss up between the two teams, Which will take home the victory? That's up \
+	to the teams and the coaches! Play ball!"
+	involved_gangs = list(/datum/antagonist/gang/sybil_slickers, /datum/antagonist/gang/basil_boys)
+	starting_gangsters = 5
+	gang_objectives = list(
+
+		/datum/antagonist/gang/sybil_slickers = "Alright, it's the BIG DAY of THE BIG GAME MMDXXXVIII! Get your players ready to go, and \
+		ensure everyone's healthy, hydrated, and ready to PLAY BALL! There's a small hiccup, however. The ball got deflated by Ball Handler Tom Brady XXIV, and \
+		we will need to set up a new ball. <B>Talk with the opposing coaches and decide on what to use for the replacement ball, recruit your team, and then play and win the \
+		FINAL MATCH of THE BIG GAME MMDXXXVIII!</B>",
+
+		/datum/antagonist/gang/basil_boys = "Alright, it's the BIG DAY of THE BIG GAME MMDXXXVIII! Get your players ready to go, and \
+		ensure everyone's healthy, hydrated, and ready to PLAY BALL! There's a small hiccup, however. The ball got deflated by Ball Handler Tom Brady XXIV, and \
+		we will need to set up a new ball. <B>Talk with the opposing coaches and decide on what to use for the replacement ball, recruit your team, and then play and win the \
+		FINAL MATCH of THE BIG GAME MMDXXXVIII!</B>"
+	)
+
 /datum/gang_theme/level_10_arch
 	name = "Level 10 Arch"
 	description = "DJ Pete here bringing you the latest news in your part of the Spinward Stellar Coalition, on 133.7, The Venture! \

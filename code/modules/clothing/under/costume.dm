@@ -348,6 +348,18 @@
 	inhand_icon_state = "yuri_uniform"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/sybil_slickers
+	name = "sybil slickers uniform"
+	icon_state = "football_blue"
+	inhand_icon_state = "football_blue"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/basil_boys
+	name = "basil boys uniform"
+	icon_state = "football_red"
+	inhand_icon_state = "football_red"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/costume/swagoutfit
 	name = "Swag outfit"
 	desc = "Why don't you go secure some bitches?"

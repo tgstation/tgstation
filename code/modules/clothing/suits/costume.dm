@@ -522,3 +522,17 @@
 	icon_state = "yuri_coat"
 	inhand_icon_state = "yuri_coat"
 	body_parts_covered = CHEST|GROIN|ARMS
+
+/obj/item/clothing/suit/sybil_slickers
+	name = "sybil slickers protective gear"
+	desc = "Given to members of the Sybil Slickers football team!"
+	icon_state = "football_armor_blue"
+	inhand_icon_state = "football_armor_blue"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/basil_boys
+	name = "basil boys protective gear"
+	desc = "Given to members of the Basil Boys football team!"
+	icon_state = "football_armor_red"
+	inhand_icon_state = "football_armor_red"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS

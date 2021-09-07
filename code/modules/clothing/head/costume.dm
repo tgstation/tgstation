@@ -164,3 +164,13 @@
 	inhand_icon_state = "yuri_helmet"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+
+/obj/item/clothing/head/sybil_slickers
+	name = "sybil slickers helmet"
+	icon_state = "football_helmet_blue"
+	inhand_icon_state = "football_helmet_blue"
+
+/obj/item/clothing/head/basil_boys
+	name = "basil boys helmet"
+	icon_state = "football_helmet_red"
+	inhand_icon_state = "football_helmet_red"

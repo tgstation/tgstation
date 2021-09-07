@@ -161,7 +161,15 @@
 					/obj/item/clothing/head/ushanka/soviet = 20,
 					/obj/item/clothing/suit/yuri = 20,
 					/obj/item/clothing/under/costume/yuri = 20,
-					/obj/item/clothing/head/yuri = 20)
+					/obj/item/clothing/head/yuri = 20,
+					/obj/item/clothing/suit/sybil_slickers = 20,
+					/obj/item/clothing/under/costume/sybil_slickers = 20,
+					/obj/item/clothing/head/sybil_slickers = 20,
+					/obj/item/clothing/shoes/sybil_slickers = 20,
+					/obj/item/clothing/suit/basil_boys = 20,
+					/obj/item/clothing/under/costume/basil_boys = 20,
+					/obj/item/clothing/head/basil_boys = 20,
+					/obj/item/clothing/shoes/basil_boys = 20)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 1,
 					  /obj/item/clothing/under/syndicate/tacticool/skirt = 1,
 		              /obj/item/clothing/mask/balaclava = 1,

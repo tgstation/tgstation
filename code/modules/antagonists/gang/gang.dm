@@ -721,3 +721,51 @@
 	else
 		gangster.current.fully_replace_character_name(gangster.current.real_name, "Initiate [lasttname.match]")
 	return
+
+/datum/antagonist/gang/sybil_slickers
+	show_in_antagpanel = TRUE
+	name = "Sybil Slicker"
+	roundend_category = "Sybil Slickers"
+	gang_name = "Sybil Slickers"
+	gang_id = "SS"
+	free_clothes = list(/obj/item/clothing/suit/sybil_slickers,
+							/obj/item/clothing/under/costume/sybil_slickers,
+							/obj/item/clothing/head/sybil_slickers,
+							/obj/item/clothing/gloves/tackler/football,
+							/obj/item/clothing/shoes/sybil_slickers,
+						/obj/item/toy/crayon/spraycan)
+	antag_hud_name = "SybilSlickers"
+	gang_team_type = /datum/team/gang/sybil_slickers
+
+/datum/team/gang/sybil_slickers/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Sybil Coach [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
+
+/datum/antagonist/gang/basil_boys
+	show_in_antagpanel = TRUE
+	name = "Basil Boy"
+	roundend_category = "Basil Boys"
+	gang_name = "Basil Boys"
+	gang_id = "BB"
+	free_clothes = list(/obj/item/clothing/suit/basil_boys,
+							/obj/item/clothing/under/costume/basil_boys,
+							/obj/item/clothing/head/basil_boys,
+							/obj/item/clothing/gloves/tackler/football,
+							/obj/item/clothing/shoes/basil_boys,
+						/obj/item/toy/crayon/spraycan)
+	antag_hud_name = "BasilBoys"
+	gang_team_type = /datum/team/gang/basil_boys
+
+/datum/team/gang/basil_boys/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Basil Coach [lasttname.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	return
