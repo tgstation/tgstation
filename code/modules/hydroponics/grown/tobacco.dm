@@ -30,7 +30,7 @@
 	species = "stobacco"
 	plantname = "Space Tobacco Plant"
 	product = /obj/item/food/grown/tobacco/space
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/medicine/salbutamol = 0.05, /datum/reagent/drug/nicotine = 0.08, /datum/reagent/consumable/nutriment = 0.03)
 	rarity = 20
 

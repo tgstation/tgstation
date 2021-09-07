@@ -32,7 +32,6 @@
 
 	var/list/dent_decals
 
-
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
 	if(is_station_level(z))
@@ -49,6 +48,8 @@
 		fixed_underlay = string_assoc_list(fixed_underlay)
 		underlays += underlay_appearance
 
+/turf/closed/wall/atom_destruction(damage_flag)
+	dismantle_wall(TRUE, FALSE)
 
 /turf/closed/wall/Destroy()
 	if(is_station_level(z))

@@ -20,8 +20,7 @@
 	/// The result from the output
 	var/datum/port/output/spawned_atom
 
-/obj/item/circuit_component/spawn_atom/Initialize()
-	. = ..()
+/obj/item/circuit_component/spawn_atom/populate_ports()
 	input_path = add_input_port("Type", PORT_TYPE_ANY)
 	spawn_at = add_input_port("Spawn At", PORT_TYPE_ATOM)
 	parameters = add_input_port("Parameters", PORT_TYPE_LIST)
@@ -29,9 +28,6 @@
 	spawned_atom = add_output_port("Spawned Atom", PORT_TYPE_ATOM)
 
 /obj/item/circuit_component/spawn_atom/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	var/typepath = input_path.value
 

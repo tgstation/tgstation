@@ -1006,7 +1006,6 @@
 					span_userdanger("[src] tries to remove your [what.name]."), null, null, src)
 	to_chat(src, span_danger("You try to remove [who]'s [what.name]..."))
 	who.log_message("[key_name(who)] is being stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red")
-	log_message("[key_name(who)] is being stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
 	what.add_fingerprint(src)
 	if(do_mob(src, who, what.strip_delay, interaction_key = what))
 		if(what && Adjacent(who))
@@ -1015,11 +1014,9 @@
 				if(what == who.get_item_for_held_index(L[2]))
 					if(what.doStrip(src, who))
 						who.log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red")
-						log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
 			if(what == who.get_item_by_slot(where))
 				if(what.doStrip(src, who))
 					who.log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red")
-					log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
 
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
@@ -1053,7 +1050,6 @@
 							span_notice("[src] tries to put [what] on you."), null, null, src)
 		to_chat(src, span_notice("You try to put [what] on [who]..."))
 		who.log_message("[key_name(who)] is having [what] put on them by [key_name(src)]", LOG_ATTACK, color="red")
-		log_message("[key_name(who)] is having [what] put on them by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
 		if(do_mob(src, who, what.equip_delay_other))
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE, TRUE))
 				if(temporarilyRemoveItemFromInventory(what))
@@ -1063,7 +1059,6 @@
 					else
 						who.equip_to_slot(what, where, TRUE)
 					who.log_message("[key_name(who)] had [what] put on them by [key_name(src)]", LOG_ATTACK, color="red")
-					log_message("[key_name(who)] had [what] put on them by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
 
 /mob/living/singularity_pull(S, current_size)
 	..()
@@ -1440,6 +1435,10 @@
 //Called in MobBump() and Crossed()
 /mob/living/proc/spreadFire(mob/living/L)
 	if(!istype(L))
+		return
+
+	// can't spread fire to mobs that don't catch on fire
+	if(HAS_TRAIT(L, TRAIT_NOFIRE_SPREAD) || HAS_TRAIT(src, TRAIT_NOFIRE_SPREAD))
 		return
 
 	if(on_fire)

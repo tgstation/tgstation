@@ -63,7 +63,7 @@
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "hI" = (
-/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 "iz" = (
@@ -381,10 +381,10 @@
 /obj/item/clothing/head/bearpelt,
 /obj/structure/table/wood,
 /obj/item/food/burger/fish,
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -4
 	},
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = 10;
 	pixel_y = 6
 	},

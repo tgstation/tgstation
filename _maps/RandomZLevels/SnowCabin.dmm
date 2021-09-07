@@ -2870,7 +2870,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "hQ" = (
-/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "hR" = (

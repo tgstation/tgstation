@@ -158,7 +158,6 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 
 	var/log_message = "[key_name(source)] is being pickpocketed of [item] by [key_name(user)] ([pocket_side])"
 	source.log_message(log_message, LOG_ATTACK, color="red")
-	user.log_message(log_message, LOG_ATTACK, color="red", log_globally=FALSE)
 	item.add_fingerprint(src)
 
 	var/result = start_unequip_mob(item, source, user, POCKET_STRIP_DELAY)

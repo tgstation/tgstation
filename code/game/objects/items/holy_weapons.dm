@@ -153,6 +153,7 @@
 /obj/item/nullrod/Initialize()
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
+	AddElement(/datum/element/bane, /mob/living/simple_animal/revenant, 0, 25, FALSE)
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
@@ -345,8 +346,8 @@
 	name = "light energy sword"
 	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
 	icon = 'icons/obj/transforming_energy.dmi'
-	icon_state = "swordblue"
-	inhand_icon_state = "swordblue"
+	icon_state = "e_sword_on_blue"
+	inhand_icon_state = "e_sword_on_blue"
 	worn_icon_state = "swordblue"
 	slot_flags = ITEM_SLOT_BELT
 	hitsound = 'sound/weapons/blade1.ogg'
@@ -355,15 +356,15 @@
 /obj/item/nullrod/claymore/saber/red
 	name = "dark energy sword"
 	desc = "Woefully ineffective when used on steep terrain."
-	icon_state = "swordred"
-	inhand_icon_state = "swordred"
+	icon_state = "e_sword_on_red"
+	inhand_icon_state = "e_sword_on_red"
 	worn_icon_state = "swordred"
 
 /obj/item/nullrod/claymore/saber/pirate
 	name = "nautical energy sword"
 	desc = "Convincing HR that your religion involved piracy was no mean feat."
-	icon_state = "cutlass1"
-	inhand_icon_state = "cutlass1"
+	icon_state = "e_cutlass_on"
+	inhand_icon_state = "e_cutlass_on"
 	worn_icon_state = "swordred"
 
 /obj/item/nullrod/sord

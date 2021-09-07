@@ -157,6 +157,18 @@
 	///AI controller that controls this atom. type on init, then turned into an instance during runtime
 	var/datum/ai_controller/ai_controller
 
+	///any atom that uses integrity and can be damaged must set this to true, otherwise the integrity procs will throw an error
+	var/uses_integrity = FALSE
+
+	var/datum/armor/armor
+	VAR_PRIVATE/atom_integrity //defaults to max_integrity
+	var/max_integrity = 500
+	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the atom breaks. 0.5 being 50%
+	///Damage under this value will be completely ignored
+	var/damage_deflection = 0
+
+	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
+
 /**
  * Called when an atom is created in byond (built in engine proc)
  *
@@ -247,6 +259,15 @@
 
 	// apply materials properly from the default custom_materials value
 	set_custom_materials(custom_materials)
+
+	if(uses_integrity)
+		if (islist(armor))
+			armor = getArmor(arglist(armor))
+		else if (!armor)
+			armor = getArmor()
+		else if (!istype(armor, /datum/armor))
+			stack_trace("Invalid type [armor.type] found in .armor during /atom Initialize()")
+		atom_integrity = max_integrity
 
 	ComponentInitialize()
 	InitializeAIController()
@@ -1276,21 +1297,28 @@
 	if(href_list[VV_HK_MODIFY_TRANSFORM] && check_rights(R_VAREDIT))
 		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate")
 		var/matrix/M = transform
+		if(!result)
+			return
 		switch(result)
 			if("Scale")
 				var/x = input(usr, "Choose x mod","Transform Mod") as null|num
 				var/y = input(usr, "Choose y mod","Transform Mod") as null|num
-				if(!isnull(x) && !isnull(y))
-					transform = M.Scale(x,y)
+				if(isnull(x) || isnull(y))
+					return
+				transform = M.Scale(x,y)
 			if("Translate")
 				var/x = input(usr, "Choose x mod (negative = left, positive = right)","Transform Mod") as null|num
 				var/y = input(usr, "Choose y mod (negative = down, positive = up)","Transform Mod") as null|num
-				if(!isnull(x) && !isnull(y))
-					transform = M.Translate(x,y)
+				if(isnull(x) || isnull(y))
+					return
+				transform = M.Translate(x,y)
 			if("Rotate")
 				var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
-				if(!isnull(angle))
-					transform = M.Turn(angle)
+				if(isnull(angle))
+					return
+				transform = M.Turn(angle)
+
+		SEND_SIGNAL(src, COMSIG_ATOM_VV_MODIFY_TRANSFORM)
 
 	if(href_list[VV_HK_AUTO_RENAME] && check_rights(R_VAREDIT))
 		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
@@ -1599,8 +1627,6 @@
 		tag = "UNKNOWN"
 
 	source.log_talk(message, message_type, tag="[tag] to [key_name(target)]")
-	if(source != target)
-		target.log_talk(message, message_type, tag="[tag] from [key_name(source)]", log_globally=FALSE)
 
 /**
  * Log a combat message in the attack log
@@ -1613,7 +1639,6 @@
  * * addition - is any additional text, which will be appended to the rest of the log line
  */
 /proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null)
-	var/ssource = key_name(user)
 	var/starget = key_name(target)
 
 	var/mob/living/living_target = target
@@ -1630,10 +1655,6 @@
 
 	var/message = "has [what_done] [starget][postfix]"
 	user.log_message(message, LOG_ATTACK, color="red")
-
-	if(user != target)
-		var/reverse_message = "has been [what_done] by [ssource][postfix]"
-		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
 
 /**
  * log_wound() is for when someone is *attacked* and suffers a wound. Note that this only captures wounds from damage, so smites/forced wounds aren't logged, as well as demotions like cuts scabbing over
@@ -1735,7 +1756,7 @@
 
 /// Sets the custom materials for an item.
 /atom/proc/set_custom_materials(list/materials, multiplier = 1)
-	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
+	if(custom_materials && material_flags & MATERIAL_EFFECTS) //Only runs if custom materials existed at first and affected src.
 		for(var/i in custom_materials)
 			var/datum/material/custom_material = GET_MATERIAL_REF(i)
 			custom_material.on_removed(src, custom_materials[i] * material_modifier, material_flags) //Remove the current materials
@@ -1744,7 +1765,7 @@
 		custom_materials = null
 		return
 
-	if(!(material_flags & MATERIAL_NO_EFFECTS))
+	if(material_flags & MATERIAL_EFFECTS)
 		for(var/x in materials)
 			var/datum/material/custom_material = GET_MATERIAL_REF(x)
 			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)

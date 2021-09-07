@@ -2608,7 +2608,7 @@
 /obj/item/reagent_containers/spray/pepper,
 /obj/item/grenade/flashbang,
 /obj/item/storage/belt/security,
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -3;
 	pixel_y = -2
 	},
