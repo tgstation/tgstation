@@ -1,0 +1,4 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - bugfix: "Slime console can now use its hotkey to scan slimes and drop/pickup monkies"

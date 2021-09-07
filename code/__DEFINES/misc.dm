@@ -506,10 +506,12 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define FALL_STOP_INTERCEPTING (1<<2) //Used in situations where halting the whole "intercept" loop would be better, like supermatter dusting (and thus deleting) the atom.
 
 //Religion
-
-#define HOLY_ROLE_DEACON 1 //role below priests, for losing most powers of priests but still being holy.
-#define HOLY_ROLE_PRIEST 2 //default priestly role
-#define HOLY_ROLE_HIGHPRIEST 3 //the one who designates the religion
+///role below priests, for losing most powers of priests but still being holy.
+#define HOLY_ROLE_DEACON 1
+///default priestly role
+#define HOLY_ROLE_PRIEST 2
+///the one who designates the religion
+#define HOLY_ROLE_HIGHPRIEST 3
 
 #define ALIGNMENT_GOOD "good"
 #define ALIGNMENT_NEUT "neutral"
@@ -537,6 +539,8 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define IGNORE_TARGET_LOC_CHANGE (1<<1)
 #define IGNORE_HELD_ITEM (1<<2)
 #define IGNORE_INCAPACITATED (1<<3)
+///Used to prevent important slowdowns from being abused by drugs like kronkaine
+#define IGNORE_SLOWDOWNS (1<<4)
 
 // Skillchip categories
 //Various skillchip categories. Use these when setting which categories a skillchip restricts being paired with

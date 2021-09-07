@@ -40,30 +40,13 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
-/obj/item/clothing/mask/facehugger/lamarr
-	name = "Lamarr"
-	desc = "The Research Director's pet, a domesticated and debeaked xenomorph facehugger. Friendly, but may still try to couple with your head."
-	sterile = 1
-
-/obj/item/clothing/mask/facehugger/dead
-	icon_state = "facehugger_dead"
-	inhand_icon_state = "facehugger_inactive"
-	worn_icon_state = "facehugger_dead"
-	stat = DEAD
-
-/obj/item/clothing/mask/facehugger/impregnated
-	icon_state = "facehugger_impregnated"
-	inhand_icon_state = "facehugger_impregnated"
-	worn_icon_state = "facehugger_impregnated"
-	stat = DEAD
-
 /obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	..()
-	if(obj_integrity < 90)
+	if(atom_integrity < 90)
 		Die()
 
 /obj/item/clothing/mask/facehugger/attackby(obj/item/O, mob/user, params)
-	return O.attack_obj(src, user, params)
+	return O.attack_atom(src, user, params)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/facehugger/attack_hand(mob/user, list/modifiers)
@@ -273,6 +256,33 @@
 			return FALSE
 		return TRUE
 	return FALSE
+
+/obj/item/clothing/mask/facehugger/lamarr
+	name = "Lamarr"
+	desc = "The Research Director's pet, a domesticated and debeaked xenomorph facehugger. Friendly, but may still try to couple with your head."
+	sterile = TRUE
+
+/obj/item/clothing/mask/facehugger/dead
+	icon_state = "facehugger_dead"
+	inhand_icon_state = "facehugger_inactive"
+	worn_icon_state = "facehugger_dead"
+	stat = DEAD
+
+/obj/item/clothing/mask/facehugger/impregnated
+	icon_state = "facehugger_impregnated"
+	inhand_icon_state = "facehugger_impregnated"
+	worn_icon_state = "facehugger_impregnated"
+	stat = DEAD
+
+/obj/item/clothing/mask/facehugger/toy
+	inhand_icon_state = "facehugger_inactive"
+	desc = "A toy often used to play pranks on other miners by putting it in their beds. It takes a bit to recharge after latching onto something."
+	real = FALSE
+	sterile = TRUE
+	tint = 3 //Makes it feel more authentic when it latches on
+
+/obj/item/clothing/mask/facehugger/toy/Die()
+	return
 
 #undef MIN_ACTIVE_TIME
 #undef MAX_ACTIVE_TIME

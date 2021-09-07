@@ -108,7 +108,7 @@
 	directional_vehicle_layers["[dir]"] = layer
 
 /// This is called after the ridden atom is successfully moved and is used to handle icon stuff
-/datum/component/riding/proc/vehicle_moved(datum/source, dir)
+/datum/component/riding/proc/vehicle_moved(datum/source, oldloc, dir, forced)
 	SIGNAL_HANDLER
 
 	var/atom/movable/movable_parent = parent
@@ -127,7 +127,7 @@
 /datum/component/riding/proc/vehicle_turned(datum/source, _old_dir, new_dir)
 	SIGNAL_HANDLER
 
-	vehicle_moved(source, new_dir)
+	vehicle_moved(source, null, new_dir)
 
 /// Check to see if we have all of the necessary bodyparts and not-falling-over statuses we need to stay onboard
 /datum/component/riding/proc/ride_check(mob/living/rider)

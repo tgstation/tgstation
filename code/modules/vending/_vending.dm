@@ -265,7 +265,7 @@
 	if(!(machine_stat & BROKEN) && powered())
 		. += emissive_appearance(icon, light_mask)
 
-/obj/machinery/vending/obj_break(damage_flag)
+/obj/machinery/vending/atom_break(damage_flag)
 	. = ..()
 	if(!.)
 		return
@@ -1121,19 +1121,21 @@ GLOBAL_LIST_EMPTY(vending_products)
 			var/base64
 			var/price = 0
 			for(var/obj/T in contents)
-				if(T.name == O)
+				if(format_text(T.name) == O)
 					price = T.custom_price
 					if(!base64)
 						if(base64_cache[T.type])
 							base64 = base64_cache[T.type]
 						else
-							base64 = icon2base64(icon(T.icon, T.icon_state))
+							base64 = icon2base64(getFlatIcon(T, no_anim=TRUE))
 							base64_cache[T.type] = base64
 					break
 			var/list/data = list(
 				name = O,
 				price = price,
-				img = base64
+				img = base64,
+				amount = vending_machine_input[O],
+				colorable = FALSE
 			)
 			.["vending_machine_input"] += list(data)
 
@@ -1165,7 +1167,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				return
 			var/datum/bank_account/account = C.registered_account
 			for(var/obj/O in contents)
-				if(O.name == N)
+				if(format_text(O.name) == N)
 					S = O
 					break
 			if(S)

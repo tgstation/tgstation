@@ -385,7 +385,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
-	if(. && obj_integrity > 0) //damage received
+	if(. && atom_integrity > 0) //damage received
 		if(prob(30))
 			spark_system.start()
 		if(on && !(turret_flags & TURRET_FLAG_SHOOT_ALL_REACT) && !(obj_flags & EMAGGED))
@@ -398,7 +398,7 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/deconstruct(disassembled = TRUE)
 	qdel(src)
 
-/obj/machinery/porta_turret/obj_break(damage_flag)
+/obj/machinery/porta_turret/atom_break(damage_flag)
 	. = ..()
 	if(.)
 		power_change()
@@ -546,6 +546,12 @@ DEFINE_BITFIELD(turret_flags, list(
 		if(!allowed(perp))
 			return 10
 
+	// If we aren't shooting heads then return a threatcount of 0
+	if (!(turret_flags & TURRET_FLAG_SHOOT_HEADS))
+		var/datum/job/apparent_job = SSjob.GetJob(perp.get_assignment())
+		if(apparent_job?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+			return 0
+
 	if(turret_flags & TURRET_FLAG_AUTH_WEAPONS) //check for weapon authorization
 		if(isnull(perp.wear_id) || istype(perp.wear_id.GetID(), /obj/item/card/id/advanced/chameleon))
 
@@ -565,10 +571,6 @@ DEFINE_BITFIELD(turret_flags, list(
 
 	if((turret_flags & TURRET_FLAG_SHOOT_UNSHIELDED) && (!HAS_TRAIT(perp, TRAIT_MINDSHIELD)))
 		threatcount += 4
-
-	// If we aren't shooting heads then return a threatcount of 0
-	if (!(turret_flags & TURRET_FLAG_SHOOT_HEADS) && (perp.get_assignment() in GLOB.command_positions))
-		return 0
 
 	return threatcount
 

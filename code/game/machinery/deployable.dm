@@ -27,13 +27,13 @@
 
 /obj/structure/barricade/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode && bar_material == METAL)
-		if(obj_integrity < max_integrity)
+		if(atom_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=0))
 				return
 
 			to_chat(user, span_notice("You begin repairing [src]..."))
 			if(I.use_tool(src, user, 40, volume=40))
-				obj_integrity = clamp(obj_integrity + 20, 0, max_integrity)
+				atom_integrity = clamp(atom_integrity + 20, 0, max_integrity)
 	else
 		return ..()
 
@@ -195,6 +195,18 @@
 /obj/item/grenade/barrier/ui_action_click(mob/user)
 	toggle_mode(user)
 
+/obj/item/deployable_turret_folded
+	name = "folded heavy machine gun"
+	desc = "A folded and unloaded heavy machine gun, ready to be deployed and used."
+	icon = 'icons/obj/turrets.dmi'
+	icon_state = "folded_hmg"
+	max_integrity = 250
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+
+/obj/item/deployable_turret_folded/Initialize()
+	. = ..()
+	AddComponent(/datum/component/deployable, 5 SECONDS, /obj/machinery/deployable_turret/hmg, delete_on_use = TRUE)
 
 #undef SINGLE
 #undef VERTICAL

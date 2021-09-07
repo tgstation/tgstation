@@ -22,7 +22,7 @@
 
 /obj/item/circuit_component/wiremod_scanner
 	display_name = "Scanner"
-	display_desc = "Used to receive scanned entities from the scanner."
+	desc = "Used to receive scanned entities from the scanner."
 
 	/// Called when afterattack is called on the shell.
 	var/datum/port/output/signal
@@ -35,8 +35,7 @@
 
 
 
-/obj/item/circuit_component/wiremod_scanner/Initialize()
-	. = ..()
+/obj/item/circuit_component/wiremod_scanner/populate_ports()
 	attacker = add_output_port("Scanner", PORT_TYPE_ATOM)
 	attacking = add_output_port("Scanned Entity", PORT_TYPE_ATOM)
 	signal = add_output_port("Scanned", PORT_TYPE_SIGNAL)

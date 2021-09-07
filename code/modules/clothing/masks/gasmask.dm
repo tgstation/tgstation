@@ -14,14 +14,17 @@
 	var/max_filters = 1
 	///List to keep track of each filter
 	var/list/gas_filters
+	///Type of filter that spawns on roundstart
+	var/starting_filter_type = /obj/item/gas_filter
 
 /obj/item/clothing/mask/gas/Initialize()
 	. = ..()
-	if(!max_filters)
+	if(!max_filters || !starting_filter_type)
 		return
+
 	for(var/i in 1 to max_filters)
-		var/obj/item/gas_filter/filter = new(src)
-		LAZYADD(gas_filters, filter)
+		var/obj/item/gas_filter/inserted_filter = new starting_filter_type(src)
+		LAZYADD(gas_filters, inserted_filter)
 	has_filter = TRUE
 
 /obj/item/clothing/mask/gas/Destroy()
@@ -34,17 +37,31 @@
 		. += "<span class='notice'>[src] has [max_filters] slot\s for filters.</span>"
 	if(LAZYLEN(gas_filters) > 0)
 		. += "<span class='notice'>Currently there [LAZYLEN(gas_filters) == 1 ? "is" : "are"] [LAZYLEN(gas_filters)] filter\s with [get_filter_durability()]% durability.</span>"
+		. += "<span class='notice'>The filters can be removed by right-clicking with an empty hand on [src].</span>"
 
-/obj/item/clothing/mask/gas/attackby(obj/item/filter, mob/user)
-	if(!istype(filter, /obj/item/gas_filter))
+/obj/item/clothing/mask/gas/attackby(obj/item/tool, mob/user)
+	if(!istype(tool, /obj/item/gas_filter))
 		return ..()
 	if(LAZYLEN(gas_filters) >= max_filters)
 		return ..()
-	if(!user.transferItemToLoc(filter, src))
+	if(!user.transferItemToLoc(tool, src))
 		return ..()
-	LAZYADD(gas_filters, filter)
+	LAZYADD(gas_filters, tool)
 	has_filter = TRUE
 	return TRUE
+
+/obj/item/clothing/mask/gas/attack_hand_secondary(mob/user, list/modifiers)
+	if(!has_filter || !max_filters)
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	for(var/i in 1 to max_filters)
+		var/obj/item/gas_filter/filter = locate() in src
+		if(!filter)
+			continue
+		user.put_in_hands(filter)
+		LAZYREMOVE(gas_filters, filter)
+	if(LAZYLEN(gas_filters) <= 0)
+		has_filter = FALSE
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 ///Check _masks.dm for this one
 /obj/item/clothing/mask/gas/consume_filter(datum/gas_mixture/breath)
@@ -147,6 +164,9 @@
 	species_exception = list(/datum/species/golem/bananium)
 	var/list/clownmask_designs = list()
 
+/obj/item/clothing/mask/gas/clown_hat/plasmaman
+	starting_filter_type = /obj/item/gas_filter/plasmaman
+
 /obj/item/clothing/mask/gas/clown_hat/Initialize(mapload)
 	.=..()
 	clownmask_designs = list(
@@ -202,6 +222,9 @@
 	actions_types = list(/datum/action/item_action/adjust)
 	species_exception = list(/datum/species/golem)
 	var/list/mimemask_designs = list()
+
+/obj/item/clothing/mask/gas/mime/plasmaman
+	starting_filter_type = /obj/item/gas_filter/plasmaman
 
 /obj/item/clothing/mask/gas/mime/Initialize(mapload)
 	.=..()

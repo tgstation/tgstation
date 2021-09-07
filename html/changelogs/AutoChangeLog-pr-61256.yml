@@ -1,0 +1,4 @@
+author: "Couls"
+delete-after: True
+changes: 
+  - admin: "individual logging now displays things that happened to the individual again"

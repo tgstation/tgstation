@@ -245,6 +245,14 @@
 	name = "\improper DNA injector (Wacky)"
 	add_mutations = list(WACKY)
 
+/obj/item/dnainjector/piglatinmut
+	name = "\improper DNA injector (Pig Latin)"
+	add_mutations = list(PIGLATIN)
+
+/obj/item/dnainjector/antipiglatin
+	name = "\improper DNA injector (Anti-Pig Latin)"
+	remove_mutations = list(PIGLATIN)
+
 /obj/item/dnainjector/antimute
 	name = "\improper DNA injector (Anti-Mute)"
 	remove_mutations = list(MUT_MUTE)
@@ -535,7 +543,7 @@
 					log_msg += "(FAILED)"
 				else
 					M.dna.add_mutation(HM, MUT_EXTRA)
-					pref = "expended"
+				pref = "expended"
 			else if(research && M.client)
 				filled = TRUE
 				pref = "filled"
@@ -545,9 +553,9 @@
 				for(var/datum/symptom/symp in disease.symptoms)
 					if((symp.type == /datum/symptom/genetic_mutation)||(symp.type == /datum/symptom/viralevolution))
 						crispr_charge = TRUE
-			suff = (crispr_charge ? "with CRISPR charge" : "")
+			suff = (crispr_charge ? " with CRISPR charge" : "")
 			log_msg += "([mutation])"
-		name = "[pref] [name] [suff]"
+		name = "[pref] [name][suff]"
 		log_attack("[log_msg] [loc_name(user)]")
 		return TRUE
 	return FALSE

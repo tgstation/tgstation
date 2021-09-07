@@ -153,6 +153,7 @@
 /obj/item/nullrod/Initialize()
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
+	AddElement(/datum/element/bane, /mob/living/simple_animal/revenant, 0, 25, FALSE)
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
@@ -345,8 +346,8 @@
 	name = "light energy sword"
 	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
 	icon = 'icons/obj/transforming_energy.dmi'
-	icon_state = "swordblue"
-	inhand_icon_state = "swordblue"
+	icon_state = "e_sword_on_blue"
+	inhand_icon_state = "e_sword_on_blue"
 	worn_icon_state = "swordblue"
 	slot_flags = ITEM_SLOT_BELT
 	hitsound = 'sound/weapons/blade1.ogg'
@@ -355,15 +356,15 @@
 /obj/item/nullrod/claymore/saber/red
 	name = "dark energy sword"
 	desc = "Woefully ineffective when used on steep terrain."
-	icon_state = "swordred"
-	inhand_icon_state = "swordred"
+	icon_state = "e_sword_on_red"
+	inhand_icon_state = "e_sword_on_red"
 	worn_icon_state = "swordred"
 
 /obj/item/nullrod/claymore/saber/pirate
 	name = "nautical energy sword"
 	desc = "Convincing HR that your religion involved piracy was no mean feat."
-	icon_state = "cutlass1"
-	inhand_icon_state = "cutlass1"
+	icon_state = "e_cutlass_on"
+	inhand_icon_state = "e_cutlass_on"
 	worn_icon_state = "swordred"
 
 /obj/item/nullrod/sord
@@ -443,48 +444,10 @@
 	attack_verb_simple= list("chop", "slice", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Able to awaken a friendly spirit to provide guidance. Very effective at butchering bodies. Can be worn on the back."
-	/// If there is a ghost possessing the item
-	var/possessed = FALSE
 
-/obj/item/nullrod/scythe/talking/relaymove(mob/living/user, direction)
-	return //stops buckled message spam for the ghost.
-
-/obj/item/nullrod/scythe/talking/attack_self(mob/living/user)
-	if(possessed)
-		return
-	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		to_chat(user, span_notice("Anomalous otherworldly energies block you from awakening the blade!"))
-		return
-
-	to_chat(user, span_notice("You attempt to wake the spirit of the blade..."))
-
-	possessed = TRUE
-
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
-
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		var/mob/living/simple_animal/shade/S = new(src)
-		S.ckey = C.ckey
-		S.fully_replace_character_name(null, "The spirit of [name]")
-		S.status_flags |= GODMODE
-		S.copy_languages(user, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the user.
-		S.update_atom_languages()
-		grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue
-		var/input = sanitize_name(stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN))
-
-		if(src && input)
-			name = input
-			S.fully_replace_character_name(null, "The spirit of [input]")
-	else
-		to_chat(user, span_warning("The blade is dormant. Maybe you can try again later."))
-		possessed = FALSE
-
-/obj/item/nullrod/scythe/talking/Destroy()
-	for(var/mob/living/simple_animal/shade/S in contents)
-		to_chat(S, span_userdanger("You were destroyed!"))
-		qdel(S)
-	return ..()
+/obj/item/nullrod/scythe/talking/Initialize()
+	. = ..()
+	AddComponent(/datum/component/spirit_holding)
 
 /obj/item/nullrod/scythe/talking/chainsword
 	name = "possessed chainsaw sword"
@@ -555,6 +518,8 @@
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	menu_description = "A sharp dagger. Fits in pockets. Can be worn on the belt. Honk."
 
+#define CHEMICAL_TRANSFER_CHANCE 30
+
 /obj/item/nullrod/pride_hammer
 	name = "Pride-struck Hammer"
 	desc = "It resonates an aura of Pride."
@@ -575,16 +540,14 @@
 /obj/item/nullrod/pride_hammer/Initialize()
 	. = ..()
 	AddElement(/datum/element/kneejerk)
+	AddElement(
+		/datum/element/chemical_transfer,\
+		span_notice("Your pride reflects on %VICTIM."),\
+		span_userdanger("You feel insecure, taking on %ATTACKER's burden."),\
+		CHEMICAL_TRANSFER_CHANCE\
+	)
 
-/obj/item/nullrod/pride_hammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(prob(30) && ishuman(A))
-		var/mob/living/carbon/human/H = A
-		user.reagents.trans_to(H, user.reagents.total_volume, 1, 1, 0, transfered_by = user)
-		to_chat(user, span_notice("Your pride reflects on [H]."))
-		to_chat(H, span_userdanger("You feel insecure, taking on [user]'s burden."))
+#undef CHEMICAL_TRANSFER_CHANCE
 
 /obj/item/nullrod/whip
 	name = "holy whip"
@@ -657,15 +620,10 @@
 	attack_verb_simple = list("bite", "eat", "fin slap")
 	hitsound = 'sound/weapons/bite.ogg'
 	menu_description = "A plushie dealing a little less damage due to it's cute form. Capable of blessing one person with the Carp-Sie favor, which grants friendship of all wild space carps. Fits in pockets. Can be worn on the belt."
-	/// If the item has already been used to bless someone
-	var/used_blessing = FALSE
 
-/obj/item/nullrod/carp/attack_self(mob/living/user)
-	if(used_blessing)
-	else if(user.mind && (user.mind.holy_role))
-		to_chat(user, span_boldnotice("You are blessed by Carp-Sie. Wild space carp will no longer attack you."))
-		user.faction |= "carp"
-		used_blessing = TRUE
+/obj/item/nullrod/carp/Initialize()
+	. = ..()
+	AddComponent(/datum/component/faction_granter, "carp", holy_role_required = HOLY_ROLE_PRIEST, grant_message = span_boldnotice("You are blessed by Carp-Sie. Wild space carp will no longer attack you."))
 
 /obj/item/nullrod/claymore/bostaff //May as well make it a "claymore" and inherit the blocking
 	name = "monk's staff"
@@ -722,7 +680,7 @@
 	name = "unholy pitchfork"
 	desc = "Holding this makes you look absolutely devilish."
 	icon_state = "pitchfork0"
-	worn_icon_state = "pitchfork0"
+	inhand_icon_state = "pitchfork0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	worn_icon_state = "pitchfork0"

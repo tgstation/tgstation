@@ -88,6 +88,8 @@
 	var/list/addiction_points
 	///Assoc list of key active addictions and value amount of cycles that it has been active.
 	var/list/active_addictions
+	///List of objective-specific equipment that couldn't properly be given to the mind
+	var/list/failed_special_equipment
 
 /datum/mind/New(_key)
 	key = _key
@@ -101,6 +103,18 @@
 	QDEL_NULL(language_holder)
 	set_current(null)
 	return ..()
+
+
+/datum/mind/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if(NAMEOF(src, assigned_role))
+			set_assigned_role(var_value)
+			. = TRUE
+	if(!isnull(.))
+		datum_flags |= DF_VAR_EDITED
+		return
+	return ..()
+
 
 /datum/mind/proc/set_current(mob/new_current)
 	if(new_current && QDELETED(new_current))
@@ -513,7 +527,7 @@
 		if (!new_job)
 			to_chat(usr, span_warning("Job not found."))
 			return
-		set_assigned_role(new_role)
+		set_assigned_role(new_job)
 
 	else if (href_list["memory_edit"])
 		var/new_memo = stripped_multiline_input(usr, "Write new memory", "Memory", memory, MAX_MESSAGE_LEN)
@@ -684,13 +698,28 @@
 		to_chat(current, "<B>[objective.objective_name] #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 
-/datum/mind/proc/find_syndicate_uplink()
+/datum/mind/proc/find_syndicate_uplink(check_unlocked)
 	var/list/L = current.GetAllContents()
 	for (var/i in L)
 		var/atom/movable/I = i
-		. = I.GetComponent(/datum/component/uplink)
-		if(.)
-			break
+		var/datum/component/uplink/found_uplink = I.GetComponent(/datum/component/uplink)
+		if(!found_uplink || (check_unlocked && found_uplink.locked))
+			continue
+		return found_uplink
+
+/**
+* Checks to see if the mind has an accessible uplink (their own, if they are a traitor; any unlocked uplink otherwise),
+* and gives them a fallback spell if no uplink was found
+*/
+/datum/mind/proc/try_give_equipment_fallback()
+	var/datum/component/uplink/uplink
+	var/datum/antagonist/traitor/traitor_datum = has_antag_datum(/datum/antagonist/traitor)
+	if(traitor_datum)
+		uplink = traitor_datum.uplink
+	if(!uplink)
+		uplink = find_syndicate_uplink(check_unlocked = TRUE)
+	if(!uplink && !(locate(/obj/effect/proc_holder/spell/self/special_equipment_fallback) in spell_list))
+		AddSpell(new /obj/effect/proc_holder/spell/self/special_equipment_fallback(null, src))
 
 /datum/mind/proc/take_uplink()
 	qdel(find_syndicate_uplink())
@@ -826,6 +855,8 @@
 /datum/mind/proc/set_assigned_role(datum/job/new_role)
 	if(assigned_role == new_role)
 		return
+	if(!is_job(new_role))
+		CRASH("set_assigned_role called with invalid role: [isnull(new_role) ? "null" : new_role]")
 	. = assigned_role
 	assigned_role = new_role
 

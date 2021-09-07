@@ -214,7 +214,10 @@
 		. += letter
 	return sanitize(.)
 
+#define TILES_PER_SECOND 0.7
 ///Shake the camera of the person viewing the mob SO REAL!
+///Takes the mob to shake, the time span to shake for, and the amount of tiles we're allowed to shake by in tiles
+///Duration isn't taken as a strict limit, since we don't trust our coders to not make things feel shitty. So it's more like a soft cap.
 /proc/shake_camera(mob/M, duration, strength=1)
 	if(!M || !M.client || duration < 1)
 		return
@@ -224,13 +227,33 @@
 	var/max = strength*world.icon_size
 	var/min = -(strength*world.icon_size)
 
-	for(var/i in 0 to duration-1)
-		if (i == 0)
-			animate(C, pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
-		else
-			animate(pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
-	animate(pixel_x=oldx, pixel_y=oldy, time=1)
+	//How much time to allot for each pixel moved
+	var/time_scalar = (1 / world.icon_size) * TILES_PER_SECOND
+	var/last_x = oldx
+	var/last_y = oldy
 
+	var/time_spent = 0
+	while(time_spent < duration)
+		//Get a random pos in our box
+		var/x_pos = rand(min, max) + oldx
+		var/y_pos = rand(min, max) + oldy
+
+		//We take the smaller of our two distances so things still have the propencity to feel somewhat jerky
+		var/time = round(max(min(abs(last_x - x_pos), abs(last_y - y_pos)) * time_scalar, 1))
+
+		if (time_spent == 0)
+			animate(C, pixel_x=x_pos, pixel_y=y_pos, time=time)
+		else
+			animate(pixel_x=x_pos, pixel_y=y_pos, time=time)
+
+		last_x = x_pos
+		last_y = y_pos
+		//We go based on time spent, so there is a chance we'll overshoot our duration. Don't care
+		time_spent += time
+
+	animate(pixel_x=oldx, pixel_y=oldy, time=3)
+
+#undef TILES_PER_SECOND
 
 ///Find if the message has the real name of any user mob in the mob_list
 /proc/findname(msg)
@@ -384,7 +407,7 @@
 /**
  * Offer control of the passed in mob to dead player
  *
- * Automatic logging and uses pollCandidatesForMob, how convenient
+ * Automatic logging and uses poll_candidates_for_mob, how convenient
  */
 /proc/offer_control(mob/M)
 	to_chat(M, "Control of your mob has been offered to dead players.")
@@ -400,7 +423,7 @@
 			var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
 			if(A)
 				poll_message = "[poll_message] Status: [A.name]."
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, FALSE, 100, M)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob(poll_message, ROLE_PAI, FALSE, 10 SECONDS, M)
 
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
@@ -432,7 +455,7 @@
 		return
 
 	// Cannot use the list as a map if the key is a number, so we stringify it (thank you BYOND)
-	var/smessage_type = num2text(message_type)
+	var/smessage_type = num2text(message_type, MAX_BITFLAG_DIGITS)
 
 	if(client)
 		if(!islist(client.player_details.logging[smessage_type]))

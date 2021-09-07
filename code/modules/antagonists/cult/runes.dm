@@ -315,11 +315,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 				to_chat(M, span_cultlarge("\"I accept this sacrifice.\""))
 			else
 				to_chat(M, span_cultlarge("\"I accept this meager sacrifice.\""))
-	
+
 	if(iscyborg(sacrificial))
 		var/construct_class = show_radial_menu(first_invoker, sacrificial, GLOB.construct_radial_images, require_near = TRUE, tooltips = TRUE)
-		if(QDELETED(sacrificial))
+		if(QDELETED(sacrificial) || !construct_class)
 			return FALSE
+		sacrificial.grab_ghost()
 		make_new_construct_from_class(construct_class, THEME_CULT, sacrificial, first_invoker, TRUE, get_turf(src))
 		var/mob/living/silicon/robot/sacriborg = sacrificial
 		sacriborg.mmi = null
@@ -328,7 +329,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/obj/item/soulstone/stone = new /obj/item/soulstone(get_turf(src))
 	if(sacrificial.mind && !sacrificial.suiciding)
 		stone.invisibility = INVISIBILITY_MAXIMUM //so it's not picked up during transfer_soul()
-		stone.transfer_soul("FORCE", sacrificial, usr)
+		stone.capture_soul(sacrificial, first_invoker, TRUE)
 		stone.invisibility = 0
 
 	if(sacrificial)
@@ -578,7 +579,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		mob_to_revive.grab_ghost()
 	if(!mob_to_revive.client || mob_to_revive.client.is_afk())
 		set waitfor = FALSE
-		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [mob_to_revive.real_name], an inactive blood cultist?", ROLE_CULTIST, ROLE_CULTIST, 50, mob_to_revive)
+		var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [mob_to_revive.real_name], an inactive blood cultist?", ROLE_CULTIST, ROLE_CULTIST, 5 SECONDS, mob_to_revive)
 		if(LAZYLEN(candidates))
 			var/mob/dead/observer/C = pick(candidates)
 			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")

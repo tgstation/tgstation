@@ -27,9 +27,10 @@
 	var/sheet_type = /obj/item/stack/sheet/iron
 	var/sheet_amount = 2
 	var/girder_type = /obj/structure/girder
+	/// A turf that will replace this turf when this turf is destroyed
+	var/decon_type
 
 	var/list/dent_decals
-
 
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
@@ -47,6 +48,8 @@
 		fixed_underlay = string_assoc_list(fixed_underlay)
 		underlays += underlay_appearance
 
+/turf/closed/wall/atom_destruction(damage_flag)
+	dismantle_wall(TRUE, FALSE)
 
 /turf/closed/wall/Destroy()
 	if(is_station_level(z))
@@ -77,8 +80,10 @@
 		if(istype(O, /obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
-
-	ScrapeAway()
+	if(decon_type)
+		ChangeTurf(decon_type, flags = CHANGETURF_INHERIT_AIR)
+	else
+		ScrapeAway()
 
 /turf/closed/wall/proc/break_wall()
 	new sheet_type(src, sheet_amount)

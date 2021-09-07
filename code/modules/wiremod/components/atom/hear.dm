@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/hear
 	display_name = "Voice Activator"
-	display_desc = "A component that listens for messages. Requires a shell."
+	desc = "A component that listens for messages. Requires a shell."
 
 	/// The message heard
 	var/datum/port/output/message_port
@@ -16,8 +16,7 @@
 	/// The trigger sent when this event occurs
 	var/datum/port/output/trigger_port
 
-/obj/item/circuit_component/hear/Initialize()
-	. = ..()
+/obj/item/circuit_component/hear/populate_ports()
 	message_port = add_output_port("Message", PORT_TYPE_STRING)
 	language_port = add_output_port("Language", PORT_TYPE_STRING)
 	speaker_port = add_output_port("Speaker", PORT_TYPE_ATOM)
