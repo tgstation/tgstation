@@ -2707,7 +2707,6 @@
 #include "code\modules\mob\living\basic\basic.dm"
 #include "code\modules\mob\living\basic\basic_defense.dm"
 #include "code\modules\mob\living\basic\health_adjustment.dm"
-#include "code\modules\mob\living\basic\mining\_mining.dm"
 #include "code\modules\mob\living\basic\vermin\cockroach.dm"
 #include "code\modules\mob\living\brain\brain.dm"
 #include "code\modules\mob\living\brain\brain_item.dm"
