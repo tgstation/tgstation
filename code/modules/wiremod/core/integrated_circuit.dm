@@ -100,9 +100,25 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	else
 		. += span_notice("There is no power cell installed.")
 
+/**
+ * Sets the cell of the integrated circuit.
+ *
+ * Arguments:
+ * * cell_to_set - The new cell of the circuit. Can be null.
+ **/
 /obj/item/integrated_circuit/proc/set_cell(obj/item/stock_parts/cell_to_set)
 	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_CELL, cell_to_set)
 	cell = cell_to_set
+
+/**
+ * Sets the locked status of the integrated circuit.
+ *
+ * Arguments:
+ * * new_value - A boolean that determines if the circuit is locked or not.
+ **/
+/obj/item/integrated_circuit/proc/set_locked(new_value)
+	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_LOCKED, new_value)
+	locked = new_value
 
 /obj/item/integrated_circuit/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -170,6 +186,12 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	set_on(FALSE)
 	SEND_SIGNAL(src, COMSIG_CIRCUIT_SHELL_REMOVED)
 
+/**
+ * Sets the on status of the integrated circuit.
+ *
+ * Arguments:
+ * * new_value - A boolean that determines if the circuit is on or not.
+ **/
 /obj/item/integrated_circuit/proc/set_on(new_value)
 	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_ON, new_value)
 	on = new_value
