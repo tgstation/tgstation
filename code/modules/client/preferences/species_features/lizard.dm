@@ -4,7 +4,7 @@
 	var/icon/lizard = icon('icons/mob/human_parts_greyscale.dmi', "lizard_head_m", EAST)
 
 	var/icon/eyes = icon('icons/mob/human_face.dmi', "eyes", EAST)
-	eyes.Blend(COLOR_BLACK, ICON_MULTIPLY)
+	eyes.Blend(COLOR_GRAY, ICON_MULTIPLY)
 	lizard.Blend(eyes, ICON_OVERLAY)
 
 	if (include_snout)
