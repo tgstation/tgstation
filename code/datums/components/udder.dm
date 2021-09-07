@@ -70,11 +70,11 @@
 	///optional proc to callback to when the udder generates milk
 	var/datum/callback/on_generate_callback
 
-/obj/item/udder/Initialize(mapload, udder_mob, on_generate_callback, reagent_produced_typepath)
+/obj/item/udder/Initialize(mapload, udder_mob, on_generate_callback, reagent_produced_typepath = /datum/reagent/consumable/milk)
 	src.udder_mob = udder_mob
 	src.on_generate_callback = on_generate_callback
 	create_reagents(size, REAGENT_HOLDER_ALIVE)
-	src.reagent_produced_typepath = reagent_produced_typepath ? reagent_produced_typepath : initial(src.reagent_produced_typepath)
+	src.reagent_produced_typepath = reagent_produced_typepath
 	initial_conditions()
 	. = ..()
 
