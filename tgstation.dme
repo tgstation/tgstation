@@ -2043,6 +2043,7 @@
 #include "code\modules\client\message.dm"
 #include "code\modules\client\player_details.dm"
 #include "code\modules\client\preferences.dm"
+#include "code\modules\client\preferences_menu.dm"
 #include "code\modules\client\preferences_savefile.dm"
 #include "code\modules\client\preferences\_preference.dm"
 #include "code\modules\client\preferences\admin.dm"
