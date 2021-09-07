@@ -109,6 +109,16 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+	var/atom/movable/warp_effect = new(src)
+	warp_effect.plane = GRAVITY_PULSE_PLANE
+	warp_effect.icon = 'icons/effects/light_overlays/light_352.dmi' // im lazy
+	warp_effect.icon_state = "light"
+	warp_effect.pixel_x = -178
+	warp_effect.pixel_y = -178
+	animate(warp_effect, time = 2 SECONDS, loop = -1, transform = matrix().Scale(2,2))
+	animate(time = 2 SECONDS, transform = matrix())
+	vis_contents += warp_effect
+
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
 	boing = 1
