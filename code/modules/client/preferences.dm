@@ -78,6 +78,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// Used to avoid expensive READ_FILE every time a preference is retrieved.
 	var/value_cache = list()
 
+	/// If set to TRUE, will update character_profiles on the next ui_data tick.
+	var/tainted_character_profiles = FALSE
+
 /datum/preferences/Destroy(force, ...)
 	QDEL_NULL(character_preview_view)
 	QDEL_LIST(middleware)
@@ -141,9 +144,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		// carry emissives.
 		character_preview_view.register_to_client(parent)
 
+	if (tainted_character_profiles)
+		data["character_profiles"] = create_character_profiles()
+		tainted_character_profiles = FALSE
+
 	// MOTHBLOCKS TODO: Try to diff these as much as possible, and only send what is needed.
 	// Some of these, like job preferences, can be pretty beefy.
-	data["character_profiles"] = create_character_profiles()
 	data["character_preferences"] = compile_character_preferences(user)
 
 	data["active_slot"] = default_slot
@@ -155,6 +161,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/ui_static_data(mob/user)
 	var/list/data = list()
+
+	data["character_profiles"] = create_character_profiles()
 
 	data["character_preview_view"] = character_preview_view.assigned_map
 	data["overflow_role"] = SSjob.GetJobType(SSjob.overflow_role).title
@@ -189,6 +197,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			// SAFETY: `load_character` performs sanitization the slot number
 			if (!load_character(params["slot"]))
+				tainted_character_profiles = TRUE
 				randomise_appearance_prefs()
 				save_character()
 
@@ -214,6 +223,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			// SAFETY: `update_preference` performs validation checks
 			if (!update_preference(requested_preference, value))
 				return FALSE
+
+			if (istype(requested_preference, /datum/preference/name))
+				tainted_character_profiles = TRUE
 
 			return TRUE
 		if ("set_color_preference")
@@ -373,7 +385,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 
 	client?.register_map_obj(src)
 
-// MOTHBLOCKS TODO: Cache until names change
 /datum/preferences/proc/create_character_profiles()
 	var/list/profiles = list()
 
