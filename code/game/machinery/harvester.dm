@@ -50,12 +50,16 @@
 	harvesting = FALSE
 
 /obj/machinery/harvester/attack_hand(mob/user, list/modifiers)
+	. = ..()
 	if(state_open)
 		close_machine()
 	else if(!harvesting)
 		open_machine()
 
 /obj/machinery/harvester/AltClick(mob/user)
+	. = ..()
+	if(!can_interact(user))
+		return
 	if(harvesting || !user || !isliving(user) || state_open)
 		return
 	if(can_harvest())

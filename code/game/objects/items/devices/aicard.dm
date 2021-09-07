@@ -100,6 +100,10 @@
 			. = TRUE
 		if("wireless")
 			AI.control_disabled = !AI.control_disabled
+			if(!AI.control_disabled)
+				AI.interaction_range = null
+			else
+				AI.interaction_range = 0
 			to_chat(AI, span_warning("[src]'s wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!"))
 			. = TRUE
 		if("radio")

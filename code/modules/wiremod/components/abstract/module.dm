@@ -68,8 +68,7 @@
 	/// The currently attached module
 	var/obj/item/circuit_component/module/attached_module
 
-/obj/item/circuit_component/module_output/input_received(datum/port/input/port)
-	. = ..()
+/obj/item/circuit_component/module_output/pre_input_received(datum/port/input/port)
 	if(!port)
 		return
 	// We don't check the parent here because frankly, we don't care. We only sync our input with the module's output
@@ -79,8 +78,7 @@
 
 	port_to_update.set_output(port.value)
 
-/obj/item/circuit_component/module/input_received(datum/port/input/port)
-	. = ..()
+/obj/item/circuit_component/module/pre_input_received(datum/port/input/port)
 	if(!port)
 		return
 	var/datum/port/output/port_to_update = linked_ports[port]
