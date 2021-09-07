@@ -43,7 +43,7 @@
 		display_results(user, target, span_warning("You screw up, damaging the brain!"),
 			span_warning("[user] screws up, damaging the brain!"),
 			span_notice("[user] completes the surgery on [target]'s brain."))
-		display_pain(target, "Your brain throbs with intense pain; Thinking hurts!")
+		display_pain(target, "Your brain throbs with intense pain; thinking hurts!")
 		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60)
 		target.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 	else
