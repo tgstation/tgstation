@@ -106,6 +106,8 @@ export type PreferencesMenuData = {
     randomization: Record<string, RandomSetting>;
   };
 
+  job_bans?: string[];
+  job_days_left?: Record<string, number>;
   job_preferences: Record<string, JobPriority>;
 
   keybindings: Record<string, string[]>;

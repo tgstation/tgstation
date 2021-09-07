@@ -146,9 +146,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	data["character_profiles"] = create_character_profiles()
 	data["character_preferences"] = compile_character_preferences(user)
 
-	// MOTHBLOCKS TODO: Job bans/yet to be unlocked jobs
-	data["job_preferences"] = job_preferences
-
 	data["active_slot"] = default_slot
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
@@ -249,23 +246,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (!update_preference(requested_preference, new_color))
 				return FALSE
 
-			return TRUE
-		if ("set_job_preference")
-			var/job_title = params["job"]
-			var/level = params["level"]
-
-			if (level != null && level != JP_LOW && level != JP_MEDIUM && level != JP_HIGH)
-				return FALSE
-
-			var/datum/job/job = SSjob.GetJob(job_title)
-
-			if (job.faction != FACTION_STATION)
-				return FALSE
-
-			if (!set_job_preference_level(job, level))
-				return FALSE
-
-			character_preview_view.update_body()
 			return TRUE
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
