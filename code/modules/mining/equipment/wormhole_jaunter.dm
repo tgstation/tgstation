@@ -43,7 +43,7 @@
 
 /obj/item/wormhole_jaunter/proc/activate(mob/user, adjacent, teleport)
 	if(!turf_check(user))
-		return
+		return FALSE
 
 	if(!can_jaunter_teleport())
 		if(user)
