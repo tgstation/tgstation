@@ -1,9 +1,4 @@
-import { createDropdownInput, Feature, FeatureNumberInput } from "./base";
-
-export const age: Feature<number> = {
-  name: "Age",
-  component: FeatureNumberInput,
-};
+import { createDropdownInput, Feature } from "../base";
 
 export const uplink_loc: Feature<string> = {
   name: "Uplink Spawn Location",
