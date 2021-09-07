@@ -2,9 +2,9 @@ import { binaryInsertWith } from "common/collections";
 import { classes } from "common/react";
 import { InfernoNode } from "inferno";
 import { useBackend } from "../../backend";
-import { Box, Button, Icon, Stack, Tooltip } from "../../components";
+import { Box, Button, Dropdown, Icon, Stack, Tooltip } from "../../components";
 import { logger } from "../../logging";
-import { createSetPreference, JobPriority, PreferencesMenuData } from "./data";
+import { createSetPreference, JoblessRole, JobPriority, PreferencesMenuData } from "./data";
 import { Job } from "./jobs/base";
 import * as Departments from "./jobs/departments";
 
@@ -247,7 +247,7 @@ const JobRow = (props: {
   );
 };
 
-export const Department = (props: {
+const Department = (props: {
   department: Departments.Department,
   name: string,
 }) => {
@@ -257,16 +257,14 @@ export const Department = (props: {
 
   if (!jobs) {
     return (
-      <Stack.Item>
-        <Box as="b" color="red">
-          ERROR: Department {name} could not be found!
-        </Box>
-      </Stack.Item>
+      <Box color="red">
+        <b>ERROR: Department {name} could not be found!</b>
+      </Box>
     );
   }
 
   return (
-    <Stack.Item>
+    <Box>
       <Stack
         vertical
         fill>
@@ -280,7 +278,7 @@ export const Department = (props: {
           return <JobRow className={className} key={job.name} job={job} />;
         })}
       </Stack>
-    </Stack.Item>
+    </Box>
   );
 };
 
@@ -288,20 +286,64 @@ export const Department = (props: {
 // All I want is for a gap to pretend to be an empty space.
 // But in order for everything to align, I also need to add the 0.2em padding.
 // But also, we can't be aligned with names that break into multiple lines!
-export const Gap = (props: {
+const Gap = (props: {
   amount: number,
 }) => {
   // 0.2em comes from the padding-bottom in the department listing
-  return <Stack.Item height={`calc(${props.amount}px + 0.2em)`} />;
+  return <Box height={`calc(${props.amount}px + 0.2em)`} />;
+};
+
+const JoblessRoleDropdown = (props: {
+
+}, context) => {
+  const { act, data } = useBackend<PreferencesMenuData>(context);
+  const selected = data.character_preferences.misc.joblessrole;
+
+  const options = [
+    {
+      displayText: `Join as ${data.overflow_role} if unavailable`,
+      value: JoblessRole.BeOverflow,
+    },
+    {
+      displayText: `Join as a random job if unavailable`,
+      value: JoblessRole.BeRandomJob,
+    },
+    {
+      displayText: `Return to lobby if unavailable`,
+      value: JoblessRole.ReturnToLobby,
+    },
+  ];
+
+  return (
+    <Box
+      position="absolute"
+      right={0}
+      width="30%"
+    >
+      <Dropdown
+        width="100%"
+        selected={selected}
+        onSelected={createSetPreference(act, "joblessrole")}
+        options={options}
+        displayText={
+          <Box pr={1}>
+            {options.find(option => option.value === selected)!.displayText}
+          </Box>
+        }
+      />
+    </Box>
+  );
 };
 
 export const JobsPage = () => {
   return (
-    <Stack vertical fill>
-      <Stack.Item>
-        <Stack fill className="PreferencesMenu__Jobs">
-          <Stack.Item>
-            <Stack vertical fill>
+    <>
+      <JoblessRoleDropdown />
+
+      <Stack vertical fill>
+        <Stack.Item>
+          <Stack fill className="PreferencesMenu__Jobs">
+            <Stack.Item>
               <Gap amount={66} />
 
               <Department
@@ -325,20 +367,17 @@ export const JobsPage = () => {
               <Department
                 department={Departments.Assistant}
                 name="Assistant" />
-            </Stack>
-          </Stack.Item>
+            </Stack.Item>
 
-          <Stack.Item>
-            <Stack vertical fill>
+            <Stack.Item>
               <Department department={Departments.Captain} name="Captain" />
+              <Gap amount={6} />
               <Department department={Departments.Service} name="Service" />
               <Gap amount={6} />
               <Department department={Departments.Cargo} name="Supply" />
-            </Stack>
-          </Stack.Item>
+            </Stack.Item>
 
-          <Stack.Item>
-            <Stack vertical fill>
+            <Stack.Item>
               <Gap amount={66} />
 
               <Department
@@ -350,10 +389,10 @@ export const JobsPage = () => {
               <Department
                 department={Departments.Medical}
                 name="Medical" />
-            </Stack>
-          </Stack.Item>
-        </Stack>
-      </Stack.Item>
-    </Stack>
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+      </Stack>
+    </>
   );
 };

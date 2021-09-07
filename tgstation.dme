@@ -2062,6 +2062,7 @@
 #include "code\modules\client\preferences\gender.dm"
 #include "code\modules\client\preferences\ghost.dm"
 #include "code\modules\client\preferences\item_outlines.dm"
+#include "code\modules\client\preferences\jobless_role.dm"
 #include "code\modules\client\preferences\names.dm"
 #include "code\modules\client\preferences\ooc.dm"
 #include "code\modules\client\preferences\parallax.dm"

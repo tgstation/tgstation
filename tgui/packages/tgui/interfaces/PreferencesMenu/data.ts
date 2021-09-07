@@ -67,6 +67,12 @@ export enum RandomSetting {
   Enabled = 3,
 }
 
+export enum JoblessRole {
+  BeOverflow = 1,
+  BeRandomJob = 2,
+  ReturnToLobby = 3,
+}
+
 export const createSetPreference = (
   act: typeof sendAct,
   preference: string
@@ -100,6 +106,7 @@ export type PreferencesMenuData = {
 
     misc: {
       gender: Gender;
+      joblessrole: JoblessRole;
       species: string;
     };
 
