@@ -117,7 +117,7 @@
 	ritual_invocations =list( "Let your will power our forges.",
 							"...Help us in our great conquest!")
 	invoke_msg = "The end of flesh is near!"
-	favor_cost = 2000	
+	favor_cost = 2000
 
 /datum/religion_rites/machine_blessing/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
@@ -232,6 +232,34 @@
 	chosen_sacrifice = null
 	return TRUE
 
+/datum/religion_rites/pyre_totem
+	name = "Totem: Pyre Totem"
+	desc = "Creates a Pyre Totem, a portable tool that can consume pollutants you may create. Requires wood. Can only be picked up by the holy."
+	favor_cost = 400
+	invoke_msg = "Burn clean, burn bright!!"
+	///the food that will be molded, only one per rite
+	var/obj/item/stack/sheet/mineral/wood/converted
+
+/datum/religion_rites/pyre_totem/perform_rite(mob/living/user, atom/religious_tool)
+	for(var/obj/item/stack/sheet/mineral/wood/could_totem in get_turf(religious_tool))
+		converted = could_totem //totemify this o great one
+		return ..()
+	to_chat(user, span_warning("You need at least 1 wood to do this!"))
+	return FALSE
+
+/datum/religion_rites/pyre_totem/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
+	var/altar_turf = get_turf(religious_tool)
+	var/obj/item/stack/sheet/mineral/wood/padala = converted
+	converted = null
+	if(QDELETED(padala) || !(get_turf(religious_tool) == padala.loc)) //check if the same food is still there
+		to_chat(user, span_warning("Your target left the altar!"))
+		return FALSE
+	to_chat(user, span_warning("[padala] reshapes into a totem!"))
+	if(!padala.use(1))//use one wood
+		return
+	new /obj/item/ritual_totem/pyre(altar_turf)
+	return TRUE
 
 
 /datum/religion_rites/infinite_candle
@@ -239,7 +267,7 @@
 	desc = "Creates 5 candles that never run out of wax."
 	ritual_length = 10 SECONDS
 	invoke_msg = "Burn bright, little candles, for you will only extinguish along with the universe."
-	favor_cost = 200
+	favor_cost = 400
 
 /datum/religion_rites/infinite_candle/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
@@ -573,22 +601,22 @@
 	qdel(moldify)
 	return TRUE
 
-/datum/religion_rites/ritual_totem
-	name = "Create Ritual Totem"
-	desc = "Creates a Ritual Totem, a portable tool for performing rites on the go. Requires wood. Can only be picked up by the holy."
+/datum/religion_rites/maint_totem
+	name = "Totem: Maintenance Totem"
+	desc = "Creates a Maintenance Totem, a portable tool for performing rites on the go. Requires wood. Can only be picked up by the holy."
 	favor_cost = 100
 	invoke_msg = "Padala!!"
 	///the food that will be molded, only one per rite
 	var/obj/item/stack/sheet/mineral/wood/converted
 
-/datum/religion_rites/ritual_totem/perform_rite(mob/living/user, atom/religious_tool)
+/datum/religion_rites/maint_totem/perform_rite(mob/living/user, atom/religious_tool)
 	for(var/obj/item/stack/sheet/mineral/wood/could_totem in get_turf(religious_tool))
 		converted = could_totem //totemify this o great one
 		return ..()
 	to_chat(user, span_warning("You need at least 1 wood to do this!"))
 	return FALSE
 
-/datum/religion_rites/ritual_totem/invoke_effect(mob/living/user, atom/movable/religious_tool)
+/datum/religion_rites/maint_totem/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
 	var/altar_turf = get_turf(religious_tool)
 	var/obj/item/stack/sheet/mineral/wood/padala = converted
@@ -600,7 +628,6 @@
 	if(!padala.use(1))//use one wood
 		return
 	user.emote("laughs")
-	new /obj/item/ritual_totem(altar_turf)
+	new /obj/item/ritual_totem/maintenance(altar_turf)
 	return TRUE
-
 

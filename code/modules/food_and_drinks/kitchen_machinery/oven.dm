@@ -78,9 +78,9 @@
 
 		worst_cooked_food_state = OVEN_SMOKE_STATE_BAD
 		baked_item.fire_act(1000) //Hot hot hot!
+		var/turf/oven_turf = get_turf(src)
+		oven_turf.PolluteTurf(/datum/pollutant/smoke/oven_disaster, 20, POLLUTION_ACTIVE_EMITTER_CAP)
 
-		if(DT_PROB(10, delta_time))
-			visible_message(span_danger("You smell a burnt smell coming from [src]!"))
 	set_smoke_state(worst_cooked_food_state)
 	update_appearance()
 

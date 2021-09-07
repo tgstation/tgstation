@@ -73,28 +73,29 @@
 			chaplain_string += "[potential_chap] ([potential_chap.key])"
 	return chaplain_string
 
+///totems. some sects have them. they can only be moved around by important members of the religion, and they block magic alongside one special ability.
 /obj/item/ritual_totem
 	name = "ritual totem"
 	desc = "A wooden totem with strange carvings on it."
-	icon_state = "ritual_totem"
 	inhand_icon_state = "sheet-wood"
 	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
 	//made out of a single sheet of wood
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
 	item_flags = NO_PIXEL_RANDOM_DROP
+	///message sent when the totem dies to blocking magic
+	var/expire_text = "has no flavor text? lame!"
 
 /obj/item/ritual_totem/Initialize()
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, 1, FALSE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire))//one charge of anti_magic
-	AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, FALSE)
 
 /obj/item/ritual_totem/proc/block_magic(mob/user, major)
 	if(major)
 		to_chat(user, span_warning("[src] consumes the magic within itself!"))
 
 /obj/item/ritual_totem/proc/expire(mob/user)
-	to_chat(user, span_warning("[src] quickly decays into rot!"))
+	to_chat(user, span_warning("[src] [expire_text]"))
 	qdel(src)
 	new /obj/effect/decal/cleanable/ash(drop_location())
 
@@ -122,3 +123,41 @@
 	if(no_take)
 		taker.dropItemToGround(src)
 		forceMove(initial_loc)
+
+///maintenance totem's special ability is to work as an invoking tool anywhere.
+/obj/item/ritual_totem/maintenance
+	name = "maintenance totem"
+	desc = "A wooden totem with strange carvings on it. It has a sinister grimace, signifying a connection with the unseen."
+	icon_state = "ritual_totem_maint"
+	expire_text = "quickly decays into rot!"
+
+/obj/item/ritual_totem/maintenance/Initialize()
+	. = ..()
+	AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, FALSE)
+
+///pyre totem's special ability is to consume smog and produce light. Ironically the particles kinda look like they're polluting themselves, but whatever. Burns clean!
+/obj/item/ritual_totem/pyre
+	name = "pyre totem"
+	desc = "A wooden totem with strange carvings on it. It has a primal contemplation, signifying a connection with the elements."
+	icon_state = "ritual_totem_pyre"
+	expire_text = "quickly burns up!"
+	light_range = 4
+	light_color = LIGHT_COLOR_FIRE
+
+/obj/item/ritual_totem/pyre/Initialize()
+	. = ..()
+	AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, FALSE)
+	START_PROCESSING(SSobj, src)
+	particles = new /particles/smoke/steam/mild/pyre_totem
+
+/obj/item/ritual_totem/pyre/examine(mob/user)
+	. = ..()
+	. += span_notice("[src] scrubs pollutants out of the air passively.")
+
+/obj/item/ritual_totem/pyre/process(delta_time)
+	for(var/turf/open/open_turf in view(3, get_turf(src)))
+		if(open_turf.pollution)
+			open_turf.pollution.ScrubAmount(POLLUTION_HEIGHT_DIVISOR)
+
+/particles/smoke/steam/mild/pyre_totem
+	position = list(-1, 9, 0)
