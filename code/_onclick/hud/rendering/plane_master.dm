@@ -1,5 +1,3 @@
-
-
 /atom/movable/screen/plane_master
 	screen_loc = "CENTER"
 	icon_state = "blank"
@@ -198,21 +196,8 @@
 	if(istype(mymob) && mymob.client?.prefs?.ambientocclusion)
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
 
-
 /atom/movable/screen/plane_master/displacer
 	name = "gravpulse plane"
 	plane = GRAVITY_PULSE_PLANE
 	render_target = GRAVITY_PULSE_RENDER_TARGET
 	render_relay_plane = null
-
-/client/verb/bvjsbivniron()
-	set name = "spawn filter example"
-	set category = "bhggg"
-
-	var/obj/O = new(mob.loc)
-	O.plane = GRAVITY_PULSE_PLANE
-	O.icon = 'icons/effects/light_overlays/light_352.dmi'
-	O.icon_state = "light"
-	animate(O, time = 2 SECONDS, loop = -1, transform = matrix().Scale(2,2))
-	animate(time = 2 SECONDS, transform = matrix())
-
