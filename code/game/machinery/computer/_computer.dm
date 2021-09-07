@@ -39,6 +39,9 @@
 	var/overlay_state = icon_screen
 	if(machine_stat & BROKEN)
 		overlay_state = "[icon_state]_broken"
+		. += mutable_appearance(icon, overlay_state)
+		return // If we don't do this broken computers glow in the dark.
+
 	. += mutable_appearance(icon, overlay_state)
 	. += emissive_appearance(icon, overlay_state)
 
