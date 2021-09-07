@@ -27,6 +27,7 @@ const CharacterControls = (props: {
   handleOpenSpecies: () => void,
   gender: Gender,
   setGender: (gender: Gender) => void,
+  showGender: boolean,
 }) => {
   return (
     <Stack>
@@ -50,9 +51,14 @@ const CharacterControls = (props: {
         />
       </Stack.Item>
 
-      <Stack.Item>
-        <GenderButton gender={props.gender} handleSetGender={props.setGender} />
-      </Stack.Item>
+      {props.showGender && (
+        <Stack.Item>
+          <GenderButton
+            gender={props.gender}
+            handleSetGender={props.setGender}
+          />
+        </Stack.Item>
+      )}
     </Stack>
   );
 };
@@ -438,6 +444,9 @@ export const MainPage = (props: {
                       act("rotate");
                     }}
                     setGender={createSetPreference(act, "gender")}
+                    showGender={
+                      currentSpeciesData ? !!currentSpeciesData.sexes : true
+                    }
                   />
                 </Stack.Item>
 
