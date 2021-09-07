@@ -120,7 +120,6 @@
 #define INIT_ORDER_STATION 74 //This is high priority because it manipulates a lot of the subsystems that will initialize after it.
 #define INIT_ORDER_QUIRKS 73
 #define INIT_ORDER_REAGENTS 72 //HAS to be before mapping and assets - both create objects, which creates reagents, which relies on lists made in this subsystem
-#define INIT_ORDER_ASSETS 71
 #define INIT_ORDER_EVENTS 70
 #define INIT_ORDER_IDACCESS 66
 #define INIT_ORDER_JOBS 65 // Must init before atoms, to set up properly the dynamic job lists.
@@ -129,6 +128,8 @@
 #define INIT_ORDER_TICKER 55
 #define INIT_ORDER_TCG 55
 #define INIT_ORDER_MAPPING 50
+#define INIT_ORDER_PERSISTENT_PAINTINGS 49 // Assets relies on this
+#define INIT_ORDER_ASSETS 48
 #define INIT_ORDER_TIMETRACK 47
 #define INIT_ORDER_NETWORKS 45
 #define INIT_ORDER_ECONOMY 40
@@ -141,7 +142,7 @@
 #define INIT_ORDER_TIMER 1
 #define INIT_ORDER_DEFAULT 0
 #define INIT_ORDER_AIR -1
-#define INIT_ORDER_PERSISTENCE -2 //before assets because some assets take data from SSPersistence
+#define INIT_ORDER_PERSISTENCE -2
 #define INIT_ORDER_ICON_SMOOTHING -5
 #define INIT_ORDER_OVERLAY -6
 #define INIT_ORDER_XKEYSCORE -10

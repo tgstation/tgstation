@@ -274,8 +274,10 @@
 
 	CHECK_TICK
 	SSdbcore.SetRoundEnd()
+
 	//Collects persistence features
 	SSpersistence.CollectData()
+	SSpersistent_paintings.save_paintings()
 
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
