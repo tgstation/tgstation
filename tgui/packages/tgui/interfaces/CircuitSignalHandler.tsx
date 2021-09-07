@@ -17,6 +17,7 @@ type CircuitSignalHandlerState = {
   signal_id: string;
   responseList: Response[];
   parameterList: Parameter[];
+  global: Boolean;
 }
 
 type CircuitSignalHandlerData ={
@@ -37,6 +38,7 @@ export class CircuitSignalHandler
       signal_id: "signal_id",
       responseList: [],
       parameterList: [],
+      global: false,
     };
 
     this.bitflags = {};
@@ -48,7 +50,7 @@ export class CircuitSignalHandler
 
   render() {
     const { act, data } = useBackend<CircuitSignalHandlerData>(this.context);
-    const { responseList, parameterList, signal_id }
+    const { responseList, parameterList, signal_id, global }
       = this.state as CircuitSignalHandlerState;
     const {
       global_port_types,
@@ -58,12 +60,23 @@ export class CircuitSignalHandler
         <Window.Content>
           <Stack vertical fill>
             <Stack.Item>
-              <Input
-                placeholder="Signal ID"
-                value={signal_id}
-                fluid
-                onChange={(e, value) => this.setState({ signal_id: value })}
-              />
+              <Stack fill>
+                <Stack.Item grow>
+                  <Input
+                    placeholder="Signal ID"
+                    value={signal_id}
+                    fluid
+                    onChange={(e, value) => this.setState({ signal_id: value })}
+                  />
+                </Stack.Item>
+                <Stack.Item>
+                  <Button.Checkbox
+                    checked={global}
+                    content="Global"
+                    onClick={(e) => this.setState({ global: !global })}
+                  />
+                </Stack.Item>
+              </Stack>
             </Stack.Item>
             <Stack.Item grow>
               <Stack width="100%" height="100%">
@@ -164,6 +177,7 @@ export class CircuitSignalHandler
                   signal_id: signal_id,
                   responses: responseList,
                   parameters: parameterList,
+                  global: global,
                 })}
               />
             </Stack.Item>

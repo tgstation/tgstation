@@ -1,3 +1,6 @@
+#define COMP_SIGNAL_HANDLER_GLOBAL "Global"
+#define COMP_SIGNAL_HANDLER_OBJECT "Object"
+
 /**
  * # Signal Handler Component
  *
@@ -7,6 +10,9 @@
 	display_name = "Signal Handler"
 	desc = "A component that listens for signals on an object. Registering a new object will automatically unregister the old."
 	circuit_flags = CIRCUIT_FLAG_ADMIN|CIRCUIT_FLAG_INSTANT
+
+	/// Whether it is a global or object signal
+	var/datum/port/input/option/signal_handler_options
 
 	/// The list of signal IDs that can be selected as an option.
 	var/datum/port/input/option/signal_id
@@ -38,16 +44,30 @@
 	var/registered_signal
 
 /obj/item/circuit_component/signal_handler/populate_options()
-	signal_id = add_option_port("Signal ID", GLOB.integrated_circuit_signal_ids, trigger = .proc/register_signals)
+	var/static/list/component_options = list(
+		COMP_SIGNAL_HANDLER_OBJECT,
+		COMP_SIGNAL_HANDLER_GLOBAL,
+	)
+	signal_handler_options = add_option_port("Signal Handler Options", component_options, trigger = null)
+
+	signal_id = add_option_port("Signal ID", GLOB.integrated_circuit_signal_ids, trigger = null)
 	signal_map = GLOB.integrated_circuit_signal_ids
 
 /obj/item/circuit_component/signal_handler/populate_ports()
-	target = add_input_port("Target", PORT_TYPE_ATOM, trigger = null)
-	register = add_input_port("Register", PORT_TYPE_SIGNAL, trigger = .proc/register_signals)
-	unregister = add_input_port("Unregister Current", PORT_TYPE_SIGNAL, trigger = .proc/unregister_signals)
+	register = add_input_port("Register", PORT_TYPE_SIGNAL, order = 2, trigger = .proc/register_signals)
+	unregister = add_input_port("Unregister Current", PORT_TYPE_SIGNAL, order = 2, trigger = .proc/unregister_signals)
 
-	entity = add_output_port("Source Entity", PORT_TYPE_ATOM, order = 0)
+	add_source_entity()
 	event_triggered = add_output_port("Triggered", PORT_TYPE_SIGNAL, order = 2)
+
+/obj/item/circuit_component/signal_handler/proc/add_source_entity()
+	if(entity)
+		remove_output_port(entity)
+	if(target)
+		remove_output_port(target)
+
+	target = add_input_port("Target", PORT_TYPE_ATOM, order = 1, trigger = null)
+	entity = add_output_port("Source Entity", PORT_TYPE_ATOM, order = 0)
 
 /obj/item/circuit_component/signal_handler/save_data_to_list(list/component_data)
 	. = ..()
@@ -73,6 +93,27 @@
 			var/list/data = signal_map[registered_signal]
 			if(data)
 				load_new_ports(data)
+		unregister_signals(port)
+
+	if(signal_handler_options == port)
+		set_signal_options(port)
+
+/obj/item/circuit_component/signal_handler/proc/set_signal_options(datum/port/input/port)
+	CIRCUIT_TRIGGER
+
+	switch(signal_handler_options.value)
+		if(COMP_SIGNAL_HANDLER_GLOBAL)
+			signal_id.possible_options = GLOB.integrated_circuit_global_signal_ids
+			signal_map = GLOB.integrated_circuit_global_signal_ids
+			remove_output_port(entity)
+			remove_output_port(target)
+		if(COMP_SIGNAL_HANDLER_OBJECT)
+			signal_id.possible_options = GLOB.integrated_circuit_signal_ids
+			signal_map = GLOB.integrated_circuit_signal_ids
+			add_source_entity()
+
+	signal_id.set_value(null, TRUE)
+	unregister_signals()
 
 /obj/item/circuit_component/signal_handler/proc/register_signals(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -80,6 +121,9 @@
 		unregister_signals(port)
 
 	var/datum/target_datum = target.value
+	if(signal_handler_options.value == COMP_SIGNAL_HANDLER_GLOBAL)
+		target_datum = SSdcs
+
 	if(target_datum)
 		RegisterSignal(target_datum, registered_signal, .proc/handle_signal_received)
 		current_registered_entity = WEAKREF(target_datum)
@@ -122,7 +166,10 @@
 	usr = null
 
 	SScircuit_component.queue_instant_run()
-	entity.set_output(popleft(arguments))
+	var/first_arg = popleft(arguments)
+	if(entity)
+		entity.set_output(first_arg)
+
 	for(var/datum/port/output/port as anything in output_signal_ports)
 		port.set_output(popleft(arguments))
 	event_triggered.set_output(COMPONENT_SIGNAL)
@@ -145,3 +192,6 @@
 		return_values["bitflag"] = 0
 
 	return_values["bitflag"] |= input_signal_ports[port]
+
+#undef COMP_SIGNAL_HANDLER_GLOBAL
+#undef COMP_SIGNAL_HANDLER_OBJECT

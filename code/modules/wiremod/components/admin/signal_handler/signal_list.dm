@@ -42,6 +42,21 @@ GLOBAL_LIST_INIT(integrated_circuit_signal_ids, generate_circuit_signal_list())
 		COMSIG_ITEM_ATTACK_SELF_SECONDARY = list(cancel_attack, user),
 	)
 
+GLOBAL_LIST_INIT(integrated_circuit_global_signal_ids, generate_global_circuit_signal_list())
+
+/proc/generate_global_circuit_signal_list()
+	var/client_ent = circuit_signal_param("Client", PORT_TYPE_ATOM)
+	var/entity = circuit_signal_param("Entity", PORT_TYPE_ATOM)
+
+	return list(
+		COMSIG_GLOB_MOB_DEATH = list(entity, circuit_signal_param("Gibbed", PORT_TYPE_NUMBER)),
+		COMSIG_GLOB_MOB_CREATED = list(entity),
+		COMSIG_GLOB_CLIENT_CONNECT = list(client_ent),
+
+		COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN = list(circuit_signal_param("Job Subsystem", PORT_TYPE_ATOM), entity, client_ent),
+		COMSIG_GLOB_CREWMEMBER_JOINED = list(circuit_signal_param("Crewmember", PORT_TYPE_ATOM), circuit_signal_param("Rank", PORT_TYPE_STRING))
+	)
+
 /obj/item/circuit_component/signal_handler/ui_state(mob/user)
 	return GLOB.admin_state
 
@@ -79,5 +94,10 @@ GLOBAL_LIST_INIT(integrated_circuit_signal_ids, generate_circuit_signal_list())
 	for(var/list/data as anything in parameters)
 		sanitized_data += list(circuit_signal_param(data["name"], data["datatype"]))
 
-	GLOB.integrated_circuit_signal_ids[signal_id] = sanitized_data
-	balloon_alert(usr, "successfully added [signal_id]")
+	var/extra_info = ""
+	if(params["global"])
+		GLOB.integrated_circuit_global_signal_ids[signal_id] = sanitized_data
+		extra_info = " as a global signal"
+	else
+		GLOB.integrated_circuit_signal_ids[signal_id] = sanitized_data
+	balloon_alert(usr, "successfully added [signal_id][extra_info]")
