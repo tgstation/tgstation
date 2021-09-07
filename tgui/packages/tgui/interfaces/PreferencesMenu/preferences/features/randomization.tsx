@@ -2,7 +2,7 @@ import { useBackend } from "../../../../backend";
 import { Button, Stack } from "../../../../components";
 import { PreferencesMenuData, RandomSetting } from "../../data";
 import { RandomizationButton } from "../../RandomizationButton";
-import { Feature } from "./base";
+import { Feature, FeatureChoiced } from "./base";
 
 export const random_body: Feature<RandomSetting> = {
   name: "Random body",
@@ -24,6 +24,18 @@ export const random_body: Feature<RandomSetting> = {
           </Button>
         </Stack.Item>
       </Stack>
+    );
+  },
+};
+
+export const random_name: Feature<RandomSetting> = {
+  name: "Random name",
+  component: (props, context) => {
+    return (
+      <RandomizationButton
+        setValue={value => props.handleSetValue(value)}
+        value={props.value}
+      />
     );
   },
 };

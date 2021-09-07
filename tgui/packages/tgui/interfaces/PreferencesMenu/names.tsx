@@ -127,6 +127,7 @@ export const MultiNameInput = (props: {
   );
 };
 
+// MOTHBLOCKS TODO: Random name button
 export const NameInput = (props: {
   handleUpdateName: (name: string) => void,
   name: string,

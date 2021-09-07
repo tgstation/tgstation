@@ -50,7 +50,12 @@
 	if (!preference.is_randomizable())
 		return FALSE
 
-	switch (randomise[preference.savefile_key])
+	var/requested_randomization = randomise[preference.savefile_key]
+
+	if (istype(preference, /datum/preference/name))
+		requested_randomization = read_preference(/datum/preference/choiced/random_name)
+
+	switch (requested_randomization)
 		if (RANDOM_ENABLED)
 			return TRUE
 		if (RANDOM_ANTAG_ONLY)

@@ -58,7 +58,6 @@
 		"random_hair_color" = "hair_color",
 		"random_hairstyle" = "hairstyle",
 		"random_jumpsuit_style" = "jumpsuit_style",
-		"random_name" = "name",
 		"random_skin_tone" = "skin_tone",
 		"random_socks" = "socks",
 		"random_species" = "species",
@@ -87,6 +86,12 @@
 		/datum/preference/choiced/random_body,
 		"random_body",
 		"random_body_antag",
+	)
+
+	migrate_randomization_to_new_pref(
+		/datum/preference/choiced/random_name,
+		"random_name",
+		"random_name_antag",
 	)
 
 	randomise = new_randomise
