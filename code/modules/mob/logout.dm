@@ -5,6 +5,12 @@
 	unset_machine()
 	remove_from_player_list()
 	clear_client_in_contents()
+
+
+	if(client)
+		client.images.Remove(pollution_alpha_mask)
+	pollution_alpha_mask = null
+
 	..()
 
 	if(loc)

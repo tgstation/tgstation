@@ -76,6 +76,11 @@
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
 
+	pollution_alpha_mask = image('icons/effects/pollutionmask.dmi', src, "primary", pixel_x = -48, pixel_y = -48)
+	pollution_alpha_mask.plane = POLLUTION_MASK_PLANE
+	pollution_alpha_mask.appearance_flags = RESET_TRANSFORM
+	client.images |= pollution_alpha_mask
+
 	update_client_colour()
 	update_mouse_pointer()
 	if(client)

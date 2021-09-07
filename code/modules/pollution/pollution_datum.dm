@@ -223,7 +223,7 @@
 	if(!total_thickness || total_thickness < POLLUTANT_APPEARANCE_THICKNESS_THRESHOLD)
 		return
 
-	var/mutable_appearance/overlay = mutable_appearance('icons/effects/96x96.dmi', "smoke", FLY_LAYER, MOUSE_TRANSPARENT_PLANE, appearance_flags = KEEP_APART|RESET_TRANSFORM|RESET_COLOR)
+	var/mutable_appearance/overlay = mutable_appearance('icons/effects/96x96.dmi', "smoke", FLY_LAYER, POLLUTION_PLANE, appearance_flags = KEEP_APART|RESET_TRANSFORM|RESET_COLOR)
 	overlay.pixel_x = -32
 	overlay.pixel_y = -32
 	overlay.alpha = FLOOR(pollutant.alpha * total_thickness * THICKNESS_ALPHA_COEFFICIENT, 1)
