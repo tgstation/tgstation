@@ -52,7 +52,6 @@
 	myarea = get_area(src)
 	LAZYADD(myarea.firealarms, src)
 
-	AddElement(/datum/element/atmos_sensitive, mapload)
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
 
 /obj/machinery/firealarm/Destroy()
@@ -124,33 +123,6 @@
 							span_notice("You emag [src], disabling its thermal sensors."))
 	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
-/obj/machinery/firealarm/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return (exposed_temperature > T0C + 200 || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && !(obj_flags & EMAGGED) && !machine_stat
-
-/obj/machinery/firealarm/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	if(!detecting)
-		return
-	if(!triggered)
-		triggered = TRUE
-		myarea.triggered_firealarms += 1
-		update_appearance()
-	alarm()
-
-/obj/machinery/firealarm/atmos_end()
-	if(!detecting)
-		return
-	if(triggered)
-		triggered = FALSE
-		myarea.triggered_firealarms -= 1
-		update_appearance()
-
-/**
- * Signal handler for checking if we should update fire alarm appearance accordingly to a newly set security level
- *
- * Arguments:
- * * source The datum source of the signal
- * * new_level The new security level that is in effect
- */
 /obj/machinery/firealarm/proc/check_security_level(datum/source, new_level)
 	SIGNAL_HANDLER
 

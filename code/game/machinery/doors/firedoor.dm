@@ -23,12 +23,89 @@
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	var/nextstate = null
 	var/boltslocked = TRUE
-	var/list/affecting_areas
 	var/being_held_open = FALSE
+	/// The merger id used to create/get the merger group in charge of handling tanks that share an internal gas storage
+	var/merger_id = "firelock"
+	/// The typecache of types which are allowed to merge internal storage
+	var/static/list/merger_typecache
+	///stores the merger datum if we are the owner
+	var/datum/merger/our_merger
+	///Don't register the turfs signal more than once
+	var/registered_turfs = FALSE
+
+	var/hazard = FALSE
 
 /obj/machinery/door/firedoor/Initialize()
 	. = ..()
-	CalculateAffectingAreas()
+	var/area/my_area = get_area(src)
+	LAZYADD(my_area.firedoors, src)
+
+	if(!merger_typecache)
+		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
+
+	RegisterSignal(src, COMSIG_MERGER_ADDING, .proc/MergerAdding)
+	RegisterSignal(src, COMSIG_MERGER_REMOVING, .proc/MergerRemoving)
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/door/firedoor/LateInitialize()
+	. = ..()
+	GetMergeGroup(merger_id, merger_typecache)
+
+///////////////////////////////////////////////////////////////////
+// Merger handling
+
+/obj/machinery/door/firedoor/proc/MergerAdding(obj/machinery/door/firedoor/us, datum/merger/new_merger)
+	SIGNAL_HANDLER
+	if(new_merger.id != merger_id)
+		return
+	RegisterSignal(new_merger, COMSIG_MERGER_REFRESH_COMPLETE, .proc/MergerRefreshComplete)
+
+/obj/machinery/door/firedoor/proc/MergerRemoving(obj/machinery/door/firedoor/us, datum/merger/old_merger)
+	SIGNAL_HANDLER
+	if(old_merger.id != merger_id)
+		return
+	UnregisterSignal(old_merger, COMSIG_MERGER_REFRESH_COMPLETE)
+
+/// Handles the firelocks to register only one signal per group
+/obj/machinery/door/firedoor/proc/MergerRefreshComplete(datum/merger/merger, list/leaving_members, list/joining_members)
+	SIGNAL_HANDLER
+	var/turf/open/turf1 = get_step(src, dir)
+	var/turf/open/turf2 = get_step(src, turn(dir, 180))
+	if(merger.origin != src)
+		our_merger = null
+		registered_turfs = FALSE
+		UnregisterSignal(turf1, COMSIG_TURF_EXPOSE)
+		UnregisterSignal(turf2, COMSIG_TURF_EXPOSE)
+		return
+
+	if(!registered_turfs)
+		RegisterSignal(turf1, COMSIG_TURF_EXPOSE, .proc/check_closing)
+		RegisterSignal(turf2, COMSIG_TURF_EXPOSE, .proc/check_closing)
+		registered_turfs = TRUE
+		our_merger = merger
+
+///Check if the temperature and pressure changes are enough to cause body damage
+/obj/machinery/door/firedoor/proc/check_closing(datum/source, datum/gas_mixture/environment, exposed_temperature)
+	SIGNAL_HANDLER
+	var/temperature_hazard = TRUE
+	if(exposed_temperature > BODYTEMP_COLD_DAMAGE_LIMIT && exposed_temperature < BODYTEMP_HEAT_DAMAGE_LIMIT)
+		temperature_hazard = FALSE
+
+	var/environment_pressure = environment.return_pressure()
+	var/pressure_hazard = TRUE
+	if(environment_pressure > HAZARD_LOW_PRESSURE && environment_pressure < HAZARD_HIGH_PRESSURE)
+		pressure_hazard = FALSE
+
+	if(!temperature_hazard && !pressure_hazard)
+		for(var/obj/machinery/door/firedoor/considered_door as anything in our_merger.members)
+			considered_door.hazard = FALSE
+			INVOKE_ASYNC(considered_door, .proc/open)
+		return
+
+	for(var/obj/machinery/door/firedoor/considered_door as anything in our_merger.members)
+		considered_door.hazard = TRUE
+		INVOKE_ASYNC(considered_door, .proc/close)
 
 /obj/machinery/door/firedoor/examine(mob/user)
 	. = ..()
@@ -44,29 +121,9 @@
 	else
 		. += span_notice("The bolt locks have been <i>unscrewed</i>, but the bolts themselves are still <b>wrenched</b> to the floor.")
 
-/obj/machinery/door/firedoor/proc/CalculateAffectingAreas()
-	remove_from_areas()
-	affecting_areas = get_adjacent_open_areas(src) | get_area(src)
-	for(var/I in affecting_areas)
-		var/area/A = I
-		LAZYADD(A.firedoors, src)
-
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
 	density = TRUE
-
-//see also turf/AfterChange for adjacency shennanigans
-
-/obj/machinery/door/firedoor/proc/remove_from_areas()
-	if(affecting_areas)
-		for(var/I in affecting_areas)
-			var/area/A = I
-			LAZYREMOVE(A.firedoors, src)
-
-/obj/machinery/door/firedoor/Destroy()
-	remove_from_areas()
-	affecting_areas.Cut()
-	return ..()
 
 /obj/machinery/door/firedoor/Bumped(atom/movable/AM)
 	if(panel_open || operating)

@@ -245,22 +245,18 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/ModifyFiredoors(opening)
 	if(firedoors)
 		firedoors_last_closed_on = world.time
-		for(var/FD in firedoors)
-			var/obj/machinery/door/firedoor/D = FD
-			if (D.being_held_open)
+		for(var/firedoor in firedoors)
+			var/obj/machinery/door/firedoor/considered_firedoor = firedoor
+			if (considered_firedoor.being_held_open)
 				continue
-			var/cont = !D.welded
-			if(cont && opening) //don't open if adjacent area is on fire
-				for(var/I in D.affecting_areas)
-					var/area/A = I
-					if(A.fire)
-						cont = FALSE
-						break
-			if(cont && D.is_operational)
-				if(D.operating)
-					D.nextstate = opening ? FIREDOOR_OPEN : FIREDOOR_CLOSED
-				else if(!(D.density ^ opening))
-					INVOKE_ASYNC(D, (opening ? /obj/machinery/door/firedoor.proc/open : /obj/machinery/door/firedoor.proc/close))
+			if(considered_firedoor.hazard) //Don't open us if we closed due to hazards
+				continue
+			var/cont = !considered_firedoor.welded
+			if(cont && considered_firedoor.is_operational)
+				if(considered_firedoor.operating)
+					considered_firedoor.nextstate = opening ? FIREDOOR_OPEN : FIREDOOR_CLOSED
+				else if(!(considered_firedoor.density ^ opening))
+					INVOKE_ASYNC(considered_firedoor, (opening ? /obj/machinery/door/firedoor.proc/open : /obj/machinery/door/firedoor.proc/close))
 
 /**
  * Generate a firealarm alert for this area
