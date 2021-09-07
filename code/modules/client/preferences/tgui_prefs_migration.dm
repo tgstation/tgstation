@@ -102,6 +102,6 @@
 	key_antag,
 )
 	if (randomise[key_antag])
-		write_preference(preference_type, RANDOM_ANTAG_ONLY)
+		write_preference(GLOB.preference_entries[preference_type], RANDOM_ANTAG_ONLY)
 	else if (randomise[key])
-		write_preference(preference_type, RANDOM_ENABLED)
+		write_preference(GLOB.preference_entries[preference_type], RANDOM_ENABLED)
