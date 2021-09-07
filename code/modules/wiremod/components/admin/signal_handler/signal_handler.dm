@@ -43,6 +43,9 @@
 	/// The current registered signal
 	var/registered_signal
 
+	/// Whether it is a custom signal id or not.
+	var/custom_signal = FALSE
+
 /obj/item/circuit_component/signal_handler/populate_options()
 	var/static/list/component_options = list(
 		COMP_SIGNAL_HANDLER_OBJECT,
@@ -61,10 +64,10 @@
 	event_triggered = add_output_port("Triggered", PORT_TYPE_SIGNAL, order = 2)
 
 /obj/item/circuit_component/signal_handler/proc/add_source_entity()
+	if(target)
+		remove_input_port(target)
 	if(entity)
 		remove_output_port(entity)
-	if(target)
-		remove_output_port(target)
 
 	target = add_input_port("Target", PORT_TYPE_ATOM, order = 1, trigger = null)
 	entity = add_output_port("Source Entity", PORT_TYPE_ATOM, order = 0)
@@ -83,6 +86,7 @@
 
 /obj/item/circuit_component/signal_handler/pre_input_received(datum/port/input/port)
 	if(signal_id == port)
+		custom_signal = FALSE
 		if(current_registered_entity)
 			unregister_signals(port)
 
@@ -106,13 +110,14 @@
 			signal_id.possible_options = GLOB.integrated_circuit_global_signal_ids
 			signal_map = GLOB.integrated_circuit_global_signal_ids
 			remove_output_port(entity)
-			remove_output_port(target)
+			remove_input_port(target)
 		if(COMP_SIGNAL_HANDLER_OBJECT)
 			signal_id.possible_options = GLOB.integrated_circuit_signal_ids
 			signal_map = GLOB.integrated_circuit_signal_ids
 			add_source_entity()
 
-	signal_id.set_value(null, TRUE)
+	if(!custom_signal)
+		signal_id.set_value(null, TRUE)
 	unregister_signals()
 
 /obj/item/circuit_component/signal_handler/proc/register_signals(datum/port/input/port)
