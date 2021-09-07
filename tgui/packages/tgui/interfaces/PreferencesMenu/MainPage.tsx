@@ -83,9 +83,10 @@ const ChoicedSelection = (props: {
     <Box style={{
       background: "white",
       padding: "5px",
-      width: `${CLOTHING_SELECTION_CELL_SIZE * CLOTHING_SELECTION_WIDTH}px`,
+
       height:
-        `${CLOTHING_SELECTION_CELL_SIZE * CLOTHING_SELECTION_MULTIPLIER}px`,
+      `${CLOTHING_SELECTION_CELL_SIZE * CLOTHING_SELECTION_MULTIPLIER}px`,
+      width: `${CLOTHING_SELECTION_CELL_SIZE * CLOTHING_SELECTION_WIDTH}px`,
     }}>
       <Stack vertical fill>
         <Stack.Item>
@@ -97,7 +98,7 @@ const ChoicedSelection = (props: {
           </Box>
         </Stack.Item>
 
-        <Stack.Item overflowY="scroll">
+        <Stack.Item overflowX="hidden" overflowY="scroll">
           <Autofocus>
             <Flex wrap>
               {Object.entries(catalog.icons).map(([name, image], index) => {
