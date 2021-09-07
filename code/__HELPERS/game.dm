@@ -208,6 +208,15 @@
 	. = list()
 	if(!center_turf)
 		return
+
+	if(view_radius == 0)
+		for(var/atom/movable/movable as anything in center_turf)
+			var/list/recursive_contents = LAZYACCESS(movable.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE)
+			if(recursive_contents)
+				. += recursive_contents
+		return
+
+	return SSspatial_hashmap.find_hashmap_contents_in_view(HASHMAP_CONTENTS_TYPE_HEARING, source, view_radius)
 	var/lum = center_turf.luminosity
 	center_turf.luminosity = 6 // This is the maximum luminosity
 	for(var/atom/movable/movable in view(view_radius, center_turf))
