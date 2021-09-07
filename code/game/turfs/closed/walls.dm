@@ -130,7 +130,7 @@
 	user.do_attack_animation(src)
 	if((user.environment_smash & ENVIRONMENT_SMASH_WALLS) || (user.environment_smash & ENVIRONMENT_SMASH_RWALLS))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-		dismantle_wall(1)
+		dismantle_wall(TRUE)
 		return
 
 /turf/closed/wall/attack_basic_mob(mob/living/simple_animal/user, list/modifiers)
@@ -138,7 +138,7 @@
 	user.do_attack_animation(src)
 	if((user.environment_smash & ENVIRONMENT_SMASH_WALLS) || (user.environment_smash & ENVIRONMENT_SMASH_RWALLS))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-		dismantle_wall(1)
+		dismantle_wall(TRUE)
 		return
 
 /turf/closed/wall/attack_hulk(mob/living/carbon/user)

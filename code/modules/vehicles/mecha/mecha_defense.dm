@@ -92,7 +92,7 @@
 	log_message("Attack by basic mob. Attacker - [user].", LOG_MECHA, color="red")
 	if(!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
-		return 0
+		return FALSE
 	else
 		var/play_soundeffect = 1
 		if(user.environment_smash)
@@ -103,7 +103,7 @@
 			basic_damage = user.obj_damage
 		log_combat(user, src, "attacked")
 		attack_generic(user, basic_damage, user.melee_damage_type, MELEE, play_soundeffect)
-		return 1
+		return TRUE
 
 
 /obj/vehicle/sealed/mecha/hulk_damage()
