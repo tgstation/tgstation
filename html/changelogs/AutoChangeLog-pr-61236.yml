@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - qol: "HFR moderator injection and fuel injection are now controlled separately"
