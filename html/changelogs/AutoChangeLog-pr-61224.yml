@@ -1,0 +1,4 @@
+author: "ExcessiveUseOfCobblestone"
+delete-after: True
+changes: 
+  - admin: "you can now customize what udders produce using `reagent_produced_typepath` or by using the `custom_milk_reagent` argument when adding the component"
