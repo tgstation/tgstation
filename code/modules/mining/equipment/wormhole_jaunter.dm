@@ -45,15 +45,16 @@
 	if(!turf_check(user))
 		return
 
-	var/list/destinations = get_destinations()
-	if(!destinations.len)
+	if(!can_jaunter_teleport())
 		if(user)
-			to_chat(user, span_notice("The [src] found no beacons in the world to anchor a wormhole to."))
+			to_chat(user, span_notice("\The [src] found no beacons in the world to anchor a wormhole to."))
 		else
 			visible_message(span_notice("\The [src] found no beacons in the world to anchor a wormhole to!"))
 		return
 
+	var/list/destinations = get_destinations()
 	var/chosen_beacon = pick(destinations)
+
 	var/obj/effect/portal/jaunt_tunnel/tunnel = new (get_turf(src), 100, null, FALSE, get_turf(chosen_beacon))
 	if(teleport)
 		tunnel.teleport(user)
@@ -76,11 +77,11 @@
 
 	var/mob/M = loc
 	if(istype(M) && triggered)
-		M.visible_message(span_warning("[src] overloads and activates!"))
+		M.visible_message(span_warning("Your [src] overloads and activates!"))
 		SSblackbox.record_feedback("tally", "jaunter", 1, "EMP") // EMP accidental activation
 		activate(M, FALSE, TRUE)
 	else if(triggered)
-		visible_message(span_warning("The [src.name] overloads and activates!"))
+		visible_message(span_warning("\The [src] overloads and activates!"))
 		activate()
 
 /obj/item/wormhole_jaunter/proc/chasm_react(mob/user)
