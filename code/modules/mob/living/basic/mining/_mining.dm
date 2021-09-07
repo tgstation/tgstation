@@ -1,13 +1,12 @@
 /mob/living/basic/mining
-	weather_immunities = list(WEATHER_LAVA,WEATHER_ASH)
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	mob_size = MOB_SIZE_LARGE
 
-	innate_traits = list(TRAIT_NOMOBSWAP)
+	innate_traits = list(TRAIT_NOMOBSWAP, TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE)
 	faction = list("mining")
 	obj_damage = 30
-	environment_smash = ENVIRONMENT_SMASH_WALLS
+	environment_smash = ENVIRONMENT_SMASH_WALLS | ENVIRONMENT_SMASH_STRUCTURES
 
 	response_harm_continuous = "strikes"
 	response_harm_simple = "strike"

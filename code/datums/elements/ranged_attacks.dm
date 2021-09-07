@@ -5,8 +5,9 @@
 	var/casingtype = /obj/item/ammo_casing/glockroach
 	var/projectilesound = 'sound/weapons/gun/pistol/shot.ogg'
 	var/projectiletype
+	var/fire_message
 
-/datum/element/ranged_attacks/Attach(atom/movable/target, casingtype, projectilesound, projectiletype)
+/datum/element/ranged_attacks/Attach(atom/movable/target, casingtype, projectilesound, projectiletype, fire_message = "fires")
 	. = ..()
 	if(!isbasicmob(target))
 		return COMPONENT_INCOMPATIBLE
@@ -14,6 +15,7 @@
 	src.casingtype = casingtype
 	src.projectilesound = projectilesound
 	src.projectiletype = projectiletype
+	src.fire_message = fire_message
 
 	RegisterSignal(target, COMSIG_MOB_ATTACK_RANGED, .proc/fire_ranged_attack)
 
@@ -48,3 +50,5 @@
 		P.original = target
 		P.preparePixelProjectile(target, firer)
 		P.fire()
+
+	firer.visible_message(span_danger("<b>[firer]</b> [fire_message] at [target]!"))

@@ -37,67 +37,6 @@
 	var/lava_drinker = TRUE
 	var/warmed_up = FALSE
 
-/obj/projectile/temp/basilisk
-	name = "freezing blast"
-	icon_state = "ice_2"
-	damage = 10
-	damage_type = BURN
-	nodamage = FALSE
-	flag = ENERGY
-	temperature = -50 // Cools you down! per hit!
-	var/slowdown = TRUE //Determines if the projectile applies a slowdown status effect on carbons or not
-
-/obj/projectile/temp/basilisk/on_hit(atom/target, blocked = 0)
-	. = ..()
-	if(iscarbon(target) && slowdown)
-		var/mob/living/carbon/carbon_target = target
-		carbon_target.apply_status_effect(/datum/status_effect/freezing_blast)
-
-/obj/projectile/temp/basilisk/heated
-	name = "energy blast"
-	icon_state= "chronobolt"
-	damage = 40
-	damage_type = BRUTE
-	nodamage = FALSE
-	temperature = 0
-	slowdown = FALSE
-
-
-/mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
-	if(..()) //we have a target
-		var/atom/target_from = GET_TARGETS_FROM(src)
-		if(isliving(target) && !target.Adjacent(target_from) && ranged_cooldown <= world.time)//No more being shot at point blank or spammed with RNG beams
-			OpenFire(target)
-
-/mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			gib()
-		if(EXPLODE_HEAVY)
-			adjustBruteLoss(140)
-		if(EXPLODE_LIGHT)
-			adjustBruteLoss(110)
-
-/mob/living/simple_animal/hostile/asteroid/basilisk/AttackingTarget()
-	. = ..()
-	if(lava_drinker && !warmed_up && istype(target, /turf/open/lava))
-		visible_message(span_warning("[src] begins to drink from [target]..."))
-		if(do_after(src, 70, target = target))
-			visible_message(span_warning("[src] begins to fire up!"))
-			fully_heal()
-			icon_state = "Basilisk_alert"
-			set_varspeed(0)
-			warmed_up = TRUE
-			projectiletype = /obj/projectile/temp/basilisk/heated
-			addtimer(CALLBACK(src, .proc/cool_down), 3000)
-
-/mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
-	visible_message(span_warning("[src] appears to be cooling down..."))
-	if(stat != DEAD)
-		icon_state = "Basilisk"
-	set_varspeed(3)
-	warmed_up = FALSE
-	projectiletype = /obj/projectile/temp/basilisk
 
 //Watcher
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher

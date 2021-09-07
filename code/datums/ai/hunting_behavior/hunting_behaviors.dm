@@ -1,15 +1,15 @@
-/datum/ai_planning_subtree/find_and_hunt_target
+/datum/ai_planning_subtree/hunt_for_food
 	var/list/hunt_targets = list(/obj/effect/decal/cleanable/ants)
 
-/datum/ai_planning_subtree/find_and_hunt_target/New()
+/datum/ai_planning_subtree/hunt_for_food/New()
 	. = ..()
 	hunt_targets = typecacheof(hunt_targets)
 
-/datum/ai_planning_subtree/find_and_hunt_target/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/hunt_for_food/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	. = ..()
 	if(controller.blackboard[BB_HUNTING_COOLDOWN] >= world.time)
 		return
-	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/atom/target = controller.blackboard[BB_CURRENT_HUNTING_TARGET]
 	if(!target || QDELETED(target))
 		controller.queue_behavior(/datum/ai_behavior/find_hunt_target, BB_CURRENT_HUNTING_TARGET, hunt_targets)
 	else

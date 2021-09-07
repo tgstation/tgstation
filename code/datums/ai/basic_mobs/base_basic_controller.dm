@@ -1,4 +1,5 @@
 /datum/ai_controller/basic_controller
+	ai_movement = /datum/ai_movement/basic_avoidance
 	movement_delay = 0.4 SECONDS
 
 /datum/ai_controller/basic_controller/TryPossessPawn(atom/new_pawn)

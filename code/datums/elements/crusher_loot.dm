@@ -6,7 +6,7 @@
 
 /datum/element/crusher_loot/Attach(datum/target, item_to_drop, chance = 25)
 	. = ..()
-	if(!isliving)
+	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 	src.item_to_drop = item_to_drop
 	src.chance = chance
@@ -19,5 +19,5 @@
 /datum/element/crusher_loot/proc/on_death(mob/living/target, gibbed)
 	SIGNAL_HANDLER
 	var/datum/status_effect/crusher_damage/crusher_effect = target.has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
-	if(crusher_effect && prob((crusher_effect.total_damage/target.maxHealth) * crusher_drop_mod)) //The more damage done by crusher, the more likely the loot is to spawn.
+	if(crusher_effect && prob((crusher_effect.total_damage/target.maxHealth) * chance)) //The more damage done by crusher, the more likely the loot is to spawn.
 		target.butcher_results[item_to_drop] = 1
