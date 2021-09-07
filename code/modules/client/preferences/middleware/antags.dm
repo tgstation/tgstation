@@ -104,6 +104,7 @@
 	var/list/generated_icons = list()
 	var/list/to_insert = list()
 
+	// MOTHBLOCKS TODO: Add a list of non-ruleset antagonists for lone op
 	for (var/datum/dynamic_ruleset/ruleset as anything in subtypesof(/datum/dynamic_ruleset))
 		var/datum/antagonist/antagonist_type = initial(ruleset.antag_datum)
 		if (isnull(antagonist_type))

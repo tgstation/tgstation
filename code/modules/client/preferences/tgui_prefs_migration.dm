@@ -1,6 +1,6 @@
 /// Handle the migrations necessary from pre-tgui prefs to post-tgui prefs
 /datum/preferences/proc/migrate_preferences_to_tgui_prefs_menu()
-	// MOTHBLOCKS TODO: Migrate antags, check midround antagonists preference
+	migrate_antagonists()
 	migrate_key_bindings()
 
 /// Handle the migrations necessary from pre-tgui prefs to post-tgui prefs, for characters
@@ -26,6 +26,20 @@
 				new_key_bindings[keybind] = list(hotkey)
 
 	key_bindings = new_key_bindings
+
+// Before tgui preferences menu, "traitor" would handle both roundstart, midround, and latejoin.
+// These were split apart.
+/datum/preferences/proc/migrate_antagonists()
+	// MOTHBLOCKS TODO: Transfer lone operative as well when it is made its own preference
+	migrate_antagonist(ROLE_TRAITOR, list(ROLE_SYNDICATE_INFILTRATOR, ROLE_SLEEPER_AGENT))
+	migrate_antagonist(ROLE_HERETIC, list(ROLE_HERETIC_SMUGGLER))
+	migrate_antagonist(ROLE_MALF, list(ROLE_MALF_MIDROUND))
+	migrate_antagonist(ROLE_WIZARD, list(ROLE_WIZARD_MIDROUND))
+
+/datum/preferences/proc/migrate_antagonist(will_exist, list/to_add)
+	if (will_exist in be_special)
+		for (var/add in to_add)
+			be_special += add
 
 // Randomization used to be an assoc list of fields to TRUE.
 // Antagonist randomization was not even available to all options.
