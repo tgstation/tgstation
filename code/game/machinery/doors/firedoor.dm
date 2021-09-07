@@ -43,7 +43,7 @@
 
 /obj/machinery/door/firedoor/LateInitialize()
 	. = ..()
-	GetMergeGroup(merger_id, allowed_types = list(/obj/machinery/door/firedoor))
+	GetMergeGroup(merger_id, allowed_types = typecacheof(/obj/machinery/door/firedoor))
 
 ///////////////////////////////////////////////////////////////////
 // Merger handling
@@ -88,7 +88,7 @@
 	if(environment_pressure > HAZARD_LOW_PRESSURE && environment_pressure < HAZARD_HIGH_PRESSURE)
 		pressure_hazard = FALSE
 
-	var/datum/merger/merge_group = GetMergeGroup(merger_id, allowed_types = list(/obj/machinery/door/firedoor))
+	var/datum/merger/merge_group = GetMergeGroup(merger_id, allowed_types = typecacheof(/obj/machinery/door/firedoor))
 	if(!temperature_hazard && !pressure_hazard)
 		for(var/obj/machinery/door/firedoor/considered_door as anything in merge_group.members)
 			considered_door.hazard = FALSE
