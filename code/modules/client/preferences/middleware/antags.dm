@@ -12,10 +12,15 @@
 		selected_antags += serialize_antag_name(antag)
 
 	// MOTHBLOCKS TODO: Only send when needed, just like generated_preference_values
-	// MOTHBLOCKS TODO: Send not old enough antags
 	data["selected_antags"] = selected_antags
 
-	data["antag_bans"] = get_antag_bans()
+	var/list/antag_bans = get_antag_bans()
+	if (antag_bans.len)
+		data["antag_bans"] = antag_bans
+
+	var/list/antag_days_left = get_antag_days_left()
+	if (antag_days_left?.len)
+		data["antag_days_left"] = antag_days_left
 
 	return data
 
@@ -57,6 +62,28 @@
 			antag_bans += serialize_antag_name(antag_flag)
 
 	return antag_bans
+
+/datum/preference_middleware/antags/proc/get_antag_days_left()
+	if (!CONFIG_GET(flag/use_age_restriction_for_jobs))
+		return
+
+	var/list/antag_days_left = list()
+
+	for (var/datum/dynamic_ruleset/dynamic_ruleset as anything in subtypesof(/datum/dynamic_ruleset))
+		var/antag_flag = initial(dynamic_ruleset.antag_flag)
+		var/antag_flag_override = initial(dynamic_ruleset.antag_flag_override)
+
+		if (isnull(antag_flag))
+			continue
+
+		var/days_needed = preferences.parent?.get_remaining_days(
+			GLOB.special_roles[antag_flag_override || antag_flag]
+		)
+
+		if (days_needed > 0)
+			antag_days_left[serialize_antag_name(antag_flag)] = days_needed
+
+	return antag_days_left
 
 /datum/preference_middleware/antags/proc/get_serialized_antags()
 	var/list/serialized_antags

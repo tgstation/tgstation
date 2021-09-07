@@ -2,6 +2,7 @@ import { binaryInsertWith } from "common/collections";
 import { classes } from "common/react";
 import { useBackend, useLocalState } from "../../backend";
 import { Box, Button, Divider, Flex, Section, Stack, Tooltip } from "../../components";
+import { logger } from "../../logging";
 import { Antagonist, Category } from "./antagonists/base";
 import { PreferencesMenuData } from "./data";
 
@@ -99,14 +100,19 @@ const AntagSelection = (props: {
     )}>
       <Flex className={className} align="flex-end" wrap>
         {props.antagonists.map(antagonist => {
-          const isBanned = data.antag_bans.indexOf(antagonist.key) !== -1;
+          const isBanned = data.antag_bans
+            && data.antag_bans.indexOf(antagonist.key) !== -1;
+
+          const daysLeft
+            = (data.antag_days_left && data.antag_days_left[antagonist.key])
+              || 0;
 
           return (
             <Flex.Item
               className={classes([
                 `${className}__antagonist`,
                 `${className}__antagonist--${
-                  isBanned
+                  (isBanned || daysLeft > 0)
                     ? "banned"
                     : predictedState.has(antagonist.key) ? "on" : "off"
                 }`,
@@ -160,10 +166,13 @@ const AntagSelection = (props: {
                       ])} />
 
                       {isBanned && (
-                        <Box className={classes([
-                          "antagonists96x96",
-                          "antagonist-banned-slash",
-                        ])} />
+                        <Box className="antagonist-banned-slash" />
+                      )}
+
+                      {daysLeft > 0 && (
+                        <Box className="antagonist-days-left">
+                          <b>{daysLeft}</b> days left
+                        </Box>
                       )}
                     </Box>
                   </Tooltip>

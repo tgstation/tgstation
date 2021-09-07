@@ -114,7 +114,8 @@ export type PreferencesMenuData = {
   overflow_role: string;
   selected_quirks: string[];
 
-  antag_bans: string[];
+  antag_bans?: string[];
+  antag_days_left?: Record<string, number>;
   selected_antags: string[];
 
   active_slot: number;
