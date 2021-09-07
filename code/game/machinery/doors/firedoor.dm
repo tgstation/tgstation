@@ -45,6 +45,11 @@
 	. = ..()
 	GetMergeGroup(merger_id, allowed_types = typecacheof(/obj/machinery/door/firedoor))
 
+/obj/machinery/door/firedoor/Destroy()
+	var/area/my_area = get_area(src)
+	LAZYREMOVE(my_area.firedoors,src)
+	return..()
+
 ///////////////////////////////////////////////////////////////////
 // Merger handling
 
