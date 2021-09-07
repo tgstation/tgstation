@@ -99,16 +99,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			unlock_content = C.IsByondMember()
 			if(unlock_content)
 				max_save_slots = 8
+
+	// give them default keybinds and update their movement keys
+	key_bindings = deepCopyList(GLOB.default_hotkeys)
+	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
+
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	randomise_appearance_prefs() //let's create a random character then - rather than a fat, bald and naked man.
-
-	// give them default keybinds and update their movement keys
-	key_bindings = deepCopyList(GLOB.default_hotkeys)
-	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
 
 	C?.set_macros()
 

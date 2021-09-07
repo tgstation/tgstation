@@ -104,26 +104,27 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/check_keybindings()
 	if(!parent)
 		return
-	var/list/binds_by_key = key_bindings || list()
-	for (var/kb_name in key_bindings)
-		for(var/key in key_bindings[kb_name])
-			binds_by_key[key] += list(kb_name)
+	var/list/binds_by_key = get_key_bindings_by_key(key_bindings)
 	var/list/notadded = list()
 	for (var/name in GLOB.keybindings_by_name)
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[name]
-		if(length(key_bindings[kb.name]))
+		if(kb.name in key_bindings)
 			continue // key is unbound and or bound to something
+
 		var/addedbind = FALSE
+		key_bindings[kb.name] = list()
+
 		if(hotkeys)
 			for(var/hotkeytobind in kb.hotkey_keys)
-				if(!length(binds_by_key[hotkeytobind]) || hotkeytobind == "Unbound") //Only bind to the key if nothing else is bound expect for Unbound
-					LAZYOR(key_bindings[kb.name], hotkeytobind)
+				if(!length(binds_by_key[hotkeytobind]) && hotkeytobind != "Unbound") //Only bind to the key if nothing else is bound expect for Unbound
+					key_bindings[kb.name] |= hotkeytobind
 					addedbind = TRUE
 		else
 			for(var/classickeytobind in kb.classic_keys)
-				if(!length(binds_by_key[classickeytobind]) || classickeytobind == "Unbound") //Only bind to the key if nothing else is bound expect for Unbound
-					LAZYOR(key_bindings[kb.name], classickeytobind)
+				if(!length(binds_by_key[classickeytobind]) && classickeytobind != "Unbound") //Only bind to the key if nothing else is bound expect for Unbound
+					key_bindings[kb.name] |= classickeytobind
 					addedbind = TRUE
+
 		if(!addedbind)
 			notadded += kb
 	save_preferences() //Save the players pref so that new keys that were set to Unbound as default are permanently stored
