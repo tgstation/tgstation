@@ -16,7 +16,7 @@ import { filterMap, sortBy } from "common/collections";
 import { exhaustiveCheck } from "common/exhaustive";
 
 const CLOTHING_CELL_SIZE = 48;
-const CLOTHING_SIDEBAR_ROWS = 7;
+const CLOTHING_SIDEBAR_ROWS = 9;
 
 const CLOTHING_SELECTION_CELL_SIZE = 48;
 const CLOTHING_SELECTION_WIDTH = 5.4;
@@ -293,7 +293,7 @@ const PreferenceList = (props: {
     <Stack.Item basis="50%" grow style={{
       background: "rgba(0, 0, 0, 0.5)",
       padding: "4px",
-    }}>
+    }} overflowX="hidden" overflowY="scroll">
       <LabeledList>
         {
           sortPreferences(Object.entries(props.preferences))
