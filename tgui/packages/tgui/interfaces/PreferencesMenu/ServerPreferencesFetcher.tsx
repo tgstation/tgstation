@@ -1,5 +1,6 @@
 import { Component, InfernoNode } from "inferno";
 import { resolveAsset } from "../../assets";
+import { fetchRetry } from "../../http";
 import { ServerData } from "./data";
 
 // Cache response so it's only sent once
@@ -20,7 +21,7 @@ export class ServerPreferencesFetcher extends Component<{
 
   async populateServerData() {
     if (!fetchServerData) {
-      fetchServerData = fetch(resolveAsset("preferences.json"))
+      fetchServerData = fetchRetry(resolveAsset("preferences.json"))
         .then(response => response.json());
     }
 

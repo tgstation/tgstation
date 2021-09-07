@@ -6,6 +6,7 @@ import { useBackend, useLocalState } from "../../backend";
 import { sortBy } from "common/collections";
 import { KeyEvent } from "../../events";
 import { TabbedMenu } from "./TabbedMenu";
+import { fetchRetry } from "../../http";
 
 type Keybinding = {
   name: string;
@@ -303,7 +304,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
   }
 
   async populateKeybindings() {
-    const keybindingsResponse = await fetch(resolveAsset("keybindings.json"));
+    const keybindingsResponse = await fetchRetry(resolveAsset("keybindings.json"));
     const keybindingsData: Keybindings = await keybindingsResponse.json();
 
     this.setState({
