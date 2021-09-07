@@ -224,89 +224,6 @@
 	StartCooldown()
 	return TRUE
 
-/datum/antagonist/gang/red
-	show_in_antagpanel = TRUE
-	name = "San Fierro Triad"
-	roundend_category = "The San Fierro Triad gangsters"
-	gang_name = "San Fierro Triad"
-	gang_id = "SFT"
-	acceptable_clothes = list(/obj/item/clothing/head/soft/red,
-							/obj/item/clothing/neck/scarf/red,
-							/obj/item/clothing/suit/jacket/letterman_red,
-							/obj/item/clothing/under/color/red,
-							/obj/item/clothing/mask/bandana/red,
-							/obj/item/clothing/under/suit/red)
-	free_clothes = list(/obj/item/clothing/suit/jacket/letterman_red,
-						/obj/item/clothing/under/color/red,
-						/obj/item/toy/crayon/spraycan)
-	antag_hud_name = "Triad"
-	gang_team_type = /datum/team/gang/red
-
-/datum/team/gang/red/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
-	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
-	lasttname.Find(original_name)
-	if(starter_gangster)
-		gangster.current.fully_replace_character_name(gangster.current.real_name, "Master [lasttname.match]")
-	else
-		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
-	return
-
-/datum/antagonist/gang/purple
-	show_in_antagpanel = TRUE
-	name = "Ballas"
-	roundend_category = "The Ballas gangsters"
-	gang_name = "Ballas"
-	gang_id = "B"
-	acceptable_clothes = list(/obj/item/clothing/head/soft/purple,
-							/obj/item/clothing/under/color/lightpurple,
-							/obj/item/clothing/neck/scarf/purple,
-							/obj/item/clothing/head/beanie/purple,
-							/obj/item/clothing/suit/apron/purple_bartender,
-							/obj/item/clothing/mask/bandana/skull,
-							/obj/item/clothing/under/suit/green)
-	free_clothes = list(/obj/item/clothing/head/beanie/purple,
-						/obj/item/clothing/under/color/lightpurple,
-						/obj/item/toy/crayon/spraycan)
-	antag_hud_name = "Ballas"
-	gang_team_type = /datum/team/gang/purple
-
-/datum/team/gang/purple/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
-	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
-	lasttname.Find(original_name)
-	if(starter_gangster)
-		gangster.current.fully_replace_character_name(gangster.current.real_name, "Leader [lasttname.match]")
-	else
-		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
-	return
-
-
-/datum/antagonist/gang/green
-	show_in_antagpanel = TRUE
-	name = "Grove Street Families"
-	roundend_category = "The Grove Street Families gangsters"
-	gang_name = "Grove Street Families"
-	gang_id = "GSF"
-	acceptable_clothes = list(/obj/item/clothing/head/soft/green,
-							/obj/item/clothing/under/color/darkgreen,
-							/obj/item/clothing/neck/scarf/green,
-							/obj/item/clothing/head/beanie/green,
-							/obj/item/clothing/suit/poncho/green,
-							/obj/item/clothing/mask/bandana/green)
-	free_clothes = list(/obj/item/clothing/mask/bandana/green,
-						/obj/item/clothing/under/color/darkgreen,
-						/obj/item/toy/crayon/spraycan)
-	antag_hud_name = "Grove"
-	gang_team_type = /datum/team/gang/green
-
-/datum/team/gang/green/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
-	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
-	lasttname.Find(original_name)
-	if(starter_gangster)
-		gangster.current.fully_replace_character_name(gangster.current.real_name, "Big [lasttname.match]")
-	else
-		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
-	return
-
 /datum/antagonist/gang/russian_mafia
 	show_in_antagpanel = TRUE
 	name = "The Mafia"
@@ -381,33 +298,6 @@
 	else
 		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
 	return
-
-/datum/antagonist/gang/vagos
-	show_in_antagpanel = TRUE
-	name = "Los Santos Vagos"
-	roundend_category = "The Los Santos Vagos gangsters"
-	gang_name = "Los Santos Vagos"
-	gang_id = "LSV"
-	acceptable_clothes = list(/obj/item/clothing/head/soft/yellow,
-							/obj/item/clothing/under/color/yellow,
-							/obj/item/clothing/neck/scarf/yellow,
-							/obj/item/clothing/head/beanie/yellow,
-							/obj/item/clothing/mask/bandana/gold)
-	free_clothes = list(/obj/item/clothing/mask/bandana/gold,
-						/obj/item/clothing/under/color/yellow,
-						/obj/item/toy/crayon/spraycan)
-	antag_hud_name = "Vagos"
-	gang_team_type = /datum/team/gang/vagos
-
-/datum/team/gang/vagos/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
-	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
-	lasttname.Find(original_name)
-	if(starter_gangster)
-		gangster.current.fully_replace_character_name(gangster.current.real_name, "Boss [lasttname.match]")
-	else
-		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
-	return
-
 
 /datum/antagonist/gang/henchmen
 	show_in_antagpanel = TRUE

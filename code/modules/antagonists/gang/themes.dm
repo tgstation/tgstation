@@ -8,61 +8,6 @@
 	var/list/everyone_objective = null // If this isn't null, everyone gets this objective.
 	var/starting_gangsters = 3 // How many gangsters should each gang start with?
 
-/datum/gang_theme/los_santos_showdown
-	name = "Los Santos Showdown"
-	description = "Hey hey hey, it's your man Joey, here on Radio Los Spess in the Spinward Stellar Coalition! Thanks for tuning in today!\
-	There's been recent reports about suspected gang activity between the Grove Street Families and the Ballas in your sector of space tonight. \
-	Keep an ear out and stay cool out there! Make love, not war, I say!"
-	involved_gangs = list(/datum/antagonist/gang/green, /datum/antagonist/gang/purple)
-	starting_gangsters = 5
-	gang_objectives = list(
-
-		/datum/antagonist/gang/green = "Yo, what's good, man? \
-		We're just having a blast here on this station, man, but you know what it really doesn't look like? \
-		It doesn't look like REAL Grove Street, man. You know, home? At least it was till we fucked everything up, man. \
-		Look man, you gotta <B>get this station reppin' Grove ASAP. Spray green everywhere, tag our turf, and rep Grove Street loud and proud!</B> \
-		And kick those damn Ballas off of this place! \
-		Those bitches are in with the Security pigs something fierce, man.",
-
-		/datum/antagonist/gang/purple = "Hey man, how are you doin' this shift? \
-		Look, we need to <B>make a deal with those Security pigs.</B> We scratch their back, they scratch ours. You feel me? \
-		If you can keep Security off our backs, we can make sure this station is Balla turf for years to come. \
-		Watch out for those Grove Street bustas, though. Keep 'em off our turf!"
-	)
-
-/datum/gang_theme/los_santos_showdown
-	name = "San Andreas Rumble"
-	description = "Hey hey hey, it's your man Joey, here on Radio Los Spess in the Spinward Stellar Coalition! Thanks for tuning in today!\
-	There's been recent reports about suspected gang activity between the Big Four from the Andreas Sector of space, in your sector tonight. \
-	Keep an ear out and stay cool out there! Make love, not war, I say!"
-	involved_gangs = list(/datum/antagonist/gang/green, /datum/antagonist/gang/purple, /datum/antagonist/gang/red, /datum/antagonist/gang/vagos)
-	gang_objectives = list(
-
-		/datum/antagonist/gang/green = "Yo, what's good, man? \
-		We're just having a blast here on this station, man, but you know what it really doesn't look like? \
-		It doesn't look like REAL Grove Street, man. You know, home? At least it was till we fucked everything up, man. \
-		Look man, you gotta <B>get this station reppin' Grove ASAP. Spray green everywhere, tag our turf, and rep Grove Street loud and proud!</B> \
-		And kick those damn Ballas off of this place! \
-		Those bitches are in with the Security pigs something fierce, man.",
-
-		/datum/antagonist/gang/red = "Welcome, friend, to the station. \
-		We've got a simple task for you;\
-		We suspect Security is in league with those filthy bilge rats, the Ballas. <B>Quietly eliminate any and all Security members that you believe to be compromised, \
-		and leave the uncorrupted ones alive.</B> \
-		Do not fail us, or the consequences will be dire.",
-
-		/datum/antagonist/gang/vagos = "Listen, we got fresh orders from up high. \
-		Our drug operations just aren't making enough cash. We need new product, and we need new customers. \
-		<B>Take advantage of the station's botanical systems to get a good grow op going, and charge out the ass for it.</B> \
-		If people don't want to pay, <B>make them start buying by force.</B>. \
-		And if the weed isn't strong enough, <B>use medbay's chemistry lab to cook up some strong stuff.</B> Addicted customers are returning customers, after all.",
-
-		/datum/antagonist/gang/purple = "Hey man, how are you doin' this shift? \
-		Look, we need to <B>make a deal with those Security pigs.</B> We scratch their back, they scratch ours. You feel me? \
-		If you can keep Security off our backs, we can make sure this station is Balla turf for years to come. \
-		Watch out for those Grove Street bustas, though. Keep 'em off our turf!"
-	)
-
 /datum/gang_theme/goodfellas
 	name = "Goodfellas"
 	description = "You're listening to the 108.9 Swing, all jazz, all night long, no advertising. We'd like to take this time to remind you to avoid smoky backrooms and \
@@ -200,20 +145,15 @@
 /datum/gang_theme/popularity_contest
 	name = "Popularity Contest"
 	description = "Hey hey hey kids, it's your favorite radio DJ, Crowley The Clown on 36.0! Today we're polling the YOUTH what their favorite violent street gang is! \
-	So far, the finalists are the Third Street Saints, the Grove Street Families, and the Tunnel Snakes! Tune in after this commercial break to hear who the winner of \
+	So far, the finalists are the Third Street Saints and the Tunnel Snakes! Tune in after this commercial break to hear who the winner of \
 	2556's Most Popular Gang award is!"
-	involved_gangs = list(/datum/antagonist/gang/saints, /datum/antagonist/gang/green, /datum/antagonist/gang/tunnel_snakes)
+	involved_gangs = list(/datum/antagonist/gang/saints, /datum/antagonist/gang/tunnel_snakes)
 	gang_objectives = list(
 
 		/datum/antagonist/gang/saints = "Hey man, welcome to the Third Street Saints! Check out this sweet new pad! \
 		Well it WOULD be a sweet new pad, but we got some rivals to deal with. People don't love us as much as they love those Grove Street fools and those Tunnel Snake greasers. \
 		<B>We need to make the Third Street Saints the most popular group on the station!</B> \
 		Get rid of those Grove Street and Tunnel Snake kids.",
-
-		/datum/antagonist/gang/green = "Hey, what's good, man? We got a situation to deal with. \
-		Those Third Street Saints and Tunnel Snakes are trying to muscle in on our turf. We need to stop this shit, man. \
-		<B>We need to make the Grove Street Families the most popular group on the station!</B> \
-		Get rid of those Third Street Saint and Tunnel Snake bustas.",
 
 		/datum/antagonist/gang/tunnel_snakes = "TUNNEL SNAKES RULE!!! \
 		We're the Tunnel Snakes, and we rule! \
