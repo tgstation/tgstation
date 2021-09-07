@@ -199,6 +199,7 @@ multiple modular subtrees with behaviors
 			continue
 		can_start_planning = FALSE
 	can_currently_plan = can_start_planning
+	SEND_SIGNAL(pawn, COMSIG_ATOM_AI_PLAN_SELECTED)
 
 
 ///This proc handles changing ai status, and starts/stops processing if required.

@@ -83,6 +83,9 @@
 	///Sentience type, for slime potions. SHOULD BE AN ELEMENT BUT I DONT CARE ABOUT IT FOR NOW
 	var/sentience_type = SENTIENCE_ORGANIC
 
+	///Traits to add on initialize
+	var/list/innate_traits = list()
+
 /mob/living/basic/Initialize(mapload)
 	. = ..()
 
@@ -99,6 +102,16 @@
 
 	if(speak_emote)
 		speak_emote = string_list(speak_emote)
+
+	for(var/trait in innate_traits)
+		ADD_TRAIT(src, trait, INNATE_TRAIT)
+
+/mob/living/basic/update_icon(updates)
+	. = ..()
+	if(stat == DEAD)
+		icon_state = icon_dead
+	else
+		icon_state = icon_living
 
 /mob/living/basic/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
@@ -117,10 +130,10 @@
 		qdel(src)
 	else
 		health = 0
-		icon_state = icon_dead
 		if(flip_on_death)
 			transform = transform.Turn(180)
 		set_density(FALSE)
+		update_appearance(UPDATE_ICON)
 
 /mob/living/basic/proc/melee_attack(atom/target)
 	src.face_atom(target)
