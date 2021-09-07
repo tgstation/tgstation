@@ -38,6 +38,8 @@
 
 	///a list of /datum/memories. assoc type of memory = memory datum. only one type of memory will be stored, new ones of the same type overriding the last.
 	var/list/memories = list()
+	///reference to the memory panel tgui
+	var/datum/memory_panel/memory_panel
 
 	/// Job datum indicating the mind's role. This should always exist after initialization, as a reference to a singleton.
 	var/datum/job/assigned_role
@@ -101,6 +103,7 @@
 /datum/mind/Destroy()
 	SSticker.minds -= src
 	QDEL_LIST(memories)
+	QDEL_NULL(memory_panel)
 	QDEL_LIST(antag_datums)
 	QDEL_NULL(language_holder)
 	set_current(null)

@@ -1341,22 +1341,26 @@
 			fail_message += " You have to be in the current round at some point to have one."
 		to_chat(src, span_warning(fail_message))
 		return
-	var/datum/memory_panel/tgui  = new(usr)//create the datum
-	tgui.ui_interact(usr)//datum has a tgui component, here we open the window
-
-GLOBAL_VAR(memory_panel_datum)
+	if(!memory_panel)
+		memory_panel = new(usr, mind)
+	memory_panel.ui_interact(usr)
 
 /datum/memory_panel
+	var/datum/mind/mind_reference
 	var/client/holder //client of whoever is using this datum
 
-/datum/memory_panel/New(user)//user can either be a client or a mob due to byondcode(tm)
+/datum/memory_panel/New(user, mind_reference)//user can either be a client or a mob due to byondcode(tm)
 	if (istype(user, /client))
 		var/client/user_client = user
 		holder = user_client //if its a client, assign it to holder
 	else
 		var/mob/user_mob = user
 		holder = user_mob.client //if its a mob, assign the mob's client to holder
-	GLOB.memory_panel_datum = src
+	src.mind_reference = mind_reference
+
+/datum/memory_panel/Destroy(force)
+	mind_reference.memory_panel = null
+	. = ..()
 
 /datum/memory_panel/ui_state(mob/user)
 	return GLOB.always_state
