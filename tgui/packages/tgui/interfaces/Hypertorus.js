@@ -44,6 +44,16 @@ const HypertorusMainControls = (props, context) => {
               selected={data.start_fuel}
               onClick={() => act('start_fuel')} />
           </Stack.Item>
+          <Stack.Item color="label">
+            {'Start moderator injection: '}
+            <Button
+              disabled={data.start_power === 0
+                || data.start_cooling === 0}
+              icon={data.start_moderator ? 'power-off' : 'times'}
+              content={data.start_moderator ? 'On' : 'Off'}
+              selected={data.start_moderator}
+              onClick={() => act('start_moderator')} />
+          </Stack.Item>
         </Stack>
       </Section>
       <Section title="Fuel selection">

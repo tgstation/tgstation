@@ -137,24 +137,21 @@
 	linked_output.update_parents()
 	linked_moderator.update_parents()
 
-	if(!start_fuel)
+	//Check and stores the gases from the moderator input in the moderator internal gasmix
+	var/datum/gas_mixture/moderator_port = linked_moderator.airs[1]
+	if(start_moderator && moderator_port.total_moles())
+		moderator_internal.merge(moderator_port.remove(moderator_injection_rate * 0.1))
+		linked_moderator.update_parents()
+
+	//Check if the fuels are present and move them inside the fuel internal gasmix
+	if(!start_fuel || !selected_fuel || !check_gas_requirements())
 		return
 
-	if(!selected_fuel)
-		return
-
-	//Start by storing the gasmix of the inputs inside the internal_fusion and moderator_internal
-	if(!check_gas_requirements())
-		return
-
+	var/datum/gas_mixture/fuel_port = linked_input.airs[1]
 	for(var/gas_type in selected_fuel.requirements)
 		internal_fusion.assert_gas(gas_type)
-		internal_fusion.merge(linked_input.airs[1].remove_specific(gas_type, linked_input.airs[1].gases[gas_type][MOLES] * fuel_injection_rate * 0.1))
-
-	if(!linked_moderator.airs[1].total_moles())
-		return
-
-	moderator_internal.merge(linked_moderator.airs[1].remove(moderator_injection_rate * 0.1))
+		internal_fusion.merge(fuel_port.remove_specific(gas_type, fuel_port.gases[gas_type][MOLES] * fuel_injection_rate * 0.1))
+		linked_input.update_parents()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/process(delta_time)
 	fusion_process(delta_time)
