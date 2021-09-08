@@ -186,7 +186,7 @@
 		message_admins("[parent.get_creator_admin()] took too much CPU time trying to handle a signal. Reduce the amount of circuit components attached to your [name] circuit component.")
 		return
 
-	return output["bitflag"] || 0
+	return output["bitflag"] || NONE
 
 /obj/item/circuit_component/signal_handler/proc/handle_bitflag_received(datum/port/input/port, list/return_values)
 	CIRCUIT_TRIGGER
@@ -194,7 +194,7 @@
 		return
 
 	if(!return_values["bitflag"])
-		return_values["bitflag"] = 0
+		return_values["bitflag"] = NONE
 
 	return_values["bitflag"] |= input_signal_ports[port]
 
