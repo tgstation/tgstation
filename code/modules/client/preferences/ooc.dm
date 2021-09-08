@@ -1,4 +1,3 @@
-// MOTHBLOCKS TODO: Only show to admins and those with unlocked content.
 /// The color admins will speak in for OOC.
 /datum/preference/color/ooc_color
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
@@ -7,3 +6,6 @@
 
 /datum/preference/color/ooc_color/create_default_value()
 	return "#c43b23"
+
+/datum/preference/color/ooc_color/is_accessible(datum/preferences/preferences)
+	return is_admin(preferences.parent) || preferences.unlock_content
