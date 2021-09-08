@@ -36,7 +36,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//character preferences
 	var/slot_randomized //keeps track of round-to-round randomization of the character slot, prevents overwriting
 
-	// MOTHBLOCKS TODO: Default values
 	var/list/randomise = list()
 
 	//Quirk list
@@ -100,6 +99,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// give them default keybinds and update their movement keys
 	key_bindings = deepCopyList(GLOB.default_hotkeys)
 	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
+	randomise = get_default_randomization()
 
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
@@ -489,3 +489,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 			LAZYADD(output[key], action)
 
 	return output
+
+/// Returns the default `randomise` variable ouptut
+/datum/preferences/proc/get_default_randomization()
+	var/list/default_randomization = list()
+
+	for (var/preference_key in GLOB.preference_entries_by_key)
+		var/datum/preference/preference = GLOB.preference_entries_by_key[preference_key]
+		if (preference.is_randomizable() && preference.randomize_by_default)
+			default_randomization[preference_key] = RANDOM_ENABLED
+
+	return default_randomization
