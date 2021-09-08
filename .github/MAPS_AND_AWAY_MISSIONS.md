@@ -1,13 +1,28 @@
 ## MAPS
 
-/tg/station currently comes equipped with five maps.
-
-* [BoxStation (default)](https://tgstation13.org/wiki/Boxstation)
+/tg/station currently has five maps in rotation.
 * [MetaStation](https://tgstation13.org/wiki/MetaStation)
 * [DeltaStation](https://tgstation13.org/wiki/DeltaStation)
+* [IceboxStation](https://tgstation13.org/wiki/IceboxStation)
+* [KiloStation](https://tgstation13.org/wiki/KiloStation)
+* [TramStation](https://tgstation13.org/wiki/Tramstation)
+
+Outdated or removed maps.
+* [BoxStation](https://tgstation13.org/wiki/Boxstation)
 * [PubbyStation](https://tgstation13.org/wiki/PubbyStation)
 * [DonutStation](https://tgstation13.org/wiki/Donutstation)
+* [AsteroidStation](https://tgstation13.org/wiki/AsteroidStation)
+* [BirdboatStation](https://tgstation13.org/wiki/BirdboatStation)
+* [CereStation](https://tgstation13.org/wiki/CereStation)
+* [DiscStation](https://tgstation13.org/wiki/Discstation)
+* [DreamStation](https://tgstation13.org/wiki/Dreamstation)
+* [EfficiencyStation](https://tgstation13.org/wiki/EfficiencyStation)
+* [MiniStation](https://tgstation13.org/wiki/MiniStation)
+* [OmegaStation](https://tgstation13.org/wiki/OmegaStation)
 
+Debug maps.
+* [RuntimeStation](https://tgstation13.org/wiki/RuntimeStation)
+* [MultiZ](https://tgstation13.org/wiki/MultiZ)
 
 All maps have their own code file that is in the base of the _maps directory. Maps are loaded dynamically when the game starts. Follow this guideline when adding your own map, to your fork, for easy compatibility.
 

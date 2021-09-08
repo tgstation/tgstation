@@ -567,9 +567,9 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 				if(!(temp_list_vars[V][W]["flags"] & LIST_VAR_FLAGS_NAMED))
 					parse_errors += "[V]/[W] did not have the LIST_VAR_FLAGS_NAMED flag set; it has been set"
 					temp_list_vars[V][W]["flags"] |= LIST_VAR_FLAGS_NAMED
-				if(temp_list_vars & ~(LIST_VAR_FLAGS_NAMED | LIST_VAR_FLAGS_NAMED))
+				if(temp_list_vars & ~(LIST_VAR_FLAGS_NAMED | LIST_VAR_FLAGS_TYPED))
 					parse_errors += "[V]/[W] has unused bit flags set; they have been unset"
-					temp_list_vars[V][W]["flags"] &= LIST_VAR_FLAGS_NAMED | LIST_VAR_FLAGS_NAMED
+					temp_list_vars[V][W]["flags"] &= LIST_VAR_FLAGS_NAMED | LIST_VAR_FLAGS_TYPED
 				if(!(temp_list_vars[V][W]["flags"] & LIST_VAR_FLAGS_TYPED))
 					if(isnull(sample.vars[W]))
 						continue
