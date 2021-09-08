@@ -85,8 +85,10 @@
 			var/mob/living/carbon/human/H = AM
 			if(istype(H.belt, /obj/item/wormhole_jaunter))
 				var/obj/item/wormhole_jaunter/jaunter = H.belt
-				var/can_jaunter_teleport = jaunter.chasm_react(H)
-				return can_jaunter_teleport
+				var/fall_into_chasm = jaunter.chasm_react(H)
+				if(!fall_into_chasm)
+					visible_message(span_boldwarning("[H] falls into the chasm!")) //To freak out any bystanders
+				return fall_into_chasm
 	return TRUE
 
 /datum/component/chasm/proc/drop(atom/movable/AM)
