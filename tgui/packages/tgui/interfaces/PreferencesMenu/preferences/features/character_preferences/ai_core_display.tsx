@@ -1,7 +1,10 @@
-import { FeatureChoiced, FeatureDropdownInput } from "../base";
+import { Feature, FeatureChoicedServerData, FeatureIconnedDropdownInput } from "../base";
 
-// MOTHBLOCKS TODO: Show images
-export const preferred_ai_core_display: FeatureChoiced = {
+export const preferred_ai_core_display: Feature<
+  { value: string },
+  string,
+  FeatureChoicedServerData,
+> = {
   name: "AI core display",
-  component: FeatureDropdownInput,
+  component: FeatureIconnedDropdownInput,
 };

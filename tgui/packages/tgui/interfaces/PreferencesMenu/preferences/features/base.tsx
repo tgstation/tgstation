@@ -1,5 +1,5 @@
 import { sortBy, sortStrings } from "common/collections";
-import { BooleanLike } from "common/react";
+import { BooleanLike, classes } from "common/react";
 import { ComponentType, createComponentVNode, InfernoNode } from "inferno";
 import { VNodeFlags } from "inferno-vnode-flags";
 import { sendAct, useLocalState } from "../../../../backend";
@@ -142,7 +142,7 @@ export type FeatureChoicedServerData = {
   icons?: Record<string, string>;
 };
 
-export type FeatureChoiced = Feature<string, string, FeatureChoicedServerData>
+export type FeatureChoiced = Feature<string, string, FeatureChoicedServerData>;
 
 const capitalizeFirstLetter = (text: string) => (
   text.toString().charAt(0).toUpperCase() + text.toString().slice(1)
@@ -177,6 +177,66 @@ export const FeatureDropdownInput = (
     }
   />);
 };
+
+export const FeatureIconnedDropdownInput = (
+  props: FeatureValueProps<{
+    value: string,
+  }, string, FeatureChoicedServerData>,
+) => {
+  const serverData = props.serverData;
+  if (!serverData) {
+    return null;
+  }
+
+  const icons = serverData.icons;
+
+  const displayNames = serverData.display_names
+    || Object.fromEntries(
+      serverData.choices.map(choice => {
+        let element: InfernoNode = capitalizeFirstLetter(choice);
+
+        if (icons && icons[choice]) {
+          const icon = icons[choice];
+          element = (
+            <Stack>
+              <Stack.Item>
+                <Box className={classes([
+                  "preferences32x32",
+                  icon,
+                ])} style={{
+                  "transform": "scale(0.8)",
+                }} />
+              </Stack.Item>
+
+              <Stack.Item grow>
+                {element}
+              </Stack.Item>
+            </Stack>
+          );
+        }
+
+        return [choice, element];
+      })
+    );
+
+  return (<Dropdown
+    clipSelectedText={false}
+    selected={props.value}
+    onSelected={props.handleSetValue}
+    width="100%"
+    displayText={displayNames[props.value.value]}
+    options={
+      sortStrings(serverData.choices)
+        .map(choice => {
+          return {
+            displayText: displayNames[choice],
+            value: choice,
+          };
+        })
+    }
+  />);
+};
+
 
 export type FeatureNumericData = {
   minimum: number,
