@@ -1,8 +1,7 @@
 /*!
  * Custom rendering solution to allow for advanced effects
  * We (ab)use plane masters and render source/target to cheaply render 2+ planes as 1
- * First we render it onto a relay object that is then in turn rendered under a rendering_plate which applies effects onto all planes under it
- *
+ * if you want to read more read the _render_readme.md
  */
 
 
@@ -44,7 +43,7 @@
 	. = ..()
 	add_filter("displacer", 1, displacement_map_filter(render_source = GRAVITY_PULSE_RENDER_TARGET, size = 10))
 
-///render plate for OOC stuff like ghosts, etc
+///render plate for OOC stuff like ghosts, hud-screen effects, etc
 /atom/movable/screen/plane_master/rendering_plate/non_game
 	name = "non-game rendering plate"
 	plane = RENDER_PLANE_NON_GAME

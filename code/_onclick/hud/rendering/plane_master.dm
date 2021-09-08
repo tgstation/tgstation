@@ -93,11 +93,11 @@
 	render_relay_plane = RENDER_PLANE_GAME
 
 /**
- * Plane master handling byond internal darkness
+ * Plane master handling byond internal blackness
  * vars are set as to replicate behavior when rendering to other planes
- * do not touch this unless you are doing
+ * do not touch this unless you know what you are doing
  */
-/atom/movable/screen/plane_master/darkness
+/atom/movable/screen/plane_master/blackness
 	name = "darkness plane master"
 	plane = BLACKNESS_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -201,3 +201,23 @@
 	plane = GRAVITY_PULSE_PLANE
 	render_target = GRAVITY_PULSE_RENDER_TARGET
 	render_relay_plane = null
+
+/atom/movable/screen/plane_master/area
+	name = "area plane"
+	plane = AREA_PLANE
+	render_relay_plane = RENDER_PLANE_GAME
+
+/atom/movable/screen/plane_master/radtext
+	name = "radtext plane"
+	plane = RAD_TEXT_PLANE
+	render_relay_plane = RENDER_PLANE_NON_GAME
+
+/atom/movable/screen/plane_master/balloon_chat
+	name = "balloon alert plane"
+	plane = BALLOON_CHAT_PLANE
+	render_relay_plane = RENDER_PLANE_NON_GAME
+
+/atom/movable/screen/plane_master/fullscreen
+	name = "fullscreen alert plane"
+	plane = FULLSCREEN_PLANE
+	render_relay_plane = RENDER_PLANE_NON_GAME

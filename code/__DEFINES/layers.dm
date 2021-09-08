@@ -20,7 +20,6 @@
 #define FLOOR_PLANE -7
 #define WALL_PLANE -5
 #define GAME_PLANE -4
-#define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
 
 #define SPACE_LAYER 1.8
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
@@ -91,10 +90,8 @@
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
 
-#define LANDMARK_PLANE 50
-#define LOW_LANDMARK_LAYER 1
-#define MID_LANDMARK_LAYER 2
-#define HIGH_LANDMARK_LAYER 3
+#define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
+
 
 #define AREA_PLANE 60
 #define MASSIVE_OBJ_PLANE 70
@@ -102,9 +99,6 @@
 #define POINT_PLANE 90
 
 #define RAD_TEXT_PLANE 90
-
-#define FRILL_MASK_PLANE 95
-#define FRILL_MASK_RENDER_TARGET "*FRILL_MASK_PLANE"
 
 //---------- LIGHTING -------------
 ///Normal 1 per turf dynamic lighting underlays
