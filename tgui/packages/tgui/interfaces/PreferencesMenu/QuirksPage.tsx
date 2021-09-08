@@ -34,8 +34,6 @@ const QuirkList = (props: {
         const className = "PreferencesMenu__Quirks__QuirkList__quirk";
 
         const child = (
-          // MOTHBLOCKS TODO: This hijacks scrolling, focus scroll
-          // back to parent once clicked
           <Box
             className={className}
             key={quirkKey}

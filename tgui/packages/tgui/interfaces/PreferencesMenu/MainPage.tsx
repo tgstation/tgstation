@@ -67,6 +67,7 @@ const ChoicedSelection = (props: {
   name: string,
   catalog: FeatureChoicedServerData,
   selected: string,
+  onClose: () => void,
   onSelect: (value: string) => void,
 }) => {
   const { catalog } = props;
@@ -90,12 +91,26 @@ const ChoicedSelection = (props: {
     }}>
       <Stack vertical fill>
         <Stack.Item>
-          <Box style={{
-            "border-bottom": "1px solid #888",
-            "font-size": "14px",
-            "text-align": "center",
-          }}>Select {props.name.toLowerCase()}
-          </Box>
+          <Stack fill>
+            <Stack.Item grow>
+              <Box style={{
+                "border-bottom": "1px solid #888",
+                "font-size": "14px",
+                "text-align": "center",
+              }}>
+                Select {props.name.toLowerCase()}
+              </Box>
+            </Stack.Item>
+
+            <Stack.Item>
+              <Button
+                color="red"
+                onClick={props.onClose}
+              >
+                X
+              </Button>
+            </Stack.Item>
+          </Stack>
         </Stack.Item>
 
         <Stack.Item overflowX="hidden" overflowY="scroll">
@@ -213,6 +228,7 @@ const MainFeature = (props: {
           name={catalog.name}
           catalog={catalog}
           selected={currentValue.value}
+          onClose={handleClose}
           onSelect={handleSelect}
         />
       </TrackOutsideClicks>

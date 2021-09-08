@@ -203,7 +203,7 @@ $department_map: (
       background-color: colors.$light-grey;
       height: calc(90vh - 170px);
       min-height: 100%;
-      overflow-y: auto;
+      overflow-y: scroll;
 
       &__quirk {
         background-color: colors.$white;
