@@ -152,7 +152,7 @@
 	yield = 1
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/mob_transformation/shroom)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.15)
 	rarity = 30
 	graft_gene = /datum/plant_gene/trait/eyes
@@ -208,6 +208,7 @@
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/reagent/liquidelectricity, /datum/plant_gene/trait/carnivory)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
+	mutatelist = null
 	graft_gene = /datum/plant_gene/trait/carnivory
 
 /obj/item/seeds/chanter/jupitercup/Initialize(mapload,nogenes)
@@ -285,7 +286,7 @@
 	plantname = "Glowcaps"
 	product = /obj/item/food/grown/mushroom/glowshroom/glowcap
 	genes = list(/datum/plant_gene/trait/glow/red, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/plant_type/fungal_metabolism)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/teslium = 0.1, /datum/reagent/consumable/nutriment = 0.04)
 	rarity = 30
 	graft_gene = /datum/plant_gene/trait/cell_charge
@@ -310,7 +311,7 @@
 	plantname = "Shadowshrooms"
 	product = /obj/item/food/grown/mushroom/glowshroom/shadowshroom
 	genes = list(/datum/plant_gene/trait/glow/shadow, /datum/plant_gene/trait/plant_type/fungal_metabolism)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/uranium/radium = 0.2, /datum/reagent/consumable/nutriment = 0.04)
 	rarity = 30
 	graft_gene = /datum/plant_gene/trait/glow/shadow

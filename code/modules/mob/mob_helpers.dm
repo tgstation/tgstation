@@ -455,7 +455,7 @@
 		return
 
 	// Cannot use the list as a map if the key is a number, so we stringify it (thank you BYOND)
-	var/smessage_type = num2text(message_type)
+	var/smessage_type = num2text(message_type, MAX_BITFLAG_DIGITS)
 
 	if(client)
 		if(!islist(client.player_details.logging[smessage_type]))

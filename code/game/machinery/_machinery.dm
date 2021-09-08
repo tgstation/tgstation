@@ -39,18 +39,22 @@
  *        EMPED -- temporary broken by EMP pulse
  *
  *Class Procs:
- *  Initialize()                     'game/machinery/machine.dm'
+ *  Initialize()
  *
- *  Destroy()                   'game/machinery/machine.dm'
+ *  Destroy()
  *
- *  auto_use_power()            'game/machinery/machine.dm'
- *     This proc determines how power mode power is deducted by the machine.
- *     'auto_use_power()' is called by the 'master_controller' game_controller every
- *     tick.
+ *	update_mode_power_usage()
+ *		updates the static_power_usage var of this machine and makes its static power usage from its area accurate.
+ *		called after the idle or active power usage has been changed.
  *
- *     Return Value:
- *        return:1 -- if object is powered
- *        return:0 -- if object is not powered.
+ *	update_power_channel()
+ *		updates the static_power_usage var of this machine and makes its static power usage from its area accurate.
+ *		called after the power_channel var has been changed or called to change the var itself.
+ *
+ *	unset_static_power()
+ *		completely removes the current static power usage of this machine from its area.
+ *		used in the other power updating procs to then readd the correct power usage.
+ *
  *
  *     Default definition uses 'use_power', 'power_channel', 'active_power_usage',
  *     'idle_power_usage', 'powered()', and 'use_power()' implement behavior.
@@ -99,11 +103,15 @@
 
 	var/machine_stat = NONE
 	var/use_power = IDLE_POWER_USE
-		//0 = dont run the auto
-		//1 = run auto, use idle
-		//2 = run auto, use active
+		//0 = dont use power
+		//1 = use idle_power_usage
+		//2 = use active_power_usage
+	///the amount of static power load this machine adds to its area's power_usage list when use_power = IDLE_POWER_USE
 	var/idle_power_usage = 0
+	///the amount of static power load this machine adds to its area's power_usage list when use_power = ACTIVE_POWER_USE
 	var/active_power_usage = 0
+	///the current amount of static power usage this machine is taking from its area
+	var/static_power_usage = 0
 	var/power_channel = AREA_USAGE_EQUIP
 		//AREA_USAGE_EQUIP,AREA_USAGE_ENVIRON or AREA_USAGE_LIGHT
 	///A combination of factors such as having power, not being broken and so on. Boolean.
@@ -154,6 +162,63 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/LateInitialize()
+	. = ..()
+	power_change()
+	if(use_power == NO_POWER_USE)
+		return
+
+	update_current_power_usage()
+	setup_area_power_relationship()
+
+/obj/machinery/Destroy()
+	GLOB.machines.Remove(src)
+	end_processing()
+	dump_inventory_contents()
+	QDEL_LIST(component_parts)
+	QDEL_NULL(circuit)
+	unset_static_power()
+	return ..()
+
+/**
+ * proc to call when the machine starts to require power after a duration of not requiring power
+ * sets up power related connections to its area if it exists and becomes area sensitive
+ * does not affect power usage itself
+ */
+/obj/machinery/proc/setup_area_power_relationship()
+	become_area_sensitive(INNATE_TRAIT)
+
+	var/area/our_area = get_area(src)
+	if(our_area)
+		RegisterSignal(our_area, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
+	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/on_enter_area)
+	RegisterSignal(src, COMSIG_EXIT_AREA, .proc/on_exit_area)
+
+/**
+ * proc to call when the machine stops requiring power after a duration of requiring power
+ * saves memory by removing the power relationship with its area if it exists and loses area sensitivity
+ * does not affect power usage itself
+ */
+/obj/machinery/proc/remove_area_power_relationship()
+	var/area/our_area = get_area(src)
+	if(our_area)
+		UnregisterSignal(our_area, COMSIG_AREA_POWER_CHANGE)
+
+	REMOVE_TRAIT(src, TRAIT_AREA_SENSITIVE, INNATE_TRAIT)
+	UnregisterSignal(src, COMSIG_ENTER_AREA)
+	UnregisterSignal(src, COMSIG_EXIT_AREA)
+
+/obj/machinery/proc/on_enter_area(datum/source, area/area_to_register)
+	SIGNAL_HANDLER
+	update_current_power_usage()
+	power_change()
+	RegisterSignal(area_to_register, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
+
+/obj/machinery/proc/on_exit_area(datum/source, area/area_to_unregister)
+	SIGNAL_HANDLER
+	unset_static_power()
+	UnregisterSignal(area_to_unregister, COMSIG_AREA_POWER_CHANGE)
+
 /obj/machinery/proc/set_occupant(atom/movable/new_occupant)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -169,20 +234,6 @@
 /obj/machinery/proc/end_processing()
 	var/datum/controller/subsystem/processing/subsystem = locate(subsystem_type) in Master.subsystems
 	STOP_PROCESSING(subsystem, src)
-
-/obj/machinery/LateInitialize()
-	. = ..()
-	power_change()
-	become_area_sensitive(ROUNDSTART_TRAIT)
-	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
-
-/obj/machinery/Destroy()
-	GLOB.machines.Remove(src)
-	end_processing()
-	dump_inventory_contents()
-	QDEL_LIST(component_parts)
-	QDEL_NULL(circuit)
-	return ..()
 
 /obj/machinery/proc/locate_machinery()
 	return
@@ -315,15 +366,119 @@
 	updateUsrDialog()
 	update_appearance()
 
-/obj/machinery/proc/auto_use_power()
-	if(!powered(power_channel))
+///updates the use_power var for this machine and updates its static power usage from its area to reflect the new value
+/obj/machinery/proc/update_use_power(new_use_power)
+	SHOULD_CALL_PARENT(TRUE)
+	if(new_use_power == use_power)
 		return FALSE
-	if(use_power == IDLE_POWER_USE)
-		use_power(idle_power_usage,power_channel)
-	else if(use_power >= ACTIVE_POWER_USE)
-		use_power(active_power_usage,power_channel)
+
+	unset_static_power()
+
+	var/new_usage = 0
+	switch(new_use_power)
+		if(IDLE_POWER_USE)
+			new_usage = idle_power_usage
+		if(ACTIVE_POWER_USE)
+			new_usage = active_power_usage
+
+	if(use_power == NO_POWER_USE)
+		setup_area_power_relationship()
+	else if(new_use_power == NO_POWER_USE)
+		remove_area_power_relationship()
+
+	static_power_usage = new_usage
+
+	if(new_usage)
+		var/area/our_area = get_area(src)
+		our_area?.addStaticPower(new_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
+
+	use_power = new_use_power
+
 	return TRUE
 
+///updates the power channel this machine uses. removes the static power usage from the old channel and readds it to the new channel
+/obj/machinery/proc/update_power_channel(new_power_channel)
+	SHOULD_CALL_PARENT(TRUE)
+	if(new_power_channel == power_channel)
+		return FALSE
+
+	var/usage = unset_static_power()
+
+	var/area/our_area = get_area(src)
+
+	if(our_area && usage)
+		our_area.addStaticPower(usage, DYNAMIC_TO_STATIC_CHANNEL(new_power_channel))
+
+	power_channel = new_power_channel
+
+	return TRUE
+
+///internal proc that removes all static power usage from the current area
+/obj/machinery/proc/unset_static_power()
+	SHOULD_NOT_OVERRIDE(TRUE)
+	var/old_usage = static_power_usage
+
+	var/area/our_area = get_area(src)
+
+	if(our_area && old_usage)
+		our_area.removeStaticPower(old_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
+		static_power_usage = 0
+
+	return old_usage
+
+/**
+ * sets the power_usage linked to the specified use_power_mode to new_usage
+ * e.g. update_mode_power_usage(ACTIVE_POWER_USE, 10) sets active_power_use = 10 and updates its power draw from the machines area if use_power == ACTIVE_POWER_USE
+ *
+ * Arguments:
+ * * use_power_mode - the use_power power mode to change. if IDLE_POWER_USE changes idle_power_usage, ACTIVE_POWER_USE changes active_power_usage
+ * * new_usage - the new value to set the specified power mode var to
+ */
+/obj/machinery/proc/update_mode_power_usage(use_power_mode, new_usage)
+	SHOULD_CALL_PARENT(TRUE)
+	if(use_power_mode == NO_POWER_USE)
+		stack_trace("trying to set the power usage associated with NO_POWER_USE in update_mode_power_usage()!")
+		return FALSE
+
+	unset_static_power() //completely remove our static_power_usage from our area, then readd new_usage
+
+	switch(use_power_mode)
+		if(IDLE_POWER_USE)
+			idle_power_usage = new_usage
+		if(ACTIVE_POWER_USE)
+			active_power_usage = new_usage
+
+	if(use_power_mode == use_power)
+		static_power_usage = new_usage
+
+	var/area/our_area = get_area(src)
+
+	if(our_area)
+		our_area.addStaticPower(static_power_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
+
+	return TRUE
+
+///makes this machine draw power from its area according to which use_power mode it is set to
+/obj/machinery/proc/update_current_power_usage()
+	if(static_power_usage)
+		unset_static_power()
+
+	var/area/our_area = get_area(src)
+	if(!our_area)
+		return FALSE
+
+	switch(use_power)
+		if(IDLE_POWER_USE)
+			static_power_usage = idle_power_usage
+		if(ACTIVE_POWER_USE)
+			static_power_usage = active_power_usage
+		if(NO_POWER_USE)
+			return
+
+	if(static_power_usage)
+		our_area.addStaticPower(static_power_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
+
+	return TRUE
 
 ///Called when we want to change the value of the `is_operational` variable. Boolean.
 /obj/machinery/proc/set_is_operational(new_value)
@@ -345,6 +500,10 @@
 
 	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_INTERACT)
 		return FALSE
+
+
+	if(isAdminGhostAI(user))
+		return TRUE //the Gods have unlimited power and do not care for things such as range or blindness
 
 	if(!isliving(user))
 		return FALSE //no ghosts allowed, sorry
@@ -368,6 +527,8 @@
 		return user.can_interact_with(src) //AIs don't care about petty mortal concerns like needing to be next to a machine to use it, but borgs do care somewhat
 
 	. = ..()
+	if(!.)
+		return FALSE
 
 	if((interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SIGHT) && user.is_blind())
 		to_chat(user, span_warning("This machine requires sight to use."))
@@ -562,7 +723,7 @@
 	transfer_fingerprints_to(new_frame)
 
 
-/obj/machinery/obj_break(damage_flag)
+/obj/machinery/atom_break(damage_flag)
 	. = ..()
 	if(!(machine_stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		set_machine_stat(machine_stat | BROKEN)
@@ -727,7 +888,7 @@
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
 			. += span_warning("It's on fire!")
-		var/healthpercent = (obj_integrity/max_integrity) * 100
+		var/healthpercent = (atom_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)
 				. += "It looks slightly damaged."

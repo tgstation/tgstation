@@ -54,6 +54,7 @@
 /obj/item/pen/fourcolor
 	desc = "It's a fancy four-color ink pen, set to black."
 	name = "four-color pen"
+	icon_state = "pen_4color"
 	colour = "black"
 
 /obj/item/pen/fourcolor/attack_self(mob/living/carbon/user)
