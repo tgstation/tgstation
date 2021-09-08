@@ -468,10 +468,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 
 /// Returns whether the parent mob should have the random hardcore settings enabled. Assumes it has a mind.
 /datum/preferences/proc/should_be_random_hardcore(datum/job/job, datum/mind/mind)
-	// if(!randomise[RANDOM_HARDCORE])
-	// 	return FALSE
-	// MOTHBLOCKS TODO: Random hardcore as its own option
-	if (TRUE)
+	if(!read_preference(/datum/preference/toggle/random_hardcore))
 		return FALSE
 	if(job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND) //No command staff
 		return FALSE

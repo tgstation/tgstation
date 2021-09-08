@@ -2,7 +2,7 @@ import { useBackend } from "../../../../backend";
 import { Button, Stack } from "../../../../components";
 import { PreferencesMenuData, RandomSetting } from "../../data";
 import { RandomizationButton } from "../../RandomizationButton";
-import { Feature, FeatureChoiced } from "./base";
+import { CheckboxInput, Feature, FeatureChoiced, FeatureToggle } from "./base";
 
 export const random_body: Feature<RandomSetting> = {
   name: "Random body",
@@ -26,6 +26,11 @@ export const random_body: Feature<RandomSetting> = {
       </Stack>
     );
   },
+};
+
+export const random_hardcore: FeatureToggle = {
+  name: "Hardcore random",
+  component: CheckboxInput,
 };
 
 export const random_name: Feature<RandomSetting> = {

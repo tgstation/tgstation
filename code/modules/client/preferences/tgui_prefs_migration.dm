@@ -50,7 +50,6 @@
 // to list("socks" = "enabled", "name" = "antag")
 // as well as removing anything that was set to FALSE, as this can be extrapolated.
 /datum/preferences/proc/migrate_randomization()
-	// MOTHBLOCKS TODO: Transfer random hardcore mode, which should be its own pref.
 	var/static/list/random_settings = list(
 		"random_age" = "age",
 		"random_backpack" = "backpack",
@@ -96,6 +95,9 @@
 		"random_name",
 		"random_name_antag",
 	)
+
+	if (randomise["random_hardcore"])
+		write_preference(GLOB.preference_entries[/datum/preference/toggle/random_hardcore], TRUE)
 
 	randomise = new_randomise
 
