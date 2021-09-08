@@ -2640,11 +2640,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 50
 	quality = DRINK_GOOD
 	taste_description = "like, the future, man"
-	var/datum/brain_trauma/special/bluespace_prophet/prophet_trauma
 	glass_icon_state = "thejuice"
 	glass_name = "The Juice"
 	glass_desc = "A concoction of not-so-edible things that apparently lets you feel like you're in two places at once"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/datum/brain_trauma/special/bluespace_prophet/prophet_trauma
 
 /datum/reagent/consumable/ethanol/the_juice/on_mob_metabolize(mob/living/carbon/victim)
 	..()
