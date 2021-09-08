@@ -58,6 +58,8 @@
 	var/datum/game_mode/dynamic/mode = null
 	/// If a role is to be considered another for the purpose of banning.
 	var/antag_flag_override = null
+	/// If set, will check this preference instead of antag_flag.
+	var/antag_preference = null
 	/// If a ruleset type which is in this list has been executed, then the ruleset will not be executed.
 	var/list/blocking_rules = list()
 	/// The minimum amount of players required for the rule to be considered.
@@ -209,7 +211,7 @@
 			candidates.Remove(candidate_player)
 			continue
 
-		if (!(antag_flag in candidate_client.prefs.be_special))
+		if (!((antag_preference || antag_flag) in candidate_client.prefs.be_special))
 			candidates.Remove(candidate_player)
 			continue
 

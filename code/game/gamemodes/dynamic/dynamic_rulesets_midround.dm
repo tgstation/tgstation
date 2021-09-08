@@ -46,7 +46,7 @@
 		if(M.client.get_remaining_days(minimum_required_age) > 0)
 			trimmed_list.Remove(M)
 			continue
-		if (!(antag_flag in M.client.prefs.be_special))
+		if (!((antag_preference || antag_flag) in M.client.prefs.be_special))
 			trimmed_list.Remove(M)
 			continue
 		if (is_banned_from(M.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
