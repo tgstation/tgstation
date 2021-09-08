@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - qol: "HFR : now you can choose multiple gases to filter from the moderators instead of just one and also the rate of filtering and you can filter even at power level 6. The rate is tied to the numbers of gases, so if you scrub at 200 moles/tick, and you have 5 gases selected, you'll be actually filtering at 40 moles/tick so be aware."
