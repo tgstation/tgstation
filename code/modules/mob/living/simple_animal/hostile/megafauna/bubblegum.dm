@@ -119,7 +119,7 @@ Difficulty: Hard
 		else
 			hallucination_charge_surround.Trigger(target)
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood(var/mob/target)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood(mob/target)
 	var/list/targets = list(target)
 	. = list()
 	for(var/mob/living/L in targets)

@@ -11,12 +11,12 @@
 	/// Whether or not to remove the inside of our radius from the possible pools to jaunt to
 	var/remove_inner_pools = TRUE
 
-/datum/action/cooldown/mob_cooldown/blood_warp/Activate(var/atom/target_atom)
+/datum/action/cooldown/mob_cooldown/blood_warp/Activate(atom/target_atom)
 	StartCooldown(10 SECONDS)
 	blood_warp(target_atom)
 	StartCooldown()
 
-/datum/action/cooldown/mob_cooldown/blood_warp/proc/blood_warp(var/atom/target)
+/datum/action/cooldown/mob_cooldown/blood_warp/proc/blood_warp(atom/target)
 	if(owner.Adjacent(target))
 		return FALSE
 	var/list/can_jaunt = get_bloodcrawlable_pools(get_turf(owner), 1)
