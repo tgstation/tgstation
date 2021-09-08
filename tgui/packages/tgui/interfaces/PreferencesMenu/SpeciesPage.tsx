@@ -212,6 +212,7 @@ const SpeciesFeatures = (props: {
 };
 
 const SpeciesPageInner = (props: {
+  handleClose: () => void,
   species: ServerData["species"],
 }, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
@@ -242,79 +243,89 @@ const SpeciesPageInner = (props: {
   })[0][1];
 
   return (
-    <Stack fill>
+    <Stack vertical fill>
       <Stack.Item>
-        <Stack vertical fill>
-          {species.map(([speciesKey, species]) => {
-            return (
-              <Stack.Item key={speciesKey}>
-                <Button
-                  onClick={() => setSpecies(speciesKey)}
-                  selected={
-                    data.character_preferences.misc.species === speciesKey
-                  }
-                  tooltip={species.name}
-                  style={{
-                    height: "32px",
-                    width: "32px",
-                  }}
-                >
-                  <Icon
-                    className="centered-image"
-                    name={species.icon}
-                    size={2}
-                    ml={0}
-                    mt={0.5}
-                    style={{
-                      "text-align": "center",
-                      height: "100%",
-                      width: "100%",
-                    }}
-                  />
-                </Button>
-              </Stack.Item>
-            );
-          })}
-        </Stack>
+        <Button icon="arrow-left" onClick={props.handleClose}>
+          Go back
+        </Button>
       </Stack.Item>
 
       <Stack.Item grow>
-        <Stack vertical fill>
+        <Stack fill>
+          <Stack.Item>
+            <Stack vertical fill>
+              {species.map(([speciesKey, species]) => {
+                return (
+                  <Stack.Item key={speciesKey}>
+                    <Button
+                      onClick={() => setSpecies(speciesKey)}
+                      selected={
+                        data.character_preferences.misc.species === speciesKey
+                      }
+                      tooltip={species.name}
+                      style={{
+                        height: "32px",
+                        width: "32px",
+                      }}
+                    >
+                      <Icon
+                        className="centered-image"
+                        name={species.icon}
+                        size={2}
+                        ml={0}
+                        mt={0.5}
+                        style={{
+                          "text-align": "center",
+                          height: "100%",
+                          width: "100%",
+                        }}
+                      />
+                    </Button>
+                  </Stack.Item>
+                );
+              })}
+            </Stack>
+          </Stack.Item>
+
           <Stack.Item grow>
-            <Stack fill>
-              <Stack.Item width="70%">
-                <Section title={currentSpecies.name} buttons={
-                  // Species with no hunger don't have diets
-                  currentSpecies.liked_food
+            <Stack vertical fill>
+              <Stack.Item grow>
+                <Stack fill>
+                  <Stack.Item width="70%">
+                    <Section title={currentSpecies.name} buttons={
+                      // Species with no hunger don't have diets
+                      currentSpecies.liked_food
                   && (<Diet
                     likedFood={currentSpecies.liked_food}
                     dislikedFood={currentSpecies.disliked_food}
                     toxicFood={currentSpecies.toxic_food}
                   />)
-                }>
-                  <Section title="Description">
-                    {currentSpecies.description}
-                  </Section>
+                    }>
+                      <Section title="Description">
+                        {currentSpecies.description}
+                      </Section>
 
-                  <Section title="Features">
-                    <SpeciesFeatures features={currentSpecies.features} />
-                  </Section>
+                      <Section title="Features">
+                        <SpeciesFeatures features={currentSpecies.features} />
+                      </Section>
+                    </Section>
+                  </Stack.Item>
+
+                  <Stack.Item width="30%">
+                    <CharacterPreview
+                      id={data.character_preview_view}
+                      height="100%"
+                    />
+                  </Stack.Item>
+                </Stack>
+              </Stack.Item>
+
+              <Stack.Item>
+                <Section title="Lore">
+                  {currentSpecies.lore}
                 </Section>
               </Stack.Item>
-
-              <Stack.Item width="30%">
-                <CharacterPreview
-                  id={data.character_preview_view}
-                  height="100%"
-                />
-              </Stack.Item>
             </Stack>
-          </Stack.Item>
-
-          <Stack.Item>
-            <Section title="Lore">
-              {currentSpecies.lore}
-            </Section>
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -322,12 +333,17 @@ const SpeciesPageInner = (props: {
   );
 };
 
-export const SpeciesPage = () => {
+export const SpeciesPage = (props: {
+  closeSpecies: () => void,
+}) => {
   return (
     <ServerPreferencesFetcher
       render={serverData => {
         if (serverData) {
-          return <SpeciesPageInner species={serverData.species} />;
+          return (<SpeciesPageInner
+            handleClose={props.closeSpecies}
+            species={serverData.species}
+          />);
         } else {
           return <Box>Loading species...</Box>;
         }

@@ -166,7 +166,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	data["overflow_role"] = SSjob.GetJobType(SSjob.overflow_role).title
 	data["window"] = current_window
 
-	data["content_unlocked"] = parent.is_content_unlocked()
+	data["content_unlocked"] = unlock_content
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		data += preference_middleware.get_ui_static_data(user)

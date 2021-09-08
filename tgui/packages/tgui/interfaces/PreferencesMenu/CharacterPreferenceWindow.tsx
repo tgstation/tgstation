@@ -63,7 +63,10 @@ export const CharacterPreferenceWindow = (props, context) => {
 
       break;
     case Page.Species:
-      pageContents = <SpeciesPage />;
+      pageContents = (<SpeciesPage
+        closeSpecies={() => setCurrentPage(Page.Main)}
+      />);
+
       break;
     case Page.Quirks:
       pageContents = <QuirksPage />;
@@ -93,7 +96,7 @@ export const CharacterPreferenceWindow = (props, context) => {
           </Stack.Item>
 
           {data.content_unlocked && (
-            <Stack.Item>
+            <Stack.Item align="center">
               Buy BYOND premium for more slots!
             </Stack.Item>
           )}
