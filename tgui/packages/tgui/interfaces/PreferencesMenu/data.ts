@@ -113,6 +113,8 @@ export type PreferencesMenuData = {
     randomization: Record<string, RandomSetting>;
   };
 
+  content_unlocked: BooleanLike,
+
   job_bans?: string[];
   job_days_left?: Record<string, number>;
   job_preferences: Record<string, JobPriority>;

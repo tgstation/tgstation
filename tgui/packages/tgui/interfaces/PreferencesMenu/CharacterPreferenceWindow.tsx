@@ -87,8 +87,16 @@ export const CharacterPreferenceWindow = (props, context) => {
                 act("change_slot", {
                   slot: slot + 1,
                 });
-              }} profiles={data.character_profiles} />
+              }}
+              profiles={data.character_profiles}
+            />
           </Stack.Item>
+
+          {data.content_unlocked && (
+            <Stack.Item>
+              Buy BYOND premium for more slots!
+            </Stack.Item>
+          )}
 
           <Stack.Divider />
 
