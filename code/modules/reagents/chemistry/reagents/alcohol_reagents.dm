@@ -2632,3 +2632,26 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(islizard(M))
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "triumph", /datum/mood_event/memories_of_home, name)
 	..()
+
+/datum/reagent/consumable/ethanol/the_juice
+	name = "The Juice"
+	description = "Woah man, this like, feels familiar to you dude."
+	color = "#4c14be"
+	boozepwr = 50
+	quality = DRINK_GOOD
+	taste_description = "like, the future, man"
+	var/datum/brain_trauma/special/bluespace_prophet/J
+	glass_icon_state = "thejuice"
+	glass_name = "The Juice"
+	glass_desc = "A concoction of not-so-edible things that apparently lets you feel like you're in two places at once"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/the_juice/on_mob_metabolize(mob/living/carbon/L)
+	..()
+	J = new()
+	L.gain_trauma(J, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/reagent/consumable/ethanol/the_juice/on_mob_end_metabolize(mob/living/carbon/L)
+	if(J)
+		QDEL_NULL(J)
+	return ..()
