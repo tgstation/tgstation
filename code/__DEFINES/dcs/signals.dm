@@ -1398,8 +1398,14 @@
 /// Called when the integrated circuit's shell is set.
 #define COMSIG_CIRCUIT_SET_SHELL "circuit_set_shell"
 
-/// Called when the integrated circuit's is locked.
+/// Called when the integrated circuit is locked.
 #define COMSIG_CIRCUIT_SET_LOCKED "circuit_set_locked"
+
+/// Called right before the integrated circuit data is converted to json. Allows modification to the data right before it is returned.
+#define COMSIG_CIRCUIT_PRE_SAVE_TO_JSON "circuit_pre_save_to_json"
+
+/// Called when the integrated circuit is loaded.
+#define COMSIG_CIRCUIT_POST_LOAD "circuit_post_load"
 
 /// Sent to an atom when a [/obj/item/usb_cable] attempts to connect to something. (/obj/item/usb_cable/usb_cable, /mob/user)
 #define COMSIG_ATOM_USB_CABLE_TRY_ATTACH "usb_cable_try_attach"
