@@ -223,10 +223,7 @@
 		return MAP_ERROR
 
 	var/mob/living/simple_animal/hostile/morph/morph = new /mob/living/simple_animal/hostile/morph(pick(GLOB.xeno_spawn))
-	morph.key = selected.key
-	morph.mind.set_assigned_role(SSjob.GetJobType(/datum/job/morph))
-	morph.mind.special_role = ROLE_MORPH
-	morph.mind.add_antag_datum(/datum/antagonist/morph)
+	morph.make_special_mind(selected.key, /datum/job/morph, ROLE_MORPH, /datum/antagonist/morph)
 	SEND_SOUND(morph, sound('sound/magic/mutate.ogg'))
 	message_admins("[ADMIN_LOOKUPFLW(morph)] has been made into a morph by an event.")
 	log_game("[key_name(morph)] was spawned as a morph by an event.")

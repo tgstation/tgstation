@@ -29,10 +29,7 @@
 		return MAP_ERROR
 
 	var/mob/living/carbon/human/nightmare = new ((pick(spawn_locs)))
-	nightmare.key = selected.key
-	nightmare.mind.set_assigned_role(SSjob.GetJobType(/datum/job/nightmare))
-	nightmare.mind.special_role = ROLE_NIGHTMARE
-	nightmare.mind.add_antag_datum(/datum/antagonist/nightmare)
+	nightmare.make_special_mind(selected.key, /datum/job/nightmare, ROLE_NIGHTMARE, /datum/antagonist/nightmare)
 	nightmare.set_species(/datum/species/shadow/nightmare)
 	playsound(nightmare, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(nightmare)] has been made into a Nightmare by an event.")

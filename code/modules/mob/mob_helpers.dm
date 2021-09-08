@@ -536,3 +536,19 @@
 ///Can this mob hold items
 /mob/proc/can_hold_items(obj/item/I)
 	return length(held_items)
+
+/// Used in several antag spawning events and rulesets. Sets the mob key, then gives its mind a job, a special role and an antag datum.
+/mob/proc/make_special_mind(key, job_type, role, antag_type)
+	if(mind)
+		CRASH("make_special_mind called on mob that already has a mind datum.")
+	src.key = key //A mind should be initialized now...
+	if(!mind) // but if it doesn't... it means it's a clientless key.
+		stack_trace("make_special_mind called with a clientless key ([key]) as argument. Ascertain there's no sleep() call in the stack that may have caused this blunder.")
+		mind_initialize()
+		mind.key = key
+	if(job_type)
+		mind.set_assigned_role(SSjob.GetJobType(job_type))
+	if(role)
+		mind.special_role = role
+	if(antag_type)
+		mind.add_antag_datum(antag_type)

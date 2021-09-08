@@ -62,11 +62,8 @@
 
 /datum/round_event/ghost_role/fugitives/proc/gear_fugitive(mob/dead/selected, turf/landing_turf, backstory) //spawns normal fugitive
 	var/mob/living/carbon/human/fugitive = new(landing_turf)
-	fugitive.key = selected.key
-	fugitive.mind.set_assigned_role(SSjob.GetJobType(/datum/job/fugitive))
-	fugitive.mind.special_role = ROLE_FUGITIVE
-	fugitive.mind.add_antag_datum(/datum/antagonist/fugitive)
-	var/datum/antagonist/fugitive/fugitiveantag = fugitive.mind.add_antag_datum(/datum/antagonist/fugitive)
+	fugitive.make_special_mind(selected.key, /datum/job/fugitive, ROLE_FUGITIVE, /datum/antagonist/fugitive)
+	var/datum/antagonist/fugitive/fugitiveantag = fugitive.mind.has_antag_datum(/datum/antagonist/fugitive)
 	INVOKE_ASYNC(fugitiveantag, /datum/antagonist/fugitive.proc/greet, backstory) //some fugitives have a sleep on their greet, so we don't want to stop the entire antag granting proc with fluff
 
 	switch(backstory)

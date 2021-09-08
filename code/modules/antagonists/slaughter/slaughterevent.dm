@@ -30,10 +30,7 @@
 
 	var/obj/effect/dummy/phased_mob/holder = new /obj/effect/dummy/phased_mob((pick(spawn_locs)))
 	var/mob/living/simple_animal/hostile/imp/slaughter/demon = new (holder)
-	demon.key = selected.key
-	demon.mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
-	demon.mind.special_role = ROLE_SLAUGHTER_DEMON
-	demon.mind.add_antag_datum(/datum/antagonist/slaughter)
+	demon.make_special_mind(selected.key, /datum/job/slaughter_demon, ROLE_SLAUGHTER_DEMON, /datum/antagonist/slaughter)
 	to_chat(demon, demon.playstyle_string)
 	to_chat(demon, "<B>You are currently not currently in the same plane of existence as the station. Blood Crawl near a blood pool to manifest.</B>")
 	SEND_SOUND(demon, 'sound/magic/demon_dies.ogg')

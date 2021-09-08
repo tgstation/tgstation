@@ -567,9 +567,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/generate_ruleset_body(mob/applicant)
 	var/mob/living/carbon/human/nightmare = new (pick(spawn_locs))
 	nightmare.key = applicant.key
-	nightmare.mind.set_assigned_role(SSjob.GetJobType(/datum/job/nightmare))
-	nightmare.mind.special_role = ROLE_NIGHTMARE
-	nightmare.mind.add_antag_datum(/datum/antagonist/nightmare)
+	nightmare.make_special_mind(applicant.key, /datum/job/nightmare, ROLE_NIGHTMARE, /datum/antagonist/nightmare)
 	nightmare.set_species(/datum/species/shadow/nightmare)
 
 	playsound(nightmare, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
@@ -607,10 +605,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/generate_ruleset_body(mob/applicant)
 	var/mob/living/simple_animal/hostile/space_dragon/dragon = new (pick(spawn_locs))
-	dragon.key = applicant.key
-	dragon.mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_dragon))
-	dragon.mind.special_role = ROLE_SPACE_DRAGON
-	dragon.mind.add_antag_datum(/datum/antagonist/space_dragon)
+	dragon.make_special_mind(applicant.key, /datum/job/space_dragon, ROLE_SPACE_DRAGON, /datum/antagonist/space_dragon)
 
 	playsound(dragon, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(dragon)] has been made into a Space Dragon by the midround ruleset.")
