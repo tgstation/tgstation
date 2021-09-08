@@ -122,6 +122,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "PreferencesMenu")
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /datum/preferences/ui_state(mob/user)
@@ -146,8 +147,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		data["character_profiles"] = create_character_profiles()
 		tainted_character_profiles = FALSE
 
-	// MOTHBLOCKS TODO: Try to diff these as much as possible, and only send what is needed.
-	// Some of these, like job preferences, can be pretty beefy.
 	data["character_preferences"] = compile_character_preferences(user)
 
 	data["active_slot"] = default_slot
