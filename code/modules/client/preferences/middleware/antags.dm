@@ -14,7 +14,6 @@
 	for (var/antag in preferences.be_special)
 		selected_antags += serialize_antag_name(antag)
 
-	// MOTHBLOCKS TODO: Only send when needed, just like generated_preference_values
 	data["selected_antags"] = selected_antags
 
 	var/list/antag_bans = get_antag_bans()
