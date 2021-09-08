@@ -346,10 +346,8 @@
 				AI.log_talk(sanitized_name, LOG_VICTIM, tag="Pressed to camera from [key_name(paper_user)]", log_globally=FALSE)
 				AI.last_paper_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
 			else if (potential_viewer.client.eye == src)
-				potential_viewer.log_talk(sanitized_name, LOG_VICTIM, tag="Pressed to camera from [key_name(paper_user)]", log_globally=FALSE)
 				to_chat(potential_viewer, "[span_name("[paper_user]")] holds \a [itemname] up to one of the cameras ...")
-
-
+				potential_viewer.log_talk(sanitized_name, LOG_VICTIM, tag="Pressed to camera from [key_name(paper_user)]", log_globally=FALSE)
 				potential_viewer << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 		return
 
