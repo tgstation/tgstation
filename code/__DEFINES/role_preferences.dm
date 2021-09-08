@@ -38,6 +38,7 @@
 
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
+#define ROLE_PROVOCATEUR "Provocateur"
 #define ROLE_SYNDICATE_INFILTRATOR "Syndicate Infiltrator"
 
 // Other roles
@@ -129,6 +130,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 
 	// Latejoin
 	ROLE_HERETIC_SMUGGLER = 0,
+	ROLE_PROVOCATEUR = 14,
 	ROLE_SYNDICATE_INFILTRATOR = 0,
 
 	// I'm not too sure why these are here, but they're not moving.
