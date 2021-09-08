@@ -96,16 +96,12 @@
 /area/awaymission/snowdin/igloo
 	name = "Snowdin Igloos"
 	icon_state = "awaycontent14"
-	static_lighting = FALSE
-	base_lighting_alpha = 255
-	base_lighting_color = COLOR_WHITE
+	static_lighting = TRUE
 
 /area/awaymission/snowdin/cave
 	name = "Snowdin Caves"
 	icon_state = "awaycontent15"
-	static_lighting = FALSE
-	base_lighting_color = COLOR_WHITE
-	base_lighting_alpha = 255
+	static_lighting = TRUE
 
 /area/awaymission/snowdin/cave/cavern
 	name = "Snowdin Depths"
