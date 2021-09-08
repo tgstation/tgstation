@@ -255,3 +255,39 @@
       a json file that contains projectile var overrides or touch attack var overrides
   tralezab:
   - rscadd: Pig Latin mutation
+2021-09-08:
+  CodeMonkey:
+  - bugfix: Robot tourists now stop attacking you after they show you who's boss.
+  Colovorat:
+  - expansion: You can place hats on plasmaman helmets!
+  Couls:
+  - admin: individual logging now displays things that happened to the individual
+      again
+  ExcessiveUseOfCobblestone:
+  - admin: you can now customize what udders produce using `reagent_produced_typepath`
+      or by using the `custom_milk_reagent` argument when adding the component
+  Fikou:
+  - admin: individual logging is now visible even with client logged out
+  Ghilker:
+  - qol: HFR moderator injection and fuel injection are now controlled separately
+  - qol: 'HFR : now you can choose multiple gases to filter from the moderators instead
+      of just one and also the rate of filtering and you can filter even at power
+      level 6. The rate is tied to the numbers of gases, so if you scrub at 200 moles/tick,
+      and you have 5 gases selected, you''ll be actually filtering at 40 moles/tick
+      so be aware.'
+  Mickyan:
+  - qol: Double examining someone will show their age, provided their face is visible
+  Nari Harimoto:
+  - bugfix: Slime console can now use its hotkey to scan slimes and drop/pickup monkies
+  TemporalOroboros:
+  - bugfix: Jack-o-lantern helmets now glow in the dark when they are worn.
+  Watermelon914:
+  - balance: Disables wrenching on money bot and scannter gate shells when they are
+      locked.
+  aaaa1023:
+  - rscadd: Penthrite now has Balloon alerts for when it first starts processing and
+      when it finishes processing.
+  tralezab:
+  - refactor: refactored some behavior in pride hammer and carp'sie plushie, you may
+      notice a few more examines and error messages for fail cases but otherwise it's
+      all the same
