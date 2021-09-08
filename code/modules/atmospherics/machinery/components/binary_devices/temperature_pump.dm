@@ -44,7 +44,7 @@
 
 	var/coolant_temperature_delta = remove_input.temperature - remove_output.temperature
 
-	if(coolant_temperature_delta > 0 && remove_input.temperature < 1e8)
+	if(coolant_temperature_delta > 0 && remove_input.temperature <= 1.2e8)
 		var/input_capacity = remove_input.heat_capacity()
 		var/output_capacity = air_output.heat_capacity()
 
