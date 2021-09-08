@@ -129,6 +129,9 @@
 /// These will be shown in the character sidebar, but at the bottom.
 #define PREFERENCE_CATEGORY_FEATURES "features"
 
+/// Any preferences that will show to the sides of the character in the setup menu.
+#define PREFERENCE_CATEGORY_CLOTHING "clothing"
+
 /// Preferences that will be put into the 3rd list, and are not contextual.
 #define PREFERENCE_CATEGORY_NON_CONTEXTUAL "non_contextual"
 

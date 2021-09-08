@@ -311,8 +311,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	/// If the preference is a main feature (PREFERENCE_CATEGORY_FEATURES or PREFERENCE_CATEGORY_CLOTHING)
 	/// this is the name of the feature that will be presented.
-	// MOTHBLOCKS TODO: Unit test that everything that's a main feature has this
-	// and vice versa.
 	var/main_feature_name
 
 	abstract_type = /datum/preference/choiced

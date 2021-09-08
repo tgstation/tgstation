@@ -1,6 +1,3 @@
-// Any preferences that will show to the sides of the character in the setup menu.
-#define PREFERENCE_CATEGORY_CLOTHING "clothing"
-
 /// Backpack preference
 /datum/preference/choiced/backpack
 	savefile_key = "backpack"
@@ -95,5 +92,3 @@
 	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = new species_type
 	return !(NO_UNDERWEAR in species.species_traits)
-
-#undef PREFERENCE_CATEGORY_CLOTHING

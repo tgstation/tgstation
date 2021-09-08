@@ -35,3 +35,17 @@
 			CRASH("[preference_type] has a non-unique savefile_key `[preference.savefile_key]`!")
 
 		known_savefile_keys += preference.savefile_key
+
+/// Requires all main features have a main_feature_name
+/datum/unit_test/preferences_valid_main_feature_name
+
+/datum/unit_test/preferences_valid_main_feature_name/Run()
+	for (var/preference_type in GLOB.preference_entries)
+		var/datum/preference/choiced/preference = GLOB.preference_entries[preference_type]
+		if (!istype(preference))
+			continue
+
+		if (preference.category != PREFERENCE_CATEGORY_FEATURES && preference.category != PREFERENCE_CATEGORY_CLOTHING)
+			continue
+
+		TEST_ASSERT(!isnull(preference.main_feature_name), "Preference [preference_type] does not have a main_feature_name set!")
