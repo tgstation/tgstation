@@ -746,7 +746,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	. = ..()
 	mode = construction_mode
 	rcd_create(A, user)
-	return FALSE
+	return TRUE
 
 /obj/item/construction/rcd/pre_attack_secondary(atom/target, mob/living/user, params)
 	. = ..()
