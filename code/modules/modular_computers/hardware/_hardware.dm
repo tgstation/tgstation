@@ -49,12 +49,12 @@
 	// Cable coil. Works as repair method, but will probably require multiple applications and more cable.
 	if(istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/S = I
-		if(obj_integrity == max_integrity)
+		if(atom_integrity == max_integrity)
 			to_chat(user, span_warning("\The [src] doesn't seem to require repairs."))
 			return 1
 		if(S.use(1))
 			to_chat(user, span_notice("You patch up \the [src] with a bit of \the [I]."))
-			obj_integrity = min(obj_integrity + 10, max_integrity)
+			atom_integrity = min(atom_integrity + 10, max_integrity)
 		return 1
 
 	if(try_insert(I, user))

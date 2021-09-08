@@ -387,7 +387,7 @@
 		remove_area_power_relationship()
 
 	static_power_usage = new_usage
-	
+
 	if(new_usage)
 		var/area/our_area = get_area(src)
 		our_area?.addStaticPower(new_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
@@ -501,6 +501,10 @@
 	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_INTERACT)
 		return FALSE
 
+
+	if(isAdminGhostAI(user))
+		return TRUE //the Gods have unlimited power and do not care for things such as range or blindness
+
 	if(!isliving(user))
 		return FALSE //no ghosts allowed, sorry
 
@@ -523,6 +527,8 @@
 		return user.can_interact_with(src) //AIs don't care about petty mortal concerns like needing to be next to a machine to use it, but borgs do care somewhat
 
 	. = ..()
+	if(!.)
+		return FALSE
 
 	if((interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SIGHT) && user.is_blind())
 		to_chat(user, span_warning("This machine requires sight to use."))
@@ -717,7 +723,7 @@
 	transfer_fingerprints_to(new_frame)
 
 
-/obj/machinery/obj_break(damage_flag)
+/obj/machinery/atom_break(damage_flag)
 	. = ..()
 	if(!(machine_stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		set_machine_stat(machine_stat | BROKEN)
@@ -882,7 +888,7 @@
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
 			. += span_warning("It's on fire!")
-		var/healthpercent = (obj_integrity/max_integrity) * 100
+		var/healthpercent = (atom_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)
 				. += "It looks slightly damaged."
