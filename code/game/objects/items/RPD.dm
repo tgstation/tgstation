@@ -510,8 +510,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					var/obj/machinery/atmospherics/node = S.nodes[i]
 					if (!node)
 						continue
-					if (S in node.nodes)
-						node.disconnect(S)
+					node.disconnect(S)
 					S.nodes[i] = null
 				// Get our new connections
 				S.atmosinit()
