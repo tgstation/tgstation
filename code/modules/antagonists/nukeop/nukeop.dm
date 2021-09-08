@@ -181,6 +181,12 @@
 	to_chat(owner, "<span class='warningplain'><B>If you feel you are not up to this task, give your ID to another operative.</B></span>")
 	if(!CONFIG_GET(flag/disable_warops))
 		to_chat(owner, "<span class='warningplain'><B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B></span>")
+
+	owner.announce_objectives()
+
+/datum/antagonist/nukeop/leader/on_gain()
+	. = ..()
+	if(!CONFIG_GET(flag/disable_warops))
 		var/obj/item/dukinuki = new challengeitem
 		var/mob/living/carbon/human/H = owner.current
 		if(!istype(H))
@@ -188,9 +194,8 @@
 		else
 			H.put_in_hands(dukinuki, TRUE)
 		nuke_team.war_button_ref = WEAKREF(dukinuki)
-	owner.announce_objectives()
-	addtimer(CALLBACK(src, .proc/nuketeam_name_assign), 1)
 
+	addtimer(CALLBACK(src, .proc/nuketeam_name_assign), 1)
 
 /datum/antagonist/nukeop/leader/proc/nuketeam_name_assign()
 	if(!nuke_team)
