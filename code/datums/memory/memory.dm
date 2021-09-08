@@ -162,7 +162,8 @@
 
 		line = replacetext(line, "%PROPER", "\proper")
 		line = replacetext(line, "%MEMORIZER", "[memorizer]")
-		line = replacetext(line, "%MOOD", pick(story_moods))
+		if(LAZYLEN(story_moods))
+			line = replacetext(line, "%MOOD", pick(story_moods))
 		line = replacetext(line, "%SOMETHING", initial(something.name))
 		line = replacetext(line, "%CREWMEMBER", memorizer_mind.build_story_mob(crew_member))
 		line = replacetext(line, "%STORY_TYPE", story_type)
