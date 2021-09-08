@@ -112,7 +112,6 @@
 		client?.mob.hud_used?.show_hud()
 
 /// Determines what ghosts orbiting look like to you.
-// MOTHBLOCKS TODO: Support for "content unlocked" specific preferences, show in UI as disabled dropdown
 /datum/preference/choiced/ghost_orbit
 	savefile_key = "ghost_orbit"
 	savefile_identifier = PREFERENCE_PLAYER

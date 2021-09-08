@@ -4,6 +4,8 @@ import { Box, Dropdown, Flex } from "../../../../../components";
 import { classes } from "common/react";
 import { InfernoNode } from "inferno";
 import { binaryInsertWith } from "common/collections";
+import { useBackend } from "../../../../../backend";
+import { PreferencesMenuData } from "../../../data";
 
 export const ghost_accs: FeatureChoiced = {
   name: "Ghost accessories",
@@ -19,8 +21,11 @@ const insertGhostForm
   }>(({ value }) => value);
 
 const GhostFormInput = (
-  props: FeatureValueProps<string, string, FeatureChoicedServerData>
+  props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  context,
 ) => {
+  const { data } = useBackend<PreferencesMenuData>(context);
+
   const serverData = props.serverData;
   if (!serverData) {
     return;
@@ -73,6 +78,7 @@ const GhostFormInput = (
   }
 
   return (<Dropdown
+    disabled={!data.content_unlocked}
     selected={props.value}
     displayText={displayTexts[props.value]}
     onSelected={props.handleSetValue}
@@ -102,7 +108,17 @@ export const ghost_orbit: FeatureChoiced = {
     The shape in which your ghost will orbit.
     Requires BYOND membership.
   `,
-  component: FeatureDropdownInput,
+  component: (
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+    context,
+  ) => {
+    const { data } = useBackend<PreferencesMenuData>(context);
+
+    return (<FeatureDropdownInput
+      {...props}
+      disabled={!data.content_unlocked}
+    />);
+  },
 };
 
 export const ghost_others: FeatureChoiced = {

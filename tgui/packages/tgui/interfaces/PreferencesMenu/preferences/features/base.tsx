@@ -149,7 +149,9 @@ const capitalizeFirstLetter = (text: string) => (
 );
 
 export const FeatureDropdownInput = (
-  props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  props: FeatureValueProps<string, string, FeatureChoicedServerData> & {
+    disabled?: boolean,
+  },
 ) => {
   const serverData = props.serverData;
   if (!serverData) {
@@ -162,6 +164,7 @@ export const FeatureDropdownInput = (
     );
 
   return (<Dropdown
+    disabled={props.disabled}
     selected={props.value}
     onSelected={props.handleSetValue}
     width="100%"
