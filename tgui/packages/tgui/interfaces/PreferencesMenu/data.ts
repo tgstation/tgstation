@@ -73,6 +73,11 @@ export enum JoblessRole {
   ReturnToLobby = 3,
 }
 
+export enum GamePreferencesSelectedPage {
+  Settings,
+  Keybindings,
+}
+
 export const createSetPreference = (
   act: typeof sendAct,
   preference: string
@@ -86,6 +91,7 @@ export const createSetPreference = (
 export enum Window {
   Character = 0,
   Game = 1,
+  Keybindings = 2,
 }
 
 export type PreferencesMenuData = {

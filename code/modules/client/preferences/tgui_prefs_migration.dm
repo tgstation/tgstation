@@ -15,6 +15,9 @@
 /datum/preferences/proc/migrate_key_bindings()
 	var/new_key_bindings = list()
 
+	for (var/unbound_hotkey in key_bindings["Unbound"])
+		new_key_bindings[unbound_hotkey] = list()
+
 	for (var/hotkey in key_bindings)
 		if (hotkey == "Unbound")
 			continue

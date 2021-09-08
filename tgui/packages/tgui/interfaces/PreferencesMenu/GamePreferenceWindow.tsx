@@ -4,26 +4,28 @@ import { KeybindingsPage } from "./KeybindingsPage";
 import { GamePreferencesPage } from "./GamePreferencesPage";
 import { PageButton } from "./PageButton";
 import { useBackend, useLocalState } from "../../backend";
-import { PreferencesMenuData } from "./data";
+import { GamePreferencesSelectedPage, PreferencesMenuData } from "./data";
 import { exhaustiveCheck } from "common/exhaustive";
 
-enum Page {
-  Settings,
-  Keybindings,
-}
-
-export const GamePreferenceWindow = (props, context) => {
+export const GamePreferenceWindow = (props: {
+  startingPage?: GamePreferencesSelectedPage,
+}, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
 
-  const [currentPage, setCurrentPage] = useLocalState(context, "currentPage", Page.Settings);
+  const [currentPage, setCurrentPage]
+    = useLocalState(
+      context,
+      "currentPage",
+      props.startingPage ?? GamePreferencesSelectedPage.Settings,
+    );
 
   let pageContents;
 
   switch (currentPage) {
-    case Page.Keybindings:
+    case GamePreferencesSelectedPage.Keybindings:
       pageContents = <KeybindingsPage />;
       break;
-    case Page.Settings:
+    case GamePreferencesSelectedPage.Settings:
       pageContents = <GamePreferencesPage />;
       break;
     default:
@@ -44,7 +46,7 @@ export const GamePreferenceWindow = (props, context) => {
               <Stack.Item grow>
                 <PageButton
                   currentPage={currentPage}
-                  page={Page.Settings}
+                  page={GamePreferencesSelectedPage.Settings}
                   setPage={setCurrentPage}
                 >
                   Settings
@@ -54,7 +56,7 @@ export const GamePreferenceWindow = (props, context) => {
               <Stack.Item grow>
                 <PageButton
                   currentPage={currentPage}
-                  page={Page.Keybindings}
+                  page={GamePreferencesSelectedPage.Keybindings}
                   setPage={setCurrentPage}
                 >
                   Keybindings

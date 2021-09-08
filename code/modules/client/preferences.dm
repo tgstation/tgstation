@@ -272,6 +272,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	save_preferences()
 	QDEL_NULL(character_preview_view)
 
+/datum/preferences/Topic(href, list/href_list)
+	. = ..()
+	if (.)
+		return
+
+	if (href_list["open_keybindings"])
+		current_window = PREFERENCE_TAB_KEYBINDINGS
+		update_static_data(usr)
+		ui_interact(usr)
+		return TRUE
+
 /datum/preferences/proc/create_character_preview_view(mob/user)
 	character_preview_view = new(null, src, user.client)
 	character_preview_view.update_body()

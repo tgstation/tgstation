@@ -1,6 +1,6 @@
 import { exhaustiveCheck } from "common/exhaustive";
 import { sendAct, useBackend, useLocalState } from "../../backend";
-import { CharacterProfile, PreferencesMenuData, Window } from "./data";
+import { GamePreferencesSelectedPage, PreferencesMenuData, Window } from "./data";
 import { CharacterPreferenceWindow } from "./CharacterPreferenceWindow";
 import { GamePreferenceWindow } from "./GamePreferenceWindow";
 
@@ -14,6 +14,10 @@ export const PreferencesMenu = (props, context) => {
       return <CharacterPreferenceWindow />;
     case Window.Game:
       return <GamePreferenceWindow />;
+    case Window.Keybindings:
+      return (<GamePreferenceWindow
+        startingPage={GamePreferencesSelectedPage.Keybindings}
+      />);
     default:
       exhaustiveCheck(window);
   }
