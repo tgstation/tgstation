@@ -505,7 +505,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				// We're allowed to connect in new directions. Recompute our nodes
 				// Disconnect from everything that is currently connected
 				for (var/i in 1 to S.device_type)
-					S.nullifyNode(i)
+					// This is basically pipe.nullifyNode, but using it here would create a pitfall for others attempting to
+					// copy and paste disconnection code for other components. Welcome to the atmospherics subsystem
+					var/obj/machinery/atmospherics/node = S.nodes[i]
+					if (!node)
+						continue
+					if (S in node.nodes)
+						node.disconnect(S)
+					S.nodes[i] = null
 				// Get our new connections
 				S.atmosinit()
 				// Connect to our new connections
