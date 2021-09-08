@@ -25,13 +25,13 @@
 	/// Used for examining
 	var/examine_type = DECOMP_EXAM_NORMAL
 
-/datum/component/decomposition/Initialize(mapload, decomp_flags = NONE, decomp_result)
+/datum/component/decomposition/Initialize(mapload, decomp_req_handle, decomp_flags = NONE, decomp_result)
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.decomp_flags = decomp_flags
 	src.decomp_result = decomp_result
-	if(mapload)
+	if(mapload || decomp_req_handle)
 		handled = FALSE
 
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/handle_movement)

@@ -37,6 +37,7 @@
 		. += "<span class='notice'>[src] has [max_filters] slot\s for filters.</span>"
 	if(LAZYLEN(gas_filters) > 0)
 		. += "<span class='notice'>Currently there [LAZYLEN(gas_filters) == 1 ? "is" : "are"] [LAZYLEN(gas_filters)] filter\s with [get_filter_durability()]% durability.</span>"
+		. += "<span class='notice'>The filters can be removed by right-clicking with an empty hand on [src].</span>"
 
 /obj/item/clothing/mask/gas/attackby(obj/item/tool, mob/user)
 	if(!istype(tool, /obj/item/gas_filter))
@@ -49,17 +50,18 @@
 	has_filter = TRUE
 	return TRUE
 
-/obj/item/clothing/mask/gas/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/item/clothing/mask/gas/attack_hand_secondary(mob/user, list/modifiers)
 	if(!has_filter || !max_filters)
-		return ..()
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	for(var/i in 1 to max_filters)
 		var/obj/item/gas_filter/filter = locate() in src
 		if(!filter)
 			continue
-		user.transferItemToLoc(filter, user.loc)
+		user.put_in_hands(filter)
 		LAZYREMOVE(gas_filters, filter)
 	if(LAZYLEN(gas_filters) <= 0)
 		has_filter = FALSE
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 ///Check _masks.dm for this one
 /obj/item/clothing/mask/gas/consume_filter(datum/gas_mixture/breath)
