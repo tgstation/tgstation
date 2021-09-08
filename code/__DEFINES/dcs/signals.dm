@@ -1462,3 +1462,7 @@
 #define COMSIG_PROJECTILE_FIRING_FINISHED "mob_ability_fired_projectile"
 #define COMSIG_SPIRAL_ATTACK_START "mob_spiral_attack_start"
 #define COMSIG_SPIRAL_ATTACK_FINISHED "mob_spiral_attack_finished"
+#define COMSIG_SWOOP_ATTACK_STARTED "mob_swoop_attack_started"
+#define COMSIG_SWOOP_INVULNERABILITY_STARTED "mob_swoop_invulnerability_started"
+#define COMSIG_SWOOP_ATTACK_FINISHED "mob_swoop_attack_finished"
+#define COMSIG_LAVA_ARENA_FAILED "mob_lava_arena_failed"

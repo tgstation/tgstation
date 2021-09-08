@@ -12,7 +12,7 @@
 	var/remove_inner_pools = TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_warp/Activate(var/atom/target_atom)
-	StartCooldown(100)
+	StartCooldown(10 SECONDS)
 	blood_warp(target_atom)
 	StartCooldown()
 
@@ -36,7 +36,7 @@
 	var/oldtransform = DA.transform
 	DA.transform = matrix()*2
 	animate(DA, alpha = 255, color = initial(DA.color), transform = oldtransform, time = 3)
-	SLEEP_CHECK_DEATH(3, owner)
+	SLEEP_CHECK_DEATH(0.3 SECONDS, owner)
 	qdel(DA)
 
 	var/obj/effect/decal/cleanable/blood/found_bloodpool

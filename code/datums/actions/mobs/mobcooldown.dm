@@ -3,7 +3,7 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	desc = "Click this ability to attack."
-	cooldown_time = 15
-	text_cooldown = FALSE
+	cooldown_time = 1.5 SECONDS
+	text_cooldown = TRUE
 	click_to_activate = TRUE
-	shared_cooldown = MOB_SHARED_COOLDOWN
+	shared_cooldown = MOB_SHARED_COOLDOWN_1

@@ -3,12 +3,9 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	desc = "Allows you to charge at a chosen position."
-	cooldown_time = 15
-	text_cooldown = FALSE
-	click_to_activate = TRUE
-	shared_cooldown = MOB_SHARED_COOLDOWN
+	cooldown_time = 1.5 SECONDS
 	/// Delay before the charge actually occurs
-	var/charge_delay = 3
+	var/charge_delay = 0.3 SECONDS
 	/// The amount of turfs we move past the target
 	var/charge_past = 2
 	/// The sleep time before moving in deciseconds while charging
@@ -37,7 +34,7 @@
 
 /datum/action/cooldown/mob_cooldown/charge/Activate(atom/target_atom)
 	// start pre-cooldown so that the ability can't come up while the charge is happening
-	StartCooldown(100)
+	StartCooldown(10 SECONDS)
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
 	StartCooldown()
 
@@ -140,7 +137,7 @@
 /datum/action/cooldown/mob_cooldown/charge/triple_charge
 	name = "Triple Charge"
 	desc = "Allows you to charge three times at a chosen position."
-	charge_delay = 6
+	charge_delay = 0.6 SECONDS
 
 /datum/action/cooldown/mob_cooldown/charge/triple_charge/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
 	for(var/i in 0 to 2)
@@ -151,8 +148,8 @@
 	icon_icon = 'icons/effects/bubblegum.dmi'
 	button_icon_state = "smack ya one"
 	desc = "Allows you to create hallucinations that charge around your target."
-	cooldown_time = 20
-	charge_delay = 6
+	cooldown_time = 2 SECONDS
+	charge_delay = 0.6 SECONDS
 	/// The damage the hallucinations in our charge do
 	var/hallucination_damage = 15
 	/// Check to see if we are enraged, enraged ability does more
@@ -211,7 +208,7 @@
 	icon_icon = 'icons/turf/walls/wall.dmi'
 	button_icon_state = "wall-0"
 	desc = "Allows you to create hallucinations that charge around your target."
-	charge_delay = 6
+	charge_delay = 0.6 SECONDS
 	charge_past = 2
 
 /datum/action/cooldown/mob_cooldown/charge/hallucination_charge/hallucination_surround/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
