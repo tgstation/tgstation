@@ -39,10 +39,10 @@
 	return priority_reactions
 
 /datum/gas_reaction
-	/** 
+	/**
 	 * Regarding the requirements list: the minimum or maximum requirements must be non-zero.
 	 * When in doubt, use MINIMUM_MOLE_COUNT.
-	 * Another thing to note is that reactions will not fire if we have any requirements outside of gas id path or MIN_TEMP or MAX_TEMP. 
+	 * Another thing to note is that reactions will not fire if we have any requirements outside of gas id path or MIN_TEMP or MAX_TEMP.
 	 * More complex implementations will require modifications to gas_mixture.react()
 	 */
 	var/list/requirements
@@ -270,6 +270,8 @@
 		)
 
 /datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
+	var/list/cached_results = air.reaction_results
+	cached_results["fire"] = 0
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
@@ -284,8 +286,10 @@
 	//more freon released at lower temperatures
 	var/temperature_scale = 1
 
-	if(temperature < FREON_LOWER_TEMPERATURE) //stop the reaction when too cold
+	if(temperature < FREON_TERMINAL_TEMPERATURE) //stop the reaction when too cold
 		temperature_scale = 0
+	else if(temperature < FREON_LOWER_TEMPERATURE)
+		temperature_scale = 0.5
 	else
 		temperature_scale = (FREON_MAXIMUM_BURN_TEMPERATURE - temperature) / (FREON_MAXIMUM_BURN_TEMPERATURE - FREON_LOWER_TEMPERATURE) //calculate the scale based on the temperature
 	if(temperature_scale >= 0)
@@ -305,14 +309,21 @@
 			if(temperature < 160 && temperature > 120 && prob(2))
 				new /obj/item/stack/sheet/hot_ice(location)
 
-			energy_released += FIRE_FREON_ENERGY_RELEASED * (freon_burn_rate)
-			. = REACTING
+			cached_results["fire"] += freon_burn_rate * COLD_FIRE_GROWTH_RATE * 10
+
+			energy_released -= FIRE_FREON_ENERGY_ABSORBED * (freon_burn_rate)
 
 	if(energy_released < 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
-		. = REACTING
+
+	if(istype(location))
+		temperature = air.temperature
+		if(temperature < FREON_MAXIMUM_BURN_TEMPERATURE)
+			location.hotspot_expose(temperature, CELL_VOLUME)
+
+	return cached_results["fire"] ? REACTING : NO_REACTION
 
 /datum/gas_reaction/h2fire
 	priority_group = PRIORITY_FIRE
@@ -355,7 +366,7 @@
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / HYDROGEN_BURN_H2_FACTOR
 
 		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
-		cached_results["fire"] += burned_fuel * 10
+		cached_results["fire"] += burned_fuel * 100
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()

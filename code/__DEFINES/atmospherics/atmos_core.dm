@@ -159,8 +159,10 @@
 #define COLD_FIRE_GROWTH_RATE 40000 //Not yet implemented
 ///Maximum temperature to burn freon
 #define FREON_MAXIMUM_BURN_TEMPERATURE 283
-///Minimum temperature allowed for the burn to go, we would have negative pressure otherwise
+///Minimum temperature allowed for the burn to go at max speed, we would have negative pressure otherwise
 #define FREON_LOWER_TEMPERATURE 60
+///Terminal temperature after wich we stop the reaction
+#define FREON_TERMINAL_TEMPERATURE 20
 ///Multiplier for freonfire with O2 moles * FREON_OXYGEN_FULLBURN for the maximum fuel consumption
 #define FREON_OXYGEN_FULLBURN 10
 
