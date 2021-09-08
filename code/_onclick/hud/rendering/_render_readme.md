@@ -36,7 +36,7 @@ The solution is thus instead we replace plane masters rendering directly to clie
 
 ![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/rendering/renderpipe_refactored.png)
 
-We can also choose to render these by decreasing all applied effects then rendering it onto multiple planes:
+We can also choose to render these by decreasing the scaling all applied effects (scale/number_of_plates_rendered_to) then rendering it onto multiple planes:
 
 ![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/rendering/renderpipe_refactored_multiple.png)
 
