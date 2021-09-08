@@ -13,10 +13,12 @@
 	var/swooping = FALSE
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/Grant(mob/M)
+	. = ..()
 	ADD_TRAIT(M, TRAIT_LAVA_IMMUNE, src)
 	ADD_TRAIT(M, TRAIT_NOFIRE, src)
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/Remove(mob/M)
+	. = ..()
 	REMOVE_TRAIT(M, TRAIT_LAVA_IMMUNE, src)
 	REMOVE_TRAIT(M, TRAIT_NOFIRE, src)
 
@@ -133,7 +135,8 @@
 			break
 		var/turf/TT = get_turf(target)
 		var/turf/T = pick(RANGE_TURFS(1,TT))
-		new /obj/effect/temp_visual/lava_warning(T, 60) // longer reset time for the lava
+		var/obj/effect/temp_visual/lava_warning/LW = new /obj/effect/temp_visual/lava_warning(T, 60) // longer reset time for the lava
+		LW.owner = owner
 		amount--
 		SLEEP_CHECK_DEATH(delay, owner)
 

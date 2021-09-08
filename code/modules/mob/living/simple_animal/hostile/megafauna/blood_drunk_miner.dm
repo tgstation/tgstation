@@ -75,9 +75,9 @@ Difficulty: Medium
 
 	Goto(target, move_to_delay, minimum_distance)
 	if(get_dist(src, target) > 4)
-		dash.Trigger(target)
-		// Use activate instead of trigger so we can bypass cooldowns
-		kinetic_accelerator.Activate(target)
+		if(dash.Trigger(target))
+			kinetic_accelerator.StartCooldown(0)
+			kinetic_accelerator.Trigger(target)
 	else
 		kinetic_accelerator.Trigger(target)
 	transform_weapon.Trigger(miner_saw)

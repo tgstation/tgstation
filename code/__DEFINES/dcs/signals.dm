@@ -1468,6 +1468,7 @@
 
 ///Called when the ticker sets up the game for start
 #define COMSIG_TICKER_ENTER_SETTING_UP "comsig_ticker_enter_setting_up"
+
 //Mob ability signals
 #define COMSIG_BLOOD_WARP "mob_ability_blood_warp"
 #define COMSIG_FINISHED_CHARGE "mob_ability_charge_finished"

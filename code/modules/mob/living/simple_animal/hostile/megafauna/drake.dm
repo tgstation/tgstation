@@ -109,16 +109,19 @@
 			lava_swoop.Trigger(target)
 			return
 		// Lava Pools
-		lava_swoop.Trigger(target)
-		SLEEP_CHECK_DEATH(0, src)
-		fire_cone.Activate(target)
-		INVOKE_ASYNC(meteors, /datum/action/cooldown/proc/Activate, target)
-		return
+		if(lava_swoop.Trigger(target))
+			SLEEP_CHECK_DEATH(0, src)
+			fire_cone.StartCooldown(0)
+			fire_cone.Trigger(target)
+			meteors.StartCooldown(0)
+			INVOKE_ASYNC(meteors, /datum/action/proc/Trigger, target)
+			return
 	else if(prob(10+anger_modifier) && DRAKE_ENRAGED)
 		mass_fire.Trigger(target)
 		return
-	fire_cone.Trigger(target)
-	INVOKE_ASYNC(meteors, /datum/action/cooldown/proc/Activate, target)
+	if(fire_cone.Trigger(target))
+		meteors.StartCooldown(0)
+		INVOKE_ASYNC(meteors, /datum/action/proc/Trigger, target)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_started()
 	icon_state = "shadow"
@@ -213,6 +216,7 @@
 	layer = BELOW_MOB_LAYER
 	light_range = 2
 	duration = 13
+	var/mob/owner
 
 /obj/effect/temp_visual/lava_warning/Initialize(mapload, reset_time = 10)
 	. = ..()
@@ -226,7 +230,7 @@
 	sleep(duration)
 	playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
 
-	for(var/mob/living/L in T.contents)
+	for(var/mob/living/L in T.contents - owner)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue
 		L.adjustFireLoss(10)

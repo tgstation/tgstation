@@ -675,12 +675,11 @@
 	. = ..()
 	if(.)
 		if(!owner)
-			return
+			return FALSE
 		if(click_to_activate)
 			if(A)
 				// For automatic / mob handling
-				InterceptClickOn(owner, null, A)
-				return
+				return InterceptClickOn(owner, null, A)
 			if(owner.click_intercept == src)
 				owner.click_intercept = null
 				to_chat(owner, "<b>[src] is no longer active</b>")
@@ -689,8 +688,8 @@
 				to_chat(owner, "<b>You are now prepared to use [src]</b>")
 			for(var/datum/action/cooldown/C in owner.actions)
 				C.UpdateButtonIcon()
-			return
-		Activate(owner)
+			return TRUE
+		return Activate(owner)
 
 /datum/action/cooldown/proc/InterceptClickOn(mob/living/caller, params, atom/A)
 	if(!IsAvailable())
