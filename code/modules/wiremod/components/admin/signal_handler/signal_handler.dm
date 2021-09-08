@@ -81,6 +81,7 @@
 	signal_id.set_value(component_data["signal_id"], force = TRUE)
 	registered_signal = signal_id.value
 	load_new_ports(component_data["signal_port_data"])
+	custom_signal = TRUE
 	return ..()
 
 
