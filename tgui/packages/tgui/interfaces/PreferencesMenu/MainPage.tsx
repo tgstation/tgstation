@@ -95,6 +95,7 @@ const ChoicedSelection = (props: {
             <Stack.Item grow>
               <Box style={{
                 "border-bottom": "1px solid #888",
+                "font-weight": "bold",
                 "font-size": "14px",
                 "text-align": "center",
               }}>

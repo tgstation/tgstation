@@ -1,3 +1,29 @@
+/proc/generate_values_for_underwear(list/accessory_list, list/icons, color)
+	var/icon/lower_half = icon('icons/blanks/32x32.dmi', "nothing")
+
+	for (var/icon in icons)
+		lower_half.Blend(icon('icons/mob/human_parts_greyscale.dmi', icon), ICON_OVERLAY)
+
+	var/list/values = list()
+
+	for (var/accessory_name in accessory_list)
+		var/icon/icon_with_socks = new(lower_half)
+
+		if (accessory_name != "Nude")
+			var/datum/sprite_accessory/accessory = accessory_list[accessory_name]
+
+			var/icon/accessory_icon = icon('icons/mob/clothing/underwear.dmi', accessory.icon_state)
+			if (color && !accessory.use_static)
+				accessory_icon.Blend(color, ICON_MULTIPLY)
+			icon_with_socks.Blend(accessory_icon, ICON_OVERLAY)
+
+		icon_with_socks.Crop(10, 1, 22, 13)
+		icon_with_socks.Scale(32, 32)
+
+		values[accessory_name] = icon_with_socks
+
+	return values
+
 /// Backpack preference
 /datum/preference/choiced/backpack
 	savefile_key = "backpack"
@@ -55,7 +81,7 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/socks/init_possible_values()
-	return possible_values_for_sprite_accessory_list(GLOB.socks_list)
+	return generate_values_for_underwear(GLOB.socks_list, list("human_r_leg", "human_l_leg"))
 
 /datum/preference/choiced/socks/apply_to_human(mob/living/carbon/human/target, value)
 	target.socks = value
@@ -69,7 +95,28 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/undershirt/init_possible_values()
-	return possible_values_for_sprite_accessory_list(GLOB.undershirt_list)
+	var/icon/body = icon('icons/mob/human_parts_greyscale.dmi', "human_r_leg")
+	body.Blend(icon('icons/mob/human_parts_greyscale.dmi', "human_l_leg"), ICON_OVERLAY)
+	body.Blend(icon('icons/mob/human_parts_greyscale.dmi', "human_r_arm"), ICON_OVERLAY)
+	body.Blend(icon('icons/mob/human_parts_greyscale.dmi', "human_l_arm"), ICON_OVERLAY)
+	body.Blend(icon('icons/mob/human_parts_greyscale.dmi', "human_r_hand"), ICON_OVERLAY)
+	body.Blend(icon('icons/mob/human_parts_greyscale.dmi', "human_l_hand"), ICON_OVERLAY)
+	body.Blend(icon('icons/mob/human_parts_greyscale.dmi', "human_chest_m"), ICON_OVERLAY)
+
+	var/list/values = list()
+
+	for (var/accessory_name in GLOB.undershirt_list)
+		var/icon/icon_with_undershirt = icon(body)
+
+		if (accessory_name != "Nude")
+			var/datum/sprite_accessory/accessory = GLOB.undershirt_list[accessory_name]
+			icon_with_undershirt.Blend(icon('icons/mob/clothing/underwear.dmi', accessory.icon_state), ICON_OVERLAY)
+
+		icon_with_undershirt.Crop(9, 9, 23, 23)
+		icon_with_undershirt.Scale(32, 32)
+		values[accessory_name] = icon_with_undershirt
+
+	return values
 
 /datum/preference/choiced/undershirt/apply_to_human(mob/living/carbon/human/target, value)
 	target.undershirt = value
@@ -83,7 +130,7 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/underwear/init_possible_values()
-	return possible_values_for_sprite_accessory_list(GLOB.underwear_list)
+	return generate_values_for_underwear(GLOB.underwear_list, list("human_chest_m", "human_r_leg", "human_l_leg"), COLOR_ALMOST_BLACK)
 
 /datum/preference/choiced/underwear/apply_to_human(mob/living/carbon/human/target, value)
 	target.underwear = value
