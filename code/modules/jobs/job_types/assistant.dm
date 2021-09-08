@@ -40,12 +40,22 @@ Assistant
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
 	..()
 	if (CONFIG_GET(flag/grey_assistants))
-		if(H.jumpsuit_style == PREF_SUIT)
-			uniform = /obj/item/clothing/under/color/grey
-		else
-			uniform = /obj/item/clothing/under/color/jumpskirt/grey
+		give_grey_suit(H)
 	else
 		if(H.jumpsuit_style == PREF_SUIT)
 			uniform = /obj/item/clothing/under/color/random
 		else
 			uniform = /obj/item/clothing/under/color/jumpskirt/random
+
+/datum/outfit/job/assistant/proc/give_grey_suit(mob/living/carbon/human/target)
+	if (target.jumpsuit_style == PREF_SUIT)
+		uniform = /obj/item/clothing/under/color/grey
+	else
+		uniform = /obj/item/clothing/under/color/jumpskirt/grey
+
+/datum/outfit/job/assistant/consistent
+	name = "Assistant - Consistent"
+
+/datum/outfit/job/assistant/consistent/pre_equip(mob/living/carbon/human/H)
+	..()
+	give_grey_suit(H)

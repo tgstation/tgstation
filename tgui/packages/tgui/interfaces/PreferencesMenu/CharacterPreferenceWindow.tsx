@@ -95,7 +95,7 @@ export const CharacterPreferenceWindow = (props, context) => {
             />
           </Stack.Item>
 
-          {data.content_unlocked && (
+          {!data.content_unlocked && (
             <Stack.Item align="center">
               Buy BYOND premium for more slots!
             </Stack.Item>
