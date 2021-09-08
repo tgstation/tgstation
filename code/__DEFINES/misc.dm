@@ -494,12 +494,6 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 //Misc text define. Does 4 spaces. Used as a makeshift tabulator.
 #define FOURSPACES "&nbsp;&nbsp;&nbsp;&nbsp;"
 
-// art quality defines, used in datums/components/art.dm, elsewhere
-#define BAD_ART 12.5
-#define OK_ART 20
-#define GOOD_ART 25
-#define GREAT_ART 50
-
 // possible bitflag return values of intercept_zImpact(atom/movable/AM, levels = 1) calls
 #define FALL_INTERCEPTED (1<<0) //Stops the movable from falling further and crashing on the ground
 #define FALL_NO_MESSAGE (1<<1) //Used to suppress the "[A] falls through [old_turf]" messages where it'd make little sense at all, like going downstairs.
