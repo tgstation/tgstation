@@ -47,7 +47,6 @@
 		"chat_pullr" = CHAT_PULLR,
 	)
 
-// MOTHBLOCKS TODO: member_public to only show when you are a BYOND member
 /datum/preference_middleware/legacy_toggles/get_character_preferences(mob/user)
 	if (preferences.current_window != PREFERENCE_TAB_GAME_PREFERENCES)
 		return list()
@@ -86,6 +85,9 @@
 			continue
 
 		if (is_admin && (toggle_name in deadmin_flags) && (preferences.toggles & DEADMIN_ALWAYS))
+			continue
+
+		if (toggle_name == "member_public" && !preferences.unlock_content)
 			continue
 
 		new_game_preferences[toggle_name] = (preferences.toggles & legacy_toggles[toggle_name]) != 0
