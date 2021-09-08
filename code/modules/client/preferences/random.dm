@@ -34,6 +34,9 @@
 	)
 
 /datum/preference/choiced/random_name/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
 	return preferences.read_preference(/datum/preference/choiced/random_body) != RANDOM_DISABLED
 
 /datum/preference/choiced/random_name/create_default_value()

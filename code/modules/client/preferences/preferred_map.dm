@@ -46,4 +46,7 @@
 	return data
 
 /datum/preference/choiced/preferred_map/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
 	return CONFIG_GET(flag/preference_map_voting)

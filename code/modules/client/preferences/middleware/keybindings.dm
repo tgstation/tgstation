@@ -7,9 +7,10 @@
 		"set_keybindings" = .proc/set_keybindings,
 	)
 
-// MOTHBLOCKS TODO: Only when requested.
-// At laziest, just if game prefs is enabled.
 /datum/preference_middleware/keybindings/get_ui_static_data(mob/user)
+	if (preferences.current_window == PREFERENCE_TAB_CHARACTER_PREFERENCES)
+		return list()
+
 	var/list/keybindings = preferences.key_bindings
 
 	return list(

@@ -14,5 +14,8 @@
 		target.body_type = target.gender
 
 /datum/preference/choiced/body_type/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
 	var/gender = preferences.read_preference(/datum/preference/choiced/gender)
 	return gender != MALE && gender != FEMALE

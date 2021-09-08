@@ -8,4 +8,7 @@
 	return "#c43b23"
 
 /datum/preference/color/ooc_color/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
 	return is_admin(preferences.parent) || preferences.unlock_content

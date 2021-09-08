@@ -7,6 +7,9 @@
 	savefile_key = "playtime_reward_cloak"
 
 /datum/preference/toggle/playtime_reward_cloak/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
 	return preferences.parent?.is_veteran()
 
 /datum/preference/toggle/playtime_reward_cloak/apply_to_human(mob/living/carbon/human/target, value)

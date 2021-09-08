@@ -7,6 +7,9 @@
 	target.underwear_color = value
 
 /datum/preference/color_legacy/underwear_color/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
 	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = new species_type
 	return !(NO_UNDERWEAR in species.species_traits)

@@ -7,6 +7,9 @@
 	return DEFAULT_ASAY_COLOR
 
 /datum/preference/color/asay_color/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
 	return is_admin(preferences.parent) && CONFIG_GET(flag/allow_admin_asaycolor)
 
 /// What outfit to equip when spawning as a briefing officer for an ERT
@@ -32,4 +35,7 @@
 	return subtypesof(/datum/outfit)
 
 /datum/preference/choiced/brief_outfit/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
 	return is_admin(preferences.parent)

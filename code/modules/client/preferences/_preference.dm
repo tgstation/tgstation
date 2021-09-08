@@ -290,6 +290,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Returns whether or not this preference is accessible.
 /// If FALSE, will not show in the UI and will not be editable (by update_preference).
 /datum/preference/proc/is_accessible(datum/preferences/preferences)
+	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+
 	if (!isnull(relevant_mutant_bodypart) || !isnull(relevant_species_trait))
 		var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 
@@ -297,7 +300,17 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		if (!(savefile_key in species.get_features()))
 			return FALSE
 
+	if (!should_show_on_page(preferences.current_window))
+		return FALSE
+
 	return TRUE
+
+/// Returns whether or not, given the PREFERENCE_TAB_*, this preference should
+/// appear.
+/datum/preference/proc/should_show_on_page(preference_tab)
+	var/is_on_character_page = preference_tab == PREFERENCE_TAB_CHARACTER_PREFERENCES
+	var/is_character_preference = savefile_identifier == PREFERENCE_CHARACTER
+	return is_on_character_page == is_character_preference
 
 /// A preference that is a choice of one option among a fixed set.
 /// Used for preferences such as clothing.

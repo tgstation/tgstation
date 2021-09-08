@@ -49,6 +49,9 @@
 
 // MOTHBLOCKS TODO: member_public to only show when you are a BYOND member
 /datum/preference_middleware/legacy_toggles/get_character_preferences(mob/user)
+	if (preferences.current_window != PREFERENCE_TAB_GAME_PREFERENCES)
+		return list()
+
 	var/static/list/admin_only_legacy_toggles = list(
 		"admin_ignore_cult_ghost",
 		"announce_login",
