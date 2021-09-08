@@ -47,16 +47,50 @@
 		"chat_pullr" = CHAT_PULLR,
 	)
 
-// MOTHBLOCKS TODO: Don't send admin stuff to normal players.
-// MOTHBLOCKS TODO: The auto_deadmin flags.
 // MOTHBLOCKS TODO: member_public to only show when you are a BYOND member
 /datum/preference_middleware/legacy_toggles/get_character_preferences(mob/user)
+	var/static/list/admin_only_legacy_toggles = list(
+		"admin_ignore_cult_ghost",
+		"announce_login",
+		"combohud_lighting",
+		"deadmin_always",
+		"deadmin_antagonist",
+		"deadmin_position_head",
+		"deadmin_position_security",
+		"deadmin_position_silicon",
+		"sound_adminhelp",
+		"sound_prayers",
+		"split_admin_tabs",
+	)
+
+	var/static/list/admin_only_chat_toggles = list(
+		"chat_dead",
+		"chat_prayer",
+	)
+
+	var/static/list/deadmin_flags = list(
+		"deadmin_antagonist",
+		"deadmin_position_head",
+		"deadmin_position_security",
+		"deadmin_position_silicon",
+	)
+
 	var/list/new_game_preferences = list()
+	var/is_admin = is_admin(user.client)
 
 	for (var/toggle_name in legacy_toggles)
+		if (!is_admin && (toggle_name in admin_only_legacy_toggles))
+			continue
+
+		if (is_admin && (toggle_name in deadmin_flags) && (preferences.toggles & DEADMIN_ALWAYS))
+			continue
+
 		new_game_preferences[toggle_name] = (preferences.toggles & legacy_toggles[toggle_name]) != 0
 
 	for (var/toggle_name in legacy_chat_toggles)
+		if (!is_admin && (toggle_name in admin_only_chat_toggles))
+			continue
+
 		new_game_preferences[toggle_name] = (preferences.chat_toggles & legacy_chat_toggles[toggle_name]) != 0
 
 	return list(
