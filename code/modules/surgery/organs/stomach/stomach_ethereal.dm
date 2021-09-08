@@ -6,7 +6,7 @@
 	var/crystal_charge = ETHEREAL_CHARGE_FULL
 	///used to keep ethereals from spam draining power sources
 	var/drain_time = 0
-	var/damagemodifer = 0.5
+	var/damagemodifer = 0.25
 	decay_factor = STANDARD_ORGAN_DECAY * 0.9 // fails around 16.5 minutes, the battery are one of the last organs to die (of the ones we have)
 	low_threshold_passed = "<span class='info'>You can feel your power draining as a feeling of pins and needles fills your abdomen.</span>"
 	high_threshold_passed = "<span class='warning'>Your abdomen is filled with the feeling of shocks and electric discharges!</span>"
@@ -108,7 +108,7 @@
 			carbon.clear_alert("ethereal_charge")
 			carbon.throw_alert("ethereal_overcharge", /atom/movable/screen/alert/ethereal_overcharge, 2)
 			carbon.apply_damage(0.325 * delta_time, TOX, null, null, carbon)
-			damage += (4 * damagemodifer)
+			damage += (8 * damagemodifer)
 			if(DT_PROB(5, delta_time)) // 5% each seacond for ethereals to explosively release excess energy if it reaches dangerous levels
 				discharge_process(carbon)
 		else
