@@ -47,8 +47,12 @@
 	var/datum/gas_mixture/internal_fusion
 	///Stores the information of the moderators gasmix
 	var/datum/gas_mixture/moderator_internal
-	///Set the filtering type of the waste remove
-	var/filter_type = null
+	///Set the filtering list of the waste remove
+	var/list/moderator_scrubbing = list(
+		/datum/gas/helium,
+		)
+	///Set the amount of moles per tick should be removed from the moderator by filtering
+	var/moderator_filtering_rate = 100
 	///Stores the current fuel mix that the user has selected
 	var/datum/hfr_fuel/selected_fuel
 

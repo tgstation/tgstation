@@ -175,13 +175,26 @@ const HypertorusSecondaryControls = (props, context) => {
           <LabeledList.Item label="Filter from moderator mix">
             {filterTypes.map(filter => (
               <Button
-                key={filter.id}
-                selected={filter.selected}
-                content={getGasLabel(filter.id, filter.name)}
+                key={filter.gas_id}
+                icon={filter.enabled ? 'check-square-o' : 'square-o'}
+                selected={filter.enabled}
+                content={getGasLabel(filter.gas_id, filter.gas_name)}
                 onClick={() => act('filter', {
-                  mode: filter.id,
+                  mode: filter.gas_id,
                 })} />
             ))}
+          </LabeledList.Item>
+          <LabeledList.Item label="Moderator filtering rate">
+            <NumberInput
+              animated
+              value={parseFloat(data.mod_filtering_rate)}
+              width="63px"
+              unit="moles/tick"
+              minValue={5}
+              maxValue={200}
+              onDrag={(e, value) => act('mod_filtering_rate', {
+                mod_filtering_rate: value,
+              })} />
           </LabeledList.Item>
         </LabeledList>
       </Section>

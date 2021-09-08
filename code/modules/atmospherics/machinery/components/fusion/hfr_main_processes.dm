@@ -558,16 +558,11 @@
 				continue
 			step_towards(alive_mob, loc)
 
-	//Gases can be removed from the moderator internal by using the interface. Helium and antinoblium inside the fusion mix will get always removed at a fixed rate
-	if(waste_remove && power_level <= 5)
-		var/filtering = TRUE
-		if(!ispath(filter_type))
-			if(filter_type)
-				filter_type = gas_id2path(filter_type)
-			else
-				filtering = FALSE
-		if(filtering && moderator_internal.gases[filter_type])
-			var/datum/gas_mixture/removed = moderator_internal.remove_specific(filter_type, 100 * delta_time)
+	//Gases can be removed from the moderator internal by using the interface.
+	if(waste_remove)
+		var/filtering_amount = moderator_scrubbing.len
+		for(var/gas in moderator_internal.gases & moderator_scrubbing)
+			var/datum/gas_mixture/removed = moderator_internal.remove_specific(gas, (moderator_filtering_rate / filtering_amount) * delta_time)
 			if(removed)
 				linked_output.airs[1].merge(removed)
 
@@ -576,9 +571,6 @@
 			if(internal_fusion.gases[gas_id][MOLES] > 0)
 				internal_remove = internal_fusion.remove_specific(gas_id, internal_fusion.gases[gas_id][MOLES] * (1 - (1 - 0.25) ** delta_time))
 				linked_output.airs[1].merge(internal_remove)
-		if(internal_fusion.gases[/datum/gas/antinoblium][MOLES] > 0)
-			internal_remove = internal_fusion.remove_specific(/datum/gas/antinoblium, internal_fusion.gases[/datum/gas/antinoblium][MOLES] * (1 - (1 - 0.25) ** delta_time))
-			linked_output.airs[1].merge(internal_remove)
 		internal_fusion.garbage_collect()
 		moderator_internal.garbage_collect()
 
