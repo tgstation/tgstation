@@ -26,7 +26,8 @@ const MemoryQuality = (props, context) => {
           good art and is unlikely to pass to future generations.
         `} />
     );
-  } if (quality === STORY_VALUE_NONE) {
+  }
+  if (quality === STORY_VALUE_NONE) {
     return (
       <Button
         icon="star"
@@ -37,7 +38,8 @@ const MemoryQuality = (props, context) => {
           mediocre art and is not likely to pass to future generations.
   `} />
     );
-  } if (quality === STORY_VALUE_MEH) {
+  }
+  if (quality === STORY_VALUE_MEH) {
     return (
       <Button
         icon="star"
@@ -50,7 +52,8 @@ const MemoryQuality = (props, context) => {
           an okay story but don't bet on it.
     `} />
     );
-  } if (quality === STORY_VALUE_OKAY) {
+  }
+  if (quality === STORY_VALUE_OKAY) {
     return (
       <Button
         icon="star"
@@ -63,7 +66,8 @@ const MemoryQuality = (props, context) => {
           from this and it might even come back in future generations.
       `} />
     );
-  } if (quality === STORY_VALUE_AMAZING) {
+  }
+  if (quality === STORY_VALUE_AMAZING) {
     return (
       <Button
         icon="star"
