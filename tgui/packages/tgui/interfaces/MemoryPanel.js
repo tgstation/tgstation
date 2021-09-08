@@ -26,7 +26,7 @@ const MemoryQuality = (props, context) => {
           good art and is unlikely to pass to future generations.
         `} />
     );
-  } else if (quality === STORY_VALUE_NONE) {
+  } if (quality === STORY_VALUE_NONE) {
     return (
       <Button
         icon="star"
@@ -37,7 +37,7 @@ const MemoryQuality = (props, context) => {
           mediocre art and is not likely to pass to future generations.
   `} />
     );
-  } else if (quality === STORY_VALUE_MEH) {
+  } if (quality === STORY_VALUE_MEH) {
     return (
       <Button
         icon="star"
@@ -50,7 +50,7 @@ const MemoryQuality = (props, context) => {
           an okay story but don't bet on it.
     `} />
     );
-  } else if (quality === STORY_VALUE_OKAY) {
+  } if (quality === STORY_VALUE_OKAY) {
     return (
       <Button
         icon="star"
@@ -63,7 +63,7 @@ const MemoryQuality = (props, context) => {
           from this and it might even come back in future generations.
       `} />
     );
-  } else if (quality === STORY_VALUE_AMAZING) {
+  } if (quality === STORY_VALUE_AMAZING) {
     return (
       <Button
         icon="star"
@@ -76,20 +76,19 @@ const MemoryQuality = (props, context) => {
           and it would have a good chanced pass to future generations!
       `} />
     );
-  } else {
-    return (
-      <Button
-        icon="crown"
-        style={{
-          "background": "linear-gradient(to right, #56A5B3, #75D4E2, #56A5B3, #75D4E2, #56A5B3)",
-        }}
-        tooltipPosition="right"
-        tooltip={multiline`
-          This memory is the stuff of legends! It would make for
-          legendary art and is likely to pass to future generations.
-        `} />
-    );
   }
+  return (
+    <Button
+      icon="crown"
+      style={{
+        "background": "linear-gradient(to right, #56A5B3, #75D4E2, #56A5B3, #75D4E2, #56A5B3)",
+      }}
+      tooltipPosition="right"
+      tooltip={multiline`
+        This memory is the stuff of legends! It would make for
+        legendary art and is likely to pass to future generations.
+      `} />
+  );
 };
 
 export const MemoryPanel = (props, context) => {
