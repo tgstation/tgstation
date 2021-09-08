@@ -137,7 +137,6 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /// be valid.
 /// If no changes need to be made, will return the same list.
 /// Expects all quirk names to be unique, but makes no other expectations.
-// MOTHBLOCKS TODO: Unit test
 /datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks)
 	var/list/new_quirks = list()
 	var/list/positive_quirks = list()

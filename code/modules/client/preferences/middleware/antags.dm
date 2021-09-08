@@ -101,17 +101,29 @@
 	name = "antagonists"
 
 /datum/asset/spritesheet/antagonists/register()
-	var/list/generated_icons = list()
-	var/list/to_insert = list()
+	// Antagonists that don't have a dynamic ruleset, but do have a preference
+	var/static/list/non_ruleset_antagonists = list(
+		ROLE_LONE_OPERATIVE = /datum/antagonist/nukeop/lone,
+	)
 
-	// MOTHBLOCKS TODO: Add a list of non-ruleset antagonists for lone op
+	var/list/antagonists = non_ruleset_antagonists.Copy()
+
 	for (var/datum/dynamic_ruleset/ruleset as anything in subtypesof(/datum/dynamic_ruleset))
 		var/datum/antagonist/antagonist_type = initial(ruleset.antag_datum)
 		if (isnull(antagonist_type))
 			continue
 
 		// antag_flag is guaranteed to be unique by unit tests.
-		var/spritesheet_key = serialize_antag_name(initial(ruleset.antag_flag))
+		antagonists[initial(ruleset.antag_flag)] = antagonist_type
+
+	var/list/generated_icons = list()
+	var/list/to_insert = list()
+
+	for (var/antag_flag in antagonists)
+		var/datum/antagonist/antagonist_type = antagonists[antag_flag]
+
+		// antag_flag is guaranteed to be unique by unit tests.
+		var/spritesheet_key = serialize_antag_name(antag_flag)
 
 		if (!isnull(generated_icons[antagonist_type]))
 			to_insert[spritesheet_key] = generated_icons[antagonist_type]

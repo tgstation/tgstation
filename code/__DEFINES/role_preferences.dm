@@ -23,6 +23,7 @@
 #define ROLE_ALIEN "Xenomorph"
 #define ROLE_BLOB "Blob"
 #define ROLE_BLOB_INFECTION "Blob Infection"
+#define ROLE_LONE_OPERATIVE "Lone Operative"
 #define ROLE_MALF_MIDROUND "Malf AI (Midround)"
 #define ROLE_NIGHTMARE "Nightmare"
 #define ROLE_NINJA "Space Ninja"
@@ -66,7 +67,6 @@
 #define ROLE_SERVANT_GOLEM "Servant Golem"
 #define ROLE_NUCLEAR_OPERATIVE "Nuclear Operative"
 #define ROLE_CLOWN_OPERATIVE "Clown Operative"
-#define ROLE_LONE_OPERATIVE "Lone Operative"
 #define ROLE_WIZARD_APPRENTICE "apprentice"
 #define ROLE_SLAUGHTER_DEMON "Slaughter Demon"
 #define ROLE_MORPH "Morph"
@@ -118,6 +118,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_ALIEN = 0,
 	ROLE_BLOB = 0,
 	ROLE_BLOB_INFECTION = 0,
+	ROLE_LONE_OPERATIVE = 0,
 	ROLE_MALF_MIDROUND = 0,
 	ROLE_NINJA = 0,
 	ROLE_OBSESSED = 0,
