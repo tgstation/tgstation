@@ -343,7 +343,7 @@
 	return message
 
 /datum/outfit/traitor
-	name = "Traitor"
+	name = "Traitor (Preview only)"
 
 	uniform = /obj/item/clothing/under/color/grey
 	suit = /obj/item/clothing/suit/hooded/ablative

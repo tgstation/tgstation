@@ -593,7 +593,7 @@
 	return common_part + heads_report
 
 /datum/outfit/revolutionary
-	name = "Revolutionary"
+	name = "Revolutionary (Preview only)"
 
 	uniform = /obj/item/clothing/under/costume/soviet
 	head = /obj/item/clothing/head/ushanka

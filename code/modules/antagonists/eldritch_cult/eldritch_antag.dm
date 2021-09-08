@@ -277,7 +277,7 @@
 	return cultie.total_sacrifices >= target_amount
 
 /datum/outfit/heretic
-	name = "Heretic"
+	name = "Heretic (Preview only)"
 
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	r_hand = /obj/item/melee/touch_attack/mansus_fist

@@ -66,7 +66,7 @@
 	return final_icon
 
 /datum/outfit/obsessed
-	name = "Obsessed"
+	name = "Obsessed (Preview only)"
 
 	uniform = /obj/item/clothing/under/misc/overalls
 	gloves = /obj/item/clothing/gloves/color/latex

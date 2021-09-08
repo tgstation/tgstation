@@ -483,7 +483,7 @@
 	human_cultist.apply_overlay(HALO_LAYER)
 
 /datum/outfit/cultist
-	name = "Cultist"
+	name = "Cultist (Preview only)"
 
 	uniform = /obj/item/clothing/under/color/black
 	suit = /obj/item/clothing/suit/hooded/cultrobes/alt

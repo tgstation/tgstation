@@ -168,13 +168,13 @@
 	return finish_preview_icon(final_icon)
 
 /datum/outfit/nuclear_operative
-	name = "Nuclear Operative"
+	name = "Nuclear Operative (Preview only)"
 
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi
 	head = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 
 /datum/outfit/nuclear_operative_elite
-	name = "Nuclear Operative (Elite)"
+	name = "Nuclear Operative (Elite, Preview only)"
 
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	head = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
