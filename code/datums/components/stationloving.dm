@@ -10,11 +10,11 @@
 /datum/component/stationloving/Initialize(inform_admins = FALSE, allow_item_destruction = FALSE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE), .proc/on_parent_pre_move)
-	RegisterSignal(parent, list(COMSIG_MOVABLE_SECLUDED_LOCATION), .proc/on_parent_unreachable)
-	RegisterSignal(parent, list(COMSIG_PARENT_PREQDELETED), .proc/on_parent_pre_qdeleted)
-	RegisterSignal(parent, list(COMSIG_ITEM_IMBUE_SOUL), .proc/check_soul_imbue)
-	RegisterSignal(parent, list(COMSIG_ITEM_MARK_RETRIEVAL), .proc/check_mark_retrieval)
+	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, .proc/on_parent_z_change)
+	RegisterSignal(parent, COMSIG_MOVABLE_SECLUDED_LOCATION, .proc/on_parent_unreachable)
+	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, .proc/on_parent_pre_qdeleted)
+	RegisterSignal(parent, COMSIG_ITEM_IMBUE_SOUL, .proc/check_soul_imbue)
+	RegisterSignal(parent, COMSIG_ITEM_MARK_RETRIEVAL, .proc/check_mark_retrieval)
 	src.inform_admins = inform_admins
 	src.allow_item_destruction = allow_item_destruction
 
@@ -47,18 +47,19 @@
 
 	return target_turf
 
-/// Signal handler for just before the parent has moved. Checks to make sure it's a valid destination, if it's not then it relacates the parent instead and blocks the move.
-/datum/component/stationloving/proc/on_parent_pre_move(datum/source, turf/destination)
+/// Signal handler when the parent has changed z-levels.
+/// Checks to make sure it's a valid destination, if it's not then it relacates the parent instead.
+/datum/component/stationloving/proc/on_parent_z_change(datum/source, turf/old_turf, turf/new_turf)
 	SIGNAL_HANDLER
 
-	if(destination_in_bounds(destination))
+	if(destination_in_bounds(parent))
 		return
 
 	var/turf/current_turf = get_turf(parent)
 	var/turf/new_destination = relocate()
-	log_game("[parent] attempted to be moved out of bounds from [loc_name(current_turf)] to [loc_name(destination)]. Moving it to [loc_name(new_destination)].")
+	log_game("[parent] attempted to be moved out of bounds from [loc_name(old_turf)] to [loc_name(current_turf)]. Moving it to [loc_name(new_destination)].")
 	if(inform_admins)
-		message_admins("[parent] attempted to be moved out of bounds from [ADMIN_VERBOSEJMP(current_turf)] to [ADMIN_VERBOSEJMP(destination)]. Moving it to [ADMIN_VERBOSEJMP(new_destination)].")
+		message_admins("[parent] attempted to be moved out of bounds from [ADMIN_VERBOSEJMP(old_turf)] to [ADMIN_VERBOSEJMP(current_turf)]. Moving it to [ADMIN_VERBOSEJMP(new_destination)].")
 
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
