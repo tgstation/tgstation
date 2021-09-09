@@ -9182,7 +9182,8 @@
 /area/medical/cryo)
 "bwF" = (
 /obj/effect/landmark/start/medical_doctor,
-/turf/open/floor/iron/white,
+/obj/machinery/holopad,
+/turf/open/floor/iron/white/smooth_large,
 /area/medical/medbay/central)
 "bwG" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
@@ -9407,7 +9408,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/holopad,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -9845,7 +9845,6 @@
 /turf/open/floor/iron/dark,
 /area/hallway/primary/central)
 "bCB" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
@@ -9914,9 +9913,9 @@
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "bCT" = (
-/obj/structure/grille,
 /obj/structure/disposalpipe/segment,
 /obj/structure/girder,
+/obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "bCV" = (
@@ -27053,7 +27052,7 @@
 "jLG" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/structure/table/greyscale,
+/obj/structure/table,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "jLW" = (
@@ -39481,10 +39480,10 @@
 /area/commons/vacant_room/commissary)
 "qFM" = (
 /obj/structure/cable,
-/obj/structure/table/greyscale,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/table,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "qFN" = (

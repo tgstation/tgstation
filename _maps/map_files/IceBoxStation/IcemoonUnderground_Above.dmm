@@ -8079,8 +8079,8 @@
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
 "OA" = (
-/obj/structure/grille,
 /obj/structure/girder,
+/obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "OF" = (
