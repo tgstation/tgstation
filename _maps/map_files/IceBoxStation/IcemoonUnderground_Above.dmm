@@ -1973,6 +1973,7 @@
 	id = "chemistry_lower_shutters";
 	name = "Chemistry Exterior Shutters"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "iS" = (
@@ -2330,10 +2331,10 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "kw" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/medical/chemistry)
 "kA" = (
@@ -3413,6 +3414,14 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/xenobiology)
+"qk" = (
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/medical/chemistry)
 "qm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4077,6 +4086,7 @@
 	},
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/bin,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/medical/chemistry)
 "tE" = (
@@ -4504,6 +4514,15 @@
 /obj/structure/ladder,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
+"vR" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/medical/chemistry)
 "vU" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/closet/crate{
@@ -4860,6 +4879,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/smooth_edge,
 /area/medical/chemistry)
 "xU" = (
@@ -7409,13 +7429,13 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "Li" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/medical/chemistry)
 "Lk" = (
@@ -7820,6 +7840,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "Nt" = (
@@ -8722,6 +8743,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/smooth_half,
 /area/medical/chemistry)
 "RN" = (
@@ -8837,6 +8859,9 @@
 	dir = 4
 	},
 /obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/light_switch/directional/east{
+	pixel_x = 23
+	},
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "Sx" = (
@@ -9841,6 +9866,7 @@
 "XK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/medical/chemistry)
 "XM" = (
@@ -10254,8 +10280,8 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "ZS" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/medical/chemistry)
 "ZU" = (
@@ -43571,7 +43597,7 @@ Fp
 ML
 Py
 Qa
-vy
+qk
 vy
 vy
 vy
@@ -44085,7 +44111,7 @@ Fp
 ML
 Qo
 UB
-cJ
+vR
 Bh
 hQ
 hQ
@@ -44342,7 +44368,7 @@ Fp
 iP
 XK
 xT
-cJ
+vR
 zL
 Fw
 Fw

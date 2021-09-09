@@ -50780,6 +50780,9 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light_switch/directional/south{
+	pixel_x = -10
+	},
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "wXB" = (
