@@ -8756,6 +8756,7 @@
 	req_access_txt = "5"
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "btk" = (
@@ -8952,6 +8953,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/iron/white,
@@ -9164,6 +9168,9 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "bwE" = (
@@ -9264,6 +9271,7 @@
 	c_tag = "Central Hallway South-East";
 	dir = 8
 	},
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bxM" = (
@@ -9729,6 +9737,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bBD" = (
@@ -9745,11 +9754,11 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/window{
 	id = "chemistry_access_shutters";
 	name = "Chemistry Access Shutters"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white/textured,
 /area/medical/medbay/central)
 "bBM" = (
@@ -9853,18 +9862,18 @@
 "bCE" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Chemistry Lab Utilities";
-	req_one_access_txt = "12"
+	req_one_access_txt = "5"
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "bCF" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/window{
 	id = "chemistry_access_shutters";
 	name = "Chemistry Access Shutters"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white/textured,
 /area/medical/medbay/central)
 "bCL" = (
@@ -19984,6 +19993,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "fRc" = (
@@ -26453,7 +26465,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
-/turf/open/floor/iron/white,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/medical/medbay/central)
 "jtG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -27596,6 +27612,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "kgv" = (
@@ -33777,6 +33796,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/medbay/aft)
+"nxJ" = (
+/obj/item/radio/intercom/directional/south,
+/turf/open/floor/iron,
+/area/hallway/primary/starboard)
 "nxW" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -35530,6 +35553,9 @@
 /obj/effect/turf_decal/trimline/yellow/filled/warning,
 /obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "oxz" = (
@@ -40021,6 +40047,14 @@
 "qYw" = (
 /obj/structure/ladder,
 /obj/effect/turf_decal/tile/yellow/full,
+/obj/effect/turf_decal/stripes/end,
+/obj/machinery/door/window/eastright{
+	base_state = "left";
+	dir = 2;
+	icon_state = "left";
+	name = "Chemistry Lab Access Hatch";
+	req_access_txt = "33"
+	},
 /turf/open/floor/iron/white/textured_large,
 /area/medical/medbay/central)
 "qYz" = (
@@ -40884,6 +40918,14 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
+"rys" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/iron,
+/area/hallway/primary/central)
 "ryI" = (
 /turf/closed/wall/mineral/wood,
 /area/maintenance/space_hut/cabin)
@@ -40963,6 +41005,10 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay Chemistry Stair Access";
+	req_access_txt = "33"
 	},
 /turf/open/floor/iron/dark,
 /area/medical/cryo)
@@ -45770,7 +45816,7 @@
 "uga" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Chemistry Access Maintenance";
-	req_access_txt = "33"
+	req_access_txt = "5"
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
@@ -47327,7 +47373,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/medical/pharmacy)
@@ -50465,7 +50510,14 @@
 	pixel_x = 1
 	},
 /obj/item/stack/medical/mesh,
-/obj/machinery/airalarm/directional/west,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/machinery/button/door/directional/west{
+	id = "chemistry_access_shutters";
+	name = "Chemistry Access Shutter Control";
+	req_access_txt = "5"
+	},
 /turf/open/floor/iron/dark,
 /area/medical/medbay/central)
 "wRn" = (
@@ -50582,11 +50634,6 @@
 /turf/open/floor/iron,
 /area/commons/storage/tools)
 "wVh" = (
-/obj/machinery/button/door/directional/west{
-	id = "chemistry_access_shutters";
-	name = "Chemistry Access Shutter Control";
-	req_access_txt = "5"
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
@@ -50597,6 +50644,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/medical/medbay/central)
 "wVm" = (
@@ -50627,6 +50678,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "wWd" = (
@@ -51691,6 +51745,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
+"xzv" = (
+/obj/structure/sign/poster/random{
+	pixel_x = 32
+	},
+/turf/open/floor/iron,
+/area/hallway/primary/central)
 "xzA" = (
 /obj/structure/table,
 /obj/item/folder/white,
@@ -85806,7 +85866,7 @@ xGS
 aYG
 aYG
 qOO
-aYG
+rys
 wbd
 bmE
 bmE
@@ -86332,7 +86392,7 @@ rGd
 aJq
 bxL
 dyC
-aJq
+xzv
 aJq
 bCA
 ejW
@@ -87344,7 +87404,7 @@ tio
 iBJ
 aYV
 jtG
-aYV
+nxJ
 bfF
 acZ
 mWw
