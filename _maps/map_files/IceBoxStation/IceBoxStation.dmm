@@ -9903,13 +9903,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
-"bCS" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/grille/broken,
-/turf/open/floor/iron,
-/area/hallway/primary/central)
 "bCT" = (
 /obj/structure/grille,
 /obj/structure/disposalpipe/segment,
@@ -10052,7 +10045,9 @@
 /area/command/heads_quarters/rd)
 "bDU" = (
 /obj/machinery/computer/cargo/request,
-/obj/effect/turf_decal/trimline/brown/filled/end,
+/obj/effect/turf_decal/trimline/brown/filled/end{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/medical/medbay/aft)
 "bDX" = (
@@ -11425,7 +11420,9 @@
 	dir = 10
 	},
 /obj/machinery/modular_computer/console/preset/cargochat/medical,
-/obj/effect/turf_decal/trimline/brown/filled/end,
+/obj/effect/turf_decal/trimline/brown/filled/end{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/medical/medbay/aft)
 "bRo" = (
@@ -22441,6 +22438,15 @@
 "hdW" = (
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
+"hea" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/medical/cryo)
 "hek" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/siding/wideplating/dark{
@@ -35071,6 +35077,9 @@
 "okk" = (
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "oko" = (
@@ -84010,7 +84019,7 @@ dpX
 qTN
 cUa
 aJq
-bCS
+lUZ
 aXf
 pxI
 vyi
@@ -88898,7 +88907,7 @@ hTU
 bzU
 jrX
 bfG
-bwE
+hea
 okk
 wIg
 tBg
