@@ -7,6 +7,18 @@
 /datum/preference/choiced/uplink_location/init_possible_values()
 	return list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN, UPLINK_IMPLANT)
 
+/datum/preference/choiced/uplink_location/compile_constant_data()
+	var/list/data = ..()
+
+	data[CHOICED_PREFERENCE_DISPLAY_NAMES] = list(
+		UPLINK_PDA = "PDA",
+		UPLINK_RADIO = "Radio",
+		UPLINK_PEN = "Pen",
+		UPLINK_IMPLANT = "Uplink ([UPLINK_IMPLANT_TELECRYSTAL_COST]TC)",
+	)
+
+	return data
+
 /datum/preference/choiced/uplink_location/create_default_value()
 	return UPLINK_PDA
 

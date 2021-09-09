@@ -1,12 +1,6 @@
-import { createDropdownInput, Feature } from "../base";
+import { FeatureChoiced, FeatureDropdownInput } from "../base";
 
-export const uplink_loc: Feature<string> = {
+export const uplink_loc: FeatureChoiced = {
   name: "Uplink Spawn Location",
-  component: createDropdownInput({
-    // MOTHBLOCKS TODO: UPLINK_IMPLANT_TELECRYSTAL_COST
-    Implant: "Implant (-4TC)",
-    PDA: "PDA",
-    Pen: "Pen",
-    Radio: "Radio",
-  }),
+  component: FeatureDropdownInput,
 };
