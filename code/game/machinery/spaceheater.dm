@@ -183,7 +183,6 @@
 	on = !on
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	. = ..()
 
 /obj/machinery/space_heater/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
