@@ -237,14 +237,11 @@
 	. = ..()
 	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
 
-/obj/item/organ/heart/freedom
-	name = "heart of freedom"
-	desc = "This heart pumps with the passion to give... something freedom."
-	organ_flags = ORGAN_SYNTHETIC //the power of freedom prevents heart attacks
+/obj/item/organ/heart/adrenaline
 	/// The cooldown until the next time this heart can give the host an adrenaline boost.
 	COOLDOWN_DECLARE(adrenaline_cooldown)
 
-/obj/item/organ/heart/freedom/on_life(delta_time, times_fired)
+/obj/item/organ/heart/adrenaline/on_life(delta_time, times_fired)
 	. = ..()
 	if(owner.health < 5 && COOLDOWN_FINISHED(src, adrenaline_cooldown))
 		COOLDOWN_START(src, adrenaline_cooldown, rand(25 SECONDS, 1 MINUTES))
@@ -253,8 +250,18 @@
 		if(owner.reagents.get_reagent_amount(/datum/reagent/medicine/ephedrine) < 20)
 			owner.reagents.add_reagent(/datum/reagent/medicine/ephedrine, 10)
 
+/obj/item/organ/heart/adrenaline/freedom
+	name = "heart of freedom"
+	desc = "This heart pumps with the passion to give... something freedom."
+	organ_flags = ORGAN_SYNTHETIC //the power of freedom prevents heart attacks
 
+/obj/item/organ/heart/adrenaline/spar
+	name = "glowing heart"
+	desc = "The heart glows with a fierce fighting spirit."
 
+/obj/item/organ/heart/adrenaline/spar/Initialize()
+	. = ..()
+	add_filter("heart_outline", 9, list("type" = "outline", "color" = COLOR_SOFT_RED))
 
 /obj/item/organ/heart/ethereal
 	name = "crystal core"

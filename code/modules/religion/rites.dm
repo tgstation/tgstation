@@ -117,7 +117,7 @@
 	ritual_invocations =list( "Let your will power our forges.",
 							"...Help us in our great conquest!")
 	invoke_msg = "The end of flesh is near!"
-	favor_cost = 2000	
+	favor_cost = 2000
 
 /datum/religion_rites/machine_blessing/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
@@ -603,4 +603,85 @@
 	new /obj/item/ritual_totem(altar_turf)
 	return TRUE
 
+///sparring god rites
 
+/datum/religion_rites/sparring_contract
+	name = "Summon Sparring Contract"
+	desc = "Turns some paper into a sparring contract."
+	invoke_msg = "I will train in the name of my god."
+	///paper to turn into a sparring contract
+	var/obj/item/paper/contract_target
+
+/datum/religion_rites/sparring_contract/perform_rite(mob/living/user, atom/religious_tool)
+	for(var/obj/item/paper/could_contract in get_turf(religious_tool))
+		if(could_contract.info) //blank paper pls
+			continue
+		contract_target = could_contract
+		return ..()
+	to_chat(user, span_warning("You need to place blank paper on [religious_tool] to do this!"))
+	return FALSE
+
+/datum/religion_rites/sparring_contract/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
+	var/obj/item/paper/blank_paper = contract_target
+	var/turf/tool_turf = get_turf(religious_tool)
+	contract_target = null
+	if(QDELETED(blank_paper) || !(tool_turf == blank_paper.loc)) //check if the same paper is still there
+		to_chat(user, span_warning("Your target left the altar!"))
+		return FALSE
+	blank_paper.visible_message(span_notice("words magically form on [blank_paper]!"))
+	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
+	new /obj/item/sparring_contract(tool_turf)
+	qdel(blank_paper)
+	return TRUE
+
+/datum/religion_rites/declare_arena
+	name = "Declare Arena"
+	desc = "Declare a new area as fit for sparring. You'll be able to select it in contracts."
+	ritual_length = 6 SECONDS
+	ritual_invocations = list("I seek new horizons ...")
+	invoke_msg = "... may my climb be steep."
+	favor_cost = 1 //only costs one holy battle for a new area
+	var/area/area_instance
+
+/datum/religion_rites/declare_arena/perform_rite(mob/living/user, atom/religious_tool)
+	var/list/filtered = list()
+	for(var/area/unfiltered_area as anything in GLOB.sortedAreas)
+		if(!(unfiltered_area.area_flags & HIDDEN_AREA))
+			filtered += unfiltered_area
+	area_instance = input("Choose an area to mark as an arena!", "Arena Declaration") as null|anything in filtered
+	if(!area_instance)
+		return FALSE
+	. = ..()
+
+/datum/religion_rites/declare_arena/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	. = ..()
+	var/datum/religion_sect/spar/sect = GLOB.religious_sect
+	sect.arenas[area_instance.name] = area_instance.type
+	to_chat(user, span_warning("[area_instance] is a now an option to select on sparring contracts."))
+
+/datum/religion_rites/fierce_heart
+	name = "Fierce Heart"
+	desc = "Your training has made you unbreakable. In times of crisis, you will attempt to keep fighting on."
+	ritual_length = 10 SECONDS
+	invoke_msg = "My will must be unbreakable."
+	favor_cost = 4 //4 duels won
+
+/datum/religion_rites/fierce_heart/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
+	if(!ishuman(user))
+		return FALSE
+	var/obj/item/organ/heart/adrenaline/spar/spar_heart = user.getorganslot(ORGAN_SLOT_HEART)
+	if(spar_heart && istype(spar_heart))
+		to_chat(user, span_warning("Your spirit is already fierce!"))
+		return FALSE
+	return ..()
+
+/datum/religion_rites/fierce_heart/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
+	..()
+	var/obj/item/organ/heart/oldheart = user.getorganslot(ORGAN_SLOT_HEART)
+	to_chat(user, span_warning("You feel your spirit is protected by [GLOB.deity]!"))
+	if(oldheart)
+		oldheart.Remove(user, special = TRUE)
+		qdel(oldheart)//eh
+	var/obj/item/organ/heart/adrenaline/spar/newheart = new
+	newheart.Insert(user, special = TRUE)

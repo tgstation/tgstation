@@ -88,6 +88,15 @@
 	one_use = TRUE
 	grab_sleeping = FALSE
 
+/obj/item/soulstone/anybody/sparring
+	one_use = TRUE
+	grab_sleeping = FALSE
+
+/obj/item/soulstone/anybody/sparring/Initialize(mapload)
+	. = ..()
+	name = "[GLOB.deity]'s punishment"
+	desc = "A prison for those who lost [GLOB.deity]'s game."
+
 /obj/item/soulstone/anybody/mining
 	grab_sleeping = FALSE
 

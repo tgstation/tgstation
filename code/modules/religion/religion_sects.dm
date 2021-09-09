@@ -375,3 +375,26 @@
 	return TRUE
 
 #undef MINIMUM_YUCK_REQUIRED
+
+/datum/religion_sect/spar
+	name = "Sparring God"
+	quote = "Your next swing must be faster."
+	desc = "Spar other crewmembers to gain favor or other rewards. Exchange favor to steel yourself against real battles."
+	tgui_icon = "toolbox"
+	altar_icon_state = "convertaltar-maint"
+	alignment = ALIGNMENT_NEUT
+	rites_list = list(/datum/religion_rites/sparring_contract, /datum/religion_rites/declare_arena, /datum/religion_rites/fierce_heart)
+	///places you can spar in. rites can be used to expand this list
+	var/list/arenas = list(
+		"\improper Recreation Area" = /area/commons/fitness/recreation,
+		"\improper Chapel" = /area/service/chapel
+	)
+	///how many matches you've lost with holy stakes. 3 = excommunication
+	var/matches_lost = 0
+	///past opponents who you've beaten in holy battles. You can't fight them again
+	var/list/past_opponents = list()
+
+// , /datum/religion_rites/duel
+
+/datum/religion_sect/spar/tool_examine(mob/living/holy_creature)
+	return "You have [round(favor)] sparring matches won in [GLOB.deity]'s name. They can be used for rites. You have lost [matches_lost] matches. You will be excommunicated after losing three matches."
