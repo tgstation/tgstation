@@ -491,7 +491,7 @@
 /area/ruin/space/derelict/bridge/access)
 "cy" = (
 /obj/structure/rack,
-/obj/item/melee/classic_baton,
+/obj/item/melee/baton,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/access)
 "cz" = (

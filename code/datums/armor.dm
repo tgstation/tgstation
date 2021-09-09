@@ -18,6 +18,7 @@
 	var/acid
 	var/magic
 	var/wound
+	var/consume
 
 /datum/armor/New(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0, magic = 0, wound = 0)
 	src.melee = melee
@@ -31,6 +32,7 @@
 	src.acid = acid
 	src.magic = magic
 	src.wound = wound
+	src.consume = melee
 	tag = ARMORID
 
 /datum/armor/proc/modifyRating(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0, magic = 0, wound = 0)

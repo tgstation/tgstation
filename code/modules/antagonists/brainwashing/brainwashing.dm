@@ -30,6 +30,8 @@
 	job_rank = ROLE_BRAINWASHED
 	roundend_category = "brainwashed victims"
 	show_in_antagpanel = TRUE
+	antag_hud_type = ANTAG_HUD_BRAINWASHED
+	antag_hud_name = "brainwashed"
 	antagpanel_category = "Other"
 	show_name_in_check_antagonists = TRUE
 	ui_name = "AntagInfoBrainwashed"
@@ -41,6 +43,16 @@
 	data["objectives"] = get_objectives()
 	return data
 
+/datum/antagonist/brainwashed/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/current_mob = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, current_mob)
+
+/datum/antagonist/brainwashed/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/current_mob = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, current_mob)
+	return ..()
+
 /datum/antagonist/brainwashed/farewell()
 	to_chat(owner, span_warning("Your mind suddenly clears..."))
 	to_chat(owner, "<big>[span_warning("<b>You feel the weight of the Directives disappear! You no longer have to obey them.</b>")]</big>")
@@ -48,6 +60,7 @@
 		var/mob/living/owner_mob = owner.current
 		owner_mob.log_message("is no longer brainwashed with the objectives: [english_list(objectives)].", LOG_ATTACK)
 	owner.announce_objectives()
+	return ..()
 
 /datum/antagonist/brainwashed/on_mindshield(mob/implanter)
 	owner.remove_antag_datum(/datum/antagonist/brainwashed)
@@ -77,7 +90,7 @@
 	brainwash(C, objectives)
 	var/obj_list = english_list(objectives)
 	message_admins("[key_name_admin(admin)] has brainwashed [key_name_admin(C)] with the following objectives: [obj_list].")
-	C.log_message("has been force-brainwashed with the objective '[obj_list]' by admin [key_name(admin)]", LOG_ATTACK, log_globally = FALSE)
+	C.log_message("has been force-brainwashed with the objective '[obj_list]' by admin [key_name(admin)]", LOG_VICTIM, log_globally = FALSE)
 	log_admin("[key_name(admin)] has brainwashed [key_name(C)] with the following objectives: [obj_list].")
 
 /datum/objective/brainwashing

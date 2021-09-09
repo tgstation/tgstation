@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - bugfix: "colossus bolts no longer instantly explode you if youre in a car/mech"

@@ -38,7 +38,7 @@
 	suit_store = /obj/item/gun/energy/e_gun
 	back = /obj/item/storage/backpack/ert
 	backpack_contents = list(
-		/obj/item/melee/baton/loaded = 1,
+		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 )
 	belt = /obj/item/storage/belt/security/full
@@ -59,7 +59,7 @@
 
 	backpack_contents = list(
 		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
-		/obj/item/melee/baton/loaded = 1,
+		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 )
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
@@ -73,7 +73,7 @@
 	suit_store = /obj/item/gun/energy/e_gun/stun
 	back = /obj/item/storage/backpack/ert/security
 	backpack_contents = list(
-		/obj/item/melee/baton/loaded = 1,
+		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/storage/box/handcuffs = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 )
@@ -96,7 +96,7 @@
 
 	belt = /obj/item/gun/energy/pulse/carbine/loyalpin
 	backpack_contents = list(
-		/obj/item/melee/baton/loaded = 1,
+		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/storage/belt/security/full = 1,
 		/obj/item/storage/box/handcuffs = 1,
 		/obj/item/storage/box/survival/engineer = 1,
@@ -111,7 +111,7 @@
 	back = /obj/item/storage/backpack/ert/medical
 	backpack_contents = list(
 		/obj/item/gun/medbeam = 1,
-		/obj/item/melee/baton/loaded = 1,
+		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/reagent_containers/hypospray/combat = 1,
 		/obj/item/storage/box/hug/plushes = 1,
 		/obj/item/storage/box/survival/engineer = 1,
@@ -136,7 +136,7 @@
 	backpack_contents = list(
 		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
 		/obj/item/gun/medbeam = 1,
-		/obj/item/melee/baton/loaded = 1,
+		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/reagent_containers/hypospray/combat/nanites = 1,
 		/obj/item/storage/box/hug/plushes = 1,
 		/obj/item/storage/box/survival/engineer = 1,
@@ -152,7 +152,7 @@
 	back = /obj/item/storage/backpack/ert/engineer
 	backpack_contents = list(
 		/obj/item/construction/rcd/loaded/upgraded = 1,
-		/obj/item/melee/baton/loaded = 1,
+		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/pipe_dispenser = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 )
@@ -176,7 +176,7 @@
 	backpack_contents = list(
 		/obj/item/construction/rcd/combat = 1,
 		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
-		/obj/item/melee/baton/loaded = 1,
+		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/pipe_dispenser = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 )
@@ -232,7 +232,7 @@
 	suit_store = /obj/item/gun/energy/e_gun/stun
 	backpack_contents = list(
 		/obj/item/construction/rcd/loaded = 1,
-		/obj/item/melee/baton/loaded = 1,
+		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/storage/box/handcuffs = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 )
@@ -243,7 +243,7 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
 	backpack_contents = list(
 		/obj/item/gun/medbeam = 1,
-		/obj/item/melee/baton/loaded = 1,
+		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 		/obj/item/reagent_containers/hypospray/combat = 1,
 		/obj/item/reagent_containers/hypospray/combat/heresypurge = 1,
@@ -289,7 +289,7 @@
 	back = /obj/item/storage/backpack/ert/janitor
 	backpack_contents = list(
 		/obj/item/grenade/clusterbuster/cleaner = 1,
-		/obj/item/melee/baton/loaded = 1,
+		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/mop/advanced = 1,
 		/obj/item/reagent_containers/glass/bucket = 1,
 		/obj/item/storage/box/lights/mixed = 1,
@@ -316,7 +316,7 @@
 
 	backpack_contents = list(
 		/obj/item/grenade/clusterbuster/cleaner = 3,
-		/obj/item/melee/baton/loaded = 1,
+		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/storage/box/lights/mixed = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 )
@@ -363,7 +363,7 @@
 	backpack_contents = list(
 		/obj/item/storage/box/survival = 1,
 )
-	belt = /obj/item/melee/classic_baton
+	belt = /obj/item/melee/baton
 	ears = /obj/item/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black
@@ -395,7 +395,7 @@
 
 	suit = /obj/item/clothing/suit/armor/vest
 	suit_store = /obj/item/gun/ballistic/rifle/boltaction/brand_new
-	belt = /obj/item/melee/baton/loaded
+	belt = /obj/item/melee/baton/security/loaded
 	head = /obj/item/clothing/head/intern
 	l_hand = /obj/item/megaphone
 
@@ -436,7 +436,7 @@
 		/obj/item/storage/box/handcuffs = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 )
-	belt = /obj/item/melee/classic_baton/telescopic
+	belt = /obj/item/melee/baton/telescopic
 	l_pocket = /obj/item/assembly/flash
 	r_pocket = /obj/item/storage/wallet
 

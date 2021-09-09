@@ -628,3 +628,84 @@
       power consumption)
   tralezab:
   - bugfix: fixes field generators not being interactable
+2021-08-29:
+  Fikou:
+  - bugfix: colossus bolts no longer instantly explode you if youre in a car/mech
+2021-08-30:
+  Arkatos:
+  - refactor: Cyborg Station Alerts UI now uses tgui.
+  - refactor: AI Station Alerts UI now uses tgui.
+  IndieanaJones:
+  - expansion: Spider nurses and broodmothers can now place down sealed webs by webbing
+      an already webbed tile, allowing them to make weak walls.
+  - qol: Tarantulas now use right-click to charge as opposed to a button ability.  Said
+      button ability is now removed.
+  - balance: Spiders have received some slight balance changes to make them less oppressive
+      when they have the upper hand whilst letting them slightly handle atmos changes.  One
+      major change is that broodmothers now take 15 seconds to lay eggs as opposed
+      to 10 seconds.
+  - qol: Spiders can see further in the dark now.
+  Y0SH1M4S73R:
+  - bugfix: Variables within an SDQL spell list variable can have their names changed
+      without causing a cascade of errors
+  - refactor: SDQL spell query execution has been moved to a component
+  - admin: The parse error handling for SDQL spells has been improved significantly
+  - admin: Projectile SDQL spells can now fire any projectile
+  - admin: Touch SDQL spells can now use any touch attack item
+  esainane:
+  - bugfix: Smart pipes now calculate their direction properly, and construction code
+      checks direction logic properly. This fixes many problems with atmospherics
+      construction.
+  - bugfix: Smart pipe construction now no longer tries to work around irrelevant
+      pipes which are on completely different layers and do not interact with the
+      new pipe in any way.
+  - bugfix: Smart pipes with less than two allowed directions can no longer be built.
+      The pipe would be invisible, but still interact in weird ways.
+  - bugfix: One tile can no longer have more than one atmospheric component ready
+      to connect in the same direction and layer. This prevents the scenario where
+      a temperature pump is placed in a manner which looks like it's going to connect
+      to a horizontal bridge pipe, but actually turns the vertical plasma input pipe
+      behind it into a manifold, ruptures the connected plasma canister, and sets
+      Toxins on fire.
+  - qol: Smart pipes are now much, much smarter. During construction, if a smart pipe
+      would block placement of a component, it will see if permitted connectivity
+      can be reconfigured to make room for other components. This includes negotiation
+      with other smart pipes, preferring to create pipe crossings where available,
+      or create an opposing corner pipe if not. The RPD can now also reconfigure allowed
+      connectivity for existing smart pipes manually. Smart pipes can never be reconfigured
+      to have less than two allowed directions, and active connections cannot be reconfigured.
+      Automatic reconfiguration will never cause a smart pipe to permit connectivity
+      that was not previously permitted.
+  - bugfix: Multi-layer pipe components can trigger smart pipe negotiation where relevant.
+  - refactor: Rearranged some atmospherics pipe code. Fewer redundant loops, add and
+      use documented and centralized helpers for bit manipulation where sensible.
+      Make bitfield assumptions explicit.
+  - code_imp: made a small part of the documentation in the area less wrong dear god
+      my eyes the goggles do nothing
+  tralezab:
+  - spellcheck: Changed the wording on antag panel policy a little bit.
+2021-08-31:
+  AMonekyThatCodes:
+  - refactor: Adds basic mobs, a replacement for simple mobs that will hopefully destroy
+      the subtype. This is so far applied to cockroaches (and their variants)
+  JohnFulpWillard:
+  - bugfix: Hardcore random traitors now get their hardcore random points for greentexting.
+  Mothblocks:
+  - admin: Admins can now give players a popup if they are not responding to tickets.
+  Shroopy:
+  - bugfix: Female uniforms now update color correctly.
+  - code_imp: Female clothing generation now takes greyscale_colors as an arg, which
+      is null by default if the clothing item doesn't use GAGS.
+  Y0SH1M4S73R:
+  - bugfix: Traitors that are unable to receive equipment required for specific objectives
+      will be able to order that equipment from the uplink. Other antagonists that
+      are unable to receive such equipment can call in a pod containing that equipment,
+      unless they somehow have an unlocked uplink on their person, in which case they
+      can order it from the uplink.
+  YakumoChen:
+  - bugfix: Naive clowns now worry less about their "sleeping" pets.
+  aaaa1023:
+  - spellcheck: fixed misspellings of "aggression" in the descriptions of Gelatinous
+      Ooze, NT combat defib and misspelling in heretic rust spell.
+  dragomagol:
+  - admin: gives brainwash victims a hud icon

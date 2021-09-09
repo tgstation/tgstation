@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(traumas)
 			/mob/living/simple_animal/pet/penguin,
 		)),
 		"anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
-		"insects" = typecacheof(list(/mob/living/simple_animal/hostile/cockroach, /mob/living/simple_animal/hostile/bee))
+		"insects" = typecacheof(list(/mob/living/basic/cockroach, /mob/living/simple_animal/hostile/bee))
 	)
 
 	phobia_objs = list("snakes" = typecacheof(list(/obj/item/rod_of_asclepius, /obj/item/toy/plush/snakeplushie)),
@@ -79,7 +79,7 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/trash/cheesie,
 		)),
 
-		"greytide" = typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod,
+		"greytide" = typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/security/cattleprod,
 			/obj/item/spear, /obj/item/clothing/mask/gas,
 		)),
 
@@ -124,7 +124,7 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/clothing/under/rank/security/head_of_security, /obj/item/clothing/under/rank/rnd/research_director,
 			/obj/item/clothing/under/rank/medical/chief_medical_officer, /obj/item/clothing/under/rank/engineering/chief_engineer,
 			/obj/item/clothing/under/rank/centcom/officer, /obj/item/clothing/under/rank/centcom/commander,
-			/obj/item/melee/classic_baton/telescopic, /obj/item/card/id/advanced/silver, /obj/item/card/id/advanced/gold,
+			/obj/item/melee/baton/telescopic, /obj/item/card/id/advanced/silver, /obj/item/card/id/advanced/gold,
 			/obj/item/card/id/advanced/centcom, /obj/machinery/door/airlock/command, /obj/item/card/id/advanced/black,
 		)),
 
