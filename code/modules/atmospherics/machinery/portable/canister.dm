@@ -678,7 +678,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 					var/list/gaseslog = list()
 					for(var/id in air_contents.gases)
 						var/gas = air_contents.gases[id]
-						gaseslog[gas[GAS_META][META_GAS_NAME]] = gas[moles] //this may be the logging mechanism
+						gaseslog[gas[GAS_META][META_GAS_NAME]] = gas[MOLES] //this may be the logging mechanism also i didnt capitalize right lol
 						if(!gas[GAS_META][META_GAS_DANGER])
 							continue
 						if(gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE)) //if moles_visible is undefined, default to default visibility
