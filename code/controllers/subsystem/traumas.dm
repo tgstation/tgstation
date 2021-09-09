@@ -80,7 +80,13 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/clothing/under/rank/civilian/clown, /obj/item/clothing/shoes/clown_shoes,
 			/obj/item/clothing/mask/gas/clown_hat, /obj/item/instrument/bikehorn,
 			/obj/item/pda/clown, /obj/item/grown/bananapeel, /obj/item/food/cheesiehonkers,
-			/obj/item/trash/cheesie,
+			/obj/item/trash/cheesie, /obj/item/stack/ore/bananium, /obj/item/stack/tile/mineral/bananium,
+			/obj/structure/falsewall/bananium, /obj/item/stack/ore/bananium, /obj/machinery/door/airlock/bananium,
+			/obj/structure/statue/bananium, /obj/item/toy/crayon/rainbow, /obj/vehicle/sealed/mecha/combat/honker,
+			/mob/living/simple_animal/bot/honkbot, /obj/item/toy/mecha/honk, /obj/item/toy/mecha/darkhonk,
+			/obj/structure/mecha_wreckage/honker, /obj/item/megaphone/clown, /obj/item/stamp/clown,
+			/obj/item/storage/backpack/clown, /obj/item/storage/backpack/ert/clown, /obj/item/storage/backpack/duffelbag/clown,
+			/obj/item/food/pie/cream, /obj/item/pneumatic_cannon/pie,
 		)),
 
 		"greytide" = typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod,
@@ -194,6 +200,7 @@ SUBSYSTEM_DEF(traumas)
 		"aliens" = typecacheof(list(/turf/open/floor/plating/abductor, /turf/open/floor/plating/abductor2,
 			/turf/open/floor/mineral/abductor, /turf/closed/wall/mineral/abductor
 		)),
+		"clowns" = typecacheof(list(/turf/closed/wall/mineral/bananium, /turf/open/floor/mineral/bananium))
 		"falling" = typecacheof(list(/turf/open/chasm, /turf/open/floor/fakepit, /turf/open/openspace))
 	)
 
@@ -204,6 +211,7 @@ SUBSYSTEM_DEF(traumas)
 		/datum/species/zombie, /datum/species/vampire, /datum/species/shadow,)),
 		"aliens" = typecacheof(list(/datum/species/abductor, /datum/species/jelly, /datum/species/pod,/datum/species/shadow)),
 		"anime" = typecacheof(list(/datum/species/human/felinid)),
+		"clowns" = typecacheof(list((/datum/species/golem/bananium)),
 		"insects" = typecacheof(list(/datum/species/fly, /datum/species/moth))
 	)
 
