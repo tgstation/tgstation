@@ -66,8 +66,8 @@
 						/obj/item/reagent_containers/pill/multiver = 6)
 	premium = list(/obj/item/reagent_containers/medigel/synthflesh = 2,
 					/obj/item/storage/pill_bottle/psicodine = 2)
-	default_price = PAYCHECK_EASY
-	extra_price = PAYCHECK_COMMAND
+	default_price = 50
+	extra_price = 100
 	payment_department = ACCOUNT_MED
 	refill_canister = /obj/item/vending_refill/drugs
 
