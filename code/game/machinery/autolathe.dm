@@ -177,7 +177,7 @@
 
 			var/multiplier = text2num(params["multiplier"])
 			if(!multiplier)
-				to_chat(usr, "<span class=\"alert\">[src] only accepts a numerical multiplier!</span>")
+				to_chat(usr, span_alert("[src] only accepts a numerical multiplier!"))
 				return
 			var/is_stack = ispath(being_built.build_path, /obj/item/stack)
 			multiplier = clamp(round(multiplier),1,50)
@@ -215,24 +215,24 @@
 
 			if(materials.has_materials(materials_used))
 				busy = TRUE
-				to_chat(usr, "<span class=\"notice\">You print [multiplier] item(s) from the [src]</span>")
+				to_chat(usr, span_notice("You print [multiplier] item(s) from the [src]"))
 				use_power(power)
 				icon_state = "autolathe_n"
 				var/time = is_stack ? 32 : (32 * coeff * multiplier) ** 0.8
 				addtimer(CALLBACK(src, .proc/make_item, power, materials_used, custom_materials, multiplier, coeff, is_stack, usr), time)
 				. = TRUE
 			else
-				to_chat(usr, "<span class=\"alert\">Not enough materials for this operation.</span>")
+				to_chat(usr, span_alert("Not enough materials for this operation."))
 		else
-			to_chat(usr, "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>")
+			to_chat(usr, span_alert("The autolathe is busy. Please wait for completion of previous operation."))
 
 /obj/machinery/autolathe/on_deconstruction()
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
 
 /obj/machinery/autolathe/attackby(obj/item/O, mob/living/user, params)
-	if (busy)
-		to_chat(user, "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>")
+	if(busy)
+		balloon_alert(user, "it's busy!")
 		return TRUE
 
 	if(default_deconstruction_crowbar(O))
@@ -250,7 +250,7 @@
 
 	if(istype(O, /obj/item/disk/design_disk))
 		user.visible_message(span_notice("[user] begins to load \the [O] in \the [src]..."),
-			span_notice("You begin to load a design from \the [O]..."),
+			balloon_alert(user, "uploading design..."),
 			span_hear("You hear the chatter of a floppy drive."))
 		busy = TRUE
 		var/obj/item/disk/design_disk/D = O
@@ -268,8 +268,8 @@
 	return ..()
 
 /obj/machinery/autolathe/attackby_secondary(obj/item/O, mob/living/user, params)
-	if (busy)
-		to_chat(user, "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>")
+	if(busy)
+		balloon_alert(user, "it's busy!")
 		return TRUE
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", O))
