@@ -41,7 +41,7 @@ type StackItemProps = FlexProps & {
 };
 
 const StackItem = (props: StackItemProps) => {
-  const { className, ...rest } = props;
+  const { className, elementRef, ...rest } = props;
   return (
     <div
       className={classes([
@@ -50,7 +50,7 @@ const StackItem = (props: StackItemProps) => {
         computeFlexItemClassName(rest),
         computeBoxClassName(rest),
       ])}
-      ref={props.elementRef}
+      ref={elementRef}
       {...computeBoxProps(computeFlexItemProps(rest))}
     />
   );
