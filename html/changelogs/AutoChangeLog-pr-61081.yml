@@ -1,0 +1,4 @@
+author: "stylemistake"
+delete-after: True
+changes: 
+  - refactor: "Performance of core tgui components was improved (Button, Icon, Flex, Stack). UI should feel a tiny bit faster."

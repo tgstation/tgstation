@@ -6,64 +6,72 @@
 
 import { classes } from 'common/react';
 import { forwardRef, SFC } from 'inferno';
-import { Flex, FlexItemProps, FlexProps } from './Flex';
+import { computeBoxClassName, computeBoxProps } from './Box';
+import { computeFlexClassName, computeFlexItemClassName, computeFlexItemProps, computeFlexProps, FlexItemProps, FlexProps } from './Flex';
 
- interface StackProps extends FlexProps {
-   vertical?: boolean;
-   fill?: boolean;
- }
+type StackProps = FlexProps & {
+  vertical?: boolean;
+  fill?: boolean;
+};
 
-export const Stack: SFC<FlexProps> & {
-   Divider: SFC<StackDividerProps>,
-   Item: SFC<FlexProps>,
- } = forwardRef((props: StackProps, ref) => {
-   const { className, vertical, fill, ...rest } = props;
-   return (
-     <Flex
-       className={classes([
-         'Stack',
-         fill && 'Stack--fill',
-         vertical
-           ? 'Stack--vertical'
-           : 'Stack--horizontal',
-         className,
-       ])}
-       direction={vertical ? 'column' : 'row'}
-       ref={ref}
-       {...rest} />
-   );
- }) as unknown as any; // They'll be defined later;
+export const Stack = (props: StackProps) => {
+  const { className, vertical, fill, ...rest } = props;
+  return (
+    <div
+      className={classes([
+        'Stack',
+        fill && 'Stack--fill',
+        vertical
+          ? 'Stack--vertical'
+          : 'Stack--horizontal',
+        className,
+        computeFlexClassName(props),
+        computeBoxClassName(props),
+      ])}
+      {...computeBoxProps(computeFlexProps({
+        direction: vertical ? 'column' : 'row',
+        ...rest,
+      }))}
+    />
+  );
+};
 
-const StackItem = forwardRef((props: FlexProps, ref) => {
+const StackItem: SFC<FlexProps> = forwardRef((props: FlexProps, ref) => {
   const { className, ...rest } = props;
   return (
-    <Flex.Item
+    <div
       className={classes([
         'Stack__item',
         className,
+        computeFlexItemClassName(rest),
+        computeBoxClassName(rest),
       ])}
       ref={ref}
-      {...rest} />
+      {...computeBoxProps(computeFlexItemProps(rest))}
+    />
   );
 });
 
 Stack.Item = StackItem;
 
- interface StackDividerProps extends FlexItemProps {
-   hidden?: boolean;
- }
+type StackDividerProps = FlexItemProps & {
+  hidden?: boolean;
+};
 
 const StackDivider = (props: StackDividerProps) => {
   const { className, hidden, ...rest } = props;
   return (
-    <Flex.Item
+    <div
       className={classes([
         'Stack__item',
         'Stack__divider',
         hidden && 'Stack__divider--hidden',
         className,
+        computeFlexItemClassName(rest),
+        computeBoxClassName(rest),
       ])}
-      {...rest} />
+      {...computeBoxProps(computeFlexItemProps(rest))}
+    />
   );
 };
 

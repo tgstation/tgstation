@@ -1,4 +1,3 @@
-import { Component, forwardRef } from "inferno";
 import { Box, Popper } from "../components";
 
 export const meta = {

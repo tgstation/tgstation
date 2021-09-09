@@ -17,7 +17,7 @@
 
 	var/static/list/allowed_devices = typecacheof(list(
 		/obj/item/gun/energy,
-		/obj/item/melee/baton,
+		/obj/item/melee/baton/security,
 		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer))
 
@@ -167,10 +167,10 @@
 			if(E.cell)
 				E.cell.emp_act(severity)
 
-		else if(istype(charging, /obj/item/melee/baton))
-			var/obj/item/melee/baton/B = charging
-			if(B.cell)
-				B.cell.charge = 0
+		else if(istype(charging, /obj/item/melee/baton/security))
+			var/obj/item/melee/baton/security/batong = charging
+			if(batong.cell)
+				batong.cell.charge = 0
 
 /obj/machinery/recharger/update_appearance(updates)
 	. = ..()
