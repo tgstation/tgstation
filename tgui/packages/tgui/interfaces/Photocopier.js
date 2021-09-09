@@ -1,6 +1,7 @@
-import { ProgressBar, NumberInput, Button, Section, Box, Flex } from '../components';
+import { ProgressBar, NumberInput, Button, Section, Box, Flex, Dropdown } from '../components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { sortBy } from "common/collections";
 
 export const Photocopier = (props, context) => {
   const { data } = useBackend(context);
@@ -13,13 +14,22 @@ export const Photocopier = (props, context) => {
   return (
     <Window
       title="Photocopier"
-      width={240}
-      height={isAI ? 309 : 234}>
+      width={320}
+      height={512}>
       <Window.Content>
         {has_toner ? (
           <Toner />
         ) : (
           <Section title="Toner">
+            <Box color="average">
+              No inserted toner cartridge.
+            </Box>
+          </Section>
+        )}
+        {has_toner ? (
+          <Blanks />
+        ) : (
+          <Section title="Blanks">
             <Box color="average">
               No inserted toner cartridge.
             </Box>
@@ -158,6 +168,57 @@ const Options = (props, context) => {
         onClick={() => act('remove')}>
         Remove item
       </Button>
+    </Section>
+  );
+};
+
+const Blanks = (props, context) => {
+  const { act, data } = useBackend(context);
+	const {
+	  blanks,
+		category
+	} = data;
+	
+	const sortBlanks = sortBy(
+		blank => blanks.category,
+	)(blanks || []);
+
+	const categories = [];
+		for (let blank of sortBlanks) {
+			if (!categories.includes(blank.category)) {
+		    categories.push(blank.category);
+		}
+	}
+  
+	let selectCategory;
+	if (category === null) {
+    selectCategory = sortBlanks.filter(blank => blank.category === categories[0]);
+	} else {
+		selectCategory = sortBlanks.filter(blank => blank.category === category);
+	}
+  
+	return (
+    <Section title="Blanks">
+		  <Dropdown
+		    width="100%"
+        options={categories}
+			  selected={category === null ? categories[0] : category}
+				onSelected={value => act("choose_category", {
+				  category: value, 
+				})}
+      />
+		
+		  <Box mt={0.4}>
+			  {selectCategory.map(blank => (
+				  <Button key={blank.path}
+            content={blank.code}
+            tooltip={blank.name}
+					  onClick={() => act("print_blank", {
+						  path: blank.path
+					  })}
+          />
+        ))}
+      </Box>
     </Section>
   );
 };
