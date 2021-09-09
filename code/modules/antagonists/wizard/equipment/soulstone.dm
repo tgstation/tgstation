@@ -269,7 +269,8 @@
 		return TRUE
 	else
 		to_chat(user, "[span_userdanger("Capture failed!")]: The soul has already fled its mortal frame. You attempt to bring it back...")
-		return getCultGhost(victim,user)
+		INVOKE_ASYNC(src, .proc/getCultGhost, victim, user)
+		return TRUE //it'll probably get someone ;)
 
 ///captures a shade that was previously released from a soulstone.
 /obj/item/soulstone/proc/capture_shade(mob/living/simple_animal/shade/shade, mob/user)

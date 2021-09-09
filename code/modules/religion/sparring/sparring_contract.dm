@@ -66,14 +66,28 @@
 		to_chat(user, span_warning("This contract refuses to be signed by a lesser creature such as yourself."))
 		return
 
+	var/datum/religion_sect/spar/sect = GLOB.religious_sect
+
+	if(user in sect.past_opponents && params["stakes"] == STANDARD_STAKES)
+		to_chat(user, span_warning("This contract refuses to be signed up for a holy match by a previous holy match loser. Pick a different stake!"))
+
 	//any updating of the terms should update the UI to display new terms
 	. = TRUE
 
-	var/datum/religion_sect/spar/sect = GLOB.religious_sect
+
 	var/area_name = params["area"]
 	var/arena_path = sect.arenas[area_name]
 	var/terms_changed = FALSE
 	switch(action)
+		if("fight")
+			var/mob/living/carbon/human/left_partner = signed_by[1]
+			var/mob/living/carbon/human/right_partner = signed_by[2]
+			if(!left_partner || !right_partner || !left_partner.mind || !right_partner.mind)
+				return
+			var/chaplain = left_partner.mind.holy_role ? left_partner : right_partner
+			var/opponent = right_partner.mind.holy_role ? right_partner : left_partner
+			new /datum/sparring_match (weapons_condition, arena_condition, stakes_condition, chaplain, opponent)
+			qdel(src)
 		if("sign")
 			if(user in signed_by)
 				to_chat(user, span_warning("You've already signed the contract."))
@@ -95,7 +109,4 @@
 				signed_by[1] = user
 			else
 				signed_by[2] = user
-		if("fight")
 
-			return
-			//todo, start the sparring
