@@ -5,7 +5,7 @@
  */
 
 import { classes } from 'common/react';
-import { forwardRef, SFC } from 'inferno';
+import { forwardRef, RefObject, SFC } from 'inferno';
 import { computeBoxClassName, computeBoxProps } from './Box';
 import { computeFlexClassName, computeFlexItemClassName, computeFlexItemProps, computeFlexProps, FlexItemProps, FlexProps } from './Flex';
 
@@ -36,7 +36,11 @@ export const Stack = (props: StackProps) => {
   );
 };
 
-const StackItem: SFC<FlexProps> = forwardRef((props: FlexProps, ref) => {
+type StackItemProps = FlexProps & {
+  elementRef?: RefObject<HTMLDivElement>,
+};
+
+const StackItem = (props: StackItemProps) => {
   const { className, ...rest } = props;
   return (
     <div
@@ -46,11 +50,11 @@ const StackItem: SFC<FlexProps> = forwardRef((props: FlexProps, ref) => {
         computeFlexItemClassName(rest),
         computeBoxClassName(rest),
       ])}
-      ref={ref}
+      ref={props.elementRef}
       {...computeBoxProps(computeFlexItemProps(rest))}
     />
   );
-});
+};
 
 Stack.Item = StackItem;
 
