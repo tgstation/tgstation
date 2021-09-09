@@ -54,8 +54,7 @@
 					/obj/item/reagent_containers/glass/bottle/syriniver = 2,
 					/obj/item/reagent_containers/glass/bottle/epinephrine = 3,
 					/obj/item/reagent_containers/glass/bottle/morphine = 4,
-					/obj/item/reagent_containers/glass/bottle/potass_iodide = 1,
-					/obj/item/reagent_containers/glass/bottle/salglu_solution = 3,
+					/obj/item/reagent_containers/glass/bottle/potass_iodide = 1,					
 					/obj/item/reagent_containers/glass/bottle/toxin = 3,
 					/obj/item/reagent_containers/syringe/antiviral = 6,
 					/obj/item/reagent_containers/medigel/libital = 2,
@@ -88,7 +87,8 @@
 					/obj/item/reagent_containers/blood/a_minus = 4,
 					/obj/item/reagent_containers/blood/b_plus = 4,
 					/obj/item/reagent_containers/blood/b_minus = 2,
-					/obj/item/reagent_containers/blood/o_plus = 7)
+					/obj/item/reagent_containers/blood/o_plus = 7,
+					/obj/item/reagent_containers/glass/bottle/salglu_solution = 3)
 	contraband = list(/obj/item/reagent_containers/blood/universal = 2)
 	premium = list(/obj/item/reagent_containers/blood/o_minus = 3,
 					/obj/item/reagent_containers/blood/lizard = 2,
