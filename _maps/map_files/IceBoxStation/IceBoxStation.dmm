@@ -15154,7 +15154,7 @@
 /obj/structure/sign/warning/fire{
 	pixel_x = -32
 	},
-/obj/structure/table,
+/obj/structure/table/reinforced,
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "cWK" = (
@@ -50411,6 +50411,10 @@
 	},
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
+"wNO" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/medical/medbay/central)
 "wNW" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/cafeteria,
@@ -50573,6 +50577,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
+"wSK" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/medical/cryo)
 "wSR" = (
 /obj/machinery/door/poddoor{
 	id = "Secure Storage";
@@ -88458,7 +88466,7 @@ rFx
 oku
 dMK
 uUv
-bfG
+wNO
 bvh
 bAl
 lrg
@@ -88981,7 +88989,7 @@ hTU
 hTU
 bzU
 jrX
-bfG
+wNO
 hea
 okk
 wIg
@@ -89238,7 +89246,7 @@ oTT
 cWc
 pws
 krv
-bfG
+wNO
 bwE
 fZF
 wIg
@@ -89495,7 +89503,7 @@ pqa
 dqs
 bzW
 mrM
-bfG
+wNO
 qHd
 paT
 wIg
@@ -89750,8 +89758,8 @@ bhh
 ugA
 eAx
 edi
-kPH
-kPH
+wSK
+wSK
 edi
 rzU
 rzU

@@ -5184,7 +5184,6 @@
 /turf/open/floor/carpet,
 /area/service/theater)
 "zJ" = (
-/obj/structure/table,
 /obj/item/book/manual/wiki/plumbing{
 	pixel_x = 4;
 	pixel_y = -4
@@ -5202,6 +5201,7 @@
 	},
 /obj/machinery/light/directional/east,
 /obj/machinery/status_display/evac/directional/east,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
