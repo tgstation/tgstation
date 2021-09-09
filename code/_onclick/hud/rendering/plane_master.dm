@@ -106,14 +106,6 @@
 	//byond internal end
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/blackness/backdrop(mob/mymob)
-	. = ..()
-	return
-	var/atom/movable/screen/fullscreen/lighting_backdrop/lit/back = new()
-	back.plane = plane
-	mymob.client.screen += back
-
-
 ///Contains all lighting objects
 /atom/movable/screen/plane_master/lighting
 	name = "lighting plane master"

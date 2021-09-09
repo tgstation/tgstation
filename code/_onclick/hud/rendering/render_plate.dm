@@ -21,6 +21,7 @@
  * Renders other planes onto this plane, through the use of render objects
  * Any effects applied onto this plane will act on the unified plane
  * IE a bulge filter will apply as if the world was one object
+ * remember that once planes are unified on a render plate you cant change the layering of them!
  */
 /atom/movable/screen/plane_master/rendering_plate
 	name = "default rendering plate"
@@ -59,12 +60,15 @@
  * * mouse opacity to ensure proper mouse hit tracking
  * * name for debugging purposes
  * Other vars such as alpha will automatically be applied with the render source
+ * Arguments:
+ * * mymob: mob whose plane is being backdropped
+ * * relay_plane: plane we are relaying this plane master to
  */
 /atom/movable/screen/plane_master/proc/relay_render_to_plane(mob/mymob, relay_plane)
 	var/atom/movable/render_plane_relay/relay = new()
 	relay.render_source = render_target
 	relay.plane = relay_plane
-	relay.layer = (plane + abs(LOWEST_EVER_PLANE))*0.5 //layer must be non-null
+	relay.layer = (plane + abs(LOWEST_EVER_PLANE))*0.5 //layer must be positive but can be a decimal
 	if(blend_mode_override)
 		relay.blend_mode = blend_mode_override
 	else
@@ -72,5 +76,4 @@
 	relay.mouse_opacity = mouse_opacity
 	relay.name = render_target
 	mymob.client.screen += relay
-	if(plane != BLACKNESS_PLANE) //snowflake byond internal behaviour
-		blend_mode = BLEND_DEFAULT
+	blend_mode = BLEND_DEFAULT
