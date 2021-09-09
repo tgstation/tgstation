@@ -403,6 +403,53 @@
 	var/code 
 	var/category
 
+/obj/item/paper/blank/nt_cmd_ja
+	code = "NT-CMD-JA"
+	category = "Command"
+	name = "Job application"
+	
+/obj/item/paper/blank/nt_cmd_jt
+	code = "NT-CMD-JT"
+	category = "Command"
+	name = "Job application"
+	
+/obj/item/paper/blank/nt_cmd_jr
+	code = "NT-CMD-JR"
+	category = "Command"
+	name = "Job reassignment"
+	
+/obj/item/paper/blank/nt_scr_w
+	code = "NT-SCR-W"
+	category = "Security"
+	name = "Warrant"	
+	
+/obj/item/paper/blank/nt_scr_sw
+	code = "NT-SCR-SW"
+	category = "Security"
+	name = "Search warrant"
+	
+/obj/item/paper/blank/nt_scr_ir
+	code = "NT-SCR-IR"
+	category = "Security"
+	name = "Interrogation Report"	
+	
+/obj/item/paper/blank/nt_eng_pw
+	code = "NT-ENG-PW"
+	category = "Engineering"
+	name = "Permission to perform non-standard work"	
+	
+/obj/item/paper/blank/nt_eng_pe
+	code = "NT-ENG-PE"
+	category = "Engineering"
+	name = "Permit for the issuance of engineering equipment"
+
+/obj/item/paper/blank/nt_lb
+	code = "NT-LB"
+	category = "Other"
+	name = "Lunch Bill"
+	info = "<center><h1 style=\"color:green\">Lunch Bill</h1></center><hr><br><b>Name of establishment: </b><br><span style=\"35;font-family:\'Verdana\';\">\[<input type=\"text\" style=\"font:\'12x Verdana\';35;\" id=\"paperfield_10001\" maxlength=35 size=35 />\]</span><br><b>Waiter's name: (with signature)</b><br><span style=\"35;font-family:\'Verdana\';\">\[<input type=\"text\" style=\"font:\'12x Verdana\';35\" id=\"paperfield_10002\" maxlength=35 size=35 />\]</span><hr><br><center><h3>Order</h3></center><br><br><span style=\"35;font-family:\'Verdana\';\">1. \[<input type=\"text\" style=\"font:\'12x Verdana\';35\" id=\"paperfield_10003\" maxlength=35 size=35 />\]</span><br><span style=\"35;font-family:\'Verdana\';\">2. \[<input type=\"text\" style=\"font:\'12x Verdana\';35\" id=\"paperfield_10004\" maxlength=35 size=35 />\]</span><br><span style=\"35;font-family:\'Verdana\';\">3. \[<input type=\"text\" style=\"font:\'12x Verdana\';35\" id=\"paperfield_10005\" maxlength=35 size=35 />\]</span><br><span style=\"35;font-family:\'Verdana\';\">4. \[<input type=\"text\" style=\"font:\'12x Verdana\';35\" id=\"paperfield_10006\" maxlength=35 size=35 />\]</span><br><span style=\"35;font-family:\'Verdana\';\">5. \[<input type=\"text\" style=\"font:\'12x Verdana\';35\" id=\"paperfield_10007\" maxlength=35 size=35 />\]</span><br><span style=\"35;font-family:\'Verdana\';\">6. \[<input type=\"text\" style=\"font:\'12x Verdana\';35\" id=\"paperfield_10008\" maxlength=35 size=35 />\]</span><br><span style=\"35;font-family:\'Verdana\';\">7. \[<input type=\"text\" style=\"font:\'12x Verdana\';35\" id=\"paperfield_10009\" maxlength=35 size=35 />\]</span><br><span style=\"35;font-family:\'Verdana\';\">8. \[<input type=\"text\" style=\"font:\'12x Verdana\';35\" id=\"paperfield_10010\" maxlength=35 size=35 />\]</span><br><span style=\"35;font-family:\'Verdana\';\">10.\[<input type=\"text\" style=\"font:\'12x Verdana\';35\" id=\"paperfield_10011\" maxlength=35 size=35 />\]</span><hr><br><br><b>Total price per service (including the cost of paper): </b><br><span style=\"35;font-family:\'Verdana\';\">\[<input type=\"text\" style=\"font:\'12x Verdana\';35\" id=\"paperfield_10012\" maxlength=35 size=35 />\]</span><br><b>Time: </b><br><span style=\"35;font-family:\'Verdana\';\">\[<input type=\"text\" style=\"font:\'12x Verdana\';35\" id=\"paperfield_10013\" maxlength=3 size=3 />\]</span><span style=\"35;font-family:\'Verdana\';\"> : \[<input type=\"text\" style=\"font:\'12x Verdana\';35\" id=\"paperfield_10014\" maxlength=3 size=3 />\]</span><br><br><hr><p style=\"color:gray\">This payment document is the property of NanoTrasen. You must deliver this document to the head of the NanoTrasen facility staff within 24 hours of service for independent tax accounting."
+	
+
 #undef MAX_PAPER_LENGTH
 #undef MAX_PAPER_STAMPS
 #undef MAX_PAPER_STAMPS_OVERLAYS
