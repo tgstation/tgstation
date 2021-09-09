@@ -122,6 +122,8 @@
 	foodtypes = MEAT | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	ant_attracting = FALSE
+	decomp_type = /obj/item/food/boiledegg/rotten
 
 /obj/item/food/boiledegg/rotten
 	food_reagents = list(/datum/reagent/consumable/eggrot = 10)
