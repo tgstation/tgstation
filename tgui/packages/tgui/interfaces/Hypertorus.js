@@ -2,7 +2,7 @@ import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Collapsible, Icon, LabeledList, NumberInput, ProgressBar, Section, Stack, Tabs, Tooltip } from '../components';
+import { Box, Button, Cell, Collapsible, Flex, Icon, LabeledList, NumberInput, ProgressBar, Row, Section, Stack, Table, Tabs, Tooltip } from '../components';
 import { getGasColor, getGasLabel } from '../constants';
 import { formatSiBaseTenUnit, formatSiUnit } from '../format';
 import { Window } from '../layouts';
@@ -78,6 +78,34 @@ const effect_to_icon = (effect_value, effect_scale) => {
   return "angle-down";
 };
 
+const GasCellItem = props => {
+  const {
+    gasid,
+    ...rest
+  } = props;
+  return (
+    <Table.Cell
+      key={gasid}
+      label={getGasLabel(gasid)} {...rest}>
+      <Box color={getGasColor(gasid)}>{getGasLabel(gasid)}</Box>
+    </Table.Cell>
+  );
+};
+
+// Quick wrapper to globally toggle use of tooltips on or off.
+// Remove once tooltip performance is fixed for good.
+const MaybeTooltip = props => {
+  const {
+    children,
+    ...rest
+  } = props;
+  const noTooltips = true;
+  if (noTooltips) {
+    return (<Box>{children}</Box>);
+  }
+  return (<Tooltip {...rest}>{children}</Tooltip>);
+};
+
 const HypertorusMainControls = (props, context) => {
   const { act, data } = useBackend(context);
   const selectableFuels = data.selectable_fuel || [];
@@ -128,29 +156,107 @@ const HypertorusMainControls = (props, context) => {
         </Stack.Item>
       </Stack>
       <Collapsible title="Fuel selection">
-        <LabeledList>
-          {selectableFuels.map(recipe => (
-          <LabeledList.Item label={recipe.name} buttons={(<Button>"Enable"</Button>)}>{/*
-            <Stack vertical>
-              {selectableFuels.map(recipe => (
-                <Stack.Item key={recipe.name}>
-                  <Button
-                    disabled={data.power_level > 0}
-                    key={recipe.id}
-                    selected={recipe.id === data.selected}
-                    content={recipe.name}
-                    onClick={() => act('fuel', {
-                      mode: recipe.id,
-                    })} />
-                </Stack.Item>
-              ))}
-            </Stack>
-            */}
-          </LabeledList.Item>
-          ))}
-          <LabeledList.Divider />
-          {selectedFuel && (
-            <LabeledList.Item label="Production">
+        <Table>
+          <Table.Row color="label" header>
+            <Table.Cell />
+            <Table.Cell textAlign="center" colspan="2">
+              Fuel
+            </Table.Cell>
+            <Table.Cell textAlign="center" colspan="2">
+              Fusion Byproducts
+            </Table.Cell>
+            <Table.Cell textAlign="center" colspan="6">
+              Produced gases
+            </Table.Cell>
+            <Table.Cell textAlign="center" colspan="6">
+              Effects
+            </Table.Cell>
+            <Table.Cell grow="1" />
+          </Table.Row>
+          <Table.Row color="label" header>
+            <Table.Cell />
+            <Table.Cell textAlign="center">
+              Primary
+            </Table.Cell>
+            <Table.Cell textAlign="center">
+              Secondary
+            </Table.Cell>
+            <Table.Cell colspan="2"/>
+            <Table.Cell textAlign="center">
+              Tier 1
+            </Table.Cell>
+            <Table.Cell textAlign="center">
+              Tier 2
+            </Table.Cell>
+            <Table.Cell textAlign="center">
+              Tier 3
+            </Table.Cell>
+            <Table.Cell textAlign="center">
+              Tier 4
+            </Table.Cell>
+            <Table.Cell textAlign="center">
+              Tier 5
+            </Table.Cell>
+            <Table.Cell textAlign="center">
+              Tier 6
+            </Table.Cell>
+            {
+              // Lay out our pictographic headers for effects.
+              recipe_effect_structure.map(item => (
+                <Table.Cell key={item.param} color="label">
+                <MaybeTooltip content={item.label}>
+                  {typeof(item.icon) === "string" ? (
+                    <Icon position="relative" width="10px" name={item.icon} />
+                  ) : (
+                    <Icon.Stack positition="relative" width="10px" textAlign="center">
+                      {item.icon.map(icon => (
+                        <Icon name={typeof(icon) === "string" ? icon : "shit's fucked"} />
+                      ))}
+                    </Icon.Stack>
+                  )}
+                </MaybeTooltip>
+                </Table.Cell>
+              ))
+            }
+          </Table.Row>
+          {selectableFuels.filter(d=>d.id).map((recipe,index) => {
+            const active = recipe.id === data.selected;
+            return (
+          <Table.Row backgroundColor={(active ? "rgba(200,255,200," : "rgba(255,255,255,") + ((active ? .13 : 0) + index % 2 * .05) + ")"}>
+            <Table.Cell>
+              <Button
+                icon={recipe.id === data.selected ? "times" : "power-off"}
+                disabled={data.power_level > 0}
+                key={recipe.id}
+                selected={recipe.id === data.selected}
+                onClick={() => act('fuel', {mode: recipe.id})}
+              />
+            </Table.Cell>
+            <GasCellItem gasid={recipe.requirements[0]} />
+            <GasCellItem gasid={recipe.requirements[1]} />
+            <GasCellItem gasid={recipe.fusion_byproducts[0]} />
+            <GasCellItem gasid={recipe.fusion_byproducts[1]} />
+            {recipe.product_gases.map(gasid => (
+              <GasCellItem gasid={gasid} />
+            ))}
+            {
+              recipe_effect_structure.map(item => {
+                const value = recipe[item.param];
+                // Note that the minus icon is wider than the arrow icons,
+                // so we set the width to work with both without jumping.
+                return (
+                  <Table.Cell>
+                    <MaybeTooltip content={(item.tooltip || (v => "x"+v))(value, data)}>
+                      <Icon position="relative" color="rgb(230,30,40)" width="10px" name={effect_to_icon(value, item.scale)} />
+                    </MaybeTooltip>
+                  </Table.Cell>
+                );
+              })
+            }
+          </Table.Row>
+          );})}
+          {false && selectedFuel && (
+            <Row label="Production">
               <Stack>
                 {selectedFuel.product_gases.map(gasid => (
                   <Stack.Item
@@ -160,42 +266,14 @@ const HypertorusMainControls = (props, context) => {
                   </Stack.Item>
                 ))}
               </Stack>
-            </LabeledList.Item>
+            </Row>
           )}
-          {selectedFuel && (
-            <LabeledList.Item label="Effects">
-            {
-              recipe_effect_structure.map(item => {
-                const value = selectedFuel[item.param];
-                // Note that the minus icon is wider than the arrow icons,
-                // so we set the width to work with both without jumping.
-                return (
-                  <Stack>
-                    <Stack.Item key={item.param} color="label">
-                      <Tooltip content={item.label}>
-                        {typeof(item.icon) === "string" ? (
-                          <Icon position="relative" width="10px" name={item.icon} />
-                        ) : (
-                          <Icon.Stack positition="relative" width="10px" textAlign="center">
-                            {item.icon.map(icon => (
-                              <Icon name={typeof(icon) === "string" ? icon : "shit's fucked"} />
-                            ))}
-                          </Icon.Stack>
-                        )}
-                      </Tooltip>
-                    </Stack.Item>
-                    <Stack.Item>
-                      <Tooltip content={(item.tooltip || (v => "x"+v))(value, data)}>
-                        <Icon position="relative" color="rgb(230,30,40)" width="10px" name={effect_to_icon(value, item.scale)} />
-                      </Tooltip>
-                    </Stack.Item>
-                </Stack>
-                );
-              })
-            }
-          </LabeledList.Item>
+          {false && selectedFuel && (
+            <Row label="Effects">
+            
+            </Row>
           )}
-        </LabeledList> 
+        </Table>
       </Collapsible>
     </Section>
   );
@@ -552,7 +630,7 @@ export const Hypertorus = (props, context) => {
   return (
     <Window
       title="Hypertorus Fusion Reactor control panel"
-      width={720}
+      width={920}
       height={600}>
       <Window.Content scrollable>
         <HypertorusTabs />

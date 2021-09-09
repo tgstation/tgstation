@@ -197,6 +197,15 @@
 	else
 		to_chat(user, span_notice("Activate the machine first by using a multitool on the interface."))
 
+/obj/machinery/hypertorus/interface/proc/gas_list_to_gasid_list(list/gas_list)
+	var/list/gasid_list = list()
+	for(var/gas_type in gas_list)
+		var/datum/gas/gas = gas_type
+		gasid_list += initial(gas.id)
+	return gasid_list
+
+
+
 /obj/machinery/hypertorus/interface/ui_static_data()
 	var/data = list()
 	data["base_max_temperature"] = FUSION_MAXIMUM_TEMPERATURE
@@ -204,21 +213,18 @@
 	for(var/path in GLOB.hfr_fuels_list)
 		var/datum/hfr_fuel/recipe = GLOB.hfr_fuels_list[path]
 
-		var/list/product_gases = list()
-		for(var/gas_type in recipe.secondary_products)
-			var/datum/gas/gas_produced = gas_type
-			product_gases += initial(gas_produced.id)
-
 		data["selectable_fuel"] += list(list(
 			"name" = recipe.name,
 			"id" = recipe.id,
+			"requirements" = gas_list_to_gasid_list(recipe.requirements),
+			"fusion_byproducts" = gas_list_to_gasid_list(recipe.primary_products),
+			"product_gases" = gas_list_to_gasid_list(recipe.secondary_products),
 			"recipe_cooling_multiplier" = recipe.negative_temperature_multiplier,
 			"recipe_heating_multiplier" = recipe.positive_temperature_multiplier,
 			"energy_loss_multiplier" = recipe.energy_concentration_multiplier,
 			"fuel_consumption_multiplier" = recipe.fuel_consumption_multiplier,
 			"gas_production_multiplier" = recipe.gas_production_multiplier,
 			"temperature_multiplier" = recipe.temperature_change_multiplier,
-			"product_gases" = product_gases,
 		))
 	return data
 
