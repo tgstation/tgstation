@@ -199,10 +199,27 @@
 
 /obj/machinery/hypertorus/interface/ui_static_data()
 	var/data = list()
-	data["selected_fuel"] = list(list("name" = "Nothing", "id" = null))
+	data["base_max_temperature"] = FUSION_MAXIMUM_TEMPERATURE
+	data["selectable_fuel"] = list(list("name" = "Nothing", "id" = null))
 	for(var/path in GLOB.hfr_fuels_list)
 		var/datum/hfr_fuel/recipe = GLOB.hfr_fuels_list[path]
-		data["selected_fuel"] += list(list("name" = recipe.name, "id" = recipe.id))
+
+		var/list/product_gases = list()
+		for(var/gas_type in recipe.secondary_products)
+			var/datum/gas/gas_produced = gas_type
+			product_gases += initial(gas_produced.id)
+
+		data["selectable_fuel"] += list(list(
+			"name" = recipe.name,
+			"id" = recipe.id,
+			"recipe_cooling_multiplier" = recipe.negative_temperature_multiplier,
+			"recipe_heating_multiplier" = recipe.positive_temperature_multiplier,
+			"energy_loss_multiplier" = recipe.energy_concentration_multiplier,
+			"fuel_consumption_multiplier" = recipe.fuel_consumption_multiplier,
+			"gas_production_multiplier" = recipe.gas_production_multiplier,
+			"temperature_multiplier" = recipe.temperature_change_multiplier,
+			"product_gases" = product_gases,
+		))
 	return data
 
 /obj/machinery/hypertorus/interface/ui_data()
@@ -212,29 +229,6 @@
 		data["selected"] = connected_core.selected_fuel.id
 	else
 		data["selected"] = ""
-
-	var/list/product_gases
-	if(!connected_core.selected_fuel)
-		product_gases = list("Select a fuel mix to see the output")
-	else
-		product_gases = list("The [connected_core.selected_fuel.name] mix will produce the following gases:")
-		for(var/gas_type in connected_core.selected_fuel.secondary_products)
-			var/datum/gas/gas_produced = gas_type
-			product_gases += "-[initial(gas_produced.name)]"
-		var/minimum_temp = connected_core.selected_fuel.negative_temperature_multiplier < 1 ? "Decrease" : "Increase"
-		var/maximum_temp = connected_core.selected_fuel.positive_temperature_multiplier < 1 ? "Decrease" : "Increase"
-		var/energy = connected_core.selected_fuel.energy_concentration_multiplier > 1 ? "Decrease" : "Increase"
-		var/fuel_consumption = connected_core.selected_fuel.fuel_consumption_multiplier < 1 ? "Decrease" : "Increase"
-		var/fuel_production = connected_core.selected_fuel.gas_production_multiplier < 1 ? "Decrease" : "Increase"
-		product_gases += "The fuel mix will"
-		product_gases += "-[minimum_temp] the maximum cooling by a factor of [connected_core.selected_fuel.negative_temperature_multiplier]"
-		product_gases += "-[maximum_temp] the maximum heating by a factor of [connected_core.selected_fuel.positive_temperature_multiplier]"
-		product_gases += "-[energy] the energy output consumption by a factor of [1 / connected_core.selected_fuel.energy_concentration_multiplier]"
-		product_gases += "-[fuel_consumption] the fuel consumption by a factor of [connected_core.selected_fuel.fuel_consumption_multiplier]"
-		product_gases += "-[fuel_production] the gas production by a factor of [connected_core.selected_fuel.gas_production_multiplier]"
-		product_gases += "-Maximum fusion temperature with this mix: [FUSION_MAXIMUM_TEMPERATURE * connected_core.selected_fuel.temperature_change_multiplier] K."
-
-	data["product_gases"] = product_gases.Join("\n")
 
 	//Internal Fusion gases
 	var/list/fusion_gasdata = list()

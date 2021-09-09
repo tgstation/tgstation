@@ -2,83 +2,202 @@ import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
-import { Button, LabeledList, NumberInput, ProgressBar, Section, Stack, Box, Tabs } from '../components';
+import { Box, Button, Collapsible, Icon, LabeledList, NumberInput, ProgressBar, Section, Stack, Tabs, Tooltip } from '../components';
 import { getGasColor, getGasLabel } from '../constants';
 import { formatSiBaseTenUnit, formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
+/**
+ * The list of recipe effects to list, in order.
+ * Parameters:
+ *  - param: The name of the parameter passed in the data object.
+ *  - label: The human readable label for this effect.
+ *  - scale: The point at which a directional arrow become a
+ *           double directional arrow.
+ *  - icon:  A string or array of strings describing a pictographic
+ *           icon for use with this effect.
+ *  - tooltip: Optional.
+ *             If specified, this is passed the value and full data
+ *             array and should return the tooltip string.
+ *             If omitted, the default of "x{value}" is used.
+ *
+ */
+const recipe_effect_structure = [
+  {
+    param: "recipe_cooling_multiplier",
+    label: "Cooling",
+    icon: "snowflake-o",
+    scale: 3,
+  },
+  {
+    param: "recipe_heating_multiplier",
+    label: "Heating",
+    icon: "fire",
+    scale: 3,
+  },
+  {
+    param: "energy_loss_multiplier",
+    label: "Energy loss",
+    icon: "sun-o",
+    scale: 3,
+  },
+  {
+    param: "fuel_consumption_multiplier",
+    label: "Intake",
+    icon: ["window-minimize", "arrow-down"],
+    scale: 1.5,
+  },
+  {
+    param: "gas_production_multiplier",
+    label: "Production",
+    icon: ["window-minimize", "arrow-up"],
+    scale: 1.5,
+  },
+  {
+    param: "temperature_multiplier",
+    label: "Max temperature",
+    icon: "thermometer-full",
+    scale: 1.15,
+    tooltip: (v, d) => "Maximum: " + (d.base_max_temperature * v).toExponential() + " K",
+  },
+];
+
+const effect_to_icon = (effect_value, effect_scale) => {
+  if (effect_value === 1) {
+    return "minus";
+  }
+  if (effect_value > 1) {
+    if (effect_value > effect_scale) {
+      return "angle-double-up";
+    }
+    return "angle-up";
+  }
+  if (effect_value < 1 / effect_scale) {
+    return "angle-double-down";
+  }
+  return "angle-down";
+};
+
 const HypertorusMainControls = (props, context) => {
   const { act, data } = useBackend(context);
-  const selectedFuels = data.selected_fuel || [];
+  const selectableFuels = data.selectable_fuel || [];
+  const selectedFuel = selectableFuels.filter(d => d.id === data.selected)[0];
   return (
-    <>
-      <Section title="Switches">
-        <Stack>
-          <Stack.Item color="label">
-            {'Start power: '}
-            <Button
-              disabled={data.power_level > 0}
-              icon={data.start_power ? 'power-off' : 'times'}
-              content={data.start_power ? 'On' : 'Off'}
-              selected={data.start_power}
-              onClick={() => act('start_power')} />
-          </Stack.Item>
-          <Stack.Item color="label">
-            {'Start cooling: '}
-            <Button
-              disabled={data.start_fuel === 1
+    <Section title="Switches">
+      <Stack>
+        <Stack.Item color="label">
+          {'Start power: '}
+          <Button
+            disabled={data.power_level > 0}
+            icon={data.start_power ? 'power-off' : 'times'}
+            content={data.start_power ? 'On' : 'Off'}
+            selected={data.start_power}
+            onClick={() => act('start_power')} />
+        </Stack.Item>
+        <Stack.Item color="label">
+          {'Start cooling: '}
+          <Button
+            disabled={data.start_fuel === 1
                 || data.start_moderator === 1
                 || data.start_power === 0
                 || (data.start_cooling && data.power_level > 0)}
-              icon={data.start_cooling ? 'power-off' : 'times'}
-              content={data.start_cooling ? 'On' : 'Off'}
-              selected={data.start_cooling}
-              onClick={() => act('start_cooling')} />
-          </Stack.Item>
-          <Stack.Item color="label">
-            {'Start fuel injection: '}
-            <Button
-              disabled={data.start_power === 0
+            icon={data.start_cooling ? 'power-off' : 'times'}
+            content={data.start_cooling ? 'On' : 'Off'}
+            selected={data.start_cooling}
+            onClick={() => act('start_cooling')} />
+        </Stack.Item>
+        <Stack.Item color="label">
+          {'Start fuel injection: '}
+          <Button
+            disabled={data.start_power === 0
                 || data.start_cooling === 0}
-              icon={data.start_fuel ? 'power-off' : 'times'}
-              content={data.start_fuel ? 'On' : 'Off'}
-              selected={data.start_fuel}
-              onClick={() => act('start_fuel')} />
-          </Stack.Item>
-          <Stack.Item color="label">
-            {'Start moderator injection: '}
-            <Button
-              disabled={data.start_power === 0
+            icon={data.start_fuel ? 'power-off' : 'times'}
+            content={data.start_fuel ? 'On' : 'Off'}
+            selected={data.start_fuel}
+            onClick={() => act('start_fuel')} />
+        </Stack.Item>
+        <Stack.Item color="label">
+          {'Start moderator injection: '}
+          <Button
+            disabled={data.start_power === 0
                 || data.start_cooling === 0}
-              icon={data.start_moderator ? 'power-off' : 'times'}
-              content={data.start_moderator ? 'On' : 'Off'}
-              selected={data.start_moderator}
-              onClick={() => act('start_moderator')} />
-          </Stack.Item>
-        </Stack>
-      </Section>
-      <Section title="Fuel selection">
+            icon={data.start_moderator ? 'power-off' : 'times'}
+            content={data.start_moderator ? 'On' : 'Off'}
+            selected={data.start_moderator}
+            onClick={() => act('start_moderator')} />
+        </Stack.Item>
+      </Stack>
+      <Collapsible title="Fuel selection">
         <LabeledList>
-          <LabeledList.Item label="Fuel">
-            {selectedFuels.map(recipe => (
-              <Button
-                disabled={data.power_level > 0}
-                key={recipe.id}
-                selected={recipe.id === data.selected}
-                content={recipe.name}
-                onClick={() => act('fuel', {
-                  mode: recipe.id,
-                })} />
-            ))}
+          {selectableFuels.map(recipe => (
+          <LabeledList.Item label={recipe.name} buttons={(<Button>"Enable"</Button>)}>{/*
+            <Stack vertical>
+              {selectableFuels.map(recipe => (
+                <Stack.Item key={recipe.name}>
+                  <Button
+                    disabled={data.power_level > 0}
+                    key={recipe.id}
+                    selected={recipe.id === data.selected}
+                    content={recipe.name}
+                    onClick={() => act('fuel', {
+                      mode: recipe.id,
+                    })} />
+                </Stack.Item>
+              ))}
+            </Stack>
+            */}
           </LabeledList.Item>
-          <LabeledList.Item label="Gases">
-            <Box m={1} preserveWhitespace>
-              {data.product_gases}
-            </Box>
+          ))}
+          <LabeledList.Divider />
+          {selectedFuel && (
+            <LabeledList.Item label="Production">
+              <Stack>
+                {selectedFuel.product_gases.map(gasid => (
+                  <Stack.Item
+                    key={gasid}
+                    label={getGasLabel(gasid)}>
+                    <Box color={getGasColor(gasid)}>{getGasLabel(gasid)}</Box>
+                  </Stack.Item>
+                ))}
+              </Stack>
+            </LabeledList.Item>
+          )}
+          {selectedFuel && (
+            <LabeledList.Item label="Effects">
+            {
+              recipe_effect_structure.map(item => {
+                const value = selectedFuel[item.param];
+                // Note that the minus icon is wider than the arrow icons,
+                // so we set the width to work with both without jumping.
+                return (
+                  <Stack>
+                    <Stack.Item key={item.param} color="label">
+                      <Tooltip content={item.label}>
+                        {typeof(item.icon) === "string" ? (
+                          <Icon position="relative" width="10px" name={item.icon} />
+                        ) : (
+                          <Icon.Stack positition="relative" width="10px" textAlign="center">
+                            {item.icon.map(icon => (
+                              <Icon name={typeof(icon) === "string" ? icon : "shit's fucked"} />
+                            ))}
+                          </Icon.Stack>
+                        )}
+                      </Tooltip>
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Tooltip content={(item.tooltip || (v => "x"+v))(value, data)}>
+                        <Icon position="relative" color="rgb(230,30,40)" width="10px" name={effect_to_icon(value, item.scale)} />
+                      </Tooltip>
+                    </Stack.Item>
+                </Stack>
+                );
+              })
+            }
           </LabeledList.Item>
-        </LabeledList>
-      </Section>
-    </>
+          )}
+        </LabeledList> 
+      </Collapsible>
+    </Section>
   );
 };
 
@@ -433,7 +552,7 @@ export const Hypertorus = (props, context) => {
   return (
     <Window
       title="Hypertorus Fusion Reactor control panel"
-      width={500}
+      width={720}
       height={600}>
       <Window.Content scrollable>
         <HypertorusTabs />
