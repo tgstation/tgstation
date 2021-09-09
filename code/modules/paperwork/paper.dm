@@ -394,6 +394,15 @@
 /obj/item/paper/crumpled/muddy
 	icon_state = "scrap_mud"
 
+/**
+ * Sheet designed for blanks
+ * var/code -indicates the form of the document
+ * var/category - to sort documents by department categories.
+ */
+/obj/item/paper/blank
+	var/code 
+	var/category
+
 #undef MAX_PAPER_LENGTH
 #undef MAX_PAPER_STAMPS
 #undef MAX_PAPER_STAMPS_OVERLAYS
