@@ -265,18 +265,18 @@ const SpeciesPageInner = (props: {
                       }
                       tooltip={species.name}
                       style={{
-                        height: "32px",
-                        width: "32px",
+                        height: "64px",
+                        width: "64px",
                       }}
                     >
                       <Box
                         className={classes([
-                          "species32x32",
+                          "species64x64",
                           species.icon,
                         ])}
                         ml={-1}
                         style={{
-                          "transform": "scale(0.9)",
+                          // "transform": "translateX(50%) translateY(50%) scale(1.9)",
                         }}
                       />
                     </Button>
