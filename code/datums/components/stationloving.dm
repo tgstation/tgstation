@@ -17,13 +17,16 @@
 	RegisterSignal(parent, list(COMSIG_ITEM_MARK_RETRIEVAL), .proc/check_mark_retrieval)
 	src.inform_admins = inform_admins
 	src.allow_item_destruction = allow_item_destruction
-	check_in_bounds() // Just in case something is being created outside of station/centcom
+
+	// Just in case something is being created outside of station/centcom
+	if(!destination_in_bounds(src))
+		relocate()
 
 /datum/component/stationloving/InheritComponent(datum/component/stationloving/newc, original, inform_admins, allow_death)
 	if (original)
 		if (newc)
 			inform_admins = newc.inform_admins
-			allow_death = newc.allow_death
+			allow_death = newc.allow_item_destruction
 		else
 			inform_admins = inform_admins
 
@@ -73,13 +76,13 @@
 /datum/component/stationloving/proc/destination_in_bounds(atom/destination)
 	var/static/list/allowed_shuttles = typecacheof(list(/area/shuttle/syndicate, /area/shuttle/escape, /area/shuttle/pod_1, /area/shuttle/pod_2, /area/shuttle/pod_3, /area/shuttle/pod_4))
 	var/static/list/disallowed_centcom_areas = typecacheof(list(/area/abductor_ship, /area/awaymission/errorroom))
-	var/turf/destination = get_turf(destination)
-	if (!destination)
+	var/turf/destination_turf = get_turf(destination)
+	if (!destination_turf)
 		return FALSE
-	var/area/destination_area = destination.loc
-	if (is_station_level(destination.z))
+	var/area/destination_area = destination_turf.loc
+	if (is_station_level(destination_turf.z))
 		return TRUE
-	if (is_centcom_level(destination.z))
+	if (is_centcom_level(destination_turf.z))
 		if (is_type_in_typecache(destination_area, disallowed_centcom_areas))
 			return FALSE
 		return TRUE
