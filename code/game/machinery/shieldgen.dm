@@ -276,6 +276,13 @@
 /obj/machinery/power/shieldwallgen/anchored
 	anchored = TRUE
 
+/obj/machinery/power/shieldwallgen/unlocked //for use in ruins, etc
+	locked = FALSE
+	req_access = null
+
+/obj/machinery/power/shieldwallgen/unlocked/anchored
+	anchored = TRUE
+
 /obj/machinery/power/shieldwallgen/Initialize()
 	. = ..()
 	if(anchored)
