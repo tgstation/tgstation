@@ -675,12 +675,16 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 				logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting a transfer into \the [holding || "air"].<br>"
 				if(!holding)
 					var/list/danger = list()
+					var/list/gaseslog = list()
 					for(var/id in air_contents.gases)
 						var/gas = air_contents.gases[id]
+						gaseslog[gas][GAS_META][META_GAS_NAME]] = gas[moles]//this may be the loggin mechanism
 						if(!gas[GAS_META][META_GAS_DANGER])
 							continue
 						if(gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE)) //if moles_visible is undefined, default to default visibility
 							danger[gas[GAS_META][META_GAS_NAME]] = gas[MOLES] //ex. "plasma" = 20
+							
+						
 
 					if(danger.len)
 						message_admins("[ADMIN_LOOKUPFLW(usr)] opened a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:")
@@ -692,7 +696,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 					else
 						log_admin("[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:")
 						for(var/name in GLOBAL_LIST_INIT)
-							var/msg = "[name]: [GLOBAL_LIST_INIT[name]] moles."
+							var/msg = "[name]: [gaseslog[name]] moles."
 							log_admin(msg)
 							message_admins(msg)
 			else
