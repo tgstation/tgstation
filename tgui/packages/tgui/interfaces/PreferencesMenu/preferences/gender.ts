@@ -16,7 +16,7 @@ export const GENDERS = {
   },
 
   [Gender.Other]: {
-    icon: "egg", // MOTHBLOCKS TODO: Unisex icon
+    icon: "tg-non-binary",
     text: "Other",
   },
 };
