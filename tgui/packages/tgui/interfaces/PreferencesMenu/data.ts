@@ -109,6 +109,7 @@ export type PreferencesMenuData = {
       [otherKey: string]: unknown;
     };
     secondary_features: Record<string, unknown>;
+    supplemental_features: Record<string, unknown>;
 
     names: Record<string, string>;
 

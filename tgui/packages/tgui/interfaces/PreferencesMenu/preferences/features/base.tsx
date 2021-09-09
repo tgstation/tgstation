@@ -46,18 +46,11 @@ export type FeatureValueProps<
   TSending = TReceiving,
   TServerData = undefined,
 > = {
-  // eslint-disable-next-line react/no-unused-prop-types
   act: typeof sendAct,
-
-  // eslint-disable-next-line react/no-unused-prop-types
   featureId: string,
-
-  // eslint-disable-next-line react/no-unused-prop-types
   handleSetValue: (newValue: TSending) => void;
-
-  // eslint-disable-next-line react/no-unused-prop-types
   serverData: TServerData | undefined,
-
+  shrink?: boolean,
   value: TReceiving;
 };
 
@@ -78,12 +71,17 @@ export const FeatureColorInput = (props: FeatureValueProps<string>) => {
             "box-sizing": "content-box",
             height: "11px",
             width: "11px",
+            ...(props.shrink ? {
+              "margin": "1px",
+            } : {}),
           }} />
         </Stack.Item>
 
-        <Stack.Item>
-          Change
-        </Stack.Item>
+        {!props.shrink && (
+          <Stack.Item>
+            Change
+          </Stack.Item>
+        )}
       </Stack>
     </Button>
   );
@@ -270,6 +268,7 @@ export const FeatureNumberInput = (
 export const FeatureValueInput = (props: {
   feature: Feature<unknown>,
   featureId: string,
+  shrink?: boolean,
   value: unknown,
 
   act: typeof sendAct,
@@ -297,6 +296,7 @@ export const FeatureValueInput = (props: {
             act: props.act,
             featureId: props.featureId,
             serverData: serverData && serverData[props.featureId],
+            shrink: props.shrink,
 
             handleSetValue: changeValue,
             value: predictedValue,

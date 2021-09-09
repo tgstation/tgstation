@@ -68,10 +68,18 @@ const ChoicedSelection = (props: {
   name: string,
   catalog: FeatureChoicedServerData,
   selected: string,
+  supplementalFeature?: string,
+  supplementalValue?: unknown,
   onClose: () => void,
   onSelect: (value: string) => void,
-}) => {
-  const { catalog } = props;
+}, context) => {
+  const { act } = useBackend<PreferencesMenuData>(context);
+
+  const {
+    catalog,
+    supplementalFeature,
+    supplementalValue,
+  } = props;
 
   if (!catalog.icons) {
     return (
@@ -93,6 +101,18 @@ const ChoicedSelection = (props: {
       <Stack vertical fill>
         <Stack.Item>
           <Stack fill>
+            {supplementalFeature && (
+              <Stack.Item>
+                <FeatureValueInput
+                  act={act}
+                  feature={features[supplementalFeature]}
+                  featureId={supplementalFeature}
+                  shrink
+                  value={supplementalValue}
+                />
+              </Stack.Item>
+            )}
+
             <Stack.Item grow>
               <Box style={{
                 "border-bottom": "1px solid #888",
@@ -201,6 +221,7 @@ const GenderButton = (props: {
 const MainFeature = (props: {
   catalog: FeatureChoicedServerData & {
     name: string,
+    supplemental_feature?: string,
   },
   currentValue: AssetWithIcon,
   isOpen: boolean,
@@ -209,7 +230,9 @@ const MainFeature = (props: {
   handleSelect: (newClothing: string) => void,
   randomization?: RandomSetting,
   setRandomization: (newSetting: RandomSetting) => void,
-}) => {
+}, context) => {
+  const { act, data } = useBackend<PreferencesMenuData>(context);
+
   const {
     catalog,
     currentValue,
@@ -221,6 +244,8 @@ const MainFeature = (props: {
     setRandomization,
   } = props;
 
+  const supplementalFeature = catalog.supplemental_feature;
+
   return (
     <Popper options={{
       placement: "bottom-start",
@@ -230,6 +255,12 @@ const MainFeature = (props: {
           name={catalog.name}
           catalog={catalog}
           selected={currentValue.value}
+          supplementalFeature={supplementalFeature}
+          supplementalValue={supplementalFeature && (
+            data
+              .character_preferences
+              .supplemental_features[supplementalFeature]
+          )}
           onClose={handleClose}
           onSelect={handleSelect}
         />

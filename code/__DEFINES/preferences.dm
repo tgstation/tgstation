@@ -140,3 +140,7 @@
 
 /// These will show in the list to the right of the character preview.
 #define PREFERENCE_CATEGORY_SECONDARY_FEATURES "secondary_features"
+
+/// These are preferences that are supplementary for main features,
+/// such as hair color being affixed to hair.
+#define PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES "supplemental_features"
