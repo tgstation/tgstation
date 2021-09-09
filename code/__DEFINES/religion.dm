@@ -13,14 +13,16 @@
 
 ///fisticuffs only. will probably be used a lot if the chaplain's weapon is really good
 #define FIST_FIGHT 1
+///must use weapons the chaplain makes from their sect. no fist fighting, even! it ensures a fair fight.
+#define RITUAL_WEAPONS 2
 ///melee weapon condition, default sparring condition.
-#define MELEE_ONLY 2
+#define MELEE_ONLY 3
 ///any weapon is cool... probably a terrible idea against security
-#define ANY_WEAPON 3
+#define ANY_WEAPON 4
 
 //## where should we fight?
 
-// default value - /area/commons/fitness
+// default value - /area/service/chapel
 
 //## what are the stakes? people you've beaten before can only fight in no stakes battles, to prevent farming
 

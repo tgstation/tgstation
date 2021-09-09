@@ -14,7 +14,7 @@
 	///outside interventions that ruin the match
 	var/flubs = 2
 
-/datum/sparring_match/New(weapons_condition, arena_condition, stakes_condition, chaplain, opponent)
+/datum/sparring_match/New(weapons_condition, arena_condition, stakes_condition, mob/living/carbon/human/chaplain, mob/living/carbon/human/opponent)
 	. = ..()
 	src.weapons_condition = weapons_condition
 	src.arena_condition = arena_condition
@@ -23,6 +23,8 @@
 	src.opponent = opponent
 	hook_signals(chaplain)
 	hook_signals(opponent)
+	chaplain.add_filter("sparring_outline", 9, list("type" = "outline", "color" = "#e02200"))
+	opponent.add_filter("sparring_outline", 9, list("type" = "outline", "color" = "#004ee0"))
 	//arena conditions
 	RegisterSignal(arena_condition, COMSIG_AREA_EXITED, .proc/check_for_quitters)
 
@@ -33,16 +35,28 @@
 		RegisterSignal(sparring, COMSIG_MOB_GRENADE_ARMED, .proc/grenade_violation)
 	if(weapons_condition < MELEE_ONLY)
 		RegisterSignal(sparring, COMSIG_MOB_ITEM_ATTACK, .proc/melee_violation)
+	//severe violations (insta violation win for other party) conditions
+	RegisterSignal(sparring, COMSIG_MOVABLE_TELEPORTED, .proc/teleport_violation)
 	//win conditions
 	RegisterSignal(sparring, COMSIG_MOB_STATCHANGE, .proc/check_for_victory)
 	//flub conditions
-	RegisterSignal(sparring, COMSIG_LIVING_DEATH, .proc/death_flubb)
-	RegisterSignal(sparring, COMSIG_PARENT_QDELETING, .proc/deletion_flubb)
+	RegisterSignal(sparring, COMSIG_PROJECTILE_HIT_BY, .proc/projectile_interference)
+	RegisterSignal(sparring, COMSIG_LIVING_DEATH, .proc/death_flub)
+	RegisterSignal(sparring, COMSIG_PARENT_QDELETING, .proc/deletion_flub)
 
 /datum/sparring_match/proc/unhook_signals(mob/living/carbon/human/sparring)
 	if(!sparring)
 		return
-	UnregisterSignal(sparring, list(COMSIG_MOB_FIRED_GUN, COMSIG_MOB_GRENADE_ARMED, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_STATCHANGE, COMSIG_LIVING_DEATH))
+	UnregisterSignal(sparring, list(
+		COMSIG_MOB_FIRED_GUN,
+		COMSIG_MOB_GRENADE_ARMED,
+		COMSIG_MOB_ITEM_ATTACK,
+		COMSIG_MOVABLE_TELEPORTED,
+		COMSIG_MOB_STATCHANGE,
+		COMSIG_PROJECTILE_HIT_BY,
+		COMSIG_LIVING_DEATH,
+		COMSIG_PARENT_QDELETING,
+	))
 
 ///someone is changing health state, end the fight in crit
 /datum/sparring_match/proc/check_for_victory(datum/participant, new_stat)
@@ -55,17 +69,39 @@
 	else
 		end_match(chaplain, opponent)
 
+/datum/sparring_match/proc/projectile_interference(datum/hit_by, atom/movable/firer)
+	SIGNAL_HANDLER
+	if(firer == chaplain || firer == opponent)
+		//oh, well that's allowed. or maybe it isn't. doesn't matter because firing the gun will trigger a violation, so no additional violation needed
+		return
+
+	if(isliving(firer))
+		var/mob/living/interfering = firer
+		switch(rand(1,3))
+			if(1)
+				to_chat(interfering, span_warning("You get a bad feeling... for interfering with [chaplain]'s sparring match..."))
+				interfering.AddComponent(/datum/component/omen, TRUE, null, FALSE)
+			if(2)
+				to_chat(interfering, span_warning("[GLOB.deity] has punished you for interfering with [chaplain]'s sparring match!"))
+				lightningbolt(interfering)
+			if(3)
+				to_chat(interfering, span_warning("[GLOB.deity]'s whispers echo through your mind for interfering with [chaplain]'s sparring match!!"))
+				SEND_SOUND(interfering, sound('sound/hallucinations/behind_you1.ogg'))
+				interfering.add_confusion(15)
+	flub()
+
+
 ///someone randomly fucking died
-/datum/sparring_match/proc/death_flubb(datum/deceased)
+/datum/sparring_match/proc/death_flub(datum/deceased)
 	SIGNAL_HANDLER
 
-	flub()
+	flubbed_match()
 
 ///someone randomly fucking deleted
-/datum/sparring_match/proc/deletion_flubb(datum/deceased)
+/datum/sparring_match/proc/deletion_flub(datum/qdeleting)
 	SIGNAL_HANDLER
 
-	flub()
+	flubbed_match()
 
 ///someone used a gun
 /datum/sparring_match/proc/gun_violation(datum/offender)
@@ -81,6 +117,13 @@
 /datum/sparring_match/proc/melee_violation(datum/offender)
 	SIGNAL_HANDLER
 	violation(offender, "using melee weapons")
+
+/datum/sparring_match/proc/teleport_violation(datum/offender)
+	SIGNAL_HANDLER
+	if(offender == chaplain)
+		end_match(opponent, chaplain, violation_victory = TRUE)
+	else
+		end_match(chaplain, opponent, violation_victory = TRUE)
 
 ///someone tried to leave
 /datum/sparring_match/proc/check_for_quitters(datum/arena, atom/movable/left_area, direction)
@@ -103,11 +146,18 @@
 		if(!opponent_violations_allowed)
 			end_match(chaplain, opponent, violation_victory = TRUE)
 
-///this match was interfered on, nobody wins or loses anything, just end
 /datum/sparring_match/proc/flub()
+	flubs--
+	if(!flubs) //too many interferences
+		flubbed_match()
+
+///this match was interfered on, nobody wins or loses anything, just end
+/datum/sparring_match/proc/flubbed_match()
 	unhook_signals(chaplain)
 	unhook_signals(opponent)
-	if(chaplain) //flubbing means who knows who is still standing
+	chaplain.remove_filter("burden_outline")
+	opponent.remove_filter("burden_outline")
+	if(chaplain) //flubing means we don't know who is still standing
 		to_chat(chaplain, span_boldannounce("The match was flub'd! No winners, no losers. You may restart the match with another contract."))
 	if(opponent)
 		to_chat(opponent, span_boldannounce("The match was flub'd! No winners, no losers."))
@@ -116,6 +166,8 @@
 /datum/sparring_match/proc/end_match(mob/living/carbon/human/winner, mob/living/carbon/human/loser, violation_victory = FALSE)
 	unhook_signals(chaplain)
 	unhook_signals(opponent)
+	chaplain.remove_filter("burden_outline")
+	opponent.remove_filter("burden_outline")
 	to_chat(chaplain, span_boldannounce("[winner] HAS WON!"))
 	to_chat(opponent, span_boldannounce("[winner] HAS WON!"))
 	win(winner, loser, violation_victory)

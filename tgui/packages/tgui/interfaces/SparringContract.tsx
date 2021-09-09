@@ -48,6 +48,7 @@ export const SparringContract = (props, context) => {
     possible_areas,
     left_sign,
     right_sign,
+    in_area,
   } = data;
   const [weapon, setWeapon] = useLocalState(context, "weapon", set_weapon);
   const [area, setArea] = useLocalState(context, "area", set_area);
@@ -133,7 +134,7 @@ export const SparringContract = (props, context) => {
                       icon="pen"
                       onClick={() => act('sign', {
                         "weapon": weapon,
-                        "arena": area,
+                        "area": area,
                         "stakes": stakes,
                         "sign_position": "left",
                       })}>
@@ -167,17 +168,23 @@ export const SparringContract = (props, context) => {
             </Stack.Item>
             <Stack.Item textAlign="center">
               <Button
-                tooltip="Both participants need to be in the arena!"
-                color="red"
-                icon="exclamation-triangle" />
+                tooltip={in_area
+                  && "Both participants are present in the "+ area + "."
+                  || "Both participants need to be in the arena!"}
+                color={in_area && "green" || "red"}
+                icon={in_area && "check" || "exclamation-triangle"} />
               <Button
-                disabled icon="fist-raised">
+                disabled={!in_area}
+                icon="fist-raised"
+                onClick={() => act('fight')} >
                 FIGHT!
               </Button>
               <Button
-                tooltip="You need signatures from both fighters!"
-                color="red"
-                icon="exclamation-triangle" />
+                tooltip={(left_sign && right_sign)
+                  && "Both signatures present, terms agreed upon."
+                  || "You need signatures from both fighters on the terms!"}
+                color={(left_sign && right_sign) && "green" || "red"}
+                icon={(left_sign && right_sign) && "check" || "exclamation-triangle"} />
             </Stack.Item>
           </Stack>
         </Section>

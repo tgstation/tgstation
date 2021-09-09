@@ -386,12 +386,14 @@
 	rites_list = list(
 		/datum/religion_rites/sparring_contract,
 		/datum/religion_rites/declare_arena,
+		// /datum/religion_rites/ritual_weapon,
 		/datum/religion_rites/fierce_heart,
+		// /datum/religion_rites/tenacity,
 	)
 	///places you can spar in. rites can be used to expand this list with new arenas!
 	var/list/arenas = list(
-		"\improper Recreation Area" = /area/commons/fitness/recreation,
-		"\improper Chapel" = /area/service/chapel
+		"Recreation Area" = /area/commons/fitness/recreation,
+		"Chapel" = /area/service/chapel
 	)
 	///how many matches you've lost with holy stakes. 3 = excommunication
 	var/matches_lost = 0

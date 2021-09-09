@@ -10,7 +10,7 @@
 	///what weapons will be allowed during the sparring match
 	var/weapons_condition = MELEE_ONLY
 	///what arena the fight will take place in
-	var/arena_condition = /area/commons/fitness/recreation
+	var/arena_condition = /area/service/chapel
 	///what stakes the fight will have
 	var/stakes_condition = STANDARD_STAKES
 	///who has signed this contract
@@ -83,7 +83,7 @@
 			if(!left_partner || !right_partner || !left_partner.mind || !right_partner.mind)
 				return
 			var/chaplain = left_partner.mind.holy_role ? left_partner : right_partner
-			var/opponent = right_partner.mind.holy_role ? right_partner : left_partner
+			var/opponent = left_partner.mind.holy_role ? right_partner : left_partner
 			new /datum/sparring_match(weapons_condition, arena_condition, stakes_condition, chaplain, opponent)
 			qdel(src)
 		if("sign")
@@ -91,17 +91,23 @@
 				to_chat(user, span_warning("You've already signed one side of the contract."))
 				return
 			var/area/arena_condition_name = GLOB.areas_by_type[arena_condition]
-			arena_condition_name = arena_condition_name.name
+			arena_condition_name = format_text(arena_condition_name.name)
 			//setting/checking for terms changed
 			var/terms_changed = FALSE
 			if(params["weapon"] != weapons_condition)
+				if(!params["weapon"])
+					return //they hit f5 to clear data then submitted
 				terms_changed = TRUE
 				weapons_condition = params["weapon"]
 			if(params["area"] != arena_condition_name)
+				if(!params["area"])
+					return //they hit f5 to clear data then submitted
 				terms_changed = TRUE
 				var/new_area_condition = sect.arenas[params["area"]]
 				arena_condition = new_area_condition
 			if(params["stakes"] != stakes_condition)
+				if(!params["stakes"])
+					return //they hit f5 to clear data then submitted
 				terms_changed = TRUE
 				weapons_condition = params["stakes"]
 			//if you change the terms you have to get the other person to sign again.
@@ -113,4 +119,3 @@
 				signed_by[1] = user
 			else
 				signed_by[2] = user
-
