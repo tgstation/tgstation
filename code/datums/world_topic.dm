@@ -186,3 +186,5 @@
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
 		// Shuttle timer, in seconds
 
+	.["custom_event"] = "Testing New Prefs Menu"
+	.["event_colors"] = TRUE
