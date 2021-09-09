@@ -341,6 +341,7 @@
 	dir = 8
 	},
 /obj/machinery/plumbing/receiver,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "abJ" = (
@@ -29794,8 +29795,9 @@
 /area/medical/medbay/aft)
 "lrg" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/item/radio/intercom/directional/west,
 /obj/machinery/light/directional/west,
+/obj/machinery/power/apc/auto_name/west,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "lrh" = (
@@ -35551,8 +35553,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/warning,
-/obj/machinery/power/apc/auto_name/east,
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -40054,6 +40054,9 @@
 	icon_state = "left";
 	name = "Chemistry Lab Access Hatch";
 	req_access_txt = "33"
+	},
+/obj/structure/sign/departments/chemistry{
+	pixel_y = 32
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/medical/medbay/central)
