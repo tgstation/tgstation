@@ -695,8 +695,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 							message_admins(msg)
 					else
 						log_admin("[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:")
-						for(var/name in GLOBAL_LIST_INIT)
-							var/msg = "[name]: [gaseslog[name]] moles."
+						for(var/name in gaseslog)
+							var/msg = "[name]: [gaseslog[name]] moles." //owo shrug
 							log_admin(msg)
 							message_admins(msg)
 			else
