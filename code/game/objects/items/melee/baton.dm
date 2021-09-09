@@ -569,7 +569,7 @@
 	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
-	var/obj/item/assembly/igniter/sparkler = 0
+	var/obj/item/assembly/igniter/sparkler
 
 /obj/item/melee/baton/security/cattleprod/Initialize()
 	. = ..()
