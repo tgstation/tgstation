@@ -66,7 +66,7 @@
 	dir = 5
 	},
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -5;
 	pixel_y = 8
 	},
@@ -154,7 +154,7 @@
 	dir = 5
 	},
 /obj/structure/closet/cabinet,
-/obj/item/storage/bag/money/vault,
+/obj/item/storage/bag/money/dutchmen,
 /obj/item/stack/sheet/mineral/gold{
 	amount = 3;
 	pixel_x = -2;
@@ -591,29 +591,11 @@
 	icon_state = "minibar";
 	name = "skeletal minibar"
 	},
-/obj/item/coin/silver{
-	name = "doubloon"
+/obj/item/reagent_containers/food/condiment/milk{
+	pixel_x = -5
 	},
-/obj/item/coin/silver{
-	name = "doubloon"
-	},
-/obj/item/coin/silver{
-	name = "doubloon"
-	},
-/obj/item/coin/silver{
-	name = "doubloon"
-	},
-/obj/item/coin/silver{
-	name = "doubloon"
-	},
-/obj/item/coin/gold{
-	name = "doubloon"
-	},
-/obj/item/coin/gold{
-	name = "doubloon"
-	},
-/obj/item/coin/gold{
-	name = "doubloon"
+/obj/item/reagent_containers/food/condiment/milk{
+	pixel_x = 5
 	},
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)

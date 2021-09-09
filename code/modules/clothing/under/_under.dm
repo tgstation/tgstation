@@ -328,6 +328,6 @@
 	accessory_overlay = null
 	update_appearance()
 
-/obj/item/clothing/under/rank/obj_destruction(damage_flag)
+/obj/item/clothing/under/rank/atom_destruction(damage_flag)
 	dump_attachment()
 	return ..()

@@ -8,7 +8,7 @@ have ways of interacting with a specific mob and control it.
 	movement_delay = 0.4 SECONDS
 	planning_subtrees = list(/datum/ai_planning_subtree/monkey_tree)
 	blackboard = list(
-		BB_MONKEY_AGRESSIVE = FALSE,
+		BB_MONKEY_AGGRESSIVE = FALSE,
 		BB_MONKEY_BEST_FORCE_FOUND = 0,
 		BB_MONKEY_ENEMIES = list(),
 		BB_MONKEY_BLACKLISTITEMS = list(),
@@ -31,7 +31,7 @@ have ways of interacting with a specific mob and control it.
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
-	blackboard[BB_MONKEY_AGRESSIVE] = TRUE //Angry cunt
+	blackboard[BB_MONKEY_AGGRESSIVE] = TRUE //Angry cunt
 
 /datum/ai_controller/monkey/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))
@@ -113,9 +113,9 @@ have ways of interacting with a specific mob and control it.
 	blackboard[BB_MONKEY_PICKUPTARGET] = weapon
 	current_movement_target = weapon
 	if(pickpocket)
-		queue_behavior(current_behaviors, /datum/ai_behavior/monkey_equip/pickpocket)
+		queue_behavior(/datum/ai_behavior/monkey_equip/pickpocket)
 	else
-		queue_behavior(current_behaviors, /datum/ai_behavior/monkey_equip/ground)
+		queue_behavior(/datum/ai_behavior/monkey_equip/ground)
 	return TRUE
 
 /// Returns either the best weapon from the given choices or null if held weapons are better

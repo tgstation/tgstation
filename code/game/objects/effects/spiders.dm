@@ -15,7 +15,7 @@
 	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
 		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/spider/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/structure/spider/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == MELEE)
 		switch(damage_type)
 			if(BURN)
@@ -31,7 +31,10 @@
 	take_damage(5, BURN, 0, 0)
 
 /obj/structure/spider/stickyweb
+	///Whether or not the web is from the genetics power
 	var/genetic = FALSE
+	///Whether or not the web is a sealed web
+	var/sealed = FALSE
 	icon_state = "stickyweb1"
 
 /obj/structure/spider/stickyweb/attack_hand(mob/user, list/modifiers)
@@ -48,7 +51,7 @@
 	user.put_in_hands(woven_cloth)
 
 /obj/structure/spider/stickyweb/Initialize()
-	if(prob(50))
+	if(!sealed && prob(50))
 		icon_state = "stickyweb2"
 	. = ..()
 
@@ -56,6 +59,8 @@
 	. = ..()
 	if(genetic)
 		return
+	if(sealed)
+		return FALSE
 	if(istype(mover, /mob/living/simple_animal/hostile/giant_spider))
 		return TRUE
 	else if(isliving(mover))
@@ -66,6 +71,13 @@
 			return FALSE
 	else if(istype(mover, /obj/projectile))
 		return prob(30)
+
+/obj/structure/spider/stickyweb/sealed
+	name = "sealed web"
+	desc = "A solid thick wall of web, airtight enough to block air flow."
+	icon_state = "sealedweb"
+	sealed = TRUE
+	CanAtmosPass = ATMOS_PASS_NO
 
 /obj/structure/spider/stickyweb/genetic //for the spider genes in genetics
 	genetic = TRUE

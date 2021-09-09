@@ -207,7 +207,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 // make the conveyor broken
 // also propagate inoperability to any connected conveyor with the same ID
 /obj/machinery/conveyor/proc/broken()
-	obj_break()
+	atom_break()
 	update()
 
 	var/obj/machinery/conveyor/C = locate() in get_step(src, dir)
@@ -467,8 +467,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/datum/port/output/direction
 	var/obj/machinery/conveyor_switch/attached_switch
 
-/obj/item/circuit_component/conveyor_switch/Initialize()
-	. = ..()
+/obj/item/circuit_component/conveyor_switch/populate_ports()
 	direction = add_output_port("Conveyor Direction", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/conveyor_switch/get_ui_notices()
@@ -485,8 +484,13 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	return ..()
 
 /obj/item/circuit_component/conveyor_switch/input_received(datum/port/input/port)
-	. = ..()
-	if(. || !attached_switch)
+	if(!attached_switch)
+		return
+
+	INVOKE_ASYNC(src, .proc/update_conveyers, port)
+
+/obj/item/circuit_component/conveyor_switch/proc/update_conveyers(datum/port/input/port)
+	if(!attached_switch)
 		return
 
 	attached_switch.update_position()

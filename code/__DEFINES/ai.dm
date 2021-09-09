@@ -7,7 +7,7 @@
 
 ///Monkey checks
 #define SHOULD_RESIST(source) (source.on_fire || source.buckled || HAS_TRAIT(source, TRAIT_RESTRAINED) || (source.pulledby && source.pulledby.grab_state > GRAB_PASSIVE))
-#define IS_DEAD_OR_INCAP(source) (HAS_TRAIT(source, TRAIT_INCAPACITATED) || HAS_TRAIT(source, TRAIT_HANDS_BLOCKED) || IS_IN_STASIS(source) || source.stat)
+#define IS_DEAD_OR_INCAP(source) (source.incapacitated() || source.stat)
 
 ///For JPS pathing, the maximum length of a path we'll try to generate. Should be modularized depending on what we're doing later on
 #define AI_MAX_PATH_LENGTH 30 // 30 is possibly overkill since by default we lose interest after 14 tiles of distance, but this gives wiggle room for weaving around obstacles
@@ -24,14 +24,20 @@
 ///Does this task let you perform the action while you move closer? (Things like moving and shooting)
 #define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<1)
 
+///AI flags
+#define STOP_MOVING_WHEN_PULLED (1<<0)
+
 ///Subtree defines
 
 ///This subtree should cancel any further planning, (Including from other subtrees)
 #define SUBTREE_RETURN_FINISH_PLANNING 1
 
+//Generic BB keys
+#define BB_CURRENT_MIN_MOVE_DISTANCE "min_move_distance"
+
 // Monkey AI controller blackboard keys
 
-#define BB_MONKEY_AGRESSIVE "BB_monkey_agressive"
+#define BB_MONKEY_AGGRESSIVE "BB_monkey_aggressive"
 #define BB_MONKEY_GUN_NEURONS_ACTIVATED "BB_monkey_gun_aware"
 #define BB_MONKEY_GUN_WORKED "BB_monkey_gun_worked"
 #define BB_MONKEY_BEST_FORCE_FOUND "BB_monkey_bestforcefound"
@@ -163,3 +169,18 @@
 ///bane ai
 #define BB_BANE_BATMAN "BB_bane_batman"
 //yep thats it
+
+
+//Hunting defines
+#define SUCCESFUL_HUNT_COOLDOWN 5 SECONDS
+
+///Hunting BB keys
+#define BB_CURRENT_HUNTING_TARGET "BB_current_hunting_target"
+#define BB_HUNTING_COOLDOWN "BB_HUNTING_COOLDOWN"
+
+///Basic Mob Keys
+
+///Targetting subtrees
+#define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
+#define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
+#define BB_TARGETTING_DATUM "targetting_datum"

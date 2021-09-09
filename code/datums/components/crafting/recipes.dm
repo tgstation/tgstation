@@ -551,7 +551,7 @@
 	result = /obj/structure/cannon/trash
 	reqs = list(
 		/obj/item/melee/skateboard/improvised = 1,
-		/obj/item/tank/internals/oxygen/red = 1,
+		/obj/item/tank/internals/oxygen = 1,
 		/datum/reagent/drug/maint/tar = 15,
 		/obj/item/restraints/handcuffs/cable = 1,
 		/obj/item/storage/toolbox = 1,
