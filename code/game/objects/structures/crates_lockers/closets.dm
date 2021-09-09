@@ -12,12 +12,18 @@
 	armor = list(MELEE = 20, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 60)
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
+	/// The overlay for the closet's door
 	var/obj/effect/overlay/closet_door/door_obj
+	/// Whether or not this door is being animated
 	var/is_animating_door = FALSE
+	/// Vertical squish of the door
 	var/door_anim_squish = 0.12
+	/// The maximum angle the door will be drawn at
 	var/door_anim_angle = 136
+	/// X position of the closet door hinge
 	var/door_hinge_x = -6.5
-	var/door_anim_time = 2.0 // set to 0 to make the door not animate at all
+	/// Amount of time it takes for the door animation to play
+	var/door_anim_time = 1.5 // set to 0 to make the door not animate at all
 
 	/// Controls whether a door overlay should be applied using the icon_door value as the icon state
 	var/enable_door_overlay = TRUE
@@ -117,6 +123,7 @@
 	. += emissive_appearance(icon, "locked", alpha = src.alpha)
 	. += locked ? "locked" : "unlocked"
 
+/// Animates the closet door opening and closing
 /obj/structure/closet/proc/animate_door(closing = FALSE)
 	if(door_anim_time)
 		if(!door_obj)
@@ -140,13 +147,12 @@
 				animate(door_obj, transform = door_transform, icon_state = door_state, layer = door_layer, time = world.tick_lag, flags = ANIMATION_END_NOW)
 			else
 				animate(transform = door_transform, icon_state = door_state, layer = door_layer, time = world.tick_lag)
-		addtimer(CALLBACK(src,.proc/end_door_animation),door_anim_time,TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_CLIENT_TIME)
+		addtimer(CALLBACK(src, .proc/end_door_animation), door_anim_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_CLIENT_TIME)
 
 /obj/structure/closet/proc/end_door_animation()
 	is_animating_door = FALSE
 	vis_contents -= door_obj
 	update_icon()
-	COMPILE_OVERLAYS(src)
 
 /obj/structure/closet/proc/get_door_transform(angle)
 	var/matrix/door_matrix = matrix()
