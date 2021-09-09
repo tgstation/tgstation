@@ -93,16 +93,6 @@
 		"wagging"
 	],
 
-	"skeletons": [
-		"skeleton",
-		"milk",
-		"xylophone",
-		"bone",
-		"calcium",
-		"the ride never ends",
-		"doot"
-	],
-
 	"snakes": [
 		"snake",
 		"snek",
@@ -194,7 +184,19 @@
 		"wiz",
 		"magic",
 		"lich",
-		"ei nath"
+		"ei nath",
+		"skeleton",
+		"milk",
+		"xylophone",
+		"bone",
+		"calcium",
+		"the ride never ends",
+		"doot",
+		"ghost",
+		"vampire",
+		"zombie",
+		"nightmare",
+		"demon",
 	],
 
 "aliens": [

@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(traumas)
 /datum/controller/subsystem/traumas/Initialize()
 	//phobia types is to pull from randomly for brain traumas, e.g. conspiracies is for special assignment only
 	phobia_types = sortList(list("spiders", "space", "security", "clowns", "greytide", "lizards",
-						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
+						"snakes", "robots", "doctors", "authority", "the supernatural",
 						"aliens", "strangers", "birds", "falling", "anime", "insects", "guns"))
 
 	phobia_regexes = list("spiders" = construct_phobia_regex("spiders"),
@@ -22,7 +22,6 @@ SUBSYSTEM_DEF(traumas)
 		"clowns" = construct_phobia_regex("clowns"),
 		"greytide" = construct_phobia_regex("greytide"),
 		"lizards" = construct_phobia_regex("lizards"),
-		"skeletons" = construct_phobia_regex("skeletons"),
 		"snakes" = construct_phobia_regex("snakes"),
 		"robots" = construct_phobia_regex("robots"),
 		"doctors" = construct_phobia_regex("doctors"),
@@ -42,7 +41,6 @@ SUBSYSTEM_DEF(traumas)
 	phobia_mobs = list("spiders" = typecacheof(list(/mob/living/simple_animal/hostile/giant_spider)),
 		"security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
 		"lizards" = typecacheof(list(/mob/living/simple_animal/hostile/lizard)),
-		"skeletons" = typecacheof(list(/mob/living/simple_animal/hostile/skeleton)),
 		"snakes" = typecacheof(list(/mob/living/simple_animal/hostile/retaliate/snake)),
 		"robots" = typecacheof(list(/mob/living/silicon/robot, /mob/living/silicon/ai,
 			/mob/living/simple_animal/drone, /mob/living/simple_animal/bot, /mob/living/simple_animal/hostile/swarmer,
@@ -91,11 +89,6 @@ SUBSYSTEM_DEF(traumas)
 
 		"lizards" = typecacheof(list(/obj/item/toy/plush/lizard_plushie, /obj/item/food/kebab/tail, /obj/item/organ/tail/lizard,
 			/obj/item/reagent_containers/food/drinks/bottle/lizardwine, /obj/item/clothing/head/lizard, /obj/item/clothing/shoes/cowboy/lizard,
-		)),
-
-		"skeletons" = typecacheof(list(/obj/item/organ/tongue/bone, /obj/item/clothing/suit/armor/bone, /obj/item/stack/sheet/bone,
-			/obj/item/food/meat/slab/human/mutant/skeleton,
-			/obj/effect/decal/remains/human,
 		)),
 
 		"conspiracies" = typecacheof(list(/obj/item/clothing/under/rank/captain, /obj/item/clothing/under/rank/security/head_of_security,
@@ -147,6 +140,8 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/nullrod, /obj/item/clothing/under/rank/civilian/chaplain,
 			/obj/structure/spirit_board, /obj/item/toy/eightball/haunted, /obj/item/storage/toolbox/haunted,
 			/obj/item/stack/sheet/hauntium,
+			/obj/item/organ/tongue/bone, /obj/item/clothing/suit/armor/bone, /obj/item/stack/sheet/bone,
+			/obj/item/food/meat/slab/human/mutant/skeleton, /obj/effect/decal/remains/human,
 		)),
 
 		"aliens" = typecacheof(list(/obj/item/clothing/mask/facehugger, /obj/item/organ/body_egg/alien_embryo,
@@ -203,7 +198,6 @@ SUBSYSTEM_DEF(traumas)
 	)
 
 	phobia_species = list("lizards" = typecacheof(list(/datum/species/lizard)),
-		"skeletons" = typecacheof(list(/datum/species/skeleton, /datum/species/plasmaman)),
 		"conspiracies" = typecacheof(list(/datum/species/abductor, /datum/species/lizard, /datum/species/synth)),
 		"robots" = typecacheof(list(/datum/species/android)),
 		"the supernatural" = typecacheof(list(/datum/species/golem/runic, /datum/species/skeleton,
