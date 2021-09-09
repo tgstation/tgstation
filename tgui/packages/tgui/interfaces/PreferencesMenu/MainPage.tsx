@@ -35,7 +35,7 @@ const CharacterControls = (props: {
       <Stack.Item>
         <Button
           onClick={props.handleRotate}
-          fontSize="16px"
+          fontSize="22px"
           icon="undo"
           tooltip="Rotate"
           tooltipPosition="top"
@@ -45,7 +45,7 @@ const CharacterControls = (props: {
       <Stack.Item>
         <Button
           onClick={props.handleOpenSpecies}
-          fontSize="16px"
+          fontSize="22px"
           icon="paw"
           tooltip="Species"
           tooltipPosition="top"
@@ -194,7 +194,7 @@ const GenderButton = (props: {
                       props.handleSetGender(gender);
                       setGenderMenuOpen(false);
                     }}
-                    fontSize="16px"
+                    fontSize="22px"
                     icon={GENDERS[gender].icon}
                     tooltip={GENDERS[gender].text}
                     tooltipPosition="top"
@@ -209,7 +209,7 @@ const GenderButton = (props: {
         onClick={() => {
           setGenderMenuOpen(!genderMenuOpen);
         }}
-        fontSize="16px"
+        fontSize="22px"
         icon={GENDERS[props.gender].icon}
         tooltip="Gender"
         tooltipPosition="top"
