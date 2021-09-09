@@ -128,3 +128,8 @@
 	human.hairstyle = "Hime Cut"
 	human.hair_color = "fcc" // pink
 	human.update_hair()
+
+	var/obj/item/organ/ears/cat/cat_ears = human.getorgan(/obj/item/organ/ears/cat)
+	if (cat_ears)
+		cat_ears.color = human.hair_color
+		human.update_body()
