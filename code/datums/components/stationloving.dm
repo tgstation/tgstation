@@ -19,7 +19,7 @@
 	src.allow_item_destruction = allow_item_destruction
 
 	// Just in case something is being created outside of station/centcom
-	if(!destination_in_bounds(src))
+	if(!destination_in_bounds(parent))
 		relocate()
 
 /datum/component/stationloving/InheritComponent(datum/component/stationloving/newc, original, inform_admins, allow_death)
