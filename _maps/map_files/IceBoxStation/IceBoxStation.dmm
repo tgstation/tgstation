@@ -27997,6 +27997,7 @@
 /turf/open/floor/carpet,
 /area/maintenance/space_hut/cabin)
 "krv" = (
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/glass/reinforced,
 /area/medical/medbay/central)
 "krA" = (
