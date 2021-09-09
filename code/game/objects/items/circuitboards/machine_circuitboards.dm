@@ -553,6 +553,7 @@
 		/obj/machinery/vending/clothing = "ClothesMate",
 		/obj/machinery/vending/medical = "NanoMed Plus",
 		/obj/machinery/vending/drugs = "NanoDrug Plus",
+		/obj/machinery/vending/blood = "Blood'O'Matic",
 		/obj/machinery/vending/wallmed = "NanoMed",
 		/obj/machinery/vending/assist  = "Part-Mart",
 		/obj/machinery/vending/engivend = "Engi-Vend",

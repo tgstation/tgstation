@@ -39,31 +39,40 @@
 	return ..()
 
 /obj/item/reagent_containers/blood/a_plus
+	name = "bloodpack A+"
 	blood_type = "A+"
 
 /obj/item/reagent_containers/blood/a_minus
+	name = "bloodpack A-"
 	blood_type = "A-"
 
 /obj/item/reagent_containers/blood/b_plus
+	name = "bloodpack B+"
 	blood_type = "B+"
 
 /obj/item/reagent_containers/blood/b_minus
+	name = "bloodpack B-"
 	blood_type = "B-"
 
 /obj/item/reagent_containers/blood/o_plus
+	name = "bloodpack O+"
 	blood_type = "O+"
 
 /obj/item/reagent_containers/blood/o_minus
+	name = "bloodpack O-"
 	blood_type = "O-"
 
 /obj/item/reagent_containers/blood/lizard
+	name = "bloodpack L"
 	blood_type = "L"
 
 /obj/item/reagent_containers/blood/ethereal
+	name = "bloodpack LE"
 	blood_type = "LE"
 	unique_blood = /datum/reagent/consumable/liquidelectricity
 
 /obj/item/reagent_containers/blood/universal
+	name = "bloodpack U"
 	blood_type = "U"
 
 /obj/item/reagent_containers/blood/attackby(obj/item/I, mob/user, params)

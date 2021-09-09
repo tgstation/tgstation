@@ -66,11 +66,37 @@
 						/obj/item/reagent_containers/pill/multiver = 6)
 	premium = list(/obj/item/reagent_containers/medigel/synthflesh = 2,
 					/obj/item/storage/pill_bottle/psicodine = 2)
-	default_price = 50
-	extra_price = 100
+	default_price = PAYCHECK_EASY
+	extra_price = PAYCHECK_COMMAND
 	payment_department = ACCOUNT_MED
 	refill_canister = /obj/item/vending_refill/drugs
 
 /obj/item/vending_refill/drugs
 	machine_name = "NanoDrug Plus"
+	icon_state = "refill_medical"
+
+//Blood'O'Matic
+/obj/machinery/vending/blood
+	name = "Blood'O'Matic"
+	desc = "Human blood dispenser. With internal freezer. Brought to you by EmpireV corp."
+	icon_state = "blood2"
+	icon_deny = "blood2-deny"
+	product_ads = "Go and grab some blood!;I'm hope you are not bloody vampire.;Only from nice virgins!;Natural liquids!;This stuff saves lives."
+	payment_department = ACCOUNT_MED
+	products = list(/obj/item/reagent_containers/blood = 4,
+					/obj/item/reagent_containers/blood/a_plus = 7,
+					/obj/item/reagent_containers/blood/a_minus = 4,
+					/obj/item/reagent_containers/blood/b_plus = 4,
+					/obj/item/reagent_containers/blood/b_minus = 2,
+					/obj/item/reagent_containers/blood/o_plus = 7)
+	contraband = list(/obj/item/reagent_containers/blood/universal = 2)
+	premium = list(/obj/item/reagent_containers/blood/o_minus = 3,
+					/obj/item/reagent_containers/blood/lizard = 2,
+					/obj/item/reagent_containers/blood/ethereal = 1)
+	default_price = 50
+	extra_price = 100
+	refill_canister = /obj/item/vending_refill/blood
+
+/obj/item/vending_refill/blood
+	machine_name = "Blood'O'Matic"
 	icon_state = "refill_medical"
