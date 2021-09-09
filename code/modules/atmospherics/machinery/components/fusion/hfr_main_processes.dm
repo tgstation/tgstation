@@ -548,8 +548,10 @@
 
 	if(moderator_list[/datum/gas/oxygen] > 150)
 		if(iron_content > 0)
-			iron_content = max(iron_content - 0.5, 0)
-			moderator_internal.gases[/datum/gas/oxygen] -= 10
+			var/max_iron_removable = 0.00415
+			var/iron_removed = min(max_iron_removable * delta_time, iron_content)
+			iron_content -= iron_removed
+			moderator_internal.gases[/datum/gas/oxygen] -= 10 * iron_removed / max_iron_removable
 
 	if(prob(critical_threshold_proximity / 15))
 		var/grav_range = round(log(2.5, critical_threshold_proximity))
