@@ -452,6 +452,9 @@ export const MainPage = (props: {
         <>
           {multiNameInputOpen && <MultiNameInput
             handleClose={() => setMultiNameInputOpen(false)}
+            handleRandomizeName={preference => act("randomize_name", {
+              preference,
+            })}
             handleUpdateName={(nameType, value) => act("set_preference", {
               preference: nameType,
               value,

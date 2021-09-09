@@ -18,6 +18,7 @@ const sortNameWithKeyEntries = sortBy<[string, NameWithKey[]]>(
 
 export const MultiNameInput = (props: {
   handleClose: () => void,
+  handleRandomizeName: (nameType: string) => void,
   handleUpdateName: (nameType: string, value: string) => void,
   names: Record<string, string>,
 }, context) => {
@@ -109,7 +110,24 @@ export const MultiNameInput = (props: {
                             key={key}
                             label={name.explanation}
                           >
-                            {content}
+                            <Stack fill>
+                              <Stack.Item grow>
+                                {content}
+                              </Stack.Item>
+
+                              {!!name.can_randomize && (
+                                <Stack.Item>
+                                  <Button
+                                    icon="dice"
+                                    tooltip="Randomize"
+                                    tooltipPosition="right"
+                                    onClick={() => {
+                                      props.handleRandomizeName(key);
+                                    }}
+                                  />
+                                </Stack.Item>
+                              )}
+                            </Stack>
                           </LabeledList.Item>
                         );
                       })}
@@ -127,7 +145,6 @@ export const MultiNameInput = (props: {
   );
 };
 
-// MOTHBLOCKS TODO: Random name button
 export const NameInput = (props: {
   handleUpdateName: (name: string) => void,
   name: string,

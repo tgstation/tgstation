@@ -1,7 +1,9 @@
 /// Middleware that handles telling the UI which name to show, and waht names
 /// they have.
 /datum/preference_middleware/names
-	// MOTHBLOCKS TODO: Randomize name, use create_informed_default_value
+	action_delegations = list(
+		"randomize_name" = .proc/randomize_name,
+	)
 
 /datum/preference_middleware/names/get_constant_data()
 	var/list/data = list()
@@ -14,6 +16,7 @@
 			continue
 
 		types[name_preference.savefile_key] = list(
+			"can_randomize" = name_preference.is_randomizable(),
 			"explanation" = name_preference.explanation,
 			"group" = name_preference.group,
 		)
@@ -44,3 +47,10 @@
 			return name_preference.savefile_key
 
 	return "real_name"
+
+/datum/preference_middleware/names/proc/randomize_name(list/params, mob/user)
+	var/datum/preference/name/name_preference = GLOB.preference_entries_by_key[params["preference"]]
+	if (!istype(name_preference))
+		return FALSE
+
+	return preferences.update_preference(name_preference, name_preference.create_random_value(preferences))

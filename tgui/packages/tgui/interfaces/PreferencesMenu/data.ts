@@ -32,6 +32,7 @@ export enum JobPriority {
 }
 
 export type Name = {
+  can_randomize: BooleanLike;
   explanation: string;
   group: string;
 };
