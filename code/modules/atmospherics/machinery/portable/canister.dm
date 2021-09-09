@@ -691,6 +691,10 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 							message_admins(msg)
 					else
 						log_admin("[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:")
+						for(var/name in GLOBAL_LIST_INIT)
+							var/msg = "[name]: [GLOBAL_LIST_INIT[name]] moles."
+							log_admin(msg)
+							message_admins(msg)
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
 			investigate_log(logmsg, INVESTIGATE_ATMOS)
