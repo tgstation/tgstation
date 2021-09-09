@@ -46,7 +46,7 @@
 	theme = THEME_HOLY
 	icon_state = "purified_soulstone"
 	for(var/mob/mob_cultist in contents)
-		if(mob_cultist.mind)
+		if(!mob_cultist.mind)
 			continue
 		icon_state = "purified_soulstone2"
 		mob_cultist.mind.remove_antag_datum(/datum/antagonist/cult)
