@@ -443,8 +443,8 @@
 
 /obj/effect/spawner/lootdrop/snowdin/dungeonlite
 	name = "dungeon lite"
-	loot = list(/obj/item/melee/classic_baton = 11,
-				/obj/item/melee/classic_baton/telescopic = 12,
+	loot = list(/obj/item/melee/baton = 11,
+				/obj/item/melee/baton/telescopic = 12,
 				/obj/item/book/granter/spell/smoke = 10,
 				/obj/item/book/granter/spell/blind = 10,
 				/obj/item/storage/firstaid/regular = 45,
