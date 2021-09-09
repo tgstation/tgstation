@@ -147,7 +147,6 @@
 		cell.emp_act(severity)
 
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
-	. = ..()
 	add_fingerprint(user)
 
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
@@ -175,6 +174,7 @@
 		user.visible_message(span_notice("\The [user] inserts a power cell into \the [src]."), span_notice("You insert the power cell into \the [src]."))
 		SStgui.update_uis(src)
 		return TRUE
+	return ..()
 
 /obj/machinery/space_heater/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
