@@ -212,7 +212,6 @@
 			to_chat(new_spawn, policy)
 		to_chat(new_spawn, "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked.")
 	else
-		new_spawn.mind.store_memory("<b>Serve [owner.real_name], your creator.</b>")
 		new_spawn.mind.enslave_mind_to_creator(owner)
 		log_game("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
 		log_admin("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")

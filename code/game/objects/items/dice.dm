@@ -1,38 +1,45 @@
-/*****************************Dice Bags********************************/
 
-/obj/item/storage/pill_bottle/dice
+///holding bag for dice
+/obj/item/storage/dice
 	name = "bag of dice"
 	desc = "Contains all the luck you'll ever need."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "dicebag"
-	var/list/special_die = list(
-				/obj/item/dice/d1,
-				/obj/item/dice/d2,
-				/obj/item/dice/fudge,
-				/obj/item/dice/d6/space,
-				/obj/item/dice/d00,
-				/obj/item/dice/eightbd20,
-				/obj/item/dice/fourdd6,
-				/obj/item/dice/d100
-				)
+	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/storage/pill_bottle/dice/PopulateContents()
+/obj/item/storage/dice/Initialize(mapload)
+	. = ..()
+	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
+	storage.allow_quick_gather = TRUE
+	storage.click_gather = TRUE
+	storage.set_holdable(list(/obj/item/dice))
+
+/obj/item/storage/dice/PopulateContents()
 	new /obj/item/dice/d4(src)
 	new /obj/item/dice/d6(src)
 	new /obj/item/dice/d8(src)
 	new /obj/item/dice/d10(src)
 	new /obj/item/dice/d12(src)
 	new /obj/item/dice/d20(src)
-	var/picked = pick(special_die)
+	var/picked = pick(list(
+		/obj/item/dice/d1,
+		/obj/item/dice/d2,
+		/obj/item/dice/fudge,
+		/obj/item/dice/d6/space,
+		/obj/item/dice/d00,
+		/obj/item/dice/eightbd20,
+		/obj/item/dice/fourdd6,
+		/obj/item/dice/d100,
+	))
 	new picked(src)
 
-/obj/item/storage/pill_bottle/dice/suicide_act(mob/user)
+/obj/item/storage/dice/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (OXYLOSS)
 
-/obj/item/storage/pill_bottle/dice/hazard
+/obj/item/storage/dice/hazard
 
-/obj/item/storage/pill_bottle/dice/hazard/PopulateContents()
+/obj/item/storage/dice/hazard/PopulateContents()
 	new /obj/item/dice/d6(src)
 	new /obj/item/dice/d6(src)
 	new /obj/item/dice/d6(src)
@@ -42,9 +49,8 @@
 		else
 			new /obj/item/dice/d6(src)
 
-/*****************************Dice********************************/
-
-/obj/item/dice //depreciated d6, use /obj/item/dice/d6 if you actually want a d6
+///this is a prototype for dice, for a real d6 use "/obj/item/dice/d6"
+/obj/item/dice
 	name = "die"
 	desc = "A die with six sides. Basic and serviceable."
 	icon = 'icons/obj/dice.dmi'

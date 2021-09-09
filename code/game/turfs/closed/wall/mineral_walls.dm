@@ -5,6 +5,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
 	rcd_memory = null
+	material_flags = MATERIAL_EFFECTS
 	var/last_event = 0
 	var/active = null
 
@@ -164,6 +165,7 @@
 	base_icon_state = "wood_wall"
 	sheet_type = /obj/item/stack/sheet/mineral/wood
 	hardness = 70
+	turf_flags = NONE
 	explosion_block = 0
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_WOOD_WALLS)

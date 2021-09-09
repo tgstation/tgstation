@@ -253,7 +253,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
-		obj_destruction(MELEE)
+		atom_destruction(MELEE)
 
 /obj/item/ComponentInitialize()
 	. = ..()
@@ -793,6 +793,13 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if (obj_flags & CAN_BE_HIT)
 		return ..()
 	return 0
+
+/obj/item/attack_basic_mob(mob/living/basic/user, list/modifiers)
+	if (obj_flags & CAN_BE_HIT)
+		return ..()
+	return 0
+
+attack_basic_mob
 
 /obj/item/burn()
 	if(!QDELETED(src))

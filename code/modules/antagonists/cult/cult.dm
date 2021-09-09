@@ -156,7 +156,7 @@
 		var/mob/living/carbon/human/H = current
 		H.eye_color = initial(H.eye_color)
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		REMOVE_TRAIT(H, TRAIT_CULT_EYES, CULT_TRAIT)
+		REMOVE_TRAIT(H, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
 		H.remove_overlay(HALO_LAYER)
 		H.update_body()
 
@@ -301,6 +301,23 @@
 		log_game("The blood cult has ascended with [cultplayers] players.")
 
 	qdel(cult_visual_controller)
+
+/datum/team/cult/proc/rise(cultist)
+	if(ishuman(cultist))
+		var/mob/living/carbon/human/H = cultist
+		H.eye_color = BLOODCULT_EYE
+		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
+		ADD_TRAIT(H, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
+		H.update_body()
+
+/datum/team/cult/proc/ascend(cultist)
+	if(ishuman(cultist))
+		var/mob/living/carbon/human/human = cultist
+		new /obj/effect/temp_visual/cult/sparks(get_turf(human), human.dir)
+		var/istate = pick("halo1","halo2","halo3","halo4","halo5","halo6")
+		var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/32x64.dmi', istate, -HALO_LAYER)
+		human.overlays_standing[HALO_LAYER] = new_halo_overlay
+		human.apply_overlay(HALO_LAYER)
 
 /datum/team/cult/proc/make_image(datum/objective/sacrifice/sac_objective)
 	var/datum/job/job_of_sacrifice = sac_objective.target.assigned_role

@@ -5,6 +5,17 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "tgui:build": "webpack",
+    "tgui:analyze": "webpack --analyze",
+    "tgui:dev": "node --experimental-modules packages/tgui-dev-server/index.js",
+    "tgui:lint": "eslint packages --ext .js,.cjs,.ts,.tsx",
+    "tgui:sonar": "eslint packages --ext .js,.cjs,.ts,.tsx -c .eslintrc-sonar.yml",
+    "tgui:tsc": "tsc",
+    "tgui:test": "jest --watch",
+    "tgui:test-simple": "CI=true jest --color",
+    "tgui:test-ci": "CI=true jest --color --collect-coverage"
+  },
   "dependencies": {
     "@babel/core": "^7.15.0",
     "@babel/eslint-parser": "^7.15.0",
