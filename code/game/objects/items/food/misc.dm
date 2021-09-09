@@ -202,7 +202,7 @@
 	food_reagents = list(/datum/reagent/consumable/mold = 30)
 
 /obj/item/food/badrecipe/moldy/bacteria
-	name = "bacterua rich moldy mess"
+	name = "bacteria rich moldy mess"
 	desc = "Not only is this rancid lump of disgusting bile crawling with insect life, but it is also teeming with various microscopic cultures. <i>It moves when you're not looking.</i>"
 
 /obj/item/food/badrecipe/moldy/bacteria/Initialize()
