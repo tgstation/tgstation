@@ -64,6 +64,7 @@
 		. += "There is no power cell installed."
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Temperature range at <b>[settable_temperature_range]°C</b>.<br>Heating power at <b>[siunit(heating_power, "W", 1)]</b>.<br>Power consumption at <b>[(efficiency*-0.0025)+150]%</b>.") //100%, 75%, 50%, 25%
+		. += span_notice("<b>Right-click</b> to toggle [on ? "off" : "on"].")
 
 /obj/machinery/space_heater/update_icon_state()
 	. = ..()
@@ -175,6 +176,15 @@
 		user.visible_message(span_notice("\The [user] inserts a power cell into \the [src]."), span_notice("You insert the power cell into \the [src]."))
 		SStgui.update_uis(src)
 		return TRUE
+
+/obj/machinery/space_heater/attack_hand_secondary(mob/user, list/modifiers)
+	if(!panel_open)
+		if(!can_interact(user))
+			return
+		on = !on
+		update_appearance()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	. = ..()
 
 /obj/machinery/space_heater/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
