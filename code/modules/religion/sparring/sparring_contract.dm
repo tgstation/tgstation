@@ -2,6 +2,8 @@
 	desc = "A contract for setting up sparring matches. Both sparring partners must agree with the terms to begin."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
+	drop_sound = 'sound/items/handling/paper_drop.ogg'
+	pickup_sound =  'sound/items/handling/paper_pickup.ogg'
 	throw_range = 1
 	throw_speed = 1
 	w_class = WEIGHT_CLASS_TINY
@@ -43,7 +45,7 @@
 	var/area/arena = GLOB.areas_by_type[arena_condition]
 	var/mob/living/carbon/human/left_partner = signed_by[1]
 	var/mob/living/carbon/human/right_partner = signed_by[2]
-	data["in_area"] = ((left_partner && right_partner) && (left_partner in arena.contents) && (right_partner in arena.contents))
+	data["in_area"] = ((left_partner && right_partner && arena) && (left_partner in arena.contents) && (right_partner in arena.contents))
 	data["left_sign"] = left_partner ? left_partner.real_name : "none"
 	data["right_sign"] = right_partner ? right_partner.real_name : "none"
 	return data
@@ -74,10 +76,6 @@
 	//any updating of the terms should update the UI to display new terms
 	. = TRUE
 
-
-	var/area_name = params["area"]
-	var/arena_path = sect.arenas[area_name]
-	var/terms_changed = FALSE
 	switch(action)
 		if("fight")
 			var/mob/living/carbon/human/left_partner = signed_by[1]
@@ -86,20 +84,26 @@
 				return
 			var/chaplain = left_partner.mind.holy_role ? left_partner : right_partner
 			var/opponent = right_partner.mind.holy_role ? right_partner : left_partner
-			new /datum/sparring_match (weapons_condition, arena_condition, stakes_condition, chaplain, opponent)
+			new /datum/sparring_match(weapons_condition, arena_condition, stakes_condition, chaplain, opponent)
 			qdel(src)
 		if("sign")
 			if(user in signed_by)
-				to_chat(user, span_warning("You've already signed the contract."))
+				to_chat(user, span_warning("You've already signed one side of the contract."))
 				return
+			var/area/arena_condition_name = GLOB.areas_by_type[arena_condition]
+			arena_condition_name = arena_condition_name.name
 			//setting/checking for terms changed
+			var/terms_changed = FALSE
 			if(params["weapon"] != weapons_condition)
 				terms_changed = TRUE
 				weapons_condition = params["weapon"]
+			if(params["area"] != arena_condition_name)
+				terms_changed = TRUE
+				var/new_area_condition = sect.arenas[params["area"]]
+				arena_condition = new_area_condition
 			if(params["stakes"] != stakes_condition)
 				terms_changed = TRUE
-			if(arena_path != arena_condition)
-				terms_changed = TRUE
+				weapons_condition = params["stakes"]
 			//if you change the terms you have to get the other person to sign again.
 			if(terms_changed && (signed_by[1] || signed_by[2]))
 				signed_by = list(null, null)

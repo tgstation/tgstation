@@ -380,8 +380,8 @@
 	name = "Sparring God"
 	quote = "Your next swing must be faster, neophyte. Steel your heart."
 	desc = "Spar other crewmembers to gain favor or other rewards. Exchange favor to steel yourself against real battles."
-	tgui_icon = "user-friends"
-	altar_icon_state = "convertaltar-maint"
+	tgui_icon = "fist-raised"
+	altar_icon_state = "convertaltar-orange"
 	alignment = ALIGNMENT_NEUT
 	rites_list = list(
 		/datum/religion_rites/sparring_contract,
@@ -395,8 +395,8 @@
 	)
 	///how many matches you've lost with holy stakes. 3 = excommunication
 	var/matches_lost = 0
-	///past opponents who you've beaten in holy battles. You can't fight them again
+	///past opponents who you've beaten in holy battles. You can't fight them again to prevent favor farming
 	var/list/past_opponents = list()
 
 /datum/religion_sect/spar/tool_examine(mob/living/holy_creature)
-	return "You have [round(favor)] sparring matches won in [GLOB.deity]'s name. They can be used for rites. You have lost [matches_lost] matches. You will be excommunicated after losing three matches."
+	return "You have [round(favor)] sparring matches won in [GLOB.deity]'s name to redeem. You have lost [matches_lost] holy matches. You will be excommunicated after losing three matches."
