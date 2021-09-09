@@ -58,7 +58,7 @@ export class TabbedMenu extends Component<TabbedMenuProps> {
 
         <Stack.Item
           grow
-          elementRef={this.sectionRef}
+          innerRef={this.sectionRef}
           position="relative"
           overflowY="scroll"
           {...{
@@ -74,7 +74,7 @@ export class TabbedMenu extends Component<TabbedMenuProps> {
                 return (
                   <Stack.Item
                     key={category}
-                    elementRef={this.getCategoryRef(category)}
+                    innerRef={this.getCategoryRef(category)}
                   >
                     <Section
                       fill
