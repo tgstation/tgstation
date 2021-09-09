@@ -63,7 +63,7 @@ SUBSYSTEM_DEF(traumas)
 			/mob/living/simple_animal/pet/penguin,
 		)),
 		"anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
-		"clowns" = typecacheof(list(/mob/living/simple_animal/hostile/retaliate/clown)),
+		"clowns" = typecacheof(list(/mob/living/simple_animal/hostile/retaliate/clown, /mob/living/simple_animal/bot/honkbot)),
 		"insects" = typecacheof(list(/mob/living/basic/cockroach, /mob/living/simple_animal/hostile/bee))
 	)
 
@@ -74,6 +74,7 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/clothing/under/rank/security/head_of_security, /obj/item/clothing/under/rank/security/detective,
 			/obj/item/melee/baton, /obj/item/gun/energy/taser, /obj/item/restraints/handcuffs,
 			/obj/machinery/door/airlock/security, /obj/effect/hallucination/simple/securitron,
+			/obj/item/stamp/hos, /obj/item/megaphone/sec, /obj/item/toy/figure/hos, /obj/item/toy/figure/secofficer,
 		)),
 
 		"clowns" = typecacheof(list(
@@ -83,14 +84,16 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/trash/cheesie, /obj/item/stack/ore/bananium, /obj/item/stack/tile/mineral/bananium,
 			/obj/structure/falsewall/bananium, /obj/item/stack/ore/bananium, /obj/machinery/door/airlock/bananium,
 			/obj/structure/statue/bananium, /obj/item/toy/crayon/rainbow, /obj/vehicle/sealed/mecha/combat/honker,
-			/mob/living/simple_animal/bot/honkbot, /obj/item/toy/mecha/honk, /obj/item/toy/mecha/darkhonk,
+			/obj/item/toy/mecha/honk, /obj/item/toy/mecha/darkhonk,
 			/obj/structure/mecha_wreckage/honker, /obj/item/megaphone/clown, /obj/item/stamp/clown,
 			/obj/item/storage/backpack/clown, /obj/item/storage/backpack/ert/clown, /obj/item/storage/backpack/duffelbag/clown,
-			/obj/item/food/pie/cream, /obj/item/pneumatic_cannon/pie,
+			/obj/item/food/pie/cream, /obj/item/pneumatic_cannon/pie, /obj/item/bedsheet/clown, /obj/vehicle/sealed/car/clowncar,
+			/obj/item/gun/magic/staff/honk, /obj/item/clothing/suit/chaplainsuit/clownpriest, /obj/item/clothing/head/clownmitre,
+			/obj/item/clothing/under/plasmaman/clown,
 		)),
 
 		"greytide" = typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod,
-			/obj/item/spear, /obj/item/clothing/mask/gas,
+			/obj/item/spear, /obj/item/clothing/mask/gas, /obj/item/toy/figure/assistant
 		)),
 
 		"lizards" = typecacheof(list(/obj/item/toy/plush/lizard_plushie, /obj/item/food/kebab/tail, /obj/item/organ/tail/lizard,
@@ -109,11 +112,14 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/clothing/suit/space/hardsuit/ert, /obj/item/clothing/suit/space/hardsuit/ert/sec,
 			/obj/item/clothing/suit/space/hardsuit/ert/engi, /obj/item/clothing/suit/space/hardsuit/ert/med,
 			/obj/item/clothing/suit/space/hardsuit/deathsquad, /obj/item/clothing/head/helmet/space/hardsuit/deathsquad,
-			/obj/machinery/door/airlock/centcom, /obj/machinery/atmospherics/miner,
+			/obj/machinery/door/airlock/centcom, /obj/machinery/atmospherics/miner, /obj/item/toy/figure/captain, /obj/item/toy/figure/ce,
+			/obj/item/toy/figure/dsquad, /obj/item/toy/figure/hop, /obj/item/toy/figure/hos, /obj/item/toy/figure/rd,
+			/obj/item/toy/figure/cmo, /obj/item/stamp/captain, /obj/item/stamp/hop, /obj/item/stamp/hos, /obj/item/stamp/ce
+			/obj/item/stamp/rd, /obj/item/stamp/cmo, /obj/item/stamp/centcom, /obj/item/megaphone/command
 		)),
 
 		"robots" = typecacheof(list(/obj/machinery/computer/upload, /obj/item/ai_module, /obj/machinery/recharge_station,
-			/obj/item/aicard, /obj/structure/swarmer_beacon
+			/obj/item/aicard, /obj/structure/swarmer_beacon, /obj/item/toy/figure/borg, /obj/item/toy/talking/ai
 		)),
 
 		"doctors" = typecacheof(list(/obj/item/clothing/under/rank/medical,
@@ -123,6 +129,7 @@ SUBSYSTEM_DEF(traumas)
 			/obj/machinery/dna_scannernew, /obj/machinery/atmospherics/components/unary/cryo_cell, /obj/item/surgical_drapes,
 			/obj/item/retractor, /obj/item/hemostat, /obj/item/cautery, /obj/item/surgicaldrill, /obj/item/scalpel, /obj/item/circular_saw,
 			/obj/item/clothing/suit/bio_suit/plaguedoctorsuit, /obj/item/clothing/head/plaguedoctorhat, /obj/item/clothing/mask/gas/plaguedoctor,
+			/obj/item/toy/figure/md, /obj/item/toy/figure/cmo,
 		)),
 
 		"authority" = typecacheof(list(/obj/item/clothing/under/rank/captain,  /obj/item/clothing/under/rank/civilian/head_of_personnel,
@@ -131,6 +138,10 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/clothing/under/rank/centcom/officer, /obj/item/clothing/under/rank/centcom/commander,
 			/obj/item/melee/classic_baton/telescopic, /obj/item/card/id/advanced/silver, /obj/item/card/id/advanced/gold,
 			/obj/item/card/id/advanced/centcom, /obj/machinery/door/airlock/command, /obj/item/card/id/advanced/black,
+			/obj/item/toy/figure/captain, /obj/item/toy/figure/ce,
+			/obj/item/toy/figure/dsquad, /obj/item/toy/figure/hop, /obj/item/toy/figure/hos, /obj/item/toy/figure/rd,
+			/obj/item/toy/figure/cmo, /obj/item/stamp/captain, /obj/item/stamp/hop, /obj/item/stamp/hos, /obj/item/stamp/ce
+			/obj/item/stamp/rd, /obj/item/stamp/cmo, /obj/item/stamp/centcom, /obj/item/megaphone/command
 		)),
 
 		"the supernatural" = typecacheof(list(/obj/structure/destructible/cult, /obj/item/tome,
@@ -158,7 +169,7 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/clothing/head/helmet/abductor, /obj/structure/bed/abductor, /obj/structure/table_frame/abductor,
 			/obj/structure/table/abductor, /obj/structure/table/optable/abductor, /obj/structure/closet/abductor, /obj/item/organ/heart/gland,
 			/obj/machinery/abductor, /obj/item/crowbar/abductor, /obj/item/screwdriver/abductor, /obj/item/weldingtool/abductor,
-			/obj/item/wirecutters/abductor, /obj/item/wrench/abductor, /obj/item/stack/sheet/mineral/abductor,
+			/obj/item/wirecutters/abductor, /obj/item/wrench/abductor, /obj/item/stack/sheet/mineral/abductor, /obj/item/toy/toy_xeno,
 		)),
 
 		"birds" = typecacheof(list(/obj/item/clothing/mask/gas/plaguedoctor, /obj/item/food/cracker,
