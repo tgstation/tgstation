@@ -5460,6 +5460,7 @@
 	dir = 6;
 	network = list("ss13","medbay")
 	},
+/obj/effect/turf_decal/stripes/end,
 /turf/open/floor/iron/dark/textured_large,
 /area/medical/chemistry)
 "Be" = (
@@ -6966,12 +6967,10 @@
 /area/icemoon/underground/explored)
 "Jh" = (
 /obj/structure/ladder,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = 32
 	},
+/obj/effect/turf_decal/stripes/box,
 /turf/open/floor/iron/dark/textured_large,
 /area/medical/chemistry)
 "Ji" = (
