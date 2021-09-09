@@ -94,7 +94,15 @@
 		/obj/item/toy/crayon,
 		/obj/item/lipstick,
 		/obj/item/flashlight/pen,
-		/obj/item/clothing/mask/cigarette)
+		/obj/item/clothing/mask/cigarette,
+		/obj/item/match,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/hypospray/medipen
+		), //vapes, syringes, screwdrivers, etc. are intentionally not included in this list; they're a bit too long to comfortably fit
+		list(
+		/obj/item/clothing/mask/cigarette/pipe,
+		/obj/item/toy/crayon/spraycan
+		)
 		)
 
 /datum/component/storage/concrete/pockets/pocketprotector/real_location()

@@ -83,7 +83,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/datum/picture/picture //Scanned photo
 
-	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
+	///a list of items that could reasonably fit in a PDA's pen slot
+	var/list/whitelisted_items = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette, /obj/item/match, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/hypospray/medipen)
+	///a list of items that are subtypes of the above items but couldn't reasonably fit inside of a PDA's pen slot
+	var/list/blacklisted_items = list(/obj/item/clothing/mask/cigarette/pipe, /obj/item/toy/crayon/spraycan)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
 	var/overlays_x_offset = 0 //x offset to use for certain overlays
 
@@ -1061,7 +1064,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(user, span_notice("You slot \the [C] into [src]."))
 		update_appearance()
 		updateUsrDialog()
-	else if(is_type_in_list(C, contained_item)) //Checks if there is a pen
+	else if(is_type_in_list(C, whitelisted_items) && !is_type_in_list(C, blacklisted_items)) //Checks to see if the item you're using could reasonably fit in the PDA's pen slot
 		if(inserted_item)
 			to_chat(user, span_warning("There is already \a [inserted_item] in \the [src]!"))
 		else
