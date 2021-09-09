@@ -93,8 +93,8 @@
 	premium = list(/obj/item/reagent_containers/blood/o_minus = 3,
 					/obj/item/reagent_containers/blood/lizard = 2,
 					/obj/item/reagent_containers/blood/ethereal = 1)
-	default_price = 50
-	extra_price = 100
+	default_price = PAYCHECK_EASY
+	extra_price = PAYCHECK_COMMAND
 	refill_canister = /obj/item/vending_refill/blood
 
 /obj/item/vending_refill/blood
