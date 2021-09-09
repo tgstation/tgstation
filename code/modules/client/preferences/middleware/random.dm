@@ -1,6 +1,7 @@
 /// Middleware for handling randomization preferences
 /datum/preference_middleware/random
 	action_delegations = list(
+		"randomize_character" = .proc/randomize_character,
 		"set_random_preference" = .proc/set_random_preference,
 	)
 
@@ -22,6 +23,15 @@
 	return list(
 		"randomizable" = randomizable,
 	)
+
+/datum/preference_middleware/random/proc/randomize_character()
+	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
+		if (preferences.should_randomize(preference))
+			preferences.write_preference(preference, preference.create_random_value(src))
+
+	preferences.character_preview_view.update_body()
+
+	return TRUE
 
 /datum/preference_middleware/random/proc/set_random_preference(list/params, mob/user)
 	var/requested_preference_key = params["preference"]

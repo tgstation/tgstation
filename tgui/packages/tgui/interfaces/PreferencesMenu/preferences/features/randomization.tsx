@@ -2,11 +2,14 @@ import { useBackend } from "../../../../backend";
 import { Button, Stack } from "../../../../components";
 import { PreferencesMenuData, RandomSetting } from "../../data";
 import { RandomizationButton } from "../../RandomizationButton";
+import { useRandomToggleState } from "../../useRandomToggleState";
 import { CheckboxInput, Feature, FeatureChoiced, FeatureToggle } from "./base";
 
 export const random_body: Feature<RandomSetting> = {
   name: "Random body",
-  component: (props) => {
+  component: (props, context) => {
+    const [randomToggle, setRandomToggle] = useRandomToggleState(context);
+
     return (
       <Stack>
         <Stack.Item>
@@ -16,13 +19,35 @@ export const random_body: Feature<RandomSetting> = {
           />
         </Stack.Item>
 
-        {/* MOTHBLOCKS TODO:
-          This probably warrants an actual context component */}
-        <Stack.Item>
-          <Button>
-            Randomize
-          </Button>
-        </Stack.Item>
+        {
+          randomToggle
+            ? (
+              <>
+                <Stack.Item>
+                  <Button color="green" onClick={() => {
+                    props.act("randomize_character");
+                    setRandomToggle(false);
+                  }}>
+                    Randomize
+                  </Button>
+                </Stack.Item>
+
+                <Stack.Item>
+                  <Button color="red" onClick={() => setRandomToggle(false)}>
+                    Cancel
+                  </Button>
+                </Stack.Item>
+              </>
+            )
+            : (
+              <Stack.Item>
+                <Button onClick={() => setRandomToggle(true)}>
+                  Randomize
+                </Button>
+              </Stack.Item>
+            )
+        }
+
       </Stack>
     );
   },

@@ -14,6 +14,7 @@ import { resolveAsset } from "../../assets";
 import { logger } from "../../logging";
 import { filterMap, sortBy } from "common/collections";
 import { exhaustiveCheck } from "common/exhaustive";
+import { useRandomToggleState } from "./useRandomToggleState";
 
 const CLOTHING_CELL_SIZE = 48;
 const CLOTHING_SIDEBAR_ROWS = 9;
@@ -372,6 +373,7 @@ export const MainPage = (props: {
     = useLocalState<string | null>(context, "currentClothingMenu", null);
   const [multiNameInputOpen, setMultiNameInputOpen]
     = useLocalState(context, "multiNameInputOpen", false);
+  const [randomToggleEnabled] = useRandomToggleState(context);
 
   return (
     <ServerPreferencesFetcher render={(serverData) => {
@@ -400,7 +402,9 @@ export const MainPage = (props: {
       ];
 
       const randomBodyEnabled
-        = data.character_preferences.non_contextual.random_body;
+        = (data.character_preferences.non_contextual.random_body
+            !== RandomSetting.Disabled)
+          || randomToggleEnabled;
 
       const getRandomization = (
         preferences: Record<string, unknown>
@@ -415,7 +419,7 @@ export const MainPage = (props: {
               return undefined;
             }
 
-            if (randomBodyEnabled === RandomSetting.Disabled) {
+            if (!randomBodyEnabled) {
               return undefined;
             }
 
@@ -435,9 +439,13 @@ export const MainPage = (props: {
           ...data.character_preferences.non_contextual,
         };
 
-      if (randomBodyEnabled !== RandomSetting.Disabled) {
+      if (randomBodyEnabled) {
         nonContextualPreferences["random_species"]
           = data.character_preferences.randomization["species"];
+      } else {
+        // We can't use random_name/is_accessible because the
+        // server doesn't know whether the random toggle is on.
+        delete nonContextualPreferences["random_name"];
       }
 
       return (
