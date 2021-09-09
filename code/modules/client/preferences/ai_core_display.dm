@@ -11,7 +11,7 @@
 	values["Random"] = icon('icons/mob/ai.dmi', "ai-empty")
 
 	for (var/screen in GLOB.ai_core_display_screens - "Portrait" - "Random")
-		values[screen] = icon('icons/mob/ai.dmi', resolve_ai_icon(screen))
+		values[screen] = icon('icons/mob/ai.dmi', resolve_ai_icon_sync(screen))
 
 	return values
 

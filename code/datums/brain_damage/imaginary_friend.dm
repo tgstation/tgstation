@@ -125,7 +125,7 @@
 		setup_friend()
 		return
 
-	real_name = appearance_from_prefs.real_name
+	real_name = appearance_from_prefs.read_preference(/datum/preference/name/real_name)
 	name = real_name
 
 	// Determine what job is marked as 'High' priority.
@@ -141,7 +141,7 @@
 		appearance_job = SSjob.GetJob("Assistant")
 
 	if(istype(appearance_job, /datum/job/ai))
-		human_image = icon('icons/mob/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.preferred_ai_core_display), dir = SOUTH)
+		human_image = icon('icons/mob/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
 		return
 
 	if(istype(appearance_job, /datum/job/cyborg))

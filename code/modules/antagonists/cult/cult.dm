@@ -472,9 +472,9 @@
 		return
 
 	var/mob/living/carbon/human/human_cultist = cultist
-	human_cultist.eye_color = "f00"
+	human_cultist.eye_color = BLOODCULT_EYE
 	human_cultist.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-	ADD_TRAIT(human_cultist, TRAIT_CULT_EYES, CULT_TRAIT)
+	ADD_TRAIT(human_cultist, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
 	human_cultist.update_body()
 
 /// When the cult hits its second milestone.
