@@ -698,7 +698,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 						for(var/name in gaseslog)
 							var/msg = "[name]: [gaseslog[name]] moles." //owo shrug
 							log_admin(msg)
-							message_admins(msg)
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
 			investigate_log(logmsg, INVESTIGATE_ATMOS)
