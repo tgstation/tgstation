@@ -49,6 +49,7 @@
 
 		data[species_id] = list(
 			"name" = species.name,
+			"icon" = sanitize_css_class_name(species.name),
 
 			"use_skintones" = species.use_skintones,
 			"sexes" = species.sexes,

@@ -56,7 +56,6 @@ const Ethereal: Species = {
         temperatures.",
     }],
   },
-  icon: "wrench",
   lore: "LORE MASTER HELP",
 };
 

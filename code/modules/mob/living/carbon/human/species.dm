@@ -2115,3 +2115,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			features += preference
 
 	return features
+
+/// Given a human, will adjust it before taking a picture for the preferences UI.
+/// This should create a CONSISTENT result, so the icons don't randomly change.
+/datum/species/proc/prepare_human_for_preview(mob/living/carbon/human/human)
+	return

@@ -1,3 +1,4 @@
+import { classes } from "common/react";
 import { useBackend } from "../../backend";
 import { Box, Button, Divider, Icon, Section, Stack, Tooltip } from "../../components";
 import { logger } from "../../logging";
@@ -268,16 +269,14 @@ const SpeciesPageInner = (props: {
                         width: "32px",
                       }}
                     >
-                      <Icon
-                        className="centered-image"
-                        name={species.icon}
-                        size={2}
-                        ml={0}
-                        mt={0.5}
+                      <Box
+                        className={classes([
+                          "species32x32",
+                          species.icon,
+                        ])}
+                        ml={-1}
                         style={{
-                          "text-align": "center",
-                          height: "100%",
-                          width: "100%",
+                          "transform": "scale(0.9)",
                         }}
                       />
                     </Button>

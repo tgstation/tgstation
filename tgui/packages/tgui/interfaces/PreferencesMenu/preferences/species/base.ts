@@ -6,7 +6,6 @@ export type Species = {
     neutral: Feature[],
     bad: Feature[],
   };
-  icon: string; // MOTHBLOCKS TODO: tg svg icons
   lore: string;
 };
 
@@ -27,7 +26,6 @@ export const fallbackSpecies: Species = {
     neutral: [],
     bad: [],
   },
-  icon: "wrench",
   lore: "LORE MASTER, I NEED LORE, HELP",
 };
 

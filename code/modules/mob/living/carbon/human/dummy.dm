@@ -35,6 +35,19 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/consistent/setup_human_dna()
 	create_dna(src)
 	dna.initialize_dna(skip_index = TRUE)
+	dna.features["body_markings"] = "None"
+	dna.features["ears"] = "Cat"
+	dna.features["ethcolor"] = COLOR_WHITE
+	dna.features["frills"] = "None"
+	dna.features["horns"] = "None"
+	dna.features["mcolor"] = COLOR_VIBRANT_LIME
+	dna.features["moth_antennae"] = "Plain"
+	dna.features["moth_markings"] = "None"
+	dna.features["moth_wings"] = "Plain"
+	dna.features["snout"] = "Round"
+	dna.features["spines"] = "None"
+	dna.features["tail_human"] = "Cat"
+	dna.features["tail_lizard"] = "Smooth"
 
 //Inefficient pooling/caching way.
 GLOBAL_LIST_EMPTY(human_dummy_list)

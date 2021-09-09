@@ -38,6 +38,7 @@ export type Name = {
 
 export type ServerSpeciesData = {
   name: string;
+  icon: string;
 
   use_skintones: BooleanLike;
   sexes: BooleanLike;
