@@ -13,6 +13,8 @@ process.chdir(__dirname);
 
 const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
+const IE_TIMEOUT_SECONDS = 60;
+
 const setup = async () => {
   const server = fastify();
 
@@ -76,7 +78,7 @@ const setup = async () => {
   }
 
   console.log('Waiting for Internet Explorer to respond.');
-  for (let i = 0; i < 60; i++) {
+  for (let i = 0; i < IE_TIMEOUT_SECONDS; i++) {
     await sleep(1000);
     if (hasResponded) {
       return;
