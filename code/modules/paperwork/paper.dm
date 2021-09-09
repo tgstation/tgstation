@@ -396,27 +396,27 @@
 
 /**
  * Sheet designed for blanks
- * var/code -indicates the form of the document
- * var/category - to sort documents by department categories.
  */
 /obj/item/paper/blank
+	// Indicates the form of the document
 	var/code 
+	// To sort documents by department categories
 	var/category
 
 /obj/item/paper/blank/nt_cmd_ja
 	code = "NT-CMD-JA"
 	category = "Command"
-	name = "Job application"
+	name = "Job Application"
 	
 /obj/item/paper/blank/nt_cmd_jt
 	code = "NT-CMD-JT"
 	category = "Command"
-	name = "Job application"
+	name = "Job Application"
 	
 /obj/item/paper/blank/nt_cmd_jr
 	code = "NT-CMD-JR"
 	category = "Command"
-	name = "Job reassignment"
+	name = "Job Reassignment"
 	
 /obj/item/paper/blank/nt_scr_w
 	code = "NT-SCR-W"
