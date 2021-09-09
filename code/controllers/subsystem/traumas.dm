@@ -49,7 +49,12 @@ SUBSYSTEM_DEF(traumas)
 		)),
 		"doctors" = typecacheof(list(/mob/living/simple_animal/bot/medbot)),
 		"the supernatural" = typecacheof(list(/mob/living/simple_animal/hostile/construct,
-			/mob/living/simple_animal/revenant, /mob/living/simple_animal/shade
+			/mob/living/simple_animal/revenant, /mob/living/simple_animal/shade,
+			/mob/living/simple_animal/hostile/skeleton, /mob/living/simple_animal/hostile/retaliate/ghost,
+			/mob/living/simple_animal/hostile/imp, /mob/dead/observer, /mob/living/simple_animal/bot/mulebot/paranormal,
+			/mob/living/simple_animal/hostile/retaliate/bat, /mob/living/simple_animal/hostile/dark_wizard,
+			/mob/living/simple_animal/hostile/faithless, /mob/living/simple_animal/hostile/wizard,
+			/mob/living/simple_animal/hostile/zombie
 		)),
 		"aliens" = typecacheof(list(/mob/living/carbon/alien, /mob/living/simple_animal/slime)),
 		"conspiracies" = typecacheof(list(/mob/living/simple_animal/bot/secbot, /mob/living/simple_animal/drone,
@@ -60,6 +65,7 @@ SUBSYSTEM_DEF(traumas)
 			/mob/living/simple_animal/pet/penguin,
 		)),
 		"anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
+		"clowns" = typecacheof(list(/mob/living/simple_animal/hostile/retaliate/clown)),
 		"insects" = typecacheof(list(/mob/living/basic/cockroach, /mob/living/simple_animal/hostile/bee))
 	)
 
@@ -136,8 +142,11 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/soulstone,
 			/obj/item/clothing/suit/wizrobe, /obj/item/clothing/head/wizard, /obj/item/spellbook, /obj/item/staff,
 			/obj/item/clothing/suit/space/hardsuit/shielded/wizard, /obj/item/clothing/suit/space/hardsuit/wizard,
-			/obj/item/gun/magic/staff, /obj/item/gun/magic/wand,
+			/obj/item/gun/magic/staff, /obj/item/gun/magic/wand, /obj/item/scrying, /obj/item/necromantic_stone,
+			/obj/item/warpwhistle,
 			/obj/item/nullrod, /obj/item/clothing/under/rank/civilian/chaplain,
+			/obj/structure/spirit_board, /obj/item/toy/eightball/haunted, /obj/item/storage/toolbox/haunted,
+			/obj/item/stack/sheet/hauntium,
 		)),
 
 		"aliens" = typecacheof(list(/obj/item/clothing/mask/facehugger, /obj/item/organ/body_egg/alien_embryo,
@@ -197,7 +206,8 @@ SUBSYSTEM_DEF(traumas)
 		"skeletons" = typecacheof(list(/datum/species/skeleton, /datum/species/plasmaman)),
 		"conspiracies" = typecacheof(list(/datum/species/abductor, /datum/species/lizard, /datum/species/synth)),
 		"robots" = typecacheof(list(/datum/species/android)),
-		"the supernatural" = typecacheof(list(/datum/species/golem/runic)),
+		"the supernatural" = typecacheof(list(/datum/species/golem/runic, /datum/species/skeleton,
+		/datum/species/zombie, /datum/species/vampire, /datum/species/shadow,)),
 		"aliens" = typecacheof(list(/datum/species/abductor, /datum/species/jelly, /datum/species/pod,/datum/species/shadow)),
 		"anime" = typecacheof(list(/datum/species/human/felinid)),
 		"insects" = typecacheof(list(/datum/species/fly, /datum/species/moth))
