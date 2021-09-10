@@ -52,7 +52,6 @@
 	var/comp_light_luminosity = 3 //The brightness of that light
 	var/comp_light_color //The color of that light
 
-
 /obj/item/modular_computer/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
@@ -74,6 +73,7 @@
 			CH.holder = null
 			all_components.Remove(CH.device_type)
 			qdel(CH)
+	all_components.Cut() //Die demon die
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
 	physical = null

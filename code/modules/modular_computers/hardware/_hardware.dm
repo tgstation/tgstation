@@ -106,7 +106,7 @@
 
 // Called when component is removed from PC.
 /obj/item/computer_hardware/proc/on_remove(obj/item/modular_computer/M, mob/living/user)
-	if(M.physical || !QDELETED(M))
+	if(M.physical && !QDELETED(M) && !QDELETED(src))
 		try_eject(forced = TRUE)
 
 // Called when someone tries to insert something in it - paper in printer, card in card reader, etc.
