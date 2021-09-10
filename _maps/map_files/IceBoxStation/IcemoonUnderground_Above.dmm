@@ -320,11 +320,12 @@
 "bo" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/table/reinforced,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/clothing/head/welding,
-/obj/item/multitool,
 /obj/item/radio/intercom/directional/east,
+/obj/item/stack/cable_coil{
+	pixel_y = 3
+	},
 /obj/item/stack/cable_coil,
+/obj/item/multitool,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -652,20 +653,8 @@
 /obj/structure/table/reinforced,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/east,
-/obj/item/plunger{
-	pixel_x = -3
-	},
-/obj/item/plunger{
-	pixel_x = 3
-	},
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/clothing/head/welding,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -2485,7 +2474,7 @@
 /area/science/xenobiology)
 "lt" = (
 /obj/structure/fermenting_barrel{
-	desc = "I said, for the love of god!";
+	desc = "A dried up barrel of what appeared to once have been full of wine.";
 	name = "cask"
 	},
 /turf/open/floor/plating,
@@ -3916,9 +3905,10 @@
 /turf/open/floor/iron,
 /area/mine/production)
 "sI" = (
-/obj/structure/easel,
-/obj/item/canvas/twentythree_nineteen,
-/obj/item/canvas/twentythree_twentythree,
+/obj/structure/chair/stool/directional/south,
+/obj/item/storage/toolbox/artistic{
+	pixel_y = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "sM" = (
@@ -3927,7 +3917,9 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
 "sN" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "sP" = (
@@ -4855,7 +4847,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/medical/chemistry)
 "xR" = (
 /obj/effect/landmark/xeno_spawn,
@@ -5088,12 +5082,8 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "zh" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/toolbox/artistic,
-/obj/machinery/light/small/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "zi" = (
@@ -5214,7 +5204,6 @@
 	pixel_y = 4
 	},
 /obj/item/clothing/glasses/science,
-/obj/item/reagent_containers/dropper,
 /obj/item/clothing/glasses/science,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -5366,7 +5355,7 @@
 "AC" = (
 /obj/structure/bonfire,
 /obj/item/melee/roastingstick,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "AD" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -5474,13 +5463,18 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/hallway/secondary/service)
 "Bc" = (
-/obj/structure/ladder,
+/obj/structure/ladder{
+	name = "chemistry lab access"
+	},
 /obj/machinery/camera{
 	c_tag = "Chemistry Lab North";
 	dir = 6;
 	network = list("ss13","medbay")
 	},
 /obj/effect/turf_decal/stripes/end,
+/obj/structure/sign/warning/vacuum{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/medical/chemistry)
 "Be" = (
@@ -6386,6 +6380,9 @@
 /obj/structure/chair{
 	dir = 4
 	},
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "FK" = (
@@ -6604,8 +6601,8 @@
 "GM" = (
 /obj/effect/decal/remains/human,
 /obj/item/reagent_containers/food/drinks/bottle/wine{
-	desc = "A fine bottle of Amontillado wine. ";
-	name = "Amontillado";
+	desc = "A fine bottle of amontillado wine. Yes, for the love of god!";
+	name = "bottle of amontillado wine";
 	pixel_x = 8
 	},
 /turf/open/floor/plating,
@@ -6986,7 +6983,9 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Jh" = (
-/obj/structure/ladder,
+/obj/structure/ladder{
+	name = "upper dispenser access"
+	},
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = 32
 	},
@@ -7456,6 +7455,18 @@
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/medical/chemistry)
+"Ln" = (
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
+	color = "#0000ff";
+	name = "Supply multi deck pipe adapter"
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/department/medical)
 "Lq" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
@@ -7952,7 +7963,6 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "NT" = (
-/obj/machinery/vending/wardrobe/chem_wardrobe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -7960,6 +7970,25 @@
 	c_tag = "Chemistry Lab East";
 	dir = 9;
 	network = list("ss13","medbay")
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/reagentgrinder{
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = 3;
+	pixel_y = -8
+	},
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = -3;
+	pixel_y = -8
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_y = -7
 	},
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
@@ -8327,15 +8356,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/science/xenobiology)
-"PD" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/medical/chemistry)
 "PE" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -8414,9 +8434,6 @@
 	dir = 10;
 	network = list("ss13","medbay")
 	},
-/obj/structure/sign/departments/chemistry{
-	pixel_y = -32
-	},
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "PV" = (
@@ -8485,6 +8502,19 @@
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"Qj" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/light_switch/directional/east{
+	pixel_x = 23
+	},
+/turf/open/floor/iron/white,
+/area/medical/chemistry)
 "Qk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -8581,6 +8611,12 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
+"QL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/department/medical)
 "QO" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -8858,10 +8894,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/machinery/vending/wallmed/directional/east,
-/obj/machinery/light_switch/directional/east{
-	pixel_x = 23
-	},
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "Sx" = (
@@ -8907,6 +8939,7 @@
 "SK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "SP" = (
@@ -9330,7 +9363,9 @@
 /obj/structure/disposalpipe/trunk/multiz{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
 /area/medical/chemistry)
 "UC" = (
 /obj/machinery/light/directional/west,
@@ -9623,6 +9658,16 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/aft)
+"VX" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/easel,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_nineteen,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
 "VY" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Xenobiology Exit";
@@ -9651,6 +9696,12 @@
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/cargo/warehouse)
+"Wj" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
 "Wn" = (
 /obj/machinery/space_heater/improvised_chem_heater,
 /obj/effect/decal/cleanable/dirt,
@@ -9699,6 +9750,21 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/table/reinforced,
+/obj/item/plunger{
+	pixel_x = 3
+	},
+/obj/item/plunger{
+	pixel_x = -3
+	},
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
 /turf/open/floor/iron/dark,
 /area/medical/chemistry)
 "WA" = (
@@ -10032,6 +10098,15 @@
 /obj/machinery/bluespace_beacon,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance)
+"YD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/vending/wardrobe/chem_wardrobe,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/medical/chemistry)
 "YE" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/table/reinforced,
@@ -42836,7 +42911,7 @@ Xe
 zQ
 oD
 sN
-CA
+GH
 VG
 Xe
 Xe
@@ -43092,7 +43167,7 @@ Fp
 Xe
 MB
 Ea
-WW
+QL
 CA
 GH
 pc
@@ -44388,8 +44463,8 @@ Xe
 eF
 Xe
 Fp
-ak
-ak
+Et
+Et
 ak
 ak
 ak
@@ -44644,10 +44719,10 @@ mO
 Xe
 hx
 Xe
-ak
-ak
-ak
-ak
+Et
+Et
+Et
+Et
 ak
 ak
 ak
@@ -44904,7 +44979,7 @@ Xe
 Xe
 Xe
 Xe
-ak
+Et
 ak
 ak
 ak
@@ -45161,8 +45236,8 @@ pc
 GH
 GH
 Xe
-ak
-ak
+Et
+Et
 ak
 ak
 ak
@@ -45418,8 +45493,8 @@ Xe
 Xe
 GH
 Xe
-ak
-ak
+Et
+Et
 ak
 ak
 ak
@@ -45672,11 +45747,11 @@ DD
 Rr
 GH
 pC
-OA
+hd
 eF
 Xe
-ak
-ak
+Et
+Et
 ak
 ak
 ak
@@ -45932,9 +46007,9 @@ Xe
 Xe
 sn
 Xe
-ak
-ak
-ak
+Et
+Et
+Et
 ak
 ak
 ak
@@ -46190,8 +46265,8 @@ OA
 WW
 Xe
 Xe
-ak
-ak
+Et
+Et
 ak
 ak
 ak
@@ -46420,7 +46495,7 @@ ak
 Fp
 Fp
 Fp
-Fp
+Et
 Et
 Et
 ML
@@ -46431,8 +46506,8 @@ NC
 pW
 DZ
 Sv
+Qj
 Fe
-PD
 iK
 In
 Lf
@@ -46447,8 +46522,8 @@ Xe
 GH
 yY
 Xe
-ak
-ak
+Et
+Et
 ak
 ak
 ak
@@ -46678,8 +46753,8 @@ ak
 ak
 ak
 Fp
-Fp
-Fp
+Et
+Et
 ML
 ML
 ML
@@ -46687,7 +46762,7 @@ ML
 NT
 zJ
 Jh
-ML
+YD
 ML
 ML
 ML
@@ -46704,8 +46779,8 @@ TO
 GH
 uQ
 Xe
-ak
-ak
+Et
+Et
 ak
 ak
 ak
@@ -46936,20 +47011,20 @@ ak
 ak
 ak
 ak
-Fp
-Fp
-Fp
-Fp
+Et
+Et
+Et
+Et
 ML
 ML
 ML
 ML
 ML
-ak
-ak
-ak
-ak
-ak
+ML
+Et
+Et
+Et
+Et
 Et
 Et
 Fp
@@ -46962,7 +47037,7 @@ sn
 Xe
 Xe
 Xe
-ak
+Et
 ak
 ak
 ak
@@ -47194,22 +47269,22 @@ ak
 ak
 ak
 ak
+Et
+Et
+Et
+Et
+Et
+Et
+Et
+Et
+Et
+Et
+Et
+Et
+Et
 ak
 ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+Fp
 PG
 hd
 GH
@@ -47219,8 +47294,8 @@ Vy
 er
 VE
 Xe
-ak
-ak
+Et
+Et
 ak
 ak
 ak
@@ -47453,15 +47528,15 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+Et
+Et
+Et
+Et
+Et
+Et
+Et
+Et
+Et
 ak
 ak
 ak
@@ -47476,8 +47551,8 @@ GH
 sc
 Lq
 Xe
-ak
-ak
+Et
+Et
 ak
 ak
 ak
@@ -47734,7 +47809,7 @@ Xe
 Xe
 Xe
 Xe
-ak
+Et
 ak
 ak
 ak
@@ -47981,10 +48056,10 @@ ak
 ak
 ak
 ak
-ak
+Et
 Xe
 ml
-hd
+VX
 sI
 sn
 SK
@@ -48237,13 +48312,13 @@ ak
 ak
 ak
 ak
-ak
-ak
+Et
+Et
 Xe
 Pr
-Xe
+Ln
 zh
-GH
+Wj
 lx
 lv
 tg
@@ -48493,9 +48568,9 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
+Et
+Et
+Et
 Xe
 Xe
 Xe
@@ -48751,10 +48826,10 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
+Et
+Et
+Et
+Et
 Xe
 Vp
 Vp
@@ -49009,10 +49084,10 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
+Et
+Et
+Et
+Et
 mO
 Vp
 Vp
