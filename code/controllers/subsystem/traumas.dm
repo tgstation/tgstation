@@ -97,7 +97,7 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/clothing/under/plasmaman/clown
 		)),
 		"greytide" = typecacheof(list(
-			/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod,
+			/obj/item/clothing/under/color/grey, /obj/item/melee/baton/security/cattleprod,
 			/obj/item/spear, /obj/item/clothing/mask/gas, /obj/item/toy/figure/assistant,
 			/obj/structure/statue/sandstone/assistant
 		)),
@@ -222,7 +222,7 @@ SUBSYSTEM_DEF(traumas)
 		"clowns" = typecacheof(list(/turf/closed/wall/mineral/bananium, /turf/open/floor/mineral/bananium)),
 		"falling" = typecacheof(list(/turf/open/chasm, /turf/open/floor/fakepit, /turf/open/openspace))
 	)
-	
+
 	phobia_species = list(
 		"lizards" = typecacheof(list(/datum/species/lizard)),
 		"skeletons" = typecacheof(list(/datum/species/skeleton, /datum/species/plasmaman)),
