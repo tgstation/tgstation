@@ -6965,7 +6965,7 @@
 	id = "secentranceflasher"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrence"
+	cycle_id = "brig-entrance"
 	},
 /turf/open/floor/iron,
 /area/security/brig)
@@ -14889,7 +14889,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrence"
+	cycle_id = "brig-entrance"
 	},
 /turf/open/floor/iron,
 /area/security/brig)
@@ -23280,7 +23280,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "perma-entrence"
+	cycle_id = "perma-entrance"
 	},
 /turf/open/floor/iron,
 /area/security/brig)
@@ -36416,7 +36416,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "sci-entrence"
+	cycle_id = "sci-entrance"
 	},
 /turf/open/floor/iron/white,
 /area/science/research)
@@ -37030,7 +37030,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "sci-entrence"
+	cycle_id = "sci-entrance"
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
@@ -41317,7 +41317,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "perma-entrence"
+	cycle_id = "perma-entrance"
 	},
 /turf/open/floor/iron,
 /area/security/brig)
@@ -48564,7 +48564,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "perma-entrence"
+	cycle_id = "perma-entrance"
 	},
 /turf/open/floor/iron,
 /area/security/brig)
@@ -58424,7 +58424,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrence"
+	cycle_id = "brig-entrance"
 	},
 /turf/open/floor/iron,
 /area/security/brig)
@@ -64708,7 +64708,7 @@
 	req_access_txt = "1"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "perma-entrence"
+	cycle_id = "perma-entrance"
 	},
 /turf/open/floor/iron,
 /area/security/brig)
@@ -67434,7 +67434,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrence"
+	cycle_id = "brig-entrance"
 	},
 /turf/open/floor/iron,
 /area/security/brig)
