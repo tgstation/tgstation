@@ -566,8 +566,8 @@
 // ---------------------------------------
 /obj/machinery/smartfridge/bottlerack/seedbin/update_icon_state()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	if(!stat)
-		SSvis_overlays.add_vis_overlay(src, icon, "smartfridge-light-mask", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+	if(!machine_stat)
+		SSvis_overlays.add_vis_overlay(src, icon, "smartfridge-light-mask", EMISSIVE_PLANE, dir, alpha)
 		if(visible_contents)
 			switch(contents.len)
 				if(0)
@@ -597,7 +597,7 @@
 	max_n_of_items = 1000
 
 /obj/machinery/smartfridge/bottlerack/grownbin/accept_check(obj/item/O)
-	if(istype(O, /obj/item/reagent_containers/food/snacks/grown))
+	if(istype(O, /obj/item/food/grown))
 		return TRUE
 	return FALSE
 
@@ -606,8 +606,8 @@
 // ---------------------------------------
 /obj/machinery/smartfridge/bottlerack/grownbin/update_icon_state()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	if(!stat)
-		SSvis_overlays.add_vis_overlay(src, icon, "smartfridge-light-mask", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+	if(!machine_stat)
+		SSvis_overlays.add_vis_overlay(src, icon, "smartfridge-light-mask", EMISSIVE_PLANE, dir, alpha)
 		if(visible_contents)
 			switch(contents.len)
 				if(0)
