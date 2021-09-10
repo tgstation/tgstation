@@ -195,6 +195,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	temperature = 200 // Heats you up! per hit!
+	slowdown = FALSE
 
 /obj/projectile/temp/basilisk/magmawing/on_hit(atom/target, blocked = FALSE)
 	. = ..()
