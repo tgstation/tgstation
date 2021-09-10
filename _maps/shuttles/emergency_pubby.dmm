@@ -608,7 +608,7 @@
 "bz" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs,
-/obj/item/melee/baton,
+/obj/item/melee/baton/security,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bA" = (

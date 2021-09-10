@@ -291,3 +291,47 @@
   - refactor: refactored some behavior in pride hammer and carp'sie plushie, you may
       notice a few more examines and error messages for fail cases but otherwise it's
       all the same
+2021-09-09:
+  Ghommie:
+  - bugfix: Fixed the chat messages for stepping on objects with the caltrop component.
+      No more "You step on the floor!".
+  Nari Harimoto:
+  - bugfix: machines can be dragged with CtrlClick again
+  Sealed101:
+  - bugfix: RnD discount experiments now reduce the proper amount of points needed
+      instead of gradually growing into a 100% free tech node.
+  - bugfix: Basic Cytology Scan Experiments no longer ask for Unknown fluids instead
+      of mice.
+  TiviPlus:
+  - admin: /area/var/static_lighting proper varedit support
+  esainane:
+  - bugfix: When reprogramming a smart pipe to permit more directions, the smart pipe
+      will now immediately connect in any newly allowed direction, rather than only
+      connecting when a component is newly placed.
+  - bugfix: The RPD now correctly reprograms smart pipes to more restrictive states.
+  tralezab:
+  - rscadd: You now store some events as mini stories in your head!
+  - rscadd: You can engrave said memories onto walls with a chisel!
+2021-09-10:
+  Ghommie:
+  - refactor: Refactored batons and stunbatons code. Stunbatons are now a subtype
+      of batons.
+  - code_imp: Removed some batons copypasta. All batons share the same anti-dual wielding
+      abuse code now. Replaced some old anchored checks for teleprods with move_resist
+      ones.
+  - bugfix: Fixed clumsy checks for teleprods stunning the user twice.
+  - bugfix: Fixed teleprods not teleporting living mobs that aren't xenos or humans.
+  - balance: TRAIT_STUNRESISTANCE now affects all batons and not just stun batons.
+  - bugfix: Fixed a money generation exploit with the roulette machine.
+  ORCACommander:
+  - bugfix: fixed as slew of failed to validate config setting errors
+  - rscdel: Removed deprecated config flags
+  - server: game_options.txt has been updated
+  esainane:
+  - bugfix: The tgui color helper now properly handles partially transparent values.
+  stylemistake:
+  - refactor: Performance of core tgui components was improved (Button, Icon, Flex,
+      Stack). UI should feel a tiny bit faster.
+  timothymtorres:
+  - bugfix: Fixed wormhole jaunter to trigger when falling into a chasm
+  - bugfix: Fixed wormhole jaunter to be affected by EMP
