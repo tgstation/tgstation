@@ -94,7 +94,7 @@
 					/obj/item/reagent_containers/blood/lizard = 2,
 					/obj/item/reagent_containers/blood/ethereal = 1)
 	default_price = PAYCHECK_EASY
-	extra_price = PAYCHECK_COMMAND
+	extra_price = PAYCHECK_MEDIUM
 	refill_canister = /obj/item/vending_refill/blood
 
 /obj/item/vending_refill/blood
