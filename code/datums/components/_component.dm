@@ -380,7 +380,7 @@
 	var/list/components = datum_components?[c_type]
 	if(!components)
 		return list()
-	return islist(components) ? dc : list(components)
+	return islist(components) ? components : list(components)
 
 /**
  * Creates an instance of `new_type` in the datum and attaches to it as parent
