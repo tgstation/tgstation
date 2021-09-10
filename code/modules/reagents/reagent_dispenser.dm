@@ -317,7 +317,7 @@
 	if(reagents.total_volume == tank_volume)
 		to_chat(user,"<span class='warning'>The [src] is filled to capacity!</span>")
 		return
-	if(istype(W, /obj/item/seeds) || istype(W, /obj/item/reagent_containers/food/snacks/grown))
+	if(istype(W, /obj/item/seeds) || istype(W, /obj/item/food/grown))
 		if(user.transferItemToLoc(W, src))
 			to_chat(user, "<span class='notice'>You load the [W] into the [src].</span>")
 			playsound(loc, 'sound/effects/blobattack.ogg', 25, 1, -1)
@@ -337,7 +337,7 @@
 		if(istype(C, /obj/item/seeds))
 			reagents.add_reagent(/datum/reagent/compost, seed_value)
 			qdel(C)
-		else if(istype(C, /obj/item/reagent_containers/food/snacks/grown))
+		else if(istype(C, /obj/item/food/grown))
 			reagents.add_reagent(/datum/reagent/compost, produce_value)
 			qdel(C)
 		else //Not sure how we got here, but there's only one reasonable thing to do.

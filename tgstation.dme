@@ -2410,6 +2410,7 @@
 #include "code\modules\hydroponics\hydroitemdefines.dm"
 #include "code\modules\hydroponics\hydroponics.dm"
 #include "code\modules\hydroponics\hydroponics_chemreact.dm"
+#include "code\modules\hydroponics\other_reagents.dm"
 #include "code\modules\hydroponics\plant_genes.dm"
 #include "code\modules\hydroponics\sample.dm"
 #include "code\modules\hydroponics\seed_extractor.dm"
