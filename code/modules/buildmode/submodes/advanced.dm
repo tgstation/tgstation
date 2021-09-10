@@ -45,7 +45,7 @@
 		if(ispath(objholder,/turf))
 			var/turf/T = get_turf(object)
 			log_admin("Build Mode: [key_name(c)] modified [T] in [AREACOORD(object)] to [objholder]")
-			T = T.ChangeTurf(objholder)
+			T = T.PlaceOnTop(objholder)
 			T.setDir(BM.build_dir)
 		else if(ispath(objholder, /obj/effect/turf_decal))
 			var/turf/T = get_turf(object)
