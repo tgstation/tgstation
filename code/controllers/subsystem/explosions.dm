@@ -183,8 +183,9 @@ SUBSYSTEM_DEF(explosions)
  * - flame_range: The range at which the explosion should produce hotspots.
  * - silent: Whether to generate/execute sound effects.
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
+ * - propagate_below_only : Whether the explosion should only propagate on the level below, mostly used by Gibtonite
  */
-/proc/explosion(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = 0, flash_range = 0, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE)
+/proc/explosion(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = 0, flash_range = 0, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, propagate_below_only = FALSE)
 	. = SSexplosions.explode(arglist(args))
 
 
@@ -202,8 +203,9 @@ SUBSYSTEM_DEF(explosions)
  * - flame_range: The range at which the explosion should produce hotspots.
  * - silent: Whether to generate/execute sound effects.
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
+ * - propagate_below_only : Whether the explosion should only propagate on the level below, mostly used by Gibtonite
  */
-/datum/controller/subsystem/explosions/proc/explode(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = 0, flash_range = 0, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE)
+/datum/controller/subsystem/explosions/proc/explode(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = 0, flash_range = 0, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, propagate_below_only = FALSE)
 	var/list/arguments = list(EXARG_KEY_ORIGIN = origin, EXARG_KEY_DEV_RANGE = devastation_range, EXARG_KEY_HEAVY_RANGE = heavy_impact_range, EXARG_KEY_LIGHT_RANGE = light_impact_range, EXARG_KEY_FLAME_RANGE = flame_range, EXARG_KEY_FLASH_RANGE = flash_range, EXARG_KEY_ADMIN_LOG = adminlog, EXARG_KEY_IGNORE_CAP = ignorecap, EXARG_KEY_SILENT = silent, EXARG_KEY_SMOKE = smoke)
 	var/atom/location = isturf(origin) ? origin : origin.loc
 	if(SEND_SIGNAL(origin, COMSIG_ATOM_EXPLODE, arguments) & COMSIG_CANCEL_EXPLOSION)
@@ -224,7 +226,7 @@ SUBSYSTEM_DEF(explosions)
 	if(SEND_SIGNAL(epicenter_area, COMSIG_AREA_INTERNAL_EXPLOSION, arguments) & COMSIG_CANCEL_EXPLOSION)
 		return
 
-	var/turf/above_level = SSmapping.get_turf_above(location)
+	var/turf/above_level = propagate_below_only ? null : SSmapping.get_turf_above(location)
 	var/turf/below_level = SSmapping.get_turf_below(location)
 
 	arguments -= EXARG_KEY_ORIGIN
