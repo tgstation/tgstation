@@ -386,9 +386,9 @@
 	rites_list = list(
 		/datum/religion_rites/sparring_contract,
 		/datum/religion_rites/declare_arena,
-		// /datum/religion_rites/ritual_weapon,
-		/datum/religion_rites/fierce_heart,
-		// /datum/religion_rites/tenacity,
+		// /datum/religion_rites/ritual_weapon, SOON
+		/datum/religion_rites/tenacious,
+		/datum/religion_rites/unbreakable,
 	)
 	///places you can spar in. rites can be used to expand this list with new arenas!
 	var/list/arenas = list(

@@ -113,7 +113,7 @@
 
 /datum/antagonist/monkey/leader/on_gain()
 	. = ..()
-	var/obj/item/organ/heart/adrenaline/freedom/super_heart = new
+	var/obj/item/organ/heart/freedom/super_heart = new
 	super_heart.Insert(owner.current, drop_if_replaced = FALSE)
 	owner.special_role = "Monkey Leader"
 

@@ -155,8 +155,8 @@
 /datum/sparring_match/proc/flubbed_match()
 	unhook_signals(chaplain)
 	unhook_signals(opponent)
-	chaplain.remove_filter("burden_outline")
-	opponent.remove_filter("burden_outline")
+	chaplain.remove_filter("sparring_outline")
+	opponent.remove_filter("sparring_outline")
 	if(chaplain) //flubing means we don't know who is still standing
 		to_chat(chaplain, span_boldannounce("The match was flub'd! No winners, no losers. You may restart the match with another contract."))
 	if(opponent)
@@ -166,14 +166,17 @@
 /datum/sparring_match/proc/end_match(mob/living/carbon/human/winner, mob/living/carbon/human/loser, violation_victory = FALSE)
 	unhook_signals(chaplain)
 	unhook_signals(opponent)
-	chaplain.remove_filter("burden_outline")
-	opponent.remove_filter("burden_outline")
+	chaplain.remove_filter("sparring_outline")
+	opponent.remove_filter("sparring_outline")
 	to_chat(chaplain, span_boldannounce("[winner] HAS WON!"))
 	to_chat(opponent, span_boldannounce("[winner] HAS WON!"))
 	win(winner, loser, violation_victory)
 	lose(loser, winner)
 	if(stakes_condition != YOUR_SOUL)
-		to_chat(winner, span_notice("You may want to heal up the loser now."))
+		var/healing_message = "You may want to heal up the loser now."
+		if(winner == chaplain)
+			healing_message += " Your bible will heal the loser for awhile."
+		to_chat(winner, span_notice(healing_message))
 	qdel(src)
 
 ///most of the effects are handled on `lose()` instead.

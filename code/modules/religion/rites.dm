@@ -660,28 +660,42 @@
 	sect.arenas[area_instance.name] = area_instance.type
 	to_chat(user, span_warning("[area_instance] is a now an option to select on sparring contracts."))
 
-/datum/religion_rites/fierce_heart
-	name = "Fierce Heart"
+/datum/religion_rites/unbreakable
+	name = "Become Unbreakable"
 	desc = "Your training has made you unbreakable. In times of crisis, you will attempt to keep fighting on."
 	ritual_length = 10 SECONDS
-	invoke_msg = "My will must be unbreakable."
+	invoke_msg = "My will must be unbreakable. Grant me this boon!"
 	favor_cost = 4 //4 duels won
 
-/datum/religion_rites/fierce_heart/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
+/datum/religion_rites/unbreakable/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
 	if(!ishuman(user))
 		return FALSE
-	var/obj/item/organ/heart/adrenaline/spar/spar_heart = user.getorganslot(ORGAN_SLOT_HEART)
-	if(spar_heart && istype(spar_heart))
-		to_chat(user, span_warning("Your spirit is already fierce!"))
+	if(HAS_TRAIT_FROM(user, TRAIT_UNBREAKABLE, INNATE_TRAIT))
+		to_chat(user, span_warning("Your spirit is already unbreakable!"))
 		return FALSE
 	return ..()
 
-/datum/religion_rites/fierce_heart/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
+/datum/religion_rites/unbreakable/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	..()
-	var/obj/item/organ/heart/oldheart = user.getorganslot(ORGAN_SLOT_HEART)
-	to_chat(user, span_warning("You feel your spirit is protected by [GLOB.deity]!"))
-	if(oldheart)
-		oldheart.Remove(user, special = TRUE)
-		qdel(oldheart)//eh
-	var/obj/item/organ/heart/adrenaline/spar/newheart = new
-	newheart.Insert(user, special = TRUE)
+	to_chat(user, span_nicegreen("You feel [GLOB.deity]'s will to keep fighting pouring into you!"))
+	user.AddComponent(/datum/component/unbreakable)
+
+/datum/religion_rites/tenacious
+	name = "Become Tenacious"
+	desc = "Your training has made you tenacious. In times of crisis, you will be able to crawl faster."
+	ritual_length = 10 SECONDS
+	invoke_msg = "Grant me your tenacity! I have proven myself!"
+	favor_cost = 3 //3 duels won
+
+/datum/religion_rites/tenacious/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
+	if(!ishuman(user))
+		return FALSE
+	if(HAS_TRAIT_FROM(user, TRAIT_TENACIOUS, INNATE_TRAIT))
+		to_chat(user, span_warning("Your spirit is already tenacious!"))
+		return FALSE
+	return ..()
+
+/datum/religion_rites/tenacious/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
+	..()
+	to_chat(user, span_nicegreen("You feel [GLOB.deity]'s tenacity pouring into you!"))
+	user.AddElement(/datum/element/tenacious)

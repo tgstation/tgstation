@@ -108,6 +108,7 @@ export const SparringContract = (props, context) => {
                   Stakes:
                 </Stack.Item>
                 <Stack.Item>
+                  {stakes}
                   <Dropdown
                     width="100%"
                     selected={stakelist[stakes-1]}

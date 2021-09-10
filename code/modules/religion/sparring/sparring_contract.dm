@@ -21,7 +21,7 @@
 	name = "[GLOB.deity]'s sparring contract"
 
 /obj/item/sparring_contract/Destroy()
-	QDEL_LIST(signed_by)
+	QDEL_NULL(signed_by)
 	. = ..()
 
 /obj/item/sparring_contract/ui_interact(mob/user, datum/tgui/ui)
@@ -35,7 +35,7 @@
 	var/area/arena = GLOB.areas_by_type[arena_condition]
 	data["set_weapon"] = weapons_condition
 	data["set_area"] = arena?.name
-	data["set_stakes"] = weapons_condition
+	data["set_stakes"] = stakes_condition
 	data["possible_areas"] = get_possible_areas()
 
 	return data
@@ -109,7 +109,7 @@
 				if(!params["stakes"])
 					return //they hit f5 to clear data then submitted
 				terms_changed = TRUE
-				weapons_condition = params["stakes"]
+				stakes_condition = params["stakes"]
 			//if you change the terms you have to get the other person to sign again.
 			if(terms_changed && (signed_by[1] || signed_by[2]))
 				signed_by = list(null, null)

@@ -526,6 +526,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// If present on a [/mob/living/carbon], will make them appear to have a medium level disease on health HUDs.
 #define TRAIT_DISEASELIKE_SEVERITY_MEDIUM "diseaselike_severity_medium"
 
+/// trait denoting someone will crawl faster in soft crit
+#define TRAIT_TENACIOUS "tenacious"
+
+/// trait denoting someone will sometimes recover out of crit
+#define TRAIT_UNBREAKABLE "unbreakable"
+
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
 #define CAT_QUIRK_NOTES 1
