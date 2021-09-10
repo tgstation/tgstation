@@ -214,7 +214,6 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/crate/coffin, 5, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("book case", /obj/structure/bookcase, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("drying rack", /obj/machinery/smartfridge/drying_rack, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("dog bed", /obj/structure/bed/dogbed, 10, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("dresser", /obj/structure/dresser, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("picture frame", /obj/item/wallframe/picture, 1, time = 10),\
@@ -227,10 +226,11 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 50),\
 	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 10),\
 	new/datum/stack_recipe("loom", /obj/structure/loom, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("drying rack", /obj/machinery/smartfridge/drying_rack, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("seed extractor", /obj/structure/primal_extractor, 25, time = 40, one_per_turf = TRUE, on_floor = TRUE),\
 	new/datum/stack_recipe("compost bin", /obj/structure/reagent_dispensers/compostbin, 25, time = 40, one_per_turf = TRUE, on_floor = TRUE),\
-	new/datum/stack_recipe("seed bin", /obj/machinery/smartfridge/bottlerack/seedbin, 20, time = 40, one_per_turf = TRUE, on_floor = TRUE),\
-	new/datum/stack_recipe("harvest bin", /obj/machinery/smartfridge/bottlerack/grownbin, 20, time = 40, one_per_turf = TRUE, on_floor = TRUE),\
+	new/datum/stack_recipe("seed bin", /obj/machinery/smartfridge/seedbin, 20, time = 40, one_per_turf = TRUE, on_floor = TRUE),\
+	new/datum/stack_recipe("harvest bin", /obj/machinery/smartfridge/grownbin, 20, time = 40, one_per_turf = TRUE, on_floor = TRUE),\
 	new/datum/stack_recipe("tiki mask", /obj/item/clothing/mask/gas/tiki_mask, 2), \
 	new/datum/stack_recipe("ore box", /obj/structure/ore_box, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE),\
 	new/datum/stack_recipe("wooden crate", /obj/structure/closet/crate/wooden, 6, time = 50, one_per_turf = TRUE, on_floor = TRUE),\

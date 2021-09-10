@@ -550,13 +550,14 @@
 // -------------------------
 //  Seedbin
 // -------------------------
-/obj/machinery/smartfridge/bottlerack/seedbin
+/obj/machinery/smartfridge/seedbin
 	name = "seed bin"
 	desc = "Organised dumping ground for the starters of life."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "seedbin"
 	max_n_of_items = 400
 
-/obj/machinery/smartfridge/bottlerack/seedbin/accept_check(obj/item/O)
+/obj/machinery/smartfridge/seedbin/accept_check(obj/item/O)
 	if(istype(O, /obj/item/seeds))
 		return TRUE
 	return FALSE
@@ -564,7 +565,7 @@
 // ---------------------------------------
 // Update Icons for Seed Bin
 // ---------------------------------------
-/obj/machinery/smartfridge/bottlerack/seedbin/update_icon_state()
+/obj/machinery/smartfridge/seedbin/update_icon_state()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(!machine_stat)
 		SSvis_overlays.add_vis_overlay(src, icon, "smartfridge-light-mask", EMISSIVE_PLANE, dir, alpha)
@@ -590,13 +591,14 @@
 //-------------------------
 // grownbin
 //-------------------------
-/obj/machinery/smartfridge/bottlerack/grownbin
+/obj/machinery/smartfridge/grownbin
 	name = "Harvest bin"
 	desc = "A large box, to contain the harvest that the Earth has blessed upon you."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "grownbin"
 	max_n_of_items = 1000
 
-/obj/machinery/smartfridge/bottlerack/grownbin/accept_check(obj/item/O)
+/obj/machinery/smartfridge/grownbin/accept_check(obj/item/O)
 	if(istype(O, /obj/item/food/grown))
 		return TRUE
 	return FALSE
@@ -604,7 +606,7 @@
 // ---------------------------------------
 // Update Icons for grownbin
 // ---------------------------------------
-/obj/machinery/smartfridge/bottlerack/grownbin/update_icon_state()
+/obj/machinery/smartfridge/grownbin/update_icon_state()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(!machine_stat)
 		SSvis_overlays.add_vis_overlay(src, icon, "smartfridge-light-mask", EMISSIVE_PLANE, dir, alpha)
