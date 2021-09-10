@@ -31,7 +31,7 @@
 ///just for fun
 #define NO_STAKES 1
 ///standard stakes, winning gets you a point. losing counts towards standard excommunication.
-#define STANDARD_STAKES 2
+#define HOLY_MATCH 2
 ///no stakes god wise, but whomever wins gets all the money of the other
 #define MONEY_MATCH 3
 ///the winner gets the other's soul. you said this was a neutral sect, right?

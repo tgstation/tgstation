@@ -12,7 +12,7 @@
 	///what arena the fight will take place in
 	var/arena_condition = /area/service/chapel
 	///what stakes the fight will have
-	var/stakes_condition = STANDARD_STAKES
+	var/stakes_condition = NO_STAKES
 	///who has signed this contract
 	var/list/signed_by = list(null, null)
 
@@ -46,6 +46,7 @@
 	var/mob/living/carbon/human/left_partner = signed_by[1]
 	var/mob/living/carbon/human/right_partner = signed_by[2]
 	data["in_area"] = ((left_partner && right_partner && arena) && (left_partner in arena.contents) && (right_partner in arena.contents))
+	data["no_chaplains"] = (!left_partner?.mind?.holy_role && !right_partner?.mind?.holy_role)
 	data["left_sign"] = left_partner ? left_partner.real_name : "none"
 	data["right_sign"] = right_partner ? right_partner.real_name : "none"
 	return data
@@ -70,7 +71,7 @@
 
 	var/datum/religion_sect/spar/sect = GLOB.religious_sect
 
-	if(user in sect.past_opponents && params["stakes"] == STANDARD_STAKES)
+	if(user in sect.past_opponents && params["stakes"] == HOLY_MATCH)
 		to_chat(user, span_warning("This contract refuses to be signed up for a holy match by a previous holy match loser. Pick a different stake!"))
 
 	//any updating of the terms should update the UI to display new terms
@@ -84,7 +85,7 @@
 				return
 			var/chaplain = left_partner.mind.holy_role ? left_partner : right_partner
 			var/opponent = left_partner.mind.holy_role ? right_partner : left_partner
-			new /datum/sparring_match(weapons_condition, arena_condition, stakes_condition, chaplain, opponent)
+			new /datum/sparring_match(weapons_condition, GLOB.areas_by_type[arena_condition], stakes_condition, chaplain, opponent)
 			qdel(src)
 		if("sign")
 			if(user in signed_by)

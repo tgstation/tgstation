@@ -647,6 +647,8 @@
 /datum/religion_rites/declare_arena/perform_rite(mob/living/user, atom/religious_tool)
 	var/list/filtered = list()
 	for(var/area/unfiltered_area as anything in GLOB.sortedAreas)
+		if(istype(unfiltered_area, /area/centcom))
+			continue
 		if(!(unfiltered_area.area_flags & HIDDEN_AREA))
 			filtered += unfiltered_area
 	area_instance = input("Choose an area to mark as an arena!", "Arena Declaration") as null|anything in filtered

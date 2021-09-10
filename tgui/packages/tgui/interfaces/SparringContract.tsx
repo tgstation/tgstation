@@ -3,6 +3,9 @@ import { useBackend, useLocalState } from '../backend';
 import { BlockQuote, Button, Dropdown, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
+// defined this so the code is more readable
+const HOLY_MATCH = 1;
+
 const weaponlist = [
   "Fist Fight",
   "Melee Only",
@@ -36,6 +39,7 @@ type Info = {
   left_sign: string;
   right_sign: string;
   in_area: BooleanLike;
+  no_chaplains: BooleanLike;
   possible_areas: Array<string>;
 };
 
@@ -49,6 +53,7 @@ export const SparringContract = (props, context) => {
     left_sign,
     right_sign,
     in_area,
+    no_chaplains,
   } = data;
   const [weapon, setWeapon] = useLocalState(context, "weapon", set_weapon);
   const [area, setArea] = useLocalState(context, "area", set_area);
@@ -108,7 +113,6 @@ export const SparringContract = (props, context) => {
                   Stakes:
                 </Stack.Item>
                 <Stack.Item>
-                  {stakes}
                   <Dropdown
                     width="100%"
                     selected={stakelist[stakes-1]}
@@ -175,7 +179,9 @@ export const SparringContract = (props, context) => {
                 color={in_area && "green" || "red"}
                 icon={in_area && "check" || "exclamation-triangle"} />
               <Button
-                disabled={!in_area}
+                disabled={
+                  !in_area || (no_chaplains && set_stakes === HOLY_MATCH)
+                }
                 icon="fist-raised"
                 onClick={() => act('fight')} >
                 FIGHT!
@@ -186,6 +192,12 @@ export const SparringContract = (props, context) => {
                   || "You need signatures from both fighters on the terms!"}
                 color={(left_sign && right_sign) && "green" || "red"}
                 icon={(left_sign && right_sign) && "check" || "exclamation-triangle"} />
+              <Button
+                tooltip={!no_chaplains
+                  && "At least one chaplain is present. Holy matches allowed."
+                  || "No chaplain present for this fight. No Holy Matches!"}
+                color={!no_chaplains && "green" || "yellow"}
+                icon={!no_chaplains && "check" || "exclamation"} />
             </Stack.Item>
           </Stack>
         </Section>

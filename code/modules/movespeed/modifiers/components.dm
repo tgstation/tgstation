@@ -8,7 +8,7 @@
 	movetypes = GROUND
 
 /datum/movespeed_modifier/tenacious
-	multiplicative_slowdown = -0.60
+	multiplicative_slowdown = -0.7
 	movetypes = GROUND
 
 /datum/movespeed_modifier/sanity

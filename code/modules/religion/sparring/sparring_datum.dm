@@ -1,5 +1,7 @@
 /datum/sparring_match
+	///the chaplain. surprisingly enough, isn't actually a chaplain all the time. it only needs to be the chaplain for holy matches.
 	var/mob/living/carbon/human/chaplain
+	///the other fighter
 	var/mob/living/carbon/human/opponent
 	///what weapons will be allowed during the sparring match
 	var/weapons_condition
@@ -25,8 +27,6 @@
 	hook_signals(opponent)
 	chaplain.add_filter("sparring_outline", 9, list("type" = "outline", "color" = "#e02200"))
 	opponent.add_filter("sparring_outline", 9, list("type" = "outline", "color" = "#004ee0"))
-	//arena conditions
-	RegisterSignal(arena_condition, COMSIG_AREA_EXITED, .proc/check_for_quitters)
 
 /datum/sparring_match/proc/hook_signals(mob/living/carbon/human/sparring)
 	//weapon conditions
@@ -35,6 +35,8 @@
 		RegisterSignal(sparring, COMSIG_MOB_GRENADE_ARMED, .proc/grenade_violation)
 	if(weapons_condition < MELEE_ONLY)
 		RegisterSignal(sparring, COMSIG_MOB_ITEM_ATTACK, .proc/melee_violation)
+	//arena conditions
+	RegisterSignal(sparring, COMSIG_MOVABLE_MOVED, .proc/arena_violation)
 	//severe violations (insta violation win for other party) conditions
 	RegisterSignal(sparring, COMSIG_MOVABLE_TELEPORTED, .proc/teleport_violation)
 	//win conditions
@@ -51,6 +53,7 @@
 		COMSIG_MOB_FIRED_GUN,
 		COMSIG_MOB_GRENADE_ARMED,
 		COMSIG_MOB_ITEM_ATTACK,
+		COMSIG_MOVABLE_MOVED,
 		COMSIG_MOVABLE_TELEPORTED,
 		COMSIG_MOB_STATCHANGE,
 		COMSIG_PROJECTILE_HIT_BY,
@@ -62,7 +65,7 @@
 /datum/sparring_match/proc/check_for_victory(datum/participant, new_stat)
 	SIGNAL_HANDLER
 
-	if(new_stat != HARD_CRIT)
+	if(new_stat != UNCONSCIOUS)
 		return
 	if(participant == chaplain)
 		end_match(opponent, chaplain)
@@ -126,12 +129,16 @@
 		end_match(chaplain, opponent, violation_victory = TRUE)
 
 ///someone tried to leave
-/datum/sparring_match/proc/check_for_quitters(datum/arena, atom/movable/left_area, direction)
+/datum/sparring_match/proc/arena_violation(atom/movable/mover, atom/oldloc, direction)
 	SIGNAL_HANDLER
-	if(left_area == chaplain || left_area == opponent)
-		violation(left_area, "leaving the arena")
-		var/atom/throw_target = get_edge_target_turf(left_area, REVERSE_DIR(direction))
-		left_area.throw_at(throw_target, 6, 4)
+
+	var/area/inhabited_area = get_area(mover)
+	if(inhabited_area == arena_condition)
+		return //still in the ring!! :)
+
+	violation(mover, "leaving the arena")
+	var/atom/throw_target = get_edge_target_turf(mover, REVERSE_DIR(direction))
+	mover.throw_at(throw_target, 6, 4)
 
 /datum/sparring_match/proc/violation(mob/living/carbon/human/offender, reason)
 	SIGNAL_HANDLER
@@ -153,23 +160,24 @@
 
 ///this match was interfered on, nobody wins or loses anything, just end
 /datum/sparring_match/proc/flubbed_match()
-	unhook_signals(chaplain)
-	unhook_signals(opponent)
-	chaplain.remove_filter("sparring_outline")
-	opponent.remove_filter("sparring_outline")
+	cleanup_sparring_match()
 	if(chaplain) //flubing means we don't know who is still standing
 		to_chat(chaplain, span_boldannounce("The match was flub'd! No winners, no losers. You may restart the match with another contract."))
 	if(opponent)
 		to_chat(opponent, span_boldannounce("The match was flub'd! No winners, no losers."))
 	qdel(src)
 
-/datum/sparring_match/proc/end_match(mob/living/carbon/human/winner, mob/living/carbon/human/loser, violation_victory = FALSE)
+///helper to remove all the effects after a match ends
+/datum/sparring_match/proc/cleanup_sparring_match()
 	unhook_signals(chaplain)
 	unhook_signals(opponent)
 	chaplain.remove_filter("sparring_outline")
 	opponent.remove_filter("sparring_outline")
-	to_chat(chaplain, span_boldannounce("[winner] HAS WON!"))
-	to_chat(opponent, span_boldannounce("[winner] HAS WON!"))
+
+/datum/sparring_match/proc/end_match(mob/living/carbon/human/winner, mob/living/carbon/human/loser, violation_victory = FALSE)
+	cleanup_sparring_match()
+	to_chat(chaplain, span_boldannounce("[violation_victory ? "[loser] DISQUALIFIED!" : ""]  [winner] HAS WON!"))
+	to_chat(opponent, span_boldannounce("[violation_victory ? "[loser] DISQUALIFIED!" : ""]  [winner] HAS WON!"))
 	win(winner, loser, violation_victory)
 	lose(loser, winner)
 	if(stakes_condition != YOUR_SOUL)
@@ -182,7 +190,7 @@
 ///most of the effects are handled on `lose()` instead.
 /datum/sparring_match/proc/win(mob/living/carbon/human/winner, mob/living/carbon/human/loser, violation_victory)
 	switch(stakes_condition)
-		if(STANDARD_STAKES)
+		if(HOLY_MATCH)
 			if(winner == chaplain)
 				if(violation_victory)
 					to_chat(winner, span_warning("[GLOB.deity] is not entertained from a matched decided by violations. No favor awarded..."))
@@ -198,7 +206,7 @@
 
 /datum/sparring_match/proc/lose(mob/living/carbon/human/loser, mob/living/carbon/human/winner)
 	switch(stakes_condition)
-		if(STANDARD_STAKES)
+		if(HOLY_MATCH)
 			if(loser == chaplain)
 				var/datum/religion_sect/spar/sect = GLOB.religious_sect
 				sect.matches_lost++
