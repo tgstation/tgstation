@@ -125,22 +125,22 @@
 		if(SLIME_ACTIVATE_MINOR)
 			user.visible_message(span_warning("[user] starts shaking!"),span_notice("Your [name] starts pulsing gently..."))
 			if(do_after(user, 40, target = user))
-				var/mob/living/simple_animal/S = create_random_mob(user.drop_location(), FRIENDLY_SPAWN)
-				S.faction |= "neutral"
+				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), FRIENDLY_SPAWN)
+				spawned_mob.faction |= "neutral"
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-				user.visible_message(span_warning("[user] spits out [S]!"), span_notice("You spit out [S]!"))
+				user.visible_message(span_warning("[user] spits out [spawned_mob]!"), span_notice("You spit out [spawned_mob]!"))
 				return 300
 
 		if(SLIME_ACTIVATE_MAJOR)
 			user.visible_message(span_warning("[user] starts shaking violently!"),span_warning("Your [name] starts pulsing violently..."))
 			if(do_after(user, 50, target = user))
-				var/mob/living/simple_animal/S = create_random_mob(user.drop_location(), HOSTILE_SPAWN)
+				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), HOSTILE_SPAWN)
 				if(!user.combat_mode)
-					S.faction |= "neutral"
+					spawned_mob.faction |= "neutral"
 				else
-					S.faction |= "slime"
+					spawned_mob.faction |= "slime"
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-				user.visible_message(span_warning("[user] spits out [S]!"), span_warning("You spit out [S]!"))
+				user.visible_message(span_warning("[user] spits out [spawned_mob]!"), span_warning("You spit out [spawned_mob]!"))
 				return 600
 
 /obj/item/slime_extract/silver
@@ -703,7 +703,7 @@
 	to_chat(user, span_notice("You offer [src] to [SM]..."))
 	being_used = TRUE
 
-	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_SENTIENCE, ROLE_SENTIENCE, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
+	var/list/candidates = poll_candidates_for_mob("Do you want to play as [SM.name]?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		SM.key = C.key

@@ -35,3 +35,12 @@
 	belt = null
 
 	id_trim = /datum/id_trim/job/prisoner
+
+/datum/outfit/job/prisoner/post_equip(mob/living/carbon/human/new_prisoner, visualsOnly)
+	. = ..()
+	if(!length(SSpersistence.prison_tattoos_to_use) || visualsOnly)
+		return
+	var/obj/item/bodypart/tatted_limb = pick(new_prisoner.bodyparts)
+	var/list/tattoo = pick(SSpersistence.prison_tattoos_to_use)
+	tatted_limb.AddComponent(/datum/component/tattoo, tattoo["story"])
+	SSpersistence.prison_tattoos_to_use -= tattoo

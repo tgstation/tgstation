@@ -79,8 +79,6 @@
 		if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] && !client?.holder)
 			to_chat(src, span_deadsay(span_big("Observer freelook is disabled.\nPlease use Orbit, Teleport, and Jump to look around.")))
 			ghostize(TRUE)
-	if(mind)
-		mind.store_memory("Time of death: [tod]", 0)
 	set_drugginess(0)
 	set_disgust(0)
 	SetSleeping(0, 0)
