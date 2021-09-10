@@ -243,6 +243,13 @@
 	key_third_person = "looks"
 	message = "looks."
 	message_param = "looks at %t."
+	
+/datum/emote/living/narrow
+	key = "narrow"
+	key_third_person = "narrows"
+	message = "narrows their eyes suspiciously."
+	message_simple = "stares suspiciously."
+	message_param = "narrows their eyes suspiciously at %t."
 
 /datum/emote/living/nod
 	key = "nod"
