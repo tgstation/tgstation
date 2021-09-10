@@ -50,7 +50,8 @@ SUBSYSTEM_DEF(traumas)
 			/mob/living/simple_animal/drone, /mob/living/simple_animal/bot, /mob/living/simple_animal/hostile/swarmer,
 		)),
 		"doctors" = typecacheof(list(/mob/living/simple_animal/bot/medbot)),
-		"the supernatural" = typecacheof(list(/mob/living/simple_animal/hostile/construct,
+		"the supernatural" = typecacheof(list(
+			/mob/living/simple_animal/hostile/construct,
 			/mob/living/simple_animal/revenant, /mob/living/simple_animal/shade,
 			/mob/living/simple_animal/hostile/skeleton, /mob/living/simple_animal/hostile/retaliate/ghost,
 			/mob/living/simple_animal/hostile/imp, /mob/dead/observer, /mob/living/simple_animal/bot/mulebot/paranormal,
@@ -59,7 +60,8 @@ SUBSYSTEM_DEF(traumas)
 			/mob/living/simple_animal/hostile/zombie
 		)),
 		"aliens" = typecacheof(list(/mob/living/carbon/alien, /mob/living/simple_animal/slime)),
-		"conspiracies" = typecacheof(list(/mob/living/simple_animal/bot/secbot, /mob/living/simple_animal/drone,
+		"conspiracies" = typecacheof(list(
+			/mob/living/simple_animal/bot/secbot, /mob/living/simple_animal/drone,
 			/mob/living/simple_animal/pet/penguin
 		)),
 		"birds" = typecacheof(list(
@@ -142,7 +144,8 @@ SUBSYSTEM_DEF(traumas)
 			/obj/machinery/dna_scannernew, /obj/machinery/atmospherics/components/unary/cryo_cell, /obj/item/surgical_drapes,
 			/obj/item/retractor, /obj/item/hemostat, /obj/item/cautery, /obj/item/surgicaldrill, /obj/item/scalpel, /obj/item/circular_saw,
 			/obj/item/clothing/suit/bio_suit/plaguedoctorsuit, /obj/item/clothing/head/plaguedoctorhat, /obj/item/clothing/mask/gas/plaguedoctor,
-			/obj/item/toy/figure/md, /obj/item/toy/figure/cmo, /obj/structure/statue/gold/cmo, /obj/structure/statue/silver/md, /obj/structure/statue/silver/medborg
+			/obj/item/toy/figure/md, /obj/item/toy/figure/cmo, /obj/structure/statue/gold/cmo,
+			/obj/structure/statue/silver/md, /obj/structure/statue/silver/medborg
 		)),
 		"authority" = typecacheof(list(
 			/obj/item/clothing/under/rank/captain,  /obj/item/clothing/under/rank/civilian/head_of_personnel,
@@ -163,13 +166,11 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/melee/cultblade, /obj/item/cult_bastard,
 			/obj/item/restraints/legcuffs/bola/cult, /obj/item/clothing/suit/space/hardsuit/cult,
 			/obj/item/clothing/suit/hooded/cultrobes, /obj/item/clothing/head/hooded/cult_hoodie, /obj/effect/rune,
-			/obj/item/stack/sheet/runed_metal, /obj/machinery/door/airlock/cult, /obj/narsie,
-			/obj/item/soulstone,
+			/obj/item/stack/sheet/runed_metal, /obj/machinery/door/airlock/cult, /obj/narsie, /obj/item/soulstone,
 			/obj/item/clothing/suit/wizrobe, /obj/item/clothing/head/wizard, /obj/item/spellbook, /obj/item/staff,
 			/obj/item/clothing/suit/space/hardsuit/shielded/wizard, /obj/item/clothing/suit/space/hardsuit/wizard,
 			/obj/item/gun/magic/staff, /obj/item/gun/magic/wand, /obj/item/scrying, /obj/item/necromantic_stone,
-			/obj/item/warpwhistle,
-			/obj/item/nullrod, /obj/item/clothing/under/rank/civilian/chaplain,
+			/obj/item/warpwhistle, /obj/item/nullrod, /obj/item/clothing/under/rank/civilian/chaplain,
 			/obj/structure/spirit_board, /obj/item/toy/eightball/haunted, /obj/item/storage/toolbox/haunted,
 			/obj/item/stack/sheet/hauntium,
 		)),
@@ -194,9 +195,12 @@ SUBSYSTEM_DEF(traumas)
 		)),
 		"anime" = typecacheof(list(
 			/obj/item/clothing/under/costume/schoolgirl, /obj/item/katana, /obj/item/food/sashimi, /obj/item/food/chawanmushi,
-			/obj/item/reagent_containers/food/drinks/bottle/sake, /obj/item/throwing_star, /obj/item/clothing/head/kitty/genuine, /obj/item/clothing/suit/space/space_ninja,
-			/obj/item/clothing/mask/gas/space_ninja, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/gloves/space_ninja, /obj/item/vibro_weapon,
-			/obj/item/nullrod/scythe/vibro, /obj/item/energy_katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana, /obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe)),
+			/obj/item/reagent_containers/food/drinks/bottle/sake, /obj/item/throwing_star, /obj/item/clothing/head/kitty/genuine,
+			/obj/item/clothing/suit/space/space_ninja, /obj/item/clothing/mask/gas/space_ninja, /obj/item/clothing/shoes/space_ninja,
+			/obj/item/clothing/gloves/space_ninja, /obj/item/vibro_weapon, /obj/item/nullrod/scythe/vibro,
+			/obj/item/energy_katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana,
+			/obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
+		)),
 		"birds" = typecacheof(list(
 			/obj/item/clothing/mask/gas/plaguedoctor, /obj/item/food/cracker,
 			/obj/item/clothing/suit/chickensuit, /obj/item/clothing/head/chicken,
@@ -210,13 +214,17 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/ammo_casing, /obj/item/storage/belt/bandolier, /obj/item/storage/belt/holster, /obj/item/ammo_box,
 			/obj/item/mecha_ammo, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic, /obj/item/mecha_parts/mecha_equipment/weapon/energy
 		)),
-		"insects" = typecacheof(list(/obj/item/toy/plush/moth, /obj/item/toy/plush/beeplushie, /obj/item/clothing/mask/animal/rat/bee, /obj/item/clothing/suit/hooded/bee_costume, /obj/structure/beebox)),
+		"insects" = typecacheof(list(
+			/obj/item/toy/plush/moth, /obj/item/toy/plush/beeplushie, /obj/item/clothing/mask/animal/rat/bee,
+			/obj/item/clothing/suit/hooded/bee_costume, /obj/structure/beebox
+		)),
 	)
 
 	phobia_turfs = list(
 		"space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
 		"the supernatural" = typecacheof(list(/turf/open/floor/cult, /turf/closed/wall/mineral/cult)),
-		"aliens" = typecacheof(list(/turf/open/floor/plating/abductor, /turf/open/floor/plating/abductor2,
+		"aliens" = typecacheof(list(
+			/turf/open/floor/plating/abductor, /turf/open/floor/plating/abductor2,
 			/turf/open/floor/mineral/abductor, /turf/closed/wall/mineral/abductor
 		)),
 		"clowns" = typecacheof(list(/turf/closed/wall/mineral/bananium, /turf/open/floor/mineral/bananium)),
