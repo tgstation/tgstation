@@ -684,23 +684,23 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 							continue
 						if(gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE)) //if moles_visible is undefined, default to default visibility
 							danger[gas[GAS_META][META_GAS_NAME]] = gas[MOLES] //ex. "plasma" = 20
-/**
- * just works better to use danger	
- * list as a test for admin alerts
- */ 
+					/**
+					* just works better to use danger
+					* list as a test for admin alerts
+					*/
 					///alert + log path
-					if(danger.len)	
+					if(danger.len)
 						message_admins("[ADMIN_LOOKUPFLW(usr)] opened a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:")
 						log_admin("[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:")
-						for(var/name in gaseslog)   	
-							var/msg = "[name]: [gaseslog[name]] moles."  		
-							log_admin(msg)										 		
-							message_admins(msg)		
-					///just logging, no alert	
-					else	
+						for(var/name in gaseslog)
+							var/msg = "[name]: [gaseslog[name]] moles."
+							log_admin(msg)
+							message_admins(msg)
+					///just logging, no alert
+					else
 						log_admin("[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:")
 						for(var/name in gaseslog)
-							var/msg = "[name]: [gaseslog[name]] moles." 
+							var/msg = "[name]: [gaseslog[name]] moles."
 							log_admin(msg)
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
