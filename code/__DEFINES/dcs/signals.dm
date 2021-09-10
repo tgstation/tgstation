@@ -239,8 +239,6 @@
 ///called when teleporting into a protected turf: (channel, turf/origin)
 #define COMSIG_ATOM_INTERCEPT_TELEPORT "intercept_teleport"
 	#define COMPONENT_BLOCK_TELEPORT (1<<0)
-///called when an atom is added to the hearers on get_hearers_in_view(): (list/processing_list, list/hearers)
-#define COMSIG_ATOM_HEARER_IN_VIEW "atom_hearer_in_view"
 ///called when an atom starts orbiting another atom: (atom)
 #define COMSIG_ATOM_ORBIT_BEGIN "atom_orbit_begin"
 ///called when an atom stops orbiting another atom: (atom)
@@ -1469,3 +1467,8 @@
 ///Called when the ticker sets up the game for start
 #define COMSIG_TICKER_ENTER_SETTING_UP "comsig_ticker_enter_setting_up"
 
+//spatial grid signals
+///Called from base of /turf/Entered: (/atom/movable)
+#define SPATIAL_GRID_CELL_ENTERED "spatial_grid_cell_entered"
+///Called from base of /turf/Exited: (/atom/movable)
+#define SPATIAL_GRID_CELL_EXITED "spatial_grid_cell_exited"
