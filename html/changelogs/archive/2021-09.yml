@@ -312,3 +312,26 @@
   tralezab:
   - rscadd: You now store some events as mini stories in your head!
   - rscadd: You can engrave said memories onto walls with a chisel!
+2021-09-10:
+  Ghommie:
+  - refactor: Refactored batons and stunbatons code. Stunbatons are now a subtype
+      of batons.
+  - code_imp: Removed some batons copypasta. All batons share the same anti-dual wielding
+      abuse code now. Replaced some old anchored checks for teleprods with move_resist
+      ones.
+  - bugfix: Fixed clumsy checks for teleprods stunning the user twice.
+  - bugfix: Fixed teleprods not teleporting living mobs that aren't xenos or humans.
+  - balance: TRAIT_STUNRESISTANCE now affects all batons and not just stun batons.
+  - bugfix: Fixed a money generation exploit with the roulette machine.
+  ORCACommander:
+  - bugfix: fixed as slew of failed to validate config setting errors
+  - rscdel: Removed deprecated config flags
+  - server: game_options.txt has been updated
+  esainane:
+  - bugfix: The tgui color helper now properly handles partially transparent values.
+  stylemistake:
+  - refactor: Performance of core tgui components was improved (Button, Icon, Flex,
+      Stack). UI should feel a tiny bit faster.
+  timothymtorres:
+  - bugfix: Fixed wormhole jaunter to trigger when falling into a chasm
+  - bugfix: Fixed wormhole jaunter to be affected by EMP

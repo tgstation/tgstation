@@ -1,6 +1,0 @@
-author: "ORCACommander"
-delete-after: True
-changes: 
-  - bugfix: "fixed as slew of failed to validate config setting errors"
-  - rscdel: "Removed deprecated config flags"
-  - server: "game_options.txt has been updated"
