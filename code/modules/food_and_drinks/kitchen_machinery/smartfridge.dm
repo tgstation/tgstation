@@ -546,3 +546,83 @@
 		return TRUE
 	else
 		return FALSE
+
+// -------------------------
+//  Seedbin
+// -------------------------
+/obj/machinery/smartfridge/bottlerack/seedbin
+	name = "seed bin"
+	desc = "Organised dumping ground for the starters of life."
+	icon_state = "seedbin"
+	max_n_of_items = 400
+
+/obj/machinery/smartfridge/bottlerack/seedbin/accept_check(obj/item/O)
+	if(istype(O, /obj/item/seeds))
+		return TRUE
+	return FALSE
+
+// ---------------------------------------
+// Update Icons for Seed Bin
+// ---------------------------------------
+/obj/machinery/smartfridge/bottlerack/seedbin/update_icon_state()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	if(!stat)
+		SSvis_overlays.add_vis_overlay(src, icon, "smartfridge-light-mask", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+		if(visible_contents)
+			switch(contents.len)
+				if(0)
+					icon_state = "[initial(icon_state)]"
+				if(1 to 50)
+					icon_state = "[initial(icon_state)]-1"
+				if(51 to 100)
+					icon_state = "[initial(icon_state)]-2"
+				if(101 to 150)
+					icon_state = "[initial(icon_state)]-3"
+				if(151 to 200)
+					icon_state = "[initial(icon_state)]-4"
+				if(201 to INFINITY)
+					icon_state = "[initial(icon_state)]-5"
+		else
+			icon_state = "[initial(icon_state)]"
+	else
+		icon_state = "[initial(icon_state)]-off"
+
+//-------------------------
+// grownbin
+//-------------------------
+/obj/machinery/smartfridge/bottlerack/grownbin
+	name = "Harvest bin"
+	desc = "A large box, to contain the harvest that the Earth has blessed upon you."
+	icon_state = "grownbin"
+	max_n_of_items = 1000
+
+/obj/machinery/smartfridge/bottlerack/grownbin/accept_check(obj/item/O)
+	if(istype(O, /obj/item/reagent_containers/food/snacks/grown))
+		return TRUE
+	return FALSE
+
+// ---------------------------------------
+// Update Icons for grownbin
+// ---------------------------------------
+/obj/machinery/smartfridge/bottlerack/grownbin/update_icon_state()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	if(!stat)
+		SSvis_overlays.add_vis_overlay(src, icon, "smartfridge-light-mask", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+		if(visible_contents)
+			switch(contents.len)
+				if(0)
+					icon_state = "[initial(icon_state)]"
+				if(1 to 50)
+					icon_state = "[initial(icon_state)]-1"
+				if(51 to 100)
+					icon_state = "[initial(icon_state)]-2"
+				if(101 to 150)
+					icon_state = "[initial(icon_state)]-3"
+				if(151 to 200)
+					icon_state = "[initial(icon_state)]-4"
+				if(201 to INFINITY)
+					icon_state = "[initial(icon_state)]-5"
+		else
+			icon_state = "[initial(icon_state)]"
+	else
+		icon_state = "[initial(icon_state)]-off"
