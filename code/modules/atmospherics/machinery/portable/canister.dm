@@ -684,17 +684,17 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 						if(gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE)) //if moles_visible is undefined, default to default visibility
 							danger[gas[GAS_META][META_GAS_NAME]] = gas[MOLES] //ex. "plasma" = 20
 							
-/*alerting + log*/ 	if(danger.len)		
+/**alert + log*/	if(danger.len)		
 						message_admins("[ADMIN_LOOKUPFLW(usr)] opened a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:")
 						log_admin("[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:")
 						for(var/name in gaseslog)
-/*just works better	*/   	var/msg = "[name]: [gaseslog[name]] moles." 
-/*to use danger		*/ 		log_admin(msg)										
-/*list as a test	*/ 		message_admins(msg)			
-/*for admin alerts	*/ 			
-/*instead of 	*/ 	else	//just logging, no alert
-/*logging when we 	*/	log_admin("[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:")
-/*log all gas		*/	for(var/name in gaseslog)
+/**just works better*/   	var/msg = "[name]: [gaseslog[name]] moles." 
+/**to use danger	*/ 		log_admin(msg)										
+/**list as a test	*/ 		message_admins(msg)			
+/**for admin alerts	*/ 			
+				 	else	//just logging, no alert
+						log_admin("[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:")
+						for(var/name in gaseslog)
 							var/msg = "[name]: [gaseslog[name]] moles." 
 							log_admin(msg)
 			else
