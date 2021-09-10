@@ -28,8 +28,8 @@
 	integrity_failure = 0.5
 	/// The gases this tank contains. Don't modify this directly, use return_air() to get it instead
 	var/datum/gas_mixture/air_contents = null
-	/// The volume of this tank.
-	var/volume = 70
+	/// The volume of this tank. Among other things gas tank explosions (including TTVs) scale off of this. Be sure to account for that if you change this or you will break ~~toxins~~ordinance.
+	var/volume = TANK_STANDARD_VOLUME
 	/// Whether the tank is currently leaking.
 	var/leaking = FALSE
 	/// The pressure of the gases this tank supplies to internals.
@@ -317,7 +317,9 @@
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react(src)
 		pressure = air_contents.return_pressure()
-		var/power = air_contents.volume * (pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
+
+		// As of writing this this is calibrated to maxcap at 140L and 160atm.
+		var/power = (air_contents.volume * (pressure - TANK_FRAGMENT_PRESSURE)) / TANK_FRAGMENT_SCALE
 		dyn_explosion(src, power, flash_range = 1.5, ignorecap = FALSE)
 	return ..()
 
