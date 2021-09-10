@@ -968,11 +968,11 @@
 	pixel_y = -23
 	},
 /obj/machinery/door/window{
+	atom_integrity = 300;
 	base_state = "leftsecure";
 	dir = 8;
 	icon_state = "leftsecure";
 	name = "Primary AI Core Access";
-	atom_integrity = 300;
 	req_access_txt = "16"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -5608,26 +5608,11 @@
 /area/space/nearstation)
 "aYy" = (
 /obj/machinery/camera{
-	c_tag = "AI Chamber - Port";
+	c_tag = "MiniSat - Antechamber";
 	dir = 4;
 	network = list("aicore")
 	},
-/obj/structure/showcase/cyborg/old{
-	dir = 4;
-	pixel_x = -9;
-	pixel_y = 2
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "aYz" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -5889,11 +5874,6 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "bbH" = (
-/obj/machinery/camera{
-	c_tag = "AI Chamber - Starboard";
-	dir = 8;
-	network = list("aicore")
-	},
 /obj/structure/showcase/cyborg/old{
 	dir = 8;
 	pixel_x = 9;
@@ -5908,6 +5888,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/newscaster/security_unit/directional/east{
+	pixel_y = 12
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
@@ -9786,38 +9769,6 @@
 	},
 /turf/closed/wall,
 /area/science/mixing)
-"bYl" = (
-/obj/effect/landmark/start/ai/secondary,
-/obj/item/radio/intercom/directional/north{
-	freerange = 1;
-	listening = 0;
-	name = "Custom Channel";
-	pixel_x = 8
-	},
-/obj/item/radio/intercom/directional/east{
-	freerange = 1;
-	listening = 0;
-	name = "Common Channel"
-	},
-/obj/item/radio/intercom/directional/south{
-	freerange = 1;
-	frequency = 1447;
-	listening = 0;
-	name = "Private Channel";
-	pixel_x = 8
-	},
-/obj/machinery/door/window{
-	base_state = "leftsecure";
-	dir = 8;
-	icon_state = "leftsecure";
-	layer = 4.1;
-	name = "Tertiary AI Core Access";
-	atom_integrity = 300;
-	pixel_x = -3;
-	req_access_txt = "16"
-	},
-/turf/open/floor/circuit/green,
-/area/ai_monitored/turret_protected/ai)
 "bYz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -13304,22 +13255,36 @@
 	},
 /area/medical/medbay/central)
 "cHT" = (
-/obj/machinery/flasher/directional/east{
-	id = "AI";
-	pixel_y = 26
+/obj/effect/landmark/start/ai/secondary,
+/obj/item/radio/intercom/directional/north{
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_x = -8
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
+/obj/item/radio/intercom/directional/west{
+	freerange = 1;
+	listening = 0;
+	name = "Common Channel"
 	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
+/obj/item/radio/intercom/directional/south{
+	freerange = 1;
+	frequency = 1447;
+	listening = 0;
+	name = "Private Channel";
+	pixel_x = -8
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
+/obj/machinery/door/window{
+	atom_integrity = 300;
+	base_state = "rightsecure";
+	dir = 4;
+	icon_state = "rightsecure";
+	layer = 4.1;
+	name = "Secondary AI Core Access";
+	pixel_x = 4;
+	req_access_txt = "16"
 	},
-/obj/machinery/holopad/secure,
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "cHY" = (
 /obj/structure/window/reinforced{
@@ -28770,6 +28735,38 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
+"idf" = (
+/obj/effect/landmark/start/ai/secondary,
+/obj/item/radio/intercom/directional/north{
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_x = 8
+	},
+/obj/item/radio/intercom/directional/east{
+	freerange = 1;
+	listening = 0;
+	name = "Common Channel"
+	},
+/obj/item/radio/intercom/directional/south{
+	freerange = 1;
+	frequency = 1447;
+	listening = 0;
+	name = "Private Channel";
+	pixel_x = 8
+	},
+/obj/machinery/door/window{
+	atom_integrity = 300;
+	base_state = "leftsecure";
+	dir = 8;
+	icon_state = "leftsecure";
+	layer = 4.1;
+	name = "Tertiary AI Core Access";
+	pixel_x = -3;
+	req_access_txt = "16"
+	},
+/turf/open/floor/circuit/green,
+/area/ai_monitored/turret_protected/ai)
 "idk" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -30406,11 +30403,11 @@
 /area/command/heads_quarters/hop)
 "iKw" = (
 /obj/machinery/door/window{
+	atom_integrity = 300;
 	base_state = "rightsecure";
 	dir = 4;
 	icon_state = "rightsecure";
 	name = "Primary AI Core Access";
-	atom_integrity = 300;
 	req_access_txt = "16"
 	},
 /obj/machinery/camera{
@@ -32784,25 +32781,12 @@
 	},
 /area/space/nearstation)
 "jCG" = (
-/obj/structure/showcase/cyborg/old{
+/obj/machinery/camera{
+	c_tag = "AI Chamber - Starboard";
 	dir = 8;
-	pixel_x = 9;
-	pixel_y = 2
+	network = list("aicore")
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/newscaster/security_unit/directional/east{
-	pixel_y = 12
-	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "jCW" = (
 /obj/effect/turf_decal/stripes/line{
@@ -36878,36 +36862,18 @@
 /turf/open/floor/iron,
 /area/service/bar)
 "ldh" = (
-/obj/effect/landmark/start/ai/secondary,
-/obj/item/radio/intercom/directional/north{
-	freerange = 1;
-	listening = 0;
-	name = "Custom Channel";
-	pixel_x = -8
+/obj/machinery/porta_turret/ai,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
-/obj/item/radio/intercom/directional/west{
-	freerange = 1;
-	listening = 0;
-	name = "Common Channel"
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
 	},
-/obj/item/radio/intercom/directional/south{
-	freerange = 1;
-	frequency = 1447;
-	listening = 0;
-	name = "Private Channel";
-	pixel_x = -8
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
-/obj/machinery/door/window{
-	base_state = "rightsecure";
-	dir = 4;
-	icon_state = "rightsecure";
-	layer = 4.1;
-	name = "Secondary AI Core Access";
-	atom_integrity = 300;
-	pixel_x = 4;
-	req_access_txt = "16"
-	},
-/turf/open/floor/circuit/green,
+/turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "ldE" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/oxygen_input{
@@ -45550,9 +45516,22 @@
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "odP" = (
-/obj/machinery/light/directional/west,
-/obj/machinery/status_display/ai/directional/west,
-/turf/open/floor/circuit,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/holopad/secure,
+/obj/machinery/flasher/directional/west{
+	id = "AI";
+	pixel_y = -26
+	},
+/turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "odV" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -57269,6 +57248,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "stR" = (
+/obj/machinery/flasher/directional/east{
+	id = "AI";
+	pixel_y = 26
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -57280,10 +57263,6 @@
 	dir = 8
 	},
 /obj/machinery/holopad/secure,
-/obj/machinery/flasher/directional/west{
-	id = "AI";
-	pixel_y = -26
-	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "stY" = (
@@ -72715,6 +72694,24 @@
 	},
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
+"xXM" = (
+/obj/structure/showcase/cyborg/old{
+	dir = 8;
+	pixel_x = 9;
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ai_monitored/turret_protected/ai)
 "xXW" = (
 /obj/docking_port/stationary{
 	dheight = 1;
@@ -127156,8 +127153,8 @@ gfU
 aTV
 aTV
 aTV
-gfU
-gfU
+aTV
+aTV
 gfU
 gfU
 bjP
@@ -127413,7 +127410,7 @@ aTV
 aTV
 ldh
 aTV
-aTV
+cHT
 aTV
 aTV
 aTV
@@ -127668,10 +127665,10 @@ aTV
 aVl
 oFC
 aYy
-stR
+aWN
 bbF
 odP
-aVl
+bbF
 jGa
 sQi
 bjQ
@@ -129210,10 +129207,10 @@ aTV
 aVr
 iZN
 jCG
-cHT
+aWN
 bbH
-iZN
-aVr
+stR
+xXM
 qsV
 kIt
 bjQ
@@ -129467,9 +129464,9 @@ gfU
 aTV
 aTV
 aTV
-bYl
+ldh
 aTV
-aTV
+idf
 aTV
 aTV
 aTV
@@ -129726,8 +129723,8 @@ gfU
 aTV
 aTV
 aTV
-gfU
-gfU
+aTV
+aTV
 gfU
 gfU
 ldP

@@ -9383,21 +9383,8 @@
 /turf/open/floor/iron,
 /area/command/gateway)
 "bAy" = (
-/obj/structure/table/reinforced,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/status_display/evac/directional/east,
-/turf/open/floor/iron/dark,
+/obj/structure/chair/office,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bAz" = (
 /obj/item/kirbyplants/random,
@@ -9436,20 +9423,33 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "bAG" = (
-/obj/structure/table/reinforced,
-/obj/item/folder/blue,
-/obj/item/pen,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
+/obj/machinery/door/window{
+	base_state = "rightsecure";
+	dir = 4;
+	icon_state = "rightsecure";
+	layer = 4.1;
+	name = "Secondary AI Core Access";
+	pixel_x = 4;
+	req_access_txt = "16"
 	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
+/obj/effect/landmark/start/ai/secondary,
+/obj/item/radio/intercom/directional/north{
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel"
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
+/obj/item/radio/intercom/directional/west{
+	freerange = 1;
+	listening = 0;
+	name = "Common Channel"
 	},
-/turf/open/floor/iron/dark,
+/obj/item/radio/intercom/directional/south{
+	freerange = 1;
+	frequency = 1447;
+	listening = 0;
+	name = "Private Channel"
+	},
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bAI" = (
 /obj/effect/turf_decal/bot,
@@ -9706,36 +9706,9 @@
 /turf/open/floor/iron,
 /area/security/execution/transfer)
 "bEf" = (
-/obj/machinery/door/window{
-	base_state = "rightsecure";
-	dir = 4;
-	icon_state = "rightsecure";
-	layer = 4.1;
-	name = "Secondary AI Core Access";
-	pixel_x = 4;
-	req_access_txt = "16"
-	},
-/obj/effect/landmark/start/ai/secondary,
-/obj/item/radio/intercom/directional/north{
-	freerange = 1;
-	listening = 0;
-	name = "Custom Channel"
-	},
-/obj/item/radio/intercom/directional/west{
-	freerange = 1;
-	listening = 0;
-	name = "Common Channel"
-	},
-/obj/item/radio/intercom/directional/south{
-	freerange = 1;
-	frequency = 1447;
-	listening = 0;
-	name = "Private Channel"
-	},
-/turf/open/floor/circuit/green,
-/area/ai_monitored/turret_protected/ai)
-"bEg" = (
-/obj/machinery/holopad/secure,
+/obj/structure/table/reinforced,
+/obj/item/paper_bin,
+/obj/item/pen,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9748,6 +9721,23 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
+"bEg" = (
+/obj/structure/table/reinforced,
+/obj/item/folder/blue,
+/obj/item/assembly/flash/handheld,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
+/area/ai_monitored/turret_protected/ai)
 "bEl" = (
 /obj/machinery/ai_slipper{
 	uses = 10
@@ -9756,33 +9746,21 @@
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bEm" = (
-/obj/machinery/door/window{
-	base_state = "leftsecure";
-	dir = 8;
-	icon_state = "leftsecure";
-	layer = 4.1;
-	name = "Tertiary AI Core Access";
-	pixel_x = -3;
-	req_access_txt = "16"
+/obj/structure/table/reinforced,
+/obj/item/crowbar,
+/obj/item/wrench,
+/obj/item/mmi,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
-/obj/effect/landmark/start/ai/secondary,
-/obj/item/radio/intercom/directional/north{
-	freerange = 1;
-	listening = 0;
-	name = "Custom Channel"
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
 	},
-/obj/item/radio/intercom/directional/east{
-	freerange = 1;
-	listening = 0;
-	name = "Common Channel"
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
-/obj/item/radio/intercom/directional/south{
-	freerange = 1;
-	frequency = 1447;
-	listening = 0;
-	name = "Private Channel"
-	},
-/turf/open/floor/circuit/green,
+/turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "bEr" = (
 /obj/structure/rack,
@@ -10245,24 +10223,6 @@
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/white,
 /area/hallway/primary/central/aft)
-"bHM" = (
-/obj/structure/table/reinforced,
-/obj/item/crowbar,
-/obj/item/wrench,
-/obj/item/mmi,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/status_display/ai/directional/east,
-/turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/ai)
 "bIc" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -10615,29 +10575,8 @@
 	},
 /turf/open/floor/iron/dark,
 /area/security/warden)
-"bJF" = (
-/obj/structure/chair/office{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/ai)
 "bJM" = (
-/obj/structure/chair/office{
-	dir = 4
-	},
+/obj/machinery/holopad/secure,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -10646,28 +10585,38 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "bJN" = (
-/obj/structure/table/reinforced,
-/obj/item/folder/blue,
-/obj/item/assembly/flash/handheld,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
+/obj/machinery/door/window{
+	base_state = "leftsecure";
+	dir = 8;
+	icon_state = "leftsecure";
+	layer = 4.1;
+	name = "Tertiary AI Core Access";
+	pixel_x = -3;
+	req_access_txt = "16"
 	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
+/obj/effect/landmark/start/ai/secondary,
+/obj/item/radio/intercom/directional/north{
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel"
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
+/obj/item/radio/intercom/directional/east{
+	freerange = 1;
+	listening = 0;
+	name = "Common Channel"
 	},
-/turf/open/floor/iron/dark,
+/obj/item/radio/intercom/directional/south{
+	freerange = 1;
+	frequency = 1447;
+	listening = 0;
+	name = "Private Channel"
+	},
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bKH" = (
 /turf/closed/wall/r_wall,
@@ -10806,28 +10755,6 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
-"bLx" = (
-/obj/structure/table/reinforced,
-/obj/item/bodypart/chest/robot,
-/obj/item/bodypart/r_arm/robot{
-	pixel_x = 6
-	},
-/obj/item/bodypart/l_arm/robot{
-	pixel_x = -6
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/status_display/evac/directional/west,
-/turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/ai)
 "bLT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
@@ -11184,6 +11111,14 @@
 /turf/open/space,
 /area/space/nearstation)
 "bNw" = (
+/obj/structure/table/reinforced,
+/obj/item/bodypart/chest/robot,
+/obj/item/bodypart/r_arm/robot{
+	pixel_x = 6
+	},
+/obj/item/bodypart/l_arm/robot{
+	pixel_x = -6
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -11217,7 +11152,9 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "bNA" = (
-/obj/machinery/light/directional/south,
+/obj/structure/table/reinforced,
+/obj/item/folder/blue,
+/obj/item/pen,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -11228,6 +11165,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "bNB" = (
@@ -65034,23 +64972,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/cargo/storage)
-"nhp" = (
-/obj/structure/table/reinforced,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/status_display/ai/directional/west,
-/turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/ai)
 "nhr" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
@@ -109477,11 +109398,11 @@ btH
 byS
 rgx
 btH
-bEf
 btH
-nhp
+btH
+btH
 bAG
-bLx
+btH
 btH
 bPC
 bRC
@@ -109734,12 +109655,12 @@ bxv
 byT
 bAz
 bCq
-bEg
-bCq
-bCq
-bJF
-bCq
 bxv
+bCq
+bCq
+bJM
+bCq
+bEf
 bPC
 bRD
 bPC
@@ -109995,7 +109916,7 @@ bEl
 abJ
 abJ
 tKq
-abJ
+bAy
 bNA
 bPC
 bKJ
@@ -111281,7 +111202,7 @@ aRF
 nav
 nav
 abJ
-bCq
+bEf
 bPH
 bRF
 bYe
@@ -111537,8 +111458,8 @@ bEl
 abJ
 abJ
 kub
-abJ
-bNA
+bAy
+bEg
 bPC
 sES
 bYg
@@ -111790,12 +111711,12 @@ bxv
 bzb
 bAF
 bCq
-bEg
+bxv
 bCq
 bCq
 bJM
 bCq
-bxv
+bEm
 bPC
 bRD
 bPC
@@ -112047,11 +111968,11 @@ btH
 bzc
 tbk
 btH
-bEm
 btH
-bHM
+btH
+btH
 bJN
-bAy
+btH
 btH
 bPC
 bRF
