@@ -6,7 +6,6 @@
 	clothing_flags = BLOCKS_SPEECH
 	flags_cover = MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
-	gas_transfer_coefficient = 0.9
 	equip_delay_other = 20
 
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user, list/modifiers)
@@ -24,6 +23,5 @@
 	inhand_icon_state = "breathmuzzle"
 	body_parts_covered = NONE
 	clothing_flags = MASKINTERNALS | BLOCKS_SPEECH
-	gas_transfer_coefficient = 0.1
 	permeability_coefficient = 0.01
 	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle

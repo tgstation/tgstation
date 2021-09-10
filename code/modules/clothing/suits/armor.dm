@@ -246,7 +246,6 @@
 	icon_state = "heavy"
 	inhand_icon_state = "swat_suit"
 	w_class = WEIGHT_CLASS_BULKY
-	gas_transfer_coefficient = 0.9
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 3
