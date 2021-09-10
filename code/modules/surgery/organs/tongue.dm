@@ -397,9 +397,9 @@
 	desc = "A sophisticated ethereal organ, capable of synthesising speech via electrical discharge."
 	icon_state = "electrotongue"
 	say_mod = "crackles"
+	taste_sensitivity = 10 // ethereal tongues function (very loosely) like a gas spectrometer: vaporising a small amount of the food and allowing it to pass to the nose, resulting in more sensitive taste
 	attack_verb_continuous = list("shocks", "jolts", "zaps")
 	attack_verb_simple = list("shock", "jolt", "zap")
-	sense_of_taste = FALSE
 	var/static/list/languages_possible_ethereal = typecacheof(list(
 		/datum/language/common,
 		/datum/language/draconic,

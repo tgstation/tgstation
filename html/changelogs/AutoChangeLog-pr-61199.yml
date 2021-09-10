@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Maint sect night vision eyes trait now correctly make your eyes show as glowing an unnatural red when examined instead of doing nothing."
-  - qol: "Tweaks the logic for the cultist glowy red eye trait, allowing admins to add this to players to make them appear as if they were cultists when examined, without actually forcing them to make that person a full blown cultist. The cultist glowy red eye message has been modified as a result, and now examines as \"... glowing with an unnatural red aura!\""

@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed mindshield implants not retroactively working against slime or mansus links."
-  - bugfix: "Fixed stargazers that were either mindshielded, dead or protected against psych magick by the time they became what they are not receiving the slime link speech ability."
-  - bugfix: "Stargazers will no permanently longer lose their slime link speech ability upon death."

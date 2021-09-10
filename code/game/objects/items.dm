@@ -113,8 +113,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	///What body parts are covered by the clothing when you wear it
 	var/body_parts_covered = 0
-	///Literally does nothing right now
-	var/gas_transfer_coefficient = 1
 	/// How likely a disease or chemical is to get through a piece of clothing
 	var/permeability_coefficient = 1
 	/// for electrical admittance/conductance (electrocution checks and shit)
@@ -253,7 +251,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
-		obj_destruction(MELEE)
+		atom_destruction(MELEE)
 
 /obj/item/ComponentInitialize()
 	. = ..()

@@ -500,6 +500,14 @@
 		"safe_dial.png" = 'icons/ui_icons/safe/safe_dial.png'
 	)
 
+/datum/asset/simple/contracts
+	assets = list(
+		"bluespace.png" = 'icons/ui_icons/contracts/bluespace.png',
+		"destruction.png" = 'icons/ui_icons/contracts/destruction.png',
+		"healing.png" = 'icons/ui_icons/contracts/healing.png',
+		"robeless.png" = 'icons/ui_icons/contracts/robeless.png',
+	)
+
 /datum/asset/spritesheet/fish
 	name = "fish"
 
