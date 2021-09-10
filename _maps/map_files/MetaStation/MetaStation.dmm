@@ -5873,27 +5873,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
-"bbH" = (
-/obj/structure/showcase/cyborg/old{
-	dir = 8;
-	pixel_x = 9;
-	pixel_y = 2
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/newscaster/security_unit/directional/east{
-	pixel_y = 12
-	},
-/turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/ai)
 "bbJ" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -35692,6 +35671,9 @@
 	},
 /obj/item/pen,
 /obj/machinery/light/small/directional/east,
+/obj/machinery/newscaster/security_unit/directional/east{
+	pixel_y = 12
+	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "kIu" = (
@@ -129208,7 +129190,7 @@ aVr
 iZN
 jCG
 aWN
-bbH
+xXM
 stR
 xXM
 qsV
