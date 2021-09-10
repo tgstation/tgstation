@@ -27,3 +27,5 @@
 	surged.heal_overall_damage(15, 15, 0, BODYPART_ORGANIC)
 	if(surged.reagents.get_reagent_amount(/datum/reagent/medicine/ephedrine) < 20)
 		surged.reagents.add_reagent(/datum/reagent/medicine/ephedrine, 10)
+	if(surged.reagents.get_reagent_amount(/datum/reagent/medicine/epinephrine) < 20)
+		surged.reagents.add_reagent(/datum/reagent/medicine/epinephrine, 10)

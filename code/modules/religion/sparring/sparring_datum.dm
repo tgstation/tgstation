@@ -1,5 +1,5 @@
 /datum/sparring_match
-	///the chaplain. surprisingly enough, isn't actually a chaplain all the time. it only needs to be the chaplain for holy matches.
+	///the chaplain. it isn't actually a chaplain all the time, but in the cases where the chaplain is needed this will always be them.
 	var/mob/living/carbon/human/chaplain
 	///the other fighter
 	var/mob/living/carbon/human/opponent
@@ -23,6 +23,8 @@
 	src.stakes_condition = stakes_condition
 	src.chaplain = chaplain
 	src.opponent = opponent
+	ADD_TRAIT(chaplain, TRAIT_SPARRING, TRAIT_GENERIC)
+	ADD_TRAIT(opponent, TRAIT_SPARRING, TRAIT_GENERIC)
 	hook_signals(chaplain)
 	hook_signals(opponent)
 	chaplain.add_filter("sparring_outline", 9, list("type" = "outline", "color" = "#e02200"))
@@ -42,7 +44,13 @@
 	//win conditions
 	RegisterSignal(sparring, COMSIG_MOB_STATCHANGE, .proc/check_for_victory)
 	//flub conditions
-	RegisterSignal(sparring, COMSIG_PROJECTILE_HIT_BY, .proc/projectile_interference)
+	RegisterSignal(sparring, COMSIG_PARENT_ATTACKBY, .proc/outsider_interference)
+	RegisterSignal(sparring, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_interference)
+	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_HAND, .proc/hand_interference)
+	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_PAW, .proc/paw_interference)
+	RegisterSignal(sparring, COMSIG_ATOM_HITBY, .proc/thrown_interference)
+	RegisterSignal(sparring, COMSIG_ATOM_BULLET_ACT, .proc/projectile_interference)
+	//severe flubs (insta match ender, no winners) conditions
 	RegisterSignal(sparring, COMSIG_LIVING_DEATH, .proc/death_flub)
 	RegisterSignal(sparring, COMSIG_PARENT_QDELETING, .proc/deletion_flub)
 
@@ -56,7 +64,12 @@
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_MOVABLE_TELEPORTED,
 		COMSIG_MOB_STATCHANGE,
-		COMSIG_PROJECTILE_HIT_BY,
+		COMSIG_PARENT_ATTACKBY,
+		COMSIG_ATOM_HULK_ATTACK,
+		COMSIG_ATOM_ATTACK_HAND,
+		COMSIG_ATOM_ATTACK_PAW,
+		COMSIG_ATOM_HITBY,
+		COMSIG_ATOM_BULLET_ACT,
 		COMSIG_LIVING_DEATH,
 		COMSIG_PARENT_QDELETING,
 	))
@@ -65,34 +78,66 @@
 /datum/sparring_match/proc/check_for_victory(datum/participant, new_stat)
 	SIGNAL_HANDLER
 
-	if(new_stat != UNCONSCIOUS)
+	if(new_stat != SOFT_CRIT)
 		return
 	if(participant == chaplain)
 		end_match(opponent, chaplain)
 	else
 		end_match(chaplain, opponent)
 
-/datum/sparring_match/proc/projectile_interference(datum/hit_by, atom/movable/firer)
+// SIGNALS THAT ARE FOR BEING ATTACKED FIRST (GUILTY)
+/datum/sparring_match/proc/outsider_interference(datum/source, obj/item/I, mob/attacker)
 	SIGNAL_HANDLER
-	if(firer == chaplain || firer == opponent)
-		//oh, well that's allowed. or maybe it isn't. doesn't matter because firing the gun will trigger a violation, so no additional violation needed
+	if(attacker == chaplain || attacker == opponent)
+		// fist fighting a hulk is so dumb. i can't fathom why you would do this.
+		return
+	flub(attacker)
+
+/datum/sparring_match/proc/hulk_interference(datum/source, mob/attacker)
+	SIGNAL_HANDLER
+	if((attacker == chaplain || attacker == opponent))
+		// fist fighting a hulk is so dumb. i can't fathom why you would do this.
+		return
+	flub(attacker)
+
+/datum/sparring_match/proc/hand_interference(datum/source, mob/living/attacker)
+	SIGNAL_HANDLER
+	if(!attacker.combat_mode)
+		//not worth the flub
+		return
+	if(attacker == chaplain || attacker == opponent)
+		//you can pretty much always use fists as a participant
 		return
 
-	if(isliving(firer))
-		var/mob/living/interfering = firer
-		switch(rand(1,3))
-			if(1)
-				to_chat(interfering, span_warning("You get a bad feeling... for interfering with [chaplain]'s sparring match..."))
-				interfering.AddComponent(/datum/component/omen, TRUE, null, FALSE)
-			if(2)
-				to_chat(interfering, span_warning("[GLOB.deity] has punished you for interfering with [chaplain]'s sparring match!"))
-				lightningbolt(interfering)
-			if(3)
-				to_chat(interfering, span_warning("[GLOB.deity]'s whispers echo through your mind for interfering with [chaplain]'s sparring match!!"))
-				SEND_SOUND(interfering, sound('sound/hallucinations/behind_you1.ogg'))
-				interfering.add_confusion(15)
-	flub()
+	flub(attacker)
 
+/datum/sparring_match/proc/paw_interference(datum/source, mob/living/attacker)
+	SIGNAL_HANDLER
+
+	if(attacker == chaplain || attacker == opponent)
+		//you can pretty much always use paws as a participant
+		return
+
+	flub(attacker)
+
+/datum/sparring_match/proc/thrown_interference(datum/source, atom/movable/thrown_movable, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
+	SIGNAL_HANDLER
+	if(istype(thrown_movable, /obj/item))
+		var/mob/living/honorbound = source
+		var/obj/item/thrown_item = thrown_movable
+		var/mob/thrown_by = thrown_item.thrownby?.resolve()
+		if(thrown_item.throwforce < honorbound.health && ishuman(thrown_by))
+			flub(thrown_by)
+
+/datum/sparring_match/proc/projectile_interference(datum/participant, obj/projectile/proj)
+	SIGNAL_HANDLER
+	if(proj.firer == chaplain || proj.firer == opponent)
+		//oh, well that's allowed. or maybe it isn't. doesn't matter because firing the gun will trigger a violation, so no additional violation needed
+		return
+	var/mob/living/interfering
+	if(isliving(proj.firer))
+		interfering = proj.firer
+	flub(interfering)
 
 ///someone randomly fucking died
 /datum/sparring_match/proc/death_flub(datum/deceased)
@@ -153,7 +198,21 @@
 		if(!opponent_violations_allowed)
 			end_match(chaplain, opponent, violation_victory = TRUE)
 
-/datum/sparring_match/proc/flub()
+/datum/sparring_match/proc/flub(mob/living/interfering)
+
+	if(interfering)
+		switch(rand(1,3))
+			if(1)
+				to_chat(interfering, span_warning("You get a bad feeling... for interfering with [chaplain]'s sparring match..."))
+				interfering.AddComponent(/datum/component/omen, TRUE, null, FALSE)
+			if(2)
+				to_chat(interfering, span_warning("[GLOB.deity] has punished you for interfering with [chaplain]'s sparring match!"))
+				lightningbolt(interfering)
+			if(3)
+				to_chat(interfering, span_warning("[GLOB.deity]'s whispers echo through your mind for interfering with [chaplain]'s sparring match!!"))
+				SEND_SOUND(interfering, sound('sound/hallucinations/behind_you1.ogg'))
+				interfering.add_confusion(15)
+
 	flubs--
 	if(!flubs) //too many interferences
 		flubbed_match()
@@ -161,6 +220,7 @@
 ///this match was interfered on, nobody wins or loses anything, just end
 /datum/sparring_match/proc/flubbed_match()
 	cleanup_sparring_match()
+
 	if(chaplain) //flubing means we don't know who is still standing
 		to_chat(chaplain, span_boldannounce("The match was flub'd! No winners, no losers. You may restart the match with another contract."))
 	if(opponent)
@@ -169,6 +229,8 @@
 
 ///helper to remove all the effects after a match ends
 /datum/sparring_match/proc/cleanup_sparring_match()
+	REMOVE_TRAIT(chaplain, TRAIT_SPARRING, TRAIT_GENERIC)
+	REMOVE_TRAIT(opponent, TRAIT_SPARRING, TRAIT_GENERIC)
 	unhook_signals(chaplain)
 	unhook_signals(opponent)
 	chaplain.remove_filter("sparring_outline")

@@ -71,7 +71,13 @@
 
 	var/datum/religion_sect/spar/sect = GLOB.religious_sect
 
-	if(user in sect.past_opponents && params["stakes"] == HOLY_MATCH)
+	var/list/resolved_opponents = list()
+	for(var/datum/weakref/resolve_me as anything in sect.past_opponents)
+		var/resolved = resolve_me.resolve()
+		if(!isnull(resolved))
+			resolved_opponents += resolved
+
+	if(user in resolved_opponents && params["stakes"] == HOLY_MATCH)
 		to_chat(user, span_warning("This contract refuses to be signed up for a holy match by a previous holy match loser. Pick a different stake!"))
 
 	//any updating of the terms should update the UI to display new terms
@@ -82,6 +88,9 @@
 			var/mob/living/carbon/human/left_partner = signed_by[1]
 			var/mob/living/carbon/human/right_partner = signed_by[2]
 			if(!left_partner || !right_partner || !left_partner.mind || !right_partner.mind)
+				return
+			if(HAS_TRAIT(left_partner, TRAIT_SPARRING) || HAS_TRAIT(right_partner, TRAIT_SPARRING))
+				to_chat(user, span_warning("One participant is already sparring!"))
 				return
 			var/chaplain = left_partner.mind.holy_role ? left_partner : right_partner
 			var/opponent = left_partner.mind.holy_role ? right_partner : left_partner
