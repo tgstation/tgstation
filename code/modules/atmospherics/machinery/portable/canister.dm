@@ -688,7 +688,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
  * just works better to use danger	
  * list as a test for admin alerts
  */ 
- 					///alert + log path
+					///alert + log path
 					if(danger.len)	
 						message_admins("[ADMIN_LOOKUPFLW(usr)] opened a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:")
 						log_admin("[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:")
@@ -697,7 +697,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 							log_admin(msg)										 		
 							message_admins(msg)		
 					///just logging, no alert	
-				 	else	
+					else	
 						log_admin("[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:")
 						for(var/name in gaseslog)
 							var/msg = "[name]: [gaseslog[name]] moles." 
