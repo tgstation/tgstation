@@ -224,9 +224,21 @@ SUBSYSTEM_DEF(explosions)
 	if(SEND_SIGNAL(epicenter_area, COMSIG_AREA_INTERNAL_EXPLOSION, arguments) & COMSIG_CANCEL_EXPLOSION)
 		return
 
+	var/turf/above_level = SSmapping.get_turf_above(location)
+	var/turf/below_level = SSmapping.get_turf_below(location)
+
 	arguments -= EXARG_KEY_ORIGIN
 	propagate_blastwave(arglist(list(location) + arguments))
 
+	arguments[EXARG_KEY_DEV_RANGE] -= 1
+	arguments[EXARG_KEY_HEAVY_RANGE] -= 1
+	arguments[EXARG_KEY_LIGHT_RANGE] -= 1
+	arguments[EXARG_KEY_FLASH_RANGE] -= 1
+
+	if(above_level && isturf(above_level))
+		propagate_blastwave(arglist(list(above_level) + arguments))
+	if(below_level && isturf(below_level))
+		propagate_blastwave(arglist(list(below_level) + arguments))
 
 /**
  * Handles the effects of an explosion originating from a given point.
