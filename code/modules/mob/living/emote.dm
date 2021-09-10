@@ -372,6 +372,13 @@
 		var/mob/living/L = user
 		L.Paralyze(200)
 		L.remove_status_effect(STATUS_EFFECT_SURRENDER)
+		
+/datum/emote/living/sus
+	key = "sus"
+	key_third_person = "susses"
+	message = "narrows their eyes suspiciously."
+	message_simple = "stares suspiciously."
+	message_param = "narrows their eyes suspiciously at %t."
 
 /datum/emote/living/sway
 	key = "sway"
