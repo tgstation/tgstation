@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - qol: "TGUI-ifies apprentice contracts. Yummy!"
