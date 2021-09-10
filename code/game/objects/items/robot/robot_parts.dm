@@ -145,7 +145,7 @@
 	to_chat(user, span_notice("You [chest.cell ? "replace [src]'s [chest.cell.name] with [temp_cell]" : "insert [temp_cell] into [src]"]."))
 	chest.cell = temp_cell
 	return TRUE
-
+//ADD
 /obj/item/robot_suit/attackby(obj/item/W, mob/user, params)
 
 	if(istype(W, /obj/item/stack/sheet/iron))
@@ -254,8 +254,8 @@
 			if(!M.brain_check(user))
 				return
 
-			var/mob/living/brain/B = M.brainmob
-			if(is_banned_from(B.ckey, "Cyborg") || QDELETED(src) || QDELETED(B) || QDELETED(user) || QDELETED(M) || !Adjacent(user))
+			var/mob/living/brain/brainmob = M.brainmob
+			if(is_banned_from(brainmob.ckey, "Cyborg") || QDELETED(src) || QDELETED(brainmob) || QDELETED(user) || QDELETED(M) || !Adjacent(user))
 				if(!QDELETED(M))
 					to_chat(user, span_warning("This [M.name] does not seem to fit!"))
 				return
@@ -287,7 +287,7 @@
 				if(M.laws.id == DEFAULT_AI_LAWID)
 					O.make_laws()
 
-			B.mind?.remove_antags_for_borging()
+			brainmob.mind?.remove_antags_for_borging()
 			O.job = "Cyborg"
 
 			O.cell = chest.cell
@@ -297,14 +297,12 @@
 			if(O.mmi) //we delete the mmi created by robot/New()
 				qdel(O.mmi)
 			O.mmi = W //and give the real mmi to the borg.
-
-			O.updatename(B.client)
-
-			B.mind.transfer_to(O)
+			O.updatename(brainmob.client)
+			brainmob.mind.transfer_to(O)
+			brainmob.mind.add_memory(MEMORY_BORGED, list(DETAIL_PROTAGONIST = user), story_value = STORY_VALUE_OKAY)
 			playsound(O.loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 
 			if(O.mind && O.mind.special_role)
-				O.mind.store_memory("As a cyborg, you must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.")
 				to_chat(O, span_userdanger("You have been robotized!"))
 				to_chat(O, span_danger("You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead."))
 

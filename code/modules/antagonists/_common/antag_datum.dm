@@ -51,8 +51,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	//ANTAG UI
 
-	///name of the UI that will try to open, right now having nothing means this won't exist but in the future all should.
-	var/ui_name
+	///name of the UI that will try to open, right now using a generic ui
+	var/ui_name = "AntagInfoGeneric"
 	///button to access antag interface
 	var/datum/action/antag_info/info_button
 
@@ -340,11 +340,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/Topic(href,href_list)
 	if(!check_rights(R_ADMIN))
 		return
-	//Antag memory edit
-	if (href_list["memory_edit"])
-		edit_memory(usr)
-		owner.traitor_panel()
-		return
 
 	//Some commands might delete/modify this datum clearing or changing owner
 	var/datum/mind/persistent_owner = owner
@@ -402,7 +397,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/ui_state(mob/user)
 	return GLOB.always_state
 
-///generic helper to send objectives as data through tgui. supports smart objectives too!
+///generic helper to send objectives as data through tgui.
 /datum/antagonist/proc/get_objectives()
 	var/objective_count = 1
 	var/list/objective_data = list()
@@ -416,6 +411,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 		))
 		objective_count++
 	return objective_data
+
+/datum/antagonist/ui_static_data(mob/user)
+	var/list/data = list()
+	data["antag_name"] = name
+	data["objectives"] = get_objectives()
+	return data
 
 //button for antags to review their descriptions/info
 

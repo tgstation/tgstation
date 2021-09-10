@@ -310,3 +310,6 @@
 	desc = initial(I.desc)
 	icon_state = initial(I.icon_state)
 	inhand_icon_state = initial(I.inhand_icon_state)
+	lefthand_file = initial(I.lefthand_file)
+	righthand_file = initial(I.righthand_file)
+	cut_overlays() //to get rid of the big blue x

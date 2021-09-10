@@ -58,6 +58,7 @@
 #define LARGE_WORN_ICON (1<<15) //Clothes that use large icons, for applying the proper overlays like blood
 /// Clothes that block speech (i.e the muzzle). Can be applied to any clothing piece.
 #define BLOCKS_SPEECH (1<<16)
+#define PLASMAMAN_HELMET_EXEMPT (1<<17) //prevents from placing on plasmaman helmet
 
 /// Flags for the organ_flags var on /obj/item/organ
 

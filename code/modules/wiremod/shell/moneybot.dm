@@ -13,6 +13,7 @@
 	light_on = FALSE
 
 	var/stored_money = 0
+	var/locked = FALSE
 
 /obj/structure/money_bot/deconstruct(disassembled)
 	new /obj/item/holochip(drop_location(), stored_money)
@@ -30,6 +31,8 @@
 	), SHELL_CAPACITY_LARGE)
 
 /obj/structure/money_bot/wrench_act(mob/living/user, obj/item/tool)
+	if(locked)
+		return
 	set_anchored(!anchored)
 	tool.play_tool_sound(src)
 	balloon_alert(user, "You [anchored?"secure":"unsecure"] [src].")
@@ -102,6 +105,8 @@
 		total_money.set_output(attached_bot.stored_money)
 		RegisterSignal(shell, COMSIG_PARENT_ATTACKBY, .proc/handle_money_insert)
 		RegisterSignal(shell, COMSIG_MONEYBOT_ADD_MONEY, .proc/handle_money_update)
+		RegisterSignal(parent, COMSIG_CIRCUIT_SET_LOCKED, .proc/on_set_locked)
+		attached_bot.locked = parent.locked
 
 /obj/item/circuit_component/money_bot/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, list(
@@ -109,6 +114,9 @@
 		COMSIG_MONEYBOT_ADD_MONEY,
 	))
 	total_money.set_output(null)
+	if(attached_bot)
+		attached_bot.locked = FALSE
+		UnregisterSignal(parent, COMSIG_CIRCUIT_SET_LOCKED)
 	attached_bot = null
 	return ..()
 
@@ -133,3 +141,12 @@
 	SIGNAL_HANDLER
 	if(attached_bot)
 		total_money.set_output(attached_bot.stored_money)
+
+/**
+ * Locks the attached bot when the circuit is locked.
+ *
+ * Arguments:
+ * * new_value - A boolean that determines if the circuit is locked or not.
+ **/
+/obj/item/circuit_component/money_bot/proc/on_set_locked(datum/source, new_value)
+	attached_bot.locked = new_value

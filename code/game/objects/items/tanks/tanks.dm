@@ -291,7 +291,7 @@
 	return FALSE
 
 /// Handles the tank springing a leak.
-/obj/item/tank/obj_break(damage_flag)
+/obj/item/tank/atom_break(damage_flag)
 	. = ..()
 	if(leaking)
 		return
@@ -299,13 +299,13 @@
 	leaking = TRUE
 	START_PROCESSING(SSobj, src)
 
-	if(obj_integrity < 0) // So we don't play the alerts while we are exploding or rupturing.
+	if(atom_integrity < 0) // So we don't play the alerts while we are exploding or rupturing.
 		return
 	visible_message(span_warning("[src] springs a leak!"))
 	playsound(src, 'sound/effects/spray.ogg', 10, TRUE, -3)
 
 /// Handles rupturing and fragmenting
-/obj/item/tank/obj_destruction(damage_flag)
+/obj/item/tank/atom_destruction(damage_flag)
 	if(!air_contents)
 		return ..()
 

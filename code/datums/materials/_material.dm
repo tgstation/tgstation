@@ -95,7 +95,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	source.mat_update_desc(src)
 
 ///This proc is called when a material updates an object's description
-/atom/proc/mat_update_desc(/datum/material/mat)
+/atom/proc/mat_update_desc(datum/material/mat)
 	return
 
 ///This proc is called when the material is added to an object specifically.
