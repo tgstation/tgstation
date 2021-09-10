@@ -111,7 +111,7 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/tdome/red,
 /obj/item/clothing/head/helmet/thunderdome,
-/obj/item/melee/baton/loaded,
+/obj/item/melee/baton/security/loaded,
 /obj/item/melee/energy/sword/saber/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -182,7 +182,7 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/tdome/green,
 /obj/item/clothing/head/helmet/thunderdome,
-/obj/item/melee/baton/loaded,
+/obj/item/melee/baton/security/loaded,
 /obj/item/melee/energy/sword/saber/green,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -12151,7 +12151,7 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/tdome/red,
 /obj/item/clothing/head/helmet/thunderdome,
-/obj/item/melee/baton/loaded,
+/obj/item/melee/baton/security/loaded,
 /obj/item/melee/energy/sword/saber/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -12275,7 +12275,7 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/tdome/green,
 /obj/item/clothing/head/helmet/thunderdome,
-/obj/item/melee/baton/loaded,
+/obj/item/melee/baton/security/loaded,
 /obj/item/melee/energy/sword/saber/green,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8

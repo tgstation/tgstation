@@ -1,6 +1,9 @@
 /// Helper define that can only be used in /obj/item/circuit_component/input_received()
 #define COMPONENT_TRIGGERED_BY(trigger, port) (trigger.value && trigger == port)
 
+/// Define to be placed at any proc that is triggered by a port.
+#define CIRCUIT_TRIGGER SHOULD_NOT_SLEEP(TRUE)
+
 // Port defines
 
 #define PORT_MAX_NAME_LENGTH 50
@@ -95,6 +98,8 @@
 #define CIRCUIT_FLAG_ADMIN (1<<3)
 /// This circuit component does not show in the menu.
 #define CIRCUIT_FLAG_HIDDEN (1<<4)
+/// This circuit component has been marked as a component that has instant execution and will show up in the UI as so. This will only cause a visual change.
+#define CIRCUIT_FLAG_INSTANT (1<<5)
 
 // Datatype flags
 /// The datatype supports manual inputs

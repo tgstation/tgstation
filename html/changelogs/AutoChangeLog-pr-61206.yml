@@ -1,4 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes: 
-  - bugfix: "Discord new round notifications will no longer come shortly before the round starts. You should now have enough time to actually ready up before round start."

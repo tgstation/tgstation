@@ -4,8 +4,8 @@ import { createLogger } from './logging';
 
 const logger = createLogger('renderer');
 
-let reactRoot;
-let initialRender = true;
+let reactRoot: any;
+let initialRender: string | boolean = true;
 let suspended = false;
 
 // These functions are used purely for profiling.
@@ -18,13 +18,22 @@ export const suspendRenderer = () => {
   suspended = true;
 };
 
-export const createRenderer = getVNode => () => {
+type CreateRenderer = <T extends unknown[] = [unknown]>(
+  getVNode?: (...args: T) => any,
+) => (...args: T) => void;
+
+export const createRenderer: CreateRenderer = (getVNode) => (...args) => {
   perf.mark('render/start');
   // Start rendering
   if (!reactRoot) {
     reactRoot = document.getElementById('react-root');
   }
-  render(getVNode(), reactRoot);
+  if (getVNode) {
+    render(getVNode(...args), reactRoot);
+  }
+  else {
+    render(args[0] as any, reactRoot);
+  }
   perf.mark('render/finish');
   if (suspended) {
     return;

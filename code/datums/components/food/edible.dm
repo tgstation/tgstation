@@ -423,6 +423,10 @@ Behavior that's still missing from this component that original food items had t
 			to_chat(H,span_notice("I love this taste!"))
 			H.adjust_disgust(-5 + -2.5 * fraction)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "fav_food", /datum/mood_event/favorite_food)
+			if(istype(parent, /obj/item/food))
+				var/obj/item/food/memorable_food = parent
+				if(memorable_food.venue_value >= FOOD_PRICE_EXOTIC)
+					H.mind?.add_memory(MEMORY_MEAL, list(DETAIL_FOOD = memorable_food), story_value = STORY_VALUE_OKAY)
 
 ///Delete the item when it is fully eaten
 /datum/component/edible/proc/On_Consume(mob/living/eater, mob/living/feeder)

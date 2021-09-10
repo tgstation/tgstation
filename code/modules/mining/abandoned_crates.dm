@@ -150,7 +150,7 @@
 		if(46 to 50)
 			new /obj/item/storage/box/syndie_kit/chameleon/broken
 		if(51 to 52) // 2% chance
-			new /obj/item/melee/classic_baton(src)
+			new /obj/item/melee/baton(src)
 		if(53 to 54)
 			new /obj/item/toy/balloon/corgi(src)
 		if(55 to 56)

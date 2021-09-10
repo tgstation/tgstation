@@ -294,7 +294,7 @@
 /obj/machinery/atmospherics/components/tank/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
 	. = TRUE
-	if(obj_integrity >= max_integrity)
+	if(atom_integrity >= max_integrity)
 		return
 	if(!tool.tool_start_check(user, amount=0))
 		return
