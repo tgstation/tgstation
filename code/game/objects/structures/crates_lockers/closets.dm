@@ -149,11 +149,13 @@
 				animate(transform = door_transform, icon_state = door_state, layer = door_layer, time = world.tick_lag)
 		addtimer(CALLBACK(src, .proc/end_door_animation), door_anim_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_CLIENT_TIME)
 
+/// Ends the door animation and removes the animated overlay
 /obj/structure/closet/proc/end_door_animation()
 	is_animating_door = FALSE
 	vis_contents -= door_obj
 	update_icon()
 
+/// Calculates the matrix to be applied to the animated door overlay
 /obj/structure/closet/proc/get_door_transform(angle)
 	var/matrix/door_matrix = matrix()
 	door_matrix.Translate(-door_hinge_x, 0)

@@ -66,6 +66,7 @@
 
 	plane = ATMOS_GROUP_PLANE
 
+/// Door overlay for animating closets
 /obj/effect/overlay/closet_door
 	anchored = TRUE
 	plane = FLOAT_PLANE
