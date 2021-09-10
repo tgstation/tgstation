@@ -2647,7 +2647,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/datum/brain_trauma/special/bluespace_prophet/prophet_trauma
 
 /datum/reagent/consumable/ethanol/the_juice/on_mob_metabolize(mob/living/carbon/victim)
-	..()
+	. = ..()
 	prophet_trauma = new()
 	victim.gain_trauma(prophet_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
 
