@@ -57,7 +57,7 @@
 	if(!H)
 		return
 
-	pipe_eject(H, dir, TRUE, target, eject_range, throw_range)
+	pipe_eject(H, dir, TRUE, target, eject_range, eject_speed)
 
 	H.vent_gas(loc)
 	qdel(H)

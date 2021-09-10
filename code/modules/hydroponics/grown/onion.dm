@@ -37,6 +37,7 @@
 	weed_chance = 1
 	product = /obj/item/food/grown/onion/red
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/tearjuice = 0.05)
+	mutatelist = null
 
 /obj/item/food/grown/onion/red
 	seed = /obj/item/seeds/onion/red

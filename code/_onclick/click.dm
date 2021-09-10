@@ -346,6 +346,8 @@
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
+	if(!can_interact(user))
+		return FALSE
 
 /mob/living/CtrlClick(mob/user)
 	if(!isliving(user) || !user.CanReach(src) || user.incapacitated())
@@ -388,6 +390,8 @@
 	A.AltClick(src)
 
 /atom/proc/AltClick(mob/user)
+	if(!can_interact(user))
+		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT)
 		return
 	var/turf/T = get_turf(src)
@@ -404,6 +408,8 @@
 
 ///The base proc of when something is right clicked on when alt is held
 /atom/proc/alt_click_secondary(mob/user)
+	if(!can_interact(user))
+		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT_SECONDARY, user) & COMPONENT_CANCEL_CLICK_ALT_SECONDARY)
 		return
 
@@ -430,6 +436,8 @@
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
+	if(!can_interact(user))
+		return FALSE
 	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT, user)
 	return
 

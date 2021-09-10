@@ -210,7 +210,7 @@
 		var/obj/item/food/donkpocket/warm/W = new(src)
 		load(W)
 	if(prob(50))
-		var/obj/item/storage/pill_bottle/dice/D = new(src)
+		var/obj/item/storage/dice/D = new(src)
 		load(D)
 	else
 		var/obj/item/instrument/guitar/G = new(src)
@@ -310,3 +310,6 @@
 	desc = initial(I.desc)
 	icon_state = initial(I.icon_state)
 	inhand_icon_state = initial(I.inhand_icon_state)
+	lefthand_file = initial(I.lefthand_file)
+	righthand_file = initial(I.righthand_file)
+	cut_overlays() //to get rid of the big blue x
