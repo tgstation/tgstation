@@ -100,7 +100,6 @@
 	var/assigned_objective = my_gang.current_theme.gang_objectives[src.type]
 	if(!assigned_objective)
 		assigned_objective = "ERROR, FILE A REPORT WITH THIS INFO: Gang Name: [gang_name], Theme Name: [my_gang.current_theme.name]"
-	owner.store_memory("<b>Family's Objective:</b> [assigned_objective]")
 	to_chat(owner.current, "<B><font size=4 color=red>Family's Objective:</B> [assigned_objective]</font>")
 
 /datum/antagonist/gang/apply_innate_effects(mob/living/mob_override)
