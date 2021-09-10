@@ -7,6 +7,7 @@
 	attack_verb_continuous = list("licks", "slobbers", "slaps", "frenches", "tongues")
 	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue")
 	var/list/languages_possible
+	var/list/languages_native //human mobs can speak with this languages without the accent (letters replaces)
 	var/say_mod = null
 
 	/// Whether the owner of this tongue can taste anything. Being set to FALSE will mean no taste feedback will be provided.
@@ -75,8 +76,11 @@
 	say_mod = "hisses"
 	taste_sensitivity = 10 // combined nose + tongue, extra sensitive
 	modifies_speech = TRUE
+	languages_native = list(/datum/language/draconic)
 
 /obj/item/organ/tongue/lizard/handle_speech(datum/source, list/speech_args)
+	if(owner.get_selected_language() in languages_native)
+		return //to keep using autohiss with a native language, a player can use prefixes without using the language as main one
 	var/static/regex/lizard_hiss = new("s+", "g")
 	var/static/regex/lizard_hiSS = new("S+", "g")
 	var/static/regex/lizard_kss = new(@"(\w)x", "g")
@@ -180,6 +184,7 @@
 	say_mod = "buzzes"
 	taste_sensitivity = 25 // you eat vomit, this is a mercy
 	modifies_speech = TRUE
+	languages_native = list(/datum/language/buzzwords)
 	var/static/list/languages_possible_fly = typecacheof(list(
 		/datum/language/common,
 		/datum/language/draconic,
