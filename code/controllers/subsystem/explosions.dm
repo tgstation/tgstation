@@ -228,19 +228,35 @@ SUBSYSTEM_DEF(explosions)
 
 	var/turf/above_level = propagate_below_only ? null : SSmapping.get_turf_above(location)
 	var/turf/below_level = SSmapping.get_turf_below(location)
+	var/turf/more_above
+	if(above_level && isturf(above_level) && !propagate_below_only)
+		more_above = SSmapping.get_turf_above(above_level)
+	var/turf/more_below
+	if(below_level && isturf(below_level))
+		more_below = SSmapping.get_turf_above(below_level)
 
 	arguments -= EXARG_KEY_ORIGIN
 	propagate_blastwave(arglist(list(location) + arguments))
 
-	arguments[EXARG_KEY_DEV_RANGE] -= 1
-	arguments[EXARG_KEY_HEAVY_RANGE] -= 1
-	arguments[EXARG_KEY_LIGHT_RANGE] -= 1
-	arguments[EXARG_KEY_FLASH_RANGE] -= 1
+	arguments[EXARG_KEY_DEV_RANGE] *= 0.1
+	arguments[EXARG_KEY_HEAVY_RANGE] *= 0.1
+	arguments[EXARG_KEY_LIGHT_RANGE] *= 0.1
+	arguments[EXARG_KEY_FLASH_RANGE] *= 0.1
 
 	if(above_level && isturf(above_level))
 		propagate_blastwave(arglist(list(above_level) + arguments))
 	if(below_level && isturf(below_level))
 		propagate_blastwave(arglist(list(below_level) + arguments))
+
+	arguments[EXARG_KEY_DEV_RANGE] *= 0.1
+	arguments[EXARG_KEY_HEAVY_RANGE] *= 0.1
+	arguments[EXARG_KEY_LIGHT_RANGE] *= 0.1
+	arguments[EXARG_KEY_FLASH_RANGE] *= 0.1
+
+	if(more_above && isturf(more_above))
+		propagate_blastwave(arglist(list(more_above) + arguments))
+	if(more_below && isturf(more_below))
+		propagate_blastwave(arglist(list(more_below) + arguments))
 
 /**
  * Handles the effects of an explosion originating from a given point.
