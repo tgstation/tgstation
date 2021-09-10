@@ -89,6 +89,8 @@
 	grab_sleeping = FALSE
 
 /obj/item/soulstone/anybody/sparring
+	icon_state = "purified_soulstone"
+	theme = THEME_HOLY
 	one_use = TRUE
 	grab_sleeping = FALSE
 
