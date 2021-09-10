@@ -1,4 +1,6 @@
 #define EXPLOSION_THROW_SPEED 4
+///How many levels above and below can the explosion affect
+#define EXPLOSION_MAX_LEVELS_AFFECT 2
 GLOBAL_LIST_EMPTY(explosions)
 
 SUBSYSTEM_DEF(explosions)
@@ -226,37 +228,30 @@ SUBSYSTEM_DEF(explosions)
 	if(SEND_SIGNAL(epicenter_area, COMSIG_AREA_INTERNAL_EXPLOSION, arguments) & COMSIG_CANCEL_EXPLOSION)
 		return
 
-	var/turf/above_level = propagate_below_only ? null : SSmapping.get_turf_above(location)
-	var/turf/below_level = SSmapping.get_turf_below(location)
-	var/turf/more_above
-	if(above_level && isturf(above_level) && !propagate_below_only)
-		more_above = SSmapping.get_turf_above(above_level)
-	var/turf/more_below
-	if(below_level && isturf(below_level))
-		more_below = SSmapping.get_turf_above(below_level)
+	var/turf/new_location_above = location
+	var/turf/new_location_below = location
+	var/base_level_exploded = FALSE
+	for(var/levels in 1 to EXPLOSION_MAX_LEVELS_AFFECT)
+		if(!base_level_exploded)
+			arguments -= EXARG_KEY_ORIGIN
+			propagate_blastwave(arglist(list(location) + arguments))
+			base_level_exploded = TRUE
 
-	arguments -= EXARG_KEY_ORIGIN
-	propagate_blastwave(arglist(list(location) + arguments))
+		//Basic inverse square law falloff of energy
+		arguments[EXARG_KEY_DEV_RANGE] *= 0.25
+		arguments[EXARG_KEY_HEAVY_RANGE] *= 0.25
+		arguments[EXARG_KEY_LIGHT_RANGE] *= 0.25
+		arguments[EXARG_KEY_FLASH_RANGE] *= 0.25
 
-	arguments[EXARG_KEY_DEV_RANGE] *= 0.1
-	arguments[EXARG_KEY_HEAVY_RANGE] *= 0.1
-	arguments[EXARG_KEY_LIGHT_RANGE] *= 0.1
-	arguments[EXARG_KEY_FLASH_RANGE] *= 0.1
+		var/turf/above_level = propagate_below_only ? null : SSmapping.get_turf_above(new_location_above)
+		var/turf/below_level = SSmapping.get_turf_below(new_location_below)
 
-	if(above_level && isturf(above_level))
-		propagate_blastwave(arglist(list(above_level) + arguments))
-	if(below_level && isturf(below_level))
-		propagate_blastwave(arglist(list(below_level) + arguments))
-
-	arguments[EXARG_KEY_DEV_RANGE] *= 0.1
-	arguments[EXARG_KEY_HEAVY_RANGE] *= 0.1
-	arguments[EXARG_KEY_LIGHT_RANGE] *= 0.1
-	arguments[EXARG_KEY_FLASH_RANGE] *= 0.1
-
-	if(more_above && isturf(more_above))
-		propagate_blastwave(arglist(list(more_above) + arguments))
-	if(more_below && isturf(more_below))
-		propagate_blastwave(arglist(list(more_below) + arguments))
+		if(above_level && isturf(above_level))
+			propagate_blastwave(arglist(list(above_level) + arguments))
+			new_location_above = above_level
+		if(below_level && isturf(below_level))
+			propagate_blastwave(arglist(list(below_level) + arguments))
+			new_location_below = below_level
 
 /**
  * Handles the effects of an explosion originating from a given point.
@@ -306,6 +301,12 @@ SUBSYSTEM_DEF(explosions)
 		light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE * cap_multiplier, light_impact_range)
 		flash_range = min(GLOB.MAX_EX_FLASH_RANGE * cap_multiplier, flash_range)
 		flame_range = min(GLOB.MAX_EX_FLAME_RANGE * cap_multiplier, flame_range)
+
+	devastation_range = FLOOR(devastation_range, 0.5)
+	heavy_impact_range = FLOOR(heavy_impact_range,0.5)
+	light_impact_range = FLOOR(light_impact_range, 0.5)
+	flash_range = FLOOR(flash_range, 0.5)
+	flame_range = FLOOR(flame_range, 0.5)
 
 	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
 	var/started_at = REALTIMEOFDAY
