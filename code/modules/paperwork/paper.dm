@@ -202,7 +202,7 @@
 		return
 
 	// Enable picking paper up by clicking on it with the clipboard or folder
-	if(istype(P, /obj/item/clipboard) || istype(P, /obj/item/folder))
+	if(istype(P, /obj/item/clipboard) || istype(P, /obj/item/folder) || istype(P, /obj/item/paper_bin))
 		P.attackby(src, user)
 		return
 	else if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
