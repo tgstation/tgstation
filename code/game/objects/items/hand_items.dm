@@ -159,6 +159,19 @@
 		if(table_smacks_left <= 0)
 			qdel(src)
 
+/obj/item/slapper/proc/offer_high_five(mob/living/carbon/user)
+	if(!istype(user) || user.has_status_effect(STATUS_EFFECT_HIGHFIVE))
+		return
+
+	if(!(locate(/mob/living/carbon) in orange(1, user)))
+		visible_message(span_danger("[user] raises [user.p_their()] arm, looking around for a high-five, but there's no one around!"), \
+			span_warning("You post up, looking for a high-five, but finding no one within range!"), null, 2)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_alone)
+		return COMPONENT_OFFER_INTERRUPT
+
+	apply_status_effect(STATUS_EFFECT_HIGHFIVE, src)
+	return COMPONENT_OFFER_INTERRUPT
+
 /obj/item/noogie
 	name = "noogie"
 	desc = "Get someone in an aggressive grab then use this on them to ruin their day."
@@ -281,6 +294,25 @@
 	blown_kiss.preparePixelProjectile(target, user)
 	blown_kiss.fire()
 	qdel(src)
+
+/obj/item/kisser/proc/offer_peck(mob/living/carbon/user)
+	if(!istype(user) || user.has_status_effect(STATUS_EFFECT_HIGHFIVE))
+		return
+
+	if(!(locate(/mob/living/carbon) in orange(1, user)))
+		visible_message(span_danger("[user] raises [user.p_their()] arm, looking around for a high-five, but there's no one around! How embarassing..."), \
+			span_warning("You post up, looking for a high-five, but finding no one within range! How embarassing..."), null, 2)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_alone)
+		return COMPONENT_OFFER_INTERRUPT
+
+	apply_status_effect(STATUS_EFFECT_OFFER_PECK, src)
+	return COMPONENT_OFFER_INTERRUPT
+
+/obj/item/kisser/proc/peck(mob/target, mob/user)
+	if(iscarbon(target))
+		var/mob/living/carbon/carbon_target = target
+		if(!carbon_target.get_bodypart(BODY_ZONE_HEAD))
+			user.visible_message(span_warning("[user] tries to give [target] \a [blown_kiss] at [target]!", span_notice("You blow \a [blown_kiss] at [target]!"))
 
 /obj/item/kisser/death
 	name = "kiss of death"

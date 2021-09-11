@@ -172,9 +172,9 @@
 		to_chat(src, span_warning("You're unable to offer anything in your current state!"))
 		return
 
-	if(istype(receiving, /obj/item/slapper))
-		offer_high_five(receiving)
+	if(SEND_SIGNAL(receiving, COMSIG_ITEM_OFFERING, src) & COMPONENT_OFFER_INTERRUPT)
 		return
+
 	visible_message(span_notice("[src] is offering [receiving]."), \
 					span_notice("You offer [receiving]."), null, 2)
 	for(var/mob/living/carbon/C in orange(1, src)) //Fixed that, now it shouldn't be able to give benos stunbatons and IDs
@@ -221,9 +221,8 @@
 	if(has_status_effect(STATUS_EFFECT_HIGHFIVE))
 		return
 	if(!(locate(/mob/living/carbon) in orange(1, src)))
-		visible_message(span_danger("[src] raises [p_their()] arm, looking around for a high-five, but there's no one around! How embarassing..."), \
-			span_warning("You post up, looking for a high-five, but finding no one within range! How embarassing..."), null, 2)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_alone)
+		visible_message(span_danger("[src] raises [p_their()] arm, looking around for a high-five, but there's no one around!"), \
+			span_warning("You post up, looking for a high-five, but finding no one within range!"), null, 2)
 		return
 
 	apply_status_effect(STATUS_EFFECT_HIGHFIVE, slap)

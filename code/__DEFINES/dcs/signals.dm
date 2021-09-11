@@ -872,6 +872,15 @@
 ///Called when an item gets recharged by the ammo powerup
 #define COMSIG_ITEM_RECHARGED "item_recharged"
 
+
+#define COMSIG_ITEM_OFFERING "item_offering"
+
+	#define COMPONENT_OFFER_INTERRUPT (1<<0)
+
+#define COMSIG_ITEM_OFFER_TAKEN "item_offer_taken"
+
+	#define COMPONENT_OFFER_TAKE_INTERRUPT (1<<0)
+
 ///from base of [/obj/item/proc/tool_check_callback]: (mob/living/user)
 #define COMSIG_TOOL_IN_USE "tool_in_use"
 ///from base of [/obj/item/proc/tool_start_check]: (mob/living/user)
