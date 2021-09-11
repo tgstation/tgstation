@@ -1067,7 +1067,7 @@ rough example of the "cone" made by the 3 dirs checked
 	chosen = matches[chosen]
 	return chosen
 
-//gives us the stack trace from CRASH() without ending the current proc.
+///gives us the stack trace from CRASH() without ending the current proc.
 /proc/stack_trace(msg)
 	CRASH(msg)
 
