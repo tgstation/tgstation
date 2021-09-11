@@ -40,7 +40,7 @@
 	production = 2
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	genes = list(/datum/plant_gene/trait/gas_production)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/toxin/formaldehyde = 0.1)
 
 //Galaxy Thistle
@@ -61,7 +61,7 @@
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/invasive)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/medicine/silibinin = 0.1)
 	graft_gene = /datum/plant_gene/trait/invasive
 

@@ -17,17 +17,13 @@
 	/// The filtered list
 	var/datum/port/output/output_list
 
-/obj/item/circuit_component/index_table/Initialize()
-	. = ..()
+/obj/item/circuit_component/index_table/populate_ports()
 	received_table = add_input_port("Input", PORT_TYPE_TABLE)
 	target_index = add_input_port("Index", PORT_TYPE_NUMBER)
 
 	output_list = add_output_port("Output", PORT_TYPE_LIST)
 
 /obj/item/circuit_component/index_table/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	var/list/target_list = received_table.value
 	if(!islist(target_list) || !length(target_list))

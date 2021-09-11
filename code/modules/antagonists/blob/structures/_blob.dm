@@ -98,7 +98,7 @@
 	if(COOLDOWN_FINISHED(src, pulse_timestamp))
 		ConsumeTile()
 		if(COOLDOWN_FINISHED(src, heal_timestamp))
-			obj_integrity = min(max_integrity, obj_integrity+health_regen)
+			atom_integrity = min(max_integrity, atom_integrity+health_regen)
 			COOLDOWN_START(src, heal_timestamp, 20)
 		update_appearance()
 		COOLDOWN_START(src, pulse_timestamp, 10)
@@ -231,7 +231,7 @@
 /obj/structure/blob/proc/typereport(mob/user)
 	RETURN_TYPE(/list)
 	return list("<b>Blob Type:</b> [span_notice("[uppertext(initial(name))]")]",
-							"<b>Health:</b> [span_notice("[obj_integrity]/[max_integrity]")]",
+							"<b>Health:</b> [span_notice("[atom_integrity]/[max_integrity]")]",
 							"<b>Effects:</b> [span_notice("[scannerreport()]")]")
 
 
@@ -250,7 +250,7 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/blob/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/structure/blob/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	switch(damage_type)
 		if(BRUTE)
 			damage_amount *= brute_resist
@@ -269,10 +269,10 @@
 
 /obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(. && obj_integrity > 0)
+	if(. && atom_integrity > 0)
 		update_appearance()
 
-/obj/structure/blob/obj_destruction(damage_flag)
+/obj/structure/blob/atom_destruction(damage_flag)
 	if(overmind)
 		overmind.blobstrain.death_reaction(src, damage_flag)
 	..()
@@ -325,17 +325,17 @@
 	update_integrity(initial_integrity)
 
 /obj/structure/blob/normal/scannerreport()
-	if(obj_integrity <= 15)
+	if(atom_integrity <= 15)
 		return "Currently weak to brute damage."
 	return "N/A"
 
 /obj/structure/blob/normal/update_name()
 	. = ..()
-	name = "[(obj_integrity <= 15) ? "fragile " : (overmind ? null : "dead ")][initial(name)]"
+	name = "[(atom_integrity <= 15) ? "fragile " : (overmind ? null : "dead ")][initial(name)]"
 
 /obj/structure/blob/normal/update_desc()
 	. = ..()
-	if(obj_integrity <= 15)
+	if(atom_integrity <= 15)
 		desc = "A thin lattice of slightly twitching tendrils."
 	else if(overmind)
 		desc = "A thick wall of writhing tendrils."
@@ -343,10 +343,10 @@
 		desc = "A thick wall of lifeless tendrils."
 
 /obj/structure/blob/normal/update_icon_state()
-	icon_state = "blob[(obj_integrity <= 15) ? "_damaged" : null]"
+	icon_state = "blob[(atom_integrity <= 15) ? "_damaged" : null]"
 
 	/// - [] TODO: Move this elsewhere
-	if(obj_integrity <= 15)
+	if(atom_integrity <= 15)
 		brute_resist = BLOB_BRUTE_RESIST
 	else if (overmind)
 		brute_resist = BLOB_BRUTE_RESIST * 0.5

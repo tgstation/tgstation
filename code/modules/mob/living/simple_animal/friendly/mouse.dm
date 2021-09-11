@@ -34,7 +34,9 @@
 
 /mob/living/simple_animal/mouse/Initialize()
 	. = ..()
-	AddElement(/datum/element/animal_variety, "mouse", pick("brown","gray","white"), FALSE)
+	if(body_color == null)
+		body_color = pick("brown","gray","white")
+	AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
 	add_cell_sample()
 
@@ -200,6 +202,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtypes = GROSS | MEAT | RAW
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
+	decomp_req_handle = TRUE
 
 /obj/item/food/deadmouse/Initialize()
 	. = ..()

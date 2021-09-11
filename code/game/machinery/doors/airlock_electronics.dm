@@ -7,6 +7,10 @@
 	var/one_access = 0
 	/// Unrestricted sides, or sides of the airlock that will open regardless of access
 	var/unres_sides = 0
+	///what name are we passing to the finished airlock
+	var/passed_name
+	///what string are we passing to the finished airlock as the cycle ID
+	var/passed_cycle_id
 	/// A holder of the electronics, in case of them working as an integrated part
 	var/holder
 
@@ -39,6 +43,8 @@
 	data["accesses"] = accesses
 	data["oneAccess"] = one_access
 	data["unres_direction"] = unres_sides
+	data["passedName"] = passed_name
+	data["passedCycleId"] = passed_cycle_id
 	return data
 
 /obj/item/electronics/airlock/ui_act(action, params)
@@ -79,6 +85,14 @@
 			if(isnull(region))
 				return
 			accesses -= SSid_access.get_region_access_list(list(region))
+			. = TRUE
+		if("passedName")
+			var/new_name = trim("[params["passedName"]]", 30)
+			passed_name = new_name
+			. = TRUE
+		if("passedCycleId")
+			var/new_cycle_id = trim(params["passedCycleId"], 30)
+			passed_cycle_id = new_cycle_id
 			. = TRUE
 
 /obj/item/electronics/airlock/ui_host()

@@ -222,7 +222,7 @@
 			visible_message(span_warning("[crusher] steps on [src], damaging it!"))
 			take_damage(100, sound_effect = FALSE)
 
-/obj/item/clothing/glasses/regular/obj_destruction(damage_flag)
+/obj/item/clothing/glasses/regular/atom_destruction(damage_flag)
 	. = ..()
 	vision_correction = FALSE
 

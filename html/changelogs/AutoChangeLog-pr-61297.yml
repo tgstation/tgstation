@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - qol: "The HFR interface now lists recipes in a more sensible order. This is sorted by maximum temperature, which also roughly approximates difficulty and desirability."

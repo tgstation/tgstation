@@ -8,7 +8,7 @@
 	max_integrity = 100
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	material_modifier = 0.5
-	material_flags = MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 	/// Beauty component mood modifier
 	var/impressiveness = 15
@@ -330,6 +330,7 @@
 /obj/item/chisel/Initialize()
 	. = ..()
 	AddElement(/datum/element/eyestab)
+	AddElement(/datum/element/wall_engraver)
 
 /obj/item/chisel/Destroy()
 	prepared_block = null
@@ -427,7 +428,7 @@ Moving interrupts
 	desc = "ready for sculpting."
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "block"
-	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_ADD_PREFIX
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_ADD_PREFIX
 	density = TRUE
 	material_modifier = 0.5 //50% effectiveness of materials
 
@@ -551,7 +552,7 @@ Moving interrupts
 	icon_state = "base"
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_TOGETHER //Added keep together in case targets has weird layering
-	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	/// primary statue overlay
 	var/mutable_appearance/content_ma
 	var/static/list/greyscale_with_value_bump = list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05)

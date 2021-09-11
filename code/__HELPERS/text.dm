@@ -75,7 +75,7 @@
 
 /**
  * Returns the text if properly formatted, or null else.
- * 
+ *
  * Things considered improper:
  * * Larger than max_length.
  * * Presence of non-ASCII characters if asci_only is set to TRUE.
@@ -937,3 +937,55 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			continue
 		out += prob(replaceprob)? pick(replacementchars) : char
 	return out.Join("")
+
+///runs `piglatin_word()` proc on each word in a sentence. preserves caps and punctuation
+/proc/piglatin_sentence(text)
+	var/text_length = length(text)
+
+	//remove caps since words will be shuffled
+	text = lowertext(text)
+	//remove punctuation for same reasons as above
+	var/punctuation = ""
+	var/punctuation_hit_list = list("!","?",".","-")
+	for(var/letter_index in text_length to 1 step -1)
+		var/letter = text[letter_index]
+		if(!(letter in punctuation_hit_list))
+			break
+		punctuation += letter
+	punctuation = reverse_text(punctuation)
+	text = copytext(text, 1, ((text_length + 1) - length(punctuation)))
+
+	//now piglatin each word
+	var/list/old_words = splittext(text, " ")
+	var/list/new_words = list()
+	for(var/word in old_words)
+		new_words += piglatin_word(word)
+	text = new_words.Join(" ")
+	//replace caps and punc
+	text = capitalize(text)
+	text += punctuation
+	return text
+
+///takes "word", and returns it piglatinized.
+/proc/piglatin_word(word)
+	if(length(word) == 1)
+		return word
+	var/first_letter = copytext(word, 1, 2)
+	var/first_two_letters = copytext(word, 1, 3)
+	var/first_word_is_vowel = (first_letter in list("a", "e", "i", "o", "u"))
+	var/second_word_is_vowel = (copytext(word, 2, 3) in list("a", "e", "i", "o", "u"))
+	//If a word starts with a vowel add the word "way" at the end of the word.
+	if(first_word_is_vowel)
+		return word + pick("yay", "way", "hay") //in cultures around the world it's different, so heck lets have fun and make it random. should still be readable
+	//If a word starts with a consonant and a vowel, put the first letter of the word at the end of the word and add "ay."
+	if(!first_word_is_vowel && second_word_is_vowel)
+		word = copytext(word, 2)
+		word += first_letter
+		return word + "ay"
+	//If a word starts with two consonants move the two consonants to the end of the word and add "ay."
+	if(!first_word_is_vowel && !second_word_is_vowel)
+		word = copytext(word, 3)
+		word += first_two_letters
+		return word + "ay"
+	//otherwise unmutated
+	return word
