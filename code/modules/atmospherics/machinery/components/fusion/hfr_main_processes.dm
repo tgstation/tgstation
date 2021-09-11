@@ -150,7 +150,7 @@
 	var/datum/gas_mixture/fuel_port = linked_input.airs[1]
 	for(var/gas_type in selected_fuel.requirements)
 		internal_fusion.assert_gas(gas_type)
-		internal_fusion.merge(fuel_port.remove_specific(gas_type, fuel_port.gases[gas_type][MOLES] * fuel_injection_rate))
+		internal_fusion.merge(fuel_port.remove_specific(gas_type, fuel_injection_rate / length(selected_fuel.requirements)))
 		linked_input.update_parents()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/process(delta_time)
