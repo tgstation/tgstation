@@ -125,6 +125,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
+		// HACK: Without this the character starts out really tiny because of some BYOND bug.
+		// You can fix it by changing a preference, so let's just forcably update the body to emulate this.
+		addtimer(CALLBACK(character_preview_view, /atom/movable/screen/character_preview_view/proc/update_body), 1 SECONDS)
+
 /datum/preferences/ui_state(mob/user)
 	return GLOB.always_state
 
