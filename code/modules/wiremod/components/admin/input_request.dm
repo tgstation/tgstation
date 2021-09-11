@@ -96,3 +96,6 @@
 			parameter = add_input_port("Options List", PORT_TYPE_LIST)
 			input_response.set_datatype(PORT_TYPE_STRING)
 
+#undef COMP_INPUT_STRING
+#undef COMP_INPUT_NUMBER
+#undef COMP_INPUT_LIST
