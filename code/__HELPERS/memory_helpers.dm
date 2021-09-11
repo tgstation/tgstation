@@ -7,7 +7,7 @@
 		if(istype(protagonist))
 			memorizers -= protagonist
 			protagonist.mind?.add_memory(memory_type, extra_info, story_value, protagonist_memory_flags)
-	for(var/mob/living/carbon/memorizer in hearers(range, source))
+	for(var/mob/living/carbon/memorizer in memorizers)
 		memorizer.mind?.add_memory(memory_type, extra_info, story_value, memory_flags)
 
 /**
