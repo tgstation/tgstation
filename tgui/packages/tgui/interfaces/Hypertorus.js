@@ -2,8 +2,10 @@ import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Cell, Collapsible, Flex, Icon, LabeledList, NumberInput, ProgressBar, Row, Section, Stack, Table, Tabs, Tooltip } from '../components';
+import { Box, Button, Collapsible, Icon, Knob, LabeledControls, LabeledList, NumberInput, ProgressBar, RoundGauge, Section, Stack, Table, Tabs, Tooltip } from '../components';
+import { Color } from '../../common/color';
 import { getGasColor, getGasLabel } from '../constants';
+import { recallWindowGeometry } from '../drag';
 import { formatSiBaseTenUnit, formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
@@ -16,6 +18,8 @@ import { Window } from '../layouts';
  *           double directional arrow.
  *  - icon:  A string or array of strings describing a pictographic
  *           icon for use with this effect.
+ *  - override_base: Optional. Sets the base value for scale calculations
+ *                   to something other than 1.
  *  - tooltip: Optional.
  *             If specified, this is passed the value and full data
  *             array and should return the tooltip string.
@@ -43,7 +47,7 @@ const recipe_effect_structure = [
   },
   {
     param: "fuel_consumption_multiplier",
-    label: "Intake",
+    label: "Fuel use",
     icon: ["window-minimize", "arrow-down"],
     scale: 1.5,
   },
@@ -57,26 +61,45 @@ const recipe_effect_structure = [
     param: "temperature_multiplier",
     label: "Max temperature",
     icon: "thermometer-full",
+    override_base: 0.85,
     scale: 1.15,
     tooltip: (v, d) => "Maximum: " + (d.base_max_temperature * v).toExponential() + " K",
   },
 ];
 
-const effect_to_icon = (effect_value, effect_scale) => {
-  if (effect_value === 1) {
+const effect_to_icon = (effect_value, effect_scale, base) => {
+  if (effect_value === base) {
     return "minus";
   }
-  if (effect_value > 1) {
-    if (effect_value > effect_scale) {
+  if (effect_value > base) {
+    if (effect_value > base * effect_scale) {
       return "angle-double-up";
     }
     return "angle-up";
   }
-  if (effect_value < 1 / effect_scale) {
+  if (effect_value < base / effect_scale) {
     return "angle-double-down";
   }
   return "angle-down";
 };
+
+const bgChange = {
+  onComponentShouldUpdate: (lastProps, nextProps) => {
+    return lastProps.backgroundColor !== nextProps.backgroundColor;
+  },
+};
+
+const MemoRow = props => {
+  const {
+    backgroundColor,
+    children,
+    key,
+    ...rest
+  } = props;
+  return <Table.Row backgroundColor={backgroundColor} {...rest}>{children}</Table.Row>
+};
+
+MemoRow.defaultHooks = bgChange;
 
 const GasCellItem = props => {
   const {
@@ -106,12 +129,64 @@ const MaybeTooltip = props => {
   return (<Tooltip {...rest}>{children}</Tooltip>);
 };
 
+const ActParam = (key,value) => {
+  const ret = {};
+  ret[key] = value;
+  return ret;
+};
+
+const TweakControl = props => {
+  const {
+    act,
+    minValue,
+    maxValue,
+    parameter,
+    step=5,
+    unit,
+    value,
+    ...rest
+  } = props;
+  return (<Box
+    position="relative"
+    left="-8px">
+    <Knob
+      size={2}
+      color={false}
+      value={value}
+      unit={unit}
+      minValue={minValue}
+      maxValue={maxValue}
+      step={step}
+      stepPixelSize={1}
+      onDrag={(e, value) => act(parameter, ActParam(parameter, value))}
+    />
+    <Button
+      fluid
+      position="absolute"
+      top="-2px"
+      right="-20px"
+      color="transparent"
+      icon="fast-forward"
+      onClick={() => act(parameter, ActParam(parameter, maxValue))}
+    />
+    <Button
+      fluid
+      position="absolute"
+      top="16px"
+      right="-20px"
+      color="transparent"
+      icon="fast-backward"
+      onClick={() => act(parameter, ActParam(parameter, minValue))}
+    />
+  </Box>);
+}
+
 const HypertorusMainControls = (props, context) => {
   const { act, data } = useBackend(context);
   const selectableFuels = data.selectable_fuel || [];
   const selectedFuel = selectableFuels.filter(d => d.id === data.selected)[0];
   return (
-    <Section title="Switches">
+    <Section title="Startup">
       <Stack>
         <Stack.Item color="label">
           {'Start power: '}
@@ -155,9 +230,9 @@ const HypertorusMainControls = (props, context) => {
             onClick={() => act('start_moderator')} />
         </Stack.Item>
       </Stack>
-      <Collapsible title="Fuel selection">
+      <Collapsible title="Recipe selection">
         <Table>
-          <Table.Row color="label" header>
+          <MemoRow color="label" header>
             <Table.Cell />
             <Table.Cell textAlign="center" colspan="2">
               Fuel
@@ -172,8 +247,8 @@ const HypertorusMainControls = (props, context) => {
               Effects
             </Table.Cell>
             <Table.Cell grow="1" />
-          </Table.Row>
-          <Table.Row color="label" header>
+          </MemoRow>
+          <MemoRow color="label" header>
             <Table.Cell />
             <Table.Cell textAlign="center">
               Primary
@@ -218,61 +293,48 @@ const HypertorusMainControls = (props, context) => {
                 </Table.Cell>
               ))
             }
-          </Table.Row>
+          </MemoRow>
           {selectableFuels.filter(d=>d.id).map((recipe,index) => {
             const active = recipe.id === data.selected;
+            const odd = 1 - 2 * (index % 2);
+            const secondary = 50 - odd * 50;
+            const primary = active ? secondary + 80 : secondary;
+            const alpha = (active ? .13 : .07);
             return (
-          <Table.Row backgroundColor={(active ? "rgba(200,255,200," : "rgba(255,255,255,") + ((active ? .13 : 0) + index % 2 * .05) + ")"}>
-            <Table.Cell>
-              <Button
-                icon={recipe.id === data.selected ? "times" : "power-off"}
-                disabled={data.power_level > 0}
-                key={recipe.id}
-                selected={recipe.id === data.selected}
-                onClick={() => act('fuel', {mode: recipe.id})}
-              />
-            </Table.Cell>
-            <GasCellItem gasid={recipe.requirements[0]} />
-            <GasCellItem gasid={recipe.requirements[1]} />
-            <GasCellItem gasid={recipe.fusion_byproducts[0]} />
-            <GasCellItem gasid={recipe.fusion_byproducts[1]} />
-            {recipe.product_gases.map(gasid => (
-              <GasCellItem gasid={gasid} />
-            ))}
-            {
-              recipe_effect_structure.map(item => {
-                const value = recipe[item.param];
-                // Note that the minus icon is wider than the arrow icons,
-                // so we set the width to work with both without jumping.
-                return (
-                  <Table.Cell>
-                    <MaybeTooltip content={(item.tooltip || (v => "x"+v))(value, data)}>
-                      <Icon position="relative" color="rgb(230,30,40)" width="10px" name={effect_to_icon(value, item.scale)} />
-                    </MaybeTooltip>
-                  </Table.Cell>
-                );
-              })
-            }
-          </Table.Row>
-          );})}
-          {false && selectedFuel && (
-            <Row label="Production">
-              <Stack>
-                {selectedFuel.product_gases.map(gasid => (
-                  <Stack.Item
-                    key={gasid}
-                    label={getGasLabel(gasid)}>
-                    <Box color={getGasColor(gasid)}>{getGasLabel(gasid)}</Box>
-                  </Stack.Item>
+              <MemoRow backgroundColor={new Color(secondary, primary, secondary, alpha)}>
+                <Table.Cell>
+                  <Button
+                    icon={recipe.id === data.selected ? "times" : "power-off"}
+                    disabled={data.power_level > 0}
+                    key={recipe.id}
+                    selected={recipe.id === data.selected}
+                    onClick={() => act('fuel', {mode: recipe.id})}
+                  />
+                </Table.Cell>
+                <GasCellItem gasid={recipe.requirements[0]} />
+                <GasCellItem gasid={recipe.requirements[1]} />
+                <GasCellItem gasid={recipe.fusion_byproducts[0]} />
+                <GasCellItem gasid={recipe.fusion_byproducts[1]} />
+                {recipe.product_gases.map(gasid => (
+                  <GasCellItem gasid={gasid} />
                 ))}
-              </Stack>
-            </Row>
-          )}
-          {false && selectedFuel && (
-            <Row label="Effects">
-            
-            </Row>
-          )}
+                {
+                  recipe_effect_structure.map(item => {
+                    const value = recipe[item.param];
+                    // Note that the minus icon is wider than the arrow icons,
+                    // so we set the width to work with both without jumping.
+                    return (
+                      <Table.Cell>
+                        <MaybeTooltip content={(item.tooltip || (v => "x"+v))(value, data)}>
+                          <Icon position="relative" color="rgb(230,30,40)" width="10px" name={effect_to_icon(value, item.scale, item.override_base || 1)} />
+                        </MaybeTooltip>
+                      </Table.Cell>
+                    );
+                  })
+                }
+              </MemoRow>
+            );
+          })}
         </Table>
       </Collapsible>
     </Section>
@@ -285,80 +347,87 @@ const HypertorusSecondaryControls = (props, context) => {
   return (
     <>
       <Section title="Tweakable Inputs">
-        <LabeledList>
-          <LabeledList.Item label="Heating Conductor">
-            <NumberInput
-              animated
+        <LabeledControls>
+          <LabeledControls.Item label="Heating Conductor">
+            <TweakControl
+              act={act}
               value={parseFloat(data.heating_conductor)}
-              width="63px"
               unit="J/cm"
               minValue={50}
               maxValue={500}
-              onDrag={(e, value) => act('heating_conductor', {
-                heating_conductor: value,
-              })} />
-          </LabeledList.Item>
-          <LabeledList.Item label="Cooling Volume">
-            <NumberInput
-              animated
+              parameter='heating_conductor'
+            />
+          </LabeledControls.Item>
+          <LabeledControls.Item label="Cooling Volume">
+            <TweakControl
+              act={act}
               value={parseFloat(data.cooling_volume)}
-              width="63px"
               unit="L"
               minValue={50}
               maxValue={2000}
-              onDrag={(e, value) => act('cooling_volume', {
-                cooling_volume: value,
-              })} />
-          </LabeledList.Item>
-          <LabeledList.Item label="Magnetic Constrictor">
-            <NumberInput
-              animated
+              parameter='cooling_volume'
+              step={25}
+            />
+          </LabeledControls.Item>
+          <LabeledControls.Item label="Magnetic Constrictor">
+            <TweakControl
+              act={act}
               value={parseFloat(data.magnetic_constrictor)}
-              width="63px"
               unit="m³/T"
               minValue={50}
               maxValue={1000}
-              onDrag={(e, value) => act('magnetic_constrictor', {
-                magnetic_constrictor: value,
-              })} />
-          </LabeledList.Item>
-          <LabeledList.Item label="Fuel Injection Rate">
-            <NumberInput
-              animated
-              value={parseFloat(data.fuel_injection_rate)}
-              width="63px"
-              unit="mol/s"
-              minValue={.5}
-              maxValue={150}
-              onDrag={(e, value) => act('fuel_injection_rate', {
-                fuel_injection_rate: value,
-              })} />
-          </LabeledList.Item>
-          <LabeledList.Item label="Moderator Injection Rate">
-            <NumberInput
-              animated
-              value={parseFloat(data.moderator_injection_rate)}
-              width="63px"
-              unit="mol/s"
-              minValue={.5}
-              maxValue={150}
-              onDrag={(e, value) => act('moderator_injection_rate', {
-                moderator_injection_rate: value,
-              })} />
-          </LabeledList.Item>
-          <LabeledList.Item label="Current Damper">
-            <NumberInput
-              animated
+              parameter='magnetic_constrictor'
+            />
+          </LabeledControls.Item>
+          <LabeledControls.Item label="Current Damper">
+            <TweakControl
+              act={act}
               value={parseFloat(data.current_damper)}
-              width="63px"
               unit="W"
               minValue={0}
               maxValue={1000}
               onDrag={(e, value) => act('current_damper', {
                 current_damper: value,
               })} />
-          </LabeledList.Item>
-        </LabeledList>
+          </LabeledControls.Item>
+        </LabeledControls>
+      </Section>
+      <Section>
+        <LabeledControls>
+          <LabeledControls.Item label="Fuel Injection Rate">
+            <NumberInput
+              animated
+              value={parseFloat(data.fuel_injection_rate)}
+              unit="mol/s"
+              minValue={.5}
+              maxValue={150}
+              onDrag={(e, value) => act('fuel_injection_rate', {
+                fuel_injection_rate: value,
+              })} />
+          </LabeledControls.Item>
+          <LabeledControls.Item label="Moderator Injection Rate">
+            <NumberInput
+              animated
+              value={parseFloat(data.moderator_injection_rate)}
+              unit="mol/s"
+              minValue={.5}
+              maxValue={150}
+              onDrag={(e, value) => act('moderator_injection_rate', {
+                moderator_injection_rate: value,
+              })} />
+          </LabeledControls.Item>
+          <LabeledControls.Item label="Moderator filtering rate">
+            <NumberInput
+              animated
+              value={parseFloat(data.mod_filtering_rate)}
+              unit="mol/s"
+              minValue={5}
+              maxValue={200}
+              onDrag={(e, value) => act('mod_filtering_rate', {
+                mod_filtering_rate: value,
+              })} />
+          </LabeledControls.Item>
+        </LabeledControls>
       </Section>
       <Section title="Waste control and filtering">
         <LabeledList>
@@ -380,18 +449,6 @@ const HypertorusSecondaryControls = (props, context) => {
                   mode: filter.gas_id,
                 })} />
             ))}
-          </LabeledList.Item>
-          <LabeledList.Item label="Moderator filtering rate">
-            <NumberInput
-              animated
-              value={parseFloat(data.mod_filtering_rate)}
-              width="63px"
-              unit="mol/s"
-              minValue={5}
-              maxValue={200}
-              onDrag={(e, value) => act('mod_filtering_rate', {
-                mod_filtering_rate: value,
-              })} />
           </LabeledList.Item>
         </LabeledList>
       </Section>
@@ -469,17 +526,21 @@ const HypertorusParameters = (props, context) => {
   return (
     <>
       <Section title="Reactor Parameters">
-        <LabeledList>
-          <LabeledList.Item label="Power Level">
-            <ProgressBar
+        <LabeledControls>
+          <LabeledControls.Item label="Fusion Level">
+            <RoundGauge
+              size={1.75}
+              minValue={0}
+              maxValue={6}
               value={power_level}
+              alertAfter={5}
               ranges={{
                 good: [0, 2],
                 average: [2, 4],
                 bad: [4, 6],
               }} />
-          </LabeledList.Item>
-          <LabeledList.Item label="Integrity">
+          </LabeledControls.Item>
+          <LabeledControls.Item label="Integrity">
             <ProgressBar
               value={integrity / 100}
               ranges={{
@@ -487,8 +548,8 @@ const HypertorusParameters = (props, context) => {
                 average: [0.5, 0.90],
                 bad: [-Infinity, 0.5],
               }} />
-          </LabeledList.Item>
-          <LabeledList.Item label="Iron Content">
+          </LabeledControls.Item>
+          <LabeledControls.Item label="Iron Content">
             <ProgressBar
               value={iron_content}
               ranges={{
@@ -496,8 +557,8 @@ const HypertorusParameters = (props, context) => {
                 average: [.1, .36],
                 bad: [.36, Infinity],
               }} />
-          </LabeledList.Item>
-          <LabeledList.Item label="Energy Levels">
+          </LabeledControls.Item>
+          <LabeledControls.Item label="Energy Levels">
             <ProgressBar
               color={'yellow'}
               value={energy_level}
@@ -505,8 +566,8 @@ const HypertorusParameters = (props, context) => {
               maxValue={1e35}>
               {formatSiUnit(energy_level, 1, 'J')}
             </ProgressBar>
-          </LabeledList.Item>
-          <LabeledList.Item label="Heat Limiter Modifier">
+          </LabeledControls.Item>
+          <LabeledControls.Item label="Heat Limiter Modifier">
             <ProgressBar
               color={'blue'}
               value={heat_limiter_modifier}
@@ -514,8 +575,8 @@ const HypertorusParameters = (props, context) => {
               maxValue={1e30}>
               {formatSiBaseTenUnit(heat_limiter_modifier * 1000, 1, 'K')}
             </ProgressBar>
-          </LabeledList.Item>
-          <LabeledList.Item label="Heat Output">
+          </LabeledControls.Item>
+          <LabeledControls.Item label="Heat Output">
             <ProgressBar
               color={'grey'}
               value={heat_output}
@@ -523,8 +584,8 @@ const HypertorusParameters = (props, context) => {
               maxValue={1e30}>
               {heat_output_bool + formatSiBaseTenUnit(heat_output * 1000, 1, 'K')}
             </ProgressBar>
-          </LabeledList.Item>
-        </LabeledList>
+          </LabeledControls.Item>
+        </LabeledControls>
       </Section>
       <Section title="Temperatures">
         <LabeledList>
@@ -578,48 +639,10 @@ const HypertorusTabs = (props, context) => {
   ] = useLocalState(context, 'tab-index', 1);
   return (
     <>
-      <Tabs>
-        <Tabs.Tab
-          selected={tabIndex === 1}
-          onClick={() => {
-            setTabIndex(1);
-          }}>
-          HFR Main controls
-        </Tabs.Tab>
-        <Tabs.Tab
-          selected={tabIndex === 2}
-          onClick={() => {
-            setTabIndex(2);
-          }}>
-          HFR Secondary controls
-        </Tabs.Tab>
-        <Tabs.Tab
-          selected={tabIndex === 3}
-          onClick={() => {
-            setTabIndex(3);
-          }}>
-          HFR internal gases
-        </Tabs.Tab>
-        <Tabs.Tab
-          selected={tabIndex === 4}
-          onClick={() => {
-            setTabIndex(4);
-          }}>
-          HFR internal parameters
-        </Tabs.Tab>
-      </Tabs>
-      {tabIndex === 1 && (
-        <HypertorusMainControls />
-      )}
-      {tabIndex === 2 && (
-        <HypertorusSecondaryControls />
-      )}
-      {tabIndex === 3 && (
-        <HypertorusGases />
-      )}
-      {tabIndex === 4 && (
-        <HypertorusParameters />
-      )}
+      <HypertorusMainControls />
+      <HypertorusGases />
+      <HypertorusParameters />
+      <HypertorusSecondaryControls />
     </>
   );
 };
@@ -630,7 +653,7 @@ export const Hypertorus = (props, context) => {
   return (
     <Window
       title="Hypertorus Fusion Reactor control panel"
-      width={920}
+      width={950}
       height={600}>
       <Window.Content scrollable>
         <HypertorusTabs />
