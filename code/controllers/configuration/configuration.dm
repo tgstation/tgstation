@@ -235,6 +235,12 @@
 	var/tm_info = GLOB.revdata.GetTestMergeInfo()
 	if(motd || tm_info)
 		motd = motd ? "[motd]<br>[tm_info]" : tm_info
+
+	// MOTHBLOCKS TODO: Remove this
+	motd += "<h1>[span_boldnotice("The NEW preferences menu is currently being tested!")]</h1>"
+	motd += "<h2>[span_notice("Changes you make during this test merge might not be saved.")]</h3>"
+	motd += "<h3>[span_notice("Please send your review on <a href='https://github.com/tgstation/tgstation/pull/61394'><b>the pull request</b></a>!")]</h3>"
+
 /*
 Policy file should be a json file with a single object.
 Value is raw html.
