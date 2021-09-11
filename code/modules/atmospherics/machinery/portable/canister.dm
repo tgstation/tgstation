@@ -669,38 +669,36 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 				investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 		if("valve")		//logging for openning canisters
 			var/logmsg
+			var/admin_msg
+			var/danger = FALSE
+			var/n = 0
 			valve_open = !valve_open
 			if(valve_open)
 				SSair.start_processing_machine(src)
 				logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting a transfer into \the [holding || "air"].<br>"
 				if(!holding)
-					var/list/danger = list()
 					//list for logging all gases in canister
-					var/list/gaseslog = list()		
+					var/list/gaseslog = list()
 					for(var/id in air_contents.gases)
 						var/gas = air_contents.gases[id]
-						gaseslog[gas[GAS_META][META_GAS_NAME]] = gas[MOLES] 
+						gaseslog[gas[GAS_META][META_GAS_NAME]] = gas[MOLES]
 						if(!gas[GAS_META][META_GAS_DANGER])
 							continue
 						if(gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE)) //if moles_visible is undefined, default to default visibility
-							danger[gas[GAS_META][META_GAS_NAME]] = gas[MOLES] //ex. "plasma" = 20
-					//end of loop counter var
-					var/n = 0
-					if(danger)
-						message_admins("[ADMIN_LOOKUPFLW(usr)] opened a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:")
-					var/msg = "[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:"
-					investigate_log(msg, INVESTIGATE_ATMOS)
+							danger = TRUE //at least 1 danger gas in there
+					logmsg = "[key_name(usr)] <b>opened</b> a canister that contains the following:"
+					admin_msg = "[key_name(usr)] <b>opened</b> a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:"
 					for(var/name in gaseslog)
-						if(!isnull(name))
-							n = n + 1
-							msg = "[name]: [gaseslog[name]] moles."
-							investigate_log(msg, INVESTIGATE_ATMOS)
-							if(danger)
-								message_admins(msg)
-							if(n == 5)
-								break
-					if(gaseslog.len > 5)
-						message_admins("Too many gases to log.")
+						n = n + 1
+						logmsg+= "\n[name]: [gaseslog[name]] moles."
+						if(danger && n <= 5)
+							admin_msg+= "\n[name]: [gaseslog[name]] moles."
+
+						if(n == 5 && danger)
+							message_admins(admin_msg)
+							message_admins("Too many gases to log. Check investigate.")
+				if(danger && n <= 5)
+					message_admins(admin_msg)
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
 			investigate_log(logmsg, INVESTIGATE_ATMOS)
