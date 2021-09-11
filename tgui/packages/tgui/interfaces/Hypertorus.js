@@ -166,7 +166,6 @@ const HypertorusSecondaryControls = (props, context) => {
         <LabeledList>
           <LabeledList.Item label="Waste remove">
             <Button
-              disabled={data.power_level > 5}
               icon={data.waste_remove ? 'power-off' : 'times'}
               content={data.waste_remove ? 'On' : 'Off'}
               selected={data.waste_remove}

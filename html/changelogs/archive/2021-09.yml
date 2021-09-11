@@ -335,3 +335,38 @@
   timothymtorres:
   - bugfix: Fixed wormhole jaunter to trigger when falling into a chasm
   - bugfix: Fixed wormhole jaunter to be affected by EMP
+2021-09-11:
+  ArcaneDefence:
+  - bugfix: Full tile windows that have become opaque from being painted a dark color
+      will now lose their opacity when repainted with a light enough color
+  Gamer025:
+  - bugfix: Crafting stackable items while already holding an existing stack of them
+      no longer causes runtimes
+  Ghommie:
+  - bugfix: Fixed a small irregularity in the outline glow of the `p` of the character
+      setup button when highligthed or pressed
+  Guillaume Prata:
+  - qol: You can now use the shock touch mutation as a ghetto alternative for revival
+      surgery. Just like stun batons!
+  - qol: The analyzer was renamed to gas analyzer and it can be printed at the Engineering/Science
+      protolathes now.
+  Sealed101:
+  - bugfix: Fixes screwdrivers not being recycle-friendly in the autolathe.
+  - qol: Moves screwdrivering an autolathe's maintenance panel open to right click.
+  - bugfix: Fixes being able to feed the autolathe when its maintenance panel is open.
+  carrotattacker, Sampslig:
+  - rscadd: Adds the juice, a drink that lets you see bluespace rifts and travel through
+      them
+  esainane:
+  - bugfix: Round setup hints and circuit board descriptions that mention production
+      of research points through power generation no longer appear. This functionality
+      was removed a long time ago.
+  timothymtorres:
+  - expansion: Supernatural phobia now includes more wizard objects, spooky mobs,
+      and haunted objects.
+  - expansion: Clown phobia now includes bananium objects and honk related simple
+      mobs.
+  - expansion: Phobias can be triggered from related stamps, toys, statues, and megaphones.
+  tralezab:
+  - qol: TGUI-ifies apprentice contracts. Yummy!
+  - bugfix: soul shards now properly remove antag when exorcised

@@ -1,4 +1,0 @@
-author: "Gamer025"
-delete-after: True
-changes: 
-  - bugfix: "Crafting stackable items while already holding an existing stack of them no longer causes runtimes"

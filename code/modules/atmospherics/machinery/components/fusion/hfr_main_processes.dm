@@ -512,8 +512,8 @@
 	//High power fusion might create other matter other than helium, iron is dangerous inside the machine, damage can be seen
 	if(moderator_internal.total_moles() > 0)
 		moderator_internal.remove(moderator_internal.total_moles() * (1 - (1 - 0.0005 * power_level) ** delta_time))
-	if(power_level > 4 && prob(17 * power_level))//at power level 6 is 100%
-		iron_content += 0.005 * delta_time
+	if(power_level > 4 && prob(IRON_CHANCE_PER_FUSION_LEVEL * power_level))//at power level 6 is 100%
+		iron_content += IRON_ACCUMULATED_PER_SECOND * delta_time
 	if(iron_content > 0 && power_level <= 4 && prob(25 / (power_level + 1)))
 		iron_content = max(iron_content - 0.01 * delta_time, 0)
 	iron_content = clamp(iron_content, 0, 1)
@@ -548,8 +548,10 @@
 
 	if(moderator_list[/datum/gas/oxygen] > 150)
 		if(iron_content > 0)
-			iron_content = max(iron_content - 0.5, 0)
-			moderator_internal.gases[/datum/gas/oxygen] -= 10
+			var/max_iron_removable = IRON_OXYGEN_HEAL_PER_SECOND
+			var/iron_removed = min(max_iron_removable * delta_time, iron_content)
+			iron_content -= iron_removed
+			moderator_internal.gases[/datum/gas/oxygen] -= iron_removed * OXYGEN_MOLES_CONSUMED_PER_IRON_HEAL
 
 	if(prob(critical_threshold_proximity / 15))
 		var/grav_range = round(log(2.5, critical_threshold_proximity))
