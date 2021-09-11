@@ -631,7 +631,11 @@
 		return FALSE
 	blank_paper.visible_message(span_notice("words magically form on [blank_paper]!"))
 	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
-	new /obj/item/sparring_contract(tool_turf)
+	var/datum/religion_sect/spar/sect = GLOB.religious_sect
+	if(sect.existing_contract)
+		sect.existing_contract.visible_message(span_warning("[src] fizzles into nothing!"))
+		qdel(sect.existing_contract)
+	sect.existing_contract = new /obj/item/sparring_contract(tool_turf)
 	qdel(blank_paper)
 	return TRUE
 
@@ -661,6 +665,42 @@
 	var/datum/religion_sect/spar/sect = GLOB.religious_sect
 	sect.arenas[area_instance.name] = area_instance.type
 	to_chat(user, span_warning("[area_instance] is a now an option to select on sparring contracts."))
+
+/datum/religion_rites/ceremonial_weapon
+	name = "Forge Ceremonial Gear"
+	desc = "Turn some material into ceremonial gear. Ceremonial blades are weak outside of sparring, and are quite heavy to lug around."
+	ritual_length = 10 SECONDS
+	invoke_msg = "Weapons in your name! Battles with your blood!"
+	favor_cost = 0
+	///the material that will be attempted to be forged into a weapon
+	var/obj/item/stack/sheet/converted
+
+/datum/religion_rites/ceremonial_weapon/perform_rite(mob/living/user, atom/religious_tool)
+	for(var/obj/item/stack/sheet/could_blade in get_turf(religious_tool))
+		if(!(GET_MATERIAL_REF(could_blade.material_type) in SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL]))
+			continue
+		if(could_blade.amount < 5)
+			continue
+		converted = could_blade
+		return ..()
+	to_chat(user, span_warning("You need at least 5 sheets of a material that can be made into items!"))
+	return FALSE
+
+/datum/religion_rites/ceremonial_weapon/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
+	var/altar_turf = get_turf(religious_tool)
+	var/obj/item/stack/sheet/used_for_blade = converted
+	converted = null
+	if(QDELETED(used_for_blade) || !(get_turf(religious_tool) == used_for_blade.loc) || used_for_blade.amount < 5) //check if the same food is still there
+		to_chat(user, span_warning("Your target left the altar!"))
+		return FALSE
+	var/material_used = used_for_blade.material_type
+	to_chat(user, span_warning("[used_for_blade] reshapes into a ceremonial blade!"))
+	if(!used_for_blade.use(5))//use 5 of the material
+		return
+	var/obj/item/ceremonial_blade/blade =  new(altar_turf)
+	blade.set_custom_materials(list(GET_MATERIAL_REF(material_used) = MINERAL_MATERIAL_AMOUNT * 5))
+	return TRUE
 
 /datum/religion_rites/unbreakable
 	name = "Become Unbreakable"

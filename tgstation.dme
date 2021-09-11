@@ -3376,6 +3376,7 @@
 #include "code\modules\religion\religion_sects.dm"
 #include "code\modules\religion\religion_structures.dm"
 #include "code\modules\religion\rites.dm"
+#include "code\modules\religion\sparring\ceremonial_gear.dm"
 #include "code\modules\religion\sparring\sparring_contract.dm"
 #include "code\modules\religion\sparring\sparring_datum.dm"
 #include "code\modules\requests\request.dm"
