@@ -19,7 +19,6 @@
 	/// List of players that were selected for this rule
 	var/list/datum/mind/assigned = list()
 	/// Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag.
-	/// Make these unique. (MOTHBLOCKS TODO: Unit test this)
 	var/antag_flag = null
 	/// The antagonist datum that is assigned to the mobs mind on ruleset execution.
 	var/datum/antagonist/antag_datum = null

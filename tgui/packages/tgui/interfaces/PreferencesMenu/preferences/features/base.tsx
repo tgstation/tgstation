@@ -49,10 +49,10 @@ export type FeatureValueProps<
 > = {
   act: typeof sendAct,
   featureId: string,
-  handleSetValue: (newValue: TSending) => void;
+  handleSetValue: (newValue: TSending) => void,
   serverData: TServerData | undefined,
   shrink?: boolean,
-  value: TReceiving;
+  value: TReceiving,
 };
 
 export const FeatureColorInput = (props: FeatureValueProps<string>) => {
