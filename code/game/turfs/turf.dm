@@ -350,6 +350,24 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return (mover.movement_type & PHASING)
 	return TRUE
 
+/turf/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+
+	if(!arrived.important_recursive_contents || !(arrived.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS] || arrived.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]))
+		return
+
+	//this is turf/Entered so we know both arrived and us have nonzero coords but we dont know if old_loc does
+	if(old_loc?.z == z && CEILING(old_loc.x / SPATIAL_GRID_CELLSIZE, 1) == CEILING(x / SPATIAL_GRID_CELLSIZE, 1) && CEILING(old_loc.y / SPATIAL_GRID_CELLSIZE, 1) == CEILING(y / SPATIAL_GRID_CELLSIZE, 1))
+		return //both the old location and the new one are in the same grid cell
+
+	var/datum/spatial_grid_cell/our_cell = SSspatial_grid.get_cell_of(src)
+	SEND_SIGNAL(our_cell, SPATIAL_GRID_CELL_ENTERED, arrived)
+
+	if(arrived.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
+		our_cell.client_contents += arrived.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS]
+
+	if(arrived.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
+		our_cell.hearing_contents += arrived.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
 
 /turf/open/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	..()
@@ -360,6 +378,27 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			O.make_unfrozen()
 	if(!arrived.zfalling)
 		zFall(arrived)
+
+/turf/Exited(atom/movable/gone, direction)
+	. = ..()
+
+	if(!gone.important_recursive_contents || !(gone.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS] || gone.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]))
+		return
+
+	var/turf/gone_turf = get_turf(gone)
+
+	//this is turf/Exited so we know we have nonzero coords but we dont know if gone has nonzero coords
+	if(gone_turf?.z == z && CEILING(gone_turf.x / SPATIAL_GRID_CELLSIZE, 1) == CEILING(x / SPATIAL_GRID_CELLSIZE, 1) && CEILING(gone_turf.y / SPATIAL_GRID_CELLSIZE, 1) == CEILING(y / SPATIAL_GRID_CELLSIZE, 1))
+		return //both the old location and the new one are in the same grid cell
+
+	var/datum/spatial_grid_cell/our_cell = SSspatial_grid.get_cell_of(src)
+	SEND_SIGNAL(our_cell, SPATIAL_GRID_CELL_EXITED, gone)
+
+	if(gone.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
+		our_cell.client_contents -= gone.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS]
+
+	if(gone.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
+		our_cell.hearing_contents -= gone.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
 
 // A proc in case it needs to be recreated or badmins want to change the baseturfs
 /turf/proc/assemble_baseturfs(turf/fake_baseturf_type)
