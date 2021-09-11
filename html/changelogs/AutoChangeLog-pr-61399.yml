@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - bugfix: "Fixed RPD arrows, strip menu eyes, etc not being styled properly."
