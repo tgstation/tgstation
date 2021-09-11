@@ -315,7 +315,7 @@
 	if(W.is_refillable())
 		return 0 //so we can refill them via their afterattack.
 	if(reagents.total_volume == tank_volume)
-		to_chat(user,"<span class='warning'>The [src] is filled to capacity!</span>")
+		to_chat(user, span_warning("[src] is filled to capacity!"))
 		return
 	if(istype(W, /obj/item/seeds) || istype(W, /obj/item/food/grown))
 		if(user.transferItemToLoc(W, src))
