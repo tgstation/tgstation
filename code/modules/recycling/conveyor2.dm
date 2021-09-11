@@ -474,12 +474,12 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	. += create_ui_notice("Conveyor direction 0 means that it is stopped, 1 means that it is active and -1 means that it is working in reverse mode", "orange", "info")
 
-/obj/item/circuit_component/conveyor_switch/register_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/conveyor_switch/register_usb_parent(atom/movable/shell)
 	. = ..()
-	if(istype(parent, /obj/machinery/conveyor_switch))
-		attached_switch = parent
+	if(istype(shell, /obj/machinery/conveyor_switch))
+		attached_switch = shell
 
-/obj/item/circuit_component/conveyor_switch/unregister_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/conveyor_switch/unregister_usb_parent(atom/movable/shell)
 	attached_switch = null
 	return ..()
 

@@ -325,8 +325,8 @@
 	for(var/entry in entries)
 		. += create_ui_notice("Column Name: '[entry]'", "grey", "columns")
 
-/obj/item/circuit_component/proc/register_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/proc/register_usb_parent(atom/movable/shell)
 	return
 
-/obj/item/circuit_component/proc/unregister_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/proc/unregister_usb_parent(atom/movable/shell)
 	return
