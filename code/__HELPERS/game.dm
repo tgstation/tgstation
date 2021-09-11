@@ -203,13 +203,13 @@
 	return
 
 /// Returns a list of hearers in view(view_radius) from source (ignoring luminosity). uses important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
-/proc/get_hearers_in_view(view_radius, atom/source)
+/proc/get_hearers_in_view(view_radius, atom/source, include_source = TRUE)
 	var/turf/center_turf = get_turf(source)
 	. = list()
 	if(!center_turf)
 		return
 
-	if(view_radius == 0)
+	if(view_radius == 0)//special case for if source only cares
 		for(var/atom/movable/movable as anything in center_turf)
 			var/list/recursive_contents = LAZYACCESS(movable.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE)
 			if(recursive_contents)
