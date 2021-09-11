@@ -155,17 +155,17 @@ GLOBAL_LIST_INIT(skin_tones, sortList(list(
 	)))
 
 GLOBAL_LIST_INIT(skin_tone_names, list(
-	"african1" = "Caramel",
-	"african2" = "Espresso",
+	"african1" = "Medium brown",
+	"african2" = "Dark brown",
 	"albino" = "Albino",
-	"arab" = "Mocha",
+	"arab" = "Light brown",
 	"asian1" = "Ivory",
 	"asian2" = "Beige",
 	"caucasian1" = "Porcelain",
-	"caucasian2" = "Sand",
+	"caucasian2" = "Light peach",
 	"caucasian3" = "Peach",
-	"indian" = "Amber",
-	"latino" = "Sienna",
+	"indian" = "Brown",
+	"latino" = "Light beige",
 	"mediterranean" = "Olive",
 ))
 

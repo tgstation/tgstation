@@ -50,6 +50,7 @@ const QuirkList = (props: {
                 "text-align": "center",
               }}>
                 <Icon
+                  color="#333"
                   fontSize={3}
                   name={quirk.icon}
                 />
