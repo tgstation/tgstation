@@ -169,7 +169,7 @@
 				volume = initial(volume)
 				return TRUE
 			else if(text2num(new_volume) != null)
-				volume = (text2num(new_volume))
+				volume = text2num(new_volume)
 				return TRUE
 
 /obj/machinery/jukebox/proc/activate_music()
