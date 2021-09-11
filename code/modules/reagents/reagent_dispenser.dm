@@ -323,7 +323,7 @@
 			playsound(loc, 'sound/effects/blobattack.ogg', 25, 1, -1)
 			process_compost()
 		else
-			to_chat(user, "<span class='warning'>That's not compostable! Try seeds or flowers instead.</span>")
+			to_chat(user, span_warning("[W] is not not compostable! Try seeds or flowers instead."))
 	else if(istype(W, /obj/item/storage/bag/plants))
 		var/obj/item/storage/bag/plants/PB = W
 		for(var/obj/item/G in PB.contents)// This check can be less than thorough because the bag has already authenticated the contents, hopefully
