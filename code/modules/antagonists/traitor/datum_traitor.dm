@@ -356,8 +356,8 @@
 
 /datum/outfit/traitor/post_equip(mob/living/carbon/human/H, visualsOnly)
 	var/obj/item/melee/energy/sword/sword = locate() in H.held_items
-	sword.icon_state = "swordred"
-	sword.worn_icon_state = "swordred"
+	sword.icon_state = "e_sword_on_red"
+	sword.worn_icon_state = "e_sword_on_red"
 
 	H.update_inv_hands()
 
