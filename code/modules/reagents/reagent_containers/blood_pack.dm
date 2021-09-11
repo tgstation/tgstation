@@ -17,10 +17,12 @@
 
 /// Handles updating the container when the reagents change.
 /obj/item/reagent_containers/blood/on_reagent_change(datum/reagents/holder, ...)
-	var/datum/reagent/blood/B = holder.has_reagent(/datum/reagent/blood)
-	if(B && B.data && B.data["blood_type"])
-		blood_type = B.data["blood_type"]
-	else if(!unique_blood)
+	var/datum/reagent/blood/new_reagent = holder.has_reagent(/datum/reagent/blood)
+	if(new_reagent && new_reagent.data && new_reagent.data["blood_type"])
+		blood_type = new_reagent.data["blood_type"]
+	else if(holder.has_reagent(/datum/reagent/consumable/liquidelectricity))
+		blood_type = "LE"
+	else
 		blood_type = null
 	return ..()
 
