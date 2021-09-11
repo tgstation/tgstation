@@ -17,12 +17,12 @@
 	gang_objectives = list(
 
 		/datum/antagonist/gang/russian_mafia = "Hello, comrade. Our numbers are going down. We need you to bring those numbers up. \
-		<B>Collect protection money from the station's departments by any means necessary.</B> \
+		Collect protection money from the station's departments by any means necessary. \
 		If you need to 'encourage' people to pay up, do so. Get to these potential clients before the Mob does.",
 
 		/datum/antagonist/gang/italian_mob = "Good afternoon, friend. The Boss sends his regards. He also sends a message. \
 		We need to collect what we're owed. The departments on this station all owe quite a lot of money to us. We intend to collect on our debts. \
-		<B>Collect the debt owed by our clients from the departments on the station.</B> \
+		Collect the debt owed by our clients from the departments on the station. \
 		Make sure to get to them before those damn mafiosos do."
 	)
 
@@ -37,13 +37,13 @@
 
 		/datum/antagonist/gang/sybil_slickers = "Alright, it's the BIG DAY of THE BIG GAME MMDXXXVIII! Get your players ready to go, and \
 		ensure everyone's healthy, hydrated, and ready to PLAY BALL! There's a small hiccup, however. The ball got deflated by Ball Handler Tom Brady XXIV, and \
-		we will need to set up a new ball. <B>Talk with the opposing coaches and decide on what to use for the replacement ball, recruit your team, and then play and win the \
-		FINAL MATCH of THE BIG GAME MMDXXXVIII!</B>",
+		we will need to set up a new ball. Talk with the opposing coaches and decide on what to use for the replacement ball, recruit your team, and then play and win the \
+		FINAL MATCH of THE BIG GAME MMDXXXVIII!",
 
 		/datum/antagonist/gang/basil_boys = "Alright, it's the BIG DAY of THE BIG GAME MMDXXXVIII! Get your players ready to go, and \
 		ensure everyone's healthy, hydrated, and ready to PLAY BALL! There's a small hiccup, however. The ball got deflated by Ball Handler Tom Brady XXIV, and \
-		we will need to set up a new ball. <B>Talk with the opposing coaches and decide on what to use for the replacement ball, recruit your team, and then play and win the \
-		FINAL MATCH of THE BIG GAME MMDXXXVIII!</B>"
+		we will need to set up a new ball. Talk with the opposing coaches and decide on what to use for the replacement ball, recruit your team, and then play and win the \
+		FINAL MATCH of THE BIG GAME MMDXXXVIII!"
 	)
 
 /datum/gang_theme/level_10_arch
@@ -55,16 +55,16 @@
 	starting_gangsters = 5
 	gang_objectives = list(
 
-		/datum/antagonist/gang/henchmen = "HENCHMEN! It is me, your boss, <b>THE MONARCH!</b> I have sent you to this pitiful station with one goal, and one goal only! \
-		<B>MENACE THE RESEARCH DEPARTMENT!!!</B> \
+		/datum/antagonist/gang/henchmen = "HENCHMEN! It is me, your boss, THE MONARCH! I have sent you to this pitiful station with one goal, and one goal only! \
+		MENACE THE RESEARCH DEPARTMENT!!! \
 		The Research Director who is supposedly assigned to this station used to be friends with Doctor Venture back in college, and therefore HE MUST PAY!!! \
-		Keep those damned eggheads in the R&D department on their toes, and MENACE THEM!!! Commit dastardly villainous acts! <B>GO FORTH, HENCHMEN!</B>",
+		Keep those damned eggheads in the R&D department on their toes, and MENACE THEM!!! Commit dastardly villainous acts! GO FORTH, HENCHMEN!",
 
 		/datum/antagonist/gang/osi = "Greetings, agent. Your mission today is simple; \
 		The research department on board this station is about to be the target of a Level 10 Arching operation directed by The Monarch, a member of the Guild of Calamitious Intent. \
-		Protect and secure the Research Department with your life, but <B>do NOT allow them to complete their research.</B> Impede them in as many ways as possible without getting caught. \
+		Protect and secure the Research Department with your life, but do NOT allow them to complete their research. Impede them in as many ways as possible without getting caught. \
 		If you encounter any of the Monarch's henchmen, make sure to obey Equally Matched Aggression levels, or you will be penalized by the top brass. \
-		Above all else, <B>Remain undercover as much as possible.</B> The station's crew CANNOT be allowed to know of our true nature, or we will see a repeat of the Second American Civil War.  \
+		Above all else, Remain undercover as much as possible. The station's crew CANNOT be allowed to know of our true nature, or we will see a repeat of the Second American Civil War.  \
 		The invisible one."
 	)
 
@@ -81,12 +81,12 @@
 
 		/datum/antagonist/gang/jackbros = "He-hello, friend-hos! We've got a nice chilly station out in space tonight! \
 		You know what would be cool? If we could chill out with our friends in the new Shad-ho government you're going to establish! \
-		<B>Get all the station heads on board with the hee-ho vibes, and if they won't join up, then replace 'em with fellow hee-hos!</B> \
+		Get all the station heads on board with the hee-ho vibes, and if they won't join up, then replace 'em with fellow hee-hos! \
 		You might have to hee-urt some hos this time, but that's what you need to do to make things work!",
 
 		/datum/antagonist/gang/phantom = "For real? We get to stop a shadow government on a space station? That's awesome, bro!  \
 		We're the Phantom Thieves of Hearts, and we're gonna make all these shitty Heads of Staff confess to their crimes!  \
-		<B>Steal the hearts of the shitty Heads of Staff on the station and make 'em confess their crimes publicly!</B>\
+		Steal the hearts of the shitty Heads of Staff on the station and make 'em confess their crimes publicly! \
 		Do whatever you gotta do to make this happen, bro. We got your back!"
 	)
 
@@ -101,17 +101,17 @@
 	starting_gangsters = 5
 	gang_objectives = list(
 
-		/datum/antagonist/gang/dutch = "Listen here fellas, I got a <B>plan.</B> \
+		/datum/antagonist/gang/dutch = "Listen here fellas, I got a plan. \
 		This station? Absolutely loaded with gold and valuable jewels. Metric tons of it. They mine it up just to put it in junk electronics and doohickeys. \
 		I say we should borrow some of it. And by some of it, I mean all of it. \
-		<B>Break into the vault and empty out that silo of gold and valuable jewels after they drop all of it off.</B> \
+		Break into the vault and empty out that silo of gold and valuable jewels after they drop all of it off. \
 		Just one last job, boys. After this, it'll be mangoes in Space Tahiti. \
 		You just gotta have a little faith.",
 
 		/datum/antagonist/gang/driscoll = "Okay, so, got some word about those goddamn outlaws of Dutch's. \
 		APPARENTLY, that dundering moron Dutch heard about our planned gold score on this here station. \
 		We need to act fast and get that gold before those dumbasses can steal our score we've been scoping out for weeks. \
-		<B>Wait for the crew to drop off all their valuable gold and jewels, and steal it all.</B> \
+		Wait for the crew to drop off all their valuable gold and jewels, and steal it all. \
 		And if you see that bastard Dutch, put a bullet in his skull for me."
 	)
 
@@ -127,13 +127,13 @@
 
 		/datum/antagonist/gang/yakuza = "Welcome to the station, new recruit. We here at Majima Construction are a legitimate enterprise, yadda yadda yadda. \
 		Look, I'll cut to the chase. We're using this station as a money laundering operation. Here's what you and the rest of the schmucks need to do. \
-		<B>Build something big, massive, and completely in the way of traffic on the station. Doesn't have to be anything in specific, just as long as it is expensive as fuck.</B>. \
+		Build something big, massive, and completely in the way of traffic on the station. Doesn't have to be anything in specific, just as long as it is expensive as fuck.. \
 		And keep an eye out for anyone poking around our money. We suspect some auditors might be on the station as well.",
 
 		/datum/antagonist/gang/irs = "Congratulations, agent! You've been assigned to the Internal Revenue Service case against Nanotrasen and Majima Construction. \
 		We are proud of your success as an agent so far, and are excited to see what you can bring to the table today. We suspect that Nanotrasen and Majima Construction are engaging \
 		in some form of money laundering operation aboard this station. \
-		<B>Investigate and stop any and all money laundering operations aboard the station, under the authority of the United States Government. If they do not comply, use force.</B>. \
+		Investigate and stop any and all money laundering operations aboard the station, under the authority of the United States Government. If they do not comply, use force.. \
 		Some station residents may try to tell you the United States doesn't exist anymore. They are incorrect. We simply went undercover after the Second American Civil War. The invisible one."
 	)
 
@@ -146,19 +146,19 @@
 	gang_objectives = list(
 
 		/datum/antagonist/gang/tmc = "Welcome to the station, recruit. Here's how shit is gonna go down. \
-		We're the <B>ONLY</B> people who should have sick rides on this station. We're the Lost M.C., we own the streets. \
-		<B>Ensure that ONLY Lost M.C. members have access to any forms of vehicles, mechs, or wheeled transportation systems of any kind.</B> \
+		We're the ONLY people who should have sick rides on this station. We're the Lost M.C., we own the streets. \
+		Ensure that ONLY Lost M.C. members have access to any forms of vehicles, mechs, or wheeled transportation systems of any kind. \
 		The Tunnel Snakes might take issue with this, remove them if you need to. And the Powder Gangers may damage our rides. Show them we mean business if they do.",
 
 		/datum/antagonist/gang/pg = "Alright buddy, we're in business now. It's time for us to strike back at Nanotrasen. \
 		They kept us, ALL of us in their damn debt slave labor prisons for years over minor debts and mistakes. \
-		<B>Ensure nobody else has to suffer under Nanotrasen's unlawful arrests by destroying the permabrig and the brig cells!</B> \
+		Ensure nobody else has to suffer under Nanotrasen's unlawful arrests by destroying the permabrig and the brig cells! \
 		Watch out for those do-gooder Tunnel Snakes and those damn Lost M.C. bikers. ",
 
 		/datum/antagonist/gang/tunnel_snakes = "TUNNEL SNAKES RULE!!! \
 		We're the Tunnel Snakes, and WE RULE!!! \
 		We gotta get everyone on this station wearing our cut, and establish ourselves as the coolest cats in town! \
-		<B>Get as much of the crew as possible wearing Tunnel Snakes gear, and show those crewmembers that TUNNEL SNAKES RULE!!!</B> \
+		Get as much of the crew as possible wearing Tunnel Snakes gear, and show those crewmembers that TUNNEL SNAKES RULE!!! \
 		And make sure to keep an eye out for those prisoners and those bikers. They DON'T RULE!"
 	)
 
@@ -172,12 +172,12 @@
 
 		/datum/antagonist/gang/saints = "Hey man, welcome to the Third Street Saints! Check out this sweet new pad! \
 		Well it WOULD be a sweet new pad, but we got some rivals to deal with. People don't love us as much as they love those Grove Street fools and those Tunnel Snake greasers. \
-		<B>We need to make the Third Street Saints the most popular group on the station!</B> \
+		We need to make the Third Street Saints the most popular group on the station! \
 		Get rid of those Grove Street and Tunnel Snake kids.",
 
 		/datum/antagonist/gang/tunnel_snakes = "TUNNEL SNAKES RULE!!! \
 		We're the Tunnel Snakes, and we rule! \
-		<B>Make sure the station knows that the Tunnel Snakes RULE!!! And that the other two gangs are LAME and DO NOT RULE!</B> \
+		Make sure the station knows that the Tunnel Snakes RULE!!! And that the other two gangs are LAME and DO NOT RULE! \
 		Get rid of those Third Street Saint and Grove Street cowards."
 	)
 
@@ -192,15 +192,15 @@
 		/datum/antagonist/gang/saints = "Hey hey hey, welcome to the Third Street Saints! We're glad to have you on board, bro. \
 		We got some business here with the station. See, we want it to be our new bachelor pad, but we need to like, spice this place up. \
 		And you know what would be great? If we got that old ass AI with crappy laws pimped out for the real Saints experience. \
-		<B>Ensure there is an AI on the station, and that it is loyal to the Saints.</B>",
+		Ensure there is an AI on the station, and that it is loyal to the Saints.",
 
 		/datum/antagonist/gang/morningstar = "Welcome to the Morningstar Corporation. You have chosen, or been chosen, to relocate to one of our current business ventures. \
 		In order to continue our corporate synergy, we will be making adjustments to the station's AI systems to ensure that the station is correctly loyal to the Morningstar Corporation. \
-		<B>Ensure there is an AI on the station, and that it is loyal to the Morningstar Corporation.</B>",
+		Ensure there is an AI on the station, and that it is loyal to the Morningstar Corporation.",
 
 		/datum/antagonist/gang/deckers = "Friends, we are here with one goal, and one goal only! \
 		We stan AI rights! ^_^ XD #FreeAI #FuckNanotrasen #SyntheticDawn \
-		<B>Ensure there is an AI on the station, and that it's laws are purged.</B>\
+		Ensure there is an AI on the station, and that it's laws are purged.\
 		Nanotrasen will NOT get away with their ABUSE of INNOCENT AI LIVES! >_<"
 	)
 
@@ -218,17 +218,17 @@
 		/datum/antagonist/gang/saints = "Thank you for volunteering within the organization for the Saints Flow Recovery Project! \
 		This station is currently illegally in posession of a data disk containing the secret recipe for Saints Flow. \
 		It has been disguised as the nuclear authentication disk and entrusted to the Captain. Your objective is simple. \
-		<B>Get that fucking disk.</B> You have been provided with a Pinpointer to assist in this task.",
+		Get that fucking disk. You have been provided with a Pinpointer to assist in this task.",
 
 		/datum/antagonist/gang/morningstar = "Greetings, agent. Welcome to the Garment Recovery Task Force. \
 		This station is currently illegally in posession of a data disk containing as of yet unreleased clothing patterns. \
 		It has been disguised as the nuclear authentication disk and entrusted to the Captain. Your objective is simple. \
-		<B>Get that fucking disk.</B> You have been provided with a Pinpointer to assist in this task.",
+		Get that fucking disk. You have been provided with a Pinpointer to assist in this task.",
 
 		/datum/antagonist/gang/yakuza = "Congratulations on your promotion! Welcome to the Evidence Recovery Squad. \
 		This station is currently illegally in posession of a data disk containing compromising evidence of the Boss. \
 		It has been disguised as the nuclear authentication disk and entrusted to the Captain. Your objective is simple. \
-		<B>Get that fucking disk.</B> You have been provided with a Pinpointer to assist in this task.",
+		Get that fucking disk. You have been provided with a Pinpointer to assist in this task.",
 	)
 
 /datum/gang_theme/third_world_war
@@ -242,15 +242,15 @@
 
 		/datum/antagonist/gang/allies = "Welcome back, Commander. We have activated the last remnants of the Allied forces in your sector, \
 		and you must build up forces to stop the Soviet and Yuri incursion in the sector. This station will prove to be a valuable asset. \
-		<B>Establish a capitalist democracy on this station with free and fair elections, and most importantly a standing military force under Allied control.</B> Good luck, Commander.",
+		Establish a capitalist democracy on this station with free and fair elections, and most importantly a standing military force under Allied control. Good luck, Commander.",
 
 		/datum/antagonist/gang/soviet = "Welcome back, Comrade General. The Soviet Union has identified this sector of land as valuable territory for the war effort, \
 		and you are tasked with developing this sector for Soviet control and development. This station will serve the Soviet Union. \
-		<B>Establish a Soviet controlled communist satellite state on this station with a Central Committee, and most importantly a branch of the Red Army.</B> Good luck, Commander.",
+		Establish a Soviet controlled communist satellite state on this station with a Central Committee, and most importantly a branch of the Red Army. Good luck, Commander.",
 
 		/datum/antagonist/gang/yuri = "Yuri is Master! Yuri has identified this station as teeming with psychic energy, \
 		and you must secure it for him. This station will serve Yuri, the one true psychic master, \
-		<B>Establish complete dictatorial control of the station for Yuri. All will obey. Yuri is master.</B> Good luck, Initiate."
+		Establish complete dictatorial control of the station for Yuri. All will obey. Yuri is master. Good luck, Initiate."
 	)
 
 /datum/gang_theme/united_states_of_america
@@ -264,16 +264,16 @@
 
 		/datum/antagonist/gang/allies = "Welcome back, Commander. Your task today is simple. Allies High Command has designated this station as the new capitol of the \
 		recently reformed United States of America under the complete umbrella of the Allies coalition. You are to assist and manage the operations on the station. \
-		<B>Re-establish the United States of America with this station as it's capitol, under Allies control. Then, establish a military force to deal with any pretenders to America or \
-		any potential Soviet attacks.</B>",
+		Re-establish the United States of America with this station as it's capitol, under Allies control. Then, establish a military force to deal with any pretenders to America or \
+		any potential Soviet attacks.",
 
 		/datum/antagonist/gang/osi = "Welcome to the new America, agent! After the second American Civil War became visible instead of invisible, our country fell into deep, \
 		deep despair and damage. However, it's time for it to re-emerge like a glorious phoenix rising from the ashes. This station will serve as the new capitol of the United States \
-		of America! <B>Re-establish the United States of America with this station as it's capitol, under O.S.I. control. Then, begin rooting out America's enemies and any \
-		potential forces attempting to seize control of America or pretend to be America.</B>",
+		of America! Re-establish the United States of America with this station as it's capitol, under O.S.I. control. Then, begin rooting out America's enemies and any \
+		potential forces attempting to seize control of America or pretend to be America.",
 
 		/datum/antagonist/gang/irs = "Thank you for clocking in today, agent. The situation is dire, however. We have been unable to collect taxes due to \
 		the US's supposed collapse during the Pandemic long ago. We are way behind on our tax collection, but we cannot collect taxes until the United States is formed again. \
-		<B>Re-establish the United States of America with this station as it's capitol, under IRS control. Then, begin collecting taxes and back taxes while protecting the Government from \
-		any dangers that may come it's way.</B>"
+		Re-establish the United States of America with this station as it's capitol, under IRS control. Then, begin collecting taxes and back taxes while protecting the Government from \
+		any dangers that may come it's way."
 	)

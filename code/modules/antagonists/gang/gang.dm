@@ -1,6 +1,7 @@
 /datum/antagonist/gang
 	name = "Family Member"
 	roundend_category = "gangsters"
+	ui_name = "AntagInfoGangmember"
 	antag_hud_type = ANTAG_HUD_GANGSTER
 	antag_hud_name = "hud_gangster"
 	antagpanel_category = "Family"
@@ -91,17 +92,6 @@
 	H.remove_hud_from(owner.current)
 	..()
 
-/datum/antagonist/gang/greet()
-	to_chat(owner.current, "<B>As you're the first gangster, your uniform and spraycan are in your inventory!</B>")
-
-	to_chat(owner.current, "<B><font size=6 color=red>[gang_name] for life!</font></B>")
-	to_chat(owner.current, "<B><font size=2 color=red>You're a member of the [gang_name] now!<br>Tag turf with a spraycan, wear your group's colors, and recruit more gangsters with the Induction Packages! Use your cell phone to communicate with fellow gangsters!</font></B>")
-	to_chat(owner.current, "<B><font size=2 color=red>You are still a team-oriented antagonist! Do what is best for your gang.</font></B>")
-	var/assigned_objective = my_gang.current_theme.gang_objectives[src.type]
-	if(!assigned_objective)
-		assigned_objective = "ERROR, FILE A REPORT WITH THIS INFO: Gang Name: [gang_name], Theme Name: [my_gang.current_theme.name]"
-	to_chat(owner.current, "<B><font size=4 color=red>Family's Objective:</B> [assigned_objective]</font>")
-
 /datum/antagonist/gang/apply_innate_effects(mob/living/mob_override)
 	..()
 	if(starter_gangster)
@@ -155,6 +145,25 @@
 			if(!equipped)
 				to_chat(owner.current, "Your [O] has been placed at your feet.")
 				O.forceMove(get_turf(H))
+
+/datum/antagonist/gang/ui_static_data(mob/user)
+	var/list/data = list()
+	data["gang_name"] = gang_name
+	data["antag_name"] = name
+	data["gang_objective"] = my_gang.current_theme.gang_objectives[type]
+
+	var/list/clothes_we_can_wear = list()
+	for(var/obj/item/accepted_item as anything in acceptable_clothes)
+		clothes_we_can_wear |= initial(accepted_item.name)
+
+	for(var/obj/item/free_item as anything in free_clothes)
+		if(ispath(free_item, /obj/item/toy/crayon/spraycan))
+			continue
+		clothes_we_can_wear |= initial(free_item.name)
+
+	data["gang_clothes"] = clothes_we_can_wear
+	return data
+
 /datum/team/gang
 	/// The abbreviation of this family.
 	var/gang_id = "LLJK"
@@ -225,9 +234,9 @@
 
 /datum/antagonist/gang/russian_mafia
 	show_in_antagpanel = TRUE
-	name = "The Mafia"
+	name = "Mafioso"
 	roundend_category = "The mafiosos"
-	gang_name = "The Mafia"
+	gang_name = "Mafia"
 	gang_id = "RM"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/red,
 							/obj/item/clothing/neck/scarf/red,
@@ -251,9 +260,9 @@
 
 /datum/antagonist/gang/italian_mob
 	show_in_antagpanel = TRUE
-	name = "The Mob"
+	name = "Mobster"
 	roundend_category = "The mobsters"
-	gang_name = "The Mob"
+	gang_name = "Mob"
 	gang_id = "IM"
 	acceptable_clothes = list(/obj/item/clothing/under/suit/checkered,
 							/obj/item/clothing/head/fedora,
@@ -276,7 +285,7 @@
 
 /datum/antagonist/gang/tunnel_snakes
 	show_in_antagpanel = TRUE
-	name = "Tunnel Snakes"
+	name = "Tunnel Snake"
 	roundend_category = "The Tunnel Snakes"
 	gang_name = "Tunnel Snakes"
 	gang_id = "TS"
@@ -300,7 +309,7 @@
 
 /datum/antagonist/gang/henchmen
 	show_in_antagpanel = TRUE
-	name = "Monarch Crew"
+	name = "Monarch Henchmen"
 	roundend_category = "The Monarch henchmen"
 	gang_name = "Monarch Crew"
 	gang_id = "HENCH"
@@ -326,7 +335,7 @@
 
 /datum/antagonist/gang/yakuza
 	show_in_antagpanel = TRUE
-	name = "Tojo Clan"
+	name = "Tojo Clan Member"
 	roundend_category = "The Yakuza"
 	gang_name = "Tojo Clan"
 	gang_id = "YAK"
@@ -357,7 +366,7 @@
 
 /datum/antagonist/gang/jackbros
 	show_in_antagpanel = TRUE
-	name = "Jack Bros"
+	name = "Jack Bro"
 	roundend_category = "The Hee-hos"
 	gang_name = "Jack Bros"
 	gang_id = "JB"
@@ -385,7 +394,7 @@
 
 /datum/antagonist/gang/dutch
 	show_in_antagpanel = TRUE
-	name = "Dutch van der Linde's Gang"
+	name = "Dutch van der Linde Outlaw"
 	roundend_category = "Dutch's outlaws"
 	gang_name = "Dutch van der Linde's Gang"
 	gang_id = "VDL"
@@ -463,7 +472,7 @@
 
 /datum/antagonist/gang/tmc
 	show_in_antagpanel = TRUE
-	name = "The Lost M.C. Biker"
+	name = "Lost M.C. Biker"
 	roundend_category = "Lost M.C. Bikers"
 	gang_name = "The Lost M.C."
 	gang_id = "TMC"
