@@ -1,0 +1,4 @@
+author: "CodeMonkey"
+delete-after: True
+changes: 
+  - bugfix: "Fixes parallax animations"

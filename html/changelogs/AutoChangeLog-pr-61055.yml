@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - bugfix: "Fixed wormhole jaunter to trigger when falling into a chasm"
-  - bugfix: "Fixed wormhole jaunter to be affected by EMP"

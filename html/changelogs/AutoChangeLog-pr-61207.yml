@@ -1,8 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - refactor: "Refactored batons and stunbatons code. Stunbatons are now a subtype of batons."
-  - code_imp: "Removed some batons copypasta. All batons share the same anti-dual wielding abuse code now. Replaced some old anchored checks for teleprods with move_resist ones."
-  - bugfix: "Fixed clumsy checks for teleprods stunning the user twice."
-  - bugfix: "Fixed teleprods not teleporting living mobs that aren't xenos or humans."
-  - balance: "TRAIT_STUNRESISTANCE now affects all batons and not just stun batons."
