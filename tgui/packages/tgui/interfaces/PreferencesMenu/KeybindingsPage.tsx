@@ -359,23 +359,26 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
                         = this.state.selectedKeybindings![keybindingId]
                           || [];
 
-                      let name = (
+                      const name = (
                         <Stack.Item basis="25%">
-                          {keybinding.name}
+                          {keybinding.description
+                            ? (
+                              <Tooltip
+                                content={
+                                  keybinding.description
+                                }
+                                position="bottom"
+                              >
+                                <Box as="span" style={{
+                                  "border-bottom": "2px dotted rgba(255, 255, 255, 0.8)",
+                                }}>
+                                  {keybinding.name}
+                                </Box>
+                              </Tooltip>
+                            )
+                            : keybinding.name}
                         </Stack.Item>
                       );
-
-                      // MOTHBLOCKS TODO: FIX TOOLTIP
-                      // if (keybinding.description) {
-                      //   name = (
-                      //     <Tooltip
-                      //       content={
-                      //         keybinding.description
-                      //       }>
-                      //       {name}
-                      //     </Tooltip>
-                      //   );
-                      // }
 
                       return (
                         <Stack.Item key={keybindingId}>
