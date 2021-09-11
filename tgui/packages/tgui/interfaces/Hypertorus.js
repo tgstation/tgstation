@@ -27,6 +27,7 @@ const HypertorusMainControls = (props, context) => {
             {'Start cooling: '}
             <Button
               disabled={data.start_fuel === 1
+                || data.start_moderator === 1
                 || data.start_power === 0
                 || (data.start_cooling && data.power_level > 0)}
               icon={data.start_cooling ? 'power-off' : 'times'}
