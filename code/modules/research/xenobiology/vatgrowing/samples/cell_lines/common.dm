@@ -495,4 +495,125 @@
 
 	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/longface = 1)
 
+/datum/micro_organism/cell_line/frog
+	desc = "amphibian cells"
+	required_reagents = list(/datum/reagent/consumable/nutriment/protein)
+
+	supplementary_reagents = list(
+						/datum/reagent/ants = 3,
+						/datum/reagent/consumable/eggwhite= 2,
+						/datum/reagent/consumable/nutriment/vitamin = 1,)
+
+	suppressive_reagents = list(
+						/datum/reagent/toxin/carpotoxin = -3,
+						/datum/reagent/toxin/bungotoxin = -3,
+						/datum/reagent/toxin/spore = -3,
+						/datum/reagent/toxin/plantbgone = -2, //GAY FROGS
+						/datum/reagent/drying_agent = -2,
+						/datum/reagent/consumable/mold = -2,
+						/datum/reagent/toxin = -1)
+
+	virus_suspectibility = 0.5
+	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/frog = 1)
+
+/datum/micro_organism/cell_line/walking_mushroom
+	desc = "motile fungal hyphae"
+	required_reagents = list(/datum/reagent/consumable/nutriment/protein)
+
+	supplementary_reagents = list(
+						/datum/reagent/toxin/polonium = 6,
+						/datum/reagent/consumable/corn_syrup = 3,
+						/datum/reagent/consumable/mushroom_tea = 3,
+						/datum/reagent/toxin/coffeepowder = 2,
+						/datum/reagent/consumable/nuka_cola = 2,
+						/datum/reagent/consumable/mold = 2,
+						/datum/reagent/consumable/sugar = 1,
+						/datum/reagent/cellulose = 1)
+
+	suppressive_reagents = list(/datum/reagent/lead = -4,
+								/datum/reagent/consumable/garlic = -3,
+								/datum/reagent/toxin/plasma = -2,
+								/datum/reagent/flash_powder = -2,
+								/datum/reagent/pax = -2,
+								/datum/reagent/copper = -1)
+	virus_suspectibility = 0
+	resulting_atoms = list(/mob/living/simple_animal/hostile/mushroom = 1)
+
+/datum/micro_organism/cell_line/queen_bee
+	desc = "aphid cells"
+	required_reagents = list(
+						/datum/reagent/consumable/nutriment/protein,
+						/datum/reagent/consumable/corn_syrup)
+
+	supplementary_reagents = list(
+						/datum/reagent/consumable/honey = 4,
+						/datum/reagent/consumable/korta_nectar = 3,
+						/datum/reagent/consumable/red_queen =  3,
+						/datum/reagent/consumable/ethanol/champagne = 2,
+						/datum/reagent/consumable/ethanol/sugar_rush = 2,
+						/datum/reagent/consumable/sugar = 1,
+						/datum/reagent/consumable/lemonade = 1,
+						/datum/reagent/consumable/nutriment/vitamin = 1)
+
+	suppressive_reagents = list(
+						/datum/reagent/toxin/carpotoxin = -3,
+						/datum/reagent/toxin/pestkiller = -2,
+						/datum/reagent/consumable/potato_juice = -2,
+						/datum/reagent/drug/nicotine = -1)
+
+	virus_suspectibility = 0
+	resulting_atoms = list(/obj/item/queen_bee = 1)
+
+/datum/micro_organism/cell_line/queen_bee/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat) //we love job hazards
+	vat.visible_message(span_warning("You hear angry buzzing coming from the inside of the vat!"))
+	QDEL_NULL(vat.biological_sample)
+	for(var/i in 1 to 5)
+		new /mob/living/simple_animal/hostile/bee(get_turf(vat))
+
+/datum/micro_organism/cell_line/leaper
+	desc = "atypical amphibian cells"
+	required_reagents = list(/datum/reagent/consumable/nutriment/protein,
+							/datum/reagent/ants,
+							/datum/reagent/consumable/eggyolk,
+							/datum/reagent/medicine/c2/synthflesh)
+
+	supplementary_reagents = list(/datum/reagent/growthserum = 4,
+								/datum/reagent/drug/blastoff = 3,
+								/datum/reagent/drug/space_drugs = 2,
+								/datum/reagent/consumable/ethanol/eggnog = 2,
+								/datum/reagent/consumable/vanilla = 2,
+								/datum/reagent/consumable/banana = 1,
+								/datum/reagent/consumable/nutriment/vitamin = 1)
+
+	suppressive_reagents = list(/datum/reagent/toxin/cyanide = -5,
+								/datum/reagent/consumable/mold = -2,
+								/datum/reagent/toxin/spore = -1)
+
+	resulting_atoms = list(/mob/living/simple_animal/hostile/jungle/leaper = 1)
+
+/datum/micro_organism/cell_line/mega_arachnid
+	desc = "pseudoarachnoid cells"
+	required_reagents = list(/datum/reagent/consumable/nutriment/protein,
+							/datum/reagent/ants,
+							/datum/reagent/medicine/omnizine)
+
+	supplementary_reagents  = list(
+								/datum/reagent/toxin/venom = 6,
+								/datum/reagent/drug/kronkaine = 4,
+								/datum/reagent/consumable/nutriment/peptides = 3,
+								/datum/reagent/consumable/ethanol/squirt_cider = 2,
+								/datum/reagent/consumable/nutraslop = 2,
+								/datum/reagent/consumable/nutriment/vitamin = 1,
+								/datum/reagent/toxin/plasma = 1,
+								/datum/reagent/consumable/nutriment/organ_tissue = 1,
+								/datum/reagent/liquidgibs = 1,
+								/datum/reagent/consumable/enzyme = 1)
+
+	suppressive_reagents = list(
+		/datum/reagent/consumable/ethanol/bug_spray = -3,
+		/datum/reagent/drug/nicotine = -1,
+		/datum/reagent/toxin/pestkiller = -1)
+
+	resulting_atoms = list(/mob/living/simple_animal/hostile/jungle/mega_arachnid = 1)
+
 #undef VAT_GROWTH_RATE
