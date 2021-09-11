@@ -166,7 +166,7 @@
 				volume = 0
 				return TRUE
 			else if(new_volume == "max")
-				volume = 50
+				volume = initial(volume)
 				return TRUE
 			else if(text2num(new_volume) != null)
 				///force volume back to 50 or the lower value
