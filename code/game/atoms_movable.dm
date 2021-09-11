@@ -755,9 +755,8 @@
 
 /atom/movable/proc/onTransitZ(old_z,new_z)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, old_z, new_z)
-	for (var/item in src) // Notify contents of Z-transition. This can be overridden IF we know the items contents do not care.
-		var/atom/movable/AM = item
-		AM.onTransitZ(old_z,new_z)
+	for (var/atom/movable/movable as anything in src) // Notify contents of Z-transition. This can be overridden IF we know the items contents do not care.
+		movable.onTransitZ(old_z,new_z)
 
 /**
  * Called whenever an object moves and by mobs when they attempt to move themselves through space
