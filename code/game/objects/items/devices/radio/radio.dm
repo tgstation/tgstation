@@ -17,17 +17,19 @@
 	custom_materials = list(/datum/material/iron=75, /datum/material/glass=25)
 	obj_flags = USES_TGUI
 
-	var/on = TRUE
-	var/frequency = FREQ_COMMON
-	/// The range around the radio in which mobs can hear what it receives.
+	///if FALSE, broadcasting and listening dont matter this radio shouldnt do anything
+	VAR_PRIVATE/on = TRUE
+	///the "default" radio frequency this radio is set to, listens and transmits to this frequency by default. wont work if the channel is encrypted
+	VAR_PRIVATE/frequency = FREQ_COMMON
+	/// Both the range around the radio in which mobs can hear what it receives and the range the radio can hear
 	var/canhear_range = 3
 	/// Tracks the number of EMPs currently stacked.
 	var/emped = 0
 
 	/// Whether the radio will transmit dialogue it hears nearby into its radio channel.
-	var/broadcasting = FALSE
+	VAR_PRIVATE/broadcasting = FALSE
 	/// Whether the radio is currently receiving radio messages from its radio frequencies.
-	var/listening = FALSE
+	VAR_PRIVATE/listening = TRUE
 	/// If true, the transmit wire starts cut.
 	var/prison_radio = FALSE
 	/// Whether wires are accessible. Toggleable by screwdrivering.
@@ -58,7 +60,7 @@
 	var/syndie = FALSE
 	/// associative list of the encrypted radio channels this radio is currently set to listen/broadcast to, of the form: list(channel name = TRUE or FALSE)
 	var/list/channels
-	/// associative list of the encrypted radio channels this radio can listen/broadcast to, of the form: list(channel name = frequency)
+	/// associative list of the encrypted radio channels this radio can listen/broadcast to, of the form: list(channel name = channel frequency)
 	var/list/secure_radio_connections
 
 /obj/item/radio/Initialize()
@@ -67,13 +69,17 @@
 		wires.cut(WIRE_TX) // OH GOD WHY
 	secure_radio_connections = new
 	. = ..()
-	frequency = sanitize_frequency(frequency, freerange)
-	set_frequency(frequency)
+
 
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
-	become_hearing_sensitive(INNATE_TRAIT)
+	set_listening(listening)
+	set_on(on)
+	set_frequency(sanitize_frequency(frequency, freerange))
+	set_broadcasting(broadcasting)
+
+	//become_hearing_sensitive(INNATE_TRAIT)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/radio/interact(mob/user)
@@ -83,49 +89,68 @@
 	else
 		..()
 
+//simple getters only because i NEED to enforce complex setter use for these vars for caching purposes but VAR_PROTECTED requires getter usage as well.
+//if another decorator is made that doesnt require getters feel free to nuke these and change these vars over to that
+/obj/item/radio/proc/get_on()
+	return on
+
+/obj/item/radio/proc/get_frequency()
+	return on
+
+/obj/item/radio/proc/get_broadcasting()
+	return broadcasting
+
+/obj/item/radio/proc/get_listening()
+	return listening
+
+//now for setters for the above protected vars
+
 ///setter for frequency that automatically updates our place in the global radio list
 /obj/item/radio/proc/set_frequency(new_frequency)
+
 	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)
 	remove_radio(src, frequency)
-	frequency = add_radio(src, new_frequency)
+	frequency = new_frequency
+	if(on && listening)
+		add_radio(src, new_frequency)
 
-///setter
+///setter for the listener var, adds or removes this radio from the global radio list if we are also on
 /obj/item/radio/proc/set_listening(new_listening)
-	if(new_listening == listening || new_listening == null)//remember that null is falsey but null != FALSE
-		return
 
 	listening = new_listening
 
-	if(listening)
+	if(listening && on)
+		recalculateChannels()
 		add_radio(src, frequency)
-	else
+	else if(!listening)
 		remove_radio_all(src)
 
+///setter for broadcasting that makes us not hearing sensitive if not broadcasting and hearing sensitive if broadcasting
+///hearing sensitive in this case only matters for the purposes of listening for words said in nearby tiles, talking into us directly bypasses hearing
 /obj/item/radio/proc/set_broadcasting(new_broadcasting)
-	if(new_broadcasting == broadcasting || new_broadcasting == null)
-		return
 
 	broadcasting = new_broadcasting
 
-	if(broadcasting) //we dont need hearing sensitivity if we arent broadcasting, because talk_into doesnt care about hearing
+	if(broadcasting && on) //we dont need hearing sensitivity if we arent broadcasting, because talk_into doesnt care about hearing
+		become_hearing_sensitive(INNATE_TRAIT)
+	else if(!broadcasting)
+		REMOVE_TRAIT(src, TRAIT_HEARING_SENSITIVE, INNATE_TRAIT)
+
+/obj/item/radio/proc/set_on(new_on)
+
+	on = new_on
+
+	if(on && broadcasting)
 		become_hearing_sensitive(INNATE_TRAIT)
 	else
 		REMOVE_TRAIT(src, TRAIT_HEARING_SENSITIVE, INNATE_TRAIT)
 
-/obj/item/radio/proc/set_on(new_on)
-	if(new_on == on || new_on == null)
-		return
-
-	on = new_on
-
-	if(!listening)
-		return // if listening is false, then we're already not in the global radio list
-
-	if(on)
+	if(on && listening)
 		add_radio(src, frequency)
 		recalculateChannels()
 	else
 		remove_radio_all(src)
+
 
 //TODOKYLER: i dont think this is friendly with temporarily removing from the global radio list
 /obj/item/radio/proc/recalculateChannels()
@@ -133,8 +158,7 @@
 
 	if(keyslot && keyslot.channels)
 		for(var/ch_name in keyslot.channels)
-			if(!(ch_name in channels))
-				LAZYSET(channels, ch_name, keyslot.channels[ch_name])
+			LAZYSET(channels, ch_name, keyslot.channels[ch_name])
 
 		if(keyslot.translate_binary)
 			translate_binary = TRUE
@@ -144,13 +168,16 @@
 			independent = TRUE
 
 	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
+		secure_radio_connections[ch_name] = GLOB.radiochannels[ch_name]
+		if(on && listening)
+			add_radio(src, GLOB.radiochannels[ch_name])
 
 // Used for cyborg override
 /obj/item/radio/proc/resetChannels()
 	LAZYNULL(channels)
 	remove_radio_all(src)
-	add_radio(src, frequency)
+	if(on && listening)
+		add_radio(src, frequency)
 	translate_binary = FALSE
 	syndie = FALSE
 	independent = FALSE
@@ -180,8 +207,14 @@
 
 GLOBAL_VAR_INIT(tick_usage_telecomms_only, 0)
 
+GLOBAL_VAR_INIT(returned_to_on_listening_or_wire, 0)
+GLOBAL_VAR_INIT(returned_to_centcom_freq, 0)
+GLOBAL_VAR_INIT(returned_to_not_on_level, 0)
+GLOBAL_VAR_INIT(returned_to_synd_freq, 0)
+GLOBAL_VAR_INIT(returned_to_end_of_proc, 0)
+
 /obj/item/radio/proc/talk_into_impl(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
-	if(!on)
+	if(!get_on())
 		return // the device has to be on
 	if(!talking_movable || !message)
 		return
@@ -248,13 +281,30 @@ GLOBAL_VAR_INIT(tick_usage_telecomms_only, 0)
 	message_admins("this signal was sent to [GLOB.total_radios_sent_to] radios and heard by [GLOB.total_hearers_sent_to] hearers")
 	message_admins("signal/broadcast() took [GLOB.broadcast_cost] ms")
 	message_admins("cost of telecomms machinery was [GLOB.tick_usage_telecomms_only] ms")
+	message_admins("filtering the radio list took [GLOB.filtering_cost] ms")
+	message_admins("of the radios filtered, [GLOB.returned_to_on_listening_or_wire] werent on or listening or had recieve wires cut, \
+	[GLOB.returned_to_centcom_freq] returned due to it being a centcom frequency, \
+	[GLOB.returned_to_not_on_level] returned due to not being on the right level, \
+	[GLOB.returned_to_synd_freq] returned due to not being syndicate, \
+	[GLOB.returned_to_end_of_proc] returned due to not having anything return TRUE")
+	message_admins("the list started with [GLOB.initial_radio_length] radios before filtering")
+	message_admins("get_hearers_in_radio_ranges cost [GLOB.get_hearers_in_radio_ranges_cost] ms")
+	message_admins("hearer.Hear cost [GLOB.hearing_cost] ms")
+	GLOB.returned_to_on_listening_or_wire = 0
+	GLOB.returned_to_centcom_freq = 0
+	GLOB.returned_to_synd_freq = 0
+	GLOB.returned_to_end_of_proc = 0
 	GLOB.relay_information_calls = 0
 	GLOB.relay_infomration_total_iterations = 0
 	GLOB.relay_information_filter_returns = 0
 	GLOB.receive_information_calls = 0
 	GLOB.total_radios_sent_to = 0
 	GLOB.total_hearers_sent_to = 0
-
+	GLOB.filtering_cost = 0
+	GLOB.initial_radio_length = 0
+	GLOB.get_hearers_in_radio_ranges_cost = 0
+	GLOB.hearing_cost = 0
+	GLOB.returned_to_not_on_level = 0
 
 	// If the radio is subspace-only, that's all it can do
 	if (subspace_transmission)
@@ -291,19 +341,26 @@ GLOBAL_VAR_INIT(tick_usage_telecomms_only, 0)
 
 	talk_into(speaker, raw_message, , spans, language=message_language)
 
+
+
 /// Checks if this radio can receive on the given frequency.
-/obj/item/radio/proc/can_receive(input_frequency, list/level = RADIO_SIGNAL_NO_Z_LEVEL_RESTRICTION)
+/obj/item/radio/proc/can_receive(input_frequency, list/level)
 	// deny checks
-	if (!on || !listening || wires.is_cut(WIRE_RX))
+	if (!listening || !on || wires.is_cut(WIRE_RX))//all of this can be cached via setters, remove it from the list if this wire is cut
+		GLOB.returned_to_on_listening_or_wire++
 		return FALSE
-	if (input_frequency == FREQ_SYNDICATE && !syndie)
-		return FALSE
-	if (input_frequency == FREQ_CENTCOM)
+	if (input_frequency == FREQ_CENTCOM)//this can too, make a list of independent radios by z level then add that list in vocal/broadcast if the frequency is that
+		GLOB.returned_to_centcom_freq++
 		return independent  // hard-ignores the z-level check
-	if (level != RADIO_SIGNAL_NO_Z_LEVEL_RESTRICTION)
+	if (!(0 in level))//
 		var/turf/position = get_turf(src)
 		if(!position || !(position.z in level))
+			GLOB.returned_to_not_on_level++
 			return FALSE
+
+	if (input_frequency == FREQ_SYNDICATE && !syndie)
+		GLOB.returned_to_synd_freq++
+		return FALSE
 
 	// allow checks: are we listening on that frequency?
 	if (input_frequency == frequency)
@@ -313,6 +370,7 @@ GLOBAL_VAR_INIT(tick_usage_telecomms_only, 0)
 			//the GLOB.radiochannels list is located in communications.dm
 			if(GLOB.radiochannels[ch_name] == text2num(input_frequency) || syndie)
 				return TRUE
+	GLOB.returned_to_end_of_proc++
 	return FALSE
 
 /obj/item/radio/ui_state(mob/user)
@@ -511,5 +569,8 @@ GLOBAL_VAR_INIT(tick_usage_telecomms_only, 0)
 
 
 /obj/item/radio/off // Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
-	listening = 0 // And it's nice to have a subtype too for future features.
 	dog_fashion = /datum/dog_fashion/back
+
+/obj/item/radio/off/Initialize()
+	. = ..()
+	set_listening(FALSE)

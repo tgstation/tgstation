@@ -4,7 +4,7 @@
 	icon_state = "intercom"
 	anchored = TRUE
 	w_class = WEIGHT_CLASS_BULKY
-	canhear_range = 4
+	canhear_range = 2//TODOKYLER: holy fuck change this also this shouldnt be listening by default
 	dog_fashion = null
 	unscrewed = FALSE
 
@@ -140,8 +140,11 @@
 /obj/item/radio/intercom/chapel
 	name = "Confessional intercom"
 	anonymize = TRUE
-	frequency = 1481
-	broadcasting = TRUE
+
+/obj/item/radio/intercom/chapel/Initialize(mapload, ndir, building)
+	. = ..()
+	set_frequency(1481)
+	set_broadcasting(TRUE)
 
 /obj/item/radio/intercom/directional/north
 	pixel_y = 22

@@ -27,7 +27,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	slot_flags = ITEM_SLOT_EARS
 	var/obj/item/encryptionkey/keyslot2 = null
 	dog_fashion = null
-	listening = TRUE
 
 /obj/item/radio/headset/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins putting \the [src]'s antenna up [user.p_their()] nose! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer!"))
@@ -56,7 +55,23 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/Initialize()
 	. = ..()
+	set_listening(TRUE)
 	recalculateChannels()
+	possibly_deactivate_in_loc()
+
+/obj/item/radio/headset/proc/possibly_deactivate_in_loc()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/human_loc = loc
+		if(human_loc.ears == src)
+			set_on(TRUE)
+	else if(isAI(loc))
+		set_on(TRUE)
+	else
+		set_on(FALSE)
+
+/obj/item/radio/headset/Moved(atom/OldLoc, Dir)
+	. = ..()
+	possibly_deactivate_in_loc()
 
 /obj/item/radio/headset/Destroy()
 	QDEL_NULL(keyslot2)
@@ -66,15 +81,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	if (!listening)
 		return ITALICS | REDUCE_RANGE
 	return ..()
-
-/obj/item/radio/headset/can_receive(freq, level, AIuser)
-	if(ishuman(src.loc))
-		var/mob/living/carbon/human/H = src.loc
-		if(H.ears == src)
-			return ..(freq, level)
-	else if(AIuser)
-		return ..(freq, level)
-	return FALSE
 
 /obj/item/radio/headset/ui_data(mob/user)
 	. = ..()
@@ -282,9 +288,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "\proper Integrated Subspace Transceiver "
 	keyslot2 = new /obj/item/encryptionkey/ai
 	command = TRUE
-
-/obj/item/radio/headset/silicon/can_receive(freq, level)
-	return ..(freq, level, TRUE)
 
 /obj/item/radio/headset/attackby(obj/item/W, mob/user, params)
 	user.set_machine(src)
