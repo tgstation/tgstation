@@ -319,7 +319,7 @@
 		return
 	if(istype(W, /obj/item/seeds) || istype(W, /obj/item/food/grown))
 		if(user.transferItemToLoc(W, src))
-			to_chat(user, "<span class='notice'>You load the [W] into the [src].</span>")
+			to_chat(user, span_notice("You load [W] into [src]."))
 			playsound(loc, 'sound/effects/blobattack.ogg', 25, 1, -1)
 			process_compost()
 		else
