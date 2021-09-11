@@ -16,7 +16,6 @@
 	icon_state = "bio"
 	inhand_icon_state = "bio_suit"
 	w_class = WEIGHT_CLASS_BULKY
-	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -84,7 +83,7 @@
 
 /obj/item/clothing/suit/bio_suit/cmo/Initialize()
 	. = ..()
-	allowed += list(/obj/item/melee/classic_baton/telescopic)
+	allowed += list(/obj/item/melee/baton/telescopic)
 
 //Plague Dr mask can be found in clothing/masks/gasmask.dm
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit
