@@ -600,6 +600,9 @@
 #define COMSIG_LIVING_LIFE "living_life"
 ///From base of mob/living/MobBump() (mob/living)
 #define COMSIG_LIVING_MOB_BUMP "living_mob_bump"
+///From base of mob/living/ZImpactDamage() (mob/living, levels, turf/t)
+#define COMSIG_LIVING_Z_IMPACT "living_z_impact"
+	#define COMPONENT_NO_Z_DAMAGE (1<<0)
 
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_LIVING_BANED "living_baned"

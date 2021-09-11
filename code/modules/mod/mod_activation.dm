@@ -66,7 +66,7 @@
 	user.visible_message(span_notice("[wearer]'s [piece] retract[piece.p_s()] back into [src] with a mechanical hiss."),
 		span_notice("[piece] retract[piece.p_s()] back into [src] with a mechanical hiss."),
 		span_hear("You hear a mechanical hiss."))
-	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/mod/control/proc/toggle_activate(mob/user, force_deactivate = FALSE)
 	for(var/obj/item/part as anything in mod_parts)

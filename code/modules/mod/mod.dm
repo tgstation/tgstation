@@ -410,6 +410,7 @@
 	var/obj/item/mod/module/old_module = module
 	modules -= old_module
 	complexity -= old_module.complexity
+	old_module.on_unequip()
 	if(old_module.active)
 		old_module.on_deactivation()
 	old_module.on_uninstall()

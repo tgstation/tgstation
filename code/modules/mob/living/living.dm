@@ -46,6 +46,8 @@
 	return ..()
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_Z_IMPACT, levels, T) & COMPONENT_NO_Z_DAMAGE)
+		return
 	visible_message(span_danger("[src] crashes into [T] with a sickening noise!"), \
 					span_userdanger("You crash into [T] with a sickening noise!"))
 	adjustBruteLoss((levels * 5) ** 1.5)
@@ -1445,7 +1447,7 @@
 
 	// can't spread fire to mobs that don't catch on fire
 	if(HAS_TRAIT(L, TRAIT_NOFIRE_SPREAD) || HAS_TRAIT(src, TRAIT_NOFIRE_SPREAD))
-		return 
+		return
 
 	if(on_fire)
 		if(L.on_fire) // If they were also on fire

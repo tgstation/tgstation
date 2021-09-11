@@ -176,12 +176,14 @@
 	return
 
 /// Called when the device moves to a different place on active modules
-/obj/item/mod/module/proc/on_exit(datum/source, atom/movable/offender, atom/newloc)
+/obj/item/mod/module/proc/on_exit(datum/source, atom/movable/part, direction)
 	SIGNAL_HANDLER
 
-	if(newloc == mod.wearer || newloc == src)
+	if(part.loc == src)
 		return
-	if(offender == device)
+	if(part.loc == mod.wearer)
+		return
+	if(part == device)
 		on_deactivation()
 
 /// Called when the device gets deleted on active modules
@@ -348,7 +350,7 @@
 		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, .proc/unstealth)
 	RegisterSignal(mod.wearer, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_unarmed_attack)
 	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
-	RegisterSignal(mod.wearer, list(COMSIG_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED), .proc/unstealth)
+	RegisterSignal(mod.wearer, list(COMSIG_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), .proc/unstealth)
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
 
 /obj/item/mod/module/stealth/on_deactivation()
@@ -357,7 +359,7 @@
 		return
 	if(bumpoff)
 		UnregisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP)
-	UnregisterSignal(mod.wearer, list(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED))
+	UnregisterSignal(mod.wearer, list(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
 	animate(mod.wearer, alpha = 255, time = 1.5 SECONDS)
 
 /obj/item/mod/module/stealth/proc/unstealth(datum/source)
@@ -510,7 +512,7 @@
 	desc = "A module that can instantly holster a gun inside the MOD."
 	module_type = MODULE_USABLE
 	complexity = 2
-	use_power_cost = 25
+	use_power_cost = 20
 	incompatible_modules = list(/obj/item/mod/module/holster)
 	cooldown_time = 0.5 SECONDS
 	var/obj/item/gun/holstered
@@ -672,9 +674,9 @@
 
 /obj/item/mod/module/emp_shield
 	name = "MOD EMP shield module"
-	desc = "A module that shields the MOD from EMP's."
+	desc = "A module that shields the MOD from EMP's, taking a power cost for that."
 	complexity = 2
-	idle_power_cost = 10
+	idle_power_cost = 15
 	incompatible_modules = list(/obj/item/mod/module/emp_shield)
 
 /obj/item/mod/module/emp_shield/on_install()
@@ -779,10 +781,13 @@
 	incompatible_modules = list(/obj/item/mod/module/dispenser)
 	cooldown_time = 5 SECONDS
 	var/dispense_type = /obj/item/food/burger/plain
+	var/dispense_time = 0 SECONDS
 
 /obj/item/mod/module/dispenser/on_use()
 	. = ..()
 	if(!.)
+		return
+	if(dispense_time && !do_after(mod.wearer, dispense_time, src))
 		return
 	var/obj/item/dispensed = new dispense_type(mod.wearer.loc)
 	mod.wearer.put_in_hands(dispensed)
@@ -791,11 +796,121 @@
 
 /obj/item/mod/module/gps
 	name = "MOD internal GPS module"
-	desc = "A module that serves as a built-in GPS signal."
+	desc = "A module that extends a GPS."
+	module_type = MODULE_ACTIVE
 	complexity = 1
-	idle_power_cost = 1
+	use_power_cost = 20
+	device = /obj/item/gps/mod
 	incompatible_modules = list(/obj/item/mod/module/gps)
+	cooldown_time = 0.5 SECONDS
 
-/obj/item/mod/module/gps/Initialize()
+/obj/item/gps/mod
+	name = "MOD internal GPS"
+	desc = "A MODsuit internal positioning system."
+	icon_state = "gps-b"
+	gpstag = "MOD0"
+
+/obj/item/mod/module/constructor
+	name = "MOD constructor module"
+	desc = "A module that lets you scan the surrounding environment for construction holograms and speeds up wall construction time."
+	module_type = MODULE_USABLE
+	complexity = 2
+	idle_power_cost = 1
+	use_power_cost = 50
+	incompatible_modules = list(/obj/item/mod/module/constructor)
+	cooldown_time = 11 SECONDS
+
+/obj/item/mod/module/constructor/on_equip()
+	ADD_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
+
+/obj/item/mod/module/constructor/on_unequip()
+	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
+
+/obj/item/mod/module/constructor/on_use()
 	. = ..()
-	AddComponent(/datum/component/gps, "MOD0")
+	if(!.)
+		return
+	rcd_scan(src, fade_time = 10 SECONDS)
+
+/obj/item/mod/module/longfall
+	name = "MOD longfall module"
+	desc = "A module that stops fall damage from happening to the user, converting into kinetic charge."
+	complexity = 2
+	use_power_cost = 100
+	incompatible_modules = list(/obj/item/mod/module/longfall)
+
+/obj/item/mod/module/longfall/on_equip()
+	RegisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT, .proc/z_impact_react)
+
+/obj/item/mod/module/longfall/on_unequip()
+	UnregisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT)
+
+/obj/item/mod/module/longfall/proc/z_impact_react(datum/source, levels, turf/fell_on)
+	if(!drain_power(use_power_cost*levels))
+		return
+	new /obj/effect/temp_visual/mook_dust(get_turf(mod.wearer))
+	mod.wearer.Stun(levels * 1 SECONDS)
+	to_chat(mod.wearer, span_notice("[src] protects you from the damage!"))
+	return COMPONENT_NO_Z_DAMAGE
+
+/obj/item/mod/module/thermal_regulator
+	name = "MOD thermal regulator module"
+	desc = "A module that lets you set a temperature to keep your body at."
+	module_type = MODULE_TOGGLE
+	complexity = 2
+	active_power_cost = 5
+	incompatible_modules = list(/obj/item/mod/module/thermal_regulator)
+	cooldown_time = 0.5 SECONDS
+	var/temperature_setting = BODYTEMP_NORMAL
+	var/min_temp = 293.15
+	var/max_temp = 318.15
+
+/obj/item/mod/module/thermal_regulator/get_configuration()
+	. = ..()
+	.["temperature_setting"] = add_ui_configuration("Temperature", "number", temperature_setting - T0C)
+
+/obj/item/mod/module/thermal_regulator/configure_edit(key, value)
+	switch(key)
+		if("temperature_setting")
+			temperature_setting = clamp(value + T0C, min_temp, max_temp)
+
+/obj/item/mod/module/thermal_regulator/on_process(delta_time)
+	. = ..()
+	if(!.)
+		return
+	mod.wearer.adjust_bodytemperature(get_temp_change_amount((temperature_setting - mod.wearer.bodytemperature), 0.08 * delta_time))
+
+/obj/item/mod/module/injector
+	name = "MOD injector module"
+	desc = "A module that extends a piercing injector."
+	module_type = MODULE_ACTIVE
+	complexity = 1
+	use_power_cost = 20
+	device = /obj/item/reagent_containers/syringe/mod
+	incompatible_modules = list(/obj/item/mod/module/injector)
+	cooldown_time = 0.5 SECONDS
+
+/obj/item/reagent_containers/syringe/mod
+	name = "MOD injector syringe"
+	desc = "A piercing injector fitting in a MODsuit."
+	icon_state = "mod_0"
+	base_icon_state = "mod"
+	amount_per_transfer_from_this = 30
+	possible_transfer_amounts = list(5, 10, 15, 20, 30)
+	volume = 30
+	inject_flags = INJECT_CHECK_PENETRATE_THICK
+
+/obj/item/mod/module/circuit
+	name = "MOD circuit adapter module"
+	desc = "A module that adapts an integrated circuit to a MODsuit."
+	complexity = 3
+	idle_power_cost = 5
+	incompatible_modules = list(/obj/item/mod/module/circuit)
+
+/obj/item/mod/module/circuit/Initialize()
+	. = ..()
+	AddComponent(/datum/component/shell, list(
+		new /obj/item/circuit_component/modsuit()
+	), SHELL_CAPACITY_LARGE)
+
+/obj/item/circuit_component/modsuit
