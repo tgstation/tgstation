@@ -22,8 +22,6 @@
 	var/max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	/// Max cold protection shared across the MOD pieces.
 	var/min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	/// Gas transfer shared across the MOD pieces.
-	var/gas_transfer_coefficient = 0.01
 	/// Permeability shared across the MOD pieces.
 	var/permeability_coefficient = 0.01
 	/// Siemens shared across the MOD pieces.

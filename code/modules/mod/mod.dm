@@ -19,7 +19,6 @@
 	resistance_flags = NONE
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.5
 	alternate_worn_layer = BODY_FRONT_LAYER
@@ -117,7 +116,6 @@
 		piece.resistance_flags = theme.resistance_flags
 		piece.max_heat_protection_temperature = theme.max_heat_protection_temperature
 		piece.min_cold_protection_temperature = theme.min_cold_protection_temperature
-		piece.gas_transfer_coefficient = theme.gas_transfer_coefficient
 		piece.permeability_coefficient = theme.permeability_coefficient
 		piece.siemens_coefficient = theme.siemens_coefficient
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
