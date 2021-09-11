@@ -5,14 +5,12 @@
 	icon_state = "bloodpack"
 	volume = 200
 	var/blood_type = null
-	var/blood_type_label = null
 	var/unique_blood = null
 	var/labelled = FALSE
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 
 /obj/item/reagent_containers/blood/Initialize()
 	. = ..()
-	blood_type_label = blood_type
 	if(blood_type != null)
 		reagents.add_reagent(unique_blood ? unique_blood : /datum/reagent/blood, 200, list("viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
 		update_appearance()
@@ -22,7 +20,7 @@
 	var/datum/reagent/blood/B = holder.has_reagent(/datum/reagent/blood)
 	if(B && B.data && B.data["blood_type"])
 		blood_type = B.data["blood_type"]
-	else
+	else if(!unique_blood)
 		blood_type = null
 	return ..()
 
@@ -30,7 +28,7 @@
 	. = ..()
 	if(labelled)
 		return
-	name = "blood pack[blood_type_label ? " - [blood_type_label]" : null]"
+	name = "blood pack[blood_type ? " - [blood_type]" : null]"
 
 /obj/item/reagent_containers/blood/random
 	icon_state = "random_bloodpack"
@@ -68,19 +66,20 @@
 /obj/item/reagent_containers/blood/universal
 	blood_type = "U"
 
-/obj/item/reagent_containers/blood/attackby(obj/item/I, mob/user, params)
-	if (istype(I, /obj/item/pen) || istype(I, /obj/item/toy/crayon))
+/obj/item/reagent_containers/blood/attackby(obj/item/tool, mob/user, params)
+	if (istype(tool, /obj/item/pen) || istype(tool, /obj/item/toy/crayon))
 		if(!user.is_literate())
 			to_chat(user, span_notice("You scribble illegibly on the label of [src]!"))
 			return
-		var/t = stripped_input(user, "What would you like to label the blood pack?", name, null, 53)
+		var/custom_label = stripped_input(user, "What would you like to label the blood pack?", name, null, 53)
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
-		if(user.get_active_held_item() != I)
+		if(user.get_active_held_item() != tool)
 			return
-		if(t)
+		if(custom_label)
 			labelled = TRUE
-			name = "blood pack - [t]"
+			name = "blood pack - [custom_label]"
+			balloon_alert(user, "new label set")
 		else
 			labelled = FALSE
 			update_name()
