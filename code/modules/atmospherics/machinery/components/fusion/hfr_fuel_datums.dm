@@ -79,7 +79,6 @@ GLOBAL_LIST_INIT(hfr_fuels_list, hfr_fuels_create_list())
 	secondary_products = list(/datum/gas/helium, /datum/gas/plasma, /datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/bz, /datum/gas/hypernoblium)
 	meltdown_flags = HYPERTORUS_FLAG_BASE_EXPLOSION | HYPERTORUS_FLAG_RADIATION_PULSE | HYPERTORUS_FLAG_MEDIUM_SPREAD
 
-
 /datum/hfr_fuel/hydrogen_tritium_fuel
 	id = "h2_t2_fuel"
 	name = "Hydrogen + Tritium fuel"
@@ -93,7 +92,6 @@ GLOBAL_LIST_INIT(hfr_fuels_list, hfr_fuels_create_list())
 	primary_products = list(/datum/gas/helium)
 	secondary_products = list(/datum/gas/helium, /datum/gas/plasma, /datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/bz, /datum/gas/hypernoblium)
 	meltdown_flags = HYPERTORUS_FLAG_MEDIUM_EXPLOSION | HYPERTORUS_FLAG_RADIATION_PULSE | HYPERTORUS_FLAG_EMP | HYPERTORUS_FLAG_MEDIUM_SPREAD
-
 
 /datum/hfr_fuel/hypernob_hydrogen_fuel
 	id = "hypernob_hydrogen_fuel"
