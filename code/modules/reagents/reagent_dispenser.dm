@@ -328,7 +328,7 @@
 		var/obj/item/storage/bag/plants/PB = W
 		for(var/obj/item/G in PB.contents)// This check can be less than thorough because the bag has already authenticated the contents, hopefully
 			if(SEND_SIGNAL(PB, COMSIG_TRY_STORAGE_TAKE, G, src))
-				to_chat(user, "<span class='info'>You empty the [PB] into the [src].</span>")
+				to_chat(user, span_notice("You empty [PB] into [src]."))
 				playsound(loc, 'sound/effects/blobattack.ogg', 25, 1, -1)
 				process_compost()
 
