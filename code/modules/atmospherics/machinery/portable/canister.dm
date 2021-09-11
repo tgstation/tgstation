@@ -675,7 +675,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 				logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting a transfer into \the [holding || "air"].<br>"
 				if(!holding)
 					var/list/danger = list()
-					///list for logging all gases in canister
+					//list for logging all gases in canister
 					var/list/gaseslog = list()		
 					for(var/id in air_contents.gases)
 						var/gas = air_contents.gases[id]
@@ -684,12 +684,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 							continue
 						if(gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE)) //if moles_visible is undefined, default to default visibility
 							danger[gas[GAS_META][META_GAS_NAME]] = gas[MOLES] //ex. "plasma" = 20
-					/**
-					* just works better to use danger
-					* list as a test for admin alerts
-					*/
-					///alert + log path
-					///end of loop counter var
+					//end of loop counter var
 					var/n = 0
 					if(danger)
 						message_admins("[ADMIN_LOOKUPFLW(usr)] opened a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:")
