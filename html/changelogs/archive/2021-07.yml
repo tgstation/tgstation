@@ -796,14 +796,138 @@
 2021-07-27:
   Domitius:
   - bugfix: One spraycan can no longer colour every light on the station.
+  Fikou:
+  - code_imp: bless aware hud is no longer hardcoded for chaplains
+  Ghommie:
+  - bugfix: Sentient monkeys are no longer subsceptible to being knocked over by mobs
+      in their way.
+  JohnFulpWillard:
+  - bugfix: Zombies no longer get permanently hungry.
+  Mothblocks:
+  - rscadd: Added brain-computer interface circuit shells.
   Nari Harimoto:
   - bugfix: AI can now no longer be pushed even when anchored, only when dead or unanchored
       can it be pushed (grab a dead core to swap places)
   - bugfix: borgs can now no longer be pushed when in combat mode and alive, you will
       always swap places with dead borg corpses.
+  PositiveEntropy, tf-4:
+  - imageadd: Thanks to a collaboration between the frontier sector and the core sector,
+      the parade jackets now boast new and varied apperances for all to enjoy, with
+      a new parade jacket releasing for the Head of Security!
+  - imageadd: In no short effort than the finest of tailors, the captain's hat, the
+      centcom hat, the captain's jumpsuit and the captain's carapace now have finer
+      gold trims and the finest quality leather available, making them more vibrant
+      for all!
+  - expansion: To utilize the new variants, simply alt-click a parade jacket, or a
+      centcom commander coat. You can also obtain a Head of Security parade jacket
+      by simply accessing the Head of Security's closet!
+  TheSmallBlue:
+  - expansion: Adds the pathfinding component.
+  Thunder12345:
+  - code_imp: Killed the miscellaneous items file!
   Wallem:
   - bugfix: Only foods which are created at mapload require player interaction in
       order to decompose.
+  Wayland-Smithy:
+  - spellcheck: Made the Doppler Array explosive sale message less wordy.
+  - bugfix: Fixed Chat Highlighting working on your own Binary messages.
+  dragomagol:
+  - bugfix: lavaland syndie base and seed vault no longer explode into green tiles
+  timothymtorres:
+  - expansion: Added xeno plasma statue
+  tralezab:
+  - spellcheck: Tiger Cooperative Traitors now have a slightly better uplink information
+      flavor text
+  - code_imp: killed the global vars misc file!
+2021-07-28:
+  Cyberboss:
+  - bugfix: Fixed APC's using extreme amounts of power instantly
+  EuSouAFazer:
+  - expansion: Kilostation Medbay's solar now starts with a Space Carp that cannot
+      destroy stuff.
+  - expansion: Kilostation Security's solar now doesn't have a solar computer, instead
+      having an empty computer frame and the circuitboard nearby. There is also 2
+      glass nearby as well.
+  - expansion: Kilostation Engineering's solar now starts partially built, with a
+      box with assembly and glass nearby.
+  Fikou:
+  - bugfix: the elite syndie suit now has the proper icons on its first equip
+  Guestify:
+  - bugfix: Replaces security newscasters with non security ones in non security rooms
+      on Tramstation
+  Kylerace:
+  - balance: tram is now twice as fast, pray it doesnt get faster
+  Wayland-Smithy:
+  - qol: Poll Candidates alerts no longer steal window focus, like ghost role rolls
+      and cult leadership votes.
+  - code_imp: Added an autofocus argument to tgui_alert, defaults on, that can be
+      used to prevent accidental inputs from surprise alerts when used.
+  ZephyrTFA:
+  - bugfix: Rust Heretics can once again benefit from rust
+  aaaa1023:
+  - bugfix: Removes stray coldroom area tile in cryogenics, medbay central tiles under
+      medical and snaking chapel office line on chapel walls on Metastation.
+  timothymtorres:
+  - bugfix: Fixed wallets not granting access for ID cards inside them.
+  timothymtorres, SomeoneYouProbablyKnow:
+  - expansion: Added a referee costume to autodrope and costume spawners
+  - imageadd: Added referee costume
+2021-07-29:
+  EuSouAFazer:
+  - bugfix: Removed the duplicate QM stamp on Icebox
+  Fikou:
+  - admin: default instakill rifle doesnt delete itself
+  Ghilker:
+  - bugfix: HFR now properly take damage when overfilled with fuel
+  Ghommie:
+  - bugfix: Fixes ridden skateboards crashing back-to-back when bumping a dense atom
+      while another is behind them.
+  Greniza:
+  - bugfix: prisoner transport bags can now be cinched properly
+  - bugfix: syndicate prisoner transport bags now expel the expected amount of gas
+      due to an occupant's exhale
+  - spellcheck: makes cinching a PTB have proper pronouns according to an onlooker
+  Improvedname:
+  - balance: Construction bags fit once more in your pockets
+  Itseasytosee:
+  - qol: ghosts will no longer get fake virus alerts
+  Melbert:
+  - bugfix: Some things that wouldn't dispense themselves from smartfridges now will
+      properly give themselves up. Some examples include Roses, Nettles / Deathnettles,
+      and Salad of Edens.
+  - bugfix: The mapped sprite for GAGS Lizard Plushes works, now. Mappers rejoice.
+  - admin: Tray planted kudzu will now log in investigate -> botany instead of its
+      own file.
+  Mey-Ha-Zah, Fikou:
+  - imageadd: new sprites for the ash walker egg
+  Mothblocks:
+  - rscdel: Nanites have been removed.
+  Shroopy:
+  - bugfix: robots now work properly
+  Thunder12345:
+  - code_imp: Removes all misc files/folders from the projectiles module
+  Wallem:
+  - bugfix: Flowers now have a Natrual Insecticide gene which protects them from decomposition
+      upon harvest.
+  Watermelon914:
+  - expansion: Adds the module duplicator that allows people to duplicate their module
+      components so that they don't have to recreate the entire code again.
+  - admin: Added the ability to save/load integrated circuits.
+  - bugfix: Fixed carps being given orders without a friend via radial menu.
+  - bugfix: Fixed sentient carps being unridable because of the ai datum.
+  - bugfix: Fixed the launchpad usb connection not working with null x/y offset inputs.
+  itseasytosee:
+  - soundadd: There are now sounds for adjusting the pressure on a pneumatic cannon.
+  - qol: attacking disembodied brains now has animations and sounds.
+  - bugfix: constructs examine text color matches the rest of their theme.
+  - qol: Your gun will now actually spin around in your hand while gun-spinning
+  - bugfix: Certain non-magic ranged weapons will no longer "appear to have a magic
+      crystal installed"
+  - qol: Adds some on examine instructions for constructing a turret
+  tf-4:
+  - qol: dash items like the ninja katana now give a balloon alert instead of a chat
+      message
+  - bugfix: Meta medbay now has all its areas set correctly
 2021-07-30:
   AlinaStarkova:
   - bugfix: Deltastations chapel disposals chute no longer chucks trash into departures
@@ -902,4 +1026,3 @@
   - bugfix: rev art now works correctly!
   wesoda25:
   - admin: Adds logging for cult reaching red eye and halo milestones
-  
