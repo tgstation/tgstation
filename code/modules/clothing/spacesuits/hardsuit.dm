@@ -1013,24 +1013,7 @@
 	allowed = null
 	armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 10, BIO = 100, RAD = 50, FIRE = 100, ACID = 100, WOUND = 15)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	/// How many charges total the shielding has
-	var/max_charges = 3
-	/// How long after we've been shot before we can start recharging.
-	var/recharge_delay = 20 SECONDS
-	/// How quickly the shield recharges each charge once it starts charging
-	var/recharge_rate = 1 SECONDS
-	/// How many charges are recovered on each recharge
-	var/recharge_amount = 1
-	/// Should the shield lose charges equal to the damage dealt by a hit?
-	var/lose_multiple_charges = FALSE
-	/// The icon for the shield
-	var/shield_icon = "shield-old"
-
-/obj/item/clothing/suit/space/hardsuit/shielded/Initialize()
-	. = ..()
-	if(!allowed)
-		allowed = GLOB.advanced_hardsuit_allowed
-	AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_delay, charge_increment_delay = recharge_rate, charge_recovery = recharge_amount, lose_multiple_charges = lose_multiple_charges, shield_icon = shield_icon)
+	has_shielding = TRUE
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded
 	resistance_flags = FIRE_PROOF | ACID_PROOF

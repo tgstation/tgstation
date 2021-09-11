@@ -62,6 +62,22 @@
 	/// A lazily initiated "food" version of the clothing for moths
 	var/obj/item/food/clothing/moth_snack
 
+	// For shielded clothing items
+	/// Does the clothing possess shielding
+	var/has_shielding = FALSE
+	/// How many charges total the shielding has
+	var/max_charges = 3
+	/// How long after we've been shot before we can start recharging.
+	var/recharge_delay = 20 SECONDS
+	/// How quickly the shield recharges each charge once it starts charging
+	var/recharge_rate = 1 SECONDS
+	/// How many charges are recovered on each recharge
+	var/recharge_amount = 1
+	/// Should the shield lose charges equal to the damage dealt by a hit?
+	var/lose_multiple_charges = FALSE
+	/// The icon for the shield
+	var/shield_icon = "shield-old"
+
 /obj/item/clothing/Initialize()
 	if((clothing_flags & VOICEBOX_TOGGLABLE))
 		actions_types += /datum/action/item_action/toggle_voice_box
@@ -73,6 +89,8 @@
 		LoadComponent(/datum/component/bloodysoles)
 	if(!icon_state)
 		item_flags |= ABSTRACT
+	if(has_shielding)
+		AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_delay, charge_increment_delay = recharge_rate, charge_recovery = recharge_amount, lose_multiple_charges = lose_multiple_charges, shield_icon = shield_icon)
 
 /obj/item/clothing/MouseDrop(atom/over_object)
 	. = ..()
