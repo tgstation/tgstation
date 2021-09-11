@@ -185,6 +185,6 @@
  */
 /datum/surgery_step/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE)
 	if(target.stat < UNCONSCIOUS)
-		to_chat(target, span_userdanger("[pain_message]"))
+		to_chat(target, span_userdanger(pain_message))
 		if(prob(30) && !mechanical_surgery)
 			target.emote("scream")
