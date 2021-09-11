@@ -1436,7 +1436,6 @@
 
 /// Called when something passes through a scanner gate shell
 #define COMSIG_SCANGATE_SHELL_PASS "scangate_shell_pass"
-	#define COMPONENT_SCANGATE_DENY_PASS (1<<0)
 
 // Merger datum signals
 /// Called on the object being added to a merger group: (datum/merger/new_merger)
