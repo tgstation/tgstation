@@ -3757,6 +3757,7 @@
 #include "code\modules\wiremod\components\action\soundemitter.dm"
 #include "code\modules\wiremod\components\action\speech.dm"
 #include "code\modules\wiremod\components\admin\getvar.dm"
+#include "code\modules\wiremod\components\admin\input_request.dm"
 #include "code\modules\wiremod\components\admin\proccall.dm"
 #include "code\modules\wiremod\components\admin\sdql.dm"
 #include "code\modules\wiremod\components\admin\setvar.dm"
