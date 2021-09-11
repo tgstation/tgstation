@@ -316,11 +316,11 @@ const SpeciesPageInner = (props: {
                 </Stack>
               </Stack.Item>
 
-              <Stack.Item>
+              {/* <Stack.Item>
                 <Section title="Lore">
                   {currentSpecies.lore}
                 </Section>
-              </Stack.Item>
+              </Stack.Item> */}
             </Stack>
           </Stack.Item>
         </Stack>
