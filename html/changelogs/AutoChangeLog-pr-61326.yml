@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes: 
-  - qol: "The analyzer was renamed to gas analyzer and it can be printed at the Engineering/Science protolathes now."

@@ -1,4 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes: 
-  - bugfix: "Full tile windows that have become opaque from being painted a dark color will now lose their opacity when repainted with a light enough color"

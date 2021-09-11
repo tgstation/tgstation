@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a small irregularity in the outline glow of the `p` of the character setup button when highligthed or pressed"
