@@ -6,6 +6,7 @@
 #define ACIDFLESH /datum/mutation/human/acidflesh
 #define ANTENNA /datum/mutation/human/antenna
 #define ANTIGLOWY /datum/mutation/human/glow/anti
+#define AUTONOMY /datum/mutation/human/self_amputation
 #define BADBLINK /datum/mutation/human/badblink
 #define BADSIGHT /datum/mutation/human/nearsight
 #define BIOTECHCOMPAT /datum/mutation/human/biotechcompat
@@ -37,9 +38,9 @@
 #define NERVOUS /datum/mutation/human/nervousness
 #define OLFACTION /datum/mutation/human/olfaction
 #define PARANOIA /datum/mutation/human/paranoia
+#define PIGLATIN /datum/mutation/human/piglatin
 #define RACEMUT /datum/mutation/human/race
 #define RADIOACTIVE /datum/mutation/human/radioactive
-#define AUTONOMY /datum/mutation/human/self_amputation
 #define SHOCKTOUCH /datum/mutation/human/shock
 #define SPACEMUT /datum/mutation/human/space_adaptation
 #define SPASTIC /datum/mutation/human/spastic

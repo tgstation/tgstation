@@ -26,14 +26,10 @@
 	variable_name.possible_options = null
 	return ..()
 
-/obj/item/circuit_component/getter/Initialize()
-	. = ..()
+/obj/item/circuit_component/getter/populate_ports()
 	value = add_output_port("Value", PORT_TYPE_ANY)
 
-/obj/item/circuit_component/getter/input_received(datum/port/input/port)
-	. = ..()
-	// We don't care much about the parent's return value. We only care if the parent exists
-	// since this should never really fail.
+/obj/item/circuit_component/getter/pre_input_received(datum/port/input/port)
 	if(!parent)
 		return
 

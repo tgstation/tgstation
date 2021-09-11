@@ -17,8 +17,7 @@
 
 	var/overlay_limit = 10
 
-/obj/item/circuit_component/object_overlay/bar/Initialize()
-	. = ..()
+/obj/item/circuit_component/object_overlay/bar/populate_ports()
 	bar_number = add_input_port("Number", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/object_overlay/bar/populate_options()

@@ -22,8 +22,7 @@
 	var/list/numbers = list()
 	var/counter_appearance
 
-/obj/item/circuit_component/counter_overlay/Initialize()
-	. = ..()
+/obj/item/circuit_component/counter_overlay/populate_ports()
 	counter_number = add_input_port("Displayed Number", PORT_TYPE_NUMBER)
 
 	signal_update = add_input_port("Update Overlay", PORT_TYPE_SIGNAL)
@@ -44,9 +43,7 @@
 	UnregisterSignal(shell, COMSIG_ORGAN_REMOVED)
 
 /obj/item/circuit_component/counter_overlay/input_received(datum/port/input/port)
-	. = ..()
-
-	if(. || !bci)
+	if(!bci)
 		return
 
 	var/mob/living/owner = bci.owner

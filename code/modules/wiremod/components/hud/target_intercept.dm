@@ -16,8 +16,7 @@
 	var/obj/item/organ/cyberimp/bci/bci
 	var/intercept_cooldown = 1 SECONDS
 
-/obj/item/circuit_component/target_intercept/Initialize()
-	. = ..()
+/obj/item/circuit_component/target_intercept/populate_ports()
 	trigger_input = add_input_port("Activate", PORT_TYPE_SIGNAL)
 	trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL)
 	clicked_atom = add_output_port("Targeted Object", PORT_TYPE_ATOM)
@@ -32,9 +31,7 @@
 	UnregisterSignal(shell, COMSIG_ORGAN_REMOVED)
 
 /obj/item/circuit_component/target_intercept/input_received(datum/port/input/port)
-	. = ..()
-
-	if(. || !bci)
+	if(!bci)
 		return
 
 	var/mob/living/owner = bci.owner

@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Outgoing comms console messages to allied stations will not be shown again as incoming messages."

@@ -89,7 +89,7 @@
 		to_chat(quirk_holder, lose_text)
 
 	if(mob_trait)
-		REMOVE_TRAIT(quirk_holder, mob_trait, ROUNDSTART_TRAIT)
+		REMOVE_TRAIT(quirk_holder, mob_trait, QUIRK_TRAIT)
 
 	if(processing_quirk)
 		STOP_PROCESSING(SSquirks, src)
