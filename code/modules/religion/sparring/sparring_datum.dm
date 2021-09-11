@@ -91,14 +91,14 @@
 	SIGNAL_HANDLER
 	if(attacker == chaplain || attacker == opponent)
 		return
-	flub(attacker)
+	INVOKE_ASYNC(src, .proc/flub, attacker)
 
 /datum/sparring_match/proc/hulk_interference(datum/source, mob/attacker)
 	SIGNAL_HANDLER
 	if((attacker == chaplain || attacker == opponent))
 		// fist fighting a hulk is so dumb. i can't fathom why you would do this.
 		return
-	flub(attacker)
+	INVOKE_ASYNC(src, .proc/flub, attacker)
 
 /datum/sparring_match/proc/hand_interference(datum/source, mob/living/attacker)
 	SIGNAL_HANDLER
@@ -106,7 +106,7 @@
 		//you can pretty much always use fists as a participant
 		return
 
-	flub(attacker)
+	INVOKE_ASYNC(src, .proc/flub, attacker)
 
 /datum/sparring_match/proc/paw_interference(datum/source, mob/living/attacker)
 	SIGNAL_HANDLER
@@ -115,7 +115,7 @@
 		//you can pretty much always use paws as a participant
 		return
 
-	flub(attacker)
+	INVOKE_ASYNC(src, .proc/flub, attacker)
 
 /datum/sparring_match/proc/thrown_interference(datum/source, atom/movable/thrown_movable, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
@@ -124,7 +124,7 @@
 		var/obj/item/thrown_item = thrown_movable
 		var/mob/thrown_by = thrown_item.thrownby?.resolve()
 		if(thrown_item.throwforce < honorbound.health && ishuman(thrown_by))
-			flub(thrown_by)
+			INVOKE_ASYNC(src, .proc/flub, thrown_by)
 
 /datum/sparring_match/proc/projectile_interference(datum/participant, obj/projectile/proj)
 	SIGNAL_HANDLER
@@ -134,7 +134,7 @@
 	var/mob/living/interfering
 	if(isliving(proj.firer))
 		interfering = proj.firer
-	flub(interfering)
+	INVOKE_ASYNC(src, .proc/flub, interfering)
 
 ///someone randomly fucking died
 /datum/sparring_match/proc/death_flub(datum/deceased)
