@@ -11,6 +11,19 @@
 
 	data[CHOICED_PREFERENCE_DISPLAY_NAMES] = GLOB.skin_tone_names
 
+	var/list/to_hex = list()
+	for (var/choice in get_choices())
+		var/hex_value = skintone2hex(choice)
+		var/list/rgb = hex2rgb("#[hex_value]")
+		var/list/hsl = rgb2hsl(rgb[1], rgb[2], rgb[3])
+
+		to_hex[choice] = list(
+			"lightness" = hsl[3],
+			"value" = hex_value,
+		)
+
+	data["to_hex"] = to_hex
+
 	return data
 
 /datum/preference/choiced/skin_tone/apply_to_human(mob/living/carbon/human/target, value)

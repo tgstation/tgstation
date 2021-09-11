@@ -4,6 +4,7 @@ import { ComponentType, createComponentVNode, InfernoNode } from "inferno";
 import { VNodeFlags } from "inferno-vnode-flags";
 import { sendAct, useLocalState } from "../../../../backend";
 import { Box, Button, Dropdown, NumberInput, Stack } from "../../../../components";
+import { logger } from "../../../../logging";
 import { createSetPreference } from "../../data";
 import { ServerPreferencesFetcher } from "../../ServerPreferencesFetcher";
 
@@ -146,6 +147,39 @@ const capitalizeFirstLetter = (text: string) => (
   text.toString().charAt(0).toUpperCase() + text.toString().slice(1)
 );
 
+export const StandardizedDropdown = (props: {
+  choices: string[],
+  disabled?: boolean,
+  displayNames: Record<string, InfernoNode>,
+  onSetValue: (newValue: string) => void,
+  value: string,
+}) => {
+  const {
+    choices,
+    disabled,
+    displayNames,
+    onSetValue,
+    value,
+  } = props;
+
+  return (<Dropdown
+    disabled={disabled}
+    selected={value}
+    onSelected={onSetValue}
+    width="100%"
+    displayText={displayNames[value]}
+    options={
+      choices
+        .map(choice => {
+          return {
+            displayText: displayNames[choice],
+            value: choice,
+          };
+        })
+    }
+  />);
+};
+
 export const FeatureDropdownInput = (
   props: FeatureValueProps<string, string, FeatureChoicedServerData> & {
     disabled?: boolean,
@@ -161,23 +195,20 @@ export const FeatureDropdownInput = (
       serverData.choices.map(choice => [choice, capitalizeFirstLetter(choice)])
     );
 
-  return (<Dropdown
+  return (<StandardizedDropdown
+    choices={sortStrings(serverData.choices)}
     disabled={props.disabled}
-    selected={props.value}
-    onSelected={props.handleSetValue}
-    width="100%"
-    displayText={displayNames[props.value]}
-    options={
-      sortStrings(serverData.choices)
-        .map(choice => {
-          return {
-            displayText: displayNames[choice],
-            value: choice,
-          };
-        })
-    }
+    displayNames={displayNames}
+    onSetValue={props.handleSetValue}
+    value={props.value}
   />);
 };
+
+export type FeatureWithIcons<T> = Feature<
+  { value: T },
+  T,
+  FeatureChoicedServerData
+>;
 
 export const FeatureIconnedDropdownInput = (
   props: FeatureValueProps<{
@@ -191,50 +222,44 @@ export const FeatureIconnedDropdownInput = (
 
   const icons = serverData.icons;
 
-  const displayNames = serverData.display_names
+  const textNames = serverData.display_names
     || Object.fromEntries(
-      serverData.choices.map(choice => {
-        let element: InfernoNode = capitalizeFirstLetter(choice);
-
-        if (icons && icons[choice]) {
-          const icon = icons[choice];
-          element = (
-            <Stack>
-              <Stack.Item>
-                <Box className={classes([
-                  "preferences32x32",
-                  icon,
-                ])} style={{
-                  "transform": "scale(0.8)",
-                }} />
-              </Stack.Item>
-
-              <Stack.Item grow>
-                {element}
-              </Stack.Item>
-            </Stack>
-          );
-        }
-
-        return [choice, element];
-      })
+      serverData.choices.map(choice => [choice, capitalizeFirstLetter(choice)])
     );
 
-  return (<Dropdown
-    clipSelectedText={false}
-    selected={props.value}
-    onSelected={props.handleSetValue}
-    width="100%"
-    displayText={displayNames[props.value.value]}
-    options={
-      sortStrings(serverData.choices)
-        .map(choice => {
-          return {
-            displayText: displayNames[choice],
-            value: choice,
-          };
-        })
-    }
+  const displayNames = Object.fromEntries(
+    Object.entries(textNames).map(([choice, textName]) => {
+      let element: InfernoNode = textName;
+
+      if (icons && icons[choice]) {
+        const icon = icons[choice];
+        element = (
+          <Stack>
+            <Stack.Item>
+              <Box className={classes([
+                "preferences32x32",
+                icon,
+              ])} style={{
+                "transform": "scale(0.8)",
+              }} />
+            </Stack.Item>
+
+            <Stack.Item grow>
+              {element}
+            </Stack.Item>
+          </Stack>
+        );
+      }
+
+      return [choice, element];
+    })
+  );
+
+  return (<StandardizedDropdown
+    choices={sortStrings(serverData.choices)}
+    displayNames={displayNames}
+    onSetValue={props.handleSetValue}
+    value={props.value.value}
   />);
 };
 

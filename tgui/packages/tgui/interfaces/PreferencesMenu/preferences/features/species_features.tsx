@@ -45,11 +45,6 @@ export const feature_mcolor: Feature<string> = {
   component: FeatureColorInput,
 };
 
-export const skin_tone: Feature<string> = {
-  name: "Skin tone",
-  component: FeatureDropdownInput,
-};
-
 export const underwear_color: Feature<string> = {
   name: "Underwear color",
   component: FeatureColorInput,
