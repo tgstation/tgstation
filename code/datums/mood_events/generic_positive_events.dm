@@ -200,7 +200,7 @@
 
 /datum/mood_event/holy_consumption
 	description = "<span class='nicegreen'>Truly, that was the food of the Divine!</span>\n"
-	mood_change = 5
+	mood_change = 1 // 1 + 5 from it being liked food makes it as good as jolly
 	timeout = 3 MINUTES
 
 /datum/mood_event/high_five

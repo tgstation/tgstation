@@ -76,18 +76,7 @@
 	if(!icon_harvest && !get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism) && yield != -1)
 		icon_harvest = "[species]-harvest"
 
-	if(!nogenes) // not used on Copy()
-		genes += new /datum/plant_gene/core/lifespan(lifespan)
-		genes += new /datum/plant_gene/core/endurance(endurance)
-		genes += new /datum/plant_gene/core/weed_rate(weed_rate)
-		genes += new /datum/plant_gene/core/weed_chance(weed_chance)
-		if(yield != -1)
-			genes += new /datum/plant_gene/core/yield(yield)
-			genes += new /datum/plant_gene/core/production(production)
-		if(potency != -1)
-			genes += new /datum/plant_gene/core/potency(potency)
-			genes += new /datum/plant_gene/core/instability(instability)
-
+	if(!nogenes)
 		for(var/plant_gene in genes)
 			if(ispath(plant_gene))
 				genes -= plant_gene
@@ -315,59 +304,47 @@
  * Adjusts seed yield up or down according to adjustamt. (Max 10)
  */
 /obj/item/seeds/proc/adjust_yield(adjustamt)
-	if(yield != -1) // Unharvestable shouldn't suddenly turn harvestable
-		/// Our plant's max yield
-		var/max_yield = MAX_PLANT_YIELD
-		for(var/datum/plant_gene/trait/trait in genes)
-			if(trait.trait_flags & TRAIT_HALVES_YIELD)
-				max_yield = round(max_yield/2)
-				break
+	if(yield == -1) // Unharvestable shouldn't suddenly turn harvestable
+		return
 
-		yield = clamp(yield + adjustamt, 0, max_yield)
+	var/max_yield = MAX_PLANT_YIELD
+	var/min_yield = 0
+	for(var/datum/plant_gene/trait/trait in genes)
+		if(trait.trait_flags & TRAIT_HALVES_YIELD)
+			max_yield = round(max_yield/2)
+			break
+	if(get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
+		min_yield = FUNGAL_METAB_YIELD_MIN
 
-		if(yield <= 0 && get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
-			yield = FUNGAL_METAB_YIELD_MIN // Mushrooms always have a minimum yield.
-		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/yield)
-		if(C)
-			C.value = yield
+	yield = clamp(yield + adjustamt, min_yield, max_yield)
 
 /**
  * Adjusts seed lifespan up or down according to adjustamt. (Max 100)
  */
 /obj/item/seeds/proc/adjust_lifespan(adjustamt)
 	lifespan = clamp(lifespan + adjustamt, 10, MAX_PLANT_LIFESPAN)
-	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/lifespan)
-	if(C)
-		C.value = lifespan
 
 /**
  * Adjusts seed endurance up or down according to adjustamt. (Max 100)
  */
 /obj/item/seeds/proc/adjust_endurance(adjustamt)
 	endurance = clamp(endurance + adjustamt, MIN_PLANT_ENDURANCE, MAX_PLANT_ENDURANCE)
-	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/endurance)
-	if(C)
-		C.value = endurance
 
 /**
  * Adjusts seed production seed up or down according to adjustamt. (Max 10)
  */
 /obj/item/seeds/proc/adjust_production(adjustamt)
-	if(yield != -1)
-		production = clamp(production + adjustamt, 1, MAX_PLANT_PRODUCTION)
-		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/production)
-		if(C)
-			C.value = production
+	if(yield == -1)
+		return
+	production = clamp(production + adjustamt, 1, MAX_PLANT_PRODUCTION)
 
 /**
  * Adjusts seed potency up or down according to adjustamt. (Max 100)
  */
 /obj/item/seeds/proc/adjust_potency(adjustamt)
-	if(potency != -1)
-		potency = clamp(potency + adjustamt, 0, MAX_PLANT_POTENCY)
-		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
-		if(C)
-			C.value = potency
+	if(potency == -1)
+		return
+	potency = clamp(potency + adjustamt, 0, MAX_PLANT_POTENCY)
 
 /**
  * Adjusts seed instability up or down according to adjustamt. (Max 100)
@@ -376,27 +353,18 @@
 	if(instability == -1)
 		return
 	instability = clamp(instability + adjustamt, 0, MAX_PLANT_INSTABILITY)
-	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/instability)
-	if(C)
-		C.value = instability
 
 /**
  * Adjusts seed weed grwoth speed up or down according to adjustamt. (Max 10)
  */
 /obj/item/seeds/proc/adjust_weed_rate(adjustamt)
 	weed_rate = clamp(weed_rate + adjustamt, 0, MAX_PLANT_WEEDRATE)
-	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_rate)
-	if(C)
-		C.value = weed_rate
 
 /**
  * Adjusts seed weed chance up or down according to adjustamt. (Max 67%)
  */
 /obj/item/seeds/proc/adjust_weed_chance(adjustamt)
 	weed_chance = clamp(weed_chance + adjustamt, 0, MAX_PLANT_WEEDCHANCE)
-	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_chance)
-	if(C)
-		C.value = weed_chance
 
 //Directly setting stats
 
@@ -404,59 +372,47 @@
  * Sets the plant's yield stat to the value of adjustamt. (Max 10, or 5 with some traits)
  */
 /obj/item/seeds/proc/set_yield(adjustamt)
-	if(yield != -1) // Unharvestable shouldn't suddenly turn harvestable
-		/// Our plant's max yield
-		var/max_yield = MAX_PLANT_YIELD
-		for(var/datum/plant_gene/trait/trait in genes)
-			if(trait.trait_flags & TRAIT_HALVES_YIELD)
-				max_yield = round(max_yield/2)
-				break
+	if(yield == -1) // Unharvestable shouldn't suddenly turn harvestable
+		return
 
-		yield = clamp(adjustamt, 0, max_yield)
+	var/max_yield = MAX_PLANT_YIELD
+	var/min_yield = 0
+	for(var/datum/plant_gene/trait/trait in genes)
+		if(trait.trait_flags & TRAIT_HALVES_YIELD)
+			max_yield = round(max_yield/2)
+			break
+	if(get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
+		min_yield = FUNGAL_METAB_YIELD_MIN
 
-		if(yield <= 0 && get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
-			yield = FUNGAL_METAB_YIELD_MIN // Mushrooms always have a minimum yield.
-		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/yield)
-		if(C)
-			C.value = yield
+	yield = clamp(adjustamt, min_yield, max_yield)
 
 /**
  * Sets the plant's lifespan stat to the value of adjustamt. (Max 100)
  */
 /obj/item/seeds/proc/set_lifespan(adjustamt)
 	lifespan = clamp(adjustamt, 10, MAX_PLANT_LIFESPAN)
-	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/lifespan)
-	if(C)
-		C.value = lifespan
 
 /**
  * Sets the plant's endurance stat to the value of adjustamt. (Max 100)
  */
 /obj/item/seeds/proc/set_endurance(adjustamt)
 	endurance = clamp(adjustamt, MIN_PLANT_ENDURANCE, MAX_PLANT_ENDURANCE)
-	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/endurance)
-	if(C)
-		C.value = endurance
 
 /**
  * Sets the plant's production stat to the value of adjustamt. (Max 10)
  */
 /obj/item/seeds/proc/set_production(adjustamt)
-	if(yield != -1)
-		production = clamp(adjustamt, 1, MAX_PLANT_PRODUCTION)
-		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/production)
-		if(C)
-			C.value = production
+	if(yield == -1)
+		return
+	production = clamp(adjustamt, 1, MAX_PLANT_PRODUCTION)
 
 /**
  * Sets the plant's potency stat to the value of adjustamt. (Max 100)
  */
 /obj/item/seeds/proc/set_potency(adjustamt)
-	if(potency != -1)
-		potency = clamp(adjustamt, 0, MAX_PLANT_POTENCY)
-		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
-		if(C)
-			C.value = potency
+	if(potency == -1)
+		return
+	potency = clamp(adjustamt, 0, MAX_PLANT_POTENCY)
 
 /**
  * Sets the plant's instability stat to the value of adjustamt. (Max 100)
@@ -465,27 +421,18 @@
 	if(instability == -1)
 		return
 	instability = clamp(adjustamt, 0, MAX_PLANT_INSTABILITY)
-	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/instability)
-	if(C)
-		C.value = instability
 
 /**
  * Sets the plant's weed production rate to the value of adjustamt. (Max 10)
  */
 /obj/item/seeds/proc/set_weed_rate(adjustamt)
 	weed_rate = clamp(adjustamt, 0, MAX_PLANT_WEEDRATE)
-	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_rate)
-	if(C)
-		C.value = weed_rate
 
 /**
  * Sets the plant's weed growth percentage to the value of adjustamt. (Max 67%)
  */
 /obj/item/seeds/proc/set_weed_chance(adjustamt)
 	weed_chance = clamp(adjustamt, 0, MAX_PLANT_WEEDCHANCE)
-	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_chance)
-	if(C)
-		C.value = weed_chance
 
 /**
  * Override for seeds with unique text for their analyzer. (No newlines at the start or end of unique text!)

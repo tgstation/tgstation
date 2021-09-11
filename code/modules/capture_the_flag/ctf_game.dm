@@ -51,6 +51,7 @@
 
 /obj/item/ctf/proc/reset_flag(capture = FALSE)
 	SIGNAL_HANDLER
+	STOP_PROCESSING(SSobj, src)
 
 	var/turf/our_turf = get_turf(src.reset)
 	if(!our_turf)
@@ -61,7 +62,6 @@
 		if(istype(mob_area, game_area))
 			if(!capture)
 				to_chat(M, span_userdanger("[src] has been returned to the base!"))
-	STOP_PROCESSING(SSobj, src)
 	return TRUE //so if called by a signal, it doesn't delete
 
 //working with attack hand feels like taking my brain and putting it through an industrial pill press so i'm gonna be a bit liberal with the comments
@@ -231,9 +231,17 @@
 	var/static/list/people_who_want_to_play = list()
 	var/game_area = /area/ctf
 
+	/// This variable is needed because of ctf shitcode + we need to make sure we're deleting the current ctf landmark that spawned us in and not a new one.
+	var/obj/effect/landmark/ctf/ctf_landmark
+
 /obj/machinery/capture_the_flag/Initialize()
 	. = ..()
 	AddElement(/datum/element/point_of_interest)
+	ctf_landmark = GLOB.ctf_spawner
+
+/obj/machinery/capture_the_flag/Destroy()
+	ctf_landmark = null
+	return ..()
 
 /obj/machinery/capture_the_flag/process(delta_time)
 	for(var/i in spawned_mobs)
@@ -452,25 +460,12 @@
 
 	notify_ghosts("[name] has been activated!", source = src, action=NOTIFY_ORBIT, header = "CTF has been activated")
 
-	if(!arena_reset)
-		reset_the_arena()
-		arena_reset = TRUE
-
 /obj/machinery/capture_the_flag/proc/reset_the_arena()
-	var/area/ctf_area = get_area(src)
-	var/static/list/ctf_object_typecache = typecacheof(list(
-				/obj/machinery,
-				/obj/effect/ctf,
-				/obj/item/ctf
-			))
-	for(var/atom/movable/area_movable in ctf_area)
-		if (ismob(area_movable))
-			continue
-		if(isstructure(area_movable))
-			var/obj/structure/ctf_structure = area_movable
-			ctf_structure.repair_damage(ctf_structure.max_integrity - ctf_structure.get_integrity())
-		else if(!is_type_in_typecache(area_movable, ctf_object_typecache))
-			qdel(area_movable)
+	if(!ctf_landmark)
+		return
+
+	if(ctf_landmark == GLOB.ctf_spawner)
+		new /obj/effect/landmark/ctf(get_turf(GLOB.ctf_spawner))
 
 
 /obj/machinery/capture_the_flag/proc/stop_ctf()
@@ -484,6 +479,7 @@
 	team_members.Cut()
 	spawned_mobs.Cut()
 	recently_dead_ckeys.Cut()
+	reset_the_arena()
 
 /obj/machinery/capture_the_flag/proc/instagib_mode()
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)

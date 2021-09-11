@@ -290,7 +290,9 @@ export const StripMenu = (props, context) => {
                   if (item === null) {
                     tooltip = slot.displayName;
                   } else if ("name" in item) {
-                    alternateAction = ALTERNATE_ACTIONS[item.alternate];
+                    if (item.alternate) {
+                      alternateAction = ALTERNATE_ACTIONS[item.alternate];
+                    }
 
                     content = (
                       <Box

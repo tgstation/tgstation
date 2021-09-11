@@ -111,8 +111,8 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/tdome/red,
 /obj/item/clothing/head/helmet/thunderdome,
-/obj/item/melee/baton/loaded,
-/obj/item/melee/transforming/energy/sword/saber/red,
+/obj/item/melee/baton/security/loaded,
+/obj/item/melee/energy/sword/saber/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -182,8 +182,8 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/tdome/green,
 /obj/item/clothing/head/helmet/thunderdome,
-/obj/item/melee/baton/loaded,
-/obj/item/melee/transforming/energy/sword/saber/green,
+/obj/item/melee/baton/security/loaded,
+/obj/item/melee/energy/sword/saber/green,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -5570,7 +5570,7 @@
 /area/syndicate_mothership/control)
 "tf" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = 5;
 	pixel_y = -2
 	},
@@ -5680,7 +5680,7 @@
 /area/syndicate_mothership/control)
 "tx" = (
 /obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /turf/open/floor/iron/grimy,
 /area/centcom/ferry)
 "ty" = (
@@ -6928,10 +6928,6 @@
 /obj/item/clothing/head/helmet/space/plasmaman,
 /turf/open/floor/wood,
 /area/centcom/holding)
-"wk" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/iron/dark,
-/area/centcom/supplypod)
 "wl" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood,
@@ -7389,7 +7385,7 @@
 /area/wizard_station)
 "xy" = (
 /obj/structure/table/wood/fancy,
-/obj/item/storage/pill_bottle/dice{
+/obj/item/storage/dice{
 	icon_state = "magicdicebag"
 	},
 /turf/open/floor/carpet,
@@ -7810,7 +7806,7 @@
 /turf/open/floor/grass,
 /area/wizard_station)
 "yM" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/structure/safe/floor,
 /obj/item/seeds/cherry/bomb,
 /turf/open/floor/wood,
@@ -12155,8 +12151,8 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/tdome/red,
 /obj/item/clothing/head/helmet/thunderdome,
-/obj/item/melee/baton/loaded,
-/obj/item/melee/transforming/energy/sword/saber/red,
+/obj/item/melee/baton/security/loaded,
+/obj/item/melee/energy/sword/saber/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -12279,8 +12275,8 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/tdome/green,
 /obj/item/clothing/head/helmet/thunderdome,
-/obj/item/melee/baton/loaded,
-/obj/item/melee/transforming/energy/sword/saber/green,
+/obj/item/melee/baton/security/loaded,
+/obj/item/melee/energy/sword/saber/green,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -14457,7 +14453,7 @@
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Tq" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/storage/toolbox/mechanical,
@@ -14497,7 +14493,7 @@
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "TK" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/structure/mirror/directional/north,
 /turf/open/floor/wood,
 /area/centcom/holding)
@@ -14879,10 +14875,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/one)
-"XK" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/iron,
-/area/centcom/supplypod)
 "XL" = (
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/wood,
@@ -14895,7 +14887,7 @@
 /area/centcom/holding)
 "XT" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
+/turf/open/floor/plating,
 /area/centcom/supplypod)
 "Ya" = (
 /obj/structure/table/wood,
@@ -64629,7 +64621,7 @@ Yn
 NE
 NE
 NE
-XK
+XT
 aa
 aa
 aa
@@ -64886,7 +64878,7 @@ Yn
 NE
 NE
 NE
-XK
+XT
 aa
 aa
 aa
@@ -65901,8 +65893,8 @@ Yn
 Yn
 Yn
 Yn
-wk
-wk
+XT
+XT
 Yn
 Yn
 Yn
@@ -66171,7 +66163,7 @@ Yn
 NE
 NE
 NE
-XK
+XT
 aa
 aa
 aa
@@ -66428,7 +66420,7 @@ Yn
 NE
 NE
 NE
-XK
+XT
 aa
 aa
 aa
@@ -67710,10 +67702,10 @@ Yn
 Yn
 Yn
 Yn
-XK
-XK
+XT
+XT
 Yn
-aa
+Yn
 aa
 aa
 aa

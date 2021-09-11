@@ -104,14 +104,6 @@
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 	update_icon()
 
-///Checks if the gases in the input are the ones needed by the recipe
-/obj/machinery/atmospherics/components/binary/crystallizer/proc/check_gas_requirements()
-	var/datum/gas_mixture/contents = airs[2]
-	for(var/gas_type in selected_recipe.requirements)
-		if(!contents.gases[gas_type] || !contents.gases[gas_type][MOLES])
-			return FALSE
-	return TRUE
-
 ///Checks if the reaction temperature is inside the range of temperature + a little deviation
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/check_temp_requirements()
 	if(internal.temperature >= selected_recipe.min_temp * MIN_DEVIATION_RATE && internal.temperature <= selected_recipe.max_temp * MAX_DEVIATION_RATE)
@@ -122,12 +114,18 @@
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/inject_gases()
 	var/datum/gas_mixture/contents = airs[2]
 	for(var/gas_type in selected_recipe.requirements)
+		if(!contents.gases[gas_type] || !contents.gases[gas_type][MOLES])
+			continue
+		if(internal.gases[gas_type] && internal.gases[gas_type][MOLES] >= selected_recipe.requirements[gas_type] * 2)
+			continue
 		internal.merge(contents.remove_specific(gas_type, contents.gases[gas_type][MOLES] * gas_input))
 
 ///Checks if the gases required are all inside
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/internal_check()
 	var/gas_check = 0
 	for(var/gas_type in selected_recipe.requirements)
+		if(!internal.gases[gas_type] || !internal.gases[gas_type][MOLES])
+			return FALSE
 		if(internal.gases[gas_type][MOLES] >= selected_recipe.requirements[gas_type])
 			gas_check++
 	if(gas_check == selected_recipe.requirements.len)
@@ -181,8 +179,7 @@
 	if(!on || !is_operational || selected_recipe == null)
 		return
 
-	if(check_gas_requirements())
-		inject_gases()
+	inject_gases()
 
 	if(!internal.total_moles())
 		return

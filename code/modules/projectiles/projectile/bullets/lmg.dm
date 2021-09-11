@@ -18,6 +18,9 @@
 /obj/projectile/bullet/manned_turret
 	damage = 20
 
+/obj/projectile/bullet/manned_turret/hmg
+	icon_state = "redtrac"
+
 /obj/projectile/bullet/syndicate_turret
 	damage = 20
 

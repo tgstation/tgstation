@@ -131,7 +131,7 @@ This file contains the cult dagger and rune list code
 	var/scribe_mod = initial(rune_to_scribe.scribe_delay)
 	if(istype(get_turf(user), /turf/open/floor/engine/cult) && !(ispath(rune_to_scribe, /obj/effect/rune/narsie)))
 		scribe_mod *= 0.5
-	if(!do_after(user, scribe_mod, target = get_turf(user)))
+	if(!do_after(user, scribe_mod, target = get_turf(user), timed_action_flags = IGNORE_SLOWDOWNS))
 		for(var/V in shields)
 			var/obj/structure/emergency_shield/cult/narsie/S = V
 			if(S && !QDELETED(S))

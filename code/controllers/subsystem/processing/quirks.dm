@@ -52,20 +52,23 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 /datum/controller/subsystem/processing/quirks/proc/AssignQuirks(mob/living/user, client/cli)
 	var/badquirk = FALSE
-	for(var/V in cli.prefs.all_quirks)
-		var/datum/quirk/Q = quirks[V]
+	for(var/quirk_name in cli.prefs.all_quirks)
+		var/datum/quirk/Q = quirks[quirk_name]
 		if(Q)
-			user.add_quirk(Q)
+			if(user.add_quirk(Q))
+				SSblackbox.record_feedback("nested tally", "quirks_taken", 1, list("[quirk_name]"))
 		else
-			stack_trace("Invalid quirk \"[V]\" in client [cli.ckey] preferences")
-			cli.prefs.all_quirks -= V
+			stack_trace("Invalid quirk \"[quirk_name]\" in client [cli.ckey] preferences")
+			cli.prefs.all_quirks -= quirk_name
 			badquirk = TRUE
 	if(badquirk)
 		cli.prefs.save_character()
 
 	// Assign wayfinding pinpointer granting quirk if they're new
 	if(cli.get_exp_living(TRUE) < EXP_ASSIGN_WAYFINDER && !user.has_quirk(/datum/quirk/item_quirk/needswayfinder))
-		user.add_quirk(/datum/quirk/item_quirk/needswayfinder)
+		var/datum/quirk/wayfinder = /datum/quirk/item_quirk/needswayfinder
+		if(user.add_quirk(wayfinder))
+			SSblackbox.record_feedback("nested tally", "quirks_taken", 1, list(initial(wayfinder.name)))
 
 /*
  *Randomises the quirks for a specified mob

@@ -408,7 +408,7 @@
 			/obj/item/food/benedict = 5,
 			/obj/item/food/full_english = 2,
 			/obj/item/food/soup/indian_curry = 3,
-			/obj/item/food/beef_wellington/slice = 2,
+			/obj/item/food/beef_wellington_slice = 2,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/ale = 10,

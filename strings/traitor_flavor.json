@@ -1,5 +1,5 @@
 {
-	"Tiger Cooperative": {
+	"Tiger Cooperative Fanatic": {
 		"introduction": "You are the Tiger Cooperative Fanatic.",
 		"allies": "Only the enlightened Tiger brethren can be trusted; all others must be expelled from this mortal realm!",
 		"goal": "Remember the teachings of Hy-lurgixon; kill first, ask questions later!",
@@ -64,11 +64,11 @@
 		"ui_theme": "syndicate"
 	},
 	"Gone Postal": {
-		"introduction": "You are the Tiger Cooperative Fanatic.",
+		"introduction": "You're going postal today.",
 		"allies": "If the syndicate learns of your plan, they're going to kill you and take your uplink. Take no chances.",
 		"goal": "The preparations are finally complete. Today is the day you go postal. You're going to hijack the emergency shuttle and live a new life free of Nanotrasen.",
 		"uplink": "You've actually managed to steal a full uplink a month ago. This should certainly help accomplish your goals.",
-		"ui_theme": "syndicate"
+		"ui_theme": "neutral"
 	},
 	"Internal Affairs Agent": {
 		"introduction": "You are the Internal Affairs Agent.",

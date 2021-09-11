@@ -104,7 +104,7 @@
 	current_movement_target = thrown_thing
 	blackboard[BB_FETCH_TARGET] = thrown_thing
 	blackboard[BB_FETCH_DELIVER_TO] = throwing_datum.thrower
-	LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/fetch))
+	queue_behavior(/datum/ai_behavior/fetch)
 
 /// Someone's interacting with us by hand, see if they're being nice or mean
 /datum/ai_controller/dog/proc/on_attack_hand(datum/source, mob/living/user)
@@ -253,7 +253,7 @@
 		if(COMMAND_DIE)
 			blackboard[BB_DOG_ORDER_MODE] = DOG_COMMAND_NONE
 			CancelActions()
-			LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/play_dead))
+			queue_behavior(/datum/ai_behavior/play_dead)
 
 /// Someone we like is pointing at something, see if it's something we might want to interact with (like if they might want us to fetch something for them)
 /datum/ai_controller/dog/proc/check_point(mob/pointing_friend, atom/movable/pointed_movable)
@@ -284,12 +284,12 @@
 			blackboard[BB_FETCH_TARGET] = pointed_movable
 			blackboard[BB_FETCH_DELIVER_TO] = pointing_friend
 			if(living_pawn.buckled)
-				LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/resist))//in case they are in bed or something
-			LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/fetch))
+				queue_behavior(/datum/ai_behavior/resist)//in case they are in bed or something
+			queue_behavior(/datum/ai_behavior/fetch)
 		if(DOG_COMMAND_ATTACK)
 			pawn.visible_message(span_notice("[pawn] follows [pointing_friend]'s gesture towards [pointed_movable] and growls intensely!"))
 			current_movement_target = pointed_movable
 			blackboard[BB_DOG_HARASS_TARGET] = WEAKREF(pointed_movable)
 			if(living_pawn.buckled)
-				LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/resist))//in case they are in bed or something
-			LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/harass))
+				queue_behavior(/datum/ai_behavior/resist)//in case they are in bed or something
+			queue_behavior(/datum/ai_behavior/harass)

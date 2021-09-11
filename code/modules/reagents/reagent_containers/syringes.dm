@@ -271,9 +271,9 @@
 /obj/item/reagent_containers/syringe/contraband/krokodil
 	list_reagents = list(/datum/reagent/drug/krokodil = 15)
 
-/obj/item/reagent_containers/syringe/contraband/crank
-	list_reagents = list(/datum/reagent/drug/crank = 15)
-
+/obj/item/reagent_containers/syringe/contraband/saturnx
+	list_reagents = list(/datum/reagent/drug/saturnx = 15)
+ 
 /obj/item/reagent_containers/syringe/contraband/methamphetamine
 	list_reagents = list(/datum/reagent/drug/methamphetamine = 15)
 

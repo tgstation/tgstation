@@ -19,13 +19,14 @@
 	/// The result from the output
 	var/datum/port/output/result
 
-/obj/item/circuit_component/compare/Initialize()
-	. = ..()
+	var/list/datum/port/input/compare_ports = list()
+
+/obj/item/circuit_component/compare/populate_ports()
 	for(var/port_id in 1 to input_port_amount)
 		var/letter = ascii2text(text2ascii("A") + (port_id-1))
-		add_input_port(letter, PORT_TYPE_ANY)
+		compare_ports += add_input_port(letter, PORT_TYPE_ANY)
 
-	load_custom_ports()
+	populate_custom_ports()
 	compare = add_input_port("Compare", PORT_TYPE_SIGNAL)
 
 	true = add_output_port("True", PORT_TYPE_SIGNAL)
@@ -35,19 +36,12 @@
 /**
  * Used by derivatives to load their own ports in for custom use.
  */
-/obj/item/circuit_component/compare/proc/load_custom_ports()
+/obj/item/circuit_component/compare/proc/populate_custom_ports()
 	return
 
 /obj/item/circuit_component/compare/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
-	var/list/ports = input_ports.Copy()
-	if(input_port_amount)
-		ports.Cut(input_port_amount+1)
-
-	var/logic_result = do_comparisons(ports)
+	var/logic_result = do_comparisons(compare_ports)
 	if(COMPONENT_TRIGGERED_BY(compare, port))
 		if(logic_result)
 			true.set_output(COMPONENT_SIGNAL)

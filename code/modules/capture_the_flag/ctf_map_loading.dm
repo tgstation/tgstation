@@ -1,25 +1,49 @@
+GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
+
 /obj/effect/landmark/ctf
 	name = "CTF Map Spawner"
+	var/list/map_bounds
 
 /obj/effect/landmark/ctf/Initialize(mapload)
 	. = ..()
+	if(GLOB.ctf_spawner)
+		qdel(GLOB.ctf_spawner)
+	GLOB.ctf_spawner = src
 	INVOKE_ASYNC(src, .proc/load_map)
 
+/obj/effect/landmark/ctf/Destroy()
+	if(map_bounds)
+		for(var/turf/ctf_turf in block(
+			locate(
+				map_bounds[MAP_MINX],
+				map_bounds[MAP_MINY],
+				map_bounds[MAP_MINZ],
+			),
+			locate(
+				map_bounds[MAP_MAXX],
+				map_bounds[MAP_MAXY],
+				map_bounds[MAP_MAXZ],
+			)
+		))
+			ctf_turf.empty()
+	GLOB.ctf_spawner = null
+	return ..()
+
 /obj/effect/landmark/ctf/proc/load_map()
-	
+
 	var/list/map_options = subtypesof(/datum/map_template/ctf)
 	var/turf/spawn_area = get_turf(src)
 	var/datum/map_template/ctf/current_map
 
 	current_map = pick(map_options)
-	current_map = new current_map
+	current_map = new current_map()
 
 	if(!spawn_area)
 		CRASH("No spawn area detected for CTF!")
 	else if(!current_map)
 		CRASH("No map prepared")
-	var/list/bounds = current_map.load(spawn_area, TRUE)
-	if(!bounds)
+	map_bounds = current_map.load(spawn_area, TRUE)
+	if(!map_bounds)
 		CRASH("Loading CTF map failed!")
 
 /datum/map_template/ctf

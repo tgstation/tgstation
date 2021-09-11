@@ -15,7 +15,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	active = FALSE
 	det_time = 50
-	display_timer = 0
+	display_timer = FALSE
 	var/check_parts = FALSE
 	var/range = 3
 	var/list/times

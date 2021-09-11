@@ -49,6 +49,8 @@
 
 /// Activates once selected
 /datum/religion_sect/proc/on_select()
+	SHOULD_CALL_PARENT(TRUE)
+	SSblackbox.record_feedback("text", "sect_chosen", 1, name)
 
 /// Activates once selected and on newjoins, oriented around people who become holy.
 /datum/religion_sect/proc/on_conversion(mob/living/chap)
@@ -297,10 +299,10 @@
 /datum/religion_sect/honorbound/on_conversion(mob/living/carbon/new_convert)
 	..()
 	if(!ishuman(new_convert))
-		to_chat(span_warning("[GLOB.deity] has no respect for lower creatures, and refuses to make you honorbound."))
+		to_chat(new_convert, span_warning("[GLOB.deity] has no respect for lower creatures, and refuses to make you honorbound."))
 		return FALSE
 	if(TRAIT_GENELESS in new_convert.dna.species.inherent_traits)
-		to_chat(span_warning("[GLOB.deity] has deemed your species as one that could never show honor."))
+		to_chat(new_convert, span_warning("[GLOB.deity] has deemed your species as one that could never show honor."))
 		return FALSE
 	var/datum/dna/holy_dna = new_convert.dna
 	holy_dna.add_mutation(HONORBOUND)
@@ -318,10 +320,10 @@
 /datum/religion_sect/burden/on_conversion(mob/living/carbon/human/new_convert)
 	..()
 	if(!ishuman(new_convert))
-		to_chat(span_warning("[GLOB.deity] needs higher level creatures to fully comprehend the suffering. You are not burdened."))
+		to_chat(new_convert, span_warning("[GLOB.deity] needs higher level creatures to fully comprehend the suffering. You are not burdened."))
 		return
 	if(TRAIT_GENELESS in new_convert.dna.species.inherent_traits)
-		to_chat(span_warning("[GLOB.deity] cannot help a species such as yourself comprehend the suffering. You are not burdened."))
+		to_chat(new_convert, span_warning("[GLOB.deity] cannot help a species such as yourself comprehend the suffering. You are not burdened."))
 		return
 	var/datum/dna/holy_dna = new_convert.dna
 	holy_dna.add_mutation(/datum/mutation/human/burdened)

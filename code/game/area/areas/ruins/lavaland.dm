@@ -4,12 +4,12 @@
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/clownplanet
-	name = "Clown Planet"
+	name = "\improper Clown Planet"
 	icon_state = "dk_yellow"
 	ambientsounds = list('sound/ambience/clown.ogg')
 
 /area/ruin/unpowered/gaia
-	name = "Patch of Eden"
+	name = "\improper Patch of Eden"
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/snow_biodome
@@ -19,14 +19,14 @@
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/golem_ship
-	name = "Free Golem Ship"
+	name = "\improper Free Golem Ship"
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/greed
 	icon_state = "dk_yellow"
 
 /area/ruin/unpowered/hierophant
-	name = "Hierophant's Arena"
+	name = "\improper Hierophant's Arena"
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/pride
@@ -36,20 +36,20 @@
 	icon_state = "dk_yellow"
 
 /area/ruin/unpowered/elephant_graveyard
-	name = "Elephant Graveyard"
+	name = "\improper Elephant Graveyard"
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/graveyard_shuttle
-	name = "Elephant Graveyard"
+	name = "\improper Elephant Graveyard"
 	icon_state = "green"
 
 /area/ruin/unpowered/syndicate_lava_base
-	name = "Secret Base"
+	name = "\improper Secret Base"
 	icon_state = "dk_yellow"
 	ambience_index = AMBIENCE_DANGER
 
 /area/ruin/unpowered/cultaltar
-	name = "Cult Altar"
+	name = "\improper Cult Altar"
 	area_flags = CULT_PERMITTED
 	ambience_index = AMBIENCE_SPOOKY
 
@@ -65,13 +65,13 @@
 	name = "Syndicate Lavaland Arrivals"
 
 /area/ruin/unpowered/syndicate_lava_base/bar
-	name = "Syndicate Lavaland Bar"
+	name = "\improper Syndicate Lavaland Bar"
 
 /area/ruin/unpowered/syndicate_lava_base/main
-	name = "Syndicate Lavaland Primary Hallway"
+	name = "\improper Syndicate Lavaland Primary Hallway"
 
 /area/ruin/unpowered/syndicate_lava_base/cargo
-	name = "Syndicate Lavaland Cargo Bay"
+	name = "\improper Syndicate Lavaland Cargo Bay"
 
 /area/ruin/unpowered/syndicate_lava_base/chemistry
 	name = "Syndicate Lavaland Chemistry"
@@ -80,13 +80,13 @@
 	name = "Syndicate Lavaland Virology"
 
 /area/ruin/unpowered/syndicate_lava_base/testlab
-	name = "Syndicate Lavaland Experimentation Lab"
+	name = "\improper Syndicate Lavaland Experimentation Lab"
 
 /area/ruin/unpowered/syndicate_lava_base/dormitories
-	name = "Syndicate Lavaland Dormitories"
+	name = "\improper Syndicate Lavaland Dormitories"
 
 /area/ruin/unpowered/syndicate_lava_base/telecomms
-	name = "Syndicate Lavaland Telecommunications"
+	name = "\improper Syndicate Lavaland Telecommunications"
 
 //Xeno Nest
 

@@ -5,14 +5,14 @@
  */
 /obj/item/circuit_component/compare/contains
 	display_name = "String Contains"
-	display_desc = "Checks if a string contains a word/letter"
+	desc = "Checks if a string contains a word/letter"
 
 	input_port_amount = 0
 
 	var/datum/port/input/needle
 	var/datum/port/input/haystack
 
-/obj/item/circuit_component/compare/contains/load_custom_ports()
+/obj/item/circuit_component/compare/contains/populate_custom_ports()
 	needle = add_input_port("Needle", PORT_TYPE_STRING)
 	haystack = add_input_port("Haystack", PORT_TYPE_STRING)
 
@@ -26,8 +26,8 @@
 	if(length(ports) < input_port_amount)
 		return
 
-	var/to_find = needle.input_value
-	var/to_search = haystack.input_value
+	var/to_find = needle.value
+	var/to_search = haystack.value
 
 	if(!to_find || !to_search)
 		return

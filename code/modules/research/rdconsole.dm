@@ -12,7 +12,7 @@ aren't already linked to another console. Any consoles it cannot link up with (e
 linked or there aren't any in range), you'll just not have access to that menu. In the settings menu, there are menu options that
 allow a player to attempt to re-sync with nearby consoles. You can also force it to disconnect from a specific console.
 
-The only thing that requires toxins access is locking and unlocking the console on the settings menu.
+The only thing that requires ordnance access is locking and unlocking the console on the settings menu.
 Nothing else in the console has ID requirements.
 
 */

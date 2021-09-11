@@ -571,15 +571,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	//Maybe in the future we can add more <i>spooky</i> code here!
 	return
 
-
-/mob/dead/observer/memory()
-	set hidden = TRUE
-	to_chat(src, span_danger("You are dead! You have no mind to store memory!"))
-
-/mob/dead/observer/add_memory()
-	set hidden = TRUE
-	to_chat(src, span_danger("You are dead! You have no mind to store memory!"))
-
 /mob/dead/observer/verb/toggle_ghostsee()
 	set name = "Toggle Ghost Vision"
 	set desc = "Toggles your ability to see things only ghosts can see, like other ghosts"

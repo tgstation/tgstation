@@ -61,6 +61,11 @@
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food &= ~MEAT
 	species.disliked_food |= MEAT
+	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+
+/datum/quirk/vegetarian/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
+	new_species.liked_food &= ~MEAT
+	new_species.disliked_food |= MEAT
 
 /datum/quirk/vegetarian/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -70,6 +75,7 @@
 		species.liked_food |= MEAT
 	if(!(initial(species.disliked_food) & MEAT))
 		species.disliked_food &= ~MEAT
+	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
 
 /datum/quirk/snob
 	name = "Snob"
@@ -92,11 +98,16 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food |= PINEAPPLE
+	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+
+/datum/quirk/pineapple_liker/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
+	new_species.liked_food |= PINEAPPLE
 
 /datum/quirk/pineapple_liker/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food &= ~PINEAPPLE
+	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
 
 /datum/quirk/pineapple_hater
 	name = "Ananas Aversion"
@@ -110,11 +121,16 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	species.disliked_food |= PINEAPPLE
+	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+
+/datum/quirk/pineapple_hater/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
+	new_species.disliked_food |= PINEAPPLE
 
 /datum/quirk/pineapple_hater/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	species.disliked_food &= ~PINEAPPLE
+	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
 
 /datum/quirk/deviant_tastes
 	name = "Deviant Tastes"
@@ -130,12 +146,19 @@
 	var/liked = species.liked_food
 	species.liked_food = species.disliked_food
 	species.disliked_food = liked
+	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+
+/datum/quirk/deviant_tastes/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
+	var/liked = new_species.liked_food
+	new_species.liked_food = new_species.disliked_food
+	new_species.disliked_food = liked
 
 /datum/quirk/deviant_tastes/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food = initial(species.liked_food)
 	species.disliked_food = initial(species.disliked_food)
+	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
 
 /datum/quirk/monochromatic
 	name = "Monochromacy"

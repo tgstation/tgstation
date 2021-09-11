@@ -49,3 +49,14 @@
 	to_chat(pull_component.parent, span_warning("You have lost the grip power of [src]!"))
 
 	QDEL_NULL(pull_component_weakref)
+
+/obj/item/clothing/gloves/rapid
+	name = "Gloves of the North Star"
+	desc = "Just looking at these fills you with an urge to beat the shit out of people."
+	icon_state = "rapid"
+	inhand_icon_state = "rapid"
+	transfer_prints = TRUE
+
+/obj/item/clothing/gloves/rapid/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/punchcooldown)

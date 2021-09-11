@@ -5,21 +5,17 @@
  */
 /obj/item/circuit_component/tempsensor
 	display_name = "Temperature Sensor"
-	display_desc = "Outputs the current temperature of the tile"
+	desc = "Outputs the current temperature of the tile"
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The result from the output
 	var/datum/port/output/result
 
-/obj/item/circuit_component/tempsensor/Initialize()
-	. = ..()
+/obj/item/circuit_component/tempsensor/populate_ports()
 	result = add_output_port("Result", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/tempsensor/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 	//Get current turf
 	var/turf/location = get_turf(src)
 	if(!location)

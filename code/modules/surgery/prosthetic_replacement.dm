@@ -42,17 +42,13 @@
 		tool = organ_storage_contents
 	if(istype(tool, /obj/item/bodypart))
 		var/obj/item/bodypart/bodypart_to_attach = tool
-		if(ismonkey(target))// monkey patient only accept organic monkey limbs
-			if(bodypart_to_attach.status == BODYPART_ROBOTIC || bodypart_to_attach.animal_origin != MONKEY_BODYPART)
-				to_chat(user, span_warning("[bodypart_to_attach] doesn't match the patient's morphology."))
-				return -1
 		if(bodypart_to_attach.status != BODYPART_ROBOTIC)
 			organ_rejection_dam = 10
 			if(ishuman(target))
-				if(bodypart_to_attach.animal_origin)
+				var/mob/living/carbon/human/human_target = target
+				if(!(bodypart_to_attach.part_origin & human_target.dna.species.allowed_animal_origin))
 					to_chat(user, span_warning("[bodypart_to_attach] doesn't match the patient's morphology."))
 					return -1
-				var/mob/living/carbon/human/human_target = target
 				if(human_target.dna.species.id != bodypart_to_attach.species_id)
 					organ_rejection_dam = 30
 

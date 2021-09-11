@@ -20,6 +20,7 @@
 		righthand_file = rh_icon
 	if(worn_slot_flags)
 		slot_flags = worn_slot_flags
+	w_class = M.held_w_class
 	deposit(M)
 	. = ..()
 
@@ -81,6 +82,12 @@
 		finder.visible_message(span_warning("\A [held_mob.name] pops out of the container [finder] is opening!"), ignored_mobs = finder)
 		release(TRUE, FALSE)
 		return
+
+/obj/item/clothing/head/mob_holder/drone/Initialize(mapload, mob/living/M, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags = NONE)
+	//If we're not being put onto a drone, end it all
+	if(!isdrone(M))
+		return INITIALIZE_HINT_QDEL
+	return ..()
 
 /obj/item/clothing/head/mob_holder/drone/deposit(mob/living/L)
 	. = ..()
