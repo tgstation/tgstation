@@ -598,8 +598,10 @@
 	icon_state = "grownbin"
 	max_n_of_items = 1000
 
-/obj/machinery/smartfridge/grownbin/accept_check(obj/item/O)
-	if(istype(O, /obj/item/food/grown))
+/obj/machinery/smartfridge/grownbin/accept_check(obj/item/inserted_item)
+	if(istype(inserted_item, /obj/item/food/grown))
+		return TRUE
+	if(istype(inserted_item, /obj/item/grown))
 		return TRUE
 	return FALSE
 
