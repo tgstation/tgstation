@@ -1,0 +1,6 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "The HFR no longer yeets all iron content given scraps of Oxygen."
+  - bugfix: "The HFR now burns Oxygen proportionally to the amount of iron content removed when appropriate."
+  - bugfix: "The HFR using Oxygen to mitigate iron content buildup now properly respects delta time."
