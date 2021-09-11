@@ -275,9 +275,6 @@ const SpeciesPageInner = (props: {
                           species.icon,
                         ])}
                         ml={-1}
-                        style={{
-                          // "transform": "translateX(50%) translateY(50%) scale(1.9)",
-                        }}
                       />
                     </Button>
                   </Stack.Item>
