@@ -149,7 +149,7 @@
 /obj/item/nullrod/Initialize()
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
-  AddElement(/datum/element/bane, /mob/living/simple_animal/revenant, 0, 25, FALSE)
+	AddElement(/datum/element/bane, /mob/living/simple_animal/revenant, 0, 25, FALSE)
 	if(!GLOB.holy_weapon_type && istype(src, /obj/item/nullrod))
 		var/list/rods = list()
 		for(var/obj/item/nullrod/nullrod_type as anything in typesof(/obj/item/nullrod))
