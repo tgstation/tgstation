@@ -5,11 +5,6 @@
 		"remove_quirk" = .proc/remove_quirk,
 	)
 
-/datum/preference_middleware/quirks/get_ui_assets()
-	return list(
-		get_asset_datum(/datum/asset/spritesheet/quirks),
-	)
-
 /datum/preference_middleware/quirks/get_ui_static_data(mob/user)
 	if (preferences.current_window != PREFERENCE_TAB_CHARACTER_PREFERENCES)
 		return list()
@@ -32,6 +27,7 @@
 		var/datum/quirk/quirk = SSquirks.quirks[quirk_name]
 		quirk_info[sanitize_css_class_name(quirk_name)] = list(
 			"description" = initial(quirk.desc),
+			"icon" = initial(quirk.icon),
 			"name" = quirk_name,
 			"value" = initial(quirk.value),
 		)
@@ -74,25 +70,3 @@
 	preferences.all_quirks = new_quirks
 
 	return TRUE
-
-/// Spritesheet generated for the quirks menu
-/datum/asset/spritesheet/quirks
-	name = "quirks"
-
-/datum/asset/spritesheet/quirks/register()
-	var/list/to_insert = list()
-
-	for (var/quirk_name in SSquirks.quirks)
-		var/quirk_type = SSquirks.quirks[quirk_name]
-		var/datum/quirk/quirk = new quirk_type
-
-		var/icon/quirk_icon = icon(quirk.icon)
-		quirk_icon.Scale(64, 64)
-		to_insert[sanitize_css_class_name(quirk_name)] = quirk_icon
-
-		qdel(quirk)
-
-	for (var/spritesheet_key in to_insert)
-		Insert(spritesheet_key, to_insert[spritesheet_key])
-
-	return ..()

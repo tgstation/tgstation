@@ -53,6 +53,7 @@ export type ServerSpeciesData = {
 
 export type Quirk = {
   description: string;
+  icon: string;
   name: string;
   value: number;
 };

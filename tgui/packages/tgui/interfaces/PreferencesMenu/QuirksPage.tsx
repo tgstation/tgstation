@@ -44,8 +44,15 @@ const QuirkList = (props: {
             }}
           >
             <Stack fill>
-              <Stack.Item align="center">
-                <Box className={classes(["quirks64x64", quirkKey])} />
+              <Stack.Item align="center" style={{
+                "min-width": "15%",
+                "max-width": "15%",
+                "text-align": "center",
+              }}>
+                <Icon
+                  fontSize={3}
+                  name={quirk.icon}
+                />
               </Stack.Item>
 
               <Stack.Item align="stretch" style={{
