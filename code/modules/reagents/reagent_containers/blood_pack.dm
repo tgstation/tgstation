@@ -5,12 +5,14 @@
 	icon_state = "bloodpack"
 	volume = 200
 	var/blood_type = null
+	var/blood_type_label = null
 	var/unique_blood = null
 	var/labelled = FALSE
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 
 /obj/item/reagent_containers/blood/Initialize()
 	. = ..()
+	blood_type_label = blood_type
 	if(blood_type != null)
 		reagents.add_reagent(unique_blood ? unique_blood : /datum/reagent/blood, 200, list("viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
 		update_appearance()
@@ -28,7 +30,7 @@
 	. = ..()
 	if(labelled)
 		return
-	name = "blood_pack[blood_type ? " - [blood_type]" : null]"
+	name = "blood pack[blood_type_label ? " - [blood_type_label]" : null]"
 
 /obj/item/reagent_containers/blood/random
 	icon_state = "random_bloodpack"
