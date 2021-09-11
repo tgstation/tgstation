@@ -169,8 +169,7 @@
 				volume = initial(volume)
 				return TRUE
 			else if(text2num(new_volume) != null)
-				///force volume back to 50 or the lower value
-				volume = (text2num(new_volume))/2
+				volume = (text2num(new_volume))
 				return TRUE
 
 /obj/machinery/jukebox/proc/activate_music()
