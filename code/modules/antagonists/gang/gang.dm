@@ -122,7 +122,7 @@
 		var/mob/living/carbon/human/gangster_human = owner.current
 		var/phone_equipped = gangster_human.equip_in_one_of_slots(phone, slots)
 		if(!phone_equipped)
-			to_chat(owner.current, "Your [phone] has been placed at your feet.")
+			to_chat(owner.current, "Your [phone.name] has been placed at your feet.")
 			phone.forceMove(get_turf(gangster_human))
 		for(var/clothing in my_gang.free_clothes)
 			var/obj/O = new clothing(owner.current)
