@@ -693,12 +693,12 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 					var/n = 0
 					if(danger)
 						message_admins("[ADMIN_LOOKUPFLW(usr)] opened a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:")
-					msg = "[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:")
+					var/msg = "[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:"
 					investigate_log(msg, INVESTIGATE_ATMOS)
 					for(var/name in gaseslog)
 						if(!isnull(name))
 							n = n + 1
-							var/msg = "[name]: [gaseslog[name]] moles."
+							msg = "[name]: [gaseslog[name]] moles."
 							investigate_log(msg, INVESTIGATE_ATMOS)
 							if(danger)
 								message_admins(msg)
