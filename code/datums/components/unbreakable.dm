@@ -18,7 +18,7 @@
 
 /datum/component/unbreakable/proc/surge(mob/living/carbon/human/surged, new_stat)
 	SIGNAL_HANDLER
-	if(new_stat != UNCONSCIOUS)
+	if(new_stat < SOFT_CRIT || new_stat >= DEAD)
 		return
 	if(!COOLDOWN_FINISHED(src, surge_cooldown))
 		return

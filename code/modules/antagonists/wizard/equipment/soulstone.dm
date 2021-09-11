@@ -88,11 +88,9 @@
 	one_use = TRUE
 	grab_sleeping = FALSE
 
-/obj/item/soulstone/anybody/sparring
+/obj/item/soulstone/anybody/chaplain/sparring
 	icon_state = "purified_soulstone"
 	theme = THEME_HOLY
-	one_use = TRUE
-	grab_sleeping = FALSE
 
 /obj/item/soulstone/anybody/sparring/Initialize(mapload)
 	. = ..()

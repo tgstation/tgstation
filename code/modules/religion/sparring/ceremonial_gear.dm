@@ -19,7 +19,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	block_chance = 50
+	block_chance = 3 //30
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE //doesn't affect stats of the weapon as to avoid gamering your opponent with a dope weapon
@@ -29,9 +29,10 @@
 /obj/item/ceremonial_blade/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 40, 105)
+	RegisterSignal(src, COMSIG_ITEM_SHARPEN_ACT, .proc/block_sharpening)
 
 /obj/item/ceremonial_blade/melee_attack_chain(mob/user, atom/target, params)
-	if(!HAS_TRAIT(user, TRAIT_SPARRING))
+	if(!HAS_TRAIT(target, TRAIT_SPARRING))
 		return ..()
 	var/old_force = force
 	var/old_throwforce = throwforce
@@ -40,3 +41,16 @@
 	. = ..()
 	force = old_force
 	throwforce = old_throwforce
+
+/obj/item/ceremonial_blade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(attack_type != MELEE_ATTACK || !ishuman(hitby.loc))
+		return ..()
+	if(HAS_TRAIT(hitby.loc, TRAIT_SPARRING))
+		//becomes 30 block
+		final_block_chance *= 10
+	. = ..()
+
+/obj/item/ceremonial_blade/proc/block_sharpening(datum/source, increment, max)
+	SIGNAL_HANDLER
+	//this breaks it
+	return COMPONENT_BLOCK_SHARPEN_BLOCKED

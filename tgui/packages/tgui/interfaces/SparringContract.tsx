@@ -4,7 +4,7 @@ import { BlockQuote, Button, Dropdown, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 // defined this so the code is more readable
-const HOLY_MATCH = 1;
+const STAKES_HOLY_MATCH = 1;
 
 const weaponlist = [
   "Fist Fight",
@@ -180,7 +180,7 @@ export const SparringContract = (props, context) => {
                 icon={in_area && "check" || "exclamation-triangle"} />
               <Button
                 disabled={
-                  !in_area || (no_chaplains && set_stakes === HOLY_MATCH)
+                  !in_area || (no_chaplains && set_stakes === STAKES_HOLY_MATCH)
                 }
                 icon="fist-raised"
                 onClick={() => act('fight')} >

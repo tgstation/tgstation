@@ -12,11 +12,11 @@
 //## which weapons should we use?
 
 ///fisticuffs only. will probably be used a lot if the chaplain's weapon is really good
-#define FIST_FIGHT 1
+// unused but for clarity #define CONDITION_FIST_FIGHT 1
 ///melee weapon condition, default sparring condition.
-#define MELEE_ONLY 2
+#define CONDITION_MELEE_ONLY 2
 ///any weapon is cool... probably a terrible idea against security
-#define ANY_WEAPON 3
+#define CONDITION_ANY_WEAPON 3
 
 //
 ///must use weapons the chaplain makes from their sect. no fist fighting, even! it ensures a fair fight.
@@ -29,13 +29,20 @@
 //## what are the stakes? people you've beaten before can only fight in no stakes battles, to prevent farming
 
 ///just for fun
-#define NO_STAKES 1
+#define STAKES_NONE 1
 ///standard stakes, winning gets you a point. losing counts towards standard excommunication.
-#define HOLY_MATCH 2
+#define STAKES_HOLY_MATCH 2
 ///no stakes god wise, but whomever wins gets all the money of the other
-#define MONEY_MATCH 3
+#define STAKES_MONEY_MATCH 3
 ///the winner gets the other's soul. you said this was a neutral sect, right?
-#define YOUR_SOUL 4
+#define STAKES_YOUR_SOUL 4
 
 ///the left signing part of the contract
-#define LEFT_FIELD "left"
+#define CONTRACT_LEFT_FIELD "left"
+
+///curses the sinner
+#define PUNISHMENT_OMEN "omen"
+///smites the sinner
+#define PUNISHMENT_LIGHTNING "lightningbolt"
+///brands the sinner
+#define PUNISHMENT_BRAND "brand"

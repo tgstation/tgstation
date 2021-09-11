@@ -32,10 +32,10 @@
 
 /datum/sparring_match/proc/hook_signals(mob/living/carbon/human/sparring)
 	//weapon conditions
-	if(weapons_condition < ANY_WEAPON)
+	if(weapons_condition < CONDITION_ANY_WEAPON)
 		RegisterSignal(sparring, COMSIG_MOB_FIRED_GUN, .proc/gun_violation)
 		RegisterSignal(sparring, COMSIG_MOB_GRENADE_ARMED, .proc/grenade_violation)
-	if(weapons_condition < MELEE_ONLY)
+	if(weapons_condition < CONDITION_MELEE_ONLY)
 		RegisterSignal(sparring, COMSIG_MOB_ITEM_ATTACK, .proc/melee_violation)
 	//arena conditions
 	RegisterSignal(sparring, COMSIG_MOVABLE_MOVED, .proc/arena_violation)
@@ -78,7 +78,8 @@
 /datum/sparring_match/proc/check_for_victory(datum/participant, new_stat)
 	SIGNAL_HANDLER
 
-	if(new_stat != SOFT_CRIT)
+	//death needs to be a flub, conscious means they haven't won
+	if(new_stat == CONSCIOUS || new_stat == DEAD)
 		return
 	if(participant == chaplain)
 		end_match(opponent, chaplain)
@@ -89,7 +90,6 @@
 /datum/sparring_match/proc/outsider_interference(datum/source, obj/item/I, mob/attacker)
 	SIGNAL_HANDLER
 	if(attacker == chaplain || attacker == opponent)
-		// fist fighting a hulk is so dumb. i can't fathom why you would do this.
 		return
 	flub(attacker)
 
@@ -102,9 +102,6 @@
 
 /datum/sparring_match/proc/hand_interference(datum/source, mob/living/attacker)
 	SIGNAL_HANDLER
-	if(!attacker.combat_mode)
-		//not worth the flub
-		return
 	if(attacker == chaplain || attacker == opponent)
 		//you can pretty much always use fists as a participant
 		return
@@ -199,19 +196,23 @@
 			end_match(chaplain, opponent, violation_victory = TRUE)
 
 /datum/sparring_match/proc/flub(mob/living/interfering)
-
 	if(interfering)
-		switch(rand(1,3))
-			if(1)
+		var/list/possible_punishments = list(PUNISHMENT_OMEN, PUNISHMENT_LIGHTNING)
+		if(ishuman(interfering))
+			possible_punishments += PUNISHMENT_BRAND
+		switch(pick(possible_punishments))
+			if(PUNISHMENT_OMEN)
 				to_chat(interfering, span_warning("You get a bad feeling... for interfering with [chaplain]'s sparring match..."))
 				interfering.AddComponent(/datum/component/omen, TRUE, null, FALSE)
-			if(2)
+			if(PUNISHMENT_LIGHTNING)
 				to_chat(interfering, span_warning("[GLOB.deity] has punished you for interfering with [chaplain]'s sparring match!"))
 				lightningbolt(interfering)
-			if(3)
-				to_chat(interfering, span_warning("[GLOB.deity]'s whispers echo through your mind for interfering with [chaplain]'s sparring match!!"))
-				SEND_SOUND(interfering, sound('sound/hallucinations/behind_you1.ogg'))
-				interfering.add_confusion(15)
+			if(PUNISHMENT_BRAND)
+				var/mob/living/carbon/human/branded = interfering
+				to_chat(interfering, span_warning("[GLOB.deity] brands your flesh for interfering with [chaplain]'s sparring match!!"))
+				var/obj/item/bodypart/branded_limb = pick(branded.bodyparts)
+				branded_limb.force_wound_upwards(/datum/wound/burn/severe/brand)
+				branded.emote("scream")
 
 	flubs--
 	if(!flubs) //too many interferences
@@ -242,7 +243,7 @@
 	to_chat(opponent, span_boldannounce("[violation_victory ? "[loser] DISQUALIFIED!" : ""]  [winner] HAS WON!"))
 	win(winner, loser, violation_victory)
 	lose(loser, winner)
-	if(stakes_condition != YOUR_SOUL)
+	if(stakes_condition != STAKES_YOUR_SOUL)
 		var/healing_message = "You may want to heal up the loser now."
 		if(winner == chaplain)
 			healing_message += " Your bible will heal the loser for awhile."
@@ -252,7 +253,7 @@
 ///most of the effects are handled on `lose()` instead.
 /datum/sparring_match/proc/win(mob/living/carbon/human/winner, mob/living/carbon/human/loser, violation_victory)
 	switch(stakes_condition)
-		if(HOLY_MATCH)
+		if(STAKES_HOLY_MATCH)
 			if(winner == chaplain)
 				if(violation_victory)
 					to_chat(winner, span_warning("[GLOB.deity] is not entertained from a matched decided by violations. No favor awarded..."))
@@ -261,14 +262,16 @@
 				var/datum/religion_sect/spar/sect = GLOB.religious_sect
 				sect.adjust_favor(1, winner)
 				sect.past_opponents += WEAKREF(loser)
-		if(MONEY_MATCH)
+		if(STAKES_MONEY_MATCH)
 			to_chat(winner, span_nicegreen("You've won all of [loser]'s money!"))
-		if(YOUR_SOUL)
+		if(STAKES_YOUR_SOUL)
 			to_chat(winner, span_nicegreen("You've won [loser]'s SOUL!"))
 
 /datum/sparring_match/proc/lose(mob/living/carbon/human/loser, mob/living/carbon/human/winner)
+	if(!loser) //shit happened?
+		return
 	switch(stakes_condition)
-		if(HOLY_MATCH)
+		if(STAKES_HOLY_MATCH)
 			if(loser == chaplain)
 				var/datum/religion_sect/spar/sect = GLOB.religious_sect
 				sect.matches_lost++
@@ -280,14 +283,17 @@
 				SEND_SIGNAL(loser, COMSIG_ADD_MOOD_EVENT, "sparring", /datum/mood_event/banished)
 				loser.mind.holy_role = NONE
 				to_chat(loser, span_userdanger("You have been excommunicated! You are no longer holy!"))
-		if(MONEY_MATCH)
+		if(STAKES_MONEY_MATCH)
 			to_chat(loser, span_userdanger("You've lost all your money to [winner]!"))
 			var/datum/bank_account/loser_account = loser.get_bank_account()
 			var/datum/bank_account/winner_account = winner.get_bank_account()
 			if(!loser_account || !winner_account)//the winner is pretty owned in this case but whatever shoulda read the fine print of the contract
 				return
 			winner_account.transfer_money(loser_account, loser_account.account_balance)
-		if(YOUR_SOUL)
+		if(STAKES_YOUR_SOUL)
+			var/turf/shard_turf = get_turf(loser)
+			if(!shard_turf)
+				return
 			to_chat(loser, span_userdanger("You've lost ownership over your soul to [winner]!"))
-			var/obj/item/soulstone/anybody/sparring/shard = new(get_turf(loser))
+			var/obj/item/soulstone/anybody/chaplain/sparring/shard = new(shard_turf)
 			shard.capture_soul(loser, winner, forced = TRUE)

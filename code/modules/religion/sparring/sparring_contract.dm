@@ -8,11 +8,11 @@
 	throw_speed = 1
 	w_class = WEIGHT_CLASS_TINY
 	///what weapons will be allowed during the sparring match
-	var/weapons_condition = MELEE_ONLY
+	var/weapons_condition = CONDITION_MELEE_ONLY
 	///what arena the fight will take place in
 	var/arena_condition = /area/service/chapel
 	///what stakes the fight will have
-	var/stakes_condition = NO_STAKES
+	var/stakes_condition = STAKES_NONE
 	///who has signed this contract
 	var/list/signed_by = list(null, null)
 
@@ -23,7 +23,7 @@
 /obj/item/sparring_contract/Destroy()
 	QDEL_NULL(signed_by)
 	var/datum/religion_sect/spar/sect = GLOB.religious_sect
-	sect.existing_contract = null
+	sect?.existing_contract = null
 	. = ..()
 
 /obj/item/sparring_contract/ui_interact(mob/user, datum/tgui/ui)
@@ -79,7 +79,7 @@
 		if(!isnull(resolved))
 			resolved_opponents += resolved
 
-	if(user in resolved_opponents && params["stakes"] == HOLY_MATCH)
+	if(user in resolved_opponents && params["stakes"] == STAKES_HOLY_MATCH)
 		to_chat(user, span_warning("This contract refuses to be signed up for a holy match by a previous holy match loser. Pick a different stake!"))
 
 	//any updating of the terms should update the UI to display new terms
@@ -127,7 +127,7 @@
 				signed_by = list(null, null)
 				to_chat(user, span_warning("You will need to get your sparring partner to sign again under these new terms you've set."))
 			//fluff and signing
-			if(params["sign_position"] == LEFT_FIELD)
+			if(params["sign_position"] == CONTRACT_LEFT_FIELD)
 				signed_by[1] = user
 			else
 				signed_by[2] = user
