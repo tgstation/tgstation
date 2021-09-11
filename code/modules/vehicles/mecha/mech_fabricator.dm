@@ -185,7 +185,7 @@
  */
 /obj/machinery/mecha_part_fabricator/proc/on_start_printing()
 	add_overlay("fab-active")
-	use_power = ACTIVE_POWER_USE
+	update_use_power(ACTIVE_POWER_USE)
 
 /**
  * Intended to be called when the exofab has stopped working and is no longer printing items.
@@ -194,7 +194,7 @@
  */
 /obj/machinery/mecha_part_fabricator/proc/on_finish_printing()
 	cut_overlay("fab-active")
-	use_power = IDLE_POWER_USE
+	update_use_power(IDLE_POWER_USE)
 	desc = initial(desc)
 	process_queue = FALSE
 
@@ -319,8 +319,6 @@
  */
 /obj/machinery/mecha_part_fabricator/proc/dispense_built_part(datum/design/D)
 	var/obj/item/I = new D.build_path(src)
-	I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
-	I.set_custom_materials(build_materials)
 
 	being_built = null
 

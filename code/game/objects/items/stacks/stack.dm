@@ -289,9 +289,9 @@
 			if(QDELETED(O))
 				return //It's a stack and has already been merged
 
+			O.add_fingerprint(usr) //Add fingerprints first, otherwise O might already be deleted because of stack merging
 			if(isitem(O))
 				usr.put_in_hands(O)
-			O.add_fingerprint(usr)
 
 			//BubbleWrap - so newly formed boxes are empty
 			if(istype(O, /obj/item/storage))

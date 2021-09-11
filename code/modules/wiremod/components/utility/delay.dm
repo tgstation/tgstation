@@ -18,17 +18,13 @@
 	/// The output of the signal
 	var/datum/port/output/output
 
-/obj/item/circuit_component/delay/Initialize()
-	. = ..()
-	delay_amount = add_input_port("Delay", PORT_TYPE_NUMBER, FALSE)
+/obj/item/circuit_component/delay/populate_ports()
+	delay_amount = add_input_port("Delay", PORT_TYPE_NUMBER, trigger = null)
 	trigger = add_input_port("Trigger", PORT_TYPE_SIGNAL)
 
 	output = add_output_port("Result", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/delay/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	if(!COMPONENT_TRIGGERED_BY(trigger, port))
 		return

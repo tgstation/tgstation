@@ -25,7 +25,7 @@
 	attack_verb_simple = "snip"
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE //the closest we have to a crustacean pinching attack effect rn.
-	weather_immunities = list(WEATHER_SNOW)
+	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 	vision_range = 5
 	aggro_vision_range = 7
 	charger = TRUE

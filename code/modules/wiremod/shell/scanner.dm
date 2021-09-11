@@ -35,8 +35,7 @@
 
 
 
-/obj/item/circuit_component/wiremod_scanner/Initialize()
-	. = ..()
+/obj/item/circuit_component/wiremod_scanner/populate_ports()
 	attacker = add_output_port("Scanner", PORT_TYPE_ATOM)
 	attacking = add_output_port("Scanned Entity", PORT_TYPE_ATOM)
 	signal = add_output_port("Scanned", PORT_TYPE_SIGNAL)
