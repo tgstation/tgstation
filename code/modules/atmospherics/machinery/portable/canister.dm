@@ -689,19 +689,23 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 					* list as a test for admin alerts
 					*/
 					///alert + log path
-					if(danger.len)
+					///end of loop counter var
+					var/n = 0
+					if(danger)
 						message_admins("[ADMIN_LOOKUPFLW(usr)] opened a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:")
-						log_admin("[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:")
-						for(var/name in gaseslog)
+					msg = "[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:")
+					investigate_log(msg, INVESTIGATE_ATMOS)
+					for(var/name in gaseslog)
+						if(!isnull(name))
+							n = n + 1
 							var/msg = "[name]: [gaseslog[name]] moles."
-							log_admin(msg)
-							message_admins(msg)
-					///just logging, no alert
-					else
-						log_admin("[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:")
-						for(var/name in gaseslog)
-							var/msg = "[name]: [gaseslog[name]] moles."
-							log_admin(msg)
+							investigate_log(msg, INVESTIGATE_ATMOS)
+							if(danger)
+								message_admins(msg)
+							if(n == 5)
+								break
+					if(gaseslog.len > 5)
+						message_admins("Too many gases to log.")
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
 			investigate_log(logmsg, INVESTIGATE_ATMOS)
