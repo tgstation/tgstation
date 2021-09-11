@@ -44,11 +44,11 @@
 #define MEMORY_FLAG_NOPERSISTENCE	(1<<3)
 ///this memory has already been engraved, and cannot be selected for engraving again.
 #define MEMORY_FLAG_ALREADY_USED	(1<<4)
-///this memory requires the target to not be blind.
+///this memory requires the target not to be blind.
 #define MEMORY_CHECK_BLINDNESS (1<<5)
-///this memory requires the target to not be deaf.
+///this memory requires the target not to be deaf.
 #define MEMORY_CHECK_DEAFNESS (1<<6)
-///this memory requires the target to not be both deaf and blind.
+///this memory requires the target not to be both deaf and blind.
 #define MEMORY_CHECK_BLIND_AND_DEAF (1<<7)
 ///this memory can be memorized by unconscious people.
 #define MEMORY_SKIP_UNCONSCIOUS (1<<8)
