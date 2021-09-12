@@ -204,17 +204,16 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	if (!parent)
 		return null
 
-	var/savefile/savefile = new /savefile(path)
-
 	switch (savefile_identifier)
 		if (PREFERENCE_CHARACTER)
-			savefile.cd = "/character[default_slot]"
+			return character_savefile
 		if (PREFERENCE_PLAYER)
-			savefile.cd = "/"
+			if (!game_savefile)
+				game_savefile = new /savefile(path)
+				game_savefile.cd = "/"
+			return game_savefile
 		else
 			CRASH("Unknown savefile identifier [savefile_identifier]")
-
-	return savefile
 
 /// Read a /datum/preference type and return its value.
 /// This will write to the savefile if a value was not found with the new value.
@@ -254,15 +253,20 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		value_cache[preference.type] = new_value
 	return success
 
-/// Similar to write_preference, but will be treated as an update.
+/// Will perform an update on the preference, but not write to the savefile.
 /// This will, for instance, update the character preference view.
 /// Performs sanity checks.
-/datum/preferences/proc/update_preference(datum/preference/preference, new_value)
+/datum/preferences/proc/update_preference(datum/preference/preference, preference_value)
 	if (!preference.is_accessible(src))
 		return FALSE
 
-	if (!write_preference(preference, new_value))
+	var/new_value = preference.deserialize(preference_value, src)
+	var/success = preference.write(null, new_value)
+
+	if (!success)
 		return FALSE
+
+	value_cache[preference.type] = new_value
 
 	if (preference.savefile_identifier == PREFERENCE_PLAYER)
 		preference.apply_to_client_updated(parent, read_preference(preference.type))

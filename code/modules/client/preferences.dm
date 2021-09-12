@@ -70,6 +70,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// A list of instantiated middleware
 	var/list/datum/preference_middleware/middleware = list()
 
+	/// The savefile relating to core preferences, PREFERENCE_PLAYER
+	var/savefile/game_savefile
+
+	/// The savefile relating to character preferences, PREFERENCE_CHARACTER
+	var/savefile/character_savefile
+
 	/// A cache of preference entries to values.
 	/// Used to avoid expensive READ_FILE every time a preference is retrieved.
 	var/value_cache = list()
@@ -404,6 +410,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 
 	var/savefile/savefile = new(path)
 	for (var/index in 1 to max_save_slots)
+		// It won't be updated in the savefile yet, so just read the name directly
+		if (index == default_slot)
+			profiles += read_preference(/datum/preference/name/real_name)
+			continue
+
 		savefile.cd = "/character[index]"
 
 		var/name
