@@ -21,7 +21,7 @@
 	if (!preferences.set_job_preference_level(job, level))
 		return FALSE
 
-	preferences.character_preview_view.update_body()
+	preferences.character_preview_view?.update_body()
 	return TRUE
 
 /datum/preference_middleware/jobs/get_ui_data(mob/user)
