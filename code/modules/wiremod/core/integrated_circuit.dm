@@ -339,7 +339,10 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	// as ui_state is only set during
 	if(admin_only)
 		if(!check_rights_for(user.client, R_VAREDIT))
-			return UI_CLOSE
+			if(isobserver(user))
+				return UI_UPDATE
+			else
+				return UI_CLOSE
 		else
 			return UI_INTERACTIVE
 
