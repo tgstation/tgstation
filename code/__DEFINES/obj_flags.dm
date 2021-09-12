@@ -37,12 +37,6 @@
 #define EXAMINE_SKIP (1<<15) // Makes the Examine proc not read out this item.
 #define XENOMORPH_HOLDABLE (1<<16) // A Xenomorph can hold this item.
 #define NO_PIXEL_RANDOM_DROP (1<<17) //if dropped, it wont have a randomized pixel_x/pixel_y
-/// Items that go above hair without hiding it when worn, for the few cases where it's necessary (needs to be implemented in most cases)
-/// I hate the fact I had to put it here, but since any item can be worn anywhere, it's necessary.
-#define ABOVE_HAIR_WORN (1<<18)
-/// Items that go above basically everything else when worn, for the few cases where it's necessary (needs to be implemented in most cases)
-/// I hate the fact I had to put it here, but since any item can be worn anywhere, it's necessary.
-#define ABOVE_BODY_FRONT_WORN (1<<19)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

@@ -213,7 +213,6 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_glasses()
 	remove_overlay(GLASSES_LAYER)
-	remove_overlay(ABOVE_BODY_FRONT_GLASSES_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //decapitated
 		return
@@ -222,7 +221,6 @@ There are several things that need to be remembered:
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_EYES) + 1]
 		inv.update_appearance()
 
-	var/layer = glasses?.item_flags & ABOVE_HAIR_WORN ? ABOVE_BODY_FRONT_GLASSES_LAYER : GLASSES_LAYER
 	if(glasses)
 		glasses.screen_loc = ui_glasses //...draw the item in the inventory screen
 		if(client && hud_used?.hud_shown)
@@ -231,15 +229,15 @@ There are several things that need to be remembered:
 		update_observer_view(glasses,1)
 		//This is in case the glasses would be going above the hair, like welding goggles that were lifted up
 		if(!(head && (head.flags_inv & HIDEEYES)) && !(wear_mask && (wear_mask.flags_inv & HIDEEYES)))
-			overlays_standing[layer] = glasses.build_worn_icon(default_layer = layer, default_icon_file = 'icons/mob/clothing/eyes.dmi')
+			overlays_standing[GLASSES_LAYER] = glasses.build_worn_icon(default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/clothing/eyes.dmi')
 
-		var/mutable_appearance/glasses_overlay = overlays_standing[layer]
+		var/mutable_appearance/glasses_overlay = overlays_standing[GLASSES_LAYER]
 		if(glasses_overlay)
 			if(OFFSET_GLASSES in dna.species.offset_features)
 				glasses_overlay.pixel_x += dna.species.offset_features[OFFSET_GLASSES][1]
 				glasses_overlay.pixel_y += dna.species.offset_features[OFFSET_GLASSES][2]
-			overlays_standing[layer] = glasses_overlay
-	apply_overlay(layer)
+			overlays_standing[GLASSES_LAYER] = glasses_overlay
+	apply_overlay(GLASSES_LAYER)
 
 
 /mob/living/carbon/human/update_inv_ears()
@@ -317,15 +315,14 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_head()
 	..()
 	update_mutant_bodyparts()
-	var/layer = head?.item_flags & ABOVE_BODY_FRONT_WORN ? ABOVE_BODY_FRONT_HEAD_LAYER : HEAD_LAYER
-	var/mutable_appearance/head_overlay = overlays_standing[layer]
+	var/mutable_appearance/head_overlay = overlays_standing[HEAD_LAYER]
 	if(head_overlay)
-		remove_overlay(layer)
+		remove_overlay(HEAD_LAYER)
 		if(OFFSET_HEAD in dna.species.offset_features)
 			head_overlay.pixel_x += dna.species.offset_features[OFFSET_HEAD][1]
 			head_overlay.pixel_y += dna.species.offset_features[OFFSET_HEAD][2]
-			overlays_standing[layer] = head_overlay
-	apply_overlay(layer)
+			overlays_standing[HEAD_LAYER] = head_overlay
+	apply_overlay(HEAD_LAYER)
 
 /mob/living/carbon/human/update_inv_belt()
 	remove_overlay(BELT_LAYER)

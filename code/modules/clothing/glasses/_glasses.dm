@@ -42,7 +42,7 @@
 
 /obj/item/clothing/glasses/weldingvisortoggle(mob/user)
 	. = ..()
-	item_flags = up ? ABOVE_HAIR_WORN : NONE
+	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
 	if(. && user)
 		user.update_sight()
 		if(iscarbon(user))
