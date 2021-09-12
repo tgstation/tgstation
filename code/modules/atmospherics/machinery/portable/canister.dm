@@ -686,6 +686,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 							continue
 						if(gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE)) //if moles_visible is undefined, default to default visibility
 							danger = TRUE //at least 1 danger gas in there
+					//logging messages + paths
 					logmsg = "[key_name(usr)] <b>opened</b> a canister that contains the following:"
 					admin_msg = "[key_name(usr)] <b>opened</b> a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:"
 					for(var/name in gaseslog)
@@ -693,11 +694,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 						logmsg+= "\n[name]: [gaseslog[name]] moles."
 						if(danger && n <= 5)
 							admin_msg+= "\n[name]: [gaseslog[name]] moles."
-
 						if(n == 5 && danger)
-							message_admins(admin_msg)
-							message_admins("Too many gases to log. Check investigate.")
-				if(danger && n <= 5)
+							admin_msg+= "\nToo many gases to log. Check investigate log."
 					message_admins(admin_msg)
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
