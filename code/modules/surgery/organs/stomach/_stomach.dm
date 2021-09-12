@@ -284,7 +284,7 @@
 	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
-	metabolism_efficiency = 0.35 // not as good at digestion
+	metabolism_efficiency = 0.035 // not as good at digestion
 
 /obj/item/organ/stomach/cybernetic/tier2
 	name = "cybernetic stomach"
@@ -314,5 +314,15 @@
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
 
+/obj/item/organ/stomach/lizard
+	name = "lizard stomach"
+	icon_state = "stomach"
+	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
+	metabolism_efficiency = 0.07
+
+/obj/item/organ/stomach/lizard/handle_hunger(mob/living/carbon/human/human, delta_time, times_fired)
+	. = ..()
+	if(human.nutrition > NUTRITION_LEVEL_WELL_FED && human.nutrition < NUTRITION_LEVEL_FULL)
+		human.adjustBruteLoss(-0.5 * delta_time)
 
 #undef STOMACH_METABOLISM_CONSTANT

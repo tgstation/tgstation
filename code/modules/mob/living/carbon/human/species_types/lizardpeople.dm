@@ -16,9 +16,13 @@
 		/obj/item/organ/external/frills = "None",
 		/obj/item/organ/external/snout = "Round")
 	mutanttongue = /obj/item/organ/tongue/lizard
-	mutant_organs = list(/obj/item/organ/tail/lizard)
+	mutantstomach = /obj/item/organ/stomach/lizard
+	mutantliver = /obj/item/organ/liver/lizard
+	mutant_organs = list(/obj/item/organ/tail/lizard, /obj/item/organ/second_heart)
 	coldmod = 1.5
 	heatmod = 0.67
+	toxmod = 1.25
+	blood_gain_multiplier = 0.75
 	payday_modifier = 0.75
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	attack_verb = "slash"
@@ -92,7 +96,9 @@
 	var/real_spines = C.dna.features["spines"]
 
 	. = ..()
-
+	C.mob_surgery_speed_mod -= 0.35
+	RegisterSignal(C, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
+	RegisterSignal(C, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
 	// Special handler for loading preferences. If we're doing it from a preference load, we'll want
 	// to make sure we give the appropriate lizard tail AFTER we call the parent proc, as the parent
 	// proc will overwrite the lizard tail. Species code at its finest.
@@ -109,11 +115,33 @@
 		// we don't need to manage that.
 		new_tail.Insert(C, TRUE, FALSE)
 
+/datum/species/lizard/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	C.mob_surgery_speed_mod += 0.35
+	UnregisterSignal(C, COMSIG_CARBON_GAIN_ORGAN)
+	UnregisterSignal(C, COMSIG_CARBON_LOSE_ORGAN)
+	receiver.remove_client_colour(/datum/client_colour/monochrome/lizard)
+	return ..()
+
 /datum/species/lizard/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
 	var/tail = pick(GLOB.tails_list_lizard)
 	human_mob.dna.features["tail_lizard"] = tail
 	mutant_bodyparts["tail_lizard"] = tail
 	human_mob.update_body()
+
+/datum/species/lizard/proc/on_gained_organ(mob/living/receiver, /obj/item/organ/tongue/organ)
+	SIGNAL_HANDLER
+
+	if(!istype(organ) || organ.taste_sensitivity > LIZARD_MIN_SENSITIVITY)
+		return
+	receiver.remove_client_colour(/datum/client_colour/monochrome/lizard)
+
+
+/datum/species/lizard/proc/on_removed_organ(mob/living/unceiver, /obj/item/organ/tongue/organ)
+	SIGNAL_HANDLER
+
+	if(!istype(organ))
+		return
+	unceiver.add_client_colour(/datum/client_colour/monochrome/lizard)
 
 /*
 Lizard subspecies: ASHWALKERS

@@ -490,3 +490,29 @@
 	ethereal_heart.owner.gain_trauma(picked_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
 	playsound(get_turf(ethereal_heart.owner), 'sound/effects/ethereal_revive.ogg', 100)
 	qdel(src)
+
+/obj/item/organ/second_heart
+	name = "second heart"
+	desc = "Makes your blood regenerate faster."
+	icon_state = "second_heart"
+	zone = BODY_ZONE_CHEST
+	slot = ORGAN_SLOT_HEART_AID
+	healing_factor = STANDARD_ORGAN_HEALING
+	decay_factor = 2.5 * STANDARD_ORGAN_DECAY
+	attack_verb_continuous = list("beats", "thumps")
+	attack_verb_simple = list("beat", "thump")
+	var/regen_modifier = 0.5
+
+/obj/item/organ/second_heart/on_life(delta_time, times_fired)
+	..()
+	if(!owner.needs_heart() || owner.blood_volume >= BLOOD_VOLUME_NORMAL)
+		return
+	if(organ_flags & ORGAN_FAILING)
+		var/bleed_amount = 0
+		for(var/obj/item/bodypart/part as anything in bodyparts)
+			bleed_amount += part.get_bleed_rate() * delta_time
+		if(bleed_amoun)
+			bleed(bleed_amoun)
+			bleed_warn(bleed_amoun)
+	else
+		owner.blood_volume = min(owner.blood_volume + (BLOOD_REGEN_FACTOR * regen_modifier * delta_time), BLOOD_VOLUME_NORMAL)

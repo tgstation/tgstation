@@ -90,12 +90,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/brutemod = 1
 	///multiplier for burn damage
 	var/burnmod = 1
+	///multiplier for toxin damage
+	var/toxmod = 1
+	///multiplier for oxygen damage
+	var/oxymod = 1
 	///multiplier for damage from cold temperature
 	var/coldmod = 1
 	///multiplier for damage from hot temperature
 	var/heatmod = 1
 	///multiplier for stun durations
 	var/stunmod = 1
+	///Multiplier for blood regeneration
+	var/blood_gain_multiplier = 1
 	///multiplier for money paid at payday
 	var/payday_modifier = 1
 	///Type of damage attack does. Ethereals attack with burn damage for example.
@@ -1520,10 +1526,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else
 				H.adjustFireLoss(damage_amount)
 		if(TOX)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.tox_mod
+			var/damage_amount = forced ? damage : damage * hit_percent * toxmod * H.physiology.tox_mod
 			H.adjustToxLoss(damage_amount)
 		if(OXY)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.oxy_mod
+			var/damage_amount = forced ? damage : damage * hit_percent * oxymod * H.physiology.oxy_mod
 			H.adjustOxyLoss(damage_amount)
 		if(CLONE)
 			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.clone_mod

@@ -250,4 +250,8 @@
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
 
-
+/obj/item/organ/liver/lizard
+	name = "lizard liver"
+	icon_state = "liver"
+	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
+	toxTolerance = 2

@@ -14,6 +14,7 @@
 
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
+			var/blood_multiplier = dna.species.blood_gain_multiplier
 			var/nutrition_ratio = 0
 			switch(nutrition)
 				if(0 to NUTRITION_LEVEL_STARVING)
@@ -29,7 +30,7 @@
 			if(satiety > 80)
 				nutrition_ratio *= 1.25
 			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * delta_time)
-			blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * delta_time), BLOOD_VOLUME_NORMAL)
+			blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * blood_multiplier * delta_time), BLOOD_VOLUME_NORMAL)
 
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
