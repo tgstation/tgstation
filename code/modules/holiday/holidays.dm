@@ -204,7 +204,7 @@ datum/holiday/wetlands_day
 	begin_month = MARCH
 	begin_day = 8
 
-	datum/holiday/int_womn/getStationPrefix()
+/datum/holiday/int_womn/getStationPrefix()
 	return pick("Lovable","Amazing","Styling","Fashionable","Queen","Girlboss","Thoughtful")
 
 /datum/holiday/pi
@@ -231,7 +231,8 @@ datum/holiday/wetlands_day
 	name = "International Day of Forests"
 	begin_day = 21
 	begin_month = MARCH
-	datum/holiday/int_forest/getStationPrefix()
+	
+/datum/holiday/int_forest/getStationPrefix()
 	return pick("Birch","Oak","Redwood","Oil Palm","Candlenut","Dogwood","Cherry Blossom")
 
 // APRIL
