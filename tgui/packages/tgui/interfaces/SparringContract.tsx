@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { BlockQuote, Button, Dropdown, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -171,33 +172,58 @@ export const SparringContract = (props, context) => {
                 </Stack.Item>
               </Stack>
             </Stack.Item>
-            <Stack.Item textAlign="center">
-              <Button
-                tooltip={in_area
-                  && "Both participants are present in the "+ area + "."
-                  || "Both participants need to be in the arena!"}
-                color={in_area && "green" || "red"}
-                icon={in_area && "check" || "exclamation-triangle"} />
-              <Button
-                disabled={
-                  !in_area || (no_chaplains && set_stakes === STAKES_HOLY_MATCH)
-                }
-                icon="fist-raised"
-                onClick={() => act('fight')} >
-                FIGHT!
-              </Button>
-              <Button
-                tooltip={(left_sign && right_sign)
-                  && "Both signatures present, terms agreed upon."
-                  || "You need signatures from both fighters on the terms!"}
-                color={(left_sign && right_sign) && "green" || "red"}
-                icon={(left_sign && right_sign) && "check" || "exclamation-triangle"} />
-              <Button
-                tooltip={!no_chaplains
-                  && "At least one chaplain is present. Holy matches allowed."
-                  || "No chaplain present for this fight. No Holy Matches!"}
-                color={!no_chaplains && "green" || "yellow"}
-                icon={!no_chaplains && "check" || "exclamation"} />
+            <Stack.Item mb={-0.5}>
+              <Stack fill>
+                <Stack.Item grow>
+                  <Button
+                    disabled={
+                      !in_area
+                      || (no_chaplains && set_stakes === STAKES_HOLY_MATCH)
+                    }
+                    icon="fist-raised"
+                    onClick={() => act('fight')} >
+                    FIGHT!
+                  </Button>
+                  <Button
+                    tooltip={multiline`
+                      If you've already signed but you want to renegotiate
+                      the terms, you can clear out the signatures with
+                      this button.
+                    `}
+                    icon="door-open"
+                    onClick={() => act('clear')} >
+                    Clear
+                  </Button>
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    tooltip={in_area
+                      && "Both participants are present in the "+ area + "."
+                      || "Both participants need to be in the arena!"}
+                    color={in_area && "green" || "red"}
+                    icon="ring" >
+                    Arena
+                  </Button>
+                  <Button
+                    tooltip={(left_sign !== "none" && right_sign !== "none")
+                      && "Both signatures present, terms agreed upon."
+                      || "You need signatures from both fighters on the terms!"}
+                    color={(left_sign !== "none" && right_sign !== "none")
+                      && "green"
+                      || "red"}
+                    icon="file-signature" >
+                    Signatures
+                  </Button>
+                  <Button
+                    tooltip={!no_chaplains
+                      && "At least one chaplain is present. Holy matches allowed."
+                      || "No chaplain present for this fight. No Holy Matches!"}
+                    color={!no_chaplains && "green" || "yellow"}
+                    icon="cross" >
+                    Chaplain
+                  </Button>
+                </Stack.Item>
+              </Stack>
             </Stack.Item>
           </Stack>
         </Section>

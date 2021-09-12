@@ -185,7 +185,7 @@
 /datum/sparring_match/proc/violation(mob/living/carbon/human/offender, reason)
 	SIGNAL_HANDLER
 
-	to_chat(offender, span_danger("Violation! No [reason]!"))
+	to_chat(offender, span_userdanger("Violation! No [reason]!"))
 	if(offender == chaplain)
 		chaplain_violations_allowed--
 		if(!chaplain_violations_allowed)

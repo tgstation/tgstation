@@ -13,8 +13,8 @@
 	var/arena_condition = /area/service/chapel
 	///what stakes the fight will have
 	var/stakes_condition = STAKES_NONE
-	///who has signed this contract
-	var/list/signed_by = list(null, null)
+	///who has signed this contract. fills itself with WEAKREFS, to prevent hanging references
+	var/list/datum/weakref/signed_by = list(null, null)
 
 /obj/item/sparring_contract/Initialize()
 	. = ..()
@@ -45,8 +45,12 @@
 /obj/item/sparring_contract/ui_data(mob/user)
 	var/list/data = list()
 	var/area/arena = GLOB.areas_by_type[arena_condition]
-	var/mob/living/carbon/human/left_partner = signed_by[1]
-	var/mob/living/carbon/human/right_partner = signed_by[2]
+	var/mob/living/carbon/human/left_partner
+	if(signed_by[1])
+		left_partner = signed_by[1].resolve()
+	var/mob/living/carbon/human/right_partner
+	if(signed_by[2])
+		right_partner = signed_by[2].resolve()
 	data["in_area"] = ((left_partner && right_partner && arena) && (left_partner in arena.contents) && (right_partner in arena.contents))
 	data["no_chaplains"] = (!left_partner?.mind?.holy_role && !right_partner?.mind?.holy_role)
 	data["left_sign"] = left_partner ? left_partner.real_name : "none"
@@ -85,10 +89,17 @@
 	//any updating of the terms should update the UI to display new terms
 	. = TRUE
 
+	var/mob/living/carbon/human/left_partner
+	if(signed_by[1])
+		left_partner = signed_by[1].resolve()
+	var/mob/living/carbon/human/right_partner
+	if(signed_by[2])
+		right_partner = signed_by[2].resolve()
+
 	switch(action)
+		if("clear")
+			signed_by = list(null, null)//remove weakrefs
 		if("fight")
-			var/mob/living/carbon/human/left_partner = signed_by[1]
-			var/mob/living/carbon/human/right_partner = signed_by[2]
 			if(!left_partner || !right_partner || !left_partner.mind || !right_partner.mind)
 				return
 			if(HAS_TRAIT(left_partner, TRAIT_SPARRING) || HAS_TRAIT(right_partner, TRAIT_SPARRING))
@@ -99,7 +110,7 @@
 			new /datum/sparring_match(weapons_condition, GLOB.areas_by_type[arena_condition], stakes_condition, chaplain, opponent)
 			qdel(src)
 		if("sign")
-			if(user in signed_by)
+			if(user == left_partner || user == right_partner)
 				to_chat(user, span_warning("You've already signed one side of the contract."))
 				return
 			var/area/arena_condition_name = GLOB.areas_by_type[arena_condition]
@@ -123,11 +134,12 @@
 				terms_changed = TRUE
 				stakes_condition = params["stakes"]
 			//if you change the terms you have to get the other person to sign again.
-			if(terms_changed && (signed_by[1] || signed_by[2]))
-				signed_by = list(null, null)
+			if(terms_changed && (left_partner || right_partner))
+				signed_by = list(null, null)//remove weakrefs
 				to_chat(user, span_warning("You will need to get your sparring partner to sign again under these new terms you've set."))
 			//fluff and signing
+			var/datum/weakref/user_ref = WEAKREF(user)
 			if(params["sign_position"] == CONTRACT_LEFT_FIELD)
-				signed_by[1] = user
+				signed_by[1] = user_ref
 			else
-				signed_by[2] = user
+				signed_by[2] = user_ref
