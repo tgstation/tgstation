@@ -33,7 +33,9 @@
 	return swarmer_team
 
 /datum/antagonist/swarmer/get_preview_icon()
-	return finish_preview_icon(icon('icons/mob/swarmer.dmi', "swarmer"))
+	var/icon/swarmer_icon = icon('icons/mob/swarmer.dmi', "swarmer")
+	swarmer_icon.Shift(NORTH, 8)
+	return finish_preview_icon(swarmer_icon)
 
 //SWARMER
 /mob/living/simple_animal/hostile/swarmer/mind_initialize()
