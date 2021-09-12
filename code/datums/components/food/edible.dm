@@ -489,7 +489,7 @@ Behavior that's still missing from this component that original food items had t
 	if(foodtypes & edible_flags)
 		var/atom/eaten_food = parent
 		eaten_food.reagents.trans_to(eater, eaten_food.reagents.total_volume, transfered_by = eater)
-		eater.visible_message("<span class='warning>[src] eats [eaten_food]!</span>", span_notice("You eat [eaten_food]."))
+		eater.visible_message(span_warning("[src] eats [eaten_food]!"), span_notice("You eat [eaten_food]."))
 		playsound(get_turf(eater),'sound/items/eatfood.ogg', rand(30,50), TRUE)
 		qdel(eaten_food)
 		return COMSIG_ATOM_EATEN
