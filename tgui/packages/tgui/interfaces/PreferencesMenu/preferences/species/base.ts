@@ -11,10 +11,6 @@ export type Species = {
   lore?: string[];
 };
 
-// MOTHBLOCKS TODO: What if the features were config-dependent?
-// As in, you don't see humans can be command if the config says that
-// isn't true.
-// Could add a feature flag.
 export type Feature = {
   icon: string;
   name: string;
