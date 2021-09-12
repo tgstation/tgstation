@@ -83,7 +83,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/healium,
 		/datum/gas/proto_nitrate,
 		/datum/gas/zauker,
-		/datum/gas/miasma
+		/datum/gas/miasma,
+		/datum/gas/antinoblium,
 	)
 	///The list of gases mapped against their current comp. We use this to calculate different values the supermatter uses, like power or heat resistance. It doesn't perfectly match the air around the sm, instead moving up at a rate determined by gas_change_rate per call. Ranges from 0 to 1
 	var/list/gas_comp = list(
@@ -101,6 +102,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/healium = 0,
 		/datum/gas/proto_nitrate = 0,
 		/datum/gas/zauker = 0,
+		/datum/gas/antinoblium = 0,
 	)
 	///The list of gases mapped against their transmit values. We use it to determine the effect different gases have on radiation
 	var/list/gas_trans = list(
@@ -114,6 +116,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/healium = HEALIUM_TRANSMIT_MODIFIER,
 		/datum/gas/proto_nitrate = PROTO_NITRATE_TRANSMIT_MODIFIER,
 		/datum/gas/zauker = ZAUKER_TRANSMIT_MODIFIER,
+		/datum/gas/antinoblium = ANTINOBLIUM_TRANSMIT_MODIFIER,
 	)
 	///The list of gases mapped against their heat penaltys. We use it to determin molar and heat output
 	var/list/gas_heat = list(
@@ -130,6 +133,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/healium = HEALIUM_HEAT_PENALTY,
 		/datum/gas/proto_nitrate = PROTO_NITRATE_HEAT_PENALTY,
 		/datum/gas/zauker = ZAUKER_HEAT_PENALTY,
+		/datum/gas/antinoblium = ANTINOBLIUM_HEAT_PENALTY,
 	)
 	///The list of gases mapped against their heat resistance. We use it to moderate heat damage.
 	var/list/gas_resist = list(
@@ -153,6 +157,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/proto_nitrate = 1,
 		/datum/gas/zauker = 1,
 		/datum/gas/miasma = 0.5,
+		/datum/gas/antinoblium
 	)
 	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
@@ -643,11 +648,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
 			radiation_pulse(src, power * max(0, (1 + (power_transmission_bonus/(10-(gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus))// RadModBZ(500%)
 
-		if(prob(gas_comp[/datum/gas/zauker]))
+		if(prob(gas_comp[/datum/gas/zauker] + gas_comp[/datum/gas/antinoblium]))
 			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 			supermatter_zap(src, 6, clamp(power*2, 4000, 20000), ZAP_MOB_STUN, zap_cutoff = src.zap_cutoff, power_level = power, zap_icon = src.zap_icon)
 
-		if(gas_comp[/datum/gas/bz] >= 0.4 && prob(30 * gas_comp[/datum/gas/bz]))
+		if(gas_comp[/datum/gas/bz] + gas_comp[/datum/gas/antinoblium] >= 0.4 && prob(30 * (gas_comp[/datum/gas/bz] + gas_comp[/datum/gas/antinoblium])))
 			src.fire_nuclear_particle()        // Start to emit radballs at a maximum of 30% chance per tick
 
 		//Power * 0.55 * a value between 1 and 0.8
