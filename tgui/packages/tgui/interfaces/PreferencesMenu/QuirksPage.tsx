@@ -217,7 +217,7 @@ export const QuirksPage = (props, context) => {
           const quirk = quirkInfo[quirkName];
 
           if (balance - quirk.value > 0) {
-            return "You need to remove a negative quirk first!";
+            return "You need to remove a positive quirk first!";
           }
 
           return undefined;
