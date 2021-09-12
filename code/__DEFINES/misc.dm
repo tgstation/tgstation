@@ -41,7 +41,7 @@
 #define HANDS_LAYER 6
 #define BODY_FRONT_LAYER 5 // Usually used for mutant bodyparts that need to be in front of stuff (e.g. cat ears)
 #define ABOVE_BODY_FRONT_GLASSES_LAYER 4 // For the special glasses that actually require to be above the hair (e.g. lifted welding goggles)
-#define ABOVE_BODY_FRONT_HEAD_LAYER 3 // For the rare cases where something on the head needs to be above everything else (e.g. flowers in South orientation)
+#define ABOVE_BODY_FRONT_HEAD_LAYER 3 // For the rare cases where something on the head needs to be above everything else (e.g. flowers)
 #define HALO_LAYER 2 //blood cult ascended halo, because there's currently no better solution for adding/removing
 #define FIRE_LAYER 1 //If you're on fire
 #define TOTAL_LAYERS 31 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
