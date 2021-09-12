@@ -3,24 +3,45 @@
 	var/cell_x
 	///our y index in the list of cells
 	var/cell_y
+	///what z level we are in
+	var/cell_z
 
 	//every data point in a grid cell is separated by usecase
 
 	///every hearing sensitive movable inside this cell
 	var/list/hearing_contents = list()
-	///every client possessed movable inside this cell
+	///every client possessed mob inside this cell
 	var/list/client_contents = list()
 
 /datum/spatial_grid_cell/New(cell_x, cell_y, cell_z)
 	. = ..()
 	src.cell_x = cell_x
 	src.cell_y = cell_y
+	src.cell_z = cell_z
 
 /datum/spatial_grid_cell/Destroy(force, ...)
-	if(!force)//fuck you dont destroy this
+	if(force)//the response to someone trying to qdel this is a right proper fuck you
 		return
 
 	. = ..()
+
+/**
+ * # Spatial Grid
+ * a gamewide grid of spatial_grid_cell datums, each "covering" SPATIAL_GRID_CELLSIZE ^ 2 turfs
+ * each spatial_grid_cell datum stores information about what is inside its covered area, so that searches through that area dont have to literally search
+ * through all turfs themselves to know what is within it since view() calls are expensive, and so is iterating through stuff you dont want.
+ * this allows you to only go through lists of what you want very cheaply
+ *
+ * you can also register to objects entering and leaving a spatial cell, this allows you to do things like stay idle until a player enters, so you wont
+ * have to use expensive view() calls or iteratite over the global list of players and call get_dist() on every one. which is fineish for a few things, but is
+ * k * n operations for k objects iterating through n players
+ *
+ * currently this system is only designed for searching for relatively uncommon things, small subsets of /atom/movable
+ * dont add stupid shit to the cells please, keep the information that the cells store to things that need to be searched for often
+ *
+ * as of right now this system operates on a subset of the important_recursive_contents list for atom/movable, specifically
+ * RECURSIVE_CONTENTS_HEARING_SENSITIVE and RECURSIVE_CONTENTS_CLIENT_MOBS because both are those are both 1. important and 2. commonly searched for
+ */
 
 SUBSYSTEM_DEF(spatial_grid)
 	can_fire = FALSE
@@ -41,7 +62,7 @@ SUBSYSTEM_DEF(spatial_grid)
 		for(var/y in 1 to cells_per_side)
 			new_cell_grid += list(list())
 			for(var/x in 1 to cells_per_side)
-				var/datum/spatial_grid_cell/cell = new(x, y)
+				var/datum/spatial_grid_cell/cell = new(x, y, z_level.z_value)
 				new_cell_grid[y] += cell
 
 /**
@@ -84,15 +105,16 @@ SUBSYSTEM_DEF(spatial_grid)
 				for(var/datum/spatial_grid_cell/cell as anything in grid_row.Copy(min_x, max_x + 1))
 					contents_to_return += cell.hearing_contents
 
-	if(!include_center)
+	if(!include_center) //this is faster for things that dont care about themselves but are (probably) in the output, helps us return without using the LOS algorithm
 		contents_to_return -= center
 
 	if(!length(contents_to_return))
-		return contents_to_return //we know that all of our contents are whats already in center
+		return contents_to_return
 
 	if(ignore_visibility)
 		for(var/atom/movable/target as anything in contents_to_return)
 			var/turf/target_turf = get_turf(target)
+
 			if(get_dist(center_turf, target_turf) > range)
 				contents_to_return -= target
 
@@ -110,8 +132,10 @@ SUBSYSTEM_DEF(spatial_grid)
 			contents_to_return -= target
 			continue
 
-		//this turf search algorithm is the worst scaling part of this proc, scaling worse than view() for moderate ranges and > 50 length contents_to_return
+		//this turf search algorithm is the worst scaling part of this proc, scaling worse than view() for small-moderate ranges and > 50 length contents_to_return
 		//luckily its significantly faster than view for large ranges in large spaces and/or relatively few contents_to_return
+		//i can do things that would scale better, but they would be slower for low volume searches which is the vast majority of the current workload
+		//maybe in the future a high volume algorithm would be worth it
 		var/turf/inbetween_turf = center_turf
 		while(TRUE)
 			inbetween_turf = get_step(inbetween_turf, get_dir(inbetween_turf, target_turf))
@@ -125,7 +149,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	return contents_to_return
 
-///get the grid cell encomapassing targets coordinates and of the specified type
+///get the grid cell encomapassing targets coordinates
 /datum/controller/subsystem/spatial_grid/proc/get_cell_of(atom/target)
 	var/turf/target_turf = get_turf(target)
 
@@ -134,7 +158,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/datum/spatial_grid_cell/cell_to_return = grid[CEILING(target_turf.y / SPATIAL_GRID_CELLSIZE, 1)][CEILING(target_turf.x / SPATIAL_GRID_CELLSIZE, 1)]
 	return cell_to_return
 
-///get all grid cells intersecting radius around center
+///get all grid cells intersecting radius around center and return a list of them
 /datum/controller/subsystem/spatial_grid/proc/get_cells_in_range(atom/center, range)
 	var/turf/center_turf = get_turf(center)
 
@@ -160,3 +184,73 @@ SUBSYSTEM_DEF(spatial_grid)
 			intersecting_grid_cells += cell
 
 	return intersecting_grid_cells
+
+///find the spatial map cell that target belongs to, then add target's important_recusive_contents to it. make sure to provide the turf new_target is "in"
+/datum/controller/subsystem/spatial_grid/proc/enter_cell(atom/movable/new_target, turf/target_turf)
+	if(!target_turf || !new_target?.important_recursive_contents)
+		CRASH("/datum/controller/subsystem/spatial_grid/proc/enter_cell() was given null arguments or a new_target without important_recursive_contents!")
+
+	var/list/grid = grids_by_z_level[target_turf.z]
+
+	var/datum/spatial_grid_cell/intersecting_cell = grid[CEILING(target_turf.y / SPATIAL_GRID_CELLSIZE, 1)][CEILING(target_turf.x / SPATIAL_GRID_CELLSIZE, 1)]
+
+	SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED, new_target)
+
+	if(new_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
+		intersecting_cell.client_contents |= new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS]
+
+	if(new_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
+		intersecting_cell.hearing_contents |= new_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+
+///find the spatial map cell that target used to belong to, then subtract target's important_recusive_contents from it.
+///make sure to provide the turf old_target used to be "in"
+/datum/controller/subsystem/spatial_grid/proc/exit_cell(atom/movable/old_target, turf/target_turf)
+	if(!target_turf || !old_target?.important_recursive_contents)
+		CRASH("/datum/controller/subsystem/spatial_grid/proc/exit_cell() was given null arguments or a new_target without important_recursive_contents!")
+
+	var/list/grid = grids_by_z_level[target_turf.z]
+	var/datum/spatial_grid_cell/intersecting_cell = grid[CEILING(target_turf.y / SPATIAL_GRID_CELLSIZE, 1)][CEILING(target_turf.x / SPATIAL_GRID_CELLSIZE, 1)]
+
+	SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED, old_target)
+
+	if(old_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
+		intersecting_cell.client_contents -= old_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS]
+
+	if(old_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
+		intersecting_cell.hearing_contents -= old_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+
+///find the cell this movable is associated with and removes it from all lists
+/datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove)
+	var/datum/spatial_grid_cell/cell = get_cell_of(to_remove)
+	if(!cell)
+		return
+
+	cell.client_contents -= to_remove
+	cell.hearing_contents -= to_remove
+
+///if shit goes south, this will find hanging references for qdeleting movables inside
+/datum/controller/subsystem/spatial_grid/proc/find_hanging_cell_refs_for_movable(atom/movable/to_remove, should_yield = TRUE)
+	var/list/containing_cells = list()
+	for(var/list/z_level_grid as anything in grids_by_z_level)
+		for(var/list/cell_row as anything in z_level_grid)
+			if(should_yield)
+				CHECK_TICK
+			for(var/datum/spatial_grid_cell/cell as anything in cell_row)
+				if(src in (cell.hearing_contents | cell.client_contents))
+					containing_cells += cell
+
+	return containing_cells
+
+///debug proc for checking if a movable is in multiple cells when it shouldnt be (ie always)
+/atom/proc/find_all_cells_containing()
+	var/datum/spatial_grid_cell/real_cell = SSspatial_grid.get_cell_of(src)
+	var/list/containing_cells = SSspatial_grid.find_hanging_cell_refs_for_movable(src, FALSE)
+
+	message_admins("[src] is located in the contents of [length(containing_cells)] spatial grid cells")
+
+	var/cell_coords = "the following cells contain [src]: "
+	for(var/datum/spatial_grid_cell/cell as anything in containing_cells)
+		cell_coords += "([cell.cell_x], [cell.cell_y]), "
+
+	message_admins(cell_coords)
+	message_admins("[src] is supposed to only be contained in the cell at indexes ([real_cell.cell_x], [real_cell.cell_y])")

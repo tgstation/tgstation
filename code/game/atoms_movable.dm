@@ -134,16 +134,18 @@
 		orbiting.end_orbit(src)
 		orbiting = null
 
+
+	if(important_recursive_contents)
+		SSspatial_grid.force_remove_from_cell(src)
+
+	LAZYCLEARLIST(important_recursive_contents)//has to be before moveToNullspace() so that we can exit our spatial_grid cell if we're in it
+
 	. = ..()
 
 	for(var/movable_content in contents)
 		qdel(movable_content)
 
 	moveToNullspace()
-
-	//We add ourselves to this list, best to clear it out
-	//DO it after moveToNullspace so memes can be had
-	LAZYCLEARLIST(important_recursive_contents)
 
 	vis_contents.Cut()
 
@@ -664,8 +666,13 @@
 		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_HEARING_SENSITIVE), .proc/on_hearing_sensitive_trait_loss)
 		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 			LAZYADDASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE, src)
-	ADD_TRAIT(src, TRAIT_HEARING_SENSITIVE, trait_source)
 
+		var/turf/our_turf = get_turf(src)
+		if(our_turf)
+			SSspatial_grid.enter_cell(src, our_turf)
+
+
+	ADD_TRAIT(src, TRAIT_HEARING_SENSITIVE, trait_source)
 
 ///allows this movable to know when it has "entered" another area no matter how many movable atoms its stuffed into, uses important_recursive_contents
 /atom/movable/proc/become_area_sensitive(trait_source = TRAIT_GENERIC)
@@ -685,6 +692,9 @@
 /atom/movable/proc/on_hearing_sensitive_trait_loss()
 	SIGNAL_HANDLER
 
+	var/turf/our_turf = get_turf(src)
+	if(our_turf)
+		SSspatial_grid.exit_cell(src, our_turf)
 	UnregisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_HEARING_SENSITIVE))
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 		LAZYREMOVEASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE, src)

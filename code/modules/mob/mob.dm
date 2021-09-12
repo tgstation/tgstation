@@ -1358,4 +1358,5 @@
 /mob/proc/clear_client_in_contents()
 	if(client?.movingmob) //In the case the client was transferred to another mob and not deleted.
 		LAZYREMOVEASSOC(client.movingmob.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, src)
+		SSspatial_grid.exit_cell(src, get_turf(src))
 		client.movingmob = null
