@@ -677,26 +677,24 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 				SSair.start_processing_machine(src)
 				logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting a transfer into \the [holding || "air"].<br>"
 				if(!holding)
-					//list for logging all gases in canister
-					var/list/gaseslog = list()
+					var/list/gaseslog = list() //list for logging all gases in canister
 					for(var/id in air_contents.gases)
 						var/gas = air_contents.gases[id]
-						gaseslog[gas[GAS_META][META_GAS_NAME]] = gas[MOLES]
+						gaseslog[gas[GAS_META][META_GAS_NAME]] = gas[MOLES]	//adds gases to gaseslog
 						if(!gas[GAS_META][META_GAS_DANGER])
 							continue
 						if(gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE)) //if moles_visible is undefined, default to default visibility
-							danger = TRUE //at least 1 danger gas in there
-					//logging messages + paths
+							danger = TRUE //at least 1 danger gas
 					logmsg = "[key_name(usr)] <b>opened</b> a canister that contains the following:"
 					admin_msg = "[key_name(usr)] <b>opened</b> a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:"
 					for(var/name in gaseslog)
 						n = n + 1
-						logmsg+= "\n[name]: [gaseslog[name]] moles."
-						if(n <= 5)
-							admin_msg+= "\n[name]: [gaseslog[name]] moles."
-						if(n == 5 && gaseslog.len > 5)
-							admin_msg+= "\nToo many gases to log. Check investigate log."
-					if(danger)
+						logmsg += "\n[name]: [gaseslog[name]] moles."
+						if(n <= 5) //the first five gases added
+							admin_msg += "\n[name]: [gaseslog[name]] moles."
+						if(n == 5 && gaseslog.len > 5) //message added if more than 5 gases
+							admin_msg += "\nToo many gases to log. Check investigate log."
+					if(danger) //sent to admin's chat if contains dangerous gases
 						message_admins(admin_msg)
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
