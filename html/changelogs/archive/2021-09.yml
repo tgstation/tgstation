@@ -370,3 +370,27 @@
   tralezab:
   - qol: TGUI-ifies apprentice contracts. Yummy!
   - bugfix: soul shards now properly remove antag when exorcised
+2021-09-12:
+  ATHATH:
+  - bugfix: Dreaming is now less rare.
+  CodeMonkey:
+  - bugfix: Fixes parallax animations
+  Fikou:
+  - admin: adds infinity to vv classes
+  Mothblocks:
+  - bugfix: The R&D console has been given back its tooltips
+  - bugfix: Fixed RPD arrows, strip menu eyes, etc not being styled properly.
+  Nari Harimoto:
+  - bugfix: you no longer hit space heaters when wrenching or screwdrivering them
+  dragomagol:
+  - qol: removed reinforced walls under grilles in space on Meta and Delta
+  esainane:
+  - bugfix: The HFR no longer yeets all iron content given scraps of Oxygen.
+  - bugfix: The HFR now burns Oxygen proportionally to the amount of iron content
+      removed when appropriate.
+  - bugfix: The HFR using Oxygen to mitigate iron content buildup now properly respects
+      delta time.
+  - qol: The HFR interface now lists recipes in a more sensible order. This is sorted
+      by maximum temperature, which also roughly approximates difficulty and desirability.
+  - bugfix: The HFR interface now lets you toggle waste removal at power level 6,
+      rather than merely having it permitted in the backend.
