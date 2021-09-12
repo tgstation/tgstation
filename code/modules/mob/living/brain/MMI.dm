@@ -104,8 +104,8 @@
 
 /obj/item/mmi/attack_self(mob/user)
 	if(!brain)
-		radio.set_on(!radio.get_on())
-		to_chat(user, span_notice("You toggle [src]'s radio system [radio.get_on() == TRUE ? "on" : "off"]."))
+		radio.set_on(!radio.is_on())
+		to_chat(user, span_notice("You toggle [src]'s radio system [radio.is_on() == TRUE ? "on" : "off"]."))
 	else
 		eject_brain(user)
 		update_appearance()
@@ -204,7 +204,7 @@
 
 	if(brainmob.stat)
 		to_chat(brainmob, span_warning("Can't do that while incapacitated or dead!"))
-	if(!radio.get_on())
+	if(!radio.is_on())
 		to_chat(brainmob, span_warning("Your radio is disabled!"))
 		return
 
@@ -235,7 +235,7 @@
 /obj/item/mmi/examine(mob/user)
 	. = ..()
 	if(radio)
-		. += span_notice("There is a switch to toggle the radio system [radio.get_on() ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]")
+		. += span_notice("There is a switch to toggle the radio system [radio.is_on() ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]")
 	if(brainmob)
 		var/mob/living/brain/B = brainmob
 		if(!B.key || !B.mind || B.stat == DEAD)

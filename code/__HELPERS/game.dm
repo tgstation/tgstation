@@ -215,6 +215,7 @@
 			if(recursive_contents)
 				. += recursive_contents
 		return
+	return SSspatial_grid.find_grid_contents_in_view(source, SPATIAL_GRID_CONTENTS_TYPE_HEARING, view_radius, TRUE, include_source)
 
 	return SSspatial_hashmap.find_hashmap_contents_in_view(HASHMAP_CONTENTS_TYPE_HEARING, source, view_radius)
 	var/lum = center_turf.luminosity

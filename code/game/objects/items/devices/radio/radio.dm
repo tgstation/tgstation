@@ -70,7 +70,6 @@
 	secure_radio_connections = new
 	. = ..()
 
-
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
@@ -91,7 +90,7 @@
 
 //simple getters only because i NEED to enforce complex setter use for these vars for caching purposes but VAR_PROTECTED requires getter usage as well.
 //if another decorator is made that doesnt require getters feel free to nuke these and change these vars over to that
-/obj/item/radio/proc/get_on()
+/obj/item/radio/proc/is_on()
 	return on
 
 /obj/item/radio/proc/get_frequency()
@@ -151,8 +150,6 @@
 	else
 		remove_radio_all(src)
 
-
-//TODOKYLER: i dont think this is friendly with temporarily removing from the global radio list
 /obj/item/radio/proc/recalculateChannels()
 	resetChannels()
 
@@ -205,16 +202,8 @@
 	INVOKE_ASYNC(src, .proc/talk_into_impl, talking_movable, message, channel, spans.Copy(), language, message_mods)
 	return ITALICS | REDUCE_RANGE
 
-GLOBAL_VAR_INIT(tick_usage_telecomms_only, 0)
-
-GLOBAL_VAR_INIT(returned_to_on_listening_or_wire, 0)
-GLOBAL_VAR_INIT(returned_to_centcom_freq, 0)
-GLOBAL_VAR_INIT(returned_to_not_on_level, 0)
-GLOBAL_VAR_INIT(returned_to_synd_freq, 0)
-GLOBAL_VAR_INIT(returned_to_end_of_proc, 0)
-
 /obj/item/radio/proc/talk_into_impl(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
-	if(!get_on())
+	if(!on)
 		return // the device has to be on
 	if(!talking_movable || !message)
 		return
@@ -270,41 +259,7 @@ GLOBAL_VAR_INIT(returned_to_end_of_proc, 0)
 		return
 
 	// All radios make an attempt to use the subspace system first
-	GLOB.tick_usage_telecomms_only = TICK_USAGE
-	var/before_usage = TICK_USAGE
 	signal.send_to_receivers()
-	var/signal_slow = signal.data["slow"]
-	message_admins("this broadcast took [TICK_USAGE_TO_MS(before_usage)] ms")
-	message_admins("receive_info called [GLOB.relay_information_calls] times, iterating [GLOB.relay_infomration_total_iterations] times, returning because of filter [GLOB.relay_information_filter_returns] times")
-	message_admins("receive_information was called [GLOB.receive_information_calls] times")
-	message_admins("this signal [signal_slow > 0 ? "has" : "hasnt"] slept while broadcasting")
-	message_admins("this signal was sent to [GLOB.total_radios_sent_to] radios and heard by [GLOB.total_hearers_sent_to] hearers")
-	message_admins("signal/broadcast() took [GLOB.broadcast_cost] ms")
-	message_admins("cost of telecomms machinery was [GLOB.tick_usage_telecomms_only] ms")
-	message_admins("filtering the radio list took [GLOB.filtering_cost] ms")
-	message_admins("of the radios filtered, [GLOB.returned_to_on_listening_or_wire] werent on or listening or had recieve wires cut, \
-	[GLOB.returned_to_centcom_freq] returned due to it being a centcom frequency, \
-	[GLOB.returned_to_not_on_level] returned due to not being on the right level, \
-	[GLOB.returned_to_synd_freq] returned due to not being syndicate, \
-	[GLOB.returned_to_end_of_proc] returned due to not having anything return TRUE")
-	message_admins("the list started with [GLOB.initial_radio_length] radios before filtering")
-	message_admins("get_hearers_in_radio_ranges cost [GLOB.get_hearers_in_radio_ranges_cost] ms")
-	message_admins("hearer.Hear cost [GLOB.hearing_cost] ms")
-	GLOB.returned_to_on_listening_or_wire = 0
-	GLOB.returned_to_centcom_freq = 0
-	GLOB.returned_to_synd_freq = 0
-	GLOB.returned_to_end_of_proc = 0
-	GLOB.relay_information_calls = 0
-	GLOB.relay_infomration_total_iterations = 0
-	GLOB.relay_information_filter_returns = 0
-	GLOB.receive_information_calls = 0
-	GLOB.total_radios_sent_to = 0
-	GLOB.total_hearers_sent_to = 0
-	GLOB.filtering_cost = 0
-	GLOB.initial_radio_length = 0
-	GLOB.get_hearers_in_radio_ranges_cost = 0
-	GLOB.hearing_cost = 0
-	GLOB.returned_to_not_on_level = 0
 
 	// If the radio is subspace-only, that's all it can do
 	if (subspace_transmission)
@@ -341,25 +296,15 @@ GLOBAL_VAR_INIT(returned_to_end_of_proc, 0)
 
 	talk_into(speaker, raw_message, , spans, language=message_language)
 
-
-
 /// Checks if this radio can receive on the given frequency.
-/obj/item/radio/proc/can_receive(input_frequency, list/level)
+/obj/item/radio/proc/can_receive(input_frequency, list/levels)
 	// deny checks
-	if (!listening || !on || wires.is_cut(WIRE_RX))//all of this can be cached via setters, remove it from the list if this wire is cut
-		GLOB.returned_to_on_listening_or_wire++
-		return FALSE
-	if (input_frequency == FREQ_CENTCOM)//this can too, make a list of independent radios by z level then add that list in vocal/broadcast if the frequency is that
-		GLOB.returned_to_centcom_freq++
-		return independent  // hard-ignores the z-level check
-	if (!(0 in level))//
+	if (levels != RADIO_NO_Z_LEVEL_RESTRICTION)
 		var/turf/position = get_turf(src)
-		if(!position || !(position.z in level))
-			GLOB.returned_to_not_on_level++
+		if(!position || !(position.z in levels))
 			return FALSE
 
 	if (input_frequency == FREQ_SYNDICATE && !syndie)
-		GLOB.returned_to_synd_freq++
 		return FALSE
 
 	// allow checks: are we listening on that frequency?
@@ -367,10 +312,8 @@ GLOBAL_VAR_INIT(returned_to_end_of_proc, 0)
 		return TRUE
 	for(var/ch_name in channels)
 		if(channels[ch_name] & FREQ_LISTENING)
-			//the GLOB.radiochannels list is located in communications.dm
 			if(GLOB.radiochannels[ch_name] == text2num(input_frequency) || syndie)
 				return TRUE
-	GLOB.returned_to_end_of_proc++
 	return FALSE
 
 /obj/item/radio/ui_state(mob/user)

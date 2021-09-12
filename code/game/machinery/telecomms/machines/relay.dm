@@ -25,8 +25,7 @@
 	if(can_send(signal) && T)
 		signal.levels |= T.z
 
-// Checks to see if it can send/receive.
-
+/// Checks to see if it can send/receive.
 /obj/machinery/telecomms/relay/proc/can(datum/signal/signal)
 	if(!on)
 		return FALSE

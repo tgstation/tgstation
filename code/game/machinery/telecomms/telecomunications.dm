@@ -75,8 +75,9 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	// send signal directly to a machine
 	machine.receive_information(signal, src)
 
+///receive information from linked machinery
 /obj/machinery/telecomms/proc/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
-	// receive information from linked machinery
+	return
 
 /obj/machinery/telecomms/proc/is_freq_listening(datum/signal/signal)
 	// return TRUE if found, FALSE if not found
