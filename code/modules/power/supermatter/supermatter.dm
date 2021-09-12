@@ -157,7 +157,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/proto_nitrate = 1,
 		/datum/gas/zauker = 1,
 		/datum/gas/miasma = 0.5,
-		/datum/gas/antinoblium
+		/datum/gas/antinoblium = 1,
 	)
 	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
