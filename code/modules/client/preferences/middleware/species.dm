@@ -8,6 +8,7 @@
 
 /datum/asset/spritesheet/species
 	name = "species"
+	early = TRUE
 
 /datum/asset/spritesheet/species/register()
 	var/list/to_insert = list()
@@ -28,6 +29,8 @@
 		to_insert[sanitize_css_class_name(initial(species_type.name))] = dummy_icon
 
 		SSatoms.prepare_deletion(dummy)
+
+	CHECK_TICK
 
 	for (var/spritesheet_key in to_insert)
 		Insert(spritesheet_key, to_insert[spritesheet_key])

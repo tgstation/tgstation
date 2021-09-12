@@ -1,6 +1,7 @@
 /// Assets generated from `/datum/preference` icons
 /datum/asset/spritesheet/preferences
 	name = "preferences"
+	early = TRUE
 
 /datum/asset/spritesheet/preferences/register()
 	var/list/to_insert = list()

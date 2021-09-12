@@ -62,9 +62,6 @@
 	pixel_x = 10
 	pixel_y = 9
 
-// Persistent paintings are created before the atoms init SS runs
-INITIALIZE_IMMEDIATE(/obj/item/canvas)
-
 /obj/item/canvas/Initialize()
 	. = ..()
 	reset_grid()
@@ -256,9 +253,6 @@ INITIALIZE_IMMEDIATE(/obj/item/canvas)
 	///Description set when canvas is added.
 	var/desc_with_canvas
 	var/persistence_id
-
-// SSpersistent_paintings runs before atoms SS
-INITIALIZE_IMMEDIATE(/obj/structure/sign/painting)
 
 /obj/structure/sign/painting/Initialize(mapload, dir, building)
 	. = ..()

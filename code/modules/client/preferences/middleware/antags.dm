@@ -101,6 +101,7 @@
 /// Sprites generated for the antagonists panel
 /datum/asset/spritesheet/antagonists
 	name = "antagonists"
+	early = TRUE
 
 /datum/asset/spritesheet/antagonists/register()
 	// Antagonists that don't have a dynamic ruleset, but do have a preference

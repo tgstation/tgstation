@@ -13,6 +13,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/_abstract = /datum/asset
 	var/cached_url_mappings
 
+	/// Whether or not this asset should be loaded in the "early assets" SS
+	var/early = FALSE
+
 /datum/asset/New()
 	GLOB.asset_datums[type] = src
 	register()
