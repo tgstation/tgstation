@@ -239,29 +239,33 @@
 	//Internal Fusion gases
 	var/list/fusion_gasdata = list()
 	if(connected_core.internal_fusion.total_moles())
-		for(var/gasid in connected_core.internal_fusion.gases)
+		for(var/gas_type in connected_core.internal_fusion.gases)
+			var/datum/gas/gas = gas_type
 			fusion_gasdata.Add(list(list(
-			"name"= connected_core.internal_fusion.gases[gasid][GAS_META][META_GAS_NAME],
-			"amount" = round(connected_core.internal_fusion.gases[gasid][MOLES], 0.01),
+			"id"= initial(gas.id),
+			"amount" = round(connected_core.internal_fusion.gases[gas][MOLES], 0.01),
 			)))
 	else
-		for(var/gasid in connected_core.internal_fusion.gases)
+		for(var/gas_type in connected_core.internal_fusion.gases)
+			var/datum/gas/gas = gas_type
 			fusion_gasdata.Add(list(list(
-				"name"= connected_core.internal_fusion.gases[gasid][GAS_META][META_GAS_NAME],
+				"id"= initial(gas.id),
 				"amount" = 0,
 				)))
 	//Moderator gases
 	var/list/moderator_gasdata = list()
 	if(connected_core.moderator_internal.total_moles())
-		for(var/gasid in connected_core.moderator_internal.gases)
+		for(var/gas_type in connected_core.moderator_internal.gases)
+			var/datum/gas/gas = gas_type
 			moderator_gasdata.Add(list(list(
-			"name"= connected_core.moderator_internal.gases[gasid][GAS_META][META_GAS_NAME],
-			"amount" = round(connected_core.moderator_internal.gases[gasid][MOLES], 0.01),
+			"id"= initial(gas.id),
+			"amount" = round(connected_core.moderator_internal.gases[gas][MOLES], 0.01),
 			)))
 	else
-		for(var/gasid in connected_core.moderator_internal.gases)
+		for(var/gas_type in connected_core.moderator_internal.gases)
+			var/datum/gas/gas = gas_type
 			moderator_gasdata.Add(list(list(
-				"name"= connected_core.moderator_internal.gases[gasid][GAS_META][META_GAS_NAME],
+				"id"= initial(gas.id),
 				"amount" = 0,
 				)))
 
