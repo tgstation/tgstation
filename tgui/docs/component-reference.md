@@ -662,7 +662,7 @@ to perform some sort of action), there is a way to do that:
 
 **Props:**
 
-- `label: string` - Item label.
+- `label: string|InfernoNode` - Item label.
 - `color: string` - Sets the color of the text.
 - `buttons: any` - Buttons to render aside the content.
 - `children: any` - Content of this labeled item.
