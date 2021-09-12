@@ -100,7 +100,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
 
-	screentip_color = owner?.client?.prefs?.read_preference(/datum/preference/color/screentip_color)
+	var/datum/preferences/preferences = owner?.client?.prefs
+	screentip_color = preferences?.read_preference(/datum/preference/color/screentip_color)
+	screentips_enabled = preferences?.read_preference(/datum/preference/toggle/enable_screentips)
 	screentip_text = new(null, src)
 	static_inventory += screentip_text
 
