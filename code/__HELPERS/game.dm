@@ -202,36 +202,33 @@
 
 	return
 
-/// Returns a list of hearers in view(view_radius) from source (ignoring luminosity). uses important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+/**
+ * Returns a list of movable atoms that are hearing sensitive with in view_radius and line of sight of source
+ * the majority of the work is passed off to the spatial grid if view_radius > 0
+ * * view_radius - what radius search circle we are using, worse performance as this increases but not as much as it used to
+ * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
+ * * include_source - if FALSE, source will be subtracted from the output. used for things that want to transmit data to other things like radios
+ */
 /proc/get_hearers_in_view(view_radius, atom/source, include_source = TRUE)
 	var/turf/center_turf = get_turf(source)
 	. = list()
 	if(!center_turf)
 		return
 
-	if(view_radius == 0)//special case for if source only cares
+	if(view_radius <= 0)//special case for if only source cares
 		for(var/atom/movable/movable as anything in center_turf)
 			var/list/recursive_contents = LAZYACCESS(movable.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE)
 			if(recursive_contents)
 				. += recursive_contents
 		return
+
 	return SSspatial_grid.find_grid_contents_in_view(source, SPATIAL_GRID_CONTENTS_TYPE_HEARING, view_radius, TRUE, include_source)
 
-	return SSspatial_hashmap.find_hashmap_contents_in_view(HASHMAP_CONTENTS_TYPE_HEARING, source, view_radius)
-	var/lum = center_turf.luminosity
-	center_turf.luminosity = 6 // This is the maximum luminosity
-	for(var/atom/movable/movable in view(view_radius, center_turf))
-		var/list/recursive_contents = LAZYACCESS(movable.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE)
-		if(recursive_contents)
-			. += recursive_contents
-			SEND_SIGNAL(movable, COMSIG_ATOM_HEARER_IN_VIEW, .)
-	center_turf.luminosity = lum
-
-/proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
+/proc/get_hearers_in_radio_ranges(list/obj/item/radio/radios)
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
-	for(var/obj/item/radio/R in radios)
-		. |= get_hearers_in_view(R.canhear_range, R)
+	for(var/obj/item/radio/radio as anything in radios)
+		. |= get_hearers_in_view(radio.canhear_range, radio, FALSE)
 
 #define SIGNV(X) ((X<0)?-1:1)
 
