@@ -692,11 +692,12 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 					for(var/name in gaseslog)
 						n = n + 1
 						logmsg+= "\n[name]: [gaseslog[name]] moles."
-						if(danger && n <= 5)
+						if(n <= 5)
 							admin_msg+= "\n[name]: [gaseslog[name]] moles."
-						if(n == 5 && danger && gaseslog.len > 5)
+						if(n == 5 && gaseslog.len > 5)
 							admin_msg+= "\nToo many gases to log. Check investigate log."
-					message_admins(admin_msg)
+					if(danger)
+						message_admins(admin_msg)
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
 			investigate_log(logmsg, INVESTIGATE_ATMOS)
