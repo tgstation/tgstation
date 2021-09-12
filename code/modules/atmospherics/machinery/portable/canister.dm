@@ -694,7 +694,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 						logmsg+= "\n[name]: [gaseslog[name]] moles."
 						if(danger && n <= 5)
 							admin_msg+= "\n[name]: [gaseslog[name]] moles."
-						if(n == 5 && danger)
+						if(n == 5 && danger && gaseslog.len > 5)
 							admin_msg+= "\nToo many gases to log. Check investigate log."
 					message_admins(admin_msg)
 			else
