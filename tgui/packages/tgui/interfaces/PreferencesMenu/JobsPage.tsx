@@ -332,9 +332,7 @@ const Gap = (props: {
   return <Box height={`calc(${props.amount}px + 0.2em)`} />;
 };
 
-const JoblessRoleDropdown = (props: {
-
-}, context) => {
+const JoblessRoleDropdown = (props, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
   const selected = data.character_preferences.misc.joblessrole;
 
