@@ -34,9 +34,9 @@
 /datum/preference_middleware/jobs/get_ui_static_data(mob/user)
 	var/list/data = list()
 
-	var/list/job_days_left = get_job_days_left(user)
-	if (job_days_left.len)
-		data["job_days_left"] = job_days_left
+	var/list/required_job_playtime = get_required_job_playtime(user)
+	if (!isnull(required_job_playtime))
+		data += required_job_playtime
 
 	var/list/job_bans = get_job_bans(user)
 	if (job_bans.len)
@@ -44,13 +44,30 @@
 
 	return data.len > 0 ? data : null
 
-/datum/preference_middleware/jobs/proc/get_job_days_left(mob/user)
+/datum/preference_middleware/jobs/proc/get_required_job_playtime(mob/user)
 	var/list/data = list()
 
+	var/list/job_days_left = list()
+	var/list/job_required_experience = list()
+
 	for (var/datum/job/job as anything in SSjob.all_occupations)
-		var/days_left = job.available_in_days(user.client)
-		if (days_left > 0)
-			data[job.title] = days_left
+		var/required_playtime_remaining = job.required_playtime_remaining(user.client)
+		if (required_playtime_remaining)
+			job_required_experience[job.title] = list(
+				"experience_type" = job.get_exp_req_type(),
+				"required_playtime" = required_playtime_remaining,
+			)
+
+			continue
+
+		if (!job.player_old_enough(user.client))
+			job_days_left[job.title] = job.available_in_days(user.client)
+
+	if (job_days_left.len)
+		data["job_days_left"] = job_days_left
+
+	if (job_required_experience)
+		data["job_required_experience"] = job_required_experience
 
 	return data
 

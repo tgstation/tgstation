@@ -149,7 +149,7 @@ const PriorityButtons = (props: {
       style={{
         "align-items": "center",
         "height": "100%",
-        "justify-content": !isOverflow && "center",
+        "justify-content": "flex-end",
         "padding-left": "0.3em",
       }}
     >
@@ -220,11 +220,24 @@ const JobRow = (props: {
 
   const createSetPriority = createCreateSetPriorityFromName(context, job.name);
 
+  const experienceNeeded = data.job_required_experience
+    && data.job_required_experience[job.name];
   const daysLeft = data.job_days_left ? data.job_days_left[job.name] : 0;
 
   let rightSide: InfernoNode;
 
-  if (daysLeft > 0) {
+  if (experienceNeeded) {
+    const { experience_type, required_playtime } = experienceNeeded;
+    const hoursNeeded = Math.ceil(required_playtime / 60);
+
+    rightSide = (
+      <Stack align="center" height="100%" pr={1}>
+        <Stack.Item grow textAlign="right">
+          <b>{hoursNeeded}h</b> as {experience_type}
+        </Stack.Item>
+      </Stack>
+    );
+  } else if (daysLeft > 0) {
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
         <Stack.Item grow textAlign="right">
@@ -257,7 +270,7 @@ const JobRow = (props: {
           content={job.description}
           position="bottom-start"
         >
-          <Stack.Item className="job-name" width="60%" style={{
+          <Stack.Item className="job-name" width="50%" style={{
             "padding-left": "0.3em",
           }}>
 
