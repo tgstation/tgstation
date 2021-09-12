@@ -38,6 +38,12 @@
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
+	if(speech_args[SPEECH_LANGUAGE] in languages_native)
+		return FALSE //no changes
+	modify_speech(source, speech_args)
+
+/obj/item/organ/tongue/proc/modify_speech(datum/source, list/speech_args)
+	return speech_args[SPEECH_MESSAGE]
 
 /obj/item/organ/tongue/Insert(mob/living/carbon/tongue_owner, special = 0)
 	..()
@@ -78,9 +84,7 @@
 	modifies_speech = TRUE
 	languages_native = list(/datum/language/draconic)
 
-/obj/item/organ/tongue/lizard/handle_speech(datum/source, list/speech_args)
-	if(owner.get_selected_language() in languages_native)
-		return //to keep using autohiss with a native language, a player can use prefixes without using the language as main one
+/obj/item/organ/tongue/lizard/modify_speech(datum/source, list/speech_args)
 	var/static/regex/lizard_hiss = new("s+", "g")
 	var/static/regex/lizard_hiSS = new("S+", "g")
 	var/static/regex/lizard_kss = new(@"(\w)x", "g")
@@ -202,7 +206,7 @@
 		/datum/language/buzzwords
 	))
 
-/obj/item/organ/tongue/fly/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/fly/modify_speech(datum/source, list/speech_args)
 	var/static/regex/fly_buzz = new("z+", "g")
 	var/static/regex/fly_buZZ = new("Z+", "g")
 	var/message = speech_args[SPEECH_MESSAGE]
@@ -251,7 +255,7 @@
 		else
 			. += span_notice("It is attuned to [mothership].")
 
-/obj/item/organ/tongue/abductor/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/abductor/modify_speech(datum/source, list/speech_args)
 	//Hacks
 	var/message = speech_args[SPEECH_MESSAGE]
 	var/mob/living/carbon/human/user = source
@@ -278,7 +282,7 @@
 	modifies_speech = TRUE
 	taste_sensitivity = 32
 
-/obj/item/organ/tongue/zombie/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/zombie/modify_speech(datum/source, list/speech_args)
 	var/list/message_list = splittext(speech_args[SPEECH_MESSAGE], " ")
 	var/maxchanges = max(round(message_list.len / 1.5), 2)
 
@@ -311,7 +315,7 @@
 	. = ..()
 	languages_possible = languages_possible_alien
 
-/obj/item/organ/tongue/alien/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/alien/modify_speech(datum/source, list/speech_args)
 	playsound(owner, "hiss", 25, TRUE, TRUE)
 
 /obj/item/organ/tongue/bone
@@ -348,7 +352,7 @@
 	phomeme_type = pick(phomeme_types)
 	languages_possible = languages_possible_skeleton
 
-/obj/item/organ/tongue/bone/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/bone/modify_speech(datum/source, list/speech_args)
 	if (chattering)
 		chatter(speech_args[SPEECH_MESSAGE], phomeme_type, source)
 	switch(phomeme_type)
@@ -378,7 +382,7 @@
 /obj/item/organ/tongue/robot/can_speak_language(language)
 	return TRUE // THE MAGIC OF ELECTRONICS
 
-/obj/item/organ/tongue/robot/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/robot/modify_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
 
 /obj/item/organ/tongue/snail
@@ -387,7 +391,7 @@
 	desc = "A minutely toothed, chitious ribbon, which as a side effect, makes all snails talk IINNCCRREEDDIIBBLLYY SSLLOOWWLLYY."
 	modifies_speech = TRUE
 
-/obj/item/organ/tongue/snail/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/snail/modify_speech(datum/source, list/speech_args)
 	var/new_message
 	var/message = speech_args[SPEECH_MESSAGE]
 	for(var/i in 1 to length(message))
@@ -456,7 +460,7 @@
 
 //Thank you Jwapplephobia for helping me with the literal hellcode below
 
-/obj/item/organ/tongue/tied/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/tied/modify_speech(datum/source, list/speech_args)
 	var/new_message
 	var/message = speech_args[SPEECH_MESSAGE]
 	var/exclamation_found = findtext(message, "!")
