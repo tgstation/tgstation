@@ -149,6 +149,7 @@
 
 /mob/living/carbon/update_inv_head()
 	remove_overlay(HEAD_LAYER)
+	remove_overlay(ABOVE_BODY_FRONT_HEAD_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
@@ -157,11 +158,12 @@
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_HEAD) + 1]
 		inv.update_appearance()
 
+	var/layer = head?.item_flags & ABOVE_BODY_FRONT_WORN ? ABOVE_BODY_FRONT_HEAD_LAYER : HEAD_LAYER
 	if(head)
-		overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head.dmi')
+		overlays_standing[layer] = head.build_worn_icon(default_layer = layer, default_icon_file = 'icons/mob/clothing/head.dmi')
 		update_hud_head(head)
 
-	apply_overlay(HEAD_LAYER)
+	apply_overlay(layer)
 
 
 /mob/living/carbon/update_inv_handcuffed()
