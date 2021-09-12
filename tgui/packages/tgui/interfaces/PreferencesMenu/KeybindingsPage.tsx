@@ -7,6 +7,7 @@ import { sortBy } from "common/collections";
 import { KeyEvent } from "../../events";
 import { TabbedMenu } from "./TabbedMenu";
 import { fetchRetry } from "../../http";
+import { logger } from "../../logging";
 
 type Keybinding = {
   name: string;
@@ -96,33 +97,73 @@ const moveToBottom = (entries: [string, unknown][], findCategory: string) => {
   );
 };
 
-const KeybindingButton = (props: {
+class KeybindingButton extends Component<{
   currentHotkey?: string,
   onClick?: () => void,
   typingHotkey?: string,
-}) => {
-  const child = (
-    <Button
-      fluid
-      textAlign="center"
-      captureKeys={props.typingHotkey === undefined}
-      onClick={props.onClick}
-      selected={props.typingHotkey !== undefined}
-    >
-      {props.typingHotkey || props.currentHotkey || "Unbound"}
-    </Button>
-  );
-
-  if (props.typingHotkey && props.onClick) {
-    return (
-      // props.onClick will cancel it
-      <TrackOutsideClicks onOutsideClick={props.onClick}>
-        {child}
-      </TrackOutsideClicks>
-    );
-  } else {
-    return child;
+}> {
+  shouldComponentUpdate(nextProps) {
+    return this.props.typingHotkey !== nextProps.typingHotkey
+      || this.props.currentHotkey !== nextProps.currentHotkey;
   }
+
+  render() {
+    const {
+      currentHotkey,
+      onClick,
+      typingHotkey,
+    } = this.props;
+
+    const child = (
+      <Button
+        fluid
+        textAlign="center"
+        captureKeys={typingHotkey === undefined}
+        onClick={onClick}
+        selected={typingHotkey !== undefined}
+      >
+        {typingHotkey || currentHotkey || "Unbound"}
+      </Button>
+    );
+
+    if (typingHotkey && onClick) {
+      return (
+        // onClick will cancel it
+        <TrackOutsideClicks onOutsideClick={onClick}>
+          {child}
+        </TrackOutsideClicks>
+      );
+    } else {
+      return child;
+    }
+  }
+}
+
+const KeybindingName = (props: {
+  keybinding: Keybinding,
+}) => {
+  const { keybinding } = props;
+
+  return keybinding.description
+    ? (
+      <Tooltip
+        content={keybinding.description}
+        position="bottom"
+      >
+        <Box as="span" style={{
+          "border-bottom": "2px dotted rgba(255, 255, 255, 0.8)",
+        }}>
+          {keybinding.name}
+        </Box>
+      </Tooltip>
+    )
+    : <span>{keybinding.name}</span>;
+};
+
+KeybindingName.defaultHooks = {
+  onComponentShouldUpdate: (lastProps, nextProps) => {
+    return lastProps.keybinding !== nextProps.keybinding;
+  },
 };
 
 const ResetToDefaultButton = (props: {
@@ -361,22 +402,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
 
                       const name = (
                         <Stack.Item basis="25%">
-                          {keybinding.description
-                            ? (
-                              <Tooltip
-                                content={
-                                  keybinding.description
-                                }
-                                position="bottom"
-                              >
-                                <Box as="span" style={{
-                                  "border-bottom": "2px dotted rgba(255, 255, 255, 0.8)",
-                                }}>
-                                  {keybinding.name}
-                                </Box>
-                              </Tooltip>
-                            )
-                            : keybinding.name}
+                          <KeybindingName keybinding={keybinding} />
                         </Stack.Item>
                       );
 
