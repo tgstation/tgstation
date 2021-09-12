@@ -145,8 +145,11 @@
 		generated_icons[antagonist_type] = preview_icon
 		to_insert[spritesheet_key] = preview_icon
 
+		CHECK_TICK
+
 	for (var/spritesheet_key in to_insert)
 		Insert(spritesheet_key, to_insert[spritesheet_key])
+		CHECK_TICK
 
 	return ..()
 

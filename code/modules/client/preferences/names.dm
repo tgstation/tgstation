@@ -99,6 +99,7 @@
 /datum/preference/name/cyborg
 	savefile_key = "cyborg_name"
 
+	allow_numbers = TRUE
 	can_randomize = FALSE
 
 	explanation = "Cyborg name"
@@ -111,6 +112,7 @@
 /datum/preference/name/ai
 	savefile_key = "ai_name"
 
+	allow_numbers = TRUE
 	explanation = "AI name"
 	group = "silicons"
 	relevant_job = /datum/job/ai
@@ -121,6 +123,8 @@
 /datum/preference/name/religion
 	savefile_key = "religion_name"
 
+	allow_numbers = TRUE
+
 	explanation = "Religion name"
 	group = "religion"
 
@@ -130,6 +134,7 @@
 /datum/preference/name/deity
 	savefile_key = "deity_name"
 
+	allow_numbers = TRUE
 	can_randomize = FALSE
 
 	explanation = "Deity name"
@@ -141,6 +146,7 @@
 /datum/preference/name/bible
 	savefile_key = "bible_name"
 
+	allow_numbers = TRUE
 	can_randomize = FALSE
 
 	explanation = "Bible name"
