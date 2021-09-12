@@ -114,7 +114,7 @@
 /datum/holiday/groundhog/getStationPrefix()
 	return pick("Deja Vu") //I have been to this place before
 
-datum/holiday/wetlands_day
+/datum/holiday/wetlands_day
 	name = "World Wetlands Day"
 	begin_day = 2
 	begin_month = FEBRUARY
