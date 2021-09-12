@@ -56,6 +56,9 @@ const Ethereal: Species = {
         temperatures.",
     }],
   },
+  lore: [
+    "Ethereals are a species native to the planet Sprout. When they were originally discovered, they were at a medieval level of technological progression, but due to their natural acclimation with electricity, they felt easy among the large NanoTrasen installations.",
+  ],
 };
 
 export default Ethereal;
