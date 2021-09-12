@@ -2,10 +2,10 @@ import { sortBy, sortStrings } from "common/collections";
 import { BooleanLike, classes } from "common/react";
 import { ComponentType, createComponentVNode, InfernoNode } from "inferno";
 import { VNodeFlags } from "inferno-vnode-flags";
-import { sendAct, useLocalState } from "../../../../backend";
+import { sendAct, useBackend, useLocalState } from "../../../../backend";
 import { Box, Button, Dropdown, NumberInput, Stack } from "../../../../components";
 import { logger } from "../../../../logging";
-import { createSetPreference } from "../../data";
+import { createSetPreference, PreferencesMenuData } from "../../data";
 import { ServerPreferencesFetcher } from "../../ServerPreferencesFetcher";
 
 export const sortChoices = sortBy<[string, InfernoNode]>(([name]) => name);
@@ -298,11 +298,13 @@ export const FeatureValueInput = (props: {
 
   act: typeof sendAct,
 }, context) => {
+  const { data } = useBackend<PreferencesMenuData>(context);
+
   const feature = props.feature;
 
   const [predictedValue, setPredictedValue] = useLocalState(
     context,
-    `${props.featureId}_predictedValue`,
+    `${props.featureId}_predictedValue_${data.active_slot}`,
     props.value,
   );
 
