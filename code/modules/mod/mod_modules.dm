@@ -179,6 +179,8 @@
 /obj/item/mod/module/proc/on_exit(datum/source, atom/movable/part, direction)
 	SIGNAL_HANDLER
 
+	if(!active)
+		return
 	if(part.loc == src)
 		return
 	if(part.loc == mod.wearer)
