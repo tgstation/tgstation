@@ -13,7 +13,6 @@
 	var/datum/action/innate/cult/comm/communion = new
 	var/datum/action/innate/cult/mastervote/vote = new
 	var/datum/action/innate/cult/blood_magic/magic = new
-	var/datum/cult_visual_controller/cult_visual_controller = new
 	job_rank = ROLE_CULTIST
 	antag_hud_type = ANTAG_HUD_CULT
 	antag_hud_name = "cult"
@@ -46,7 +45,6 @@
 
 /datum/antagonist/cult/Destroy()
 	QDEL_NULL(communion)
-	QDEL_NULL(cult_visual_controller)
 	QDEL_NULL(vote)
 	return ..()
 
@@ -135,9 +133,9 @@
 		magic.Grant(current)
 	current.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
 	if(cult_team.cult_risen)
-		cult_visual_controller.rise(current)
+		cult_team.rise(current)
 		if(cult_team.cult_ascendent)
-			cult_visual_controller.ascend(current)
+			cult_team.ascend(current)
 
 /datum/antagonist/cult/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -238,9 +236,9 @@
 	current.update_action_buttons_icon()
 	current.apply_status_effect(/datum/status_effect/cult_master)
 	if(cult_team.cult_risen)
-		cult_visual_controller.rise(current)
+		cult_team.rise(current)
 		if(cult_team.cult_ascendent)
-			cult_visual_controller.ascend(current)
+			cult_team.ascend(current)
 
 /datum/antagonist/cult/master/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -278,16 +276,13 @@
 				++cultplayers
 			else
 				++alive
-
 	var/ratio = cultplayers/alive
-	var/datum/cult_visual_controller/cult_visual_controller = new
-
 	if(ratio > CULT_RISEN && !cult_risen)
 		for(var/datum/mind/B in members)
 			if(B.current)
 				SEND_SOUND(B.current, 'sound/hallucinations/i_see_you2.ogg')
 				to_chat(B.current, span_cultlarge("<span class='warningplain'>The veil weakens as your cult grows, your eyes begin to glow...</span>"))
-				addtimer(CALLBACK(cult_visual_controller, /datum/cult_visual_controller/proc/rise, B.current), 200)
+				addtimer(CALLBACK(src, .proc/rise, B.current), 200)
 		cult_risen = TRUE
 		log_game("The blood cult has risen with [cultplayers] players.")
 
@@ -296,11 +291,10 @@
 			if(B.current)
 				SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
 				to_chat(B.current, span_cultlarge("<span class='warningplain'>Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!</span>"))
-				addtimer(CALLBACK(cult_visual_controller, /datum/cult_visual_controller/proc/ascend, B.current), 200)
+				addtimer(CALLBACK(src, .proc/ascend, B.current), 200)
 		cult_ascendent = TRUE
 		log_game("The blood cult has ascended with [cultplayers] players.")
 
-	qdel(cult_visual_controller)
 
 /datum/team/cult/proc/rise(cultist)
 	if(ishuman(cultist))
@@ -460,45 +454,6 @@
 		return FALSE //can't convert machines, shielded, or braindead
 	return TRUE
 
-/// A datum which acts as a namespace for procs that make humans look like cultists
-/datum/cult_visual_controller
-
-/// When the cult hits its first milestone.
-/// Will give the cultist red eyes if it is a human.
-/datum/cult_visual_controller/proc/rise(cultist)
-	// This proc doesn't require humans for forwards compatibility.
-	// It means it is seamless to add different "risen" effects for things such as constructs.
-	if (!ishuman(cultist))
-		return
-
-	var/mob/living/carbon/human/human_cultist = cultist
-	human_cultist.eye_color = BLOODCULT_EYE
-	human_cultist.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-	ADD_TRAIT(human_cultist, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
-	human_cultist.update_body()
-
-/// When the cult hits its second milestone.
-/// Will give the cultist halos if it is a human.
-/datum/cult_visual_controller/proc/ascend(cultist)
-	if (!ishuman(cultist))
-		return
-
-	var/mob/living/carbon/human/human_cultist = cultist
-	new /obj/effect/temp_visual/cult/sparks(get_turf(human_cultist), human_cultist.dir)
-
-	// Why we have THE SAME ICON SIX TIMES, I have no idea.
-	// I figure what happened is the original programmer noticed that, given
-	// the same looping icon, BYOND will have them all be completely synchronized.
-	// This looks fairly bad in practice, so I bet they just copied and pasted it
-	// SIX TIMES in order to get around it.
-	// The "real fix" is to have one sprite and change its loop from infinite to just a
-	// stupid high loop count. That works to stop the sync, oddly enough.
-	var/icon_state = "halo[rand(1, 6)]"
-
-	var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/32x64.dmi', icon_state, -HALO_LAYER)
-	human_cultist.overlays_standing[HALO_LAYER] = new_halo_overlay
-	human_cultist.apply_overlay(HALO_LAYER)
-
 /datum/outfit/cultist
 	name = "Cultist (Preview only)"
 
@@ -508,9 +463,8 @@
 	r_hand = /obj/item/melee/blood_magic/stun
 
 /datum/outfit/cultist/post_equip(mob/living/carbon/human/H, visualsOnly)
-	var/datum/cult_visual_controller/cult_visual_controller = new
-	cult_visual_controller.rise(H)
-	qdel(cult_visual_controller)
+	H.eye_color = BLOODCULT_EYE
+	H.update_body()
 
 	var/obj/item/clothing/suit/hooded/hooded = locate() in H
 	hooded.MakeHood() // This is usually created on Initialize, but we run before atoms

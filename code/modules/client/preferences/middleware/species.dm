@@ -30,8 +30,6 @@
 
 		SSatoms.prepare_deletion(dummy)
 
-	CHECK_TICK
-
 	for (var/spritesheet_key in to_insert)
 		Insert(spritesheet_key, to_insert[spritesheet_key])
 
