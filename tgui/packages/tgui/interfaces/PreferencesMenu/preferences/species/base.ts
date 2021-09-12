@@ -1,3 +1,5 @@
+import { InfernoNode } from "inferno";
+
 // MOTHBLOCKS TODO: The stupid halloween races
 export type Species = {
   description: string;
@@ -6,7 +8,7 @@ export type Species = {
     neutral: Feature[],
     bad: Feature[],
   };
-  lore: string;
+  lore?: string[];
 };
 
 // MOTHBLOCKS TODO: What if the features were config-dependent?
@@ -26,7 +28,6 @@ export const fallbackSpecies: Species = {
     neutral: [],
     bad: [],
   },
-  lore: "LORE MASTER, I NEED LORE, HELP",
 };
 
 export const createLanguagePerk = (language: string): Feature => {

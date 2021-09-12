@@ -56,7 +56,6 @@ const Ethereal: Species = {
         temperatures.",
     }],
   },
-  lore: "LORE MASTER HELP",
 };
 
 export default Ethereal;

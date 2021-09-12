@@ -1,6 +1,6 @@
 import { classes } from "common/react";
 import { useBackend } from "../../backend";
-import { Box, Button, Divider, Icon, Section, Stack, Tooltip } from "../../components";
+import { BlockQuote, Box, Button, Divider, Icon, Section, Stack, Tooltip } from "../../components";
 import { logger } from "../../logging";
 import { CharacterPreview } from "./CharacterPreview";
 import { createSetPreference, Food, PreferencesMenuData, ServerData, ServerSpeciesData } from "./data";
@@ -243,6 +243,8 @@ const SpeciesPageInner = (props: {
     return speciesKey === data.character_preferences.misc.species;
   })[0][1];
 
+  const { lore } = currentSpecies;
+
   return (
     <Stack vertical fill>
       <Stack.Item>
@@ -284,8 +286,8 @@ const SpeciesPageInner = (props: {
           </Stack.Item>
 
           <Stack.Item grow>
-            <Stack vertical fill>
-              <Stack.Item grow>
+            <Box fill>
+              <Box>
                 <Stack fill>
                   <Stack.Item width="70%">
                     <Section title={currentSpecies.name} buttons={
@@ -314,14 +316,24 @@ const SpeciesPageInner = (props: {
                     />
                   </Stack.Item>
                 </Stack>
-              </Stack.Item>
+              </Box>
 
-              {/* <Stack.Item>
-                <Section title="Lore">
-                  {currentSpecies.lore}
-                </Section>
-              </Stack.Item> */}
-            </Stack>
+              {lore && (
+                <Box mt={1}>
+                  <Section title="Lore">
+                    <BlockQuote>
+                      {lore.map((text, index) => (
+                        <Box key={index} maxWidth="100%">
+                          {text}
+                          {index !== lore.length - 1
+                            && (<><br /><br /></>)}
+                        </Box>
+                      ))}
+                    </BlockQuote>
+                  </Section>
+                </Box>
+              )}
+            </Box>
           </Stack.Item>
         </Stack>
       </Stack.Item>

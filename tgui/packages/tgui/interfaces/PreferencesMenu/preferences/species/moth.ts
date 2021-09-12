@@ -28,7 +28,6 @@ const Moth: Species = {
         masks will work.",
     }],
   },
-  lore: "LORE MASTER HELP",
 };
 
 export default Moth;

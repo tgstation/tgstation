@@ -18,7 +18,11 @@ const Felinid: Species = {
         flashbangs.",
     }],
   },
-  lore: "LORE MASTER HELP",
+  lore: [
+    "Bio-engineering at its felinest, felinids are the peak example of humanity's mastery of genetic code. One of many \"animalid\" variants, felinids are the most popular and common, as well as one of the biggest points of contention in genetic-modification.",
+    "Body modders were eager to splice human and feline DNA in search of the holy trifecta: ears, eyes, and tail. These traits were in high demand, with the corresponding side effects of vocal and neurochemical changes being seen as a minor inconvenience.",
+    "Sadly for the felinids, they were not minor inconveniences. Shunned as subhuman and monstrous by many, felinids (and other animalids) sought their greener pastures out in the colonies, cloistering in communities of their own kind. As a result, outer human space has a high animalid population.",
+  ],
 };
 
 export default Felinid;
