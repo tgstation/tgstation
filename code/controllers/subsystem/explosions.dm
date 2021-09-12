@@ -313,6 +313,7 @@ SUBSYSTEM_DEF(explosions)
 	if(adminlog)
 		// Now begins a bit of a logic train to find out whodunnit.
 		var/who_did_it = "N/A"
+		var/who_did_it_game_log = "N/A"
 
 		// Projectiles have special handling. They rely on a firer var and not fingerprints. Check special cases for firer being
 		// mecha, mob or an object such as the gun itself. Handle each uniquely.
@@ -323,19 +324,24 @@ SUBSYSTEM_DEF(explosions)
 				var/list/mob/drivers = firing_mecha.return_occupants()
 				if(length(drivers))
 					who_did_it = "\[Mecha drivers:"
+					who_did_it_game_log = "\[Mecha drivers:"
 					for(var/mob/driver in drivers)
 						who_did_it += " [ADMIN_LOOKUPFLW(driver)]"
+						who_did_it_game_log = " [key_name(driver)]"
 					who_did_it += "\]"
+					who_did_it_game_log += "\]"
 			else if(ismob(fired_projectile.firer))
 				who_did_it = "\[Projectile firer: [ADMIN_LOOKUPFLW(fired_projectile.firer)]\]"
+				who_did_it_game_log = "\[Projectile firer: [key_name(fired_projectile.firer)]\]"
 			else
 				who_did_it = "\[Projectile firer: [ADMIN_LOOKUPFLW(fired_projectile.firer.fingerprintslast)]\]"
+				who_did_it_game_log = "\[Projectile firer: [key_name(fired_projectile.firer.fingerprintslast)]\]"
 		// Otherwise if the explosion cause is an atom, try get the fingerprints.
 		else if(istype(explosion_cause))
 			who_did_it = ADMIN_LOOKUPFLW(explosion_cause.fingerprintslast)
 
 		message_admins("Explosion with size (Devast: [devastation_range], Heavy: [heavy_impact_range], Light: [light_impact_range], Flame: [flame_range]) in [ADMIN_VERBOSEJMP(epicenter)]. Possible cause: [explosion_cause]. Last fingerprints: [who_did_it].")
-		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [loc_name(epicenter)].  Possible cause: [explosion_cause]. Last fingerprints: [who_did_it].")
+		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [loc_name(epicenter)].  Possible cause: [explosion_cause]. Last fingerprints: [who_did_it_game_log].")
 
 	var/x0 = epicenter.x
 	var/y0 = epicenter.y
