@@ -78,6 +78,7 @@
 	name = "ritual totem"
 	desc = "A wooden totem with strange carvings on it."
 	inhand_icon_state = "sheet-wood"
+	icon = 'icons/obj/totems.dmi'
 	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
 	//made out of a single sheet of wood
