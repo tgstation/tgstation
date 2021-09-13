@@ -201,8 +201,8 @@
 	return "<div class='panel redborder'>[report.Join("<br>")]</div>"
 
 /datum/action/cooldown/spawn_induction_package
-	name = "Create Induction Package"
-	desc = "Generate an induction package for your family."
+	name = "Induct via Secret Handshake"
+	desc = "Teach new recruits the Secret Handshake to join."
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "recruit"
 	icon_icon = 'icons/obj/gang/actions.dmi'
@@ -222,13 +222,24 @@
 	var/mob/living/carbon/human/H = owner
 	if(H.stat)
 		return FALSE
-	to_chat(H, "You pull an induction package from your pockets and place it on the ground.")
-	var/obj/item/gang_induction_package/GP = new(get_turf(H))
-	GP.name = "\improper [my_gang_datum.name] signup package"
-	GP.desc = "The book reads:<br>[my_gang_datum.my_gang.current_theme.gang_objectives[my_gang_datum.type]]"
-	GP.handler = my_gang_datum.handler
-	GP.gang_to_use = my_gang_datum.type
-	GP.team_to_use = my_gang_datum.my_gang
+
+	var/obj/item/slapper/secret_handshake_item = new(owner)
+	if(owner.put_in_hands(secret_handshake_item))
+		to_chat(owner, span_notice("You ready your secret handshake."))
+	else
+		qdel(secret_handshake_item)
+		to_chat(owner, span_warning("You're incapable of performing a handshake in your current state."))
+		return FALSE
+	owner.visible_message(span_notice("[src] is offering to induct people into the Family."), \
+					span_notice("You offer to induct people into the Family."), null, 2)
+	if(H.has_status_effect(STATUS_EFFECT_HANDSHAKE))
+		return FALSE
+	if(!(locate(/mob/living/carbon) in orange(1, owner)))
+		owner.visible_message(span_danger("[src] offers to induct people into the Family, but nobody was around."), \
+			span_warning("You offer to induct people into the Family, but nobody is around."), null, 2)
+		return FALSE
+
+	H.apply_status_effect(STATUS_EFFECT_HANDSHAKE, secret_handshake_item)
 	StartCooldown()
 	return TRUE
 

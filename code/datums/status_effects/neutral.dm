@@ -161,31 +161,33 @@
 	var/list/possible_takers
 	/// The actual slapper item
 	var/obj/item/slapper/slap_item
+	/// Whether it's a secret handshake or not for code purposes.
+	var/is_secret_handshake = FALSE
 
 /datum/status_effect/high_fiving/on_creation(mob/living/new_owner, obj/item/slap)
 	. = ..()
 	if(!.)
 		return
+	if(!is_secret_handshake)
+		slap_item = slap
+		owner.visible_message(span_notice("[owner] raises [owner.p_their()] arm, looking for a high-five!"), \
+			span_notice("You post up, looking for a high-five!"), null, 2)
 
-	slap_item = slap
-	owner.visible_message(span_notice("[owner] raises [owner.p_their()] arm, looking for a high-five!"), \
-		span_notice("You post up, looking for a high-five!"), null, 2)
+		for(var/mob/living/carbon/possible_taker in orange(1, owner))
+			if(!owner.CanReach(possible_taker) || possible_taker.incapacitated())
+				continue
+			register_candidate(possible_taker)
 
-	for(var/mob/living/carbon/possible_taker in orange(1, owner))
-		if(!owner.CanReach(possible_taker) || possible_taker.incapacitated())
-			continue
-		register_candidate(possible_taker)
+		if(!possible_takers) // in case we tried high-fiving with only a dead body around or something
+			owner.visible_message(span_danger("[owner] realizes no one within range is actually capable of high-fiving, lowering [owner.p_their()] arm in shame..."), \
+				span_warning("You realize a moment too late that no one within range is actually capable of high-fiving you, oof..."), null, 2)
+			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_alone)
+			qdel(src)
+			return
 
-	if(!possible_takers) // in case we tried high-fiving with only a dead body around or something
-		owner.visible_message(span_danger("[owner] realizes no one within range is actually capable of high-fiving, lowering [owner.p_their()] arm in shame..."), \
-			span_warning("You realize a moment too late that no one within range is actually capable of high-fiving you, oof..."), null, 2)
-		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_alone)
-		qdel(src)
-		return
-
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/check_owner_in_range)
-	RegisterSignal(slap_item, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), .proc/dropped_slap)
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
+		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/check_owner_in_range)
+		RegisterSignal(slap_item, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), .proc/dropped_slap)
+		RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
 
 /datum/status_effect/high_fiving/Destroy()
 	QDEL_NULL(slap_item)
@@ -294,6 +296,113 @@
 	remove_candidate(taker)
 	if(!possible_takers)
 		fail()
+
+/datum/status_effect/high_fiving/secret_handshake
+	id = "secret_handshake"
+	is_secret_handshake = TRUE
+	/// References the active families gamemode handler (if one exists), for adding new family members to.
+	var/datum/gang_handler/handler
+	/// The typepath of the gang antagonist datum that the person who uses the package should have added to them -- remember that the distinction between e.g. Ballas and Grove Street is on the antag datum level, not the team datum level.
+	var/gang_to_use
+	/// The team datum that the person who uses this package should be added to.
+	var/datum/team/gang/team_to_use
+
+/datum/status_effect/high_fiving/secret_handshake/on_creation(mob/living/new_owner, obj/item/slap)
+	. = ..()
+	if(!.)
+		return
+	slap_item = slap
+	owner.visible_message(span_notice("[owner] is ready to teach someone the Secret Handshake!"), \
+		span_notice("You ready yourself to teach someone the Secret Handshake."), null, 2)
+
+	for(var/mob/living/carbon/possible_taker in orange(1, owner))
+		if(!owner.CanReach(possible_taker) || possible_taker.incapacitated())
+			continue
+		register_candidate(possible_taker)
+
+	if(!possible_takers)
+		owner.visible_message(span_danger("[owner] realizes no one within range is actually capable of learning the secret handshake."), \
+			span_warning("You realize a moment too late that no one within range is actually capable of learning the secret handshake."), null, 2)
+		qdel(src)
+		return
+
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/check_owner_in_range)
+	RegisterSignal(slap_item, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), .proc/dropped_slap)
+	RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
+
+/datum/status_effect/high_fiving/secret_handshake/we_did_it(mob/living/carbon/successful_taker)
+	var/open_hands_taker
+	for(var/i in successful_taker.held_items) // see how many hands the taker has open for high'ing
+		if(isnull(i))
+			open_hands_taker++
+
+	if(!open_hands_taker)
+		to_chat(successful_taker, span_warning("You can't get taught the secret handshake if [owner] has no free hands!"))
+		return
+
+	if(HAS_TRAIT(successful_taker, TRAIT_MINDSHIELD))
+		to_chat(successful_taker, "You attended a seminar on not signing up for a gang and are not interested.")
+		return
+
+	var/datum/antagonist/gang/is_gangster = successful_taker.mind.has_antag_datum(/datum/antagonist/gang)
+	if(is_gangster?.starter_gangster)
+		if(is_gangster.my_gang == team_to_use)
+			to_chat(successful_taker, "You started your family. You don't need to join it.")
+			return
+		to_chat(successful_taker, "You started your family. You can't turn your back on it now.")
+		return
+
+	owner.visible_message(span_notice("[successful_taker] is taught the secret handshake by [owner]!"), span_nicegreen("All right! You've taught the secret handshake to [successful_taker]!"), span_hear("You hear a bunch of weird shuffling and flesh slapping sounds!"), ignored_mobs=successful_taker)
+	to_chat(successful_taker, span_nicegreen("You get taught the secret handshake by [owner]!"))
+	var/datum/antagonist/gang/owner_gang_datum = owner.mind.has_antag_datum(/datum/antagonist/gang)
+	handler = owner_gang_datum.handler
+	gang_to_use = owner_gang_datum.type
+	team_to_use = owner_gang_datum.my_gang
+	attempt_join_gang(successful_taker)
+	qdel(src)
+
+/datum/status_effect/high_fiving/secret_handshake/register_candidate(mob/living/carbon/possible_candidate)
+	var/atom/movable/screen/alert/secret_handshake/G = possible_candidate.throw_alert("[owner]", /atom/movable/screen/alert/secret_handshake)
+	if(!G)
+		return
+	LAZYADD(possible_takers, possible_candidate)
+	RegisterSignal(possible_candidate, COMSIG_MOVABLE_MOVED, .proc/check_taker_in_range)
+	G.setup(possible_candidate, owner, slap_item)
+
+/// Adds the user to the family that this package corresponds to, dispenses the free_clothes of that family, and adds them to the handler if it exists.
+/datum/status_effect/high_fiving/secret_handshake/proc/add_to_gang(mob/living/user, original_name)
+	var/datum/antagonist/gang/swappin_sides = new gang_to_use()
+	swappin_sides.original_name = original_name
+	swappin_sides.handler = handler
+	user.mind.add_antag_datum(swappin_sides, team_to_use)
+	var/policy = get_policy(ROLE_FAMILIES)
+	if(policy)
+		to_chat(user, policy)
+	team_to_use.add_member(user.mind)
+	for(var/threads in team_to_use.free_clothes)
+		new threads(get_turf(user))
+	for(var/threads in team_to_use.current_theme.bonus_items)
+		new threads(get_turf(user))
+	var/obj/item/gangster_cellphone/phone = new(get_turf(user))
+	phone.gang_id = team_to_use.my_gang_datum.gang_name
+	phone.name = "[team_to_use.my_gang_datum.gang_name] branded cell phone"
+	if (!isnull(handler) && !handler.gangbangers.Find(user.mind)) // if we have a handler and they're not tracked by it
+		handler.gangbangers += user.mind
+
+/// Checks if the user is trying to use the package of the family they are in, and if not, adds them to the family, with some differing processing depending on whether the user is already a family member.
+/datum/status_effect/high_fiving/secret_handshake/proc/attempt_join_gang(mob/living/user)
+	if(user?.mind)
+		var/datum/antagonist/gang/is_gangster = user.mind.has_antag_datum(/datum/antagonist/gang)
+		if(is_gangster)
+			if(is_gangster.my_gang == team_to_use)
+				return
+			else
+				var/real_name_backup = is_gangster.original_name
+				is_gangster.my_gang.remove_member(user.mind)
+				user.mind.remove_antag_datum(/datum/antagonist/gang)
+				add_to_gang(user, real_name_backup)
+		else
+			add_to_gang(user)
 
 /// The propositioner moved, see if anyone is out of range now
 /datum/status_effect/high_fiving/proc/check_owner_in_range(mob/living/carbon/source)

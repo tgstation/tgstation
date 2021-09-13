@@ -369,6 +369,29 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(high_five_effect)
 		high_five_effect.we_did_it(owner)
 
+/atom/movable/screen/alert/secret_handshake
+	icon_state = "default"
+	var/mob/living/carbon/giver
+	var/obj/item/slapper/slapper_item
+
+/atom/movable/screen/alert/secret_handshake/proc/setup(mob/living/carbon/taker, mob/living/carbon/giver, obj/item/slapper/slap)
+	name = "[giver] is offering a Handshake"
+	desc = "[giver] wants to teach you the Secret Handshake for their Family and induct you! Click on this alert to accept."
+	icon_state = "template"
+	cut_overlays()
+	add_overlay(slap)
+	src.slapper_item = slap
+	src.giver = giver
+
+/atom/movable/screen/alert/secret_handshake/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+
+	var/datum/status_effect/high_fiving/secret_handshake/handshake_effect = giver.has_status_effect(STATUS_EFFECT_HANDSHAKE)
+	if(handshake_effect)
+		handshake_effect.we_did_it(owner)
+
 /// Gives the player the option to succumb while in critical condition
 /atom/movable/screen/alert/succumb
 	name = "Succumb"
