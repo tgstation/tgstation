@@ -20,8 +20,6 @@
 
 		values[name] = final_icon
 
-		CHECK_TICK
-
 	return values
 
 /datum/preference/color_legacy/eye_color
