@@ -1,5 +1,8 @@
 GLOBAL_LIST_EMPTY(roundstart_races)
 
+/// An assoc list of species types to their features (from get_features())
+GLOBAL_LIST_EMPTY(features_by_species)
+
 /**
  * # species datum
  *
@@ -211,8 +214,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	///List of visual overlays created by handle_body()
 	var/list/body_vis_overlays = list()
-
-
 
 ///////////
 // PROCS //
@@ -2092,6 +2093,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /// Returns a list of strings representing features this species has.
 /// Used by the preferences UI to know what buttons to show.
 /datum/species/proc/get_features()
+	var/cached_features = GLOB.features_by_species[type]
+	if (!isnull(cached_features))
+		return cached_features
+
 	var/list/features = list()
 
 	for (var/preference_type in GLOB.preference_entries)
@@ -2107,6 +2112,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/preference = initial(organ_type.preference)
 		if (!isnull(preference))
 			features += preference
+
+	GLOB.features_by_species[type] = features
 
 	return features
 
