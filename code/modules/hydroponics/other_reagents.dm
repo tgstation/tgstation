@@ -68,7 +68,7 @@
 /datum/reagent/alacritous_compost
 	name = "alacritous compost"
 	description = "A strange mixture of compost, ashes and pungajuice. This potent mixture will hasten the plant's harvest while increasing the yield."
-	reagent_state = "LIQUID"
+	reagent_state = LIQUID
 	color = "#4CB529"
 	taste_description = "cool, salty rot"
 
