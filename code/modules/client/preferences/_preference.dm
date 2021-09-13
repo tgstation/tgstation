@@ -389,15 +389,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/choiced/create_default_value()
 	return pick(get_choices())
 
-/datum/preference/choiced/compile_ui_data(mob/user, value)
-	if (should_generate_icons)
-		return list(
-			"icon" = get_spritesheet_key(value),
-			"value" = serialize(value),
-		)
-
-	return ..()
-
 /datum/preference/choiced/compile_constant_data()
 	var/list/data = list()
 

@@ -1,7 +1,7 @@
 import { classes } from "common/react";
 import { sendAct, useBackend, useLocalState } from "../../backend";
 import { Autofocus, Box, Button, ByondUi, Dropdown, FitText, Flex, Icon, Input, LabeledList, NumberInput, Popper, Stack, TrackOutsideClicks } from "../../components";
-import { AssetWithIcon, createSetPreference, PreferencesMenuData, RandomSetting, ServerSpeciesData } from "./data";
+import { createSetPreference, PreferencesMenuData, RandomSetting, ServerSpeciesData } from "./data";
 import { CharacterPreview } from "./CharacterPreview";
 import { RandomizationButton } from "./RandomizationButton";
 import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
@@ -223,7 +223,7 @@ const MainFeature = (props: {
     name: string,
     supplemental_feature?: string,
   },
-  currentValue: AssetWithIcon,
+  currentValue: string,
   isOpen: boolean,
   handleClose: () => void,
   handleOpen: () => void,
@@ -254,7 +254,7 @@ const MainFeature = (props: {
         <ChoicedSelection
           name={catalog.name}
           catalog={catalog}
-          selected={currentValue.value}
+          selected={currentValue}
           supplementalFeature={supplementalFeature}
           supplementalValue={supplementalFeature && (
             data
@@ -285,8 +285,8 @@ const MainFeature = (props: {
         <Box
           className={classes([
             "preferences32x32",
-            currentValue.icon,
-            "centered-image",
+              catalog.icons![currentValue],
+              "centered-image",
           ])}
           style={{
             transform: randomization

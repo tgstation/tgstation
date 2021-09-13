@@ -1,7 +1,6 @@
 import { classes } from "common/react";
 import { createDropdownInput, Feature, FeatureChoiced, FeatureChoicedServerData, FeatureValueProps, sortChoices } from "../base";
 import { Box, Button, Dropdown, Flex, NumberInput, Stack } from "../../../../../components";
-import { AssetWithIcon } from "../../../data";
 
 const UIStyleInput = (
   props: FeatureValueProps<string, string, FeatureChoicedServerData>

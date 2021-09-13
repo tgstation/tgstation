@@ -2,11 +2,6 @@ import { BooleanLike } from "common/react";
 import { sendAct } from "../../backend";
 import { Gender } from "./preferences/gender";
 
-export type AssetWithIcon = {
-  icon: string;
-  value: string;
-};
-
 export enum Food {
   Alcohol = "ALCOHOL",
   Breakfast = "BREAKFAST",
@@ -102,8 +97,8 @@ export type PreferencesMenuData = {
   character_profiles: (string | null)[];
 
   character_preferences: {
-    clothing: Record<string, AssetWithIcon>;
-    features: Record<string, AssetWithIcon>;
+    clothing: Record<string, string>;
+    features: Record<string, string>;
     game_preferences: Record<string, unknown>;
     non_contextual: {
       random_body: RandomSetting,

@@ -1,7 +1,4 @@
 /datum/preference_middleware/jobs
-	/// Whether or not the data has been "tainted" and should resend next data tick.
-	var/tainted = TRUE
-
 	action_delegations = list(
 		"set_job_preference" = .proc/set_job_preference,
 	)
@@ -24,7 +21,6 @@
 	if (!preferences.set_job_preference_level(job, level))
 		return FALSE
 
-	tainted = TRUE
 	preferences.character_preview_view?.update_body()
 
 	return TRUE
@@ -32,9 +28,7 @@
 /datum/preference_middleware/jobs/get_ui_data(mob/user)
 	var/list/data = list()
 
-	if (tainted)
-		data["job_preferences"] = preferences.job_preferences
-		tainted = FALSE
+	data["job_preferences"] = preferences.job_preferences
 
 	return data
 
@@ -50,9 +44,6 @@
 		data["job_bans"] = job_bans
 
 	return data.len > 0 ? data : null
-
-/datum/preference_middleware/jobs/on_new_character()
-	tainted = TRUE
 
 /datum/preference_middleware/jobs/proc/get_required_job_playtime(mob/user)
 	var/list/data = list()

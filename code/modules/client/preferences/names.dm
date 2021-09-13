@@ -22,7 +22,7 @@
 	return
 
 /datum/preference/name/deserialize(input, datum/preferences/preferences)
-	return reject_bad_name("[input]")
+	return reject_bad_name("[input]", allow_numbers)
 
 /datum/preference/name/serialize(input)
 	// `is_valid` should always be run before `serialize`, so it should not
@@ -30,7 +30,7 @@
 	return reject_bad_name(input, allow_numbers)
 
 /datum/preference/name/is_valid(value)
-	return istext(value) && !isnull(reject_bad_name(value))
+	return istext(value) && !isnull(reject_bad_name(value, allow_numbers))
 
 /// A character's real name
 /datum/preference/name/real_name

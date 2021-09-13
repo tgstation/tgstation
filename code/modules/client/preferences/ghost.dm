@@ -98,9 +98,6 @@
 
 	return data
 
-/datum/preference/choiced/ghost_form/compile_ui_data(mob/user, value)
-	return serialize(value)
-
 /// Toggles the HUD for ghosts
 /datum/preference/toggle/ghost_hud
 	savefile_key = "ghost_hud"
