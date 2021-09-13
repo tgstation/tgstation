@@ -1,0 +1,4 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - bugfix: "kilostation now has an unlocked mix chamber air alarm, 3 cores in the launch room, the telescreen can see the test site, and a fancy launch controller"
