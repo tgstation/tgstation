@@ -253,5 +253,5 @@
 /obj/item/organ/liver/lizard
 	name = "lizard liver"
 	icon_state = "liver"
-	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
+	desc = "Due to a low number of natural poisons on Tizira, lizard livers have a lower tolerance for poisons when compared to human ones."
 	toxTolerance = 2

@@ -317,7 +317,7 @@
 /obj/item/organ/stomach/lizard
 	name = "lizard stomach"
 	icon_state = "stomach"
-	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
+	desc = "Lizards have evolved highly efficient stomachs, made to get nutrients out of what they eat as fast as possible."
 	metabolism_efficiency = 0.07
 
 /obj/item/organ/stomach/lizard/handle_hunger(mob/living/carbon/human/human, delta_time, times_fired)

@@ -493,7 +493,7 @@
 
 /obj/item/organ/second_heart
 	name = "second heart"
-	desc = "Makes your blood regenerate faster."
+	desc = "Wow, those lizards sure are full of heart."
 	icon_state = "second_heart"
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_HEART_AID
@@ -509,10 +509,10 @@
 		return
 	if(organ_flags & ORGAN_FAILING)
 		var/bleed_amount = 0
-		for(var/obj/item/bodypart/part as anything in bodyparts)
+		for(var/obj/item/bodypart/part as anything in owner.bodyparts)
 			bleed_amount += part.get_bleed_rate() * delta_time
-		if(bleed_amoun)
-			bleed(bleed_amoun)
-			bleed_warn(bleed_amoun)
+		if(bleed_amount)
+			owner.bleed(bleed_amount)
+			owner.bleed_warn(bleed_amount)
 	else
 		owner.blood_volume = min(owner.blood_volume + (BLOOD_REGEN_FACTOR * regen_modifier * delta_time), BLOOD_VOLUME_NORMAL)

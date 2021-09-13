@@ -1975,13 +1975,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	// If it's initializing the species, don't add moodlets
 	if(on_species_init)
-		return
+		return FALSE
 	// If we don't have a set tail, don't bother adding moodlets
 	if(!mutant_organs.len)
-		return
+		return FALSE
 
 	SEND_SIGNAL(tail_owner, COMSIG_ADD_MOOD_EVENT, "tail_lost", /datum/mood_event/tail_lost)
 	SEND_SIGNAL(tail_owner, COMSIG_ADD_MOOD_EVENT, "tail_balance_lost", /datum/mood_event/tail_balance_lost)
+	return TRUE
 
 /*
  * This proc is called when a mob gains a tail.
@@ -1996,15 +1997,16 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	// If it's initializing the species, don't add moodlets
 	if(on_species_init)
-		return
+		return FALSE
 	// If we don't have a set tail, don't add moodlets
 	if(!mutant_organs.len)
-		return
+		return FALSE
 
 	if(found_tail.type in mutant_organs)
 		SEND_SIGNAL(tail_owner, COMSIG_ADD_MOOD_EVENT, "right_tail_regained", /datum/mood_event/tail_regained_right)
 	else
 		SEND_SIGNAL(tail_owner, COMSIG_ADD_MOOD_EVENT, "wrong_tail_regained", /datum/mood_event/tail_regained_wrong)
+	return TRUE
 
 /*
  * Clears all tail related moodlets when they lose their species.

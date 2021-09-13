@@ -22,7 +22,7 @@
 	coldmod = 1.5
 	heatmod = 0.67
 	toxmod = 1.25
-	blood_gain_multiplier = 0.75
+	blood_gain_multiplier = 0.5
 	payday_modifier = 0.75
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	attack_verb = "slash"
@@ -119,7 +119,7 @@
 	C.mob_surgery_speed_mod += 0.35
 	UnregisterSignal(C, COMSIG_CARBON_GAIN_ORGAN)
 	UnregisterSignal(C, COMSIG_CARBON_LOSE_ORGAN)
-	receiver.remove_client_colour(/datum/client_colour/monochrome/lizard)
+	C.remove_client_colour(/datum/client_colour/monochrome/lizard)
 	return ..()
 
 /datum/species/lizard/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
@@ -128,20 +128,45 @@
 	mutant_bodyparts["tail_lizard"] = tail
 	human_mob.update_body()
 
-/datum/species/lizard/proc/on_gained_organ(mob/living/receiver, /obj/item/organ/tongue/organ)
+/datum/species/lizard/on_tail_lost(mob/living/carbon/human/tail_owner, obj/item/organ/tail/lost_tail, on_species_init)
+	. = ..()
+	if(!.)
+		return
+	if(lost_tail.type in mutant_organs)
+		RegisterSignal(tail_owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
+
+/datum/species/lizard/on_tail_regain(mob/living/carbon/human/tail_owner, obj/item/organ/tail/found_tail, on_species_init)
+	. = ..()
+	if(!.)
+		return
+	if(found_tail.type in mutant_organs)
+		UnregisterSignal(tail_owner, COMSIG_MOVABLE_MOVED)
+
+/datum/species/lizard/clear_tail_moodlets(mob/living/carbon/human/former_tail_owner)
+	. = ..()
+	UnregisterSignal(former_tail_owner, COMSIG_MOVABLE_MOVED)
+
+/datum/species/lizard/proc/on_gained_organ(mob/living/receiver, obj/item/organ/tongue/organ)
 	SIGNAL_HANDLER
 
-	if(!istype(organ) || organ.taste_sensitivity > LIZARD_MIN_SENSITIVITY)
+	if(!istype(organ) || organ.taste_sensitivity > LIZARD_TASTE_SENSITIVITY)
 		return
 	receiver.remove_client_colour(/datum/client_colour/monochrome/lizard)
 
-
-/datum/species/lizard/proc/on_removed_organ(mob/living/unceiver, /obj/item/organ/tongue/organ)
+/datum/species/lizard/proc/on_removed_organ(mob/living/unceiver, obj/item/organ/tongue/organ)
 	SIGNAL_HANDLER
 
-	if(!istype(organ))
+	if(!istype(organ) || organ.taste_sensitivity > LIZARD_TASTE_SENSITIVITY)
 		return
 	unceiver.add_client_colour(/datum/client_colour/monochrome/lizard)
+
+/datum/species/lizard/proc/on_move(mob/living/mover, atom/old_loc, movement_dir, forced, list/old_locs)
+	SIGNAL_HANDLER
+
+	if(!movement_dir || !prob(1))
+		return
+	mover.Knockdown(1 SECONDS)
+	to_chat(mover, span_warning("You trip from your imbalance!"))
 
 /*
 Lizard subspecies: ASHWALKERS
