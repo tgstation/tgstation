@@ -5,6 +5,12 @@
 	icon_state = "microscope"
 	var/obj/item/petri_dish/current_dish
 
+/obj/structure/microscope/wrench_act(mob/living/user, obj/item/I)
+	..()
+	default_unfasten_wrench(user, I)
+	return TRUE
+
+
 /obj/structure/microscope/attacked_by(obj/item/I, mob/living/user)
 	if(!istype(I, /obj/item/petri_dish))
 		return ..()
