@@ -2,7 +2,7 @@
 /datum/reagent/compost
 	name = "compost"
 	description = "A mixture of waste and rotten plant matter that nurtures plants and keeps them free of pests."
-	reagent_state = "SOLID"
+	reagent_state = SOLID
 	color = "#44341F"
 	taste_description = "rot"
 
