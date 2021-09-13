@@ -26,6 +26,11 @@
 
 	return data
 
+/datum/preference_middleware/antags/get_ui_assets()
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/antagonists),
+	)
+
 /datum/preference_middleware/antags/proc/set_antags(list/params, mob/user)
 	SHOULD_NOT_SLEEP(TRUE)
 
