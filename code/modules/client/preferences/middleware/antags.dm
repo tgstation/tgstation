@@ -53,7 +53,8 @@
 	else
 		preferences.be_special -= antags
 
-	return TRUE
+	// This is predicted on the client
+	return FALSE
 
 /datum/preference_middleware/antags/proc/get_antag_bans()
 	var/list/antag_bans = list()
