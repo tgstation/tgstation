@@ -38,7 +38,7 @@ export const RandomizationButton = (props: {
       clipSelectedText={false}
       displayText={(
         <Icon
-          name={value === RandomSetting.Disabled ? "lock" : "dice-d20"}
+          name="dice-d20"
           mr="-0.25em"
         />
       )}

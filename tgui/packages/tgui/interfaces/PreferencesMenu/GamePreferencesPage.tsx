@@ -43,7 +43,7 @@ export const GamePreferencesPage = (props, context) => {
     }
 
     let name: InfernoNode = (
-      <Flex.Item textAlign="right" grow={1} pr={2} basis="50%">
+      <Flex.Item grow={1} pr={2} basis={0} ml={2}>
         {nameInner}
       </Flex.Item>
     );
@@ -60,7 +60,7 @@ export const GamePreferencesPage = (props, context) => {
       <Flex align="center" key={featureId} pb={2}>
         {name}
 
-        <Flex.Item grow={1} basis="50%">
+        <Flex.Item grow={1} basis={0}>
           {feature && <FeatureValueInput
             feature={feature}
             featureId={featureId}
