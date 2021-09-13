@@ -378,7 +378,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// - An assoc list of raw values to atoms/icons, in which case
 /// icons will be generated.
 /datum/preference/choiced/proc/init_possible_values()
-	SHOULD_NOT_SLEEP(TRUE)
 	CRASH("`init_possible_values()` was not implemented for [type]!")
 
 /datum/preference/choiced/is_valid(value)
