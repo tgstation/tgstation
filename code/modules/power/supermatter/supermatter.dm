@@ -596,7 +596,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		kdelta = gas_comp[/datum/gas/antinoblium] - k
 		//k converges to antinoblium composition faster when the SM is cold.
 		//Limited to 0.999999 because we will multiply power gain from matter by the inverse of 1 - k.
-		k = min(k + kdelta * HEAT_PENALTY_THRESHOLD/(HEAT_PENALTY_THRESHOLD+removed.temperature),0.999999)
+		k = min(k + kdelta * TCMB / (TCMB + removed.temperature),0.999999)
 		ki = 1/(1-k)
 		//Minimum value of -10, maximum value of 23. Effects plasma and o2 output and the output heat
 		dynamic_heat_modifier = 0
