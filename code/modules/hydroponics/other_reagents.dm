@@ -46,7 +46,7 @@
 /datum/reagent/fortifying_compost
 	name = "fortifying compost"
 	description = "Compost mixed with tatojuice and yucca juice. The resulting mixture will fortify the plant from weed infestations, toxins and the toils of gardening."
-	reagent_state = "LIQUID"
+	reagent_state = LIQUID
 	color = "#AD462C"
 	taste_description = "earthy rot"
 
