@@ -189,9 +189,6 @@
 /datum/holiday/no_this_is_patrick/greet()
 	return "Happy National Inebriation Day!"
 
-/datum/holiday/int_forest/getStationPrefix()
-	return pick("Birch","Oak","Redwood","Oil Palm","Candlenut","Dogwood","Cherry Blossom")
-
 // APRIL
 
 /datum/holiday/april_fools
