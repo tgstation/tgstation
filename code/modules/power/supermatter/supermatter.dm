@@ -666,7 +666,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			power = max((removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0)
 
 		//Passively gain power when ki is above 1.
-		power += (ki-1) * T100C
+		power += sqrt((ki-1) * POWER_PENALTY_THRESHOLD)
 
 		if(prob(50))
 			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
