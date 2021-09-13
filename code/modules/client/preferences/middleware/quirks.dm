@@ -1,5 +1,7 @@
 /// Middleware to handle quirks
 /datum/preference_middleware/quirks
+	var/tainted = FALSE
+
 	action_delegations = list(
 		"give_quirk" = .proc/give_quirk,
 		"remove_quirk" = .proc/remove_quirk,
@@ -11,12 +13,16 @@
 
 	var/list/data = list()
 
-	var/list/selected_quirks = list()
+	data["selected_quirks"] = get_selected_quirks()
 
-	for (var/quirk in preferences.all_quirks)
-		selected_quirks += sanitize_css_class_name(quirk)
+	return data
 
-	data["selected_quirks"] = selected_quirks
+/datum/preference_middleware/quirks/get_ui_data(mob/user)
+	var/list/data = list()
+
+	if (tainted)
+		tainted = FALSE
+		data["selected_quirks"] = get_selected_quirks()
 
 	return data
 
@@ -37,6 +43,9 @@
 		"quirk_info" = quirk_info,
 		"quirk_blacklist" = SSquirks.quirk_blacklist,
 	)
+
+/datum/preference_middleware/quirks/on_new_character(mob/user)
+	tainted = TRUE
 
 /datum/preference_middleware/quirks/proc/give_quirk(list/params, mob/user)
 	var/quirk_name = params["quirk"]
@@ -70,3 +79,11 @@
 	preferences.all_quirks = new_quirks
 
 	return TRUE
+
+/datum/preference_middleware/quirks/proc/get_selected_quirks()
+	var/list/selected_quirks = list()
+
+	for (var/quirk in preferences.all_quirks)
+		selected_quirks += sanitize_css_class_name(quirk)
+
+	return selected_quirks

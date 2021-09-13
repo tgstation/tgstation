@@ -7,10 +7,6 @@ import { useBackend, useLocalState } from "../../backend";
 import { logger } from "../../logging";
 import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
 
-type QuirksPageState = {
-  selectedQuirks: string[];
-};
-
 const getValueClass = (value: number): string => {
   if (value > 0) {
     return "positive";
@@ -136,7 +132,7 @@ export const QuirksPage = (props, context) => {
 
   const [selectedQuirks, setSelectedQuirks] = useLocalState(
     context,
-    "selectedQuirks",
+    `selectedQuirks_${data.active_slot}`,
     data.selected_quirks,
   );
 
