@@ -12893,7 +12893,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "perma-entrence"
+	cycle_id = "perma-entrance"
 	},
 /turf/open/floor/iron,
 /area/security/prison)
@@ -15827,7 +15827,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "atmos-entrence"
+	cycle_id = "atmos-entrance"
 	},
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/atmos{
@@ -16612,7 +16612,7 @@
 	name = "Permabrig Transfer"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "perma-entrence"
+	cycle_id = "perma-entrance"
 	},
 /turf/open/floor/iron,
 /area/security/prison)
@@ -21370,7 +21370,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "atmos-entrence"
+	cycle_id = "atmos-entrance"
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
@@ -25652,7 +25652,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "perma-entrence"
+	cycle_id = "perma-entrance"
 	},
 /turf/open/floor/iron,
 /area/security/prison)
@@ -25802,7 +25802,7 @@
 	},
 /obj/machinery/navbeacon/wayfinding,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "atmos-entrence"
+	cycle_id = "atmos-entrance"
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
@@ -26872,7 +26872,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrence"
+	cycle_id = "brig-entrance"
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
@@ -29966,7 +29966,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "perma-entrence"
+	cycle_id = "perma-entrance"
 	},
 /turf/open/floor/iron,
 /area/security/prison)
@@ -31877,7 +31877,7 @@
 /obj/machinery/navbeacon/wayfinding,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrence"
+	cycle_id = "brig-entrance"
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
@@ -46963,7 +46963,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrence"
+	cycle_id = "brig-entrance"
 	},
 /turf/open/floor/iron,
 /area/security/brig)
@@ -48993,7 +48993,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrence"
+	cycle_id = "brig-entrance"
 	},
 /turf/open/floor/iron,
 /area/security/brig)

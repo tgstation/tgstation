@@ -29490,7 +29490,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrence-left"
+	cycle_id = "brig-entrance-left"
 	},
 /obj/machinery/door/airlock/security/glass{
 	name = "Prison Wing";
@@ -31785,7 +31785,7 @@
 	},
 /obj/effect/turf_decal/siding/yellow/corner,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "engi-entrence"
+	cycle_id = "engi-entrance"
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/main)
@@ -31933,7 +31933,7 @@
 /obj/machinery/navbeacon/wayfinding,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "atmos-entrence"
+	cycle_id = "atmos-entrance"
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
@@ -36182,7 +36182,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "engi-entrence"
+	cycle_id = "engi-entrance"
 	},
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Storage";
@@ -39115,7 +39115,7 @@
 	req_access_txt = "63"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrence-right"
+	cycle_id = "brig-entrance-right"
 	},
 /turf/open/floor/iron/dark,
 /area/security/brig)
@@ -43167,7 +43167,7 @@
 	req_access_txt = "63"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrence-right"
+	cycle_id = "brig-entrance-right"
 	},
 /turf/open/floor/iron/dark,
 /area/security/brig)
@@ -59797,7 +59797,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "atmos-entrence"
+	cycle_id = "atmos-entrance"
 	},
 /obj/machinery/door/airlock/atmos{
 	name = "Atmospherics Desk";
@@ -60240,7 +60240,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "engi-entrence"
+	cycle_id = "engi-entrance"
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/main)
@@ -66269,7 +66269,7 @@
 	req_access_txt = "63"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrence-right"
+	cycle_id = "brig-entrance-right"
 	},
 /turf/open/floor/iron/dark,
 /area/security/brig)
@@ -66995,7 +66995,7 @@
 	name = "Departure Lounge"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "departures-entrence"
+	cycle_id = "departures-entrance"
 	},
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/exit/departure_lounge)
@@ -72737,7 +72737,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "engi-entrence"
+	cycle_id = "engi-entrance"
 	},
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Desk";
@@ -78108,7 +78108,7 @@
 	req_access_txt = "1"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrence-left"
+	cycle_id = "brig-entrance-left"
 	},
 /turf/open/floor/plating,
 /area/security/prison)
@@ -80564,7 +80564,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "departures-entrence"
+	cycle_id = "departures-entrance"
 	},
 /obj/machinery/door/airlock/public/glass{
 	name = "Departure Lounge"
@@ -82068,7 +82068,7 @@
 	},
 /obj/machinery/navbeacon/wayfinding,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrence-right"
+	cycle_id = "brig-entrance-right"
 	},
 /turf/open/floor/iron/dark,
 /area/security/brig)
