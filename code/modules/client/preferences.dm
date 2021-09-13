@@ -209,6 +209,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				randomise_appearance_prefs()
 				save_character()
 
+			for (var/datum/preference_middleware/preference_middleware as anything in middleware)
+				preference_middleware.on_new_character()
+
 			character_preview_view.update_body()
 
 			return TRUE
