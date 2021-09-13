@@ -381,7 +381,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	if (isnull(body))
 		create_body()
 	else
-		body.wipe_state()
+		body.delete_equipment()
 	appearance = preferences.render_new_preview_appearance(body)
 
 /atom/movable/screen/character_preview_view/proc/create_body()
