@@ -35,7 +35,7 @@
 	if(weapons_condition < CONDITION_ANY_WEAPON)
 		RegisterSignal(sparring, COMSIG_MOB_FIRED_GUN, .proc/gun_violation)
 		RegisterSignal(sparring, COMSIG_MOB_GRENADE_ARMED, .proc/grenade_violation)
-	if(weapons_condition == CONDITION_FIST_FIGHT)
+	if(weapons_condition <= CONDITION_CEREMONIAL_ONLY)
 		RegisterSignal(sparring, COMSIG_MOB_ITEM_ATTACK, .proc/melee_violation)
 	//arena conditions
 	RegisterSignal(sparring, COMSIG_MOVABLE_MOVED, .proc/arena_violation)
@@ -159,11 +159,13 @@
 	violation(offender, "using grenades")
 
 ///someone used melee weapons
-/datum/sparring_match/proc/melee_violation(datum/offender)
+/datum/sparring_match/proc/melee_violation(datum/offender, item_used, user, params)
 	SIGNAL_HANDLER
 
-	if()
-	violation(offender, "using melee weapons")
+	if(weapons_condition == CONDITION_CEREMONIAL_ONLY && istype(item_used, /obj/item/ceremonial_blade))
+		violation(offender, "using non ceremonial weapons")
+	else
+		violation(offender, "using melee weapons")
 
 /datum/sparring_match/proc/teleport_violation(datum/offender)
 	SIGNAL_HANDLER
