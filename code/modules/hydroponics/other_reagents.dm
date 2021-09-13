@@ -92,7 +92,7 @@
 /datum/reagent/stabilizing_compost
 	name = "stabilizing compost"
 	description = "A soothing mixture of compost, milk and honey. The resulting mixture will stabilize a soil at the cost of potency."
-	reagent_state = "LIQUID"
+	reagent_state = LIQUID
 	color = "#B5ABAB"
 	taste_description = "sweet rot"
 
