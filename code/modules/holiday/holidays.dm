@@ -76,11 +76,6 @@
 
 // JANUARY
 
-/datum/holiday/world_braille
-	name = "World Braille Day"
-	begin_month = JANUARY
-	begin_day = 4
-
 //Fleet Day is celebrated on Jan 19th, the date on which moths were merged (#34498)
 /datum/holiday/fleet_day
 	name = "Fleet Day"
@@ -93,16 +88,6 @@
 /datum/holiday/fleet_day/getStationPrefix()
 	return pick("Moth", "Fleet", "Nomadic")
 
-/datum/holiday/int_edu
-	name = "International Day of Education"
-	begin_month = JANUARY
-	begin_day = 24
-
-/datum/holiday/int_customs
-	name = "International Customs Day"
-	begin_month = JANUARY
-	begin_day = 26
-
 // FEBRUARY
 
 /datum/holiday/groundhog
@@ -113,11 +98,6 @@
 
 /datum/holiday/groundhog/getStationPrefix()
 	return pick("Deja Vu") //I have been to this place before
-
-/datum/holiday/wetlands_day
-	name = "World Wetlands Day"
-	begin_day = 2
-	begin_month = FEBRUARY
 
 /datum/holiday/nz
 	name = "Waitangi Day"
@@ -182,30 +162,12 @@
 /datum/holiday/random_kindness/greet()
 	return "Go do some random acts of kindness for a stranger!" //haha yeah right
 
-/datum/holiday/int_mother_lang
-	name = "International Mother Language Day"
-	begin_month = FEBRUARY
-	begin_day = 21
-
 /datum/holiday/leap
 	name = "Leap Day"
 	begin_day = 29
 	begin_month = FEBRUARY
 
 // MARCH
-
-/datum/holiday/wrld_wildlife
-	name = "World Wildlife Day"
-	begin_day = 3
-	begin_month = MARCH
-
-/datum/holiday/int_womn
-	name = "International Women's Day"
-	begin_month = MARCH
-	begin_day = 8
-
-/datum/holiday/int_womn/getStationPrefix()
-	return pick("Lovable","Amazing","Styling","Fashionable","Queen","Girlboss","Thoughtful")
 
 /datum/holiday/pi
 	name = "Pi Day"
@@ -227,11 +189,6 @@
 /datum/holiday/no_this_is_patrick/greet()
 	return "Happy National Inebriation Day!"
 
-/datum/holiday/int_forest
-	name = "International Day of Forests"
-	begin_day = 21
-	begin_month = MARCH
-	
 /datum/holiday/int_forest/getStationPrefix()
 	return pick("Birch","Oak","Redwood","Oil Palm","Candlenut","Dogwood","Cherry Blossom")
 
@@ -251,14 +208,6 @@
 		var/mob/dead/new_player/P = i
 		if(P.client)
 			P.client.playtitlemusic()
-
-/datum/holiday/conscience
-	name = "International Day of Conscience"
-	begin_day = 5
-	begin_month = APRIL
-
-/datum/holiday/conscience/greet()
-	return "Today we celebrate the importance of the human conscience!"
 
 /datum/holiday/spess
 	name = "Cosmonautics Day"
@@ -329,14 +278,6 @@
 
 /datum/holiday/firefighter/getStationPrefix()
 	return pick("Burning","Blazing","Plasma","Fire")
-
-/datum/holiday/redcross
-	name = "World Red Cross and Red Crescent Day"
-	begin_day = 8
-	begin_month = MAY
-
-/datum/holiday/redcross/greet()
-	return "Today we celebrate the efforts of the Red Cross and Red Crescent! One donation can potentially save up to three lives."
 
 /datum/holiday/bee
 	name = "Bee Day"
