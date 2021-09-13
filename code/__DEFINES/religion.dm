@@ -11,12 +11,14 @@
 
 //## which weapons should we use?
 
-///fisticuffs only. will probably be used a lot if the chaplain's weapon is really good
-// unused but for clarity #define CONDITION_FIST_FIGHT 1
+// unused but for clarity
+#define CONDITION_FIST_FIGHT 1
+///can only use the ritual weapons the sparring chaplain makes.
+#define CONDITION_CEREMONIAL_ONLY 2
 ///melee weapon condition, default sparring condition.
-#define CONDITION_MELEE_ONLY 2
+#define CONDITION_MELEE_ONLY 3
 ///any weapon is cool... probably a terrible idea against security
-#define CONDITION_ANY_WEAPON 3
+#define CONDITION_ANY_WEAPON 4
 
 //
 ///must use weapons the chaplain makes from their sect. no fist fighting, even! it ensures a fair fight.
