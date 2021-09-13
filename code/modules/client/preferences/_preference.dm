@@ -266,6 +266,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	if (!success)
 		return FALSE
 
+	recently_updated_keys |= preference.type
 	value_cache[preference.type] = new_value
 
 	if (preference.savefile_identifier == PREFERENCE_PLAYER)

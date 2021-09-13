@@ -255,6 +255,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (preference.savefile_identifier != PREFERENCE_PLAYER)
 			continue
 
+		if (!(preference.type in recently_updated_keys))
+			continue
+
+		recently_updated_keys -= preference.type
+
 		if (preference_type in value_cache)
 			write_preference(preference, preference.serialize(value_cache[preference_type]))
 
@@ -272,6 +277,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return TRUE
 
 /datum/preferences/proc/load_character(slot)
+	SHOULD_NOT_SLEEP(TRUE)
+
 	if(!path)
 		return FALSE
 	if(!fexists(path))
@@ -333,6 +340,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return TRUE
 
 /datum/preferences/proc/save_character()
+	SHOULD_NOT_SLEEP(TRUE)
+
 	if(!path)
 		return FALSE
 	var/savefile/S = new /savefile(path)
@@ -343,6 +352,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (preference.savefile_identifier != PREFERENCE_CHARACTER)
 			continue
+
+		if (!(preference.type in recently_updated_keys))
+			continue
+
+		recently_updated_keys -= preference.type
 
 		if (preference.type in value_cache)
 			write_preference(preference, preference.serialize(value_cache[preference.type]))

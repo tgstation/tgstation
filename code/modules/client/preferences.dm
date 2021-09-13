@@ -76,6 +76,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// The savefile relating to character preferences, PREFERENCE_CHARACTER
 	var/savefile/character_savefile
 
+	/// A list of keys that have been updated since the last save.
+	var/list/recently_updated_keys = list()
+
 	/// A cache of preference entries to values.
 	/// Used to avoid expensive READ_FILE every time a preference is retrieved.
 	var/value_cache = list()
@@ -208,9 +211,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				tainted_character_profiles = TRUE
 				randomise_appearance_prefs()
 				save_character()
-
-			for (var/datum/preference_middleware/preference_middleware as anything in middleware)
-				preference_middleware.on_new_character()
 
 			character_preview_view.update_body()
 
