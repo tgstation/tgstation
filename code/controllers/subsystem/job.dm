@@ -476,25 +476,28 @@ SUBSYSTEM_DEF(job)
 
 	if(PopcapReached())
 		RejectPlayer(player)
-	else if(jobless_role == BEOVERFLOW)
-		var/datum/job/overflow_role_datum = GetJobType(overflow_role)
-		var/allowed_to_be_a_loser = !is_banned_from(player.ckey, overflow_role_datum.title)
-		if(QDELETED(player) || !allowed_to_be_a_loser)
-			RejectPlayer(player)
-		else
-			if(!AssignRole(player, overflow_role_datum))
+		return
+
+	switch (jobless_role)
+		if (BEOVERFLOW)
+			var/datum/job/overflow_role_datum = GetJobType(overflow_role)
+			var/allowed_to_be_a_loser = !is_banned_from(player.ckey, overflow_role_datum.title)
+			if(QDELETED(player) || !allowed_to_be_a_loser)
 				RejectPlayer(player)
-	else if(jobless_role == BERANDOMJOB)
-		if(!GiveRandomJob(player))
+			else
+				if(!AssignRole(player, overflow_role_datum))
+					RejectPlayer(player)
+		if (BERANDOMJOB)
+			if(!GiveRandomJob(player))
+				RejectPlayer(player)
+		if (RETURNTOLOBBY)
 			RejectPlayer(player)
-	else if(jobless_role == RETURNTOLOBBY)
-		RejectPlayer(player)
-	else //Something gone wrong if we got here.
-		var/message = "DO: [player] fell through handling unassigned"
-		JobDebug(message)
-		log_game(message)
-		message_admins(message)
-		RejectPlayer(player)
+		else //Something gone wrong if we got here.
+			var/message = "DO: [player] fell through handling unassigned"
+			JobDebug(message)
+			log_game(message)
+			message_admins(message)
+			RejectPlayer(player)
 
 
 //Gives the player the stuff he should have with his rank
