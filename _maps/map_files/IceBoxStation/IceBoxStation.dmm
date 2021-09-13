@@ -12759,6 +12759,9 @@
 	name = "External Access";
 	req_access_txt = "13"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cfr" = (
@@ -18556,8 +18559,10 @@
 /area/cargo/miningdock)
 "eVp" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock/atmos,
-/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/airlock/atmos{
+	name = "Atmospherics";
+	req_access_txt = "24"
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "eVu" = (
@@ -19759,9 +19764,8 @@
 /area/command/heads_quarters/captain)
 "fEL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 1;
-	sortType = 1
+/obj/structure/disposalpipe/sorting/wrap/flip{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
@@ -24714,7 +24718,6 @@
 	name = "Atmospherics";
 	req_access_txt = "24"
 	},
-/obj/machinery/door/firedoor/heavy,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -38601,7 +38604,6 @@
 	name = "Atmospherics";
 	req_access_txt = "24"
 	},
-/obj/machinery/door/firedoor/heavy,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "pYU" = (
