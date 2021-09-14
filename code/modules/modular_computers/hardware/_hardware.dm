@@ -97,16 +97,16 @@
 		. += span_notice("It seems to be slightly damaged.")
 
 // Component-side compatibility check.
-/obj/item/computer_hardware/proc/can_install(obj/item/modular_computer/M, mob/living/user = null)
+/obj/item/computer_hardware/proc/can_install(obj/item/modular_computer/install_into, mob/living/user = null)
 	return can_install
 
 // Called when component is installed into PC.
-/obj/item/computer_hardware/proc/on_install(obj/item/modular_computer/M, mob/living/user = null)
+/obj/item/computer_hardware/proc/on_install(obj/item/modular_computer/install_into, mob/living/user = null)
 	return
 
 // Called when component is removed from PC.
-/obj/item/computer_hardware/proc/on_remove(obj/item/modular_computer/M, mob/living/user)
-	if(M.physical && !QDELETED(M) && !QDELETED(src))
+/obj/item/computer_hardware/proc/on_remove(obj/item/modular_computer/remove_from, mob/living/user)
+	if(remove_from.physical && !QDELETED(remove_from) && !QDELETED(src))
 		try_eject(forced = TRUE)
 
 // Called when someone tries to insert something in it - paper in printer, card in card reader, etc.
