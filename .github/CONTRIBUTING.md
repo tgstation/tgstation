@@ -14,17 +14,20 @@
 
 ### Guides to code and coding
 
-#### Must Reads
+#### Writing readable code 
 [Style guide](./guides/STYLE.md)
 
+#### Writing sane code 
 [Code standards](./guides/STANDARDS.md)
 
+#### Writing understandable code 
 [Autodocumenting code](./guides/AUTODOC_GUIDE.md)
 
-#### Misc Information
+#### Misc
+
 [Policy configuration system](./guides/POLICYCONFIG.md)
 
-[Fixing hard deletes](./guides/HARDDEL_GUIDE.md)
+[Hard deletes](./guides/HARDDEL_GUIDE.md)
 
 ## Reporting Issues
 

@@ -2,6 +2,8 @@
 
 These are our code standards. They include information about how to properly work with our code, rules about how to structure what you're writing, and some more general information about BYOND and Dream Maker.
 
+As with the style guide, you are expected to follow these specifications in order to make everyone's lives easier. It'll save both your time and ours, by making sure you don't have to make any changes and we don't have to ask you to. Thank you for reading this file!
+
 1. [General](#general)
 2. [Structural](#structural)
 3. [Optimization](#optimization)
@@ -9,6 +11,11 @@ These are our code standards. They include information about how to properly wor
 5. [SQL](#sql)
 
 ## General
+
+### Object Oriented Code
+
+As BYOND's Dream Maker (henceforth "DM") is an object-oriented language, code must be object-oriented when possible in order to be more flexible when adding content to it. If you don't know what "object-oriented" means, we highly recommend you do some light research to grasp the basics.
+
 ### Develop Secure Code
 
 * Player input must always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind
