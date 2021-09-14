@@ -55,7 +55,8 @@ multiple modular subtrees with behaviors
 	change_ai_movement_type(ai_movement)
 	init_subtrees()
 
-	idle_behavior = new idle_behavior()
+	if(idle_behavior)
+		idle_behavior = new idle_behavior()
 
 	PossessPawn(new_pawn)
 
@@ -135,7 +136,7 @@ multiple modular subtrees with behaviors
 		walk(pawn, 0) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.
 
-	if(!LAZYLEN(current_behaviors))
+	if(!LAZYLEN(current_behaviors) && idle_behavior)
 		idle_behavior.perform_idle_behavior(delta_time, src) //Do some stupid shit while we have nothing to do
 		return
 
