@@ -49,7 +49,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/centcom/Initialize()
 	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
+	allowed += GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/centcom
 	icon_state = "hood_centcom"
@@ -68,7 +68,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/captain/Initialize()
 	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
+	allowed += GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/captain
 	icon_state = "hood_captain"
@@ -120,15 +120,9 @@
 	allowed = list(
 		/obj/item/grenade/chem_grenade,
 		/obj/item/holosign_creator,
-		/obj/item/key/janitor,
-		/obj/item/lightreplacer,
-		/obj/item/melee/flyswatter,
-		/obj/item/paint/paint_remover,
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/reagent_containers/glass/bottle,
-		/obj/item/reagent_containers/glass/bucket,
 		/obj/item/reagent_containers/spray,
-		/obj/item/soap,
 	)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/janitor
 
@@ -147,7 +141,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/security/Initialize()
 	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
+	allowed += GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/security
 	desc = "A red, armour-padded winter hood. Definitely not bulletproof, especially not the part where your face goes."
