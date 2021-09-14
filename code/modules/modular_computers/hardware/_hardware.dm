@@ -41,7 +41,7 @@
 
 /obj/item/computer_hardware/Destroy()
 	if(holder)
-		holder.uninstall_component(src)
+		holder.forget_component(src)
 	return ..()
 
 

@@ -42,21 +42,25 @@
 /obj/item/modular_computer/proc/uninstall_component(obj/item/computer_hardware/H, mob/living/user = null)
 	if(H.holder != src) // Not our component at all.
 		return FALSE
-	if(H.expansion_hw)
-
-		LAZYREMOVE(expansion_bays, H.device_type)
-	all_components.Remove(H.device_type)
 
 	to_chat(user, span_notice("You remove \the [H] from \the [src]."))
 
 	H.forceMove(get_turf(src))
-	H.holder = null
+	forget_component(H)
 	H.on_remove(src, user)
 	if(enabled && !use_power())
 		shutdown_computer()
 	update_appearance()
 	return TRUE
 
+///This isn't a "uninstall fully" proc, it just makes the computer lose all its references to the component
+/obj/item/modular_computer/proc/forget_component(obj/item/computer_hardware/H)
+	if(H.holder != src)
+		return FALSE
+	if(H.expansion_hw)
+		LAZYREMOVE(expansion_bays, H.device_type)
+	all_components.Remove(H.device_type)
+	H.holder = null
 
 // Checks all hardware pieces to determine if name matches, if yes, returns the hardware piece, otherwise returns null
 /obj/item/modular_computer/proc/find_hardware_by_name(name)
