@@ -12,7 +12,7 @@
 /datum/element/movement_turf_changer/Attach(datum/target, turf_type)
 	. = ..()
 
-	if(!ismovable(target) || !ishostile(target))
+	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 
 	src.turf_type = turf_type
