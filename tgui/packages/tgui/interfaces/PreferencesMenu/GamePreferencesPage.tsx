@@ -50,7 +50,7 @@ export const GamePreferencesPage = (props, context) => {
 
     if (feature?.description) {
       name = (
-        <Tooltip content={feature.description} position="bottom-end">
+        <Tooltip content={feature.description} position="bottom-start">
           {name}
         </Tooltip>
       );
