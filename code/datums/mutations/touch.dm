@@ -28,7 +28,7 @@
 	inhand_icon_state = "zapper"
 
 /obj/item/melee/touch_attack/shock/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!proximity)
+	if(!proximity || !isliving(target))
 		return
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -41,11 +41,8 @@
 		else
 			user.visible_message(span_warning("[user] fails to electrocute [target]!"))
 			return ..()
-	else if(isliving(target))
-		var/mob/living/L = target
-		L.electrocute_act(15, user, 1, SHOCK_NOSTUN)
-		L.visible_message(span_danger("[user] electrocutes [target]!"),span_userdanger("[user] electrocutes you!"))
-		return ..()
 	else
-		to_chat(user,span_warning("The electricity doesn't seem to affect [target]..."))
+		var/mob/living/L = target
+		L.electrocute_act(15, user, 1, SHOCK_NOGLOVES | SHOCK_NOSTUN)
+		L.visible_message(span_danger("[user] electrocutes [target]!"),span_userdanger("[user] electrocutes you!"))
 		return ..()
