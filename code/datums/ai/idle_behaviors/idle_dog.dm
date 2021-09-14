@@ -1,11 +1,11 @@
 ///Dog specific idle behavior.
-/datum/idle_behavior/idle_dog/perform_idle_behavior(delta_time, controller)
+/datum/idle_behavior/idle_dog/perform_idle_behavior(delta_time, datum/ai_controller/dog/controller)
 	var/mob/living/living_pawn = controller.pawn
 	if(!isturf(living_pawn.loc) || living_pawn.pulledby)
 		return
 
 	// if we were just ordered to heel, chill out for a bit
-	if(!COOLDOWN_FINISHED(src, heel_cooldown))
+	if(!COOLDOWN_FINISHED(controller, heel_cooldown))
 		return
 
 	// if we're just ditzing around carrying something, occasionally print a message so people know we have something

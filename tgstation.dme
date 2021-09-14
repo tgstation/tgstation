@@ -492,6 +492,7 @@
 #include "code\datums\ai\idle_behaviors\idle_dog.dm"
 #include "code\datums\ai\idle_behaviors\idle_haunted.dm"
 #include "code\datums\ai\idle_behaviors\idle_monkey.dm"
+#include "code\datums\ai\idle_behaviors\idle_random_walk.dm"
 #include "code\datums\ai\monkey\monkey_behaviors.dm"
 #include "code\datums\ai\monkey\monkey_controller.dm"
 #include "code\datums\ai\monkey\monkey_subtrees.dm"
