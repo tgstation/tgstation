@@ -1,6 +1,13 @@
 ## Code Standards
-These are our code standards. They'll teach you waht to do
+These are our code standards. There's information about how to properly work with our code, and rules about how to structure what you're writing.
 
+## User Interfaces
+* All new player-facing user interfaces must use TGUI.
+* Raw HTML is permitted for admin and debug UIs.
+* Documentation for TGUI can be found at:
+	* [tgui/README.md](../tgui/README.md)
+	* [tgui/tutorial-and-examples.md](../tgui/docs/tutorial-and-examples.md)
+	
 ## All `process` procs need to make use of delta-time and be frame independent
 
 In a lot of our older code, `process()` is frame dependent. Here's some example mob code:
@@ -47,16 +54,6 @@ var/path_type = /obj/item/baseball_bat
 var/path_type = "/obj/item/baseball_bat"
 ```
 
-## Avoid hacky code
-Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: "I couldn't immediately think of a proper way so thus there must be no other option" is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)
-
-You can avoid hacky code by using object-oriented methodologies, such as overriding a function (called "procs" in DM) or sectioning code into functions and then overriding them as required.
-
-## No duplicated code (Don't repeat yourself)
-Copying code from one place to another may be suitable for small, short-time projects, but /tg/station is a long-term project and highly discourages this.
-
-Instead you can use object orientation, or simply placing repeated code in a function, to obey this specification easily.
-
 ## Startup/Runtime tradeoffs with lists and the "hidden" init proc
 First, read the comments in [this BYOND thread](http://www.byond.com/forum/?post=2086980&page=2#comment19776775), starting where the link takes you.
 
@@ -70,117 +67,7 @@ Remember: although this tradeoff makes sense in many cases, it doesn't cover the
 
 ## Prefer `Initialize()` over `New()` for atoms
 Our game controller is pretty good at handling long operations and lag, but it can't control what happens when the map is loaded, which calls `New` for all atoms on the map. If you're creating a new atom, use the `Initialize` proc to do what you would normally do in `New`. This cuts down on the number of proc calls needed when the world is loaded. See here for details on `Initialize`: https://github.com/tgstation/tgstation/blob/34775d42a2db4e0f6734560baadcfcf5f5540910/code/game/atoms.dm#L166
-While we normally encourage (and in some cases, even require) bringing out of date code up to date when you make unrelated changes near the out of date code, that is not the case for `New` -> `Initialize` conversions. These systems are generally more dependant on parent and children procs so unrelated random conversions of existing things can cause bugs that take months to figure out.
-
-## No magic numbers or strings
-This means stuff like having a "mode" variable for an object set to "1" or "2" with no clear indicator of what that means. Make these #defines with a name that more clearly states what it's for. For instance:
-````DM
-/datum/proc/do_the_thing(thing_to_do)
-	switch(thing_to_do)
-		if(1)
-			(...)
-		if(2)
-			(...)
-````
-There's no indication of what "1" and "2" mean! Instead, you'd do something like this:
-````DM
-#define DO_THE_THING_REALLY_HARD 1
-#define DO_THE_THING_EFFICIENTLY 2
-/datum/proc/do_the_thing(thing_to_do)
-	switch(thing_to_do)
-		if(DO_THE_THING_REALLY_HARD)
-			(...)
-		if(DO_THE_THING_EFFICIENTLY)
-			(...)
-````
-This is clearer and enhances readability of your code! Get used to doing it!
-
-## Use early return
-Do not enclose a proc in an if-block when returning on a condition is more feasible
-This is bad:
-````DM
-/datum/datum1/proc/proc1()
-	if (thing1)
-		if (!thing2)
-			if (thing3 == 30)
-				do stuff
-````
-This is good:
-````DM
-/datum/datum1/proc/proc1()
-	if (!thing1)
-		return
-	if (thing2)
-		return
-	if (thing3 != 30)
-		return
-	do stuff
-````
-This prevents nesting levels from getting deeper then they need to be.
-
-## Use our time defines
-
-The codebase contains some defines which will automatically multiply a number by the correct amount to get a number in deciseconds. Using these is preffered over using a literal amount in deciseconds.
-
-The defines are as follows:
-* SECONDS
-* MINUTES
-* HOURS
-
-This is bad:
-````DM
-/datum/datum1/proc/proc1()
-	if(do_after(mob, 15))
-		mob.dothing()
-````
-
-This is good:
-````DM
-/datum/datum1/proc/proc1()
-	if(do_after(mob, 1.5 SECONDS))
-		mob.dothing()
-````
-
-## Getters and setters
-
-* Avoid getter procs. They are useful tools in languages with that properly enforce variable privacy and encapsulation, but DM is not one of them. The upfront cost in proc overhead is met with no benefits, and it may tempt to develop worse code.
-
-This is bad:
-```DM
-/datum/datum1/proc/simple_getter()
-	return gotten_variable
-```
-Prefer to either access the variable directly or use a macro/define.
-
-
-* Make usage of variables or traits, set up through condition setters, for a more maintainable alternative to compex and redefined getters.
-
-These are bad:
-```DM
-/datum/datum1/proc/complex_getter()
-	return condition ? VALUE_A : VALUE_B
-
-/datum/datum1/child_datum/complex_getter()
-	return condition ? VALUE_C : VALUE_D
-```
-
-This is good:
-```DM
-/datum/datum1
-	var/getter_turned_into_variable
-
-/datum/datum1/proc/set_condition(new_value)
-	if(condition == new_value)
-		return
-	condition = new_value
-	on_condition_change()
-
-/datum/datum1/proc/on_condition_change()
-	getter_turned_into_variable = condition ? VALUE_A : VALUE_B
-
-/datum/datum1/child_datum/on_condition_change()
-	getter_turned_into_variable = condition ? VALUE_C : VALUE_D
-```
+While we normally encourage (and in some cases, even require) bringing out of date code up to date when you make unrelated changes near the out of date code, that is not the case for `New` -> `Initialize` conversions. These systems are generally more dependent on parent and children procs so unrelated random conversions of existing things can cause bugs that take months to figure out.
 
 ## Avoid unnecessary type checks and obscuring nulls in lists
 Typecasting in `for` loops carries an implied `istype()` check that filters non-matching types, nulls included. The `as anything` key can be used to skip the check.
@@ -208,51 +95,6 @@ for(var/atom/thing as anything in bag_of_atoms)
 		continue
 	highest_alpha = thing.alpha
 ```
-
-## Develop Secure Code
-
-* Player input must always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind
-
-* Calls to the database must be escaped properly - use sanitizeSQL to escape text based database entries from players or admins, and isnum() for number based database entries from players or admins.
-
-* All calls to topics must be checked for correctness. Topic href calls can be easily faked by clients, so you should ensure that the call is valid for the state the item is in. Do not rely on the UI code to provide only valid topic calls, because it won't.
-
-* Information that players could use to metagame (that is, to identify round information and/or antagonist type via information that would not be available to them in character) should be kept as administrator only.
-
-* It is recommended as well you do not expose information about the players - even something as simple as the number of people who have readied up at the start of the round can and has been used to try to identify the round type.
-
-* Where you have code that can cause large-scale modification and *FUN*, make sure you start it out locked behind one of the default admin roles - use common sense to determine which role fits the level of damage a function could do.
-
-## Files
-* Because runtime errors do not give the full path, try to avoid having files with the same name across folders.
-
-* File names should not be mixed case, or contain spaces or any character that would require escaping in a uri.
-
-* Files and path accessed and referenced by code above simply being #included should be strictly lowercase to avoid issues on filesystems where case matters.
-
-## SQL
-* Do not use the shorthand sql insert format (where no column names are specified) because it unnecessarily breaks all queries on minor column changes and prevents using these tables for tracking outside related info such as in a connected site/forum.
-
-* All changes to the database's layout(schema) must be specified in the database changelog in SQL, as well as reflected in the schema files
-
-* Any time the schema is changed the `schema_revision` table and `DB_MAJOR_VERSION` or `DB_MINOR_VERSION` defines must be incremented.
-
-* Queries must never specify the database, be it in code, or in text files in the repo.
-
-* Primary keys are inherently immutable and you must never do anything to change the primary key of a row or entity. This includes preserving auto increment numbers of rows when copying data to a table in a conversion script. No amount of bitching about gaps in ids or out of order ids will save you from this policy.
-
-* The ttl for data from the database is 10 seconds. You must have a compelling reason to store and reuse data for longer then this.
-
-* Do not write stored and transformed data to the database, instead, apply the transformation to the data in the database directly.
-	* ie: SELECTing a number from the database, doubling it, then updating the database with the doubled number. If the data in the database changed between step 1 and 3, you'll get an incorrect result. Instead, directly double it in the update query. `UPDATE table SET num = num*2` instead of `UPDATE table SET num = [num]`.
-	* if the transformation is user provided (such as allowing a user to edit a string), you should confirm the value being updated did not change in the database in the intervening time before writing the new user provided data by checking the old value with the current value in the database, and if it has changed, allow the user to decide what to do next.
-
-## User Interfaces
-* All new player-facing user interfaces must use TGUI.
-* Raw HTML is permitted for admin and debug UIs.
-* Documentation for TGUI can be found at:
-	* [tgui/README.md](../tgui/README.md)
-	* [tgui/tutorial-and-examples.md](../tgui/docs/tutorial-and-examples.md)
 
 ## Signal Handlers
 All procs that are registered to listen for signals using `RegisterSignal()` must contain at the start of the proc `SIGNAL_HANDLER` eg;
@@ -371,69 +213,6 @@ Proc variables, static variables, and global variables are resolved at compile t
 
 Note: While there has historically been a strong impulse to use associated lists for caching of computed values, this is the easy way out and leaves a lot of hidden overhead. Please keep this in mind when designing core/root systems that are intended for use by other code/coders. It's normally better for consumers of such systems to handle their own caching using vars and number indexed lists, than for you to do it using associated lists.
 
-## When passing vars through New() or Initialize()'s arguments, use src.var
-Using src.var + naming the arguments the same as the var is the most readable and intuitive way to pass arguments into a new instance's vars. The main benefit is that you do not need to give arguments odd names with prefixes and suffixes that are easily forgotten in `new()` when sending named args.
-
-This is very bad:
-```DM
-/atom/thing
-	var/is_red
-
-/atom/thing/Initialize(mapload, enable_red)
-	is_red = enable_red
-
-/proc/make_red_thing()
-	new /atom/thing(null, enable_red = TRUE)
-```
-
-Future coders using this code will have to remember two differently named variables which are near-synonyms of eachother. One of them is only used in Initialize for one line.
-
-This is bad:
-```DM
-/atom/thing
-	var/is_red
-
-/atom/thing/Initialize(mapload, _is_red)
-	is_red = _is_red
-
-/proc/make_red_thing()
-	new /atom/thing(null, _is_red = TRUE)
-```
-
-`_is_red` is being used to set `is_red` and yet means a random '_' needs to be appended to the front of the arg, same as all other args like this.
-
-This is good:
-```DM
-/atom/thing
-	var/is_red
-
-/atom/thing/Initialize(mapload, is_red)
-	src.is_red = is_red
-
-/proc/make_red_thing()
-	new /atom/thing(null, is_red = TRUE)
-```
-
-Setting `is_red` in args is simple, and directly names the variable the argument sets.
-
-## Other Notes
-* Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
-
-* Bloated code may be necessary to add a certain feature, which means there has to be a judgement over whether the feature is worth having or not. You can help make this decision easier by making sure your code is modular.
-
-* You are expected to help maintain the code that you add, meaning that if there is a problem then you are likely to be approached in order to fix any issues, runtimes, or bugs.
-
-* Do not divide when you can easily convert it to multiplication. (ie `4/2` should be done as `4*0.5`)
-
-* Separating single lines into more readable blocks is not banned, however you should use it only where it makes new information more accessible, or aids maintainability. We do not have a column limit, and mass conversions will not be received well.
-
-* If you used regex to replace code during development of your code, post the regex in your PR for the benefit of future developers and downstream users.
-
-* Changes to the `/config` tree must be made in a way that allows for updating server deployments while preserving previous behaviour. This is due to the fact that the config tree is to be considered owned by the user and not necessarily updated alongside the remainder of the code. The code to preserve previous behaviour may be removed at some point in the future given the OK by maintainers.
-
-* The dlls section of tgs3.json is not designed for dlls that are purely `call()()`ed since those handles are closed between world reboots. Only put in dlls that may have to exist between world reboots.
-
-
 ## Dream Maker Quirks/Tricks
 Like all languages, Dream Maker has its quirks, some of them are beneficial to us, like these
 
@@ -459,3 +238,57 @@ However, DM also has a dot variable, accessed just as `.` on its own, defaulting
 
 With `.` being everpresent in every proc, can we use it as a temporary variable? Of course we can! However, the `.` operator cannot replace a typecasted variable - it can hold data any other var in DM can, it just can't be accessed as one, although the `.` operator is compatible with a few operators that look weird but work perfectly fine, such as: `.++` for incrementing `.'s` value, or `.[1]` for accessing the first element of `.`, provided that it's a list.
 
+## Develop Secure Code
+
+* Player input must always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind
+
+* Calls to the database must be escaped properly - use sanitizeSQL to escape text based database entries from players or admins, and isnum() for number based database entries from players or admins.
+
+* All calls to topics must be checked for correctness. Topic href calls can be easily faked by clients, so you should ensure that the call is valid for the state the item is in. Do not rely on the UI code to provide only valid topic calls, because it won't.
+
+* Information that players could use to metagame (that is, to identify round information and/or antagonist type via information that would not be available to them in character) should be kept as administrator only.
+
+* It is recommended as well you do not expose information about the players - even something as simple as the number of people who have readied up at the start of the round can and has been used to try to identify the round type.
+
+* Where you have code that can cause large-scale modification and *FUN*, make sure you start it out locked behind one of the default admin roles - use common sense to determine which role fits the level of damage a function could do.
+
+## Files
+* Because runtime errors do not give the full path, try to avoid having files with the same name across folders.
+
+* File names should not be mixed case, or contain spaces or any character that would require escaping in a uri.
+
+* Files and path accessed and referenced by code above simply being #included should be strictly lowercase to avoid issues on filesystems where case matters.
+
+## SQL
+* Do not use the shorthand sql insert format (where no column names are specified) because it unnecessarily breaks all queries on minor column changes and prevents using these tables for tracking outside related info such as in a connected site/forum.
+
+* All changes to the database's layout(schema) must be specified in the database changelog in SQL, as well as reflected in the schema files
+
+* Any time the schema is changed the `schema_revision` table and `DB_MAJOR_VERSION` or `DB_MINOR_VERSION` defines must be incremented.
+
+* Queries must never specify the database, be it in code, or in text files in the repo.
+
+* Primary keys are inherently immutable and you must never do anything to change the primary key of a row or entity. This includes preserving auto increment numbers of rows when copying data to a table in a conversion script. No amount of bitching about gaps in ids or out of order ids will save you from this policy.
+
+* The ttl for data from the database is 10 seconds. You must have a compelling reason to store and reuse data for longer then this.
+
+* Do not write stored and transformed data to the database, instead, apply the transformation to the data in the database directly.
+	* ie: SELECTing a number from the database, doubling it, then updating the database with the doubled number. If the data in the database changed between step 1 and 3, you'll get an incorrect result. Instead, directly double it in the update query. `UPDATE table SET num = num*2` instead of `UPDATE table SET num = [num]`.
+	* if the transformation is user provided (such as allowing a user to edit a string), you should confirm the value being updated did not change in the database in the intervening time before writing the new user provided data by checking the old value with the current value in the database, and if it has changed, allow the user to decide what to do next.
+
+## Other Notes
+* Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
+
+* Bloated code may be necessary to add a certain feature, which means there has to be a judgement over whether the feature is worth having or not. You can help make this decision easier by making sure your code is modular.
+
+* You are expected to help maintain the code that you add, meaning that if there is a problem then you are likely to be approached in order to fix any issues, runtimes, or bugs.
+
+* Do not divide when you can easily convert it to multiplication. (ie `4/2` should be done as `4*0.5`)
+
+* Separating single lines into more readable blocks is not banned, however you should use it only where it makes new information more accessible, or aids maintainability. We do not have a column limit, and mass conversions will not be received well.
+
+* If you used regex to replace code during development of your code, post the regex in your PR for the benefit of future developers and downstream users.
+
+* Changes to the `/config` tree must be made in a way that allows for updating server deployments while preserving previous behaviour. This is due to the fact that the config tree is to be considered owned by the user and not necessarily updated alongside the remainder of the code. The code to preserve previous behaviour may be removed at some point in the future given the OK by maintainers.
+
+* The dlls section of tgs3.json is not designed for dlls that are purely `call()()`ed since those handles are closed between world reboots. Only put in dlls that may have to exist between world reboots.

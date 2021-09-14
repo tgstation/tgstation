@@ -14,13 +14,13 @@
 
 ## Guides
 
-[Syntactical guide](./SYNTAX.md)
+[Style guide](./STYLE.md)
+
+[Code standards](./STANDARDS.md)
 
 [Autodocumenting code](./AUTODOC_GUIDE.md)
 
 [Policy configuration system](./POLICYCONFIG.md)
-
-[Code standards](./STANDARDS.md)
 
 [Fixing hard deletes](./HARDDEL_GUIDE.md)
 
