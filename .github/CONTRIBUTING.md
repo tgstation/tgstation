@@ -12,6 +12,8 @@
 7. [Banned content](#banned-content)
 8. [A word on Git](#a-word-on-git)
 
+## Guides
+
 [Syntactical guide](./SYNTAX.md)
 
 [Autodocumenting code](./AUTODOC_GUIDE.md)
@@ -20,7 +22,12 @@
 
 [Tips for good code](./TIPS.md)
 
+[Fixing hard deletes](./HARDDEL_GUIDE.md)
+
+[Trouble with the engine](./BYOND_PAIN.md)
+
 ## Reporting Issues
+
 If you ever encounter a bug in-game, the best way to let a coder know about it is with our GitHub Issue Tracker. Please make sure you use the supplied issue template, and include the round ID for the server.
 
 (If you don't have an account, making a new one takes only one minute.)
