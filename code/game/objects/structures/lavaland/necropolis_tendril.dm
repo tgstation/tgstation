@@ -26,7 +26,7 @@
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril)
 
 /obj/structure/spawner/lavaland/icewatcher
-	mob_types = list(/mob/living/basic/mining/basilisk/watcher/icewing)
+	mob_types = list(/mob/living/basic/mining/watcher/icewing)
 
 GLOBAL_LIST_INIT(tendrils, list())
 /obj/structure/spawner/lavaland/Initialize()

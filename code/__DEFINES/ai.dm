@@ -25,6 +25,8 @@
 #define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<1)
 ///This task does not prevent re-planning.
 #define AI_BEHAVIOR_ALLOWS_REPLANNING (1<<2)
+///Does this task require line of sight?
+#define AI_BEHAVIOR_REQUIRE_LOS (1<<3)
 
 ///AI flags
 #define STOP_MOVING_WHEN_PULLED (1<<0)

@@ -12,6 +12,18 @@
 /datum/ai_behavior/proc/setup(datum/ai_controller/controller, ...)
 	return TRUE
 
+/datum/ai_behavior/proc/need_movement(datum/ai_controller/controller)
+	if(behavior_flags & AI_BEHAVIOR_REQUIRE_LOS)
+		if(COOLDOWN_FINISHED(controller, los_cooldown))
+			controller.last_LOS_check_result = can_see(controller.pawn, controller.current_movement_target)
+			COOLDOWN_START(controller, los_cooldown, 1 SECONDS)
+		if(!controller.last_LOS_check_result)
+			return TRUE
+
+	if(required_distance >= get_dist(controller.pawn, controller.current_movement_target))
+		return FALSE
+	return TRUE
+
 ///Called by the AI controller when this action is performed
 /datum/ai_behavior/proc/perform(delta_time, datum/ai_controller/controller, ...)
 	controller.behavior_cooldowns[src] = world.time + action_cooldown

@@ -67,8 +67,6 @@
 		var/mob/living/carbon/carbon_target = target
 		carbon_target.apply_status_effect(/datum/status_effect/freezing_blast)
 
-
-
 ///Watcher
 /mob/living/basic/mining/watcher
 	name = "watcher"
@@ -115,7 +113,7 @@
 		if(prob(75))
 			new/mob/living/basic/mining/watcher/magmawing(loc)
 		else
-			new /mob/living/basic/mining/watcherr/icewing(loc)
+			new /mob/living/basic/mining/watcher/icewing(loc)
 		return INITIALIZE_HINT_QDEL
 
 ///Magmawing variant
@@ -123,8 +121,6 @@
 	name = "magmawing watcher"
 	desc = "When raised very close to lava, some watchers adapt to the extreme heat and use lava as both a weapon and wings."
 	icon_state = "watcher_magmawing"
-	icon_living = "watcher_magmawing"
-	icon_aggro = "watcher_magmawing"
 	icon_dead = "watcher_magmawing_dead"
 	maxHealth = 215 //Compensate for the lack of slowdown on projectiles with a bit of extra health
 	health = 215
@@ -160,7 +156,6 @@
 	desc = "Very rarely, some watchers will eke out an existence far from heat sources. In the absence of warmth, they become icy and fragile but fire much stronger freezing blasts."
 	icon_state = "watcher_icewing"
 	icon_living = "watcher_icewing"
-	icon_aggro = "watcher_icewing"
 	icon_dead = "watcher_icewing_dead"
 	maxHealth = 170
 	health = 170

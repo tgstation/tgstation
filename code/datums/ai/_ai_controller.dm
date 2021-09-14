@@ -50,6 +50,11 @@ multiple modular subtrees with behaviors
 	///AI paused time
 	var/paused_until = 0
 
+	///Line of sight check cooldown
+	COOLDOWN_DECLARE(los_cooldown)
+	///Last result of line of sight check
+	var/last_LOS_check_result = FALSE
+
 /datum/ai_controller/New(atom/new_pawn)
 	change_ai_movement_type(ai_movement)
 	init_subtrees()
@@ -144,6 +149,7 @@ multiple modular subtrees with behaviors
 		var/datum/ai_behavior/current_behavior = i
 
 
+
 		// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
 		// Then pick the max of this and the delta_time passed to ai_controller.process()
 		// Action cooldowns cannot happen faster than delta_time, so delta_time should be the value used in this scenario.
@@ -153,7 +159,7 @@ multiple modular subtrees with behaviors
 			if(!current_movement_target)
 				stack_trace("[pawn] wants to perform action type [current_behavior.type] which requires movement, but has no current movement target!")
 				return //This can cause issues, so don't let these slide.
-			if(current_behavior.required_distance >= get_dist(pawn, current_movement_target)) ///Are we close enough to engage?
+			if(!current_behavior.need_movement(src)) ///Are we close enough to engage?
 				if(ai_movement.moving_controllers[src] == current_movement_target) //We are close enough, if we're moving stop.
 					ai_movement.stop_moving_towards(src)
 
