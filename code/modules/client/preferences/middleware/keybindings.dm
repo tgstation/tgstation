@@ -29,7 +29,7 @@
 	if (isnull(keybinding))
 		return FALSE
 
-	preferences.key_bindings[keybind_name] = preferences.hotkeys ? keybinding.hotkey_keys : keybinding.classic_keys
+	preferences.key_bindings[keybind_name] = preferences.parent.hotkeys ? keybinding.hotkey_keys : keybinding.classic_keys
 	preferences.key_bindings_by_key = preferences.get_key_bindings_by_key(preferences.key_bindings)
 
 	preferences.update_static_data(user)
