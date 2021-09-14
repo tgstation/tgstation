@@ -2,6 +2,7 @@
 /mob/living/basic/cow
 	name = "cow"
 	desc = "Known for their milk, just don't tip them over."
+	icon = 'icons/mob/cows.dmi'
 	icon_state = "cow"
 	icon_living = "cow"
 	icon_dead = "cow_dead"
@@ -134,16 +135,16 @@
 	name = "moonicorn"
 	desc = "Magical cow of legend. Its horn will pacify anything it touches, rendering victims mostly helpless. \
 		Victims, yes, because despite the enimatic and wonderous appearance, the moonicorn is incredibly aggressive."
-	icon_state = "cow"
-	icon_living = "cow"
-	icon_dead = "cow_dead"
-	icon_gib = "cow_gib"
+	icon_state = "moonicorn"
+	icon_living = "moonicorn"
+	icon_dead = "moonicorn_dead"
+	icon_gib = null //otherwise does the regular cow gib animation
 	speed = 1.4
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	obj_damage = 35
-	attack_verb_continuous = "rams its moonihorn into"
-	attack_verb_simple = "ram your moonihorn into"
+	attack_verb_continuous = "telekinetically rams its moonihorn into"
+	attack_verb_simple = "telekinetically ram your moonihorn into"
 	gold_core_spawnable = NO_SPAWN
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
