@@ -7,18 +7,18 @@ This is the style you must follow when writing code. It's important to note that
 4. [Procs](#procs)
 5. [Things that do not matter](#things-that-do-not-matter)
 
-# General Guidelines
-## Avoid hacky code
+## General Guidelines
+### Avoid hacky code
 Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: "I couldn't immediately think of a proper way so thus there must be no other option" is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)
 
 You can avoid hacky code by using object-oriented methodologies, such as overriding a function (called "procs" in DM) or sectioning code into functions and then overriding them as required.
 
-## No duplicated code (Don't repeat yourself)
+### No duplicated code (Don't repeat yourself)
 Copying code from one place to another may be suitable for small, short-time projects, but /tg/station is a long-term project and highly discourages this.
 
 Instead you can use object orientation, or simply placing repeated code in a function, to obey this specification easily.
 
-## Tabs, not spaces
+### Tabs, not spaces
 You must use tabs to indent your code, NOT SPACES.
 
 Do not use tabs/spaces for indentation in the middle of a code line. Not only is this inconsistent because the size of a tab is undefined, but it means that, should the line you're aligning to change size at all, we have to adjust a ton of other code. Plus, it often time hurts readability.
@@ -35,14 +35,14 @@ Do not use tabs/spaces for indentation in the middle of a code line. Not only is
 #define SPECIES_FELINID "felinid"
 ```
 
-## Control statements
+### Control statements
 (if, while, for, etc)
 
 * No control statement may contain code on the same line as the statement (`if (blah) return`)
 * All control statements comparing a variable to a number should use the formula of `thing` `operator` `number`, not the reverse (eg: `if (count <= 10)` not `if (10 >= count)`)
 
-## Operators
-### Spacing
+### Operators
+#### Spacing
 * Operators that should be separated by spaces
 	* Boolean and logic operators like &&, || <, >, ==, etc (but not !)
 	* Bitwise AND &
@@ -56,14 +56,14 @@ Do not use tabs/spaces for indentation in the middle of a code line. Not only is
 
 Math operators like +, -, /, *, etc are up in the air, just choose which version looks more readable.
 
-### Use
+#### Use
 * Bitwise AND - '&'
 	* Should be written as `variable & CONSTANT` NEVER `CONSTANT & variable`. Both are valid, but the latter is confusing and nonstandard.
 * Associated lists declarations must have their key value quoted if it's a string
 	* WRONG: `list(a = "b")`
 	* RIGHT: `list("a" = "b")`
 
-## Use static instead of global
+### Use static instead of global
 DM has a var keyword, called global. This var keyword is for vars inside of types. For instance:
 
 ```DM
@@ -76,7 +76,7 @@ Isn't that confusing?
 
 There is also an undocumented keyword called `static` that has the same behaviour as global but more correctly describes BYOND's behaviour. Therefore, we always use static instead of global where we need it, as it reduces suprise when reading BYOND code.
 
-## Use early returns
+### Use early returns
 Do not enclose a proc in an if-block when returning on a condition is more feasible
 This is bad:
 ````DM
@@ -99,7 +99,7 @@ This is good:
 ````
 This prevents nesting levels from getting deeper then they need to be.
 
-## No magic numbers or strings
+### No magic numbers or strings
 This means stuff like having a "mode" variable for an object set to "1" or "2" with no clear indicator of what that means. Make these #defines with a name that more clearly states what it's for. For instance:
 ````DM
 /datum/proc/do_the_thing(thing_to_do)
@@ -122,7 +122,7 @@ There's no indication of what "1" and "2" mean! Instead, you'd do something like
 ````
 This is clearer and enhances readability of your code! Get used to doing it!
 
-## Use our time defines
+### Use our time defines
 
 The codebase contains some defines which will automatically multiply a number by the correct amount to get a number in deciseconds. Using these is preffered over using a literal amount in deciseconds.
 
@@ -145,8 +145,8 @@ This is good:
 		mob.dothing()
 ````
 
-# Paths and Inheritence
-## All BYOND paths must contain the full path
+## Paths and Inheritence
+### All BYOND paths must contain the full path
 (i.e. absolute pathing)
 
 DM will allow you nest almost any type keyword into a block, such as:
@@ -202,24 +202,24 @@ The previous code made compliant:
 	code
 ```
 
-## Type paths must begin with a `/`
+### Type paths must begin with a `/`
 eg: `/datum/thing`, not `datum/thing`
 
-## Type paths must be snake case
+### Type paths must be snake case
 eg: `/datum/blue_bird`, not `/datum/BLUEBIRD` or `/datum/BlueBird` or `/datum/Bluebird` or `/datum/blueBird`
 
-## Datum type paths must began with "datum"
+### Datum type paths must began with "datum"
 In DM, this is optional, but omitting it makes finding definitions harder.
 
-# Variables
+## Variables
 
-## Use `var/name` format when declaring variables
+### Use `var/name` format when declaring variables
 While DM allows other ways of declaring variables, this one should be used for consistency.
 
-## Use descriptive and obvious names
+### Use descriptive and obvious names
 Optimize for readability, not writability. While it is certainly easier to write `M` than `victim`, it will cause issues down the line for other developers to figure out what exactly your code is doing, even if you think the variable's purpose is obvious.
 
-## Don't use abbreviations
+### Don't use abbreviations
 Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", etc.
 
 ```dm
@@ -233,7 +233,7 @@ Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", 
 
 Unless it is otherwise obvious, try to avoid just extending variables like "C" to "carbon"--this is slightly more helpful, but does not describe the *context* of the use of the variable.
 
-## Naming things when typecasting
+### Naming things when typecasting
 When typecasting, keep your names descriptive:
 ```dm
 var/mob/living/living_target = target
@@ -258,14 +258,14 @@ var/client/client = CLIENT_FROM_VAR(usr)
 client << browse(...)
 ```
 
-## Name things as directly as possible
+### Name things as directly as possible
 `was_called` is better than `has_been_called`. `notify` is better than `do_notification`.
 
-## Avoid negative variable names
+### Avoid negative variable names
 `is_flying` is better than `is_not_flying`. `late` is better than `not_on_time`.
 This prevents double-negatives (such as `if (!is_not_flying)` which can make complex checks more difficult to parse.
 
-## Exceptions to variable names
+### Exceptions to variable names
 
 Exceptions can be made in the case of inheriting existing procs, as it makes it so you can use named parameters, but *new* variable names must follow these standards. It is also welcome, and encouraged, to refactor existing procs to use clearer variable names.
 
@@ -288,9 +288,9 @@ for (var/month in 1 to 12)
 for (var/i in reagents)
 ```
 
-# Procs
+## Procs
 
-## Getters and setters
+### Getters and setters
 
 * Avoid getter procs. They are useful tools in languages with that properly enforce variable privacy and encapsulation, but DM is not one of them. The upfront cost in proc overhead is met with no benefits, and it may tempt to develop worse code.
 
@@ -331,7 +331,7 @@ This is good:
 	getter_turned_into_variable = condition ? VALUE_C : VALUE_D
 ```
 
-## When passing vars through New() or Initialize()'s arguments, use src.var
+### When passing vars through New() or Initialize()'s arguments, use src.var
 Using src.var + naming the arguments the same as the var is the most readable and intuitive way to pass arguments into a new instance's vars. The main benefit is that you do not need to give arguments odd names with prefixes and suffixes that are easily forgotten in `new()` when sending named args.
 
 This is very bad:
@@ -376,7 +376,7 @@ This is good:
 
 Setting `is_red` in args is simple, and directly names the variable the argument sets.
 
-# Things that do not matter
+## Things that do not matter
 The following coding styles are not only not enforced at all, but are generally frowned upon to change for little to no reason:
 
 * English/British spelling on var/proc names

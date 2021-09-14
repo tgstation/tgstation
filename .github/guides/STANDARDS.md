@@ -8,8 +8,8 @@ These are our code standards. They include information about how to properly wor
 4. [BYOND Quirks](#dream-maker-quirks/tricks)
 5. [SQL](#sql)
 
-# General
-## Develop Secure Code
+## General
+### Develop Secure Code
 
 * Player input must always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind
 
@@ -23,7 +23,7 @@ These are our code standards. They include information about how to properly wor
 
 * Where you have code that can cause large-scale modification and *FUN*, make sure you start it out locked behind one of the default admin roles - use common sense to determine which role fits the level of damage a function could do.
 
-## User Interfaces
+### User Interfaces
 
 * All new player-facing user interfaces must use TGUI.
 * Raw HTML is permitted for admin and debug UIs.
@@ -31,11 +31,11 @@ These are our code standards. They include information about how to properly wor
 	* [tgui/README.md](../tgui/README.md)
 	* [tgui/tutorial-and-examples.md](../tgui/docs/tutorial-and-examples.md)
 
-## Dont override type safety checks
+### Dont override type safety checks
 
 The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
-## Do not use text/string based type paths
+### Do not use text/string based type paths
 
 It is rarely allowed to put type paths in a text format, as there are no compile errors if the type path no longer exists. Here is an example:
 
@@ -47,7 +47,7 @@ var/path_type = /obj/item/baseball_bat
 var/path_type = "/obj/item/baseball_bat"
 ```
 
-## Other Notes
+### Other Notes
 
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
 
@@ -65,13 +65,13 @@ var/path_type = "/obj/item/baseball_bat"
 
 * The dlls section of tgs3.json is not designed for dlls that are purely `call()()`ed since those handles are closed between world reboots. Only put in dlls that may have to exist between world reboots.
 
-# Structural
-## Prefer `Initialize()` over `New()` for atoms
+## Structural
+### Prefer `Initialize()` over `New()` for atoms
 
 Our game controller is pretty good at handling long operations and lag, but it can't control what happens when the map is loaded, which calls `New` for all atoms on the map. If you're creating a new atom, use the `Initialize` proc to do what you would normally do in `New`. This cuts down on the number of proc calls needed when the world is loaded. See here for details on `Initialize`: https://github.com/tgstation/tgstation/blob/34775d42a2db4e0f6734560baadcfcf5f5540910/code/game/atoms.dm#L166
 While we normally encourage (and in some cases, even require) bringing out of date code up to date when you make unrelated changes near the out of date code, that is not the case for `New` -> `Initialize` conversions. These systems are generally more dependent on parent and children procs so unrelated random conversions of existing things can cause bugs that take months to figure out.
 
-## Files
+### Files
 
 * Because runtime errors do not give the full path, try to avoid having files with the same name across folders.
 
@@ -79,7 +79,7 @@ While we normally encourage (and in some cases, even require) bringing out of da
 
 * Files and path accessed and referenced by code above simply being #included should be strictly lowercase to avoid issues on filesystems where case matters.
 
-## Signal Handlers
+### Signal Handlers
 
 All procs that are registered to listen for signals using `RegisterSignal()` must contain at the start of the proc `SIGNAL_HANDLER` eg;
 ```
@@ -91,7 +91,7 @@ This is to ensure that it is clear the proc handles signals and turns on a lint 
 
 Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc must be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously. 
 
-## Enforcing parent calling
+### Enforcing parent calling
 
 When adding new signals to root level procs, eg;
 ```
@@ -102,7 +102,7 @@ When adding new signals to root level procs, eg;
 ```
 The `SHOULD_CALL_PARENT(TRUE)` lint should be added to ensure that overrides/child procs call the parent chain and ensure the signal is sent.
 
-## Avoid unnecessary type checks and obscuring nulls in lists
+### Avoid unnecessary type checks and obscuring nulls in lists
 
 Typecasting in `for` loops carries an implied `istype()` check that filters non-matching types, nulls included. The `as anything` key can be used to skip the check.
 
@@ -130,7 +130,7 @@ for(var/atom/thing as anything in bag_of_atoms)
 	highest_alpha = thing.alpha
 ```
 
-## All `process` procs need to make use of delta-time and be frame independent
+### All `process` procs need to make use of delta-time and be frame independent
 
 In a lot of our older code, `process()` is frame dependent. Here's some example mob code:
 
@@ -162,8 +162,8 @@ In the above example, we made our health_loss variable a per second value rather
 
 For example, if SSmobs is set to run once every 4 seconds, it would call process once every 4 seconds and multiply your health_loss var by 4 before subtracting it. Ensuring that your code is frame independent.
 
-# Optimization
-## Startup/Runtime tradeoffs with lists and the "hidden" init proc
+## Optimization
+### Startup/Runtime tradeoffs with lists and the "hidden" init proc
 
 First, read the comments in [this BYOND thread](http://www.byond.com/forum/?post=2086980&page=2#comment19776775), starting where the link takes you.
 
@@ -175,7 +175,7 @@ There are two key points here:
 
 Remember: although this tradeoff makes sense in many cases, it doesn't cover them all. Think carefully about your addition before deciding if you need to use it.
 
-## Icons are for image manipulation and defining an obj's `.icon` var, appearances are for everything else.
+### Icons are for image manipulation and defining an obj's `.icon` var, appearances are for everything else.
 
 BYOND will allow you to use a raw icon file or even an icon datum for underlays, overlays, and what not (you can even use strings to refer to an icon state on the current icon). The issue is these get converted by BYOND to appearances on every overlay insert or removal involving them, and this process requires inserting the new appearance into the global list of appearances, and informing clients about them.
 
@@ -217,7 +217,7 @@ Good:
 Note: images are appearances with extra steps, and don't incur the overhead in conversion.
 
 
-## Do not abuse associated lists.
+### Do not abuse associated lists.
 
 Associated lists that could instead be variables or statically defined number indexed lists will use more memory, as associated lists have a 24 bytes per item overhead (vs 8 for lists and most vars), and are slower to search compared to static/global variables and lists with known indexes.
 
@@ -273,25 +273,25 @@ Proc variables, static variables, and global variables are resolved at compile t
 
 Note: While there has historically been a strong impulse to use associated lists for caching of computed values, this is the easy way out and leaves a lot of hidden overhead. Please keep this in mind when designing core/root systems that are intended for use by other code/coders. It's normally better for consumers of such systems to handle their own caching using vars and number indexed lists, than for you to do it using associated lists.
 
-# Dream Maker Quirks/Tricks
+## Dream Maker Quirks/Tricks
 
 Like all languages, Dream Maker has its quirks, some of them are beneficial to us, some are harmful.
 
-## Loops
-### In-To for-loops
+### Loops
+#### In-To for-loops
 
 `for(var/i = 1, i <= some_value, i++)` is a fairly standard way to write an incremental for loop in most languages (especially those in the C family), but DM's `for(var/i in 1 to some_value)` syntax is oddly faster than its implementation of the former syntax; where possible, it's advised to use DM's syntax. (Note, the `to` keyword is inclusive, so it automatically defaults to replacing `<=`; if you want `<` then you should write it as `1 to some_value-1`).
 
 HOWEVER, if either `some_value` or `i` changes within the body of the for (underneath the `for(...)` header) or if you are looping over a list AND changing the length of the list then you can NOT use this type of for-loop!
 
-### `for(var/A in list)` versus `for(var/i in 1 to list.len)`
+#### `for(var/A in list)` versus `for(var/i in 1 to list.len)`
 
 The former is faster than the latter, as shown by the following profile results:
 https://file.house/zy7H.png
 Code used for the test in a readable format:
 https://pastebin.com/w50uERkG
 
-## Dot variable
+### Dot variable
 
 Like other languages in the C family, DM has a `.` or "Dot" operator, used for accessing variables/members/functions of an object instance.
 eg:
@@ -303,16 +303,16 @@ However, DM also has a dot variable, accessed just as `.` on its own, defaulting
 
 With `.` being everpresent in every proc, can we use it as a temporary variable? Of course we can! However, the `.` operator cannot replace a typecasted variable - it can hold data any other var in DM can, it just can't be accessed as one, although the `.` operator is compatible with a few operators that look weird but work perfectly fine, such as: `.++` for incrementing `.'s` value, or `.[1]` for accessing the first element of `.`, provided that it's a list.
 
-## BYOND hellspawn
+### BYOND hellspawn
 
 What follows is documentation of inconsistent or strange behavior found in our engine, BYOND.
 It's listed here in the hope that it will prevent fruitless debugging in future.
 
-### Icon hell
+#### Icon hell
 
 The ‘transparent’ icon state causes fucked visual behavior when used on turfs, something to do with underlays and overlays.
 
-# SQL
+## SQL
 
 * Do not use the shorthand sql insert format (where no column names are specified) because it unnecessarily breaks all queries on minor column changes and prevents using these tables for tracking outside related info such as in a connected site/forum.
 
