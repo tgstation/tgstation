@@ -55,6 +55,8 @@ multiple modular subtrees with behaviors
 	change_ai_movement_type(ai_movement)
 	init_subtrees()
 
+	idle_behavior = new idle_behavior()
+
 	PossessPawn(new_pawn)
 
 /datum/ai_controller/Destroy(force, ...)

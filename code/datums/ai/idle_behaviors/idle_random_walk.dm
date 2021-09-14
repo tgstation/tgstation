@@ -2,7 +2,7 @@
 	///Chance that the mob random walks per second
 	var/walk_chance = 25
 
-/datum/idle_behavior/idle_random_walk(delta_time, datum/ai_controller/controller)
+/datum/idle_behavior/idle_random_walk/perform_idle_behavior(delta_time, datum/ai_controller/controller)
 	. = ..()
 	var/mob/living/living_pawn = controller.pawn
 
