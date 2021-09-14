@@ -169,7 +169,7 @@
 			if (100)
 				input = GHOST_OTHERS_THEIR_SETTING
 
-	return ..(input)
+	return ..(input, preferences)
 
 /// Whether or not ghosts can examine things by clicking on them.
 /datum/preference/toggle/inquisitive_ghost

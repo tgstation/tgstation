@@ -1149,6 +1149,5 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	set category = "OOC"
 	set desc = "Stop Current Sounds"
 	SEND_SOUND(usr, sound(null))
-	var/client/C = usr.client
-	C?.tgui_panel?.stop_music()
+	tgui_panel?.stop_music()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds"))
