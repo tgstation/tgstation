@@ -21,8 +21,6 @@ SUBSYSTEM_DEF(persistence)
 	var/list/picture_logging_information = list()
 	var/list/obj/structure/sign/picture_frame/photo_frames
 	var/list/obj/item/storage/photo_album/photo_albums
-	var/list/obj/structure/sign/painting/painting_frames = list()
-	var/list/paintings = list()
 
 
 /datum/controller/subsystem/persistence/Initialize()
@@ -33,7 +31,6 @@ SUBSYSTEM_DEF(persistence)
 	LoadRecentMaps()
 	LoadPhotoPersistence()
 	LoadRandomizedRecipes()
-	LoadPaintings()
 	load_custom_outfits()
 
 	load_adventures()
@@ -46,7 +43,6 @@ SUBSYSTEM_DEF(persistence)
 	CollectMaps()
 	SavePhotoPersistence() //THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	SaveRandomizedRecipes()
-	SavePaintings()
 	SaveScars()
 	save_custom_outfits()
 
@@ -410,22 +406,6 @@ SUBSYSTEM_DEF(persistence)
 
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
-
-/datum/controller/subsystem/persistence/proc/LoadPaintings()
-	var/json_file = file("data/paintings.json")
-	if(fexists(json_file))
-		paintings = json_decode(file2text(json_file))
-
-	for(var/obj/structure/sign/painting/P in painting_frames)
-		P.load_persistent()
-
-/datum/controller/subsystem/persistence/proc/SavePaintings()
-	for(var/obj/structure/sign/painting/P in painting_frames)
-		P.save_persistent()
-
-	var/json_file = file("data/paintings.json")
-	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(paintings))
 
 /datum/controller/subsystem/persistence/proc/SaveScars()
 	for(var/i in GLOB.joined_player_list)
