@@ -411,5 +411,14 @@
 	"supermatter_dusted_moods":[
 		"%PROTAGONIST %MOOD as they faded way.",
 		"%PROTAGONIST %MOOD as they are reduced to atoms."
+	],
+	"nuke_code_names":[
+		"The nuke code for the %PROTAGONIST, %NUKE_CODE" 
+	],
+	"nuke_code_starts":[
+		"%PROTAGONIST starts grinning recalling the nuke code, %NUKE_CODE"
+	],
+	"nuke_code_moods":[
+		"%PROTAGONIST %MOOD as they recalled the nuke code, %NUKE_CODE"
 	]
 }
