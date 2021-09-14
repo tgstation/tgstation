@@ -5,7 +5,7 @@
 			continue
 
 		if (preference.is_randomizable())
-			update_preference(preference, preference.create_random_value(src))
+			write_preference(preference, preference.create_random_value(src))
 
 /// Randomizes the character according to preferences.
 /datum/preferences/proc/apply_character_randomization_prefs(antag_override = FALSE)
@@ -19,7 +19,7 @@
 
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (should_randomize(preference, antag_override))
-			update_preference(preference, preference.create_random_value(src))
+			write_preference(preference, preference.create_random_value(src))
 
 ///Setup the random hardcore quirks and give the character the new score prize.
 /datum/preferences/proc/hardcore_random_setup(mob/living/carbon/human/character)
