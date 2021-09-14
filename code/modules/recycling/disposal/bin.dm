@@ -100,8 +100,17 @@
 			return
 
 	if(!user.combat_mode)
+		var/was_latched_toolbox
+		var/obj/item/storage/toolbox/placed_toolbox
+		if(istype(I, /obj/item/storage/toolbox))
+			placed_toolbox = I
+			if(!placed_toolbox.has_latches && !placed_toolbox.latch_exempt)
+				placed_toolbox.latch_exempt = TRUE
+				was_latched_toolbox = TRUE
 		if((I.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(I))
 			return
+		if(was_latched_toolbox)
+			placed_toolbox.latch_exempt = FALSE
 		place_item_in_disposal(I, user)
 		update_appearance()
 		return 1 //no afterattack

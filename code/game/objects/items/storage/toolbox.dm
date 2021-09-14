@@ -20,10 +20,13 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
 	var/latches = "single_latch"
 	var/has_latches = TRUE
+	var/latch_exempt = FALSE
 	wound_bonus = 5
 
 /obj/item/storage/toolbox/Initialize()
 	. = ..()
+	if(prob(5))
+		has_latches = FALSE
 	if(has_latches)
 		if(prob(10))
 			latches = "double_latch"
@@ -36,6 +39,27 @@
 	if(has_latches)
 		. += latches
 
+/obj/item/storage/toolbox/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(!has_latches && !latch_exempt)
+		var/list/obj/item/oldContents = contents.Copy()
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_QUICK_EMPTY)
+		for(var/obj/item/scatter_item in oldContents)
+			INVOKE_ASYNC(src, .proc/do_scatter, scatter_item)
+
+/obj/item/storage/toolbox/dropped(mob/user)
+	. = ..()
+	if(!has_latches && !latch_exempt)
+		var/list/obj/item/oldContents = contents.Copy()
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_QUICK_EMPTY)
+		for(var/obj/item/scatter_item in oldContents)
+			INVOKE_ASYNC(src, .proc/do_scatter, scatter_item)
+
+/obj/item/storage/toolbox/proc/do_scatter(obj/item/scatter_item)
+	for(var/i in 1 to rand(1,2))
+		if(scatter_item)
+			step(scatter_item, pick(NORTH,SOUTH,EAST,WEST))
+			sleep(1)
 
 /obj/item/storage/toolbox/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] robusts [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -64,6 +88,7 @@
 	name = "rusty red toolbox"
 	icon_state = "toolbox_red_old"
 	has_latches = FALSE
+	latch_exempt = TRUE
 	material_flags = NONE
 
 /obj/item/storage/toolbox/mechanical
@@ -86,6 +111,7 @@
 	name = "rusty blue toolbox"
 	icon_state = "toolbox_blue_old"
 	has_latches = FALSE
+	latch_exempt = TRUE
 	has_soul = TRUE
 
 /obj/item/storage/toolbox/mechanical/old/heirloom
@@ -103,6 +129,7 @@
 	icon_state = "oldtoolboxclean"
 	inhand_icon_state = "toolbox_blue"
 	has_latches = FALSE
+	latch_exempt = TRUE
 	force = 19
 	throwforce = 22
 
@@ -252,6 +279,7 @@
 	throwforce = 18
 	w_class = WEIGHT_CLASS_NORMAL
 	has_latches = FALSE
+	latch_exempt = TRUE
 
 /obj/item/storage/toolbox/infiltrator/ComponentInitialize()
 	. = ..()

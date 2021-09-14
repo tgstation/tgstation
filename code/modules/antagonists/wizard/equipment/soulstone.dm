@@ -207,6 +207,7 @@
 	target_toolbox.icon_state = "toolbox_blue_old"
 	target_toolbox.has_soul = TRUE
 	target_toolbox.has_latches = FALSE
+	target_toolbox.latch_exempt = TRUE
 
 ///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
 /obj/structure/constructshell

@@ -214,7 +214,18 @@
 		return TRUE
 
 	if(!user.combat_mode && !(I.item_flags & ABSTRACT))
+		//prevents latchless toolboxes from spilling contents when "dropped" on a table
+		var/was_latched_toolbox
+		var/obj/item/storage/toolbox/placed_toolbox
+		if(istype(I, /obj/item/storage/toolbox))
+			placed_toolbox = I
+			if(!placed_toolbox.has_latches && !placed_toolbox.latch_exempt)
+				placed_toolbox.latch_exempt = TRUE
+				was_latched_toolbox = TRUE
+
 		if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
+			if(was_latched_toolbox)
+				placed_toolbox.latch_exempt = FALSE
 			//Center the icon where the user clicked.
 			if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 				return
