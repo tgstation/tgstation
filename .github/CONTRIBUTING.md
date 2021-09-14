@@ -7,29 +7,11 @@
 	1. [Headcoder](#headcoder)
 	2. [Maintainers](#maintainers)
 	3. [Issue Managers](#issue-managers)
-5. [Pull Request Process](#pull-request-process)
-6. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
-7. [Banned content](#banned-content)
-8. [A word on Git](#a-word-on-git)
-
-### Guides to code and coding
-
-#### Writing readable code 
-[Style guide](./guides/STYLE.md)
-
-#### Writing sane code 
-[Code standards](./guides/STANDARDS.md)
-
-#### Writing understandable code 
-[Autodocumenting code](./guides/AUTODOC_GUIDE.md)
-
-#### Misc
-
-[Policy configuration system](./guides/POLICYCONFIG.md)
-
-[Hard deletes](./guides/HARDDEL_GUIDE.md)
-
-[UI Development](../tgui/README.md)
+5. [Development Guides](#development-guides)
+6. [Pull Request Process](#pull-request-process)
+7. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
+8. [Banned content](#banned-content)
+9. [A word on Git](#a-word-on-git)
 
 ## Reporting Issues
 
@@ -106,6 +88,25 @@ Things you **CAN'T** do:
 * [Close PRs](https://imgur.com/w2RqpX8.png): Only maintainers are allowed to close PRs. Do not hit that button.
 
 </details>
+
+## Development Guides
+
+#### Writing readable code 
+[Style guide](./guides/STYLE.md)
+
+#### Writing sane code 
+[Code standards](./guides/STANDARDS.md)
+
+#### Writing understandable code 
+[Autodocumenting code](./guides/AUTODOC.md)
+
+#### Misc
+
+[Policy configuration system](./guides/POLICYCONFIG.md)
+
+[Hard deletes](./guides/HARDDEL.md)
+
+[UI Development](../tgui/README.md)
 
 ## Pull Request Process
 

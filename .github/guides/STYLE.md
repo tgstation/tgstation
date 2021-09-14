@@ -8,15 +8,6 @@ This is the style you must follow when writing code. It's important to note that
 5. [Things that do not matter](#things-that-do-not-matter)
 
 ## General Guidelines
-### Avoid hacky code
-Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: "I couldn't immediately think of a proper way so thus there must be no other option" is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)
-
-You can avoid hacky code by using object-oriented methodologies, such as overriding a function (called "procs" in DM) or sectioning code into functions and then overriding them as required.
-
-### No duplicated code (Don't repeat yourself)
-Copying code from one place to another may be suitable for small, short-time projects, but /tg/station is a long-term project and highly discourages this.
-
-Instead you can use object orientation, or simply placing repeated code in a function, to obey this specification easily.
 
 ### Tabs, not spaces
 You must use tabs to indent your code, NOT SPACES.
