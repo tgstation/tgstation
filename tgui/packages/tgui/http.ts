@@ -1,12 +1,10 @@
-import { FetchOptions } from "jsdom";
-
 /**
  * An equivalent to `fetch`, except will automatically retry.
  */
 export const fetchRetry
   = (
     url: string,
-    options?: FetchOptions,
+    options?: RequestInit,
     retryTimer: number = 1000,
   ): Promise<Response> => {
     return fetch(url, options).catch(() => {
