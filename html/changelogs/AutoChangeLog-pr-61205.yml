@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - expansion: "Adds instant circuit components that execute instantly and are colour-coded orange to be used in handling events. Adds an airlock access event to determine who is able to open a door."

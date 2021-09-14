@@ -76,6 +76,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/obj/item/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
+	///account id of the ID held
+	var/account_id
 
 	var/obj/item/paicard/pai = null // A slot for a personal AI device
 
@@ -127,8 +129,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	. = ..()
 	if(!equipped)
 		if(user.client)
-			background_color = user.client.prefs.pda_color
-			switch(user.client.prefs.pda_style)
+			background_color = user.client.prefs.read_preference(/datum/preference/color/pda_color)
+			switch(user.client.prefs.read_preference(/datum/preference/choiced/pda_style))
 				if(MONO)
 					font_index = MODE_MONO
 					font_mode = FONT_MONO

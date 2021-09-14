@@ -1567,7 +1567,18 @@
 /atom/proc/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	return
 
-/// Generic logging helper
+/**
+ * Generic logging helper
+ *
+ * reads the type of the log
+ * and writes it to the respective log file
+ * unless log_globally is FALSE
+ * Arguments:
+ * * message - The message being logged
+ * * message_type - the type of log the message is(ATTACK, SAY, etc)
+ * * color - color of the log text
+ * * log_globally - boolean checking whether or not we write this log to the log file
+ */
 /atom/proc/log_message(message, message_type, color=null, log_globally=TRUE)
 	if(!log_globally)
 		return
@@ -1614,7 +1625,19 @@
 			stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
 			log_game(log_text)
 
-/// Helper for logging chat messages or other logs with arbitrary inputs (e.g. announcements)
+/**
+ * Helper for logging chat messages or other logs with arbitrary inputs(e.g. announcements)
+ *
+ * This proc compiles a log string by prefixing the tag to the message
+ * and suffixing what it was forced_by if anything
+ * if the message lacks a tag and suffix then it is logged on its own
+ * Arguments:
+ * * message - The message being logged
+ * * message_type - the type of log the message is(ATTACK, SAY, etc)
+ * * tag - tag that indicates the type of text(announcement, telepathy, etc)
+ * * log_globally - boolean checking whether or not we write this log to the log file
+ * * forced_by - source that forced the dialogue if any
+ */
 /atom/proc/log_talk(message, message_type, tag=null, log_globally=TRUE, forced_by=null)
 	var/prefix = tag ? "([tag]) " : ""
 	var/suffix = forced_by ? " FORCED by [forced_by]" : ""
@@ -1627,6 +1650,8 @@
 		tag = "UNKNOWN"
 
 	source.log_talk(message, message_type, tag="[tag] to [key_name(target)]")
+	if(source != target)
+		target.log_talk(message, LOG_VICTIM, tag="[tag] from [key_name(source)]", log_globally=FALSE)
 
 /**
  * Log a combat message in the attack log
@@ -1639,6 +1664,7 @@
  * * addition - is any additional text, which will be appended to the rest of the log line
  */
 /proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null)
+	var/ssource = key_name(user)
 	var/starget = key_name(target)
 
 	var/mob/living/living_target = target
@@ -1655,6 +1681,10 @@
 
 	var/message = "has [what_done] [starget][postfix]"
 	user.log_message(message, LOG_ATTACK, color="red")
+
+	if(user != target)
+		var/reverse_message = "has been [what_done] by [ssource][postfix]"
+		target.log_message(reverse_message, LOG_VICTIM, color="orange", log_globally=FALSE)
 
 /**
  * log_wound() is for when someone is *attacked* and suffers a wound. Note that this only captures wounds from damage, so smites/forced wounds aren't logged, as well as demotions like cuts scabbing over
@@ -2077,10 +2107,10 @@
 	status_bar_set_text(usr, name)
 	// Screentips
 	if(usr?.hud_used)
-		if(!usr.client?.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
+		if(!usr.hud_used.screentips_enabled || (flags_1 & NO_SCREENTIPS_1))
 			usr.hud_used.screentip_text.maptext = ""
 		else
-			usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")
+			usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.hud_used.screentip_color]: 32px'>[name]</span>")
 
 /// Gets a merger datum representing the connected blob of objects in the allowed_types argument
 /atom/proc/GetMergeGroup(id, list/allowed_types)
