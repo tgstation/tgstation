@@ -140,6 +140,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/nitrous_oxide = N2O_HEAT_RESISTANCE,
 		/datum/gas/hydrogen = HYDROGEN_HEAT_RESISTANCE,
 		/datum/gas/proto_nitrate = PROTO_NITRATE_HEAT_RESISTANCE,
+		/datum/gas/antinoblium = ANTINOBLIUM_HEAT_RESISTANCE,
 	)
 	///The list of gases mapped against their powermix ratio
 	var/list/gas_powermix = list(
@@ -167,7 +168,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///The list of gasses that cause the SM to shoot nuclear particles, and their odds to do so in %
 	var/list/nuclear_gas = list(
 		/datum/gas/bz = 30,
-		/datum/gas/antinoblium = 90,
+		/datum/gas/antinoblium = 100,
 	)
 	///The list of gasses that cause the SM to zap, and their power multiplier.
 	var/list/charged_gas = list(
@@ -861,7 +862,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		investigate_log("has been hit by [projectile] fired by [key_name(projectile.firer)]", INVESTIGATE_SUPERMATTER)
 	if(projectile.flag != BULLET)
 		if(power_changes) //This needs to be here I swear
-			power += projectile.damage * bullet_energy * ki
+			power += projectile.damage * bullet_energy * sqrt(ki)
 			if(!has_been_powered)
 				investigate_log("has been powered for the first time.", INVESTIGATE_SUPERMATTER)
 				message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
@@ -1040,7 +1041,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			if (scalpel.usesLeft)
 				to_chat(user, span_danger("You extract a sliver from \the [src]. \The [src] begins to react violently!"))
 				new /obj/item/nuke_core/supermatter_sliver(drop_location())
-				matter_power += 800 * ki
+				matter_power += 800 * sqrt(ki)
 				scalpel.usesLeft--
 				if (!scalpel.usesLeft)
 					to_chat(user, span_notice("A tiny piece of \the [item] falls off, rendering it useless!"))
@@ -1095,7 +1096,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_SUPERMATTER)
 		consumed_mob.dust(force = TRUE)
 		if(power_changes)
-			matter_power += 200 * ki
+			matter_power += 200 * sqrt(ki)
 	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
 		return
 	else if(isobj(consumed_object))
@@ -1107,7 +1108,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			investigate_log("has consumed [consumed_object] - [suspicion].", INVESTIGATE_SUPERMATTER)
 		qdel(consumed_object)
 	if(!iseffect(consumed_object) && power_changes)
-		matter_power += 200 * ki
+		matter_power += 200 * sqrt(ki)
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
 	radiation_pulse(src, 3000, 2, TRUE)

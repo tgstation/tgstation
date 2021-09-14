@@ -32,6 +32,7 @@
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
 #define HYDROGEN_HEAT_RESISTANCE 2 // just a bit of heat resistance to spice it up
 #define PROTO_NITRATE_HEAT_RESISTANCE 5
+#define ANTINOBLIUM_HEAT_RESISTANCE 8 //Its very low specific heat and the nature of giving SM high power heats it up very easily.
 
 /// The minimum portion of the miasma in the air that will be consumed. Higher values mean more miasma will be consumed be default.
 #define MIASMA_CONSUMPTION_RATIO_MIN 0
