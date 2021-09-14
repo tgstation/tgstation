@@ -139,7 +139,7 @@
 	icon_living = "moonicorn"
 	icon_dead = "moonicorn_dead"
 	icon_gib = null //otherwise does the regular cow gib animation
-	speed = 1.4
+	speed = 1
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	obj_damage = 35
