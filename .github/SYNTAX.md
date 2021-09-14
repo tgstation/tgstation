@@ -63,14 +63,6 @@ eg: `/datum/thing`, not `datum/thing`
 ## Type paths must be snake case
 eg: `/datum/blue_bird`, not `/datum/BLUEBIRD` or `/datum/BlueBird` or `/datum/Bluebird` or `/datum/blueBird`
 
-## proc names must be snake case
-eg: `/datum/proc/orange_man() , not `/datum/proc/ORANGEMAN()` or `/datum/proc/OrangeMan()` or `/datum/proc/orangeMan()` or `/datum/proc/Orange_Man()`
-
-## var names must be snake case
-eg: `var/green_house , not  `var/GreenHouse` or `var/greenHouse` 
-## global variables are uppercase
-eg: `var/SOME_GLOBAL`
-
 ## Datum type paths must began with "datum"
 In DM, this is optional, but omitting it makes finding definitions harder.
 
