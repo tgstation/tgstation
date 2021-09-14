@@ -728,9 +728,9 @@
 /// from /obj/item/toy/crayon/spraycan/afterattack: (color_is_dark)
 #define COMSIG_OBJ_PAINTED "obj_painted"
 /// from /obj/proc/atom_break: ()
-#define COMSIG_OBJ_BREAK "atom_break"
+#define COMSIG_ATOM_BREAK "atom_break"
 /// from base of [/obj/proc/atom_fix]: ()
-#define COMSIG_OBJ_FIX "atom_fix"
+#define COMSIG_ATOM_FIX "atom_fix"
 
 // /obj/machinery signals
 

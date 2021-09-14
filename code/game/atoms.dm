@@ -160,6 +160,7 @@
 	///any atom that uses integrity and can be damaged must set this to true, otherwise the integrity procs will runtime
 	var/uses_integrity = FALSE
 
+
 	var/datum/armor/armor
 	VAR_PRIVATE/atom_integrity //defaults to max_integrity
 	var/max_integrity = 500
@@ -259,6 +260,15 @@
 
 	// apply materials properly from the default custom_materials value
 	set_custom_materials()
+
+	if(uses_integrity)
+		if (islist(armor))
+			armor = getArmor(arglist(armor))
+		else if (!armor)
+			armor = getArmor()
+		else if (!istype(armor, /datum/armor))
+			stack_trace("Invalid type [armor.type] found in .armor during /atom Initialize()")
+		atom_integrity = max_integrity
 
 	ComponentInitialize()
 	InitializeAIController()

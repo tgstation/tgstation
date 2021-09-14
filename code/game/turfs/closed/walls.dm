@@ -36,7 +36,6 @@
 
 	var/list/dent_decals
 
-
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
 	if(is_station_level(z))

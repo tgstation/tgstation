@@ -147,24 +147,6 @@
 /obj/attackby(obj/item/I, mob/living/user, params)
 	return ..() || ((obj_flags & CAN_BE_HIT) && I.attack_atom(src, user, params))
 
-/turf/attacked_by(obj/item/attacking_item, mob/living/user)
-	return
-
-/turf/closed/wall/window_frame/attackby(obj/item/attacking_item, mob/user, params)
-	return ..() || attacking_item.attack_atom(src, user, params)
-
-/turf/closed/wall/window_frame/attacked_by(obj/item/attacking_item, mob/living/user)
-	if(!attacking_item.force)
-		return
-
-	var/no_damage = TRUE
-	if(take_damage(attacking_item.force, attacking_item.damtype, MELEE, 1))
-		no_damage = FALSE
-	//only witnesses close by and the victim see a hit message.
-	log_combat(user, src, "attacked", attacking_item)
-	user.visible_message(span_danger("[user] hits [src] with [attacking_item][no_damage ? ", which doesn't leave a mark" : ""]!"), \
-		span_danger("You hit [src] with [attacking_item][no_damage ? ", which doesn't leave a mark" : ""]!"), null, COMBAT_MESSAGE_RANGE)
-
 /mob/living/attackby(obj/item/I, mob/living/user, params)
 	if(..())
 		return TRUE
@@ -233,7 +215,7 @@
 
 	return SECONDARY_ATTACK_CALL_NORMAL
 
-/// The equivalent of the standard version of [/obj/item/proc/attack] but for object targets.
+/// The equivalent of the standard version of [/obj/item/proc/attack] but for non mob targets.
 /obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user, params)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, attacked_atom, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
@@ -244,10 +226,10 @@
 	attacked_atom.attacked_by(src, user)
 
 /// Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds
-/atom/proc/attacked_by(obj/item/attacking_item, mob/living/user)
-	CRASH("/atom/proc/attacked_by() was called on [src]!")
+/atom/proc/attacked_by(obj/item/attacking_item, mob/living/user) //TODOKYLER: figure out if this should go in another file
+	if(!uses_integrity)
+		CRASH("attacked_by() was called on an object that doesnt use integrity!")
 
-/obj/attacked_by(obj/item/attacking_item, mob/living/user)
 	if(!attacking_item.force)
 		return
 
@@ -258,6 +240,9 @@
 	log_combat(user, src, "attacked", attacking_item)
 	user.visible_message(span_danger("[user] hits [src] with [attacking_item][no_damage ? ", which doesn't leave a mark" : ""]!"), \
 		span_danger("You hit [src] with [attacking_item][no_damage ? ", which doesn't leave a mark" : ""]!"), null, COMBAT_MESSAGE_RANGE)
+
+/area/attacked_by(obj/item/attacking_item, mob/living/user)
+	CRASH("areas are NOT supposed to have attacked_by() called on them!")
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)
 	send_item_attack_message(I, user)

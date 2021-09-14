@@ -99,12 +99,12 @@
 /// Called after the atom takes damage and integrity is below integrity_failure level
 /atom/proc/atom_break(damage_flag)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_OBJ_BREAK)
+	SEND_SIGNAL(src, COMSIG_ATOM_BREAK)
 
 /// Called when integrity is repaired above the breaking point having been broken before
 /atom/proc/atom_fix()
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_OBJ_FIX)
+	SEND_SIGNAL(src, COMSIG_ATOM_FIX)
 
 ///what happens when the atom's integrity reaches zero.
 /atom/proc/atom_destruction(damage_flag)
