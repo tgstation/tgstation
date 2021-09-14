@@ -60,8 +60,6 @@
 #define HAUNTED_ITEM_ATTACK_HAUNT_CHANCE 10
 ///Chance for haunted item to try to get itself let go.
 #define HAUNTED_ITEM_ESCAPE_GRASP_CHANCE 20
-///Chance for haunted item to warp somewhere new
-#define HAUNTED_ITEM_TELEPORT_CHANCE 4
 ///Amount of aggro you get when picking up a haunted item
 #define HAUNTED_ITEM_AGGRO_ADDITION 2
 
@@ -77,7 +75,6 @@
 //defines
 ///how far a cursed item will still try to chase a target
 #define CURSED_VIEW_RANGE 7
-#define CURSED_ITEM_TELEPORT_CHANCE 4
 //blackboards
 
 ///Actual mob the item is haunting at the moment
