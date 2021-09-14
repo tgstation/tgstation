@@ -1,7 +1,6 @@
 import { exhaustiveCheck } from "common/exhaustive";
-import { classes } from "common/react";
-import { sendAct, useBackend, useLocalState } from "../../backend";
-import { Box, Button, ByondUi, Flex, Icon, Popper, Stack } from "../../components";
+import { useBackend, useLocalState } from "../../backend";
+import { Button, Stack } from "../../components";
 import { Window } from "../../layouts";
 import { PreferencesMenuData } from "./data";
 import { PageButton } from "./PageButton";

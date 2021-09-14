@@ -6,7 +6,6 @@
 
 import { classes } from 'common/react';
 import { Component } from 'inferno';
-import { logger } from '../logging';
 import { Box } from './Box';
 import { Icon } from './Icon';
 

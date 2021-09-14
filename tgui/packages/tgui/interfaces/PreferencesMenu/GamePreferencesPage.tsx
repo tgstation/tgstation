@@ -1,9 +1,7 @@
 import { binaryInsertWith, sortBy } from "common/collections";
-import { classes } from "common/react";
 import { InfernoNode } from "inferno";
-import { useBackend, useLocalState } from "../../backend";
-import { Box, Button, Divider, Flex, LabeledList, Section, Stack, Table, Tooltip } from "../../components";
-import { logger } from "../../logging";
+import { useBackend } from "../../backend";
+import { Box, Flex, Tooltip } from "../../components";
 import { PreferencesMenuData } from "./data";
 import features from "./preferences/features";
 import { FeatureValueInput } from "./preferences/features/base";

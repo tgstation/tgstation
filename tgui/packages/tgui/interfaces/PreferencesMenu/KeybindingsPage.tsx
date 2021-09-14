@@ -1,13 +1,12 @@
-import { Component, createRef, RefObject } from "inferno";
-import { Box, Button, Flex, Icon, KeyListener, Section, Stack, Table, Tooltip, TrackOutsideClicks } from "../../components";
+import { Component } from "inferno";
+import { Box, Button, KeyListener, Stack, Tooltip, TrackOutsideClicks } from "../../components";
 import { resolveAsset } from "../../assets";
 import { PreferencesMenuData } from "./data";
-import { useBackend, useLocalState } from "../../backend";
+import { useBackend } from "../../backend";
 import { range, sortBy } from "common/collections";
 import { KeyEvent } from "../../events";
 import { TabbedMenu } from "./TabbedMenu";
 import { fetchRetry } from "../../http";
-import { logger } from "../../logging";
 
 type Keybinding = {
   name: string;

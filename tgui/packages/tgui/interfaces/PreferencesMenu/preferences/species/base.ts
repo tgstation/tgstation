@@ -1,4 +1,3 @@
-import { InfernoNode } from "inferno";
 
 // MOTHBLOCKS TODO: The stupid halloween races
 export type Species = {

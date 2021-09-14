@@ -1,4 +1,3 @@
-import { Box } from "../../../../components";
 import { Species } from "./base";
 
 const Human: Species = {

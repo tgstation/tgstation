@@ -1,6 +1,6 @@
 import { sortBy } from "common/collections";
 import { Box, Stack } from "../../../../../components";
-import { Feature, FeatureChoiced, FeatureChoicedServerData, FeatureValueProps, StandardizedDropdown } from "../base";
+import { Feature, FeatureChoicedServerData, FeatureValueProps, StandardizedDropdown } from "../base";
 
 type HexValue = {
   lightness: number,

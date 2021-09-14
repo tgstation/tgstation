@@ -2,7 +2,6 @@ import { binaryInsertWith } from "common/collections";
 import { classes } from "common/react";
 import { useBackend, useLocalState } from "../../backend";
 import { Box, Button, Divider, Flex, Section, Stack, Tooltip } from "../../components";
-import { logger } from "../../logging";
 import { Antagonist, Category } from "./antagonists/base";
 import { PreferencesMenuData } from "./data";
 

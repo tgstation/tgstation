@@ -1,7 +1,5 @@
-import { classes } from "common/react";
-import { sendAct, useBackend, useLocalState } from "../../backend";
-import { Autofocus, Box, Button, ByondUi, Dropdown, FitText, Flex, Icon, Input, LabeledList, NumberInput, Popper, Stack, TrackOutsideClicks } from "../../components";
-import { createSetPreference, PreferencesMenuData, RandomSetting, ServerSpeciesData } from "./data";
+import { Dropdown, Icon } from "../../components";
+import { RandomSetting } from "./data";
 import { exhaustiveCheck } from "common/exhaustive";
 
 export const RandomizationButton = (props: {

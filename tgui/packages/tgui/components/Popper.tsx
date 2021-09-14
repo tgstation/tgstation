@@ -1,4 +1,4 @@
-import { createPopper, OptionsGeneric } from "@popperjs/core";
+import { createPopper } from "@popperjs/core";
 import { ArgumentsOf } from "common/types";
 import { Component, findDOMfromVNode, InfernoNode, render } from "inferno";
 

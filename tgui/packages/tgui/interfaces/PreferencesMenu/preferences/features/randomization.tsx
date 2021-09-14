@@ -3,7 +3,7 @@ import { Button, Stack } from "../../../../components";
 import { PreferencesMenuData, RandomSetting } from "../../data";
 import { RandomizationButton } from "../../RandomizationButton";
 import { useRandomToggleState } from "../../useRandomToggleState";
-import { CheckboxInput, Feature, FeatureChoiced, FeatureToggle } from "./base";
+import { CheckboxInput, Feature, FeatureToggle } from "./base";
 
 export const random_body: Feature<RandomSetting> = {
   name: "Random body",

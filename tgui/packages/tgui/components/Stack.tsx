@@ -5,7 +5,7 @@
  */
 
 import { classes } from 'common/react';
-import { forwardRef, RefObject, SFC } from 'inferno';
+import { RefObject } from 'inferno';
 import { computeBoxClassName, computeBoxProps } from './Box';
 import { computeFlexClassName, computeFlexItemClassName, computeFlexItemProps, computeFlexProps, FlexItemProps, FlexProps } from './Flex';
 

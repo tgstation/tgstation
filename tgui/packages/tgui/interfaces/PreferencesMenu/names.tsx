@@ -1,7 +1,6 @@
 import { binaryInsertWith, sortBy } from "common/collections";
 import { useLocalState } from "../../backend";
-import { Autofocus, Box, Button, ByondUi, Dropdown, FitText, Flex, Icon, Input, LabeledList, Modal, NumberInput, Popper, Section, Stack, TrackOutsideClicks } from "../../components";
-import { logger } from "../../logging";
+import { Box, Button, FitText, Icon, Input, LabeledList, Modal, Section, Stack, TrackOutsideClicks } from "../../components";
 import { Name } from "./data";
 import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
 

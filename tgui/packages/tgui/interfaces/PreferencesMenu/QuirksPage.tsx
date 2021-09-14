@@ -1,10 +1,7 @@
-import { Component, StatelessComponent } from "inferno";
-import { Box, Icon, Stack, Table, Tooltip } from "../../components";
-import { resolveAsset } from "../../assets";
-import { classes } from "common/react";
+import { StatelessComponent } from "inferno";
+import { Box, Icon, Stack, Tooltip } from "../../components";
 import { PreferencesMenuData, Quirk } from "./data";
 import { useBackend, useLocalState } from "../../backend";
-import { logger } from "../../logging";
 import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
 
 const getValueClass = (value: number): string => {

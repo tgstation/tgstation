@@ -1,19 +1,15 @@
 import { classes } from "common/react";
 import { sendAct, useBackend, useLocalState } from "../../backend";
-import { Autofocus, Box, Button, ByondUi, Dropdown, FitText, Flex, Icon, Input, LabeledList, NumberInput, Popper, Stack, TrackOutsideClicks } from "../../components";
-import { createSetPreference, PreferencesMenuData, RandomSetting, ServerSpeciesData } from "./data";
+import { Autofocus, Box, Button, Flex, LabeledList, Popper, Stack, TrackOutsideClicks } from "../../components";
+import { createSetPreference, PreferencesMenuData, RandomSetting } from "./data";
 import { CharacterPreview } from "./CharacterPreview";
 import { RandomizationButton } from "./RandomizationButton";
 import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
 import { MultiNameInput, NameInput } from "./names";
 import { Gender, GENDERS } from "./preferences/gender";
-import { Component, createRef } from "inferno";
 import features from "./preferences/features";
 import { FeatureChoicedServerData, FeatureValueInput } from "./preferences/features/base";
-import { resolveAsset } from "../../assets";
-import { logger } from "../../logging";
 import { filterMap, sortBy } from "common/collections";
-import { exhaustiveCheck } from "common/exhaustive";
 import { useRandomToggleState } from "./useRandomToggleState";
 
 const CLOTHING_CELL_SIZE = 48;

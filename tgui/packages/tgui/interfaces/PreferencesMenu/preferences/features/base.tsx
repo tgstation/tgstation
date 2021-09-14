@@ -4,7 +4,6 @@ import { ComponentType, createComponentVNode, InfernoNode } from "inferno";
 import { VNodeFlags } from "inferno-vnode-flags";
 import { sendAct, useBackend, useLocalState } from "../../../../backend";
 import { Box, Button, Dropdown, NumberInput, Stack } from "../../../../components";
-import { logger } from "../../../../logging";
 import { createSetPreference, PreferencesMenuData } from "../../data";
 import { ServerPreferencesFetcher } from "../../ServerPreferencesFetcher";
 

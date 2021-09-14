@@ -1,4 +1,4 @@
-import { Box, Button, ByondUi, Flex, Icon, Popper, Stack } from "../../components";
+import { ByondUi } from "../../components";
 
 export const CharacterPreview = (props: {
   height: string,
