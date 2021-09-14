@@ -129,10 +129,10 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
  * Arguments:
  * * target - mob for preferences and gender
  */
-/datum/anonymous_theme/proc/anonymous_name(mob/M)
-	var/species_type = M.client.prefs.read_preference(/datum/preference/choiced/species)
+/datum/anonymous_theme/proc/anonymous_name(mob/target)
+	var/species_type = target.client.prefs.read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = new species_type
-	return species.random_name(M.gender,1)
+	return species.random_name(target.gender,1)
 
 /**
  * anonymous_ai_name: generates a random name, based off of whatever the round's anonymousnames is set to (but for sillycones).
