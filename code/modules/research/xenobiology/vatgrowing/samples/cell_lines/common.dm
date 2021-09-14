@@ -61,7 +61,7 @@
 							/datum/reagent/toxin/carpotoxin = -5)
 
 	virus_suspectibility = 1
-	resulting_atoms = list(/mob/living/simple_animal/cow = 1)
+	resulting_atoms = list(/mob/living/basic/cow = 1)
 
 /datum/micro_organism/cell_line/cat
 	desc = "Feliform cells"
