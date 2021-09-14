@@ -12,19 +12,19 @@
 7. [Banned content](#banned-content)
 8. [A word on Git](#a-word-on-git)
 
-## Guides to code and coding
+### Guides to code and coding
 
-### Must Reads
-[Style guide](./STYLE.md)
+#### Must Reads
+[Style guide](./guides/STYLE.md)
 
-[Code standards](./STANDARDS.md)
+[Code standards](./guides/STANDARDS.md)
 
-[Autodocumenting code](./AUTODOC_GUIDE.md)
+[Autodocumenting code](./guides/AUTODOC_GUIDE.md)
 
-### Misc Information
-[Policy configuration system](./POLICYCONFIG.md)
+#### Misc Information
+[Policy configuration system](./guides/POLICYCONFIG.md)
 
-[Fixing hard deletes](./HARDDEL_GUIDE.md)
+[Fixing hard deletes](./guides/HARDDEL_GUIDE.md)
 
 ## Reporting Issues
 
