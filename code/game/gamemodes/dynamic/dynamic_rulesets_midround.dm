@@ -247,7 +247,9 @@
 /datum/dynamic_ruleset/midround/families
 	name = "Family Head Aspirants"
 	persistent = TRUE
-	antag_flag = ROLE_FAMILIES
+	antag_datum = /datum/antagonist/gang
+	antag_flag = ROLE_FAMILY_HEAD_ASPIRANT
+	antag_flag_override = ROLE_FAMILIES
 	protected_roles = list("Prisoner", "Head of Personnel")
 	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_candidates = 6 // gotta have 'em ALL

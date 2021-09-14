@@ -40,6 +40,9 @@
 	migrate_antagonist(ROLE_TRAITOR, list(ROLE_SYNDICATE_INFILTRATOR, ROLE_SLEEPER_AGENT))
 	migrate_antagonist(ROLE_WIZARD, list(ROLE_WIZARD_MIDROUND))
 
+	// "Familes [sic] Antagonists" was the old name of the catch-all.
+	migrate_antagonist("Familes Antagonists", list(ROLE_FAMILIES, ROLE_FAMILY_HEAD_ASPIRANT))
+
 /datum/preferences/proc/migrate_antagonist(will_exist, list/to_add)
 	if (will_exist in be_special)
 		for (var/add in to_add)

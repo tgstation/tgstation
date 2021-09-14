@@ -11,6 +11,7 @@
 #define ROLE_BROTHER "Blood Brother"
 #define ROLE_CHANGELING "Changeling"
 #define ROLE_CULTIST "Cultist"
+#define ROLE_FAMILIES "Gangster"
 #define ROLE_HERETIC "Heretic"
 #define ROLE_MALF "Malf AI"
 #define ROLE_MONKEY "Monkey"
@@ -23,6 +24,7 @@
 #define ROLE_ALIEN "Xenomorph"
 #define ROLE_BLOB "Blob"
 #define ROLE_BLOB_INFECTION "Blob Infection"
+#define ROLE_FAMILY_HEAD_ASPIRANT "Family Head Aspirant"
 #define ROLE_LONE_OPERATIVE "Lone Operative"
 #define ROLE_MALF_MIDROUND "Malf AI (Midround)"
 #define ROLE_NIGHTMARE "Nightmare"
@@ -60,7 +62,6 @@
 #define ROLE_DEATHSQUAD "Deathsquad"
 #define ROLE_LAVALAND "Lavaland"
 #define ROLE_INTERNAL_AFFAIRS "Internal Affairs Agent"
-#define ROLE_FAMILIES "Familes Antagonists"
 
 #define ROLE_POSITRONIC_BRAIN "Positronic Brain"
 #define ROLE_FREE_GOLEM "Free Golem"
@@ -106,6 +107,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_BROTHER = 0,
 	ROLE_CHANGELING = 0,
 	ROLE_CULTIST = 14,
+	ROLE_FAMILIES = 0,
 	ROLE_HERETIC = 0,
 	ROLE_MALF = 0,
 	ROLE_MONKEY = 0,
@@ -119,6 +121,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_ALIEN = 0,
 	ROLE_BLOB = 0,
 	ROLE_BLOB_INFECTION = 0,
+	ROLE_FAMILY_HEAD_ASPIRANT = 0,
 	ROLE_LONE_OPERATIVE = 14,
 	ROLE_MALF_MIDROUND = 0,
 	ROLE_NINJA = 0,
@@ -141,7 +144,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_PAI = 0,
 	ROLE_INTERNAL_AFFAIRS = 0,
 	ROLE_SENTIENCE = 0,
-	ROLE_FAMILIES = 0,
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection
