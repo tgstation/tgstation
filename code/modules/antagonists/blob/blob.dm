@@ -38,6 +38,16 @@
 	to_chat(owner.current, "<span class='alertsyndie'><font color=\"#EE4000\">You are no longer the Blob!</font></span>")
 	return ..()
 
+/datum/antagonist/blob/get_preview_icon()
+	var/datum/blobstrain/reagent/reactive_spines/reactive_spines = /datum/blobstrain/reagent/reactive_spines
+
+	var/icon/icon = icon('icons/mob/blob.dmi', "blob_core")
+	icon.Blend(initial(reactive_spines.color), ICON_MULTIPLY)
+	icon.Blend(icon('icons/mob/blob.dmi', "blob_core_overlay"), ICON_OVERLAY)
+	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+
+	return icon
+
 /datum/antagonist/blob/proc/create_objectives()
 	var/datum/objective/blob_takeover/main = new
 	main.owner = owner
@@ -107,3 +117,22 @@
 		var/mob/camera/blob/blob_cam = owner.current
 		if(istype(blob_cam))
 			. += "(Progress: [length(blob_cam.blobs_legit)]/[blob_cam.blobwincount])"
+
+/// A subtype of blob meant to represent the infective version.
+/datum/antagonist/blob/infection
+	job_rank = ROLE_BLOB_INFECTION
+
+/datum/antagonist/blob/infection/get_preview_icon()
+	var/icon/blob_icon = ..()
+
+	var/datum/blobstrain/reagent/reactive_spines/reactive_spines = /datum/blobstrain/reagent/reactive_spines
+	var/icon/blob_head = icon('icons/mob/blob.dmi', "blob_head")
+	blob_head.Blend(initial(reactive_spines.complementary_color), ICON_MULTIPLY)
+
+	var/icon/human_icon = render_preview_outfit(/datum/outfit/job/miner)
+	human_icon.Blend(blob_head, ICON_OVERLAY)
+	human_icon.ChangeOpacity(0.7)
+
+	blob_icon.Blend(finish_preview_icon(human_icon), ICON_OVERLAY)
+
+	return blob_icon

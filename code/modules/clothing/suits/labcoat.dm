@@ -38,8 +38,8 @@
 /obj/item/clothing/suit/toggle/labcoat/cmo/Initialize()
 	. = ..()
 	allowed += list(
-		/obj/item/melee/classic_baton/telescopic,
-	)	
+		/obj/item/melee/baton/telescopic,
+	)
 
 /obj/item/clothing/suit/toggle/labcoat/paramedic
 	name = "paramedic's jacket"

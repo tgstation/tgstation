@@ -122,7 +122,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define CULT_PERMITTED (1<<13)
 ///Whther this area is iluminated by starlight
 #define AREA_USES_STARLIGHT (1<<14)
-
+/// If engravings are persistent in this area
+#define PERSISTENT_ENGRAVINGS (1<<15)
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
 	the atom/checkpass() proc uses them (tables will call movable atom checkpass(PASSTABLE) for example)

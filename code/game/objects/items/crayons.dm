@@ -1,5 +1,3 @@
-#define DARK_COLOR_LIGHTNESS_THRESHOLD 0.25
-
 #define RANDOM_GRAFFITI "Random Graffiti"
 #define RANDOM_LETTER "Random Letter"
 #define RANDOM_PUNCTUATION "Random Punctuation"
@@ -762,9 +760,7 @@
 
 	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
 		if(actually_paints)
-			var/list/rgb = hex2rgb(paint_color)
-			var/list/hsl = rgb2hsl(rgb[1], rgb[2], rgb[3])
-			var/color_is_dark = hsl[3] < DARK_COLOR_LIGHTNESS_THRESHOLD
+			var/color_is_dark = is_color_dark(paint_color)
 
 			if (color_is_dark && !(target.flags_1 & ALLOW_DARK_PAINTS_1))
 				to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
@@ -865,7 +861,6 @@
 	charges = -1
 	desc = "Now with 30% more bluespace technology."
 
-#undef DARK_COLOR_LIGHTNESS_THRESHOLD
 #undef RANDOM_GRAFFITI
 #undef RANDOM_LETTER
 #undef RANDOM_PUNCTUATION
