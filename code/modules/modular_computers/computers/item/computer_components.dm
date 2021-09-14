@@ -20,7 +20,7 @@
 	return TRUE
 
 
-// Installs component.
+/// Installs component.
 /obj/item/modular_computer/proc/install_component(obj/item/computer_hardware/install, mob/living/user = null)
 	if(!can_install_component(install, user))
 		return FALSE
@@ -38,7 +38,7 @@
 	install.on_install(src, user)
 
 
-// Uninstalls component.
+/// Uninstalls component.
 /obj/item/modular_computer/proc/uninstall_component(obj/item/computer_hardware/yeet, mob/living/user = null)
 	if(yeet.holder != src) // Not our component at all.
 		return FALSE
@@ -53,7 +53,7 @@
 	update_appearance()
 	return TRUE
 
-///This isn't a "uninstall fully" proc, it just makes the computer lose all its references to the component
+/// This isn't the "uninstall fully" proc, it just makes the computer lose all its references to the component
 /obj/item/modular_computer/proc/forget_component(obj/item/computer_hardware/wipe_memory)
 	if(wipe_memory.holder != src)
 		return FALSE
@@ -62,7 +62,7 @@
 	all_components.Remove(wipe_memory.device_type)
 	wipe_memory.holder = null
 
-// Checks all hardware pieces to determine if name matches, if yes, returns the hardware piece, otherwise returns null
+/// Checks all hardware pieces to determine if name matches, if yes, returns the hardware piece, otherwise returns null
 /obj/item/modular_computer/proc/find_hardware_by_name(name)
 	for(var/i in all_components)
 		var/obj/component = all_components[i]
