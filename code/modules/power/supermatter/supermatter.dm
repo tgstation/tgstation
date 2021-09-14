@@ -207,8 +207,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/ki = 0.0
 	///Powerloss composition
 	var/powerloss_composition = 0.0
-	///Just using this so I can finetune the power gain with vv. Should be removed before merge.______qdel_list_wrapper(list/L)
-	var/kpp = POWER_PENALTY_THRESHOLD
+	///Just using this so I can finetune the power gain with vv. Should be removed before merge.
+	var/kpp = T0C
 	///Our internal radio
 	var/obj/item/radio/radio
 	///The key our internal radio uses
@@ -546,7 +546,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//Mols start to have a positive effect on damage after 350
 			damage = max(damage + (max(clamp(removed.total_moles() / 200, 0.5, 1) * removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ) * DAMAGE_INCREASE_MULTIPLIER, 0)
 			//Power only starts affecting damage when it is above 5000
-			damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD, 0)/500) * DAMAGE_INCREASE_MULTIPLIER * (1-k), 0)
+			damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD * ki, 0)/500) * DAMAGE_INCREASE_MULTIPLIER * (1-k), 0)
 			//Molar count only starts affecting damage when it is above 1800
 			damage = max(damage + (max(combined_gas - MOLE_PENALTY_THRESHOLD, 0)/80) * DAMAGE_INCREASE_MULTIPLIER, 0)
 
@@ -641,14 +641,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them.
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
 
-		//Ramps up in increments of 0.02, and down in increments of 0.02 / ki, up to the proportion of powerloss_composition.
+		//Ramps up in increments of 0.02 * ki, and down in increments of 0.02 / ki, up to the proportion of powerloss_composition.
 		//Given infinite time, powerloss_dynamic_scaling = powerloss_composition.
 		//Some value between 0 and 1.
 		powerloss_composition = 0.0
 		for(var/gas_id in powerloss_gas)
 			powerloss_composition += gas_comp[gas_id]
 		if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && powerloss_composition > POWERLOSS_INHIBITION_GAS_THRESHOLD) //If there are more then 20 mols, and more then 20% co2
-			powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling + clamp(powerloss_composition - powerloss_dynamic_scaling, -0.02 / ki, 0.02), 0, 1)
+			powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling + clamp(powerloss_composition - powerloss_dynamic_scaling, -0.02 / ki, 0.02 * ki), 0, 1)
 		else
 			powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling - 0.05 / ki, 0, 1)
 		//Ranges from 0 to 1(1-(value between 0 and 1 * ranges from 1 to 1.5(mol / 500)))
@@ -679,7 +679,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			power = max((removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0)
 
 		//Passively gain power when ki is above 1.
-		power += sqrt((ki-1) * kpp)
+		power += (ki-1) * kpp
 
 		if(prob(50))
 			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
@@ -754,7 +754,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			continue
 
 		// Everyone else gets hallucinations.
-		var/dist = sqrt(1 / max(1, get_dist(seen_by_sm, src)))
+		var/dist = 1 / max(1, get_dist(seen_by_sm, src))
 		seen_by_sm.hallucination += power * hallucination_power * dist
 		seen_by_sm.hallucination = clamp(seen_by_sm.hallucination, 0, 200)
 	psyCoeff = clamp(psyCoeff + psy_coeff_diff, 0, 1)
@@ -862,7 +862,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		investigate_log("has been hit by [projectile] fired by [key_name(projectile.firer)]", INVESTIGATE_SUPERMATTER)
 	if(projectile.flag != BULLET)
 		if(power_changes) //This needs to be here I swear
-			power += projectile.damage * bullet_energy * sqrt(ki)
+			power += projectile.damage * bullet_energy * ki
 			if(!has_been_powered)
 				investigate_log("has been powered for the first time.", INVESTIGATE_SUPERMATTER)
 				message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
@@ -1041,7 +1041,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			if (scalpel.usesLeft)
 				to_chat(user, span_danger("You extract a sliver from \the [src]. \The [src] begins to react violently!"))
 				new /obj/item/nuke_core/supermatter_sliver(drop_location())
-				matter_power += 800 * sqrt(ki)
+				matter_power += 800 * ki
 				scalpel.usesLeft--
 				if (!scalpel.usesLeft)
 					to_chat(user, span_notice("A tiny piece of \the [item] falls off, rendering it useless!"))
@@ -1096,7 +1096,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_SUPERMATTER)
 		consumed_mob.dust(force = TRUE)
 		if(power_changes)
-			matter_power += 200 * sqrt(ki)
+			matter_power += 200 * ki
 	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
 		return
 	else if(isobj(consumed_object))
@@ -1108,7 +1108,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			investigate_log("has consumed [consumed_object] - [suspicion].", INVESTIGATE_SUPERMATTER)
 		qdel(consumed_object)
 	if(!iseffect(consumed_object) && power_changes)
-		matter_power += 200 * sqrt(ki)
+		matter_power += 200 * ki
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
 	radiation_pulse(src, 3000, 2, TRUE)
