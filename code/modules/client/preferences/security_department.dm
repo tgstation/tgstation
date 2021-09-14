@@ -9,7 +9,7 @@
 /datum/preference/choiced/security_department/deserialize(input, datum/preferences/preferences)
 	if (!(input in GLOB.security_depts_prefs))
 		return SEC_DEPT_NONE
-	return ..(input)
+	return ..(input, preferences)
 
 /datum/preference/choiced/security_department/init_possible_values()
 	return GLOB.security_depts_prefs

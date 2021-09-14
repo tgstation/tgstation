@@ -3,7 +3,7 @@ import { Box, Button, Flex, Icon, KeyListener, Section, Stack, Table, Tooltip, T
 import { resolveAsset } from "../../assets";
 import { PreferencesMenuData } from "./data";
 import { useBackend, useLocalState } from "../../backend";
-import { sortBy } from "common/collections";
+import { range, sortBy } from "common/collections";
 import { KeyEvent } from "../../events";
 import { TabbedMenu } from "./TabbedMenu";
 import { fetchRetry } from "../../http";
@@ -411,47 +411,21 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
                           <Stack fill>
                             {name}
 
-                            <Stack.Item grow basis="10%">
-                              <KeybindingButton
-                                currentHotkey={keys[0]}
-                                typingHotkey={this.getTypingHotkey(
-                                  keybindingId,
-                                  0,
-                                )}
-                                onClick={this.getKeybindingOnClick(
-                                  keybindingId,
-                                  0,
-                                )}
-                              />
-                            </Stack.Item>
-
-                            <Stack.Item grow basis="10%">
-                              <KeybindingButton
-                                currentHotkey={keys[1]}
-                                typingHotkey={this.getTypingHotkey(
-                                  keybindingId,
-                                  1,
-                                )}
-                                onClick={this.getKeybindingOnClick(
-                                  keybindingId,
-                                  1,
-                                )}
-                              />
-                            </Stack.Item>
-
-                            <Stack.Item grow basis="10%">
-                              <KeybindingButton
-                                currentHotkey={keys[2]}
-                                typingHotkey={this.getTypingHotkey(
-                                  keybindingId,
-                                  2,
-                                )}
-                                onClick={this.getKeybindingOnClick(
-                                  keybindingId,
-                                  2,
-                                )}
-                              />
-                            </Stack.Item>
+                            {range(0, 3).map(key => (
+                              <Stack.Item key={key} grow basis="10%">
+                                <KeybindingButton
+                                  currentHotkey={keys[key]}
+                                  typingHotkey={this.getTypingHotkey(
+                                    keybindingId,
+                                    key,
+                                  )}
+                                  onClick={this.getKeybindingOnClick(
+                                    keybindingId,
+                                    key,
+                                  )}
+                                />
+                              </Stack.Item>
+                            ))}
 
                             <Stack.Item shrink>
                               <ResetToDefaultButton

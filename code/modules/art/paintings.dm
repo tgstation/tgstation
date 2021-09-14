@@ -336,7 +336,7 @@
  * Deleting paintings leaves their json, so this proc will remove the json and try again if it finds one of those.
  */
 /obj/structure/sign/painting/proc/load_persistent()
-	if(!persistence_id || !SSpersistent_paintings.paintings || !SSpersistent_paintings.paintings[persistence_id])
+	if(!persistence_id || !SSpersistent_paintings.paintings[persistence_id])
 		return
 	var/list/painting_category = SSpersistent_paintings.paintings[persistence_id]
 	var/list/painting
@@ -444,9 +444,9 @@
 					current -= entry
 			var/png = "data/paintings/[persistence_id]/[md5].png"
 			fdel(png)
-		for(var/obj/structure/sign/painting/P in SSpersistent_paintings.painting_frames)
-			if(P.current_canvas && md5(P.current_canvas.get_data_string()) == md5)
-				QDEL_NULL(P.current_canvas)
-				P.update_appearance()
+		for(var/obj/structure/sign/painting/painting as anything in SSpersistent_paintings.painting_frames)
+			if(painting.current_canvas && md5(painting.current_canvas.get_data_string()) == md5)
+				QDEL_NULL(painting.current_canvas)
+				painting.update_appearance()
 		log_admin("[key_name(user)] has deleted a persistent painting made by [author].")
 		message_admins(span_notice("[key_name_admin(user)] has deleted persistent painting made by [author]."))

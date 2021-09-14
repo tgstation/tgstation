@@ -428,6 +428,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	var/static/regex/is_legacy_color = regex(@"^[0-9a-fA-F]{3}$")
 	return findtext(value, is_legacy_color)
 
+/// A preference that represents an RGB color of something.
+/// Will give the value as 6 hex digits, without a hash.
 /datum/preference/color
 	abstract_type = /datum/preference/color
 
