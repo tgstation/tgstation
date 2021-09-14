@@ -16908,7 +16908,6 @@
 /area/medical/medbay/central)
 "ekY" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/atmos{
 	name = "Atmospherics";
 	req_access_txt = "24"
