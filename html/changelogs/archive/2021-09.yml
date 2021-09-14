@@ -399,3 +399,10 @@
   - bugfix: server restarting stuff uses alert instead of tgui alert
   kopoba:
   - spellcheck: Nanotrasen recount blood packs in cargo order now its match reality
+2021-09-14:
+  Ghilker:
+  - spellcheck: fixed airlocks id from entrence to entrance
+  Nari Harimoto:
+  - bugfix: kilostation now has an unlocked mix chamber air alarm, 3 cores in the
+      launch room, the telescreen can see the test site, and a fancy launch controller
+  - bugfix: icebox disposals no longer spits trash on the mailroom floor
