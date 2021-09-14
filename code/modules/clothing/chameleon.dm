@@ -57,7 +57,7 @@
 	else if(istype(old_headgear, /obj/item/clothing/mask/chameleon/drone))
 		new_headgear = new /obj/item/clothing/head/chameleon/drone()
 	else
-		to_chat(owner, "<span class='warning'>You shouldn't be able to toggle a camogear helmetmask if you're not wearing it.</span>")
+		to_chat(owner, span_warning("You shouldn't be able to toggle a camogear helmetmask if you're not wearing it."))
 	if(new_headgear)
 		// Force drop the item in the headslot, even though
 		// it's has TRAIT_NODROP
@@ -215,21 +215,32 @@
 	UpdateButtonIcon()
 
 /datum/action/item_action/chameleon/change/proc/update_item(obj/item/picked_item)
-	target.name = initial(picked_item.name)
-	target.desc = initial(picked_item.desc)
-	target.icon_state = initial(picked_item.icon_state)
-	if(isitem(target))
-		var/obj/item/clothing/I = target
-		I.lefthand_file = initial(picked_item.lefthand_file)
-		I.righthand_file = initial(picked_item.righthand_file)
-		I.inhand_icon_state = initial(picked_item.inhand_icon_state)
-		I.worn_icon = initial(picked_item.worn_icon)
-		I.worn_icon_state = initial(picked_item.worn_icon_state)
-		if(istype(I, /obj/item/clothing) && istype(initial(picked_item), /obj/item/clothing))
-			var/obj/item/clothing/CL = I
-			var/obj/item/clothing/PCL = picked_item
-			CL.flags_cover = initial(PCL.flags_cover)
-	target.icon = initial(picked_item.icon)
+	var/atom/atom_target = target
+	atom_target.name = initial(picked_item.name)
+	atom_target.desc = initial(picked_item.desc)
+	atom_target.icon_state = initial(picked_item.icon_state)
+	if(isitem(atom_target))
+		var/obj/item/item_target = target
+		item_target.worn_icon = initial(picked_item.worn_icon)
+		item_target.lefthand_file = initial(picked_item.lefthand_file)
+		item_target.righthand_file = initial(picked_item.righthand_file)
+		if(initial(picked_item.greyscale_colors))
+			if(initial(picked_item.greyscale_config_worn))
+				item_target.worn_icon = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config_worn), initial(picked_item.greyscale_colors))
+			if(initial(picked_item.greyscale_config_inhand_left))
+				item_target.lefthand_file = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config_inhand_left), initial(picked_item.greyscale_colors))
+			if(initial(picked_item.greyscale_config_inhand_right))
+				item_target.righthand_file = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config_inhand_right), initial(picked_item.greyscale_colors))
+		item_target.worn_icon_state = initial(picked_item.worn_icon_state)
+		item_target.inhand_icon_state = initial(picked_item.inhand_icon_state)
+		if(istype(item_target, /obj/item/clothing) && istype(initial(picked_item), /obj/item/clothing))
+			var/obj/item/clothing/clothing_target = item_target
+			var/obj/item/clothing/picked_clothing = picked_item
+			clothing_target.flags_cover = initial(picked_clothing.flags_cover)
+	if(initial(picked_item.greyscale_config) && initial(picked_item.greyscale_colors))
+		atom_target.icon = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config), initial(picked_item.greyscale_colors))
+	else
+		atom_target.icon = initial(picked_item.icon)
 
 /datum/action/item_action/chameleon/change/Trigger()
 	if(!IsAvailable())
@@ -358,10 +369,12 @@
 /obj/item/clothing/under/chameleon
 //starts off as black
 	name = "black jumpsuit"
-	icon = 'icons/obj/clothing/under/color.dmi'
-	icon_state = "black"
-	inhand_icon_state = "bl_suit"
-	worn_icon = 'icons/mob/clothing/under/color.dmi'
+	icon_state = "jumpsuit"
+	greyscale_colors = "#3f3f3f"
+	greyscale_config = /datum/greyscale_config/jumpsuit
+	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit_inhand_right
+	greyscale_config_worn = /datum/greyscale_config/jumpsuit_worn
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = FALSE
@@ -527,7 +540,6 @@
 	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
-	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
@@ -556,7 +568,7 @@
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
 	voice_change = !voice_change
-	to_chat(user, "<span class='notice'>The voice changer is now [voice_change ? "on" : "off"]!</span>")
+	to_chat(user, span_notice("The voice changer is now [voice_change ? "on" : "off"]!"))
 
 
 /obj/item/clothing/mask/chameleon/drone
@@ -575,11 +587,14 @@
 	randomise_action.UpdateButtonIcon()
 
 /obj/item/clothing/mask/chameleon/drone/attack_self(mob/user)
-	to_chat(user, "<span class='notice'>[src] does not have a voice changer.</span>")
+	to_chat(user, span_notice("[src] does not have a voice changer."))
 
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
-	icon_state = "black"
+	icon_state = "sneakers"
+	greyscale_colors = "#545454#ffffff"
+	greyscale_config = /datum/greyscale_config/sneakers
+	greyscale_config_worn = /datum/greyscale_config/sneakers_worn
 	desc = "A pair of black shoes."
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
@@ -603,9 +618,6 @@
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/shoes/chameleon/noslip
-	name = "black shoes"
-	icon_state = "black"
-	desc = "A pair of black shoes."
 	clothing_flags = NOSLIP
 	can_be_bloody = FALSE
 

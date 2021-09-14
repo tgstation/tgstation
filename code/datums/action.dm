@@ -5,8 +5,8 @@
 
 /datum/action
 	var/name = "Generic Action"
-	var/desc = null
-	var/obj/target = null
+	var/desc
+	var/datum/target
 	var/check_flags = NONE
 	var/processing = FALSE
 	var/atom/movable/screen/movable/action_button/button = null
@@ -47,6 +47,7 @@
 				return
 			Remove(owner)
 		owner = M
+		RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/owner_deleted)
 
 		//button id generation
 		var/counter = 0
@@ -72,13 +73,19 @@
 	else
 		Remove(owner)
 
+/datum/action/proc/owner_deleted(datum/source)
+	SIGNAL_HANDLER
+	Remove(owner)
+
 /datum/action/proc/Remove(mob/M)
 	if(M)
 		if(M.client)
 			M.client.screen -= button
 		LAZYREMOVE(M.actions, src)
 		M.update_action_buttons()
-	owner = null
+	if(owner)
+		UnregisterSignal(owner, COMSIG_PARENT_QDELETING)
+		owner = null
 	button.moved = FALSE //so the button appears in its normal position when given to another owner.
 	button.locked = FALSE
 	button.id = null
@@ -171,21 +178,21 @@
 	return TRUE
 
 /datum/action/item_action/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
+	var/obj/item/item_target = target
 	if(button_icon && button_icon_state)
 		// If set, use the custom icon that we set instead
 		// of the item appearence
 		..()
-	else if((target && current_button.appearance_cache != target.appearance) || force) //replace with /ref comparison if this is not valid.
-		var/obj/item/I = target
-		var/old_layer = I.layer
-		var/old_plane = I.plane
-		I.layer = FLOAT_LAYER //AAAH
-		I.plane = FLOAT_PLANE //^ what that guy said
+	else if((target && current_button.appearance_cache != item_target.appearance) || force) //replace with /ref comparison if this is not valid.
+		var/old_layer = item_target.layer
+		var/old_plane = item_target.plane
+		item_target.layer = FLOAT_LAYER //AAAH
+		item_target.plane = FLOAT_PLANE //^ what that guy said
 		current_button.cut_overlays()
-		current_button.add_overlay(I)
-		I.layer = old_layer
-		I.plane = old_plane
-		current_button.appearance_cache = I.appearance
+		current_button.add_overlay(item_target)
+		item_target.layer = old_layer
+		item_target.plane = old_plane
+		current_button.appearance_cache = item_target.appearance
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
@@ -304,7 +311,7 @@
 /datum/action/item_action/vortex_recall/IsAvailable()
 	var/area/current_area = get_area(target)
 	if(current_area.area_flags & NOTELEPORT)
-		to_chat(owner, "<span class='notice'>[target] fizzles uselessly.</span>")
+		to_chat(owner, span_notice("[target] fizzles uselessly."))
 		return
 	if(istype(target, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = target
@@ -323,10 +330,10 @@
 	if(istype(target, /obj/item/clothing/head/helmet/space/hardsuit/berserker))
 		var/obj/item/clothing/head/helmet/space/hardsuit/berserker/berzerk = target
 		if(berzerk.berserk_active)
-			to_chat(owner, "<span class='warning'>You are already berserk!</span>")
+			to_chat(owner, span_warning("You are already berserk!"))
 			return
 		if(berzerk.berserk_charge < 100)
-			to_chat(owner, "<span class='warning'>You don't have a full charge.</span>")
+			to_chat(owner, span_warning("You don't have a full charge."))
 			return
 		berzerk.berserk_mode(owner)
 		return
@@ -345,7 +352,8 @@
 
 /datum/action/item_action/toggle/New(Target)
 	..()
-	name = "Toggle [target.name]"
+	var/obj/item/item_target = target
+	name = "Toggle [item_target.name]"
 	button.name = name
 
 /datum/action/item_action/halt
@@ -374,7 +382,8 @@
 
 /datum/action/item_action/adjust/New(Target)
 	..()
-	name = "Adjust [target.name]"
+	var/obj/item/item_target = target
+	name = "Adjust [item_target.name]"
 	button.name = name
 
 /datum/action/item_action/switch_hud
@@ -427,7 +436,7 @@
 			owner.research_scanner++
 		else
 			owner.research_scanner--
-		to_chat(owner, "<span class='notice'>[target] research scanner has been [active ? "activated" : "deactivated"].</span>")
+		to_chat(owner, span_notice("[target] research scanner has been [active ? "activated" : "deactivated"]."))
 		return 1
 
 /datum/action/item_action/toggle_research_scanner/Remove(mob/M)
@@ -462,12 +471,14 @@
 
 /datum/action/item_action/organ_action/toggle/New(Target)
 	..()
-	name = "Toggle [target.name]"
+	var/obj/item/organ/organ_target = target
+	name = "Toggle [organ_target.name]"
 	button.name = name
 
 /datum/action/item_action/organ_action/use/New(Target)
 	..()
-	name = "Use [target.name]"
+	var/obj/item/organ/organ_target = target
+	name = "Use [organ_target.name]"
 	button.name = name
 
 /datum/action/item_action/cult_dagger
@@ -479,7 +490,7 @@
 	background_icon_state = "bg_demon"
 
 /datum/action/item_action/cult_dagger/Grant(mob/M)
-	if(iscultist(M))
+	if(IS_CULTIST(M))
 		..()
 		button.screen_loc = "6:157,4:-2"
 		button.moved = "6:157,4:-2"
@@ -499,13 +510,13 @@
 		I.attack_self(owner)
 		return
 	if(!isliving(owner))
-		to_chat(owner, "<span class='warning'>You lack the necessary living force for this action.</span>")
+		to_chat(owner, span_warning("You lack the necessary living force for this action."))
 		return
 	var/mob/living/living_owner = owner
 	if (living_owner.usable_hands <= 0)
-		to_chat(living_owner, "<span class='warning'>You dont have any usable hands!</span>")
+		to_chat(living_owner, span_warning("You dont have any usable hands!"))
 	else
-		to_chat(living_owner, "<span class='warning'>Your hands are full!</span>")
+		to_chat(living_owner, span_warning("Your hands are full!"))
 
 
 ///MGS BOX!
@@ -532,7 +543,7 @@
 		return
 	//Box closing from here on out.
 	if(!isturf(owner.loc)) //Don't let the player use this to escape mechs/welded closets.
-		to_chat(owner, "<span class='warning'>You need more space to activate this implant!</span>")
+		to_chat(owner, span_warning("You need more space to activate this implant!"))
 		return
 	if(!COOLDOWN_FINISHED(src, box_cooldown))
 		return
@@ -675,7 +686,7 @@
 	desc = "Activates the jump boot's internal propulsion system, allowing the user to dash over 4-wide gaps."
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "jetboot"
-	
+
 /datum/action/item_action/bhop/brocket
 	name = "Activate Rocket Boots"
 	desc = "Activates the boot's rocket propulsion system, allowing the user to hurl themselves great distances."
@@ -760,12 +771,13 @@
 
 /datum/action/item_action/storage_gather_mode/ApplyIcon(atom/movable/screen/movable/action_button/current_button)
 	. = ..()
-	var/old_layer = target.layer
-	var/old_plane = target.plane
-	target.layer = FLOAT_LAYER //AAAH
-	target.plane = FLOAT_PLANE //^ what that guy said
+	var/obj/item/item_target = target
+	var/old_layer = item_target.layer
+	var/old_plane = item_target.plane
+	item_target.layer = FLOAT_LAYER //AAAH
+	item_target.plane = FLOAT_PLANE //^ what that guy said
 	current_button.cut_overlays()
 	current_button.add_overlay(target)
-	target.layer = old_layer
-	target.plane = old_plane
-	current_button.appearance_cache = target.appearance
+	item_target.layer = old_layer
+	item_target.plane = old_plane
+	current_button.appearance_cache = item_target.appearance

@@ -31,7 +31,7 @@ All ShuttleMove procs go here
 				if(M.pulledby)
 					M.pulledby.stop_pulling()
 				M.stop_pulling()
-				M.visible_message("<span class='warning'>[shuttle] slams into [M]!</span>")
+				M.visible_message(span_warning("[shuttle] slams into [M]!"))
 				SSblackbox.record_feedback("tally", "shuttle_gib", 1, M.type)
 				log_attack("[key_name(M)] was shuttle gibbed by [shuttle].")
 				M.gib()
@@ -105,8 +105,7 @@ All ShuttleMove procs go here
 	if(loc != oldT) // This is for multi tile objects
 		return
 
-	loc = newT
-
+	abstract_move(newT)
 
 	return TRUE
 
@@ -363,9 +362,6 @@ All ShuttleMove procs go here
 
 /************************************Misc move procs************************************/
 
-/atom/movable/lighting_object/onShuttleMove()
-	return FALSE
-
 /obj/docking_port/mobile/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
 	if(moving_dock == src)
@@ -386,7 +382,7 @@ All ShuttleMove procs go here
 	if(loc != oldT) // This is for multi tile objects
 		return
 
-	loc = newT
+	abstract_move(newT)
 
 	return TRUE
 

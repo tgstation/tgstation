@@ -15,7 +15,7 @@
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
 
 /obj/item/storage/belt/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins belting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins belting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
 /obj/item/storage/belt/update_overlays()
@@ -105,6 +105,15 @@
 	new /obj/item/weldingtool/experimental(src)
 	new /obj/item/multitool(src)
 	new /obj/item/holosign_creator/atmos(src)
+	new /obj/item/extinguisher/mini(src)
+	new /obj/item/stack/cable_coil(src)
+
+/obj/item/storage/belt/utility/full/powertools/rcd/PopulateContents()
+	new /obj/item/screwdriver/power(src)
+	new /obj/item/crowbar/power(src)
+	new /obj/item/weldingtool/experimental(src)
+	new /obj/item/multitool(src)
+	new /obj/item/construction/rcd/loaded/upgraded(src)
 	new /obj/item/extinguisher/mini(src)
 	new /obj/item/stack/cable_coil(src)
 
@@ -226,7 +235,6 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/melee/baton,
-		/obj/item/melee/classic_baton,
 		/obj/item/grenade,
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
@@ -237,7 +245,7 @@
 		/obj/item/food/donut,
 		/obj/item/kitchen/knife/combat,
 		/obj/item/flashlight/seclite,
-		/obj/item/melee/classic_baton/telescopic,
+		/obj/item/melee/baton/telescopic,
 		/obj/item/radio,
 		/obj/item/clothing/gloves,
 		/obj/item/restraints/legcuffs/bola,
@@ -249,7 +257,7 @@
 	new /obj/item/restraints/handcuffs(src)
 	new /obj/item/grenade/flashbang(src)
 	new /obj/item/assembly/flash/handheld(src)
-	new /obj/item/melee/baton/loaded(src)
+	new /obj/item/melee/baton/security/loaded(src)
 	update_appearance()
 
 /obj/item/storage/belt/security/webbing
@@ -484,6 +492,12 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 
+/obj/item/storage/belt/military/assault/full/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/ammo_box/magazine/wt550m9/wtap = 2,
+		/obj/item/ammo_box/magazine/wt550m9 = 4,
+	), src)
+
 /obj/item/storage/belt/grenade
 	name = "grenadier belt"
 	desc = "A belt for holding grenades."
@@ -510,7 +524,7 @@
 		))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
-	var/static/items_inside = list(
+	generate_items_inside(list(
 		/obj/item/grenade/flashbang = 1,
 		/obj/item/grenade/smokebomb = 4,
 		/obj/item/grenade/empgrenade = 1,
@@ -521,8 +535,8 @@
 		/obj/item/grenade/chem_grenade/facid = 1,
 		/obj/item/grenade/syndieminibomb = 2,
 		/obj/item/screwdriver = 1,
-		/obj/item/multitool = 1)
-	generate_items_inside(items_inside,src)
+		/obj/item/multitool = 1,
+	),src)
 
 
 /obj/item/storage/belt/wands
@@ -702,18 +716,18 @@
 /obj/item/storage/belt/sabre/examine(mob/user)
 	. = ..()
 	if(length(contents))
-		. += "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
+		. += span_notice("Alt-click it to quickly draw the blade.")
 
 /obj/item/storage/belt/sabre/AltClick(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		return
 	if(length(contents))
 		var/obj/item/I = contents[1]
-		user.visible_message("<span class='notice'>[user] takes [I] out of [src].</span>", "<span class='notice'>You take [I] out of [src].</span>")
+		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
 		user.put_in_hands(I)
 		update_appearance()
 	else
-		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+		to_chat(user, span_warning("[src] is empty!"))
 
 /obj/item/storage/belt/sabre/update_icon_state()
 	icon_state = initial(inhand_icon_state)

@@ -7,14 +7,19 @@
 #define AREA_USAGE_STATIC_LIGHT 5
 #define AREA_USAGE_STATIC_ENVIRON 6
 #define AREA_USAGE_LEN AREA_USAGE_STATIC_ENVIRON // largest idx
+
 /// Index of the first dynamic usage channel
 #define AREA_USAGE_DYNAMIC_START AREA_USAGE_EQUIP
 /// Index of the last dynamic usage channel
 #define AREA_USAGE_DYNAMIC_END AREA_USAGE_ENVIRON
+
 /// Index of the first static usage channel
 #define AREA_USAGE_STATIC_START AREA_USAGE_STATIC_EQUIP
 /// Index of the last static usage channel
 #define AREA_USAGE_STATIC_END AREA_USAGE_STATIC_ENVIRON
+
+#define DYNAMIC_TO_STATIC_CHANNEL(dyn_channel) (dyn_channel + (AREA_USAGE_STATIC_START - AREA_USAGE_DYNAMIC_START))
+#define STATIC_TO_DYNAMIC_CHANNEL(static_channel) (static_channel - (AREA_USAGE_STATIC_START - AREA_USAGE_DYNAMIC_START))
 
 
 //Power use
@@ -41,11 +46,12 @@
 #define BIOGENERATOR (1<<4) //Uses biomass
 #define LIMBGROWER (1<<5) //Uses synthetic flesh
 #define SMELTER (1<<6) //uses various minerals
-#define NANITE_COMPILER  (1<<7) //Prints nanite disks
 /// Protolathes for offstation roles. More limited tech tree.
 #define AWAY_LATHE (1<<8)
 /// Imprinters for offstation roles. More limited tech tree.
 #define AWAY_IMPRINTER (1<<9)
+/// For wiremod/integrated circuits. Uses various minerals.
+#define COMPONENT_PRINTER (1<<10)
 //Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 //Modular computer/NTNet defines
@@ -62,6 +68,7 @@
 #define MC_CHARGE "CHARGE"
 #define MC_AI "AI"
 #define MC_SENSORS "SENSORS"
+#define MC_SIGNALER "SIGNALER"
 
 //NTNet stuff, for modular computers
 									// NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)
@@ -141,12 +148,8 @@
 #define MACHINE_ELECTRIFIED_PERMANENT -1
 #define MACHINE_DEFAULT_ELECTRIFY_TIME 30
 
-//these flags are used to tell the DNA modifier if a plant gene cannot be extracted or modified.
-#define PLANT_GENE_REMOVABLE (1<<0)
-#define PLANT_GENE_EXTRACTABLE (1<<1)
-
 //mass drivers and related machinery
-#define MASSDRIVER_TOXINS "toxinsdriver"
+#define MASSDRIVER_ORDNANCE "ordnancedriver"
 #define MASSDRIVER_CHAPEL "chapelgun"
 #define MASSDRIVER_DISPOSALS "trash"
 #define MASSDRIVER_SHACK "shack"
@@ -190,3 +193,20 @@
 #define ORION_GAMER_PAMPHLET -1
 //game begins to have a chance to warn sec and med
 #define ORION_GAMER_REPORT_THRESHOLD 2
+
+// Air alarm [/obj/machinery/airalarm/buildstage]
+/// Air alarm missing circuit
+#define AIRALARM_BUILD_NO_CIRCUIT 0
+/// Air alarm has circuit but is missing wires
+#define AIRALARM_BUILD_NO_WIRES 1
+/// Air alarm has all components but isn't completed
+#define AIRALARM_BUILD_COMPLETE 2
+
+///TLV datums wont check limits set to this
+#define TLV_DONT_CHECK -1
+///the gas mixture is within the bounds of both warning and hazard limits
+#define TLV_NO_DANGER 0
+///the gas value is outside the warning limit but within the hazard limit, the air alarm will go into warning mode
+#define TLV_OUTSIDE_WARNING_LIMIT 1
+///the gas is outside the hazard limit, the air alarm will go into hazard mode
+#define TLV_OUTSIDE_HAZARD_LIMIT 2

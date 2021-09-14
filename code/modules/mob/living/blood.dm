@@ -36,25 +36,25 @@
 		switch(blood_volume)
 			if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
 				if(DT_PROB(7.5, delta_time))
-					to_chat(src, "<span class='userdanger'>Blood starts to tear your skin apart. You're going to burst!</span>")
+					to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
 					inflate_gib()
 			if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
 				if(DT_PROB(5, delta_time))
-					to_chat(src, "<span class='warning'>You feel terribly bloated.</span>")
+					to_chat(src, span_warning("You feel terribly bloated."))
 			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 				if(DT_PROB(2.5, delta_time))
-					to_chat(src, "<span class='warning'>You feel [word].</span>")
+					to_chat(src, span_warning("You feel [word]."))
 				adjustOxyLoss(round(0.005 * (BLOOD_VOLUME_NORMAL - blood_volume) * delta_time, 1))
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				adjustOxyLoss(round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * delta_time, 1))
 				if(DT_PROB(2.5, delta_time))
 					blur_eyes(6)
-					to_chat(src, "<span class='warning'>You feel very [word].</span>")
+					to_chat(src, span_warning("You feel very [word]."))
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 				adjustOxyLoss(2.5 * delta_time)
 				if(DT_PROB(7.5, delta_time))
 					Unconscious(rand(20,60))
-					to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
+					to_chat(src, span_warning("You feel extremely [word]."))
 			if(-INFINITY to BLOOD_VOLUME_SURVIVE)
 				if(!HAS_TRAIT(src, TRAIT_NODEATH))
 					death()
@@ -157,7 +157,7 @@
 				if(BLOOD_FLOW_DECREASING) // this only matters if none of the wounds fit the above two cases, included here for completeness
 					continue
 
-	to_chat(src, "<span class='warning'>[bleeding_severity][rate_of_change]</span>")
+	to_chat(src, span_warning("[bleeding_severity][rate_of_change]"))
 	COOLDOWN_START(src, bleeding_message_cd, next_cooldown)
 
 /mob/living/carbon/human/bleed_warn(bleed_amt = 0, forced = FALSE)
@@ -223,7 +223,6 @@
 	if(blood_id == /datum/reagent/blood) //actual blood reagent
 		var/blood_data = list()
 		//set the blood data
-		blood_data["donor"] = src
 		blood_data["viruses"] = list()
 
 		for(var/thing in diseases)
@@ -254,7 +253,7 @@
 		blood_data["features"] = dna.features
 		blood_data["factions"] = faction
 		blood_data["quirks"] = list()
-		for(var/V in roundstart_quirks)
+		for(var/V in quirks)
 			var/datum/quirk/T = V
 			blood_data["quirks"] += T.type
 		return blood_data
@@ -270,7 +269,7 @@
 /mob/living/carbon/human/get_blood_id()
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		return
-	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS] && mind && mind.assigned_role == "Clown")
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS] && is_clown_job(mind?.assigned_role))
 		return /datum/reagent/colorful_reagent
 	if(dna.species.exotic_blood)
 		return dna.species.exotic_blood
@@ -330,6 +329,8 @@
 	var/obj/effect/decal/cleanable/blood/B = locate() in T
 	if(!B)
 		B = new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
+	if(QDELETED(B)) //Give it up
+		return
 	B.bloodiness = min((B.bloodiness + BLOOD_AMOUNT_PER_DECAL), BLOOD_POOL_MAX)
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
 	if(temp_blood_DNA)

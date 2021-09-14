@@ -1,31 +1,33 @@
 
 //returns TRUE if this mob has sufficient access to use this object
-/obj/proc/allowed(mob/M)
+/obj/proc/allowed(mob/accessor)
+	if(SEND_SIGNAL(src, COMSIG_OBJ_ALLOWED, accessor) & COMPONENT_OBJ_ALLOW)
+		return TRUE
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
 		return TRUE
-	if(issilicon(M))
-		if(ispAI(M))
+	if(issilicon(accessor))
+		if(ispAI(accessor))
 			return FALSE
 		return TRUE //AI can do whatever it wants
-	if(isAdminGhostAI(M))
+	if(isAdminGhostAI(accessor))
 		//Access can't stop the abuse
 		return TRUE
-	else if(istype(M) && SEND_SIGNAL(M, COMSIG_MOB_ALLOWED, src))
+	else if(istype(accessor) && SEND_SIGNAL(accessor, COMSIG_MOB_ALLOWED, src))
 		return TRUE
-	else if(ishuman(M))
-		var/mob/living/carbon/human/H = M
+	else if(ishuman(accessor))
+		var/mob/living/carbon/human/human_accessor = accessor
 		//if they are holding or wearing a card that has access, that works
-		if(check_access(H.get_active_held_item()) || src.check_access(H.wear_id))
+		if(check_access(human_accessor.get_active_held_item()) || src.check_access(human_accessor.wear_id))
 			return TRUE
-	else if(isalienadult(M))
-		var/mob/living/carbon/george = M
+	else if(isalienadult(accessor))
+		var/mob/living/carbon/george = accessor
 		//they can only hold things :(
 		if(check_access(george.get_active_held_item()))
 			return TRUE
-	else if(isanimal(M))
-		var/mob/living/simple_animal/A = M
-		if(check_access(A.get_active_held_item()) || check_access(A.access_card))
+	else if(isanimal(accessor))
+		var/mob/living/simple_animal/animal = accessor
+		if(check_access(animal.get_active_held_item()) || check_access(animal.access_card))
 			return TRUE
 	return FALSE
 
@@ -112,7 +114,13 @@
 	var/card_assignment
 	if(istype(id_card, /obj/item/card/id/advanced))
 		var/obj/item/card/id/advanced/advanced_id_card = id_card
-		card_assignment = advanced_id_card.trim_assignment_override ? advanced_id_card.trim_assignment_override : advanced_id_card.trim?.assignment
+		if(advanced_id_card.trim_assignment_override)
+			card_assignment = advanced_id_card.trim_assignment_override
+		else if(ispath(advanced_id_card.trim))
+			var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[advanced_id_card.trim]
+			card_assignment = trim.assignment
+		else
+			card_assignment = advanced_id_card.trim?.assignment
 	else
 		card_assignment = id_card.trim?.assignment
 

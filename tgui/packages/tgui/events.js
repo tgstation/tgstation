@@ -148,7 +148,7 @@ window.addEventListener('beforeunload', e => {
 
 const keyHeldByCode = {};
 
-class KeyEvent {
+export class KeyEvent {
   constructor(e, type, repeat) {
     this.event = e;
     this.type = type;

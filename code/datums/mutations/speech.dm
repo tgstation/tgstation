@@ -16,7 +16,7 @@
 	name = "Wacky"
 	desc = "You are not a clown. You are the entire circus."
 	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='sans'>You feel an off sensation in your voicebox.</span>"
+	text_gain_indication = "<span class='sans'><span class='infoplain'>You feel an off sensation in your voicebox.</span></span>"
 	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"
 
 /datum/mutation/human/wacky/on_acquiring(mob/living/carbon/human/owner)
@@ -240,3 +240,27 @@
 		message = "[chosen_starting] [message]"
 
 		speech_args[SPEECH_MESSAGE] = message
+
+/datum/mutation/human/piglatin
+	name = "Pig Latin"
+	desc = "Historians say back in the 2020's humanity spoke entirely in this mystical language."
+	quality = MINOR_NEGATIVE
+	text_gain_indication = span_notice("Omethingsay eelsfay offyay.")
+	text_lose_indication = span_notice("The off sensation passes.")
+
+/datum/mutation/human/piglatin/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+
+/datum/mutation/human/piglatin/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+
+/datum/mutation/human/piglatin/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
+	var/spoken_message = speech_args[SPEECH_MESSAGE]
+	spoken_message = piglatin_sentence(spoken_message)
+	speech_args[SPEECH_MESSAGE] = spoken_message

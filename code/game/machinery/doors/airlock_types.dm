@@ -110,15 +110,15 @@
 	autoclose = FALSE
 	frequency = FREQ_AIRLOCK_CONTROL
 	heat_proof = TRUE
-	req_access = list(ACCESS_TOXINS)
+	req_access = list(ACCESS_ORDNANCE)
 
-/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior
+/obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior
 	name = "Mixing Room Interior Airlock"
-	id_tag = INCINERATOR_TOXMIX_AIRLOCK_INTERIOR
+	id_tag = INCINERATOR_ORDMIX_AIRLOCK_INTERIOR
 
-/obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior
+/obj/machinery/door/airlock/research/glass/incinerator/ordmix_exterior
 	name = "Mixing Room Exterior Airlock"
-	id_tag = INCINERATOR_TOXMIX_AIRLOCK_EXTERIOR
+	id_tag = INCINERATOR_ORDMIX_AIRLOCK_EXTERIOR
 
 /obj/machinery/door/airlock/mining/glass
 	opacity = FALSE
@@ -210,9 +210,9 @@
 	icon = 'icons/obj/doors/airlocks/station/plasma.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_plasma
 
-/obj/machinery/door/airlock/plasma/ComponentInitialize()
+/obj/machinery/door/airlock/plasma/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/machinery/door/airlock/plasma/proc/ignite(exposed_temperature)
 	if(exposed_temperature > 300)
@@ -464,7 +464,7 @@
 	new openingoverlaytype(loc)
 
 /obj/machinery/door/airlock/cult/canAIControl(mob/user)
-	return (iscultist(user) && !isAllPowerCut())
+	return (IS_CULTIST(user) && !isAllPowerCut())
 
 /obj/machinery/door/airlock/cult/on_break()
 	if(!panel_open)
@@ -479,7 +479,7 @@
 /obj/machinery/door/airlock/cult/allowed(mob/living/L)
 	if(!density)
 		return TRUE
-	if(friendly || iscultist(L) || istype(L, /mob/living/simple_animal/shade) || isconstruct(L))
+	if(friendly || IS_CULTIST(L) || istype(L, /mob/living/simple_animal/shade) || isconstruct(L))
 		if(!stealthy)
 			new openingoverlaytype(loc)
 		return TRUE

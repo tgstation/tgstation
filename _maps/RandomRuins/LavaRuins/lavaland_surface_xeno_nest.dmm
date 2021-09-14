@@ -85,7 +85,7 @@
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/item/clothing/under/rank/security/officer,
 /obj/item/clothing/suit/armor/vest,
-/obj/item/melee/baton/loaded,
+/obj/item/melee/baton/security/loaded,
 /obj/item/clothing/head/helmet,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
@@ -162,6 +162,15 @@
 /obj/effect/decal/cleanable/blood,
 /mob/living/simple_animal/hostile/alien/drone{
 	plants_off = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"Y" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/resin/wall{
+	move_force = 1000;
+	move_resist = 3000;
+	pull_force = 1000
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
@@ -243,7 +252,7 @@ b
 g
 g
 b
-b
+Y
 G
 a
 a

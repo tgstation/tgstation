@@ -5,10 +5,9 @@
 // effectout: effect to show right after teleportation
 // asoundin: soundfile to play before teleportation
 // asoundout: soundfile to play after teleportation
-// forceMove: if false, teleport will use Move() proc (dense objects will prevent teleportation)
 // no_effects: disable the default effectin/effectout of sparks
 // forced: whether or not to ignore no_teleport
-/proc/do_teleport(atom/movable/teleatom, atom/destination, precision=null, forceMove = TRUE, datum/effect_system/effectin=null, datum/effect_system/effectout=null, asoundin=null, asoundout=null, no_effects=FALSE, channel=TELEPORT_CHANNEL_BLUESPACE, forced = FALSE)
+/proc/do_teleport(atom/movable/teleatom, atom/destination, precision=null, datum/effect_system/effectin=null, datum/effect_system/effectout=null, asoundin=null, asoundout=null, no_effects=FALSE, channel=TELEPORT_CHANNEL_BLUESPACE, forced = FALSE)
 	// teleporting most effects just deletes them
 	var/static/list/delete_atoms = typecacheof(list(
 		/obj/effect,
@@ -38,7 +37,7 @@
 				precision = max(rand(1,100)*bagholding.len,100)
 				if(isliving(teleatom))
 					var/mob/living/MM = teleatom
-					to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
+					to_chat(MM, span_warning("The bluespace interface on your bag of holding interferes with the teleport!"))
 
 			// if effects are not specified and not explicitly disabled, sparks
 			if ((!effectin || !effectout) && !no_effects)
@@ -73,9 +72,13 @@
 	if(SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORT, channel, curturf, destturf))
 		return FALSE
 
+	if(isobserver(teleatom))
+		teleatom.abstract_move(destturf)
+		return TRUE
+
 	tele_play_specials(teleatom, curturf, effectin, asoundin)
-	var/success = forceMove ? teleatom.forceMove(destturf) : teleatom.Move(destturf)
-	if (success)
+	var/success = teleatom.forceMove(destturf)
+	if(success)
 		log_game("[key_name(teleatom)] has teleported from [loc_name(curturf)] to [loc_name(destturf)]")
 		tele_play_specials(teleatom, destturf, effectout, asoundout)
 
@@ -86,12 +89,14 @@
 	return TRUE
 
 /proc/tele_play_specials(atom/movable/teleatom, atom/location, datum/effect_system/effect, sound)
-	if (location && !isobserver(teleatom))
-		if (sound)
-			playsound(location, sound, 60, TRUE)
-		if (effect)
-			effect.attach(location)
-			effect.start()
+	if(!location)
+		return
+
+	if(sound)
+		playsound(location, sound, 60, TRUE)
+	if(effect)
+		effect.attach(location)
+		effect.start()
 
 // Safe location finder
 /proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE, dense_atoms = TRUE)

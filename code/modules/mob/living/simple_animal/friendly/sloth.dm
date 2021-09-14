@@ -10,6 +10,7 @@
 	emote_see = list("dozes off.", "looks around sleepily.")
 	speak_chance = 1
 	turns_per_move = 5
+	can_be_held = TRUE
 	butcher_results = list(/obj/item/food/meat/slab = 3)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -25,8 +26,6 @@
 	maxHealth = 50
 	speed = 10
 	held_state = "sloth"
-	pet_bonus = TRUE
-	pet_bonus_emote = "slowly smiles!"
 	///In the case 'melee_damage_upper' is somehow raised above 0
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
@@ -35,6 +34,9 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
+/mob/living/simple_animal/sloth/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/pet_bonus, "slowly smiles!")
 
 //Cargo Sloth
 /mob/living/simple_animal/sloth/paperwork

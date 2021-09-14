@@ -24,16 +24,16 @@
 
 /obj/item/storage/box/syndicate/bundle_a/PopulateContents()
 	switch (pickweight(list(
-		KIT_RECON = 2, 
-		KIT_BLOODY_SPAI = 3, 
-		KIT_STEALTHY = 2, 
-		KIT_SCREWED = 2, 
-		KIT_SABOTAGE = 3, 
-		KIT_GUN = 2, 
-		KIT_MURDER = 2, 
-		KIT_IMPLANTS = 1, 
-		KIT_HACKER = 3, 
-		KIT_SNIPER = 1, 
+		KIT_RECON = 2,
+		KIT_BLOODY_SPAI = 3,
+		KIT_STEALTHY = 2,
+		KIT_SCREWED = 2,
+		KIT_SABOTAGE = 3,
+		KIT_GUN = 2,
+		KIT_MURDER = 2,
+		KIT_IMPLANTS = 1,
+		KIT_HACKER = 3,
+		KIT_SNIPER = 1,
 		KIT_NUKEOPS_METAGAME = 1
 		)))
 		if(KIT_RECON)
@@ -89,7 +89,7 @@
 			new /obj/item/encryptionkey/syndicate(src)
 
 		if(KIT_MURDER)
-			new /obj/item/melee/transforming/energy/sword/saber(src)
+			new /obj/item/melee/energy/sword/saber(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/card/emag(src)
 			new /obj/item/clothing/shoes/chameleon/noslip(src)
@@ -153,14 +153,14 @@
 			new /obj/item/card/emag/doorjack(src) // 3 tc
 
 /obj/item/storage/box/syndicate/bundle_b/PopulateContents()
-	switch (pickweight(list( 
-		KIT_JAMES_BOND = 2, 
-		KIT_NINJA = 1, 
-		KIT_DARK_LORD = 1, 
-		KIT_WHITE_WHALE_HOLY_GRAIL = 2, 
-		KIT_MAD_SCIENTIST = 2, 
-		KIT_BEES = 1, 
-		KIT_MR_FREEZE = 2, 
+	switch (pickweight(list(
+		KIT_JAMES_BOND = 2,
+		KIT_NINJA = 1,
+		KIT_DARK_LORD = 1,
+		KIT_WHITE_WHALE_HOLY_GRAIL = 2,
+		KIT_MAD_SCIENTIST = 2,
+		KIT_BEES = 1,
+		KIT_MR_FREEZE = 2,
 		KIT_TRAITOR_2006 = 1
 		)))
 		if(KIT_JAMES_BOND)
@@ -236,13 +236,13 @@
 			new /obj/item/dnainjector/geladikinesis(src)
 			new /obj/item/dnainjector/cryokinesis(src)
 			new /obj/item/gun/energy/temperature/security(src)
-			new /obj/item/melee/transforming/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue
-			
+			new /obj/item/melee/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue
+
 		if(KIT_TRAITOR_2006) //A kit so old, it's probably older than you. //This bundle is filled with the entire unlink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.
 			new /obj/item/storage/toolbox/emergency/old/ancientbundle(src) //Items fit neatly into a classic toolbox just to remind you what the theme is.
-		
+
 /obj/item/storage/toolbox/emergency/old/ancientbundle/ //So the subtype works
-		
+
 /obj/item/storage/toolbox/emergency/old/ancientbundle/PopulateContents()
 	new /obj/item/card/emag(src)
 	new /obj/item/pen/sleepy(src)
@@ -322,7 +322,7 @@
 /obj/item/storage/box/syndicate/contract_kit/PopulateContents()
 	new /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink(src)
 	new /obj/item/storage/box/syndicate/contractor_loadout(src)
-	new /obj/item/melee/classic_baton/telescopic/contractor_baton(src)
+	new /obj/item/melee/baton/telescopic/contractor_baton(src)
 
 	// All about 4 TC or less - some nukeops only items, but fit nicely to the theme.
 	var/list/item_list = list(
@@ -481,7 +481,8 @@
 	new /obj/item/reagent_containers/syringe(src)
 
 /obj/item/storage/box/syndie_kit/nuke
-	name = "box"
+	name = "nuke core extraction kit"
+	desc = "A box containing the equipment and instructions for extracting the plutonium cores of most Nanotrasen nuclear explosives."
 
 /obj/item/storage/box/syndie_kit/nuke/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
@@ -489,7 +490,8 @@
 	new /obj/item/paper/guides/antag/nuke_instructions(src)
 
 /obj/item/storage/box/syndie_kit/supermatter
-	name = "box"
+	name = "supermatter sliver extraction kit"
+	desc = "A box containing the equipment and instructions for extracting a sliver of supermatter."
 
 /obj/item/storage/box/syndie_kit/supermatter/PopulateContents()
 	new /obj/item/scalpel/supermatter(src)
@@ -632,7 +634,7 @@
 	for(var/i in implants)
 		group.register(i)
 	desc += " The implants are registered to the \"[group.name]\" group."
-	
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY

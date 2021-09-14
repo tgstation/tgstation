@@ -1,0 +1,118 @@
+2012-05-01:
+  PolymorphBlue:
+  - rscadd: Adds BS12 dismemberment!
+  - rscadd: Adds greater changeling for 30 points
+2012-05-03:
+  Petethegoat:
+  - rscadd: <a href="#" id="minimoog" onclick="changeText('minimoogtext','Added BS12\'s
+      piano code.','minimoog')"><span id="minimoogtext">MINIMOOOOOOOOOOOOOOOOG</span></a>
+2012-05-04:
+  Cheridan:
+  - imageadd: -Added fat jumpsuit sprites for orange, pink, yellow, owl, security,
+      and warden jumpsuits.
+  - tweak: -Somatoray is hopefully more useful and less buggy when used on trays.
+      -Botanists now have morgue access, because of their ability to clone via replica
+      pods. Try not to get this removed like all your other access, okay hippies?
+2012-05-05:
+  Icarus:
+  - tweak: Updates to Sec, including a stationary scrubber for the prison area.
+  - tweak: Swapped around cryogenics and the patient rooms in medbay.
+2012-05-06:
+  Cheridan:
+  - imageadd: -New booze sprites for the drinks that were removed! Re-enabled the
+      recipes for the removed drinks. Get cracking, bartenders. -You now need 10 sheets
+      of metal instead of 2 to make a gas canister, people can't FILL ENTIRE ROOMS
+      WITH THEM.
+  - rscadd: "-Emergency Toolboxes now contain smaller, lighter fire extinguishers\
+      \ that actually fit inside them!\n\t"
+2012-05-10:
+  Sieve:
+  - rscdel: 'Reverted dismemberment, the recent gun changes, and Tarajans. Before
+      you shit up the forums, read this:'
+  - unknown: Dismemberment was ported from Bay12, but only halfway, and there were
+      several problems with it. I know many people really liked it, but as it stood
+      it did not fit the playstyle here at all. This <b>had</b> to be removed, there
+      is work on a more fitting system, but this had to be taken out first regardless,
+      and the longer people beat around the bush the worse the situation got.
+  - unknown: The gun change was made for no real reason and was pretty problematic,
+      so reverting that should mean there are a lot less 'accidental suicides.'
+  - unknown: Tarjans were reverted by request as well, and since keeping them working
+      after removing dismemberment would be a stupid amount of work.
+2012-05-11:
+  Important changes below!:
+  - tweak: Authors note, there was nothing below save for the previous day!!
+2012-05-14:
+  Nodrak:
+  - rscadd: Added a 'random item' button to traitor uplinks. You can potentially get
+      ANY item that shows up on the traitor item list, provided you have enough crystals
+      for it.
+2012-05-15:
+  Icarus:
+  - rscadd: Added WJohnston's scrubs to Medical Doctor lockers. Comes in blue, green,
+      and purple.
+  - rscadd: Added two new syndicate bundles
+  - tweak: Reduced cost of thermals to 3 telecrystals (formerly 4)
+  - tweak: Singularity Beacons are now spawned from a smaller, portable device.
+  - imageadd: CMO and QM jumpsuits made more unique.
+2012-05-17:
+  Icarus:
+  - rscadd: Individual dorms now have a button inside that bolts/unbolts the door
+  - imageadd: New sprites for Cargo, HoP, and Captain's lockers
+  - imageadd: More department-specific door sprites. Most noticable changes in medsci
+      and supply departments.
+2012-05-18:
+  Errorage:
+  - rscdel: Removed hat storage, which was useless.
+  - tweak: Implanting someone now takes 5 seconds, both people need to remain still.
+      Implanting yourself remains instant.
+  - tweak: Wallets once again spawn in the cabinets in the dormitory
+  - tweak: Wallets now fit in pockets
+2012-05-19:
+  Invisty:
+  - rscadd: Brand new ending animations!
+2012-05-20:
+  Errorage:
+  - rscadd: <font color="red">The new user interface is here. If anything is broken
+      or something should be done differently please post feedback on the forum. <b>Spriters
+      are encouraged to make new sprites for the UI.</b></font>
+  - rscadd: When you receive a PDA message, the content is displayed to you if the
+      PDA is located somewhere on your person (so not in your backpack). You will
+      also get a reply button there. This will hopefully make PDA communication easier.
+  - rscadd: <b>New hotkeys!</b> delete is the now the 'stop dragging' hotkey, insert
+      is the 'cycle intents' hotkey.
+2012-05-22:
+  Icarus:
+  - rscadd: RIG helmets can now be used as flashlights, just like hardhats. Credit
+      to Sly for the sprites.
+  - tweak: HoP's office has been remapped and made into his private office. Conference
+      Room can now be accessed from the main hall.
+2012-05-23:
+  Errorage:
+  - tweak: Some of the more pressing issues with the new user interface were addressed.
+      These include the health indicator being too far up, the open inventory taking
+      a lot of space, hotkey buttons not being removable and suit storage not being
+      accessible enough.
+  - rscadd: A toggle-hotkey-buttons verb was added to the OOC tab, which hides the
+      pull, drop and throw buttons for people who prefer to use hotkeys and never
+      use the buttons.
+  - rscadd: Added a character setup option which allows you to pick between the Midnight,
+      Orange and Old iconsets for the user interface.
+2012-05-26:
+  Icarus:
+  - imageadd: Ported over Flashkirby99's RIG suit sprites from Bay12
+  - tweak: Department PDA Carts moved out of lockers and into head offices.
+2012-05-28:
+  Cheridan:
+  - rscadd: -Adjusted balaclavas and added luchador masks. Wearing luchador masks
+      give you latin charisma. They replace the boxing gloves in the fitness room.
+      Boxing gloves are still available in the holodeck. -Fake moustache tweaked and
+      given new sprites.
+  Donkie:
+  - rscadd: You can now dispense Disposal Bins, Outlets and Chutes from the disposal
+      dispenser. These are movable and you can attach them above open trunks with
+      a wrench, then weld them to attach them completely. You can remove Bins by turning
+      off their pump, then screwdriver, then weld, then wrench. Same with outlet and
+      chute except for the pump part.
+2012-05-29:
+  Icarus:
+  - tweak: Moved Engineering and Bridge deliveries.

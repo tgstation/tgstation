@@ -73,7 +73,7 @@
 
 /obj/item/candle/attack_self(mob/user)
 	if(put_out_candle())
-		user.visible_message("<span class='notice'>[user] snuffs [src].</span>")
+		user.visible_message(span_notice("[user] snuffs [src]."))
 
 /obj/item/candle/infinite
 	infinite = TRUE

@@ -1,0 +1,408 @@
+2021-09-01:
+  AlinaStarkova:
+  - bugfix: Maint areas have been cleaned up to properly cover maint, minor tiles
+      and airlocks which had space areas were fixed to have an actual maint area
+  ArcaneMusic:
+  - bugfix: Meat steaks now have protein as expected.
+  Ghommie:
+  - bugfix: fixes people catching fire when using jump or rocket boots to leap over
+      a gap of lava.
+  - refactor: refactored lava burn and weather immunities code.
+  - bugfix: Fixed the anti-drop implant not removing the nodrop trait on held items
+      if they're somehow dropped.
+  - bugfix: fixes wormhole jaunter portals floating in space.
+  - bugfix: balloon alerts no longer become transparent, scale up/down or get colored
+      alongside their holder.
+  - bugfix: Hostile mobs will always face their targets when shooting.
+  - spellcheck: Corrected a possessive case in the text of the ancient note found
+      in the ice library ruin.
+  Nari Harimoto:
+  - bugfix: Nanotrasen expert roboticists have found an error in cyborg programming
+      which allows them to interact with things farther than they are supposed to.
+      some of those errors have been squashed.
+  - refactor: can_interact() now has a few less unnesscary overrides and now properly
+      checks for range such. and hotkeys are also now respected with can_interact()
+  - bugfix: the emitter area around the SM chamber now has APCs, so no more infinate
+      power for the thermomachines and other equipment
+  Sealed101:
+  - bugfix: 'Tramstation: Restored the missing law office stamp. Hail bureaucracy!'
+  - bugfix: 'Tramstation: Replaced the Core AI module in RD''s office with an AI Core
+      circuitboard. You can actually build a new AI with this!'
+  - bugfix: 'Tramstation: RnD now comes with three Experi-scanners. You no longer
+      have an excuse for not scanning those toilets.'
+  - bugfix: 'Tramstation: Fixed a non-functional shutters button in left-side tram
+      underpass.'
+  - rscadd: 'Tramstation: Book manuals have been shipped to Robotics and Medbay Treatment
+      Center.'
+  SpaceDragon00:
+  - admin: Admins can click a category in the banning panel to toggle all checkboxes
+      within that category
+  esainane:
+  - spellcheck: Fix grammar when attacked by an unknown assailant
+  - spellcheck: Fix typo in Sparkler description
+  timothymtorres:
+  - bugfix: Fix staff of lava not terraforming lava properly
+  tralezab:
+  - bugfix: fixes a broken antag panel that rarely showed up
+  - bugfix: trash cannons now accept any oxygen tank, not just red ones
+  - bugfix: Any instance where you'd see "illusion" as a school of magic is now "translocation".
+      the illusion school has been dead for awhile now!
+2021-09-02:
+  ArcaneDefence:
+  - bugfix: Plasmamen that have all of their limbs replaced with non-plasma alternatives
+      will not autoignite in flammable environments.
+  - bugfix: Moths have finally figured out how to finish eating clothes again, rather
+      than infinitely eating a singular sock.
+  GoblinBackwards:
+  - bugfix: Doors, reinforced windows, lockers, mass spectrometers and lockers can
+      now be attacked with right click
+  Timberpoes:
+  - bugfix: Fixes a logic error in ID cards which could cause their accesses to be
+      unintentionally overwritten.
+  - bugfix: Fix oversight allowing players to spam observers with notifications for
+      ghost roles.
+  magatsuchi:
+  - spellcheck: fixed a single typo
+  tralezab:
+  - spellcheck: going postal now uses the correct ui theme and isn't confused with
+      tiger cooperative
+2021-09-03:
+  ArcaneDefence:
+  - bugfix: Opening a toilet's cistern will no longer strike the toilet with the crowbar.
+  BraveMole:
+  - bugfix: Fix dir delay when riding something and turning
+  CRITAWAKETS:
+  - rscadd: Added in a new sock type, Thigh-high and Knee-high ace socks.
+  - bugfix: Bee socks are now properly ordered in the code.
+  Fikou:
+  - bugfix: fixed non-combat mechs doing 0 damage
+  Fikou, PositiveEntropy:
+  - expansion: adds a gun circuit shell
+  - qol: to string circuit component should now see everything in normal view range
+  Ghilker:
+  - qol: RPD defaul pipe color is now green, grey has been renamed to omni and the
+      two colors are moved to the first and last places of the RPD ui
+  Ghommie:
+  - bugfix: Using a soulstone on a construct shell no longer destroys it and the shade
+      if no option for the construct mob type is taken.
+  - bugfix: Fixed the Bloodcrawl spell not ejecting users if somehow lost.
+  JohnFulpWillard:
+  - bugfix: traitors now get objectives again.
+  - qol: Cayenne can once again strip people.
+  - bugfix: Cayenne no longer deletes the nuke disk when putting it back down.
+  Krysonism:
+  - bugfix: fixed a few small sprites issues with the lobby menu.
+  TiviPlus:
+  - bugfix: Mechs with no damage will no longer punch
+  - bugfix: Fix atv covers not appearing
+  Watermelon914:
+  - bugfix: Fixed scanner gates not functioning when anchored and also fixed their
+      examine text not saying they need to be anchored.
+  esainane:
+  - bugfix: Vent and scrubber names once again contain their unique ID tags
+  - bugfix: When something is disconnected from a smart pipe, the smart pipe now immediately
+      frees up connectivity in that direction for other pipes or components to use.
+  maxymax13:
+  - imageadd: resprited pens and paper bins
+  - imageadd: four color pen now has a sprite
+2021-09-04:
+  Ghommie:
+  - bugfix: bees, hivelord, its brood and legion skulls no longer use the MOUSE_OPACITY_OPAQUE
+      setting that makes the invisible portions of their icons count toward mouse
+      clicks, which can get in the way of players trying to click stuff below their
+      layer. Instead, to be easier to click on, they use a component that gives them
+      a near-invisible underlay.
+  - bugfix: Fixed the protect objective always failing.
+  TiviPlus:
+  - bugfix: patched mechs being slow randomly after phasing
+  Watermelon914:
+  - refactor: Refactored how components are triggered and how ports can now be ordered.
+  aaaa1023:
+  - bugfix: Mice no longer become invisible when splatted by a mousetrap.
+2021-09-05:
+  Ghommie:
+  - code_imp: Replaced the MATERIAL_NO_EFFECTS material flag with MATERIAL_EFFECTS.
+  - bugfix: No more gazillions of atoms having the beauty element.
+  - bugfix: Fixed mindshield implants not retroactively working against slime or mansus
+      links.
+  - bugfix: Fixed stargazers that were either mindshielded, dead or protected against
+      psych magick by the time they became what they are not receiving the slime link
+      speech ability.
+  - bugfix: Stargazers will no permanently longer lose their slime link speech ability
+      upon death.
+  - bugfix: Fixed a regression that removed easy access to milk cartons from skeleton
+      pirates.
+  GoldenAlpharex:
+  - qol: The pAI signaler is now a proper internal signaler and will feel much easier
+      to use.
+  - bugfix: Fixed the pAI Host Scan being unable to work from within a PDA or anywhere
+      that wasn't your hands or your pockets.
+  - spellcheck: Fixed typoes in the pAI interface related to signaler being written
+      "signaller"
+  - code_imp: Improved the pAI code, mostly around the softwares.
+  MrStonedOne:
+  - bugfix: Discord new round notifications will no longer come shortly before the
+      round starts. You should now have enough time to actually ready up before round
+      start.
+  Nari Harimoto:
+  - bugfix: Emergency Access can no longer be spammed to cause sound and text pain
+  - bugfix: you can no longer print from a protolathe at a distance, and the operating
+      computer tgui will grey out if you walk away again
+  - bugfix: Admins can now use their godly powers of AdminGhostAI to interact with
+      every machine again
+  Sealed101:
+  - bugfix: Detective vests can store detective's (and nukeops agent) holsters.
+  Timberpoes:
+  - bugfix: Maint sect night vision eyes trait now correctly make your eyes show as
+      glowing an unnatural red when examined instead of doing nothing.
+  - qol: Tweaks the logic for the cultist glowy red eye trait, allowing admins to
+      add this to players to make them appear as if they were cultists when examined,
+      without actually forcing them to make that person a full blown cultist. The
+      cultist glowy red eye message has been modified as a result, and now examines
+      as "... glowing with an unnatural red aura!"
+  aaaa1023:
+  - qol: Defib mounts are now removed from the wall by right clicking with a wrench
+      while not on combat mode.
+  - bugfix: You will no longer smack defib mounts when removing them from the wall.
+  tralezab:
+  - rscdel: You can no longer store dice in pill bottles and pills in dice bags.
+  - bugfix: fixes getting scared of dice bags if you have a medical phobia.
+2021-09-06:
+  ArcaneDefence:
+  - balance: Projectiles fired by the watchers on lavaland will now deal damage and
+      apply a short slowdown to carbons.
+  EOBGames:
+  - balance: Ethereals can taste again.
+  Fikou:
+  - admin: ticket panel is wider, resolve button should now stay on the same line
+  Ghilker:
+  - qol: better hfr ui
+  - bugfix: rclick on gasmasks removes filters
+  Ghommie:
+  - expansion: Space pirates now speak Piratespeak.
+  - bugfix: The transparent area of the image used by imaginary friend mobs should
+      no longer catch clicks.
+  - spellcheck: Rectifies the name and description of the cryostylane inverse chem.
+  Imaginos16:
+  - imageadd: Improves the Display Case sprite, giving it a fresh new 3/4ths perspective!
+  Improvedname:
+  - rscadd: You can now easels with 5 wood
+  - rscadd: RD/Roboticists/Cmo/Doctors can now buy a syndi brand MMi from their uplink
+      for 2 tc
+  - bugfix: Gibbers now produce 3 pieces of meat at tier 1 again
+  Melbert:
+  - bugfix: Some invisible chaplain weapons are now visible again
+  - bugfix: Durathread, Jupiter Cups, Fairy Grass, and a few other plants can no longer
+      hard species mutate into themselves.
+  Ryll/Shaps:
+  - qol: Most of the byond donator ghosts that don't drastically change the ghost
+      shape can now have hair and accessories like the plain white ghosts
+  Sealed101:
+  - bugfix: Better tools now deconstruct blast doors and shutters quicker like they
+      actually should. Each deconstruction step now provides a message upon completion
+      as well as uses the tool's sounds!
+  Seris02:
+  - bugfix: fixed fake artefacts so they look real
+  Timberpoes:
+  - admin: Added a new smite for admins that allows them to give any mob a permanent
+      imaginary friend of the admin's choosing, including additional customisation
+      for the looks allowing the imaginary friend to take on the appearance of the
+      player inserted into it.
+  Wallem:
+  - rscadd: You can now pour ants back onto the ground, with the more ants you pour
+      leading to more damage!
+  - balance: Ants now do more damage, however they require more sugar in order to
+      breed.
+  - imageadd: The ant decal now has a couple shiny new sprites!
+  timothymtorres:
+  - bugfix: Fixed xenos will now take damage while in crit state
+  tralezab:
+  - bugfix: fixed traitors randomly spawning incredibly bugged.
+2021-09-07:
+  AlinaStarkova:
+  - expansion: You can now set an Airlocks name and cycle ID in the RCD airlock settings
+      menu, or by clicking on an airlock control board and making an airlock manually,
+      this allows you to make airlocks that can cycle with each other. examine an
+      airlock to see what, if any, ID they are set to cycle on (linear 1x3 airlocks
+      to space currently do not use cycleIDs)
+  Ghilker:
+  - expansion: HFR - different fuel mixes will have different meltdowns (higher the
+      effort, bigger and badder the result)
+  Nari Harimoto:
+  - qol: Disposals mapped into every map have been redone from the ground up to be
+      fully functional and usable
+  - bugfix: All of Disposals now works, no infinate loops, no random pipes shooting
+      into a room, no sections inaccessible due to a wrong junction
+  QuarianCommando:
+  - expansion: Added five new table variants - Plasmaglass, Reinforced Plasmaglass,
+      Reinforced Glass, Plastitanium Glass, and Titaniumglass.
+  - bugfix: Attempting to create a table with the aforementioned materials will no
+      longer result in a normal metal table.
+  Ryll/Shaps:
+  - bugfix: Disposal outlets no longer constantly shoot you out at an incredibly dangerous
+      speed, and no longer deal a base 35 damage + guaranteed dislocation/likely hairline
+      fracture when you hit a wall or other person. Instead, they're back to the old
+      10 brute damage they were at last year, though you can still multitool/emag
+      them to make them shoot out things faster....
+  SpaceDragon00:
+  - bugfix: Firelance can no longer be used when out of battery
+  Watermelon914:
+  - expansion: Adds instant circuit components that execute instantly and are colour-coded
+      orange to be used in handling events. Adds an airlock access event to determine
+      who is able to open a door.
+  Y0SH1M4S73R:
+  - bugfix: Admins will no longer receive erroneous SDQL spell parse errors when loading
+      a json file that contains projectile var overrides or touch attack var overrides
+  tralezab:
+  - rscadd: Pig Latin mutation
+2021-09-08:
+  CodeMonkey:
+  - bugfix: Robot tourists now stop attacking you after they show you who's boss.
+  Colovorat:
+  - expansion: You can place hats on plasmaman helmets!
+  Couls:
+  - admin: individual logging now displays things that happened to the individual
+      again
+  ExcessiveUseOfCobblestone:
+  - admin: you can now customize what udders produce using `reagent_produced_typepath`
+      or by using the `custom_milk_reagent` argument when adding the component
+  Fikou:
+  - admin: individual logging is now visible even with client logged out
+  Ghilker:
+  - qol: HFR moderator injection and fuel injection are now controlled separately
+  - qol: 'HFR : now you can choose multiple gases to filter from the moderators instead
+      of just one and also the rate of filtering and you can filter even at power
+      level 6. The rate is tied to the numbers of gases, so if you scrub at 200 moles/tick,
+      and you have 5 gases selected, you''ll be actually filtering at 40 moles/tick
+      so be aware.'
+  Mickyan:
+  - qol: Double examining someone will show their age, provided their face is visible
+  Nari Harimoto:
+  - bugfix: Slime console can now use its hotkey to scan slimes and drop/pickup monkies
+  TemporalOroboros:
+  - bugfix: Jack-o-lantern helmets now glow in the dark when they are worn.
+  Watermelon914:
+  - balance: Disables wrenching on money bot and scannter gate shells when they are
+      locked.
+  aaaa1023:
+  - rscadd: Penthrite now has Balloon alerts for when it first starts processing and
+      when it finishes processing.
+  tralezab:
+  - refactor: refactored some behavior in pride hammer and carp'sie plushie, you may
+      notice a few more examines and error messages for fail cases but otherwise it's
+      all the same
+2021-09-09:
+  Ghommie:
+  - bugfix: Fixed the chat messages for stepping on objects with the caltrop component.
+      No more "You step on the floor!".
+  Nari Harimoto:
+  - bugfix: machines can be dragged with CtrlClick again
+  Sealed101:
+  - bugfix: RnD discount experiments now reduce the proper amount of points needed
+      instead of gradually growing into a 100% free tech node.
+  - bugfix: Basic Cytology Scan Experiments no longer ask for Unknown fluids instead
+      of mice.
+  TiviPlus:
+  - admin: /area/var/static_lighting proper varedit support
+  esainane:
+  - bugfix: When reprogramming a smart pipe to permit more directions, the smart pipe
+      will now immediately connect in any newly allowed direction, rather than only
+      connecting when a component is newly placed.
+  - bugfix: The RPD now correctly reprograms smart pipes to more restrictive states.
+  tralezab:
+  - rscadd: You now store some events as mini stories in your head!
+  - rscadd: You can engrave said memories onto walls with a chisel!
+2021-09-10:
+  Ghommie:
+  - refactor: Refactored batons and stunbatons code. Stunbatons are now a subtype
+      of batons.
+  - code_imp: Removed some batons copypasta. All batons share the same anti-dual wielding
+      abuse code now. Replaced some old anchored checks for teleprods with move_resist
+      ones.
+  - bugfix: Fixed clumsy checks for teleprods stunning the user twice.
+  - bugfix: Fixed teleprods not teleporting living mobs that aren't xenos or humans.
+  - balance: TRAIT_STUNRESISTANCE now affects all batons and not just stun batons.
+  - bugfix: Fixed a money generation exploit with the roulette machine.
+  ORCACommander:
+  - bugfix: fixed as slew of failed to validate config setting errors
+  - rscdel: Removed deprecated config flags
+  - server: game_options.txt has been updated
+  esainane:
+  - bugfix: The tgui color helper now properly handles partially transparent values.
+  stylemistake:
+  - refactor: Performance of core tgui components was improved (Button, Icon, Flex,
+      Stack). UI should feel a tiny bit faster.
+  timothymtorres:
+  - bugfix: Fixed wormhole jaunter to trigger when falling into a chasm
+  - bugfix: Fixed wormhole jaunter to be affected by EMP
+2021-09-11:
+  ArcaneDefence:
+  - bugfix: Full tile windows that have become opaque from being painted a dark color
+      will now lose their opacity when repainted with a light enough color
+  Gamer025:
+  - bugfix: Crafting stackable items while already holding an existing stack of them
+      no longer causes runtimes
+  Ghommie:
+  - bugfix: Fixed a small irregularity in the outline glow of the `p` of the character
+      setup button when highligthed or pressed
+  Guillaume Prata:
+  - qol: You can now use the shock touch mutation as a ghetto alternative for revival
+      surgery. Just like stun batons!
+  - qol: The analyzer was renamed to gas analyzer and it can be printed at the Engineering/Science
+      protolathes now.
+  Sealed101:
+  - bugfix: Fixes screwdrivers not being recycle-friendly in the autolathe.
+  - qol: Moves screwdrivering an autolathe's maintenance panel open to right click.
+  - bugfix: Fixes being able to feed the autolathe when its maintenance panel is open.
+  carrotattacker, Sampslig:
+  - rscadd: Adds the juice, a drink that lets you see bluespace rifts and travel through
+      them
+  esainane:
+  - bugfix: Round setup hints and circuit board descriptions that mention production
+      of research points through power generation no longer appear. This functionality
+      was removed a long time ago.
+  timothymtorres:
+  - expansion: Supernatural phobia now includes more wizard objects, spooky mobs,
+      and haunted objects.
+  - expansion: Clown phobia now includes bananium objects and honk related simple
+      mobs.
+  - expansion: Phobias can be triggered from related stamps, toys, statues, and megaphones.
+  tralezab:
+  - qol: TGUI-ifies apprentice contracts. Yummy!
+  - bugfix: soul shards now properly remove antag when exorcised
+2021-09-12:
+  ATHATH:
+  - bugfix: Dreaming is now less rare.
+  CodeMonkey:
+  - bugfix: Fixes parallax animations
+  Fikou:
+  - admin: adds infinity to vv classes
+  Mothblocks:
+  - bugfix: The R&D console has been given back its tooltips
+  - bugfix: Fixed RPD arrows, strip menu eyes, etc not being styled properly.
+  Nari Harimoto:
+  - bugfix: you no longer hit space heaters when wrenching or screwdrivering them
+  dragomagol:
+  - qol: removed reinforced walls under grilles in space on Meta and Delta
+  esainane:
+  - bugfix: The HFR no longer yeets all iron content given scraps of Oxygen.
+  - bugfix: The HFR now burns Oxygen proportionally to the amount of iron content
+      removed when appropriate.
+  - bugfix: The HFR using Oxygen to mitigate iron content buildup now properly respects
+      delta time.
+  - qol: The HFR interface now lists recipes in a more sensible order. This is sorted
+      by maximum temperature, which also roughly approximates difficulty and desirability.
+  - bugfix: The HFR interface now lets you toggle waste removal at power level 6,
+      rather than merely having it permitted in the backend.
+2021-09-13:
+  Fikou:
+  - bugfix: server restarting stuff uses alert instead of tgui alert
+  kopoba:
+  - spellcheck: Nanotrasen recount blood packs in cargo order now its match reality
+2021-09-14:
+  Ghilker:
+  - spellcheck: fixed airlocks id from entrence to entrance
+  Nari Harimoto:
+  - bugfix: kilostation now has an unlocked mix chamber air alarm, 3 cores in the
+      launch room, the telescreen can see the test site, and a fancy launch controller
+  - bugfix: icebox disposals no longer spits trash on the mailroom floor

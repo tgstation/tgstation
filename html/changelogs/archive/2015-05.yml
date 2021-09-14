@@ -1,0 +1,228 @@
+2015-05-01:
+  Ikarrus:
+  - rscadd: Gang bosses can now rally their gang to their location with their gangtool.
+  - rscadd: Gangtools can no longer recall the shuttle if station integrity is lower
+      than 70%
+  - rscdel: Removed requirement to be in the territory to tag it.
+  - tweak: Recruitment Pen cost reduced to 40.
+  - bugfix: Communications console should now accurately print the (lack of a) location
+      of the last shuttle call.
+  Xhuis:
+  - rscdel: Revenants will no longer spawn without admin intervention. They are pending
+      a remake.
+2015-05-02:
+  Boggart:
+  - bugfix: Cryo tubes can no longer be used for ventcrawling.
+  Ikarrus:
+  - rscadd: Admins can choose the strength and size of Centcom teams to send, ranging
+      from officials to deathsquads, with the 'Make Centcom Respone Team' button.
+  phil235:
+  - tweak: Space carps can no longer knock down anyone, but they now deal additional
+      stamina damage to humans.
+  - tweak: Radiation effects from uranium walls are nerfed to the level of uranium
+      floor.
+  - rscadd: You can no longer put an inactive MMI in a cyborg shell. Ghosted brains
+      now get an alert when someone puts their brain in a MMI. You can now examine
+      the MMI to see if its brain is active.
+2015-05-03:
+  AnturK:
+  - rscadd: Abductors can purchase spare gear with experimentation points.
+  Ikarrus:
+  - rscadd: Admins can now adjust the pre-game delay time.
+  MrStonedOne:
+  - experiment: MasterController and subsystem rejiggering!
+  - rscadd: The MC can now dynamcially change the rate a subsystem is triggered based
+      on how laggy it's being. This has been applied to atmos to allow for faster
+      air processing without lagging the server
+  - tweak: Pipes and atmos machinery now processes in tune with air, rather than seperately.
+  - bugfix: Fixed hotspots and fire causing more lag than they needed to
+  - bugfix: Fixed some objects not getting garbage collected because they didn't properly
+      clear references in Destory()
+  - tweak: The qdel subsystem will now limit its processing time to a 5th of a second
+      each tick to prevent lag when a lot of deletes happen
+  - bugfix: Fixed the ticker not showing a tip of the round if an admin forces the
+      round to start immediately
+2015-05-04:
+  Firecage:
+  - bugfix: Emagged windoors can now be deconstructed.
+  RemieRichards:
+  - rscadd: Adds Plasmamen, a species that breathes plasma and bursts into flames
+      if they don't wear special suits.
+  - imageadd: New burning icon for all humanoid mobs.
+  - imageadd: New sprite for Skeletons to match Plasmamen.
+  oranges:
+  - tweak: Thanks to recent advances in fork science, you no longer need to aim at
+      your eyes to eat the food off a fork
+  xxalpha:
+  - rscadd: 'Adds a new barsign: ''The Net''.'
+2015-05-05:
+  Firecage:
+  - bugfix: Golems and skeletons no longer fall over when stepping on shards.
+  Gun Hog:
+  - bugfix: Mining borg diamond drill upgrade now functional.
+  Ikarrus:
+  - tweak: Doubled the initial charge of SMESs in Engineering.
+  - tweak: Influence cap for gangs has been increased.
+  incoming5643:
+  - bugfix: All modes now select their antagonists before job selection, this means
+      that a player who prefers roles normally immune to being certain antagonists
+      (implanted roles/silicons) can still have a fair shot at every antagonist roll
+      they opt into. If they're selected they simply will not end up with an incompatible
+      job.
+  - bugfix: As an example if someone loved to play Head of Security (humor me here)
+      and had it set to high, and the only other jobs he had set were security officer
+      at medium and botanist at low but he was selected to be a traitor, he would
+      spawn as a botanist even if there ended up being no Head of Security.
+  - experiment: Please give playing security another chance if you'd written it off
+      because it affected your antag chances.
+  xxalpha:
+  - bugfix: Hulks can now break windoors.
+  - bugfix: Fixed smoking pipe messages. Fixed emptying a smoking pipe with nothing
+      in it.
+2015-05-06:
+  Jordie0608:
+  - bugfix: Borgs can now open lockers with the 'Toggle Open' verb.
+  Thunder12345:
+  - bugfix: Severed the cryo tube's connection to the spirit world. Ghosts will no
+      longer be able to eject people from cryo. Please report further instances of
+      poltergeist activity to your local exorcist.
+  Xhuis:
+  - tweak: Many minor technical changes have been made to cult.
+  - rscadd: Cultist communications now show the name of the person using them. Emergency
+      communications do not do this.
+  - rscadd: Emergency communication does less damage.
+  xxalpha:
+  - rscadd: Engineering cyborgs can now pick their cable coil color whenever they
+      want.
+2015-05-07:
+  Xhuis:
+  - rscadd: Emagged defibrillators will now do burn damage and stop the patient's
+      heart if used in harm intent.
+  - tweak: The previous stunning functionality of the emagged defibrillator has been
+      moved to disarm intent.
+  phil235:
+  - tweak: Temperature effects  from frost oil and capsaicin reagents and basilisk
+      have been buffed to be significant again.
+  xxalpha:
+  - tweak: Hulks can now break windoors.
+2015-05-08:
+  Firecage:
+  - tweak: Mobs can now be buckled to operating tables.
+  Gun Hog:
+  - rscadd: 'Top scientists at Nanotrasen have made strong progress in Artificial
+      Intelligence technology, and have completed a design for replicating a human
+      mind: Positronic Brains. Prototypes produced on your research station should
+      be compatible with all Man-Machine Interface compliant machines, be it Mechs,
+      AIs, and even Cyborg bodies. Please note that Cyborgs created from artificial
+      brains are called Androids.'
+  - tweak: The pAI role preference and related jobbans have been renamed to properly
+      reflect that they are not soley for pAI, but include drones and positroinc prains.
+  astralenigma:
+  - tweak: Cargo packages are now delivered with their manifests taped to the outside.
+      Click on them with an open hand to remove them.
+  optimumtact:
+  - tweak: Machine frame and girder deconstruction now uses a screwdriver instead
+      of welding tool.
+2015-05-09:
+  Firecage:
+  - tweak: Increased the manifestation chance of super powers.
+  Ikarrus:
+  - experiment: 'Loyalty implants will no longer survive deconverting a gangster.
+      Security now needs to use two of them if they want the permanent effects: The
+      first to deconvert them, and the second to make them loyal.'
+  KorPhaeron:
+  - tweak: Slime mutation chance now starts at 30%.
+  - rscadd: Baby slimes have a -5% to 5% difference of their parent's mutation chance,
+      allowing you to breed slimes that are more likely to mutate.
+  - rscdel: Plasma and epinephrine no longer affect mutation chance of slimes.
+  - rscadd: Red slime extract and plasma makes a potion that can increase mutation
+      chance, Blue slime extract and plasma potions will decrease it.
+2015-05-10:
+  AnturK:
+  - bugfix: Fixed borg's cells draining much faster than they're meant to.
+  Gun Hog:
+  - tweak: Station bot performance greatly increased.
+  - rscadd: Captain PDA cartridge now includes nearly all utilities and functions,
+      including signaller and all bots! HoP now has janitor and quartermaster functions!
+      The RD and Roboticists now have access to Floor, Clean, and Medibots!
+  - tweak: Bot access on PDA is now one button across all PDAs. You will only see
+      what bots you can access, however.
+  - rscadd: Cartridges that include a signaller have been improved so they will work
+      on a larger frequency range.
+  - tweak: All bots now have Robotics access, so they may be set to patrol and released
+      once constructed.
+  - tweak: Roboticists now have access to bot navigation beacons. They are found under
+      the floor tiles as patrol route nodes.
+2015-05-11:
+  Firecage:
+  - imageadd: New icons for Industrial and Experimental welding tools.
+  Gun Hog:
+  - rscdel: The power mechanic for mining drills and the jackhammer has been removed.
+      They no longer require cells or recharging.
+  - bugfix: The diamond drill upgrade for mining cyborgs has been fixed.
+  Xhuis:
+  - rscadd: Adds the pneumatic cannon, attach an air tank and shoot anything out of
+      it.
+  - rscadd: Improvised pneumatic cannons can be tablecrafted with a wrench, 4 metal,
+      2 pipes, a pipe manifold, a pipe valve and 8 package wrappers.
+  spasticVerbalizer:
+  - bugfix: False walls no longer stackable.
+2015-05-13:
+  Firecage:
+  - rscadd: Kudzu is now admin-logged in Investigate.
+  GunHog:
+  - tweak: Positronic brains are now entered by clicking on an empty one, in the same
+      manner as drones.
+  - rscadd: Ghosts are alerted when a new posibrain is made.
+  Jordie0608:
+  - rscadd: Borg reagent containers (beakers, spraybottles, shakers etc.) are no longer
+      emptied when stowed.
+  - bugfix: Fixes North and West Mining Outposts having empty SMESs.
+  - bugfix: Aliens and slimes can smash metal foam again.
+  - rscdel: Deconstructing reinforced walls no longer creates additional rods out
+      of nowhere.
+  - imageadd: Pepperspray now has inhand sprites.
+  Xhuis:
+  - bugfix: Fixes the recipe for pneumatic cannons; it now only requires a wrench,
+      4 metal, 2 pipes and 8 package wrappers .
+2015-05-15:
+  xxalpha:
+  - bugfix: Fixed emitter beams not being reflectable.
+2015-05-16:
+  MartiUK:
+  - bugfix: Fixed a typo when cleaning a Microwave.
+  - bugfix: Fixed a typo when burning someone with a lighter.
+2015-05-20:
+  xxalpha:
+  - rscadd: Added three drone shells to the derelict.
+2015-05-22:
+  Jordie0608:
+  - tweak: Smothering someone with a damp rag when in harm intent will apply reagents
+      onto them, for acid-burning their face; otherwise it will inject them, for drugging
+      with chloral hydrate.
+  - imageadd: The healthdoll is now blue when at full health to make it more clear
+      when a body part is injured.
+2015-05-25:
+  spasticVerbalizer:
+  - tweak: Glass airlocks can now be made heat-proof by using a sheet of reinforced
+      glass to create the window, regular glass creates a normal glass airlock.
+  xxalpha:
+  - bugfix: You can no longer drop items inside mechas nor machinery (this includes
+      gas pipes, disposal pipes, cryopods, sleepers, etc.).
+  - bugfix: Fixed exploit of changelings being able to keep thermal vision after resetting
+      their powers.
+  - bugfix: Fixed being able to implant NODROP items with cavity implant surgery.
+2015-05-26:
+  CosmicScientist:
+  - spellcheck: Corrected wording for the pAI, donksoft riot darts and some tip of
+      the round tips.
+  xxalpha:
+  - bugfix: Fixed changeling revival.
+2015-05-30:
+  duncathan:
+  - bugfix: Fixes passive gates not auto-coloring.
+  spasticVerbalizer:
+  - tweak: Players trying to speak but unable to will now get a message.
+2015-05-31:
+  duncathan:
+  - tweak: Clarified the ability to retract changeling armblades.

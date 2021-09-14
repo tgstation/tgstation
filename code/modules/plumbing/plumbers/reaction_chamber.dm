@@ -37,6 +37,12 @@
 	AddComponent(/datum/component/plumbing/acidic_input, bolt, custom_receiver = acidic_beaker)
 	AddComponent(/datum/component/plumbing/alkaline_input, bolt, custom_receiver = alkaline_beaker)
 
+/// Make sure beakers are deleted when being deconstructed
+/obj/machinery/plumbing/reaction_chamber/Destroy()
+	QDEL_NULL(acidic_beaker)
+	QDEL_NULL(alkaline_beaker)
+	. = ..()
+
 /obj/machinery/plumbing/reaction_chamber/create_reagents(max_vol, flags)
 	. = ..()
 	RegisterSignal(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED), .proc/on_reagent_change)
@@ -83,11 +89,14 @@
 /obj/machinery/plumbing/reaction_chamber/ui_data(mob/user)
 	var/list/data = list()
 
-	var/list/text_reagents = list()
+	var/list/reagents_data = list()
 	for(var/datum/reagent/required_reagent as anything in required_reagents) //make a list where the key is text, because that looks alot better in the ui than a typepath
-		text_reagents[initial(required_reagent.name)] = required_reagents[required_reagent]
+		var/list/reagent_data = list()
+		reagent_data["name"] = initial(required_reagent.name)
+		reagent_data["required_reagent"] = required_reagents[required_reagent]
+		reagents_data += list(reagent_data)
 
-	data["reagents"] = text_reagents
+	data["reagents"] = reagents_data
 	data["emptying"] = emptying
 	data["temperature"] = round(reagents.chem_temp, 0.1)
 	data["ph"] = round(reagents.ph, 0.01)

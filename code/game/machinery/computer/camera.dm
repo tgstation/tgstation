@@ -209,7 +209,7 @@
 	name = "security camera monitor"
 	desc = "An old TV hooked into the station's camera network."
 	icon_state = "television"
-	icon_keyboard = "no_keyboard"
+	icon_keyboard = null
 	icon_screen = "detective_tv"
 	pass_flags = PASSTABLE
 
@@ -252,6 +252,7 @@
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
+	icon_keyboard = null
 	layer = SIGN_LAYER
 	network = list("thunder")
 	density = FALSE
@@ -275,6 +276,22 @@
 	interaction_flags_atom = NONE  // interact() is called by BigClick()
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/west
+	dir = EAST
+	pixel_x = -32
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize()
 	. = ..()
@@ -300,7 +317,7 @@
 /obj/machinery/computer/security/telescreen/rd
 	name = "\improper Research Director's telescreen"
 	desc = "Used for watching the AI and the RD's goons from the safety of his office."
-	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test")
+	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test", "toxins")
 
 /obj/machinery/computer/security/telescreen/research
 	name = "research telescreen"
@@ -322,10 +339,10 @@
 	desc = "A telescreen that connects to the vault's camera network."
 	network = list("vault")
 
-/obj/machinery/computer/security/telescreen/toxins
+/obj/machinery/computer/security/telescreen/ordnance
 	name = "bomb test site monitor"
 	desc = "A telescreen that connects to the bomb test site's camera."
-	network = list("toxins")
+	network = list("ordnance")
 
 /obj/machinery/computer/security/telescreen/engine
 	name = "engine monitor"

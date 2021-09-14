@@ -8,7 +8,7 @@
 
 		handle_status_effects(delta_time, times_fired)
 
-		handle_traits()
+		handle_traits(delta_time, times_fired)
 
 		if(malfhack?.aidisabled)
 			deltimer(malfhacking)
@@ -26,7 +26,7 @@
 		if(aiRestorePowerRoutine)
 			// Lost power
 			if (!battery)
-				to_chat(src, "<span class='warning'>Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable.</span>")
+				to_chat(src, span_warning("Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable."))
 				adjustOxyLoss(200)
 			else
 				battery--
@@ -91,7 +91,7 @@
 
 
 /mob/living/silicon/ai/proc/start_RestorePowerRoutine()
-	to_chat(src, "<span class='notice'>Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection.</span>")
+	to_chat(src, span_notice("Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection."))
 	end_multicam()
 	sleep(50)
 	var/turf/T = get_turf(src)
@@ -100,16 +100,16 @@
 		if(!isspaceturf(T))
 			ai_restore_power()
 			return
-	to_chat(src, "<span class='notice'>Fault confirmed: missing external power. Shutting down main control system to save power.</span>")
+	to_chat(src, span_notice("Fault confirmed: missing external power. Shutting down main control system to save power."))
 	sleep(20)
-	to_chat(src, "<span class='notice'>Emergency control system online. Verifying connection to power network.</span>")
+	to_chat(src, span_notice("Emergency control system online. Verifying connection to power network."))
 	sleep(50)
 	T = get_turf(src)
 	if(isspaceturf(T))
-		to_chat(src, "<span class='alert'>Unable to verify! No power connection detected!</span>")
+		to_chat(src, span_alert("Unable to verify! No power connection detected!"))
 		setAiRestorePowerRoutine(POWER_RESTORATION_SEARCH_APC)
 		return
-	to_chat(src, "<span class='notice'>Connection verified. Searching for APC in power network.</span>")
+	to_chat(src, span_notice("Connection verified. Searching for APC in power network."))
 	sleep(50)
 	var/obj/machinery/power/apc/theAPC = null
 
@@ -125,9 +125,9 @@
 		if (!theAPC)
 			switch(PRP)
 				if(1)
-					to_chat(src, "<span class='alert'>Unable to locate APC!</span>")
+					to_chat(src, span_alert("Unable to locate APC!"))
 				else
-					to_chat(src, "<span class='alert'>Lost connection with the APC!</span>")
+					to_chat(src, span_alert("Lost connection with the APC!"))
 			setAiRestorePowerRoutine(POWER_RESTORATION_SEARCH_APC)
 			return
 		if(AIarea.power_equip)
@@ -136,15 +136,15 @@
 				return
 		switch(PRP)
 			if (1)
-				to_chat(src, "<span class='notice'>APC located. Optimizing route to APC to avoid needless power waste.</span>")
+				to_chat(src, span_notice("APC located. Optimizing route to APC to avoid needless power waste."))
 			if (2)
-				to_chat(src, "<span class='notice'>Best route identified. Hacking offline APC power port.</span>")
+				to_chat(src, span_notice("Best route identified. Hacking offline APC power port."))
 			if (3)
-				to_chat(src, "<span class='notice'>Power port upload access confirmed. Loading control program into APC power port software.</span>")
+				to_chat(src, span_notice("Power port upload access confirmed. Loading control program into APC power port software."))
 			if (4)
-				to_chat(src, "<span class='notice'>Transfer complete. Forcing APC to execute program.</span>")
+				to_chat(src, span_notice("Transfer complete. Forcing APC to execute program."))
 				sleep(50)
-				to_chat(src, "<span class='notice'>Receiving control information from APC.</span>")
+				to_chat(src, span_notice("Receiving control information from APC."))
 				sleep(2)
 				to_chat(src, "<A HREF=?src=[REF(src)];emergencyAPC=[TRUE]>APC ready for connection.</A>")
 				apc_override = theAPC
@@ -156,11 +156,11 @@
 /mob/living/silicon/ai/proc/ai_restore_power()
 	if(aiRestorePowerRoutine)
 		if(aiRestorePowerRoutine == POWER_RESTORATION_APC_FOUND)
-			to_chat(src, "<span class='notice'>Alert cancelled. Power has been restored.</span>")
+			to_chat(src, span_notice("Alert cancelled. Power has been restored."))
 			if(apc_override)
-				to_chat(src, "<span class='notice'>APC backdoor has been closed.</span>") //Fluff for why we have to hack every time.
+				to_chat(src, span_notice("APC backdoor has been closed.")) //Fluff for why we have to hack every time.
 		else
-			to_chat(src, "<span class='notice'>Alert cancelled. Power has been restored without our assistance.</span>")
+			to_chat(src, span_notice("Alert cancelled. Power has been restored without our assistance."))
 		setAiRestorePowerRoutine(POWER_RESTORATION_OFF)
 		set_blindness(0)
 		apc_override = null
@@ -171,5 +171,5 @@
 	setAiRestorePowerRoutine(POWER_RESTORATION_START)
 	blind_eyes(1)
 	update_sight()
-	to_chat(src, "<span class='alert'>You've lost power!</span>")
+	to_chat(src, span_alert("You've lost power!"))
 	addtimer(CALLBACK(src, .proc/start_RestorePowerRoutine), 20)

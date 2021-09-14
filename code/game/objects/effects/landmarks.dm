@@ -453,6 +453,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/start/hangover/Initialize()
 	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/landmark/start/hangover/LateInitialize()
+	. = ..()
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER))
 		return
 	if(prob(60))
@@ -463,14 +467,21 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 			var/turf/turf_to_spawn_on = get_step(src, pick(GLOB.alldirs))
 			if(!isopenturf(turf_to_spawn_on))
 				continue
-			new /obj/item/reagent_containers/food/drinks/beer/almost_empty(turf_to_spawn_on)
+			var/dense_object = FALSE
+			for(var/atom/content in turf_to_spawn_on.contents)
+				if(content.density)
+					dense_object = TRUE
+					break
+			if(dense_object)
+				continue
+			new /obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty(turf_to_spawn_on)
 
 ///Spawns the mob with some drugginess/drunkeness, and some disgust.
 /obj/effect/landmark/start/hangover/proc/make_hungover(mob/hangover_mob)
 	if(!iscarbon(hangover_mob))
 		return
 	var/mob/living/carbon/spawned_carbon = hangover_mob
-	spawned_carbon.Sleeping(rand(2 SECONDS, 5 SECONDS))
+	spawned_carbon.set_resting(TRUE, silent = TRUE)
 	if(prob(50))
 		spawned_carbon.adjust_drugginess(rand(15, 20))
 	else
@@ -479,19 +490,19 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	if(spawned_carbon.head)
 		return
 
-/obj/effect/landmark/start/hangover/JoinPlayerHere(mob/M, buckle)
+/obj/effect/landmark/start/hangover/JoinPlayerHere(mob/joining_mob, buckle)
 	. = ..()
-	make_hungover(M)
+	make_hungover(joining_mob)
 
 /obj/effect/landmark/start/hangover/closet
 	name = "hangover spawn closet"
 	icon_state = "hangover_spawn_closet"
 
-/obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/M, buckle)
-	make_hungover(M)
+/obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/joining_mob, buckle)
+	make_hungover(joining_mob)
 	for(var/obj/structure/closet/closet in contents)
 		if(closet.opened)
 			continue
-		M.forceMove(closet)
+		joining_mob.forceMove(closet)
 		return
-	..() //Call parent as fallback
+	return ..() //Call parent as fallback

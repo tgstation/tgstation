@@ -24,6 +24,8 @@
 	var/start_cooling = FALSE
 	///Checks for the fuel to be injected
 	var/start_fuel = FALSE
+	///Checks for the moderators to be injected
+	var/start_moderator = FALSE
 
 	/**
 	 * Hypertorus internal objects and gasmixes
@@ -39,12 +41,18 @@
 	var/obj/machinery/atmospherics/components/unary/hypertorus/waste_output/linked_output
 	///Stores the information of the corners of the machine
 	var/list/corners = list()
+	///Stores the three inputs/outputs of the HFR, needed for cracking the parts
+	var/list/machine_parts = list()
 	///Stores the information of the fusion gasmix
 	var/datum/gas_mixture/internal_fusion
 	///Stores the information of the moderators gasmix
 	var/datum/gas_mixture/moderator_internal
-	///Set the filtering type of the waste remove
-	var/filter_type = null
+	///Set the filtering list of the waste remove
+	var/list/moderator_scrubbing = list(
+		/datum/gas/helium,
+		)
+	///Set the amount of moles per tick should be removed from the moderator by filtering
+	var/moderator_filtering_rate = 100
 	///Stores the current fuel mix that the user has selected
 	var/datum/hfr_fuel/selected_fuel
 
@@ -146,7 +154,9 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/Initialize()
 	. = ..()
 	internal_fusion = new
+	internal_fusion.volume = 5000
 	moderator_internal = new
+	moderator_internal.volume = 10000
 
 	radio = new(src)
 	radio.keyslot = new radio_key
@@ -172,4 +182,5 @@
 		QDEL_NULL(corner)
 	QDEL_NULL(radio)
 	QDEL_NULL(soundloop)
+	machine_parts = null
 	return..()

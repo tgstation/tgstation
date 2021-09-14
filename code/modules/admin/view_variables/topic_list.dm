@@ -9,7 +9,7 @@
 				mod_list(target, null, "list", "contents", target_index, autodetect_class = FALSE)
 			if(href_list[VV_HK_LIST_REMOVE])
 				var/variable = target[target_index]
-				var/prompt = alert("Do you want to remove item number [target_index] from list?", "Confirm", "Yes", "No")
+				var/prompt = tgui_alert(usr,"Do you want to remove item number [target_index] from list?", "Confirm", list("Yes", "No"))
 				if (prompt != "Yes")
 					return
 				target.Cut(target_index, target_index+1)

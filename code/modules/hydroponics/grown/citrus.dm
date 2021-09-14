@@ -4,7 +4,6 @@
 	name = "citrus"
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
-	bite_consumption_mod = 2
 	foodtypes = FRUIT
 	wine_power = 30
 
@@ -95,7 +94,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
-	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/bomb_plant/potency_based)
 	lifespan = 55
 	endurance = 45
 	yield = 4
@@ -106,51 +105,9 @@
 	name = "Combustible Lemon"
 	desc = "Made for burning houses down."
 	icon_state = "firelemon"
-	bite_consumption_mod = 2
+	alt_icon = "firelemon_active"
 	foodtypes = FRUIT
 	wine_power = 70
-
-/obj/item/food/grown/firelemon/attack_self(mob/living/user)
-	user.visible_message("<span class='warning'>[user] primes [src]!</span>", "<span class='userdanger'>You prime [src]!</span>")
-	log_bomber(user, "primed a", src, "for detonation")
-	icon_state = "firelemon_active"
-	playsound(loc, 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
-	addtimer(CALLBACK(src, .proc/detonate), rand(10, 60))
-
-/obj/item/food/grown/firelemon/burn()
-	detonate()
-	..()
-
-/obj/item/food/grown/firelemon/proc/update_mob()
-	if(ismob(loc))
-		var/mob/M = loc
-		M.dropItemToGround(src)
-
-/obj/item/food/grown/firelemon/ex_act(severity)
-	qdel(src) //Ensuring that it's deleted by its own explosion
-
-/obj/item/food/grown/firelemon/proc/detonate(mob/living/lanced_by)
-	switch(seed.potency) //Combustible lemons are alot like IEDs, lots of flame, very little bang.
-		if(0 to 30)
-			update_mob()
-			explosion(src.loc,-1,-1,2, flame_range = 1)
-			qdel(src)
-		if(31 to 50)
-			update_mob()
-			explosion(src.loc,-1,-1,2, flame_range = 2)
-			qdel(src)
-		if(51 to 70)
-			update_mob()
-			explosion(src.loc,-1,-1,2, flame_range = 3)
-			qdel(src)
-		if(71 to 90)
-			update_mob()
-			explosion(src.loc,-1,-1,2, flame_range = 4)
-			qdel(src)
-		else
-			update_mob()
-			explosion(src.loc,-1,-1,2, flame_range = 5)
-			qdel(src)
 
 //3D Orange
 /obj/item/seeds/orange_3d
@@ -176,14 +133,16 @@
 	name = "extradimensional orange"
 	desc = "You can hardly wrap your head around this thing."
 	icon_state = "orang"
+	alt_icon = "orange"
+	bite_consumption_mod = 2
 	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
 	distill_reagent = /datum/reagent/toxin/mindbreaker
 	tastes = list("polygons" = 1, "bluespace" = 1, "the true nature of reality" = 1)
 
 /obj/item/food/grown/citrus/orange_3d/pickup(mob/user)
 	. = ..()
-	icon_state = "orange"
+	icon_state = alt_icon
 
 /obj/item/food/grown/citrus/orange_3d/dropped(mob/user)
 	. = ..()
-	icon_state = "orang"
+	icon_state = initial(icon_state)

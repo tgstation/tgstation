@@ -29,6 +29,34 @@
 	icon_state = "armor"
 	inhand_icon_state = "armor"
 
+/obj/item/clothing/suit/armor/vest/marine
+	name = "marine combat armor"
+	desc = "A multirole set of armor used by the marines, painted in a tacticool black color with blue markings to indicate you might be important."
+	icon_state = "marine_command"
+	inhand_icon_state = "armor"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	armor = list(MELEE = 40, BULLET = 50, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 20, RAD = 0, FIRE = 40, ACID = 50, WOUND = 20)
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	heat_protection = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/armor/vest/marine/security
+	name = "marine heavy armor"
+	desc = "A heavy set of armor that still allows full mobility, offering higher protection at the cost of having red targets painted on your shoulders."
+	icon_state = "marine_security"
+	armor = list(MELEE = 45, BULLET = 60, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 20, RAD = 0, FIRE = 50, ACID = 50, WOUND = 20)
+
+/obj/item/clothing/suit/armor/vest/marine/engineer
+	name = "marine utility armor"
+	desc = "A light set of armor with a mounted satchel for storing things. You realized too late that pouches are only for looks, and don't actually work. No refunds."
+	icon_state = "marine_engineer"
+	armor = list(MELEE = 35, BULLET = 40, LASER = 20, ENERGY = 20, BOMB = 70, BIO = 20, RAD = 30, FIRE = 70, ACID = 70, WOUND = 10)
+
+/obj/item/clothing/suit/armor/vest/marine/medic
+	name = "marine medic armor"
+	desc = "Light armor with needlessly large arm and leg plates, they provide no extra protection, but you feel safer."
+	icon_state = "marine_medic"
+	armor = list(MELEE = 35, BULLET = 40, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 30, RAD = 10, FIRE = 50, ACID = 70, WOUND = 10)
+
 /obj/item/clothing/suit/armor/vest/old
 	name = "degrading armor vest"
 	desc = "Older generation Type 1 armored vest. Due to degradation over time the vest is far less maneuverable to move in."
@@ -110,11 +138,18 @@
 	desc = "A sinister looking vest of advanced armor worn over a black and red fireproof jacket. The gold collar and shoulders denote that this belongs to a high ranking syndicate officer."
 	icon_state = "syndievest"
 
-/obj/item/clothing/suit/armor/vest/capcarapace/alt
+/obj/item/clothing/suit/toggle/captains_parade
 	name = "captain's parade jacket"
 	desc = "For when an armoured vest isn't fashionable enough."
 	icon_state = "capformal"
 	inhand_icon_state = "capspacesuit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 50, BOMB = 25, BIO = 0, RAD = 0, FIRE = 100, ACID = 90, WOUND = 10)
+	togglename = "buttons"
+
+/obj/item/clothing/suit/toggle/captains_parade/Initialize()
+	. = ..()
+	allowed = GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
@@ -211,7 +246,6 @@
 	icon_state = "heavy"
 	inhand_icon_state = "swat_suit"
 	w_class = WEIGHT_CLASS_BULKY
-	gas_transfer_coefficient = 0.9
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 3
@@ -278,7 +312,7 @@
 	desc = "A classic suit of armour, able to be made from many different materials."
 	icon_state = "knight_greyscale"
 	inhand_icon_state = "knight_greyscale"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
 	armor = list(MELEE = 35, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 10, RAD = 10, FIRE = 40, ACID = 40, WOUND = 15)
 
 /obj/item/clothing/suit/armor/vest/durathread
@@ -314,16 +348,34 @@
 	desc = "A superb armor made with the toughest and rarest materials available to man."
 	icon_state = "h2armor"
 	inhand_icon_state = "h2armor"
-	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
-	armor = list(MELEE = 15, BULLET = 10, LASER = 30, ENERGY = 30, BOMB = 10, BIO = 10, RAD = 20, FIRE = 65, ACID = 40, WOUND = 15)
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
+	armor = list(MELEE = 25, BULLET = 20, LASER = 30, ENERGY = 30, BOMB = 85, BIO = 10, RAD = 50, FIRE = 65, ACID = 40, WOUND = 15)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
-/obj/item/clothing/suit/armor/vest/centcom_formal
-	name = "\improper CentCom Formal Coat"
+/obj/item/clothing/suit/toggle/armor/vest/centcom_formal
+	name = "\improper CentCom formal coat"
 	desc = "A stylish coat given to CentCom Commanders. Perfect for sending ERTs to suicide missions with style!"
 	icon_state = "centcom_formal"
 	inhand_icon_state = "centcom"
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 10, RAD = 10, FIRE = 10, ACID = 60)
+	togglename = "buttons"
+
+/obj/item/clothing/suit/toggle/armor/vest/centcom_formal/Initialize()
+	. = ..()
+	allowed = GLOB.security_wintercoat_allowed
+
+/obj/item/clothing/suit/toggle/armor/hos/hos_formal
+	name = "\improper Head of Security's parade jacket"
+	desc = "For when an armoured vest isn't fashionable enough."
+	icon_state = "hosformal"
+	inhand_icon_state = "hostrench"
+	body_parts_covered = CHEST|GROIN|ARMS
+	armor = list(MELEE = 30, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 70, ACID = 90, WOUND = 10)
+	togglename = "buttons"
+
+/obj/item/clothing/suit/toggle/armor/hos/hos_formal/Initialize()
+	. = ..()
+	allowed = GLOB.security_wintercoat_allowed

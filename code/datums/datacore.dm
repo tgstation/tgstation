@@ -1,3 +1,6 @@
+
+GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
+
 //TODO: someone please get rid of this shit
 /datum/datacore
 	var/list/medical = list()
@@ -139,61 +142,49 @@
 	if(foundrecord)
 		foundrecord.fields["rank"] = assignment
 
-/datum/datacore/proc/get_manifest()
-	var/list/manifest_out = list(
-		"Command",
-		"Security",
-		"Engineering",
-		"Medical",
-		"Science",
-		"Supply",
-		"Service",
-		"Silicon"
-	)
-	var/list/departments = list(
-		"Command" = GLOB.command_positions,
-		"Security" = GLOB.security_positions + GLOB.security_sub_positions,
-		"Engineering" = GLOB.engineering_positions,
-		"Medical" = GLOB.medical_positions,
-		"Science" = GLOB.science_positions,
-		"Supply" = GLOB.supply_positions,
-		"Service" = GLOB.service_positions,
-		"Silicon" = GLOB.nonhuman_positions
-	)
-	var/list/heads = GLOB.command_positions + list("Quartermaster")
 
-	for(var/datum/data/record/t in GLOB.data_core.general)
-		var/name = t.fields["name"]
-		var/rank = t.fields["rank"]
-		var/has_department = FALSE
-		for(var/department in departments)
-			var/list/jobs = departments[department]
-			if(rank in jobs)
-				if(!manifest_out[department])
-					manifest_out[department] = list()
-				// Append to beginning of list if captain or department head
-				if (rank == "Captain" || (department != "Command" && (rank in heads)))
-					manifest_out[department] = list(list(
-						"name" = name,
-						"rank" = rank
-					)) + manifest_out[department]
-				else
-					manifest_out[department] += list(list(
-						"name" = name,
-						"rank" = rank
-					))
-				has_department = TRUE
-		if(!has_department)
-			if(!manifest_out["Misc"])
-				manifest_out["Misc"] = list()
-			manifest_out["Misc"] += list(list(
+/datum/datacore/proc/get_manifest()
+	// First we build up the order in which we want the departments to appear in.
+	var/list/manifest_out = list()
+	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
+		manifest_out[department.department_name] = list()
+	manifest_out[DEPARTMENT_UNASSIGNED] = list()
+
+	var/list/departments_by_type = SSjob.joinable_departments_by_type
+	for(var/datum/data/record/record as anything in GLOB.data_core.general)
+		var/name = record.fields["name"]
+		var/rank = record.fields["rank"]
+		var/datum/job/job = SSjob.GetJob(rank)
+		if(!job || !(job.job_flags & JOB_CREW_MANIFEST) || !LAZYLEN(job.departments_list)) // In case an unlawful custom rank is added.
+			var/list/misc_list = manifest_out[DEPARTMENT_UNASSIGNED]
+			misc_list[++misc_list.len] = list(
 				"name" = name,
-				"rank" = rank
-			))
-	for (var/department in departments)
-		if (!manifest_out[department])
+				"rank" = rank,
+				)
+			continue
+		for(var/department_type as anything in job.departments_list)
+			var/datum/job_department/department = departments_by_type[department_type]
+			if(!department)
+				stack_trace("get_manifest() failed to get job department for [department_type] of [job.type]")
+				continue
+			var/list/entry = list(
+				"name" = name,
+				"rank" = rank,
+				)
+			var/list/department_list = manifest_out[department.department_name]
+			if(istype(job, department.department_head))
+				department_list.Insert(1, null)
+				department_list[1] = entry
+			else
+				department_list[++department_list.len] = entry
+
+	// Trim the empty categories.
+	for (var/department in manifest_out)
+		if(!length(manifest_out[department]))
 			manifest_out -= department
+
 	return manifest_out
+
 
 /datum/datacore/proc/get_manifest_html(monochrome = FALSE)
 	var/list/manifest = get_manifest()
@@ -227,14 +218,8 @@
 /datum/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
 	set waitfor = FALSE
 	var/static/list/show_directions = list(SOUTH, WEST)
-	if(H.mind && (H.mind.assigned_role != H.mind.special_role))
-		var/assignment
-		if(H.mind.assigned_role)
-			assignment = H.mind.assigned_role
-		else if(H.job)
-			assignment = H.job
-		else
-			assignment = "Unassigned"
+	if(H.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST)
+		var/assignment = H.mind.assigned_role.title
 
 		var/static/record_id_num = 1001
 		var/id = num2hex(record_id_num++,6)
@@ -260,7 +245,7 @@
 		G.fields["rank"] = assignment
 		G.fields["age"] = H.age
 		G.fields["species"] = H.dna.species.name
-		G.fields["fingerprint"] = md5(H.dna.uni_identity)
+		G.fields["fingerprint"] = md5(H.dna.unique_identity)
 		G.fields["p_stat"] = "Active"
 		G.fields["m_stat"] = "Stable"
 		G.fields["gender"] = H.gender
@@ -302,9 +287,9 @@
 
 		//Locked Record
 		var/datum/data/record/L = new()
-		L.fields["id"] = md5("[H.real_name][H.mind.assigned_role]") //surely this should just be id, like the others?
+		L.fields["id"] = md5("[H.real_name][assignment]") //surely this should just be id, like the others?
 		L.fields["name"] = H.real_name
-		L.fields["rank"] = H.mind.assigned_role
+		L.fields["rank"] = assignment
 		L.fields["age"] = H.age
 		L.fields["gender"] = H.gender
 		if(H.gender == "male")
@@ -315,7 +300,7 @@
 			G.fields["gender"]  = "Other"
 		L.fields["blood_type"] = H.dna.blood_type
 		L.fields["b_dna"] = H.dna.unique_enzymes
-		L.fields["identity"] = H.dna.uni_identity
+		L.fields["identity"] = H.dna.unique_identity
 		L.fields["species"] = H.dna.species.type
 		L.fields["features"] = H.dna.features
 		L.fields["image"] = image
@@ -324,7 +309,7 @@
 	return
 
 /datum/datacore/proc/get_id_photo(mob/living/carbon/human/H, client/C, show_directions = list(SOUTH))
-	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
+	var/datum/job/J = H.mind.assigned_role
 	var/datum/preferences/P
 	if(!C)
 		C = H.client

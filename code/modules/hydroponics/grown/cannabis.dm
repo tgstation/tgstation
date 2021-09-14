@@ -18,7 +18,7 @@
 						/obj/item/seeds/cannabis/death,
 						/obj/item/seeds/cannabis/white,
 						/obj/item/seeds/cannabis/ultimate)
-	reagents_add = list(/datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.35) // gives u the munchies
+	reagents_add = list(/datum/reagent/drug/cannabis = 0.15)
 
 
 /obj/item/seeds/cannabis/rainbow
@@ -28,8 +28,8 @@
 	species = "megacannabis"
 	plantname = "Rainbow Weed"
 	product = /obj/item/food/grown/cannabis/rainbow
-	mutatelist = list()
-	reagents_add = list(/datum/reagent/colorful_reagent = 0.05, /datum/reagent/medicine/psicodine = 0.03, /datum/reagent/drug/happiness = 0.1, /datum/reagent/toxin/mindbreaker = 0.1, /datum/reagent/toxin/lipolicide = 0.15)
+	mutatelist = null
+	reagents_add = list(/datum/reagent/colorful_reagent = 0.05, /datum/reagent/medicine/psicodine = 0.03, /datum/reagent/drug/happiness = 0.1, /datum/reagent/toxin/mindbreaker = 0.1, /datum/reagent/toxin/lipolicide = 0.15, /datum/reagent/drug/space_drugs = 0.15)
 	rarity = 40
 
 /obj/item/seeds/cannabis/death
@@ -39,8 +39,8 @@
 	species = "blackcannabis"
 	plantname = "Deathweed"
 	product = /obj/item/food/grown/cannabis/death
-	mutatelist = list()
-	reagents_add = list(/datum/reagent/toxin/cyanide = 0.35, /datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.15)
+	mutatelist = null
+	reagents_add = list(/datum/reagent/toxin/cyanide = 0.35, /datum/reagent/drug/cannabis = 0.15)
 	rarity = 40
 
 /obj/item/seeds/cannabis/white
@@ -51,8 +51,8 @@
 	plantname = "Lifeweed"
 	instability = 30
 	product = /obj/item/food/grown/cannabis/white
-	mutatelist = list()
-	reagents_add = list(/datum/reagent/medicine/omnizine = 0.35, /datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.15)
+	mutatelist = null
+	reagents_add = list(/datum/reagent/medicine/omnizine = 0.35, /datum/reagent/drug/cannabis = 0.15)
 	rarity = 40
 
 
@@ -63,16 +63,15 @@
 	species = "ocannabis"
 	plantname = "Omega Weed"
 	product = /obj/item/food/grown/cannabis/ultimate
-	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/green)
-	mutatelist = list()
-	reagents_add = list(/datum/reagent/drug/space_drugs = 0.3,
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/green, /datum/plant_gene/trait/modified_volume/omega_weed)
+	mutatelist = null
+	reagents_add = list(/datum/reagent/drug/cannabis = 0.3,
 						/datum/reagent/toxin/mindbreaker = 0.3,
 						/datum/reagent/mercury = 0.15,
 						/datum/reagent/lithium = 0.15,
 						/datum/reagent/medicine/atropine = 0.15,
 						/datum/reagent/drug/methamphetamine = 0.15,
 						/datum/reagent/drug/bath_salts = 0.15,
-						/datum/reagent/drug/crank = 0.15,
 						/datum/reagent/drug/krokodil = 0.15,
 						/datum/reagent/toxin/lipolicide = 0.15,
 						/datum/reagent/drug/nicotine = 0.1)
@@ -88,7 +87,7 @@
 	name = "cannabis leaf"
 	desc = "Recently legalized in most galaxies."
 	icon_state = "cannabis"
-	bite_consumption_mod = 2
+	bite_consumption_mod = 4
 	foodtypes = VEGETABLES //i dont really know what else weed could be to be honest
 	tastes = list("cannabis" = 1)
 	wine_power = 20
@@ -119,5 +118,5 @@
 	name = "omega cannabis leaf"
 	desc = "You feel dizzy looking at it. What the fuck?"
 	icon_state = "ocannabis"
-	max_volume = 420
+	bite_consumption_mod = 2 // Ingesting like 40 units of drugs in 1 bite at 100 potency
 	wine_power = 90

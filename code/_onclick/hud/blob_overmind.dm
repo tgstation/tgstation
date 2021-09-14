@@ -49,7 +49,7 @@
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
 		if(!B.placed)
-			B.place_blob_core(0)
+			B.place_blob_core(BLOB_NORMAL_PLACEMENT)
 		B.transport_core()
 
 /atom/movable/screen/blob/blobbernaut

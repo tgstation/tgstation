@@ -23,7 +23,7 @@
 	combat_mode = TRUE
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list(ROLE_ALIEN)
 	status_flags = CANPUSH
 	minbodytemp = 0
@@ -113,7 +113,7 @@
 		return
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(src))
 		return
-	visible_message("<span class='alertalien'>[src] plants some alien weeds!</span>")
+	visible_message(span_alertalien("[src] plants some alien weeds!"))
 	new /obj/structure/alien/weeds/node(loc)
 
 /mob/living/simple_animal/hostile/alien/proc/LayEggs()
@@ -121,7 +121,7 @@
 		return
 	if(locate(/obj/structure/alien/egg) in get_turf(src))
 		return
-	visible_message("<span class='alertalien'>[src] lays an egg!</span>")
+	visible_message(span_alertalien("[src] lays an egg!"))
 	new /obj/structure/alien/egg(loc)
 
 /mob/living/simple_animal/hostile/alien/queen/large
@@ -167,7 +167,7 @@
 	if(ismovable(target))
 		target.wash(CLEAN_SCRUB)
 		if(istype(target, /obj/effect/decal/cleanable))
-			visible_message("<span class='notice'>[src] cleans up \the [target].</span>")
+			visible_message(span_notice("[src] cleans up \the [target]."))
 		else
-			visible_message("<span class='notice'>[src] polishes \the [target].</span>")
+			visible_message(span_notice("[src] polishes \the [target]."))
 		return TRUE

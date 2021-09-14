@@ -15,7 +15,7 @@
 	max_equip = 7
 	wreckage = /obj/structure/mecha_wreckage/clarke
 	enter_delay = 40
-	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS
+	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 	internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
 
 /obj/vehicle/sealed/mecha/working/clarke/Initialize()

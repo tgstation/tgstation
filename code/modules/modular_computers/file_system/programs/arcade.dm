@@ -150,20 +150,20 @@
 			return TRUE
 		if("Dispense_Tickets")
 			if(!printer)
-				to_chat(usr, "<span class='notice'>Hardware error: A printer is required to redeem tickets.</span>")
+				to_chat(usr, span_notice("Hardware error: A printer is required to redeem tickets."))
 				return
 			if(printer.stored_paper <= 0)
-				to_chat(usr, "<span class='notice'>Hardware error: Printer is out of paper.</span>")
+				to_chat(usr, span_notice("Hardware error: Printer is out of paper."))
 				return
 			else
-				computer.visible_message("<span class='notice'>\The [computer] prints out paper.</span>")
+				computer.visible_message(span_notice("\The [computer] prints out paper."))
 				if(ticket_count >= 1)
 					new /obj/item/stack/arcadeticket((get_turf(computer)), 1)
-					to_chat(usr, "<span class='notice'>[computer] dispenses a ticket!</span>")
+					to_chat(usr, span_notice("[computer] dispenses a ticket!"))
 					ticket_count -= 1
 					printer.stored_paper -= 1
 				else
-					to_chat(usr, "<span class='notice'>You don't have any stored tickets!</span>")
+					to_chat(usr, span_notice("You don't have any stored tickets!"))
 				return TRUE
 		if("Start_Game")
 			game_active = TRUE

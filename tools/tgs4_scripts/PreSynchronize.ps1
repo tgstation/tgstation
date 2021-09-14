@@ -12,7 +12,7 @@ if(!$?){
 }
 
 Write-Host "Running changelog script..."
-python3 tools/ss13_genchangelog.py html/changelog.html html/changelogs
+python3 tools/ss13_genchangelog.py html/changelogs
 if(!$?){
     Write-Host "python3 returned non-zero!"
     exit $LASTEXITCODE

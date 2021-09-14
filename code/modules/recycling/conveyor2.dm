@@ -136,7 +136,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 	//get the first 30 items in contents
 	var/turf/locturf = loc
-	var/list/items = locturf.contents - src - locturf.lighting_object
+	var/list/items = locturf.contents - src
 	if(!LAZYLEN(items))//Dont do anything at all if theres nothing there but the conveyor
 		return
 	var/list/affecting
@@ -170,13 +170,13 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)
-		user.visible_message("<span class='notice'>[user] struggles to pry up \the [src] with \the [I].</span>", \
-		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>")
+		user.visible_message(span_notice("[user] struggles to pry up \the [src] with \the [I]."), \
+		span_notice("You struggle to pry up \the [src] with \the [I]."))
 		if(I.use_tool(src, user, 40, volume=40))
 			if(!(machine_stat & BROKEN))
 				var/obj/item/stack/conveyor/C = new /obj/item/stack/conveyor(loc, 1, TRUE, null, null, id)
 				transfer_fingerprints_to(C)
-			to_chat(user, "<span class='notice'>You remove the conveyor belt.</span>")
+			to_chat(user, span_notice("You remove the conveyor belt."))
 			qdel(src)
 
 	else if(I.tool_behaviour == TOOL_WRENCH)
@@ -184,13 +184,13 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			I.play_tool_sound(src)
 			setDir(turn(dir,-45))
 			update_move_direction()
-			to_chat(user, "<span class='notice'>You rotate [src].</span>")
+			to_chat(user, span_notice("You rotate [src]."))
 
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!(machine_stat & BROKEN))
 			verted = verted * -1
 			update_move_direction()
-			to_chat(user, "<span class='notice'>You reverse [src]'s direction.</span>")
+			to_chat(user, span_notice("You reverse [src]'s direction."))
 
 	else if(!user.combat_mode)
 		user.transferItemToLoc(I, drop_location())
@@ -207,7 +207,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 // make the conveyor broken
 // also propagate inoperability to any connected conveyor with the same ID
 /obj/machinery/conveyor/proc/broken()
-	obj_break()
+	atom_break()
 	update()
 
 	var/obj/machinery/conveyor/C = locate() in get_step(src, dir)
@@ -262,6 +262,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	update_appearance()
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 	wires = new /datum/wires/conveyor(src)
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/conveyor_switch,
+	))
 
 /obj/machinery/conveyor_switch/Destroy()
 	LAZYREMOVE(GLOB.conveyors_by_id[id], src)
@@ -344,27 +347,27 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
 	C.id = id
 	transfer_fingerprints_to(C)
-	to_chat(user, "<span class='notice'>You detach the conveyor switch.</span>")
+	to_chat(user, span_notice("You detach the conveyor switch."))
 	qdel(src)
 	return TRUE
 
 /obj/machinery/conveyor_switch/screwdriver_act(mob/user, obj/item/I)
 	I.play_tool_sound(src, 50)
 	oneway = !oneway
-	to_chat(user, "<span class='notice'>You set conveyor switch to [oneway ? "one way" : "default"] configuration.</span>")
+	to_chat(user, span_notice("You set conveyor switch to [oneway ? "one way" : "default"] configuration."))
 	return TRUE
 
 /obj/machinery/conveyor_switch/wrench_act(mob/user, obj/item/I)
 	I.play_tool_sound(src, 50)
 	invert_icon = !invert_icon
 	update_appearance()
-	to_chat(user, "<span class='notice'>You set conveyor switch to [invert_icon ? "inverted": "normal"] position.</span>")
+	to_chat(user, span_notice("You set conveyor switch to [invert_icon ? "inverted": "normal"] position."))
 	return TRUE
 
 /obj/machinery/conveyor_switch/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>[src] is set to [oneway ? "one way" : "default"] configuration. It can be changed with <b>screwdriver</b>.</span>"
-	. += "<span class='notice'>[src] is set to [invert_icon ? "inverted": "normal"] position. It can be rotated with <b>wrench</b>.</span>"
+	. += span_notice("[src] is set to [oneway ? "one way" : "default"] configuration. It can be changed with <b>screwdriver</b>.")
+	. += span_notice("[src] is set to [invert_icon ? "inverted": "normal"] position. It can be rotated with <b>wrench</b>.")
 
 /obj/machinery/conveyor_switch/oneway
 	icon_state = "conveyor_switch_oneway"
@@ -391,7 +394,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/item/conveyor_switch_construct/attack_self(mob/user)
 	for(var/obj/item/stack/conveyor/C in view())
 		C.id = id
-	to_chat(user, "<span class='notice'>You have linked all nearby conveyor belt assemblies to this switch.</span>")
+	to_chat(user, span_notice("You have linked all nearby conveyor belt assemblies to this switch."))
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
 	. = ..()
@@ -431,7 +434,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return
 	var/cdir = get_dir(A, user)
 	if(A == user.loc)
-		to_chat(user, "<span class='warning'>You cannot place a conveyor belt under yourself!</span>")
+		to_chat(user, span_warning("You cannot place a conveyor belt under yourself!"))
 		return
 	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A, cdir, id)
 	transfer_fingerprints_to(C)
@@ -440,7 +443,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/item/stack/conveyor/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/conveyor_switch_construct))
-		to_chat(user, "<span class='notice'>You link the switch to the conveyor belt assembly.</span>")
+		to_chat(user, span_notice("You link the switch to the conveyor belt assembly."))
 		var/obj/item/conveyor_switch_construct/C = I
 		id = C.id
 
@@ -455,3 +458,43 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	info = "<h1>Congratulations!</h1><p>You are now the proud owner of the best conveyor set available for space mail order! We at Nano-it-up know you love to prepare your own structures without wasting time, so we have devised a special streamlined assembly procedure that puts all other mail-order products to shame!</p><p>Firstly, you need to link the conveyor switch assembly to each of the conveyor belt assemblies. After doing so, you simply need to install the belt assemblies onto the floor, et voila, belt built. Our special Nano-it-up smart switch will detected any linked assemblies as far as the eye can see! This convenience, you can only have it when you Nano-it-up. Stay nano!</p>"
 
 #undef MAX_CONVEYOR_ITEMS_MOVE
+
+/obj/item/circuit_component/conveyor_switch
+	display_name = "Conveyor Switch"
+	desc = "Allows to control connected conveyor belts."
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
+
+	var/datum/port/output/direction
+	var/obj/machinery/conveyor_switch/attached_switch
+
+/obj/item/circuit_component/conveyor_switch/populate_ports()
+	direction = add_output_port("Conveyor Direction", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/conveyor_switch/get_ui_notices()
+	. = ..()
+	. += create_ui_notice("Conveyor direction 0 means that it is stopped, 1 means that it is active and -1 means that it is working in reverse mode", "orange", "info")
+
+/obj/item/circuit_component/conveyor_switch/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/conveyor_switch))
+		attached_switch = parent
+
+/obj/item/circuit_component/conveyor_switch/unregister_usb_parent(atom/movable/parent)
+	attached_switch = null
+	return ..()
+
+/obj/item/circuit_component/conveyor_switch/input_received(datum/port/input/port)
+	if(!attached_switch)
+		return
+
+	INVOKE_ASYNC(src, .proc/update_conveyers, port)
+
+/obj/item/circuit_component/conveyor_switch/proc/update_conveyers(datum/port/input/port)
+	if(!attached_switch)
+		return
+
+	attached_switch.update_position()
+	attached_switch.update_appearance()
+	attached_switch.update_linked_conveyors()
+	attached_switch.update_linked_switches()
+	direction.set_output(attached_switch.position)

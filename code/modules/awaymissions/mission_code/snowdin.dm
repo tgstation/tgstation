@@ -4,7 +4,7 @@
 	name = "Snowdin"
 	icon_state = "awaycontent1"
 	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
 
 /area/awaymission/snowdin/outside
 	name = "Snowdin Tundra Plains"
@@ -14,7 +14,7 @@
 	name = "Snowdin Outpost"
 	icon_state = "awaycontent2"
 	requires_power = TRUE
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	static_lighting = TRUE
 
 /area/awaymission/snowdin/post/medbay
 	name = "Snowdin Outpost - Medbay"
@@ -96,12 +96,16 @@
 /area/awaymission/snowdin/igloo
 	name = "Snowdin Igloos"
 	icon_state = "awaycontent14"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	static_lighting = FALSE
+	base_lighting_alpha = 255
+	base_lighting_color = COLOR_WHITE
 
 /area/awaymission/snowdin/cave
 	name = "Snowdin Caves"
 	icon_state = "awaycontent15"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	static_lighting = FALSE
+	base_lighting_color = COLOR_WHITE
+	base_lighting_alpha = 255
 
 /area/awaymission/snowdin/cave/cavern
 	name = "Snowdin Depths"
@@ -115,18 +119,18 @@
 /area/awaymission/snowdin/base
 	name = "Snowdin Main Base"
 	icon_state = "awaycontent16"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	static_lighting = TRUE
 	requires_power = TRUE
 
 /area/awaymission/snowdin/dungeon1
 	name = "Snowdin Depths"
 	icon_state = "awaycontent17"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	static_lighting = TRUE
 
 /area/awaymission/snowdin/sekret
 	name = "Snowdin Operations"
 	icon_state = "awaycontent18"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	static_lighting = TRUE
 	requires_power = TRUE
 
 /area/shuttle/snowdin/elevator1
@@ -160,88 +164,61 @@
 	icon_state = "liquidplasma"
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
 	baseturfs = /turf/open/lava/plasma
-	slowdown = 2
 
 	light_range = 3
 	light_power = 0.75
 	light_color = LIGHT_COLOR_PURPLE
+	immunity_trait = TRAIT_SNOWSTORM_IMMUNE
+	immunity_resistance_flags = FREEZE_PROOF
 
 /turf/open/lava/plasma/attackby(obj/item/I, mob/user, params)
 	var/obj/item/reagent_containers/glass/C = I
 	if(C.reagents.total_volume >= C.volume)
-		to_chat(user, "<span class='danger'>[C] is full.</span>")
+		to_chat(user, span_danger("[C] is full."))
 		return
 	C.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 10))
-	user.visible_message("<span class='notice'>[user] scoops some plasma from the [src] with \the [C].</span>", "<span class='notice'>You scoop out some plasma from the [src] using \the [C].</span>")
+	user.visible_message(span_notice("[user] scoops some plasma from the [src] with \the [C]."), span_notice("You scoop out some plasma from the [src] using \the [C]."))
 
-/turf/open/lava/plasma/burn_stuff(AM)
-	. = 0
+/turf/open/lava/plasma/do_burn(atom/movable/burn_target, delta_time = 1)
+	. = TRUE
+	if(isobj(burn_target))
+		return FALSE // Does nothing against objects. Old code.
 
-	if(is_safe())
-		return FALSE
+	var/mob/living/burn_living = burn_target
+	burn_living.adjustFireLoss(2)
+	if(QDELETED(burn_living))
+		return
+	burn_living.adjust_fire_stacks(20) //dipping into a stream of plasma would probably make you more flammable than usual
+	burn_living.adjust_bodytemperature(-rand(50,65)) //its cold, man
+	if(!ishuman(burn_living) || DT_PROB(65, delta_time))
+		return
+	var/mob/living/carbon/human/burn_human = burn_living
+	var/datum/species/burn_species = burn_human.dna.species
+	if(istype(burn_species, /datum/species/plasmaman) || istype(burn_species, /datum/species/android) || istype(burn_species, /datum/species/synth)) //ignore plasmamen/robotic species
+		return
 
-	var/thing_to_check = src
-	if (AM)
-		thing_to_check = list(AM)
-	for(var/thing in thing_to_check)
-		if(isobj(thing))
-			var/obj/O = thing
-			if((O.resistance_flags & (FREEZE_PROOF)) || O.throwing)
-				continue
+	var/list/plasma_parts = list()//a list of the organic parts to be turned into plasma limbs
+	var/list/robo_parts = list()//keep a reference of robotic parts so we know if we can turn them into a plasmaman
+	for(var/obj/item/bodypart/burn_limb as anything in burn_human.bodyparts)
+		if(burn_limb.status == BODYPART_ORGANIC && burn_limb.species_id != SPECIES_PLASMAMAN) //getting every organic, non-plasmaman limb (augments/androids are immune to this)
+			plasma_parts += burn_limb
+		if(burn_limb.status == BODYPART_ROBOTIC)
+			robo_parts += burn_limb
 
-		else if (isliving(thing))
-			. = 1
-			var/mob/living/L = thing
-			if(L.movement_type & FLYING)
-				continue //YOU'RE FLYING OVER IT
-			if("snow" in L.weather_immunities)
-				continue
-
-			var/buckle_check = L.buckled
-			if(isobj(buckle_check))
-				var/obj/O = buckle_check
-				if(O.resistance_flags & FREEZE_PROOF)
-					continue
-
-			else if(isliving(buckle_check))
-				var/mob/living/live = buckle_check
-				if("snow" in live.weather_immunities)
-					continue
-
-			L.adjustFireLoss(2)
-			if(L)
-				L.adjust_fire_stacks(20) //dipping into a stream of plasma would probably make you more flammable than usual
-				L.adjust_bodytemperature(-rand(50,65)) //its cold, man
-				if(ishuman(L))//are they a carbon?
-					var/list/plasma_parts = list()//a list of the organic parts to be turned into plasma limbs
-					var/list/robo_parts = list()//keep a reference of robotic parts so we know if we can turn them into a plasmaman
-					var/mob/living/carbon/human/PP = L
-					var/S = PP.dna.species
-					if(istype(S, /datum/species/plasmaman) || istype(S, /datum/species/android) || istype(S, /datum/species/synth)) //ignore plasmamen/robotic species
-						continue
-
-					for(var/BP in PP.bodyparts)
-						var/obj/item/bodypart/NN = BP
-						if(NN.status == BODYPART_ORGANIC && NN.species_id != "plasmaman") //getting every organic, non-plasmaman limb (augments/androids are immune to this)
-							plasma_parts += NN
-						if(NN.status == BODYPART_ROBOTIC)
-							robo_parts += NN
-
-					if(prob(35)) //checking if the delay is over & if the victim actually has any parts to nom
-						PP.adjustToxLoss(15)
-						PP.adjustFireLoss(25)
-						if(plasma_parts.len)
-							var/obj/item/bodypart/NB = pick(plasma_parts) //using the above-mentioned list to get a choice of limbs
-							PP.emote("scream")
-							ADD_TRAIT(NB, TRAIT_PLASMABURNT, src)
-							PP.update_body_parts()
-							PP.visible_message("<span class='warning'>[L] screams in pain as [L.p_their()] [NB] melts down to the bone!</span>", \
-											  "<span class='userdanger'>You scream out in pain as your [NB] melts down to the bone, leaving an eerie plasma-like glow where flesh used to be!</span>")
-						if(!plasma_parts.len && !robo_parts.len) //a person with no potential organic limbs left AND no robotic limbs, time to turn them into a plasmaman
-							PP.IgniteMob()
-							PP.set_species(/datum/species/plasmaman)
-							PP.visible_message("<span class='warning'>[L] bursts into a brilliant purple flame as [L.p_their()] entire body is that of a skeleton!</span>", \
-											  "<span class='userdanger'>Your senses numb as all of your remaining flesh is turned into a purple slurry, sloshing off your body and leaving only your bones to show in a vibrant purple!</span>")
+	burn_human.adjustToxLoss(15)
+	burn_human.adjustFireLoss(25)
+	if(plasma_parts.len)
+		var/obj/item/bodypart/burn_limb = pick(plasma_parts) //using the above-mentioned list to get a choice of limbs
+		burn_human.emote("scream")
+		ADD_TRAIT(burn_limb, TRAIT_PLASMABURNT, src)
+		burn_human.update_body_parts()
+		burn_human.visible_message(span_warning("[burn_human] screams in pain as [burn_human.p_their()] [burn_limb] melts down to the bone!"), \
+			span_userdanger("You scream out in pain as your [burn_limb] melts down to the bone, leaving an eerie plasma-like glow where flesh used to be!"))
+	if(!plasma_parts.len && !robo_parts.len) //a person with no potential organic limbs left AND no robotic limbs, time to turn them into a plasmaman
+		burn_human.IgniteMob()
+		burn_human.set_species(/datum/species/plasmaman)
+		burn_human.visible_message(span_warning("[burn_human] bursts into a brilliant purple flame as [burn_human.p_their()] entire body is that of a skeleton!"), \
+			span_userdanger("Your senses numb as all of your remaining flesh is turned into a purple slurry, sloshing off your body and leaving only your bones to show in a vibrant purple!"))
 
 //mafia specific tame happy plasma (normal atmos, no slowdown)
 /turf/open/lava/plasma/mafia
@@ -466,8 +443,8 @@
 
 /obj/effect/spawner/lootdrop/snowdin/dungeonlite
 	name = "dungeon lite"
-	loot = list(/obj/item/melee/classic_baton = 11,
-				/obj/item/melee/classic_baton/telescopic = 12,
+	loot = list(/obj/item/melee/baton = 11,
+				/obj/item/melee/baton/telescopic = 12,
 				/obj/item/book/granter/spell/smoke = 10,
 				/obj/item/book/granter/spell/blind = 10,
 				/obj/item/storage/firstaid/regular = 45,
@@ -491,7 +468,7 @@
 				/obj/item/dnainjector/lasereyesmut = 7,
 				/obj/item/gun/magic/wand/fireball/inert = 3,
 				/obj/item/pneumatic_cannon = 15,
-				/obj/item/melee/transforming/energy/sword = 7,
+				/obj/item/melee/energy/sword = 7,
 				/obj/item/book/granter/spell/knock = 15,
 				/obj/item/book/granter/spell/summonitem = 20,
 				/obj/item/book/granter/spell/forcewall = 17,
@@ -583,7 +560,7 @@
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE
-	faction = ROLE_SYNDICATE
+	faction = list(ROLE_SYNDICATE)
 	outfit = /datum/outfit/snowsyndie
 	short_desc = "You are a syndicate operative recently awoken from cryostasis in an underground outpost."
 	flavour_text = "You are a syndicate operative recently awoken from cryostasis in an underground outpost. Monitor Nanotrasen communications and record information. All intruders should be \

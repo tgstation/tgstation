@@ -8,7 +8,6 @@
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."
-	weather_immunities = list("ash")
 	health = 500
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
@@ -60,7 +59,7 @@
 	var/obj/machinery/door/hackdoor // The airlock being hacked
 	var/hackprogress = 0 // Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
 
-	var/obj/item/integrated_signaler/signaler // AI's signaller
+	var/obj/item/assembly/signaler/internal/signaler // AI's signaler
 
 	var/obj/item/instrument/piano_synth/internal_instrument
 	var/obj/machinery/newscaster //pAI Newscaster
@@ -137,7 +136,7 @@
 	forceMove(P)
 	card = P
 	job = "Personal AI"
-	signaler = new(src)
+	signaler = new /obj/item/assembly/signaler/internal(src)
 	hostscan = new /obj/item/healthanalyzer(src)
 	newscaster = new /obj/machinery/newscaster(src)
 	if(!aicamera)
@@ -300,7 +299,7 @@
 	if(hacking_cable)
 		if(get_dist(src, hacking_cable) > 1)
 			var/turf/T = get_turf(src)
-			T.visible_message("<span class='warning'>[hacking_cable] rapidly retracts back into its spool.</span>", "<span class='hear'>You hear a click and the sound of wire spooling rapidly.</span>")
+			T.visible_message(span_warning("[hacking_cable] rapidly retracts back into its spool."), span_hear("You hear a click and the sound of wire spooling rapidly."))
 			QDEL_NULL(hacking_cable)
 			if(!QDELETED(card))
 				card.update_appearance()
@@ -317,13 +316,20 @@
 /mob/living/silicon/pai/process(delta_time)
 	emitterhealth = clamp((emitterhealth + (emitter_regen_per_second * delta_time)), -50, emittermaxhealth)
 
-/obj/item/paicard/attackby(obj/item/W, mob/user, params)
-	if(pai && (istype(W, /obj/item/encryptionkey) || W.tool_behaviour == TOOL_SCREWDRIVER))
+/mob/living/silicon/pai/can_interact_with(atom/A)
+	if(A == signaler) // Bypass for signaler
+		return TRUE
+
+	return ..()
+
+/obj/item/paicard/attackby(obj/item/used, mob/user, params)
+	if(pai && (istype(used, /obj/item/encryptionkey) || used.tool_behaviour == TOOL_SCREWDRIVER))
 		if(!pai.encryptmod)
-			to_chat(user, "<span class='alert'>Encryption Key ports not configured.</span>")
+			to_chat(user, span_alert("Encryption Key ports not configured."))
 			return
 		user.set_machine(src)
-		pai.radio.attackby(W, user, params)
+		pai.radio.attackby(used, user, params)
+		to_chat(user, span_notice("You insert [used] into the [src]."))
 		return
 
 	return ..()
@@ -331,8 +337,8 @@
 /obj/item/paicard/emag_act(mob/user) // Emag to wipe the master DNA and supplemental directive
 	if(!pai)
 		return
-	to_chat(user, "<span class='notice'>You override [pai]'s directive system, clearing its master string and supplied directive.</span>")
-	to_chat(pai, "<span class='userdanger'>Warning: System override detected, check directive sub-system for any changes.</span>")
+	to_chat(user, span_notice("You override [pai]'s directive system, clearing its master string and supplied directive."))
+	to_chat(pai, span_userdanger("Warning: System override detected, check directive sub-system for any changes."))
 	log_game("[key_name(user)] emagged [key_name(pai)], wiping their master DNA and supplemental directive.")
 	pai.master = null
 	pai.master_dna = null

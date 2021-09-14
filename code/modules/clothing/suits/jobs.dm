@@ -37,7 +37,6 @@
 	desc = "An apron-jacket used by a high class chef."
 	icon_state = "chef"
 	inhand_icon_state = "chef"
-	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.5
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(/obj/item/kitchen)
@@ -127,6 +126,22 @@
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 	togglename = "straps"
 	species_exception = list(/datum/species/golem)
+	greyscale_config = /datum/greyscale_config/suspenders
+	greyscale_config_worn = /datum/greyscale_config/suspenders/worn
+	greyscale_colors = "#ff0000"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/suit/toggle/suspenders/blue
+	name = "blue suspenders"
+	desc = "The symbol of hard labor and dirty jobs."
+	icon = 'icons/obj/clothing/belts.dmi'
+	greyscale_colors = "#0000ff"
+
+/obj/item/clothing/suit/toggle/suspenders/gray
+	name = "gray suspenders"
+	desc = "The symbol of hard labor and dirty jobs."
+	icon = 'icons/obj/clothing/belts.dmi'
+	greyscale_colors = "#888888"
 
 //Security
 /obj/item/clothing/suit/security/officer
@@ -155,7 +170,23 @@
 	name = "surgical apron"
 	desc = "A sterile blue surgical apron."
 	icon_state = "surgical"
-	allowed = list(/obj/item/scalpel, /obj/item/surgical_drapes, /obj/item/cautery, /obj/item/hemostat, /obj/item/retractor)
+	allowed = list(
+		/obj/item/hemostat,
+		/obj/item/cautery,
+		/obj/item/scalpel,
+		/obj/item/surgical_drapes,
+		/obj/item/retractor,
+		/obj/item/bonesetter,
+		/obj/item/flashlight/pen,
+		/obj/item/healthanalyzer,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/hypospray,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/storage/pill_bottle,
+		/obj/item/tank/internals/emergency_oxygen,
+		)
 
 //Curator
 /obj/item/clothing/suit/curator

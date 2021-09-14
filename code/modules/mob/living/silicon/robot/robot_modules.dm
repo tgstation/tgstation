@@ -101,10 +101,9 @@
 			F.times_used = 0
 			F.burnt_out = FALSE
 			F.update_appearance()
-		else if(istype(I, /obj/item/melee/baton))
-			var/obj/item/melee/baton/B = I
-			if(B.cell)
-				B.cell.charge = B.cell.maxcharge
+		else if(istype(I, /obj/item/melee/baton/security))
+			var/obj/item/melee/baton/security/baton = I
+			baton.cell?.charge = baton.cell.maxcharge
 		else if(istype(I, /obj/item/gun/energy))
 			var/obj/item/gun/energy/EG = I
 			if(!EG.chambered)
@@ -251,7 +250,7 @@
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/sheet/rglass/cyborg,
 		/obj/item/stack/rods/cyborg,
-		/obj/item/stack/tile/iron,
+		/obj/item/stack/tile/iron/base/cyborg,
 		/obj/item/stack/cable_coil)
 	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
 	emag_modules = list(/obj/item/borg/stun)
@@ -267,7 +266,7 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/screwdriver/cyborg,
 		/obj/item/crowbar/cyborg,
-		/obj/item/stack/tile/iron,
+		/obj/item/stack/tile/iron/base/cyborg,
 		/obj/item/soap/nanotrasen,
 		/obj/item/storage/bag/trash/cyborg,
 		/obj/item/melee/flyswatter,
@@ -422,7 +421,7 @@
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/restraints/handcuffs/cable/zipties,
-		/obj/item/melee/baton/loaded,
+		/obj/item/melee/baton/security/loaded,
 		/obj/item/gun/energy/disabler/cyborg,
 		/obj/item/clothing/mask/gas/sechailer/cyborg,
 		/obj/item/extinguisher/mini)
@@ -519,7 +518,7 @@
 	name = "Syndicate Assault"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/melee/transforming/energy/sword/cyborg,
+		/obj/item/melee/energy/sword/cyborg,
 		/obj/item/gun/energy/printer,
 		/obj/item/gun/ballistic/revolver/grenadelauncher/cyborg,
 		/obj/item/card/emag,
@@ -556,9 +555,8 @@
 		/obj/item/cautery,
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
-		/obj/item/melee/transforming/energy/sword/cyborg/saw,
+		/obj/item/melee/energy/sword/cyborg/saw,
 		/obj/item/roller/robo,
-		/obj/item/card/emag,
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg,
@@ -586,16 +584,18 @@
 		/obj/item/wrench/cyborg,
 		/obj/item/crowbar/cyborg,
 		/obj/item/wirecutters/cyborg,
+		/obj/item/analyzer,
 		/obj/item/multitool/cyborg,
 		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/sheet/rglass/cyborg,
 		/obj/item/stack/rods/cyborg,
-		/obj/item/stack/tile/iron,
+		/obj/item/stack/tile/iron/base/cyborg,
 		/obj/item/dest_tagger/borg,
 		/obj/item/stack/cable_coil,
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/borg_chameleon,
+		/obj/item/card/emag,
 		)
 
 	cyborg_base_icon = "synd_engi"

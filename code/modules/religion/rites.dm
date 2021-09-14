@@ -25,7 +25,7 @@
 
 /datum/religion_rites/proc/can_afford(mob/living/user)
 	if(GLOB.religious_sect?.favor < favor_cost)
-		to_chat(user, "<span class='warning'>This rite requires more favor!</span>")
+		to_chat(user, span_warning("This rite requires more favor!"))
 		return FALSE
 	return TRUE
 
@@ -33,7 +33,7 @@
 /datum/religion_rites/proc/perform_rite(mob/living/user, atom/religious_tool)
 	if(!can_afford(user))
 		return FALSE
-	to_chat(user, "<span class='notice'>You begin to perform the rite of [name]...</span>")
+	to_chat(user, span_notice("You begin to perform the rite of [name]..."))
 	if(!ritual_invocations)
 		if(do_after(user, target = user, delay = ritual_length))
 			return TRUE
@@ -77,7 +77,7 @@
 
 /datum/religion_rites/synthconversion/perform_rite(mob/living/user, atom/religious_tool)
 	if(!ismovable(religious_tool))
-		to_chat(user, "<span class='warning'>This rite requires a religious device that individuals can be buckled to.</span>")
+		to_chat(user, span_warning("This rite requires a religious device that individuals can be buckled to."))
 		return FALSE
 	var/atom/movable/movable_reltool = religious_tool
 	if(!movable_reltool)
@@ -85,9 +85,9 @@
 	if(!LAZYLEN(movable_reltool.buckled_mobs))
 		. = FALSE
 		if(!movable_reltool.can_buckle) //yes, if you have somehow managed to have someone buckled to something that now cannot buckle, we will still let you perform the rite!
-			to_chat(user, "<span class='warning'>This rite requires a religious device that individuals can be buckled to.</span>")
+			to_chat(user, span_warning("This rite requires a religious device that individuals can be buckled to."))
 			return
-		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [movable_reltool].</span>")
+		to_chat(user, span_warning("This rite requires an individual to be buckled to [movable_reltool]."))
 		return
 	return ..()
 
@@ -106,10 +106,31 @@
 	if(!human2borg)
 		return FALSE
 	human2borg.set_species(/datum/species/android)
-	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [name]!</span>")
+	human2borg.visible_message(span_notice("[human2borg] has been converted by the rite of [name]!"))
 	return TRUE
 
 
+/datum/religion_rites/machine_blessing
+	name = "Receive Blessing"
+	desc = "Receive a blessing from the machine god to further your ascension."
+	ritual_length = 5 SECONDS
+	ritual_invocations =list( "Let your will power our forges.",
+							"...Help us in our great conquest!")
+	invoke_msg = "The end of flesh is near!"
+	favor_cost = 2000	
+
+/datum/religion_rites/machine_blessing/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
+	var/altar_turf = get_turf(religious_tool)
+	var/blessing = pick(
+					/obj/item/organ/cyberimp/arm/surgery,
+					/obj/item/organ/cyberimp/eyes/hud/diagnostic,
+					/obj/item/organ/cyberimp/eyes/hud/medical,
+					/obj/item/organ/cyberimp/mouth/breathing_tube,
+					/obj/item/organ/cyberimp/chest/thrusters,
+					/obj/item/organ/eyes/robotic/glow)
+	new blessing(altar_turf)
+	return TRUE
 /**** Pyre God ****/
 
 ///apply a bunch of fire immunity effect to clothing
@@ -150,7 +171,7 @@
 		chosen_clothing = null //our lord and savior no longer cares about this apparel
 		return TRUE
 	chosen_clothing = null
-	to_chat(user, "<span class='warning'>The clothing that was chosen for the rite is no longer on the altar!</span>")
+	to_chat(user, span_warning("The clothing that was chosen for the rite is no longer on the altar!"))
 	return FALSE
 
 
@@ -168,44 +189,44 @@
 
 /datum/religion_rites/burning_sacrifice/perform_rite(mob/living/user, atom/religious_tool)
 	if(!ismovable(religious_tool))
-		to_chat(user, "<span class='warning'>This rite requires a religious device that individuals can be buckled to.</span>")
+		to_chat(user, span_warning("This rite requires a religious device that individuals can be buckled to."))
 		return FALSE
 	var/atom/movable/movable_reltool = religious_tool
 	if(!movable_reltool)
 		return FALSE
 	if(!LAZYLEN(movable_reltool.buckled_mobs))
-		to_chat(user, "<span class='warning'>Nothing is buckled to the altar!</span>")
+		to_chat(user, span_warning("Nothing is buckled to the altar!"))
 		return FALSE
 	for(var/corpse in movable_reltool.buckled_mobs)
 		if(!iscarbon(corpse))// only works with carbon corpse since most normal mobs can't be set on fire.
-			to_chat(user, "<span class='warning'>Only carbon lifeforms can be properly burned for the sacrifice!</span>")
+			to_chat(user, span_warning("Only carbon lifeforms can be properly burned for the sacrifice!"))
 			return FALSE
 		chosen_sacrifice = corpse
 		if(chosen_sacrifice.stat != DEAD)
-			to_chat(user, "<span class='warning'>You can only sacrifice dead bodies, this one is still alive!</span>")
+			to_chat(user, span_warning("You can only sacrifice dead bodies, this one is still alive!"))
 			return FALSE
 		if(!chosen_sacrifice.on_fire)
-			to_chat(user, "<span class='warning'>This corpse needs to be on fire to be sacrificed!</span>")
+			to_chat(user, span_warning("This corpse needs to be on fire to be sacrificed!"))
 			return FALSE
 		return ..()
 
 /datum/religion_rites/burning_sacrifice/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
 	if(!(chosen_sacrifice in religious_tool.buckled_mobs)) //checks one last time if the right corpse is still buckled
-		to_chat(user, "<span class='warning'>The right sacrifice is no longer on the altar!</span>")
+		to_chat(user, span_warning("The right sacrifice is no longer on the altar!"))
 		chosen_sacrifice = null
 		return FALSE
 	if(!chosen_sacrifice.on_fire)
-		to_chat(user, "<span class='warning'>The sacrifice is no longer on fire, it needs to burn until the end of the rite!</span>")
+		to_chat(user, span_warning("The sacrifice is no longer on fire, it needs to burn until the end of the rite!"))
 		chosen_sacrifice = null
 		return FALSE
 	if(chosen_sacrifice.stat != DEAD)
-		to_chat(user, "<span class='warning'>The sacrifice has to stay dead for the rite to work!</span>")
+		to_chat(user, span_warning("The sacrifice has to stay dead for the rite to work!"))
 		chosen_sacrifice = null
 		return FALSE
 	var/favor_gained = 100 + round(chosen_sacrifice.getFireLoss())
 	GLOB.religious_sect.adjust_favor(favor_gained, user)
-	to_chat(user, "<span class='notice'>[GLOB.deity] absorbs the burning corpse and any trace of fire with it. [GLOB.deity] rewards you with [favor_gained] favor.</span>")
+	to_chat(user, span_notice("[GLOB.deity] absorbs the burning corpse and any trace of fire with it. [GLOB.deity] rewards you with [favor_gained] favor."))
 	chosen_sacrifice.dust(force = TRUE)
 	playsound(get_turf(religious_tool), 'sound/effects/supermatter.ogg', 50, TRUE)
 	chosen_sacrifice = null
@@ -239,17 +260,17 @@
 /datum/religion_rites/greed/can_afford(mob/living/user)
 	var/datum/bank_account/account = user.get_bank_account()
 	if(!account)
-		to_chat(user, "<span class='warning'>You need a way to pay for the rite!</span>")
+		to_chat(user, span_warning("You need a way to pay for the rite!"))
 		return FALSE
 	if(account.account_balance < money_cost)
-		to_chat(user, "<span class='warning'>This rite requires more money!</span>")
+		to_chat(user, span_warning("This rite requires more money!"))
 		return FALSE
 	return TRUE
 
 /datum/religion_rites/greed/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	var/datum/bank_account/account = user.get_bank_account()
 	if(!account || account.account_balance < money_cost)
-		to_chat(user, "<span class='warning'>This rite requires more money!</span>")
+		to_chat(user, span_warning("This rite requires more money!"))
 		return FALSE
 	account.adjust_money(-money_cost)
 	. = ..()
@@ -301,27 +322,27 @@
 /datum/religion_rites/deaconize/perform_rite(mob/living/user, atom/religious_tool)
 	var/datum/religion_sect/honorbound/sect = GLOB.religious_sect
 	if(!ismovable(religious_tool))
-		to_chat(user, "<span class='warning'>This rite requires a religious device that individuals can be buckled to.</span>")
+		to_chat(user, span_warning("This rite requires a religious device that individuals can be buckled to."))
 		return FALSE
 	var/atom/movable/movable_reltool = religious_tool
 	if(!movable_reltool)
 		return FALSE
 	if(!LAZYLEN(movable_reltool.buckled_mobs))
-		to_chat(user, "<span class='warning'>Nothing is buckled to the altar!</span>")
+		to_chat(user, span_warning("Nothing is buckled to the altar!"))
 		return FALSE
 	for(var/mob/living/carbon/human/possible_crusader in movable_reltool.buckled_mobs)
 		if(possible_crusader.stat != CONSCIOUS)
-			to_chat(user, "<span class='warning'>[possible_crusader] needs to be alive and conscious to join the crusade!</span>")
+			to_chat(user, span_warning("[possible_crusader] needs to be alive and conscious to join the crusade!"))
 			return FALSE
 		if(TRAIT_GENELESS in possible_crusader.dna.species.inherent_traits)
-			to_chat(user, "<span class='warning'>This species disgusts [GLOB.deity]! They would never be allowed to join the crusade!</span>")
+			to_chat(user, span_warning("This species disgusts [GLOB.deity]! They would never be allowed to join the crusade!"))
 			return FALSE
 		if(possible_crusader in sect.currently_asking)
-			to_chat(user, "<span class='warning'>Wait for them to decide on whether to join or not!</span>")
+			to_chat(user, span_warning("Wait for them to decide on whether to join or not!"))
 			return FALSE
 		if(!(possible_crusader in sect.possible_crusaders))
 			INVOKE_ASYNC(sect, /datum/religion_sect/honorbound.proc/invite_crusader, possible_crusader)
-			to_chat(user, "<span class='notice'>They have been given the option to consider joining the crusade against evil. Wait for them to decide and try again.</span>")
+			to_chat(user, span_notice("They have been given the option to consider joining the crusade against evil. Wait for them to decide and try again."))
 			return FALSE
 		new_crusader = possible_crusader
 		return ..()
@@ -331,16 +352,16 @@
 	var/mob/living/carbon/human/joining_now = new_crusader
 	new_crusader = null
 	if(!(joining_now in religious_tool.buckled_mobs)) //checks one last time if the right corpse is still buckled
-		to_chat(user, "<span class='warning'>The new member is no longer on the altar!</span>")
+		to_chat(user, span_warning("The new member is no longer on the altar!"))
 		return FALSE
 	if(joining_now.stat != CONSCIOUS)
-		to_chat(user, "<span class='warning'>The new member has to stay alive for the rite to work!</span>")
+		to_chat(user, span_warning("The new member has to stay alive for the rite to work!"))
 		return FALSE
 	if(!joining_now.mind)
-		to_chat(user, "<span class='warning'>The new member has no mind!</span>")
+		to_chat(user, span_warning("The new member has no mind!"))
 		return FALSE
 	if(joining_now.mind.has_antag_datum(/datum/antagonist/cult))//what the fuck?!
-		to_chat(user, "<span class='warning'>[GLOB.deity] has seen a true, dark evil in [joining_now]'s heart, and they have been smitten!</span>")
+		to_chat(user, span_warning("[GLOB.deity] has seen a true, dark evil in [joining_now]'s heart, and they have been smitten!"))
 		playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
 		joining_now.gib(TRUE)
 		return FALSE
@@ -348,7 +369,7 @@
 	if(joining_now in honormut.guilty)
 		honormut.guilty -= joining_now
 	GLOB.religious_sect.adjust_favor(200, user)
-	to_chat(user, "<span class='notice'>[GLOB.deity] has bound [joining_now] to the code! They are now a holy role! (albeit the lowest level of such)</span>")
+	to_chat(user, span_notice("[GLOB.deity] has bound [joining_now] to the code! They are now a holy role! (albeit the lowest level of such)"))
 	joining_now.mind.holy_role = HOLY_ROLE_DEACON
 	GLOB.religious_sect.on_conversion(joining_now)
 	playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
@@ -368,7 +389,7 @@
 	if(!honormut)
 		return FALSE
 	if(!honormut.guilty.len)
-		to_chat(user, "<span class='warning'>[GLOB.deity] is holding no grudges to forgive.</span>")
+		to_chat(user, span_warning("[GLOB.deity] is holding no grudges to forgive."))
 		return FALSE
 	var/forgiven_choice = input(user, "Choose one of [GLOB.deity]'s guilty to forgive.", "Forgive") as null|anything in honormut.guilty
 	if(!forgiven_choice)
@@ -403,7 +424,7 @@
 			continue
 		writ_target = could_writ //PLEASE SIGN MY AUTOGRAPH
 		return ..()
-	to_chat(user, "<span class='warning'>You need to place blank paper on [religious_tool] to do this!</span>")
+	to_chat(user, span_warning("You need to place blank paper on [religious_tool] to do this!"))
 	return FALSE
 
 /datum/religion_rites/summon_rules/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -412,9 +433,9 @@
 	var/turf/tool_turf = get_turf(religious_tool)
 	writ_target = null
 	if(QDELETED(autograph) || !(tool_turf == autograph.loc)) //check if the same food is still there
-		to_chat(user, "<span class='warning'>Your target left the altar!</span>")
+		to_chat(user, span_warning("Your target left the altar!"))
 		return FALSE
-	autograph.visible_message("<span class='notice'>words magically form on [autograph]!</span>")
+	autograph.visible_message(span_notice("words magically form on [autograph]!"))
 	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
 	new /obj/item/paper/holy_writ(tool_turf)
 	qdel(autograph)
@@ -473,13 +494,13 @@
 		return FALSE
 	//uses HAS_TRAIT_FROM because junkies are also hopelessly addicted
 	if(HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
-		to_chat(user, "<span class='warning'>You've already adapted.</b></span>")
+		to_chat(user, span_warning("You've already adapted.</b>"))
 		return FALSE
 	return ..()
 
 /datum/religion_rites/maint_adaptation/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
-	to_chat(user, "<span class='warning'>You feel your genes rattled and reshaped. <b>You're becoming something new.</b></span>")
+	to_chat(user, span_warning("You feel your genes rattled and reshaped. <b>You're becoming something new.</b>"))
 	user.emote("laughs")
 	ADD_TRAIT(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation")
 	//addiction sends some nasty mood effects but we want the maint adaption to be enjoyed like a fine wine
@@ -503,18 +524,18 @@
 	if(!ishuman(user))
 		return FALSE
 	if(!HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
-		to_chat(user, "<span class='warning'>You need to adapt to maintenance first.</span>")
+		to_chat(user, span_warning("You need to adapt to maintenance first."))
 		return FALSE
 	var/obj/item/organ/eyes/night_vision/maintenance_adapted/adapted = user.getorganslot(ORGAN_SLOT_EYES)
 	if(adapted && istype(adapted))
-		to_chat(user, "<span class='warning'>Your eyes are already adapted!</span>")
+		to_chat(user, span_warning("Your eyes are already adapted!"))
 		return FALSE
 	return ..()
 
 /datum/religion_rites/adapted_eyes/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	..()
 	var/obj/item/organ/eyes/oldeyes = user.getorganslot(ORGAN_SLOT_EYES)
-	to_chat(user, "<span class='warning'>You feel your eyes adapt to the darkness!</span>")
+	to_chat(user, span_warning("You feel your eyes adapt to the darkness!"))
 	if(oldeyes)
 		oldeyes.Remove(user, special = TRUE)
 		qdel(oldeyes)//eh
@@ -536,7 +557,7 @@
 			continue
 		mold_target = could_mold //moldify this o great one
 		return ..()
-	to_chat(user, "<span class='warning'>You need to place food on [religious_tool] to do this!</span>")
+	to_chat(user, span_warning("You need to place food on [religious_tool] to do this!"))
 	return FALSE
 
 /datum/religion_rites/adapted_food/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -544,9 +565,9 @@
 	var/obj/item/food/moldify = mold_target
 	mold_target = null
 	if(QDELETED(moldify) || !(get_turf(religious_tool) == moldify.loc)) //check if the same food is still there
-		to_chat(user, "<span class='warning'>Your target left the altar!</span>")
+		to_chat(user, span_warning("Your target left the altar!"))
 		return FALSE
-	to_chat(user, "<span class='warning'>[moldify] becomes rancid!</span>")
+	to_chat(user, span_warning("[moldify] becomes rancid!"))
 	user.emote("laughs")
 	new /obj/item/food/badrecipe/moldy(get_turf(religious_tool))
 	qdel(moldify)
@@ -564,7 +585,7 @@
 	for(var/obj/item/stack/sheet/mineral/wood/could_totem in get_turf(religious_tool))
 		converted = could_totem //totemify this o great one
 		return ..()
-	to_chat(user, "<span class='warning'>You need at least 1 wood to do this!</span>")
+	to_chat(user, span_warning("You need at least 1 wood to do this!"))
 	return FALSE
 
 /datum/religion_rites/ritual_totem/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -573,9 +594,9 @@
 	var/obj/item/stack/sheet/mineral/wood/padala = converted
 	converted = null
 	if(QDELETED(padala) || !(get_turf(religious_tool) == padala.loc)) //check if the same food is still there
-		to_chat(user, "<span class='warning'>Your target left the altar!</span>")
+		to_chat(user, span_warning("Your target left the altar!"))
 		return FALSE
-	to_chat(user, "<span class='warning'>[padala] reshapes into a totem!</span>")
+	to_chat(user, span_warning("[padala] reshapes into a totem!"))
 	if(!padala.use(1))//use one wood
 		return
 	user.emote("laughs")

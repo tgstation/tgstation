@@ -4,41 +4,46 @@
 //Don't put it on things that tend to clump into one spot, you will cause lag spikes.
 /datum/element/atmos_sensitive
 	element_flags = ELEMENT_DETACH
+	var/static/list/pass_on = list(COMSIG_TURF_EXPOSE = /atom/proc/check_atmos_process)
 
-/datum/element/atmos_sensitive/Attach(datum/target)
+/datum/element/atmos_sensitive/Attach(datum/target, mapload)
 	if(!isatom(target)) //How
 		return ELEMENT_INCOMPATIBLE
 	var/atom/to_track = target
-	if(isopenturf(to_track.loc))
-		to_track.RegisterSignal(to_track.loc, COMSIG_TURF_EXPOSE, /atom/proc/check_atmos_process)
-	RegisterSignal(to_track, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+	to_track.AddElement(/datum/element/connect_loc, pass_on)
+	RegisterSignal(to_track, COMSIG_MOVABLE_MOVED, .proc/react_to_move)
+
+	if(!mapload && isopenturf(to_track.loc))
+		var/turf/open/new_open = to_track.loc
+		to_track.check_atmos_process(new_open, new_open.air, new_open.air.temperature) //Make sure you're properly registered
+
 	return ..()
 
 /datum/element/atmos_sensitive/Detach(datum/source)
 	var/atom/us = source
-	us.UnregisterSignal(get_turf(us), COMSIG_TURF_EXPOSE)
+	us.RemoveElement(/datum/element/connect_loc, pass_on)
 	if(us.flags_1 & ATMOS_IS_PROCESSING_1)
 		us.atmos_end()
 		SSair.atom_process -= us
 		us.flags_1 &= ~ATMOS_IS_PROCESSING_1
 	return ..()
 
-/datum/element/atmos_sensitive/proc/handle_move(datum/source, atom/movable/oldloc, direction, forced)
-	var/atom/microchipped_lad = source
-	microchipped_lad.UnregisterSignal(oldloc, COMSIG_TURF_EXPOSE)
-	if(isopenturf(microchipped_lad.loc))
-		var/turf/open/new_spot = microchipped_lad.loc
-		microchipped_lad.RegisterSignal(new_spot, COMSIG_TURF_EXPOSE, /atom/proc/check_atmos_process)
-		microchipped_lad.check_atmos_process(null, new_spot.air, new_spot.temperature) //Make sure you're properly registered
+/datum/element/atmos_sensitive/proc/react_to_move(datum/source, atom/movable/oldloc, direction, forced)
+	SIGNAL_HANDLER
+	var/atom/atom_source = source
+	if(isopenturf(atom_source.loc))
+		var/turf/open/new_open = atom_source.loc
+		atom_source.check_atmos_process(new_open, new_open.air, new_open.air.temperature) //Make sure you're properly registered
 
 /atom/proc/check_atmos_process(datum/source, datum/gas_mixture/air, exposed_temperature)
+	SIGNAL_HANDLER
 	if(should_atmos_process(air, exposed_temperature))
 		if(flags_1 & ATMOS_IS_PROCESSING_1)
 			return
 		SSair.atom_process += src
 		flags_1 |= ATMOS_IS_PROCESSING_1
 	else if(flags_1 & ATMOS_IS_PROCESSING_1)
-		atmos_end(air, exposed_temperature)
+		atmos_end()
 		SSair.atom_process -= src
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
 
@@ -51,7 +56,7 @@
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
 		return
 	if(!should_atmos_process(spot.air, spot.air.temperature)) //Things can change without a tile becoming active
-		atmos_end(spot.air, spot.air.temperature)
+		atmos_end()
 		SSair.atom_process -= src
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
 		return
@@ -59,7 +64,7 @@
 
 /turf/open/process_exposure()
 	if(!should_atmos_process(air, air.temperature))
-		atmos_end(air, air.temperature)
+		atmos_end()
 		SSair.atom_process -= src
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
 		return
@@ -69,11 +74,10 @@
 /atom/proc/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return FALSE
 
-
 ///This is your process() proc
 /atom/proc/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	return
 
-///What to do when our requirements are no longer met. Null inputs are possible
-/atom/proc/atmos_end(datum/gas_mixture/air, exposed_temperature)
+///What to do when our requirements are no longer met
+/atom/proc/atmos_end()
 	return

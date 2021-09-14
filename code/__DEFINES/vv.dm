@@ -17,6 +17,7 @@
 #define VV_NEW_TYPE "New Custom Typepath"
 #define VV_NEW_LIST "New List"
 #define VV_NULL "NULL"
+#define VV_INFINITY "Infinity"
 #define VV_RESTORE_DEFAULT "Restore to Default"
 #define VV_MARKED_DATUM "Marked Datum"
 #define VV_BITFIELD "Bitfield"
@@ -75,12 +76,15 @@
 #define VV_HK_CALLPROC "proc_call"
 #define VV_HK_MARK "mark"
 #define VV_HK_ADDCOMPONENT "addcomponent"
+#define VV_HK_REMOVECOMPONENT "removecomponent"
+#define VV_HK_MASS_REMOVECOMPONENT "massremovecomponent"
 #define VV_HK_MODIFY_TRAITS "modtraits"
 
 // /atom
 #define VV_HK_MODIFY_TRANSFORM "atom_transform"
 #define VV_HK_MODIFY_GREYSCALE "modify_greyscale"
 #define VV_HK_ADD_REAGENT "addreagent"
+#define VV_HK_SHOW_HIDDENPRINTS "show_hiddenprints"
 #define VV_HK_TRIGGER_EMP "empulse"
 #define VV_HK_TRIGGER_EXPLOSION "explode"
 #define VV_HK_AUTO_RENAME "auto_rename"
@@ -96,6 +100,9 @@
 #define VV_HK_MASS_DEL_TYPE "mass_delete_type"
 #define VV_HK_ARMOR_MOD "mod_obj_armor"
 
+// /obj/item
+#define VV_HK_ADD_FANTASY_AFFIX "add_fantasy_affix"
+
 // /mob
 #define VV_HK_GIB "gib"
 #define VV_HK_GIVE_SPELL "give_spell"
@@ -109,6 +116,7 @@
 #define VV_HK_DIRECT_CONTROL "direct_control"
 #define VV_HK_GIVE_DIRECT_CONTROL "give_direct_control"
 #define VV_HK_OFFER_GHOSTS "offer_ghosts"
+#define VV_HK_SDQL_SPELL "sdql_spell"
 
 // /mob/living/carbon
 #define VV_HK_MAKE_AI "aiify"

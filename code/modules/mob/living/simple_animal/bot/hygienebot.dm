@@ -46,23 +46,22 @@
 	var/datum/id_trim/job/jani_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/janitor]
 	access_card.add_access(jani_trim.access + jani_trim.wildcard_access)
 	prev_access = access_card.access.Copy()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /mob/living/simple_animal/bot/hygienebot/explode()
 	walk_to(src,0)
-	visible_message("<span class='boldannounce'>[src] blows apart in a foamy explosion!</span>")
+	visible_message(span_boldannounce("[src] blows apart in a foamy explosion!"))
 	do_sparks(3, TRUE, src)
 	on = FALSE
 	new /obj/effect/particle_effect/foam(loc)
 
 	..()
 
-/mob/living/simple_animal/bot/hygienebot/Cross(atom/movable/AM)
-	. = ..()
-	if(washing)
-		do_wash(AM)
-
-/mob/living/simple_animal/bot/hygienebot/Crossed(atom/movable/AM)
-	. = ..()
+/mob/living/simple_animal/bot/hygienebot/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(washing)
 		do_wash(AM)
 

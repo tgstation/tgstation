@@ -46,10 +46,9 @@
 
 	if(((_magic && magic) || (_holy && holy) || (_psychic && psychic)) && (!self || blocks_self))
 		protection_sources += parent
-		reaction?.Invoke(user, chargecost)
+		reaction?.Invoke(user, chargecost, parent)
 		charges -= chargecost
 		if(charges <= 0)
-			expire?.Invoke(user)
+			expire?.Invoke(user, parent)
 			qdel(src)
 		return COMPONENT_BLOCK_MAGIC
-

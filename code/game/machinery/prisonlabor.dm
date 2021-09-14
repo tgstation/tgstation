@@ -28,10 +28,10 @@
 
 /obj/machinery/plate_press/attackby(obj/item/I, mob/living/user, params)
 	if(!is_operational)
-		to_chat(user, "<span class='warning'>[src] has to be on to do this!</span>")
+		to_chat(user, span_warning("[src] has to be on to do this!"))
 		return FALSE
 	if(current_plate)
-		to_chat(user, "<span class='warning'>[src] already has a plate in it!</span>")
+		to_chat(user, span_warning("[src] already has a plate in it!"))
 		return FALSE
 	if(istype(I, /obj/item/stack/license_plates/empty))
 		var/obj/item/stack/license_plates/empty/plate = I
@@ -51,7 +51,7 @@
 
 	pressing = TRUE
 	update_appearance()
-	to_chat(user, "<span class='notice'>You start pressing a new license plate!</span>")
+	to_chat(user, span_notice("You start pressing a new license plate!"))
 
 	if(!do_after(user, 40, target = src))
 		pressing = FALSE
@@ -59,7 +59,7 @@
 		return FALSE
 
 	use_power(100)
-	to_chat(user, "<span class='notice'>You finish pressing a new license plate!</span>")
+	to_chat(user, span_notice("You finish pressing a new license plate!"))
 
 	pressing = FALSE
 	QDEL_NULL(current_plate)

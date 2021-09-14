@@ -114,14 +114,6 @@
 	///Ionpulse effect.
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
-	var/alarms = list(
-		"Motion" = list(),
-		"Fire" = list(),
-		"Atmosphere" = list(),
-		"Power" = list(),
-		"Camera" = list(),
-		"Burglar" = list())
-
 // ------------------------------------------ Misc
 	var/toner = 0
 	var/tonermax = 40
@@ -139,7 +131,8 @@
 
 	/// the last health before updating - to check net change in health
 	var/previous_health
-
+	/// Station alert datum for showing alerts UI
+	var/datum/station_alert/alert_control
 
 /***************************************************************************************
  *                          Defining specific kinds of robots

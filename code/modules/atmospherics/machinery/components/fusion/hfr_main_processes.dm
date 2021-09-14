@@ -39,17 +39,43 @@
 
 	critical_threshold_proximity_archived = critical_threshold_proximity
 	if(power_level == 6)
-		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 9e5 + internal_fusion.temperature) / 9e5, 1) - 2700) / 400, 0), 0)
+		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 9e5 + coolant_temperature) / 9e5, 1) - 2700) / 400, 0), 0)
 
-	if(internal_fusion.total_moles() < 2000 || power_level <= 5)
+	if(internal_fusion.total_moles() < HYPERTORUS_SUBCRITICAL_MOLES || power_level <= 5)
 		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 1200) / 200, 0), 0)
 
-	if(internal_fusion.total_moles() > 0 && internal_fusion.temperature < 5e5 && power_level <= 4)
-		critical_threshold_proximity = max(critical_threshold_proximity + min(log(10, internal_fusion.temperature) - 5, 0), 0)
+	if(internal_fusion.total_moles() > 0 && (airs[1].total_moles() && coolant_temperature < 5e5) || power_level <= 4)
+		critical_threshold_proximity = max(critical_threshold_proximity + min(log(10, max(coolant_temperature, 1)) - 5, 0), 0)
 
 	critical_threshold_proximity += max(iron_content - 0.35, 0)
 
 	critical_threshold_proximity = min(critical_threshold_proximity_archived + (DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
+
+	if(internal_fusion.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES)
+		critical_threshold_proximity += min(max(0.001 * internal_fusion.total_moles() - 10, 0), HYPERTORUS_MAX_MOLE_DAMAGE)
+
+	if(moderator_internal.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES && !check_cracked_parts())
+		var/obj/machinery/atmospherics/components/unary/hypertorus/part = create_crack()
+		if(moderator_internal.return_pressure() >= 10000 && moderator_internal.return_pressure() < 12000)
+			explosion(
+				origin = part,
+				devastation_range = 0,
+				heavy_impact_range = 0,
+				light_impact_range = 1,
+				flame_range = 3,
+				flash_range = 3
+				)
+			spill_gases(part, moderator_internal, ratio = 0.25)
+		else if(moderator_internal.return_pressure() >= 12000)
+			explosion(
+				origin = part,
+				devastation_range = 0,
+				heavy_impact_range = 1,
+				light_impact_range = 3,
+				flame_range = 5,
+				flash_range = 5
+				)
+			spill_gases(part, moderator_internal, ratio = 0.75)
 
 	check_alert()
 
@@ -111,24 +137,21 @@
 	linked_output.update_parents()
 	linked_moderator.update_parents()
 
-	if(!start_fuel)
+	//Check and stores the gases from the moderator input in the moderator internal gasmix
+	var/datum/gas_mixture/moderator_port = linked_moderator.airs[1]
+	if(start_moderator && moderator_port.total_moles())
+		moderator_internal.merge(moderator_port.remove(moderator_injection_rate * 0.1))
+		linked_moderator.update_parents()
+
+	//Check if the fuels are present and move them inside the fuel internal gasmix
+	if(!start_fuel || !selected_fuel || !check_gas_requirements())
 		return
 
-	if(!selected_fuel)
-		return
-
-	//Start by storing the gasmix of the inputs inside the internal_fusion and moderator_internal
-	if(!check_gas_requirements())
-		return
-
+	var/datum/gas_mixture/fuel_port = linked_input.airs[1]
 	for(var/gas_type in selected_fuel.requirements)
 		internal_fusion.assert_gas(gas_type)
-		internal_fusion.merge(linked_input.airs[1].remove_specific(gas_type, linked_input.airs[1].gases[gas_type][MOLES] * fuel_injection_rate * 0.1))
-
-	if(!linked_moderator.airs[1].total_moles())
-		return
-
-	moderator_internal.merge(linked_moderator.airs[1].remove(moderator_injection_rate * 0.1))
+		internal_fusion.merge(fuel_port.remove_specific(gas_type, fuel_port.gases[gas_type][MOLES] * fuel_injection_rate * 0.1))
+		linked_input.update_parents()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/process(delta_time)
 	fusion_process(delta_time)
@@ -344,7 +367,7 @@
 		var/fuel_consumption = fuel_consumption_rate * delta_time
 
 		for(var/gas_id in selected_fuel.requirements)
-			internal_fusion.gases[gas_id][MOLES] -= min(fuel_list[gas_id], fuel_consumption * 0.85 / selected_fuel.fuel_consumption_multiplier)
+			internal_fusion.gases[gas_id][MOLES] -= min(fuel_list[gas_id], fuel_consumption * 0.85 * selected_fuel.fuel_consumption_multiplier)
 		for(var/gas_id in selected_fuel.primary_products)
 			internal_fusion.gases[gas_id][MOLES] += fuel_consumption * 0.5
 		//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
@@ -489,22 +512,59 @@
 	//High power fusion might create other matter other than helium, iron is dangerous inside the machine, damage can be seen
 	if(moderator_internal.total_moles() > 0)
 		moderator_internal.remove(moderator_internal.total_moles() * (1 - (1 - 0.0005 * power_level) ** delta_time))
-	if(power_level > 4 && prob(17 * power_level))//at power level 6 is 100%
-		iron_content += 0.005 * delta_time
+	if(power_level > 4 && prob(IRON_CHANCE_PER_FUSION_LEVEL * power_level))//at power level 6 is 100%
+		iron_content += IRON_ACCUMULATED_PER_SECOND * delta_time
 	if(iron_content > 0 && power_level <= 4 && prob(25 / (power_level + 1)))
 		iron_content = max(iron_content - 0.01 * delta_time, 0)
 	iron_content = clamp(iron_content, 0, 1)
 
-	//Gases can be removed from the moderator internal by using the interface. Helium and antinoblium inside the fusion mix will get always removed at a fixed rate
-	if(waste_remove && power_level <= 5)
-		var/filtering = TRUE
-		if(!ispath(filter_type))
-			if(filter_type)
-				filter_type = gas_id2path(filter_type)
-			else
-				filtering = FALSE
-		if(filtering && moderator_internal.gases[filter_type])
-			var/datum/gas_mixture/removed = moderator_internal.remove_specific(filter_type, 100 * delta_time)
+	if(power_level >= 4)
+		if(moderator_list[/datum/gas/bz] > (150 / power_level))
+			var/obj/machinery/hypertorus/corner/picked_corner = pick(corners)
+			picked_corner.loc.fire_nuclear_particle(turn(picked_corner.dir, 180))
+
+		if(moderator_list[/datum/gas/antinoblium] > 50 || critical_threshold_proximity > 500)
+			var/zap_number = power_level - 2
+
+			if(critical_threshold_proximity > 650 && prob(20))
+				zap_number += 1
+
+			var/cutoff = 1500
+			cutoff = clamp(3000 - (power_level * (internal_fusion.total_moles() * 0.45)), 450, 3000)
+
+			var/zaps_aspect = DEFAULT_ZAP_ICON_STATE
+			var/flags = ZAP_SUPERMATTER_FLAGS
+			switch(power_level)
+				if(5)
+					zaps_aspect = SLIGHTLY_CHARGED_ZAP_ICON_STATE
+					flags |= (ZAP_MOB_DAMAGE)
+				if(6)
+					zaps_aspect = OVER_9000_ZAP_ICON_STATE
+					flags |= (ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE)
+
+			playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
+			for(var/i in 1 to zap_number)
+				supermatter_zap(src, 5, power_level * 300, flags, zap_cutoff = cutoff, power_level = src.power_level * 1000, zap_icon = zaps_aspect)
+
+	if(moderator_list[/datum/gas/oxygen] > 150)
+		if(iron_content > 0)
+			var/max_iron_removable = IRON_OXYGEN_HEAL_PER_SECOND
+			var/iron_removed = min(max_iron_removable * delta_time, iron_content)
+			iron_content -= iron_removed
+			moderator_internal.gases[/datum/gas/oxygen] -= iron_removed * OXYGEN_MOLES_CONSUMED_PER_IRON_HEAL
+
+	if(prob(critical_threshold_proximity / 15))
+		var/grav_range = round(log(2.5, critical_threshold_proximity))
+		for(var/mob/alive_mob in GLOB.alive_mob_list)
+			if(alive_mob.z != z || get_dist(alive_mob, src) > grav_range || alive_mob.mob_negates_gravity())
+				continue
+			step_towards(alive_mob, loc)
+
+	//Gases can be removed from the moderator internal by using the interface.
+	if(waste_remove)
+		var/filtering_amount = moderator_scrubbing.len
+		for(var/gas in moderator_internal.gases & moderator_scrubbing)
+			var/datum/gas_mixture/removed = moderator_internal.remove_specific(gas, (moderator_filtering_rate / filtering_amount) * delta_time)
 			if(removed)
 				linked_output.airs[1].merge(removed)
 
@@ -513,9 +573,6 @@
 			if(internal_fusion.gases[gas_id][MOLES] > 0)
 				internal_remove = internal_fusion.remove_specific(gas_id, internal_fusion.gases[gas_id][MOLES] * (1 - (1 - 0.25) ** delta_time))
 				linked_output.airs[1].merge(internal_remove)
-		if(internal_fusion.gases[/datum/gas/antinoblium][MOLES] > 0)
-			internal_remove = internal_fusion.remove_specific(/datum/gas/antinoblium, internal_fusion.gases[/datum/gas/antinoblium][MOLES] * (1 - (1 - 0.25) ** delta_time))
-			linked_output.airs[1].merge(internal_remove)
 		internal_fusion.garbage_collect()
 		moderator_internal.garbage_collect()
 

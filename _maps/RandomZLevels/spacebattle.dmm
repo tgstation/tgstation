@@ -291,7 +291,7 @@
 /area/awaymission/spacebattle/syndicate3)
 "bt" = (
 /obj/structure/table/reinforced,
-/obj/item/melee/transforming/energy/sword/saber/red,
+/obj/item/melee/energy/sword/saber/red,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "bu" = (
@@ -1152,7 +1152,7 @@
 /area/awaymission/spacebattle/cruiser)
 "eW" = (
 /obj/effect/mob_spawn/human/syndicatesoldier,
-/obj/item/melee/transforming/energy/sword/saber/red,
+/obj/item/melee/energy/sword/saber/red,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
@@ -1654,10 +1654,9 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "gr" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/east{
 	id = "spacebattlestorage";
-	name = "Secure Storage";
-	pixel_x = 24
+	name = "Secure Storage"
 	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
@@ -2347,7 +2346,7 @@
 /turf/closed/wall/mineral/plasma,
 /area/awaymission/spacebattle/secret)
 "jm" = (
-/turf/open/floor/iron/rockvault/alien,
+/turf/open/floor/vault/alien,
 /area/awaymission/spacebattle/secret)
 "jn" = (
 /obj/machinery/door/airlock/plasma,
@@ -2355,7 +2354,7 @@
 /area/awaymission/spacebattle/secret)
 "jo" = (
 /obj/item/clothing/suit/space/hardsuit/wizard,
-/turf/open/floor/iron/rockvault/alien,
+/turf/open/floor/vault/alien,
 /area/awaymission/spacebattle/secret)
 "jp" = (
 /obj/vehicle/sealed/mecha/combat/gygax,

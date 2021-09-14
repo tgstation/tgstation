@@ -65,6 +65,7 @@
 
 /obj/item/clothing/suit/space/chronos/Destroy()
 	dropped()
+	QDEL_NULL(teleport_now)
 	return ..()
 
 /obj/item/clothing/suit/space/chronos/emp_act(severity)
@@ -75,8 +76,8 @@
 	switch(severity)
 		if(1)
 			if(activated && user && ishuman(user) && (user.wear_suit == src))
-				to_chat(user, "<span class='danger'>E:FATAL:RAM_READ_FAIL\nE:FATAL:STACK_EMPTY\nE:FATAL:READ_NULL_POINT\nE:FATAL:PWR_BUS_OVERLOAD</span>")
-				to_chat(user, "<span class='userdanger'>An electromagnetic pulse disrupts your [name] and violently tears you out of time-bluespace!</span>")
+				to_chat(user, span_danger("E:FATAL:RAM_READ_FAIL\nE:FATAL:STACK_EMPTY\nE:FATAL:READ_NULL_POINT\nE:FATAL:PWR_BUS_OVERLOAD"))
+				to_chat(user, span_userdanger("An electromagnetic pulse disrupts your [name] and violently tears you out of time-bluespace!"))
 				user.emote("scream")
 			deactivate(1, 1)
 
@@ -128,7 +129,7 @@
 		for(var/exposed_item in exposed)
 			var/obj/item/exposed_I = exposed_item
 			if(exposed_I && !(exposed_I.type in chronosafe_items) && user.dropItemToGround(exposed_I))
-				to_chat(user, "<span class='notice'>Your [exposed_I.name] got left behind.</span>")
+				to_chat(user, span_notice("Your [exposed_I.name] got left behind."))
 
 		user.extinguish_mob()
 
@@ -329,6 +330,10 @@
 	button_icon_state = "chrono_phase"
 	check_flags = AB_CHECK_CONSCIOUS //|AB_CHECK_INSIDE
 	var/obj/item/clothing/suit/space/chronos/chronosuit = null
+
+/datum/action/innate/chrono_teleport/Destroy()
+	chronosuit = null
+	return ..()
 
 /datum/action/innate/chrono_teleport/IsAvailable()
 	return (chronosuit && chronosuit.activated && chronosuit.camera && !chronosuit.teleporting)

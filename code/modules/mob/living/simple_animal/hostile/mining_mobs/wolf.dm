@@ -49,7 +49,7 @@
 		retreat_distance = initial(retreat_distance)
 		return
 	if(!retreat_message_said && target)
-		visible_message("<span class='danger'>The [name] tries to flee from [target]!</span>")
+		visible_message(span_danger("The [name] tries to flee from [target]!"))
 		retreat_message_said = TRUE
 	retreat_distance = 30
 

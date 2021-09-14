@@ -32,7 +32,7 @@
 
 /obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
 	if(istype(I) && istype(I.buffer,/obj/machinery/piratepad/civilian))
-		to_chat(user, "<span class='notice'>You link [src] with [I.buffer] in [I] buffer.</span>")
+		to_chat(user, span_notice("You link [src] with [I.buffer] in [I] buffer."))
 		pad = I.buffer
 		return TRUE
 
@@ -104,7 +104,7 @@
 		var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
 		reward.set_up(curr_bounty, inserted_scan_id)
 
-	pad.visible_message("<span class='notice'>[pad] activates!</span>")
+	pad.visible_message(span_notice("[pad] activates!"))
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
 	playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
@@ -117,10 +117,10 @@
 	var/datum/bank_account/pot_acc = inserted_scan_id.registered_account
 	if((pot_acc.civilian_bounty && ((world.time) < pot_acc.bounty_timer + 5 MINUTES)) || pot_acc.bounties)
 		var/curr_time = round(((pot_acc.bounty_timer + (5 MINUTES))-world.time)/ (1 MINUTES), 0.01)
-		to_chat(usr, "<span class='warning'>Internal ID network spools coiling, try again in [curr_time] minutes!</span>")
+		to_chat(usr, span_warning("Internal ID network spools coiling, try again in [curr_time] minutes!"))
 		return FALSE
 	if(!pot_acc.account_job)
-		to_chat(usr, "<span class='warning'>The console smartly rejects your ID card, as it lacks a job assignment!</span>")
+		to_chat(usr, span_warning("The console smartly rejects your ID card, as it lacks a job assignment!"))
 		return FALSE
 	var/list/datum/bounty/crumbs = list(random_bounty(pot_acc.account_job.bounty_types), // We want to offer 2 bounties from their appropriate job catagories
 										random_bounty(pot_acc.account_job.bounty_types), // and 1 guarenteed assistant bounty if the other 2 suck.
@@ -129,7 +129,7 @@
 	pot_acc.bounties = crumbs
 
 /obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(choice)
-	if(!inserted_scan_id?.registered_account)
+	if(!inserted_scan_id || !inserted_scan_id.registered_account || !inserted_scan_id.registered_account.bounties || !inserted_scan_id.registered_account.bounties[choice])
 		playsound(loc, 'sound/machines/synth_no.ogg', 40 , TRUE)
 		return
 	inserted_scan_id.registered_account.civilian_bounty = inserted_scan_id.registered_account.bounties[choice]
@@ -216,8 +216,8 @@
 		else
 			id_eject(user, target)
 
-	user.visible_message("<span class='notice'>[user] inserts \the [card_to_insert] into \the [src].</span>",
-						"<span class='notice'>You insert \the [card_to_insert] into \the [src].</span>")
+	user.visible_message(span_notice("[user] inserts \the [card_to_insert] into \the [src]."),
+						span_notice("You insert \the [card_to_insert] into \the [src]."))
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	updateUsrDialog()
 	return TRUE
@@ -225,14 +225,14 @@
 ///Removes A stored ID card.
 /obj/machinery/computer/piratepad_control/civilian/proc/id_eject(mob/user, obj/target)
 	if(!target)
-		to_chat(user, "<span class='warning'>That slot is empty!</span>")
+		to_chat(user, span_warning("That slot is empty!"))
 		return FALSE
 	else
 		target.forceMove(drop_location())
 		if(!issilicon(user) && Adjacent(user))
 			user.put_in_hands(target)
-		user.visible_message("<span class='notice'>[user] gets \the [target] from \the [src].</span>", \
-							"<span class='notice'>You get \the [target] from \the [src].</span>")
+		user.visible_message(span_notice("[user] gets \the [target] from \the [src]."), \
+							span_notice("You get \the [target] from \the [src]."))
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 		inserted_scan_id = null
 		updateUsrDialog()
@@ -287,9 +287,9 @@
 /obj/item/bounty_cube/examine()
 	. = ..()
 	if(speed_bonus)
-		. += "<span class='notice'><b>[time2text(next_nag_time - world.time,"mm:ss")]</b> remains until <b>[bounty_value * speed_bonus]</b> credit speedy delivery bonus lost.</span>"
+		. += span_notice("<b>[time2text(next_nag_time - world.time,"mm:ss")]</b> remains until <b>[bounty_value * speed_bonus]</b> credit speedy delivery bonus lost.")
 	if(handler_tip && !bounty_handler_account)
-		. += "<span class='notice'>Scan this in the cargo shuttle with an export scanner to register your bank account for the <b>[bounty_value * handler_tip]</b> credit handling tip.</span>"
+		. += span_notice("Scan this in the cargo shuttle with an export scanner to register your bank account for the <b>[bounty_value * handler_tip]</b> credit handling tip.")
 
 /obj/item/bounty_cube/process(delta_time)
 	//if our nag cooldown has finished and we aren't on Centcom or in transit, then nag
@@ -335,7 +335,7 @@
 
 /obj/item/bounty_cube/debug_cube/attack_self(mob/user)
 	if(!isliving(user))
-		to_chat(user, "<span class='warning'>You aren't eligible to use this!</span>")
+		to_chat(user, span_warning("You aren't eligible to use this!"))
 		return ..()
 
 	if(!set_up)
@@ -344,7 +344,7 @@
 			set_up(random_bounty(), squeezer.get_idcard())
 			set_up = TRUE
 			return ..()
-		to_chat(user, "<span class='notice'>It can't detect your bank account.</span>")
+		to_chat(user, span_notice("It can't detect your bank account."))
 
 	return ..()
 
@@ -357,7 +357,7 @@
 	var/uses = 2
 
 /obj/item/civ_bounty_beacon/attack_self()
-	loc.visible_message("<span class='warning'>\The [src] begins to beep loudly!</span>")
+	loc.visible_message(span_warning("\The [src] begins to beep loudly!"))
 	addtimer(CALLBACK(src, .proc/launch_payload), 1 SECONDS)
 
 /obj/item/civ_bounty_beacon/proc/launch_payload()

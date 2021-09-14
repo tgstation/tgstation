@@ -17,9 +17,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/powered/bathhouse)
 "e" = (
-/obj/structure/mirror{
-	pixel_y = 28
-	},
+/obj/structure/mirror/directional/north,
 /obj/structure/sink{
 	pixel_y = 20
 	},
@@ -38,9 +36,7 @@
 /area/ruin/powered/bathhouse)
 "h" = (
 /obj/structure/table/wood,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /obj/item/food/spaghetti/pastatomato{
 	desc = "Just how mom used to make it.";
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/tomatojuice = 10, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/pax = 5, /datum/reagent/medicine/psicodine = 10, /datum/reagent/medicine/morphine = 5);
@@ -79,7 +75,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/bathhouse)
 "p" = (
-/obj/machinery/light/dim,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/ruin/powered/bathhouse)
 "q" = (

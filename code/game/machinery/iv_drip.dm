@@ -16,7 +16,7 @@
 	///whether we feed slower
 	var/dripfeed = FALSE
 	///Internal beaker
-	var/obj/item/reagent_containers/beaker
+	var/obj/item/reagent_container
 	///Set false to block beaker use and instead use an internal reagent holder
 	var/use_internal_storage = FALSE
 	///Typecache of containers we accept
@@ -33,7 +33,7 @@
 
 /obj/machinery/iv_drip/Destroy()
 	attached = null
-	QDEL_NULL(beaker)
+	QDEL_NULL(reagent_container)
 	return ..()
 
 /obj/machinery/iv_drip/update_icon_state()
@@ -46,7 +46,7 @@
 /obj/machinery/iv_drip/update_overlays()
 	. = ..()
 
-	if(!beaker)
+	if(!reagent_container)
 		return
 
 	. += attached ? "beakeractive" : "beakeridle"
@@ -81,35 +81,35 @@
 		return
 
 	if(attached)
-		visible_message("<span class='warning'>[attached] is detached from [src].</span>")
+		visible_message(span_warning("[attached] is detached from [src]."))
 		attached = null
 		update_appearance()
 		return
 
 	if(!target.has_dna())
-		to_chat(usr, "<span class='danger'>The drip beeps: Warning, incompatible creature!</span>")
+		to_chat(usr, span_danger("The drip beeps: Warning, incompatible creature!"))
 		return
 
 	if(Adjacent(target) && usr.Adjacent(target))
 		if(get_reagent_holder())
 			attach_iv(target, usr)
 		else
-			to_chat(usr, "<span class='warning'>There's nothing attached to the IV drip!</span>")
+			to_chat(usr, span_warning("There's nothing attached to the IV drip!"))
 
 
 /obj/machinery/iv_drip/attackby(obj/item/W, mob/user, params)
 	if(use_internal_storage)
 		return ..()
 
-	if(is_type_in_typecache(W, drip_containers))
-		if(beaker)
-			to_chat(user, "<span class='warning'>There is already a reagent container loaded!</span>")
+	if(is_type_in_typecache(W, drip_containers) || IS_EDIBLE(W))
+		if(reagent_container)
+			to_chat(user, span_warning("[reagent_container] is already loaded on [src]!"))
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
-		beaker = W
-		to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
-		user.log_message("attached a [W] to [src] at [AREACOORD(src)] containing ([beaker.reagents.log_list()])", LOG_ATTACK)
+		reagent_container = W
+		to_chat(user, span_notice("You attach [W] to [src]."))
+		user.log_message("attached a [W] to [src] at [AREACOORD(src)] containing ([reagent_container.reagents.log_list()])", LOG_ATTACK)
 		add_fingerprint(user)
 		update_appearance()
 		return
@@ -126,7 +126,7 @@
 		return PROCESS_KILL
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
-		to_chat(attached, "<span class='userdanger'>The IV drip needle is ripped out of you!</span>")
+		to_chat(attached, span_userdanger("The IV drip needle is ripped out of you!"))
 		attached.apply_damage(3, BRUTE, pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
 		detach_iv()
 		return PROCESS_KILL
@@ -139,7 +139,7 @@
 				var/transfer_amount = 5
 				if (dripfeed)
 					transfer_amount = 1
-				if(istype(beaker, /obj/item/reagent_containers/blood))
+				if(istype(reagent_container, /obj/item/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount *= 2
 				target_reagents.trans_to(attached, transfer_amount * delta_time * 0.5, methods = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
@@ -152,14 +152,14 @@
 			// If the beaker is full, ping
 			if(!amount)
 				if(prob(5))
-					visible_message("<span class='hear'>[src] pings.</span>")
+					visible_message(span_hear("[src] pings."))
 				return
 
 			// If the human is losing too much blood, beep.
 			if(attached.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
-				visible_message("<span class='hear'>[src] beeps loudly.</span>")
+				visible_message(span_hear("[src] beeps loudly."))
 				playsound(loc, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-			var/atom/movable/target = use_internal_storage ? src : beaker
+			var/atom/movable/target = use_internal_storage ? src : reagent_container
 			attached.transfer_blood_to(target, amount)
 			update_appearance()
 
@@ -170,26 +170,30 @@
 	if(!ishuman(user))
 		return
 	if(attached)
-		visible_message("<span class='notice'>[attached] is detached from [src].</span>")
+		visible_message(span_notice("[attached] is detached from [src]."))
 		detach_iv()
 		return
-	else if(beaker)
+	else if(reagent_container)
 		eject_beaker(user)
 	else
 		toggle_mode()
 
 /obj/machinery/iv_drip/attack_hand_secondary(mob/user, modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
 	if(dripfeed)
 		dripfeed = FALSE
-		to_chat(usr, "<span class='notice'>You loosen the valve to speed up the [src].</span>")
+		to_chat(usr, span_notice("You loosen the valve to speed up the [src]."))
 	else
 		dripfeed = TRUE
-		to_chat(usr, "<span class='notice'>You tighten the valve to slowly drip-feed the contents of [src].</span>")
+		to_chat(usr, span_notice("You tighten the valve to slowly drip-feed the contents of [src]."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 ///called when an IV is attached
 /obj/machinery/iv_drip/proc/attach_iv(mob/living/target, mob/user)
-	usr.visible_message("<span class='warning'>[usr] attaches [src] to [target].</span>", "<span class='notice'>You attach [src] to [target].</span>")
+	usr.visible_message(span_warning("[usr] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
 	var/datum/reagents/container = get_reagent_holder()
 	log_combat(usr, target, "attached", src, "containing: ([container.log_list()])")
 	add_fingerprint(usr)
@@ -207,7 +211,7 @@
 	update_appearance()
 
 /obj/machinery/iv_drip/proc/get_reagent_holder()
-	return use_internal_storage ? reagents : beaker?.reagents
+	return use_internal_storage ? reagents : reagent_container?.reagents
 
 /obj/machinery/iv_drip/verb/eject_beaker()
 	set category = "Object"
@@ -215,14 +219,15 @@
 	set src in view(1)
 
 	if(!isliving(usr))
-		to_chat(usr, "<span class='warning'>You can't do that!</span>")
+		to_chat(usr, span_warning("You can't do that!"))
 		return
-
+	if (!usr.canUseTopic())
+		return
 	if(usr.incapacitated())
 		return
-	if(beaker)
-		beaker.forceMove(drop_location())
-		beaker = null
+	if(reagent_container)
+		reagent_container.forceMove(drop_location())
+		reagent_container = null
 		update_appearance()
 
 /obj/machinery/iv_drip/verb/toggle_mode()
@@ -231,13 +236,14 @@
 	set src in view(1)
 
 	if(!isliving(usr))
-		to_chat(usr, "<span class='warning'>You can't do that!</span>")
+		to_chat(usr, span_warning("You can't do that!"))
 		return
-
+	if (!usr.canUseTopic())
+		return
 	if(usr.incapacitated())
 		return
 	mode = !mode
-	to_chat(usr, "<span class='notice'>The IV drip is now [mode ? "injecting" : "taking blood"].</span>")
+	to_chat(usr, span_notice("The IV drip is now [mode ? "injecting" : "taking blood"]."))
 	update_appearance()
 
 /obj/machinery/iv_drip/examine(mob/user)
@@ -247,17 +253,17 @@
 
 	. += "[src] is [mode ? "injecting" : "taking blood"]."
 
-	if(beaker)
-		if(beaker.reagents && beaker.reagents.reagent_list.len)
-			. += "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>"
+	if(reagent_container)
+		if(reagent_container.reagents && reagent_container.reagents.reagent_list.len)
+			. += span_notice("Attached is \a [reagent_container] with [reagent_container.reagents.total_volume] units of liquid.")
 		else
-			. += "<span class='notice'>Attached is an empty [beaker.name].</span>"
+			. += span_notice("Attached is an empty [reagent_container.name].")
 	else if(use_internal_storage)
-		. += "<span class='notice'>It has an internal chemical storage.</span>"
+		. += span_notice("It has an internal chemical storage.")
 	else
-		. += "<span class='notice'>No chemicals are attached.</span>"
+		. += span_notice("No chemicals are attached.")
 
-	. += "<span class='notice'>[attached ? attached : "No one"] is attached.</span>"
+	. += span_notice("[attached ? attached : "No one"] is attached.")
 
 
 /obj/machinery/iv_drip/saline
@@ -269,7 +275,7 @@
 
 /obj/machinery/iv_drip/saline/Initialize(mapload)
 	. = ..()
-	beaker = new /obj/item/reagent_containers/glass/saline(src)
+	reagent_container = new /obj/item/reagent_containers/glass/saline(src)
 
 /obj/machinery/iv_drip/saline/ComponentInitialize()
 	. = ..()

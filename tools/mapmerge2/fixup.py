@@ -96,7 +96,7 @@ def main(repo):
                     converted[path] = merge_map(head_files[path], dmm.DMM.from_bytes(data))
         if len(working_commit.parents) != 1:
             print("A merge commit was encountered before good versions of these maps were found:")
-            print("\n".join(f"    {x}" for x in head_files.keys() - base_files.keys()))
+            print("\n".join(f"    {x}" for x in head_files.keys() - converted.keys()))
             return 1
         working_commit = working_commit.parents[0]
 

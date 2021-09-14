@@ -61,10 +61,6 @@
 #define CONTRACT_UPLINK_PAGE_CONTRACTS "CONTRACTS"
 #define CONTRACT_UPLINK_PAGE_HUB "HUB"
 
-///It is faster as a macro than a proc
-#define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
-#define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
-
 GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/basic,/datum/eldritch_knowledge/living_heart,/datum/eldritch_knowledge/codex_cicatrix))
 
 
@@ -75,6 +71,17 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 #define PATH_FLESH "Flesh"
 #define PATH_VOID "Void"
 
+/// Forces the blob to place the core where they currently are, ignoring any checks.
+#define BLOB_FORCE_PLACEMENT -1
+/// Normal blob placement, does the regular checks to make sure the blob isn't placing itself in an invalid location
+#define BLOB_NORMAL_PLACEMENT 0
+/// Selects a random location for the blob to be placed.
+#define BLOB_RANDOM_PLACEMENT 1
+
+#define CONSTRUCT_JUGGERNAUT "Juggernaut"
+#define CONSTRUCT_WRAITH "Wraith"
+#define CONSTRUCT_ARTIFICER "Artificer"
+
 
 /// How many telecrystals a normal traitor starts with
 #define TELECRYSTALS_DEFAULT 20
@@ -84,3 +91,100 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 /// TC to charge someone if they get a free implant through choice or
 /// because they have nothing else that supports an implant.
 #define UPLINK_IMPLANT_TELECRYSTAL_COST 4
+
+/// The Classic Wizard wizard loadout.
+#define WIZARD_LOADOUT_CLASSIC "loadout_classic"
+/// Mjolnir's Power wizard loadout.
+#define WIZARD_LOADOUT_MJOLNIR "loadout_hammer"
+/// Fantastical Army wizard loadout.
+#define WIZARD_LOADOUT_WIZARMY "loadout_army"
+/// Soul Tapper wizard loadout.
+#define WIZARD_LOADOUT_SOULTAP "loadout_tap"
+/// Convenient list of all wizard loadouts for unit testing.
+#define ALL_WIZARD_LOADOUTS list( \
+	WIZARD_LOADOUT_CLASSIC, \
+	WIZARD_LOADOUT_MJOLNIR, \
+	WIZARD_LOADOUT_WIZARMY, \
+	WIZARD_LOADOUT_SOULTAP, \
+)
+
+///File to the traitor flavor
+#define TRAITOR_FLAVOR_FILE "traitor_flavor.json"
+
+///employers that are from the syndicate
+GLOBAL_LIST_INIT(syndicate_employers, list(
+	"Tiger Cooperative Fanatic",
+	"Waffle Corporation Terrorist",
+	"Animal Rights Consortium",
+	"Bee Liberation Front",
+	"Cybersun Industries",
+	"MI13",
+	"Gorlex Marauders",
+	"Donk Corporation",
+	"Waffle Corporation",
+))
+///employers that are from nanotrasen
+GLOBAL_LIST_INIT(nanotrasen_employers, list(
+	"Gone Postal",
+	"Internal Affairs Agent",
+	"Corporate Climber",
+	"Legal Trouble"
+))
+
+///employers who hire agents to do the hijack
+GLOBAL_LIST_INIT(hijack_employers, list(
+	"Tiger Cooperative Fanatic",
+	"Waffle Corporation Terrorist",
+	"Animal Rights Consortium",
+	"Bee Liberation Front",
+	"Gone Postal"
+))
+
+///employers who hire agents to do a task and escape... or martyrdom. whatever
+GLOBAL_LIST_INIT(normal_employers, list(
+	"Cybersun Industries",
+	"MI13",
+	"Gorlex Marauders",
+	"Donk Corporation",
+	"Waffle Corporation",
+	"Internal Affairs Agent",
+	"Corporate Climber",
+	"Legal Trouble"
+))
+
+///how long traitors will have to wait before an unreasonable objective is rerolled
+#define OBJECTIVE_REROLL_TIMER 10 MINUTES
+
+///all the employers that are syndicate
+#define FACTION_SYNDICATE "syndicate"
+///all the employers that are nanotrasen
+#define FACTION_NANOTRASEN "nanotrasen"
+
+#define UPLINK_THEME_SYNDICATE "syndicate"
+
+#define UPLINK_THEME_UNDERWORLD_MARKET "neutral"
+
+/// Checks if the given mob is a blood cultist
+#define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
+
+/// Checks if the given mind is a leader of the monkey antagonists
+#define IS_MONKEY_LEADER(mind) mind?.has_antag_datum(/datum/antagonist/monkey/leader)
+
+/// Checks if the given mind is a monkey antagonist
+#define IS_INFECTED_MONKEY(mind) mind?.has_antag_datum(/datum/antagonist/monkey)
+
+/// Checks if the given mob is a nuclear operative
+#define IS_NUKE_OP(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/nukeop))
+
+#define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
+
+#define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+
+/// Checks if the given mob is a wizard
+#define IS_WIZARD(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/wizard))
+
+/// Checks if the given mob is a revolutionary. Will return TRUE for rev heads as well.
+#define IS_REVOLUTIONARY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/rev))
+
+/// Checks if the given mob is a head revolutionary.
+#define IS_HEAD_REVOLUTIONARY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/rev/head))

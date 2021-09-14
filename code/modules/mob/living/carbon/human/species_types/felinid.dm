@@ -1,7 +1,7 @@
 //Subtype of human
 /datum/species/human/felinid
 	name = "Felinid"
-	id = "felinid"
+	id = SPECIES_FELINE
 	say_mod = "meows"
 	limbs_id = "human"
 
@@ -11,7 +11,7 @@
 	mutant_organs = list(/obj/item/organ/tail/cat)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/felinid
-	disliked_food = CLOTH
+	disliked_food = GROSS | RAW | CLOTH
 	var/original_felinid = TRUE //set to false for felinids created by mass-purrbation
 	payday_modifier = 0.75
 	ass_image = 'icons/ass/asscat.png'
@@ -100,7 +100,7 @@
 		kitty_ears.Insert(H, TRUE, FALSE) //Gives nonhumans cat tail and ears
 		kitty_tail.Insert(H, TRUE, FALSE)
 	if(!silent)
-		to_chat(H, "<span class='boldnotice'>Something is nya~t right.</span>")
+		to_chat(H, span_boldnotice("Something is nya~t right."))
 		playsound(get_turf(H), 'sound/effects/meow1.ogg', 50, TRUE, -1)
 
 /proc/purrbation_remove(mob/living/carbon/human/H, silent = FALSE)
@@ -122,4 +122,4 @@
 				var/obj/item/organ/new_ears = new target_species.mutantears
 				new_ears.Insert(H, TRUE, FALSE)
 	if(!silent)
-		to_chat(H, "<span class='boldnotice'>You are no longer a cat.</span>")
+		to_chat(H, span_boldnotice("You are no longer a cat."))

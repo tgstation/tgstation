@@ -22,7 +22,6 @@
 	name = "peapod"
 	desc = "Finally... peas."
 	icon_state = "peas"
-	bite_consumption_mod = 1
 	foodtypes = VEGETABLES
 	tastes = list ("peas" = 1, "chalky saltiness" = 1)
 	wine_power = 50
@@ -54,7 +53,6 @@
 	name = "pod of laughin' peas"
 	desc = "Ridens Cicer, guaranteed to improve your mood dramatically upon consumption!"
 	icon_state = "laughpeas"
-	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
 	juice_results = list (/datum/reagent/consumable/laughsyrup = 0)
 	tastes = list ("a prancing rabbit" = 1) //Vib Ribbon sends her regards.. wherever she is.
@@ -81,13 +79,14 @@
 	reagents_add = list (/datum/reagent/pax = 0.1, /datum/reagent/drug/happiness = 0.1, /datum/reagent/consumable/nutriment = 0.15)
 	rarity = 50 // This absolutely will make even the most hardened Syndicate Operators relax.
 	graft_gene = /datum/plant_gene/trait/glow/blue
+	mutatelist = null
 
 /obj/item/food/grown/peace
 	seed = /obj/item/seeds/peas/laugh/peace
 	name = "cluster of world peas"
 	desc = "A plant discovered through extensive genetic engineering, and iterative graft work. It's rumored to bring peace to any who consume it. In the wider AgSci community, it's attained the nickname of 'Pax Mundi'." //at last... world peas. I'm not sorry.
 	icon_state = "worldpeas"
-	bite_consumption_mod = 4
+	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
 	tastes = list ("numbing tranquility" = 2, "warmth" = 1)
 	wine_power = 100

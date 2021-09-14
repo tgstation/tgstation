@@ -33,7 +33,7 @@
 	hardware_flag = machinery_computer.hardware_flag
 	max_hardware_size = machinery_computer.max_hardware_size
 	steel_sheet_cost = machinery_computer.steel_sheet_cost
-	obj_integrity = machinery_computer.obj_integrity
+	update_integrity(machinery_computer.get_integrity())
 	max_integrity = machinery_computer.max_integrity
 	integrity_failure = machinery_computer.integrity_failure
 	base_active_power_usage = machinery_computer.base_active_power_usage
@@ -57,4 +57,4 @@
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext)
 		return
 	playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-	machinery_computer.visible_message("<span class='notice'>The [src] displays a [caller.filedesc] notification: [alerttext]</span>")
+	machinery_computer.visible_message(span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]"))

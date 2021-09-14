@@ -319,3 +319,13 @@
 	)
 	result = /obj/item/food/soup/indian_curry
 	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/oatmeal
+	name = "Oatmeal"
+	reqs = list(
+		/datum/reagent/consumable/milk = 10,
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/food/grown/oat = 1
+	)
+	result = /obj/item/food/soup/oatmeal
+	subcategory = CAT_SOUP

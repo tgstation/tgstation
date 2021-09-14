@@ -58,7 +58,7 @@ class DMM:
         self.grid[coord] = self.get_or_generate_key(tile)
 
     def generate_new_key(self):
-        free_keys = self._ensure_free_keys(1)
+        self._ensure_free_keys(1)
         max_key = max_key_for(self.key_length)
         # choose one of the free keys at random
         key = random.randint(0, max_key - 1)
