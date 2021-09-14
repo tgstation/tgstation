@@ -141,6 +141,12 @@
 	speed = 1.4
 	melee_damage_lower = 25
 	melee_damage_upper = 25
+	obj_damage = 35
+	attack_verb_continuous = "rams its moonihorn into"
+	attack_verb_simple = "ram your moonihorn into"
+	gold_core_spawnable = NO_SPAWN
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 
 /mob/living/basic/cow/moonicorn/Initialize()
 	. = ..()
