@@ -90,8 +90,8 @@
 	mag_display = FALSE
 	show_bolt_icon = FALSE
 
-/obj/item/gun/ballistic/automatic/pistol/stickman/pickup(mob/living/user)
-	SHOULD_CALL_PARENT(FALSE)
+/obj/item/gun/ballistic/automatic/pistol/stickman/equipped(mob/user, slot)
+	..()
 	to_chat(user, span_notice("As you try to pick up [src], it slips out of your grip.."))
 	if(prob(50))
 		to_chat(user, span_notice("..and vanishes from your vision! Where the hell did it go?"))
@@ -100,4 +100,3 @@
 	else
 		to_chat(user, span_notice("..and falls into view. Whew, that was a close one."))
 		user.dropItemToGround(src)
-
