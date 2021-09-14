@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the chat messages for stepping on objects with the caltrop component. No more \"You step on the floor!\"."

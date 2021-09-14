@@ -40,7 +40,7 @@
 		options += "Server Restart (Kill and restart DD)";
 
 	if(SSticker.admin_delay_notice)
-		if(tgui_alert(usr, "Are you sure? An admin has already delayed the round end for the following reason: [SSticker.admin_delay_notice]", "Confirmation", list("Yes", "No")) != "Yes")
+		if(alert(usr, "Are you sure? An admin has already delayed the round end for the following reason: [SSticker.admin_delay_notice]", "Confirmation", "Yes", "No") != "Yes")
 			return FALSE
 
 	var/result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
@@ -50,7 +50,7 @@
 		switch(result)
 			if("Regular Restart")
 				if(!(isnull(usr.client.address) || (usr.client.address in localhost_addresses)))
-					if(tgui_alert(usr, "Are you sure you want to restart the server?","This server is live",list("Restart","Cancel")) != "Restart")
+					if(alert(usr, "Are you sure you want to restart the server?","This server is live", "Restart", "Cancel") != "Restart")
 						return FALSE
 				SSticker.Reboot(init_by, "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
 			if("Regular Restart (with delay)")
@@ -58,7 +58,7 @@
 				if(!delay)
 					return FALSE
 				if(!(isnull(usr.client.address) || (usr.client.address in localhost_addresses)))
-					if(tgui_alert(usr,"Are you sure you want to restart the server?","This server is live",list("Restart","Cancel")) != "Restart")
+					if(alert(usr,"Are you sure you want to restart the server?","This server is live", "Restart", "Cancel") != "Restart")
 						return FALSE
 				SSticker.Reboot(init_by, "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", delay * 10)
 			if("Hard Restart (No Delay, No Feeback Reason)")
