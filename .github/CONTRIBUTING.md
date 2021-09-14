@@ -20,7 +20,7 @@
 
 [Policy configuration system](./POLICYCONFIG.md)
 
-[Tips for good code](./TIPS.md)
+[Code standards](./STANDARDS.md)
 
 [Fixing hard deletes](./HARDDEL_GUIDE.md)
 

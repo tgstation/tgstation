@@ -1,4 +1,4 @@
-## SYNTAX
+# SYNTAX
 Here are all the rules you must follow when writing code. It's important to note that large parts of the codebase do not consistently follow these rules, but this does not free you of the requirement to follow them.
 
 ## All BYOND paths must contain the full path
@@ -66,8 +66,6 @@ eg: `/datum/blue_bird`, not `/datum/BLUEBIRD` or `/datum/BlueBird` or `/datum/Bl
 ## Datum type paths must began with "datum"
 In DM, this is optional, but omitting it makes finding definitions harder.
 
-## Use `var/name` format when declaring variables
-While DM allows other ways of declaring variables, this one should be used for consistency.
 
 ## Tabs, not spaces
 You must use tabs to indent your code, NOT SPACES.
@@ -127,6 +125,82 @@ Isn't that confusing?
 
 There is also an undocumented keyword called `static` that has the same behaviour as global but more correctly describes BYOND's behaviour. Therefore, we always use static instead of global where we need it, as it reduces suprise when reading BYOND code.
 
+## Naming variables
+### Use `var/name` format when declaring variables
+While DM allows other ways of declaring variables, this one should be used for consistency.
+
+### Use descriptive and obvious names
+Optimize for readability, not writability. While it is certainly easier to write `M` than `victim`, it will cause issues down the line for other developers to figure out what exactly your code is doing, even if you think the variable's purpose is obvious.
+
+### Don't use abbreviations
+Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", etc.
+
+```dm
+// What is M? The user? The target?
+// What is A? The target? The item?
+/proc/use_item(mob/M, atom/A)
+
+// Much better!
+/proc/use_item(mob/user, atom/target)
+```
+
+Unless it is otherwise obvious, try to avoid just extending variables like "C" to "carbon"--this is slightly more helpful, but does not describe the *context* of the use of the variable.
+
+### Naming things when typecasting
+When typecasting, keep your names descriptive:
+```dm
+var/mob/living/living_target = target
+var/mob/living/carbon/carbon_target = living_target
+```
+
+Of course, if you have a variable name that better describes the situation when typecasting, feel free to use it.
+
+Note that it's okay, semantically, to use the same variable name as the type, e.g.:
+```dm
+var/atom/atom
+var/client/client
+var/mob/mob
+```
+
+Your editor may highlight the variable names, but BYOND, and we, accept these as variable names:
+
+```dm
+// This functions properly!
+var/client/client = CLIENT_FROM_VAR(usr)
+// vvv this may be highlighted, but it's fine!
+client << browse(...)
+```
+
+### Name things as directly as possible
+`was_called` is better than `has_been_called`. `notify` is better than `do_notification`.
+
+### Avoid negative variable names
+`is_flying` is better than `is_not_flying`. `late` is better than `not_on_time`.
+This prevents double-negatives (such as `if (!is_not_flying)` which can make complex checks more difficult to parse.
+
+### Exceptions to variable names
+
+Exceptions can be made in the case of inheriting existing procs, as it makes it so you can use named parameters, but *new* variable names must follow these standards. It is also welcome, and encouraged, to refactor existing procs to use clearer variable names.
+
+Naming numeral iterator variables `i` is also allowed, but do remember to [Avoid unnecessary type checks and obscuring nulls in lists](./STANDARDS.md#avoid-unnecessary-type-checks-and-obscuring-nulls-in-lists), and making more descriptive variables is always encouraged.
+
+```dm
+// Bad
+for (var/datum/reagent/R as anything in reagents)
+
+// Good
+for (var/datum/reagent/deadly_reagent as anything in reagents)
+
+// Allowed, but still has the potential to not be clear. What does `i` refer to?
+for (var/i in 1 to 12)
+
+// Better
+for (var/month in 1 to 12)
+
+// Bad, only use `i` for numeral loops
+for (var/i in reagents)
+```
+
 ## Things that do not matter
 The following coding styles are not only not enforced at all, but are generally frowned upon to change for little to no reason:
 
@@ -134,4 +208,3 @@ The following coding styles are not only not enforced at all, but are generally 
 	* Color/Colour - both are fine, but keep in mind that BYOND uses `color` as a base variable
 * Spaces after control statements
 	* `if()` and `if ()` - nobody cares!
-
