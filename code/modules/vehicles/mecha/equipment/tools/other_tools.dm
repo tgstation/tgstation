@@ -15,7 +15,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/teleporter/action(mob/source, atom/target, params)
 	var/area/ourarea = get_area(src)
-	if(!action_checks(target) || ourarea & NOTELEPORT)
+	if(!action_checks(target) || ourarea.area_flags & NOTELEPORT)
 		return
 	var/turf/T = get_turf(target)
 	if(T && (loc.z == T.z) && (get_dist(loc, T) <= teleport_range))
@@ -88,15 +88,15 @@
 		if(GRAVSLING_MODE)
 			if(!movable_target)
 				if(!istype(target) || target.anchored || target.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)
-					to_chat(source, "[icon2html(src, source)]<span class='warning'>Unable to lock on [target]!</span>")
+					to_chat(source, "[icon2html(src, source)][span_warning("Unable to lock on [target]!")]")
 					return
 				if(ismob(target))
 					var/mob/M = target
 					if(M.mob_negates_gravity())
-						to_chat(source, "[icon2html(src, source)]<span class='warning'>[target] immune to gravitational impulses, unable to lock!</span>")
+						to_chat(source, "[icon2html(src, source)][span_warning("[target] immune to gravitational impulses, unable to lock!")]")
 						return
 				movable_target = target
-				to_chat(source, "[icon2html(src, source)]<span class='notice'>locked on [target].</span>")
+				to_chat(source, "[icon2html(src, source)][span_notice("locked on [target].")]")
 				send_byjax(source,"exosuit.browser","[REF(src)]", get_equip_info())
 			else if(target!=movable_target)
 				if(movable_target in view(chassis))
@@ -108,7 +108,7 @@
 					log_game("[key_name(source)] used a Gravitational Catapult to throw [movable_target] (From [AREACOORD(orig)]) at [target] ([AREACOORD(targ)]).")
 					return ..()
 				movable_target = null
-				to_chat(source, "[icon2html(src, source)]<span class='notice'>Lock on [movable_target] disengaged.</span>")
+				to_chat(source, "[icon2html(src, source)][span_notice("Lock on [movable_target] disengaged.")]")
 				send_byjax(source,"exosuit.browser","[REF(src)]", get_equip_info())
 
 		if(GRAVPUSH_MODE)
@@ -253,8 +253,8 @@
 			chassis.clear_internal_damage(int_dam_flag)
 			repaired = TRUE
 			break
-	if(h_boost<0 || chassis.obj_integrity < chassis.max_integrity)
-		chassis.obj_integrity += min(h_boost, chassis.max_integrity-chassis.obj_integrity)
+	if(h_boost<0 || chassis.get_integrity() < chassis.max_integrity)
+		chassis.repair_damage(h_boost)
 		repaired = TRUE
 	if(repaired)
 		if(!chassis.use_power(energy_drain))
@@ -328,7 +328,7 @@
 		return PROCESS_KILL
 	var/cur_charge = chassis.get_charge()
 	if(isnull(cur_charge) || !chassis.cell)
-		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)]<span class='notice'>No power cell detected.</span>")
+		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("No power cell detected.")]")
 		return PROCESS_KILL
 	if(cur_charge >= chassis.cell.maxcharge)
 		return
@@ -404,13 +404,13 @@
 			var/units = min(max(round(to_load / MINERAL_MATERIAL_AMOUNT),1),P.amount)
 			fuel.amount += units
 			P.use(units)
-			to_chat(user, "[icon2html(src, user)]<span class='notice'>[units] unit\s of [fuel] successfully loaded.</span>")
+			to_chat(user, "[icon2html(src, user)][span_notice("[units] unit\s of [fuel] successfully loaded.")]")
 			return units
 		else
-			to_chat(user, "[icon2html(src, user)]<span class='notice'>Unit is full.</span>")
+			to_chat(user, "[icon2html(src, user)][span_notice("Unit is full.")]")
 			return 0
 	else
-		to_chat(user, "[icon2html(src, user)]<span class='warning'>[fuel] traces in target minimal! [P] cannot be used as fuel.</span>")
+		to_chat(user, "[icon2html(src, user)][span_warning("[fuel] traces in target minimal! [P] cannot be used as fuel.")]")
 		return
 
 /obj/item/mecha_parts/mecha_equipment/generator/attackby(weapon,mob/user, params)
@@ -421,11 +421,11 @@
 		return PROCESS_KILL
 	if(fuel.amount<=0)
 		log_message("Deactivated - no fuel.", LOG_MECHA)
-		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)]<span class='notice'>Fuel reserves depleted.</span>")
+		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Fuel reserves depleted.")]")
 		return PROCESS_KILL
 	var/cur_charge = chassis.get_charge()
 	if(isnull(cur_charge))
-		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)]<span class='notice'>No power cell detected.</span>")
+		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("No power cell detected.")]")
 		log_message("Deactivated.", LOG_MECHA)
 		return PROCESS_KILL
 	var/use_fuel = fuelrate_idle
@@ -467,7 +467,7 @@
 /obj/item/mecha_parts/mecha_equipment/thrusters/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M)
 	for(var/obj/item/I in M.equipment)
 		if(istype(I, src))
-			to_chat(user, "<span class='warning'>[M] already has this thruster package!</span>")
+			to_chat(user, span_warning("[M] already has this thruster package!"))
 			return FALSE
 	return ..()
 
@@ -501,13 +501,13 @@
 	if (chassis.active_thrusters == src)
 		return
 	chassis.active_thrusters = src
-	to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)]<span class='notice'>[src] enabled.</span>")
+	to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("[src] enabled.")]")
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/proc/disable()
 	if(chassis.active_thrusters != src)
 		return
 	chassis.active_thrusters = null
-	to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)]<span class='notice'>[src] disabled.</span>")
+	to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("[src] disabled.")]")
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/get_equip_info()
 	return "[..()] \[<a href='?src=[REF(src)];isactive=0'>Enable</a>|<a href='?src=[REF(src)];isactive=1'>Disable</a>\]"
@@ -533,7 +533,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/gas/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M)
 	if(!M.internal_tank)
-		to_chat(user, "<span class='warning'>[M] does not have an internal tank and cannot support this upgrade!</span>")
+		to_chat(user, span_warning("[M] does not have an internal tank and cannot support this upgrade!"))
 		return FALSE
 	return ..()
 

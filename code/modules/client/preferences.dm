@@ -81,7 +81,20 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/eye_color = "000" //Eye color
 	var/datum/species/pref_species = new /datum/species/human() //Mutant race
 	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "moth_antennae" = "Plain", "moth_markings" = "None")
-	var/list/randomise = list(RANDOM_UNDERWEAR = TRUE, RANDOM_UNDERWEAR_COLOR = TRUE, RANDOM_UNDERSHIRT = TRUE, RANDOM_SOCKS = TRUE, RANDOM_BACKPACK = TRUE, RANDOM_JUMPSUIT_STYLE = TRUE, RANDOM_HAIRSTYLE = TRUE, RANDOM_HAIR_COLOR = TRUE, RANDOM_FACIAL_HAIRSTYLE = TRUE, RANDOM_FACIAL_HAIR_COLOR = TRUE, RANDOM_SKIN_TONE = TRUE, RANDOM_EYE_COLOR = TRUE)
+	var/list/randomise = list(
+		RANDOM_UNDERWEAR = TRUE,
+		RANDOM_UNDERWEAR_COLOR = TRUE,
+		RANDOM_UNDERSHIRT = TRUE,
+		RANDOM_SOCKS = TRUE,
+		RANDOM_BACKPACK = TRUE,
+		RANDOM_JUMPSUIT_STYLE = TRUE,
+		RANDOM_HAIRSTYLE = TRUE,
+		RANDOM_HAIR_COLOR = TRUE,
+		RANDOM_FACIAL_HAIRSTYLE = TRUE,
+		RANDOM_FACIAL_HAIR_COLOR = TRUE,
+		RANDOM_SKIN_TONE = TRUE,
+		RANDOM_EYE_COLOR = TRUE,
+		)
 	var/phobia = "spiders"
 
 	var/list/custom_names = list()
@@ -133,9 +146,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/action_buttons_screen_locs = list()
 
-	///This var stores the amount of points the owner will get for making it out alive.
-	var/hardcore_survival_score = 0
-
 	///Someone thought we were nice! We get a little heart in OOC until we join the server past the below time (we can keep it until the end of the round otherwise)
 	var/hearted
 	///If we have a hearted commendations, we honor it every time the player loads preferences until this time has been passed
@@ -148,6 +158,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/broadcast_login_logout = TRUE
 	///What outfit typepaths we've favorited in the SelectEquipment menu
 	var/list/favorite_outfits = list()
+	///If TRUE, we replace the flash effect from flashes with a solid black screen
+	var/darkened_flash = FALSE
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -167,7 +179,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(load_character())
 			return
 	//we couldn't load character data so just randomize the character appearance + name
-	random_character() //let's create a random character then - rather than a fat, bald and naked man.
+	randomise_appearance_prefs() //let's create a random character then - rather than a fat, bald and naked man.
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
 	C?.set_macros()
 	real_name = pref_species.random_name(gender,1)
@@ -401,7 +413,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					mutant_category = 0
 
-			if(pref_species.mutant_bodyparts["snout"])
+			if(pref_species.external_organs[/obj/item/organ/external/snout])
 				if(!mutant_category)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
@@ -414,7 +426,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					mutant_category = 0
 
-			if(pref_species.mutant_bodyparts["horns"])
+			if(pref_species.external_organs[/obj/item/organ/external/horns])
 				if(!mutant_category)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
@@ -427,7 +439,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					mutant_category = 0
 
-			if(pref_species.mutant_bodyparts["frills"])
+			if(pref_species.external_organs[/obj/item/organ/external/frills])
 				if(!mutant_category)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
@@ -479,7 +491,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					mutant_category = 0
 
-			if(pref_species.mutant_bodyparts["moth_wings"])
+			if(pref_species.external_organs[/obj/item/organ/external/wings/moth])
 				if(!mutant_category)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
@@ -492,7 +504,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					mutant_category = 0
 
-			if(pref_species.mutant_bodyparts["moth_antennae"])
+			if(pref_species.external_organs[/obj/item/organ/external/antennae])
 				if(!mutant_category)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
@@ -719,6 +731,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Play End of Round Sounds:</b> <a href='?_src_=prefs;preference=endofround_sounds'>[(toggles & SOUND_ENDOFROUND) ? "Enabled":"Disabled"]</a><br>"
 			dat += "<b>Play Combat Mode Sounds:</b> <a href='?_src_=prefs;preference=combat_mode_sound'>[(toggles & SOUND_COMBATMODE) ? "Enabled":"Disabled"]</a><br>"
 			dat += "<b>See Pull Requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(chat_toggles & CHAT_PULLR) ? "Enabled":"Disabled"]</a><br>"
+			dat += "<b>Darkened Flashes:</b> (replaces flashes with a black screen) <a href='?_src_=prefs;preference=darkened_flash'>[darkened_flash ? "Enabled":"Disabled"]</a><br>"
 			dat += "<br>"
 
 
@@ -883,7 +896,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/width = widthPerColumn
 
 	var/HTML = "<center>"
-	if(SSjob.occupations.len <= 0)
+	if(length(SSjob.joinable_occupations) <= 0)
 		HTML += "The job SSticker is not yet finished creating jobs, please try again later"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
 
@@ -898,8 +911,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 		//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
 		var/datum/job/lastJob
+		var/datum/job/overflow_role = SSjob.GetJobType(SSjob.overflow_role)
 
-		for(var/datum/job/job in sortList(SSjob.occupations, /proc/cmp_job_display_asc))
+		for(var/datum/job/job as anything in SSjob.joinable_occupations)
 
 			index += 1
 			if(index >= limit)
@@ -925,10 +939,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/available_in_days = job.available_in_days(user.client)
 				HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
 				continue
-			if((job_preferences[SSjob.overflow_role] == JP_LOW) && (rank != SSjob.overflow_role) && !is_banned_from(user.ckey, SSjob.overflow_role))
+			if((job_preferences[overflow_role.title] == JP_LOW) && (rank != overflow_role.title) && !is_banned_from(user.ckey, overflow_role.title))
 				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 				continue
-			if((rank in GLOB.command_positions) || (rank == "AI"))//Bold head jobs
+			if(job.job_flags & JOB_BOLD_SELECT_TEXT)//Bold head jobs
 				HTML += "<b><span class='dark'>[rank]</span></b>"
 			else
 				HTML += "<span class='dark'>[rank]</span>"
@@ -964,8 +978,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
 
-			if(rank == SSjob.overflow_role)//Overflow is special
-				if(job_preferences[SSjob.overflow_role] == JP_LOW)
+			if(rank == overflow_role.title)//Overflow is special
+				if(job_preferences[overflow_role.title] == JP_LOW)
 					HTML += "<font color=green>Yes</font>"
 				else
 					HTML += "<font color=red>No</font>"
@@ -981,7 +995,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		HTML += "</td'></tr></table>"
 		HTML += "</center></table>"
 
-		var/message = "Be an [SSjob.overflow_role] if preferences unavailable"
+		var/message = "Be an [overflow_role.title] if preferences unavailable"
 		if(joblessrole == BERANDOMJOB)
 			message = "Get random job if preferences unavailable"
 		else if(joblessrole == RETURNTOLOBBY)
@@ -1009,19 +1023,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return TRUE
 
 /datum/preferences/proc/UpdateJobPreference(mob/user, role, desiredLvl)
-	if(!SSjob || SSjob.occupations.len <= 0)
+	if(!SSjob || length(SSjob.joinable_occupations) <= 0)
 		return
 	var/datum/job/job = SSjob.GetJob(role)
 
-	if(!job)
+	if(!job || !(job.job_flags & JOB_NEW_PLAYER_JOINABLE))
 		user << browse(null, "window=mob_occupation")
 		ShowChoices(user)
 		return
 
 	if (!isnum(desiredLvl))
-		to_chat(user, "<span class='danger'>UpdateJobPreference - desired level was not a number. Please notify coders!</span>")
+		to_chat(user, span_danger("UpdateJobPreference - desired level was not a number. Please notify coders!"))
 		ShowChoices(user)
-		return
+		CRASH("UpdateJobPreference called with desiredLvl value of [isnull(desiredLvl) ? "null" : desiredLvl]")
 
 	var/jpval = null
 	switch(desiredLvl)
@@ -1032,7 +1046,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(1)
 			jpval = JP_HIGH
 
-	if(role == SSjob.overflow_role)
+	if(job.type == SSjob.overflow_role)
 		if(job_preferences[job.title] == JP_LOW)
 			jpval = null
 		else
@@ -1049,7 +1063,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/SetQuirks(mob/user)
 	if(!SSquirks)
-		to_chat(user, "<span class='danger'>The quirk subsystem is still initializing! Try again in a minute.</span>")
+		to_chat(user, span_danger("The quirk subsystem is still initializing! Try again in a minute."))
 		return
 
 	var/list/dat = list()
@@ -1145,7 +1159,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/expires = "This is a permanent ban."
 			if(ban_details["expiration_time"])
 				expires = " The ban is for [DisplayTimeText(text2num(ban_details["duration"]) MINUTES)] and expires on [ban_details["expiration_time"]] (server time)."
-			to_chat(user, "<span class='danger'>You, or another user of this computer or connection ([ban_details["key"]]) is banned from playing [href_list["bancheck"]].<br>The ban reason is: [ban_details["reason"]]<br>This ban (BanID #[ban_details["id"]]) was applied by [ban_details["admin_key"]] on [ban_details["bantime"]] during round ID [ban_details["round_id"]].<br>[expires]</span>")
+			to_chat(user, span_danger("You, or another user of this computer or connection ([ban_details["key"]]) is banned from playing [href_list["bancheck"]].<br>The ban reason is: [ban_details["reason"]]<br>This ban (BanID #[ban_details["id"]]) was applied by [ban_details["admin_key"]] on [ban_details["bantime"]] during round ID [ban_details["round_id"]].<br>[expires]"))
 			return
 	if(href_list["preference"] == "job")
 		switch(href_list["task"])
@@ -1158,7 +1172,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if("random")
 				switch(joblessrole)
 					if(RETURNTOLOBBY)
-						if(is_banned_from(user.ckey, SSjob.overflow_role))
+						var/datum/job/overflow_role = SSjob.GetJobType(SSjob.overflow_role)
+						if(is_banned_from(user.ckey, overflow_role.title))
 							joblessrole = BERANDOMJOB
 						else
 							joblessrole = BEOVERFLOW
@@ -1188,22 +1203,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						continue
 					for(var/Q in all_quirks)
 						if((Q in L) && !(Q == quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
-							to_chat(user, "<span class='danger'>[quirk] is incompatible with [Q].</span>")
+							to_chat(user, span_danger("[quirk] is incompatible with [Q]."))
 							return
 				var/value = SSquirks.quirk_points[quirk]
 				var/balance = GetQuirkBalance()
 				if(quirk in all_quirks)
 					if(balance + value < 0)
-						to_chat(user, "<span class='warning'>Refunding this would cause you to go below your balance!</span>")
+						to_chat(user, span_warning("Refunding this would cause you to go below your balance!"))
 						return
 					all_quirks -= quirk
 				else
 					var/is_positive_quirk = SSquirks.quirk_points[quirk] > 0
 					if(is_positive_quirk && GetPositiveQuirkCount() >= MAX_QUIRKS)
-						to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] positive quirks!</span>")
+						to_chat(user, span_warning("You can't have more than [MAX_QUIRKS] positive quirks!"))
 						return
 					if(balance - value < 0)
-						to_chat(user, "<span class='warning'>You don't have enough balance to gain this quirk!</span>")
+						to_chat(user, span_warning("You don't have enough balance to gain this quirk!"))
 						return
 					all_quirks += quirk
 				SetQuirks(user)
@@ -1248,7 +1263,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("suit")
 					jumpsuit_style = pick(GLOB.jumpsuitlist)
 				if("all")
-					random_character(gender)
+					apply_character_randomization_prefs()
 
 		if("input")
 
@@ -1383,7 +1398,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 						else
-							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
+							to_chat(user, span_danger("Invalid color. Your color is not bright enough."))
 
 				if("color_ethereal")
 					var/new_etherealcolor = input(user, "Choose your ethereal color", "Character Preference") as null|anything in GLOB.color_list_ethereal
@@ -1735,7 +1750,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("clear_scars")
 					var/path = "data/player_saves/[user.ckey[1]]/[user.ckey]/scars.sav"
 					fdel(path)
-					to_chat(user, "<span class='notice'>All scar slots cleared.</span>")
+					to_chat(user, span_notice("All scar slots cleared."))
 
 				if("hear_midis")
 					toggles ^= SOUND_MIDI
@@ -1846,6 +1861,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							scaling_method = SCALING_METHOD_NORMAL
 					user.client.view_size.setZoomMode()
 
+				if("darkened_flash")
+					darkened_flash = !darkened_flash
+
 				if("save")
 					save_preferences()
 					save_character()
@@ -1856,8 +1874,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("changeslot")
 					if(!load_character(text2num(href_list["num"])))
-						random_character()
-						real_name = random_unique_name(gender)
+						randomise_appearance_prefs()
 						save_character()
 
 				if("tab")
@@ -1867,43 +1884,39 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("clear_heart")
 					hearted = FALSE
 					hearted_until = null
-					to_chat(user, "<span class='notice'>OOC Commendation Heart disabled</span>")
+					to_chat(user, span_notice("OOC Commendation Heart disabled"))
 					save_preferences()
 
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, is_latejoiner = TRUE)
 
-	hardcore_survival_score = 0 //Set to 0 to prevent you getting points from last another time.
+/// Sanitization checks to be performed before using these preferences.
+/datum/preferences/proc/sanitize_chosen_prefs()
+	if(!(pref_species.id in GLOB.roundstart_races) && !(pref_species.id in (CONFIG_GET(keyed_list/roundstart_no_hard_check))))
+		pref_species = new /datum/species/human
+		save_character()
 
-	if((randomise[RANDOM_SPECIES] || randomise[RANDOM_HARDCORE]) && !character_setup)
+	if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == SPECIES_HUMAN))
+		var/firstspace = findtext(real_name, " ")
+		var/name_length = length(real_name)
+		if(!firstspace) //we need a surname
+			real_name += " [pick(GLOB.last_names)]"
+		else if(firstspace == name_length)
+			real_name += "[pick(GLOB.last_names)]"
 
-		random_species()
 
-	if((randomise[RANDOM_BODY] || (randomise[RANDOM_BODY_ANTAG] && antagonist) || randomise[RANDOM_HARDCORE]) && !character_setup)
-		slot_randomized = TRUE
-		random_character(gender, antagonist)
+/// Sanitizes the preferences, applies the randomization prefs, and then applies the preference to the human mob.
+/datum/preferences/proc/safe_transfer_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE, is_antag = FALSE)
+	apply_character_randomization_prefs(is_antag)
+	sanitize_chosen_prefs()
+	apply_prefs_to(character, icon_updates)
 
-	if((randomise[RANDOM_NAME] || (randomise[RANDOM_NAME_ANTAG] && antagonist) || randomise[RANDOM_HARDCORE]) && !character_setup)
-		slot_randomized = TRUE
-		real_name = pref_species.random_name(gender)
 
-	if(randomise[RANDOM_HARDCORE] && parent.mob.mind && !character_setup)
-		if(can_be_random_hardcore())
-			hardcore_random_setup(character, antagonist, is_latejoiner)
-
-	if(roundstart_checks)
-		if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == "human"))
-			var/firstspace = findtext(real_name, " ")
-			var/name_length = length(real_name)
-			if(!firstspace) //we need a surname
-				real_name += " [pick(GLOB.last_names)]"
-			else if(firstspace == name_length)
-				real_name += "[pick(GLOB.last_names)]"
-
+/// Applies the given preferences to a human mob.
+/datum/preferences/proc/apply_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE)
 	character.real_name = real_name
-	character.name = character.real_name
+	character.name = real_name
 
 	character.gender = gender
 	character.age = age
@@ -1920,7 +1933,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		organ_eyes.old_eye_color = eye_color
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
-
 	character.skin_tone = skin_tone
 	character.hairstyle = hairstyle
 	character.facial_hairstyle = facial_hairstyle
@@ -1933,15 +1945,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.jumpsuit_style = jumpsuit_style
 
-	var/datum/species/chosen_species
-	chosen_species = pref_species.type
-	if(roundstart_checks && !(pref_species.id in GLOB.roundstart_races) && !(pref_species.id in (CONFIG_GET(keyed_list/roundstart_no_hard_check))))
-		chosen_species = /datum/species/human
-		pref_species = new /datum/species/human
-		save_character()
-
 	character.dna.features = features.Copy()
-	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
+	character.set_species(pref_species.type, icon_update = FALSE, pref_load = TRUE)
 	character.dna.real_name = character.real_name
 
 	if(pref_species.mutant_bodyparts["tail_lizard"])
@@ -1954,14 +1959,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_hair()
 		character.update_body_parts()
 
-/datum/preferences/proc/can_be_random_hardcore()
-	if(parent.mob.mind.assigned_role in GLOB.command_positions) //No command staff
+
+/// Returns whether the parent mob should have the random hardcore settings enabled. Assumes it has a mind.
+/datum/preferences/proc/should_be_random_hardcore(datum/job/job, datum/mind/mind)
+	if(!randomise[RANDOM_HARDCORE])
 		return FALSE
-	for(var/A in parent.mob.mind.antag_datums)
-		var/datum/antagonist/antag
+	if(job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND) //No command staff
+		return FALSE
+	for(var/datum/antagonist/antag as anything in mind.antag_datums)
 		if(antag.get_team()) //No team antags
 			return FALSE
 	return TRUE
+
 
 /datum/preferences/proc/get_default_name(name_id)
 	switch(name_id)
@@ -1976,7 +1985,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if("mime")
 			return pick(GLOB.mime_names)
 		if("religion")
-			return DEFAULT_RELIGION
+			return pick(GLOB.religion_names)
 		if("deity")
 			return DEFAULT_DEITY
 		if("bible")
@@ -2001,3 +2010,75 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return
 		else
 			custom_names[name_id] = sanitized_name
+
+	if(name_id == "religion")
+		update_bible_and_deity_name(custom_names[name_id])
+
+/datum/preferences/proc/update_bible_and_deity_name(religion)
+	switch(lowertext(religion))
+		if("christianity") // DEFAULT_RELIGION
+			custom_names["bible"] = pick("The Holy Bible","The Dead Sea Scrolls")
+			custom_names["deity"] = "Space Jesus"
+		if("buddhism")
+			custom_names["bible"] = "The Sutras"
+			custom_names["deity"] = "Buddha"
+		if("clownism","honkmother","honk","honkism","comedy")
+			custom_names["bible"] = pick("The Holy Joke Book", "Just a Prank", "Hymns to the Honkmother")
+			custom_names["deity"] = "The Honkmother"
+		if("chaos")
+			custom_names["bible"] = "The Book of Lorgar"
+			custom_names["deity"] = pick("Chaos Gods", "Dark Gods", "Ruinous Powers")
+		if("cthulhu")
+			custom_names["bible"] = "The Necronomicon"
+			custom_names["deity"] = pick("Great Old Ones", "Old Ones")
+		if("hinduism")
+			custom_names["bible"] = "The Vedas"
+			custom_names["deity"] = pick("Brahma", "Vishnu", "Shiva")
+		if("imperium")
+			custom_names["bible"] = "Uplifting Primer"
+			custom_names["deity"] = "Astra Militarum"
+		if("islam")
+			custom_names["bible"] = "Quran"
+			custom_names["deity"] = "Allah"
+		if("judaism")
+			custom_names["bible"] = "The Torah"
+			custom_names["deity"] = "Yahweh"
+		if("lampism")
+			custom_names["bible"] = "Fluorescent Incandescence"
+			custom_names["deity"] = "Lamp"
+		if("monkeyism","apism","gorillism","primatism")
+			custom_names["bible"] = pick("Going Bananas", "Bananas Out For Harambe")
+			custom_names["deity"] = pick("Harambe", "monky")
+		if("mormonism")
+			custom_names["bible"] = "The Book of Mormon"
+			custom_names["deity"] = pick("God", "Elohim", "Godhead")
+		if("pastafarianism")
+			custom_names["bible"] = "The Gospel of the Flying Spaghetti Monster"
+			custom_names["deity"] = "Flying Spaghetti Monster"
+		if("rastafarianism","rasta")
+			custom_names["bible"] = "The Holy Piby"
+			custom_names["deity"] = "Haile Selassie I"
+		if("satanism")
+			custom_names["bible"] = "The Unholy Bible"
+			custom_names["deity"] = "Satan"
+		if("sikhism")
+			custom_names["bible"] = "Guru Granth Sahib"
+			custom_names["deity"] = "Waheguru"
+		if("science")
+			custom_names["bible"] = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
+			custom_names["deity"] = pick("Albert Einstein", "Stephen Hawking", "Neil deGrasse Tyson", "Carl Sagan", "Richard Dawkins")
+		if("scientology")
+			custom_names["bible"] = pick("The Biography of L. Ron Hubbard","Dianetics")
+			custom_names["deity"] = pick("Money", "Power", "Xenu", "Tom Cruise", "L. Ron Hubbard", "David Miscavige", "John Travolta")
+		if("servicianism", "partying")
+			custom_names["bible"] = "The Tenets of Servicia"
+			custom_names["deity"] = pick("Servicia", "Space Bacchus", "Space Dionysus")
+		if("subgenius")
+			custom_names["bible"] = "Book of the SubGenius"
+			custom_names["deity"] = pick("Jehovah 1", "J. R. \"Bob\" Dobbs")
+		if("toolboxia","greytide")
+			custom_names["bible"] = pick("Toolbox Manifesto","iGlove Assistants")
+			custom_names["deity"] = "Maintenance"
+		else
+			if(custom_names["bible"] == DEFAULT_BIBLE)
+				custom_names["bible"] = "The Holy Book of [religion]"

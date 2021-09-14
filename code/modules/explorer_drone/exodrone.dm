@@ -354,7 +354,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /obj/machinery/exodrone_launcher/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/fuel_pellet))
 		if(fuel_canister)
-			to_chat(user, "<span class='warning'>There's already a fuel tank inside [src]!</span>")
+			to_chat(user, span_warning("There's already a fuel tank inside [src]!"))
 			return TRUE
 		if(!user.transferItemToLoc(I, src))
 			return
@@ -369,7 +369,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /obj/machinery/exodrone_launcher/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(fuel_canister)
-		to_chat(user, "<span class='notie'>You remove the fuel tank from [src].</span>")
+		to_chat(user, span_notice("You remove the fuel tank from [src]."))
 		fuel_canister.forceMove(drop_location())
 		fuel_canister = null
 

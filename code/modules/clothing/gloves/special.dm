@@ -9,16 +9,54 @@
 	equip_delay_other = 4 SECONDS
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
 	undyeable = TRUE
-	var/datum/component/strong_pull/pull_component
+	var/datum/weakref/pull_component_weakref
 
-/obj/item/clothing/gloves/cargo_gauntlet/equipped(mob/user, slot)
+/obj/item/clothing/gloves/cargo_gauntlet/Initialize()
 	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, .proc/on_glove_equip)
+	RegisterSignal(src, COMSIG_ITEM_POST_UNEQUIP, .proc/on_glove_unequip)
+
+/// Called when the glove is equipped. Adds a component to the equipper and stores a weak reference to it.
+/obj/item/clothing/gloves/cargo_gauntlet/proc/on_glove_equip(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+
 	if(slot != ITEM_SLOT_GLOVES)
 		return
-	to_chat(user, "<span class='notice'>You feel the gauntlets activate as soon as you fit them on, making your pulls stronger!</span>")
-	pull_component = user.AddComponent(/datum/component/strong_pull)
 
-/obj/item/clothing/gloves/cargo_gauntlet/dropped(mob/user)
+	var/datum/component/strong_pull/pull_component = pull_component_weakref?.resolve()
+	if(pull_component)
+		stack_trace("Gloves already have a pull component associated with \[[pull_component.parent]\] when \[[equipper]\] is trying to equip them.")
+		QDEL_NULL(pull_component_weakref)
+
+	to_chat(equipper, span_notice("You feel the gauntlets activate as soon as you fit them on, making your pulls stronger!"))
+
+	pull_component_weakref = WEAKREF(equipper.AddComponent(/datum/component/strong_pull))
+
+/*
+ * Called when the glove is unequipped. Deletes the component if one exists.
+ *
+ * No component being associated on equip is a valid state, as holding the gloves in your hands also counts
+ * as having them equipped, or even in pockets. They only give the component when they're worn on the hands.
+ */
+/obj/item/clothing/gloves/cargo_gauntlet/proc/on_glove_unequip(datum/source, force, atom/newloc, no_move, invdrop, silent)
+	SIGNAL_HANDLER
+
+	var/datum/component/strong_pull/pull_component = pull_component_weakref?.resolve()
+
+	if(!pull_component)
+		return
+
+	to_chat(pull_component.parent, span_warning("You have lost the grip power of [src]!"))
+
+	QDEL_NULL(pull_component_weakref)
+
+/obj/item/clothing/gloves/rapid
+	name = "Gloves of the North Star"
+	desc = "Just looking at these fills you with an urge to beat the shit out of people."
+	icon_state = "rapid"
+	inhand_icon_state = "rapid"
+	transfer_prints = TRUE
+
+/obj/item/clothing/gloves/rapid/ComponentInitialize()
 	. = ..()
-	to_chat(user, "<span class='warning'>You have lost the grip power of [src]!</span>")
-	QDEL_NULL(pull_component)
+	AddComponent(/datum/component/wearertargeting/punchcooldown)

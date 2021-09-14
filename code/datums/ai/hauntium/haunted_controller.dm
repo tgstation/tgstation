@@ -4,6 +4,7 @@
 	blackboard = list(BB_TO_HAUNT_LIST = list(),
 	BB_HAUNT_TARGET,
 	BB_HAUNTED_THROW_ATTEMPT_COUNT)
+	planning_subtrees = list(/datum/ai_planning_subtree/haunted)
 
 /datum/ai_controller/haunted/TryPossessPawn(atom/new_pawn)
 	if(!isitem(new_pawn))
@@ -14,30 +15,6 @@
 /datum/ai_controller/haunted/UnpossessPawn()
 	UnregisterSignal(pawn, COMSIG_ITEM_EQUIPPED)
 	return ..() //Run parent at end
-
-/datum/ai_controller/haunted/SelectBehaviors(delta_time)
-	current_behaviors = list()
-	var/obj/item/item_pawn = pawn
-
-	if(ismob(item_pawn.loc)) //We're being held, maybe escape?
-		if(DT_PROB(HAUNTED_ITEM_ESCAPE_GRASP_CHANCE, delta_time))
-			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/item_escape_grasp)
-		return
-
-	if(!DT_PROB(HAUNTED_ITEM_ATTACK_HAUNT_CHANCE, delta_time))
-		return
-
-	var/list/to_haunt_list = blackboard[BB_TO_HAUNT_LIST]
-
-	for(var/i in to_haunt_list)
-		if(to_haunt_list[i] <= 0)
-			continue
-		var/mob/living/potential_target = i
-		if(get_dist(potential_target, item_pawn) <= 7)
-			blackboard[BB_HAUNT_TARGET] = potential_target
-			current_movement_target = potential_target
-			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/item_move_close_and_attack/haunted)
-			return
 
 /datum/ai_controller/haunted/PerformIdleBehavior(delta_time)
 	var/obj/item/item_pawn = pawn

@@ -20,7 +20,8 @@
 	var/short_desc = "The mapper forgot to set this!"
 	var/flavour_text = ""
 	var/important_info = ""
-	var/faction = null
+	/// Lazy string list of factions that the spawned mob will be in upon spawn
+	var/list/faction
 	var/permanent = FALSE //If true, the spawner will not disappear upon running out of uses.
 	var/random = FALSE //Don't set a name or gender, just go random
 	var/antagonist_type
@@ -31,36 +32,45 @@
 	var/burn_damage = 0
 	var/datum/disease/disease = null //Do they start with a pre-spawned disease?
 	var/mob_color //Change the mob's color
-	var/assignedrole
+	/// Typepath indicating the kind of job datum this ert member will have.
+	var/spawner_job_path = /datum/job/ghost_role
 	var/show_flavour = TRUE
 	var/banType = ROLE_LAVALAND
 	var/ghost_usable = TRUE
+	// If the spawner is ready to function at the moment
+	var/ready = TRUE
+	/// If the spawner uses radials
+	var/radial_based = FALSE
+
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(!SSticker.HasRoundStarted() || !loc || !ghost_usable)
 		return
-	var/ghost_role = tgui_alert(usr,"Become [mob_name]? (Warning, You can no longer be revived!)",,list("Yes","No"))
-	if(ghost_role == "No" || !loc || QDELETED(user))
-		return
+	if(!radial_based)
+		var/ghost_role = tgui_alert(usr, "Become [mob_name]? (Warning, You can no longer be revived!)",, list("Yes", "No"))
+		if(ghost_role == "No" || !loc || QDELETED(user))
+			return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
-		to_chat(user, "<span class='warning'>An admin has temporarily disabled non-admin ghost roles!</span>")
+		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
 		return
 	if(!uses)
-		to_chat(user, "<span class='warning'>This spawner is out of charges!</span>")
+		to_chat(user, span_warning("This spawner is out of charges!"))
 		return
 	if(is_banned_from(user.key, banType))
-		to_chat(user, "<span class='warning'>You are jobanned!</span>")
+		to_chat(user, span_warning("You are jobanned!"))
 		return
 	if(!allow_spawn(user))
 		return
 	if(QDELETED(src) || QDELETED(user))
 		return
 	log_game("[key_name(user)] became [mob_name]")
-	create(ckey = user.ckey)
+	create(user)
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
+	if(faction)
+		faction = string_list(faction)
 	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		INVOKE_ASYNC(src, .proc/create)
 	else if(ghost_usable)
@@ -83,7 +93,7 @@
 /obj/effect/mob_spawn/proc/equip(mob/M)
 	return
 
-/obj/effect/mob_spawn/proc/create(ckey, newname)
+/obj/effect/mob_spawn/proc/create(mob/user, newname)
 	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
 	if(!random || newname)
 		if(newname)
@@ -97,7 +107,7 @@
 			var/mob/living/carbon/human/hoomie = M
 			hoomie.body_type = mob_gender
 	if(faction)
-		M.faction = list(faction)
+		M.faction = faction
 	if(disease)
 		M.ForceContractDisease(new disease)
 	if(death)
@@ -109,14 +119,14 @@
 	M.color = mob_color
 	equip(M)
 
-	if(ckey)
-		M.ckey = ckey
+	if(user?.ckey)
+		M.ckey = user.ckey
 		if(show_flavour)
 			var/output_message = "<span class='infoplain'><span class='big bold'>[short_desc]</span></span>"
 			if(flavour_text != "")
 				output_message += "\n<span class='infoplain'><b>[flavour_text]</b></span>"
 			if(important_info != "")
-				output_message += "\n<span class='userdanger'>[important_info]</span>"
+				output_message += "\n[span_userdanger("[important_info]")]"
 			to_chat(M, output_message)
 		var/datum/mind/MM = M.mind
 		var/datum/antagonist/A
@@ -129,8 +139,7 @@
 				var/datum/objective/O = new/datum/objective(objective)
 				O.owner = MM
 				A.objectives += O
-		if(assignedrole)
-			M.mind.assigned_role = assignedrole
+		M.mind.set_assigned_role(SSjob.GetJobType(spawner_job_path))
 		special(M)
 		MM.name = M.real_name
 	if(uses > 0)
@@ -147,7 +156,7 @@
 	var/datum/outfit/outfit = /datum/outfit //If this is a path, it will be instanced in Initialize()
 	var/disable_pda = TRUE
 	var/disable_sensors = TRUE
-	assignedrole = "Ghost Role"
+	spawner_job_path = /datum/job/ghost_role
 
 	var/husk = null
 	//these vars are for lazy mappers to override parts of the outfit
@@ -266,7 +275,7 @@
 
 //Non-human spawners
 
-/obj/effect/mob_spawn/AICorpse/create(ckey) //Creates a corrupted AI
+/obj/effect/mob_spawn/AICorpse/create(mob/user) //Creates a corrupted AI
 	var/A = locate(/mob/living/silicon/ai) in loc
 	if(A)
 		return
@@ -286,7 +295,7 @@
 /obj/effect/mob_spawn/slime/equip(mob/living/simple_animal/slime/S)
 	S.colour = mobcolour
 
-/obj/effect/mob_spawn/facehugger/create(ckey) //Creates a squashed facehugger
+/obj/effect/mob_spawn/facehugger/create(mob/user) //Creates a squashed facehugger
 	var/obj/item/clothing/mask/facehugger/O = new(src.loc) //variable O is a new facehugger at the location of the landmark
 	O.name = src.name
 	O.Die() //call the facehugger's death proc
@@ -442,7 +451,7 @@
 	name = "rotting corpse"
 	mob_name = "zombie"
 	mob_species = /datum/species/zombie
-	assignedrole = "Zombie"
+	spawner_job_path = /datum/job/zombie
 
 /obj/effect/mob_spawn/human/abductor
 	name = "abductor"

@@ -188,7 +188,7 @@
 
 /datum/holiday/april_fools/celebrate()
 	. = ..()
-	SSjob.set_overflow_role("Clown")
+	SSjob.set_overflow_role(/datum/job/clown)
 	SSticker.login_music = 'sound/ambience/clown.ogg'
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/P = i
@@ -573,7 +573,7 @@
 	. = ..()
 	GLOB.maintenance_loot += list(
 		list(
-			/obj/item/food/egg/loaded = 15,
+			/obj/item/surprise_egg = 15,
 			/obj/item/storage/basket/easter = 15
 		) = maint_holiday_weight,
 	)

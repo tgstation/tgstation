@@ -201,18 +201,18 @@
 
 /obj/effect/proc_holder/spell/pointed/abyssal_gaze/cast(list/targets, mob/user)
 	if(!LAZYLEN(targets))
-		to_chat(user, "<span class='warning'>No target found in range!</span>")
+		to_chat(user, span_warning("No target found in range!"))
 		return FALSE
 	if(!can_target(targets[1], user))
 		return FALSE
 
 	var/mob/living/carbon/target = targets[1]
 	if(target.anti_magic_check(TRUE, TRUE))
-		to_chat(user, "<span class='warning'>The spell had no effect!</span>")
-		to_chat(target, "<span class='warning'>You feel a freezing darkness closing in on you, but it rapidly dissipates.</span>")
+		to_chat(user, span_warning("The spell had no effect!"))
+		to_chat(target, span_warning("You feel a freezing darkness closing in on you, but it rapidly dissipates."))
 		return FALSE
 
-	to_chat(target, "<span class='userdanger'>A freezing darkness surrounds you...</span>")
+	to_chat(target, span_userdanger("A freezing darkness surrounds you..."))
 	target.playsound_local(get_turf(target), 'sound/hallucinations/i_see_you1.ogg', 50, 1)
 	user.playsound_local(get_turf(user), 'sound/effects/ghost2.ogg', 50, 1)
 	target.become_blind(ABYSSAL_GAZE_BLIND)
@@ -239,7 +239,7 @@
 		return FALSE
 	if(!iscarbon(target))
 		if(!silent)
-			to_chat(user, "<span class='warning'>You can only target carbon based lifeforms!</span>")
+			to_chat(user, span_warning("You can only target carbon based lifeforms!"))
 		return FALSE
 	return TRUE
 
@@ -261,7 +261,7 @@
 
 /obj/effect/proc_holder/spell/pointed/dominate/cast(list/targets, mob/user)
 	if(!LAZYLEN(targets))
-		to_chat(user, "<span class='notice'>No target found in range.</span>")
+		to_chat(user, span_notice("No target found in range."))
 		return FALSE
 	if(!can_target(targets[1], user))
 		return FALSE
@@ -278,25 +278,25 @@
 		return FALSE
 	if(!isanimal(target))
 		if(!silent)
-			to_chat(user, "<span class='warning'>Target is not a lesser creature!</span>")
+			to_chat(user, span_warning("Target is not a lesser creature!"))
 		return FALSE
 
 	var/mob/living/simple_animal/S = target
 	if(S.mind)
 		if(!silent)
-			to_chat(user, "<span class='warning'>[S] is too intelligent to dominate!</span>")
+			to_chat(user, span_warning("[S] is too intelligent to dominate!"))
 		return FALSE
 	if(S.stat)
 		if(!silent)
-			to_chat(user, "<span class='warning'>[S] is dead!</span>")
+			to_chat(user, span_warning("[S] is dead!"))
 		return FALSE
 	if(S.sentience_type != SENTIENCE_ORGANIC)
 		if(!silent)
-			to_chat(user, "<span class='warning'>[S] cannot be dominated!</span>")
+			to_chat(user, span_warning("[S] cannot be dominated!"))
 		return FALSE
 	if("cult" in S.faction)
 		if(!silent)
-			to_chat(user, "<span class='warning'>[S] is already serving Nar'Sie!</span>")
+			to_chat(user, span_warning("[S] is already serving Nar'Sie!"))
 		return FALSE
 	return TRUE
 

@@ -58,13 +58,13 @@ SUBSYSTEM_DEF(pai)
 				candidate.savefile_load(usr)
 				//In case people have saved unsanitized stuff.
 				if(candidate.name)
-					candidate.name = copytext_char(sanitize(candidate.name),1,MAX_NAME_LEN)
+					candidate.name = copytext_char(candidate.name,1,MAX_NAME_LEN)
 				if(candidate.description)
-					candidate.description = copytext_char(sanitize(candidate.description),1,MAX_MESSAGE_LEN)
+					candidate.description = copytext_char(candidate.description,1,MAX_MESSAGE_LEN)
 				if(candidate.role)
-					candidate.role = copytext_char(sanitize(candidate.role),1,MAX_MESSAGE_LEN)
+					candidate.role = copytext_char(candidate.role,1,MAX_MESSAGE_LEN)
 				if(candidate.comments)
-					candidate.comments = copytext_char(sanitize(candidate.comments),1,MAX_MESSAGE_LEN)
+					candidate.comments = copytext_char(candidate.comments,1,MAX_MESSAGE_LEN)
 
 			if("submit")
 				if(candidate)
@@ -140,7 +140,7 @@ SUBSYSTEM_DEF(pai)
 
 /datum/controller/subsystem/pai/proc/findPAI(obj/item/paicard/p, mob/user)
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SILICONS))
-		to_chat(user, "<span class='warning'>Due to growing incidents of SELF corrupted independent artificial intelligences, freeform personality devices have been temporarily banned in this sector.</span>")
+		to_chat(user, span_warning("Due to growing incidents of SELF corrupted independent artificial intelligences, freeform personality devices have been temporarily banned in this sector."))
 		return
 	if(!ghost_spam)
 		ghost_spam = TRUE
@@ -149,7 +149,7 @@ SUBSYSTEM_DEF(pai)
 				continue
 			if(!(ROLE_PAI in G.client.prefs.be_special))
 				continue
-			to_chat(G, "<span class='ghostalert'>[user] is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>")
+			to_chat(G, span_ghostalert("[user] is requesting a pAI personality! Use the pAI button to submit yourself as one."))
 		addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
 	var/list/available = list()
 	for(var/datum/pai_candidate/c in SSpai.candidates)

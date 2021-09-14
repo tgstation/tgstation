@@ -36,17 +36,17 @@
 
 			if(!marked_item)
 				if(hand_items)
-					message = "<span class='warning'>You aren't holding anything that can be marked for recall!</span>"
+					message = span_warning("You aren't holding anything that can be marked for recall!")
 				else
-					message = "<span class='warning'>You must hold the desired item in your hands to mark it for recall!</span>"
+					message = span_warning("You must hold the desired item in your hands to mark it for recall!")
 
 		else if(marked_item && (marked_item in hand_items)) //unlinking item to the spell
-			message = "<span class='notice'>You remove the mark on [marked_item] to use elsewhere.</span>"
+			message = span_notice("You remove the mark on [marked_item] to use elsewhere.")
 			name = "Instant Summons"
 			marked_item = null
 
 		else if(marked_item && QDELETED(marked_item)) //the item was destroyed at some point
-			message = "<span class='warning'>You sense your marked item has been destroyed!</span>"
+			message = span_warning("You sense your marked item has been destroyed!")
 			name = "Instant Summons"
 			marked_item = null
 
@@ -71,9 +71,9 @@
 						var/mob/M = item_to_retrieve.loc
 
 						if(issilicon(M)) //Items in silicons warp the whole silicon
-							M.loc.visible_message("<span class='warning'>[M] suddenly disappears!</span>")
+							M.loc.visible_message(span_warning("[M] suddenly disappears!"))
 							M.forceMove(L.loc)
-							M.loc.visible_message("<span class='warning'>[M] suddenly appears!</span>")
+							M.loc.visible_message(span_warning("[M] suddenly appears!"))
 							item_to_retrieve = null
 							break
 						M.dropItemToGround(item_to_retrieve)
@@ -92,13 +92,13 @@
 				return
 
 			if(item_to_retrieve.loc)
-				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly disappears!</span>")
+				item_to_retrieve.loc.visible_message(span_warning("The [item_to_retrieve.name] suddenly disappears!"))
 			if(!L.put_in_hands(item_to_retrieve))
 				item_to_retrieve.forceMove(L.drop_location())
-				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly appears!</span>")
+				item_to_retrieve.loc.visible_message(span_warning("The [item_to_retrieve.name] suddenly appears!"))
 				playsound(get_turf(L), 'sound/magic/summonitems_generic.ogg', 50, TRUE)
 			else
-				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly appears in [L]'s hand!</span>")
+				item_to_retrieve.loc.visible_message(span_warning("The [item_to_retrieve.name] suddenly appears in [L]'s hand!"))
 				playsound(get_turf(L), 'sound/magic/summonitems_generic.ogg', 50, TRUE)
 
 

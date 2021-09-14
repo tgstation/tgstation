@@ -150,10 +150,11 @@
 	. = ..()
 	if(.)
 		var/mob/living/carbon/human/H = user
-		if(findtext(select_message_type(user,intentional), "open"))
-			H.OpenWings()
+		var/obj/item/organ/external/wings/functional/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+		if(wings && findtext(select_message_type(user,intentional), "open"))
+			wings.open_wings()
 		else
-			H.CloseWings()
+			wings.close_wings()
 
 /datum/emote/living/carbon/human/wing/select_message_type(mob/user, intentional)
 	. = ..()
@@ -169,28 +170,6 @@
 	var/mob/living/carbon/human/H = user
 	if(H.dna && H.dna.species && (H.dna.features["wings"] != "None"))
 		return TRUE
-
-/mob/living/carbon/human/proc/OpenWings()
-	if(!dna || !dna.species)
-		return
-	if(dna.species.mutant_bodyparts["wings"])
-		dna.species.mutant_bodyparts["wingsopen"] = dna.species.mutant_bodyparts["wings"]
-		dna.species.mutant_bodyparts -= "wings"
-	update_body()
-
-/mob/living/carbon/human/proc/CloseWings()
-	if(!dna || !dna.species)
-		return
-	if(dna.species.mutant_bodyparts["wingsopen"])
-		dna.species.mutant_bodyparts["wings"] = dna.species.mutant_bodyparts["wingsopen"]
-		dna.species.mutant_bodyparts -= "wingsopen"
-	update_body()
-	if(isturf(loc))
-		var/turf/T = loc
-		T.Entered(src)
-
-//Ayy lmao
-
 
 ///Snowflake emotes only for le epic chimp
 /datum/emote/living/carbon/human/monkey

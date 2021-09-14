@@ -35,17 +35,17 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /obj/item/hilbertshotel/attack(mob/living/M, mob/living/user)
 	if(M.mind)
-		to_chat(user, "<span class='notice'>You invite [M] to the hotel.</span>")
+		to_chat(user, span_notice("You invite [M] to the hotel."))
 		promptAndCheckIn(user, M)
 	else
-		to_chat(user, "<span class='warning'>[M] is not intelligent enough to understand how to use this device!</span>")
+		to_chat(user, span_warning("[M] is not intelligent enough to understand how to use this device!"))
 
 /obj/item/hilbertshotel/attack_self(mob/user)
 	. = ..()
 	promptAndCheckIn(user, user)
 
 /obj/item/hilbertshotel/attack_tk(mob/user)
-	to_chat(user, "<span class='notice'>\The [src] actively rejects your mind as the bluespace energies surrounding it disrupt your telekinesis.</span>")
+	to_chat(user, span_notice("\The [src] actively rejects your mind as the bluespace energies surrounding it disrupt your telekinesis."))
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/item/hilbertshotel/proc/promptAndCheckIn(mob/user, mob/target)
@@ -60,26 +60,26 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	if(!chosenRoomNumber)
 		return
 	if(chosenRoomNumber > SHORT_REAL_LIMIT)
-		to_chat(target, "<span class='warning'>You have to check out the first [SHORT_REAL_LIMIT] rooms before you can go to a higher numbered one!</span>")
+		to_chat(target, span_warning("You have to check out the first [SHORT_REAL_LIMIT] rooms before you can go to a higher numbered one!"))
 		return
 	if((chosenRoomNumber < 1) || (chosenRoomNumber != round(chosenRoomNumber)))
-		to_chat(target, "<span class='warning'>That is not a valid room number!</span>")
+		to_chat(target, span_warning("That is not a valid room number!"))
 		return
 
 	// Orb is not adjacent to the target. No teleporties.
 	if(!src.Adjacent(target))
-		to_chat(target, "<span class='warning'>You too far away from \the [src] to enter it!</span>")
+		to_chat(target, span_warning("You too far away from \the [src] to enter it!"))
 
 	// If the target is incapacitated after selecting a room, they're not allowed to teleport.
 	if(target.incapacitated())
-		to_chat(target, "<span class='warning'>You aren't able to activate \the [src] anymore!</span>")
+		to_chat(target, span_warning("You aren't able to activate \the [src] anymore!"))
 
 	// Has the user thrown it away or otherwise disposed of it such that it's no longer in their hands or in some storage connected to them?
 	if(!(get_atom_on_turf(src, /mob) == user))
 		if(user == target)
-			to_chat(user, "<span class='warning'>\The [src] is no longer in your possession!</span>")
+			to_chat(user, span_warning("\The [src] is no longer in your possession!"))
 		else
-			to_chat(target, "<span class='warning'>\The [src] is no longer in the possession of [user]!</span>")
+			to_chat(target, span_warning("\The [src] is no longer in the possession of [user]!"))
 		return
 
 	// If the player is using it on themselves, we've got some logic to deal with.
@@ -88,10 +88,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		// The item should be on the user or in the user's inventory somewhere.
 		// However, if they're not holding it, it may be in a pocket? In a backpack? Who knows! Still, they can't just drop it to the floor anymore...
 		if(!user.get_held_index_of_item(src))
-			to_chat(user, "<span class='warning'>You try to drop \the [src], but it's too late! It's no longer in your hands! Prepare for unforeseen consequences...</span>")
+			to_chat(user, span_warning("You try to drop \the [src], but it's too late! It's no longer in your hands! Prepare for unforeseen consequences..."))
 		// Okay, so they HAVE to be holding it here, because it's in their hand from the above check. Try to drop the item and if it fails, oh dear...
 		else if(!user.dropItemToGround(src))
-			to_chat(user, "<span class='warning'>You can't seem to drop \the [src]! It must be stuck to your hand somehow! Prepare for unforeseen consequences...</span>")
+			to_chat(user, span_warning("You can't seem to drop \the [src]! It must be stuck to your hand somehow! Prepare for unforeseen consequences..."))
 
 	if(!storageTurf) //Blame subsystems for not allowing this to be in Initialize
 		if(!GLOB.hhStorageTurf)
@@ -157,7 +157,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	currentArea.reservation = currentReservation
 	for(var/turf/closed/indestructible/hoteldoor/door in currentArea)
 		door.parentSphere = src
-		door.desc = "The door to this hotel room. The placard reads 'Room [currentRoomnumber]'. Strangely, this door doesn't even seem openable. The doorknob, however, seems to buzz with unusual energy...<br /><span class='info'>Alt-Click to look through the peephole.</span>"
+		door.desc = "The door to this hotel room. The placard reads 'Room [currentRoomnumber]'. Strangely, this door doesn't even seem openable. The doorknob, however, seems to buzz with unusual energy...<br />[span_info("Alt-Click to look through the peephole.")]"
 	for(var/turf/open/space/bluespace/BSturf in currentArea)
 		BSturf.parentSphere = src
 
@@ -171,7 +171,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 						if(ismob(A))
 							var/mob/M = A
 							if(M.mind)
-								to_chat(M, "<span class='warning'>As the sphere breaks apart, you're suddenly ejected into the depths of space!</span>")
+								to_chat(M, span_warning("As the sphere breaks apart, you're suddenly ejected into the depths of space!"))
 						var/max = world.maxx-TRANSITIONEDGE
 						var/min = 1+TRANSITIONEDGE
 						var/list/possible_transtitons = list()
@@ -261,10 +261,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	icon_state = base_icon_state
 	return ..()
 
-/turf/open/space/bluespace/Entered(atom/movable/A)
+/turf/open/space/bluespace/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(parentSphere && A.forceMove(get_turf(parentSphere)))
-		do_sparks(3, FALSE, get_turf(A))
+	if(parentSphere && arrived.forceMove(get_turf(parentSphere)))
+		do_sparks(3, FALSE, get_turf(arrived))
 
 /turf/closed/indestructible/hoteldoor
 	name = "Hotel Door"
@@ -278,7 +278,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	if(!user.mind)
 		return
 	if(!parentSphere)
-		to_chat(user, "<span class='warning'>The door seems to be malfunctioning and refuses to operate!</span>")
+		to_chat(user, span_warning("The door seems to be malfunctioning and refuses to operate!"))
 		return
 	if(tgui_alert(user, "Hilbert's Hotel would like to remind you that while we will do everything we can to protect the belongings you leave behind, we make no guarantees of their safety while you're gone, especially that of the health of any living creatures. With that in mind, are you ready to leave?", "Exit", list("Leave", "Stay")) == "Leave")
 		if(HAS_TRAIT(user, TRAIT_IMMOBILIZED) || (get_dist(get_turf(src), get_turf(user)) > 1)) //no teleporting around if they're dead or moved away during the prompt.
@@ -320,7 +320,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /turf/closed/indestructible/hoteldoor/AltClick(mob/user)
 	. = ..()
 	if(get_dist(get_turf(src), get_turf(user)) <= 1)
-		to_chat(user, "<span class='notice'>You peak through the door's bluespace peephole...</span>")
+		to_chat(user, span_notice("You peak through the door's bluespace peephole..."))
 		user.reset_perspective(parentSphere)
 		var/datum/action/peephole_cancel/PHC = new
 		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
@@ -339,7 +339,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /datum/action/peephole_cancel/Trigger()
 	. = ..()
-	to_chat(owner, "<span class='warning'>You move away from the peephole.</span>")
+	to_chat(owner, span_warning("You move away from the peephole."))
 	owner.reset_perspective()
 	owner.clear_fullscreen("remote_view", 0)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
@@ -351,18 +351,20 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	requires_power = FALSE
 	has_gravity = TRUE
 	area_flags = NOTELEPORT | HIDDEN_AREA
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	static_lighting = FALSE
+	base_lighting_alpha = 255
+	base_lighting_color = COLOR_WHITE
 	ambientsounds = list('sound/ambience/servicebell.ogg')
 	var/roomnumber = 0
 	var/obj/item/hilbertshotel/parentSphere
 	var/datum/turf_reservation/reservation
 	var/turf/storageTurf
 
-/area/hilbertshotel/Entered(atom/movable/AM)
+/area/hilbertshotel/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(istype(AM, /obj/item/hilbertshotel))
-		relocate(AM)
-	var/list/obj/item/hilbertshotel/hotels = AM.get_all_contents_type(/obj/item/hilbertshotel)
+	if(istype(arrived, /obj/item/hilbertshotel))
+		relocate(arrived)
+	var/list/obj/item/hilbertshotel/hotels = arrived.get_all_contents_type(/obj/item/hilbertshotel)
 	for(var/obj/item/hilbertshotel/H in hotels)
 		if(parentSphere == H)
 			relocate(H)
@@ -378,7 +380,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	// Turns out giving anyone who grabs a Hilbert's Hotel a free, complementary warp whistle is probably bad.
 	// Let's gib the last person to have selected a room number in it.
 	if(unforeseen_consequences)
-		to_chat(unforeseen_consequences, "<span class='warning'>\The [H] starts to resonate. Forcing it to enter itself induces a bluespace paradox, violently tearing your body apart.</span>")
+		to_chat(unforeseen_consequences, span_warning("\The [H] starts to resonate. Forcing it to enter itself induces a bluespace paradox, violently tearing your body apart."))
 		unforeseen_consequences.gib()
 
 	var/turf/targetturf = find_safe_turf()
@@ -392,13 +394,13 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	log_game("[H] entered itself. Moving it to [loc_name(targetturf)].")
 	message_admins("[H] entered itself. Moving it to [ADMIN_VERBOSEJMP(targetturf)].")
 	for(var/mob/M in A)
-		to_chat(M, "<span class='danger'>[H] almost implodes in upon itself, but quickly rebounds, shooting off into a random point in space!</span>")
+		to_chat(M, span_danger("[H] almost implodes in upon itself, but quickly rebounds, shooting off into a random point in space!"))
 	H.forceMove(targetturf)
 
-/area/hilbertshotel/Exited(atom/movable/AM)
+/area/hilbertshotel/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(ismob(AM))
-		var/mob/M = AM
+	if(ismob(gone))
+		var/mob/M = gone
 		if(M.mind)
 			var/stillPopulated = FALSE
 			var/list/currentLivingMobs = get_all_contents_type(/mob/living) //Got to catch anyone hiding in anything
@@ -446,16 +448,16 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	var/roomNumber
 	var/obj/item/hilbertshotel/parentSphere
 
-/obj/item/abstracthotelstorage/Entered(atom/movable/AM, atom/oldLoc)
+/obj/item/abstracthotelstorage/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(ismob(AM))
-		var/mob/M = AM
+	if(ismob(arrived))
+		var/mob/M = arrived
 		M.notransform = TRUE
 
-/obj/item/abstracthotelstorage/Exited(atom/movable/AM, atom/newLoc)
+/obj/item/abstracthotelstorage/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(ismob(AM))
-		var/mob/M = AM
+	if(ismob(gone))
+		var/mob/M = gone
 		M.notransform = FALSE
 
 //Space Ruin stuff
@@ -472,7 +474,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	. = ..()
 	if(istype(target, /obj/item/hilbertshotel))
 		if(!proximity)
-			to_chat(user, "<span class='warning'>It's to far away to scan!</span>")
+			to_chat(user, span_warning("It's to far away to scan!"))
 			return
 		var/obj/item/hilbertshotel/sphere = target
 		if(sphere.activeRooms.len)
@@ -492,7 +494,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	name = "Doctor Hilbert"
 	mob_name = "Doctor Hilbert"
 	mob_gender = "male"
-	assignedrole = null
+	spawner_job_path = /datum/job/ghost_role
 	ghost_usable = FALSE
 	oxy_damage = 500
 	mob_species = /datum/species/skeleton

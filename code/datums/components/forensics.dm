@@ -7,10 +7,10 @@
 	var/list/fibers //assoc print = print
 
 /datum/component/forensics/InheritComponent(datum/component/forensics/F, original) //Use of | and |= being different here is INTENTIONAL.
-	fingerprints = fingerprints | F.fingerprints
-	hiddenprints = hiddenprints | F.hiddenprints
-	blood_DNA = blood_DNA | F.blood_DNA
-	fibers = fibers | F.fibers
+	fingerprints = LAZY_LISTS_OR(fingerprints, F.fingerprints)
+	hiddenprints = LAZY_LISTS_OR(hiddenprints, F.hiddenprints)
+	blood_DNA = LAZY_LISTS_OR(blood_DNA, F.blood_DNA)
+	fibers = LAZY_LISTS_OR(fibers, F.fibers)
 	check_blood()
 	return ..()
 
@@ -91,7 +91,7 @@
 			if(!ignoregloves)
 				H.gloves.add_fingerprint(H, TRUE) //ignoregloves = 1 to avoid infinite loop.
 				return
-		var/full_print = md5(H.dna.uni_identity)
+		var/full_print = md5(H.dna.unique_identity)
 		LAZYSET(fingerprints, full_print, full_print)
 	return TRUE
 

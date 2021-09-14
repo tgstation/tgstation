@@ -24,27 +24,27 @@
 	name = "remove lower duodenum"
 	implements = list(
 		TOOL_SCALPEL = 95,
-		/obj/item/melee/transforming/energy/sword = 65,
+		/obj/item/melee/energy/sword = 65,
 		/obj/item/kitchen/knife = 45,
 		/obj/item/shard = 35)
 	time = 52
 
 /datum/surgery_step/gastrectomy/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You begin to cut out a damaged piece of [target]'s stomach...</span>",
-		"<span class='notice'>[user] begins to make an incision in [target].</span>",
-		"<span class='notice'>[user] begins to make an incision in [target].</span>")
+	display_results(user, target, span_notice("You begin to cut out a damaged piece of [target]'s stomach..."),
+		span_notice("[user] begins to make an incision in [target]."),
+		span_notice("[user] begins to make an incision in [target]."))
 
 /datum/surgery_step/gastrectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/mob/living/carbon/human/target_human = target
 	target_human.setOrganLoss(ORGAN_SLOT_STOMACH, 20) // Stomachs have a threshold for being able to even digest food, so I might tweak this number
-	display_results(user, target, "<span class='notice'>You successfully remove the damaged part of [target]'s stomach.</span>",
-		"<span class='notice'>[user] successfully removes the damaged part of [target]'s stomach.</span>",
-		"<span class='notice'>[user] successfully removes the damaged part of [target]'s stomach.</span>")
+	display_results(user, target, span_notice("You successfully remove the damaged part of [target]'s stomach."),
+		span_notice("[user] successfully removes the damaged part of [target]'s stomach."),
+		span_notice("[user] successfully removes the damaged part of [target]'s stomach."))
 	return ..()
 
 /datum/surgery_step/gastrectomy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery)
 	var/mob/living/carbon/human/target_human = target
 	target_human.adjustOrganLoss(ORGAN_SLOT_STOMACH, 15)
-	display_results(user, target, "<span class='warning'>You cut the wrong part of [target]'s stomach!</span>",
-		"<span class='warning'>[user] cuts the wrong part of [target]'s stomach!</span>",
-		"<span class='warning'>[user] cuts the wrong part of [target]'s stomach!</span>")
+	display_results(user, target, span_warning("You cut the wrong part of [target]'s stomach!"),
+		span_warning("[user] cuts the wrong part of [target]'s stomach!"),
+		span_warning("[user] cuts the wrong part of [target]'s stomach!"))

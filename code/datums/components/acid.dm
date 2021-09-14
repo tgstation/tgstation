@@ -50,7 +50,7 @@
 	var/atom/parent_atom = parent
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
 	parent_atom.update_appearance()
-	sizzle = new(list(parent), TRUE)
+	sizzle = new(parent, TRUE)
 	START_PROCESSING(SSacid, src)
 
 /datum/component/acid/Destroy(force, silent)
@@ -129,19 +129,19 @@
 
 	parent_integrity -= delta_time
 	if(parent_integrity <= 0)
-		target_turf.visible_message("<span class='warning'>[target_turf] collapses under its own weight into a puddle of goop and undigested debris!</span>")
+		target_turf.visible_message(span_warning("[target_turf] collapses under its own weight into a puddle of goop and undigested debris!"))
 		target_turf.acid_melt()
 	else if(parent_integrity <= 4 && stage <= 3)
-		target_turf.visible_message("<span class='warning'>[target_turf] begins to crumble under the acid!</span>")
+		target_turf.visible_message(span_warning("[target_turf] begins to crumble under the acid!"))
 		stage = 4
 	else if(parent_integrity <= 8 && stage <= 2)
-		target_turf.visible_message("<span class='warning'>[target_turf] is struggling to withstand the acid!</span>")
+		target_turf.visible_message(span_warning("[target_turf] is struggling to withstand the acid!"))
 		stage = 3
 	else if(parent_integrity <= 16 && stage <= 1)
-		target_turf.visible_message("<span class='warning'>[target_turf] is being melted by the acid!</span>")
+		target_turf.visible_message(span_warning("[target_turf] is being melted by the acid!"))
 		stage = 2
 	else if(parent_integrity <= 24 && stage == 0)
-		target_turf.visible_message("<span class='warning'>[target_turf] is holding up against the acid!</span>")
+		target_turf.visible_message(span_warning("[target_turf] is holding up against the acid!"))
 		stage = 1
 
 /// Used to maintain the acid overlay on the parent [/atom].
@@ -154,7 +154,7 @@
 /datum/component/acid/proc/on_examine(atom/A, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += "<span class='danger'>[A.p_theyre()] covered in corrosive liquid!</span>"
+	examine_list += span_danger("[A.p_theyre()] covered in corrosive liquid!")
 
 /// Makes it possible to clean acid off of objects.
 /datum/component/acid/proc/on_clean(atom/A, clean_types)
@@ -194,18 +194,19 @@
 	if(!affecting?.receive_damage(0, 5))
 		return NONE
 
-	to_chat(user, "<span class='warning'>The acid on \the [parent_atom] burns your hand!</span>")
+	to_chat(user, span_warning("The acid on \the [parent_atom] burns your hand!"))
 	playsound(parent_atom, 'sound/weapons/sear.ogg', 50, TRUE)
 	user.update_damage_overlays()
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
 /// Handles searing the feet of whoever walks over this without protection. Only active if the parent is a turf.
-/datum/component/acid/proc/on_entered(atom/parent_atom, mob/living/crosser)
+/datum/component/acid/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
-	if(!isliving(crosser))
+	if(!isliving(arrived))
 		return
+	var/mob/living/crosser = arrived
 	if(crosser.movement_type & FLYING)
 		return
 	if(crosser.m_intent & MOVE_INTENT_WALK)
@@ -216,5 +217,5 @@
 	var/acid_used = min(acid_volume * 0.05, 20)
 	if(crosser.acid_act(acid_power, acid_used, FEET))
 		playsound(crosser, 'sound/weapons/sear.ogg', 50, TRUE)
-		to_chat(crosser, "<span class='userdanger'>The acid on the [parent] burns you!</span>")
+		to_chat(crosser, span_userdanger("The acid on the [parent] burns you!"))
 		set_volume(max(acid_volume - acid_used, 10))

@@ -5,7 +5,7 @@
 /area/shuttle
 	name = "Shuttle"
 	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	static_lighting = TRUE
 	has_gravity = STANDARD_GRAVITY
 	always_unpowered = FALSE
 	// Loading the same shuttle map at a different time will produce distinct area instances.
@@ -63,7 +63,7 @@
 
 /area/shuttle/hunter
 	name = "Hunter Shuttle"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
 
 ////////////////////////////White Ship////////////////////////////
 
@@ -97,11 +97,21 @@
 /area/shuttle/transit
 	name = "Hyperspace"
 	desc = "Weeeeee"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
+
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
 	area_flags = UNIQUE_AREA// SSjob refers to this area for latejoiners
+
+
+/area/shuttle/arrival/on_joining_game(mob/living/boarder)
+	if(SSshuttle.arrivals?.mode == SHUTTLE_CALL)
+		var/atom/movable/screen/splash/Spl = new(boarder.client, TRUE)
+		Spl.Fade(TRUE)
+		boarder.playsound_local(get_turf(boarder), 'sound/voice/ApproachingTG.ogg', 25)
+	boarder.update_parallax_teleport()
+
 
 /area/shuttle/pod_1
 	name = "Escape Pod One"
@@ -157,7 +167,7 @@
 	name = "Medieval Reality Simulation Dome"
 	icon_state = "shuttlectf"
 	area_flags = NOTELEPORT
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
 
 /area/shuttle/escape/arena
 	name = "The Arena"
@@ -234,7 +244,7 @@
 
 	var/mob/living/L = AM
 	if(L.pulling && istype(L.pulling, /obj/item/bodypart/head))
-		to_chat(L, "<span class='notice'>Your offering is accepted. You may pass.</span>", confidential = TRUE)
+		to_chat(L, span_notice("Your offering is accepted. You may pass."), confidential = TRUE)
 		qdel(L.pulling)
 		var/turf/LA = get_turf(pick(warp_points))
 		L.forceMove(LA)
@@ -245,7 +255,7 @@
 		var/obj/item/skeleton_key/key = new(L)
 		L.put_in_hands(key)
 	else
-		to_chat(L, "<span class='warning'>You are not yet worthy of passing. Drag a severed head to the barrier to be allowed entry to the hall of champions.</span>", confidential = TRUE)
+		to_chat(L, span_warning("You are not yet worthy of passing. Drag a severed head to the barrier to be allowed entry to the hall of champions."), confidential = TRUE)
 
 /obj/effect/landmark/shuttle_arena_safe
 	name = "hall of champions"

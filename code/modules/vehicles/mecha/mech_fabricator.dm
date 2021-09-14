@@ -53,6 +53,7 @@
 								"Durand",
 								"H.O.N.K",
 								"Phazon",
+								"Savannah-Ivanov",
 								"Exosuit Equipment",
 								"Exosuit Ammunition",
 								"Cyborg Upgrade Modules",
@@ -101,7 +102,7 @@
 /obj/machinery/mecha_part_fabricator/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.</span>"
+		. += span_notice("The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.")
 
 /**
  * Generates an info list for a given part.
@@ -184,7 +185,7 @@
  */
 /obj/machinery/mecha_part_fabricator/proc/on_start_printing()
 	add_overlay("fab-active")
-	use_power = ACTIVE_POWER_USE
+	update_use_power(ACTIVE_POWER_USE)
 
 /**
  * Intended to be called when the exofab has stopped working and is no longer printing items.
@@ -193,7 +194,7 @@
  */
 /obj/machinery/mecha_part_fabricator/proc/on_finish_printing()
 	cut_overlay("fab-active")
-	use_power = IDLE_POWER_USE
+	update_use_power(IDLE_POWER_USE)
 	desc = initial(desc)
 	process_queue = FALSE
 
@@ -318,8 +319,6 @@
  */
 /obj/machinery/mecha_part_fabricator/proc/dispense_built_part(datum/design/D)
 	var/obj/item/I = new D.build_path(src)
-	I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
-	I.set_custom_materials(build_materials)
 
 	being_built = null
 
@@ -578,7 +577,7 @@
 	if(..())
 		return TRUE
 	if(being_built)
-		to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
+		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
 		return FALSE
 	return default_deconstruction_screwdriver(user, "fab-o", "fab-idle", I)
 
@@ -586,16 +585,16 @@
 	if(..())
 		return TRUE
 	if(being_built)
-		to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
+		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
 		return FALSE
 	return default_deconstruction_crowbar(I)
 
 /obj/machinery/mecha_part_fabricator/proc/is_insertion_ready(mob/user)
 	if(panel_open)
-		to_chat(user, "<span class='warning'>You can't load [src] while it's opened!</span>")
+		to_chat(user, span_warning("You can't load [src] while it's opened!"))
 		return FALSE
 	if(being_built)
-		to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
+		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
 		return FALSE
 
 	return TRUE

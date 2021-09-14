@@ -139,3 +139,5 @@ This repository uses `LF` line endings for all code as specified in the **.gitat
 Unless overridden or a non standard git binary is used the line ending settings should be applied to your clone automatically.
 
 Note: VSC requires an [extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) to take advantage of editorconfig.
+
+Github actions that require additional configuration are disabled on the repository until ACTION_ENABLER secret is created with non-empty value.

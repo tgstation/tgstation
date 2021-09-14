@@ -56,12 +56,16 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/on_part_entered)
 
-/obj/item/storage/part_replacer/bluespace/proc/on_part_entered(datum/source, obj/item/I)
+/obj/item/storage/part_replacer/bluespace/proc/on_part_entered(datum/source, obj/item/inserted_component)
 	SIGNAL_HANDLER
-	if(!istype(I, /obj/item/stock_parts/cell))
+	if(inserted_component.reagents && length(inserted_component.reagents.reagent_list))
+		inserted_component.reagents.clear_reagents()
+		to_chat(usr, span_notice("[src] churns as [inserted_component] has its reagents emptied into bluespace."))
+
+	if(!istype(inserted_component, /obj/item/stock_parts/cell))
 		return
 
-	var/obj/item/stock_parts/cell/inserted_cell = I
+	var/obj/item/stock_parts/cell/inserted_cell = inserted_component
 
 	if(inserted_cell.rigged || inserted_cell.corrupted)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")

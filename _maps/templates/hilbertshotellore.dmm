@@ -117,7 +117,7 @@
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "aA" = (
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar/directional/north,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "aB" = (
@@ -250,7 +250,7 @@
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "aY" = (
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar/directional/north,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/vomit,
 /obj/effect/mob_spawn/human/doctorhilbert,

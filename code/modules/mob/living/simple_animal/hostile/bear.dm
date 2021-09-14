@@ -38,7 +38,7 @@
 	friendly_verb_simple = "bear hug"
 
 	//Space bears aren't affected by cold.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 
@@ -82,7 +82,7 @@
 	icon_living = "snowbear"
 	icon_dead = "snowbear_dead"
 	desc = "It's a polar bear, in space, but not actually in space."
-	weather_immunities = list("snow")
+	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 
 /mob/living/simple_animal/hostile/bear/russian
 	name = "combat bear"
@@ -113,7 +113,7 @@
 	if(istype(target, /mob/living/simple_animal/hostile/bear) && proximity_flag)
 		var/mob/living/simple_animal/hostile/bear/A = target
 		if(A.armored)
-			to_chat(user, "<span class='warning'>[A] has already been armored up!</span>")
+			to_chat(user, span_warning("[A] has already been armored up!"))
 			return
 		A.armored = TRUE
 		A.maxHealth += 60
@@ -123,7 +123,7 @@
 		A.melee_damage_upper += 5
 		A.wound_bonus += 5
 		A.update_icons()
-		to_chat(user, "<span class='info'>You strap the armor plating to [A] and sharpen [A.p_their()] claws with the nail filer. This was a great idea.</span>")
+		to_chat(user, span_info("You strap the armor plating to [A] and sharpen [A.p_their()] claws with the nail filer. This was a great idea."))
 		qdel(src)
 
 /mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Several functions used from it.
@@ -173,7 +173,7 @@
 	free butter to the station!</b>")
 	var/new_name = stripped_input(src, "Enter your name, or press \"Cancel\" to stick with Terrygold.", "Name Change")
 	if(new_name)
-		to_chat(src, "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>")
+		to_chat(src, span_notice("Your name is now <b>\"new_name\"</b>!"))
 		name = new_name
 
 /mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes some attacks by the butter bear slip those who dare cross its path.
@@ -182,4 +182,4 @@
 		if((L.body_position == STANDING_UP))
 			L.Knockdown(20)
 			playsound(loc, 'sound/misc/slip.ogg', 15)
-			L.visible_message("<span class='danger'>[L] slips on butter!</span>")
+			L.visible_message(span_danger("[L] slips on butter!"))

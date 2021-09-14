@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(assets)
 	switch (CONFIG_GET(string/asset_transport))
 		if ("webroot")
 			newtransporttype = /datum/asset_transport/webroot
-	
+
 	if (newtransporttype == transport.type)
 		return
 
@@ -31,3 +31,7 @@ SUBSYSTEM_DEF(assets)
 	transport.Initialize(cache)
 
 	..()
+
+/datum/controller/subsystem/assets/Recover()
+	cache = SSassets.cache
+	preload = SSassets.preload

@@ -125,8 +125,7 @@
 			qdel(src)
 			return
 
-	victim = L.owner
-	RegisterSignal(victim, COMSIG_PARENT_QDELETING, .proc/null_victim)
+	set_victim(L.owner)
 	set_limb(L)
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
@@ -145,14 +144,14 @@
 		return
 
 	if(!(silent || demoted))
-		var/msg = "<span class='danger'>[victim]'s [limb.name] [occur_text]!</span>"
+		var/msg = span_danger("[victim]'s [limb.name] [occur_text]!")
 		var/vis_dist = COMBAT_MESSAGE_RANGE
 
 		if(severity != WOUND_SEVERITY_MODERATE)
 			msg = "<b>[msg]</b>"
 			vis_dist = DEFAULT_MESSAGE_RANGE
 
-		victim.visible_message(msg, "<span class='userdanger'>Your [limb.name] [occur_text]!</span>", vision_distance = vis_dist)
+		victim.visible_message(msg, span_userdanger("Your [limb.name] [occur_text]!"), vision_distance = vis_dist)
 		if(sound_effect)
 			playsound(L.owner, sound_effect, 70 + 20 * severity, TRUE)
 
@@ -162,7 +161,15 @@
 
 /datum/wound/proc/null_victim()
 	SIGNAL_HANDLER
-	victim = null
+	set_victim(null)
+
+/datum/wound/proc/set_victim(new_victim)
+	if(victim)
+		UnregisterSignal(victim, COMSIG_PARENT_QDELETING)
+	remove_wound_from_victim()
+	victim = new_victim
+	if(victim)
+		RegisterSignal(victim, COMSIG_PARENT_QDELETING, .proc/null_victim)
 
 /datum/wound/proc/source_died()
 	SIGNAL_HANDLER
@@ -176,14 +183,18 @@
 		already_scarred = TRUE
 		var/datum/scar/new_scar = new
 		new_scar.generate(limb, src)
-	if(victim)
-		LAZYREMOVE(victim.all_wounds, src)
-		if(!victim.all_wounds)
-			victim.clear_alert("wound")
-		SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
+	remove_wound_from_victim()
 	if(limb && !ignore_limb)
 		LAZYREMOVE(limb.wounds, src)
 		limb.update_wounds(replaced)
+
+/datum/wound/proc/remove_wound_from_victim()
+	if(!victim)
+		return
+	LAZYREMOVE(victim.all_wounds, src)
+	if(!victim.all_wounds)
+		victim.clear_alert("wound")
+	SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
 
 /**
  * replace_wound() is used when you want to replace the current wound with a new wound, presumably of the same category, just of a different severity (either up or down counts)
@@ -298,7 +309,7 @@
 
 	// now that we've determined we have a valid attempt at treating, we can stomp on their dreams if we're already interacting with the patient or if their part is obscured
 	if(DOING_INTERACTION_WITH_TARGET(user, victim))
-		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
+		to_chat(user, span_warning("You're already interacting with [victim]!"))
 		return TRUE
 
 	// next we check if the bodypart in actually accessible (not under thick clothing). We skip the species trait check since skellies

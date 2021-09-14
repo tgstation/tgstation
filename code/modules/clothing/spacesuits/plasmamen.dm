@@ -1,10 +1,9 @@
 //Suits for the pink and grey skeletons! //EVA version no longer used in favor of the Jumpsuit version
 
-
 /obj/item/clothing/suit/space/eva/plasmaman
 	name = "EVA plasma envirosuit"
 	desc = "A special plasma containment suit designed to be space-worthy, as well as worn over other clothing. Like its smaller counterpart, it can automatically extinguish the wearer in a crisis, and holds twice as many charges."
-	allowed = list(/obj/item/gun, /obj/item/ammo_casing, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/transforming/energy/sword, /obj/item/restraints/handcuffs, /obj/item/tank)
+	allowed = list(/obj/item/gun, /obj/item/ammo_casing, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/energy/sword, /obj/item/restraints/handcuffs, /obj/item/tank)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 100, ACID = 75)
 	resistance_flags = FIRE_PROOF
 	icon_state = "plasmaman_suit"
@@ -16,7 +15,7 @@
 
 /obj/item/clothing/suit/space/eva/plasmaman/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>There [extinguishes_left == 1 ? "is" : "are"] [extinguishes_left] extinguisher charge\s left in this suit.</span>"
+	. += span_notice("There [extinguishes_left == 1 ? "is" : "are"] [extinguishes_left] extinguisher charge\s left in this suit.")
 
 
 /obj/item/clothing/suit/space/eva/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
@@ -29,7 +28,7 @@
 				return
 			next_extinguish = world.time + extinguish_cooldown
 			extinguishes_left--
-			H.visible_message("<span class='warning'>[H]'s suit automatically extinguishes [H.p_them()]!</span>","<span class='warning'>Your suit automatically extinguishes you.</span>")
+			H.visible_message(span_warning("[H]'s suit automatically extinguishes [H.p_them()]!"),span_warning("Your suit automatically extinguishes you."))
 			H.extinguish_mob()
 			new /obj/effect/particle_effect/water(get_turf(H))
 
@@ -55,6 +54,7 @@
 	var/smile_color = "#FF0000"
 	var/visor_icon = "envisor"
 	var/smile_state = "envirohelm_smile"
+	var/obj/item/clothing/head/attached_hat
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_welding_screen/plasmaman)
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
@@ -66,6 +66,13 @@
 	visor_toggling()
 	update_appearance()
 
+/obj/item/clothing/head/helmet/space/plasmaman/examine()
+	. = ..()
+	if(attached_hat)
+		. += span_notice("There's [attached_hat.name] placed on the helmet. Right-click to remove it.")
+	else
+		. += span_notice("There's nothing placed on the helmet.")
+
 /obj/item/clothing/head/helmet/space/plasmaman/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
 		toggle_welding_screen(user)
@@ -73,7 +80,7 @@
 /obj/item/clothing/head/helmet/space/plasmaman/proc/toggle_welding_screen(mob/living/user)
 	if(weldingvisortoggle(user))
 		if(helmet_on)
-			to_chat(user, "<span class='notice'>Your helmet's torch can't pass through your welding visor!</span>")
+			to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
 			helmet_on = FALSE
 			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 			update_appearance()
@@ -85,26 +92,41 @@
 	. = ..()
 	. += visor_icon
 
-/obj/item/clothing/head/helmet/space/plasmaman/attackby(obj/item/C, mob/living/user)
+/obj/item/clothing/head/helmet/space/plasmaman/attackby(obj/item/hitting_item, mob/living/user)
 	. = ..()
-	if(istype(C, /obj/item/toy/crayon))
+	if(istype(hitting_item, /obj/item/toy/crayon))
 		if(smile == FALSE)
-			var/obj/item/toy/crayon/CR = C
-			to_chat(user, "<span class='notice'>You start drawing a smiley face on the helmet's visor..</span>")
+			var/obj/item/toy/crayon/CR = hitting_item
+			to_chat(user, span_notice("You start drawing a smiley face on the helmet's visor.."))
 			if(do_after(user, 25, target = src))
 				smile = TRUE
 				smile_color = CR.paint_color
 				to_chat(user, "You draw a smiley on the helmet visor.")
 				update_appearance()
 		else
-			to_chat(user, "<span class='warning'>Seems like someone already drew something on this helmet's visor!</span>")
+			to_chat(user, span_warning("Seems like someone already drew something on this helmet's visor!"))
+		return
+	if(istype(hitting_item, /obj/item/clothing/head))
+		var/obj/item/clothing/hitting_clothing = hitting_item
+		if(hitting_clothing.clothing_flags & PLASMAMAN_HELMET_EXEMPT)
+			to_chat(user, span_notice("You cannot place [hitting_clothing.name] on helmet!"))
+			return
+		if(attached_hat)
+			to_chat(user, span_notice("There's already something placed on helmet!"))
+			return
+		attached_hat = hitting_clothing
+		to_chat(user, span_notice("You placed [hitting_clothing.name] on helmet!"))
+		hitting_clothing.forceMove(src)
+		update_appearance()
 
-/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands)
+/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	if(!isinhands && smile)
 		var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/head/plasmaman_head.dmi', smile_state)
 		M.color = smile_color
 		. += M
+	if(!isinhands && attached_hat)
+		. += attached_hat.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head.dmi')
 	if(!isinhands && !up)
 		. += mutable_appearance('icons/mob/clothing/head/plasmaman_head.dmi', visor_icon)
 	else
@@ -125,16 +147,24 @@
 
 	if(helmet_on)
 		if(!up)
-			to_chat(user, "<span class='notice'>Your helmet's torch can't pass through your welding visor!</span>")
+			to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
 			set_light_on(FALSE)
 		else
 			set_light_on(TRUE)
 	else
 		set_light_on(FALSE)
 
-	for(var/X in actions)
-		var/datum/action/A=X
-		A.UpdateButtonIcon()
+	update_action_buttons()
+
+/obj/item/clothing/head/helmet/space/plasmaman/attack_hand_secondary(mob/user)
+	..()
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!attached_hat)
+		return
+	user.put_in_active_hand(attached_hat)
+	to_chat(user, span_notice("You removed [attached_hat.name] from helmet!"))
+	attached_hat = null
+	update_appearance()
 
 /obj/item/clothing/head/helmet/space/plasmaman/security
 	name = "security plasma envirosuit helmet"

@@ -30,7 +30,7 @@
 	wine_power = 15
 
 /obj/item/food/grown/grass/attack_self(mob/user)
-	to_chat(user, "<span class='notice'>You prepare the astroturf.</span>")
+	to_chat(user, span_notice("You prepare the astroturf."))
 	var/grassAmt = 1 + round(seed.potency * tile_coefficient) // The grass we're holding
 	for(var/obj/item/food/grown/grass/G in user.loc) // The grass on the floor
 		if(G.type != type)
@@ -53,6 +53,7 @@
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/blue)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/hydrogen = 0.05, /datum/reagent/drug/space_drugs = 0.15)
 	graft_gene = /datum/plant_gene/trait/glow/blue
+	mutatelist = null
 
 /obj/item/food/grown/grass/fairy
 	seed = /obj/item/seeds/grass/fairy
@@ -70,7 +71,7 @@
 	species = "carpet"
 	plantname = "Carpet"
 	product = /obj/item/food/grown/grass/carpet
-	mutatelist = list()
+	mutatelist = null
 	rarity = 10
 
 /obj/item/food/grown/grass/carpet

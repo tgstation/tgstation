@@ -1,5 +1,5 @@
 /datum/reagent/blood
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null)
+	data = list("viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null)
 	name = "Blood"
 	color = "#C80000" // rgb: 200, 0, 0
 	metabolization_rate = 12.5 * REAGENTS_METABOLISM //fast rate so it disappears fast.
@@ -255,7 +255,7 @@
 /datum/reagent/water/holywater/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	if(IS_CULTIST(exposed_mob))
-		to_chat(exposed_mob, "<span class='userdanger'>A vile holiness begins to spread its shining tendrils through your mind, purging the Geometer of Blood's influence!</span>")
+		to_chat(exposed_mob, span_userdanger("A vile holiness begins to spread its shining tendrils through your mind, purging the Geometer of Blood's influence!"))
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.blood_volume)
@@ -267,7 +267,7 @@
 	M.jitteriness = min(M.jitteriness + (2 * delta_time), 10)
 	if(IS_CULTIST(M))
 		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
-			to_chat(M, "<span class='cultlarge'>Your blood rites falter as holy water scours your body!</span>")
+			to_chat(M, span_cultlarge("Your blood rites falter as holy water scours your body!"))
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
 				qdel(BS)
 	if(data["misc"] >= (25 SECONDS)) // 10 units
@@ -278,7 +278,7 @@
 		if(IS_CULTIST(M) && DT_PROB(10, delta_time))
 			M.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
 			if(prob(10))
-				M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
+				M.visible_message(span_danger("[M] starts having a seizure!"), span_userdanger("You have a seizure!"))
 				M.Unconscious(12 SECONDS)
 				to_chat(M, "<span class='cultlarge'>[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
 				"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")].</span>")
@@ -300,14 +300,6 @@
 		for(var/obj/effect/rune/R in exposed_turf)
 			qdel(R)
 	exposed_turf.Bless()
-
-// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases instability.
-/datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	. = ..()
-	mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 1))
-	mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 0.1))
-	if(myseed)
-		myseed.adjust_instability(round(chems.get_reagent_amount(src.type) * 0.15))
 
 /datum/reagent/water/hollowwater
 	name = "Hollow Water"
@@ -435,7 +427,7 @@
 	if(ishuman(exposed_mob))
 		if(methods & (PATCH|VAPOR))
 			var/mob/living/carbon/human/exposed_human = exposed_mob
-			if(exposed_human.dna.species.id == "human")
+			if(exposed_human.dna.species.id == SPECIES_HUMAN)
 				switch(exposed_human.skin_tone)
 					if("african1")
 						exposed_human.skin_tone = "african2"
@@ -489,7 +481,7 @@
 			exposed_human.regenerate_icons()
 
 		if((methods & INGEST) && show_message)
-			to_chat(exposed_mob, "<span class='notice'>That tasted horrible.</span>")
+			to_chat(exposed_mob, span_notice("That tasted horrible."))
 
 
 /datum/reagent/spraytan/overdose_process(mob/living/M, delta_time, times_fired)
@@ -557,13 +549,13 @@
 		for(var/i in mutationtexts)
 			if(mutationtexts[i] == filter)
 				pick_ur_fav += i
-		to_chat(H, "<span class='warning'>[pick(pick_ur_fav)]</span>")
+		to_chat(H, span_warning("[pick(pick_ur_fav)]"))
 
 	if(current_cycle >= cycles_to_turn)
 		var/datum/species/species_type = race
 		H.set_species(species_type)
 		holder.del_reagent(type)
-		to_chat(H, "<span class='warning'>You've become \a [lowertext(initial(species_type.name))]!</span>")
+		to_chat(H, span_warning("You've become \a [lowertext(initial(species_type.name))]!"))
 		return
 	..()
 
@@ -623,7 +615,7 @@
 
 /datum/reagent/mutationtoxin/jelly/on_mob_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(isjellyperson(H))
-		to_chat(H, "<span class='warning'>Your jelly shifts and morphs, turning you into another subspecies!</span>")
+		to_chat(H, span_warning("Your jelly shifts and morphs, turning you into another subspecies!"))
 		var/species_type = pick(subtypesof(/datum/species/jelly))
 		H.set_species(species_type)
 		holder.del_reagent(type)
@@ -632,7 +624,7 @@
 		var/datum/species/species_type = pick(subtypesof(race))
 		H.set_species(species_type)
 		holder.del_reagent(type)
-		to_chat(H, "<span class='warning'>You've become \a [initial(species_type.name)]!</span>")
+		to_chat(H, span_warning("You've become \a [initial(species_type.name)]!"))
 		return TRUE
 	return ..()
 
@@ -718,9 +710,10 @@
 	..()
 	if (!istype(H))
 		return
-	to_chat(H, "<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
+	to_chat(H, span_warning("<b>You grit your teeth in pain as your body rapidly mutates!</b>"))
 	H.visible_message("<b>[H]</b> suddenly transforms!")
 	randomize_human(H)
+	H.dna.update_dna_identity()
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
@@ -1088,7 +1081,7 @@
 
 /datum/reagent/bluespace/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(current_cycle > 10 && DT_PROB(7.5, delta_time))
-		to_chat(M, "<span class='warning'>You feel unstable...</span>")
+		to_chat(M, span_warning("You feel unstable..."))
 		M.Jitter(2)
 		current_cycle = 1
 		addtimer(CALLBACK(M, /mob/living/proc/bluespace_shuffle), 30)
@@ -1870,6 +1863,119 @@
 	carpet_type = /turf/open/floor/carpet/royalblue
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/carpet/neon
+	name = "Neon Carpet"
+	description = "For those who like the 1980s, vegas, and debugging."
+	color = COLOR_ALMOST_BLACK
+	taste_description = "neon"
+	ph = 6
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	carpet_type = /turf/open/floor/carpet/neon
+
+/datum/reagent/carpet/neon/simple_white
+	name = "Simple White Neon Carpet"
+	description = "For those who like fluorescent lighting."
+	color = LIGHT_COLOR_HALOGEN
+	taste_description = "sodium vapor"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	carpet_type = /turf/open/floor/carpet/neon/simple/white
+
+/datum/reagent/carpet/neon/simple_red
+	name = "Simple Red Neon Carpet"
+	description = "For those who like a bit of uncertainty."
+	color = COLOR_RED
+	taste_description = "neon hallucinations"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	carpet_type = /turf/open/floor/carpet/neon/simple/red
+
+/datum/reagent/carpet/neon/simple_orange
+	name = "Simple Orange Neon Carpet"
+	description = "For those who like some sharp edges."
+	color = COLOR_ORANGE
+	taste_description = "neon spines"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	carpet_type = /turf/open/floor/carpet/neon/simple/orange
+
+/datum/reagent/carpet/neon/simple_yellow
+	name = "Simple Yellow Neon Carpet"
+	description = "For those who need a little stability in their lives."
+	color = COLOR_YELLOW
+	taste_description = "stabilized neon"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	carpet_type = /turf/open/floor/carpet/neon/simple/yellow
+
+/datum/reagent/carpet/neon/simple_lime
+	name = "Simple Lime Neon Carpet"
+	description = "For those who need a little bitterness."
+	color = COLOR_LIME
+	taste_description = "neon citrus"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	carpet_type = /turf/open/floor/carpet/neon/simple/lime
+
+/datum/reagent/carpet/neon/simple_green
+	name = "Simple Green Neon Carpet"
+	description = "For those who need a little bit of change in their lives."
+	color = COLOR_GREEN
+	taste_description = "radium"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	carpet_type = /turf/open/floor/carpet/neon/simple/green
+
+/datum/reagent/carpet/neon/simple_teal
+	name = "Simple Teal Neon Carpet"
+	description = "For those who need a smoke."
+	color = COLOR_TEAL
+	taste_description = "neon tobacco"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	carpet_type = /turf/open/floor/carpet/neon/simple/teal
+
+/datum/reagent/carpet/neon/simple_cyan
+	name = "Simple Cyan Neon Carpet"
+	description = "For those who need to take a breath."
+	color = COLOR_DARK_CYAN
+	taste_description = "neon air"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	carpet_type = /turf/open/floor/carpet/neon/simple/cyan
+
+/datum/reagent/carpet/neon/simple_blue
+	name = "Simple Blue Neon Carpet"
+	description = "For those who need to feel joy again."
+	color = COLOR_NAVY
+	taste_description = "neon blue"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	carpet_type = /turf/open/floor/carpet/neon/simple/blue
+
+/datum/reagent/carpet/neon/simple_purple
+	name = "Simple Purple Neon Carpet"
+	description = "For those that need a little bit of exploration."
+	color = COLOR_PURPLE
+	taste_description = "neon hell"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	carpet_type = /turf/open/floor/carpet/neon/simple/purple
+
+/datum/reagent/carpet/neon/simple_violet
+	name = "Simple Violet Neon Carpet"
+	description = "For those who want to temp fate."
+	color = COLOR_VIOLET
+	taste_description = "neon hell"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	carpet_type = /turf/open/floor/carpet/neon/simple/violet
+
+/datum/reagent/carpet/neon/simple_pink
+	name = "Simple Pink Neon Carpet"
+	description = "For those just want to stop thinking so much."
+	color = COLOR_PINK
+	taste_description = "neon pink"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	carpet_type = /turf/open/floor/carpet/neon/simple/pink
+
+/datum/reagent/carpet/neon/simple_black
+	name = "Simple Black Neon Carpet"
+	description = "For those who need to catch their breath."
+	color = COLOR_BLACK
+	taste_description = "neon ash"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	carpet_type = /turf/open/floor/carpet/neon/simple/black
+
 /datum/reagent/bromine
 	name = "Bromine"
 	description = "A brownish liquid that's highly reactive. Useful for stopping free radicals, but not intended for human consumption."
@@ -1954,12 +2060,20 @@
 	taste_description = "rainbows"
 	var/can_colour_mobs = TRUE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/datum/callback/color_callback
 
 /datum/reagent/colorful_reagent/New()
-	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateColor))
+	color_callback = CALLBACK(src, .proc/UpdateColor)
+	SSticker.OnRoundstart(color_callback)
+	return ..()
+
+/datum/reagent/colorful_reagent/Destroy()
+	LAZYREMOVE(SSticker.round_end_events, color_callback) //Prevents harddels during roundstart
+	color_callback = null //Fly free little callback
 	return ..()
 
 /datum/reagent/colorful_reagent/proc/UpdateColor()
+	color_callback = null
 	color = pick(random_color_list)
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -2017,7 +2131,7 @@
 	var/mob/living/carbon/human/exposed_human = exposed_mob
 	var/datum/sprite_accessory/hair/picked_hair = pick(GLOB.hairstyles_list)
 	var/datum/sprite_accessory/facial_hair/picked_beard = pick(GLOB.facial_hairstyles_list)
-	to_chat(exposed_human, "<span class='notice'>Hair starts sprouting from your scalp.</span>")
+	to_chat(exposed_human, span_notice("Hair starts sprouting from your scalp."))
 	exposed_human.hairstyle = picked_hair
 	exposed_human.facial_hairstyle = picked_beard
 	exposed_human.update_hair()
@@ -2037,7 +2151,7 @@
 		return
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
-	to_chat(exposed_human, "<span class='notice'>Your hair starts growing at an incredible speed!</span>")
+	to_chat(exposed_human, span_notice("Your hair starts growing at an incredible speed!"))
 	exposed_human.hairstyle = "Very Long Hair"
 	exposed_human.facial_hairstyle = "Beard (Very Long)"
 	exposed_human.update_hair()
@@ -2057,7 +2171,7 @@
 		return
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
-	to_chat(exposed_human, "<span class='danger'>Your hair is falling out in clumps!</span>")
+	to_chat(exposed_human, span_danger("Your hair is falling out in clumps!"))
 	exposed_human.hairstyle = "Bald"
 	exposed_human.facial_hairstyle = "Shaved"
 	exposed_human.update_hair()
@@ -2315,14 +2429,6 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/bz_metabolites/on_mob_metabolize(mob/living/L)
-	..()
-	ADD_TRAIT(L, CHANGELING_HIVEMIND_MUTE, type)
-
-/datum/reagent/bz_metabolites/on_mob_end_metabolize(mob/living/L)
-	..()
-	REMOVE_TRAIT(L, CHANGELING_HIVEMIND_MUTE, type)
-
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/L, delta_time, times_fired)
 	if(L.mind)
 		var/datum/antagonist/changeling/changeling = L.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -2411,7 +2517,7 @@
 			var/dread = pick("Something is moving in your stomach...", \
 				"A wet growl echoes from your stomach...", \
 				"For a moment you feel like your surroundings are moving, but it's your stomach...")
-			to_chat(C, "<span class='userdanger'>[dread]</span>")
+			to_chat(C, span_userdanger("[dread]"))
 			yuck_cycle = current_cycle
 	else
 		var/yuck_cycles = current_cycle - yuck_cycle
@@ -2475,7 +2581,7 @@
 	taste_mult = 0 // oderless and tasteless
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	/// The material flags used to apply the transmuted materials
-	var/applied_material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	var/applied_material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	/// The amount of materials to apply to the transmuted objects if they don't contain materials
 	var/default_material_amount = 100
 
@@ -2611,3 +2717,87 @@
 		var/color
 		CONVERT_PH_TO_COLOR(exposed_atom.reagents.ph, color)
 		exposed_atom.add_atom_colour(color, WASHABLE_COLOUR_PRIORITY)
+
+// [Original ants concept by Keelin on Goon]
+/datum/reagent/ants
+	name = "Ants"
+	description = "A genetic crossbreed between ants and termites, their bites land at a 3 on the Schmidt Pain Scale."
+	reagent_state = SOLID
+	color = "#993333"
+	taste_mult = 1.3
+	taste_description = "tiny legs scuttling down the back of your throat"
+	metabolization_rate = 5 * REAGENTS_METABOLISM //1u per second
+	glass_name = "glass of ants"
+	glass_desc = "Bottoms up...?"
+	ph = 4.6 // Ants contain Formic Acid
+	/// How much damage the ants are going to be doing (rises with each tick the ants are in someone's body)
+	var/ant_damage = 0
+	/// Tells the debuff how many ants we are being covered with.
+	var/amount_left = 0
+
+/datum/reagent/ants/on_mob_life(mob/living/carbon/victim, delta_time)
+	victim.adjustBruteLoss(max(0.1, round((ant_damage * 0.025),0.1))) //Scales with time. Roughly 32 brute with 100u.
+	if(DT_PROB(5, delta_time))
+		if(DT_PROB(5, delta_time)) //Super rare statement
+			victim.say("AUGH NO NOT THE ANTS! NOT THE ANTS! AAAAUUGH THEY'RE IN MY EYES! MY EYES! AUUGH!!", forced = /datum/reagent/ants)
+		else
+			victim.say(pick("THEY'RE UNDER MY SKIN!!", "GET THEM OUT OF ME!!", "HOLY HELL THEY BURN!!", "MY GOD THEY'RE INSIDE ME!!", "GET THEM OUT!!"), forced = /datum/reagent/ants)
+	if(DT_PROB(15, delta_time))
+		victim.emote("scream")
+	if(DT_PROB(2, delta_time)) // Stuns, but purges ants.
+		victim.vomit(rand(5,10), FALSE, TRUE, 1, TRUE, FALSE, purge_ratio = 1)
+	ant_damage++
+	return ..()
+
+/datum/reagent/ants/on_mob_end_metabolize(mob/living/living_anthill)
+	ant_damage = 0
+	to_chat(living_anthill, "<span class='notice'>You feel like the last of the ants are out of your system.</span>")
+	return ..()
+
+/datum/reagent/ants/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(!iscarbon(exposed_mob) || (methods & (INGEST|INJECT)))
+		return
+	if(methods & (PATCH|TOUCH|VAPOR))
+		amount_left = round(reac_volume,0.1)
+		exposed_mob.apply_status_effect(STATUS_EFFECT_ANTS, amount_left)
+
+/datum/reagent/ants/expose_turf(turf/exposed_turf, reac_volume)
+	. = ..()
+	if((reac_volume < 10) || isspaceturf(exposed_turf))
+		return
+
+	var/obj/effect/decal/cleanable/ants/pests = locate() in exposed_turf.contents
+	if(!pests)
+		pests = new(exposed_turf)
+	var/spilled_ants = (round(reac_volume,1) - 5) // To account for ant decals giving 3-5 ants on initialize.
+	pests.reagents.add_reagent(/datum/reagent/ants, spilled_ants)
+	pests.update_ant_damage(spilled_ants)
+
+//This is intended to a be a scarce reagent to gate certain drugs and toxins with. Do not put in a synthesizer. Renewable sources of this reagent should be inefficient.
+/datum/reagent/lead
+	name = "lead"
+	description = "A dull metalltic element with a low melting point."
+	taste_description = "metal"
+	reagent_state = SOLID
+	color = "#80919d"
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+
+/datum/reagent/lead/on_mob_life(mob/living/carbon/victim)
+	. = ..()
+	victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5)
+
+//The main feedstock for kronkaine production, also a shitty stamina healer.
+/datum/reagent/kronkus_extract
+	name = "kronkus extract"
+	description = "A frothy extract made from fermented kronkus vine pulp.\nHighly bitter due to the presence of a variety of kronkamines."
+	taste_description = "bitterness"
+	color = "#228f63"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	addiction_types = list(/datum/addiction/stimulants = 5)
+
+/datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer)
+	. = ..()
+	kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
+	kronkus_enjoyer.adjustStaminaLoss(-2, FALSE)
+

@@ -11,7 +11,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/new_highlander)
 	sound_to_playing_players('sound/misc/highlander.ogg')
-	send_to_playing_players("<span class='boldannounce'><font size=6>THERE CAN BE ONLY ONE</font></span>")
+	send_to_playing_players(span_boldannounce("<font size=6>THERE CAN BE ONLY ONE</font>"))
 	for(var/obj/item/disk/nuclear/fukkendisk in GLOB.poi_list)
 		var/datum/component/stationloving/component = fukkendisk.GetComponent(/datum/component/stationloving)
 		component?.relocate() //Gets it out of bags and such
@@ -59,7 +59,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 /datum/highlander_controller/proc/new_highlander(mob/living/carbon/human/new_crewmember, rank)
 	SIGNAL_HANDLER
 
-	to_chat(new_crewmember, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
+	to_chat(new_crewmember, span_userdanger("<i>THERE CAN BE ONLY ONE!!!</i>"))
 	new_crewmember.make_scottish()
 
 /**
@@ -76,17 +76,17 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 		return
 
 	if(was_delayed) //sends more accurate logs
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)]'s delayed THERE CAN ONLY BE ONE started!</span>")
+		message_admins(span_adminnotice("[key_name_admin(usr)]'s delayed THERE CAN ONLY BE ONE started!"))
 		log_admin("[key_name(usr)] delayed THERE CAN ONLY BE ONE started.")
 	else
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>")
+		message_admins(span_adminnotice("[key_name_admin(usr)] used THERE CAN BE ONLY ONE!"))
 		log_admin("[key_name(usr)] used THERE CAN BE ONLY ONE.")
 
 	GLOB.highlander_controller = new /datum/highlander_controller
 
 /client/proc/only_one_delayed()
-	send_to_playing_players("<span class='userdanger'>Bagpipes begin to blare. You feel Scottish pride coming over you.</span>")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used (delayed) THERE CAN BE ONLY ONE!</span>")
+	send_to_playing_players(span_userdanger("Bagpipes begin to blare. You feel Scottish pride coming over you."))
+	message_admins(span_adminnotice("[key_name_admin(usr)] used (delayed) THERE CAN BE ONLY ONE!"))
 	log_admin("[key_name(usr)] used delayed THERE CAN BE ONLY ONE.")
 	addtimer(CALLBACK(src, .proc/only_one, TRUE), 42 SECONDS)
 

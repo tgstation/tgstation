@@ -107,9 +107,9 @@
 	greyscale_colors = "#933ea8#a92323"
 	ttone = "slip"
 
-/obj/item/pda/toxins
+/obj/item/pda/science
 	name = "scientist PDA"
-	default_cartridge = /obj/item/cartridge/signal/toxins
+	default_cartridge = /obj/item/cartridge/signal/ordnance
 	greyscale_config = /datum/greyscale_config/pda/stripe_thick
 	greyscale_colors = "#e2e2e2#000099#9e00ea"
 	ttone = "boom"

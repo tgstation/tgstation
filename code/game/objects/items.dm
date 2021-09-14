@@ -113,8 +113,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	///What body parts are covered by the clothing when you wear it
 	var/body_parts_covered = 0
-	///Literally does nothing right now
-	var/gas_transfer_coefficient = 1
 	/// How likely a disease or chemical is to get through a piece of clothing
 	var/permeability_coefficient = 1
 	/// for electrical admittance/conductance (electrocution checks and shit)
@@ -142,8 +140,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	///list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 	var/list/species_exception = null
 
-	///Who threw the item
-	var/mob/thrownby = null
+	///A weakref to the mob who threw the item
+	var/datum/weakref/thrownby = null //I cannot verbally describe how much I hate this var
 	///Items can by default thrown up to 10 tiles by TK users
 	tk_throw_range = 10
 
@@ -241,10 +239,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		qdel(X)
 	return ..()
 
-/*
- * Adds the weapon_description element, which shows the warning label for especially dangerous objects.
- * Made to be overridden by item subtypes that require specific notes outside of the scope of offensive_notes
- */
+/// Adds the weapon_description element, which shows the 'warning label' for especially dangerous objects. Override this for item types with special notes.
 /obj/item/proc/add_weapon_description()
 	AddElement(/datum/element/weapon_description)
 
@@ -256,7 +251,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
-		obj_destruction(MELEE)
+		atom_destruction(MELEE)
 
 /obj/item/ComponentInitialize()
 	. = ..()
@@ -425,12 +420,12 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		var/announce = FALSE
 		//Apply fantasy with affix. failing this should never happen, but if it does it should not be silent.
 		if(AddComponent(/datum/component/fantasy, fantasy_quality, list(affix), canFail, announce) == COMPONENT_INCOMPATIBLE)
-			to_chat(usr, "<span class='warning'>Fantasy component not compatible with [src].</span>")
+			to_chat(usr, span_warning("Fantasy component not compatible with [src]."))
 			CRASH("fantasy component incompatible with object of type: [type]")
 
-		to_chat(usr, "<span class='notice'>[before_name] now has [picked_affix_name]!</span>")
+		to_chat(usr, span_notice("[before_name] now has [picked_affix_name]!"))
 		log_admin("[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]")
-		message_admins("<span class='notice'>[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]</span>")
+		message_admins(span_notice("[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]"))
 
 /obj/item/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -455,9 +450,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 		if(can_handle_hot)
 			extinguish()
-			to_chat(user, "<span class='notice'>You put out the fire on [src].</span>")
+			to_chat(user, span_notice("You put out the fire on [src]."))
 		else
-			to_chat(user, "<span class='warning'>You burn your hand on [src]!</span>")
+			to_chat(user, span_warning("You burn your hand on [src]!"))
 			var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 			if(affecting?.receive_damage( 0, 5 )) // 5 burn damage
 				C.update_damage_overlays()
@@ -470,7 +465,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/grav = user.has_gravity()
 	if(grav > STANDARD_GRAVITY)
 		var/grav_power = min(3,grav - STANDARD_GRAVITY)
-		to_chat(user,"<span class='notice'>You start picking up [src]...</span>")
+		to_chat(user,span_notice("You start picking up [src]..."))
 		if(!do_mob(user,src,30*grav_power))
 			return
 
@@ -521,7 +516,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!user.can_hold_items(src))
 		if(src in ayy.contents) // To stop Aliens having items stuck in their pockets
 			ayy.dropItemToGround(src)
-		to_chat(user, "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>")
+		to_chat(user, span_warning("Your claws aren't capable of such fine manipulation!"))
 		return
 	attack_paw(ayy, modifiers)
 
@@ -545,7 +540,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return TRUE
 
 	if(prob(final_block_chance))
-		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
+		owner.visible_message(span_danger("[owner] blocks [attack_text] with [src]!"))
 		return TRUE
 
 /obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language, list/message_mods)
@@ -599,6 +594,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	SHOULD_CALL_PARENT(TRUE)
 	visual_equipped(user, slot, initial)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
+	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED_ITEM, src, slot)
 	for(var/X in actions)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
@@ -696,10 +692,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
 		return
-	thrownby = thrower
+	thrownby = WEAKREF(thrower)
 	callback = CALLBACK(src, .proc/after_throw, callback) //replace their callback with our own
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle, quickstart = quickstart)
-
 
 /obj/item/proc/after_throw(datum/callback/callback)
 	if (callback) //call the original callback
@@ -782,7 +777,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /obj/item/proc/ignition_effect(atom/A, mob/user)
 	if(get_temperature())
-		. = "<span class='notice'>[user] lights [A] with [src].</span>"
+		. = span_notice("[user] lights [A] with [src].")
 	else
 		. = ""
 
@@ -796,6 +791,13 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if (obj_flags & CAN_BE_HIT)
 		return ..()
 	return 0
+
+/obj/item/attack_basic_mob(mob/living/basic/user, list/modifiers)
+	if (obj_flags & CAN_BE_HIT)
+		return ..()
+	return 0
+
+attack_basic_mob
 
 /obj/item/burn()
 	if(!QDELETED(src))
@@ -1037,7 +1039,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return
 	user.dropItemToGround(src, silent = TRUE)
 	if(throwforce && HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, "<span class='notice'>You set [src] down gently on the ground.</span>")
+		to_chat(user, span_notice("You set [src] down gently on the ground."))
 		return
 	return src
 
@@ -1110,8 +1112,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item/proc/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
 	if(get_sharpness() && force >= 5) //if we've got something sharp with a decent force (ie, not plastic)
 		INVOKE_ASYNC(victim, /mob.proc/emote, "scream")
-		victim.visible_message("<span class='warning'>[victim] looks like [victim.p_theyve()] just bit something they shouldn't have!</span>", \
-							"<span class='boldwarning'>OH GOD! Was that a crunch? That didn't feel good at all!!</span>")
+		victim.visible_message(span_warning("[victim] looks like [victim.p_theyve()] just bit something they shouldn't have!"), \
+							span_boldwarning("OH GOD! Was that a crunch? That didn't feel good at all!!"))
 
 		victim.apply_damage(max(15, force), BRUTE, BODY_ZONE_HEAD, wound_bonus = 10, sharpness = TRUE)
 		victim.losebreath += 2
@@ -1154,8 +1156,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			discover_after = FALSE
 
 		victim.adjust_disgust(33)
-		victim.visible_message("<span class='warning'>[victim] looks like [victim.p_theyve()] just bitten into something hard.</span>", \
-						"<span class='warning'>Eugh! Did I just bite into something?</span>")
+		victim.visible_message(span_warning("[victim] looks like [victim.p_theyve()] just bitten into something hard."), \
+						span_warning("Eugh! Did I just bite into something?"))
 
 	else if(w_class == WEIGHT_CLASS_TINY) //small items like soap or toys that don't have mat datums
 		/// victim's chest (for cavity implanting the item)
@@ -1163,20 +1165,31 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		if(victim_cavity.cavity_item)
 			victim.vomit(5, FALSE, FALSE, distance = 0)
 			forceMove(drop_location())
-			to_chat(victim, "<span class='warning'>You vomit up a [name]! [source_item? "Was that in \the [source_item]?" : ""]</span>")
+			to_chat(victim, span_warning("You vomit up a [name]! [source_item? "Was that in \the [source_item]?" : ""]"))
 		else
 			victim.transferItemToLoc(src, victim, TRUE)
 			victim.losebreath += 2
 			victim_cavity.cavity_item = src
-			to_chat(victim, "<span class='warning'>You swallow hard. [source_item? "Something small was in \the [source_item]..." : ""]</span>")
+			to_chat(victim, span_warning("You swallow hard. [source_item? "Something small was in \the [source_item]..." : ""]"))
 		discover_after = FALSE
 
 	else
-		to_chat(victim, "<span class='warning'>[source_item? "Something strange was in the \the [source_item]..." : "I just bit something strange..."] </span>")
+		to_chat(victim, span_warning("[source_item? "Something strange was in the \the [source_item]..." : "I just bit something strange..."] "))
 
 	return discover_after
 
 #undef MAX_MATS_PER_BITE
+
+/**
+ * Updates all action buttons associated with this item
+ *
+ * Arguments:
+ * * status_only - Update only current availability status of the buttons to show if they are ready or not to use
+ * * force - Force buttons update even if the given button icon state has not changed
+ */
+/obj/item/proc/update_action_buttons(status_only = FALSE, force = FALSE)
+	for(var/datum/action/current_action as anything in actions)
+		current_action.UpdateButtonIcon(status_only, force)
 
 // Update icons if this is being carried by a mob
 /obj/item/wash(clean_types)
@@ -1185,3 +1198,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(ismob(loc))
 		var/mob/mob_loc = loc
 		mob_loc.regenerate_icons()
+
+/// Called on [/datum/element/openspace_item_click_handler/proc/on_afterattack]. Check the relative file for information.
+/obj/item/proc/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
+	stack_trace("Undefined handle_openspace_click() behaviour. Ascertain the openspace_item_click_handler element has been attached to the right item and that its proc override doesn't call parent.")

@@ -19,6 +19,7 @@
 	damage_deflection = 10
 
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
 	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
 	var/shockedby
@@ -47,12 +48,12 @@
 	. = ..()
 	if(red_alert_access)
 		if(SSsecurity_level.current_level >= SEC_LEVEL_RED)
-			. += "<span class='notice'>Due to a security threat, its access requirements have been lifted!</span>"
+			. += span_notice("Due to a security threat, its access requirements have been lifted!")
 		else
-			. += "<span class='notice'>In the event of a red alert, its access requirements will automatically lift.</span>"
-	. += "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>"
+			. += span_notice("In the event of a red alert, its access requirements will automatically lift.")
+	. += span_notice("Its maintenance panel is <b>screwed</b> in place.")
 	if(safety_mode)
-		. += "<span class='notice'>It has labels indicating that it has an emergency mechanism to open it with <b>just your hands</b> if there's no power.</span>"
+		. += span_notice("It has labels indicating that it has an emergency mechanism to open it with <b>just your hands</b> if there's no power.")
 
 /obj/machinery/door/check_access_list(list/access_list)
 	if(red_alert_access && SSsecurity_level.current_level >= SEC_LEVEL_RED)
@@ -106,12 +107,12 @@
 		return
 	if(!red_alert_access)
 		return
-	audible_message("<span class='notice'>[src] whirr[p_s()] as [p_they()] automatically lift[p_s()] access requirements!</span>")
+	audible_message(span_notice("[src] whirr[p_s()] as [p_they()] automatically lift[p_s()] access requirements!"))
 	playsound(src, 'sound/machines/boltsup.ogg', 50, TRUE)
 
 /obj/machinery/door/proc/try_safety_unlock(mob/user)
 	if(safety_mode && !hasPower() && density)
-		to_chat(user, "<span class='notice'>You begin unlocking the airlock safety mechanism...</span>")
+		to_chat(user, span_notice("You begin unlocking the airlock safety mechanism..."))
 		if(do_after(user, 15 SECONDS, target = src))
 			try_to_crowbar(null, user)
 			return TRUE
@@ -165,7 +166,7 @@
 	if(density) //Gotta be closed my friend
 		move_update_air(T)
 
-/obj/machinery/door/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/machinery/door/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(.)
 		return
@@ -269,11 +270,11 @@
 			forced_open = crowbar.force_opens
 		try_to_crowbar_secondary(weapon, user, forced_open)
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
 
 /obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(. && obj_integrity > 0)
+	if(. && atom_integrity > 0)
 		if(damage_amount >= 10 && prob(30))
 			spark_system.start()
 
@@ -334,7 +335,7 @@
 	do_animate("opening")
 	set_opacity(0)
 	sleep(5)
-	density = FALSE
+	set_density(FALSE)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	sleep(5)
 	layer = initial(layer)
@@ -364,7 +365,7 @@
 	do_animate("closing")
 	layer = closingLayer
 	sleep(5)
-	density = TRUE
+	set_density(TRUE)
 	flags_1 |= PREVENT_CLICK_UNDER_1
 	sleep(5)
 	update_appearance()
@@ -390,7 +391,7 @@
 
 /obj/machinery/door/proc/crush()
 	for(var/mob/living/L in get_turf(src))
-		L.visible_message("<span class='warning'>[src] closes on [L], crushing [L.p_them()]!</span>", "<span class='userdanger'>[src] closes on you and crushes you!</span>")
+		L.visible_message(span_warning("[src] closes on [L], crushing [L.p_them()]!"), span_userdanger("[src] closes on you and crushes you!"))
 		SEND_SIGNAL(L, COMSIG_LIVING_DOORCRUSHED, src)
 		if(isalien(L))  //For xenos
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.

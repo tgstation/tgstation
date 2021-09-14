@@ -112,7 +112,7 @@
 
 /obj/structure/speaking_tile/proc/SpeakPeace(list/statements)
 	for(var/i in 1 to statements.len)
-		say("<span class='deadsay'>[statements[i]]</span>")
+		say(span_deadsay("[statements[i]]"), sanitize=FALSE)
 		if(i != statements.len)
 			sleep(30)
 
@@ -131,7 +131,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/rupee/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER

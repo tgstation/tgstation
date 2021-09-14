@@ -76,7 +76,6 @@ const useRemappedBackend = context => {
 
 const abbreviations = {
   "General Research": "Gen. Res.",
-  "Nanite Research": "Nanite Res.",
 };
 const abbreviateName = name => abbreviations[name] ?? name;
 
@@ -722,7 +721,8 @@ const TechNode = (props, context) => {
             key={id}
             className={`${design_cache[k].class} Techweb__DesignIcon`}
             tooltip={design_cache[k].name}
-            tooltipPosition={i % 15 < 7 ? "right" : "left"} />
+            tooltipPosition={i % 15 < 7 ? "right" : "left"}
+          />
         ))}
       </Box>
       {required_experiments?.length > 0 && (

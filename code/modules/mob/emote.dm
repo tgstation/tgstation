@@ -18,7 +18,7 @@
 
 	if(!length(key_emotes))
 		if(intentional && !force_silence)
-			to_chat(src, "<span class='notice'>'[act]' emote does not exist. Say *help for a list.</span>")
+			to_chat(src, span_notice("'[act]' emote does not exist. Say *help for a list."))
 		return FALSE
 	var/silenced = FALSE
 	for(var/datum/emote/P in key_emotes)
@@ -27,9 +27,10 @@
 			continue
 		if(P.run_emote(src, param, m_type, intentional))
 			SEND_SIGNAL(src, COMSIG_MOB_EMOTE, P, act, m_type, message, intentional)
+			SEND_SIGNAL(src, COMSIG_MOB_EMOTED(P.key))
 			return TRUE
 	if(intentional && !silenced && !force_silence)
-		to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
+		to_chat(src, span_notice("Unusable emote '[act]'. Say *help for a list."))
 	return FALSE
 
 /datum/emote/help
@@ -77,15 +78,15 @@
 		if(prob(20))
 			flippy_mcgee.Knockdown(1 SECONDS)
 			flippy_mcgee.visible_message(
-				"<span class='notice'>[flippy_mcgee] attempts to do a flip and falls over, what a doofus!</span>",
-				"<span class='notice'>You attempt to do a flip while still off balance from the last flip and fall down!</span>"
+				span_notice("[flippy_mcgee] attempts to do a flip and falls over, what a doofus!"),
+				span_notice("You attempt to do a flip while still off balance from the last flip and fall down!")
 			)
 			if(prob(50))
 				flippy_mcgee.adjustBruteLoss(1)
 		else
 			flippy_mcgee.visible_message(
-				"<span class='notice'>[flippy_mcgee] stumbles a bit after their flip.</span>",
-				"<span class='notice'>You stumble a bit from still being off balance from your last flip.</span>"
+				span_notice("[flippy_mcgee] stumbles a bit after their flip."),
+				span_notice("You stumble a bit from still being off balance from your last flip.")
 			)
 
 /datum/emote/spin
@@ -113,7 +114,7 @@
 		user.vomit(BEYBLADE_PUKE_NUTRIENT_LOSS, distance = 0)
 		return
 	if(prob(BEYBLADE_DIZZINESS_PROBABILITY))
-		to_chat(user, "<span class='warning'>You feel woozy from spinning.</span>")
+		to_chat(user, span_warning("You feel woozy from spinning."))
 		user.Dizzy(BEYBLADE_DIZZINESS_VALUE)
 		if(current_confusion < BEYBLADE_CONFUSION_LIMIT)
 			user.add_confusion(BEYBLADE_CONFUSION_INCREMENT)

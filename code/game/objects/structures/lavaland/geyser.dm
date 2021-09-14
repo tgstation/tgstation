@@ -54,13 +54,13 @@
 
 /obj/structure/geyser/plunger_act(obj/item/plunger/P, mob/living/user, _reinforced)
 	if(!_reinforced)
-		to_chat(user, "<span class='warning'>The [P.name] isn't strong enough!</span>")
+		to_chat(user, span_warning("The [P.name] isn't strong enough!"))
 		return
 	if(activated)
-		to_chat(user, "<span class='warning'>The [name] is already active!</span>")
+		to_chat(user, span_warning("The [name] is already active!"))
 		return
 
-	to_chat(user, "<span class='notice'>You start vigorously plunging [src]!</span>")
+	to_chat(user, span_notice("You start vigorously plunging [src]!"))
 	if(do_after(user, 50 * P.plunge_mod, target = src) && !activated)
 		start_chemming()
 
@@ -69,10 +69,10 @@
 		return ..() //this runs the plunger code
 
 	if(discovered)
-		to_chat(user, "<span class='warning'>This geyser has already been discovered!</span>")
+		to_chat(user, span_warning("This geyser has already been discovered!"))
 		return
 
-	to_chat(user, "<span class='notice'>You discovered the geyser and mark it on the GPS system!</span>")
+	to_chat(user, span_notice("You discovered the geyser and mark it on the GPS system!"))
 	if(discovery_message)
 		to_chat(user, discovery_message)
 
@@ -87,7 +87,7 @@
 
 		var/obj/item/card/id/card = living.get_idcard()
 		if(card)
-			to_chat(user, "<span class='notice'>[point_value] mining points have been paid out!</span>")
+			to_chat(user, span_notice("[point_value] mining points have been paid out!"))
 			card.mining_points += point_value
 
 /obj/structure/geyser/wittel
@@ -142,7 +142,7 @@
 	///Assoc list for possible layers
 	var/list/layers = list("Second Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT, "Fourth Layer" = FOURTH_DUCT_LAYER)
 
-/obj/item/plunger/attack_obj(obj/O, mob/living/user, params)
+/obj/item/plunger/attack_atom(obj/O, mob/living/user, params)
 	if(layer_mode)
 		SEND_SIGNAL(O, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, O, target_layer)
 		return ..()
@@ -158,7 +158,7 @@
 		var/mob/living/carbon/H = hit_atom
 		if(!H.wear_mask)
 			H.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)
-			H.visible_message("<span class='warning'>The plunger slams into [H]'s face!</span>", "<span class='warning'>The plunger suctions to your face!</span>")
+			H.visible_message(span_warning("The plunger slams into [H]'s face!"), span_warning("The plunger suctions to your face!"))
 
 /obj/item/plunger/attack_self(mob/user)
 	. = ..()
@@ -167,10 +167,10 @@
 
 	if(!layer_mode)
 		icon_state = initial(icon_state)
-		to_chat(user, "<span class='notice'>You set the plunger to 'Plunger Mode'.</span>")
+		to_chat(user, span_notice("You set the plunger to 'Plunger Mode'."))
 	else
 		icon_state = layer_mode_sprite
-		to_chat(user, "<span class='notice'>You set the plunger to 'Layer Mode'.</span>")
+		to_chat(user, span_notice("You set the plunger to 'Layer Mode'."))
 
 	playsound(src, 'sound/machines/click.ogg', 10, TRUE)
 

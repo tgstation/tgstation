@@ -18,7 +18,7 @@
 /datum/atom_hud/data
 
 /datum/atom_hud/data/human/medical
-	hud_icons = list(STATUS_HUD, HEALTH_HUD, NANITE_HUD)
+	hud_icons = list(STATUS_HUD, HEALTH_HUD)
 
 /datum/atom_hud/data/human/medical/basic
 
@@ -47,7 +47,7 @@
 	hud_icons = list(ID_HUD)
 
 /datum/atom_hud/data/human/security/advanced
-	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD, NANITE_HUD)
+	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD)
 
 /datum/atom_hud/data/human/fan_hud
 	hud_icons = list(FAN_HUD)
@@ -55,10 +55,10 @@
 /datum/atom_hud/data/diagnostic
 
 /datum/atom_hud/data/diagnostic/basic
-	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_CIRCUIT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD, DIAG_NANITE_FULL_HUD, DIAG_LAUNCHPAD_HUD)
+	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_CIRCUIT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD, DIAG_LAUNCHPAD_HUD)
 
 /datum/atom_hud/data/diagnostic/advanced
-	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_CIRCUIT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD, DIAG_NANITE_FULL_HUD, DIAG_LAUNCHPAD_HUD, DIAG_PATH_HUD)
+	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_CIRCUIT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD, DIAG_LAUNCHPAD_HUD, DIAG_PATH_HUD)
 
 /datum/atom_hud/data/bot_path
 	hud_icons = list(DIAG_PATH_HUD)
@@ -95,6 +95,10 @@ Medical HUD! Basic mode needs suit sensors on.
 /mob/living/carbon/proc/check_virus()
 	var/threat
 	var/severity
+	if(HAS_TRAIT(src, TRAIT_DISEASELIKE_SEVERITY_MEDIUM))
+		severity = DISEASE_SEVERITY_MEDIUM
+		threat = get_disease_severity_value(severity)
+
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
@@ -296,14 +300,6 @@ Security HUDs! Basic mode shows only the job.
 Diagnostic HUDs!
 ************************************************/
 
-/mob/living/proc/hud_set_nanite_indicator()
-	var/image/holder = hud_list[NANITE_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	holder.icon_state = null
-	if(HAS_TRAIT(src, TRAIT_NANITE_MONITORING))
-		holder.icon_state = "nanite_ping"
-
 //For Diag health and cell bars!
 /proc/RoundDiagBar(value)
 	switch(value * 100)
@@ -384,7 +380,7 @@ Diagnostic HUDs!
 	var/image/holder = hud_list[DIAG_MECH_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	holder.icon_state = "huddiag[RoundDiagBar(obj_integrity/max_integrity)]"
+	holder.icon_state = "huddiag[RoundDiagBar(atom_integrity/max_integrity)]"
 
 
 /obj/vehicle/sealed/mecha/proc/diag_hud_set_mechcell()

@@ -13,7 +13,7 @@
 															"digital messenger" = 5,
 															"atmosphere sensor" = 5,
 															"photography module" = 5,
-															"remote signaller" = 10,
+															"remote signaler" = 10,
 															"medical records" = 10,
 															"security records" = 10,
 															"camera zoom" = 10,
@@ -68,10 +68,6 @@
 				left_part = medicalAnalysis()
 			if("doorjack")
 				left_part = softwareDoor()
-			if("signaller")
-				left_part = softwareSignal()
-			if("loudness")
-				left_part = softwareLoudness()
 			if("hostscan")
 				left_part = softwareHostScan()
 
@@ -165,30 +161,15 @@
 			if("camzoom")
 				aicamera.adjust_zoom(usr)
 
-			if("signaller")
-				if(href_list["send"])
-					signaler.send_activation()
-					audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
-					playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
-
-				if(href_list["freq"])
-					var/new_frequency = (signaler.frequency + text2num(href_list["freq"]))
-					if(new_frequency < MIN_FREE_FREQ || new_frequency > MAX_FREE_FREQ)
-						new_frequency = sanitize_frequency(new_frequency)
-					signaler.set_frequency(new_frequency)
-
-				if(href_list["code"])
-					signaler.code += text2num(href_list["code"])
-					signaler.code = round(signaler.code)
-					signaler.code = min(100, signaler.code)
-					signaler.code = max(1, signaler.code)
+			if("signaler")
+				signaler.ui_interact(src)
 
 			if("directive")
 				if(href_list["getdna"])
 					if(iscarbon(card.loc))
 						CheckDNA(card.loc, src) //you should only be able to check when directly in hand, muh immersions?
 					else
-						to_chat(src, "<span class='warning'>You are not being carried by anyone!</span>")
+						to_chat(src, span_warning("You are not being carried by anyone!"))
 						return 0 // FALSE ? If you return here you won't call paiinterface() below
 
 			if("pdamessage")
@@ -273,16 +254,17 @@
 						var/mob/living/L = card.loc
 						if(L.put_in_hands(hacking_cable))
 							transfered_to_mob = TRUE
-							L.visible_message("<span class='warning'>A port on [src] opens to reveal \a [hacking_cable], which you quickly grab hold of.</span>", "<span class='hear'>You hear the soft click of something light and manage to catch hold of [hacking_cable].</span>")
+							L.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which you quickly grab hold of."), span_hear("You hear the soft click of something light and manage to catch hold of [hacking_cable]."))
 					if(!transfered_to_mob)
 						hacking_cable.forceMove(drop_location())
-						hacking_cable.visible_message("<span class='warning'>A port on [src] opens to reveal \a [hacking_cable], which promptly falls to the floor.</span>", "<span class='hear'>You hear the soft click of something light and hard falling to the ground.</span>")
+						hacking_cable.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which promptly falls to the floor."), span_hear("You hear the soft click of something light and hard falling to the ground."))
 
 
 
 			if("loudness")
-				if(subscreen == 1) // Open Instrument
-					internal_instrument.interact(src)
+				if(!internal_instrument)
+					internal_instrument = new(src)
+				internal_instrument.interact(src) // Open Instrument
 
 			if("internalgps")
 				if(!internal_gps)
@@ -317,8 +299,8 @@
 			dat += "<a href='byond://?src=[REF(src)];software=medicalrecord;sub=0'>Medical Records</a> <br>"
 		if(s == "security records")
 			dat += "<a href='byond://?src=[REF(src)];software=securityrecord;sub=0'>Security Records</a> <br>"
-		if(s == "remote signaller")
-			dat += "<a href='byond://?src=[REF(src)];software=signaller;sub=0'>Remote Signaller</a> <br>"
+		if(s == "remote signaler")
+			dat += "<a href='byond://?src=[REF(src)];software=signaler;sub=0'>Remote Signaler</a> <br>"
 		if(s == "loudness booster")
 			dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=0'>Loudness Booster</a> <br>"
 		if(s == "internal gps")
@@ -398,9 +380,9 @@
 		return
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
-		M.visible_message("<span class='notice'>[M] presses [M.p_their()] thumb against [P].</span>",\
-						"<span class='notice'>You press your thumb against [P].</span>",\
-						"<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>")
+		M.visible_message(span_notice("[M] presses [M.p_their()] thumb against [P]."),\
+						span_notice("You press your thumb against [P]."),\
+						span_notice("[P] makes a sharp clicking sound as it extracts DNA material from [M]."))
 		if(!M.has_dna())
 			to_chat(P, "<b>No DNA detected</b>")
 			return
@@ -410,31 +392,9 @@
 		else
 			to_chat(P, "<b>DNA does not match stored Master DNA.</b>")
 	else
-		to_chat(P, "<span class='warning'>[M] does not seem like [M.p_theyre()] going to provide a DNA sample willingly.</span>")
+		to_chat(P, span_warning("[M] does not seem like [M.p_theyre()] going to provide a DNA sample willingly."))
 
 // -=-=-=-= Software =-=-=-=-=- //
-
-//Remote Signaller
-/mob/living/silicon/pai/proc/softwareSignal()
-	var/dat = ""
-	dat += "<h3>Remote Signaller</h3><br><br>"
-	dat += {"<B>Frequency/Code</B> for signaler:<BR>
-	Frequency:
-	<A href='byond://?src=[REF(src)];software=signaller;freq=-10;'>-</A>
-	<A href='byond://?src=[REF(src)];software=signaller;freq=-2'>-</A>
-	[format_frequency(signaler.frequency)]
-	<A href='byond://?src=[REF(src)];software=signaller;freq=2'>+</A>
-	<A href='byond://?src=[REF(src)];software=signaller;freq=10'>+</A><BR>
-
-	Code:
-	<A href='byond://?src=[REF(src)];software=signaller;code=-5'>-</A>
-	<A href='byond://?src=[REF(src)];software=signaller;code=-1'>-</A>
-	[signaler.code]
-	<A href='byond://?src=[REF(src)];software=signaller;code=1'>+</A>
-	<A href='byond://?src=[REF(src)];software=signaller;code=5'>+</A><BR>
-
-	<A href='byond://?src=[REF(src)];software=signaller;send=1'>Send Signal</A><BR>"}
-	return dat
 
 // Crew Manifest
 /mob/living/silicon/pai/proc/softwareManifest()
@@ -611,13 +571,4 @@
 	dat += "</ul>"
 	dat += "<br><br>"
 	dat += "Messages: <hr> [aiPDA.tnote]"
-	return dat
-
-// Loudness Booster
-/mob/living/silicon/pai/proc/softwareLoudness()
-	if(!internal_instrument)
-		internal_instrument = new(src)
-	var/dat = "<h3>Sound Synthesizer</h3>"
-	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=1'>Open Synthesizer Interface</a><br>"
-	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=2'>Choose Instrument Type</a>"
 	return dat

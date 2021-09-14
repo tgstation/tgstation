@@ -36,7 +36,7 @@
 
 /obj/item/grenade/c4/attackby(obj/item/item, mob/user, params)
 	if(item.tool_behaviour == TOOL_SCREWDRIVER)
-		to_chat(user, "<span class='notice'>The wire panel can be accessed without a screwdriver.</span>")
+		to_chat(user, span_notice("The wire panel can be accessed without a screwdriver."))
 	else if(is_wire_tool(item))
 		wires.interact(user)
 	else
@@ -85,7 +85,7 @@
 	if(!flag)
 		return
 
-	to_chat(user, "<span class='notice'>You start planting [src]. The timer is set to [det_time]...</span>")
+	to_chat(user, span_notice("You start planting [src]. The timer is set to [det_time]..."))
 
 	if(do_after(user, 30, target = bomb_target))
 		if(!user.temporarilyRemoveItemFromInventory(src))
@@ -110,43 +110,28 @@
 			plastic_overlay.layer = FLOAT_LAYER
 
 		target.add_overlay(plastic_overlay)
-		to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [det_time].</span>")
+		to_chat(user, span_notice("You plant the bomb. Timer counting down from [det_time]."))
 		addtimer(CALLBACK(src, .proc/detonate), det_time*10)
 
 /obj/item/grenade/c4/proc/shout_syndicate_crap(mob/player)
 	if(!player)
-		return
-	var/message_say = "FOR NO RAISIN!"
+		CRASH("[src] proc shout_syndicate_crap called without a mob to shout crap from!")
+
+	var/final_message = "FOR NO RAISIN!!"
 	if(player.mind)
-		var/datum/mind/our_guy = player.mind
-		if(our_guy.has_antag_datum(/datum/antagonist/nukeop) || our_guy.has_antag_datum(/datum/antagonist/traitor))
-			message_say = "FOR THE SYNDICATE!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/changeling))
-			message_say = "FOR THE HIVE!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/cult))
-			message_say = "FOR NAR'SIE!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/rev))
-			message_say = "VIVA LA REVOLUTION!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/brother))
-			message_say = "FOR MY BROTHER!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/ninja))
-			message_say = "FOR THE SPIDER CLAN!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/fugitive))
-			message_say = "FOR FREEDOM!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/ashwalker))
-			message_say = "I HAVE NO IDEA WHAT THIS THING DOES!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/ert))
-			message_say = "FOR NANOTRASEN!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/pirate))
-			message_say = "FOR ME MATEYS!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/wizard))
-			message_say = "FOR THE FEDERATION!"
-	player.say(message_say, forced="C4 suicide")
+		// Give our list of antag datums a shuffle and pick the first one with a suicide_cry to use as our shout.
+		var/list/shuffled_antag_datums = shuffle(player.mind.antag_datums)
+		for(var/datum/antagonist/found_antag as anything in shuffled_antag_datums)
+			if(found_antag.suicide_cry)
+				final_message = found_antag.suicide_cry
+				break
+
+	player.say(final_message, forced = "C4 suicide")
 
 /obj/item/grenade/c4/suicide_act(mob/living/user)
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_VERBOSEJMP(user)]")
 	log_game("[key_name(user)] suicided with [src] at [AREACOORD(user)]")
-	user.visible_message("<span class='suicide'>[user] activates [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
+	user.visible_message(span_suicide("[user] activates [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!"))
 	shout_syndicate_crap(user)
 	explosion(user, heavy_impact_range = 2) //Cheap explosion imitation because putting detonate() here causes runtimes
 	user.gib(1, 1)

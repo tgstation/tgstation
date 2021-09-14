@@ -73,9 +73,7 @@
 			H.update_sight()
 
 	update_appearance()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /obj/item/clothing/glasses/meson/engine/attack_self(mob/user)
 	toggle_mode(user, TRUE)

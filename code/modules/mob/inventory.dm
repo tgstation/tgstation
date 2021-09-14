@@ -158,7 +158,7 @@
 
 	if(isturf(I.loc) && !ignore_anim)
 		I.do_pickup_animation(src)
-	if(get_item_for_held_index(hand_index) != null)
+	if(get_item_for_held_index(hand_index))
 		dropItemToGround(get_item_for_held_index(hand_index), force = TRUE)
 	I.forceMove(src)
 	held_items[hand_index] = I
@@ -205,27 +205,27 @@
 //If both fail it drops it on the floor and returns FALSE.
 //This is probably the main one you need to know :)
 /mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, forced = FALSE)
-	if(!I)
+	if(QDELETED(I))
 		return FALSE
 
 	// If the item is a stack and we're already holding a stack then merge
 	if (istype(I, /obj/item/stack))
-		var/obj/item/stack/I_stack = I
+		var/obj/item/stack/item_stack = I
 		var/obj/item/stack/active_stack = get_active_held_item()
 
-		if (I_stack.zero_amount())
+		if (item_stack.is_zero_amount(delete_if_zero = TRUE))
 			return FALSE
 
 		if (merge_stacks)
-			if (istype(active_stack) && active_stack.can_merge(I_stack))
-				if (I_stack.merge(active_stack))
-					to_chat(usr, "<span class='notice'>Your [active_stack.name] stack now contains [active_stack.get_amount()] [active_stack.singular_name]\s.</span>")
+			if (istype(active_stack) && active_stack.can_merge(item_stack))
+				if (item_stack.merge(active_stack))
+					to_chat(usr, span_notice("Your [active_stack.name] stack now contains [active_stack.get_amount()] [active_stack.singular_name]\s."))
 					return TRUE
 			else
 				var/obj/item/stack/inactive_stack = get_inactive_held_item()
-				if (istype(inactive_stack) && inactive_stack.can_merge(I_stack))
-					if (I_stack.merge(inactive_stack))
-						to_chat(usr, "<span class='notice'>Your [inactive_stack.name] stack now contains [inactive_stack.get_amount()] [inactive_stack.singular_name]\s.</span>")
+				if (istype(inactive_stack) && inactive_stack.can_merge(item_stack))
+					if (item_stack.merge(inactive_stack))
+						to_chat(usr, span_notice("Your [inactive_stack.name] stack now contains [inactive_stack.get_amount()] [inactive_stack.singular_name]\s."))
 						return TRUE
 
 	if(put_in_active_hand(I, forced))
@@ -415,7 +415,7 @@
 		if(SEND_SIGNAL(I, COMSIG_TRY_STORAGE_INSERT, src, M))
 			return TRUE
 
-	to_chat(M, "<span class='warning'>You are unable to equip that!</span>")
+	to_chat(M, span_warning("You are unable to equip that!"))
 	return FALSE
 
 
@@ -425,7 +425,7 @@
 
 	var/obj/item/I = get_active_held_item()
 	if(!I)
-		to_chat(src, "<span class='warning'>You are not holding anything to equip!</span>")
+		to_chat(src, span_warning("You are not holding anything to equip!"))
 		return
 	if (temporarilyRemoveItemFromInventory(I) && !QDELETED(I))
 		if(I.equip_to_best_slot(src))

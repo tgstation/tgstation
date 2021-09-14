@@ -54,19 +54,6 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 ))
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
-/obj/effect/debugging/mapfix_marker
-	name = "map fix marker"
-	icon = 'icons/hud/screen_gen.dmi'
-	icon_state = "mapfixmarker"
-	desc = "I am a mappers mistake."
-
-/obj/effect/debugging/marker
-	icon = 'icons/turf/areas.dmi'
-	icon_state = "yellow"
-
-/obj/effect/debugging/marker/Move()
-	return FALSE
-
 /client/proc/camera_view()
 	set category = "Mapping"
 	set name = "Camera Range Display"
@@ -149,17 +136,16 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	set name = "Intercom Range Display"
 
 	var/static/intercom_range_display_status = FALSE
-	intercom_range_display_status = !intercom_range_display_status //blame cyberboss if this breaks something
+	intercom_range_display_status = !intercom_range_display_status //blame cyberboss if this breaks something //blamed
 
-	for(var/obj/effect/debugging/marker/M in world)
-		qdel(M)
+	for(var/obj/effect/abstract/marker/intercom/marker in GLOB.all_abstract_markers)
+		qdel(marker)
 
 	if(intercom_range_display_status)
-		for(var/obj/item/radio/intercom/I in world)
-			for(var/turf/T in orange(7,I))
-				var/obj/effect/debugging/marker/F = new/obj/effect/debugging/marker(T)
-				if (!(F in view(7,I.loc)))
-					qdel(F)
+		for(var/frequency in GLOB.all_radios)
+			for(var/obj/item/radio/intercom/intercom in GLOB.all_radios[frequency])
+				for(var/turf/turf in view(7,intercom.loc))
+					new /obj/effect/abstract/marker/intercom(turf)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Intercom Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_show_at_list()
@@ -305,7 +291,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 				for(var/obj/item/I in D)
 					qdel(I)
 				randomize_human(D)
-				JB.equip(D, TRUE, FALSE)
+				D.dress_up_as_job(JB, TRUE)
 				COMPILE_OVERLAYS(D)
 				var/icon/I = icon(getFlatIcon(D), frame = 1)
 				final.Insert(I, JB.title)

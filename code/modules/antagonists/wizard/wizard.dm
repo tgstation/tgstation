@@ -7,6 +7,8 @@
 	antag_hud_name = "wizard"
 	antag_moodlet = /datum/mood_event/focused
 	hijack_speed = 0.5
+	ui_name = "AntagInfoWizard"
+	suicide_cry = "FOR THE FEDERATION!!"
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
@@ -120,19 +122,14 @@
 		H.age = wiz_age
 	H.equipOutfit(outfit_type)
 
-/datum/antagonist/wizard/greet()
-	to_chat(owner, "<span class='warningplain'><font color=red><B>You are the Space Wizard!</B></font></span>")
-	to_chat(owner, "<span class='warningplain'><B>The Space Wizards Federation has given you the following tasks:</B></span>")
-	owner.announce_objectives()
-	var/message = "<span class='warningplain'>"
-	message += "<BR>You will find a list of available spells in your spell book. Choose your magic arsenal carefully."
-	message += "<BR>The spellbook is bound to you, and others cannot use it."
-	message += "<BR>In your pockets you will find a teleport scroll. Use it as needed."
-	message += "<BR><B>Remember:</B> Do not forget to prepare your spells.</span>"
-	to_chat(owner, message)
+/datum/antagonist/wizard/ui_static_data(mob/user)
+	. = ..()
+	var/list/data = list()
+	data["objectives"] = get_objectives()
+	return data
 
 /datum/antagonist/wizard/farewell()
-	to_chat(owner, "<span class='userdanger'>You have been brainwashed! You are no longer a wizard!</span>")
+	to_chat(owner, span_userdanger("You have been brainwashed! You are no longer a wizard!"))
 
 /datum/antagonist/wizard/proc/rename_wizard()
 	set waitfor = FALSE
@@ -214,6 +211,7 @@
 //Random event wizard
 /datum/antagonist/wizard/apprentice/imposter
 	name = "Wizard Imposter"
+	show_in_antagpanel = FALSE
 	allow_rename = FALSE
 	move_to_lair = FALSE
 
@@ -246,6 +244,7 @@
 
 /datum/antagonist/wizard/academy
 	name = "Academy Teacher"
+	show_in_antagpanel = FALSE
 	outfit_type = /datum/outfit/wizard/academy
 	move_to_lair = FALSE
 
@@ -278,16 +277,16 @@
 	var/wizardwin = 1
 	for(var/datum/objective/objective in objectives)
 		if(objective.check_completion())
-			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+			parts += "<B>Objective #[count]</B>: [objective.explanation_text] [span_greentext("Success!")]"
 		else
-			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+			parts += "<B>Objective #[count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
 			wizardwin = 0
 		count++
 
 	if(wizardwin)
-		parts += "<span class='greentext'>The wizard was successful!</span>"
+		parts += span_greentext("The wizard was successful!")
 	else
-		parts += "<span class='redtext'>The wizard has failed!</span>"
+		parts += span_redtext("The wizard has failed!")
 
 	if(owner.spell_list.len>0)
 		parts += "<B>[owner.name] used the following spells: </B>"

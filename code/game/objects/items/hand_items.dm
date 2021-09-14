@@ -42,10 +42,10 @@
 		return
 
 	if(owner == sucker) // big mood
-		to_chat(owner, "<span class='danger'>Wait a second... you just looked at your own [src.name]!</span>")
+		to_chat(owner, span_danger("Wait a second... you just looked at your own [src.name]!"))
 		addtimer(CALLBACK(src, .proc/selfGottem, owner), 10)
 	else
-		to_chat(sucker, "<span class='danger'>Wait a second... was that a-</span>")
+		to_chat(sucker, span_danger("Wait a second... was that a-"))
 		addtimer(CALLBACK(src, .proc/GOTTEM, owner, sucker), 6)
 
 /// Stage 3A: We face our own failures
@@ -54,8 +54,8 @@
 		return
 
 	playsound(get_turf(owner), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
-	owner.visible_message("<span class='danger'>[owner] shamefully bops [owner.p_them()]self with [owner.p_their()] [src.name].</span>", "<span class='userdanger'>You shamefully bop yourself with your [src.name].</span>", \
-		"<span class='hear'>You hear a dull thud!</span>")
+	owner.visible_message(span_danger("[owner] shamefully bops [owner.p_them()]self with [owner.p_their()] [src.name]."), span_userdanger("You shamefully bop yourself with your [src.name]."), \
+		span_hear("You hear a dull thud!"))
 	log_combat(owner, owner, "bopped", src.name, "(self)")
 	owner.do_attack_animation(owner)
 	owner.apply_damage(100, STAMINA)
@@ -68,15 +68,15 @@
 		return
 
 	if(QDELETED(src) || QDELETED(owner))
-		to_chat(sucker, "<span class='warning'>Nevermind... must've been your imagination...</span>")
+		to_chat(sucker, span_warning("Nevermind... must've been your imagination..."))
 		return
 
 	if(!in_range(owner, sucker) || !(owner.mobility_flags & MOBILITY_USE))
-		to_chat(sucker, "<span class='notice'>Phew... you moved away before [owner] noticed you saw [owner.p_their()] [src.name]...</span>")
+		to_chat(sucker, span_notice("Phew... you moved away before [owner] noticed you saw [owner.p_their()] [src.name]..."))
 		return
 
-	to_chat(owner, "<span class='warning'>[sucker] looks down at your [src.name] before trying to avert [sucker.p_their()] eyes, but it's too late!</span>")
-	to_chat(sucker, "<span class='danger'><b>[owner] sees the fear in your eyes as you try to look away from [owner.p_their()] [src.name]!</b></span>")
+	to_chat(owner, span_warning("[sucker] looks down at your [src.name] before trying to avert [sucker.p_their()] eyes, but it's too late!"))
+	to_chat(sucker, span_danger("<b>[owner] sees the fear in your eyes as you try to look away from [owner.p_their()] [src.name]!</b>"))
 
 	owner.face_atom(sucker)
 	if(owner.client)
@@ -86,20 +86,20 @@
 	owner.do_attack_animation(sucker)
 
 	if(HAS_TRAIT(owner, TRAIT_HULK))
-		owner.visible_message("<span class='danger'>[owner] bops [sucker] with [owner.p_their()] [src.name] much harder than intended, sending [sucker.p_them()] flying!</span>", \
-			"<span class='danger'>You bop [sucker] with your [src.name] much harder than intended, sending [sucker.p_them()] flying!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", ignored_mobs=list(sucker))
-		to_chat(sucker, "<span class='userdanger'>[owner] bops you incredibly hard with [owner.p_their()] [src.name], sending you flying!</span>")
+		owner.visible_message(span_danger("[owner] bops [sucker] with [owner.p_their()] [src.name] much harder than intended, sending [sucker.p_them()] flying!"), \
+			span_danger("You bop [sucker] with your [src.name] much harder than intended, sending [sucker.p_them()] flying!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=list(sucker))
+		to_chat(sucker, span_userdanger("[owner] bops you incredibly hard with [owner.p_their()] [src.name], sending you flying!"))
 		sucker.apply_damage(50, STAMINA)
 		sucker.Knockdown(50)
 		log_combat(owner, sucker, "bopped", src.name, "(setup- Hulk)")
 		var/atom/throw_target = get_edge_target_turf(sucker, owner.dir)
 		sucker.throw_at(throw_target, 6, 3, owner)
 	else
-		owner.visible_message("<span class='danger'>[owner] bops [sucker] with [owner.p_their()] [src.name]!</span>", "<span class='danger'>You bop [sucker] with your [src.name]!</span>", \
-			"<span class='hear'>You hear a dull thud!</span>", ignored_mobs=list(sucker))
+		owner.visible_message(span_danger("[owner] bops [sucker] with [owner.p_their()] [src.name]!"), span_danger("You bop [sucker] with your [src.name]!"), \
+			span_hear("You hear a dull thud!"), ignored_mobs=list(sucker))
 		sucker.apply_damage(15, STAMINA)
 		log_combat(owner, sucker, "bopped", src.name, "(setup)")
-		to_chat(sucker, "<span class='userdanger'>[owner] bops you with [owner.p_their()] [src.name]!</span>")
+		to_chat(sucker, span_userdanger("[owner] bops you with [owner.p_their()] [src.name]!"))
 	qdel(src)
 
 /obj/item/slapper
@@ -124,16 +124,16 @@
 	user.do_attack_animation(M)
 	playsound(M, 'sound/weapons/slap.ogg', 50, TRUE, -1)
 	if(user.zone_selected == BODY_ZONE_HEAD || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
-		user.visible_message("<span class='danger'>[user] slaps [M] in the face!</span>",
-		"<span class='notice'>You slap [M] in the face!</span>",\
-		"<span class='hear'>You hear a slap.</span>")
+		user.visible_message(span_danger("[user] slaps [M] in the face!"),
+		span_notice("You slap [M] in the face!"),\
+		span_hear("You hear a slap."))
 	else
-		user.visible_message("<span class='danger'>[user] slaps [M]!</span>",
-		"<span class='notice'>You slap [M]!</span>",\
-		"<span class='hear'>You hear a slap.</span>")
+		user.visible_message(span_danger("[user] slaps [M]!"),
+		span_notice("You slap [M]!"),\
+		span_hear("You hear a slap."))
 	return
 
-/obj/item/slapper/attack_obj(obj/O, mob/living/user, params)
+/obj/item/slapper/attack_atom(obj/O, mob/living/user, params)
 	if(!istype(O, /obj/structure/table))
 		return ..()
 
@@ -149,12 +149,12 @@
 		SEND_SIGNAL(user, COMSIG_LIVING_SLAM_TABLE, the_table)
 		SEND_SIGNAL(the_table, COMSIG_TABLE_SLAMMED, user)
 		playsound(get_turf(the_table), 'sound/effects/tableslam.ogg', 110, TRUE)
-		user.visible_message("<b><span class='danger'>[user] slams [user.p_their()] fist down on [the_table]!</span></b>", "<b><span class='danger'>You slam your fist down on [the_table]!</span></b>")
+		user.visible_message("<b>[span_danger("[user] slams [user.p_their()] fist down on [the_table]!")]</b>", "<b>[span_danger("You slam your fist down on [the_table]!")]</b>")
 		qdel(src)
 	else
 		user.do_attack_animation(the_table)
 		playsound(get_turf(the_table), 'sound/effects/tableslam.ogg', 40, TRUE)
-		user.visible_message("<span class='notice'>[user] slaps [user.p_their()] hand on [the_table].</span>", "<span class='notice'>You slap your hand on [the_table].</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+		user.visible_message(span_notice("[user] slaps [user.p_their()] hand on [the_table]."), span_notice("You slap your hand on [the_table]."), vision_distance=COMBAT_MESSAGE_RANGE)
 		table_smacks_left--
 		if(table_smacks_left <= 0)
 			qdel(src)
@@ -170,11 +170,11 @@
 
 /obj/item/noogie/attack(mob/living/carbon/target, mob/living/carbon/human/user)
 	if(!istype(target))
-		to_chat(user, "<span class='warning'>You don't think you can give this a noogie!</span>")
+		to_chat(user, span_warning("You don't think you can give this a noogie!"))
 		return
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, "<span class='warning'>You can't bring yourself to noogie [target]! You don't want to risk harming anyone...</span>")
+		to_chat(user, span_warning("You can't bring yourself to noogie [target]! You don't want to risk harming anyone..."))
 		return
 
 	if(!(target?.get_bodypart(BODY_ZONE_HEAD)) || user.pulling != target || user.grab_state < GRAB_AGGRESSIVE || user.getStaminaLoss() > 80)
@@ -182,7 +182,7 @@
 
 	var/obj/item/bodypart/head/the_head = target.get_bodypart(BODY_ZONE_HEAD)
 	if((target.get_biological_state() != BIO_FLESH_BONE && target.get_biological_state() != BIO_JUST_FLESH) || !the_head.is_organic_limb())
-		to_chat(user, "<span class='warning'>You can't noogie [target], [target.p_they()] [target.p_have()] no skin on [target.p_their()] head!</span>")
+		to_chat(user, span_warning("You can't noogie [target], [target.p_they()] [target.p_have()] no skin on [target.p_their()] head!"))
 		return
 
 	// [user] gives [target] a [prefix_desc] noogie[affix_desc]!
@@ -203,12 +203,12 @@
 	var/message_others = "[prefix_desc] noogie[affix_desc]"
 	var/message_target = "[prefix_desc] noogie[affix_desc_target]"
 
-	user.visible_message("<span class='danger'>[user] begins giving [target] a [message_others]!</span>", "<span class='warning'>You start giving [target] a [message_others]!</span>", vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=target)
-	to_chat(target, "<span class='userdanger'>[user] starts giving you a [message_target]!</span>")
+	user.visible_message(span_danger("[user] begins giving [target] a [message_others]!"), span_warning("You start giving [target] a [message_others]!"), vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=target)
+	to_chat(target, span_userdanger("[user] starts giving you a [message_target]!"))
 
 	if(!do_after(user, 1.5 SECONDS, target))
-		to_chat(user, "<span class='warning'>You fail to give [target] a noogie!</span>")
-		to_chat(target, "<span class='danger'>[user] fails to give you a noogie!</span>")
+		to_chat(user, span_warning("You fail to give [target] a noogie!"))
+		to_chat(target, span_danger("[user] fails to give you a noogie!"))
 		return
 
 	if(brutal_noogie)
@@ -224,8 +224,8 @@
 		return FALSE
 
 	if(user.getStaminaLoss() > 80)
-		to_chat(user, "<span class='warning'>You're too tired to continue giving [target] a noogie!</span>")
-		to_chat(target, "<span class='danger'>[user] is too tired to continue giving you a noogie!</span>")
+		to_chat(user, span_warning("You're too tired to continue giving [target] a noogie!"))
+		to_chat(target, span_danger("[user] is too tired to continue giving you a noogie!"))
 		return
 
 	var/damage = rand(1, 5)
@@ -243,12 +243,12 @@
 	playsound(get_turf(user), pick('sound/effects/rustle1.ogg','sound/effects/rustle2.ogg','sound/effects/rustle3.ogg','sound/effects/rustle4.ogg','sound/effects/rustle5.ogg'), 50)
 
 	if(prob(33))
-		user.visible_message("<span class='danger'>[user] continues noogie'ing [target]!</span>", "<span class='warning'>You continue giving [target] a noogie!</span>", vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=target)
-		to_chat(target, "<span class='userdanger'>[user] continues giving you a noogie!</span>")
+		user.visible_message(span_danger("[user] continues noogie'ing [target]!"), span_warning("You continue giving [target] a noogie!"), vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=target)
+		to_chat(target, span_userdanger("[user] continues giving you a noogie!"))
 
 	if(!do_after(user, 1 SECONDS + (iteration * 2), target))
-		to_chat(user, "<span class='warning'>You fail to give [target] a noogie!</span>")
-		to_chat(target, "<span class='danger'>[user] fails to give you a noogie!</span>")
+		to_chat(user, span_warning("You fail to give [target] a noogie!"))
+		to_chat(target, span_danger("[user] fails to give you a noogie!"))
 		return
 
 	iteration++
@@ -270,7 +270,7 @@
 /obj/item/kisser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	var/obj/projectile/blown_kiss = new kiss_type(get_turf(user))
-	user.visible_message("<b>[user]</b> blows \a [blown_kiss] at [target]!", "<span class='notice'>You blow \a [blown_kiss] at [target]!</span>")
+	user.visible_message("<b>[user]</b> blows \a [blown_kiss] at [target]!", span_notice("You blow \a [blown_kiss] at [target]!"))
 
 	//Shooting Code:
 	blown_kiss.spread = 0
@@ -322,7 +322,11 @@
  */
 /obj/projectile/kiss/proc/harmless_on_hit(mob/living/living_target)
 	playsound(get_turf(living_target), hitsound, 100, TRUE)
-	living_target.visible_message("<span class='danger'>[living_target] is hit by \a [src].</span>", "<span class='userdanger'>You're hit by \a [src]!</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+	living_target.visible_message(span_danger("[living_target] is hit by \a [src]."), span_userdanger("You're hit by \a [src]!"), vision_distance=COMBAT_MESSAGE_RANGE)
+	living_target.mind?.add_memory(MEMORY_KISS, list(DETAIL_PROTAGONIST = living_target, DETAIL_KISSER = firer), story_value = STORY_VALUE_OKAY)
+	if(isliving(firer))
+		var/mob/living/kisser = firer
+		kisser.mind?.add_memory(MEMORY_KISS, list(DETAIL_PROTAGONIST = living_target, DETAIL_KISSER = firer), story_value = STORY_VALUE_OKAY)
 	try_fluster(living_target)
 
 /obj/projectile/kiss/proc/try_fluster(mob/living/living_target)

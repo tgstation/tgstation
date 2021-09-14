@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - bugfix: "AIs should no longer occasionally have their lawset randomly and silently returned to Asimov."

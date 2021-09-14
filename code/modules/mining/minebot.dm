@@ -13,7 +13,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	faction = list("neutral")
 	combat_mode = TRUE
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	move_to_delay = 10
 	health = 125
@@ -44,7 +44,7 @@
 /mob/living/simple_animal/hostile/mining_drone/Initialize()
 	. = ..()
 
-	AddComponent(/datum/component/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, vary = TRUE)
+	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 
 	stored_gun = new(src)
 	var/datum/action/innate/minedrone/toggle_light/toggle_light_action = new()
@@ -79,34 +79,34 @@
 	var/t_s = p_s()
 	if(health < maxHealth)
 		if(health >= maxHealth * 0.5)
-			. += "<span class='warning'>[t_He] look[t_s] slightly dented.</span>"
+			. += span_warning("[t_He] look[t_s] slightly dented.")
 		else
-			. += "<span class='boldwarning'>[t_He] look[t_s] severely dented!</span>"
+			. += span_boldwarning("[t_He] look[t_s] severely dented!")
 	. += {"<span class='notice'>Using a mining scanner on [t_him] will instruct [t_him] to drop stored ore. <b>[max(0, LAZYLEN(contents) - 1)] Stored Ore</b>\n
 	Field repairs can be done with a welder."}
 	if(stored_gun?.max_mod_capacity)
 		. += "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining."
 		for(var/obj/item/borg/upgrade/modkit/modkit as anything in stored_gun.modkits)
-			. += "<span class='notice'>There is \a [modkit] installed, using <b>[modkit.cost]%</b> capacity.</span>"
+			. += span_notice("There is \a [modkit] installed, using <b>[modkit.cost]%</b> capacity.")
 
 /mob/living/simple_animal/hostile/mining_drone/welder_act(mob/living/user, obj/item/welder)
 	..()
 	. = TRUE
 	if(mode == MINEDRONE_ATTACK)
-		to_chat(user, "<span class='warning'>[src] can't be repaired while in attack mode!</span>")
+		to_chat(user, span_warning("[src] can't be repaired while in attack mode!"))
 		return
 
 	if(maxHealth == health)
-		to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
+		to_chat(user, span_info("[src] is at full integrity."))
 		return
 
 	if(welder.use_tool(src, user, 0, volume=40))
 		adjustBruteLoss(-15)
-		to_chat(user, "<span class='info'>You repair some of the armor on [src].</span>")
+		to_chat(user, span_info("You repair some of the armor on [src]."))
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/item_used, mob/user, params)
 	if(istype(item_used, /obj/item/mining_scanner) || istype(item_used, /obj/item/t_scanner/adv_mining_scanner))
-		to_chat(user, "<span class='info'>You instruct [src] to drop any collected ore.</span>")
+		to_chat(user, span_info("You instruct [src] to drop any collected ore."))
 		DropOre()
 		return
 	if(item_used.tool_behaviour == TOOL_CROWBAR || istype(item_used, /obj/item/borg/upgrade/modkit))
@@ -130,19 +130,19 @@
 		toggle_mode()
 		switch(mode)
 			if(MINEDRONE_COLLECT)
-				to_chat(user, "<span class='info'>[src] has been set to search and store loose ore.</span>")
+				to_chat(user, span_info("[src] has been set to search and store loose ore."))
 			if(MINEDRONE_ATTACK)
-				to_chat(user, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
+				to_chat(user, span_info("[src] has been set to attack hostile wildlife."))
 		return
 
-/mob/living/simple_animal/hostile/mining_drone/CanAllowThrough(atom/movable/object)
+/mob/living/simple_animal/hostile/mining_drone/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(istype(object, /obj/projectile/kinetic))
-		var/obj/projectile/kinetic/projectile = object
+	if(istype(mover, /obj/projectile/kinetic))
+		var/obj/projectile/kinetic/projectile = mover
 		if(projectile.kinetic_gun)
 			if (locate(/obj/item/borg/upgrade/modkit/minebot_passthrough) in projectile.kinetic_gun.modkits)
 				return TRUE
-	if(istype(object, /obj/projectile/destabilizer))
+	else if(istype(mover, /obj/projectile/destabilizer))
 		return TRUE
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
@@ -154,7 +154,7 @@
 	minimum_distance = 1
 	retreat_distance = null
 	icon_state = "mining_drone"
-	to_chat(src, "<span class='info'>You are set to collect mode. You can now collect loose ore.</span>")
+	to_chat(src, span_info("You are set to collect mode. You can now collect loose ore."))
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
 	mode = MINEDRONE_ATTACK
@@ -165,7 +165,7 @@
 	retreat_distance = 2
 	minimum_distance = 1
 	icon_state = "mining_drone_offense"
-	to_chat(src, "<span class='info'>You are set to attack mode. You can now attack from range.</span>")
+	to_chat(src, span_info("You are set to attack mode. You can now attack from range."))
 
 /mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
 	if(istype(target, /obj/item/stack/ore) && mode == MINEDRONE_COLLECT)
@@ -187,10 +187,10 @@
 /mob/living/simple_animal/hostile/mining_drone/proc/DropOre(message = 1)
 	if(!contents.len)
 		if(message)
-			to_chat(src, "<span class='warning'>You attempt to dump your stored ore, but you have none!</span>")
+			to_chat(src, span_warning("You attempt to dump your stored ore, but you have none!"))
 		return
 	if(message)
-		to_chat(src, "<span class='notice'>You dump your stored ore.</span>")
+		to_chat(src, span_notice("You dump your stored ore."))
 	for(var/obj/item/stack/ore/O in contents)
 		O.forceMove(drop_location())
 
@@ -214,7 +214,7 @@
 
 	user.sync_lighting_plane_alpha()
 
-	to_chat(user, "<span class='notice'>You toggle your meson vision [(user.sight & SEE_TURFS) ? "on" : "off"].</span>")
+	to_chat(user, span_notice("You toggle your meson vision [(user.sight & SEE_TURFS) ? "on" : "off"]."))
 
 
 /mob/living/simple_animal/hostile/mining_drone/proc/toggle_mode()
@@ -239,7 +239,7 @@
 /datum/action/innate/minedrone/toggle_light/Activate()
 	var/mob/living/simple_animal/hostile/mining_drone/user = owner
 	user.set_light_on(!user.light_on)
-	to_chat(user, "<span class='notice'>You toggle your light [user.light_on ? "on" : "off"].</span>")
+	to_chat(user, span_notice("You toggle your light [user.light_on ? "on" : "off"]."))
 
 
 /datum/action/innate/minedrone/toggle_mode
@@ -277,7 +277,7 @@
 
 /obj/item/mine_bot_upgrade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/minebot, mob/user)
 	if(minebot.melee_damage_upper != initial(minebot.melee_damage_upper))
-		to_chat(user, "<span class='warning'>[minebot] already has a combat upgrade installed!</span>")
+		to_chat(user, span_warning("[minebot] already has a combat upgrade installed!"))
 		return
 	minebot.melee_damage_lower += 7
 	minebot.melee_damage_upper += 7
@@ -291,7 +291,7 @@
 
 /obj/item/mine_bot_upgrade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/minebot, mob/user)
 	if(minebot.maxHealth != initial(minebot.maxHealth))
-		to_chat(user, "<span class='warning'>[minebot] already has reinforced armor!</span>")
+		to_chat(user, span_warning("[minebot] already has reinforced armor!"))
 		return
 	minebot.maxHealth += 45
 	minebot.updatehealth()

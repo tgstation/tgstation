@@ -34,7 +34,6 @@ Possible to do for anyone motivated enough:
 	base_icon_state = "holopad"
 	layer = LOW_OBJ_LAYER
 	plane = FLOOR_PLANE
-	flags_1 = HEAR_1
 	req_access = list(ACCESS_KEYCARD_AUTH) //Used to allow for forced connecting to other (not secure) holopads. Anyone can make a call, though.
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
@@ -80,6 +79,10 @@ Possible to do for anyone motivated enough:
 	/// If we are currently calling another holopad
 	var/calling = FALSE
 
+/obj/machinery/holopad/Initialize()
+	. = ..()
+	become_hearing_sensitive()
+
 /obj/machinery/holopad/secure
 	name = "secure holopad"
 	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."
@@ -106,6 +109,27 @@ Possible to do for anyone motivated enough:
 		if(new_disk && !disk)
 			new_disk.forceMove(src)
 			disk = new_disk
+
+/obj/machinery/holopad/Moved(atom/OldLoc, Dir)
+	. = ..()
+	if(!loc)
+		return
+	// move any relevant holograms, basically non-AI, and rays with the pad
+	if(replay_holo)
+		replay_holo.abstract_move(loc)
+	for(var/i in holorays)
+		var/obj/effect/overlay/holoray/ray = holorays[i]
+		ray.abstract_move(loc)
+	var/list/non_call_masters = masters?.Copy()
+	for(var/datum/holocall/holocall as anything in holo_calls)
+		if(!holocall.user || !LAZYACCESS(masters, holocall.user))
+			continue
+		non_call_masters -= holocall.user
+		// moving the eye moves the holo which updates the ray too
+		holocall.eye.setLoc(locate(clamp(x + (holocall.hologram.x - OldLoc.x), 1, world.maxx), clamp(y + (holocall.hologram.y - OldLoc.y), 1, world.maxy), z))
+	for(var/mob/living/holo_master as anything in non_call_masters)
+		var/obj/effect/holo = masters[holo_master]
+		update_holoray(holo_master, holo.loc)
 
 /obj/machinery/holopad/tutorial/attack_hand(mob/user, list/modifiers)
 	if(!istype(user))
@@ -159,7 +183,7 @@ Possible to do for anyone motivated enough:
 		if(outgoing_call)
 			outgoing_call.ConnectionFailure(src)
 
-/obj/machinery/holopad/obj_break()
+/obj/machinery/holopad/atom_break()
 	. = ..()
 	if(outgoing_call)
 		outgoing_call.ConnectionFailure(src)
@@ -172,8 +196,10 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/examine(mob/user)
 	. = ..()
-	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Current projection range: <b>[holo_range]</b> units.</span>"
+	if(isAI(user))
+		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units. Use :h to speak through the projection. Right-click to project or cancel a projection. Alt-click to hangup all active and incomming calls. Ctrl-click to end projection without jumping to your last location.")
+	else if(in_range(user, src) || isobserver(user))
+		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units.")
 
 /obj/machinery/holopad/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
@@ -190,11 +216,11 @@ Possible to do for anyone motivated enough:
 
 	if(istype(P,/obj/item/disk/holodisk))
 		if(disk)
-			to_chat(user,"<span class='warning'>There's already a disk inside [src]!</span>")
+			to_chat(user,span_warning("There's already a disk inside [src]!"))
 			return
 		if (!user.transferItemToLoc(P,src))
 			return
-		to_chat(user,"<span class='notice'>You insert [P] into [src].</span>")
+		to_chat(user,span_notice("You insert [P] into [src]."))
 		disk = P
 		return
 
@@ -242,17 +268,22 @@ Possible to do for anyone motivated enough:
 
 	switch(action)
 		if("AIrequest")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/ai_user = usr
+				ai_user.eyeobj.setLoc(get_turf(src))
+				to_chat(usr, span_info("AIs can not request AI presence. Jumping instead."))
+				return
 			if(last_request + 200 < world.time)
 				last_request = world.time
-				to_chat(usr, "<span class='info'>You requested an AI's presence.</span>")
+				to_chat(usr, span_info("You requested an AI's presence."))
 				var/area/area = get_area(src)
 				for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
 					if(!AI.client)
 						continue
-					to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=[REF(AI)];jumptoholopad=[REF(src)]'>\the [area]</a>.</span>")
+					to_chat(AI, span_info("Your presence is requested at <a href='?src=[REF(AI)];jump_to_holopad=[REF(src)]'>\the [area]</a>. <a href='?src=[REF(AI)];project_to_holopad=[REF(src)]'>Project Hologram?</a>"))
 				return TRUE
 			else
-				to_chat(usr, "<span class='info'>A request for AI presence was already sent recently.</span>")
+				to_chat(usr, span_info("A request for AI presence was already sent recently."))
 				return
 		if("holocall")
 			if(outgoing_call)
@@ -274,7 +305,7 @@ Possible to do for anyone motivated enough:
 					calling = TRUE
 					return TRUE
 			else
-				to_chat(usr, "<span class='warning'>You must stand on the holopad to make a call!</span>")
+				to_chat(usr, span_warning("You must stand on the holopad to make a call!"))
 		if("connectcall")
 			var/datum/holocall/call_to_connect = locate(params["holopad"]) in holo_calls
 			if(!QDELETED(call_to_connect))
@@ -285,6 +316,12 @@ Possible to do for anyone motivated enough:
 			if(!QDELETED(call_to_disconnect))
 				call_to_disconnect.Disconnect(src)
 				return TRUE
+		if("rejectall")
+			for(var/datum/holocall/call_to_reject as anything in holo_calls)
+				if(call_to_reject.connected_holopad == src) // do not kill the current connection
+					continue
+				call_to_reject.Disconnect(src)
+			return TRUE
 		if("disk_eject")
 			if(disk && !replay_mode)
 				disk.forceMove(drop_location())
@@ -334,30 +371,38 @@ Possible to do for anyone motivated enough:
 		var/datum/holocall/HC = I
 		HC.Disconnect(src)
 
-//do not allow AIs to answer calls or people will use it to meta the AI sattelite
-/obj/machinery/holopad/attack_ai(mob/living/silicon/ai/user)
+/obj/machinery/holopad/attack_ai_secondary(mob/living/silicon/ai/user)
+	if (!istype(user))
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if (!on_network)
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	/*There are pretty much only three ways to interact here.
+	I don't need to check for client since they're clicking on an object.
+	This may change in the future but for now will suffice.*/
+	if(!LAZYLEN(masters) || !masters[user])//If there is no hologram, possibly make one.
+		activate_holo(user)
+	else//If there is a hologram, remove it, and jump to your last location.
+		clear_holo(user)
+		if(user.lastloc)//only jump to your last location if your lastloc is set, which only sets if you projected from a request message.
+			user.eyeobj.setLoc(user.lastloc)
+			user.lastloc = null
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/holopad/AICtrlClick(mob/living/silicon/ai/user)
 	if (!istype(user))
 		return
 	if (!on_network)
 		return
-	/*There are pretty much only three ways to interact here.
-	I don't need to check for client since they're clicking on an object.
-	This may change in the future but for now will suffice.*/
-	if(user.eyeobj.loc != src.loc)//Set client eye on the object if it's not already.
-		user.eyeobj.setLoc(get_turf(src))
-	else if(!LAZYLEN(masters) || !masters[user])//If there is no hologram, possibly make one.
-		activate_holo(user)
-	else//If there is a hologram, remove it.
+	if(!LAZYLEN(masters) || !masters[user])//If there is no hologram, then this button does nothing.
+		return
+	else//If there is a hologram, remove it, but dont jump to your last location.
+		user.lastloc = null
 		clear_holo(user)
+	return
 
 /obj/machinery/holopad/process()
 	if(LAZYLEN(masters))
-		for(var/I in masters)
-			var/mob/living/master = I
-			var/mob/living/silicon/ai/AI = master
-			if(!istype(AI))
-				AI = null
-
+		for(var/mob/living/master as anything in masters)
 			if(!is_operational || !validate_user(master))
 				clear_holo(master)
 
@@ -366,36 +411,38 @@ Possible to do for anyone motivated enough:
 
 	ringing = FALSE
 
-	for(var/I in holo_calls)
-		var/datum/holocall/HC = I
-		if(HC.connected_holopad != src)
-			if(force_answer_call && world.time > (HC.call_start_time + (HOLOPAD_MAX_DIAL_TIME / 2)))
-				HC.Answer(src)
-				break
-			if(HC.head_call && !secure)
-				HC.Answer(src)
-				break
-			if(outgoing_call)
-				HC.Disconnect(src)//can't answer calls while calling
-			else
-				playsound(src, 'sound/machines/twobeep.ogg', 100) //bring, bring!
-				ringing = TRUE
+	for(var/datum/holocall/holocall as anything in holo_calls)
+		if(holocall.connected_holopad == src)
+			continue
 
-	update_appearance()
+		if(force_answer_call && world.time > (holocall.call_start_time + (HOLOPAD_MAX_DIAL_TIME / 2)))
+			holocall.Answer(src)
+			break
+		if(holocall.head_call && !secure)
+			holocall.Answer(src)
+			break
+		if(outgoing_call)
+			holocall.Disconnect(src)//can't answer calls while calling
+		else
+			playsound(src, 'sound/machines/twobeep.ogg', 100) //bring, bring!
+			ringing = TRUE
+
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/holopad/proc/activate_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user
 	if(!istype(AI))
 		AI = null
 
-	if(is_operational && (!AI || AI.eyeobj.loc == loc))//If the projector has power and client eye is on it
-		if (AI && istype(AI.current, /obj/machinery/holopad))
-			to_chat(user, "<span class='danger'>ERROR:</span> \black Image feed in progress.")
+	if(is_operational)//If the projector has power
+		if(AI && istype(AI.current, /obj/machinery/holopad))
+			to_chat(user, "[span_danger("ERROR:")] \black Image feed in progress.")
 			return
 
 		var/obj/effect/overlay/holo_pad_hologram/Hologram = new(loc)//Spawn a blank effect at the location.
 		if(AI)
 			Hologram.icon = AI.holo_icon
+			AI.eyeobj.setLoc(get_turf(src)) //ensure the AI camera moves to the holopad
 		else //make it like real life
 			Hologram.icon = user.icon
 			Hologram.icon_state = user.icon_state
@@ -413,11 +460,11 @@ Possible to do for anyone motivated enough:
 		move_hologram()
 
 		set_holo(user, Hologram)
-		visible_message("<span class='notice'>A holographic image of [user] flickers to life before your eyes!</span>")
+		visible_message(span_notice("A holographic image of [user] flickers to life before your eyes!"))
 
 		return Hologram
 	else
-		to_chat(user, "<span class='danger'>ERROR:</span> Unable to project hologram.")
+		to_chat(user, "[span_danger("ERROR:")] Unable to project hologram.")
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
@@ -430,19 +477,22 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
-		if(HC.connected_holopad == src && speaker != HC.hologram)
-			HC.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
+		if(HC.connected_holopad == src)
+			if(speaker == HC.hologram && HC.user.client?.prefs.chat_on_map)
+				HC.user.create_chat_message(speaker, message_language, raw_message, spans)
+			else
+				HC.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
 	if(outgoing_call?.hologram && speaker == outgoing_call.user)
-		outgoing_call.hologram.say(raw_message)
+		outgoing_call.hologram.say(raw_message, sanitize = FALSE)
 
 	if(record_mode && speaker == record_user)
 		record_message(speaker,raw_message,message_language)
 
 /obj/machinery/holopad/proc/SetLightsAndPower()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
-	use_power = total_users > 0 ? ACTIVE_POWER_USE : IDLE_POWER_USE
-	active_power_usage = HOLOPAD_PASSIVE_POWER_USAGE + (HOLOGRAM_POWER_USAGE * total_users)
+	update_use_power(total_users > 0 ? ACTIVE_POWER_USE : IDLE_POWER_USE)
+	update_mode_power_usage(ACTIVE_POWER_USE, HOLOPAD_PASSIVE_POWER_USAGE + (HOLOGRAM_POWER_USAGE * total_users))
 	if(total_users || replay_mode)
 		set_light(2)
 	else
@@ -567,7 +617,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	Hologram.set_anchored(TRUE)//So space wind cannot drag it.
 	Hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
 	Hologram.set_light(2) //hologram lighting
-	visible_message("<span class='notice'>A holographic image of [record.caller_name] flickers to life before your eyes!</span>")
+	visible_message(span_notice("A holographic image of [record.caller_name] flickers to life before your eyes!"))
 	return Hologram
 
 /obj/machinery/holopad/proc/replay_start()
@@ -636,7 +686,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		if(HOLORECORD_SAY)
 			var/message = entry[2]
 			if(replay_holo)
-				replay_holo.say(message)
+				replay_holo.say(message, sanitize = FALSE)
 		if(HOLORECORD_SOUND)
 			playsound(src,entry[2],50,TRUE)
 		if(HOLORECORD_DELAY)
@@ -672,6 +722,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	Impersonation = null
 	if(!QDELETED(HC))
 		HC.Disconnect(HC.calling_holopad)
+	HC = null
 	return ..()
 
 /obj/effect/overlay/holo_pad_hologram/Process_Spacemove(movement_dir = 0)

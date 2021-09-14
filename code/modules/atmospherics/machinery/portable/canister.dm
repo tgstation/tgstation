@@ -13,7 +13,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		"n2" = /obj/machinery/portable_atmospherics/canister/nitrogen,
 		"o2" = /obj/machinery/portable_atmospherics/canister/oxygen,
 		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
+		"plasma" = /obj/machinery/portable_atmospherics/canister/plasma,
 		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 		"no2" = /obj/machinery/portable_atmospherics/canister/nitryl,
 		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
@@ -114,14 +114,14 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	. = ..()
 	if(!allowed(user))
-		to_chat(user, "<span class='alert'>Error - Unauthorized User.</span>")
+		to_chat(user, span_alert("Error - Unauthorized User."))
 		playsound(src, 'sound/misc/compiler-failure.ogg', 50, TRUE)
 		return
 
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	if(mode)
-		. += "<span class='notice'>This canister is Tier [mode]. A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]</b>.</span>"
+		. += span_notice("This canister is Tier [mode]. A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]</b>.")
 
 // Please keep the canister types sorted
 // Basic canister per gas below here
@@ -259,7 +259,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#9b5d7f"
 
-/obj/machinery/portable_atmospherics/canister/toxins
+/obj/machinery/portable_atmospherics/canister/plasma
 	name = "Plasma canister"
 	desc = "Plasma gas. The reason YOU are here. Highly toxic."
 	gas_type = /datum/gas/plasma
@@ -435,7 +435,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	window = image(icon, icon_state="window-base", layer=FLOAT_LAYER)
 	var/list/window_overlays = list()
 	for(var/visual in air_contents.return_visuals())
-		var/image/new_visual = image(visual, layer=FLOAT_PLANE)
+		var/image/new_visual = image(visual, layer=FLOAT_LAYER)
 		new_visual.filters = alpha_filter
 		window_overlays += new_visual
 	window.overlays = window_overlays
@@ -474,12 +474,12 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		return TRUE
 	var/pressure = air_contents.return_pressure()
 	if(pressure > 300)
-		to_chat(user, "<span class='alert'>The pressure gauge on [src] indicates a high pressure inside... maybe you want to reconsider?</span>")
+		to_chat(user, span_alert("The pressure gauge on [src] indicates a high pressure inside... maybe you want to reconsider?"))
 		message_admins("[src] deconstructed by [ADMIN_LOOKUPFLW(user)]")
 		log_game("[src] deconstructed by [key_name(user)]")
-	to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
+	to_chat(user, span_notice("You begin cutting [src] apart..."))
 	if(I.use_tool(src, user, 3 SECONDS, volume=50))
-		to_chat(user, "<span class='notice'>You cut [src] apart.</span>")
+		to_chat(user, span_notice("You cut [src] apart."))
 		deconstruct(TRUE)
 	return TRUE
 
@@ -487,19 +487,19 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	. = ..()
 	if(user.combat_mode)
 		return FALSE
-	if(obj_integrity >= max_integrity)
+	if(atom_integrity >= max_integrity)
 		return TRUE
 	if(machine_stat & BROKEN)
 		return TRUE
 	if(!tool.tool_start_check(user, amount=0))
 		return TRUE
-	to_chat(user, "<span class='notice'>You begin repairing cracks in [src]...</span>")
+	to_chat(user, span_notice("You begin repairing cracks in [src]..."))
 	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))
-		obj_integrity = min(obj_integrity + 25, max_integrity)
-		if(obj_integrity >= max_integrity)
-			to_chat(user, "<span class='notice'>You've finished repairing [src].</span>")
+		atom_integrity = min(atom_integrity + 25, max_integrity)
+		if(atom_integrity >= max_integrity)
+			to_chat(user, span_notice("You've finished repairing [src]."))
 			return TRUE
-		to_chat(user, "<span class='notice'>You repair some of the cracks in [src]...</span>")
+		to_chat(user, span_notice("You repair some of the cracks in [src]..."))
 	return TRUE
 
 /obj/machinery/portable_atmospherics/canister/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
@@ -508,7 +508,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		return
 	SSair.start_processing_machine(src)
 
-/obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
+/obj/machinery/portable_atmospherics/canister/atom_break(damage_flag)
 	. = ..()
 	if(!.)
 		return
@@ -523,9 +523,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	var/turf/T = get_turf(src)
 	T.assume_air(expelled_gas)
 
-	obj_break()
+	atom_break()
 
-	density = FALSE
+	set_density(FALSE)
 	playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
 
@@ -718,8 +718,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		if("eject")
 			if(holding)
 				if(valve_open)
-					message_admins("[ADMIN_LOOKUPFLW(usr)] removed [holding] from [src] with valve still open at [ADMIN_VERBOSEJMP(src)] releasing contents into the <span class='boldannounce'>air</span>.")
-					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transferring into the <span class='boldannounce'>air</span>.", INVESTIGATE_ATMOS)
+					message_admins("[ADMIN_LOOKUPFLW(usr)] removed [holding] from [src] with valve still open at [ADMIN_VERBOSEJMP(src)] releasing contents into the [span_boldannounce("air")].")
+					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transferring into the [span_boldannounce("air")].", INVESTIGATE_ATMOS)
 				replace_tank(usr, FALSE)
 				. = TRUE
 	update_appearance()

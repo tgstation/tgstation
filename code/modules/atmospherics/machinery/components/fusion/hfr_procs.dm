@@ -60,16 +60,19 @@
 			if(linked_input && linked_input != object)
 				. =  FALSE
 			linked_input = object
+			machine_parts |= object
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/waste_output))
 			if(linked_output && linked_output != object)
 				. =  FALSE
 			linked_output = object
+			machine_parts |= object
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/moderator_input))
 			if(linked_moderator && linked_moderator != object)
 				. =  FALSE
 			linked_moderator = object
+			machine_parts |= object
 
 	if(!linked_interface || !linked_input || !linked_moderator || !linked_output || corners.len != 4)
 		. = FALSE
@@ -82,9 +85,9 @@
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/activate(mob/living/user)
 	if(active)
-		to_chat(user, "<span class='notice'>You already activated the machine.</span>")
+		to_chat(user, span_notice("You already activated the machine."))
 		return
-	to_chat(user, "<span class='notice'>You link all parts toghether.</span>")
+	to_chat(user, span_notice("You link all parts toghether."))
 	active = TRUE
 	update_appearance()
 	linked_interface.active = TRUE
@@ -103,7 +106,7 @@
 		corner.active = TRUE
 		corner.update_appearance()
 		RegisterSignal(corner, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
-	soundloop = new(list(src), TRUE)
+	soundloop = new(src, TRUE)
 	soundloop.volume = 5
 
 /**
@@ -114,10 +117,14 @@
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/unregister_signals(only_signals = FALSE)
 	SIGNAL_HANDLER
-	UnregisterSignal(linked_interface, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(linked_input, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(linked_output, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(linked_moderator, COMSIG_PARENT_QDELETING)
+	if(linked_interface)
+		UnregisterSignal(linked_interface, COMSIG_PARENT_QDELETING)
+	if(linked_input)
+		UnregisterSignal(linked_input, COMSIG_PARENT_QDELETING)
+	if(linked_output)
+		UnregisterSignal(linked_output, COMSIG_PARENT_QDELETING)
+	if(linked_moderator)
+		UnregisterSignal(linked_moderator, COMSIG_PARENT_QDELETING)
 	for(var/obj/machinery/hypertorus/corner/corner in corners)
 		UnregisterSignal(corner, COMSIG_PARENT_QDELETING)
 	if(!only_signals)
@@ -181,7 +188,8 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return FALSE
 	if(use_power == ACTIVE_POWER_USE)
-		active_power_usage = ((power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
+		update_mode_power_usage(ACTIVE_POWER_USE, (power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
+
 	return TRUE
 
 ///Checks if the gases in the input are the ones needed by the recipe
@@ -204,7 +212,7 @@
  * Check the integrity level and returns the status of the machine
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/get_status()
-	var/integrity = get_integrity()
+	var/integrity = get_integrity_percent()
 	if(integrity < HYPERTORUS_MELTING_PERCENT)
 		return HYPERTORUS_MELTING
 
@@ -239,7 +247,7 @@
 /**
  * Getter for the machine integrity
  */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/get_integrity()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/get_integrity_percent()
 	var/integrity = critical_threshold_proximity / melting_point
 	integrity = round(100 - integrity * 100, 0.01)
 	integrity = integrity < 0 ? 0 : integrity
@@ -257,18 +265,18 @@
 		alarm()
 
 		if(critical_threshold_proximity > emergency_point)
-			radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity()]%", common_channel)
+			radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity_percent()]%", common_channel)
 			lastwarning = REALTIMEOFDAY
 			if(!has_reached_emergency)
 				investigate_log("has reached the emergency point for the first time.", INVESTIGATE_HYPERTORUS)
 				message_admins("[src] has reached the emergency point [ADMIN_JMP(src)].")
 				has_reached_emergency = TRUE
 		else if(critical_threshold_proximity >= critical_threshold_proximity_archived) // The damage is still going up
-			radio.talk_into(src, "[warning_alert] Integrity: [get_integrity()]%", engineering_channel)
+			radio.talk_into(src, "[warning_alert] Integrity: [get_integrity_percent()]%", engineering_channel)
 			lastwarning = REALTIMEOFDAY - (WARNING_TIME_DELAY * 5)
 
 		else // Phew, we're safe
-			radio.talk_into(src, "[safe_alert] Integrity: [get_integrity()]%", engineering_channel)
+			radio.talk_into(src, "[safe_alert] Integrity: [get_integrity_percent()]%", engineering_channel)
 			lastwarning = REALTIMEOFDAY
 
 	//Melt
@@ -286,6 +294,10 @@
 		return
 	final_countdown = TRUE
 
+	var/critical = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_CRITICAL_MELTDOWN
+	if(critical)
+		priority_announce("WARNING - The explosion will likely cover a big part of the station and the coming EMP will wipe out most of the electronics. \
+				Get as far away as possible from the reactor or find a way to shut it down.", "Alert")
 	var/speaking = "[emergency_alert] The Hypertorus fusion reactor has reached critical integrity failure. Emergency magnetic dampeners online."
 	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
 	for(var/i in HYPERTORUS_COUNTDOWN_TIME to 0 step -10)
@@ -297,6 +309,8 @@
 			sleep(10)
 			continue
 		else if(i > 50)
+			if(i == 10 SECONDS && critical)
+				sound_to_playing_players('sound/machines/hypertorus/HFR_critical_explosion.ogg')
 			speaking = "[DisplayTimeText(i, TRUE)] remain before total integrity failure."
 		else
 			speaking = "[i*0.1]..."
@@ -310,10 +324,76 @@
  * Create the explosion + the gas emission before deleting the machine core.
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/meltdown()
-	explosion(src, light_impact_range = power_level * 5, flash_range = power_level * 6, adminlog = TRUE, ignorecap = TRUE)
-	radiation_pulse(loc, power_level * 7000, (1 / (power_level + 5)), TRUE)
-	empulse(loc, power_level * 5, power_level * 7, TRUE)
-	var/list/around_turfs = circlerangeturfs(src, power_level * 5)
+	var/flash_explosion = 0
+	var/light_impact_explosion = 0
+	var/heavy_impact_explosion = 0
+	var/devastating_explosion = 0
+	var/em_pulse = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_EMP
+	var/rad_pulse = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_RADIATION_PULSE
+	var/emp_light_size = 0
+	var/emp_heavy_size = 0
+	var/rad_pulse_size = 0
+	var/rad_pulse_strength = 0
+	var/gas_spread = 0
+	var/gas_pockets = 0
+	var/critical = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_CRITICAL_MELTDOWN
+
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_BASE_EXPLOSION)
+		flash_explosion = power_level * 3
+		light_impact_explosion = power_level * 2
+
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_MEDIUM_EXPLOSION)
+		flash_explosion = power_level * 6
+		light_impact_explosion = power_level * 5
+		heavy_impact_explosion = power_level * 0.5
+
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_DEVASTATING_EXPLOSION)
+		flash_explosion = power_level * 8
+		light_impact_explosion = power_level * 7
+		heavy_impact_explosion = power_level * 2
+		devastating_explosion = power_level
+
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_MINIMUM_SPREAD)
+		if(em_pulse)
+			emp_light_size = power_level * 3
+			emp_heavy_size = power_level * 1
+		if(rad_pulse)
+			rad_pulse_size = (1 / (power_level + 1))
+			rad_pulse_strength = power_level * 3000
+		gas_pockets = 5
+		gas_spread = power_level * 2
+
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_MEDIUM_SPREAD)
+		if(em_pulse)
+			emp_light_size = power_level * 5
+			emp_heavy_size = power_level * 3
+		if(rad_pulse)
+			rad_pulse_size = (1 / (power_level + 3))
+			rad_pulse_strength = power_level * 5000
+		gas_pockets = 7
+		gas_spread = power_level * 4
+
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_BIG_SPREAD)
+		if(em_pulse)
+			emp_light_size = power_level * 7
+			emp_heavy_size = power_level * 5
+		if(rad_pulse)
+			rad_pulse_size = (1 / (power_level + 5))
+			rad_pulse_strength = power_level * 7000
+		gas_pockets = 10
+		gas_spread = power_level * 6
+
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_MASSIVE_SPREAD)
+		if(em_pulse)
+			emp_light_size = power_level * 9
+			emp_heavy_size = power_level * 7
+		if(rad_pulse)
+			rad_pulse_size = (1 / (power_level + 7))
+			rad_pulse_strength = power_level * 9000
+		gas_pockets = 15
+		gas_spread = power_level * 8
+
+	var/list/around_turfs = circlerangeturfs(src, gas_spread)
 	for(var/turf/turf as anything in around_turfs)
 		if(isclosedturf(turf) || isspaceturf(turf))
 			around_turfs -= turf
@@ -322,8 +402,8 @@
 	if(internal_fusion.total_moles() > 0)
 		remove_fusion = internal_fusion.remove_ratio(0.2)
 		var/datum/gas_mixture/remove
-		for(var/i in 1 to 10)
-			remove = remove_fusion.remove_ratio(0.1)
+		for(var/i in 1 to gas_pockets)
+			remove = remove_fusion.remove_ratio(1/gas_pockets)
 			var/turf/local = pick(around_turfs)
 			local.assume_air(remove)
 		loc.assume_air(internal_fusion)
@@ -331,9 +411,56 @@
 	if(moderator_internal.total_moles() > 0)
 		remove_moderator = moderator_internal.remove_ratio(0.2)
 		var/datum/gas_mixture/remove
-		for(var/i in 1 to 10)
-			remove = remove_moderator.remove_ratio(0.1)
+		for(var/i in 1 to gas_pockets)
+			remove = remove_moderator.remove_ratio(1/gas_pockets)
 			var/turf/local = pick(around_turfs)
 			local.assume_air(remove)
 		loc.assume_air(moderator_internal)
+
+	//Max explosion ranges: devastation = 12, heavy = 24, light = 42
+	explosion(
+		origin = src,
+		devastation_range = critical ? devastating_explosion * 2 : devastating_explosion,
+		heavy_impact_range = critical ?  heavy_impact_explosion * 2 : heavy_impact_explosion,
+		light_impact_range = light_impact_explosion,
+		flash_range = flash_explosion,
+		adminlog = TRUE,
+		ignorecap = TRUE
+		)
+
+	if(rad_pulse)
+		radiation_pulse(
+			source = loc,
+			intensity = rad_pulse_strength,
+			range_modifier = rad_pulse_size,
+			log = TRUE
+			)
+
+	if(em_pulse)
+		empulse(
+			epicenter = loc,
+			heavy_range = critical ? emp_heavy_size * 2 : emp_heavy_size,
+			light_range = critical ? emp_light_size * 2 : emp_heavy_size,
+			log = TRUE
+			)
+
 	qdel(src)
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_cracked_parts()
+	for(var/obj/machinery/atmospherics/components/unary/hypertorus/part in machine_parts)
+		if(part.cracked)
+			return TRUE
+	return FALSE
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/create_crack()
+	var/obj/machinery/atmospherics/components/unary/hypertorus/part = pick(machine_parts)
+	part.cracked = TRUE
+	part.update_appearance()
+	return part
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/spill_gases(obj/origin, datum/gas_mixture/target_mix, ratio)
+	var/datum/gas_mixture/remove_mixture = target_mix.remove_ratio(ratio)
+	var/turf/origin_turf = origin.loc
+	if(!origin_turf)
+		return
+	origin_turf.assume_air(remove_mixture)

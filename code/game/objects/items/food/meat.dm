@@ -10,7 +10,7 @@
 	bite_consumption = 3
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6,  /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("fish" = 4, "batter" = 1, "hot peppers" = 1)
-	foodtypes = MEAT
+	foodtypes = MEAT | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 
 
@@ -42,6 +42,29 @@
 	desc = "Almost just like the real thing, kinda."
 	cell_line = null
 
+/obj/item/food/fishmeat/moonfish
+	name = "moonfish fillet"
+	desc = "A fillet of moonfish."
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "moonfish_fillet"
+
+/obj/item/food/fishmeat/moonfish/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/grilled_moonfish, rand(40 SECONDS, 50 SECONDS), TRUE, TRUE)
+
+/obj/item/food/fishmeat/gunner_jellyfish
+	name = "filleted gunner jellyfish"
+	desc = "A gunner jellyfish with the stingers removed. Mildly hallucinogenic."
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "jellyfish_fillet"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin/mindbreaker = 2)
+
+/obj/item/food/fishmeat/armorfish
+	name = "cleaned armorfish"
+	desc = "An armorfish with its guts and shell removed, ready for use in cooking."
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "armorfish_fillet"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
+
 /obj/item/food/fishfingers
 	name = "fish fingers"
 	desc = "A finger of fish."
@@ -49,7 +72,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	bite_consumption = 1
 	tastes = list("fish" = 1, "breadcrumbs" = 1)
-	foodtypes = MEAT
+	foodtypes = MEAT | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
 
@@ -358,23 +381,23 @@
 	if(faction)
 		bananas.faction = faction
 	if (!QDELETED(bananas))
-		visible_message("<span class='notice'>[src] expands!</span>")
+		visible_message(span_notice("[src] expands!"))
 		bananas.log_message("Spawned via [src] at [AREACOORD(src)], Last attached mob: [key_name(spammer)].", LOG_ATTACK)
 	else if (!spammer) // Visible message in case there are no fingerprints
-		visible_message("<span class='notice'>[src] fails to expand!</span>")
+		visible_message(span_notice("[src] fails to expand!"))
 	qdel(src)
 
 /obj/item/food/monkeycube/suicide_act(mob/living/M)
-	M.visible_message("<span class='suicide'>[M] is putting [src] in [M.p_their()] mouth! It looks like [M.p_theyre()] trying to commit suicide!</span>")
+	M.visible_message(span_suicide("[M] is putting [src] in [M.p_their()] mouth! It looks like [M.p_theyre()] trying to commit suicide!"))
 	var/eating_success = do_after(M, 1 SECONDS, src)
 	if(QDELETED(M)) //qdeletion: the nuclear option of self-harm
 		return SHAME
 	if(!eating_success || QDELETED(src)) //checks if src is gone or if they failed to wait for a second
-		M.visible_message("<span class='suicide'>[M] chickens out!</span>")
+		M.visible_message(span_suicide("[M] chickens out!"))
 		return SHAME
 	if(HAS_TRAIT(M, TRAIT_NOHUNGER)) //plasmamen don't have saliva/stomach acid
-		M.visible_message("<span class='suicide'>[M] realizes [M.p_their()] body won't activate [src]!</span>"
-		,"<span class='warning'>Your body won't activate [src]...</span>")
+		M.visible_message(span_suicide("[M] realizes [M.p_their()] body won't activate [src]!")
+		,span_warning("Your body won't activate [src]..."))
 		return SHAME
 	playsound(M, 'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	M.temporarilyRemoveItemFromInventory(src) //removes from hands, keeps in M
@@ -385,10 +408,10 @@
 	if(QDELETED(M) || QDELETED(src))
 		return
 	if((src.loc != M)) //how the hell did you manage this
-		to_chat(M, "<span class='warning'>Something happened to [src]...</span>")
+		to_chat(M, span_warning("Something happened to [src]..."))
 		return
 	Expand()
-	M.visible_message("<span class='danger'>[M]'s torso bursts open as a primate emerges!</span>")
+	M.visible_message(span_danger("[M]'s torso bursts open as a primate emerges!"))
 	M.gib(null, TRUE, null, TRUE)
 
 /obj/item/food/monkeycube/syndicate
@@ -484,7 +507,7 @@
 	icon_state = "pigblanket"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("meat" = 1, "butter" = 1)
-	foodtypes = MEAT | DAIRY
+	foodtypes = MEAT | DAIRY | GRAIN
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/bbqribs
@@ -494,7 +517,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/bbqsauce = 10)
 	tastes = list("meat" = 3, "smokey sauce" = 1)
-	foodtypes = MEAT
+	foodtypes = MEAT | SUGAR
 
 /obj/item/food/meatclown
 	name = "meat clown"
@@ -583,7 +606,6 @@
 
 /obj/item/food/meat
 	custom_materials = list(/datum/material/meat = MINERAL_MATERIAL_AMOUNT * 4)
-	material_flags = MATERIAL_NO_EFFECTS
 	var/subjectname = ""
 	var/subjectjob = null
 	w_class = WEIGHT_CLASS_SMALL
@@ -695,7 +717,7 @@
 /obj/item/food/meat/slab/human/mutant/ethereal
 	icon_state = "etherealmeat"
 	desc = "So shiny you feel like ingesting it might make you shine too"
-	food_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 3)
+	food_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 10)
 	tastes = list("pure electricity" = 2, "meat" = 1)
 	foodtypes = RAW | MEAT | TOXIC
 
@@ -822,7 +844,7 @@
 	foodtypes = RAW | MEAT | TOXIC
 
 /obj/item/food/meat/slab/goliath/burn()
-	visible_message("<span class='notice'>[src] finishes cooking!</span>")
+	visible_message(span_notice("[src] finishes cooking!"))
 	new /obj/item/food/meat/steak/goliath(loc)
 	qdel(src)
 
@@ -893,7 +915,6 @@
 	name = "raw crab meat"
 	desc = "A pile of raw crab meat."
 	icon_state = "crabmeatraw"
-	microwaved_type = /obj/item/food/meat/crab
 	bite_consumption = 3
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/cooking_oil = 3)
 	tastes = list("raw crab" = 1)
@@ -934,7 +955,6 @@
 	desc = "A piece of hot spicy meat."
 	icon_state = "meatsteak"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 1)
-
 	foodtypes = MEAT
 	tastes = list("meat" = 1)
 	burns_on_grill = TRUE
@@ -1235,9 +1255,9 @@
 	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/beef_wellington/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/beef_wellington/slice, 3, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/beef_wellington_slice, 3, 30)
 
-/obj/item/food/beef_wellington/slice
+/obj/item/food/beef_wellington_slice
 	name = "beef wellington slice"
 	desc = "A slice of beef wellington, topped with a rich gravy. Simply delicious."
 	icon_state = "beef_wellington_slice"

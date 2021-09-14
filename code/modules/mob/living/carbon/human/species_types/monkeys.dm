@@ -1,6 +1,6 @@
 /datum/species/monkey
 	name = "Monkey"
-	id = "monkey"
+	id = SPECIES_MONKEY
 	say_mod = "chimpers"
 	attack_verb = "bite"
 	attack_effect = ATTACK_EFFECT_BITE
@@ -10,6 +10,7 @@
 	mutant_bodyparts = list("tail_monkey" = "Monkey")
 	skinned_type = /obj/item/stack/sheet/animalhide/monkey
 	meat = /obj/item/food/meat/slab/monkey
+	allowed_animal_origin = MONKEY_BODY
 	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	species_traits = list(HAS_FLESH,HAS_BONE,NO_UNDERWEAR,LIPS,NOEYESPRITES,NOBLOODOVERLAY,NOTRANSSTING, NOAUGMENTS)
 	inherent_traits = list(
@@ -41,6 +42,7 @@
 	gib_anim = "gibbed-m"
 
 	payday_modifier = 1.5
+
 
 
 /datum/species/monkey/random_name(gender,unique,lastname)
@@ -80,14 +82,14 @@
 			affecting = human_victim.get_bodypart(pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		var/armor = victim.run_armor_check(affecting, MELEE)
 		if(prob(25))
-			victim.visible_message("<span class='danger'>[user]'s bite misses [victim]!</span>",
-				"<span class='danger'>You avoid [user]'s bite!</span>", "<span class='hear'>You hear jaws snapping shut!</span>", COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, "<span class='danger'>Your bite misses [victim]!</span>")
+			victim.visible_message(span_danger("[user]'s bite misses [victim]!"),
+				span_danger("You avoid [user]'s bite!"), span_hear("You hear jaws snapping shut!"), COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, span_danger("Your bite misses [victim]!"))
 			return TRUE
 		victim.apply_damage(rand(punchdamagelow, punchdamagehigh), BRUTE, affecting, armor)
-		victim.visible_message("<span class='danger'>[name] bites [victim]!</span>",
-			"<span class='userdanger'>[name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, name)
-		to_chat(user, "<span class='danger'>You bite [victim]!</span>")
+		victim.visible_message(span_danger("[name] bites [victim]!"),
+			span_userdanger("[name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, name)
+		to_chat(user, span_danger("You bite [victim]!"))
 		if(armor >= 2)
 			return TRUE
 		for(var/d in user.diseases)

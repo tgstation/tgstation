@@ -2,13 +2,25 @@
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "random_loot"
 	layer = OBJ_LAYER
+	anchored = TRUE // Stops persistent lootdrop spawns from being shoved into lockers
 	var/lootcount = 1 //how many items will be spawned
 	var/lootdoubles = TRUE //if the same item can be spawned twice
 	var/list/loot //a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
 	var/fan_out_items = FALSE //Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
+	/// Whether the spawner should immediately spawn loot and cleanup on Initialize()
+	var/spawn_on_init = TRUE
 
 /obj/effect/spawner/lootdrop/Initialize(mapload)
-	..()
+	. = ..()
+
+	if(spawn_on_init)
+		spawn_loot()
+		return INITIALIZE_HINT_QDEL
+
+///If the spawner has any loot defined, randomly picks some and spawns it. Does not cleanup the spawner.
+/obj/effect/spawner/lootdrop/proc/spawn_loot(lootcount_override)
+	var/lootcount = isnull(lootcount_override) ? src.lootcount : lootcount_override
+
 	if(loot?.len)
 		var/loot_spawned = 0
 		while((lootcount-loot_spawned) && loot.len)
@@ -29,7 +41,6 @@
 					if (loot_spawned)
 						spawned_loot.pixel_x = spawned_loot.pixel_y = ((!(loot_spawned%2)*loot_spawned/2)*-1)+((loot_spawned%2)*(loot_spawned+1)/2*1)
 			loot_spawned++
-	return INITIALIZE_HINT_QDEL
 
 /obj/effect/spawner/lootdrop/donkpockets
 	name = "donk pocket box spawner"
@@ -100,7 +111,7 @@
 				/obj/item/storage/box/matches = 3,
 				/obj/item/reagent_containers/syringe/contraband/space_drugs = 1,
 				/obj/item/reagent_containers/syringe/contraband/krokodil = 1,
-				/obj/item/reagent_containers/syringe/contraband/crank = 1,
+				/obj/item/reagent_containers/syringe/contraband/saturnx = 1,
 				/obj/item/reagent_containers/syringe/contraband/methamphetamine = 1,
 				/obj/item/reagent_containers/syringe/contraband/bath_salts = 1,
 				/obj/item/reagent_containers/syringe/contraband/fentanyl = 1,
@@ -108,7 +119,7 @@
 				/obj/item/storage/pill_bottle/happy = 1,
 				/obj/item/storage/pill_bottle/lsd = 1,
 				/obj/item/storage/pill_bottle/psicodine = 1,
-				/obj/item/reagent_containers/food/drinks/beer = 4,
+				/obj/item/reagent_containers/food/drinks/bottle/beer = 4,
 				/obj/item/reagent_containers/food/drinks/bottle/whiskey = 1,
 				/obj/item/paper/fluff/jobs/prisoner/letter = 1,
 				/obj/item/grenade/smokebomb = 1,
@@ -177,7 +188,7 @@
 				/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 15,
 				/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy = 10,
 				/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko = 10,
-				/obj/item/reagent_containers/food/drinks/beer/light = 10,
+				/obj/item/reagent_containers/food/drinks/bottle/beer/light = 10,
 				/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 5,
 				/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game = 5,
 				/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb = 5,
@@ -240,18 +251,53 @@
 
 /obj/effect/spawner/lootdrop/maintenance
 	name = "maintenance loot spawner"
+	desc = "Come on Lady Luck, spawn me a pair of sunglasses."
+	spawn_on_init = FALSE
 	// see code/_globalvars/lists/maintenance_loot.dm for loot table
 
+/obj/effect/spawner/lootdrop/maintenance/examine(mob/user)
+	. = ..()
+	. += span_info("This spawner has an effective loot count of [get_effective_lootcount()].")
+
 /obj/effect/spawner/lootdrop/maintenance/Initialize(mapload)
+	. = ..()
+	// There is a single callback in SSmapping to spawn all delayed maintenance loot
+	// so we don't just make one callback per loot spawner
+	GLOB.maintenance_loot_spawners += src
 	loot = GLOB.maintenance_loot
 
+	// Late loaded templates like shuttles can have maintenance loot
+	if(SSticker.current_state >= GAME_STATE_SETTING_UP)
+		spawn_loot()
+		hide()
+
+/obj/effect/spawner/lootdrop/maintenance/Destroy()
+	GLOB.maintenance_loot_spawners -= src
+	return ..()
+
+/obj/effect/spawner/lootdrop/maintenance/proc/hide()
+	invisibility = INVISIBILITY_ABSTRACT
+
+/obj/effect/spawner/lootdrop/maintenance/proc/get_effective_lootcount()
+	var/effective_lootcount = lootcount
+
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_FILLED_MAINT))
-		lootcount = FLOOR(lootcount * 1.5, 1)
+		effective_lootcount = FLOOR(lootcount * 1.5, 1)
 
 	else if(HAS_TRAIT(SSstation, STATION_TRAIT_EMPTY_MAINT))
-		lootcount = FLOOR(lootcount * 0.5, 1)
+		effective_lootcount = FLOOR(lootcount * 0.5, 1)
 
+	return effective_lootcount
+
+/obj/effect/spawner/lootdrop/maintenance/spawn_loot(lootcount_override)
+	if(isnull(lootcount_override))
+		lootcount_override = get_effective_lootcount()
 	. = ..()
+
+	// In addition, closets that are closed will have the maintenance loot inserted inside.
+	for(var/obj/structure/closet/closet in get_turf(src))
+		if(!closet.opened)
+			closet.take_contents()
 
 /obj/effect/spawner/lootdrop/maintenance/two
 	name = "2 x maintenance loot spawner"
@@ -443,11 +489,6 @@
 				/obj/item/circuitboard/computer/teleporter,
 				/obj/item/circuitboard/machine/destructive_analyzer,
 				/obj/item/circuitboard/computer/rdconsole,
-				/obj/item/circuitboard/computer/nanite_chamber_control,
-				/obj/item/circuitboard/computer/nanite_cloud_controller,
-				/obj/item/circuitboard/machine/nanite_chamber,
-				/obj/item/circuitboard/machine/nanite_programmer,
-				/obj/item/circuitboard/machine/nanite_program_hub,
 				/obj/item/circuitboard/computer/scan_consolenew,
 				/obj/item/circuitboard/machine/dnascanner
 				)
@@ -742,4 +783,106 @@
 	/obj/item/flashlight/lantern/jade = 5,
 	/obj/item/phone = 5,
 	/obj/item/flashlight/lamp/bananalamp = 3
+	)
+
+/obj/effect/spawner/lootdrop/wallet_loot
+	lootcount = 1
+	loot = list(
+		list(
+			// Same weights as contraband loot cigarettes (with no packs)
+			/obj/item/clothing/mask/cigarette/space_cigarette = 4,
+			/obj/item/clothing/mask/cigarette/robust = 2,
+			/obj/item/clothing/mask/cigarette/carp = 3,
+			/obj/item/clothing/mask/cigarette/uplift = 2,
+			/obj/item/clothing/mask/cigarette/dromedary = 3,
+			/obj/item/clothing/mask/cigarette/robustgold = 1,
+			/obj/item/clothing/mask/cigarette/rollie/cannabis = 4,
+		) = 1,
+		list(
+			/obj/item/flashlight/pen = 90,
+			/obj/item/flashlight/pen/paramedic = 10,
+		) = 1,
+		list( // The same seeds in the Supply "Seeds Crate"
+			/obj/item/seeds/chili = 1,
+			/obj/item/seeds/cotton = 1,
+			/obj/item/seeds/berry = 1,
+			/obj/item/seeds/corn = 1,
+			/obj/item/seeds/eggplant = 1,
+			/obj/item/seeds/tomato = 1,
+			/obj/item/seeds/soya = 1,
+			/obj/item/seeds/wheat = 1,
+			/obj/item/seeds/wheat/rice = 1,
+			/obj/item/seeds/carrot = 1,
+			/obj/item/seeds/sunflower = 1,
+			/obj/item/seeds/rose = 1,
+			/obj/item/seeds/chanter = 1,
+			/obj/item/seeds/potato = 1,
+			/obj/item/seeds/sugarcane = 1,
+		) = 1,
+		list(
+			/obj/item/stack/medical/suture = 1,
+			/obj/item/stack/medical/mesh = 1,
+			/obj/item/stack/medical/gauze = 1,
+		) = 1,
+		list(
+			/obj/item/toy/crayon/red = 1,
+			/obj/item/toy/crayon/orange = 1,
+			/obj/item/toy/crayon/yellow = 1,
+			/obj/item/toy/crayon/green = 1,
+			/obj/item/toy/crayon/blue = 1,
+			/obj/item/toy/crayon/purple = 1,
+			/obj/item/toy/crayon/black = 1,
+			/obj/item/toy/crayon/rainbow = 1,
+		) = 1,
+		list(
+			/obj/item/coin/iron = 1,
+			/obj/item/coin/silver = 1,
+			/obj/item/coin/diamond = 1,
+			/obj/item/coin/plasma = 1,
+			/obj/item/coin/uranium = 1,
+			/obj/item/coin/titanium = 1,
+			/obj/item/coin/bananium = 1,
+			/obj/item/coin/adamantine = 1,
+			/obj/item/coin/mythril = 1,
+			/obj/item/coin/plastic = 1,
+			/obj/item/coin/runite = 1,
+			/obj/item/coin/twoheaded = 1,
+			/obj/item/coin/antagtoken = 1,
+		) = 1,
+		list(
+			/obj/item/dice/d4 = 1,
+			/obj/item/dice/d6 = 1,
+			/obj/item/dice/d8 = 1,
+			/obj/item/dice/d10 = 1,
+			/obj/item/dice/d12 = 1,
+			/obj/item/dice/d20 = 1,
+		) = 1,
+		list(
+			/obj/item/disk/data = 99,
+			/obj/item/disk/nuclear/fake/obvious = 1,
+		) = 1,
+		/obj/item/implanter = 1,
+		list(
+			/obj/item/lighter = 25,
+			/obj/item/lighter/greyscale = 75,
+		) = 1,
+		/obj/item/lipstick/random = 1,
+		/obj/item/match = 1,
+		/obj/item/paper/pamphlet/gateway = 1,
+		list(
+			/obj/item/pen = 1,
+			/obj/item/pen/blue = 1,
+			/obj/item/pen/red = 1,
+			/obj/item/pen/fourcolor = 1,
+			/obj/item/pen/fountain = 1,
+		) = 1,
+		// random photos would go here. IF I HAD ONE. :'(
+		/obj/item/reagent_containers/dropper = 1,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/item/reagent_containers/pill/maintenance = 1,
+		/obj/item/screwdriver = 1,
+		list(
+			/obj/item/stamp = 50,
+			/obj/item/stamp/denied = 50,
+		) = 1,
 	)

@@ -96,11 +96,11 @@
 			owner.dizziness += 10
 			fail = TRUE
 		if(3)
-			to_chat(owner, "<span class='userdanger'>You feel your heart lurching in your chest...</span>")
+			to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
 			owner.Stun(20)
 			shake_camera(owner, 15, 1)
 		if(4)
-			to_chat(owner, "<span class='warning'>You faint.</span>")
+			to_chat(owner, span_warning("You faint."))
 			owner.Unconscious(80)
 			fail = TRUE
 	return fail
@@ -112,7 +112,7 @@
 	if(examining_mob != owner || !triggering_examiner || prob(50))
 		return
 
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, obsession, "<span class='warning'>You catch [examining_mob] staring at you...</span>", 3))
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, obsession, span_warning("You catch [examining_mob] staring at you..."), 3))
 	return COMSIG_BLOCK_EYECONTACT
 
 /datum/brain_trauma/special/obsessed/proc/find_obsession()
@@ -122,12 +122,15 @@
 	var/list/special_pool = list() //The special list, for quirk-based
 	var/chosen_victim  //The obsession target
 
-	for(var/mob/Player in GLOB.player_list)//prevents crewmembers falling in love with nuke ops they never met, and other annoying hijinks
-		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player) && Player.client && Player != owner && SSjob.GetJob(Player.mind.assigned_role))
-			viable_minds += Player.mind
-	for(var/datum/mind/possible_target in viable_minds)
+	for(var/mob/player as anything in GLOB.player_list)//prevents crewmembers falling in love with nuke ops they never met, and other annoying hijinks
+		if(!player.client || !player.mind || isnewplayer(player) || player.stat == DEAD || isbrain(player) || player == owner)
+			continue
+		if(!(player.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
+			continue
+		viable_minds += player.mind
+	for(var/datum/mind/possible_target as anything in viable_minds)
 		if(possible_target != owner && ishuman(possible_target.current))
-			var/job = possible_target.assigned_role
+			var/job = possible_target.assigned_role.title
 			if (trait_obsessions[job] != null && HAS_TRAIT(owner, trait_obsessions[job]))
 				special_pool += possible_target.current
 			possible_targets += possible_target.current

@@ -78,7 +78,7 @@
 	var/mob/mob_source = source
 
 	if (!mob_source.can_put_in_hand(equipping, hand_index))
-		to_chat(src, "<span class='warning'>\The [equipping] doesn't fit in that place!</span>")
+		to_chat(src, span_warning("\The [equipping] doesn't fit in that place!"))
 		return FALSE
 
 	return TRUE

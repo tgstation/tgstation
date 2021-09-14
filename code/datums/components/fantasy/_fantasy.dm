@@ -118,7 +118,7 @@
 
 	if(canFail && prob((quality - 9)*10))
 		var/turf/place = get_turf(parent)
-		place.visible_message("<span class='danger'>[parent] <span class='blue'>violently glows blue</span> for a while, then evaporates.</span>")
+		place.visible_message(span_danger("[parent] [span_blue("violently glows blue")] for a while, then evaporates."))
 		master.burn()
 		return
 	else if(announce)
@@ -132,8 +132,7 @@
 	for(var/i in affixes)
 		var/datum/fantasy_affix/affix = i
 		affix.remove(src)
-	for(var/i in appliedComponents)
-		qdel(i)
+	QDEL_LIST(appliedComponents)
 
 	master.force = max(0, master.force - quality)
 	master.throwforce = max(0, master.throwforce - quality)
@@ -152,6 +151,6 @@
 		effect_description = "<span class='heavy_brass'>shimmering golden glow</span>"
 	else
 		span = "<span class='danger'>"
-		effect_description = "<span class='bold'>mottled black glow</span>"
+		effect_description = span_bold("mottled black glow")
 
 	location.visible_message("[span][originalName] is covered by a [effect_description] and then transforms into [parent]!</span>")

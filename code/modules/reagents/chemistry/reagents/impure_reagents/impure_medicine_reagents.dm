@@ -62,7 +62,7 @@
 
 //Warns you about the impenting hands
 /datum/reagent/inverse/helgrasp/on_mob_add(mob/living/L, amount)
-	to_chat(L, "<span class='hierophant'>You hear laughter as malevolent hands apparate before you, eager to drag you down to hell...! Look out!</span>")
+	to_chat(L, span_hierophant("You hear laughter as malevolent hands apparate before you, eager to drag you down to hell...! Look out!"))
 	playsound(L.loc, 'sound/chemistry/ahaha.ogg', 80, TRUE, -1) //Very obvious tell so people can be ready
 	. = ..()
 
@@ -226,7 +226,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/ichiyuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	if(prob(resetting_probability) && !(HAS_TRAIT(owner, TRAIT_RESTRAINED) || owner.incapacitated()))
 		if(spammer < world.time)
-			to_chat(owner,"<span class='warning'>You can't help but itch yourself.</span>")
+			to_chat(owner,span_warning("You can't help but itch yourself."))
 			spammer = world.time + (10 SECONDS)
 		var/scab = rand(1,7)
 		owner.adjustBruteLoss(scab*REM)
@@ -333,7 +333,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/healing/tirimol/on_mob_delete(mob/living/owner)
 	if(owner.IsSleeping())
-		owner.visible_message("<span class='notice'>[icon2html(owner, viewers(DEFAULT_MESSAGE_RANGE, src))] [owner] lets out a hearty snore!</span>")//small way of letting people know the supersnooze is ended
+		owner.visible_message(span_notice("[icon2html(owner, viewers(DEFAULT_MESSAGE_RANGE, src))] [owner] lets out a hearty snore!"))//small way of letting people know the supersnooze is ended
 	for(var/datum/reagent/reagent as anything in cached_reagent_list)
 		if(!reagent)
 			continue
@@ -546,7 +546,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(owner.health < -500 || heart.organ_flags & ORGAN_FAILING)//Honestly commendable if you get -500
 		explosion(owner, light_impact_range = 1)
 		qdel(heart)
-		owner.visible_message("<span class='boldwarning'>[owner]'s heart explodes!</span>")
+		owner.visible_message(span_boldwarning("[owner]'s heart explodes!"))
 	return ..()
 
 /datum/reagent/inverse/penthrite/overdose_start(mob/living/carbon/owner)
@@ -559,7 +559,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return ..()
 	explosion(owner, light_impact_range = 1)
 	qdel(heart)
-	owner.visible_message("<span class='boldwarning'>[owner]'s heart explodes!</span>")
+	owner.visible_message(span_boldwarning("[owner]'s heart explodes!"))
 	return..()
 
 /datum/reagent/inverse/penthrite/proc/remove_buffs(mob/living/carbon/owner)
@@ -590,7 +590,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/mob/living/carbon/carbon = owner
 	if(!carbon.dna)
 		return
-	var/list/speech_options = list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, NERVOUS, MUT_MUTE)
+	var/list/speech_options = list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, PIGLATIN, NERVOUS, MUT_MUTE)
 	speech_options = shuffle(speech_options)
 	for(var/option in speech_options)
 		if(carbon.dna.get_mutation(option))
@@ -746,13 +746,13 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(headache)
 		return ..()
 	if(DT_PROB(100*(1-creation_purity), delta_time))
-		owner.become_blind("oculine_impure")
+		owner.become_blind(IMPURE_OCULINE)
 		to_chat(owner, "<span class='warning'>You suddenly develop a pounding headache as your vision fluxuates.</spans>")
 		headache = TRUE
 	..()
 
 /datum/reagent/inverse/oculine/on_mob_end_metabolize(mob/living/owner)
-	owner.cure_blind("oculine_impure")
+	owner.cure_blind(IMPURE_OCULINE)
 	if(headache)
 		to_chat(owner, "<span class='notice'>Your headache clears up!</spans>")
 	..()

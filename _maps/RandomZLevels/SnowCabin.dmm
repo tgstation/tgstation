@@ -2870,7 +2870,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "hQ" = (
-/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "hR" = (
@@ -3030,7 +3030,7 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "il" = (
-/obj/item/toy/prize/deathripley{
+/obj/item/toy/mecha/deathripley{
 	desc = "The mining mecha of the exploration team.";
 	name = "exploraton squad Ripley";
 	pixel_y = 15
@@ -5100,7 +5100,7 @@
 /obj/structure/window{
 	dir = 4
 	},
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/east,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "nU" = (

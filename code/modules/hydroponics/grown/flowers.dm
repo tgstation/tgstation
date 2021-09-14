@@ -15,6 +15,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
+	genes = list(/datum/plant_gene/trait/preserved)
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
 	reagents_add = list(/datum/reagent/medicine/c2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
@@ -67,16 +68,11 @@
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "spacemanstrumpet-grow"
 	icon_dead = "spacemanstrumpet-dead"
-	mutatelist = list()
-	genes = list(/datum/plant_gene/reagent/polypyr)
+	mutatelist = null
+	genes = list(/datum/plant_gene/reagent/polypyr, /datum/plant_gene/trait/preserved)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 	rarity = 30
 	graft_gene = /datum/plant_gene/reagent/polypyr
-
-/obj/item/seeds/poppy/lily/trumpet/Initialize(mapload,nogenes)
-	. = ..()
-	if(!nogenes)
-		unset_mutability(/datum/plant_gene/reagent/polypyr, PLANT_GENE_EXTRACTABLE)
 
 /obj/item/food/grown/trumpet
 	seed = /obj/item/seeds/poppy/lily/trumpet
@@ -110,7 +106,7 @@
 	species = "fraxinella"
 	plantname = "Fraxinella Plants"
 	product = /obj/item/food/grown/poppy/geranium/fraxinella
-	mutatelist = list()
+	mutatelist = null
 	rarity = 15
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/fuel/oil = 0.05)
 
@@ -141,7 +137,7 @@
 	potency = 30
 	instability = 1
 	growthstages = 4
-	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
+	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/preserved)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04)
 	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
@@ -163,6 +159,7 @@
 	species = "sunflower"
 	plantname = "Sunflowers"
 	product = /obj/item/grown/sunflower
+	genes = list(/datum/plant_gene/trait/attack/sunflower_attack, /datum/plant_gene/trait/preserved)
 	endurance = 20
 	production = 2
 	yield = 2
@@ -189,10 +186,6 @@
 	throw_speed = 1
 	throw_range = 3
 
-/obj/item/grown/sunflower/attack(mob/M, mob/user)
-	to_chat(M, "<font color='green'>[user] smacks you with a sunflower!<font color='orange'><b>FLOWER POWER!</b></font></font>")
-	to_chat(user, "<font color='green'>Your sunflower's <font color='orange'><b>FLOWER POWER</b></font> strikes [M]!</font>")
-
 // Moonflower
 /obj/item/seeds/sunflower/moonflower
 	name = "pack of moonflower seeds"
@@ -205,8 +198,8 @@
 	icon_grow = "moonflower-grow"
 	icon_dead = "sunflower-dead"
 	product = /obj/item/food/grown/moonflower
-	genes = list(/datum/plant_gene/trait/glow/purple)
-	mutatelist = list()
+	genes = list(/datum/plant_gene/trait/glow/purple, /datum/plant_gene/trait/preserved)
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/ethanol/moonshine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 15
 	graft_gene = /datum/plant_gene/trait/glow/purple
@@ -229,7 +222,8 @@
 	icon_grow = "novaflower-grow"
 	icon_dead = "sunflower-dead"
 	product = /obj/item/grown/novaflower
-	mutatelist = list()
+	genes = list(/datum/plant_gene/trait/backfire/novaflower_heat, /datum/plant_gene/trait/attack/novaflower_attack, /datum/plant_gene/trait/preserved)
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.25, /datum/reagent/consumable/capsaicin = 0.3, /datum/reagent/consumable/nutriment = 0)
 	rarity = 20
 
@@ -251,42 +245,6 @@
 	attack_verb_simple = list("roast", "scorch", "burn")
 	grind_results = list(/datum/reagent/consumable/capsaicin = 0, /datum/reagent/consumable/condensedcapsaicin = 0)
 
-/obj/item/grown/novaflower/Initialize(mapload, obj/item/seeds/new_seed)
-	. = ..()
-	force = round((5 + seed.potency / 5), 1)
-	AddElement(/datum/element/plant_backfire, /obj/item/grown/novaflower.proc/singe_holder)
-
-/obj/item/grown/novaflower/attack(mob/living/carbon/M, mob/user)
-	if(!..())
-		return
-	if(isliving(M))
-		to_chat(M, "<span class='danger'>You are lit on fire from the intense heat of [src]!</span>")
-		M.adjust_fire_stacks(seed.potency / 20)
-		if(M.IgniteMob())
-			message_admins("[ADMIN_LOOKUPFLW(user)] set [ADMIN_LOOKUPFLW(M)] on fire with [src] at [AREACOORD(user)]")
-			log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
-
-/obj/item/grown/novaflower/afterattack(atom/A as mob|obj, mob/user,proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(force > 0)
-		force -= rand(1, (force / 3) + 1)
-	else
-		to_chat(usr, "<span class='warning'>All the petals have fallen off [src] from violent whacking!</span>")
-		qdel(src)
-
-/*
- * Burn the person holding the novaflower's hand. Their active hand takes burn = the novaflower's force.
- *
- * user - the carbon who is holding the flower.
- */
-/obj/item/grown/novaflower/proc/singe_holder(mob/living/carbon/user)
-	to_chat(user, "<span class='danger'>[src] singes your bare hand!</span>")
-	var/obj/item/bodypart/affecting = user.get_active_hand()
-	if(affecting?.receive_damage(0, force, wound_bonus = CANT_WOUND))
-		user.update_damage_overlays()
-
 // Rose
 /obj/item/seeds/rose
 	name = "pack of rose seeds"
@@ -300,7 +258,7 @@
 	potency = 15
 	instability = 20 //Roses crossbreed easily, and there's many many species of them.
 	growthstages = 3
-	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/backfire/rose_thorns, /datum/plant_gene/trait/preserved)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "rose-grow"
 	icon_dead = "rose-dead"
@@ -312,25 +270,23 @@
 	seed = /obj/item/seeds/rose
 	name = "\improper rose"
 	desc = "The classic fleur d'amour - flower of love. Watch for its thorns!"
+	base_icon_state = "rose"
 	icon_state = "rose"
+	worn_icon_state = "rose"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_MASK
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
 
-/obj/item/food/grown/rose/Initialize(mapload, obj/item/seeds/new_seed)
+/obj/item/food/grown/rose/equipped(mob/user, slot, initial)
 	. = ..()
-	AddElement(/datum/element/plant_backfire, /obj/item/food/grown/rose.proc/prick_holder, list(TRAIT_PIERCEIMMUNE))
-
-/obj/item/food/grown/rose/proc/prick_holder(mob/living/carbon/user)
-	if(!seed.get_gene(/datum/plant_gene/trait/sticky) && prob(66))
-		return
-
-	to_chat(user, "<span class='danger'>[src]'s thorns prick your hand. Ouch.</span>")
-	var/obj/item/bodypart/affecting = user.get_active_hand()
-	if(affecting?.receive_damage(2))
-		user.update_damage_overlays()
+	if(slot == ITEM_SLOT_MASK)
+		worn_icon_state = "[base_icon_state]_mouth"
+		user.update_inv_wear_mask()
+	else
+		worn_icon_state = base_icon_state
+		user.update_inv_head()
 
 // Carbon Rose
 /obj/item/seeds/carbon_rose
@@ -345,19 +301,13 @@
 	potency = 15
 	instability = 3
 	growthstages = 3
-	genes = list(/datum/plant_gene/reagent/carbon)
+	genes = list(/datum/plant_gene/reagent/carbon, /datum/plant_gene/trait/preserved)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "carbonrose-grow"
 	icon_dead = "carbonrose-dead"
-	mutatelist = list(/obj/item/seeds/carbon_rose)
 	reagents_add = list(/datum/reagent/plastic_polymers = 0.05)
 	rarity = 10
 	graft_gene = /datum/plant_gene/reagent/carbon
-
-/obj/item/seeds/carbon_rose/Initialize(mapload, nogenes)
-	. = ..()
-	if(!nogenes)
-		unset_mutability(/datum/plant_gene/reagent/carbon, PLANT_GENE_EXTRACTABLE)
 
 /obj/item/grown/carbon_rose
 	seed = /obj/item/seeds/carbon_rose

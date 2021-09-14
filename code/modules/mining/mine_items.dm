@@ -80,7 +80,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/machinery/computer/shuttle/mining/attack_hand(mob/user, list/modifiers)
 	if(is_station_level(user.z) && user.mind && IS_HEAD_REVOLUTIONARY(user) && !(user.mind in dumb_rev_heads))
-		to_chat(user, "<span class='warning'>You get a feeling that leaving the station might be a REALLY dumb idea...</span>")
+		to_chat(user, span_warning("You get a feeling that leaving the station might be a REALLY dumb idea..."))
 		dumb_rev_heads += user.mind
 		return
 	. = ..()

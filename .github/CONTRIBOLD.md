@@ -688,6 +688,10 @@ This is good:
 
 Setting `is_red` in args is simple, and directly names the variable the argument sets.
 
+### Don't create code that hangs references
+
+This is part of the larger issue of hard deletes, read this file for more info: [Guide to Harddels](HARDDEL_GUIDE.md))
+
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
 
@@ -777,6 +781,13 @@ Isn't that confusing?
 
 There is also an undocumented keyword called `static` that has the same behaviour as global but more correctly describes BYOND's behaviour. Therefore, we always use static instead of global where we need it, as it reduces suprise when reading BYOND code.
 
+### Byond Hellspawn 
+
+Put stuff that shouldn’t work but does, or should work but doesn’t here so we don’t forget about it.
+#### Icon hell
+
+The ‘transparent’ icon state causes fucked behavior when used on turfs, for reasons unknown and unknowable
+
 ## Pull Request Process
 
 There is no strict process when it comes to merging pull requests. Pull requests will sometimes take a while before they are looked at by a maintainer; the bigger the change, the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be courteous and respectful. Here are some helpful ways to make it easier for you and for the maintainers when making a pull request.
@@ -821,3 +832,5 @@ This repository uses `LF` line endings for all code as specified in the **.gitat
 Unless overridden or a non standard git binary is used the line ending settings should be applied to your clone automatically.
 
 Note: VSC requires an [extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) to take advantage of editorconfig.
+
+Github actions that require additional configuration are disabled on the repository until ACTION_ENABLER secret is created with non-empty value.

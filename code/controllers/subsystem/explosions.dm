@@ -414,11 +414,11 @@ SUBSYSTEM_DEF(explosions)
 /// The probability that a distant explosion SFX will be a far explosion sound rather than an echo. (0-100)
 #define FAR_SOUND_PROB 75
 /// The upper limit on screenshake amplitude for nearby explosions.
-#define NEAR_SHAKE_CAP 10
+#define NEAR_SHAKE_CAP 5
 /// The upper limit on screenshake amplifude for distant explosions.
-#define FAR_SHAKE_CAP 2.5
+#define FAR_SHAKE_CAP 1.5
 /// The duration of the screenshake for nearby explosions.
-#define NEAR_SHAKE_DURATION (2.5 SECONDS)
+#define NEAR_SHAKE_DURATION (1.5 SECONDS)
 /// The duration of the screenshake for distant explosions.
 #define FAR_SHAKE_DURATION (1 SECONDS)
 /// The lower limit for the randomly selected hull creaking frequency.
@@ -458,9 +458,9 @@ SUBSYSTEM_DEF(explosions)
 			continue
 
 		var/distance = get_dist(epicenter, listener_turf)
-		var/base_shake_amount
-		if(near_distance > distance)
-			base_shake_amount = sqrt((near_distance - distance) / 10)
+		if(epicenter == listener_turf)
+			distance = 0
+		var/base_shake_amount = sqrt(near_distance / (distance + 1))
 
 		if(distance <= round(near_distance + world.view - 2, 1)) // If you are close enough to see the effects of the explosion first-hand (ignoring walls)
 			listener.playsound_local(epicenter, null, 100, TRUE, frequency, S = near_sound)
@@ -477,16 +477,14 @@ SUBSYSTEM_DEF(explosions)
 				listener.playsound_local(epicenter, null, far_volume, TRUE, frequency, S = echo_sound, distance_multiplier = 0)
 
 			if(base_shake_amount || quake_factor)
-				if(!base_shake_amount) // Devastating explosions rock the station and ground
-					base_shake_amount = quake_factor * 3
-				shake_camera(listener, FAR_SHAKE_DURATION, clamp(base_shake_amount / 4, 0, FAR_SHAKE_CAP))
+				base_shake_amount = max(base_shake_amount, quake_factor * 3, 0) // Devastating explosions rock the station and ground
+				shake_camera(listener, FAR_SHAKE_DURATION, min(base_shake_amount, FAR_SHAKE_CAP))
 
 		else if(!isspaceturf(listener_turf) && echo_factor) // Big enough explosions echo through the hull.
 			var/echo_volume
 			if(quake_factor)
-				base_shake_amount = quake_factor
 				echo_volume = 60
-				shake_camera(listener, FAR_SHAKE_DURATION, clamp(base_shake_amount / 4, 0, FAR_SHAKE_CAP))
+				shake_camera(listener, FAR_SHAKE_DURATION, clamp(quake_factor / 4, 0, FAR_SHAKE_CAP))
 			else
 				echo_volume = 40
 			listener.playsound_local(epicenter, null, echo_volume, TRUE, frequency, S = echo_sound, distance_multiplier = 0)

@@ -97,29 +97,17 @@
 	return
 
 /proc/reopen_roundstart_suicide_roles()
-	var/list/valid_positions = list()
-	valid_positions += GLOB.engineering_positions
-	valid_positions += GLOB.medical_positions
-	valid_positions += GLOB.science_positions
-	valid_positions += GLOB.supply_positions
-	valid_positions += GLOB.service_positions
-	valid_positions += GLOB.security_positions
-	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_positions))
-		valid_positions += GLOB.command_positions //add any remaining command positions
-	else
-		valid_positions -= GLOB.command_positions //remove all command positions that were added from their respective department positions lists.
-
+	var/include_command = CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_positions)
 	var/list/reopened_jobs = list()
-	for(var/X in GLOB.suicided_mob_list)
-		if(!isliving(X))
+
+	for(var/mob/living/quitter in GLOB.suicided_mob_list)
+		var/datum/job/job = SSjob.GetJob(quitter.job)
+		if(!job || !(job.job_flags & JOB_REOPEN_ON_ROUNDSTART_LOSS))
 			continue
-		var/mob/living/L = X
-		if(L.job in valid_positions)
-			var/datum/job/J = SSjob.GetJob(L.job)
-			if(!J)
-				continue
-			J.current_positions = max(J.current_positions-1, 0)
-			reopened_jobs += L.job
+		if(!include_command && job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+			continue
+		job.current_positions = max(job.current_positions - 1, 0)
+		reopened_jobs += quitter.job
 
 	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_report))
 		if(reopened_jobs.len)
@@ -147,7 +135,7 @@
 //Reports player logouts//
 //////////////////////////
 /proc/display_roundstart_logout_report()
-	var/list/msg = list("<span class='boldnotice'>Roundstart logout report</span>\n\n")
+	var/list/msg = list("[span_boldnotice("Roundstart logout report")]\n\n")
 	for(var/i in GLOB.mob_living_list)
 		var/mob/living/L = i
 		var/mob/living/carbon/C = L
@@ -165,7 +153,7 @@
 				failed = TRUE //AFK client
 			if(!failed && L.stat)
 				if(L.suiciding) //Suicider
-					msg += "<b>[L.name]</b> ([L.key]), the [L.job] (<span class='boldannounce'>Suicide</span>)\n"
+					msg += "<b>[L.name]</b> ([L.key]), the [L.job] ([span_boldannounce("Suicide")])\n"
 					failed = TRUE //Disconnected client
 				if(!failed && (L.stat == UNCONSCIOUS || L.stat == HARD_CRIT))
 					msg += "<b>[L.name]</b> ([L.key]), the [L.job] (Dying)\n"
@@ -179,7 +167,7 @@
 			if(D.mind && D.mind.current == L)
 				if(L.stat == DEAD)
 					if(L.suiciding) //Suicider
-						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='boldannounce'>Suicide</span>)\n"
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] ([span_boldannounce("Suicide")])\n"
 						continue //Disconnected client
 					else
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (Dead)\n"
@@ -188,7 +176,7 @@
 					if(D.can_reenter_corpse)
 						continue //Adminghost, or cult/wizard ghost
 					else
-						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='boldannounce'>Ghosted</span>)\n"
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] ([span_boldannounce("Ghosted")])\n"
 						continue //Ghosted while alive
 
 

@@ -75,6 +75,14 @@
 #define COLOR_DARK_BROWN "#997C4F"
 #define COLOR_ORANGE_BROWN "#a9734f"
 
+//Color defines used by the soapstone (based on readability against grey tiles)
+#define COLOR_SOAPSTONE_PLASTIC "#a19d94"
+#define COLOR_SOAPSTONE_IRON "#b2b2b2"
+#define COLOR_SOAPSTONE_BRONZE "#FE8001"
+#define COLOR_SOAPSTONE_SILVER "#FFFFFF"
+#define COLOR_SOAPSTONE_GOLD "#FFD900"
+#define COLOR_SOAPSTONE_DIAMOND "#00ffee"
+
 #define COLOR_GREEN_GRAY       "#99BB76"
 #define COLOR_RED_GRAY         "#B4696A"
 #define COLOR_PALE_BLUE_GRAY   "#98C5DF"
@@ -135,7 +143,7 @@
 #define LIGHT_COLOR_CYAN       "#7DE1E1"
 /// Electric cyan rgb(0, 255, 255)
 #define LIGHT_COLOR_ELECTRIC_CYAN "#00FFFF"
-/// More-saturated cyan. rgb(16, 21, 22)
+/// More-saturated cyan. rgb(64, 206, 255)
 #define LIGHT_COLOR_LIGHT_CYAN "#40CEFF"
 /// Saturated blue. rgb(51, 117, 248)
 #define LIGHT_COLOR_DARK_BLUE  "#6496FA"

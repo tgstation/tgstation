@@ -47,7 +47,7 @@
 /**
  * Called on a normal destruction, so we have a cool explosion and toss whatever's attached
  */
-/obj/structure/training_machine/obj_destruction(damage_flag)
+/obj/structure/training_machine/atom_destruction(damage_flag)
 	remove_attached_item(throwing = TRUE)
 	explosion(src, light_impact_range = 1, flash_range = 2)
 	return ..()
@@ -83,7 +83,7 @@
 	if(.)
 		return
 	if (moving && obj_flags & EMAGGED)
-		visible_message("<span class='warning'>The [src]'s control panel fizzles slightly.</span>")
+		visible_message(span_warning("The [src]'s control panel fizzles slightly."))
 		return
 	switch(action)
 		if("toggle")
@@ -113,10 +113,10 @@
 	if (!istype(target, /obj/item/training_toolbox) && !istype(target, /obj/item/target))
 		return ..()
 	if (obj_flags & EMAGGED)
-		to_chat(user, "<span class='warning'>The toolbox is somehow stuck on! It won't budge!</span>")
+		to_chat(user, span_warning("The toolbox is somehow stuck on! It won't budge!"))
 		return
 	attach_item(target)
-	to_chat(user, "<span class='notice'>You attach \the [attached_item] to the training device.</span>")
+	to_chat(user, span_notice("You attach \the [attached_item] to the training device."))
 	playsound(src, "rustle", 50, TRUE)
 
 /**
@@ -183,9 +183,9 @@
 	if (!attached_item)
 		return
 	if (obj_flags & EMAGGED)
-		to_chat(user, "<span class='warning'>The toolbox is somehow stuck on! It won't budge!</span>")
+		to_chat(user, span_warning("The toolbox is somehow stuck on! It won't budge!"))
 		return
-	to_chat(user, "<span class='notice'>You remove \the [attached_item] from the training device.</span>")
+	to_chat(user, span_notice("You remove \the [attached_item] from the training device."))
 	remove_attached_item(user)
 	playsound(src, "rustle", 50, TRUE)
 
@@ -293,9 +293,9 @@
  */
 /obj/structure/training_machine/proc/handle_density()
 	if(length(buckled_mobs) || attached_item)
-		density = TRUE
+		set_density(TRUE)
 	else
-		density = FALSE
+		set_density(FALSE)
 
 /obj/structure/training_machine/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	. = ..()
@@ -320,7 +320,7 @@
 	obj_flags |= EMAGGED
 	remove_attached_item(throwing = TRUE) //Toss out the old attached item!
 	attach_item(new /obj/item/storage/toolbox/syndicate(src))
-	to_chat(user, "<span class='warning'>You override the training machine's safety protocols, and activate its realistic combat feature. A toolbox pops out of a slot on the top.</span>")
+	to_chat(user, span_warning("You override the training machine's safety protocols, and activate its realistic combat feature. A toolbox pops out of a slot on the top."))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	add_overlay("evil_trainer")
 
@@ -328,12 +328,12 @@
 	. = ..()
 	var/has_buckled_mob = has_buckled_mobs()
 	if(has_buckled_mob)
-		. += "<span class='notice'><b>Alt-Click to unbuckle \the [buckled_mobs[1]]</b></span>"
+		. += span_notice("<b>Alt-Click to unbuckle \the [buckled_mobs[1]]</b>")
 	if (obj_flags & EMAGGED)
-		. += "<span class='warning'>It has a dangerous-looking toolbox attached to it, and the control panel is smoking sightly...</span>"
+		. += span_warning("It has a dangerous-looking toolbox attached to it, and the control panel is smoking sightly...")
 	else if (!has_buckled_mob && attached_item) //Can't removed the syndicate toolbox!
-		. += "<span class='notice'><b>Alt-Click to remove \the [attached_item]</b></span>"
-	. += "<span class='notice'><b>Click to open control interface.</b></span>"
+		. += span_notice("<b>Alt-Click to remove \the [attached_item]</b>")
+	. += span_notice("<b>Click to open control interface.</b>")
 
 /**
  * Device that simply counts the number of times you've hit a mob or target with. Looks like a toolbox but isn't.
@@ -396,19 +396,21 @@
 
 /obj/item/training_toolbox/AltClick(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>You push the 'Lap' button on the toolbox's display.</span>")
+	if(!can_interact(user))
+		return
+	to_chat(user, span_notice("You push the 'Lap' button on the toolbox's display."))
 	lap_hits = initial(lap_hits)
 
 /obj/item/training_toolbox/examine(mob/user)
 	. = ..()
 	if(!in_range(src, user) && !isobserver(user))
-		. += "<span class='notice'>You can see a display on the back. You'll need to get closer to read it, though.</span>"
+		. += span_notice("You can see a display on the back. You'll need to get closer to read it, though.")
 		return
-	. += "<span class='notice'>A display on the back reads:</span>"
-	. += "<span class='notice'>Total Hits: <b>[total_hits]</b></span>"
+	. += span_notice("A display on the back reads:")
+	. += span_notice("Total Hits: <b>[total_hits]</b>")
 	if (lap_hits != total_hits)
-		. += "<span class='notice'>Current Lap: <b>[lap_hits]</b></span>"
-	. += "<span class='notice'><b>Alt-Click to 'Lap' the hit counter.</b></span>"
+		. += span_notice("Current Lap: <b>[lap_hits]</b>")
+	. += span_notice("<b>Alt-Click to 'Lap' the hit counter.</b>")
 
 #undef MIN_RANGE
 #undef MIN_SPEED

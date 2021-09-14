@@ -2,14 +2,15 @@
 	title = "Security Officer"
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Head of Security")
-	faction = "Station"
+	faction = FACTION_STATION
 	total_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
 	spawn_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
 	supervisors = "the head of security, and the head of your assigned department (if applicable)"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
 	exp_requirements = 300
-	exp_type = EXP_TYPE_CREW
+	exp_required_type = EXP_TYPE_CREW
+	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/security
 	plasmaman_outfit = /datum/outfit/plasmaman/security
@@ -22,7 +23,9 @@
 
 	display_order = JOB_DISPLAY_ORDER_SECURITY_OFFICER
 	bounty_types = CIV_JOB_SEC
-	departments = DEPARTMENT_SECURITY
+	departments_list = list(
+		/datum/job_department/security,
+		)
 
 	family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law, /obj/item/clothing/head/beret/sec)
 
@@ -31,8 +34,11 @@
 		/obj/item/food/donut/matcha = 10,
 		/obj/item/food/donut/blumpkin = 5,
 		/obj/item/clothing/mask/whistle = 5,
-		/obj/item/melee/baton/boomerang/loaded = 1
+		/obj/item/melee/baton/security/boomerang/loaded = 1
 	)
+
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+
 
 GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
@@ -44,28 +50,34 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
  */
 GLOBAL_LIST_EMPTY(security_officer_distribution)
 
-/datum/job/security_officer/after_spawn(mob/living/carbon/human/H, mob/M, latejoin = FALSE)
+
+/datum/job/security_officer/after_roundstart_spawn(mob/living/spawning, client/player_client)
 	. = ..()
+	if(ishuman(spawning))
+		setup_department(spawning, player_client)
 
-	var/department
 
-	var/prefered_department = M.client?.prefs?.prefered_security_department
-	if (!isnull(prefered_department))
-		department = get_my_department(H, prefered_department)
+/datum/job/security_officer/after_latejoin_spawn(mob/living/spawning)
+	. = ..()
+	if(ishuman(spawning))
+		var/department = setup_department(spawning, spawning.client)
+		if(department)
+			announce_latejoin(spawning, department, GLOB.security_officer_distribution)
 
-		if (latejoin)
-			announce_latejoin(H, department, GLOB.security_officer_distribution)
 
-		// In the event we're a latejoin, or otherwise aren't in the round-start distributions.
-		// This is outside the latejoin check because this should theoretically still run if
-		// a player isn't in the distributions, but isn't a late join.
-		GLOB.security_officer_distribution[REF(H)] = department
+/// Returns the department this mob was assigned to, if any.
+/datum/job/security_officer/proc/setup_department(mob/living/carbon/human/spawning, client/player_client)
+	var/department = player_client?.prefs?.prefered_security_department
+	if (!isnull(department))
+		department = get_my_department(spawning, department)
+
+		// This should theoretically still run if a player isn't in the distributions, but isn't a late join.
+		GLOB.security_officer_distribution[REF(spawning)] = department
 
 	var/ears = null
 	var/accessory = null
 	var/list/dep_trim = null
 	var/destination = null
-	var/spawn_point = pick(LAZYACCESS(GLOB.department_security_spawns, department))
 
 	switch(department)
 		if(SEC_DEPT_SUPPLY)
@@ -90,40 +102,42 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 			accessory = /obj/item/clothing/accessory/armband/science
 
 	if(accessory)
-		var/obj/item/clothing/under/U = H.w_uniform
-		U.attach_accessory(new accessory)
+		var/obj/item/clothing/under/worn_under = spawning.w_uniform
+		worn_under.attach_accessory(new accessory)
+
 	if(ears)
-		if(H.ears)
-			qdel(H.ears)
-		H.equip_to_slot_or_del(new ears(H),ITEM_SLOT_EARS)
+		if(spawning.ears)
+			qdel(spawning.ears)
+		spawning.equip_to_slot_or_del(new ears(spawning),ITEM_SLOT_EARS)
 
 	// If there's a departmental sec trim to apply to the card, overwrite.
 	if(dep_trim)
-		var/obj/item/card/id/worn_id = H.wear_id
+		var/obj/item/card/id/worn_id = spawning.wear_id
 		SSid_access.apply_trim_to_card(worn_id, dep_trim)
-		H.sec_hud_set_ID()
+		spawning.sec_hud_set_ID()
 
-	var/teleport = 0
-	if(!CONFIG_GET(flag/sec_start_brig))
-		if(destination || spawn_point)
-			teleport = 1
-	if(teleport)
-		var/turf/T
+	var/spawn_point = pick(LAZYACCESS(GLOB.department_security_spawns, department))
+
+	if(!CONFIG_GET(flag/sec_start_brig) && (destination || spawn_point))
 		if(spawn_point)
-			T = get_turf(spawn_point)
-			H.Move(T)
+			spawning.Move(get_turf(spawn_point))
 		else
 			var/list/possible_turfs = get_area_turfs(destination)
 			while (length(possible_turfs))
-				var/I = rand(1, possible_turfs.len)
-				var/turf/target = possible_turfs[I]
-				if (H.Move(target))
+				var/random_index = rand(1, length(possible_turfs))
+				var/turf/target = possible_turfs[random_index]
+				if (spawning.Move(target))
 					break
-				possible_turfs.Cut(I,I+1)
-	if(department)
-		to_chat(M, "<b>You have been assigned to [department]!</b>")
-	else
-		to_chat(M, "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
+				possible_turfs.Cut(random_index, random_index + 1)
+
+	if(player_client)
+		if(department)
+			to_chat(player_client, "<b>You have been assigned to [department]!</b>")
+		else
+			to_chat(player_client, "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
+
+	return department
+
 
 /datum/job/security_officer/proc/announce_latejoin(
 	mob/officer,
@@ -190,7 +204,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	l_pocket = /obj/item/restraints/handcuffs
 	r_pocket = /obj/item/assembly/flash/handheld
 	suit_store = /obj/item/gun/energy/disabler
-	backpack_contents = list(/obj/item/melee/baton/loaded=1)
+	backpack_contents = list(/obj/item/melee/baton/security/loaded=1)
 
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel/sec

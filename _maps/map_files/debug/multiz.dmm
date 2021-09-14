@@ -47,7 +47,7 @@
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "am" = (
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "an" = (
@@ -1079,7 +1079,7 @@
 	dir = 8;
 	icon_state = "connector_map-2"
 	},
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/plating,
 /area/construction)
 "gW" = (

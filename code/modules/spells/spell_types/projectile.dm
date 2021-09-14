@@ -36,7 +36,7 @@
 	trail.icon = trail_icon
 	trail.icon_state = trail_icon_state
 	//might be changed to temp overlay
-	trail.density = FALSE
+	trail.set_density(FALSE)
 	trail.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	QDEL_IN(trail, trail_lifespan)
 

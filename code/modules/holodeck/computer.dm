@@ -203,7 +203,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 
 	spawning_simulation = TRUE
 	active = (map_id != offline_program)
-	use_power = active + IDLE_POWER_USE
+	update_use_power(active + IDLE_POWER_USE)
 	program = map_id
 
 	//clear the items from the previous program
@@ -253,8 +253,12 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 			effects += holo_effect
 			spawned -= holo_effect
 			var/atom/holo_effect_product = holo_effect.activate(src)//change name
-			if(istype(holo_effect_product) || islist(holo_effect_product))
+			if(istype(holo_effect_product))
 				spawned += holo_effect_product // we want mobs or objects spawned via holoeffects to be tracked as objects
+				RegisterSignal(holo_effect_product, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
+			if(islist(holo_effect_product))
+				for(var/atom/atom_product as anything in holo_effect_product)
+					RegisterSignal(atom_product, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
 			continue
 
 		if(isobj(holo_atom))
@@ -287,7 +291,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 		atom_contents.forceMove(target_turf)
 
 	if(!silent)
-		visible_message("<span class='notice'>[holo_atom] fades away!</span>")
+		visible_message(span_notice("[holo_atom] fades away!"))
 
 	qdel(holo_atom)
 
@@ -322,7 +326,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 				derez(item)
 	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
 		holo_effect.tick()
-	active_power_usage = 50 + spawned.len * 3 + effects.len * 5
+	update_mode_power_usage(ACTIVE_POWER_USE, 50 + spawned.len * 3 + effects.len * 5)
 
 /obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
 	if(active == toggleOn)
@@ -373,7 +377,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 		return
 	playsound(src, "sparks", 75, TRUE)
 	obj_flags |= EMAGGED
-	to_chat(user, "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>")
+	to_chat(user, span_warning("You vastly increase projector power and override the safety and security protocols."))
 	say("Warning. Automatic shutoff and derezzing protocols have been corrupted. Please call Nanotrasen maintenance and do not use the simulator.")
 	log_game("[key_name(user)] emagged the Holodeck Control Console")
 	nerf(!(obj_flags & EMAGGED),FALSE)

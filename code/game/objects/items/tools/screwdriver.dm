@@ -8,7 +8,7 @@
 	belt_icon_state = "screwdriver"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	flags_1 = CONDUCT_1
+	flags_1 = CONDUCT_1 | IS_PLAYER_COLORABLE_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	w_class = WEIGHT_CLASS_TINY
@@ -44,7 +44,7 @@
 	)
 
 /obj/item/screwdriver/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return(BRUTELOSS)
 
 /obj/item/screwdriver/Initialize()
@@ -72,7 +72,8 @@
 /obj/item/screwdriver/power
 	name = "hand drill"
 	desc = "A simple powered hand drill."
-	icon_state = "drill_screw"
+	icon_state = "drill"
+	belt_icon_state = null
 	inhand_icon_state = "drill"
 	worn_icon_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -89,8 +90,33 @@
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.7
 	random_color = FALSE
+	greyscale_config = null
+	greyscale_config_belt = null
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
+
+/obj/item/screwdriver/power/Initialize()
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		force_on = force, \
+		throwforce_on = throwforce, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+
+/*
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
+ *
+ * Toggles between crowbar and wirecutters and gives feedback to the user.
+ */
+/obj/item/screwdriver/power/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	tool_behaviour = (active ? TOOL_WRENCH : TOOL_SCREWDRIVER)
+	balloon_alert(user, "attached [active ? "bolt bit" : "screw bit"]")
+	playsound(user ? user : src, 'sound/items/change_drill.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/screwdriver/power/examine()
 	. = ..()
@@ -98,22 +124,11 @@
 
 /obj/item/screwdriver/power/suicide_act(mob/user)
 	if(tool_behaviour == TOOL_SCREWDRIVER)
-		user.visible_message("<span class='suicide'>[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(span_suicide("[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!"))
 	else
-		user.visible_message("<span class='suicide'>[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(span_suicide("[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/items/drill_use.ogg', 50, TRUE, -1)
 	return(BRUTELOSS)
-
-/obj/item/screwdriver/power/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_SCREWDRIVER)
-		tool_behaviour = TOOL_WRENCH
-		to_chat(user, "<span class='notice'>You attach the bolt bit to [src].</span>")
-		icon_state = "drill_bolt"
-	else
-		tool_behaviour = TOOL_SCREWDRIVER
-		to_chat(user, "<span class='notice'>You attach the screw bit to [src].</span>")
-		icon_state = "drill_screw"
 
 /obj/item/screwdriver/cyborg
 	name = "automated screwdriver"

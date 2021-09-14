@@ -55,6 +55,7 @@ There are several things that need to be remembered:
 //used when putting/removing clothes that hide certain mutant body parts to just update those and not update the whole body.
 /mob/living/carbon/human/proc/update_mutant_bodyparts()
 	dna.species.handle_mutant_bodyparts(src)
+	update_body_parts() // basically a better and cooler handle_mutant_bodyparts (at least until handle_mutant_bodyparts is annihilated)
 
 
 /mob/living/carbon/human/update_body()
@@ -420,16 +421,20 @@ There are several things that need to be remembered:
 	remove_overlay(LEGCUFF_LAYER)
 	clear_alert("legcuffed")
 	if(legcuffed)
-		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
+		var/mutable_appearance/legcuff_overlay = mutable_appearance('icons/mob/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
+		if(legcuffed.blocks_emissive)
+			legcuff_overlay.overlays += emissive_blocker(legcuff_overlay.icon, legcuff_overlay.icon_state, alpha = legcuff_overlay.alpha)
+
+		overlays_standing[LEGCUFF_LAYER] = legcuff_overlay
 		apply_overlay(LEGCUFF_LAYER)
 		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
-/proc/wear_female_version(t_color, icon, layer, type)
-	var/index = t_color
+/proc/wear_female_version(t_color, icon, layer, type, greyscale_colors)
+	var/index = "[t_color]-[greyscale_colors]"
 	var/icon/female_clothing_icon = GLOB.female_clothing_icons[index]
 	if(!female_clothing_icon) //Create standing/laying icons if they don't exist
-		generate_female_clothing(index,t_color,icon,type)
-	return mutable_appearance(GLOB.female_clothing_icons[t_color], layer = -layer)
+		generate_female_clothing(index, t_color, icon, type)
+	return mutable_appearance(GLOB.female_clothing_icons[index], layer = -layer)
 
 /mob/living/carbon/human/proc/get_overlays_copy(list/unwantedLayers)
 	var/list/out = new
@@ -516,13 +521,13 @@ generate/load female uniform sprites matching all previously decided variables
 
 	var/mutable_appearance/standing
 	if(femaleuniform)
-		standing = wear_female_version(t_state,file2use,layer2use,femaleuniform) //should layer2use be in sync with the adjusted value below? needs testing - shiz
+		standing = wear_female_version(t_state, file2use, layer2use, femaleuniform, greyscale_colors) //should layer2use be in sync with the adjusted value below? needs testing - shiz
 	if(!standing)
 		standing = mutable_appearance(file2use, t_state, -layer2use)
 
 	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.
-	var/list/worn_overlays = worn_overlays(isinhands, file2use)
+	var/list/worn_overlays = worn_overlays(standing, isinhands, file2use)
 	if(worn_overlays?.len)
 		standing.overlays.Add(worn_overlays)
 
@@ -582,6 +587,12 @@ generate/load female uniform sprites matching all previously decided variables
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		. += "-[BP.body_zone]"
+
+		if(!HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
+			for(var/obj/item/organ/external/organ as anything in BP.external_organs)
+				if(organ.can_draw_on_bodypart(src)) //make sure we're drawn before generating a key
+					. += "([organ.cache_key])"
+
 		if(BP.status == BODYPART_ORGANIC)
 			. += "-organic"
 		else
@@ -595,6 +606,9 @@ generate/load female uniform sprites matching all previously decided variables
 
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "-husk"
+
+	if(HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
+		. += "-invisible"
 
 /mob/living/carbon/human/load_limb_from_cache()
 	..()

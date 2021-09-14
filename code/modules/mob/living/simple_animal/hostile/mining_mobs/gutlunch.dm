@@ -10,7 +10,7 @@
 	speak_emote = list("warbles", "quavers")
 	emote_hear = list("trills.")
 	emote_see = list("sniffs.", "burps.")
-	weather_immunities = list("lava","ash")
+	weather_immunities = list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE)
 	faction = list("mining", "ashwalker")
 	density = FALSE
 	speak_chance = 1
@@ -51,7 +51,7 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/CanAttack(atom/the_target) // Gutlunch-specific version of CanAttack to handle stupid stat_exclusive = true crap so we don't have to do it for literally every single simple_animal/hostile except the two that spawn in lavaland
-	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
+	if(isturf(the_target) || !the_target) // bail out on invalids
 		return FALSE
 
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
@@ -126,5 +126,5 @@
 	L.faction = faction
 	L.setDir(dir)
 	L.Stun(20, ignore_canstun = TRUE)
-	visible_message("<span class='notice'>[src] grows up into [L].</span>")
+	visible_message(span_notice("[src] grows up into [L]."))
 	qdel(src)

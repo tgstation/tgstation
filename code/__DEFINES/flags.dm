@@ -18,47 +18,48 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 //FLAGS BITMASK
 // scroll down before changing the numbers on these
 
-/// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
-#define HEAR_1 (1<<0)
 /// Is this object currently processing in the atmos object list?
-#define ATMOS_IS_PROCESSING_1 (1<<1)
+#define ATMOS_IS_PROCESSING_1 (1<<0)
 /// conducts electricity (metal etc.)
-#define CONDUCT_1 (1<<2)
+#define CONDUCT_1 (1<<1)
 /// For machines and structures that should not break into parts, eg, holodeck stuff
-#define NODECONSTRUCT_1 (1<<3)
+#define NODECONSTRUCT_1 (1<<2)
 /// atom queued to SSoverlay
-#define OVERLAY_QUEUED_1 (1<<4)
+#define OVERLAY_QUEUED_1 (1<<3)
 /// item has priority to check when entering or leaving
-#define ON_BORDER_1 (1<<5)
+#define ON_BORDER_1 (1<<4)
 ///Whether or not this atom shows screentips when hovered over
-#define NO_SCREENTIPS_1 (1 << 6)
+#define NO_SCREENTIPS_1 (1<<5)
 /// Prevent clicking things below it on the same turf eg. doors/ fulltile windows
-#define PREVENT_CLICK_UNDER_1 (1<<7)
-#define HOLOGRAM_1 (1<<8)
+#define PREVENT_CLICK_UNDER_1 (1<<6)
+///specifies that this atom is a hologram that isnt real
+#define HOLOGRAM_1 (1<<7)
 /// Prevents mobs from getting chainshocked by teslas and the supermatter
-#define SHOCKED_1 (1<<9)
+#define SHOCKED_1 (1<<8)
 ///Whether /atom/Initialize() has already run for the object
-#define INITIALIZED_1 (1<<10)
+#define INITIALIZED_1 (1<<9)
 /// was this spawned by an admin? used for stat tracking stuff.
-#define ADMIN_SPAWNED_1     (1<<11)
+#define ADMIN_SPAWNED_1 (1<<10)
 /// should not get harmed if this gets caught by an explosion?
-#define PREVENT_CONTENTS_EXPLOSION_1 (1<<12)
+#define PREVENT_CONTENTS_EXPLOSION_1 (1<<11)
 /// should the contents of this atom be acted upon
-#define RAD_PROTECT_CONTENTS_1 (1 << 13)
+#define RAD_PROTECT_CONTENTS_1 (1<<12)
 /// should this object be allowed to be contaminated
-#define RAD_NO_CONTAMINATE_1 (1 << 14)
+#define RAD_NO_CONTAMINATE_1 (1<<13)
 /// Should this object be paintable with very dark colors?
-#define ALLOW_DARK_PAINTS_1 (1 << 15)
+#define ALLOW_DARK_PAINTS_1 (1<<14)
 /// Should this object be unpaintable?
-#define UNPAINTABLE_1 (1 << 16)
+#define UNPAINTABLE_1 (1<<15)
 /// Is the thing currently spinning?
-#define IS_SPINNING_1 (1 << 17)
-#define IS_ONTOP_1 (1 << 18)
-#define SUPERMATTER_IGNORES_1 (1 << 19)
+#define IS_SPINNING_1 (1<<16)
+#define IS_ONTOP_1 (1<<17)
+#define SUPERMATTER_IGNORES_1 (1<<18)
 /// If a turf can be made dirty at roundstart. This is also used in areas.
-#define CAN_BE_DIRTY_1 (1<<20)
+#define CAN_BE_DIRTY_1 (1<<19)
 /// Should we use the initial icon for display? Mostly used by overlay only objects
-#define HTML_USE_INITAL_ICON_1 (1<<21)
+#define HTML_USE_INITAL_ICON_1 (1<<20)
+/// Can players recolor this in-game via vendors (and maybe more if support is added)?
+#define IS_PLAYER_COLORABLE_1 (1<<21)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
@@ -71,6 +72,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define UPDATE_OVERLAYS (1<<3)
 /// Update the atom's greyscaling
 #define UPDATE_GREYSCALE (1<<4)
+/// Update the atom's smoothing. (More accurately, queue it for an update)
+#define UPDATE_SMOOTHING (1<<5)
 /// Update the atom's icon
 #define UPDATE_ICON (UPDATE_ICON_STATE|UPDATE_OVERLAYS)
 
@@ -117,7 +120,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_ALERTS (1<<12)
 /// If blood cultists can draw runes or build structures on this AREA.
 #define CULT_PERMITTED (1<<13)
-
+///Whther this area is iluminated by starlight
+#define AREA_USES_STARLIGHT (1<<14)
+/// If engravings are persistent in this area
+#define PERSISTENT_ENGRAVINGS (1<<15)
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
 	the atom/checkpass() proc uses them (tables will call movable atom checkpass(PASSTABLE) for example)

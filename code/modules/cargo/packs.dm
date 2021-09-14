@@ -364,7 +364,7 @@
 					/obj/item/clothing/head/beret/sec/navywarden,
 					/obj/item/clothing/under/rank/security/head_of_security/formal,
 					/obj/item/clothing/suit/security/hos,
-					/obj/item/clothing/head/beret/sec/navyhos)
+					/obj/item/clothing/head/hos/beret/navyhos)
 	crate_name = "security clothing crate"
 
 /datum/supply_pack/security/stingpack
@@ -418,9 +418,9 @@
 	desc = "Arm the Civil Protection Forces with three stun batons. Batteries included. Requires Security access to open."
 	cost = CARGO_CRATE_VALUE * 2
 	access_view = ACCESS_SECURITY
-	contains = list(/obj/item/melee/baton/loaded,
-					/obj/item/melee/baton/loaded,
-					/obj/item/melee/baton/loaded)
+	contains = list(/obj/item/melee/baton/security/loaded,
+					/obj/item/melee/baton/security/loaded,
+					/obj/item/melee/baton/security/loaded)
 	crate_name = "stun baton crate"
 
 /datum/supply_pack/security/wall_flash
@@ -643,17 +643,17 @@
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/gun/ballistic/automatic/wt550,
 					/obj/item/gun/ballistic/automatic/wt550)
-	crate_name = "auto rifle crate"
+	crate_name = "wt-550 auto rifle crate"
 
 /datum/supply_pack/security/armory/wt550ammo
-	name = "WT-550 Auto Rifle Ammo Crate"
+	name = "WT-550 Standard Ammo Crate"
 	desc = "Contains four 20-round magazine for the WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
 	cost = CARGO_CRATE_VALUE * 3.5
 	contains = list(/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9)
-
+	crate_name = "wt-550 standard ammo crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Engineering /////////////////////////////////////
@@ -995,10 +995,10 @@
 					/obj/item/hfr_box/corner,
 					/obj/item/hfr_box/corner,
 					/obj/item/hfr_box/corner,
-					/obj/item/hfr_box/body,
-					/obj/item/hfr_box/body,
-					/obj/item/hfr_box/body,
-					/obj/item/hfr_box/body,
+					/obj/item/hfr_box/body/fuel_input,
+					/obj/item/hfr_box/body/moderator_input,
+					/obj/item/hfr_box/body/waste_output,
+					/obj/item/hfr_box/body/interface,
 					/obj/item/hfr_box/core)
 	crate_name = "HFR crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
@@ -1165,7 +1165,7 @@
 
 /datum/supply_pack/medical/bloodpacks
 	name = "Blood Pack Variety Crate"
-	desc = "Contains eight different blood packs for reintroducing blood to patients."
+	desc = "Contains ten different blood packs for reintroducing blood to patients."
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/reagent_containers/blood,
 					/obj/item/reagent_containers/blood,
@@ -1319,10 +1319,10 @@
 
 /datum/supply_pack/science/plasma
 	name = "Plasma Assembly Crate"
-	desc = "Everything you need to burn something to the ground, this contains three plasma assembly sets. Each set contains a plasma tank, igniter, proximity sensor, and timer! Warranty void if exposed to high temperatures. Requires Toxins access to open."
+	desc = "Everything you need to burn something to the ground, this contains three plasma assembly sets. Each set contains a plasma tank, igniter, proximity sensor, and timer! Warranty void if exposed to high temperatures. Requires Ordnance access to open."
 	cost = CARGO_CRATE_VALUE * 2
-	access = ACCESS_TOXINS
-	access_view = ACCESS_TOXINS
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/tank/internals/plasma,
 					/obj/item/tank/internals/plasma,
 					/obj/item/tank/internals/plasma,
@@ -1342,8 +1342,8 @@
 	name = "Raw Flux Anomaly"
 	desc = "The raw core of a flux anomaly, ready to be implosion-compressed into a powerful artifact."
 	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_TOXINS
-	access_view = ACCESS_TOXINS
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/flux)
 	crate_name = "raw flux anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
@@ -1352,8 +1352,8 @@
 	name = "Raw Gravitational Anomaly"
 	desc = "The raw core of a gravitational anomaly, ready to be implosion-compressed into a powerful artifact."
 	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_TOXINS
-	access_view = ACCESS_TOXINS
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/grav)
 	crate_name = "raw pyro anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
@@ -1362,8 +1362,8 @@
 	name = "Raw Vortex Anomaly"
 	desc = "The raw core of a vortex anomaly, ready to be implosion-compressed into a powerful artifact."
 	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_TOXINS
-	access_view = ACCESS_TOXINS
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/vortex)
 	crate_name = "raw vortex anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
@@ -1372,8 +1372,8 @@
 	name = "Raw Bluespace Anomaly"
 	desc = "The raw core of a bluespace anomaly, ready to be implosion-compressed into a powerful artifact."
 	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_TOXINS
-	access_view = ACCESS_TOXINS
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/bluespace)
 	crate_name = "raw bluespace anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
@@ -1382,8 +1382,8 @@
 	name = "Raw Pyro Anomaly"
 	desc = "The raw core of a pyro anomaly, ready to be implosion-compressed into a powerful artifact."
 	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_TOXINS
-	access_view = ACCESS_TOXINS
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/pyro)
 	crate_name = "raw pyro anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
@@ -1546,8 +1546,8 @@
 					/obj/item/reagent_containers/food/drinks/shaker,
 					/obj/item/reagent_containers/food/drinks/bottle/patron,
 					/obj/item/reagent_containers/food/drinks/bottle/goldschlager,
-					/obj/item/reagent_containers/food/drinks/ale,
-					/obj/item/reagent_containers/food/drinks/ale,
+					/obj/item/reagent_containers/food/drinks/bottle/ale,
+					/obj/item/reagent_containers/food/drinks/bottle/ale,
 					/obj/item/storage/cans/sixbeer,
 					/obj/item/storage/cans/sixsoda,
 					/obj/item/flashlight/glowstick,
@@ -1590,6 +1590,40 @@
 					/obj/item/stack/tile/carpet/royalblack/fifty,
 					/obj/item/stack/tile/carpet/royalblack/fifty)
 	crate_name = "exotic carpet crate"
+
+/datum/supply_pack/service/carpet_neon
+	name = "Simple Neon Carpet Crate"
+	desc = "Simple rubbery mats with phosphorescent lining. Contains 120 tiles each of 13 color variants. Limited edition release."
+	cost = CARGO_CRATE_VALUE * 15
+	contains = list(
+		/obj/item/stack/tile/carpet/neon/simple/white/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/white/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/black/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/black/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/red/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/red/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/orange/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/orange/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/yellow/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/yellow/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/lime/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/lime/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/green/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/green/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/teal/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/teal/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/cyan/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/cyan/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/blue/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/blue/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/purple/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/purple/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/violet/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/violet/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/pink/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/pink/sixty,
+	)
+	crate_name = "neon carpet crate"
 
 /datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights"
@@ -2416,6 +2450,21 @@
 					/obj/item/toy/crayon/white,
 					/obj/item/toy/crayon/rainbow)
 	crate_name = "art supply crate"
+	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/misc
+	group = "Miscellaneous Supplies"
+
+/datum/supply_pack/misc/tattoo_kit
+	name = "Tattoo Kit"
+	desc = "A tattoo kit with some extra starting ink."
+	cost = CARGO_CRATE_VALUE * 1.8
+	contains = list(
+		/obj/item/tattoo_kit,
+		/obj/item/toner,
+		/obj/item/toner,
+	)
+	crate_name = "tattoo crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/misc/aquarium_kit

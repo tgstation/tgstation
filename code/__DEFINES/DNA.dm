@@ -6,6 +6,7 @@
 #define ACIDFLESH /datum/mutation/human/acidflesh
 #define ANTENNA /datum/mutation/human/antenna
 #define ANTIGLOWY /datum/mutation/human/glow/anti
+#define AUTONOMY /datum/mutation/human/self_amputation
 #define BADBLINK /datum/mutation/human/badblink
 #define BADSIGHT /datum/mutation/human/nearsight
 #define BIOTECHCOMPAT /datum/mutation/human/biotechcompat
@@ -37,9 +38,9 @@
 #define NERVOUS /datum/mutation/human/nervousness
 #define OLFACTION /datum/mutation/human/olfaction
 #define PARANOIA /datum/mutation/human/paranoia
+#define PIGLATIN /datum/mutation/human/piglatin
 #define RACEMUT /datum/mutation/human/race
 #define RADIOACTIVE /datum/mutation/human/radioactive
-#define AUTONOMY /datum/mutation/human/self_amputation
 #define SHOCKTOUCH /datum/mutation/human/shock
 #define SPACEMUT /datum/mutation/human/space_adaptation
 #define SPASTIC /datum/mutation/human/spastic
@@ -64,6 +65,7 @@
 
 #define UE_CHANGED "ue changed"
 #define UI_CHANGED "ui changed"
+#define UF_CHANGED "uf changed"
 
 #define CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY 204
 
@@ -91,6 +93,23 @@
 #define DNA_HAIRSTYLE_BLOCK 7
 #define DNA_SKIN_TONE_BLOCK 3
 #define DNA_UNI_IDENTITY_BLOCKS 7
+
+#define DNA_FEATURE_BLOCKS 15
+#define DNA_MUTANT_COLOR_BLOCK 1
+#define DNA_ETHEREAL_COLOR_BLOCK 2
+#define DNA_LIZARD_MARKINGS_BLOCK 3
+#define DNA_LIZARD_TAIL_BLOCK 4
+#define DNA_SNOUT_BLOCK 5
+#define DNA_HORNS_BLOCK 6
+#define DNA_FRILLS_BLOCK 7
+#define DNA_SPINES_BLOCK 8
+#define DNA_HUMAN_TAIL_BLOCK 9
+#define DNA_EARS_BLOCK 10
+#define DNA_MOTH_WINGS_BLOCK 11
+#define DNA_MOTH_ANTENNAE_BLOCK 12
+#define DNA_MOTH_MARKINGS_BLOCK 13
+#define DNA_MUSHROOM_CAPS_BLOCK 14
+#define DNA_MONKEY_TAIL_BLOCK 15
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
@@ -156,6 +175,16 @@
 #define ORGAN_SLOT_VOICE "vocal_cords"
 #define ORGAN_SLOT_ZOMBIE "zombie_infection"
 
+/// Organ slot external
+#define ORGAN_SLOT_EXTERNAL_TAIL "tail"
+#define ORGAN_SLOT_EXTERNAL_SPINES "spines"
+#define ORGAN_SLOT_EXTERNAL_SNOUT "snout"
+#define ORGAN_SLOT_EXTERNAL_FRILLS "frills"
+#define ORGAN_SLOT_EXTERNAL_HORNS "horns"
+#define ORGAN_SLOT_EXTERNAL_WINGS "wings"
+#define ORGAN_SLOT_EXTERNAL_ANTENNAE "antennae"
+#define ORGAN_SLOT_EXTERNAL_BODYMARKINGS "bodymarkings"
+
 /// Xenomorph organ slots
 #define ORGAN_SLOT_XENO_ACIDGLAND "acid_gland"
 #define ORGAN_SLOT_XENO_EGGSAC "eggsac"
@@ -212,3 +241,63 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_XENO_ACIDGLAND,
 	ORGAN_SLOT_XENO_NEUROTOXINGLAND,
 	ORGAN_SLOT_XENO_EGGSAC,))
+
+//Defines for Species IDs
+#define SPECIES_HUMAN "human"
+#define SPECIES_FELINE "felinid"
+#define SPECIES_MOTH "moth"
+#define SPECIES_ETHEREAL "ethereal"
+#define SPECIES_PLASMAMAN "plasmaman"
+#define SPECIES_FLY "fly"
+#define SPECIES_MONKEY "monkey"
+#define SPECIES_JELLYPERSON "jelly"
+#define SPECIES_SLIMEPERSON "slime"
+#define SPECIES_LUMINESCENT "lum"
+#define SPECIES_STARGAZER "stargazer"
+#define SPECIES_LIZARD "lizard"
+#define SPECIES_LIZARD_ASH "ashlizard"
+#define SPECIES_LIZARD_SILVER "silverlizard"
+#define SPECIES_DULLAHAN "dullahan"
+#define SPECIES_SKELETON "skeleton"
+#define SPECIES_VAMPIRE "vampire"
+#define SPECIES_ZOMBIE "memezombies"
+#define SPECIES_ZOMBIE_HALLOWEEN "zombie"
+#define SPECIES_ADDICT "goofzombies"
+
+#define SPECIES_ABDUCTOR "abductor"
+#define SPECIES_ANDROID "android"
+#define SPECIES_MUSHROOM "mush"
+#define SPECIES_PODPERSON "pod"
+#define SPECIES_SHADOW "shadow"
+#define SPECIES_NIGHTMARE "nightmare"
+#define SPECIES_SNAIL "snail"
+#define SPECIES_SYNTH "synth"
+#define SPECIES_SYNTH_MILITARY "military_synth"
+
+//Defines for Golem Species IDs
+#define SPECIES_GOLEM "iron golem"
+#define SPECIES_GOLEM_ADAMANTINE "adamantine golem"
+#define SPECIES_GOLEM_PLASMA "plasma golem"
+#define SPECIES_GOLEM_DIAMOND "diamond golem"
+#define SPECIES_GOLEM_GOLD "gold golem"
+#define SPECIES_GOLEM_SILVER "silver golem"
+#define SPECIES_GOLEM_PLASTEEL "plasteel golem"
+#define SPECIES_GOLEM_TITANIUM "titanium golem"
+#define SPECIES_GOLEM_PLASTITANIUM "plastitanium golem"
+#define SPECIES_GOLEM_ALIEN "alloy golem"
+#define SPECIES_GOLEM_WOOD "wood golem"
+#define SPECIES_GOLEM_URANIUM "uranium golem"
+#define SPECIES_GOLEM_SAND "sand golem"
+#define SPECIES_GOLEM_GLASS "glass golem"
+#define SPECIES_GOLEM_BLUESPACE "bluespace golem"
+#define SPECIES_GOLEM_BANANIUM "bananium golem"
+#define SPECIES_GOLEM_CULT "runic golem"
+#define SPECIES_GOLEM_CLOTH "cloth golem"
+#define SPECIES_GOLEM_PLASTIC "plastic golem"
+#define SPECIES_GOLEM_BRONZE "bronze golem"
+#define SPECIES_GOLEM_CARDBOARD "cardboard golem"
+#define SPECIES_GOLEM_LEATHER "leather golem"
+#define SPECIES_GOLEM_DURATHREAD "durathread golem"
+#define SPECIES_GOLEM_BONE "bone golem"
+#define SPECIES_GOLEM_SNOW "snow golem"
+#define SPECIES_GOLEM_HYDROGEN "Metallic Hydrogen golem"

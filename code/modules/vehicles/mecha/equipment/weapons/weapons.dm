@@ -134,6 +134,25 @@
 		return TRUE
 	return FALSE
 
+//Exosuit-mounted kinetic accelerator
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun
+	equip_cooldown = 10
+	name = "Exosuit Proto-kinetic Accelerator"
+	desc = "An exosuit-mounted mining tool that does increased damage in low pressure. Drawing from an onboard power source allows it to project further than the handheld version."
+	icon_state = "mecha_kineticgun"
+	energy_drain = 30
+	projectile = /obj/projectile/kinetic/mech
+	fire_sound = 'sound/weapons/kenetic_accel.ogg'
+	harmful = TRUE
+
+//attachable to all mechas, like the plasma cutter
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun/can_attach(obj/vehicle/sealed/mecha/M)
+	. = ..()
+	if(.) //combat mech
+		return
+	if(LAZYLEN(M.equipment) < M.max_equip)
+		return TRUE
+
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
 	name = "\improper PBT \"Pacifier\" mounted taser"
 	desc = "A weapon for combat exosuits. Shoots non-lethal stunning electrodes."
@@ -475,9 +494,9 @@
 		if(!chassis)
 			return
 		if(harmful)
-			to_chat(usr, "[icon2html(src, usr)]<span class='warning'>Lethal Fisting Enabled.</span>")
+			to_chat(usr, "[icon2html(src, usr)][span_warning("Lethal Fisting Enabled.")]")
 		else
-			to_chat(usr, "[icon2html(src, usr)]<span class='warning'>Lethal Fisting Disabled.</span>")
+			to_chat(usr, "[icon2html(src, usr)][span_warning("Lethal Fisting Disabled.")]")
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/action(mob/source, atom/target, params)
 	. = ..()
@@ -505,7 +524,7 @@
 	if(!..())
 		if(ismovable(hit_atom))
 			var/atom/movable/AM = hit_atom
-			AM.safe_throw_at(get_edge_target_turf(AM,get_dir(src, AM)), clamp(round(throwforce/5), 2, 20), 2) //Throws them equal to damage/5, with a min range of 2 and max range of 20
+			AM.safe_throw_at(get_edge_target_turf(AM,get_dir(src, AM)), clamp(round(throwforce/5), 2, 20), 2, force = MOVE_FORCE_EXTREMELY_STRONG) //Throws them equal to damage/5, with a min range of 2 and max range of 20
 		qdel(src)
 
 ///dark honk weapons

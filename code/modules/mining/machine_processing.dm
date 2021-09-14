@@ -48,7 +48,7 @@
 	* target - the atom that just moved onto the `source` turf.
 	* oldLoc - the old location that `target` was at before moving onto `source`.
 */
-/obj/machinery/mineral/proc/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
+/obj/machinery/mineral/proc/pickup_item(datum/source, atom/movable/target, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
 	return
@@ -200,7 +200,7 @@
 
 	return dat
 
-/obj/machinery/mineral/processing_unit/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
+/obj/machinery/mineral/processing_unit/pickup_item(datum/source, atom/movable/target, direction)
 	if(QDELETED(target))
 		return
 	if(istype(target, /obj/item/stack/ore))

@@ -7,6 +7,7 @@
 	armor = list(MELEE = 30, BULLET = 30, LASER = 30, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
 	density = TRUE
 	anchored = FALSE
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	COOLDOWN_DECLARE(cooldown_vehicle_move)
 	var/list/mob/occupants //mob = bitflags of their control level.
 	///Maximum amount of passengers plus drivers
@@ -23,7 +24,7 @@
 	var/key_type
 	///The inserted key, needed on some vehicles to start the engine
 	var/obj/item/key/inserted_key
-	/// Whether the vehicle os currently able to move
+	/// Whether the vehicle is currently able to move
 	var/canmove = TRUE
 	var/list/autogrant_actions_passenger //plain list of typepaths
 	var/list/autogrant_actions_controller //assoc list "[bitflag]" = list(typepaths)
@@ -43,15 +44,15 @@
 /obj/vehicle/examine(mob/user)
 	. = ..()
 	if(resistance_flags & ON_FIRE)
-		. += "<span class='warning'>It's on fire!</span>"
-	var/healthpercent = obj_integrity/max_integrity * 100
+		. += span_warning("It's on fire!")
+	var/healthpercent = atom_integrity/max_integrity * 100
 	switch(healthpercent)
 		if(50 to 99)
 			. += "It looks slightly damaged."
 		if(25 to 50)
 			. += "It appears heavily damaged."
 		if(0 to 25)
-			. += "<span class='warning'>It's falling apart!</span>"
+			. += span_warning("It's falling apart!")
 
 /obj/vehicle/proc/is_key(obj/item/I)
 	return istype(I, key_type)
@@ -102,9 +103,10 @@
 
 /obj/vehicle/proc/auto_assign_occupant_flags(mob/M) //override for each type that needs it. Default is assign driver if drivers is not at max.
 	if(driver_amount() < max_drivers)
-		add_control_flags(M, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION)
+		add_control_flags(M, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/proc/remove_occupant(mob/M)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!istype(M))
 		return FALSE
 	remove_control_flags(M, ALL)

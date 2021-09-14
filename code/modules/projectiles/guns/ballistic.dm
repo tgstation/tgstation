@@ -50,7 +50,7 @@
 	///Compatible magazines with the gun
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	///Whether the sprite has a visible magazine or not
-	var/mag_display = FALSE
+	var/mag_display = TRUE
 	///Whether the sprite has a visible ammo display or not
 	var/mag_display_ammo = FALSE
 	///Whether the sprite has a visible indicator for being empty or not.
@@ -141,8 +141,8 @@
  *
  */
 /obj/item/gun/ballistic/proc/add_notes_ballistic()
-	if(magazine) // Make sure you have a magazine, thats where the warning is!
-		return "\nBe especially careful around this device, as it can be loaded with <span class='warning'>[magazine.caliber]</span> rounds, which you can inspect for more information."
+	if(magazine) // Make sure you have a magazine, to get the notes from
+		return "\n[magazine.add_notes_box()]"
 	else
 		return "\nThe warning attached to the magazine is missing..."
 
@@ -181,7 +181,7 @@
 		. += "[icon_state]_toy"
 
 
-	if(!magazine || internal_magazine)
+	if(!magazine || internal_magazine || !mag_display)
 		return
 
 	if(special_mags)
@@ -210,7 +210,7 @@
 		. += "[icon_state]_mag_[capacity_number]"
 
 
-/obj/item/gun/ballistic/process_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
+/obj/item/gun/ballistic/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)
 		return
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
@@ -218,6 +218,7 @@
 		if(casing_ejector || !from_firing)
 			AC.forceMove(drop_location()) //Eject casing onto ground.
 			AC.bounce_away(TRUE)
+			SEND_SIGNAL(AC, COMSIG_CASING_EJECTED)
 			chambered = null
 		else if(empty_chamber)
 			chambered = null
@@ -242,11 +243,11 @@
 	if (bolt_type == BOLT_TYPE_OPEN)
 		if(!bolt_locked) //If it's an open bolt, racking again would do nothing
 			if (user)
-				to_chat(user, "<span class='notice'>\The [src]'s [bolt_wording] is already cocked!</span>")
+				to_chat(user, span_notice("[src]'s [bolt_wording] is already cocked!"))
 			return
 		bolt_locked = FALSE
 	if (user)
-		to_chat(user, "<span class='notice'>You rack the [bolt_wording] of \the [src].</span>")
+		to_chat(user, span_notice("You rack the [bolt_wording] of [src]."))
 	process_chamber(!chambered, FALSE)
 	if (bolt_type == BOLT_TYPE_LOCKING && !chambered)
 		bolt_locked = TRUE
@@ -259,7 +260,7 @@
 /obj/item/gun/ballistic/proc/drop_bolt(mob/user = null)
 	playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)
 	if (user)
-		to_chat(user, "<span class='notice'>You drop the [bolt_wording] of \the [src].</span>")
+		to_chat(user, span_notice("You drop the [bolt_wording] of [src]."))
 	chamber_round()
 	bolt_locked = FALSE
 	update_appearance()
@@ -267,19 +268,19 @@
 ///Handles all the logic needed for magazine insertion
 /obj/item/gun/ballistic/proc/insert_magazine(mob/user, obj/item/ammo_box/magazine/AM, display_message = TRUE)
 	if(!istype(AM, mag_type))
-		to_chat(user, "<span class='warning'>\The [AM] doesn't seem to fit into \the [src]...</span>")
+		to_chat(user, span_warning("[AM] doesn't seem to fit into [src]..."))
 		return FALSE
 	if(user.transferItemToLoc(AM, src))
 		magazine = AM
 		if (display_message)
-			to_chat(user, "<span class='notice'>You load a new [magazine_wording] into \the [src].</span>")
+			to_chat(user, span_notice("You load a new [magazine_wording] into [src]."))
 		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
 		if (bolt_type == BOLT_TYPE_OPEN && !bolt_locked)
 			chamber_round(TRUE)
 		update_appearance()
 		return TRUE
 	else
-		to_chat(user, "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>")
+		to_chat(user, span_warning("You cannot seem to get [src] out of your hands!"))
 		return FALSE
 
 ///Handles all the logic of magazine ejection, if tac_load is set that magazine will be tacloaded in the place of the old eject
@@ -294,16 +295,16 @@
 	var/obj/item/ammo_box/magazine/old_mag = magazine
 	if (tac_load)
 		if (insert_magazine(user, tac_load, FALSE))
-			to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src].</span>")
+			to_chat(user, span_notice("You perform a tactical reload on [src]."))
 		else
-			to_chat(user, "<span class='warning'>You dropped the old [magazine_wording], but the new one doesn't fit. How embarassing.</span>")
+			to_chat(user, span_warning("You dropped the old [magazine_wording], but the new one doesn't fit. How embarassing."))
 			magazine = null
 	else
 		magazine = null
 	user.put_in_hands(old_mag)
 	old_mag.update_appearance()
 	if (display_message)
-		to_chat(user, "<span class='notice'>You pull the [magazine_wording] out of \the [src].</span>")
+		to_chat(user, span_notice("You pull the [magazine_wording] out of [src]."))
 	update_appearance()
 
 /obj/item/gun/ballistic/can_shoot()
@@ -321,7 +322,7 @@
 			if (tac_reloads)
 				eject_magazine(user, FALSE, AM)
 			else
-				to_chat(user, "<span class='notice'>There's already a [magazine_wording] in \the [src].</span>")
+				to_chat(user, span_notice("There's already a [magazine_wording] in [src]."))
 		return
 	if (istype(A, /obj/item/ammo_casing) || istype(A, /obj/item/ammo_box))
 		if (bolt_type == BOLT_TYPE_NO_BOLT || internal_magazine)
@@ -330,7 +331,7 @@
 				chambered = null
 			var/num_loaded = magazine?.attackby(A, user, params, TRUE)
 			if (num_loaded)
-				to_chat(user, "<span class='notice'>You load [num_loaded] [cartridge_wording]\s into \the [src].</span>")
+				to_chat(user, span_notice("You load [num_loaded] [cartridge_wording]\s into [src]."))
 				playsound(src, load_sound, load_sound_volume, load_sound_vary)
 				if (chambered == null && bolt_type == BOLT_TYPE_NO_BOLT)
 					chamber_round()
@@ -340,16 +341,16 @@
 	if(istype(A, /obj/item/suppressor))
 		var/obj/item/suppressor/S = A
 		if(!can_suppress)
-			to_chat(user, "<span class='warning'>You can't seem to figure out how to fit [S] on [src]!</span>")
+			to_chat(user, span_warning("You can't seem to figure out how to fit [S] on [src]!"))
 			return
 		if(!user.is_holding(src))
-			to_chat(user, "<span class='warning'>You need be holding [src] to fit [S] to it!</span>")
+			to_chat(user, span_warning("You need be holding [src] to fit [S] to it!"))
 			return
 		if(suppressed)
-			to_chat(user, "<span class='warning'>[src] already has a suppressor!</span>")
+			to_chat(user, span_warning("[src] already has a suppressor!"))
 			return
 		if(user.transferItemToLoc(A, src))
-			to_chat(user, "<span class='notice'>You screw \the [S] onto \the [src].</span>")
+			to_chat(user, span_notice("You screw [S] onto [src]."))
 			install_suppressor(A)
 			return
 	if (can_be_sawn_off)
@@ -367,7 +368,7 @@
 	if(magazine && chambered.loaded_projectile && can_misfire && misfire_probability > 0)
 		if(prob(misfire_probability))
 			if(blow_up(user))
-				to_chat(user, "<span class='userdanger'>[src] misfires!</span>")
+				to_chat(user, span_userdanger("[src] misfires!"))
 
 	if (sawn_off)
 		bonus_spread += SAWN_OFF_ACC_PENALTY
@@ -403,7 +404,7 @@
 			var/obj/item/suppressor/S = suppressed
 			if(!user.is_holding(src))
 				return ..()
-			to_chat(user, "<span class='notice'>You unscrew \the [S] from \the [src].</span>")
+			to_chat(user, span_notice("You unscrew [S] from [src]."))
 			user.put_in_hands(S)
 			clear_suppressor()
 
@@ -439,16 +440,18 @@
 
 /obj/item/gun/ballistic/attack_self(mob/living/user)
 	if(HAS_TRAIT(user, TRAIT_GUNFLIP))
+		SpinAnimation(4,2)
 		if(flip_cooldown <= world.time)
 			if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
-				to_chat(user, "<span class='userdanger'>While trying to flip the [src] you pull the trigger and accidently shoot yourself!</span>")
+				to_chat(user, span_userdanger("While trying to flip [src] you pull the trigger and accidentaly shoot yourself!"))
 				var/flip_mistake = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_CHEST)
 				process_fire(user, user, FALSE, flip_mistake)
 				user.dropItemToGround(src, TRUE)
 				return
 			flip_cooldown = (world.time + 30)
-			user.visible_message("<span class='notice'>[user] spins the [src] around their finger by the trigger. That’s pretty badass.</span>")
+			user.visible_message(span_notice("[user] spins [src] around [user.p_their()] finger by the trigger. That’s pretty badass."))
 			playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
+			return
 	if(!internal_magazine && magazine)
 		if(!magazine.ammo_count())
 			eject_magazine(user)
@@ -464,11 +467,11 @@
 			if(T && is_station_level(T.z))
 				SSblackbox.record_feedback("tally", "station_mess_created", 1, CB.name)
 		if (num_unloaded)
-			to_chat(user, "<span class='notice'>You unload [num_unloaded] [cartridge_wording]\s from [src].</span>")
+			to_chat(user, span_notice("You unload [num_unloaded] [cartridge_wording]\s from [src]."))
 			playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
 			update_appearance()
 		else
-			to_chat(user, "<span class='warning'>[src] is empty!</span>")
+			to_chat(user, span_warning("[src] is empty!"))
 		return
 	if(bolt_type == BOLT_TYPE_LOCKING && bolt_locked)
 		drop_bolt(user)
@@ -492,9 +495,9 @@
 	if (suppressed)
 		. += "It has a suppressor attached that can be removed with <b>alt+click</b>."
 	if(can_misfire)
-		. += "<span class='danger'>You get the feeling this might explode if you fire it....</span>"
+		. += span_danger("You get the feeling this might explode if you fire it....")
 		if(misfire_probability > 0)
-			. += "<span class='danger'>Given the state of the gun, there is a [misfire_probability]% chance it'll misfire.</span>"
+			. += span_danger("Given the state of the gun, there is a [misfire_probability]% chance it'll misfire.")
 
 ///Gets the number of bullets in the gun
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)
@@ -521,12 +524,12 @@
 /obj/item/gun/ballistic/suicide_act(mob/user)
 	var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
 	if (B && chambered && chambered.loaded_projectile && can_trigger_gun(user) && !chambered.loaded_projectile.nodamage)
-		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(span_suicide("[user] is putting the barrel of [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!"))
 		sleep(25)
 		if(user.is_holding(src))
 			var/turf/T = get_turf(user)
 			process_fire(user, user, FALSE, null, BODY_ZONE_HEAD)
-			user.visible_message("<span class='suicide'>[user] blows [user.p_their()] brain[user.p_s()] out with [src]!</span>")
+			user.visible_message(span_suicide("[user] blows [user.p_their()] brain[user.p_s()] out with [src]!"))
 			var/turf/target = get_ranged_target_turf(user, turn(user.dir, 180), BRAINS_BLOWN_THROW_RANGE)
 			B.Remove(user)
 			B.forceMove(T)
@@ -534,10 +537,10 @@
 			B.throw_at(target, BRAINS_BLOWN_THROW_RANGE, BRAINS_BLOWN_THROW_SPEED, callback=gibspawner)
 			return(BRUTELOSS)
 		else
-			user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>")
+			user.visible_message(span_suicide("[user] panics and starts choking to death!"))
 			return(OXYLOSS)
 	else
-		user.visible_message("<span class='suicide'>[user] is pretending to blow [user.p_their()] brain[user.p_s()] out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
+		user.visible_message(span_suicide("[user] is pretending to blow [user.p_their()] brain[user.p_s()] out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b>"))
 		playsound(src, dry_fire_sound, 30, TRUE)
 		return (OXYLOSS)
 #undef BRAINS_BLOWN_THROW_SPEED
@@ -545,7 +548,7 @@
 
 GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	/obj/item/gun/energy/plasmacutter,
-	/obj/item/melee/transforming/energy,
+	/obj/item/melee/energy,
 	/obj/item/dualsaber
 	)))
 
@@ -554,23 +557,23 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(!saw.get_sharpness() || (!is_type_in_typecache(saw, GLOB.gun_saw_types) && saw.tool_behaviour != TOOL_SAW)) //needs to be sharp. Otherwise turned off eswords can cut this.
 		return
 	if(sawn_off)
-		to_chat(user, "<span class='warning'>\The [src] is already shortened!</span>")
+		to_chat(user, span_warning("[src] is already shortened!"))
 		return
 	if(bayonet)
-		to_chat(user, "<span class='warning'>You cannot saw-off \the [src] with \the [bayonet] attached!</span>")
+		to_chat(user, span_warning("You cannot saw-off [src] with [bayonet] attached!"))
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("<span class='notice'>[user] begins to shorten \the [src].</span>", "<span class='notice'>You begin to shorten \the [src]...</span>")
+	user.visible_message(span_notice("[user] begins to shorten [src]."), span_notice("You begin to shorten [src]..."))
 
 	//if there's any live ammo inside the gun, makes it go off
 	if(blow_up(user))
-		user.visible_message("<span class='danger'>\The [src] goes off!</span>", "<span class='danger'>\The [src] goes off in your face!</span>")
+		user.visible_message(span_danger("[src] goes off!"), span_danger("[src] goes off in your face!"))
 		return
 
 	if(do_after(user, 30, target = src))
 		if(sawn_off)
 			return
-		user.visible_message("<span class='notice'>[user] shortens \the [src]!</span>", "<span class='notice'>You shorten \the [src].</span>")
+		user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
 		w_class = WEIGHT_CLASS_NORMAL
@@ -588,24 +591,24 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		update_appearance()
 		return TRUE
 
-/obj/item/gun/ballistic/proc/guncleaning(mob/user, /obj/item/A)
+/obj/item/gun/ballistic/proc/guncleaning(mob/user, obj/item/A)
 	if(misfire_probability == 0)
-		to_chat(user, "<span class='notice'>\The [src] seems to be already clean of fouling.</span>")
+		to_chat(user, span_notice("[src] seems to be already clean of fouling."))
 		return
 
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("<span class='notice'>[user] begins to cleaning \the [src].</span>", "<span class='notice'>You begin to clean the internals of \the [src].</span>")
+	user.visible_message(span_notice("[user] begins to cleaning [src]."), span_notice("You begin to clean the internals of [src]."))
 
 	if(do_after(user, 100, target = src))
 		var/original_misfire_value = initial(misfire_probability)
 		if(misfire_probability > original_misfire_value)
 			misfire_probability = original_misfire_value
-			user.visible_message("<span class='notice'>[user] cleans \the [src] of any fouling.</span>", "<span class='notice'>You clean \the [src], removing any fouling, preventing misfire.</span>")
+			user.visible_message(span_notice("[user] cleans [src] of any fouling."), span_notice("You clean [src], removing any fouling, preventing misfire."))
 			return TRUE
 
 /obj/item/gun/ballistic/wrench_act(mob/living/user, obj/item/I)
 	if(!user.is_holding(src))
-		to_chat(user, "<span class='notice'>You need to hold [src] to modify it.</span>")
+		to_chat(user, span_notice("You need to hold [src] to modify it."))
 		return TRUE
 
 	if(!can_modify_ammo)
@@ -613,20 +616,20 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 
 	if(bolt_type == BOLT_TYPE_STANDARD)
 		if(get_ammo())
-			to_chat(user, "<span class='notice'>You can't get at the internals while the gun has a bullet in it!</span>")
+			to_chat(user, span_notice("You can't get at the internals while the gun has a bullet in it!"))
 			return
 
 		else if(!bolt_locked)
-			to_chat(user, "<span class='notice'>You can't get at the internals while the bolt is down!</span>")
+			to_chat(user, span_notice("You can't get at the internals while the bolt is down!"))
 			return
 
-	to_chat(user, "<span class='notice'>You begin to tinker with [src]...</span>")
+	to_chat(user, span_notice("You begin to tinker with [src]..."))
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 3 SECONDS))
 		return TRUE
 
 	if(blow_up(user))
-		user.visible_message("<span class='danger'>\The [src] goes off!</span>", "<span class='danger'>\The [src] goes off in your face!</span>")
+		user.visible_message(span_danger("[src] goes off!"), span_danger("[src] goes off in your face!"))
 		return
 
 	if(magazine.caliber == initial_caliber)
@@ -634,13 +637,13 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		if(alternative_ammo_misfires)
 			can_misfire = TRUE
 		fire_sound = alternative_fire_sound
-		to_chat(user, "<span class='notice'>You modify [src]. Now it will fire [alternative_caliber] rounds.</span>")
+		to_chat(user, span_notice("You modify [src]. Now it will fire [alternative_caliber] rounds."))
 	else
 		magazine.caliber = initial_caliber
 		if(alternative_ammo_misfires)
 			can_misfire = FALSE
 		fire_sound = initial_fire_sound
-		to_chat(user, "<span class='notice'>You reset [src]. Now it will fire [initial_caliber] rounds.</span>")
+		to_chat(user, span_notice("You reset [src]. Now it will fire [initial_caliber] rounds."))
 
 
 ///used for sawing guns, causes the gun to fire without the input of the user

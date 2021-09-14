@@ -18,9 +18,9 @@
 
 /obj/structure/chair/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
+	. += span_notice("It's held together by a couple of <b>bolts</b>.")
 	if(!has_buckled_mobs() && can_buckle)
-		. += "<span class='notice'>While standing on [src], drag and drop your sprite onto [src] to buckle to it.</span>"
+		. += span_notice("While standing on [src], drag and drop your sprite onto [src] to buckle to it.")
 
 /obj/structure/chair/Initialize()
 	. = ..()
@@ -94,7 +94,7 @@
 		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, overlays_from_child_procs, FALSE)
 
 	if(HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
-		to_chat(user, "<span class='notice'>You connect the shock kit to the [name], electrifying it </span>")
+		to_chat(user, span_notice("You connect the shock kit to the [name], electrifying it "))
 	else
 		user.put_in_active_hand(input_shock_kit)
 		to_chat(user, "<span class='notice'> You cannot fit the shock kit onto the [name]!")
@@ -142,7 +142,7 @@
 
 ///Material chair
 /obj/structure/chair/greyscale
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	item_chair = /obj/item/chair/greyscale
 	buildstacktype = null //Custom mats handle this
 
@@ -260,6 +260,20 @@
 	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
 
+/obj/structure/chair/stool/directional/north
+	dir = SOUTH
+	pixel_y = 6
+
+/obj/structure/chair/stool/directional/south
+	dir = NORTH
+	pixel_y = 6
+
+/obj/structure/chair/stool/directional/east
+	dir = WEST
+
+/obj/structure/chair/stool/directional/west
+	dir = EAST
+
 /obj/structure/chair/stool/narsie_act()
 	return
 
@@ -270,7 +284,7 @@
 			return
 		if(!usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 			return
-		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
+		usr.visible_message(span_notice("[usr] grabs \the [src.name]."), span_notice("You grab \the [src.name]."))
 		var/obj/item/C = new item_chair(loc)
 		C.set_custom_materials(custom_materials)
 		TransferComponents(C)
@@ -285,6 +299,18 @@
 	desc = "It has some unsavory stains on it..."
 	icon_state = "bar"
 	item_chair = /obj/item/chair/stool/bar
+
+/obj/structure/chair/stool/bar/directional/north
+	dir = SOUTH
+
+/obj/structure/chair/stool/bar/directional/south
+	dir = NORTH
+
+/obj/structure/chair/stool/bar/directional/east
+	dir = WEST
+
+/obj/structure/chair/stool/bar/directional/west
+	dir = EAST
 
 /obj/item/chair
 	name = "chair"
@@ -305,7 +331,7 @@
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
 /obj/item/chair/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins hitting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins hitting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src,hitsound,50,TRUE)
 	return BRUTELOSS
 
@@ -320,17 +346,17 @@
 /obj/item/chair/proc/plant(mob/user)
 	var/turf/T = get_turf(loc)
 	if(!isfloorturf(T))
-		to_chat(user, "<span class='warning'>You need ground to plant this on!</span>")
+		to_chat(user, span_warning("You need ground to plant this on!"))
 		return
 	for(var/obj/A in T)
 		if(istype(A, /obj/structure/chair))
-			to_chat(user, "<span class='warning'>There is already a chair here!</span>")
+			to_chat(user, span_warning("There is already a chair here!"))
 			return
 		if(A.density && !(A.flags_1 & ON_BORDER_1))
-			to_chat(user, "<span class='warning'>There is already something here!</span>")
+			to_chat(user, span_warning("There is already something here!"))
 			return
 
-	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
+	user.visible_message(span_notice("[user] rights \the [src.name]."), span_notice("You right \the [name]."))
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
 	C.set_custom_materials(custom_materials)
 	TransferComponents(C)
@@ -355,7 +381,7 @@
 
 /obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
-		owner.visible_message("<span class='danger'>[owner] fends off [attack_text] with [src]!</span>")
+		owner.visible_message(span_danger("[owner] fends off [attack_text] with [src]!"))
 		return TRUE
 	return FALSE
 
@@ -364,7 +390,7 @@
 	if(!proximity)
 		return
 	if(prob(break_chance))
-		user.visible_message("<span class='danger'>[user] smashes \the [src] to pieces against \the [target]</span>")
+		user.visible_message(span_danger("[user] smashes \the [src] to pieces against \the [target]"))
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(C.health < C.maxHealth*0.5)
@@ -372,7 +398,7 @@
 		smash(user)
 
 /obj/item/chair/greyscale
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	origin_type = /obj/structure/chair/greyscale
 
 /obj/item/chair/stool
@@ -446,12 +472,12 @@
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
 	if(!(datum_flags & DF_ISPROCESSING))
-		user.visible_message("<span class='notice'>[user] spins [src] around, and the last vestiges of Ratvarian technology keeps it spinning FOREVER.</span>", \
-		"<span class='notice'>Automated spinny chairs. The pinnacle of ancient Ratvarian technology.</span>")
+		user.visible_message(span_notice("[user] spins [src] around, and the last vestiges of Ratvarian technology keeps it spinning FOREVER."), \
+		span_notice("Automated spinny chairs. The pinnacle of ancient Ratvarian technology."))
 		START_PROCESSING(SSfastprocess, src)
 	else
-		user.visible_message("<span class='notice'>[user] stops [src]'s uncontrollable spinning.</span>", \
-		"<span class='notice'>You grab [src] and stop its wild spinning.</span>")
+		user.visible_message(span_notice("[user] stops [src]'s uncontrollable spinning."), \
+		span_notice("You grab [src] and stop its wild spinning."))
 		STOP_PROCESSING(SSfastprocess, src)
 
 /obj/structure/chair/mime
@@ -493,9 +519,9 @@
 
 /obj/structure/chair/plastic/proc/snap_check(mob/living/carbon/Mob)
 	if (Mob.nutrition >= NUTRITION_LEVEL_FAT)
-		to_chat(Mob, "<span class='warning'>The chair begins to pop and crack, you're too heavy!</span>")
+		to_chat(Mob, span_warning("The chair begins to pop and crack, you're too heavy!"))
 		if(do_after(Mob, 6 SECONDS, progress = FALSE))
-			Mob.visible_message("<span class='notice'>The plastic chair snaps under [Mob]'s weight!</span>")
+			Mob.visible_message(span_notice("The plastic chair snaps under [Mob]'s weight!"))
 			new /obj/effect/decal/cleanable/plastic(loc)
 			qdel(src)
 

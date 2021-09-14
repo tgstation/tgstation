@@ -22,15 +22,15 @@
 	name = "excise damaged lung node"
 	implements = list(
 		TOOL_SCALPEL = 95,
-		/obj/item/melee/transforming/energy/sword = 65,
+		/obj/item/melee/energy/sword = 65,
 		/obj/item/kitchen/knife = 45,
 		/obj/item/shard = 35)
 	time = 42
 
 /datum/surgery_step/lobectomy/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You begin to make an incision in [target]'s lungs...</span>",
-		"<span class='notice'>[user] begins to make an incision in [target].</span>",
-		"<span class='notice'>[user] begins to make an incision in [target].</span>")
+	display_results(user, target, span_notice("You begin to make an incision in [target]'s lungs..."),
+		span_notice("[user] begins to make an incision in [target]."),
+		span_notice("[user] begins to make an incision in [target]."))
 
 /datum/surgery_step/lobectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(ishuman(target))
@@ -38,17 +38,17 @@
 		var/obj/item/organ/lungs/target_lungs = human_target.getorganslot(ORGAN_SLOT_LUNGS)
 		target_lungs.operated = TRUE
 		human_target.setOrganLoss(ORGAN_SLOT_LUNGS, 60)
-		display_results(user, target, "<span class='notice'>You successfully excise [human_target]'s most damaged lobe.</span>",
-			"<span class='notice'>Successfully removes a piece of [human_target]'s lungs.</span>",
+		display_results(user, target, span_notice("You successfully excise [human_target]'s most damaged lobe."),
+			span_notice("Successfully removes a piece of [human_target]'s lungs."),
 			"")
 	return ..()
 
 /datum/surgery_step/lobectomy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		display_results(user, target, "<span class='warning'>You screw up, failing to excise [human_target]'s damaged lobe!</span>",
-			"<span class='warning'>[user] screws up!</span>",
-			"<span class='warning'>[user] screws up!</span>")
+		display_results(user, target, span_warning("You screw up, failing to excise [human_target]'s damaged lobe!"),
+			span_warning("[user] screws up!"),
+			span_warning("[user] screws up!"))
 		human_target.losebreath += 4
 		human_target.adjustOrganLoss(ORGAN_SLOT_LUNGS, 10)
 	return FALSE

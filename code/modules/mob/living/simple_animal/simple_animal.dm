@@ -64,12 +64,15 @@
 	///This damage is taken when the body temp is too hot.
 	var/unsuitable_heat_damage
 
+	/// List of weather immunity traits that are then added on Initialize(), see traits.dm.
+	var/list/weather_immunities
+
 	///Healable by medical stacks? Defaults to yes.
 	var/healable = 1
 
 	///Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
 	///Leaving something at 0 means it's off - has no maximum.
-	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	///This damage is taken when atmos doesn't fit all the requirements above.
 	var/unsuitable_atmos_damage = 1
 
@@ -111,8 +114,6 @@
 	///Simple_animal access.
 	///Innate access uses an internal ID card.
 	var/obj/item/card/id/access_card = null
-	///In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against.
-	var/buffed = 0
 	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
 	var/gold_core_spawnable = NO_SPAWN
 
@@ -158,6 +159,13 @@
 	///Generic flags
 	var/simple_mob_flags = NONE
 
+	///Limits how often mobs can hunt other mobs
+	COOLDOWN_DECLARE(emote_cooldown)
+	var/turns_since_scan = 0
+
+	///Is this animal horrible at hunting?
+	var/inept_hunter = FALSE
+
 
 /mob/living/simple_animal/Initialize(mapload)
 	. = ..()
@@ -173,6 +181,9 @@
 		AddComponent(/datum/component/personal_crafting)
 		ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
 		ADD_TRAIT(src, TRAIT_CAN_STRIP, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
+	for(var/trait in weather_immunities)
+		ADD_TRAIT(src, trait, ROUNDSTART_TRAIT)
 
 	if(speak)
 		speak = string_list(speak)
@@ -187,7 +198,7 @@
 	if(damage_coeff)
 		damage_coeff = string_assoc_list(damage_coeff)
 	if(footstep_type)
-		AddComponent(/datum/component/footstep, footstep_type)
+		AddElement(/datum/element/footstep, footstep_type)
 	if(!isnull(unsuitable_cold_damage))
 		unsuitable_cold_damage = unsuitable_atmos_damage
 	if(!isnull(unsuitable_heat_damage))
@@ -218,7 +229,10 @@
 /mob/living/simple_animal/examine(mob/user)
 	. = ..()
 	if(stat == DEAD)
-		. += "<span class='deadsay'>Upon closer examination, [p_they()] appear[p_s()] to be dead.</span>"
+		if(HAS_TRAIT(user, TRAIT_NAIVE))
+			. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be asleep.")
+		else
+			. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be dead.")
 	if(access_card)
 		. += "There appears to be [icon2html(access_card, user)] \a [access_card] pinned to [p_them()]."
 
@@ -305,7 +319,7 @@
 			var/ST_gases = ST.air.gases
 			ST.air.assert_gases(arglist(GLOB.hardcoded_gases))
 
-			var/tox = ST_gases[/datum/gas/plasma][MOLES]
+			var/plas = ST_gases[/datum/gas/plasma][MOLES]
 			var/oxy = ST_gases[/datum/gas/oxygen][MOLES]
 			var/n2  = ST_gases[/datum/gas/nitrogen][MOLES]
 			var/co2 = ST_gases[/datum/gas/carbon_dioxide][MOLES]
@@ -316,9 +330,9 @@
 				. = FALSE
 			else if(atmos_requirements["max_oxy"] && oxy > atmos_requirements["max_oxy"])
 				. = FALSE
-			else if(atmos_requirements["min_tox"] && tox < atmos_requirements["min_tox"])
+			else if(atmos_requirements["min_plas"] && plas < atmos_requirements["min_plas"])
 				. = FALSE
-			else if(atmos_requirements["max_tox"] && tox > atmos_requirements["max_tox"])
+			else if(atmos_requirements["max_plas"] && plas > atmos_requirements["max_plas"])
 				. = FALSE
 			else if(atmos_requirements["min_n2"] && n2 < atmos_requirements["min_n2"])
 				. = FALSE
@@ -329,7 +343,7 @@
 			else if(atmos_requirements["max_co2"] && co2 > atmos_requirements["max_co2"])
 				. = FALSE
 		else
-			if(atmos_requirements["min_oxy"] || atmos_requirements["min_tox"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"])
+			if(atmos_requirements["min_oxy"] || atmos_requirements["min_plas"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"])
 				. = FALSE
 
 /mob/living/simple_animal/proc/environment_temperature_is_safe(datum/gas_mixture/environment)
@@ -455,7 +469,7 @@
 		icon_state = icon_dead
 		if(flip_on_death)
 			transform = transform.Turn(180)
-		density = FALSE
+		set_density(FALSE)
 		..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
@@ -489,7 +503,7 @@
 	if(!.)
 		return
 	icon_state = icon_living
-	density = initial(density)
+	set_density(initial(density))
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
@@ -538,19 +552,6 @@
 	else
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, RESTING_TRAIT)
 	return ..()
-
-
-/mob/living/simple_animal/update_transform()
-	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
-	var/changed = FALSE
-
-	if(resize != RESIZE_DEFAULT_SIZE)
-		changed = TRUE
-		ntransform.Scale(resize)
-		resize = RESIZE_DEFAULT_SIZE
-
-	if(changed)
-		animate(src, transform = ntransform, time = 2, easing = EASE_IN|EASE_OUT)
 
 /mob/living/simple_animal/proc/sentience_act() //Called when a simple animal gains sentience via gold slime potion
 	toggle_ai(AI_OFF) // To prevent any weirdness.
@@ -686,3 +687,41 @@
 
 /mob/living/simple_animal/proc/stop_deadchat_plays()
 	stop_automated_movement = FALSE
+
+
+//Makes this mob hunt the prey, be it living or an object. Will kill living creatures, and delete objects.
+/mob/living/simple_animal/proc/hunt(hunted)
+	if(src == hunted) //Make sure it doesn't eat itself. While not likely to ever happen, might as well check just in case.
+		return
+	stop_automated_movement = FALSE
+	if(!isturf(src.loc)) // Are we on a proper turf?
+		return
+	if(stat || resting || buckled) // Are we concious, upright, and not buckled?
+		return
+	if(!COOLDOWN_FINISHED(src, emote_cooldown)) // Has the cooldown on this ended?
+		return
+	if(!Adjacent(hunted))
+		stop_automated_movement = TRUE
+		walk_to(src,hunted,0,3)
+		if(Adjacent(hunted))
+			hunt(hunted) // In case it gets next to the target immediately, skip the scan timer and kill it.
+		return
+	if(isliving(hunted)) // Are we hunting a living mob?
+		var/mob/living/prey = hunted
+		if(inept_hunter) // Make your hunter inept to have them unable to catch their prey.
+			visible_message("<span class='warning'>[src] chases [prey] around, to no avail!</span>")
+			step(prey, pick(GLOB.cardinals))
+			COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
+			return
+		if(!(prey.stat))
+			manual_emote("chomps [prey]!")
+			prey.death()
+			prey = null
+			COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
+			return
+	else // We're hunting an object, and should delete it instead of killing it. Mostly useful for decal bugs like ants or spider webs.
+		manual_emote("chomps [hunted]!")
+		qdel(hunted)
+		hunted = null
+		COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
+		return

@@ -6,13 +6,13 @@
 
 /datum/dynamic_ruleset/latejoin/trim_candidates()
 	for(var/mob/P in candidates)
-		if(!P.client || !P.mind || !P.mind.assigned_role) // Are they connected?
+		if(!P.client || !P.mind || is_unassigned_job(P.mind.assigned_role)) // Are they connected?
 			candidates.Remove(P)
 		else if (P.client.get_remaining_days(minimum_required_age) > 0)
 			candidates.Remove(P)
-		else if(P.mind.assigned_role in restricted_roles) // Does their job allow for it?
+		else if(P.mind.assigned_role.title in restricted_roles) // Does their job allow for it?
 			candidates.Remove(P)
-		else if((exclusive_roles.len > 0) && !(P.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
+		else if((exclusive_roles.len > 0) && !(P.mind.assigned_role.title in exclusive_roles)) // Is the rule exclusive to their job?
 			candidates.Remove(P)
 		else if(antag_flag_override)
 			if(!(antag_flag_override in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
@@ -28,7 +28,7 @@
 			for (var/mob/M in GLOB.alive_player_list)
 				if (M.stat == DEAD)
 					continue // Dead players cannot count as opponents
-				if (M.mind && M.mind.assigned_role && (M.mind.assigned_role in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role in restricted_roles)))
+				if (M.mind && (M.mind.assigned_role.title in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role.title in restricted_roles)))
 					job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
 
 		var/threat = round(mode.threat_level/10)
@@ -96,7 +96,7 @@
 		return FALSE
 	var/head_check = 0
 	for(var/mob/player in GLOB.alive_player_list)
-		if (player.mind.assigned_role in GLOB.command_positions)
+		if (player.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			head_check++
 	return (head_check >= required_heads_of_staff)
 
@@ -153,5 +153,5 @@
 	required_candidates = 1
 	weight = 4
 	cost = 10
-	requirements = list(40,30,20,10,10,10,10,10,10,10)
+	requirements = list(101,101,101,10,10,10,10,10,10,10)
 	repeatable = TRUE

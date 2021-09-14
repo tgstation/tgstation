@@ -92,9 +92,9 @@
 				if(ishuman(user))
 					var/mob/living/carbon/human/H = user
 					if(H.put_in_hands(crystals))
-						to_chat(H, "<span class='notice'>Your payment materializes into your hands!</span>")
+						to_chat(H, span_notice("Your payment materializes into your hands!"))
 					else
-						to_chat(user, "<span class='notice'>Your payment materializes onto the floor.</span>")
+						to_chat(user, span_notice("Your payment materializes onto the floor."))
 
 				hard_drive.traitor_data.contractor_hub.contract_TC_payed_out += hard_drive.traitor_data.contractor_hub.contract_TC_to_redeem
 				hard_drive.traitor_data.contractor_hub.contract_TC_to_redeem = 0
@@ -165,6 +165,11 @@
 			))
 
 		for (var/datum/syndicate_contract/contract in traitor_data.contractor_hub.assigned_contracts)
+			if(!contract.contract)
+				stack_trace("Syndiate contract with null contract objective found in [traitor_data.owner]'s contractor hub!")
+				contract.status = CONTRACT_STATUS_ABORTED
+				continue
+
 			data["contracts"] += list(list(
 				"target" = contract.contract.target,
 				"target_rank" = contract.target_rank,

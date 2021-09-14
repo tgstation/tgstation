@@ -49,7 +49,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /mob/living/simple_animal/bot/honkbot/proc/limiting_spam_false() //used for addtimer
 	limiting_spam = FALSE
@@ -73,7 +73,7 @@
 	..()
 	target = null
 	oldtarget_name = null
-	anchored = FALSE
+	set_anchored(FALSE)
 	walk_to(src,0)
 	last_found = world.time
 	limiting_spam = FALSE
@@ -135,9 +135,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	..()
 	if(emagged == 2)
 		if(user)
-			user << "<span class='danger'>You short out [src]'s sound control system. It gives out an evil laugh!!</span>"
+			user << span_danger("You short out [src]'s sound control system. It gives out an evil laugh!!")
 			oldtarget_name = user.name
-		audible_message("<span class='danger'>[src] gives out an evil laugh!</span>")
+		audible_message(span_danger("[src] gives out an evil laugh!"))
 		playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
 		update_appearance()
 
@@ -167,8 +167,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	if(istype(AM, /obj/item))
 		playsound(src, honksound, 50, TRUE, -1)
 		var/obj/item/I = AM
-		if(I.throwforce < health && I.thrownby && (istype(I.thrownby, /mob/living/carbon/human)))
-			var/mob/living/carbon/human/H = I.thrownby
+		var/mob/thrown_by = I.thrownby?.resolve()
+		if(I.throwforce < health && thrown_by && (istype(thrown_by, /mob/living/carbon/human)))
+			var/mob/living/carbon/human/H = thrown_by
 			retaliate(H)
 	..()
 
@@ -220,8 +221,8 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 			log_combat(src,C,"honked")
 
-			C.visible_message("<span class='danger'>[src] honks [C]!</span>",\
-					"<span class='userdanger'>[src] honks you!</span>")
+			C.visible_message(span_danger("[src] honks [C]!"),\
+					span_userdanger("[src] honks you!"))
 		else
 			C.stuttering = 20
 			C.Paralyze(80)
@@ -284,7 +285,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	return
 
 /mob/living/simple_animal/bot/honkbot/proc/back_to_idle()
-	anchored = FALSE
+	set_anchored(FALSE)
 	mode = BOT_IDLE
 	target = null
 	last_found = world.time
@@ -292,13 +293,13 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	INVOKE_ASYNC(src, .proc/handle_automated_action) //responds quickly
 
 /mob/living/simple_animal/bot/honkbot/proc/back_to_hunt()
-	anchored = FALSE
+	set_anchored(FALSE)
 	frustration = 0
 	mode = BOT_HUNT
 	INVOKE_ASYNC(src, .proc/handle_automated_action) // responds quickly
 
 /mob/living/simple_animal/bot/honkbot/proc/look_for_perp()
-	anchored = FALSE
+	set_anchored(FALSE)
 	for (var/mob/living/carbon/C in view(7,src))
 		if((C.stat) || (C.handcuffed))
 			continue
@@ -333,7 +334,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 /mob/living/simple_animal/bot/honkbot/explode()
 
 	walk_to(src,0)
-	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
+	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 	//doesn't drop cardboard nor its assembly, since its a very frail material.
 	if(prob(50))

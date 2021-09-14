@@ -17,6 +17,7 @@
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
 #define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
 #define LAZYFIND(L, V) (L ? L.Find(V) : 0)
+///returns L[I] if L exists and I is a valid index of L, runtimes if L is not a list
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 #define LAZYLEN(L) length(L)
@@ -126,45 +127,45 @@
 /proc/typecache_filter_list_reverse(list/atoms, list/typecache)
 	RETURN_TYPE(/list)
 	. = list()
-	for(var/thing in atoms)
-		var/atom/A = thing
-		if(!typecache[A.type])
-			. += A
+	for(var/atom/atom as anything in atoms)
+		if(!typecache[atom.type])
+			. += atom
 
 /proc/typecache_filter_multi_list_exclusion(list/atoms, list/typecache_include, list/typecache_exclude)
 	. = list()
-	for(var/thing in atoms)
-		var/atom/A = thing
-		if(typecache_include[A.type] && !typecache_exclude[A.type])
-			. += A
+	for(var/atom/atom as anything in atoms)
+		if(typecache_include[atom.type] && !typecache_exclude[atom.type])
+			. += atom
 
-//Like typesof() or subtypesof(), but returns a typecache instead of a list
+///Like typesof() or subtypesof(), but returns a typecache instead of a list
 /proc/typecacheof(path, ignore_root_path, only_root_path = FALSE)
 	if(ispath(path))
-		var/list/types = list()
+		var/list/types
+		var/list/output = list()
 		if(only_root_path)
-			types = list(path)
+			output[path] = TRUE
 		else
 			types = ignore_root_path ? subtypesof(path) : typesof(path)
-		var/list/L = list()
-		for(var/T in types)
-			L[T] = TRUE
-		return L
+			for(var/T in types)
+				output[T] = TRUE
+		return output
 	else if(islist(path))
 		var/list/pathlist = path
-		var/list/L = list()
+		var/list/output = list()
 		if(ignore_root_path)
-			for(var/P in pathlist)
-				for(var/T in subtypesof(P))
-					L[T] = TRUE
+			for(var/current_path in pathlist)
+				for(var/subtype in subtypesof(current_path))
+					output[subtype] = TRUE
+			return output
+
+		if(only_root_path)
+			for(var/current_path in pathlist)
+				output[current_path] = TRUE
 		else
-			for(var/P in pathlist)
-				if(only_root_path)
-					L[P] = TRUE
-				else
-					for(var/T in typesof(P))
-						L[T] = TRUE
-		return L
+			for(var/current_path in pathlist)
+				for(var/subpath in typesof(current_path))
+					output[subpath] = TRUE
+		return output
 
 //Removes any null entries from the list
 //Returns TRUE if the list had nulls, FALSE otherwise
@@ -571,3 +572,13 @@
 			return FALSE
 
 	return TRUE
+
+#define LAZY_LISTS_OR(left_list, right_list)\
+	( length(left_list)\
+		? length(right_list)\
+			? (left_list | right_list)\
+			: left_list.Copy()\
+		: length(right_list)\
+			? right_list.Copy()\
+			: null\
+	)

@@ -15,7 +15,7 @@
 	name = "egg"
 	desc = "An egg!"
 	icon_state = "egg"
-	food_reagents = list(/datum/reagent/consumable/eggyolk = 4)
+	food_reagents = list(/datum/reagent/consumable/eggyolk = 2, /datum/reagent/consumable/eggwhite = 4)
 	microwaved_type = /obj/item/food/boiledegg
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_TINY
@@ -48,16 +48,16 @@
 		var/clr = C.crayon_color
 
 		if(!(clr in list("blue", "green", "mime", "orange", "purple", "rainbow", "red", "yellow")))
-			to_chat(usr, "<span class='notice'>[src] refuses to take on this colour!</span>")
+			to_chat(usr, span_notice("[src] refuses to take on this colour!"))
 			return
 
-		to_chat(usr, "<span class='notice'>You colour [src] with [W].</span>")
+		to_chat(usr, span_notice("You colour [src] with [W]."))
 		icon_state = "egg-[clr]"
 	else if(istype(W, /obj/item/stamp/clown))
 		var/clowntype = pick("grock", "grimaldi", "rainbow", "chaos", "joker", "sexy", "standard", "bobble", "krusty", "bozo", "pennywise", "ronald", "jacobs", "kelly", "popov", "cluwne")
 		icon_state = "egg-clown-[clowntype]"
 		desc = "An egg that has been decorated with the grotesque, robustable likeness of a clown's face. "
-		to_chat(usr, "<span class='notice'>You stamp [src] with [W], creating an artistic and not remotely horrifying likeness of clown makeup.</span>")
+		to_chat(usr, span_notice("You stamp [src] with [W], creating an artistic and not remotely horrifying likeness of clown makeup."))
 	else
 		..()
 
@@ -120,11 +120,11 @@
 	if(istype(W, /obj/item/kitchen/fork))
 		var/obj/item/kitchen/fork/F = W
 		if(F.forkload)
-			to_chat(user, "<span class='warning'>You already have omelette on your fork!</span>")
+			to_chat(user, span_warning("You already have omelette on your fork!"))
 		else
 			F.icon_state = "forkloaded"
-			user.visible_message("<span class='notice'>[user] takes a piece of omelette with [user.p_their()] fork!</span>", \
-				"<span class='notice'>You take a piece of omelette with your fork.</span>")
+			user.visible_message(span_notice("[user] takes a piece of omelette with [user.p_their()] fork!"), \
+				span_notice("You take a piece of omelette with your fork."))
 
 			var/datum/reagent/R = pick(reagents.reagent_list)
 			reagents.remove_reagent(R.type, 1)
@@ -150,7 +150,7 @@
 	icon_state = "eggwrap"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("egg" = 1)
-	foodtypes = MEAT
+	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/chawanmushi
@@ -160,4 +160,3 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("custard" = 1)
 	foodtypes = MEAT | VEGETABLES
-

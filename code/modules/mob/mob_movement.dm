@@ -174,7 +174,7 @@
 		return TRUE
 	else if(HAS_TRAIT(mob, TRAIT_RESTRAINED))
 		COOLDOWN_START(src, move_delay, 1 SECONDS)
-		to_chat(src, "<span class='warning'>You're restrained! You can't move!</span>")
+		to_chat(src, span_warning("You're restrained! You can't move!"))
 		return TRUE
 	return mob.resist_grab(TRUE)
 
@@ -248,18 +248,19 @@
 		if(INCORPOREAL_MOVE_JAUNT) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
 			var/turf/open/floor/stepTurf = get_step(L, direct)
 			if(stepTurf)
-				for(var/obj/effect/decal/cleanable/food/salt/S in stepTurf)
-					to_chat(L, "<span class='warning'>[S] bars your passage!</span>")
+				var/obj/effect/decal/cleanable/food/salt/salt = locate() in stepTurf
+				if(salt)
+					to_chat(L, span_warning("[salt] bars your passage!"))
 					if(isrevenant(L))
 						var/mob/living/simple_animal/revenant/R = L
 						R.reveal(20)
 						R.stun(20)
 					return
 				if(stepTurf.turf_flags & NOJAUNT)
-					to_chat(L, "<span class='warning'>Some strange aura is blocking the way.</span>")
+					to_chat(L, span_warning("Some strange aura is blocking the way."))
 					return
-				if (locate(/obj/effect/blessing, stepTurf))
-					to_chat(L, "<span class='warning'>Holy energies block your path!</span>")
+				if(locate(/obj/effect/blessing) in stepTurf)
+					to_chat(L, span_warning("Holy energies block your path!"))
 					return
 
 				L.forceMove(stepTurf)
@@ -284,7 +285,7 @@
 	if(backup)
 		if(istype(backup) && movement_dir && !backup.anchored)
 			if(backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
-				to_chat(src, "<span class='info'>You push off of [backup] to propel yourself.</span>")
+				to_chat(src, span_info("You push off of [backup] to propel yourself."))
 		return TRUE
 	return FALSE
 
@@ -310,7 +311,7 @@
 				var/mob/M = AM
 				if(M.buckled)
 					continue
-			if(!AM.CanPass(src) || AM.density)
+			if(AM.density || !AM.CanPass(src, get_dir(AM, src)))
 				if(AM.anchored)
 					return AM
 				if(pulling == AM)
@@ -333,6 +334,7 @@
 
 /// Called when this mob slips over, override as needed
 /mob/proc/slip(knockdown_amount, obj/O, lube, paralyze, force_drop)
+	mind?.add_memory(MEMORY_SLIPPED, list(DETAIL_WHAT_BY = O, DETAIL_PROTAGONIST = src), story_value = STORY_VALUE_OKAY)
 	return
 
 /// Update the gravity status of this mob
@@ -503,7 +505,7 @@
 		return
 
 	if(zMove(UP, TRUE, ventcrawling_mob))
-		to_chat(src, "<span class='notice'>You move upwards.</span>")
+		to_chat(src, span_notice("You move upwards."))
 
 ///Moves a mob down a z level
 /mob/verb/down()
@@ -513,7 +515,12 @@
 	var/ventcrawling_mob = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING)
 
 	if(zMove(DOWN, TRUE, ventcrawling_mob))
-		to_chat(src, "<span class='notice'>You move down.</span>")
+		to_chat(src, span_notice("You move down."))
+
+/mob/can_zFall(turf/source, levels, turf/target, direction)
+	if(buckled)
+		return buckled.can_zFall(source, levels, target, direction)
+	return ..()
 
 ///Move a mob between z levels, if it's valid to move z's on this turf
 /mob/proc/zMove(dir, feedback = FALSE, ventcrawling = FALSE)
@@ -521,19 +528,19 @@
 		return FALSE
 	if(incapacitated())
 		if(feedback)
-			to_chat(src, "<span class='warning'>You can't do that right now!</span>")
+			to_chat(src, span_warning("You can't do that right now!"))
 			return FALSE
 	var/turf/target = get_step_multiz(src, dir)
 	if(!target)
 		if(feedback)
-			to_chat(src, "<span class='warning'>There's nowhere to go in that direction!</span>")
+			to_chat(src, span_warning("There's nowhere to go in that direction!"))
 		return FALSE
 	if(!canZMove(dir, target) && !ventcrawling)
 		if(feedback)
-			to_chat(src, "<span class='warning'>You couldn't move there!</span>")
+			to_chat(src, span_warning("You couldn't move there!"))
 		return FALSE
 	if(!ventcrawling) //let this be handled in atmosmachinery.dm
-		forceMove(target)
+		return Move(target)
 	else
 		var/obj/machinery/atmospherics/pipe = loc
 		pipe.relaymove(src, dir)

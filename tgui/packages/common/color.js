@@ -15,7 +15,12 @@ export class Color {
   }
 
   toString() {
-    return `rgba(${this.r | 0}, ${this.g | 0}, ${this.b | 0}, ${this.a | 0})`;
+    // Alpha component needs to permit fractional values, so cannot use |
+    let alpha = parseFloat(this.a);
+    if (isNaN(alpha)) {
+      alpha = 1;
+    }
+    return `rgba(${this.r | 0}, ${this.g | 0}, ${this.b | 0}, ${alpha})`;
   }
 }
 

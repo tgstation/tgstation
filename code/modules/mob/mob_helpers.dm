@@ -214,7 +214,10 @@
 		. += letter
 	return sanitize(.)
 
+#define TILES_PER_SECOND 0.7
 ///Shake the camera of the person viewing the mob SO REAL!
+///Takes the mob to shake, the time span to shake for, and the amount of tiles we're allowed to shake by in tiles
+///Duration isn't taken as a strict limit, since we don't trust our coders to not make things feel shitty. So it's more like a soft cap.
 /proc/shake_camera(mob/M, duration, strength=1)
 	if(!M || !M.client || duration < 1)
 		return
@@ -224,13 +227,33 @@
 	var/max = strength*world.icon_size
 	var/min = -(strength*world.icon_size)
 
-	for(var/i in 0 to duration-1)
-		if (i == 0)
-			animate(C, pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
-		else
-			animate(pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
-	animate(pixel_x=oldx, pixel_y=oldy, time=1)
+	//How much time to allot for each pixel moved
+	var/time_scalar = (1 / world.icon_size) * TILES_PER_SECOND
+	var/last_x = oldx
+	var/last_y = oldy
 
+	var/time_spent = 0
+	while(time_spent < duration)
+		//Get a random pos in our box
+		var/x_pos = rand(min, max) + oldx
+		var/y_pos = rand(min, max) + oldy
+
+		//We take the smaller of our two distances so things still have the propencity to feel somewhat jerky
+		var/time = round(max(min(abs(last_x - x_pos), abs(last_y - y_pos)) * time_scalar, 1))
+
+		if (time_spent == 0)
+			animate(C, pixel_x=x_pos, pixel_y=y_pos, time=time)
+		else
+			animate(pixel_x=x_pos, pixel_y=y_pos, time=time)
+
+		last_x = x_pos
+		last_y = y_pos
+		//We go based on time spent, so there is a chance we'll overshoot our duration. Don't care
+		time_spent += time
+
+	animate(pixel_x=oldx, pixel_y=oldy, time=3)
+
+#undef TILES_PER_SECOND
 
 ///Find if the message has the real name of any user mob in the mob_list
 /proc/findname(msg)
@@ -320,7 +343,7 @@
 		var/orbit_link
 		if (source && action == NOTIFY_ORBIT)
 			orbit_link = " <a href='?src=[REF(O)];follow=[REF(source)]'>(Orbit)</a>"
-		to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""][orbit_link]</span>")
+		to_chat(O, span_ghostalert("[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"))
 		if(ghost_sound)
 			SEND_SOUND(O, sound(ghost_sound, volume = notify_volume))
 		if(flashwindow)
@@ -355,11 +378,11 @@
 		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
 			if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYPART_ROBOTIC))
 				H.update_damage_overlays()
-			user.visible_message("<span class='notice'>[user] fixes some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>", \
-			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H == user ? "your" : "[H]'s"] [affecting.name].</span>")
+			user.visible_message(span_notice("[user] fixes some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name]."), \
+			span_notice("You fix some of the [dam ? "dents on" : "burnt wires in"] [H == user ? "your" : "[H]'s"] [affecting.name]."))
 			return 1 //successful heal
 		else
-			to_chat(user, "<span class='warning'>[affecting] is already in good condition!</span>")
+			to_chat(user, span_warning("[affecting] is already in good condition!"))
 
 ///Is the passed in mob a ghost with admin powers, doesn't check for AI interact like isAdminGhost() used to
 /proc/isAdminObserver(mob/user)
@@ -384,7 +407,7 @@
 /**
  * Offer control of the passed in mob to dead player
  *
- * Automatic logging and uses pollCandidatesForMob, how convenient
+ * Automatic logging and uses poll_candidates_for_mob, how convenient
  */
 /proc/offer_control(mob/M)
 	to_chat(M, "Control of your mob has been offered to dead players.")
@@ -392,15 +415,15 @@
 		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
 		message_admins("[key_name_admin(usr)] has offered control of ([ADMIN_LOOKUPFLW(M)]) to ghosts")
 	var/poll_message = "Do you want to play as [M.real_name]?"
-	if(M.mind && M.mind.assigned_role)
-		poll_message = "[poll_message] Job:[M.mind.assigned_role]."
-	if(M.mind && M.mind.special_role)
-		poll_message = "[poll_message] Status:[M.mind.special_role]."
-	else if(M.mind)
-		var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
-		if(A)
-			poll_message = "[poll_message] Status:[A.name]."
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, FALSE, 100, M)
+	if(M.mind)
+		poll_message = "[poll_message] Job: [M.mind.assigned_role.title]."
+		if(M.mind.special_role)
+			poll_message = "[poll_message] Status: [M.mind.special_role]."
+		else
+			var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
+			if(A)
+				poll_message = "[poll_message] Status: [A.name]."
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob(poll_message, ROLE_PAI, FALSE, 10 SECONDS, M)
 
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
@@ -432,7 +455,7 @@
 		return
 
 	// Cannot use the list as a map if the key is a number, so we stringify it (thank you BYOND)
-	var/smessage_type = num2text(message_type)
+	var/smessage_type = num2text(message_type, MAX_BITFLAG_DIGITS)
 
 	if(client)
 		if(!islist(client.player_details.logging[smessage_type]))
@@ -486,9 +509,9 @@
 			dissectionmsg = " via Experimental Dissection"
 		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Thorough Dissection"))
 			dissectionmsg = " via Thorough Dissection"
-		. += "<span class='notice'>This body has been dissected and analyzed[dissectionmsg].</span><br>"
+		. += "[span_notice("This body has been dissected and analyzed[dissectionmsg].")]<br>"
 	if(HAS_TRAIT(src,TRAIT_HUSK))
-		. += "<span class='warning'>This body has been reduced to a grotesque husk.</span>"
+		. += span_warning("This body has been reduced to a grotesque husk.")
 
 /**
  * Get the list of keywords for policy config
@@ -500,10 +523,11 @@
 	. = list()
 	. += "[type]"
 	if(mind)
-		. += mind.assigned_role
+		if(mind.assigned_role.policy_index)
+			. += mind.assigned_role.policy_index
 		. += mind.special_role //In case there's something special leftover, try to avoid
-		for(var/datum/antagonist/A in mind.antag_datums)
-			. += "[A.type]"
+		for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
+			. += "[antag_datum.type]"
 
 ///Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()

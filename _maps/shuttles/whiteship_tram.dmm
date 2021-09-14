@@ -46,7 +46,7 @@
 /area/shuttle/abandoned/engine)
 "ai" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/abandoned/engine)
 "aj" = (
@@ -1295,7 +1295,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/box/zipties,
 /obj/item/assembly/flash/handheld,
-/obj/item/melee/classic_baton/telescopic,
+/obj/item/melee/baton/telescopic,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/abandoned/bridge)
 "ds" = (

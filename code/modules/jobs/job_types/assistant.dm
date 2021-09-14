@@ -3,15 +3,15 @@ Assistant
 */
 /datum/job/assistant
 	title = "Assistant"
-	faction = "Station"
+	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 5
 	supervisors = "absolutely everyone"
 	selection_color = "#dddddd"
+	exp_granted_type = EXP_TYPE_CREW
 	outfit = /datum/outfit/job/assistant
 	plasmaman_outfit = /datum/outfit/plasmaman
 	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
-	departments = DEPARTMENT_SERVICE
 
 	liver_traits = list(TRAIT_GREYTIDE_METABOLISM)
 
@@ -28,6 +28,9 @@ Assistant
 		/obj/item/toy/sprayoncan = 3,
 		/obj/item/crowbar/large = 1
 	)
+
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+
 
 /datum/outfit/job/assistant
 	name = "Assistant"

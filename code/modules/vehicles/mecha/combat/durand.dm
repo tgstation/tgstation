@@ -140,7 +140,6 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	invisibility = INVISIBILITY_MAXIMUM //no showing on right-click
 	pixel_y = 4
 	max_integrity = 10000
-	obj_integrity = 10000
 	anchored = TRUE
 	light_system = MOVABLE_LIGHT
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
@@ -233,13 +232,13 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		return
 	. = ..()
 	flick("shield_impact", src)
-	if(!chassis.use_power((max_integrity - obj_integrity) * 100))
+	if(!chassis.use_power((max_integrity - atom_integrity) * 100))
 		chassis.cell?.charge = 0
 		for(var/O in chassis.occupants)
 			var/mob/living/occupant = O
 			var/datum/action/action = LAZYACCESSASSOC(chassis.occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/mech_defense_mode)
 			action.Trigger(FALSE)
-	obj_integrity = 10000
+	atom_integrity = 10000
 
 /obj/durand_shield/play_attack_sound()
 	playsound(src, 'sound/mecha/mech_shield_deflect.ogg', 100, TRUE)

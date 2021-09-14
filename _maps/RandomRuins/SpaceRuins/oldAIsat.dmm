@@ -252,7 +252,7 @@
 /obj/item/food/meat/slab/synthmeat{
 	name = "Cuban Pete-Meat"
 	},
-/obj/item/stack/spacecash,
+/obj/item/stack/spacecash/c200,
 /turf/open/floor/engine,
 /area/tcommsat/oldaisat)
 "aY" = (

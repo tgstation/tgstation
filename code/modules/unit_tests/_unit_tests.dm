@@ -37,6 +37,9 @@
 #define UNIT_TEST_FAILED 1
 #define UNIT_TEST_SKIPPED 2
 
+#define TEST_DEFAULT 1
+#define TEST_DEL_WORLD INFINITY
+
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
 
@@ -52,6 +55,7 @@
 #include "connect_loc.dm"
 #include "confusion.dm"
 #include "crayons.dm"
+#include "create_and_destroy.dm"
 #include "designs.dm"
 #include "dynamic_ruleset_sanity.dm"
 #include "egg_glands.dm"
@@ -61,7 +65,7 @@
 #include "heretic_knowledge.dm"
 #include "holidays.dm"
 #include "hydroponics_harvest.dm"
-#include "initialize_sanity.dm"
+#include "hydroponics_self_mutations.dm"
 #include "keybinding_init.dm"
 #include "machine_disassembly.dm"
 #include "medical_wounds.dm"

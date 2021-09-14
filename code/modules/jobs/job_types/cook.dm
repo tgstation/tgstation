@@ -1,11 +1,12 @@
 /datum/job/cook
 	title = "Cook"
 	department_head = list("Head of Personnel")
-	faction = "Station"
+	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
+	exp_granted_type = EXP_TYPE_CREW
 	var/cooks = 0 //Counts cooks amount
 	/// List of areas that are counted as the kitchen for the purposes of CQC. Defaults to just the kitchen. Mapping configs can and should override this.
 	var/list/kitchen_areas = list(/area/service/kitchen)
@@ -20,13 +21,17 @@
 
 	display_order = JOB_DISPLAY_ORDER_COOK
 	bounty_types = CIV_JOB_CHEF
-	departments = DEPARTMENT_SERVICE
+	departments_list = list(
+		/datum/job_department/service,
+		)
 
 	family_heirlooms = list(/obj/item/reagent_containers/food/condiment/saltshaker, /obj/item/kitchen/rollingpin, /obj/item/clothing/head/chefhat)
 
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+
+
 /datum/job/cook/New()
 	. = ..()
-	SSmapping.HACK_LoadMapConfig()
 	var/list/job_changes = SSmapping.config.job_changes
 
 	if(!length(job_changes))
@@ -56,7 +61,7 @@
 
 	mail_goodies = list(
 		/obj/item/storage/box/ingredients/random = 80,
-		/datum/reagent/consumable/caramel =  20,
+		/obj/item/reagent_containers/glass/bottle/caramel = 20,
 		/obj/item/reagent_containers/food/condiment/flour = 20,
 		/obj/item/reagent_containers/food/condiment/rice = 20,
 		/obj/item/reagent_containers/food/condiment/enzyme = 15,
@@ -64,6 +69,18 @@
 		/obj/item/kitchen/knife = 4,
 		/obj/item/kitchen/knife/butcher = 2
 	)
+
+
+/datum/job/cook/award_service(client/winner, award)
+	winner.give_award(award, winner.mob)
+
+	var/datum/venue/restaurant = SSrestaurant.all_venues[/datum/venue/restaurant]
+	var/award_score = restaurant.total_income
+	var/award_status = winner.get_award_status(/datum/award/score/chef_tourist_score)
+	if(award_score > award_status)
+		award_score -= award_status
+	winner.give_award(/datum/award/score/chef_tourist_score, winner.mob, award_score)
+
 
 /datum/outfit/job/cook
 	name = "Cook"

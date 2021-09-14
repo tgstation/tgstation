@@ -40,11 +40,18 @@
 /obj/projectile/temp/basilisk
 	name = "freezing blast"
 	icon_state = "ice_2"
-	damage = 0
+	damage = 10
 	damage_type = BURN
-	nodamage = TRUE
+	nodamage = FALSE
 	flag = ENERGY
 	temperature = -50 // Cools you down! per hit!
+	var/slowdown = TRUE //Determines if the projectile applies a slowdown status effect on carbons or not
+
+/obj/projectile/temp/basilisk/on_hit(atom/target, blocked = 0)
+	. = ..()
+	if(iscarbon(target) && slowdown)
+		var/mob/living/carbon/carbon_target = target
+		carbon_target.apply_status_effect(/datum/status_effect/freezing_blast)
 
 /obj/projectile/temp/basilisk/heated
 	name = "energy blast"
@@ -53,11 +60,13 @@
 	damage_type = BRUTE
 	nodamage = FALSE
 	temperature = 0
+	slowdown = FALSE
 
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
-		if(isliving(target) && !target.Adjacent(targets_from) && ranged_cooldown <= world.time)//No more being shot at point blank or spammed with RNG beams
+		var/atom/target_from = GET_TARGETS_FROM(src)
+		if(isliving(target) && !target.Adjacent(target_from) && ranged_cooldown <= world.time)//No more being shot at point blank or spammed with RNG beams
 			OpenFire(target)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
@@ -72,9 +81,9 @@
 /mob/living/simple_animal/hostile/asteroid/basilisk/AttackingTarget()
 	. = ..()
 	if(lava_drinker && !warmed_up && istype(target, /turf/open/lava))
-		visible_message("<span class='warning'>[src] begins to drink from [target]...</span>")
+		visible_message(span_warning("[src] begins to drink from [target]..."))
 		if(do_after(src, 70, target = target))
-			visible_message("<span class='warning'>[src] begins to fire up!</span>")
+			visible_message(span_warning("[src] begins to fire up!"))
 			fully_heal()
 			icon_state = "Basilisk_alert"
 			set_varspeed(0)
@@ -83,7 +92,7 @@
 			addtimer(CALLBACK(src, .proc/cool_down), 3000)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
-	visible_message("<span class='warning'>[src] appears to be cooling down...</span>")
+	visible_message(span_warning("[src] appears to be cooling down..."))
 	if(stat != DEAD)
 		icon_state = "Basilisk"
 	set_varspeed(3)
@@ -131,22 +140,13 @@
 		consume_bait()
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/proc/consume_bait()
-	var/obj/item/stack/ore/diamond/diamonds = locate(/obj/item/stack/ore/diamond) in oview(src, 9)
-	var/obj/item/pen/survival/bait = locate(/obj/item/pen/survival) in oview(src, 9)
-	if(!diamonds && !bait)
-		return
-	if(diamonds)
-		var/distanced = 0
-		distanced = get_dist(loc,diamonds.loc)
-		if(distanced <= 1 && diamonds)
-			qdel(diamonds)
-			src.visible_message("<span class='notice'>[src] consumes [diamonds], and it disappears! ...At least, you think.</span>")
-	if(bait)
-		var/distanceb = 0
-		distanceb = get_dist(loc,bait.loc)
-		if(distanceb <= 1 && bait)
-			qdel(bait)
-			src.visible_message("<span class='notice'>[src] examines [bait] closer, and telekinetically shatters the pen.</span>")
+	for(var/obj/potential_consumption in view(1, src))
+		if(istype(potential_consumption, /obj/item/stack/ore/diamond))
+			qdel(potential_consumption)
+			visible_message(span_notice("[src] consumes [potential_consumption], and it disappears! ...At least, you think."))
+		else if(istype(potential_consumption, /obj/item/pen/survival))
+			qdel(potential_consumption)
+			visible_message(span_notice("[src] examines [potential_consumption] closer, and telekinetically shatters the pen."))
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize()
 	. = ..()

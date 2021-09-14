@@ -1,3 +1,6 @@
+#define GHOUL_MAX_HEALTH 25
+#define MUTE_MAX_HEALTH 50
+
 /datum/eldritch_knowledge/base_flesh
 	name = "Principle of Hunger"
 	desc = "Opens up the Path of Flesh to you. Allows you to transmute a pool of blood with a kitchen knife, or its derivatives, into a Flesh Blade."
@@ -43,7 +46,7 @@
 	humie.grab_ghost()
 
 	if(!humie.mind || !humie.client)
-		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [humie.real_name], a voiceless dead", ROLE_HERETIC, ROLE_HERETIC, 50,humie)
+		var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [humie.real_name], a voiceless dead", ROLE_HERETIC, ROLE_HERETIC, 5 SECONDS, humie)
 		if(!LAZYLEN(candidates))
 			return
 		var/mob/dead/observer/chosen_candidate = pick(candidates)
@@ -54,10 +57,11 @@
 	ADD_TRAIT(humie, TRAIT_MUTE, MAGIC_TRAIT)
 	log_game("[key_name_admin(humie)] has become a voiceless dead, their master is [user.real_name]")
 	humie.revive(full_heal = TRUE, admin_revive = TRUE)
-	humie.setMaxHealth(50)
-	humie.health = 50 // Voiceless dead are much tougher than ghouls
+	humie.setMaxHealth(MUTE_MAX_HEALTH)
+	humie.health = MUTE_MAX_HEALTH // Voiceless dead are much tougher than ghouls
 	humie.become_husk()
 	humie.faction |= "heretics"
+	humie.apply_status_effect(/datum/status_effect/ghoul)
 
 	var/datum/antagonist/heretic_monster/heretic_monster = humie.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
@@ -70,6 +74,8 @@
 	SIGNAL_HANDLER
 	var/mob/living/carbon/human/humie = source
 	ghouls -= humie
+	humie.setMaxHealth(initial(humie.maxHealth))
+	humie.remove_status_effect(/datum/status_effect/ghoul)
 	humie.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
 	UnregisterSignal(source,COMSIG_LIVING_DEATH)
 
@@ -92,13 +98,13 @@
 		return
 	human_target.grab_ghost()
 	if(!human_target.mind || !human_target.client)
-		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
+		to_chat(user, span_warning("There is no soul connected to this body..."))
 		return
 	if(HAS_TRAIT(human_target, TRAIT_HUSK))
-		to_chat(user, "<span class='warning'>You cannot revive a dead ghoul!</span>")
+		to_chat(user, span_warning("You cannot revive a dead ghoul!"))
 		return
 	if(LAZYLEN(spooky_scaries) >= ghoul_amt)
-		to_chat(user, "<span class='warning'>Your patron cannot support more ghouls on this plane!</span>")
+		to_chat(user, span_warning("Your patron cannot support more ghouls on this plane!"))
 		return
 	LAZYADD(spooky_scaries, human_target)
 	log_game("[key_name_admin(human_target)] has become a ghoul, their master is [user.real_name]")
@@ -106,9 +112,10 @@
 	. = TRUE
 	RegisterSignal(human_target,COMSIG_LIVING_DEATH,.proc/remove_ghoul)
 	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
-	human_target.setMaxHealth(25)
-	human_target.health = 25
+	human_target.setMaxHealth(GHOUL_MAX_HEALTH)
+	human_target.health = GHOUL_MAX_HEALTH
 	human_target.become_husk()
+	human_target.apply_status_effect(/datum/status_effect/ghoul)
 	human_target.faction |= "heretics"
 	var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
@@ -129,8 +136,12 @@
 			crit_wound.apply_wound(bodypart)
 
 /datum/eldritch_knowledge/flesh_grasp/proc/remove_ghoul(datum/source)
+	SIGNAL_HANDLER
+
 	var/mob/living/carbon/human/humie = source
 	spooky_scaries -= humie
+	humie.setMaxHealth(initial(humie.maxHealth))
+	humie.remove_status_effect(/datum/status_effect/ghoul)
 	humie.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
 	UnregisterSignal(source, COMSIG_LIVING_DEATH)
 
@@ -190,7 +201,7 @@
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/stalker
 	next_knowledge = list(
 		/datum/eldritch_knowledge/summon/ashy,
-		/datum/eldritch_knowledge/summon/rusty,
+		/datum/eldritch_knowledge/spell/blood_siphon,
 		/datum/eldritch_knowledge/final/flesh_final
 	)
 	route = PATH_FLESH
@@ -244,3 +255,6 @@
 	grasp_ghoul.ghoul_amt *= 3
 	var/datum/eldritch_knowledge/flesh_ghoul/better_ghoul = heretic_datum.get_knowledge(/datum/eldritch_knowledge/flesh_ghoul)
 	better_ghoul.max_amt *= 3
+
+#undef GHOUL_MAX_HEALTH
+#undef MUTE_MAX_HEALTH

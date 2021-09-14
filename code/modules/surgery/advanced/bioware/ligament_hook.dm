@@ -19,14 +19,14 @@
 	time = 125
 
 /datum/surgery_step/reshape_ligaments/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You start reshaping [target]'s ligaments into a hook-like shape.</span>",
-		"<span class='notice'>[user] starts reshaping [target]'s ligaments into a hook-like shape.</span>",
-		"<span class='notice'>[user] starts manipulating [target]'s ligaments.</span>")
+	display_results(user, target, span_notice("You start reshaping [target]'s ligaments into a hook-like shape."),
+		span_notice("[user] starts reshaping [target]'s ligaments into a hook-like shape."),
+		span_notice("[user] starts manipulating [target]'s ligaments."))
 
 /datum/surgery_step/reshape_ligaments/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	display_results(user, target, "<span class='notice'>You reshape [target]'s ligaments into a connective hook!</span>",
-		"<span class='notice'>[user] reshapes [target]'s ligaments into a connective hook!</span>",
-		"<span class='notice'>[user] finishes manipulating [target]'s ligaments.</span>")
+	display_results(user, target, span_notice("You reshape [target]'s ligaments into a connective hook!"),
+		span_notice("[user] reshapes [target]'s ligaments into a connective hook!"),
+		span_notice("[user] finishes manipulating [target]'s ligaments."))
 	new /datum/bioware/hooked_ligaments(target)
 	return ..()
 

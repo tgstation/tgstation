@@ -42,7 +42,7 @@
 	if(!iscarbon(target))
 		return
 	var/mob/living/carbon/blind_victim = target
-	to_chat(blind_victim, "<span class='danger'>Your eyes burn horrifically!</span>") //pocket sand! also, this is the message that changeling blind stings use, and no, I'm not ashamed about reusing it
+	to_chat(blind_victim, span_danger("Your eyes burn horrifically!")) //pocket sand! also, this is the message that changeling blind stings use, and no, I'm not ashamed about reusing it
 	blind_victim.become_nearsighted(EYE_DAMAGE)
 	blind_victim.blind_eyes(5)
 	blind_victim.blur_eyes(10)
@@ -104,7 +104,7 @@
 /datum/eldritch_knowledge/spell/flame_birth
 	name = "Flame Birth"
 	gain_text = "The Nightwatcher was a man of principles, and yet his power arose from the chaos he vowed to combat."
-	desc = "Short range spell that allows you to curse someone with massive sanity loss."
+	desc = "A spell that steals some health from every burning person around you."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/fiery_rebirth
 	next_knowledge = list(
@@ -137,7 +137,7 @@
 /datum/eldritch_knowledge/curse/corrosion
 	name = "Curse of Corrosion"
 	gain_text = "Cursed land, cursed man, cursed mind."
-	desc = "Curse someone for 2 minutes of vomiting and major organ damage. Using a wirecutter, a pool of blood, a heart, left arm and a right arm, and an item that the victim touched  with their bare hands."
+	desc = "Curse someone for 2 minutes of vomiting and major organ damage. Using a wirecutter, a pool of vomit, a heart and an item that the victim touched  with their bare hands."
 	cost = 1
 	required_atoms = list(/obj/item/wirecutters,/obj/effect/decal/cleanable/vomit,/obj/item/organ/heart)
 	next_knowledge = list(

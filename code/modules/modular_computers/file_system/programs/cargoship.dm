@@ -63,16 +63,16 @@
 			cut_multiplier = potential_cut ? clamp(round(potential_cut/100, cut_min), cut_min, cut_max) : initial(cut_multiplier)
 		if("print")
 			if(!printer)
-				to_chat(usr, "<span class='notice'>Hardware error: A printer is required to print barcodes.</span>")
+				to_chat(usr, span_notice("Hardware error: A printer is required to print barcodes."))
 				return
 			if(printer.stored_paper <= 0)
-				to_chat(usr, "<span class='notice'>Hardware error: Printer is out of paper.</span>")
+				to_chat(usr, span_notice("Hardware error: Printer is out of paper."))
 				return
 			if(!payments_acc)
-				to_chat(usr, "<span class='notice'>Software error: Please set a current user first.</span>")
+				to_chat(usr, span_notice("Software error: Please set a current user first."))
 				return
 			var/obj/item/barcode/barcode = new /obj/item/barcode(get_turf(ui_host()))
 			barcode.payments_acc = payments_acc
 			barcode.cut_multiplier = cut_multiplier
 			printer.stored_paper--
-			to_chat(usr, "<span class='notice'>The computer prints out a barcode.</span>")
+			to_chat(usr, span_notice("The computer prints out a barcode."))

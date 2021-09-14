@@ -36,11 +36,11 @@
 
 /datum/component/gas_leaker/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_OBJ_TAKE_DAMAGE, .proc/start_processing)
+	RegisterSignal(parent, COMSIG_ATOM_TAKE_DAMAGE, .proc/start_processing)
 
 /datum/component/gas_leaker/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, COMSIG_OBJ_TAKE_DAMAGE)
+	UnregisterSignal(parent, COMSIG_ATOM_TAKE_DAMAGE)
 
 /datum/component/gas_leaker/proc/process_atmos()
 	. = PROCESS_KILL
@@ -72,10 +72,11 @@
 	return process_machine(master, airs)
 
 /datum/component/gas_leaker/proc/process_leak(obj/master, list/airs)
-	if(master.obj_integrity > master.max_integrity * integrity_leak_percent)
+	var/current_integrity = master.get_integrity()
+	if(current_integrity > master.max_integrity * integrity_leak_percent)
 		return PROCESS_KILL
 	var/turf/location = get_turf(master)
-	var/true_rate = (1 - (master.obj_integrity / master.max_integrity)) * leak_rate
+	var/true_rate = (1 - (current_integrity / master.max_integrity)) * leak_rate
 	for(var/datum/gas_mixture/mix as anything in airs)
 		var/pressure = mix.return_pressure()
 		if(mix.release_gas_to(location.return_air(), pressure, true_rate))

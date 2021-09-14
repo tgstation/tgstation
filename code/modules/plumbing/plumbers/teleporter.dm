@@ -20,7 +20,7 @@
 	var/obj/item/multitool/M = I
 
 	if(!istype(M.buffer, /obj/machinery/plumbing/receiver))
-		to_chat(user, "<span class='warning'>Invalid buffer.</span>")
+		to_chat(user, span_warning("Invalid buffer."))
 		return
 
 	if(target)
@@ -28,7 +28,7 @@
 
 	set_teleport_target(M.buffer)
 
-	to_chat(user, "<span class='green'>You succesfully link [src] to the [M.buffer].</span>")
+	to_chat(user, span_green("You succesfully link [src] to the [M.buffer]."))
 	return TRUE
 
 ///Lose our previous target and make our previous target lose us. Seperate proc because I feel like I'll need this again
@@ -74,7 +74,7 @@
 
 	var/obj/item/multitool/M = I
 	M.buffer = src
-	to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
+	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
 	return TRUE
 
 /obj/machinery/plumbing/receiver/process()

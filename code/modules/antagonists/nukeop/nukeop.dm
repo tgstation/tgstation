@@ -1,5 +1,5 @@
 /datum/antagonist/nukeop
-	name = "Nuclear Operative"
+	name = ROLE_NUCLEAR_OPERATIVE
 	roundend_category = "syndicate operatives" //just in case
 	antagpanel_category = "NukeOp"
 	job_rank = ROLE_OPERATIVE
@@ -8,6 +8,7 @@
 	antag_moodlet = /datum/mood_event/focused
 	show_to_ghosts = TRUE
 	hijack_speed = 2 //If you can't take out the station, take the shuttle instead.
+	suicide_cry = "FOR THE SYNDICATE!!"
 	var/datum/team/nuclear/nuke_team
 	var/always_new_team = FALSE //If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
 	var/send_to_spawnpoint = TRUE //Should the user be moved to default spawnpoint.
@@ -34,7 +35,7 @@
 
 /datum/antagonist/nukeop/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
-	to_chat(owner, "<span class='notice'>You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!</span>")
+	to_chat(owner, span_notice("You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!"))
 	owner.announce_objectives()
 
 /datum/antagonist/nukeop/on_gain()
@@ -42,7 +43,6 @@
 	forge_objectives()
 	. = ..()
 	equip_op()
-	memorize_code()
 	if(send_to_spawnpoint)
 		move_to_spawnpoint()
 		// grant extra TC for the people who start in the nukie base ie. not the lone op
@@ -50,8 +50,7 @@
 		var/datum/component/uplink/U = owner.find_syndicate_uplink()
 		if (U)
 			U.telecrystals += extra_tc
-
-
+	memorize_code()
 
 /datum/antagonist/nukeop/get_team()
 	return nuke_team
@@ -124,7 +123,7 @@
 	nuke_team = new_team
 
 /datum/antagonist/nukeop/admin_add(datum/mind/new_owner,mob/admin)
-	new_owner.assigned_role = ROLE_SYNDICATE
+	new_owner.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has nuke op'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has nuke op'ed [key_name(new_owner)].")
@@ -147,7 +146,7 @@
 		antag_memory += "<B>Syndicate Nuclear Bomb Code</B>: [code]<br>"
 		to_chat(owner.current, "The nuclear authorization code is: <B>[code]</B>")
 	else
-		to_chat(admin, "<span class='danger'>No valid nuke found!</span>")
+		to_chat(admin, span_danger("No valid nuke found!"))
 
 /datum/antagonist/nukeop/leader
 	name = "Nuclear Operative Leader"
@@ -188,7 +187,7 @@
 			dukinuki.forceMove(H.drop_location())
 		else
 			H.put_in_hands(dukinuki, TRUE)
-		nuke_team.war_button = dukinuki
+		nuke_team.war_button_ref = WEAKREF(dukinuki)
 	owner.announce_objectives()
 	addtimer(CALLBACK(src, .proc/nuketeam_name_assign), 1)
 
@@ -242,6 +241,7 @@
 			nuke_team.memorized_code = null
 
 /datum/antagonist/nukeop/reinforcement
+	show_in_antagpanel = FALSE
 	send_to_spawnpoint = FALSE
 	nukeop_outfit = /datum/outfit/syndicate/no_crystals
 
@@ -251,7 +251,7 @@
 	var/core_objective = /datum/objective/nuclear
 	var/memorized_code
 	var/list/team_discounts
-	var/obj/item/nuclear_challenge/war_button
+	var/datum/weakref/war_button_ref
 
 /datum/team/nuclear/New()
 	..()
@@ -394,7 +394,8 @@
 	disk_report += "</table>"
 	var/common_part = ..()
 	var/challenge_report
-	if(!QDELETED(war_button))
+	var/obj/item/nuclear_challenge/war_button = war_button_ref?.resolve()
+	if(war_button)
 		challenge_report += "<b>War not declared.</b> <a href='?_src_=holder;[HrefToken()];force_war=[REF(war_button)]'>\[Force war\]</a>"
 	return common_part + disk_report + challenge_report
 

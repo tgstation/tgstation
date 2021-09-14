@@ -138,7 +138,10 @@
 		else
 			dat += "ETA: <a href='?_src_=holder;[HrefToken()];edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_leading(num2text(timeleft % 60), 2, "0")]</a><BR>"
 	dat += "<a href='?_src_=holder;[HrefToken()];end_round=[REF(usr)]'>End Round Now</a><br>"
-	dat += "<a href='?_src_=holder;[HrefToken()];delay_round_end=1'>[SSticker.delay_end ? "End Round Normally" : "Delay Round End"]</a><br>"
+	if(SSticker.delay_end)
+		dat += "<a href='?_src_=holder;[HrefToken()];undelay_round_end=1'>End Round Normally</a><br>"
+	else
+		dat += "<a href='?_src_=holder;[HrefToken()];delay_round_end=1'>Delay Round End</a><br>"
 	dat += "<a href='?_src_=holder;[HrefToken()];ctf_toggle=1'>Enable/Disable CTF</a><br>"
 	dat += "<a href='?_src_=holder;[HrefToken()];rebootworld=1'>Reboot World</a><br>"
 	dat += "<a href='?_src_=holder;[HrefToken()];check_teams=1'>Check Teams</a>"
@@ -183,7 +186,7 @@
 	dat += "<BR><b><font color='#bf42f4'>SKIPPED \[On centcom Z-level\]: [living_skipped] living players|[drones] living drones|</font></b>"
 	dat += "<BR><b><font color='red'>Dead/Observing players:|[observers_connected] active|[observers - observers_connected] disconnected|[brains] brains|</font></b>"
 	if(other_players)
-		dat += "<BR><span class='userdanger'>[other_players] players in invalid state or the statistics code is bugged!</span>"
+		dat += "<BR>[span_userdanger("[other_players] players in invalid state or the statistics code is bugged!")]"
 	dat += "<br><br>"
 
 	dat += build_antag_listing()

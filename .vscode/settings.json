@@ -12,13 +12,11 @@
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": true
 	},
-	"workbench.editorAssociations": [
-		{
-			"filenamePattern": "*.dmi",
-			"viewType": "imagePreview.previewEditor"
-		}
-	],
+	"workbench.editorAssociations": {
+		"*.dmi": "imagePreview.previewEditor"
+	},
 	"files.eol": "\n",
+	"files.insertFinalNewline": true,
 	"gitlens.advanced.blame.customArguments": ["-w"],
 	"tgstationTestExplorer.project.resultsType": "json",
 	"[javascript]": {

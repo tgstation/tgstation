@@ -28,7 +28,7 @@
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
 	if(icon_state == "mirror_broke" && !broken)
-		obj_break(null, mapload)
+		atom_break(null, mapload)
 
 /obj/structure/mirror/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -58,7 +58,7 @@
 		if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 			return //no tele-grooming
 		if(HAS_TRAIT(H, TRAIT_BALD))
-			to_chat(H, "<span class='notice'>If only growing back hair were that easy for you...</span>")
+			to_chat(H, span_notice("If only growing back hair were that easy for you..."))
 		if(new_style)
 			H.hairstyle = new_style
 
@@ -75,7 +75,7 @@
 
 	. = ..()
 	if(broken) // breaking a mirror truly gets you bad luck!
-		to_chat(user, "<span class='warning'>A chill runs down your spine as [src] shatters...</span>")
+		to_chat(user, span_warning("A chill runs down your spine as [src] shatters..."))
 		user.AddComponent(/datum/component/omen, silent=TRUE) // we have our own message
 
 /obj/structure/mirror/bullet_act(obj/projectile/P)
@@ -85,10 +85,10 @@
 	. = ..()
 	if(broken) // breaking a mirror truly gets you bad luck!
 		var/mob/living/unlucky_dude = P.firer
-		to_chat(unlucky_dude, "<span class='warning'>A chill runs down your spine as [src] shatters...</span>")
+		to_chat(unlucky_dude, span_warning("A chill runs down your spine as [src] shatters..."))
 		unlucky_dude.AddComponent(/datum/component/omen, silent=TRUE) // we have our own message
 
-/obj/structure/mirror/obj_break(damage_flag, mapload)
+/obj/structure/mirror/atom_break(damage_flag, mapload)
 	. = ..()
 	if(broken || (flags_1 & NODECONSTRUCT_1))
 		return
@@ -116,9 +116,9 @@
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
 
-	to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+	to_chat(user, span_notice("You begin repairing [src]..."))
 	if(I.use_tool(src, user, 10, volume=50))
-		to_chat(user, "<span class='notice'>You repair [src].</span>")
+		to_chat(user, span_notice("You repair [src]."))
 		broken = 0
 		icon_state = initial(icon_state)
 		desc = initial(desc)
@@ -216,9 +216,10 @@
 
 					if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
 						H.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
+						H.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
 
 					else
-						to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")
+						to_chat(H, span_notice("Invalid color. Your color is not bright enough."))
 
 			H.update_body()
 			H.update_hair()
@@ -234,7 +235,7 @@
 						return
 					H.gender = FEMALE
 					H.body_type = FEMALE
-					to_chat(H, "<span class='notice'>Man, you feel like a woman!</span>")
+					to_chat(H, span_notice("Man, you feel like a woman!"))
 				else
 					return
 
@@ -244,7 +245,7 @@
 						return
 					H.gender = MALE
 					H.body_type = MALE
-					to_chat(H, "<span class='notice'>Whoa man, you feel like a man!</span>")
+					to_chat(H, span_notice("Whoa man, you feel like a man!"))
 				else
 					return
 			H.dna.update_ui_block(DNA_GENDER_BLOCK)
