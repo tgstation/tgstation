@@ -27,6 +27,7 @@
 	maxHealth = 50
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
+	ai_controller = /datum/ai_controller/basic_controller/cow
 
 /mob/living/basic/cow/Initialize()
 	AddComponent(/datum/component/tippable, \
@@ -60,42 +61,29 @@
  * tipper - the mob who tipped us
  */
 /mob/living/basic/cow/proc/after_cow_tipped(mob/living/carbon/tipper)
-	addtimer(CALLBACK(src, .proc/look_for_help, tipper), rand(10 SECONDS, 20 SECONDS))
+	addtimer(CALLBACK(src, .proc/set_tip_react_blackboard, tipper), rand(10 SECONDS, 20 SECONDS))
 
 /*
- * Find a mob in a short radius around us (prioritizing the person who originally tipped us)
- * and either look at them for help, or give up. No actual mechanical difference between the two.
+ * We've been waiting long enough, we're going to tell our AI to begin pleading.
  *
  * tipper - the mob who originally tipped us
  */
-/mob/living/basic/cow/proc/look_for_help(mob/living/carbon/tipper)
-	// visible part of the visible message
-	var/seen_message = ""
-	// self part of the visible message
-	var/self_message = ""
-	// the mob we're looking to for aid
-	var/mob/living/carbon/savior
-	// look for someone in a radius around us for help. If our original tipper is in range, prioritize them
-	for(var/mob/living/carbon/potential_aid in oview(3, get_turf(src)))
-		if(potential_aid == tipper)
-			savior = tipper
-			break
-		savior = potential_aid
-
-	if(prob(75) && savior)
-		var/text = pick("imploringly", "pleadingly", "with a resigned expression")
-		seen_message = "[src] looks at [savior] [text]."
-		self_message = "You look at [savior] [text]."
-	else
-		seen_message = "[src] seems resigned to its fate."
-		self_message = "You resign yourself to your fate."
-	visible_message(span_notice("[seen_message]"), span_notice("[self_message]"))
+/mob/living/basic/cow/proc/set_tip_react_blackboard(mob/living/carbon/tipper)
+	if(!HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, TIPPED_OVER) || !ai_controller)
+		return
+	ai_controller.blackboard[BB_BASIC_MOB_TIP_REACTING] = TRUE
+	ai_controller.blackboard[BB_BASIC_MOB_TIPPER] = tipper
 
 /datum/ai_controller/basic_controller/cow
+	blackboard = list(
+		BB_BASIC_MOB_TIP_REACTING = FALSE,
+		BB_BASIC_MOB_TIPPER = null,
+	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/tip_reaction,
 		/datum/ai_planning_subtree/random_speech/cow,
 	)
 
@@ -118,6 +106,7 @@
 
 /datum/ai_controller/basic_controller/cow/wisdom
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/tip_reaction,
 		/datum/ai_planning_subtree/random_speech/cow/wisdom,
 	)
 
@@ -139,6 +128,7 @@
 	icon_living = "moonicorn"
 	icon_dead = "moonicorn_dead"
 	icon_gib = null //otherwise does the regular cow gib animation
+	faction = list("hostile")
 	speed = 1
 	melee_damage_lower = 25
 	melee_damage_upper = 25
@@ -148,6 +138,7 @@
 	gold_core_spawnable = NO_SPAWN
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
+	ai_controller = /datum/ai_controller/basic_controller/cow/moonicorn
 
 /mob/living/basic/cow/moonicorn/Initialize()
 	. = ..()
@@ -162,17 +153,19 @@
 
 /mob/living/basic/cow/moonicorn/tamed(mob/living/tamer)
 	. = ..()
+	visible_message(span_notice("[src] nods with respect."))
 	///stop killing my FRIENDS
 	faction |= tamer.faction
 
 /datum/ai_controller/basic_controller/cow/moonicorn
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/moonicorn()
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/moonicorn(),
+		BB_BASIC_MOB_TIP_REACTING = FALSE,
+		BB_BASIC_MOB_TIPPER = null,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
-	ai_movement = /datum/ai_movement/basic_avoidance
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/tip_reaction,
 		/datum/ai_planning_subtree/random_speech/cow,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/moonicorn,
