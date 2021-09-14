@@ -19,7 +19,10 @@
 /mob/living/basic/mining/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/basic_body_temp_sensetive, 0, INFINITY, cold_damage = 20)
-	//AddElement(/datum/element/aggro_icon, )
+	add_crusher_loot()
+
+/mob/living/basic/mining/proc/add_crusher_loot()
+	return
 
 /mob/living/basic/mining/bullet_act(obj/projectile/projectile)//Reduces damage from most projectilerojectiles to curb off-screen kills
 	if(projectile.damage < 30 && projectile.damage_type != BRUTE)

@@ -1260,7 +1260,7 @@
 				/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
 				/mob/living/simple_animal/hostile/carp/ranged,
 				/mob/living/simple_animal/hostile/carp/ranged/chaos,
-				/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
+				/mob/living/basic/mining/basilisk/watcher,
 				/mob/living/simple_animal/hostile/asteroid/goliath/beast,
 				/mob/living/simple_animal/hostile/headcrab,
 				/mob/living/simple_animal/hostile/morph,

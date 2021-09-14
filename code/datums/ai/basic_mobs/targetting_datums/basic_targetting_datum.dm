@@ -13,6 +13,8 @@
 	return target_hiding_location
 
 /datum/targetting_datum/basic
+	///What level of stat do keep attacking up to? ( https://www.youtube.com/watch?v=UcZzlPGnKdU )
+	var/max_attack_stat = CONSCIOUS
 
 /datum/targetting_datum/basic/can_attack(mob/living/living_mob, atom/the_target)
 	if(isturf(the_target) || !the_target) // bail out on invalids
@@ -29,10 +31,13 @@
 	if(living_mob.z != the_target.z)
 		return FALSE
 
+	if(!can_see(living_mob, target))
+		return FALSE
+
 	if(isliving(the_target)) //Targetting vs living mobs
 		var/mob/living/L = the_target
 		var/faction_check = living_mob.faction_check_mob(L)
-		if(faction_check || L.stat)
+		if(faction_check || L.stat > max_attack_stat)
 			return FALSE
 		return TRUE
 
@@ -53,3 +58,7 @@
 		return TRUE
 
 	return FALSE
+
+///We go a bit rougher on them with this one.
+/datum/targetting_datum/basic/hard_crit
+	max_attack_stat = HARD_CRIT

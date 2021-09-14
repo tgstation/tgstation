@@ -12,7 +12,7 @@
 	spawnableTurfs = list()
 	spawnableAtoms = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast = 10,
 	/mob/living/simple_animal/hostile/asteroid/hivelord/legion = 10,
-	/mob/living/simple_animal/hostile/asteroid/basilisk/watcher = 10)
+	/mob/living/basic/mining/basilisk/watcher = 10)
 
 /datum/map_generator_module/splatter_layer/lavaland_tendrils
 	spawnableTurfs = list()

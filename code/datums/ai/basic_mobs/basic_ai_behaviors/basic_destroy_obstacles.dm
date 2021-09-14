@@ -29,7 +29,7 @@
 			continue
 		if(turf_in_direction.Adjacent(mob_pawn)) //Required because it might be obscured by cardinals.
 			if(iswallturf(turf_in_direction) || ismineralturf(turf_in_direction))
-				turf_in_direction.attack_basic_mob(src)
+				turf_in_direction.attack_basic_mob(mob_pawn)
 				break
 		for(var/obj/object_in_direction in turf_in_direction.contents)
 			if(!object_in_direction.Adjacent(mob_pawn))

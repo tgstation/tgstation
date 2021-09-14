@@ -2978,7 +2978,7 @@
 	},
 /area/maintenance/fore)
 "amq" = (
-/mob/living/simple_animal/hostile/asteroid/basilisk{
+/mob/living/basic/mining/basilisk{
 	environment_smash = 0
 	},
 /turf/open/floor/plating/asteroid/airless,
@@ -81447,7 +81447,7 @@
 /area/engineering/atmos)
 "xuj" = (
 /obj/structure/table_frame/wood,
-/mob/living/simple_animal/hostile/asteroid/basilisk{
+/mob/living/basic/mining/basilisk{
 	environment_smash = 0
 	},
 /turf/open/floor/carpet/green,
