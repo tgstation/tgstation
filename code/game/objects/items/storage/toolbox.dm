@@ -34,6 +34,11 @@
 				latches = "triple_latch"
 	update_appearance()
 
+/obj/item/storage/toolbox/examine(mob/user)
+	. = ..()
+	if(!has_latches && !latch_exempt)
+		. += span_danger("\The [src] lacks a latch, be careful to not spill its contents.")
+
 /obj/item/storage/toolbox/update_overlays()
 	. = ..()
 	if(has_latches)
@@ -48,6 +53,14 @@
 			INVOKE_ASYNC(src, .proc/do_scatter, scatter_item)
 
 /obj/item/storage/toolbox/dropped(mob/user)
+	. = ..()
+	if(!has_latches && !latch_exempt)
+		var/list/obj/item/oldContents = contents.Copy()
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_QUICK_EMPTY)
+		for(var/obj/item/scatter_item in oldContents)
+			INVOKE_ASYNC(src, .proc/do_scatter, scatter_item)
+
+/obj/item/storage/toolbox/attack(mob/living/M, mob/living/user)
 	. = ..()
 	if(!has_latches && !latch_exempt)
 		var/list/obj/item/oldContents = contents.Copy()
