@@ -164,6 +164,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/carbon_dioxide,
 		/datum/gas/antinoblium,
 	)
+	///The list of gasses that cause the SM to shoot nuclear particles, and their odds to do so in %
+	var/list/nuclear_gas = list(
+		/datum/gas/bz = 30,
+		/datum/gas/antinoblium = 90,
+	)
+	///The list of gasses that cause the SM to zap, and their power multiplier.
+	var/list/charged_gas = list(
+		/datum/gas/zauker = 2,
+		/datum/gas/antinoblium = 3,
+	)
 	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
 	///Affects the power gain the sm experiances from heat
@@ -196,6 +206,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/ki = 0.0
 	///Powerloss composition
 	var/powerloss_composition = 0.0
+	///Just using this so I can finetune the power gain with vv. Should be removed before merge.______qdel_list_wrapper(list/L)
+	var/kpp = POWER_PENALTY_THRESHOLD
 	///Our internal radio
 	var/obj/item/radio/radio
 	///The key our internal radio uses
@@ -666,18 +678,35 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			power = max((removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0)
 
 		//Passively gain power when ki is above 1.
-		power += sqrt((ki-1) * POWER_PENALTY_THRESHOLD)
+		power += sqrt((ki-1) * kpp)
 
 		if(prob(50))
 			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
 			radiation_pulse(src, power * max(0, (1 + (power_transmission_bonus/(10-(gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus))// RadModBZ(500%)
 
-		if(prob(gas_comp[/datum/gas/zauker] + gas_comp[/datum/gas/antinoblium]))
-			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
-			supermatter_zap(src, 6, clamp(power*2, 4000, 20000), ZAP_MOB_STUN, zap_cutoff = src.zap_cutoff, power_level = power, zap_icon = src.zap_icon)
+		//Power multiplier for zaps caused by charged_gas.
+		var/zap_power = 0
+		//Composition of charged_gas.
+		var/charged_comp = 0
 
-		if(gas_comp[/datum/gas/bz] + gas_comp[/datum/gas/antinoblium] >= 0.4 && prob(30 * (gas_comp[/datum/gas/bz] + gas_comp[/datum/gas/antinoblium])))
-			src.fire_nuclear_particle()        // Start to emit radballs at a maximum of 30% chance per tick
+		for(var/gas_id in charged_gas)
+			zap_power += charged_gas[gas_id] * gas_comp[gas_id]
+			charged_comp += gas_comp[gas_id]
+
+		if(prob(charged_comp))
+			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
+			supermatter_zap(src, 6, clamp(power*zap_power, 2000*zap_power, 10000*zap_power), ZAP_MOB_STUN, zap_cutoff = src.zap_cutoff, power_level = power, zap_icon = src.zap_icon)
+
+		//Chance for nuclear particles being shot.
+		var/nuclear_chance = 0
+		//Composition of nuclear gasses.
+		var/nuclear_comp = 0
+
+		for(var/gas_id in nuclear_gas)
+			nuclear_chance += nuclear_gas[gas_id] * gas_comp[gas_id]
+			nuclear_comp += gas_comp[gas_id]
+		if(nuclear_comp >= 0.4 && prob(nuclear_chance))
+			src.fire_nuclear_particle()        // Start to emit radballs at a maximum of 90% chance per tick
 
 		//Power * 0.55 * a value between 1 and 0.8
 		var/device_energy = power * REACTION_POWER_MODIFIER * (1 - (psyCoeff * 0.2))
