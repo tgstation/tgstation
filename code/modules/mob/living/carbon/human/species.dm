@@ -245,11 +245,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /proc/generate_selectable_species()
 	var/list/selectable_species = list()
 
-	for(var/I in subtypesof(/datum/species))
-		var/datum/species/S = new I
-		if(S.check_roundstart_eligible())
-			selectable_species += S.id
-			qdel(S)
+	for(var/species_type in subtypesof(/datum/species))
+		var/datum/species/species = new species_type
+		if(species.check_roundstart_eligible())
+			selectable_species += species.id
+			qdel(species)
 
 	if(!selectable_species.len)
 		selectable_species += SPECIES_HUMAN
