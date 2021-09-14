@@ -204,11 +204,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Delta from k and antinob composition.
 	var/kdelta = 0.0
 	///Inverse of 1 - k
-	var/ki = 0.0
+	var/ki = 1.0
 	///Powerloss composition
 	var/powerloss_composition = 0.0
 	///Just using this so I can finetune the power gain with vv. Should be removed before merge.
-	var/kpp = T0C
+	var/kpp = 2*T0C
 	///Our internal radio
 	var/obj/item/radio/radio
 	///The key our internal radio uses
@@ -556,6 +556,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				//Only has a net positive effect when the temp is below 313.15, heals up to 2 damage. Psycologists increase this temp min by up to 45
 				damage = max(damage + (min(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD) + (45 * psyCoeff)), 0) / 150 ), 0)
 
+			//Maintaining a high ki will heal the SM.
+			damage = max(damage - log(10, max(ki - 4, 1)), 0)
 			//Check for holes in the SM inner chamber
 			for(var/turf/open/space/turf_to_check in RANGE_TURFS(1, loc))
 				if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))
@@ -707,7 +709,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			nuclear_chance += nuclear_gas[gas_id] * gas_comp[gas_id]
 			nuclear_comp += gas_comp[gas_id]
 		if(nuclear_comp >= 0.4 && prob(nuclear_chance))
-			src.fire_nuclear_particle()        // Start to emit radballs at a maximum of 90% chance per tick
+			src.fire_nuclear_particle()        // Start to emit radballs at a maximum of 100% chance per tick
 
 		//Power * 0.55 * a value between 1 and 0.8
 		var/device_energy = power * REACTION_POWER_MODIFIER * (1 - (psyCoeff * 0.2))
