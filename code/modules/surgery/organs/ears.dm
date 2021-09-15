@@ -54,10 +54,11 @@
 		REMOVE_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
 
 /obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)
-	if(owner.status_flags & owner.GODMODE)
+	if(owner.status_flags & GODMODE)
 		return FALSE
-	damage = max(damage + (ddmg*damage_multiplier), 0)
-	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
+	else
+		damage = max(damage + (ddmg*damage_multiplier), 0)
+		deaf = max(deaf + (ddeaf*damage_multiplier), 0)
 
 /obj/item/organ/ears/invincible
 	damage_multiplier = 0
