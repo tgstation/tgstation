@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - bugfix: "Flyswatter can now swat ants"
