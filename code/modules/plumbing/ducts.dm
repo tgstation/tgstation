@@ -328,7 +328,7 @@ All the important duct code:
 	item_flags = NOBLUDGEON
 	merge_type = /obj/item/stack/ducts
 	///Color of our duct
-	var/duct_color = "grey"
+	var/duct_color = "omni"
 	///Default layer of our duct
 	var/duct_layer = "Default Layer"
 	///Assoc index with all the available layers. yes five might be a bit much. Colors uses a global by the way

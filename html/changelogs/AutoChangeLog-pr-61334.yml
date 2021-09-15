@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - qol: "You can now toggle a space heater on/off with right click."

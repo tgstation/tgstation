@@ -394,3 +394,19 @@
       by maximum temperature, which also roughly approximates difficulty and desirability.
   - bugfix: The HFR interface now lets you toggle waste removal at power level 6,
       rather than merely having it permitted in the backend.
+2021-09-13:
+  Fikou:
+  - bugfix: server restarting stuff uses alert instead of tgui alert
+  kopoba:
+  - spellcheck: Nanotrasen recount blood packs in cargo order now its match reality
+2021-09-14:
+  Ghilker:
+  - spellcheck: fixed airlocks id from entrence to entrance
+  Nari Harimoto:
+  - bugfix: kilostation now has an unlocked mix chamber air alarm, 3 cores in the
+      launch room, the telescreen can see the test site, and a fancy launch controller
+  - bugfix: icebox disposals no longer spits trash on the mailroom floor
+2021-09-15:
+  Mothblocks, Floyd on lots of the design:
+  - refactor: The preferences menu has been completely rewritten in tgui.
+  - refactor: The "Stop Sounds" verb has been moved to OOC.

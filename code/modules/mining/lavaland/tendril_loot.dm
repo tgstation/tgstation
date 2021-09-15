@@ -510,7 +510,7 @@
 		exposed_carbon.dna.species.GiveSpeciesFlight(exposed_carbon)
 		if(holycheck)
 			to_chat(exposed_carbon, span_notice("You feel blessed!"))
-			ADD_TRAIT(exposed_carbon, TRAIT_HOLY, SPECIES_TRAIT)
+			ADD_TRAIT(exposed_carbon, TRAIT_HOLY, FLIGHTPOTION_TRAIT)
 		playsound(exposed_carbon.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
 		exposed_carbon.adjustBruteLoss(20)
 		exposed_carbon.emote("scream")

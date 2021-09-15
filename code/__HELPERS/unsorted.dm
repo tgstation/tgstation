@@ -191,7 +191,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return TRUE
 
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
-/mob/proc/apply_pref_name(role, client/C)
+/mob/proc/apply_pref_name(preference_type, client/C)
 	if(!C)
 		C = client
 	var/oldname = real_name
@@ -202,20 +202,11 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/random = CONFIG_GET(flag/force_random_names) || (C ? is_banned_from(C.ckey, "Appearance") : FALSE)
 
 	while(loop && safety < 5)
-		if(!safety && !random && C?.prefs.custom_names[role])
-			newname = C.prefs.custom_names[role]
+		if(!safety && !random)
+			newname = C?.prefs?.read_preference(preference_type)
 		else
-			switch(role)
-				if("human")
-					newname = random_unique_name(gender)
-				if("clown")
-					newname = pick(GLOB.clown_names)
-				if("mime")
-					newname = pick(GLOB.mime_names)
-				if("ai")
-					newname = pick(GLOB.ai_names)
-				else
-					return FALSE
+			var/datum/preference/preference = GLOB.preference_entries[preference_type]
+			newname = preference.create_informed_default_value(C.prefs)
 
 		for(var/mob/living/M in GLOB.player_list)
 			if(M == src)

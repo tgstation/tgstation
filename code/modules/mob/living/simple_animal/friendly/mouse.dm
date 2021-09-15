@@ -190,7 +190,7 @@
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "squeaks happily!")
 	// Tom fears no cable.
-	ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, SPECIES_TRAIT)
+	ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, INNATE_TRAIT)
 
 /obj/item/food/deadmouse
 	name = "dead mouse"

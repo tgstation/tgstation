@@ -31,19 +31,24 @@
 #define QUATERNARY 4
 
 //TANKS
-/// temperature in kelvins at which a tank will start to melt
-#define TANK_MELT_TEMPERATURE 1000000
-/// Tank starts leaking
-#define TANK_LEAK_PRESSURE (30.*ONE_ATMOSPHERE)
-/// Tank spills all contents into atmosphere
-#define TANK_RUPTURE_PRESSURE (35.*ONE_ATMOSPHERE)
-/// Boom 3x3 base explosion
-#define TANK_FRAGMENT_PRESSURE (40.*ONE_ATMOSPHERE)
-/// +1 for each SCALE kPa aboe threshold
-#define TANK_FRAGMENT_SCALE (6.*ONE_ATMOSPHERE)
-#define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
+/// The volume of the standard handheld gas tanks on the station.
+#define TANK_STANDARD_VOLUME 70
+/// The minimum pressure an gas tanks release valve can be set to.
 #define TANK_MIN_RELEASE_PRESSURE 0
+/// The maximum pressure an gas tanks release valve can be set to.
+#define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
+/// The default initial value gas tanks release valves are set to. (At least the ones containing pure plasma/oxygen.)
 #define TANK_DEFAULT_RELEASE_PRESSURE 16
+/// The internal temperature in kelvins at which a handheld gas tank begins to take damage.
+#define TANK_MELT_TEMPERATURE 1000000
+/// The internal pressure in kPa at which a handheld gas tank begins to take damage.
+#define TANK_LEAK_PRESSURE (30.*ONE_ATMOSPHERE)
+/// The internal pressure in kPa at which a handheld gas tank almost immediately ruptures.
+#define TANK_RUPTURE_PRESSURE (35.*ONE_ATMOSPHERE)
+/// The internal pressure in kPa at which an gas tank that breaks will cause an explosion.
+#define TANK_FRAGMENT_PRESSURE (40.*ONE_ATMOSPHERE)
+/// Range scaling constant for tank explosions. Calibrated so that a TTV assembled using two 70L tanks will hit the maxcap at at least 160atm.
+#define TANK_FRAGMENT_SCALE (84.*ONE_ATMOSPHERE)
 
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.

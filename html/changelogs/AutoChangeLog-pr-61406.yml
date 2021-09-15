@@ -1,0 +1,5 @@
+author: "AccountName5"
+delete-after: True
+changes: 
+  - balance: "Temperature pump power consumption no longer increases exponentially. Removes maximum operational temperature as it is now obsolete."
+  - bugfix: "Fixed temperature pump exploit. It should no longer treat output as having a much lower heat capacity than it actually has."

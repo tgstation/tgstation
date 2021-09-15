@@ -29,9 +29,7 @@
 /area/awaymission/cabin/caves
 	name = "North Snowdin Caves"
 	icon_state = "awaycontent15"
-	static_lighting = FALSE
-	base_lighting_alpha = 255
-	base_lighting_color = COLOR_WHITE
+	static_lighting = TRUE
 
 /area/awaymission/cabin/caves/mountain
 	name = "North Snowdin Mountains"
