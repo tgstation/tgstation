@@ -118,7 +118,7 @@ const HypertorusSecondaryControls = (props, context) => {
               animated
               value={parseFloat(data.magnetic_constrictor)}
               width="63px"
-              unit="m^3/B"
+              unit="m³/T"
               minValue={50}
               maxValue={1000}
               onDrag={(e, value) => act('magnetic_constrictor', {
@@ -130,9 +130,9 @@ const HypertorusSecondaryControls = (props, context) => {
               animated
               value={parseFloat(data.fuel_injection_rate)}
               width="63px"
-              unit="g/s"
-              minValue={5}
-              maxValue={1500}
+              unit="mol/s"
+              minValue={.5}
+              maxValue={150}
               onDrag={(e, value) => act('fuel_injection_rate', {
                 fuel_injection_rate: value,
               })} />
@@ -142,9 +142,9 @@ const HypertorusSecondaryControls = (props, context) => {
               animated
               value={parseFloat(data.moderator_injection_rate)}
               width="63px"
-              unit="g/s"
-              minValue={5}
-              maxValue={1500}
+              unit="mol/s"
+              minValue={.5}
+              maxValue={150}
               onDrag={(e, value) => act('moderator_injection_rate', {
                 moderator_injection_rate: value,
               })} />
@@ -189,7 +189,7 @@ const HypertorusSecondaryControls = (props, context) => {
               animated
               value={parseFloat(data.mod_filtering_rate)}
               width="63px"
-              unit="moles/tick"
+              unit="mol/s"
               minValue={5}
               maxValue={200}
               onDrag={(e, value) => act('mod_filtering_rate', {
