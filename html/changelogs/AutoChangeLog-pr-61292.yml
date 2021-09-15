@@ -1,0 +1,4 @@
+author: "sqnztb"
+delete-after: True
+changes: 
+  - bugfix: "Fluid ducts now properly start as \"omni\" instead of \"grey.\""
