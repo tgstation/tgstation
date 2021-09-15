@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - bugfix: "Removes some of the odd items that didn't have an icon from the Janitor's winter coat suit store and fixes Security's ones being unable to hold the base items like internals."
