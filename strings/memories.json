@@ -413,12 +413,15 @@
 		"%PROTAGONIST %MOOD as they are reduced to atoms."
 	],
 	"nuke_code_names":[
-		"The detonation code for the %PROTAGONIST, %NUKE_CODE" 
+		"%NUKE_CODE, The detonation code for the nuclear device" 
 	],
 	"nuke_code_starts":[
-		"%PROTAGONIST starts grinning as they recall the code for detonating a nuclear device, %NUKE_CODE"
+		"%PROTAGONIST firing their neurons to remember the important detonation code",
+		"%PROTAGONIST rapidly combing through their thoughts so they can make the station light up like a christmas tree"
 	],
 	"nuke_code_moods":[
-		"%PROTAGONIST %MOOD as they recalled the codes for detonating a nuclear device, %NUKE_CODE"
+		"%PROTAGONIST %MOOD as they look at the nuclear device",
+		"%PROTAGONIST %MOOD as they cry into they keypad of the nuclear device",
+		"%PROTAGONIST %MOOD as they punch in those magic numbers"
 	]
 }
