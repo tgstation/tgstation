@@ -15,7 +15,7 @@ GLOBAL_PROTECT(AdminProcCallHandler)
 /// Adds a caller.
 /mob/proccall_handler/proc/add_caller(caller_name)
 	callers += caller_name
-	name = "[initial(name)] ([callers.Join(", ")])"
+	name = "[initial(name)] ([callers.Join(") (")])"
 
 /// Removes a caller.
 /mob/proccall_handler/proc/remove_caller(caller_name)
