@@ -58,10 +58,10 @@
 	if(!to_invoke)
 		return
 
-	GLOB.AdminProcCaller = "CHAT_[parent.display_name]" //_ won't show up in ckeys so it'll never match with a real admin
-	var/result = WrapAdminProcCall(called_on, to_invoke, params)
-	GLOB.AdminProcCaller = null
+	if(called_on != GLOBAL_PROC && !hascall(called_on, to_invoke))
+		return
 
+	var/result = HandleUserlessProcCall(parent.get_creator(), called_on, to_invoke, params)
 	output_value.set_output(result)
 
 #undef COMP_PROC_GLOBAL
