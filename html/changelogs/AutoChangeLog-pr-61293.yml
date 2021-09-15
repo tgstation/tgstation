@@ -1,0 +1,4 @@
+author: "sqnztb"
+delete-after: True
+changes: 
+  - bugfix: "fixes a bad icon state for filled mid_joiners"
