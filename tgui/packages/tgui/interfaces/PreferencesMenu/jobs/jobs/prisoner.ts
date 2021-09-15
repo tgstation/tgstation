@@ -1,10 +1,10 @@
 import { Job } from "../base";
-import { Security } from "../departments";
+import { Assistant as DepartmentAssistant } from "../departments";
 
 const Prisoner: Job = {
   name: "Prisoner",
   description: "Keep yourself occupied while in permabrig.",
-  department: Security,
+  department: DepartmentAssistant,
 };
 
 export default Prisoner;
