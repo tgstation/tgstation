@@ -170,10 +170,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/bz = 30,
 		/datum/gas/antinoblium = 100,
 	)
-	///The list of gasses that cause the SM to zap, and their power multiplier.
+	///The list of gasses that cause the SM to zap. [power, range, probability in % to zap per tick]
 	var/list/charged_gas = list(
-		/datum/gas/zauker = 2,
-		/datum/gas/antinoblium = 3,
+		/datum/gas/zauker = list(8, 180, 100),
+		/datum/gas/antinoblium = list(256, 6, 1),
 	)
 	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
@@ -689,22 +689,22 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		//Power multiplier for zaps caused by charged_gas.
 		var/zap_power = 0
-		//Composition of charged_gas.
-		var/charged_comp = 0
-
+		//Odds of zap.
+		var/zap_chance = 0
+		//Range of zap.
+		var/zap_range = 0
 		for(var/gas_id in charged_gas)
-			zap_power += charged_gas[gas_id] * gas_comp[gas_id]
-			charged_comp += gas_comp[gas_id]
-
-		if(prob(charged_comp))
+			zap_power += charged_gas[gas_id][1] * gas_comp[gas_id]
+			zap_range += charged_gas[gas_id][2] * gas_comp[gas_id]
+			zap_chance += gas_comp[gas_id] * charged_gas[gas_id][3]
+		if(prob(zap_chance))
 			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
-			supermatter_zap(src, 6, clamp(power*zap_power, 2000*zap_power, 10000*zap_power), ZAP_MOB_STUN, zap_cutoff = src.zap_cutoff, power_level = power, zap_icon = src.zap_icon)
+			supermatter_zap(src, zap_range, clamp(power*zap_power, 2000*zap_power, 10000*zap_power), ZAP_MOB_STUN, zap_cutoff = src.zap_cutoff, power_level = power, zap_icon = src.zap_icon)
 
 		//Chance for nuclear particles being shot.
 		var/nuclear_chance = 0
 		//Composition of nuclear gasses.
 		var/nuclear_comp = 0
-
 		for(var/gas_id in nuclear_gas)
 			nuclear_chance += nuclear_gas[gas_id] * gas_comp[gas_id]
 			nuclear_comp += gas_comp[gas_id]
