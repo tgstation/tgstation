@@ -6,5 +6,5 @@
 	var/tip_reacting = controller.blackboard[BB_BASIC_MOB_TIP_REACTING]
 	if(!tip_reacting)
 		return
-	controller.queue_behavior(/datum/ai_behavior/tipped_reaction, BB_BASIC_MOB_TIPPER)
+	controller.queue_behavior(/datum/ai_behavior/tipped_reaction, BB_BASIC_MOB_TIPPER, BB_BASIC_MOB_TIP_REACTING)
 	return SUBTREE_RETURN_FINISH_PLANNING //no point in trying, boy. you're TIPPED.
