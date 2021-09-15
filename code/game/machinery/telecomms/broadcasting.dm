@@ -140,7 +140,6 @@
 	if(compression > 0)
 		message = Gibberish(message, compression >= 30)
 
-	//0 means the z level of the radio doesnt matter the signal goes to it TODOKYLER: make it a define, figure out if it should be null
 	var/list/signal_reaches_every_z_level = levels
 
 	if(0 in levels)
@@ -180,7 +179,7 @@
 
 	// Cut out mobs with clients who are admins and have radio chatter disabled.
 	for(var/mob/receiving_mob in receive)
-		if (receiving_mob.client && receiving_mob.client.holder && !(receiving_mob.client.prefs.chat_toggles & CHAT_RADIO))//TODOKYLER: global list for this
+		if (receiving_mob.client && receiving_mob.client.holder && !(receiving_mob.client.prefs.chat_toggles & CHAT_RADIO))
 			receive -= receiving_mob
 
 	// Add observers who have ghost radio enabled.

@@ -4,7 +4,7 @@
 	icon_state = "intercom"
 	anchored = TRUE
 	w_class = WEIGHT_CLASS_BULKY
-	canhear_range = 2//TODOKYLER: holy fuck change this also this shouldnt be listening by default
+	canhear_range = 2
 	dog_fashion = null
 	unscrewed = FALSE
 
