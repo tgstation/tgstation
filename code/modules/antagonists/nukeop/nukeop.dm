@@ -162,8 +162,8 @@
 		var/icon/teammate = render_preview_outfit(preview_outfit_behind)
 		teammate.Blend(rgb(128, 128, 128, 128), ICON_MULTIPLY)
 
-		final_icon.Blend(teammate, ICON_OVERLAY, -world.icon_size / 4, 0)
-		final_icon.Blend(teammate, ICON_OVERLAY, world.icon_size / 4, 0)
+		final_icon.Blend(teammate, ICON_UNDERLAY, -world.icon_size / 4, 0)
+		final_icon.Blend(teammate, ICON_UNDERLAY, world.icon_size / 4, 0)
 
 	return finish_preview_icon(final_icon)
 

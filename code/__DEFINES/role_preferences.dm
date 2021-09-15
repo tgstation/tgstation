@@ -16,6 +16,7 @@
 #define ROLE_MALF "Malf AI"
 #define ROLE_MONKEY "Monkey"
 #define ROLE_OPERATIVE "Operative"
+#define ROLE_CLOWNOP "Clown Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
 
@@ -112,6 +113,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_MALF = 0,
 	ROLE_MONKEY = 0,
 	ROLE_OPERATIVE = 14,
+	ROLE_CLOWNOP = 14,
 	ROLE_REV_HEAD = 14,
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
