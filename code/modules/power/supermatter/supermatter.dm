@@ -170,11 +170,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/bz = 30,
 		/datum/gas/antinoblium = 100,
 	)
-	///The list of gasses that cause the SM to zap. [power, range, probability in % to zap per tick]
-	var/list/charged_gas = list(
-		/datum/gas/zauker = list(8, 180, 100),
-		/datum/gas/antinoblium = list(256, 6, 1),
-	)
+
 	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
 	///Affects the power gain the sm experiances from heat
@@ -546,7 +542,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//Mols start to have a positive effect on damage after 350
 			damage = max(damage + (max(clamp(removed.total_moles() / 200, 0.5, 1) * removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ) * DAMAGE_INCREASE_MULTIPLIER, 0)
 			//Power only starts affecting damage when it is above 5000
-			damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD * ki, 0)/500) * DAMAGE_INCREASE_MULTIPLIER * (1-k), 0)
+			damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD * ki, 0)/500) * DAMAGE_INCREASE_MULTIPLIER * (1 - k), 0)
 			//Molar count only starts affecting damage when it is above 1800
 			damage = max(damage + (max(combined_gas - MOLE_PENALTY_THRESHOLD, 0)/80) * DAMAGE_INCREASE_MULTIPLIER, 0)
 
@@ -637,8 +633,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			var/consumed_miasma = clamp(((miasma_pp - MIASMA_CONSUMPTION_PP) / (miasma_pp + MIASMA_PRESSURE_SCALING)) * (1 + (gasmix_power_ratio * MIASMA_GASMIX_SCALING)), MIASMA_CONSUMPTION_RATIO_MIN, MIASMA_CONSUMPTION_RATIO_MAX)
 			consumed_miasma *= gas_comp[/datum/gas/miasma] * combined_gas
 			if(consumed_miasma)
-				removed.gases[/datum/gas/miasma][MOLES] -= consumed_miasma
-				matter_power += consumed_miasma * MIASMA_POWER_GAIN
+				removed.gases[/datum/gas/miasma][MOLES] -= consumed_miasma * ki
+				matter_power += consumed_miasma * MIASMA_POWER_GAIN * ki
 
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them.
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
@@ -687,19 +683,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
 			radiation_pulse(src, power * max(0, (1 + (power_transmission_bonus/(10-(gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus))// RadModBZ(500%)
 
-		//Power multiplier for zaps caused by charged_gas.
-		var/zap_power = 0
-		//Odds of zap.
-		var/zap_chance = 0
-		//Range of zap.
-		var/zap_range = 0
-		for(var/gas_id in charged_gas)
-			zap_power += charged_gas[gas_id][1] * gas_comp[gas_id]
-			zap_range += charged_gas[gas_id][2] * gas_comp[gas_id]
-			zap_chance += gas_comp[gas_id] * charged_gas[gas_id][3]
-		if(prob(zap_chance))
+		if(prob(gas_comp[/datum/gas/zauker]))
 			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
-			supermatter_zap(src, zap_range, clamp(power*zap_power, 2000*zap_power, 10000*zap_power), ZAP_MOB_STUN, zap_cutoff = src.zap_cutoff, power_level = power, zap_icon = src.zap_icon)
+			supermatter_zap(src, 256, clamp(power*2, 4000, 20000), ZAP_MOB_STUN, zap_cutoff = src.zap_cutoff, power_level = power, zap_icon = src.zap_icon)
 
 		//Chance for nuclear particles being shot.
 		var/nuclear_chance = 0
