@@ -36,7 +36,7 @@
 		RegisterSignal(sparring, COMSIG_MOB_FIRED_GUN, .proc/gun_violation)
 		RegisterSignal(sparring, COMSIG_MOB_GRENADE_ARMED, .proc/grenade_violation)
 	if(weapons_condition <= CONDITION_CEREMONIAL_ONLY)
-		RegisterSignal(sparring, COMSIG_MOB_ITEM_ATTACK, .proc/melee_violation)
+		RegisterSignal(sparring, COMSIG_PARENT_ATTACKBY, .proc/melee_violation)
 	//arena conditions
 	RegisterSignal(sparring, COMSIG_MOVABLE_MOVED, .proc/arena_violation)
 	//severe violations (insta violation win for other party) conditions
