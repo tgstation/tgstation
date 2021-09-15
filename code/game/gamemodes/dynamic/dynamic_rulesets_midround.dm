@@ -861,7 +861,7 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 4
-	cost = 10
+	cost = 3 // Doesn't have the same impact on rounds as revenants, dragons, sentient disease (10) or syndicate infiltrators (5). 
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
 
