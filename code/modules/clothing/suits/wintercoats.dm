@@ -49,7 +49,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/centcom/Initialize()
 	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
+	allowed += GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/centcom
 	icon_state = "hood_centcom"
@@ -68,7 +68,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/captain/Initialize()
 	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
+	allowed += GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/captain
 	icon_state = "hood_captain"
@@ -147,7 +147,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/security/Initialize()
 	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
+	allowed += GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/security
 	desc = "A red, armour-padded winter hood. Definitely not bulletproof, especially not the part where your face goes."
@@ -205,7 +205,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/medical/cmo/Initialize()
 	. = ..()
-	allowed += list(
+	allowed = list(
 		/obj/item/melee/baton/telescopic,
 	)
 
@@ -288,7 +288,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/science/rd/Initialize()
 	. = ..()
-	allowed += list(
+	allowed = list(
 		/obj/item/melee/baton/telescopic,
 	)
 
@@ -353,7 +353,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/engineering/ce/Initialize()
 	. = ..()
-	allowed += list(
+	allowed = list(
 		/obj/item/melee/baton/telescopic,
 	)
 
