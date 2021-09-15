@@ -81,8 +81,6 @@ GLOBAL_LIST(round_end_notifiees)
 	admin_only = TRUE
 
 /datum/tgs_chat_command/sdql/Run(datum/tgs_chat_user/sender, params)
-	if(GLOB.AdminProcCaller)
-		return "Unable to run query, another admin proc call is in progress. Try again later."
 	var/list/results = HandleUserlessSDQL(sender.friendly_name, params)
 	if(!results)
 		return "Query produced no output"
