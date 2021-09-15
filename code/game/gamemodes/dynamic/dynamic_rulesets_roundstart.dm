@@ -562,7 +562,7 @@
 //////////////////////////////////////////////
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops
-	name = "Clown Ops"
+	name = "Clown Operatives"
 	antag_datum = /datum/antagonist/nukeop/clownop
 	antag_flag = ROLE_CLOWN_OPERATIVE
 	antag_flag_override = ROLE_OPERATIVE
