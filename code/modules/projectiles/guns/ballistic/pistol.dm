@@ -92,7 +92,7 @@
 
 /obj/item/gun/ballistic/automatic/pistol/stickman/equipped(mob/user, slot)
 	..()
-	to_chat(user, span_notice("As you try to pick up [src], it slips out of your grip.."))
+	to_chat(user, span_notice("As you try to manipulate [src], it slips out of your possession.."))
 	if(prob(50))
 		to_chat(user, span_notice("..and vanishes from your vision! Where the hell did it go?"))
 		qdel(src)
