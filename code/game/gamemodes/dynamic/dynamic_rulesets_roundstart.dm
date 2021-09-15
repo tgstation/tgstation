@@ -566,7 +566,7 @@
 	antag_datum = /datum/antagonist/nukeop/clownop
 	antag_flag = ROLE_CLOWN_OPERATIVE
 	antag_preference = ROLE_CLOWNOP
-	antag_flag_override = ROLE_CLOWNOP
+	antag_flag_override = ROLE_OPERATIVE
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 
