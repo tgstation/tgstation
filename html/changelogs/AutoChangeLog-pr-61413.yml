@@ -1,0 +1,5 @@
+author: "TheSmallBlue"
+delete-after: True
+changes: 
+  - bugfix: "pressing the close button while entering a mob as a ghost will no longer force you to become that mob."
+  - bugfix: "you can no longer ghost and re-enter posibrains indefinitely."

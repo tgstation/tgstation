@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - qol: "When configuring smart pipes, the RPD will now only spark if the configuration actually changed, and the RPD now provides feedback if configuration couldn't change."

@@ -856,7 +856,7 @@
 /area/awaymission/caves/research)
 "cX" = (
 /obj/structure/table,
-/obj/item/melee/baton,
+/obj/item/melee/baton/security,
 /turf/open/floor/iron{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},

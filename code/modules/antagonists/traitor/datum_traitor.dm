@@ -26,6 +26,7 @@
 	hijack_speed = 0.5 //10 seconds per hijack stage by default
 	ui_name = "AntagInfoTraitor"
 	suicide_cry = "FOR THE SYNDICATE!!"
+	preview_outfit = /datum/outfit/traitor
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
 	var/should_equip = TRUE
@@ -215,6 +216,7 @@
 	data["responses"] = jointext(GLOB.syndicate_code_response, ", ")
 	data["theme"] = traitor_flavor["ui_theme"]
 	data["code"] = uplink?.unlock_code
+	data["failsafe_code"] = uplink?.failsafe_code
 	data["intro"] = traitor_flavor["introduction"]
 	data["allies"] = traitor_flavor["allies"]
 	data["goal"] = traitor_flavor["goal"]
@@ -341,6 +343,23 @@
 					<b>The code responses were:</b> [span_redtext("[responses]")]<br>"
 
 	return message
+
+/datum/outfit/traitor
+	name = "Traitor (Preview only)"
+
+	uniform = /obj/item/clothing/under/color/grey
+	suit = /obj/item/clothing/suit/hooded/ablative
+	gloves = /obj/item/clothing/gloves/color/yellow
+	mask = /obj/item/clothing/mask/gas
+	l_hand = /obj/item/melee/energy/sword
+	r_hand = /obj/item/gun/energy/kinetic_accelerator/crossbow
+
+/datum/outfit/traitor/post_equip(mob/living/carbon/human/H, visualsOnly)
+	var/obj/item/melee/energy/sword/sword = locate() in H.held_items
+	sword.icon_state = "e_sword_on_red"
+	sword.worn_icon_state = "e_sword_on_red"
+
+	H.update_inv_hands()
 
 #undef HIJACK_PROB
 #undef HIJACK_MIN_PLAYERS

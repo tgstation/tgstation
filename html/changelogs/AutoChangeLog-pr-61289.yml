@@ -1,0 +1,5 @@
+author: "Mooshimi"
+delete-after: True
+changes: 
+  - admin: "admins are now alerted when miasma, freon, and co2 canisters are opened, and are informed of the contents of canisters containing dangerous gases in general, not just the spooky gas on its own."
+  - code_imp: "added overall logging for all canisters opened"

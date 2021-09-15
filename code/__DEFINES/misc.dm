@@ -206,33 +206,20 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define GHOST_ORBIT_PENTAGON "pentagon"
 
 //Ghost showing preferences:
-#define GHOST_ACCS_NONE 1
-#define GHOST_ACCS_DIR 50
-#define GHOST_ACCS_FULL 100
-
-#define GHOST_ACCS_NONE_NAME "default sprites"
-#define GHOST_ACCS_DIR_NAME "only directional sprites"
-#define GHOST_ACCS_FULL_NAME "full accessories"
+#define GHOST_ACCS_NONE "Default sprites"
+#define GHOST_ACCS_DIR "Only directional sprites"
+#define GHOST_ACCS_FULL "Full accessories"
 
 #define GHOST_ACCS_DEFAULT_OPTION GHOST_ACCS_FULL
 
-GLOBAL_LIST_INIT(ghost_accs_options, list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST_ACCS_FULL)) //So save files can be sanitized properly.
-
-#define GHOST_OTHERS_SIMPLE 1
-#define GHOST_OTHERS_DEFAULT_SPRITE 50
-#define GHOST_OTHERS_THEIR_SETTING 100
-
-#define GHOST_OTHERS_SIMPLE_NAME "white ghost"
-#define GHOST_OTHERS_DEFAULT_SPRITE_NAME "default sprites"
-#define GHOST_OTHERS_THEIR_SETTING_NAME "their setting"
+#define GHOST_OTHERS_SIMPLE "White ghosts"
+#define GHOST_OTHERS_DEFAULT_SPRITE "Default sprites"
+#define GHOST_OTHERS_THEIR_SETTING "Their sprites"
 
 #define GHOST_OTHERS_DEFAULT_OPTION GHOST_OTHERS_THEIR_SETTING
 
 #define GHOST_MAX_VIEW_RANGE_DEFAULT 10
 #define GHOST_MAX_VIEW_RANGE_MEMBER 14
-
-
-GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DEFAULT_SPRITE, GHOST_OTHERS_THEIR_SETTING)) //Same as ghost_accs_options.
 
 //pda fonts
 #define MONO "Monospaced"
@@ -387,7 +374,6 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define SECURITY_TRUSTED 3
 
 //Dummy mob reserve slots
-#define DUMMY_HUMAN_SLOT_PREFERENCES "dummy_preference_preview"
 #define DUMMY_HUMAN_SLOT_ADMIN "admintools"
 #define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
 #define DUMMY_HUMAN_SLOT_CTF "dummy_ctf_preview_generation"
@@ -493,12 +479,6 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 //Misc text define. Does 4 spaces. Used as a makeshift tabulator.
 #define FOURSPACES "&nbsp;&nbsp;&nbsp;&nbsp;"
-
-// art quality defines, used in datums/components/art.dm, elsewhere
-#define BAD_ART 12.5
-#define OK_ART 20
-#define GOOD_ART 25
-#define GREAT_ART 50
 
 // possible bitflag return values of intercept_zImpact(atom/movable/AM, levels = 1) calls
 #define FALL_INTERCEPTED (1<<0) //Stops the movable from falling further and crashing on the ground

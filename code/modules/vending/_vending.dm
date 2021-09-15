@@ -538,6 +538,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 			SEND_SIGNAL(L, COMSIG_ON_VENDOR_CRUSH)
 
+
 			if(istype(C))
 				var/crit_rebate = 0 // lessen the normal damage we deal for some of the crits
 
@@ -616,6 +617,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			. = TRUE
 			playsound(L, 'sound/effects/blobattack.ogg', 40, TRUE)
 			playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
+			add_memory_in_range(L, 7, MEMORY_VENDING_CRUSHED, list(DETAIL_PROTAGONIST = L, DETAIL_WHAT_BY = src), story_value = STORY_VALUE_AMAZING)
 
 	var/matrix/M = matrix()
 	M.Turn(pick(90, 270))
