@@ -1,10 +1,7 @@
 import { Antagonist, Category } from "../base";
 import { multiline } from "common/string";
+import { OPERATIVE_MECHANICAL_DESCRIPTION } from "./operative";
 
-export const OPERATIVE_MECHANICAL_DESCRIPTION = multiline`
-  Retrieve the nuclear authentication disk, use it to activate the nuclear
-  fission explosive, and destroy the station.
-`;
 
 const ClownOperative: Antagonist = {
   key: "clownoperative",
