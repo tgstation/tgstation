@@ -406,3 +406,7 @@
   - bugfix: kilostation now has an unlocked mix chamber air alarm, 3 cores in the
       launch room, the telescreen can see the test site, and a fancy launch controller
   - bugfix: icebox disposals no longer spits trash on the mailroom floor
+2021-09-15:
+  Mothblocks, Floyd on lots of the design:
+  - refactor: The preferences menu has been completely rewritten in tgui.
+  - refactor: The "Stop Sounds" verb has been moved to OOC.
