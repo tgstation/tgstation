@@ -159,13 +159,14 @@
 	violation(offender, "using grenades")
 
 ///someone used melee weapons
-/datum/sparring_match/proc/melee_violation(datum/offender, item_used, user, params)
+/datum/sparring_match/proc/melee_violation(datum/offender, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER
 
-	if(weapons_condition == CONDITION_CEREMONIAL_ONLY && istype(item_used, /obj/item/ceremonial_blade))
-		violation(offender, "using non ceremonial weapons")
-	else
+	if(weapons_condition != CONDITION_CEREMONIAL_ONLY)
 		violation(offender, "using melee weapons")
+	if(istype(thing, /obj/item/ceremonial_blade))
+		return
+	violation(offender, "using non ceremonial weapons")
 
 /datum/sparring_match/proc/teleport_violation(datum/offender)
 	SIGNAL_HANDLER

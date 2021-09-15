@@ -9,8 +9,8 @@ const STAKES_HOLY_MATCH = 1;
 
 const weaponlist = [
   "Fist Fight",
-  "Melee Only",
   "Ceremonial Weapons",
+  "Melee Only",
   "Any Weapons",
 ];
 
@@ -23,7 +23,7 @@ const stakelist = [
 
 const weaponblurb = [
   "You will fight with your fists only. Any weapons will be considered a violation.",
-  "You can only fight with ceremonial weapons. Fists are considered a violation, so don't lose your weapon!",
+  "You can only fight with ceremonial weapons. You will be at a severe disadvantage without one!",
   "You can fight with weapons, or fists if you have none. Ranged weapons are a violation.",
   "You can fight with any and all weapons as you please. Try not to kill them, okay?",
 ];
