@@ -2,7 +2,9 @@
 GLOBAL_DATUM_INIT(AdminProcCallHandler, /mob/proccall_handler, new())
 GLOBAL_PROTECT(AdminProcCallHandler)
 
-/// Used to handle proccalls called indirectly by an admin (e.g. tgs, circuits)
+/// Used to handle proccalls called indirectly by an admin (e.g. tgs, circuits).
+/// Has to be a mob because IsAdminAdvancedProcCall() checks usr, which is a mob variable.
+/// So usr is set to this for any proccalls that don't have any usr mob/client to refer to.
 /mob/proccall_handler
 	name = "ProcCall Handler"
 	desc = "If you are seeing this, tell a coder."
