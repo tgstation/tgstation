@@ -295,9 +295,9 @@ const HypertorusParameters = (props, context) => {
             <ProgressBar
               value={iron_content}
               ranges={{
-                good: [-Infinity, 3],
-                average: [3, 6],
-                bad: [6, Infinity],
+                good: [-Infinity, .1],
+                average: [.1, .36],
+                bad: [.36, Infinity],
               }} />
           </LabeledList.Item>
           <LabeledList.Item label="Energy Levels">
