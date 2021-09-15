@@ -55,7 +55,7 @@
 
 /obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)
 	if(owner.status_flags & owner.GODMODE)
-  		return FALSE
+		return FALSE
 	damage = max(damage + (ddmg*damage_multiplier), 0)
 	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
 
