@@ -413,15 +413,10 @@
 		"%PROTAGONIST %MOOD as they are reduced to atoms."
 	],
 	"nuke_code_names":[
-		"%NUKE_CODE, The detonation code for the nuclear device" 
-	],
-	"nuke_code_starts":[
-		"%PROTAGONIST firing their neurons to remember the important detonation code",
-		"%PROTAGONIST rapidly combing through their thoughts so they can make the station light up like a christmas tree"
-	],
-	"nuke_code_moods":[
-		"%PROTAGONIST %MOOD as they look at the nuclear device",
-		"%PROTAGONIST %MOOD as they cry into they keypad of the nuclear device",
-		"%PROTAGONIST %MOOD as they punch in those magic numbers"
+		"%PROTAGONIST learns the detonation codes for a nuclear weapon, %NUKE_CODE."
+		],
+		"nuke_code_starts":[
+		"The number %NUKE_CODE written on a sticky note with the words \"FOR SYNDICATE EYES ONLY\" scrawled next to it.",
+		"A piece of paper with the number %NUKE_CODE being handed to %PROTAGONIST from a figure in a blood-red hardsuit."
 	]
 }
