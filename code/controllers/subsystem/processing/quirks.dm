@@ -30,6 +30,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 							list("Extrovert", "Introvert"))
 	return ..()
 
+/// Returns the list of possible quirks
 /datum/controller/subsystem/processing/quirks/proc/get_quirks()
 	RETURN_TYPE(/list)
 	if (!quirks.len)
