@@ -29,6 +29,8 @@
 
 #define BZ_RADIOACTIVITY_MODIFIER 5 //Improves the effect of transmit modifiers
 
+#define ANTINOBLIUM_POWER_GENERATION 546.3 //Multiplies the rate of antinoblium generating power.
+
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
 #define HYDROGEN_HEAT_RESISTANCE 2 // just a bit of heat resistance to spice it up
 #define PROTO_NITRATE_HEAT_RESISTANCE 5
