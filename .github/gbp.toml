@@ -2,7 +2,7 @@ no_balance_label = "GBP: No Update"
 reset_label = "GBP: Reset"
 
 [points]
-"Administration" = 1
+"Administration" = 2
 "Atomic" = 2
 "Balance/Rebalance" = -8
 "Code Improvement" = 2
