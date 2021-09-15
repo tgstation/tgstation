@@ -43,6 +43,34 @@
 /datum/antagonist/brother/antag_panel_data()
 	return "Conspirators : [get_brother_names()]"
 
+/datum/antagonist/brother/get_preview_icon()
+	var/mob/living/carbon/human/dummy/consistent/brother1 = new
+	var/mob/living/carbon/human/dummy/consistent/brother2 = new
+
+	brother1.dna.features["ethcolor"] = GLOB.color_list_ethereal["Faint Red"]
+	brother1.set_species(/datum/species/ethereal)
+
+	brother2.dna.features["moth_antennae"] = "Plain"
+	brother2.dna.features["moth_markings"] = "None"
+	brother2.dna.features["moth_wings"] = "Plain"
+	brother2.set_species(/datum/species/moth)
+
+	var/icon/brother1_icon = render_preview_outfit(/datum/outfit/job/quartermaster, brother1)
+	brother1_icon.Blend(icon('icons/effects/blood.dmi', "maskblood"), ICON_OVERLAY)
+	brother1_icon.Shift(WEST, 8)
+
+	var/icon/brother2_icon = render_preview_outfit(/datum/outfit/job/scientist, brother2)
+	brother2_icon.Blend(icon('icons/effects/blood.dmi', "uniformblood"), ICON_OVERLAY)
+	brother2_icon.Shift(EAST, 8)
+
+	var/icon/final_icon = brother1_icon
+	final_icon.Blend(brother2_icon, ICON_OVERLAY)
+
+	qdel(brother1)
+	qdel(brother2)
+
+	return finish_preview_icon(final_icon)
+
 /datum/antagonist/brother/proc/get_brother_names()
 	var/list/brothers = team.members - owner
 	var/brother_text = ""

@@ -33,7 +33,7 @@
 	product = /obj/item/food/grown/shell/eggy
 	lifespan = 75
 	production = 12
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/food/grown/shell/eggy

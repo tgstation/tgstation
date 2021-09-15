@@ -1,0 +1,5 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - balance: "The cyborg emergency reboot module is now reusable.
+sound: The cyborg emergency reboot module will now make a different sound when rebooting AI shells or borgs without a ghost."

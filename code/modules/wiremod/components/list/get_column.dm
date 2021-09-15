@@ -17,16 +17,12 @@
 	/// The filtered list
 	var/datum/port/output/output_list
 
-/obj/item/circuit_component/get_column/Initialize()
-	. = ..()
+/obj/item/circuit_component/get_column/populate_ports()
 	received_table = add_input_port("Input", PORT_TYPE_TABLE)
 	column_name = add_input_port("Column Name", PORT_TYPE_STRING)
 	output_list = add_output_port("Output", PORT_TYPE_LIST)
 
 /obj/item/circuit_component/get_column/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	var/list/input_list = received_table.value
 	if(!islist(input_list) || isnum(column_name.value))

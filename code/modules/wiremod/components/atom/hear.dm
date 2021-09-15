@@ -16,8 +16,7 @@
 	/// The trigger sent when this event occurs
 	var/datum/port/output/trigger_port
 
-/obj/item/circuit_component/hear/Initialize()
-	. = ..()
+/obj/item/circuit_component/hear/populate_ports()
 	message_port = add_output_port("Message", PORT_TYPE_STRING)
 	language_port = add_output_port("Language", PORT_TYPE_STRING)
 	speaker_port = add_output_port("Speaker", PORT_TYPE_ATOM)

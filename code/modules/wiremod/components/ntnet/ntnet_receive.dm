@@ -20,8 +20,7 @@
 	var/datum/port/input/option/data_type_options
 	var/datum/port/input/option/secondary_data_type_options
 
-/obj/item/circuit_component/ntnet_receive/Initialize()
-	. = ..()
+/obj/item/circuit_component/ntnet_receive/populate_ports()
 	data_package = add_output_port("Data Package", PORT_TYPE_ANY)
 	secondary_package = add_output_port("Secondary Package", PORT_TYPE_ANY)
 	enc_key = add_input_port("Encryption Key", PORT_TYPE_STRING)
@@ -39,9 +38,6 @@
 	secondary_data_type_options = add_option_port("Secondary Data Type", component_options)
 
 /obj/item/circuit_component/ntnet_receive/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	if(COMPONENT_TRIGGERED_BY(data_type_options, port))
 		data_package.set_datatype(data_type_options.value)

@@ -119,11 +119,6 @@
 	QDEL_NULL(bci_action)
 
 /obj/item/circuit_component/bci_action/input_received(datum/port/input/port)
-	. = ..()
-
-	if (.)
-		return
-
 	if (!isnull(bci_action))
 		update_action()
 
@@ -167,8 +162,7 @@
 
 	var/datum/weakref/user
 
-/obj/item/circuit_component/bci_core/Initialize()
-	. = ..()
+/obj/item/circuit_component/bci_core/populate_ports()
 
 	message = add_input_port("Message", PORT_TYPE_STRING)
 	send_message_signal = add_input_port("Send Message", PORT_TYPE_SIGNAL)
@@ -199,24 +193,24 @@
 		COMSIG_ORGAN_REMOVED,
 	))
 
+/obj/item/circuit_component/bci_core/should_receive_input(datum/port/input/port)
+	if (!COMPONENT_TRIGGERED_BY(send_message_signal, port))
+		return FALSE
+	return ..()
+
 /obj/item/circuit_component/bci_core/input_received(datum/port/input/port)
-	. = ..()
-	if (.)
-		return .
+	var/sent_message = trim(message.value)
+	if (!sent_message)
+		return
 
-	if (COMPONENT_TRIGGERED_BY(send_message_signal, port))
-		var/sent_message = trim(message.value)
-		if (!sent_message)
-			return
+	var/mob/living/carbon/resolved_owner = user?.resolve()
+	if (isnull(resolved_owner))
+		return
 
-		var/mob/living/carbon/resolved_owner = user?.resolve()
-		if (isnull(resolved_owner))
-			return
+	if (resolved_owner.stat == DEAD)
+		return
 
-		if (resolved_owner.stat == DEAD)
-			return
-
-		to_chat(resolved_owner, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("[html_encode(sent_message)]")]\"")
+	to_chat(resolved_owner, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("[html_encode(sent_message)]")]\"")
 
 /obj/item/circuit_component/bci_core/proc/on_organ_implanted(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER

@@ -72,6 +72,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	id = "co2"
 	specific_heat = 30
 	name = "Carbon Dioxide"
+	dangerous = TRUE
 	rarity = 700
 	purchaseable = TRUE
 	base_value = 0.2
@@ -171,6 +172,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	id = "miasma"
 	specific_heat = 20
 	name = "Miasma"
+	dangerous = TRUE
 	gas_overlay = "miasma"
 	moles_visible = MOLES_GAS_VISIBLE * 60
 	rarity = 250
@@ -180,6 +182,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	id = "freon"
 	specific_heat = 600
 	name = "Freon"
+	dangerous = TRUE
 	gas_overlay = "freon"
 	moles_visible = MOLES_GAS_VISIBLE *30
 	fusion_power = -5
