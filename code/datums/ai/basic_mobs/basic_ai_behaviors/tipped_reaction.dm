@@ -28,9 +28,10 @@
 		seen_message = "[controller.pawn] seems resigned to its fate."
 		self_message = "You resign yourself to your fate."
 	controller.pawn.visible_message(span_notice("[seen_message]"), span_notice("[self_message]"))
-	finish_action(controller, TRUE)
+	finish_action(controller, TRUE, tipper_key)
 
-/datum/ai_behavior/tipped_reaction/finish_action(datum/ai_controller/controller, succeeded)
+/datum/ai_behavior/tipped_reaction/finish_action(datum/ai_controller/controller, succeeded, tipper_key)
 	. = ..()
 	//I'VE SAID MY PEACE...
 	controller.blackboard[BB_BASIC_MOB_TIP_REACTING] = FALSE
+	controller.blackboard[BB_BASIC_MOB_TIPPER] = null
