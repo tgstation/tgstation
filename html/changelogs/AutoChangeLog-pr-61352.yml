@@ -1,0 +1,4 @@
+author: "SishTis"
+delete-after: True
+changes: 
+  - rscadd: "If a human mob speaks with a language their tongue counts as native one (like draconic for forked tongue), their speech will sound normally."
