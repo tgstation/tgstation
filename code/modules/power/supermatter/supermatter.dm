@@ -195,12 +195,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/bullet_energy = 2
 	///How much hallucination should we produce per unit of power?
 	var/hallucination_power = 0.1
-	///Remind me to give this variable proper documentation and a proper name if I left it like this after opening PR. This variable will converge to antinoblium gas composition, and is used to boost power and lower the damage from high power.
-	var/k = 0.0
-	///Delta from k and antinob composition.
-	var/kdelta = 0.0
-	///Inverse of 1 - k
-	var/ki = 1.0
+	///The efficiency of the antinoblium interaction
+	var/ANTINOBLIUM_EFFICIENCY = 0.0
+	///Delta from ANTINOBLIUM_EFFICIENCY and antinoblium composition.
+	var/ANTINOBLIUM_EFFICIENCY_DELTA = 0.0
+	///Inverse of 1 - ANTINOBLIUM_EFFICIENCY
+	var/ANTINOBLIUM_MULTIPLIER = 1.0
 	///Powerloss composition
 	var/powerloss_composition = 0.0
 	///Just using this so I can finetune the power gain with vv. Should be removed before merge.
@@ -542,7 +542,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//Mols start to have a positive effect on damage after 350
 			damage = max(damage + (max(clamp(removed.total_moles() / 200, 0.5, 1) * removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ) * DAMAGE_INCREASE_MULTIPLIER, 0)
 			//Power only starts affecting damage when it is above 5000
-			damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD * ki, 0)/500) * DAMAGE_INCREASE_MULTIPLIER * (1 - k), 0)
+			damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD * ANTINOBLIUM_MULTIPLIER, 0)/500) * DAMAGE_INCREASE_MULTIPLIER * (1 - ANTINOBLIUM_EFFICIENCY), 0)
 			//Molar count only starts affecting damage when it is above 1800
 			damage = max(damage + (max(combined_gas - MOLE_PENALTY_THRESHOLD, 0)/80) * DAMAGE_INCREASE_MULTIPLIER, 0)
 
@@ -552,8 +552,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				//Only has a net positive effect when the temp is below 313.15, heals up to 2 damage. Psycologists increase this temp min by up to 45
 				damage = max(damage + (min(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD) + (45 * psyCoeff)), 0) / 150 ), 0)
 
-			//Maintaining a high ki will heal the SM.
-			damage = max(damage - log(10, max(ki - 4, 1)), 0)
+			//Maintaining a high ANTINOBLIUM_MULTIPLIER will heal the SM.
+			damage = max(damage - log(10, max(ANTINOBLIUM_MULTIPLIER - 4, 1)), 0)
 			//Check for holes in the SM inner chamber
 			for(var/turf/open/space/turf_to_check in RANGE_TURFS(1, loc))
 				if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))
@@ -603,12 +603,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			gasmix_power_ratio += gas_comp[gas_id] * gas_powermix[gas_id]
 		gasmix_power_ratio = clamp(gasmix_power_ratio, 0, 1)
 
-		//Delta between k and antinoblium composition.
-		kdelta = gas_comp[/datum/gas/antinoblium] - k
-		//k converges to antinoblium composition faster when the SM is cold.
-		//Limited to 0.999999 because we will multiply power gain from matter by the inverse of 1 - k.
-		k = min(k + kdelta * TCMB / (TCMB + removed.temperature),0.999999)
-		ki = 1/(1-k)
+		//Delta between ANTINOBLIUM_EFFICIENCY and antinoblium composition.
+		ANTINOBLIUM_EFFICIENCY_DELTA = gas_comp[/datum/gas/antinoblium] - ANTINOBLIUM_EFFICIENCY
+		//ANTINOBLIUM_EFFICIENCY converges to antinoblium composition faster when the SM is cold.
+		ANTINOBLIUM_EFFICIENCY = min(ANTINOBLIUM_EFFICIENCY + ANTINOBLIUM_EFFICIENCY_DELTA * TCMB / (TCMB + removed.temperature),0.999999)
+		//Multiplies maximum power before taking damage, multiplies power gained from matter, and passively generates power when above 1.
+		ANTINOBLIUM_MULTIPLIER = max(1 / (1 - ANTINOBLIUM_EFFICIENCY), 1)
 		//Minimum value of -10, maximum value of 23. Effects plasma and o2 output and the output heat
 		dynamic_heat_modifier = 0
 		for(var/gas_id in gas_heat)
@@ -633,22 +633,22 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			var/consumed_miasma = clamp(((miasma_pp - MIASMA_CONSUMPTION_PP) / (miasma_pp + MIASMA_PRESSURE_SCALING)) * (1 + (gasmix_power_ratio * MIASMA_GASMIX_SCALING)), MIASMA_CONSUMPTION_RATIO_MIN, MIASMA_CONSUMPTION_RATIO_MAX)
 			consumed_miasma *= gas_comp[/datum/gas/miasma] * combined_gas
 			if(consumed_miasma)
-				removed.gases[/datum/gas/miasma][MOLES] -= consumed_miasma * ki
-				matter_power += consumed_miasma * MIASMA_POWER_GAIN * ki
+				removed.gases[/datum/gas/miasma][MOLES] -= consumed_miasma * ANTINOBLIUM_MULTIPLIER
+				matter_power += consumed_miasma * MIASMA_POWER_GAIN * ANTINOBLIUM_MULTIPLIER
 
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them.
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
 
-		//Ramps up in increments of 0.02 * ki, and down in increments of 0.02 / ki, up to the proportion of powerloss_composition.
+		//Ramps up in increments of 0.02 * ANTINOBLIUM_MULTIPLIER, and down in increments of 0.02 / ANTINOBLIUM_MULTIPLIER, up to the proportion of powerloss_composition.
 		//Given infinite time, powerloss_dynamic_scaling = powerloss_composition.
 		//Some value between 0 and 1.
 		powerloss_composition = 0.0
 		for(var/gas_id in powerloss_gas)
 			powerloss_composition += gas_comp[gas_id]
 		if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && powerloss_composition > POWERLOSS_INHIBITION_GAS_THRESHOLD) //If there are more then 20 mols, and more then 20% co2
-			powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling + clamp(powerloss_composition - powerloss_dynamic_scaling, -0.02 / ki, 0.02 * ki), 0, 1)
+			powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling + clamp(powerloss_composition - powerloss_dynamic_scaling, -0.02 / ANTINOBLIUM_MULTIPLIER, 0.02 * ANTINOBLIUM_MULTIPLIER), 0, 1)
 		else
-			powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling - 0.05 / ki, 0, 1)
+			powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling - 0.05 / ANTINOBLIUM_MULTIPLIER, 0, 1)
 		//Ranges from 0 to 1(1-(value between 0 and 1 * ranges from 1 to 1.5(mol / 500)))
 		//We take the mol count, and scale it to be our inhibitor
 		powerloss_inhibitor = clamp(1-(powerloss_dynamic_scaling * clamp(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD, 1, 1.5)), 0, 1)
@@ -659,9 +659,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//We base our removed power off one 10th of the matter_power.
 			var/removed_matter = max(matter_power/MATTER_POWER_CONVERSION, 40)
 			//Adds at least 40 power
-			power = max(power + removed_matter * ki, 0)
+			power = max(power + removed_matter * ANTINOBLIUM_MULTIPLIER, 0)
 			//Removes at least 40 matter power
-			matter_power = max(matter_power - removed_matter * ki, 0)
+			matter_power = max(matter_power - removed_matter * ANTINOBLIUM_MULTIPLIER, 0)
 
 		var/temp_factor = 50
 		if(gasmix_power_ratio > 0.8)
@@ -676,8 +676,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(power_changes)
 			power = max((removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0)
 
-		//Passively gain power when ki is above 1.
-		power += (ki-1) * kpp
+		//Passively gain power when ANTINOBLIUM_MULTIPLIER is above 1.
+		power += (ANTINOBLIUM_MULTIPLIER - 1) * kpp
 
 		if(prob(50))
 			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
@@ -850,7 +850,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		investigate_log("has been hit by [projectile] fired by [key_name(projectile.firer)]", INVESTIGATE_SUPERMATTER)
 	if(projectile.flag != BULLET)
 		if(power_changes) //This needs to be here I swear
-			power += projectile.damage * bullet_energy * ki
+			power += projectile.damage * bullet_energy * ANTINOBLIUM_MULTIPLIER
 			if(!has_been_powered)
 				investigate_log("has been powered for the first time.", INVESTIGATE_SUPERMATTER)
 				message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
@@ -1029,7 +1029,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			if (scalpel.usesLeft)
 				to_chat(user, span_danger("You extract a sliver from \the [src]. \The [src] begins to react violently!"))
 				new /obj/item/nuke_core/supermatter_sliver(drop_location())
-				matter_power += 800 * ki
+				matter_power += 800 * ANTINOBLIUM_MULTIPLIER
 				scalpel.usesLeft--
 				if (!scalpel.usesLeft)
 					to_chat(user, span_notice("A tiny piece of \the [item] falls off, rendering it useless!"))
@@ -1084,7 +1084,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_SUPERMATTER)
 		consumed_mob.dust(force = TRUE)
 		if(power_changes)
-			matter_power += 200 * ki
+			matter_power += 200 * ANTINOBLIUM_MULTIPLIER
 	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
 		return
 	else if(isobj(consumed_object))
@@ -1096,7 +1096,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			investigate_log("has consumed [consumed_object] - [suspicion].", INVESTIGATE_SUPERMATTER)
 		qdel(consumed_object)
 	if(!iseffect(consumed_object) && power_changes)
-		matter_power += 200 * ki
+		matter_power += 200 * ANTINOBLIUM_MULTIPLIER
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
 	radiation_pulse(src, 3000, 2, TRUE)
