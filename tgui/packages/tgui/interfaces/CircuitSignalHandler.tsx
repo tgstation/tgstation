@@ -1,4 +1,4 @@
-import { Component, MouseEventHandler } from "inferno";
+import { Component } from "inferno";
 import { useBackend } from "../backend";
 import { Box, Stack, Section, Input, Button, Dropdown } from "../components";
 import { Window } from "../layouts";
