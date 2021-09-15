@@ -18,8 +18,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	var/list/hardcore_quirks = list()
 
 /datum/controller/subsystem/processing/quirks/Initialize(timeofday)
-	if(!quirks.len)
-		SetupQuirks()
+	get_quirks()
 
 	quirk_blacklist = list(list("Blind","Nearsighted"), \
 							list("Jolly","Depression","Apathetic","Hypersensitive"), \
@@ -30,6 +29,13 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 							list("Bad Touch", "Friendly"), \
 							list("Extrovert", "Introvert"))
 	return ..()
+
+/datum/controller/subsystem/processing/quirks/proc/get_quirks()
+	RETURN_TYPE(/list)
+	if (!quirks.len)
+		SetupQuirks()
+
+	return quirks
 
 /datum/controller/subsystem/processing/quirks/proc/SetupQuirks()
 	// Sort by Positive, Negative, Neutral; and then by name
