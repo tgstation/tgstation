@@ -36,7 +36,7 @@
 			empulse_call(below_level, heavy_range, light_range)
 			new_location_below = below_level
 
-	return 1
+	return TRUE
 
 /proc/empulse_call(turf/epicenter, heavy_range, light_range)
 	for(var/atom in spiral_range(light_range, epicenter))
