@@ -134,8 +134,8 @@
 	desc = "I can't believe its not a bear!"
 	faction = list("neutral", "russian")
 	obj_damage = 11
-	melee_damage_lower = 1
-	melee_damage_upper = 1
+	melee_damage_lower = 0
+	melee_damage_upper = 0
 	armour_penetration = 0
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"
@@ -177,9 +177,10 @@
 		name = new_name
 
 /mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes some attacks by the butter bear slip those who dare cross its path.
-	if(isliving(target))
+	. = ..()
+	if(. && isliving(target))
 		var/mob/living/L = target
 		if((L.body_position == STANDING_UP))
 			L.Knockdown(20)
 			playsound(loc, 'sound/misc/slip.ogg', 15)
-			L.visible_message(span_danger("[L] slips on butter!"))
+			L.visible_message(span_danger("[L] slips on [src]'s butter!"))
