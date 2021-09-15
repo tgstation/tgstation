@@ -1,0 +1,4 @@
+author: "AMonkeyThatCodes"
+delete-after: True
+changes: 
+  - admin: "Admin only menus now have a new SVG background"
