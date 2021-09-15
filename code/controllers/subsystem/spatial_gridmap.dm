@@ -1,23 +1,19 @@
 /datum/spatial_grid_cell
-	///our x index in the list of cells
+	///our x index in the list of cells. this is our index inside of our row list
 	var/cell_x
-	///our y index in the list of cells
+	///our y index in the list of cells. this is the index of our row list inside of our z level grid
 	var/cell_y
-	///what z level we are in
-	var/cell_z
-
 	//every data point in a grid cell is separated by usecase
 
 	///every hearing sensitive movable inside this cell
-	var/list/hearing_contents = list()
+	var/list/hearing_contents
 	///every client possessed mob inside this cell
-	var/list/client_contents = list()
+	var/list/client_contents
 
 /datum/spatial_grid_cell/New(cell_x, cell_y, cell_z)
 	. = ..()
 	src.cell_x = cell_x
 	src.cell_y = cell_y
-	src.cell_z = cell_z
 
 /datum/spatial_grid_cell/Destroy(force, ...)
 	if(force)//the response to someone trying to qdel this is a right proper fuck you
@@ -62,7 +58,7 @@ SUBSYSTEM_DEF(spatial_grid)
 		for(var/y in 1 to cells_per_side)
 			new_cell_grid += list(list())
 			for(var/x in 1 to cells_per_side)
-				var/datum/spatial_grid_cell/cell = new(x, y, z_level.z_value)
+				var/datum/spatial_grid_cell/cell = new(x, y)
 				new_cell_grid[y] += cell
 
 /**
@@ -86,26 +82,37 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/static/grid_cells_per_axis = world.maxx / SPATIAL_GRID_CELLSIZE//im going to assume this doesnt change at runtime
 
 	//the minimum x and y cell indexes to test
-	var/min_x = max(CEILING((center_x - range) * (1 / SPATIAL_GRID_CELLSIZE), 1), 1)
-	var/min_y = max(CEILING((center_y - range) * (1 / SPATIAL_GRID_CELLSIZE), 1), 1)//calculating these indices only takes around 2 microseconds
+	var/min_x = max(CEILING((center_x - range) / SPATIAL_GRID_CELLSIZE, 1), 1)
+	var/min_y = max(CEILING((center_y - range) / SPATIAL_GRID_CELLSIZE, 1), 1)//calculating these indices only takes around 2 microseconds
 
 	//the maximum x and y cell indexes to test
-	var/max_x = min(CEILING((center_x + range) * (1 / SPATIAL_GRID_CELLSIZE), 1), grid_cells_per_axis)
-	var/max_y = min(CEILING((center_y + range) * (1 / SPATIAL_GRID_CELLSIZE), 1), grid_cells_per_axis)
+	var/max_x = min(CEILING((center_x + range) / SPATIAL_GRID_CELLSIZE, 1), grid_cells_per_axis)
+	var/max_y = min(CEILING((center_y + range) / SPATIAL_GRID_CELLSIZE, 1), grid_cells_per_axis)
 
 	var/list/grid_level = grids_by_z_level[center_turf.z]
 	switch(type)
 		if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
-			for(var/list/grid_row as anything in grid_level.Copy(min_y, max_y + 1))//from testing, slightly faster than iterating numbers from min_index to max_index
-				for(var/datum/spatial_grid_cell/cell as anything in grid_row.Copy(min_x, max_x + 1))
-					contents_to_return += cell.client_contents
+			for(var/row in min_y to max_y)
+				var/list/grid_row = grid_level[row]
+
+				for(var/x_index in min_x to max_x)
+					var/datum/spatial_grid_cell/cell = grid_row[x_index]
+
+					if(cell.client_contents)//this if statement slows down the proc by ~3%, try to find a way to make this unnecessary
+						contents_to_return += cell.client_contents
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
-			for(var/list/grid_row as anything in grid_level.Copy(min_y, max_y + 1))
-				for(var/datum/spatial_grid_cell/cell as anything in grid_row.Copy(min_x, max_x + 1))
-					contents_to_return += cell.hearing_contents
+			for(var/row in min_y to max_y)
+				var/list/grid_row = grid_level[row]
 
-	if(!include_center) //this is faster for things that dont care about themselves but are (probably) in the output, helps us return without using the LOS algorithm
+				for(var/x_index in min_x to max_x)
+					var/datum/spatial_grid_cell/cell = grid_row[x_index]
+
+					if(cell.hearing_contents)
+						contents_to_return += cell.hearing_contents
+
+	//this is faster for things that dont care about themselves but are (probably) in the output, helps us return without using the LOS algorithm
+	if(!include_center)
 		contents_to_return -= center
 
 	if(!length(contents_to_return))
@@ -179,9 +186,11 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	var/list/grid_level = grids_by_z_level[center_turf.z]
 
-	for(var/list/grid_row as anything in grid_level.Copy(min_y, max_y+1))
-		for(var/datum/spatial_grid_cell/cell as anything in grid_row.Copy(min_x, max_x + 1))
-			intersecting_grid_cells += cell
+	for(var/row in min_y to max_y)
+		var/list/grid_row = grid_level[row]
+
+		for(var/x_index in min_x to max_x)
+			intersecting_grid_cells += grid_row[x_index]
 
 	return intersecting_grid_cells
 
@@ -197,10 +206,10 @@ SUBSYSTEM_DEF(spatial_grid)
 	SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED, new_target)
 
 	if(new_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
-		intersecting_cell.client_contents |= new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS]
+		LAZYOR(intersecting_cell.client_contents, new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
 	if(new_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
-		intersecting_cell.hearing_contents |= new_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+		LAZYOR(intersecting_cell.hearing_contents, new_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
 
 ///find the spatial map cell that target used to belong to, then subtract target's important_recusive_contents from it.
 ///make sure to provide the turf old_target used to be "in"
@@ -214,37 +223,40 @@ SUBSYSTEM_DEF(spatial_grid)
 	SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED, old_target)
 
 	if(old_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
-		intersecting_cell.client_contents -= old_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS]
+		LAZYREMOVE(intersecting_cell.client_contents, old_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
 
 	if(old_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
-		intersecting_cell.hearing_contents -= old_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+		LAZYREMOVE(intersecting_cell.hearing_contents, old_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
 
 ///find the cell this movable is associated with and removes it from all lists
-/datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove)
-	var/datum/spatial_grid_cell/cell = get_cell_of(to_remove)
-	if(!cell)
-		return
+/datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove, datum/spatial_grid_cell/input_cell)
+	if(!input_cell)
+		input_cell = get_cell_of(to_remove)
+		if(!input_cell)
+			return
 
-	cell.client_contents -= to_remove
-	cell.hearing_contents -= to_remove
+	LAZYREMOVE(input_cell.client_contents, to_remove)
+	LAZYREMOVE(input_cell.hearing_contents, to_remove)
 
 ///if shit goes south, this will find hanging references for qdeleting movables inside
-/datum/controller/subsystem/spatial_grid/proc/find_hanging_cell_refs_for_movable(atom/movable/to_remove, should_yield = TRUE)
+/datum/controller/subsystem/spatial_grid/proc/find_hanging_cell_refs_for_movable(atom/movable/to_remove, should_yield = TRUE, remove_from_cells = TRUE)
 	var/list/containing_cells = list()
 	for(var/list/z_level_grid as anything in grids_by_z_level)
 		for(var/list/cell_row as anything in z_level_grid)
 			if(should_yield)
 				CHECK_TICK
 			for(var/datum/spatial_grid_cell/cell as anything in cell_row)
-				if(src in (cell.hearing_contents | cell.client_contents))
+				if(to_remove in (cell.hearing_contents | cell.client_contents))
 					containing_cells += cell
+					if(remove_from_cells)
+						force_remove_from_cell(to_remove, cell)
 
 	return containing_cells
 
 ///debug proc for checking if a movable is in multiple cells when it shouldnt be (ie always)
-/atom/proc/find_all_cells_containing()
+/atom/proc/find_all_cells_containing(remove_from_cells = FALSE)
 	var/datum/spatial_grid_cell/real_cell = SSspatial_grid.get_cell_of(src)
-	var/list/containing_cells = SSspatial_grid.find_hanging_cell_refs_for_movable(src, FALSE)
+	var/list/containing_cells = SSspatial_grid.find_hanging_cell_refs_for_movable(src, FALSE, remove_from_cells)
 
 	message_admins("[src] is located in the contents of [length(containing_cells)] spatial grid cells")
 
