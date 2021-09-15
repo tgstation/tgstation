@@ -290,7 +290,6 @@
 	icon_state = "bola_cult"
 	inhand_icon_state = "bola_cult"
 	breakouttime = 6 SECONDS
-	knockdown = 30
 
 #define CULT_BOLA_PICKUP_STUN 6 SECONDS
 /obj/item/restraints/legcuffs/bola/cult/attack_hand(mob/living/carbon/user, list/modifiers)
