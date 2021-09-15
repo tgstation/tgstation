@@ -199,6 +199,7 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 
 /client/proc/playtitlemusic(vol = 85)
 	set waitfor = FALSE
+	return
 	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
 
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
