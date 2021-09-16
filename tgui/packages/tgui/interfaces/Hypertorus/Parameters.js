@@ -105,7 +105,7 @@ export const HypertorusParameters = props => {
             minValue={0}
             maxValue={6}
             value={power_level}
-            alertAfter={5}
+            alertAfter={4.5}
             ranges={{
               grey: [0, 1],
               good: [1, 3.5],
