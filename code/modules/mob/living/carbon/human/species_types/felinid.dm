@@ -28,12 +28,6 @@
 		stop_wagging_tail(H)
 	. = ..()
 
-/datum/species/human/felinid/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
-	. = ..()
-	if(chem.type == /datum/reagent/toxin/carpotoxin)
-		H.adjustToxLoss(-1 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
-
 /datum/species/human/felinid/can_wag_tail(mob/living/carbon/human/H)
 	return mutant_bodyparts["tail_human"] || mutant_bodyparts["waggingtail_human"]
 
