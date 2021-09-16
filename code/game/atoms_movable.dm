@@ -135,7 +135,7 @@
 		orbiting = null
 
 
-	if(important_recursive_contents)
+	if(important_recursive_contents && (important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS] || important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]))
 		SSspatial_grid.force_remove_from_cell(src)
 
 	LAZYCLEARLIST(important_recursive_contents)//has to be before moveToNullspace() so that we can exit our spatial_grid cell if we're in it
@@ -668,9 +668,8 @@
 			LAZYADDASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE, src)
 
 		var/turf/our_turf = get_turf(src)
-		if(our_turf)
+		if(our_turf && SSspatial_grid.initialized)
 			SSspatial_grid.enter_cell(src, our_turf)
-
 
 	ADD_TRAIT(src, TRAIT_HEARING_SENSITIVE, trait_source)
 
@@ -693,7 +692,7 @@
 	SIGNAL_HANDLER
 
 	var/turf/our_turf = get_turf(src)
-	if(our_turf)
+	if(our_turf && SSspatial_grid.initialized)
 		SSspatial_grid.exit_cell(src, our_turf)
 	UnregisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_HEARING_SENSITIVE))
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)

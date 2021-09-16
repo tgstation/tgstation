@@ -159,6 +159,8 @@ SUBSYSTEM_DEF(spatial_grid)
 ///get the grid cell encomapassing targets coordinates
 /datum/controller/subsystem/spatial_grid/proc/get_cell_of(atom/target)
 	var/turf/target_turf = get_turf(target)
+	if(!target_turf)
+		return
 
 	var/list/grid = grids_by_z_level[target_turf.z]
 
@@ -233,6 +235,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	if(!input_cell)
 		input_cell = get_cell_of(to_remove)
 		if(!input_cell)
+			find_hanging_cell_refs_for_movable(to_remove, TRUE, TRUE)
 			return
 
 	LAZYREMOVE(input_cell.client_contents, to_remove)
