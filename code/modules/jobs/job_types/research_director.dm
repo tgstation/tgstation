@@ -14,6 +14,7 @@
 	exp_requirements = 180
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
+	min_age = COMMAND_AGE_MIN
 
 	outfit = /datum/outfit/job/rd
 	plasmaman_outfit = /datum/outfit/plasmaman/research_director

@@ -8,6 +8,7 @@
 	selection_color = "#d7b088"
 	exp_required_type_department = EXP_TYPE_SUPPLY
 	exp_granted_type = EXP_TYPE_CREW
+	min_age = COMMAND_AGE_MIN //Despite not being a real head, you still gotta be of age.
 
 	outfit = /datum/outfit/job/quartermaster
 	plasmaman_outfit = /datum/outfit/plasmaman/cargo

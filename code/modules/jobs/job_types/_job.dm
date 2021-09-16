@@ -102,6 +102,9 @@
 	/// String. If set to a non-empty one, it will be the key for the policy text value to show this role on spawn.
 	var/policy_index = ""
 
+	/// The minimum age someone can be for a job. By default it's the minimum roundstart age
+	var/min_age = AGE_MIN
+
 
 /datum/job/New()
 	. = ..()
@@ -174,6 +177,8 @@
 	var/datum/bank_account/bank_account = new(real_name, equipping, dna.species.payday_modifier)
 	bank_account.payday(STARTING_PAYCHECKS, TRUE)
 	account_id = bank_account.account_id
+	if(age < equipping.min_age)
+		age = equipping.min_age
 
 	dress_up_as_job(equipping)
 
