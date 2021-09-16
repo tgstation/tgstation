@@ -7,13 +7,18 @@ const DEFAULT_PLACEMENT = "top";
 
 type TooltipProps = {
   children?: InfernoNode;
-  content: string;
+  content: InfernoNode;
   position?: Placement,
 };
 
 type TooltipState = {
   hovered: boolean;
 };
+
+const DISABLE_EVENT_LISTENERS = [{
+  name: "eventListeners",
+  enabled: false,
+}];
 
 export class Tooltip extends Component<TooltipProps, TooltipState> {
   state = {
@@ -53,10 +58,7 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
       <Popper
         options={{
           placement: this.props.position || "auto",
-          modifiers: [{
-            name: "eventListeners",
-            enabled: false,
-          }],
+          modifiers: DISABLE_EVENT_LISTENERS,
         }}
         popperContent={
           <div
@@ -69,6 +71,7 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
         }
         additionalStyles={{
           "pointer-events": "none",
+          "z-index": 2,
         }}>
         {this.props.children}
       </Popper>

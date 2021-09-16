@@ -256,7 +256,7 @@
 
 /obj/structure/sign/painting/Initialize(mapload, dir, building)
 	. = ..()
-	SSpersistence.painting_frames += src
+	SSpersistent_paintings.painting_frames += src
 	if(dir)
 		setDir(dir)
 	if(building)
@@ -265,7 +265,7 @@
 
 /obj/structure/sign/painting/Destroy()
 	. = ..()
-	SSpersistence.painting_frames -= src
+	SSpersistent_paintings.painting_frames -= src
 
 /obj/structure/sign/painting/attackby(obj/item/I, mob/user, params)
 	if(!current_canvas && istype(I, /obj/item/canvas))
@@ -336,12 +336,12 @@
  * Deleting paintings leaves their json, so this proc will remove the json and try again if it finds one of those.
  */
 /obj/structure/sign/painting/proc/load_persistent()
-	if(!persistence_id || !SSpersistence.paintings || !SSpersistence.paintings[persistence_id])
+	if(!persistence_id || !SSpersistent_paintings.paintings[persistence_id])
 		return
-	var/list/painting_category = SSpersistence.paintings[persistence_id]
+	var/list/painting_category = SSpersistent_paintings.paintings[persistence_id]
 	var/list/painting
 	while(!painting)
-		if(!length(SSpersistence.paintings[persistence_id]))
+		if(!length(SSpersistent_paintings.paintings[persistence_id]))
 			return //aborts loading anything this category has no usable paintings
 		var/list/chosen = pick(painting_category)
 		if(!fexists("data/paintings/[persistence_id]/[chosen["md5"]].png")) //shitmin deleted this art, lets remove json entry to avoid errors
@@ -383,7 +383,7 @@
 		current_canvas.painting_name = "Untitled Artwork"
 	var/data = current_canvas.get_data_string()
 	var/md5 = md5(lowertext(data))
-	var/list/current = SSpersistence.paintings[persistence_id]
+	var/list/current = SSpersistent_paintings.paintings[persistence_id]
 	if(!current)
 		current = list()
 	for(var/list/entry in current)
@@ -395,7 +395,7 @@
 	if(result)
 		CRASH("Error saving persistent painting: [result]")
 	current += list(list("title" = current_canvas.painting_name , "md5" = md5, "ckey" = current_canvas.author_ckey))
-	SSpersistence.paintings[persistence_id] = current
+	SSpersistent_paintings.paintings[persistence_id] = current
 
 /obj/item/canvas/proc/fill_grid_from_icon(icon/I)
 	var/h = I.Height() + 1
@@ -437,16 +437,16 @@
 			return
 		var/md5 = md5(lowertext(current_canvas.get_data_string()))
 		var/author = current_canvas.author_ckey
-		var/list/current = SSpersistence.paintings[persistence_id]
+		var/list/current = SSpersistent_paintings.paintings[persistence_id]
 		if(current)
 			for(var/list/entry in current)
 				if(entry["md5"] == md5)
 					current -= entry
 			var/png = "data/paintings/[persistence_id]/[md5].png"
 			fdel(png)
-		for(var/obj/structure/sign/painting/P in SSpersistence.painting_frames)
-			if(P.current_canvas && md5(P.current_canvas.get_data_string()) == md5)
-				QDEL_NULL(P.current_canvas)
-				P.update_appearance()
+		for(var/obj/structure/sign/painting/painting as anything in SSpersistent_paintings.painting_frames)
+			if(painting.current_canvas && md5(painting.current_canvas.get_data_string()) == md5)
+				QDEL_NULL(painting.current_canvas)
+				painting.update_appearance()
 		log_admin("[key_name(user)] has deleted a persistent painting made by [author].")
 		message_admins(span_notice("[key_name_admin(user)] has deleted persistent painting made by [author]."))

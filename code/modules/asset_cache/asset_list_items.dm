@@ -476,10 +476,9 @@
 	assets = list()
 
 /datum/asset/simple/portraits/New()
-	if(!SSpersistence.paintings || !SSpersistence.paintings[tab] || !length(SSpersistence.paintings[tab]))
+	if(!length(SSpersistent_paintings.paintings[tab]))
 		return
-	for(var/p in SSpersistence.paintings[tab])
-		var/list/portrait = p
+	for(var/list/portrait as anything in SSpersistent_paintings.paintings[tab])
 		var/png = "data/paintings/[tab]/[portrait["md5"]].png"
 		if(fexists(png))
 			var/asset_name = "[tab]_[portrait["md5"]]"

@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Shamebrero and maybe some other greyscale icons flashing have been fixed"
