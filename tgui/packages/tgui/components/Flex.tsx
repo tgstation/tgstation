@@ -69,9 +69,7 @@ export type FlexItemProps = BoxProps & {
 };
 
 export const computeFlexItemClassName = (props: FlexItemProps) => {
-  return classes([
-    'Flex__item',
-  ]);
+  return 'Flex__item';
 };
 
 export const computeFlexItemProps = (props: FlexItemProps) => {
