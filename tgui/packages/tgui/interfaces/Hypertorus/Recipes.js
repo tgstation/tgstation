@@ -201,7 +201,7 @@ export const HypertorusRecipes = props => {
         const primary = active ? secondary + 80 : secondary;
         const alpha = (active ? .13 : .07);
         return (
-          <MemoRow backgroundColor={new Color(secondary, primary, secondary, alpha)}>
+          <MemoRow backgroundColor={String(new Color(secondary, primary, secondary, alpha))}>
             <Table.Cell>
               <Button
                 icon={recipe.id === selected_fuel_id ? "times" : "power-off"}
