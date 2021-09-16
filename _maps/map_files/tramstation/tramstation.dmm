@@ -17338,9 +17338,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
-"dKB" = (
-/turf/closed/wall,
-/area)
 "dKT" = (
 /obj/machinery/washing_machine,
 /obj/structure/sign/poster/official/help_others{
@@ -58677,7 +58674,9 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/maintenance/disposal)
 "uyr" = (
@@ -62833,10 +62832,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
-"wip" = (
-/obj/machinery/door/poddoor,
-/turf/closed/wall/r_wall,
-/area/cargo/miningdock)
 "wit" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -108293,7 +108288,7 @@ acz
 ici
 dXN
 dzy
-wip
+dzy
 dzy
 aeu
 jlO
@@ -112668,7 +112663,7 @@ tjh
 jAl
 tIC
 gCu
-dKB
+bBA
 uym
 adS
 iBI
