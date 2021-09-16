@@ -2,7 +2,6 @@ import { Antagonist, Category } from "../base";
 import { multiline } from "common/string";
 import { OPERATIVE_MECHANICAL_DESCRIPTION } from "./operative";
 
-
 const ClownOperative: Antagonist = {
   key: "clownoperative",
   name: "Clown Operative",
