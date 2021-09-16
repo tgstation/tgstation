@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Attacking something after you've deactivated the Chameleon mutation or changeling Chameleon Skin power should no longer turn you partially transparent."

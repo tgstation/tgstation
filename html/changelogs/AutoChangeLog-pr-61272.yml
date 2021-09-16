@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - refactor: "turns stickmen into basic mobs"
-  - balance: "wizard paper robe now makes stickmen hostile to things that arent stickmen and arent you"
