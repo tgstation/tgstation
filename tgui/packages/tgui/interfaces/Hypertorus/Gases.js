@@ -57,8 +57,8 @@ export const HypertorusGases = props => {
   // Make sure the "sticky" production gases are always visible. We want to display help for these.
   ensure_gases(moderator_gases, moderator_gases_sticky_order);
 
-  const fusionMax = Math.max(1, ...fusion_gases.map(gas => gas.amount));
-  const moderatorMax = Math.max(1, ...moderator_gases.map(gas => gas.amount));
+  const fusionMax = Math.max(500, ...fusion_gases.map(gas => gas.amount));
+  const moderatorMax = Math.max(500, ...moderator_gases.map(gas => gas.amount));
 
   return (
     <>
