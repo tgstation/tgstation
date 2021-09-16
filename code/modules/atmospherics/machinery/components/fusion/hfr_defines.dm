@@ -47,10 +47,79 @@
 
 #define HYPERTORUS_COUNTDOWN_TIME 30 SECONDS
 
-#define HYPERTORUS_SUBCRITICAL_MOLES 2000
-#define HYPERTORUS_HYPERCRITICAL_MOLES 10000
-#define HYPERTORUS_MAX_MOLE_DAMAGE 10
+//
+// Damage source: Too much mass in the fusion mix at high fusion levels
+//
 
+// In the original release, this was 2500 moles at 1 Kelvin, linearly scaling down to a maximum of 1500 safe moles at 1e8 degrees kelvin
+// Currently, this is 2700 moles at 1 Kelvin, linearly scaling down to a maximum of 2589 safe moles at 1e8 degrees kelvin
+// ...this possibly was not intentional, but lets not change implementation and behavior at the same time
+// Settings:
+// Start taking overfull damage at this power level
+#define HYPERTORUS_OVERFULL_MIN_POWER_LEVEL 6
+// Take 0 damage beneath this much fusion mass at 1 degree Kelvin
+#define HYPERTORUS_OVERFULL_MAX_SAFE_COLD_FUSION_MOLES 2700
+// Take 0 damage beneath this much fusion mass at FUSION_TEMPERATURE_MAX degrees Kelvin
+#define HYPERTORUS_OVERFULL_MAX_SAFE_HOT_FUSION_MOLES 2589
+// From there, how quickly should things get bad?
+// Every 400 moles, 1 point of damage per tick
+#define HYPERTORUS_OVERFULL_MOLAR_SLOPE (1/400)
+// Derived:
+// Given these settings, derive the rest of the equation.
+// Damage is the dependent variable, fusion_moles and damage_source_temperature are the independent variables
+// So the equation takes the form:
+//   damage = molar_slope * fusion_moles + temperature_slope * damage_source_temperature + constant
+// Derive these constants here for readability
+// Derive the temperature slope from the molar slope
+#define HYPERTORUS_OVERFULL_TEMPERATURE_SLOPE (HYPERTORUS_OVERFULL_MOLAR_SLOPE * (HYPERTORUS_OVERFULL_MAX_SAFE_COLD_FUSION_MOLES - HYPERTORUS_OVERFULL_MAX_SAFE_HOT_FUSION_MOLES) / (FUSION_MAXIMUM_TEMPERATURE - 1))
+// Derive the constant to set damage = 0 at our desired thresholds above
+#define HYPERTORUS_OVERFULL_CONSTANT (-(HYPERTORUS_OVERFULL_MOLAR_SLOPE * HYPERTORUS_OVERFULL_MAX_SAFE_HOT_FUSION_MOLES + HYPERTORUS_OVERFULL_TEMPERATURE_SLOPE * FUSION_MAXIMUM_TEMPERATURE))
+
+//
+// Heal source: Small enough mass in the fusion mix
+//
+
+// Settings:
+// Start healing when fusion mass is below this threshold
+#define HYPERTORUS_SUBCRITICAL_MOLES 1200
+// Heal one point per tick per this many moles under the threshold
+#define HYPERTORUS_SUBCRITICAL_SCALE 200
+
+//
+// Heal source: Cold enough coolant
+//
+
+// Settings:
+// Heal up to this many points of damage
+#define HYPERTORUS_COLD_COOLANT_MAX_RESTORE 5
+// Derived:
+#define HYPERTORUS_COLD_COOLANT_THRESHOLD (10 ** HYPERTORUS_COLD_COOLANT_MAX_RESTORE)
+
+//
+// Damage source: Iron content
+//
+
+// Settings:
+// Start taking damage over this threshold, up to a maximum of (1 - HYPERTORUS_MAX_SAFE_IRON) per tick at 100% iron
+#define HYPERTORUS_MAX_SAFE_IRON 0.35
+
+//
+// Damage source: Extreme levels of mass in fusion mix at any power level
+//
+
+// Note: Ignores the damage cap!
+// Settings:
+// Start taking damage over this threshold
+#define HYPERTORUS_HYPERCRITICAL_MOLES 10000
+// Take this much damage per mole over the threshold per tick
+#define HYPERTORUS_HYPERCRITICAL_SCALE 0.001
+// Take at least this much damage per tick.
+#define HYPERTORUS_HYPERCRITICAL_MIN_DAMAGE 10
+
+
+//
+// Explosion flags for use in fuel recipes
+//
 #define HYPERTORUS_FLAG_BASE_EXPLOSION (1<<0)
 #define HYPERTORUS_FLAG_MEDIUM_EXPLOSION (1<<1)
 #define HYPERTORUS_FLAG_DEVASTATING_EXPLOSION (1<<2)

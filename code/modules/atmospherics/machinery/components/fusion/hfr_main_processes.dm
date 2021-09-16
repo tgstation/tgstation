@@ -38,21 +38,26 @@
 	 */
 
 	critical_threshold_proximity_archived = critical_threshold_proximity
-	if(power_level == 6)
-		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 9e5 + coolant_temperature) / 9e5, 1) - 2700) / 400, 0), 0)
+	if(power_level >= HYPERTORUS_OVERFULL_MIN_POWER_LEVEL)
+		var/overfull_damage_taken = HYPERTORUS_OVERFULL_MOLAR_SLOPE * internal_fusion.total_moles() + HYPERTORUS_OVERFULL_TEMPERATURE_SLOPE * coolant_temperature + HYPERTORUS_OVERFULL_CONSTANT
+		critical_threshold_proximity = max(critical_threshold_proximity + max(overfull_damage_taken, 0), 0)
 
 	if(internal_fusion.total_moles() < HYPERTORUS_SUBCRITICAL_MOLES || power_level <= 5)
-		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 1200) / 200, 0), 0)
+		var/subcritical_heal_restore = (internal_fusion.total_moles() - HYPERTORUS_SUBCRITICAL_MOLES) / HYPERTORUS_SUBCRITICAL_SCALE
+		critical_threshold_proximity = max(critical_threshold_proximity + min(subcritical_heal_restore, 0), 0)
 
-	if(internal_fusion.total_moles() > 0 && (airs[1].total_moles() && coolant_temperature < 5e5) || power_level <= 4)
-		critical_threshold_proximity = max(critical_threshold_proximity + min(log(10, max(coolant_temperature, 1)) - 5, 0), 0)
+	if(internal_fusion.total_moles() > 0 && (airs[1].total_moles() && coolant_temperature < HYPERTORUS_COLD_COOLANT_THRESHOLD) || power_level <= 4)
+		var/cold_coolant_heal_restore = log(10, max(coolant_temperature, 1)) - (HYPERTORUS_COLD_COOLANT_MAX_RESTORE)
+		critical_threshold_proximity = max(critical_threshold_proximity + min(cold_coolant_heal_restore, 0), 0)
 
-	critical_threshold_proximity += max(iron_content - 0.35, 0)
+	critical_threshold_proximity += max(iron_content - HYPERTORUS_MAX_SAFE_IRON, 0)
 
+	// Apply damage cap
 	critical_threshold_proximity = min(critical_threshold_proximity_archived + (DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
 
 	if(internal_fusion.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES)
-		critical_threshold_proximity += min(max(0.001 * internal_fusion.total_moles() - 10, 0), HYPERTORUS_MAX_MOLE_DAMAGE)
+		var/hypercritical_damage_taken = max((internal_fusion.total_moles() - HYPERTORUS_HYPERCRITICAL_MOLES) * HYPERTORUS_HYPERCRITICAL_SCALE, 0)
+		critical_threshold_proximity += min(hypercritical_damage_taken, HYPERTORUS_HYPERCRITICAL_MIN_DAMAGE)
 
 	if(moderator_internal.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES && !check_cracked_parts())
 		var/obj/machinery/atmospherics/components/unary/hypertorus/part = create_crack()
