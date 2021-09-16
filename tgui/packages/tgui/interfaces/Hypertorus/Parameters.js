@@ -36,22 +36,37 @@ export const HypertorusParameters = props => {
   const max_capped_heat_change = raw_heat_limiter_modifier;
   const min_capped_heat_change = -raw_heat_limiter_modifier / 100;
 
-  const log_max_capped_heat_change = log10scale(max_capped_heat_change);
-  const log_min_capped_heat_change = log10scale(min_capped_heat_change);
+  // Force each band to be of minimum size for visibility
+  const visible_epsilon = 0.2;
 
-  const log_cool_midpoint = Math.min(-0.5, log_min_capped_heat_change + 1);
-  const log_heat_midpoint = Math.max( 0.5, log_max_capped_heat_change - 1);
+  const log_max_capped_heat_change = Math.max( 2 * visible_epsilon, log10scale(max_capped_heat_change));
+  const log_min_capped_heat_change = Math.min(-2 * visible_epsilon, log10scale(min_capped_heat_change));
+
+  const log_heat_midpoint = Math.max( visible_epsilon, log_max_capped_heat_change - 1);
+  const log_cool_midpoint = Math.min(-visible_epsilon, log_min_capped_heat_change + 1);
+
+  const heat_change_gauge_ranges = {
+    //pink: [log10scale(-max_power_level_heat_change), log_min_capped_heat_change],
+    blue: [log_min_capped_heat_change, log_cool_midpoint],
+    grey: [log_cool_midpoint, log_heat_midpoint],
+    orange: [log_heat_midpoint, log_max_capped_heat_change],
+    //red: [log_max_capped_heat_change, log10scale(max_power_level_heat_change)]
+  };
 
   // Finally, we want to indicate how much of the potential heat change is
   // being achieved.
   // This will form the needle on the gauge. We pass this in to the
   // heat RoundGauge directly.
 
+  const heat_change_value = log10scale(heat_output);
 
   // Visually, we place a large Fusion Level Gauge in the center.
   // Immediately adjacent are Gauges that track an important intermediate
   // parameter, and on the sides are Gauges that track the result that people
   // are most likely to ultimately care about relating to each value.
+
+  const energy_minimum_exponent = 12;
+  const energy_minimum_suffix = energy_minimum_exponent / 3;
 
   return (
     <Section title="Reactor Parameters">
@@ -102,10 +117,11 @@ export const HypertorusParameters = props => {
           <RoundGauge
             size={1.75}
             value={Math.max(0,Math.log10(energy_level))}
-            minValue={12}
+            minValue={energy_minimum_exponent}
             maxValue={30}
-            format={v=>formatSiUnit(10**v, 4, 'J')}
+            format={v=>formatSiUnit(10**v, energy_minimum_suffix, 'J')}
             ranges={{
+              black: [energy_minimum_exponent, 15],
               grey: [15, 18], // Anything under 1EJ is pretty mediocre
               yellow: [18, 24],
               orange: [24, 30],
@@ -114,15 +130,11 @@ export const HypertorusParameters = props => {
         <LabeledControls.Item label="Heat Change/Cap">
           <RoundGauge
             size={1.75}
-            value={log10scale(heat_output)}
+            value={heat_change_value}
             minValue={log10scale(min_power_level_heat_change)}
             maxValue={log10scale(max_power_level_heat_change)}
             format={()=>`${to_exponential_if_big(heat_output)} K/${to_exponential_if_big(heat_limiter_modifier)} K`}
-            ranges={{
-              cyan: [log_min_capped_heat_change, log_cool_midpoint],
-              grey: [log_cool_midpoint, log_heat_midpoint],
-              orange: [log_heat_midpoint, log_max_capped_heat_change],
-            }} />
+            ranges={heat_change_gauge_ranges} />
         </LabeledControls.Item>
       </LabeledControls>
     </Section>
