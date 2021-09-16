@@ -79,8 +79,8 @@ export class CircuitSignalHandler
               </Stack>
             </Stack.Item>
             <Stack.Item grow>
-              <Stack width="100%" height="100%">
-                <Stack.Item basis="50%">
+              <Stack fill>
+                <Stack.Item grow={1} basis={0}>
                   <Section title="Responses" fill scrollable>
                     <Stack vertical>
                       {responseList.map((val, index) => (
@@ -123,7 +123,7 @@ export class CircuitSignalHandler
                     </Stack>
                   </Section>
                 </Stack.Item>
-                <Stack.Item basis="50%">
+                <Stack.Item grow={1} basis={0}>
                   <Section title="Parameters" fill scrollable>
                     <Stack vertical>
                       {parameterList.map((val, index) => (
