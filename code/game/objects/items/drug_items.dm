@@ -7,7 +7,7 @@
 	max_volume = 50
 	eat_time = 1 SECONDS
 	tastes = list("drugs" = 2, "chemicals" = 1)
-	eatverbs = list("gnaws" = 1)
+	eatverbs = list("gnaw" = 1)
 	bite_consumption = 10
 	w_class = WEIGHT_CLASS_TINY
 	preserved_food = TRUE

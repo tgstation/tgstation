@@ -267,8 +267,11 @@
 	/// The kind of projectile this version of the kiss blower fires
 	var/kiss_type = /obj/projectile/kiss
 
+
 /obj/item/kisser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
+		kiss_type = /obj/projectile/kiss/french
 	var/obj/projectile/blown_kiss = new kiss_type(get_turf(user))
 	user.visible_message("<b>[user]</b> blows \a [blown_kiss] at [target]!", span_notice("You blow \a [blown_kiss] at [target]!"))
 
@@ -378,3 +381,16 @@
 	var/mob/living/carbon/heartbreakee = target
 	var/obj/item/organ/heart/dont_go_breakin_my_heart = heartbreakee.getorganslot(ORGAN_SLOT_HEART)
 	dont_go_breakin_my_heart.applyOrganDamage(999)
+
+
+/obj/projectile/kiss/french
+	name = "french kiss (is that a hint of garlic?)"
+	color = "#f2e9d2" //Scientifically proven to be the colour of garlic
+
+/obj/projectile/kiss/french/harmless_on_hit(mob/living/living_target)
+	. = ..()
+	//Don't stack the garlic
+	if(! living_target.has_reagent(/datum/reagent/consumable/garlic) )
+		//Phwoar
+		living_target.reagents.add_reagent(/datum/reagent/consumable/garlic, 1)
+	living_target.visible_message("[living_target] has a funny look on [living_target.p_their()] face.", "Wow, that is a strong after taste of garlic!", vision_distance=COMBAT_MESSAGE_RANGE)

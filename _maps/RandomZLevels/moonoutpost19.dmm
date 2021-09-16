@@ -3173,10 +3173,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gZ" = (
-/obj/machinery/power/shieldwallgen{
-	locked = 0;
-	req_access = null
-	},
+/obj/machinery/power/shieldwallgen/unlocked,
 /obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006

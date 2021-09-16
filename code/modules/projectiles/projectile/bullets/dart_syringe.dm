@@ -38,5 +38,13 @@
 	name = "syringe"
 	icon_state = "syringeproj"
 
+/obj/projectile/bullet/dart/syringe/Initialize()
+	. = ..()
+
+	// This prevents the Ody from being used as a combat mech spamming RDX/Teslium syringes all over the place.
+	// Other syringe guns are loaded manually with pre-filled syringes which will react chems themselves.
+	// The traitor chem dartgun uses /obj/projectile/bullet/dart/piercing, so this does not impact it.
+	reagents.flags &= ~NO_REACT
+
 /obj/projectile/bullet/dart/piercing
 	piercing = TRUE

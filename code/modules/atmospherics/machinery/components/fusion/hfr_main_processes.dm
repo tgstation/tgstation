@@ -140,7 +140,7 @@
 	//Check and stores the gases from the moderator input in the moderator internal gasmix
 	var/datum/gas_mixture/moderator_port = linked_moderator.airs[1]
 	if(start_moderator && moderator_port.total_moles())
-		moderator_internal.merge(moderator_port.remove(moderator_injection_rate * 0.1))
+		moderator_internal.merge(moderator_port.remove(moderator_injection_rate))
 		linked_moderator.update_parents()
 
 	//Check if the fuels are present and move them inside the fuel internal gasmix
@@ -150,7 +150,7 @@
 	var/datum/gas_mixture/fuel_port = linked_input.airs[1]
 	for(var/gas_type in selected_fuel.requirements)
 		internal_fusion.assert_gas(gas_type)
-		internal_fusion.merge(fuel_port.remove_specific(gas_type, fuel_port.gases[gas_type][MOLES] * fuel_injection_rate * 0.1))
+		internal_fusion.merge(fuel_port.remove_specific(gas_type, fuel_injection_rate / length(selected_fuel.requirements)))
 		linked_input.update_parents()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/process(delta_time)
@@ -204,8 +204,8 @@
 		magnetic_constrictor = 100
 		heating_conductor = 500
 		current_damper = 0
-		fuel_injection_rate = 200
-		moderator_injection_rate = 500
+		fuel_injection_rate = 20
+		moderator_injection_rate = 50
 		waste_remove = FALSE
 		iron_content += 0.1 * delta_time
 
@@ -363,7 +363,7 @@
 	var/datum/gas_mixture/internal_output = new
 	//gas consumption and production
 	if(check_fuel())
-		var/fuel_consumption_rate = clamp((fuel_injection_rate * 0.001) * 5 * power_level, 0.05, 30) * selected_fuel.gas_production_multiplier
+		var/fuel_consumption_rate = clamp(fuel_injection_rate * 0.01 * 5 * power_level, 0.05, 30) * selected_fuel.gas_production_multiplier
 		var/fuel_consumption = fuel_consumption_rate * delta_time
 
 		for(var/gas_id in selected_fuel.requirements)
@@ -466,7 +466,7 @@
 							moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20)
 					if(moderator_internal.temperature < 1e7 || (moderator_list[/datum/gas/plasma] > 100 && moderator_list[/datum/gas/bz] > 50))
 						internal_output.assert_gases(/datum/gas/antinoblium)
-						internal_output.gases[/datum/gas/antinoblium][MOLES] += 0.9 * (scaled_fuel_list[scaled_fuel_list[3]] / (fuel_injection_rate * 0.0065)) * delta_time
+						internal_output.gases[/datum/gas/antinoblium][MOLES] += 0.9 * (scaled_fuel_list[scaled_fuel_list[3]] / (fuel_injection_rate * 0.065)) * delta_time
 				if(6)
 					var/scaled_production = clamp(heat_output * 1e-7, 0, fuel_consumption_rate) * delta_time
 					moderator_internal.gases[selected_fuel.secondary_products[5]][MOLES] += scaled_production * 0.35
@@ -487,12 +487,12 @@
 							var/distance_root = sqrt(1 / max(1, get_dist(human, src)))
 							human.hallucination += power_level * 150 * distance_root
 							human.hallucination = clamp(human.hallucination, 0, 200)
-						moderator_internal.gases[/datum/gas/antinoblium][MOLES] += clamp((scaled_fuel_list[scaled_fuel_list[3]] / (fuel_injection_rate * 0.0045)), 0, 10) * delta_time
+						moderator_internal.gases[/datum/gas/antinoblium][MOLES] += clamp((scaled_fuel_list[scaled_fuel_list[3]] / (fuel_injection_rate * 0.045)), 0, 10) * delta_time
 					if(moderator_list[/datum/gas/healium] > 100)
 						if(critical_threshold_proximity > 400)
 							critical_threshold_proximity = max(critical_threshold_proximity - (moderator_list[/datum/gas/healium] / 100 * delta_time ), 0)
 							moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20)
-					internal_fusion.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_fuel_list[scaled_fuel_list[3]] / (fuel_injection_rate * 0.0095)) * delta_time
+					internal_fusion.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_fuel_list[scaled_fuel_list[3]] / (fuel_injection_rate * 0.095)) * delta_time
 
 	//Modifies the internal_fusion temperature with the amount of heat output
 	var/temperature_modifier = selected_fuel.temperature_change_multiplier
