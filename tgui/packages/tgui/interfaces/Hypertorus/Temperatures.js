@@ -254,10 +254,10 @@ export const HypertorusTemperatures = props => {
     <Section title="Temperatures">
       <Flex overflowY="hidden">
         <Flex.Item mx={1} width={`${yAxisMargin}px`}>
-          {(power_level == 0 || value_to_y(Math.abs(prev_power_level_temperature - minTemperature), 0) > 20) && (<TemperatureLabel value={minTemperature} force={true} />)}
-          <TemperatureLabel icon="chevron-down" tooltip="Previous Fusion Level" value={prev_power_level_temperature} />
-          <TemperatureLabel icon="chevron-up" tooltip="Next Fusion Level" value={next_power_level_temperature} />
-          {value_to_y(Math.abs(next_power_level_temperature - maxTemperature), 0) > 20 && (<TemperatureLabel value={maxTemperature} />)}
+          {(power_level == 0 || value_to_y(Math.abs(prev_power_level_temperature - minTemperature), 0) > 20) && (<TemperatureLabel key="min_temp" value={minTemperature} force={true} />)}
+          <TemperatureLabel key="prev_fusion_temp" icon="chevron-down" tooltip="Previous Fusion Level" value={prev_power_level_temperature} />
+          <TemperatureLabel key="next_fusion_temp" icon="chevron-up" tooltip="Next Fusion Level" value={next_power_level_temperature} />
+          {value_to_y(Math.abs(next_power_level_temperature - maxTemperature), 0) > 20 && (<TemperatureLabel key="max_temp" value={maxTemperature} />)}
         </Flex.Item>
         <TemperatureBar label="Fusion" value={internal_fusion_temperature} color="orange">
           {heat_delta_indicator}
