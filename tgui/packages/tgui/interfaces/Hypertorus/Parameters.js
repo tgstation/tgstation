@@ -104,7 +104,7 @@ export const HypertorusParameters = props => {
             value={Math.max(0,Math.log10(energy_level))}
             minValue={12}
             maxValue={30}
-            format={v=>formatSiUnit(10**v, 1, 'J')}
+            format={v=>formatSiUnit(10**v, 4, 'J')}
             ranges={{
               grey: [15, 18], // Anything under 1EJ is pretty mediocre
               yellow: [18, 24],
