@@ -19,6 +19,7 @@ export const computeFlexClassName = (props: FlexProps) => {
   return classes([
     'Flex',
     props.inline && 'Flex--inline',
+    computeBoxClassName(props),
   ]);
 };
 
@@ -32,7 +33,7 @@ export const computeFlexProps = (props: FlexProps) => {
     inline,
     ...rest
   } = props;
-  return {
+  return computeBoxProps({
     style: {
       ...rest.style,
       'flex-direction': direction,
@@ -41,7 +42,7 @@ export const computeFlexProps = (props: FlexProps) => {
       'justify-content': justify,
     },
     ...rest,
-  };
+  });
 };
 
 export const Flex = props => {
@@ -51,9 +52,8 @@ export const Flex = props => {
       className={classes([
         className,
         computeFlexClassName(rest),
-        computeBoxClassName(rest),
       ])}
-      {...computeBoxProps(computeFlexProps(rest))}
+      {...computeFlexProps(rest)}
     />
   );
 };
@@ -69,7 +69,10 @@ export type FlexItemProps = BoxProps & {
 };
 
 export const computeFlexItemClassName = (props: FlexItemProps) => {
-  return 'Flex__item';
+  return classes([
+    'Flex__item',
+    computeBoxClassName(props),
+  ]);
 };
 
 export const computeFlexItemProps = (props: FlexItemProps) => {
@@ -85,7 +88,7 @@ export const computeFlexItemProps = (props: FlexItemProps) => {
     align,
     ...rest
   } = props;
-  return {
+  return computeBoxProps({
     style: {
       ...style,
       'flex-grow': grow !== undefined && Number(grow),
@@ -95,7 +98,7 @@ export const computeFlexItemProps = (props: FlexItemProps) => {
       'align-self': align,
     },
     ...rest,
-  };
+  });
 };
 
 const FlexItem = props => {
@@ -105,9 +108,8 @@ const FlexItem = props => {
       className={classes([
         className,
         computeFlexItemClassName(props),
-        computeBoxClassName(props),
       ])}
-      {...computeBoxProps(computeFlexItemProps(rest))}
+      {...computeFlexItemProps(rest)}
     />
   );
 };
