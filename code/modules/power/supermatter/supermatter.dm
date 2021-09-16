@@ -551,7 +551,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				damage = max(damage + (min(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD) + (45 * psyCoeff)), 0) / 150 ), 0)
 
 			//Maintaining a high antinoblium_multiplier will heal the SM.
-			damage = max(damage - log(10, max(antinoblium_multiplier - 4, 1)), 0)
+			damage = max(damage - log(10, max(antinoblium_multiplier - 3, 1)), 0)
 			//Check for holes in the SM inner chamber
 			for(var/turf/open/space/turf_to_check in RANGE_TURFS(1, loc))
 				if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))
@@ -604,7 +604,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Delta between antinoblium_efficiency and antinoblium composition.
 		antinoblium_efficiency_delta = gas_comp[/datum/gas/antinoblium] - antinoblium_efficiency
 		//antinoblium_efficiency converges to antinoblium composition faster when the SM is cold.
-		antinoblium_efficiency = min(antinoblium_efficiency + antinoblium_efficiency_delta * TCMB / (TCMB + removed.temperature),0.999999)
+		antinoblium_efficiency = clamp(antinoblium_efficiency + antinoblium_efficiency_delta * TCMB / (TCMB + removed.temperature), 0, 0.999999)
 		//Multiplies maximum power before taking damage, multiplies power gained from matter, and passively generates power when above 1.
 		antinoblium_multiplier = max(1 / (1 - antinoblium_efficiency), 1)
 		//Minimum value of -10, maximum value of 23. Effects plasma and o2 output and the output heat
