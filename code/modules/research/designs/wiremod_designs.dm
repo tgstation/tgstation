@@ -378,7 +378,7 @@
 	desc = "An implant that can be placed in a user's head to control circuits using their brain."
 	id = "bci_shell"
 	materials = list(
-		/datum/material/glass = 2000,
+		/datum/material/glass = 1000,
 		/datum/material/iron = 8000,
 	)
 	build_path = /obj/item/shell/bci
