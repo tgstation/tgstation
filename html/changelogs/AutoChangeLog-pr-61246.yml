@@ -1,0 +1,6 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - admin: "Adds the signal handler circuit component."
+  - qol: "Big dropdowns on the integrated circuit ui will now expand when opened."
+  - bugfix: "Fixed any ports returning a string if set to the value of 0."
