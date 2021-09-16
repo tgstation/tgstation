@@ -94,7 +94,7 @@ export const HypertorusSecondaryControls = (props, context) => {
   const { act, data } = useBackend(context);
   return (
     <Section title="Tweakable Inputs">
-      <LabeledControls justify="flex-start">
+      <LabeledControls justify="space-around">
         <LabeledControls.Item label="Heating Conductor">
           <ComboKnob
             act={act}
@@ -157,8 +157,8 @@ export const HypertorusSecondaryControls = (props, context) => {
 export const HypertorusIO = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Section title="I/O Flow Control" height="100%">
-      <LabeledList width="200px">
+    <Section title="I/O Flow Control" height="100%" width="280px">
+      <LabeledList >
         <LabeledList.Item label="Fuel Injection Rate">
           <NumberInput
             animated

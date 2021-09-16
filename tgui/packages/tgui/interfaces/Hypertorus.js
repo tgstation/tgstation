@@ -138,7 +138,7 @@ const HypertorusLayout = (props, context) => {
         </Stack.Item>
       </Stack>
       <Stack mb="0.5em">
-        <Stack.Item>
+        <Stack.Item minWidth="600px" grow>
           <HypertorusParameters
             energyLevel={energy_level}
             rawHeatLimiterModifier={heat_limiter_modifier}
@@ -150,7 +150,7 @@ const HypertorusLayout = (props, context) => {
             integrity={integrity}/>
           <HypertorusSecondaryControls />
         </Stack.Item>
-        <Stack.Item grow>
+        <Stack.Item>
           <HypertorusIO />
         </Stack.Item>
       </Stack>
