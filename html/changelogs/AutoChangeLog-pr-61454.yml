@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Malf AI's who shunt onto an APC can once again be tracked by the nuke disk pinpointer."
