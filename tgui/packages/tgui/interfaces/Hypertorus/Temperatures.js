@@ -243,7 +243,9 @@ export const HypertorusTemperatures = props => {
             <VerticalProgressBar height={height} progressHeight={y} value={value} {...rest}>{children}</VerticalProgressBar>
           </Stack.Item>
           <Stack.Item color="label">
-            {label}
+            <Tooltip position="bottom" content={to_exponential_if_big(value) + " K"}>
+              <Box position="relative">{label}</Box>
+            </Tooltip>
           </Stack.Item>
         </Stack>
       </Flex.Item>
