@@ -27,6 +27,9 @@
 			if (poi == null)
 				. = TRUE
 				return
+			if(isnewplayer(poi))
+				stack_trace("[usr] attempted to orbit menu follow an invalid target.")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] attempted to orbit menu follow an invalid point of interest: [ADMIN_LOOKUPFLW(poi)]")
 			owner.ManualFollow(poi)
 			owner.reset_perspective(null)
 			if (auto_observe)
@@ -66,30 +69,31 @@
 
 		serialized["ref"] = REF(poi)
 
-		var/mob/M = poi
-		if (istype(M))
-			if (isobserver(M))
-				var/number_of_orbiters = length(M.get_all_orbiters())
+		var/mob/mob_poi = poi
+		if (istype(mob_poi))
+			if(isnewplayer(mob_poi))
+				continue
+			if (isobserver(mob_poi))
+				var/number_of_orbiters = length(mob_poi.get_all_orbiters())
 				if (number_of_orbiters)
 					serialized["orbiters"] = number_of_orbiters
 				ghosts += list(serialized)
-			else if (M.stat == DEAD)
+			else if (mob_poi.stat == DEAD)
 				dead += list(serialized)
-			else if (M.mind == null)
+			else if (mob_poi.mind == null)
 				npcs += list(serialized)
 			else
-				var/number_of_orbiters = length(M.get_all_orbiters())
+				var/number_of_orbiters = length(mob_poi.get_all_orbiters())
 				if (number_of_orbiters)
 					serialized["orbiters"] = number_of_orbiters
 
-				var/datum/mind/mind = M.mind
+				var/datum/mind/mind = mob_poi.mind
 				var/was_antagonist = FALSE
 
-				for (var/_A in mind.antag_datums)
-					var/datum/antagonist/A = _A
-					if (A.show_to_ghosts)
+				for (var/datum/antagonist/antag_datum as anything in mind.antag_datums)
+					if (antag_datum.show_to_ghosts)
 						was_antagonist = TRUE
-						serialized["antag"] = A.name
+						serialized["antag"] = antag_datum.name
 						antagonists += list(serialized)
 						break
 
