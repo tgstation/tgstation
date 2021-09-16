@@ -310,36 +310,38 @@ SUBSYSTEM_DEF(explosions)
 
 	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
 	var/started_at = REALTIMEOFDAY
+
+	// Now begins a bit of a logic train to find out whodunnit.
+	var/who_did_it = "N/A"
+	var/who_did_it_game_log = "N/A"
+
+	// Projectiles have special handling. They rely on a firer var and not fingerprints. Check special cases for firer being
+	// mecha, mob or an object such as the gun itself. Handle each uniquely.
+	if(isprojectile(explosion_cause))
+		var/obj/projectile/fired_projectile = explosion_cause
+		if(ismecha(fired_projectile.firer))
+			var/obj/vehicle/sealed/mecha/firing_mecha = fired_projectile.firer
+			var/list/mob/drivers = firing_mecha.return_occupants()
+			if(length(drivers))
+				who_did_it = "\[Mecha drivers:"
+				who_did_it_game_log = "\[Mecha drivers:"
+				for(var/mob/driver in drivers)
+					who_did_it += " [ADMIN_LOOKUPFLW(driver)]"
+					who_did_it_game_log = " [key_name(driver)]"
+				who_did_it += "\]"
+				who_did_it_game_log += "\]"
+		else if(ismob(fired_projectile.firer))
+			who_did_it = "\[Projectile firer: [ADMIN_LOOKUPFLW(fired_projectile.firer)]\]"
+			who_did_it_game_log = "\[Projectile firer: [key_name(fired_projectile.firer)]\]"
+		else
+			who_did_it = "\[Projectile firer: [ADMIN_LOOKUPFLW(fired_projectile.firer.fingerprintslast)]\]"
+			who_did_it_game_log = "\[Projectile firer: [key_name(fired_projectile.firer.fingerprintslast)]\]"
+	// Otherwise if the explosion cause is an atom, try get the fingerprints.
+	else if(istype(explosion_cause))
+		who_did_it = ADMIN_LOOKUPFLW(explosion_cause.fingerprintslast)
+		who_did_it_game_log = key_name(explosion_cause.fingerprintslast)
+
 	if(adminlog)
-		// Now begins a bit of a logic train to find out whodunnit.
-		var/who_did_it = "N/A"
-		var/who_did_it_game_log = "N/A"
-
-		// Projectiles have special handling. They rely on a firer var and not fingerprints. Check special cases for firer being
-		// mecha, mob or an object such as the gun itself. Handle each uniquely.
-		if(isprojectile(explosion_cause))
-			var/obj/projectile/fired_projectile = explosion_cause
-			if(ismecha(fired_projectile.firer))
-				var/obj/vehicle/sealed/mecha/firing_mecha = fired_projectile.firer
-				var/list/mob/drivers = firing_mecha.return_occupants()
-				if(length(drivers))
-					who_did_it = "\[Mecha drivers:"
-					who_did_it_game_log = "\[Mecha drivers:"
-					for(var/mob/driver in drivers)
-						who_did_it += " [ADMIN_LOOKUPFLW(driver)]"
-						who_did_it_game_log = " [key_name(driver)]"
-					who_did_it += "\]"
-					who_did_it_game_log += "\]"
-			else if(ismob(fired_projectile.firer))
-				who_did_it = "\[Projectile firer: [ADMIN_LOOKUPFLW(fired_projectile.firer)]\]"
-				who_did_it_game_log = "\[Projectile firer: [key_name(fired_projectile.firer)]\]"
-			else
-				who_did_it = "\[Projectile firer: [ADMIN_LOOKUPFLW(fired_projectile.firer.fingerprintslast)]\]"
-				who_did_it_game_log = "\[Projectile firer: [key_name(fired_projectile.firer.fingerprintslast)]\]"
-		// Otherwise if the explosion cause is an atom, try get the fingerprints.
-		else if(istype(explosion_cause))
-			who_did_it = ADMIN_LOOKUPFLW(explosion_cause.fingerprintslast)
-
 		message_admins("Explosion with size (Devast: [devastation_range], Heavy: [heavy_impact_range], Light: [light_impact_range], Flame: [flame_range]) in [ADMIN_VERBOSEJMP(epicenter)]. Possible cause: [explosion_cause]. Last fingerprints: [who_did_it].")
 		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [loc_name(epicenter)].  Possible cause: [explosion_cause]. Last fingerprints: [who_did_it_game_log].")
 
@@ -347,7 +349,7 @@ SUBSYSTEM_DEF(explosions)
 	var/y0 = epicenter.y
 	var/z0 = epicenter.z
 	var/area/areatype = get_area(epicenter)
-	SSblackbox.record_feedback("associative", "explosion", 1, list("dev" = devastation_range, "heavy" = heavy_impact_range, "light" = light_impact_range, "flame" = flame_range, "flash" = flash_range, "orig_dev" = orig_dev_range, "orig_heavy" = orig_heavy_range, "orig_light" = orig_light_range, "x" = x0, "y" = y0, "z" = z0, "area" = areatype.type, "time" = time_stamp("YYYY-MM-DD hh:mm:ss", 1)))
+	SSblackbox.record_feedback("associative", "explosion", 1, list("dev" = devastation_range, "heavy" = heavy_impact_range, "light" = light_impact_range, "flame" = flame_range, "flash" = flash_range, "orig_dev" = orig_dev_range, "orig_heavy" = orig_heavy_range, "orig_light" = orig_light_range, "x" = x0, "y" = y0, "z" = z0, "area" = areatype.type, "time" = time_stamp("YYYY-MM-DD hh:mm:ss", 1), "possible_cause" = explosion_cause, "possible_suspect" = who_did_it_game_log))
 
 	// Play sounds; we want sounds to be different depending on distance so we will manually do it ourselves.
 	// Stereo users will also hear the direction of the explosion!
