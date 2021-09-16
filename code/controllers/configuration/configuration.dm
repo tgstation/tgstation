@@ -235,6 +235,7 @@
 	var/tm_info = GLOB.revdata.GetTestMergeInfo()
 	if(motd || tm_info)
 		motd = motd ? "[motd]<br>[tm_info]" : tm_info
+
 /*
 Policy file should be a json file with a single object.
 Value is raw html.

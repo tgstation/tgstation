@@ -125,7 +125,7 @@
 		setup_friend()
 		return
 
-	real_name = appearance_from_prefs.real_name
+	real_name = appearance_from_prefs.read_preference(/datum/preference/name/real_name)
 	name = real_name
 
 	// Determine what job is marked as 'High' priority.
@@ -141,7 +141,7 @@
 		appearance_job = SSjob.GetJob("Assistant")
 
 	if(istype(appearance_job, /datum/job/ai))
-		human_image = icon('icons/mob/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.preferred_ai_core_display), dir = SOUTH)
+		human_image = icon('icons/mob/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
 		return
 
 	if(istype(appearance_job, /datum/job/cyborg))
@@ -194,7 +194,7 @@
 	friend_talk(message)
 
 /mob/camera/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
-	if (client?.prefs.chat_on_map && (client.prefs.see_chat_non_mob || ismob(speaker)))
+	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
 		create_chat_message(speaker, message_language, raw_message, spans)
 	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods))
 
