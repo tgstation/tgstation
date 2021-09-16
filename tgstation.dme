@@ -3821,6 +3821,8 @@
 #include "code\modules\wiremod\components\admin\setvar.dm"
 #include "code\modules\wiremod\components\admin\spawn.dm"
 #include "code\modules\wiremod\components\admin\to_type.dm"
+#include "code\modules\wiremod\components\admin\signal_handler\signal_handler.dm"
+#include "code\modules\wiremod\components\admin\signal_handler\signal_list.dm"
 #include "code\modules\wiremod\components\atom\direction.dm"
 #include "code\modules\wiremod\components\atom\gps.dm"
 #include "code\modules\wiremod\components\atom\health.dm"
