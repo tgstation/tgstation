@@ -17,9 +17,9 @@
 ///Constant used when calculating the chance of emitting a radioactive particle
 #define PARTICLE_CHANCE_CONSTANT (-20000000)
 ///Conduction of heat inside the fusion reactor
-#define METALLIC_VOID_CONDUCTIVITY 0.15
+#define METALLIC_VOID_CONDUCTIVITY 0.38
 ///Conduction of heat near the external cooling loop
-#define HIGH_EFFICIENCY_CONDUCTIVITY 0.95
+#define HIGH_EFFICIENCY_CONDUCTIVITY 0.975
 ///Sets the minimum amount of power the machine uses
 #define MIN_POWER_USAGE 50000
 ///Sets the multiplier for the damage
@@ -62,8 +62,8 @@
 // Take 0 damage beneath this much fusion mass at FUSION_TEMPERATURE_MAX degrees Kelvin
 #define HYPERTORUS_OVERFULL_MAX_SAFE_HOT_FUSION_MOLES 2589
 // From there, how quickly should things get bad?
-// Every 400 moles, 1 point of damage per tick
-#define HYPERTORUS_OVERFULL_MOLAR_SLOPE (1/400)
+// Every 200 moles, 1 point of damage per second
+#define HYPERTORUS_OVERFULL_MOLAR_SLOPE (1/200)
 // Derived:
 // Given these settings, derive the rest of the equation.
 // Damage is the dependent variable, fusion_moles and damage_source_temperature are the independent variables
@@ -82,18 +82,20 @@
 // Settings:
 // Start healing when fusion mass is below this threshold
 #define HYPERTORUS_SUBCRITICAL_MOLES 1200
-// Heal one point per tick per this many moles under the threshold
-#define HYPERTORUS_SUBCRITICAL_SCALE 200
+// Heal one point per second per this many moles under the threshold
+#define HYPERTORUS_SUBCRITICAL_SCALE 400
 
 //
 // Heal source: Cold enough coolant
 //
 
 // Settings:
-// Heal up to this many points of damage
-#define HYPERTORUS_COLD_COOLANT_MAX_RESTORE 5
+// Heal up to this many points of damage per second at 1 degree kelvin
+#define HYPERTORUS_COLD_COOLANT_MAX_RESTORE 2.5
+// Start healing below this temperature
+#define HYPERTORUS_COLD_COOLANT_THRESHOLD (10 ** 5)
 // Derived:
-#define HYPERTORUS_COLD_COOLANT_THRESHOLD (10 ** HYPERTORUS_COLD_COOLANT_MAX_RESTORE)
+#define HYPERTORUS_COLD_COOLANT_SCALE (HYPERTORUS_COLD_COOLANT_MAX_RESTORE / log(10, HYPERTORUS_COLD_COOLANT_THRESHOLD))
 
 //
 // Damage source: Iron content
@@ -111,10 +113,10 @@
 // Settings:
 // Start taking damage over this threshold
 #define HYPERTORUS_HYPERCRITICAL_MOLES 10000
-// Take this much damage per mole over the threshold per tick
-#define HYPERTORUS_HYPERCRITICAL_SCALE 0.001
-// Take at least this much damage per tick.
-#define HYPERTORUS_HYPERCRITICAL_MIN_DAMAGE 10
+// Take this much damage per mole over the threshold per second
+#define HYPERTORUS_HYPERCRITICAL_SCALE 0.002
+// Take at least this much damage per second
+#define HYPERTORUS_HYPERCRITICAL_MIN_DAMAGE 20
 
 
 //
