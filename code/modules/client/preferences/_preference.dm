@@ -204,13 +204,21 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	if (!parent)
 		return null
 
+	// Both of these will cache savefiles, but only for a tick.
+	// This is because storing a savefile will lock it, causing later issues down the line.
+
 	switch (savefile_identifier)
 		if (PREFERENCE_CHARACTER)
+			if (!character_savefile)
+				character_savefile = new /savefile(path)
+				character_savefile.cd = "/character[default_slot]"
+				addtimer(VARSET_CALLBACK(src, character_savefile, null), 1)
 			return character_savefile
 		if (PREFERENCE_PLAYER)
 			if (!game_savefile)
 				game_savefile = new /savefile(path)
 				game_savefile.cd = "/"
+				addtimer(VARSET_CALLBACK(src, game_savefile, null), 1)
 			return game_savefile
 		else
 			CRASH("Unknown savefile identifier [savefile_identifier]")

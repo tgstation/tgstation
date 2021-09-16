@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - admin: "Fixed the Everyone Is A Traitor admin button not affecting latejoins."

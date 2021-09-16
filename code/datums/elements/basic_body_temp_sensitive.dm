@@ -1,7 +1,7 @@
 /**
- * When attached to a basic mob, it gives it the ability to be hurt by cold body temperatures
+ * When attached to a basic mob, it gives it the ability to be hurt by cold/hot body temperatures
  */
-/datum/element/basic_body_temp_sensetive
+/datum/element/basic_body_temp_sensitive
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 
@@ -14,7 +14,7 @@
 	///Damage when above max temp
 	var/heat_damage = 1
 
-/datum/element/basic_body_temp_sensetive/Attach(datum/target, min_body_temp, max_body_temp, cold_damage, heat_damage)
+/datum/element/basic_body_temp_sensitive/Attach(datum/target, min_body_temp, max_body_temp, cold_damage, heat_damage)
 	. = ..()
 	if(!isbasicmob(target))
 		return ELEMENT_INCOMPATIBLE
@@ -29,13 +29,13 @@
 		src.heat_damage = heat_damage
 	RegisterSignal(target, COMSIG_LIVING_LIFE, .proc/on_life)
 
-/datum/element/basic_body_temp_sensetive/Detach(datum/source)
+/datum/element/basic_body_temp_sensitive/Detach(datum/source)
 	if(source)
 		UnregisterSignal(source, COMSIG_LIVING_LIFE)
 	return ..()
 
 
-/datum/element/basic_body_temp_sensetive/proc/on_life(datum/target, delta_time, times_fired)
+/datum/element/basic_body_temp_sensitive/proc/on_life(datum/target, delta_time, times_fired)
 	var/mob/living/basic/basic_mob = target
 	var/gave_alert = FALSE
 

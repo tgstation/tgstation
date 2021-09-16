@@ -42,7 +42,6 @@
 	output_value = add_output_port("Output Value", PORT_TYPE_ANY)
 
 /obj/item/circuit_component/proccall/input_received(datum/port/input/port)
-
 	var/called_on
 	if(proccall_options.value == COMP_PROC_OBJECT)
 		called_on = entity.value
@@ -61,6 +60,9 @@
 	if(called_on != GLOBAL_PROC && !hascall(called_on, to_invoke))
 		return
 
+	INVOKE_ASYNC(src, .proc/do_proccall, called_on, to_invoke, params)
+
+/obj/item/circuit_component/proccall/proc/do_proccall(called_on, to_invoke, params)
 	var/result = HandleUserlessProcCall(parent.get_creator(), called_on, to_invoke, params)
 	output_value.set_output(result)
 
