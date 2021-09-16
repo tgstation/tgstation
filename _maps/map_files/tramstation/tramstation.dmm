@@ -58677,7 +58677,7 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/maintenance/disposal)
 "uyr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
