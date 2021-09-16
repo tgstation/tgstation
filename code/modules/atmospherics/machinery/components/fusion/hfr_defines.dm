@@ -8,14 +8,6 @@
 #define CALCULATED_TRITRADIUS 230e-3
 ///Power conduction in the void, used to calculate the efficiency of the reaction
 #define VOID_CONDUCTION 1e-2
-///Max reaction point per reaction cycle
-#define MAX_FUSION_RESEARCH 1000
-///Min amount of allowed heat change
-#define MIN_HEAT_VARIATION -1e5
-///Max amount of allowed heat change
-#define MAX_HEAT_VARIATION 1e5
-///Max mole consumption per reaction cycle
-#define MAX_FUEL_USAGE 36
 ///Mole count required (tritium/hydrogen) to start a fusion reaction
 #define FUSION_MOLE_THRESHOLD 25
 ///Used to reduce the gas_power to a more useful amount
