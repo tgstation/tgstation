@@ -119,7 +119,7 @@ export class Dropdown extends Component {
     return (
       <div className="Dropdown" style={dropdownStyle}>
         <Box
-          width={this.state.open? openWidth : width}
+          width={this.state.open ? openWidth : width}
           className={classes([
             'Dropdown__control',
             'Button',
