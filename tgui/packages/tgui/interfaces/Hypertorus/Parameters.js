@@ -108,9 +108,9 @@ export const HypertorusParameters = props => {
             alertAfter={5}
             ranges={{
               grey: [0, 1],
-              good: [1, 3],
-              average: [3, 4],
-              bad: [4, 6],
+              good: [1, 3.5],
+              average: [3.5, 4.5],
+              bad: [4.5, 6],
             }} />
         </LabeledControls.Item>
         <LabeledControls.Item label="Energy">
