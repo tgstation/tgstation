@@ -3816,6 +3816,7 @@
 #include "code\modules\wiremod\components\action\speech.dm"
 #include "code\modules\wiremod\components\admin\getvar.dm"
 #include "code\modules\wiremod\components\admin\proccall.dm"
+#include "code\modules\wiremod\components\admin\save_shell.dm"
 #include "code\modules\wiremod\components\admin\sdql.dm"
 #include "code\modules\wiremod\components\admin\setvar.dm"
 #include "code\modules\wiremod\components\admin\spawn.dm"
