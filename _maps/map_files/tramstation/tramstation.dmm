@@ -17339,15 +17339,8 @@
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "dKB" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/maintenance/disposal)
+/turf/closed/wall,
+/area)
 "dKT" = (
 /obj/machinery/washing_machine,
 /obj/structure/sign/poster/official/help_others{
@@ -24609,6 +24602,10 @@
 "gIy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door/directional/east{
+	id = disposals;
+	name = "Disposals Blast Door Control"
+	},
 /turf/open/floor/iron,
 /area/maintenance/disposal)
 "gIF" = (
@@ -32011,11 +32008,11 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/window{
+	atom_integrity = 300;
 	base_state = "rightsecure";
 	dir = 1;
 	icon_state = "rightsecure";
 	name = "Primary AI Core Access";
-	atom_integrity = 300;
 	req_access_txt = "16"
 	},
 /turf/open/floor/iron/dark,
@@ -40353,6 +40350,17 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/storage)
+"nbb" = (
+/obj/machinery/conveyor{
+	id = "garbage"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/poddoor{
+	id = disposals;
+	name = "Disposals Blast Door"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "nbk" = (
 /obj/structure/chair{
 	dir = 8
@@ -58664,6 +58672,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
+"uym" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/iron,
+/area/maintenance/disposal)
 "uyr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
@@ -62817,6 +62833,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
+"wip" = (
+/obj/machinery/door/poddoor,
+/turf/closed/wall/r_wall,
+/area/cargo/miningdock)
 "wit" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -108273,7 +108293,7 @@ acz
 ici
 dXN
 dzy
-dzy
+wip
 dzy
 aeu
 jlO
@@ -112649,7 +112669,7 @@ jAl
 tIC
 gCu
 dKB
-tIC
+uym
 adS
 iBI
 cmy
@@ -112905,7 +112925,7 @@ izU
 vnt
 iim
 iim
-iim
+nbb
 oSV
 adS
 adS
