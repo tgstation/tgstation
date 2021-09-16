@@ -214,11 +214,6 @@
 	ph = 12
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/carpotoxin/on_mob_add(mob/living/L, amount)
-	if(isfelinid(L))
-		toxpwr = 0
-	..()
-
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
 	description = "A strong neurotoxin that puts the subject into a death-like state."
