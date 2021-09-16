@@ -101,7 +101,7 @@ export const HypertorusParameters = props => {
         <LabeledControls.Item label="Energy">
           <RoundGauge
             size={1.75}
-            value={Math.log10(energy_level)}
+            value={Math.max(0,Math.log10(energy_level))}
             minValue={12}
             maxValue={30}
             format={v=>formatSiUnit(10**v, 1, 'J')}
