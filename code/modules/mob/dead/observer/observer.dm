@@ -876,7 +876,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/proc/do_observe(mob/mob_eye)
 	//Istype so we filter out points of interest that are not mobs
-	if(client && mob_eye && istype(mob_eye))
+	if(client && mob_eye && istype(mob_eye) && !isnewplayer(mob_eye))
 		client.eye = mob_eye
 		if(mob_eye.hud_used)
 			client.screen = list()
