@@ -51,16 +51,14 @@
 // Damage source: Too much mass in the fusion mix at high fusion levels
 //
 
-// In the original release, this was 2500 moles at 1 Kelvin, linearly scaling down to a maximum of 1500 safe moles at 1e8 degrees kelvin
-// Currently, this is 2700 moles at 1 Kelvin, linearly scaling down to a maximum of 2589 safe moles at 1e8 degrees kelvin
-// ...this possibly was not intentional, but lets not change implementation and behavior at the same time
+// Currently, this is 2700 moles at 1 Kelvin, linearly scaling down to a maximum of 1800 safe moles at 1e8 degrees kelvin
 // Settings:
 // Start taking overfull damage at this power level
 #define HYPERTORUS_OVERFULL_MIN_POWER_LEVEL 6
 // Take 0 damage beneath this much fusion mass at 1 degree Kelvin
 #define HYPERTORUS_OVERFULL_MAX_SAFE_COLD_FUSION_MOLES 2700
 // Take 0 damage beneath this much fusion mass at FUSION_TEMPERATURE_MAX degrees Kelvin
-#define HYPERTORUS_OVERFULL_MAX_SAFE_HOT_FUSION_MOLES 2589
+#define HYPERTORUS_OVERFULL_MAX_SAFE_HOT_FUSION_MOLES 1800
 // From there, how quickly should things get bad?
 // Every 200 moles, 1 point of damage per second
 #define HYPERTORUS_OVERFULL_MOLAR_SLOPE (1/200)
@@ -115,8 +113,8 @@
 #define HYPERTORUS_HYPERCRITICAL_MOLES 10000
 // Take this much damage per mole over the threshold per second
 #define HYPERTORUS_HYPERCRITICAL_SCALE 0.002
-// Take at least this much damage per second
-#define HYPERTORUS_HYPERCRITICAL_MIN_DAMAGE 20
+// Take at most this much damage per second
+#define HYPERTORUS_HYPERCRITICAL_MAX_DAMAGE 20
 
 // If the moderator goes hypercritical, it cracks and starts to spill
 // If our pressure is weak, it can still spill, just weakly and infrequently

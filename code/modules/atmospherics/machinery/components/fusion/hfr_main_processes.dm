@@ -434,7 +434,7 @@
 	// If we have a preposterous amount of mass in the fusion mix, things get bad extremely fast
 	if(internal_fusion.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES)
 		var/hypercritical_damage_taken = max((internal_fusion.total_moles() - HYPERTORUS_HYPERCRITICAL_MOLES) * HYPERTORUS_HYPERCRITICAL_SCALE, 0)
-		critical_threshold_proximity += min(hypercritical_damage_taken, HYPERTORUS_HYPERCRITICAL_MIN_DAMAGE) * delta_time
+		critical_threshold_proximity = max(critical_threshold_proximity + min(hypercritical_damage_taken, HYPERTORUS_HYPERCRITICAL_MAX_DAMAGE), 0) * delta_time
 
 	// High power fusion might create other matter other than helium, iron is dangerous inside the machine, damage can be seen
 	if(power_level > 4 && prob(IRON_CHANCE_PER_FUSION_LEVEL * power_level))//at power level 6 is 100%
@@ -550,12 +550,10 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/inject_from_side_components(delta_time)
 	update_pipenets()
 
-	// XXX: x2 because units are wrong
-
 	//Check and stores the gases from the moderator input in the moderator internal gasmix
 	var/datum/gas_mixture/moderator_port = linked_moderator.airs[1]
 	if(start_moderator && moderator_port.total_moles())
-		moderator_internal.merge(moderator_port.remove(moderator_injection_rate * delta_time * 2))
+		moderator_internal.merge(moderator_port.remove(moderator_injection_rate * delta_time))
 		linked_moderator.update_parents()
 
 	//Check if the fuels are present and move them inside the fuel internal gasmix
@@ -565,7 +563,7 @@
 	var/datum/gas_mixture/fuel_port = linked_input.airs[1]
 	for(var/gas_type in selected_fuel.requirements)
 		internal_fusion.assert_gas(gas_type)
-		internal_fusion.merge(fuel_port.remove_specific(gas_type, fuel_injection_rate * delta_time * 2 / length(selected_fuel.requirements)))
+		internal_fusion.merge(fuel_port.remove_specific(gas_type, fuel_injection_rate * delta_time / length(selected_fuel.requirements)))
 		linked_input.update_parents()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_deconstructable()
