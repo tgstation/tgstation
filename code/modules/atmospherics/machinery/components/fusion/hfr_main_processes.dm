@@ -4,180 +4,6 @@
  * fusion_process() handles all the main fusion reaction logic and consequences (lightning, radiation, particles) from an active fusion reaction.
  */
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/play_ambience()
-	//We play delam/neutral sounds at a rate determined by power and critical_threshold_proximity
-	if(last_accent_sound < world.time && prob(20))
-		var/aggression = min(((critical_threshold_proximity / 800) * ((power_level) / 5)), 1.0) * 100
-		if(critical_threshold_proximity >= 300)
-			playsound(src, "hypertorusmelting", max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
-		else
-			playsound(src, "hypertoruscalm", max(50, aggression), FALSE, 25, 25, falloff_distance = 10)
-		var/next_sound = round((100 - aggression) * 5) + 5
-		last_accent_sound = world.time + max(HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
-
-	soundloop.volume = clamp((power_level + 1) * 8, 0, 50)
-
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_damageheal(delta_time)
-	// Archive current health for damage cap purposes
-	critical_threshold_proximity_archived = critical_threshold_proximity
-
-	// If we're operating at an extreme power level, take increasing damage for the amount of fusion mass over a low threshold
-	if(power_level >= HYPERTORUS_OVERFULL_MIN_POWER_LEVEL)
-		var/overfull_damage_taken = HYPERTORUS_OVERFULL_MOLAR_SLOPE * internal_fusion.total_moles() + HYPERTORUS_OVERFULL_TEMPERATURE_SLOPE * coolant_temperature + HYPERTORUS_OVERFULL_CONSTANT
-		critical_threshold_proximity = max(critical_threshold_proximity + max(overfull_damage_taken * delta_time, 0), 0)
-
-	// If we're running on a thin fusion mix, heal up
-	if(internal_fusion.total_moles() < HYPERTORUS_SUBCRITICAL_MOLES || power_level <= 5)
-		var/subcritical_heal_restore = (internal_fusion.total_moles() - HYPERTORUS_SUBCRITICAL_MOLES) / HYPERTORUS_SUBCRITICAL_SCALE
-		critical_threshold_proximity = max(critical_threshold_proximity + min(subcritical_heal_restore * delta_time, 0), 0)
-
-	// If coolant is sufficiently cold, heal up
-	if(internal_fusion.total_moles() > 0 && (airs[1].total_moles() && coolant_temperature < HYPERTORUS_COLD_COOLANT_THRESHOLD) || power_level <= 4)
-		var/cold_coolant_heal_restore = log(10, max(coolant_temperature, 1) * HYPERTORUS_COLD_COOLANT_SCALE) - (HYPERTORUS_COLD_COOLANT_MAX_RESTORE * 2)
-		critical_threshold_proximity = max(critical_threshold_proximity + min(cold_coolant_heal_restore * delta_time, 0), 0)
-
-	critical_threshold_proximity += max(iron_content - HYPERTORUS_MAX_SAFE_IRON, 0) * delta_time
-
-	// Apply damage cap
-	critical_threshold_proximity = min(critical_threshold_proximity_archived + (delta_time * DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
-
-	// If we have a preposterous amount of mass in the fusion mix, things get bad extremely fast
-	if(internal_fusion.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES)
-		var/hypercritical_damage_taken = max((internal_fusion.total_moles() - HYPERTORUS_HYPERCRITICAL_MOLES) * HYPERTORUS_HYPERCRITICAL_SCALE, 0)
-		critical_threshold_proximity += min(hypercritical_damage_taken, HYPERTORUS_HYPERCRITICAL_MIN_DAMAGE) * delta_time
-
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_spill(delta_time)
-	var/obj/machinery/atmospherics/components/unary/hypertorus/cracked_part = check_cracked_parts()
-	if (!cracked_part)
-		if (moderator_internal.total_moles() < HYPERTORUS_HYPERCRITICAL_MOLES)
-			return
-		cracked_part = create_crack()
-		// See if we do anything in the initial rupture
-		if (moderator_internal.return_pressure() < HYPERTORUS_MEDIUM_SPILL_PRESSURE)
-			return
-		if (moderator_internal.return_pressure() < HYPERTORUS_STRONG_SPILL_PRESSURE)
-			// Medium explosion on initial rupture
-			explosion(
-				origin = cracked_part,
-				devastation_range = 0,
-				heavy_impact_range = 0,
-				light_impact_range = 1,
-				flame_range = 3,
-				flash_range = 3
-				)
-			spill_gases(cracked_part, moderator_internal, ratio = HYPERTORUS_MEDIUM_SPILL_INITIAL)
-			return
-		// Enough pressure for a strong explosion. Oh dear, oh dear.
-		explosion(
-			origin = cracked_part,
-			devastation_range = 0,
-			heavy_impact_range = 1,
-			light_impact_range = 3,
-			flame_range = 5,
-			flash_range = 5
-			)
-		spill_gases(cracked_part, moderator_internal, ratio = HYPERTORUS_STRONG_SPILL_INITIAL)
-		return
-	// We have an existing crack
-	if (moderator_internal.return_pressure() < HYPERTORUS_MEDIUM_SPILL_PRESSURE)
-		// Not high pressure, but can still leak
-		if (prob(HYPERTORUS_WEAK_SPILL_CHANCE))
-			spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - HYPERTORUS_WEAK_SPILL_RATE) ** delta_time)
-		return
-	// Lots of gas in here, out we go
-	if (moderator_internal.return_pressure() < HYPERTORUS_STRONG_SPILL_PRESSURE)
-		spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - HYPERTORUS_MEDIUM_SPILL_RATE) ** delta_time)
-		return
-	spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - HYPERTORUS_STRONG_SPILL_RATE) ** delta_time)
-
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_internal_cooling(delta_time)
-	if(moderator_internal.total_moles() > 0 && internal_fusion.total_moles() > 0)
-		//Modifies the moderator_internal temperature based on energy conduction and also the fusion by the same amount
-		var/fusion_temperature_delta = internal_fusion.temperature - moderator_internal.temperature
-		var/fusion_heat_amount = (1 - (1 - METALLIC_VOID_CONDUCTIVITY) ** delta_time) * fusion_temperature_delta * (internal_fusion.heat_capacity() * moderator_internal.heat_capacity() / (internal_fusion.heat_capacity() + moderator_internal.heat_capacity()))
-		internal_fusion.temperature = max(internal_fusion.temperature - fusion_heat_amount / internal_fusion.heat_capacity(), TCMB)
-		moderator_internal.temperature = max(moderator_internal.temperature + fusion_heat_amount / moderator_internal.heat_capacity(), TCMB)
-
-	if(airs[1].total_moles() * 0.05 > MINIMUM_MOLE_COUNT)
-		var/datum/gas_mixture/cooling_port = airs[1]
-		var/datum/gas_mixture/cooling_remove = cooling_port.remove(0.05 * cooling_port.total_moles())
-		//Cooling of the moderator gases with the cooling loop in and out the core
-		if(moderator_internal.total_moles() > 0)
-			var/coolant_temperature_delta = cooling_remove.temperature - moderator_internal.temperature
-			var/cooling_heat_amount = (1 - (1 - HIGH_EFFICIENCY_CONDUCTIVITY) ** delta_time) * coolant_temperature_delta * (cooling_remove.heat_capacity() * moderator_internal.heat_capacity() / (cooling_remove.heat_capacity() + moderator_internal.heat_capacity()))
-			cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
-			moderator_internal.temperature = max(moderator_internal.temperature + cooling_heat_amount / moderator_internal.heat_capacity(), TCMB)
-
-		else if(internal_fusion.total_moles() > 0)
-			var/coolant_temperature_delta = cooling_remove.temperature - internal_fusion.temperature
-			var/cooling_heat_amount = (1 - (1 - METALLIC_VOID_CONDUCTIVITY) ** delta_time) * coolant_temperature_delta * (cooling_remove.heat_capacity() * internal_fusion.heat_capacity() / (cooling_remove.heat_capacity() + internal_fusion.heat_capacity()))
-			cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
-			internal_fusion.temperature = max(internal_fusion.temperature + cooling_heat_amount / internal_fusion.heat_capacity(), TCMB)
-		cooling_port.merge(cooling_remove)
-
-	fusion_temperature = internal_fusion.temperature
-	moderator_temperature = moderator_internal.temperature
-	coolant_temperature = airs[1].temperature
-	output_temperature = linked_output.airs[1].temperature
-
-	//Set the power level of the fusion process
-	switch(fusion_temperature)
-		if(-INFINITY to 500)
-			power_level = 0
-		if(500 to 1e3)
-			power_level = 1
-		if(1e3 to 1e4)
-			power_level = 2
-		if(1e4 to 1e5)
-			power_level = 3
-		if(1e5 to 1e6)
-			power_level = 4
-		if(1e6 to 1e7)
-			power_level = 5
-		else
-			power_level = 6
-
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/inject_from_side_components(delta_time)
-	update_pipenets()
-
-	// XXX: x2 because units are wrong
-
-	//Check and stores the gases from the moderator input in the moderator internal gasmix
-	var/datum/gas_mixture/moderator_port = linked_moderator.airs[1]
-	if(start_moderator && moderator_port.total_moles())
-		moderator_internal.merge(moderator_port.remove(moderator_injection_rate * delta_time * 2))
-		linked_moderator.update_parents()
-
-	//Check if the fuels are present and move them inside the fuel internal gasmix
-	if(!start_fuel || !selected_fuel || !check_gas_requirements())
-		return
-
-	var/datum/gas_mixture/fuel_port = linked_input.airs[1]
-	for(var/gas_type in selected_fuel.requirements)
-		internal_fusion.assert_gas(gas_type)
-		internal_fusion.merge(fuel_port.remove_specific(gas_type, fuel_injection_rate * delta_time * 2 / length(selected_fuel.requirements)))
-		linked_input.update_parents()
-
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_deconstructable()
-	if(!active)
-		return
-	if(power_level > 0)
-		fusion_started = TRUE
-		linked_input.fusion_started = TRUE
-		linked_output.fusion_started = TRUE
-		linked_moderator.fusion_started = TRUE
-		linked_interface.fusion_started = TRUE
-		for(var/obj/machinery/hypertorus/corner/corner in corners)
-			corner.fusion_started = TRUE
-	else
-		fusion_started = FALSE
-		linked_input.fusion_started = FALSE
-		linked_output.fusion_started = FALSE
-		linked_moderator.fusion_started = FALSE
-		linked_interface.fusion_started = FALSE
-		for(var/obj/machinery/hypertorus/corner/corner in corners)
-			corner.fusion_started = FALSE
-
 /obj/machinery/atmospherics/components/unary/hypertorus/core/process(delta_time)
 	/*
 	 *Pre-checks
@@ -577,17 +403,39 @@
 
 	emit_rads(radiation)
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/induce_hallucination(strength, delta_time, force=FALSE)
-	for(var/mob/living/carbon/human/human in view(src, HALLUCINATION_HFR(heat_output)))
-		if(force || !istype(human.glasses, /obj/item/clothing/glasses/meson))
-			var/distance_root = sqrt(1 / max(1, get_dist(human, src)))
-			human.hallucination += strength * distance_root * delta_time
-			human.hallucination = clamp(human.hallucination, 0, 200)
-
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/evaporate_moderator(delta_time)
 	// All gases in the moderator slowly burn away over time, whether used for production or not
 	if(moderator_internal.total_moles() > 0)
 		moderator_internal.remove(moderator_internal.total_moles() * (1 - (1 - 0.0005 * power_level) ** delta_time))
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_damageheal(delta_time)
+	// Archive current health for damage cap purposes
+	critical_threshold_proximity_archived = critical_threshold_proximity
+
+	// If we're operating at an extreme power level, take increasing damage for the amount of fusion mass over a low threshold
+	if(power_level >= HYPERTORUS_OVERFULL_MIN_POWER_LEVEL)
+		var/overfull_damage_taken = HYPERTORUS_OVERFULL_MOLAR_SLOPE * internal_fusion.total_moles() + HYPERTORUS_OVERFULL_TEMPERATURE_SLOPE * coolant_temperature + HYPERTORUS_OVERFULL_CONSTANT
+		critical_threshold_proximity = max(critical_threshold_proximity + max(overfull_damage_taken * delta_time, 0), 0)
+
+	// If we're running on a thin fusion mix, heal up
+	if(internal_fusion.total_moles() < HYPERTORUS_SUBCRITICAL_MOLES || power_level <= 5)
+		var/subcritical_heal_restore = (internal_fusion.total_moles() - HYPERTORUS_SUBCRITICAL_MOLES) / HYPERTORUS_SUBCRITICAL_SCALE
+		critical_threshold_proximity = max(critical_threshold_proximity + min(subcritical_heal_restore * delta_time, 0), 0)
+
+	// If coolant is sufficiently cold, heal up
+	if(internal_fusion.total_moles() > 0 && (airs[1].total_moles() && coolant_temperature < HYPERTORUS_COLD_COOLANT_THRESHOLD) || power_level <= 4)
+		var/cold_coolant_heal_restore = log(10, max(coolant_temperature, 1) * HYPERTORUS_COLD_COOLANT_SCALE) - (HYPERTORUS_COLD_COOLANT_MAX_RESTORE * 2)
+		critical_threshold_proximity = max(critical_threshold_proximity + min(cold_coolant_heal_restore * delta_time, 0), 0)
+
+	critical_threshold_proximity += max(iron_content - HYPERTORUS_MAX_SAFE_IRON, 0) * delta_time
+
+	// Apply damage cap
+	critical_threshold_proximity = min(critical_threshold_proximity_archived + (delta_time * DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
+
+	// If we have a preposterous amount of mass in the fusion mix, things get bad extremely fast
+	if(internal_fusion.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES)
+		var/hypercritical_damage_taken = max((internal_fusion.total_moles() - HYPERTORUS_HYPERCRITICAL_MOLES) * HYPERTORUS_HYPERCRITICAL_SCALE, 0)
+		critical_threshold_proximity += min(hypercritical_damage_taken, HYPERTORUS_HYPERCRITICAL_MIN_DAMAGE) * delta_time
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_damageheal_2(delta_time)
 	// The damage and healing system under SSmachine.
@@ -662,12 +510,90 @@
 		internal_fusion.garbage_collect()
 		moderator_internal.garbage_collect()
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/update_pipenets()
-	update_parents()
-	linked_input.update_parents()
-	linked_output.update_parents()
-	linked_moderator.update_parents()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_internal_cooling(delta_time)
+	if(moderator_internal.total_moles() > 0 && internal_fusion.total_moles() > 0)
+		//Modifies the moderator_internal temperature based on energy conduction and also the fusion by the same amount
+		var/fusion_temperature_delta = internal_fusion.temperature - moderator_internal.temperature
+		var/fusion_heat_amount = (1 - (1 - METALLIC_VOID_CONDUCTIVITY) ** delta_time) * fusion_temperature_delta * (internal_fusion.heat_capacity() * moderator_internal.heat_capacity() / (internal_fusion.heat_capacity() + moderator_internal.heat_capacity()))
+		internal_fusion.temperature = max(internal_fusion.temperature - fusion_heat_amount / internal_fusion.heat_capacity(), TCMB)
+		moderator_internal.temperature = max(moderator_internal.temperature + fusion_heat_amount / moderator_internal.heat_capacity(), TCMB)
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/emit_rads(rad_power)
-	rad_power = clamp((radiation / 1e5), 0, FUSION_RAD_MAX)
-	radiation_pulse(loc, rad_power)
+	if(airs[1].total_moles() * 0.05 > MINIMUM_MOLE_COUNT)
+		var/datum/gas_mixture/cooling_port = airs[1]
+		var/datum/gas_mixture/cooling_remove = cooling_port.remove(0.05 * cooling_port.total_moles())
+		//Cooling of the moderator gases with the cooling loop in and out the core
+		if(moderator_internal.total_moles() > 0)
+			var/coolant_temperature_delta = cooling_remove.temperature - moderator_internal.temperature
+			var/cooling_heat_amount = (1 - (1 - HIGH_EFFICIENCY_CONDUCTIVITY) ** delta_time) * coolant_temperature_delta * (cooling_remove.heat_capacity() * moderator_internal.heat_capacity() / (cooling_remove.heat_capacity() + moderator_internal.heat_capacity()))
+			cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
+			moderator_internal.temperature = max(moderator_internal.temperature + cooling_heat_amount / moderator_internal.heat_capacity(), TCMB)
+
+		else if(internal_fusion.total_moles() > 0)
+			var/coolant_temperature_delta = cooling_remove.temperature - internal_fusion.temperature
+			var/cooling_heat_amount = (1 - (1 - METALLIC_VOID_CONDUCTIVITY) ** delta_time) * coolant_temperature_delta * (cooling_remove.heat_capacity() * internal_fusion.heat_capacity() / (cooling_remove.heat_capacity() + internal_fusion.heat_capacity()))
+			cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
+			internal_fusion.temperature = max(internal_fusion.temperature + cooling_heat_amount / internal_fusion.heat_capacity(), TCMB)
+		cooling_port.merge(cooling_remove)
+
+	fusion_temperature = internal_fusion.temperature
+	moderator_temperature = moderator_internal.temperature
+	coolant_temperature = airs[1].temperature
+	output_temperature = linked_output.airs[1].temperature
+
+	//Set the power level of the fusion process
+	switch(fusion_temperature)
+		if(-INFINITY to 500)
+			power_level = 0
+		if(500 to 1e3)
+			power_level = 1
+		if(1e3 to 1e4)
+			power_level = 2
+		if(1e4 to 1e5)
+			power_level = 3
+		if(1e5 to 1e6)
+			power_level = 4
+		if(1e6 to 1e7)
+			power_level = 5
+		else
+			power_level = 6
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/inject_from_side_components(delta_time)
+	update_pipenets()
+
+	// XXX: x2 because units are wrong
+
+	//Check and stores the gases from the moderator input in the moderator internal gasmix
+	var/datum/gas_mixture/moderator_port = linked_moderator.airs[1]
+	if(start_moderator && moderator_port.total_moles())
+		moderator_internal.merge(moderator_port.remove(moderator_injection_rate * delta_time * 2))
+		linked_moderator.update_parents()
+
+	//Check if the fuels are present and move them inside the fuel internal gasmix
+	if(!start_fuel || !selected_fuel || !check_gas_requirements())
+		return
+
+	var/datum/gas_mixture/fuel_port = linked_input.airs[1]
+	for(var/gas_type in selected_fuel.requirements)
+		internal_fusion.assert_gas(gas_type)
+		internal_fusion.merge(fuel_port.remove_specific(gas_type, fuel_injection_rate * delta_time * 2 / length(selected_fuel.requirements)))
+		linked_input.update_parents()
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_deconstructable()
+	if(!active)
+		return
+	if(power_level > 0)
+		fusion_started = TRUE
+		linked_input.fusion_started = TRUE
+		linked_output.fusion_started = TRUE
+		linked_moderator.fusion_started = TRUE
+		linked_interface.fusion_started = TRUE
+		for(var/obj/machinery/hypertorus/corner/corner in corners)
+			corner.fusion_started = TRUE
+	else
+		fusion_started = FALSE
+		linked_input.fusion_started = FALSE
+		linked_output.fusion_started = FALSE
+		linked_moderator.fusion_started = FALSE
+		linked_interface.fusion_started = FALSE
+		for(var/obj/machinery/hypertorus/corner/corner in corners)
+			corner.fusion_started = FALSE

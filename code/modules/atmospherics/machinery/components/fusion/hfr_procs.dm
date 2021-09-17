@@ -163,6 +163,31 @@
 	QDEL_NULL(soundloop)
 
 /**
+ * Updates all related pipenets from all connected components
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/update_pipenets()
+	update_parents()
+	linked_input.update_parents()
+	linked_output.update_parents()
+	linked_moderator.update_parents()
+
+/**
+ * Infrequently plays accent sounds, and adjusts main loop parameters
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/play_ambience()
+	// We play delam/neutral sounds at a rate determined by power and critical_threshold_proximity
+	if(last_accent_sound < world.time && prob(20))
+		var/aggression = min(((critical_threshold_proximity / 800) * ((power_level) / 5)), 1.0) * 100
+		if(critical_threshold_proximity >= 300)
+			playsound(src, "hypertorusmelting", max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
+		else
+			playsound(src, "hypertoruscalm", max(50, aggression), FALSE, 25, 25, falloff_distance = 10)
+		var/next_sound = round((100 - aggression) * 5) + 5
+		last_accent_sound = world.time + max(HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
+
+	soundloop.volume = clamp((power_level + 1) * 8, 0, 50)
+
+/**
  * Called by the main fusion processes in hfr_main_processes.dm
  * Getter for fusion fuel moles
  */
@@ -446,11 +471,34 @@
 
 	qdel(src)
 
+/**
+ * Induce hallucinations in nearby humans.
+ *
+ * force will make hallucinations ignore meson protection.
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/induce_hallucination(strength, delta_time, force=FALSE)
+	for(var/mob/living/carbon/human/human in view(src, HALLUCINATION_HFR(heat_output)))
+		if(force || !istype(human.glasses, /obj/item/clothing/glasses/meson))
+			var/distance_root = sqrt(1 / max(1, get_dist(human, src)))
+			human.hallucination += strength * distance_root * delta_time
+			human.hallucination = clamp(human.hallucination, 0, 200)
+
+/**
+ * Emit radiation
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/emit_rads(radiation)
+	rad_power = clamp((radiation / 1e5), 0, FUSION_RAD_MAX)
+	radiation_pulse(loc, rad_power)
+
+/*
+ * HFR cracking related procs
+ */
+
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_cracked_parts()
 	for(var/obj/machinery/atmospherics/components/unary/hypertorus/part in machine_parts)
 		if(part.cracked)
-			return part
-	return null
+			return TRUE
+	return FALSE
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/create_crack()
 	var/obj/machinery/atmospherics/components/unary/hypertorus/part = pick(machine_parts)
@@ -464,3 +512,48 @@
 	if(!origin_turf)
 		return
 	origin_turf.assume_air(remove_mixture)
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_spill(delta_time)
+	var/obj/machinery/atmospherics/components/unary/hypertorus/cracked_part = check_cracked_parts()
+	if (!cracked_part)
+		if (moderator_internal.total_moles() < HYPERTORUS_HYPERCRITICAL_MOLES)
+			return
+		cracked_part = create_crack()
+		// See if we do anything in the initial rupture
+		if (moderator_internal.return_pressure() < HYPERTORUS_MEDIUM_SPILL_PRESSURE)
+			return
+		if (moderator_internal.return_pressure() < HYPERTORUS_STRONG_SPILL_PRESSURE)
+			// Medium explosion on initial rupture
+			explosion(
+				origin = cracked_part,
+				devastation_range = 0,
+				heavy_impact_range = 0,
+				light_impact_range = 1,
+				flame_range = 3,
+				flash_range = 3
+				)
+			spill_gases(cracked_part, moderator_internal, ratio = HYPERTORUS_MEDIUM_SPILL_INITIAL)
+			return
+		// Enough pressure for a strong explosion. Oh dear, oh dear.
+		explosion(
+			origin = cracked_part,
+			devastation_range = 0,
+			heavy_impact_range = 1,
+			light_impact_range = 3,
+			flame_range = 5,
+			flash_range = 5
+			)
+		spill_gases(cracked_part, moderator_internal, ratio = HYPERTORUS_STRONG_SPILL_INITIAL)
+		return
+	// We have an existing crack
+	if (moderator_internal.return_pressure() < HYPERTORUS_MEDIUM_SPILL_PRESSURE)
+		// Not high pressure, but can still leak
+		if (prob(HYPERTORUS_WEAK_SPILL_CHANCE))
+			spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - HYPERTORUS_WEAK_SPILL_RATE) ** delta_time)
+		return
+	// Lots of gas in here, out we go
+	if (moderator_internal.return_pressure() < HYPERTORUS_STRONG_SPILL_PRESSURE)
+		spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - HYPERTORUS_MEDIUM_SPILL_RATE) ** delta_time)
+		return
+	spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - HYPERTORUS_STRONG_SPILL_RATE) ** delta_time)
+
