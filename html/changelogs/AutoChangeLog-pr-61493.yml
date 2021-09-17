@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Agent IDs and other similar Chameleon gear can no longer be used/forged while you have your hand blocked and/or are in critical condition."
