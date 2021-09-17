@@ -839,7 +839,7 @@
 /area/lavaland/surface/outdoors/explored)
 "Br" = (
 /obj/item/melee/skateboard/hoverboard,
-/mob/living/simple_animal/chicken{
+/mob/living/basic/chicken{
 	name = "Chicken Joe"
 	},
 /turf/open/floor/plating/beach/coastline_t,

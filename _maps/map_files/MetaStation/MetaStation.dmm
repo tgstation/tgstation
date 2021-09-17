@@ -33792,7 +33792,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/mob/living/simple_animal/chicken{
+/mob/living/basic/chicken{
 	name = "Kentucky";
 	real_name = "Kentucky"
 	},
@@ -50107,7 +50107,7 @@
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "pPb" = (
-/mob/living/simple_animal/chicken{
+/mob/living/basic/chicken{
 	name = "Featherbottom";
 	real_name = "Featherbottom"
 	},

@@ -1279,13 +1279,13 @@
 				/mob/living/simple_animal/pet/dog/pug,
 				/mob/living/simple_animal/pet/cat,
 				/mob/living/simple_animal/mouse,
-				/mob/living/simple_animal/chicken,
+				/mob/living/basic/chicken,
 				/mob/living/basic/cow,
 				/mob/living/simple_animal/hostile/lizard,
 				/mob/living/simple_animal/pet/fox,
 				/mob/living/simple_animal/butterfly,
 				/mob/living/simple_animal/pet/cat/cak,
-				/mob/living/simple_animal/chick,
+				/mob/living/basic/chick,
 			)
 			new_mob = new path(loc)
 

@@ -82,6 +82,8 @@
 	var/gold_core_spawnable = NO_SPAWN
 	///Sentience type, for slime potions. SHOULD BE AN ELEMENT BUT I DONT CARE ABOUT IT FOR NOW
 	var/sentience_type = SENTIENCE_ORGANIC
+	///Sounds the animal makes, initializes as an element if this is set to a step type.
+	var/footstep_type
 
 /mob/living/basic/Initialize(mapload)
 	. = ..()
@@ -94,6 +96,9 @@
 
 	if(!loc)
 		stack_trace("Basic mob being instantiated in nullspace")
+
+	if(footstep_type)
+		AddElement(/datum/element/footstep, footstep_type)
 
 	update_basic_mob_varspeed()
 

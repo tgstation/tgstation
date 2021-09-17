@@ -431,7 +431,7 @@
 	bite_consumption = 20
 	food_reagents = list(/datum/reagent/consumable/eggyolk = 30, /datum/reagent/medicine/strange_reagent = 1)
 	tastes = list("chicken" = 1, "the country" = 1, "chicken bouillon" = 1)
-	spawned_mob = /mob/living/simple_animal/chicken
+	spawned_mob = /mob/living/basic/chicken
 
 /obj/item/food/monkeycube/bee
 	name = "bee cube"

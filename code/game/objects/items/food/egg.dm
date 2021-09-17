@@ -19,7 +19,21 @@
 	microwaved_type = /obj/item/food/boiledegg
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_TINY
-	var/static/chick_count = 0 //I copied this from the chicken_count (note the "en" in there) variable from chicken code.
+	///I copied this from the chicken_count (note the "en" in there) variable from chicken code.
+	var/static/chick_count = 0
+	///How much this
+	var/amount_grown = 0
+
+/obj/item/food/egg/process(delta_time)
+	if(!isturf(loc))
+		STOP_PROCESSING(SSobj, src)
+
+	amount_grown += rand(1,2) * delta_time
+	if(amount_grown >= 200)
+		visible_message(span_notice("[src] hatches with a quiet cracking sound."))
+		new /mob/living/basic/chick(get_turf(src))
+		STOP_PROCESSING(SSobj, src)
+		qdel(src)
 
 /obj/item/food/egg/gland
 	desc = "An egg! It looks weird..."
@@ -37,7 +51,7 @@
 		new /obj/effect/decal/cleanable/food/egg_smudge(T)
 		if(prob(13)) //Roughly a 1/8 (12.5%) chance to make a chick, as in Minecraft. I decided not to include the chances for the creation of multiple chicks from the impact of one egg, since that'd probably require nested prob()s or something (and people might think that it was a bug, anyway).
 			if(chick_count < MAX_CHICKENS) //Chicken code uses this MAX_CHICKENS variable, so I figured that I'd use it again here. Even this check and the check in chicken code both use the MAX_CHICKENS variable, they use independent counter variables and thus are independent of each other.
-				new /mob/living/simple_animal/chick(T)
+				new /mob/living/basic/chick(T)
 				chick_count++
 		reagents.expose(hit_atom, TOUCH)
 		qdel(src)

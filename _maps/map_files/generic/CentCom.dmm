@@ -14975,7 +14975,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/mob/living/simple_animal/chicken,
+/mob/living/basic/chicken,
 /turf/open/floor/grass,
 /area/centcom/holding)
 "YQ" = (

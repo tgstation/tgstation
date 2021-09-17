@@ -180,6 +180,9 @@
 
 ///Basic Mob Keys
 
+///a destination decided by another search subtree. used by run_away code
+#define BB_BASIC_MOB_DESTINATION "BB_basic_destination"
+
 ///Tipped blackboards
 ///Bool that means a basic mob will start reacting to being tipped in it's planning
 #define BB_BASIC_MOB_TIP_REACTING "BB_basic_tip_reacting"

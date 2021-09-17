@@ -108,7 +108,7 @@
 
 /obj/effect/holodeck_effect/mobspawner/pet/Initialize()
 	. = ..()
-	mobtype = list(/mob/living/simple_animal/butterfly, /mob/living/simple_animal/chick/holo, /mob/living/simple_animal/pet/fox)
+	mobtype = list(/mob/living/simple_animal/butterfly, /mob/living/basic/chick, /mob/living/simple_animal/pet/fox)
 	mobtype += pick(/mob/living/simple_animal/pet/dog/corgi, /mob/living/simple_animal/pet/dog/corgi/puppy,
 		/mob/living/simple_animal/pet/dog/pug)
 	mobtype += pick(/mob/living/simple_animal/pet/cat, /mob/living/simple_animal/pet/cat/kitten)

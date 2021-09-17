@@ -279,5 +279,3 @@
 		return
 	living_pawn.say(speech, forced = "AI Controller")
 	finish_action(controller, TRUE)
-
-

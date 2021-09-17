@@ -43,3 +43,7 @@
 		controller.blackboard[hiding_location_key] = potential_hiding_location
 
 	finish_action(controller, TRUE)
+
+///only finds targets that get really close.
+/datum/ai_behavior/find_potential_targets/too_close
+	vision_range = 3
