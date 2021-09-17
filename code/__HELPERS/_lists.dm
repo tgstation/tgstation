@@ -347,14 +347,14 @@
 /proc/bitfield2list(bitfield = 0, list/wordlist)
 	var/list/r = list()
 	if(islist(wordlist))
-		var/max = min(wordlist.len,16)
+		var/max = min(wordlist.len,24)
 		var/bit = 1
 		for(var/i=1, i<=max, i++)
 			if(bitfield & bit)
 				r += wordlist[i]
 			bit = bit << 1
 	else
-		for(var/bit=1, bit<=65535, bit = bit << 1)
+		for(var/bit=1, bit<=(1<<24), bit = bit << 1)
 			if(bitfield & bit)
 				r += bit
 
