@@ -9,14 +9,19 @@
 	damage_type = BRUTE
 	flag = BULLET
 
+/obj/projectile/meteor/on_hit(atom/target, blocked = FALSE)
+	..()
+	if(isliving(target))
+		explosion(target, devastation_range = -1, light_impact_range = 2, flame_range = 0, flash_range = 1, adminlog = FALSE)
+		playsound(target.loc, 'sound/effects/meteorimpact.ogg', 40, TRUE)
+	return BULLET_ACT_HIT
+
 /obj/projectile/meteor/Bump(atom/hit_target)
 	if(hit_target == firer)
 		forceMove(hit_target.loc)
 		return
 	if(isobj(hit_target))
 		SSexplosions.med_mov_atom += hit_target
-	if(isliving(hit_target))
-		explosion(hit_target, devastation_range = -1, light_impact_range = 1, flame_range = 0, flash_range = 1, adminlog = FALSE)
 	if(isturf(hit_target))
 		SSexplosions.medturf += hit_target
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, TRUE)
