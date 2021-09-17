@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - rscadd: "Icebox Chemistry Lab is now multi-z'd, with maintenance changes to match."
+  - bugfix: "fixed a maintenance door in the icebox HFR room that had the wrong access / name"
