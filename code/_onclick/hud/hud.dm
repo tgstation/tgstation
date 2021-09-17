@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	screentip_text = new(null, src)
 	static_inventory += screentip_text
 
-	for(var/mytype in subtypesof(/atom/movable/plane_master_controller))
+	for(var/mytype in subtypesof(/obj/plane_master_controller))
 		var/obj/plane_master_controller/controller_instance = new mytype(src)
 		plane_master_controllers[controller_instance.name] = controller_instance
 

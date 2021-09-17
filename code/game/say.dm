@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/GetRadio()
 
 //VIRTUALSPEAKERS
-/atom/movable/virtualspeaker
+/obj/virtualspeaker
 	var/job
 	var/atom/movable/source
 	var/obj/item/radio/radio

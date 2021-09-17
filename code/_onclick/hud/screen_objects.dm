@@ -6,7 +6,7 @@
 	They are used with the client/screen list and the screen_loc var.
 	For more information, see the byond documentation on the screen_loc and screen vars.
 */
-/atom/movable/screen
+/obj/screen
 	name = ""
 	icon = 'icons/hud/screen_gen.dmi'
 	plane = HUD_PLANE

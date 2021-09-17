@@ -85,6 +85,9 @@
 	/// The degree of pressure protection that mobs in list/contents have from the external environment, between 0 and 1
 	var/contents_pressure_protection = 0
 
+	var/pressure_resistance = 10
+	var/last_high_pressure_movement_air_cycle = 0
+
 
 /obj/Initialize(mapload)
 	. = ..()

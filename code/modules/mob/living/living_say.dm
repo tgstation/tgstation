@@ -255,7 +255,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/deaf_message
 	var/deaf_type
 	var/avoid_highlight
-	if(istype(speaker, /atom/movable/virtualspeaker))
+	if(istype(speaker, /obj/virtualspeaker))
 		var/obj/virtualspeaker/virt = speaker
 		avoid_highlight = src == virt.source
 	else

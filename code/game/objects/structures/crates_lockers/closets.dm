@@ -337,7 +337,7 @@
 	return
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
-	if(!istype(O) || O.anchored || istype(O, /atom/movable/screen))
+	if(!istype(O) || O.anchored || istype(O, /obj/screen))
 		return
 	if(!istype(user) || user.incapacitated() || user.body_position == LYING_DOWN)
 		return

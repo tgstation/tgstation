@@ -1,5 +1,5 @@
 ///Atom that manages and controls multiple planes. It's an atom so we can hook into add_filter etc. Multiple controllers can control one plane.
-/atom/movable/plane_master_controller
+/obj/plane_master_controller
 	///List of planes in this controllers control. Initially this is a normal list, but becomes an assoc list of plane numbers as strings | plane instance
 	var/list/controlled_planes = list()
 	///hud that owns this controller

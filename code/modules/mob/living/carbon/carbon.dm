@@ -145,7 +145,7 @@
 	throw_mode_off(THROW_MODE_TOGGLE)
 	if(!target || !isturf(loc))
 		return
-	if(istype(target, /atom/movable/screen))
+	if(istype(target, /obj/screen))
 		return
 
 	var/atom/movable/thrown_thing
