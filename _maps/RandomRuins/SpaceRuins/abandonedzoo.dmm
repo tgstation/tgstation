@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/obj/machinery/power/shieldwallgen/anchored,
+/obj/machinery/power/shieldwallgen/unlocked/anchored,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
@@ -99,7 +99,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/abandonedzoo)
 "aE" = (
-/obj/machinery/power/shieldwallgen/anchored,
+/obj/machinery/power/shieldwallgen/unlocked/anchored,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
@@ -179,7 +179,7 @@
 	pixel_x = -25
 	},
 /obj/structure/rack,
-/obj/item/melee/baton/cattleprod,
+/obj/item/melee/baton/security/cattleprod,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/side,
@@ -298,12 +298,12 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bs" = (
 /obj/structure/cable,
-/obj/machinery/power/shieldwallgen/anchored,
+/obj/machinery/power/shieldwallgen/unlocked/anchored,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "bt" = (
 /obj/structure/cable,
-/obj/machinery/power/shieldwallgen/anchored,
+/obj/machinery/power/shieldwallgen/unlocked/anchored,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "bu" = (
@@ -429,7 +429,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "bV" = (
-/obj/machinery/power/shieldwallgen,
+/obj/machinery/power/shieldwallgen/unlocked,
 /turf/template_noop,
 /area/template_noop)
 "bW" = (

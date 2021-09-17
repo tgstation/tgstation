@@ -49,7 +49,7 @@
 	if(src.value != value || force)
 		if(isatom(value))
 			UnregisterSignal(value, COMSIG_PARENT_QDELETING)
-		src.value = datatype_handler.convert_value(src, value)
+		src.value = datatype_handler.convert_value(src, value, force)
 		if(isatom(value))
 			RegisterSignal(value, COMSIG_PARENT_QDELETING, .proc/null_value)
 	SEND_SIGNAL(src, COMSIG_PORT_SET_VALUE, value)
@@ -57,12 +57,12 @@
 /**
  * Updates the value of the input and calls input_received on the connected component
  */
-/datum/port/input/proc/set_input(value)
+/datum/port/input/proc/set_input(value, list/return_values)
 	if(QDELETED(src)) //Pain
 		return
 	set_value(value)
 	if(trigger)
-		connected_component.trigger_component(src)
+		connected_component.trigger_component(src, return_values)
 
 /datum/port/output/proc/set_output(value)
 	set_value(value)
@@ -204,7 +204,7 @@
  */
 /datum/port/input/proc/receive_value(datum/port/output/output, value)
 	SIGNAL_HANDLER
-	SScircuit_component.add_callback(CALLBACK(src, .proc/set_input, value))
+	SScircuit_component.add_callback(src, CALLBACK(src, .proc/set_input, value))
 
 /// Signal handler proc to null the input if an atom is deleted. An update is not sent because this was not set by anything.
 /datum/port/proc/null_value(datum/source)

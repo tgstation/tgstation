@@ -300,7 +300,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		to_chat(user, span_notice("You fasten the glass shard to the top of the rod with the cable."))
 
 	else if(istype(I, /obj/item/assembly/igniter) && !(HAS_TRAIT(I, TRAIT_NODROP)))
-		var/obj/item/melee/baton/cattleprod/P = new /obj/item/melee/baton/cattleprod
+		var/obj/item/melee/baton/security/cattleprod/prod = new
 
 		remove_item_from_storage(user)
 
@@ -309,7 +309,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		qdel(I)
 		qdel(src)
 
-		user.put_in_hands(P)
+		user.put_in_hands(prod)
 	else
 		return ..()
 
@@ -720,7 +720,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 					/mob/living/simple_animal/butterfly,
 					/mob/living/basic/cockroach,
 					/obj/item/queen_bee,
-					/obj/structure/spider/spiderling
+					/obj/structure/spider/spiderling,
+					/mob/living/simple_animal/ant,
+					/obj/effect/decal/cleanable/ants
 	))
 
 

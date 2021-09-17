@@ -185,13 +185,13 @@
 	add_fingerprint(user)
 
 	if(I.tool_behaviour == TOOL_WELDER)
-		if(obj_integrity < max_integrity)
+		if(atom_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount = 0))
 				return
 
 			to_chat(user, span_notice("You begin repairing [src]..."))
 			if(I.use_tool(src, user, 40, volume = 50))
-				obj_integrity = max_integrity
+				atom_integrity = max_integrity
 				update_nearby_icons()
 				to_chat(user, span_notice("You repair [src]."))
 		else
@@ -305,9 +305,8 @@
 	air_update_turf(TRUE, FALSE)
 	add_fingerprint(user)
 
-/obj/structure/window/proc/on_painted(is_dark_color)
+/obj/structure/window/proc/on_painted(obj/structure/window/source, is_dark_color)
 	SIGNAL_HANDLER
-
 	if (is_dark_color && fulltile) //Opaque directional windows restrict vision even in directions they are not placed in, please don't do this
 		set_opacity(255)
 	else
@@ -346,7 +345,7 @@
 	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
 		QUEUE_SMOOTH(src)
 
-	var/ratio = obj_integrity / max_integrity
+	var/ratio = atom_integrity / max_integrity
 	ratio = CEILING(ratio*4, 1) * 25
 	cut_overlay(crack_overlay)
 	if(ratio > 75)
@@ -632,7 +631,7 @@
 	name = "frosted window"
 	icon_state = "fwindow"
 
-/* Full Tile Windows (more obj_integrity) */
+/* Full Tile Windows (more atom_integrity) */
 
 /obj/structure/window/fulltile
 	icon = 'icons/obj/smooth_structures/window.dmi'
@@ -804,7 +803,7 @@
 
 /obj/structure/window/paperframe/examine(mob/user)
 	. = ..()
-	if(obj_integrity < max_integrity)
+	if(atom_integrity < max_integrity)
 		. += span_info("It looks a bit damaged, you may be able to fix it with some <b>paper</b>.")
 
 /obj/structure/window/paperframe/spawnDebris(location)
@@ -823,7 +822,7 @@
 
 /obj/structure/window/paperframe/update_appearance(updates)
 	. = ..()
-	set_opacity(obj_integrity >= max_integrity)
+	set_opacity(atom_integrity >= max_integrity)
 
 /obj/structure/window/paperframe/update_icon(updates=ALL)
 	. = ..()
@@ -832,7 +831,7 @@
 
 /obj/structure/window/paperframe/update_overlays()
 	. = ..()
-	. += (obj_integrity < max_integrity) ? torn : paper
+	. += (atom_integrity < max_integrity) ? torn : paper
 
 /obj/structure/window/paperframe/attackby(obj/item/W, mob/living/user)
 	if(W.get_temperature())
@@ -840,13 +839,13 @@
 		return
 	if(user.combat_mode)
 		return ..()
-	if(istype(W, /obj/item/paper) && obj_integrity < max_integrity)
+	if(istype(W, /obj/item/paper) && atom_integrity < max_integrity)
 		user.visible_message(span_notice("[user] starts to patch the holes in \the [src]."))
 		if(do_after(user, 20, target = src))
-			obj_integrity = min(obj_integrity+4,max_integrity)
+			atom_integrity = min(atom_integrity+4,max_integrity)
 			qdel(W)
 			user.visible_message(span_notice("[user] patches some of the holes in \the [src]."))
-			if(obj_integrity == max_integrity)
+			if(atom_integrity == max_integrity)
 				update_appearance()
 			return
 	..()

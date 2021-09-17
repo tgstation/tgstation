@@ -117,9 +117,9 @@
 	UnregisterSignal(cart_smartfridge, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 	UnregisterSignal(cart_table, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 	UnregisterSignal(cart_tent, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-	obj_break()
+	atom_break()
 
-/obj/machinery/food_cart/obj_break(damage_flag)
+/obj/machinery/food_cart/atom_break(damage_flag)
 	. = ..()
 	pack_up()
 	if(!QDELETED(cart_griddle))

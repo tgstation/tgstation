@@ -157,6 +157,18 @@
 	///AI controller that controls this atom. type on init, then turned into an instance during runtime
 	var/datum/ai_controller/ai_controller
 
+	///any atom that uses integrity and can be damaged must set this to true, otherwise the integrity procs will throw an error
+	var/uses_integrity = FALSE
+
+	var/datum/armor/armor
+	VAR_PRIVATE/atom_integrity //defaults to max_integrity
+	var/max_integrity = 500
+	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the atom breaks. 0.5 being 50%
+	///Damage under this value will be completely ignored
+	var/damage_deflection = 0
+
+	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
+
 /**
  * Called when an atom is created in byond (built in engine proc)
  *
@@ -247,6 +259,15 @@
 
 	// apply materials properly from the default custom_materials value
 	set_custom_materials(custom_materials)
+
+	if(uses_integrity)
+		if (islist(armor))
+			armor = getArmor(arglist(armor))
+		else if (!armor)
+			armor = getArmor()
+		else if (!istype(armor, /datum/armor))
+			stack_trace("Invalid type [armor.type] found in .armor during /atom Initialize()")
+		atom_integrity = max_integrity
 
 	ComponentInitialize()
 	InitializeAIController()
@@ -1546,7 +1567,18 @@
 /atom/proc/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	return
 
-/// Generic logging helper
+/**
+ * Generic logging helper
+ *
+ * reads the type of the log
+ * and writes it to the respective log file
+ * unless log_globally is FALSE
+ * Arguments:
+ * * message - The message being logged
+ * * message_type - the type of log the message is(ATTACK, SAY, etc)
+ * * color - color of the log text
+ * * log_globally - boolean checking whether or not we write this log to the log file
+ */
 /atom/proc/log_message(message, message_type, color=null, log_globally=TRUE)
 	if(!log_globally)
 		return
@@ -1593,7 +1625,19 @@
 			stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
 			log_game(log_text)
 
-/// Helper for logging chat messages or other logs with arbitrary inputs (e.g. announcements)
+/**
+ * Helper for logging chat messages or other logs with arbitrary inputs(e.g. announcements)
+ *
+ * This proc compiles a log string by prefixing the tag to the message
+ * and suffixing what it was forced_by if anything
+ * if the message lacks a tag and suffix then it is logged on its own
+ * Arguments:
+ * * message - The message being logged
+ * * message_type - the type of log the message is(ATTACK, SAY, etc)
+ * * tag - tag that indicates the type of text(announcement, telepathy, etc)
+ * * log_globally - boolean checking whether or not we write this log to the log file
+ * * forced_by - source that forced the dialogue if any
+ */
 /atom/proc/log_talk(message, message_type, tag=null, log_globally=TRUE, forced_by=null)
 	var/prefix = tag ? "([tag]) " : ""
 	var/suffix = forced_by ? " FORCED by [forced_by]" : ""
@@ -1607,7 +1651,7 @@
 
 	source.log_talk(message, message_type, tag="[tag] to [key_name(target)]")
 	if(source != target)
-		target.log_talk(message, message_type, tag="[tag] from [key_name(source)]", log_globally=FALSE)
+		target.log_talk(message, LOG_VICTIM, tag="[tag] from [key_name(source)]", log_globally=FALSE)
 
 /**
  * Log a combat message in the attack log
@@ -1640,7 +1684,7 @@
 
 	if(user != target)
 		var/reverse_message = "has been [what_done] by [ssource][postfix]"
-		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
+		target.log_message(reverse_message, LOG_VICTIM, color="orange", log_globally=FALSE)
 
 /**
  * log_wound() is for when someone is *attacked* and suffers a wound. Note that this only captures wounds from damage, so smites/forced wounds aren't logged, as well as demotions like cuts scabbing over
@@ -1742,7 +1786,7 @@
 
 /// Sets the custom materials for an item.
 /atom/proc/set_custom_materials(list/materials, multiplier = 1)
-	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
+	if(custom_materials && material_flags & MATERIAL_EFFECTS) //Only runs if custom materials existed at first and affected src.
 		for(var/i in custom_materials)
 			var/datum/material/custom_material = GET_MATERIAL_REF(i)
 			custom_material.on_removed(src, custom_materials[i] * material_modifier, material_flags) //Remove the current materials
@@ -1751,7 +1795,7 @@
 		custom_materials = null
 		return
 
-	if(!(material_flags & MATERIAL_NO_EFFECTS))
+	if(material_flags & MATERIAL_EFFECTS)
 		for(var/x in materials)
 			var/datum/material/custom_material = GET_MATERIAL_REF(x)
 			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)
@@ -2063,10 +2107,10 @@
 	status_bar_set_text(usr, name)
 	// Screentips
 	if(usr?.hud_used)
-		if(!usr.client?.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
+		if(!usr.hud_used.screentips_enabled || (flags_1 & NO_SCREENTIPS_1))
 			usr.hud_used.screentip_text.maptext = ""
 		else
-			usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")
+			usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.hud_used.screentip_color]: 32px'>[name]</span>")
 
 /// Gets a merger datum representing the connected blob of objects in the allowed_types argument
 /atom/proc/GetMergeGroup(id, list/allowed_types)

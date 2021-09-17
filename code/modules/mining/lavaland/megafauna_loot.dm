@@ -379,7 +379,7 @@
 	RegisterSignal(soul, COMSIG_LIVING_RESIST, .proc/on_resist)
 	RegisterSignal(soul, COMSIG_MOB_ATTACK_RANGED, .proc/on_attack)
 	RegisterSignal(soul, COMSIG_MOB_ATTACK_RANGED_SECONDARY, .proc/on_secondary_attack)
-	RegisterSignal(src, COMSIG_OBJ_INTEGRITY_CHANGED, .proc/on_integrity_change)
+	RegisterSignal(src, COMSIG_ATOM_INTEGRITY_CHANGED, .proc/on_integrity_change)
 
 /obj/item/soulscythe/examine(mob/user)
 	. = ..()

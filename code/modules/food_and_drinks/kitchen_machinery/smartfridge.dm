@@ -239,7 +239,23 @@
 
 	return FALSE
 
-
+/obj/machinery/smartfridge/welder_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(machine_stat & BROKEN)
+		if(!I.tool_start_check(user, amount=0))
+			return
+		user.visible_message("<span class='notice'>[user] is repairing [src].</span>", \
+						"<span class='notice'>You begin repairing [src]...</span>", \
+						"<span class='hear'>You hear welding.</span>")
+		if(I.use_tool(src, user, 40, volume=50))
+			if(!(machine_stat & BROKEN))
+				return
+			to_chat(user, "<span class='notice'>You repair [src].</span>")
+			atom_integrity = max_integrity
+			set_machine_stat(machine_stat & ~BROKEN)
+			update_icon()
+	else
+		to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 // ----------------------------
 //  Drying Rack 'smartfridge'
 // ----------------------------
@@ -308,7 +324,7 @@
 	if(!powered())
 		toggle_drying(TRUE)
 
-/obj/machinery/smartfridge/drying_rack/load(/obj/item/dried_object) //For updating the filled overlay
+/obj/machinery/smartfridge/drying_rack/load(obj/item/dried_object) //For updating the filled overlay
 	. = ..()
 	update_appearance()
 

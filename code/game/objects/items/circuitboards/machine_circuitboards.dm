@@ -141,7 +141,7 @@
 /obj/item/circuitboard/machine/tesla_coil
 	name = "Tesla Controller (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	desc = "You can use a screwdriver to switch between Research and Power Generation."
+	desc = "Does not let you shoot lightning from your hands."
 	build_path = /obj/machinery/power/tesla_coil
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
 	needs_anchored = FALSE
@@ -222,6 +222,7 @@
 /obj/item/circuitboard/machine/rad_collector
 	name = "Radiation Collector (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	desc = "Comes with a small amount solder of arranged in the corner: \"If you can read this, you're too close.\""
 	build_path = /obj/machinery/power/rad_collector
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,

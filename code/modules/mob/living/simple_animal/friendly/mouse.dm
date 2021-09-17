@@ -190,7 +190,7 @@
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "squeaks happily!")
 	// Tom fears no cable.
-	ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, SPECIES_TRAIT)
+	ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, INNATE_TRAIT)
 
 /obj/item/food/deadmouse
 	name = "dead mouse"
@@ -202,6 +202,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtypes = GROSS | MEAT | RAW
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
+	decomp_req_handle = TRUE
 
 /obj/item/food/deadmouse/Initialize()
 	. = ..()

@@ -1,6 +1,6 @@
 import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Blink, Box, Button, Dimmer, Divider, Icon, Modal, NoticeBox, ProgressBar, Section, Stack } from '../components';
+import { Box, Button, Dimmer, Divider, Icon, NoticeBox, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const TAB2NAME = [

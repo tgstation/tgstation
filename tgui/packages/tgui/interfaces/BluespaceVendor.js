@@ -3,7 +3,7 @@ import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { multiline } from 'common/string';
 import { useBackend } from '../backend';
-import { Button, Divider, LabeledList, NumberInput, ProgressBar, Section, Stack, Box } from '../components';
+import { Button, Divider, LabeledList, NumberInput, ProgressBar, Section, Stack } from '../components';
 import { getGasColor, getGasLabel } from '../constants';
 import { Window } from '../layouts';
 
