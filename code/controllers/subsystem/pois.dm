@@ -110,7 +110,7 @@ SUBSYSTEM_DEF(pois)
 	add_mob_poi(former_stealthmin)
 
 /// Send a signal to indicate that this SS's POI lists have changed. Listeners can then update.
-/datum/controller/subsystem/pois/proc/on_pois_changed(var/poi_type)
+/datum/controller/subsystem/pois/proc/on_pois_changed(poi_type)
 	switch(poi_type)
 		if(POI_MOBS)
 			SEND_SIGNAL(src, COMSIG_MOB_POIS_CHANGED)
@@ -170,7 +170,7 @@ SUBSYSTEM_DEF(pois)
 	return pois
 
 /// Returns TRUE if potential_poi is in certain POI lists, making it a valid POI. If include_lobby is TRUE, it also considers the lobby_points_of_interest list when checking for a valid POI.
-/datum/controller/subsystem/pois/proc/is_valid_poi(atom/potential_poi, var/include_lobby = FALSE)
+/datum/controller/subsystem/pois/proc/is_valid_poi(atom/potential_poi, include_lobby = FALSE)
 	if(potential_poi in mob_points_of_interest)
 		return TRUE
 
