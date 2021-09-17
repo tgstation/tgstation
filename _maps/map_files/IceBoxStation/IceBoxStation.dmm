@@ -39095,12 +39095,6 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/storage)
-"qlL" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "qlY" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
@@ -77627,7 +77621,7 @@ caq
 caq
 caq
 caq
-qlL
+caq
 wmw
 bCq
 bCq
