@@ -152,11 +152,7 @@
 			power_level = 6
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/inject_from_side_components(delta_time)
-	//Update pipenets
-	update_parents()
-	linked_input.update_parents()
-	linked_output.update_parents()
-	linked_moderator.update_parents()
+	update_pipenets()
 
 	// XXX: x2 because units are wrong
 
@@ -215,9 +211,6 @@
 	//then check if the other machines are still there
 	if(!check_part_connectivity())
 		deactivate()
-		return
-
-	if(!selected_fuel)
 		return
 
 	if(!check_fuel())
@@ -383,142 +376,164 @@
 					- heat_limiter_modifier * 0.01 * selected_fuel.negative_temperature_multiplier, \
 					heat_limiter_modifier * selected_fuel.positive_temperature_multiplier)
 
-	moderator_process(delta_time, selected_fuel, fuel_list, moderator_list, heat_output, scaled_fuel_list)
+	// Phew. Lets calculate what this means in practice.
+	var/fuel_consumption_rate = clamp(fuel_injection_rate * 0.01 * 5 * power_level, 0.05, 30)
+	var/consumption_amount = fuel_consumption_rate * delta_time
+	var/production_amount
+	switch(power_level)
+		if(3,4)
+			production_amount = clamp(heat_output * 5e-4, 0, fuel_consumption_rate) * delta_time
+		else
+			production_amount = clamp(heat_output / 10 ** (power_level+1), 0, fuel_consumption_rate) * delta_time
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/moderator_process(delta_time, datum/hfr_fuel/selected_fuel, fuel_list, moderator_list, heat_output, scaled_fuel_list)
+	// antinob production is special, and uses its own calculations from how stale the fusion mix is (via byproduct ratio and fresh fuel rate)
+	var/dirty_production_rate = scaled_fuel_list[scaled_fuel_list[3]] / fuel_injection_rate
+
+	// Run the effects of our selected fuel recipe
+
 	var/datum/gas_mixture/internal_output = new
-	//gas consumption and production
-	if(check_fuel())
-		var/fuel_consumption_rate = clamp(fuel_injection_rate * 0.01 * 5 * power_level, 0.05, 30) * selected_fuel.gas_production_multiplier
-		var/fuel_consumption = fuel_consumption_rate * delta_time
+	moderator_fuel_process(delta_time, production_amount, consumption_amount, internal_output, moderator_list, selected_fuel, fuel_list)
 
-		for(var/gas_id in selected_fuel.requirements)
-			internal_fusion.gases[gas_id][MOLES] -= min(fuel_list[gas_id], fuel_consumption * 0.85 * selected_fuel.fuel_consumption_multiplier)
-		for(var/gas_id in selected_fuel.primary_products)
-			internal_fusion.gases[gas_id][MOLES] += fuel_consumption * 0.5
-		//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
-		//Also dependant on what is the power level and what moderator gases are present
-		if(power_output)
-			switch(power_level)
-				if(1)
-					var/scaled_production = clamp(heat_output * 1e-2, 0, fuel_consumption_rate) * delta_time
-					moderator_internal.gases[selected_fuel.secondary_products[1]][MOLES] += scaled_production * 0.95
-					moderator_internal.gases[selected_fuel.secondary_products[2]][MOLES] += scaled_production *0.75
-					if(moderator_list[/datum/gas/plasma] > 100)
-						moderator_internal.gases[/datum/gas/nitrous_oxide] += scaled_production * 0.5
-						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.85)
-					if(moderator_list[/datum/gas/bz] > 150)
-						internal_output.assert_gases(/datum/gas/halon)
-						internal_output.gases[/datum/gas/halon][MOLES] += scaled_production * 0.55
-						moderator_internal.gases[/datum/gas/bz][MOLES] -= min(moderator_internal.gases[/datum/gas/bz][MOLES], scaled_production * 0.95)
-				if(2)
-					var/scaled_production = clamp(heat_output * 1e-3, 0, fuel_consumption_rate) * delta_time
-					moderator_internal.gases[selected_fuel.secondary_products[1]][MOLES] += scaled_production * 1.65
-					moderator_internal.gases[selected_fuel.secondary_products[2]][MOLES] += scaled_production
-					if(moderator_list[/datum/gas/plasma] > 50)
-						internal_output.assert_gases(/datum/gas/bz)
-						internal_output.gases[/datum/gas/bz][MOLES] += scaled_production * 1.8
-						moderator_internal.gases[selected_fuel.secondary_products[3]][MOLES] += scaled_production * 1.15
-						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.75)
-					if(moderator_list[/datum/gas/proto_nitrate] > 20)
-						radiation *= 1.55
-						heat_output *= 1.025
-						internal_output.assert_gases(/datum/gas/stimulum)
-						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.05
-						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.35)
-				if(3, 4)
-					var/scaled_production = clamp(heat_output * 5e-4, 0, fuel_consumption_rate) * delta_time
-					if(power_level == 3)
-						moderator_internal.gases[selected_fuel.secondary_products[2]][MOLES] += scaled_production * 0.5
-						moderator_internal.gases[selected_fuel.secondary_products[3]][MOLES] += scaled_production * 0.45
-					if(power_level == 4)
-						moderator_internal.gases[selected_fuel.secondary_products[3]][MOLES] += scaled_production * 1.65
-						moderator_internal.gases[selected_fuel.secondary_products[4]][MOLES] += scaled_production * 1.25
-					if(moderator_list[/datum/gas/plasma] > 10)
-						internal_output.assert_gases(/datum/gas/freon, /datum/gas/stimulum)
-						internal_output.gases[/datum/gas/freon][MOLES] += scaled_production * 0.15
-						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.05
-						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.45)
-					if(moderator_list[/datum/gas/freon] > 50)
-						heat_output *= 0.9
-						radiation *= 0.8
-					if(moderator_list[/datum/gas/proto_nitrate]> 15)
-						internal_output.assert_gases(/datum/gas/stimulum, /datum/gas/halon)
-						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.25
-						internal_output.gases[/datum/gas/halon][MOLES] += scaled_production * 1.15
-						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.55)
-						radiation *= 1.95
-						heat_output *= 1.25
-					if(moderator_list[/datum/gas/bz] > 100)
-						internal_output.assert_gases(/datum/gas/healium, /datum/gas/proto_nitrate)
-						internal_output.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 1.5
-						internal_output.gases[/datum/gas/healium][MOLES] += scaled_production * 1.5
-						for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_HFR(heat_output))) // If they can see it without mesons on.  Bad on them.
-							if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
-								var/D = sqrt(1 / max(1, get_dist(l, src)))
-								l.hallucination += power_level * 50 * D * delta_time
-								l.hallucination = clamp(l.hallucination, 0, 200)
-				if(5)
-					var/scaled_production = clamp(heat_output * 1e-6, 0, fuel_consumption_rate) * delta_time
-					moderator_internal.gases[selected_fuel.secondary_products[4]][MOLES] += scaled_production * 0.65
-					moderator_internal.gases[selected_fuel.secondary_products[5]][MOLES] += scaled_production
-					moderator_internal.gases[selected_fuel.secondary_products[6]][MOLES] += scaled_production * 0.75
-					if(moderator_list[/datum/gas/plasma] > 15)
-						internal_output.assert_gases(/datum/gas/freon)
-						internal_output.gases[/datum/gas/freon][MOLES] += scaled_production *0.25
-						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.45)
-					if(moderator_list[/datum/gas/freon] > 500)
-						heat_output *= 0.5
-						radiation *= 0.2
-					if(moderator_list[/datum/gas/proto_nitrate] > 50)
-						internal_output.assert_gases(/datum/gas/stimulum, /datum/gas/pluoxium)
-						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.95
-						internal_output.gases[/datum/gas/pluoxium][MOLES] += scaled_production
-						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.35)
-						radiation *= 1.95
-						heat_output *= 1.25
-					if(moderator_list[/datum/gas/bz] > 100)
-						internal_output.assert_gases(/datum/gas/healium)
-						internal_output.gases[/datum/gas/healium][MOLES] += scaled_production
-						for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_HFR(heat_output))) // If they can see it without mesons on.  Bad on them.
-							if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
-								var/D = sqrt(1 / max(1, get_dist(l, src)))
-								l.hallucination += power_level * 100 * D
-								l.hallucination = clamp(l.hallucination, 0, 200)
-						moderator_internal.gases[/datum/gas/freon][MOLES] += scaled_production * 1.15
-					if(moderator_list[/datum/gas/healium] > 100)
-						if(critical_threshold_proximity > 400)
-							critical_threshold_proximity = max(critical_threshold_proximity - (moderator_list[/datum/gas/healium] / 100 * delta_time ), 0)
-							moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20)
-					if(moderator_internal.temperature < 1e7 || (moderator_list[/datum/gas/plasma] > 100 && moderator_list[/datum/gas/bz] > 50))
-						internal_output.assert_gases(/datum/gas/antinoblium)
-						internal_output.gases[/datum/gas/antinoblium][MOLES] += 0.9 * (scaled_fuel_list[scaled_fuel_list[3]] / (fuel_injection_rate * 0.065)) * delta_time
-				if(6)
-					var/scaled_production = clamp(heat_output * 1e-7, 0, fuel_consumption_rate) * delta_time
-					moderator_internal.gases[selected_fuel.secondary_products[5]][MOLES] += scaled_production * 0.35
-					moderator_internal.gases[selected_fuel.secondary_products[6]][MOLES] += scaled_production
-					if(moderator_list[/datum/gas/plasma] > 30)
-						moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 1.15
-						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.45)
-					if(moderator_list[/datum/gas/proto_nitrate])
-						internal_output.assert_gases(/datum/gas/zauker, /datum/gas/stimulum)
-						internal_output.gases[/datum/gas/zauker][MOLES] += scaled_production * 5.35
-						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 2.15
-						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 3.35)
-						radiation *= 2
-						heat_output *= 2.25
-					if(moderator_list[/datum/gas/bz])
-						for(var/mob/living/carbon/human/human in view(src, HALLUCINATION_HFR(heat_output)))
-							//mesons won't protect you at fusion level 6
-							var/distance_root = sqrt(1 / max(1, get_dist(human, src)))
-							human.hallucination += power_level * 150 * distance_root
-							human.hallucination = clamp(human.hallucination, 0, 200)
-						moderator_internal.gases[/datum/gas/antinoblium][MOLES] += clamp((scaled_fuel_list[scaled_fuel_list[3]] / (fuel_injection_rate * 0.045)), 0, 10) * delta_time
-					if(moderator_list[/datum/gas/healium] > 100)
-						if(critical_threshold_proximity > 400)
-							critical_threshold_proximity = max(critical_threshold_proximity - (moderator_list[/datum/gas/healium] / 100 * delta_time ), 0)
-							moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20)
-					internal_fusion.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_fuel_list[scaled_fuel_list[3]] / (fuel_injection_rate * 0.095)) * delta_time
+	// Run the common effects, committing changes where applicable
+
+	// This is repetition, but is here as a placeholder for what will need to be done to allow concurrently running multiple recipes
+	var/common_production_amount = production_amount * selected_fuel.fuel_consumption_multiplier * selected_fuel.gas_production_multiplier
+	moderator_common_process(delta_time, common_production_amount, internal_output, moderator_list, dirty_production_rate, heat_output, radiation_modifier)
+
+/**
+ * Perform recipe specific actions. Fuel consumption and recipe based gas production happens here.
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/moderator_fuel_process(delta_time, production_amount, consumption_amount, datum/gas_mixture/internal_output, moderator_list, datum/hfr_fuel/fuel, fuel_list)
+	// Adjust fusion consumption/production based on this recipe's characteristics
+	var/fuel_consumption = consumption_amount * 0.85 * selected_fuel.fuel_consumption_multiplier
+	// Note production depends on *both* the fuel consumption and gas production multipliers. XXX: Was this intentional?
+	var/scaled_production = production_amount * selected_fuel.fuel_consumption_multiplier * selected_fuel.gas_production_multiplier
+
+	for(var/gas_id in fuel.requirements)
+		internal_fusion.gases[gas_id][MOLES] -= min(fuel_list[gas_id], fuel_consumption)
+	for(var/gas_id in fuel.primary_products)
+		internal_fusion.gases[gas_id][MOLES] += fuel_consumption * 0.5
+	//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
+	//Also dependant on what is the power level and what moderator gases are present
+	switch(power_level)
+		if(1)
+			moderator_internal.gases[fuel.secondary_products[1]][MOLES] += scaled_production * 0.95
+			moderator_internal.gases[fuel.secondary_products[2]][MOLES] += scaled_production *0.75
+		if(2)
+			moderator_internal.gases[fuel.secondary_products[1]][MOLES] += scaled_production * 1.65
+			moderator_internal.gases[fuel.secondary_products[2]][MOLES] += scaled_production
+			if(moderator_list[/datum/gas/plasma] > 50)
+				moderator_internal.gases[fuel.secondary_products[3]][MOLES] += scaled_production * 1.15
+		if(3, 4)
+			if(power_level == 3)
+				moderator_internal.gases[fuel.secondary_products[2]][MOLES] += scaled_production * 0.5
+				moderator_internal.gases[fuel.secondary_products[3]][MOLES] += scaled_production * 0.45
+			if(power_level == 4)
+				moderator_internal.gases[fuel.secondary_products[3]][MOLES] += scaled_production * 1.65
+				moderator_internal.gases[fuel.secondary_products[4]][MOLES] += scaled_production * 1.25
+		if(5)
+			moderator_internal.gases[fuel.secondary_products[4]][MOLES] += scaled_production * 0.65
+			moderator_internal.gases[fuel.secondary_products[5]][MOLES] += scaled_production
+			moderator_internal.gases[fuel.secondary_products[6]][MOLES] += scaled_production * 0.75
+		if(6)
+			moderator_internal.gases[fuel.secondary_products[5]][MOLES] += scaled_production * 0.35
+			moderator_internal.gases[fuel.secondary_products[6]][MOLES] += scaled_production
+
+/**
+ * Perform common fusion actions:
+ *
+ * - Gases that get produced irrespective of recipe
+ * - Temperature modifiers, radiation modifiers, and the application of each
+ * - Committing staged output, performing filtering, and making !FUN! emissions
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/moderator_common_process(delta_time, scaled_production, datum/gas_mixture/internal_output, moderator_list, dirty_production_rate, heat_output, radiation_modifier)
+	switch(power_level)
+		if(1)
+			if(moderator_list[/datum/gas/plasma] > 100)
+				moderator_internal.gases[/datum/gas/nitrous_oxide] += scaled_production * 0.5
+				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.85)
+			if(moderator_list[/datum/gas/bz] > 150)
+				internal_output.assert_gases(/datum/gas/halon)
+				internal_output.gases[/datum/gas/halon][MOLES] += scaled_production * 0.55
+				moderator_internal.gases[/datum/gas/bz][MOLES] -= min(moderator_internal.gases[/datum/gas/bz][MOLES], scaled_production * 0.95)
+		if(2)
+			if(moderator_list[/datum/gas/plasma] > 50)
+				internal_output.assert_gases(/datum/gas/bz)
+				internal_output.gases[/datum/gas/bz][MOLES] += scaled_production * 1.8
+				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.75)
+			if(moderator_list[/datum/gas/proto_nitrate] > 20)
+				radiation *= 1.55
+				heat_output *= 1.025
+				internal_output.assert_gases(/datum/gas/stimulum)
+				internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.05
+				moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.35)
+		if(3, 4)
+			if(moderator_list[/datum/gas/plasma] > 10)
+				internal_output.assert_gases(/datum/gas/freon, /datum/gas/stimulum)
+				internal_output.gases[/datum/gas/freon][MOLES] += scaled_production * 0.15
+				internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.05
+				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.45)
+			if(moderator_list[/datum/gas/freon] > 50)
+				heat_output *= 0.9
+				radiation *= 0.8
+			if(moderator_list[/datum/gas/proto_nitrate]> 15)
+				internal_output.assert_gases(/datum/gas/stimulum, /datum/gas/halon)
+				internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.25
+				internal_output.gases[/datum/gas/halon][MOLES] += scaled_production * 1.15
+				moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.55)
+				radiation *= 1.95
+				heat_output *= 1.25
+			if(moderator_list[/datum/gas/bz] > 100)
+				internal_output.assert_gases(/datum/gas/healium, /datum/gas/proto_nitrate)
+				internal_output.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 1.5
+				internal_output.gases[/datum/gas/healium][MOLES] += scaled_production * 1.5
+				induce_hallucination(50 * power_level, delta_time)
+		if(5)
+			if(moderator_list[/datum/gas/plasma] > 15)
+				internal_output.assert_gases(/datum/gas/freon)
+				internal_output.gases[/datum/gas/freon][MOLES] += scaled_production *0.25
+				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.45)
+			if(moderator_list[/datum/gas/freon] > 500)
+				heat_output *= 0.5
+				radiation *= 0.2
+			if(moderator_list[/datum/gas/proto_nitrate] > 50)
+				internal_output.assert_gases(/datum/gas/stimulum, /datum/gas/pluoxium)
+				internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.95
+				internal_output.gases[/datum/gas/pluoxium][MOLES] += scaled_production
+				moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.35)
+				radiation *= 1.95
+				heat_output *= 1.25
+			if(moderator_list[/datum/gas/bz] > 100)
+				internal_output.assert_gases(/datum/gas/healium)
+				internal_output.gases[/datum/gas/healium][MOLES] += scaled_production
+				induce_hallucination(500, delta_time)
+				moderator_internal.gases[/datum/gas/freon][MOLES] += scaled_production * 1.15
+			if(moderator_list[/datum/gas/healium] > 100)
+				if(critical_threshold_proximity > 400)
+					critical_threshold_proximity = max(critical_threshold_proximity - (moderator_list[/datum/gas/healium] / 100 * delta_time ), 0)
+					moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20)
+			if(moderator_internal.temperature < 1e7 || (moderator_list[/datum/gas/plasma] > 100 && moderator_list[/datum/gas/bz] > 50))
+				internal_output.assert_gases(/datum/gas/antinoblium)
+				internal_output.gases[/datum/gas/antinoblium][MOLES] += dirty_production_rate * 0.9 / 0.065 * delta_time
+		if(6)
+			if(moderator_list[/datum/gas/plasma] > 30)
+				moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 1.15
+				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.45)
+			if(moderator_list[/datum/gas/proto_nitrate])
+				internal_output.assert_gases(/datum/gas/zauker, /datum/gas/stimulum)
+				internal_output.gases[/datum/gas/zauker][MOLES] += scaled_production * 5.35
+				internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 2.15
+				moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 3.35)
+				radiation *= 2
+				heat_output *= 2.25
+			if(moderator_list[/datum/gas/bz])
+				induce_hallucination(900, delta_time, force=TRUE)
+				moderator_internal.gases[/datum/gas/antinoblium][MOLES] += clamp(dirty_production_rate / 0.045, 0, 10) * delta_time
+			if(moderator_list[/datum/gas/healium] > 100)
+				if(critical_threshold_proximity > 400)
+					critical_threshold_proximity = max(critical_threshold_proximity - (moderator_list[/datum/gas/healium] / 100 * delta_time ), 0)
+					moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20)
+			internal_fusion.gases[/datum/gas/antinoblium][MOLES] += dirty_production_rate * 0.01 / 0.095 * delta_time
 
 	//Modifies the internal_fusion temperature with the amount of heat output
 	var/temperature_modifier = selected_fuel.temperature_change_multiplier
@@ -535,20 +550,67 @@
 			internal_output.temperature = internal_fusion.temperature * METALLIC_VOID_CONDUCTIVITY
 		linked_output.airs[1].merge(internal_output)
 
-	//High power fusion might create other matter other than helium, iron is dangerous inside the machine, damage can be seen
+	evaporate_moderator(delta_time)
+
+	process_damageheal_2(delta_time)
+
+	check_nuclear_particles(moderator_list)
+
+	check_lightning_arcs(moderator_list)
+
+	// Oxygen burns away iron content rapidly
+	if(moderator_list[/datum/gas/oxygen] > 150)
+		if(iron_content > 0)
+			var/max_iron_removable = IRON_OXYGEN_HEAL_PER_SECOND
+			var/iron_removed = min(max_iron_removable * delta_time, iron_content)
+			iron_content -= iron_removed
+			moderator_internal.gases[/datum/gas/oxygen][MOLES] -= iron_removed * OXYGEN_MOLES_CONSUMED_PER_IRON_HEAL
+
+	check_gravity_pulse()
+
+	remove_waste(delta_time)
+
+	update_pipenets()
+
+	emit_rads(radiation)
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/induce_hallucination(strength, delta_time, force=FALSE)
+	for(var/mob/living/carbon/human/human in view(src, HALLUCINATION_HFR(heat_output)))
+		if(force || !istype(human.glasses, /obj/item/clothing/glasses/meson))
+			var/distance_root = sqrt(1 / max(1, get_dist(human, src)))
+			human.hallucination += strength * distance_root * delta_time
+			human.hallucination = clamp(human.hallucination, 0, 200)
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/evaporate_moderator(delta_time)
+	// All gases in the moderator slowly burn away over time, whether used for production or not
 	if(moderator_internal.total_moles() > 0)
 		moderator_internal.remove(moderator_internal.total_moles() * (1 - (1 - 0.0005 * power_level) ** delta_time))
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_damageheal_2(delta_time)
+	// The damage and healing system under SSmachine.
+	// Distinct proc while we change the implementation rather than behavior, these will be merged soon.
+	// High power fusion might create other matter other than helium, iron is dangerous inside the machine, damage can be seen
 	if(power_level > 4 && prob(IRON_CHANCE_PER_FUSION_LEVEL * power_level))//at power level 6 is 100%
 		iron_content += IRON_ACCUMULATED_PER_SECOND * delta_time
 	if(iron_content > 0 && power_level <= 4 && prob(25 / (power_level + 1)))
 		iron_content = max(iron_content - 0.01 * delta_time, 0)
 	iron_content = clamp(iron_content, 0, 1)
 
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_nuclear_particles(moderator_list)
+	// New nuclear particle emission sytem.
 	if(power_level >= 4)
 		if(moderator_list[/datum/gas/bz] > (150 / power_level))
 			var/obj/machinery/hypertorus/corner/picked_corner = pick(corners)
 			picked_corner.loc.fire_nuclear_particle(turn(picked_corner.dir, 180))
 
+	// Classic nuclear particle emission system. XXX: Are we supposed to have both?
+	var/particle_chance = max(((PARTICLE_CHANCE_CONSTANT)/(power_output-PARTICLE_CHANCE_CONSTANT)) + 1, 0)//Asymptopically approaches 100% as the energy of the reaction goes up.
+	if(prob(PERCENT(particle_chance)))
+		var/obj/machinery/hypertorus/corner/picked_corner = pick(corners)
+		picked_corner.loc.fire_nuclear_particle()
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_lightning_arcs(moderator_list)
+	if(power_level >= 4)
 		if(moderator_list[/datum/gas/antinoblium] > 50 || critical_threshold_proximity > 500)
 			var/zap_number = power_level - 2
 
@@ -572,13 +634,7 @@
 			for(var/i in 1 to zap_number)
 				supermatter_zap(src, 5, power_level * 300, flags, zap_cutoff = cutoff, power_level = src.power_level * 1000, zap_icon = zaps_aspect)
 
-	if(moderator_list[/datum/gas/oxygen] > 150)
-		if(iron_content > 0)
-			var/max_iron_removable = IRON_OXYGEN_HEAL_PER_SECOND
-			var/iron_removed = min(max_iron_removable * delta_time, iron_content)
-			iron_content -= iron_removed
-			moderator_internal.gases[/datum/gas/oxygen][MOLES] -= iron_removed * OXYGEN_MOLES_CONSUMED_PER_IRON_HEAL
-
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_gravity_pulse()
 	if(prob(critical_threshold_proximity / 15))
 		var/grav_range = round(log(2.5, critical_threshold_proximity))
 		for(var/mob/alive_mob in GLOB.alive_mob_list)
@@ -586,6 +642,7 @@
 				continue
 			step_towards(alive_mob, loc)
 
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/remove_waste(delta_time)
 	//Gases can be removed from the moderator internal by using the interface.
 	if(waste_remove)
 		var/filtering_amount = moderator_scrubbing.len
@@ -602,19 +659,12 @@
 		internal_fusion.garbage_collect()
 		moderator_internal.garbage_collect()
 
-
-	//Update pipenets
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/update_pipenets()
 	update_parents()
 	linked_input.update_parents()
 	linked_output.update_parents()
 	linked_moderator.update_parents()
 
-	//better heat and rads emission
-	//To do
-	if(power_output)
-		var/particle_chance = max(((PARTICLE_CHANCE_CONSTANT)/(power_output-PARTICLE_CHANCE_CONSTANT)) + 1, 0)//Asymptopically approaches 100% as the energy of the reaction goes up.
-		if(prob(PERCENT(particle_chance)))
-			var/obj/machinery/hypertorus/corner/picked_corner = pick(corners)
-			picked_corner.loc.fire_nuclear_particle()
-		rad_power = clamp((radiation / 1e5), 0, FUSION_RAD_MAX)
-		radiation_pulse(loc, rad_power)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/emit_rads(rad_power)
+	rad_power = clamp((radiation / 1e5), 0, FUSION_RAD_MAX)
+	radiation_pulse(loc, rad_power)
