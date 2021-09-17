@@ -906,7 +906,7 @@
 
 /obj/effect/mob_spawn/cow
 	name = "sleeper"
-	mob_type = /mob/living/simple_animal/cow
+	mob_type = /mob/living/basic/cow
 	death = FALSE
 	roundstart = FALSE
 	mob_gender = FEMALE
