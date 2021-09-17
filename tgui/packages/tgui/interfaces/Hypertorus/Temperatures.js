@@ -1,4 +1,4 @@
-
+import { pureComponentHooks } from 'common/react';
 import { Box, Icon, Flex, Section, Stack, Tooltip } from '../../components';
 
 import { to_exponential_if_big } from './helpers';
@@ -271,3 +271,4 @@ export const HypertorusTemperatures = props => {
     </Section>
   );
 };
+HypertorusTemperatures.defaultHooks = pureComponentHooks;
