@@ -18659,13 +18659,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
-"ekC" = (
-/obj/machinery/computer/pod/old/mass_driver_controller/trash{
-	pixel_x = -5;
-	pixel_y = -5
-	},
-/turf/closed/wall,
-/area/maintenance/disposal)
 "ekI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -24604,6 +24597,10 @@
 	name = "Disposals Blast Door Control";
 	pixel_x = 27;
 	pixel_y = 7
+	},
+/obj/machinery/computer/pod/old/mass_driver_controller/trash{
+	pixel_x = 27;
+	pixel_y = -5
 	},
 /turf/open/floor/iron,
 /area/maintenance/disposal)
@@ -112633,7 +112630,7 @@ tjh
 jAl
 tIC
 gCu
-ekC
+bBA
 uym
 adS
 iBI
