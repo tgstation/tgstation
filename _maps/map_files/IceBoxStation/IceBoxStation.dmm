@@ -16902,8 +16902,10 @@
 /obj/effect/turf_decal/siding/yellow/end{
 	dir = 8
 	},
-/obj/machinery/plumbing/receiver,
 /obj/item/radio/intercom/directional/west,
+/obj/machinery/plumbing/receiver{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "ekY" = (
@@ -20955,7 +20957,9 @@
 /obj/effect/turf_decal/siding/yellow/end{
 	dir = 4
 	},
-/obj/machinery/plumbing/receiver,
+/obj/machinery/plumbing/receiver{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "gDf" = (
@@ -86977,7 +86981,7 @@ lsW
 bDJ
 bDJ
 bDJ
-tzc
+xTm
 hZq
 ucq
 lmS
@@ -87491,7 +87495,7 @@ nhp
 quI
 wqB
 bDJ
-xTm
+tzc
 bDJ
 rkV
 rLU
