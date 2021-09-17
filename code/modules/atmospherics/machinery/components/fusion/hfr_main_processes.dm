@@ -25,7 +25,6 @@
 		// Running out of fuel won't save you if your moderator and coolant are exploding on their own.
 		check_spill()
 		process_damageheal(delta_time)
-		process_damageheal_2(delta_time)
 		check_alert()
 	remove_waste(delta_time)
 	update_pipenets()
@@ -437,9 +436,6 @@
 		var/hypercritical_damage_taken = max((internal_fusion.total_moles() - HYPERTORUS_HYPERCRITICAL_MOLES) * HYPERTORUS_HYPERCRITICAL_SCALE, 0)
 		critical_threshold_proximity += min(hypercritical_damage_taken, HYPERTORUS_HYPERCRITICAL_MIN_DAMAGE) * delta_time
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_damageheal_2(delta_time)
-	// The damage and healing system under SSmachine.
-	// Distinct proc while we change the implementation rather than behavior, these will be merged soon.
 	// High power fusion might create other matter other than helium, iron is dangerous inside the machine, damage can be seen
 	if(power_level > 4 && prob(IRON_CHANCE_PER_FUSION_LEVEL * power_level))//at power level 6 is 100%
 		iron_content += IRON_ACCUMULATED_PER_SECOND * delta_time
@@ -453,12 +449,6 @@
 		if(moderator_list[/datum/gas/bz] > (150 / power_level))
 			var/obj/machinery/hypertorus/corner/picked_corner = pick(corners)
 			picked_corner.loc.fire_nuclear_particle(turn(picked_corner.dir, 180))
-
-	// Classic nuclear particle emission system. XXX: Are we supposed to have both?
-	var/particle_chance = max(((PARTICLE_CHANCE_CONSTANT)/(power_output-PARTICLE_CHANCE_CONSTANT)) + 1, 0)//Asymptopically approaches 100% as the energy of the reaction goes up.
-	if(prob(PERCENT(particle_chance)))
-		var/obj/machinery/hypertorus/corner/picked_corner = pick(corners)
-		picked_corner.loc.fire_nuclear_particle()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_lightning_arcs(moderator_list)
 	if(power_level >= 4)
