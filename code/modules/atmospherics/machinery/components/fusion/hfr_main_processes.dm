@@ -54,6 +54,8 @@
 		waste_remove = FALSE
 		iron_content += 0.02 * power_level * delta_time
 
+	update_temperature_status()
+
 	//Store the temperature of the gases after one cicle of the fusion reaction
 	var/archived_heat = internal_fusion.temperature
 	//Store the volume of the fusion reaction multiplied by the force of the magnets that controls how big it will be
@@ -524,28 +526,6 @@
 			cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
 			internal_fusion.temperature = max(internal_fusion.temperature + cooling_heat_amount / internal_fusion.heat_capacity(), TCMB)
 		cooling_port.merge(cooling_remove)
-
-	fusion_temperature = internal_fusion.temperature
-	moderator_temperature = moderator_internal.temperature
-	coolant_temperature = airs[1].temperature
-	output_temperature = linked_output.airs[1].temperature
-
-	//Set the power level of the fusion process
-	switch(fusion_temperature)
-		if(-INFINITY to 500)
-			power_level = 0
-		if(500 to 1e3)
-			power_level = 1
-		if(1e3 to 1e4)
-			power_level = 2
-		if(1e4 to 1e5)
-			power_level = 3
-		if(1e5 to 1e6)
-			power_level = 4
-		if(1e6 to 1e7)
-			power_level = 5
-		else
-			power_level = 6
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/inject_from_side_components(delta_time)
 	update_pipenets()
