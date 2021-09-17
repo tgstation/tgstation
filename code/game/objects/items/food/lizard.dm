@@ -223,7 +223,7 @@
 	icon_state = "surf_n_turf"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("surf" = 1, "turf" = 1)
-	foodtypes = MEAT| SEAFOOD | VEGETABLES
+	foodtypes = MEAT | SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_BULKY
 
 //Spaghetti Dishes
