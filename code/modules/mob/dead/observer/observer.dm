@@ -507,16 +507,21 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 		if (!target)//Make sure we actually have a target
 			return
-		else
-			var/mob/M = dest[target] //Destination mob
-			var/mob/A = src  //Source mob
-			var/turf/T = get_turf(M) //Turf of the destination mob
 
-			if(T && isturf(T)) //Make sure the turf exists, then move the source to that destination.
-				A.abstract_move(T)
-				A.update_parallax_contents()
-			else
-				to_chat(A, span_danger("This mob is not located in the game world."))
+		var/mob/destination_mob = dest[target] //Destination mob
+
+		// During the break between opening the input menu and selecting our target, has this become an invalid option?
+		if(!SSpois.is_valid_poi(destination_mob))
+			return
+
+		var/mob/source_mob = src  //Source mob
+		var/turf/destination_turf = get_turf(destination_mob) //Turf of the destination mob
+
+		if(isturf(destination_turf))
+			source_mob.abstract_move(destination_turf)
+			source_mob.update_parallax_contents()
+		else
+			to_chat(source_mob, span_danger("This mob is not located in the game world."))
 
 /mob/dead/observer/verb/change_view_range()
 	set category = "Ghost"
