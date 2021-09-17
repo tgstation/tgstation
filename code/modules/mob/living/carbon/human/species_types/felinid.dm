@@ -31,7 +31,7 @@
 /datum/species/human/felinid/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	. = ..()
 	var/datum/reagent/toxin/carpotoxin/fish = chem
-	if(istype(chem, fish))
+	if(istype(chem, /datum/reagent/toxin/carpotoxin))
 		fish.toxpwr = 0
 
 /datum/species/human/felinid/can_wag_tail(mob/living/carbon/human/H)
