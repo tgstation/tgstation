@@ -746,8 +746,8 @@
 /obj/item/food/canned/envirochow/proc/apply_buff(mob/living/simple_animal/hungry_pet, mob/living/dog_mom)
 	hungry_pet.apply_status_effect(STATUS_EFFECT_HEALTH_BUFFED) //the status effect keeps track of the stacks
 	hungry_pet.visible_message(span_notice("[hungry_pet] chows down on [src]."),
-						 span_nicegreen("You chow down on [src]."),
-						 span_notice("You hear sloppy eating noises."))
-	SEND_SIGNAL(src, COMSIG_FOOD_CONSUMED, hungry_pet, dog_mom ? dog_mom : hungry_pet) //If there is no dog mom, we assume the pet fed itself.
+						span_nicegreen("You chow down on [src]."),
+						span_notice("You hear sloppy eating noises."))
+	SEND_SIGNAL(src, COMSIG_FOOD_CONSUMED, hungry_pet, dog_mom ? dog_mom : hungry_pet)//If there is no dog mom, we assume the pet fed itself.
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	qdel(src)
