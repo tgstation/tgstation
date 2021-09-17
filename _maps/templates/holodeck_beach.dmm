@@ -3,37 +3,37 @@
 /turf/open/floor/holofloor/beach/water,
 /area/template_noop)
 "f" = (
-/obj/item/shovel/spade,
+/obj/basic/item/shovel/spade,
 /turf/open/floor/holofloor/beach/coast_t,
 /area/template_noop)
 "g" = (
-/obj/item/toy/beach_ball,
+/obj/basic/item/toy/beach_ball,
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "h" = (
-/obj/item/clothing/under/color/rainbow,
-/obj/item/clothing/glasses/sunglasses,
+/obj/basic/item/clothing/under/color/rainbow,
+/obj/basic/item/clothing/glasses/sunglasses,
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "k" = (
 /turf/open/floor/holofloor/beach/coast_b,
 /area/template_noop)
 "q" = (
-/obj/item/reagent_containers/glass/bucket,
+/obj/basic/item/reagent_containers/glass/bucket,
 /turf/open/floor/holofloor/beach/coast_t,
 /area/template_noop)
 "t" = (
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "H" = (
-/obj/effect/holodeck_effect/mobspawner/monkey,
+/obj/basic/effect/holodeck_effect/mobspawner/monkey,
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "J" = (
 /turf/open/floor/holofloor/beach/coast_t,
 /area/template_noop)
 "M" = (
-/obj/item/toy/seashell,
+/obj/basic/item/toy/seashell,
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "Q" = (
@@ -46,20 +46,20 @@
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "S" = (
-/obj/structure/fluff/beach_umbrella/cap,
+/obj/basic/structure/fluff/beach_umbrella/cap,
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "T" = (
-/obj/effect/overlay/palmtree_l,
-/obj/effect/overlay/coconut,
+/obj/basic/effect/overlay/palmtree_l,
+/obj/basic/effect/overlay/coconut,
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "W" = (
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/basic/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "X" = (
-/obj/effect/overlay/palmtree_r,
+/obj/basic/effect/overlay/palmtree_r,
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 

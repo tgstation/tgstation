@@ -1,7 +1,9 @@
 
 /obj
+	uses_integrity = TRUE
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
+
 	var/obj_flags = CAN_BE_HIT
 	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
 
@@ -39,16 +41,12 @@
 
 	var/drag_slowdown // Amont of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
 
-	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of obj in openspace.
-
 	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
 	/// Network id. If set it can be found by either its hardware id or by the id tag if thats set.  It can also be
 	/// broadcasted to as long as the other guys network is on the same branch or above.
 	var/network_id = null
-
-	uses_integrity = TRUE
 
 /obj/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, obj_flags))

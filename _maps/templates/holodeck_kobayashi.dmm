@@ -3,234 +3,234 @@
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "c" = (
-/obj/machinery/button/massdriver/indestructible{
+/obj/basic/machinery/button/massdriver/indestructible{
 	id = "trektorpedo1";
 	layer = 3.9;
 	name = "photon torpedo button";
 	pixel_x = -16;
 	pixel_y = -5
 	},
-/obj/machinery/button/massdriver/indestructible{
+/obj/basic/machinery/button/massdriver/indestructible{
 	id = "trektorpedo2";
 	layer = 3.9;
 	name = "photon torpedo button";
 	pixel_x = 16;
 	pixel_y = -5
 	},
-/obj/machinery/computer/arcade/orion_trail/kobayashi,
+/obj/basic/machinery/computer/arcade/orion_trail/kobayashi,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "d" = (
-/obj/machinery/computer/station_alert{
+/obj/basic/machinery/computer/station_alert{
 	dir = 8
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "f" = (
-/obj/machinery/door/window/westleft{
+/obj/basic/machinery/door/window/westleft{
 	dir = 2
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "j" = (
-/obj/structure/chair/office{
+/obj/basic/structure/chair/office{
 	dir = 1
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "k" = (
-/obj/structure/chair/office{
+/obj/basic/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "l" = (
-/obj/structure/window/reinforced,
-/obj/machinery/computer/station_alert{
+/obj/basic/structure/window/reinforced,
+/obj/basic/machinery/computer/station_alert{
 	dir = 4
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "m" = (
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "o" = (
-/obj/structure/chair/comfy/beige{
+/obj/basic/structure/chair/comfy/beige{
 	dir = 1
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "p" = (
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/computer/arcade/orion_trail/kobayashi,
+/obj/basic/machinery/computer/arcade/orion_trail/kobayashi,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "r" = (
-/obj/structure/table,
+/obj/basic/structure/table,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "s" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "t" = (
-/obj/structure/table/glass,
-/obj/item/gun/energy/e_gun/mini/practice_phaser,
-/obj/structure/window/reinforced{
+/obj/basic/structure/table/glass,
+/obj/basic/item/gun/energy/e_gun/mini/practice_phaser,
+/obj/basic/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/recharger,
+/obj/basic/machinery/recharger,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "w" = (
-/obj/structure/table,
-/obj/item/folder,
-/obj/item/pen/blue,
-/obj/structure/window/reinforced{
+/obj/basic/structure/table,
+/obj/basic/item/folder,
+/obj/basic/item/pen/blue,
+/obj/basic/structure/window/reinforced{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "x" = (
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/computer/arcade/orion_trail/kobayashi,
+/obj/basic/machinery/computer/arcade/orion_trail/kobayashi,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "y" = (
 /turf/open/floor/holofloor/hyperspace,
 /area/template_noop)
 "z" = (
-/obj/machinery/computer/atmos_alert{
+/obj/basic/machinery/computer/atmos_alert{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/basic/structure/window/reinforced,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "A" = (
-/obj/structure/window/reinforced,
+/obj/basic/structure/window/reinforced,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "B" = (
-/obj/structure/window/reinforced,
+/obj/basic/structure/window/reinforced,
 /turf/open/floor/holofloor/hyperspace,
 /area/template_noop)
 "C" = (
-/obj/machinery/computer/station_alert{
+/obj/basic/machinery/computer/station_alert{
 	dir = 4
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "E" = (
-/obj/structure/chair{
+/obj/basic/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "F" = (
-/obj/structure/rack,
-/obj/item/clothing/under/trek/engsec,
-/obj/item/clothing/under/trek/engsec,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/structure/rack,
+/obj/basic/item/clothing/under/trek/engsec,
+/obj/basic/item/clothing/under/trek/engsec,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "H" = (
-/obj/machinery/door/window/westleft{
+/obj/basic/machinery/door/window/westleft{
 	dir = 2;
 	icon_state = "right"
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "J" = (
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "L" = (
-/obj/structure/table/glass,
-/obj/item/gun/energy/e_gun/mini/practice_phaser,
-/obj/structure/window/reinforced{
+/obj/basic/structure/table/glass,
+/obj/basic/item/gun/energy/e_gun/mini/practice_phaser,
+/obj/basic/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "Q" = (
-/obj/structure/table,
-/obj/structure/window/reinforced{
+/obj/basic/structure/table,
+/obj/basic/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/folder,
-/obj/item/pen/red,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/item/folder,
+/obj/basic/item/pen/red,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "T" = (
-/obj/structure/rack,
-/obj/item/clothing/under/trek/medsci,
-/obj/item/clothing/under/trek/medsci,
-/obj/item/clothing/under/trek/command,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/structure/rack,
+/obj/basic/item/clothing/under/trek/medsci,
+/obj/basic/item/clothing/under/trek/medsci,
+/obj/basic/item/clothing/under/trek/command,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "V" = (
-/obj/structure/window/reinforced,
-/obj/machinery/mass_driver{
+/obj/basic/structure/window/reinforced,
+/obj/basic/machinery/mass_driver{
 	dir = 1;
 	id = "trektorpedo2";
 	name = "photon torpedo tube"
 	},
-/obj/item/toy/minimeteor{
+/obj/basic/item/toy/minimeteor{
 	desc = "A primitive long-range weapon, inferior to Nanotrasen's perfected bluespace artillery.";
 	icon = 'icons/effects/effects.dmi';
 	icon_state = "impact_laser";
@@ -239,19 +239,19 @@
 /turf/open/floor/holofloor/hyperspace,
 /area/template_noop)
 "X" = (
-/obj/structure/chair/office{
+/obj/basic/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "Z" = (
-/obj/structure/table,
-/obj/item/folder,
-/obj/item/pen,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/structure/table,
+/obj/basic/item/folder,
+/obj/basic/item/pen,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /turf/open/floor/holofloor,

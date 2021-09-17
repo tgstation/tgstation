@@ -3,35 +3,35 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/mining)
 "b" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/basic/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "c" = (
-/obj/structure/table,
+/obj/basic/structure/table,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "d" = (
-/obj/machinery/computer/shuttle/mining,
+/obj/basic/machinery/computer/shuttle/mining,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "e" = (
 /turf/open/floor/mineral/titanium,
 /area/shuttle/mining)
 "f" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "g" = (
-/obj/machinery/light/directional/west,
+/obj/basic/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/mining)
 "h" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Mining Shuttle Airlock"
 	},
-/obj/docking_port/mobile{
+/obj/basic/docking_port/mobile{
 	dir = 8;
 	dwidth = 3;
 	height = 5;
@@ -43,33 +43,33 @@
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "i" = (
-/obj/structure/closet/crate,
+/obj/basic/structure/closet/crate,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "j" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
+/obj/basic/structure/shuttle/engine/heater,
+/obj/basic/structure/window/reinforced{
 	dir = 1;
 	layer = 2.9
 	},
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "k" = (
-/obj/structure/ore_box,
+/obj/basic/structure/ore_box,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "l" = (
-/obj/structure/shuttle/engine/propulsion/burst,
+/obj/basic/structure/shuttle/engine/propulsion/burst,
 /turf/open/floor/plating/airless,
 /area/shuttle/mining)
 "Q" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,

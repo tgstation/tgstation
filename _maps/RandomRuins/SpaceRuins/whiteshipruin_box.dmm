@@ -3,225 +3,225 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/ruin/space/has_grav/whiteship/box)
 "bN" = (
-/obj/structure/light_construct/small/directional/south,
+/obj/basic/structure/light_construct/small/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
 "cw" = (
-/obj/structure/light_construct/small/directional/north,
+/obj/basic/structure/light_construct/small/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
 "eD" = (
-/obj/structure/table,
-/obj/item/radio/off,
+/obj/basic/structure/table,
+/obj/basic/item/radio/off,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "fd" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular{
+/obj/basic/structure/table,
+/obj/basic/item/storage/firstaid/regular{
 	pixel_x = 6;
 	pixel_y = -5
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "gc" = (
-/obj/structure/table,
+/obj/basic/structure/table,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "gK" = (
-/obj/structure/table,
-/obj/item/gps/spaceruin,
+/obj/basic/structure/table,
+/obj/basic/item/gps/spaceruin,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "gO" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/basic/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
 "hT" = (
-/obj/structure/frame/computer{
+/obj/basic/structure/frame/computer{
 	anchored = 1;
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "in" = (
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/basic/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "iK" = (
-/obj/machinery/computer{
+/obj/basic/machinery/computer{
 	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
 	name = "Broken Computer"
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "iS" = (
-/obj/structure/frame/computer{
+/obj/basic/structure/frame/computer{
 	anchored = 1
 	},
-/obj/machinery/light/directional/north,
+/obj/basic/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "jb" = (
-/obj/structure/table,
-/obj/item/tank/internals/oxygen,
+/obj/basic/structure/table,
+/obj/basic/item/tank/internals/oxygen,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "kK" = (
 /turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
 "lR" = (
-/obj/machinery/light/small/built/directional/east,
+/obj/basic/machinery/light/small/built/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "mE" = (
-/obj/machinery/door/window/northright,
-/obj/effect/decal/remains/human,
+/obj/basic/machinery/door/window/northright,
+/obj/basic/effect/decal/remains/human,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/whiteship/box)
 "mR" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/basic/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "nd" = (
-/obj/structure/frame/computer{
+/obj/basic/structure/frame/computer{
 	anchored = 1;
 	dir = 1
 	},
-/obj/structure/light_construct/directional/south,
+/obj/basic/structure/light_construct/directional/south,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "nH" = (
 /turf/template_noop,
 /area/template_noop)
 "nK" = (
-/obj/item/shard{
+/obj/basic/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "nL" = (
-/obj/structure/table,
-/obj/item/screwdriver,
-/obj/structure/light_construct/directional/north,
+/obj/basic/structure/table,
+/obj/basic/item/screwdriver,
+/obj/basic/structure/light_construct/directional/north,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "pq" = (
-/obj/machinery/sleeper{
+/obj/basic/machinery/sleeper{
 	dir = 8
 	},
-/obj/effect/decal/remains/human,
-/obj/structure/light_construct/directional/south,
+/obj/basic/effect/decal/remains/human,
+/obj/basic/structure/light_construct/directional/south,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "pu" = (
-/obj/item/multitool,
+/obj/basic/item/multitool,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "pv" = (
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "qz" = (
-/obj/machinery/light/small/built/directional/west,
+/obj/basic/machinery/light/small/built/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "qI" = (
-/obj/machinery/light/built/directional/west,
+/obj/basic/machinery/light/built/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "qZ" = (
-/obj/machinery/door/airlock/titanium,
+/obj/basic/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "rO" = (
-/obj/machinery/mass_driver{
+/obj/basic/machinery/mass_driver{
 	dir = 4;
 	id = "oldship_ruin_gun"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
 "sX" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/eva,
-/obj/item/clothing/head/helmet/space/eva,
-/obj/item/clothing/mask/breath,
+/obj/basic/structure/rack,
+/obj/basic/item/clothing/suit/space/eva,
+/obj/basic/item/clothing/head/helmet/space/eva,
+/obj/basic/item/clothing/mask/breath,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "uG" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/basic/structure/shuttle/engine/propulsion/right{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "zY" = (
-/obj/machinery/door/poddoor{
+/obj/basic/machinery/door/poddoor{
 	id = "oldship_ruin_gun";
 	name = "pod bay door"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
 "Al" = (
-/obj/machinery/door/airlock/public/glass,
+/obj/basic/machinery/door/airlock/public/glass,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
 "Ay" = (
-/obj/structure/chair{
+/obj/basic/structure/chair{
 	dir = 4
 	},
-/obj/effect/decal/remains/human,
+/obj/basic/effect/decal/remains/human,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "BG" = (
-/obj/structure/bed,
-/obj/item/bedsheet,
-/obj/structure/window/reinforced{
+/obj/basic/structure/bed,
+/obj/basic/item/bedsheet,
+/obj/basic/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/whiteship/box)
 "CC" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/basic/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "Db" = (
-/obj/item/stock_parts/cell{
+/obj/basic/item/stock_parts/cell{
 	charge = 100;
 	maxcharge = 15000
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "Gj" = (
-/obj/structure/table,
-/obj/item/gun/energy/laser/retro,
+/obj/basic/structure/table,
+/obj/basic/item/gun/energy/laser/retro,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "HR" = (
-/obj/structure/light_construct/directional/north,
+/obj/basic/structure/light_construct/directional/north,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "HT" = (
-/obj/structure/rack,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/storage/toolbox/mechanical,
+/obj/basic/structure/rack,
+/obj/basic/item/tank/internals/emergency_oxygen,
+/obj/basic/item/tank/internals/emergency_oxygen,
+/obj/basic/item/tank/internals/emergency_oxygen,
+/obj/basic/item/tank/internals/emergency_oxygen,
+/obj/basic/item/storage/toolbox/mechanical,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "Jk" = (
-/obj/machinery/door/airlock/titanium,
+/obj/basic/machinery/door/airlock/titanium,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
 "Jy" = (
-/obj/structure/chair,
+/obj/basic/structure/chair,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "JF" = (
-/obj/machinery/computer{
+/obj/basic/machinery/computer{
 	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
 	dir = 8;
 	name = "Broken Computer"
@@ -229,61 +229,61 @@
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "Kg" = (
-/obj/machinery/door/airlock/public/glass,
+/obj/basic/machinery/door/airlock/public/glass,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "Lv" = (
-/obj/structure/bed,
-/obj/item/bedsheet,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/basic/structure/bed,
+/obj/basic/item/bedsheet,
+/obj/basic/structure/window/reinforced,
+/obj/basic/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/whiteship/box)
 "Oj" = (
-/obj/machinery/door/window,
+/obj/basic/machinery/door/window,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/whiteship/box)
 "Ov" = (
-/obj/item/scalpel,
+/obj/basic/item/scalpel,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "Px" = (
-/obj/machinery/computer/pod{
+/obj/basic/machinery/computer/pod{
 	dir = 8;
 	id = "oldship_ruin_gun"
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "Ud" = (
-/obj/machinery/light/built/directional/east,
+/obj/basic/machinery/light/built/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "Vt" = (
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
 "VQ" = (
-/obj/structure/shuttle/engine/heater{
+/obj/basic/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "Xp" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/basic/structure/shuttle/engine/propulsion/left{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "Xt" = (
-/obj/structure/light_construct/directional/south,
+/obj/basic/structure/light_construct/directional/south,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "Xy" = (
-/obj/structure/chair{
+/obj/basic/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/white,

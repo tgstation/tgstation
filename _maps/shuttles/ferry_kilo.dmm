@@ -12,143 +12,143 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "e" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/basic/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "f" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/basic/machinery/door/airlock/shuttle{
 	name = "Ferry Shuttle Airlock"
 	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line,
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/fans/tiny,
+/obj/basic/structure/fans/tiny,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "g" = (
-/obj/structure/sign/nanotrasen,
+/obj/basic/structure/sign/nanotrasen,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "h" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/basic/structure/shuttle/engine/propulsion/left{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "i" = (
-/obj/structure/shuttle/engine/heater{
+/obj/basic/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/effect/spawner/structure/window/shuttle,
+/obj/basic/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "j" = (
-/obj/structure/sign/warning/fire,
+/obj/basic/structure/sign/warning/fire,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/transport)
 "k" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/firstaid/o2{
+/obj/basic/structure/table/reinforced,
+/obj/basic/item/storage/firstaid/o2{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/firstaid/regular,
-/obj/item/crowbar,
-/obj/machinery/light/directional/west,
+/obj/basic/item/storage/firstaid/regular,
+/obj/basic/item/crowbar,
+/obj/basic/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "l" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/chair/comfy/shuttle,
+/obj/basic/effect/turf_decal/bot,
+/obj/basic/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "m" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "n" = (
-/obj/structure/table/reinforced,
-/obj/machinery/recharger,
+/obj/basic/structure/table/reinforced,
+/obj/basic/machinery/recharger,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "o" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/directional/north,
+/obj/basic/effect/turf_decal/bot,
+/obj/basic/structure/chair/comfy/shuttle,
+/obj/basic/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "p" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/basic/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "q" = (
-/obj/machinery/computer/shuttle/ferry/request{
+/obj/basic/machinery/computer/shuttle/ferry/request{
 	dir = 4
 	},
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/bot,
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "r" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line,
+/obj/basic/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "s" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/stripes/corner{
+/obj/basic/effect/turf_decal/stripes/corner,
+/obj/basic/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/corner{
+/obj/basic/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/corner{
+/obj/basic/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "t" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/basic/machinery/door/airlock/shuttle{
 	name = "Ferry Shuttle Airlock"
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/fans/tiny,
-/obj/docking_port/mobile{
+/obj/basic/structure/fans/tiny,
+/obj/basic/docking_port/mobile{
 	dir = 8;
 	dwidth = 2;
 	height = 11;
@@ -160,50 +160,50 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "u" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/basic/structure/shuttle/engine/propulsion/right{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "v" = (
-/obj/structure/rack,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/structure/rack,
+/obj/basic/effect/turf_decal/bot,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/item/radio{
+/obj/basic/item/radio{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/radio{
+/obj/basic/item/radio{
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/radio{
+/obj/basic/item/radio{
 	pixel_y = 4
 	},
-/obj/machinery/light/directional/west,
+/obj/basic/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "w" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/effect/turf_decal/bot,
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "x" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/effect/turf_decal/bot,
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light/directional/south,
+/obj/basic/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 

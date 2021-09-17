@@ -3,7 +3,7 @@
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "c" = (
-/obj/item/cardboard_cutout/adaptive{
+/obj/basic/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_greytide";
 	name = "White Pawn"
 	},
@@ -13,50 +13,50 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "g" = (
-/obj/item/cardboard_cutout/adaptive{
+/obj/basic/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_clown";
 	name = "White King"
 	},
-/obj/item/cardboard_cutout/adaptive{
+/obj/basic/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_clown";
 	name = "White King"
 	},
-/obj/item/cardboard_cutout/adaptive{
+/obj/basic/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_clown";
 	name = "White King"
 	},
-/obj/item/cardboard_cutout/adaptive{
+/obj/basic/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_clown";
 	name = "White King"
 	},
-/obj/item/cardboard_cutout/adaptive{
+/obj/basic/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_clown";
 	name = "White King"
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "z" = (
-/obj/item/cardboard_cutout/adaptive{
+/obj/basic/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
 	icon_state = "cutout_clown";
 	name = "Black King"
 	},
-/obj/item/cardboard_cutout/adaptive{
+/obj/basic/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
 	icon_state = "cutout_clown";
 	name = "Black King"
 	},
-/obj/item/cardboard_cutout/adaptive{
+/obj/basic/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
 	icon_state = "cutout_clown";
 	name = "Black King"
 	},
-/obj/item/cardboard_cutout/adaptive{
+/obj/basic/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
 	icon_state = "cutout_clown";
 	name = "Black King"
 	},
-/obj/item/cardboard_cutout/adaptive{
+/obj/basic/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
 	icon_state = "cutout_clown";
 	name = "Black King"
@@ -69,7 +69,7 @@
 	},
 /area/template_noop)
 "M" = (
-/obj/item/cardboard_cutout/adaptive{
+/obj/basic/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
 	icon_state = "cutout_greytide";
 	name = "Black Pawn"

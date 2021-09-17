@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/basic/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
@@ -12,38 +12,38 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "e" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/basic/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "g" = (
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/transport)
 "h" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "i" = (
-/obj/machinery/computer/shuttle/ferry/request{
+/obj/basic/machinery/computer/shuttle/ferry/request{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "j" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/basic/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "k" = (
-/obj/machinery/door/airlock/titanium,
+/obj/basic/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "l" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "m" = (
-/obj/machinery/door/airlock/titanium,
-/obj/docking_port/mobile{
+/obj/basic/machinery/door/airlock/titanium,
+/obj/basic/docking_port/mobile{
 	dir = 8;
 	dwidth = 2;
 	height = 12;
@@ -55,11 +55,11 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "p" = (
-/obj/structure/closet/crate,
+/obj/basic/structure/closet/crate,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "q" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,

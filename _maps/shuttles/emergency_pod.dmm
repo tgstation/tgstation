@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/basic/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
@@ -9,47 +9,47 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "c" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/basic/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "d" = (
 /turf/template_noop,
 /area/template_noop)
 "e" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "f" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/basic/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "g" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "i" = (
-/obj/machinery/light/directional/west,
+/obj/basic/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "j" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "k" = (
-/obj/machinery/computer/emergency_shuttle{
+/obj/basic/machinery/computer/emergency_shuttle{
 	dir = 8
 	},
-/obj/machinery/light/small/directional/east,
+/obj/basic/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "m" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Shuttle Airlock"
 	},
-/obj/docking_port/mobile/emergency{
+/obj/basic/docking_port/mobile/emergency{
 	port_direction = 2;
 	preferred_direction = 4
 	},

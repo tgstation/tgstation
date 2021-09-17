@@ -3,11 +3,11 @@
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "j" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/basic/structure/reagent_dispensers/fueltank,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "F" = (
-/obj/item/weldingtool,
+/obj/basic/item/weldingtool,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 

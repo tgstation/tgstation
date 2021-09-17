@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/basic/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
@@ -15,50 +15,50 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/transport)
 "f" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "g" = (
-/obj/machinery/computer/shuttle/ferry/request{
+/obj/basic/machinery/computer/shuttle/ferry/request{
 	dir = 8
 	},
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "h" = (
-/obj/structure/closet/secure_closet/freezer/meat/open{
+/obj/basic/structure/closet/secure_closet/freezer/meat/open{
 	name = "\"meat\" fridge"
 	},
-/obj/item/food/meat/slab/bear,
-/obj/item/food/meat/slab/corgi,
-/obj/item/food/meat/slab/goliath,
-/obj/item/food/meat/slab/killertomato,
-/obj/item/food/meat/slab/pug,
-/obj/item/food/meat/slab/spider,
-/obj/item/food/meat/slab/xeno,
-/obj/item/food/meat/slab/human{
+/obj/basic/item/food/meat/slab/bear,
+/obj/basic/item/food/meat/slab/corgi,
+/obj/basic/item/food/meat/slab/goliath,
+/obj/basic/item/food/meat/slab/killertomato,
+/obj/basic/item/food/meat/slab/pug,
+/obj/basic/item/food/meat/slab/spider,
+/obj/basic/item/food/meat/slab/xeno,
+/obj/basic/item/food/meat/slab/human{
 	name = "human meat"
 	},
-/obj/item/food/meat/slab/human/mutant/fly{
+/obj/basic/item/food/meat/slab/human/mutant/fly{
 	name = "flyman meat"
 	},
-/obj/item/food/meat/slab/human/mutant/golem/adamantine{
+/obj/basic/item/food/meat/slab/human/mutant/golem/adamantine{
 	name = "golem meat"
 	},
-/obj/item/food/meat/slab/human/mutant/lizard{
+/obj/basic/item/food/meat/slab/human/mutant/lizard{
 	name = "lizard meat"
 	},
-/obj/item/food/meat/slab/human/mutant/plant{
+/obj/basic/item/food/meat/slab/human/mutant/plant{
 	name = "podperson meat"
 	},
-/obj/item/food/meat/slab/human/mutant/shadow{
+/obj/basic/item/food/meat/slab/human/mutant/shadow{
 	name = "shadowling meat"
 	},
-/obj/item/food/meat/slab/human/mutant/slime{
+/obj/basic/item/food/meat/slab/human/mutant/slime{
 	name = "slimeperson meat"
 	},
-/obj/item/food/meat/slab/human/mutant/zombie{
+/obj/basic/item/food/meat/slab/human/mutant/zombie{
 	name = "rotten meat"
 	},
 /turf/open/floor/iron/freezer,
@@ -67,19 +67,19 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "j" = (
-/obj/machinery/gibber,
+/obj/basic/machinery/gibber,
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "k" = (
-/obj/structure/extinguisher_cabinet/directional/north,
+/obj/basic/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "l" = (
-/obj/structure/table/reinforced,
+/obj/basic/structure/table/reinforced,
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "m" = (
-/obj/structure/sink/kitchen{
+/obj/basic/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
 	name = "old sink";
 	pixel_y = 28
@@ -87,21 +87,21 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "n" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/comfy/shuttle,
+/obj/basic/effect/decal/cleanable/dirt,
+/obj/basic/structure/chair/comfy/shuttle,
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "o" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/basic/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "p" = (
-/obj/machinery/door/airlock/titanium,
+/obj/basic/machinery/door/airlock/titanium,
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "q" = (
-/obj/machinery/door/airlock/titanium,
-/obj/docking_port/mobile{
+/obj/basic/machinery/door/airlock/titanium,
+/obj/basic/docking_port/mobile{
 	dir = 8;
 	dwidth = 2;
 	height = 12;
@@ -113,22 +113,22 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "t" = (
-/obj/structure/closet/chefcloset,
+/obj/basic/structure/closet/chefcloset,
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "u" = (
-/obj/structure/kitchenspike,
+/obj/basic/structure/kitchenspike,
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "v" = (
-/obj/machinery/door/airlock/freezer{
+/obj/basic/machinery/door/airlock/freezer{
 	name = "Meat Tradeship Backroom";
 	req_access_txt = "28"
 	},
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "w" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/iron/freezer,

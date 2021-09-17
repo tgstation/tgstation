@@ -6,51 +6,51 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "f" = (
-/obj/machinery/conveyor{
+/obj/basic/machinery/conveyor{
 	dir = 4;
 	id = "QMLoad2"
 	},
-/obj/machinery/door/poddoor{
+/obj/basic/machinery/door/poddoor{
 	id = "QMLoaddoor2";
 	name = "supply dock loading door"
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "g" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "h" = (
-/obj/machinery/button/door/directional/east{
+/obj/basic/machinery/button/door/directional/east{
 	id = "QMLoaddoor2";
 	name = "Loading Doors";
 	pixel_y = 8
 	},
-/obj/machinery/button/door/directional/east{
+/obj/basic/machinery/button/door/directional/east{
 	id = "QMLoaddoor";
 	name = "Loading Doors";
 	pixel_y = -8
 	},
-/obj/machinery/light/directional/east,
+/obj/basic/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "i" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
-/obj/docking_port/mobile/supply,
+/obj/basic/docking_port/mobile/supply,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "j" = (
-/obj/machinery/conveyor{
+/obj/basic/machinery/conveyor{
 	dir = 8;
 	id = "QMLoad"
 	},
-/obj/machinery/door/poddoor{
+/obj/basic/machinery/door/poddoor{
 	id = "QMLoaddoor";
 	name = "supply dock loading door"
 	},
@@ -60,33 +60,33 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/supply)
 "q" = (
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/shuttle/engine/heater,
+/obj/basic/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "s" = (
 /turf/template_noop,
 /area/template_noop)
 "t" = (
-/obj/structure/shuttle/engine/propulsion/burst/left,
+/obj/basic/structure/shuttle/engine/propulsion/burst/left,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "u" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/basic/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "v" = (
-/obj/structure/shuttle/engine/propulsion/burst/right,
+/obj/basic/structure/shuttle/engine/propulsion/burst/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "w" = (
-/obj/machinery/light/directional/north,
+/obj/basic/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "x" = (
-/obj/machinery/light/directional/west,
+/obj/basic/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 

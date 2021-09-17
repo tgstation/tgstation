@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/docking_port/stationary/picked/whiteship,
+/obj/basic/docking_port/stationary/picked/whiteship,
 /turf/template_noop,
 /area/template_noop)
 

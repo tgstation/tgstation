@@ -11,7 +11,7 @@
 /turf/closed/indestructible/oldshuttle,
 /area/ruin/powered)
 "d" = (
-/obj/machinery/door/airlock/public/glass,
+/obj/basic/machinery/door/airlock/public/glass,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "e" = (
@@ -31,7 +31,7 @@
 	},
 /area/ruin/powered)
 "i" = (
-/obj/structure/closet{
+/obj/basic/structure/closet{
 	icon_state = "oldcloset";
 	name = "strange closet";
 	enable_door_overlay = 0
@@ -39,7 +39,7 @@
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "j" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/basic/structure/shuttle/engine/propulsion/burst{
 	dir = 1
 	},
 /turf/template_noop,
@@ -54,43 +54,43 @@
 	},
 /area/ruin/powered)
 "m" = (
-/obj/structure/chair/old{
+/obj/basic/structure/chair/old{
 	dir = 1
 	},
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "n" = (
-/obj/structure/chair/old{
+/obj/basic/structure/chair/old{
 	dir = 1
 	},
-/obj/item/crowbar/large/heavy,
+/obj/basic/item/crowbar/large/heavy,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "o" = (
-/obj/structure/chair/old{
+/obj/basic/structure/chair/old{
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/retaliate/spaceman,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "t" = (
-/obj/machinery/power/generator,
+/obj/basic/machinery/power/generator,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "u" = (
-/obj/machinery/power/smes,
+/obj/basic/machinery/power/smes,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "v" = (
-/obj/structure/shuttle/engine/propulsion/burst/left,
+/obj/basic/structure/shuttle/engine/propulsion/burst/left,
 /turf/template_noop,
 /area/ruin/powered)
 "w" = (
-/obj/structure/shuttle/engine/propulsion/burst/right,
+/obj/basic/structure/shuttle/engine/propulsion/burst/right,
 /turf/template_noop,
 /area/ruin/powered)
 "x" = (
-/obj/structure/shuttle/engine/propulsion/burst,
+/obj/basic/structure/shuttle/engine/propulsion/burst,
 /turf/template_noop,
 /area/ruin/powered)
 

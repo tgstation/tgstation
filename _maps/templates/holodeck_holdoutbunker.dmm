@@ -1,14 +1,14 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/structure/foamedmetal,
-/obj/structure/window{
+/obj/basic/structure/foamedmetal,
+/obj/basic/structure/window{
 	dir = 8
 	},
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "b" = (
-/obj/structure/foamedmetal,
-/obj/structure/window{
+/obj/basic/structure/foamedmetal,
+/obj/basic/structure/window{
 	dir = 4
 	},
 /turf/open/floor/holofloor/asteroid,
@@ -17,40 +17,40 @@
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "t" = (
-/obj/structure/foamedmetal,
+/obj/basic/structure/foamedmetal,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "u" = (
-/obj/structure/table,
-/obj/machinery/recharger,
+/obj/basic/structure/table,
+/obj/basic/machinery/recharger,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "v" = (
-/obj/structure/table,
-/obj/item/stack/medical/ointment{
+/obj/basic/structure/table,
+/obj/basic/item/stack/medical/ointment{
 	heal_burn = 10
 	},
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "x" = (
-/obj/structure/foamedmetal,
-/obj/structure/window{
+/obj/basic/structure/foamedmetal,
+/obj/basic/structure/window{
 	dir = 4
 	},
-/obj/structure/bookcase/random/fiction,
+/obj/basic/structure/bookcase/random/fiction,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "I" = (
-/obj/structure/table,
-/obj/item/gun/energy/laser,
+/obj/basic/structure/table,
+/obj/basic/item/gun/energy/laser,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "J" = (
-/obj/structure/table,
-/obj/item/stack/medical/bruise_pack{
+/obj/basic/structure/table,
+/obj/basic/item/stack/medical/bruise_pack{
 	heal_brute = 10
 	},
-/obj/item/soap,
+/obj/basic/item/soap,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 

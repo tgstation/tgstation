@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
+/obj/basic/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
 	dir = 8;
 	view_range = 7;
 	x_offset = 6
@@ -8,14 +8,14 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "ab" = (
-/obj/machinery/computer/shuttle/hunter{
+/obj/basic/machinery/computer/shuttle/hunter{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "ac" = (
-/obj/structure/fans/tiny,
-/obj/docking_port/stationary{
+/obj/basic/structure/fans/tiny,
+/obj/basic/docking_port/stationary{
 	dir = 4;
 	dwidth = 3;
 	height = 12;
@@ -23,7 +23,7 @@
 	name = "Deep Space";
 	width = 7
 	},
-/obj/docking_port/mobile{
+/obj/basic/docking_port/mobile{
 	dir = 4;
 	dwidth = 3;
 	height = 12;
@@ -32,66 +32,66 @@
 	rechargeTime = 1800;
 	width = 7
 	},
-/obj/machinery/door/poddoor/shutters{
+/obj/basic/machinery/door/poddoor/shutters{
 	id = "Interpolship"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "ae" = (
-/obj/effect/turf_decal/stripes{
+/obj/basic/effect/turf_decal/stripes{
 	dir = 8
 	},
-/obj/machinery/button/door/directional/north{
+/obj/basic/machinery/button/door/directional/north{
 	id = "Interpolship"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "af" = (
-/obj/effect/turf_decal/stripes{
+/obj/basic/effect/turf_decal/stripes{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "ag" = (
-/obj/effect/turf_decal/delivery,
+/obj/basic/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "ah" = (
-/obj/effect/turf_decal/loading_area{
+/obj/basic/effect/turf_decal/loading_area{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "aj" = (
-/obj/structure/closet/crate/eva,
-/obj/effect/turf_decal/box,
+/obj/basic/structure/closet/crate/eva,
+/obj/basic/effect/turf_decal/box,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "ak" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/effect/mob_spawn/human/fugitive/spacepol{
+/obj/basic/effect/mob_spawn/human/fugitive/spacepol{
 	dir = 1
 	},
-/obj/effect/turf_decal/box,
+/obj/basic/effect/turf_decal/box,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "al" = (
-/obj/effect/turf_decal/stripes{
+/obj/basic/effect/turf_decal/stripes{
 	dir = 8
 	},
-/obj/effect/turf_decal/caution{
+/obj/basic/effect/turf_decal/caution{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "bY" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/basic/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "hB" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/basic/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
@@ -100,36 +100,36 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/hunter)
 "lp" = (
-/obj/machinery/fugitive_capture,
+/obj/basic/machinery/fugitive_capture,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "rR" = (
-/obj/machinery/door/airlock/titanium,
+/obj/basic/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "te" = (
-/obj/structure/fans/tiny,
-/obj/machinery/door/poddoor/shutters{
+/obj/basic/structure/fans/tiny,
+/obj/basic/machinery/door/poddoor/shutters{
 	id = "Interpolship"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "Am" = (
-/obj/effect/mob_spawn/human/fugitive/spacepol{
+/obj/basic/effect/mob_spawn/human/fugitive/spacepol{
 	dir = 8
 	},
-/obj/effect/turf_decal/box,
+/obj/basic/effect/turf_decal/box,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "An" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/basic/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "Pq" = (
 /turf/template_noop,
 /area/template_noop)
 "Rz" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,

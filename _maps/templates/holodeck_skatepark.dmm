@@ -3,19 +3,19 @@
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "l" = (
-/obj/vehicle/ridden/scooter/skateboard/pro/holodeck{
+/obj/basic/vehicle/ridden/scooter/skateboard/pro/holodeck{
 	dir = 8;
 	icon_state = "skateboard2"
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "t" = (
-/obj/structure/table,
-/obj/structure/table,
+/obj/basic/structure/table,
+/obj/basic/structure/table,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "H" = (
-/obj/structure/table,
+/obj/basic/structure/table,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 

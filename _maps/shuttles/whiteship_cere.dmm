@@ -6,11 +6,11 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "ac" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "mech bay external airlock"
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/docking_port/mobile{
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/docking_port/mobile{
 	dir = 2;
 	dwidth = 8;
 	height = 16;
@@ -23,294 +23,294 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "ad" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/basic/structure/shuttle/engine/propulsion{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "ae" = (
-/obj/machinery/mech_bay_recharge_port{
+/obj/basic/machinery/mech_bay_recharge_port{
 	dir = 2
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "af" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "ag" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "ah" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ai" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/frame/machine,
-/obj/item/stack/cable_coil,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/cobweb/cobweb2,
+/obj/basic/structure/frame/machine,
+/obj/basic/item/stack/cable_coil,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aj" = (
-/obj/structure/shuttle/engine/heater{
+/obj/basic/structure/shuttle/engine/heater{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/basic/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "ak" = (
-/obj/structure/mecha_wreckage/ripley,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/structure/mecha_wreckage/ripley,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mech_bay_recharge_floor,
 /area/shuttle/abandoned)
 "al" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "am" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "an" = (
-/obj/effect/spawner/lootdrop/whiteship_cere_ripley,
+/obj/basic/effect/spawner/lootdrop/whiteship_cere_ripley,
 /turf/open/floor/mech_bay_recharge_floor,
 /area/shuttle/abandoned)
 "ao" = (
-/obj/machinery/computer/mech_bay_power_console{
+/obj/basic/machinery/computer/mech_bay_power_console{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "ap" = (
-/obj/machinery/computer/mech_bay_power_console{
+/obj/basic/machinery/computer/mech_bay_power_console{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aq" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "mech bay"
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "ar" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/basic/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "as" = (
-/obj/effect/turf_decal/delivery{
+/obj/basic/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/structure/closet/crate{
+/obj/basic/structure/closet/crate{
 	name = "spare equipment crate"
 	},
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/iron/fifty,
-/obj/effect/decal/cleanable/cobweb,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/item/stack/sheet/iron/fifty,
+/obj/basic/item/stack/sheet/iron/fifty,
+/obj/basic/effect/decal/cleanable/cobweb,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "at" = (
-/obj/effect/turf_decal/delivery{
+/obj/basic/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "au" = (
-/obj/effect/turf_decal/delivery{
+/obj/basic/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "av" = (
-/obj/effect/turf_decal/delivery{
+/obj/basic/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate{
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/structure/closet/crate{
 	icon_state = "crateopen";
 	name = "spare equipment crate"
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aw" = (
-/obj/effect/turf_decal/delivery{
+/obj/basic/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "ax" = (
-/obj/effect/turf_decal/delivery{
+/obj/basic/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/structure/closet/crate{
+/obj/basic/structure/closet/crate{
 	icon_state = "crateopen";
 	name = "spare equipment crate"
 	},
-/obj/item/pickaxe,
-/obj/item/pickaxe,
-/obj/item/storage/toolbox/emergency/old,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/item/pickaxe,
+/obj/basic/item/pickaxe,
+/obj/basic/item/storage/toolbox/emergency/old,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "ay" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned)
 "az" = (
-/obj/effect/turf_decal/delivery{
+/obj/basic/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/button/door/directional/west{
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/machinery/button/door/directional/west{
 	id = "cerewhiteleft";
 	name = "Cargo Blast Door Toggle"
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aA" = (
-/obj/effect/turf_decal/delivery{
+/obj/basic/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aB" = (
-/obj/effect/turf_decal/delivery{
+/obj/basic/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/structure/closet/crate{
+/obj/basic/structure/closet/crate{
 	icon_state = "crateopen";
 	name = "spare equipment crate"
 	},
-/obj/item/storage/bag/ore,
-/obj/item/pickaxe,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/item/storage/bag/ore,
+/obj/basic/item/pickaxe,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aC" = (
-/obj/effect/turf_decal/delivery{
+/obj/basic/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aD" = (
-/obj/effect/turf_decal/delivery{
+/obj/basic/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/structure/closet/crate{
+/obj/basic/structure/closet/crate{
 	name = "spare equipment crate"
 	},
-/obj/item/stack/sheet/glass/fifty,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/item/stack/sheet/glass/fifty,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aE" = (
-/obj/effect/turf_decal/delivery{
+/obj/basic/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/button/door/directional/east{
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/machinery/button/door/directional/east{
 	id = "cerewhiteright";
 	name = "Cargo Blast Door Toggle"
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aF" = (
-/obj/machinery/door/poddoor{
+/obj/basic/machinery/door/poddoor{
 	id = "cerewhiteleft"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "aG" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aH" = (
-/obj/machinery/door/poddoor{
+/obj/basic/machinery/door/poddoor{
 	id = "cerewhiteright"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "aI" = (
-/obj/effect/turf_decal/delivery{
+/obj/basic/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/structure/closet/crate{
+/obj/basic/structure/closet/crate{
 	name = "spare equipment crate"
 	},
-/obj/item/storage/toolbox/mechanical/old,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/clothing/glasses/welding,
+/obj/basic/item/storage/toolbox/mechanical/old,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/item/clothing/glasses/welding,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aJ" = (
-/obj/effect/turf_decal/delivery{
+/obj/basic/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate{
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/structure/closet/crate{
 	icon_state = "crateopen";
 	name = "spare equipment crate"
 	},
-/obj/machinery/light/directional/south,
+/obj/basic/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aK" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aL" = (
-/obj/effect/turf_decal/delivery{
+/obj/basic/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/south,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aM" = (
-/obj/structure/ore_box,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/structure/ore_box,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aN" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "cockpit"
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aO" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/tank_dispenser/oxygen{
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/structure/tank_dispenser/oxygen{
 	layer = 2.7;
 	pixel_x = -1;
 	pixel_y = 2
@@ -318,83 +318,83 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aP" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
+/obj/basic/structure/table,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aQ" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aR" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aS" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aT" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/item/storage/firstaid/regular,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
+/obj/basic/structure/table,
+/obj/basic/effect/decal/cleanable/cobweb/cobweb2,
+/obj/basic/item/storage/firstaid/regular,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aU" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/structure/table,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aV" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/machinery/suit_storage_unit/standard_unit,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aW" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/chair/comfy/black,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/structure/chair/comfy/black,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aX" = (
-/obj/structure/closet/emcloset,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/basic/structure/closet/emcloset,
+/obj/basic/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aZ" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/computer/shuttle/white_ship/bridge{
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/machinery/computer/shuttle/white_ship/bridge{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "ba" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/table,
-/obj/item/phone{
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/structure/table,
+/obj/basic/item/phone{
 	pixel_x = -3;
 	pixel_y = 3
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bb" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/machinery/computer/camera_advanced/shuttle_docker/whiteship{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "We" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/chair/comfy/black,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/effect/decal/cleanable/dirt/dust,
+/obj/basic/structure/chair/comfy/black,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 

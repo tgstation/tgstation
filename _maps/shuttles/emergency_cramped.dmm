@@ -3,11 +3,11 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "b" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/basic/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "c" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
@@ -17,46 +17,46 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "e" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "f" = (
-/obj/machinery/computer/emergency_shuttle{
+/obj/basic/machinery/computer/emergency_shuttle{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "g" = (
-/obj/structure/window/reinforced,
-/obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular,
-/obj/item/book/manual/random,
-/obj/structure/extinguisher_cabinet/directional/west,
+/obj/basic/structure/window/reinforced,
+/obj/basic/structure/table/reinforced,
+/obj/basic/item/storage/firstaid/regular,
+/obj/basic/item/book/manual/random,
+/obj/basic/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "h" = (
-/obj/machinery/door/window/southleft,
+/obj/basic/machinery/door/window/southleft,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "i" = (
-/obj/structure/table/reinforced,
-/obj/structure/window/reinforced,
-/obj/item/gps{
+/obj/basic/structure/table/reinforced,
+/obj/basic/structure/window/reinforced,
+/obj/basic/item/gps{
 	gpstag = "STV5"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "j" = (
-/obj/machinery/status_display/evac,
+/obj/basic/machinery/status_display/evac,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "k" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
-/obj/docking_port/mobile/emergency{
+/obj/basic/docking_port/mobile/emergency{
 	dwidth = 3;
 	height = 5;
 	name = "Secure Transport Vessel 5";
@@ -68,66 +68,66 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "m" = (
-/obj/structure/closet/emcloset,
+/obj/basic/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "n" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "o" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/eight,
-/obj/effect/turf_decal/bot,
+/obj/basic/structure/closet/crate,
+/obj/basic/effect/spawner/lootdrop/maintenance/eight,
+/obj/basic/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "p" = (
-/obj/structure/closet/crate/secure/loot,
-/obj/effect/turf_decal/bot,
+/obj/basic/structure/closet/crate/secure/loot,
+/obj/basic/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "q" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "r" = (
-/obj/structure/closet/crate/secure/weapon,
-/obj/effect/spawner/lootdrop/armory_contraband,
-/obj/effect/turf_decal/bot,
-/obj/machinery/light/directional/east,
+/obj/basic/structure/closet/crate/secure/weapon,
+/obj/basic/effect/spawner/lootdrop/armory_contraband,
+/obj/basic/effect/turf_decal/bot,
+/obj/basic/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "s" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/structure/extinguisher_cabinet/directional/west,
+/obj/basic/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "t" = (
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/shuttle/engine/heater,
+/obj/basic/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "u" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/basic/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "v" = (
-/obj/structure/closet/emcloset,
-/obj/machinery/light/directional/east,
+/obj/basic/structure/closet/emcloset,
+/obj/basic/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "w" = (
-/obj/structure/closet/crate/secure/weapon,
-/obj/effect/spawner/lootdrop/armory_contraband,
-/obj/effect/turf_decal/bot,
+/obj/basic/structure/closet/crate/secure/weapon,
+/obj/basic/effect/spawner/lootdrop/armory_contraband,
+/obj/basic/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 

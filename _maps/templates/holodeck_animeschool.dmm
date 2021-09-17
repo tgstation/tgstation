@@ -3,67 +3,67 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "j" = (
-/obj/structure/chair{
+/obj/basic/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "n" = (
-/obj/structure/table,
-/obj/item/paper,
-/obj/item/pen,
-/obj/item/clothing/under/costume/schoolgirl,
-/obj/item/toy/katana,
+/obj/basic/structure/table,
+/obj/basic/item/paper,
+/obj/basic/item/pen,
+/obj/basic/item/clothing/under/costume/schoolgirl,
+/obj/basic/item/toy/katana,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "s" = (
-/obj/structure/table/wood,
-/obj/item/toy/crayon/white,
+/obj/basic/structure/table/wood,
+/obj/basic/item/toy/crayon/white,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "x" = (
-/obj/structure/table,
-/obj/item/paper,
-/obj/item/pen,
-/obj/item/clothing/under/costume/schoolgirl/orange,
+/obj/basic/structure/table,
+/obj/basic/item/paper,
+/obj/basic/item/pen,
+/obj/basic/item/clothing/under/costume/schoolgirl/orange,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "E" = (
-/obj/structure/table/wood,
-/obj/item/food/grown/apple,
+/obj/basic/structure/table/wood,
+/obj/basic/item/food/grown/apple,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "H" = (
-/obj/structure/table,
-/obj/item/paper,
-/obj/item/pen,
-/obj/item/clothing/under/costume/schoolgirl,
+/obj/basic/structure/table,
+/obj/basic/item/paper,
+/obj/basic/item/pen,
+/obj/basic/item/clothing/under/costume/schoolgirl,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "R" = (
-/obj/structure/chair{
+/obj/basic/structure/chair{
 	pixel_y = -2
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "S" = (
-/obj/structure/table,
-/obj/item/paper,
-/obj/item/pen,
-/obj/item/clothing/under/costume/schoolgirl/green,
+/obj/basic/structure/table,
+/obj/basic/item/paper,
+/obj/basic/item/pen,
+/obj/basic/item/clothing/under/costume/schoolgirl/green,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "T" = (
-/obj/structure/table,
-/obj/item/paper,
-/obj/item/pen,
-/obj/item/clothing/under/costume/schoolgirl/red,
+/obj/basic/structure/table,
+/obj/basic/item/paper,
+/obj/basic/item/pen,
+/obj/basic/item/clothing/under/costume/schoolgirl/red,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "Y" = (
-/obj/structure/table/wood,
-/obj/item/folder,
-/obj/item/melee/baton/telescopic,
+/obj/basic/structure/table/wood,
+/obj/basic/item/folder,
+/obj/basic/item/melee/baton/telescopic,
 /turf/open/floor/holofloor,
 /area/template_noop)
 

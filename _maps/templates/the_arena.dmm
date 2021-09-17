@@ -6,14 +6,14 @@
 /turf/open/indestructible/necropolis/air,
 /area/shuttle_arena)
 "c" = (
-/obj/effect/forcefield/arena_shuttle,
+/obj/basic/effect/forcefield/arena_shuttle,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle_arena)
 "d" = (
 /turf/open/lava/smooth,
 /area/shuttle_arena)
 "e" = (
-/obj/effect/landmark/shuttle_arena_entrance,
+/obj/basic/effect/landmark/shuttle_arena_entrance,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle_arena)
 "f" = (

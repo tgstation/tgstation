@@ -6,74 +6,74 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ac" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/basic/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
-/obj/structure/table,
-/obj/machinery/recharger,
+/obj/basic/structure/table,
+/obj/basic/machinery/recharger,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ae" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/basic/machinery/computer/emergency_shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "af" = (
-/obj/machinery/computer/communications,
+/obj/basic/machinery/computer/communications,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ag" = (
-/obj/machinery/computer/atmos_alert{
+/obj/basic/machinery/computer/atmos_alert{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ah" = (
-/obj/structure/chair/comfy/black{
+/obj/basic/structure/chair/comfy/black{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ai" = (
-/obj/machinery/computer/security{
+/obj/basic/machinery/computer/security{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aj" = (
-/obj/machinery/computer/crew{
+/obj/basic/machinery/computer/crew{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ak" = (
-/obj/machinery/computer/secure_data{
+/obj/basic/machinery/computer/secure_data{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "al" = (
-/obj/structure/chair/office{
+/obj/basic/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ap" = (
-/obj/structure/chair/comfy,
-/obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/obj/effect/turf_decal/tile/green{
+/obj/basic/structure/chair/comfy,
+/obj/basic/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/green{
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/green{
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aq" = (
-/obj/structure/chair/office{
+/obj/basic/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -82,26 +82,26 @@
 /turf/open/floor/carpet/black,
 /area/shuttle/escape)
 "as" = (
-/obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/obj/item/kirbyplants{
+/obj/basic/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/basic/item/kirbyplants{
 	icon_state = "plant-21";
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/effect/turf_decal/tile/green{
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/obj/basic/effect/turf_decal/tile/green,
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "at" = (
-/obj/effect/turf_decal/tile/green{
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/green{
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -110,18 +110,18 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "av" = (
-/obj/structure/table/wood/poker,
-/obj/item/toy/cards/deck{
+/obj/basic/structure/table/wood/poker,
+/obj/basic/item/toy/cards/deck{
 	pixel_y = 5
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aw" = (
-/obj/structure/chair/comfy{
+/obj/basic/structure/chair/comfy{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/obj/basic/effect/turf_decal/tile/green,
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -130,318 +130,318 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "ay" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "az" = (
-/obj/structure/chair/comfy{
+/obj/basic/structure/chair/comfy{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
-/obj/effect/turf_decal/tile/green{
+/obj/basic/structure/window/reinforced,
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/obj/basic/effect/turf_decal/tile/green,
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aA" = (
-/obj/structure/chair/comfy{
+/obj/basic/structure/chair/comfy{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/obj/basic/structure/window/reinforced,
+/obj/basic/effect/turf_decal/tile/green,
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aB" = (
-/obj/structure/window/reinforced,
-/obj/item/kirbyplants{
+/obj/basic/structure/window/reinforced,
+/obj/basic/item/kirbyplants{
 	icon_state = "plant-11"
 	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/obj/basic/effect/turf_decal/tile/green,
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/green{
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aC" = (
-/obj/structure/chair/comfy{
+/obj/basic/structure/chair/comfy{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/obj/basic/structure/window/reinforced,
+/obj/basic/effect/turf_decal/tile/green,
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/green{
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aD" = (
-/obj/structure/chair/comfy{
+/obj/basic/structure/chair/comfy{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/green{
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/obj/basic/effect/turf_decal/tile/green,
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aE" = (
-/obj/structure/chair/comfy,
-/obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/tile/green{
+/obj/basic/structure/chair/comfy,
+/obj/basic/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/basic/machinery/light/directional/north,
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/green{
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aF" = (
-/obj/structure/chair/comfy{
+/obj/basic/structure/chair/comfy{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/obj/basic/effect/turf_decal/tile/green,
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/green{
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aG" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
-/obj/structure/window/reinforced{
+/obj/basic/structure/closet/secure_closet/freezer/fridge,
+/obj/basic/structure/window/reinforced{
 	dir = 8;
 	layer = 2.9
 	},
-/obj/machinery/light/directional/north,
-/obj/item/food/butterdog,
-/obj/item/food/cakeslice/apple,
-/obj/item/food/cakeslice/brioche,
-/obj/item/food/cakeslice/cheese,
-/obj/item/food/cakeslice/chocolate,
-/obj/item/food/cakeslice/lemon,
-/obj/item/food/cakeslice/lime,
-/obj/item/food/cakeslice/orange,
+/obj/basic/machinery/light/directional/north,
+/obj/basic/item/food/butterdog,
+/obj/basic/item/food/cakeslice/apple,
+/obj/basic/item/food/cakeslice/brioche,
+/obj/basic/item/food/cakeslice/cheese,
+/obj/basic/item/food/cakeslice/chocolate,
+/obj/basic/item/food/cakeslice/lemon,
+/obj/basic/item/food/cakeslice/lime,
+/obj/basic/item/food/cakeslice/orange,
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
 "aH" = (
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aI" = (
-/obj/machinery/door/airlock/public/glass{
+/obj/basic/machinery/door/airlock/public/glass{
 	name = "First Class"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aJ" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/structure/chair/comfy/shuttle,
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aK" = (
-/obj/structure/chair/comfy{
+/obj/basic/structure/chair/comfy{
 	dir = 1
 	},
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/obj/basic/machinery/light/directional/south,
+/obj/basic/effect/turf_decal/tile/green,
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aL" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/structure/chair/comfy/shuttle,
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/effect/turf_decal/tile/purple,
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aM" = (
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aN" = (
-/obj/structure/table/glass,
-/obj/item/reagent_containers/food/drinks/bottle/wine,
-/obj/effect/turf_decal/tile/green{
+/obj/basic/structure/table/glass,
+/obj/basic/item/reagent_containers/food/drinks/bottle/wine,
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/green{
+/obj/basic/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aO" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/structure/window/reinforced,
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/effect/turf_decal/tile/purple,
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aP" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/structure/window/reinforced,
+/obj/basic/effect/turf_decal/tile/purple,
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aQ" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/structure/window/reinforced,
+/obj/basic/effect/turf_decal/tile/purple,
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aR" = (
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/effect/turf_decal/tile/purple,
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aS" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/effect/turf_decal/tile/purple,
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aT" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/structure/chair/comfy/shuttle,
+/obj/basic/machinery/light/directional/north,
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aU" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/effect/turf_decal/tile/purple,
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aV" = (
-/obj/item/food/breadslice/plain,
-/obj/item/food/breadslice/plain{
+/obj/basic/item/food/breadslice/plain,
+/obj/basic/item/food/breadslice/plain{
 	pixel_y = 4
 	},
-/obj/item/food/breadslice/plain{
+/obj/basic/item/food/breadslice/plain{
 	pixel_y = 8
 	},
-/obj/structure/table/glass,
+/obj/basic/structure/table/glass,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aW" = (
-/obj/structure/table,
-/obj/machinery/microwave,
+/obj/basic/structure/table,
+/obj/basic/machinery/microwave,
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
 "aX" = (
-/obj/effect/turf_decal/tile/blue{
+/obj/basic/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
+/obj/basic/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/stasis,
+/obj/basic/machinery/stasis,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "aY" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
+/obj/basic/machinery/light/directional/south,
+/obj/basic/effect/turf_decal/tile/purple,
+/obj/basic/effect/turf_decal/tile/purple{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aZ" = (
-/obj/structure/table/glass,
-/obj/machinery/light/directional/north,
-/obj/item/storage/firstaid/regular,
-/obj/structure/window/reinforced{
+/obj/basic/structure/table/glass,
+/obj/basic/machinery/light/directional/north,
+/obj/basic/item/storage/firstaid/regular,
+/obj/basic/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
 	},
-/obj/effect/turf_decal/tile/blue{
+/obj/basic/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
+/obj/basic/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/vending/wallmed/directional/north{
+/obj/basic/machinery/vending/wallmed/directional/north{
 	use_power = 0
 	},
 /turf/open/floor/iron/white,
@@ -450,76 +450,76 @@
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
 "bb" = (
-/obj/effect/turf_decal/tile/blue{
+/obj/basic/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
+/obj/basic/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "bc" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/basic/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bd" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced,
+/obj/basic/structure/window/reinforced{
 	dir = 8;
 	layer = 2.9
 	},
-/obj/structure/table,
-/obj/item/food/canned/beans{
+/obj/basic/structure/table,
+/obj/basic/item/food/canned/beans{
 	pixel_x = 3;
 	pixel_y = 4
 	},
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
 "be" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/effect/turf_decal/tile/blue{
+/obj/basic/structure/chair/comfy/shuttle,
+/obj/basic/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
+/obj/basic/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "bf" = (
-/obj/structure/window/reinforced,
-/obj/structure/table,
-/obj/item/storage/bag/tray,
-/obj/item/clothing/under/suit/waiter,
+/obj/basic/structure/window/reinforced,
+/obj/basic/structure/table,
+/obj/basic/item/storage/bag/tray,
+/obj/basic/item/clothing/under/suit/waiter,
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
 "bg" = (
-/obj/structure/closet/crate,
-/obj/item/storage/toolbox/mechanical,
+/obj/basic/structure/closet/crate,
+/obj/basic/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bh" = (
-/obj/structure/window/reinforced,
-/obj/structure/table/glass,
-/obj/item/defibrillator/loaded,
-/obj/effect/turf_decal/tile/blue{
+/obj/basic/structure/window/reinforced,
+/obj/basic/structure/table/glass,
+/obj/basic/item/defibrillator/loaded,
+/obj/basic/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
+/obj/basic/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "bi" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced,
+/obj/basic/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/table/glass,
-/obj/item/storage/firstaid/regular,
-/obj/effect/turf_decal/tile/blue{
+/obj/basic/structure/table/glass,
+/obj/basic/item/storage/firstaid/regular,
+/obj/basic/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
+/obj/basic/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /turf/open/floor/iron/white,
@@ -528,42 +528,42 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bk" = (
-/obj/machinery/vending/snack,
+/obj/basic/machinery/vending/snack,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bl" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/basic/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bm" = (
-/obj/machinery/vending/cola,
+/obj/basic/machinery/vending/cola,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bn" = (
-/obj/structure/closet/crate{
+/obj/basic/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/machinery/light/directional/south,
-/obj/item/storage/toolbox/mechanical,
+/obj/basic/machinery/light/directional/south,
+/obj/basic/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bo" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/structure/window/reinforced{
+/obj/basic/structure/chair/comfy/shuttle,
+/obj/basic/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 2
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bq" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "br" = (
-/obj/machinery/light/directional/south,
-/obj/structure/chair/office{
+/obj/basic/machinery/light/directional/south,
+/obj/basic/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -572,100 +572,100 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "bt" = (
-/obj/machinery/light/directional/south,
-/obj/structure/chair/office{
+/obj/basic/machinery/light/directional/south,
+/obj/basic/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bu" = (
-/obj/item/kirbyplants{
+/obj/basic/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bv" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/basic/effect/spawner/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bw" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bx" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "by" = (
-/obj/structure/table/reinforced,
-/obj/machinery/recharger,
+/obj/basic/structure/table/reinforced,
+/obj/basic/machinery/recharger,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bz" = (
-/obj/structure/table/reinforced,
-/obj/item/restraints/handcuffs,
-/obj/item/melee/baton/security,
+/obj/basic/structure/table/reinforced,
+/obj/basic/item/restraints/handcuffs,
+/obj/basic/item/melee/baton/security,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bA" = (
-/obj/machinery/door/airlock/public/glass{
+/obj/basic/machinery/door/airlock/public/glass{
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bB" = (
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bC" = (
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 8;
 	layer = 2.9
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bD" = (
-/obj/structure/bed,
+/obj/basic/structure/bed,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bE" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/basic/structure/shuttle/engine/heater,
+/obj/basic/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bG" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light/directional/south,
+/obj/basic/machinery/light/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bH" = (
-/obj/machinery/light/directional/north,
+/obj/basic/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bI" = (
-/obj/machinery/light/directional/south,
+/obj/basic/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bK" = (
-/obj/machinery/door/airlock/public/glass{
+/obj/basic/machinery/door/airlock/public/glass{
 	name = "Economy Class"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bL" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
-/obj/docking_port/mobile/emergency{
+/obj/basic/docking_port/mobile/emergency{
 	dir = 8;
 	dwidth = 27;
 	height = 8;
@@ -676,27 +676,27 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bO" = (
-/obj/machinery/door/airlock/public/glass{
+/obj/basic/machinery/door/airlock/public/glass{
 	name = "Cockpit";
 	req_access_txt = "19"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bQ" = (
-/obj/machinery/door/airlock/public/glass{
+/obj/basic/machinery/door/airlock/public/glass{
 	name = "Service"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bT" = (
-/obj/machinery/door/airlock/public/glass{
+/obj/basic/machinery/door/airlock/public/glass{
 	name = "Brig";
 	req_access_txt = "2"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape/brig)
 "xt" = (
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 8;
 	layer = 2.9
 	},
@@ -706,7 +706,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape/brig)
 "Uu" = (
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plating,

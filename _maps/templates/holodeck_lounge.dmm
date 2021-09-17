@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/item/reagent_containers/glass/rag{
+/obj/basic/structure/table/wood/shuttle_bar,
+/obj/basic/item/reagent_containers/glass/rag{
 	pixel_x = 10;
 	pixel_y = 1
 	},
@@ -11,14 +11,14 @@
 	},
 /area/template_noop)
 "b" = (
-/obj/structure/closet/crate/bin,
+/obj/basic/structure/closet/crate/bin,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "c" = (
-/obj/machinery/door/window{
+/obj/basic/machinery/door/window{
 	base_state = "right";
 	dir = 4;
 	icon_state = "right";
@@ -30,15 +30,15 @@
 	},
 /area/template_noop)
 "d" = (
-/obj/structure/table/wood/shuttle_bar,
+/obj/basic/structure/table/wood/shuttle_bar,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "f" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green{
+/obj/basic/structure/table/wood,
+/obj/basic/item/flashlight/lamp/green{
 	layer = 3.3
 	},
 /turf/open/floor/holofloor{
@@ -47,21 +47,21 @@
 	},
 /area/template_noop)
 "h" = (
-/obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/pipe,
-/obj/effect/holodeck_effect/random_book,
+/obj/basic/structure/table/wood,
+/obj/basic/item/clothing/mask/cigarette/pipe,
+/obj/basic/effect/holodeck_effect/random_book,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "i" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/item/reagent_containers/food/drinks/shaker,
+/obj/basic/structure/table/wood/shuttle_bar,
+/obj/basic/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "j" = (
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
 	},
@@ -71,16 +71,16 @@
 	},
 /area/template_noop)
 "k" = (
-/obj/structure/table/wood/poker,
-/obj/item/storage/box/matches,
+/obj/basic/structure/table/wood/poker,
+/obj/basic/item/storage/box/matches,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "l" = (
-/obj/structure/chair/stool/bar/directional/north,
-/obj/structure/window/reinforced{
+/obj/basic/structure/chair/stool/bar/directional/north,
+/obj/basic/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
 	},
@@ -90,14 +90,14 @@
 	},
 /area/template_noop)
 "m" = (
-/obj/structure/chair/wood,
+/obj/basic/structure/chair/wood,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "o" = (
-/obj/structure/chair/wood{
+/obj/basic/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/holofloor{
@@ -106,23 +106,23 @@
 	},
 /area/template_noop)
 "p" = (
-/obj/structure/table/wood,
-/obj/item/instrument/guitar,
+/obj/basic/structure/table/wood,
+/obj/basic/item/instrument/guitar,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "q" = (
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "t" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/item/book/manual/wiki/barman_recipes,
+/obj/basic/structure/table/wood/shuttle_bar,
+/obj/basic/item/book/manual/wiki/barman_recipes,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "u" = (
-/obj/structure/chair/wood{
+/obj/basic/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/holofloor{
@@ -131,13 +131,13 @@
 	},
 /area/template_noop)
 "w" = (
-/obj/structure/table/wood,
-/obj/item/instrument/saxophone,
+/obj/basic/structure/table/wood,
+/obj/basic/item/instrument/saxophone,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "x" = (
-/obj/structure/table/wood,
-/obj/item/instrument/violin,
+/obj/basic/structure/table/wood,
+/obj/basic/item/instrument/violin,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "z" = (
@@ -147,27 +147,27 @@
 	},
 /area/template_noop)
 "A" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin,
+/obj/basic/structure/table/wood,
+/obj/basic/item/paper_bin,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "C" = (
-/obj/structure/chair/stool/bar/directional/east,
+/obj/basic/structure/chair/stool/bar/directional/east,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "D" = (
-/obj/structure/table/wood,
-/obj/item/kirbyplants{
+/obj/basic/structure/table/wood,
+/obj/basic/item/kirbyplants{
 	icon_state = "plant-05";
 	pixel_y = 10
 	},
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "E" = (
-/obj/structure/chair/comfy/brown{
+/obj/basic/structure/chair/comfy/brown{
 	dir = 8
 	},
 /turf/open/floor/holofloor/carpet,
@@ -178,18 +178,18 @@
 	},
 /area/template_noop)
 "G" = (
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/table/wood/shuttle_bar,
-/obj/item/storage/box/cups,
+/obj/basic/structure/table/wood/shuttle_bar,
+/obj/basic/item/storage/box/cups,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "H" = (
-/obj/structure/sink{
+/obj/basic/structure/sink{
 	dir = 4;
 	pixel_x = -12
 	},
@@ -199,7 +199,7 @@
 	},
 /area/template_noop)
 "I" = (
-/obj/structure/chair/wood{
+/obj/basic/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/holofloor{
@@ -208,14 +208,14 @@
 	},
 /area/template_noop)
 "J" = (
-/obj/structure/table/wood,
-/obj/effect/holodeck_effect/random_book,
+/obj/basic/structure/table/wood,
+/obj/basic/effect/holodeck_effect/random_book,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "K" = (
-/obj/structure/table/wood,
-/obj/item/storage/fancy/cigarettes/cigars/cohiba,
-/obj/item/lighter,
+/obj/basic/structure/table/wood,
+/obj/basic/item/storage/fancy/cigarettes/cigars/cohiba,
+/obj/basic/item/lighter,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -227,73 +227,73 @@
 	},
 /area/template_noop)
 "M" = (
-/obj/structure/chair/comfy/brown{
+/obj/basic/structure/chair/comfy/brown{
 	buildstackamount = 0;
 	dir = 1
 	},
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "N" = (
-/obj/structure/table/wood,
-/obj/item/instrument/piano_synth/headphones,
+/obj/basic/structure/table/wood,
+/obj/basic/item/instrument/piano_synth/headphones,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "O" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green{
+/obj/basic/structure/table/wood,
+/obj/basic/item/flashlight/lamp/green{
 	pixel_y = 4
 	},
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "P" = (
-/obj/structure/table/wood/poker,
-/obj/structure/table/wood/poker,
-/obj/effect/holodeck_effect/cards,
+/obj/basic/structure/table/wood/poker,
+/obj/basic/structure/table/wood/poker,
+/obj/basic/effect/holodeck_effect/cards,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "R" = (
-/obj/structure/window/reinforced,
+/obj/basic/structure/window/reinforced,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "S" = (
-/obj/structure/table/wood/poker,
+/obj/basic/structure/table/wood/poker,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "T" = (
-/obj/structure/table/wood/poker,
-/obj/item/clothing/mask/cigarette/pipe,
+/obj/basic/structure/table/wood/poker,
+/obj/basic/item/clothing/mask/cigarette/pipe,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "U" = (
-/obj/structure/table/wood/poker,
-/obj/item/storage/dice,
+/obj/basic/structure/table/wood/poker,
+/obj/basic/item/storage/dice,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "V" = (
-/obj/structure/chair/stool/bar/directional/north,
+/obj/basic/structure/chair/stool/bar/directional/north,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
 "Y" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/structure/window/reinforced{
+/obj/basic/structure/table/wood/shuttle_bar,
+/obj/basic/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
 	},
@@ -303,7 +303,7 @@
 	},
 /area/template_noop)
 "Z" = (
-/obj/structure/musician/piano{
+/obj/basic/structure/musician/piano{
 	icon_state = "piano"
 	},
 /turf/open/floor/holofloor/carpet,

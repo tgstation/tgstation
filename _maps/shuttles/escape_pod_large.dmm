@@ -1,9 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "h" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/item/storage/pod{
+/obj/basic/item/storage/pod{
 	pixel_x = -24
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -12,55 +12,55 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "u" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/basic/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/pod_1)
 "A" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/item/radio/intercom/directional/east,
+/obj/basic/item/radio/intercom/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "B" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
 "C" = (
-/obj/machinery/computer/shuttle/monastery_shuttle,
-/obj/machinery/light/directional/north,
+/obj/basic/machinery/computer/shuttle/monastery_shuttle,
+/obj/basic/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "H" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "J" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/status_display/evac/directional/west,
+/obj/basic/machinery/status_display/evac/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "L" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "M" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/status_display/evac/directional/east,
+/obj/basic/machinery/status_display/evac/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "O" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Shuttle Airlock"
 	},
-/obj/docking_port/mobile/pod{
+/obj/basic/docking_port/mobile/pod{
 	dwidth = 2;
 	height = 6;
 	port_direction = 2;
@@ -72,7 +72,7 @@
 /turf/template_noop,
 /area/template_noop)
 "Z" = (
-/obj/structure/shuttle/engine/propulsion/burst,
+/obj/basic/structure/shuttle/engine/propulsion/burst,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
 

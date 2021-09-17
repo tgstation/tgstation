@@ -6,13 +6,13 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "c" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/basic/structure/shuttle/engine/propulsion/burst{
 	dir = 1
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "d" = (
-/obj/machinery/door/airlock/public/glass{
+/obj/basic/machinery/door/airlock/public/glass{
 	name = "Shuttle Airlock"
 	},
 /turf/open/floor/iron/dark,
@@ -24,48 +24,48 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned)
 "g" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/basic/structure/shuttle/engine/propulsion/burst{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "h" = (
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 1;
 	layer = 2.9
 	},
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/table/glass,
-/obj/item/gun/medbeam,
+/obj/basic/structure/table/glass,
+/obj/basic/item/gun/medbeam,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "i" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship,
+/obj/basic/machinery/computer/camera_advanced/shuttle_docker/whiteship,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "j" = (
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 1;
 	layer = 2.9
 	},
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/table/glass,
-/obj/machinery/recharger,
-/obj/item/gun/energy/laser/retro,
+/obj/basic/structure/table/glass,
+/obj/basic/machinery/recharger,
+/obj/basic/item/gun/energy/laser/retro,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "k" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/basic/structure/shuttle/engine/propulsion/burst{
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "l" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/plating/abductor,
@@ -74,16 +74,16 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "n" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "o" = (
-/obj/machinery/door/airlock/public/glass{
+/obj/basic/machinery/door/airlock/public/glass{
 	name = "Shuttle Airlock"
 	},
-/obj/docking_port/mobile{
+/obj/basic/docking_port/mobile{
 	dir = 8;
 	dwidth = 4;
 	height = 9;
@@ -96,34 +96,34 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
 "p" = (
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
-/obj/structure/table/glass,
-/obj/item/tank/internals/oxygen,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/eva,
-/obj/item/clothing/head/helmet/space/eva,
+/obj/basic/structure/window/reinforced,
+/obj/basic/structure/table/glass,
+/obj/basic/item/tank/internals/oxygen,
+/obj/basic/item/clothing/mask/breath,
+/obj/basic/item/clothing/suit/space/eva,
+/obj/basic/item/clothing/head/helmet/space/eva,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "q" = (
-/obj/machinery/computer/shuttle/white_ship/bridge{
+/obj/basic/machinery/computer/shuttle/white_ship/bridge{
 	dir = 1
 	},
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "r" = (
-/obj/structure/window/reinforced{
+/obj/basic/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
-/obj/structure/table/glass,
-/obj/item/clothing/shoes/magboots,
+/obj/basic/structure/window/reinforced,
+/obj/basic/structure/table/glass,
+/obj/basic/item/clothing/shoes/magboots,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "s" = (
-/obj/structure/shuttle/engine/propulsion/burst,
+/obj/basic/structure/shuttle/engine/propulsion/burst,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 

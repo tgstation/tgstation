@@ -6,26 +6,26 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ae" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "ah" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/basic/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ai" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aj" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
-/obj/docking_port/mobile/emergency{
+/obj/basic/docking_port/mobile/emergency{
 	dir = 2;
 	dwidth = 10;
 	height = 13;
@@ -35,40 +35,40 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "al" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "am" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/basic/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "an" = (
-/obj/structure/shuttle/engine/heater{
+/obj/basic/structure/shuttle/engine/heater{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "ap" = (
-/obj/structure/ore_box,
+/obj/basic/structure/ore_box,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "aq" = (
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "ar" = (
-/obj/machinery/recharge_station,
+/obj/basic/machinery/recharge_station,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "at" = (
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "av" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
@@ -77,7 +77,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "ax" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
@@ -89,71 +89,71 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
 "aE" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/item/radio/intercom/directional/west,
+/obj/basic/item/radio/intercom/directional/west,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aF" = (
-/obj/machinery/suit_storage_unit,
+/obj/basic/machinery/suit_storage_unit,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "aG" = (
-/obj/machinery/door/airlock/mining{
+/obj/basic/machinery/door/airlock/mining{
 	name = "Emergency Shuttle Storage"
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "aH" = (
-/obj/structure/extinguisher_cabinet/directional/north,
+/obj/basic/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aI" = (
-/obj/structure/closet,
+/obj/basic/structure/closet,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aJ" = (
-/obj/structure/table,
-/obj/item/extinguisher,
-/obj/item/crowbar,
+/obj/basic/structure/table,
+/obj/basic/item/extinguisher,
+/obj/basic/item/crowbar,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aK" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/basic/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aL" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
+/obj/basic/structure/table,
+/obj/basic/item/storage/firstaid/fire,
+/obj/basic/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aM" = (
-/obj/structure/closet/emcloset,
-/obj/item/radio/intercom/directional/north,
+/obj/basic/structure/closet/emcloset,
+/obj/basic/item/radio/intercom/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aN" = (
-/obj/structure/bed/roller,
+/obj/basic/structure/bed/roller,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aP" = (
-/obj/machinery/door/airlock/security/glass{
+/obj/basic/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aQ" = (
-/obj/structure/bed,
+/obj/basic/structure/bed,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aR" = (
-/obj/machinery/computer/station_alert{
+/obj/basic/machinery/computer/station_alert{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -162,257 +162,257 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aT" = (
-/obj/structure/chair/office/light{
+/obj/basic/structure/chair/office/light{
 	name = "Chief Engineer"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aU" = (
-/obj/structure/chair/office/light{
+/obj/basic/structure/chair/office/light{
 	name = "Captain"
 	},
-/obj/machinery/light/directional/north,
+/obj/basic/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aV" = (
-/obj/structure/chair/office/light{
+/obj/basic/structure/chair/office/light{
 	name = "Head of Security"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aW" = (
-/obj/item/radio/intercom/directional/north,
+/obj/basic/item/radio/intercom/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aY" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aZ" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ba" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bb" = (
-/obj/machinery/computer/security{
+/obj/basic/machinery/computer/security{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bc" = (
-/obj/structure/table,
-/obj/item/paper_bin{
+/obj/basic/structure/table,
+/obj/basic/item/paper_bin{
 	pixel_x = -1;
 	pixel_y = 6
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bd" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/basic/machinery/computer/emergency_shuttle,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "be" = (
-/obj/structure/table,
-/obj/item/folder/blue,
-/obj/item/pen,
-/obj/machinery/recharger,
+/obj/basic/structure/table,
+/obj/basic/item/folder/blue,
+/obj/basic/item/pen,
+/obj/basic/machinery/recharger,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bf" = (
-/obj/machinery/ai_slipper,
+/obj/basic/machinery/ai_slipper,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bg" = (
-/obj/machinery/door/airlock/command/glass{
+/obj/basic/machinery/door/airlock/command/glass{
 	name = "Emergency Shuttle Cockpit";
 	req_access_txt = "19"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bi" = (
-/obj/machinery/status_display/evac,
+/obj/basic/machinery/status_display/evac,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bj" = (
-/obj/machinery/computer/communications{
+/obj/basic/machinery/computer/communications{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bk" = (
-/obj/structure/chair/office/light{
+/obj/basic/structure/chair/office/light{
 	dir = 1;
 	name = "Research Director"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bl" = (
-/obj/structure/chair/office/light{
+/obj/basic/structure/chair/office/light{
 	dir = 1;
 	name = "Head of Personnel"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bm" = (
-/obj/structure/chair/office/light{
+/obj/basic/structure/chair/office/light{
 	dir = 1;
 	name = "Chief Medical Officer"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bn" = (
-/obj/structure/extinguisher_cabinet/directional/south,
+/obj/basic/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bp" = (
-/obj/machinery/computer/crew{
+/obj/basic/machinery/computer/crew{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bq" = (
-/obj/machinery/door/airlock/medical/glass{
+/obj/basic/machinery/door/airlock/medical/glass{
 	name = "Escape Shuttle Infirmary";
 	req_access_txt = "5"
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "br" = (
-/obj/machinery/door/airlock/medical/glass{
+/obj/basic/machinery/door/airlock/medical/glass{
 	name = "Escape Shuttle Infirmary"
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bs" = (
-/obj/structure/bed,
+/obj/basic/structure/bed,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bt" = (
-/obj/structure/sink{
+/obj/basic/structure/sink{
 	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/structure/mirror/directional/west,
+/obj/basic/structure/mirror/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bu" = (
-/obj/machinery/door/airlock{
+/obj/basic/machinery/door/airlock{
 	name = "Emergency Shuttle Restroom"
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bv" = (
-/obj/structure/closet/emcloset,
+/obj/basic/structure/closet/emcloset,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bw" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/south,
+/obj/basic/item/radio/intercom/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bx" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/extinguisher_cabinet/directional/south,
+/obj/basic/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "by" = (
-/obj/structure/table,
-/obj/item/extinguisher,
-/obj/item/crowbar,
-/obj/machinery/recharger,
+/obj/basic/structure/table,
+/obj/basic/item/extinguisher,
+/obj/basic/item/crowbar,
+/obj/basic/machinery/recharger,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bz" = (
-/obj/machinery/stasis,
-/obj/machinery/vending/wallmed/directional/east{
+/obj/basic/machinery/stasis,
+/obj/basic/machinery/vending/wallmed/directional/east{
 	use_power = 0
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bC" = (
-/obj/item/radio/intercom/directional/west,
+/obj/basic/item/radio/intercom/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bD" = (
-/obj/structure/closet/secure_closet/medical2,
+/obj/basic/structure/closet/secure_closet/medical2,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bE" = (
-/obj/structure/toilet{
+/obj/basic/structure/toilet{
 	dir = 1
 	},
-/obj/machinery/light/small/directional/east,
+/obj/basic/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bF" = (
-/obj/structure/table,
-/obj/item/retractor,
-/obj/item/hemostat,
-/obj/item/scalpel,
-/obj/item/surgicaldrill,
+/obj/basic/structure/table,
+/obj/basic/item/retractor,
+/obj/basic/item/hemostat,
+/obj/basic/item/scalpel,
+/obj/basic/item/surgicaldrill,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bG" = (
-/obj/structure/table/optable,
+/obj/basic/structure/table/optable,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bH" = (
-/obj/structure/table,
-/obj/item/circular_saw,
-/obj/item/cautery{
+/obj/basic/structure/table,
+/obj/basic/item/circular_saw,
+/obj/basic/item/cautery{
 	pixel_x = 4
 	},
-/obj/item/surgical_drapes,
+/obj/basic/item/surgical_drapes,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bJ" = (
-/obj/machinery/light/directional/south,
+/obj/basic/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bK" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/directional/north,
+/obj/basic/structure/chair/comfy/shuttle,
+/obj/basic/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bM" = (
-/obj/machinery/light/directional/south,
+/obj/basic/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bN" = (
-/obj/machinery/light/directional/north,
+/obj/basic/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bP" = (
-/obj/machinery/light/directional/south,
+/obj/basic/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "hJ" = (
-/obj/machinery/status_display/ai/directional/west,
+/obj/basic/machinery/status_display/ai/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Id" = (
-/obj/machinery/status_display/evac/directional/west,
+/obj/basic/machinery/status_display/evac/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Jx" = (
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "JM" = (
-/obj/machinery/vending/wallmed{
+/obj/basic/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	use_power = 0
 	},

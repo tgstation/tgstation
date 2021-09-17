@@ -11,7 +11,7 @@
 	},
 /area/shuttle/escape/arena)
 "i" = (
-/obj/structure/closet/crate/necropolis/dragon,
+/obj/basic/structure/closet/crate/necropolis/dragon,
 /turf/open/indestructible{
 	icon_state = "cult"
 	},
@@ -20,36 +20,36 @@
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 "k" = (
-/obj/structure/fluff/drake_statue,
+/obj/basic/structure/fluff/drake_statue,
 /turf/open/indestructible{
 	icon_state = "cult"
 	},
 /area/shuttle/escape/arena)
 "l" = (
-/obj/structure/closet/crate/necropolis/tendril,
+/obj/basic/structure/closet/crate/necropolis/tendril,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 "m" = (
-/obj/structure/fluff/drake_statue,
+/obj/basic/structure/fluff/drake_statue,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 "n" = (
-/obj/effect/forcefield/arena_shuttle_entrance,
+/obj/basic/effect/forcefield/arena_shuttle_entrance,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 "o" = (
-/obj/effect/forcefield/arena_shuttle_entrance,
-/obj/docking_port/mobile/emergency{
+/obj/basic/effect/forcefield/arena_shuttle_entrance,
+/obj/basic/docking_port/mobile/emergency{
 	name = "The Arena"
 	},
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 "z" = (
-/obj/effect/landmark/shuttle_arena_safe,
+/obj/basic/effect/landmark/shuttle_arena_safe,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 "T" = (
-/obj/machinery/computer/emergency_shuttle{
+/obj/basic/machinery/computer/emergency_shuttle{
 	dir = 1
 	},
 /turf/open/indestructible{
@@ -57,7 +57,7 @@
 	},
 /area/shuttle/escape/arena)
 "V" = (
-/obj/structure/healingfountain,
+/obj/basic/structure/healingfountain,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 

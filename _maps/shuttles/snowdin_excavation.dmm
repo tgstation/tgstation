@@ -1,9 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/machinery/door/airlock/public/glass{
+/obj/basic/machinery/door/airlock/public/glass{
 	name = "Elevator Access"
 	},
-/obj/docking_port/mobile/elevator{
+/obj/basic/docking_port/mobile/elevator{
 	dir = 4;
 	height = 6;
 	id = "snowdin_excavation";
@@ -13,12 +13,12 @@
 /turf/open/floor/plating,
 /area/shuttle/snowdin/elevator1)
 "b" = (
-/obj/structure/window/reinforced/fulltile/ice,
-/obj/structure/grille,
+/obj/basic/structure/window/reinforced/fulltile/ice,
+/obj/basic/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/snowdin/elevator1)
 "c" = (
-/obj/machinery/door/airlock/public/glass{
+/obj/basic/machinery/door/airlock/public/glass{
 	name = "Elevator Access"
 	},
 /turf/open/floor/plating,
@@ -30,7 +30,7 @@
 /turf/open/floor/engine,
 /area/shuttle/snowdin/elevator1)
 "f" = (
-/obj/machinery/computer/shuttle/snowdin/mining{
+/obj/basic/machinery/computer/shuttle/snowdin/mining{
 	name = "Excavation Elevator Console";
 	possible_destinations = "snowdin_excavation_top;snowdin_excavation_down";
 	shuttleId = "snowdin_excavation"

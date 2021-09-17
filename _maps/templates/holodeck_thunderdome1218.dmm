@@ -1,28 +1,28 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/structure/chair/wood{
+/obj/basic/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "f" = (
-/obj/structure/window/reinforced,
-/obj/item/banner/red,
+/obj/basic/structure/window/reinforced,
+/obj/basic/item/banner/red,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "g" = (
-/obj/structure/window/reinforced,
-/obj/item/banner/blue,
+/obj/basic/structure/window/reinforced,
+/obj/basic/item/banner/blue,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "k" = (
-/obj/structure/table/wood/fancy,
-/obj/item/clothing/suit/armor/riot/knight/blue,
-/obj/item/clothing/head/helmet/knight/blue,
+/obj/basic/structure/table/wood/fancy,
+/obj/basic/item/clothing/suit/armor/riot/knight/blue,
+/obj/basic/item/clothing/head/helmet/knight/blue,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "n" = (
-/obj/machinery/door/window/westleft{
+/obj/basic/machinery/door/window/westleft{
 	dir = 2
 	},
 /turf/open/floor/holofloor/grass,
@@ -31,16 +31,16 @@
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "r" = (
-/obj/structure/table/wood,
-/obj/item/scythe,
-/obj/item/spear,
-/obj/item/melee/chainofcommand{
+/obj/basic/structure/table/wood,
+/obj/basic/item/scythe,
+/obj/basic/item/spear,
+/obj/basic/item/melee/chainofcommand{
 	name = "chain whip"
 	},
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "s" = (
-/obj/machinery/door/window/westleft{
+/obj/basic/machinery/door/window/westleft{
 	dir = 2;
 	icon_state = "right"
 	},
@@ -50,11 +50,11 @@
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "y" = (
-/obj/structure/table/wood,
-/obj/item/melee/chainofcommand{
+/obj/basic/structure/table/wood,
+/obj/basic/item/melee/chainofcommand{
 	name = "chain whip"
 	},
-/obj/item/spear,
+/obj/basic/item/spear,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "B" = (
@@ -63,52 +63,52 @@
 	},
 /area/template_noop)
 "C" = (
-/obj/structure/table/wood/fancy,
-/obj/item/clothing/head/crown/fancy{
+/obj/basic/structure/table/wood/fancy,
+/obj/basic/item/clothing/head/crown/fancy{
 	pixel_y = 6
 	},
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "E" = (
-/obj/structure/window/reinforced,
+/obj/basic/structure/window/reinforced,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "H" = (
-/obj/structure/statue/diamond/captain,
+/obj/basic/structure/statue/diamond/captain,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "J" = (
-/obj/structure/window/reinforced,
+/obj/basic/structure/window/reinforced,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "N" = (
-/obj/structure/table/wood,
-/obj/item/spear,
+/obj/basic/structure/table/wood,
+/obj/basic/item/spear,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "Q" = (
-/obj/structure/table/wood/fancy,
-/obj/item/clothing/suit/armor/riot/knight/blue,
-/obj/item/clothing/head/helmet/knight/blue,
-/obj/item/claymore/weak,
+/obj/basic/structure/table/wood/fancy,
+/obj/basic/item/clothing/suit/armor/riot/knight/blue,
+/obj/basic/item/clothing/head/helmet/knight/blue,
+/obj/basic/item/claymore/weak,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "R" = (
-/obj/machinery/door/window/westleft{
+/obj/basic/machinery/door/window/westleft{
 	dir = 2
 	},
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "T" = (
-/obj/structure/table/wood,
-/obj/item/tailclub,
-/obj/item/spear,
+/obj/basic/structure/table/wood,
+/obj/basic/item/tailclub,
+/obj/basic/item/spear,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "X" = (
-/obj/structure/table/wood,
-/obj/item/scythe,
-/obj/item/spear,
+/obj/basic/structure/table/wood,
+/obj/basic/item/scythe,
+/obj/basic/item/spear,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 

@@ -1,42 +1,42 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "cc" = (
-/obj/structure/railing{
+/obj/basic/structure/railing{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/wood{
+/obj/basic/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "ce" = (
-/obj/effect/turf_decal/siding/wood{
+/obj/basic/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "cP" = (
-/obj/effect/spawner/randomarcade,
+/obj/basic/effect/spawner/randomarcade,
 /turf/open/floor/eighties,
 /area/shuttle/escape)
 "dJ" = (
-/obj/effect/turf_decal/siding/wood,
+/obj/basic/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "eR" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/drinks/shaker,
-/obj/item/storage/box/drinkingglasses,
+/obj/basic/structure/table,
+/obj/basic/item/reagent_containers/food/drinks/shaker,
+/obj/basic/item/storage/box/drinkingglasses,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "fX" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/basic/structure/table,
+/obj/basic/machinery/chem_dispenser/drinks/beer{
 	dir = 1
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "hD" = (
-/obj/machinery/door/airlock/gold/glass{
+/obj/basic/machinery/door/airlock/gold/glass{
 	req_access_txt = "19"
 	},
 /turf/open/floor/wood,
@@ -45,209 +45,209 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
 "im" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/basic/machinery/computer/emergency_shuttle,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "ln" = (
-/obj/machinery/vending/games,
+/obj/basic/machinery/vending/games,
 /turf/open/floor/eighties,
 /area/shuttle/escape)
 "ns" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/effect/fun_balloon/sentience/emergency_shuttle{
+/obj/basic/structure/table/wood/shuttle_bar,
+/obj/basic/effect/fun_balloon/sentience/emergency_shuttle{
 	group_name = "snack bar drone at Uncle Pete's Rollerdome"
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "nw" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks{
+/obj/basic/structure/table,
+/obj/basic/machinery/chem_dispenser/drinks{
 	dir = 1
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "nN" = (
-/obj/structure/railing{
+/obj/basic/structure/railing{
 	dir = 5
 	},
-/obj/effect/turf_decal/siding/wood{
+/obj/basic/effect/turf_decal/siding/wood{
 	dir = 5
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "nT" = (
-/obj/machinery/computer/atmos_alert{
+/obj/basic/machinery/computer/atmos_alert{
 	dir = 4
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "od" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/basic/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "pa" = (
-/obj/structure/table/reinforced,
+/obj/basic/structure/table/reinforced,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "pj" = (
 /turf/template_noop,
 /area/template_noop)
 "pI" = (
-/obj/machinery/light/directional/west,
+/obj/basic/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "qU" = (
-/obj/machinery/light/directional/east,
+/obj/basic/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "ss" = (
-/obj/docking_port/mobile/emergency{
+/obj/basic/docking_port/mobile/emergency{
 	name = "Uncle Pete's Rollerdome"
 	},
-/obj/machinery/door/airlock/gold/glass,
+/obj/basic/machinery/door/airlock/gold/glass,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "tG" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "uN" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/item/storage/bag/tray,
+/obj/basic/structure/table/wood/shuttle_bar,
+/obj/basic/item/storage/bag/tray,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "vq" = (
-/obj/structure/railing{
+/obj/basic/structure/railing{
 	dir = 9
 	},
-/obj/effect/turf_decal/siding/wood{
+/obj/basic/effect/turf_decal/siding/wood{
 	dir = 9
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "wf" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/basic/effect/spawner/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating/elevatorshaft,
 /area/shuttle/escape)
 "wn" = (
-/obj/structure/chair/comfy/brown{
+/obj/basic/structure/chair/comfy/brown{
 	dir = 1
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "xK" = (
-/obj/structure/chair/comfy/brown{
+/obj/basic/structure/chair/comfy/brown{
 	dir = 4
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "ze" = (
-/obj/structure/railing,
-/obj/effect/turf_decal/siding/wood,
+/obj/basic/structure/railing,
+/obj/basic/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "zs" = (
-/obj/effect/turf_decal/siding/wood{
+/obj/basic/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "zt" = (
-/obj/structure/table/wood,
-/obj/item/storage/fancy/cigarettes/cigars/havana,
-/obj/item/lighter{
+/obj/basic/structure/table/wood,
+/obj/basic/item/storage/fancy/cigarettes/cigars/havana,
+/obj/basic/item/lighter{
 	pixel_x = -4;
 	pixel_y = 6
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "zx" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/basic/effect/spawner/structure/window/reinforced,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "zZ" = (
-/obj/effect/turf_decal/siding/wood{
+/obj/basic/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "AT" = (
-/obj/structure/etherealball,
+/obj/basic/structure/etherealball,
 /turf/open/floor/light,
 /area/shuttle/escape)
 "Cg" = (
 /turf/open/floor/eighties,
 /area/shuttle/escape)
 "Dh" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/basic/effect/spawner/randomsnackvend,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "DR" = (
-/obj/structure/railing{
+/obj/basic/structure/railing{
 	dir = 6
 	},
-/obj/effect/turf_decal/siding/wood{
+/obj/basic/effect/turf_decal/siding/wood{
 	dir = 6
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Hi" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green,
+/obj/basic/structure/table/wood,
+/obj/basic/item/flashlight/lamp/green,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "HA" = (
-/obj/effect/spawner/randomcolavend,
+/obj/basic/effect/spawner/randomcolavend,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "HS" = (
 /turf/open/floor/light,
 /area/shuttle/escape)
 "Jq" = (
-/obj/machinery/computer/security{
+/obj/basic/machinery/computer/security{
 	dir = 8
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "JR" = (
-/obj/machinery/vending/boozeomat,
+/obj/basic/machinery/vending/boozeomat,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Ky" = (
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "KJ" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced/spawner/north,
+/obj/basic/structure/shuttle/engine/heater,
+/obj/basic/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "Ow" = (
-/obj/structure/table,
-/obj/item/storage/box/drinkingglasses,
+/obj/basic/structure/table,
+/obj/basic/item/storage/box/drinkingglasses,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Ox" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/item/pizzabox/meat,
-/obj/item/pizzabox/meat,
-/obj/item/pizzabox/meat,
-/obj/item/pizzabox/mushroom,
-/obj/item/pizzabox/margherita,
-/obj/item/pizzabox/pineapple,
-/obj/item/pizzabox/vegetable,
+/obj/basic/structure/table/wood/shuttle_bar,
+/obj/basic/item/pizzabox/meat,
+/obj/basic/item/pizzabox/meat,
+/obj/basic/item/pizzabox/meat,
+/obj/basic/item/pizzabox/mushroom,
+/obj/basic/item/pizzabox/margherita,
+/obj/basic/item/pizzabox/pineapple,
+/obj/basic/item/pizzabox/vegetable,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "OG" = (
-/obj/machinery/computer/communications{
+/obj/basic/machinery/computer/communications{
 	dir = 8
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "ON" = (
-/obj/machinery/vending/donksofttoyvendor,
+/obj/basic/machinery/vending/donksofttoyvendor,
 /turf/open/floor/eighties,
 /area/shuttle/escape)
 "Qf" = (
-/obj/machinery/computer/crew{
+/obj/basic/machinery/computer/crew{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -257,56 +257,56 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "QO" = (
-/obj/machinery/door/airlock/gold/glass,
+/obj/basic/machinery/door/airlock/gold/glass,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Ry" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/railing,
+/obj/basic/effect/turf_decal/siding/wood,
+/obj/basic/structure/railing,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "RN" = (
-/obj/machinery/jukebox/disco/indestructible,
+/obj/basic/machinery/jukebox/disco/indestructible,
 /turf/open/floor/light,
 /area/shuttle/escape)
 "TU" = (
-/obj/structure/railing{
+/obj/basic/structure/railing{
 	dir = 10
 	},
-/obj/effect/turf_decal/siding/wood{
+/obj/basic/effect/turf_decal/siding/wood{
 	dir = 10
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "We" = (
-/obj/structure/chair/comfy/brown{
+/obj/basic/structure/chair/comfy/brown{
 	dir = 8
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Wg" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/item/storage/bag/tray,
-/obj/item/food/cake/birthday,
-/obj/item/kitchen/knife,
+/obj/basic/structure/table/wood/shuttle_bar,
+/obj/basic/item/storage/bag/tray,
+/obj/basic/item/food/cake/birthday,
+/obj/basic/item/kitchen/knife,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Yr" = (
-/obj/structure/table/wood/poker,
-/obj/item/storage/box/drinkingglasses,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey,
-/obj/machinery/light/directional/south,
+/obj/basic/structure/table/wood/poker,
+/obj/basic/item/storage/box/drinkingglasses,
+/obj/basic/item/reagent_containers/food/drinks/bottle/whiskey,
+/obj/basic/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Zo" = (
-/obj/structure/table/wood/shuttle_bar,
+/obj/basic/structure/table/wood/shuttle_bar,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "ZN" = (
-/obj/effect/turf_decal/siding/wood{
+/obj/basic/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/structure/railing{
+/obj/basic/structure/railing{
 	dir = 1
 	},
 /turf/open/floor/wood,

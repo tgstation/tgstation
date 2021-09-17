@@ -3,10 +3,10 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/basic/structure/shuttle/engine/propulsion{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -15,11 +15,11 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "d" = (
-/obj/structure/window/reinforced,
-/obj/structure/shuttle/engine/heater{
+/obj/basic/structure/window/reinforced,
+/obj/basic/structure/shuttle/engine/heater{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -31,20 +31,20 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "g" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "h" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/basic/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "i" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
-/obj/docking_port/mobile/emergency/shuttle_build{
+/obj/basic/docking_port/mobile/emergency/shuttle_build{
 	height = 15;
 	name = "Shuttle Under Construction";
 	port_direction = 4;
@@ -54,118 +54,118 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "j" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/mechanical{
+/obj/basic/structure/table,
+/obj/basic/item/storage/toolbox/mechanical{
 	pixel_x = 3;
 	pixel_y = 10
 	},
-/obj/item/storage/toolbox/mechanical{
+/obj/basic/item/storage/toolbox/mechanical{
 	pixel_y = 4
 	},
-/obj/item/storage/toolbox/mechanical{
+/obj/basic/item/storage/toolbox/mechanical{
 	pixel_x = -3;
 	pixel_y = -2
 	},
-/obj/item/airlock_painter,
+/obj/basic/item/airlock_painter,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "k" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/electrical,
-/obj/item/clothing/gloves/color/yellow{
+/obj/basic/structure/table,
+/obj/basic/item/storage/toolbox/electrical,
+/obj/basic/item/clothing/gloves/color/yellow{
 	pixel_y = 8
 	},
-/obj/item/storage/toolbox/electrical,
-/obj/item/multitool{
+/obj/basic/item/storage/toolbox/electrical,
+/obj/basic/item/multitool{
 	pixel_x = 2;
 	pixel_y = -4
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "l" = (
-/obj/structure/table,
-/obj/item/storage/box/lights/mixed{
+/obj/basic/structure/table,
+/obj/basic/item/storage/box/lights/mixed{
 	pixel_x = -4;
 	pixel_y = 8
 	},
-/obj/item/electronics/airalarm{
+/obj/basic/item/electronics/airalarm{
 	pixel_x = 8
 	},
-/obj/item/electronics/airalarm{
+/obj/basic/item/electronics/airalarm{
 	pixel_x = 8
 	},
-/obj/item/electronics/airalarm{
+/obj/basic/item/electronics/airalarm{
 	pixel_x = 8
 	},
-/obj/item/electronics/airalarm{
+/obj/basic/item/electronics/airalarm{
 	pixel_x = 8
 	},
-/obj/item/electronics/airlock{
+/obj/basic/item/electronics/airlock{
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/obj/item/electronics/airlock{
+/obj/basic/item/electronics/airlock{
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/obj/item/electronics/airlock{
+/obj/basic/item/electronics/airlock{
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/obj/item/electronics/airlock{
+/obj/basic/item/electronics/airlock{
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/obj/item/electronics/airlock{
+/obj/basic/item/electronics/airlock{
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/obj/item/electronics/airlock{
+/obj/basic/item/electronics/airlock{
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/obj/item/electronics/airlock{
+/obj/basic/item/electronics/airlock{
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/obj/item/electronics/airlock{
+/obj/basic/item/electronics/airlock{
 	pixel_x = -6;
 	pixel_y = -6
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "m" = (
-/obj/structure/table,
-/obj/item/stack/sheet/iron/fifty{
+/obj/basic/structure/table,
+/obj/basic/item/stack/sheet/iron/fifty{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stack/sheet/iron/fifty{
+/obj/basic/item/stack/sheet/iron/fifty{
 	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/item/stack/rods/fifty,
+/obj/basic/item/stack/rods/fifty,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "n" = (
-/obj/structure/table,
-/obj/item/stack/sheet/mineral/titanium/fifty{
+/obj/basic/structure/table,
+/obj/basic/item/stack/sheet/mineral/titanium/fifty{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stack/sheet/mineral/titanium/fifty{
+/obj/basic/item/stack/sheet/mineral/titanium/fifty{
 	pixel_x = -2;
 	pixel_y = -2
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "o" = (
-/obj/structure/table,
-/obj/item/stack/sheet/glass/fifty{
+/obj/basic/structure/table,
+/obj/basic/item/stack/sheet/glass/fifty{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stack/sheet/titaniumglass{
+/obj/basic/item/stack/sheet/titaniumglass{
 	pixel_x = -2;
 	pixel_y = -2
 	},
@@ -175,7 +175,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "S" = (
-/obj/machinery/computer/emergency_shuttle{
+/obj/basic/machinery/computer/emergency_shuttle{
 	dir = 1
 	},
 /turf/open/floor/plating,

@@ -3,221 +3,221 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/labor)
 "b" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/basic/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "c" = (
-/obj/machinery/computer/shuttle/labor{
+/obj/basic/machinery/computer/shuttle/labor{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/peppertank/directional/west,
-/obj/effect/turf_decal/bot,
+/obj/basic/structure/reagent_dispensers/peppertank/directional/west,
+/obj/basic/effect/turf_decal/bot,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/labor)
 "d" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/labor)
 "e" = (
-/obj/structure/table,
-/obj/item/folder/red,
-/obj/item/restraints/handcuffs,
+/obj/basic/structure/table,
+/obj/basic/item/folder/red,
+/obj/basic/item/restraints/handcuffs,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/labor)
 "f" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/effect/turf_decal/stripes/corner,
+/obj/basic/effect/turf_decal/stripes/corner,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "g" = (
-/obj/machinery/button/flasher{
+/obj/basic/machinery/button/flasher{
 	id = "gulagshuttleflasher";
 	name = "Flash Control";
 	pixel_y = -26;
 	req_access_txt = "1"
 	},
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/machinery/light/directional/south,
+/obj/basic/effect/turf_decal/tile/neutral,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line,
+/obj/basic/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "h" = (
-/obj/machinery/mineral/stacking_unit_console{
+/obj/basic/machinery/mineral/stacking_unit_console{
 	machinedir = 2;
 	pixel_x = 30;
 	pixel_y = 30
 	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line,
+/obj/basic/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "i" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Labor Shuttle Airlock";
 	req_access_txt = "2"
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/labor)
 "j" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	name = "Labor Shuttle Airlock";
 	req_access_txt = "2"
 	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line,
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/labor)
 "k" = (
-/obj/machinery/mineral/stacking_machine/laborstacker{
+/obj/basic/machinery/mineral/stacking_machine/laborstacker{
 	input_dir = 2;
 	output_dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/labor)
 "l" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/corner{
+/obj/basic/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "m" = (
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/machinery/light/directional/north,
+/obj/basic/effect/turf_decal/tile/neutral,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "n" = (
-/obj/machinery/mineral/labor_claim_console{
+/obj/basic/machinery/mineral/labor_claim_console{
 	machinedir = 1;
 	pixel_x = 30
 	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "o" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "p" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line,
+/obj/basic/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "q" = (
-/obj/machinery/flasher/directional/east{
+/obj/basic/machinery/flasher/directional/east{
 	id = "gulagshuttleflasher"
 	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/basic/effect/turf_decal/tile/neutral,
+/obj/basic/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/chair/comfy/shuttle{
+/obj/basic/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "r" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
+/obj/basic/effect/turf_decal/tile/brown,
+/obj/basic/effect/turf_decal/tile/brown{
 	dir = 1
 	},
-/obj/structure/closet/crate,
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/stripes/line,
+/obj/basic/structure/closet/crate,
+/obj/basic/effect/turf_decal/delivery,
+/obj/basic/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/labor)
 "s" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
+/obj/basic/effect/turf_decal/tile/brown,
+/obj/basic/effect/turf_decal/tile/brown{
 	dir = 1
 	},
-/obj/effect/turf_decal/loading_area{
+/obj/basic/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line,
+/obj/basic/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/labor)
 "t" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
+/obj/basic/effect/turf_decal/tile/brown,
+/obj/basic/effect/turf_decal/tile/brown{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line,
+/obj/basic/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/labor)
 "u" = (
-/obj/machinery/door/airlock/titanium{
+/obj/basic/machinery/door/airlock/titanium{
 	id_tag = "prisonshuttle";
 	name = "Labor Shuttle Airlock"
 	},
-/obj/docking_port/mobile{
+/obj/basic/docking_port/mobile{
 	dir = 8;
 	dwidth = 2;
 	height = 5;
@@ -226,10 +226,10 @@
 	port_direction = 4;
 	width = 9
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/basic/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -238,15 +238,15 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/labor)
 "w" = (
-/obj/effect/spawner/structure/window/shuttle,
-/obj/structure/shuttle/engine/heater,
+/obj/basic/effect/spawner/structure/window/shuttle,
+/obj/basic/structure/shuttle/engine/heater,
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "x" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/labor)
 "y" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/basic/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/labor)
 
