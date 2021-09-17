@@ -823,7 +823,7 @@
 
 /datum/reagent/consumable/electrolyte/enriched/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(10, delta_time) && !isethereal(M)) //lmao at the newbs who eat energy bars
-		M.electrocute_act(rand(5,10), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
+		M.electrocute_act(rand(5,10), "Enriched Electrolytes in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
 		playsound(M, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	..()
 
