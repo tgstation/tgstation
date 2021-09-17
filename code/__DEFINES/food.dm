@@ -33,6 +33,8 @@
 	"PINEAPPLE", \
 	"BREAKFAST", \
 	"CLOTH", \
+	"NUTS", \
+	"SEAFOOD", \
 )
 
 #define DRINK_NICE 1
