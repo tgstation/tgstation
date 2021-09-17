@@ -32,6 +32,8 @@
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "chirps!")
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	AddElement(/datum/element/basic_body_temp_sensitive, cold_damage = 3, heat_damage = 3)
+	AddElement(/datum/element/atmos_requirements, list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0), 3)
 	pixel_x = base_pixel_x + rand(-6, 6)
 	pixel_y = base_pixel_y + rand(0, 10)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
@@ -101,6 +103,8 @@
 	chicken_count++
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/animal_variety, "chicken", pick("brown","black","white"), TRUE)
+	AddElement(/datum/element/basic_body_temp_sensitive, cold_damage = 7.5, heat_damage = 7.5)
+	setup_atmos_requirements()
 	AddComponent(/datum/component/egg_layer,\
 		/obj/item/food/egg,\
 		list(/obj/item/food/grown/wheat),\
@@ -116,6 +120,10 @@
 /mob/living/basic/chicken/Destroy()
 	chicken_count--
 	return ..()
+
+///for subtypes to override
+/mob/living/basic/chicken/proc/setup_atmos_requirements()
+	AddElement(/datum/element/atmos_requirements, list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0), 7.5)
 
 /mob/living/basic/chicken/proc/egg_laid(obj/item/egg)
 	if(chicken_count <= MAX_CHICKENS && process_eggs && prob(25))
@@ -140,3 +148,11 @@
 	if(DT_PROB(25, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
 		var/move_dir = pick(GLOB.alldirs)
 		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
+
+/mob/living/basic/chicken/kentucky
+	name = "Kentucky"
+	desc = "A timeless classic."
+
+/mob/living/basic/chicken/kentucky/setup_atmos_requirements()
+	//kentucky says fuck you to atmos
+	return
