@@ -308,22 +308,22 @@
 	/*
 	 *Modifiers
 	 */
-	///Those are the scaled gases that gets consumed and releases energy or help increase that energy
-	var/positive_modifiers = scaled_fuel_list[scaled_fuel_list[1]] + \
+	///Those are the scaled gases that gets consumed and adjust energy
+	// Gases that increase the amount of energy
+	var/energy_modifiers = scaled_fuel_list[scaled_fuel_list[1]] + \
 								scaled_fuel_list[scaled_fuel_list[2]] + \
 								scaled_moderator_list[/datum/gas/nitrogen] * 0.35 + \
 								scaled_moderator_list[/datum/gas/carbon_dioxide] * 0.55 + \
 								scaled_moderator_list[/datum/gas/nitrous_oxide] * 0.95 + \
 								scaled_moderator_list[/datum/gas/zauker] * 1.55 + \
-								scaled_moderator_list[/datum/gas/antinoblium] * 10 - \
-								scaled_moderator_list[/datum/gas/hypernoblium] * 10 //Hypernob decreases the amount of energy
-	///Those are the scaled gases that gets produced and consumes energy or help decrease that energy
-	var/negative_modifiers = scaled_fuel_list[scaled_fuel_list[3]] + \
+								scaled_moderator_list[/datum/gas/antinoblium] * 20
+	// Gases that decrease the amount of energy
+	energy_modifiers -= scaled_fuel_list[scaled_fuel_list[3]] + \
+								scaled_moderator_list[/datum/gas/hypernoblium] * 10 + \
 								scaled_moderator_list[/datum/gas/water_vapor] * 0.75 + \
 								scaled_moderator_list[/datum/gas/nitryl] * 0.15 + \
 								scaled_moderator_list[/datum/gas/healium] * 0.45 + \
-								scaled_moderator_list[/datum/gas/freon] * 1.15 - \
-								scaled_moderator_list[/datum/gas/antinoblium] * 10
+								scaled_moderator_list[/datum/gas/freon] * 1.15
 	///Between 0.25 and 100, this value is used to modify the behaviour of the internal energy and the core temperature based on the gases present in the mix
 	var/power_modifier = clamp( scaled_fuel_list[scaled_fuel_list[2]] * 1.05 + \
 								scaled_moderator_list[/datum/gas/oxygen] * 0.55 + \
@@ -357,9 +357,9 @@
 	 *Main calculations (energy, internal power, core temperature, delta temperature,
 	 *conduction, radiation, efficiency, power output, heat limiter modifier and heat output)
 	 */
-	//Can go either positive or negative depending on the instability and the negative_modifiers
+	//Can go either positive or negative depending on the instability and the negative energy modifiers
 	//E=mc^2 with some changes for gameplay purposes
-	energy = ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2) * max(internal_fusion.temperature * heat_modifier / 100, 1)
+	energy = (energy_modifiers * LIGHT_SPEED ** 2) * max(internal_fusion.temperature * heat_modifier / 100, 1)
 	energy = energy / selected_fuel.energy_concentration_multiplier
 	energy = clamp(energy, 0, 1e35) //ugly way to prevent NaN error
 	//Power of the gas mixture
