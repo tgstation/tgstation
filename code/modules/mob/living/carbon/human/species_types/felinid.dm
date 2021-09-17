@@ -28,10 +28,11 @@
 		stop_wagging_tail(H)
 	. = ..()
 
+// Prevents felinids from taking toxin damage from carpotoxin
 /datum/species/human/felinid/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	. = ..()
-	var/datum/reagent/toxin/carpotoxin/fish = chem
 	if(istype(chem, /datum/reagent/toxin/carpotoxin))
+		var/datum/reagent/toxin/carpotoxin/fish = chem
 		fish.toxpwr = 0
 
 /datum/species/human/felinid/can_wag_tail(mob/living/carbon/human/H)
