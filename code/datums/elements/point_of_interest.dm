@@ -10,7 +10,8 @@
 	if(isnewplayer(target))
 		return ELEMENT_INCOMPATIBLE
 
-	// Do not ever attach to stealthmins
+	// Do not ever attach to stealthmins. This is not perfect, as mobs can ascend to stealthmin status later.
+	// SSpois steps in at that point to make sure the stealthmin is not considered a POI.
 	if(ismob(target))
 		var/mob/target_mob = target
 		if(target_mob.client?.holder?.fakekey)

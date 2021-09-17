@@ -863,7 +863,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if (!eye_name)
 		return
 
-	do_observe(SSpois.mob_points_of_interest[eye_name])
+	var/chosen_target = SSpois.mob_points_of_interest[eye_name]
+
+	// During the break between opening the input menu and selecting our target, has this become an invalid option?
+	if(!SSpois.is_valid_poi(chosen_target))
+		return
+
+	do_observe(chosen_target)
 
 /mob/dead/observer/proc/do_observe(mob/mob_eye)
 	if(isnewplayer(mob_eye))
