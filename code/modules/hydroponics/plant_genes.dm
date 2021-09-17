@@ -101,7 +101,7 @@
 	mutability_flags = PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/reagent/electrolyte
-	name = "Enriched Liquid Electricity"
+	name = "Enriched electrolytes"
 	reagent_id = /datum/reagent/consumable/electrolyte/enriched
 	rate = 0.1
 	mutability_flags = PLANT_GENE_GRAFTABLE

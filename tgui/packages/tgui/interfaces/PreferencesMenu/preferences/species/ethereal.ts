@@ -26,8 +26,8 @@ const Ethereal: Species = {
     }, createLanguagePerk("Voltaic")],
     neutral: [{
       icon: "tint",
-      name: "Liquid Electricity",
-      description: "Ethereals have liquid electricity instead of blood. \
+      name: "electrolytes",
+      description: "Ethereals have electrolytes instead of blood. \
         Great for them, horrid for anyone else. Can make receiving medical \
         treatment harder.",
     }, {
