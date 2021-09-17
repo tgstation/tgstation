@@ -10,6 +10,7 @@
 
 /obj/machinery/computer/station_alert/Initialize()
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z), title = name)
+	RegisterSignal(alert_control.listener, list(COMSIG_ALARM_TRIGGERED, COMSIG_ALARM_CLEARED), .proc/update_alarm_display)
 	return ..()
 
 /obj/machinery/computer/station_alert/Destroy()
@@ -31,3 +32,13 @@
 		return
 	if(length(alert_control.listener.alarms))
 		. += "alert:2"
+
+/**
+ * Signal handler for calling an icon update in case an alarm is added or cleared
+ *
+ * Arguments:
+ * * source The datum source of the signal
+ */
+/obj/machinery/computer/station_alert/proc/update_alarm_display(datum/source)
+	SIGNAL_HANDLER
+	update_icon()
