@@ -819,6 +819,7 @@
 	req_access_txt = "48"
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/visible,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dT" = (
