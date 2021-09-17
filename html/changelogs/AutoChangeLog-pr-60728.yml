@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - refactor: "refactored some behavior in pride hammer and carp'sie plushie, you may notice a few more examines and error messages for fail cases but otherwise it's all the same"

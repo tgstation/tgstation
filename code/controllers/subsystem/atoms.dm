@@ -17,6 +17,9 @@ SUBSYSTEM_DEF(atoms)
 	///initAtom() adds the atom its creating to this list iff InitializeAtoms() has been given a list to populate as an argument
 	var/list/created_atoms
 
+	/// Atoms that will be deleted once the subsystem is initialized
+	var/list/queued_deletions = list()
+
 	initialized = INITIALIZATION_INSSATOMS
 
 /datum/controller/subsystem/atoms/Initialize(timeofday)
@@ -74,6 +77,12 @@ SUBSYSTEM_DEF(atoms)
 	if (created_atoms)
 		atoms_to_return += created_atoms
 		created_atoms = null
+
+	for (var/queued_deletion in queued_deletions)
+		qdel(queued_deletion)
+
+	testing("[queued_deletions.len] atoms were queued for deletion.")
+	queued_deletions.Cut()
 
 /// Init this specific atom
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, from_template = FALSE, list/arguments)
@@ -168,6 +177,14 @@ SUBSYSTEM_DEF(atoms)
 			. += "- Qdel'd in New()\n"
 		if(fails & BAD_INIT_SLEPT)
 			. += "- Slept during Initialize()\n"
+
+/// Prepares an atom to be deleted once the atoms SS is initialized.
+/datum/controller/subsystem/atoms/proc/prepare_deletion(atom/target)
+	if (initialized == INITIALIZATION_INNEW_REGULAR)
+		// Atoms SS has already completed, just kill it now.
+		qdel(target)
+	else
+		queued_deletions += WEAKREF(target)
 
 /datum/controller/subsystem/atoms/Shutdown()
 	var/initlog = InitLog()

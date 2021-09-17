@@ -2419,7 +2419,6 @@
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
 "mn" = (
-/obj/structure/chair/stool/directional/east,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},

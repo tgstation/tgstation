@@ -1,4 +1,0 @@
-author: "aaaa1023"
-delete-after: True
-changes: 
-  - rscadd: "Penthrite now has Balloon alerts for when it first starts processing and when it finishes processing."
