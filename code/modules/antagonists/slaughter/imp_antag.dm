@@ -21,7 +21,6 @@
 	objectives += newobjective
 
 /datum/antagonist/imp/ui_static_data(mob/user)
-	. = ..()
 	var/list/data = list()
 	data["fluff"] = "You're an Imp, a lesser being of congealed sin summoned to serve the hierarchy of hell."
 	data["objectives"] = get_objectives()

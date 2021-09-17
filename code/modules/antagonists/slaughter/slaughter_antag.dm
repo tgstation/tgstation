@@ -31,7 +31,6 @@
 	objectives += new_objective2
 
 /datum/antagonist/slaughter/ui_static_data(mob/user)
-	. = ..()
 	var/list/data = list()
 	data["fluff"] = fluff
 	data["objectives"] = get_objectives()
