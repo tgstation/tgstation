@@ -17338,16 +17338,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
-"dKB" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/maintenance/disposal)
 "dKT" = (
 /obj/machinery/washing_machine,
 /obj/structure/sign/poster/official/help_others{
@@ -18669,13 +18659,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
-"ekC" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/maintenance/disposal)
 "ekI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -24609,6 +24592,16 @@
 "gIy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door/directional/east{
+	id = "disposals";
+	name = "Disposals Blast Door Control";
+	pixel_x = 27;
+	pixel_y = 7
+	},
+/obj/machinery/computer/pod/old/mass_driver_controller/trash{
+	pixel_x = 27;
+	pixel_y = -5
+	},
 /turf/open/floor/iron,
 /area/maintenance/disposal)
 "gIF" = (
@@ -32011,11 +32004,11 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/window{
+	atom_integrity = 300;
 	base_state = "rightsecure";
 	dir = 1;
 	icon_state = "rightsecure";
 	name = "Primary AI Core Access";
-	atom_integrity = 300;
 	req_access_txt = "16"
 	},
 /turf/open/floor/iron/dark,
@@ -40353,6 +40346,17 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/storage)
+"nbb" = (
+/obj/machinery/conveyor{
+	id = "garbage"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/poddoor{
+	id = "disposals";
+	name = "Disposals Blast Door"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "nbk" = (
 /obj/structure/chair{
 	dir = 8
@@ -41570,10 +41574,7 @@
 /area/engineering/atmospherics_engine)
 "nEv" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/asteroid/airless,
 /area/mine/explored)
 "nEA" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
@@ -44836,13 +44837,10 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "oSV" = (
-/obj/machinery/disposal/delivery_chute{
-	dir = 1
-	},
-/obj/structure/disposalpipe/trunk{
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/mass_driver/trash{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "oTe" = (
@@ -46128,16 +46126,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
-"pqO" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/disposaloutlet{
-	dir = 4
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/mine/explored)
 "pqW" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -57126,10 +57114,8 @@
 /area/command/gateway)
 "tSo" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/closed/wall,
+/obj/machinery/door/poddoor/massdriver_trash,
+/turf/open/floor/plating,
 /area/maintenance/disposal)
 "tSC" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -58664,6 +58650,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
+"uym" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "uyr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
@@ -59504,13 +59500,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/prison)
-"uPX" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless,
-/area/maintenance/disposal)
 "uQe" = (
 /turf/open/floor/plating,
 /area/science/mixing)
@@ -66625,13 +66614,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron,
 /area/science/mixing)
-"xHt" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/turf/open/floor/plating/airless,
-/area/mine/explored)
 "xHG" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -112648,8 +112630,8 @@ tjh
 jAl
 tIC
 gCu
-dKB
-tIC
+bBA
+uym
 adS
 iBI
 cmy
@@ -112905,7 +112887,7 @@ izU
 vnt
 iim
 iim
-iim
+nbb
 oSV
 adS
 adS
@@ -113420,7 +113402,7 @@ aae
 aae
 aae
 bBA
-uPX
+aBM
 bBA
 aae
 aae
@@ -113677,7 +113659,7 @@ aBM
 aae
 aae
 bBA
-ekC
+aBM
 bBA
 aae
 aae
@@ -113934,7 +113916,7 @@ aBM
 aBM
 aBM
 aBM
-dOi
+aBM
 aae
 aae
 aae
@@ -114191,8 +114173,8 @@ aBM
 aBM
 aBM
 aBM
-dOi
-aae
+aBM
+aBM
 aae
 aae
 adS
@@ -114447,10 +114429,10 @@ aBM
 aBM
 aBM
 aBM
-xHt
+aBM
 nEv
-aae
-aae
+aBM
+aBM
 aae
 aae
 aae
@@ -114704,11 +114686,11 @@ aBM
 aBM
 aBM
 aBM
-dOi
-aae
-aae
-aae
-aae
+aBM
+aBM
+aBM
+aBM
+aBM
 aae
 aae
 aae
@@ -114961,13 +114943,13 @@ aBM
 aBM
 aBM
 aBM
-dOi
-aae
-aae
-aae
-aae
-aae
-aae
+aBM
+aBM
+aBM
+aBM
+aBM
+aBM
+aBM
 aae
 aae
 aae
@@ -115218,12 +115200,12 @@ aBM
 aBM
 aBM
 aBM
-dOi
-aae
-aae
-aae
-aae
-aae
+aBM
+aBM
+aBM
+aBM
+aBM
+aBM
 aae
 aae
 aae
@@ -115475,11 +115457,11 @@ aBM
 aBM
 aBM
 aBM
-dOi
-aae
-aae
-aae
-aae
+aBM
+aBM
+aBM
+aBM
+aBM
 aae
 aae
 aae
@@ -115732,9 +115714,9 @@ aBM
 aBM
 aBM
 aBM
-dOi
 aBM
-aae
+aBM
+aBM
 aae
 aae
 aae
@@ -115989,10 +115971,10 @@ aBM
 aBM
 aBM
 aBM
-dOi
-aae
 aBM
-aae
+aBM
+aBM
+aBM
 aae
 aae
 aae
@@ -116246,11 +116228,11 @@ aBM
 aBM
 aBM
 aBM
-dOi
-aae
-aae
-aae
-aae
+aBM
+aBM
+aBM
+aBM
+aBM
 aae
 aae
 aae
@@ -116501,9 +116483,9 @@ ajc
 aBM
 aBM
 aBM
-xHt
-qix
-nEv
+aBM
+aBM
+aBM
 aBM
 aBM
 aBM
@@ -116758,11 +116740,11 @@ ajc
 ajc
 aBM
 aBM
-dOi
-aae
-aae
-aae
-aae
+aBM
+aBM
+aBM
+aBM
+aBM
 aae
 aae
 aae
@@ -117013,13 +116995,13 @@ ajc
 ajc
 ajc
 ajc
-xHt
-qix
-nEv
-aae
-aae
-aae
-aae
+aBM
+aBM
+aBM
+aBM
+aBM
+aBM
+aBM
 aae
 aae
 aae
@@ -117270,12 +117252,12 @@ ajc
 ajc
 ajc
 ajc
-pqO
 aBM
 aBM
-aae
-aae
-aae
+aBM
+aBM
+aBM
+aBM
 aae
 aae
 aae
@@ -117530,9 +117512,9 @@ ajc
 ajc
 ajc
 aBM
-aae
-aae
-aae
+aBM
+aBM
+aBM
 aae
 aae
 aae
@@ -117787,10 +117769,10 @@ ajc
 ajc
 ajc
 aBM
-aae
-aae
-aae
-aae
+aBM
+aBM
+aBM
+aBM
 aae
 aae
 aae
@@ -118044,10 +118026,10 @@ ajc
 ajc
 ajc
 ajc
-aae
-aae
-aae
-aae
+aBM
+aBM
+aBM
+aBM
 aae
 aae
 aae
@@ -118303,9 +118285,9 @@ ajc
 ajc
 ajc
 ajc
-aae
-aae
-aae
+aBM
+aBM
+aBM
 aae
 aae
 aae
@@ -118559,8 +118541,8 @@ ajc
 ajc
 ajc
 ajc
-aae
-aae
+ajc
+ajc
 aae
 aae
 aae
@@ -118815,9 +118797,9 @@ ajc
 ajc
 ajc
 ajc
-aae
-aae
-aae
+ajc
+ajc
+ajc
 aae
 aae
 aae
