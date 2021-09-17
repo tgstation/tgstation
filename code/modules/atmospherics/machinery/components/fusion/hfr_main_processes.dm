@@ -1,44 +1,8 @@
 /**
  * Main Fusion processes
- * process_atmos() is mainly used to dea with the damage calculation, gas moving between the parts (like cooling, gas injection, output) and the calculation for the power level
- * process() calls fusion_process() and set the fusion_started var to TRUE if the power level goes over 0
- * fusion_process() the main calculations are done here
+ * process() Organizes all other calls, and is the best starting point for top-level logic.
+ * fusion_process() handles all the main fusion reaction logic and consequences (lightning, radiation, particles) from an active fusion reaction.
  */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/process_atmos()
-	/*
-	 *Pre-checks
-	 */
-	//first check if the machine is active
-	if(!active)
-		return
-
-	//then check if the other machines are still there
-	if(!check_part_connectivity())
-		deactivate()
-		return
-
-	//now check if the machine has been turned on by the user
-	if(!start_power)
-		return
-
-	// Code effectively assumes SSair and SSmachines' ticks stay roughly in
-	// sync, performing heating under SSmachines and cooling under SSair
-	// This assumption is not true, but we need to track it in order to fix it
-	// (or at least mitigate it; every solution here has a downside)
-	var/assumed_delta_time = 0.5
-	play_ambience()
-	process_damageheal(assumed_delta_time)
-	check_spill(assumed_delta_time)
-	check_alert()
-
-	if(!check_power_use())
-		return
-
-	if(!start_cooling)
-		return
-
-	process_internal_cooling(assumed_delta_time)
-	inject_from_side_components(assumed_delta_time)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/play_ambience()
 	//We play delam/neutral sounds at a rate determined by power and critical_threshold_proximity
@@ -215,17 +179,6 @@
 			corner.fusion_started = FALSE
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/process(delta_time)
-	fusion_process(delta_time)
-	check_deconstructable()
-
-/**
- * Called by process()
- * Contains the main fusion calculations and checks, for more informations check the comments along the code.
- */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/fusion_process(delta_time)
-//fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again! Again but with machine!
-//Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
-//7 reworks
 	/*
 	 *Pre-checks
 	 */
@@ -238,10 +191,36 @@
 		deactivate()
 		return
 
-	if(!check_fuel())
-		return
+	// Run the reaction if it is either live or being started
+	if (start_power || power_level)
+		play_ambience()
+		fusion_process(delta_time)
+		// Note that we process damage/healing even if the fusion process aborts.
+		// Running out of fuel won't save you if your moderator and coolant are exploding on their own.
+		check_spill()
+		process_damageheal(delta_time)
+		process_damageheal_2(delta_time)
+		check_alert()
+	remove_waste(delta_time)
+	update_pipenets()
 
-	if(!check_power_use())
+	check_deconstructable()
+
+/**
+ * Called by process()
+ * Contains the main fusion calculations and checks, for more informations check the comments along the code.
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/fusion_process(delta_time)
+//fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again! Again but with machine!
+//Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
+//7 reworks
+
+	if (check_power_use())
+		if (start_cooling)
+			inject_from_side_components(delta_time)
+			process_internal_cooling(delta_time)
+	else
+		// No power forces bad settings
 		magnetic_constrictor = 100
 		heating_conductor = 500
 		current_damper = 0
@@ -400,6 +379,11 @@
 	heat_output = clamp(internal_instability * power_output * heat_modifier / 100, \
 					- heat_limiter_modifier * 0.01 * selected_fuel.negative_temperature_multiplier, \
 					heat_limiter_modifier * selected_fuel.positive_temperature_multiplier)
+
+	// Is the fusion process actually going to run?
+	// Note we have to always perform the above calculations to keep the UI updated, so we can't use this to early return.
+	if (!check_fuel())
+		return
 
 	// Phew. Lets calculate what this means in practice.
 	var/fuel_consumption_rate = clamp(fuel_injection_rate * 0.01 * 5 * power_level, 0.05, 30)
@@ -577,8 +561,6 @@
 
 	evaporate_moderator(delta_time)
 
-	process_damageheal_2(delta_time)
-
 	check_nuclear_particles(moderator_list)
 
 	check_lightning_arcs(moderator_list)
@@ -592,10 +574,6 @@
 			moderator_internal.gases[/datum/gas/oxygen][MOLES] -= iron_removed * OXYGEN_MOLES_CONSUMED_PER_IRON_HEAL
 
 	check_gravity_pulse()
-
-	remove_waste(delta_time)
-
-	update_pipenets()
 
 	emit_rads(radiation)
 
