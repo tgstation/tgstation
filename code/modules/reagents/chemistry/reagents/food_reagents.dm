@@ -784,18 +784,27 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 
-/datum/reagent/consumable/liquidelectricity
-	name = "Liquid Electricity"
-	description = "The blood of Ethereals, and the stuff that keeps them going. Great for them, horrid for anyone else."
+/datum/reagent/consumable/electrolyte
+	name = "Electrolytes"
+	description = "The blood of Ethereals, and the stuff necessary to carry electrical charge through their body. For everyone else, it's somewhat medicinal."
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#97ee63"
-	taste_description = "pure electricity"
+	taste_description = "energy-boosting nutrients"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/liquidelectricity/enriched
-	name = "Enriched Liquid Electricity"
+//Despite what the clown will tell you, electrolytes are not what plants crave.
+/datum/reagent/consumable/electrolyte/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 1))
 
-/datum/reagent/consumable/liquidelectricity/enriched/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
+/datum/reagent/consumable/electrolyte/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(isethereal(M))
+		M.blood_volume += 1 * delta_time
+	M.adjust_disgust(-1) //If you're vomiting, this helps that. It's mostly fluff.
+	return ..()
+
+/datum/reagent/consumable/electrolyte/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	. = ..()
 	if(!(methods & (INGEST|INJECT|PATCH)) || !iscarbon(exposed_mob))
 		return
@@ -805,13 +814,18 @@
 	if(istype(stomach))
 		stomach.adjust_charge(reac_volume * 30)
 
-/datum/reagent/consumable/liquidelectricity/enriched/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(isethereal(M))
-		M.blood_volume += 1 * delta_time
-	else if(DT_PROB(10, delta_time)) //lmao at the newbs who eat energy bars
+/datum/reagent/consumable/electrolyte/enriched
+	name = "Enriched Electrolytes"
+	description = "Infused with plasma, these electrolytes destroy plants and other living matter with intense electrical shocks, but keep ethereals topped up and estatic."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#97ee63"
+	taste_description = "pure energy"
+
+/datum/reagent/consumable/electrolyte/enriched/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(DT_PROB(10, delta_time) && !isethereal(M)) //lmao at the newbs who eat energy bars
 		M.electrocute_act(rand(5,10), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
 		playsound(M, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	return ..()
+	..()
 
 /datum/reagent/consumable/astrotame
 	name = "Astrotame"

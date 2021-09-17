@@ -164,7 +164,7 @@
 	icon_state = "energybar"
 	desc = "An energy bar with a lot of punch, you probably shouldn't eat this if you're not an Ethereal."
 	trash_type = /obj/item/trash/energybar
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/liquidelectricity/enriched = 3)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/electrolyte/enriched = 3)
 	tastes = list("pure electricity" = 3, "fitness" = 2)
 	foodtypes = TOXIC
 	food_flags = FOOD_FINGER_FOOD

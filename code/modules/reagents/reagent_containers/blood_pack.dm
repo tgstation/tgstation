@@ -61,7 +61,7 @@
 
 /obj/item/reagent_containers/blood/ethereal
 	blood_type = "LE"
-	unique_blood = /datum/reagent/consumable/liquidelectricity
+	unique_blood = /datum/reagent/consumable/electrolyte
 
 /obj/item/reagent_containers/blood/universal
 	blood_type = "U"
