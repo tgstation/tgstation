@@ -28,6 +28,9 @@
 /obj/structure/fluff/tram_rail{
 	pixel_y = 17
 	},
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
+	},
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/unexplored/rivers/deep)
 "bz" = (
@@ -1144,6 +1147,14 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/large,
 /area/mine/eva)
+"PR" = (
+/obj/structure/chair/comfy/beige{
+	dir = 1;
+	name = "Bench"
+	},
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/dark,
+/area/mine/eva)
 "QD" = (
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/brown{
@@ -1244,6 +1255,9 @@
 	},
 /obj/structure/lattice/catwalk,
 /obj/structure/fluff/tram_rail,
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
+	},
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/unexplored/rivers/deep)
 "Sy" = (
@@ -1255,6 +1269,13 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
 	dir = 6
+	},
+/turf/open/lava/plasma/ice_moon,
+/area/icemoon/underground/explored)
+"Tj" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
 	},
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
@@ -20865,7 +20886,7 @@ jr
 fa
 cx
 BP
-hI
+PR
 NB
 Lm
 yN
@@ -21130,7 +21151,7 @@ TC
 Se
 RJ
 NB
-pT
+Tj
 yT
 yT
 qI
