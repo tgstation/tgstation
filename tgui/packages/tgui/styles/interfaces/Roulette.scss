@@ -1,0 +1,100 @@
+@use '../base.scss';
+@use '../colors.scss';
+
+.Roulette__container {
+  display: flex;
+}
+
+.Roulette__board-cell {
+  display: table-cell;
+  padding: 0;
+  margin: 0;
+  border: 1px solid colors.$white;
+  vertical-align: bottom;
+}
+
+.Roulette__board-cell-number {
+  width: 35px;
+}
+
+.Roulette__board-cell-number--colspan-2 {
+  width: 71px;
+}
+
+.Roulette__board-cell-number--colspan-4 {
+  width: 143px;
+}
+
+.Roulette__board-button {
+  display: table-cell !important;
+  border: none !important;
+  width: inherit;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  vertical-align: middle;
+  color: colors.$white !important;
+}
+
+.Roulette__board-button--rowspan-3 {
+  height: 122px;
+}
+
+.Roulette__board-button-text {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.Roulette__lowertable {
+  margin-top: 8px;
+  border-collapse: collapse;
+  border: 1px solid colors.$white;
+  border-spacing: 0;
+}
+
+.Roulette__lowertable--cell {
+  border: 2px solid colors.$white;
+  padding: 0px;
+  margin: 0px;
+}
+
+.Roulette__lowertable--betscell {
+  vertical-align: top;
+}
+
+.Roulette__lowertable--spinresult {
+  text-align: center;
+  font-size: 100px;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.Roulette__lowertable--spinresult-black {
+  background-color: colors.$black;
+}
+
+.Roulette__lowertable--spinresult-red {
+  background-color: colors.$red;
+}
+
+.Roulette__lowertable--spinresult-green {
+  background-color: colors.$green;
+}
+
+.Roulette__lowertable--spinbutton {
+  margin: 0 !important;
+  border: none !important;
+  font-size: 50px;
+  line-height: 60px !important;
+  text-align: center;
+  font-weight: bold;
+}
+
+.Roulette__lowertable--header {
+  width: 1%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}

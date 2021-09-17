@@ -10,9 +10,7 @@
 	idle_power_usage = 20
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/computer/powermonitor
-	tgui_id = "power_monitor"
-	ui_x = 550
-	ui_y = 700
+	tgui_id = "PowerMonitor"
 
 	var/obj/structure/cable/attached_wire
 	var/obj/machinery/power/apc/local_apc
@@ -31,7 +29,7 @@
 
 /obj/machinery/computer/monitor/secret/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>It's operating system seems quite outdated... It doesn't seem like it'd be compatible with the latest remote NTOS monitoring systems.</span>"
+	. += span_notice("It's operating system seems quite outdated... It doesn't seem like it'd be compatible with the latest remote NTOS monitoring systems.")
 
 /obj/machinery/computer/monitor/Initialize()
 	. = ..()
@@ -41,10 +39,10 @@
 
 /obj/machinery/computer/monitor/process()
 	if(!get_powernet())
-		use_power = IDLE_POWER_USE
+		update_use_power(IDLE_POWER_USE)
 		search()
 	else
-		use_power = ACTIVE_POWER_USE
+		update_use_power(ACTIVE_POWER_USE)
 		record()
 
 /obj/machinery/computer/monitor/proc/search() //keep in sync with /datum/computer_file/program/power_monitor's version
@@ -62,7 +60,7 @@
 		local_apc = null
 
 /obj/machinery/computer/monitor/proc/get_powernet() //keep in sync with /datum/computer_file/program/power_monitor's version
-	if(attached_wire || (local_apc && local_apc.terminal))
+	if(attached_wire || (local_apc?.terminal))
 		return attached_wire ? attached_wire.powernet : local_apc.terminal.powernet
 	return FALSE
 
@@ -84,11 +82,10 @@
 		if(demand.len > record_size)
 			demand.Cut(1, 2)
 
-/obj/machinery/computer/monitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/monitor/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, tgui_id, name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "PowerMonitor", name)
 		ui.open()
 
 /obj/machinery/computer/monitor/ui_data()

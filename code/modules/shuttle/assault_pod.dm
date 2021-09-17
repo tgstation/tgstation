@@ -21,7 +21,7 @@
 	name = "Assault Pod Targeting Device"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-red"
-	item_state = "radio"
+	inhand_icon_state = "radio"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	desc = "Used to select a landing zone for assault pods."
@@ -42,11 +42,13 @@
 	if(!src || QDELETED(src))
 		return
 
-	var/turf/T = safepick(get_area_turfs(picked_area))
-	if(!T)
+	var/list/turfs = get_area_turfs(picked_area)
+	if (!length(turfs))
 		return
+	var/turf/T = pick(turfs)
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
 	landing_zone.id = "assault_pod([REF(src)])"
+	landing_zone.port_destinations = "assault_pod([REF(src)])"
 	landing_zone.name = "Landing Zone"
 	landing_zone.dwidth = dwidth
 	landing_zone.dheight = dheight
@@ -58,6 +60,6 @@
 		if(S.shuttleId == shuttle_id)
 			S.possible_destinations = "[landing_zone.id]"
 
-	to_chat(user, "<span class='notice'>Landing zone set.</span>")
+	to_chat(user, span_notice("Landing zone set."))
 
 	qdel(src)

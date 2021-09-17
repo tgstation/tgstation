@@ -28,16 +28,16 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 
-/obj/structure/showcase/fakesec/Initialize()
+/obj/structure/showcase/fakesec/update_overlays()
 	. = ..()
-	add_overlay("security")
-	add_overlay("security_key")
+	. += "security"
+	. += "security_key"
 
 /obj/structure/showcase/horrific_experiment
 	name = "horrific experiment"
 	desc = "Some sort of pod filled with blood and viscera. You swear you can see it moving..."
 	icon = 'icons/obj/machines/cloning.dmi'
-	icon_state = "pod_g"
+	icon_state = "pod_g" // Please don't delete it and not notice it for months this time.
 
 /obj/structure/showcase/machinery/oldpod
 	name = "damaged cryogenic pod"
@@ -69,20 +69,20 @@
 	icon_state = "firefighter"
 
 /obj/structure/showcase/machinery/implanter
-	name = "Nanotrasen automated mindshield implanter exhibit"
+	name = "\improper Nanotrasen automated mindshield implanter exhibit"
 	desc = "A flimsy model of a standard Nanotrasen automated mindshield implant machine. With secure positioning harnesses and a robotic surgical injector, brain damage and other serious medical anomalies are now up to 60% less likely!"
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "implantchair"
 
 /obj/structure/showcase/machinery/microwave
-	name = "Nanotrasen-brand microwave"
+	name = "\improper Nanotrasen-brand microwave"
 	desc = "The famous Nanotrasen-brand microwave, the multi-purpose cooking appliance every station needs! This one appears to be drawn onto a cardboard box."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "mw"
 
 /obj/structure/showcase/machinery/cloning_pod
 	name = "cloning pod exhibit"
-	desc = "Signs describe how cloning pods like these ensure that every Nanotrasen employee can carry out their contracts in full, even in the unlikely event of their catastrophic death. Hopefully they aren't all made of cardboard, like this one."
+	desc = "Depicts a prototype from a failed attempt at reliable cloning technology. The technology was scrapped after reports of severe mutations, wiggly ear syndrome and spontaneous tail growth. The date 11.11.2558 is engraved on the base."
 	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "pod_0"
 
@@ -91,7 +91,7 @@
 	desc = "A stand with a model of the perfect Nanotrasen Employee bolted to it. Signs indicate it is robustly genetically engineered, as well as being ruthlessly loyal."
 
 /obj/structure/showcase/machinery/tv
-	name = "Nanotrasen corporate newsfeed"
+	name = "\improper Nanotrasen corporate newsfeed"
 	desc = "A slightly battered looking TV. Various Nanotrasen infomercials play on a loop, accompanied by a jaunty tune."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "television"
@@ -111,18 +111,18 @@
 /obj/structure/showcase/attackby(obj/item/W, mob/user)
 	if(W.tool_behaviour == TOOL_SCREWDRIVER && !anchored)
 		if(deconstruction_state == SHOWCASE_SCREWDRIVERED)
-			to_chat(user, "<span class='notice'>You screw the screws back into the showcase.</span>")
+			to_chat(user, span_notice("You screw the screws back into the showcase."))
 			W.play_tool_sound(src, 100)
 			deconstruction_state = SHOWCASE_CONSTRUCTED
 		else if (deconstruction_state == SHOWCASE_CONSTRUCTED)
-			to_chat(user, "<span class='notice'>You unscrew the screws.</span>")
+			to_chat(user, span_notice("You unscrew the screws."))
 			W.play_tool_sound(src, 100)
 			deconstruction_state = SHOWCASE_SCREWDRIVERED
 
 	if(W.tool_behaviour == TOOL_CROWBAR && deconstruction_state == SHOWCASE_SCREWDRIVERED)
 		if(W.use_tool(src, user, 20, volume=100))
-			to_chat(user, "<span class='notice'>You start to crowbar the showcase apart...</span>")
-			new /obj/item/stack/sheet/metal(drop_location(), 4)
+			to_chat(user, span_notice("You start to crowbar the showcase apart..."))
+			new /obj/item/stack/sheet/iron(drop_location(), 4)
 			qdel(src)
 
 	if(deconstruction_state == SHOWCASE_CONSTRUCTED && default_unfasten_wrench(user, W))

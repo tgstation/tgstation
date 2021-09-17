@@ -2,9 +2,9 @@
 #define DRONE_RECHARGING "recharging"
 #define DRONE_READY "ready"
 
-/obj/machinery/droneDispenser //Most customizable machine 2015
+/obj/machinery/drone_dispenser //Most customizable machine 2015
 	name = "drone shell dispenser"
-	desc = "A hefty machine that, when supplied with metal and glass, will periodically create a drone shell. Does not need to be manually operated."
+	desc = "A hefty machine that, when supplied with iron and glass, will periodically create a drone shell. Does not need to be manually operated."
 
 	icon = 'icons/obj/machines/droneDispenser.dmi'
 	icon_state = "on"
@@ -21,7 +21,7 @@
 
 	var/list/using_materials
 	var/starting_amount = 0
-	var/metal_cost = 1000
+	var/iron_cost = 1000
 	var/glass_cost = 1000
 	var/power_used = 1000
 
@@ -48,57 +48,63 @@
 	var/break_message = "lets out a tinny alarm before falling dark."
 	var/break_sound = 'sound/machines/warning-buzzer.ogg'
 
-/obj/machinery/droneDispenser/Initialize()
+/obj/machinery/drone_dispenser/Initialize()
 	. = ..()
-	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE, /obj/item/stack)
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_DRONE_DISPENSER, allowed_items=/obj/item/stack)
 	materials.insert_amount_mat(starting_amount)
 	materials.precise_insertion = TRUE
-	using_materials = list(/datum/material/iron = metal_cost, /datum/material/glass = glass_cost)
+	using_materials = list(/datum/material/iron = iron_cost, /datum/material/glass = glass_cost)
 
-/obj/machinery/droneDispenser/preloaded
+/obj/machinery/drone_dispenser/preloaded
 	starting_amount = 5000
 
-/obj/machinery/droneDispenser/syndrone //Please forgive me
+/obj/machinery/drone_dispenser/syndrone //Please forgive me
 	name = "syndrone shell dispenser"
-	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with metal and glass. Disgusting."
+	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with iron and glass. Disgusting."
 	dispense_type = /obj/effect/mob_spawn/drone/syndrone
 	//If we're gonna be a jackass, go the full mile - 10 second recharge timer
 	cooldownTime = 100
 	end_create_message = "dispenses a suspicious drone shell."
 	starting_amount = 25000
 
-/obj/machinery/droneDispenser/syndrone/badass //Please forgive me
+/obj/machinery/drone_dispenser/syndrone/badass //Please forgive me
 	name = "badass syndrone shell dispenser"
-	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with metal and glass. Disgusting. This one seems ominous."
+	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with iron and glass. Disgusting. This one seems ominous."
 	dispense_type = /obj/effect/mob_spawn/drone/syndrone/badass
 	end_create_message = "dispenses an ominous suspicious drone shell."
 
 // I don't need your forgiveness, this is awesome.
-/obj/machinery/droneDispenser/snowflake
+/obj/machinery/drone_dispenser/snowflake
 	name = "snowflake drone shell dispenser"
-	desc = "A hefty machine that, when supplied with metal and glass, will periodically create a snowflake drone shell. Does not need to be manually operated."
+	desc = "A hefty machine that, when supplied with iron and glass, will periodically create a snowflake drone shell. Does not need to be manually operated."
 	dispense_type = /obj/effect/mob_spawn/drone/snowflake
 	end_create_message = "dispenses a snowflake drone shell."
 	// Those holoprojectors aren't cheap
-	metal_cost = 2000
+	iron_cost = 2000
 	glass_cost = 2000
 	power_used = 2000
 	starting_amount = 10000
 
 // If the derelict gets lonely, make more friends.
-/obj/machinery/droneDispenser/derelict
+/obj/machinery/drone_dispenser/derelict
 	name = "derelict drone shell dispenser"
-	desc = "A rusty machine that, when supplied with metal and glass, will periodically create a derelict drone shell. Does not need to be manually operated."
+	desc = "A rusty machine that, when supplied with iron and glass, will periodically create a derelict drone shell. Does not need to be manually operated."
 	dispense_type = /obj/effect/mob_spawn/drone/derelict
 	end_create_message = "dispenses a derelict drone shell."
-	metal_cost = 10000
+	iron_cost = 10000
 	glass_cost = 5000
 	starting_amount = 0
 	cooldownTime = 600
 
+/obj/machinery/drone_dispenser/classic
+	name = "classic drone shell dispenser"
+	desc = "A hefty machine that, when supplied with iron and glass, will periodically create a classic drone shell. Does not need to be manually operated."
+	dispense_type = /obj/effect/mob_spawn/drone/classic
+	end_create_message = "dispenses a classic drone shell."
+
 // An example of a custom drone dispenser.
 // This one requires no materials and creates basic hivebots
-/obj/machinery/droneDispenser/hivebot
+/obj/machinery/drone_dispenser/hivebot
 	name = "hivebot fabricator"
 	desc = "A large, bulky machine that whirs with activity, steam hissing from vents in its sides."
 	icon = 'icons/obj/objects.dmi'
@@ -107,7 +113,7 @@
 	icon_on = "hivebot_fab"
 	icon_recharging = "hivebot_fab"
 	icon_creating = "hivebot_fab_on"
-	metal_cost = 0
+	iron_cost = 0
 	glass_cost = 0
 	power_used = 0
 	cooldownTime = 10 //Only 1 second - hivebots are extremely weak
@@ -117,36 +123,14 @@
 	recharge_sound = null
 	recharge_message = null
 
-/obj/machinery/droneDispenser/swarmer
-	name = "swarmer fabricator"
-	desc = "An alien machine of unknown origin. It whirs and hums with green-blue light, the air above it shimmering."
-	icon = 'icons/obj/machines/gateway.dmi'
-	icon_state = "toffcenter"
-	icon_off = "toffcenter"
-	icon_on = "toffcenter"
-	icon_recharging = "toffcenter"
-	icon_creating = "offcenter"
-	metal_cost = 0
-	glass_cost = 0
-	cooldownTime = 300 //30 seconds
-	maximum_idle = 0 // Swarmers have no restraint
-	dispense_type = /obj/effect/mob_spawn/swarmer
-	begin_create_message = "hums softly as an interface appears above it, scrolling by at unreadable speed."
-	end_create_message = "materializes a strange shell, which drops to the ground."
-	recharging_text = "Its lights are slowly increasing in brightness."
-	work_sound = 'sound/effects/empulse.ogg'
-	create_sound = 'sound/effects/phasein.ogg'
-	break_sound = 'sound/effects/empulse.ogg'
-	break_message = "slowly falls dark, lights stuttering."
-
-/obj/machinery/droneDispenser/examine(mob/user)
+/obj/machinery/drone_dispenser/examine(mob/user)
 	. = ..()
-	if((mode == DRONE_RECHARGING) && !stat && recharging_text)
-		. += "<span class='warning'>[recharging_text]</span>"
+	if((mode == DRONE_RECHARGING) && !machine_stat && recharging_text)
+		. += span_warning("[recharging_text]")
 
-/obj/machinery/droneDispenser/process()
+/obj/machinery/drone_dispenser/process()
 	..()
-	if((stat & (NOPOWER|BROKEN)) || !anchored)
+	if((machine_stat & (NOPOWER|BROKEN)) || !anchored)
 		return
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
@@ -163,12 +147,12 @@
 			if(maximum_idle && (count_shells() >= maximum_idle))
 				return // then do nothing; check again next tick
 			if(begin_create_message)
-				visible_message("<span class='notice'>[src] [begin_create_message]</span>")
+				visible_message(span_notice("[src] [begin_create_message]"))
 			if(work_sound)
 				playsound(src, work_sound, 50, TRUE)
 			mode = DRONE_PRODUCTION
 			timer = world.time + production_time
-			update_icon()
+			update_appearance()
 
 		if(DRONE_PRODUCTION)
 			materials.use_materials(using_materials)
@@ -181,81 +165,84 @@
 			if(create_sound)
 				playsound(src, create_sound, 50, TRUE)
 			if(end_create_message)
-				visible_message("<span class='notice'>[src] [end_create_message]</span>")
+				visible_message(span_notice("[src] [end_create_message]"))
 
 			mode = DRONE_RECHARGING
 			timer = world.time + cooldownTime
-			update_icon()
+			update_appearance()
 
 		if(DRONE_RECHARGING)
 			if(recharge_sound)
 				playsound(src, recharge_sound, 50, TRUE)
 			if(recharge_message)
-				visible_message("<span class='notice'>[src] [recharge_message]</span>")
+				visible_message(span_notice("[src] [recharge_message]"))
 
 			mode = DRONE_READY
-			update_icon()
+			update_appearance()
 
-/obj/machinery/droneDispenser/proc/count_shells()
+/obj/machinery/drone_dispenser/proc/count_shells()
 	. = 0
 	for(var/a in loc)
 		if(istype(a, dispense_type))
 			.++
 
-/obj/machinery/droneDispenser/update_icon_state()
-	if(stat & (BROKEN|NOPOWER))
+/obj/machinery/drone_dispenser/update_icon_state()
+	if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = icon_off
-	else if(mode == DRONE_RECHARGING)
+		return ..()
+	if(mode == DRONE_RECHARGING)
 		icon_state = icon_recharging
-	else if(mode == DRONE_PRODUCTION)
+		return ..()
+	if(mode == DRONE_PRODUCTION)
 		icon_state = icon_creating
-	else
-		icon_state = icon_on
+		return ..()
+	icon_state = icon_on
+	return ..()
 
-/obj/machinery/droneDispenser/attackby(obj/item/I, mob/living/user)
+/obj/machinery/drone_dispenser/attackby(obj/item/I, mob/living/user)
 	if(I.tool_behaviour == TOOL_CROWBAR)
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		materials.retrieve_all()
 		I.play_tool_sound(src)
-		to_chat(user, "<span class='notice'>You retrieve the materials from [src].</span>")
+		to_chat(user, span_notice("You retrieve the materials from [src]."))
 
 	else if(I.tool_behaviour == TOOL_WELDER)
-		if(!(stat & BROKEN))
-			to_chat(user, "<span class='warning'>[src] doesn't need repairs.</span>")
+		if(!(machine_stat & BROKEN))
+			to_chat(user, span_warning("[src] doesn't need repairs."))
 			return
 
 		if(!I.tool_start_check(user, amount=1))
 			return
 
 		user.visible_message(
-			"<span class='notice'>[user] begins patching up [src] with [I].</span>",
-			"<span class='notice'>You begin restoring the damage to [src]...</span>")
+			span_notice("[user] begins patching up [src] with [I]."),
+			span_notice("You begin restoring the damage to [src]..."))
 
 		if(!I.use_tool(src, user, 40, volume=50, amount=1))
 			return
 
 		user.visible_message(
-			"<span class='notice'>[user] fixes [src]!</span>",
-			"<span class='notice'>You restore [src] to operation.</span>")
+			span_notice("[user] fixes [src]!"),
+			span_notice("You restore [src] to operation."))
 
-		stat &= ~BROKEN
-		obj_integrity = max_integrity
-		update_icon()
+		set_machine_stat(machine_stat & ~BROKEN)
+		atom_integrity = max_integrity
+		update_appearance()
 	else
 		return ..()
 
-/obj/machinery/droneDispenser/obj_break(damage_flag)
+/obj/machinery/drone_dispenser/atom_break(damage_flag)
 	. = ..()
 	if(!.)
 		return
 	if(break_message)
-		audible_message("<span class='warning'>[src] [break_message]</span>")
+		audible_message(span_warning("[src] [break_message]"))
 	if(break_sound)
 		playsound(src, break_sound, 50, TRUE)
 
-/obj/machinery/droneDispenser/deconstruct(disassembled = TRUE)
+/obj/machinery/drone_dispenser/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(loc, 5)
+		new /obj/item/stack/sheet/iron(loc, 5)
 	qdel(src)
 
 #undef DRONE_PRODUCTION

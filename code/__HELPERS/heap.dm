@@ -1,39 +1,44 @@
-
 //////////////////////
-//datum/Heap object
+//datum/heap object
 //////////////////////
 
-/datum/Heap
+/datum/heap
 	var/list/L
 	var/cmp
 
-/datum/Heap/New(compare)
+/datum/heap/New(compare)
 	L = new()
 	cmp = compare
 
-/datum/Heap/proc/IsEmpty()
-	return !L.len
+/datum/heap/Destroy(force, ...)
+	for(var/i in L) // because this is before the list helpers are loaded
+		qdel(i)
+	L = null
+	return ..()
 
-//Insert and place at its position a new node in the heap
-/datum/Heap/proc/Insert(atom/A)
+/datum/heap/proc/is_empty()
+	return !length(L)
+
+//insert and place at its position a new node in the heap
+/datum/heap/proc/insert(atom/A)
 
 	L.Add(A)
-	Swim(L.len)
+	swim(length(L))
 
 //removes and returns the first element of the heap
 //(i.e the max or the min dependant on the comparison function)
-/datum/Heap/proc/Pop()
-	if(!L.len)
+/datum/heap/proc/pop()
+	if(!length(L))
 		return 0
 	. = L[1]
 
-	L[1] = L[L.len]
-	L.Cut(L.len)
-	if(L.len)
-		Sink(1)
+	L[1] = L[length(L)]
+	L.Cut(length(L))
+	if(length(L))
+		sink(1)
 
 //Get a node up to its right position in the heap
-/datum/Heap/proc/Swim(var/index)
+/datum/heap/proc/swim(index)
 	var/parent = round(index * 0.5)
 
 	while(parent > 0 && (call(cmp)(L[index],L[parent]) > 0))
@@ -42,21 +47,21 @@
 		parent = round(index * 0.5)
 
 //Get a node down to its right position in the heap
-/datum/Heap/proc/Sink(var/index)
-	var/g_child = GetGreaterChild(index)
+/datum/heap/proc/sink(index)
+	var/g_child = get_greater_child(index)
 
 	while(g_child > 0 && (call(cmp)(L[index],L[g_child]) < 0))
 		L.Swap(index,g_child)
 		index = g_child
-		g_child = GetGreaterChild(index)
+		g_child = get_greater_child(index)
 
 //Returns the greater (relative to the comparison proc) of a node children
 //or 0 if there's no child
-/datum/Heap/proc/GetGreaterChild(var/index)
-	if(index * 2 > L.len)
+/datum/heap/proc/get_greater_child(index)
+	if(index * 2 > length(L))
 		return 0
 
-	if(index * 2 + 1 > L.len)
+	if(index * 2 + 1 > length(L))
 		return index * 2
 
 	if(call(cmp)(L[index * 2],L[index * 2 + 1]) < 0)
@@ -65,12 +70,11 @@
 		return index * 2
 
 //Replaces a given node so it verify the heap condition
-/datum/Heap/proc/ReSort(atom/A)
+/datum/heap/proc/resort(atom/A)
 	var/index = L.Find(A)
 
-	Swim(index)
-	Sink(index)
+	swim(index)
+	sink(index)
 
-/datum/Heap/proc/List()
+/datum/heap/proc/List()
 	. = L.Copy()
-

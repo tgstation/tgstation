@@ -7,6 +7,7 @@
 	icon_keyboard = "med_key"
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_FORENSICS_LOCKERS)
 	circuit = /obj/item/circuitboard/computer/med_data
+	light_color = LIGHT_COLOR_BLUE
 	var/rank = null
 	var/screen = null
 	var/datum/data/record/active1
@@ -17,7 +18,6 @@
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
-	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/med_data/syndie
 	icon_keyboard = "syndie_key"
@@ -55,7 +55,7 @@
 <tr>
 <th><A href='?src=[REF(src)];choice=Sorting;sort=name'>Name</A></th>
 <th><A href='?src=[REF(src)];choice=Sorting;sort=id'>ID</A></th>
-<th>Fingerprints (F) | DNA (D)</th>
+<th>Fingerprints (F) | DNA UE (D)</th>
 <th><A href='?src=[REF(src)];choice=Sorting;sort=bloodtype'>Blood Type</A></th>
 <th>Physical Status</th>
 <th>Mental Status</th>
@@ -122,11 +122,10 @@
 						dat += "<tr><td>Details:</td><td><A href='?src=[REF(src)];field=mi_dis_d'>&nbsp;[active2.fields["mi_dis_d"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td><br>Major Disabilities:</td><td><br><A href='?src=[REF(src)];field=ma_dis'>&nbsp;[active2.fields["ma_dis"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Details:</td><td><A href='?src=[REF(src)];field=ma_dis_d'>&nbsp;[active2.fields["ma_dis_d"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td><br>Allergies:</td><td><br><A href='?src=[REF(src)];field=alg'>&nbsp;[active2.fields["alg"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td>Details:</td><td><A href='?src=[REF(src)];field=alg_d'>&nbsp;[active2.fields["alg_d"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td><br>Current Diseases:</td><td><br><A href='?src=[REF(src)];field=cdi'>&nbsp;[active2.fields["cdi"]]&nbsp;</A></td></tr>" //(per disease info placed in log/comment section)
 						dat += "<tr><td>Details:</td><td><A href='?src=[REF(src)];field=cdi_d'>&nbsp;[active2.fields["cdi_d"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td><br>Important Notes:</td><td><br><A href='?src=[REF(src)];field=notes'>&nbsp;[active2.fields["notes"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td><br>Notes Cont'd:</td><td><br><A href='?src=[REF(src)];field=notes'>&nbsp;[active2.fields["notes_d"]]&nbsp;</A></td></tr>"
 
 						dat += "<tr><td><br><b><font size='4'>Comments/Log</font></b></td></tr>"
 						var/counter = 1
@@ -159,9 +158,9 @@
 					var/bdat = null
 					for(var/mob/living/simple_animal/bot/medbot/M in GLOB.alive_mob_list)
 						if(M.z != z)
-							continue	//only find medibots on the same z-level as the computer
+							continue //only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
-						if(bl)	//if it can't find a turf for the medibot, then it probably shouldn't be showing up
+						if(bl) //if it can't find a turf for the medibot, then it probably shouldn't be showing up
 							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
 					if(!bdat)
 						dat += "<br><center>None detected</center>"
@@ -173,7 +172,6 @@
 			dat += "<A href='?src=[REF(src)];login=1'>{Log In}</A>"
 	var/datum/browser/popup = new(user, "med_rec", "Medical Records Console", 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/med_data/Topic(href, href_list)
@@ -185,7 +183,7 @@
 	if(!(active2 in GLOB.data_core.medical))
 		active2 = null
 
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || IsAdminGhost(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || isAdminGhostAI(usr))
 		usr.set_machine(src)
 		if(href_list["temp"])
 			temp = null
@@ -209,15 +207,17 @@
 					sortBy = href_list["sort"]
 					order = initial(order)
 		else if(href_list["login"])
-			var/mob/M = usr
-			var/obj/item/card/id/I = M.get_idcard(TRUE)
-			if(issilicon(M))
+			var/obj/item/card/id/I
+			if(isliving(usr))
+				var/mob/living/L = usr
+				I = L.get_idcard(TRUE)
+			if(issilicon(usr))
 				active1 = null
 				active2 = null
 				authenticated = 1
 				rank = "AI"
 				screen = 1
-			else if(IsAdminGhost(M))
+			else if(isAdminGhostAI(usr))
 				active1 = null
 				active2 = null
 				authenticated = 1
@@ -230,7 +230,7 @@
 				rank = I.assignment
 				screen = 1
 			else
-				to_chat(usr, "<span class='danger'>Unauthorized access.</span>")
+				to_chat(usr, span_danger("Unauthorized access."))
 			playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 		if(authenticated)
 			if(href_list["screen"])
@@ -526,7 +526,7 @@
 						P.info += "<B>Medical Record Lost!</B><BR>"
 						P.name = text("MR-[] '[]'", GLOB.data_core.medicalPrintCount, "Record Lost")
 					P.info += "</TT>"
-					P.update_icon()
+					P.update_appearance()
 					printing = null
 
 	add_fingerprint(usr)
@@ -535,7 +535,7 @@
 
 /obj/machinery/computer/med_data/emp_act(severity)
 	. = ..()
-	if(!(stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
+	if(!(machine_stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
 		for(var/datum/data/record/R in GLOB.data_core.medical)
 			if(prob(10/severity))
 				switch(rand(1,6))
@@ -545,7 +545,7 @@
 						else
 							R.fields["name"] = random_unique_name(R.fields["gender"],1)
 					if(2)
-						R.fields["gender"]	= pick("Male", "Female", "Other")
+						R.fields["gender"] = pick("Male", "Female", "Other")
 					if(3)
 						R.fields["age"] = rand(AGE_MIN, AGE_MAX)
 					if(4)
@@ -561,14 +561,12 @@
 				continue
 
 /obj/machinery/computer/med_data/proc/canUseMedicalRecordsConsole(mob/user, message = 1, record1, record2)
-	if(user)
-		if(message)
-			if(authenticated)
-				if(user.canUseTopic(src, !issilicon(user)))
-					if(!record1 || record1 == active1)
-						if(!record2 || record2 == active2)
-							return 1
-	return 0
+	if(user && message && authenticated)
+		if(user.canUseTopic(src, !issilicon(user)))
+			if(!record1 || record1 == active1)
+				if(!record2 || record2 == active2)
+					return TRUE
+	return FALSE
 
 /obj/machinery/computer/med_data/laptop
 	name = "medical laptop"

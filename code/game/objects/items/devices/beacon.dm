@@ -3,7 +3,7 @@
 	desc = "A beacon used by a teleporter."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "beacon"
-	item_state = "beacon"
+	inhand_icon_state = "beacon"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/enabled = TRUE
@@ -13,11 +13,11 @@
 	. = ..()
 	if (enabled)
 		GLOB.teleportbeacons += src
-	else 
+	else
 		icon_state = "beacon-off"
 
 /obj/item/beacon/Destroy()
-	GLOB.teleportbeacons.Remove(src)
+	GLOB.teleportbeacons -= src
 	return ..()
 
 /obj/item/beacon/attack_self(mob/user)
@@ -25,10 +25,10 @@
 	if (enabled)
 		icon_state = "beacon"
 		GLOB.teleportbeacons += src
-	else 
+	else
 		icon_state = "beacon-off"
-		GLOB.teleportbeacons.Remove(src)
-	to_chat(user, "<span class='notice'>You [enabled ? "enable" : "disable"] the beacon.</span>")
+		GLOB.teleportbeacons -= src
+	to_chat(user, span_notice("You [enabled ? "enable" : "disable"] the beacon."))
 	return
 
 /obj/item/beacon/attackby(obj/item/W, mob/user)
@@ -40,5 +40,5 @@
 			name = new_name
 			renamed = TRUE
 		return
-	else	
+	else
 		return ..()

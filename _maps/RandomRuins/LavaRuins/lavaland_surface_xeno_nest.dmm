@@ -85,7 +85,7 @@
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/item/clothing/under/rank/security/officer,
 /obj/item/clothing/suit/armor/vest,
-/obj/item/melee/baton/loaded,
+/obj/item/melee/baton/security/loaded,
 /obj/item/clothing/head/helmet,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
@@ -157,10 +157,6 @@
 /obj/item/clothing/head/helmet/space/syndicate/orange,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"O" = (
-/obj/structure/alien/weeds/node,
-/turf/template_noop,
-/area/ruin/unpowered/xenonest)
 "Q" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
@@ -169,9 +165,14 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"R" = (
+"Y" = (
 /obj/structure/alien/weeds,
-/turf/template_noop,
+/obj/structure/alien/resin/wall{
+	move_force = 1000;
+	move_resist = 3000;
+	pull_force = 1000
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 
 (1,1,1) = {"
@@ -251,7 +252,7 @@ b
 g
 g
 b
-b
+Y
 G
 a
 a
@@ -1065,8 +1066,8 @@ g
 g
 g
 b
-O
-R
+l
+g
 g
 g
 "}
@@ -1097,8 +1098,8 @@ b
 g
 l
 b
-O
-R
+l
+f
 g
 g
 "}

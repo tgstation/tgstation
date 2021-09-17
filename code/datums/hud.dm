@@ -13,6 +13,7 @@ GLOBAL_LIST_INIT(huds, list(
 	DATA_HUD_ABDUCTOR = new/datum/atom_hud/abductor(),
 	DATA_HUD_SENTIENT_DISEASE = new/datum/atom_hud/sentient_disease(),
 	DATA_HUD_AI_DETECT = new/datum/atom_hud/ai_detector(),
+	DATA_HUD_FAN = new/datum/atom_hud/data/human/fan_hud(),
 	ANTAG_HUD_CULT = new/datum/atom_hud/antag(),
 	ANTAG_HUD_REV = new/datum/atom_hud/antag(),
 	ANTAG_HUD_OPS = new/datum/atom_hud/antag(),
@@ -22,12 +23,13 @@ GLOBAL_LIST_INIT(huds, list(
 	ANTAG_HUD_NINJA = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_CHANGELING = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_ABDUCTOR = new/datum/atom_hud/antag/hidden(),
-	ANTAG_HUD_DEVIL = new/datum/atom_hud/antag(),
-	ANTAG_HUD_SINTOUCHED = new/datum/atom_hud/antag/hidden(),
-	ANTAG_HUD_SOULLESS = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_BROTHER = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_OBSESSED = new/datum/atom_hud/antag/hidden(),
-	ANTAG_HUD_FUGITIVE = new/datum/atom_hud/antag()
+	ANTAG_HUD_FUGITIVE = new/datum/atom_hud/antag(),
+	ANTAG_HUD_GANGSTER = new/datum/atom_hud/antag/hidden(),
+	ANTAG_HUD_SPACECOP = new/datum/atom_hud/antag(),
+	ANTAG_HUD_HERETIC = new/datum/atom_hud/antag/hidden(),
+	ANTAG_HUD_BRAINWASHED = new/datum/atom_hud/antag/hidden()
 	))
 
 /datum/atom_hud
@@ -50,11 +52,14 @@ GLOBAL_LIST_INIT(huds, list(
 	GLOB.all_huds -= src
 	return ..()
 
-/datum/atom_hud/proc/remove_hud_from(mob/M)
+/datum/atom_hud/proc/remove_hud_from(mob/M, absolute = FALSE)
 	if(!M || !hudusers[M])
 		return
-	if (!--hudusers[M])
+	if (absolute || !--hudusers[M])
+		UnregisterSignal(M, COMSIG_PARENT_QDELETING)
 		hudusers -= M
+		if(next_time_allowed[M])
+			next_time_allowed -= M
 		if(queued_to_see[M])
 			queued_to_see -= M
 		else
@@ -80,6 +85,7 @@ GLOBAL_LIST_INIT(huds, list(
 		return
 	if(!hudusers[M])
 		hudusers[M] = 1
+		RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/unregister_mob)
 		if(next_time_allowed[M] > world.time)
 			if(!queued_to_see[M])
 				addtimer(CALLBACK(src, .proc/show_hud_images_after_cooldown, M), next_time_allowed[M] - world.time)
@@ -90,6 +96,11 @@ GLOBAL_LIST_INIT(huds, list(
 				add_to_single_hud(M, A)
 	else
 		hudusers[M]++
+
+/datum/atom_hud/proc/unregister_mob(datum/source, force)
+	SIGNAL_HANDLER
+	remove_hud_from(source, TRUE)
+	remove_from_hud(source)
 
 /datum/atom_hud/proc/hide_single_atomhud_from(hud_user,hidden_atom)
 	if(hudusers[hud_user])
@@ -130,7 +141,7 @@ GLOBAL_LIST_INIT(huds, list(
 //MOB PROCS
 /mob/proc/reload_huds()
 	for(var/datum/atom_hud/hud in GLOB.all_huds)
-		if(hud && hud.hudusers[src])
+		if(hud?.hudusers[src])
 			for(var/atom/A in hud.hudatoms)
 				hud.add_to_single_hud(src, A)
 

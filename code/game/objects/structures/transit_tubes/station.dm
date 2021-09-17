@@ -1,7 +1,9 @@
+#define OPEN_DURATION 6
+#define CLOSE_DURATION 6
 
 // A place where tube pods stop, and people can get in or out.
 // Mappers: use "Generate Instances from Directions" for this
-//  one.
+// one.
 
 
 /obj/structure/transit_tube/station
@@ -19,11 +21,8 @@
 	var/base_icon = "station0"
 	var/boarding_dir //from which direction you can board the tube
 
-	var/const/OPEN_DURATION = 6
-	var/const/CLOSE_DURATION = 6
-
-/obj/structure/transit_tube/station/New()
-	..()
+/obj/structure/transit_tube/station/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/transit_tube/station/Destroy()
@@ -38,7 +37,7 @@
 		for(var/obj/structure/transit_tube_pod/pod in loc)
 			if(!pod.moving)
 				AM.forceMove(pod)
-				pod.update_icon()
+				pod.update_appearance()
 				return
 
 
@@ -56,24 +55,24 @@
 	R.transfer_fingerprints_to(TP)
 	TP.add_fingerprint(user)
 	TP.setDir(turn(src.dir, -90))
-	user.visible_message("<span class='notice'>[user] inserts [R].</span>", "<span class='notice'>You insert [R].</span>")
+	user.visible_message(span_notice("[user] inserts [R]."), span_notice("You insert [R]."))
 	qdel(R)
 
 
-/obj/structure/transit_tube/station/attack_hand(mob/user)
+/obj/structure/transit_tube/station/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	if(!pod_moving)
-		if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
+		if(user.pulling && isliving(user.pulling))
 			if(open_status == STATION_TUBE_OPEN)
 				var/mob/living/GM = user.pulling
 				if(user.grab_state >= GRAB_AGGRESSIVE)
 					if(GM.buckled || GM.has_buckled_mobs())
-						to_chat(user, "<span class='warning'>[GM] is attached to something!</span>")
+						to_chat(user, span_warning("[GM] is attached to something!"))
 						return
 					for(var/obj/structure/transit_tube_pod/pod in loc)
-						pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
+						pod.visible_message(span_warning("[user] starts putting [GM] into the [pod]!"))
 						if(do_after(user, 15, target = src))
 							if(open_status == STATION_TUBE_OPEN && GM && user.grab_state >= GRAB_AGGRESSIVE && user.pulling == GM && !GM.buckled && !GM.has_buckled_mobs())
 								GM.Paralyze(100)
@@ -87,7 +86,7 @@
 
 					else if(open_status == STATION_TUBE_OPEN)
 						if(pod.contents.len && user.loc != pod)
-							user.visible_message("<span class='notice'>[user] starts emptying [pod]'s contents onto the floor.</span>", "<span class='notice'>You start emptying [pod]'s contents onto the floor...</span>")
+							user.visible_message(span_notice("[user] starts emptying [pod]'s contents onto the floor."), span_notice("You start emptying [pod]'s contents onto the floor..."))
 							if(do_after(user, 10, target = src)) //So it doesn't default to close_animation() on fail
 								if(pod && pod.loc == loc)
 									for(var/atom/movable/AM in pod)
@@ -109,21 +108,30 @@
 	if(open_status == STATION_TUBE_CLOSED)
 		icon_state = "opening_[base_icon]"
 		open_status = STATION_TUBE_OPENING
-		spawn(OPEN_DURATION)
-			if(open_status == STATION_TUBE_OPENING)
-				icon_state = "open_[base_icon]"
-				open_status = STATION_TUBE_OPEN
+		addtimer(CALLBACK(src, .proc/finish_animation), OPEN_DURATION)
 
+/obj/structure/transit_tube/station/proc/finish_animation()
+	switch(open_status)
+		if(STATION_TUBE_OPENING)
+			icon_state = "open_[base_icon]"
+			open_status = STATION_TUBE_OPEN
+			for(var/obj/structure/transit_tube_pod/pod in loc)
+				for(var/thing in pod)
+					if(ismob(thing))
+						var/mob/mob_content = thing
+						if(mob_content.client && mob_content.stat < UNCONSCIOUS)
+							continue // Let the mobs with clients decide what they want to do themselves.
+					var/atom/movable/movable_content = thing
+					movable_content.forceMove(loc) //Everything else is moved out of.
+		if(STATION_TUBE_CLOSING)
+			icon_state = "closed_[base_icon]"
+			open_status = STATION_TUBE_CLOSED
 
 /obj/structure/transit_tube/station/proc/close_animation()
 	if(open_status == STATION_TUBE_OPEN)
 		icon_state = "closing_[base_icon]"
 		open_status = STATION_TUBE_CLOSING
-		spawn(CLOSE_DURATION)
-			if(open_status == STATION_TUBE_CLOSING)
-				icon_state = "closed_[base_icon]"
-				open_status = STATION_TUBE_CLOSED
-
+		addtimer(CALLBACK(src, .proc/finish_animation), CLOSE_DURATION)
 
 /obj/structure/transit_tube/station/proc/launch_pod()
 	if(launch_cooldown >= world.time)
@@ -145,19 +153,25 @@
 
 /obj/structure/transit_tube/station/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
 	pod_moving = TRUE
-	spawn(5)
-		if(reverse_launch)
-			pod.setDir(tube_dirs[1]) //turning the pod around for next launch.
-		launch_cooldown = world.time + cooldown_delay
-		open_animation()
-		sleep(OPEN_DURATION + 2)
-		pod_moving = FALSE
-		if(!QDELETED(pod))
-			var/datum/gas_mixture/floor_mixture = loc.return_air()
-			floor_mixture.archive()
-			pod.air_contents.archive()
-			pod.air_contents.share(floor_mixture, 1) //mix the pod's gas mixture with the tile it's on
-			air_update_turf()
+	addtimer(CALLBACK(src, .proc/start_stopped, pod), 5)
+
+/obj/structure/transit_tube/station/proc/start_stopped(obj/structure/transit_tube_pod/pod)
+	if(QDELETED(pod))
+		return
+	if(reverse_launch)
+		pod.setDir(tube_dirs[1]) //turning the pod around for next launch.
+	launch_cooldown = world.time + cooldown_delay
+	open_animation()
+	addtimer(CALLBACK(src, .proc/finish_stopped, pod), OPEN_DURATION + 2)
+
+/obj/structure/transit_tube/station/proc/finish_stopped(obj/structure/transit_tube_pod/pod)
+	pod_moving = FALSE
+	if(!QDELETED(pod))
+		var/datum/gas_mixture/floor_mixture = loc.return_air()
+		floor_mixture.archive()
+		pod.air_contents.archive()
+		pod.air_contents.share(floor_mixture, 1) //mix the pod's gas mixture with the tile it's on
+		air_update_turf(FALSE, FALSE)
 
 /obj/structure/transit_tube/station/init_tube_dirs()
 	switch(dir)
@@ -235,17 +249,17 @@
 
 /obj/structure/transit_tube/station/dispenser/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>This station will create a pod for you to ride, no need to wait for one.</span>"
+	. += span_notice("This station will create a pod for you to ride, no need to wait for one.")
 
 /obj/structure/transit_tube/station/dispenser/Bumped(atom/movable/AM)
 	if(!(istype(AM) && AM.dir == boarding_dir))
 		return
 	var/obj/structure/transit_tube_pod/dispensed/pod = new(loc)
-	AM.visible_message("<span class='notice'>[pod] forms around [AM].</span>", "<span class='notice'>[pod] materializes around you.</span>")
+	AM.visible_message(span_notice("[pod] forms around [AM]."), span_notice("[pod] materializes around you."))
 	playsound(src, 'sound/weapons/emitter2.ogg', 50, TRUE)
 	pod.setDir(turn(src.dir, -90))
 	AM.forceMove(pod)
-	pod.update_icon()
+	pod.update_appearance()
 	launch_pod()
 
 /obj/structure/transit_tube/station/dispenser/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
@@ -265,7 +279,7 @@
 /obj/structure/transit_tube/station/dispenser/reverse
 	tube_construction = /obj/structure/c_transit_tube/station/dispenser/reverse
 	reverse_launch = TRUE
-	icon_state = "closed_terminusdispenser0"
+	icon_state = "open_terminusdispenser0"
 	base_icon = "terminusdispenser0"
 
 /obj/structure/transit_tube/station/dispenser/reverse/init_tube_dirs()
@@ -281,10 +295,13 @@
 	boarding_dir = turn(dir, 180)
 
 /obj/structure/transit_tube/station/dispenser/reverse/flipped
-	icon_state = "closed_terminusdispenser1"
+	icon_state = "open_terminusdispenser1"
 	base_icon = "terminusdispenser1"
 	tube_construction = /obj/structure/c_transit_tube/station/dispenser/reverse/flipped
 
 /obj/structure/transit_tube/station/dispenser/reverse/flipped/init_tube_dirs()
 	..()
 	boarding_dir = dir
+
+#undef OPEN_DURATION
+#undef CLOSE_DURATION

@@ -45,7 +45,8 @@
 
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "lightreplacer0"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "light_replacer"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -75,23 +76,23 @@
 	if(istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
 		if(uses >= max_uses)
-			to_chat(user, "<span class='warning'>[src.name] is full.</span>")
+			to_chat(user, span_warning("[src.name] is full."))
 			return
 		else if(G.use(decrement))
 			AddUses(increment)
-			to_chat(user, "<span class='notice'>You insert a piece of glass into \the [src.name]. You have [uses] light\s remaining.</span>")
+			to_chat(user, span_notice("You insert a piece of glass into \the [src.name]. You have [uses] light\s remaining."))
 			return
 		else
-			to_chat(user, "<span class='warning'>You need one sheet of glass to replace lights!</span>")
+			to_chat(user, span_warning("You need one sheet of glass to replace lights!"))
 
 	if(istype(W, /obj/item/shard))
 		if(uses >= max_uses)
-			to_chat(user, "<span class='warning'>\The [src] is full.</span>")
+			to_chat(user, span_warning("\The [src] is full."))
 			return
 		if(!user.temporarilyRemoveItemFromInventory(W))
 			return
 		AddUses(round(increment*0.75))
-		to_chat(user, "<span class='notice'>You insert a shard of glass into \the [src]. You have [uses] light\s remaining.</span>")
+		to_chat(user, span_notice("You insert a shard of glass into \the [src]. You have [uses] light\s remaining."))
 		qdel(W)
 		return
 
@@ -106,7 +107,7 @@
 		else
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
-			to_chat(user, "<span class='notice'>You insert [L] into \the [src].</span>")
+			to_chat(user, span_notice("You insert [L] into \the [src]."))
 			AddShards(1, user)
 			qdel(L)
 		return
@@ -133,14 +134,14 @@
 					qdel(L)
 
 		if(!found_lightbulbs)
-			to_chat(user, "<span class='warning'>\The [S] contains no bulbs.</span>")
+			to_chat(user, span_warning("\The [S] contains no bulbs."))
 			return
 
 		if(!replaced_something && src.uses == max_uses)
-			to_chat(user, "<span class='warning'>\The [src] is full!</span>")
+			to_chat(user, span_warning("\The [src] is full!"))
 			return
 
-		to_chat(user, "<span class='notice'>You fill \the [src] with lights from \the [S]. " + status_string() + "</span>")
+		to_chat(user, span_notice("You fill \the [src] with lights from \the [S]. " + status_string() + ""))
 
 /obj/item/lightreplacer/emag_act()
 	if(obj_flags & EMAGGED)
@@ -152,8 +153,9 @@
 		ReplaceLight(target, user)
 	to_chat(user, status_string())
 
-/obj/item/lightreplacer/update_icon()
+/obj/item/lightreplacer/update_icon_state()
 	icon_state = "lightreplacer[(obj_flags & EMAGGED ? 1 : 0)]"
+	return ..()
 
 /obj/item/lightreplacer/proc/status_string()
 	return "It has [uses] light\s remaining (plus [bulb_shards] fragment\s)."
@@ -165,7 +167,7 @@
 
 // Negative numbers will subtract
 /obj/item/lightreplacer/proc/AddUses(amount = 1)
-	uses = CLAMP(uses + amount, 0, max_uses)
+	uses = clamp(uses + amount, 0, max_uses)
 
 /obj/item/lightreplacer/proc/AddShards(amount = 1, user)
 	bulb_shards += amount
@@ -174,11 +176,11 @@
 		AddUses(new_bulbs)
 	bulb_shards = bulb_shards % shards_required
 	if(new_bulbs != 0)
-		to_chat(user, "<span class='notice'>\The [src] has fabricated a new bulb from the broken glass it has stored. It now has [uses] uses.</span>")
+		to_chat(user, span_notice("\The [src] fabricates a new bulb from the broken glass it has stored. It now has [uses] uses."))
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
 	return new_bulbs
 
-/obj/item/lightreplacer/proc/Charge(var/mob/user)
+/obj/item/lightreplacer/proc/Charge(mob/user)
 	charge += 1
 	if(charge > 3)
 		AddUses(1)
@@ -190,7 +192,7 @@
 		if(CanUse(U))
 			if(!Use(U))
 				return
-			to_chat(U, "<span class='notice'>You replace \the [target.fitting] with \the [src].</span>")
+			to_chat(U, span_notice("You replace \the [target.fitting] with \the [src]."))
 
 			if(target.status != LIGHT_EMPTY)
 				AddShards(1, U)
@@ -212,20 +214,20 @@
 			return
 
 		else
-			to_chat(U, "<span class='warning'>\The [src]'s refill light blinks red.</span>")
+			to_chat(U, span_warning("\The [src]'s refill light blinks red."))
 			return
 	else
-		to_chat(U, "<span class='warning'>There is a working [target.fitting] already inserted!</span>")
+		to_chat(U, span_warning("There is a working [target.fitting] already inserted!"))
 		return
 
 /obj/item/lightreplacer/proc/Emag()
 	obj_flags ^= EMAGGED
-	playsound(src.loc, "sparks", 100, TRUE)
+	playsound(src.loc, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(obj_flags & EMAGGED)
 		name = "shortcircuited [initial(name)]"
 	else
 		name = initial(name)
-	update_icon()
+	update_appearance()
 
 /obj/item/lightreplacer/proc/CanUse(mob/living/user)
 	src.add_fingerprint(user)
@@ -250,12 +252,12 @@
 			ReplaceLight(A, U)
 
 	if(!used)
-		to_chat(U, "<span class='warning'>\The [src]'s refill light blinks red.</span>")
+		to_chat(U, span_warning("\The [src]'s refill light blinks red."))
 
 /obj/item/lightreplacer/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	J.put_in_cart(src, user)
 	J.myreplacer = src
-	J.update_icon()
+	J.update_appearance()
 
 /obj/item/lightreplacer/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	return

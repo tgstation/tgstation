@@ -1,139 +1,152 @@
-<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
-
-- [tgui](#tgui)
-	- [Concepts](#concepts)
-	- [Using It](#using-it)
-	- [Copypasta](#copypasta)
-
-<!-- /TOC -->
-
 # tgui
-tgui is the user interface library of /tg/station. It is rendered clientside,  based on JSON data sent from the server. Clicks are processed on the server, in  a similar method to native BYOND `Topic()`.
 
-Basic tgui consists of defining a few procs. In these procs you will handle a request to open or update a UI (typically by updating a UI if it exists or setting up and opening it if it does not), a request for data, in which you build a list to be passed as JSON to the UI, and an action handler, which handles any user input. In addition, you will write a HTML template file which renders your data and provides actionable inputs.
+## Introduction
 
-tgui is very different from most UIs you will encounter in BYOND programming, and is heavily reliant of Javascript and web technologies as opposed to DM. However, if you are familiar with NanoUI (a library which can be found on almost every other SS13 codebase), tgui should be fairly easy to pick up.
+tgui is a robust user interface framework of /tg/station.
 
-tgui is a fork of NanoUI. The server-side code (DM) is similar and derived from NanoUI, while the clientside is a wholly new project with no code in common.
+tgui is very different from most UIs you will encounter in BYOND programming. It is heavily reliant on Javascript and web technologies as opposed to DM. If you are familiar with NanoUI (a library which can be found on almost every other SS13 codebase), tgui should be fairly easy to pick up.
 
-## Concepts
-tgui is loosely based a MVVM architecture. MVVM stands for model, view, view model.
-- A model is the object that a UI represents. This is the atom a UI corresponds to in the game world in most cases, and is known as the `src_object` in tgui.
-- The view model is how data is represented in terms of the view. In tgui, this is the `ui_data` proc which munges whatever complex data your `src_object` has into a list.
-- The view is how the data is rendered. This is the template, a HTML (plus mustaches and other goodies) file which is compiled into the tgui blob that the browser executes.
+## Learn tgui
 
-Not included in the MVVM model are other important concepts:
-- The action/topic handler, `ui_act`, is what recieves input from the user and acts on it.
-- The request/update proc, `ui_interact` is where you open your UI and set options like title, size, autoupdate, theme, and more.
-- Finally, `ui_state`s (set in `ui_interact`) dictate under what conditions a UI may be interacted with. This may be the standard checks that check if you are in range and conscious, or more.
+People come to tgui from different backgrounds and with different learning styles. Whether you prefer a more theoretical or a practical approach, we hope you’ll find this section helpful.
 
-States are easy to write and extend, and what make tgui interactions so powerful. Because states can over overridden from other procs, you can build powerful interactions for embedded objects or remote access.
+### Practical Tutorial
 
-## Using It
-All these examples and abstracts sound great, you might say. But you also might say, "How do I use it?"
+If you are completely new to frontend and prefer to **learn by doing**, start with our [practical tutorial](docs/tutorial-and-examples.md).
 
-Examples can be as simple or as complex as you would like. Let's start with a very basic hello world.
+### Guides
 
-```DM
-/obj/machinery/my_machine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-  ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-  if(!ui)
-    ui = new(user, src, ui_key, "my_machine", name, 300, 300, master_ui, state)
-    ui.open()
+This project uses **Inferno** - a very fast UI rendering engine with a similar API to React. Take your time to read these guides:
+
+- [React guide](https://reactjs.org/docs/hello-world.html)
+- [Inferno documentation](https://infernojs.org/docs/guides/components) - highlights differences with React.
+
+If you were already familiar with an older, Ractive-based tgui, and want to translate concepts between old and new tgui, read this [interface conversion guide](docs/converting-old-tgui-interfaces.md).
+
+## Pre-requisites
+
+If you are using the tooling provided in this repo, everything is included! Feel free to skip this step.
+
+However, if you want finer control over the installation or build process, you will need these:
+
+- [Node v12.20+](https://nodejs.org/en/download/)
+  - **DO NOT install Chocolatey if Node installer asks you to!**
+- [Yarn v1.22.4+](https://yarnpkg.com/getting-started/install)
+  - You only need to run `npm install -g yarn`.
+
+## Usage
+
+**Via provided cmd scripts (Windows)**:
+
+- `bin/tgui-build` - Build tgui in production mode and run a full suite of code checks.
+- `bin/tgui-dev` - Launch a development server.
+  - `bin/tgui-dev --reload` - Reload byond cache once.
+  - `bin/tgui-dev --debug` - Run server with debug logging enabled.
+  - `bin/tgui-dev --no-hot` - Disable hot module replacement (helps when doing development on IE8).
+- `bin/tgui-sonar` - Analyze code with SonarQube.
+- `bin/tgui-bench` - Run benchmarks.
+
+> To open a CMD or PowerShell window in any open folder, right click **while holding Shift** on any free space in the folder, then click on either `Open command window here` or `Open PowerShell window here`.
+
+**Via Juke Build (cross-platform)**:
+
+- `tools/build/build tgui` - Build tgui in production mode.
+- `tools/build/build tgui-dev` - Build tgui in production mode.
+  - `tools/build/build tgui-dev --reload` - Reload byond cache once.
+  - `tools/build/build tgui-dev --debug` - Run server with debug logging enabled.
+  - `tools/build/build tgui-dev --no-hot` - Disable hot module replacement (helps when doing development on IE8).
+- `tools/build/build tgui-lint` - Show (and auto-fix) problems with the code.
+- `tools/build/build tgui-sonar` - Analyze code with SonarQube.
+- `tools/build/build tgui-test` - Run unit and integration tests.
+- `tools/build/build tgui-analyze` - Run a bundle analyzer.
+- `tools/build/build tgui-bench` - Run benchmarks.
+- `tools/build/build tgui-clean` - Clean up tgui folder.
+
+> With Juke Build, you can run multiple targets together, e.g.:
+> ```
+> tools/build/build tgui tgui-lint tgui-tsc tgui-test
+> ```
+
+**Via Yarn (cross-platform)**:
+
+Run `yarn install` once to install tgui dependencies.
+
+- `yarn tgui:build` - Build tgui in production mode.
+  - `yarn tgui:build [options]` - Build tgui with custom webpack options.
+- `yarn tgui:dev` - Launch a development server.
+  - `yarn tgui:dev --reload` - Reload byond cache once.
+  - `yarn tgui:dev --debug` - Run server with debug logging enabled.
+  - `yarn tgui:dev --no-hot` - Disable hot module replacement (helps when doing development on IE8).
+- `yarn tgui:lint` - Show (and auto-fix) problems with the code.
+- `yarn tgui:sonar` - Analyze code with SonarQube.
+- `yarn tgui:tsc` - Check code with TypeScript compiler.
+- `yarn tgui:test` - Run unit and integration tests.
+- `yarn tgui:analyze` - Run a bundle analyzer.
+- `yarn tgui:bench` - Run benchmarks.
+
+## Important memo
+
+Remember to always run a full build of tgui before submitting a PR, because it comes with the full suite of CI checks, and runs much faster on your computer than on GitHub servers. It will save you some time and possibly a few broken commits! Address the issues that are reported by the tooling as much as possible, because maintainers will beat you with a ruler and force you to address them anyway (unless it's a false positive or something unfixable).
+
+## Troubleshooting
+
+**Development server is crashing**
+
+Make sure path to your working directory does not contain spaces, special unicode characters, exclamation marks or any other special symbols. If so, move codebase to a location which does not contain these characters.
+
+This is a known issue with Yarn (and some other tools, like Webpack), and fix is going to happen eventually.
+
+**Development server doesn't find my BYOND cache!**
+
+This happens if your Documents folder in Windows has a custom location, for example in `E:\Libraries\Documents`. Development server tries its best to find this non-standard location (searches for a Windows Registry key), but it can fail. You have to run the dev server with an additional environmental variable, with a full path to BYOND cache.
+
+```
+BYOND_CACHE="E:/Libraries/Documents/BYOND/cache"
 ```
 
-This is the proc that defines our interface. There's a bit going on here, so let's break it down. First, we override the ui_interact proc on our object. This will be called by `interact` for you, which is in turn called by `attack_hand` (or `attack_self` for items). `ui_interact` is also called to update a UI (hence the `try_update_ui`), so we accept an existing UI to update. The `state` is a default argument so that a caller can overload it with named arguments (`ui_interact(state = overloaded_state)`) if needed.
+**Webpack errors out with some cryptic messages!**
 
-Inside the `if(!ui)` block (which means we are creating a new UI), we choose our template, title, and size; we can also set various options like `style` (for themes), or autoupdate. These options will be elaborated on later (as will `ui_state`s).
+> Example: `No template for dependency: PureExpressionDependency`
 
-After `ui_interact`, we need to define `ui_data`. This just returns a list of data for our object to use. Let's imagine our object has a few vars:
+Webpack stores its cache on disk since tgui 4.3, and it is very sensitive to build configuration. So if you update webpack, or share the same cache directory between development and production build, it will start hallucinating.
 
-```DM
-/obj/machinery/my_machine/ui_data(mob/user)
-  var/list/data = list()
-  data["health"] = health
-  data["color"] = color
+To fix this kind of problem, run `bin/tgui --clean` and try again.
 
-  return data
-```
+## Developer Tools
 
-The `ui_data` proc is what people often find the hardest about tgui, but its really quite simple! You just need to represent your object as numbers, strings, and lists, instead of atoms and datums.
+When developing with `tgui-dev-server`, you will have access to certain development only features.
 
-Finally, the `ui_act` proc is called by the interface whenever the user used an input. The input's `action` and `params` are passed to the proc.
+**Debug Logs**. When running server via `bin/tgui --dev --debug`, server will print debug logs and time spent on rendering. Use this information to optimize your code, and try to keep re-renders below 16ms.
 
-```DM
-/obj/machinery/my_machine/ui_act(action, params)
-  if(..())
-    return
-  switch(action)
-    if("change_color")
-      var/new_color = params["color"]
-      if(!(color in allowed_coors))
-        return
-      color = new_color
-      . = TRUE
-  update_icon()
-```
+**Kitchen Sink**. Press `F12` to open the KitchenSink interface. This interface is a playground to test various tgui components.
 
-The `..()` (parent call) is very important here, as it is how we check that the user is allowed to use this interface (to avoid so-called href exploits). It is also very important to clamp and sanitize all input here. Always assume the user is attempting to exploit the game.
+**Layout Debugger**. Press `F11` to toggle the *layout debugger*. It will show outlines of all tgui elements, which makes it easy to understand how everything comes together, and can reveal certain layout bugs which are not normally visible.
 
-Also note the use of `. = TRUE` (or `FALSE`), which is used to notify the UI that this input caused an update. This is especially important for UIs that do not auto-update, as otherwise the user will never see their change.
+## Project Structure
 
-Finally, you have a template. This is also a source of confusion for many new users. Some basic HTML knowledge will get you a long way, however.
+- `/packages` - Each folder here represents a self-contained Node module.
+- `/packages/common` - Helper functions that are used throughout all packages.
+- `/packages/tgui/index.js` - Application entry point.
+- `/packages/tgui/components` - Basic UI building blocks.
+- `/packages/tgui/interfaces` - Actual in-game interfaces.
+- `/packages/tgui/layouts` - Root level UI components, that affect the final look and feel of the browser window. These hold various window elements, like the titlebar and resize handlers, and control the UI theme.
+- `/packages/tgui/routes.js` - This is where tgui decides which interface to pull and render.
+- `/packages/tgui/styles/main.scss` - CSS entry point.
+- `/packages/tgui/styles/functions.scss` - Useful SASS functions. Stuff like `lighten`, `darken`, `luminance` are defined here.
+- `/packages/tgui/styles/atomic` - Atomic CSS classes. These are very simple, tiny, reusable CSS classes which you can use and combine to change appearance of your elements. Keep them small.
+- `/packages/tgui/styles/components` - CSS classes which are used in UI components. These stylesheets closely follow the [BEM](https://en.bem.info/methodology/) methodology.
+- `/packages/tgui/styles/interfaces` - Custom stylesheets for your interfaces. Add stylesheets here if you really need a fine control over your UI styles.
+- `/packages/tgui/styles/layouts` - Layout-related styles.
+- `/packages/tgui/styles/themes` - Contains themes that you can use in tgui. Each theme must be registered in `/packages/tgui/index.js` file.
 
-A template is regular HTML, with mustache for logic and built-in components to quickly build UIs. Here's how we might show some data (components will be elaborated on later).
+## Component Reference
 
-In a template there are a few special values. `config` is always the same and is part of core tgui (it will be explained later), `data` is the data returned from `ui_data`, and `adata` is the same, but with certain values (numbers at this time) interpolated in order to allow animation.
+See: [Component Reference](docs/component-reference.md).
 
-```html
-<ui-display>
-  <ui-section label='Health'>
-    <span>{{data.health}}</span>
-  </ui-section>
-  <ui-section label='Color'>
-    <span>{{data.color}}</span>
-  </ui-section>
-</ui-display>
-```
+## License
 
-Templates can be very confusing at first, as ternary operators, computed properties, and iterators are used quite a bit in more complex interfaces. Start with the basics, and work your way up. Much of the complexity stems from performance concerns. If in doubt, take the simpler approach and refactor if performance becomes an issue.
+Source code is covered by /tg/station's parent license - **AGPL-3.0** (see the main [README](../README.md)), unless otherwise indicated.
 
-## Copypasta
-We all do it, even the best of us. If you just want to make a tgui **fast**, here's what you need (note that you'll probably be forced to clean your shit up upon code review):
+Some files are annotated with a copyright header, which explicitly states the copyright holder and license of the file. Most of the core tgui source code is available under the **MIT** license.
 
-```DM
-/obj/copypasta/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state) // Remember to use the appropriate state.
-  ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-  if(!ui)
-    ui = new(user, src, ui_key, "copypasta", name, 300, 300, master_ui, state)
-    ui.open()
-
-/obj/copypasta/ui_data(mob/user)
-  var/list/data = list()
-  data["var"] = var
-
-  return data
-
-/obj/copypasta/ui_act(action, params)
-  if(..())
-    return
-  switch(action)
-    if("copypasta")
-      var/newvar = params["var"]
-      var = Clamp(newvar, min_val, max_val) // Just a demo of proper input sanitation.
-      . = TRUE
-  update_icon() // Not applicable to all objects.
-```
-
-And the template:
-
-```html
-<ui-display title='My Copypasta Section'>
-  <ui-section label='Var'>
-    <span>{{data.var}}</span>
-  </ui-section>
-  <ui-section label='Animated Var'>
-    <span>{{adata.var}}</span>
-  </ui-section>
-</ui-display>
-```
+The Authors retain all copyright to their respective work here submitted.

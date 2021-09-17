@@ -9,6 +9,7 @@
 	desc = "A device that creates a bluespace anchor that allow ships jump near to it."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "core"
+	base_icon_state = "core"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 0
 	density = TRUE
@@ -21,7 +22,7 @@
 	. = ..()
 	SSshuttle.beacons |= src
 
-obj/machinery/spaceship_navigation_beacon/emp_act()
+/obj/machinery/spaceship_navigation_beacon/emp_act()
 	locked = TRUE
 
 /obj/machinery/spaceship_navigation_beacon/Destroy()
@@ -29,22 +30,20 @@ obj/machinery/spaceship_navigation_beacon/emp_act()
 	return ..()
 
 // update the icon_state
-/obj/machinery/spaceship_navigation_beacon/update_icon()
-	if(powered())
-		icon_state = "core"
-	else
-		icon_state = "core-open"
+/obj/machinery/spaceship_navigation_beacon/update_icon_state()
+	icon_state = "[base_icon_state][powered() ? null : "-open"]"
+	return ..()
 
 /obj/machinery/spaceship_navigation_beacon/multitool_act(mob/living/user, obj/item/multitool/I)
 	..()
 	if(panel_open)
-		var/new_name = "Beacon_[input("Enter the custom name for this beacon", "It be Beacon ..your input..") as text|null]"
+		var/new_name = "Beacon_[stripped_input("Enter the custom name for this beacon", "It be Beacon ..your input..")]"
 		if(new_name && Adjacent(user))
 			name = new_name
-			to_chat(user, "<span class='notice'>You change beacon name to [name].</span>")
+			to_chat(user, span_notice("You change beacon name to [name]."))
 	else
 		locked =!locked
-		to_chat(user, "<span class='notice'>You [locked ? "" : "un"]lock [src].</span>")
+		to_chat(user, span_notice("You [locked ? "" : "un"]lock [src]."))
 	return TRUE
 
 /obj/machinery/spaceship_navigation_beacon/examine()

@@ -14,9 +14,10 @@
 	short_desc = "You are a sentient ecosystem, an example of the mastery over life that your creators possessed."
 	flavour_text = "Your masters, benevolent as they were, created uncounted seed vaults and spread them across \
 	the universe to every planet they could chart. You are in one such seed vault. \
-	Your goal is to cultivate and spread life wherever it will go while waiting for contact from your creators. \
+	Your goal is to protect the vault you are assigned to, cultivate the seeds passed onto you, \
+	and eventually bring life to this desolate planet while waiting for contact from your creators. \
 	Estimated time of last contact: Deployment, 5000 millennia ago."
-	assignedrole = "Lifebringer"
+	spawner_job_path = /datum/job/lifebringer
 
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
 	var/plant_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
@@ -33,6 +34,45 @@
 
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 
+/obj/structure/ash_walker_eggshell
+	name = "ash walker egg"
+	desc = "A man-sized yellow egg, spawned from some unfathomable creature. A humanoid silhouette lurks within. The egg shell looks resistant to temperature but otherwise rather brittle."
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "large_egg"
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | FREEZE_PROOF
+	max_integrity = 80
+	var/obj/effect/mob_spawn/human/ash_walker/egg
+
+/obj/structure/ash_walker_eggshell/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0) //lifted from xeno eggs
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+		if(BURN)
+			if(damage_amount)
+				playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+
+/obj/structure/ash_walker_eggshell/attack_ghost(mob/user) //Pass on ghost clicks to the mob spawner
+	if(egg)
+		egg.attack_ghost(user)
+	. = ..()
+
+/obj/structure/ash_walker_eggshell/Destroy()
+	if(!egg)
+		return ..()
+	var/mob/living/carbon/human/yolk = new /mob/living/carbon/human/(get_turf(src))
+	yolk.fully_replace_character_name(null,random_unique_lizard_name(gender))
+	yolk.set_species(/datum/species/lizard/ashwalker)
+	yolk.underwear = "Nude"
+	yolk.equipOutfit(/datum/outfit/ashwalker)//this is an authentic mess we're making
+	yolk.update_body()
+	yolk.gib()
+	QDEL_NULL(egg)
+	return ..()
+
+
 /obj/effect/mob_spawn/human/ash_walker
 	name = "ash walker egg"
 	desc = "A man-sized yellow egg, spawned from some unfathomable creature. A humanoid silhouette lurks within."
@@ -43,23 +83,30 @@
 	outfit = /datum/outfit/ashwalker
 	roundstart = FALSE
 	death = FALSE
-	anchored = FALSE
 	move_resist = MOVE_FORCE_NORMAL
 	density = FALSE
 	short_desc = "You are an ash walker. Your tribe worships the Necropolis."
 	flavour_text = "The wastes are sacred ground, its monsters a blessed bounty. \
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. \
 	Fresh sacrifices for your nest."
-	assignedrole = "Ash Walker"
+	spawner_job_path = /datum/job/ash_walker
 	var/datum/team/ashwalkers/team
+	var/obj/structure/ash_walker_eggshell/eggshell
+
+
+/obj/effect/mob_spawn/human/ash_walker/Destroy()
+	eggshell = null
+	return ..()
+
+/obj/effect/mob_spawn/human/ash_walker/allow_spawn(mob/user)
+	if(!(user.key in team.players_spawned))//one per person unless you get a bonus spawn
+		return TRUE
+	to_chat(user, span_warning("<b>You have exhausted your usefulness to the Necropolis</b>."))
+	return FALSE
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.fully_replace_character_name(null,random_unique_lizard_name(gender))
-	to_chat(new_spawn, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Don't leave your nest undefended, protect it with your life. Glory to the Necropolis!</b>")
-
-	new_spawn.grant_language(/datum/language/draconic)
-	var/datum/language_holder/holder = new_spawn.get_language_holder()
-	holder.selected_default_language = /datum/language/draconic
+	to_chat(new_spawn, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Invade the strange structure of the outsiders if you must. Do not cause unnecessary destruction, as littering the wastes with ugly wreckage is certain to not gain you favor. Glory to the Necropolis!</b>")
 
 	new_spawn.mind.add_antag_datum(/datum/antagonist/ashwalker, team)
 
@@ -67,11 +114,19 @@
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
 		H.update_body()
+		ADD_TRAIT(H, TRAIT_PRIMITIVE, ROUNDSTART_TRAIT)
+		H.remove_language(/datum/language/common)
+	team.players_spawned += (new_spawn.key)
+	eggshell.egg = null
+	QDEL_NULL(eggshell)
 
 /obj/effect/mob_spawn/human/ash_walker/Initialize(mapload, datum/team/ashwalkers/ashteam)
 	. = ..()
 	var/area/A = get_area(src)
 	team = ashteam
+	eggshell = new /obj/structure/ash_walker_eggshell(get_turf(loc))
+	eggshell.egg = src
+	src.forceMove(eggshell)
 	if(A)
 		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_ASHWALKER)
 
@@ -94,7 +149,7 @@
 	short_desc = "You are cursed."
 	flavour_text = "Years ago, you sacrificed the lives of your trusted friends and the humanity of yourself to reach the Wish Granter. Though you \
 	did so, it has come at a cost: your very body rejects the light, dooming you to wander endlessly in this horrible wasteland."
-	assignedrole = "Exile"
+	spawner_job_path = /datum/job/exile
 
 /obj/effect/mob_spawn/human/exile/Destroy()
 	new/obj/structure/fluff/empty_sleeper(get_turf(src))
@@ -103,15 +158,17 @@
 /obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
 	new_spawn.fully_replace_character_name(null,"Wish Granter's Victim ([rand(1,999)])")
 	var/wish = rand(1,4)
+	var/message = ""
 	switch(wish)
 		if(1)
-			to_chat(new_spawn, "<b>You wished to kill, and kill you did. You've lost track of how many, but the spark of excitement that murder once held has winked out. You feel only regret.</b>")
+			message = "<b>You wished to kill, and kill you did. You've lost track of how many, but the spark of excitement that murder once held has winked out. You feel only regret.</b>"
 		if(2)
-			to_chat(new_spawn, "<b>You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?</b>")
+			message = "<b>You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?</b>"
 		if(3)
-			to_chat(new_spawn, "<b>You wished for power. Little good it did you, cast out of the light. You are the [gender == MALE ? "king" : "queen"] of a hell that holds no subjects. You feel only remorse.</b>")
+			message = "<b>You wished for power. Little good it did you, cast out of the light. You are the [gender == MALE ? "king" : "queen"] of a hell that holds no subjects. You feel only remorse.</b>"
 		if(4)
-			to_chat(new_spawn, "<b>You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. There is no escape.</b>")
+			message = "<b>You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. There is no escape.</b>"
+	to_chat(new_spawn, "<span class='infoplain'>[message]</span>")
 
 //Golem shells: Spawns in Free Golem ships in lavaland. Ghosts become mineral golems and are advised to spread personal freedom.
 /obj/effect/mob_spawn/human/golem
@@ -130,9 +187,7 @@
 	var/can_transfer = TRUE //if golems can switch bodies to this new shell
 	var/mob/living/owner = null //golem's owner if it has one
 	short_desc = "You are a Free Golem. Your family worships The Liberator."
-	flavour_text = "In his infinite and divine wisdom, he set your clan free to \
-	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
-	golems, so that no golem may ever be forced to serve again."
+	flavour_text = "In his infinite and divine wisdom, he set your clan free to travel the stars with a single declaration: \"Yeah go do whatever.\""
 
 /obj/effect/mob_spawn/human/golem/Initialize(mapload, datum/species/golem/species = null, mob/creator = null)
 	if(species) //spawners list uses object name to register so this goes before ..()
@@ -152,9 +207,11 @@
 	var/datum/species/golem/X = mob_species
 	to_chat(new_spawn, "[initial(X.info_text)]")
 	if(!owner)
+		var/policy = get_policy(ROLE_FREE_GOLEM)
+		if (policy)
+			to_chat(new_spawn, policy)
 		to_chat(new_spawn, "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked.")
 	else
-		new_spawn.mind.store_memory("<b>Serve [owner.real_name], your creator.</b>")
 		new_spawn.mind.enslave_mind_to_creator(owner)
 		log_game("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
 		log_admin("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
@@ -172,23 +229,23 @@
 		else
 			H.fully_replace_character_name(null, name)
 	if(has_owner)
-		new_spawn.mind.assigned_role = "Servant Golem"
+		new_spawn.mind.set_assigned_role(SSjob.GetJobType(/datum/job/servant_golem))
 	else
-		new_spawn.mind.assigned_role = "Free Golem"
+		new_spawn.mind.set_assigned_role(SSjob.GetJobType(/datum/job/free_golem))
 
-/obj/effect/mob_spawn/human/golem/attack_hand(mob/user)
+/obj/effect/mob_spawn/human/golem/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	if(isgolem(user) && can_transfer)
 		var/mob/living/carbon/human/H = user
-		var/transfer_choice = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
+		var/transfer_choice = tgui_alert(usr, "Transfer your soul to [src]? (Warning, your old body will die!)",,list("Yes","No"))
 		if(transfer_choice != "Yes")
 			return
 		if(QDELETED(src) || uses <= 0)
 			return
 		log_game("[key_name(H)] golem-swapped into [src]")
-		H.visible_message("<span class='notice'>A faint light leaves [H], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
+		H.visible_message(span_notice("A faint light leaves [H], moving to [src] and animating it!"),span_notice("You leave your old body behind, and transfer into [src]!"))
 		show_flavour = FALSE
 		var/mob/living/carbon/human/newgolem = create(newname = H.real_name)
 		H.transfer_trait_datums(newgolem)
@@ -225,7 +282,7 @@
 	flavour_text = "Each day you barely scrape by, and between the terrible conditions of your makeshift shelter, \
 	the hostile creatures, and the ash drakes swooping down from the cloudless skies, all you can wish for is the feel of soft grass between your toes and \
 	the fresh air of Earth. These thoughts are dispelled by yet another recollection of how you got here... "
-	assignedrole = "Hermit"
+	spawner_job_path = /datum/job/hermit
 
 /obj/effect/mob_spawn/human/hermit/Initialize(mapload)
 	. = ..()
@@ -257,9 +314,25 @@
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
 	return ..()
 
+//Icebox version of hermit
+/obj/effect/mob_spawn/human/hermit/icemoon
+	name = "Cryostasis bed"
+	desc = "A humming sleeper with a silhouetted occupant inside. Its stasis function is broken and it's likely being used as a bed."
+	mob_name = "a grumpy old man"
+	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon_state = "cryostasis_sleeper"
+	outfit = /datum/outfit/hermit
+	roundstart = FALSE
+	death = FALSE
+	random = TRUE
+	mob_species = /datum/species/human
+	short_desc = "You've been hunting polar bears for 40 years now! What do these 'NaniteTrans' newcomers want?"
+	flavour_text = "You were fine hunting polar bears and taming wolves out here on your own, but now that there are corporate stooges around, you need to watch your step."
+	spawner_job_path = /datum/job/hermit
+
 /datum/outfit/hermit
 	name = "Lavaland hermit"
-	uniform = /obj/item/clothing/under/color/grey/glorf
+	uniform = /obj/item/clothing/under/color/grey/ancient
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	back = /obj/item/storage/backpack
 	mask = /obj/item/clothing/mask/breath
@@ -279,7 +352,7 @@
 	short_desc = "You're a prisoner, sentenced to hard work in one of Nanotrasen's labor camps, but it seems as \
 	though fate has other plans for you."
 	flavour_text = "Good. It seems as though your ship crashed. You remember that you were convicted of "
-	assignedrole = "Escaped Prisoner"
+	spawner_job_path = /datum/job/escaped_prisoner
 
 /obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/L)
 	L.fully_replace_character_name(null,"NTP #LL-0[rand(111,999)]") //Nanotrasen Prisoner #Lavaland-(numbers)
@@ -310,15 +383,15 @@
 	mob_name = "hotel staff member"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
-	objectives = "Cater to visiting guests with your fellow staff. Do not leave your assigned hotel and always remember: The customer is always right!"
+	objectives = "Cater to visiting guests with your fellow staff. Do not leave your assigned hotel. Remember, the customer is always right!"
 	death = FALSE
 	roundstart = FALSE
 	random = TRUE
 	outfit = /datum/outfit/hotelstaff
 	short_desc = "You are a staff member of a top-of-the-line space hotel!"
-	flavour_text = "You are a staff member of a top-of-the-line space hotel! Cater to guests and make sure the manager doesn't fire you."
-	important_info = "DON'T leave the hotel"
-	assignedrole = "Hotel Staff"
+	flavour_text = "You are a staff member of a top-of-the-line space hotel! Cater to guests, advertise the hotel, and make sure the manager doesn't fire you."
+	important_info = "Do NOT leave the hotel, as that is grounds for contract termination."
+	spawner_job_path = /datum/job/hotel_staff
 
 /datum/outfit/hotelstaff
 	name = "Hotel Staff"
@@ -326,7 +399,7 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	r_pocket = /obj/item/radio/off
 	back = /obj/item/storage/backpack
-	implants = list(/obj/item/implant/mindshield)
+	implants = list(/obj/item/implant/mindshield, /obj/item/implant/exile/noteleport)
 
 /obj/effect/mob_spawn/human/hotel_staff/security
 	name = "hotel security sleeper"
@@ -336,7 +409,7 @@
 	flavour_text = "You have been assigned to this hotel to protect the interests of the company while keeping the peace between \
 		guests and the staff."
 	important_info = "Do NOT leave the hotel, as that is grounds for contract termination."
-	objectives = "Do not leave your assigned hotel. Try and keep the peace between staff and guests, non-lethal force heavily advised if possible."
+	objectives = "Do not leave your assigned hotel. Try and keep the peace between staff and guests. Using non-lethal force instead of lethal force is heavily advised if possible."
 
 /datum/outfit/hotelstaff/security
 	name = "Hotel Security"
@@ -349,60 +422,7 @@
 
 /obj/effect/mob_spawn/human/hotel_staff/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
-	..()
-
-/obj/effect/mob_spawn/human/demonic_friend
-	name = "Essence of friendship"
-	desc = "Oh boy! Oh boy! A friend!"
-	mob_name = "Demonic friend"
-	icon = 'icons/obj/cardboard_cutout.dmi'
-	icon_state = "cutout_basic"
-	outfit = /datum/outfit/demonic_friend
-	death = FALSE
-	roundstart = FALSE
-	random = TRUE
-	id_job = "SuperFriend"
-	id_access = "assistant"
-	var/obj/effect/proc_holder/spell/targeted/summon_friend/spell
-	var/datum/mind/owner
-	assignedrole = "SuperFriend"
-
-/obj/effect/mob_spawn/human/demonic_friend/Initialize(mapload, datum/mind/owner_mind, obj/effect/proc_holder/spell/targeted/summon_friend/summoning_spell)
-	. = ..()
-	owner = owner_mind
-	flavour_text = "You have been given a reprieve from your eternity of torment, to be [owner.name]'s friend for [owner.p_their()] short mortal coil."
-	important_info = "Be aware that if you do not live up to [owner.name]'s expectations, they can send you back to hell with a single thought. [owner.name]'s death will also return you to hell."
-	var/area/A = get_area(src)
-	if(!mapload && A)
-		notify_ghosts("\A friendship shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
-	objectives = "Be [owner.name]'s friend, and keep [owner.name] alive, so you don't get sent back to hell."
-	spell = summoning_spell
-
-
-/obj/effect/mob_spawn/human/demonic_friend/special(mob/living/L)
-	if(!QDELETED(owner.current) && owner.current.stat != DEAD)
-		L.fully_replace_character_name(null,"[owner.name]'s best friend")
-		soullink(/datum/soullink/oneway, owner.current, L)
-		spell.friend = L
-		spell.charge_counter = spell.charge_max
-		L.mind.hasSoul = FALSE
-		var/mob/living/carbon/human/H = L
-		var/obj/item/worn = H.wear_id
-		var/obj/item/card/id/id = worn.GetID()
-		id.registered_name = L.real_name
-		id.update_label()
-	else
-		to_chat(L, "<span class='userdanger'>Your owner is already dead! You will soon perish.</span>")
-		addtimer(CALLBACK(L, /mob.proc/dust, 150)) //Give em a few seconds as a mercy.
-
-/datum/outfit/demonic_friend
-	name = "Demonic Friend"
-	uniform = /obj/item/clothing/under/misc/assistantformal
-	shoes = /obj/item/clothing/shoes/laceup
-	r_pocket = /obj/item/radio/off
-	back = /obj/item/storage/backpack
-	implants = list(/obj/item/implant/mindshield) //No revolutionaries, he's MY friend.
-	id = /obj/item/card/id
+	return ..()
 
 /obj/effect/mob_spawn/human/syndicate
 	name = "Syndicate Operative"
@@ -411,17 +431,18 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	outfit = /datum/outfit/syndicate_empty
-	assignedrole = "Space Syndicate"	//I know this is really dumb, but Syndicate operative is nuke ops
+	spawner_job_path = /datum/job/space_syndicate
 
 /datum/outfit/syndicate_empty
 	name = "Syndicate Operative Empty"
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	ears = /obj/item/radio/headset/syndicate/alt
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/weapons_auth)
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/advanced/chameleon
+	id_trim = /datum/id_trim/chameleon/operative
 
 /datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
@@ -431,9 +452,9 @@
 	short_desc = "You are a crewmember aboard the syndicate flagship: the SBC Starfury."
 	flavour_text = "Your job is to follow your captain's orders, maintain the ship, and keep the engine running. If you are not familiar with how the supermatter engine functions: do not attempt to start it."
 	important_info = "The armory is not a candy store, and your role is not to assault the station directly, leave that work to the assault operatives."
-	outfit = /datum/outfit/syndicate_empty/SBC
+	outfit = /datum/outfit/syndicate_empty/battlecruiser
 
-/datum/outfit/syndicate_empty/SBC
+/datum/outfit/syndicate_empty/battlecruiser
 	name = "Syndicate Battlecruiser Ship Operative"
 	l_pocket = /obj/item/gun/ballistic/automatic/pistol
 	r_pocket = /obj/item/kitchen/knife/combat/survival
@@ -444,12 +465,12 @@
 	short_desc = "You are an assault operative aboard the syndicate flagship: the SBC Starfury."
 	flavour_text = "Your job is to follow your captain's orders, keep intruders out of the ship, and assault Space Station 13. There is an armory, multiple assault ships, and beam cannons to attack the station with."
 	important_info = "Work as a team with your fellow operatives and work out a plan of attack. If you are overwhelmed, escape back to your ship!"
-	outfit = /datum/outfit/syndicate_empty/SBC/assault
+	outfit = /datum/outfit/syndicate_empty/battlecruiser/assault
 
-/datum/outfit/syndicate_empty/SBC/assault
+/datum/outfit/syndicate_empty/battlecruiser/assault
 	name = "Syndicate Battlecruiser Assault Operative"
 	uniform = /obj/item/clothing/under/syndicate/combat
-	l_pocket = /obj/item/ammo_box/magazine/m10mm
+	l_pocket = /obj/item/ammo_box/magazine/m9mm
 	r_pocket = /obj/item/kitchen/knife/combat/survival
 	belt = /obj/item/storage/belt/military
 	suit = /obj/item/clothing/suit/armor/vest
@@ -462,19 +483,19 @@
 	short_desc = "You are the captain aboard the syndicate flagship: the SBC Starfury."
 	flavour_text = "Your job is to oversee your crew, defend the ship, and destroy Space Station 13. The ship has an armory, multiple ships, beam cannons, and multiple crewmembers to accomplish this goal."
 	important_info = "As the captain, this whole operation falls on your shoulders. You do not need to nuke the station, causing sufficient damage and preventing your ship from being destroyed will be enough."
-	outfit = /datum/outfit/syndicate_empty/SBC/assault/captain
-	id_access_list = list(150,151)
+	outfit = /datum/outfit/syndicate_empty/battlecruiser/assault/captain
 
-/datum/outfit/syndicate_empty/SBC/assault/captain
+/datum/outfit/syndicate_empty/battlecruiser/assault/captain
 	name = "Syndicate Battlecruiser Captain"
-	l_pocket = /obj/item/melee/transforming/energy/sword/saber/red
-	r_pocket = /obj/item/melee/classic_baton/telescopic
+	l_pocket = /obj/item/melee/energy/sword/saber/red
+	r_pocket = /obj/item/melee/baton/telescopic
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	suit_store = /obj/item/gun/ballistic/revolver/mateba
 	back = /obj/item/storage/backpack/satchel/leather
-	head = /obj/item/clothing/head/HoS/syndicate
+	head = /obj/item/clothing/head/hos/syndicate
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+	id_trim = /datum/id_trim/battlecruiser/captain
 
 //Ancient cryogenic sleepers. Players become NT crewmen from a hundred year old space station, now on the verge of collapse.
 /obj/effect/mob_spawn/human/oldsec
@@ -497,7 +518,7 @@
 	id = /obj/item/card/id/away/old/sec
 	r_pocket = /obj/item/restraints/handcuffs
 	l_pocket = /obj/item/assembly/flash/handheld
-	assignedrole = "Ancient Crew"
+	spawner_job_path = /datum/job/ancient_crew
 
 /obj/effect/mob_spawn/human/oldsec/Destroy()
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
@@ -523,7 +544,7 @@
 	id = /obj/item/card/id/away/old/eng
 	gloves = /obj/item/clothing/gloves/color/fyellow/old
 	l_pocket = /obj/item/tank/internals/emergency_oxygen
-	assignedrole = "Ancient Crew"
+	spawner_job_path = /datum/job/ancient_crew
 
 /obj/effect/mob_spawn/human/oldeng/Destroy()
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
@@ -548,11 +569,13 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	id = /obj/item/card/id/away/old/sci
 	l_pocket = /obj/item/stack/medical/bruise_pack
-	assignedrole = "Ancient Crew"
+	spawner_job_path = /datum/job/ancient_crew
 
 /obj/effect/mob_spawn/human/oldsci/Destroy()
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
+
+///Pirates
 
 /obj/effect/mob_spawn/human/pirate
 	name = "space pirate sleeper"
@@ -561,7 +584,6 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	mob_name = "a space pirate"
-	mob_species = /datum/species/skeleton
 	outfit = /datum/outfit/pirate/space
 	roundstart = FALSE
 	death = FALSE
@@ -570,25 +592,323 @@
 	show_flavour = FALSE //Flavour only exists for spawners menu
 	short_desc = "You are a space pirate."
 	flavour_text = "The station refused to pay for your protection, protect the ship, siphon the credits from the station and raid it for even more loot."
-	assignedrole = "Space Pirate"
-	var/rank = "Mate"
+	spawner_job_path = /datum/job/space_pirate
+	///Rank of the pirate on the ship, it's used in generating pirate names!
+	var/rank = "Deserter"
+	///Whether or not it will spawn a fluff structure upon opening.
+	var/spawn_oldpod = TRUE
 
 /obj/effect/mob_spawn/human/pirate/special(mob/living/new_spawn)
-	new_spawn.fully_replace_character_name(new_spawn.real_name,generate_pirate_name())
+	new_spawn.fully_replace_character_name(new_spawn.real_name, generate_pirate_name(new_spawn.gender))
 	new_spawn.mind.add_antag_datum(/datum/antagonist/pirate)
 
-/obj/effect/mob_spawn/human/pirate/proc/generate_pirate_name()
+/obj/effect/mob_spawn/human/pirate/proc/generate_pirate_name(spawn_gender)
 	var/beggings = strings(PIRATE_NAMES_FILE, "beginnings")
 	var/endings = strings(PIRATE_NAMES_FILE, "endings")
 	return "[rank] [pick(beggings)][pick(endings)]"
 
 /obj/effect/mob_spawn/human/pirate/Destroy()
-	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
+	if(spawn_oldpod)
+		new /obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
 
 /obj/effect/mob_spawn/human/pirate/captain
-	rank = "Captain"
+	rank = "Renegade Leader"
 	outfit = /datum/outfit/pirate/space/captain
 
 /obj/effect/mob_spawn/human/pirate/gunner
+	rank = "Rogue"
+
+/obj/effect/mob_spawn/human/pirate/skeleton
+	name = "pirate remains"
+	desc = "Some unanimated bones. They feel like they could spring to life any moment!"
+	random = TRUE
+	density = FALSE
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains"
+	spawn_oldpod = FALSE
+	mob_name = "a space pirate"
+	mob_species = /datum/species/skeleton
+	outfit = /datum/outfit/pirate
+	rank = "Mate"
+
+/obj/effect/mob_spawn/human/pirate/skeleton/captain
+	rank = "Captain"
+	outfit = /datum/outfit/pirate/captain
+
+/obj/effect/mob_spawn/human/pirate/skeleton/gunner
 	rank = "Gunner"
+
+/obj/effect/mob_spawn/human/pirate/silverscale
+	name = "elegant sleeper"
+	desc = "Cozy. You get the feeling you aren't supposed to be here, though..."
+	random = TRUE
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	mob_name = "a space pirate"
+	mob_species = /datum/species/lizard/silverscale
+	outfit = /datum/outfit/pirate/silverscale
+	rank = "High-born"
+
+/obj/effect/mob_spawn/human/pirate/silverscale/generate_pirate_name(spawn_gender)
+	var/first_name
+	switch(gender)
+		if(MALE)
+			first_name = pick(GLOB.lizard_names_male)
+		if(FEMALE)
+			first_name = pick(GLOB.lizard_names_female)
+		else
+			first_name = pick(GLOB.lizard_names_male + GLOB.lizard_names_female)
+
+	return "[rank] [first_name]-Silverscale"
+
+/obj/effect/mob_spawn/human/pirate/silverscale/captain
+	rank = "Old-guard"
+	outfit = /datum/outfit/pirate/silverscale/captain
+
+/obj/effect/mob_spawn/human/pirate/silverscale/gunner
+	rank = "Top-drawer"
+
+//Forgotten syndicate ship
+
+/obj/effect/mob_spawn/human/syndicatespace
+	name = "Syndicate Ship Crew Member"
+	roundstart = FALSE
+	death = FALSE
+	show_flavour = FALSE
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper_s"
+	short_desc = "You are a syndicate operative on old ship, stuck in hostile space."
+	flavour_text = "Your ship docks after a long time somewhere in hostile space, reporting a malfunction. You are stuck here, with Nanotrasen station nearby. Fix the ship, find a way to power it and follow your captain's orders."
+	important_info = "Obey orders given by your captain. DO NOT let the ship fall into enemy hands."
+	outfit = /datum/outfit/syndicatespace/syndicrew
+	spawner_job_path = /datum/job/syndicate_cybersun
+
+/datum/outfit/syndicatespace/syndicrew/post_equip(mob/living/carbon/human/H)
+	H.faction |= ROLE_SYNDICATE
+
+/obj/effect/mob_spawn/human/syndicatespace/special(mob/living/new_spawn)
+	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
+	var/datum/job/spawn_job = SSjob.GetJobType(spawner_job_path)
+	var/policy = get_policy(spawn_job.policy_index)
+	if(policy)
+		to_chat(new_spawn, span_bold("[policy]"))
+
+/obj/effect/mob_spawn/human/syndicatespace/captain
+	name = "Syndicate Ship Captain"
+	short_desc = "You are the captain of an old ship, stuck in hostile space."
+	flavour_text = "Your ship docks after a long time somewhere in hostile space, reporting a malfunction. You are stuck here, with Nanotrasen station nearby. Command your crew and turn your ship into the most protected fortress."
+	important_info = "Protect the ship and secret documents in your backpack with your own life."
+	outfit = /datum/outfit/syndicatespace/syndicaptain
+	spawner_job_path = /datum/job/syndicate_cybersun_captain
+
+/datum/outfit/syndicatespace/syndicaptain/post_equip(mob/living/carbon/human/H)
+	H.faction |= ROLE_SYNDICATE
+
+/obj/effect/mob_spawn/human/syndicatespace/captain/Destroy()
+	new/obj/structure/fluff/empty_sleeper/syndicate/captain(get_turf(src))
+	return ..()
+
+/datum/outfit/syndicatespace/syndicrew
+	name = "Syndicate Ship Crew Member"
+	uniform = /obj/item/clothing/under/syndicate/combat
+	glasses = /obj/item/clothing/glasses/night
+	mask = /obj/item/clothing/mask/gas/syndicate
+	ears = /obj/item/radio/headset/syndicate/alt
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	back = /obj/item/storage/backpack
+	l_pocket = /obj/item/gun/ballistic/automatic/pistol
+	r_pocket = /obj/item/kitchen/knife/combat/survival
+	belt = /obj/item/storage/belt/military/assault
+	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
+	implants = list(/obj/item/implant/weapons_auth)
+
+/datum/outfit/syndicatespace/syndicaptain
+	name = "Syndicate Ship Captain"
+	uniform = /obj/item/clothing/under/syndicate/combat
+	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
+	head = /obj/item/clothing/head/hos/beret/syndicate
+	ears = /obj/item/radio/headset/syndicate/alt/leader
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	back = /obj/item/storage/backpack
+	r_pocket = /obj/item/kitchen/knife/combat/survival
+	belt = /obj/item/storage/belt/military/assault
+	id = /obj/item/card/id/advanced/black/syndicate_command/captain_id
+	implants = list(/obj/item/implant/weapons_auth)
+	backpack_contents = list(/obj/item/documents/syndicate/red, /obj/item/paper/fluff/ruins/forgottenship/password, /obj/item/gun/ballistic/automatic/pistol/aps)
+
+/obj/effect/mob_spawn/human/beach/alive
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	mob_name = "Beach Bum"
+	name = "beach bum sleeper"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	short_desc = "You're, like, totally a dudebro, bruh."
+	flavour_text = "Ch'yea. You came here, like, on spring break, hopin' to pick up some bangin' hot chicks, y'knaw?"
+	spawner_job_path = /datum/job/beach_bum
+
+/obj/effect/mob_spawn/human/beach/alive/lifeguard
+	short_desc = "You're a spunky lifeguard!"
+	flavour_text = "It's up to you to make sure nobody drowns or gets eaten by sharks and stuff."
+	mob_gender = "female"
+	name = "lifeguard sleeper"
+	outfit = /datum/outfit/beachbum/lifeguard
+	uniform = /obj/item/clothing/under/shorts/red
+
+/datum/outfit/beachbum
+	name = "Beach Bum"
+	glasses = /obj/item/clothing/glasses/sunglasses
+	r_pocket = /obj/item/storage/wallet/random
+	l_pocket = /obj/item/food/pizzaslice/dank
+	uniform = /obj/item/clothing/under/pants/youngfolksjeans
+	id = /obj/item/card/id/advanced
+
+/datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	. = ..()
+	if(visualsOnly)
+		return
+	H.dna.add_mutation(STONER)
+
+/datum/outfit/beachbum/lifeguard
+	id_trim = /datum/id_trim/lifeguard
+
+/obj/effect/mob_spawn/human/bartender/alive
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	name = "bartender sleeper"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	short_desc = "You are a space bartender!"
+	flavour_text = "Time to mix drinks and change lives. Smoking space drugs makes it easier to understand your patrons' odd dialect."
+	spawner_job_path = /datum/job/space_bartender
+
+/datum/outfit/spacebartender
+	name = "Space Bartender"
+	uniform = /obj/item/clothing/under/rank/civilian/bartender
+	back = /obj/item/storage/backpack
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	suit = /obj/item/clothing/suit/armor/vest
+	glasses = /obj/item/clothing/glasses/sunglasses/reagent
+	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/space_bartender
+
+/datum/outfit/spacebartender/post_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+	var/obj/item/card/id/id_card = H.wear_id
+	if(H.age < AGE_MINOR)
+		id_card.registered_age = AGE_MINOR
+		to_chat(H, span_notice("You're not technically old enough to access or serve alcohol, but your ID has been discreetly modified to display your age as [AGE_MINOR]. Try to keep that a secret!"))
+
+/obj/effect/mob_spawn/human/skeleton/alive
+	death = FALSE
+	roundstart = FALSE
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains"
+	short_desc = "By unknown powers, your skeletal remains have been reanimated!"
+	flavour_text = "Walk this mortal plane and terrorize all living adventurers who dare cross your path."
+	spawner_job_path = /datum/job/skeleton
+
+/obj/effect/mob_spawn/human/skeleton/alive/special(mob/living/new_spawn)
+	to_chat(new_spawn, "<b>You have this horrible lurching feeling deep down that your binding to this world will fail if you abandon this zone... Were you reanimated to protect something?</b>")
+	new_spawn.AddComponent(/datum/component/stationstuck, PUNISHMENT_MURDER, "You experience a feeling like a stressed twine being pulled until it snaps. Then, merciful nothing.")
+
+/obj/effect/mob_spawn/human/zombie/alive
+	death = FALSE
+	roundstart = FALSE
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains"
+	short_desc = "By unknown powers, your rotting remains have been resurrected!"
+	flavour_text = "Walk this mortal plane and terrorize all living adventurers who dare cross your path."
+
+/obj/effect/mob_spawn/human/zombie/alive/special(mob/living/new_spawn)
+	to_chat(new_spawn, "<b>You have this horrible lurching feeling deep down that your binding to this world will fail if you abandon this zone... Were you reanimated to protect something?</b>")
+	new_spawn.AddComponent(/datum/component/stationstuck, PUNISHMENT_MURDER, "You experience a feeling like a stressed twine being pulled until it snaps. Then, merciful nothing.")
+
+//terribly basic spawns below, please read the disclaimer. unless you're an admin. these are perfect for events as they have no intro text.
+
+//if you're going to use these in a map of some kind, add GUIDANCE or stationstuck component to them on spawn. see ash walkers and skeletons for an example of each. they're simply not very fleshed out.
+//if this is in your map, the player will have no idea what to do so will just go to the station and kill people until a policy headache arises
+
+//For ghost bar.
+/obj/effect/mob_spawn/human/alive/space_bar_patron
+	name = "Bar cryogenics"
+	mob_name = "Bar patron"
+	random = TRUE
+	permanent = TRUE
+	uses = -1
+	outfit = /datum/outfit/spacebartender
+	spawner_job_path = /datum/job/space_bar_patron
+
+/obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user, list/modifiers)
+	var/despawn = tgui_alert(usr, "Return to cryosleep? (Warning, Your mob will be deleted!)", null, list("Yes", "No"))
+	if(despawn == "No" || !loc || !Adjacent(user))
+		return
+	user.visible_message(span_notice("[user.name] climbs back into cryosleep..."))
+	qdel(user)
+
+/datum/outfit/cryobartender
+	name = "Cryogenic Bartender"
+	uniform = /obj/item/clothing/under/rank/civilian/bartender
+	back = /obj/item/storage/backpack
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	suit = /obj/item/clothing/suit/armor/vest
+	glasses = /obj/item/clothing/glasses/sunglasses/reagent
+
+/obj/effect/mob_spawn/human/nanotrasensoldier/alive
+	death = FALSE
+	roundstart = FALSE
+	mob_name = "Private Security Officer"
+	name = "sleeper"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	faction = list("nanotrasenprivate")
+	short_desc = "You are a Nanotrasen Private Security Officer!"
+
+/obj/effect/mob_spawn/human/commander/alive
+	death = FALSE
+	roundstart = FALSE
+	mob_name = "\improper Nanotrasen Commander"
+	name = "sleeper"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	short_desc = "You are a Nanotrasen Commander!"
+
+/obj/effect/mob_spawn/human/doctor/alive
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	name = "sleeper"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	short_desc = "You are a space doctor!"
+	spawner_job_path = /datum/job/space_doctor
+
+/obj/effect/mob_spawn/human/doctor/alive/equip(mob/living/carbon/human/doctor)
+	. = ..()
+	// Remove radio and PDA so they wouldn't annoy station crew.
+	var/list/del_types = list(/obj/item/pda, /obj/item/radio/headset)
+	for(var/del_type in del_types)
+		var/obj/item/unwanted_item = locate(del_type) in doctor
+		qdel(unwanted_item)
+
+/obj/effect/mob_spawn/mouse
+	name = "sleeper"
+	mob_type = /mob/living/simple_animal/mouse
+	death = FALSE
+	roundstart = FALSE
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+
+/obj/effect/mob_spawn/cow
+	name = "sleeper"
+	mob_type = /mob/living/basic/cow
+	death = FALSE
+	roundstart = FALSE
+	mob_gender = FEMALE
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"

@@ -2,158 +2,133 @@
 	name = "\improper AI system integrity restorer"
 	desc = "Used with intelliCards containing nonfunctional AIs to restore them to working order."
 	req_access = list(ACCESS_CAPTAIN, ACCESS_ROBOTICS, ACCESS_HEADS)
-	var/mob/living/silicon/ai/occupier = null
-	var/active = 0
 	circuit = /obj/item/circuitboard/computer/aifixer
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"
 	light_color = LIGHT_COLOR_PINK
 
+	/// Variable containing transferred AI
+	var/mob/living/silicon/ai/occupier
+	/// Variable dictating if we are in the process of restoring the occupier AI
+	var/restoring = FALSE
+
 /obj/machinery/computer/aifixer/screwdriver_act(mob/living/user, obj/item/I)
 	if(occupier)
-		if(stat & (NOPOWER|BROKEN))
-			to_chat(user, "<span class='warning'>The screws on [name]'s screen won't budge.</span>")
+		if(machine_stat & (NOPOWER|BROKEN))
+			to_chat(user, span_warning("The screws on [name]'s screen won't budge."))
 		else
-			to_chat(user, "<span class='warning'>The screws on [name]'s screen won't budge and it emits a warning beep.</span>")
+			to_chat(user, span_warning("The screws on [name]'s screen won't budge and it emits a warning beep."))
 	else
 		return ..()
 
-/obj/machinery/computer/aifixer/ui_interact(mob/user)
+/obj/machinery/computer/aifixer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "AiRestorer", name)
+		ui.open()
+
+/obj/machinery/computer/aifixer/ui_data(mob/user)
+	var/list/data = list()
+
+	data["ejectable"] = FALSE
+	data["AI_present"] = FALSE
+	data["error"] = null
+	if(!occupier)
+		data["error"] = "Please transfer an AI unit."
+	else
+		data["AI_present"] = TRUE
+		data["name"] = occupier.name
+		data["restoring"] = restoring
+		data["health"] = (occupier.health + 100) / 2
+		data["isDead"] = occupier.stat == DEAD
+		data["laws"] = occupier.laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
+
+	return data
+
+/obj/machinery/computer/aifixer/ui_act(action, params)
 	. = ..()
+	if(.)
+		return
 
-	var/dat = ""
+	if(!occupier)
+		restoring = FALSE
 
-	if (src.occupier)
-		var/laws
-		dat += "<h3>Stored AI: [src.occupier.name]</h3>"
-		dat += "<b>System integrity:</b> [(src.occupier.health+100)/2]%<br>"
-
-		if (src.occupier.laws.zeroth)
-			laws += "<b>0:</b> [src.occupier.laws.zeroth]<BR>"
-
-		for (var/index = 1, index <= src.occupier.laws.hacked.len, index++)
-			var/law = src.occupier.laws.hacked[index]
-			if (length(law) > 0)
-				var/num = ionnum()
-				laws += "<b>[num]:</b> [law]<BR>"
-
-		for (var/index = 1, index <= src.occupier.laws.ion.len, index++)
-			var/law = src.occupier.laws.ion[index]
-			if (length(law) > 0)
-				var/num = ionnum()
-				laws += "<b>[num]:</b> [law]<BR>"
-
-		var/number = 1
-		for (var/index = 1, index <= src.occupier.laws.inherent.len, index++)
-			var/law = src.occupier.laws.inherent[index]
-			if (length(law) > 0)
-				laws += "<b>[number]:</b> [law]<BR>"
-				number++
-
-		for (var/index = 1, index <= src.occupier.laws.supplied.len, index++)
-			var/law = src.occupier.laws.supplied[index]
-			if (length(law) > 0)
-				laws += "<b>[number]:</b> [law]<BR>"
-				number++
-
-		dat += "<b>Laws:</b><br>[laws]<br>"
-
-		if (src.occupier.stat == DEAD)
-			dat += "<span class='bad'>AI non-functional</span>"
-		else
-			dat += "<span class='good'>AI functional</span>"
-		if (!src.active)
-			dat += {"<br><br><A href='byond://?src=[REF(src)];fix=1'>Begin Reconstruction</A>"}
-		else
-			dat += "<br><br>Reconstruction in process, please wait.<br>"
-	dat += {"<br><A href='?src=[REF(user)];mach_close=computer'>Close</A>"}
-	var/datum/browser/popup = new(user, "computer", "AI System Integrity Restorer", 400, 500)
-	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-	popup.open()
-	return
+	switch(action)
+		if("PRG_beginReconstruction")
+			if(occupier?.health < 100)
+				to_chat(usr, span_notice("Reconstruction in progress. This will take several minutes."))
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
+				restoring = TRUE
+				occupier.notify_ghost_cloning("Your core files are being restored!", source = src)
+				. = TRUE
 
 /obj/machinery/computer/aifixer/proc/Fix()
 	use_power(1000)
-	occupier.adjustOxyLoss(-5, 0)
-	occupier.adjustFireLoss(-5, 0)
-	occupier.adjustToxLoss(-5, 0)
-	occupier.adjustBruteLoss(-5, 0)
+	occupier.adjustOxyLoss(-5, FALSE)
+	occupier.adjustFireLoss(-5, FALSE)
+	occupier.adjustBruteLoss(-5, FALSE)
 	occupier.updatehealth()
 	if(occupier.health >= 0 && occupier.stat == DEAD)
 		occupier.revive(full_heal = FALSE, admin_revive = FALSE)
 		if(!occupier.radio_enabled)
 			occupier.radio_enabled = TRUE
-			to_chat(occupier, "<span class='warning'>Your Subspace Transceiver has been enabled!</span>")
+			to_chat(occupier, span_warning("Your Subspace Transceiver has been enabled!"))
 	return occupier.health < 100
 
 /obj/machinery/computer/aifixer/process()
 	if(..())
-		if(active)
+		if(restoring)
 			var/oldstat = occupier.stat
-			active = Fix()
+			restoring = Fix()
 			if(oldstat != occupier.stat)
-				update_icon()
-		updateDialog()
-
-/obj/machinery/computer/aifixer/Topic(href, href_list)
-	if(..())
-		return
-	if(href_list["fix"])
-		to_chat(usr, "<span class='notice'>Reconstruction in progress. This will take several minutes.</span>")
-		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
-		active = TRUE
-		if(occupier)
-			var/mob/living/silicon/ai/A = occupier
-			A.notify_ghost_cloning("Your core files are being restored!", source = src)
-		add_fingerprint(usr)
-	updateUsrDialog()
+				update_appearance()
 
 /obj/machinery/computer/aifixer/update_overlays()
 	. = ..()
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	
-	if(active)
+
+	if(restoring)
 		. += "ai-fixer-on"
-	if (occupier)
-		switch (occupier.stat)
-			if (0)
-				. += "ai-fixer-full"
-			if (2)
-				. += "ai-fixer-404"
-	else
+
+	if(!occupier)
 		. += "ai-fixer-empty"
+		return
+	switch(occupier.stat)
+		if(CONSCIOUS)
+			. += "ai-fixer-full"
+		if(UNCONSCIOUS, HARD_CRIT)
+			. += "ai-fixer-404"
 
 /obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(!..())
 		return
 	//Downloading AI from card to terminal.
 	if(interaction == AI_TRANS_FROM_CARD)
-		if(stat & (NOPOWER|BROKEN))
-			to_chat(user, "<span class='alert'>[src] is offline and cannot take an AI at this time.</span>")
+		if(machine_stat & (NOPOWER|BROKEN))
+			to_chat(user, span_alert("[src] is offline and cannot take an AI at this time."))
 			return
 		AI.forceMove(src)
 		occupier = AI
 		AI.control_disabled = TRUE
 		AI.radio_enabled = FALSE
-		to_chat(AI, "<span class='alert'>You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.</span>")
-		to_chat(user, "<span class='notice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+		to_chat(AI, span_alert("You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."))
+		to_chat(user, "[span_notice("Transfer successful")]: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null
-		update_icon()
+		update_appearance()
 
 	else //Uploading AI from terminal to card
-		if(occupier && !active)
-			to_chat(occupier, "<span class='notice'>You have been downloaded to a mobile storage device. Still no remote access.</span>")
-			to_chat(user, "<span class='notice'>Transfer successful</span>: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+		if(occupier && !restoring)
+			to_chat(occupier, span_notice("You have been downloaded to a mobile storage device. Still no remote access."))
+			to_chat(user, "[span_notice("Transfer successful")]: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 			occupier.forceMove(card)
 			card.AI = occupier
 			occupier = null
-			update_icon()
-		else if (active)
-			to_chat(user, "<span class='alert'>ERROR: Reconstruction in progress.</span>")
+			update_appearance()
+		else if (restoring)
+			to_chat(user, span_alert("ERROR: Reconstruction in progress."))
 		else if (!occupier)
-			to_chat(user, "<span class='alert'>ERROR: Unable to locate artificial intelligence.</span>")
+			to_chat(user, span_alert("ERROR: Unable to locate artificial intelligence."))
 
 /obj/machinery/computer/aifixer/on_deconstruction()
 	if(occupier)

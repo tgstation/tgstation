@@ -72,16 +72,6 @@
 	construction_time = 100
 	category = list("Ripley")
 
-//firefighter subtype
-/datum/design/firefighter_chassis
-	name = "Exosuit Chassis (APLU \"Firefighter\")"
-	id = "firefighter_chassis"
-	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/chassis/firefighter
-	materials = list(/datum/material/iron=20000)
-	construction_time = 100
-	category = list("Firefighter")
-
 /datum/design/ripley_torso
 	name = "Exosuit Torso (APLU \"Ripley\")"
 	id = "ripley_torso"
@@ -89,7 +79,7 @@
 	build_path = /obj/item/mecha_parts/part/ripley_torso
 	materials = list(/datum/material/iron=20000,/datum/material/glass = 7500)
 	construction_time = 200
-	category = list("Ripley","Firefighter")
+	category = list("Ripley")
 
 /datum/design/ripley_left_arm
 	name = "Exosuit Left Arm (APLU \"Ripley\")"
@@ -98,7 +88,7 @@
 	build_path = /obj/item/mecha_parts/part/ripley_left_arm
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list("Ripley","Firefighter")
+	category = list("Ripley")
 
 /datum/design/ripley_right_arm
 	name = "Exosuit Right Arm (APLU \"Ripley\")"
@@ -107,7 +97,7 @@
 	build_path = /obj/item/mecha_parts/part/ripley_right_arm
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list("Ripley","Firefighter")
+	category = list("Ripley")
 
 /datum/design/ripley_left_leg
 	name = "Exosuit Left Leg (APLU \"Ripley\")"
@@ -116,7 +106,7 @@
 	build_path = /obj/item/mecha_parts/part/ripley_left_leg
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list("Ripley","Firefighter")
+	category = list("Ripley")
 
 /datum/design/ripley_right_leg
 	name = "Exosuit Right Leg (APLU \"Ripley\")"
@@ -125,7 +115,7 @@
 	build_path = /obj/item/mecha_parts/part/ripley_right_leg
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list("Ripley","Firefighter")
+	category = list("Ripley")
 
 //Odysseus
 /datum/design/odysseus_chassis
@@ -475,9 +465,173 @@
 	construction_time = 300
 	category = list("Phazon")
 
+//Savannah-Ivanov
+/datum/design/savannah_ivanov_chassis
+	name = "Exosuit Chassis (\"Savannah-Ivanov\")"
+	id = "savannah_ivanov_chassis"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/chassis/savannah_ivanov
+	materials = list(/datum/material/iron=20000)
+	construction_time = 100
+	category = list("Savannah-Ivanov")
+
+/datum/design/savannah_ivanov_torso
+	name = "Exosuit Torso (\"Savannah-Ivanov\")"
+	id = "savannah_ivanov_torso"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/savannah_ivanov_torso
+	materials = list(/datum/material/iron=20000,/datum/material/glass = 7500)
+	construction_time = 200
+	category = list("Savannah-Ivanov")
+
+/datum/design/savannah_ivanov_head
+	name = "Exosuit Head (\"Savannah-Ivanov\")"
+	id = "savannah_ivanov_head"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/savannah_ivanov_head
+	materials = list(/datum/material/iron=6000,/datum/material/glass = 10000)
+	construction_time = 100
+	category = list("Savannah-Ivanov")
+
+/datum/design/savannah_ivanov_left_arm
+	name = "Exosuit Left Arm (\"Savannah-Ivanov\")"
+	id = "savannah_ivanov_left_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/savannah_ivanov_left_arm
+	materials = list(/datum/material/iron=15000)
+	construction_time = 150
+	category = list("Savannah-Ivanov")
+
+/datum/design/savannah_ivanov_right_arm
+	name = "Exosuit Right Arm (\"Savannah-Ivanov\")"
+	id = "savannah_ivanov_right_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/savannah_ivanov_right_arm
+	materials = list(/datum/material/iron=15000)
+	construction_time = 150
+	category = list("Savannah-Ivanov")
+
+/datum/design/savannah_ivanov_chassis
+	name = "Exosuit Chassis (\"Savannah-Ivanov\")"
+	id = "savannah_ivanov_chassis"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/chassis/savannah_ivanov
+	materials = list(/datum/material/iron=25000)
+	construction_time = 100
+	category = list("Savannah-Ivanov")
+
+/datum/design/savannah_ivanov_torso
+	name = "Exosuit Torso (\"Savannah-Ivanov\")"
+	id = "savannah_ivanov_torso"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/savannah_ivanov_torso
+	materials = list(/datum/material/iron=25000, /datum/material/glass = 10000,/datum/material/silver=10000)
+	construction_time = 300
+	category = list("Savannah-Ivanov")
+
+/datum/design/savannah_ivanov_head
+	name = "Exosuit Head (\"Savannah-Ivanov\")"
+	id = "savannah_ivanov_head"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/savannah_ivanov_head
+	materials = list(/datum/material/iron=10000,/datum/material/glass = 15000,/datum/material/silver=2000)
+	construction_time = 200
+	category = list("Savannah-Ivanov")
+
+/datum/design/savannah_ivanov_left_arm
+	name = "Exosuit Left Arm (\"Savannah-Ivanov\")"
+	id = "savannah_ivanov_left_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/savannah_ivanov_left_arm
+	materials = list(/datum/material/iron=10000,/datum/material/silver=4000)
+	construction_time = 200
+	category = list("Savannah-Ivanov")
+
+/datum/design/savannah_ivanov_right_arm
+	name = "Exosuit Right Arm (\"Savannah-Ivanov\")"
+	id = "savannah_ivanov_right_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/savannah_ivanov_right_arm
+	materials = list(/datum/material/iron=10000,/datum/material/silver=4000)
+	construction_time = 200
+	category = list("Savannah-Ivanov")
+
+/datum/design/savannah_ivanov_left_leg
+	name = "Exosuit Left Leg (\"Savannah-Ivanov\")"
+	id = "savannah_ivanov_left_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/savannah_ivanov_left_leg
+	materials = list(/datum/material/iron=15000,/datum/material/silver=4000)
+	construction_time = 200
+	category = list("Savannah-Ivanov")
+
+/datum/design/savannah_ivanov_right_leg
+	name = "Exosuit Right Leg (\"Savannah-Ivanov\")"
+	id = "savannah_ivanov_right_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/savannah_ivanov_right_leg
+	materials = list(/datum/material/iron=15000,/datum/material/silver=4000)
+	construction_time = 200
+	category = list("Savannah-Ivanov")
+
+/datum/design/savannah_ivanov_armor
+	name = "Exosuit Armor (\"Savannah-Ivanov\")"
+	id = "savannah_ivanov_armor"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/savannah_ivanov_armor
+	materials = list(/datum/material/iron=30000,/datum/material/uranium=25000,/datum/material/titanium=20000)
+	construction_time = 600
+	category = list("Savannah-Ivanov")
+
+//Clarke
+/datum/design/clarke_chassis
+	name = "Exosuit Chassis (\"Clarke\")"
+	id = "clarke_chassis"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/chassis/clarke
+	materials = list(/datum/material/iron=20000)
+	construction_time = 100
+	category = list("Clarke")
+
+/datum/design/clarke_torso
+	name = "Exosuit Torso (\"Clarke\")"
+	id = "clarke_torso"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/clarke_torso
+	materials = list(/datum/material/iron=20000,/datum/material/glass = 7500)
+	construction_time = 200
+	category = list("Clarke")
+
+/datum/design/clarke_head
+	name = "Exosuit Head (\"Clarke\")"
+	id = "clarke_head"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/clarke_head
+	materials = list(/datum/material/iron=6000,/datum/material/glass = 10000)
+	construction_time = 100
+	category = list("Clarke")
+
+/datum/design/clarke_left_arm
+	name = "Exosuit Left Arm (\"Clarke\")"
+	id = "clarke_left_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/clarke_left_arm
+	materials = list(/datum/material/iron=15000)
+	construction_time = 150
+	category = list("Clarke")
+
+/datum/design/clarke_right_arm
+	name = "Exosuit Right Arm (\"Clarke\")"
+	id = "clarke_right_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/clarke_right_arm
+	materials = list(/datum/material/iron=15000)
+	construction_time = 150
+	category = list("Clarke")
+
 //Exosuit Equipment
 /datum/design/ripleyupgrade
-	name = "Ripley MK-1 to MK-II conversion kit"
+	name = "Ripley MK-I to MK-II conversion kit"
 	id = "ripleyupgrade"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/ripleyupgrade
@@ -486,7 +640,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_hydraulic_clamp
-	name = "Exosuit Engineering Equipment (Hydraulic Clamp)"
+	name = "Exosuit Engineering (Hydraulic Clamp)"
 	id = "mech_hydraulic_clamp"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp
@@ -495,7 +649,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_drill
-	name = "Exosuit Engineering Equipment (Drill)"
+	name = "Exosuit Mining (Mining Drill)"
 	id = "mech_drill"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/drill
@@ -504,7 +658,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_mining_scanner
-	name = "Exosuit Engineering Equipment (Mining Scanner)"
+	name = "Exosuit Engineering (Mining Scanner)"
 	id = "mech_mscanner"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/mining_scanner
@@ -513,7 +667,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_extinguisher
-	name = "Exosuit Engineering Equipment (Extinguisher)"
+	name = "Exosuit Engineering (Extinguisher)"
 	id = "mech_extinguisher"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/extinguisher
@@ -522,7 +676,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_generator
-	name = "Exosuit Equipment (Plasma Generator)"
+	name = "Exosuit Module (Plasma Generator)"
 	id = "mech_generator"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator
@@ -531,7 +685,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_mousetrap_mortar
-	name = "H.O.N.K Mousetrap Mortar"
+	name = "H.O.N.K Weapon (Mousetrap Mortar)"
 	id = "mech_mousetrap_mortar"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
@@ -540,7 +694,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_banana_mortar
-	name = "H.O.N.K Banana Mortar"
+	name = "H.O.N.K Weapon (Banana Mortar)"
 	id = "mech_banana_mortar"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar
@@ -549,7 +703,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_honker
-	name = "HoNkER BlAsT 5000"
+	name = "H.O.N.K Weapon (HoNkER BlAsT 5000)"
 	id = "mech_honker"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/honker
@@ -558,7 +712,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_punching_glove
-	name = "Oingo Boingo Punch-face"
+	name = "H.O.N.K Weapon (Oingo Boingo Punch-face)"
 	id = "mech_punching_face"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove
@@ -583,7 +737,7 @@
 	name = "Cyborg Upgrade (Emergency Reboot Board)"
 	id = "borg_upgrade_restart"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/restart
+	build_path = /obj/item/borg_restart_board
 	materials = list(/datum/material/iron = 20000 , /datum/material/glass = 5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
@@ -643,7 +797,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_transform_clown
-	name = "Cyborg Upgrade (Clown Module)"
+	name = "Cyborg Upgrade (Clown Model)"
 	id = "borg_transform_clown"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/transform/clown
@@ -714,6 +868,15 @@
 	construction_time = 40
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_prt
+	name = "Cyborg Upgrade (Plating Repair Tool)"
+	id = "borg_upgrade_prt"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/prt
+	materials = list(/datum/material/iron = 2500, /datum/material/glass = 750) //same price as a cautery
+	construction_time = 40
+	category = list("Cyborg Upgrade Modules")
+
 /datum/design/borg_upgrade_expand
 	name = "Cyborg Upgrade (Expand)"
 	id = "borg_upgrade_expand"
@@ -730,7 +893,8 @@
 	build_path = /obj/item/borg/upgrade/ai
 	materials = list(/datum/material/iron = 1200, /datum/material/glass = 1500, /datum/material/gold = 200)
 	construction_time = 50
-	category = list("Misc")
+	category = list("Control Interfaces")
+	search_metadata = "boris"
 
 /datum/design/borg_upgrade_rped
 	name = "Cyborg Upgrade (RPED)"
@@ -768,15 +932,24 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_broomer
+	name = "Cyborg Upgrade (Experimental Push Broom)"
+	id = "borg_upgrade_broomer"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/broomer
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 500)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 //Misc
 /datum/design/mecha_tracking
-	name = "Exosuit Tracking Beacon"
+	name = "Exosuit Tracker (Exosuit Tracking Beacon)"
 	id = "mecha_tracking"
 	build_type = MECHFAB
 	build_path =/obj/item/mecha_parts/mecha_tracking
 	materials = list(/datum/material/iron=500)
 	construction_time = 50
-	category = list("Misc")
+	category = list("Exosuit Equipment")
 
 /datum/design/mecha_tracking_ai_control
 	name = "AI Control Beacon"
@@ -785,7 +958,7 @@
 	build_path = /obj/item/mecha_parts/mecha_tracking/ai_control
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500, /datum/material/silver = 200)
 	construction_time = 50
-	category = list("Misc")
+	category = list("Control Interfaces")
 
 /datum/design/synthetic_flash
 	name = "Flash"
@@ -796,3 +969,13 @@
 	construction_time = 100
 	build_path = /obj/item/assembly/flash/handheld
 	category = list("Misc")
+
+/datum/design/maint_drone
+	name = "Maintenance Drone"
+	desc = "\"Repairs the station without bothering you!\" is what the marketing says."
+	id = "maint_drone"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron = 800, /datum/material/glass = 350)
+	construction_time = 150
+	build_path = /obj/effect/mob_spawn/drone
+	category = list("Control Interfaces")

@@ -49,5 +49,19 @@
 /obj/effect/overlay/vis
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
-	var/unused = 0 //When detected to be unused it gets set to world.time, after a while it gets removed
-	var/cache_expiration = 2 MINUTES // overlays which go unused for 2 minutes get cleaned up
+	vis_flags = VIS_INHERIT_DIR
+	///When detected to be unused it gets set to world.time, after a while it gets removed
+	var/unused = 0
+	///overlays which go unused for this amount of time get cleaned up
+	var/cache_expiration = 2 MINUTES
+
+/obj/effect/overlay/atmos_excited
+	name = "excited group"
+	icon = null
+	icon_state = null
+	anchored = TRUE  // should only appear in vis_contents, but to be safe
+	appearance_flags = RESET_TRANSFORM | TILE_BOUND
+	invisibility = INVISIBILITY_ABSTRACT
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	plane = ATMOS_GROUP_PLANE

@@ -86,10 +86,6 @@
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/wood,
 /area/shuttle/transport)
-"aw" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
 "az" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
@@ -121,9 +117,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aH" = (
-/obj/machinery/newscaster{
-	pixel_y = 30
-	},
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aI" = (
@@ -208,10 +202,6 @@
 /obj/structure/window/fulltile,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"aY" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
 "ba" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -236,7 +226,7 @@
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "bd" = (
-/obj/item/twohanded/required/kirbyplants/dead{
+/obj/item/kirbyplants/dead{
 	desc = "It doesn't look very healthy...";
 	name = "potted plant"
 	},
@@ -518,7 +508,7 @@ aa
 aa
 aa
 aa
-aw
+az
 aE
 aN
 aE
@@ -536,7 +526,7 @@ aa
 aa
 aa
 aa
-aw
+az
 aE
 aE
 aE
@@ -558,7 +548,7 @@ ad
 ak
 aE
 ak
-aY
+ad
 aa
 aa
 aa
@@ -576,7 +566,7 @@ ad
 aF
 aE
 aT
-aw
+az
 aa
 aa
 aa

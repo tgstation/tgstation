@@ -1,4 +1,3 @@
-//DON'T FORGET TO CHANGE THE REFILL SIZE IF YOU CHANGE THE MACHINE'S CONTENTS!
 /obj/machinery/vending/clothing
 	name = "ClothesMate" //renamed to make the slogan rhyme
 	desc = "A vending machine for clothing."
@@ -21,6 +20,7 @@
 		            /obj/item/clothing/head/beanie/stripedblue = 3,
 		            /obj/item/clothing/head/beanie/stripedgreen = 3,
 					/obj/item/clothing/head/beanie/rasta = 3,
+					/obj/item/clothing/head/beret/black = 3,
 					/obj/item/clothing/head/kippah = 3,
 					/obj/item/clothing/head/taqiyahred = 3,
 		            /obj/item/clothing/gloves/fingerless = 2,
@@ -46,7 +46,6 @@
 		            /obj/item/storage/belt/fannypack = 3,
 		            /obj/item/storage/belt/fannypack/blue = 3,
 		            /obj/item/storage/belt/fannypack/red = 3,
-		            /obj/item/clothing/ears/headphones = 2,
 		            /obj/item/clothing/under/misc/overalls = 2,
 		            /obj/item/clothing/under/pants/jeans = 2,
 		            /obj/item/clothing/under/pants/classicjeans = 2,
@@ -72,6 +71,7 @@
 		            /obj/item/clothing/under/rank/captain/suit/skirt = 2,
 		            /obj/item/clothing/under/rank/civilian/head_of_personnel/suit/skirt = 2,
 		            /obj/item/clothing/suit/jacket = 2,
+					/obj/item/clothing/suit/hooded/wintercoat/custom = 2,
 		            /obj/item/clothing/suit/jacket/puffer/vest = 2,
 		            /obj/item/clothing/suit/jacket/puffer = 2,
 		            /obj/item/clothing/suit/jacket/letterman = 2,
@@ -101,6 +101,7 @@
 		            /obj/item/clothing/suit/ianshirt = 1,
 		            /obj/item/clothing/shoes/laceup = 2,
 		            /obj/item/clothing/shoes/sandal = 2,
+					/obj/item/clothing/shoes/winterboots = 2,
 		            /obj/item/clothing/shoes/cowboy = 2,
 		            /obj/item/clothing/shoes/cowboy/white = 2,
 		            /obj/item/clothing/shoes/cowboy/black = 2,
@@ -118,7 +119,9 @@
 		              /obj/item/clothing/suit/jacket/letterman_syndie = 1,
 		              /obj/item/clothing/under/costume/jabroni = 1,
 		              /obj/item/clothing/suit/vapeshirt = 1,
-		              /obj/item/clothing/under/costume/geisha = 1)
+		              /obj/item/clothing/under/costume/geisha = 1,
+					  /obj/item/clothing/under/rank/centcom/officer/replica = 1,
+					  /obj/item/clothing/under/rank/centcom/officer_skirt/replica = 1)
 	premium = list(/obj/item/clothing/under/suit/checkered = 1,
 		           /obj/item/clothing/head/mailman = 1,
 		           /obj/item/clothing/under/misc/mailman = 1,
@@ -126,11 +129,16 @@
 		           /obj/item/clothing/suit/jacket/leather/overcoat = 1,
 		           /obj/item/clothing/under/pants/mustangjeans = 1,
 		           /obj/item/clothing/neck/necklace/dope = 3,
-		           /obj/item/clothing/suit/jacket/letterman_nanotrasen = 1)
+		           /obj/item/clothing/suit/jacket/letterman_nanotrasen = 1,
+				   /obj/item/clothing/under/costume/swagoutfit = 1,
+				   /obj/item/clothing/shoes/swagshoes = 1,
+		           /obj/item/instrument/piano_synth/headphones/spacepods = 1)
 	refill_canister = /obj/item/vending_refill/clothing
-	default_price = 50
-	extra_price = 75
+	default_price = PAYCHECK_ASSISTANT * 0.7 //Default of
+	extra_price = PAYCHECK_HARD
 	payment_department = NO_FREEBIES
+	light_mask = "wardrobe-light-mask"
+	light_color = LIGHT_COLOR_ELECTRIC_GREEN
 
 /obj/machinery/vending/clothing/canLoadItem(obj/item/I,mob/user)
 	return (I.type in products)

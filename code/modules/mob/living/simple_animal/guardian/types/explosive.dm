@@ -14,14 +14,14 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Scientist, master of explosive death.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Explosive modules active. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's an explosive carp! Boom goes the fishy.</span>"
+	miner_fluff_string = "<span class='holoparasite'>You encounter... Gibtonite, an explosive fighter.</span>"
 	var/bomb_cooldown = 0
 	var/static/list/boom_signals = list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_BUMPED, COMSIG_ATOM_ATTACK_HAND)
 
-/mob/living/simple_animal/hostile/guardian/bomb/Stat()
-	..()
-	if(statpanel("Status"))
-		if(bomb_cooldown >= world.time)
-			stat(null, "Bomb Cooldown Remaining: [DisplayTimeText(bomb_cooldown - world.time)]")
+/mob/living/simple_animal/hostile/guardian/bomb/get_status_tab_items()
+	. = ..()
+	if(bomb_cooldown >= world.time)
+		. += "Bomb Cooldown Remaining: [DisplayTimeText(bomb_cooldown - world.time)]"
 
 /mob/living/simple_animal/hostile/guardian/bomb/AttackingTarget()
 	. = ..()
@@ -41,25 +41,26 @@
 	if(!istype(A))
 		return
 	if(loc == summoner)
-		to_chat(src, "<span class='danger'><B>You must be manifested to create bombs!</B></span>")
+		to_chat(src, span_danger("<B>You must be manifested to create bombs!</B>"))
 		return
 	if(isobj(A) && Adjacent(A))
 		if(bomb_cooldown <= world.time && !stat)
-			to_chat(src, "<span class='danger'><B>Success! Bomb armed!</B></span>")
+			to_chat(src, span_danger("<B>Success! Bomb armed!</B>"))
 			bomb_cooldown = world.time + 200
 			RegisterSignal(A, COMSIG_PARENT_EXAMINE, .proc/display_examine)
 			RegisterSignal(A, boom_signals, .proc/kaboom)
 			addtimer(CALLBACK(src, .proc/disable, A), 600, TIMER_UNIQUE|TIMER_OVERRIDE)
 		else
-			to_chat(src, "<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</B></span>")
+			to_chat(src, span_danger("<B>Your powers are on cooldown! You must wait 20 seconds between bombs.</B>"))
 
 /mob/living/simple_animal/hostile/guardian/bomb/proc/kaboom(atom/source, mob/living/explodee)
+	SIGNAL_HANDLER
 	if(!istype(explodee))
 		return
 	if(explodee == src || explodee == summoner || hasmatchingsummoner(explodee))
 		return
-	to_chat(explodee, "<span class='danger'><B>[source] was boobytrapped!</B></span>")
-	to_chat(src, "<span class='danger'><B>Success! Your trap caught [explodee]</B></span>")
+	to_chat(explodee, span_danger("<B>[source] was boobytrapped!</B>"))
+	to_chat(src, span_danger("<B>Success! Your trap caught [explodee]</B>"))
 	var/turf/T = get_turf(source)
 	playsound(T,'sound/effects/explosion2.ogg', 200, TRUE)
 	new /obj/effect/temp_visual/explosion(T)
@@ -67,10 +68,11 @@
 	UNREGISTER_BOMB_SIGNALS(source)
 
 /mob/living/simple_animal/hostile/guardian/bomb/proc/disable(atom/A)
-	to_chat(src, "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</B></span>")
+	to_chat(src, span_danger("<B>Failure! Your trap didn't catch anyone this time.</B>"))
 	UNREGISTER_BOMB_SIGNALS(A)
 
 /mob/living/simple_animal/hostile/guardian/bomb/proc/display_examine(datum/source, mob/user, text)
-	text += "<span class='holoparasite'>It glows with a strange <font color=\"[namedatum.colour]\">light</font>!</span>"
+	SIGNAL_HANDLER
+	text += span_holoparasite("It glows with a strange <font color=\"[guardiancolor]\">light</font>!")
 
 #undef UNREGISTER_BOMB_SIGNALS

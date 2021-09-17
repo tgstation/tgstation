@@ -1,0 +1,4 @@
+author: "AccountName5"
+delete-after: True
+changes: 
+  - bugfix: "Roulette: You no longer win when betting on even and rolling 0."

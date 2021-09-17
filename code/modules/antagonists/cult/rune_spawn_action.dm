@@ -23,13 +23,13 @@
 	if(!T)
 		return FALSE
 	if(isspaceturf(T))
-		to_chat(owner, "<span class='warning'>You cannot scribe runes in space!</span>")
+		to_chat(owner, span_warning("You cannot scribe runes in space!"))
 		return FALSE
 	if(locate(/obj/effect/rune) in T)
-		to_chat(owner, "<span class='cult'>There is already a rune here.</span>")
+		to_chat(owner, span_cult("There is already a rune here."))
 		return FALSE
 	if(!is_station_level(T.z) && !is_mining_level(T.z))
-		to_chat(owner, "<span class='warning'>The veil is not weak enough here.</span>")
+		to_chat(owner, span_warning("The veil is not weak enough here."))
 		return FALSE
 	return TRUE
 
@@ -100,12 +100,6 @@
 	rune_innerring_type = /obj/effect/temp_visual/cult/rune_spawn/rune4/inner
 	rune_center_type = /obj/effect/temp_visual/cult/rune_spawn/rune4/center
 	rune_color = RUNE_COLOR_DARKRED
-
-/datum/action/innate/cult/create_rune/wall/Activate()
-	. = ..()
-	var/obj/effect/rune/wall/W = locate(/obj/effect/rune/wall) in owner.loc
-	if(W)
-		W.spread_density()
 
 /datum/action/innate/cult/create_rune/revive
 	name = "Summon Revive Rune"

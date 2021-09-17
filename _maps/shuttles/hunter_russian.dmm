@@ -65,7 +65,7 @@
 /area/shuttle/hunter)
 "o" = (
 /obj/effect/mob_spawn/human/fugitive/russian{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter)
@@ -216,13 +216,15 @@
 /area/shuttle/hunter)
 "N" = (
 /obj/machinery/suit_storage_unit/standard_unit,
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter)
 "Q" = (
 /obj/item/book/manual/ripley_build_and_repair,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"V" = (
+/obj/effect/mob_spawn/human/fugitive/russian,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter)
 "Y" = (
@@ -451,7 +453,7 @@ a
 a
 a
 b
-o
+V
 k
 r
 z

@@ -7,7 +7,7 @@
 	var/list/elements
 	var/floor_type = /turf/open/floor/vault
 	var/finished = FALSE
-	var/reward_type = /obj/item/reagent_containers/food/snacks/cookie
+	var/reward_type = /obj/item/food/cookie
 	var/element_type = /obj/structure/puzzle_element
 	var/auto_setup = TRUE
 	var/empty_tile_id
@@ -34,7 +34,7 @@
 			return get_step(center,SOUTH)
 		if(9)
 			return get_step(center,SOUTHEAST)
-		
+
 /obj/effect/sliding_puzzle/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
@@ -56,7 +56,7 @@
 /obj/effect/sliding_puzzle/proc/validate()
 	if(finished)
 		return
-	
+
 	if(elements.len < 8) //Someone broke it
 		qdel(src)
 
@@ -86,7 +86,7 @@
 		shake_camera(M, COLLAPSE_DURATION , 1)
 	for(var/obj/structure/puzzle_element/E in elements)
 		E.collapse()
-	
+
 	dispense_reward()
 
 /obj/effect/sliding_puzzle/proc/dispense_reward()
@@ -103,7 +103,7 @@
 		for(var/j in i to current_ordering.len)
 			if(current_ordering[j] < checked_value)
 				swap_tally++
-	
+
 	return swap_tally % 2 == 0
 
 //swap two tiles in same row
@@ -113,13 +113,13 @@
 	if(empty_tile_id == 1 || empty_tile_id == 2) //Can't swap with empty one so just grab some in second row
 		first_tile_id = 4
 		other_tile_id = 5
-	
+
 	var/turf/T1 = get_turf_for_id(first_tile_id)
 	var/turf/T2 = get_turf_for_id(other_tile_id)
-	
+
 	var/obj/structure/puzzle_element/E1 = locate() in T1
 	var/obj/structure/puzzle_element/E2 = locate() in T2
-	
+
 	E1.forceMove(T2)
 	E2.forceMove(T1)
 
@@ -242,7 +242,8 @@
 
 /obj/structure/puzzle_element/Moved()
 	. = ..()
-	source.validate()
+	if(source)
+		source.validate()
 
 //Admin abuse version so you can pick the icon before it sets up
 /obj/effect/sliding_puzzle/admin
@@ -282,7 +283,7 @@
 
 /obj/effect/sliding_puzzle/prison/Destroy()
 	if(prisoner)
-		to_chat(prisoner,"<span class='userdanger'>With the cube broken by force, you can feel your body falling apart.</span>")
+		to_chat(prisoner,span_userdanger("With the cube broken by force, you can feel your body falling apart."))
 		prisoner.death()
 		qdel(prisoner)
 	. = ..()
@@ -294,9 +295,9 @@
 
 //Some armor so it's harder to kill someone by mistake.
 /obj/structure/puzzle_element/prison
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 50, "rad" = 50, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 50, RAD = 50, FIRE = 50, ACID = 50)
 
-/obj/structure/puzzle_element/prison/relaymove(mob/user)
+/obj/structure/puzzle_element/prison/relaymove(mob/living/user, direction)
 	return
 
 /obj/item/prisoncube
@@ -314,12 +315,12 @@
 	//Handcuffed or unconcious
 	if(istype(carbon_victim) && carbon_victim.handcuffed || victim.stat != CONSCIOUS)
 		if(!puzzle_imprison(target))
-			to_chat(user,"<span class='warning'>[src] does nothing.</span>")
+			to_chat(user,span_warning("[src] does nothing."))
 			return
-		to_chat(user,"<span class='warning'>You trap [victim] in the prison cube!</span>")
+		to_chat(user,span_warning("You trap [victim] in the prison cube!"))
 		qdel(src)
 	else
-		to_chat(user,"<span class='notice'>[src] only accepts restrained or unconcious prisoners.</span>")
+		to_chat(user,span_notice("[src] only accepts restrained or unconcious prisoners."))
 
 /proc/puzzle_imprison(mob/living/prisoner)
 	var/turf/T = get_turf(prisoner)
@@ -331,7 +332,7 @@
 	//First grab the prisoner and move them temporarily into the generator so they won't get thrown around.
 	prisoner.notransform = TRUE
 	prisoner.forceMove(cube)
-	to_chat(prisoner,"<span class='userdanger'>You're trapped by the prison cube! You will remain trapped until someone solves it.</span>")
+	to_chat(prisoner,span_userdanger("You're trapped by the prison cube! You will remain trapped until someone solves it."))
 
 	//Clear the area from objects (and cube user)
 	var/list/things_to_throw = list()
@@ -342,7 +343,7 @@
 	for(var/atom/movable/AM in things_to_throw)
 		var/throwtarget = get_edge_target_turf(T, get_dir(T, get_step_away(AM, T)))
 		AM.throw_at(throwtarget, 2, 3)
-	
+
 	//Create puzzle itself
 	cube.prisoner = prisoner
 	cube.setup()

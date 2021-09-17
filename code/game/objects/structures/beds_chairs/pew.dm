@@ -41,7 +41,7 @@
 	update_leftpewarmrest()
 
 /obj/structure/chair/pew/right
-	name = "left wooden pew end"
+	name = "right wooden pew end"
 	icon_state = "pewend_right"
 	var/mutable_appearance/rightpewarmrest
 

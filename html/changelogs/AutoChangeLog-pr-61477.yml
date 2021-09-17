@@ -1,0 +1,4 @@
+author: "AccountName5"
+delete-after: True
+changes: 
+  - admin: "Revenant emag now logs correctly."

@@ -4,12 +4,12 @@
 	earliest_start = 10 MINUTES
 	min_players = 5
 	weight = 20
-	alert_observers = 0
+	alert_observers = FALSE
 
 /datum/round_event/electrical_storm
-	var/lightsoutAmount	= 1
-	var/lightsoutRange	= 25
-	announceWhen	= 1
+	var/lightsoutAmount = 1
+	var/lightsoutRange = 25
+	announceWhen = 1
 
 /datum/round_event/electrical_storm/announce(fake)
 	priority_announce("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert")

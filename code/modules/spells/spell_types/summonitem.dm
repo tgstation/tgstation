@@ -1,11 +1,11 @@
 /obj/effect/proc_holder/spell/targeted/summonitem
 	name = "Instant Summons"
 	desc = "This spell can be used to recall a previously marked item to your hand from anywhere in the universe."
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 100
 	clothes_req = FALSE
 	invocation = "GAR YOK"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	range = -1
 	level_max = 0 //cannot be improved
 	cooldown_min = 100
@@ -29,28 +29,28 @@
 					continue
 				if(HAS_TRAIT(item, TRAIT_NODROP))
 					message += "Though it feels redundant, "
-				marked_item = 		item
+				marked_item = item
 				message += "You mark [item] for recall.</span>"
 				name = "Recall [item]"
 				break
 
 			if(!marked_item)
 				if(hand_items)
-					message = "<span class='warning'>You aren't holding anything that can be marked for recall!</span>"
+					message = span_warning("You aren't holding anything that can be marked for recall!")
 				else
-					message = "<span class='warning'>You must hold the desired item in your hands to mark it for recall!</span>"
+					message = span_warning("You must hold the desired item in your hands to mark it for recall!")
 
-		else if(marked_item && marked_item in hand_items) //unlinking item to the spell
-			message = "<span class='notice'>You remove the mark on [marked_item] to use elsewhere.</span>"
+		else if(marked_item && (marked_item in hand_items)) //unlinking item to the spell
+			message = span_notice("You remove the mark on [marked_item] to use elsewhere.")
 			name = "Instant Summons"
-			marked_item = 		null
+			marked_item = null
 
 		else if(marked_item && QDELETED(marked_item)) //the item was destroyed at some point
-			message = "<span class='warning'>You sense your marked item has been destroyed!</span>"
+			message = span_warning("You sense your marked item has been destroyed!")
 			name = "Instant Summons"
-			marked_item = 		null
+			marked_item = null
 
-		else	//Getting previously marked item
+		else //Getting previously marked item
 			var/obj/item_to_retrieve = marked_item
 			var/infinite_recursion = 0 //I don't want to know how someone could put something inside itself but these are wizards so let's be safe
 
@@ -59,7 +59,7 @@
 					var/obj/item/organ/organ = item_to_retrieve
 					if(organ.owner)
 						// If this code ever runs I will be happy
-						log_combat(L, organ.owner, "magically removed [organ.name] from", addition="INTENT: [uppertext(L.a_intent)]")
+						log_combat(L, organ.owner, "magically removed [organ.name] from", addition="COMBAT MODE: [uppertext(L.combat_mode)]")
 						organ.Remove(organ.owner)
 			else
 				while(!isturf(item_to_retrieve.loc) && infinite_recursion < 10) //if it's in something you get the whole thing.
@@ -71,30 +71,18 @@
 						var/mob/M = item_to_retrieve.loc
 
 						if(issilicon(M)) //Items in silicons warp the whole silicon
-							M.loc.visible_message("<span class='warning'>[M] suddenly disappears!</span>")
+							M.loc.visible_message(span_warning("[M] suddenly disappears!"))
 							M.forceMove(L.loc)
-							M.loc.visible_message("<span class='warning'>[M] suddenly appears!</span>")
+							M.loc.visible_message(span_warning("[M] suddenly appears!"))
 							item_to_retrieve = null
 							break
 						M.dropItemToGround(item_to_retrieve)
-
-						if(iscarbon(M)) //Edge case housekeeping
-							var/mob/living/carbon/C = M
-							for(var/X in C.bodyparts)
-								var/obj/item/bodypart/part = X
-								if(item_to_retrieve in part.embedded_objects)
-									part.embedded_objects -= item_to_retrieve
-									to_chat(C, "<span class='warning'>The [item_to_retrieve] that was embedded in your [L] has mysteriously vanished. How fortunate!</span>")
-									if(!C.has_embedded_objects())
-										C.clear_alert("embeddedobject")
-										SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-									break
 
 					else
 						if(istype(item_to_retrieve.loc, /obj/machinery/portable_atmospherics/)) //Edge cases for moved machinery
 							var/obj/machinery/portable_atmospherics/P = item_to_retrieve.loc
 							P.disconnect()
-							P.update_icon()
+							P.update_appearance()
 
 						item_to_retrieve = item_to_retrieve.loc
 
@@ -104,13 +92,13 @@
 				return
 
 			if(item_to_retrieve.loc)
-				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly disappears!</span>")
+				item_to_retrieve.loc.visible_message(span_warning("The [item_to_retrieve.name] suddenly disappears!"))
 			if(!L.put_in_hands(item_to_retrieve))
 				item_to_retrieve.forceMove(L.drop_location())
-				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly appears!</span>")
+				item_to_retrieve.loc.visible_message(span_warning("The [item_to_retrieve.name] suddenly appears!"))
 				playsound(get_turf(L), 'sound/magic/summonitems_generic.ogg', 50, TRUE)
 			else
-				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly appears in [L]'s hand!</span>")
+				item_to_retrieve.loc.visible_message(span_warning("The [item_to_retrieve.name] suddenly appears in [L]'s hand!"))
 				playsound(get_turf(L), 'sound/magic/summonitems_generic.ogg', 50, TRUE)
 
 

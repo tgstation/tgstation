@@ -1,3 +1,5 @@
+#define PROB_MOUSE_SPAWN 98
+
 SUBSYSTEM_DEF(minor_mapping)
 	name = "Minor Mapping"
 	init_order = INIT_ORDER_MINOR_MAPPING
@@ -11,28 +13,36 @@ SUBSYSTEM_DEF(minor_mapping)
 /datum/controller/subsystem/minor_mapping/proc/trigger_migration(num_mice=10)
 	var/list/exposed_wires = find_exposed_wires()
 
-	var/mob/living/simple_animal/mouse/M
-	var/turf/proposed_turf
+	var/mob/living/simple_animal/mouse/mouse
+	var/turf/open/proposed_turf
+
 
 	while((num_mice > 0) && exposed_wires.len)
 		proposed_turf = pick_n_take(exposed_wires)
-		if(!M)
-			M = new(proposed_turf)
+
+		if(!istype(proposed_turf))
+			continue
+
+		if(prob(PROB_MOUSE_SPAWN))
+			if(!mouse)
+				mouse = new(proposed_turf)
+			else
+				mouse.forceMove(proposed_turf)
 		else
-			M.forceMove(proposed_turf)
-		if(M.environment_is_safe())
+			mouse = new /mob/living/simple_animal/hostile/regalrat/controlled(proposed_turf)
+		if(proposed_turf.air.has_gas(/datum/gas/oxygen, 5))
 			num_mice -= 1
-			M = null
+			mouse = null
 
 /datum/controller/subsystem/minor_mapping/proc/place_satchels(amount=10)
 	var/list/turfs = find_satchel_suitable_turfs()
 
 	while(turfs.len && amount > 0)
 		var/turf/T = pick_n_take(turfs)
-		var/obj/item/storage/backpack/satchel/flat/S = new(T)
-		S.hide(intact=TRUE)
-		amount--
+		var/obj/item/storage/backpack/satchel/flat/F = new(T)
 
+		SEND_SIGNAL(F, COMSIG_OBJ_HIDE, T.intact)
+		amount--
 
 /proc/find_exposed_wires()
 	var/list/exposed_wires = list()
@@ -41,7 +51,7 @@ SUBSYSTEM_DEF(minor_mapping)
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		all_turfs += block(locate(1,1,z), locate(world.maxx,world.maxy,z))
 	for(var/turf/open/floor/plating/T in all_turfs)
-		if(is_blocked_turf(T))
+		if(T.is_blocked_turf())
 			continue
 		if(locate(/obj/structure/cable) in T)
 			exposed_wires += T
@@ -57,3 +67,5 @@ SUBSYSTEM_DEF(minor_mapping)
 				suitable += t
 
 	return shuffle(suitable)
+
+#undef PROB_MOUSE_SPAWN

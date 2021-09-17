@@ -2,6 +2,8 @@
 	name = "Conjure"
 	desc = "This spell conjures objs of the specified types in range."
 
+	school = SCHOOL_CONJURATION
+
 	var/list/summon_type = list() //determines what exactly will be summoned
 	//should be text, like list("/mob/living/simple_animal/bot/ed209")
 
@@ -47,7 +49,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/proc/post_summon(atom/summoned_object, mob/user)
 	return
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/summonEdSwarm //test purposes - Also a lot of fun
+/obj/effect/proc_holder/spell/aoe_turf/conjure/summon_ed_swarm //test purposes - Also a lot of fun
 	name = "Dispense Wizard Justice"
 	desc = "This spell dispenses wizard justice."
 	summon_type = list(/mob/living/simple_animal/bot/secbot/ed209)
@@ -55,7 +57,7 @@
 	range = 3
 	newVars = list("emagged" = 2, "remote_disabled" = 1,"shoot_sound" = 'sound/weapons/laser.ogg',"projectile" = /obj/projectile/beam/laser, "declare_arrests" = 0,"name" = "Wizard's Justicebot")
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/linkWorlds
+/obj/effect/proc_holder/spell/aoe_turf/conjure/link_worlds
 	name = "Link Worlds"
 	desc = "A whole new dimension for you to play with! They won't be happy about it, though."
 	invocation = "WTF"
@@ -76,7 +78,7 @@
 	clothes_req = FALSE
 	var/obj/item/item
 	var/item_type = /obj/item/banhammer
-	school = "conjuration"
+	school = SCHOOL_CONJURATION
 	charge_max = 150
 	cooldown_min = 10
 	var/delete_old = TRUE //TRUE to delete the last summoned object if it's still there, FALSE for infinite item stream weeeee

@@ -1,6 +1,6 @@
 /obj/effect/spawner/bundle
 	name = "bundle spawner"
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x2"
 	color = "#00FF00"
 
@@ -8,10 +8,9 @@
 
 /obj/effect/spawner/bundle/Initialize(mapload)
 	..()
-	if(items && items.len)
-		var/turf/T = get_turf(src)
+	if(items?.len)
 		for(var/path in items)
-			new path(T)
+			new path(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/spawner/bundle/costume/chicken
@@ -19,7 +18,7 @@
 	items = list(
 		/obj/item/clothing/suit/chickensuit,
 		/obj/item/clothing/head/chicken,
-		/obj/item/reagent_containers/food/snacks/egg)
+		/obj/item/food/egg)
 
 /obj/effect/spawner/bundle/costume/gladiator
 	name = "gladiator costume spawner"
@@ -63,6 +62,15 @@
 		/obj/item/clothing/accessory/waistcoat,
 		/obj/item/clothing/under/suit/black,
 		/obj/item/clothing/head/that)
+
+/obj/effect/spawner/bundle/costume/referee
+	name = "referee costume spawner"
+	items = list(
+		/obj/item/clothing/mask/whistle,
+		/obj/item/clothing/gloves/color/latex,
+		/obj/item/clothing/shoes/laceup,
+		/obj/item/clothing/head/soft/black,
+		/obj/item/clothing/under/costume/referee)
 
 /obj/effect/spawner/bundle/costume/highlander
 	name = "highlander costume spawner"
@@ -138,7 +146,7 @@
 /obj/effect/spawner/bundle/costume/marisawizard
 	name = "marisa wizard costume spawner"
 	items = list(
-		/obj/item/clothing/shoes/sandal/marisa,
+		/obj/item/clothing/shoes/sneakers/marisa,
 		/obj/item/clothing/head/wizard/marisa/fake,
 		/obj/item/clothing/suit/wizrobe/marisa/fake)
 
@@ -168,3 +176,42 @@
 	items = list(
 		/obj/item/clothing/mask/gas/sexymime,
 		/obj/item/clothing/under/rank/civilian/mime/sexy)
+
+/obj/effect/spawner/bundle/costume/mafia
+	name = "black mafia outfit spawner"
+	items = list(
+		/obj/item/clothing/head/fedora,
+		/obj/item/clothing/under/suit/blacktwopiece,
+		/obj/item/clothing/shoes/laceup)
+
+/obj/effect/spawner/bundle/costume/mafia/white
+	name = "white mafia outfit spawner"
+	items = list(
+		/obj/item/clothing/head/fedora/white,
+		/obj/item/clothing/under/suit/white,
+		/obj/item/clothing/shoes/laceup)
+
+/obj/effect/spawner/bundle/costume/mafia/checkered
+	name = "checkered mafia outfit spawner"
+	items = list(
+		/obj/item/clothing/head/fedora,
+		/obj/item/clothing/under/suit/checkered,
+		/obj/item/clothing/shoes/laceup)
+
+/obj/effect/spawner/bundle/costume/mafia/beige
+	name = "beige mafia outfit spawner"
+	items = list(
+		/obj/item/clothing/head/fedora/beige,
+		/obj/item/clothing/under/suit/beige,
+		/obj/item/clothing/shoes/laceup)
+
+/obj/effect/spawner/bundle/hobo_squat
+	name = "hobo squat spawner"
+	items = list(/obj/structure/bed/maint,
+				/obj/effect/spawner/scatter/grime,
+				/obj/effect/spawner/lootdrop/maint_drugs)
+
+/obj/effect/spawner/bundle/moisture_trap
+	name = "moisture trap spawner"
+	items = list(/obj/effect/spawner/scatter/moisture,
+				/obj/structure/moisture_trap)

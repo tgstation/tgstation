@@ -39,8 +39,8 @@
 	..()
 	new /obj/item/clothing/glasses/eyepatch(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
-	new /obj/item/clothing/gloves/combat(src)
-	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/clothing/gloves/tackler/combat(src)
+	new /obj/item/clothing/gloves/tackler/combat(src)
 	new /obj/item/clothing/head/helmet/swat(src)
 	new /obj/item/clothing/head/helmet/swat(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
@@ -67,11 +67,11 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/armor/tdome/red(src)
 	for(var/i in 1 to 3)
-		new /obj/item/melee/transforming/energy/sword/saber(src)
+		new /obj/item/melee/energy/sword/saber(src)
 	for(var/i in 1 to 3)
 		new /obj/item/gun/energy/laser(src)
 	for(var/i in 1 to 3)
-		new /obj/item/melee/baton/loaded(src)
+		new /obj/item/melee/baton/security/loaded(src)
 	for(var/i in 1 to 3)
 		new /obj/item/storage/box/flashbangs(src)
 	for(var/i in 1 to 3)
@@ -86,11 +86,11 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/armor/tdome/green(src)
 	for(var/i in 1 to 3)
-		new /obj/item/melee/transforming/energy/sword/saber(src)
+		new /obj/item/melee/energy/sword/saber(src)
 	for(var/i in 1 to 3)
 		new /obj/item/gun/energy/laser(src)
 	for(var/i in 1 to 3)
-		new /obj/item/melee/baton/loaded(src)
+		new /obj/item/melee/baton/security/loaded(src)
 	for(var/i in 1 to 3)
 		new /obj/item/storage/box/flashbangs(src)
 	for(var/i in 1 to 3)
@@ -109,3 +109,22 @@
 	new /obj/item/crowbar(src)
 	new /obj/item/stock_parts/cell(src)
 	new /obj/item/multitool(src)
+
+/obj/structure/closet/mini_fridge
+	name = "grimy mini-fridge"
+	desc = "A small contraption designed to imbue a few drinks with a pleasant chill. This antiquated unit however seems to serve no purpose other than keeping the roaches company."
+	icon_state = "mini_fridge"
+	icon_welded = "welded_small"
+	max_mob_size = MOB_SIZE_SMALL
+	storage_capacity = 7
+
+/obj/structure/closet/mini_fridge/PopulateContents()
+	. = ..()
+	new /obj/effect/spawner/lootdrop/refreshing_beverage(src)
+	new /obj/effect/spawner/lootdrop/refreshing_beverage(src)
+	if(prob(50))
+		new /obj/effect/spawner/lootdrop/refreshing_beverage(src)
+	if(prob(40))
+		new /obj/item/food/pizzaslice/moldy(src)
+	else if(prob(30))
+		new /obj/item/food/syndicake(src)

@@ -47,10 +47,8 @@
 	req_access_txt = "46"
 	},
 /obj/item/clothing/shoes/clown_shoes/banana_shoes,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/item/gps/spaceruin,
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "l" = (

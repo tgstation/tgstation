@@ -28,6 +28,7 @@
 	attack_verb_simple = "bite into"
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	aggro_vision_range = 9
 	turns_per_move = 5
 	gold_core_spawnable = HOSTILE_SPAWN
@@ -39,12 +40,19 @@
 /obj/projectile/temp/basilisk
 	name = "freezing blast"
 	icon_state = "ice_2"
-	damage = 0
+	damage = 10
 	damage_type = BURN
-	nodamage = TRUE
-	flag = "energy"
-	temperature = 50
-	
+	nodamage = FALSE
+	flag = ENERGY
+	temperature = -50 // Cools you down! per hit!
+	var/slowdown = TRUE //Determines if the projectile applies a slowdown status effect on carbons or not
+
+/obj/projectile/temp/basilisk/on_hit(atom/target, blocked = 0)
+	. = ..()
+	if(iscarbon(target) && slowdown)
+		var/mob/living/carbon/carbon_target = target
+		carbon_target.apply_status_effect(/datum/status_effect/freezing_blast)
+
 /obj/projectile/temp/basilisk/heated
 	name = "energy blast"
 	icon_state= "chronobolt"
@@ -52,37 +60,39 @@
 	damage_type = BRUTE
 	nodamage = FALSE
 	temperature = 0
+	slowdown = FALSE
 
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
-		if(isliving(target) && !target.Adjacent(targets_from) && ranged_cooldown <= world.time)//No more being shot at point blank or spammed with RNG beams
+		var/atom/target_from = GET_TARGETS_FROM(src)
+		if(isliving(target) && !target.Adjacent(target_from) && ranged_cooldown <= world.time)//No more being shot at point blank or spammed with RNG beams
 			OpenFire(target)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			gib()
-		if(2)
+		if(EXPLODE_HEAVY)
 			adjustBruteLoss(140)
-		if(3)
+		if(EXPLODE_LIGHT)
 			adjustBruteLoss(110)
-			
+
 /mob/living/simple_animal/hostile/asteroid/basilisk/AttackingTarget()
 	. = ..()
 	if(lava_drinker && !warmed_up && istype(target, /turf/open/lava))
-		visible_message("<span class='warning'>[src] begins to drink from [target]...</span>")
+		visible_message(span_warning("[src] begins to drink from [target]..."))
 		if(do_after(src, 70, target = target))
-			visible_message("<span class='warning'>[src] begins to fire up!</span>")
+			visible_message(span_warning("[src] begins to fire up!"))
 			fully_heal()
 			icon_state = "Basilisk_alert"
 			set_varspeed(0)
 			warmed_up = TRUE
 			projectiletype = /obj/projectile/temp/basilisk/heated
 			addtimer(CALLBACK(src, .proc/cool_down), 3000)
-			
-mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
-	visible_message("<span class='warning'>[src] appears to be cooling down...</span>")
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
+	visible_message(span_warning("[src] appears to be cooling down..."))
 	if(stat != DEAD)
 		icon_state = "Basilisk"
 	set_varspeed(3)
@@ -98,23 +108,45 @@ mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
 	icon_living = "watcher"
 	icon_aggro = "watcher"
 	icon_dead = "watcher_dead"
+	health_doll_icon = "watcher"
 	pixel_x = -10
+	base_pixel_x = -10
 	throw_message = "bounces harmlessly off of"
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attack_verb_continuous = "impales"
 	attack_verb_simple = "impale"
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	stat_attack = UNCONSCIOUS
-	movement_type = FLYING
+	attack_vis_effect = null // doesn't bite unlike the parent type.
+	stat_attack = HARD_CRIT
 	robust_searching = 1
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
 	gold_core_spawnable = NO_SPAWN
 	loot = list()
 	butcher_results = list(/obj/item/stack/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
 	lava_drinker = FALSE
+	search_objects = 1
+	wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Initialize()
+	. = ..()
+	AddElement(/datum/element/simple_flying)
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life(delta_time = SSMOBS_DT, times_fired)
+	. = ..()
+	if(stat == CONSCIOUS)
+		consume_bait()
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/proc/consume_bait()
+	for(var/obj/potential_consumption in view(1, src))
+		if(istype(potential_consumption, /obj/item/stack/ore/diamond))
+			qdel(potential_consumption)
+			visible_message(span_notice("[src] consumes [potential_consumption], and it disappears! ...At least, you think."))
+		else if(istype(potential_consumption, /obj/item/pen/survival))
+			qdel(potential_consumption)
+			visible_message(span_notice("[src] examines [potential_consumption] closer, and telekinetically shatters the pen."))
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize()
 	. = ..()
@@ -134,6 +166,7 @@ mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
 	icon_dead = "watcher_magmawing_dead"
 	maxHealth = 215 //Compensate for the lack of slowdown on projectiles with a bit of extra health
 	health = 215
+	light_system = MOVABLE_LIGHT
 	light_range = 3
 	light_power = 2.5
 	light_color = LIGHT_COLOR_LAVA
@@ -161,7 +194,8 @@ mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
 	damage = 5
 	damage_type = BURN
 	nodamage = FALSE
-	temperature = 500 //Heats you up!
+	temperature = 200 // Heats you up! per hit!
+	slowdown = FALSE
 
 /obj/projectile/temp/basilisk/magmawing/on_hit(atom/target, blocked = FALSE)
 	. = ..()

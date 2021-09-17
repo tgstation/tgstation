@@ -11,7 +11,7 @@
 	while(num_spawned < nodes && possible_locs.len)
 		var/turf/T = pick(possible_locs)
 		var/area/A = get_area(T)
-		if(!istype(A, whitelist_area) || (T.flags_1 & NO_LAVA_GEN_1))
+		if(!istype(A, whitelist_area) || (T.turf_flags & NO_LAVA_GEN))
 			possible_locs -= T
 		else
 			river_nodes += new /obj/effect/landmark/river_waypoint(T)
@@ -22,22 +22,22 @@
 		var/obj/effect/landmark/river_waypoint/W = A
 		if (W.z != target_z || W.connected)
 			continue
-		W.connected = 1
+		W.connected = TRUE
 		var/turf/cur_turf = get_turf(W)
 		cur_turf.ChangeTurf(turf_type, new_baseturfs, CHANGETURF_IGNORE_AIR)
 		var/turf/target_turf = get_turf(pick(river_nodes - W))
 		if(!target_turf)
 			break
-		var/detouring = 0
+		var/detouring = FALSE
 		var/cur_dir = get_dir(cur_turf, target_turf)
 		while(cur_turf != target_turf)
 
 			if(detouring) //randomly snake around a bit
 				if(prob(20))
-					detouring = 0
+					detouring = FALSE
 					cur_dir = get_dir(cur_turf, target_turf)
 			else if(prob(20))
-				detouring = 1
+				detouring = TRUE
 				if(prob(50))
 					cur_dir = turn(cur_dir, 45)
 				else
@@ -47,8 +47,8 @@
 
 			cur_turf = get_step(cur_turf, cur_dir)
 			var/area/new_area = get_area(cur_turf)
-			if(!istype(new_area, whitelist_area) || (cur_turf.flags_1 & NO_LAVA_GEN_1)) //Rivers will skip ruins
-				detouring = 0
+			if(!istype(new_area, whitelist_area) || (cur_turf.turf_flags & NO_LAVA_GEN)) //Rivers will skip ruins
+				detouring = FALSE
 				cur_dir = get_dir(cur_turf, target_turf)
 				cur_turf = get_step(cur_turf, cur_dir)
 				continue
@@ -62,7 +62,7 @@
 
 /obj/effect/landmark/river_waypoint
 	name = "river waypoint"
-	var/connected = 0
+	var/connected = FALSE
 	invisibility = INVISIBILITY_ABSTRACT
 
 
@@ -75,7 +75,7 @@
 	for(var/F in RANGE_TURFS(1, src) - src)
 		var/turf/T = F
 		var/area/new_area = get_area(T)
-		if(!T || (T.density && !ismineralturf(T)) || istype(T, /turf/open/indestructible) || (whitelisted_area && !istype(new_area, whitelisted_area)) || (T.flags_1 & NO_LAVA_GEN_1) )
+		if(!T || (T.density && !ismineralturf(T)) || istype(T, /turf/open/indestructible) || (whitelisted_area && !istype(new_area, whitelisted_area)) || (T.turf_flags & NO_LAVA_GEN) )
 			continue
 
 		if(!logged_turf_type && ismineralturf(T))

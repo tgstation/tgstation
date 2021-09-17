@@ -1,20 +1,6 @@
 /datum/skill/mining
 	name = "Mining"
+	title = "Miner"
 	desc = "A dwarf's biggest skill, after drinking."
-
-/datum/skill/mining/get_skill_speed_modifier(level)
-	switch(level)
-		if(SKILL_LEVEL_NONE)
-			return 1.3
-		if(SKILL_LEVEL_NOVICE)
-			return 1.2
-		if(SKILL_LEVEL_APPRENTICE)
-			return 1.1
-		if(SKILL_LEVEL_JOURNEYMAN)
-			return 1
-		if(SKILL_LEVEL_EXPERT)
-			return 0.9
-		if(SKILL_LEVEL_MASTER)
-			return 0.75
-		if(SKILL_LEVEL_LEGENDARY)
-			return 0.5
+	modifiers = list(SKILL_SPEED_MODIFIER = list(1, 0.95, 0.9, 0.85, 0.75, 0.6, 0.5),SKILL_PROBS_MODIFIER=list(10, 15, 20, 25, 30, 35, 40))
+	skill_cape_path = /obj/item/clothing/neck/cloak/skill_reward/mining

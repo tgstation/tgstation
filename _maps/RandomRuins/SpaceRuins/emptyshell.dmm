@@ -36,10 +36,7 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "k" = (
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "l" = (
@@ -47,16 +44,9 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "m" = (
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 4;
-	name = "4maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/four,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"Q" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/space/nearstation)
 
 (1,1,1) = {"
 a
@@ -65,7 +55,7 @@ a
 a
 a
 a
-Q
+b
 a
 a
 a
@@ -80,12 +70,12 @@ a
 a
 a
 a
-Q
-Q
-Q
+b
+b
+b
 a
 a
-Q
+b
 a
 a
 a
@@ -96,23 +86,23 @@ a
 a
 a
 a
-Q
+b
 a
 a
-Q
+b
 i
 i
-Q
+b
 a
 a
 a
-Q
+b
 a
 "}
 (4,1,1) = {"
 a
-Q
-Q
+b
+b
 c
 c
 c
@@ -128,7 +118,7 @@ a
 "}
 (5,1,1) = {"
 a
-Q
+b
 c
 c
 c
@@ -141,7 +131,7 @@ c
 c
 c
 c
-Q
+b
 "}
 (6,1,1) = {"
 a
@@ -158,7 +148,7 @@ l
 c
 c
 c
-Q
+b
 "}
 (7,1,1) = {"
 a
@@ -196,7 +186,7 @@ a
 "}
 (9,1,1) = {"
 a
-Q
+b
 c
 c
 d
@@ -230,7 +220,7 @@ a
 "}
 (11,1,1) = {"
 a
-Q
+b
 c
 c
 f
@@ -281,7 +271,7 @@ a
 "}
 (14,1,1) = {"
 a
-Q
+b
 c
 c
 c
@@ -316,17 +306,17 @@ a
 (16,1,1) = {"
 a
 a
-Q
+b
 a
-Q
-Q
-Q
+b
+b
+b
 a
-Q
-Q
-Q
+b
+b
+b
 a
-Q
+b
 a
 a
 "}
@@ -336,12 +326,12 @@ a
 a
 a
 a
-Q
-Q
+b
+b
 a
-Q
-Q
-Q
+b
+b
+b
 a
 a
 a

@@ -1,25 +1,36 @@
-#define MONKEYS_ESCAPED		1
-#define MONKEYS_LIVED		2
-#define MONKEYS_DIED		3
-#define DISEASE_LIVED		4
+#define MONKEYS_ESCAPED 1
+#define MONKEYS_LIVED 2
+#define MONKEYS_DIED 3
+#define DISEASE_LIVED 4
 
 /datum/antagonist/monkey
 	name = "Monkey"
 	job_rank = ROLE_MONKEY
 	roundend_category = "monkeys"
 	antagpanel_category = "Monkey"
+	show_to_ghosts = TRUE
+	suicide_cry = "EEK OOP!!"
 	var/datum/team/monkey/monkey_team
 	var/monkey_only = TRUE
 
 /datum/antagonist/monkey/can_be_owned(datum/mind/new_owner)
 	return ..() && (!monkey_only || ismonkey(new_owner.current))
 
+/datum/antagonist/monkey/get_preview_icon()
+	// Creating a *real* monkey is fairly involved before atoms init.
+	var/icon/icon = icon('icons/mob/monkey.dmi', "monkey1")
+
+	icon.Crop(4, 9, 28, 33)
+	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+	icon.Shift(SOUTH, 10)
+
+	return icon
+
 /datum/antagonist/monkey/get_team()
 	return monkey_team
 
 /datum/antagonist/monkey/on_gain()
 	. = ..()
-	SSticker.mode.ape_infectees += owner
 	owner.special_role = "Infected Monkey"
 
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever/monkeymode
@@ -38,7 +49,6 @@
 
 /datum/antagonist/monkey/on_removal()
 	owner.special_role = null
-	SSticker.mode.ape_infectees -= owner
 
 	var/datum/disease/transformation/jungle_fever/D =  locate() in owner.current.diseases
 	if(D)
@@ -46,10 +56,21 @@
 
 	. = ..()
 
+/datum/antagonist/monkey/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/M = mob_override || owner.current
+	ADD_TRAIT(M, TRAIT_ADVANCEDTOOLUSER, JUNGLE_FEVER_TRAIT)
+
+/datum/antagonist/monkey/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/M = mob_override || owner.current
+	REMOVE_TRAIT(M, TRAIT_ADVANCEDTOOLUSER, JUNGLE_FEVER_TRAIT)
+
 /datum/antagonist/monkey/create_team(datum/team/monkey/new_team)
 	if(!new_team)
 		for(var/datum/antagonist/monkey/H in GLOB.antagonists)
 			if(!H.owner)
+				stack_trace("Antagonist datum without owner in GLOB.antagonists: [H]")
 				continue
 			if(H.monkey_team)
 				monkey_team = H.monkey_team
@@ -65,14 +86,14 @@
 	objectives |= monkey_team.objectives
 
 /datum/antagonist/monkey/admin_remove(mob/admin)
-	var/mob/living/carbon/monkey/M = owner.current
-	if(istype(M))
-		switch(alert(admin, "Humanize?", "Humanize", "Yes", "No"))
+	var/mob/living/carbon/human/M = owner.current
+	if(ismonkey(M))
+		switch(tgui_alert(admin, "Humanize?", "Humanize", list("Yes", "No")))
 			if("Yes")
 				if(admin == M)
-					admin = M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  | TR_KEEPSTUNS | TR_KEEPREAGENTS |  TR_DEFAULTMSG)
+					admin = M.humanize()
 				else
-					M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_KEEPSTUNS  |  TR_KEEPREAGENTS  |  TR_DEFAULTMSG)
+					M.humanize()
 			if("No")
 				//nothing
 			else
@@ -86,7 +107,7 @@
 /datum/antagonist/monkey/leader/admin_add(datum/mind/new_owner,mob/admin)
 	var/mob/living/carbon/human/H = new_owner.current
 	if(istype(H))
-		switch(alert(admin, "Monkeyize?", "Monkeyize", "Yes", "No"))
+		switch(tgui_alert(admin, "Monkeyize?", "Monkeyize", list("Yes", "No")))
 			if("Yes")
 				if(admin == H)
 					admin = H.monkeyize()
@@ -102,20 +123,18 @@
 
 /datum/antagonist/monkey/leader/on_gain()
 	. = ..()
-	var/obj/item/organ/heart/freedom/F = new
-	F.Insert(owner.current, drop_if_replaced = FALSE)
-	SSticker.mode.ape_leaders += owner
+	var/obj/item/organ/heart/freedom/super_heart = new
+	super_heart.Insert(owner.current, drop_if_replaced = FALSE)
 	owner.special_role = "Monkey Leader"
 
 /datum/antagonist/monkey/leader/on_removal()
-	SSticker.mode.ape_leaders -= owner
 	var/obj/item/organ/heart/H = new
 	H.Insert(owner.current, drop_if_replaced = FALSE) //replace freedom heart with normal heart
 
 	. = ..()
 
 /datum/antagonist/monkey/leader/greet()
-	to_chat(owner, "<B><span class='notice'>You are the Jungle Fever patient zero!!</B></span>")
+	to_chat(owner, "<B>[span_notice("You are the Jungle Fever patient zero!!</B>")]")
 	to_chat(owner, "<b>You have been planted onto this station by the Animal Rights Consortium.</b>")
 	to_chat(owner, "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>")
 	to_chat(owner, "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>")
@@ -132,7 +151,9 @@
 
 /datum/objective/monkey/check_completion()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
-	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
+		if(!ismonkey(M))
+			continue
 		if (M.HasDisease(D) && (M.onCentCom() || M.onSyndieBase()))
 			escaped_monkeys++
 	if(escaped_monkeys >= monkeys_to_win)
@@ -150,14 +171,18 @@
 
 /datum/team/monkey/proc/infected_monkeys_alive()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
-	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
+		if(!ismonkey(M))
+			continue
 		if(M.HasDisease(D))
 			return TRUE
 	return FALSE
 
 /datum/team/monkey/proc/infected_monkeys_escaped()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
-	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
+		if(!ismonkey(M))
+			continue
 		if(M.HasDisease(D) && (M.onCentCom() || M.onSyndieBase()))
 			return TRUE
 	return FALSE
@@ -190,23 +215,23 @@
 	switch(get_result())
 		if(MONKEYS_ESCAPED)
 			parts += "<span class='greentext big'><B>Monkey Major Victory!</B></span>"
-			parts += "<span class='greentext'><B>Central Command and [station_name()] were taken over by the monkeys! Ook ook!</B></span>"
+			parts += span_greentext("<B>Central Command and [station_name()] were taken over by the monkeys! Ook ook!</B>")
 		if(MONKEYS_LIVED)
 			parts += "<FONT size = 3><B>Monkey Minor Victory!</B></FONT>"
-			parts += "<span class='greentext'><B>[station_name()] was taken over by the monkeys! Ook ook!</B></span>"
+			parts += span_greentext("<B>[station_name()] was taken over by the monkeys! Ook ook!</B>")
 		if(DISEASE_LIVED)
 			parts += "<span class='redtext big'><B>Monkey Minor Defeat!</B></span>"
-			parts += "<span class='redtext'><B>All the monkeys died, but the disease lives on! The future is uncertain.</B></span>"
+			parts += span_redtext("<B>All the monkeys died, but the disease lives on! The future is uncertain.</B>")
 		if(MONKEYS_DIED)
 			parts += "<span class='redtext big'><B>Monkey Major Defeat!</B></span>"
-			parts += "<span class='redtext'><B>All the monkeys died, and Jungle Fever was wiped out!</B></span>"
+			parts += span_redtext("<B>All the monkeys died, and Jungle Fever was wiped out!</B>")
 	var/list/leaders = get_antag_minds(/datum/antagonist/monkey/leader, TRUE)
 	var/list/monkeys = get_antag_minds(/datum/antagonist/monkey, TRUE)
 
 	if(LAZYLEN(leaders))
 		parts += "<span class='header'>The monkey leaders were:</span>"
-		parts += printplayerlist(SSticker.mode.ape_leaders)
+		parts += printplayerlist(leaders)
 	if(LAZYLEN(monkeys))
 		parts += "<span class='header'>The monkeys were:</span>"
-		parts += printplayerlist(SSticker.mode.ape_infectees)
+		parts += printplayerlist(monkeys)
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

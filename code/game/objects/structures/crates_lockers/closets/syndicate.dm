@@ -12,17 +12,19 @@
 	new /obj/item/clothing/under/syndicate/skirt(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/radio/headset/syndicate(src)
-	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/ammo_box/magazine/m9mm(src)
 	new /obj/item/storage/belt/military(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/clothing/glasses/night(src)
+	new /obj/item/storage/belt/holster/nukie(src)
+	new /obj/item/pickaxe/drill/diamonddrill(src)
 
 /obj/structure/closet/syndicate/nuclear
 	desc = "It's a storage unit for a Syndicate boarding party."
 
 /obj/structure/closet/syndicate/nuclear/PopulateContents()
 	for(var/i in 1 to 5)
-		new /obj/item/ammo_box/magazine/m10mm(src)
+		new /obj/item/ammo_box/magazine/m9mm(src)
 	new /obj/item/storage/box/flashbangs(src)
 	new /obj/item/storage/box/teargas(src)
 	new /obj/item/storage/backpack/duffelbag/syndie/med(src)
@@ -47,9 +49,9 @@
 		P.name = "\improper IOU"
 		P.info = "Sorry man, we needed the money so we sold your stash. It's ok, we'll double our money for sure this time!"
 
-	//Metal (common ore)
+	//Iron (common ore)
 	if(pickednum >= 2)
-		new /obj/item/stack/sheet/metal(src, rand(common_min, common_max))
+		new /obj/item/stack/sheet/iron(src, rand(common_min, common_max))
 
 	//Glass (common ore)
 	if(pickednum >= 5)
@@ -96,7 +98,7 @@
 
 /obj/structure/closet/syndicate/resources/everything/PopulateContents()
 	var/list/resources = list(
-	/obj/item/stack/sheet/metal,
+	/obj/item/stack/sheet/iron,
 	/obj/item/stack/sheet/glass,
 	/obj/item/stack/sheet/mineral/gold,
 	/obj/item/stack/sheet/mineral/silver,

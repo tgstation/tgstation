@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - qol: "Engineering, Atmos and the CE's tablets come preinstalled with Canary (Alarm monitor) now."

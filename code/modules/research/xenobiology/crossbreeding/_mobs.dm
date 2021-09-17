@@ -21,13 +21,13 @@ Slimecrossing Mobs
 	if(remove_on_restore)
 		if(M.mind)
 			M.mind.RemoveSpell(src)
-	..()
+	return ..()
 
 //Transformed slime - Burning Black
 /mob/living/simple_animal/slime/transformedslime
 
 /mob/living/simple_animal/slime/transformedslime/Reproduce() //Just in case.
-	to_chat(src, "<span class='warning'>I can't reproduce...</span>")
+	to_chat(src, span_warning("I can't reproduce..."))
 	return
 
 //Slime corgi - Chilling Pink

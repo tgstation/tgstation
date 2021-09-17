@@ -6,6 +6,7 @@
 	device_type = TRINARY
 	layer = GAS_FILTER_LAYER
 	pipe_flags = PIPING_ONE_PER_TURF
+	vent_movement = NONE
 
 	var/flipped = FALSE
 
@@ -46,3 +47,12 @@ Housekeeping and pipe network stuff
 		node3_connect = turn(node3_connect, 180)
 
 	return list(node1_connect, node2_connect, node3_connect)
+
+/obj/machinery/atmospherics/components/trinary/proc/set_overlay_offset(pipe_layer)
+	switch(pipe_layer)
+		if(1)
+			return 1
+		if(5)
+			return 5
+		else
+			return 0

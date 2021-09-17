@@ -13,22 +13,19 @@
 	var/obj/item/modular_computer/tablet/fabricated_tablet = null
 
 	// Utility vars
-	var/state = 0 							// 0: Select device type, 1: Select loadout, 2: Payment, 3: Thankyou screen
-	var/devtype = 0 						// 0: None(unselected), 1: Laptop, 2: Tablet
-	var/total_price = 0						// Price of currently vended device.
+	var/state = 0 // 0: Select device type, 1: Select loadout, 2: Payment, 3: Thankyou screen
+	var/devtype = 0 // 0: None(unselected), 1: Laptop, 2: Tablet
+	var/total_price = 0 // Price of currently vended device.
 	var/credits = 0
 
 	// Device loadout
-	var/dev_cpu = 1							// 1: Default, 2: Upgraded
-	var/dev_battery = 1						// 1: Default, 2: Upgraded, 3: Advanced
-	var/dev_disk = 1						// 1: Default, 2: Upgraded, 3: Advanced
-	var/dev_netcard = 0						// 0: None, 1: Basic, 2: Long-Range
-	var/dev_apc_recharger = 0				// 0: None, 1: Standard (LAPTOP ONLY)
-	var/dev_printer = 0						// 0: None, 1: Standard
-	var/dev_card = 0						// 0: None, 1: Standard
-
-	ui_x = 500
-	ui_y = 400
+	var/dev_cpu = 1 // 1: Default, 2: Upgraded
+	var/dev_battery = 1 // 1: Default, 2: Upgraded, 3: Advanced
+	var/dev_disk = 1 // 1: Default, 2: Upgraded, 3: Advanced
+	var/dev_netcard = 0 // 0: None, 1: Basic, 2: Long-Range
+	var/dev_apc_recharger = 0 // 0: None, 1: Standard (LAPTOP ONLY)
+	var/dev_printer = 0 // 0: None, 1: Standard
+	var/dev_card = 0 // 0: None, 1: Standard
 
 // Removes all traces of old order and allows you to begin configuration from scratch.
 /obj/machinery/lapvend/proc/reset_order()
@@ -51,10 +48,11 @@
 // Recalculates the price and optionally even fabricates the device.
 /obj/machinery/lapvend/proc/fabricate_and_recalc_price(fabricate = FALSE)
 	total_price = 0
-	if(devtype == 1) 		// Laptop, generally cheaper to make it accessible for most station roles
+	if(devtype == 1) // Laptop, generally cheaper to make it accessible for most station roles
 		var/obj/item/computer_hardware/battery/battery_module = null
 		if(fabricate)
 			fabricated_laptop = new /obj/item/modular_computer/laptop/buildable(src)
+			fabricated_laptop.install_component(new /obj/item/computer_hardware/card_slot)
 			fabricated_laptop.install_component(new /obj/item/computer_hardware/battery)
 			battery_module = fabricated_laptop.all_components[MC_CELL]
 		total_price = 99
@@ -102,7 +100,7 @@
 		if(dev_apc_recharger)
 			total_price += 399
 			if(fabricate)
-				fabricated_laptop.install_component(new /obj/item/computer_hardware/recharger/APC)
+				fabricated_laptop.install_component(new /obj/item/computer_hardware/recharger/apc_recharger)
 		if(dev_printer)
 			total_price += 99
 			if(fabricate)
@@ -110,15 +108,16 @@
 		if(dev_card)
 			total_price += 199
 			if(fabricate)
-				fabricated_laptop.install_component(new /obj/item/computer_hardware/card_slot)
+				fabricated_laptop.install_component(new /obj/item/computer_hardware/card_slot/secondary)
 
 		return total_price
-	else if(devtype == 2) 	// Tablet, more expensive, not everyone could probably afford this.
+	else if(devtype == 2) // Tablet, more expensive, not everyone could probably afford this.
 		var/obj/item/computer_hardware/battery/battery_module = null
 		if(fabricate)
 			fabricated_tablet = new(src)
 			fabricated_tablet.install_component(new /obj/item/computer_hardware/battery)
 			fabricated_tablet.install_component(new /obj/item/computer_hardware/processor_unit/small)
+			fabricated_tablet.install_component(new/obj/item/computer_hardware/card_slot)
 			battery_module = fabricated_tablet.all_components[MC_CELL]
 		total_price = 199
 		switch(dev_battery)
@@ -157,11 +156,11 @@
 		if(dev_printer)
 			total_price += 99
 			if(fabricate)
-				fabricated_tablet.install_component(new/obj/item/computer_hardware/printer)
+				fabricated_tablet.install_component(new/obj/item/computer_hardware/printer/mini)
 		if(dev_card)
 			total_price += 199
 			if(fabricate)
-				fabricated_tablet.install_component(new/obj/item/computer_hardware/card_slot)
+				fabricated_tablet.install_component(new/obj/item/computer_hardware/card_slot/secondary)
 		return total_price
 	return FALSE
 
@@ -170,8 +169,9 @@
 
 
 /obj/machinery/lapvend/ui_act(action, params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
 
 	switch(action)
 		if("pick_device")
@@ -224,15 +224,15 @@
 			return TRUE
 	return FALSE
 
-/obj/machinery/lapvend/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	if(stat & (BROKEN | NOPOWER | MAINT))
+/obj/machinery/lapvend/ui_interact(mob/user, datum/tgui/ui)
+	if(machine_stat & (BROKEN | NOPOWER | MAINT))
 		if(ui)
 			ui.close()
 		return FALSE
 
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
-		ui = new(user, src, ui_key, "computer_fabricator", "Personal Computer Vendor", ui_x, ui_y, state = state)
+		ui = new(user, src, "ComputerFabricator")
 		ui.open()
 
 /obj/machinery/lapvend/attackby(obj/item/I, mob/user)
@@ -241,15 +241,15 @@
 		if(!user.temporarilyRemoveItemFromInventory(c))
 			return
 		credits += c.value
-		visible_message("<span class='info'><span class='name'>[user]</span> inserts [c.value] credits into [src].</span>")
+		visible_message(span_info("[span_name("[user]")] inserts [c.value] cr into [src]."))
 		qdel(c)
 		return
 	else if(istype(I, /obj/item/holochip))
 		var/obj/item/holochip/HC = I
 		credits += HC.credits
-		visible_message("<span class='info'>[user] inserts a $[HC.credits] holocredit chip into [src].</span>")
+		visible_message(span_info("[user] inserts a [HC.credits] cr holocredit chip into [src]."))
 		qdel(HC)
-		return		
+		return
 	else if(istype(I, /obj/item/card/id))
 		if(state != 2)
 			return
@@ -257,10 +257,10 @@
 		var/datum/bank_account/account = ID.registered_account
 		var/target_credits = total_price - credits
 		if(!account.adjust_money(-target_credits))
-			say("Insufficient money on card to purchase!")
+			say("Insufficient credits on card to purchase!")
 			return
 		credits += target_credits
-		say("$[target_credits] has been desposited from your account.")
+		say("[target_credits] cr have been withdrawn from your account.")
 		return
 	return ..()
 

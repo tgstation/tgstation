@@ -6,23 +6,25 @@
 	strip_delay = 40
 	equip_delay_other = 40
 
-/obj/item/clothing/neck/worn_overlays(isinhands = FALSE)
-	. = list()
-	if(!isinhands)
-		if(body_parts_covered & HEAD)
-			if(damaged_clothes)
-				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-			if(HAS_BLOOD_DNA(src))
-				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
+/obj/item/clothing/neck/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
+	. = ..()
+	if(isinhands)
+		return
+
+	if(body_parts_covered & HEAD)
+		if(damaged_clothes)
+			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
+		if(HAS_BLOOD_DNA(src))
+			. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 /obj/item/clothing/neck/tie
 	name = "tie"
 	desc = "A neosilk clip-on tie."
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "bluetie"
-	item_state = ""	//no inhands
+	inhand_icon_state = "" //no inhands
 	w_class = WEIGHT_CLASS_SMALL
-	custom_price = 15
+	custom_price = PAYCHECK_EASY
 
 /obj/item/clothing/neck/tie/blue
 	name = "blue tie"
@@ -52,37 +54,37 @@
 	icon_state = "stethoscope"
 
 /obj/item/clothing/neck/stethoscope/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] wont hear much!</span>")
+	user.visible_message(span_suicide("[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] won't hear much!"))
 	return OXYLOSS
 
-/obj/item/clothing/neck/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
-	if(ishuman(M) && isliving(user))
-		if(user.a_intent == INTENT_HELP)
-			var/body_part = parse_zone(user.zone_selected)
+/obj/item/clothing/neck/stethoscope/attack(mob/living/M, mob/living/user)
+	if(!ishuman(M) || !isliving(user))
+		return ..()
+	if(user.combat_mode)
+		return
 
-			var/heart_strength = "<span class='danger'>no</span>"
-			var/lung_strength = "<span class='danger'>no</span>"
+	var/mob/living/carbon/carbon_patient = M
+	var/body_part = parse_zone(user.zone_selected)
 
-			var/obj/item/organ/heart/heart = M.getorganslot(ORGAN_SLOT_HEART)
-			var/obj/item/organ/lungs/lungs = M.getorganslot(ORGAN_SLOT_LUNGS)
+	var/heart_strength = span_danger("no")
+	var/lung_strength = span_danger("no")
 
-			if(!(M.stat == DEAD || (HAS_TRAIT(M, TRAIT_FAKEDEATH))))
-				if(heart && istype(heart))
-					heart_strength = "<span class='danger'>an unstable</span>"
-					if(heart.beating)
-						heart_strength = "a healthy"
-				if(lungs && istype(lungs))
-					lung_strength = "<span class='danger'>strained</span>"
-					if(!(M.failed_last_breath || M.losebreath))
-						lung_strength = "healthy"
+	var/obj/item/organ/heart/heart = carbon_patient.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/lungs/lungs = carbon_patient.getorganslot(ORGAN_SLOT_LUNGS)
 
-			if(M.stat == DEAD && heart && world.time - M.timeofdeath < DEFIB_TIME_LIMIT * 10)
-				heart_strength = "<span class='boldannounce'>a faint, fluttery</span>"
+	if(carbon_patient.stat != DEAD && !(HAS_TRAIT(carbon_patient, TRAIT_FAKEDEATH)))
+		if(istype(heart))
+			heart_strength = (heart.beating ? "a healthy" : span_danger("an unstable"))
+		if(istype(lungs))
+			lung_strength = ((carbon_patient.failed_last_breath || carbon_patient.losebreath) ? span_danger("strained") : "healthy")
 
-			var/diagnosis = (body_part == BODY_ZONE_CHEST ? "You hear [heart_strength] pulse and [lung_strength] respiration." : "You faintly hear [heart_strength] pulse.")
-			user.visible_message("<span class='notice'>[user] places [src] against [M]'s [body_part] and listens attentively.</span>", "<span class='notice'>You place [src] against [M]'s [body_part]. [diagnosis]</span>")
-			return
-	return ..(M,user)
+	user.visible_message(span_notice("[user] places [src] against [carbon_patient]'s [body_part] and listens attentively."), ignored_mobs = user)
+
+	var/diagnosis = (body_part == BODY_ZONE_CHEST ? "You hear [heart_strength] pulse and [lung_strength] respiration" : "You faintly hear [heart_strength] pulse")
+	if(!user.can_hear())
+		diagnosis = "Fat load of good it does you though, since you can't hear"
+
+	to_chat(user, span_notice("You place [src] against [carbon_patient]'s [body_part]. [diagnosis]."))
 
 ///////////
 //SCARVES//
@@ -92,8 +94,9 @@
 	name = "white scarf"
 	icon_state = "scarf"
 	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
+	w_class = WEIGHT_CLASS_TINY
 	dog_fashion = /datum/dog_fashion/head
-	custom_price = 10
+	custom_price = PAYCHECK_EASY
 
 /obj/item/clothing/neck/scarf/black
 	name = "black scarf"
@@ -157,17 +160,17 @@
 /obj/item/clothing/neck/stripedredscarf
 	name = "striped red scarf"
 	icon_state = "stripedredscarf"
-	custom_price = 10
+	custom_price = PAYCHECK_ASSISTANT * 0.2
 
 /obj/item/clothing/neck/stripedgreenscarf
 	name = "striped green scarf"
 	icon_state = "stripedgreenscarf"
-	custom_price = 10
+	custom_price = PAYCHECK_ASSISTANT * 0.2
 
 /obj/item/clothing/neck/stripedbluescarf
 	name = "striped blue scarf"
 	icon_state = "stripedbluescarf"
-	custom_price = 10
+	custom_price = PAYCHECK_ASSISTANT * 0.2
 
 /obj/item/clothing/neck/petcollar
 	name = "pet collar"
@@ -175,13 +178,13 @@
 	icon_state = "petcollar"
 	var/tagname = null
 
-/obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
-	if(ishuman(M))
+/obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+	if(!ismonkey(M))
 		return FALSE
 	return ..()
 
 /obj/item/clothing/neck/petcollar/attack_self(mob/user)
-	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
+	tagname = sanitize_name(stripped_input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot", MAX_NAME_LEN))
 	name = "[initial(name)] - [tagname]"
 
 //////////////
@@ -194,12 +197,47 @@
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "bling"
 
+/obj/item/clothing/neck/necklace/dope/merchant
+	desc = "Don't ask how it works, the proof is in the holochips!"
+	/// scales the amount received in case an admin wants to emulate taxes/fees.
+	var/profit_scaling = 1
+	/// toggles between sell (TRUE) and get price post-fees (FALSE)
+	var/selling = FALSE
+
+/obj/item/clothing/neck/necklace/dope/merchant/attack_self(mob/user)
+	. = ..()
+	selling = !selling
+	to_chat(user, span_notice("[src] has been set to [selling ? "'Sell'" : "'Get Price'"] mode."))
+
+/obj/item/clothing/neck/necklace/dope/merchant/afterattack(obj/item/I, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	var/datum/export_report/ex = export_item_and_contents(I, dry_run=TRUE)
+	var/price = 0
+	for(var/x in ex.total_amount)
+		price += ex.total_value[x]
+
+	if(price)
+		var/true_price = round(price*profit_scaling)
+		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [I], value: <b>[true_price]</b> credits[I.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]"))
+		if(selling)
+			new /obj/item/holochip(get_turf(user),true_price)
+			for(var/i in ex.exported_atoms_ref)
+				var/atom/movable/AM = i
+				if(QDELETED(AM))
+					continue
+				qdel(AM)
+	else
+		to_chat(user, span_warning("There is no export value for [I] or any items within it."))
+
+
 /obj/item/clothing/neck/neckerchief
 	icon = 'icons/obj/clothing/masks.dmi' //In order to reuse the bandana sprite
 	w_class = WEIGHT_CLASS_TINY
 	var/sourceBandanaType
 
-/obj/item/clothing/neck/neckerchief/worn_overlays(isinhands)
+/obj/item/clothing/neck/neckerchief/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	if(!isinhands)
 		var/mutable_appearance/realOverlay = mutable_appearance('icons/mob/clothing/mask.dmi', icon_state)
@@ -211,7 +249,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(C.get_item_by_slot(ITEM_SLOT_NECK) == src)
-			to_chat(user, "<span class='warning'>You can't untie [src] while wearing it!</span>")
+			to_chat(user, span_warning("You can't untie [src] while wearing it!"))
 			return
 		if(user.is_holding(src))
 			var/obj/item/clothing/mask/bandana/newBand = new sourceBandanaType(user)
@@ -219,6 +257,19 @@
 			var/oldName = src.name
 			qdel(src)
 			user.put_in_hand(newBand, currentHandIndex)
-			user.visible_message("<span class='notice'>You untie [oldName] back into a [newBand.name].</span>", "<span class='notice'>[user] unties [oldName] back into a [newBand.name].</span>")
+			user.visible_message(span_notice("You untie [oldName] back into a [newBand.name]."), span_notice("[user] unties [oldName] back into a [newBand.name]."))
 		else
-			to_chat(user, "<span class='warning'>You must be holding [src] in order to untie it!</span>")
+			to_chat(user, span_warning("You must be holding [src] in order to untie it!"))
+
+/obj/item/clothing/neck/beads
+	name = "plastic bead necklace"
+	desc = "A cheap, plastic bead necklace. Show team spirit! Collect them! Throw them away! The posibilites are endless!"
+	icon = 'icons/obj/clothing/neck.dmi'
+	icon_state = "beads"
+	color = "#ffffff"
+	custom_price = PAYCHECK_ASSISTANT * 0.2
+	custom_materials = (list(/datum/material/plastic = 500))
+
+/obj/item/clothing/neck/beads/Initialize()
+	. = ..()
+	color = color = pick("#ff0077","#d400ff","#2600ff","#00ccff","#00ff2a","#e5ff00","#ffae00","#ff0000", "#ffffff")

@@ -2,8 +2,7 @@
 //
 // An invisible (no icon) mob that the AI controls to look around the station with.
 // It streams chunks as it moves around, which will show it what the AI can and cannot see.
-
-/mob/camera/aiEye
+/mob/camera/ai_eye
 	name = "Inactive AI Eye"
 
 	icon_state = "ai_camera"
@@ -13,18 +12,26 @@
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
 	var/relay_speech = FALSE
-	var/use_static = USE_STATIC_OPAQUE
+	var/use_static = TRUE
 	var/static_visibility_range = 16
 	var/ai_detector_visible = TRUE
 	var/ai_detector_color = COLOR_RED
+	interaction_range = null
 
-/mob/camera/aiEye/Initialize()
+/mob/camera/ai_eye/Initialize()
 	. = ..()
 	GLOB.aiEyes += src
 	update_ai_detect_hud()
 	setLoc(loc, TRUE)
 
-/mob/camera/aiEye/proc/update_ai_detect_hud()
+/mob/camera/ai_eye/examine(mob/user) //Displays a silicon's laws to ghosts
+	. = ..()
+	if(istype(ai) && ai.laws && isobserver(user))
+		. += "<b>[ai] has the following laws:</b>"
+		for(var/law in ai.laws.get_law_list(include_zeroth = TRUE))
+			. += law
+
+/mob/camera/ai_eye/proc/update_ai_detect_hud()
 	var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
 	var/list/old_images = hud_list[AI_DETECT_HUD]
 	if(!ai_detector_visible)
@@ -32,17 +39,17 @@
 		QDEL_LIST(old_images)
 		return
 
-	if(!hud.hudusers.len)
-		//no one is watching, do not bother updating anything
-		return
+	if(!length(hud.hudusers))
+		return //no one is watching, do not bother updating anything
+
 	hud.remove_from_hud(src)
 
-	var/static/list/vis_contents_objects = list()
-	var/obj/effect/overlay/ai_detect_hud/hud_obj = vis_contents_objects[ai_detector_color]
+	var/static/list/vis_contents_opaque = list()
+	var/obj/effect/overlay/ai_detect_hud/hud_obj = vis_contents_opaque[ai_detector_color]
 	if(!hud_obj)
 		hud_obj = new /obj/effect/overlay/ai_detect_hud()
 		hud_obj.color = ai_detector_color
-		vis_contents_objects[ai_detector_color] = hud_obj
+		vis_contents_opaque[ai_detector_color] = hud_obj
 
 	var/list/new_images = list()
 	var/list/turfs = get_visible_turfs()
@@ -56,7 +63,7 @@
 	hud_list[AI_DETECT_HUD] = new_images
 	hud.add_to_hud(src)
 
-/mob/camera/aiEye/proc/get_visible_turfs()
+/mob/camera/ai_eye/proc/get_visible_turfs()
 	if(!isturf(loc))
 		return list()
 	var/client/C = GetViewerClient()
@@ -68,18 +75,18 @@
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
 
-/mob/camera/aiEye/proc/setLoc(T, force_update = FALSE)
+/mob/camera/ai_eye/proc/setLoc(destination, force_update = FALSE)
 	if(ai)
 		if(!isturf(ai.loc))
 			return
-		T = get_turf(T)
-		if(!force_update && (T == get_turf(src)) )
+		destination = get_turf(destination)
+		if(!force_update && (destination == get_turf(src)) )
 			return //we are already here!
-		if (T)
-			forceMove(T)
+		if (destination)
+			abstract_move(destination)
 		else
 			moveToNullspace()
-		if(use_static != USE_STATIC_NONE)
+		if(use_static)
 			ai.camera_visibility(src)
 		if(ai.client && !ai.multicam_on)
 			ai.client.eye = src
@@ -88,21 +95,40 @@
 		//Holopad
 		if(istype(ai.current, /obj/machinery/holopad))
 			var/obj/machinery/holopad/H = ai.current
-			H.move_hologram(ai, T)
+			H.move_hologram(ai, destination)
 		if(ai.camera_light_on)
 			ai.light_cameras()
 		if(ai.master_multicam)
 			ai.master_multicam.refresh_view()
 
-/mob/camera/aiEye/Move()
-	return 0
+//it uses setLoc not forceMove, talks to the sillycone and not the camera mob
+/mob/camera/ai_eye/zMove(dir, feedback = FALSE)
+	if(dir != UP && dir != DOWN)
+		return FALSE
+	var/turf/target = get_step_multiz(src, dir)
+	if(!target)
+		if(feedback)
+			to_chat(ai, span_warning("There's nowhere to go in that direction!"))
+		return FALSE
+	if(!canZMove(dir, target))
+		if(feedback)
+			to_chat(ai, span_warning("You couldn't move there!"))
+		return FALSE
+	setLoc(target, TRUE)
+	return TRUE
 
-/mob/camera/aiEye/proc/GetViewerClient()
+/mob/camera/ai_eye/canZMove(direction, turf/target) //cameras do not respect these FLOORS you speak so much of
+	return TRUE
+
+/mob/camera/ai_eye/Move()
+	return
+
+/mob/camera/ai_eye/proc/GetViewerClient()
 	if(ai)
 		return ai.client
 	return null
 
-/mob/camera/aiEye/Destroy()
+/mob/camera/ai_eye/Destroy()
 	if(ai)
 		ai.all_eyes -= src
 		ai = null
@@ -169,7 +195,7 @@
 /mob/living/silicon/ai/proc/create_eye()
 	if(eyeobj)
 		return
-	eyeobj = new /mob/camera/aiEye()
+	eyeobj = new /mob/camera/ai_eye()
 	all_eyes += eyeobj
 	eyeobj.ai = src
 	eyeobj.setLoc(loc)
@@ -192,10 +218,10 @@
 	acceleration = !acceleration
 	to_chat(usr, "Camera acceleration has been toggled [acceleration ? "on" : "off"].")
 
-/mob/camera/aiEye/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+/mob/camera/ai_eye/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
 	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && near_camera(speaker))
-		ai.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
+		ai.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
 /obj/effect/overlay/ai_detect_hud
 	name = ""

@@ -1,13 +1,207 @@
 Any time you make a change to the schema files, remember to increment the database schema version. Generally increment the minor number, major should be reserved for significant changes to the schema. Both values go up to 255.
 
-The latest database version is 5.6; The query to update the schema revision table is:
+The latest database version is 5.16; The query to update the schema revision table is:
 
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 6);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 16);
 or
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 6);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 16);
 
 In any query remember to add a prefix to the table names if you use one.
 
+-----------------------------------------------------
+Version 5.16, 31 July 2021, by Atlanta-Ned
+Added `library_action` table for tracking reported library books and actions taken on them.
+
+```
+DROP TABLE IF EXISTS `library_action`;
+CREATE TABLE `library_action` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `book` int(10) unsigned NOT NULL,
+  `reason` longtext DEFAULT NULL,
+  `ckey` varchar(11) NOT NULL DEFAULT '',
+  `datetime` datetime NOT NULL DEFAULT current_timestamp(),
+  `action` varchar(11) NOT NULL DEFAULT '',
+  `ip_addr` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+```
+
+
+-----------------------------------------------------
+Version 5.15, 2 June 2021, by Mothblocks
+Added verified admin connection log used for 2FA
+
+```
+DROP TABLE IF EXISTS `admin_connections`;
+CREATE TABLE `admin_connections` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `ckey` VARCHAR(32) NOT NULL,
+  `ip` INT(11) UNSIGNED NOT NULL,
+  `cid` VARCHAR(32) NOT NULL,
+  `verification_time` DATETIME NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `unique_constraints` (`ckey`, `ip`, `cid`));
+```
+
+-----------------------------------------------------
+
+Version 5.14, xx May 2021, by Anturke
+Added exploration drone adventure table
+
+```
+DROP TABLE IF EXISTS `text_adventures`;
+CREATE TABLE `text_adventures` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`adventure_data` LONGTEXT NOT NULL,
+	`uploader` VARCHAR(32) NOT NULL,
+	`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`approved` TINYINT(1) NOT NULL DEFAULT FALSE,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+```
+
+-----------------------------------------------------
+
+Version 5.13, 30 April 2021, by Atlanta Ned
+Added the `citation` table for tracking security citations in the database.
+
+```
+CREATE TABLE `citation` (
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`round_id` INT(11) UNSIGNED NOT NULL,
+	`server_ip` INT(11) UNSIGNED NOT NULL,
+	`server_port` INT(11) UNSIGNED NOT NULL,
+	`citation` TEXT NOT NULL COLLATE 'utf8mb4_general_ci',
+	`action` VARCHAR(20) NOT NULL DEFAULT '' COLLATE 'utf8mb4_general_ci',
+	`sender` VARCHAR(32) NOT NULL DEFAULT '' COLLATE 'utf8mb4_general_ci',
+	`sender_ic` VARCHAR(64) NOT NULL DEFAULT '' COMMENT 'Longer because this is the character name, not the ckey' COLLATE 'utf8mb4_general_ci',
+	`recipient` VARCHAR(64) NOT NULL DEFAULT '' COMMENT 'Longer because this is the character name, not the ckey' COLLATE 'utf8mb4_general_ci',
+	`crime` TEXT NOT NULL COLLATE 'utf8mb4_general_ci',
+	`fine` INT(4) NULL DEFAULT NULL,
+	`paid` INT(4) NULL DEFAULT '0',
+	`timestamp` DATETIME NOT NULL,
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `idx_constraints` (`round_id`, `server_ip`, `server_port`, `citation`(100)) USING BTREE
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=1
+;
+```
+
+-----------------------------------------------------
+
+Version 5.12, 29 December 2020, by Missfox
+Modified table `messages`, adding column `playtime` to show the user's playtime when the note was created.
+
+ALTER TABLE `messages` ADD `playtime` INT(11) NULL DEFAULT(NULL) AFTER `severity`
+
+-----------------------------------------------------
+
+Version 5.11, 7 September 2020, by bobbahbrown, MrStonedOne, and Jordie0608 (Updated 26 March 2021 by bobbahbrown)
+
+Adds indices to support search operations on the adminhelp ticket tables. This is to support improved performance on Atlanta Ned's Statbus.
+
+ALTER TABLE `ticket`
+	ADD INDEX `idx_ticket_act_recip` (`action`, `recipient`),
+	ADD INDEX `idx_ticket_act_send` (`action`, `sender`),
+	ADD INDEX `idx_ticket_tic_rid` (`ticket`, `round_id`),
+	ADD INDEX `idx_ticket_act_time_rid` (`action`, `timestamp`, `round_id`);
+
+-----------------------------------------------------
+
+Version 5.10, 7 August 2020, by oranges
+
+Changes how the discord verification process works.
+Adds the discord_links table, and migrates discord id entries from player table to the discord links table in a once off operation and then removes the discord id
+on the player table
+
+START TRANSACTION;
+
+DROP TABLE IF EXISTS `discord_links`;
+CREATE TABLE `discord_links` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`ckey` VARCHAR(32) NOT NULL,
+	`discord_id` BIGINT(20) DEFAULT NULL,
+	`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`one_time_token` VARCHAR(100) NOT NULL,
+	`valid` BOOLEAN NOT NULL DEFAULT FALSE,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+INSERT INTO `discord_links` (`ckey`, `discord_id`, `one_time_token`, `valid`) SELECT `ckey`, `discord_id`, CONCAT("presync_from_player_table_", `ckey`), TRUE FROM `player` WHERE discord_id IS NOT NULL;
+
+ALTER TABLE `player` DROP COLUMN `discord_id`;
+
+COMMIT;
+
+-----------------------------------------------------
+
+Version 5.9, 19 April 2020, by Jordie0608
+Updates and improvements to poll handling.
+Added the `deleted` column to tables 'poll_option', 'poll_textreply' and 'poll_vote' and the columns `created_datetime`, `subtitle`, `allow_revoting` and `deleted` to 'poll_question'.
+Changes table 'poll_question' column `createdby_ckey` to be NOT NULL and index `idx_pquest_time_admin` to be `idx_pquest_time_deleted_id` and 'poll_textreply' column `adminrank` to have no default.
+Added procedure `set_poll_deleted` that's called when deleting a poll to set deleted to true on each poll table where rows matching a poll_id argument.
+
+ALTER TABLE `poll_option`
+	ADD COLUMN `deleted` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `default_percentage_calc`;
+
+ALTER TABLE `poll_question`
+	CHANGE COLUMN `createdby_ckey` `createdby_ckey` VARCHAR(32) NOT NULL AFTER `multiplechoiceoptions`,
+	ADD COLUMN `created_datetime` datetime NOT NULL AFTER `polltype`,
+	ADD COLUMN `subtitle` VARCHAR(255) NULL DEFAULT NULL AFTER `question`,
+	ADD COLUMN `allow_revoting` TINYINT(1) UNSIGNED NOT NULL AFTER `dontshow`,
+	ADD COLUMN `deleted` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `allow_revoting`,
+	DROP INDEX `idx_pquest_time_admin`,
+	ADD INDEX `idx_pquest_time_deleted_id` (`starttime`, `endtime`, `deleted`, `id`);
+
+ALTER TABLE `poll_textreply`
+	CHANGE COLUMN `adminrank` `adminrank` varchar(32) NOT NULL AFTER `replytext`,
+	ADD COLUMN `deleted` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `adminrank`;
+
+ALTER TABLE `poll_vote`
+	ADD COLUMN `deleted` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `rating`;
+
+DELIMITER $$
+CREATE PROCEDURE `set_poll_deleted`(
+	IN `poll_id` INT
+)
+SQL SECURITY INVOKER
+BEGIN
+UPDATE `poll_question` SET deleted = 1 WHERE id = poll_id;
+UPDATE `poll_option` SET deleted = 1 WHERE pollid = poll_id;
+UPDATE `poll_vote` SET deleted = 1 WHERE pollid = poll_id;
+UPDATE `poll_textreply` SET deleted = 1 WHERE pollid = poll_id;
+END
+$$
+DELIMITER ;
+
+-----------------------------------------------------
+
+Version 5.8, 7 April 2020, by Jordie0608
+Modified table `messages`, adding column `deleted_ckey` to record who deleted a message.
+
+ALTER TABLE `messages` ADD COLUMN `deleted_ckey` VARCHAR(32) NULL DEFAULT NULL AFTER `deleted`;
+
+-----------------------------------------------------
+
+Version 5.7, 10 January 2020 by Atlanta-Ned
+Added ticket table for tracking ahelp tickets in the database.
+
+DROP TABLE IF EXISTS `ticket`;
+CREATE TABLE `ticket` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `server_ip` int(10) unsigned NOT NULL,
+  `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
+  `ticket` smallint(11) unsigned NOT NULL,
+  `action` varchar(20) NOT NULL DEFAULT 'Message',
+  `message` text NOT NULL,
+  `timestamp` datetime NOT NULL,
+  `recipient` varchar(32) DEFAULT NULL,
+  `sender` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -----------------------------------------------------
 

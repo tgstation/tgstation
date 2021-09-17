@@ -49,7 +49,7 @@
 	},
 /area/ruin/unpowered)
 "j" = (
-/obj/item/reagent_containers/food/snacks/pizzaslice/mushroom,
+/obj/item/food/pizzaslice/mushroom,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	initial_gas_mix = "LAVALAND_ATMOS"
@@ -64,9 +64,7 @@
 	},
 /area/ruin/unpowered)
 "l" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/structure/table/wood,
 /obj/effect/spawner/lootdrop/pizzaparty,
 /obj/effect/decal/cleanable/dirt,
@@ -90,7 +88,7 @@
 	},
 /area/ruin/unpowered)
 "o" = (
-/obj/item/trash/plate,
+/obj/item/plate,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	initial_gas_mix = "LAVALAND_ATMOS"
@@ -160,7 +158,7 @@
 /area/ruin/unpowered)
 "y" = (
 /obj/structure/table/wood,
-/obj/item/trash/plate,
+/obj/item/plate,
 /turf/open/floor/wood{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -175,7 +173,7 @@
 /area/ruin/unpowered)
 "A" = (
 /obj/structure/table/wood,
-/obj/item/trash/plate,
+/obj/item/plate,
 /obj/item/kitchen/fork,
 /turf/open/floor/wood{
 	initial_gas_mix = "LAVALAND_ATMOS"
@@ -192,22 +190,22 @@
 /area/ruin/unpowered)
 "D" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/pizzaslice/margherita,
-/obj/item/trash/plate,
+/obj/item/food/pizzaslice/margherita,
+/obj/item/plate,
 /turf/open/floor/wood{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/ruin/unpowered)
 "E" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/pizzaslice/meat,
+/obj/item/food/pizzaslice/meat,
 /turf/open/floor/wood{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/ruin/unpowered)
 "F" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/store/cake/birthday,
+/obj/item/food/cake/birthday,
 /turf/open/floor/wood{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -275,9 +273,7 @@
 	},
 /area/ruin/unpowered)
 "P" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	initial_gas_mix = "LAVALAND_ATMOS"

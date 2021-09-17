@@ -1,0 +1,52 @@
+name: Compile changelogs
+
+on:
+  schedule:
+  - cron: "0 0 * * *"
+
+jobs:
+  compile:
+    name: "Compile changelogs"
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Check for ACTION_ENABLER secret and pass true to output if it exists to be checked by later steps"
+        id: value_holder
+        env:
+          ENABLER_SECRET: ${{ secrets.ACTION_ENABLER }}
+        run: |
+          unset SECRET_EXISTS
+          if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
+          echo "::set-output name=ACTIONS_ENABLED::$SECRET_EXISTS"
+      - name: "Setup python"
+        if: steps.value_holder.outputs.ACTIONS_ENABLED
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+      - name: "Install deps"
+        if: steps.value_holder.outputs.ACTIONS_ENABLED
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pyyaml
+          sudo apt-get install  dos2unix
+      - name: "Checkout"
+        if: steps.value_holder.outputs.ACTIONS_ENABLED
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 25
+      - name: "Compile"
+        if: steps.value_holder.outputs.ACTIONS_ENABLED
+        run: |
+          python tools/ss13_genchangelog.py html/changelogs
+      - name: Commit
+        if: steps.value_holder.outputs.ACTIONS_ENABLED
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "Changelogs"
+          git pull origin master
+          git add html/changelogs
+          git commit -m "Automatic changelog compile [ci skip]" -a || true
+      - name: "Push"
+        if: steps.value_holder.outputs.ACTIONS_ENABLED
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

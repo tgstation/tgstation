@@ -2,16 +2,16 @@
 	name = "cargo cap"
 	desc = "It's a baseball hat in a tasteless yellow colour."
 	icon_state = "cargosoft"
-	item_state = "helmet"
+	inhand_icon_state = "helmet"
 	var/soft_type = "cargo"
 
 	dog_fashion = /datum/dog_fashion/head/cargo_tech
 
-	var/flipped = 0
+	var/flipped = FALSE
 
 /obj/item/clothing/head/soft/dropped()
 	icon_state = "[soft_type]soft"
-	flipped=0
+	flipped = FALSE
 	..()
 
 /obj/item/clothing/head/soft/verb/flipcap()
@@ -23,26 +23,24 @@
 
 /obj/item/clothing/head/soft/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		return
-	else
+	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		flip(user)
 
 
 /obj/item/clothing/head/soft/proc/flip(mob/user)
 	if(!user.incapacitated())
 		flipped = !flipped
-		if(src.flipped)
+		if(flipped)
 			icon_state = "[soft_type]soft_flipped"
-			to_chat(user, "<span class='notice'>You flip the hat backwards.</span>")
+			to_chat(user, span_notice("You flip the hat backwards."))
 		else
 			icon_state = "[soft_type]soft"
-			to_chat(user, "<span class='notice'>You flip the hat back in normal position.</span>")
-		usr.update_inv_head()	//so our mob-overlays update
+			to_chat(user, span_notice("You flip the hat back in normal position."))
+		usr.update_inv_head() //so our mob-overlays update
 
 /obj/item/clothing/head/soft/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Alt-click the cap to flip it [flipped ? "forwards" : "backwards"].</span>"
+	. += span_notice("Alt-click the cap to flip it [flipped ? "forwards" : "backwards"].")
 
 /obj/item/clothing/head/soft/red
 	name = "red cap"
@@ -78,6 +76,15 @@
 	icon_state = "greysoft"
 	soft_type = "grey"
 	dog_fashion = null
+
+/* A grey baseball cap that grants TRAIT_JOLLY when it's on your head.
+ * Used for testing that gaining and losing the JOLLY trait behaves properly.
+ * Also a perfectly valid weird admin reward.
+ */
+/obj/item/clothing/head/soft/grey/jolly
+	name = "jolly grey cap"
+	desc = "It's a baseball hat in a sublime grey colour. Why, wearing this alone would boost a person's spirits!"
+	clothing_traits = list(TRAIT_JOLLY)
 
 /obj/item/clothing/head/soft/orange
 	name = "orange cap"
@@ -119,13 +126,13 @@
 	desc = "It's a robust baseball hat in tasteful red colour."
 	icon_state = "secsoft"
 	soft_type = "sec"
-	armor = list("melee" = 30, "bullet" = 25, "laser" = 25, "energy" = 35, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 50)
+	armor = list(MELEE = 30, BULLET = 25, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, RAD = 0, FIRE = 20, ACID = 50)
 	strip_delay = 60
 	dog_fashion = null
 
-/obj/item/clothing/head/soft/emt
-	name = "EMT cap"
+/obj/item/clothing/head/soft/paramedic
+	name = "paramedic cap"
 	desc = "It's a baseball hat with a dark turquoise color and a reflective cross on the top."
-	icon_state = "emtsoft"
-	soft_type = "emt"
+	icon_state = "paramedicsoft"
+	soft_type = "paramedic"
 	dog_fashion = null

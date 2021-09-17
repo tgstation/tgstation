@@ -4,6 +4,7 @@
 	density = TRUE
 	icon = 'icons/obj/machines/harvester.dmi'
 	icon_state = "harvester"
+	base_icon_state = "harvester"
 	verb_say = "states"
 	state_open = FALSE
 	idle_power_usage = 50
@@ -11,6 +12,7 @@
 	light_color = LIGHT_COLOR_BLUE
 	var/interval = 20
 	var/harvesting = FALSE
+	var/warming_up = FALSE
 	var/list/operation_order = list() //Order of wich we harvest limbs.
 	var/allow_clothing = FALSE
 	var/allow_living = FALSE
@@ -27,37 +29,44 @@
 		max_time -= L.rating
 	interval = max(max_time,1)
 
-/obj/machinery/harvester/update_icon(warming_up)
-	if(warming_up)
-		icon_state = initial(icon_state)+"-charging"
-		return
+/obj/machinery/harvester/update_icon_state()
 	if(state_open)
-		icon_state = initial(icon_state)+"-open"
-	else if(harvesting)
-		icon_state = initial(icon_state)+"-active"
-	else
-		icon_state = initial(icon_state)
+		icon_state = "[base_icon_state]-open"
+		return ..()
+	if(warming_up)
+		icon_state = "[base_icon_state]-charging"
+		return ..()
+	if(harvesting)
+		icon_state = "[base_icon_state]-active"
+		return ..()
+	icon_state = base_icon_state
+	return ..()
 
 /obj/machinery/harvester/open_machine(drop = TRUE)
 	if(panel_open)
 		return
 	. = ..()
+	warming_up = FALSE
 	harvesting = FALSE
 
-/obj/machinery/harvester/attack_hand(mob/user)
+/obj/machinery/harvester/attack_hand(mob/user, list/modifiers)
+	. = ..()
 	if(state_open)
 		close_machine()
 	else if(!harvesting)
 		open_machine()
 
 /obj/machinery/harvester/AltClick(mob/user)
+	. = ..()
+	if(!can_interact(user))
+		return
 	if(harvesting || !user || !isliving(user) || state_open)
 		return
 	if(can_harvest())
 		start_harvest()
 
 /obj/machinery/harvester/proc/can_harvest()
-	if(!powered(EQUIP) || state_open || !occupant || !iscarbon(occupant))
+	if(!powered() || state_open || !occupant || !iscarbon(occupant))
 		return
 	var/mob/living/carbon/C = occupant
 	if(!allow_clothing)
@@ -84,15 +93,17 @@
 		return
 	var/mob/living/carbon/C = occupant
 	operation_order = reverseList(C.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
+	warming_up = TRUE
 	harvesting = TRUE
-	visible_message("<span class='notice'>The [name] begins warming up!</span>")
+	visible_message(span_notice("The [name] begins warming up!"))
 	say("Initializing harvest protocol.")
-	update_icon(TRUE)
+	update_appearance()
 	addtimer(CALLBACK(src, .proc/harvest), interval)
 
 /obj/machinery/harvester/proc/harvest()
-	update_icon()
-	if(!harvesting || state_open || !powered(EQUIP) || !occupant || !iscarbon(occupant))
+	warming_up = FALSE
+	update_appearance()
+	if(!harvesting || state_open || !powered() || !occupant || !iscarbon(occupant))
 		return
 	playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
 	var/mob/living/carbon/C = occupant
@@ -125,6 +136,7 @@
 	addtimer(CALLBACK(src, .proc/harvest), interval)
 
 /obj/machinery/harvester/proc/end_harvesting()
+	warming_up = FALSE
 	harvesting = FALSE
 	open_machine()
 	say("Subject has been successfully harvested.")
@@ -135,10 +147,10 @@
 	if(..())
 		return
 	if(occupant)
-		to_chat(user, "<span class='warning'>[src] is currently occupied!</span>")
+		to_chat(user, span_warning("[src] is currently occupied!"))
 		return
 	if(state_open)
-		to_chat(user, "<span class='warning'>[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!</span>")
+		to_chat(user, span_warning("[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!"))
 		return
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 		return
@@ -151,10 +163,10 @@
 		return TRUE
 
 /obj/machinery/harvester/default_pry_open(obj/item/I) //wew
-	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR //We removed is_operational() here
+	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR //We removed is_operational here
 	if(.)
 		I.play_tool_sound(src, 50)
-		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open [src].</span>")
+		visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open [src]."))
 		open_machine()
 
 /obj/machinery/harvester/emag_act(mob/user)
@@ -162,31 +174,31 @@
 		return
 	obj_flags |= EMAGGED
 	allow_living = TRUE
-	to_chat(user, "<span class='warning'>You overload [src]'s lifesign scanners.</span>")
+	to_chat(user, span_warning("You overload [src]'s lifesign scanners."))
 
-/obj/machinery/harvester/container_resist(mob/living/user)
+/obj/machinery/harvester/container_resist_act(mob/living/user)
 	if(!harvesting)
-		visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
-			"<span class='notice'>You climb out of [src]!</span>")
+		visible_message(span_notice("[occupant] emerges from [src]!"),
+			span_notice("You climb out of [src]!"))
 		open_machine()
 	else
-		to_chat(user,"<span class='warning'>[src] is active and can't be opened!</span>") //rip
+		to_chat(user,span_warning("[src] is active and can't be opened!")) //rip
 
-/obj/machinery/harvester/Exited(atom/movable/user)
-	if (!state_open && user == occupant)
-		container_resist(user)
+/obj/machinery/harvester/Exited(atom/movable/gone, direction)
+	if (!state_open && gone == occupant)
+		container_resist_act(gone)
 
-/obj/machinery/harvester/relaymove(mob/user)
+/obj/machinery/harvester/relaymove(mob/living/user, direction)
 	if (!state_open)
-		container_resist(user)
+		container_resist_act(user)
 
 /obj/machinery/harvester/examine(mob/user)
 	. = ..()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 	if(state_open)
-		. += "<span class='notice'>[src] must be closed before harvesting.</span>"
+		. += span_notice("[src] must be closed before harvesting.")
 	else if(!harvesting)
-		. += "<span class='notice'>Alt-click [src] to start harvesting.</span>"
+		. += span_notice("Alt-click [src] to start harvesting.")
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Harvest speed at <b>[interval*0.1]</b> seconds per organ.</span>"
+		. += span_notice("The status display reads: Harvest speed at <b>[interval*0.1]</b> seconds per organ.")

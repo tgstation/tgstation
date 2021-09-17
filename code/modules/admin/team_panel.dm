@@ -24,7 +24,7 @@
 
 /datum/admins/proc/check_teams()
 	if(!SSticker.HasRoundStarted())
-		alert("The game hasn't started yet!")
+		tgui_alert(usr,"The game hasn't started yet!")
 		return
 
 	var/datum/browser/popup = new(usr, "teams", "Team Listing", 500, 500)
@@ -55,7 +55,7 @@
 	if(!message)
 		return
 	for(var/datum/mind/M in members)
-		to_chat(M.current,message)
+		to_chat(M.current,message, confidential = TRUE)
 
 	message_admins("[key_name_admin(usr)] messaged [name] team with : [message]")
 	log_admin("Team Message: [key_name(usr)] -> [name] team : [message]")
@@ -128,7 +128,7 @@
 //After a bit of consideration i block team deletion if there's any members left until unified objective handling is in.
 /datum/team/proc/admin_delete(mob/user)
 	if(members.len > 0)
-		to_chat(user,"Team has members left, remove them first and make sure you know what you're doing.")
+		to_chat(user,"Team has members left, remove them first and make sure you know what you're doing.", confidential = TRUE)
 		return
 	qdel(src)
 

@@ -6,12 +6,13 @@ SUBSYSTEM_DEF(adjacent_air)
 	priority = FIRE_PRIORITY_ATMOS_ADJACENCY
 	var/list/queue = list()
 
-/datum/controller/subsystem/adjacent_air/stat_entry()
+/datum/controller/subsystem/adjacent_air/stat_entry(msg)
 #ifdef TESTING
-	..("P:[length(queue)], S:[GLOB.atmos_adjacent_savings[1]], T:[GLOB.atmos_adjacent_savings[2]]")
+	msg = "P:[length(queue)], S:[GLOB.atmos_adjacent_savings[1]], T:[GLOB.atmos_adjacent_savings[2]]"
 #else
-	..("P:[length(queue)]")
+	msg = "P:[length(queue)]"
 #endif
+	return ..()
 
 /datum/controller/subsystem/adjacent_air/Initialize()
 	while(length(queue))
@@ -24,9 +25,14 @@ SUBSYSTEM_DEF(adjacent_air)
 
 	while (length(queue))
 		var/turf/currT = queue[1]
+		var/goal = queue[currT]
 		queue.Cut(1,2)
 
 		currT.ImmediateCalculateAdjacentTurfs()
+		if(goal == MAKE_ACTIVE)
+			SSair.add_to_active(currT)
+		else if(goal == KILL_EXCITED)
+			SSair.add_to_active(currT, TRUE)
 
 		if(mc_check)
 			if(MC_TICK_CHECK)

@@ -1,27 +1,85 @@
+Among-many
+Azurepelt
+Borealis
 Dark
 Darkmagic
 Darko
+Deathbringer
+Doomancer
+Evergreen
+Evilton
+Fide
 Gray
 Honko
+Infinitum
 Inverse
+Lifereaper
+Meatsmith
+Midnight
+Mother-of-dragons
+Mountain-Mother
+Namekeeper
+Nauseam
+Rasa
+Runespear
+Sequitur
+Shado
+Shadowdancer
+Shorekeeper
+Smith
+Snape
+Spellstone
+Starfall
+Starlightking
+Starlightqueen
+Stormcaller
+Suneater
+Truenamer
+Unseen
+Voidfall
+Voidstabber
+Volente
+Weatherwax
+Who-was-blood
+Who-was-light
+Who-was-stone
+Windshearer
+Worldshaker
+Yagg
 le Fay
 of Void
-Shado
-Smith
+the Alchemist
 the All Knowing
 the Amazing
+the Annoyed
+the Annoying
 the Bandit Killer
 the Benevolent
 the Blue
 the Brown
+the Colourless
 the Conquerer
+the Dappled
 the Deathless
 the Destroyer
 the Dragon Spooker
+the Dragoncaller
+the Drunk
 the Emperor
+the Empty
+the Ethereal
+the Excoherent
 the Gray
 the Great
+the Herb
+the Impaler
+the Incoherent
+the Jaunter
 the Magician
+the Manual
+the Moldywarp
+the Necromancer
+the Obscure
 the Powerful
 the Raven
 the Red
@@ -30,11 +88,12 @@ the Seething
 the Sorcelator
 the Spiral King
 the Unending
+the Unseen
 the Unstoppable
+the Wandsmith
+the Waxmancer
 the Weeping
 the White
+the Wife
 the Wise
 the Wizzard
-Unseen
-Weatherwax
-Yagg

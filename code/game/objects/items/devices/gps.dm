@@ -4,6 +4,8 @@
 	desc = "Helping lost spacemen find their way through the planets since 2016."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "electronic"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	obj_flags = UNIQUE_RENAME
@@ -11,7 +13,14 @@
 
 /obj/item/gps/Initialize()
 	. = ..()
+	add_gps_component()
+
+/// Adds the GPS component to this item.
+/obj/item/gps/proc/add_gps_component()
 	AddComponent(/datum/component/gps/item, gpstag)
+
+/obj/item/gps/spaceruin
+	gpstag = SPACE_SIGNAL_GPSTAG
 
 /obj/item/gps/science
 	icon_state = "gps-s"
@@ -40,6 +49,15 @@
 	gpstag = "MINER"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
 
+/*
+ * GPS for pAIS, which only allows access if it's contained within the user.
+ */
+/obj/item/gps/pai
+	gpstag = "PAI0"
+
+/obj/item/gps/pai/add_gps_component()
+	AddComponent(/datum/component/gps/item, gpstag, state = GLOB.inventory_state)
+
 /obj/item/gps/visible_debug
 	name = "visible GPS"
 	gpstag = "ADMIN"
@@ -59,7 +77,7 @@
 		// I assume it's faster to color,tag and OR the turf in, rather
 		// then checking if its there
 		T.color = RANDOM_COLOUR
-		T.maptext = "[T.x],[T.y],[T.z]"
+		T.maptext = MAPTEXT("[T.x],[T.y],[T.z]")
 		tagged |= T
 
 /obj/item/gps/visible_debug/proc/clear()

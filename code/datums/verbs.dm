@@ -78,7 +78,7 @@
 				if (childname == "[child.type]")
 					var/list/tree = splittext(childname, "/")
 					childname = tree[tree.len]
-				.[child.type] = "parent=[url_encode(type)];name=[childname]"
+				.[child.type] = "parent=[url_encode("[type]")];name=[childname]"
 				. += childlist
 
 	for (var/thing in verblist)
@@ -88,8 +88,8 @@
 		var/list/entry = list()
 		entry["parent"] = "[type]"
 		entry["name"] = verbpath.desc
-		if (copytext(verbpath.name,1,2) == "@")
-			entry["command"] = copytext(verbpath.name,2)
+		if (verbpath.name[1] == "@")
+			entry["command"] = copytext(verbpath.name, length(verbpath.name[1]) + 1)
 		else
 			entry["command"] = replacetext(verbpath.name, " ", "-")
 

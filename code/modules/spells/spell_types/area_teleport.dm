@@ -2,6 +2,7 @@
 	name = "Area teleport"
 	desc = "This spell teleports you to a type of area of your selection."
 	nonabstract_req = TRUE
+	school = SCHOOL_TRANSLOCATION
 
 	var/randomise_selection = FALSE //if it lets the usr choose the teleport loc or picks it from the list
 	var/invocation_area = TRUE //if the invocation appends the selected area
@@ -49,10 +50,10 @@
 					L+=T
 
 		if(!L.len)
-			to_chat(usr, "<span class='warning'>The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.</span>")
+			to_chat(usr, span_warning("The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."))
 			return
 
-		if(target && target.buckled)
+		if(target?.buckled)
 			target.buckled.unbuckle_mob(target, force=1)
 
 		var/list/tempL = L
@@ -68,7 +69,7 @@
 				tempL.Remove(attempt)
 
 		if(!success)
-			do_teleport(target, L, forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
+			do_teleport(target, L, channel = TELEPORT_CHANNEL_MAGIC)
 			playsound(get_turf(user), sound2, 50,TRUE)
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/invocation(area/chosenarea = null,mob/living/user = usr)
@@ -82,11 +83,8 @@
 			words = "[invocation]"
 
 		switch(invocation_type)
-			if("shout")
+			if(INVOCATION_SHOUT)
 				user.say(words, forced = "spell")
-				if(user.gender==MALE)
-					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, TRUE)
-				else
-					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, TRUE)
-			if("whisper")
+				playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, TRUE)
+			if(INVOCATION_WHISPER)
 				user.whisper(words, forced = "spell")

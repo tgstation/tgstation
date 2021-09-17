@@ -10,18 +10,12 @@
 	reagent = /datum/reagent/blob/electromagnetic_web
 
 /datum/blobstrain/reagent/electromagnetic_web/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if(damage_type == BRUTE) //take full brute
-		switch(B.brute_resist)
-			if(0.5)
-				return damage * 2
-			if(0.25)
-				return damage * 4
-			if(0.1)
-				return damage * 10
+	if(damage_type == BRUTE) // take full brute, divide by the multiplier to get full value
+		return damage / B.brute_resist
 	return damage * 1.25 //a laser will do 25 damage, which will kill any normal blob
 
 /datum/blobstrain/reagent/electromagnetic_web/death_reaction(obj/structure/blob/B, damage_flag)
-	if(damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser")
+	if(damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER)
 		empulse(B.loc, 1, 3) //less than screen range, so you can stand out of range to avoid it
 
 /datum/reagent/blob/electromagnetic_web
@@ -29,9 +23,10 @@
 	taste_description = "pop rocks"
 	color = "#83ECEC"
 
-/datum/reagent/blob/electromagnetic_web/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	reac_volume = ..()
+/datum/reagent/blob/electromagnetic_web/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
+	. = ..()
+	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
 	if(prob(reac_volume*2))
-		M.emp_act(EMP_LIGHT)
-	if(M)
-		M.apply_damage(reac_volume, BURN)
+		exposed_mob.emp_act(EMP_LIGHT)
+	if(exposed_mob)
+		exposed_mob.apply_damage(reac_volume, BURN, wound_bonus=CANT_WOUND)

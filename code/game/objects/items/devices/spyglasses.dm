@@ -1,87 +1,92 @@
-//antag spyglasses. meant to be an example for map_popups.dm
-/obj/item/clothing/glasses/regular/spy
+//detective spyglasses. meant to be an example for map_popups.dm
+/obj/item/clothing/glasses/sunglasses/spy
 	desc = "Made by Nerd. Co's infiltration and surveillance department. Upon closer inspection, there's a small screen in each lens."
-	var/obj/item/spy_bug/linked_bug
+	actions_types = list(/datum/action/item_action/activate_remote_view)
+	var/obj/item/clothing/accessory/spy_bug/linked_bug
 
-/obj/item/clothing/glasses/regular/spy/proc/show_to_user(var/mob/user)//this is the meat of it. most of the map_popup usage is in this.
+/obj/item/clothing/glasses/sunglasses/spy/proc/show_to_user(mob/user)//this is the meat of it. most of the map_popup usage is in this.
 	if(!user)
 		return
 	if(!user.client)
-		return	
+		return
 	if(!linked_bug)
-		user.audible_message("<span class='warning'>[src] lets off a shrill beep!</span>")
-
-	if("spypopup_map" in user.client.screen_maps) //alright, the popup this object uses is already IN use, so the window is open. no point in doing any other work here, so we're good. 
-		return 
-	user.client.setup_popup("spypopup",3,3,2)
-	var/list/buglist = list(linked_bug.cam_view,linked_bug.popupmaster)
-	user.client.add_objs_to_map(buglist)
+		user.audible_message(span_warning("[src] lets off a shrill beep!"))
+	if("spypopup_map" in user.client.screen_maps) //alright, the popup this object uses is already IN use, so the window is open. no point in doing any other work here, so we're good.
+		return
+	user.client.setup_popup("spypopup", 3, 3, 2)
+	user.client.register_map_obj(linked_bug.cam_screen)
+	for(var/plane in linked_bug.cam_plane_masters)
+		user.client.register_map_obj(plane)
 	linked_bug.update_view()
 
-/obj/item/clothing/glasses/regular/spy/equipped(mob/user, slot)
+/obj/item/clothing/glasses/sunglasses/spy/equipped(mob/user, slot)
 	. = ..()
 	if(slot != ITEM_SLOT_EYES)
 		user.client.close_popup("spypopup")
 
-/obj/item/clothing/glasses/regular/spy/dropped(mob/user)
+/obj/item/clothing/glasses/sunglasses/spy/dropped(mob/user)
 	. = ..()
 	user.client.close_popup("spypopup")
 
-/obj/item/clothing/glasses/regular/spy/verb/activate_remote_view()
-	//yada yada check to see if the glasses are in their eye slot
-	if(ishuman(usr))
-		var/mob/living/carbon/human/user = usr
-		if(user.glasses == src)
-			show_to_user(user)
+/obj/item/clothing/glasses/sunglasses/spy/ui_action_click(mob/user)
+	show_to_user(user)
 
-/obj/item/clothing/glasses/regular/spy/Destroy()
+/obj/item/clothing/glasses/sunglasses/spy/item_action_slot_check(slot)
+	if(slot == ITEM_SLOT_EYES)
+		return TRUE
+
+/obj/item/clothing/glasses/sunglasses/spy/Destroy()
 	if(linked_bug)
 		linked_bug.linked_glasses = null
 	. = ..()
-	
 
-/obj/item/spy_bug
+
+/obj/item/clothing/accessory/spy_bug
 	name = "pocket protector"
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "pocketprotector"
-	desc = "an advanced peice of espionage equipment in the shape of a pocket protector. it has a built in 360 degree camera for all your nefarious needs. Microphone not included."
-	var/obj/item/clothing/glasses/regular/spy/linked_glasses
-	var/obj/screen/cam_view
-	var/obj/screen/plane_master/lighting/popupmaster 
-	var/cam_range = 1//ranges higher than one can be used to see through walls.
-
+	desc = "An advanced piece of espionage equipment in the shape of a pocket protector. It has a built in 360 degree camera for all your \"admirable\" needs. Microphone not included."
+	var/obj/item/clothing/glasses/sunglasses/spy/linked_glasses
+	var/atom/movable/screen/map_view/cam_screen
+	var/list/cam_plane_masters
+	// Ranges higher than one can be used to see through walls.
+	var/cam_range = 1
 	var/datum/movement_detector/tracker
 
-/obj/item/spy_bug/Initialize()
+/obj/item/clothing/accessory/spy_bug/Initialize()
 	. = ..()
 	tracker = new /datum/movement_detector(src, CALLBACK(src, .proc/update_view))
-	
-	cam_view = new
-	cam_view.name = "screen"
-	cam_view.del_on_map_removal = FALSE
-	cam_view.assigned_map = "spypopup_map"
-	cam_view.screen_info = list(1,1)
 
-	popupmaster = new
-	popupmaster.screen_loc = "spypopup_map:CENTER"//note that we don't use screen_info here, due to it being a non-standard placement.
-	popupmaster.assigned_map = "spypopup_map"
-	popupmaster.del_on_map_removal = FALSE //not stored on the client, but instead on the bug. there's no need to 
-	//we need to add a lighting planesmaster to the popup, otherwise blending fucks up massively. Any planesmaster on the main screen does NOT apply to map popups.
-	//if there's ever a way to make planesmasters omnipresent, then this wouldn't be needed.
+	cam_screen = new
+	cam_screen.name = "screen"
+	cam_screen.assigned_map = "spypopup_map"
+	cam_screen.del_on_map_removal = FALSE
+	cam_screen.set_position(1, 1)
 
-/obj/item/spy_bug/Destroy()
+	// We need to add planesmasters to the popup, otherwise
+	// blending fucks up massively. Any planesmaster on the main screen does
+	// NOT apply to map popups. If there's ever a way to make planesmasters
+	// omnipresent, then this wouldn't be needed.
+	cam_plane_masters = list()
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master))
+		var/atom/movable/screen/instance = new plane()
+		instance.assigned_map = "spypopup_map"
+		instance.del_on_map_removal = FALSE
+		instance.screen_loc = "spypopup_map:CENTER"
+		cam_plane_masters += instance
+
+/obj/item/clothing/accessory/spy_bug/Destroy()
 	if(linked_glasses)
 		linked_glasses.linked_bug = null
-	
-	qdel(cam_view)
-	qdel(popupmaster)
+	qdel(cam_screen)
+	QDEL_LIST(cam_plane_masters)
 	qdel(tracker)
 	. = ..()
 
-/obj/item/spy_bug/proc/update_view()//this doesn't do anything too crazy, just updates the vis_contents of its screen obj
-	cam_view.vis_contents.Cut()
+/obj/item/clothing/accessory/spy_bug/proc/update_view()//this doesn't do anything too crazy, just updates the vis_contents of its screen obj
+	cam_screen.vis_contents.Cut()
 	for(var/turf/visible_turf in view(1,get_turf(src)))//fuck you usr
-		cam_view.vis_contents += visible_turf
+		cam_screen.vis_contents += visible_turf
 
 //it needs to be linked, hence a kit.
 /obj/item/storage/box/rxglasses/spyglasskit
@@ -104,8 +109,8 @@ A shrill beep coming from your SpySpeks means that they can't connect to the inc
 	"}
 
 /obj/item/storage/box/rxglasses/spyglasskit/PopulateContents()
-	var/obj/item/spy_bug/newbug = new(src)
-	var/obj/item/clothing/glasses/regular/spy/newglasses = new(src)
+	var/obj/item/clothing/accessory/spy_bug/newbug = new(src)
+	var/obj/item/clothing/glasses/sunglasses/spy/newglasses = new(src)
 	newbug.linked_glasses = newglasses
 	newglasses.linked_bug = newbug
 	new /obj/item/paper/fluff/nerddocs(src)

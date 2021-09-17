@@ -6,7 +6,7 @@
 	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/magicarp
-	announceWhen	= 3
+	announceWhen = 3
 	startWhen = 50
 
 /datum/round_event/wizard/magicarp/setup()
@@ -38,6 +38,7 @@
 	health = 50
 	gold_core_spawnable = NO_SPAWN
 	random_color = FALSE
+
 	var/allowed_projectile_types = list(/obj/projectile/magic/change, /obj/projectile/magic/animate, /obj/projectile/magic/resurrection,
 	/obj/projectile/magic/death, /obj/projectile/magic/teleport, /obj/projectile/magic/door, /obj/projectile/magic/aoe/fireball,
 	/obj/projectile/magic/spellblade, /obj/projectile/magic/arcane_barrage)
@@ -60,13 +61,10 @@
 
 /mob/living/simple_animal/hostile/carp/ranged/xenobiology // these are for the xenobio gold slime pool
 	gold_core_spawnable = HOSTILE_SPAWN
-	allowed_projectile_types = list(/obj/projectile/magic/change, /obj/projectile/magic/animate, /obj/projectile/magic/resurrection,
-	/obj/projectile/magic/teleport, /obj/projectile/magic/door, /obj/projectile/magic/aoe/fireball, /obj/projectile/magic/spellblade,
-	/obj/projectile/magic/arcane_barrage) //thanks Lett1
+	allowed_projectile_types = list(/obj/projectile/magic/animate, /obj/projectile/magic/teleport,
+	/obj/projectile/magic/door, /obj/projectile/magic/aoe/fireball, /obj/projectile/magic/spellblade, /obj/projectile/magic/arcane_barrage) //thanks Lett1
 
 /mob/living/simple_animal/hostile/carp/ranged/chaos/xenobiology
 	gold_core_spawnable = HOSTILE_SPAWN
-	allowed_projectile_types = list(/obj/projectile/magic/change, /obj/projectile/magic/animate, /obj/projectile/magic/resurrection,
-	/obj/projectile/magic/teleport, /obj/projectile/magic/door, /obj/projectile/magic/aoe/fireball, /obj/projectile/magic/spellblade,
-	/obj/projectile/magic/arcane_barrage)
-
+	allowed_projectile_types = list(/obj/projectile/magic/animate, /obj/projectile/magic/teleport,
+	/obj/projectile/magic/door, /obj/projectile/magic/aoe/fireball, /obj/projectile/magic/spellblade, /obj/projectile/magic/arcane_barrage)

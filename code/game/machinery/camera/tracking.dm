@@ -49,9 +49,9 @@
 		track.namecounts[name] = 1
 
 		if(ishuman(L))
-			track.humans[name] = L
+			track.humans[name] = WEAKREF(L)
 		else
-			track.others[name] = L
+			track.others[name] = WEAKREF(L)
 
 	var/list/targets = sortList(track.humans) + sortList(track.others)
 
@@ -59,7 +59,7 @@
 
 /mob/living/silicon/ai/verb/ai_camera_track(target_name in trackable_mobs())
 	set name = "track"
-	set hidden = 1 //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
+	set hidden = TRUE //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
 
 	if(!target_name)
 		return
@@ -67,9 +67,9 @@
 	if(!track.initialized)
 		trackable_mobs()
 
-	var/mob/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
+	var/datum/weakref/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
 
-	ai_actual_track(target)
+	ai_actual_track(target.resolve())
 
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target)
 	if(!istype(target))
@@ -80,11 +80,11 @@
 	U.tracking = 1
 
 	if(!target || !target.can_track(usr))
-		to_chat(U, "<span class='warning'>Target is not near any active cameras.</span>")
+		to_chat(U, span_warning("Target is not near any active cameras."))
 		U.cameraFollow = null
 		return
 
-	to_chat(U, "<span class='notice'>Now tracking [target.get_visible_name()] on camera.</span>")
+	to_chat(U, span_notice("Now tracking [target.get_visible_name()] on camera."))
 
 	INVOKE_ASYNC(src, .proc/do_track, target, U)
 
@@ -96,14 +96,14 @@
 			return
 
 		if(!target.can_track(usr))
-			U.tracking = 1
+			U.tracking = TRUE
 			if(!cameraticks)
-				to_chat(U, "<span class='warning'>Target is not near any active cameras. Attempting to reacquire...</span>")
+				to_chat(U, span_warning("Target is not near any active cameras. Attempting to reacquire..."))
 			cameraticks++
 			if(cameraticks > 9)
 				U.cameraFollow = null
-				to_chat(U, "<span class='warning'>Unable to reacquire, cancelling track...</span>")
-				tracking = 0
+				to_chat(U, span_warning("Unable to reacquire, cancelling track..."))
+				tracking = FALSE
 				return
 			else
 				sleep(10)
@@ -111,7 +111,7 @@
 
 		else
 			cameraticks = 0
-			U.tracking = 0
+			U.tracking = FALSE
 
 		if(U.eyeobj)
 			U.eyeobj.setLoc(get_turf(target))

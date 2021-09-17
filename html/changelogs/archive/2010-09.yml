@@ -1,0 +1,130 @@
+2010-09-02:
+  /tg/station ss13 team:
+  - unknown: Ghosts can no longer release the singularity.
+  - unknown: Sprites added in preparation for a Hydroponics update
+  - unknown: A decoy AI now spawns in the AI core during Malfunction rounds to reduce
+      metagaming.
+  - unknown: libmysql.dll added to distribution.
+  - unknown: Aircode options restored to default configuration.
+  - unknown: AIs properly enter powerloss mode if the APC in their area loses equipment
+      power.
+  - unknown: Hydroponics crates added to Hydroponics, containing Weed-B-Gone
+  - unknown: Airlock electrification now actually works properly.
+  - unknown: Karma database error message updated.
+  - unknown: Cyborgs choosing the standard module no longer become invisible except
+      for a pair of glowing red eyes.
+  - unknown: <b>Aliens now have a hivemind channel, accessed like departmental radio
+      channels or robot talk with ':a'.</b>
+  - unknown: Full donut boxes no longer eat whatever item is used on them and disappear.
+2010-09-12:
+  /tg/station ss13 team:
+  - unknown: "New kitchen stuff: New recipes (Meatbread, Cheese, Omelette Du Fromage,\
+      \ Muffins), new chef's knife and trays (Spawn in the meat locker) and milk (spawns\
+      \ in the fridge). Recipes are as follows:\n\t\t-Cheese: milk on food processor\n\
+      \t\t-Cheese wedge: Slice the cheese wheel with the chef's knife\n\t\t-Omelette\
+      \ Du Fromage: 2 eggs 2 cheese wedges\n\t\t-Muffin: 2 eggs 1 flour 1 carton of\
+      \ milk\n\t\t-Meatbread: 3 meats (whatever meats) 3 flour 3 cheese. Can be sliced.\n\
+      \tCheese_amount is actually displayed on the microwave."
+  - unknown: ' Profession-special radio channels now have color.'
+  - unknown: ' AI card not stupidly lethal anymore, for anyone that didn''t notice'
+  - unknown: ' HYDROPONICS OVERHAUL, credit goes to Skie and Numbers. Wood doesn''t
+      have the entity so the tower caps cannot be harvested. For now.'
+  - unknown: ' Bar is now barman-only, access-wise. No more shall the entire station
+      trump inside the bar and choke the monkey.'
+  - unknown: ' Prepping ground for Barman update (SPRITE ME SOME GODDAMN BOTTLES)'
+2010-09-13:
+  /tg/station ss13 team:
+  - unknown: ' Bunch of new announcer sounds added'
+  - unknown: ' Minor lag fix implementation in the pipe system'
+  - unknown: ' You can now hear ghosts... sometimes'
+  - unknown: ' Seed bags and nutrients can now be pocketed'
+2010-09-16:
+  /tg/station ss13 team:
+  - unknown: Added the Lawyer job.
+  - unknown: Doors can now be constructed and deconstructed.  This is being playtested,
+      expect the specifics to change.
+  - unknown: Fixed certain jobs which were supposed to have stuff spawning in their
+      backpack that just wasn't getting spawned.
+2010-09-17:
+  /tg/station ss13 team:
+  - unknown: The Lawyer now starts in his snazzy new office.
+  - unknown: Law Office accesslevel added.  Currently, the Lawyer and the HoP begin
+      with this.
+  - unknown: Robotics access can now be added or removed from the HoP's computer.
+  - unknown: Robotics, the captain's quarters, the cargo lobby and the staff heads
+      office now have APCs and can lose power like the rest of the station.
+  - unknown: Toxins mixing room is now a separate area for power and fire alarm purposes,
+      as it already had its own APC.
+2010-09-21:
+  /tg/station ss13 team:
+  - unknown: New experimental UI for humans by Skie. Voice out if it has problems
+      or you don't like it.
+  - unknown: 'Hydroponics: Now you can inject chemicals into plants with a syringe.
+      Every reagent works differently.'
+  - unknown: 'Hydroponics: Added a small hoe for uprooting weeds safely. Botanists
+      now have sissy aprons.'
+  - unknown: New random station/command names and verbs.
+  - unknown: Dead AIs can no longer be intellicarded and the steal AI objective is
+      now working.
+  - unknown: Aliens now bleed when you hit them, as well as monkeys.
+  - unknown: Hurt people and bodies leave blood behind if dragged around when they
+      are lying. Sprites to be updated soon...
+  - unknown: Fixed several run-time errors in the code. Also food doesn't deal damage
+      anylonger in some cases.
+  - unknown: Blobs and alien weeds slowed down some. Plant-b-gone buffed some.
+  - unknown: Fixed monkeys and aliens not being able to deal damage to humans with
+      items.
+  - unknown: Monkeys now slip on wet floor.
+2010-09-26:
+  /tg/station ss13 team:
+  - unknown: Riot shields! One in every security closet, and a few in armory. Also
+      orderable from QM.
+2010-09-29:
+  /tg/station ss13 team:
+  - unknown: <b>Bartender update!</b>  Bartender now has a Booze-O-Mat vending machine
+      dispensing spirits and glasses, which he can use to mix cocktails.  Recipes
+      for cocktails are available on the wiki.
+  - unknown: The barman also now has a shotgun hidden under a table in the bar.  He
+      spawns with beanbag shells and blanks.  Lethal ammo is obtainable from hacked
+      autolathes.
+  - unknown: Dead AIs can once more be intelicarded, however in order to be restored
+      to functionality they must be repaired using a machine in the RD office.
+  - unknown: Silicon-based lifeforms have metal gibs and motor oil instead of blood.
+  - unknown: Aliens now have a death message.
+  - unknown: Intelicarded AIs can now have their ability to interact with things within
+      their view range reactivated by the person carrying the card.
+  - unknown: New AI cores can be constructed from <strike>victims</strike>volunteers.
+  - unknown: Verbs tweaked.
+  - unknown: Intelicarded AIs can be deleted.
+  - unknown: RD office redesigned, and the RD now spawns there.
+  - unknown: The AI can now choose to destroy the station on winning a Malf round.
+  - unknown: General bugfixes to AIs, constructed AIs and decoy AIs.
+  - unknown: Hats no longer prevent choking.
+  - unknown: Some extra gimmick costumes are now adminspawnable.
+  - unknown: AI health is now displayed on their status tab.
+  - unknown: AI upload module now requires you to select which AI to upload laws to
+      in case of multiple AIs.
+  - unknown: Cyborgs now choose an AI to sync laws with upon creation.
+  - unknown: Law office redesigned.
+  - unknown: Roboticists no longer have Engineering access.
+  - unknown: More fixes to areas which had infinite power due to having no assosciated
+      APC.
+  - unknown: Meatbread slices are no longer infinite.
+  - unknown: Malf rounds no longer end if a non-malfunctioning AI is killed.
+  - unknown: Cigarettes now have directional sprites.
+  - unknown: AI Core circuitboard spawns in the RD office.
+  - unknown: AI Satellite now has cameras and properly-wired SMES batteries.
+  - unknown: Decoy AIs can no longer be moved.
+  - unknown: Several runtime errors have been fixed.
+  - unknown: Nuke rounds will now end properly on a station or neutral victory.
+  - unknown: Riot shields have been nerfed and are now only available in the armory
+      and in riot crates.
+  - unknown: Foam dart crossbows, cap guns and caps can now be won as arcade prizes.
+  - unknown: AI Malfunction has been redesigned - the AI must now hack APCs in order
+      to win.  More APCs hacked makes the timer tick faster.
+  - unknown: Hydroponics now has a MULEbot station.
+  - unknown: <b>Changeling mode has been added to the game and is now in testing.</b>
+  - unknown: <b>Electrified airlocks should now only zap you once if you bump into
+      them while running.</b>
+  - unknown: Chemistry and Toxins access has been removed from Botanists.
+  - unknown: General bugfixes and map tweaks.

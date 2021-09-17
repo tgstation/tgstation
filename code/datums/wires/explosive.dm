@@ -1,5 +1,6 @@
 /datum/wires/explosive
 	var/duds_number = 2 // All "dud" wires cause an explosion when cut or pulsed
+	proper_name = "Explosive Device"
 	randomize = TRUE // Prevents wires from showing up on blueprints
 
 /datum/wires/explosive/New(atom/holder)
@@ -21,9 +22,23 @@
 	var/fingerprint
 
 /datum/wires/explosive/chem_grenade/interactable(mob/user)
+	if(!..())
+		return FALSE
 	var/obj/item/grenade/chem_grenade/G = holder
 	if(G.stage == GRENADE_WIRED)
 		return TRUE
+
+/datum/wires/explosive/chem_grenade/on_pulse(index)
+	var/obj/item/grenade/chem_grenade/grenade = holder
+	if(grenade.stage != GRENADE_READY)
+		return
+	. = ..()
+
+/datum/wires/explosive/chem_grenade/on_cut(index, mend)
+	var/obj/item/grenade/chem_grenade/grenade = holder
+	if(grenade.stage != GRENADE_READY)
+		return
+	. = ..()
 
 /datum/wires/explosive/chem_grenade/attach_assembly(color, obj/item/assembly/S)
 	if(istype(S,/obj/item/assembly/timer))
@@ -43,9 +58,12 @@
 	message_admins("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
 	log_game("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
 	var/mob/M = get_mob_by_ckey(fingerprint)
-	var/turf/T = get_turf(M)	
-	G.log_grenade(M, T)
-	G.prime()
+	G.log_grenade(M) //Used in arm_grenade() too but this one conveys where the mob who triggered the bomb is
+	if(G.landminemode)
+		G.detonate() ///already armed
+	else
+		G.arm_grenade() //The one here conveys where the bomb was when it went boom
+
 
 /datum/wires/explosive/chem_grenade/detach_assembly(color)
 	var/obj/item/assembly/S = get_attached(color)
@@ -60,12 +78,9 @@
 /datum/wires/explosive/c4 // Also includes X4
 	holder_type = /obj/item/grenade/c4
 
-/datum/wires/explosive/c4/interactable(mob/user) // No need to unscrew wire panels on plastic explosives
-	return TRUE
-
 /datum/wires/explosive/c4/explode()
 	var/obj/item/grenade/c4/P = holder
-	P.prime()
+	P.detonate()
 
 /datum/wires/explosive/pizza
 	holder_type = /obj/item/pizzabox
@@ -78,6 +93,8 @@
 	..()
 
 /datum/wires/explosive/pizza/interactable(mob/user)
+	if(!..())
+		return FALSE
 	var/obj/item/pizzabox/P = holder
 	if(P.open && P.bomb)
 		return TRUE
@@ -113,8 +130,8 @@
 
 
 /datum/wires/explosive/gibtonite
-	holder_type = /obj/item/twohanded/required/gibtonite
+	holder_type = /obj/item/gibtonite
 
 /datum/wires/explosive/gibtonite/explode()
-	var/obj/item/twohanded/required/gibtonite/P = holder
+	var/obj/item/gibtonite/P = holder
 	P.GibtoniteReaction(null, 2)

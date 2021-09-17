@@ -34,7 +34,7 @@
 	name = "Abductor Agent"
 	head = /obj/item/clothing/head/helmet/abductor
 	suit = /obj/item/clothing/suit/armor/abductor/vest
-	suit_store = /obj/item/abductor/baton
+	suit_store = /obj/item/melee/baton/abductor
 	belt = /obj/item/storage/belt/military/abductor/full
 
 	backpack_contents = list(
@@ -59,7 +59,7 @@
 	name = "Abductor Scientist (w/ agent gear)"
 	head = /obj/item/clothing/head/helmet/abductor
 	suit = /obj/item/clothing/suit/armor/abductor/vest
-	suit_store = /obj/item/abductor/baton
+	suit_store = /obj/item/melee/baton/abductor
 	belt = /obj/item/storage/belt/military/abductor/full
 
 	backpack_contents = list(

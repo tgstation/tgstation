@@ -5,13 +5,15 @@
 /datum/status_effect
 	var/id = "effect" //Used for screen alerts.
 	var/duration = -1 //How long the status effect lasts in DECISECONDS. Enter -1 for an effect that never ends unless removed through some means.
-	var/tick_interval = 10 //How many deciseconds between ticks, approximately. Leave at 10 for every second.
+	var/tick_interval = 10 //How many deciseconds between ticks, approximately. Leave at 10 for every second. Setting this to -1 will stop processing if duration is also unlimited.
 	var/mob/living/owner //The mob affected by the status effect.
 	var/status_type = STATUS_EFFECT_UNIQUE //How many of the effect can be on one mob, and what happens when you try to add another
 	var/on_remove_on_mob_delete = FALSE //if we call on_remove() when the mob is deleted
 	var/examine_text //If defined, this text will appear when the mob is examined - to use he, she etc. use "SUBJECTPRONOUN" and replace it in the examines themselves
-	var/alert_type = /obj/screen/alert/status_effect //the alert thrown by the status effect, contains name and description
-	var/obj/screen/alert/status_effect/linked_alert = null //the alert itself, if it exists
+	var/alert_type = /atom/movable/screen/alert/status_effect //the alert thrown by the status effect, contains name and description
+	var/atom/movable/screen/alert/status_effect/linked_alert = null //the alert itself, if it exists
+	///Processing speed - used to define if the status effect should be using SSfastprocess or SSprocessing
+	var/processing_speed = STATUS_EFFECT_FAST_PROCESS
 
 /datum/status_effect/New(list/arguments)
 	on_creation(arglist(arguments))
@@ -19,24 +21,34 @@
 /datum/status_effect/proc/on_creation(mob/living/new_owner, ...)
 	if(new_owner)
 		owner = new_owner
-	if(owner)
-		LAZYADD(owner.status_effects, src)
-	if(!owner || !on_apply())
+	if(QDELETED(owner) || !on_apply())
 		qdel(src)
 		return
+	if(owner)
+		LAZYADD(owner.status_effects, src)
 	if(duration != -1)
 		duration = world.time + duration
 	tick_interval = world.time + tick_interval
 	if(alert_type)
-		var/obj/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
+		var/atom/movable/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
 		A.attached_effect = src //so the alert can reference us, if it needs to
 		linked_alert = A //so we can reference the alert, if we need to
-	START_PROCESSING(SSfastprocess, src)
+	if(duration > 0 || initial(tick_interval) > 0) //don't process if we don't care
+		switch(processing_speed)
+			if(STATUS_EFFECT_FAST_PROCESS)
+				START_PROCESSING(SSfastprocess, src)
+			if (STATUS_EFFECT_NORMAL_PROCESS)
+				START_PROCESSING(SSprocessing, src)
 	return TRUE
 
 /datum/status_effect/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
+	switch(processing_speed)
+		if(STATUS_EFFECT_FAST_PROCESS)
+			STOP_PROCESSING(SSfastprocess, src)
+		if (STATUS_EFFECT_NORMAL_PROCESS)
+			STOP_PROCESSING(SSprocessing, src)
 	if(owner)
+		linked_alert = null
 		owner.clear_alert(id)
 		LAZYREMOVE(owner.status_effects, src)
 		on_remove()
@@ -63,7 +75,10 @@
 	owner = null
 	qdel(src)
 
-/datum/status_effect/proc/refresh()
+/datum/status_effect/proc/before_remove() //! Called before being removed; returning FALSE will cancel removal
+	return TRUE
+
+/datum/status_effect/proc/refresh(effect, ...)
 	var/original_duration = initial(duration)
 	if(original_duration == -1)
 		return
@@ -80,10 +95,14 @@
 // ALERT HOOK //
 ////////////////
 
-/obj/screen/alert/status_effect
+/atom/movable/screen/alert/status_effect
 	name = "Curse of Mundanity"
 	desc = "You don't feel any different..."
 	var/datum/status_effect/attached_effect
+
+/atom/movable/screen/alert/status_effect/Destroy()
+	attached_effect = null //Don't keep a ref now
+	return ..()
 
 //////////////////
 // HELPER PROCS //
@@ -93,26 +112,27 @@
 	. = FALSE
 	var/datum/status_effect/S1 = effect
 	LAZYINITLIST(status_effects)
+	var/list/arguments = args.Copy()
+	arguments[1] = src
 	for(var/datum/status_effect/S in status_effects)
 		if(S.id == initial(S1.id) && S.status_type)
 			if(S.status_type == STATUS_EFFECT_REPLACE)
 				S.be_replaced()
 			else if(S.status_type == STATUS_EFFECT_REFRESH)
-				S.refresh()
+				S.refresh(arglist(arguments))
 				return
 			else
 				return
-	var/list/arguments = args.Copy()
-	arguments[1] = src
 	S1 = new effect(arguments)
 	. = S1
 
-/mob/living/proc/remove_status_effect(effect) //removes all of a given status effect from this mob, returning TRUE if at least one was removed
+/mob/living/proc/remove_status_effect(effect, ...) //removes all of a given status effect from this mob, returning TRUE if at least one was removed
 	. = FALSE
+	var/list/arguments = args.Copy(2)
 	if(status_effects)
 		var/datum/status_effect/S1 = effect
 		for(var/datum/status_effect/S in status_effects)
-			if(initial(S1.id) == S.id)
+			if(initial(S1.id) == S.id && S.before_remove(arguments))
 				qdel(S)
 				. = TRUE
 
@@ -143,7 +163,7 @@
 	var/stacks = 0 //how many stacks are accumulated, also is # of stacks that target will have when first applied
 	var/delay_before_decay //deciseconds until ticks start occuring, which removes stacks (first stack will be removed at this time plus tick_interval)
 	tick_interval = 10 //deciseconds between decays once decay starts
-	var/stack_decay = 1 //how many stacks are lost per tick (decay trigger) 
+	var/stack_decay = 1 //how many stacks are lost per tick (decay trigger)
 	var/stack_threshold //special effects trigger when stacks reach this amount
 	var/max_stacks //stacks cannot exceed this amount
 	var/consumed_on_threshold = TRUE //if status should be removed once threshold is crossed
@@ -151,7 +171,7 @@
 	var/overlay_file
 	var/underlay_file
 	var/overlay_state // states in .dmi must be given a name followed by a number which corresponds to a number of stacks. put the state name without the number in these state vars
-	var/underlay_state // the number is concatonated onto the string based on the number of stacks to get the correct state name 
+	var/underlay_state // the number is concatonated onto the string based on the number of stacks to get the correct state name
 	var/mutable_appearance/status_overlay
 	var/mutable_appearance/status_underlay
 
@@ -194,6 +214,8 @@
 		if(stacks >= stack_threshold && !threshold_crossed) //threshold_crossed check prevents threshold effect from occuring if changing from above threshold to still above threshold
 			threshold_crossed = TRUE
 			on_threshold_cross()
+			if(consumed_on_threshold)
+				return
 		else if(stacks < stack_threshold && threshold_crossed)
 			threshold_crossed = FALSE //resets threshold effect if we fall below threshold so threshold effect can trigger again
 			on_threshold_drop()
@@ -205,13 +227,14 @@
 		owner.add_overlay(status_overlay)
 		owner.underlays += status_underlay
 	else
-		fadeout_effect() 
+		fadeout_effect()
 		qdel(src) //deletes status if stacks fall under one
 
 /datum/status_effect/stacking/on_creation(mob/living/new_owner, stacks_to_apply)
-	..()
-	src.add_stacks(stacks_to_apply)
-	
+	. = ..()
+	if(.)
+		add_stacks(stacks_to_apply)
+
 /datum/status_effect/stacking/on_apply()
 	if(!can_have_status())
 		return FALSE
@@ -235,3 +258,22 @@
 		owner.underlays -= status_underlay
 	QDEL_NULL(status_overlay)
 	return ..()
+
+/// Status effect from multiple sources, when all sources are removed, so is the effect
+/datum/status_effect/grouped
+	status_type = STATUS_EFFECT_MULTIPLE //! Adds itself to sources and destroys itself if one exists already, there are never multiple
+	var/list/sources = list()
+
+/datum/status_effect/grouped/on_creation(mob/living/new_owner, source)
+	var/datum/status_effect/grouped/existing = new_owner.has_status_effect(type)
+	if(existing)
+		existing.sources |= source
+		qdel(src)
+		return FALSE
+	else
+		sources |= source
+		return ..()
+
+/datum/status_effect/grouped/before_remove(source)
+	sources -= source
+	return !length(sources)

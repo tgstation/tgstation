@@ -7,17 +7,11 @@
 	density = TRUE
 	layer = LOW_ITEM_LAYER
 	anchored = TRUE
-	climbable = TRUE
+	pass_flags_self = PASSGLASS
 	var/tube_construction = /obj/structure/c_transit_tube
 	var/list/tube_dirs //list of directions this tube section can connect to.
 	var/exit_delay = 1
 	var/enter_delay = 0
-	var/const/time_to_unwrench = 2 SECONDS
-
-/obj/structure/transit_tube/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return TRUE
-	return !density
 
 /obj/structure/transit_tube/New(loc, newdirection)
 	..(loc)
@@ -25,6 +19,7 @@
 		setDir(newdirection)
 	init_tube_dirs()
 	generate_tube_overlays()
+	AddElement(/datum/element/climbable)
 
 /obj/structure/transit_tube/Destroy()
 	for(var/obj/structure/transit_tube_pod/P in loc)
@@ -40,11 +35,11 @@
 	if(W.tool_behaviour == TOOL_WRENCH)
 		if(tube_construction)
 			for(var/obj/structure/transit_tube_pod/pod in src.loc)
-				to_chat(user, "<span class='warning'>Remove the pod first!</span>")
+				to_chat(user, span_warning("Remove the pod first!"))
 				return
-			user.visible_message("<span class='notice'>[user] starts to detach \the [src].</span>", "<span class='notice'>You start to detach the [name]...</span>")
-			if(W.use_tool(src, user, time_to_unwrench, volume=50))
-				to_chat(user, "<span class='notice'>You detach the [name].</span>")
+			user.visible_message(span_notice("[user] starts to detach \the [src]."), span_notice("You start to detach the [name]..."))
+			if(W.use_tool(src, user, 2 SECONDS, volume=50))
+				to_chat(user, span_notice("You detach the [name]."))
 				var/obj/structure/c_transit_tube/R = new tube_construction(loc)
 				R.setDir(dir)
 				transfer_fingerprints_to(R)
@@ -131,7 +126,7 @@
 
 /obj/structure/transit_tube/proc/generate_tube_overlays()
 	for(var/direction in tube_dirs)
-		if(direction in GLOB.diagonals)
+		if(ISDIAGONALDIR(direction))
 			if(direction & NORTH)
 				create_tube_overlay(direction ^ 3, NORTH)
 

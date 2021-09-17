@@ -3,6 +3,7 @@
 /obj/item/storage/bag/money
 	name = "money bag"
 	icon_state = "moneybag"
+	worn_icon_state = "moneybag"
 	force = 10
 	throwforce = 0
 	resistance_flags = FLAMMABLE
@@ -27,3 +28,11 @@
 	new /obj/item/coin/gold(src)
 	new /obj/item/coin/gold(src)
 	new /obj/item/coin/adamantine(src)
+
+///Used in the dutchmen pirate shuttle.
+/obj/item/storage/bag/money/dutchmen/PopulateContents()
+	for(var/iteration in 1 to 9)
+		new /obj/item/coin/silver/doubloon(src)
+	for(var/iteration in 1 to 9)
+		new /obj/item/coin/gold/doubloon(src)
+	new /obj/item/coin/adamantine/doubloon(src)

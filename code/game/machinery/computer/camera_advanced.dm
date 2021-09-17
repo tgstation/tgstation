@@ -3,16 +3,23 @@
 	desc = "Used to access the various cameras on the station."
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
+	light_color = COLOR_SOFT_RED
 	var/list/z_lock = list() // Lock use to these z levels
 	var/lock_override = NONE
-	var/mob/camera/aiEye/remote/eyeobj
+	var/mob/camera/ai_eye/remote/eyeobj
 	var/mob/living/current_user = null
 	var/list/networks = list("ss13")
 	var/datum/action/innate/camera_off/off_action = new
 	var/datum/action/innate/camera_jump/jump_action = new
+	///Camera action button to move up a Z level
+	var/datum/action/innate/camera_multiz_up/move_up_action = new
+	///Camera action button to move down a Z level
+	var/datum/action/innate/camera_multiz_down/move_down_action = new
 	var/list/actions = list()
+	///Should we supress any view changes?
+	var/should_supress_view_changes  = TRUE
 
-	light_color = LIGHT_COLOR_RED
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE | INTERACT_MACHINE_REQUIRES_SIGHT
 
 /obj/machinery/computer/camera_advanced/Initialize()
 	. = ..()
@@ -27,16 +34,16 @@
 		if(lock_override & CAMERA_LOCK_CENTCOM)
 			z_lock |= SSmapping.levels_by_trait(ZTRAIT_CENTCOM)
 
-/obj/machinery/computer/camera_advanced/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+/obj/machinery/computer/camera_advanced/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in networks)
 		networks -= i
-		networks += "[idnum][i]"
+		networks += "[port.id]_[i]"
 
 /obj/machinery/computer/camera_advanced/syndie
 	icon_keyboard = "syndie_key"
 	circuit = /obj/item/circuitboard/computer/advanced_camera
 
-/obj/machinery/computer/camera_advanced/syndie/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+/obj/machinery/computer/camera_advanced/syndie/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	return //For syndie nuke shuttle, to spy for station.
 
 /obj/machinery/computer/camera_advanced/proc/CreateEye()
@@ -53,6 +60,16 @@
 		jump_action.target = user
 		jump_action.Grant(user)
 		actions += jump_action
+
+	if(move_up_action)
+		move_up_action.target = user
+		move_up_action.Grant(user)
+		actions += move_up_action
+
+	if(move_down_action)
+		move_down_action.target = user
+		move_down_action.Grant(user)
+		actions += move_down_action
 
 /obj/machinery/proc/remove_eye_control(mob/living/user)
 	CRASH("[type] does not implement ai eye handling")
@@ -71,23 +88,23 @@
 		user.reset_perspective(null)
 		if(eyeobj.visible_icon && user.client)
 			user.client.images -= eyeobj.user_image
+		user.client.view_size.unsupress()
+
 	eyeobj.eye_user = null
 	user.remote_control = null
-
 	current_user = null
 	user.unset_machine()
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
-	if( (stat & (NOPOWER|BROKEN)) || (!Adjacent(user) && !user.has_unlimited_silicon_privilege) || user.eye_blind || user.incapacitated() )
+	if(!can_use(user) || (issilicon(user) && !user.has_unlimited_silicon_privilege))
 		user.unset_machine()
 
 /obj/machinery/computer/camera_advanced/Destroy()
-	if(current_user)
-		current_user.unset_machine()
 	if(eyeobj)
-		qdel(eyeobj)
+		QDEL_NULL(eyeobj)
 	QDEL_LIST(actions)
+	current_user = null
 	return ..()
 
 /obj/machinery/computer/camera_advanced/on_unset_machine(mob/M)
@@ -95,33 +112,31 @@
 		remove_eye_control(M)
 
 /obj/machinery/computer/camera_advanced/proc/can_use(mob/living/user)
-	return TRUE
+	return can_interact(user)
 
 /obj/machinery/computer/camera_advanced/abductor/can_use(mob/user)
 	if(!isabductor(user))
 		return FALSE
 	return ..()
 
-/obj/machinery/computer/camera_advanced/attack_hand(mob/user)
+/obj/machinery/computer/camera_advanced/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
-	if(!is_operational()) //you cant use broken machine you chumbis
-		return
-	if(current_user)
-		to_chat(user, "<span class='warning'>The console is already in use!</span>")
-		return
-	var/mob/living/L = user
-
 	if(!can_use(user))
 		return
+	if(current_user)
+		to_chat(user, span_warning("The console is already in use!"))
+		return
+	var/mob/living/L = user
 	if(!eyeobj)
 		CreateEye()
-
+	if(!eyeobj) //Eye creation failed
+		return
 	if(!eyeobj.eye_initialized)
 		var/camera_location
 		var/turf/myturf = get_turf(src)
-		if(eyeobj.use_static != USE_STATIC_NONE)
+		if(eyeobj.use_static != FALSE)
 			if((!z_lock.len || (myturf.z in z_lock)) && GLOB.cameranet.checkTurfVis(myturf))
 				camera_location = myturf
 			else
@@ -161,8 +176,10 @@
 	user.remote_control = eyeobj
 	user.reset_perspective(eyeobj)
 	eyeobj.setLoc(eyeobj.loc)
+	if(should_supress_view_changes )
+		user.client.view_size.supress()
 
-/mob/camera/aiEye/remote
+/mob/camera/ai_eye/remote
 	name = "Inactive Camera Eye"
 	ai_detector_visible = FALSE
 	var/sprint = 10
@@ -174,41 +191,50 @@
 	var/visible_icon = 0
 	var/image/user_image = null
 
-/mob/camera/aiEye/remote/update_remote_sight(mob/living/user)
+/mob/camera/ai_eye/remote/update_remote_sight(mob/living/user)
 	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras
 	user.sight = SEE_TURFS | SEE_BLACKNESS
 	user.see_in_dark = 2
-	return 1
+	return TRUE
 
-/mob/camera/aiEye/remote/Destroy()
+/mob/camera/ai_eye/remote/Destroy()
 	if(origin && eye_user)
 		origin.remove_eye_control(eye_user,src)
 	origin = null
 	. = ..()
 	eye_user = null
 
-/mob/camera/aiEye/remote/GetViewerClient()
+/mob/camera/ai_eye/remote/GetViewerClient()
 	if(eye_user)
 		return eye_user.client
 	return null
 
-/mob/camera/aiEye/remote/setLoc(T)
+/mob/camera/ai_eye/remote/xenobio/canZMove(direction, turf/target)
+	var/area/new_area = get_area(target)
+	if(new_area && new_area.name == allowed_area || new_area && (new_area.area_flags & XENOBIOLOGY_COMPATIBLE))
+		return TRUE
+	return FALSE
+
+/mob/camera/ai_eye/remote/setLoc(destination)
 	if(eye_user)
-		T = get_turf(T)
-		if (T)
-			forceMove(T)
+		destination = get_turf(destination)
+		if (destination)
+			abstract_move(destination)
 		else
 			moveToNullspace()
+
 		update_ai_detect_hud()
-		if(use_static != USE_STATIC_NONE)
+
+		if(use_static)
 			GLOB.cameranet.visibility(src, GetViewerClient(), null, use_static)
+
 		if(visible_icon)
 			if(eye_user.client)
 				eye_user.client.images -= user_image
 				user_image = image(icon,loc,icon_state,FLY_LAYER)
 				eye_user.client.images += user_image
 
-/mob/camera/aiEye/remote/relaymove(mob/user,direct)
+/mob/camera/ai_eye/remote/relaymove(mob/living/user, direction)
 	var/initial = initial(sprint)
 	var/max_sprint = 50
 
@@ -216,7 +242,7 @@
 		sprint = initial
 
 	for(var/i = 0; i < max(sprint, initial); i += 20)
-		var/turf/step = get_turf(get_step(src, direct))
+		var/turf/step = get_turf(get_step(src, direction))
 		if(step)
 			setLoc(step)
 
@@ -235,7 +261,7 @@
 	if(!target || !isliving(target))
 		return
 	var/mob/living/C = target
-	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
+	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/console = remote_eye.origin
 	console.remove_eye_control(target)
 
@@ -248,7 +274,7 @@
 	if(!target || !isliving(target))
 		return
 	var/mob/living/C = target
-	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
+	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin
 
 	var/list/L = list()
@@ -274,8 +300,37 @@
 	if(final)
 		playsound(origin, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 		remote_eye.setLoc(get_turf(final))
-		C.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
+		C.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
 		C.clear_fullscreen("flash", 3) //Shorter flash than normal since it's an ~~advanced~~ console!
 	else
 		playsound(origin, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 
+/datum/action/innate/camera_multiz_up
+	name = "Move up a floor"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon_state = "move_up"
+
+/datum/action/innate/camera_multiz_up/Activate()
+	if(!target || !isliving(target))
+		return
+	var/mob/living/user_mob = target
+	var/mob/camera/ai_eye/remote/remote_eye = user_mob.remote_control
+	if(remote_eye.zMove(UP, FALSE))
+		to_chat(user_mob, span_notice("You move upwards."))
+	else
+		to_chat(user_mob, span_notice("You couldn't move upwards!"))
+
+/datum/action/innate/camera_multiz_down
+	name = "Move down a floor"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon_state = "move_down"
+
+/datum/action/innate/camera_multiz_down/Activate()
+	if(!target || !isliving(target))
+		return
+	var/mob/living/user_mob = target
+	var/mob/camera/ai_eye/remote/remote_eye = user_mob.remote_control
+	if(remote_eye.zMove(DOWN, FALSE))
+		to_chat(user_mob, span_notice("You move downwards."))
+	else
+		to_chat(user_mob, span_notice("You couldn't move downwards!"))

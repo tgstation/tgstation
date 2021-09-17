@@ -15,6 +15,7 @@
 	icon_state = "agentbox"
 	max_integrity = 1 // "This dumb box shouldn't take more than one hit to make it vanish."
 	move_speed_multiplier = 0.5
+	enable_door_overlay = FALSE
 
 /obj/structure/closet/cardboard/agent/proc/go_invisible()
 	animate(src, , alpha = 0, time = 20)
@@ -24,7 +25,7 @@
 	go_invisible()
 
 
-/obj/structure/closet/cardboard/agent/open()
+/obj/structure/closet/cardboard/agent/open(mob/living/user, force = FALSE)
 	. = ..()
 	qdel(src)
 
@@ -35,7 +36,7 @@
 	alpha = 255
 	addtimer(CALLBACK(src, .proc/go_invisible), 10, TIMER_OVERRIDE|TIMER_UNIQUE)
 
-/obj/structure/closet/cardboard/agent/Bump(atom/movable/A)
+/obj/structure/closet/cardboard/agent/Bump(atom/A)
 	. = ..()
 	if(isliving(A))
 		reveal()

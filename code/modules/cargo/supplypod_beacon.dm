@@ -3,7 +3,7 @@
 	desc = "A device that can be linked to an Express Supply Console for precision supply pod deliveries. Alt-click to remove link."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "supplypod_beacon"
-	item_state = "radio"
+	inhand_icon_state = "radio"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -12,7 +12,7 @@
 	var/ready = FALSE
 	var/launched = FALSE
 
-/obj/item/supplypod_beacon/proc/update_status(var/consoleStatus)
+/obj/item/supplypod_beacon/proc/update_status(consoleStatus)
 	switch(consoleStatus)
 		if (SP_LINKED)
 			linked = TRUE
@@ -29,16 +29,19 @@
 			playsound(src,'sound/machines/synth_no.ogg',50,FALSE)
 		if (SP_UNREADY)
 			ready = FALSE
-	update_icon()
+	update_appearance()
 
-/obj/item/supplypod_beacon/update_icon()
-	cut_overlays()
-	if (launched)
-		add_overlay("sp_green")
-	else if (ready)
-		add_overlay("sp_yellow")
-	else if (linked)
-		add_overlay("sp_orange")
+/obj/item/supplypod_beacon/update_overlays()
+	. = ..()
+	if(launched)
+		. += "sp_green"
+		return
+	if(ready)
+		. += "sp_yellow"
+		return
+	if(linked)
+		. += "sp_orange"
+		return
 
 /obj/item/supplypod_beacon/proc/endLaunch()
 	launched = FALSE
@@ -47,9 +50,9 @@
 /obj/item/supplypod_beacon/examine(user)
 	. = ..()
 	if(!express_console)
-		. += "<span class='notice'>[src] is not currently linked to an Express Supply console.</span>"
+		. += span_notice("[src] is not currently linked to an Express Supply console.")
 	else
-		. += "<span class='notice'>Alt-click to unlink it from the Express Supply console.</span>"
+		. += span_notice("Alt-click to unlink it from the Express Supply console.")
 
 /obj/item/supplypod_beacon/Destroy()
 	if(express_console)
@@ -73,7 +76,7 @@
 	update_status(SP_LINKED)
 	if (express_console.usingBeacon)
 		update_status(SP_READY)
-	to_chat(user, "<span class='notice'>[src] linked to [C].</span>")
+	to_chat(user, span_notice("[src] linked to [C]."))
 
 /obj/item/supplypod_beacon/AltClick(mob/user)
 	if (!user.canUseTopic(src, !issilicon(user)))
@@ -81,7 +84,7 @@
 	if (express_console)
 		unlink_console()
 	else
-		to_chat(user, "<span class='alert'>There is no linked console.</span>")
+		to_chat(user, span_alert("There is no linked console."))
 
 /obj/item/supplypod_beacon/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/pen)) //give a tag that is visible from the linked express console

@@ -12,7 +12,27 @@
 		"Griffing",
 		"Lord",
 		"Professor",
-		"Space"
+		"Space",
+		"Unrobust"
+	],
+
+	"rpg_adjective_valentines": [
+		"Amorous",
+		"Aphrodisiac",
+		"Carnal",
+		"Forever Alone",
+		"Infatuated",
+		"Jilted",
+		"Lascivious",
+		"Lewd",
+		"Lovelorn",
+		"Lusty",
+		"Moonstruck",
+		"Recently Dumped",
+		"Salacious",
+		"Sexy",
+		"Smitten",
+		"Steamy"
 	],
 
 	"rpg_adjective_halloween": [
@@ -49,6 +69,7 @@
 	"rpg_adjective_xmas": [
 		"Bleak Midwinter",
 		"Blustery",
+		"Chilly",
 		"Frostbitten",
 		"Jolly",
 		"Icy",
@@ -64,16 +85,29 @@
 		"Defeat",
 		"Destroy",
 		"Mutilate",
+		"Nuke",
 		"Own",
+		"Perma",
 		"Pwn",
 		"Pulverize",
 		"Robust",
-		"Romance",
 		"Save",
 		"Stop",
 		"Strike",
 		"Valid",
 		"Yeet"
+	],
+
+	"rpg_action_valentines": [
+		"Bewitch",
+		"Crush",
+		"Cuddle",
+		"Divorce",
+		"ERP",
+		"Romance",
+		"Seduce",
+		"Smooch",
+		"Titillate"
 	],
 
 	"rpg_action_halloween": [
@@ -97,6 +131,7 @@
 		"Jingle",
 		"Nutcrack",
 		"Regift",
+		"Snowplow",
 		"Stuff",
 		"Unwrap",
 		"Wassail"
@@ -105,6 +140,7 @@
 	"rpg_enemy": [
 		"Administrator",
 		"Bloopers",
+		"Coder",
 		"Crushulon",
 		"Ectoplasm",
 		"ERPer",
@@ -114,12 +150,28 @@
 		"Lizard Man",
 		"Mecha-Gondola",
 		"Peteoid",
+		"Powergamer",
 		"Slime",
 		"Syndie",
+		"Tider",
 		"Uhangoid",
 		"Unicorn",
 		"Tunnel Clown",
 		"Vhakoid"
+	],
+
+	"rpg_enemy_valentines": [
+		"Aphrodite",
+		"Comdom",
+		"Ex-Boyfriend",
+		"Ex-Girlfriend",
+		"Husbando",
+		"Maneater",
+		"Spess Casanova",
+		"Spess Don Juan",
+		"St. Valentine",
+		"Waifu",
+		"Xenomorph Maid"
 	],
 
 	"rpg_enemy_halloween": [
@@ -136,6 +188,7 @@
 		"Graverobber",
 		"Headless Horseman",
 		"Juggernaut",
+		"Mr. Bones",
 		"Necromancer",
 		"Poltergeist",
 		"Reaper",
@@ -154,6 +207,7 @@
 		"Abominable Snowman",
 		"Der Klown",
 		"Elf",
+		"Elf on the Shelf",
 		"Festivus Pole",
 		"Ghost of Your Future",
 		"Grinch",
@@ -170,7 +224,9 @@
 		"bike horn",
 		"broken bottle",
 		"chef's knife",
+		"circular saw",
 		"claymore",
+		"cleaver",
 		"crowbar",
 		"curator's whip",
 		"fire axe",
@@ -181,23 +237,42 @@
 		"null rod",
 		"potted plant",
 		"rolling pin",
+		"scalpel",
 		"screwdriver",
 		"stunprod",
-		"toolbox"
+		"toolbox",
+		"welder"
+	],
+	
+	"rpg_weapon_valentines": [
+		"bouquet of deathnettles",
+		"candy-heart shotgun",
+		"cupid's arrow",
+		"declaration of anguished feelings",
+		"razor-sharp breakup letter",
+		"still-beating heart",
+		"thorny rose",
+		"toolbox of chocolates"
 	],
 	
 	"rpg_weapon_halloween": [
 		"chainsaw",
+		"heavy gravestone",
 		"lit jack-o-lantern",
 		"machete",
 		"silver dagger",
 		"skeleton femur",
+		"spectral blade",
 		"wooden stake"
 	],
 	
 	"rpg_weapon_xmas": [
+		"bike horn playing carols",
+		"blunt fruitcake",
 		"box cutter",
 		"Christmas-light garrotte",
+		"festivus polearm",
+		"rejected present",
 		"sharpened icicle",
 		"sprig of mistletoe",
 		"thrown snowball",

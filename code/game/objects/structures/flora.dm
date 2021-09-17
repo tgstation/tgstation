@@ -17,18 +17,16 @@
 		if(W.get_sharpness() && W.force > 0)
 			if(W.hitsound)
 				playsound(get_turf(src), W.hitsound, 100, FALSE, FALSE)
-			user.visible_message("<span class='notice'>[user] begins to cut down [src] with [W].</span>","<span class='notice'>You begin to cut down [src] with [W].</span>", "<span class='hear'>You hear the sound of sawing.</span>")
+			user.visible_message(span_notice("[user] begins to cut down [src] with [W]."),span_notice("You begin to cut down [src] with [W]."), span_hear("You hear the sound of sawing."))
 			if(do_after(user, 1000/W.force, target = src)) //5 seconds with 20 force, 8 seconds with a hatchet, 20 seconds with a shard.
-				user.visible_message("<span class='notice'>[user] fells [src] with the [W].</span>","<span class='notice'>You fell [src] with the [W].</span>", "<span class='hear'>You hear the sound of a tree falling.</span>")
+				user.visible_message(span_notice("[user] fells [src] with the [W]."),span_notice("You fell [src] with the [W]."), span_hear("You hear the sound of a tree falling."))
 				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , FALSE, FALSE)
+				user.log_message("cut down [src] at [AREACOORD(src)]", LOG_ATTACK)
 				for(var/i=1 to log_amount)
 					new /obj/item/grown/log/tree(get_turf(src))
-
 				var/obj/structure/flora/stump/S = new(loc)
 				S.name = "[name] stump"
-
 				qdel(src)
-
 	else
 		return ..()
 
@@ -50,7 +48,7 @@
 /obj/structure/flora/tree/pine/Initialize()
 	. = ..()
 
-	if(islist(icon_states && icon_states.len))
+	if(islist(icon_states?.len))
 		icon_state = pick(icon_states)
 
 /obj/structure/flora/tree/pine/xmas
@@ -58,6 +56,7 @@
 	desc = "A wondrous decorated Christmas tree."
 	icon_state = "pine_c"
 	icon_states = null
+	flags_1 = NODECONSTRUCT_1 //protected by the christmas spirit
 
 /obj/structure/flora/tree/pine/xmas/presents
 	icon_state = "pinepresents"
@@ -71,7 +70,7 @@
 	if(!took_presents)
 		took_presents = list()
 
-/obj/structure/flora/tree/pine/xmas/presents/attack_hand(mob/living/user)
+/obj/structure/flora/tree/pine/xmas/presents/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -79,9 +78,9 @@
 		return
 
 	if(took_presents[user.ckey] && !unlimited)
-		to_chat(user, "<span class='warning'>There are no presents with your name on.</span>")
+		to_chat(user, span_warning("There are no presents with your name on."))
 		return
-	to_chat(user, "<span class='warning'>After a bit of rummaging, you locate a gift with your name on it!</span>")
+	to_chat(user, span_warning("After a bit of rummaging, you locate a gift with your name on it!"))
 
 	if(!unlimited)
 		took_presents[user.ckey] = TRUE
@@ -146,7 +145,7 @@
 	name = "grass"
 	desc = "A patch of overgrown grass."
 	icon = 'icons/obj/flora/snowflora.dmi'
-	gender = PLURAL	//"this is grass" not "this is a grass"
+	gender = PLURAL //"this is grass" not "this is a grass"
 
 /obj/structure/flora/grass/brown
 	icon_state = "snowgrass1bb"
@@ -301,7 +300,7 @@
 	icon_state = "fullgrass_[rand(1, 3)]"
 	. = ..()
 
-/obj/item/twohanded/required/kirbyplants
+/obj/item/kirbyplants
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
@@ -309,52 +308,89 @@
 	layer = ABOVE_MOB_LAYER
 	w_class = WEIGHT_CLASS_HUGE
 	force = 10
-	force_wielded = 10
 	throwforce = 13
 	throw_speed = 2
 	throw_range = 4
+	item_flags = NO_PIXEL_RANDOM_DROP
 
-/obj/item/twohanded/required/kirbyplants/Initialize()
+	/// Can this plant be trimmed by someone with TRAIT_BONSAI
+	var/trimmable = TRUE
+	var/list/static/random_plant_states
+
+/obj/item/kirbyplants/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/tactical)
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 500), 0)
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_unwielded=10, force_wielded=10)
+	AddElement(/datum/element/beauty, 500)
 
-/obj/item/twohanded/required/kirbyplants/random
+/obj/item/kirbyplants/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(trimmable && HAS_TRAIT(user,TRAIT_BONSAI) && isturf(loc) && I.get_sharpness())
+		to_chat(user,span_notice("You start trimming [src]."))
+		if(do_after(user,3 SECONDS,target=src))
+			to_chat(user,span_notice("You finish trimming [src]."))
+			change_visual()
+
+/// Cycle basic plant visuals
+/obj/item/kirbyplants/proc/change_visual()
+	if(!random_plant_states)
+		generate_states()
+	var/current = random_plant_states.Find(icon_state)
+	var/next = WRAP(current+1,1,length(random_plant_states))
+	icon_state = random_plant_states[next]
+
+/obj/item/kirbyplants/random
 	icon = 'icons/obj/flora/_flora.dmi'
 	icon_state = "random_plant"
-	var/list/static/states
 
-/obj/item/twohanded/required/kirbyplants/random/Initialize()
+/obj/item/kirbyplants/random/Initialize()
 	. = ..()
 	icon = 'icons/obj/flora/plants.dmi'
-	if(!states)
+	if(!random_plant_states)
 		generate_states()
-	icon_state = pick(states)
+	icon_state = pick(random_plant_states)
 
-/obj/item/twohanded/required/kirbyplants/random/proc/generate_states()
-	states = list()
+/obj/item/kirbyplants/proc/generate_states()
+	random_plant_states = list()
 	for(var/i in 1 to 25)
 		var/number
 		if(i < 10)
 			number = "0[i]"
 		else
 			number = "[i]"
-		states += "plant-[number]"
-	states += "applebush"
+		random_plant_states += "plant-[number]"
+	random_plant_states += "applebush"
 
 
-/obj/item/twohanded/required/kirbyplants/dead
+/obj/item/kirbyplants/dead
 	name = "RD's potted plant"
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
 	icon_state = "plant-25"
+	trimmable = FALSE
 
-/obj/item/twohanded/required/kirbyplants/photosynthetic
+/obj/item/kirbyplants/photosynthetic
 	name = "photosynthetic potted plant"
 	desc = "A bioluminescent plant."
 	icon_state = "plant-09"
-	light_color = "#2cb2e8"
+	light_color = COLOR_BRIGHT_BLUE
 	light_range = 3
 
+/obj/item/kirbyplants/fullysynthetic
+	name = "plastic potted plant"
+	desc = "A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch."
+	icon_state = "plant-26"
+	custom_materials = (list(/datum/material/plastic = 8000))
+	trimmable = FALSE
+
+/obj/item/kirbyplants/fullysynthetic/Initialize()
+	. = ..()
+	icon_state = "plant-[rand(26, 29)]"
+
+/obj/item/kirbyplants/potty
+	name = "Potty the Potted Plant"
+	desc = "A secret agent staffed in the station's bar to protect the mystical cakehat."
+	icon_state = "potty"
+	trimmable = FALSE
 
 //a rock is flora according to where the icon file is
 //and now these defines
@@ -365,10 +401,27 @@
 	icon = 'icons/obj/flora/rocks.dmi'
 	resistance_flags = FIRE_PROOF
 	density = TRUE
+	/// Itemstack that is dropped when a rock is mined with a pickaxe
+	var/obj/item/stack/mineResult = /obj/item/stack/ore/glass/basalt
+	/// Amount of the itemstack to drop
+	var/mineAmount = 20
 
 /obj/structure/flora/rock/Initialize()
 	. = ..()
 	icon_state = "[icon_state][rand(1,3)]"
+
+/obj/structure/flora/rock/attackby(obj/item/W, mob/user, params)
+	if(!mineResult || W.tool_behaviour != TOOL_MINING)
+		return ..()
+	if(flags_1 & NODECONSTRUCT_1)
+		return ..()
+	to_chat(user, span_notice("You start mining..."))
+	if(W.use_tool(src, user, 40, volume=50))
+		to_chat(user, span_notice("You finish mining the rock."))
+		if(mineResult && mineAmount)
+			new mineResult(loc, mineAmount)
+		SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
+		qdel(src)
 
 /obj/structure/flora/rock/pile
 	icon_state = "lavarocks"
@@ -439,3 +492,4 @@
 /obj/structure/flora/rock/pile/largejungle/Initialize()
 	. = ..()
 	icon_state = "[initial(icon_state)][rand(1,3)]"
+

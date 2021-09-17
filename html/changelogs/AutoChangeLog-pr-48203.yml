@@ -1,4 +1,0 @@
-author: "JDHoffmann3"
-delete-after: True
-changes: 
-  - bugfix: "Vampires maintain blood volume when shapeshifting."

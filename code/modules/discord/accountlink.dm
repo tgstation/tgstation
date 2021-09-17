@@ -1,45 +1,38 @@
-// Verb to link discord accounts to BYOND accounts
-/client/verb/linkdiscord()
-	set category = "Special Verbs"
-	set name = "Link Discord Account"
-	set desc = "Link your discord account to your BYOND account."
+// IF you have linked your account, this will trigger a verify of the user
+/client/verb/verify_in_discord()
+	set category = "OOC"
+	set name = "Verify Discord Account"
+	set desc = "Verify your discord account with your BYOND account"
 
 	// Safety checks
 	if(!CONFIG_GET(flag/sql_enabled))
-		to_chat(src, "<span class='warning'>This feature requires the SQL backend to be running.</span>")
+		to_chat(src, span_warning("This feature requires the SQL backend to be running."))
 		return
 
-	if(!SSdiscord) // SS is still starting
-		to_chat(src, "<span class='notice'>The server is still starting up. Please wait before attempting to link your account!</span>")
+	// Why this would ever be unset, who knows
+	var/prefix = CONFIG_GET(string/discordbotcommandprefix)
+	if(!prefix)
+		to_chat(src, span_warning("This feature is disabled."))
+
+	if(!SSdiscord || !SSdiscord.reverify_cache)
+		to_chat(src, span_warning("Wait for the Discord subsystem to finish initialising"))
 		return
+	var/message = ""
+	// Simple sanity check to prevent a user doing this too often
+	var/cached_one_time_token = SSdiscord.reverify_cache[usr.ckey]
+	if(cached_one_time_token && cached_one_time_token != "")
+		message = "You already generated your one time token, it is [cached_one_time_token], if you need a new one, you will have to wait until the round ends, or switch to another server, try verifying yourself in discord by using the command <span class=\"warning\">\" [prefix]verify [cached_one_time_token] \"</span>"
 
-	if(!SSdiscord.enabled)
-		to_chat(src, "<span class='warning'>This feature requires the server is running on the TGS toolkit.</span>")
-		return
 
-	var/stored_id = SSdiscord.lookup_id(usr.ckey)
-	if(!stored_id) // Account is not linked
-		var/know_how = alert("Do you know how to get a Discord user ID? This ID is NOT your Discord username and numbers! (Pressing NO will open a guide.)","Question","Yes","No","Cancel Linking")
-		if(know_how == "No") // Opens discord support on how to collect IDs
-			src << link("https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID")
-		if(know_how == "Cancel Linking")
-			return
-		var/entered_id = input("Please enter your Discord ID (18-ish digits)", "Enter Discord ID", null, null) as text|null
-		SSdiscord.account_link_cache[replacetext(lowertext(usr.ckey), " ", "")] = "[entered_id]" // Prepares for TGS-side verification, also fuck spaces
-		alert(usr, "Account link started. Please ping the bot of the server you\'re currently on, followed by \"verify [usr.ckey]\" in Discord to successfully verify your account (Example: @Mr_Terry verify [usr.ckey])")
+	else
+		// Will generate one if an expired one doesn't exist already, otherwise will grab existing token
+		var/one_time_token = SSdiscord.get_or_generate_one_time_token_for_ckey(ckey)
+		SSdiscord.reverify_cache[usr.ckey] = one_time_token
+		message = "Your one time token is: [one_time_token], Assuming you have the required living minutes in game, you can now verify yourself in discord by using the command <span class=\"warning\">\" [prefix]verify [one_time_token] \"</span>"
 
-	else // Account is already linked
-		var/choice = alert("You already have the Discord Account [stored_id] linked to [usr.ckey]. Would you like to link a different account?","Already Linked","Yes","No")
-		if(choice == "Yes")
-			var/know_how = alert("Do you know how to get a Discord user ID? This ID is NOT your Discord username and numbers! (Pressing NO will open a guide.)","Question","Yes","No", "Cancel Linking")
-			if(know_how == "No") // Opens discord support on how to collect IDs
-				src << link("https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID")
+	//Now give them a browse window so they can't miss whatever we told them
+	var/datum/browser/window = new/datum/browser(usr, "discordverification", "Discord verification")
+	window.set_content("<span>[message]</span>")
+	window.open()
 
-			if(know_how == "Cancel Linking")
-				return
 
-			var/entered_id = input("Please enter your Discord ID (18-ish digits)", "Enter Discord ID", null, null) as text|null
-			SSdiscord.account_link_cache[replacetext(lowertext(usr.ckey), " ", "")] = "[entered_id]" // Prepares for TGS-side verification, also fuck spaces
-			alert(usr, "Account link started. Please ping the bot of the server you\'re currently on, followed by \"verify [usr.ckey]\" in Discord to successfully verify your account (Example: @Mr_Terry verify [usr.ckey])")
-			// This is so people cant fill the notify list with a fuckload of ckeys
-			SSdiscord.notify_members -= "[stored_id]" // The list uses strings because BYOND cannot handle a 17 digit integer

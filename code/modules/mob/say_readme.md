@@ -38,9 +38,6 @@ global procs
 	message_spans_start(spans)
 		Turns each element of spans into a span class.
 
-	message_spans_end(length)
-		Returns lenght times "</span>"
-
 	attach_spans(input, spans)
 		Attaches span classes around input.
 
@@ -49,43 +46,41 @@ global procs
 		The HEAR_1 flag determines whether something is a hearer or not.
 		Hear() is only called on procs with this flag.
 
-	languages_spoken/languages_understood
-		Bitmask variable.
-		What languages this object speaks/understands. If the languages of the speaker don't match the languages
-		of the hearer, the message will be modified in the hearer's lang_treat().
+	languages
+		languages live either in datum/languages_holder or in the mind.
 
-	verb_say/verb_ask/verb_exclaim/verb_yell
+	verb_say/verb_ask/verb_exclaim/verb_yell/verb_sing
 		These determine what the verb is for their respective action. Used in say_quote().
 
-	say(message)
+	say(message, bubble_type, var/list/spans, sanitize, datum/language/language, ignore_spam, forced)
 		Say() is the "mother-proc". It calls all the other procs required for speaking, but does little itself.
 		At the atom/movable level, say() just calls send_speech.
 
-	Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
+	Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mods)
 		This proc handles hearing. What it does varies. For mobs, it treats the message with hearer-specific things
 		like language and deafness, then outputs it to the hearer.
 
 		IMPORTANT NOTE: If radio_freq is not null, the code will assume that the speaker is virtual! (more info on this in the Radios section below)
 
-	send_speech(message, range, source, bubble_type, spans)
+	send_speech(message, range, source, bubble_type, spans, list/message_mods)
 		This proc composes a list of hearers (things with the HEAR_1 flag + dead people) and calls Hear() on them.
 		Message treatment or composition of output are not done by this proc, these are handled by the rest of
 		say() and the hearer respectively.
 
-	lang_treat(message, atom/movable/speaker, message_langs, raw_message, spans, message_mode)
+	lang_treat(message, atom/movable/speaker, message_langs, raw_message, spans, list/message_mods)
 		Modifies the message by comparing the languages of the speaker with the languages of the hearer.
 		Called on the hearer.
-		Passes message_mode to say_quote.
+		Passes message_mods to say_quote.
 
-	say_quote(input, spans, message_mode)
+	say_quote(input, spans, list/message_mods)
 		Adds a verb and quotes to a message. Also attaches span classes to a message.
-        Verbs are determined by verb_say/verb_ask/verb_yell variables. Called on the speaker.
+        Verbs are determined by verb_say/verb_ask/verb_yell/verb_sing variables. Called on the speaker.
 
 /mob
 	say_dead(message)
 		Sends a message to all dead people. Does not use Hear().
 
-	compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
+	compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods)
 		Composes the message mobs see on their screen when they hear something.
 
 	compose_track_href(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
@@ -95,17 +90,17 @@ global procs
 		Composes the job and the end tag for tracking hrefs. Returns "" for all mobs except AIs.
 
 	hivecheck()
-		Returns 1 if the mob can hear and talk in the alien hivemind.
+		Returns TRUE if the mob can hear and talk in the alien hivemind.
 
 	lingcheck()
-		Returns 1 if the mob can hear and talk in the changeling hivemind.
+		Returns a bitflag representing who is trying to talk to the changeling hivemind.
 
 /mob/living
-	say(message)
+	say(message, bubble_type, var/list/spans, sanitize, datum/language/languag, ignore_spam, forced)
 		The say() of mob_living is significantly more complex than that of objects.
 		Most of the extra code has to do with radios and message treatment.
 
-	send_speech(message, range, source, bubble_type, spans, message_mode)
+	send_speech(message, range, source, bubble_type, spans, list/message_mods)
 		mob/living's send_speech allows mobs one tile outside of the defined range to still hear the message,
 		but starred with the stars() proc.
 
@@ -113,7 +108,7 @@ global procs
 		Checks if the message begins with an * and is thus an emote.
 
 	can_speak(message)
-		Calls can_speak_basic() and can_speak_vocal()
+		Calls can_speak_basic() and can_speak_vocal(), if they both pass it passes
 
 	can_speak_basic(message)
 		Sees if the mob can "think" the message. Does not include vocalization or stat checks.
@@ -125,29 +120,36 @@ global procs
 		hivemind chat.
 		Called right after handle_inherent_channels()
 
-	get_message_mode(message)
-		Checks the start of the message for a message mode, then returns said message mode.
-		DOES NOT TRIM THE MESSAGE. This is done manually.
-
-	handle_inherent_channels(message, message_mode)
-		If message_mode is MODE_BINARY, MODE_ALIEN or MODE_CHANGELING (or, for AIs, MODE_HOLOPAD), this will
-		handle speaking in those modes. Return 1 to exit say().
+	get_message_mods(message, list/message_mods)
+		Checks the start of the message for each of the components it could contain, stores that info in mods, and returns a trimmed list
 
 	treat_message(message)
-		What it says on the tin. Treats the message according to masks, mutantraces, mutations, etc.
-		Please try to keep things in a logical order (e.g. don't have masks handled before mutations),
-		even if that means you have to call ..() in the middle of the proc.
+		What it says on the tin. Treats the message according to flags set on the mob.
+		Also handles captilization of the message
 
-	radio(message, message_mode, spans)
+	radio(message, list/message_mods = list(), spans)
 		Handles talking into radios. Uses a switch to determine what radio to speak into and in which manner to do so.
 
 		Return is a bitflag.
-		NOPASS = terminate say() (used for whispers)
+		NOPASS = terminate say()
 		ITALICS = add italics to the message
 		REDUCE_RANGE = reduce the message range to one tile.
 
 		Return 0 if no radio was spoken into.
 		IMPORTANT: remember to call ..() and check for ..()'s return value properly!
+
+/datum/saymode
+	This is made to handle things like admin or alien chat.
+	Features that look like radio, but aren't quite
+
+	key
+		The key used to talk on this channel, in combination with : or .
+	mode
+		The UID we use for this channel
+
+	handle_message(message, list/message_mods, datum/language/language)
+		Intercepts say() after it's done all of it's message building.
+		If this returns true we stop say(), if it returns false we keep going
 ```
 # RADIOS
 

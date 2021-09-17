@@ -104,7 +104,7 @@
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/suit/chaplainsuit/nun(src)
 	new /obj/item/clothing/head/nun_hood(src)
-	new /obj/item/clothing/suit/hooded/chaplainsuit/monkfrock(src)
+	new /obj/item/clothing/suit/hooded/chaplainsuit/monkhabit(src)
 	new /obj/item/clothing/suit/chaplainsuit/holidaypriest(src)
 	new /obj/item/storage/backpack/cultpack(src)
 	new /obj/item/storage/fancy/candle_box(src)
@@ -195,9 +195,9 @@
 		/obj/item/clothing/under/rank/medical/doctor/purple = 1,
 		/obj/item/clothing/under/rank/medical/doctor = 3,
 		/obj/item/clothing/suit/toggle/labcoat = 3,
-		/obj/item/clothing/suit/toggle/labcoat/emt = 3,
+		/obj/item/clothing/suit/toggle/labcoat/paramedic = 3,
 		/obj/item/clothing/shoes/sneakers/white = 3,
-		/obj/item/clothing/head/soft/emt = 3)
+		/obj/item/clothing/head/soft/paramedic = 3)
 	generate_items_inside(items_inside,src)
 	return
 
@@ -232,6 +232,7 @@
 		/obj/item/clothing/suit/toggle/labcoat/chemist = 2,
 		/obj/item/storage/backpack/chemistry = 2,
 		/obj/item/storage/backpack/satchel/chem = 2,
+		/obj/item/storage/backpack/duffelbag/chemistry = 2,
 		/obj/item/storage/bag/chemistry = 2)
 	generate_items_inside(items_inside,src)
 	return
@@ -243,11 +244,12 @@
 
 /obj/structure/closet/wardrobe/genetics_white/PopulateContents()
 	var/static/items_inside = list(
-		/obj/item/clothing/under/rank/medical/geneticist = 2,
+		/obj/item/clothing/under/rank/rnd/geneticist = 2,
 		/obj/item/clothing/shoes/sneakers/white = 2,
 		/obj/item/clothing/suit/toggle/labcoat/genetics = 2,
 		/obj/item/storage/backpack/genetics = 2,
-		/obj/item/storage/backpack/satchel/gen = 2)
+		/obj/item/storage/backpack/satchel/gen = 2,
+		/obj/item/storage/backpack/duffelbag/genetics = 2)
 	generate_items_inside(items_inside,src)
 	return
 
@@ -263,7 +265,8 @@
 		/obj/item/clothing/suit/toggle/labcoat/virologist = 2,
 		/obj/item/clothing/mask/surgical = 2,
 		/obj/item/storage/backpack/virology = 2,
-		/obj/item/storage/backpack/satchel/vir = 2)
+		/obj/item/storage/backpack/satchel/vir = 2,
+		/obj/item/storage/backpack/duffelbag/virology = 2,)
 	generate_items_inside(items_inside,src)
 	return
 
@@ -275,7 +278,8 @@
 	var/static/items_inside = list(
 		/obj/item/clothing/accessory/pocketprotector = 1,
 		/obj/item/storage/backpack/science = 2,
-		/obj/item/storage/backpack/satchel/tox = 2,
+		/obj/item/storage/backpack/satchel/science = 2,
+		/obj/item/storage/backpack/duffelbag/science = 2,
 		/obj/item/clothing/suit/hooded/wintercoat/science = 1,
 		/obj/item/clothing/under/rank/rnd/scientist = 3,
 		/obj/item/clothing/suit/toggle/labcoat/science = 3,
@@ -293,6 +297,7 @@
 	var/static/items_inside = list(
 		/obj/item/storage/backpack/botany = 2,
 		/obj/item/storage/backpack/satchel/hyd = 2,
+		/obj/item/storage/backpack/duffelbag/hydroponics = 2,
 		/obj/item/clothing/suit/hooded/wintercoat/hydro = 1,
 		/obj/item/clothing/suit/apron = 2,
 		/obj/item/clothing/suit/apron/overalls = 2,

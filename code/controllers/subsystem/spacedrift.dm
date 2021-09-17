@@ -8,11 +8,12 @@ SUBSYSTEM_DEF(spacedrift)
 	var/list/currentrun = list()
 	var/list/processing = list()
 
-/datum/controller/subsystem/spacedrift/stat_entry()
-	..("P:[processing.len]")
+/datum/controller/subsystem/spacedrift/stat_entry(msg)
+	msg = "P:[length(processing)]"
+	return ..()
 
 
-/datum/controller/subsystem/spacedrift/fire(resumed = 0)
+/datum/controller/subsystem/spacedrift/fire(resumed = FALSE)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 
@@ -46,6 +47,7 @@ SUBSYSTEM_DEF(spacedrift)
 		var/old_dir = AM.dir
 		var/old_loc = AM.loc
 		AM.inertia_moving = TRUE
+		AM.set_glide_size(DELAY_TO_GLIDE_SIZE(AM.inertia_move_delay))
 		step(AM, AM.inertia_dir)
 		AM.inertia_moving = FALSE
 		AM.inertia_next_move = world.time + AM.inertia_move_delay
@@ -56,4 +58,3 @@ SUBSYSTEM_DEF(spacedrift)
 		AM.inertia_last_loc = AM.loc
 		if (MC_TICK_CHECK)
 			return
-

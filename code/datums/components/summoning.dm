@@ -28,29 +28,37 @@
 	else if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/item_afterattack)
 	else if(ishostile(parent))
-		RegisterSignal(parent, COMSIG_HOSTILE_ATTACKINGTARGET, .proc/hostile_attackingtarget)
+		RegisterSignal(parent, COMSIG_HOSTILE_POST_ATTACKINGTARGET, .proc/hostile_attackingtarget)
 
 /datum/component/summoning/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
+	UnregisterSignal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_POST_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
 
 /datum/component/summoning/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+	SIGNAL_HANDLER
+
 	if(!proximity_flag)
 		return
 	do_spawn_mob(get_turf(target), user)
 
-/datum/component/summoning/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target)
+/datum/component/summoning/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
+	SIGNAL_HANDLER
+
+	if(!success)
+		return
 	do_spawn_mob(get_turf(target), attacker)
 
 /datum/component/summoning/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)
+	SIGNAL_HANDLER
+
 	do_spawn_mob(get_turf(target), firer)
 
 /datum/component/summoning/proc/do_spawn_mob(atom/spawn_location, summoner)
 	if(spawned_mobs.len >= max_mobs)
-		return 0
+		return
 	if(last_spawned_time > world.time)
-		return 0
+		return
 	if(!prob(spawn_chance))
-		return 0
+		return
 	last_spawned_time = world.time + spawn_delay
 	var/chosen_mob_type = pick(mob_types)
 	var/mob/living/simple_animal/L = new chosen_mob_type(spawn_location)
@@ -60,9 +68,11 @@
 	spawned_mobs += L
 	if(faction != null)
 		L.faction = faction
-	RegisterSignal(L, COMSIG_MOB_DEATH, .proc/on_spawned_death) // so we can remove them from the list, etc (for mobs with corpses)
+	RegisterSignal(L, COMSIG_LIVING_DEATH, .proc/on_spawned_death) // so we can remove them from the list, etc (for mobs with corpses)
 	playsound(spawn_location,spawn_sound, 50, TRUE)
-	spawn_location.visible_message("<span class='danger'>[L] [spawn_text].</span>")
+	spawn_location.visible_message(span_danger("[L] [spawn_text]."))
 
 /datum/component/summoning/proc/on_spawned_death(mob/killed, gibbed)
+	SIGNAL_HANDLER
+
 	spawned_mobs -= killed

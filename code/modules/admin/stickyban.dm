@@ -21,7 +21,7 @@
 			ban["ckey"] = ckey
 
 			if (get_stickyban_from_ckey(ckey))
-				to_chat(usr, "<span class='adminnotice'>Error: Can not add a stickyban: User already has a current sticky ban</span>")
+				to_chat(usr, span_adminnotice("Error: Can not add a stickyban: User already has a current sticky ban"), confidential = TRUE)
 				return
 
 			if (data["reason"])
@@ -33,7 +33,10 @@
 				ban["message"] = "[reason]"
 
 			if(SSdbcore.Connect())
-				var/datum/DBQuery/query_create_stickyban = SSdbcore.NewQuery("INSERT INTO [format_table_name("stickyban")] (ckey, reason, banning_admin) VALUES ('[sanitizeSQL(ckey)]', '[sanitizeSQL(ban["message"])]', '[sanitizeSQL(usr.ckey)]')")
+				var/datum/db_query/query_create_stickyban = SSdbcore.NewQuery({"
+					INSERT INTO [format_table_name("stickyban")] (ckey, reason, banning_admin)
+					VALUES (:ckey, :message, :banning_admin)
+				"}, list("ckey" = ckey, "message" = ban["message"], "banning_admin" = usr.ckey))
 				if (query_create_stickyban.warn_execute())
 					ban["fromdb"] = TRUE
 				qdel(query_create_stickyban)
@@ -47,7 +50,7 @@
 			SSstickyban.cache[ckey] = ban
 
 			log_admin_private("[key_name(usr)] has stickybanned [ckey].\nReason: [ban["message"]]")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has stickybanned [ckey].\nReason: [ban["message"]]</span>")
+			message_admins(span_adminnotice("[key_name_admin(usr)] has stickybanned [ckey].\nReason: [ban["message"]]"))
 
 		if ("remove")
 			if (!data["ckey"])
@@ -56,27 +59,27 @@
 
 			var/ban = get_stickyban_from_ckey(ckey)
 			if (!ban)
-				to_chat(usr, "<span class='adminnotice'>Error: No sticky ban for [ckey] found!</span>")
+				to_chat(usr, span_adminnotice("Error: No sticky ban for [ckey] found!"), confidential = TRUE)
 				return
-			if (alert("Are you sure you want to remove the sticky ban on [ckey]?","Are you sure","Yes","No") == "No")
+			if (tgui_alert(usr,"Are you sure you want to remove the sticky ban on [ckey]?","Are you sure",list("Yes","No")) == "No")
 				return
 			if (!get_stickyban_from_ckey(ckey))
-				to_chat(usr, "<span class='adminnotice'>Error: The ban disappeared.</span>")
+				to_chat(usr, span_adminnotice("Error: The ban disappeared."), confidential = TRUE)
 				return
 			world.SetConfig("ban",ckey, null)
 			SSstickyban.cache -= ckey
 
 			if (SSdbcore.Connect())
 				SSdbcore.QuerySelect(list(
-					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban")] WHERE ckey = '[sanitizeSQL(ckey)]'"),
-					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = '[sanitizeSQL(ckey)]'"),
-					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_cid")] WHERE stickyban = '[sanitizeSQL(ckey)]'"),
-					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ip")] WHERE stickyban = '[sanitizeSQL(ckey)]'")
+					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban")] WHERE ckey = :ckey", list("ckey" = ckey)),
+					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = :ckey", list("ckey" = ckey)),
+					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_cid")] WHERE stickyban = :ckey", list("ckey" = ckey)),
+					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ip")] WHERE stickyban = :ckey", list("ckey" = ckey))
 				), warn = TRUE, qdel = TRUE)
 
 
 			log_admin_private("[key_name(usr)] removed [ckey]'s stickyban")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed [ckey]'s stickyban</span>")
+			message_admins(span_adminnotice("[key_name_admin(usr)] removed [ckey]'s stickyban"))
 
 		if ("remove_alt")
 			if (!data["ckey"])
@@ -87,27 +90,27 @@
 			var/alt = ckey(data["alt"])
 			var/ban = get_stickyban_from_ckey(ckey)
 			if (!ban)
-				to_chat(usr, "<span class='adminnotice'>Error: No sticky ban for [ckey] found!</span>")
+				to_chat(usr, span_adminnotice("Error: No sticky ban for [ckey] found!"), confidential = TRUE)
 				return
 
 			var/key = LAZYACCESS(ban["keys"], alt)
 			if (!key)
-				to_chat(usr, "<span class='adminnotice'>Error: [alt] is not linked to [ckey]'s sticky ban!</span>")
+				to_chat(usr, span_adminnotice("Error: [alt] is not linked to [ckey]'s sticky ban!"), confidential = TRUE)
 				return
 
-			if (alert("Are you sure you want to disassociate [alt] from [ckey]'s sticky ban? \nNote: Nothing stops byond from re-linking them, Use \[E] to exempt them","Are you sure","Yes","No") == "No")
+			if (tgui_alert(usr,"Are you sure you want to disassociate [alt] from [ckey]'s sticky ban? \nNote: Nothing stops byond from re-linking them, Use \[E] to exempt them","Are you sure",list("Yes","No")) == "No")
 				return
 
 			//we have to do this again incase something changes
 			ban = get_stickyban_from_ckey(ckey)
 			if (!ban)
-				to_chat(usr, "<span class='adminnotice'>Error: The ban disappeared.</span>")
+				to_chat(usr, span_adminnotice("Error: The ban disappeared."), confidential = TRUE)
 				return
 
 			key = LAZYACCESS(ban["keys"], alt)
 
 			if (!key)
-				to_chat(usr, "<span class='adminnotice'>Error: [alt] link to [ckey]'s sticky ban disappeared.</span>")
+				to_chat(usr, span_adminnotice("Error: [alt] link to [ckey]'s sticky ban disappeared."), confidential = TRUE)
 				return
 
 			LAZYREMOVE(ban["keys"], alt)
@@ -116,12 +119,15 @@
 			SSstickyban.cache[ckey] = ban
 
 			if (SSdbcore.Connect())
-				var/datum/DBQuery/query_remove_stickyban_alt = SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
+				var/datum/db_query/query_remove_stickyban_alt = SSdbcore.NewQuery(
+					"DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = :ckey AND matched_ckey = :alt",
+					list("ckey" = ckey, "alt" = alt)
+				)
 				query_remove_stickyban_alt.warn_execute()
 				qdel(query_remove_stickyban_alt)
 
 			log_admin_private("[key_name(usr)] has disassociated [alt] from [ckey]'s sticky ban")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has disassociated [alt] from [ckey]'s sticky ban</span>")
+			message_admins(span_adminnotice("[key_name_admin(usr)] has disassociated [alt] from [ckey]'s sticky ban"))
 
 		if ("edit")
 			if (!data["ckey"])
@@ -129,7 +135,7 @@
 			var/ckey = data["ckey"]
 			var/ban = get_stickyban_from_ckey(ckey)
 			if (!ban)
-				to_chat(usr, "<span class='adminnotice'>Error: No sticky ban for [ckey] found!</span>")
+				to_chat(usr, span_adminnotice("Error: No sticky ban for [ckey] found!"), confidential = TRUE)
 				return
 			var/oldreason = ban["message"]
 			var/reason = input(usr,"Reason","Reason","[ban["message"]]") as text|null
@@ -138,7 +144,7 @@
 			//we have to do this again incase something changed while we waited for input
 			ban = get_stickyban_from_ckey(ckey)
 			if (!ban)
-				to_chat(usr, "<span class='adminnotice'>Error: The ban disappeared.</span>")
+				to_chat(usr, span_adminnotice("Error: The ban disappeared."), confidential = TRUE)
 				return
 			ban["message"] = "[reason]"
 
@@ -147,12 +153,15 @@
 			SSstickyban.cache[ckey] = ban
 
 			if (SSdbcore.Connect())
-				var/datum/DBQuery/query_edit_stickyban = SSdbcore.NewQuery("UPDATE [format_table_name("stickyban")] SET reason = '[sanitizeSQL(reason)]' WHERE ckey = '[sanitizeSQL(ckey)]'")
+				var/datum/db_query/query_edit_stickyban = SSdbcore.NewQuery(
+					"UPDATE [format_table_name("stickyban")] SET reason = :reason WHERE ckey = :ckey",
+					list("reason" = reason, "ckey" = ckey)
+				)
 				query_edit_stickyban.warn_execute()
 				qdel(query_edit_stickyban)
 
 			log_admin_private("[key_name(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]</span>")
+			message_admins(span_adminnotice("[key_name_admin(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]"))
 
 		if ("exempt")
 			if (!data["ckey"])
@@ -163,27 +172,27 @@
 			var/alt = ckey(data["alt"])
 			var/ban = get_stickyban_from_ckey(ckey)
 			if (!ban)
-				to_chat(usr, "<span class='adminnotice'>Error: No sticky ban for [ckey] found!</span>")
+				to_chat(usr, span_adminnotice("Error: No sticky ban for [ckey] found!"), confidential = TRUE)
 				return
 
 			var/key = LAZYACCESS(ban["keys"], alt)
 			if (!key)
-				to_chat(usr, "<span class='adminnotice'>Error: [alt] is not linked to [ckey]'s sticky ban!</span>")
+				to_chat(usr, span_adminnotice("Error: [alt] is not linked to [ckey]'s sticky ban!"), confidential = TRUE)
 				return
 
-			if (alert("Are you sure you want to exempt [alt] from [ckey]'s sticky ban?","Are you sure","Yes","No") == "No")
+			if (tgui_alert(usr,"Are you sure you want to exempt [alt] from [ckey]'s sticky ban?","Are you sure",list("Yes","No")) == "No")
 				return
 
 			//we have to do this again incase something changes
 			ban = get_stickyban_from_ckey(ckey)
 			if (!ban)
-				to_chat(usr, "<span class='adminnotice'>Error: The ban disappeared.</span>")
+				to_chat(usr, span_adminnotice("Error: The ban disappeared."), confidential = TRUE)
 				return
 
 			key = LAZYACCESS(ban["keys"], alt)
 
 			if (!key)
-				to_chat(usr, "<span class='adminnotice'>Error: [alt]'s link to [ckey]'s sticky ban disappeared.</span>")
+				to_chat(usr, span_adminnotice("Error: [alt]'s link to [ckey]'s sticky ban disappeared."), confidential = TRUE)
 				return
 			LAZYREMOVE(ban["keys"], alt)
 			key["exempt"] = TRUE
@@ -194,12 +203,15 @@
 			SSstickyban.cache[ckey] = ban
 
 			if (SSdbcore.Connect())
-				var/datum/DBQuery/query_exempt_stickyban_alt = SSdbcore.NewQuery("UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 1 WHERE stickyban = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
+				var/datum/db_query/query_exempt_stickyban_alt = SSdbcore.NewQuery(
+					"UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 1 WHERE stickyban = :ckey AND matched_ckey = :alt",
+					list("ckey" = ckey, "alt" = alt)
+				)
 				query_exempt_stickyban_alt.warn_execute()
 				qdel(query_exempt_stickyban_alt)
 
 			log_admin_private("[key_name(usr)] has exempted [alt] from [ckey]'s sticky ban")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has exempted [alt] from [ckey]'s sticky ban</span>")
+			message_admins(span_adminnotice("[key_name_admin(usr)] has exempted [alt] from [ckey]'s sticky ban"))
 
 		if ("unexempt")
 			if (!data["ckey"])
@@ -210,26 +222,26 @@
 			var/alt = ckey(data["alt"])
 			var/ban = get_stickyban_from_ckey(ckey)
 			if (!ban)
-				to_chat(usr, "<span class='adminnotice'>Error: No sticky ban for [ckey] found!</span>")
+				to_chat(usr, span_adminnotice("Error: No sticky ban for [ckey] found!"), confidential = TRUE)
 				return
 
 			var/key = LAZYACCESS(ban["whitelist"], alt)
 			if (!key)
-				to_chat(usr, "<span class='adminnotice'>Error: [alt] is not exempt from [ckey]'s sticky ban!</span>")
+				to_chat(usr, span_adminnotice("Error: [alt] is not exempt from [ckey]'s sticky ban!"), confidential = TRUE)
 				return
 
-			if (alert("Are you sure you want to unexempt [alt] from [ckey]'s sticky ban?","Are you sure","Yes","No") == "No")
+			if (tgui_alert(usr,"Are you sure you want to unexempt [alt] from [ckey]'s sticky ban?","Are you sure",list("Yes","No")) == "No")
 				return
 
 			//we have to do this again incase something changes
 			ban = get_stickyban_from_ckey(ckey)
 			if (!ban)
-				to_chat(usr, "<span class='adminnotice'>Error: The ban disappeared.</span>")
+				to_chat(usr, span_adminnotice("Error: The ban disappeared."), confidential = TRUE)
 				return
 
 			key = LAZYACCESS(ban["whitelist"], alt)
 			if (!key)
-				to_chat(usr, "<span class='adminnotice'>Error: [alt]'s exemption from [ckey]'s sticky ban disappeared.</span>")
+				to_chat(usr, span_adminnotice("Error: [alt]'s exemption from [ckey]'s sticky ban disappeared."), confidential = TRUE)
 				return
 
 			LAZYREMOVE(ban["whitelist"], alt)
@@ -241,27 +253,30 @@
 			SSstickyban.cache[ckey] = ban
 
 			if (SSdbcore.Connect())
-				var/datum/DBQuery/query_unexempt_stickyban_alt = SSdbcore.NewQuery("UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 0 WHERE stickyban = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
+				var/datum/db_query/query_unexempt_stickyban_alt = SSdbcore.NewQuery(
+					"UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 0 WHERE stickyban = :ckey AND matched_ckey = :alt",
+					list("ckey" = ckey, "alt" = alt)
+				)
 				query_unexempt_stickyban_alt.warn_execute()
 				qdel(query_unexempt_stickyban_alt)
 
 			log_admin_private("[key_name(usr)] has unexempted [alt] from [ckey]'s sticky ban")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has unexempted [alt] from [ckey]'s sticky ban</span>")
+			message_admins(span_adminnotice("[key_name_admin(usr)] has unexempted [alt] from [ckey]'s sticky ban"))
 
 		if ("timeout")
 			if (!data["ckey"])
 				return
 			if (!SSdbcore.Connect())
-				to_chat(usr, "<span class='adminnotice'>No database connection!</span>")
+				to_chat(usr, span_adminnotice("No database connection!"), confidential = TRUE)
 				return
 
 			var/ckey = data["ckey"]
 
-			if (alert("Are you sure you want to put [ckey]'s stickyban on timeout until next round (or removed)?","Are you sure","Yes","No") == "No")
+			if (tgui_alert(usr,"Are you sure you want to put [ckey]'s stickyban on timeout until next round (or removed)?","Are you sure",list("Yes","No")) == "No")
 				return
 			var/ban = get_stickyban_from_ckey(ckey)
 			if (!ban)
-				to_chat(usr, "<span class='adminnotice'>Error: No sticky ban for [ckey] found!</span>")
+				to_chat(usr, span_adminnotice("Error: No sticky ban for [ckey] found!"), confidential = TRUE)
 				return
 
 			ban["timeout"] = TRUE
@@ -273,17 +288,17 @@
 				cachedban["timeout"] = TRUE
 
 			log_admin_private("[key_name(usr)] has put [ckey]'s sticky ban on timeout.")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [ckey]'s sticky ban on timeout.</span>")
+			message_admins(span_adminnotice("[key_name_admin(usr)] has put [ckey]'s sticky ban on timeout."))
 
 		if ("untimeout")
 			if (!data["ckey"])
 				return
 			if (!SSdbcore.Connect())
-				to_chat(usr, "<span class='adminnotice'>No database connection!</span>")
+				to_chat(usr, span_adminnotice("No database connection!"), confidential = TRUE)
 				return
 			var/ckey = data["ckey"]
 
-			if (alert("Are you sure you want to lift the timeout on [ckey]'s stickyban?","Are you sure","Yes","No") == "No")
+			if (tgui_alert(usr,"Are you sure you want to lift the timeout on [ckey]'s stickyban?","Are you sure",list("Yes","No")) == "No")
 				return
 
 			var/ban = get_stickyban_from_ckey(ckey)
@@ -292,7 +307,7 @@
 				cachedban["timeout"] = FALSE
 			if (!ban)
 				if (!cachedban)
-					to_chat(usr, "<span class='adminnotice'>Error: No sticky ban for [ckey] found!</span>")
+					to_chat(usr, span_adminnotice("Error: No sticky ban for [ckey] found!"), confidential = TRUE)
 					return
 				ban = cachedban
 
@@ -301,28 +316,28 @@
 			world.SetConfig("ban",ckey,list2stickyban(ban))
 
 			log_admin_private("[key_name(usr)] has taken [ckey]'s sticky ban off of timeout.")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has taken [ckey]'s sticky ban off of timeout.</span>")
+			message_admins(span_adminnotice("[key_name_admin(usr)] has taken [ckey]'s sticky ban off of timeout."))
 
 
 		if ("revert")
 			if (!data["ckey"])
 				return
 			var/ckey = data["ckey"]
-			if (alert("Are you sure you want to revert the sticky ban on [ckey] to its state at round start (or last edit)?","Are you sure","Yes","No") == "No")
+			if (tgui_alert(usr,"Are you sure you want to revert the sticky ban on [ckey] to its state at round start (or last edit)?","Are you sure",list("Yes","No")) == "No")
 				return
 			var/ban = get_stickyban_from_ckey(ckey)
 			if (!ban)
-				to_chat(usr, "<span class='adminnotice'>Error: No sticky ban for [ckey] found!</span>")
+				to_chat(usr, span_adminnotice("Error: No sticky ban for [ckey] found!"), confidential = TRUE)
 				return
 			var/cached_ban = SSstickyban.cache[ckey]
 			if (!cached_ban)
-				to_chat(usr, "<span class='adminnotice'>Error: No cached sticky ban for [ckey] found!</span>")
+				to_chat(usr, span_adminnotice("Error: No cached sticky ban for [ckey] found!"), confidential = TRUE)
 			world.SetConfig("ban",ckey,null)
 
 			log_admin_private("[key_name(usr)] has reverted [ckey]'s sticky ban to its state at round start.")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has reverted [ckey]'s sticky ban to its state at round start.</span>")
+			message_admins(span_adminnotice("[key_name_admin(usr)] has reverted [ckey]'s sticky ban to its state at round start."))
 			//revert is mostly used when shit goes rouge, so we have to set it to null
-			//	and wait a byond tick before assigning it to ensure byond clears its shit.
+			// and wait a byond tick before assigning it to ensure byond clears its shit.
 			sleep(world.tick_lag)
 			world.SetConfig("ban",ckey,list2stickyban(cached_ban))
 
@@ -391,7 +406,7 @@
 	return sortList(world.GetConfig("ban"))
 
 
-/proc/get_stickyban_from_ckey(var/ckey)
+/proc/get_stickyban_from_ckey(ckey)
 	. = list()
 	if (!ckey)
 		return null

@@ -1,11 +1,12 @@
 /*Power cells are in code\modules\power\cell.dm
 
-If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fit with the clamp to not confuse the user or cause possible exploits.*/
+If you create T5+ please take a pass at mech_fabricator.dm. The parts being good enough allows it to go into minus values and create materials out of thin air when printing stuff.*/
 /obj/item/storage/part_replacer
 	name = "rapid part exchange device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "RPED"
-	item_state = "RPED"
+	inhand_icon_state = "RPED"
+	worn_icon_state = "RPED"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
@@ -49,6 +50,27 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/pshoom.ogg'
 	alt_sound = 'sound/items/pshoom_2.ogg'
 	component_type = /datum/component/storage/concrete/bluespace/rped
+
+/obj/item/storage/part_replacer/bluespace/Initialize()
+	. = ..()
+
+	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/on_part_entered)
+
+/obj/item/storage/part_replacer/bluespace/proc/on_part_entered(datum/source, obj/item/inserted_component)
+	SIGNAL_HANDLER
+	if(inserted_component.reagents && length(inserted_component.reagents.reagent_list))
+		inserted_component.reagents.clear_reagents()
+		to_chat(usr, span_notice("[src] churns as [inserted_component] has its reagents emptied into bluespace."))
+
+	if(!istype(inserted_component, /obj/item/stock_parts/cell))
+		return
+
+	var/obj/item/stock_parts/cell/inserted_cell = inserted_component
+
+	if(inserted_cell.rigged || inserted_cell.corrupted)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
+		log_game("[key_name(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
+		usr.log_message("inserted rigged/corrupted [inserted_cell] into [src]", LOG_ATTACK)
 
 /obj/item/storage/part_replacer/bluespace/tier1
 
@@ -108,7 +130,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	name = "rapid part exchange device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "borgrped"
-	item_state = "RPED"
+	inhand_icon_state = "RPED"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
@@ -124,8 +146,8 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 
 /obj/item/stock_parts/Initialize()
 	. = ..()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = base_pixel_x + rand(-5, 5)
+	pixel_y = base_pixel_y + rand(-5, 5)
 
 /obj/item/stock_parts/get_part_rating()
 	return rating
@@ -240,7 +262,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 
 /obj/item/stock_parts/capacitor/quadratic
 	name = "quadratic capacitor"
-	desc = "An capacity capacitor used in the construction of a variety of devices."
+	desc = "A capacity capacitor used in the construction of a variety of devices."
 	icon_state = "quadratic_capacitor"
 	rating = 4
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
@@ -316,6 +338,20 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	icon_state = "subspace_transmitter"
 	desc = "A large piece of equipment used to open a window into the subspace dimension."
 	custom_materials = list(/datum/material/iron=50)
+
+// Misc. Parts
+
+/obj/item/stock_parts/card_reader
+	name = "card reader"
+	icon_state = "card_reader"
+	desc = "A small magnetic card reader, used for devices that take and transmit holocredits."
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=10)
+
+/obj/item/stock_parts/water_recycler
+	name = "water recycler"
+	icon_state = "water_recycler"
+	desc = "A chemical reclaimation component, which serves to re-accumulate and filter water over time."
+	custom_materials = list(/datum/material/plastic=200, /datum/material/iron=50)
 
 /obj/item/research//Makes testing much less of a pain -Sieve
 	name = "research"

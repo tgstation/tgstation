@@ -8,7 +8,7 @@
 		if(toIndex <= 0)
 			toIndex += L.len + 1
 
-		var/datum/sortInstance/SI = GLOB.sortInstance
+		var/datum/sort_instance/SI = GLOB.sortInstance
 		if(!SI)
 			SI = new
 		SI.L = L

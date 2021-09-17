@@ -1,0 +1,136 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../base.scss';
+@use '../colors.scss';
+@use '../functions.scss' as *;
+
+$color-default: colors.bg(colors.$primary) !default;
+$color-disabled: #999999 !default;
+$color-selected: colors.bg(colors.$green) !default;
+$color-caution: colors.bg(colors.$yellow) !default;
+$color-danger: colors.bg(colors.$red) !default;
+$color-transparent-text: rgba(255, 255, 255, 0.5) !default;
+$border-radius: base.$border-radius !default;
+$bg-map: colors.$bg-map !default;
+
+@mixin button-color($color) {
+  // Adapt text color to background luminance to ensure high contast
+  $luminance: luminance($color);
+  $text-color: if($luminance > 0.4,
+    rgba(0, 0, 0, 1),
+    rgba(255, 255, 255, 1));
+
+  transition: color 50ms, background-color 50ms;
+  background-color: $color;
+  color: $text-color;
+
+  &:hover {
+    transition: color 0ms, background-color 0ms;
+  }
+
+  &:focus {
+    transition: color 100ms, background-color 100ms;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: lighten($color, 30%);
+    color: $text-color;
+  }
+}
+
+.Button {
+  position: relative;
+  display: inline-block;
+  line-height: 1.667em;
+  padding: 0 0.5em;
+  margin-right: base.em(2px);
+  white-space: nowrap;
+  outline: 0;
+  border-radius: $border-radius;
+  margin-bottom: base.em(2px);
+  // Disable selection in buttons
+  user-select: none;
+  -ms-user-select: none;
+
+  &:last-child {
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+
+  .fa, .fas, .far {
+    margin-left: -0.25em;
+    margin-right: -0.25em;
+    min-width: 1.333em;
+    text-align: center;
+  }
+}
+
+.Button--hasContent {
+  // Add a margin to the icon to keep it separate from the text
+  .fa, .fas, .far {
+    margin-right: 0.25em;
+  }
+}
+
+.Button--hasContent.Button--iconPosition--right {
+  .fa, .fas, .far {
+    margin-right: 0px;
+    margin-left: 3px;
+  }
+}
+
+.Button--ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Button--fluid {
+  display: block;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.Button--circular {
+  border-radius: 50%;
+}
+
+.Button--compact {
+  padding: 0 0.25em;
+  line-height: 1.333em;
+}
+
+@each $color-name, $color-value in $bg-map {
+  .Button--color--#{$color-name} {
+    @include button-color($color-value);
+  }
+}
+
+.Button--color--default {
+  @include button-color($color-default);
+}
+
+.Button--color--caution {
+  @include button-color($color-caution);
+}
+
+.Button--color--danger {
+  @include button-color($color-danger);
+}
+
+.Button--color--transparent {
+  @include button-color(base.$color-bg);
+  background-color: rgba(base.$color-bg, 0);
+  color: $color-transparent-text;
+}
+
+.Button--disabled {
+  background-color: $color-disabled !important;
+}
+
+.Button--selected {
+  @include button-color($color-selected);
+}

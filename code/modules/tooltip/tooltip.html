@@ -62,12 +62,12 @@
 
 		.hisgrace .wrap {border-color: #7C1414;}
 		.hisgrace .content {color: #15D512; border-color: #9D1414; background-color: #861414;}
-	
+
 		/* TG: Themes */
 		/* ScreenUI */
 		.midnight .wrap {border-color: #2B2B33;}
 		.midnight .content {color: #6087A0; border-color: #2B2B33; background-color: #36363C;}
-		
+
 		.plasmafire .wrap {border-color: #21213D;}
 		.plasmafire .content {color: #FFA800 ; border-color: #21213D; background-color:#1D1D36;}
 
@@ -114,12 +114,17 @@
 				window.location = 'byond://winset?id='+tooltip.control+';anchor1=0,0;size=999x999';
 
 				//Get the real icon size according to the client view
+				//FYI, this bit is even more borrowed from goon, our widescreen broke tooltips so I took a look at how they do it
+				//To improve our code. Thanks gooncoders, very cool
 				var mapWidth 		= map['view-size'].x,
 					mapHeight 		= map['view-size'].y,
-					tilesShown 		= tooltip.client_view_w
-					realIconSize 	= mapWidth / tilesShown,
-					resizeRatio		= realIconSize / tooltip.tileSize,
-					//Calculate letterboxing offsets	
+					tilesShownX 	= tooltip.client_view_w
+					tilesShownY 	= tooltip.client_view_h
+					realIconSizeX 	= mapWidth / tilesShownX,
+					realIconSizeY 	= mapHeight / tilesShownY,
+					resizeRatioX	= realIconSizeX / tooltip.tileSize,
+					resizeRatioY	= realIconSizeY / tooltip.tileSize,
+					//Calculate letterboxing offsets
 					leftOffset 		= (map.size.x - mapWidth) / 2,
 					topOffset 		= (map.size.y - mapHeight) / 2;
 
@@ -162,7 +167,7 @@
 						if ((iconX + westOffset) !== enteredX) { //Cursor entered on the offset tile
 							left = left + (westOffset < 0 ? 1 : -1);
 						}
-						leftOffset = leftOffset + (westOffset * resizeRatio);
+						leftOffset = leftOffset + (westOffset * resizeRatioX);
 					}
 				}
 
@@ -173,13 +178,13 @@
 						if (northOffset !== 0) {
 							if ((iconY + northOffset) === enteredY) { //Cursor entered on the original tile
 								top--;
-								topOffset = topOffset - ((tooltip.tileSize + northOffset) * resizeRatio);
+								topOffset = topOffset - ((tooltip.tileSize + northOffset) * resizeRatioY);
 							} else { //Cursor entered on the offset tile
 								if (northOffset < 0) { //Offset southwards
-									topOffset = topOffset - ((tooltip.tileSize + northOffset) * resizeRatio);
+									topOffset = topOffset - ((tooltip.tileSize + northOffset) * resizeRatioY);
 								} else { //Offset northwards
 									top--;
-									topOffset = topOffset - (northOffset * resizeRatio);
+									topOffset = topOffset - (northOffset * resizeRatioY);
 								}
 							}
 						}
@@ -192,12 +197,12 @@
 				}
 
 				//Clamp values
-				left = (left < 0 ? 0 : (left > tilesShown ? tilesShown : left));
-				top = (top < 0 ? 0 : (top > tilesShown ? tilesShown : top));
+				left = (left < 0 ? 0 : (left > tilesShownX ? tilesShownX : left));
+				top = (top < 0 ? 0 : (top > tilesShownY ? tilesShownY : top));
 
 				//Calculate where on the screen the popup should appear (below the hovered tile)
-				var posX = Math.round(((left - 1) * realIconSize) + leftOffset + tooltip.padding); //-1 to position at the left of the target tile
-				var posY = Math.round(((tilesShown - top + 1) * realIconSize) + topOffset + tooltip.padding); //+1 to position at the bottom of the target tile
+				var posX = Math.round(((left - 1) * realIconSizeX) + leftOffset + tooltip.padding); //-1 to position at the left of the target tile
+				var posY = Math.round(((tilesShownY - top + 1) * realIconSizeY) + topOffset + tooltip.padding); //+1 to position at the bottom of the target tile
 
 				//alert(mapWidth+' | '+mapHeight+' | '+tilesShown+' | '+realIconSize+' | '+leftOffset+' | '+topOffset+' | '+left+' | '+top+' | '+posX+' | '+posY); //DEBUG
 
@@ -215,7 +220,7 @@
 					docHeight	= $wrap.outerHeight();
 
 				if (posY + docHeight > map.size.y) { //Is the bottom edge below the window? Snap it up if so
-					posY = (posY - docHeight) - realIconSize - tooltip.padding;
+					posY = (posY - docHeight) - realIconSizeY - tooltip.padding;
 				}
 
 				//Actually size, move and show the tooltip box

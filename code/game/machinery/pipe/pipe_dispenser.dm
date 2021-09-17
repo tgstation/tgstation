@@ -8,8 +8,8 @@
 	var/wait = 0
 	var/piping_layer = PIPING_LAYER_DEFAULT
 
-/obj/machinery/pipedispenser/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/machinery/pipedispenser/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/machinery/pipedispenser/ui_interact(mob/user)
 	. = ..()
@@ -35,7 +35,7 @@
 	if(..())
 		return 1
 	var/mob/living/L = usr
-	if(!anchored || (istype(L) && !(L.mobility_flags & MOBILITY_UI)) || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(!anchored || (istype(L) && !(L.mobility_flags & MOBILITY_UI)) || usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED) || !in_range(loc, usr))
 		usr << browse(null, "window=pipedispenser")
 		return 1
 	usr.set_machine(src)
@@ -55,15 +55,15 @@
 			new /obj/item/pipe_meter(loc)
 			wait = world.time + 15
 	if(href_list["layer_up"])
-		piping_layer = CLAMP(++piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+		piping_layer = clamp(++piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	if(href_list["layer_down"])
-		piping_layer = CLAMP(--piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+		piping_layer = clamp(--piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	return
 
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
-		to_chat(usr, "<span class='notice'>You put [W] back into [src].</span>")
+		to_chat(usr, span_notice("You put [W] back into [src]."))
 		qdel(W)
 		return
 	else
@@ -142,13 +142,13 @@
 			var/obj/structure/disposalconstruct/C = new (loc, p_type)
 
 			if(!C.can_place())
-				to_chat(usr, "<span class='warning'>There's not enough room to build that here!</span>")
+				to_chat(usr, span_warning("There's not enough room to build that here!"))
 				qdel(C)
 				return
 			if(href_list["dir"])
 				C.setDir(text2num(href_list["dir"]))
 			C.add_fingerprint(usr)
-			C.update_icon()
+			C.update_appearance()
 			wait = world.time + 15
 	return
 

@@ -16,12 +16,12 @@
 	..()
 	active = !active
 	if(active)
-		to_chat(user, "<span class='notice'>Our muscles tense and strengthen.</span>")
+		to_chat(user, span_notice("Our muscles tense and strengthen."))
 	else
-		user.remove_movespeed_modifier(MOVESPEED_ID_CHANGELING_MUSCLES)
-		to_chat(user, "<span class='notice'>Our muscles relax.</span>")
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
+		to_chat(user, span_notice("Our muscles relax."))
 		if(stacks >= 10)
-			to_chat(user, "<span class='danger'>We collapse in exhaustion.</span>")
+			to_chat(user, span_danger("We collapse in exhaustion."))
 			user.Paralyze(60)
 			user.emote("gasp")
 
@@ -31,12 +31,12 @@
 
 /datum/action/changeling/strained_muscles/proc/muscle_loop(mob/living/carbon/user)
 	while(active)
-		user.add_movespeed_modifier(MOVESPEED_ID_CHANGELING_MUSCLES, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+		user.add_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
 			active = !active
-			to_chat(user, "<span class='notice'>Our muscles relax without the energy to strengthen them.</span>")
+			to_chat(user, span_notice("Our muscles relax without the energy to strengthen them."))
 			user.Paralyze(40)
-			user.remove_movespeed_modifier(MOVESPEED_ID_CHANGELING_MUSCLES)
+			user.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 			break
 
 		stacks++
@@ -44,7 +44,7 @@
 		user.adjustStaminaLoss(stacks * 1.3) //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
 
 		if(stacks == 11) //Warning message that the stacks are getting too high
-			to_chat(user, "<span class='warning'>Our legs are really starting to hurt...</span>")
+			to_chat(user, span_warning("Our legs are really starting to hurt..."))
 
 		sleep(40)
 

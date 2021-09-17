@@ -54,7 +54,7 @@ Industrial extracts:
 /obj/item/slimecross/industrial/grey
 	colour = "grey"
 	effect_desc = "Produces monkey cubes."
-	itempath = /obj/item/reagent_containers/food/snacks/monkeycube
+	itempath = /obj/item/food/monkeycube
 	itemamount = 5
 
 /obj/item/slimecross/industrial/orange
@@ -77,9 +77,9 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/metal
 	colour = "metal"
-	effect_desc = "Produces metal sheets."
+	effect_desc = "Produces iron sheets."
 	plasmarequired = 3
-	itempath = /obj/item/stack/sheet/metal/ten
+	itempath = /obj/item/stack/sheet/iron/ten
 
 /obj/item/slimecross/industrial/yellow
 	colour = "yellow"
@@ -174,7 +174,7 @@ Industrial extracts:
 	colour = "oil"
 	effect_desc = "Produces IEDs."
 	plasmarequired = 4
-	itempath = /obj/item/grenade/iedcasing
+	itempath = /obj/item/grenade/iedcasing/spawned
 
 /obj/item/slimecross/industrial/black //What does this have to do with black slimes? No clue! Fun, though
 	colour = "black"

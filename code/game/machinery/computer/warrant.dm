@@ -4,7 +4,7 @@
 	icon_screen = "security"
 	icon_keyboard = "security_key"
 	circuit = /obj/item/circuitboard/computer/warrant
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	var/screen = null
 	var/datum/data/record/current = null
 
@@ -55,18 +55,18 @@
 			for(var/datum/data/crime/c in current.fields["citation"])
 				var/owed = c.fine - c.paid
 				dat += {"<tr><td>[c.crimeName]</td>
-				<td>$[c.fine]</td>
+				<td>[c.fine] cr</td>
 				<td>[c.author]</td>
 				<td>[c.time]</td>"}
 				if(owed > 0)
-					dat += {"<td>$[owed]</td>
+					dat += {"<td>[owed] cr</td>
 					<td><A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td>"}
 				else
 					dat += "<td colspan='2'>All Paid Off</td>"
 				dat += "</tr>"
 			dat += "</table>"
 
-			dat += "<br>Minor Crimes:"
+			dat += "<br>Crimes:"
 			dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 			<tr>
 			<th>Crime</th>
@@ -74,23 +74,7 @@
 			<th>Author</th>
 			<th>Time Added</th>
 			</tr>"}
-			for(var/datum/data/crime/c in current.fields["mi_crim"])
-				dat += {"<tr><td>[c.crimeName]</td>
-				<td>[c.crimeDetails]</td>
-				<td>[c.author]</td>
-				<td>[c.time]</td>
-				</tr>"}
-			dat += "</table>"
-
-			dat += "<br>Major Crimes:"
-			dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-			<tr>
-			<th>Crime</th>
-			<th>Details</th>
-			<th>Author</th>
-			<th>Time Added</th>
-			</tr>"}
-			for(var/datum/data/crime/c in current.fields["ma_crim"])
+			for(var/datum/data/crime/c in current.fields["crim"])
 				dat += {"<tr><td>[c.crimeName]</td>
 				<td>[c.crimeDetails]</td>
 				<td>[c.author]</td>
@@ -104,7 +88,6 @@
 
 	var/datum/browser/popup = new(user, "warrant", "Security Warrant Console", 600, 400)
 	popup.set_content(dat.Join())
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/warrant/Topic(href, href_list)
@@ -113,13 +96,15 @@
 	var/mob/M = usr
 	switch(href_list["choice"])
 		if("Login")
-			var/obj/item/card/id/scan = M.get_idcard(TRUE)
-			authenticated = scan.registered_name
-			if(authenticated)
-				for(var/datum/data/record/R in GLOB.data_core.security)
-					if(R.fields["name"] == authenticated)
-						current = R
-				playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
+			if(isliving(M))
+				var/mob/living/L = M
+				var/obj/item/card/id/scan = L.get_idcard(TRUE)
+				authenticated = scan.registered_name
+				if(authenticated)
+					for(var/datum/data/record/R in GLOB.data_core.security)
+						if(R.fields["name"] == authenticated)
+							current = R
+					playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 		if("Logout")
 			current = null
 			authenticated = null
@@ -132,17 +117,18 @@
 					if(C && istype(C))
 						var/pay = C.get_item_credit_value()
 						if(!pay)
-							to_chat(M, "<span class='warning'>[C] doesn't seem to be worth anything!</span>")
+							to_chat(M, span_warning("[C] doesn't seem to be worth anything!"))
 						else
 							var/diff = p.fine - p.paid
 							GLOB.data_core.payCitation(current.fields["id"], text2num(href_list["cdataid"]), pay)
-							to_chat(M, "<span class='notice'>You have paid [pay] credit\s towards your fine.</span>")
+							to_chat(M, span_notice("You have paid [pay] credit\s towards your fine."))
 							if (pay == diff || pay > diff || pay >= diff)
 								investigate_log("Citation Paid off: <strong>[p.crimeName]</strong> Fine: [p.fine] | Paid off by [key_name(usr)]", INVESTIGATE_RECORDS)
-								to_chat(M, "<span class='notice'>The fine has been paid in full.</span>")
+								to_chat(M, span_notice("The fine has been paid in full."))
+							SSblackbox.ReportCitation(text2num(href_list["cdataid"]),"","","","", 0, pay)
 							qdel(C)
 							playsound(src, "terminal_type", 25, FALSE)
 					else
-						to_chat(M, "<span class='warning'>Fines can only be paid with holochips!</span>")
+						to_chat(M, span_warning("Fines can only be paid with holochips!"))
 	updateUsrDialog()
 	add_fingerprint(M)

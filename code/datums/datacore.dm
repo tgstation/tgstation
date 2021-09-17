@@ -1,13 +1,16 @@
 
+GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
+
+//TODO: someone please get rid of this shit
 /datum/datacore
-	var/medical[] = list()
+	var/list/medical = list()
 	var/medicalPrintCount = 0
-	var/general[] = list()
-	var/security[] = list()
+	var/list/general = list()
+	var/list/security = list()
 	var/securityPrintCount = 0
 	var/securityCrimeCounter = 0
-	//This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
-	var/locked[] = list()
+	///This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
+	var/list/locked = list()
 
 /datum/data
 	var/name = "data"
@@ -75,37 +78,55 @@
 					D.adjust_money(amount)
 					return
 
-/datum/datacore/proc/addMinorCrime(id = "", datum/data/crime/crime)
+/**
+ * Adds crime to security record.
+ *
+ * Is used to add single crime to someone's security record.
+ * Arguments:
+ * * id - record id.
+ * * datum/data/crime/crime - premade array containing every variable, usually created by createCrimeEntry.
+ */
+/datum/datacore/proc/addCrime(id = "", datum/data/crime/crime)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
-			var/list/crimes = R.fields["mi_crim"]
+			var/list/crimes = R.fields["crim"]
 			crimes |= crime
 			return
 
-/datum/datacore/proc/removeMinorCrime(id, cDataId)
+/**
+ * Deletes crime from security record.
+ *
+ * Is used to delete single crime to someone's security record.
+ * Arguments:
+ * * id - record id.
+ * * cDataId - id of already existing crime.
+ */
+/datum/datacore/proc/removeCrime(id, cDataId)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
-			var/list/crimes = R.fields["mi_crim"]
+			var/list/crimes = R.fields["crim"]
 			for(var/datum/data/crime/crime in crimes)
 				if(crime.dataId == text2num(cDataId))
 					crimes -= crime
 					return
 
-/datum/datacore/proc/removeMajorCrime(id, cDataId)
+/**
+ * Adds details to a crime.
+ *
+ * Is used to add or replace details to already existing crime.
+ * Arguments:
+ * * id - record id.
+ * * cDataId - id of already existing crime.
+ * * details - data you want to add.
+ */
+/datum/datacore/proc/addCrimeDetails(id, cDataId, details)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
-			var/list/crimes = R.fields["ma_crim"]
+			var/list/crimes = R.fields["crim"]
 			for(var/datum/data/crime/crime in crimes)
 				if(crime.dataId == text2num(cDataId))
-					crimes -= crime
+					crime.crimeDetails = details
 					return
-
-/datum/datacore/proc/addMajorCrime(id = "", datum/data/crime/crime)
-	for(var/datum/data/record/R in security)
-		if(R.fields["id"] == id)
-			var/list/crimes = R.fields["ma_crim"]
-			crimes |= crime
-			return
 
 /datum/datacore/proc/manifest()
 	for(var/i in GLOB.new_player_list)
@@ -121,16 +142,52 @@
 	if(foundrecord)
 		foundrecord.fields["rank"] = assignment
 
-/datum/datacore/proc/get_manifest(monochrome, OOC)
-	var/list/heads = list()
-	var/list/sec = list()
-	var/list/eng = list()
-	var/list/med = list()
-	var/list/sci = list()
-	var/list/sup = list()
-	var/list/civ = list()
-	var/list/bot = list()
-	var/list/misc = list()
+
+/datum/datacore/proc/get_manifest()
+	// First we build up the order in which we want the departments to appear in.
+	var/list/manifest_out = list()
+	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
+		manifest_out[department.department_name] = list()
+	manifest_out[DEPARTMENT_UNASSIGNED] = list()
+
+	var/list/departments_by_type = SSjob.joinable_departments_by_type
+	for(var/datum/data/record/record as anything in GLOB.data_core.general)
+		var/name = record.fields["name"]
+		var/rank = record.fields["rank"]
+		var/datum/job/job = SSjob.GetJob(rank)
+		if(!job || !(job.job_flags & JOB_CREW_MANIFEST) || !LAZYLEN(job.departments_list)) // In case an unlawful custom rank is added.
+			var/list/misc_list = manifest_out[DEPARTMENT_UNASSIGNED]
+			misc_list[++misc_list.len] = list(
+				"name" = name,
+				"rank" = rank,
+				)
+			continue
+		for(var/department_type as anything in job.departments_list)
+			var/datum/job_department/department = departments_by_type[department_type]
+			if(!department)
+				stack_trace("get_manifest() failed to get job department for [department_type] of [job.type]")
+				continue
+			var/list/entry = list(
+				"name" = name,
+				"rank" = rank,
+				)
+			var/list/department_list = manifest_out[department.department_name]
+			if(istype(job, department.department_head))
+				department_list.Insert(1, null)
+				department_list[1] = entry
+			else
+				department_list[++department_list.len] = entry
+
+	// Trim the empty categories.
+	for (var/department in manifest_out)
+		if(!length(manifest_out[department]))
+			manifest_out -= department
+
+	return manifest_out
+
+
+/datum/datacore/proc/get_manifest_html(monochrome = FALSE)
+	var/list/manifest = get_manifest()
 	var/dat = {"
 	<head><style>
 		.manifest {border-collapse:collapse;}
@@ -142,84 +199,14 @@
 	<table class="manifest" width='350px'>
 	<tr class='head'><th>Name</th><th>Rank</th></tr>
 	"}
-	var/even = 0
-	// sort mobs
-	for(var/datum/data/record/t in GLOB.data_core.general)
-		var/name = t.fields["name"]
-		var/rank = t.fields["rank"]
-		var/department = 0
-		if(rank in GLOB.command_positions)
-			heads[name] = rank
-			department = 1
-		if(rank in GLOB.security_positions)
-			sec[name] = rank
-			department = 1
-		if(rank in GLOB.engineering_positions)
-			eng[name] = rank
-			department = 1
-		if(rank in GLOB.medical_positions)
-			med[name] = rank
-			department = 1
-		if(rank in GLOB.science_positions)
-			sci[name] = rank
-			department = 1
-		if(rank in GLOB.supply_positions)
-			sup[name] = rank
-			department = 1
-		if(rank in GLOB.civilian_positions)
-			civ[name] = rank
-			department = 1
-		if(rank in GLOB.nonhuman_positions)
-			bot[name] = rank
-			department = 1
-		if(!department && !(name in heads))
-			misc[name] = rank
-	if(heads.len > 0)
-		dat += "<tr><th colspan=3>Heads</th></tr>"
-		for(var/name in heads)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[heads[name]]</td></tr>"
-			even = !even
-	if(sec.len > 0)
-		dat += "<tr><th colspan=3>Security</th></tr>"
-		for(var/name in sec)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sec[name]]</td></tr>"
-			even = !even
-	if(eng.len > 0)
-		dat += "<tr><th colspan=3>Engineering</th></tr>"
-		for(var/name in eng)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[eng[name]]</td></tr>"
-			even = !even
-	if(med.len > 0)
-		dat += "<tr><th colspan=3>Medical</th></tr>"
-		for(var/name in med)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[med[name]]</td></tr>"
-			even = !even
-	if(sci.len > 0)
-		dat += "<tr><th colspan=3>Science</th></tr>"
-		for(var/name in sci)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sci[name]]</td></tr>"
-			even = !even
-	if(sup.len > 0)
-		dat += "<tr><th colspan=3>Supply</th></tr>"
-		for(var/name in sup)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sup[name]]</td></tr>"
-			even = !even
-	if(civ.len > 0)
-		dat += "<tr><th colspan=3>Civilian</th></tr>"
-		for(var/name in civ)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[civ[name]]</td></tr>"
-			even = !even
-	// in case somebody is insane and added them to the manifest, why not
-	if(bot.len > 0)
-		dat += "<tr><th colspan=3>Silicon</th></tr>"
-		for(var/name in bot)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[bot[name]]</td></tr>"
-			even = !even
-	// misc guys
-	if(misc.len > 0)
-		dat += "<tr><th colspan=3>Miscellaneous</th></tr>"
-		for(var/name in misc)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[misc[name]]</td></tr>"
+	for(var/department in manifest)
+		var/list/entries = manifest[department]
+		dat += "<tr><th colspan=3>[department]</th></tr>"
+		//JUST
+		var/even = FALSE
+		for(var/entry in entries)
+			var/list/entry_list = entry
+			dat += "<tr[even ? " class='alt'" : ""]><td>[entry_list["name"]]</td><td>[entry_list["rank"]]</td></tr>"
 			even = !even
 
 	dat += "</table>"
@@ -231,14 +218,8 @@
 /datum/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
 	set waitfor = FALSE
 	var/static/list/show_directions = list(SOUTH, WEST)
-	if(H.mind && (H.mind.assigned_role != H.mind.special_role))
-		var/assignment
-		if(H.mind.assigned_role)
-			assignment = H.mind.assigned_role
-		else if(H.job)
-			assignment = H.job
-		else
-			assignment = "Unassigned"
+	if(H.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST)
+		var/assignment = H.mind.assigned_role.title
 
 		var/static/record_id_num = 1001
 		var/id = num2hex(record_id_num++,6)
@@ -259,78 +240,76 @@
 		//These records should ~really~ be merged or something
 		//General Record
 		var/datum/data/record/G = new()
-		G.fields["id"]			= id
-		G.fields["name"]		= H.real_name
-		G.fields["rank"]		= assignment
-		G.fields["age"]			= H.age
-		G.fields["species"]	= H.dna.species.name
-		G.fields["fingerprint"]	= md5(H.dna.uni_identity)
-		G.fields["p_stat"]		= "Active"
-		G.fields["m_stat"]		= "Stable"
-		G.fields["gender"]			= H.gender
+		G.fields["id"] = id
+		G.fields["name"] = H.real_name
+		G.fields["rank"] = assignment
+		G.fields["age"] = H.age
+		G.fields["species"] = H.dna.species.name
+		G.fields["fingerprint"] = md5(H.dna.unique_identity)
+		G.fields["p_stat"] = "Active"
+		G.fields["m_stat"] = "Stable"
+		G.fields["gender"] = H.gender
 		if(H.gender == "male")
 			G.fields["gender"]  = "Male"
 		else if(H.gender == "female")
 			G.fields["gender"]  = "Female"
 		else
 			G.fields["gender"]  = "Other"
-		G.fields["photo_front"]	= photo_front
-		G.fields["photo_side"]	= photo_side
+		G.fields["photo_front"] = photo_front
+		G.fields["photo_side"] = photo_side
 		general += G
 
 		//Medical Record
 		var/datum/data/record/M = new()
-		M.fields["id"]			= id
-		M.fields["name"]		= H.real_name
-		M.fields["blood_type"]	= H.dna.blood_type
-		M.fields["b_dna"]		= H.dna.unique_enzymes
-		M.fields["mi_dis"]		= "None"
-		M.fields["mi_dis_d"]	= "No minor disabilities have been declared."
-		M.fields["ma_dis"]		= "None"
-		M.fields["ma_dis_d"]	= "No major disabilities have been diagnosed."
-		M.fields["alg"]			= "None"
-		M.fields["alg_d"]		= "No allergies have been detected in this patient."
-		M.fields["cdi"]			= "None"
-		M.fields["cdi_d"]		= "No diseases have been diagnosed at the moment."
-		M.fields["notes"]		= H.get_trait_string(medical)
+		M.fields["id"] = id
+		M.fields["name"] = H.real_name
+		M.fields["blood_type"] = H.dna.blood_type
+		M.fields["b_dna"] = H.dna.unique_enzymes
+		M.fields["mi_dis"] = H.get_quirk_string(!medical, CAT_QUIRK_MINOR_DISABILITY)
+		M.fields["mi_dis_d"] = H.get_quirk_string(medical, CAT_QUIRK_MINOR_DISABILITY)
+		M.fields["ma_dis"] = H.get_quirk_string(!medical, CAT_QUIRK_MAJOR_DISABILITY)
+		M.fields["ma_dis_d"] = H.get_quirk_string(medical, CAT_QUIRK_MAJOR_DISABILITY)
+		M.fields["cdi"] = "None"
+		M.fields["cdi_d"] = "No diseases have been diagnosed at the moment."
+		M.fields["notes"] = H.get_quirk_string(!medical, CAT_QUIRK_NOTES)
+		M.fields["notes_d"] = H.get_quirk_string(medical, CAT_QUIRK_NOTES)
 		medical += M
 
 		//Security Record
 		var/datum/data/record/S = new()
-		S.fields["id"]			= id
-		S.fields["name"]		= H.real_name
-		S.fields["criminal"]	= "None"
-		S.fields["citation"]	= list()
-		S.fields["mi_crim"]		= list()
-		S.fields["ma_crim"]		= list()
-		S.fields["notes"]		= "No notes."
+		S.fields["id"] = id
+		S.fields["name"] = H.real_name
+		S.fields["criminal"] = "None"
+		S.fields["citation"] = list()
+		S.fields["crim"] = list()
+		S.fields["notes"] = "No notes."
 		security += S
 
 		//Locked Record
 		var/datum/data/record/L = new()
-		L.fields["id"]			= md5("[H.real_name][H.mind.assigned_role]")	//surely this should just be id, like the others?
-		L.fields["name"]		= H.real_name
-		L.fields["rank"] 		= H.mind.assigned_role
-		L.fields["age"]			= H.age
-		L.fields["gender"]			= H.gender
+		L.fields["id"] = md5("[H.real_name][assignment]") //surely this should just be id, like the others?
+		L.fields["name"] = H.real_name
+		L.fields["rank"] = assignment
+		L.fields["age"] = H.age
+		L.fields["gender"] = H.gender
 		if(H.gender == "male")
 			G.fields["gender"]  = "Male"
 		else if(H.gender == "female")
 			G.fields["gender"]  = "Female"
 		else
 			G.fields["gender"]  = "Other"
-		L.fields["blood_type"]	= H.dna.blood_type
-		L.fields["b_dna"]		= H.dna.unique_enzymes
-		L.fields["identity"]	= H.dna.uni_identity
-		L.fields["species"]		= H.dna.species.type
-		L.fields["features"]	= H.dna.features
-		L.fields["image"]		= image
-		L.fields["mindref"]		= H.mind
+		L.fields["blood_type"] = H.dna.blood_type
+		L.fields["b_dna"] = H.dna.unique_enzymes
+		L.fields["identity"] = H.dna.unique_identity
+		L.fields["species"] = H.dna.species.type
+		L.fields["features"] = H.dna.features
+		L.fields["image"] = image
+		L.fields["mindref"] = H.mind
 		locked += L
 	return
 
 /datum/datacore/proc/get_id_photo(mob/living/carbon/human/H, client/C, show_directions = list(SOUTH))
-	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
+	var/datum/job/J = H.mind.assigned_role
 	var/datum/preferences/P
 	if(!C)
 		C = H.client

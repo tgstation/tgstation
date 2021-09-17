@@ -1,0 +1,14 @@
+environment = "tgstation.dme"
+
+[langserver]
+dreamchecker = true
+
+[code_standards]
+disallow_relative_type_definitions = true
+disallow_relative_proc_definitions = true
+
+[dmdoc]
+use_typepath_names = true
+
+[debugger]
+engine = "auxtools"

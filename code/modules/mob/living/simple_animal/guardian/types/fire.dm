@@ -1,6 +1,6 @@
 //Fire
 /mob/living/simple_animal/hostile/guardian/fire
-	a_intent = INTENT_HELP
+	combat_mode = FALSE
 	melee_damage_lower = 7
 	melee_damage_upper = 7
 	attack_sound = 'sound/items/welder.ogg'
@@ -12,20 +12,28 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Wizard, bringer of endless chaos!</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Crowd control modules activated. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! OH GOD, EVERYTHING'S ON FIRE. Except you and the fish.</span>"
+	miner_fluff_string = "<span class='holoparasite'>You encounter... Plasma, the bringer of fire.</span>"
 
-/mob/living/simple_animal/hostile/guardian/fire/Life()
+/mob/living/simple_animal/hostile/guardian/fire/Initialize(mapload, theme)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/mob/living/simple_animal/hostile/guardian/fire/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(summoner)
-		summoner.ExtinguishMob()
-		summoner.adjust_fire_stacks(-20)
+		summoner.extinguish_mob()
+		summoner.adjust_fire_stacks(-10 * delta_time)
 
 /mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
 	. = ..()
 	if(. && ishuman(target) && target != summoner)
 		new /datum/hallucination/delusion(target,TRUE,"custom",200,0, icon_state,icon)
 
-/mob/living/simple_animal/hostile/guardian/fire/Crossed(AM as mob|obj)
-	..()
+/mob/living/simple_animal/hostile/guardian/fire/proc/on_entered(datum/source, AM as mob|obj)
+	SIGNAL_HANDLER
 	collision_ignite(AM)
 
 /mob/living/simple_animal/hostile/guardian/fire/Bumped(atom/movable/AM)
@@ -40,5 +48,5 @@
 	if(isliving(AM))
 		var/mob/living/M = AM
 		if(!hasmatchingsummoner(M) && M != summoner && M.fire_stacks < 7)
-			M.fire_stacks = 7
+			M.set_fire_stacks(7)
 			M.IgniteMob()

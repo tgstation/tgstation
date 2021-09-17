@@ -30,6 +30,8 @@
 	VV_DROPDOWN_OPTION(VV_HK_DELETE, "Delete")
 	VV_DROPDOWN_OPTION(VV_HK_EXPOSE, "Show VV To Player")
 	VV_DROPDOWN_OPTION(VV_HK_ADDCOMPONENT, "Add Component/Element")
+	VV_DROPDOWN_OPTION(VV_HK_REMOVECOMPONENT, "Remove Component/Element")
+	VV_DROPDOWN_OPTION(VV_HK_MASS_REMOVECOMPONENT, "Mass Remove Component/Element")
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_TRAITS, "Modify Traits")
 
 //This proc is only called if everything topic-wise is verified. The only verifications that should happen here is things like permission checks!
@@ -37,7 +39,9 @@
 //This proc is for "high level" actions like admin heal/set species/etc/etc. The low level debugging things should go in admin/view_variables/topic_basic.dm incase this runtimes.
 /datum/proc/vv_do_topic(list/href_list)
 	if(!usr || !usr.client || !usr.client.holder || !check_rights(NONE))
-		return FALSE			//This is VV, not to be called by anything else.
+		return FALSE //This is VV, not to be called by anything else.
+	if(SEND_SIGNAL(src, COMSIG_VV_TOPIC, usr, href_list) & COMPONENT_VV_HANDLED)
+		return FALSE
 	if(href_list[VV_HK_MODIFY_TRAITS])
 		usr.client.holder.modify_traits(src)
 	return TRUE
@@ -46,6 +50,3 @@
 	. = list()
 	if(("name" in vars) && !isatom(src))
 		. += "<b>[vars["name"]]</b><br>"
-
-/datum/proc/on_reagent_change(changetype)
-	return

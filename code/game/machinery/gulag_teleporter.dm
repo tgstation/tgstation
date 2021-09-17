@@ -11,8 +11,10 @@ The console is located at computer/gulag_teleporter.dm
 	desc = "A bluespace teleporter used for teleporting prisoners to the labor camp."
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "implantchair"
+	base_icon_state = "implantchair"
 	state_open = FALSE
 	density = TRUE
+	obj_flags = NO_BUILD // Becomes undense when the door is open
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
@@ -21,13 +23,16 @@ The console is located at computer/gulag_teleporter.dm
 	var/message_cooldown
 	var/breakout_time = 600
 	var/jumpsuit_type = /obj/item/clothing/under/rank/prisoner
+	var/jumpskirt_type = /obj/item/clothing/under/rank/prisoner/skirt
 	var/shoes_type = /obj/item/clothing/shoes/sneakers/orange
+	var/emergency_plasglove_type = /obj/item/clothing/gloves/color/plasmaman
 	var/obj/machinery/gulag_item_reclaimer/linked_reclaimer
 	var/static/list/telegulag_required_items = typecacheof(list(
 		/obj/item/implant,
 		/obj/item/clothing/suit/space/eva/plasmaman,
 		/obj/item/clothing/under/plasmaman,
 		/obj/item/clothing/head/helmet/space/plasmaman,
+		/obj/item/clothing/gloves/color/plasmaman,
 		/obj/item/tank/internals,
 		/obj/item/clothing/mask/breath,
 		/obj/item/clothing/mask/gas))
@@ -44,7 +49,7 @@ The console is located at computer/gulag_teleporter.dm
 /obj/machinery/gulag_teleporter/interact(mob/user)
 	. = ..()
 	if(locked)
-		to_chat(user, "<span class='warning'>[src] is locked!</span>")
+		to_chat(user, span_warning("[src] is locked!"))
 		return
 	toggle_open()
 
@@ -53,7 +58,7 @@ The console is located at computer/gulag_teleporter.dm
 
 /obj/machinery/gulag_teleporter/attackby(obj/item/I, mob/user)
 	if(!occupant && default_deconstruction_screwdriver(user, "[icon_state]", "[icon_state]",I))
-		update_icon()
+		update_appearance()
 		return
 
 	if(default_deconstruction_crowbar(I))
@@ -65,49 +70,49 @@ The console is located at computer/gulag_teleporter.dm
 	return ..()
 
 /obj/machinery/gulag_teleporter/update_icon_state()
-	icon_state = initial(icon_state) + (state_open ? "_open" : "")
+	icon_state = "[base_icon_state][state_open ? "_open" : null]"
 	//no power or maintenance
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		icon_state += "_unpowered"
-		if((stat & MAINT) || panel_open)
+		if((machine_stat & MAINT) || panel_open)
 			icon_state += "_maintenance"
-		return
+		return ..()
 
-	if((stat & MAINT) || panel_open)
+	if((machine_stat & MAINT) || panel_open)
 		icon_state += "_maintenance"
-		return
+		return ..()
 
 	//running and someone in there
 	if(occupant)
 		icon_state += "_occupied"
-		return
+	return ..()
 
 
-/obj/machinery/gulag_teleporter/relaymove(mob/user)
+/obj/machinery/gulag_teleporter/relaymove(mob/living/user, direction)
 	if(user.stat != CONSCIOUS)
 		return
 	if(locked)
 		if(message_cooldown <= world.time)
 			message_cooldown = world.time + 50
-			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
+			to_chat(user, span_warning("[src]'s door won't budge!"))
 		return
 	open_machine()
 
-/obj/machinery/gulag_teleporter/container_resist(mob/living/user)
+/obj/machinery/gulag_teleporter/container_resist_act(mob/living/user)
 	if(!locked)
 		open_machine()
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
-		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='hear'>You hear a metallic creaking from [src].</span>")
+	user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
+		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
+		span_hear("You hear a metallic creaking from [src]."))
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
 		locked = FALSE
-		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
-			"<span class='notice'>You successfully break out of [src]!</span>")
+		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
+			span_notice("You successfully break out of [src]!"))
 		open_machine()
 
 /obj/machinery/gulag_teleporter/proc/locate_reclaimer()
@@ -117,7 +122,7 @@ The console is located at computer/gulag_teleporter.dm
 
 /obj/machinery/gulag_teleporter/proc/toggle_open()
 	if(panel_open)
-		to_chat(usr, "<span class='notice'>Close the maintenance panel first.</span>")
+		to_chat(usr, span_notice("Close the maintenance panel first."))
 		return
 
 	if(state_open)
@@ -150,11 +155,14 @@ The console is located at computer/gulag_teleporter.dm
 	strip_occupant()
 	var/mob/living/carbon/human/prisoner = occupant
 	if(!isplasmaman(prisoner) && jumpsuit_type)
-		prisoner.equip_to_appropriate_slot(new jumpsuit_type)
+		var/suit_or_skirt = prisoner.jumpsuit_style == PREF_SKIRT ? jumpskirt_type : jumpsuit_type //Check player prefs for jumpsuit or jumpskirt toggle, then give appropriate prison outfit.
+		prisoner.equip_to_appropriate_slot(new suit_or_skirt, qdel_on_fail = TRUE)
+	if(isplasmaman(prisoner) && !prisoner.gloves && emergency_plasglove_type)
+		prisoner.equip_to_appropriate_slot(new emergency_plasglove_type, qdel_on_fail = TRUE)
 	if(shoes_type)
-		prisoner.equip_to_appropriate_slot(new shoes_type)
+		prisoner.equip_to_appropriate_slot(new shoes_type, qdel_on_fail = TRUE)
 	if(id)
-		prisoner.equip_to_appropriate_slot(id)
+		prisoner.equip_to_appropriate_slot(id, qdel_on_fail = TRUE)
 	if(R)
 		R.fields["criminal"] = "Incarcerated"
 
@@ -172,6 +180,6 @@ The console is located at computer/gulag_teleporter.dm
 	name = "labor camp bluespace beacon"
 	desc = "A receiving beacon for bluespace teleportations."
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "light_on-w"
+	icon_state = "light_on-8"
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE

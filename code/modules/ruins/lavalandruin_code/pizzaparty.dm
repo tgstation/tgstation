@@ -5,5 +5,5 @@
 	loot = list(/obj/item/pizzabox/margherita = 3,
 				/obj/item/pizzabox/meat = 3,
 				/obj/item/pizzabox/mushroom = 3,
-				/obj/item/pizzabox/bomb = 1)
+				/obj/item/pizzabox/bomb/armed = 1)
 	lootdoubles = FALSE

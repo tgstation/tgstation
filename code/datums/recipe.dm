@@ -9,10 +9,10 @@
  * * items are objects. Fruits, tools, circuit boards.
  * * result is type to create as new object
  * * time is optional parameter, you shall use in in your machine,
-     default /datum/recipe/ procs does not rely on this parameter.
+ *  default /datum/recipe/ procs does not rely on this parameter.
  *
  *  Functions you need:
- *  /datum/recipe/proc/make(var/obj/container as obj)
+ *  /datum/recipe/proc/make(obj/container as obj)
  *    Creates result inside container,
  *    deletes prerequisite reagents,
  *    transfers reagents from prerequisite objects,
@@ -25,10 +25,10 @@
  *
  *
  *  Functions you do not need to call directly but could:
- *  /datum/recipe/proc/check_reagents(var/datum/reagents/avail_reagents)
+ *  /datum/recipe/proc/check_reagents(datum/reagents/avail_reagents)
  *    //1=precisely,  0=insufficiently, -1=superfluous
  *
- *  /datum/recipe/proc/check_items(var/obj/container as obj)
+ *  /datum/recipe/proc/check_items(obj/container as obj)
  *    //1=precisely, 0=insufficiently, -1=superfluous
  *
  * */
@@ -36,7 +36,7 @@
 /datum/recipe
 	var/list/reagents_list // example:  = list(/datum/reagent/consumable/berryjuice = 5) // do not list same reagent twice
 	var/list/items // example: =list(/obj/item/crowbar, /obj/item/welder) // place /foo/bar before /foo
-	var/result //example: = /obj/item/reagent_containers/food/snacks/donut
+	var/result //example: = /obj/item/food/donut
 	var/time = 100 // 1/10 part of second
 
 

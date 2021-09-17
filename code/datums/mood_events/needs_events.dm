@@ -20,6 +20,14 @@
 	mood_change = -10
 
 //charge
+/datum/mood_event/supercharged
+	description = "<span class='boldwarning'>I can't possibly keep all this power inside, I need to release some quick!</span>\n"
+	mood_change = -10
+
+/datum/mood_event/overcharged
+	description = "<span class='warning'>I feel dangerously overcharged, perhaps I should release some power.</span>\n"
+	mood_change = -4
+
 /datum/mood_event/charged
 	description = "<span class='nicegreen'>I feel the power in my veins!</span>\n"
 	mood_change = 6
@@ -42,11 +50,11 @@
 	mood_change = -6
 
 /datum/mood_event/disgusted
-	description = "<span class='boldwarning'>Oh god that's disgusting...</span>\n"
+	description = "<span class='boldwarning'>Oh god, that's disgusting...</span>\n"
 	mood_change = -8
 
 /datum/mood_event/disgust/bad_smell
-	description = "<span class='warning'>You smell something horribly decayed inside this room.</span>\n"
+	description = "<span class='warning'>I can smell something horribly decayed inside this room.</span>\n"
 	mood_change = -6
 
 /datum/mood_event/disgust/nauseating_stench

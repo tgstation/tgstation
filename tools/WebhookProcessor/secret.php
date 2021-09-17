@@ -1,6 +1,6 @@
 <?php
 //This file contains things that should not be touched by the automatic live tracker
- 
+
 //Github lets you have it sign the message with a secret that you can validate. This prevents people from faking events.
 //This var should match the secret you configured for this webhook on github.
 //This is required as otherwise somebody could trick the script into leaking the api key.
@@ -67,11 +67,11 @@ announce_secret - Announce secret/security prs that have a [s] in front of the t
 $servers[$configitem]['announce_secret'] = false;
 $servers[$configitem]['announce_secret'] = 'only';
 
-announce_unvalidated - Announce prs by unvalidated users (see the validation setting above)? Defaults to no. 
+announce_unvalidated - Announce prs by unvalidated users (see the validation setting above)? Defaults to no.
 	Can also be set to 'only' to only announce prs by unvalidated users.
 $servers[$configitem]['announce_unvalidated'] = false;
 
-//Note: the same webhook or game server can be given in mutiple announce endpoints with different settings, allowing you to say, have embeds only show on prs to certain repos by excluding the repo in a endpoint with embed = false, and including the repo in a endpoint with embed = true true. This could also be used to only block closed and reopened events on prs by unvalidated users.
+//Note: the same webhook or game server can be given in mutiple announce endpoints with different settings, allowing you to say, have embeds only show on prs to certain repos by excluding the repo in an endpoint with embed = false, and including the repo in an endpoint with embed = true true. This could also be used to only block closed and reopened events on prs by unvalidated users.
 
 
 
@@ -104,7 +104,7 @@ $configitem = -1;//ignore me
 $discordWebHooks[++$configitem] = array();
 
 // Webhook Url (you can get this from discord via the webhook setting menu of the server or a channel.)
-$discordWebHooks[$configitem]['url'] = 'https://discordapp.com/api/webhooks/538933489920245771/xaoYtVuype-P1rb_uthQLkh_C4iVL3sjtIvFEp7rsfhbBs8tDsSJgE0a9MNWJaoSPBPK';
+$discordWebHooks[$configitem]['url'] = 'https://discord.com/api/webhooks/538933489920245771/xaoYtVuype-P1rb_uthQLkh_C4iVL3sjtIvFEp7rsfhbBs8tDsSJgE0a9MNWJaoSPBPK';
 
 // show an embed with more info?
 $discordWebHooks[$configitem]['embed'] = true;
@@ -118,7 +118,7 @@ $discordWebHooks[$configitem]['no_text'] = false;
 $discordWebHooks[++$configitem] = array();
 
 // Webhook Url (you can get this from discord via the webhook setting menu of the server or a channel.)
-$discordWebHooks[$configitem]['url'] = 'https://discordapp.com/api/webhooks/538933686956064769/q0uDel7S6eutvRIyEwsuZo_ppzAoxqUNeU2PRChYVsYoJmmn2f2YYSDoMjy9FhhXKqpI';
+$discordWebHooks[$configitem]['url'] = 'https://discord.com/api/webhooks/538933686956064769/q0uDel7S6eutvRIyEwsuZo_ppzAoxqUNeU2PRChYVsYoJmmn2f2YYSDoMjy9FhhXKqpI';
 
 // show an embed with more info?
 $discordWebHooks[$configitem]['embed'] = true;

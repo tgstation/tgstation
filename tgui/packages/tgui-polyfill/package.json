@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "name": "tgui-polyfill",
+  "version": "4.3.0",
+  "dependencies": {
+    "core-js": "^3.16.1",
+    "regenerator-runtime": "^0.13.9",
+    "unfetch": "^4.2.0"
+  }
+}

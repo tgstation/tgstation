@@ -7,7 +7,8 @@
 	name = "area modification item"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "blueprints"
-	attack_verb = list("attacked", "bapped", "hit")
+	attack_verb_continuous = list("attacks", "baps", "hits")
+	attack_verb_simple = list("attack", "bap", "hit")
 	var/fluffnotice = "Nobody's gonna read this stuff!"
 	var/in_use = FALSE
 
@@ -33,6 +34,10 @@
 	if(href_list["create_area"])
 		if(in_use)
 			return
+		var/area/A = get_area(usr)
+		if(A.area_flags & NOTELEPORT)
+			to_chat(usr, span_warning("You cannot edit restricted areas."))
+			return
 		in_use = TRUE
 		create_area(usr)
 		in_use = FALSE
@@ -48,7 +53,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/list/image/showing = list()
 	var/client/viewing
-	var/legend = FALSE	//Viewing the wire legend
+	var/legend = FALSE //Viewing the wire legend
 
 
 /obj/item/areaeditor/blueprints/Destroy()
@@ -101,9 +106,9 @@
 	if(href_list["view_wireset"])
 		legend = href_list["view_wireset"];
 	if(href_list["view_blueprints"])
-		set_viewer(usr, "<span class='notice'>You flip the blueprints over to view the complex information diagram.</span>")
+		set_viewer(usr, span_notice("You flip the blueprints over to view the complex information diagram."))
 	if(href_list["hide_blueprints"])
-		clear_viewer(usr,"<span class='notice'>You flip the blueprints over to view the simple information diagram.</span>")
+		clear_viewer(usr,span_notice("You flip the blueprints over to view the simple information diagram."))
 	if(href_list["refresh"])
 		clear_viewer(usr)
 		set_viewer(usr)
@@ -112,12 +117,12 @@
 
 /obj/item/areaeditor/blueprints/proc/get_images(turf/T, viewsize)
 	. = list()
-	for(var/turf/TT in range(viewsize, T))
+	for(var/turf/TT in RANGE_TURFS(viewsize, T))
 		if(TT.blueprint_data)
 			. += TT.blueprint_data
 
 /obj/item/areaeditor/blueprints/proc/set_viewer(mob/user, message = "")
-	if(user && user.client)
+	if(user?.client)
 		if(viewing)
 			clear_viewer()
 		viewing = user.client
@@ -169,11 +174,11 @@
 /obj/item/areaeditor/blueprints/proc/view_wire_set(mob/user, wireset)
 	//for some reason you can't use wireset directly as a derefencer so this is the next best :/
 	for(var/device in GLOB.wire_color_directory)
-		if("[device]" == wireset)	//I know... don't change it...
+		if("[device]" == wireset) //I know... don't change it...
 			var/message = "<p><b>[GLOB.wire_name_directory[device]]:</b>"
 			for(var/Col in GLOB.wire_color_directory[device])
 				var/wire_name = GLOB.wire_color_directory[device][Col]
-				if(!findtext(wire_name, WIRE_DUD_PREFIX))	//don't show duds
+				if(!findtext(wire_name, WIRE_DUD_PREFIX)) //don't show duds
 					message += "<p><span style='color: [Col]'>[Col]</span>: [wire_name]</p>"
 			message += "</p>"
 			return message
@@ -186,12 +191,12 @@
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)
-		to_chat(usr, "<span class='warning'>The given name is too long. The area's name is unchanged.</span>")
+		to_chat(usr, span_warning("The given name is too long. The area's name is unchanged."))
 		return
 
 	rename_area(A, str)
 
-	to_chat(usr, "<span class='notice'>You rename the '[prevname]' to '[str]'.</span>")
+	to_chat(usr, span_notice("You rename the '[prevname]' to '[str]'."))
 	log_game("[key_name(usr)] has renamed [prevname] to [str]")
 	A.update_areasize()
 	interact()
