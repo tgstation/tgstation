@@ -2617,9 +2617,6 @@
 /obj/item/gps/mining,
 /obj/item/gps/mining,
 /obj/machinery/power/apc/auto_name/south,
-/obj/structure/railing{
-	dir = 8
-	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/mine/eva)
