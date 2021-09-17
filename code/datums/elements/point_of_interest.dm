@@ -5,9 +5,20 @@
 /datum/element/point_of_interest/Attach(datum/target)
 	if (!isatom(target))
 		return ELEMENT_INCOMPATIBLE
-	GLOB.poi_list += target
+
+	// Do not ever attach to players in the lobby.
+	if(isnewplayer(target))
+		return ELEMENT_INCOMPATIBLE
+
+	// Do not ever attach to stealthmins
+	if(ismob(target))
+		var/mob/target_mob = target
+		if(target_mob.client?.holder?.fakekey)
+			return ELEMENT_INCOMPATIBLE
+
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_POI_ELEMENT_ADDED, target)
 	return ..()
 
 /datum/element/point_of_interest/Detach(datum/target)
-	GLOB.poi_list -= target
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_POI_ELEMENT_REMOVED, target)
 	return ..()

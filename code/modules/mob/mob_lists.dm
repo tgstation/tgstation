@@ -2,11 +2,13 @@
 /mob/proc/add_to_mob_list()
 	GLOB.mob_list |= src
 	GLOB.mob_directory[tag] = src
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_CREATED, src)
 
 ///Removes the mob reference from the list and directory of all mobs. Called on Destroy().
 /mob/proc/remove_from_mob_list()
 	GLOB.mob_list -= src
 	GLOB.mob_directory -= tag
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_DELETED, src)
 
 ///Adds the mob reference to the list of all mobs alive. If mob is cliented, it adds it to the list of all living player-mobs.
 /mob/proc/add_to_alive_mob_list()
@@ -25,7 +27,7 @@
 ///Adds a mob reference to the list of all suicided mobs
 /mob/proc/add_to_mob_suicide_list()
 	GLOB.suicided_mob_list += src
-	
+
 ///Removes a mob references from the list of all suicided mobs
 /mob/proc/remove_from_mob_suicide_list()
 	GLOB.suicided_mob_list -= src

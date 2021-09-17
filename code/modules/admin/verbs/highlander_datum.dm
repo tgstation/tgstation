@@ -12,7 +12,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/new_highlander)
 	sound_to_playing_players('sound/misc/highlander.ogg')
 	send_to_playing_players(span_boldannounce("<font size=6>THERE CAN BE ONLY ONE</font>"))
-	for(var/obj/item/disk/nuclear/fukkendisk in GLOB.poi_list)
+	for(var/obj/item/disk/nuclear/fukkendisk in SSpois.other_points_of_interest)
 		var/datum/component/stationloving/component = fukkendisk.GetComponent(/datum/component/stationloving)
 		component?.relocate() //Gets it out of bags and such
 

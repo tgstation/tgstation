@@ -36,6 +36,9 @@ const compareNumberedText = (a, b) => {
 const BasicSection = (props, context) => {
   const { act } = useBackend(context);
   const { searchText, source, title } = props;
+
+  const [autoObs] = useLocalState(context, "autoObs", false);
+
   const things = source.filter(searchFor(searchText));
   things.sort(compareNumberedText);
   return source.length > 0 && (
@@ -46,6 +49,7 @@ const BasicSection = (props, context) => {
           content={thing.name}
           onClick={() => act("orbit", {
             ref: thing.ref,
+            autoObs: autoObs,
           })} />
       ))}
     </Section>
@@ -56,11 +60,14 @@ const OrbitedButton = (props, context) => {
   const { act } = useBackend(context);
   const { color, thing } = props;
 
+  const [autoObs] = useLocalState(context, "autoObs", false);
+
   return (
     <Button
       color={color}
       onClick={() => act("orbit", {
         ref: thing.ref,
+        autoObs: autoObs,
       })}>
       {thing.name}
       {thing.orbiters && (
@@ -82,7 +89,6 @@ export const Orbit = (props, context) => {
   const {
     alive,
     antagonists,
-    auto_observe,
     dead,
     ghosts,
     misc,
@@ -90,6 +96,7 @@ export const Orbit = (props, context) => {
   } = data;
 
   const [searchText, setSearchText] = useLocalState(context, "searchText", "");
+  const [autoObs, setAutoObs] = useLocalState(context, "autoObs", false);
 
   const collatedAntagonists = {};
   for (const antagonist of antagonists) {
@@ -113,7 +120,10 @@ export const Orbit = (props, context) => {
         .filter(searchFor(searchText))
         .sort(compareNumberedText)[0];
       if (member !== undefined) {
-        act("orbit", { ref: member.ref });
+        act("orbit", {
+          ref: member.ref,
+          autoObs: autoObs,
+        });
         break;
       }
     }
@@ -151,9 +161,9 @@ export const Orbit = (props, context) => {
                 tooltip={multiline`Toggle Auto-Observe. When active, you'll
                 see the UI / full inventory of whoever you're orbiting. Neat!`}
                 tooltipPosition="bottom-start"
-                selected={auto_observe}
-                icon={auto_observe ? "toggle-on" : "toggle-off"}
-                onClick={() => act("toggle_observe")} />
+                selected={autoObs}
+                icon={autoObs ? "toggle-on" : "toggle-off"}
+                onClick={() => setAutoObs(!autoObs)} />
               <Button
                 inline
                 color="transparent"

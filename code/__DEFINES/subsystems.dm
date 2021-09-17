@@ -128,6 +128,7 @@
 #define INIT_ORDER_AI_CONTROLLERS 55 //So the controller can get the ref
 #define INIT_ORDER_TICKER 55
 #define INIT_ORDER_TCG 55
+#define INIT_ORDER_POINTS_OF_INTEREST 51 // POIs rely on elements being attached to items and atom init, so should probably come before mapping.
 #define INIT_ORDER_MAPPING 50
 #define INIT_ORDER_EARLY_ASSETS 48
 #define INIT_ORDER_TIMETRACK 47

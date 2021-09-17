@@ -402,7 +402,7 @@
 			if (specificTarget)
 				specificTarget = null
 				return
-			var/list/mobs = getpois()//code stolen from observer.dm
+			var/list/mobs = SSpois.get_pois(mobs_only = TRUE)
 			var/inputTarget = input("Select a mob! (Smiting does this automatically)", "Target", null, null) as null|anything in mobs
 			if (isnull(inputTarget))
 				return
