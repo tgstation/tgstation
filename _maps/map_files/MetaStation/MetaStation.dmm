@@ -57466,7 +57466,7 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "syT" = (
-/mob/living/simple_animal/cow{
+/mob/living/basic/cow{
 	name = "Betsy";
 	real_name = "Betsy"
 	},

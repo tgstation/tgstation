@@ -1492,3 +1492,5 @@
 #define COMSIG_MOB_POIS_CHANGED "mob_pois_changed"
 /// Sent from base of /datum/controller/subsystem/pois/proc/on_pois_changed: ()
 #define COMSIG_OTHER_POIS_CHANGED "other_pois_changed"
+
+#define COMSIG_GREYSCALE_CONFIG_REFRESHED "greyscale_config_refreshed"
