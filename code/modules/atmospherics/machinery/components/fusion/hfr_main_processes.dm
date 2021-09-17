@@ -223,7 +223,7 @@
 		fuel_injection_rate = 20
 		moderator_injection_rate = 50
 		waste_remove = FALSE
-		iron_content += 0.1 * delta_time
+		iron_content += 0.02 * power_level * delta_time
 
 	//Store the temperature of the gases after one cicle of the fusion reaction
 	var/archived_heat = internal_fusion.temperature
