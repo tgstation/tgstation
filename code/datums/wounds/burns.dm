@@ -299,3 +299,10 @@
 	infestation_rate = 0.075 // appx 4.33 minutes to reach sepsis without any treatment
 	flesh_damage = 20
 	scar_keyword = "burncritical"
+
+///special severe wound caused by sparring interference or other god related punishments.
+/datum/wound/burn/severe/brand
+	name = "Holy Brand"
+	desc = "Patient is suffering extreme burns from a strange brand marking, creating serious risk of infection and greatly reduced limb integrity."
+	examine_desc = "appears to have holy symbols painfully branded into their flesh, leaving severe burns."
+	occur_text = "chars rapidly into a strange pattern of holy symbols, burned into the flesh."

@@ -199,15 +199,6 @@
 			lightningbolt(user)
 			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/holy_smite)//permanently lose your moodlet after this
 
-/datum/mutation/human/honorbound/proc/lightningbolt(mob/living/user)
-	var/turf/lightning_source = get_step(get_step(user, NORTH), NORTH)
-	lightning_source.Beam(user, icon_state="lightning[rand(1,12)]", time = 5)
-	user.adjustFireLoss(LIGHTNING_BOLT_DAMAGE)
-	playsound(get_turf(user), 'sound/magic/lightningbolt.ogg', 50, TRUE)
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_target = user
-		human_target.electrocution_animation(LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH)
-
 /obj/effect/proc_holder/spell/pointed/declare_evil
 	name = "Declare Evil"
 	desc = "If someone is so obviously an evil of this world you can spend a huge amount of favor to declare them guilty."

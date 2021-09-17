@@ -501,6 +501,8 @@
 #define COMSIG_MOVABLE_UPDATE_GLIDE_SIZE "movable_glide_size"
 ///Called when a movable is hit by a plunger in layer mode, from /obj/item/plunger/attack_atom()
 #define COMSIG_MOVABLE_CHANGE_DUCT_LAYER "movable_change_duct_layer"
+///Called when a movable is teleported from `do_teleport()`: (destination, channel)
+#define COMSIG_MOVABLE_TELEPORTED "movable_teleported"
 
 // /mob signals
 
@@ -1015,6 +1017,8 @@
 
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
 #define COMSIG_GRENADE_DETONATE "grenade_prime"
+//called from many places in grenade code (armed_by, nade, det_time, delayoverride)
+#define COMSIG_MOB_GRENADE_ARMED "grenade_mob_armed"
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
 #define COMSIG_GRENADE_ARMED "grenade_armed"
 
