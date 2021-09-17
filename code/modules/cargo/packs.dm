@@ -2077,7 +2077,7 @@
 	desc = "The cow goes moo!"
 	cost = CARGO_CRATE_VALUE * 6
 	access_view = ACCESS_HYDROPONICS
-	contains = list(/mob/living/simple_animal/cow)
+	contains = list(/mob/living/basic/cow)
 	crate_name = "cow crate"
 
 /datum/supply_pack/critter/crab

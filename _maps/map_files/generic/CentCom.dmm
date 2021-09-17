@@ -15045,7 +15045,7 @@
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/four)
 "ZT" = (
-/mob/living/simple_animal/cow,
+/mob/living/basic/cow,
 /turf/open/floor/grass,
 /area/centcom/holding)
 "ZU" = (
