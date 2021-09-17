@@ -18,6 +18,8 @@
 
 	/// In the preview icon, the nukies who are behind the leader
 	var/preview_outfit_behind = /datum/outfit/nuclear_operative
+	/// In the preview icon, a nuclear fission explosive device, only appearing if there's an icon state for it.
+	var/nuke_icon_state = "nuclearbomb_base"
 
 /datum/antagonist/nukeop/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
@@ -91,7 +93,7 @@
 /datum/antagonist/nukeop/proc/memorize_code()
 	if(nuke_team && nuke_team.tracked_nuke && nuke_team.memorized_code)
 		antag_memory += "<B>[nuke_team.tracked_nuke] Code</B>: [nuke_team.memorized_code]<br>"
-		owner.add_memory(MEMORY_NUKECODE, list(DETAIL_NUKE_CODE = nuke_team.memorized_code, DETAIL_PROTAGONIST = owner.current), story_value = STORY_VALUE_AMAZING, memory_flags = MEMORY_FLAG_NOLOCATION | MEMORY_FLAG_NOMOOD | MEMORY_FLAG_NOPERSISTENCE) 
+		owner.add_memory(MEMORY_NUKECODE, list(DETAIL_NUKE_CODE = nuke_team.memorized_code, DETAIL_PROTAGONIST = owner.current), story_value = STORY_VALUE_AMAZING, memory_flags = MEMORY_FLAG_NOLOCATION | MEMORY_FLAG_NOMOOD | MEMORY_FLAG_NOPERSISTENCE)
 		to_chat(owner, "The nuclear authorization code is: <B>[nuke_team.memorized_code]</B>")
 	else
 		to_chat(owner, "Unfortunately the syndicate was unable to provide you with nuclear authorization code.")
@@ -163,8 +165,13 @@
 		var/icon/teammate = render_preview_outfit(preview_outfit_behind)
 		teammate.Blend(rgb(128, 128, 128, 128), ICON_MULTIPLY)
 
-		final_icon.Blend(teammate, ICON_OVERLAY, -world.icon_size / 4, 0)
-		final_icon.Blend(teammate, ICON_OVERLAY, world.icon_size / 4, 0)
+		final_icon.Blend(teammate, ICON_UNDERLAY, -world.icon_size / 4, 0)
+		final_icon.Blend(teammate, ICON_UNDERLAY, world.icon_size / 4, 0)
+
+	if (!isnull(nuke_icon_state))
+		var/icon/nuke = icon('icons/obj/machines/nuke.dmi', nuke_icon_state)
+		nuke.Shift(SOUTH, 6)
+		final_icon.Blend(nuke, ICON_OVERLAY)
 
 	return finish_preview_icon(final_icon)
 
@@ -266,6 +273,7 @@
 	nukeop_outfit = /datum/outfit/syndicate/full
 	preview_outfit = /datum/outfit/nuclear_operative
 	preview_outfit_behind = null
+	nuke_icon_state = null
 
 /datum/antagonist/nukeop/lone/assign_nuke()
 	if(nuke_team && !nuke_team.tracked_nuke)
