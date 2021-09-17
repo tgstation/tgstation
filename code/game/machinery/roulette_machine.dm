@@ -302,7 +302,7 @@
 ///Returns TRUE if the player bet correctly.
 /obj/machinery/roulette/proc/check_win(bet_type, bet_amount, rolled_number)
 	var/actual_bet_number = text2num(bet_type) //Only returns the numeric bet types, AKA singles.
-	if(actual_bet_number) //This means we're playing singles
+	if(!isnull(actual_bet_number)) //This means we're playing singles
 		return rolled_number == actual_bet_number
 
 	switch(bet_type) //Otherwise, we are playing a "special" game, switch on all the cases so we can check.
