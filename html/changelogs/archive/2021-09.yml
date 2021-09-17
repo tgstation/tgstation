@@ -512,3 +512,16 @@
   - balance: 'The cyborg emergency reboot module is now reusable. sound: The cyborg
       emergency reboot module will now make a different sound when rebooting AI shells
       or borgs without a ghost.'
+2021-09-17:
+  JohnFulpWillard:
+  - bugfix: Malf AI's who shunt onto an APC can once again be tracked by the nuke
+      disk pinpointer.
+  Watermelon914:
+  - admin: Adds the signal handler circuit component.
+  - qol: Big dropdowns on the integrated circuit ui will now expand when opened.
+  - bugfix: Fixed any ports returning a string if set to the value of 0.
+  - admin: Admins can now save custom shells from integrated circuits.
+  Zytolg:
+  - bugfix: Removes the spare stool from the Icebox Theater.
+  ninjanomnom:
+  - bugfix: Shamebrero and maybe some other greyscale icons flashing have been fixed
