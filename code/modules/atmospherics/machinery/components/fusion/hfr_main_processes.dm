@@ -54,19 +54,20 @@
 	soundloop.volume = clamp((power_level + 1) * 8, 0, 50)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_damageheal(delta_time)
-	/*
-	 *Storing variables such as gas mixes, temperature, volume, moles
-	 */
-
+	// Archive current health for damage cap purposes
 	critical_threshold_proximity_archived = critical_threshold_proximity
+
+	// If we're operating at an extreme power level, take increasing damage for the amount of fusion mass over a low threshold
 	if(power_level >= HYPERTORUS_OVERFULL_MIN_POWER_LEVEL)
 		var/overfull_damage_taken = HYPERTORUS_OVERFULL_MOLAR_SLOPE * internal_fusion.total_moles() + HYPERTORUS_OVERFULL_TEMPERATURE_SLOPE * coolant_temperature + HYPERTORUS_OVERFULL_CONSTANT
 		critical_threshold_proximity = max(critical_threshold_proximity + max(overfull_damage_taken * delta_time, 0), 0)
 
+	// If we're running on a thin fusion mix, heal up
 	if(internal_fusion.total_moles() < HYPERTORUS_SUBCRITICAL_MOLES || power_level <= 5)
 		var/subcritical_heal_restore = (internal_fusion.total_moles() - HYPERTORUS_SUBCRITICAL_MOLES) / HYPERTORUS_SUBCRITICAL_SCALE
 		critical_threshold_proximity = max(critical_threshold_proximity + min(subcritical_heal_restore * delta_time, 0), 0)
 
+	// If coolant is sufficiently cold, heal up
 	if(internal_fusion.total_moles() > 0 && (airs[1].total_moles() && coolant_temperature < HYPERTORUS_COLD_COOLANT_THRESHOLD) || power_level <= 4)
 		var/cold_coolant_heal_restore = log(10, max(coolant_temperature, 1) * HYPERTORUS_COLD_COOLANT_SCALE) - (HYPERTORUS_COLD_COOLANT_MAX_RESTORE * 2)
 		critical_threshold_proximity = max(critical_threshold_proximity + min(cold_coolant_heal_restore * delta_time, 0), 0)
@@ -76,6 +77,7 @@
 	// Apply damage cap
 	critical_threshold_proximity = min(critical_threshold_proximity_archived + (delta_time * DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
 
+	// If we have a preposterous amount of mass in the fusion mix, things get bad extremely fast
 	if(internal_fusion.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES)
 		var/hypercritical_damage_taken = max((internal_fusion.total_moles() - HYPERTORUS_HYPERCRITICAL_MOLES) * HYPERTORUS_HYPERCRITICAL_SCALE, 0)
 		critical_threshold_proximity += min(hypercritical_damage_taken, HYPERTORUS_HYPERCRITICAL_MIN_DAMAGE) * delta_time
