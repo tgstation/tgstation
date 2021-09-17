@@ -169,5 +169,18 @@ SUBSYSTEM_DEF(pois)
 
 	return pois
 
+/// Returns TRUE if potential_poi is in certain POI lists, making it a valid POI. If include_lobby is TRUE, it also considers the lobby_points_of_interest list when checking for a valid POI.
+/datum/controller/subsystem/pois/proc/is_valid_poi(atom/potential_poi, var/include_lobby = FALSE)
+	if(potential_poi in mob_points_of_interest)
+		return TRUE
+
+	if(potential_poi in other_points_of_interest)
+		return TRUE
+
+	if(include_lobby && (potential_poi in lobby_points_of_interest))
+		return TRUE
+
+	return FALSE
+
 #undef POI_MOBS
 #undef POI_OTHER
