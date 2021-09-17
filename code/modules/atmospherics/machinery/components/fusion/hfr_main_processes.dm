@@ -28,7 +28,7 @@
 	var/assumed_delta_time = 0.5
 	play_ambience()
 	process_damageheal(assumed_delta_time)
-	check_spill()
+	check_spill(assumed_delta_time)
 	check_alert()
 
 	if(!check_power_use())
@@ -80,29 +80,49 @@
 		var/hypercritical_damage_taken = max((internal_fusion.total_moles() - HYPERTORUS_HYPERCRITICAL_MOLES) * HYPERTORUS_HYPERCRITICAL_SCALE, 0)
 		critical_threshold_proximity += min(hypercritical_damage_taken, HYPERTORUS_HYPERCRITICAL_MIN_DAMAGE) * delta_time
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_spill()
-	if(moderator_internal.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES && !check_cracked_parts())
-		var/obj/machinery/atmospherics/components/unary/hypertorus/part = create_crack()
-		if(moderator_internal.return_pressure() >= 10000 && moderator_internal.return_pressure() < 12000)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_spill(delta_time)
+	var/obj/machinery/atmospherics/components/unary/hypertorus/cracked_part = check_cracked_parts()
+	if (!cracked_part)
+		if (moderator_internal.total_moles() < HYPERTORUS_HYPERCRITICAL_MOLES)
+			return
+		cracked_part = create_crack()
+		// See if we do anything in the initial rupture
+		if (moderator_internal.return_pressure() < HYPERTORUS_MEDIUM_SPILL_PRESSURE)
+			return
+		if (moderator_internal.return_pressure() < HYPERTORUS_STRONG_SPILL_PRESSURE)
+			// Medium explosion on initial rupture
 			explosion(
-				origin = part,
+				origin = cracked_part,
 				devastation_range = 0,
 				heavy_impact_range = 0,
 				light_impact_range = 1,
 				flame_range = 3,
 				flash_range = 3
 				)
-			spill_gases(part, moderator_internal, ratio = 0.25)
-		else if(moderator_internal.return_pressure() >= 12000)
-			explosion(
-				origin = part,
-				devastation_range = 0,
-				heavy_impact_range = 1,
-				light_impact_range = 3,
-				flame_range = 5,
-				flash_range = 5
-				)
-			spill_gases(part, moderator_internal, ratio = 0.75)
+			spill_gases(cracked_part, moderator_internal, ratio = HYPERTORUS_MEDIUM_SPILL_INITIAL)
+			return
+		// Enough pressure for a strong explosion. Oh dear, oh dear.
+		explosion(
+			origin = cracked_part,
+			devastation_range = 0,
+			heavy_impact_range = 1,
+			light_impact_range = 3,
+			flame_range = 5,
+			flash_range = 5
+			)
+		spill_gases(cracked_part, moderator_internal, ratio = HYPERTORUS_STRONG_SPILL_INITIAL)
+		return
+	// We have an existing crack
+	if (moderator_internal.return_pressure() < HYPERTORUS_MEDIUM_SPILL_PRESSURE)
+		// Not high pressure, but can still leak
+		if (prob(HYPERTORUS_WEAK_SPILL_CHANCE))
+			spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - HYPERTORUS_WEAK_SPILL_RATE) ** delta_time)
+		return
+	// Lots of gas in here, out we go
+	if (moderator_internal.return_pressure() < HYPERTORUS_STRONG_SPILL_PRESSURE)
+		spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - HYPERTORUS_MEDIUM_SPILL_RATE) ** delta_time)
+		return
+	spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - HYPERTORUS_STRONG_SPILL_RATE) ** delta_time)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_internal_cooling(delta_time)
 	if(moderator_internal.total_moles() > 0 && internal_fusion.total_moles() > 0)

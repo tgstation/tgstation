@@ -449,8 +449,8 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_cracked_parts()
 	for(var/obj/machinery/atmospherics/components/unary/hypertorus/part in machine_parts)
 		if(part.cracked)
-			return TRUE
-	return FALSE
+			return part
+	return null
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/create_crack()
 	var/obj/machinery/atmospherics/components/unary/hypertorus/part = pick(machine_parts)

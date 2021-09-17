@@ -118,6 +118,24 @@
 // Take at least this much damage per second
 #define HYPERTORUS_HYPERCRITICAL_MIN_DAMAGE 20
 
+// If the moderator goes hypercritical, it cracks and starts to spill
+// If our pressure is weak, it can still spill, just weakly and infrequently
+// Even a small amount is still extremely hazardous with fusion temperatures
+#define HYPERTORUS_WEAK_SPILL_RATE 0.0005
+#define HYPERTORUS_WEAK_SPILL_CHANCE 1
+// Start spilling superhot moderator gas when over this pressure threshold
+#define HYPERTORUS_MEDIUM_SPILL_PRESSURE 10000
+// How much should we spill initially?
+#define HYPERTORUS_MEDIUM_SPILL_INITIAL 0.25
+// How much of the moderator mix should we spill per second until mended?
+#define HYPERTORUS_MEDIUM_SPILL_RATE 0.01
+// If the moderator gas goes over this threshold, REALLY spill it
+#define HYPERTORUS_STRONG_SPILL_PRESSURE 12000
+// How much should we spill initially?
+#define HYPERTORUS_STRONG_SPILL_INITIAL 0.75
+// How much of the moderator mix should we spill per second until mended?
+#define HYPERTORUS_STRONG_SPILL_RATE 0.05
+
 
 //
 // Explosion flags for use in fuel recipes
