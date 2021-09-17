@@ -194,8 +194,7 @@
 		internal_fusion.merge(fuel_port.remove_specific(gas_type, fuel_injection_rate * delta_time * 2 / length(selected_fuel.requirements)))
 		linked_input.update_parents()
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/process(delta_time)
-	fusion_process(delta_time)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_deconstructable()
 	if(!active)
 		return
 	if(power_level > 0)
@@ -214,6 +213,10 @@
 		linked_interface.fusion_started = FALSE
 		for(var/obj/machinery/hypertorus/corner/corner in corners)
 			corner.fusion_started = FALSE
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/process(delta_time)
+	fusion_process(delta_time)
+	check_deconstructable()
 
 /**
  * Called by process()
