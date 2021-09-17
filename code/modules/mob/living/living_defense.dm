@@ -426,7 +426,7 @@
 	return TRUE
 
 //called when the mob receives a bright flash
-/mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 2.5 SECONDS)
+/mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash, length = 2.5 SECONDS)
 	if(HAS_TRAIT(src, TRAIT_NOFLASH))
 		return FALSE
 	if(get_eye_protection() >= intensity)
@@ -438,7 +438,7 @@
 	// it absolutely isn't an ideal solution since sudden flashes to black can apparently still trigger epilepsy, but byond apparently doesn't let you freeze screens
 	// and this is apparently at least less likely to trigger issues than a full white/static flash
 	if(client?.prefs?.read_preference(/datum/preference/toggle/darkened_flash))
-		type = /atom/movable/screen/fullscreen/flash/black
+		type = /obj/screen/fullscreen/flash/black
 
 	overlay_fullscreen("flash", type)
 	addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", length), length)

@@ -55,21 +55,21 @@
 	var/mutable_appearance/eye_lights
 
 // ------------------------------------------ Hud
-	var/atom/movable/screen/inv1 = null
-	var/atom/movable/screen/inv2 = null
-	var/atom/movable/screen/inv3 = null
-	var/atom/movable/screen/hands = null
+	var/obj/screen/inv1 = null
+	var/obj/screen/inv2 = null
+	var/obj/screen/inv3 = null
+	var/obj/screen/hands = null
 
 	///Used to determine whether they have the module menu shown or not
 	var/shown_robot_modules = FALSE
-	var/atom/movable/screen/robot_modules_background
+	var/obj/screen/robot_modules_background
 
 	///Lamp button reference
-	var/atom/movable/screen/robot/lamp/lampButton
+	var/obj/screen/robot/lamp/lampButton
 
 	///The reference to the built-in tablet that borgs carry.
 	var/obj/item/modular_computer/tablet/integrated/modularInterface
-	var/atom/movable/screen/robot/modPC/interfaceButton
+	var/obj/screen/robot/modPC/interfaceButton
 
 	var/sight_mode = 0
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD)

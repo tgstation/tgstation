@@ -389,7 +389,7 @@ Difficulty: Extremely Hard
 	id = "ice_block_talisman"
 	duration = 4 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
-	alert_type = /atom/movable/screen/alert/status_effect/ice_block_talisman
+	alert_type = /obj/screen/alert/status_effect/ice_block_talisman
 	/// Stored icon overlay for the hit mob, removed when effect is removed
 	var/icon/cube
 
@@ -398,7 +398,7 @@ Difficulty: Extremely Hard
 		duration = set_duration
 	return ..()
 
-/atom/movable/screen/alert/status_effect/ice_block_talisman
+/obj/screen/alert/status_effect/ice_block_talisman
 	name = "Frozen Solid"
 	desc = "You're frozen inside an ice cube, and cannot move!"
 	icon_state = "frozen"

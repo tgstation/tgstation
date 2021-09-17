@@ -645,7 +645,7 @@
 	var/severity = 0
 	var/healthpercent = (health/maxHealth) * 100
 	if(hud_used?.healthdoll) //to really put you in the boots of a simplemob
-		var/atom/movable/screen/healthdoll/living/livingdoll = hud_used.healthdoll
+		var/obj/screen/healthdoll/living/livingdoll = hud_used.healthdoll
 		switch(healthpercent)
 			if(100 to INFINITY)
 				severity = 0
@@ -671,7 +671,7 @@
 			livingdoll.add_filter("mob_shape_mask", 1, alpha_mask_filter(icon = mob_mask))
 			livingdoll.add_filter("inset_drop_shadow", 2, drop_shadow_filter(size = -1))
 	if(severity > 0)
-		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
+		overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
 	else
 		clear_fullscreen("brute")
 
@@ -978,19 +978,19 @@
 	. = ..()
 	if(!SSticker.HasRoundStarted())
 		return
-	var/was_weightless = alerts["gravity"] && istype(alerts["gravity"], /atom/movable/screen/alert/weightless)
+	var/was_weightless = alerts["gravity"] && istype(alerts["gravity"], /obj/screen/alert/weightless)
 	if(has_gravity)
 		if(has_gravity == 1)
 			clear_alert("gravity")
 		else
 			if(has_gravity >= GRAVITY_DAMAGE_THRESHOLD)
-				throw_alert("gravity", /atom/movable/screen/alert/veryhighgravity)
+				throw_alert("gravity", /obj/screen/alert/veryhighgravity)
 			else
-				throw_alert("gravity", /atom/movable/screen/alert/highgravity)
+				throw_alert("gravity", /obj/screen/alert/highgravity)
 		if(was_weightless)
 			REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
 	else
-		throw_alert("gravity", /atom/movable/screen/alert/weightless)
+		throw_alert("gravity", /obj/screen/alert/weightless)
 		if(!was_weightless)
 			ADD_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
 
@@ -1387,7 +1387,7 @@
 		src.visible_message(span_warning("[src] catches fire!"), \
 						span_userdanger("You're set on fire!"))
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
-		throw_alert("fire", /atom/movable/screen/alert/fire)
+		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
 		SEND_SIGNAL(src, COMSIG_LIVING_IGNITED,src)
 		return TRUE

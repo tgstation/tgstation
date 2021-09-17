@@ -67,7 +67,7 @@
 	/// Either FALSE, [EMISSIVE_BLOCK_GENERIC], or [EMISSIVE_BLOCK_UNIQUE]
 	var/blocks_emissive = FALSE
 	///Internal holder for emissive blocker object, do not use directly use blocks_emissive
-	var/atom/movable/emissive_blocker/em_block
+	var/obj/emissive_blocker/em_block
 
 	///Used for the calculate_adjacencies proc for icon smoothing.
 	var/can_be_unanchored = FALSE
@@ -86,7 +86,7 @@
 	var/contents_pressure_protection = 0
 
 
-/atom/movable/Initialize(mapload)
+/obj/Initialize(mapload)
 	. = ..()
 	switch(blocks_emissive)
 		if(EMISSIVE_BLOCK_GENERIC)
@@ -108,7 +108,7 @@
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE)
 
 
-/atom/movable/Destroy(force)
+/obj/Destroy(force)
 	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
 	QDEL_NULL(em_block)
@@ -164,7 +164,7 @@
 			em_block = new(src, render_target)
 		return em_block
 
-/atom/movable/update_overlays()
+/obj/update_overlays()
 	. = ..()
 	var/emissive_block = update_emissive_block()
 	if(emissive_block)
@@ -213,7 +213,7 @@
 	return T.zPassOut(src, direction, destination) && destination.zPassIn(src, direction, T)
 
 
-/atom/movable/vv_edit_var(var_name, var_value)
+/obj/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("step_x" = TRUE, "step_y" = TRUE, "step_size" = TRUE, "bounds" = TRUE)
 	var/static/list/careful_edits = list("bound_x" = TRUE, "bound_y" = TRUE, "bound_width" = TRUE, "bound_height" = TRUE)
 	if(banned_edits[var_name])
@@ -383,7 +383,7 @@
 // Here's where we rewrite how byond handles movement except slightly different
 // To be removed on step_ conversion
 // All this work to prevent a second bump
-/atom/movable/Move(atom/newloc, direction, glide_size_override = 0)
+/obj/Move(atom/newloc, direction, glide_size_override = 0)
 	. = FALSE
 	if(!newloc || newloc == loc)
 		return
@@ -457,7 +457,7 @@
 
 ////////////////////////////////////////
 
-/atom/movable/Move(atom/newloc, direct, glide_size_override = 0)
+/obj/Move(atom/newloc, direct, glide_size_override = 0)
 	var/atom/movable/pullee = pulling
 	var/turf/T = loc
 	if(!moving_from_pull)
@@ -587,14 +587,14 @@
 
 // Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
 // You probably want CanPass()
-/atom/movable/Cross(atom/movable/AM)
+/obj/Cross(atom/movable/AM)
 	. = TRUE
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSS, AM)
 	SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSS_OVER, src)
 	return CanPass(AM, get_dir(src, AM))
 
 ///default byond proc that is deprecated for us in lieu of signals. do not call
-/atom/movable/Crossed(atom/movable/AM, oldloc)
+/obj/Crossed(atom/movable/AM, oldloc)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	CRASH("atom/movable/Crossed() was called!")
 
@@ -618,7 +618,7 @@
  * replacement is [`/datum/element/connect_loc`] while hooking onto
  * [`COMSIG_ATOM_EXIT`].
  */
-/atom/movable/Uncross()
+/obj/Uncross()
 	SHOULD_NOT_OVERRIDE(TRUE)
 	CRASH("Uncross() should not be being called, please read the doc-comment for it for why.")
 
@@ -628,11 +628,11 @@
  * this is wasteful since the vast majority of objects do not use Uncrossed
  * use connect_loc to register to COMSIG_ATOM_EXITED instead
  */
-/atom/movable/Uncrossed(atom/movable/AM)
+/obj/Uncrossed(atom/movable/AM)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	CRASH("/atom/movable/Uncrossed() was called")
+	CRASH("/obj/Uncrossed() was called")
 
-/atom/movable/Bump(atom/A)
+/obj/Bump(atom/A)
 	if(!A)
 		CRASH("Bump was called with no argument.")
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, A)
@@ -644,7 +644,7 @@
 			return
 	A.Bumped(src)
 
-/atom/movable/Exited(atom/movable/gone, direction)
+/obj/Exited(atom/movable/gone, direction)
 	. = ..()
 
 	if(LAZYLEN(gone.important_recursive_contents))
@@ -653,7 +653,7 @@
 			for(var/atom/movable/location as anything in nested_locs)
 				LAZYREMOVEASSOC(location.important_recursive_contents, channel, gone.important_recursive_contents[channel])
 
-/atom/movable/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/obj/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 
 	if(LAZYLEN(arrived.important_recursive_contents))
@@ -816,7 +816,7 @@
 	if(!(impact_signal && (impact_signal & COMPONENT_MOVABLE_IMPACT_NEVERMIND))) // in case a signal interceptor broke or deleted the thing before we could process our hit
 		return hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
 
-/atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum)
+/obj/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum)
 	if(!anchored && hitpush && (!throwingdatum || (throwingdatum.force >= (move_resist * MOVE_FORCE_PUSH_RATIO))))
 		step(src, AM.dir)
 	..()
@@ -939,7 +939,7 @@
 /atom/movable/proc/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	return FALSE
 
-/atom/movable/CanAllowThrough(atom/movable/mover, border_dir)
+/obj/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(mover in buckled_mobs)
 		return TRUE
@@ -1049,7 +1049,7 @@
 	animate(time = 1)
 	animate(alpha = 0, time = 3, easing = CIRCULAR_EASING|EASE_OUT)
 
-/atom/movable/vv_get_dropdown()
+/obj/vv_get_dropdown()
 	. = ..()
 	. += "<option value='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(src)]'>Follow</option>"
 	. += "<option value='?_src_=holder;[HrefToken()];admingetmovable=[REF(src)]'>Get</option>"
@@ -1194,12 +1194,12 @@
 /atom/movable/proc/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
 	return AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(), cooldown)
 
-/atom/movable/vv_get_dropdown()
+/obj/vv_get_dropdown()
 	. = ..()
 	VV_DROPDOWN_OPTION(VV_HK_DEADCHAT_PLAYS, "Start/Stop Deadchat Plays")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_FANTASY_AFFIX, "Add Fantasy Affix")
 
-/atom/movable/vv_do_topic(list/href_list)
+/obj/vv_do_topic(list/href_list)
 	. = ..()
 
 	if(!.)

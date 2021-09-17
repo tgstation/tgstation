@@ -5,7 +5,7 @@
 	/// then the component will delete itself.
 	var/datum/admin_help/ticket
 
-	var/atom/movable/screen/admin_popup/admin_popup
+	var/obj/screen/admin_popup/admin_popup
 
 /datum/component/admin_popup/Initialize(datum/admin_help/ticket)
 	if (!istype(parent, /client))
@@ -57,7 +57,7 @@
 	qdel(src)
 
 /// The UI element for admin popups
-/atom/movable/screen/admin_popup
+/obj/screen/admin_popup
 	icon = null
 	icon_state = null
 	plane = ABOVE_HUD_PLANE
@@ -83,20 +83,20 @@
 	/// The `world.time` when the last color update occurred.
 	var/last_update_time = 0
 
-/atom/movable/screen/admin_popup/New(loc, ...)
+/obj/screen/admin_popup/New(loc, ...)
 	. = ..()
 
 	START_PROCESSING(SSobj, src)
 	update_text()
 
-/atom/movable/screen/admin_popup/Destroy()
+/obj/screen/admin_popup/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/atom/movable/screen/admin_popup/process(delta_time)
+/obj/screen/admin_popup/process(delta_time)
 	update_text()
 
-/atom/movable/screen/admin_popup/proc/update_text()
+/obj/screen/admin_popup/proc/update_text()
 	// Even if processing time changes, we want this to remain slow.
 	// We want to pester them into reading their ticket, not give them a seizure!
 	if (world.time - last_update_time < 2 SECONDS)

@@ -339,8 +339,8 @@
 		if (!M.anchored && !M.pulledby && M.last_high_pressure_movement_air_cycle < SSair.times_fired)
 			M.experience_pressure_difference(pressure_difference, pressure_direction)
 
-/atom/movable/var/pressure_resistance = 10
-/atom/movable/var/last_high_pressure_movement_air_cycle = 0
+/obj/var/pressure_resistance = 10
+/obj/var/last_high_pressure_movement_air_cycle = 0
 
 /atom/movable/proc/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
 	var/const/PROBABILITY_OFFSET = 25

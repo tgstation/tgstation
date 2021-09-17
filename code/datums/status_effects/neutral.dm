@@ -39,7 +39,7 @@
 	get_kill()
 	. = ..()
 
-/atom/movable/screen/alert/status_effect/in_love
+/obj/screen/alert/status_effect/in_love
 	name = "In Love"
 	desc = "You feel so wonderfully in love!"
 	icon_state = "in_love"
@@ -48,7 +48,7 @@
 	id = "in_love"
 	duration = -1
 	status_type = STATUS_EFFECT_UNIQUE
-	alert_type = /atom/movable/screen/alert/status_effect/in_love
+	alert_type = /obj/screen/alert/status_effect/in_love
 	var/hearts
 
 /datum/status_effect/in_love/on_creation(mob/living/new_owner, mob/living/date)
@@ -122,9 +122,9 @@
 	duration = -1
 	tick_interval = -1
 	status_type = STATUS_EFFECT_MULTIPLE
-	alert_type = /atom/movable/screen/alert/status_effect/heldup
+	alert_type = /obj/screen/alert/status_effect/heldup
 
-/atom/movable/screen/alert/status_effect/heldup
+/obj/screen/alert/status_effect/heldup
 	name = "Held Up"
 	desc = "Making any sudden moves would probably be a bad idea!"
 	icon_state = "aimed"
@@ -143,9 +143,9 @@
 	duration = -1
 	tick_interval = -1
 	status_type = STATUS_EFFECT_UNIQUE
-	alert_type = /atom/movable/screen/alert/status_effect/holdup
+	alert_type = /obj/screen/alert/status_effect/holdup
 
-/atom/movable/screen/alert/status_effect/holdup
+/obj/screen/alert/status_effect/holdup
 	name = "Holding Up"
 	desc = "You're currently pointing a gun at someone."
 	icon_state = "aimed"
@@ -197,7 +197,7 @@
 
 /// Hook up the specified carbon mob for possible high-fiving, give them the alert and signals and all
 /datum/status_effect/high_fiving/proc/register_candidate(mob/living/carbon/possible_candidate)
-	var/atom/movable/screen/alert/highfive/G = possible_candidate.throw_alert("[owner]", /atom/movable/screen/alert/highfive)
+	var/obj/screen/alert/highfive/G = possible_candidate.throw_alert("[owner]", /obj/screen/alert/highfive)
 	if(!G)
 		return
 	LAZYADD(possible_takers, possible_candidate)
@@ -318,14 +318,14 @@
 	duration = -1
 	tick_interval = -1
 	status_type = STATUS_EFFECT_UNIQUE
-	alert_type = /atom/movable/screen/alert/status_effect/surrender
+	alert_type = /obj/screen/alert/status_effect/surrender
 
-/atom/movable/screen/alert/status_effect/surrender
+/obj/screen/alert/status_effect/surrender
 	name = "Surrender"
 	desc = "Looks like you're in trouble now, bud. Click here to surrender. (Warning: You will be incapacitated.)"
 	icon_state = "surrender"
 
-/atom/movable/screen/alert/status_effect/surrender/Click(location, control, params)
+/obj/screen/alert/status_effect/surrender/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return

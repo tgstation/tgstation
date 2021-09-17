@@ -115,7 +115,7 @@
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
 	id = "sleeping"
-	alert_type = /atom/movable/screen/alert/status_effect/asleep
+	alert_type = /obj/screen/alert/status_effect/asleep
 	needs_update_stat = TRUE
 	tick_interval = 2 SECONDS
 	var/mob/living/carbon/carbon_owner
@@ -188,7 +188,7 @@
 	if(prob(2) && owner.health > owner.crit_threshold)
 		owner.emote("snore")
 
-/atom/movable/screen/alert/status_effect/asleep
+/obj/screen/alert/status_effect/asleep
 	name = "Asleep"
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
@@ -198,7 +198,7 @@
 	id = "stasis"
 	duration = -1
 	tick_interval = 10
-	alert_type = /atom/movable/screen/alert/status_effect/stasis
+	alert_type = /obj/screen/alert/status_effect/stasis
 	var/last_dead_time
 
 /datum/status_effect/grouped/stasis/proc/update_time_of_death()
@@ -238,7 +238,7 @@
 	update_time_of_death()
 	return ..()
 
-/atom/movable/screen/alert/status_effect/stasis
+/obj/screen/alert/status_effect/stasis
 	name = "Stasis"
 	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
 	icon_state = "stasis"
@@ -250,7 +250,7 @@
 	id = "strandling"
 	examine_text = "SUBJECTPRONOUN seems to be being choked by some durathread strands. You may be able to <b>cut</b> them off."
 	status_type = STATUS_EFFECT_UNIQUE
-	alert_type = /atom/movable/screen/alert/status_effect/strandling
+	alert_type = /obj/screen/alert/status_effect/strandling
 
 /datum/status_effect/strandling/on_apply()
 	ADD_TRAIT(owner, TRAIT_MAGIC_CHOKE, STATUS_EFFECT_TRAIT)
@@ -260,13 +260,13 @@
 	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, STATUS_EFFECT_TRAIT)
 	return ..()
 
-/atom/movable/screen/alert/status_effect/strandling
+/obj/screen/alert/status_effect/strandling
 	name = "Choking strand"
 	desc = "A magical strand of Durathread is wrapped around your neck, preventing you from breathing! Click this icon to remove the strand."
 	icon_state = "his_grace"
 	alerttooltipstyle = "hisgrace"
 
-/atom/movable/screen/alert/status_effect/strandling/Click(location, control, params)
+/obj/screen/alert/status_effect/strandling/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
@@ -302,9 +302,9 @@
 	id = "his_wrath"
 	duration = -1
 	tick_interval = 4
-	alert_type = /atom/movable/screen/alert/status_effect/his_wrath
+	alert_type = /obj/screen/alert/status_effect/his_wrath
 
-/atom/movable/screen/alert/status_effect/his_wrath
+/obj/screen/alert/status_effect/his_wrath
 	name = "His Wrath"
 	desc = "You fled from His Grace instead of feeding Him, and now you suffer."
 	icon_state = "his_grace"
@@ -576,7 +576,7 @@
 /datum/status_effect/necropolis_curse/proc/apply_curse(set_curse)
 	curse_flags |= set_curse
 	if(curse_flags & CURSE_BLINDING)
-		owner.overlay_fullscreen("curse", /atom/movable/screen/fullscreen/curse, 1)
+		owner.overlay_fullscreen("curse", /obj/screen/fullscreen/curse, 1)
 
 /datum/status_effect/necropolis_curse/proc/remove_curse(remove_curse)
 	if(remove_curse & CURSE_BLINDING)
@@ -654,9 +654,9 @@
 	tick_interval = 10
 	examine_text = "<span class='warning'>SUBJECTPRONOUN seems slow and unfocused.</span>"
 	var/stun = TRUE
-	alert_type = /atom/movable/screen/alert/status_effect/trance
+	alert_type = /obj/screen/alert/status_effect/trance
 
-/atom/movable/screen/alert/status_effect/trance
+/obj/screen/alert/status_effect/trance
 	name = "Trance"
 	desc = "Everything feels so distant, and you can feel your thoughts forming loops inside your head..."
 	icon_state = "high"
@@ -763,7 +763,7 @@
 	id = "convulsing"
 	duration = 150
 	status_type = STATUS_EFFECT_REFRESH
-	alert_type = /atom/movable/screen/alert/status_effect/convulsing
+	alert_type = /obj/screen/alert/status_effect/convulsing
 
 /datum/status_effect/convulsing/on_creation(mob/living/zappy_boy)
 	. = ..()
@@ -777,7 +777,7 @@
 			H.visible_message(span_notice("[H]'s hand convulses, and they drop their [I.name]!"),span_userdanger("Your hand convulses violently, and you drop what you were holding!"))
 			H.jitteriness += 5
 
-/atom/movable/screen/alert/status_effect/convulsing
+/obj/screen/alert/status_effect/convulsing
 	name = "Shaky Hands"
 	desc = "You've been zapped with something and your hands can't stop shaking! You can't seem to hold on to anything."
 	icon_state = "convulsing"
@@ -786,7 +786,7 @@
 	id = "dna_melt"
 	duration = 600
 	status_type = STATUS_EFFECT_REPLACE
-	alert_type = /atom/movable/screen/alert/status_effect/dna_melt
+	alert_type = /obj/screen/alert/status_effect/dna_melt
 	var/kill_either_way = FALSE //no amount of removing mutations is gonna save you now
 
 /datum/status_effect/dna_melt/on_creation(mob/living/new_owner, set_duration)
@@ -800,7 +800,7 @@
 	var/mob/living/carbon/human/H = owner
 	H.something_horrible(kill_either_way)
 
-/atom/movable/screen/alert/status_effect/dna_melt
+/obj/screen/alert/status_effect/dna_melt
 	name = "Genetic Breakdown"
 	desc = "I don't feel so good. Your body can't handle the mutations! You have one minute to remove your mutations, or you will be met with a horrible fate."
 	icon_state = "dna_melt"
@@ -810,7 +810,7 @@
 	duration = 100
 	status_type = STATUS_EFFECT_REPLACE
 	tick_interval = 1
-	alert_type = /atom/movable/screen/alert/status_effect/go_away
+	alert_type = /obj/screen/alert/status_effect/go_away
 	var/direction
 
 /datum/status_effect/go_away/on_creation(mob/living/new_owner, set_duration)
@@ -823,7 +823,7 @@
 	var/turf/T = get_step(owner, direction)
 	owner.forceMove(T)
 
-/atom/movable/screen/alert/status_effect/go_away
+/obj/screen/alert/status_effect/go_away
 	name = "TO THE STARS AND BEYOND!"
 	desc = "I must go, my people need me!"
 	icon_state = "high"
@@ -972,7 +972,7 @@
 /datum/status_effect/ants
 	id = "ants"
 	status_type = STATUS_EFFECT_REFRESH
-	alert_type = /atom/movable/screen/alert/status_effect/ants
+	alert_type = /obj/screen/alert/status_effect/ants
 	duration = 2 MINUTES //Keeping the normal timer makes sure people can't somehow dump 300+ ants on someone at once so they stay there for like 30 minutes. Max w/ 1 dump is 57.6 brute.
 	examine_text = "<span class='warning'>SUBJECTPRONOUN is covered in ants!</span>"
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
@@ -1039,12 +1039,12 @@
 	if(ants_remaining <= 0 || victim.stat >= HARD_CRIT)
 		victim.remove_status_effect(STATUS_EFFECT_ANTS) //If this person has no more ants on them or are dead, they are no longer affected.
 
-/atom/movable/screen/alert/status_effect/ants
+/obj/screen/alert/status_effect/ants
 	name = "Ants!"
 	desc = "<span class='warning'>JESUS FUCKING CHRIST! CLICK TO GET THOSE THINGS OFF!</span>"
 	icon_state = "antalert"
 
-/atom/movable/screen/alert/status_effect/ants/Click()
+/obj/screen/alert/status_effect/ants/Click()
 	var/mob/living/living = owner
 	if(!istype(living) || !living.can_resist() || living != owner)
 		return
@@ -1059,9 +1059,9 @@
 	id = "ghoul"
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = -1
-	alert_type = /atom/movable/screen/alert/status_effect/ghoul
+	alert_type = /obj/screen/alert/status_effect/ghoul
 
-/atom/movable/screen/alert/status_effect/ghoul
+/obj/screen/alert/status_effect/ghoul
 	name = "Flesh Servant"
 	desc = "You are a Ghoul! A eldritch monster reanimated to serve its master."
 	icon_state = "mind_control"
@@ -1092,11 +1092,11 @@
 
 /datum/status_effect/freezing_blast
 	id = "freezing_blast"
-	alert_type = /atom/movable/screen/alert/status_effect/freezing_blast
+	alert_type = /obj/screen/alert/status_effect/freezing_blast
 	duration = 5 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 
-/atom/movable/screen/alert/status_effect/freezing_blast
+/obj/screen/alert/status_effect/freezing_blast
 	name = "Freezing Blast"
 	desc = "You've been struck by a freezing blast! Your body moves more slowly!"
 	icon_state = "frozen"

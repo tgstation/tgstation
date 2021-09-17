@@ -24,6 +24,6 @@
 
 	if(over == picker)
 		INVOKE_ASYNC(picker, /mob/.proc/put_in_hands, source)
-	else if(istype(over, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/Selected_hand = over
+	else if(istype(over, /obj/screen/inventory/hand))
+		var/obj/screen/inventory/hand/Selected_hand = over
 		picker.putItemFromInventoryInHandIfPossible(source, Selected_hand.held_index)

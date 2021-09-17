@@ -95,9 +95,9 @@
 		if((organ_flags & ORGAN_FAILING))
 			eye_owner.become_blind(EYE_DAMAGE)
 		else if(damage > 30)
-			eye_owner.overlay_fullscreen("eye_damage", /atom/movable/screen/fullscreen/impaired, 2)
+			eye_owner.overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
 		else
-			eye_owner.overlay_fullscreen("eye_damage", /atom/movable/screen/fullscreen/impaired, 1)
+			eye_owner.overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
 	//called once since we don't want to keep clearing the screen of eye damage for people who are below 20 damage
 	else if(damaged)
 		damaged = FALSE

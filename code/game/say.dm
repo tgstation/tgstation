@@ -171,7 +171,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/obj/item/radio/radio
 
 INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
-/atom/movable/virtualspeaker/Initialize(mapload, atom/movable/M, _radio)
+/obj/virtualspeaker/Initialize(mapload, atom/movable/M, _radio)
 	. = ..()
 	radio = _radio
 	source = M
@@ -205,11 +205,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 	else  // Unidentifiable mob
 		job = "Unknown"
 
-/atom/movable/virtualspeaker/GetJob()
+/obj/virtualspeaker/GetJob()
 	return job
 
-/atom/movable/virtualspeaker/GetSource()
+/obj/virtualspeaker/GetSource()
 	return source
 
-/atom/movable/virtualspeaker/GetRadio()
+/obj/virtualspeaker/GetRadio()
 	return radio

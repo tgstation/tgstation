@@ -81,10 +81,10 @@
 /atom/proc/IsAutoclickable()
 	return TRUE
 
-/atom/movable/screen/IsAutoclickable()
+/obj/screen/IsAutoclickable()
 	return FALSE
 
-/atom/movable/screen/click_catcher/IsAutoclickable()
+/obj/screen/click_catcher/IsAutoclickable()
 	return TRUE
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)

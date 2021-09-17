@@ -11,7 +11,7 @@
 #define CRYO_BREAKOUT_TIME 30 SECONDS
 
 /// This is a visual helper that shows the occupant inside the cryo cell.
-/atom/movable/visual/cryo_occupant
+/obj/visual/cryo_occupant
 	icon = 'icons/obj/cryogenics.dmi'
 	// Must be tall, otherwise the filter will consider this as a 32x32 tile
 	// and will crop the head off.
@@ -23,7 +23,7 @@
 	/// The current occupant being presented
 	var/mob/living/occupant
 
-/atom/movable/visual/cryo_occupant/Initialize(mapload, obj/machinery/atmospherics/components/unary/cryo_cell/parent)
+/obj/visual/cryo_occupant/Initialize(mapload, obj/machinery/atmospherics/components/unary/cryo_cell/parent)
 	. = ..()
 	// Alpha masking
 	// It will follow this as the animation goes, but that's no problem as the "mask" icon state
@@ -33,7 +33,7 @@
 	RegisterSignal(parent, COMSIG_CRYO_SET_ON, .proc/on_set_on)
 
 /// COMSIG_MACHINERY_SET_OCCUPANT callback
-/atom/movable/visual/cryo_occupant/proc/on_set_occupant(datum/source, mob/living/new_occupant)
+/obj/visual/cryo_occupant/proc/on_set_occupant(datum/source, mob/living/new_occupant)
 	SIGNAL_HANDLER
 
 	if(occupant)
@@ -53,7 +53,7 @@
 	ADD_TRAIT(occupant, TRAIT_FORCED_STANDING, CRYO_TRAIT)
 
 /// COMSIG_CRYO_SET_ON callback
-/atom/movable/visual/cryo_occupant/proc/on_set_on(datum/source, on)
+/obj/visual/cryo_occupant/proc/on_set_on(datum/source, on)
 	SIGNAL_HANDLER
 
 	if(on)
@@ -97,7 +97,7 @@
 	vent_movement = NONE
 
 	/// Visual content - Occupant
-	var/atom/movable/visual/cryo_occupant/occupant_vis
+	var/obj/visual/cryo_occupant/occupant_vis
 
 	var/message_cooldown
 	///Cryo will continue to treat people with 0 damage but existing wounds, but will sound off when damage healing is done in case doctors want to directly treat the wounds instead
@@ -508,7 +508,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	return // we don't see the pipe network while inside cryo.
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/get_remote_view_fullscreens(mob/user)
-	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
+	user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()
 	return FALSE // you can't see the pipe network when inside a cryo cell.

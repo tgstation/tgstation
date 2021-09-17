@@ -240,7 +240,7 @@
 	// Check for virtual speakers (aka hearing a message through a radio)
 	var/atom/movable/originalSpeaker = speaker
 	if (istype(speaker, /atom/movable/virtualspeaker))
-		var/atom/movable/virtualspeaker/v = speaker
+		var/obj/virtualspeaker/v = speaker
 		speaker = v.source
 		spans |= "virtual-speaker"
 

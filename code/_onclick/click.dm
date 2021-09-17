@@ -475,14 +475,14 @@
 			setDir(WEST)
 
 //debug
-/atom/movable/screen/proc/scale_to(x1,y1)
+/obj/screen/proc/scale_to(x1,y1)
 	if(!y1)
 		y1 = x1
 	var/matrix/M = new
 	M.Scale(x1,y1)
 	transform = M
 
-/atom/movable/screen/click_catcher
+/obj/screen/click_catcher
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "catcher"
 	plane = CLICKCATCHER_PLANE
@@ -492,7 +492,7 @@
 #define MAX_SAFE_BYOND_ICON_SCALE_TILES (MAX_SAFE_BYOND_ICON_SCALE_PX / world.icon_size)
 #define MAX_SAFE_BYOND_ICON_SCALE_PX (33 * 32) //Not using world.icon_size on purpose.
 
-/atom/movable/screen/click_catcher/proc/UpdateGreed(view_size_x = 15, view_size_y = 15)
+/obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 15, view_size_y = 15)
 	var/icon/newicon = icon('icons/hud/screen_gen.dmi', "catcher")
 	var/ox = min(MAX_SAFE_BYOND_ICON_SCALE_TILES, view_size_x)
 	var/oy = min(MAX_SAFE_BYOND_ICON_SCALE_TILES, view_size_y)
@@ -507,7 +507,7 @@
 	M.Scale(px/sx, py/sy)
 	transform = M
 
-/atom/movable/screen/click_catcher/Click(location, control, params)
+/obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK) && iscarbon(usr))
 		var/mob/living/carbon/C = usr

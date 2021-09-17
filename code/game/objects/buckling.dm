@@ -13,7 +13,7 @@
 	var/buckle_prevents_pull = FALSE
 
 //Interaction
-/atom/movable/attack_hand(mob/living/user, list/modifiers)
+/obj/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -26,7 +26,7 @@
 			if(user_unbuckle_mob(buckled_mobs[1],user))
 				return TRUE
 
-/atom/movable/attackby(obj/item/W, mob/user, params)
+/obj/attackby(obj/item/W, mob/user, params)
 	if(!can_buckle || !istype(W, /obj/item/riding_offhand) || !user.Adjacent(src))
 		return ..()
 
@@ -39,7 +39,7 @@
 	return mouse_buckle_handling(carried_mob, user)
 
 //literally just the above extension of attack_hand(), but for silicons instead (with an adjacency check, since attack_robot() being called doesn't mean that you're adjacent to something)
-/atom/movable/attack_robot(mob/living/user)
+/obj/attack_robot(mob/living/user)
 	. = ..()
 	if(.)
 		return
@@ -50,7 +50,7 @@
 		else
 			return user_unbuckle_mob(buckled_mobs[1], user)
 
-/atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
+/obj/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
 	return mouse_buckle_handling(M, user)
 
@@ -112,7 +112,7 @@
 		RegisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, .proc/on_set_anchored)
 	M.set_buckled(src)
 	buckled_mobs |= M
-	M.throw_alert("buckled", /atom/movable/screen/alert/buckled)
+	M.throw_alert("buckled", /obj/screen/alert/buckled)
 	M.set_glide_size(glide_size)
 
 	M.Move(loc)

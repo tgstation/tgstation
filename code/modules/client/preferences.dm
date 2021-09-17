@@ -63,7 +63,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/favorite_outfits = list()
 
 	/// A preview of the current character
-	var/atom/movable/screen/character_preview_view/character_preview_view
+	var/obj/screen/character_preview_view/character_preview_view
 
 	/// A list of instantiated middleware
 	var/list/datum/preference_middleware/middleware = list()
@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 		// HACK: Without this the character starts out really tiny because of some BYOND bug.
 		// You can fix it by changing a preference, so let's just forcably update the body to emulate this.
-		addtimer(CALLBACK(character_preview_view, /atom/movable/screen/character_preview_view/proc/update_body), 1 SECONDS)
+		addtimer(CALLBACK(character_preview_view, /obj/screen/character_preview_view/proc/update_body), 1 SECONDS)
 
 /datum/preferences/ui_state(mob/user)
 	return GLOB.always_state
@@ -331,10 +331,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 // This is necessary because you can open the set preferences menu before
 // the atoms SS is done loading.
-INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
+INITIALIZE_IMMEDIATE(/obj/screen/character_preview_view)
 
 /// A preview of a character for use in the preferences menu
-/atom/movable/screen/character_preview_view
+/obj/screen/character_preview_view
 	name = "character_preview"
 	del_on_map_removal = FALSE
 	layer = GAME_PLANE
@@ -351,7 +351,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	/// The client that is watching this view
 	var/client/client
 
-/atom/movable/screen/character_preview_view/Initialize(mapload, datum/preferences/preferences, client/client)
+/obj/screen/character_preview_view/Initialize(mapload, datum/preferences/preferences, client/client)
 	. = ..()
 
 	assigned_map = "character_preview_[REF(src)]"
@@ -359,7 +359,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 
 	src.preferences = preferences
 
-/atom/movable/screen/character_preview_view/Destroy()
+/obj/screen/character_preview_view/Destroy()
 	QDEL_NULL(body)
 
 	for (var/plane_master in plane_masters)
@@ -378,14 +378,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	return ..()
 
 /// Updates the currently displayed body
-/atom/movable/screen/character_preview_view/proc/update_body()
+/obj/screen/character_preview_view/proc/update_body()
 	if (isnull(body))
 		create_body()
 	else
 		body.wipe_state()
 	appearance = preferences.render_new_preview_appearance(body)
 
-/atom/movable/screen/character_preview_view/proc/create_body()
+/obj/screen/character_preview_view/proc/create_body()
 	QDEL_NULL(body)
 
 	body = new
@@ -394,7 +394,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	body.appearance_flags &= ~KEEP_TOGETHER
 
 /// Registers the relevant map objects to a client
-/atom/movable/screen/character_preview_view/proc/register_to_client(client/client)
+/obj/screen/character_preview_view/proc/register_to_client(client/client)
 	QDEL_LIST(plane_masters)
 
 	src.client = client
@@ -402,8 +402,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	if (!client)
 		return
 
-	for (var/plane_master_type in subtypesof(/atom/movable/screen/plane_master))
-		var/atom/movable/screen/plane_master/plane_master = new plane_master_type
+	for (var/plane_master_type in subtypesof(/obj/screen/plane_master))
+		var/obj/screen/plane_master/plane_master = new plane_master_type
 		plane_master.screen_loc = "[assigned_map]:CENTER"
 		client?.screen |= plane_master
 

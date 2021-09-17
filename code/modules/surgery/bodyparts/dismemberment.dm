@@ -229,7 +229,7 @@
 			arm_owner.set_handcuffed(null)
 			arm_owner.update_handcuffed()
 		if(arm_owner.hud_used)
-			var/atom/movable/screen/inventory/hand/R_hand = arm_owner.hud_used.hand_slots["[held_index]"]
+			var/obj/screen/inventory/hand/R_hand = arm_owner.hud_used.hand_slots["[held_index]"]
 			if(R_hand)
 				R_hand.update_appearance()
 		if(arm_owner.gloves)
@@ -247,7 +247,7 @@
 			arm_owner.set_handcuffed(null)
 			arm_owner.update_handcuffed()
 		if(arm_owner.hud_used)
-			var/atom/movable/screen/inventory/hand/L_hand = arm_owner.hud_used.hand_slots["[held_index]"]
+			var/obj/screen/inventory/hand/L_hand = arm_owner.hud_used.hand_slots["[held_index]"]
 			if(L_hand)
 				L_hand.update_appearance()
 		if(arm_owner.gloves)
@@ -333,7 +333,7 @@
 		if(new_limb_owner.dna.species.mutanthands && !is_pseudopart)
 			new_limb_owner.put_in_hand(new new_limb_owner.dna.species.mutanthands(), held_index)
 		if(new_limb_owner.hud_used)
-			var/atom/movable/screen/inventory/hand/hand = new_limb_owner.hud_used.hand_slots["[held_index]"]
+			var/obj/screen/inventory/hand/hand = new_limb_owner.hud_used.hand_slots["[held_index]"]
 			if(hand)
 				hand.update_appearance()
 		new_limb_owner.update_inv_gloves()

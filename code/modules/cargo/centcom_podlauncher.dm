@@ -51,9 +51,9 @@
 	var/obj/structure/closet/supplypod/centcompod/temp_pod //The temporary pod that is modified by this datum, then cloned. The buildObject() clone of this pod is what is launched
 	// Stuff needed to render the map
 	var/map_name
-	var/atom/movable/screen/map_view/cam_screen
+	var/obj/screen/map_view/cam_screen
 	var/list/cam_plane_masters
-	var/atom/movable/screen/background/cam_background
+	var/obj/screen/background/cam_background
 	var/tabIndex = 1
 	var/renderLighting = FALSE
 
@@ -92,8 +92,8 @@
 	cam_screen.del_on_map_removal = TRUE
 	cam_screen.screen_loc = "[map_name]:1,1"
 	cam_plane_masters = list()
-	for(var/plane in subtypesof(/atom/movable/screen/plane_master))
-		var/atom/movable/screen/instance = new plane()
+	for(var/plane in subtypesof(/obj/screen/plane_master))
+		var/obj/screen/instance = new plane()
 		if (!renderLighting && instance.plane == LIGHTING_PLANE)
 			instance.alpha = 100
 		instance.assigned_map = map_name

@@ -48,7 +48,7 @@
 	switch(stat)
 		if(CONSCIOUS, SOFT_CRIT)
 			if(HAS_TRAIT(src, TRAIT_BLIND) || eye_blind)
-				throw_alert("blind", /atom/movable/screen/alert/blind)
+				throw_alert("blind", /obj/screen/alert/blind)
 				do_set_blindness(TRUE)
 			else
 				do_set_blindness(FALSE)
@@ -61,7 +61,7 @@
 ///Proc that handles adding and removing the blindness overlays.
 /mob/proc/do_set_blindness(now_blind)
 	if(now_blind)
-		overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
+		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		// You are blind why should you be able to make out details like color, only shapes near you
 		add_client_colour(/datum/client_colour/monochrome/blind)
 	else
@@ -94,7 +94,7 @@
 /mob/proc/update_eye_blur()
 	if(!client)
 		return
-	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	var/obj/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	if(eye_blurry)
 		game_plane_master_controller.add_filter("eye_blur", 1, gauss_blur_filter(clamp(eye_blurry * 0.1, 0.6, 3)))
 	else

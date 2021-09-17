@@ -257,7 +257,7 @@
 			return
 
 	// Determine the identity information which will be attached to the signal.
-	var/atom/movable/virtualspeaker/speaker = new(null, M, src)
+	var/obj/virtualspeaker/speaker = new(null, M, src)
 
 	// Construct the signal
 	var/datum/signal/subspace/vocal/signal = new(src, freq, speaker, language, message, spans, message_mods)

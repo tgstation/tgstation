@@ -368,7 +368,7 @@
 	if(!environment_air_is_safe() && unsuitable_atmos_damage)
 		adjustHealth(unsuitable_atmos_damage * delta_time)
 		if(unsuitable_atmos_damage > 0)
-			throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
+			throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 	else
 		clear_alert("not_enough_oxy")
 
@@ -380,22 +380,22 @@
 		adjustHealth(unsuitable_cold_damage * delta_time)
 		switch(unsuitable_cold_damage)
 			if(1 to 5)
-				throw_alert("temp", /atom/movable/screen/alert/cold, 1)
+				throw_alert("temp", /obj/screen/alert/cold, 1)
 			if(5 to 10)
-				throw_alert("temp", /atom/movable/screen/alert/cold, 2)
+				throw_alert("temp", /obj/screen/alert/cold, 2)
 			if(10 to INFINITY)
-				throw_alert("temp", /atom/movable/screen/alert/cold, 3)
+				throw_alert("temp", /obj/screen/alert/cold, 3)
 		. = TRUE
 
 	if((bodytemperature > maxbodytemp) && unsuitable_heat_damage)
 		adjustHealth(unsuitable_heat_damage * delta_time)
 		switch(unsuitable_heat_damage)
 			if(1 to 5)
-				throw_alert("temp", /atom/movable/screen/alert/hot, 1)
+				throw_alert("temp", /obj/screen/alert/hot, 1)
 			if(5 to 10)
-				throw_alert("temp", /atom/movable/screen/alert/hot, 2)
+				throw_alert("temp", /obj/screen/alert/hot, 2)
 			if(10 to INFINITY)
-				throw_alert("temp", /atom/movable/screen/alert/hot, 3)
+				throw_alert("temp", /obj/screen/alert/hot, 3)
 		. = TRUE
 
 	if(!.)
@@ -611,7 +611,7 @@
 	var/oindex = active_hand_index
 	active_hand_index = hand_index
 	if(hud_used)
-		var/atom/movable/screen/inventory/hand/H
+		var/obj/screen/inventory/hand/H
 		H = hud_used.hand_slots["[hand_index]"]
 		if(H)
 			H.update_appearance()

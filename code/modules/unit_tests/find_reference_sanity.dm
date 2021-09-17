@@ -2,26 +2,26 @@
 /datum/unit_test/find_reference_sanity
 
 /atom/movable/ref_holder
-	var/atom/movable/ref_test/test
+	var/obj/ref_test/test
 	var/list/test_list = list()
 	var/list/test_assoc_list = list()
 
-/atom/movable/ref_holder/Destroy()
+/obj/ref_holder/Destroy()
 	test = null
 	test_list.Cut()
 	test_assoc_list.Cut()
 	return ..()
 
 /atom/movable/ref_test
-	var/atom/movable/ref_test/self_ref
+	var/obj/ref_test/self_ref
 
-/atom/movable/ref_test/Destroy(force)
+/obj/ref_test/Destroy(force)
 	self_ref = null
 	return ..()
 
 /datum/unit_test/find_reference_sanity/Run()
-	var/atom/movable/ref_test/victim = allocate(/atom/movable/ref_test)
-	var/atom/movable/ref_holder/testbed = allocate(/atom/movable/ref_holder)
+	var/obj/ref_test/victim = allocate(/atom/movable/ref_test)
+	var/obj/ref_holder/testbed = allocate(/atom/movable/ref_holder)
 	SSgarbage.should_save_refs = TRUE
 
 	//Sanity check
@@ -30,8 +30,8 @@
 	SSgarbage.should_save_refs = FALSE
 
 /datum/unit_test/find_reference_baseline/Run()
-	var/atom/movable/ref_test/victim = allocate(/atom/movable/ref_test)
-	var/atom/movable/ref_holder/testbed = allocate(/atom/movable/ref_holder)
+	var/obj/ref_test/victim = allocate(/atom/movable/ref_test)
+	var/obj/ref_holder/testbed = allocate(/atom/movable/ref_holder)
 	SSgarbage.should_save_refs = TRUE
 
 	//Set up for the first round of tests
@@ -47,8 +47,8 @@
 	SSgarbage.should_save_refs = FALSE
 
 /datum/unit_test/find_reference_exotic/Run()
-	var/atom/movable/ref_test/victim = allocate(/atom/movable/ref_test)
-	var/atom/movable/ref_holder/testbed = allocate(/atom/movable/ref_holder)
+	var/obj/ref_test/victim = allocate(/atom/movable/ref_test)
+	var/obj/ref_holder/testbed = allocate(/atom/movable/ref_holder)
 	SSgarbage.should_save_refs = TRUE
 
 	//Second round, bit harder this time
@@ -65,8 +65,8 @@
 	SSgarbage.should_save_refs = FALSE
 
 /datum/unit_test/find_reference_esoteric/Run()
-	var/atom/movable/ref_test/victim = allocate(/atom/movable/ref_test)
-	var/atom/movable/ref_holder/testbed = allocate(/atom/movable/ref_holder)
+	var/obj/ref_test/victim = allocate(/atom/movable/ref_test)
+	var/obj/ref_holder/testbed = allocate(/atom/movable/ref_holder)
 	SSgarbage.should_save_refs = TRUE
 
 	//Let's get a bit esoteric
@@ -84,8 +84,8 @@
 	SSgarbage.should_save_refs = FALSE
 
 /datum/unit_test/find_reference_null_key_entry/Run()
-	var/atom/movable/ref_test/victim = allocate(/atom/movable/ref_test)
-	var/atom/movable/ref_holder/testbed = allocate(/atom/movable/ref_holder)
+	var/obj/ref_test/victim = allocate(/atom/movable/ref_test)
+	var/obj/ref_holder/testbed = allocate(/atom/movable/ref_holder)
 	SSgarbage.should_save_refs = TRUE
 
 	//Calm before the storm
@@ -95,8 +95,8 @@
 	TEST_ASSERT(testbed.test_assoc_list, "The ref-tracking tool failed to find a null key'd assoc list entry")
 
 /datum/unit_test/find_reference_assoc_investigation/Run()
-	var/atom/movable/ref_test/victim = allocate(/atom/movable/ref_test)
-	var/atom/movable/ref_holder/testbed = allocate(/atom/movable/ref_holder)
+	var/obj/ref_test/victim = allocate(/atom/movable/ref_test)
+	var/obj/ref_holder/testbed = allocate(/atom/movable/ref_holder)
 	SSgarbage.should_save_refs = TRUE
 
 	//Let's do some more complex assoc list investigation

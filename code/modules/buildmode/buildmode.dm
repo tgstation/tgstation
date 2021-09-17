@@ -17,10 +17,10 @@
 	var/switch_state = BM_SWITCHSTATE_NONE
 	var/switch_width = 4
 	// modeswitch UI
-	var/atom/movable/screen/buildmode/mode/modebutton
+	var/obj/screen/buildmode/mode/modebutton
 	var/list/modeswitch_buttons = list()
 	// dirswitch UI
-	var/atom/movable/screen/buildmode/bdir/dirbutton
+	var/obj/screen/buildmode/bdir/dirbutton
 	var/list/dirswitch_buttons = list()
 
 /datum/buildmode/New(client/c)
@@ -65,16 +65,16 @@
 
 /datum/buildmode/proc/create_buttons()
 	// keep a reference so we can update it upon mode switch
-	modebutton = new /atom/movable/screen/buildmode/mode(src)
+	modebutton = new /obj/screen/buildmode/mode(src)
 	buttons += modebutton
-	buttons += new /atom/movable/screen/buildmode/help(src)
+	buttons += new /obj/screen/buildmode/help(src)
 	// keep a reference so we can update it upon dir switch
-	dirbutton = new /atom/movable/screen/buildmode/bdir(src)
+	dirbutton = new /obj/screen/buildmode/bdir(src)
 	buttons += dirbutton
-	buttons += new /atom/movable/screen/buildmode/quit(src)
+	buttons += new /obj/screen/buildmode/quit(src)
 	// build the lists of switching buttons
-	build_options_grid(subtypesof(/datum/buildmode_mode), modeswitch_buttons, /atom/movable/screen/buildmode/modeswitch)
-	build_options_grid(GLOB.alldirs, dirswitch_buttons, /atom/movable/screen/buildmode/dirswitch)
+	build_options_grid(subtypesof(/datum/buildmode_mode), modeswitch_buttons, /obj/screen/buildmode/modeswitch)
+	build_options_grid(GLOB.alldirs, dirswitch_buttons, /obj/screen/buildmode/dirswitch)
 
 // this creates a nice offset grid for choosing between buildmode options,
 // because going "click click click ah hell" sucks.
@@ -83,7 +83,7 @@
 	for(var/thing in elements)
 		var/x = pos_idx % switch_width
 		var/y = FLOOR(pos_idx / switch_width, 1)
-		var/atom/movable/screen/buildmode/B = new buttontype(src, thing)
+		var/obj/screen/buildmode/B = new buttontype(src, thing)
 		// extra .5 for a nice offset look
 		B.screen_loc = "NORTH-[(1 + 0.5 + y*1.5)],WEST+[0.5 + x*1.5]"
 		buttonslist += B

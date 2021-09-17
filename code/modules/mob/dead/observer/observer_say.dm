@@ -37,7 +37,7 @@
 	. = ..()
 	var/atom/movable/to_follow = speaker
 	if(radio_freq)
-		var/atom/movable/virtualspeaker/V = speaker
+		var/obj/virtualspeaker/V = speaker
 
 		if(isAI(V.source))
 			var/mob/living/silicon/ai/S = V.source

@@ -785,7 +785,7 @@
 
 /datum/status_effect/agent_pinpointer/scan
 	duration = 15 SECONDS
-	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer/scan
+	alert_type = /obj/screen/alert/status_effect/agent_pinpointer/scan
 	tick_interval = 2 SECONDS
 	range_fuzz_factor = 0
 	minimum_range = 1
@@ -795,7 +795,7 @@
 /datum/status_effect/agent_pinpointer/scan/scan_for_target()
 	return
 
-/atom/movable/screen/alert/status_effect/agent_pinpointer/scan
+/obj/screen/alert/status_effect/agent_pinpointer/scan
 	name = "Scan Target"
 	desc = "Contact may or may not be close."
 

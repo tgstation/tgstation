@@ -204,7 +204,7 @@
 
 	var/memory_throttle_time = 0
 
-	/// Contains [/atom/movable/screen/alert] only.
+	/// Contains [/obj/screen/alert] only.
 	///
 	/// On [/mob] so clientless mobs will throw alerts properly.
 	var/list/alerts = list()

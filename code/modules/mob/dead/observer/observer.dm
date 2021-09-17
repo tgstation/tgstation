@@ -407,7 +407,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(message)
 		to_chat(src, span_ghostalert("[message]"))
 		if(source)
-			var/atom/movable/screen/alert/A = throw_alert("[REF(source)]_notify_cloning", /atom/movable/screen/alert/notify_cloning)
+			var/obj/screen/alert/A = throw_alert("[REF(source)]_notify_cloning", /obj/screen/alert/notify_cloning)
 			if(A)
 				var/ui_style = client?.prefs?.read_preference(/datum/preference/choiced/ui_style)
 				if(ui_style)

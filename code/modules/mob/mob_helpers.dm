@@ -349,7 +349,7 @@
 		if(flashwindow)
 			window_flash(O.client)
 		if(source)
-			var/atom/movable/screen/alert/notify_action/A = O.throw_alert("[REF(source)]_notify_action", /atom/movable/screen/alert/notify_action)
+			var/obj/screen/alert/notify_action/A = O.throw_alert("[REF(source)]_notify_action", /obj/screen/alert/notify_action)
 			if(A)
 				var/ui_style = O.client?.prefs?.read_preference(/datum/preference/choiced/ui_style)
 				if(ui_style)

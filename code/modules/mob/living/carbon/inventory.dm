@@ -184,7 +184,7 @@
 		if(!C.can_hold_items())
 			continue
 
-		var/atom/movable/screen/alert/give/G = C.throw_alert("[src]", /atom/movable/screen/alert/give)
+		var/obj/screen/alert/give/G = C.throw_alert("[src]", /obj/screen/alert/give)
 		if(!G)
 			continue
 		G.setup(C, src, receiving)

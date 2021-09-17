@@ -18,7 +18,7 @@
 	for(var/I in credit_order_for_this_round)
 		if(!credits)
 			return
-		_credits += new /atom/movable/screen/credit(null, I, src, credits_icon)
+		_credits += new /obj/screen/credit(null, I, src, credits_icon)
 		sleep(CREDIT_SPAWN_SPEED)
 	sleep(CREDIT_ROLL_SPEED - CREDIT_SPAWN_SPEED)
 	remove_verb(src, /client/proc/ClearCredits)
@@ -31,7 +31,7 @@
 	QDEL_LIST(credits)
 	credits = null
 
-/atom/movable/screen/credit
+/obj/screen/credit
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 0
 	screen_loc = "12,1"
@@ -39,7 +39,7 @@
 	var/client/parent
 	var/matrix/target
 
-/atom/movable/screen/credit/Initialize(mapload, credited, client/P, icon/I)
+/obj/screen/credit/Initialize(mapload, credited, client/P, icon/I)
 	. = ..()
 	icon = I
 	parent = P
@@ -58,7 +58,7 @@
 	if(parent)
 		parent.screen += src
 
-/atom/movable/screen/credit/Destroy()
+/obj/screen/credit/Destroy()
 	icon = null
 	if(parent)
 		parent.screen -= src
@@ -66,5 +66,5 @@
 		parent = null
 	return ..()
 
-/atom/movable/screen/credit/proc/FadeOut()
+/obj/screen/credit/proc/FadeOut()
 	animate(src, alpha = 0, transform = target, time = CREDIT_EASE_DURATION)

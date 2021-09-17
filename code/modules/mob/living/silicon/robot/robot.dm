@@ -15,9 +15,9 @@
 	robot_modules_background.icon_state = "block"
 	robot_modules_background.plane = HUD_PLANE
 
-	inv1 = new /atom/movable/screen/robot/module1()
-	inv2 = new /atom/movable/screen/robot/module2()
-	inv3 = new /atom/movable/screen/robot/module3()
+	inv1 = new /obj/screen/robot/module1()
+	inv2 = new /obj/screen/robot/module2()
+	inv3 = new /obj/screen/robot/module3()
 
 	ident = rand(1, 999)
 
@@ -367,7 +367,7 @@
 	if(wires?.is_cut(WIRE_LOCKDOWN))
 		state = TRUE
 	if(state)
-		throw_alert("locked", /atom/movable/screen/alert/locked)
+		throw_alert("locked", /obj/screen/alert/locked)
 	else
 		clear_alert("locked")
 	set_lockcharge(state)
@@ -392,7 +392,7 @@
 	model.rebuild_modules()
 	update_icons()
 	if(emagged)
-		throw_alert("hacked", /atom/movable/screen/alert/hacked)
+		throw_alert("hacked", /obj/screen/alert/hacked)
 	else
 		clear_alert("hacked")
 

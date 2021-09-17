@@ -152,7 +152,7 @@
 		adjustOxyLoss(1)
 
 		failed_last_breath = TRUE
-		throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
+		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		return FALSE
 
 	var/safe_oxy_min = 16
@@ -182,7 +182,7 @@
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = TRUE
-		throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
+		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 
 	else //Enough oxygen
 		failed_last_breath = FALSE
@@ -213,7 +213,7 @@
 	if(Plasma_partialpressure > safe_plas_max)
 		var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_plas_max) * 10
 		adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
-		throw_alert("too_much_plas", /atom/movable/screen/alert/too_much_plas)
+		throw_alert("too_much_plas", /obj/screen/alert/too_much_plas)
 	else
 		clear_alert("too_much_plas")
 
@@ -221,7 +221,7 @@
 	if(breath_gases[/datum/gas/nitrous_oxide])
 		var/SA_partialpressure = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/breath.total_moles())*breath_pressure
 		if(SA_partialpressure > SA_para_min)
-			throw_alert("too_much_n2o", /atom/movable/screen/alert/too_much_n2o)
+			throw_alert("too_much_n2o", /obj/screen/alert/too_much_n2o)
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 			Unconscious(60)
 			if(SA_partialpressure > SA_sleep_min)
@@ -511,7 +511,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(DT_PROB(16, delta_time))
 				slurring += 2
 			jitteriness = max(jitteriness - (1.5 * delta_time), 0)
-			throw_alert("drunk", /atom/movable/screen/alert/drunk)
+			throw_alert("drunk", /obj/screen/alert/drunk)
 			sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")

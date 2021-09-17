@@ -238,7 +238,7 @@
 	RegisterSignal(src, COMSIG_MECHA_EQUIPMENT_CLICK, .proc/on_equipment_click)
 	gunner.client.mouse_override_icon = 'icons/effects/mouse_pointers/supplypod_down_target.dmi'
 	gunner.update_mouse_pointer()
-	gunner.overlay_fullscreen("ivanov", /atom/movable/screen/fullscreen/ivanov_display, 1)
+	gunner.overlay_fullscreen("ivanov", /obj/screen/fullscreen/ivanov_display, 1)
 	SEND_SOUND(gunner, 'sound/machines/terminal_on.ogg') //spammable so I don't want to make it audible to anyone else
 
 /**

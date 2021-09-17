@@ -63,5 +63,5 @@
 	else
 		signal.data["command"] = "shuttle"
 
-	var/atom/movable/virtualspeaker/virt = new(null)
+	var/obj/virtualspeaker/virt = new(null)
 	frequency.post_signal(virt, signal)

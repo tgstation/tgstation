@@ -74,7 +74,7 @@
 
 	preload_rsc = PRELOAD_RSC
 
-	var/atom/movable/screen/click_catcher/void
+	var/obj/screen/click_catcher/void
 
 	///used to make a special mouse cursor, this one for mouse up icon
 	var/mouse_up_icon = null

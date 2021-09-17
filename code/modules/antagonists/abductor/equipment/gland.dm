@@ -66,7 +66,7 @@
 	message_admins("[key_name(user)] sent an abductor mind control message to [key_name(owner)]: [command]")
 	log_game("[key_name(user)] sent an abductor mind control message to [key_name(owner)]: [command]")
 	update_gland_hud()
-	var/atom/movable/screen/alert/mind_control/mind_alert = owner.throw_alert("mind_control", /atom/movable/screen/alert/mind_control)
+	var/obj/screen/alert/mind_control/mind_alert = owner.throw_alert("mind_control", /obj/screen/alert/mind_control)
 	mind_alert.command = command
 	addtimer(CALLBACK(src, .proc/clear_mind_control), mind_control_duration)
 	return TRUE

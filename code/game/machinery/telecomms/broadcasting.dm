@@ -92,7 +92,7 @@
 // Despite "subspace" in the name, these transmissions can also be RADIO
 // (intercoms and SBRs) or SUPERSPACE (CentCom).
 /datum/signal/subspace/vocal
-	var/atom/movable/virtualspeaker/virt
+	var/obj/virtualspeaker/virt
 	var/datum/language/language
 
 /datum/signal/subspace/vocal/New(

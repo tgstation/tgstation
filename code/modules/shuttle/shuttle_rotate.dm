@@ -27,7 +27,7 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 
 /************************************Base /atom/movable proc************************************/
 
-/atom/movable/shuttleRotate(rotation, params)
+/obj/shuttleRotate(rotation, params)
 	. = ..()
 	//rotate the physical bounds and offsets for multitile atoms too. Owerride base "rotate the pixel offsets" for multitile atoms.
 	//Owerride non zero bound_x, bound_y, pixel_x, pixel_y to zero.

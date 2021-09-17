@@ -71,7 +71,7 @@
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = null
 	tick_interval = 1
-	var/atom/movable/screen/seedling/seedling_screen_object
+	var/obj/screen/seedling/seedling_screen_object
 	var/atom/target
 
 
@@ -83,7 +83,7 @@
 
 /datum/status_effect/seedling_beam_indicator/on_apply()
 	if(owner.client)
-		seedling_screen_object = new /atom/movable/screen/seedling()
+		seedling_screen_object = new /obj/screen/seedling()
 		owner.client.screen += seedling_screen_object
 	tick()
 	return ..()
@@ -100,7 +100,7 @@
 	final.Turn(target_angle)
 	seedling_screen_object.transform = final
 
-/atom/movable/screen/seedling
+/obj/screen/seedling
 	icon = 'icons/mob/jungle/arachnid.dmi'
 	icon_state = "seedling_beam_indicator"
 	screen_loc = "CENTER:-16,CENTER:-16"

@@ -17,7 +17,7 @@
 	//Since only render_target handles transform we don't get any applied transform "stacking"
 	appearance_flags = EMISSIVE_APPEARANCE_FLAGS
 
-/atom/movable/emissive_blocker/Initialize(mapload, source)
+/obj/emissive_blocker/Initialize(mapload, source)
 	. = ..()
 	verbs.Cut() //Cargo culting from lighting object, this maybe affects memory usage?
 
@@ -25,22 +25,22 @@
 	color = GLOB.em_block_color
 
 
-/atom/movable/emissive_blocker/ex_act(severity)
+/obj/emissive_blocker/ex_act(severity)
 	return FALSE
 
-/atom/movable/emissive_blocker/singularity_act()
+/obj/emissive_blocker/singularity_act()
 	return
 
-/atom/movable/emissive_blocker/singularity_pull()
+/obj/emissive_blocker/singularity_pull()
 	return
 
-/atom/movable/emissive_blocker/blob_act()
+/obj/emissive_blocker/blob_act()
 	return
 
-/atom/movable/emissive_blocker/onTransitZ()
+/obj/emissive_blocker/onTransitZ()
 	return
 
 //Prevents people from moving these after creation, because they shouldn't be.
-/atom/movable/emissive_blocker/forceMove(atom/destination, no_tp=FALSE, harderforce = FALSE)
+/obj/emissive_blocker/forceMove(atom/destination, no_tp=FALSE, harderforce = FALSE)
 	if(harderforce)
 		return ..()

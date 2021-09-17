@@ -138,7 +138,7 @@ the new instance inside the host to be updated to the template's stats.
 	. = ..()
 	var/atom/movable/to_follow = speaker
 	if(radio_freq)
-		var/atom/movable/virtualspeaker/V = speaker
+		var/obj/virtualspeaker/V = speaker
 		to_follow = V.source
 	var/link
 	if(to_follow in hosts)

@@ -85,7 +85,7 @@
 	if(!can_interact(user))
 		. = min(., UI_UPDATE)
 
-/atom/movable/can_interact(mob/user)
+/obj/can_interact(mob/user)
 	. = ..()
 	if(!.)
 		return

@@ -5,7 +5,7 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/toggle/ambient_occlusion/apply_to_client(client/client, value)
-	var/atom/movable/screen/plane_master/game_world/plane_master = locate() in client?.screen
+	var/obj/screen/plane_master/game_world/plane_master = locate() in client?.screen
 	if (!plane_master)
 		return
 

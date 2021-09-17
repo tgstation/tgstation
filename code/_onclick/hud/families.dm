@@ -1,4 +1,4 @@
-/atom/movable/screen/wanted
+/obj/screen/wanted
 	name = "Space Police Alertness"
 	desc = "Shows the current level of hostility the space police is planning to rain down on you. Better be careful."
 	icon = 'icons/obj/gang/wanted_160x32.dmi'
@@ -10,17 +10,17 @@
 	/// Boolean, have the cops arrived? If so, the icon stops changing and remains the same.
 	var/cops_arrived = 0
 
-/atom/movable/screen/wanted/Initialize()
+/obj/screen/wanted/Initialize()
 	. = ..()
 	update_appearance()
 
-/atom/movable/screen/wanted/MouseEntered(location,control,params)
+/obj/screen/wanted/MouseEntered(location,control,params)
 	. = ..()
 	openToolTip(usr,src,params,title = name,content = desc, theme = "alerttooltipstyle")
 
-/atom/movable/screen/wanted/MouseExited()
+/obj/screen/wanted/MouseExited()
 	closeToolTip(usr)
 
-/atom/movable/screen/wanted/update_icon_state()
+/obj/screen/wanted/update_icon_state()
 	icon_state = "[base_icon_state]_[level][cops_arrived ? "_active" : null]"
 	return ..()

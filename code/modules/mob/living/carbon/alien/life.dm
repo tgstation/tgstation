@@ -25,7 +25,7 @@
 
 	if(Plasma_pp > plas_detect_threshold) // Detect plasma in air
 		adjustPlasma(breath_gases[/datum/gas/plasma][MOLES]*250)
-		throw_alert("alien_plas", /atom/movable/screen/alert/alien_plas)
+		throw_alert("alien_plas", /obj/screen/alert/alien_plas)
 
 		plasma_used = breath_gases[/datum/gas/plasma][MOLES]
 

@@ -143,7 +143,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 					. |= SOUTHEAST_JUNCTION
 
 
-/atom/movable/calculate_adjacencies()
+/obj/calculate_adjacencies()
 	if(can_be_unanchored && !anchored)
 		return NONE
 	return ..()

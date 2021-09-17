@@ -81,7 +81,7 @@
 * Will be removed when the required reagent is removed too
 * is processed on the dead.
 */
-/atom/movable/screen/alert/status_effect/freon/cryostylane
+/obj/screen/alert/status_effect/freon/cryostylane
 	desc = "You're frozen inside of a protective ice cube! While inside, you can't do anything, but are immune to harm! You will be free when the chem runs out."
 
 /datum/reagent/inverse/cryostylane
@@ -95,7 +95,7 @@
 	metabolization_rate = 1 * REM
 	///The cube we're stasis'd in
 	var/obj/structure/ice_stasis/cube
-	var/atom/movable/screen/alert/status_effect/freon/cryostylane_alert
+	var/obj/screen/alert/status_effect/freon/cryostylane_alert
 
 /datum/reagent/inverse/cryostylane/on_mob_add(mob/living/carbon/owner, amount)
 	cube = new /obj/structure/ice_stasis(get_turf(owner))
@@ -103,7 +103,7 @@
 	cube.set_anchored(TRUE)
 	owner.forceMove(cube)
 	owner.apply_status_effect(STATUS_EFFECT_STASIS, STASIS_CHEMICAL_EFFECT)
-	cryostylane_alert = owner.throw_alert("cryostylane_alert", /atom/movable/screen/alert/status_effect/freon/cryostylane)
+	cryostylane_alert = owner.throw_alert("cryostylane_alert", /obj/screen/alert/status_effect/freon/cryostylane)
 	cryostylane_alert.attached_effect = src //so the alert can reference us, if it needs to
 	..()
 

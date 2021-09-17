@@ -323,7 +323,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		to_chat(user, span_notice("You peak through the door's bluespace peephole..."))
 		user.reset_perspective(parentSphere)
 		var/datum/action/peephole_cancel/PHC = new
-		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
+		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
 		PHC.Grant(user)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, /atom/.proc/check_eye, user)
 

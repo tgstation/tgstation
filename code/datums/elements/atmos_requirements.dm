@@ -33,7 +33,7 @@
 		target.clear_alert("not_enough_oxy")
 		return
 	target.adjustBruteLoss(unsuitable_atmos_damage * delta_time)
-	target.throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
+	target.throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 
 /datum/element/atmos_requirements/proc/is_breathable_atmos(mob/living/target)
 	if(target.pulledby && target.pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
