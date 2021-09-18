@@ -228,7 +228,7 @@
 			efficiency *= clamp(log(1.55, exchange_target.total_moles()) * 0.15, 0.65, 1)
 
 		efficiency *= mole_efficiency
-		efficiency = max(efficiency, parts_efficiency) 
+		efficiency = max(efficiency, parts_efficiency)
 
 		if (exchange_target.temperature > THERMOMACHINE_SAFE_TEMPERATURE && safeties)
 			on = FALSE
@@ -387,7 +387,7 @@
 		return TRUE
 
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/explode()
-	explosion(loc, 0, 0, 3, 3, TRUE)
+	explosion(loc, 0, 0, 3, 3, TRUE, explosion_cause = src)
 	var/datum/gas_mixture/main_port = airs[1]
 	var/datum/gas_mixture/exchange_target = airs[2]
 	if(main_port)
