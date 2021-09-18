@@ -90,8 +90,10 @@
 	var/datum/action/innate/summon_rift/rift
 	/// The color of the space dragon.
 	var/chosen_color
-	/// Devastation damage dealt coefficient based on max health
-	var/devastation_damage_percentage = 0.75
+	/// Minimum devastation damage dealt coefficient based on max health
+	var/devastation_damage_min_percentage = 0.4
+	/// Maximum devastation damage dealt coefficient based on max health
+	var/devastation_damage_max_percentage = 0.75
 
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
 	. = ..()
@@ -108,7 +110,8 @@
 		color_selection()
 
 /mob/living/simple_animal/hostile/space_dragon/ex_act_devastate()
-	adjustBruteLoss(initial(maxHealth)*devastation_damage_percentage)
+	var/damage_coefficient = rand(devastation_damage_min_percentage, devastation_damage_max_percentage)
+	adjustBruteLoss(initial(maxHealth)*damage_coefficient)
 
 /mob/living/simple_animal/hostile/space_dragon/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
