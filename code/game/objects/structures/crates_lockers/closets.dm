@@ -140,13 +140,12 @@
 		var/door_state
 		var/door_layer
 
-		if (angle >= 90) {
+		if (angle >= 90)
 			door_state = "[icon_door_override ? icon_door : icon_state]_back"
 			door_layer = FLOAT_LAYER
-		} else {
+		else
 			door_state = "[icon_door || icon_state]_door"
 			door_layer = ABOVE_MOB_LAYER
-		}
 
 		if(step == 0)
 			door_obj.transform = door_transform
