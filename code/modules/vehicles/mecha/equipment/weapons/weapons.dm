@@ -39,6 +39,9 @@
 		var/obj/projectile/A = new projectile(get_turf(src))
 		var/modifiers = params2list(params)
 		A.firer = chassis
+		if(source.client && isliving(source)) //dont want it to happen from syndie mecha npc mobs, they do direct fire anyways
+			var/mob/living/shooter = source
+			A.hit_prone_targets = shooter.combat_mode
 		A.preparePixelProjectile(target, source, modifiers, spread)
 
 		A.fire()
