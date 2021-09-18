@@ -1221,3 +1221,10 @@
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
 	build_path = /obj/item/assembly/control
 	category = list("initial","Misc")
+/datum/design/razor
+	name = "Electric Razor"
+	id = "razor"
+	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
+	materials = list(/datum/material/iron = 75)
+	build_path = /obj/item/razor
+	category = list("initial","Medical")
