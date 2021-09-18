@@ -262,13 +262,12 @@
 			moderator_internal.gases[tier[2]][MOLES] += scaled_production
 			if(moderator_list[/datum/gas/plasma] > 50)
 				moderator_internal.gases[tier[3]][MOLES] += scaled_production * 1.15
-		if(3, 4)
-			if(power_level == 3)
-				moderator_internal.gases[tier[2]][MOLES] += scaled_production * 0.5
-				moderator_internal.gases[tier[3]][MOLES] += scaled_production * 0.45
-			if(power_level == 4)
-				moderator_internal.gases[tier[3]][MOLES] += scaled_production * 1.65
-				moderator_internal.gases[tier[4]][MOLES] += scaled_production * 1.25
+		if(3)
+			moderator_internal.gases[tier[2]][MOLES] += scaled_production * 0.5
+			moderator_internal.gases[tier[3]][MOLES] += scaled_production * 0.45
+		if(4)
+			moderator_internal.gases[tier[3]][MOLES] += scaled_production * 1.65
+			moderator_internal.gases[tier[4]][MOLES] += scaled_production * 1.25
 		if(5)
 			moderator_internal.gases[tier[4]][MOLES] += scaled_production * 0.65
 			moderator_internal.gases[tier[5]][MOLES] += scaled_production
