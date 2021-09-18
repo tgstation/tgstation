@@ -7,7 +7,7 @@
 	max_volume = 50
 	eat_time = 1 SECONDS
 	tastes = list("drugs" = 2, "chemicals" = 1)
-	eatverbs = list("gnaws" = 1)
+	eatverbs = list("gnaw" = 1)
 	bite_consumption = 10
 	w_class = WEIGHT_CLASS_TINY
 	preserved_food = TRUE
@@ -27,6 +27,7 @@
 /obj/item/food/drug/moon_rock/Initialize()
 	. = ..()
 	icon_state = pick("moon_rock1", "moon_rock2", "moon_rock3")
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOONICORN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /obj/item/reagent_containers/glass/blastoff_ampoule
 	name = "bLaSToFF ampoule" //stylized name

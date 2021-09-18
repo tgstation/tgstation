@@ -426,7 +426,7 @@ SUBSYSTEM_DEF(ticker)
 			officer_mobs += character
 
 			var/datum/client_interface/client = GET_CLIENT(new_player_mob)
-			var/preference = client?.prefs?.prefered_security_department || SEC_DEPT_NONE
+			var/preference = client?.prefs?.read_preference(/datum/preference/choiced/security_department)
 			officer_preferences += preference
 
 	var/distribution = get_officer_departments(officer_preferences, departments)

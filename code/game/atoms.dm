@@ -2107,10 +2107,10 @@
 	status_bar_set_text(usr, name)
 	// Screentips
 	if(usr?.hud_used)
-		if(!usr.client?.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
+		if(!usr.hud_used.screentips_enabled || (flags_1 & NO_SCREENTIPS_1))
 			usr.hud_used.screentip_text.maptext = ""
 		else
-			usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")
+			usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.hud_used.screentip_color]: 32px'>[name]</span>")
 
 /// Gets a merger datum representing the connected blob of objects in the allowed_types argument
 /atom/proc/GetMergeGroup(id, list/allowed_types)

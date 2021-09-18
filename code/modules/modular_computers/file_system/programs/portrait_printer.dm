@@ -23,9 +23,9 @@
 
 /datum/computer_file/program/portrait_printer/ui_data(mob/user)
 	var/list/data = list()
-	data["library"] = SSpersistence.paintings["library"] ? SSpersistence.paintings["library"] : 0
-	data["library_secure"] = SSpersistence.paintings["library_secure"] ? SSpersistence.paintings["library_secure"] : 0
-	data["library_private"] = SSpersistence.paintings["library_private"] ? SSpersistence.paintings["library_private"] : 0 //i'm gonna regret this, won't i?
+	data["library"] = SSpersistent_paintings.paintings["library"] ? SSpersistent_paintings.paintings["library"] : 0
+	data["library_secure"] = SSpersistent_paintings.paintings["library_secure"] ? SSpersistent_paintings.paintings["library_secure"] : 0
+	data["library_private"] = SSpersistent_paintings.paintings["library_private"] ? SSpersistent_paintings.paintings["library_private"] : 0 //i'm gonna regret this, won't i?
 	return data
 
 /datum/computer_file/program/portrait_printer/ui_assets(mob/user)
@@ -55,7 +55,7 @@
 	//canvas printing!
 	var/list/tab2key = list(TAB_LIBRARY = "library", TAB_SECURE = "library_secure", TAB_PRIVATE = "library_private")
 	var/folder = tab2key[params["tab"]]
-	var/list/current_list = SSpersistence.paintings[folder]
+	var/list/current_list = SSpersistent_paintings.paintings[folder]
 	var/list/chosen_portrait = current_list[params["selected"]]
 	var/author = chosen_portrait["author"]
 	var/title = chosen_portrait["title"]

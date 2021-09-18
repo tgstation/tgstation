@@ -26,6 +26,8 @@
 	if (isnull(precision))
 		precision = 0
 
+	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_TELEPORTED, destination, channel)
+
 	switch(channel)
 		if(TELEPORT_CHANNEL_BLUESPACE)
 			if(istype(teleatom, /obj/item/storage/backpack/holding))

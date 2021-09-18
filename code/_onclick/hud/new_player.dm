@@ -73,7 +73,11 @@
 	. = ..()
 	if(!.)
 		return
-	hud.mymob.client.prefs.ShowChoices(hud.mymob)
+
+	var/datum/preferences/preferences = hud.mymob.client.prefs
+	preferences.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
+	preferences.update_static_data(usr)
+	preferences.ui_interact(usr)
 
 ///Button that appears before the game has started
 /atom/movable/screen/lobby/button/ready
@@ -189,21 +193,21 @@
 	set_button_status(TRUE)
 	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, .proc/enable_observing)
 
-
-/* This is here for a future settings menu that will come with the prefs rework, if this is not in by 2022 kill mothblocks.
 /atom/movable/screen/lobby/button/settings
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "settings"
 	base_icon_state = "settings"
-	screen_loc = "TOP:-122,CENTER:+58"
+	screen_loc = "TOP:-122,CENTER:+30"
 
 /atom/movable/screen/lobby/button/settings/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
-	hud.mymob.client.prefs.ShowChoices(hud.mymob)
-*/
 
+	var/datum/preferences/preferences = hud.mymob.client.prefs
+	preferences.current_window = PREFERENCE_TAB_GAME_PREFERENCES
+	preferences.update_static_data(usr)
+	preferences.ui_interact(usr)
 
 /atom/movable/screen/lobby/button/changelog_button
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
@@ -216,7 +220,7 @@
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "crew_manifest"
 	base_icon_state = "crew_manifest"
-	screen_loc = "TOP:-122,CENTER:+30"
+	screen_loc = "TOP:-122,CENTER:+2"
 
 /atom/movable/screen/lobby/button/crew_manifest/Click(location, control, params)
 	. = ..()
@@ -233,7 +237,7 @@
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "poll"
 	base_icon_state = "poll"
-	screen_loc = "TOP:-122,CENTER:+2"
+	screen_loc = "TOP:-122,CENTER:-26"
 
 	var/new_poll = FALSE
 

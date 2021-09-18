@@ -49,7 +49,7 @@
 	if(src.value != value || force)
 		if(isatom(value))
 			UnregisterSignal(value, COMSIG_PARENT_QDELETING)
-		src.value = datatype_handler.convert_value(src, value)
+		src.value = datatype_handler.convert_value(src, value, force)
 		if(isatom(value))
 			RegisterSignal(value, COMSIG_PARENT_QDELETING, .proc/null_value)
 	SEND_SIGNAL(src, COMSIG_PORT_SET_VALUE, value)
