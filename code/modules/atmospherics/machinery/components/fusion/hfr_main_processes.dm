@@ -249,8 +249,7 @@
 		internal_fusion.gases[gas_id][MOLES] -= min(fuel_list[gas_id], fuel_consumption)
 	for(var/gas_id in fuel.primary_products)
 		internal_fusion.gases[gas_id][MOLES] += fuel_consumption * 0.5
-	//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
-	//Also dependant on what is the power level and what moderator gases are present
+
 	switch(power_level)
 		if(1)
 			moderator_internal.gases[fuel.secondary_products[1]][MOLES] += scaled_production * 0.95
