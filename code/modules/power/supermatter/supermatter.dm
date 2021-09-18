@@ -471,7 +471,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	explode()
 
-/obj.machinery/power/supermatter_crystal/proc/add_matter_power(added_power)
+/obj/machinery/power/supermatter_crystal/proc/add_matter_power(added_power)
 	matter_power += added_power * antinoblium_multiplier
 
 
