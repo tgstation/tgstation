@@ -501,6 +501,8 @@
 #define COMSIG_MOVABLE_UPDATE_GLIDE_SIZE "movable_glide_size"
 ///Called when a movable is hit by a plunger in layer mode, from /obj/item/plunger/attack_atom()
 #define COMSIG_MOVABLE_CHANGE_DUCT_LAYER "movable_change_duct_layer"
+///Called when a movable is teleported from `do_teleport()`: (destination, channel)
+#define COMSIG_MOVABLE_TELEPORTED "movable_teleported"
 
 // /mob signals
 
@@ -1015,6 +1017,8 @@
 
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
 #define COMSIG_GRENADE_DETONATE "grenade_prime"
+//called from many places in grenade code (armed_by, nade, det_time, delayoverride)
+#define COMSIG_MOB_GRENADE_ARMED "grenade_mob_armed"
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
 #define COMSIG_GRENADE_ARMED "grenade_armed"
 
@@ -1398,8 +1402,14 @@
 /// Called when the integrated circuit's shell is set.
 #define COMSIG_CIRCUIT_SET_SHELL "circuit_set_shell"
 
-/// Called when the integrated circuit's is locked.
+/// Called when the integrated circuit is locked.
 #define COMSIG_CIRCUIT_SET_LOCKED "circuit_set_locked"
+
+/// Called right before the integrated circuit data is converted to json. Allows modification to the data right before it is returned.
+#define COMSIG_CIRCUIT_PRE_SAVE_TO_JSON "circuit_pre_save_to_json"
+
+/// Called when the integrated circuit is loaded.
+#define COMSIG_CIRCUIT_POST_LOAD "circuit_post_load"
 
 /// Sent to an atom when a [/obj/item/usb_cable] attempts to connect to something. (/obj/item/usb_cable/usb_cable, /mob/user)
 #define COMSIG_ATOM_USB_CABLE_TRY_ATTACH "usb_cable_try_attach"
@@ -1469,3 +1479,4 @@
 ///Called when the ticker sets up the game for start
 #define COMSIG_TICKER_ENTER_SETTING_UP "comsig_ticker_enter_setting_up"
 
+#define COMSIG_GREYSCALE_CONFIG_REFRESHED "greyscale_config_refreshed"

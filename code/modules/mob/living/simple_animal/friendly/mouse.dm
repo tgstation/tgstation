@@ -203,6 +203,7 @@
 	foodtypes = GROSS | MEAT | RAW
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
 	decomp_req_handle = TRUE
+	decomp_type = /obj/item/food/deadmouse/moldy
 
 /obj/item/food/deadmouse/Initialize()
 	. = ..()
@@ -240,3 +241,11 @@
 /obj/item/food/deadmouse/on_grind()
 	. = ..()
 	reagents.clear_reagents()
+
+/obj/item/food/deadmouse/moldy
+	name = "moldy dead mouse"
+	desc = "A dead rodent, consumed by mold and rot. There is a slim chance that a lizard might still eat it."
+	icon_state = "mouse_gray_dead"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/mold = 10)
+	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5, /datum/reagent/consumable/mold = 10)
+	preserved_food = TRUE

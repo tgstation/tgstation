@@ -263,7 +263,6 @@
 	S.mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
 	S.mind.special_role = ROLE_SLAUGHTER_DEMON
 	S.mind.add_antag_datum(antag_type)
-	to_chat(S, S.playstyle_string)
 	to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. \
 	Ctrl+Click a blood pool to manifest.</B>")
 

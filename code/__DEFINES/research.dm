@@ -61,6 +61,7 @@
 #define CELL_LINE_TABLE_COCKROACH "cell_line_cockroach_table"
 #define CELL_LINE_TABLE_CORGI "cell_line_corgi_table"
 #define CELL_LINE_TABLE_COW "cell_line_cow_table"
+#define CELL_LINE_TABLE_MOONICORN "cell_line_moonicorn_table"
 #define CELL_LINE_TABLE_GELATINOUS "cell_line_gelatinous_table"
 #define CELL_LINE_TABLE_GRAPE "cell_line_grape_table"
 #define CELL_LINE_TABLE_MEGACARP "cell_line_megacarp_table"
