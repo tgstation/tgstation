@@ -1221,6 +1221,7 @@
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
 	build_path = /obj/item/assembly/control
 	category = list("initial","Misc")
+
 /datum/design/razor
 	name = "Electric Razor"
 	id = "razor"
