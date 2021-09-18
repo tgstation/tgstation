@@ -1,5 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - bugfix: "Station alert console will now always show a correct icon when an alert is added or cleared."
-  - bugfix: "Station alert console and Canary application icons will no longer get stuck in an alert mode forever."

@@ -253,9 +253,6 @@
 		if(owner.reagents.get_reagent_amount(/datum/reagent/medicine/ephedrine) < 20)
 			owner.reagents.add_reagent(/datum/reagent/medicine/ephedrine, 10)
 
-
-
-
 /obj/item/organ/heart/ethereal
 	name = "crystal core"
 	icon_state = "ethereal_heart" //Welp. At least it's more unique in functionaliy.
