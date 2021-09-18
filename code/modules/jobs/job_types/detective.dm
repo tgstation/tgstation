@@ -65,8 +65,8 @@
 	r_pocket = /obj/item/lighter
 
 	chameleon_extras = list(
-		/obj/item/gun/ballistic/revolver/detective,
 		/obj/item/clothing/glasses/sunglasses,
+		/obj/item/gun/ballistic/revolver/detective,
 		)
 	implants = list(/obj/item/implant/mindshield)
 
