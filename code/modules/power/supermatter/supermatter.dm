@@ -197,8 +197,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/hallucination_power = 0.1
 	///The efficiency of the antinoblium interaction.
 	var/antinoblium_efficiency = 0
-	///Delta from antinoblium_efficiency and antinoblium composition.
-	var/antinoblium_efficiency_delta = 0
 	///Inverse of 1 - antinoblium_efficiency.
 	var/antinoblium_multiplier = 1
 	///Our internal radio
@@ -603,10 +601,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			gasmix_power_ratio += gas_comp[gas_id] * gas_powermix[gas_id]
 		gasmix_power_ratio = clamp(gasmix_power_ratio, 0, 1)
 
-		//Delta between antinoblium_efficiency and antinoblium composition.
-		antinoblium_efficiency_delta = gas_comp[/datum/gas/antinoblium] - antinoblium_efficiency
 		//antinoblium_efficiency converges to antinoblium composition faster when the SM is cold.
-		antinoblium_efficiency = clamp(antinoblium_efficiency + antinoblium_efficiency_delta * TCMB / (TCMB + removed.temperature), 0, 0.999999)
+		antinoblium_efficiency = clamp(antinoblium_efficiency + (gas_comp[/datum/gas/antinoblium] - antinoblium_efficiency) * TCMB / (TCMB + removed.temperature), 0, 0.999999)
 		//Multiplies maximum power before taking damage, multiplies power gained from matter, and passively generates power when above 1.
 		antinoblium_multiplier = max(1 / (1 - antinoblium_efficiency), 1)
 		//Minimum value of -10, maximum value of 23. Effects plasma and o2 output and the output heat
