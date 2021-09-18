@@ -206,33 +206,20 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define GHOST_ORBIT_PENTAGON "pentagon"
 
 //Ghost showing preferences:
-#define GHOST_ACCS_NONE 1
-#define GHOST_ACCS_DIR 50
-#define GHOST_ACCS_FULL 100
-
-#define GHOST_ACCS_NONE_NAME "default sprites"
-#define GHOST_ACCS_DIR_NAME "only directional sprites"
-#define GHOST_ACCS_FULL_NAME "full accessories"
+#define GHOST_ACCS_NONE "Default sprites"
+#define GHOST_ACCS_DIR "Only directional sprites"
+#define GHOST_ACCS_FULL "Full accessories"
 
 #define GHOST_ACCS_DEFAULT_OPTION GHOST_ACCS_FULL
 
-GLOBAL_LIST_INIT(ghost_accs_options, list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST_ACCS_FULL)) //So save files can be sanitized properly.
-
-#define GHOST_OTHERS_SIMPLE 1
-#define GHOST_OTHERS_DEFAULT_SPRITE 50
-#define GHOST_OTHERS_THEIR_SETTING 100
-
-#define GHOST_OTHERS_SIMPLE_NAME "white ghost"
-#define GHOST_OTHERS_DEFAULT_SPRITE_NAME "default sprites"
-#define GHOST_OTHERS_THEIR_SETTING_NAME "their setting"
+#define GHOST_OTHERS_SIMPLE "White ghosts"
+#define GHOST_OTHERS_DEFAULT_SPRITE "Default sprites"
+#define GHOST_OTHERS_THEIR_SETTING "Their sprites"
 
 #define GHOST_OTHERS_DEFAULT_OPTION GHOST_OTHERS_THEIR_SETTING
 
 #define GHOST_MAX_VIEW_RANGE_DEFAULT 10
 #define GHOST_MAX_VIEW_RANGE_MEMBER 14
-
-
-GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DEFAULT_SPRITE, GHOST_OTHERS_THEIR_SETTING)) //Same as ghost_accs_options.
 
 //pda fonts
 #define MONO "Monospaced"
@@ -387,7 +374,6 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define SECURITY_TRUSTED 3
 
 //Dummy mob reserve slots
-#define DUMMY_HUMAN_SLOT_PREFERENCES "dummy_preference_preview"
 #define DUMMY_HUMAN_SLOT_ADMIN "admintools"
 #define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
 #define DUMMY_HUMAN_SLOT_CTF "dummy_ctf_preview_generation"
@@ -498,18 +484,6 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define FALL_INTERCEPTED (1<<0) //Stops the movable from falling further and crashing on the ground
 #define FALL_NO_MESSAGE (1<<1) //Used to suppress the "[A] falls through [old_turf]" messages where it'd make little sense at all, like going downstairs.
 #define FALL_STOP_INTERCEPTING (1<<2) //Used in situations where halting the whole "intercept" loop would be better, like supermatter dusting (and thus deleting) the atom.
-
-//Religion
-///role below priests, for losing most powers of priests but still being holy.
-#define HOLY_ROLE_DEACON 1
-///default priestly role
-#define HOLY_ROLE_PRIEST 2
-///the one who designates the religion
-#define HOLY_ROLE_HIGHPRIEST 3
-
-#define ALIGNMENT_GOOD "good"
-#define ALIGNMENT_NEUT "neutral"
-#define ALIGNMENT_EVIL "evil"
 
 
 // Play time / EXP

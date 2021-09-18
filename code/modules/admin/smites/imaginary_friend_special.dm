@@ -28,7 +28,7 @@
 		return FALSE
 
 	if(friend_candidate_client.prefs)
-		random_appearance = tgui_alert(user, "Do you want the imaginary friend to look like and be named after [friend_candidate_client]'s current preferences ([friend_candidate_client.prefs.real_name])?", "Imaginary Friend Appearance?", list("Look-a-like", "Random")) == "Random"
+		random_appearance = tgui_alert(user, "Do you want the imaginary friend to look like and be named after [friend_candidate_client]'s current preferences ([friend_candidate_client.prefs.read_preference(/datum/preference/name/real_name)])?", "Imaginary Friend Appearance?", list("Look-a-like", "Random")) == "Random"
 	else
 		random_appearance = TRUE
 

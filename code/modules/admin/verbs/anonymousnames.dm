@@ -113,9 +113,8 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 			continue
 		var/old_name = player.real_name //before restoration
 		if(issilicon(player))
-			player.apply_pref_name("[isAI(player) ? "ai" : "cyborg"]", player.client)
+			player.apply_pref_name("[isAI(player) ? /datum/preference/name/ai : /datum/preference/name/cyborg]", player.client)
 		else
-			player.client.prefs.sanitize_chosen_prefs() // Just in case they changed unlawfully.
 			player.client.prefs.apply_prefs_to(player) // This is not sound logic, as the prefs may have changed since then.
 			player.fully_replace_character_name(old_name, player.real_name) //this changes IDs and PDAs and whatnot
 
@@ -131,7 +130,9 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
  * * target - mob for preferences and gender
  */
 /datum/anonymous_theme/proc/anonymous_name(mob/target)
-	return target.client.prefs.pref_species.random_name(target.gender,1)
+	var/species_type = target.client.prefs.read_preference(/datum/preference/choiced/species)
+	var/datum/species/species = new species_type
+	return species.random_name(target.gender,1)
 
 /**
  * anonymous_ai_name: generates a random name, based off of whatever the round's anonymousnames is set to (but for sillycones).

@@ -207,4 +207,4 @@
 	icon_state = "playercloak"
 
 /obj/item/clothing/neck/cloak/skill_reward/playing/check_wearable(mob/user)
-	return user.client?.get_exp_living(TRUE) >= PLAYTIME_VETERAN
+	return user.client?.is_veteran()

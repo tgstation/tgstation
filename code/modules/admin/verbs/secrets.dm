@@ -1,4 +1,4 @@
-
+GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 
 /client/proc/secrets() //Creates a verb for admins to open up the ui
 	set name = "Secrets"
@@ -450,24 +450,16 @@
 			if(!SSticker.HasRoundStarted())
 				tgui_alert(usr,"The game hasn't started yet!")
 				return
+			if(GLOB.everyone_a_traitor)
+				tgui_alert(usr, "The everyone is a traitor secret has already been triggered")
+				return
 			var/objective = stripped_input(holder, "Enter an objective")
 			if(!objective)
 				return
+			GLOB.everyone_a_traitor = new /datum/everyone_is_a_traitor_controller(objective)
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Traitor All", "[objective]"))
 			for(var/mob/living/player in GLOB.player_list)
-				if(!(ishuman(player)||istype(player, /mob/living/silicon/)))
-					continue
-				if(player.stat == DEAD || !player.mind || ispAI(player))
-					continue
-				if(is_special_character(player))
-					continue
-				var/datum/antagonist/traitor/traitor_datum = new()
-				traitor_datum.give_objectives = FALSE
-				var/datum/objective/new_objective = new
-				new_objective.owner = player
-				new_objective.explanation_text = objective
-				traitor_datum.objectives += new_objective
-				player.mind.add_antag_datum(traitor_datum)
+				GLOB.everyone_a_traitor.make_traitor(null, player)
 			message_admins(span_adminnotice("[key_name_admin(holder)] used everyone is a traitor secret. Objective is [objective]"))
 			log_admin("[key_name(holder)] used everyone is a traitor secret. Objective is [objective]")
 		if("massbraindamage")
@@ -614,3 +606,31 @@
 	var/turf/T = get_step(loc, SOUTHWEST)
 	flick_overlay_static(portal_appearance, T, 15)
 	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), TRUE)
+
+///Makes sure latejoining crewmembers also become traitors.
+/datum/everyone_is_a_traitor_controller
+	var/objective = ""
+
+/datum/everyone_is_a_traitor_controller/New(objective)
+	src.objective = objective
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/make_traitor)
+
+/datum/everyone_is_a_traitor_controller/Destroy()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
+	return ..()
+
+/datum/everyone_is_a_traitor_controller/proc/make_traitor(datum/source, mob/living/player)
+	SIGNAL_HANDLER
+	if(player.stat == DEAD || !player.mind)
+		return
+	if(!(ishuman(player) || issilicon(player)) || ispAI(player))
+		return
+	if(is_special_character(player))
+		return
+	var/datum/antagonist/traitor/traitor_datum = new()
+	traitor_datum.give_objectives = FALSE
+	var/datum/objective/new_objective = new
+	new_objective.owner = player
+	new_objective.explanation_text = objective
+	traitor_datum.objectives += new_objective
+	player.mind.add_antag_datum(traitor_datum)

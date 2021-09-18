@@ -335,3 +335,245 @@
   timothymtorres:
   - bugfix: Fixed wormhole jaunter to trigger when falling into a chasm
   - bugfix: Fixed wormhole jaunter to be affected by EMP
+2021-09-11:
+  ArcaneDefence:
+  - bugfix: Full tile windows that have become opaque from being painted a dark color
+      will now lose their opacity when repainted with a light enough color
+  Gamer025:
+  - bugfix: Crafting stackable items while already holding an existing stack of them
+      no longer causes runtimes
+  Ghommie:
+  - bugfix: Fixed a small irregularity in the outline glow of the `p` of the character
+      setup button when highligthed or pressed
+  Guillaume Prata:
+  - qol: You can now use the shock touch mutation as a ghetto alternative for revival
+      surgery. Just like stun batons!
+  - qol: The analyzer was renamed to gas analyzer and it can be printed at the Engineering/Science
+      protolathes now.
+  Sealed101:
+  - bugfix: Fixes screwdrivers not being recycle-friendly in the autolathe.
+  - qol: Moves screwdrivering an autolathe's maintenance panel open to right click.
+  - bugfix: Fixes being able to feed the autolathe when its maintenance panel is open.
+  carrotattacker, Sampslig:
+  - rscadd: Adds the juice, a drink that lets you see bluespace rifts and travel through
+      them
+  esainane:
+  - bugfix: Round setup hints and circuit board descriptions that mention production
+      of research points through power generation no longer appear. This functionality
+      was removed a long time ago.
+  timothymtorres:
+  - expansion: Supernatural phobia now includes more wizard objects, spooky mobs,
+      and haunted objects.
+  - expansion: Clown phobia now includes bananium objects and honk related simple
+      mobs.
+  - expansion: Phobias can be triggered from related stamps, toys, statues, and megaphones.
+  tralezab:
+  - qol: TGUI-ifies apprentice contracts. Yummy!
+  - bugfix: soul shards now properly remove antag when exorcised
+2021-09-12:
+  ATHATH:
+  - bugfix: Dreaming is now less rare.
+  CodeMonkey:
+  - bugfix: Fixes parallax animations
+  Fikou:
+  - admin: adds infinity to vv classes
+  Mothblocks:
+  - bugfix: The R&D console has been given back its tooltips
+  - bugfix: Fixed RPD arrows, strip menu eyes, etc not being styled properly.
+  Nari Harimoto:
+  - bugfix: you no longer hit space heaters when wrenching or screwdrivering them
+  dragomagol:
+  - qol: removed reinforced walls under grilles in space on Meta and Delta
+  esainane:
+  - bugfix: The HFR no longer yeets all iron content given scraps of Oxygen.
+  - bugfix: The HFR now burns Oxygen proportionally to the amount of iron content
+      removed when appropriate.
+  - bugfix: The HFR using Oxygen to mitigate iron content buildup now properly respects
+      delta time.
+  - qol: The HFR interface now lists recipes in a more sensible order. This is sorted
+      by maximum temperature, which also roughly approximates difficulty and desirability.
+  - bugfix: The HFR interface now lets you toggle waste removal at power level 6,
+      rather than merely having it permitted in the backend.
+2021-09-13:
+  Fikou:
+  - bugfix: server restarting stuff uses alert instead of tgui alert
+  kopoba:
+  - spellcheck: Nanotrasen recount blood packs in cargo order now its match reality
+2021-09-14:
+  Ghilker:
+  - spellcheck: fixed airlocks id from entrence to entrance
+  Nari Harimoto:
+  - bugfix: kilostation now has an unlocked mix chamber air alarm, 3 cores in the
+      launch room, the telescreen can see the test site, and a fancy launch controller
+  - bugfix: icebox disposals no longer spits trash on the mailroom floor
+2021-09-15:
+  Mothblocks, Floyd on lots of the design:
+  - refactor: The preferences menu has been completely rewritten in tgui.
+  - refactor: The "Stop Sounds" verb has been moved to OOC.
+2021-09-16:
+  AMonkeyThatCodes:
+  - admin: Admin only menus now have a new SVG background
+  ATHATH:
+  - bugfix: The negative moodlet from being held at gunpoint will no longer last indefinitely
+      under certain conditions.
+  AccountName5:
+  - balance: Temperature pump power consumption no longer increases exponentially.
+      Removes maximum operational temperature as it is now obsolete.
+  - bugfix: Fixed temperature pump exploit. It should no longer treat output as having
+      a much lower heat capacity than it actually has.
+  ArcaneDefence:
+  - bugfix: Magmawing watchers do not apply a slowdown any more.
+  Burgerman, tralezab:
+  - bugfix: You can now see the nuke code in your memories
+  Burgermancoding:
+  - expansion: Adds plates to the autolathe
+  Couls:
+  - bugfix: restored lighting to areas that were supposed to have it
+  Fikou:
+  - refactor: turns stickmen into basic mobs
+  - balance: wizard paper robe now makes stickmen hostile to things that arent stickmen
+      and arent you
+  - bugfix: observe button now works even if your tgui doesnt
+  FlamingLily:
+  - bugfix: Narsie no longer stops the shuttle leaving from beyond the eldritch grave.
+  - bugfix: RPDs now have four different directions to choose from once again
+  - expansion: You can now feel pain when having surgery done on you while you're
+      conscious. Oh god.
+  Gamer025:
+  - bugfix: RCDs end their attack chain early now
+  Ghommie:
+  - admin: Fixed the Everyone Is A Traitor admin button not affecting latejoins.
+  - balance: Lowered the cost of the obsessed midround ruleset from 10 to 3.
+  Guillaume Prata:
+  - bugfix: Removes some of the odd items that didn't have an icon from the Janitor's
+      winter coat suit store and fixes Security's ones being unable to hold the base
+      items like internals.
+  - qol: You can now toggle a space heater on/off with right click.
+  JohnFulpWillard:
+  - spellcheck: Being shoved into a disposal unit tells you who shoved you in, rather
+      than saying you shoved yourself.
+  KRVH:
+  - spellcheck: Removed the extra 's' in the food/drug eating verb.
+  Mooshimi:
+  - admin: admins are now alerted when miasma, freon, and co2 canisters are opened,
+      and are informed of the contents of canisters containing dangerous gases in
+      general, not just the spooky gas on its own.
+  - code_imp: added overall logging for all canisters opened
+  - balance: lowered disco ball's max volume
+  Nari Harimoto:
+  - bugfix: the aux base console now wont block an empty tile
+  SishTis:
+  - rscadd: If a human mob speaks with a language their tongue counts as native one
+      (like draconic for forked tongue), their speech will sound normally.
+  TemporalOroboros:
+  - balance: Tank explosions (the kind used by TTVs and singlecaps) now take tank
+      volume into account as well as scale faster at low pressures and much, much
+      slower at high pressures.
+  - balance: The research doppler array in toxins now grants more points at lower
+      explosion ranges. The maximum cash generation is practically unchanged though.
+  - balance: The blastcannon has experienced negligible net change to its range given
+      bog-standard TTVs.
+  TheSmallBlue:
+  - bugfix: pressing the close button while entering a mob as a ghost will no longer
+      force you to become that mob.
+  - bugfix: you can no longer ghost and re-enter posibrains indefinitely.
+  Timberpoes:
+  - bugfix: Attacking something after you've deactivated the Chameleon mutation or
+      changeling Chameleon Skin power should no longer turn you partially transparent.
+  - bugfix: Fixed an issue with ping display that could cause display and chat errors
+      on exceptionally long shifts.
+  - balance: The Odysseus no longer fires magical syringes that only react their contents
+      when the target is hit. It now fires syringes that react as soon as your fire
+      your Ody's syringe gun. You have been warned.
+  TiviPlus:
+  - bugfix: Fix space lighting with lattices
+  Wallem:
+  - bugfix: Flyswatter can now swat ants
+  esainane:
+  - bugfix: The HFR will now once again use warning colors on the iron content indicator
+      when dangerous levels of iron content are present.
+  - qol: When configuring smart pipes, the RPD will now only spark if the configuration
+      actually changed, and the RPD now provides feedback if configuration couldn't
+      change.
+  - bugfix: The HFR interface now uses correct units, and avoids references to tickrate.
+  - bugfix: The HFR no longer rapidly absorbs all available fuel from the fuel port
+      at rates far exceeding the fuel injection rate.
+  - bugfix: You can no longer leave HFR moderator injection uninteractably on with
+      cooling disabled.
+  - spellcheck: Fix truely -> truly in a tip of the round
+  lyricalpaws:
+  - qol: Adds a new mention to the epinephrine pens about allergies
+  oranges:
+  - rscadd: Added french kissing to the game
+  sqnztb:
+  - bugfix: Fluid ducts now properly start as "omni" instead of "grey."
+  - bugfix: fixes a bad icon state for filled mid_joiners
+  zxaber:
+  - balance: 'The cyborg emergency reboot module is now reusable. sound: The cyborg
+      emergency reboot module will now make a different sound when rebooting AI shells
+      or borgs without a ghost.'
+2021-09-17:
+  JohnFulpWillard:
+  - bugfix: Malf AI's who shunt onto an APC can once again be tracked by the nuke
+      disk pinpointer.
+  Watermelon914:
+  - admin: Adds the signal handler circuit component.
+  - qol: Big dropdowns on the integrated circuit ui will now expand when opened.
+  - bugfix: Fixed any ports returning a string if set to the value of 0.
+  - admin: Admins can now save custom shells from integrated circuits.
+  Zytolg:
+  - bugfix: Removes the spare stool from the Icebox Theater.
+  ninjanomnom:
+  - bugfix: Shamebrero and maybe some other greyscale icons flashing have been fixed
+2021-09-18:
+  AccountName5:
+  - admin: Revenant emag now logs correctly.
+  - bugfix: 'Roulette: You no longer win when betting on even and rolling 0.'
+  Arkatos:
+  - bugfix: Station alert console will now always show a correct icon when an alert
+      is added or cleared.
+  - bugfix: Station alert console and Canary application icons will no longer get
+      stuck in an alert mode forever.
+  Ghommie:
+  - bugfix: Fixed betting on singles never paying out if the chosen number is 0.
+  Guillaume Prata:
+  - qol: Engineering, Atmos and the CE's tablets come preinstalled with Canary (Alarm
+      monitor) now.
+  JohnFulpWillard:
+  - qol: Clown operatives have been split from Nuclear operatives in the antagonist
+      preferences menu.
+  - qol: The nukie preference icon's background nukies no longer overlap with the
+      main nukie, and a nuke has been added.
+  - bugfix: Agent IDs and other similar Chameleon gear can no longer be used/forged
+      while you have your hand blocked and/or are in critical condition.
+  LemonInTheDark:
+  - admin: Putting pdas/paper up against cameras is now logged. Not what is actually
+      written, I'm too scared of people injecting war and peace into the game logs
+      section of a log panel, but you'll be able to tell em off for spamming the poor
+      ai with messages
+  Melbert:
+  - rscadd: Icebox Chemistry Lab is now multi-z'd, with maintenance changes to match.
+  - bugfix: fixed a maintenance door in the icebox HFR room that had the wrong access
+      / name
+  Mooshimi:
+  - bugfix: GODMODE dummies can no longer be deafened by flashbangs
+  - rscadd: added disposals blast door at the end of tram disposals
+  Pepsilawn:
+  - admin: Mobs being forced to say things through ingame sources or admin magic will
+      now show up correctly in logs if whispered.
+  Sealed101:
+  - bugfix: Liquid Electricity blood packs in blood freezers now have proper labeling.
+  - bugfix: Donating Ethereal blood to a new bag now also properly labels it.
+  - qol: Balloon message upon labeling your blood pack with a pen for more clarity
+  Seris02:
+  - bugfix: hopefully fixes pellet clouds only spawning one projectile
+  Watermelon914:
+  - admin: Adds admin input requests circuit component
+  esainane:
+  - bugfix: The HFR now actually consumes oxygen used to mitigate iron content
+  tralezab:
+  - qol: Converted slaughter demons (and their friends) to antagonist panels
+  - expansion: Adds the Sparring God as a new sect!
+  - rscadd: MOONICORNS. Watch out for their horn!
+  - refactor: during a code refactor for cow, they may be SLIGHTLY faster or SLIGHTLY
+      slower as an accidental result

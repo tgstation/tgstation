@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - balance: "Replaces the hardcoded material restriction for exporting protolathe designs to autolathes with a variable that does the same when set FALSE. Energy bolas, gun part kits, tele shield, enegy bolas and jaws of life currently have it set FALSE. TL;DR: You can export designs like bluespace cells to autolathes."
+  - qol: "Added a chat feedback when unable to import designs to autolathes."
