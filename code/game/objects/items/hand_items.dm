@@ -159,18 +159,78 @@
 		if(table_smacks_left <= 0)
 			qdel(src)
 
-/obj/item/slapper/proc/offer_high_five(mob/living/carbon/user)
-	if(!istype(user) || user.has_status_effect(STATUS_EFFECT_HIGHFIVE))
+/obj/item/slapper/on_offered(mob/living/offerer)
+	. = TRUE
+
+	if(!istype(offerer) || offerer.has_status_effect(STATUS_EFFECT_OFFERING))
 		return
 
-	if(!(locate(/mob/living/carbon) in orange(1, user)))
-		visible_message(span_danger("[user] raises [user.p_their()] arm, looking around for a high-five, but there's no one around!"), \
+	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
+		visible_message(span_danger("[offerer] raises [offerer.p_their()] arm, looking around for a high-five, but there's no one around!"), \
 			span_warning("You post up, looking for a high-five, but finding no one within range!"), null, 2)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_alone)
-		return COMPONENT_OFFER_INTERRUPT
+		return
 
-	apply_status_effect(STATUS_EFFECT_HIGHFIVE, src)
-	return COMPONENT_OFFER_INTERRUPT
+	offerer.visible_message(span_notice("[offerer] raises [offerer.p_their()] arm, looking for a high-five!"), \
+		span_notice("You post up, looking for a high-five!"), null, 2)
+	offerer.apply_status_effect(STATUS_EFFECT_OFFERING, src)
+
+/// Yeah broh! This is where we do the high-fiving (or high-tenning :o)
+/obj/item/slapper/on_offer_taken(mob/living/giver, mob/living/taker)
+	. = TRUE
+
+	var/open_hands_taker
+	var/slappers_giver
+	for(var/i in taker.held_items) // see how many hands the taker has open for high'ing
+		if(isnull(i))
+			open_hands_taker++
+
+	if(!open_hands_taker)
+		to_chat(taker, span_warning("You can't high-five [giver] with no open hands!"))
+		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_full_hand) // not so successful now!
+		return
+
+	for(var/i in giver.held_items)
+		var/obj/item/slapper/slap_check = i
+		if(istype(slap_check))
+			slappers_giver++
+
+	if(!slappers_giver) // THE PRANKAGE
+		too_slow_p1(giver, taker)
+		return
+
+	if(slappers_giver >= 2) // we only check this if it's already established the taker has 2+ hands free
+		giver.visible_message(span_notice("[taker] enthusiastically high-tens [giver]!"), span_nicegreen("Wow! You're high-tenned [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
+		to_chat(taker, span_nicegreen("You give high-tenning [giver] your all!"))
+		playsound(giver, 'sound/weapons/slap.ogg', 100, TRUE, 1)
+		SEND_SIGNAL(giver, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_ten)
+		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_ten)
+	else
+		giver.visible_message(span_notice("[taker] high-fives [giver]!"), span_nicegreen("All right! You're high-fived by [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
+		to_chat(taker, span_nicegreen("You high-five [giver]!"))
+		playsound(giver, 'sound/weapons/slap.ogg', 50, TRUE, -1)
+		SEND_SIGNAL(giver, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
+		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
+	qdel(src)
+
+/// If we don't have any slappers in hand when someone goes to high-five us, we prank the hell out of them
+/obj/item/slapper/proc/too_slow_p1(mob/living/owner, mob/living/carbon/rube)
+	owner.visible_message(span_notice("[rube] rushes in to high-five [owner], but-"), span_nicegreen("[rube] falls for your trick just as planned, lunging for a high-five that no longer exists! Classic!"), ignored_mobs=rube)
+	to_chat(rube, span_nicegreen("You go in for [owner]'s high-five, but-"))
+	addtimer(CALLBACK(src, .proc/too_slow_p2, owner, rube), 0.5 SECONDS)
+
+/// Part two of the ultimate prank
+/obj/item/slapper/proc/too_slow_p2(mob/living/owner, mob/living/carbon/rube)
+	if(!owner || !rube)
+		qdel(src)
+		return
+	owner.visible_message(span_danger("[owner] pulls away from [rube]'s slap at the last second, dodging the high-five entirely!"), span_nicegreen("[rube] fails to make contact with your hand, making an utter fool of [rube.p_them()]self!"), span_hear("You hear a disappointing sound of flesh not hitting flesh!"), ignored_mobs=rube)
+	var/all_caps_for_emphasis = uppertext("NO! [owner] PULLS [owner.p_their()] HAND AWAY FROM YOURS! YOU'RE TOO SLOW!")
+	to_chat(rube, span_userdanger("[all_caps_for_emphasis]"))
+	playsound(owner, 'sound/weapons/thudswoosh.ogg', 100, TRUE, 1)
+	rube.Knockdown(1 SECONDS)
+	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/down_low)
+	SEND_SIGNAL(rube, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/too_slow)
+	qdel(src)
 
 /obj/item/noogie
 	name = "noogie"
@@ -295,24 +355,8 @@
 	blown_kiss.fire()
 	qdel(src)
 
-/obj/item/kisser/proc/offer_peck(mob/living/carbon/user)
-	if(!istype(user) || user.has_status_effect(STATUS_EFFECT_HIGHFIVE))
-		return
-
-	if(!(locate(/mob/living/carbon) in orange(1, user)))
-		visible_message(span_danger("[user] raises [user.p_their()] arm, looking around for a high-five, but there's no one around! How embarassing..."), \
-			span_warning("You post up, looking for a high-five, but finding no one within range! How embarassing..."), null, 2)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_alone)
-		return COMPONENT_OFFER_INTERRUPT
-
-	apply_status_effect(STATUS_EFFECT_OFFER_PECK, src)
-	return COMPONENT_OFFER_INTERRUPT
-
-/obj/item/kisser/proc/peck(mob/target, mob/user)
-	if(iscarbon(target))
-		var/mob/living/carbon/carbon_target = target
-		if(!carbon_target.get_bodypart(BODY_ZONE_HEAD))
-			user.visible_message(span_warning("[user] tries to give [target] \a [blown_kiss] at [target]!", span_notice("You blow \a [blown_kiss] at [target]!"))
+/obj/item/kisser/on_offered(mob/living/user)
+	return
 
 /obj/item/kisser/death
 	name = "kiss of death"

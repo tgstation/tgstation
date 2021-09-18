@@ -163,8 +163,8 @@
  * This handles creating an alert and adding an overlay to it
  */
 /mob/living/carbon/proc/give()
-	var/obj/item/receiving = get_active_held_item()
-	if(!receiving)
+	var/obj/item/offered_item = get_active_held_item()
+	if(!offered_item)
 		to_chat(src, span_warning("You're not holding anything to give!"))
 		return
 
@@ -172,22 +172,14 @@
 		to_chat(src, span_warning("You're unable to offer anything in your current state!"))
 		return
 
-	if(SEND_SIGNAL(receiving, COMSIG_ITEM_OFFERING, src) & COMPONENT_OFFER_INTERRUPT)
+	if(offered_item.on_offered(src)) // see if the item interrupts with its own behavior
 		return
 
-	visible_message(span_notice("[src] is offering [receiving]."), \
-					span_notice("You offer [receiving]."), null, 2)
-	for(var/mob/living/carbon/C in orange(1, src)) //Fixed that, now it shouldn't be able to give benos stunbatons and IDs
-		if(!CanReach(C))
-			continue
+	visible_message(span_notice("[src] is offering [offered_item]."), \
+					span_notice("You offer [offered_item]."), null, 2)
 
-		if(!C.can_hold_items())
-			continue
+	apply_status_effect(STATUS_EFFECT_OFFERING, offered_item)
 
-		var/atom/movable/screen/alert/give/G = C.throw_alert("[src]", /atom/movable/screen/alert/give)
-		if(!G)
-			continue
-		G.setup(C, src, receiving)
 
 /**
  * Proc called when the player clicks the give alert
@@ -201,28 +193,22 @@
 /mob/living/carbon/proc/take(mob/living/carbon/giver, obj/item/I)
 	clear_alert("[giver]")
 	if(get_dist(src, giver) > 1)
-		to_chat(src, span_warning("[giver] is out of range! "))
+		to_chat(src, span_warning("[giver] is out of range!"))
 		return
 	if(!I || giver.get_active_held_item() != I)
-		to_chat(src, span_warning("[giver] is no longer holding the item they were offering! "))
+		to_chat(src, span_warning("[giver] is no longer holding the item they were offering!"))
 		return
 	if(!get_empty_held_indexes())
 		to_chat(src, span_warning("You have no empty hands!"))
 		return
+
+	if(I.on_offer_taken(giver, src)) // see if the item has special behavior for being accepted
+		return
+
 	if(!giver.temporarilyRemoveItemFromInventory(I))
 		visible_message(span_notice("[giver] tries to hand over [I] but it's stuck to them...."))
 		return
+
 	visible_message(span_notice("[src] takes [I] from [giver]"), \
 					span_notice("You take [I] from [giver]"))
 	put_in_hands(I)
-
-/// Spin-off of [/mob/living/carbon/proc/give] exclusively for high-fiving
-/mob/living/carbon/proc/offer_high_five(obj/item/slap)
-	if(has_status_effect(STATUS_EFFECT_HIGHFIVE))
-		return
-	if(!(locate(/mob/living/carbon) in orange(1, src)))
-		visible_message(span_danger("[src] raises [p_their()] arm, looking around for a high-five, but there's no one around!"), \
-			span_warning("You post up, looking for a high-five, but finding no one within range!"), null, 2)
-		return
-
-	apply_status_effect(STATUS_EFFECT_HIGHFIVE, slap)

@@ -1204,3 +1204,12 @@ attack_basic_mob
 /// Called on [/datum/element/openspace_item_click_handler/proc/on_afterattack]. Check the relative file for information.
 /obj/item/proc/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
 	stack_trace("Undefined handle_openspace_click() behaviour. Ascertain the openspace_item_click_handler element has been attached to the right item and that its proc override doesn't call parent.")
+
+
+/obj/item/proc/on_offered(mob/living/user)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFERING, user) & COMPONENT_OFFER_INTERRUPT)
+		return TRUE
+
+/obj/item/proc/on_offer_taken(mob/living/giver, mob/living/taker)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, giver, taker) & COMPONENT_OFFER_INTERRUPT)
+		return TRUE
