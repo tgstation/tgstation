@@ -196,13 +196,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///How much hallucination should we produce per unit of power?
 	var/hallucination_power = 0.1
 	///The efficiency of the antinoblium interaction.
-	var/antinoblium_efficiency = 0.0
+	var/antinoblium_efficiency = 0
 	///Delta from antinoblium_efficiency and antinoblium composition.
-	var/antinoblium_efficiency_delta = 0.0
+	var/antinoblium_efficiency_delta = 0
 	///Inverse of 1 - antinoblium_efficiency.
-	var/antinoblium_multiplier = 1.0
+	var/antinoblium_multiplier = 1
 	///Powerloss composition.
-	var/powerloss_composition = 0.0
+	var/powerloss_composition = 0
 	///Our internal radio
 	var/obj/item/radio/radio
 	///The key our internal radio uses
@@ -500,7 +500,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	//We play delam/neutral sounds at a rate determined by power and damage
 	if(last_accent_sound < world.time && prob(20))
-		var/aggression = min(((damage / 800) * (power / 2500)), 1.0) * 100
+		var/aggression = min(((damage / 800) * (power / 2500)), 1) * 100
 		if(damage >= 300)
 			playsound(src, "smdelam", max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
 		else
@@ -640,7 +640,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Ramps up in increments of 0.02 * antinoblium_multiplier, and down in increments of 0.02 / antinoblium_multiplier, up to the proportion of powerloss_composition.
 		//Given infinite time, powerloss_dynamic_scaling = powerloss_composition.
 		//Some value between 0 and 1.
-		powerloss_composition = 0.0
+		var/powerloss_composition = 0
 		for(var/gas_id in powerloss_gas)
 			powerloss_composition += gas_comp[gas_id]
 		if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && powerloss_composition > POWERLOSS_INHIBITION_GAS_THRESHOLD) //If there are more then 20 mols, and more then 20% co2
