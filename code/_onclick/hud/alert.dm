@@ -328,13 +328,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	src.giver = giver
 	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, override = TRUE) //Override to prevent runtimes when people offer a item multiple times
 
-/atom/movable/screen/alert/give/proc/check_in_range(atom/taker)
-	SIGNAL_HANDLER
-
-	if (!giver.CanReach(taker))
-		to_chat(owner, span_warning("You moved out of range of [giver]!"))
-		owner.clear_alert("[giver]")
-
 /atom/movable/screen/alert/give/Click(location, control, params)
 	. = ..()
 	if(!.)
@@ -345,6 +338,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 	var/mob/living/carbon/C = owner
 	C.take(giver, receiving)
+
+/atom/movable/screen/alert/give/proc/check_in_range(atom/taker)
+	SIGNAL_HANDLER
+
+	if (!giver.CanReach(taker))
+		to_chat(owner, span_warning("You moved out of range of [giver]!"))
+		owner.clear_alert("[giver]")
 
 /// Gives the player the option to succumb while in critical condition
 /atom/movable/screen/alert/succumb

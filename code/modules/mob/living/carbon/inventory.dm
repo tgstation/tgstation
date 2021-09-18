@@ -172,6 +172,10 @@
 		to_chat(src, span_warning("You're unable to offer anything in your current state!"))
 		return
 
+	if(has_status_effect(STATUS_EFFECT_OFFERING))
+		to_chat(src, span_warning("You're already offering up something!"))
+		return
+
 	if(offered_item.on_offered(src)) // see if the item interrupts with its own behavior
 		return
 
