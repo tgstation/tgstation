@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed betting on singles never paying out if the chosen number is 0."

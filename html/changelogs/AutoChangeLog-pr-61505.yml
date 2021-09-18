@@ -1,4 +1,0 @@
-author: "Pepsilawn"
-delete-after: True
-changes: 
-  - admin: "Mobs being forced to say things through ingame sources or admin magic will now show up correctly in logs if whispered."

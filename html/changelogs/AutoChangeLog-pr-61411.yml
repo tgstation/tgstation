@@ -1,6 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes: 
-  - bugfix: "Liquid Electricity blood packs in blood freezers now have proper labeling."
-  - bugfix: "Donating Ethereal blood to a new bag now also properly labels it."
-  - qol: "Balloon message upon labeling your blood pack with a pen for more clarity"
