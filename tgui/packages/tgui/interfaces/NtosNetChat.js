@@ -1,7 +1,6 @@
 import { useBackend } from '../backend';
-import { Box, Button, Dimmer, Icon, Input, Section, Stack, Table, Tooltip } from '../components';
+import { Box, Button, Dimmer, Icon, Input, Section, Stack } from '../components';
 import { NtosWindow } from '../layouts';
-import { StackingConsole } from './StackingConsole';
 
 // byond defines for the program state
 const CLIENT_ONLINE = 2;

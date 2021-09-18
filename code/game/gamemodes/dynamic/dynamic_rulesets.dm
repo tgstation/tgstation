@@ -18,7 +18,7 @@
 	var/list/mob/candidates = list()
 	/// List of players that were selected for this rule
 	var/list/datum/mind/assigned = list()
-	/// Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag
+	/// Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag.
 	var/antag_flag = null
 	/// The antagonist datum that is assigned to the mobs mind on ruleset execution.
 	var/datum/antagonist/antag_datum = null
@@ -57,6 +57,8 @@
 	var/datum/game_mode/dynamic/mode = null
 	/// If a role is to be considered another for the purpose of banning.
 	var/antag_flag_override = null
+	/// If set, will check this preference instead of antag_flag.
+	var/antag_preference = null
 	/// If a ruleset type which is in this list has been executed, then the ruleset will not be executed.
 	var/list/blocking_rules = list()
 	/// The minimum amount of players required for the rule to be considered.
@@ -208,14 +210,13 @@
 			candidates.Remove(candidate_player)
 			continue
 
-		if(antag_flag_override)
-			if(!(antag_flag_override in candidate_client.prefs.be_special) || is_banned_from(candidate_player.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
-				candidates.Remove(candidate_player)
-				continue
-		else
-			if(!(antag_flag in candidate_client.prefs.be_special) || is_banned_from(candidate_player.ckey, list(antag_flag, ROLE_SYNDICATE)))
-				candidates.Remove(candidate_player)
-				continue
+		if (!((antag_preference || antag_flag) in candidate_client.prefs.be_special))
+			candidates.Remove(candidate_player)
+			continue
+
+		if (is_banned_from(candidate_player.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
+			candidates.Remove(candidate_player)
+			continue
 
 		// If this ruleset has exclusive_roles set, we want to only consider players who have those
 		// job prefs enabled and are eligible to play that job. Otherwise, continue as before.

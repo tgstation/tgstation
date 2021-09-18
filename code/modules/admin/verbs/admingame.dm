@@ -59,8 +59,8 @@
 	body += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a> - "
 	//Default to client logs if available
 	var/source = LOGSRC_MOB
-	if(M.client)
-		source = LOGSRC_CLIENT
+	if(M.ckey)
+		source = LOGSRC_CKEY
 	body += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_src=[source]'>LOGS</a>\] <br>"
 
 	body += "<b>Mob type</b> = [M.type]<br><br>"
@@ -386,7 +386,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(view_size.getView() == view_size.default)
 		view_size.setTo(input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,37) - 7)
 	else
-		view_size.resetToDefault(getScreenSize(prefs.widescreenpref))
+		view_size.resetToDefault(getScreenSize(prefs.read_preference(/datum/preference/toggle/widescreen)))
 
 	log_admin("[key_name(usr)] changed their view range to [view].")
 	//message_admins("\blue [key_name_admin(usr)] changed their view range to [view].") //why? removed by order of XSI

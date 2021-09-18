@@ -275,16 +275,18 @@
 
 ///Returns the client runechat visible messages preference according to the message type.
 /atom/proc/runechat_prefs_check(mob/target, visible_message_flags = NONE)
-	if(!target.client?.prefs.chat_on_map || !target.client.prefs.see_chat_non_mob)
+	if(!target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 		return FALSE
-	if(visible_message_flags & EMOTE_MESSAGE && !target.client.prefs.see_rc_emotes)
+	if (!target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs))
+		return FALSE
+	if(visible_message_flags & EMOTE_MESSAGE && !target.client.prefs.read_preference(/datum/preference/toggle/see_rc_emotes))
 		return FALSE
 	return TRUE
 
 /mob/runechat_prefs_check(mob/target, visible_message_flags = NONE)
-	if(!target.client?.prefs.chat_on_map)
+	if(!target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 		return FALSE
-	if(visible_message_flags & EMOTE_MESSAGE && !target.client.prefs.see_rc_emotes)
+	if(visible_message_flags & EMOTE_MESSAGE && !target.client.prefs.read_preference(/datum/preference/toggle/see_rc_emotes))
 		return FALSE
 	return TRUE
 
@@ -655,38 +657,6 @@
 		return
 
 	limb_attack_self()
-
-
-/**
- * Get the notes of this mob
- *
- * This actually gets the mind datums notes
- */
-/mob/verb/memory()
-	set name = "Notes"
-	set category = "IC"
-	set desc = "View your character's notes memory."
-	if(mind)
-		mind.show_memory(src)
-	else
-		to_chat(src, "You don't have a mind datum for some reason, so you can't look at your notes, if you had any.")
-
-/**
- * Add a note to the mind datum
- */
-/mob/verb/add_memory(msg as message)
-	set name = "Add Note"
-	set category = "IC"
-	if(mind)
-		if (world.time < memory_throttle_time)
-			return
-		memory_throttle_time = world.time + 5 SECONDS
-		msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
-		msg = sanitize(msg)
-
-		mind.store_memory(msg)
-	else
-		to_chat(src, "You don't have a mind datum for some reason, so you can't add a note to it.")
 
 /**
  * Allows you to respawn, abandoning your current mob
@@ -1360,3 +1330,59 @@
 		client.movingmob.client_mobs_in_contents -= src
 		UNSETEMPTY(client.movingmob.client_mobs_in_contents)
 		client.movingmob = null
+
+
+///Shows a tgui window with memories
+/mob/verb/memory()
+	set name = "Memories"
+	set category = "IC"
+	set desc = "View your character's memories."
+	if(!mind)
+		var/fail_message = "You have no mind!"
+		if(isobserver(src))
+			fail_message += " You have to be in the current round at some point to have one."
+		to_chat(src, span_warning(fail_message))
+		return
+	if(!mind.memory_panel)
+		mind.memory_panel = new(usr, mind)
+	mind.memory_panel.ui_interact(usr)
+
+/datum/memory_panel
+	var/datum/mind/mind_reference
+	var/client/holder //client of whoever is using this datum
+
+/datum/memory_panel/New(user, mind_reference)//user can either be a client or a mob due to byondcode(tm)
+	if (istype(user, /client))
+		var/client/user_client = user
+		holder = user_client //if its a client, assign it to holder
+	else
+		var/mob/user_mob = user
+		holder = user_mob.client //if its a mob, assign the mob's client to holder
+	src.mind_reference = mind_reference
+
+/datum/memory_panel/Destroy(force)
+	mind_reference.memory_panel = null
+	. = ..()
+
+/datum/memory_panel/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/memory_panel/ui_close()
+	qdel(src)
+
+/datum/memory_panel/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MemoryPanel")
+		ui.open()
+
+/datum/memory_panel/ui_data(mob/user)
+	var/list/data = list()
+	var/list/memories = list()
+
+	for(var/memory_key in user?.mind.memories)
+		var/datum/memory/memory =  user.mind.memories[memory_key]
+		memories += list(list("name" = memory.name, "quality" = memory.story_value))
+
+	data["memories"] = memories
+	return data

@@ -70,9 +70,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	max_ambience_cooldown = 220 SECONDS
 
 /area/asteroid/nearstation
-	static_lighting = FALSE
-	base_lighting_alpha = 255
-	base_lighting_color = COLOR_WHITE
+	static_lighting = TRUE
 	ambience_index = AMBIENCE_RUINS
 	always_unpowered = FALSE
 	requires_power = TRUE
@@ -170,7 +168,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance
 	name = "Generic Maintenance"
 	ambience_index = AMBIENCE_MAINT
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
 	airlock_wires = /datum/wires/airlock/maint
 	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
 
@@ -1159,6 +1157,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/prison
 	name = "\improper Prison Wing"
 	icon_state = "sec_prison"
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
 
 /area/security/prison/toilet //radproof
 	name = "\improper Prison Toilet"

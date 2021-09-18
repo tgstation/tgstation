@@ -101,6 +101,8 @@
 		display_results(user, target, span_notice("You begin to insert [tool] into [target]'s [parse_zone(target_zone)]..."),
 			span_notice("[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)]."),
 			span_notice("[user] begins to insert something into [target]'s [parse_zone(target_zone)]."))
+		display_pain(target, "You can feel your something being placed in your [parse_zone(target_zone)]!")
+
 
 	else if(implement_type in implements_extract)
 		current_type = "extract"
@@ -127,6 +129,7 @@
 				display_results(user, target, span_notice("You begin to extract [target_organ] from [target]'s [parse_zone(target_zone)]..."),
 					span_notice("[user] begins to extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
 					span_notice("[user] begins to extract something from [target]'s [parse_zone(target_zone)]."))
+				display_pain(target, "You can feel your [target_organ] being removed from your [parse_zone(target_zone)]!")
 			else
 				return -1
 
@@ -148,12 +151,14 @@
 		display_results(user, target, span_notice("You insert [tool] into [target]'s [parse_zone(target_zone)]."),
 			span_notice("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!"),
 			span_notice("[user] inserts something into [target]'s [parse_zone(target_zone)]!"))
+		display_pain(target, "Your [parse_zone(target_zone)] throbs with pain as your new [tool] comes to life!")
 
 	else if(current_type == "extract")
 		if(target_organ && target_organ.owner == target)
 			display_results(user, target, span_notice("You successfully extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
 				span_notice("[user] successfully extracts [target_organ] from [target]'s [parse_zone(target_zone)]!"),
 				span_notice("[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!"))
+			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain, you can't feel your [target_organ] anymore!")
 			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 			target_organ.Remove(target)
 			target_organ.forceMove(get_turf(target))

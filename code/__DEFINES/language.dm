@@ -17,6 +17,7 @@
 #define LANGUAGE_HAT "hat"
 #define LANGUAGE_HIGH "high"
 #define LANGUAGE_MALF "malf"
+#define LANGUAGE_PIRATE "pirate"
 #define LANGUAGE_MASTER "master"
 #define LANGUAGE_SOFTWARE "software"
 #define LANGUAGE_STONER "stoner"

@@ -68,7 +68,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "spacemanstrumpet-grow"
 	icon_dead = "spacemanstrumpet-dead"
-	mutatelist = list()
+	mutatelist = null
 	genes = list(/datum/plant_gene/reagent/polypyr, /datum/plant_gene/trait/preserved)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 	rarity = 30
@@ -106,7 +106,7 @@
 	species = "fraxinella"
 	plantname = "Fraxinella Plants"
 	product = /obj/item/food/grown/poppy/geranium/fraxinella
-	mutatelist = list()
+	mutatelist = null
 	rarity = 15
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/fuel/oil = 0.05)
 
@@ -199,7 +199,7 @@
 	icon_dead = "sunflower-dead"
 	product = /obj/item/food/grown/moonflower
 	genes = list(/datum/plant_gene/trait/glow/purple, /datum/plant_gene/trait/preserved)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/ethanol/moonshine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 15
 	graft_gene = /datum/plant_gene/trait/glow/purple
@@ -223,7 +223,7 @@
 	icon_dead = "sunflower-dead"
 	product = /obj/item/grown/novaflower
 	genes = list(/datum/plant_gene/trait/backfire/novaflower_heat, /datum/plant_gene/trait/attack/novaflower_attack, /datum/plant_gene/trait/preserved)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.25, /datum/reagent/consumable/capsaicin = 0.3, /datum/reagent/consumable/nutriment = 0)
 	rarity = 20
 

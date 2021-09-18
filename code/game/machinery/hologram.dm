@@ -183,7 +183,7 @@ Possible to do for anyone motivated enough:
 		if(outgoing_call)
 			outgoing_call.ConnectionFailure(src)
 
-/obj/machinery/holopad/obj_break()
+/obj/machinery/holopad/atom_break()
 	. = ..()
 	if(outgoing_call)
 		outgoing_call.ConnectionFailure(src)
@@ -478,13 +478,13 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
 		if(HC.connected_holopad == src)
-			if(speaker == HC.hologram && HC.user.client?.prefs.chat_on_map)
+			if(speaker == HC.hologram && HC.user.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 				HC.user.create_chat_message(speaker, message_language, raw_message, spans)
 			else
 				HC.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
 	if(outgoing_call?.hologram && speaker == outgoing_call.user)
-		outgoing_call.hologram.say(raw_message)
+		outgoing_call.hologram.say(raw_message, sanitize = FALSE)
 
 	if(record_mode && speaker == record_user)
 		record_message(speaker,raw_message,message_language)
@@ -686,7 +686,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		if(HOLORECORD_SAY)
 			var/message = entry[2]
 			if(replay_holo)
-				replay_holo.say(message)
+				replay_holo.say(message, sanitize = FALSE)
 		if(HOLORECORD_SOUND)
 			playsound(src,entry[2],50,TRUE)
 		if(HOLORECORD_DELAY)
