@@ -24,7 +24,7 @@
 	QDEL_NULL(signed_by)
 	var/datum/religion_sect/spar/sect = GLOB.religious_sect
 	sect?.existing_contract = null
-	. = ..()
+	return ..()
 
 /obj/item/sparring_contract/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
