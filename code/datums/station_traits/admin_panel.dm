@@ -75,7 +75,7 @@
 			return TRUE
 		if ("setup_future_traits")
 			if (too_late_for_future_traits())
-				to_chat(usr, span_warning("It's too to add future station traits, the round is already over!"))
+				to_chat(usr, span_warning("It's too late to add future station traits, the round is already over!"))
 				return TRUE
 
 			var/list/new_future_traits = list()
