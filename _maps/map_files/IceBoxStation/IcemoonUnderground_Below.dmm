@@ -390,6 +390,10 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating/snowed/icemoon,
 /area/mine/mechbay)
+"mw" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron/smooth,
+/area/mine/eva)
 "mB" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing/corner,
@@ -573,8 +577,8 @@
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
 "tE" = (
-/obj/structure/closet/emcloset,
 /obj/machinery/newscaster/directional/north,
+/obj/structure/closet/firecloset,
 /turf/open/floor/iron/dark,
 /area/mine/eva)
 "tZ" = (
@@ -607,6 +611,7 @@
 /area/mine/eva)
 "vx" = (
 /obj/structure/closet/crate,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
 "vB" = (
@@ -828,6 +833,7 @@
 "ED" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
 /area/mine/eva)
 "EX" = (
@@ -1085,6 +1091,13 @@
 "MP" = (
 /turf/closed/wall/ice,
 /area/mine/mechbay)
+"MQ" = (
+/obj/effect/turf_decal/trimline,
+/obj/machinery/shower{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/mine/eva)
 "Ng" = (
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating/snowed/icemoon,
@@ -1160,19 +1173,6 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
-/area/mine/eva)
-"QD" = (
-/obj/machinery/light/small/directional/north,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark/side{
-	dir = 1
-	},
 /area/mine/eva)
 "QN" = (
 /obj/structure/cable,
@@ -1350,15 +1350,6 @@
 "Wd" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
-/area/mine/eva)
-"Wh" = (
-/obj/machinery/light/small/directional/south,
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark/side,
 /area/mine/eva)
 "Wj" = (
 /obj/structure/grille,
@@ -22689,10 +22680,10 @@ NB
 GR
 NB
 NB
-QD
-Dc
-Wh
-tZ
+Rn
+HA
+BT
+Uu
 fG
 Sy
 rZ
@@ -22945,10 +22936,10 @@ Wl
 Ra
 Mw
 pI
-NB
-Rn
-HA
-BT
+pj
+mw
+zq
+MQ
 Uu
 If
 Jv
