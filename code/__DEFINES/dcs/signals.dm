@@ -1479,4 +1479,7 @@
 ///Called when the ticker sets up the game for start
 #define COMSIG_TICKER_ENTER_SETTING_UP "comsig_ticker_enter_setting_up"
 
+/// Called when the round has started, but before GAME_STATE_PLAYING
+#define COMSIG_TICKER_ROUND_STARTING "comsig_ticker_round_starting"
+
 #define COMSIG_GREYSCALE_CONFIG_REFRESHED "greyscale_config_refreshed"
