@@ -157,6 +157,7 @@
 		"wirebrush",
 		"wirecutters",
 		"wrench",
+		"razor",
 	)
 
 /datum/techweb_node/basic_medical

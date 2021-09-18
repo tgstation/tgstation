@@ -1229,3 +1229,4 @@
 	materials = list(/datum/material/iron = 75)
 	build_path = /obj/item/razor
 	category = list("initial","Medical")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
