@@ -470,8 +470,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	explode()
 
 /obj/machinery/power/supermatter_crystal/proc/add_matter_power(added_power)
-	matter_power += added_power * antinoblium_multiplier
-
+	var/matter_power_gain = added_power * antinoblium_multiplier
+	matter_power += matter_power_gain
+	return matter_power_gain
 
 /obj/machinery/power/supermatter_crystal/process_atmos()
 	if(!processes) //Just fuck me up bro
@@ -629,8 +630,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			var/consumed_miasma = clamp(((miasma_pp - MIASMA_CONSUMPTION_PP) / (miasma_pp + MIASMA_PRESSURE_SCALING)) * (1 + (gasmix_power_ratio * MIASMA_GASMIX_SCALING)), MIASMA_CONSUMPTION_RATIO_MIN, MIASMA_CONSUMPTION_RATIO_MAX)
 			consumed_miasma *= gas_comp[/datum/gas/miasma] * combined_gas
 			if(consumed_miasma)
-				removed.gases[/datum/gas/miasma][MOLES] -= consumed_miasma * antinoblium_multiplier
-				add_matter_power(consumed_miasma * MIASMA_POWER_GAIN)
+				removed.gases[/datum/gas/miasma][MOLES] -= add_matter_power(consumed_miasma * MIASMA_POWER_GAIN)
 
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them.
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
