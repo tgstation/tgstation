@@ -504,7 +504,6 @@
 			return TRUE
 		if(L.stat == DEAD)
 			return FALSE
-		var/mob/living/living_firer = firer
 		if(!hit_prone_targets) // If target not able to use items, move and stand - or if they're just dead, pass over.
 			if(!L.density)
 				return FALSE
