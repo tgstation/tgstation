@@ -52,30 +52,31 @@
 	jobtype = /datum/job/research_director
 
 	id = /obj/item/card/id/advanced/silver
+	id_trim = /datum/id_trim/job/research_director
+	uniform = /obj/item/clothing/under/rank/rnd/research_director
+	suit = /obj/item/clothing/suit/toggle/labcoat
+	backpack_contents = list(
+		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/modular_computer/tablet/preset/advanced/command = 1,
+		)
 	belt = /obj/item/pda/heads/rd
 	ears = /obj/item/radio/headset/heads/rd
-	uniform = /obj/item/clothing/under/rank/rnd/research_director
 	shoes = /obj/item/clothing/shoes/sneakers/brown
-	suit = /obj/item/clothing/suit/toggle/labcoat
-	l_hand = /obj/item/clipboard
 	l_pocket = /obj/item/laser_pointer
-	backpack_contents = list(/obj/item/melee/baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced/command=1)
+	l_hand = /obj/item/clipboard
 
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/science
 	duffelbag = /obj/item/storage/backpack/duffelbag/science
 
-	skillchips = list(/obj/item/skillchip/job/research_director)
-
 	chameleon_extras = /obj/item/stamp/rd
-
-	id_trim = /datum/id_trim/job/research_director
+	skillchips = list(/obj/item/skillchip/job/research_director)
 
 /datum/outfit/job/rd/rig
 	name = "Research Director (Hardsuit)"
 
-	l_hand = null
-	mask = /obj/item/clothing/mask/breath
 	suit = /obj/item/clothing/suit/space/hardsuit/rd
 	suit_store = /obj/item/tank/internals/oxygen
+	mask = /obj/item/clothing/mask/breath
+	l_hand = null
 	internals_slot = ITEM_SLOT_SUITSTORE
