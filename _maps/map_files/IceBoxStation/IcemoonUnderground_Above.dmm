@@ -799,6 +799,7 @@
 "ey" = (
 /obj/structure/rack,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/smooth_large,
 /area/cargo/warehouse)
 "eG" = (
@@ -1351,6 +1352,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
+"hs" = (
+/obj/structure/railing,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
 "ht" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/structure/cable,
@@ -1945,6 +1950,11 @@
 /obj/structure/flora/tree/pine,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/unexplored)
+"kz" = (
+/obj/structure/flora/grass/both,
+/obj/structure/railing,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
 "kA" = (
 /obj/structure/sign/painting/library{
 	pixel_y = 32
@@ -1968,6 +1978,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/small/directional/north,
 /obj/machinery/firealarm/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/production)
 "kF" = (
@@ -2621,6 +2632,8 @@
 "od" = (
 /obj/structure/rack,
 /obj/item/pickaxe,
+/obj/item/gps/mining,
+/obj/item/gps/mining,
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
 "og" = (
@@ -3096,6 +3109,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/machinery/door/firedoor/border_only,
 /turf/open/floor/iron/dark/side,
 /area/mine/eva)
 "qc" = (
@@ -3190,6 +3204,12 @@
 	},
 /turf/open/floor/iron,
 /area/science/xenobiology)
+"qD" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
 "qG" = (
 /obj/structure/sign/poster/contraband/random,
 /turf/closed/wall,
@@ -3631,6 +3651,12 @@
 /obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating,
 /area/mine/eva)
+"sC" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
 "sE" = (
 /obj/machinery/space_heater,
 /obj/structure/disposalpipe/segment{
@@ -4117,6 +4143,7 @@
 "uN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "uP" = (
@@ -4213,6 +4240,13 @@
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"vn" = (
+/obj/structure/flora/grass/brown,
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
 "vp" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -4485,6 +4519,17 @@
 "wS" = (
 /turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/unexplored)
+"wX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/clothing/mask/cigarette{
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/turf/open/floor/iron,
+/area/mine/eva)
 "wZ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -5029,6 +5074,8 @@
 /obj/item/pickaxe,
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/gps/mining,
+/obj/item/gps/mining,
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
 "zP" = (
@@ -5207,6 +5254,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured_half,
 /area/cargo/warehouse)
 "AF" = (
@@ -5633,6 +5681,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large,
 /area/cargo/warehouse)
+"Cr" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
 "Ct" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red{
@@ -5798,6 +5852,8 @@
 "Db" = (
 /obj/structure/closet/crate/secure/freezer/pizza,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/iron/smooth_large,
 /area/cargo/warehouse)
 "Dc" = (
@@ -5883,6 +5939,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/machinery/door/firedoor/border_only,
 /turf/open/floor/iron/dark/side,
 /area/mine/eva)
 "Dr" = (
@@ -6482,6 +6539,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/production)
 "FP" = (
@@ -7132,6 +7191,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth_large,
 /area/cargo/warehouse)
 "IC" = (
@@ -7153,6 +7213,10 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
+"IL" = (
+/obj/structure/flora/grass/green,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
 "IN" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 8
@@ -7962,6 +8026,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
+"Mp" = (
+/obj/structure/flora/grass/both,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "Mq" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/cable,
@@ -8588,10 +8656,10 @@
 /area/icemoon/underground/explored)
 "OV" = (
 /obj/structure/table,
-/obj/item/pickaxe,
-/obj/item/gps/mining,
-/obj/item/gps/mining,
-/obj/item/gps/mining,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/hand_labeler,
 /obj/machinery/power/apc/auto_name/south,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -9171,6 +9239,7 @@
 	pixel_x = 8;
 	pixel_y = 23
 	},
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/textured,
 /area/mine/mechbay)
 "RN" = (
@@ -9747,6 +9816,19 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"Ut" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/mine/eva)
 "Uw" = (
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
@@ -9881,6 +9963,20 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/department/medical)
+"UX" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/mine/eva)
 "UZ" = (
 /obj/machinery/button/door/directional/east{
 	id = "xenobio7";
@@ -10358,6 +10454,8 @@
 "XC" = (
 /obj/machinery/mineral/equipment_vendor,
 /obj/machinery/light/small/directional/south,
+/obj/machinery/light_switch/directional/south,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -10660,11 +10758,11 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "Zf" = (
-/obj/structure/table,
-/obj/item/stack/package_wrap,
-/obj/item/stack/package_wrap,
-/obj/item/stack/package_wrap,
-/obj/item/hand_labeler,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/box,
+/obj/structure/ladder,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -28478,11 +28576,11 @@ mO
 mO
 mO
 mO
-mO
-mO
-mO
-mO
-mO
+vn
+Cr
+Cr
+Cr
+sC
 Rj
 mO
 br
@@ -28735,11 +28833,11 @@ mO
 mO
 mO
 mO
-mO
-mO
-mO
-mO
-mO
+qD
+PG
+Mp
+PG
+hs
 Rj
 mO
 br
@@ -28993,10 +29091,10 @@ YH
 YH
 YH
 fA
-mO
-mO
-mO
-mO
+IL
+PG
+PG
+kz
 Rj
 mO
 br
@@ -29761,7 +29859,7 @@ mO
 rL
 Cg
 CZ
-rR
+wX
 Cd
 bf
 bq
@@ -32077,7 +32175,7 @@ jn
 DU
 QQ
 Cz
-Cz
+Ut
 So
 bR
 wN
@@ -32330,7 +32428,7 @@ WU
 Ge
 IA
 AC
-YD
+UX
 Wk
 Wk
 Wk

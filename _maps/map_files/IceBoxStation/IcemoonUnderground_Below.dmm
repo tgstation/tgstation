@@ -214,6 +214,7 @@
 "hx" = (
 /obj/structure/chair/stool/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/wood/large,
 /area/mine/eva)
 "hD" = (
@@ -322,9 +323,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -418,9 +416,6 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -559,6 +554,12 @@
 /obj/structure/railing,
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
+"sD" = (
+/obj/structure/girder,
+/turf/open/floor/plating{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/mine/eva)
 "sP" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/lootdrop/donkpockets,
@@ -573,6 +574,7 @@
 /area/icemoon/underground/explored)
 "tE" = (
 /obj/structure/closet/emcloset,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/mine/eva)
 "tZ" = (
@@ -1021,6 +1023,9 @@
 	c_tag = "Mining Break Room";
 	dir = 6
 	},
+/obj/machinery/light_switch/directional/north{
+	pixel_x = 9
+	},
 /turf/open/floor/stone,
 /area/mine/eva)
 "Lq" = (
@@ -1103,6 +1108,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark,
 /area/mine/mechbay)
 "Oj" = (
@@ -1281,7 +1287,9 @@
 /area/icemoon/underground/explored)
 "Tu" = (
 /obj/structure/girder,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/icemoon/underground/explored)
 "TC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -1419,7 +1427,6 @@
 "Ye" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark,
 /area/mine/mechbay)
 "YK" = (
@@ -22933,7 +22940,7 @@ qI
 fQ
 fQ
 fQ
-zp
+sD
 Wl
 Ra
 Mw
