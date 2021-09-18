@@ -551,7 +551,7 @@
 			var/max_iron_removable = IRON_OXYGEN_HEAL_PER_SECOND
 			var/iron_removed = min(max_iron_removable * delta_time, iron_content)
 			iron_content -= iron_removed
-			moderator_internal.gases[/datum/gas/oxygen] -= iron_removed * OXYGEN_MOLES_CONSUMED_PER_IRON_HEAL
+			moderator_internal.gases[/datum/gas/oxygen][MOLES] -= iron_removed * OXYGEN_MOLES_CONSUMED_PER_IRON_HEAL
 
 	if(prob(critical_threshold_proximity / 15))
 		var/grav_range = round(log(2.5, critical_threshold_proximity))

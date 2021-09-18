@@ -525,3 +525,55 @@
   - bugfix: Removes the spare stool from the Icebox Theater.
   ninjanomnom:
   - bugfix: Shamebrero and maybe some other greyscale icons flashing have been fixed
+2021-09-18:
+  AccountName5:
+  - admin: Revenant emag now logs correctly.
+  - bugfix: 'Roulette: You no longer win when betting on even and rolling 0.'
+  Arkatos:
+  - bugfix: Station alert console will now always show a correct icon when an alert
+      is added or cleared.
+  - bugfix: Station alert console and Canary application icons will no longer get
+      stuck in an alert mode forever.
+  Ghommie:
+  - bugfix: Fixed betting on singles never paying out if the chosen number is 0.
+  Guillaume Prata:
+  - qol: Engineering, Atmos and the CE's tablets come preinstalled with Canary (Alarm
+      monitor) now.
+  JohnFulpWillard:
+  - qol: Clown operatives have been split from Nuclear operatives in the antagonist
+      preferences menu.
+  - qol: The nukie preference icon's background nukies no longer overlap with the
+      main nukie, and a nuke has been added.
+  - bugfix: Agent IDs and other similar Chameleon gear can no longer be used/forged
+      while you have your hand blocked and/or are in critical condition.
+  LemonInTheDark:
+  - admin: Putting pdas/paper up against cameras is now logged. Not what is actually
+      written, I'm too scared of people injecting war and peace into the game logs
+      section of a log panel, but you'll be able to tell em off for spamming the poor
+      ai with messages
+  Melbert:
+  - rscadd: Icebox Chemistry Lab is now multi-z'd, with maintenance changes to match.
+  - bugfix: fixed a maintenance door in the icebox HFR room that had the wrong access
+      / name
+  Mooshimi:
+  - bugfix: GODMODE dummies can no longer be deafened by flashbangs
+  - rscadd: added disposals blast door at the end of tram disposals
+  Pepsilawn:
+  - admin: Mobs being forced to say things through ingame sources or admin magic will
+      now show up correctly in logs if whispered.
+  Sealed101:
+  - bugfix: Liquid Electricity blood packs in blood freezers now have proper labeling.
+  - bugfix: Donating Ethereal blood to a new bag now also properly labels it.
+  - qol: Balloon message upon labeling your blood pack with a pen for more clarity
+  Seris02:
+  - bugfix: hopefully fixes pellet clouds only spawning one projectile
+  Watermelon914:
+  - admin: Adds admin input requests circuit component
+  esainane:
+  - bugfix: The HFR now actually consumes oxygen used to mitigate iron content
+  tralezab:
+  - qol: Converted slaughter demons (and their friends) to antagonist panels
+  - expansion: Adds the Sparring God as a new sect!
+  - rscadd: MOONICORNS. Watch out for their horn!
+  - refactor: during a code refactor for cow, they may be SLIGHTLY faster or SLIGHTLY
+      slower as an accidental result

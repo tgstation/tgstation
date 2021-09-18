@@ -180,7 +180,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	if(message_mods[WHISPER_MODE] == MODE_WHISPER)
 		message_range = 1
-		log_talk(message, LOG_WHISPER)
+		log_talk(message, LOG_WHISPER, forced_by=forced)
 		if(stat == HARD_CRIT)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
