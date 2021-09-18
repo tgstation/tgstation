@@ -125,4 +125,3 @@ export const AntagInfoHeretic = (props, context) => {
     </Window>
   );
 };
-0;
