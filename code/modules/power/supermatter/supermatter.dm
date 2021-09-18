@@ -195,9 +195,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/bullet_energy = 2
 	///How much hallucination should we produce per unit of power?
 	var/hallucination_power = 0.1
-	///The efficiency of the antinoblium interaction.
+	///The efficiency of the antinoblium interaction. Converges to antinoblium composition faster at low temperature. Getting close to 1 will have very strong effects.
 	var/antinoblium_efficiency = 0
-	///Inverse of 1 - antinoblium_efficiency.
+	///Used to amplify some effects of the SM, including maximum power before gaining damage, and passively gain power when above 1. It is equal to the inverse of 1 - antinoblium_efficiency, and should never get below 1.
 	var/antinoblium_multiplier = 1
 	///Our internal radio
 	var/obj/item/radio/radio
@@ -638,7 +638,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Ramps up in increments of 0.02 * antinoblium_multiplier, and down in increments of 0.02 / antinoblium_multiplier, up to the proportion of powerloss_composition.
 		//Given infinite time, powerloss_dynamic_scaling = powerloss_composition.
 		//Some value between 0 and 1.
-		///The composition of the gasses that effect powerloss.
+		///The composition of the gasses that effect powerloss. Powerloss_dynamic_scaling converges to powerloss_composition.
 		var/powerloss_composition = 0
 		for(var/gas_id in powerloss_gas)
 			powerloss_composition += gas_comp[gas_id]
