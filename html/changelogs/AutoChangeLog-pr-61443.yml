@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an issue with ping display that could cause display and chat errors on exceptionally long shifts."

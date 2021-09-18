@@ -64,8 +64,9 @@
 	if(!direct_target)
 		var/modifiers = params2list(params)
 		loaded_projectile.preparePixelProjectile(target, user, modifiers, spread)
-	loaded_projectile.fire(null, direct_target)
+	var/obj/projectile/loaded_projectile_cache = loaded_projectile
 	loaded_projectile = null
+	loaded_projectile_cache.fire(null, direct_target)
 	return TRUE
 
 /obj/item/ammo_casing/proc/spread(turf/target, turf/current, distro)

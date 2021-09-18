@@ -1,6 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - balance: "Tank explosions (the kind used by TTVs and singlecaps) now take tank volume into account as well as scale faster at low pressures and much, much slower at high pressures."
-  - balance: "The research doppler array in toxins now grants more points at lower explosion ranges. The maximum cash generation is practically unchanged though."
-  - balance: "The blastcannon has experienced negligible net change to its range given bog-standard TTVs."
