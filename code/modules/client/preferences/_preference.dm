@@ -213,10 +213,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 			if (!character_savefile)
 				character_savefile = new /savefile(path)
 				character_savefile.cd = "/character[default_slot]"
-
 				spawn (1)
 					character_savefile = null
-
 			return character_savefile
 		if (PREFERENCE_PLAYER)
 			if (!game_savefile)
