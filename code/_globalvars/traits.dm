@@ -164,10 +164,12 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_WEAK_SOUL" = TRAIT_WEAK_SOUL,
 		"TRAIT_INVISIBLE_MAN" = TRAIT_INVISIBLE_MAN,
 		"TRAIT_HIDE_EXTERNAL_ORGANS" = TRAIT_HIDE_EXTERNAL_ORGANS,
+		"TRAIT_UNNATURAL_RED_GLOWY_EYES" = TRAIT_UNNATURAL_RED_GLOWY_EYES,
+		"TRAIT_BLOODSHOT_EYES" = TRAIT_BLOODSHOT_EYES,
 	),
 	/obj/item/bodypart = list(
 		"TRAIT_PARALYSIS" = TRAIT_PARALYSIS,
-		"TRAIT_PLASMABURNT" = TRAIT_PLASMABURNT
+		"TRAIT_PLASMABURNT" = TRAIT_PLASMABURNT,
 		),
 	/obj/item = list(
 		"TRAIT_NODROP" = TRAIT_NODROP,
@@ -178,7 +180,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_UNCATCHABLE" = TRAIT_UNCATCHABLE,
 		),
 	/atom = list(
-		"TRAIT_KEEP_TOGETHER" = TRAIT_KEEP_TOGETHER
+		"TRAIT_KEEP_TOGETHER" = TRAIT_KEEP_TOGETHER,
 		),
 	/atom/movable = list(
 		"TRAIT_MOVE_GROUND" = TRAIT_MOVE_GROUND,
@@ -194,8 +196,8 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		),
 	/obj/item/card/id = list(
 		"TRAIT_MAGNETIC_ID_CARD" = TRAIT_MAGNETIC_ID_CARD,
-	)
-	))
+	),
+))
 
 /// value -> trait name, generated on use from trait_by_type global
 GLOBAL_LIST(trait_name_map)
