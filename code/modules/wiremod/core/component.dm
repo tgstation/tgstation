@@ -45,11 +45,14 @@
 	/// The power usage whenever this component receives an input
 	var/power_usage_per_input = 1
 
-	// Whether the component is removable or not. Only affects user UI
+	/// Whether the component is removable or not. Only affects user UI
 	var/removable = TRUE
 
-	// Defines which shells support this component. Only used as an informational guide, does not restrict placing these components in circuits.
+	/// Defines which shells support this component. Only used as an informational guide, does not restrict placing these components in circuits.
 	var/required_shells = null
+
+	/// Determines the amount of space this circuit occupies in an integrated circuit.
+	var/circuit_size = 1
 
 /// Called when the option ports should be set up
 /obj/item/circuit_component/proc/populate_options()
@@ -213,6 +216,14 @@
 		trigger_output.set_output(COMPONENT_SIGNAL)
 	return TRUE
 
+/obj/item/circuit_component/proc/set_circuit_size(new_size)
+	if(parent)
+		parent.current_size -= circuit_size
+
+	circuit_size = new_size
+
+	if(parent)
+		parent.current_size += circuit_size
 
 /**
  * Called whether this circuit component should receive an input.
