@@ -471,6 +471,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	explode()
 
+/obj.machinery/power/supermatter_crystal/proc/add_matter_power(added_power)
+	matter_power += added_power * antinoblium_multiplier
+
+
 /obj/machinery/power/supermatter_crystal/process_atmos()
 	if(!processes) //Just fuck me up bro
 		return
@@ -630,7 +634,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			consumed_miasma *= gas_comp[/datum/gas/miasma] * combined_gas
 			if(consumed_miasma)
 				removed.gases[/datum/gas/miasma][MOLES] -= consumed_miasma * antinoblium_multiplier
-				matter_power += consumed_miasma * MIASMA_POWER_GAIN * antinoblium_multiplier
+				add_matter_power(consumed_miasma * MIASMA_POWER_GAIN)
 
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them.
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
@@ -1026,7 +1030,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			if (scalpel.usesLeft)
 				to_chat(user, span_danger("You extract a sliver from \the [src]. \The [src] begins to react violently!"))
 				new /obj/item/nuke_core/supermatter_sliver(drop_location())
-				matter_power += 800 * antinoblium_multiplier
+				add_matter_power(800)
 				scalpel.usesLeft--
 				if (!scalpel.usesLeft)
 					to_chat(user, span_notice("A tiny piece of \the [item] falls off, rendering it useless!"))
@@ -1081,7 +1085,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_SUPERMATTER)
 		consumed_mob.dust(force = TRUE)
 		if(power_changes)
-			matter_power += 200 * antinoblium_multiplier
+			add_matter_power(200)
 	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
 		return
 	else if(isobj(consumed_object))
@@ -1093,7 +1097,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			investigate_log("has consumed [consumed_object] - [suspicion].", INVESTIGATE_SUPERMATTER)
 		qdel(consumed_object)
 	if(!iseffect(consumed_object) && power_changes)
-		matter_power += 200 * antinoblium_multiplier
+		add_matter_power(200)
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
 	radiation_pulse(src, 3000, 2, TRUE)
