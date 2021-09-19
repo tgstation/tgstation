@@ -73,6 +73,13 @@
 }\
 /datum/controller/subsystem/timer/##X
 
+#define MOVEMENT_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/movement/##X);\
+/datum/controller/subsystem/movement/##X/New(){\
+	NEW_SS_GLOBAL(SS##X);\
+	PreInit();\
+}\
+/datum/controller/subsystem/movement/##X
+
 #define PROCESSING_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/processing/##X);\
 /datum/controller/subsystem/processing/##X/New(){\
 	NEW_SS_GLOBAL(SS##X);\
