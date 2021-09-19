@@ -7,9 +7,9 @@
 	icon = 'icons/mob/human_parts.dmi'
 	icon_state = ""
 	/// The icon for Organic limbs using greyscale
-	var/icon_greyscale = 'icons/mob/human_parts_greyscale.dmi'
+	var/icon_greyscale = DEFAULT_BODYPART_ICON_ORGANIC
 	/// The icon for Robotic limbs
-	var/icon_robotic = 'icons/mob/augmentation/augments.dmi'
+	var/icon_robotic = DEFAULT_BODYPART_ICON_ROBOTIC
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/liquidgibs = 5) // robotic bodyparts and chests/heads cannot be ground
 	var/mob/living/carbon/owner
