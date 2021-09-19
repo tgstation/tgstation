@@ -504,13 +504,13 @@
 			return TRUE
 		if(L.stat == DEAD)
 			return FALSE
-		if(!hit_prone_targets) // If target not able to use items, move and stand - or if they're just dead, pass over.
+		if(HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED))
+			return FALSE
+		if(!hit_prone_targets)
 			if(!L.density)
 				return FALSE
 			if(L.body_position != LYING_DOWN)
 				return TRUE
-			var/stunned = HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED)
-			return stunned
 	return TRUE
 
 /**
