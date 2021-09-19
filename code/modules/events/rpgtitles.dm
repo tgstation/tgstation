@@ -34,8 +34,29 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 	new_crewmember.maptext_x = -24
 	new_crewmember.maptext_y = 32
 
+	var/static/list/biotype_titles = list(
+		MOB_BEAST = "Beast",
+		MOB_REPTILE = "Lizard",
+		MOB_SPIRIT = "Spirit",
+		MOB_PLANT = "Plant",
+		MOB_UNDEAD = "Undead",
+		MOB_ROBOTIC = "Robot",
+	)
+
+	var/maptext_title = ""
+
+	if(!(isanimal(new_crewmember) || isbasicmob(new_crewmember)))
+		maptext_title = job.rpg_title || job.title
+	else
+		for(var/biotype_flag in biotype_titles)
+			if(new_crewmember.mob_biotypes & biotype_flag)
+				maptext_title += "biotype_titles[biotype_flag] "
+		maptext_title.trim_right(maptext_title)
+		if(!maptext_title)
+			maptext_title = "Anomaly"
+
 	//mother of all strings...
-	new_crewmember.maptext = "<span class='maptext' style='text-align: center'><span style='color: [new_crewmember.chat_color || rgb(rand(100,255), rand(100,255), rand(100,255))]'>Level [rand(1, 100)] [job.rpg_title || job.title]</span></span>"
+	new_crewmember.maptext = "<span class='maptext' style='text-align: center'><span style='color: [new_crewmember.chat_color || rgb(rand(100,255), rand(100,255), rand(100,255))]'>Level [rand(1, 100)] [maptext_title]</span></span>"
 
 	if(!(job.job_flags & JOB_CREW_MEMBER))
 		return
