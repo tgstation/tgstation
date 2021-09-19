@@ -241,6 +241,7 @@
 	inhand_icon_state = "godstaff-red"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+	belt_icon_state = 'icons/mob/clothing/belt.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	force = 2
 	slot_flags = ITEM_SLOT_BELT|ITEM_SLOT_BACK
@@ -258,6 +259,7 @@
 	name = "blue holy staff"
 	icon_state = "godstaff-blue"
 	inhand_icon_state = "godstaff-blue"
+	belt_icon_state = 'icons/mob/clothing/belt.dmi'
 	shield_icon = "shield-old"
 	menu_description = "A blue staff which provides a high chance of blocking incoming attacks via a protective blue aura around it's user, but deals very low amount of damage. Can be worn only on the back."
 
