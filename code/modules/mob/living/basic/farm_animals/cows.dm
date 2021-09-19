@@ -82,18 +82,11 @@
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/tip_reaction,
 		/datum/ai_planning_subtree/random_speech/cow,
 	)
-
-/datum/ai_controller/basic_controller/cow/PerformIdleBehavior(delta_time)
-	. = ..()
-	var/mob/living/living_pawn = pawn
-
-	if(DT_PROB(25, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
-		var/move_dir = pick(GLOB.alldirs)
-		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
 
 ///Wisdom cow, gives XP to a random skill and speaks wisdoms
 /mob/living/basic/cow/wisdom

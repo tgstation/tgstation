@@ -7,8 +7,8 @@
 	ADD_TRAIT(parent, TRAIT_UNBREAKABLE, INNATE_TRAIT)
 
 /datum/component/unbreakable/Destroy(force, silent)
-	. = ..()
 	REMOVE_TRAIT(parent, TRAIT_UNBREAKABLE, INNATE_TRAIT)
+	return ..()
 
 /datum/component/unbreakable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOB_STATCHANGE, .proc/surge)

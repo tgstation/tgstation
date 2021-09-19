@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - qol: "Allows you to interrupt delay components and makes it so that it cannot queue multiple delays."
