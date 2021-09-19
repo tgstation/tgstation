@@ -51,7 +51,7 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 		for(var/biotype_flag in biotype_titles)
 			if(new_crewmember.mob_biotypes & biotype_flag)
 				maptext_title += "biotype_titles[biotype_flag] "
-		maptext_title.trim_right(maptext_title)
+		maptext_title = trim_right(maptext_title)
 		if(!maptext_title)
 			maptext_title = "Anomaly"
 
