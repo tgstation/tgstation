@@ -245,7 +245,7 @@
 	force = 2
 	slot_flags = ITEM_SLOT_BELT|ITEM_SLOT_BACK
 	block_chance = 55
-	menu_description = "A red staff which provides a high chance of blocking incoming attacks via a protective red aura around it's user, but deals very low amount of damage. Can be worn only on the back."
+	menu_description = "A red staff which provides a high chance of blocking incoming attacks via a protective red aura around it's user, but deals very low amount of damage. Can be worn on the back and belt."
 	/// The icon which appears over the mob holding the item
 	var/shield_icon = "shield-red"
 
