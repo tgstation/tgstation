@@ -577,3 +577,40 @@
   - rscadd: MOONICORNS. Watch out for their horn!
   - refactor: during a code refactor for cow, they may be SLIGHTLY faster or SLIGHTLY
       slower as an accidental result
+2021-09-19:
+  Ghommie:
+  - balance: 'Replaces the hardcoded material restriction for exporting protolathe
+      designs to autolathes with a variable that does the same when set FALSE. Energy
+      bolas, gun part kits, tele shield, enegy bolas and jaws of life currently have
+      it set FALSE. TL;DR: You can export designs like bluespace cells to autolathes.'
+  - qol: Added a chat feedback when unable to import designs to autolathes.
+  Ryll/Shaps:
+  - balance: Bone wounds in general have been made less obnoxious, especially when
+      suffered on the legs. Instead of limping every step with that leg, you now have
+      a chance to limp each step with that leg that scales with the severity of the
+      wound. Putting your leg in a sling also reduces this limp chance per step, in
+      addition to reducing the delay the limp adds.
+  - balance: Skeletons and plasmamen can now apply bone gel directly to fractured
+      limbs, take no damage from applying this fix, don't need surgical tape, and
+      recover 4x as fast as fleshy humans do from these improvised fixes. Shine on,
+      you crazy bone-bags!
+  - balance: Sticky tape (and especially surgical tape) makef for much more effective
+      slings than before, with surgical tape even outshining gauze.
+  - spellcheck: Adjusted some bone wound examine descriptions to be more obvious what
+      they represent
+  Timberpoes:
+  - bugfix: Fixed an oversight/exploit allowing the nuke disk to be removed from station
+      z-levels.
+  - admin: Improved the warnings for when stationloving objects such as the nuke disk
+      get relocated.
+  - admin: Expanded explosion logging should now make your day a little bit brighter.
+  Watermelon914:
+  - qol: Heretic now has an antagonist panel
+  necromanceranne:
+  - code_imp: Added an argument for the decomposition component that allows for specifying
+      what kind of item something decomposes into.
+  - bugfix: Space ants no longer prey upon chickens and their produce.
+  - rscadd: Includes some examples from existing food and a new kind of food. Moldy
+      bread, moldy pizza slices, rotten eggs and moldy dead mice.
+  tralezab:
+  - bugfix: fixed one small runtime with sparring sect

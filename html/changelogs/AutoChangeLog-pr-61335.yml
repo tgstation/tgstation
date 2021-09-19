@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an oversight/exploit allowing the nuke disk to be removed from station z-levels."
-  - admin: "Improved the warnings for when stationloving objects such as the nuke disk get relocated."
