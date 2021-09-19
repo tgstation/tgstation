@@ -1,0 +1,5 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - balance: "Devastating explosions will now deal damage equivalent to 40% to 75% of a dragon's max health."
+  - balance: "Carp rifts will no longer be instantly destroyed to devastating explosions."
