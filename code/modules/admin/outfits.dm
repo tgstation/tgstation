@@ -25,7 +25,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		to_chat(admin,span_warning("Malformed/Outdated file."))
 		return
 	var/datum/outfit/O = new otype
-	if(!O.load_from(json))
+	O.load_from(json)
+	if(!O.loaded)
 		to_chat(admin,span_warning("Malformed/Outdated file."))
 		return
 	GLOB.custom_outfits += O

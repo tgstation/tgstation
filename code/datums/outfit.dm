@@ -120,6 +120,9 @@
 	/// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
 	var/datum/sprite_accessory/undershirt = null
 
+	/// When using the load_from proc, has it succeeded or not
+	var/loaded = FALSE
+
 /**
  * Called at the start of the equip proc
  *
@@ -424,7 +427,7 @@
 		if(imptype)
 			implants += imptype
 	accessory = text2path(outfit_data["accessory"])
-	return TRUE
+	loaded = TRUE
 
 /datum/outfit/vv_get_dropdown()
 	. = ..()
