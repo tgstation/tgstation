@@ -675,18 +675,8 @@ SUBSYSTEM_DEF(ticker)
 	save_admin_data()
 	update_everything_flag_in_db()
 	if(!round_end_sound)
-		round_end_sound = pick(\
-		'sound/roundend/newroundsexy.ogg',
-		'sound/roundend/apcdestroyed.ogg',
-		'sound/roundend/bangindonk.ogg',
-		'sound/roundend/leavingtg.ogg',
-		'sound/roundend/its_only_game.ogg',
-		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg',
-		'sound/roundend/scrunglartiy.ogg',
-		'sound/roundend/petersondisappointed.ogg',
-		'sound/roundend/bully2.ogg'\
-		)
+		var/list/reboot_sounds = flist("[global.config.directory]/reboot_themes/")
+		round_end_sound = "[global.config.directory]/reboot_themes/[pick(reboot_sounds)]"
 	///The reference to the end of round sound that we have chosen.
 	var/sound/end_of_round_sound_ref = sound(round_end_sound)
 	for(var/mob/M in GLOB.player_list)
