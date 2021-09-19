@@ -1,13 +1,11 @@
 /datum/emote/living/carbon
 	mob_type_allowed_typecache = list(/mob/living/carbon)
 
-//A
 /datum/emote/living/carbon/airguitar
 	key = "airguitar"
 	message = "is strumming the air and headbanging like a safari chimp."
 	hands_use_check = TRUE
 
-//B
 /datum/emote/living/carbon/blink
 	key = "blink"
 	key_third_person = "blinks"
@@ -17,7 +15,6 @@
 	key = "blink_r"
 	message = "blinks rapidly."
 
-//C
 /datum/emote/living/carbon/clap
 	key = "clap"
 	key_third_person = "claps"
@@ -64,17 +61,6 @@
 	if(user.put_in_hands(N))
 		to_chat(user, span_notice("You make a circle with your hand."))
 
-
-// D
-// E
-// F
-// G
-// H
-// I
-// J
-// K
-// L
-// M
 /datum/emote/living/carbon/moan
 	key = "moan"
 	key_third_person = "moans"
@@ -82,7 +68,6 @@
 	message_mime = "appears to moan!"
 	emote_type = EMOTE_AUDIBLE
 	
-// N
 /datum/emote/living/carbon/noogie
 	key = "noogie"
 	key_third_person = "noogies"
@@ -98,17 +83,14 @@
 	else
 		qdel(noogie)
 		to_chat(user, span_warning("You're incapable of noogie'ing in your current state."))
-// O
-// P
-// Q
-// R
+
 /datum/emote/living/carbon/roll
 	key = "roll"
 	key_third_person = "rolls"
 	message = "rolls."
 	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
 	hands_use_check = TRUE
-// S
+
 /datum/emote/living/carbon/scratch
 	key = "scratch"
 	key_third_person = "scratches"
@@ -151,20 +133,13 @@
 	else
 		qdel(N)
 		to_chat(user, span_warning("You're incapable of slapping in your current state."))
-// T
+
 /datum/emote/living/carbon/tail
 	key = "tail"
 	message = "waves their tail."
 	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
 
-// U
-// V
-// W
 /datum/emote/living/carbon/wink
 	key = "wink"
 	key_third_person = "winks"
 	message = "winks."
-
-// X
-// Y
-// Z
