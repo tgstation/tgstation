@@ -241,10 +241,10 @@
 	inhand_icon_state = "godstaff-red"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	w_class = WEIGHT_CLASS_HUGE
-	force = 5
-	slot_flags = ITEM_SLOT_BACK
-	block_chance = 50
+	w_class = WEIGHT_CLASS_BULKY
+	force = 2
+	slot_flags = ITEM_SLOT_BELT|ITEM_SLOT_BACK
+	block_chance = 55
 	menu_description = "A red staff which provides a high chance of blocking incoming attacks via a protective red aura around it's user, but deals very low amount of damage. Can be worn only on the back."
 	/// The icon which appears over the mob holding the item
 	var/shield_icon = "shield-red"
