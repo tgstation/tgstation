@@ -329,6 +329,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return preferences
 
+/// Applies all PREFERENCE_PLAYER preferences
+/datum/preferences/proc/apply_all_client_preferences()
+	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
+		if (preference.savefile_identifier != PREFERENCE_PLAYER)
+			continue
+
+		value_cache -= preference.type
+		preference.apply_to_client(parent, read_preference(preference.type))
+
 // This is necessary because you can open the set preferences menu before
 // the atoms SS is done loading.
 INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)

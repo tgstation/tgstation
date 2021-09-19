@@ -163,12 +163,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		fcopy(S, bacpath) //byond helpfully lets you use a savefile for the first arg.
 		return FALSE
 
-	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
-		if (preference.savefile_identifier != PREFERENCE_PLAYER)
-			continue
-
-		value_cache -= preference.type
-		preference.apply_to_client(parent, read_preference(preference.type))
+	apply_all_client_preferences()
 
 	//general preferences
 	READ_FILE(S["lastchangelog"], lastchangelog)
