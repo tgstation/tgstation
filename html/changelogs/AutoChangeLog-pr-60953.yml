@@ -1,4 +1,0 @@
-author: "Kryson, AMonkeyThatCodes"
-delete-after: True
-changes: 
-  - imageadd: "Replaces the lobby menu with sprites instead of HTML"

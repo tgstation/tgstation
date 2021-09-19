@@ -40,7 +40,7 @@
 		QUEUE_SMOOTH(src)
 
 /obj/structure/grille/update_icon_state()
-	icon_state = "[base_icon_state][((obj_integrity / max_integrity) <= 0.5) ? "50_[rand(0, 3)]" : null]"
+	icon_state = "[base_icon_state][((atom_integrity / max_integrity) <= 0.5) ? "50_[rand(0, 3)]" : null]"
 	return ..()
 
 /obj/structure/grille/examine(mob/user)
@@ -264,12 +264,12 @@
 		qdel(src)
 	..()
 
-/obj/structure/grille/obj_break()
+/obj/structure/grille/atom_break()
 	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		icon_state = "brokengrille"
 		set_density(FALSE)
-		obj_integrity = 20
+		atom_integrity = 20
 		broken = TRUE
 		rods_amount = 1
 		rods_broken = FALSE
@@ -280,7 +280,7 @@
 	if(broken)
 		icon_state = "grille"
 		set_density(TRUE)
-		obj_integrity = max_integrity
+		atom_integrity = max_integrity
 		broken = FALSE
 		rods_amount = 2
 		rods_broken = TRUE

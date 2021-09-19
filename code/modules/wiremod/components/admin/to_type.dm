@@ -14,15 +14,11 @@
 	/// The type output
 	var/datum/port/output/type_output
 
-/obj/item/circuit_component/to_type/Initialize()
-	. = ..()
+/obj/item/circuit_component/to_type/populate_ports()
 	input_path = add_input_port("Type", PORT_TYPE_STRING)
 	type_output = add_output_port("Typepath", PORT_TYPE_ANY)
 
 /obj/item/circuit_component/to_type/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	type_output.set_output(text2path(input_path.value))
 

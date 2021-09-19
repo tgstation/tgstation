@@ -93,6 +93,9 @@
 
 
 /obj/item/modular_computer/laptop/AltClick(mob/user)
+	. = ..()
+	if(!can_interact(user))
+		return
 	if(screen_on) // Close it.
 		try_toggle_open(user)
 	else

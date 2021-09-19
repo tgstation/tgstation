@@ -28,6 +28,7 @@
 		display_results(user, target, span_notice("You begin to extract [implant] from [target]'s [target_zone]..."),
 			span_notice("[user] begins to extract [implant] from [target]'s [target_zone]."),
 			span_notice("[user] begins to extract something from [target]'s [target_zone]."))
+		display_pain(target, "You feel a serious pain in your [target_zone]!")
 	else
 		display_results(user, target, span_notice("You look for an implant in [target]'s [target_zone]..."),
 			span_notice("[user] looks for an implant in [target]'s [target_zone]."),
@@ -38,6 +39,7 @@
 		display_results(user, target, span_notice("You successfully remove [implant] from [target]'s [target_zone]."),
 			span_notice("[user] successfully removes [implant] from [target]'s [target_zone]!"),
 			span_notice("[user] successfully removes something from [target]'s [target_zone]!"))
+		display_pain(target, "You can feel your [implant] pulled out of you!")
 		implant.removed(target)
 
 		var/obj/item/implantcase/case

@@ -1,0 +1,5 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - code_imp: "The tgui ProgressBar can now accept color specifications in hexademical, rgb/rgba, color-\\<name\\> class, and base CSS named colors."
+  - bugfix: "Add missing gas color mappings to tgui, and disambiguate old mappings. Exotic (and mundane) gases in the SM monitor and HFR interfaces have never been more colorful!"

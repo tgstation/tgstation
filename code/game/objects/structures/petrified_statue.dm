@@ -20,8 +20,8 @@
 		ADD_TRAIT(L, TRAIT_MUTE, STATUE_MUTE)
 		L.faction += "mimic" //Stops mimics from instaqdeling people in statues
 		L.status_flags |= GODMODE
-		obj_integrity = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
-		max_integrity = obj_integrity
+		atom_integrity = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
+		max_integrity = atom_integrity
 		START_PROCESSING(SSobj, src)
 	..()
 
@@ -61,7 +61,7 @@
 		petrified_mob.forceMove(loc)
 		REMOVE_TRAIT(petrified_mob, TRAIT_MUTE, STATUE_MUTE)
 		REMOVE_TRAIT(petrified_mob, TRAIT_NOBLEED, MAGIC_TRAIT)
-		petrified_mob.take_overall_damage((petrified_mob.health - obj_integrity + 100)) //any new damage the statue incurred is transfered to the mob
+		petrified_mob.take_overall_damage((petrified_mob.health - atom_integrity + 100)) //any new damage the statue incurred is transfered to the mob
 		petrified_mob.faction -= "mimic"
 		petrified_mob = null
 	return ..()

@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "roundstart offstation antagonists such as wizards and nuke ops no longer have quirks (either from preferences or hardcore random) assigned to them or count toward the hardcore random score."

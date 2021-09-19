@@ -56,7 +56,7 @@
 /obj/machinery/door/window/Destroy()
 	set_density(FALSE)
 	QDEL_LIST(debris)
-	if(obj_integrity == 0)
+	if(atom_integrity == 0)
 		playsound(src, "shatter", 70, TRUE)
 	electronics = null
 	var/turf/floor = get_turf(src)

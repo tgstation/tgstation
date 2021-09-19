@@ -11,10 +11,10 @@
 		return
 
 	var/mob/living/selected_enemy
-	if(length(enemies) || controller.blackboard[BB_MONKEY_AGRESSIVE]) //We have enemies or are pissed
+	if(length(enemies) || controller.blackboard[BB_MONKEY_AGGRESSIVE]) //We have enemies or are pissed
 		var/list/valids = list()
 		for(var/mob/living/possible_enemy in view(MONKEY_ENEMY_VISION, living_pawn))
-			if(possible_enemy == living_pawn || (!enemies[possible_enemy] && (!controller.blackboard[BB_MONKEY_AGRESSIVE] || HAS_AI_CONTROLLER_TYPE(possible_enemy, /datum/ai_controller/monkey)))) //Are they an enemy? (And do we even care?)
+			if(possible_enemy == living_pawn || (!enemies[possible_enemy] && (!controller.blackboard[BB_MONKEY_AGGRESSIVE] || HAS_AI_CONTROLLER_TYPE(possible_enemy, /datum/ai_controller/monkey)))) //Are they an enemy? (And do we even care?)
 				continue
 			// Weighted list, so the closer they are the more likely they are to be chosen as the enemy
 			valids[possible_enemy] = CEILING(100 / (get_dist(living_pawn, possible_enemy) || 1), 1)

@@ -27,8 +27,7 @@
 	. += create_ui_notice("Sound Cooldown: [DisplayTimeText(sound_cooldown)]", "orange", "stopwatch")
 
 
-/obj/item/circuit_component/soundemitter/Initialize()
-	. = ..()
+/obj/item/circuit_component/soundemitter/populate_ports()
 	volume = add_input_port("Volume", PORT_TYPE_NUMBER, default = 35)
 	frequency = add_input_port("Frequency", PORT_TYPE_NUMBER, default = 0)
 
@@ -46,14 +45,11 @@
 	sound_file = add_option_port("Sound Option", component_options)
 	options_map = component_options
 
-
-/obj/item/circuit_component/soundemitter/input_received(datum/port/input/port)
-	. = ..()
+/obj/item/circuit_component/soundemitter/pre_input_received(datum/port/input/port)
 	volume.set_value(clamp(volume.value, 0, 100))
 	frequency.set_value(clamp(frequency.value, -100, 100))
-	if(.)
-		return
 
+/obj/item/circuit_component/soundemitter/input_received(datum/port/input/port)
 	if(TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_SOUNDEMITTER))
 		return
 
