@@ -30,23 +30,14 @@
 	var/datum/port/output/output_value
 
 /obj/item/circuit_component/proccall/populate_options()
-	var/static/list/call_options = list(
+	var/static/list/component_options = list(
 		COMP_PROC_OBJECT,
 		COMP_PROC_GLOBAL,
 	)
 
-	var/static/list/output_options = list(
-		PORT_TYPE_ANY,
-		PORT_TYPE_NUMBER,
-		PORT_TYPE_STRING,
-		PORT_TYPE_LIST,
-		PORT_TYPE_ATOM,
-		PORT_TYPE_DATUM
-	)
+	proccall_options = add_option_port("Proccall Options", component_options)
 
-	proccall_options = add_option_port("Proccall Options", call_options)
-
-	expected_output_type = add_option_port("Expected Output Type", output_options)
+	expected_output_type = add_option_port("Expected Output Type", GLOB.wiremod_fundamental_types)
 
 /obj/item/circuit_component/proccall/populate_ports()
 	entity = add_input_port("Target", PORT_TYPE_DATUM)

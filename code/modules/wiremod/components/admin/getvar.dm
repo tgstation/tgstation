@@ -21,15 +21,7 @@
 	var/datum/port/output/output_value
 
 /obj/item/circuit_component/get_variable/populate_options()
-	var/static/list/component_options = list(
-		PORT_TYPE_ANY,
-		PORT_TYPE_NUMBER,
-		PORT_TYPE_STRING,
-		PORT_TYPE_LIST,
-		PORT_TYPE_ATOM,
-		PORT_TYPE_DATUM
-	)
-	expected_output_type = add_option_port("Expected Output Type", component_options)
+	expected_output_type = add_option_port("Expected Output Type", GLOB.wiremod_fundamental_types)
 
 /obj/item/circuit_component/get_variable/populate_ports()
 	entity = add_input_port("Target", PORT_TYPE_DATUM)
