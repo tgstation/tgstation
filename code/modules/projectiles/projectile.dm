@@ -504,7 +504,7 @@
 			return TRUE
 		if(L.stat == DEAD)
 			return FALSE
-		if((HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED)) || HAS_TRAIT(L, TRAIT_HANDS_BLOCKED))
+		if(HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED))
 			return FALSE
 		if(!hit_prone_targets)
 			if(!L.density)
