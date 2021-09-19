@@ -4058,14 +4058,6 @@
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/iron/dark,
 /area/service/bar/atrium)
-"um" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
-	dir = 4;
-	piping_layer = 4
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/openspace/icemoon/keep_below,
-/area/mine/living_quarters)
 "un" = (
 /obj/structure/cable,
 /obj/machinery/light/directional/south,
@@ -19629,7 +19621,7 @@ qt
 rj
 Gn
 cM
-um
+IV
 mO
 mO
 mO
