@@ -99,10 +99,12 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/spanned = attach_spans(input, spans)
 	return "[say_mod(input, message_mods)], \"[spanned]\""
 
+/// Transforms the speech emphasis mods from [/atom/movable/proc/say_emphasis] into the appropriate HTML tags
 #define ENCODE_HTML_EMPHASIS(input, char, html, varname) \
 	var/static/regex/##varname = regex("[char](.+?)[char]", "g");\
 	input = varname.Replace_char(input, "<[html]>$1</[html]>")
 
+/// Scans the input sentence for speech emphasis modifiers, notably |italics|, +bold+, and _underline_ -mothblocks
 /atom/movable/proc/say_emphasis(input)
 	ENCODE_HTML_EMPHASIS(input, "\\|", "i", italics)
 	ENCODE_HTML_EMPHASIS(input, "\\+", "b", bold)
