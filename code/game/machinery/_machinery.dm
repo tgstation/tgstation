@@ -851,7 +851,7 @@
 	if(!machine_board)
 		return FALSE
 
-	for(var/obj/item/primary_part in component_parts)
+	for(var/obj/item/primary_part as anything in component_parts)
 		for(var/design_type in machine_board.req_components)
 			if(ispath(primary_part.type, design_type))
 				required_type = design_type
