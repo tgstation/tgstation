@@ -37,7 +37,7 @@
 
 	var/atom/target_entity = target.value
 
-	if(isInSight(target_entity, parent.shell) && IN_GIVEN_RANGE(parent.shell, target_entity, max_range))
+	if(isInSight(target_entity, get_turf(src)) && IN_GIVEN_RANGE(get_turf(src), target_entity, max_range))
 		var/turf/location = get_turf(target_entity)
 
 		x_pos.set_output(location?.x)
@@ -48,5 +48,6 @@
 		y_pos.set_output(null)
 		z_pos.set_output(null)
 		on_error.set_output(COMPONENT_SIGNAL)
+		return TRUE
 
 
