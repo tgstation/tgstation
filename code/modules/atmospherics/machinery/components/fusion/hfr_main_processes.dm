@@ -405,6 +405,9 @@
 	emit_rads(radiation)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/evaporate_moderator(delta_time)
+	// Don't evaporate if the reaction is dead
+	if (!power_level)
+		return
 	// All gases in the moderator slowly burn away over time, whether used for production or not
 	if(moderator_internal.total_moles() > 0)
 		moderator_internal.remove(moderator_internal.total_moles() * (1 - (1 - 0.0005 * power_level) ** delta_time))
