@@ -294,11 +294,7 @@ const Department = (props: {
   const className = `PreferencesMenu__Jobs__departments--${name}`;
 
   if (!jobs) {
-    return (
-      <Box color="red">
-        <b>ERROR: Department {name} could not be found!</b>
-      </Box>
-    );
+    return null;
   }
 
   return (

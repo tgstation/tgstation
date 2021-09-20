@@ -4,6 +4,12 @@
 //checks client ban cache or DB ban table if ckey is banned from one or more roles
 //doesn't return any details, use only for if statements
 /proc/is_banned_from(player_ckey, list/roles)
+	// NON-MODULAR EDIT: Prevents assistants from being job banned
+	if (islist(roles))
+		roles -= "Assistant"
+	else if (roles == "Assistant")
+		return FALSE
+
 	if(!player_ckey)
 		return
 	var/client/player_client = GLOB.directory[player_ckey]
