@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "The HFR now actually produces T3 gas at Fusion Level 2, provided you have enough plasma in the moderator"

@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - bugfix: "some small critters that should have been able to fit in the vim but couldn't, now can"
