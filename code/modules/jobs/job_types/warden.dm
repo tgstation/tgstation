@@ -66,3 +66,17 @@
 	implants = list(/obj/item/implant/mindshield)
 
 	id_trim = /datum/id_trim/job/warden
+
+/datum/outfit/job/warden/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return ..()
+
+	var/static/use_blue_suit = FALSE //If there is one warden, they get the default red armored suit. If another warden joins the round, they start with a blue suit.
+	if(use_blue_suit)
+		uniform = /obj/item/clothing/under/rank/security/warden/formal 
+		suit = /obj/item/clothing/suit/armor/vest/warden
+		head = /obj/item/clothing/head/beret/sec/navywarden 
+		gloves = /obj/item/clothing/gloves/krav_maga/sec
+	else
+		use_blue_suit = TRUE
+	..()
