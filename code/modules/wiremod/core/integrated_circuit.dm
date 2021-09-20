@@ -272,7 +272,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 /obj/item/integrated_circuit/ui_static_data(mob/user)
 	. = list()
-	.["global_basic_types"] = GLOB.wiremod_basic_types
+	.["global_basic_types"] = admin_only ? GLOB.wiremod_admin_basic_types : GLOB.wiremod_basic_types
 	.["screen_x"] = screen_x
 	.["screen_y"] = screen_y
 
@@ -542,7 +542,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			if(variable_identifier == "")
 				return TRUE
 			var/variable_datatype = params["variable_datatype"]
-			if(!(variable_datatype in GLOB.wiremod_basic_types))
+			if(!(variable_datatype in (admin_only ? GLOB.wiremod_admin_basic_types : GLOB.wiremod_basic_types)))
 				return
 
 			circuit_variables[variable_identifier] = new /datum/circuit_variable(variable_identifier, variable_datatype)

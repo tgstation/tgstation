@@ -1,5 +1,16 @@
-/// The basic types that don't have any super special behaviour.
+/// The basic player-facing types that don't have any super special behaviour.
 GLOBAL_LIST_INIT(wiremod_basic_types, list(
+	PORT_TYPE_ANY,
+	PORT_TYPE_STRING,
+	PORT_TYPE_NUMBER,
+	PORT_TYPE_SIGNAL,
+	PORT_TYPE_LIST,
+	PORT_TYPE_TABLE,
+	PORT_TYPE_ATOM,
+))
+
+/// All basic types that don't have any super special behavior. This includes the admin-only datum type.
+GLOBAL_LIST_INIT(wiremod_admin_basic_types, list(
 	PORT_TYPE_ANY,
 	PORT_TYPE_STRING,
 	PORT_TYPE_NUMBER,
