@@ -96,6 +96,8 @@
 #define MEMORY_VENDING_CRUSHED "vending_crushed"
 /// Dusted by SM
 #define MEMORY_SUPERMATTER_DUSTED "supermatter_dusted"
+/// Nuke ops nuke code memory
+#define MEMORY_NUKECODE "nuke_code"
 
 /**
  * These are also memories, but they're examples of what I kinda don't want to be memories. They're stuff that I had to port
@@ -149,5 +151,6 @@
 #define DETAIL_STATION_NAME "STATION_NAME"
 #define DETAIL_MEDAL_TYPE "MEDAL_TYPE"
 #define DETAIL_MEDAL_REASON "MEDAL_REASON"
+#define DETAIL_NUKE_CODE "NUKE_CODE"
 
 

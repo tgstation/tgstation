@@ -59,6 +59,7 @@
 	var/mob/living/shooter = parent
 	shooter.remove_status_effect(STATUS_EFFECT_HOLDUP)
 	target.remove_status_effect(STATUS_EFFECT_HELDUP, shooter)
+	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
 	return ..()
 
 /datum/component/gunpoint/RegisterWithParent()
@@ -164,7 +165,6 @@
 	shooter.visible_message(span_danger("[shooter] breaks [shooter.p_their()] aim on [target]!"), \
 		span_danger("You are no longer aiming [weapon] at [target]."), ignored_mobs = target)
 	to_chat(target, span_userdanger("[shooter] breaks [shooter.p_their()] aim on you!"))
-	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
 	qdel(src)
 
 ///If the shooter is hit by an attack, they have a 50% chance to flinch and fire. If it hit the arm holding the trigger, it's an 80% chance to fire instead

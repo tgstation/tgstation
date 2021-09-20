@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - qol: "The atmos holofan barrier has a new animation and is slightly transparent to easily convey that you can move through it."
