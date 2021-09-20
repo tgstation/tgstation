@@ -187,31 +187,31 @@
 /**
  * Proc called when the player clicks the give alert
  *
- * Handles checking if the player taking the item has open slots and is in range of the giver
+ * Handles checking if the player taking the item has open slots and is in range of the offerer
  * Also deals with the actual transferring of the item to the players hands
  * Arguments:
- * * giver - The person giving the original item
- * * I - The item being given by the giver
+ * * offerer - The person giving the original item
+ * * I - The item being given by the offerer
  */
-/mob/living/carbon/proc/take(mob/living/carbon/giver, obj/item/I)
-	clear_alert("[giver]")
-	if(get_dist(src, giver) > 1)
-		to_chat(src, span_warning("[giver] is out of range!"))
+/mob/living/carbon/proc/take(mob/living/carbon/offerer, obj/item/I)
+	clear_alert("[offerer]")
+	if(get_dist(src, offerer) > 1)
+		to_chat(src, span_warning("[offerer] is out of range!"))
 		return
-	if(!I || giver.get_active_held_item() != I)
-		to_chat(src, span_warning("[giver] is no longer holding the item they were offering!"))
+	if(!I || offerer.get_active_held_item() != I)
+		to_chat(src, span_warning("[offerer] is no longer holding the item they were offering!"))
 		return
 	if(!get_empty_held_indexes())
 		to_chat(src, span_warning("You have no empty hands!"))
 		return
 
-	if(I.on_offer_taken(giver, src)) // see if the item has special behavior for being accepted
+	if(I.on_offer_taken(offerer, src)) // see if the item has special behavior for being accepted
 		return
 
-	if(!giver.temporarilyRemoveItemFromInventory(I))
-		visible_message(span_notice("[giver] tries to hand over [I] but it's stuck to them...."))
+	if(!offerer.temporarilyRemoveItemFromInventory(I))
+		visible_message(span_notice("[offerer] tries to hand over [I] but it's stuck to them...."))
 		return
 
-	visible_message(span_notice("[src] takes [I] from [giver]"), \
-					span_notice("You take [I] from [giver]"))
+	visible_message(span_notice("[src] takes [I] from [offerer]"), \
+					span_notice("You take [I] from [offerer]"))
 	put_in_hands(I)

@@ -269,7 +269,7 @@
 	offerer.apply_status_effect(STATUS_EFFECT_OFFERING, src, /atom/movable/screen/alert/give/highfive)
 
 /// Yeah broh! This is where we do the high-fiving (or high-tenning :o)
-/obj/item/slapper/on_offer_taken(mob/living/giver, mob/living/taker)
+/obj/item/slapper/on_offer_taken(mob/living/offerer, mob/living/taker)
 	. = TRUE
 
 	var/open_hands_taker
@@ -279,30 +279,30 @@
 			open_hands_taker++
 
 	if(!open_hands_taker)
-		to_chat(taker, span_warning("You can't high-five [giver] with no open hands!"))
+		to_chat(taker, span_warning("You can't high-five [offerer] with no open hands!"))
 		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_full_hand) // not so successful now!
 		return
 
-	for(var/i in giver.held_items)
+	for(var/i in offerer.held_items)
 		var/obj/item/slapper/slap_check = i
 		if(istype(slap_check))
 			slappers_giver++
 
 	if(slappers_giver >= 2) // we only check this if it's already established the taker has 2+ hands free
-		giver.visible_message(span_notice("[taker] enthusiastically high-tens [giver]!"), span_nicegreen("Wow! You're high-tenned [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
-		to_chat(taker, span_nicegreen("You give high-tenning [giver] your all!"))
-		playsound(giver, 'sound/weapons/slap.ogg', 100, TRUE, 1)
-		giver.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_PROTAGONIST = taker, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
-		taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_PROTAGONIST = giver, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
-		SEND_SIGNAL(giver, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_ten)
+		offerer.visible_message(span_notice("[taker] enthusiastically high-tens [offerer]!"), span_nicegreen("Wow! You're high-tenned [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
+		to_chat(taker, span_nicegreen("You give high-tenning [offerer] your all!"))
+		playsound(offerer, 'sound/weapons/slap.ogg', 100, TRUE, 1)
+		offerer.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_PROTAGONIST = taker, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
+		taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_PROTAGONIST = offerer, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
+		SEND_SIGNAL(offerer, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_ten)
 		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_ten)
 	else
-		giver.visible_message(span_notice("[taker] high-fives [giver]!"), span_nicegreen("All right! You're high-fived by [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
-		to_chat(taker, span_nicegreen("You high-five [giver]!"))
-		playsound(giver, 'sound/weapons/slap.ogg', 50, TRUE, -1)
-		giver.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_PROTAGONIST = taker, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
-		taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_PROTAGONIST = giver, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
-		SEND_SIGNAL(giver, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
+		offerer.visible_message(span_notice("[taker] high-fives [offerer]!"), span_nicegreen("All right! You're high-fived by [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
+		to_chat(taker, span_nicegreen("You high-five [offerer]!"))
+		playsound(offerer, 'sound/weapons/slap.ogg', 50, TRUE, -1)
+		offerer.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_PROTAGONIST = taker, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
+		taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_PROTAGONIST = offerer, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
+		SEND_SIGNAL(offerer, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
 		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
 	qdel(src)
 
@@ -347,19 +347,19 @@
 		span_notice("You lean in slightly, indicating you'd like to offer a kiss on the cheek!"), null, 2)
 	offerer.apply_status_effect(STATUS_EFFECT_OFFERING, src)
 
-/obj/item/kisser/on_offer_taken(mob/living/giver, mob/living/taker)
+/obj/item/kisser/on_offer_taken(mob/living/offerer, mob/living/taker)
 	. = TRUE
 
-	var/obj/projectile/blown_kiss = new kiss_type(get_turf(giver))
-	giver.visible_message("<b>[giver]</b> gives [taker] \a [blown_kiss] on the cheek!", span_notice("You give [taker] \a [blown_kiss] on the cheek!"), ignored_mobs = taker)
-	to_chat(taker, span_nicegreen("[giver] gives you \a [blown_kiss] on the cheek!"))
+	var/obj/projectile/blown_kiss = new kiss_type(get_turf(offerer))
+	offerer.visible_message("<b>[offerer]</b> gives [taker] \a [blown_kiss] on the cheek!", span_notice("You give [taker] \a [blown_kiss] on the cheek!"), ignored_mobs = taker)
+	to_chat(taker, span_nicegreen("[offerer] gives you \a [blown_kiss] on the cheek!"))
 	//Shooting Code:
 	blown_kiss.spread = 0
 	blown_kiss.original = taker
-	blown_kiss.fired_from = giver
-	blown_kiss.firer = giver // don't hit ourself that would be really annoying
-	blown_kiss.impacted = list(giver = TRUE) // just to make sure we don't hit the wearer
-	blown_kiss.preparePixelProjectile(taker, giver)
+	blown_kiss.fired_from = offerer
+	blown_kiss.firer = offerer // don't hit ourself that would be really annoying
+	blown_kiss.impacted = list(offerer = TRUE) // just to make sure we don't hit the wearer
+	blown_kiss.preparePixelProjectile(taker, offerer)
 	blown_kiss.suppressed = SUPPRESSED_VERY
 	blown_kiss.fire()
 	qdel(src)
