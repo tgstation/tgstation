@@ -25,13 +25,12 @@
 	if(current)
 		if(!(memory_flags & MEMORY_SKIP_UNCONSCIOUS) && current.stat >= UNCONSCIOUS)
 			return
-		var/is_blind = current.is_blind()
-		var/is_deaf = HAS_TRAIT(current, TRAIT_DEAF)
-		if(memory_flags & MEMORY_CHECK_BLIND_AND_DEAF && is_blind && is_deaf)
-			return
-		if(memory_flags & MEMORY_CHECK_BLINDNESS && is_blind)
-			return
-		if(memory_flags & MEMORY_CHECK_DEAFNESS && is_deaf)
+		var/is_blind = FALSE
+		if(memory_flags & MEMORY_CHECK_BLINDNESS && current.is_blind())
+			if(!(memory_flags & MEMORY_CHECK_DEAFNESS)) // Only check for blindness
+				return
+			is_blind = TRUE // Otherwise check if the mob is both blind and deaf
+		if(memory_flags & MEMORY_CHECK_DEAFNESS && HAS_TRAIT(current, TRAIT_DEAF) && (!(memory_flags & MEMORY_CHECK_BLINDNESS) || is_blind))
 			return
 
 	var/story_mood = MOODLESS_MEMORY

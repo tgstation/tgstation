@@ -49,7 +49,7 @@
 ///this memory requires the target not to be deaf.
 #define MEMORY_CHECK_DEAFNESS (1<<6)
 ///this memory requires the target not to be both deaf and blind.
-#define MEMORY_CHECK_BLIND_AND_DEAF (1<<7)
+#define MEMORY_CHECK_BLIND_AND_DEAF (MEMORY_CHECK_BLINDNESS|MEMORY_CHECK_DEAFNESS)
 ///this memory can be memorized by unconscious people.
 #define MEMORY_SKIP_UNCONSCIOUS (1<<8)
 
