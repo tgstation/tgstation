@@ -1203,11 +1203,27 @@ attack_basic_mob
 /obj/item/proc/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
 	stack_trace("Undefined handle_openspace_click() behaviour. Ascertain the openspace_item_click_handler element has been attached to the right item and that its proc override doesn't call parent.")
 
-
-/obj/item/proc/on_offered(mob/living/user)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFERING, user) & COMPONENT_OFFER_INTERRUPT)
+/**
+  * An interrupt for offering an item to other people, called mainly from [/mob/living/carbon/proc/give], in case you want to run your own offer behavior instead.
+  *
+  * Return TRUE if you want to interrupt the offer.
+  *
+  * Arguments:
+  * * offerer - the person offering the item
+  */
+/obj/item/proc/on_offered(mob/living/carbon/offerer)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFERING, offerer) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
 
-/obj/item/proc/on_offer_taken(mob/living/giver, mob/living/taker)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, giver, taker) & COMPONENT_OFFER_INTERRUPT)
+/**
+  * An interrupt for someone trying to accept an offered item, called mainly from [/mob/living/carbon/proc/take], in case you want to run your own take behavior instead.
+  *
+  * Return TRUE if you want to interrupt the taking.
+  *
+  * Arguments:
+  * * offerer - the person offering the item
+  * * taker - the person trying to accept the offer
+  */
+/obj/item/proc/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, offerer, taker) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE

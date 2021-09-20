@@ -256,7 +256,7 @@
 		if(table_smacks_left <= 0)
 			qdel(src)
 
-/obj/item/slapper/on_offered(mob/living/offerer)
+/obj/item/slapper/on_offered(mob/living/carbon/offerer)
 	. = TRUE
 
 	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
@@ -269,7 +269,7 @@
 	offerer.apply_status_effect(STATUS_EFFECT_OFFERING, src, /atom/movable/screen/alert/give/highfive)
 
 /// Yeah broh! This is where we do the high-fiving (or high-tenning :o)
-/obj/item/slapper/on_offer_taken(mob/living/offerer, mob/living/taker)
+/obj/item/slapper/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
 	. = TRUE
 
 	var/open_hands_taker
@@ -337,7 +337,7 @@
 	blown_kiss.fire()
 	qdel(src)
 
-/obj/item/kisser/on_offered(mob/living/offerer)
+/obj/item/kisser/on_offered(mob/living/carbon/offerer)
 	. = TRUE
 
 	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
@@ -347,7 +347,7 @@
 		span_notice("You lean in slightly, indicating you'd like to offer a kiss on the cheek!"), null, 2)
 	offerer.apply_status_effect(STATUS_EFFECT_OFFERING, src)
 
-/obj/item/kisser/on_offer_taken(mob/living/offerer, mob/living/taker)
+/obj/item/kisser/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
 	. = TRUE
 
 	var/obj/projectile/blown_kiss = new kiss_type(get_turf(offerer))
