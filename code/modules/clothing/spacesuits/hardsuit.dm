@@ -182,7 +182,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/dropped(mob/user)
 	..()
-	if(jetpack)
+	if(isatom(jetpack))
 		for(var/X in jetpack.actions)
 			var/datum/action/A = X
 			A.Remove(user)

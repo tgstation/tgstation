@@ -21,7 +21,7 @@
 	name = "Stunprod"
 	description = "CentCom demands a stunprod to use against dissidents. Craft one, then ship it."
 	reward = CARGO_CRATE_VALUE * 2.6
-	wanted_types = list(/obj/item/melee/baton/cattleprod)
+	wanted_types = list(/obj/item/melee/baton/security/cattleprod)
 
 /datum/bounty/item/assistant/soap
 	name = "Soap"

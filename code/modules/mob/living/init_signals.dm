@@ -44,6 +44,9 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_SKITTISH), .proc/on_skittish_trait_gain)
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_SKITTISH), .proc/on_skittish_trait_loss)
 
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_INNATE_FACTIONS_BLOCKED), .proc/on_innate_factions_blocked_trait_gain)
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_INNATE_FACTIONS_BLOCKED), .proc/on_innate_factions_blocked_trait_loss)
+
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
 	SIGNAL_HANDLER
@@ -210,3 +213,15 @@
 /mob/living/proc/on_skittish_trait_loss(datum/source)
 	SIGNAL_HANDLER
 	RemoveElement(/datum/element/skittish)
+
+/// Called when [TRAIT_INNATE_FACTIONS_BLOCKED] is added to the mob.
+/mob/living/proc/on_innate_factions_blocked_trait_gain(datum/source)
+	SIGNAL_HANDLER
+	for(var/faction_trait in innate_factions)
+		REMOVE_TRAIT(src, faction_trait, INNATE_TRAIT)
+
+/// Called when [TRAIT_INNATE_FACTIONS_BLOCKED] is removed to the mob.
+/mob/living/proc/on_innate_factions_blocked_trait_loss(datum/source)
+	SIGNAL_HANDLER
+	for(var/faction_trait in innate_factions)
+		ADD_TRAIT(src, faction_trait, INNATE_TRAIT)

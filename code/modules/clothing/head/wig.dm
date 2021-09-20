@@ -44,9 +44,7 @@
 	. += hair_overlay
 
 	// So that the wig actually blocks emissives.
-	var/mutable_appearance/hair_blocker = mutable_appearance(hair.icon, hair.icon_state, plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
-	hair_blocker.color = GLOB.em_block_color
-	hair_overlay.overlays += hair_blocker
+	hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, alpha = hair_overlay.alpha)
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
 	var/new_style = input(user, "Select a hairstyle", "Wig Styling")  as null|anything in (GLOB.hairstyles_list - "Bald")

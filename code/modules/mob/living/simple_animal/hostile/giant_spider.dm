@@ -77,8 +77,6 @@
 	if(directive)
 		to_chat(src, span_spider("Your mother left you a directive! Follow it at all costs."))
 		to_chat(src, span_spider("<b>[directive]</b>"))
-		if(mind)
-			mind.store_memory(span_spider("<b>[directive]</b>"))
 	GLOB.spidermobs[src] = TRUE
 
 /mob/living/simple_animal/hostile/giant_spider/Destroy()

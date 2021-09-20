@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(circuit_datatypes, generate_circuit_datatypes())
  * Used for implicit conversions between outputs and inputs (e.g. number -> string)
  * and applying/removing signals on inputs
  */
-/datum/circuit_datatype/proc/convert_value(datum/port/port, value_to_convert)
+/datum/circuit_datatype/proc/convert_value(datum/port/port, value_to_convert, force = FALSE)
 	return value_to_convert
 
 /**

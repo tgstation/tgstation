@@ -5,6 +5,8 @@
 	icon_state = "scangate_black"
 	var/scanline_timer
 
+	var/locked = FALSE
+
 /obj/structure/scanner_gate_shell/Initialize()
 	. = ..()
 	set_scanline("passive")
@@ -18,6 +20,8 @@
 	), SHELL_CAPACITY_LARGE, SHELL_FLAG_REQUIRE_ANCHOR)
 
 /obj/structure/scanner_gate_shell/wrench_act(mob/living/user, obj/item/tool)
+	if(locked)
+		return
 	set_anchored(!anchored)
 	tool.play_tool_sound(src)
 	balloon_alert(user, "You [anchored?"secure":"unsecure"] [src].")
@@ -53,9 +57,14 @@
 	if(istype(shell, /obj/structure/scanner_gate_shell))
 		attached_gate = shell
 		RegisterSignal(attached_gate, COMSIG_SCANGATE_SHELL_PASS, .proc/on_trigger)
+		RegisterSignal(parent, COMSIG_CIRCUIT_SET_LOCKED, .proc/on_set_locked)
+		attached_gate.locked = parent.locked
 
 /obj/item/circuit_component/scanner_gate/unregister_shell(atom/movable/shell)
 	UnregisterSignal(attached_gate, COMSIG_SCANGATE_SHELL_PASS)
+	if(attached_gate)
+		attached_gate.locked = FALSE
+		UnregisterSignal(parent, COMSIG_CIRCUIT_SET_LOCKED)
 	attached_gate = null
 	return ..()
 
@@ -63,3 +72,12 @@
 	SIGNAL_HANDLER
 	scanned.set_output(passed)
 	trigger_output.set_output(COMPONENT_SIGNAL)
+
+/**
+ * Locks the attached bot when the circuit is locked.
+ *
+ * Arguments:
+ * * new_value - A boolean that determines if the circuit is locked or not.
+ **/
+/obj/item/circuit_component/scanner_gate/proc/on_set_locked(datum/source, new_value)
+	attached_gate.locked = new_value

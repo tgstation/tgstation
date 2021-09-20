@@ -1,5 +1,0 @@
-author: "QuarianCommando"
-delete-after: True
-changes: 
-  - expansion: "Added five new table variants - Plasmaglass, Reinforced Plasmaglass, Reinforced Glass, Plastitanium Glass, and Titaniumglass."
-  - bugfix: "Attempting to create a table with the aforementioned materials will no longer result in a normal metal table."

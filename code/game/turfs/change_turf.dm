@@ -77,7 +77,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(flags & CHANGETURF_SKIP)
 		return new path(src)
 
-	var/old_always_lit = always_lit
 	var/old_lighting_object = lighting_object
 	var/old_lighting_corner_NE = lighting_corner_NE
 	var/old_lighting_corner_SE = lighting_corner_SE
@@ -132,14 +131,13 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	dynamic_lumcount = old_dynamic_lumcount
 
-	if(always_lit != old_always_lit)
-		if(always_lit)
-			add_overlay(GLOB.fullbright_overlay)
-		else
-			cut_overlay(GLOB.fullbright_overlay)
+	if(W.always_lit)
+		W.add_overlay(GLOB.fullbright_overlay)
+	else
+		W.cut_overlay(GLOB.fullbright_overlay)
 
 	if(SSlighting.initialized)
-		lighting_object = old_lighting_object
+		W.lighting_object = old_lighting_object
 
 		directional_opacity = old_directional_opacity
 		recalculate_directional_opacity()

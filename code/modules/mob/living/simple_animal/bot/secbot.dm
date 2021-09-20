@@ -23,7 +23,7 @@
 
 	combat_mode = TRUE
 
-	var/baton_type = /obj/item/melee/baton
+	var/baton_type = /obj/item/melee/baton/security
 	var/obj/item/weapon
 	var/mob/living/carbon/target
 	var/oldtarget_name

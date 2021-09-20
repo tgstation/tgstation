@@ -283,6 +283,21 @@
 	icon_file = 'icons/obj/items/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn_gold.json'
 
+/datum/greyscale_config/ceremonial_blade
+	name = "Base Ceremonial Blade"
+	icon_file = 'icons/obj/items/ritual_weapon.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/ceremonial_blade.json'
+
+/datum/greyscale_config/ceremonial_blade_lefthand
+	name = "Base Held Ceremonial Blade, Left"
+	icon_file = 'icons/obj/items/ritual_weapon.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/ceremonial_blade_lefthand.json'
+
+/datum/greyscale_config/ceremonial_blade_righthand
+	name = "Base Held Ceremonial Blade, Right"
+	icon_file = 'icons/obj/items/ritual_weapon.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/ceremonial_blade_righthand.json'
+
 /datum/greyscale_config/beret
 	name = "Beret"
 	icon_file = 'icons/obj/clothing/head/beret.dmi'

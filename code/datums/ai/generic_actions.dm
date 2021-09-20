@@ -38,10 +38,10 @@
 	var/mob/living/big_guy = controller.pawn //he was molded by the darkness
 
 	if(batman.stat)
-		finish_action(controller, TRUE)
+		finish_action(controller, TRUE, target_key)
 
 	if(get_dist(batman, big_guy) >= give_up_distance)
-		finish_action(controller, FALSE)
+		finish_action(controller, FALSE, target_key)
 
 	big_guy.start_pulling(batman)
 	big_guy.setDir(get_dir(big_guy, batman))
@@ -57,11 +57,11 @@
 	else
 		batman.adjustBruteLoss(150)
 
-	finish_action(controller, TRUE)
+	finish_action(controller, TRUE, target_key)
 
 /datum/ai_behavior/break_spine/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	if(succeeded)
-		controller.blackboard[target_key] = null
+		controller.blackboard -= target_key
 	return ..()
 
 /// Use in hand the currently held item

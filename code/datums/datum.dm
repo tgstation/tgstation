@@ -287,5 +287,6 @@
 		return TRUE
 	return (datum_target && SEND_SIGNAL(datum_target, COMSIG_PARENT_FACTION_CHECKED, src, exact_match))
 
+///Used by the above proc. returns a list of faction traits found in the status_traits list.
 /datum/proc/get_faction_traits(list/factions_list)
 	return GET_TRAITS_IN_LIST(src, factions_list)

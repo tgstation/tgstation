@@ -1,11 +1,26 @@
+/**
+ * Component attachable to any datum. Used by mobs the most.
+ *
+ * If do_faction_check is TRUE, faction checks done to/by the parent also take into account the factions of the faction_master datum.
+ * It also gives the attached atom an unique faction trait to make sure faction checks from other datums return TRUE if they both
+ * have a faction_bind component with the same faction_master.
+ */
 /datum/component/faction_bind
 	dupe_mode = COMPONENT_DUPE_SELECTIVE
+	/// The datum the parent is bound to. Avoids faction checks with him returning FALSE along other things (see above).
 	var/datum/faction_master
+	/// For living mobs: Wheter the component adds the INNATE_FACTIONS_BLOCKED trait on Initialize. See living/init_signals.dm.
 	var/block_innate_factions = FALSE
+	/**
+	 * The trait source of traits added on init. It's important that the sources are unique and shared among other faction bind
+	 * comps in the code, unless it's sure they won't overlap (e.g. MINION_MOB_SPAWN_TRAIT, added right after a new minion is spawned)
+	 * or if both AddComponent calls have the highlander arg TRUE.
+	 */
 	var/trait_source
+	/// If false, faction_master.faction_check() won't be called.
 	var/do_faction_check = TRUE
+	/// list of blacklisted factions that should be ignored in the master faction check.
 	var/list/blacklist
-	var/currently_looping = FALSE
 
 /datum/component/faction_bind/Initialize(datum/faction_master, trait_source, block_innate_factions = FALSE, do_faction_check = TRUE, list/blacklist, highlander = FALSE)
 	if(!istype(faction_master) || !trait_source)
@@ -20,10 +35,6 @@
 	src.blacklist = blacklist
 
 	if(block_innate_factions && isliving(parent))
-		if(!HAS_TRAIT(parent, TRAIT_INNATE_FACTIONS_BLOCKED))
-			var/mob/living/living_parent = parent
-			for(var/faction_trait in living_parent.innate_factions)
-				REMOVE_TRAIT(living_parent, faction_trait, INNATE_TRAIT)
 		ADD_TRAIT(parent, TRAIT_INNATE_FACTIONS_BLOCKED, trait_source)
 
 	RegisterSignal(parent, COMSIG_PARENT_FACTION_CHECK, .proc/on_parent_faction_check)
@@ -38,12 +49,8 @@
 	UnregisterSignal(faction_master, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(parent, list(COMSIG_PARENT_FACTION_CHECK, COMSIG_PARENT_FACTION_CHECKED))
 
-	if(block_innate_factions && isliving(parent))
+	if(block_innate_factions)
 		REMOVE_TRAIT(parent, TRAIT_INNATE_FACTIONS_BLOCKED, trait_source)
-		if(!HAS_TRAIT(parent, TRAIT_INNATE_FACTIONS_BLOCKED))
-			var/mob/living/living_parent = parent
-			for(var/faction_trait in living_parent.innate_factions)
-				ADD_TRAIT(living_parent, faction_trait, INNATE_TRAIT)
 
 	REMOVE_TRAIT(parent, TRAIT_FACTION_MASTER(faction_master), trait_source)
 	faction_master = null
@@ -56,7 +63,7 @@
 		stack_trace("a faction_bind comp type with same trait_source ([trait_source]) of an instanciated one was about to be added to [parent] with the highlander arg set FALSE.")
 	else if(!faction_master)
 		stack_trace("the faction_master ([src.faction_master]) of a faction_bind comp (trait_source: [trait_source]) was about to be replaced with a new one, but it turned out to be null.")
-	else //There can only be one!
+	else if(src.faction_master != faction_master) //There can only be one!
 		replace_faction_master(faction_master)
 	return TRUE
 
@@ -90,7 +97,7 @@
 	if(target && !exact_match && HAS_TRAIT(target, TRAIT_FACTION_MASTER(faction_master)))
 		return TRUE
 	if(do_faction_check)
-		do_faction_check = FALSE // Temporarily set it to false to avoid possible loops.
+		do_faction_check = FALSE // Temporarily set it to false to avoid potential infinite loops.
 		. = faction_master.faction_check(target || factions, exact_match, blacklist)
 		do_faction_check = TRUE
 

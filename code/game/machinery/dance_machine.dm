@@ -12,7 +12,7 @@
 	var/list/songs = list()
 	var/datum/track/selection = null
 	/// Volume of the songs played
-	var/volume = 100
+	var/volume = 50
 	COOLDOWN_DECLARE(jukebox_error_cd)
 
 /obj/machinery/jukebox/disco
@@ -166,7 +166,7 @@
 				volume = 0
 				return TRUE
 			else if(new_volume == "max")
-				volume = 100
+				volume = initial(volume)
 				return TRUE
 			else if(text2num(new_volume) != null)
 				volume = text2num(new_volume)

@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 /// Assorted weaponry
 /datum/adventure_loot_generator/simple/weapons
 	id = "weapons"
-	loot_list = list(/obj/item/gun/energy/laser,/obj/item/melee/baton/loaded)
+	loot_list = list(/obj/item/gun/energy/laser,/obj/item/melee/baton/security/loaded)
 
 /// Pets and pet accesories in carriers
 /datum/adventure_loot_generator/pet

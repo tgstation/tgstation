@@ -58,6 +58,7 @@
 	if(ishostile(parent) && isliving(tamer)) //Kinda shit check but this only applies to hostiles atm
 		var/mob/living/simple_animal/hostile/evil_but_now_not_evil = parent
 		evil_but_now_not_evil.friends |= tamer
-		evil_but_now_not_evil.AddComponent(/datum/component/faction_bind, tamer, ANIMAL_TAMED_TRAIT, TRUE, highlander = TRUE)
+
+	parent.AddComponent(/datum/component/faction_bind, tamer, ANIMAL_TAMED_TRAIT, TRUE, highlander = TRUE)
 
 	qdel(src)
