@@ -417,7 +417,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VOIDSTORM_IMMUNE "voidstorm_immune"
 #define TRAIT_WEATHER_IMMUNE "weather_immune" //Immune to ALL weather effects.
 
-/// Faction traits.
+/**
+ * Faction traits. Don't forget to add new factions to the faction_traits global list
+ * found in [_globalvars/traits.dm] or they won't work.
+ */
 #define TRAIT_FACTION_NEUTRAL "faction_neutral"
 #define TRAIT_FACTION_MINING "faction_mining"
 #define TRAIT_FACTION_ORION "faction_orion"
@@ -461,6 +464,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FACTION_GREYTIDE "faction_greytide"
 #define TRAIT_FACTION_LAZARUS "faction_lazarus"
 #define TRAIT_FACTION_CHEMICAL "faction_chemical"
+
 ///Used in the faction_bind component to temporarily remove innate faction traits from living mobs.
 #define TRAIT_INNATE_FACTIONS_BLOCKED "innate_factions_blocked"
 ///Custom factions also used in faction_bind so entities with the same master won't be hostile to each other.

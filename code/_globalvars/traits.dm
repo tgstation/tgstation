@@ -273,6 +273,7 @@ GLOBAL_LIST_INIT(movement_type_removetrait_signals, set_movement_type_removetrai
 	for(var/trait in GLOB.movement_type_trait_to_flag)
 		. += SIGNAL_REMOVETRAIT(trait)
 
+/// A list of status traits that are considered factions. New factions won't work unless they're also added here.
 GLOBAL_LIST_INIT(faction_traits, list(
 	TRAIT_FACTION_NEUTRAL,
 	TRAIT_FACTION_MINING,
