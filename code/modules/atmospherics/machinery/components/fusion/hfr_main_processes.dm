@@ -447,60 +447,66 @@
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_nuclear_particles(moderator_list)
 	// New nuclear particle emission sytem.
-	if(power_level >= 4)
-		if(moderator_list[/datum/gas/bz] > (150 / power_level))
-			var/obj/machinery/hypertorus/corner/picked_corner = pick(corners)
-			picked_corner.loc.fire_nuclear_particle(turn(picked_corner.dir, 180))
+	if(power_level < 4)
+		return
+	if(moderator_list[/datum/gas/bz] < (150 / power_level))
+		return
+	var/obj/machinery/hypertorus/corner/picked_corner = pick(corners)
+	picked_corner.loc.fire_nuclear_particle(turn(picked_corner.dir, 180))
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_lightning_arcs(moderator_list)
-	if(power_level >= 4)
-		if(moderator_list[/datum/gas/antinoblium] > 50 || critical_threshold_proximity > 500)
-			var/zap_number = power_level - 2
+	if(power_level < 4)
+		return
+	if(moderator_list[/datum/gas/antinoblium] <= 50 && critical_threshold_proximity <= 500)
+		return
+	var/zap_number = power_level - 2
 
-			if(critical_threshold_proximity > 650 && prob(20))
-				zap_number += 1
+	if(critical_threshold_proximity > 650 && prob(20))
+		zap_number += 1
 
-			var/cutoff = 1500
-			cutoff = clamp(3000 - (power_level * (internal_fusion.total_moles() * 0.45)), 450, 3000)
+	var/cutoff = 1500
+	cutoff = clamp(3000 - (power_level * (internal_fusion.total_moles() * 0.45)), 450, 3000)
 
-			var/zaps_aspect = DEFAULT_ZAP_ICON_STATE
-			var/flags = ZAP_SUPERMATTER_FLAGS
-			switch(power_level)
-				if(5)
-					zaps_aspect = SLIGHTLY_CHARGED_ZAP_ICON_STATE
-					flags |= (ZAP_MOB_DAMAGE)
-				if(6)
-					zaps_aspect = OVER_9000_ZAP_ICON_STATE
-					flags |= (ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE)
+	var/zaps_aspect = DEFAULT_ZAP_ICON_STATE
+	var/flags = ZAP_SUPERMATTER_FLAGS
+	switch(power_level)
+		if(5)
+			zaps_aspect = SLIGHTLY_CHARGED_ZAP_ICON_STATE
+			flags |= (ZAP_MOB_DAMAGE)
+		if(6)
+			zaps_aspect = OVER_9000_ZAP_ICON_STATE
+			flags |= (ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE)
 
-			playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
-			for(var/i in 1 to zap_number)
-				supermatter_zap(src, 5, power_level * 300, flags, zap_cutoff = cutoff, power_level = src.power_level * 1000, zap_icon = zaps_aspect)
+	playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
+	for(var/i in 1 to zap_number)
+		supermatter_zap(src, 5, power_level * 300, flags, zap_cutoff = cutoff, power_level = src.power_level * 1000, zap_icon = zaps_aspect)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_gravity_pulse()
-	if(prob(critical_threshold_proximity / 15))
-		var/grav_range = round(log(2.5, critical_threshold_proximity))
-		for(var/mob/alive_mob in GLOB.alive_mob_list)
-			if(alive_mob.z != z || get_dist(alive_mob, src) > grav_range || alive_mob.mob_negates_gravity())
-				continue
-			step_towards(alive_mob, loc)
+	if(prob(100 - critical_threshold_proximity / 15))
+		return
+	var/grav_range = round(log(2.5, critical_threshold_proximity))
+	for(var/mob/alive_mob in GLOB.alive_mob_list)
+		if(alive_mob.z != z || get_dist(alive_mob, src) > grav_range || alive_mob.mob_negates_gravity())
+			continue
+		step_towards(alive_mob, loc)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/remove_waste(delta_time)
 	//Gases can be removed from the moderator internal by using the interface.
-	if(waste_remove)
-		var/filtering_amount = moderator_scrubbing.len
-		for(var/gas in moderator_internal.gases & moderator_scrubbing)
-			var/datum/gas_mixture/removed = moderator_internal.remove_specific(gas, (moderator_filtering_rate / filtering_amount) * delta_time)
-			if(removed)
-				linked_output.airs[1].merge(removed)
+	if(!waste_remove)
+		return
+	var/filtering_amount = moderator_scrubbing.len
+	for(var/gas in moderator_internal.gases & moderator_scrubbing)
+		var/datum/gas_mixture/removed = moderator_internal.remove_specific(gas, (moderator_filtering_rate / filtering_amount) * delta_time)
+		if(removed)
+			linked_output.airs[1].merge(removed)
 
-		var/datum/gas_mixture/internal_remove
-		for(var/gas_id in selected_fuel.primary_products)
-			if(internal_fusion.gases[gas_id][MOLES] > 0)
-				internal_remove = internal_fusion.remove_specific(gas_id, internal_fusion.gases[gas_id][MOLES] * (1 - (1 - 0.25) ** delta_time))
-				linked_output.airs[1].merge(internal_remove)
-		internal_fusion.garbage_collect()
-		moderator_internal.garbage_collect()
+	var/datum/gas_mixture/internal_remove
+	for(var/gas_id in selected_fuel.primary_products)
+		if(internal_fusion.gases[gas_id][MOLES] > 0)
+			internal_remove = internal_fusion.remove_specific(gas_id, internal_fusion.gases[gas_id][MOLES] * (1 - (1 - 0.25) ** delta_time))
+			linked_output.airs[1].merge(internal_remove)
+	internal_fusion.garbage_collect()
+	moderator_internal.garbage_collect()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_internal_cooling(delta_time)
 	if(moderator_internal.total_moles() > 0 && internal_fusion.total_moles() > 0)
@@ -510,22 +516,23 @@
 		internal_fusion.temperature = max(internal_fusion.temperature - fusion_heat_amount / internal_fusion.heat_capacity(), TCMB)
 		moderator_internal.temperature = max(moderator_internal.temperature + fusion_heat_amount / moderator_internal.heat_capacity(), TCMB)
 
-	if(airs[1].total_moles() * 0.05 > MINIMUM_MOLE_COUNT)
-		var/datum/gas_mixture/cooling_port = airs[1]
-		var/datum/gas_mixture/cooling_remove = cooling_port.remove(0.05 * cooling_port.total_moles())
-		//Cooling of the moderator gases with the cooling loop in and out the core
-		if(moderator_internal.total_moles() > 0)
-			var/coolant_temperature_delta = cooling_remove.temperature - moderator_internal.temperature
-			var/cooling_heat_amount = (1 - (1 - HIGH_EFFICIENCY_CONDUCTIVITY) ** delta_time) * coolant_temperature_delta * (cooling_remove.heat_capacity() * moderator_internal.heat_capacity() / (cooling_remove.heat_capacity() + moderator_internal.heat_capacity()))
-			cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
-			moderator_internal.temperature = max(moderator_internal.temperature + cooling_heat_amount / moderator_internal.heat_capacity(), TCMB)
+	if(airs[1].total_moles() * 0.05 <= MINIMUM_MOLE_COUNT)
+		return
+	var/datum/gas_mixture/cooling_port = airs[1]
+	var/datum/gas_mixture/cooling_remove = cooling_port.remove(0.05 * cooling_port.total_moles())
+	//Cooling of the moderator gases with the cooling loop in and out the core
+	if(moderator_internal.total_moles() > 0)
+		var/coolant_temperature_delta = cooling_remove.temperature - moderator_internal.temperature
+		var/cooling_heat_amount = (1 - (1 - HIGH_EFFICIENCY_CONDUCTIVITY) ** delta_time) * coolant_temperature_delta * (cooling_remove.heat_capacity() * moderator_internal.heat_capacity() / (cooling_remove.heat_capacity() + moderator_internal.heat_capacity()))
+		cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
+		moderator_internal.temperature = max(moderator_internal.temperature + cooling_heat_amount / moderator_internal.heat_capacity(), TCMB)
 
-		else if(internal_fusion.total_moles() > 0)
-			var/coolant_temperature_delta = cooling_remove.temperature - internal_fusion.temperature
-			var/cooling_heat_amount = (1 - (1 - METALLIC_VOID_CONDUCTIVITY) ** delta_time) * coolant_temperature_delta * (cooling_remove.heat_capacity() * internal_fusion.heat_capacity() / (cooling_remove.heat_capacity() + internal_fusion.heat_capacity()))
-			cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
-			internal_fusion.temperature = max(internal_fusion.temperature + cooling_heat_amount / internal_fusion.heat_capacity(), TCMB)
-		cooling_port.merge(cooling_remove)
+	else if(internal_fusion.total_moles() > 0)
+		var/coolant_temperature_delta = cooling_remove.temperature - internal_fusion.temperature
+		var/cooling_heat_amount = (1 - (1 - METALLIC_VOID_CONDUCTIVITY) ** delta_time) * coolant_temperature_delta * (cooling_remove.heat_capacity() * internal_fusion.heat_capacity() / (cooling_remove.heat_capacity() + internal_fusion.heat_capacity()))
+		cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
+		internal_fusion.temperature = max(internal_fusion.temperature + cooling_heat_amount / internal_fusion.heat_capacity(), TCMB)
+	cooling_port.merge(cooling_remove)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/inject_from_side_components(delta_time)
 	update_pipenets()
