@@ -16,13 +16,22 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 /datum/rpgtitle_controller/New()
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/on_crewmember_join)
+	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_LOGGED_IN, .proc/on_mob_login)
 	handle_current_jobs()
 
 /datum/rpgtitle_controller/Destroy(force)
-	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
+	UnregisterSignal(SSdcs, list(COMSIG_GLOB_CREWMEMBER_JOINED, COMSIG_GLOB_MOB_LOGGED_IN))
 	. = ..()
 
-///signal sent by a new item being created.
+///signal sent by a player list expanding
+/datum/rpgtitle_controller/proc/on_mob_login(datum/source, mob/new_login)
+	SIGNAL_HANDLER
+	if(isliving(new_login))
+		var/mob/living/living_login = new_login
+		if(living_login.stat != DEAD && !living_login.maptext)
+			on_crewmember_join(source, living_login, living_login.mind.assigned_role.title)
+
+///signal sent by a crewmember joining
 /datum/rpgtitle_controller/proc/on_crewmember_join(datum/source, mob/living/new_crewmember, rank)
 	SIGNAL_HANDLER
 
@@ -34,13 +43,21 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 	new_crewmember.maptext_x = -24
 	new_crewmember.maptext_y = 32
 
-	var/static/list/biotype_titles = list(
-		MOB_BEAST = "Beast",
-		MOB_REPTILE = "Lizard",
-		MOB_SPIRIT = "Spirit",
-		MOB_PLANT = "Plant",
-		MOB_UNDEAD = "Undead",
-		MOB_ROBOTIC = "Robot",
+	//list of lists involving strings related to a biotype flag, their position in the list equal to the position they were defined as bitflags.
+	//the first list entry is an adjective, the second is a noun. if null, we don't want to describe this biotype, and so even if the mob
+	//has that biotype, the null is skipped
+	var/list/biotype_titles = list(
+		null, //organic is too common to be a descriptor
+		null, //mineral is only used with carbons
+		list("Mechanical", "Robot"),
+		list("Undead", "Zombie"),
+		null, //humanoid is used to denote carbons, we're working with basic and simplemobs
+		list("Insectile", "Bug"),
+		list("Beastly", "Beast"),
+		list("Monstrous", "Megafauna"),
+		list("Reptilian", "Lizard"),
+		list("Paranormal", "Spirit"),
+		list("Flowering", "Plant"),
 	)
 
 	var/maptext_title = ""
@@ -48,12 +65,26 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 	if(!(isanimal(new_crewmember) || isbasicmob(new_crewmember)))
 		maptext_title = job.rpg_title || job.title
 	else
-		for(var/biotype_flag in biotype_titles)
-			if(new_crewmember.mob_biotypes & biotype_flag)
-				maptext_title += "biotype_titles[biotype_flag] "
-		maptext_title = trim_right(maptext_title)
-		if(!maptext_title)
-			maptext_title = "Anomaly"
+		//this following code can only be described as bitflag black magic. ye be warned. i tried to comment excessively to explain what the fuck is happening
+		var/list/applicable_biotypes = list()
+		for(var/biotype_flag_position in 0 to 10)
+			var/biotype_flag = (1 << biotype_flag_position)
+			if(new_crewmember.mob_biotypes & biotype_flag)//they have this flag
+				if(biotype_titles[biotype_flag_position+1]) //if there is a fitting verbage for this biotype...
+					applicable_biotypes += biotype_titles[biotype_flag_position]//...add it to the list of applicable biotypes
+		if(!applicable_biotypes.len) //there will never be an adjective anomaly because anomaly is only added when there are no choices
+			applicable_biotypes += list(null, "Anomaly")
+
+		//shuffle it to allow for some cool combinations of adjectives and nouns
+		applicable_biotypes = shuffle(applicable_biotypes)
+
+		//okay, out of the black magic area we now have a list of things to describe our mob, yay!!!
+		for(var/iteration in applicable_biotypes)
+			if(iteration == applicable_biotypes.len) //last descriptor to add, make it the noun
+				maptext_title += applicable_biotypes[iteration][2]
+				break
+			//there are more descriptors, make it an adjective
+			maptext_title += "[applicable_biotypes[iteration][1]] "
 
 	//mother of all strings...
 	new_crewmember.maptext = "<span class='maptext' style='text-align: center'><span style='color: [new_crewmember.chat_color || rgb(rand(100,255), rand(100,255), rand(100,255))]'>Level [rand(1, 100)] [maptext_title]</span></span>"
