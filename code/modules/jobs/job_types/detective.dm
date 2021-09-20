@@ -75,3 +75,18 @@
 
 	if(visualsOnly)
 		return
+		
+/datum/outfit/job/detective/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return ..()
+
+	var/static/use_noir_suit = FALSE //If there is one detective, they get the default hard-worn suit. If another detective joins the round, they start with a noir suit. Stolen from lawyer code.
+	if(use_noir_suit)
+		uniform = /obj/item/clothing/under/rank/security/detective/grey
+		suit = /obj/item/clothing/suit/det_suit/grey
+		shoes = /obj/item/clothing/shoes/laceup
+		head = /obj/item/clothing/head/fedora
+		suit_store = /obj/item/storage/belt/holster/detective/full
+	else
+		use_noir_suit = TRUE
+	..()
