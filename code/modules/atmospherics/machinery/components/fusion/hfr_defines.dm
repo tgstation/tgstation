@@ -53,14 +53,14 @@
 
 // Currently, this is 2700 moles at 1 Kelvin, linearly scaling down to a maximum of 1800 safe moles at 1e8 degrees kelvin
 // Settings:
-// Start taking overfull damage at this power level
+/// Start taking overfull damage at this power level
 #define HYPERTORUS_OVERFULL_MIN_POWER_LEVEL 6
-// Take 0 damage beneath this much fusion mass at 1 degree Kelvin
+/// Take 0 damage beneath this much fusion mass at 1 degree Kelvin
 #define HYPERTORUS_OVERFULL_MAX_SAFE_COLD_FUSION_MOLES 2700
-// Take 0 damage beneath this much fusion mass at FUSION_TEMPERATURE_MAX degrees Kelvin
+/// Take 0 damage beneath this much fusion mass at FUSION_TEMPERATURE_MAX degrees Kelvin
 #define HYPERTORUS_OVERFULL_MAX_SAFE_HOT_FUSION_MOLES 1800
 // From there, how quickly should things get bad?
-// Every 200 moles, 1 point of damage per second
+/// Every 200 moles, 1 point of damage per second
 #define HYPERTORUS_OVERFULL_MOLAR_SLOPE (1/200)
 // Derived:
 // Given these settings, derive the rest of the equation.
@@ -78,9 +78,9 @@
 //
 
 // Settings:
-// Start healing when fusion mass is below this threshold
+/// Start healing when fusion mass is below this threshold
 #define HYPERTORUS_SUBCRITICAL_MOLES 1200
-// Heal one point per second per this many moles under the threshold
+/// Heal one point per second per this many moles under the threshold
 #define HYPERTORUS_SUBCRITICAL_SCALE 400
 
 //
@@ -88,9 +88,9 @@
 //
 
 // Settings:
-// Heal up to this many points of damage per second at 1 degree kelvin
+/// Heal up to this many points of damage per second at 1 degree kelvin
 #define HYPERTORUS_COLD_COOLANT_MAX_RESTORE 2.5
-// Start healing below this temperature
+/// Start healing below this temperature
 #define HYPERTORUS_COLD_COOLANT_THRESHOLD (10 ** 5)
 // Derived:
 #define HYPERTORUS_COLD_COOLANT_SCALE (HYPERTORUS_COLD_COOLANT_MAX_RESTORE / log(10, HYPERTORUS_COLD_COOLANT_THRESHOLD))
@@ -100,7 +100,7 @@
 //
 
 // Settings:
-// Start taking damage over this threshold, up to a maximum of (1 - HYPERTORUS_MAX_SAFE_IRON) per tick at 100% iron
+/// Start taking damage over this threshold, up to a maximum of (1 - HYPERTORUS_MAX_SAFE_IRON) per tick at 100% iron
 #define HYPERTORUS_MAX_SAFE_IRON 0.35
 
 //
@@ -109,11 +109,11 @@
 
 // Note: Ignores the damage cap!
 // Settings:
-// Start taking damage over this threshold
+/// Start taking damage over this threshold
 #define HYPERTORUS_HYPERCRITICAL_MOLES 10000
-// Take this much damage per mole over the threshold per second
+/// Take this much damage per mole over the threshold per second
 #define HYPERTORUS_HYPERCRITICAL_SCALE 0.002
-// Take at most this much damage per second
+/// Take at most this much damage per second
 #define HYPERTORUS_HYPERCRITICAL_MAX_DAMAGE 20
 
 // If the moderator goes hypercritical, it cracks and starts to spill
@@ -121,17 +121,17 @@
 // Even a small amount is still extremely hazardous with fusion temperatures
 #define HYPERTORUS_WEAK_SPILL_RATE 0.0005
 #define HYPERTORUS_WEAK_SPILL_CHANCE 1
-// Start spilling superhot moderator gas when over this pressure threshold
+/// Start spilling superhot moderator gas when over this pressure threshold
 #define HYPERTORUS_MEDIUM_SPILL_PRESSURE 10000
-// How much should we spill initially?
+/// How much we should spill initially
 #define HYPERTORUS_MEDIUM_SPILL_INITIAL 0.25
-// How much of the moderator mix should we spill per second until mended?
+/// How much of the moderator mix we should spill per second until mended
 #define HYPERTORUS_MEDIUM_SPILL_RATE 0.01
-// If the moderator gas goes over this threshold, REALLY spill it
+/// If the moderator gas goes over this threshold, REALLY spill it
 #define HYPERTORUS_STRONG_SPILL_PRESSURE 12000
-// How much should we spill initially?
+/// How much we should spill initially
 #define HYPERTORUS_STRONG_SPILL_INITIAL 0.75
-// How much of the moderator mix should we spill per second until mended?
+/// How much of the moderator mix we should spill per second until mended
 #define HYPERTORUS_STRONG_SPILL_RATE 0.05
 
 
