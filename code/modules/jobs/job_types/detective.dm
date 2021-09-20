@@ -86,7 +86,7 @@
 		suit = /obj/item/clothing/suit/det_suit/grey
 		shoes = /obj/item/clothing/shoes/laceup
 		head = /obj/item/clothing/head/fedora
-		suit_store = /obj/item/storage/belt/holster/detective/full
+		suit_store = /obj/item/gun/energy/disabler
 	else
 		use_noir_suit = TRUE
 	..()
