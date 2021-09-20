@@ -20,8 +20,10 @@
 	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
 	if(!input || !IsAvailable())
 		return
-	if(CHAT_FILTER_CHECK(input))
-		to_chat(usr, span_warning("You cannot send a message that contains a word prohibited in IC chat!"))
+
+	var/list/filter_result = is_ic_filtered(input)
+	if(filter_result)
+		REPORT_CHAT_FILTER_TO_USER(usr, filter_result)
 		return
 	cultist_commune(usr, input)
 
