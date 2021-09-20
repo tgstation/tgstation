@@ -202,12 +202,12 @@
 	RegisterSignal(possible_candidate, COMSIG_MOVABLE_MOVED, .proc/check_taker_in_range)
 	G.setup(possible_candidate, owner, offered_item)
 
-/// Remove the alert and signals for the specified carbon mob
+/// Remove the alert and signals for the specified carbon mob. Automatically removes the status effect when we lost the last taker
 /datum/status_effect/offering/proc/remove_candidate(mob/living/carbon/removed_candidate)
 	removed_candidate.clear_alert("[owner]")
 	LAZYREMOVE(possible_takers, removed_candidate)
 	UnregisterSignal(removed_candidate, COMSIG_MOVABLE_MOVED)
-	if(!possible_takers)
+	if(!possible_takers && !QDELING(src))
 		qdel(src)
 
 /// One of our possible takers moved, see if they left us hanging
