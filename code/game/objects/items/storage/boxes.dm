@@ -116,7 +116,10 @@
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
 
 /obj/item/storage/box/survival/PopulateContents()
-	new mask_type(src)
+	if(!isplasmaman(loc))
+		new mask_type(src)
+	else
+		return
 	if(!isnull(medipen_type))
 		new medipen_type(src)
 
