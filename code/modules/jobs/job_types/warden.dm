@@ -71,12 +71,15 @@
 	if(visualsOnly)
 		return ..()
 
-	var/static/use_blue_suit = FALSE //If there is one warden, they get the default red armored suit. If another warden joins the round, they start with a blue suit.
+	var/static/use_blue_suit = FALSE //If there is one warden, they get the default red armored suit. If another warden joins the round, they start with a blue suit. And their unique items.
 	if(use_blue_suit)
 		uniform = /obj/item/clothing/under/rank/security/warden/formal 
 		suit = /obj/item/clothing/suit/armor/vest/warden
 		head = /obj/item/clothing/head/beret/sec/navywarden 
 		gloves = /obj/item/clothing/gloves/krav_maga/sec
+		belt = /obj/item/storage/belt/security/full
+		backpack_contents = list(/obj/item/melee/baton/security/loaded=1,\
+			/obj/item/pda/warden)
 	else
 		use_blue_suit = TRUE
 	..()
