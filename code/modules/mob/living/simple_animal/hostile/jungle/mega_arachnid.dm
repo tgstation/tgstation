@@ -67,5 +67,4 @@
 	desc = "Used by mega arachnids to immobilize their prey."
 	item_flags = DROPDEL
 	flags_1 = NONE
-	icon_state = "tentacle_end"
-	icon = 'icons/obj/guns/projectiles.dmi'
+	icon_state = "flesh_snare"
