@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - admin: "Made admin only shells not interactable to non-admins"

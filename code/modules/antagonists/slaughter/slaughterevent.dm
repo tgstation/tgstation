@@ -7,8 +7,6 @@
 	min_players = 20
 	dynamic_should_hijack = TRUE
 
-
-
 /datum/round_event/ghost_role/slaughter
 	minimum_required = 1
 	role_name = "slaughter demon"
@@ -31,7 +29,6 @@
 	var/obj/effect/dummy/phased_mob/holder = new /obj/effect/dummy/phased_mob((pick(spawn_locs)))
 	var/mob/living/simple_animal/hostile/imp/slaughter/demon = new (holder)
 	demon.make_special_mind(selected.key, /datum/job/slaughter_demon, ROLE_SLAUGHTER_DEMON, /datum/antagonist/slaughter)
-	to_chat(demon, demon.playstyle_string)
 	to_chat(demon, "<B>You are currently not currently in the same plane of existence as the station. Blood Crawl near a blood pool to manifest.</B>")
 	SEND_SOUND(demon, 'sound/magic/demon_dies.ogg')
 	message_admins("[ADMIN_LOOKUPFLW(demon)] has been made into a slaughter demon by an event.")

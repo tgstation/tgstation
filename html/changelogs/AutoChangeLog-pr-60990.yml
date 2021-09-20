@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixes monkey being unable to access right click functions on several objects such as stacks and storages."

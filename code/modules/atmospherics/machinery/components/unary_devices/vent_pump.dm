@@ -167,12 +167,17 @@
 	if(!GLOB.air_vent_names[id_tag])
 		// If we do not have a name, assign one.
 		// Produces names like "Port Quarter Solar vent pump hZ2l6".
-		name = "\proper [vent_area.name] vent pump [id_tag]"
+		update_name()
 		GLOB.air_vent_names[id_tag] = name
 
 	vent_area.air_vent_info[id_tag] = signal.data
 
 	radio_connection.post_signal(src, signal, radio_filter_out)
+
+/obj/machinery/atmospherics/components/unary/vent_pump/update_name()
+	..()
+	var/area/vent_area = get_area(src)
+	name = "\proper [vent_area.name] [name] [id_tag]"
 
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atmosinit()
