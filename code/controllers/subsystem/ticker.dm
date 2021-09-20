@@ -690,5 +690,5 @@ SUBSYSTEM_DEF(ticker)
 
 	for(var/themes in reboot_sounds)
 		possible_themes += themes
-	if(possible_themes)
+	if(possible_themes.len)
 		return "[global.config.directory]/reboot_themes/[pick(possible_themes)]"
