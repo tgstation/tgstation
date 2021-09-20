@@ -191,10 +191,6 @@
 		if(istype(slap_check))
 			slappers_giver++
 
-	if(!slappers_giver) // THE PRANKAGE
-		too_slow_p1(giver, taker)
-		return
-
 	if(slappers_giver >= 2) // we only check this if it's already established the taker has 2+ hands free
 		giver.visible_message(span_notice("[taker] enthusiastically high-tens [giver]!"), span_nicegreen("Wow! You're high-tenned [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
 		to_chat(taker, span_nicegreen("You give high-tenning [giver] your all!"))
@@ -211,26 +207,6 @@
 		taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_PROTAGONIST = giver, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
 		SEND_SIGNAL(giver, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
 		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
-	qdel(src)
-
-/// If we don't have any slappers in hand when someone goes to high-five us, we prank the hell out of them
-/obj/item/slapper/proc/too_slow_p1(mob/living/owner, mob/living/carbon/rube)
-	owner.visible_message(span_notice("[rube] rushes in to high-five [owner], but-"), span_nicegreen("[rube] falls for your trick just as planned, lunging for a high-five that no longer exists! Classic!"), ignored_mobs=rube)
-	to_chat(rube, span_nicegreen("You go in for [owner]'s high-five, but-"))
-	addtimer(CALLBACK(src, .proc/too_slow_p2, owner, rube), 0.5 SECONDS)
-
-/// Part two of the ultimate prank
-/obj/item/slapper/proc/too_slow_p2(mob/living/owner, mob/living/carbon/rube)
-	if(!owner || !rube)
-		qdel(src)
-		return
-	owner.visible_message(span_danger("[owner] pulls away from [rube]'s slap at the last second, dodging the high-five entirely!"), span_nicegreen("[rube] fails to make contact with your hand, making an utter fool of [rube.p_them()]self!"), span_hear("You hear a disappointing sound of flesh not hitting flesh!"), ignored_mobs=rube)
-	var/all_caps_for_emphasis = uppertext("NO! [owner] PULLS [owner.p_their()] HAND AWAY FROM YOURS! YOU'RE TOO SLOW!")
-	to_chat(rube, span_userdanger("[all_caps_for_emphasis]"))
-	playsound(owner, 'sound/weapons/thudswoosh.ogg', 100, TRUE, 1)
-	rube.Knockdown(1 SECONDS)
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/down_low)
-	SEND_SIGNAL(rube, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/too_slow)
 	qdel(src)
 
 /obj/item/noogie
@@ -359,8 +335,31 @@
 	blown_kiss.fire()
 	qdel(src)
 
-/obj/item/kisser/on_offered(mob/living/user)
-	return
+/obj/item/kisser/on_offered(mob/living/offerer)
+	. = TRUE
+
+	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
+		return
+
+	offerer.visible_message(span_notice("[offerer] raises [offerer.p_their()] arm, looking for a high-five!"), \
+		span_notice("You post up, looking for a high-five!"), null, 2)
+	offerer.apply_status_effect(STATUS_EFFECT_OFFERING, src)
+
+/obj/item/kisser/on_offer_taken(mob/living/giver, mob/living/taker)
+	. = TRUE
+
+	var/obj/projectile/blown_kiss = new kiss_type(get_turf(giver))
+	giver.visible_message("<b>[giver]</b> gives [taker] \a [blown_kiss] on the cheek!", span_notice("You give [taker] \a [blown_kiss] on the cheek!"))
+	//Shooting Code:
+	blown_kiss.spread = 0
+	blown_kiss.original = taker
+	blown_kiss.fired_from = giver
+	blown_kiss.firer = giver // don't hit ourself that would be really annoying
+	blown_kiss.impacted = list(giver = TRUE) // just to make sure we don't hit the wearer
+	blown_kiss.preparePixelProjectile(taker, giver)
+	blown_kiss.suppressed = SUPPRESSED_VERY
+	blown_kiss.fire()
+	qdel(src)
 
 /obj/item/kisser/death
 	name = "kiss of death"
@@ -402,7 +401,8 @@
  */
 /obj/projectile/kiss/proc/harmless_on_hit(mob/living/living_target)
 	playsound(get_turf(living_target), hitsound, 100, TRUE)
-	living_target.visible_message(span_danger("[living_target] is hit by \a [src]."), span_userdanger("You're hit by \a [src]!"), vision_distance=COMBAT_MESSAGE_RANGE)
+	if(!suppressed)
+		living_target.visible_message(span_danger("[living_target] is hit by \a [src]."), span_userdanger("You're hit by \a [src]!"), vision_distance=COMBAT_MESSAGE_RANGE)
 	living_target.mind?.add_memory(MEMORY_KISS, list(DETAIL_PROTAGONIST = living_target, DETAIL_KISSER = firer), story_value = STORY_VALUE_OKAY)
 	if(isliving(firer))
 		var/mob/living/kisser = firer

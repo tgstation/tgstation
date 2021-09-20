@@ -184,6 +184,7 @@
 
 /datum/status_effect/offering/Destroy()
 	//QDEL_NULL(offered_item)
+	owner?.remove_status_effect(STATUS_EFFECT_OFFERING)
 	for(var/i in possible_takers)
 		var/mob/living/carbon/removed_taker = i
 		remove_candidate(removed_taker)
@@ -207,12 +208,6 @@
 	if(!possible_takers)
 		qdel(src)
 
-/// If someone examine_more's us while we don't have a slapper in hand, it'll tip them off to our trickster ways
-/datum/status_effect/offering/proc/check_fake_out(datum/source, mob/user, list/examine_list)
-	SIGNAL_HANDLER
-
-	if(!offered_item)
-		examine_list += "[span_warning("[owner]'s arm appears tensed up, as if [owner.p_they()] plan on pulling it back suddenly...")]\n"
 
 /// One of our possible takers moved, see if they left us hanging
 /datum/status_effect/offering/proc/check_taker_in_range(mob/living/carbon/taker)

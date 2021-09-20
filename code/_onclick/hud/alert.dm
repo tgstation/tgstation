@@ -336,8 +336,11 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!iscarbon(usr))
 		CRASH("User for [src] is of type \[[usr.type]\]. This should never happen.")
 
-	var/mob/living/carbon/C = owner
-	C.take(giver, receiving)
+	handle_transfer()
+
+/atom/movable/screen/alert/give/proc/handle_transfer()
+	var/mob/living/carbon/taker = owner
+	taker.take(giver, receiving)
 
 /atom/movable/screen/alert/give/proc/check_in_range(atom/taker)
 	SIGNAL_HANDLER
@@ -345,6 +348,54 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if (!giver.CanReach(taker))
 		to_chat(owner, span_warning("You moved out of range of [giver]!"))
 		owner.clear_alert("[giver]")
+
+/atom/movable/screen/alert/give/highfive/setup(mob/living/carbon/taker, mob/living/carbon/giver, obj/item/receiving)
+	. = ..()
+	name = "[giver] is offering a high-five!"
+	desc = "[giver] is offering a high-five!. Click this alert to slap it."
+	RegisterSignal(giver, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
+
+/atom/movable/screen/alert/give/highfive/handle_transfer()
+	var/mob/living/carbon/taker = owner
+	if(receiving && (receiving in giver.held_items))
+		receiving.on_offer_taken(taker)
+		return
+
+	too_slow_p1()
+
+/// If we don't have any slappers in hand when someone goes to high-five us, we prank the hell out of them
+/atom/movable/screen/alert/give/highfive/proc/too_slow_p1()
+	var/mob/living/carbon/rube = owner
+	if(!rube || !giver)
+		qdel(src)
+		return
+
+	giver.visible_message(span_notice("[rube] rushes in to high-five [giver], but-"), span_nicegreen("[rube] falls for your trick just as planned, lunging for a high-five that no longer exists! Classic!"), ignored_mobs=rube)
+	to_chat(rube, span_nicegreen("You go in for [giver]'s high-five, but-"))
+	addtimer(CALLBACK(src, .proc/too_slow_p2, giver, rube), 0.5 SECONDS)
+
+/// Part two of the ultimate prank
+/atom/movable/screen/alert/give/highfive/proc/too_slow_p2()
+	var/mob/living/carbon/rube = owner
+	if(!rube || !giver)
+		qdel(src)
+		return
+
+	giver.visible_message(span_danger("[giver] pulls away from [rube]'s slap at the last second, dodging the high-five entirely!"), span_nicegreen("[rube] fails to make contact with your hand, making an utter fool of [rube.p_them()]self!"), span_hear("You hear a disappointing sound of flesh not hitting flesh!"), ignored_mobs=rube)
+	var/all_caps_for_emphasis = uppertext("NO! [giver] PULLS [giver.p_their()] HAND AWAY FROM YOURS! YOU'RE TOO SLOW!")
+	to_chat(rube, span_userdanger("[all_caps_for_emphasis]"))
+	playsound(giver, 'sound/weapons/thudswoosh.ogg', 100, TRUE, 1)
+	rube.Knockdown(1 SECONDS)
+	SEND_SIGNAL(giver, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/down_low)
+	SEND_SIGNAL(rube, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/too_slow)
+	qdel(src)
+
+/// If someone examine_more's us while we don't have a slapper in hand, it'll tip them off to our trickster ways
+/atom/movable/screen/alert/give/highfive/proc/check_fake_out(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(!receiving)
+		examine_list += "[span_warning("[giver]'s arm appears tensed up, as if [giver.p_they()] plan on pulling it back suddenly...")]\n"
 
 /// Gives the player the option to succumb while in critical condition
 /atom/movable/screen/alert/succumb
