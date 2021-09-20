@@ -51,7 +51,7 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 		null, //mineral is only used with carbons
 		list("Mechanical", "Robot"),
 		list("Undead", "Zombie"),
-		null, //humanoid is used to denote carbons, we're working with basic and simplemobs
+		list("Bipedal", "Humanoid"),
 		list("Insectile", "Bug"),
 		list("Beastly", "Beast"),
 		list("Monstrous", "Megafauna"),
@@ -71,7 +71,7 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 			var/biotype_flag = (1 << biotype_flag_position)
 			if(new_crewmember.mob_biotypes & biotype_flag)//they have this flag
 				if(biotype_titles[biotype_flag_position+1]) //if there is a fitting verbage for this biotype...
-					applicable_biotypes += biotype_titles[biotype_flag_position]//...add it to the list of applicable biotypes
+					applicable_biotypes += list(biotype_titles[biotype_flag_position+1])//...add it to the list of applicable biotypes
 		if(!applicable_biotypes.len) //there will never be an adjective anomaly because anomaly is only added when there are no choices
 			applicable_biotypes += list(null, "Anomaly")
 
@@ -79,7 +79,7 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 		applicable_biotypes = shuffle(applicable_biotypes)
 
 		//okay, out of the black magic area we now have a list of things to describe our mob, yay!!!
-		for(var/iteration in applicable_biotypes)
+		for(var/iteration in 1 to applicable_biotypes.len)
 			if(iteration == applicable_biotypes.len) //last descriptor to add, make it the noun
 				maptext_title += applicable_biotypes[iteration][2]
 				break
