@@ -47,7 +47,7 @@
 		user.update_sight()
 		if(iscarbon(user))
 			var/mob/living/carbon/carbon_user = user
-			carbon_user.head_update(src, forced = 1)
+			carbon_user.head_update(src, forced = TRUE)
 
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
