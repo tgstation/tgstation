@@ -1,3 +1,7 @@
+/**
+ * Verifies that core procs for factions such as living/reset_innate_traits and datum/faction_check()
+ * and the faction_bind component work correctly.
+ */
 /datum/unit_test/factions
 	var/emotes_used = 0
 
@@ -30,4 +34,4 @@
 	// same as above, but factions no longer coincide and bob also has a faction_bind comp with charlie as master.
 	charlie.reset_innate_factions(TRAIT_FACTION_HOSTILE)
 	bob.AddComponent(/datum/component/faction_bind, charlie, TRAIT_SOURCE_UNIT_TESTS)
-	TEST_ASSERT(alice.faction_check(bob), "alice.faction_check(bob) failed though Alice and Bob both having faction bind components with the same faction_master, Charlie")
+	TEST_ASSERT(alice.faction_check(bob), "alice.faction_check(bob) failed though both Alice and Bob have a faction bind component with Charlie as faction_master")

@@ -114,10 +114,7 @@
 #define HAS_TRAIT_FROM_ONLY(target, trait, source) (target.status_traits?[trait] && (source in target.status_traits[trait]) && (length(target.status_traits) == 1))
 #define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits?[trait] && (length(target.status_traits[trait] - source) > 0))
 
-#define GET_TRAITS_IN_LIST(target, list) (\
-	(target.status_traits && islist(list)) ?\
-		(target.status_traits & list)\
-		: FALSE)
+#define GET_TRAITS_IN_LIST(target, list) ((target.status_traits && islist(list)) ? (target.status_traits & list) : null)
 
 /*
 Remember to update _globalvars/traits.dm if you're adding/removing/renaming traits.
