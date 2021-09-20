@@ -320,7 +320,6 @@
 	/// The kind of projectile this version of the kiss blower fires
 	var/kiss_type = /obj/projectile/kiss
 
-
 /obj/item/kisser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
@@ -344,15 +343,16 @@
 	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
 		return
 
-	offerer.visible_message(span_notice("[offerer] raises [offerer.p_their()] arm, looking for a high-five!"), \
-		span_notice("You post up, looking for a high-five!"), null, 2)
+	offerer.visible_message(span_notice("[offerer] leans in slightly, offering a kiss on the cheek!"), \
+		span_notice("You lean in slightly, indicating you'd like to offer a kiss on the cheek!"), null, 2)
 	offerer.apply_status_effect(STATUS_EFFECT_OFFERING, src)
 
 /obj/item/kisser/on_offer_taken(mob/living/giver, mob/living/taker)
 	. = TRUE
 
 	var/obj/projectile/blown_kiss = new kiss_type(get_turf(giver))
-	giver.visible_message("<b>[giver]</b> gives [taker] \a [blown_kiss] on the cheek!", span_notice("You give [taker] \a [blown_kiss] on the cheek!"))
+	giver.visible_message("<b>[giver]</b> gives [taker] \a [blown_kiss] on the cheek!", span_notice("You give [taker] \a [blown_kiss] on the cheek!"), ignored_mobs = taker)
+	to_chat(taker, span_nicegreen("[giver] gives you \a [blown_kiss] on the cheek!"))
 	//Shooting Code:
 	blown_kiss.spread = 0
 	blown_kiss.original = taker

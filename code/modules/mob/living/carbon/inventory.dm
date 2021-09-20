@@ -158,7 +158,7 @@
 	return index && hand_bodyparts[index]
 
 /**
- * Proc called when giving an item to another player
+ * Proc called when offering an item to another player
  *
  * This handles creating an alert and adding an overlay to it
  */
@@ -183,7 +183,6 @@
 					span_notice("You offer [offered_item]."), null, 2)
 
 	apply_status_effect(STATUS_EFFECT_OFFERING, offered_item)
-
 
 /**
  * Proc called when the player clicks the give alert

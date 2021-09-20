@@ -187,8 +187,6 @@
 	//RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
 
 /datum/status_effect/offering/Destroy()
-	//QDEL_NULL(offered_item)
-	owner?.remove_status_effect(STATUS_EFFECT_OFFERING)
 	for(var/i in possible_takers)
 		var/mob/living/carbon/removed_taker = i
 		remove_candidate(removed_taker)
@@ -212,7 +210,6 @@
 	if(!possible_takers)
 		qdel(src)
 
-
 /// One of our possible takers moved, see if they left us hanging
 /datum/status_effect/offering/proc/check_taker_in_range(mob/living/carbon/taker)
 	SIGNAL_HANDLER
@@ -221,7 +218,7 @@
 
 	remove_candidate(taker)
 
-/// The propositioner moved, see if anyone is out of range now
+/// The offerer moved, see if anyone is out of range now
 /datum/status_effect/offering/proc/check_owner_in_range(mob/living/carbon/source)
 	SIGNAL_HANDLER
 
@@ -230,10 +227,10 @@
 		if(!istype(checking_taker) || !owner.CanReach(checking_taker) || IS_DEAD_OR_INCAP(checking_taker))
 			remove_candidate(checking_taker)
 
-/// Something fishy is going on here...
+/// We lost the item, give it up
 /datum/status_effect/offering/proc/dropped_item(obj/item/source)
 	SIGNAL_HANDLER
-	offered_item = null
+	qdel(src)
 
 //this effect gives the user an alert they can use to surrender quickly
 /datum/status_effect/grouped/surrender

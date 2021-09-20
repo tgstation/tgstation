@@ -338,14 +338,16 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 	handle_transfer()
 
+/// An overrideable proc used simply to hand over the item when claimed, this is a proc so that high-fives can override them since nothing is actually transferred
 /atom/movable/screen/alert/give/proc/handle_transfer()
 	var/mob/living/carbon/taker = owner
 	taker.take(giver, receiving)
 
+/// Simply checks if the other person is still in range
 /atom/movable/screen/alert/give/proc/check_in_range(atom/taker)
 	SIGNAL_HANDLER
 
-	if (!giver.CanReach(taker))
+	if(!giver.CanReach(taker))
 		to_chat(owner, span_warning("You moved out of range of [giver]!"))
 		owner.clear_alert("[giver]")
 
@@ -358,12 +360,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/give/highfive/handle_transfer()
 	var/mob/living/carbon/taker = owner
 	if(receiving && (receiving in giver.held_items))
-		receiving.on_offer_taken(taker)
+		receiving.on_offer_taken(giver, taker)
 		return
 
 	too_slow_p1()
 
-/// If we don't have any slappers in hand when someone goes to high-five us, we prank the hell out of them
+/// If the person who offered the high five no longer has it when we try to accept it, we get pranked hard
 /atom/movable/screen/alert/give/highfive/proc/too_slow_p1()
 	var/mob/living/carbon/rube = owner
 	if(!rube || !giver)
@@ -390,7 +392,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	SEND_SIGNAL(rube, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/too_slow)
 	qdel(src)
 
-/// If someone examine_more's us while we don't have a slapper in hand, it'll tip them off to our trickster ways
+/// If someone examine_more's the offerer while they're trying to pull a too-slow, it'll tip them off to the offerer's trickster ways
 /atom/movable/screen/alert/give/highfive/proc/check_fake_out(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
