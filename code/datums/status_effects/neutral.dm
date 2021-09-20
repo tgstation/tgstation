@@ -155,19 +155,23 @@
 	id = "offering"
 	duration = -1
 	tick_interval = -1
-	status_type = STATUS_EFFECT_REPLACE
+	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
 	/// The people who were offered this item at the start
 	var/list/possible_takers
 	/// The actual item being offered
 	var/obj/item/offered_item
+	/// The type of alert given to people when offered, in case you need to override some behavior (like for high-fives)
+	var/give_alert_type = /atom/movable/screen/alert/give
 
-/datum/status_effect/offering/on_creation(mob/living/new_owner, obj/item/offer)
+/datum/status_effect/offering/on_creation(mob/living/new_owner, obj/item/offer, give_alert_override)
 	. = ..()
 	if(!.)
 		return
 
 	offered_item = offer
+	if(give_alert_override)
+		give_alert_type = give_alert_override
 
 	for(var/mob/living/carbon/possible_taker in orange(1, owner))
 		if(!owner.CanReach(possible_taker) || IS_DEAD_OR_INCAP(possible_taker) || !possible_taker.can_hold_items())
@@ -193,7 +197,7 @@
 
 /// Hook up the specified carbon mob to be offered the item in question, give them the alert and signals and all
 /datum/status_effect/offering/proc/register_candidate(mob/living/carbon/possible_candidate)
-	var/atom/movable/screen/alert/give/G = possible_candidate.throw_alert("[owner]", /atom/movable/screen/alert/give)
+	var/atom/movable/screen/alert/give/G = possible_candidate.throw_alert("[owner]", give_alert_type)
 	if(!G)
 		return
 	LAZYADD(possible_takers, possible_candidate)

@@ -169,7 +169,7 @@
 
 	offerer.visible_message(span_notice("[offerer] raises [offerer.p_their()] arm, looking for a high-five!"), \
 		span_notice("You post up, looking for a high-five!"), null, 2)
-	offerer.apply_status_effect(STATUS_EFFECT_OFFERING, src)
+	offerer.apply_status_effect(STATUS_EFFECT_OFFERING, src, /atom/movable/screen/alert/give/highfive)
 
 /// Yeah broh! This is where we do the high-fiving (or high-tenning :o)
 /obj/item/slapper/on_offer_taken(mob/living/giver, mob/living/taker)
