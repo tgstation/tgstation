@@ -238,6 +238,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	prefs = GLOB.preferences_datums[ckey]
 	if(prefs)
 		prefs.parent = src
+		prefs.apply_all_client_preferences()
 	else
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs

@@ -7,7 +7,7 @@
 	///alpha 0-255 of lighting_effect and thus baselighting intensity
 	var/base_lighting_alpha = 0
 	///The colour of the light acting on this area
-	var/base_lighting_color = null
+	var/base_lighting_color = COLOR_WHITE
 
 /area/proc/set_base_lighting(new_base_lighting_color = -1, new_alpha = -1)
 	if(base_lighting_alpha == new_alpha && base_lighting_color == new_base_lighting_color)

@@ -1,7 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - balance: "Bone wounds in general have been made less obnoxious, especially when suffered on the legs. Instead of limping every step with that leg, you now have a chance to limp each step with that leg that scales with the severity of the wound. Putting your leg in a sling also reduces this limp chance per step, in addition to reducing the delay the limp adds."
-  - balance: "Skeletons and plasmamen can now apply bone gel directly to fractured limbs, take no damage from applying this fix, don't need surgical tape, and recover 4x as fast as fleshy humans do from these improvised fixes. Shine on, you crazy bone-bags!"
-  - balance: "Sticky tape (and especially surgical tape) makef for much more effective slings than before, with surgical tape even outshining gauze."
-  - spellcheck: "Adjusted some bone wound examine descriptions to be more obvious what they represent"

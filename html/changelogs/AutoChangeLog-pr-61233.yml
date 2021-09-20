@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - code_imp: "Added an argument for the decomposition component that allows for specifying what kind of item something decomposes into."
-  - bugfix: "Space ants no longer prey upon chickens and their produce."
-  - rscadd: "Includes some examples from existing food and a new kind of food. Moldy bread, moldy pizza slices, rotten eggs and moldy dead mice."

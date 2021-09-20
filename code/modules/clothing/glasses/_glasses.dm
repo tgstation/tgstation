@@ -10,13 +10,17 @@
 	resistance_flags = NONE
 	custom_materials = list(/datum/material/glass = 250)
 	var/vision_flags = 0
-	var/darkness_view = 2//Base human is 2
-	var/invis_view = SEE_INVISIBLE_LIVING //admin only for now
-	var/invis_override = 0 //Override to allow glasses to set higher than normal see_invis
+	var/darkness_view = 2 // Base human is 2
+	var/invis_view = SEE_INVISIBLE_LIVING // Admin only for now
+	/// Override to allow glasses to set higher than normal see_invis
+	var/invis_override = 0
 	var/lighting_alpha
-	var/list/icon/current = list() //the current hud icons
-	var/vision_correction = FALSE //does wearing these glasses correct some of our vision defects?
-	var/glass_colour_type //colors your vision when worn
+	/// The current hud icons
+	var/list/icon/current = list()
+	/// Does wearing these glasses correct some of our vision defects?
+	var/vision_correction = FALSE
+	/// Colors your vision when worn
+	var/glass_colour_type
 
 /obj/item/clothing/glasses/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is stabbing \the [src] into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -38,8 +42,12 @@
 
 /obj/item/clothing/glasses/weldingvisortoggle(mob/user)
 	. = ..()
+	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
 	if(. && user)
 		user.update_sight()
+		if(iscarbon(user))
+			var/mob/living/carbon/carbon_user = user
+			carbon_user.head_update(src, forced = TRUE)
 
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()

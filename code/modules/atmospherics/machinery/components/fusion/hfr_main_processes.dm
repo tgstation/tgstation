@@ -392,7 +392,7 @@
 					if(moderator_list[/datum/gas/plasma] > 50)
 						internal_output.assert_gases(/datum/gas/bz)
 						internal_output.gases[/datum/gas/bz][MOLES] += scaled_production * 1.8
-						moderator_internal.gases[selected_fuel.secondary_products[3]] += scaled_production * 1.15
+						moderator_internal.gases[selected_fuel.secondary_products[3]][MOLES] += scaled_production * 1.15
 						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.75)
 					if(moderator_list[/datum/gas/proto_nitrate] > 20)
 						radiation *= 1.55
