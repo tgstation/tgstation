@@ -31,13 +31,13 @@
 	var/static/regex/ooc_filter_regex
 
 	/// A regex that matches words blocked IC, but not in PDAs
-	var/static/regex/ic_no_pda_filter_regex
+	var/static/regex/ic_outside_pda_filter_regex
 
 	/// An assoc list of blocked IC words to their reasons
 	var/static/list/ic_filter_reasons
 
 	/// An assoc list of words that are blocked IC, but not in PDAs, to their reasons
-	var/static/list/ic_no_pda_filter_reasons
+	var/static/list/ic_outside_pda_filter_reasons
 
 	/// An assoc list of words that are blocked both IC and OOC to their reasons
 	var/static/list/shared_filter_reasons
@@ -353,11 +353,15 @@ Example config:
 		return
 
 	ic_filter_reasons = try_extract_from_word_filter(word_filter, "ic")
-	ic_no_pda_filter_reasons = try_extract_from_word_filter(word_filter, "ic_outside_pda")
+	ic_outside_pda_filter_reasons = try_extract_from_word_filter(word_filter, "ic_outside_pda")
 	shared_filter_reasons = try_extract_from_word_filter(word_filter, "shared")
 
-	ic_filter_regex = compile_filter_regex(ic_filter_reasons + ic_no_pda_filter_reasons + shared_filter_reasons)
-	ic_no_pda_filter_regex = compile_filter_regex(ic_filter_reasons + shared_filter_reasons)
+	update_chat_filter_regexes()
+
+/// Will update the internal regexes of the chat filter based on the filter reasons
+/datum/controller/configuration/proc/update_chat_filter_regexes()
+	ic_filter_regex = compile_filter_regex(ic_filter_reasons + ic_outside_pda_filter_reasons + shared_filter_reasons)
+	ic_outside_pda_filter_regex = compile_filter_regex(ic_filter_reasons + shared_filter_reasons)
 	ooc_filter_regex = compile_filter_regex(shared_filter_reasons)
 
 /datum/controller/configuration/proc/try_extract_from_word_filter(list/word_filter, key)
@@ -390,7 +394,7 @@ Example config:
 		else
 			to_join_on_whitespace_splits += REGEX_QUOTE(banned_word)
 
-	var/whitespace_split = @"(?:(?:^|\s+)" + jointext(to_join_on_whitespace_splits, "|") + @"(?:$|\s+))"
+	var/whitespace_split = @"(?:(?:^|\s+)(" + jointext(to_join_on_whitespace_splits, "|") + @")(?:$|\s+))"
 	var/word_bounds = @"(\b(" + jointext(to_join_on_word_bounds, "|") + "))"
 	return regex("([whitespace_split]|[word_bounds])", "i")
 

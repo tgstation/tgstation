@@ -9,7 +9,7 @@
 		var/matched_group = GET_MATCHED_GROUP(config.ic_filter_regex)
 		return list(
 			matched_group,
-			config.ic_filter_reasons[matched_group] || config.ic_no_pda_filter_reasons[matched_group] || config.shared_filter_reasons[matched_group],
+			config.ic_filter_reasons[matched_group] || config.ic_outside_pda_filter_reasons[matched_group] || config.shared_filter_reasons[matched_group],
 		)
 
 	return null
@@ -17,8 +17,8 @@
 /// Given a text, will return what word is on the IC filter, ignoring words allowed on the PDA, with the reason.
 /// Returns null if the message is OK.
 /proc/is_ic_filtered_for_pdas(message)
-	if (config.ic_no_pda_filter_regex.Find(message))
-		var/matched_group = GET_MATCHED_GROUP(config.ic_no_pda_filter_regex)
+	if (config.ic_outside_pda_filter_regex.Find(message))
+		var/matched_group = GET_MATCHED_GROUP(config.ic_outside_pda_filter_regex)
 		return list(
 			matched_group,
 			config.ic_filter_reasons[matched_group] || config.shared_filter_reasons[matched_group],
