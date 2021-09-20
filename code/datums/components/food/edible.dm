@@ -261,6 +261,8 @@ Behavior that's still missing from this component that original food items had t
 	if(feeder.combat_mode)
 		return
 
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
+
 	if(IsFoodGone(owner, feeder))
 		return
 
