@@ -219,14 +219,11 @@
 		return FALSE
 	if(!internal_fusion.total_moles())
 		return FALSE
-	var/gas_check = 0
 	for(var/gas_type in selected_fuel.requirements)
 		internal_fusion.assert_gas(gas_type)
-		if(internal_fusion.gases[gas_type][MOLES] >= FUSION_MOLE_THRESHOLD)
-			gas_check++
-	if(gas_check == length(selected_fuel.requirements))
-		return TRUE
-	return FALSE
+		if(internal_fusion.gases[gas_type][MOLES] < FUSION_MOLE_THRESHOLD)
+			return FALSE
+	return TRUE
 
 /**
  * Called by the main fusion processes in hfr_main_processes.dm
