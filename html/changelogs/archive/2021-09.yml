@@ -614,3 +614,39 @@
       bread, moldy pizza slices, rotten eggs and moldy dead mice.
   tralezab:
   - bugfix: fixed one small runtime with sparring sect
+2021-09-20:
+  JohnFulpWillard:
+  - bugfix: Maintenance sect's adapted eyes will no longer render you permanently
+      blind despite having them repaired via the darkness.
+  Kevinz for Citadel, who was ported to TGMC by XSlayer300, now ported to tg by Ryll/Shaps:
+  - rscadd: Text modifiers have been added! You can now |italicize| _underline_ and
+      +bold+ your messages.
+  LemonInTheDark:
+  - bugfix: Imaginary friends will show up properly again
+  Mothblocks:
+  - bugfix: Fixed FPS preference not applying after reconnect.
+  Pepsiman0:
+  - bugfix: holosword doesnt have blockchance
+  TiviPlus:
+  - bugfix: fixed lighting bug
+  Watermelon914:
+  - qol: BCIs only come with 1 bci action component and it is now removable.
+  - balance: Devastating explosions will now deal damage equivalent to 40% to 75%
+      of a dragon's max health.
+  - balance: Carp rifts will no longer be instantly destroyed to devastating explosions.
+  - qol: Allows you to interrupt delay components and makes it so that it cannot queue
+      multiple delays.
+  carshalash:
+  - bugfix: adjusted arnold palmer recipe to be made with iced tea instead of hot
+      tea.
+  esainane:
+  - code_imp: The tgui ProgressBar can now accept color specifications in hexademical,
+      rgb/rgba, color-\<name\> class, and base CSS named colors.
+  - bugfix: Add missing gas color mappings to tgui, and disambiguate old mappings.
+      Exotic (and mundane) gases in the SM monitor and HFR interfaces have never been
+      more colorful!
+  - bugfix: The HFR now actually produces T3 gas at Fusion Level 2, provided you have
+      enough plasma in the moderator
+  tralezab:
+  - bugfix: some small critters that should have been able to fit in the vim but couldn't,
+      now can

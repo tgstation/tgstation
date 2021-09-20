@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Maintenance sect's adapted eyes will no longer render you permanently blind despite having them repaired via the darkness."

@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Things pushed via bumping into them now get fingerprints and admin-viewable hiddenprints added to them."

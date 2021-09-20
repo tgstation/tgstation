@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Certain memories should no longer be added to mobs that are unaware of them (almost always unconsciousness, in some cases blindness and/or deafness)."

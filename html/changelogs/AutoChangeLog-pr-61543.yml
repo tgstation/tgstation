@@ -1,4 +1,0 @@
-author: "Kevinz for Citadel, who was ported to TGMC by XSlayer300, now ported to tg by Ryll/Shaps"
-delete-after: True
-changes: 
-  - rscadd: "Text modifiers have been added! You can now |italicize| _underline_ and +bold+ your messages."

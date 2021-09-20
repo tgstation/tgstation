@@ -53,6 +53,8 @@
 /obj/projectile/mega_arachnid
 	name = "flesh snare"
 	nodamage = TRUE
+
+
 	damage = 0
 	icon_state = "tentacle_end"
 
@@ -68,3 +70,4 @@
 	item_flags = DROPDEL
 	flags_1 = NONE
 	icon_state = "flesh_snare"
+	armed = TRUE
