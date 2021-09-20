@@ -233,7 +233,7 @@
 	// Run the common effects, committing changes where applicable
 
 	// This is repetition, but is here as a placeholder for what will need to be done to allow concurrently running multiple recipes
-	var/common_production_amount = production_amount * selected_fuel.fuel_consumption_multiplier * selected_fuel.gas_production_multiplier
+	var/common_production_amount = production_amount * selected_fuel.gas_production_multiplier
 	moderator_common_process(delta_time, common_production_amount, internal_output, moderator_list, dirty_production_rate, heat_output, radiation_modifier)
 
 /**
@@ -242,8 +242,7 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/moderator_fuel_process(delta_time, production_amount, consumption_amount, datum/gas_mixture/internal_output, moderator_list, datum/hfr_fuel/fuel, fuel_list)
 	// Adjust fusion consumption/production based on this recipe's characteristics
 	var/fuel_consumption = consumption_amount * 0.85 * selected_fuel.fuel_consumption_multiplier
-	// Note production depends on *both* the fuel consumption and gas production multipliers. XXX: Was this intentional?
-	var/scaled_production = production_amount * selected_fuel.fuel_consumption_multiplier * selected_fuel.gas_production_multiplier
+	var/scaled_production = production_amount * selected_fuel.gas_production_multiplier
 
 	for(var/gas_id in fuel.requirements)
 		internal_fusion.gases[gas_id][MOLES] -= min(fuel_list[gas_id], fuel_consumption)
