@@ -419,12 +419,12 @@
 		critical_threshold_proximity = max(critical_threshold_proximity + max(overfull_damage_taken * delta_time, 0), 0)
 
 	// If we're running on a thin fusion mix, heal up
-	if(internal_fusion.total_moles() < HYPERTORUS_SUBCRITICAL_MOLES || power_level <= 5)
+	if(internal_fusion.total_moles() < HYPERTORUS_SUBCRITICAL_MOLES && power_level <= 5)
 		var/subcritical_heal_restore = (internal_fusion.total_moles() - HYPERTORUS_SUBCRITICAL_MOLES) / HYPERTORUS_SUBCRITICAL_SCALE
 		critical_threshold_proximity = max(critical_threshold_proximity + min(subcritical_heal_restore * delta_time, 0), 0)
 
 	// If coolant is sufficiently cold, heal up
-	if(internal_fusion.total_moles() > 0 && (airs[1].total_moles() && coolant_temperature < HYPERTORUS_COLD_COOLANT_THRESHOLD) || power_level <= 4)
+	if(internal_fusion.total_moles() > 0 && (airs[1].total_moles() && coolant_temperature < HYPERTORUS_COLD_COOLANT_THRESHOLD) && power_level <= 4)
 		var/cold_coolant_heal_restore = log(10, max(coolant_temperature, 1) * HYPERTORUS_COLD_COOLANT_SCALE) - (HYPERTORUS_COLD_COOLANT_MAX_RESTORE * 2)
 		critical_threshold_proximity = max(critical_threshold_proximity + min(cold_coolant_heal_restore * delta_time, 0), 0)
 
