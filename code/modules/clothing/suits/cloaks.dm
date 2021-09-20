@@ -48,6 +48,13 @@
 	name = "head of personnel's cloak"
 	desc = "Worn by the Head of Personnel. It smells faintly of bureaucracy."
 	icon_state = "hopcloak"
+	
+/obj/item/clothing/neck/cloak/comxy
+	name = "comxian's cloak"
+	desc = "A mysterious cloak."
+	icon_state = "comxycloak"
+	armor = list(MELEE = 0, BULLET = 0, LASER = 30, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 30, ACID = 60)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/suit/hooded/cloak/goliath
 	name = "goliath cloak"
