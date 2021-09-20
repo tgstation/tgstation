@@ -17,6 +17,8 @@
 		deactivate()
 		return
 
+	assert_gases()
+
 	// Run the reaction if it is either live or being started
 	if (start_power || power_level)
 		play_ambience()
@@ -60,18 +62,6 @@
 	var/archived_heat = internal_fusion.temperature
 	//Store the volume of the fusion reaction multiplied by the force of the magnets that controls how big it will be
 	var/volume = internal_fusion.volume * (magnetic_constrictor * 0.01)
-
-	//Assert the gases that will be used/created during the process
-	for(var/gas_id in selected_fuel.requirements) //These are the fuels
-		internal_fusion.assert_gas(gas_id)
-
-	for(var/gas_id in selected_fuel.primary_products) //These are the gases that can be produced inside the internal_fusion mix
-		internal_fusion.assert_gas(gas_id)
-
-	internal_fusion.assert_gas(/datum/gas/antinoblium)
-
-	for(var/gas_id in GLOB.meta_gas_info)
-		moderator_internal.assert_gas(gas_id)
 
 	//Store the fuel gases and the product gas moles
 

@@ -162,6 +162,19 @@
 		corners = list()
 	QDEL_NULL(soundloop)
 
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/assert_gases()
+	//Assert the gases that will be used/created during the process
+	for(var/gas_id in selected_fuel.requirements) //These are the fuels
+		internal_fusion.assert_gas(gas_id)
+
+	for(var/gas_id in selected_fuel.primary_products) //These are the gases that can be produced inside the internal_fusion mix
+		internal_fusion.assert_gas(gas_id)
+
+	internal_fusion.assert_gas(/datum/gas/antinoblium)
+
+	for(var/gas_id in GLOB.meta_gas_info)
+		moderator_internal.assert_gas(gas_id)
+
 /**
  * Updates all related pipenets from all connected components
  */
