@@ -79,7 +79,8 @@
 		gloves = /obj/item/clothing/gloves/krav_maga/sec
 		belt = /obj/item/storage/belt/security/full
 		backpack_contents = list(/obj/item/melee/baton/security/loaded=1,\
-			/obj/item/pda/warden)
+			/obj/item/restraints/handcuffs)
+		l_pocket = /obj/item/pda/warden
 	else
 		use_blue_suit = TRUE
 	..()
