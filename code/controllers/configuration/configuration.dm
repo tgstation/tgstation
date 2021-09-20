@@ -231,7 +231,13 @@
 	return E.ValidateAndSet("[new_val]")
 
 /datum/controller/configuration/proc/LoadMOTD()
-	motd = file2text("[directory]/motd.txt")
+	var/list/motd_contents = list()
+
+	for (var/motd_file in CONFIG_GET(str_list/motd))
+		motd_contents += file2text("[directory]/[motd_file]")
+
+	motd = motd_contents.Join("\n")
+
 	var/tm_info = GLOB.revdata.GetTestMergeInfo()
 	if(motd || tm_info)
 		motd = motd ? "[motd]<br>[tm_info]" : tm_info
