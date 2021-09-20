@@ -76,7 +76,7 @@
 		uniform = /obj/item/clothing/under/rank/security/warden/formal 
 		suit = /obj/item/clothing/suit/armor/vest/warden
 		head = /obj/item/clothing/head/beret/sec/navywarden 
-		gloves = /obj/item/clothing/gloves/krav_maga/sec
+		gloves = /obj/item/clothing/gloves/tackler
 		belt = /obj/item/storage/belt/security/full
 		backpack_contents = list(/obj/item/melee/baton/security/loaded=1,\
 			/obj/item/restraints/handcuffs)
