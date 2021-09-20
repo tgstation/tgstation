@@ -1011,10 +1011,6 @@
 	},
 /turf/open/floor/iron,
 /area/mine/living_quarters)
-"fI" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/genturf,
-/area/icemoon/underground/unexplored/rivers)
 "fK" = (
 /turf/closed/wall,
 /area/maintenance/starboard/fore)
@@ -37849,7 +37845,7 @@ NH
 NH
 NH
 NH
-fI
+ak
 ak
 ak
 ak
