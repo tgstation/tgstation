@@ -182,6 +182,8 @@
 		return
 	on = !on
 	update_appearance()
+	if (on)
+		START_PROCESSING(SSmachines, src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/space_heater/ui_interact(mob/user, datum/tgui/ui)
