@@ -341,6 +341,7 @@ Example config:
 
 /datum/controller/configuration/proc/LoadChatFilter()
 	if(!fexists("[directory]/word_filter.toml"))
+		load_legacy_chat_filter()
 		return
 
 	log_config("Loading config file word_filter.toml...")
@@ -355,6 +356,26 @@ Example config:
 	ic_filter_reasons = try_extract_from_word_filter(word_filter, "ic")
 	ic_outside_pda_filter_reasons = try_extract_from_word_filter(word_filter, "ic_outside_pda")
 	shared_filter_reasons = try_extract_from_word_filter(word_filter, "shared")
+
+	update_chat_filter_regexes()
+
+/datum/controller/configuration/proc/load_legacy_chat_filter()
+	if (!fexists("[directory]/in_character_filter.txt"))
+		return
+
+	log_config("Loading config file in_character_filter.txt...")
+
+	ic_filter_reasons = list()
+	ic_outside_pda_filter_reasons = list()
+	shared_filter_reasons = list()
+
+	for (var/line in world.file2list("[directory]/in_character_filter.txt"))
+		if (!line)
+			continue
+		if (findtextEx(line, "#", 1, 2))
+			continue
+		// The older filter didn't apply to PDA
+		ic_outside_pda_filter_reasons[line] = "No reason available"
 
 	update_chat_filter_regexes()
 
