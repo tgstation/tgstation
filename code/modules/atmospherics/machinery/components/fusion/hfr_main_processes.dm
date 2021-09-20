@@ -503,11 +503,12 @@
 		if(removed)
 			linked_output.airs[1].merge(removed)
 
-	var/datum/gas_mixture/internal_remove
-	for(var/gas_id in selected_fuel.primary_products)
-		if(internal_fusion.gases[gas_id][MOLES] > 0)
-			internal_remove = internal_fusion.remove_specific(gas_id, internal_fusion.gases[gas_id][MOLES] * (1 - (1 - 0.25) ** delta_time))
-			linked_output.airs[1].merge(internal_remove)
+	if (selected_fuel)
+		var/datum/gas_mixture/internal_remove
+		for(var/gas_id in selected_fuel.primary_products)
+			if(internal_fusion.gases[gas_id][MOLES] > 0)
+				internal_remove = internal_fusion.remove_specific(gas_id, internal_fusion.gases[gas_id][MOLES] * (1 - (1 - 0.25) ** delta_time))
+				linked_output.airs[1].merge(internal_remove)
 	internal_fusion.garbage_collect()
 	moderator_internal.garbage_collect()
 
