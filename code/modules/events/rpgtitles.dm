@@ -50,7 +50,7 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 		null, //organic is too common to be a descriptor
 		null, //mineral is only used with carbons
 		list("Mechanical", "Robot"),
-		list("Undead", "Zombie"),
+		list("Reanimated", "Undead"),
 		list("Bipedal", "Humanoid"),
 		list("Insectile", "Bug"),
 		list("Beastly", "Beast"),
