@@ -69,6 +69,7 @@
 	lay_web.Grant(src)
 	if(poison_per_bite)
 		AddElement(/datum/element/venomous, poison_type, poison_per_bite)
+	AddComponent(/datum/component/nerfed_pulling)
 
 /mob/living/simple_animal/hostile/giant_spider/Login()
 	. = ..()

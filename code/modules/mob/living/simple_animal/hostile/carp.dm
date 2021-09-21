@@ -68,6 +68,7 @@
 	)
 
 /mob/living/simple_animal/hostile/carp/Initialize(mapload, mob/tamer)
+	AddComponent(/datum/component/nerfed_pulling)
 	AddElement(/datum/element/simple_flying)
 	if(random_color)
 		set_greyscale(new_config=/datum/greyscale_config/carp)
