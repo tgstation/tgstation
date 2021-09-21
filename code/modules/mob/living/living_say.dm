@@ -205,6 +205,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = "[randomnote] [message] [randomnote]"
 		spans |= SPAN_SINGING
 
+	///List of symbols that we dont want a dot after
+	var/list/punctuation = list("!","?",".")
+	///Last charachter in the message
+	var/last_charachter = copytext(message,length_char(message))
+	if(!(last_charachter in punctuation))
+		message += "."
+
 	//This is before anything that sends say a radio message, and after all important message type modifications, so you can scumb in alien chat or something
 	if(saymode && !saymode.handle_message(src, message, language))
 		return
