@@ -625,8 +625,8 @@ const TechNode = (props, context) => {
         average: [0.25, 0.5],
         bad: [-Infinity, 0.25],
       }}
-      value={expcompl / required_experiments?.length}>
-      Experiments ({expcompl}/{required_experiments?.length})
+      value={expcompl / required_experiments.length}>
+      Experiments ({expcompl}/{required_experiments.length})
     </ProgressBar>
   );
 
@@ -705,7 +705,7 @@ const TechNode = (props, context) => {
               {techProgress}
             </Flex.Item>
           )}
-          {required_experiments?.length > 0 && (
+          {required_experiments.length > 0 && (
             <Flex.Item grow={1} basis={0}>
               {experimentProgress}
             </Flex.Item>
@@ -725,7 +725,7 @@ const TechNode = (props, context) => {
           />
         ))}
       </Box>
-      {required_experiments?.length > 0 && (
+      {required_experiments.length > 0 && (
         <Collapsible
           className="Techweb__NodeExperimentsRequired"
           title="Required Experiments">
