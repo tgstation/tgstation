@@ -55,8 +55,10 @@
 
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
+	desc = null
 	icon = 'icons/blank_title.png'
 	icon_state = ""
+	base_pixel_x = -64
 	plane = SPLASHSCREEN_PLANE
 	bullet_bounce_sound = null
 
@@ -73,6 +75,10 @@
 			if(NAMEOF(src, icon))
 				SStitle.icon = icon
 
+/turf/closed/indestructible/start_area
+	name = null
+	desc = null
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /turf/closed/indestructible/reinforced
 	name = "reinforced wall"
