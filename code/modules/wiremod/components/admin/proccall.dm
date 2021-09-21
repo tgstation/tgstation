@@ -42,7 +42,6 @@
 	output_value = add_output_port("Output Value", PORT_TYPE_ANY)
 
 /obj/item/circuit_component/proccall/input_received(datum/port/input/port)
-
 	var/called_on
 	if(proccall_options.value == COMP_PROC_OBJECT)
 		called_on = entity.value
@@ -58,6 +57,9 @@
 	if(!to_invoke)
 		return
 
+	INVOKE_ASYNC(src, .proc/do_proccall, called_on, to_invoke, params)
+
+/obj/item/circuit_component/proccall/proc/do_proccall(called_on, to_invoke, params)
 	GLOB.AdminProcCaller = "CHAT_[parent.display_name]" //_ won't show up in ckeys so it'll never match with a real admin
 	var/result = WrapAdminProcCall(called_on, to_invoke, params)
 	GLOB.AdminProcCaller = null

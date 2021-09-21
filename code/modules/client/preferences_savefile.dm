@@ -163,12 +163,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		fcopy(S, bacpath) //byond helpfully lets you use a savefile for the first arg.
 		return FALSE
 
-	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
-		if (preference.savefile_identifier != PREFERENCE_PLAYER)
-			continue
-
-		value_cache -= preference.type
-		preference.apply_to_client(parent, read_preference(preference.type))
+	apply_all_client_preferences()
 
 	//general preferences
 	READ_FILE(S["lastchangelog"], lastchangelog)
@@ -279,6 +274,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return FALSE
 	if(!fexists(path))
 		return FALSE
+
+	character_savefile = null
+
 	var/savefile/S = new /savefile(path)
 	if(!S)
 		return FALSE
@@ -291,7 +289,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		WRITE_FILE(S["default_slot"] , slot)
 
 	S.cd = "/character[slot]"
-	character_savefile = S
 	var/needs_update = savefile_needs_update(S)
 	if(needs_update == -2) //fatal, can't load any data
 		return FALSE
@@ -376,7 +373,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["all_quirks"] , all_quirks)
 
 	return TRUE
-
 
 /proc/sanitize_keybindings(value)
 	var/list/base_bindings = sanitize_islist(value,list())

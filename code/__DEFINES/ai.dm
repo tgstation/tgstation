@@ -60,8 +60,6 @@
 #define HAUNTED_ITEM_ATTACK_HAUNT_CHANCE 10
 ///Chance for haunted item to try to get itself let go.
 #define HAUNTED_ITEM_ESCAPE_GRASP_CHANCE 20
-///Chance for haunted item to warp somewhere new
-#define HAUNTED_ITEM_TELEPORT_CHANCE 4
 ///Amount of aggro you get when picking up a haunted item
 #define HAUNTED_ITEM_AGGRO_ADDITION 2
 
@@ -77,7 +75,6 @@
 //defines
 ///how far a cursed item will still try to chase a target
 #define CURSED_VIEW_RANGE 7
-#define CURSED_ITEM_TELEPORT_CHANCE 4
 //blackboards
 
 ///Actual mob the item is haunting at the moment
@@ -179,6 +176,12 @@
 #define BB_HUNTING_COOLDOWN "BB_HUNTING_COOLDOWN"
 
 ///Basic Mob Keys
+
+///Tipped blackboards
+///Bool that means a basic mob will start reacting to being tipped in it's planning
+#define BB_BASIC_MOB_TIP_REACTING "BB_basic_tip_reacting"
+///the motherfucker who tipped us
+#define BB_BASIC_MOB_TIPPER "BB_basic_tip_tipper"
 
 ///Targetting subtrees
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"

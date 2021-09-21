@@ -33,6 +33,7 @@
 	display_results(user, target, span_notice("You begin pumping [target]'s stomach..."),
 		span_notice("[user] begins to pump [target]'s stomach."),
 		span_notice("[user] begins to press on [target]'s chest."))
+	display_pain(target, "You feel a horrible sloshing feeling in your gut! You're going to be sick!")
 
 /datum/surgery_step/stomach_pump/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(ishuman(target))

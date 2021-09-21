@@ -1,5 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "The HFR interface now uses correct units, and avoids references to tickrate."
-  - bugfix: "The HFR no longer rapidly absorbs all available fuel from the fuel port at rates far exceeding the fuel injection rate."
