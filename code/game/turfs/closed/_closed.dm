@@ -58,7 +58,7 @@
 	desc = null
 	icon = 'icons/blank_title.png'
 	icon_state = ""
-	base_pixel_x = -64
+	pixel_x = -64
 	plane = SPLASHSCREEN_PLANE
 	bullet_bounce_sound = null
 
