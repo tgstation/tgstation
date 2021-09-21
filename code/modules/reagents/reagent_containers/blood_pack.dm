@@ -30,7 +30,7 @@
 	. = ..()
 	if(labelled)
 		return
-	name = "blood pack[blood_type ? " - [blood_type.name]" : null]"
+	name = "blood pack[blood_type ? " - [unique_blood ? blood_type : blood_type.name]" : null]"
 
 /obj/item/reagent_containers/blood/random
 	icon_state = "random_bloodpack"
