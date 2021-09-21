@@ -212,7 +212,7 @@
 	use_vis_overlay = FALSE
 	var/datum/venue/linked_venue = /datum/venue
 
-/obj/structure/holosign/robot_seat/Initialize(loc, source_projector)
+/obj/structure/holosign/robot_seat/Initialize(mapload, loc, source_projector)
 	. = ..()
 	linked_venue = SSrestaurant.all_venues[linked_venue]
 	linked_venue.linked_seats[src] += null

@@ -3,7 +3,7 @@
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
-/datum/controller/proc/Initialize(mapload)
+/datum/controller/proc/Initialize()
 
 //cleanup actions
 /datum/controller/proc/Shutdown()
