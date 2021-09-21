@@ -4,24 +4,25 @@
 	var/minX = 2
 	var/minY = 2
 
-/obj/effect/vaultspawner/New(turf/location,lX = minX,uX = maxX,lY = minY,uY = maxY,type = null)
-	if(!type)
-		type = pick("sandstone","rock","alien")
+/obj/effect/vaultspawner/Initialize(mapload,lX = minX,uX = maxX,lY = minY,uY = maxY, spawn_type = null)
+	. = ..()
+	if(!spawn_type)
+		spawn_type = pick("sandstone","rock","alien")
 
-	var/lowBoundX = location.x
-	var/lowBoundY = location.y
+	var/lowBoundX = loc.x
+	var/lowBoundY = loc.y
 
-	var/hiBoundX = location.x + rand(lX,uX)
-	var/hiBoundY = location.y + rand(lY,uY)
+	var/hiBoundX = loc.x + rand(lX,uX)
+	var/hiBoundY = loc.y + rand(lY,uY)
 
-	var/z = location.z
+	var/z = loc.z
 
 	for(var/i = lowBoundX,i<=hiBoundX,i++)
 		for(var/j = lowBoundY,j<=hiBoundY,j++)
 			var/turf/T = locate(i,j,z)
 			if(i == lowBoundX || i == hiBoundX || j == lowBoundY || j == hiBoundY)
-				T.PlaceOnTop(text2path("/turf/closed/wall/vault/[type]"))
+				T.PlaceOnTop(text2path("/turf/closed/wall/vault/[spawn_type]"))
 			else
-				T.PlaceOnTop(text2path("/turf/open/floor/vault/[type]"))
+				T.PlaceOnTop(text2path("/turf/open/floor/vault/[spawn_type]"))
 
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
