@@ -3896,5 +3896,6 @@
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
+#include "modular_event\station_traits.dm"
 #include "modular_event\jobs\jobs.dm"
 // END_INCLUDE
