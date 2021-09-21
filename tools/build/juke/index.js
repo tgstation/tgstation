@@ -3552,7 +3552,7 @@ var require_sync = __commonJS({
       }
     };
     GlobSync.prototype._processSimple = function(prefix, index) {
-      var exists = this._stat(prefix);
+      var exists = prefix ? this._stat(prefix) : false;
       if (!this.matches[index])
         this.matches[index] = Object.create(null);
       if (!exists)

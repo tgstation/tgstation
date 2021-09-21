@@ -625,8 +625,8 @@ const TechNode = (props, context) => {
         average: [0.25, 0.5],
         bad: [-Infinity, 0.25],
       }}
-      value={expcompl / required_experiments.length}>
-      Experiments ({expcompl}/{required_experiments.length})
+      value={expcompl / required_experiments?.length}>
+      Experiments ({expcompl}/{required_experiments?.length})
     </ProgressBar>
   );
 

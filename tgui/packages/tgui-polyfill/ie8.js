@@ -458,7 +458,7 @@
         ) : (
           (parentNode = self.parentNode) /* && live(self) */ ?
             parentNode.dispatchEvent(e) :
-            true
+            null
         )), !e.defaultPrevented;
       }),
       removeEventListener: valueDesc(function (type, handler, capture) {
