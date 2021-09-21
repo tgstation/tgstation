@@ -68,8 +68,9 @@
 	)
 
 /mob/living/simple_animal/hostile/carp/Initialize(mapload, mob/tamer)
-	AddComponent(/datum/element/nerfed_pulling)
+	AddElement(/datum/element/nerfed_pulling)
 	AddElement(/datum/element/simple_flying)
+	AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
 	if(random_color)
 		set_greyscale(new_config=/datum/greyscale_config/carp)
 		carp_randomify(rarechance)

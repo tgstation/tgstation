@@ -784,6 +784,7 @@
 #include "code\datums\elements\pet_bonus.dm"
 #include "code\datums\elements\plant_backfire.dm"
 #include "code\datums\elements\point_of_interest.dm"
+#include "code\datums\elements\prevent_attacking_of_types.dm"
 #include "code\datums\elements\rad_insulation.dm"
 #include "code\datums\elements\ranged_attacks.dm"
 #include "code\datums\elements\ridable.dm"

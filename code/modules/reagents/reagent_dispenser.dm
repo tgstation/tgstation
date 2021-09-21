@@ -1,7 +1,6 @@
 /obj/structure/reagent_dispensers
 	name = "Dispenser"
 	desc = "..."
-	obj_flags = CAN_BE_HIT | HAS_NERFED_PULLING
 	icon = 'icons/obj/chemical_tanks.dmi'
 	icon_state = "water"
 	density = TRUE

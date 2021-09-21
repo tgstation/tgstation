@@ -1,15 +1,20 @@
-/// This atom will be slower when pulling/moving into an object with HAS_NERFED_PULLING in its obj_flags
+/// This living will be slower when pulling/moving some dangerous objects in its obj_flags
 /datum/element/nerfed_pulling
 	element_flags = ELEMENT_DETACH
 
-/datum/element/nerfed_pulling/Attach(datum/source)
+	var/static/list/nerf_pulling_of_typecache = typecacheof(list(
+		/obj/machinery/portable_atmospherics/canister,
+		/obj/structure/reagent_dispensers,
+	))
+
+/datum/element/nerfed_pulling/Attach(datum/target)
 	. = ..()
 
-	if (!isliving(source))
+	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(source, COMSIG_LIVING_PUSHING_MOVABLE, .proc/on_push_movable)
-	RegisterSignal(source, COMSIG_LIVING_UPDATING_PULL_MOVESPEED, .proc/on_updating_pull_movespeed)
+	RegisterSignal(target, COMSIG_LIVING_PUSHING_MOVABLE, .proc/on_push_movable)
+	RegisterSignal(target, COMSIG_LIVING_UPDATING_PULL_MOVESPEED, .proc/on_updating_pull_movespeed)
 
 /datum/element/nerfed_pulling/Detach(mob/living/source)
 	source.remove_movespeed_modifier(/datum/movespeed_modifier/nerfed_bump)
@@ -37,8 +42,8 @@
 
 	source.add_movespeed_modifier(/datum/movespeed_modifier/nerfed_pull)
 
-/datum/element/nerfed_pulling/proc/will_slow_down(obj/input)
-	return isobj(input) && (input.obj_flags & HAS_NERFED_PULLING)
+/datum/element/nerfed_pulling/proc/will_slow_down(datum/input)
+	return nerf_pulling_of_typecache[input.type]
 
 /datum/movespeed_modifier/nerfed_pull
 	multiplicative_slowdown = 5.5
