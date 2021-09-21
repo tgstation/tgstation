@@ -79,3 +79,5 @@
 /obj/effect/spawner/lootdrop/snowdin/dungeonmisc : /obj/effect/spawner/random/exotic/snow_gear
 /obj/effect/spawner/lootdrop/seed_vault : /obj/effect/spawner/random/food_or_drink/seed_vault
 /obj/effect/spawner/lootdrop/whiteship_cere_ripley : /obj/effect/spawner/random/exotic/ripley
+/obj/effect/spawner/random/medical/surgery_tool_rare : /obj/effect/spawner/random/medical/surgery_tool_alien
+/obj/effect/spawner/random/engineering/tool_rare : /obj/effect/spawner/random/engineering/tool_alien

@@ -32,7 +32,7 @@
 		/obj/item/weldingtool/largetank,
 	)
 
-/obj/effect/spawner/random/engineering/tool_rare
+/obj/effect/spawner/random/engineering/tool_alien
 	name = "Rare tool spawner"
 	icon_state = "wrench"
 	loot = list(

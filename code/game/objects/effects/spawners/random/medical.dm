@@ -93,7 +93,7 @@
 		/obj/item/cautery/advanced,
 	)
 
-/obj/effect/spawner/random/medical/surgery_tool_rare
+/obj/effect/spawner/random/medical/surgery_tool_alien
 	name = "Rare surgery tool spawner"
 	icon_state = "scapel"
 	loot = list( // Mail loot spawner. Some sort of random and rare surgical tool. Alien tech found here.
