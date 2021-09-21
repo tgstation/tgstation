@@ -520,7 +520,7 @@
  * Emit radiation
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/emit_rads(radiation)
-	rad_power = clamp((radiation / 1e5), 0, FUSION_RAD_MAX)
+	rad_power = clamp(radiation / 1e5, 0, FUSION_RAD_MAX)
 	radiation_pulse(loc, rad_power)
 
 /*
