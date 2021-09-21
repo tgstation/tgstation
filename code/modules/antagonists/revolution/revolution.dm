@@ -429,7 +429,7 @@
 				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former revolutionary</span>")
 			else
 				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former head revolutionary</span>")
-				add_memory_in_range(rev_mind.current, 7, MEMORY_WON_REVOLUTION, list(DETAIL_PROTAGONIST = rev_mind.current, DETAIL_STATION_NAME = station_name()), story_value = STORY_VALUE_LEGENDARY, memory_flags = MEMORY_FLAG_NOSTATIONNAME)
+				add_memory_in_range(rev_mind.current, 7, MEMORY_WON_REVOLUTION, list(DETAIL_PROTAGONIST = rev_mind.current, DETAIL_STATION_NAME = station_name()), story_value = STORY_VALUE_LEGENDARY, memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_CHECK_BLIND_AND_DEAF, protagonist_memory_flags = MEMORY_FLAG_NOSTATIONNAME)
 				if(!charter_given && rev_mind.current && rev_mind.current.stat == CONSCIOUS)
 					charter_given = TRUE
 					podspawn(list(

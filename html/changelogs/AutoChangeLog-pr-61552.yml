@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - balance: "If you are on Combat Mode, your bullets no longer pass through prone people"
