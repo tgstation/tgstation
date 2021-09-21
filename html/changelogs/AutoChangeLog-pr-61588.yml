@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - bugfix: "Quirks being removed/renamed/rebalanced will no longer break your quirks menu"
