@@ -447,7 +447,9 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/industrial_lift/tram/central//that's a surprise tool that can help us later
+/obj/structure/industrial_lift/tram/central//that's a surprise tool that can help us later. also, it plays the looping sound
+	///looping sound
+	var/datum/looping_sound/industrial_lift/tram_sound_loop
 
 /obj/structure/industrial_lift/tram/central/Initialize(mapload)
 	if(GLOB.central_tram)
@@ -457,9 +459,11 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 
 	SStramprocess.can_fire = TRUE
 	GLOB.central_tram = src
+	tram_sound_loop = new(src)
 
 /obj/structure/industrial_lift/tram/central/Destroy()
 	GLOB.central_tram = null
+	QDEL_NULL(tram_sound_loop)
 	return ..()
 
 /obj/structure/industrial_lift/tram/LateInitialize()
@@ -494,6 +498,7 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 
 /obj/structure/industrial_lift/tram/process(delta_time)
 	if(!travel_distance)
+		GLOB.central_tram.tram_sound_loop.stop()
 		addtimer(CALLBACK(src, .proc/unlock_controls), 3 SECONDS)
 		return PROCESS_KILL
 	else

@@ -128,3 +128,13 @@
 	volume = 40
 	falloff_distance = 5
 	falloff_exponent = 20
+
+///this makes sense for any industrial lift that has a route but currently that's just the ol' tram.
+/datum/looping_sound/industrial_lift
+	start_sound = 'sound/industrial_lift/start.ogg'
+	start_length = 0.5 SECONDS
+	mid_sounds = list('sound/industrial_lift/loop.ogg'=1)
+	mid_length = 2 SECONDS
+	end_sound = 'sound/industrial_lift/end.ogg'
+	volume = 40
+	falloff_distance = 4

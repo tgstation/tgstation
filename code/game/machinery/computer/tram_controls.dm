@@ -107,6 +107,7 @@
 	if(tram_part.controls_locked) // someone else started
 		return FALSE
 	tram_part.tram_travel(to_where)
+	GLOB.central_tram.tram_sound_loop.start()
 	return TRUE
 
 /obj/item/circuit_component/tram_controls
