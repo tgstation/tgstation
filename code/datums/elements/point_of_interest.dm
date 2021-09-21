@@ -7,7 +7,8 @@
 		return ELEMENT_INCOMPATIBLE
 
 	// New players are abstract mobs assigned to people who are still in the lobby screen.
-	// As a result, they are not a valid POI and should never be a valid POI.
+	// As a result, they are not a valid POI and should never be a valid POI. If they
+	// somehow get this element attached to them, there's something we need to debug.
 	if(isnewplayer(target))
 		return ELEMENT_INCOMPATIBLE
 

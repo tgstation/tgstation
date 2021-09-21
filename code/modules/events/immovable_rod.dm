@@ -92,7 +92,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /obj/effect/immovablerod/Destroy(force)
 	UnregisterSignal(src, COMSIG_ATOM_ENTERING)
-	SSpoints_of_interest.make_point_of_interest(src)
 	SSaugury.unregister_doom(src)
 
 	return ..()
