@@ -106,7 +106,7 @@
 
 /obj/item/clothing/mask/gas/atmos/centcom
 	name = "\improper CentCom gas mask"
-	desc = "Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone."
+	desc = "Oooh, gold and green. Fancy! This should help as you sit in your office."
 	icon_state = "gas_centcom"
 	inhand_icon_state = "gas_centcom"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
