@@ -229,9 +229,9 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return "![pick("!","@","#","$","%","^","&")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
 
 /// Orders mobs by type then by name. Accepts optional arg to sort a custom list, otherwise copies GLOB.mob_list.
-/proc/sortmobs(list/custom_mob_list = null)
+/proc/sortmobs()
 	var/list/moblist = list()
-	var/list/sortmob = sortNames(custom_mob_list ? custom_mob_list : GLOB.mob_list)
+	var/list/sortmob = sortNames(GLOB.mob_list)
 	for(var/mob/living/silicon/ai/mob_to_sort in sortmob)
 		moblist += mob_to_sort
 	for(var/mob/camera/mob_to_sort in sortmob)
@@ -256,7 +256,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		// We've already added slimes.
 		if(isslime(mob_to_sort))
 			continue
-		moblist.Add(mob_to_sort)
+		moblist += mob_to_sort
 	for(var/mob/living/basic/mob_to_sort in sortmob)
 		moblist += mob_to_sort
 	return moblist

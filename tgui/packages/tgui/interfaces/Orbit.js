@@ -35,9 +35,7 @@ const compareNumberedText = (a, b) => {
 
 const BasicSection = (props, context) => {
   const { act } = useBackend(context);
-  const { searchText, source, title } = props;
-
-  const [autoObs] = useLocalState(context, "autoObs", false);
+  const { searchText, source, title, autoObserve } = props;
 
   const things = source.filter(searchFor(searchText));
   things.sort(compareNumberedText);
@@ -49,7 +47,7 @@ const BasicSection = (props, context) => {
           content={thing.name}
           onClick={() => act("orbit", {
             ref: thing.ref,
-            autoObs: autoObs,
+            auto_observe: autoObserve,
           })} />
       ))}
     </Section>
@@ -58,16 +56,14 @@ const BasicSection = (props, context) => {
 
 const OrbitedButton = (props, context) => {
   const { act } = useBackend(context);
-  const { color, thing } = props;
-
-  const [autoObs] = useLocalState(context, "autoObs", false);
+  const { color, thing, autoObserve } = props;
 
   return (
     <Button
       color={color}
       onClick={() => act("orbit", {
         ref: thing.ref,
-        autoObs: autoObs,
+        auto_observe: autoObserve,
       })}>
       {thing.name}
       {thing.orbiters && (
@@ -96,7 +92,7 @@ export const Orbit = (props, context) => {
   } = data;
 
   const [searchText, setSearchText] = useLocalState(context, "searchText", "");
-  const [autoObs, setAutoObs] = useLocalState(context, "autoObs", false);
+  const [autoObserve, setAutoObserve] = useLocalState(context, "autoObserve", false);
 
   const collatedAntagonists = {};
   for (const antagonist of antagonists) {
@@ -122,7 +118,7 @@ export const Orbit = (props, context) => {
       if (member !== undefined) {
         act("orbit", {
           ref: member.ref,
-          autoObs: autoObs,
+          auto_observe: autoObserve,
         });
         break;
       }
@@ -161,9 +157,9 @@ export const Orbit = (props, context) => {
                 tooltip={multiline`Toggle Auto-Observe. When active, you'll
                 see the UI / full inventory of whoever you're orbiting. Neat!`}
                 tooltipPosition="bottom-start"
-                selected={autoObs}
-                icon={autoObs ? "toggle-on" : "toggle-off"}
-                onClick={() => setAutoObs(!autoObs)} />
+                selected={autoObserve}
+                icon={autoObserve ? "toggle-on" : "toggle-off"}
+                onClick={() => setAutoObserve(!autoObserve)} />
               <Button
                 inline
                 color="transparent"
@@ -186,6 +182,7 @@ export const Orbit = (props, context) => {
                       key={antag.name}
                       color="bad"
                       thing={antag}
+                      autoObserve={autoObserve}
                     />
                   ))}
               </Section>
@@ -221,6 +218,7 @@ export const Orbit = (props, context) => {
           title="Dead"
           source={dead}
           searchText={searchText}
+          autoObserve={autoObserve}
         />
 
         <BasicSection

@@ -463,7 +463,6 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 				else
 					mob.name = mob.real_name
 				mob.mouse_opacity = initial(mob.mouse_opacity)
-			SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_LOSE_STEALTHMIN, mob)
 		else
 			var/new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
 			if(!new_key)
@@ -475,7 +474,6 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 				mob.alpha = 0 //JUUUUST IN CASE
 				mob.name = " "
 				mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-			SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_GAIN_STEALTHMIN, mob)
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stealth Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

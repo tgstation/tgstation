@@ -12,10 +12,8 @@
 #define COMSIG_GLOB_VAR_EDIT "!var_edit"
 /// called after an explosion happened : (epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
 #define COMSIG_GLOB_EXPLOSION "!explosion"
-/// Called from base of /mob/proc/add_to_mob_list - Mob is currently being Initialise()d and has been added to the global mob list : (mob)
+/// Called from base of /mob/Initialise : (mob)
 #define COMSIG_GLOB_MOB_CREATED "!mob_created"
-/// Called from base of remove_from_mob_list - Mob is currently being Destroy()ed and has been removed from the global mob list : (mob)
-#define COMSIG_GLOB_MOB_DELETED "!mob_deleted"
 /// mob died somewhere : (mob/living, gibbed)
 #define COMSIG_GLOB_MOB_DEATH "!mob_death"
 /// global living say plug - use sparingly: (mob/speaker , message)
@@ -55,16 +53,6 @@
 #define COMSIG_ALARM_FIRE(alarm_type) "!alarm_fire [alarm_type]"
 /// An alarm of some form was cleared (datum/alarm_handler/source, alarm_type, area/source_area)
 #define COMSIG_ALARM_CLEAR(alarm_type) "!alarm_clear [alarm_type]"
-
-/// Sent from base of /datum/element/point_of_interest/Attach: (atom/new_poi)
-#define COMSIG_GLOB_POI_ELEMENT_ADDED "!poi_element_added"
-/// Sent from base of /datum/element/point_of_interest/Detatch: (atom/new_poi)
-#define COMSIG_GLOB_POI_ELEMENT_REMOVED "!poi_element_removed"
-
-/// From base of /client/proc/stealth() - Called when any mob loses their stealthmin status : (mob/losing_mob)
-#define COMSIG_GLOB_MOB_LOSE_STEALTHMIN "!mob_lose_stealthmin"
-/// From base of /client/proc/stealth() - Called when any mob gains stealthmin status : (mob/gaining_mob)
-#define COMSIG_GLOB_MOB_GAIN_STEALTHMIN "!mob_gain_stealthmin"
 
 /// signals from globally accessible objects
 
@@ -1487,10 +1475,10 @@
 ///Called when the ticker sets up the game for start
 #define COMSIG_TICKER_ENTER_SETTING_UP "comsig_ticker_enter_setting_up"
 
-// Point of interest signals
-/// Sent from base of /datum/controller/subsystem/pois/proc/on_pois_changed: ()
-#define COMSIG_MOB_POIS_CHANGED "mob_pois_changed"
-/// Sent from base of /datum/controller/subsystem/pois/proc/on_pois_changed: ()
-#define COMSIG_OTHER_POIS_CHANGED "other_pois_changed"
-
 #define COMSIG_GREYSCALE_CONFIG_REFRESHED "greyscale_config_refreshed"
+
+// Point of interest signals
+/// Sent from base of /datum/controller/subsystem/points_of_interest/proc/on_poi_element_added : (atom/new_poi)
+#define COMSIG_ADDED_POINT_OF_INTEREST "added_point_of_interest"
+/// Sent from base of /datum/controller/subsystem/points_of_interest/proc/on_poi_element_removed : (atom/old_poi)
+#define COMSIG_REMOVED_POINT_OF_INTEREST "removed_point_of_interest"

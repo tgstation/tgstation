@@ -16,13 +16,6 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	/// Serialised list of all POIS without a mind.
 	var/list/npcs = list()
 
-	/// When TRUE, will update next process. Set to TRUE when SSpois informs the orbit menu that POIs have changed.
-	var/do_update_next_process = TRUE
-
-/datum/orbit_menu/New()
-	RegisterSignal(SSpois, list(COMSIG_MOB_POIS_CHANGED, COMSIG_OTHER_POIS_CHANGED), .proc/on_poi_change)
-	START_PROCESSING(SSprocessing, src)
-
 /datum/orbit_menu/ui_state(mob/user)
 	return GLOB.observer_state
 
@@ -39,11 +32,13 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		return
 
 	switch(action)
-		if ("orbit")
+		if("orbit")
 			var/ref = params["ref"]
-			var/auto_observe = params["autoObs"]
-			var/atom/movable/poi = pois[ref]
-			if (!poi)
+			var/auto_observe = params["auto_observe"]
+			var/atom/poi = SSpoints_of_interest.get_poi_atom_by_ref(ref)
+
+			if((ismob(poi) && !SSpoints_of_interest.is_valid_poi(poi, CALLBACK(src, .proc/validate_mob_poi))) \
+				|| !SSpoints_of_interest.is_valid_poi(poi))
 				to_chat(usr, span_notice("That point of interest is no longer valid."))
 				return TRUE
 
@@ -53,12 +48,14 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			if (auto_observe)
 				user.do_observe(poi)
 			return TRUE
-		if ("refresh")
+		if("refresh")
 			update_static_data(usr, ui)
 			return TRUE
 
-/datum/orbit_menu/ui_static_data(mob/user)
+/datum/orbit_menu/ui_data(mob/user)
 	var/list/data = list()
+
+	update_poi_list()
 
 	data["alive"] = alive
 	data["antagonists"] = antagonists
@@ -70,96 +67,105 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	return data
 
 /datum/orbit_menu/ui_assets()
-	. = ..() || list()
-	. += get_asset_datum(/datum/asset/simple/orbit)
+	return list(
+		get_asset_datum(/datum/asset/simple/orbit),
+	)
 
-/// Updates the list of POIs.
+/// Fully updates the list of POIs.
 /datum/orbit_menu/proc/update_poi_list()
-	var/list/new_pois = SSpois.get_pois(skip_mindless = TRUE, specify_dead_role = FALSE)
+	var/list/new_mob_pois = SSpoints_of_interest.get_mob_pois(CALLBACK(src, .proc/validate_mob_poi))
+	var/list/new_other_pois = SSpoints_of_interest.get_other_pois()
 
 	pois.Cut()
+
 	alive.Cut()
 	antagonists.Cut()
 	dead.Cut()
 	ghosts.Cut()
-	misc.Cut()
 	npcs.Cut()
 
-	for(var/name in new_pois)
+	misc.Cut()
+
+	for(var/name in new_mob_pois)
 		var/list/serialized = list()
-		serialized["name"] = name
 
-		var/poi = new_pois[name]
+		var/mob/mob_poi = new_mob_pois[name]
 
-		var/poi_ref = REF(poi)
+		// Add the ghost/dead tag to the end of dead mob POIs.
+		if(mob_poi.stat == DEAD)
+			if(isobserver(mob_poi))
+				serialized["name"] = name + " \[ghost\]"
+			else
+				serialized["name"] = name + " \[dead\]"
+		else
+			serialized["name"] = name
+
+		var/poi_ref = REF(mob_poi)
 		serialized["ref"] = poi_ref
 
-		pois[poi_ref] = poi
+		pois[poi_ref] = mob_poi
 
-		if(ismob(poi))
-			var/mob/mob_poi = poi
-
-			if(isobserver(mob_poi))
-				var/number_of_orbiters = length(mob_poi.get_all_orbiters())
-				if (number_of_orbiters)
-					serialized["orbiters"] = number_of_orbiters
-				ghosts += list(serialized)
-				continue
-
-			if(mob_poi.stat == DEAD)
-				dead += list(serialized)
-				continue
-
-			if(isnull(mob_poi.mind))
-				npcs += list(serialized)
-				continue
-
+		if(isobserver(mob_poi))
 			var/number_of_orbiters = length(mob_poi.get_all_orbiters())
-			if(number_of_orbiters)
+			if (number_of_orbiters)
 				serialized["orbiters"] = number_of_orbiters
+			ghosts += list(serialized)
+			continue
 
-			var/datum/mind/mind = mob_poi.mind
-			var/was_antagonist = FALSE
+		if(mob_poi.stat == DEAD)
+			dead += list(serialized)
+			continue
 
-			for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
-				if (antag_datum.show_to_ghosts)
-					was_antagonist = TRUE
-					serialized["antag"] = antag_datum.name
-					antagonists += list(serialized)
-					break
+		if(isnull(mob_poi.mind))
+			npcs += list(serialized)
+			continue
 
-			if(!was_antagonist)
-				alive += list(serialized)
-		else
-			misc += list(serialized)
+		var/number_of_orbiters = length(mob_poi.get_all_orbiters())
+		if(number_of_orbiters)
+			serialized["orbiters"] = number_of_orbiters
 
-	do_update_next_process = TRUE
+		var/datum/mind/mind = mob_poi.mind
+		var/was_antagonist = FALSE
+
+		for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
+			if (antag_datum.show_to_ghosts)
+				was_antagonist = TRUE
+				serialized["antag"] = antag_datum.name
+				antagonists += list(serialized)
+				break
+
+		if(!was_antagonist)
+			alive += list(serialized)
+
+	for(var/name in new_other_pois)
+		var/list/serialized = list()
+
+		var/atom/atom_poi = new_other_pois[name]
+
+		var/poi_ref = REF(atom_poi)
+		serialized["ref"] = poi_ref
+		serialized["name"] = name
+
+		pois[poi_ref] = atom_poi
+		misc += list(serialized)
 
 /// Shows the UI to the specified user.
 /datum/orbit_menu/proc/show(mob/user)
 	ui_interact(user)
 
 /**
- * Signal handler for major POI changes.
+ * Helper POI validation function passed as a callback to various SSpoints_of_interest procs.
  *
- * Major POI changes are POIs added or removed from SSpoi's lists.
+ * Provides extended validation above and beyond standard, limiting mob POIs without minds or ckeys
+ * unless they're mobs, camera mobs or megafauna.
  *
- * We need to update the poi lists promptly, as they are used to validate user input in ui_act.
+ * If they satisfy that requirement, falls back to default validation for the POI.
  */
-/datum/orbit_menu/proc/on_poi_change()
-	SIGNAL_HANDLER
+/datum/orbit_menu/proc/validate_mob_poi(datum/point_of_interest/mob_poi/potential_poi)
+	var/mob/potential_mob_poi = potential_poi.target
+	// Skip mindless and ckeyless mobs except bots, cameramobs and megafauna.
+	if(!potential_mob_poi.mind && !potential_mob_poi.ckey)
+		if(!isbot(potential_mob_poi) && !iscameramob(potential_mob_poi) && !ismegafauna(potential_mob_poi))
+			return FALSE
 
-	update_poi_list()
-
-/**
- * Manages periodic updates.
- *
- * Used to sweep up minor POI updates like dead < - > alive /mob/living state changes.
- *
- * Pushes all the updates to all active UI windows.
- */
-/datum/orbit_menu/process(delta_time)
-	update_poi_list()
-
-	for(var/datum/tgui/window as anything in SStgui.open_uis_by_src[REF(src)])
-		window.send_full_update()
+	return potential_poi.validate()

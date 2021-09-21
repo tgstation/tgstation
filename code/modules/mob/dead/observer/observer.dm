@@ -148,6 +148,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	show_data_huds()
 	data_huds_on = 1
 
+	SSpoints_of_interest.make_point_of_interest(src)
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
@@ -498,30 +499,31 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Jump to Mob"
 	set desc = "Teleport to a mob"
 
-	if(isobserver(usr)) //Make sure they're an observer!
-		var/list/dest = list() //List of possible destinations (mobs)
-		var/target = null    //Chosen target.
+	if(!isobserver(usr)) //Make sure they're an observer!
+		return
 
-		dest += SSpois.get_pois(mobs_only = TRUE) //Fill list, prompt user with list
-		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
+	var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
+	var/target = null
 
-		if (!target)//Make sure we actually have a target
-			return
+	target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in possible_destinations
 
-		var/mob/destination_mob = dest[target] //Destination mob
+	if (!target || !isobserver(usr))
+		return
 
-		// During the break between opening the input menu and selecting our target, has this become an invalid option?
-		if(!SSpois.is_valid_poi(destination_mob))
-			return
+	var/mob/destination_mob = possible_destinations[target] //Destination mob
 
-		var/mob/source_mob = src  //Source mob
-		var/turf/destination_turf = get_turf(destination_mob) //Turf of the destination mob
+	// During the break between opening the input menu and selecting our target, has this become an invalid option?
+	if(!SSpoints_of_interest.is_valid_poi(destination_mob))
+		return
 
-		if(isturf(destination_turf))
-			source_mob.abstract_move(destination_turf)
-			source_mob.update_parallax_contents()
-		else
-			to_chat(source_mob, span_danger("This mob is not located in the game world."))
+	var/mob/source_mob = src  //Source mob
+	var/turf/destination_turf = get_turf(destination_mob) //Turf of the destination mob
+
+	if(isturf(destination_turf))
+		source_mob.abstract_move(destination_turf)
+		source_mob.update_parallax_contents()
+	else
+		to_chat(source_mob, span_danger("This mob is not located in the game world."))
 
 /mob/dead/observer/verb/change_view_range()
 	set category = "Ghost"
@@ -859,19 +861,23 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Observe"
 	set category = "Ghost"
 
-	reset_perspective(null)
-
-	var/eye_name = null
-
-	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in SSpois.mob_points_of_interest
-
-	if (!eye_name)
+	if(!isobserver(usr)) //Make sure they're an observer!
 		return
 
-	var/chosen_target = SSpois.mob_points_of_interest[eye_name]
+	reset_perspective(null)
+
+	var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
+	var/target = null
+
+	target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in possible_destinations
+
+	if (!target || !isobserver(usr))
+		return
+
+	var/mob/chosen_target = possible_destinations[target]
 
 	// During the break between opening the input menu and selecting our target, has this become an invalid option?
-	if(!SSpois.is_valid_poi(chosen_target))
+	if(!SSpoints_of_interest.is_valid_poi(chosen_target))
 		return
 
 	do_observe(chosen_target)
