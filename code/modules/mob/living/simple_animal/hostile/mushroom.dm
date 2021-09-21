@@ -65,6 +65,7 @@
 	cap_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	UpdateMushroomCap()
 	health = maxHealth
+	add_cell_sample()
 	. = ..()
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)

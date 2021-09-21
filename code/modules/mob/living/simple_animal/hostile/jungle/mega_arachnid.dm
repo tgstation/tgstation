@@ -50,6 +50,10 @@
 	..()
 	alpha = 50
 
+/mob/living/simple_animal/hostile/jungle/mega_arachnid/Initialize(mapload)
+	. = ..()
+	add_cell_sample()
+
 /mob/living/simple_animal/hostile/jungle/mega_arachnid/add_cell_sample()
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGA_ARACHNID, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

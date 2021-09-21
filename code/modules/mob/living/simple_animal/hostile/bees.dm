@@ -66,6 +66,7 @@
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/clickbox, x_offset = -2, y_offset = -2)
 	AddComponent(/datum/component/swarming)
+	add_cell_sample()
 
 /mob/living/simple_animal/hostile/bee/mob_pickup(mob/living/L)
 	if(flags_1 & HOLOGRAM_1)
