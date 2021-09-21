@@ -142,6 +142,39 @@
 	explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 7, flame_range = 12)
 	qdel(src)
 
+/obj/structure/reagent_dispensers/cream_soda //too fizzy, too furious
+	name = "cream soda barrel"
+	desc = "Be careful with that! That cream soda is serious business!"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "barrel"
+	reagent_id = /datum/reagent/consumable/cream_soda
+	can_be_tanked = FALSE
+
+/obj/structure/reagent_dispensers/cream_soda/boom()
+	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flame_range = 0)
+	qdel(src)
+
+/obj/structure/reagent_dispensers/cream_soda/blob_act(obj/structure/blob/B)
+	boom()
+
+/obj/structure/reagent_dispensers/cream_soda/ex_act()
+	boom()
+
+/obj/structure/reagent_dispensers/cream_soda/fire_act(exposed_temperature, exposed_volume)
+	boom()
+
+/obj/structure/reagent_dispensers/cream_soda/zap_act(power, zap_flags)
+	. = ..() //extend the zap
+	if(ZAP_OBJ_DAMAGE & zap_flags)
+		boom()
+
+/obj/structure/reagent_dispensers/cream_soda/bullet_act(obj/projectile/P)
+	. = ..()
+	if(!QDELETED(src)) //wasn't deleted by the projectile's effects.
+		if(!P.nodamage && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
+			log_bomber(P.firer, "detonated a", src, "via projectile")
+			boom()
+
 /obj/structure/reagent_dispensers/peppertank
 	name = "pepper spray refiller"
 	desc = "Contains condensed capsaicin for use in law \"enforcement.\""
@@ -211,7 +244,6 @@
 	explosion(src, heavy_impact_range = 3, light_impact_range = 5, flame_range = 10, flash_range = 7)
 	if(!QDELETED(src))
 		qdel(src)
-
 
 /obj/structure/reagent_dispensers/virusfood
 	name = "virus food dispenser"

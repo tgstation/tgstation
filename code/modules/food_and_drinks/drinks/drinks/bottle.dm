@@ -597,6 +597,13 @@
 	list_reagents = list(/datum/reagent/consumable/ethanol/mushi_kombucha = 30)
 	isGlass = FALSE
 
+/obj/item/reagent_containers/food/drinks/bottle/cream_soda
+	name = "Tipper's Classic Iceberg Cream Soda"
+	desc = "Why is it purple? Well, let's just say it's an old Tipper family recipe."
+	icon_state = "cream_soda_bottle"
+	volume = 30
+	list_reagents = list(/datum/reagent/consumable/cream_soda = 30)
+
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/food/drinks/bottle/molotov
 	name = "molotov cocktail"

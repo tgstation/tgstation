@@ -1995,6 +1995,14 @@
 					)
 	crate_name = "grilling fuel kit crate"
 
+/datum/supply_pack/organic/cream_soda
+	name = "Cream Soda Crate"
+	desc = "Contains a barrel of delicious Tipper's cream soda. Handle with care."
+	cost = CARGO_CRATE_VALUE * 1.2
+	contains = list(/obj/structure/reagent_dispensers/cream_soda)
+	crate_name = "cream soda barrel crate"
+	crate_type = /obj/structure/closet/crate/large
+
 //////////////////////////////////////////////////////////////////////////////
 ////////////////////////////// Livestock /////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////

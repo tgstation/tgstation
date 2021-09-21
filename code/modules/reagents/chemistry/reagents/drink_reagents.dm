@@ -911,13 +911,13 @@
 
 /datum/reagent/consumable/cream_soda
 	name = "Cream Soda"
-	description = "A classic space-American vanilla flavored soft drink."
-	color = "#dcb137"
+	description = "A classic space-Antarctican vanilla flavored soft drink."
+	color = "#FF01FF"
 	quality = DRINK_VERYGOOD
-	taste_description = "fizzy vanilla"
+	taste_description = "fizzy pink vanilla"
 	glass_icon_state = "cream_soda"
 	glass_name = "Cream Soda"
-	glass_desc = "A classic space-American vanilla flavored soft drink."
+	glass_desc = "A classic space-Antarctican vanilla flavored soft drink. Best drunk iceberg-cold."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/cream_soda/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
