@@ -6634,7 +6634,7 @@
 /area/engineering/atmos)
 "aWN" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/medical,
+/obj/effect/spawner/random/techstorage/medical_all,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
@@ -57704,7 +57704,7 @@
 /area/hallway/primary/starboard)
 "kNA" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/command,
+/obj/effect/spawner/random/techstorage/command_all,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -57876,7 +57876,7 @@
 /area/medical/treatment_center)
 "kQc" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/tcomms,
+/obj/effect/spawner/random/techstorage/tcomms_all,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
@@ -60163,7 +60163,7 @@
 /area/security/brig)
 "luF" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/security,
+/obj/effect/spawner/random/techstorage/security_all,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
@@ -61030,7 +61030,7 @@
 /area/science/mixing)
 "lHA" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/ai,
+/obj/effect/spawner/random/techstorage/ai_all,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
@@ -68971,7 +68971,7 @@
 /area/service/electronic_marketing_den)
 "nVC" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/rnd,
+/obj/effect/spawner/random/techstorage/rnd_all,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
@@ -72114,7 +72114,7 @@
 /area/hallway/primary/central/aft)
 "oOA" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/service,
+/obj/effect/spawner/random/techstorage/service_all,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
@@ -81803,7 +81803,7 @@
 /area/science/research)
 "rNW" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/engineering,
+/obj/effect/spawner/random/techstorage/engineering_all,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
@@ -96143,7 +96143,7 @@
 /area/maintenance/solars/port/fore)
 "waZ" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/rnd_secure,
+/obj/effect/spawner/random/techstorage/rnd_secure_all,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6

@@ -8387,7 +8387,7 @@
 "boN" = (
 /obj/structure/rack,
 /obj/machinery/light/small/directional/west,
-/obj/effect/spawner/random/techstorage/command,
+/obj/effect/spawner/random/techstorage/command_all,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
 "boP" = (
@@ -26882,7 +26882,7 @@
 /area/security/prison/safe)
 "jvv" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/rnd,
+/obj/effect/spawner/random/techstorage/rnd_all,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
@@ -31912,7 +31912,7 @@
 /area/security/office)
 "mos" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/rnd_secure,
+/obj/effect/spawner/random/techstorage/rnd_secure_all,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
 "mot" = (
@@ -32069,7 +32069,7 @@
 /area/cargo/office)
 "msG" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/security,
+/obj/effect/spawner/random/techstorage/security_all,
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
 "mtb" = (
@@ -40555,7 +40555,7 @@
 /area/service/library)
 "qVo" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/engineering,
+/obj/effect/spawner/random/techstorage/engineering_all,
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
 "qVD" = (
@@ -44647,7 +44647,7 @@
 /area/security/prison/safe)
 "tfG" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/service,
+/obj/effect/spawner/random/techstorage/service_all,
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
 "tfL" = (
@@ -51408,7 +51408,7 @@
 /area/security/checkpoint/supply)
 "xmb" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/ai,
+/obj/effect/spawner/random/techstorage/ai_all,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
 "xmc" = (
@@ -52388,7 +52388,7 @@
 /area/commons/storage/primary)
 "xMY" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/medical,
+/obj/effect/spawner/random/techstorage/medical_all,
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
 "xNq" = (
@@ -52860,7 +52860,7 @@
 /area/medical/chemistry)
 "ycJ" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/tcomms,
+/obj/effect/spawner/random/techstorage/tcomms_all,
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
 "ycN" = (

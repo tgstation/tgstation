@@ -9748,7 +9748,7 @@
 /area/service/bar)
 "aNS" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/engineering,
+/obj/effect/spawner/random/techstorage/engineering_all,
 /obj/effect/turf_decal/trimline/white/filled/line,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
@@ -31874,7 +31874,7 @@
 /area/security/interrogation)
 "juE" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/rnd_secure,
+/obj/effect/spawner/random/techstorage/rnd_secure_all,
 /obj/effect/turf_decal/trimline/white/filled/line,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
@@ -34265,7 +34265,7 @@
 /area/hallway/secondary/entry)
 "koo" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/rnd,
+/obj/effect/spawner/random/techstorage/rnd_all,
 /obj/effect/turf_decal/trimline/white/filled/line,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
@@ -34986,7 +34986,7 @@
 /area/engineering/atmos)
 "kEF" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/tcomms,
+/obj/effect/spawner/random/techstorage/tcomms_all,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
@@ -44894,7 +44894,7 @@
 /area/security/prison)
 "oRl" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/ai,
+/obj/effect/spawner/random/techstorage/ai_all,
 /obj/effect/turf_decal/trimline/white/filled/line,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark,
@@ -47044,7 +47044,7 @@
 "pHA" = (
 /obj/structure/rack,
 /obj/machinery/status_display/ai/directional/north,
-/obj/effect/spawner/random/techstorage/medical,
+/obj/effect/spawner/random/techstorage/medical_all,
 /obj/effect/turf_decal/trimline/white/filled/line,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
@@ -55524,7 +55524,7 @@
 /area/service/chapel)
 "tfG" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/command,
+/obj/effect/spawner/random/techstorage/command_all,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
@@ -59168,7 +59168,7 @@
 /area/engineering/atmos)
 "uAs" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/service,
+/obj/effect/spawner/random/techstorage/service_all,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
@@ -65015,7 +65015,7 @@
 /area/ai_monitored/turret_protected/aisat/hallway)
 "wTy" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/security,
+/obj/effect/spawner/random/techstorage/security_all,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},

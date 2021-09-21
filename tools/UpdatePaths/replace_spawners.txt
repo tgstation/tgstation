@@ -81,3 +81,14 @@
 /obj/effect/spawner/lootdrop/whiteship_cere_ripley : /obj/effect/spawner/random/exotic/ripley
 /obj/effect/spawner/random/medical/surgery_tool_rare : /obj/effect/spawner/random/medical/surgery_tool_alien
 /obj/effect/spawner/random/engineering/tool_rare : /obj/effect/spawner/random/engineering/tool_alien
+/obj/effect/spawner/random/techstorage/service : /obj/effect/spawner/random/techstorage/service_all
+/obj/effect/spawner/random/techstorage/rnd : /obj/effect/spawner/random/techstorage/rnd_all
+/obj/effect/spawner/random/techstorage/security : /obj/effect/spawner/random/techstorage/security_all
+/obj/effect/spawner/random/techstorage/engineering : /obj/effect/spawner/random/techstorage/engineering_all
+/obj/effect/spawner/random/techstorage/tcomms : /obj/effect/spawner/random/techstorage/tcomms_all
+/obj/effect/spawner/random/techstorage/medical : /obj/effect/spawner/random/techstorage/medical_all
+/obj/effect/spawner/random/techstorage/ai : /obj/effect/spawner/random/techstorage/ai_all
+/obj/effect/spawner/random/techstorage/command : /obj/effect/spawner/random/techstorage/command_all
+/obj/effect/spawner/random/techstorage/rnd_secure : /obj/effect/spawner/random/techstorage/rnd_secure_all
+
+

@@ -28562,7 +28562,7 @@
 /area/medical/chemistry)
 "cMc" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/command,
+/obj/effect/spawner/random/techstorage/command_all,
 /turf/open/floor/circuit/green{
 	luminosity = 2
 	},
@@ -36631,7 +36631,7 @@
 /area/command/bridge)
 "fWX" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/medical,
+/obj/effect/spawner/random/techstorage/medical_all,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -42485,7 +42485,7 @@
 /area/engineering/atmos)
 "ion" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/security,
+/obj/effect/spawner/random/techstorage/security_all,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -46222,7 +46222,7 @@
 /area/hallway/primary/fore)
 "jLR" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/rnd,
+/obj/effect/spawner/random/techstorage/rnd_all,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -61587,7 +61587,7 @@
 /area/medical/psychology)
 "pHx" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/service,
+/obj/effect/spawner/random/techstorage/service_all,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -63772,7 +63772,7 @@
 /area/engineering/supermatter/room)
 "qCe" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/rnd_secure,
+/obj/effect/spawner/random/techstorage/rnd_secure_all,
 /obj/machinery/light/small/directional/south,
 /obj/machinery/status_display/shuttle{
 	pixel_y = -32
@@ -72634,7 +72634,7 @@
 /area/service/chapel)
 "tZv" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/ai,
+/obj/effect/spawner/random/techstorage/ai_all,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/circuit/green{
 	luminosity = 2
@@ -73183,7 +73183,7 @@
 /area/space/nearstation)
 "uiZ" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/tcomms,
+/obj/effect/spawner/random/techstorage/tcomms_all,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -73770,7 +73770,7 @@
 /area/command/gateway)
 "uvr" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/engineering,
+/obj/effect/spawner/random/techstorage/engineering_all,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

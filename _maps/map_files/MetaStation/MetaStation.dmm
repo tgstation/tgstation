@@ -7476,7 +7476,7 @@
 /area/science/misc_lab)
 "brM" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/engineering,
+/obj/effect/spawner/random/techstorage/engineering_all,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "brO" = (
@@ -20120,7 +20120,7 @@
 /area/security/office)
 "eRK" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/command,
+/obj/effect/spawner/random/techstorage/command_all,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "eRR" = (
@@ -25464,7 +25464,7 @@
 /area/commons/dorms)
 "gRO" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/service,
+/obj/effect/spawner/random/techstorage/service_all,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "gSe" = (
@@ -32009,7 +32009,7 @@
 /area/security/office)
 "juj" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/ai,
+/obj/effect/spawner/random/techstorage/ai_all,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "jun" = (
@@ -37963,7 +37963,7 @@
 /area/command/gateway)
 "lxi" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/rnd,
+/obj/effect/spawner/random/techstorage/rnd_all,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "lxj" = (
@@ -40843,7 +40843,7 @@
 /area/service/theater)
 "mxF" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/tcomms,
+/obj/effect/spawner/random/techstorage/tcomms_all,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "myi" = (
@@ -61834,7 +61834,7 @@
 "tUo" = (
 /obj/structure/rack,
 /obj/machinery/status_display/ai/directional/north,
-/obj/effect/spawner/random/techstorage/medical,
+/obj/effect/spawner/random/techstorage/medical_all,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "tUz" = (
@@ -66107,7 +66107,7 @@
 /area/service/library)
 "vqo" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/rnd_secure,
+/obj/effect/spawner/random/techstorage/rnd_secure_all,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "vqw" = (
@@ -71354,7 +71354,7 @@
 /area/commons/locker)
 "xnH" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/techstorage/security,
+/obj/effect/spawner/random/techstorage/security_all,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "xnK" = (
