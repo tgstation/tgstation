@@ -145,6 +145,7 @@
 		"plant_analyzer",
 		"plunger",
 		"pushbroom",
+		"razor",
 		"screwdriver",
 		"secateurs",
 		"shovel",
@@ -157,7 +158,6 @@
 		"wirebrush",
 		"wirecutters",
 		"wrench",
-		"razor",
 	)
 
 /datum/techweb_node/basic_medical
