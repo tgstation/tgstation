@@ -23,7 +23,8 @@
 
 /obj/structure/altar_of_gods/update_overlays()
 	. = ..()
-	. += "convertaltarcandle"
+	if(GLOB.religious_sect?.candle_overlay)
+		. += "convertaltarcandle"
 
 /obj/structure/altar_of_gods/attack_hand(mob/living/user, list/modifiers)
 	if(!Adjacent(user) || !user.pulling)

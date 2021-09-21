@@ -255,6 +255,7 @@
 			if(repeat)
 				repeat--
 				current_chord = 1
+				SEND_SIGNAL(parent, COMSIG_SONG_REPEAT)
 				return
 			else
 				stop_playing()

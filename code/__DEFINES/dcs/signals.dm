@@ -1081,6 +1081,9 @@
 #define COMSIG_SONG_START "song_start"
 ///sent to the instrument when a song stops playing
 #define COMSIG_SONG_END "song_end"
+///sent to the instrument (and player if available) when a song repeats (datum/song)
+#define COMSIG_SONG_REPEAT	"song_repeat"
+
 
 /*******Component Specific Signals*******/
 //Janitor
