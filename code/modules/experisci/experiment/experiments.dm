@@ -151,3 +151,15 @@
 	performance_hint = "The wide varities of plants on station each carry various traits, some unique to them. Look for plants that may mutate into what we're looking for."
 	total_requirement = 3
 	possible_plant_genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/glow/shadow, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/brewing, /datum/plant_gene/trait/juicing, /datum/plant_gene/trait/eyes, /datum/plant_gene/trait/sticky)
+
+/datum/experiment/scanning/machinery/lathes_tier2
+	name = "Advanced Stock Parts Benchmark"
+	description = "TBD"
+	required_atoms = list(/obj/machinery/rnd/production/protolathe/department/science = 1,
+		/obj/machinery/rnd/production/protolathe/department/engineering = 1,
+		/obj/machinery/rnd/production/techfab/department/cargo = 1,
+		/obj/machinery/rnd/production/techfab/department/medical = 1,
+		/obj/machinery/rnd/production/techfab/department/security = 1,
+		/obj/machinery/rnd/production/techfab/department/service = 1
+		)
+	required_tier = 2
