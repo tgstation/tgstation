@@ -48,9 +48,6 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			if (auto_observe)
 				user.do_observe(poi)
 			return TRUE
-		if("refresh")
-			update_static_data(usr, ui)
-			return TRUE
 
 /datum/orbit_menu/ui_data(mob/user)
 	var/list/data = list()

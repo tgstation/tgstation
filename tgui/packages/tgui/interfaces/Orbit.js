@@ -160,13 +160,6 @@ export const Orbit = (props, context) => {
                 selected={autoObserve}
                 icon={autoObserve ? "toggle-on" : "toggle-off"}
                 onClick={() => setAutoObserve(!autoObserve)} />
-              <Button
-                inline
-                color="transparent"
-                tooltip="Refresh"
-                tooltipPosition="bottom-start"
-                icon="sync-alt"
-                onClick={() => act("refresh")} />
             </Flex.Item>
           </Flex>
         </Section>
