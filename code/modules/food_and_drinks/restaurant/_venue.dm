@@ -120,7 +120,7 @@
 	/// A weak reference to the mob who turned on the portal
 	var/datum/weakref/turned_on_portal
 
-/obj/machinery/restaurant_portal/Initialize()
+/obj/machinery/restaurant_portal/Initialize(mapload)
 	. = ..()
 	if(linked_venue)
 		linked_venue = SSrestaurant.all_venues[linked_venue]

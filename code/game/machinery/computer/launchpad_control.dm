@@ -9,7 +9,7 @@
 	var/list/obj/machinery/launchpad/launchpads
 	var/maximum_pads = 4
 
-/obj/machinery/computer/launchpad/Initialize()
+/obj/machinery/computer/launchpad/Initialize(mapload)
 	launchpads = list()
 	. = ..()
 	AddComponent(/datum/component/usb_port, list(

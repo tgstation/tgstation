@@ -8,6 +8,6 @@ SUBSYSTEM_DEF(trading_card_game)
 	var/loaded = FALSE
 
 //Let's load the cards before the map fires, so we can load cards on the map safely
-/datum/controller/subsystem/trading_card_game/Initialize()
+/datum/controller/subsystem/trading_card_game/Initialize(mapload)
 	reloadAllCardFiles(card_files, card_directory)
 	return ..()

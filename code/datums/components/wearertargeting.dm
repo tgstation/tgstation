@@ -6,7 +6,7 @@
 	var/proctype = .proc/pass
 	var/mobtype = /mob/living
 
-/datum/component/wearertargeting/Initialize()
+/datum/component/wearertargeting/Initialize(mapload)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)

@@ -63,7 +63,7 @@
 /obj/item/pda/ai/pai
 	ttone = "assist"
 
-/obj/item/pda/ai/Initialize()
+/obj/item/pda/ai/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
 
@@ -154,7 +154,7 @@
 	inserted_item = /obj/item/pen/fountain/captain
 	greyscale_colors = "#aa9100#0060b8"
 
-/obj/item/pda/captain/Initialize()
+/obj/item/pda/captain/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
 

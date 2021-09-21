@@ -33,7 +33,7 @@
 /obj/item/food/egg/gland
 	desc = "An egg! It looks weird..."
 
-/obj/item/food/egg/gland/Initialize()
+/obj/item/food/egg/gland/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(get_random_reagent_id(), 15)
 

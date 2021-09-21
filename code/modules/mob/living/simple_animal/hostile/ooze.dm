@@ -32,7 +32,7 @@
 	var/ooze_nutrition_loss = -0.15
 	var/ooze_metabolism_modifier = 2
 
-/mob/living/simple_animal/hostile/ooze/Initialize()
+/mob/living/simple_animal/hostile/ooze/Initialize(mapload)
 	. = ..()
 	create_reagents(300)
 	add_cell_sample()
@@ -123,7 +123,7 @@
 	var/datum/action/consume/consume
 
 ///Initializes the mobs abilities and gives them to the mob
-/mob/living/simple_animal/hostile/ooze/gelatinous/Initialize()
+/mob/living/simple_animal/hostile/ooze/gelatinous/Initialize(mapload)
 	. = ..()
 	boost = new
 	boost.Grant(src)
@@ -294,7 +294,7 @@
 	///The ability to shoot a mending globule, a sticky projectile that heals over time.
 	var/obj/effect/proc_holder/globules/globules
 
-/mob/living/simple_animal/hostile/ooze/grapes/Initialize()
+/mob/living/simple_animal/hostile/ooze/grapes/Initialize(mapload)
 	. = ..()
 	globules = new
 	AddAbility(globules)

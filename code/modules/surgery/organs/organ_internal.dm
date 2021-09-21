@@ -40,7 +40,7 @@
 // any nonhumans created in that time would experience the same effect.
 INITIALIZE_IMMEDIATE(/obj/item/organ)
 
-/obj/item/organ/Initialize()
+/obj/item/organ/Initialize(mapload)
 	. = ..()
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponent(/datum/component/edible,\
@@ -152,7 +152,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(damage > high_threshold)
 		. += span_warning("[src] is starting to look discolored.")
 
-/obj/item/organ/Initialize()
+/obj/item/organ/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 

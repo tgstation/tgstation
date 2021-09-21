@@ -14,7 +14,7 @@
 	var/obj/item/slimecross/reproductive/parentSlimeExtract
 
 
-/datum/component/storage/concrete/extract_inventory/Initialize()
+/datum/component/storage/concrete/extract_inventory/Initialize(mapload)
 	. = ..()
 	set_holdable(/obj/item/food/monkeycube)
 	if(!istype(parent, /obj/item/slimecross/reproductive))

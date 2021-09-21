@@ -10,7 +10,7 @@
 	var/damage_rate = 1 // organ damage taken per tick
 	var/datum/emote/next_breath_type = /datum/emote/living/inhale
 
-/datum/component/manual_breathing/Initialize()
+/datum/component/manual_breathing/Initialize(mapload)
 	if(!iscarbon(parent))
 		return COMPONENT_INCOMPATIBLE
 

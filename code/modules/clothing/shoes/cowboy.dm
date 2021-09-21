@@ -9,7 +9,7 @@
 	var/max_occupants = 4
 	can_be_tied = FALSE
 
-/obj/item/clothing/shoes/cowboy/Initialize()
+/obj/item/clothing/shoes/cowboy/Initialize(mapload)
 	. = ..()
 	if(prob(2))
 		var/mob/living/simple_animal/hostile/retaliate/snake/bootsnake = new/mob/living/simple_animal/hostile/retaliate/snake(src)

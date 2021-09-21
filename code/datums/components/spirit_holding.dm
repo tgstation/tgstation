@@ -9,7 +9,7 @@
 	///mob contained in the item.
 	var/mob/living/simple_animal/shade/bound_spirit
 
-/datum/component/spirit_holding/Initialize()
+/datum/component/spirit_holding/Initialize(mapload)
 	if(!ismovable(parent)) //you may apply this to mobs, i take no responsibility for how that works out
 		return COMPONENT_INCOMPATIBLE
 

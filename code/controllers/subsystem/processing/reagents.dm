@@ -10,7 +10,7 @@ PROCESSING_SUBSYSTEM_DEF(reagents)
 	///What time was it when we last ticked
 	var/previous_world_time = 0
 
-/datum/controller/subsystem/processing/reagents/Initialize()
+/datum/controller/subsystem/processing/reagents/Initialize(mapload)
 	. = ..()
 	//So our first step isn't insane
 	previous_world_time = world.time

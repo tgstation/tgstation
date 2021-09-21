@@ -13,7 +13,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 
 	var/mutable_appearance/creamface
 
-/datum/component/creamed/Initialize()
+/datum/component/creamed/Initialize(mapload)
 	if(!is_type_in_typecache(parent, GLOB.creamable))
 		return COMPONENT_INCOMPATIBLE
 

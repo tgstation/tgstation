@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(blackbox)
 							"round_end_stats" = 2,
 							"testmerged_prs" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
 
-/datum/controller/subsystem/blackbox/Initialize()
+/datum/controller/subsystem/blackbox/Initialize(mapload)
 	triggertime = world.time
 	record_feedback("amount", "random_seed", Master.random_seed)
 	record_feedback("amount", "dm_version", DM_VERSION)

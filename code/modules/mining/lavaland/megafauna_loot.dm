@@ -77,7 +77,7 @@
 	/// Whether the blink is charged. Set and unset by the blink action. Used as part of setting the appropriate icon states.
 	var/blink_charged = TRUE
 
-/obj/item/hierophant_club/Initialize()
+/obj/item/hierophant_club/Initialize(mapload)
 	. = ..()
 	blink = new(src)
 
@@ -294,7 +294,7 @@
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF
 	actions_types = list()
 
-/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/Initialize()
+/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/Initialize(mapload)
 	. = ..()
 	update_appearance()
 	AddComponent(/datum/component/butchering, 5, 150, null, null, null, TRUE, CALLBACK(src, .proc/consume))
@@ -373,7 +373,7 @@
 	/// Cooldown between attacks
 	COOLDOWN_DECLARE(attack_cooldown)
 
-/obj/item/soulscythe/Initialize()
+/obj/item/soulscythe/Initialize(mapload)
 	. = ..()
 	soul = new(src)
 	RegisterSignal(soul, COMSIG_LIVING_RESIST, .proc/on_resist)
@@ -626,7 +626,7 @@
 	var/summon_cooldown = 0
 	var/list/mob/dead/observer/spirits
 
-/obj/item/melee/ghost_sword/Initialize()
+/obj/item/melee/ghost_sword/Initialize(mapload)
 	. = ..()
 	spirits = list()
 	START_PROCESSING(SSobj, src)
@@ -832,7 +832,7 @@
 	/// Throwforce when the saw is opened.
 	var/open_throwforce = 20
 
-/obj/item/melee/cleaving_saw/Initialize()
+/obj/item/melee/cleaving_saw/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/transforming, \
 		transform_cooldown_time = (CLICK_CD_MELEE * 0.25), \

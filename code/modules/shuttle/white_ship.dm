@@ -51,7 +51,7 @@
 	y_offset = 0
 	designate_time = 0
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/Initialize()
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/Initialize(mapload)
 	. = ..()
 	GLOB.jam_on_wardec += src
 

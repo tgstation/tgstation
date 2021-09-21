@@ -1,7 +1,7 @@
 /datum/component/unbreakable
 	COOLDOWN_DECLARE(surge_cooldown)
 
-/datum/component/unbreakable/Initialize()
+/datum/component/unbreakable/Initialize(mapload)
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
 	ADD_TRAIT(parent, TRAIT_UNBREAKABLE, INNATE_TRAIT)

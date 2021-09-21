@@ -8,7 +8,7 @@
 	max_combined_w_class = WEIGHT_CLASS_TINY * 30
 	///The deck that the card pile is using for FAIR PLAY.
 
-/datum/component/storage/concrete/tcg/Initialize()
+/datum/component/storage/concrete/tcg/Initialize(mapload)
 	. = ..()
 	set_holdable(list(/obj/item/tcgcard))
 

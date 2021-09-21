@@ -12,7 +12,7 @@
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
 	var/atom/movable/screen/mood/screen_obj
 
-/datum/component/mood/Initialize()
+/datum/component/mood/Initialize(mapload)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 

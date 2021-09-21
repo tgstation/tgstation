@@ -54,7 +54,7 @@
 	if(!stat)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
 		adjustBruteLoss(-1 * delta_time)
 
-/mob/living/simple_animal/hostile/mushroom/Initialize()//Makes every shroom a little unique
+/mob/living/simple_animal/hostile/mushroom/Initialize(mapload)//Makes every shroom a little unique
 	melee_damage_lower += rand(3, 5)
 	melee_damage_upper += rand(10,20)
 	maxHealth += rand(40,60)

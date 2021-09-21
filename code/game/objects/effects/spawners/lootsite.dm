@@ -12,7 +12,7 @@
 							/obj/structure/closet/crate/decorations = 15)
 
 
-/obj/effect/loot_site_spawner/Initialize()
+/obj/effect/loot_site_spawner/Initialize(mapload)
 	..()
 	if(!length(loot_table))
 		return INITIALIZE_HINT_QDEL

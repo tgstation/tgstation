@@ -36,7 +36,7 @@
 	var/souls = 0
 	var/resolved = FALSE
 
-/obj/narsie/Initialize()
+/obj/narsie/Initialize(mapload)
 	. = ..()
 
 	AddElement(/datum/element/point_of_interest)

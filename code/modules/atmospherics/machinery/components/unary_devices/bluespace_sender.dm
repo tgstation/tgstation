@@ -24,7 +24,7 @@
 	///Amount of credits gained from each vendor
 	var/credits_gained = 0
 
-/obj/machinery/atmospherics/components/unary/bluespace_sender/Initialize()
+/obj/machinery/atmospherics/components/unary/bluespace_sender/Initialize(mapload)
 	. = ..()
 	initialize_directions = dir
 	bluespace_network = new

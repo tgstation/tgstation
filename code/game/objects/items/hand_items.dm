@@ -10,7 +10,7 @@
 	attack_verb_continuous = list("bops")
 	attack_verb_simple = list("bop")
 
-/obj/item/circlegame/Initialize()
+/obj/item/circlegame/Initialize(mapload)
 	. = ..()
 	var/mob/living/owner = loc
 	if(!istype(owner))

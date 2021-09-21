@@ -57,7 +57,7 @@
 	/// The typecache of types which are allowed to merge internal storage
 	var/static/list/merger_typecache
 
-/obj/machinery/atmospherics/components/tank/Initialize()
+/obj/machinery/atmospherics/components/tank/Initialize(mapload)
 	. = ..()
 
 	if(!knob_overlays)
@@ -341,7 +341,7 @@
 /obj/machinery/atmospherics/components/tank/air
 	name = "pressure tank (Air)"
 
-/obj/machinery/atmospherics/components/tank/air/Initialize()
+/obj/machinery/atmospherics/components/tank/air/Initialize(mapload)
 	. = ..()
 	FillToPressure(/datum/gas/oxygen, safety_margin=(O2STANDARD * 0.5))
 	FillToPressure(/datum/gas/nitrogen, safety_margin=(N2STANDARD * 0.5))

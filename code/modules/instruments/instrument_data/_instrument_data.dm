@@ -53,7 +53,7 @@
 /**
  * Initializes the instrument, calculating its samples if necessary.
  */
-/datum/instrument/proc/Initialize()
+/datum/instrument/proc/Initialize(mapload)
 	if(instrument_flags & (INSTRUMENT_LEGACY | INSTRUMENT_DO_NOT_AUTOSAMPLE))
 		return
 	calculate_samples()

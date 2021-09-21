@@ -6,7 +6,7 @@
  *
  ***************************************************************************************/
 
-/obj/item/robot_model/Initialize()
+/obj/item/robot_model/Initialize(mapload)
 	. = ..()
 	for(var/i in basic_modules)
 		var/obj/item/I = new i(src)

@@ -61,7 +61,7 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	duration = 3
 
-/obj/effect/temp_visual/leaper_projectile_impact/Initialize()
+/obj/effect/temp_visual/leaper_projectile_impact/Initialize(mapload)
 	. = ..()
 	new /obj/effect/decal/cleanable/leaper_sludge(get_turf(src))
 
@@ -79,7 +79,7 @@
 	max_integrity = 10
 	density = FALSE
 
-/obj/structure/leaper_bubble/Initialize()
+/obj/structure/leaper_bubble/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 100)
 	var/static/list/loc_connections = list(
@@ -137,7 +137,7 @@
 	base_pixel_y = -32
 	duration = 30
 
-/mob/living/simple_animal/hostile/jungle/leaper/Initialize()
+/mob/living/simple_animal/hostile/jungle/leaper/Initialize(mapload)
 	. = ..()
 	remove_verb(src, /mob/living/verb/pulled)
 

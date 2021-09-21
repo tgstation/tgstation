@@ -7,7 +7,7 @@
 	///This weighted list acts as the loot table for the spawner
 	var/list/loot_table
 
-/obj/effect/spawner/scatter/Initialize()
+/obj/effect/spawner/scatter/Initialize(mapload)
 	..()
 	if(!length(loot_table))
 		return INITIALIZE_HINT_QDEL
