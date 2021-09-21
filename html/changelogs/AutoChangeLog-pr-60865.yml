@@ -1,0 +1,7 @@
+author: "axietheaxolotl"
+delete-after: True
+changes: 
+  - rscadd: "Added new CC armour suit, with accompanying helmet and gasmask"
+  - rscadd: "Added suit storage that contains this new armour and gasmask."
+  - expansion: "Expands on the old CC armour suit"
+  - imageadd: "added some sprites for da drip"
