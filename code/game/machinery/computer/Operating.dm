@@ -95,7 +95,7 @@
 			data["patient"]["stat"] = "Dead"
 			data["patient"]["statstate"] = "bad"
 	data["patient"]["health"] = patient.health
-	data["patient"]["blood_type"] = patient.dna.blood_type
+	data["patient"]["blood_type"] = patient.dna.blood_type.name
 	data["patient"]["maxHealth"] = patient.maxHealth
 	data["patient"]["minHealth"] = HEALTH_THRESHOLD_DEAD
 	data["patient"]["bruteLoss"] = patient.getBruteLoss()

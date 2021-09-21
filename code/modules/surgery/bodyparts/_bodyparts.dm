@@ -58,6 +58,10 @@
 	var/should_draw_greyscale = FALSE
 	var/species_color = ""
 	var/mutation_color = ""
+	/// The colour of damage done to this bodypart
+	var/damage_color = ""
+	/// Should we even use a color?
+	var/use_damage_color = FALSE
 	var/no_update = 0
 
 	///for nonhuman bodypart (e.g. monkey)
@@ -761,6 +765,11 @@
 		should_draw_greyscale = FALSE
 		no_update = TRUE
 
+	if(limb_owner?.dna.blood_type?.color)
+		damage_color = limb_owner.dna.blood_type.color
+	else
+		damage_color = COLOR_BLOOD
+
 	if(no_update)
 		return
 
@@ -780,7 +789,7 @@
 
 		body_gender = human_owner.body_type
 		should_draw_gender = owner_species.sexes
-
+		use_damage_color = owner_species.use_damage_color
 		if((MUTCOLORS in owner_species.species_traits) || (DYNCOLORS in owner_species.species_traits))
 			if(owner_species.fixed_mut_color)
 				species_color = owner_species.fixed_mut_color
@@ -829,7 +838,10 @@
 		image_dir = SOUTH
 		if(dmg_overlay_type)
 			if(brutestate)
-				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER, image_dir)
+				var/image/bruteoverlay = image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER, image_dir)
+				if(use_damage_color)
+					bruteoverlay.color = damage_color
+				. += bruteoverlay
 			if(burnstate)
 				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
 

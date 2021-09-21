@@ -1,8 +1,9 @@
 /obj/effect/decal/cleanable/blood
 	name = "blood"
-	desc = "It's red and gooey. Perhaps it's the chef's cooking?"
+	desc = "It's weird and gooey. Perhaps it's the chef's cooking?"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
+	color = "#C80000"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_state = BLOOD_STATE_HUMAN
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
@@ -47,7 +48,8 @@
 		name = dryname
 		desc = drydesc
 		bloodiness = 0
-		color =  COLOR_GRAY //not all blood splatters have their own sprites... It still looks pretty nice
+		var/temp_color = ReadHSV(RGBtoHSV(color || COLOR_WHITE))
+		color = HSVtoRGB(hsv(temp_color[1], temp_color[2], max(temp_color[3] - 100, 0)))
 		STOP_PROCESSING(SSobj, src)
 		return TRUE
 
@@ -77,15 +79,12 @@
 	dryname = "dried tracks"
 	drydesc = "Some old bloody tracks left by wheels. Machines are evil, perhaps."
 
-/obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose
-	name = "blood"
-	icon = 'icons/effects/blood.dmi'
+/obj/effect/decal/cleanable/blood/trail_holder //not a child of blood on purpose //nice fucking descriptive comment jackass, fuck you
 	desc = "Your instincts say you shouldn't be following these."
 	beauty = -50
+	icon_state = null
+	random_icon_states = null
 	var/list/existing_dirs = list()
-
-/obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
-	return TRUE
 
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
@@ -104,6 +103,8 @@
 	. = ..()
 	reagents.add_reagent(/datum/reagent/liquidgibs, 5)
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, .proc/on_pipe_eject)
+	var/mutable_appearance/gib_overlay = mutable_appearance(icon, "[icon_state]-overlay", appearance_flags = RESET_COLOR)
+	add_overlay(gib_overlay)
 
 /obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
 	return FALSE //Never fail to place us

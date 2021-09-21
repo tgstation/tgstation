@@ -4,7 +4,7 @@
 	icon = 'icons/obj/bloodpack.dmi'
 	icon_state = "bloodpack"
 	volume = 200
-	var/blood_type = null
+	var/datum/blood_type/blood_type = null
 	var/unique_blood = null
 	var/labelled = FALSE
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
@@ -12,7 +12,7 @@
 /obj/item/reagent_containers/blood/Initialize()
 	. = ..()
 	if(blood_type != null)
-		reagents.add_reagent(unique_blood ? unique_blood : /datum/reagent/blood, 200, list("viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
+		reagents.add_reagent(unique_blood ? unique_blood : /datum/reagent/blood, 200, list("viruses"=null,"blood_DNA"=null,"blood_type"=get_blood_type(blood_type),"resistances"=null,"trace_chem"=null))
 		update_appearance()
 
 /// Handles updating the container when the reagents change.
@@ -28,7 +28,7 @@
 	. = ..()
 	if(labelled)
 		return
-	name = "blood_pack[blood_type ? " - [blood_type]" : null]"
+	name = "blood_pack[blood_type ? " - [blood_type.name]" : null]"
 
 /obj/item/reagent_containers/blood/random
 	icon_state = "random_bloodpack"

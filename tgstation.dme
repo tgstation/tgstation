@@ -414,6 +414,7 @@
 #include "code\datums\alarm.dm"
 #include "code\datums\armor.dm"
 #include "code\datums\beam.dm"
+#include "code\datums\blood_type.dm"
 #include "code\datums\browser.dm"
 #include "code\datums\callback.dm"
 #include "code\datums\chatmessage.dm"

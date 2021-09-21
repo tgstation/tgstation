@@ -129,7 +129,7 @@
 			for(var/i in GLOB.human_list)
 				var/mob/living/carbon/human/H = i
 				if(H.ckey)
-					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.blood_type]</td></tr>"
+					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.blood_type.name]</td></tr>"
 			dat += "</table>"
 			holder << browse(dat, "window=DNA;size=440x410")
 		if("fingerprints")

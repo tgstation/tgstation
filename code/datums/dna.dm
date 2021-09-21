@@ -5,7 +5,7 @@
 	var/unique_enzymes
 	///Stores the hashed values of traits such as skin tones, hair style, and gender
 	var/unique_identity
-	var/blood_type
+	var/datum/blood_type/blood_type
 	var/datum/species/species = new /datum/species/human //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/list/features = list("FFF") //first value is mutant color
 	///Stores the hashed values of the person's non-human features

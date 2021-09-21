@@ -4824,7 +4824,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/alien/weeds,
 /obj/structure/cable,
-/obj/effect/decal/cleanable/blood/xtracks,
+/obj/effect/decal/cleanable/xenoblood/xtracks,
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltaai)

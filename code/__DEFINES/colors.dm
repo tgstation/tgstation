@@ -178,6 +178,9 @@
 /// Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
 #define LIGHT_COLOR_HALOGEN    "#F0FAFA"
 
+/// Color used for default blood
+#define COLOR_BLOOD "#CC0000"
+
 //The GAGS greyscale_colors for each department's computer/machine circuits
 #define CIRCUIT_COLOR_GENERIC "#1A7A13"
 #define CIRCUIT_COLOR_COMMAND "#1B4594"

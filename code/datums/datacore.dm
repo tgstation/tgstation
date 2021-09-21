@@ -263,7 +263,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		var/datum/data/record/M = new()
 		M.fields["id"] = id
 		M.fields["name"] = H.real_name
-		M.fields["blood_type"] = H.dna.blood_type
+		M.fields["blood_type"] = H.dna.blood_type.name
 		M.fields["b_dna"] = H.dna.unique_enzymes
 		M.fields["mi_dis"] = H.get_quirk_string(!medical, CAT_QUIRK_MINOR_DISABILITY)
 		M.fields["mi_dis_d"] = H.get_quirk_string(medical, CAT_QUIRK_MINOR_DISABILITY)

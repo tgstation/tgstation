@@ -72,6 +72,14 @@ GLOBAL_LIST_INIT(construct_radial_images, list(
 	CONSTRUCT_ARTIFICER = image(icon = 'icons/mob/cult.dmi', icon_state = "artificer")
 ))
 
+GLOBAL_LIST_INIT(blood_types, generate_blood_types())
+
+/proc/generate_blood_types()
+	. = list()
+	for(var/path in subtypesof(/datum/blood_type))
+		var/datum/blood_type/new_type = new path()
+		.[new_type.name] = new_type
+
 /proc/update_config_movespeed_type_lookup(update_mobs = TRUE)
 	var/list/mob_types = list()
 	var/list/entry_value = CONFIG_GET(keyed_list/multiplicative_movespeed)

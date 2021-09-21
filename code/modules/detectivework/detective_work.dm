@@ -89,13 +89,17 @@
 		w_uniform.add_blood_DNA(blood_dna)
 		update_inv_w_uniform()
 	if(gloves)
-		var/obj/item/clothing/gloves/G = gloves
-		G.add_blood_DNA(blood_dna)
+		gloves.add_blood_DNA(blood_dna)
 	else if(length(blood_dna))
 		AddComponent(/datum/component/forensics, null, null, blood_dna)
 		blood_in_hands = rand(2, 4)
 	update_inv_gloves() //handles bloody hands overlays and updating
 	return TRUE
+
+/obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+	. = ..()
+	if(blood_dna)
+		color = get_blood_dna_color(blood_dna)
 
 /atom/proc/transfer_fingerprints_to(atom/A)
 	A.add_fingerprint_list(return_fingerprints())

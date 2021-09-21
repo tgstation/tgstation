@@ -30,7 +30,9 @@
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
 	if(HAS_BLOOD_DNA(src))
-		. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
+		var/mutable_appearance/bloody_uniform = mutable_appearance('icons/effects/blood.dmi', "uniformblood")
+		bloody_uniform.color = get_blood_dna_color(return_blood_DNA())
+		. += bloody_uniform
 	if(accessory_overlay)
 		. += accessory_overlay
 

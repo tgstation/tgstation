@@ -88,10 +88,6 @@
 	icon_state = "xgiblarvatorso"
 	random_icon_states = list("xgiblarvahead", "xgiblarvatorso")
 
-/obj/effect/decal/cleanable/blood/xtracks
+/obj/effect/decal/cleanable/xenoblood/xtracks
 	icon_state = "xtracks"
 	random_icon_states = null
-
-/obj/effect/decal/cleanable/blood/xtracks/Initialize()
-	. = ..()
-	add_blood_DNA(list("Unknown DNA" = "X*"))

@@ -56,11 +56,14 @@
 	brother2.set_species(/datum/species/moth)
 
 	var/icon/brother1_icon = render_preview_outfit(/datum/outfit/job/quartermaster, brother1)
-	brother1_icon.Blend(icon('icons/effects/blood.dmi', "maskblood"), ICON_OVERLAY)
+	var/icon/blood1_icon = icon('icons/effects/blood.dmi', "maskblood")
+	blood1_icon.Blend(COLOR_BLOOD, ICON_MULTIPLY)
+	brother1_icon.Blend(blood1_icon, ICON_OVERLAY)
 	brother1_icon.Shift(WEST, 8)
-
 	var/icon/brother2_icon = render_preview_outfit(/datum/outfit/job/scientist, brother2)
-	brother2_icon.Blend(icon('icons/effects/blood.dmi', "uniformblood"), ICON_OVERLAY)
+	var/icon/blood2_icon = icon('icons/effects/blood.dmi', "uniformblood")
+	blood2_icon.Blend(COLOR_BLOOD, ICON_MULTIPLY)
+	brother2_icon.Blend(blood2_icon, ICON_OVERLAY)
 	brother2_icon.Shift(EAST, 8)
 
 	var/icon/final_icon = brother1_icon

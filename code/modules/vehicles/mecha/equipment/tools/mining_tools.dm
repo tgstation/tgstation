@@ -143,7 +143,11 @@
 		if(isalien(target))
 			new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target.drop_location(), splatter_dir)
 		else
-			new /obj/effect/temp_visual/dir_setting/bloodsplatter(target.drop_location(), splatter_dir)
+			var/splatter_color = null
+			if(iscarbon(target))
+				var/mob/living/carbon/carbon_target = target
+				splatter_color = carbon_target.dna.blood_type.color
+			new /obj/effect/temp_visual/dir_setting/bloodsplatter(target.drop_location(), splatter_dir, splatter_color)
 
 		//organs go everywhere
 		if(target_part && prob(10 * drill_level))

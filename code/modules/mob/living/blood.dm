@@ -205,7 +205,9 @@
 						if((D.spread_flags & DISEASE_SPREAD_SPECIAL) || (D.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
 							continue
 						C.ForceContractDisease(D)
-				if(!(blood_data["blood_type"] in get_safe_blood(C.dna.blood_type)))
+
+				var/datum/blood_type/blood_type = blood_data["blood_type"]
+				if(!blood_type || !(blood_type.type in C.dna.blood_type.compatible_types))
 					C.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
 					return TRUE
 
@@ -277,28 +279,16 @@
 		return
 	return /datum/reagent/blood
 
-// This is has more potential uses, and is probably faster than the old proc.
-/proc/get_safe_blood(bloodtype)
-	. = list()
-	if(!bloodtype)
-		return
+/proc/random_blood_type()
+	return get_blood_type(pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+"))
 
-	var/static/list/bloodtypes_safe = list(
-		"A-" = list("A-", "O-"),
-		"A+" = list("A-", "A+", "O-", "O+"),
-		"B-" = list("B-", "O-"),
-		"B+" = list("B-", "B+", "O-", "O+"),
-		"AB-" = list("A-", "B-", "O-", "AB-"),
-		"AB+" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+"),
-		"O-" = list("O-"),
-		"O+" = list("O-", "O+"),
-		"L" = list("L"),
-		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U")
-	)
+/proc/get_blood_type(type)
+	return GLOB.blood_types[type]
 
-	var/safe = bloodtypes_safe[bloodtype]
-	if(safe)
-		. = safe
+/proc/get_blood_dna_color(list/blood_dna)
+	var/blood_print = blood_dna[length(blood_dna)]
+	var/datum/blood_type/blood_type = blood_dna[blood_print]
+	return blood_type.color
 
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/T, small_drip)

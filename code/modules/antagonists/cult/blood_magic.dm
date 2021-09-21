@@ -785,8 +785,6 @@
 					temp += max((B.bloodiness**2)/800,1)
 				new /obj/effect/temp_visual/cult/turf/floor(get_turf(B))
 				qdel(B)
-		for(var/obj/effect/decal/cleanable/trail_holder/TH in view(T, 2))
-			qdel(TH)
 		if(temp)
 			user.Beam(T,icon_state="drainbeam", time = 15)
 			new /obj/effect/temp_visual/cult/sparks(get_turf(user))

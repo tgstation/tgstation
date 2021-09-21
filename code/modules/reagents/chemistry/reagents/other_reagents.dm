@@ -1,7 +1,7 @@
 /datum/reagent/blood
 	data = list("viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null)
 	name = "Blood"
-	color = "#C80000" // rgb: 200, 0, 0
+	color = COLOR_BLOOD
 	metabolization_rate = 12.5 * REAGENTS_METABOLISM //fast rate so it disappears fast.
 	taste_description = "iron"
 	taste_mult = 1.3
@@ -35,15 +35,20 @@
 	if(iscarbon(exposed_mob))
 		var/mob/living/carbon/exposed_carbon = exposed_mob
 		if(exposed_carbon.get_blood_id() == /datum/reagent/blood && ((methods & INJECT) || ((methods & INGEST) && exposed_carbon.dna && exposed_carbon.dna.species && (DRINKSBLOOD in exposed_carbon.dna.species.species_traits))))
-			if(!data || !(data["blood_type"] in get_safe_blood(exposed_carbon.dna.blood_type)))
-				exposed_carbon.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
-			else
-				exposed_carbon.blood_volume = min(exposed_carbon.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+			if(data && data["blood_type"])
+				var/datum/blood_type/blood_type = data["blood_type"]
+				if(blood_type.type in exposed_carbon.dna.blood_type.compatible_types)
+					exposed_carbon.blood_volume = min(exposed_carbon.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+					return
+			exposed_carbon.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 
 
 /datum/reagent/blood/on_new(list/data)
 	if(istype(data))
 		SetViruses(src, data)
+		var/datum/blood_type/blood_type = data["blood_type"]
+		if(blood_type)
+			color = blood_type.color
 
 /datum/reagent/blood/on_merge(list/mix_data)
 	if(data && mix_data)

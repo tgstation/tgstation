@@ -16,6 +16,7 @@
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null
 	damage_overlay_type = "synth"
+	use_damage_color = FALSE
 	limbs_id = "synth"
 	///If your health becomes equal to or less than this value, your disguise is supposed to break. Unfortunately, that feature currently isn't implemented, so currently, all this threshold is used for is (I kid you not) determining whether or not your speech uses SPAN_CLOWN while you're disguised as a bananium golem. See the handle_speech() proc further down in this file for more information on that check.
 	var/disguise_fail_health = 75

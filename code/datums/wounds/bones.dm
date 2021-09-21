@@ -132,12 +132,12 @@
 				victim.bleed(blood_bled, TRUE)
 			if(14 to 19)
 				victim.visible_message("<span class='smalldanger'>[victim] spits out a string of blood from the blow to [victim.p_their()] chest!</span>", span_danger("You spit out a string of blood from the blow to your chest!"), vision_distance=COMBAT_MESSAGE_RANGE)
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir, victim.dna.blood_type.color)
 				victim.bleed(blood_bled)
 			if(20 to INFINITY)
 				victim.visible_message(span_danger("[victim] chokes up a spray of blood from the blow to [victim.p_their()] chest!"), span_danger("<b>You choke up on a spray of blood from the blow to your chest!</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
 				victim.bleed(blood_bled)
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir, victim.dna.blood_type.color)
 				victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
 

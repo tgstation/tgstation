@@ -26,6 +26,7 @@
 	disliked_food = CLOTH
 	limbs_id = "monkey"
 	damage_overlay_type = "monkey"
+	use_damage_color = FALSE
 	sexes = FALSE
 	punchdamagelow = 1
 	punchdamagehigh = 3

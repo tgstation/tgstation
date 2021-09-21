@@ -216,8 +216,7 @@
 /mob/living/simple_animal/hostile/eldritch/armsy/proc/gib_trail()
 	if(front) // head makes gibs
 		return
-	var/chosen_decal = pick(typesof(/obj/effect/decal/cleanable/blood/tracks))
-	var/obj/effect/decal/cleanable/blood/gibs/decal = new chosen_decal(drop_location())
+	var/obj/decal = new /obj/effect/decal/cleanable/blood/tracks(drop_location())
 	decal.setDir(dir)
 
 /mob/living/simple_animal/hostile/eldritch/armsy/Destroy()

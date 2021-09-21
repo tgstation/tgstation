@@ -147,6 +147,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///the species that body parts are surgically compatible with (found in _DEFINES/mobs.dm)
 	///current acceptable bitfields are HUMAN_BODY, ALIEN_BODY, LARVA_BODY, MONKEY_BODY, or NONE
 	var/allowed_animal_origin = HUMAN_BODY
+	///Does our species have colors for its' damage overlays?
+	var/use_damage_color = TRUE
 
 
 	///Species-only traits. Can be found in [code/__DEFINES/DNA.dm]
@@ -410,7 +412,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	regenerate_organs(C,old_species)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
-		C.dna.blood_type = exotic_bloodtype
+		C.dna.blood_type = get_blood_type(exotic_bloodtype)
 
 	if(old_species.mutanthands)
 		for(var/obj/item/I in C.held_items)
