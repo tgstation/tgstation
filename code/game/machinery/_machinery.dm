@@ -567,6 +567,7 @@
 	var/datum/bank_account/department_account = SSeconomy.get_dep_account(payment_department)
 	if(department_account)
 		department_account.adjust_money(fair_market_price)
+	return TRUE
 
 /obj/machinery/proc/nap_violation(mob/violator)
 	return
@@ -629,6 +630,8 @@
 	var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sortNames(buckled_mobs)
 	if(user_unbuckle_mob(unbuckled,user))
 		return TRUE
+
+	return _try_interact(user)
 
 /obj/machinery/attack_ai(mob/user)
 	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !isAdminGhostAI(user))
