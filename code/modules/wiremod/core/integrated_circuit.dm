@@ -316,6 +316,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		component_data["y"] = component.rel_y
 		component_data["removable"] = component.removable
 		component_data["color"] = component.ui_color
+		component_data["ui_buttons"] = component.ui_buttons
 		.["components"] += list(component_data)
 
 	.["variables"] = list()
@@ -380,7 +381,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 #define WITHIN_RANGE(id, table) (id >= 1 && id <= length(table))
 
-/obj/item/integrated_circuit/ui_act(action, list/params)
+/obj/item/integrated_circuit/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
@@ -464,6 +465,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				if(port.datatype != PORT_TYPE_ATOM && port.datatype != PORT_TYPE_ANY)
 					return
 				var/obj/item/multitool/circuit/marker = usr.get_active_held_item()
+				// Let's admins upload marked datums to an entity port.
 				if(!istype(marker))
 					var/client/user = usr.client
 					if(!check_rights_for(user, R_VAREDIT))
@@ -573,6 +575,15 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		if("move_screen")
 			screen_x = text2num(params["screen_x"])
 			screen_y = text2num(params["screen_y"])
+		if("perform_action")
+			var/component_id = text2num(params["component_id"])
+			if(!WITHIN_RANGE(component_id, attached_components))
+				return
+			var/obj/item/circuit_component/component = attached_components[component_id]
+			component.ui_perform_action(ui.user, params["action_name"])
+
+
+#undef WITHIN_RANGE
 
 /obj/item/integrated_circuit/proc/clear_setter_or_getter(datum/source)
 	SIGNAL_HANDLER
@@ -585,8 +596,6 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	SIGNAL_HANDLER
 	usb_cable.balloon_alert(user, "circuit needs to be in a compatible shell")
 	return COMSIG_CANCEL_USB_CABLE_ATTACK
-
-#undef WITHIN_RANGE
 
 /// Sets the display name that appears on the shell.
 /obj/item/integrated_circuit/proc/set_display_name(new_name)
