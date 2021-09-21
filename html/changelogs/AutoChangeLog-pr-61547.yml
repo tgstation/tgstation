@@ -1,0 +1,5 @@
+author: "remuluson2"
+delete-after: True
+changes: 
+  - rscadd: "Electric razors can now be printed at any lathe. Its in medical section."
+  - rscadd: "Electric razor can be bought from the library vendor."
