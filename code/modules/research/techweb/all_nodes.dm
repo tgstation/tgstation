@@ -145,6 +145,7 @@
 		"plant_analyzer",
 		"plunger",
 		"pushbroom",
+		"razor",
 		"screwdriver",
 		"secateurs",
 		"shovel",
