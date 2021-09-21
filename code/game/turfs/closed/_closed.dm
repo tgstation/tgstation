@@ -66,6 +66,10 @@
 	SStitle.splash_turf = src
 	if(SStitle.icon)
 		icon = SStitle.icon
+	var/icon/size_check = icon(icon, icon_state)
+	var/x_to_add = (size_check.Width() - 480) * 0.5
+	if(x_to_add > 0)
+		pixel_x += x_to_add
 	..()
 
 /turf/closed/indestructible/splashscreen/vv_edit_var(var_name, var_value)
