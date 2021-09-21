@@ -1,7 +1,0 @@
-author: "Zytolg"
-delete-after: True
-changes: 
-  - bugfix: "The Icebox Mining Basement Levels now utilize power and air provided by the main station. Some areas were changed to accomplish this."
-  - bugfix: "The Icebox Mining Basement Levels now utilize pipe layers 2 and 4 instead of the improper 3, and 4."
-  - bugfix: "You can now use the B-2 level of Icebox mining safely and reliably, a new, quaint layout affords miners easy access to the B-2 exploration Z."
-  - bugfix: "Due to the extent of the alterations on for mining's B-2 level, the B-1 level has received some upgrades as well. Please look forwards to them."

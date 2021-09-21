@@ -1,6 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "Flowers now properly display on people with mutant ears, meaning that they no longer hide within cat ears anymore."
-  - bugfix: "Welding goggles no longer hide in your hair when you pull them up, they will now properly display above your hair (and mutant body features if you have any)."
-  - code_imp: "Glasses and headwear can now appear over hair and all mutant body features, meaning that they shouldn't get wrongly hidden anymore."
