@@ -21,7 +21,7 @@
 	/// The world.time when we last picked up blood
 	var/last_pickup
 
-/datum/component/bloodysoles/Initialize(mapload)
+/datum/component/bloodysoles/Initialize()
 	if(!isclothing(parent))
 		return COMPONENT_INCOMPATIBLE
 	parent_atom = parent
@@ -225,7 +225,7 @@
 /datum/component/bloodysoles/feet
 	var/static/mutable_appearance/bloody_feet
 
-/datum/component/bloodysoles/feet/Initialize(mapload)
+/datum/component/bloodysoles/feet/Initialize()
 	if(!iscarbon(parent))
 		return COMPONENT_INCOMPATIBLE
 	parent_atom = parent

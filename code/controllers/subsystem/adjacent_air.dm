@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(adjacent_air)
 #endif
 	return ..()
 
-/datum/controller/subsystem/adjacent_air/Initialize(mapload)
+/datum/controller/subsystem/adjacent_air/Initialize()
 	while(length(queue))
 		fire(mc_check = FALSE)
 	return ..()

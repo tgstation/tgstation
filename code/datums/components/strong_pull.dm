@@ -6,7 +6,7 @@ Basically, the items they pull cannot be pulled (except by the puller)
 /datum/component/strong_pull
 	var/atom/movable/strongpulling
 
-/datum/component/strong_pull/Initialize(mapload)
+/datum/component/strong_pull/Initialize()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 

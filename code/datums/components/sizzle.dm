@@ -3,7 +3,7 @@
 	var/sizzlealpha = 0
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
-/datum/component/sizzle/Initialize(mapload)
+/datum/component/sizzle/Initialize()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	setup_sizzle()

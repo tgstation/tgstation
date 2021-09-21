@@ -15,7 +15,7 @@
 	var/mob/current_holder
 	var/current_timerid
 
-/datum/component/jousting/Initialize(mapload)
+/datum/component/jousting/Initialize()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)

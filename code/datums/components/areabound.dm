@@ -5,7 +5,7 @@
 	var/datum/movement_detector/move_tracker
 	var/moving = FALSE //Used to prevent infinite recursion if your reset turf places you somewhere on enter or something
 
-/datum/component/areabound/Initialize(mapload)
+/datum/component/areabound/Initialize()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	bound_area = get_area(parent)

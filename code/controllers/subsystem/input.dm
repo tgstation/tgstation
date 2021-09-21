@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(input)
 
 	var/list/macro_set
 
-/datum/controller/subsystem/input/Initialize(mapload)
+/datum/controller/subsystem/input/Initialize()
 	setup_default_macro_sets()
 
 	initialized = TRUE

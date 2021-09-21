@@ -7,7 +7,7 @@
 	silent = TRUE
 	allow_big_nesting = TRUE
 
-/datum/component/storage/concrete/implant/Initialize(mapload)
+/datum/component/storage/concrete/implant/Initialize()
 	. = ..()
 	set_holdable(null, list(/obj/item/disk/nuclear))
 

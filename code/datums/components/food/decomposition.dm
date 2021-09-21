@@ -27,7 +27,7 @@
 	/// Used for examining
 	var/examine_type = DECOMP_EXAM_NORMAL
 
-/datum/component/decomposition/Initialize(mapload, decomp_req_handle, decomp_flags = NONE, decomp_result, ant_attracting = TRUE)
+/datum/component/decomposition/Initialize(, decomp_req_handle, decomp_flags = NONE, decomp_result, ant_attracting = TRUE)
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 

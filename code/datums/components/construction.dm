@@ -11,7 +11,7 @@
 	var/index = 1
 	var/desc
 
-/datum/component/construction/Initialize(mapload)
+/datum/component/construction/Initialize()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 

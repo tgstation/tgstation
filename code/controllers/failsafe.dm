@@ -30,7 +30,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 	Failsafe = src
 	Initialize()
 
-/datum/controller/failsafe/Initialize(mapload)
+/datum/controller/failsafe/Initialize()
 	set waitfor = FALSE
 	Failsafe.Loop()
 	if (!Master || defcon == 0) //Master is gone/not responding and Failsafe just exited its loop

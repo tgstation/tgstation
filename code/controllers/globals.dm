@@ -34,7 +34,7 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 		return FALSE
 	return ..()
 
-/datum/controller/global_vars/Initialize(mapload)
+/datum/controller/global_vars/Initialize()
 	gvars_datum_init_order = list()
 	gvars_datum_protected_varlist = list(NAMEOF(src, gvars_datum_protected_varlist) = TRUE)
 	var/list/global_procs = typesof(/datum/controller/global_vars/proc)

@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/obj/item/storage/photo_album/photo_albums
 
 
-/datum/controller/subsystem/persistence/Initialize(mapload)
+/datum/controller/subsystem/persistence/Initialize()
 	LoadPoly()
 	load_wall_engravings()
 	load_prisoner_tattoos()

@@ -50,7 +50,7 @@ SUBSYSTEM_DEF(research)
 	ANOMALY_CORE_FLUX = MAX_CORES_FLUX
 	)
 
-/datum/controller/subsystem/research/Initialize(mapload)
+/datum/controller/subsystem/research/Initialize()
 	point_types = TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES
 	initialize_all_techweb_designs()
 	initialize_all_techweb_nodes()

@@ -10,7 +10,7 @@
 	var/damage_rate = 1 // organ damage taken per tick
 	var/list/valid_emotes = list(/datum/emote/living/carbon/blink, /datum/emote/living/carbon/blink_r)
 
-/datum/component/manual_blinking/Initialize(mapload)
+/datum/component/manual_blinking/Initialize()
 	if(!iscarbon(parent))
 		return COMPONENT_INCOMPATIBLE
 

@@ -7,7 +7,7 @@
 	///The warcry this generates
 	var/warcry = "AT"
 
-/datum/component/wearertargeting/punchcooldown/Initialize(mapload)
+/datum/component/wearertargeting/punchcooldown/Initialize()
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE)
 		return

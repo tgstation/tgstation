@@ -9,7 +9,7 @@
 	var/case_sensitive = FALSE
 	var/regex/R
 
-/datum/component/beetlejuice/Initialize(mapload)
+/datum/component/beetlejuice/Initialize()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 

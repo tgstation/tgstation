@@ -22,7 +22,7 @@
 	max_w_class = WEIGHT_CLASS_TINY
 	attack_hand_interact = FALSE
 
-/datum/component/storage/concrete/pockets/small/fedora/Initialize(mapload)
+/datum/component/storage/concrete/pockets/small/fedora/Initialize()
 	. = ..()
 	var/static/list/exception_cache = typecacheof(list(
 		/obj/item/katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana,
@@ -38,7 +38,7 @@
 	max_items = 1
 	max_w_class = WEIGHT_CLASS_NORMAL
 
-/datum/component/storage/concrete/pockets/chefhat/Initialize(mapload)
+/datum/component/storage/concrete/pockets/chefhat/Initialize()
 	. = ..()
 	set_holdable(list(
 		/obj/item/clothing/head/mob_holder,
@@ -58,7 +58,7 @@
 	quickdraw = TRUE
 	silent = TRUE
 
-/datum/component/storage/concrete/pockets/shoes/Initialize(mapload)
+/datum/component/storage/concrete/pockets/shoes/Initialize()
 	. = ..()
 	set_holdable(list(
 		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
@@ -70,7 +70,7 @@
 		list(/obj/item/screwdriver/power)
 		)
 
-/datum/component/storage/concrete/pockets/shoes/clown/Initialize(mapload)
+/datum/component/storage/concrete/pockets/shoes/clown/Initialize()
 	. = ..()
 	set_holdable(list(
 		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
@@ -86,7 +86,7 @@
 	max_w_class = WEIGHT_CLASS_TINY
 	var/atom/original_parent
 
-/datum/component/storage/concrete/pockets/pocketprotector/Initialize(mapload)
+/datum/component/storage/concrete/pockets/pocketprotector/Initialize()
 	original_parent = parent
 	. = ..()
 	set_holdable(list( //Same items as a PDA
@@ -105,7 +105,7 @@
 	quickdraw = TRUE
 	max_combined_w_class = 6
 
-/datum/component/storage/concrete/pockets/helmet/Initialize(mapload)
+/datum/component/storage/concrete/pockets/helmet/Initialize()
 	. = ..()
 	set_holdable(list(/obj/item/reagent_containers/food/drinks/bottle/vodka,
 					  /obj/item/reagent_containers/food/drinks/bottle/molotov,
@@ -117,7 +117,7 @@
 	quickdraw = TRUE
 	max_items = 3
 
-/datum/component/storage/concrete/pockets/void_cloak/Initialize(mapload)
+/datum/component/storage/concrete/pockets/void_cloak/Initialize()
 	. = ..()
 	var/static/list/exception_cache = typecacheof(list(/obj/item/living_heart,/obj/item/forbidden_book))
 	exception_hold = exception_cache
