@@ -3557,7 +3557,7 @@ var require_sync = __commonJS({
         this.matches[index] = Object.create(null);
       if (!exists)
         return;
-      if (prefix && isAbsolute(prefix) && !this.nomount) {
+      if (isAbsolute(prefix) && !this.nomount) {
         var trail = /[\/\\]$/.test(prefix);
         if (prefix.charAt(0) === "/") {
           prefix = path2.join(this.root, prefix);
