@@ -275,7 +275,8 @@
 
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	return ..()
+	..()
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
