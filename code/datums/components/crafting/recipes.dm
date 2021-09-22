@@ -624,6 +624,21 @@
 				/obj/item/radio = 1)
 	tool_behaviors = list(TOOL_WIRECUTTER)
 	category = CAT_CLOTHING
+	
+/datum/crafting_recipe/dripcloak
+	name = "Drip Cloak"
+	result = /obj/item/clothing/neck/cloak/comxy
+	time = 200
+	reqs = list(/obj/item/bedsheet = 1,
+				/obj/item/stack/sheet/mineral/plasma = 5,
+				/obj/item/stack/sheet/plasteel = 5,
+				/obj/item/clothing/suit/hazardvest = 1,
+				/datum/reagent/nitrogen = 10,
+				/obj/item/stack/ore/bluespace_crystal = 1,
+				/obj/item/stock_parts/subspace/transmitter = 1,
+				/obj/item/stock_parts/subspace/amplifier = 2)
+	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER)
+	category = CAT_CLOTHING
 
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
