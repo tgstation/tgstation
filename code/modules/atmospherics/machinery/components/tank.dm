@@ -57,7 +57,7 @@
 	/// The typecache of types which are allowed to merge internal storage
 	var/static/list/merger_typecache
 
-/obj/machinery/atmospherics/components/tank/Initialize()
+/obj/machinery/atmospherics/components/tank/Initialize(mapload)
 	. = ..()
 
 	if(!knob_overlays)
@@ -91,6 +91,10 @@
 
 	QUEUE_SMOOTH(src)
 	QUEUE_SMOOTH_NEIGHBORS(src)
+
+	// Mapped in tanks should automatically connect to adjacent pipenets in the direction set in dir
+	if(mapload)
+		initialize_directions = dir
 
 	return INITIALIZE_HINT_LATELOAD
 

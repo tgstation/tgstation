@@ -4006,9 +4006,6 @@
 /area/shuttle/escape)
 "TK" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden{
-	dir = 1
-	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "TR" = (
@@ -4435,12 +4432,6 @@
 	pixel_y = 1
 	},
 /turf/open/space/basic,
-/area/shuttle/escape)
-"YB" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden{
-	dir = 6
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "YC" = (
 /obj/machinery/light/small/directional/west,
@@ -6170,7 +6161,7 @@ ZM
 yc
 Rx
 Su
-YB
+Zf
 dR
 nr
 Ho

@@ -3411,21 +3411,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/pool)
 "kV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 6
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hotel/power)
-"kW" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 1
-	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "kX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 1
-	},
 /obj/structure/plaque/static_plaque/atmos{
 	pixel_y = 32
 	},
@@ -3433,12 +3421,6 @@
 /area/ruin/space/has_grav/hotel/power)
 "kY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hotel/power)
-"kZ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 10
-	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "la" = (
@@ -4994,7 +4976,7 @@ jB
 jB
 kr
 kH
-kW
+kV
 lp
 kH
 aa
@@ -5204,7 +5186,7 @@ jD
 iK
 ku
 kH
-kZ
+kV
 lp
 kH
 aa

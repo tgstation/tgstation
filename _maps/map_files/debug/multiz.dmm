@@ -109,16 +109,6 @@
 "aw" = (
 /turf/open/floor/plating,
 /area/engineering/atmos)
-"ax" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/engineering/atmos)
-"ay" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/engineering/atmos)
 "aD" = (
 /obj/structure/fans/tiny,
 /obj/structure/cable,
@@ -2553,7 +2543,7 @@ ad
 Dm
 ah
 am
-ax
+aw
 aw
 ba
 bk
@@ -2607,7 +2597,7 @@ ad
 af
 ah
 am
-ay
+aw
 aN
 bb
 bl
@@ -2661,7 +2651,7 @@ ad
 af
 ah
 am
-ay
+aw
 aO
 bc
 bm

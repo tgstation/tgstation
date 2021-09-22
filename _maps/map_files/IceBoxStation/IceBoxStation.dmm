@@ -26325,7 +26325,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "jyP" = (
@@ -38635,7 +38634,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "qiS" = (
@@ -70553,7 +70551,7 @@ boP
 boP
 alU
 alF
-anJ
+amC
 amC
 alU
 alU

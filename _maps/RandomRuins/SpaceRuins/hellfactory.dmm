@@ -68,10 +68,8 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hellfactoryoffice)
 "ak" = (
-/obj/machinery/atmospherics/components/tank/oxygen{
-	dir = 8;
-	gas_type = /datum/gas/water_vapor;
-	initialize_directions = 8
+/obj/machinery/atmospherics/components/tank/water_vapor{
+	dir = 8
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hellfactoryoffice)
