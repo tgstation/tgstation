@@ -203,8 +203,7 @@
 		/obj/item/soap/deluxe = 15,
 		/obj/item/soap/nanotrasen = 10,
 		/obj/item/food/urinalcake = 5,
-		/obj/item/bikehorn/rubberducky/plasticducky = 4,
-		/obj/item/soap/omega = 1,
+		/obj/item/bikehorn/rubberducky/plasticducky = 5,
 	)
 
 /obj/effect/spawner/random/trash/box
