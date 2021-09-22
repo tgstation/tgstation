@@ -9,16 +9,18 @@
 	///visible message sent to indicate a song will have special properties
 	var/visible_message
 
-/datum/religion_rites/song_tuner/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/song_tuner/invoke_effect(mob/living/user, obj/structure/altar_of_gods/altar)
+	. = ..()
 	user.AddComponent(/datum/component/smooth_tunes, src, repeats_okay)
 
 /**
   * Perform the song effect.
   *
   * Arguments:
-  * * arg1 - Atom (parent) of the smooth_tunes component. This is limited to the compatible items of said component, which currently includes mobs and objects so we'll have to type appropriately.
+  * * arg1 - parent of the smooth_tunes component. This is limited to the compatible items of said component, which currently includes mobs and objects so we'll have to type appropriately.
+  * * song_datum - Datum song being played
   */
-/datum/religion_rites/song_tuner/proc/song_effect(atom/A, datum/song/S)
+/datum/religion_rites/song_tuner/proc/song_effect(atom/song_player, datum/song/song_datum)
 	return
 
 /datum/religion_rites/song_tuner/evangelism
@@ -26,16 +28,15 @@
 	desc = "Spreads the word of your god, gaining favor for each non-holy listener."
 	favor_cost = 0
 
-/datum/religion_rites/song_tuner/evangelism/song_effect(atom/A, datum/song/S)
-	if(!S || !GLOB.religious_sect)
+/datum/religion_rites/song_tuner/evangelism/song_effect(atom/song_player, datum/song/song_datum)
+	if(!song_datum || !GLOB.religious_sect)
 		return
-	for(var/i in S.hearing_mobs)
-		if(i == A)
+	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
+		if(listener == song_player || listener.anti_magic_check(magic = FALSE, holy = TRUE))
 			continue
-		if(!isliving(i))
-			continue //stinky ghosts
-		var/mob/living/L = i
-		if(L.mind.holy_role)
+		if(listener.mind.holy_role)
+			continue
+		if(!listener.ckey) //good requirement to have for favor, trust me
 			continue
 		GLOB.religious_sect.adjust_favor(0.2)
 
@@ -44,40 +45,34 @@
 	desc = "Sing a sweet song, healing bruises and burns around you."
 	repeats_okay = FALSE
 
-/datum/religion_rites/song_tuner/sooth/song_effect(atom/A, datum/song/S)
-	if(!S)
+/datum/religion_rites/song_tuner/sooth/song_effect(atom/song_player, datum/song/song_datum)
+	if(!song_datum)
 		return
-	for(var/i in S.hearing_mobs)
-		if(i == A)
+	for(var/mob/living/listener in song_datum.hearing_mobs)
+		if(listener == song_player || listener.anti_magic_check(magic = FALSE, holy = TRUE))
 			continue
-		if(!isliving(i))
-			continue
-		var/mob/living/L = i
 		var/healy_juice = 0.25
-		if(L.mind.holy_role)
+		if(listener.mind.holy_role)
 			healy_juice*=3
-		L.adjustBruteLoss(-healy_juice)
-		L.adjustFireLoss(-healy_juice)
+		listener.adjustBruteLoss(-healy_juice)
+		listener.adjustFireLoss(-healy_juice)
 
 /datum/religion_rites/song_tuner/pain
 	name = "Sorrow Song"
 	desc = "Sing a melancholic song, hurting those around you. Works less effectively on fellow priests."
 	repeats_okay = FALSE
 
-/datum/religion_rites/song_tuner/pain/song_effect(atom/A, datum/song/S)
-	if(!S)
+/datum/religion_rites/song_tuner/pain/song_effect(atom/song_player, datum/song/song_datum)
+	if(!song_datum)
 		return
-	for(var/i in S.hearing_mobs)
-		if(i == A)
+	for(var/mob/living/listener in song_datum.hearing_mobs)
+		if(listener == song_player || listener.anti_magic_check(magic = FALSE, holy = TRUE))
 			continue
-		if(!isliving(i))
-			continue
-		var/mob/living/L = i
 		var/pain_juice = 0.5
-		if(L.mind.holy_role)
+		if(listener.mind.holy_role)
 			pain_juice*=0.5
-		L.adjustBruteLoss(pain_juice)
-		L.adjustFireLoss(pain_juice)
+		listener.adjustBruteLoss(pain_juice)
+		listener.adjustFireLoss(pain_juice)
 
 /datum/religion_rites/song_tuner/lullaby
 	name = "Lullaby"
@@ -85,17 +80,14 @@
 	favor_cost = 20
 	repeats_okay = FALSE
 
-/datum/religion_rites/song_tuner/lullaby/song_effect(atom/A, datum/song/S)
-	if(!S)
+/datum/religion_rites/song_tuner/lullaby/song_effect(atom/song_player, datum/song/song_datum)
+	if(!song_datum)
 		return
-	for(var/i in S.hearing_mobs)
-		if(i == A)
+	for(var/mob/living/listener in song_datum.hearing_mobs)
+		if(listener == song_player || listener.anti_magic_check(magic = FALSE, holy = TRUE))
 			continue
-		if(!isliving(i))
+		if(listener.mind.holy_role)
 			continue
-		var/mob/living/L = i
-		if(L.mind.holy_role)
-			continue
-		L.drowsyness += 5
-		if(L.drowsyness >= 100)
-			L.AdjustSleeping(3 SECONDS)
+		listener.drowsyness += 5
+		if(listener.drowsyness >= 100)
+			listener.AdjustSleeping(3 SECONDS)
