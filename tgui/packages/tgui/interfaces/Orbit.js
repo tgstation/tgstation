@@ -191,7 +191,8 @@ export const Orbit = (props, context) => {
               <OrbitedButton
                 key={thing.name}
                 color="good"
-                thing={thing} />
+                thing={thing}
+                autoObserve={autoObserve} />
             ))}
         </Section>
 
@@ -203,7 +204,8 @@ export const Orbit = (props, context) => {
               <OrbitedButton
                 key={thing.name}
                 color="grey"
-                thing={thing} />
+                thing={thing}
+                autoObserve={autoObserve} />
             ))}
         </Section>
 
