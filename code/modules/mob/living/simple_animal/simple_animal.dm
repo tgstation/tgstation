@@ -25,6 +25,7 @@
 	///Unlike speak_emote, the list of things in this variable only show by themselves with no spoken text. IE: Ian barks, Ian yaps
 	var/list/emote_see = list()
 
+	///ticks up every time `handle_automated_movement()` is called, which is every 2 seconds at the time of documenting. 1  turns per move is 1 movement every 2 seconds.
 	var/turns_per_move = 1
 	var/turns_since_move = 0
 	///Use this to temporarely stop random movement or to if you write special movement code for animals.
@@ -63,6 +64,9 @@
 	var/unsuitable_cold_damage
 	///This damage is taken when the body temp is too hot.
 	var/unsuitable_heat_damage
+
+	/// List of weather immunity traits that are then added on Initialize(), see traits.dm.
+	var/list/weather_immunities
 
 	///Healable by medical stacks? Defaults to yes.
 	var/healable = 1
@@ -178,7 +182,9 @@
 		AddComponent(/datum/component/personal_crafting)
 		ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
 		ADD_TRAIT(src, TRAIT_CAN_STRIP, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, SPECIES_TRAIT)
+	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
+	for(var/trait in weather_immunities)
+		ADD_TRAIT(src, trait, ROUNDSTART_TRAIT)
 
 	if(speak)
 		speak = string_list(speak)
@@ -224,7 +230,10 @@
 /mob/living/simple_animal/examine(mob/user)
 	. = ..()
 	if(stat == DEAD)
-		. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be dead.")
+		if(HAS_TRAIT(user, TRAIT_NAIVE))
+			. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be asleep.")
+		else
+			. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be dead.")
 	if(access_card)
 		. += "There appears to be [icon2html(access_card, user)] \a [access_card] pinned to [p_them()]."
 
@@ -545,19 +554,6 @@
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, RESTING_TRAIT)
 	return ..()
 
-
-/mob/living/simple_animal/update_transform()
-	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
-	var/changed = FALSE
-
-	if(resize != RESIZE_DEFAULT_SIZE)
-		changed = TRUE
-		ntransform.Scale(resize)
-		resize = RESIZE_DEFAULT_SIZE
-
-	if(changed)
-		animate(src, transform = ntransform, time = 2, easing = EASE_IN|EASE_OUT)
-
 /mob/living/simple_animal/proc/sentience_act() //Called when a simple animal gains sentience via gold slime potion
 	toggle_ai(AI_OFF) // To prevent any weirdness.
 	can_have_ai = FALSE
@@ -667,10 +663,10 @@
 	if (pulledby || shouldwakeup)
 		toggle_ai(AI_ON)
 
-/mob/living/simple_animal/onTransitZ(old_z, new_z)
+/mob/living/simple_animal/on_changed_z_level(turf/old_turf, turf/new_turf)
 	..()
 	if (AIStatus == AI_Z_OFF)
-		SSidlenpcpool.idle_mobs_by_zlevel[old_z] -= src
+		SSidlenpcpool.idle_mobs_by_zlevel[old_turf?.z] -= src
 		toggle_ai(initial(AIStatus))
 
 ///This proc is used for adding the swabbale element to mobs so that they are able to be biopsied and making sure holograpic and butter-based creatures don't yield viable cells samples.

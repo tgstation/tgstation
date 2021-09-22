@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the quirks list in the preferences menu sometimes being empty."

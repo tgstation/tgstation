@@ -123,3 +123,13 @@
 				new_ears.Insert(H, TRUE, FALSE)
 	if(!silent)
 		to_chat(H, span_boldnotice("You are no longer a cat."))
+
+/datum/species/human/felinid/prepare_human_for_preview(mob/living/carbon/human/human)
+	human.hairstyle = "Hime Cut"
+	human.hair_color = "fcc" // pink
+	human.update_hair()
+
+	var/obj/item/organ/ears/cat/cat_ears = human.getorgan(/obj/item/organ/ears/cat)
+	if (cat_ears)
+		cat_ears.color = human.hair_color
+		human.update_body()

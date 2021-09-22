@@ -1205,11 +1205,6 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
-"eu" = (
-/obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
-/turf/open/floor/wood,
-/area/ruin/space/has_grav/hotel/guestroom/room_2)
 "ev" = (
 /obj/machinery/door/airlock{
 	name = "Bathroom"
@@ -1651,6 +1646,15 @@
 	req_access_txt = "200"
 	},
 /turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/hotel/bar)
+"fU" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/bar)
 "fV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -4288,6 +4292,16 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
+"vk" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/hotel/pool)
+"yx" = (
+/obj/structure/table/wood,
+/obj/item/storage/dice,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/hotel/guestroom/room_2)
 "Jk" = (
 /obj/structure/chair/stool/bar/directional/south,
 /obj/effect/turf_decal/tile/bar,
@@ -4296,22 +4310,8 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/bar)
-"PU" = (
+"VI" = (
 /obj/effect/spawner/random/entertainment/arcade,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/hotel/pool)
-"Se" = (
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/hotel/bar)
-"SX" = (
-/obj/effect/spawner/random/entertainment/arcade,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/pool)
 
@@ -5741,7 +5741,7 @@ cZ
 dr
 dN
 dN
-eu
+yx
 cZ
 aw
 fi
@@ -6027,7 +6027,7 @@ aw
 fi
 fC
 fG
-Se
+fU
 fG
 fG
 gX
@@ -6376,7 +6376,7 @@ dc
 aw
 fi
 fH
-Se
+fU
 fH
 Jk
 fG
@@ -6460,7 +6460,7 @@ eT
 am
 cJ
 jt
-PU
+VI
 ko
 jR
 jR
@@ -6530,7 +6530,7 @@ eT
 am
 cJ
 jt
-PU
+VI
 ko
 kD
 kD
@@ -6600,7 +6600,7 @@ iC
 am
 iY
 jt
-PU
+VI
 ko
 kD
 kD
@@ -7580,7 +7580,7 @@ fu
 fu
 eX
 jt
-PU
+VI
 ko
 kD
 kS
@@ -7650,7 +7650,7 @@ fu
 fu
 eY
 jt
-PU
+VI
 ko
 kD
 kS
@@ -7720,7 +7720,7 @@ fu
 fu
 eZ
 jy
-SX
+vk
 kp
 kG
 kT

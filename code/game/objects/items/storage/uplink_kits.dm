@@ -322,7 +322,7 @@
 /obj/item/storage/box/syndicate/contract_kit/PopulateContents()
 	new /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink(src)
 	new /obj/item/storage/box/syndicate/contractor_loadout(src)
-	new /obj/item/melee/classic_baton/telescopic/contractor_baton(src)
+	new /obj/item/melee/baton/telescopic/contractor_baton(src)
 
 	// All about 4 TC or less - some nukeops only items, but fit nicely to the theme.
 	var/list/item_list = list(
@@ -481,7 +481,8 @@
 	new /obj/item/reagent_containers/syringe(src)
 
 /obj/item/storage/box/syndie_kit/nuke
-	name = "box"
+	name = "nuke core extraction kit"
+	desc = "A box containing the equipment and instructions for extracting the plutonium cores of most Nanotrasen nuclear explosives."
 
 /obj/item/storage/box/syndie_kit/nuke/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
@@ -489,7 +490,8 @@
 	new /obj/item/paper/guides/antag/nuke_instructions(src)
 
 /obj/item/storage/box/syndie_kit/supermatter
-	name = "box"
+	name = "supermatter sliver extraction kit"
+	desc = "A box containing the equipment and instructions for extracting a sliver of supermatter."
 
 /obj/item/storage/box/syndie_kit/supermatter/PopulateContents()
 	new /obj/item/scalpel/supermatter(src)

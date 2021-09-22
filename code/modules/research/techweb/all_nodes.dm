@@ -145,6 +145,7 @@
 		"plant_analyzer",
 		"plunger",
 		"pushbroom",
+		"razor",
 		"screwdriver",
 		"secateurs",
 		"shovel",
@@ -221,6 +222,7 @@
 		"comp_not",
 		"comp_ntnet_receive",
 		"comp_ntnet_send",
+		"comp_pinpointer",
 		"comp_pressuresensor",
 		"comp_radio",
 		"comp_random",
@@ -663,8 +665,9 @@
 	prereq_ids = list("basic_circuitry", "engineering")
 	design_ids = list(
 		"bot_shell",
-		"door_shell",
 		"controller_shell",
+		"door_shell",
+		"gun_shell",
 		"money_bot_shell",
 		"scanner_gate_shell",
 		"scanner_shell",

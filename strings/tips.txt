@@ -99,12 +99,10 @@ As the Chief Engineer, the power flow control console in your office will show y
 As an Engineer, the supermatter shard is an extremely dangerous piece of equipment: touching it will disintegrate you. So will touching it with telepathy.
 As an Engineer, you can electrify grilles by placing powered cables beneath them.
 As an Engineer, return to Engineering once in a while to check on the engine and SMES cells. It's always a good idea to make sure the supermatter isn't delaminating.
-As an Engineer, you can temporarily power the station solely with the solar arrays. They will provide just enough electricity to power the station for a while, however their output is just slightly below what is truely needed to consistently power the station.
+As an Engineer, you can temporarily power the station solely with the solar arrays. They will provide just enough electricity to power the station for a while, however their output is just slightly below what is truly needed to consistently power the station.
 As an Engineer, you can cool the supermatter crystal by spraying it with a fire extinguisher. Only for the brave!
 As an Engineer, you can repair windows by using a welding tool on them while not in combat mode.
 As an Engineer, you can lock APCs, fire alarms, emitters and radiation collectors using your ID card to prevent others from disabling them.
-As an Engineer, you can convert tesla coils into corona analyzers by using a screwdriver on the circuit board. They will produce less power, but generate research points!
-As an Engineer, you can use radiation collectors to generate research points. Load them with a 50/50 oxygen/tritium tank and use a multitool to switch them to research mode.
 As an Engineer, don't underestimate the humble P.A.C.M.A.N. generators. With upgraded parts, a couple units working in tandem are sufficient to take over for an exploded engine or shattered solars.
 As an Engineer, your departmental protolathe and circuit printer can manufacture the necessary circuit boards and components to build just about anything. Make extra medical machinery everywhere! Build a gibber for security! Set up an array of emitters pointing down the hall! The possibilities are endless!
 As an Engineer, you can pry open secure storage blast doors by disabling the engine room APC's main breaker. This is obviously a bad idea if the engine is running.

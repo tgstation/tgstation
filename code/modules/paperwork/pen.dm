@@ -54,6 +54,7 @@
 /obj/item/pen/fourcolor
 	desc = "It's a fancy four-color ink pen, set to black."
 	name = "four-color pen"
+	icon_state = "pen_4color"
 	colour = "black"
 
 /obj/item/pen/fourcolor/attack_self(mob/living/carbon/user)
@@ -289,3 +290,5 @@
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	tool_behaviour = TOOL_MINING //For the classic "digging out of prison with a spoon but you're in space so this analogy doesn't work" situation.
 	toolspeed = 10 //You will never willingly choose to use one of these over a shovel.
+	font = FOUNTAIN_PEN_FONT
+	colour = "blue"

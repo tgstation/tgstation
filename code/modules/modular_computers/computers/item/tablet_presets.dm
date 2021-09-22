@@ -54,11 +54,15 @@
 
 /obj/item/modular_computer/tablet/preset/advanced/atmos/Initialize() //This will be defunct and will be replaced when NtOS PDAs are done
 	. = ..()
+	var/obj/item/computer_hardware/hard_drive/small/hard_drive = find_hardware_by_name("solid state drive")
 	install_component(new /obj/item/computer_hardware/sensorpackage)
+	hard_drive.store_file(new /datum/computer_file/program/alarm_monitor)
+	hard_drive.store_file(new /datum/computer_file/program/atmosscan)
 
 /obj/item/modular_computer/tablet/preset/advanced/engineering/Initialize()
 	. = ..()
 	var/obj/item/computer_hardware/hard_drive/small/hard_drive = find_hardware_by_name("solid state drive")
+	hard_drive.store_file(new /datum/computer_file/program/alarm_monitor)
 	hard_drive.store_file(new /datum/computer_file/program/supermatter_monitor)
 
 /obj/item/modular_computer/tablet/preset/advanced/command/Initialize()
@@ -72,6 +76,7 @@
 /obj/item/modular_computer/tablet/preset/advanced/command/engineering/Initialize()
 	. = ..()
 	var/obj/item/computer_hardware/hard_drive/small/hard_drive = find_hardware_by_name("solid state drive")
+	hard_drive.store_file(new /datum/computer_file/program/alarm_monitor)
 	hard_drive.store_file(new /datum/computer_file/program/supermatter_monitor)
 
 /// Given by the syndicate as part of the contract uplink bundle - loads in the Contractor Uplink.

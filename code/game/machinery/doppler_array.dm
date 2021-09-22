@@ -226,11 +226,11 @@
 	var/cash_gain = 0
 
 	/*****The Point Calculator*****/
-	if(orig_light_range < 10)
+	if(orig_light_range < TECHWEB_BOMB_MIN_RANGE)
 		say("Explosion not large enough for profitability.")
 		return
-	else if(orig_light_range < 4500)
-		cash_gain = (83300 * orig_light_range) / (orig_light_range + 3000)
+	else if(orig_light_range < TECHWEB_BOMB_MAX_RANGE)
+		cash_gain = (TECHWEB_BOMB_SCALE_CONST * orig_light_range) / (TECHWEB_BOMB_SCALE_DIVISOR + orig_light_range)
 	else
 		cash_gain = TECHWEB_BOMB_CASHCAP
 
@@ -240,7 +240,7 @@
 			var/old_tech_largest_bomb_value = linked_techweb.largest_bomb_value //held so we can pull old before we do math
 			linked_techweb.largest_bomb_value = cash_gain
 			cash_gain -= old_tech_largest_bomb_value
-			cash_gain = min(cash_gain,TECHWEB_BOMB_CASHCAP)
+			cash_gain = min(cash_gain, TECHWEB_BOMB_CASHCAP)
 		else
 			linked_techweb.largest_bomb_value = TECHWEB_BOMB_CASHCAP
 			cash_gain = 1000

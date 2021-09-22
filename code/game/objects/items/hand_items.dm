@@ -133,7 +133,7 @@
 		span_hear("You hear a slap."))
 	return
 
-/obj/item/slapper/attack_obj(obj/O, mob/living/user, params)
+/obj/item/slapper/attack_atom(obj/O, mob/living/user, params)
 	if(!istype(O, /obj/structure/table))
 		return ..()
 
@@ -267,8 +267,11 @@
 	/// The kind of projectile this version of the kiss blower fires
 	var/kiss_type = /obj/projectile/kiss
 
+
 /obj/item/kisser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
+		kiss_type = /obj/projectile/kiss/french
 	var/obj/projectile/blown_kiss = new kiss_type(get_turf(user))
 	user.visible_message("<b>[user]</b> blows \a [blown_kiss] at [target]!", span_notice("You blow \a [blown_kiss] at [target]!"))
 
@@ -323,11 +326,15 @@
 /obj/projectile/kiss/proc/harmless_on_hit(mob/living/living_target)
 	playsound(get_turf(living_target), hitsound, 100, TRUE)
 	living_target.visible_message(span_danger("[living_target] is hit by \a [src]."), span_userdanger("You're hit by \a [src]!"), vision_distance=COMBAT_MESSAGE_RANGE)
+	living_target.mind?.add_memory(MEMORY_KISS, list(DETAIL_PROTAGONIST = living_target, DETAIL_KISSER = firer), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLINDNESS)
+	if(isliving(firer))
+		var/mob/living/kisser = firer
+		kisser.mind?.add_memory(MEMORY_KISS, list(DETAIL_PROTAGONIST = living_target, DETAIL_KISSER = firer), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLINDNESS)
 	try_fluster(living_target)
 
 /obj/projectile/kiss/proc/try_fluster(mob/living/living_target)
 	// people with the social anxiety quirk can get flustered when hit by a kiss
-	if(!HAS_TRAIT(living_target, TRAIT_ANXIOUS) || (living_target.stat > SOFT_CRIT))
+	if(!HAS_TRAIT(living_target, TRAIT_ANXIOUS) || (living_target.stat > SOFT_CRIT) || living_target.is_blind())
 		return
 	if(HAS_TRAIT(living_target, TRAIT_FEARLESS) || prob(50)) // 50% chance for it to apply, also immune while on meds
 		return
@@ -374,3 +381,16 @@
 	var/mob/living/carbon/heartbreakee = target
 	var/obj/item/organ/heart/dont_go_breakin_my_heart = heartbreakee.getorganslot(ORGAN_SLOT_HEART)
 	dont_go_breakin_my_heart.applyOrganDamage(999)
+
+
+/obj/projectile/kiss/french
+	name = "french kiss (is that a hint of garlic?)"
+	color = "#f2e9d2" //Scientifically proven to be the colour of garlic
+
+/obj/projectile/kiss/french/harmless_on_hit(mob/living/living_target)
+	. = ..()
+	//Don't stack the garlic
+	if(! living_target.has_reagent(/datum/reagent/consumable/garlic) )
+		//Phwoar
+		living_target.reagents.add_reagent(/datum/reagent/consumable/garlic, 1)
+	living_target.visible_message("[living_target] has a funny look on [living_target.p_their()] face.", "Wow, that is a strong after taste of garlic!", vision_distance=COMBAT_MESSAGE_RANGE)

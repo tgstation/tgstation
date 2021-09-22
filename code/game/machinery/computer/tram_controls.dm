@@ -127,33 +127,28 @@
 	/// The tram controls computer (/obj/machinery/computer/tram_controls)
 	var/obj/machinery/computer/tram_controls/computer
 
-/obj/item/circuit_component/tram_controls/Initialize()
-	. = ..()
-	new_destination = add_input_port("Destination", PORT_TYPE_STRING, FALSE)
+/obj/item/circuit_component/tram_controls/populate_ports()
+	new_destination = add_input_port("Destination", PORT_TYPE_STRING, trigger = null)
 	trigger_move = add_input_port("Send Tram", PORT_TYPE_SIGNAL)
 
 	location = add_output_port("Location", PORT_TYPE_STRING)
 	travelling_output = add_output_port("Travelling", PORT_TYPE_NUMBER)
 
-/obj/item/circuit_component/tram_controls/register_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/tram_controls/register_usb_parent(atom/movable/shell)
 	. = ..()
-	if (istype(parent, /obj/machinery/computer/tram_controls))
-		computer = parent
+	if (istype(shell, /obj/machinery/computer/tram_controls))
+		computer = shell
 		var/obj/structure/industrial_lift/tram/central/tram_part = computer.tram_ref?.resolve()
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, .proc/on_tram_set_travelling)
 		RegisterSignal(tram_part, COMSIG_TRAM_TRAVEL, .proc/on_tram_travel)
 
-/obj/item/circuit_component/tram_controls/unregister_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/tram_controls/unregister_usb_parent(atom/movable/shell)
 	var/obj/structure/industrial_lift/tram/central/tram_part = computer.tram_ref?.resolve()
 	computer = null
 	UnregisterSignal(tram_part, list(COMSIG_TRAM_SET_TRAVELLING, COMSIG_TRAM_TRAVEL))
 	return ..()
 
 /obj/item/circuit_component/tram_controls/input_received(datum/port/input/port)
-	. = ..()
-	if (.)
-		return
-
 	if (!COMPONENT_TRIGGERED_BY(trigger_move, port))
 		return
 
@@ -164,7 +159,6 @@
 		return
 
 	var/destination
-
 	for(var/obj/effect/landmark/tram/possible_destination as anything in GLOB.tram_landmarks)
 		if(possible_destination.name == new_destination.value)
 			destination = possible_destination

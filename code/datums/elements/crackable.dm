@@ -18,7 +18,7 @@
 				var/icon/new_crack_icon = icon(crack_icon, state)
 				new_crack_icon.Turn(i * 10)
 				crack_icons += new_crack_icon
-	RegisterSignal(target, COMSIG_OBJ_INTEGRITY_CHANGED, .proc/IntegrityChanged)
+	RegisterSignal(target, COMSIG_ATOM_INTEGRITY_CHANGED, .proc/IntegrityChanged)
 
 /datum/element/crackable/proc/IntegrityChanged(obj/source, old_value, new_value)
 	SIGNAL_HANDLER

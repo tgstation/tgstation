@@ -36,6 +36,11 @@ export const PortParameter = new Juke.Parameter({
 
 export const CiParameter = new Juke.Parameter({ type: 'boolean' });
 
+export const WarningParameter = new Juke.Parameter({
+  type: 'string[]',
+  alias: 'W',
+});
+
 export const DmMapsIncludeTarget = new Juke.Target({
   executes: async () => {
     const folders = [
@@ -73,6 +78,7 @@ export const DmTarget = new Juke.Target({
   executes: async ({ get }) => {
     await DreamMaker(`${DME_NAME}.dme`, {
       defines: ['CBT', ...get(DefineParameter)],
+      warningsAsErrors: get(WarningParameter).includes('error'),
     });
   },
 });
@@ -86,6 +92,7 @@ export const DmTestTarget = new Juke.Target({
     fs.copyFileSync(`${DME_NAME}.dme`, `${DME_NAME}.test.dme`);
     await DreamMaker(`${DME_NAME}.test.dme`, {
       defines: ['CBT', 'CIBUILDING', ...get(DefineParameter)],
+      warningsAsErrors: get(WarningParameter).includes('error'),
     });
     Juke.rm('data/logs/ci', { recursive: true });
     await DreamDaemon(
@@ -184,6 +191,11 @@ export const TguiDevTarget = new Juke.Target({
 export const TguiAnalyzeTarget = new Juke.Target({
   dependsOn: [YarnTarget],
   executes: () => yarn('tgui:analyze'),
+});
+
+export const TguiBenchTarget = new Juke.Target({
+  dependsOn: [YarnTarget],
+  executes: () => yarn('tgui:bench'),
 });
 
 export const TestTarget = new Juke.Target({

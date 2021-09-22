@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - bugfix: "Fixed crayon and spraycan text input to behave properly"

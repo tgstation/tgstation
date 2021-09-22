@@ -21,14 +21,14 @@
 		return ELEMENT_INCOMPATIBLE
 
 	rate = _rate
-	RegisterSignal(target, COMSIG_OBJ_TAKE_DAMAGE, .proc/on_take_damage)
+	RegisterSignal(target, COMSIG_ATOM_TAKE_DAMAGE, .proc/on_take_damage)
 	if(target.get_integrity() < target.max_integrity)
 		if(!length(processing))
 			START_PROCESSING(SSobj, src)
 		processing |= target
 
 /datum/element/obj_regen/Detach(obj/target)
-	UnregisterSignal(target, COMSIG_OBJ_TAKE_DAMAGE)
+	UnregisterSignal(target, COMSIG_ATOM_TAKE_DAMAGE)
 	processing -= target
 	if(!length(processing))
 		STOP_PROCESSING(SSobj, src)

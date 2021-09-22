@@ -42,7 +42,6 @@ require only minor tweaks.
 // boolean - weather types that occur on the level
 #define ZTRAIT_SNOWSTORM "Weather_Snowstorm"
 #define ZTRAIT_ASHSTORM "Weather_Ashstorm"
-#define ZTRAIT_ACIDRAIN "Weather_Acidrain"
 #define ZTRAIT_VOIDSTORM "Weather_Voidstorm"
 
 // number - bombcap is multiplied by this before being applied to bombs

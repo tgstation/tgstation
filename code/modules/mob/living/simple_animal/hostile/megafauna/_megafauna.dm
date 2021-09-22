@@ -10,7 +10,7 @@
 	obj_damage = 400
 	light_range = 3
 	faction = list("mining", "boss")
-	weather_immunities = list(WEATHER_LAVA,WEATHER_ASH)
+	weather_immunities = list(TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE)
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	stat_attack = DEAD
@@ -177,6 +177,7 @@
 	for(var/mob/living/L in grant_achievement)
 		if(L.stat || !L.client)
 			continue
+		L?.mind.add_memory(MEMORY_MEGAFAUNA_KILL, list(DETAIL_PROTAGONIST = L, DETAIL_DEUTERAGONIST = src), STORY_VALUE_LEGENDARY, memory_flags = MEMORY_CHECK_BLIND_AND_DEAF)
 		L.client.give_award(/datum/award/achievement/boss/boss_killer, L)
 		L.client.give_award(achievement_type, L)
 		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/kinetic_crusher))

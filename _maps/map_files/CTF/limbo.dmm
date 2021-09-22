@@ -99,7 +99,7 @@
 	color = "#008000";
 	max_integrity = 5000;
 	name = "hardened window";
-	obj_integrity = 5000
+	atom_integrity = 5000
 	},
 /turf/open/floor/plating,
 /area/ctf)

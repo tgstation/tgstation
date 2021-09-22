@@ -16,7 +16,7 @@
 
 	var/locked = FALSE
 
-/datum/component/shell/Initialize(unremovable_circuit_components, capacity, shell_flags)
+/datum/component/shell/Initialize(unremovable_circuit_components, capacity, shell_flags, starting_circuit)
 	. = ..()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -24,6 +24,9 @@
 	src.shell_flags = shell_flags || src.shell_flags
 	src.capacity = capacity || src.capacity
 	set_unremovable_circuit_components(unremovable_circuit_components)
+
+	if(starting_circuit)
+		attach_circuit(starting_circuit)
 
 /datum/component/shell/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attack_by)
@@ -34,7 +37,7 @@
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/on_multitool_act)
 		RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/on_object_deconstruct)
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
-		RegisterSignal(parent, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, .proc/on_unfasten)
+		RegisterSignal(parent, COMSIG_MOVABLE_SET_ANCHORED, .proc/on_set_anchored)
 	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
 	RegisterSignal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, .proc/on_load)
 
@@ -76,7 +79,7 @@
 		COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
 		COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
 		COMSIG_OBJ_DECONSTRUCT,
-		COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH,
+		COMSIG_MOVABLE_SET_ANCHORED,
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_ATOM_ATTACK_GHOST,
 		COMSIG_ATOM_USB_CABLE_TRY_ATTACH,
@@ -102,7 +105,7 @@
 	if(attached_circuit)
 		INVOKE_ASYNC(attached_circuit, /datum.proc/ui_interact, ghost)
 
-/datum/component/shell/proc/on_examine(datum/source, mob/user, list/examine_text)
+/datum/component/shell/proc/on_examine(atom/movable/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 	if(!is_authorized(user))
 		return
@@ -115,19 +118,22 @@
 	examine_text += span_notice("The cover panel to the integrated circuit is [locked? "locked" : "unlocked"].")
 	var/obj/item/stock_parts/cell/cell = attached_circuit.cell
 	examine_text += span_notice("The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
+	if((shell_flags & SHELL_FLAG_REQUIRE_ANCHOR) && !source.anchored)
+		examine_text += span_notice("The integrated circuit is non-functional whilst the shell is unanchored.")
 
 	if (shell_flags & SHELL_FLAG_USB_PORT)
 		examine_text += span_notice("There is a <b>USB port</b> on the front.")
 
 /**
- * Called when the shell is wrenched.
+ * Called when the shell is anchored.
  *
  * Only applies if the shell has SHELL_FLAG_REQUIRE_ANCHOR.
  * Disables the integrated circuit if unanchored, otherwise enable the circuit.
  */
-/datum/component/shell/proc/on_unfasten(atom/source, anchored)
+/datum/component/shell/proc/on_set_anchored(atom/movable/source, previous_value)
 	SIGNAL_HANDLER
-	attached_circuit?.on = anchored
+	attached_circuit?.on = source.anchored
+
 /**
  * Called when an item hits the parent. This is the method to add the circuitboard to the component.
  */
@@ -142,7 +148,7 @@
 
 	if(istype(item, /obj/item/inducer))
 		var/obj/item/inducer/inducer = item
-		INVOKE_ASYNC(inducer, /obj/item.proc/attack_obj, attached_circuit, attacker, list())
+		INVOKE_ASYNC(inducer, /obj/item.proc/attack_atom, attached_circuit, attacker, list())
 		return COMPONENT_NO_AFTERATTACK
 
 	if(attached_circuit)
@@ -182,7 +188,7 @@
 /// Sets whether the shell is locked or not
 /datum/component/shell/proc/set_locked(new_value)
 	locked = new_value
-	attached_circuit?.locked = locked
+	attached_circuit?.set_locked(new_value)
 
 
 /datum/component/shell/proc/on_multitool_act(atom/source, mob/user, obj/item/tool)
@@ -267,10 +273,10 @@
 	attached_circuit.set_shell(parent_atom)
 	if(attached_circuit.display_name != "")
 		parent_atom.name = "[initial(parent_atom.name)] ([attached_circuit.display_name])"
-	attached_circuit.locked = FALSE
+	attached_circuit.set_locked(FALSE)
 
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
-		on_unfasten(parent_atom, parent_atom.anchored)
+		attached_circuit.on = parent_atom.anchored
 
 	if(circuitboard.loc != parent_atom)
 		circuitboard.forceMove(parent_atom)
@@ -293,7 +299,7 @@
 	for(var/obj/item/circuit_component/to_remove as anything in unremovable_circuit_components)
 		attached_circuit.remove_component(to_remove)
 		to_remove.moveToNullspace()
-	attached_circuit.locked = FALSE
+	attached_circuit.set_locked(FALSE)
 	attached_circuit = null
 
 /datum/component/shell/proc/on_atom_usb_cable_try_attach(atom/source, obj/item/usb_cable/usb_cable, mob/user)

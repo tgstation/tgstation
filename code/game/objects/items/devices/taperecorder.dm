@@ -239,7 +239,7 @@
 		if(mytape.storedinfo.len < i)
 			say("End of recording.")
 			break
-		say("[mytape.storedinfo[i]]")
+		say("[mytape.storedinfo[i]]", sanitize=FALSE)//We want to display this properly, don't double encode
 		if(mytape.storedinfo.len < i + 1)
 			playsleepseconds = 1
 			sleep(1 SECONDS)

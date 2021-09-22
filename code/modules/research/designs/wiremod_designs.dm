@@ -253,6 +253,11 @@
 	id = "comp_typecast"
 	build_path = /obj/item/circuit_component/typecast
 
+/datum/design/component/pinpointer
+	name = "Proximity Pinpointer Component"
+	id = "comp_pinpointer"
+	build_path = /obj/item/circuit_component/pinpointer
+
 /datum/design/component/bci
 	category = list("Circuitry", "BCI Components")
 
@@ -306,6 +311,15 @@
 	build_path = /obj/item/wiremod_scanner
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 7000)
+	category = list("Circuitry", "Shells")
+
+/datum/design/gun_shell
+	name = "Gun Shell"
+	desc = "A handheld shell that can fire projectiles to output entities."
+	id = "gun_shell"
+	build_path = /obj/item/gun/energy/wiremod_gun
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000, /datum/material/plasma = 100)
 	category = list("Circuitry", "Shells")
 
 /datum/design/bot_shell

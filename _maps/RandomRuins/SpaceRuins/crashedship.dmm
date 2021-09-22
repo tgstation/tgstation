@@ -179,6 +179,13 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/bmpship/aft)
+"aR" = (
+/obj/structure/table/wood,
+/obj/item/stack/spacecash/c500,
+/obj/item/stack/spacecash/c100,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/turf/open/floor/wood,
+/area/awaymission/bmpship/fore)
 "aS" = (
 /obj/structure/bed,
 /obj/item/bedsheet/yellow,
@@ -229,6 +236,12 @@
 /obj/machinery/door/airlock/titanium,
 /turf/open/floor/plating/airless,
 /area/awaymission/bmpship/midship)
+"bh" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/turf/open/floor/plating,
+/area/awaymission/bmpship/aft)
 "bi" = (
 /obj/machinery/computer/teleporter,
 /turf/open/floor/plating,
@@ -474,6 +487,19 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/bmpship/midship)
+"cf" = (
+/obj/structure/table,
+/obj/item/kitchen/knife/butcher,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/food/meat/slab/human,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/bmpship/midship)
 "cg" = (
 /obj/structure/table,
 /obj/item/storage/box/donkpockets,
@@ -509,6 +535,15 @@
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
+/area/awaymission/bmpship/midship)
+"cj" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
 /area/awaymission/bmpship/midship)
 "ck" = (
 /obj/structure/table,
@@ -546,6 +581,10 @@
 /turf/open/floor/iron,
 /area/awaymission/bmpship/midship)
 "cq" = (
+/turf/open/floor/iron,
+/area/awaymission/bmpship/midship)
+"cr" = (
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/midship)
 "cs" = (
@@ -665,6 +704,14 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/bmpship/midship)
+"cP" = (
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/awaymission/bmpship/midship)
 "cQ" = (
 /obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
@@ -713,6 +760,11 @@
 "cY" = (
 /obj/structure/table,
 /obj/item/paper/fluff/ruins/crashedship/captains_log,
+/turf/open/floor/carpet,
+/area/awaymission/bmpship/fore)
+"cZ" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/open/floor/carpet,
 /area/awaymission/bmpship/fore)
 "da" = (
@@ -849,11 +901,6 @@
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/bmpship/fore)
-"dL" = (
-/obj/machinery/power/shieldwallgen,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/midship)
 "dN" = (
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
@@ -1497,6 +1544,12 @@
 /obj/item/paper/fluff/ruins/crashedship/old_diary,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
+"gi" = (
+/obj/structure/table,
+/obj/item/pen/red,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/turf/open/floor/iron,
+/area/awaymission/bmpship/aft)
 "gj" = (
 /obj/structure/closet,
 /obj/item/clothing/under/misc/overalls,
@@ -1734,6 +1787,10 @@
 /obj/item/poster/random_contraband,
 /turf/open/floor/plating,
 /area/awaymission/bmpship/aft)
+"hs" = (
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/turf/open/floor/plating,
+/area/awaymission/bmpship/aft)
 "ht" = (
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/bmpship/aft)
@@ -1750,36 +1807,10 @@
 "hE" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/awaymission/bmpship/fore)
-"oN" = (
-/obj/structure/table,
-/obj/effect/spawner/random/exotic/technology,
-/turf/open/floor/carpet,
-/area/awaymission/bmpship/fore)
-"uH" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/turf/open/floor/iron,
-/area/awaymission/bmpship/midship)
-"vi" = (
-/obj/structure/table/wood,
-/obj/item/stack/spacecash/c500,
-/obj/item/stack/spacecash/c100,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/turf/open/floor/wood,
-/area/awaymission/bmpship/fore)
-"vu" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/random/entertainment/money_large,
+"nN" = (
+/obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
-"vJ" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/awaymission/bmpship/midship)
 "ya" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "packerMine"
@@ -1790,66 +1821,24 @@
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/bmpship/midship)
-"yQ" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/turf/open/floor/carpet,
-/area/awaymission/bmpship/fore)
-"yU" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron,
+"zm" = (
+/obj/machinery/power/shieldwallgen/unlocked,
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/awaymission/bmpship/midship)
 "zW" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
-"Ao" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"Bg" = (
-/obj/machinery/hydroponics,
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/spawner/random/food_or_drink/seed_rare,
-/turf/open/floor/iron,
-/area/awaymission/bmpship/midship)
-"CZ" = (
-/obj/structure/table,
-/obj/item/kitchen/knife/butcher,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/food/meat/slab/human,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron/cafeteria,
-/area/awaymission/bmpship/midship)
 "EQ" = (
 /obj/structure/lattice,
 /turf/template_noop,
 /area/awaymission/bmpship/midship)
-"Fi" = (
-/obj/machinery/hydroponics,
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/spawner/random/food_or_drink/seed_rare,
+"EU" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/entertainment/money_large,
 /turf/open/floor/iron,
-/area/awaymission/bmpship/midship)
+/area/awaymission/bmpship/aft)
 "Hy" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "packerMine"
@@ -1861,6 +1850,15 @@
 /obj/item/gps/spaceruin,
 /turf/open/floor/carpet,
 /area/awaymission/bmpship/fore)
+"IL" = (
+/obj/machinery/hydroponics,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/spawner/random/food_or_drink/seed_rare,
+/turf/open/floor/iron,
+/area/awaymission/bmpship/midship)
 "Kj" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating/asteroid/airless,
@@ -1875,16 +1873,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/bmpship/midship)
-"LT" = (
-/obj/structure/table,
-/obj/item/pen/red,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/turf/open/floor/iron,
-/area/awaymission/bmpship/aft)
 "Mx" = (
 /turf/closed/mineral/random,
 /area/awaymission/bmpship/midship)
-"OY" = (
+"Nm" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1892,21 +1884,13 @@
 /obj/effect/spawner/random/exotic/technology,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
-"Pg" = (
-/obj/effect/spawner/random/entertainment/arcade,
-/turf/open/floor/iron,
-/area/awaymission/bmpship/aft)
-"PU" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
 "QM" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
 /area/awaymission/bmpship/midship)
-"Ts" = (
+"Ry" = (
 /obj/machinery/hydroponics,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -1918,6 +1902,22 @@
 /obj/effect/spawner/random/food_or_drink/seed_rare,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/midship)
+"Sd" = (
+/obj/machinery/hydroponics,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/spawner/random/food_or_drink/seed_rare,
+/turf/open/floor/iron,
+/area/awaymission/bmpship/midship)
+"Ss" = (
+/obj/structure/table,
+/obj/effect/spawner/random/exotic/technology,
+/turf/open/floor/carpet,
+/area/awaymission/bmpship/fore)
 "Xc" = (
 /obj/structure/frame/computer{
 	anchored = 1;
@@ -2314,7 +2314,7 @@ bV
 IA
 Xc
 Xc
-oN
+Ss
 bV
 aT
 aI
@@ -2506,14 +2506,14 @@ aa
 aa
 aa
 cG
-vi
+aR
 bm
 bu
 aT
 bV
 bV
 bV
-yQ
+cZ
 du
 bV
 bV
@@ -2869,7 +2869,7 @@ bv
 aq
 bZ
 bZ
-Fi
+Sd
 dc
 dg
 dB
@@ -3072,7 +3072,7 @@ aa
 aa
 aq
 ca
-uH
+cr
 cq
 dd
 dg
@@ -3122,18 +3122,18 @@ aa
 aa
 aa
 aq
-Bg
+IL
 cd
 cd
-Ts
+Ry
 dg
-dL
+zm
 ej
 ej
 ej
 eV
 ej
-dL
+zm
 ce
 ce
 aq
@@ -3326,7 +3326,7 @@ EQ
 aq
 gt
 aq
-CZ
+cf
 cs
 cL
 ce
@@ -3734,7 +3734,7 @@ as
 at
 bA
 aq
-vJ
+cj
 cu
 ce
 dg
@@ -3838,7 +3838,7 @@ bC
 aq
 cl
 ce
-yU
+cP
 dg
 dB
 dS
@@ -3887,7 +3887,7 @@ at
 at
 bA
 aq
-vJ
+cj
 cu
 ce
 dg
@@ -4055,11 +4055,11 @@ cw
 fO
 ac
 cE
-Pg
+nN
 gg
 dl
 cE
-vu
+EU
 ht
 ho
 aj
@@ -4110,7 +4110,7 @@ cE
 cE
 dl
 cE
-vu
+EU
 ht
 ag
 ah
@@ -4189,7 +4189,7 @@ ac
 ac
 aE
 aN
-Ao
+bh
 al
 al
 bO
@@ -4317,7 +4317,7 @@ gN
 cE
 fY
 al
-PU
+hs
 ht
 ae
 aa
@@ -4462,7 +4462,7 @@ ht
 ht
 ht
 ht
-LT
+gi
 dl
 cE
 cE
@@ -4507,7 +4507,7 @@ dD
 dY
 et
 eG
-OY
+Nm
 dD
 cV
 cV

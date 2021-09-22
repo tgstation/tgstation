@@ -1,4 +1,4 @@
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { multiline } from 'common/string';
 import { BlockQuote, Button, Dimmer, Section, Stack } from '../components';
 import { BooleanLike } from 'common/react';
@@ -33,6 +33,7 @@ type Info = {
   goal: string;
   intro: string;
   code: string;
+  failsafe_code: string;
   has_uplink: BooleanLike;
   uplink_intro: string;
   uplink_unlock_info: string;
@@ -96,7 +97,8 @@ const EmployerSection = (props, context) => {
           icon="hammer"
           tooltip={multiline`
             This is a gameplay suggestion for bored traitors.
-            You don't have to follow it... kinda like spacelaw!`}
+            You don't have to follow it, unless you want some
+            ideas for how to spend the round.`}
           tooltipPosition="bottom-start">
           Policy
         </Button>
@@ -135,6 +137,7 @@ const UplinkSection = (props, context) => {
     uplink_intro,
     uplink_unlock_info,
     code,
+    failsafe_code,
   } = data;
   return (
     <Section
@@ -153,6 +156,8 @@ const UplinkSection = (props, context) => {
               {uplink_intro}
               <br />
               <span style={goalstyle}>Code: {code}</span>
+              <br />
+              <span style={badstyle}>Failsafe: {failsafe_code}</span>
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item mt="1%">

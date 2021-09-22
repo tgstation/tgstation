@@ -94,19 +94,6 @@
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron,
 /area/centcom/evac)
-"aU" = (
-/obj/structure/rack,
-/obj/item/clothing/under/color/red,
-/obj/item/clothing/shoes/sneakers/brown,
-/obj/item/clothing/suit/armor/tdome/red,
-/obj/item/clothing/head/helmet/thunderdome,
-/obj/item/melee/baton/loaded,
-/obj/item/melee/energy/sword/saber/red,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/tdome/arena)
 "aW" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomehea";
@@ -255,15 +242,39 @@
 "gu" = (
 /turf/closed/indestructible/splashscreen,
 /area/start)
+"gQ" = (
+/obj/structure/rack,
+/obj/item/clothing/under/color/red,
+/obj/item/clothing/shoes/sneakers/brown,
+/obj/item/clothing/suit/armor/tdome/red,
+/obj/item/clothing/head/helmet/thunderdome,
+/obj/item/melee/baton/security/loaded,
+/obj/item/melee/energy/sword/saber/red,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/tdome/arena)
 "hh" = (
 /turf/closed/indestructible/rock/snow,
 /area/syndicate_mothership)
 "hl" = (
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
+"hn" = (
+/mob/living/basic/cow,
+/turf/open/floor/grass,
+/area/centcom/holding)
 "hH" = (
 /turf/open/floor/holofloor/hyperspace,
 /area/space)
+"hO" = (
+/obj/structure/table/wood/fancy,
+/obj/item/storage/dice{
+	icon_state = "magicdicebag"
+	},
+/turf/open/floor/carpet,
+/area/wizard_station)
 "hU" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -279,6 +290,10 @@
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/control)
+"ig" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/turf/open/floor/wood,
+/area/centcom/holding)
 "il" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/prison)
@@ -5555,6 +5570,22 @@
 	},
 /turf/open/floor/iron,
 /area/syndicate_mothership/control)
+"tf" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/toy/cards/deck/syndicate{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/syndicate_mothership/control)
 "tg" = (
 /turf/closed/indestructible/rock/snow,
 /area/syndicate_mothership/control)
@@ -5649,11 +5680,6 @@
 /obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
-"tx" = (
-/obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
-/turf/open/floor/iron/grimy,
-/area/centcom/ferry)
 "ty" = (
 /obj/structure/table/wood,
 /obj/item/toy/cards/deck/cas{
@@ -7354,13 +7380,6 @@
 /obj/machinery/vending/snack,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
-"xy" = (
-/obj/structure/table/wood/fancy,
-/obj/item/storage/pill_bottle/dice{
-	icon_state = "magicdicebag"
-	},
-/turf/open/floor/carpet,
-/area/wizard_station)
 "xz" = (
 /obj/structure/table/wood/fancy,
 /obj/item/storage/photo_album,
@@ -8220,22 +8239,6 @@
 /obj/item/food/fishmeat/carp,
 /turf/open/floor/iron/cafeteria,
 /area/centcom/holding)
-"zW" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/obj/item/toy/cards/deck/syndicate{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/syndicate_mothership/control)
 "zX" = (
 /obj/structure/table,
 /obj/machinery/light/directional/north,
@@ -8708,19 +8711,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/centcom/holding)
-"Br" = (
-/obj/structure/rack,
-/obj/item/clothing/under/color/green,
-/obj/item/clothing/shoes/sneakers/brown,
-/obj/item/clothing/suit/armor/tdome/green,
-/obj/item/clothing/head/helmet/thunderdome,
-/obj/item/melee/baton/loaded,
-/obj/item/melee/energy/sword/saber/green,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/tdome/arena)
 "Bs" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/bookmanagement,
@@ -13772,6 +13762,11 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/wood,
 /area/centcom/holding)
+"ND" = (
+/obj/structure/table/wood,
+/obj/item/storage/dice,
+/turf/open/floor/iron/grimy,
+/area/centcom/ferry)
 "NE" = (
 /turf/open/floor/iron,
 /area/centcom/supplypod/pod_storage)
@@ -14065,10 +14060,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/centcom/holding)
-"Qa" = (
-/obj/effect/spawner/random/entertainment/arcade,
-/turf/open/floor/wood,
-/area/centcom/holding)
 "Qd" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album/syndicate{
@@ -14106,19 +14097,6 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/centcom/holding)
-"Ql" = (
-/obj/structure/rack,
-/obj/item/clothing/under/color/green,
-/obj/item/clothing/shoes/sneakers/brown,
-/obj/item/clothing/suit/armor/tdome/green,
-/obj/item/clothing/head/helmet/thunderdome,
-/obj/item/melee/baton/loaded,
-/obj/item/melee/energy/sword/saber/green,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/tdome/arena_source)
 "Qq" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -14664,19 +14642,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/three)
-"Vo" = (
-/obj/structure/rack,
-/obj/item/clothing/under/color/red,
-/obj/item/clothing/shoes/sneakers/brown,
-/obj/item/clothing/suit/armor/tdome/red,
-/obj/item/clothing/head/helmet/thunderdome,
-/obj/item/melee/baton/loaded,
-/obj/item/melee/energy/sword/saber/red,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/tdome/arena_source)
 "Vu" = (
 /obj/structure/flora/ausbushes/fernybush,
 /obj/structure/flora/ausbushes/fullgrass,
@@ -14749,6 +14714,19 @@
 	},
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
+"Wr" = (
+/obj/structure/rack,
+/obj/item/clothing/under/color/green,
+/obj/item/clothing/shoes/sneakers/brown,
+/obj/item/clothing/suit/armor/tdome/green,
+/obj/item/clothing/head/helmet/thunderdome,
+/obj/item/melee/baton/security/loaded,
+/obj/item/melee/energy/sword/saber/green,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/tdome/arena_source)
 "Wt" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -14813,6 +14791,19 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/ferry)
+"WV" = (
+/obj/structure/rack,
+/obj/item/clothing/under/color/red,
+/obj/item/clothing/shoes/sneakers/brown,
+/obj/item/clothing/suit/armor/tdome/red,
+/obj/item/clothing/head/helmet/thunderdome,
+/obj/item/melee/baton/security/loaded,
+/obj/item/melee/energy/sword/saber/red,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/tdome/arena_source)
 "WY" = (
 /obj/structure/mineral_door/paperframe{
 	name = "Arcade"
@@ -14830,6 +14821,19 @@
 /obj/machinery/vending/autodrobe,
 /turf/open/floor/wood,
 /area/centcom/holding)
+"Xg" = (
+/obj/structure/rack,
+/obj/item/clothing/under/color/green,
+/obj/item/clothing/shoes/sneakers/brown,
+/obj/item/clothing/suit/armor/tdome/green,
+/obj/item/clothing/head/helmet/thunderdome,
+/obj/item/melee/baton/security/loaded,
+/obj/item/melee/energy/sword/saber/green,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/tdome/arena)
 "Xh" = (
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/four)
@@ -15044,10 +15048,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/four)
-"ZT" = (
-/mob/living/simple_animal/cow,
-/turf/open/floor/grass,
-/area/centcom/holding)
 "ZU" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -22698,7 +22698,7 @@ uE
 vl
 uE
 wP
-xy
+hO
 qE
 yG
 zp
@@ -33229,7 +33229,7 @@ pZ
 pZ
 rf
 sg
-zW
+tf
 pZ
 rf
 vx
@@ -39430,7 +39430,7 @@ CT
 CT
 XM
 NT
-Qa
+ig
 CV
 CT
 NT
@@ -39944,7 +39944,7 @@ CT
 CT
 GY
 NT
-Qa
+ig
 CV
 CT
 NT
@@ -41726,7 +41726,7 @@ Nd
 CT
 CT
 Rh
-ZT
+hn
 Nd
 Pr
 Fh
@@ -52247,7 +52247,7 @@ qd
 mD
 rt
 sx
-tx
+ND
 up
 uR
 mD
@@ -54595,12 +54595,12 @@ Ep
 FI
 FL
 Ep
-aU
-aU
-aU
-aU
-aU
-aU
+gQ
+gQ
+gQ
+gQ
+gQ
+gQ
 Iv
 JG
 JO
@@ -62305,12 +62305,12 @@ Ep
 FP
 FL
 Ep
-Br
-Br
-Br
-Br
-Br
-Br
+Xg
+Xg
+Xg
+Xg
+Xg
+Xg
 Iv
 JG
 JU
@@ -72383,12 +72383,12 @@ aa
 "}
 (224,1,1) = {"
 ab
-Vo
-Vo
-Vo
-Vo
-Vo
-Vo
+WV
+WV
+WV
+WV
+WV
+WV
 ab
 aa
 aa
@@ -80093,12 +80093,12 @@ aa
 "}
 (254,1,1) = {"
 ab
-Ql
-Ql
-Ql
-Ql
-Ql
-Ql
+Wr
+Wr
+Wr
+Wr
+Wr
+Wr
 ab
 aa
 aa

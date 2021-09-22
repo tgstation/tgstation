@@ -12,18 +12,15 @@
 
 	network_id = __NETWORK_CIRCUITS
 
+	/// Data being sent
 	var/datum/port/input/data_package
-	var/datum/port/input/secondary_package
+
+	/// Encryption key
 	var/datum/port/input/enc_key
 
-/obj/item/circuit_component/ntnet_send/Initialize()
-	. = ..()
+/obj/item/circuit_component/ntnet_send/populate_ports()
 	data_package = add_input_port("Data Package", PORT_TYPE_ANY)
-	secondary_package = add_input_port("Secondary Package", PORT_TYPE_ANY)
 	enc_key = add_input_port("Encryption Key", PORT_TYPE_STRING)
 
 /obj/item/circuit_component/ntnet_send/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
-	ntnet_send(list("data" = data_package.value, "data_secondary" = secondary_package.value, "enc_key" = enc_key.value))
+	ntnet_send(list("data" = data_package.value, "enc_key" = enc_key.value))
