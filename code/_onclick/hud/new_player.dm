@@ -5,10 +5,13 @@
 	if (owner?.client?.interviewee)
 		return
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
-	for(var/button in buttons)
-		var/atom/movable/screen/lobbyscreen = new button()
+	for(var/button_type in buttons)
+		var/atom/movable/screen/lobbyscreen = new button_type()
 		lobbyscreen.hud = src
 		static_inventory += lobbyscreen
+		if(istype(lobbyscreen, /atom/movable/screen/lobby/button))
+			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
+			lobby_button.owner = REF(owner)
 
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
@@ -26,9 +29,15 @@
 	var/enabled = TRUE
 	///Is the button currently being hovered over with the mouse?
 	var/highlighted = FALSE
+	/// The ref of the mob that owns this button. Only the owner can click on it.
+	var/owner
 
 /atom/movable/screen/lobby/button/Click(location, control, params)
+	if(owner != REF(usr))
+		return
+
 	. = ..()
+
 	if(!enabled)
 		return
 	flick("[base_icon_state]_pressed", src)
@@ -36,11 +45,17 @@
 	return TRUE
 
 /atom/movable/screen/lobby/button/MouseEntered(location,control,params)
+	if(owner != REF(usr))
+		return
+
 	. = ..()
 	highlighted = TRUE
 	update_appearance(UPDATE_ICON)
 
 /atom/movable/screen/lobby/button/MouseExited()
+	if(owner != REF(usr))
+		return
+
 	. = ..()
 	highlighted = FALSE
 	update_appearance(UPDATE_ICON)

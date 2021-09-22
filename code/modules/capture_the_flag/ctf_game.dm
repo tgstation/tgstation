@@ -236,7 +236,7 @@
 
 /obj/machinery/capture_the_flag/Initialize()
 	. = ..()
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 	ctf_landmark = GLOB.ctf_spawner
 
 /obj/machinery/capture_the_flag/Destroy()
