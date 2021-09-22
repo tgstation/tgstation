@@ -71,7 +71,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 /// Fully updates the list of POIs.
 /datum/orbit_menu/proc/update_poi_list()
-	var/list/new_mob_pois = SSpoints_of_interest.get_mob_pois(CALLBACK(src, .proc/validate_mob_poi))
+	var/list/new_mob_pois = SSpoints_of_interest.get_mob_pois(CALLBACK(src, .proc/validate_mob_poi), append_dead_role = FALSE)
 	var/list/new_other_pois = SSpoints_of_interest.get_other_pois()
 
 	pois.Cut()
@@ -89,17 +89,9 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 		var/mob/mob_poi = new_mob_pois[name]
 
-		// Add the ghost/dead tag to the end of dead mob POIs.
-		if(mob_poi.stat == DEAD)
-			if(isobserver(mob_poi))
-				serialized["name"] = name + " \[ghost\]"
-			else
-				serialized["name"] = name + " \[dead\]"
-		else
-			serialized["name"] = name
-
 		var/poi_ref = REF(mob_poi)
 		serialized["ref"] = poi_ref
+		serialized["name"] = name
 
 		pois[poi_ref] = mob_poi
 

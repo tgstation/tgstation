@@ -98,8 +98,9 @@ SUBSYSTEM_DEF(points_of_interest)
  *
  * Arguments:
  * * poi_validation_override - [OPTIONAL] Callback to a proc that takes a single argument for the POI and returns TRUE if this POI should be included. Overrides standard POI validation.
+ * * append_dead_role - [OPTIONAL] If TRUE, adds a ghost tag to the end of observer names and a dead tag to the end of any other mob which is not alive.
  */
-/datum/controller/subsystem/points_of_interest/proc/get_mob_pois(datum/callback/poi_validation_override = null)
+/datum/controller/subsystem/points_of_interest/proc/get_mob_pois(datum/callback/poi_validation_override = null, append_dead_role = TRUE)
 	var/list/pois = list()
 	var/list/used_name_list = list()
 
@@ -112,6 +113,13 @@ SUBSYSTEM_DEF(points_of_interest)
 
 		var/mob/target_mob = mob_poi.target
 		var/name = avoid_assoc_duplicate_keys(target_mob.name, used_name_list) + target_mob.get_realname_string()
+
+		// Add the ghost/dead tag to the end of dead mob POIs.
+		if(append_dead_role && target_mob.stat == DEAD)
+			if(isobserver(target_mob))
+				name += " \[ghost\]"
+			else
+				name += " \[dead\]"
 
 		pois[name] = target_mob
 
