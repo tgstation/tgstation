@@ -115,10 +115,9 @@
 	name = "snow gear"
 	icon_state = "snowman"
 	loot = list(
-		/obj/item/toy/snowball = 15,
-		/obj/item/stack/sheet/mineral/snow{amount = 25} = 10,
-		/obj/item/shovel = 10,
-		/obj/item/spear = 8,
+		/obj/item/toy/snowball = 6,
+		/obj/item/stack/sheet/mineral/snow{amount = 25} = 2,
+		/obj/item/shovel = 2,
 	)
 
 /obj/effect/spawner/random/exotic/ripley
