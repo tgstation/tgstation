@@ -26,7 +26,7 @@
 /obj/effect/spawner/lootdrop/donkpockets : /obj/effect/spawner/random/food_or_drink/donkpockets
 /obj/effect/spawner/lootdrop/space/rareseed : /obj/effect/spawner/random/food_or_drink/seed_rare
 /obj/effect/spawner/lootdrop/space/cashmoney : /obj/effect/spawner/random/entertainment/money_large
-/obj/effect/spawner/lootdrop/space/fancytool/raremedicalonly : /obj/effect/spawner/random/medical/surgery_tool_rare
+/obj/effect/spawner/lootdrop/space/fancytool/raremedicalonly : /obj/effect/spawner/random/medical/surgery_tool_alien
 /obj/effect/spawner/lootdrop/space/fancytool/advmedicalonly : /obj/effect/spawner/random/medical/surgery_tool_advanced
 /obj/effect/spawner/lootdrop/space/fancytool/engineonly : /obj/effect/spawner/random/engineering/tool_advanced
 /obj/effect/spawner/lootdrop/space/material : /obj/effect/spawner/random/engineering/material_rare
@@ -36,15 +36,15 @@
 /obj/effect/spawner/lootdrop/aimodule_harmless : /obj/effect/spawner/random/aimodule/harmless
 /obj/effect/spawner/lootdrop/aimodule_neutral : /obj/effect/spawner/random/aimodule/neutral
 /obj/effect/spawner/lootdrop/aimodule_harmful : /obj/effect/spawner/random/aimodule/harmful
-/obj/effect/spawner/lootdrop/techstorage/service : /obj/effect/spawner/random/techstorage/service
-/obj/effect/spawner/lootdrop/techstorage/rnd : /obj/effect/spawner/random/techstorage/rnd
-/obj/effect/spawner/lootdrop/techstorage/security : /obj/effect/spawner/random/techstorage/security
-/obj/effect/spawner/lootdrop/techstorage/engineering : /obj/effect/spawner/random/techstorage/engineering
-/obj/effect/spawner/lootdrop/techstorage/tcomms : /obj/effect/spawner/random/techstorage/tcomms
-/obj/effect/spawner/lootdrop/techstorage/medical : /obj/effect/spawner/random/techstorage/medical
-/obj/effect/spawner/lootdrop/techstorage/ai : /obj/effect/spawner/random/techstorage/ai
-/obj/effect/spawner/lootdrop/techstorage/command : /obj/effect/spawner/random/techstorage/command
-/obj/effect/spawner/lootdrop/techstorage/rnd_secure : /obj/effect/spawner/random/techstorage/rnd_secure
+/obj/effect/spawner/lootdrop/techstorage/service : /obj/effect/spawner/random/techstorage/service_all
+/obj/effect/spawner/lootdrop/techstorage/rnd : /obj/effect/spawner/random/techstorage/rnd_all
+/obj/effect/spawner/lootdrop/techstorage/security : /obj/effect/spawner/random/techstorage/security_all
+/obj/effect/spawner/lootdrop/techstorage/engineering : /obj/effect/spawner/random/techstorage/engineering_all
+/obj/effect/spawner/lootdrop/techstorage/tcomms : /obj/effect/spawner/random/techstorage/tcomms_all
+/obj/effect/spawner/lootdrop/techstorage/medical : /obj/effect/spawner/random/techstorage/medical_all
+/obj/effect/spawner/lootdrop/techstorage/ai : /obj/effect/spawner/random/techstorage/ai_all
+/obj/effect/spawner/lootdrop/techstorage/command : /obj/effect/spawner/random/techstorage/command_all
+/obj/effect/spawner/lootdrop/techstorage/rnd_secure : /obj/effect/spawner/random/techstorage/rnd_secure_all
 /obj/effect/spawner/lootdrop/prison_contraband : /obj/effect/spawner/random/contraband/prison
 /obj/effect/spawner/lootdrop/armory_contraband : /obj/effect/spawner/random/contraband/armory
 /obj/effect/spawner/lootdrop/armory_contraband/metastation : /obj/effect/spawner/random/contraband/armory
@@ -79,16 +79,5 @@
 /obj/effect/spawner/lootdrop/snowdin/dungeonmisc : /obj/effect/spawner/random/exotic/snow_gear
 /obj/effect/spawner/lootdrop/seed_vault : /obj/effect/spawner/random/food_or_drink/seed_vault
 /obj/effect/spawner/lootdrop/whiteship_cere_ripley : /obj/effect/spawner/random/exotic/ripley
-/obj/effect/spawner/random/medical/surgery_tool_rare : /obj/effect/spawner/random/medical/surgery_tool_alien
-/obj/effect/spawner/random/engineering/tool_rare : /obj/effect/spawner/random/engineering/tool_alien
-/obj/effect/spawner/random/techstorage/service : /obj/effect/spawner/random/techstorage/service_all
-/obj/effect/spawner/random/techstorage/rnd : /obj/effect/spawner/random/techstorage/rnd_all
-/obj/effect/spawner/random/techstorage/security : /obj/effect/spawner/random/techstorage/security_all
-/obj/effect/spawner/random/techstorage/engineering : /obj/effect/spawner/random/techstorage/engineering_all
-/obj/effect/spawner/random/techstorage/tcomms : /obj/effect/spawner/random/techstorage/tcomms_all
-/obj/effect/spawner/random/techstorage/medical : /obj/effect/spawner/random/techstorage/medical_all
-/obj/effect/spawner/random/techstorage/ai : /obj/effect/spawner/random/techstorage/ai_all
-/obj/effect/spawner/random/techstorage/command : /obj/effect/spawner/random/techstorage/command_all
-/obj/effect/spawner/random/techstorage/rnd_secure : /obj/effect/spawner/random/techstorage/rnd_secure_all
 
 

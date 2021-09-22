@@ -11323,10 +11323,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"bYs" = (
-/obj/effect/loot_site_spawner,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "bYu" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = -32
@@ -17276,7 +17272,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "ezy" = (
-/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "ezI" = (
@@ -28653,7 +28649,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -28795,7 +28791,7 @@
 	name = "---Merge conflict marker---"
 	},
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
@@ -30356,7 +30352,7 @@
 /area/medical/pharmacy)
 "lTi" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "lTp" = (
@@ -31267,7 +31263,7 @@
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/random,
-/obj/effect/spawner/lootdrop/memeorgans,
+/obj/effect/spawner/random/medical/memeorgans,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
@@ -34671,7 +34667,7 @@
 	name = "---Merge conflict marker---"
 	},
 /obj/machinery/light/small/directional/north,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -35123,7 +35119,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
@@ -35341,7 +35337,7 @@
 /area/commons/locker)
 "oDu" = (
 /obj/item/poster/random_contraband,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
@@ -38244,7 +38240,7 @@
 /turf/open/floor/iron,
 /area/command/heads_quarters/hop)
 "qcx" = (
-/obj/effect/spawner/bundle/hobo_squat,
+/obj/effect/spawner/random/trash/hobo_squat,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "qde" = (
@@ -39686,7 +39682,7 @@
 	name = "---Merge conflict marker---"
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/structure/table,
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -40085,7 +40081,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -42252,7 +42248,7 @@
 	name = "---Merge conflict marker---"
 	},
 /obj/structure/cable,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table,
@@ -43758,7 +43754,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -45345,7 +45341,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
@@ -45997,7 +45993,7 @@
 /area/cargo/miningdock)
 "ugf" = (
 /obj/structure/closet/cardboard,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "ugy" = (
@@ -47237,7 +47233,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/spawner/lootdrop/maintenance/four,
+/obj/effect/spawner/random/maintenance/four,
 /obj/structure/closet/crate/maint,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
@@ -48282,7 +48278,7 @@
 	},
 /obj/structure/rack,
 /obj/machinery/light/small/directional/north,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -50423,7 +50419,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -99546,7 +99542,7 @@ jsw
 jsw
 ebd
 cNW
-bYs
+tYw
 cOe
 moG
 cNW

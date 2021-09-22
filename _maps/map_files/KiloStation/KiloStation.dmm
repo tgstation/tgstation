@@ -46485,7 +46485,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/port)

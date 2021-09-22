@@ -830,7 +830,7 @@
 "fg" = (
 /obj/structure/rack,
 /obj/item/poster/random_official,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/item/relic,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
@@ -2194,7 +2194,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/maintenance/starboard/fore)
 "ld" = (
-/obj/effect/spawner/bundle/hobo_squat,
+/obj/effect/spawner/random/trash/hobo_squat,
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
@@ -3553,7 +3553,7 @@
 /area/mine/living_quarters)
 "rD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "rE" = (
@@ -3605,7 +3605,7 @@
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
 "rO" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron/dark,
 /area/mine/eva)
 "rQ" = (
@@ -3784,7 +3784,7 @@
 /area/service/bar/atrium)
 "sA" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/gloves,
+/obj/effect/spawner/random/clothing/gloves,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/plating,
@@ -3900,7 +3900,7 @@
 /area/mine/eva)
 "ta" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /obj/item/storage/toolbox/emergency,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
@@ -4420,7 +4420,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "vA" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "vC" = (
@@ -4508,7 +4508,7 @@
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
 "vZ" = (
-/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "wa" = (
@@ -4650,7 +4650,7 @@
 /area/icemoon/underground/explored)
 "wJ" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maint_drugs,
+/obj/effect/spawner/random/entertainment/drugs,
 /obj/item/poster/random_contraband,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/showroomfloor,
@@ -5324,7 +5324,7 @@
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "Af" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "Ag" = (
@@ -6138,7 +6138,7 @@
 /area/icemoon/underground/explored)
 "DP" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maint_drugs,
+/obj/effect/spawner/random/entertainment/drugs,
 /obj/item/lighter/greyscale,
 /turf/open/floor/iron/showroomfloor,
 /area/maintenance/department/medical)
@@ -7198,7 +7198,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "Il" = (
@@ -7358,7 +7358,7 @@
 "Jb" = (
 /obj/structure/grille/broken,
 /obj/effect/landmark/event_spawn,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/effect/decal/cleanable/generic,
 /obj/effect/landmark/xeno_spawn,
 /obj/effect/landmark/blobstart,
@@ -7862,7 +7862,7 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "LB" = (
-/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/spawner/random/maintenance/three,
 /obj/structure/closet/crate,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
@@ -10567,7 +10567,7 @@
 /area/service/bar/atrium)
 "Yf" = (
 /obj/structure/bed,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "Yg" = (
@@ -10743,7 +10743,7 @@
 /area/maintenance/aft)
 "YR" = (
 /obj/structure/grille/broken,
-/obj/effect/spawner/bundle/moisture_trap,
+/obj/effect/spawner/random/trash/moisture_trap,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "YT" = (

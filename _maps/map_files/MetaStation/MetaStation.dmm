@@ -4779,7 +4779,7 @@
 	name = "---Merge conflict marker---"
 	},
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
 /turf/open/floor/wood,
 /area/service/bar)
 "aRA" = (
@@ -8574,7 +8574,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/structure/closet,
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -8674,7 +8674,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -13140,7 +13140,7 @@
 	dir = 4
 	},
 /obj/item/storage/box/lights/mixed,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -15457,7 +15457,7 @@
 	name = "---Merge conflict marker---"
 	},
 /obj/machinery/airalarm/directional/west,
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -17701,7 +17701,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -28920,7 +28920,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/machinery/light/dim{
 	dir = 1
 	},
@@ -32929,7 +32929,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/closet/crate,
 /obj/item/storage/box/drinkingglasses,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -33296,7 +33296,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
@@ -36480,8 +36480,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
@@ -44956,7 +44956,7 @@
 	name = "---Merge conflict marker---"
 	},
 /obj/structure/table/glass,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -47402,7 +47402,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -51753,7 +51753,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -57570,7 +57570,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
@@ -59625,7 +59625,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/machinery/light/directional/east,
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -60809,7 +60809,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -61260,7 +61260,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plating,
@@ -61508,7 +61508,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "tLK" = (
@@ -69578,7 +69578,7 @@
 /obj{
 	name = "---Merge conflict marker---"
 	},
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
