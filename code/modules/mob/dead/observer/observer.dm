@@ -961,6 +961,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Minigames Menu"
 	set desc = "See all currently available minigames"
 	set category = "Ghost"
+	if(!client)
+		return
+	if(!isobserver(src))
+		to_chat(usr, span_warning("You must be a ghost to play minigames!"))
+		return
 	if(!minigames_menu)
 		minigames_menu = new(src)
 

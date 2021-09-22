@@ -18,3 +18,19 @@
 	if(!ui)
 		ui = new(user, src, "MinigamesMenu")
 		ui.open()
+
+/datum/minigames_menu/ui_act(action, params, datum/tgui/ui)
+	switch(action)
+		if("mafia")
+			ui.close()
+			mafia()
+			return TRUE
+		if("ctf")
+			mafia()
+			return TRUE
+
+/datum/minigames_menu/proc/mafia()
+	var/datum/mafia_controller/game = GLOB.mafia_game //this needs to change if you want multiple mafia games up at once.
+	if(!game)
+		game = create_mafia_game("mafia")
+	game.ui_interact(usr)

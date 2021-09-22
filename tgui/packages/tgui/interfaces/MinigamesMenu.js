@@ -1,37 +1,41 @@
 import { useBackend } from '../backend';
-import { Box, Button, Section } from '../components';
+import { Box, Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
-
+ 
 export const MinigamesMenu = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act } = useBackend(context);
   return (
     <Window
       title="Minigames Menu"
-      width={400}
+      width={390}
       height={200}>
       <Window.Content>
-        <Section
-        title="Select Game"
-        textAlign="center"
-           />
-           {( 
-            <>
+        <Section title="Select Minigame" textAlign="center">
+          <Stack>
+            <Stack.Item>
               <Button
-                fluid
-                textAlign="center"
-                content="CTF"
-                onClick={() => act('jump', {
-                  name: "spawner.name",
-                })} />
+                 content="CTF"
+                 height={9}
+                 width={15}
+                 fontSize={3}
+                 textAlign="center"
+                 lineHeight="3"
+                 onClick={() => act('ctf')}
+              />
+            </Stack.Item>
+            <Stack.Item>
               <Button
-                fluid
-                textAlign="center"
                 content="Mafia"
-                onClick={() => act('spawn', {
-                  name: "spawner.name",
-                })} />
-            </>
-          )}
+                height={9}
+                width={15}
+                fontSize={3}
+                textAlign="center"
+                lineHeight="3"
+                onClick={() => act('mafia')}
+              />
+             </Stack.Item>
+          </Stack>  
+        </Section>
       </Window.Content>
     </Window>
   );
