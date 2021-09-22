@@ -54,13 +54,13 @@
 		var/obj/item/paper_bin/bin = I
 		if(LAZYLEN(bin.papers))
 			if(stored_paper >= max_paper)
-				to_chat(user, span_warning("You try to feed \the [bin] into [src]'s paper recycler, but its paper bin is full!"))
+				balloon_alert(user, "its full!")
 				return FALSE
 			/// Number of sheets we're adding
 			var/num_to_add = 0
 			/// Some goober put their manifesto in the paperbin, complain at the user if that's why nothing happened
 			var/rejected_sheets = FALSE
-			for(var/obj/item/paper/the_paper in bin.papers) // Search for the first blank sheet of paper, then toss it in
+			for(var/obj/item/paper/the_paper as anything in bin.papers) // Search for the first blank sheet of paper, then toss it in
 				if(the_paper.info != "") // Uh oh, paper has words! 
 					rejected_sheets = TRUE
 					continue
@@ -81,10 +81,10 @@
 				else
 					to_chat(user, span_warning("The [src]'s paper recycler refuses \the [bin], flashing some cryptic message about a feed error!"))
 			else
-				to_chat(user, span_notice("The [src]'s paper recycler pulls in [num_to_add] unit[num_to_add >= 2 ? "s" : ""] of paper from \the [bin]."))
+				balloon_alert(user, "pulled in [num_to_add] sheets\s of paper")
 			return TRUE
 		else
-			to_chat(user, span_warning("\The [bin] is empty."))
+			balloon_alert(user, "the bin is empty!")
 			return FALSE
 	return FALSE
 
