@@ -26,7 +26,7 @@
 			mafia()
 			return TRUE
 		if("ctf")
-			mafia()
+			CTF()
 			return TRUE
 
 /datum/minigames_menu/proc/mafia()
@@ -34,3 +34,9 @@
 	if(!game)
 		game = create_mafia_game("mafia")
 	game.ui_interact(usr)
+
+/datum/minigames_menu/proc/CTF()
+	var/datum/ctf_panel/ctf_panel
+	if(!ctf_panel)
+		ctf_panel = new(src)
+	ctf_panel.ui_interact(usr)
