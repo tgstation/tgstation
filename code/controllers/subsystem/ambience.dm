@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(ambience)
 	var/area/current_area = get_area(to_process.mob)
 
 	if(!current_area) //Something's gone horribly wrong
-		stack_trace("A [to_process.ckey]'s mob [to_process.mob] has somehowe ended up in nullspace. WTF did you do")
+		stack_trace("[key_name(to_process)] has somehow ended up in nullspace. WTF did you do")
 		ambience_listening_clients -= to_process
 		return
 
