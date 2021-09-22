@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - bugfix: "fix scrubbers/vents/injectors/etc from being able to be placed on all layer on the same turf"
