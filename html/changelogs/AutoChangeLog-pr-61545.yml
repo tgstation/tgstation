@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - admin: "Adds a couple of missing traits relating to cult and bloodshot eyes to the Modify Traits VV dropdown menu for mobs."

@@ -261,14 +261,14 @@ Behavior that's still missing from this component that original food items had t
 	if(feeder.combat_mode)
 		return
 
+	. = COMPONENT_CANCEL_ATTACK_CHAIN //Point of no return I suppose
+
 	if(IsFoodGone(owner, feeder))
 		return
 
 	if(!CanConsume(eater, feeder))
 		return
 	var/fullness = eater.get_fullness() + 10 //The theoretical fullness of the person eating if they were to eat this
-
-	. = COMPONENT_CANCEL_ATTACK_CHAIN //Point of no return I suppose
 
 	if(eater == feeder)//If you're eating it yourself.
 		if(eat_time && !do_mob(feeder, eater, eat_time, timed_action_flags = food_flags & FOOD_FINGER_FOOD ? IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE : NONE)) //Gotta pass the minimal eat time

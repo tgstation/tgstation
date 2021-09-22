@@ -376,7 +376,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 		qdel(plane_master)
 
 	client?.clear_map(assigned_map)
-	client?.screen -= src
 
 	preferences?.character_preview_view = null
 
