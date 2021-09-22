@@ -3,7 +3,7 @@
 
 	if(ismob(item_pawn.loc)) //We're being held, maybe escape?
 		if(controller.blackboard[BB_LIKES_EQUIPPER])//don't unequip from people it's okay with
-			return SUBTREE_RETURN_FINISH_PLANNING
+			return
 		if(DT_PROB(HAUNTED_ITEM_ESCAPE_GRASP_CHANCE, delta_time))
 			controller.queue_behavior(/datum/ai_behavior/item_escape_grasp)
 		return SUBTREE_RETURN_FINISH_PLANNING
