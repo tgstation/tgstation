@@ -627,7 +627,7 @@
 	
 /datum/crafting_recipe/dripcloak
 	name = "Drip Cloak"
-	result = /obj/item/clothing/neck/cloak/comxy
+	result = /obj/item/clothing/neck/cloak/drip
 	time = 200
 	reqs = list(/obj/item/bedsheet = 1,
 				/obj/item/stack/sheet/mineral/plasma = 5,
