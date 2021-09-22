@@ -154,7 +154,7 @@
 	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flame_range = 0)
 	qdel(src)
 
-/obj/structure/reagent_dispensers/cream_soda/blob_act(obj/structure/blob/B)
+/obj/structure/reagent_dispensers/cream_soda/blob_act(obj/structure/blob/beware_of_the_blob)
 	boom()
 
 /obj/structure/reagent_dispensers/cream_soda/ex_act()
@@ -168,11 +168,11 @@
 	if(ZAP_OBJ_DAMAGE & zap_flags)
 		boom()
 
-/obj/structure/reagent_dispensers/cream_soda/bullet_act(obj/projectile/P)
+/obj/structure/reagent_dispensers/cream_soda/bullet_act(obj/projectile/boolett)
 	. = ..()
 	if(!QDELETED(src)) //wasn't deleted by the projectile's effects.
-		if(!P.nodamage && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
-			log_bomber(P.firer, "detonated a", src, "via projectile")
+		if(!boolett.nodamage && ((boolett.damage_type == BURN) || (boolett.damage_type == BRUTE)))
+			log_bomber(boolett.firer, "detonated a", src, "via projectile")
 			boom()
 
 /obj/structure/reagent_dispensers/peppertank
