@@ -225,53 +225,9 @@
 /obj/effect/spawner/random/entertainment/toy
 	name = "toy spawner"
 	icon_state = "toy"
-	loot_subtype_path = /obj/item/toy/mecha
-	loot = list(
-		/obj/item/storage/box/snappops,
-		/obj/item/toy/talking/ai,
-		/obj/item/toy/talking/codex_gigas,
-		/obj/item/clothing/under/syndicate/tacticool,
-		/obj/item/toy/sword,
-		/obj/item/toy/gun,
-		/obj/item/gun/ballistic/shotgun/toy/crossbow,
-		/obj/item/storage/box/fakesyndiesuit,
-		/obj/item/storage/crayons,
-		/obj/item/toy/spinningtoy,
-		/obj/item/toy/balloon/arrest,
-		/obj/item/toy/cards/deck,
-		/obj/item/toy/nuke,
-		/obj/item/toy/minimeteor,
-		/obj/item/toy/redbutton,
-		/obj/item/toy/talking/owl,
-		/obj/item/toy/talking/griffin,
-		/obj/item/coin/antagtoken,
-		/obj/item/stack/tile/fakespace/loaded,
-		/obj/item/stack/tile/fakepit/loaded,
-		/obj/item/stack/tile/eighties/loaded,
-		/obj/item/toy/toy_xeno,
-		/obj/item/storage/box/actionfigure,
-		/obj/item/restraints/handcuffs/fake,
-		/obj/item/grenade/chem_grenade/glitter/pink,
-		/obj/item/grenade/chem_grenade/glitter/blue,
-		/obj/item/grenade/chem_grenade/glitter/white,
-		/obj/item/toy/eightball,
-		/obj/item/toy/windup_toolbox,
-		/obj/item/toy/clockwork_watch,
-		/obj/item/toy/toy_dagger,
-		/obj/item/extendohand/acme,
-		/obj/item/hot_potato/harmless/toy,
-		/obj/item/card/emagfake,
-		/obj/item/clothing/shoes/wheelys,
-		/obj/item/clothing/shoes/kindle_kicks,
-		/obj/item/toy/plush/goatplushie,
-		/obj/item/toy/plush/moth,
-		/obj/item/toy/plush/pkplush,
-		/obj/item/toy/plush/rouny,
-		/obj/item/storage/belt/military/snack,
-		/obj/item/toy/brokenradio,
-		/obj/item/toy/braintoy,
-		/obj/item/toy/eldritch_book,
-		/obj/item/storage/box/heretic_box,
-		/obj/item/toy/foamfinger,
-		/obj/item/clothing/glasses/trickblindfold,
-	)
+	loot = list()
+
+/obj/effect/spawner/random/entertainment/toy/Initialize(mapload)
+	loot += GLOB.arcade_prize_pool
+	. = ..()
+	return INITIALIZE_HINT_QDEL
