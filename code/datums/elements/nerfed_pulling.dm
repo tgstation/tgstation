@@ -1,4 +1,4 @@
-/// This living will be slower when pulling/moving some dangerous objects in its obj_flags
+/// This living will be slower when pulling/moving anything in the given typecache
 /datum/element/nerfed_pulling
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
 	id_arg_index = 2
