@@ -14,13 +14,13 @@ export const MinigamesMenu = (context) => {
           <Stack>
             <Stack.Item>
               <Button
-                 content="CTF"
-                 height={9}
-                 width={15}
-                 fontSize={3}
-                 textAlign="center"
-                 lineHeight="3"
-                 onClick={() => act('ctf')}
+                content="CTF"
+                height={9}
+                width={15}
+                fontSize={3}
+                textAlign="center"
+                lineHeight="3"
+                onClick={() => act('ctf')}
               />
             </Stack.Item>
             <Stack.Item>
@@ -33,7 +33,7 @@ export const MinigamesMenu = (context) => {
                 lineHeight="3"
                 onClick={() => act('mafia')}
               />
-             </Stack.Item>
+            </Stack.Item>
           </Stack>  
         </Section>
       </Window.Content>
