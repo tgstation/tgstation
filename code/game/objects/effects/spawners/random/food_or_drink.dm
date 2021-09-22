@@ -122,9 +122,9 @@
 	name = "booze spawner"
 	icon_state = "beer"
 	loot = list(
-		/obj/item/reagent_containers/food/drinks/bottle/beer = 250,
-		/obj/item/reagent_containers/food/drinks/bottle/ale = 100,
-		/obj/item/reagent_containers/food/drinks/bottle/beer/light = 50,
+		/obj/item/reagent_containers/food/drinks/bottle/beer = 75,
+		/obj/item/reagent_containers/food/drinks/bottle/ale = 25,
+		/obj/item/reagent_containers/food/drinks/bottle/beer/light = 5,
 		/obj/item/reagent_containers/food/drinks/bottle/maltliquor = 5,
 		/obj/item/reagent_containers/food/drinks/bottle/whiskey = 5,
 		/obj/item/reagent_containers/food/drinks/bottle/gin = 5,
