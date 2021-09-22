@@ -1,5 +1,9 @@
 ///Template class of the movement datums, handles the timing portion of the loops
 /datum/move_loop
+	///The movement packet that owns us
+	var/datum/movement_packet/owner
+	///The subsystem we're processing on
+	var/datum/controller/subsystem/movement/controller
 	///The thing we're moving about
 	var/atom/movable/moving
 	///Lifetime in deci-seconds, defaults to forever
@@ -11,34 +15,40 @@
 	///The last tick we processed
 	var/lasttick = 0
 
-/datum/move_loop/proc/setup(atom/moving, delay = 1, timeout = INFINITY)
-	if(!ismovable(moving))
-		handle_delete()
+/datum/move_loop/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving)
+	src.owner = owner
+	src.controller = controller
+	src.moving = moving
+
+/datum/move_loop/proc/setup(delay = 1, timeout = INFINITY)
+	if(!ismovable(moving) || !owner)
 		return FALSE
 
-	src.moving = moving
 	src.delay = delay
 	lifetime = timeout
 
-	RegisterSignal(moving, COMSIG_PARENT_QDELETING, .proc/handle_delete)
+	RegisterSignal(moving, COMSIG_PARENT_QDELETING, .proc/nuke_loop)
 	return TRUE
 
 /datum/move_loop/Destroy()
-	SHOULD_CALL_PARENT(TRUE)
-	UnregisterSignal(moving, COMSIG_PARENT_QDELETING)
+	if(owner)
+		owner.remove_loop(controller, src)
+		owner = null
 	if(!QDELETED(moving))
+		UnregisterSignal(moving, COMSIG_PARENT_QDELETING)
 		SEND_SIGNAL(moving, COMSIG_MOVELOOP_END)
+	moving = null
 	return ..()
 
-/datum/move_loop/proc/handle_delete()
+/datum/move_loop/proc/nuke_loop()
 	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
-	SSmovement_loop.remove_from_loop(moving, src)
+	qdel(src)
 
 /datum/move_loop/process(delta_time)
 	timer += delta_time
 	if(timer >= lifetime)
-		handle_delete()
+		nuke_loop()
 		return
 	if(timer - delay < lasttick)
 		return
@@ -53,6 +63,9 @@
 	return
 
 
+/proc/stop_looping(atom/moving, subsystem)
+	SSmove_manager.remove_from_subsystem(subsystem)
+
 /**
  * Replacement for walk()
  *
@@ -65,14 +78,14 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/movement/proc/move(moving, direction, delay, timeout, override)
-	return start_looping(/datum/move_loop/move, override, moving, delay, timeout, direction)
+/proc/move(moving, direction, delay, timeout, override, subsystem)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move, override, delay, timeout, direction)
 
 ///Replacement for walk()
 /datum/move_loop/move
 	var/direction
 
-/datum/move_loop/move/setup(atom/moving, delay, timeout, dir)
+/datum/move_loop/move/setup(delay, timeout, dir)
 	. = ..()
 	if(!.)
 		return
@@ -86,12 +99,12 @@
 	///The thing we're moving in relation to, either at or away from
 	var/atom/target
 
-/datum/move_loop/has_target/setup(atom/moving, delay, timeout, atom/chasing)
+/datum/move_loop/has_target/setup(delay, timeout, atom/chasing)
 	. = ..()
 	if(!.)
 		return
 	if(!isatom(chasing))
-		handle_delete()
+		nuke_loop()
 		return FALSE
 
 	target = chasing
@@ -106,7 +119,7 @@
 
 /datum/move_loop/has_target/proc/handle_no_target()
 	SIGNAL_HANDLER
-	handle_delete()
+	nuke_loop()
 
 
 /**
@@ -121,8 +134,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/movement/proc/force_move(moving, chasing, delay, timeout, override)
-	return start_looping(/datum/move_loop/has_target/force_move, override, moving, delay, timeout, chasing)
+/proc/force_move(moving, chasing, delay, timeout, override, subsystem)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/force_move, override, delay, timeout, chasing)
 
 ///Used for force-move loops
 /datum/move_loop/has_target/force_move
@@ -135,7 +148,7 @@
 /datum/move_loop/has_target/dist_bound
 	var/distance = 0
 
-/datum/move_loop/has_target/dist_bound/setup(atom/moving, delay, timeout, atom/chasing, dist = 0)
+/datum/move_loop/has_target/dist_bound/setup(delay, timeout, atom/chasing, dist = 0)
 	. = ..()
 	if(!.)
 		return
@@ -165,8 +178,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/movement/proc/move_to(moving, chasing, min_dist, delay, timeout, override)
-	return start_looping(/datum/move_loop/has_target/dist_bound/move_to, override, moving, delay, timeout, chasing, min_dist)
+/proc/move_to(moving, chasing, min_dist, delay, timeout, override, subsystem)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_to, override, delay, timeout, chasing, min_dist)
 
 ///Wrapper around walk_to()
 /datum/move_loop/has_target/dist_bound/move_to
@@ -194,8 +207,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/movement/proc/move_away(moving, chasing, max_dist, delay, timeout, override)
-	return start_looping(/datum/move_loop/has_target/dist_bound/move_away, override, moving, delay, timeout, chasing, max_dist)
+/proc/move_away(moving, chasing, max_dist, delay, timeout, override, subsystem)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_away, override, delay, timeout, chasing, max_dist)
 
 ///Wrapper around walk_away()
 /datum/move_loop/has_target/dist_bound/move_away
@@ -223,11 +236,11 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/movement/proc/move_towards(moving, chasing, delay, home, timeout, override)
-	return start_looping(/datum/move_loop/has_target/move_towards, override, moving, delay, timeout, chasing, home)
+/proc/move_towards(moving, chasing, delay, home, timeout, override, subsystem)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards, override, delay, timeout, chasing, home)
 
 ///Helper proc for homing
-/datum/controller/subsystem/movement/proc/home_onto(moving, chasing, delay, timeout, override)
+/proc/home_onto(moving, chasing, delay, timeout, override)
 	return move_towards(moving, chasing, delay, TRUE, timeout, override)
 
 ///Used as a alternative to walk_towards
@@ -243,7 +256,7 @@
 	var/x_rate = 1
 	var/y_rate = 1
 
-/datum/move_loop/has_target/move_towards/setup(atom/moving, delay, timeout, atom/chasing, home = FALSE)
+/datum/move_loop/has_target/move_towards/setup(delay, timeout, atom/chasing, home = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -332,8 +345,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/movement/proc/move_towards_legacy(moving, chasing, delay, timeout, override)
-	return start_looping(/datum/move_loop/has_target/move_towards_budget, override, moving, delay, timeout, chasing)
+/proc/move_towards_legacy(moving, chasing, delay, timeout, override, subsystem)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards_budget, override, delay, timeout, chasing)
 
 ///The actual implementation of walk_towards()
 /datum/move_loop/has_target/move_towards_budget
@@ -355,10 +368,10 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/movement/proc/move_rand(moving, directions, delay, timeout, override)
+/proc/move_rand(moving, directions, delay, timeout, override, subsystem)
 	if(!directions)
 		directions = GLOB.alldirs
-	return start_looping(/datum/move_loop/move_rand, override, moving, delay, timeout, directions)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move_rand, override, delay, timeout, directions)
 
 /**
  * This isn't actually the same as walk_rand
@@ -370,7 +383,7 @@
 /datum/move_loop/move_rand
 	var/list/potential_directions
 
-/datum/move_loop/move_rand/setup(atom/moving, delay, timeout, list/directions)
+/datum/move_loop/move_rand/setup(delay, timeout, list/directions)
 	. = ..()
 	if(!.)
 		return
@@ -397,8 +410,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/movement/proc/move_to_rand(moving, delay, timeout, override)
-	return start_looping(/datum/move_loop/move_to_rand, override, moving, delay, timeout)
+/proc/move_to_rand(moving, delay, timeout, override, subsystem)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move_to_rand, override, delay, timeout)
 
 ///Wrapper around step_rand
 /datum/move_loop/move_to_rand
