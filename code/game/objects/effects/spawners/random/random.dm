@@ -2,18 +2,30 @@
 	icon = 'icons/effects/random_spawners.dmi'
 	icon_state = "loot"
 	layer = OBJ_LAYER
-	anchored = TRUE // Stops persistent lootdrop spawns from being shoved into lockers
-	var/list/loot //a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
-	var/loot_type_path //the subtypes AND type to combine with the loot list
-	var/loot_subtype_path // the subtypes (this excludes the provided path) to combine with the loot list
-	var/spawn_on_init = TRUE	// Whether the spawner should immediately spawn loot and cleanup on Initialize()
-	var/spawn_loot_count = 1 //how many items will be spawned
-	var/spawn_loot_double = TRUE //if the same item can be spawned twice
-	var/spawn_loot_split = FALSE //Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
-	var/spawn_all_loot = FALSE // Whether the spawner should spawn all the loot in the list
-	var/spawn_loot_chance = 100 // The chance for the spawner to create loot (ignores spawn_loot_count)
-	var/spawn_scatter_radius = 0 //determines how big of a range (in tiles) we should scatter things in.
-	var/spawn_random_offset = FALSE // Whether the items should have a random pixel_x/y offset (maxium offset distance is ±16 pixels for x/y)
+	/// Stops persistent lootdrop spawns from being shoved into lockers
+	anchored = TRUE
+	/// A list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
+	var/list/loot
+	/// The subtypes AND type to combine with the loot list
+	var/loot_type_path
+	/// The subtypes (this excludes the provided path) to combine with the loot list
+	var/loot_subtype_path
+	/// Whether the spawner should immediately spawn loot and cleanup on Initialize()
+	var/spawn_on_init = TRUE
+	/// How many items will be spawned
+	var/spawn_loot_count = 1
+	/// If the same item can be spawned twice
+	var/spawn_loot_double = TRUE
+	/// Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
+	var/spawn_loot_split = FALSE
+	/// Whether the spawner should spawn all the loot in the list
+	var/spawn_all_loot = FALSE
+	/// The chance for the spawner to create loot (ignores spawn_loot_count)
+	var/spawn_loot_chance = 100
+	/// Determines how big of a range (in tiles) we should scatter things in.
+	var/spawn_scatter_radius = 0
+	/// Whether the items should have a random pixel_x/y offset (maxium offset distance is ±16 pixels for x/y)
+	var/spawn_random_offset = FALSE
 
 /obj/effect/spawner/random/Initialize(mapload)
 	. = ..()
