@@ -29,8 +29,10 @@
 /datum/preference_middleware/quirks/get_constant_data()
 	var/list/quirk_info = list()
 
-	for (var/quirk_name in SSquirks.quirks)
-		var/datum/quirk/quirk = SSquirks.quirks[quirk_name]
+	var/list/quirks = SSquirks.get_quirks()
+
+	for (var/quirk_name in quirks)
+		var/datum/quirk/quirk = quirks[quirk_name]
 		quirk_info[sanitize_css_class_name(quirk_name)] = list(
 			"description" = initial(quirk.desc),
 			"icon" = initial(quirk.icon),
