@@ -30,18 +30,20 @@
 /obj/effect/spawner/random/trash/food_packaging
 	name = "empty food packaging spawner"
 	loot = list(
-		/obj/item/trash/raisins = 20,
-		/obj/item/trash/cheesie = 10,
-		/obj/item/trash/candy = 10,
-		/obj/item/trash/chips = 10,
-		/obj/item/trash/sosjerky = 10,
-		/obj/item/trash/pistachios = 10,
-		/obj/item/trash/boritos = 8,
-		/obj/item/trash/can/food/beans = 6,
-		/obj/item/trash/popcorn = 5,
-		/obj/item/trash/energybar = 5,
-		/obj/item/trash/can/food/peaches/maint = 4,
-		/obj/item/trash/semki = 2,
+		/obj/item/trash/raisins = 2,
+		/obj/item/trash/cheesie = 2,
+		/obj/item/trash/candy = 2,
+		/obj/item/trash/chips = 2,
+		/obj/item/trash/sosjerky = 2,
+		/obj/item/trash/pistachios = 2,
+		/obj/item/trash/peanuts = 2,
+		/obj/item/trash/boritos = 1,
+		/obj/item/trash/can/food/beans = 1,
+		/obj/item/trash/popcorn = 1,
+		/obj/item/trash/energybar = 1,
+		/obj/item/trash/can/food/peaches/maint = 1,
+		/obj/item/trash/semki = 1,
+		/obj/item/trash/cnds = 1,
 	)
 
 /obj/effect/spawner/random/trash/botanical_waste
