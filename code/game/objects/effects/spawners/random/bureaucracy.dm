@@ -42,23 +42,11 @@
 	icon_state = "paper"
 	loot = list(
 		/obj/item/paper = 20,
-		/obj/item/paper/pamphlet/gateway = 3,
-		/obj/item/paper/pamphlet/violent_video_games = 3,
-		/obj/item/paper/pamphlet/radstorm = 3,
 		/obj/item/paper/crumpled = 2,
 		/obj/item/paper/crumpled/bloody = 2,
 		/obj/item/paper/crumpled/muddy = 2,
 		/obj/item/paper/construction = 1,
 		/obj/item/paper/carbon = 1,
-	)
-
-/obj/effect/spawner/random/bureaucracy/pamphlet
-	name = "pamphlet spawner"
-	icon_state = "pamphlet"
-	loot = list(
-		/obj/item/paper/pamphlet/gateway,
-		/obj/item/paper/pamphlet/violent_video_games,
-		/obj/item/paper/pamphlet/radstorm,
 	)
 
 /obj/effect/spawner/random/bureaucracy/briefcase
