@@ -29,6 +29,8 @@
 		/mob/dview,
 		//Template,
 		/obj/effect/mapping_helpers/custom_icon,
+		//Proccall handler to handle proccalls
+		/mob/proccall_handler
 	)
 	//This turf existing is an error in and of itself
 	ignore += typesof(/turf/baseturf_skipover)
