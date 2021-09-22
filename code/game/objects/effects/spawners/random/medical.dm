@@ -130,9 +130,8 @@
 	name = "patient stretcher spawner"
 	icon_state = "rollerbed"
 	loot = list(
-		/obj/structure/bed/roller = 25,
-		/obj/vehicle/ridden/wheelchair = 24,
-		/obj/vehicle/ridden/wheelchair/gold = 1,
+		/obj/structure/bed/roller,
+		/obj/vehicle/ridden/wheelchair,
 	)
 
 /obj/effect/spawner/random/medical/supplies
