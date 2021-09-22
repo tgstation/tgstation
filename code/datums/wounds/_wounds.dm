@@ -58,6 +58,8 @@
 	var/damage_mulitplier_penalty = 1
 	/// If set and this wound is applied to a leg, we take this many deciseconds extra per step on this leg
 	var/limp_slowdown
+	/// If this wound has a limp_slowdown and is applied to a leg, it has this chance to limp each step
+	var/limp_chance
 	/// How much we're contributing to this limb's bleed_rate
 	var/blood_flow
 

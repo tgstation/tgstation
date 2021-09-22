@@ -1,0 +1,8 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - rscadd: "Tramstation's Security and Service wing has been flipped around."
+  - rscadd: "Tramstation's commissary has been placed above in the central wing beside the kitchen."
+  - rscadd: "Tramstation's EVA and Gateway rooms have been adjusted. EVA now has one extra suit storage unit."
+  - rscadd: "Tramstation's maintenance near the Service and Security wing has had reworked layouts."
+  - rscadd: "Tramstation's asteroid now leaves behind breathable turfs so digging out a room isn't as tedious."

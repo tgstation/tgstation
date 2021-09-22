@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "The weapons authorization setting for turrets will now check for weapons on targets without a chameleon identification card instead of those with either a chameleon ID or no ID at all."

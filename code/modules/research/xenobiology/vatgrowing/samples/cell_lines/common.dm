@@ -61,7 +61,32 @@
 							/datum/reagent/toxin/carpotoxin = -5)
 
 	virus_suspectibility = 1
-	resulting_atoms = list(/mob/living/simple_animal/cow = 1)
+	resulting_atoms = list(/mob/living/basic/cow = 1)
+
+/datum/micro_organism/cell_line/moonicorn
+	desc = "Fairyland Bovine stem cells"
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/protein,
+		/datum/reagent/consumable/nutriment,
+		/datum/reagent/drug/mushroomhallucinogen,
+	)
+
+	supplementary_reagents = list(
+		/datum/reagent/growthserum = 4,
+		/datum/reagent/consumable/tinlux = 2,
+		/datum/reagent/consumable/vitfro = 2,
+		/datum/reagent/consumable/astrotame = 1,
+	)
+
+	suppressive_reagents = list(
+		/datum/reagent/toxin = -2,
+		/datum/reagent/toxin/carpotoxin = -5,
+		/datum/reagent/consumable/coffee = -3,
+		/datum/reagent/consumable/triple_citrus = -5,
+	)
+
+	virus_suspectibility = 1
+	resulting_atoms = list(/mob/living/basic/cow/moonicorn = 1)
 
 /datum/micro_organism/cell_line/cat
 	desc = "Feliform cells"

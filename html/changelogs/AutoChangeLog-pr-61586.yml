@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - bugfix: "You can now bind Ctrl/Alt again."
