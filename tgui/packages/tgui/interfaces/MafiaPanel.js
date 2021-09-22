@@ -127,7 +127,7 @@ const MafiaLobby = (props, context) => {
         </>
       )}>
       <NoticeBox info>
-        The lobby currently has {readyGhosts 
+        The lobby currently has {readyGhosts
           ? readyGhosts.length : "0"}/12 valid players signed up.
       </NoticeBox>
       {lobbydata?.map(lobbyist => (
