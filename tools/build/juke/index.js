@@ -3552,12 +3552,12 @@ var require_sync = __commonJS({
       }
     };
     GlobSync.prototype._processSimple = function(prefix, index) {
-      var exists = prefix ? this._stat(prefix) : false;
+      var exists = this._stat(prefix);
       if (!this.matches[index])
         this.matches[index] = Object.create(null);
       if (!exists)
         return;
-      if (isAbsolute(prefix) && !this.nomount) {
+      if (prefix && isAbsolute(prefix) && !this.nomount) {
         var trail = /[\/\\]$/.test(prefix);
         if (prefix.charAt(0) === "/") {
           prefix = path2.join(this.root, prefix);
