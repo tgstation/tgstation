@@ -1,0 +1,4 @@
+author: "grimm-hollowknight, ported by tralezab with a few overlays"
+delete-after: True
+changes: 
+  - imageadd: "New borg sprite, from Yogstation!"

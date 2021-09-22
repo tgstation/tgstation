@@ -488,8 +488,8 @@
 	if(. != BATON_DO_NORMAL_ATTACK)
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		if(active && cooldown_check <= world.time && check_parried(target, user))
-			finalize_baton_attack(target, user, modifiers)
+		if(active && cooldown_check <= world.time && !check_parried(target, user))
+			finalize_baton_attack(target, user, modifiers, in_attack_chain = FALSE)
 	else if(!user.combat_mode)
 		target.visible_message(span_warning("[user] prods [target] with [src]. Luckily it was off."), \
 			span_warning("[user] prods you with [src]. Luckily it was off."))

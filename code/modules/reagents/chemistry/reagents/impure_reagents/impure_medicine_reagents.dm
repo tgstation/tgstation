@@ -544,7 +544,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	remove_buffs(owner)
 	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(owner.health < -500 || heart.organ_flags & ORGAN_FAILING)//Honestly commendable if you get -500
-		explosion(owner, light_impact_range = 1)
+		explosion(owner, light_impact_range = 1, explosion_cause = src)
 		qdel(heart)
 		owner.visible_message(span_boldwarning("[owner]'s heart explodes!"))
 	return ..()
@@ -557,7 +557,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
 		owner.stat = DEAD
 		return ..()
-	explosion(owner, light_impact_range = 1)
+	explosion(owner, light_impact_range = 1, explosion_cause = src)
 	qdel(heart)
 	owner.visible_message(span_boldwarning("[owner]'s heart explodes!"))
 	return..()

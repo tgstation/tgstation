@@ -18,12 +18,10 @@ export type FlexProps = BoxProps & {
 export const computeFlexClassName = (props: FlexProps) => {
   return classes([
     'Flex',
-    Byond.IS_LTE_IE10 && (
-      props.direction === 'column'
-        ? 'Flex--iefix--column'
-        : 'Flex--iefix'
-    ),
     props.inline && 'Flex--inline',
+    Byond.IS_LTE_IE10 && 'Flex--iefix',
+    Byond.IS_LTE_IE10 && props.direction === 'column' && 'Flex--iefix--column',
+    computeBoxClassName(props),
   ]);
 };
 
@@ -37,7 +35,7 @@ export const computeFlexProps = (props: FlexProps) => {
     inline,
     ...rest
   } = props;
-  return {
+  return computeBoxProps({
     style: {
       ...rest.style,
       'flex-direction': direction,
@@ -46,7 +44,7 @@ export const computeFlexProps = (props: FlexProps) => {
       'justify-content': justify,
     },
     ...rest,
-  };
+  });
 };
 
 export const Flex = props => {
@@ -56,9 +54,8 @@ export const Flex = props => {
       className={classes([
         className,
         computeFlexClassName(rest),
-        computeBoxClassName(rest),
       ])}
-      {...computeBoxProps(computeFlexProps(rest))}
+      {...computeFlexProps(rest)}
     />
   );
 };
@@ -77,7 +74,7 @@ export const computeFlexItemClassName = (props: FlexItemProps) => {
   return classes([
     'Flex__item',
     Byond.IS_LTE_IE10 && 'Flex__item--iefix',
-    Byond.IS_LTE_IE10 && (props.grow && props.grow > 0) && 'Flex__item--iefix--grow',
+    computeBoxClassName(props),
   ]);
 };
 
@@ -94,7 +91,7 @@ export const computeFlexItemProps = (props: FlexItemProps) => {
     align,
     ...rest
   } = props;
-  return {
+  return computeBoxProps({
     style: {
       ...style,
       'flex-grow': grow !== undefined && Number(grow),
@@ -104,7 +101,7 @@ export const computeFlexItemProps = (props: FlexItemProps) => {
       'align-self': align,
     },
     ...rest,
-  };
+  });
 };
 
 const FlexItem = props => {
@@ -114,9 +111,8 @@ const FlexItem = props => {
       className={classes([
         className,
         computeFlexItemClassName(props),
-        computeBoxClassName(props),
       ])}
-      {...computeBoxProps(computeFlexItemProps(rest))}
+      {...computeFlexItemProps(rest)}
     />
   );
 };

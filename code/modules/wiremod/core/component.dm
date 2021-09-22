@@ -325,8 +325,20 @@
 	for(var/entry in entries)
 		. += create_ui_notice("Column Name: '[entry]'", "grey", "columns")
 
-/obj/item/circuit_component/proc/register_usb_parent(atom/movable/parent)
+/**
+ * Called when a circuit component is added to an object with a USB port.
+ *
+ * Arguments:
+ * * shell - The object that USB cables can connect to
+ */
+/obj/item/circuit_component/proc/register_usb_parent(atom/movable/shell)
 	return
 
-/obj/item/circuit_component/proc/unregister_usb_parent(atom/movable/parent)
+/**
+ * Called when a circuit component is removed from an object with a USB port.
+ *
+ * Arguments:
+ * * shell - The object that USB cables can connect to
+ */
+/obj/item/circuit_component/proc/unregister_usb_parent(atom/movable/shell)
 	return
