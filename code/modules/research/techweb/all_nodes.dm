@@ -222,6 +222,7 @@
 		"comp_not",
 		"comp_ntnet_receive",
 		"comp_ntnet_send",
+		"comp_pinpointer",
 		"comp_pressuresensor",
 		"comp_radio",
 		"comp_random",
