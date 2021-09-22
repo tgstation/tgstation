@@ -111,9 +111,8 @@
 	icon_state = "tank"
 	loot = list( // use this for emergency storage areas and maint
 		/obj/structure/reagent_dispensers/fueltank = 5,
-		/obj/structure/reagent_dispensers/watertank = 3,
+		/obj/structure/reagent_dispensers/watertank = 4,
 		/obj/structure/reagent_dispensers/watertank/high = 1,
-		/obj/structure/reagent_dispensers/foamtank = 1,
 	)
 
 /obj/effect/spawner/random/engineering/vending_restock
