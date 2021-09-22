@@ -2,13 +2,15 @@
 
 ///Assoc list of cell line define | assoc list of datum | cell_line
 GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
-	CELL_LINE_TABLE_SLUDGE = list(/datum/micro_organism/cell_line/sholean_grapes = 2,
-								/datum/micro_organism/cell_line/blobbernaut = 1,
-								/datum/micro_organism/cell_line/slime = 2,
-								/datum/micro_organism/cell_line/cow = 1,
-								/datum/micro_organism/cell_line/mouse = 1,
-								/datum/micro_organism/cell_line/chicken = 1,
-								/datum/micro_organism/cell_line/cockroach = 2),
+	CELL_LINE_TABLE_SLUDGE = list(
+		/datum/micro_organism/cell_line/sholean_grapes = 2,
+		/datum/micro_organism/cell_line/blobbernaut = 1,
+		/datum/micro_organism/cell_line/slime = 2,
+		/datum/micro_organism/cell_line/cow = 1,
+		/datum/micro_organism/cell_line/mouse = 1,
+		/datum/micro_organism/cell_line/chicken = 1,
+		/datum/micro_organism/cell_line/cockroach = 2,
+	),
 
 	CELL_LINE_TABLE_MOIST = list(/datum/micro_organism/cell_line/gelatinous_cube = 2,
 								/datum/micro_organism/cell_line/megacarp = 1,
