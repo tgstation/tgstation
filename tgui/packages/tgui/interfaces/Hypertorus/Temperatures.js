@@ -76,13 +76,15 @@ const VerticalProgressBar = props => {
 export const HypertorusTemperatures = props => {
   const {
     powerLevel: power_level,
-    heatOutput: heat_output,
     baseMaxTemperature: base_max_temperature,
-    heatLimiterModifier: heat_limiter_modifier,
     internalFusionTemperature: internal_fusion_temperature,
+    internalFusionTemperatureDelta: internal_fusion_temperature_delta,
     moderatorInternalTemperature: moderator_internal_temperature,
+    moderatorInternalTemperatureDelta: moderator_internal_temperature_delta,
     internalOutputTemperature: internal_output_temperature,
+    internalOutputTemperatureDelta: internal_output_temperature_delta,
     internalCoolantTemperature: internal_coolant_temperature,
+    internalCoolantTemperatureDelta: internal_coolant_temperature_delta,
     selectedFuel: selected_fuel,
   } = props;
 
@@ -126,52 +128,6 @@ export const HypertorusTemperatures = props => {
     const ratio = (value - baseTemp) / (maxTemperature - minTemperature);
     const ret = height * (fromBottom ? (1 - ratio) : ratio);
     return ret;
-  }
-
-  /*
-   * Display temperature change delta right of the temperature change bar.
-   */
-
-  const heat_delta_height = Math.max(1,value_to_y(Math.abs(heat_output), 0, false));
-  let heat_modifier_height = Math.max(1,value_to_y(Math.abs(heat_limiter_modifier), 0, false));
-  let heat_delta_indicator;
-  if (heat_output > 1) {
-    heat_delta_indicator = (
-      <div style={{
-        position: "absolute",
-        left: '17px',
-        top: `-${heat_modifier_height}px`,
-      }}>
-        <VerticalProgressBar
-          color="maroon"
-          height={heat_modifier_height}
-          progressHeight={heat_delta_height}
-          value={heat_output}
-          borderRadius="2px 9px 0 0"
-        />
-      </div>
-    );
-  } else if (heat_output < -1) {
-    heat_delta_indicator = (
-      <div style={{
-        position: "absolute",
-        left: '17px',
-        height: `${heat_modifier_height}px`,
-        bottom: `0px`,
-        'background-color': 'magenta',
-      }}>
-        <VerticalProgressBar
-          color="aliceblue"
-          height={heat_modifier_height}
-          progressHeight={heat_delta_height}
-          value={heat_output}
-          borderRadius="0 0 9px 2px"
-          falling
-        />
-      </div>
-    );
-  } else {
-    heat_delta_indicator = false;
   }
 
   const TemperatureLabel = (props, context) => {
@@ -231,11 +187,13 @@ export const HypertorusTemperatures = props => {
   const TemperatureBar = (props, context) => {
     const {
       label,
+      delta,
       value,
       children,
       ...rest
     } = props;
     const y = value_to_y(value);
+    const delta_str = to_exponential_if_big(delta) + " K/s";
     return (
       <Flex.Item mx={1}>
         <Stack vertical align="center">
@@ -243,9 +201,17 @@ export const HypertorusTemperatures = props => {
             <VerticalProgressBar height={height} progressHeight={y} value={value} {...rest}>{children}</VerticalProgressBar>
           </Stack.Item>
           <Stack.Item color="label">
-            <Tooltip position="bottom" content={to_exponential_if_big(value) + " K"}>
-              <Box position="relative">{label}</Box>
-            </Tooltip>
+            <Box align="center">{label}</Box>
+            {value > 0 ? ([<Box align="center">
+              {to_exponential_if_big(value) + " K"}
+            </Box>,<Box align="center">{(delta > 0 ?
+              `+${delta_str}` :
+              delta < 0 ?
+                `${delta_str}` :
+                "-"
+            )}</Box>]) : (<Box align="center" color="red">
+              Empty
+            </Box>)}
           </Stack.Item>
         </Stack>
       </Flex.Item>
@@ -261,12 +227,26 @@ export const HypertorusTemperatures = props => {
           <TemperatureLabel key="next_fusion_temp" icon="chevron-up" tooltip="Next Fusion Level" value={next_power_level_temperature} />
           {value_to_y(Math.abs(next_power_level_temperature - maxTemperature), 0) > 20 && (<TemperatureLabel key="max_temp" value={maxTemperature} />)}
         </Flex.Item>
-        <TemperatureBar label="Fusion" value={internal_fusion_temperature} color="orange">
-          {heat_delta_indicator}
-        </TemperatureBar>
-        <TemperatureBar label="Moderator" value={moderator_internal_temperature} color="pink" />
-        <TemperatureBar label="Coolant" value={internal_coolant_temperature} color="aliceblue" />
-        <TemperatureBar label="Output" value={internal_output_temperature} color="green" />
+        <TemperatureBar
+          label="Fusion"
+          value={internal_fusion_temperature}
+          delta={internal_fusion_temperature_delta}
+          color="orange" />
+        <TemperatureBar
+          label="Moderator"
+          value={moderator_internal_temperature}
+          delta={moderator_internal_temperature_delta}
+          color="pink" />
+        <TemperatureBar
+          label="Coolant"
+          value={internal_coolant_temperature}
+          delta={internal_coolant_temperature_delta}
+          color="aliceblue" />
+        <TemperatureBar
+          label="Output"
+          value={internal_output_temperature}
+          delta={internal_output_temperature_delta}
+          color="green" />
       </Flex>
     </Section>
   );

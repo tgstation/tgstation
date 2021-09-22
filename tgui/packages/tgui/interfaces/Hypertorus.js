@@ -82,28 +82,33 @@ const HypertorusLayout = (props, context) => {
     energy_level,
     fusion_gases,
     heat_limiter_modifier,
+    heat_output_min,
+    heat_output_max,
     heat_output,
-    heat_output_bool,
     iron_content,
+    instability,
     integrity,
     internal_fusion_temperature,
+    internal_fusion_temperature_archived,
     internal_output_temperature,
+    internal_output_temperature_archived,
     internal_coolant_temperature,
+    internal_coolant_temperature_archived,
     moderator_gases,
     moderator_internal_temperature,
+    moderator_internal_temperature_archived,
     power_level,
     selectable_fuel,
     selected,
   } = data;
 
+  const internal_fusion_temperature_delta = internal_fusion_temperature - internal_fusion_temperature_archived;
+  const internal_output_temperature_delta = internal_output_temperature - internal_output_temperature_archived;
+  const internal_coolant_temperature_delta = internal_coolant_temperature - internal_coolant_temperature_archived;
+  const moderator_internal_temperature_delta = moderator_internal_temperature - moderator_internal_temperature_archived;
+
   const selectable_fuels = selectable_fuel || [];
   const selected_fuel = selectable_fuels.filter(d => d.id === selected)[0];
-
-  // heat_output_bool is set to '-' if heat_output is negative.
-  // heat_output is always the absolute value of heat output.
-  // Why? aaaaaaaaaaaaaaaaaaaa
-  const real_heat_output = heat_output_bool === '-' ? -heat_output : heat_output;
-  const real_heat_limiter_modifier = heat_output_bool === '-' ? -heat_limiter_modifier / 100 : heat_limiter_modifier;
 
   // Note this adds bottom margin to non-Section elements for consistent
   // spacing. This is a good candidate to be moved to css > properties to
@@ -126,13 +131,15 @@ const HypertorusLayout = (props, context) => {
         <Stack.Item>
           <HypertorusTemperatures
             powerLevel={power_level}
-            heatOutput={heat_output}
             baseMaxTemperature={base_max_temperature}
-            heatLimiterModifier={heat_limiter_modifier}
             internalFusionTemperature={internal_fusion_temperature}
+            internalFusionTemperatureDelta={internal_fusion_temperature_delta}
             moderatorInternalTemperature={moderator_internal_temperature}
+            moderatorInternalTemperatureDelta={moderator_internal_temperature_delta}
             internalOutputTemperature={internal_output_temperature}
+            internalOutputTemperatureDelta={internal_output_temperature_delta}
             internalCoolantTemperature={internal_coolant_temperature}
+            internalCoolantTemperatureDelta={internal_coolant_temperature_delta}
             selectedFuel={selected_fuel}
           />
         </Stack.Item>
@@ -141,10 +148,12 @@ const HypertorusLayout = (props, context) => {
         <Stack.Item minWidth="600px" grow>
           <HypertorusParameters
             energyLevel={energy_level}
-            rawHeatLimiterModifier={heat_limiter_modifier}
-            realHeatOutput={real_heat_output}
-            realHeatLimiterModifier={real_heat_limiter_modifier}
+            heatLimiterModifier={heat_limiter_modifier}
+            heatOutputMin={heat_output_min}
+            heatOutputMax={heat_output_max}
             heatOutput={heat_output}
+            heatLimiterModifier={heat_limiter_modifier}
+            instability={instability}
             powerLevel={power_level}
             ironContent={iron_content}
             integrity={integrity}/>

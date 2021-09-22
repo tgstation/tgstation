@@ -17,6 +17,7 @@ const ActParam = (key,value) => {
 const ComboKnob = props => {
   const {
     act,
+    color=false,
     defaultValue,
     icon,
     flipIcon,
@@ -25,7 +26,6 @@ const ComboKnob = props => {
     maxValue,
     parameter,
     step=5,
-    unit,
     value,
     ...rest
   } = props;
@@ -50,15 +50,15 @@ const ComboKnob = props => {
       icon_element
     }
     <Knob
+      color={color}
       size={2}
-      color={false}
       value={value}
-      unit={unit}
       minValue={minValue}
       maxValue={maxValue}
       step={step}
       stepPixelSize={1}
       onDrag={(e, value) => act(parameter, ActParam(parameter, value))}
+      {...rest}
     />
     <Button
       fluid
@@ -98,6 +98,7 @@ export const HypertorusSecondaryControls = (props, context) => {
         <LabeledControls.Item label="Heating Conductor">
           <ComboKnob
             act={act}
+            color={data.heating_conductor > 50 && data.heat_output > 0 && "yellow"}
             value={parseFloat(data.heating_conductor)}
             unit="J/cm"
             minValue={50}
@@ -139,6 +140,7 @@ export const HypertorusSecondaryControls = (props, context) => {
         <LabeledControls.Item label="Current Damper">
           <ComboKnob
             act={act}
+            color={data.current_damper && "yellow"}
             value={parseFloat(data.current_damper)}
             unit="W"
             minValue={0}

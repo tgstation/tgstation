@@ -274,8 +274,10 @@
 
 	data["energy_level"] = connected_core.energy
 	data["heat_limiter_modifier"] = connected_core.heat_limiter_modifier
-	data["heat_output"] = abs(connected_core.heat_output)
-	data["heat_output_bool"] = connected_core.heat_output >= 0 ? "" : "-"
+	data["heat_output_min"] = connected_core.heat_output_min
+	data["heat_output_max"] = connected_core.heat_output_max
+	data["heat_output"] = connected_core.heat_output
+	data["instability"] = connected_core.instability
 
 	data["heating_conductor"] = connected_core.heating_conductor
 	data["magnetic_constrictor"] = connected_core.magnetic_constrictor
@@ -296,6 +298,12 @@
 	data["moderator_internal_temperature"] = connected_core.moderator_temperature
 	data["internal_output_temperature"] = connected_core.output_temperature
 	data["internal_coolant_temperature"] = connected_core.coolant_temperature
+
+	data["internal_fusion_temperature_archived"] = connected_core.fusion_temperature_archived
+	data["moderator_internal_temperature_archived"] = connected_core.moderator_temperature_archived
+	data["internal_output_temperature_archived"] = connected_core.output_temperature_archived
+	data["internal_coolant_temperature_archived"] = connected_core.coolant_temperature_archived
+	data["temperature_period"] = connected_core.temperature_period
 
 	data["waste_remove"] = connected_core.waste_remove
 	data["filter_types"] = list()

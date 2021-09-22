@@ -183,11 +183,16 @@
 	linked_output.update_parents()
 	linked_moderator.update_parents()
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/update_temperature_status()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/update_temperature_status(delta_time)
+	fusion_temperature_archived = fusion_temperature
 	fusion_temperature = internal_fusion.temperature
+	moderator_temperature_archived = moderator_temperature
 	moderator_temperature = moderator_internal.temperature
+	coolant_temperature_archived = coolant_temperature
 	coolant_temperature = airs[1].temperature
+	output_temperature_archived = output_temperature
 	output_temperature = linked_output.airs[1].temperature
+	temperature_period = delta_time
 
 	//Set the power level of the fusion process
 	switch(fusion_temperature)
