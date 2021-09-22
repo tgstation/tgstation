@@ -38,8 +38,8 @@
 		/obj/structure/grille/broken = 1,
 	)
 
-/obj/effect/spawner/random/structure/spare_parts
-	name = "spare parts spawner"
+/obj/effect/spawner/random/structure/furniture_parts
+	name = "furniture parts spawner"
 	icon_state = "table_parts"
 	loot = list(
 		/obj/structure/table_frame,
