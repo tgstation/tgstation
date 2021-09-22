@@ -33,6 +33,8 @@
 /obj/effect/singularity_act()
 	qdel(src)
 
+/obj/effect/abstract
+
 /obj/effect/abstract/singularity_pull()
 	return
 

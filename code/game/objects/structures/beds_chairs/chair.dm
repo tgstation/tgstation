@@ -539,3 +539,15 @@
 	custom_materials = list(/datum/material/plastic = 2000)
 	break_chance = 25
 	origin_type = /obj/structure/chair/plastic
+
+/obj/structure/chair/musical
+	name = "musical chair"
+	desc = "You listen to this. Either by will or by force."
+	item_chair = /obj/item/chair/musical
+	particles = new /particles/musical_notes
+
+/obj/item/chair/musical
+	name = "musical chair"
+	desc = "Oh, so this is the Yu-Gi-Oh rules where there are no rules and you can pick up and place the musical chairs as you please."
+	particles = new /particles/musical_notes
+	origin_type = /obj/structure/chair/musical

@@ -1,3 +1,5 @@
+///Smooth tunes component! Applied to musicians to give the songs they play special effects, according to a rite!
+///Comes with BARTICLES!!!
 /datum/component/smooth_tunes
 	///if applied due to a rite, we link it here
 	var/datum/religion_rites/song_tuner/linked_songtuner_rite
@@ -5,41 +7,70 @@
 	var/datum/song/linked_song
 	///if repeats count as continuations instead of a song's end, TRUE
 	var/allow_repeats = TRUE
+	///particles to apply, if applicable
+	var/particles_path
+	///the particle holder of the particle path (created when song starts) ((no i cant think of a better var name because i made the typepath and im perfect))
+	var/obj/effect/abstract/particle_holder/particle_holder
 
-/datum/component/smooth_tunes/Initialize(linked_songtuner_rite, allow_repeats)
+	var/glow_color
+
+/datum/component/smooth_tunes/Initialize(linked_songtuner_rite, allow_repeats, particles_path, glow_color)
 	if(!isinstrument(parent) && !isliving(parent))
 		return COMPONENT_INCOMPATIBLE
+	src.linked_songtuner_rite = linked_songtuner_rite
 	src.allow_repeats = allow_repeats
-	if(istype(linked_songtuner_rite, /datum/religion_rites/song_tuner))
-		src.linked_songtuner_rite = linked_songtuner_rite
+	src.particles_path = particles_path
+	src.glow_color = glow_color
+
+/datum/component/smooth_tunes/Destroy(force, silent)
+	if(particle_holder)
+		QDEL_NULL(particle_holder)
+	qdel(linked_songtuner_rite)
+	. = ..()
 
 /datum/component/smooth_tunes/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_SONG_START,.proc/timetosing)
-	RegisterSignal(parent, COMSIG_SONG_END, .proc/stopsinging)
-	if(!allow_repeats)
-		RegisterSignal(parent, COMSIG_SONG_REPEAT, .proc/stopsinging)
 
 /datum/component/smooth_tunes/UnregisterFromParent()
-	UnregisterSignal(parent, list(
-		COMSIG_SONG_START,
-		COMSIG_SONG_END,
-		COMSIG_SONG_REPEAT,
-	))
+	UnregisterSignal(parent, COMSIG_SONG_START)
 
 ///Initiates the effect when the song begins playing.
 /datum/component/smooth_tunes/proc/timetosing(datum/source, datum/song/starting_song)
-	if(linked_songtuner_rite)
-		START_PROCESSING(SSobj, src) //even though WE aren't an object, our parent is!
-		if(linked_songtuner_rite.visible_message)
-			starting_song.parent?.visible_message(linked_songtuner_rite.visible_message)
-	if(starting_song)
-		linked_song = starting_song
+	SIGNAL_HANDLER
+	if(!starting_song)
+		return
+	if(istype(starting_song.parent, /obj/structure/musician))
+		return //TODO: make stationary instruments work with no hiccups
+	START_PROCESSING(SSobj, src) //even though WE aren't an object, our parent is!
+	if(linked_songtuner_rite.visible_message)
+		starting_song.parent.visible_message(linked_songtuner_rite.visible_message)
+
+	///prevent more songs from being blessed concurrently
+	UnregisterSignal(parent, COMSIG_SONG_START)
+	///and hook into the song datum this time, preventing other weird exploity stuff.
+	RegisterSignal(starting_song, COMSIG_SONG_END, .proc/stopsinging)
+	if(!allow_repeats)
+		RegisterSignal(starting_song, COMSIG_SONG_REPEAT, .proc/stopsinging)
+
+	linked_song = starting_song
+
+	//barticles
+	if(particles_path && ismovable(linked_song.parent))
+		particle_holder = new particle_holder(linked_song.parent, particles_path)
+	//filters
+	linked_song.parent?.add_filter("smooth_tunes_outline", 9, list("type" = "outline", "color" = glow_color))
 
 ///Ends the effect when the song is no longer playing.
 /datum/component/smooth_tunes/proc/stopsinging(datum/source)
+	SIGNAL_HANDLER
 	STOP_PROCESSING(SSobj, src)
+	linked_song.parent?.remove_filter("smooth_tunes_outline")
+	UnregisterSignal(linked_song, list(
+		COMSIG_SONG_END,
+		COMSIG_SONG_REPEAT,
+	))
 	linked_song = null
-	qdel(linked_songtuner_rite)
+	qdel(src)
 
 /datum/component/smooth_tunes/process(delta_time = SSOBJ_DT)
 	if(linked_songtuner_rite)
