@@ -86,9 +86,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	RegisterSignal(src, COMSIG_ATOM_ENTERING, .proc/on_entering_atom)
 
 	if(special_target)
-		SSmovement_loop.home_onto(src, special_target)
+		home_onto(src, special_target)
 	else
-		SSmovement_loop.move_towards(src, destination)
+		move_towards(src, destination)
 
 /obj/effect/immovablerod/Destroy(force)
 	UnregisterSignal(src, COMSIG_ATOM_ENTERING)
@@ -154,7 +154,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 				return
 
 			visible_message(span_danger("[src] phases into reality."))
-			SSmovement_loop.home_onto(src, special_target)
+			home_onto(src, special_target)
 
 		if(loc == target_turf)
 			complete_trajectory()
@@ -297,7 +297,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
  * Stops your rod's automated movement. Sit... Stay... Good rod!
  */
 /obj/effect/immovablerod/proc/sit_stay_good_rod()
-	SSmovement_loop.stop_looping(src)
+	stop_looping(src)
 
 /**
  * Allows your rod to release restraint level zero and go for a walk.
@@ -311,7 +311,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/proc/go_for_a_walk(walkies_location = null)
 	if(walkies_location)
 		special_target = walkies_location
-		SSmovement_loop.home_onto(src, special_target)
+		home_onto(src, special_target)
 		return
 
 	complete_trajectory()
@@ -327,4 +327,4 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
  */
 /obj/effect/immovablerod/proc/walk_in_direction(direction)
 	destination = get_edge_target_turf(src, direction)
-	SSmovement_loop.move_towards(src, destination)
+	move_towards(src, destination)

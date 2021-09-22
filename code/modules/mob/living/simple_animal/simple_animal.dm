@@ -701,7 +701,7 @@
 		return
 	if(!Adjacent(hunted))
 		stop_automated_movement = TRUE
-		SSmovement_loop.move_to(src, hunted, 0, 3)
+		move_to(src, hunted, 0, 3)
 		if(Adjacent(hunted))
 			hunt(hunted) // In case it gets next to the target immediately, skip the scan timer and kill it.
 		return

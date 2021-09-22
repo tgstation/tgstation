@@ -111,7 +111,7 @@
 	ranged = 0
 	minimum_distance = 1
 
-	SSmovement_loop.stop_looping(src)//end any lingering movement loops, to prevent the haunted mecha bug
+	stop_looping(src)//end any lingering movement loops, to prevent the haunted mecha bug
 
 //Checks if a mecha is valid for theft
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/is_valid_mecha(obj/vehicle/sealed/mecha/M)
@@ -290,6 +290,6 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/Goto(target, delay, minimum_distance)
 	if(mecha)
-		SSmovement_loop.move_to(mecha, target, minimum_distance, mecha.movedelay)
+		move_to(mecha, target, minimum_distance, mecha.movedelay)
 	else
 		..()

@@ -44,7 +44,7 @@
 /mob/living/simple_animal/hostile/asteroid/curseblob/proc/move_loop(move_target, delay)
 	//Goto passes delay in ticks, we need it in deciseconds
 	//We don't need to check to see if the loop exists, as the subsystem handles that
-	if(SSmovement_loop.force_move(src, set_target, delay, override = FALSE))
+	if(force_move(src, set_target, delay, override = FALSE))
 		RegisterSignal(src, COMSIG_MOVELOOP_PROCESS_CHECK, .proc/check_target)
 		RegisterSignal(src, COMSIG_MOVELOOP_END, .proc/handle_loop_end)
 

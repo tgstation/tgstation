@@ -155,7 +155,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/proc/chase_target(atom/chasing, delay, home)
 	if(!isatom(chasing))
 		return
-	SSmovement_loop.move_towards(src, chasing, delay, home, lifetime)
+	move_towards(src, chasing, delay, home, lifetime)
 	RegisterSignal(src, COMSIG_MOVELOOP_END, .proc/handle_stopping)
 
 /obj/effect/meteor/proc/handle_stopping()
