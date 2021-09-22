@@ -602,7 +602,7 @@
 	pixel_x = -25
 	},
 /obj/structure/rack,
-/obj/item/melee/baton/cattleprod,
+/obj/item/melee/baton/security/cattleprod,
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /obj{

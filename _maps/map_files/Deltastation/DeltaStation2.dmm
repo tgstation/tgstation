@@ -65843,7 +65843,7 @@
 /obj/item/toy/beach_ball/holoball/dodgeball,
 /obj/effect/spawner/random/contraband/prison,
 /obj/item/instrument/harmonica,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /obj/item/toy/cards/deck/tarot,
 /obj/machinery/light/directional/south,
 /obj{
@@ -79643,7 +79643,7 @@
 /area/engineering/supermatter/room)
 "rzw" = (
 /obj/structure/table/wood/poker,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /obj/effect/spawner/random/entertainment/money_large,
 /obj{
 	name = "---Merge conflict marker---"
