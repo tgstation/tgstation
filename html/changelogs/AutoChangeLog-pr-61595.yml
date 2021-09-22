@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixes evolved xenos deaths being broadcasted in dchat with the old larva name ."

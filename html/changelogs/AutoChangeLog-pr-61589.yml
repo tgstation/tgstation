@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - server: "MOTD is now read sequentially in configuration, allowing for multiple MOTD files."

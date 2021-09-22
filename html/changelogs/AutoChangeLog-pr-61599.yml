@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes: 
-  - bugfix: "Space heater actually turns On with right click now, for reals this time!"

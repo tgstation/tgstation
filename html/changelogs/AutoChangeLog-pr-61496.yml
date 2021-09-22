@@ -1,5 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - bugfix: "tgui: IE8: Removed \"iefix\" css classes from Flex elements which resulted in unusable layout in complex UIs, such as tgui prefs."
-  - bugfix: "tgui: IE8: Fixed button clicks."
