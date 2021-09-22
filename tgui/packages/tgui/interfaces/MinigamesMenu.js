@@ -1,8 +1,8 @@
 import { useBackend } from '../backend';
-import { Box, Button, Section, Stack } from '../components';
+import { Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
  
-export const MinigamesMenu = (props, context) => {
+export const MinigamesMenu = (context) => {
   const { act } = useBackend(context);
   return (
     <Window
