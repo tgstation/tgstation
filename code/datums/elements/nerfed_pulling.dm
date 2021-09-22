@@ -1,17 +1,18 @@
 /// This living will be slower when pulling/moving some dangerous objects in its obj_flags
 /datum/element/nerfed_pulling
-	element_flags = ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
+	id_arg_index = 2
 
-	var/static/list/nerf_pulling_of_typecache = typecacheof(list(
-		/obj/machinery/portable_atmospherics/canister,
-		/obj/structure/reagent_dispensers,
-	))
+	/// The typecache of things that shouldn't be easily movable
+	var/list/typecache
 
-/datum/element/nerfed_pulling/Attach(datum/target)
+/datum/element/nerfed_pulling/Attach(datum/target, list/typecache)
 	. = ..()
 
 	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
+
+	src.typecache = typecache
 
 	RegisterSignal(target, COMSIG_LIVING_PUSHING_MOVABLE, .proc/on_push_movable)
 	RegisterSignal(target, COMSIG_LIVING_UPDATING_PULL_MOVESPEED, .proc/on_updating_pull_movespeed)
@@ -43,7 +44,7 @@
 	source.add_movespeed_modifier(/datum/movespeed_modifier/nerfed_pull)
 
 /datum/element/nerfed_pulling/proc/will_slow_down(datum/input)
-	return nerf_pulling_of_typecache[input.type]
+	return typecache[input.type]
 
 /datum/movespeed_modifier/nerfed_pull
 	multiplicative_slowdown = 5.5

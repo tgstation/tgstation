@@ -18,4 +18,11 @@ GLOBAL_LIST_INIT(typecache_elevated_structures, typecacheof(list(/obj/structure/
 GLOBAL_LIST_INIT(typecache_general_bad_hostile_attack_targets, typecacheof(list(
 	/obj/machinery/airalarm,
 	/obj/machinery/atmospherics,
+	/obj/machinery/power/apc,
+)))
+
+/// A typecache of objects that player controlled, easily accessible, hostile mobs should not be able to move around easily
+GLOBAL_LIST_INIT(typecache_general_bad_things_to_easily_move, typecacheof(list(
+	/obj/machinery/portable_atmospherics/canister,
+	/obj/structure/reagent_dispensers,
 )))
