@@ -561,21 +561,33 @@
 /datum/plant_gene/trait/gas_production
 	name = "Miasma Gas Production"
 	/// The location of our tray, if we have one.
-	var/obj/machinery/hydroponics/home_tray
+	var/datum/weakref/home_tray
 	/// The seed emitting gas.
-	var/obj/item/seeds/stinky_seed
+	var/datum/weakref/stinky_seed
 
 /datum/plant_gene/trait/gas_production/on_new_seed(obj/item/seeds/new_seed)
 	. = ..()
 	if(!.)
 		return
 
-	RegisterSignal(new_seed, COMSIG_PLANT_ON_GROW, .proc/try_release_gas)
-	stinky_seed = new_seed
+	RegisterSignal(new_seed, COMSIG_SEED_ON_PLANTED, .proc/set_home_tray)
+	RegisterSignal(new_seed, COMSIG_SEED_ON_GROW, .proc/try_release_gas)
+	stinky_seed = WEAKREF(new_seed)
 
-/datum/plant_gene/trait/gas_production/on_seed_delete(obj/item/seeds/old_seed)
-	UnregisterSignal(old_seed, COMSIG_PLANT_ON_GROW)
+/datum/plant_gene/trait/gas_production/on_removed(obj/item/seeds/old_seed)
+	UnregisterSignal(old_seed, list(COMSIG_SEED_ON_PLANTED, COMSIG_SEED_ON_GROW))
 	stop_gas()
+
+/*
+ * Whenever we're planted, set a new home tray.
+ *
+ * our_seed - the seed growing
+ * grown_tray - the tray we were planted in
+ */
+/datum/plant_gene/trait/gas_production/proc/set_home_tray(obj/item/seeds/our_seed, obj/machinery/hydroponics/grown_tray)
+	SIGNAL_HANDLER
+
+	home_tray = WEAKREF(grown_tray)
 
 /*
  * Whenever the plant starts to grow in a tray, check if we can release gas.
@@ -589,34 +601,36 @@
 	if(grown_tray.age < our_seed.maturation) // Start a little before it blooms
 		return
 
-	home_tray = grown_tray
 	START_PROCESSING(SSobj, src)
 
 /*
  * Stop the seed from releasing gas and null all our references.
  */
 /datum/plant_gene/trait/gas_production/proc/stop_gas(datum/source)
-	SIGNAL_HANDLER
-
-	stinky_seed = null
-	home_tray = null
 	STOP_PROCESSING(SSobj, src)
 
 /*
  * If the conditions are acceptable and the potency is high enough, release miasma into the air.
  */
 /datum/plant_gene/trait/gas_production/process(delta_time)
-	if(!stinky_seed || !home_tray || stinky_seed.loc != home_tray)
+	if(!home_tray || !stinky_seed)
 		stop_gas()
 		return
 
-	var/turf/open/tray_turf = get_turf(home_tray)
-	if(abs(ONE_ATMOSPHERE - tray_turf.return_air().return_pressure()) > (stinky_seed.potency / 10 + 10)) // clouds can begin showing at around 50-60 potency in standard atmos
+	var/obj/item/seeds/seed = stinky_seed?.resolve()
+	var/obj/machinery/hydroponics/tray = home_tray?.resolve()
+
+	if(seed.loc != tray)
+		stop_gas()
+		return
+
+	var/turf/open/tray_turf = get_turf(tray)
+	if(abs(ONE_ATMOSPHERE - tray_turf.return_air().return_pressure()) > (seed.potency / 10 + 10)) // clouds can begin showing at around 50-60 potency in standard atmos
 		return
 
 	var/datum/gas_mixture/stank = new
 	ADD_GAS(/datum/gas/miasma, stank.gases)
-	stank.gases[/datum/gas/miasma][MOLES] = (stinky_seed.yield + 6) * 3.5 * MIASMA_CORPSE_MOLES * delta_time // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
+	stank.gases[/datum/gas/miasma][MOLES] = (seed.yield + 6) * 3.5 * MIASMA_CORPSE_MOLES * delta_time // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
 	stank.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
 	tray_turf.assume_air(stank)
 

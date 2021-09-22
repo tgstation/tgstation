@@ -290,7 +290,7 @@
 			update_appearance()
 
 		if(myseed)
-			SEND_SIGNAL(myseed, COMSIG_PLANT_ON_GROW, src)
+			SEND_SIGNAL(myseed, COMSIG_SEED_ON_GROW, src)
 
 	return
 
@@ -574,6 +574,7 @@
 				investigate_log("had Kudzu planted in it by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_BOTANY)
 			if(!user.transferItemToLoc(O, src))
 				return
+			SEND_SIGNAL(O, COMSIG_SEED_ON_PLANTED, src)
 			to_chat(user, span_notice("You plant [O]."))
 			dead = FALSE
 			myseed = O
@@ -645,7 +646,7 @@
 		for(var/datum/plant_gene/gene as anything in myseed.genes)
 			if(gene.name == removed_trait)
 				if(myseed.genes.Remove(gene))
-					gene.on_seed_delete(myseed)
+					gene.on_removed(myseed)
 					qdel(gene)
 					break
 		myseed.reagents_from_genes()

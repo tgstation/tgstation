@@ -38,11 +38,12 @@
 	return FALSE
 
 /*
- * on_seed_delete is called the seed that holds our gene is deleted.
+ * on_removed is called when the gene is removed from a seed.
+ * Also called when a seed is qdel'd (and all the genes are removed and deleted).
  *
- * old_seed - the seed being destroyed
+ * old_seed - our seed, before being removed
  */
-/datum/plant_gene/proc/on_seed_delete(obj/item/seeds/old_seed)
+/datum/plant_gene/proc/on_removed(obj/item/seeds/old_seed)
 	return FALSE
 
 /// Reagent genes store a reagent ID and reagent ratio.
@@ -639,7 +640,7 @@
 	if(!(new_seed.resistance_flags & FIRE_PROOF))
 		new_seed.resistance_flags |= FIRE_PROOF
 
-/datum/plant_gene/trait/fire_resistance/on_seed_delete(obj/item/seeds/old_seed)
+/datum/plant_gene/trait/fire_resistance/on_removed(obj/item/seeds/old_seed)
 	if(old_seed.resistance_flags & FIRE_PROOF)
 		old_seed.resistance_flags &= ~FIRE_PROOF
 
@@ -657,10 +658,10 @@
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/invasive/on_new_seed(obj/item/seeds/new_seed)
-	RegisterSignal(new_seed, COMSIG_PLANT_ON_GROW, .proc/try_spread)
+	RegisterSignal(new_seed, COMSIG_SEED_ON_GROW, .proc/try_spread)
 
-/datum/plant_gene/trait/invasive/on_seed_delete(obj/item/seeds/old_seed)
-	UnregisterSignal(old_seed, COMSIG_PLANT_ON_GROW)
+/datum/plant_gene/trait/invasive/on_removed(obj/item/seeds/old_seed)
+	UnregisterSignal(old_seed, COMSIG_SEED_ON_GROW)
 
 /*
  * Attempt to find an adjacent tray we can spread to.

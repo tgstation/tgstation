@@ -34,7 +34,7 @@
 		add_juice()
 
 /obj/item/grown/Destroy()
-	if(seed)
+	if(isatom(seed))
 		QDEL_NULL(seed)
 	return ..()
 

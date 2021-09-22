@@ -75,7 +75,7 @@
 	transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
 
 /obj/item/food/grown/Destroy()
-	if(seed)
+	if(isatom(seed))
 		QDEL_NULL(seed)
 	return ..()
 

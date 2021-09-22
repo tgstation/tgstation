@@ -93,7 +93,7 @@
 /obj/item/seeds/Destroy()
 	for(var/datum/plant_gene/gene as anything in genes)
 		if(genes.Remove(gene))
-			gene.on_seed_delete(src)
+			gene.on_removed(src)
 			qdel(gene)
 	return ..()
 
