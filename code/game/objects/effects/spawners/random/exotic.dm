@@ -41,7 +41,7 @@
 	)
 
 /obj/effect/spawner/random/exotic/antag_gear_weak
-	name = "weak antag gear "
+	name = "antag gear weak"
 	icon_state = "syndi_toolbox"
 	loot = list(
 		/obj/item/storage/firstaid/regular = 45,
@@ -90,7 +90,7 @@
 	)
 
 /obj/effect/spawner/random/exotic/antag_gear_strong
-	name = "strong antag gear"
+	name = "antag gear strong"
 	icon_state = "esword_dual"
 	loot = list(
 		/obj/item/pickaxe/drill/jackhammer = 30,
