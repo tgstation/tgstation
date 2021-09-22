@@ -65,37 +65,41 @@
 
 	//Store the fuel gases and the product gas moles
 
+	var/energy_concentration_multiplier = 1
+	var/positive_temperature_multiplier = 1
+	var/negative_temperature_multiplier = 1
 	var/list/fuel_list = list()
-	for(var/gas_id in selected_fuel.requirements)
-		fuel_list |= gas_id
-		fuel_list[gas_id] = internal_fusion.gases[gas_id][MOLES]
-
-	for(var/gas_id in selected_fuel.primary_products)
-		fuel_list |= gas_id
-		fuel_list[gas_id] = internal_fusion.gases[gas_id][MOLES]
-
-	//Store the moderators gases moles
-	var/list/moderator_list = list()
-	for(var/gas_id in moderator_internal.gases)
-		moderator_list |= gas_id
-		moderator_list[gas_id] = moderator_internal.gases[gas_id][MOLES]
 
 	//We scale it down by volume/2 because for fusion conditions, moles roughly = 2*volume, but we want it to be based off something constant between reactions.
 	var/scale_factor = volume * 0.5
 
 	//Scaled down moles of gases, no less than 0
 	var/list/scaled_fuel_list = list()
-	for(var/gas_id in selected_fuel.requirements)
-		scaled_fuel_list |= gas_id
-		scaled_fuel_list[gas_id] = max((fuel_list[gas_id] - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 
-	for(var/gas_id in selected_fuel.primary_products)
-		scaled_fuel_list |= gas_id
-		scaled_fuel_list[gas_id] = max((fuel_list[gas_id] - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+	if (selected_fuel)
+		energy_concentration_multiplier = selected_fuel.energy_concentration_multiplier
+		positive_temperature_multiplier = selected_fuel.positive_temperature_multiplier
+		negative_temperature_multiplier = selected_fuel.negative_temperature_multiplier
+
+		for(var/gas_id in selected_fuel.requirements)
+			fuel_list[gas_id] = internal_fusion.gases[gas_id][MOLES]
+
+		for(var/gas_id in selected_fuel.primary_products)
+			fuel_list[gas_id] = internal_fusion.gases[gas_id][MOLES]
+
+		for(var/gas_id in selected_fuel.requirements)
+			scaled_fuel_list[gas_id] = max((fuel_list[gas_id] - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+
+		for(var/gas_id in selected_fuel.primary_products)
+			scaled_fuel_list[gas_id] = max((fuel_list[gas_id] - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+
+	//Store the moderators gases moles
+	var/list/moderator_list = list()
+	for(var/gas_id in moderator_internal.gases)
+		moderator_list[gas_id] = moderator_internal.gases[gas_id][MOLES]
 
 	var/list/scaled_moderator_list = list()
 	for(var/gas_id in moderator_internal.gases)
-		scaled_moderator_list |= gas_id
 		scaled_moderator_list[gas_id] = max((moderator_list[gas_id] - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 
 	/*
@@ -124,60 +128,76 @@
 	 */
 	///Those are the scaled gases that gets consumed and adjust energy
 	// Gases that increase the amount of energy
-	var/energy_modifiers = scaled_fuel_list[scaled_fuel_list[1]] + \
-								scaled_fuel_list[scaled_fuel_list[2]] + \
-								scaled_moderator_list[/datum/gas/nitrogen] * 0.35 + \
+	var/energy_modifiers = scaled_moderator_list[/datum/gas/nitrogen] * 0.35 + \
 								scaled_moderator_list[/datum/gas/carbon_dioxide] * 0.55 + \
 								scaled_moderator_list[/datum/gas/nitrous_oxide] * 0.95 + \
 								scaled_moderator_list[/datum/gas/zauker] * 1.55 + \
 								scaled_moderator_list[/datum/gas/antinoblium] * 20
 	// Gases that decrease the amount of energy
-	energy_modifiers -= scaled_fuel_list[scaled_fuel_list[3]] + \
-								scaled_moderator_list[/datum/gas/hypernoblium] * 10 + \
+	energy_modifiers -= scaled_moderator_list[/datum/gas/hypernoblium] * 10 + \
 								scaled_moderator_list[/datum/gas/water_vapor] * 0.75 + \
 								scaled_moderator_list[/datum/gas/nitryl] * 0.15 + \
 								scaled_moderator_list[/datum/gas/healium] * 0.45 + \
 								scaled_moderator_list[/datum/gas/freon] * 1.15
 	///Between 0.25 and 100, this value is used to modify the behaviour of the internal energy and the core temperature based on the gases present in the mix
-	var/power_modifier = clamp( scaled_fuel_list[scaled_fuel_list[2]] * 1.05 + \
-								scaled_moderator_list[/datum/gas/oxygen] * 0.55 + \
+	var/power_modifier = scaled_moderator_list[/datum/gas/oxygen] * 0.55 + \
 								scaled_moderator_list[/datum/gas/carbon_dioxide] * 0.95 + \
 								scaled_moderator_list[/datum/gas/nitryl] * 1.45 + \
 								scaled_moderator_list[/datum/gas/zauker] * 5.55 + \
 								scaled_moderator_list[/datum/gas/plasma] * 0.05 - \
-								scaled_fuel_list[scaled_fuel_list[3]] * 0.55 - \
 								scaled_moderator_list[/datum/gas/nitrous_oxide] * 0.05 - \
-								scaled_moderator_list[/datum/gas/freon] * 0.75, \
-								0.25, 100)
+								scaled_moderator_list[/datum/gas/freon] * 0.75
 	///Minimum 0.25, this value is used to modify the behaviour of the energy emission based on the gases present in the mix
-	var/heat_modifier = clamp( scaled_fuel_list[scaled_fuel_list[1]] * 1.15 + \
-								scaled_fuel_list[scaled_fuel_list[3]] * 1.05 + \
-								scaled_moderator_list[/datum/gas/plasma] * 1.25 - \
+	var/heat_modifier = scaled_moderator_list[/datum/gas/plasma] * 1.25 - \
 								scaled_moderator_list[/datum/gas/nitrogen] * 0.75 - \
 								scaled_moderator_list[/datum/gas/nitrous_oxide] * 1.45 - \
-								scaled_moderator_list[/datum/gas/freon] * 0.95, \
-								0.25, 100)
+								scaled_moderator_list[/datum/gas/freon] * 0.95
 	///Between 0.005 and 1000, this value modify the radiation emission of the reaction, higher values increase the emission
-	var/radiation_modifier = clamp( scaled_fuel_list[scaled_fuel_list[3]] * 0.55 - \
-									scaled_moderator_list[/datum/gas/freon] * 1.15 - \
+	var/radiation_modifier = scaled_moderator_list[/datum/gas/freon] * 1.15 - \
 									scaled_moderator_list[/datum/gas/nitrogen] * 0.45 - \
 									scaled_moderator_list[/datum/gas/plasma] * 0.95 + \
 									scaled_moderator_list[/datum/gas/bz] * 1.9 + \
 									scaled_moderator_list[/datum/gas/proto_nitrate] * 0.1 + \
-									scaled_moderator_list[/datum/gas/antinoblium] * 10, \
-									0.005, 1000)
+									scaled_moderator_list[/datum/gas/antinoblium] * 10
+
+	if (selected_fuel)
+		// These should probably be static coefficients read from a table rather than things that depend on the current recipe
+		// the same is true for the effects above
+		energy_modifiers += scaled_fuel_list[selected_fuel.requirements[1]] + \
+									scaled_fuel_list[selected_fuel.requirements[2]]
+		energy_modifiers -= scaled_fuel_list[selected_fuel.primary_products[1]]
+
+		power_modifier += scaled_fuel_list[selected_fuel.requirements[2]] * 1.05 - \
+									scaled_fuel_list[selected_fuel.primary_products[1]] * 0.55
+
+		heat_modifier += scaled_fuel_list[selected_fuel.requirements[1]] * 1.15 + \
+									scaled_fuel_list[selected_fuel.primary_products[1]] * 1.05
+
+		radiation_modifier += scaled_fuel_list[selected_fuel.primary_products[1]]
+
+	power_modifier = clamp(power_modifier, 0.25, 100)
+	heat_modifier = clamp(heat_modifier, 0.25, 100)
+	radiation_modifier = clamp(radiation_modifier, 0.005, 1000)
 
 	/*
 	 *Main calculations (energy, internal power, core temperature, delta temperature,
 	 *conduction, radiation, efficiency, power output, heat limiter modifier and heat output)
 	 */
+	internal_power = 0
+	efficiency = VOID_CONDUCTION * 1
+
+	if (selected_fuel)
+		// Power of the gas mixture
+		internal_power = (scaled_fuel_list[selected_fuel.requirements[1]] * power_modifier / 100) * (scaled_fuel_list[selected_fuel.requirements[2]] * power_modifier / 100) * (PI * (2 * (scaled_fuel_list[selected_fuel.requirements[1]] * CALCULATED_H2RADIUS) * (scaled_fuel_list[selected_fuel.requirements[2]] * CALCULATED_TRITRADIUS))**2) * energy
+
+		// Efficiency of the reaction, it increases with the amount of byproduct
+		efficiency = VOID_CONDUCTION * clamp(scaled_fuel_list[selected_fuel.primary_products[1]], 1, 100)
+
 	//Can go either positive or negative depending on the instability and the negative energy modifiers
 	//E=mc^2 with some changes for gameplay purposes
 	energy = (energy_modifiers * LIGHT_SPEED ** 2) * max(internal_fusion.temperature * heat_modifier / 100, 1)
-	energy = energy / selected_fuel.energy_concentration_multiplier
+	energy = energy / energy_concentration_multiplier
 	energy = clamp(energy, 0, 1e35) //ugly way to prevent NaN error
-	//Power of the gas mixture
-	internal_power = (scaled_fuel_list[scaled_fuel_list[1]] * power_modifier / 100) * (scaled_fuel_list[scaled_fuel_list[2]] * power_modifier / 100) * (PI * (2 * (scaled_fuel_list[scaled_fuel_list[1]] * CALCULATED_H2RADIUS) * (scaled_fuel_list[scaled_fuel_list[2]] * CALCULATED_TRITRADIUS))**2) * energy
 	//Temperature inside the center of the gas mixture
 	core_temperature = internal_power * power_modifier / 1000
 	core_temperature = max(TCMB, core_temperature)
@@ -187,15 +207,13 @@
 	conduction = - delta_temperature * (magnetic_constrictor * 0.001)
 	//The remaining wavelength that actually can do damage to mobs.
 	radiation = max(-(PLANCK_LIGHT_CONSTANT / 5e-18) * radiation_modifier * delta_temperature, 0)
-	//Efficiency of the reaction, it increases with the amount of helium
-	efficiency = VOID_CONDUCTION * clamp(scaled_fuel_list[scaled_fuel_list[3]], 1, 100)
 	power_output = efficiency * (internal_power - conduction - radiation)
 	//Hotter air is easier to heat up and cool down
 	heat_limiter_modifier = 10 * (10 ** power_level) * (heating_conductor / 100)
 	//The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
 	heat_output = clamp(internal_instability * power_output * heat_modifier / 100, \
-					- heat_limiter_modifier * 0.01 * selected_fuel.negative_temperature_multiplier, \
-					heat_limiter_modifier * selected_fuel.positive_temperature_multiplier)
+					- heat_limiter_modifier * 0.01 * negative_temperature_multiplier, \
+					heat_limiter_modifier * positive_temperature_multiplier)
 
 	// Is the fusion process actually going to run?
 	// Note we have to always perform the above calculations to keep the UI updated, so we can't use this to early return.
