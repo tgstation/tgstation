@@ -12,24 +12,26 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 		/datum/micro_organism/cell_line/cockroach = 2,
 	),
 
-	CELL_LINE_TABLE_MOIST = list(/datum/micro_organism/cell_line/gelatinous_cube = 2,
-								/datum/micro_organism/cell_line/megacarp = 1,
-								/datum/micro_organism/cell_line/slime = 2,
-								/datum/micro_organism/cell_line/snake = 1,
-								/datum/micro_organism/cell_line/carp = 1,
-								/datum/micro_organism/cell_line/cockroach = 1),
+	CELL_LINE_TABLE_MOIST = list(
+		/datum/micro_organism/cell_line/gelatinous_cube = 2,
+		/datum/micro_organism/cell_line/megacarp = 1,
+		/datum/micro_organism/cell_line/slime = 2,
+		/datum/micro_organism/cell_line/snake = 1,
+		/datum/micro_organism/cell_line/carp = 1,
+		/datum/micro_organism/cell_line/cockroach = 1),
 
 	CELL_LINE_TABLE_BLOB = list(/datum/micro_organism/cell_line/blobbernaut = 1,
 								/datum/micro_organism/cell_line/blob_spore = 1),
 
-	CELL_LINE_TABLE_MOLD = list(/datum/micro_organism/cell_line/vat_beast = 2,
-								/datum/micro_organism/cell_line/bear = 1,
-								/datum/micro_organism/cell_line/slime = 1,
-								/datum/micro_organism/cell_line/blob_spore = 1,
-								/datum/micro_organism/cell_line/mouse = 2,
-								/datum/micro_organism/cell_line/corgi = 1,
-								/datum/micro_organism/cell_line/cockroach = 1,
-								/datum/micro_organism/cell_line/cat = 1),
+	CELL_LINE_TABLE_MOLD = list(
+		/datum/micro_organism/cell_line/vat_beast = 2,
+		/datum/micro_organism/cell_line/bear = 1,
+		/datum/micro_organism/cell_line/slime = 1,
+		/datum/micro_organism/cell_line/blob_spore = 1,
+		/datum/micro_organism/cell_line/mouse = 2,
+		/datum/micro_organism/cell_line/corgi = 1,
+		/datum/micro_organism/cell_line/cockroach = 1,
+		/datum/micro_organism/cell_line/cat = 1),
 
 	CELL_LINE_TABLE_BEAR = list(/datum/micro_organism/cell_line/bear = 1),
 	CELL_LINE_TABLE_BLOBBERNAUT = list(/datum/micro_organism/cell_line/blobbernaut = 1),
@@ -51,9 +53,10 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 	CELL_LINE_TABLE_SNAKE = list(/datum/micro_organism/cell_line/snake = 1),
 	CELL_LINE_TABLE_VATBEAST = list(/datum/micro_organism/cell_line/vat_beast = 1),
 	CELL_LINE_TABLE_NETHER = list(/datum/micro_organism/cell_line/netherworld = 1),
-	CELL_LINE_TABLE_CLOWN = list(/datum/micro_organism/cell_line/clown/bananaclown = 1,
-								/datum/micro_organism/cell_line/clown/glutton = 1,
-								/datum/micro_organism/cell_line/clown/longclown = 1),
+	CELL_LINE_TABLE_CLOWN = list(
+		/datum/micro_organism/cell_line/clown/bananaclown = 1,
+		/datum/micro_organism/cell_line/clown/glutton = 1,
+		/datum/micro_organism/cell_line/clown/longclown = 1),
 
 	CELL_LINE_TABLE_GLUTTON = list(/datum/micro_organism/cell_line/clown/glutton = 1),
 	CELL_LINE_TABLE_FROG = list(/datum/micro_organism/cell_line/frog = 1),
@@ -61,12 +64,13 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 	CELL_LINE_TABLE_QUEEN_BEE = list(/datum/micro_organism/cell_line/queen_bee = 1),
 	CELL_LINE_TABLE_LEAPER = list(/datum/micro_organism/cell_line/leaper = 1),
 	CELL_LINE_TABLE_MEGA_ARACHNID = list(/datum/micro_organism/cell_line/mega_arachnid = 1),
-	CELL_LINE_TABLE_ALGAE = list(/datum/micro_organism/cell_line/frog = 2,
-								/datum/micro_organism/cell_line/snake = 1,
-								/datum/micro_organism/cell_line/queen_bee = 1,
-								/datum/micro_organism/cell_line/walking_mushroom = 2,
-								/datum/micro_organism/cell_line/leaper = 2,
-								/datum/micro_organism/cell_line/mega_arachnid = 1)
+	CELL_LINE_TABLE_ALGAE = list(
+		/datum/micro_organism/cell_line/frog = 2,
+		/datum/micro_organism/cell_line/snake = 1,
+		/datum/micro_organism/cell_line/queen_bee = 1,
+		/datum/micro_organism/cell_line/walking_mushroom = 2,
+		/datum/micro_organism/cell_line/leaper = 2,
+		/datum/micro_organism/cell_line/mega_arachnid = 1)
 	))
 
 ///Assoc list of cell virus define | assoc list of datum | cell_virus
