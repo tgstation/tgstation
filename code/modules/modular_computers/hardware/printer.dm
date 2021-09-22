@@ -77,7 +77,7 @@
 			bin.update_appearance()
 			if(!num_to_add)
 				if(rejected_sheets)
-					to_chat(user, span_warning("The [src]'s paper recycler detects writing on everything in \the [bin], outright refusing to accept anything!"))
+					balloon_alert(user, "everything is written on!")
 				else
 					to_chat(user, span_warning("The [src]'s paper recycler refuses \the [bin], flashing some cryptic message about a feed error!"))
 			else
