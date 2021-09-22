@@ -183,7 +183,7 @@
 		/obj/item/food/spacetwinkie = 5,
 		/obj/item/food/cheesiehonkers = 5,
 		/obj/item/food/candy = 5,
-	  /obj/item/food/chips = 5,
+		/obj/item/food/chips = 5,
 	  /obj/item/food/sosjerky = 5,
 		/obj/item/food/no_raisin = 5,
 		/obj/item/food/peanuts = 5,
