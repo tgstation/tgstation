@@ -204,8 +204,9 @@
 	if(istype(mymob) && mymob.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
 
-/atom/movable/screen/plane_master/displacer
+/atom/movable/screen/plane_master/gravpulse
 	name = "gravpulse plane"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	plane = GRAVITY_PULSE_PLANE
 	render_target = GRAVITY_PULSE_RENDER_TARGET
 	render_relay_plane = null
