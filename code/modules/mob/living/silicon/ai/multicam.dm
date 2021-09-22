@@ -92,7 +92,7 @@
 	name = "ai_multicam_room"
 	icon_state = "ai_camera_room"
 	static_lighting = FALSE
-	base_lighting_color = COLOR_WHITE
+
 	base_lighting_alpha = 255
 	area_flags = NOTELEPORT | HIDDEN_AREA | UNIQUE_AREA
 	ambientsounds = null

@@ -61,6 +61,8 @@
 /obj/projectile/mega_arachnid
 	name = "flesh snare"
 	nodamage = TRUE
+
+
 	damage = 0
 	icon_state = "tentacle_end"
 
@@ -75,9 +77,9 @@
 	desc = "Used by mega arachnids to immobilize their prey."
 	item_flags = DROPDEL
 	flags_1 = NONE
-	icon_state = "tentacle_end"
-	icon = 'icons/obj/guns/projectiles.dmi'
+	icon_state = "flesh_snare"
+	armed = TRUE
 
-/obj/item/restraints/legcuffs/beartrap/mega_arachnid/Initialize()
+/obj/item/restraints/legcuffs/beartrap/mega_arachnid/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGA_ARACHNID, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

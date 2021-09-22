@@ -56,7 +56,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
  * * setup_list: list of all the datum setups (fancy list of roles) that would work for the game
  * * ready_players: list of filtered, sane players (so not playing or disconnected) for the game to put into roles
  */
-/datum/highlander_controller/proc/new_highlander(mob/living/carbon/human/new_crewmember, rank)
+/datum/highlander_controller/proc/new_highlander(datum/source, mob/living/new_crewmember, rank)
 	SIGNAL_HANDLER
 
 	to_chat(new_crewmember, span_userdanger("<i>THERE CAN BE ONLY ONE!!!</i>"))
@@ -90,8 +90,11 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 	log_admin("[key_name(usr)] used delayed THERE CAN BE ONLY ONE.")
 	addtimer(CALLBACK(src, .proc/only_one, TRUE), 42 SECONDS)
 
-/mob/living/carbon/human/proc/make_scottish()
+/mob/living/proc/make_scottish()
+	return
+
+/mob/living/carbon/human/make_scottish()
 	mind.add_antag_datum(/datum/antagonist/highlander)
 
-/mob/living/silicon/robot/proc/make_scottish()
+/mob/living/silicon/robot/make_scottish()
 	mind.add_antag_datum(/datum/antagonist/highlander/robot)

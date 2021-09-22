@@ -1,5 +1,6 @@
 import { BasicInput } from './BasicInput';
-import { NumberInput, Button, Stack, Input, Dropdown, Box } from '../../components';
+import { NumberInput, Button, Stack, Input, Dropdown } from '../../components';
+import { OPTION_DROPDOWN_LARGE_CHAR_AMOUNT } from './constants';
 
 export const FUNDAMENTAL_DATA_TYPES = {
   'string': (props, context) => {
@@ -57,15 +58,25 @@ export const FUNDAMENTAL_DATA_TYPES = {
   },
   'option': (props, context) => {
     const { value, setValue, extraData } = props;
+    let large = false;
+    const data = Array.isArray(extraData)
+      ? extraData
+      : Object.keys(extraData);
+
+    data.forEach(element => {
+      if (element.length > OPTION_DROPDOWN_LARGE_CHAR_AMOUNT) {
+        large = true;
+      }
+    });
+
     return (
       <Dropdown
         className="Datatype__Option"
         color={"transparent"}
-        options={Array.isArray(extraData)
-          ? extraData
-          : Object.keys(extraData)}
+        options={data}
         onSelected={setValue}
         displayText={value}
+        openWidth={large ? "200px" : undefined}
         noscroll
       />
     );

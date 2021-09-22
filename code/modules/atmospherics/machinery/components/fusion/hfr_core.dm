@@ -104,9 +104,9 @@
 	///Stores the iron content produced by the fusion
 	var/iron_content = 0
 	///User controlled variable to control the flow of the fusion by changing the amount of fuel injected
-	var/fuel_injection_rate = 250
+	var/fuel_injection_rate = 25
 	///User controlled variable to control the flow of the fusion by changing the amount of moderators injected
-	var/moderator_injection_rate = 250
+	var/moderator_injection_rate = 25
 
 	///Integrity of the machine, if reaches 900 the machine will explode
 	var/critical_threshold_proximity = 0

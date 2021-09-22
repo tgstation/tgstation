@@ -950,12 +950,12 @@
 	air_alarm_options = add_option_port("Air Alarm Options", component_options)
 	options_map = component_options
 
-/obj/item/circuit_component/air_alarm/register_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/air_alarm/register_usb_parent(atom/movable/shell)
 	. = ..()
-	if(istype(parent, /obj/machinery/airalarm))
-		connected_alarm = parent
+	if(istype(shell, /obj/machinery/airalarm))
+		connected_alarm = shell
 
-/obj/item/circuit_component/air_alarm/unregister_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/air_alarm/unregister_usb_parent(atom/movable/shell)
 	connected_alarm = null
 	return ..()
 
