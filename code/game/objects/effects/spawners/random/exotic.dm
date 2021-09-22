@@ -25,8 +25,8 @@
 	name = "exotic tool spawner"
 	icon_state = "wrench"
 	loot = list( // Some sort of random and rare tool.
-		/obj/effect/spawner/random/engineering/tool_rare,
-		/obj/effect/spawner/random/medical/surgery_tool_rare,
+		/obj/effect/spawner/random/engineering/tool_alien,
+		/obj/effect/spawner/random/medical/surgery_tool_alien,
 		/obj/effect/spawner/random/engineering/tool_advanced,
 	)
 
