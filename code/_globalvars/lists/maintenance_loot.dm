@@ -287,7 +287,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/clothing/gloves/color/black = 1,
 		/obj/item/clothing/gloves/tackler/combat = 1,
 		/obj/item/clothing/head/helmet/justice = 1,
-		/obj/item/clothing/neck/cloak/comxy = 1,
+		/obj/item/clothing/neck/cloak/drip = 1,
 		) = 1,
 
 	list(//paint
