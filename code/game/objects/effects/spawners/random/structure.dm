@@ -52,6 +52,7 @@
 	icon_state = "rack_parts"
 	loot = list(
 		/obj/effect/spawner/random/structure/table,
+		/obj/structure/rack,
 	)
 
 /obj/effect/spawner/random/structure/table
