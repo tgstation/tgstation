@@ -27,8 +27,8 @@
 	var/required_stock_part = /obj/item/stock_parts
 
 /datum/experiment/scanning/machinery_pinpoint_scan/serialize_progress_stage(atom/target, list/seen_instances)
-	return EXPERIMENT_PROG_INT("Scan \a [initial(target.name)] built with \a [required_stock_part].", \ //make this show the actual name of the part goddamnit
-		traits & EXPERIMENT_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len, required_atoms[target])
+	return EXPERIMENT_PROG_INT("Scan \a [initial(target.name)] built with \a [required_stock_part].", \
+		traits & EXPERIMENT_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len, required_atoms[target]) //make this show the actual name of the part goddamnit
 
 /datum/experiment/scanning/machinery_pinpoint_scan/final_contributing_index_checks(atom/target, typepath)
 	var/obj/machinery/machine = target
