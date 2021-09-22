@@ -73,15 +73,7 @@
 			header = "IT'S LOOSE",
 			notify_volume = 75
 		)
-	var/atom/movable/warp_effect = new(src)
-	warp_effect.plane = GRAVITY_PULSE_PLANE //mandatory
-	warp_effect.icon = 'icons/effects/light_overlays/light_352.dmi' // your icon here!!
-	warp_effect.icon_state = "light"
-	warp_effect.pixel_x = -178
-	warp_effect.pixel_y = -178
-	animate(warp_effect, time = 2 SECONDS, loop = -1, transform = matrix().Scale(2,2))
-	animate(time = 2 SECONDS, transform = matrix())
-	vis_contents += warp_effect//mandatory
+
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
