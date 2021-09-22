@@ -102,10 +102,10 @@
 	name = "generic signaler cartridge"
 	desc = "A data cartridge with an integrated radio signaler module."
 
-/obj/item/cartridge/signal/toxins
+/obj/item/cartridge/signal/ordnance
 	name = "\improper Signal Ace 2 cartridge"
 	desc = "Complete with integrated radio signaler!"
-	icon_state = "cart-tox"
+	icon_state = "cart-ord"
 	access = CART_REAGENT_SCANNER | CART_ATMOS
 
 /obj/item/cartridge/signal/Initialize()

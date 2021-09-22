@@ -145,7 +145,8 @@
 	source = _source
 	shape = loc
 	if(!istype(shape))
-		CRASH("shapeshift holder created outside mob/living")
+		stack_trace("shapeshift holder created outside mob/living")
+		return INITIALIZE_HINT_QDEL
 	stored = caster
 	if(stored.mind)
 		stored.mind.transfer_to(shape)

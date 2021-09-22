@@ -91,7 +91,7 @@
 	/// List of family heirlooms this job can get with the family heirloom quirk. List of types.
 	var/list/family_heirlooms
 
-	/// All values = (JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT)
+	/// All values = (JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_ASSIGN_QUIRKS)
 	var/job_flags = NONE
 
 	/// Multiplier for general usage of the voice of god.
@@ -268,6 +268,11 @@
 		holder = "[uniform]"
 	uniform = text2path(holder)
 
+	var/client/client = GLOB.directory[ckey(H.mind?.key)]
+
+	if(client?.is_veteran() && client?.prefs.read_preference(/datum/preference/toggle/playtime_reward_cloak))
+		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
+
 /datum/outfit/job/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
@@ -295,9 +300,6 @@
 		PDA.owner = H.real_name
 		PDA.ownjob = J.title
 		PDA.update_label()
-
-	if(H.client?.prefs.playtime_reward_cloak)
-		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
 
 
 /datum/outfit/job/get_chameleon_disguise_info()
@@ -392,25 +394,35 @@
 	var/fully_randomize = GLOB.current_anonymous_theme || player_client.prefs.should_be_random_hardcore(job, player_client.mob.mind) || is_banned_from(player_client.ckey, "Appearance")
 	if(!player_client)
 		return // Disconnected while checking for the appearance ban.
+
+	var/require_human = CONFIG_GET(flag/enforce_human_authority) && (job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+
 	if(fully_randomize)
-		if(CONFIG_GET(flag/enforce_human_authority) && (job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
-			if(player_client.prefs.pref_species.id != SPECIES_HUMAN)
-				player_client.prefs.pref_species = new /datum/species/human
+		if(require_human)
 			player_client.prefs.randomise_appearance_prefs(~RANDOMIZE_SPECIES)
 		else
 			player_client.prefs.randomise_appearance_prefs()
+
 		player_client.prefs.apply_prefs_to(src)
+
+		if (require_human)
+			set_species(/datum/species/human)
+
 		if(GLOB.current_anonymous_theme)
 			fully_replace_character_name(null, GLOB.current_anonymous_theme.anonymous_name(src))
 	else
 		var/is_antag = (player_client.mob.mind in GLOB.pre_setup_antags)
-		if(CONFIG_GET(flag/enforce_human_authority) && (job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
-			player_client.prefs.randomise[RANDOM_SPECIES] = FALSE
-			if(player_client.prefs.pref_species.id != SPECIES_HUMAN)
-				player_client.prefs.pref_species = new /datum/species/human
+		if(require_human)
+			player_client.prefs.randomise["species"] = FALSE
 		player_client.prefs.safe_transfer_prefs_to(src, TRUE, is_antag)
+		if (require_human)
+			set_species(/datum/species/human)
 		if(CONFIG_GET(flag/force_random_names))
-			player_client.prefs.real_name = player_client.prefs.pref_species.random_name(player_client.prefs.gender, TRUE)
+			var/species_type = player_client.prefs.read_preference(/datum/preference/choiced/species)
+			var/datum/species/species = new species_type
+
+			var/gender = player_client.prefs.read_preference(/datum/preference/choiced/gender)
+			real_name = species.random_name(gender, TRUE)
 	dna.update_dna_identity()
 
 
@@ -418,23 +430,26 @@
 	if(GLOB.current_anonymous_theme)
 		fully_replace_character_name(real_name, GLOB.current_anonymous_theme.anonymous_ai_name(TRUE))
 		return
-	apply_pref_name("ai", player_client) // This proc already checks if the player is appearance banned.
+	apply_pref_name(/datum/preference/name/ai, player_client) // This proc already checks if the player is appearance banned.
 	set_core_display_icon(null, player_client)
 
 
 /mob/living/silicon/robot/apply_prefs_job(client/player_client, datum/job/job)
 	if(mmi)
-		var/organic_name 
+		var/organic_name
 		if(GLOB.current_anonymous_theme)
 			organic_name = GLOB.current_anonymous_theme.anonymous_name(src)
-		else if(player_client.prefs.randomise[RANDOM_NAME] || CONFIG_GET(flag/force_random_names) || is_banned_from(player_client.ckey, "Appearance"))
+		else if(player_client.prefs.read_preference(/datum/preference/choiced/random_name) == RANDOM_ENABLED || CONFIG_GET(flag/force_random_names) || is_banned_from(player_client.ckey, "Appearance"))
 			if(!player_client)
 				return // Disconnected while checking the appearance ban.
-			organic_name = player_client.prefs.pref_species.random_name(player_client.prefs.gender, TRUE)
+
+			var/species_type = player_client.prefs.read_preference(/datum/preference/choiced/species)
+			var/datum/species/species = new species_type
+			organic_name = species.random_name(player_client.prefs.read_preference(/datum/preference/choiced/gender), TRUE)
 		else
 			if(!player_client)
 				return // Disconnected while checking the appearance ban.
-			organic_name = player_client.prefs.real_name
+			organic_name = player_client.prefs.read_preference(/datum/preference/name/real_name)
 
 		mmi.name = "[initial(mmi.name)]: [organic_name]"
 		if(mmi.brain)
@@ -443,8 +458,8 @@
 			mmi.brainmob.real_name = organic_name //the name of the brain inside the cyborg is the robotized human's name.
 			mmi.brainmob.name = organic_name
 	// If this checks fails, then the name will have been handled during initialization.
-	if(!GLOB.current_anonymous_theme && player_client.prefs.custom_names["cyborg"] != DEFAULT_CYBORG_NAME)
-		apply_pref_name("cyborg", player_client)
+	if(!GLOB.current_anonymous_theme && player_client.prefs.read_preference(/datum/preference/name/cyborg) != DEFAULT_CYBORG_NAME)
+		apply_pref_name(/datum/preference/name/cyborg, player_client)
 
 /**
  * Called after a successful roundstart spawn.

@@ -63,10 +63,7 @@
 	return ..()
 
 /obj/machinery/ntnet_relay/process(delta_time)
-	if(is_operational)
-		use_power = ACTIVE_POWER_USE
-	else
-		use_power = IDLE_POWER_USE
+	update_use_power(is_operational ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 
 	update_appearance()
 

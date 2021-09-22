@@ -49,7 +49,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/centcom/Initialize()
 	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
+	allowed += GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/centcom
 	icon_state = "hood_centcom"
@@ -68,7 +68,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/captain/Initialize()
 	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
+	allowed += GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/captain
 	icon_state = "hood_captain"
@@ -82,7 +82,7 @@
 	inhand_icon_state = "coathop"
 	armor = list(MELEE = 10, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 35)
 	allowed = list(
-		/obj/item/melee/classic_baton/telescopic,
+		/obj/item/melee/baton/telescopic,
 	)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/hop
 
@@ -120,15 +120,9 @@
 	allowed = list(
 		/obj/item/grenade/chem_grenade,
 		/obj/item/holosign_creator,
-		/obj/item/key/janitor,
-		/obj/item/lightreplacer,
-		/obj/item/melee/flyswatter,
-		/obj/item/paint/paint_remover,
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/reagent_containers/glass/bottle,
-		/obj/item/reagent_containers/glass/bucket,
 		/obj/item/reagent_containers/spray,
-		/obj/item/soap,
 	)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/janitor
 
@@ -147,7 +141,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/security/Initialize()
 	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
+	allowed += GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/security
 	desc = "A red, armour-padded winter hood. Definitely not bulletproof, especially not the part where your face goes."
@@ -206,7 +200,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/medical/cmo/Initialize()
 	. = ..()
 	allowed += list(
-		/obj/item/melee/classic_baton/telescopic,
+		/obj/item/melee/baton/telescopic,
 	)
 
 /obj/item/clothing/head/hooded/winterhood/medical/cmo
@@ -289,7 +283,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/science/rd/Initialize()
 	. = ..()
 	allowed += list(
-		/obj/item/melee/classic_baton/telescopic,
+		/obj/item/melee/baton/telescopic,
 	)
 
 /obj/item/clothing/head/hooded/winterhood/science/rd
@@ -354,7 +348,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/engineering/ce/Initialize()
 	. = ..()
 	allowed += list(
-		/obj/item/melee/classic_baton/telescopic,
+		/obj/item/melee/baton/telescopic,
 	)
 
 /obj/item/clothing/head/hooded/winterhood/engineering/ce

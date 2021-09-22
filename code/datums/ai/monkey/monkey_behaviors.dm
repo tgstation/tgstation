@@ -212,7 +212,7 @@
 			controller.blackboard[BB_MONKEY_GUN_WORKED] = TRUE // 'worked'
 
 	// no de-aggro
-	if(controller.blackboard[BB_MONKEY_AGRESSIVE])
+	if(controller.blackboard[BB_MONKEY_AGGRESSIVE])
 		return
 
 	if(DT_PROB(MONKEY_HATRED_REDUCTION_PROB, delta_time))
@@ -228,19 +228,19 @@
 /datum/ai_behavior/disposal_mob
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM //performs to increase frustration
 
-/datum/ai_behavior/disposal_mob/finish_action(datum/ai_controller/controller, succeeded)
+/datum/ai_behavior/disposal_mob/finish_action(datum/ai_controller/controller, succeeded, attack_target_key, disposal_target_key)
 	. = ..()
-	controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = null //Reset attack target
+	controller.blackboard[attack_target_key] = null //Reset attack target
 	controller.blackboard[BB_MONKEY_DISPOSING] = FALSE //No longer disposing
-	controller.blackboard[BB_MONKEY_TARGET_DISPOSAL] = null //No target disposal
+	controller.blackboard[disposal_target_key] = null //No target disposal
 
-/datum/ai_behavior/disposal_mob/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/disposal_mob/perform(delta_time, datum/ai_controller/controller, attack_target_key, disposal_target_key)
 	. = ..()
 
 	if(controller.blackboard[BB_MONKEY_DISPOSING]) //We are disposing, don't do ANYTHING!!!!
 		return
 
-	var/mob/living/target = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
+	var/mob/living/target = controller.blackboard[attack_target_key]
 	var/mob/living/living_pawn = controller.pawn
 
 	controller.current_movement_target = target
@@ -250,24 +250,24 @@
 			target.grabbedby(living_pawn)
 		return //Do the rest next turn
 
-	var/obj/machinery/disposal/disposal = controller.blackboard[BB_MONKEY_TARGET_DISPOSAL]
+	var/obj/machinery/disposal/disposal = controller.blackboard[disposal_target_key]
 	controller.current_movement_target = disposal
 
 	if(living_pawn.Adjacent(disposal))
-		INVOKE_ASYNC(src, .proc/try_disposal_mob, controller) //put him in!
+		INVOKE_ASYNC(src, .proc/try_disposal_mob, controller, attack_target_key, disposal_target_key) //put him in!
 	else //This means we might be getting pissed!
 		return
 
-/datum/ai_behavior/disposal_mob/proc/try_disposal_mob(datum/ai_controller/controller)
+/datum/ai_behavior/disposal_mob/proc/try_disposal_mob(datum/ai_controller/controller, attack_target_key, disposal_target_key)
 	var/mob/living/living_pawn = controller.pawn
-	var/mob/living/target = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
-	var/obj/machinery/disposal/disposal = controller.blackboard[BB_MONKEY_TARGET_DISPOSAL]
+	var/mob/living/target = controller.blackboard[attack_target_key]
+	var/obj/machinery/disposal/disposal = controller.blackboard[disposal_target_key]
 
 	controller.blackboard[BB_MONKEY_DISPOSING] = TRUE
 
 	if(target && disposal?.stuff_mob_in(target, living_pawn))
 		disposal.flush()
-	finish_action(controller, TRUE)
+	finish_action(controller, TRUE, attack_target_key, disposal_target_key)
 
 
 /datum/ai_behavior/recruit_monkeys/perform(delta_time, datum/ai_controller/controller)

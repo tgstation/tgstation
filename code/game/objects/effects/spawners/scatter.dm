@@ -37,7 +37,7 @@
 	name = "trash and grime scatterer"
 	max_spawns = 5
 	loot_table = list(/obj/effect/spawner/lootdrop/garbage_spawner = 30,
-					/mob/living/simple_animal/hostile/cockroach = 25,
+					/mob/living/basic/cockroach = 25,
 					/obj/effect/decal/cleanable/garbage = 20,
 					/obj/effect/decal/cleanable/vomit/old = 15,
 					/obj/effect/spawner/lootdrop/cigbutt = 10)

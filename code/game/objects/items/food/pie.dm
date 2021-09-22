@@ -25,6 +25,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("pie" = 1)
 	foodtypes = GRAIN
+	burns_in_oven = TRUE
 
 /obj/item/food/pie/cream
 	name = "banana cream pie"

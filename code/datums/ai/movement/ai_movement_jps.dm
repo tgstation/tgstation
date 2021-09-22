@@ -15,6 +15,9 @@
 		if(!isturf(movable_pawn.loc)) //No moving if not on a turf
 			continue
 
+		if(controller.ai_traits & STOP_MOVING_WHEN_PULLED && movable_pawn.pulledby)
+			continue
+
 		var/minimum_distance = controller.max_target_distance
 		// right now I'm just taking the shortest minimum distance of our current behaviors, at some point in the future
 		// we should let whatever sets the current_movement_target also set the min distance and max path length

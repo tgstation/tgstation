@@ -112,6 +112,9 @@
 	var/obj/machinery/computer/camera_advanced/base_construction/linked_console
 
 /mob/camera/ai_eye/remote/base_construction/Initialize(mapload, obj/machinery/computer/camera_advanced/console_link)
+	if(!linked_console)
+		stack_trace("A base consturuction drone was created with no linked console")
+		return INITIALIZE_HINT_QDEL
 	linked_console = console_link
 	return ..()
 

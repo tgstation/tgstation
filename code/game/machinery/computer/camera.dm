@@ -51,9 +51,9 @@
 	cam_background.del_on_map_removal = FALSE
 
 /obj/machinery/computer/security/Destroy()
-	qdel(cam_screen)
+	QDEL_NULL(cam_screen)
 	QDEL_LIST(cam_plane_masters)
-	qdel(cam_background)
+	QDEL_NULL(cam_background)
 	return ..()
 
 /obj/machinery/computer/security/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
@@ -339,10 +339,10 @@
 	desc = "A telescreen that connects to the vault's camera network."
 	network = list("vault")
 
-/obj/machinery/computer/security/telescreen/toxins
+/obj/machinery/computer/security/telescreen/ordnance
 	name = "bomb test site monitor"
 	desc = "A telescreen that connects to the bomb test site's camera."
-	network = list("toxins")
+	network = list("ordnance")
 
 /obj/machinery/computer/security/telescreen/engine
 	name = "engine monitor"

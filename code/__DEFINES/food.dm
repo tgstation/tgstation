@@ -15,6 +15,25 @@
 #define CLOTH (1<<14)
 #define NUTS (1<<15)
 
+/// A list of food type names, in order of their flags
+#define FOOD_FLAGS list( \
+	"MEAT", \
+	"VEGETABLES", \
+	"RAW", \
+	"JUNKFOOD", \
+	"GRAIN", \
+	"FRUIT", \
+	"DAIRY", \
+	"FRIED", \
+	"ALCOHOL", \
+	"SUGAR", \
+	"GROSS", \
+	"TOXIC", \
+	"PINEAPPLE", \
+	"BREAKFAST", \
+	"CLOTH", \
+)
+
 #define DRINK_NICE 1
 #define DRINK_GOOD 2
 #define DRINK_VERYGOOD 3
@@ -87,3 +106,4 @@
 #define ICE_CREAM_BLAND "bland"
 
 #define DEFAULT_MAX_ICE_CREAM_SCOOPS 3
+

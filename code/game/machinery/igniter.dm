@@ -14,8 +14,8 @@
 	var/id = null
 	var/on = FALSE
 
-/obj/machinery/igniter/incinerator_toxmix
-	id = INCINERATOR_TOXMIX_IGNITER
+/obj/machinery/igniter/incinerator_ordmix
+	id = INCINERATOR_ORDMIX_IGNITER
 
 /obj/machinery/igniter/incinerator_atmos
 	id = INCINERATOR_ATMOS_IGNITER
@@ -85,8 +85,8 @@
 	dir = EAST
 	pixel_x = -26
 
-/obj/machinery/sparker/toxmix
-	id = INCINERATOR_TOXMIX_IGNITER
+/obj/machinery/sparker/ordmix
+	id = INCINERATOR_ORDMIX_IGNITER
 
 /obj/machinery/sparker/Initialize()
 	. = ..()

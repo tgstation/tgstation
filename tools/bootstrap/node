@@ -22,7 +22,7 @@ NodeVersion="$NODE_VERSION_PRECISE"
 NodeFullVersion="node-v$NodeVersion-win-x64"
 NodeDir="$Cache/$NodeFullVersion"
 NodeExe="$NodeDir/node.exe"
-Log="$Cache/last-command.log"
+is_vendored="1"
 
 # If a bootstrapped Node is not present, search on $PATH.
 if [ "$(uname)" = "Linux" ] || [ ! -f "$NodeExe" ]; then
@@ -39,6 +39,7 @@ if [ "$(uname)" = "Linux" ] || [ ! -f "$NodeExe" ]; then
 		fi
 	elif command -v node >/dev/null 2>&1; then
 		NodeExe="node"
+		is_vendored="0"
 	else
 		echo
 		if command -v apt-get >/dev/null 2>&1; then
@@ -62,23 +63,11 @@ if [ "$(uname)" = "Linux" ] || [ ! -f "$NodeExe" ]; then
 	fi
 fi
 
-# Cheap shell function if tee.exe is not available
-if ! command -v tee >/dev/null 2>&1; then
-	tee() {
-		# Fudge: assume $1 is always "-a"
-		while read -r line; do
-			echo "$line" >> "$2"
-			echo "$line"
-		done
-	}
-fi
-
 # Invoke Node with all command-line arguments
-mkdir -p "$Cache"
-printf '%s\n' "$NodeExe" "$@" > "$Log"
-printf -- '---\n' >> "$Log"
-exec 4>&1
-PATH="$(readlink -f "$NodeDir"):$PATH"  # Set PATH so that recursive calls find it
-exitstatus=$({ { set +e; "$NodeExe" "$@" 2>&1 3>&-; printf %s $? >&3; } 4>&- | tee -a "$Log" 1>&4; } 3>&1)
-exec 4>&-
-exit "$exitstatus"
+if [ "$is_vendored" = "1" ]; then
+	PATH="$(readlink -f "$NodeDir"):$PATH"
+	echo "Using vendored Node $("$NodeExe" --version)"
+else
+	echo "Using system-wide Node $("$NodeExe" --version)"
+fi
+exec "$NodeExe" "$@"

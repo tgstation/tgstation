@@ -104,7 +104,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 			add_hud_to(mob)
 
 /datum/atom_hud/alternate_appearance/basic/everyone/mobShouldSee(mob/M)
-	return !isobserver(M)
+	return !isdead(M)
 
 /datum/atom_hud/alternate_appearance/basic/silicons
 

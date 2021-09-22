@@ -81,7 +81,7 @@
 	name = "Energy cake"
 	reqs = list(
 		/obj/item/food/cake/birthday = 1,
-		/obj/item/melee/transforming/energy/sword = 1,
+		/obj/item/melee/energy/sword = 1,
 	)
 	blacklist = list(/obj/item/food/cake/birthday/energy)
 	result = /obj/item/food/cake/birthday/energy

@@ -40,7 +40,7 @@
 	species = "bluecherry"
 	plantname = "Blue Cherry Tree"
 	product = /obj/item/food/grown/bluecherries
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.07, /datum/reagent/consumable/sugar = 0.07, /datum/reagent/oxygen = 0.07)
 	rarity = 10
 
@@ -64,7 +64,7 @@
 	plantname = "Cherry Bulb Tree"
 	product = /obj/item/food/grown/cherrybulbs
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/pink)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.07, /datum/reagent/consumable/sugar = 0.07)
 	rarity = 10
 	graft_gene = /datum/plant_gene/trait/glow/pink
@@ -88,7 +88,7 @@
 	species = "cherry_bomb"
 	plantname = "Cherry Bomb Tree"
 	product = /obj/item/food/grown/cherry_bomb
-	mutatelist = list()
+	mutatelist = null
 	genes = list(/datum/plant_gene/trait/bomb_plant, /datum/plant_gene/trait/modified_volume/cherry_bomb)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1, /datum/reagent/gunpowder = 0.7)
 	rarity = 60 //See above

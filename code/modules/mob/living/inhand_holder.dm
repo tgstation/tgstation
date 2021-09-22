@@ -83,6 +83,12 @@
 		release(TRUE, FALSE)
 		return
 
+/obj/item/clothing/head/mob_holder/drone/Initialize(mapload, mob/living/M, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags = NONE)
+	//If we're not being put onto a drone, end it all
+	if(!isdrone(M))
+		return INITIALIZE_HINT_QDEL
+	return ..()
+
 /obj/item/clothing/head/mob_holder/drone/deposit(mob/living/L)
 	. = ..()
 	if(!isdrone(L))

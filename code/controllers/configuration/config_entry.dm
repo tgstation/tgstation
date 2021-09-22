@@ -96,6 +96,8 @@
 	default = ""
 	abstract_type = /datum/config_entry/string
 	var/auto_trim = TRUE
+	/// whether the string will be lowercased on ValidateAndSet or not.
+	var/lowercase = FALSE
 
 /datum/config_entry/string/vv_edit_var(var_name, var_value)
 	return var_name != NAMEOF(src, auto_trim) && ..()
@@ -104,6 +106,8 @@
 	if(!VASProcCallGuard(str_val))
 		return FALSE
 	config_entry_value = auto_trim ? trim(str_val) : str_val
+	if(lowercase)
+		config_entry_value = lowertext(config_entry_value)
 	return TRUE
 
 /datum/config_entry/number
@@ -143,13 +147,15 @@
 	abstract_type = /datum/config_entry/str_list
 	default = list()
 	dupes_allowed = TRUE
+	/// whether the string elements will be lowercased on ValidateAndSet or not.
+	var/lowercase = FALSE
 
 /datum/config_entry/str_list/ValidateAndSet(str_val)
 	if (!VASProcCallGuard(str_val))
 		return FALSE
 	str_val = trim(str_val)
 	if (str_val != "")
-		config_entry_value += str_val
+		config_entry_value += lowercase ? lowertext(str_val) : str_val
 	return TRUE
 
 /datum/config_entry/number_list
@@ -180,6 +186,8 @@
 	var/key_mode
 	var/value_mode
 	var/splitter = " "
+	/// whether the key names will be lowercased on ValidateAndSet or not.
+	var/lowercase_key = TRUE
 
 /datum/config_entry/keyed_list/New()
 	. = ..()
@@ -196,7 +204,9 @@
 	var/key_value = null
 
 	if(key_pos || value_mode == VALUE_MODE_FLAG)
-		key_name = lowertext(copytext(str_val, 1, key_pos))
+		key_name = copytext(str_val, 1, key_pos)
+		if(lowercase_key)
+			key_name = lowertext(key_name)
 		if(key_pos)
 			key_value = copytext(str_val, key_pos + length(str_val[key_pos]))
 		var/new_key

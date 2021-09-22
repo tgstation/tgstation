@@ -29,7 +29,7 @@
 		/obj/item/toy/plush/ratplush = 1
 	)
 
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 	voice_of_god_power = 2 //Chaplains are very good at speaking with the voice of god
 
@@ -62,19 +62,11 @@
 	if(H.mind)
 		H.mind.holy_role = HOLY_ROLE_HIGHPRIEST
 
-	var/new_religion = DEFAULT_RELIGION
-	if(player_client?.prefs.custom_names["religion"])
-		new_religion = player_client.prefs.custom_names["religion"]
-
-	var/new_deity = DEFAULT_DEITY
-	if(player_client?.prefs.custom_names["deity"])
-		new_deity = player_client.prefs.custom_names["deity"]
+	var/new_religion = player_client?.prefs?.read_preference(/datum/preference/name/religion) || DEFAULT_RELIGION
+	var/new_deity = player_client?.prefs?.read_preference(/datum/preference/name/deity) || DEFAULT_DEITY
+	var/new_bible = player_client?.prefs?.read_preference(/datum/preference/name/bible) || DEFAULT_BIBLE
 
 	B.deity_name = new_deity
-
-	var/new_bible = DEFAULT_BIBLE
-	if(player_client?.prefs.custom_names["bible"])
-		new_bible = player_client.prefs.custom_names["bible"]
 
 	switch(lowertext(new_religion))
 		if("homosexuality", "gay", "penis", "ass", "cock", "cocks")

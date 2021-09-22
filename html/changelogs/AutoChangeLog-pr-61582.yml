@@ -1,0 +1,5 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - admin: "The Set Var, Get Var, Proc Call, and Signal Handler admin circuit components now use a \"datum\" datatype for their \"Target\" port. The \"datum\" datatype can accept inputs from \"atom\" ports, and can be safely cast to the \"atom\" datatype using the typecasting component when necessary."
+  - admin: "The Get Var component now has an option port used to select the expected datatype of the obtained var. Similarly, the Proc Call component now has an option port used to select the expected datatype of the proc's return value. Both of these options default to \"any\""
