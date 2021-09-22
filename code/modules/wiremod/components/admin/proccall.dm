@@ -14,6 +14,9 @@
 
 	var/datum/port/input/option/proccall_options
 
+	/// Expected type of output
+	var/datum/port/input/option/expected_output_type
+
 	/// Entity to proccall on
 	var/datum/port/input/entity
 
@@ -34,12 +37,19 @@
 
 	proccall_options = add_option_port("Proccall Options", component_options)
 
+	expected_output_type = add_option_port("Expected Output Type", GLOB.wiremod_fundamental_types)
+
 /obj/item/circuit_component/proccall/populate_ports()
-	entity = add_input_port("Target", PORT_TYPE_ATOM)
+	entity = add_input_port("Target", PORT_TYPE_DATUM)
 	proc_name = add_input_port("Proc Name", PORT_TYPE_STRING)
 	arguments = add_input_port("Arguments", PORT_TYPE_LIST)
 
 	output_value = add_output_port("Output Value", PORT_TYPE_ANY)
+
+/obj/item/circuit_component/proccall/pre_input_received(datum/port/input/port)
+	if(port == expected_output_type)
+		if(output_value.datatype != expected_output_type.value)
+			output_value.set_datatype(expected_output_type.value)
 
 /obj/item/circuit_component/proccall/input_received(datum/port/input/port)
 	var/called_on

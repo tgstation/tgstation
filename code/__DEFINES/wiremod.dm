@@ -32,6 +32,8 @@
 // Other datatypes
 /// Atom datatype
 #define PORT_TYPE_ATOM "entity"
+/// Datum datatype
+#define PORT_TYPE_DATUM "datum"
 
 
 /// The maximum range between a port and an atom
