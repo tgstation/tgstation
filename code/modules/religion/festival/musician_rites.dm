@@ -17,7 +17,7 @@
   * Perform the song effect.
   *
   * Arguments:
-  * * arg1 - parent of the smooth_tunes component. This is limited to the compatible items of said component, which currently includes mobs and objects so we'll have to type appropriately.
+  * * song_player - parent of the smooth_tunes component. This is limited to the compatible items of said component, which currently includes mobs and objects so we'll have to type appropriately.
   * * song_datum - Datum song being played
   */
 /datum/religion_rites/song_tuner/proc/song_effect(atom/song_player, datum/song/song_datum)
