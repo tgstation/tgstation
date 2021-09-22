@@ -210,6 +210,8 @@
 		/obj/item/reagent_containers/food/condiment/pack/bbqsauce = 3,
 		/obj/item/reagent_containers/food/condiment/bbqsauce = 1,
 		/obj/item/reagent_containers/food/condiment/soysauce = 1,
+		/obj/item/reagent_containers/food/condiment/vinegar = 1,
+		/obj/item/reagent_containers/food/condiment/quality_oil = 1,
 	)
 
 /obj/effect/spawner/random/food_or_drink/cups
