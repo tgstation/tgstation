@@ -34,6 +34,11 @@
 	input_port = add_input_port("Input", PORT_TYPE_ANY)
 	trigger = add_input_port("Store", PORT_TYPE_SIGNAL)
 
+/obj/item/circuit_component/setter/Initialize(mapload, variable)
+	. = ..()
+	if(variable)
+		variable_name.set_input(variable)
+
 /obj/item/circuit_component/setter/pre_input_received(datum/port/input/port)
 	var/datum/circuit_variable/variable = get_variable()
 	if(!variable)

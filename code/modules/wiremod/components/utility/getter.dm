@@ -29,6 +29,11 @@
 /obj/item/circuit_component/getter/populate_ports()
 	value = add_output_port("Value", PORT_TYPE_ANY)
 
+/obj/item/circuit_component/getter/Initialize(mapload, variable)
+	. = ..()
+	if(variable)
+		variable_name.set_input(variable)
+
 /obj/item/circuit_component/getter/pre_input_received(datum/port/input/port)
 	if(!parent)
 		return

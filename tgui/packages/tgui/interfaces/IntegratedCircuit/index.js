@@ -15,6 +15,8 @@ import { Connections } from './Connections';
 import { ObjectComponent } from './ObjectComponent';
 import { VariableMenu } from './VariableMenu';
 
+const oldData = {};
+
 export class IntegratedCircuit extends Component {
   constructor() {
     super();
@@ -105,7 +107,7 @@ export class IntegratedCircuit extends Component {
   // mouse up called whilst over a port. This means we can check if selectedPort
   // exists and do perform some actions if it does.
   handlePortUp(portIndex, componentId, port, isOutput, event) {
-    const { act } = useBackend(this.context);
+    const { act, data: uiData } = useBackend(this.context);
     const {
       selectedPort,
     } = this.state;
@@ -132,6 +134,27 @@ export class IntegratedCircuit extends Component {
       };
     }
     act("add_connection", data);
+
+    const { components } = uiData;
+    const {
+      input_component_id,
+      input_port_id,
+      output_component_id,
+      output_port_id,
+    } = data;
+
+    const input_comp = components[input_component_id-1];
+    const input_port = input_comp.input_ports[input_port_id-1];
+    const output_comp = components[output_component_id-1];
+    const output_port = output_comp.output_ports[output_port_id-1];
+    // Do not predict ports that do not match because there is no guarantee
+    // that they will properly match.
+    if (!input_port || input_port.type !== output_port.type) {
+      return;
+    }
+    input_port.connected_to.push(isOutput? port.ref : selectedPort.ref);
+
+    this.forceUpdate();
   }
 
   handlePortDrag(event) {
@@ -263,8 +286,8 @@ export class IntegratedCircuit extends Component {
 
     return (
       <Window
-        width={600}
-        height={600}
+        width={1200}
+        height={800}
         buttons={(
           <Box
             width="160px"
@@ -355,8 +378,8 @@ export class IntegratedCircuit extends Component {
               position="absolute"
               bottom={0}
               left={0}
-              height="50%"
-              minHeight="300px"
+              height="25%"
+              minHeight="200px"
               width="100%"
               backgroundColor="#202020"
             >

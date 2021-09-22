@@ -564,7 +564,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			var/designated_type = /obj/item/circuit_component/getter
 			if(params["is_setter"])
 				designated_type = /obj/item/circuit_component/setter
-			var/obj/item/circuit_component/component = new designated_type(src)
+			var/obj/item/circuit_component/component = new designated_type(src, params["variable"])
+			component.rel_x = text2num(params["rel_x"])
+			component.rel_y = text2num(params["rel_y"])
 			if(!add_component(component, usr))
 				qdel(component)
 				return
