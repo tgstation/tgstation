@@ -158,11 +158,14 @@
 	name = "maintenance chair spawner"
 	icon_state = "chair"
 	loot = list(
-		/obj/effect/spawner/random/structure/chair = 500,
+		/obj/structure/chair = 200,
+		/obj/structure/chair/stool = 200,
 		/obj/structure/chair/stool/bar = 200,
 		/obj/effect/spawner/random/structure/chair_flipped = 150,
 		/obj/structure/chair/wood = 100,
 		/obj/effect/spawner/random/structure/chair_comfy = 50,
+		/obj/structure/chair/office/light = 50,
+		/obj/structure/chair/office = 50,
 		/obj/structure/chair/wood/wings = 1,
 		/obj/structure/chair/old = 1,
 	)
