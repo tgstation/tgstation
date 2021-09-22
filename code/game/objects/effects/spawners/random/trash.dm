@@ -44,6 +44,7 @@
 		/obj/item/trash/can/food/peaches/maint = 1,
 		/obj/item/trash/semki = 1,
 		/obj/item/trash/cnds = 1,
+		/obj/item/trash/syndi_cakes = 1,
 	)
 
 /obj/effect/spawner/random/trash/botanical_waste
@@ -60,16 +61,9 @@
 	icon_state = "grille"
 	loot = list(
 		/obj/structure/grille = 5,
-		/obj/item/cigbutt = 1,
-		/obj/item/trash/cheesie = 1,
-		/obj/item/trash/candy = 1,
-		/obj/item/trash/chips = 1,
+		/obj/effect/spawner/random/trash/food_packaging = 3,
+		/obj/effect/spawner/random/trash/cigbutt = 1,
 		/obj/item/food/deadmouse = 1,
-		/obj/item/trash/pistachios = 1,
-		/obj/item/trash/popcorn = 1,
-		/obj/item/trash/raisins = 1,
-		/obj/item/trash/sosjerky = 1,
-		/obj/item/trash/syndi_cakes = 1,
 	)
 
 /obj/effect/spawner/random/trash/hobo_squat
