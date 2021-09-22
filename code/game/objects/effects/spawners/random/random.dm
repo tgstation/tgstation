@@ -1,3 +1,6 @@
+/**
+ * Base class for all random spawners.
+ */
 /obj/effect/spawner/random
 	icon = 'icons/effects/random_spawners.dmi'
 	icon_state = "loot"
