@@ -13,10 +13,15 @@
 		traits & EXPERIMENT_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len, required_atoms[target])
 
 /datum/experiment/scanning/machinery_tiered_scan/final_contributing_index_checks(atom/target, typepath)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	var/obj/machinery/machine = target
 	for(var/obj/item/stock_parts/stock_part in machine.component_parts)
-		if((stock_part.rating == required_tier))
-			return ..() && TRUE
+		if(stock_part.rating == required_tier)
+			return TRUE
+	return FALSE
 
 //This experiment type will turn up TRUE if there is a specific part in the scanned machine
 /datum/experiment/scanning/machinery_pinpoint_scan
@@ -31,7 +36,12 @@
 		traits & EXPERIMENT_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len, required_atoms[target]) //make this show the actual name of the part goddamnit
 
 /datum/experiment/scanning/machinery_pinpoint_scan/final_contributing_index_checks(atom/target, typepath)
+	.=..()
+	if(!.)
+		return FALSE
+
 	var/obj/machinery/machine = target
 	for(var/obj/stock_part in machine.component_parts)
 		if(istype(stock_part, required_stock_part))
-			return ..() && TRUE
+			return TRUE
+	return FALSE
