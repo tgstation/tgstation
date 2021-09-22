@@ -157,10 +157,13 @@
 	name = "pizza bomb spawner"
 	icon_state = "pizzabox"
 	loot = list(
-		/obj/item/pizzabox/margherita = 3,
-		/obj/item/pizzabox/meat = 3,
-		/obj/item/pizzabox/mushroom = 3,
+		/obj/item/pizzabox/margherita = 2,
+		/obj/item/pizzabox/meat = 2,
+		/obj/item/pizzabox/mushroom = 2,
+		/obj/item/pizzabox/pineapple = 2,
+		/obj/item/pizzabox/vegetable = 2,
 		/obj/item/pizzabox/bomb/armed = 1,
+
 	)
 
 /obj/effect/spawner/random/food_or_drink/seed_vault
