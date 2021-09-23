@@ -1,8 +1,10 @@
+import { useBackend } from '../../backend';
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
+import { ActNone, ActSet } from './helpers';
 
-import { Box, Icon, LabeledList, ProgressBar, Section, Tooltip } from '../../components';
+import { Box, Button, Icon, LabeledList, NumberInput, ProgressBar, Section, Tooltip } from '../../components';
 import { getGasColor, getGasLabel } from '../../constants';
 
 const moderator_gases_help = {
@@ -32,55 +34,111 @@ const ensure_gases = (gas_array, gasids) => {
   }
 };
 
-export const HypertorusGases = props => {
+const HoverHelp = props => (
+  <Tooltip content={props.content}>
+    <Icon name="question-circle" width="12px" mr="6px" />
+  </Tooltip>
+);
+
+const GasList = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
-    fusionGases: raw_fusion_gases,
-    moderatorGases: raw_moderator_gases,
-    selectedFuel,
+    input_max,
+    input_min,
+    input_rate,
+    input_switch,
+    gases: raw_gases,
+    minimumScale,
+    prepend,
+    rateHelp,
+    stickyGases,
   } = props;
 
-  const fusion_gases = flow([
+  const gases = flow([
     filter(gas => gas.amount >= 0.01),
     sortBy(gas => -gas.amount),
-  ])(raw_fusion_gases || []);
+  ])(raw_gases || []);
 
-  if (selectedFuel) {
-    // Always display the requirement gases of the selected recipe.
-    ensure_gases(fusion_gases, selectedFuel.requirements);
+  if (stickyGases) {
+    ensure_gases(gases, stickyGases);
   }
 
-  const moderator_gases = flow([
-    filter(gas => gas.amount >= 0.01),
-    sortBy(gas => -gas.amount),
-  ])(raw_moderator_gases || []);
+  return (
+    <LabeledList>
+      <LabeledList.Item
+        label={
+          <>
+            <HoverHelp content={rateHelp} />
+            Injection Rate:
+          </>
+        }
+      >
+        <Button
+          disabled={data.start_power === 0
+              || data.start_cooling === 0}
+          icon={data[input_switch] ? 'power-off' : 'times'}
+          content={data[input_switch] ? 'On' : 'Off'}
+          selected={data[input_switch]}
+          onClick={ActNone(act, input_switch)} />
+        <NumberInput
+          animated
+          value={parseFloat(data[input_rate])}
+          unit="mol/s"
+          minValue={input_min}
+          maxValue={input_max}
+          onDrag={ActSet(act, input_rate)}
+        />
+      </LabeledList.Item>
+    {gases.map(gas => {
+      let labelPrefix;
+      if (prepend) {
+        labelPrefix = prepend(gas)
+      }
+      return (
+      <LabeledList.Item
+        key={gas.id}
+        label={
+          <>
+            (labelPrefix)
+            {getGasLabel(gas.id)}:
+          </>}
+        >
+        <ProgressBar
+          color={getGasColor(gas.id)}
+          value={gas.amount}
+          minValue={0}
+          maxValue={minimumScale}>
+          {toFixed(gas.amount, 2) + ' moles'}
+        </ProgressBar>
+      </LabeledList.Item>);
+    })}
+  </LabeledList>);
+};
 
-  // Make sure the "sticky" production gases are always visible.
-  // We want to display help for these.
-  ensure_gases(moderator_gases, moderator_gases_sticky_order);
-
-  const fusionMax = Math.max(500, ...fusion_gases.map(gas => gas.amount));
-  const moderatorMax = Math.max(500, ...moderator_gases.map(gas => gas.amount));
+export const HypertorusGases = props => {
+  const {
+    fusionGases: fusion_gases,
+    moderatorGases: moderator_gases,
+    selectedFuel,
+  } = props;
 
   return (
     <>
       <Section title="Internal Fusion Gases">
         {selectedFuel 
           ? (
-            <LabeledList>
-              {fusion_gases.map(gas => (
-                <LabeledList.Item
-                  key={gas.id}
-                  label={getGasLabel(gas.id)}>
-                  <ProgressBar
-                    color={getGasColor(gas.id)}
-                    value={gas.amount}
-                    minValue={0}
-                    maxValue={fusionMax}>
-                    {toFixed(gas.amount, 2) + ' moles'}
-                  </ProgressBar>
-                </LabeledList.Item>
-              ))}
-            </LabeledList>)
+            <GasList
+              input_rate="fuel_injection_rate"
+              input_switch="start_fuel"
+              input_max={150}
+              input_min={.5}
+              gases={fusion_gases}
+              minimumScale={500}
+              rateHelp={"The rate at which new fuel is added from the fuel input port. "
+               + "Affects the rate of production, even when not active."}
+              stickyGases={selectedFuel.requirements}
+            />
+          )
           : (
             <Box align="center" color="red">
               {"No recipe selected"}
@@ -88,42 +146,21 @@ export const HypertorusGases = props => {
           )}
       </Section>
       <Section title="Moderator Gases">
-        <LabeledList>
-          {moderator_gases.map(gas => {
-            // Add in an icon to display tooltip help for interesting gases.
-            let labelPrefix;
-            if (moderator_gases_help[gas.id]) {
-              labelPrefix = (
-                <Tooltip content={moderator_gases_help[gas.id]}>
-                  <Icon name="question-circle" width="12px" mr="6px" />
-                </Tooltip>
-              );
-            } else {
-              // Empty icon for spacing purposes
-              labelPrefix = (
-                <Icon name="" width="12px" mr="6px" />
-              );
-            }
-            return (
-              <LabeledList.Item
-                key={gas.id}
-                label={
-                  <>
-                    {labelPrefix}
-                    {getGasLabel(gas.id)}:
-                  </>
-                }>
-                <ProgressBar
-                  color={getGasColor(gas.id)}
-                  value={gas.amount}
-                  minValue={0}
-                  maxValue={moderatorMax}>
-                  {toFixed(gas.amount, 2) + ' moles'}
-                </ProgressBar>
-              </LabeledList.Item>
-            );
-          })}
-        </LabeledList>
+        <GasList
+          input_rate="moderator_injection_rate"
+          input_switch="start_moderator"
+          input_max={150}
+          input_min={.5}
+          gases={moderator_gases}
+          minimumScale={500}
+          rateHelp={"The rate at which new moderator gas is added from the moderator port."}
+          stickyGases={moderator_gases_sticky_order}
+          prepend={gas=>
+            moderator_gases_help[gas.id]
+            ? (<HoverHelp content={moderator_gases_help[gas.id]} />)
+            : (<Icon name="" width="12px" mr="6px" />)
+          }
+        />
       </Section>
     </>
   );

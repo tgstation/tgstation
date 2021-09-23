@@ -1,6 +1,6 @@
 
 import { useBackend } from '../backend';
-import { Button, Collapsible, Section, Stack } from '../components';
+import { Button, Collapsible, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 import { HypertorusGases } from './Hypertorus/Gases';
@@ -40,26 +40,6 @@ const HypertorusMainControls = (props, context) => {
             content={data.start_cooling ? 'On' : 'Off'}
             selected={data.start_cooling}
             onClick={act.bind(null, 'start_cooling')} />
-        </Stack.Item>
-        <Stack.Item color="label">
-          {'Start fuel injection: '}
-          <Button
-            disabled={data.start_power === 0
-                || data.start_cooling === 0}
-            icon={data.start_fuel ? 'power-off' : 'times'}
-            content={data.start_fuel ? 'On' : 'Off'}
-            selected={data.start_fuel}
-            onClick={act.bind(null, 'start_fuel')} />
-        </Stack.Item>
-        <Stack.Item color="label">
-          {'Start moderator injection: '}
-          <Button
-            disabled={data.start_power === 0
-                || data.start_cooling === 0}
-            icon={data.start_moderator ? 'power-off' : 'times'}
-            content={data.start_moderator ? 'On' : 'Off'}
-            selected={data.start_moderator}
-            onClick={act.bind(null, 'start_moderator')} />
         </Stack.Item>
       </Stack>
       <Collapsible title="Recipe selection">
@@ -149,25 +129,18 @@ const HypertorusLayout = (props, context) => {
           />
         </Stack.Item>
       </Stack>
-      <Stack mb="0.5em">
-        <Stack.Item minWidth="660px" grow>
-          <HypertorusParameters
-            energyLevel={energy_level}
-            heatLimiterModifier={heat_limiter_modifier}
-            heatOutputMin={heat_output_min}
-            heatOutputMax={heat_output_max}
-            heatOutput={heat_output}
-            apcEnergy={apc_energy}
-            instability={instability}
-            powerLevel={power_level}
-            ironContent={iron_content}
-            integrity={integrity} />
-          <HypertorusSecondaryControls />
-        </Stack.Item>
-        <Stack.Item>
-          <HypertorusIO />
-        </Stack.Item>
-      </Stack>
+      <HypertorusParameters
+        energyLevel={energy_level}
+        heatLimiterModifier={heat_limiter_modifier}
+        heatOutputMin={heat_output_min}
+        heatOutputMax={heat_output_max}
+        heatOutput={heat_output}
+        apcEnergy={apc_energy}
+        instability={instability}
+        powerLevel={power_level}
+        ironContent={iron_content}
+        integrity={integrity} />
+      <HypertorusSecondaryControls />
       <HypertorusWasteRemove />
     </>
   );
@@ -177,8 +150,8 @@ export const Hypertorus = (props, context) => {
   return (
     <Window
       title="Hypertorus Fusion Reactor control panel"
-      width={960}
-      height={740}>
+      width={850}
+      height={980}>
       <Window.Content scrollable>
         <HypertorusLayout />
       </Window.Content>

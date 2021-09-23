@@ -2,17 +2,12 @@
 import { useBackend } from '../../backend';
 import { Box, Button, Icon, Knob, LabeledControls, LabeledList, NumberInput, Section, Tooltip } from '../../components';
 import { getGasLabel } from '../../constants';
+import { ActFixed, ActSet } from './helpers';
 
 /*
  * This module holds user interactable controls. Some may be good candidates
  * for generalizing and refactoring.
  */
-
-const ActParam = (key, value) => {
-  const ret = {};
-  ret[key] = value;
-  return ret;
-};
 
 const ComboKnob = props => {
   const {
@@ -57,7 +52,7 @@ const ComboKnob = props => {
         maxValue={maxValue}
         step={step}
         stepPixelSize={1}
-        onDrag={(e, value) => act(parameter, ActParam(parameter, value))}
+        onDrag={ActSet(act, parameter)}
         {...rest}
       />
       <Button
@@ -67,7 +62,7 @@ const ComboKnob = props => {
         right="-20px"
         color="transparent"
         icon="fast-forward"
-        onClick={act.bind(null, parameter, ActParam(parameter, maxValue))}
+        onClick={ActFixed(act, parameter, maxValue)}
       />
       <Button
         fluid
@@ -76,7 +71,7 @@ const ComboKnob = props => {
         right="-20px"
         color="transparent"
         icon="undo"
-        onClick={act.bind(null, parameter, ActParam(parameter, defaultValue))}
+        onClick={ActFixed(act, parameter, defaultValue)}
       />
       <Button
         fluid
@@ -85,7 +80,7 @@ const ComboKnob = props => {
         right="-20px"
         color="transparent"
         icon="fast-backward"
-        onClick={act.bind(null, parameter, ActParam(parameter, minValue))}
+        onClick={ActFixed(act, parameter, minValue)}
       />
     </Box>
   );
@@ -162,27 +157,23 @@ export const HypertorusIO = (props, context) => {
   return (
     <Section title="I/O Flow Control" height="100%" width="260px">
       <LabeledList >
-        <LabeledList.Item label="Fuel Injection Rate">
-          <NumberInput
-            animated
-            value={parseFloat(data.fuel_injection_rate)}
-            unit="mol/s"
-            minValue={.5}
-            maxValue={150}
-            onDrag={(e, value) => act('fuel_injection_rate', {
-              fuel_injection_rate: value,
-            })} />
-        </LabeledList.Item>
-        <LabeledList.Item label="Moderator Injection Rate">
-          <NumberInput
-            animated
-            value={parseFloat(data.moderator_injection_rate)}
-            unit="mol/s"
-            minValue={.5}
-            maxValue={150}
-            onDrag={(e, value) => act('moderator_injection_rate', {
-              moderator_injection_rate: value,
-            })} />
+      </LabeledList>
+    </Section>
+  );
+};
+
+export const HypertorusWasteRemove = (props, context) => {
+  const { act, data } = useBackend(context);
+  const filterTypes = data.filter_types || [];
+  return (
+    <Section title="Output control">
+      <LabeledList>
+        <LabeledList.Item label="Waste remove">
+          <Button
+            icon={data.waste_remove ? 'power-off' : 'times'}
+            content={data.waste_remove ? 'On' : 'Off'}
+            selected={data.waste_remove}
+            onClick={() => act('waste_remove')} />
         </LabeledList.Item>
         <LabeledList.Item label="Moderator filtering rate">
           <NumberInput
@@ -194,24 +185,6 @@ export const HypertorusIO = (props, context) => {
             onDrag={(e, value) => act('mod_filtering_rate', {
               mod_filtering_rate: value,
             })} />
-        </LabeledList.Item>
-      </LabeledList>
-    </Section>
-  );
-};
-
-export const HypertorusWasteRemove = (props, context) => {
-  const { act, data } = useBackend(context);
-  const filterTypes = data.filter_types || [];
-  return (
-    <Section title="Waste control and filtering">
-      <LabeledList>
-        <LabeledList.Item label="Waste remove">
-          <Button
-            icon={data.waste_remove ? 'power-off' : 'times'}
-            content={data.waste_remove ? 'On' : 'Off'}
-            selected={data.waste_remove}
-            onClick={() => act('waste_remove')} />
         </LabeledList.Item>
         <LabeledList.Item label="Filter from moderator mix">
           {filterTypes.map(filter => (

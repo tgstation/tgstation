@@ -257,7 +257,7 @@ export const HypertorusTemperatures = props => {
   };
 
   return (
-    <Section title="Temperatures">
+    <Section title="Gas Monitoring">
       <Flex overflowY="hidden">
         <Flex.Item mx={1} width={`${yAxisMargin}px`}>
           {(power_level === 0 || value_to_y(Math.abs(prev_power_level_temperature - minTemperature), 0) > 20) && (<TemperatureLabel key="min_temp" value={minTemperature} force />)}
