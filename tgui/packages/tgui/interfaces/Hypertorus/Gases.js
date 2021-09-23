@@ -2,9 +2,9 @@ import { useBackend } from '../../backend';
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
-import { ActNone, ActSet } from './helpers';
+import { ActNone, ActSet, HoverHelp, HelpDummy } from './helpers';
 
-import { Box, Button, Icon, LabeledList, NumberInput, ProgressBar, Section, Tooltip } from '../../components';
+import { Box, Button, LabeledList, NumberInput, ProgressBar, Section, Tooltip } from '../../components';
 import { getGasColor, getGasLabel } from '../../constants';
 
 const moderator_gases_help = {
@@ -33,12 +33,6 @@ const ensure_gases = (gas_array, gasids) => {
     }
   }
 };
-
-const HoverHelp = props => (
-  <Tooltip content={props.content}>
-    <Icon name="question-circle" width="12px" mr="6px" />
-  </Tooltip>
-);
 
 const GasList = (props, context) => {
   const { act, data } = useBackend(context);
@@ -134,6 +128,7 @@ export const HypertorusGases = props => {
               input_min={.5}
               gases={fusion_gases}
               minimumScale={500}
+              prepend={()=>(<HelpDummy />)}
               rateHelp={"The rate at which new fuel is added from the fuel input port. "
                + "Affects the rate of production, even when not active."}
               stickyGases={selectedFuel.requirements}
@@ -158,7 +153,7 @@ export const HypertorusGases = props => {
           prepend={gas=>
             moderator_gases_help[gas.id]
             ? (<HoverHelp content={moderator_gases_help[gas.id]} />)
-            : (<Icon name="" width="12px" mr="6px" />)
+            : (<HelpDummy />)
           }
         />
       </Section>

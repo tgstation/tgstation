@@ -2,7 +2,7 @@
 import { useBackend } from '../../backend';
 import { Box, Button, Icon, Knob, LabeledControls, LabeledList, NumberInput, Section, Tooltip } from '../../components';
 import { getGasLabel } from '../../constants';
-import { ActFixed, ActSet } from './helpers';
+import { ActFixed, ActSet, HelpDummy, HoverHelp } from './helpers';
 
 /*
  * This module holds user interactable controls. Some may be good candidates
@@ -168,14 +168,26 @@ export const HypertorusWasteRemove = (props, context) => {
   return (
     <Section title="Output control">
       <LabeledList>
-        <LabeledList.Item label="Waste remove">
+        <LabeledList.Item
+          label={
+            <>
+              <HoverHelp
+                content={"Remove waste gases from Fusion,"
+                +" and any selected gases from the Moderator."}
+              />
+              Waste remove:
+            </>
+          }
+        >
           <Button
             icon={data.waste_remove ? 'power-off' : 'times'}
             content={data.waste_remove ? 'On' : 'Off'}
             selected={data.waste_remove}
             onClick={() => act('waste_remove')} />
         </LabeledList.Item>
-        <LabeledList.Item label="Moderator filtering rate">
+        <LabeledList.Item
+          label={<><HelpDummy />Moderator filtering rate:</>}
+        >
           <NumberInput
             animated
             value={parseFloat(data.mod_filtering_rate)}
@@ -186,7 +198,9 @@ export const HypertorusWasteRemove = (props, context) => {
               mod_filtering_rate: value,
             })} />
         </LabeledList.Item>
-        <LabeledList.Item label="Filter from moderator mix">
+        <LabeledList.Item
+          label={<><HelpDummy />Filter from moderator mix:</>}
+        >
           {filterTypes.map(filter => (
             <Button
               key={filter.gas_id}
