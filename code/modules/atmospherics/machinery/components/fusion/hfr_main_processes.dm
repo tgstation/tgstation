@@ -28,7 +28,8 @@
 		check_spill()
 		process_damageheal(delta_time)
 		check_alert()
-	remove_waste(delta_time)
+	if (start_power)
+		remove_waste(delta_time)
 	update_pipenets()
 
 	check_deconstructable()
