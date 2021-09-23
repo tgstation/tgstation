@@ -265,7 +265,7 @@
 	new /obj/item/holochip(wallet, holochip_amount)
 	id_card.registered_account.adjust_money(-holochip_amount)
 
-	new /obj/effect/spawner/lootdrop/wallet_loot(wallet)
+	new /obj/effect/spawner/random/entertainment/wallet_storage(wallet)
 
 	// Put our filthy fingerprints all over the contents
 	for(var/obj/item/item in wallet)
