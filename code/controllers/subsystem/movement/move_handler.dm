@@ -29,6 +29,8 @@ SUBSYSTEM_DEF(move_manager)
 /datum/movement_packet
 	///Our parent atom
 	var/atom/movable/parent
+	///The move loop that's currently running
+	var/datum/move_loop/running_loop
 	///Assoc list of subsystems -> loop datum. Only one datum is allowed per subsystem
 	var/list/existing_loops = list()
 
@@ -41,12 +43,6 @@ SUBSYSTEM_DEF(move_manager)
 	QDEL_LIST(existing_loops)
 	existing_loops = null //Catch anyone modifying this post del
 	return ..()
-	
-///Checks if the packet should exist still. If it shouldn't, nukes it
-/datum/movement_packet/proc/prove_existence()
-	if(length(existing_loops))
-		return
-	qdel(src)
 
 ///Adds a loop to our parent. Returns TRUE if a success, FALSE otherwise
 /datum/movement_packet/proc/add_loop(datum/controller/subsystem/movement/subsystem, datum/move_loop/loop_type, override)
@@ -59,30 +55,64 @@ SUBSYSTEM_DEF(move_manager)
 	var/datum/move_loop/new_loop = new loop_type(src, subsystem, parent) //Pass the mob to move and ourselves in via new
 
 	var/worked_out = new_loop.setup(arglist(arguments)) //Here goes the rest
-
-	existing_loops[subsystem] = new_loop
-
-	qdel(existing_loop) //We need to do this here because otherwise the packet would think it was empty, and self destruct
 	if(!worked_out)
 		qdel(new_loop)
 		return FALSE
 
-	subsystem.processing += new_loop
-
+	existing_loops[subsystem] = new_loop
+	if(existing_loop)
+		qdel(existing_loop) //We need to do this here because otherwise the packet would think it was empty, and self destruct
+	contest_running_loop(new_loop)
 	return TRUE
 
+///Attempts to contest the current running move loop. Returns TRUE if it succeeds, FALSE otherwise
+/datum/movement_packet/proc/contest_running_loop(datum/move_loop/contestant)
+	if(!running_loop)
+		var/datum/controller/subsystem/movement/contesting_subsystem = contestant.controller
+		running_loop = contestant
+		contesting_subsystem.add_loop(running_loop)
+		return TRUE
+
+	var/datum/controller/subsystem/movement/current_subsystem = running_loop.controller
+	var/datum/controller/subsystem/movement/contesting_subsystem = contestant.controller
+
+	if(contesting_subsystem.precedence > current_subsystem.precedence)
+		return FALSE
+
+	current_subsystem.remove_loop(running_loop)
+	contesting_subsystem.add_loop(contestant)
+	return TRUE
+
+///Tries to figure out the current favorite loop to run. More complex then just deciding between two different loops, assumes no running loop currently exists
+/datum/movement_packet/proc/decide_on_running_loop()
+	if(running_loop)
+		return
+	if(!length(existing_loops)) //Die
+		qdel(src)
+		return
+	var/datum/controller/subsystem/movement/favorite = existing_loops[1] //Take the first index
+	for(var/i in 2 to length(existing_loops))
+		var/datum/controller/subsystem/movement/checking = existing_loops[i]
+		if(favorite.precedence < checking.precedence)
+			continue
+		favorite = checking
+
+	var/datum/move_loop/favorite_loop = existing_loops[favorite]
+	running_loop = favorite_loop
+	favorite.add_loop(running_loop)
+
 /datum/movement_packet/proc/remove_loop(datum/controller/subsystem/movement/remove_from, datum/move_loop/loop_to_remove)
-	remove_from.processing -= loop_to_remove
-	remove_from.currentrun -= loop_to_remove
+	if(loop_to_remove == running_loop)
+		remove_from.remove_loop(loop_to_remove)
+		running_loop = null
 	if(existing_loops[remove_from] == loop_to_remove)
 		existing_loops -= remove_from
-	loop_to_remove.owner = null
-	loop_to_remove.controller = null
-	prove_existence()
+	decide_on_running_loop()
 	return TRUE
 
 /datum/movement_packet/proc/remove_subsystem(datum/controller/subsystem/movement/remove)
 	var/datum/move_loop/our_loop = existing_loops[remove]
 	if(!our_loop)
 		return FALSE
-	return qdel(our_loop)
+	qdel(our_loop)
+	return TRUE

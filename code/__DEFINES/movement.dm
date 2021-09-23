@@ -14,3 +14,8 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 /// The whole result is then clamped to within the range above.
 /// Not very readable but it works
 #define DELAY_TO_GLIDE_SIZE(delay) (clamp(((32 / max((delay) / world.tick_lag, 1)) * GLOB.glide_size_multiplier), MIN_GLIDE_SIZE, MAX_GLIDE_SIZE))
+
+//Movement subsystem precedence (priority, damn you mc system). Who gets to run over who
+// Lower numbers beat higher numbers
+// Pretty simple for now, if you want to add loops that run in parrael it's gonna need some modification
+#define MOVEMENT_DEFAULT_PRECEDENCE 10

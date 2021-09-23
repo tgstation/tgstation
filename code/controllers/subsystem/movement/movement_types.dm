@@ -38,6 +38,7 @@
 		UnregisterSignal(moving, COMSIG_PARENT_QDELETING)
 		SEND_SIGNAL(moving, COMSIG_MOVELOOP_END)
 	moving = null
+	controller = null
 	return ..()
 
 /datum/move_loop/proc/nuke_loop()
@@ -45,8 +46,8 @@
 	SHOULD_CALL_PARENT(TRUE)
 	qdel(src)
 
-/datum/move_loop/process(delta_time)
-	timer += delta_time
+/datum/move_loop/process(delta_ticks)
+	timer += delta_ticks
 	if(timer >= lifetime)
 		nuke_loop()
 		return

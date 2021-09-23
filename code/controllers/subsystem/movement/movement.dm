@@ -1,7 +1,9 @@
 SUBSYSTEM_DEF(movement)
 	name = "Movement Loop"
-	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING|SS_NO_INIT
+	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING|SS_NO_INIT|SS_KEEP_TIMING
 	wait = 1 //Fire each tick
+	///Defines how different movement types override each other. Lower numbers beat higher numbers
+	var/precedence = MOVEMENT_DEFAULT_PRECEDENCE
 	///The list of datums we're processing
 	var/list/processing = list()
 	///Used to make pausing possible
@@ -19,6 +21,13 @@ SUBSYSTEM_DEF(movement)
 		loop.process(wait) //This shouldn't get nulls, if it does, runtime
 		if (MC_TICK_CHECK)
 			return
+
+/datum/controller/subsystem/movement/proc/add_loop(datum/move_loop/add)
+	processing += add
+
+/datum/controller/subsystem/movement/proc/remove_loop(datum/move_loop/remove)
+	processing -= remove
+	currentrun -= remove
 
 /datum/controller/subsystem/movement/stat_entry(msg)
 	msg = "P:[length(processing)]"
