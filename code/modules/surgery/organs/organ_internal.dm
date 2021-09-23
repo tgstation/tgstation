@@ -218,9 +218,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * output: failing organ flags on a failing/no longer failing organ.
  */
 /obj/item/organ/proc/check_failing_thresholds(mob/organ_owner)
-	if(!(organ_flags & ORGAN_FAILING) && damage >= maxHealth)
+	if(damage >= maxHealth)
 		organ_flags |= ORGAN_FAILING
-	if((organ_flags & ORGAN_FAILING) && (damage < maxHealth))
+	if(damage < maxHealth)
 		organ_flags &= ~ORGAN_FAILING
 
 //Looking for brains?
