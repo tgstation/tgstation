@@ -63,7 +63,7 @@
 	if(!spawnerlist.len)
 		return
 	var/obj/effect/mob_spawn/mob_spawner = pick(spawnerlist)
-	if(!istype(mob_spawner) || !(mob_spawner in GLOB.poi_list))
+	if(!istype(mob_spawner) || !SSpoints_of_interest.get_poi_atom_by_ref(mob_spawner))
 		return
 
 	switch(action)

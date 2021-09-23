@@ -65,6 +65,7 @@
 	cap_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	UpdateMushroomCap()
 	health = maxHealth
+	add_cell_sample()
 	. = ..()
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
@@ -196,3 +197,7 @@
 		S.reagents.add_reagent(/datum/reagent/drug/mushroomhallucinogen, powerlevel)
 		S.reagents.add_reagent(/datum/reagent/medicine/omnizine, powerlevel)
 		S.reagents.add_reagent(/datum/reagent/medicine/synaptizine, powerlevel)
+
+/mob/living/simple_animal/hostile/mushroom/add_cell_sample()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_WALKING_MUSHROOM, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

@@ -19,7 +19,7 @@
 
 
 /obj/item/circuit_component/set_variable/populate_ports()
-	entity = add_input_port("Target", PORT_TYPE_ATOM)
+	entity = add_input_port("Target", PORT_TYPE_DATUM)
 	variable_name = add_input_port("Variable Name", PORT_TYPE_STRING)
 	new_value = add_input_port("New Value", PORT_TYPE_ANY)
 
