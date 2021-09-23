@@ -16156,13 +16156,6 @@
 "dUj" = (
 /turf/open/floor/iron/grimy,
 /area/maintenance/aft)
-"dUY" = (
-/obj/effect/spawner/random/structure/crate,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
 "dVc" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -18048,17 +18041,6 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
-"fct" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/obj/structure/rack,
-/obj/effect/spawner/random/maintenance/two,
-/obj/item/poster/random_contraband,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/medical)
 "fcy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -18761,16 +18743,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/brig)
-"fuE" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/obj/structure/rack,
-/obj/effect/spawner/random/maintenance/three,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/medical)
 "fuL" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 1
@@ -19609,19 +19581,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/cafeteria,
 /area/command/heads_quarters/rd)
-"fSc" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/spawner/random/entertainment/drugs,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/maintenance/department/medical)
 "fSi" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/yellow,
@@ -28642,13 +28601,6 @@
 /turf/open/floor/iron,
 /area/commons/dorms)
 "kRx" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/obj/effect/spawner/random/maintenance,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/spawner/random/maintenance,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -28785,11 +28737,6 @@
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
 "kXI" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/random/maintenance/two,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance/two,
 /obj/structure/disposalpipe/segment{
@@ -34657,17 +34604,6 @@
 "ojz" = (
 /obj/machinery/light/small/directional/north,
 /obj/effect/spawner/random/maintenance,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/light/small/directional/north,
-/obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -35115,10 +35051,6 @@
 /turf/open/floor/iron/white,
 /area/science/research)
 "ovY" = (
-/obj/effect/spawner/random/maintenance,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/spawner/random/maintenance,
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -37671,14 +37603,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron/white/smooth_large,
 /area/medical/medbay/central)
-"pJc" = (
-/obj/effect/spawner/random/maintenance,
-/obj/structure/closet/cardboard,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "pJf" = (
 /obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable,
@@ -39677,12 +39601,6 @@
 "qNY" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/spawner/random/maintenance,
-/obj/structure/table/greyscale,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/spawner/random/maintenance,
 /obj/structure/table,
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -40077,10 +39995,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "raC" = (
-/obj/effect/spawner/random/maintenance,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/spawner/random/maintenance,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -42236,17 +42150,6 @@
 /turf/open/floor/iron/dark,
 /area/medical/medbay/lobby)
 "sgt" = (
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj/structure/cable,
-/obj/structure/table/greyscale,
-/obj/effect/spawner/random/maintenance,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/cable,
 /obj/effect/spawner/random/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -43750,10 +43653,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "sVT" = (
-/obj/effect/spawner/random/structure/crate,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/spawner/random/structure/crate,
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -45337,10 +45236,6 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "tRa" = (
-/obj/effect/spawner/random/trash/mess,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/spawner/random/trash/mess,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -47227,12 +47122,6 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "uLx" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/spawner/random/maintenance/four,
-/obj/structure/closet/crate/maint,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/spawner/random/maintenance/four,
 /obj/structure/closet/crate/maint,
 /turf/open/floor/plating,
@@ -48270,12 +48159,6 @@
 /turf/open/floor/iron,
 /area/service/janitor)
 "vyj" = (
-/obj/structure/rack,
-/obj/machinery/light/small/directional/north,
-/obj/effect/spawner/random/maintenance,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/rack,
 /obj/machinery/light/small/directional/north,
 /obj/effect/spawner/random/maintenance,
@@ -50415,10 +50298,6 @@
 /turf/open/floor/iron,
 /area/maintenance/department/electrical)
 "wGW" = (
-/obj/effect/spawner/random/trash/mess,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/spawner/random/trash/mess,
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -75365,7 +75244,7 @@ cfV
 boP
 boP
 bLv
-pJc
+bHE
 fGn
 wDC
 rDP
@@ -85894,7 +85773,7 @@ aXf
 lBV
 lBV
 sMQ
-fSc
+ltH
 mPS
 ltH
 aQp
@@ -86666,8 +86545,8 @@ bCA
 lBV
 rON
 qsk
-fuE
-fct
+biq
+biq
 aQp
 sSC
 eZu
@@ -99799,7 +99678,7 @@ cNW
 cNW
 cvO
 cNW
-dUY
+cNW
 isx
 oTL
 viq
