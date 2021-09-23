@@ -18,6 +18,7 @@
 
 
 	WRITE_FILE(F["name"], name)
+	WRITE_FILE(F["color"], color)
 	WRITE_FILE(F["description"], description)
 	WRITE_FILE(F["role"], role)
 	WRITE_FILE(F["comments"], comments)
@@ -55,6 +56,7 @@
 		return 0
 
 	F["name"] >> src.name
+	F["color"] >> src.color
 	F["description"] >> src.description
 	F["role"] >> src.role
 	F["comments"] >> src.comments
