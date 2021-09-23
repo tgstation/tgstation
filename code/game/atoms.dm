@@ -392,10 +392,10 @@
 		return TRUE
 
 	//Check for centcom shuttles
-	for(var/moving_shuttle in SSshuttle.mobile)
+	for(var/moving_shuttle as anything in SSshuttle.mobile)
 		var/obj/docking_port/mobile/mobile_docking_port = moving_shuttle
 		if(mobile_docking_port.launch_status == ENDGAME_LAUNCHED)
-			for(var/place in mobile_docking_port.shuttle_areas)
+			for(var/place as anything in mobile_docking_port.shuttle_areas)
 				var/area/shuttle/shuttle_area = place
 				if(current_turf in shuttle_area)
 					return TRUE
@@ -541,7 +541,7 @@
 		return
 
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_ATOM, src, reagents, methods, volume_modifier, show_message)
-	for(var/reagent in reagents)
+	for(var/reagent as anything in reagents)
 		var/datum/reagent/current_reagent = reagent
 		. |= current_reagent.expose_atom(src, reagents[current_reagent])
 
@@ -642,7 +642,7 @@
 
 	if(custom_materials)
 		var/list/materials_list = list()
-		for(var/material in custom_materials)
+		for(var/material as anything in custom_materials)
 			var/datum/material/current_material = material
 			materials_list += "[current_material.name]"
 		. += "<u>It is made out of [english_list(materials_list)]</u>."
@@ -1039,7 +1039,7 @@
  * Default behaviour is to loop through atom contents and call their HandleTurfChange() proc
  */
 /atom/proc/HandleTurfChange(turf/changing_turf)
-	for(var/atom in src)
+	for(var/atom as anything in src)
 		var/atom/current_atom = atom
 		current_atom.HandleTurfChange(changing_turf)
 
@@ -1403,7 +1403,7 @@
 			return TRUE
 		switch(tool_type)
 			if(TOOL_CROWBAR)
-				act_result = crowbar_act(user, tool,)
+				act_result = crowbar_act(user, tool)
 			if(TOOL_MULTITOOL)
 				act_result = multitool_act(user, tool)
 			if(TOOL_SCREWDRIVER)
@@ -1422,7 +1422,7 @@
 			return TOOL_ACT_SIGNAL_BLOCKING
 		switch(tool_type)
 			if(TOOL_CROWBAR)
-				act_result = crowbar_act_secondary(user, tool,)
+				act_result = crowbar_act_secondary(user, tool)
 			if(TOOL_MULTITOOL)
 				act_result = multitool_act_secondary(user, tool)
 			if(TOOL_SCREWDRIVER)
@@ -1452,7 +1452,7 @@
 	var/list/choices_to_options = list() //Dict of object name | dict of object processing settings
 	var/list/choices = list()
 
-	for(var/option in possible_options)
+	for(var/option as anything in possible_options)
 		var/list/current_option = option
 		var/atom/current_option_type = current_option[TOOL_PROCESSING_RESULT]
 		choices_to_options[initial(current_option_type.name)] = current_option
@@ -2064,7 +2064,7 @@
 	if (!source)
 		output += src
 	processed += src
-	for (var/orbiter in orbiters?.orbiter_list)
+	for (var/orbiter as anything in orbiters?.orbiter_list)
 		var/atom/atom_orbiter = orbiter
 		output += atom_orbiter.get_all_orbiters(processed, source = FALSE)
 	return output
