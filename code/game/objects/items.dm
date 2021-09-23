@@ -1209,7 +1209,7 @@ attack_basic_mob
  * * Return TRUE if you want to interrupt the offer.
  *
  * * Arguments:
- * * * offerer - the person offering the item
+ * * offerer - the person offering the item
  */
 /obj/item/proc/on_offered(mob/living/carbon/offerer)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFERING, offerer) & COMPONENT_OFFER_INTERRUPT)
@@ -1221,8 +1221,8 @@ attack_basic_mob
  * * Return TRUE if you want to interrupt the taking.
  *
  * * Arguments:
- * * * offerer - the person offering the item
- * * * taker - the person trying to accept the offer
+ * * offerer - the person offering the item
+ * * taker - the person trying to accept the offer
  */
 /obj/item/proc/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, offerer, taker) & COMPONENT_OFFER_INTERRUPT)
