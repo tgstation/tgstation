@@ -460,14 +460,15 @@
 	var/list/result
 	if(client)
 		LAZYINITLIST(client.recent_examines)
-		if(isnull(client.recent_examines[A]) || client.recent_examines[A] < world.time)
-			result = A.examine(src)
-			client.recent_examines[A] = world.time + EXAMINE_MORE_TIME // set the value to when the examine cooldown ends
-			RegisterSignal(A, COMSIG_PARENT_QDELETING, .proc/clear_from_recent_examines, override=TRUE) // to flush the value if deleted early
-			addtimer(CALLBACK(src, .proc/clear_from_recent_examines, A), EXAMINE_MORE_TIME)
-			handle_eye_contact(A)
-		else
+		var/last_examined = client.recent_examines[A]
+		if(last_examined && (world.time - last_examined < EXAMINE_MORE_WINDOW))
 			result = A.examine_more(src)
+		else
+			result = A.examine(src)
+			client.recent_examines[A] = world.time // set to when we last normal examine'd them
+			RegisterSignal(A, COMSIG_PARENT_QDELETING, .proc/clear_from_recent_examines, override=TRUE) // to flush the value if deleted early
+			addtimer(CALLBACK(src, .proc/clear_from_recent_examines, A), RECENT_EXAMINE_MAX_WINDOW)
+			handle_eye_contact(A)
 	else
 		result = A.examine(src) // if a tree is examined but no client is there to see it, did the tree ever really exist?
 
@@ -547,8 +548,10 @@
 	return
 
 /mob/living/handle_eye_contact(mob/living/examined_mob)
-	if(!istype(examined_mob) || src == examined_mob || examined_mob.stat >= UNCONSCIOUS || !client || !examined_mob.client?.recent_examines || !(src in examined_mob.client.recent_examines))
+	if(!istype(examined_mob) || src == examined_mob || examined_mob.stat >= UNCONSCIOUS || !client)
 		return
+
+	if((HAS_TRAIT(examined_mob, TRAIT_SHIFTY_EYES) && prob (10 - get_dist(src, examined_mob))) || (!examined_mob.client?.recent_examines || !(src in examined_mob.client.recent_examines)))
 
 	if(get_dist(src, examined_mob) > EYE_CONTACT_RANGE)
 		return

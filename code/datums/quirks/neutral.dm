@@ -212,6 +212,14 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.cure_trauma_type(/datum/brain_trauma/mild/phobia, TRAUMA_RESILIENCE_ABSOLUTE)
 
+/datum/quirk/shifty_eyes
+	name = "Shifty Eyes"
+	desc = "Your eyes tend to wander all over the place, whether you mean to or not, causing people to sometimes think you're looking directly at them when you aren't."
+	icon = "eye"
+	value = 0
+	medical_record_text = "Fucking creep kept staring at me the whole damn checkup. I'm only diagnosing this because it's less awkward than thinking it was on purpose."
+	mob_trait = TRAIT_SHIFTY_EYES
+
 /datum/quirk/item_quirk/needswayfinder
 	name = "Navigationally Challenged"
 	desc = "Lacking familiarity with certain stations, you start with a wayfinding pinpointer where available."
