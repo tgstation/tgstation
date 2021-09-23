@@ -18,7 +18,6 @@
 
 
 #define FLOOR_PLANE -7
-#define WALL_PLANE -5
 #define GAME_PLANE -4
 
 #define SPACE_LAYER 1.8
