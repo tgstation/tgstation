@@ -220,12 +220,6 @@
 	..()
 	GLOB.apcs_list += src
 
-	var/area/local_area = get_area(src)
-	if (local_area)
-		if (local_area.apc)
-			WARNING("Duplicate APC created at [AREACOORD(src)]")
-		local_area.apc = src
-
 	wires = new /datum/wires/apc(src)
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
@@ -252,7 +246,7 @@
 				log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([tdir] | [uppertext(dir2text(tdir))]) has pixel_x value ([pixel_x] - should be -25.)")
 			pixel_x = -25
 	if (building)
-		area = local_area
+		area = get_area(src)
 		opened = APC_COVER_OPENED
 		operating = FALSE
 		name = "\improper [get_area_name(area, TRUE)] APC"
@@ -321,6 +315,11 @@
 
 	if(auto_name)
 		name = "\improper [get_area_name(area, TRUE)] APC"
+
+	if (area)
+		if (area.apc)
+			WARNING("Duplicate APC created at [AREACOORD(src)]")
+		area.apc = src
 
 	update_appearance()
 
