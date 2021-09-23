@@ -57,6 +57,7 @@
 		return
 
 	lasttick = timer
+	moving.set_glide_size(DELAY_TO_GLIDE_SIZE(delay))
 	move()
 
 ///Handles the actual move, overriden by children
