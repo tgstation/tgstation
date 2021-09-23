@@ -4,6 +4,11 @@
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = ABOVE_ALL_MOB_LAYER
+	///typepath of the last location we're in, if it's different when moved then we need to update vis contents
+	var/last_attached_location_type
+	var/datum/weakref/weakref_attached
+	///besides the item we're also sometimes attached to other stuff (items held emitting particles on mob)
+	var/datum/weakref/additional_attach
 
 /obj/effect/abstract/particle_holder/Initialize(mapload, particle_path)
 	. = ..()
@@ -13,30 +18,42 @@
 	if(ismovable(loc))
 		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, .proc/on_move)
 	RegisterSignal(loc, COMSIG_PARENT_QDELETING, .proc/on_qdel)
-	reposition(loc)//we are now hooked to the thing we're trying to follow, we can move outside of it
-	forceMove(loc.loc)
+	weakref_attached = WEAKREF(loc)
 	particles = new particle_path
+	update_visual_contents(loc)
 
 /obj/effect/abstract/particle_holder/Destroy(force)
-	UnregisterSignal(loc)
+	var/atom/movable/attached = weakref_attached.resolve()
+	if(attached)
+		attached.vis_contents -= src
+		UnregisterSignal(loc, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 	QDEL_NULL(particles)
 	. = ..()
 
 ///signal called when parent is moved
 /obj/effect/abstract/particle_holder/proc/on_move(atom/movable/attached, atom/oldloc, direction)
 	SIGNAL_HANDLER
-	reposition(attached)
+	if(attached.loc.type != last_attached_location_type)
+		update_visual_contents(attached)
 
 ///signal called when parent is deleted
-/obj/effect/abstract/particle_holder/proc/on_qdel(atom/attached, force)
+/obj/effect/abstract/particle_holder/proc/on_qdel(atom/movable/attached, force)
 	SIGNAL_HANDLER
 	qdel(src)//our parent is gone and we need to be as well
 
 ///logic proc for particle holders, aka where they move.
 ///subtypes of particle holders can override this for particles that should always be turf level or do special things when repositioning.
 ///this base subtype has some logic for items, as the loc of items becomes mobs very often hiding the particles
-/obj/effect/abstract/particle_holder/proc/reposition(atom/attached_to)
-	if(isitem(attached_to) && ismob(attached_to.loc))
-		forceMove(attached_to.loc.loc) //we need to go deeper!
-		return
-	forceMove(attached_to.loc)
+/obj/effect/abstract/particle_holder/proc/update_visual_contents(atom/movable/attached_to)
+	//remove old
+	if(additional_attach)
+		var/atom/movable/resolved_location = additional_attach.resolve()
+		resolved_location?.vis_contents -= src
+	//add to new
+	if(isitem(attached_to) && ismob(attached_to.loc)) //special case we want to also be emitting from the mob
+		var/mob/particle_mob = attached_to.loc
+		last_attached_location_type = attached_to.loc
+		additional_attach = WEAKREF(particle_mob)
+		particle_mob.vis_contents += src
+	//readd to ourselves
+	attached_to.vis_contents |= src

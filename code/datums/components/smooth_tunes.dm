@@ -29,13 +29,13 @@
 	. = ..()
 
 /datum/component/smooth_tunes/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_SONG_START,.proc/timetosing)
+	RegisterSignal(parent, COMSIG_SONG_START,.proc/start_singing)
 
 /datum/component/smooth_tunes/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_SONG_START)
 
 ///Initiates the effect when the song begins playing.
-/datum/component/smooth_tunes/proc/timetosing(datum/source, datum/song/starting_song)
+/datum/component/smooth_tunes/proc/start_singing(datum/source, datum/song/starting_song)
 	SIGNAL_HANDLER
 	if(!starting_song)
 		return
@@ -48,24 +48,24 @@
 	///prevent more songs from being blessed concurrently
 	UnregisterSignal(parent, COMSIG_SONG_START)
 	///and hook into the song datum this time, preventing other weird exploity stuff.
-	RegisterSignal(starting_song, COMSIG_SONG_END, .proc/stopsinging)
+	RegisterSignal(starting_song.parent, COMSIG_SONG_END, .proc/stop_singing)
 	if(!allow_repeats)
-		RegisterSignal(starting_song, COMSIG_SONG_REPEAT, .proc/stopsinging)
+		RegisterSignal(starting_song.parent, COMSIG_SONG_REPEAT, .proc/stop_singing)
 
 	linked_song = starting_song
 
 	//barticles
 	if(particles_path && ismovable(linked_song.parent))
-		particle_holder = new particle_holder(linked_song.parent, particles_path)
+		particle_holder = new(linked_song.parent, particles_path)
 	//filters
 	linked_song.parent?.add_filter("smooth_tunes_outline", 9, list("type" = "outline", "color" = glow_color))
 
 ///Ends the effect when the song is no longer playing.
-/datum/component/smooth_tunes/proc/stopsinging(datum/source)
+/datum/component/smooth_tunes/proc/stop_singing(datum/source)
 	SIGNAL_HANDLER
 	STOP_PROCESSING(SSobj, src)
 	linked_song.parent?.remove_filter("smooth_tunes_outline")
-	UnregisterSignal(linked_song, list(
+	UnregisterSignal(linked_song.parent, list(
 		COMSIG_SONG_END,
 		COMSIG_SONG_REPEAT,
 	))
@@ -76,4 +76,4 @@
 	if(linked_songtuner_rite)
 		linked_songtuner_rite.song_effect(parent, linked_song)
 	else
-		stopsinging()
+		stop_singing()
