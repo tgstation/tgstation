@@ -286,6 +286,7 @@
 	data["current_damper"] = connected_core.current_damper
 
 	data["power_level"] = connected_core.power_level
+	data["apc_energy"] = connected_core.get_area_cell_percent()
 	data["iron_content"] = connected_core.iron_content
 	data["integrity"] = connected_core.get_integrity_percent()
 

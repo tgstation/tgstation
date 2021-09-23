@@ -159,7 +159,7 @@ export const HypertorusSecondaryControls = (props, context) => {
 export const HypertorusIO = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Section title="I/O Flow Control" height="100%" width="280px">
+    <Section title="I/O Flow Control" height="100%" width="260px">
       <LabeledList >
         <LabeledList.Item label="Fuel Injection Rate">
           <NumberInput

@@ -209,9 +209,15 @@ export const HypertorusTemperatures = props => {
               delta < 0 ?
                 `${delta_str}` :
                 "-"
-            )}</Box>]) : (<Box align="center" color="red">
+            )}</Box>]) : ([<Box align="center" color="red">
               Empty
-            </Box>)}
+            </Box>,<Box style={{
+              "user-select": "none",
+              "-ms-user-select": "none",
+              unselectable: Byond.IS_LTE_IE8
+            }}>
+              &nbsp; {/* Placeholder. Geocities did nothing wrong :o) */}
+            </Box>])}
           </Stack.Item>
         </Stack>
       </Flex.Item>

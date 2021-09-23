@@ -5,6 +5,7 @@ import { toFixed } from 'common/math';
 
 export const HypertorusParameters = props => {
   const {
+    apcEnergy: apc_energy,
     energyLevel: energy_level,
     heatOutputMin: heat_output_min,
     heatOutputMax: heat_output_max,
@@ -55,6 +56,21 @@ export const HypertorusParameters = props => {
               bad: [.36, 1],
             }} />
         </LabeledControls.Item>
+        <LabeledControls.Item label="Area Power">
+          <RoundGauge
+            size={1.75}
+            value={apc_energy}
+            minValue={0}
+            maxValue={100}
+            alertBefore={30}
+            format={v=>`${Math.round(v)}%`}
+            ranges={{
+              // Keep these in line with the auto-off thresholds in apc.dm
+              bad: [0, 15],
+              average: [15, 30],
+              good: [30, 100],
+            }} />
+        </LabeledControls.Item>
         <LabeledControls.Item label="Fusion Level">
           <RoundGauge
             size={3}
@@ -88,7 +104,7 @@ export const HypertorusParameters = props => {
             size={1.75}
             value={activity * 100}
             minValue={0}
-            maxValue={130}
+            maxValue={130} // Proto-nitrate lets us exceed 100%
             format={v=>`${toFixed(activity * 100, 1)}%`}
             ranges={{
               grey: [0, 70],

@@ -78,6 +78,7 @@ const HypertorusMainControls = (props, context) => {
 const HypertorusLayout = (props, context) => {
   const { data } = useBackend(context);
   const {
+    apc_energy,
     base_max_temperature,
     energy_level,
     fusion_gases,
@@ -145,13 +146,14 @@ const HypertorusLayout = (props, context) => {
         </Stack.Item>
       </Stack>
       <Stack mb="0.5em">
-        <Stack.Item minWidth="600px" grow>
+        <Stack.Item minWidth="660px" grow>
           <HypertorusParameters
             energyLevel={energy_level}
             heatLimiterModifier={heat_limiter_modifier}
             heatOutputMin={heat_output_min}
             heatOutputMax={heat_output_max}
             heatOutput={heat_output}
+            apcEnergy={apc_energy}
             heatLimiterModifier={heat_limiter_modifier}
             instability={instability}
             powerLevel={power_level}
@@ -172,7 +174,7 @@ export const Hypertorus = (props, context) => {
   return (
     <Window
       title="Hypertorus Fusion Reactor control panel"
-      width={950}
+      width={960}
       height={740}>
       <Window.Content scrollable>
         <HypertorusLayout />
