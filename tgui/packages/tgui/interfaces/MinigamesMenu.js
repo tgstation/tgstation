@@ -7,27 +7,25 @@ export const MinigamesMenu = (props, context) => {
   return (
     <Window
       title="Minigames Menu"
-      width={390}
+      width={450}
       height={200}>
       <Window.Content>
         <Section title="Select Minigame" textAlign="center">
           <Stack>
-            <Stack.Item>
+            <Stack.Item grow>
               <Button
                 content="CTF"
-                height={9}
-                width={15}
+                fluid={1}
                 fontSize={3}
                 textAlign="center"
                 lineHeight="3"
                 onClick={() => act('ctf')}
               />
             </Stack.Item>
-            <Stack.Item>
+            <Stack.Item grow>
               <Button
                 content="Mafia"
-                height={9}
-                width={15}
+                fluid={1}
                 fontSize={3}
                 textAlign="center"
                 lineHeight="3"

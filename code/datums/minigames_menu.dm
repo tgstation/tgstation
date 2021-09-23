@@ -20,6 +20,10 @@
 		ui.open()
 
 /datum/minigames_menu/ui_act(action, params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+
 	switch(action)
 		if("mafia")
 			ui.close()
