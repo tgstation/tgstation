@@ -255,7 +255,6 @@
 		addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/Destroy()
-	area.apc = null
 	GLOB.apcs_list -= src
 
 	if(malfai && operating)
@@ -265,6 +264,7 @@
 		area.power_equip = FALSE
 		area.power_environ = FALSE
 		area.power_change()
+		area.apc = null
 	QDEL_NULL(alarm_manager)
 	if(occupier)
 		malfvacate(TRUE)
