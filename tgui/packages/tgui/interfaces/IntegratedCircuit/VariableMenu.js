@@ -78,7 +78,9 @@ export const VariableMenu = (props, context) => {
               <Stack.Item>
                 <Dropdown
                   options={types}
+                  selected={types[0]}
                   width="100%"
+                  over
                   onSelected={(selectedVal) => setType(selectedVal)}
                 />
               </Stack.Item>
