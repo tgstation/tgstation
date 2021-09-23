@@ -724,3 +724,57 @@
   - bugfix: 'tgui: IE8: Removed "iefix" css classes from Flex elements which resulted
       in unusable layout in complex UIs, such as tgui prefs.'
   - bugfix: 'tgui: IE8: Fixed button clicks.'
+2021-09-23:
+  EricZilla:
+  - expansion: Updated old GAGS colors for the PDAs based on user feedback
+  - imageadd: Updated appearance of the Survival Pen
+  - expansion: The Quartermaster now starts with a Survival Pen because its flavorful.
+      Survival Pen has also been updated to use the fancy font, since, its fancy.
+  Ghilker:
+  - bugfix: fix scrubbers/vents/injectors/etc from being able to be placed on all
+      layer on the same turf
+  Ghommie:
+  - bugfix: The weapons authorization setting for turrets will now check for weapons
+      on targets without a chameleon identification card instead of those with either
+      a chameleon ID or no ID at all.
+  Krysonism:
+  - expansion: Leapers, mega arachnids, queen bees, frogs and walking mushrooms can
+      now be grown using cytology.
+  - expansion: A neglected fern, once collected on nearby jungle planet, can sometimes
+      be found in maintenance
+  LemonInTheDark:
+  - bugfix: Fixes a rare case of new players being unable to move
+  MMMiracles:
+  - rscadd: Tramstation's Security and Service wing has been flipped around.
+  - rscadd: Tramstation's commissary has been placed above in the central wing beside
+      the kitchen.
+  - rscadd: Tramstation's EVA and Gateway rooms have been adjusted. EVA now has one
+      extra suit storage unit.
+  - rscadd: Tramstation's maintenance near the Service and Security wing has had reworked
+      layouts.
+  - rscadd: Tramstation's asteroid now leaves behind breathable turfs so digging out
+      a room isn't as tedious.
+  Mothblocks:
+  - bugfix: You can now bind Ctrl/Alt again.
+  - bugfix: Fixed the quirks list in the preferences menu sometimes being empty.
+  - admin: Added a panel for editing station traits.
+  TheSmallBlue:
+  - rscadd: Added the Proximity Pinpointer component, get the coordinates of any entity!
+      (As long as its in view)
+  Timberpoes:
+  - admin: Adds a couple of missing traits relating to cult and bloodshot eyes to
+      the Modify Traits VV dropdown menu for mobs.
+  Y0SH1M4S73R:
+  - admin: The Set Var, Get Var, Proc Call, and Signal Handler admin circuit components
+      now use a "datum" datatype for their "Target" port. The "datum" datatype can
+      accept inputs from "atom" ports, and can be safely cast to the "atom" datatype
+      using the typecasting component when necessary.
+  - admin: The Get Var component now has an option port used to select the expected
+      datatype of the obtained var. Similarly, the Proc Call component now has an
+      option port used to select the expected datatype of the proc's return value.
+      Both of these options default to "any"
+  grimm-hollowknight, ported by tralezab with a few overlays:
+  - imageadd: New borg sprite, from Yogstation!
+  necromanceranne:
+  - bugfix: Stickmen flatguns now properly drop out of your hands when picked up,
+      as intended.
