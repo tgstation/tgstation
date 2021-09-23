@@ -118,10 +118,7 @@
 		T = get_turf(src)
 		AIarea = get_area(src)
 		if(AIarea)
-			for (var/obj/machinery/power/apc/APC in AIarea)
-				if (!(APC.machine_stat & BROKEN))
-					theAPC = APC
-					break
+			theAPC = AIarea.apc
 		if (!theAPC)
 			switch(PRP)
 				if(1)
