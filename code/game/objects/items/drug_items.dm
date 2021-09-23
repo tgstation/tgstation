@@ -27,6 +27,7 @@
 /obj/item/food/drug/moon_rock/Initialize()
 	. = ..()
 	icon_state = pick("moon_rock1", "moon_rock2", "moon_rock3")
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOONICORN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /obj/item/reagent_containers/glass/blastoff_ampoule
 	name = "bLaSToFF ampoule" //stylized name

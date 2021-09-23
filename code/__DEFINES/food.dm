@@ -14,6 +14,7 @@
 #define BREAKFAST (1<<13)
 #define CLOTH (1<<14)
 #define NUTS (1<<15)
+#define SEAFOOD (1<<16)
 
 /// A list of food type names, in order of their flags
 #define FOOD_FLAGS list( \
@@ -32,6 +33,8 @@
 	"PINEAPPLE", \
 	"BREAKFAST", \
 	"CLOTH", \
+	"NUTS", \
+	"SEAFOOD", \
 )
 
 #define DRINK_NICE 1

@@ -104,7 +104,7 @@ Things you **CAN'T** do:
 
 [Policy configuration system](./guides/POLICYCONFIG.md)
 
-[Hard deletes](./guides/HARDDEL.md)
+[Hard deletes](./guides/HARDDELETES.md)
 
 [UI Development](../tgui/README.md)
 

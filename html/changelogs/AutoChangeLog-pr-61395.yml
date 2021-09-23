@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "The negative moodlet from being held at gunpoint will no longer last indefinitely under certain conditions."

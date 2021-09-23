@@ -83,7 +83,7 @@ Your `.tsx` file would look like:
 ```ts
 import { CheckboxInput, FeatureToggle } from "../base";
 
-export const enable_breathing: Feature<number> = {
+export const enable_breathing: FeatureToggle = {
   name: "Enable breathing",
   component: CheckboxInput,
 }

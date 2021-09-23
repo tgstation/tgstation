@@ -36,6 +36,10 @@
 	name = "chips"
 	icon_state = "chips"
 
+/obj/item/trash/shrimp_chips
+	name = "shrimp chips"
+	icon_state = "shrimp_chips"
+
 /obj/item/trash/boritos
 	name = "boritos bag"
 	icon_state = "boritos"

@@ -1510,7 +1510,7 @@
 	new /obj/item/food/meat/slab/bear(src)
 	new /obj/item/food/meat/slab/spider(src)
 	new /obj/item/food/spidereggs(src)
-	new /obj/item/food/fishmeat/carp(src)
+	new /obj/item/food/meat/slab/penguin(src)
 	new /obj/item/food/meat/slab/xeno(src)
 	new /obj/item/food/meat/slab/corgi(src)
 	new /obj/item/food/meatball(src)
@@ -1524,6 +1524,16 @@
 		new /obj/item/food/grown/soybeans(src)
 		new /obj/item/food/grown/cabbage(src)
 	new /obj/item/food/grown/chili(src)
+
+/obj/item/storage/box/ingredients/seafood
+	theme_name = "seafood"
+
+/obj/item/storage/box/ingredients/seafood/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/food/fishmeat/carp(src)
+		new /obj/item/food/fishmeat/armorfish(src)
+		new /obj/item/food/fishmeat/moonfish(src)
+	new /obj/item/food/fishmeat/gunner_jellyfish(src)
 
 /obj/item/storage/box/ingredients/random
 	theme_name = "random"

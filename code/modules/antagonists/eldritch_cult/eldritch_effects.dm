@@ -246,7 +246,7 @@
 
 	var/datum/effect_system/reagents_explosion/explosion = new()
 	explosion.set_up(1, get_turf(human_user), TRUE, 0)
-	explosion.start()
+	explosion.start(src)
 
 
 /obj/effect/broken_illusion/examine(mob/user)
