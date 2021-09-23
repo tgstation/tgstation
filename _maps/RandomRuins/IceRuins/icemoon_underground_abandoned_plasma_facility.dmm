@@ -1554,13 +1554,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood/large,
 /area/ruin/plasma_facility/commons)
-"zx" = (
-/obj/structure/girder,
-/turf/open/floor/plating/snowed/icemoon,
-/area/mine/abandoned{
-	mood_message = "<span class='nicegreen'>You feel like something is watching you...</span>\n";
-	name = "Abandoned Plasma Rig"
-	})
 "zD" = (
 /obj/structure/fluff/tram_rail/end{
 	dir = 1;
@@ -4086,7 +4079,7 @@ XA
 Rj
 Gb
 kA
-zx
+rk
 fO
 rs
 rs
