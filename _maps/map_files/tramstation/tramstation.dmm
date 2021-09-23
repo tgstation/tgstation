@@ -815,6 +815,8 @@
 /obj/structure/closet/crate,
 /obj/item/pickaxe/mini,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "afe" = (
@@ -24526,6 +24528,15 @@
 /obj/item/paper_bin,
 /turf/open/floor/iron/white,
 /area/science/research)
+"gMN" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_one_access_txt = "12"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/maintenance/starboard/central)
 "gNb" = (
 /obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/tile/neutral,
@@ -29607,6 +29618,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/security/checkpoint/supply)
+"iHc" = (
+/obj/machinery/duct,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/maintenance/central)
 "iHi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -34039,6 +34057,8 @@
 "kqA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/food_packaging,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "kqN" = (
@@ -39227,6 +39247,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/security/prison)
+"mAC" = (
+/obj/machinery/duct,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/maintenance/central)
 "mAL" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -42232,6 +42260,8 @@
 /obj/machinery/duct,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "nOJ" = (
@@ -59273,6 +59303,12 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/office)
+"uAT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/maintenance/starboard/central)
 "uBm" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/camera{
@@ -102179,9 +102215,9 @@ dhe
 dhe
 aGF
 nOD
-qhG
-qhG
-qhG
+iHc
+iHc
+iHc
 aGF
 dhe
 aej
@@ -102438,7 +102474,7 @@ aGF
 aGF
 aGF
 aGF
-qhG
+iHc
 aGF
 dhe
 aej
@@ -102695,7 +102731,7 @@ dhe
 dhe
 dhe
 aGF
-tOF
+mAC
 aGF
 aGF
 aej
@@ -102952,14 +102988,14 @@ dhe
 dhe
 dhe
 aGF
-qhG
-qhG
-qhG
-qhG
-qhG
-qhG
-qhG
-qhG
+iHc
+iHc
+iHc
+iHc
+iHc
+iHc
+iHc
+iHc
 aej
 lsc
 aUC
@@ -103216,7 +103252,7 @@ aGF
 aGF
 aGF
 aGF
-qhG
+iHc
 aej
 apf
 aej
@@ -103473,7 +103509,7 @@ dhe
 dhe
 dhe
 aGF
-qhG
+iHc
 aej
 aej
 aej
@@ -103730,7 +103766,7 @@ dhe
 dhe
 dhe
 aGF
-qhG
+iHc
 qhG
 qhG
 vWs
@@ -103987,7 +104023,7 @@ dhe
 dhe
 dhe
 aGF
-tFo
+gMN
 aGF
 aGF
 aGF
@@ -104244,7 +104280,7 @@ dhe
 dhe
 dhe
 adS
-aet
+uAT
 adS
 dhe
 dhe
@@ -104501,7 +104537,7 @@ dhe
 dhe
 dhe
 adS
-aet
+uAT
 adS
 dhe
 dhe
@@ -104758,7 +104794,7 @@ dhe
 dhe
 dhe
 adS
-aet
+uAT
 adS
 dhe
 dhe
@@ -105015,7 +105051,7 @@ dhe
 dhe
 dhe
 adS
-aet
+uAT
 adS
 dhe
 dhe
@@ -105272,7 +105308,7 @@ dhe
 dhe
 dhe
 adS
-aet
+uAT
 adS
 dhe
 dhe
@@ -105529,7 +105565,7 @@ dhe
 dhe
 dhe
 adS
-aet
+uAT
 adS
 dhe
 dhe
@@ -106043,7 +106079,7 @@ dhe
 adS
 adS
 adS
-aet
+uAT
 adS
 dhe
 dhe
