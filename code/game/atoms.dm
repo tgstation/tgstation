@@ -376,13 +376,12 @@
 		return FALSE
 
 	if(is_reserved_level(current_turf.z))
-		for(var/moving_shuttle in SSshuttle.mobile)
-			var/obj/docking_port/mobile/mobile_docking_port = moving_shuttle
-			if(mobile_docking_port.launch_status == ENDGAME_TRANSIT)
-				for(var/place in mobile_docking_port.shuttle_areas)
-					var/area/shuttle/shuttle_area = place
-					if(current_turf in shuttle_area)
-						return TRUE
+		for(var/obj/docking_port/mobile/mobile_docking_port in SSshuttle.mobile)
+			if(mobile_docking_port.launch_status != ENDGAME_TRANSIT)
+				continue
+			for(var/area/shuttle/shuttle_area as anything in mobile_docking_port.shuttle_areas)
+				if(current_turf in shuttle_area)
+					return TRUE
 
 	if(!is_centcom_level(current_turf.z))//if not, don't bother
 		return FALSE
@@ -392,8 +391,7 @@
 		return TRUE
 
 	//Check for centcom shuttles
-	for(var/moving_shuttle as anything in SSshuttle.mobile)
-		var/obj/docking_port/mobile/mobile_docking_port = moving_shuttle
+	for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile)
 		if(mobile_docking_port.launch_status == ENDGAME_LAUNCHED)
 			for(var/place as anything in mobile_docking_port.shuttle_areas)
 				var/area/shuttle/shuttle_area = place
@@ -541,8 +539,7 @@
 		return
 
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_ATOM, src, reagents, methods, volume_modifier, show_message)
-	for(var/reagent as anything in reagents)
-		var/datum/reagent/current_reagent = reagent
+	for(var/datum/reagent/current_reagent as anything in reagents)
 		. |= current_reagent.expose_atom(src, reagents[current_reagent])
 
 /// Are you allowed to drop this atom
@@ -642,8 +639,7 @@
 
 	if(custom_materials)
 		var/list/materials_list = list()
-		for(var/material as anything in custom_materials)
-			var/datum/material/current_material = material
+		for(var/datum/material/current_material as anything in custom_materials)
 			materials_list += "[current_material.name]"
 		. += "<u>It is made out of [english_list(materials_list)]</u>."
 	if(reagents)
@@ -651,14 +647,14 @@
 			. += "It contains:"
 			if(length(reagents.reagent_list))
 				if(user.can_see_reagents()) //Show each individual reagent
-					for(var/datum/reagent/current_reagent in reagents.reagent_list)
+					for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
 						. += "[round(current_reagent.volume, 0.01)] units of [current_reagent.name]"
 					if(reagents.is_reacting)
 						. += span_warning("It is currently reacting!")
 					. += span_notice("The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.")
 				else //Otherwise, just show the total volume
 					var/total_volume = 0
-					for(var/datum/reagent/current_reagent in reagents.reagent_list)
+					for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
 						total_volume += current_reagent.volume
 					. += "[total_volume] units of various reagents"
 			else
@@ -1039,8 +1035,7 @@
  * Default behaviour is to loop through atom contents and call their HandleTurfChange() proc
  */
 /atom/proc/HandleTurfChange(turf/changing_turf)
-	for(var/atom as anything in src)
-		var/atom/current_atom = atom
+	for(var/atom/current_atom as anything in src)
 		current_atom.HandleTurfChange(changing_turf)
 
 /**
@@ -1452,8 +1447,7 @@
 	var/list/choices_to_options = list() //Dict of object name | dict of object processing settings
 	var/list/choices = list()
 
-	for(var/option as anything in possible_options)
-		var/list/current_option = option
+	for(var/list/current_option as anything in possible_options)
 		var/atom/current_option_type = current_option[TOOL_PROCESSING_RESULT]
 		choices_to_options[initial(current_option_type.name)] = current_option
 		var/image/option_image = image(icon = initial(current_option_type.icon), icon_state = initial(current_option_type.icon_state))
@@ -1979,7 +1973,7 @@
 		// There's a gravity generator on our z level
 		if(GLOB.gravity_generators["[gravity_turf.z]"])
 			var/max_grav = 0
-			for(var/obj/machinery/gravity_generator/main/main_grav_gen in GLOB.gravity_generators["[gravity_turf.z]"])
+			for(var/obj/machinery/gravity_generator/main/main_grav_gen as anything in GLOB.gravity_generators["[gravity_turf.z]"])
 				max_grav = max(main_grav_gen.setting,max_grav)
 			return max_grav
 	return SSmapping.level_trait(gravity_turf.z, ZTRAIT_GRAVITY)
@@ -2064,8 +2058,7 @@
 	if (!source)
 		output += src
 	processed += src
-	for (var/orbiter as anything in orbiters?.orbiter_list)
-		var/atom/atom_orbiter = orbiter
+	for (var/atom/atom_orbiter as anything in orbiters?.orbiter_list)
 		output += atom_orbiter.get_all_orbiters(processed, source = FALSE)
 	return output
 

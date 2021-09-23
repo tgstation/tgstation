@@ -185,8 +185,7 @@
 
 /atom/movable/proc/onZImpact(turf/impacted_turf, levels)
 	var/atom/highest = impacted_turf
-	for(var/current_atom as anything in impacted_turf.contents)
-		var/atom/hurt_atom = current_atom
+	for(var/atom/hurt_atom as anything in impacted_turf.contents)
 		if(!hurt_atom.density)
 			continue
 		if(isobj(hurt_atom) || ismob(hurt_atom))
