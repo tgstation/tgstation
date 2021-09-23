@@ -64,6 +64,9 @@
 		/obj/item/stack/tile/iron/freezer,
 		/obj/item/stack/tile/iron/grimy,
 		/obj/item/stack/tile/iron/sepia,
+		/obj/item/stack/tile/iron/galactoturf,
+		/obj/item/stack/tile/iron/galactoturf_dark,
+		/obj/item/stack/tile/iron/galactoturf_light,
 	)
 
 /obj/item/stack/tile/iron/attackby(obj/item/W, mob/user, params)
@@ -447,6 +450,30 @@
 	icon_state = "tile_sepia"
 	turf_type = /turf/open/floor/iron/sepia
 	merge_type = /obj/item/stack/tile/iron/sepia
+
+/obj/item/stack/tile/iron/galactoturf
+	name = "galactoturf floor tile"
+	singular_name = "galactoturf floor tile"
+	desc = "The finest faux grass, for that natural feel (but not too natural)."
+	icon_state = "tile_galactoturf"
+	turf_type = /turf/open/floor/iron/galactoturf
+	merge_type = /obj/item/stack/tile/iron/galactoturf
+
+/obj/item/stack/tile/iron/galactoturf_dark
+	name = "dark galactoturf floor tile"
+	singular_name = "dark galactoturf floor tile"
+	desc = "The finest faux grass, for that natural feel (but not too natural)."
+	icon_state = "tile_galactoturf_dark"
+	turf_type = /turf/open/floor/iron/galactoturf/dark
+	merge_type = /obj/item/stack/tile/iron/galactoturf_dark
+
+/obj/item/stack/tile/iron/galactoturf_light
+	name = "light galactoturf floor tile"
+	singular_name = "light galactoturf floor tile"
+	desc = "The finest faux grass, for that natural feel (but not too natural)."
+	icon_state = "tile_galactoturf_light"
+	turf_type = /turf/open/floor/iron/galactoturf/light
+	merge_type = /obj/item/stack/tile/iron/galactoturf_light
 
 //Tiles below can't be gotten through tile reskinning
 
