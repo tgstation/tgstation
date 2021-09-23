@@ -1662,8 +1662,7 @@
 "Bc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/wardrobe/grey,
-/obj/effect/spawner/lootdrop/maintenance/two,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
 "Bi" = (
@@ -2682,7 +2681,7 @@
 /area/ruin/plasma_facility/operations)
 "Rf" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
 "Rj" = (
@@ -3127,8 +3126,9 @@
 /obj/item/pen/red{
 	pixel_y = 14
 	},
-/obj/effect/spawner/lootdrop/donkpockets{
-	pixel_y = -4
+/obj/effect/spawner/random/food_or_drink/donkpockets{
+	pixel_x = 10;
+	pixel_y = -2
 	},
 /turf/open/floor/wood/large,
 /area/ruin/plasma_facility/commons)

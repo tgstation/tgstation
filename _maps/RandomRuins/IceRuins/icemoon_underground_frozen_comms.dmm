@@ -162,8 +162,6 @@
 /area/icemoon/underground/explored)
 "yF" = (
 /obj/structure/closet/wardrobe/grey,
-/obj/effect/spawner/lootdrop/maintenance/two,
-/obj/effect/spawner/lootdrop/maintenance/two,
 /obj/item/clothing/gloves/color/plasmaman,
 /turf/open/floor/iron/showroomfloor{
 	initial_gas_mix = "ICEMOON_ATMOS"
@@ -284,8 +282,7 @@
 /area/ruin/powered/shuttle)
 "HT" = (
 /obj/structure/closet/wardrobe/grey,
-/obj/effect/spawner/lootdrop/maintenance/two,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/showroomfloor{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -418,8 +415,6 @@
 /area/ruin/powered/shuttle)
 "Ws" = (
 /obj/structure/closet/wardrobe/grey,
-/obj/effect/spawner/lootdrop/maintenance/two,
-/obj/effect/spawner/lootdrop/maintenance/two,
 /obj/item/clothing/under/plasmaman,
 /turf/open/floor/iron/showroomfloor{
 	initial_gas_mix = "ICEMOON_ATMOS"
