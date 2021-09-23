@@ -38,7 +38,7 @@
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
-			if(freon > 0.5)
+			else if(freon > 0.5)
 				if(active_hotspot.temperature > exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
