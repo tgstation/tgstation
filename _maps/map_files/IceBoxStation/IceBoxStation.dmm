@@ -8690,7 +8690,7 @@
 /turf/open/floor/iron/dark/telecomms,
 /area/tcommsat/server)
 "bvC" = (
-/obj/structure/chair/greyscale{
+/obj/structure/chair{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red/full,
@@ -14808,7 +14808,7 @@
 /area/commons/fitness)
 "dfC" = (
 /obj/effect/turf_decal/tile/red/full,
-/obj/structure/chair/greyscale,
+/obj/structure/chair,
 /turf/open/floor/iron/large,
 /area/service/kitchen/diner)
 "dfM" = (
@@ -15446,7 +15446,7 @@
 /area/maintenance/starboard/aft)
 "dwV" = (
 /obj/effect/turf_decal/tile/red/full,
-/obj/structure/table/greyscale,
+/obj/structure/table,
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
@@ -16068,7 +16068,7 @@
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "dRa" = (
-/obj/structure/chair/greyscale{
+/obj/structure/chair{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/white{
@@ -18539,7 +18539,7 @@
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
 "fqr" = (
-/obj/structure/table/greyscale,
+/obj/structure/table,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/white/smooth_large,
 /area/service/kitchen/diner)
@@ -20357,7 +20357,7 @@
 /turf/closed/wall,
 /area/engineering/main)
 "gjg" = (
-/obj/structure/chair/greyscale{
+/obj/structure/chair{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/white{
@@ -20505,7 +20505,7 @@
 /turf/open/floor/iron,
 /area/command/bridge)
 "gmp" = (
-/obj/structure/chair/greyscale{
+/obj/structure/chair{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/white{
@@ -22405,7 +22405,7 @@
 /area/maintenance/starboard/fore)
 "hsd" = (
 /obj/effect/turf_decal/tile/red/full,
-/obj/structure/table/greyscale,
+/obj/structure/table,
 /turf/open/floor/iron/large,
 /area/service/kitchen/diner)
 "hsh" = (
@@ -23528,7 +23528,7 @@
 /turf/open/floor/iron,
 /area/cargo/qm)
 "ids" = (
-/obj/structure/chair/greyscale{
+/obj/structure/chair{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red/full,
@@ -25773,7 +25773,7 @@
 /turf/open/floor/iron,
 /area/commons/locker)
 "jnv" = (
-/obj/structure/table/greyscale,
+/obj/structure/table,
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
@@ -29912,7 +29912,7 @@
 /area/commons/vacant_room/commissary)
 "lIw" = (
 /obj/effect/turf_decal/tile/red/full,
-/obj/structure/chair/greyscale{
+/obj/structure/chair{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/white{
@@ -32441,7 +32441,7 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay)
 "nbH" = (
-/obj/structure/chair/greyscale,
+/obj/structure/chair,
 /turf/open/floor/iron/white/smooth_large,
 /area/service/kitchen/diner)
 "nbT" = (
@@ -33812,7 +33812,7 @@
 /turf/open/floor/iron,
 /area/command/gateway)
 "nPr" = (
-/obj/structure/table/greyscale,
+/obj/structure/table,
 /obj/effect/turf_decal/tile/red/full,
 /obj/effect/turf_decal/siding/white{
 	dir = 1
@@ -34135,7 +34135,7 @@
 	},
 /area/maintenance/aft)
 "nXe" = (
-/obj/structure/chair/greyscale{
+/obj/structure/chair{
 	dir = 1
 	},
 /obj/effect/landmark/start/hangover,
@@ -36981,7 +36981,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
 "psp" = (
-/obj/structure/chair/greyscale{
+/obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/iron/white/smooth_large,
@@ -37995,7 +37995,7 @@
 /area/service/kitchen)
 "pVj" = (
 /obj/effect/turf_decal/tile/red/full,
-/obj/structure/chair/greyscale,
+/obj/structure/chair,
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
@@ -38551,7 +38551,7 @@
 /obj/machinery/camera{
 	c_tag = "Starboard Primary Hallway 2"
 	},
-/obj/structure/chair/greyscale,
+/obj/structure/chair,
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "qkW" = (
@@ -38779,7 +38779,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "qqX" = (
-/obj/structure/chair/greyscale{
+/obj/structure/chair{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red/full,
@@ -42701,7 +42701,7 @@
 /turf/open/floor/iron,
 /area/command/heads_quarters/hop)
 "stA" = (
-/obj/structure/chair/greyscale{
+/obj/structure/chair{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red/full,
@@ -44457,7 +44457,7 @@
 /turf/open/floor/plating,
 /area/commons/storage/emergency/port)
 "trH" = (
-/obj/structure/chair/greyscale{
+/obj/structure/chair{
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/white{
@@ -45724,7 +45724,7 @@
 /turf/open/floor/iron,
 /area/cargo/office)
 "ubX" = (
-/obj/structure/chair/greyscale,
+/obj/structure/chair,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
@@ -47644,7 +47644,7 @@
 /turf/open/floor/engine/o2,
 /area/engineering/atmos)
 "vgc" = (
-/obj/structure/chair/greyscale,
+/obj/structure/chair,
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
@@ -47724,7 +47724,7 @@
 /turf/open/floor/iron,
 /area/command/heads_quarters/hop)
 "vjE" = (
-/obj/structure/table/greyscale,
+/obj/structure/table,
 /obj/effect/turf_decal/tile/red/full,
 /obj/item/clothing/head/fedora,
 /turf/open/floor/iron/large,
@@ -48516,7 +48516,7 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "vHs" = (
-/obj/machinery/door/airlock/sandstone/glass{
+/obj/machinery/door/airlock/freezer{
 	name = "Kitchen";
 	req_access_txt = "28"
 	},
@@ -48620,7 +48620,7 @@
 /area/maintenance/fore/secondary)
 "vJD" = (
 /obj/effect/turf_decal/tile/red/full,
-/obj/structure/chair/greyscale{
+/obj/structure/chair{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/white,
@@ -49611,7 +49611,7 @@
 /turf/open/floor/iron,
 /area/cargo/qm)
 "wks" = (
-/obj/structure/table/greyscale,
+/obj/structure/table,
 /obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
@@ -51732,7 +51732,7 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "xwa" = (
-/obj/structure/table/greyscale,
+/obj/structure/table,
 /obj/item/clothing/mask/cigarette/cigar,
 /turf/open/floor/iron/white/smooth_large,
 /area/service/kitchen/diner)
