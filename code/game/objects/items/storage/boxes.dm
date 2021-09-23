@@ -116,14 +116,14 @@
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
 
 /obj/item/storage/box/survival/PopulateContents()
-	new mask_type(src)
-	if(!isnull(medipen_type))
-		new medipen_type(src)
-
 	if(!isplasmaman(loc))
+		new mask_type(src)
 		new internal_type(src)
 	else
 		new /obj/item/tank/internals/plasmaman/belt(src)
+
+	if(!isnull(medipen_type))
+		new medipen_type(src)
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
 		new /obj/item/flashlight/flare(src)
