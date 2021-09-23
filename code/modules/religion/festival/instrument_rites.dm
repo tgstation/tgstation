@@ -15,6 +15,7 @@
 
 /datum/religion_rites/song_tuner/invoke_effect(mob/living/user, obj/structure/altar_of_gods/altar)
 	. = ..()
+
 	user.AddComponent(/datum/component/smooth_tunes, src, repeats_okay, particles_path, glow_color)
 
 /**
@@ -48,7 +49,7 @@
 		GLOB.religious_sect.adjust_favor(0.2)
 
 /datum/religion_rites/song_tuner/sooth
-	name = "Soothing Hymn"
+	name = "Mending Chord"
 	desc = "Sing a sweet song, healing bruises and burns around you."
 	particles_path = /particles/musical_notes/heal
 	visible_message = span_nicegreen("This music is closing your wounds!")
@@ -68,10 +69,10 @@
 		listener.adjustFireLoss(-healy_juice)
 
 /datum/religion_rites/song_tuner/pain
-	name = "Sorrow Song"
-	desc = "Sing a melancholic song, hurting those around you. Works less effectively on fellow priests."
+	name = "Murderous Chord"
+	desc = "Sing a sharp song, cutting those around you. Works less effectively on fellow priests."
 	particles_path = /particles/musical_notes/harm
-	visible_message = span_danger("This music's low notes burn you, and the high notes cut you!")
+	visible_message = span_danger("This music cuts like a knife!")
 	glow_color = "#FF4460"
 	repeats_okay = FALSE
 
@@ -81,14 +82,13 @@
 	for(var/mob/living/listener in song_datum.hearing_mobs)
 		if(listener == song_player || listener.anti_magic_check(magic = FALSE, holy = TRUE))
 			continue
-		var/pain_juice = 0.5
+		var/pain_juice = 1
 		if(listener.mind?.holy_role)
-			pain_juice*=0.5
+			pain_juice *= 0.5
 		listener.adjustBruteLoss(pain_juice)
-		listener.adjustFireLoss(pain_juice)
 
 /datum/religion_rites/song_tuner/lullaby
-	name = "Lullaby"
+	name = "Spiritual Lullaby"
 	desc = "Sing a lullaby, tiring those around you and eventually putting them to sleep. Does not work on fellow priests."
 	particles_path = /particles/musical_notes/sleepy
 	visible_message = span_warning("This music's making you feel drowsy...")
