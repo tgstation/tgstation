@@ -38696,6 +38696,9 @@
 /obj/structure/sign/painting/library_secure{
 	pixel_y = 32
 	},
+/obj/effect/spawner/random/decoration/statue{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/carpet,
 /area/service/library)
 "fDa" = (
@@ -52395,6 +52398,9 @@
 /obj/structure/sign/painting/library_secure{
 	pixel_y = 32
 	},
+/obj/effect/spawner/random/decoration/statue{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/carpet,
 /area/service/library)
 "jGK" = (
@@ -54074,9 +54080,9 @@
 	req_access_txt = "20"
 	},
 /obj/effect/spawner/random/aimodule/harmful{
-	spawn_loot_split = 1;
 	spawn_loot_count = 2;
-	spawn_loot_double = 0
+	spawn_loot_double = 0;
+	spawn_loot_split = 1
 	},
 /obj/item/ai_module/supplied/oxygen{
 	pixel_x = -3;
@@ -54329,9 +54335,9 @@
 	req_access_txt = "20"
 	},
 /obj/effect/spawner/random/aimodule/harmless{
-	spawn_loot_split = 1;
 	spawn_loot_count = 3;
-	spawn_loot_double = 0
+	spawn_loot_double = 0;
+	spawn_loot_split = 1
 	},
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
@@ -78784,6 +78790,9 @@
 /obj/structure/sign/painting/library_secure{
 	pixel_y = 32
 	},
+/obj/effect/spawner/random/decoration/statue{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/carpet,
 /area/service/library)
 "rhZ" = (
@@ -93824,9 +93833,9 @@
 "vIl" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/aimodule/neutral{
-	spawn_loot_split = 1;
 	spawn_loot_count = 3;
-	spawn_loot_double = 0
+	spawn_loot_double = 0;
+	spawn_loot_split = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
