@@ -11,7 +11,7 @@
 	mutant_organs = list(/obj/item/organ/tail/cat)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/felinid
-	disliked_food = GROSS | FRUIT | CLOTH | RAW
+	disliked_food = GROSS | CLOTH | RAW
 	liked_food = SEAFOOD
 	var/original_felinid = TRUE //set to false for felinids created by mass-purrbation
 	payday_modifier = 0.75
