@@ -44170,16 +44170,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/effect/spawner/random/maintenance/two,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -54074,9 +54064,9 @@
 	req_access_txt = "20"
 	},
 /obj/effect/spawner/random/aimodule/harmful{
-	spawn_loot_split = 1;
 	spawn_loot_count = 2;
-	spawn_loot_double = 0
+	spawn_loot_double = 0;
+	spawn_loot_split = 1
 	},
 /obj/item/ai_module/supplied/oxygen{
 	pixel_x = -3;
@@ -54329,9 +54319,9 @@
 	req_access_txt = "20"
 	},
 /obj/effect/spawner/random/aimodule/harmless{
-	spawn_loot_split = 1;
 	spawn_loot_count = 3;
-	spawn_loot_double = 0
+	spawn_loot_double = 0;
+	spawn_loot_split = 1
 	},
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
@@ -56058,15 +56048,6 @@
 /turf/open/floor/iron/white/corner,
 /area/hallway/secondary/entry)
 "kIl" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/effect/spawner/random/structure/crate,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/spawner/random/structure/crate,
@@ -93824,9 +93805,9 @@
 "vIl" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/aimodule/neutral{
-	spawn_loot_split = 1;
 	spawn_loot_count = 3;
-	spawn_loot_double = 0
+	spawn_loot_double = 0;
+	spawn_loot_split = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
