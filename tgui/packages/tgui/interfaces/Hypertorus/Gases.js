@@ -12,7 +12,7 @@ const moderator_gases_help = {
   o2: "When added in high quantities, rapidly purges iron content. Does not purge iron content fast enough to keep up with damage at high Fusion Levels.",
   healium: "Directly heals a heavily damaged HFR core at high Fusion Levels, but is rapidly consumed in the process.",
   antinoblium: "Provides huge amounts of energy and radiation. Can cause dangerous electrical storms even from a healthy HFR core when present in more than trace amounts. Wear appropriate electrical protection when handling.",
-  freon: "Saps most forms of energy expression. Slows the rate of temperature change."
+  freon: "Saps most forms of energy expression. Slows the rate of temperature change.",
 };
 
 const moderator_gases_sticky_order = [
@@ -23,14 +23,14 @@ const moderator_gases_sticky_order = [
 
 const ensure_gases = (gas_array, gasids) => {
   const gases_by_id = {};
-  gas_array.forEach(gas => gases_by_id[gas.id] = true);
+  gas_array.forEach(gas => { gases_by_id[gas.id] = true; });
 
   for (let gasid of gasids) {
     if (!gases_by_id[gasid]) {
-      gas_array.push({id: gasid, amount: 0});
+      gas_array.push({ id: gasid, amount: 0 });
     }
   }
-}
+};
 
 export const HypertorusGases = props => {
   const {
@@ -54,7 +54,8 @@ export const HypertorusGases = props => {
     sortBy(gas => -gas.amount),
   ])(raw_moderator_gases || []);
 
-  // Make sure the "sticky" production gases are always visible. We want to display help for these.
+  // Make sure the "sticky" production gases are always visible.
+  // We want to display help for these.
   ensure_gases(moderator_gases, moderator_gases_sticky_order);
 
   const fusionMax = Math.max(500, ...fusion_gases.map(gas => gas.amount));
@@ -63,23 +64,28 @@ export const HypertorusGases = props => {
   return (
     <>
       <Section title="Internal Fusion Gases">
-        {selectedFuel ? (<LabeledList>
-          {fusion_gases.map(gas => (
-            <LabeledList.Item
-              key={gas.id}
-              label={getGasLabel(gas.id)}>
-              <ProgressBar
-                color={getGasColor(gas.id)}
-                value={gas.amount}
-                minValue={0}
-                maxValue={fusionMax}>
-                {toFixed(gas.amount, 2) + ' moles'}
-              </ProgressBar>
-            </LabeledList.Item>
-          ))}
-        </LabeledList>) :
-        (<Box align="center" color="red">{"No recipe selected"}</Box>)
-        }
+        {selectedFuel 
+          ? (
+            <LabeledList>
+              {fusion_gases.map(gas => (
+                <LabeledList.Item
+                  key={gas.id}
+                  label={getGasLabel(gas.id)}>
+                  <ProgressBar
+                    color={getGasColor(gas.id)}
+                    value={gas.amount}
+                    minValue={0}
+                    maxValue={fusionMax}>
+                    {toFixed(gas.amount, 2) + ' moles'}
+                  </ProgressBar>
+                </LabeledList.Item>
+              ))}
+            </LabeledList>)
+          : (
+            <Box align="center" color="red">
+              {"No recipe selected"}
+            </Box>
+          )}
       </Section>
       <Section title="Moderator Gases">
         <LabeledList>
@@ -89,23 +95,23 @@ export const HypertorusGases = props => {
             if (moderator_gases_help[gas.id]) {
               labelPrefix = (
                 <Tooltip content={moderator_gases_help[gas.id]}>
-                  <Icon name="question-circle" width="12px" mr="6px"/>
+                  <Icon name="question-circle" width="12px" mr="6px" />
                 </Tooltip>
               );
             } else {
               // Empty icon for spacing purposes
               labelPrefix = (
                 <Icon name="" width="12px" mr="6px" />
-              )
+              );
             }
             return (
               <LabeledList.Item
                 key={gas.id}
                 label={
-                <>
-                  {labelPrefix}
-                  {getGasLabel(gas.id)}:
-                </>
+                  <>
+                    {labelPrefix}
+                    {getGasLabel(gas.id)}:
+                  </>
                 }>
                 <ProgressBar
                   color={getGasColor(gas.id)}

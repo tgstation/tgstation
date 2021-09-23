@@ -8,7 +8,7 @@ import { getGasLabel } from '../../constants';
  * for generalizing and refactoring.
  */
 
-const ActParam = (key,value) => {
+const ActParam = (key, value) => {
   const ret = {};
   ret[key] = value;
   return ret;
@@ -37,58 +37,59 @@ const ComboKnob = props => {
     position="absolute"
     top="16px"
     left="-27px"
-    color='label'
-    fontSize='200%'
+    color="label"
+    fontSize="200%"
     name={icon}
     {...iconProps}
   />);
-  return (<Box
-    position="relative"
-    left="2px">
-    {help ?
-      (<Tooltip content={help}>{icon_element}</Tooltip>) :
-      icon_element
-    }
-    <Knob
-      color={color}
-      size={2}
-      value={value}
-      minValue={minValue}
-      maxValue={maxValue}
-      step={step}
-      stepPixelSize={1}
-      onDrag={(e, value) => act(parameter, ActParam(parameter, value))}
-      {...rest}
-    />
-    <Button
-      fluid
-      position="absolute"
-      top="-2px"
-      right="-20px"
-      color="transparent"
-      icon="fast-forward"
-      onClick={act.bind(null, parameter, ActParam(parameter, maxValue))}
-    />
-    <Button
-      fluid
-      position="absolute"
-      top="16px"
-      right="-20px"
-      color="transparent"
-      icon="undo"
-      onClick={act.bind(null, parameter, ActParam(parameter, defaultValue))}
-    />
-    <Button
-      fluid
-      position="absolute"
-      top="34px"
-      right="-20px"
-      color="transparent"
-      icon="fast-backward"
-      onClick={act.bind(null, parameter, ActParam(parameter, minValue))}
-    />
-  </Box>);
-}
+  return (
+    <Box
+      position="relative"
+      left="2px">
+      {help
+        ? (<Tooltip content={help}>{icon_element}</Tooltip>)
+        : icon_element}
+      <Knob
+        color={color}
+        size={2}
+        value={value}
+        minValue={minValue}
+        maxValue={maxValue}
+        step={step}
+        stepPixelSize={1}
+        onDrag={(e, value) => act(parameter, ActParam(parameter, value))}
+        {...rest}
+      />
+      <Button
+        fluid
+        position="absolute"
+        top="-2px"
+        right="-20px"
+        color="transparent"
+        icon="fast-forward"
+        onClick={act.bind(null, parameter, ActParam(parameter, maxValue))}
+      />
+      <Button
+        fluid
+        position="absolute"
+        top="16px"
+        right="-20px"
+        color="transparent"
+        icon="undo"
+        onClick={act.bind(null, parameter, ActParam(parameter, defaultValue))}
+      />
+      <Button
+        fluid
+        position="absolute"
+        top="34px"
+        right="-20px"
+        color="transparent"
+        icon="fast-backward"
+        onClick={act.bind(null, parameter, ActParam(parameter, minValue))}
+      />
+    </Box>
+  );
+};
 
 export const HypertorusSecondaryControls = (props, context) => {
   const { act, data } = useBackend(context);
@@ -104,9 +105,9 @@ export const HypertorusSecondaryControls = (props, context) => {
             minValue={50}
             defaultValue={100}
             maxValue={500}
-            parameter='heating_conductor'
-            icon='fire'
-            help='Adjusts the rate the fusion reaction heats or cools. Higher heating values improve production at the risk of a runaway reaction.'
+            parameter="heating_conductor"
+            icon="fire"
+            help="Adjusts the rate the fusion reaction heats or cools. Higher heating values improve production at the risk of a runaway reaction."
           />
         </LabeledControls.Item>
         <LabeledControls.Item label="Cooling Volume">
@@ -117,9 +118,9 @@ export const HypertorusSecondaryControls = (props, context) => {
             minValue={50}
             defaultValue={100}
             maxValue={2000}
-            parameter='cooling_volume'
+            parameter="cooling_volume"
             step={25}
-            icon='snowflake-o'
+            icon="snowflake-o"
             help="Adjusts the HFR core's internal cooling space. A smaller space will provide less cooling internally, but will move most of the coolant outside of the HFR core, where it can be rapidly cooled when not needed."
           />
         </LabeledControls.Item>
@@ -131,10 +132,10 @@ export const HypertorusSecondaryControls = (props, context) => {
             minValue={50}
             defaultValue={100}
             maxValue={1000}
-            parameter='magnetic_constrictor'
-            icon='magnet'
-            flipIcon={true}
-            help='Adjusts the density of the fusion reaction. Denser reactions expose more energy, but may destabilize the reaction if too much mass is involved.'
+            parameter="magnetic_constrictor"
+            icon="magnet"
+            flipIcon
+            help="Adjusts the density of the fusion reaction. Denser reactions expose more energy, but may destabilize the reaction if too much mass is involved."
           />
         </LabeledControls.Item>
         <LabeledControls.Item label="Current Damper">
@@ -146,9 +147,9 @@ export const HypertorusSecondaryControls = (props, context) => {
             minValue={0}
             defaultValue={0}
             maxValue={1000}
-            parameter='current_damper'
-            icon='sun-o'
-            help='Destabilizes the reaction. A sufficiently destabilized reaction will halt production and become endothermic, cooling the Fusion Mix instead of heating it. Reactions with more iron are harder to destabilize.'
+            parameter="current_damper"
+            icon="sun-o"
+            help="Destabilizes the reaction. A sufficiently destabilized reaction will halt production and become endothermic, cooling the Fusion Mix instead of heating it. Reactions with more iron are harder to destabilize."
           />
         </LabeledControls.Item>
       </LabeledControls>

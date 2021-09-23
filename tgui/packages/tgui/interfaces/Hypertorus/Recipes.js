@@ -19,7 +19,7 @@ import { getGasColor, getGasLabel } from '../../constants';
  *             If omitted, the default of "x{value}" is used.
  *
  */
- const recipe_effect_structure = [
+const recipe_effect_structure = [
   {
     param: "recipe_cooling_multiplier",
     label: "Cooling",
@@ -89,7 +89,14 @@ const MemoRow = props => {
     key,
     ...rest
   } = props;
-  return <Table.Row backgroundColor={backgroundColor} {...rest}>{children}</Table.Row>
+  return (
+    <Table.Row
+      backgroundColor={backgroundColor}
+      {...rest}
+    >
+      {children}
+    </Table.Row>
+  );
 };
 
 MemoRow.defaultHooks = bgChange;
@@ -156,7 +163,7 @@ export const HypertorusRecipes = props => {
         <Table.Cell textAlign="center">
           Secondary
         </Table.Cell>
-        <Table.Cell colspan="2"/>
+        <Table.Cell colspan="2" />
         <Table.Cell textAlign="center">
           Tier 1
         </Table.Cell>
@@ -179,29 +186,31 @@ export const HypertorusRecipes = props => {
           // Lay out our pictographic headers for effects.
           recipe_effect_structure.map(item => (
             <Table.Cell key={item.param} color="label">
-            <MaybeTooltip content={item.label}>
-              {typeof(item.icon) === "string" ? (
-                <Icon position="relative" width="10px" name={item.icon} />
-              ) : (
-                <Icon.Stack positition="relative" width="10px" textAlign="center">
-                  {item.icon.map(icon => (
-                    <Icon name={icon} />
-                  ))}
-                </Icon.Stack>
-              )}
-            </MaybeTooltip>
+              <MaybeTooltip content={item.label}>
+                {typeof(item.icon) === "string" ? (
+                  <Icon position="relative" width="10px" name={item.icon} />
+                ) : (
+                  <Icon.Stack positition="relative" width="10px" textAlign="center">
+                    {item.icon.map(icon => (
+                      <Icon key={icon} name={icon} />
+                    ))}
+                  </Icon.Stack>
+                )}
+              </MaybeTooltip>
             </Table.Cell>
           ))
         }
       </MemoRow>
-      {selectable_fuels.filter(d=>d.id).map((recipe,index) => {
+      {selectable_fuels.filter(d => d.id).map((recipe, index) => {
         const active = recipe.id === selected_fuel_id;
         const odd = 1 - 2 * (index % 2);
         const secondary = 50 - odd * 50;
         const primary = active ? secondary + 80 : secondary;
         const alpha = (active ? .13 : .07);
         return (
-          <MemoRow backgroundColor={String(new Color(secondary, primary, secondary, alpha))}>
+          <MemoRow key={recipe.id} backgroundColor={
+            String(new Color(secondary, primary, secondary, alpha))
+          }>
             <Table.Cell>
               <Button
                 icon={recipe.id === selected_fuel_id ? "times" : "power-off"}
@@ -216,7 +225,7 @@ export const HypertorusRecipes = props => {
             <GasCellItem gasid={recipe.fusion_byproducts[0]} />
             <GasCellItem gasid={recipe.fusion_byproducts[1]} />
             {recipe.product_gases.map(gasid => (
-              <GasCellItem gasid={gasid} />
+              <GasCellItem key={gasid} gasid={gasid} />
             ))}
             {
               recipe_effect_structure.map(item => {
@@ -224,7 +233,7 @@ export const HypertorusRecipes = props => {
                 // Note that the minus icon is wider than the arrow icons,
                 // so we set the width to work with both without jumping.
                 return (
-                  <Table.Cell>
+                  <Table.Cell key={item.param}>
                     <MaybeTooltip content={(item.tooltip || (v => "x"+v))(value, rest)}>
                       <Icon position="relative" color="rgb(230,30,40)" width="10px" name={effect_to_icon(value, item.scale, item.override_base || 1)} />
                     </MaybeTooltip>

@@ -1,6 +1,5 @@
 import { LabeledControls, RoundGauge, Section } from '../../components';
 import { formatSiUnit } from '../../format';
-import { to_exponential_if_big }from './helpers';
 import { toFixed } from 'common/math';
 
 export const HypertorusParameters = props => {
@@ -20,7 +19,9 @@ export const HypertorusParameters = props => {
   const energy_minimum_exponent = 12;
   const energy_minimum_suffix = energy_minimum_exponent / 3;
 
-  let activity = heat_output / (heat_output < 0 ? heat_output_min : heat_output_max);
+  let activity = heat_output / (heat_output < 0
+    ? heat_output_min
+    : heat_output_max);
   if (isNaN(activity) || !isFinite(activity)) {
     activity = 0;
   }
@@ -35,7 +36,7 @@ export const HypertorusParameters = props => {
             minValue={0}
             maxValue={100}
             alertBefore={95}
-            format={v=>`${Math.round(v)}%`}
+            format={v => `${Math.round(v)}%`}
             ranges={{
               good: [90, 100],
               average: [50, 90],
@@ -49,7 +50,7 @@ export const HypertorusParameters = props => {
             minValue={0}
             maxValue={1}
             alertAfter={.25}
-            format={v=>`${Math.round(v*100)}%`}
+            format={v => `${Math.round(v*100)}%`}
             ranges={{
               good: [0, .1],
               average: [.1, .36],
@@ -63,7 +64,7 @@ export const HypertorusParameters = props => {
             minValue={0}
             maxValue={100}
             alertBefore={30}
-            format={v=>`${Math.round(v)}%`}
+            format={v => `${Math.round(v)}%`}
             ranges={{
               // Keep these in line with the auto-off thresholds in apc.dm
               bad: [0, 15],
@@ -88,10 +89,10 @@ export const HypertorusParameters = props => {
         <LabeledControls.Item label="Energy">
           <RoundGauge
             size={1.75}
-            value={Math.max(0,Math.log10(energy_level))}
+            value={Math.max(0, Math.log10(energy_level))}
             minValue={energy_minimum_exponent}
             maxValue={30}
-            format={v=>formatSiUnit(10**v, energy_minimum_suffix, 'J')}
+            format={v => formatSiUnit(10**v, energy_minimum_suffix, 'J')}
             ranges={{
               black: [energy_minimum_exponent, 15],
               grey: [15, 18], // Anything under 1EJ is pretty mediocre
@@ -105,7 +106,7 @@ export const HypertorusParameters = props => {
             value={activity * 100}
             minValue={0}
             maxValue={130} // Proto-nitrate lets us exceed 100%
-            format={v=>`${toFixed(activity * 100, 1)}%`}
+            format={v => `${toFixed(activity * 100, 1)}%`}
             ranges={{
               grey: [0, 70],
               blue: [70, 100],
@@ -115,13 +116,13 @@ export const HypertorusParameters = props => {
         <LabeledControls.Item label="Instability">
           <RoundGauge
             size={1.75}
-            value={Math.max(instability,0)}
+            value={Math.max(instability, 0)}
             minValue={0}
             maxValue={10}
-            format={v=>`${toFixed(Math.max(instability,0)/8 * 100, 1)}%`}
+            format={v => `${toFixed(Math.max(instability, 0)/8 * 100, 1)}%`}
             ranges={{
               orange: [0, 8], // exothermic
-              blue: [8,10] // endothermic
+              blue: [8, 10], // endothermic
             }} />
         </LabeledControls.Item>
       </LabeledControls>

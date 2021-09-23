@@ -62,10 +62,10 @@ export const RoundGauge = props => {
       return true;
     }
     return false;
-  }
+  };
 
-  const alertColor = shouldShowAlert() &&
-    keyOfMatchingRange(clampedValue, scaledRanges);
+  const alertColor = shouldShowAlert()
+    && keyOfMatchingRange(clampedValue, scaledRanges);
 
   return (
     <Box inline>

@@ -23,7 +23,7 @@ const VerticalProgressBar = props => {
     height,
     value,
     progressHeight,
-    children
+    children,
   } = props;
   const fill_dims = {}, anchor_dims = {}, container_dims = {};
   let y = height - progressHeight;
@@ -34,43 +34,48 @@ const VerticalProgressBar = props => {
     anchor_dims.top = `${progressHeight}px`;
     anchor_dims.bottom = `${y}px`;
   } else {
-    fill_dims.top = `${y}px`,
+    fill_dims.top = `${y}px`;
     fill_dims.bottom = '0px';
     container_dims.bottom = '0px';
     anchor_dims.top = `${y}px`;
     anchor_dims.bottom = `${progressHeight}px`;
   }
-  return (<div className={`ProgressBar--color--${color}`} style={{
-    display: 'absolute',
-    position: 'relative',
-    height: `${height}px`,
-    width: '17px',
-    padding: '0',
-    "border-radius": borderRadius,
-    ...container_dims
-  }}>
-    {
-      !!value && (
-        <>
-          <div className="ProgressBar__fill ProgressBar__fill--animated" style={{
-            position: 'absolute',
-            left: '-0.5px',
-            right: '-0.5px',
-            "border-radius": borderRadius,
-            ...fill_dims
-          }} />
-          {children && (
-            <div style={{
-              position: 'relative',
-              height: '1px',
-              ...anchor_dims,
-              'background-color': 'magenta',
-            }}>{children}</div>
-          )}
-        </>
-      )
-    }
-  </div>);
+  return (
+    <div
+      className={`ProgressBar--color--${color}`}
+      style={{
+        display: 'absolute',
+        position: 'relative',
+        height: `${height}px`,
+        width: '17px',
+        padding: '0',
+        "border-radius": borderRadius,
+        ...container_dims,
+      }}
+    >
+      {
+        !!value && (
+          <>
+            <div className="ProgressBar__fill ProgressBar__fill--animated" style={{
+              position: 'absolute',
+              left: '-0.5px',
+              right: '-0.5px',
+              "border-radius": borderRadius,
+              ...fill_dims,
+            }} />
+            {children && (
+              <div style={{
+                position: 'relative',
+                height: '1px',
+                ...anchor_dims,
+                'background-color': 'magenta',
+              }}>{children}
+              </div>
+            )}
+          </>
+        )
+      }
+    </div>);
 };
 
 export const HypertorusTemperatures = props => {
@@ -88,15 +93,17 @@ export const HypertorusTemperatures = props => {
     selectedFuel: selected_fuel,
   } = props;
 
-  let prev_power_level_temperature = 10 ** (1+power_level), next_power_level_temperature = 10 ** (2+power_level);
+  let prev_power_level_temperature = 10 ** (1+power_level);
+  let next_power_level_temperature = 10 ** (2+power_level);
 
-  if (power_level == 0) {
+  if (power_level === 0) {
     prev_power_level_temperature = 0;
     next_power_level_temperature = 500;
-  } else if (power_level == 1) {
+  } else if (power_level === 1) {
     prev_power_level_temperature = 500;
-  } else if (power_level == 6) {
-    next_power_level_temperature = base_max_temperature * selected_fuel.temperature_multiplier;
+  } else if (power_level === 6) {
+    next_power_level_temperature = base_max_temperature
+      * selected_fuel.temperature_multiplier;
   }
 
   const temperatures = [
@@ -107,13 +114,13 @@ export const HypertorusTemperatures = props => {
       moderator_internal_temperature,
       internal_output_temperature,
       internal_coolant_temperature,
-    ].filter(d=>d),
-  ].map(d=>parseFloat(d));
+    ].filter(d => d),
+  ].map(d => parseFloat(d));
 
   const maxTemperature = Math.max(...temperatures);
   const minTemperature = Math.min(...temperatures);
 
-  if (power_level == 6) {
+  if (power_level === 6) {
     next_power_level_temperature = 0;
   }
 
@@ -128,7 +135,7 @@ export const HypertorusTemperatures = props => {
     const ratio = (value - baseTemp) / (maxTemperature - minTemperature);
     const ret = height * (fromBottom ? (1 - ratio) : ratio);
     return ret;
-  }
+  };
 
   const TemperatureLabel = (props, context) => {
     const {
@@ -148,13 +155,13 @@ export const HypertorusTemperatures = props => {
         top="0"
         left="0"
         width={`${yAxisMargin}px`}
-        >
-          {icon && (<Icon
-            display="inline-block"
-            mr={`${yAxisIconPadding}px`}
-            name={icon}
-          />)}
-          {to_exponential_if_big(value) + " K"}
+      >
+        {icon && (<Icon
+          display="inline-block"
+          mr={`${yAxisIconPadding}px`}
+          name={icon}
+        />)}
+        {to_exponential_if_big(value) + " K"}
       </Box>
     );
     return (!!value || force) && (
@@ -166,7 +173,7 @@ export const HypertorusTemperatures = props => {
       }}>
         <Box
           backgroundColor="label"
-           style={{
+          style={{
             position: "absolute",
             left: `${yAxisMargin}px`,
             right: '0',
@@ -174,12 +181,13 @@ export const HypertorusTemperatures = props => {
             height: '1px',
           }}
         />
-        {tooltip ?
-          (<Tooltip content={tooltip}>
-            {label}
-          </Tooltip>) :
-          label
-        }
+        {tooltip
+          ? (
+            <Tooltip content={tooltip}>
+              {label}
+            </Tooltip>
+          )
+          : label}
       </Box>
     );
   };
@@ -198,26 +206,50 @@ export const HypertorusTemperatures = props => {
       <Flex.Item mx={1}>
         <Stack vertical align="center">
           <Stack.Item>
-            <VerticalProgressBar height={height} progressHeight={y} value={value} {...rest}>{children}</VerticalProgressBar>
+            <VerticalProgressBar
+              height={height}
+              progressHeight={y}
+              value={value}
+              {...rest}
+            >
+              {children}
+            </VerticalProgressBar>
           </Stack.Item>
           <Stack.Item color="label">
             <Box align="center">{label}</Box>
-            {value > 0 ? ([<Box align="center">
-              {to_exponential_if_big(value) + " K"}
-            </Box>,<Box align="center">{(delta > 0 ?
-              `+${delta_str}` :
-              delta < 0 ?
-                `${delta_str}` :
-                "-"
-            )}</Box>]) : ([<Box align="center" color="red">
-              Empty
-            </Box>,<Box style={{
-              "user-select": "none",
-              "-ms-user-select": "none",
-              unselectable: Byond.IS_LTE_IE8
-            }}>
-              &nbsp; {/* Placeholder. Geocities did nothing wrong :o) */}
-            </Box>])}
+            {value > 0
+              ? (
+                <>
+                  <Box align="center">
+                    {to_exponential_if_big(value) + " K"}
+                  </Box>
+                  <Box align="center">{(delta > 0
+                    ? `+${delta_str}`
+                    : delta < 0
+                      ? `${delta_str}`
+                      : "-"
+                  )}
+                  </Box>
+                </>)
+              : (
+                <>
+                  <Box
+                    align="center"
+                    color="red"
+                  >
+                    Empty
+                  </Box>
+                  <Box
+                    style={{
+                      "user-select": "none",
+                      "-ms-user-select": "none",
+                      unselectable: Byond.IS_LTE_IE8,
+                    }}
+                  >
+                &nbsp; {/* Placeholder. Geocities did nothing wrong :o) */}
+                  </Box>
+                </>
+              )}
           </Stack.Item>
         </Stack>
       </Flex.Item>
@@ -228,7 +260,7 @@ export const HypertorusTemperatures = props => {
     <Section title="Temperatures">
       <Flex overflowY="hidden">
         <Flex.Item mx={1} width={`${yAxisMargin}px`}>
-          {(power_level == 0 || value_to_y(Math.abs(prev_power_level_temperature - minTemperature), 0) > 20) && (<TemperatureLabel key="min_temp" value={minTemperature} force={true} />)}
+          {(power_level === 0 || value_to_y(Math.abs(prev_power_level_temperature - minTemperature), 0) > 20) && (<TemperatureLabel key="min_temp" value={minTemperature} force />)}
           <TemperatureLabel key="prev_fusion_temp" icon="chevron-down" tooltip="Previous Fusion Level" value={prev_power_level_temperature} />
           <TemperatureLabel key="next_fusion_temp" icon="chevron-up" tooltip="Next Fusion Level" value={next_power_level_temperature} />
           {value_to_y(Math.abs(next_power_level_temperature - maxTemperature), 0) > 20 && (<TemperatureLabel key="max_temp" value={maxTemperature} />)}

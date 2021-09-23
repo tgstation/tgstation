@@ -4,4 +4,4 @@ export const to_exponential_if_big = (value) => {
     return value.toExponential(1);
   }
   return Math.round(value);
-}
+};

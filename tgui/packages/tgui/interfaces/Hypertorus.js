@@ -103,10 +103,14 @@ const HypertorusLayout = (props, context) => {
     selected,
   } = data;
 
-  const internal_fusion_temperature_delta = internal_fusion_temperature - internal_fusion_temperature_archived;
-  const internal_output_temperature_delta = internal_output_temperature - internal_output_temperature_archived;
-  const internal_coolant_temperature_delta = internal_coolant_temperature - internal_coolant_temperature_archived;
-  const moderator_internal_temperature_delta = moderator_internal_temperature - moderator_internal_temperature_archived;
+  const internal_fusion_temperature_delta = internal_fusion_temperature
+    - internal_fusion_temperature_archived;
+  const internal_output_temperature_delta = internal_output_temperature
+    - internal_output_temperature_archived;
+  const internal_coolant_temperature_delta = internal_coolant_temperature
+    - internal_coolant_temperature_archived;
+  const moderator_internal_delta = moderator_internal_temperature
+    - moderator_internal_temperature_archived;
 
   const selectable_fuels = selectable_fuel || [];
   const selected_fuel = selectable_fuels.filter(d => d.id === selected)[0];
@@ -120,14 +124,14 @@ const HypertorusLayout = (props, context) => {
       <HypertorusMainControls
         selectableFuels={selectable_fuels}
         selectedFuelID={selected}
-       />
+      />
       <Stack mb="0.5em">
         <Stack.Item grow>
           <HypertorusGases
             selectedFuel={selected_fuel}
             fusionGases={fusion_gases}
             moderatorGases={moderator_gases}
-            />
+          />
         </Stack.Item>
         <Stack.Item>
           <HypertorusTemperatures
@@ -136,7 +140,7 @@ const HypertorusLayout = (props, context) => {
             internalFusionTemperature={internal_fusion_temperature}
             internalFusionTemperatureDelta={internal_fusion_temperature_delta}
             moderatorInternalTemperature={moderator_internal_temperature}
-            moderatorInternalTemperatureDelta={moderator_internal_temperature_delta}
+            moderatorInternalTemperatureDelta={moderator_internal_delta}
             internalOutputTemperature={internal_output_temperature}
             internalOutputTemperatureDelta={internal_output_temperature_delta}
             internalCoolantTemperature={internal_coolant_temperature}
@@ -154,11 +158,10 @@ const HypertorusLayout = (props, context) => {
             heatOutputMax={heat_output_max}
             heatOutput={heat_output}
             apcEnergy={apc_energy}
-            heatLimiterModifier={heat_limiter_modifier}
             instability={instability}
             powerLevel={power_level}
             ironContent={iron_content}
-            integrity={integrity}/>
+            integrity={integrity} />
           <HypertorusSecondaryControls />
         </Stack.Item>
         <Stack.Item>
