@@ -91,6 +91,16 @@
 	if(trash_type)
 		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
 
+/obj/item/food/chips/shrimp
+	name = "shrimp chips"
+	desc = "Deep-fried, shrimp flavored chips. A favorite junkfood among seafood connoisseurs!"
+	icon_state = "shrimp_chips"
+	trash_type = /obj/item/trash/shrimp_chips
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/cooking_oil = 3, /datum/reagent/consumable/salt = 1)
+	tastes = list("salt" = 1, "shrimp" = 1)
+	foodtypes = JUNKFOOD | FRIED | SEAFOOD
+	w_class = WEIGHT_CLASS_SMALL
+
 /obj/item/food/no_raisin
 	name = "4no raisins"
 	icon_state = "4no_raisins"

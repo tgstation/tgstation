@@ -69,7 +69,7 @@
 	icon_state = "fishburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("bun" = 4, "fish" = 4)
-	foodtypes = GRAIN | MEAT
+	foodtypes = GRAIN | SEAFOOD
 	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/burger/tofu
@@ -349,7 +349,7 @@
 	icon_state = "crabburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("bun" = 2, "crab meat" = 4)
-	foodtypes = GRAIN | MEAT
+	foodtypes = GRAIN | SEAFOOD
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/burger/soylent

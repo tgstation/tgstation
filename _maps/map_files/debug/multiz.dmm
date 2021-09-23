@@ -449,10 +449,6 @@
 /obj/machinery/vending/snack,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
-"bT" = (
-/obj/effect/spawner/randomarcade,
-/turf/open/floor/iron,
-/area/hallway/primary/central)
 "bU" = (
 /obj/machinery/airalarm{
 	locked = 0;
@@ -1734,6 +1730,10 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
+"WR" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/turf/open/floor/iron,
+/area/hallway/primary/central)
 "XN" = (
 /obj/structure/railing,
 /turf/open/floor/plating,
@@ -3574,7 +3574,7 @@ dV
 aI
 aI
 ak
-bT
+WR
 bE
 co
 bO
