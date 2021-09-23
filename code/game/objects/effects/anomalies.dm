@@ -26,7 +26,7 @@
 /obj/effect/anomaly/Initialize(mapload, new_lifespan, drops_core = TRUE)
 	. = ..()
 
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 
 	START_PROCESSING(SSobj, src)
 	impact_area = get_area(src)
@@ -322,7 +322,7 @@
 	var/datum/action/innate/slime/reproduce/A = new
 	A.Grant(S)
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a pyroclastic anomaly slime?", ROLE_SENTIENCE, null, 100, S, POLL_IGNORE_PYROSLIME)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a pyroclastic anomaly slime?", ROLE_SENTIENCE, null, 10 SECONDS, S, POLL_IGNORE_PYROSLIME)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/chosen = pick(candidates)
 		S.key = chosen.key

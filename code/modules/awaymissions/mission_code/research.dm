@@ -3,7 +3,7 @@
 /area/awaymission/research
 	name = "Research Outpost"
 	icon_state = "away"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	static_lighting = TRUE
 
 /area/awaymission/research/interior
 	name = "Research Inside"

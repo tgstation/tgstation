@@ -23,7 +23,7 @@
 	name = "remove damaged liver section"
 	implements = list(
 		TOOL_SCALPEL = 95,
-		/obj/item/melee/transforming/energy/sword = 65,
+		/obj/item/melee/energy/sword = 65,
 		/obj/item/kitchen/knife = 45,
 		/obj/item/shard = 35)
 	time = 52
@@ -32,6 +32,7 @@
 	display_results(user, target, span_notice("You begin to cut out a damaged piece of [target]'s liver..."),
 		span_notice("[user] begins to make an incision in [target]."),
 		span_notice("[user] begins to make an incision in [target]."))
+	display_pain(target, "Your abdomen burns in horrific stabbing pain!")
 
 /datum/surgery_step/hepatectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/mob/living/carbon/human/human_target = target
@@ -39,6 +40,7 @@
 	display_results(user, target, span_notice("You successfully remove the damaged part of [target]'s liver."),
 		span_notice("[user] successfully removes the damaged part of [target]'s liver."),
 		span_notice("[user] successfully removes the damaged part of [target]'s liver."))
+	display_pain(target, "The pain receeds slightly.")
 	return ..()
 
 /datum/surgery_step/hepatectomy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery)
@@ -47,3 +49,4 @@
 	display_results(user, target, span_warning("You cut the wrong part of [target]'s liver!"),
 		span_warning("[user] cuts the wrong part of [target]'s liver!"),
 		span_warning("[user] cuts the wrong part of [target]'s liver!"))
+	display_pain(target, "You feel a sharp stab inside your abdomen!")

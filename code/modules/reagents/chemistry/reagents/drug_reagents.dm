@@ -676,8 +676,11 @@
 		return
 	if(HAS_TRAIT(invisible_man, TRAIT_NOMETABOLISM))
 		return
+	if(invisible_man.has_status_effect(STATUS_EFFECT_STASIS))
+		return
 
 	ADD_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN, name)
+	ADD_TRAIT(invisible_man, TRAIT_HIDE_EXTERNAL_ORGANS, name)
 
 	var/datum/dna/druggy_dna = invisible_man.has_dna()
 	if(druggy_dna?.species)
@@ -693,6 +696,7 @@
 	if(HAS_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN))
 		invisible_man.add_to_all_human_data_huds() //Is this safe, what do you think, Floyd?
 		REMOVE_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN, name)
+		REMOVE_TRAIT(invisible_man, TRAIT_HIDE_EXTERNAL_ORGANS, name)
 		to_chat(invisible_man, span_notice("As you sober up, opacity once again returns to your body meats."))
 
 		var/datum/dna/druggy_dna = invisible_man.has_dna()

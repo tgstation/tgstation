@@ -40,7 +40,7 @@
 /obj/machinery/deployable_turret/Destroy()
 	target = null
 	target_turf = null
-	..()
+	return ..()
 
 /// Undeploying, for when you want to move your big dakka around
 /obj/machinery/deployable_turret/wrench_act(mob/living/user, obj/item/wrench/used_wrench)
@@ -232,12 +232,12 @@
 
 /obj/item/gun_control/Destroy()
 	turret = null
-	..()
+	return ..()
 
 /obj/item/gun_control/CanItemAutoclick()
 	return TRUE
 
-/obj/item/gun_control/attack_obj(obj/O, mob/living/user, params)
+/obj/item/gun_control/attack_atom(obj/O, mob/living/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	O.attacked_by(src, user)
 

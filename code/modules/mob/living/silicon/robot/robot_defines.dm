@@ -131,9 +131,8 @@
 
 	/// the last health before updating - to check net change in health
 	var/previous_health
-	///Alarm listener datum, handes caring about alarm events and such
-	var/datum/alarm_listener/listener
-
+	/// Station alert datum for showing alerts UI
+	var/datum/station_alert/alert_control
 
 /***************************************************************************************
  *                          Defining specific kinds of robots

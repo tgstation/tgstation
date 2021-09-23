@@ -233,25 +233,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			new /obj/item/nullrod/claymore(get_turf(sword))
 			user.visible_message(span_notice("[user] purifies [sword]!"))
 			qdel(sword)
-	else if(istype(bible_smacked, /obj/item/soulstone) && !IS_CULTIST(user))
-		var/obj/item/soulstone/SS = bible_smacked
-		if(SS.theme == THEME_HOLY)
-			return
-		to_chat(user, span_notice("You begin to exorcise [SS]."))
-		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
-		if(do_after(user, 40, target = SS))
-			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
-			SS.required_role = null
-			SS.theme = THEME_HOLY
-			SS.icon_state = "purified_soulstone"
-			for(var/mob/M in SS.contents)
-				if(M.mind)
-					SS.icon_state = "purified_soulstone2"
-					M.mind?.remove_antag_datum(/datum/antagonist/cult)
-			for(var/mob/living/simple_animal/shade/EX in SS)
-				EX.icon_state = "ghost1"
-				EX.name = "Purified [initial(EX.name)]"
-			user.visible_message(span_notice("[user] purifies [SS]!"))
 
 /obj/item/storage/book/bible/booze
 	desc = "To be applied to the head repeatedly."

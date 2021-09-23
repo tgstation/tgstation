@@ -21,6 +21,8 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 
+
+
 /datum/component/rot/Initialize(delay, scaling, severity)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -37,7 +39,7 @@
 	RegisterSignal(parent, list(COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_ATOM_ATTACK_HAND), .proc/rot_react_touch)
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/rot_hit_react)
 	if(ismovable(parent))
-		AddElement(/datum/element/connect_loc_behalf, parent, loc_connections)
+		AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/rot_react)
 	if(isliving(parent))
 		RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/react_to_revive) //mobs stop this when they come to life
@@ -60,7 +62,7 @@
 /datum/component/rot/UnregisterFromParent()
 	. = ..()
 	if(ismovable(parent))
-		RemoveElement(/datum/element/connect_loc_behalf, parent, loc_connections)
+		qdel(GetComponent(/datum/component/connect_loc_behalf))
 
 ///One of two procs that modifies blockers, this one handles removing a blocker and potentially restarting the rot
 /datum/component/rot/proc/start_up(blocker_type)

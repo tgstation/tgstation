@@ -429,30 +429,6 @@
 	desc +=  span_notice("The writing reads '[random_reagent.name]'.")
 	update_appearance()
 
-/obj/item/reagent_containers/food/drinks/beer
-	name = "space beer"
-	desc = "Beer. In space."
-	icon_state = "beer"
-	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
-	foodtype = GRAIN | ALCOHOL
-	custom_price = PAYCHECK_EASY
-
-/obj/item/reagent_containers/food/drinks/beer/almost_empty
-	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 1)
-
-/obj/item/reagent_containers/food/drinks/beer/light
-	name = "Carp Lite"
-	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."
-	list_reagents = list(/datum/reagent/consumable/ethanol/beer/light = 30)
-
-/obj/item/reagent_containers/food/drinks/ale
-	name = "Magm-Ale"
-	desc = "A true dorf's drink of choice."
-	icon_state = "alebottle"
-	inhand_icon_state = "beer"
-	list_reagents = list(/datum/reagent/consumable/ethanol/ale = 30)
-	foodtype = GRAIN | ALCOHOL
-	custom_price = PAYCHECK_EASY
 
 /obj/item/reagent_containers/food/drinks/sillycup
 	name = "paper cup"

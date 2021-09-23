@@ -26,7 +26,7 @@
 	species = "steelcap"
 	plantname = "Steel Caps"
 	product = /obj/item/grown/log/steel
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/cellulose = 0.05, /datum/reagent/iron = 0.05)
 	rarity = 20
 
@@ -112,7 +112,7 @@
 
 /obj/structure/punji_sticks/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_BYPASS_SHOES)
+	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_BYPASS_SHOES)
 
 /obj/structure/punji_sticks/spikes
 	name = "wooden spikes"

@@ -14,20 +14,19 @@
  */
 /datum/proc/ntnet_send(packet_data, target_id = null, passkey = null)
 	var/datum/netdata/data = packet_data
-	if(!data) // check for easy case
-		if(!islist(packet_data) || target_id == null)
+	if(!istype(data)) // construct netdata from list()
+		if(!islist(packet_data))
 			stack_trace("ntnet_send: Bad packet creation") // hard fail as its runtime fault
 			return
 		data = new(packet_data)
 		data.receiver_id = target_id
 		data.passkey = passkey
-	if(data.receiver_id == null)
-		return NETWORK_ERROR_BAD_TARGET_ID
 	var/datum/component/ntnet_interface/NIC = GetComponent(/datum/component/ntnet_interface)
 	if(!NIC)
 		return NETWORK_ERROR_NOT_ON_NETWORK
 	data.sender_id = NIC.hardware_id
 	data.network_id = NIC.network.network_id
+	data.receiver_id ||= data.network_id
 	return SSnetworks.transmit(data)
 
 /*

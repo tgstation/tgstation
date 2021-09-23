@@ -237,9 +237,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/robot/Initialize()
 	var/obj/item/robot_model/kiltkit = loc
 	robot = kiltkit.loc
+	. = ..()
 	if(!istype(robot))
-		qdel(src)
-	return ..()
+		return INITIALIZE_HINT_QDEL
 
 /obj/item/claymore/highlander/robot/process()
 	loc.layer = LARGE_MOB_LAYER
@@ -300,7 +300,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		to_chat(user, span_notice("You fasten the glass shard to the top of the rod with the cable."))
 
 	else if(istype(I, /obj/item/assembly/igniter) && !(HAS_TRAIT(I, TRAIT_NODROP)))
-		var/obj/item/melee/baton/cattleprod/P = new /obj/item/melee/baton/cattleprod
+		var/obj/item/melee/baton/security/cattleprod/prod = new
 
 		remove_item_from_storage(user)
 
@@ -309,7 +309,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		qdel(I)
 		qdel(src)
 
-		user.put_in_hands(P)
+		user.put_in_hands(prod)
 	else
 		return ..()
 
@@ -364,48 +364,30 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
 	resistance_flags = FIRE_PROOF
-	var/extended = FALSE
+	/// Whether the switchblade starts extended or not.
+	var/start_extended = FALSE
 
 /obj/item/switchblade/Initialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	AddComponent(/datum/component/butchering, 7 SECONDS, 100)
-	set_extended(extended)
-
-/obj/item/switchblade/attack_self(mob/user)
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
-	set_extended(!extended)
-
-/obj/item/switchblade/update_icon_state()
-	icon_state = "[base_icon_state][extended ? "_ext" : ""]"
-	return ..()
-
-/obj/item/switchblade/proc/set_extended(new_extended)
-	extended = new_extended
-	update_icon_state()
-	if(extended)
-		force = 20
-		w_class = WEIGHT_CLASS_NORMAL
-		throwforce = 23
-		attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-		attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-		hitsound = 'sound/weapons/bladeslice.ogg'
-		sharpness = SHARP_EDGED
-	else
-		force = 3
-		w_class = WEIGHT_CLASS_SMALL
-		throwforce = 5
-		attack_verb_continuous = list("stubs", "pokes")
-		attack_verb_simple = list("stub", "poke")
-		hitsound = 'sound/weapons/genhit.ogg'
-		sharpness = NONE
+	AddComponent(/datum/component/transforming, \
+		start_transformed = start_extended, \
+		force_on = 20, \
+		throwforce_on = 23, \
+		throw_speed_on = throw_speed, \
+		sharpness_on = SHARP_EDGED, \
+		hitsound_on = 'sound/weapons/bladeslice.ogg', \
+		w_class_on = WEIGHT_CLASS_NORMAL, \
+		attack_verb_continuous_on = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
+		attack_verb_simple_on = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"))
 
 /obj/item/switchblade/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS)
 
 /obj/item/switchblade/extended
-	extended = TRUE
+	start_extended = TRUE
 
 /obj/item/phone
 	name = "red phone"
@@ -736,9 +718,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	strong_against = typecacheof(list(
 					/mob/living/simple_animal/hostile/bee/,
 					/mob/living/simple_animal/butterfly,
-					/mob/living/simple_animal/hostile/cockroach,
+					/mob/living/basic/cockroach,
 					/obj/item/queen_bee,
-					/obj/structure/spider/spiderling
+					/obj/structure/spider/spiderling,
+					/mob/living/simple_animal/ant,
+					/obj/effect/decal/cleanable/ants
 	))
 
 

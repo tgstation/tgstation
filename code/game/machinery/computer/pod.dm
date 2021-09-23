@@ -143,11 +143,11 @@
 	icon_keyboard = null
 	density = FALSE
 
-/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver
-	id = MASSDRIVER_TOXINS
+/obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver
+	id = MASSDRIVER_ORDNANCE
 
 //for maps where pod doors are outside of the standard 4 tile controller detection range (ie Pubbystation)
-/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver/longrange
+/obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver/longrange
 	range = 6
 
 /obj/machinery/computer/pod/old/mass_driver_controller/chapelgun

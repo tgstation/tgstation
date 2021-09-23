@@ -8,7 +8,7 @@ import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from 'common/keycodes';
 import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { createLogger } from '../logging';
-import { Box } from './Box';
+import { Box, computeBoxClassName, computeBoxProps } from './Box';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
 
@@ -46,10 +46,17 @@ export const Button = props => {
       + `'onClick' instead and read: `
       + `https://infernojs.org/docs/guides/event-handling`);
   }
-  // IE8: Use a lowercase "onclick" because synthetic events are fucked.
-  // IE8: Use an "unselectable" prop because "user-select" doesn't work.
+  rest.onClick = e => {
+    if (!disabled && onClick) {
+      onClick(e);
+    }
+  };
+  // IE8: Use "unselectable" because "user-select" doesn't work.
+  if (Byond.IS_LTE_IE8) {
+    rest.unselectable = true;
+  }
   let buttonContent = (
-    <Box
+    <div
       className={classes([
         'Button',
         fluid && 'Button--fluid',
@@ -64,15 +71,13 @@ export const Button = props => {
           ? 'Button--color--' + color
           : 'Button--color--default',
         className,
+        computeBoxClassName(rest),
       ])}
       tabIndex={!disabled && '0'}
-      unselectable={Byond.IS_LTE_IE8}
-      onClick={e => {
-        if (!disabled && onClick) {
-          onClick(e);
-        }
-      }}
       onKeyDown={e => {
+        if (props.captureKeys === false) {
+          return;
+        }
         const keyCode = window.event ? e.which : e.keyCode;
         // Simulate a click when pressing space or enter.
         if (keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
@@ -88,7 +93,7 @@ export const Button = props => {
           return;
         }
       }}
-      {...rest}>
+      {...computeBoxProps(rest)}>
       {(icon && iconPosition !== 'right') && (
         <Icon
           name={icon}
@@ -105,7 +110,7 @@ export const Button = props => {
           rotation={iconRotation}
           spin={iconSpin} />
       )}
-    </Box>
+    </div>
   );
 
   if (tooltip) {

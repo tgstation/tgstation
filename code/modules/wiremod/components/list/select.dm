@@ -35,18 +35,15 @@
 	)
 	comparison_options = add_option_port("Comparison Options", component_options)
 
-/obj/item/circuit_component/select/Initialize()
-	. = ..()
+/obj/item/circuit_component/select/populate_ports()
 	received_table = add_input_port("Input", PORT_TYPE_TABLE)
 	column_name = add_input_port("Column Name", PORT_TYPE_STRING)
 	comparison_input = add_input_port("Comparison Input", PORT_TYPE_ANY)
 
 	filtered_table = add_output_port("Output", PORT_TYPE_TABLE)
 
-/obj/item/circuit_component/select/input_received(datum/port/input/port)
-	. = ..()
+/obj/item/circuit_component/select/pre_input_received(datum/port/input/port)
 	var/current_option = comparison_options.value
-
 	switch(current_option)
 		if(COMP_COMPARISON_EQUAL, COMP_COMPARISON_NOT_EQUAL)
 			if(current_type != PORT_TYPE_ANY)
@@ -57,9 +54,9 @@
 				current_type = PORT_TYPE_NUMBER
 				comparison_input.set_datatype(PORT_TYPE_NUMBER)
 
-	if(.)
-		return
 
+/obj/item/circuit_component/select/input_received(datum/port/input/port)
+	var/current_option = comparison_options.value
 	var/list/input_list = received_table.value
 	if(!islist(input_list) || isnum(column_name.value))
 		return

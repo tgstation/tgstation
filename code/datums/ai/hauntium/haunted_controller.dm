@@ -5,6 +5,7 @@
 	BB_HAUNT_TARGET,
 	BB_HAUNTED_THROW_ATTEMPT_COUNT)
 	planning_subtrees = list(/datum/ai_planning_subtree/haunted)
+	idle_behavior = /datum/idle_behavior/idle_ghost_item
 
 /datum/ai_controller/haunted/TryPossessPawn(atom/new_pawn)
 	if(!isitem(new_pawn))
@@ -15,14 +16,6 @@
 /datum/ai_controller/haunted/UnpossessPawn()
 	UnregisterSignal(pawn, COMSIG_ITEM_EQUIPPED)
 	return ..() //Run parent at end
-
-/datum/ai_controller/haunted/PerformIdleBehavior(delta_time)
-	var/obj/item/item_pawn = pawn
-	if(ismob(item_pawn.loc)) //Being held. dont teleport
-		return
-	if(DT_PROB(HAUNTED_ITEM_TELEPORT_CHANCE, delta_time))
-		playsound(item_pawn.loc, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
-		do_teleport(pawn, get_turf(pawn), 4, channel = TELEPORT_CHANNEL_MAGIC)
 
 ///Signal response for when the item is picked up; stops listening for follow up equips, just waits for a drop.
 /datum/ai_controller/haunted/proc/on_equip(datum/source, mob/equipper, slot)

@@ -819,7 +819,7 @@
 	add_overlay(standing)
 
 //Gives you a proper icon appearance for the dismembered limb
-/obj/item/bodypart/proc/get_limb_icon(dropped)
+/obj/item/bodypart/proc/get_limb_icon(dropped, draw_external_organs)
 	icon_state = "" //to erase the default sprite, we're building the visual aspects of the bodypart through overlays alone.
 
 	. = list()
@@ -849,9 +849,8 @@
 			limb.icon_state = "[animal_origin]_[body_zone]"
 
 		if(blocks_emissive)
-			var/mutable_appearance/limb_em_block = mutable_appearance(limb.icon, limb.icon_state, plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, alpha = limb.alpha)
 			limb_em_block.dir = image_dir
-			limb_em_block.color = GLOB.em_block_color
 			limb.overlays += limb_em_block
 		return
 
@@ -865,9 +864,8 @@
 		limb.icon_state = "[body_zone]" //Inorganic limbs are agender
 
 		if(blocks_emissive)
-			var/mutable_appearance/limb_em_block = mutable_appearance(limb.icon, limb.icon_state, plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, alpha = limb.alpha)
 			limb_em_block.dir = image_dir
-			limb_em_block.color = GLOB.em_block_color
 			limb.overlays += limb_em_block
 
 		if(aux_zone)
@@ -875,9 +873,8 @@
 			. += aux
 
 			if(blocks_emissive)
-				var/mutable_appearance/aux_em_block = mutable_appearance(aux.icon, aux.icon_state, plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+				var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, alpha = aux.alpha)
 				aux_em_block.dir = image_dir
-				aux_em_block.color = GLOB.em_block_color
 				aux.overlays += aux_em_block
 
 		return
@@ -910,16 +907,17 @@
 				aux.color = "#[draw_color]"
 
 	if(blocks_emissive)
-		var/mutable_appearance/limb_em_block = mutable_appearance(limb.icon, limb.icon_state, plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+		var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, alpha = limb.alpha)
 		limb_em_block.dir = image_dir
-		limb_em_block.color = GLOB.em_block_color
 		limb.overlays += limb_em_block
 
 		if(aux_zone)
-			var/mutable_appearance/aux_em_block = mutable_appearance(aux.icon, aux.icon_state, plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+			var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, alpha = aux.alpha)
 			aux_em_block.dir = image_dir
-			aux_em_block.color = GLOB.em_block_color
 			aux.overlays += aux_em_block
+
+	if(!draw_external_organs)
+		return
 
 	//Draw external organs like horns and frills
 	for(var/obj/item/organ/external/external_organ in external_organs)
@@ -959,7 +957,7 @@
 		dam_mul *= iter_wound.damage_mulitplier_penalty
 
 	if(!LAZYLEN(wounds) && current_gauze && !replaced) // no more wounds = no need for the gauze anymore
-		owner.visible_message(span_notice("\The [current_gauze] on [owner]'s [name] falls away."), span_notice("The [current_gauze] on your [name] falls away."))
+		owner.visible_message(span_notice("\The [current_gauze.name] on [owner]'s [name] falls away."), span_notice("The [current_gauze.name] on your [name] falls away."))
 		QDEL_NULL(current_gauze)
 
 	wound_damage_multiplier = dam_mul
@@ -1031,7 +1029,7 @@
 		return
 	current_gauze.absorption_capacity -= seep_amt
 	if(current_gauze.absorption_capacity <= 0)
-		owner.visible_message(span_danger("\The [current_gauze] on [owner]'s [name] falls away in rags."), span_warning("\The [current_gauze] on your [name] falls away in rags."), vision_distance=COMBAT_MESSAGE_RANGE)
+		owner.visible_message(span_danger("\The [current_gauze.name] on [owner]'s [name] falls away in rags."), span_warning("\The [current_gauze.name] on your [name] falls away in rags."), vision_distance=COMBAT_MESSAGE_RANGE)
 		QDEL_NULL(current_gauze)
 		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZE_DESTROYED)
 

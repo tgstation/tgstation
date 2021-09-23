@@ -305,10 +305,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /obj/machinery/doomsday_device/Initialize()
 	. = ..()
-	owner = loc
-	if(!istype(owner))
+	if(!isAI(loc))
 		stack_trace("Doomsday created outside an AI somehow, shit's fucking broke. Anyway, we're just gonna qdel now. Go make a github issue report.")
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
+	owner = loc
 	countdown = new(src)
 
 /obj/machinery/doomsday_device/Destroy()
@@ -318,7 +318,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	SSshuttle.clearHostileEnvironment(src)
 	SSmapping.remove_nuke_threat(src)
 	set_security_level("red")
-	for(var/mob/living/silicon/robot/borg in owner.connected_robots)
+	for(var/mob/living/silicon/robot/borg in owner?.connected_robots)
 		borg.lamp_doom = FALSE
 		borg.toggle_headlamp(FALSE, TRUE) //forces borg lamp to update
 	owner?.doomsday_device = null

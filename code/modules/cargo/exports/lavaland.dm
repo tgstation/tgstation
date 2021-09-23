@@ -42,7 +42,7 @@
 	cost = CARGO_CRATE_VALUE * 80
 	unit_name = "major lava planet artifact"
 	export_types = list(/obj/item/hierophant_club,
-						/obj/item/melee/transforming/cleaving_saw,
+						/obj/item/melee/cleaving_saw,
 						/obj/item/organ/vocal_cords/colossus,
 						/obj/machinery/anomalous_crystal,
 						/obj/item/mayhem,

@@ -47,11 +47,11 @@
 
 /obj/item/assembly/mousetrap/on_attach()
 	. = ..()
-	AddElement(/datum/element/connect_loc_behalf, holder, holder_connections)
+	AddComponent(/datum/component/connect_loc_behalf, holder, holder_connections)
 
 /obj/item/assembly/mousetrap/on_detach()
 	. = ..()
-	RemoveElement(/datum/element/connect_loc_behalf, holder, holder_connections)
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
 
 /obj/item/assembly/mousetrap/proc/triggered(mob/target, type = "feet")
 	if(!armed)

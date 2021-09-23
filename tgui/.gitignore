@@ -16,6 +16,7 @@ package-lock.json
 /public/.tmp/**/*
 /public/**/*
 !/public/*.html
+/coverage
 
 ## Previously ignored locations that are kept to avoid confusing git
 ## while transitioning to a new project structure.

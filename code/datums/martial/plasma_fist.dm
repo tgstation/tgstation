@@ -108,7 +108,7 @@
 
 	addtimer(CALLBACK(src,.proc/Apotheosis_end, user), 6 SECONDS)
 	playsound(boomspot, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
-	explosion(user, devastation_range = plasma_power, heavy_impact_range = plasma_power*2, light_impact_range = plasma_power*4, ignorecap = TRUE)
+	explosion(user, devastation_range = plasma_power, heavy_impact_range = plasma_power*2, light_impact_range = plasma_power*4, ignorecap = TRUE, explosion_cause = src)
 	plasma_power = 1 //just in case there is any clever way to cause it to happen again
 
 /datum/martial_art/plasma_fist/proc/Apotheosis_end(mob/living/dying)

@@ -68,7 +68,7 @@
 
 /obj/structure/closet/crate/secure/freezer/pizza/PopulateContents()
 	. = ..()
-	new /obj/effect/spawner/lootdrop/pizzaparty(src)
+	new /obj/effect/spawner/random/food_or_drink/pizzaparty(src)
 
 /obj/structure/closet/crate/secure/engineering
 	desc = "A crate with a lock on it, painted in the scheme of the station's engineers."

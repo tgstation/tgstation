@@ -59,7 +59,7 @@
 
 ///Returns the status of the mech.
 /obj/vehicle/sealed/mecha/proc/get_stats_part(mob/user)
-	var/integrity = obj_integrity/max_integrity*100
+	var/integrity = atom_integrity/max_integrity*100
 	var/cell_charge = get_charge()
 	var/datum/gas_mixture/int_tank_air = 0
 	var/tank_pressure = 0

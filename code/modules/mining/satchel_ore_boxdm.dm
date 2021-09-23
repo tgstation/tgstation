@@ -98,5 +98,6 @@
 	dump_box_contents()
 	qdel(src)
 
-/obj/structure/ore_box/onTransitZ()
-	return
+/// Special override for notify_contents = FALSE.
+/obj/structure/ore_box/on_changed_z_level(turf/old_turf, turf/new_turf, notify_contents = FALSE)
+	return ..()

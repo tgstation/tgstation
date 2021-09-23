@@ -12,6 +12,8 @@
 /mob/living/proc/Life(delta_time = SSMOBS_DT, times_fired)
 	set waitfor = FALSE
 
+	SEND_SIGNAL(src, COMSIG_LIVING_LIFE, delta_time, times_fired)
+
 	if (client)
 		var/turf/T = get_turf(src)
 		if(!T)
@@ -78,6 +80,7 @@
 		return 1
 
 /mob/living/proc/handle_breathing(delta_time, times_fired)
+	SEND_SIGNAL(src, COMSIG_LIVING_HANDLE_BREATHING, delta_time, times_fired)
 	return
 
 /mob/living/proc/handle_mutations_and_radiation(delta_time, times_fired)

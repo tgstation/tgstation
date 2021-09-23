@@ -277,7 +277,7 @@
 		if(dust_mob.stat == DEAD)
 			dust_mob.dust()
 		return
-	if(!explode_hit_objects)
+	if(!explode_hit_objects || istype(target, /obj/vehicle/sealed))
 		return
 	if(isturf(target) || isobj(target))
 		if(isobj(target))
@@ -525,7 +525,7 @@
 
 /obj/machinery/anomalous_crystal/helpers/ActivationReaction(mob/user, method)
 	if(..() && !ready_to_deploy)
-		AddElement(/datum/element/point_of_interest)
+		SSpoints_of_interest.make_point_of_interest(src)
 		ready_to_deploy = TRUE
 		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", enter_link = "<a href=?src=[REF(src)];ghostjoin=1>(Click to enter)</a>", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_ATTACK, header = "Anomalous crystal activated")
 
@@ -628,7 +628,7 @@
 				mobcheck = TRUE
 				break
 			if(!mobcheck)
-				new /mob/living/simple_animal/hostile/cockroach(get_step(src,dir)) //Just in case there aren't any animals on the station, this will leave you with a terrible option to possess if you feel like it //i found it funny that in the file for a giant angel beast theres a cockroach
+				new /mob/living/basic/cockroach(get_step(src,dir)) //Just in case there aren't any animals on the station, this will leave you with a terrible option to possess if you feel like it //i found it funny that in the file for a giant angel beast theres a cockroach
 
 /obj/structure/closet/stasis
 	name = "quantum entanglement stasis warp field"

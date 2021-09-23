@@ -10,7 +10,7 @@
 	gender = NEUTER
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("blorbles")
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	hud_type = /datum/hud/ooze
 	minbodytemp = 250
 	maxbodytemp = INFINITY
@@ -109,7 +109,7 @@
 ///Its good stats and high mobility makes this a good assasin type creature. It's vulnerabilites against cold, shotguns and
 /mob/living/simple_animal/hostile/ooze/gelatinous
 	name = "Gelatinous Cube"
-	desc = "A cubic ooze native to Sholus VII.\nSince the advent of space travel this species has established itself in the waste treatment facilities of several space colonies.\nIt is often considered to be the third most infamous invasive species due to its highly agressive and predatory nature."
+	desc = "A cubic ooze native to Sholus VII.\nSince the advent of space travel this species has established itself in the waste treatment facilities of several space colonies.\nIt is often considered to be the third most infamous invasive species due to its highly aggressive and predatory nature."
 	speed = 1
 	damage_coeff = list(BRUTE = 1, BURN = 0.6, TOX = 0.5, CLONE = 1.5, STAMINA = 0, OXY = 1)
 	melee_damage_lower = 20

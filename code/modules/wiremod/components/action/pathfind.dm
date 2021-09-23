@@ -33,11 +33,10 @@
 	. += create_ui_notice("Pathfinding Cooldown: [DisplayTimeText(different_path_cooldown)]", "orange", "stopwatch")
 	. += create_ui_notice("Maximum Range: [max_range] tiles", "orange", "info")
 
-/obj/item/circuit_component/pathfind/Initialize()
-	. = ..()
-	input_X = add_input_port("Target X", PORT_TYPE_NUMBER, FALSE)
-	input_Y = add_input_port("Target Y", PORT_TYPE_NUMBER, FALSE)
-	id_card = add_input_port("ID Card", PORT_TYPE_ATOM, FALSE)
+/obj/item/circuit_component/pathfind/populate_ports()
+	input_X = add_input_port("Target X", PORT_TYPE_NUMBER, trigger = null)
+	input_Y = add_input_port("Target Y", PORT_TYPE_NUMBER, trigger = null)
+	id_card = add_input_port("ID Card", PORT_TYPE_ATOM, trigger = null)
 
 	output = add_output_port("Next step", PORT_TYPE_ATOM)
 	finished = add_output_port("Arrived to destination", PORT_TYPE_SIGNAL)
@@ -45,10 +44,9 @@
 	reason_failed = add_output_port("Fail reason", PORT_TYPE_STRING)
 
 /obj/item/circuit_component/pathfind/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
+	INVOKE_ASYNC(src, .proc/perform_pathfinding, port)
 
+/obj/item/circuit_component/pathfind/proc/perform_pathfinding(datum/port/input/port)
 	var/target_X = input_X.value
 	if(isnull(target_X))
 		return
@@ -110,4 +108,3 @@
 			next_turf = get_turf(path[1])
 			output.set_output(next_turf)
 		TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME, same_path_cooldown)
-

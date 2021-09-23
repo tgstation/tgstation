@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/clothing/suit/toggle/labcoat = 1,
 		/obj/item/clothing/under/color/grey = 1,
 		/obj/item/clothing/gloves/color/fyellow = 1,
-		/obj/effect/spawner/lootdrop/gloves = 1,
+		/obj/effect/spawner/random/clothing/gloves = 1,
 		/obj/item/storage/wallet/random = 1,
 		/obj/item/clothing/glasses/science = 1,
 		/obj/item/clothing/glasses/meson = 1,
@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		) = 1,
 
 	list(//food
-		/obj/item/reagent_containers/food/drinks/beer = 1,
+		/obj/item/reagent_containers/food/drinks/bottle/beer = 1,
 		/obj/item/reagent_containers/food/drinks/coffee = 1,
 		) = 1,
 
@@ -151,7 +151,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 
 		//light sources
 		/obj/item/flashlight = 1,
-		/obj/effect/spawner/lootdrop/glowstick = 1,
+		/obj/effect/spawner/random/decoration/glowstick = 1,
 		/obj/item/clothing/head/hardhat/red = 1,
 		/obj/item/flashlight/flare = 1,
 		) = 1,
@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/restraints/handcuffs/cable = 1,
 		/obj/item/spear = 1,
 		/obj/item/grenade/iedcasing/spawned = 1,
-		/obj/item/melee/baton/cattleprod = 1,
+		/obj/item/melee/baton/security/cattleprod = 1,
 		/obj/item/pen/fountain = 1,
 		) = 8,
 
@@ -200,6 +200,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/plaque = 1,
 		/obj/item/storage/box/clown = 1,
 		/obj/item/seeds/kronkus = 1,
+		/obj/item/seeds/odious_puffball = 1,
 		) = 8,
 
 	list(//medical and chemicals
@@ -270,7 +271,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/kitchen/knife = 1,
 		/obj/item/restraints/handcuffs = 1,
 		/obj/item/shield/riot/buckler = 1,
-		/obj/item/melee/baton/cattleprod/teleprod = 1,
+		/obj/item/melee/baton/security/cattleprod/teleprod = 1,
 		/obj/item/throwing_star = 1,
 		/obj/item/pen/survival = 1,
 		/obj/item/flashlight/flashdark = 1,
@@ -317,6 +318,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/disk/nuclear/fake = 1,
 		/obj/item/book/granter/crafting_recipe/pipegun_prime = 1,
 		/obj/item/book/granter/crafting_recipe/trash_cannon = 1,
+		/obj/item/tattoo_kit = 1,
 		) = 1,
 
 ))

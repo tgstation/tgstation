@@ -425,7 +425,7 @@
 
 /datum/chemical_reaction/drink/arnold_palmer
 	results = list(/datum/reagent/consumable/tea/arnold_palmer = 2)
-	required_reagents = list(/datum/reagent/consumable/tea = 1, /datum/reagent/consumable/lemonade = 1)
+	required_reagents = list(/datum/reagent/consumable/icetea = 1, /datum/reagent/consumable/lemonade = 1)
 	mix_message = "The smells of fresh green grass and sand traps waft through the air as the mixture turns a friendly yellow-orange."
 
 /datum/chemical_reaction/drink/chocolate_milk
@@ -685,3 +685,8 @@
 	results = list(/datum/reagent/consumable/ethanol/triumphal_arch = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/mushi_kombucha = 5, /datum/reagent/consumable/ethanol/grappa = 2, /datum/reagent/consumable/lemonjuice = 2, /datum/reagent/gold = 1)
 	mix_message = "The mixture turns a deep golden hue."
+
+/datum/chemical_reaction/drink/the_juice
+	results = list(/datum/reagent/consumable/ethanol/the_juice = 5)
+	required_reagents = list(/datum/reagent/consumable/mushroom_tea = 1, /datum/reagent/bluespace = 1, /datum/reagent/toxin/mindbreaker = 1, /datum/reagent/consumable/ethanol/neurotoxin = 1, /datum/reagent/medicine/morphine = 1)
+	mix_message = "The liquids all swirl together into a deep purple."

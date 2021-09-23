@@ -259,8 +259,13 @@
 					door.req_access = electronics.accesses
 				if(created_name)
 					door.name = created_name
+				else if(electronics.passed_name)
+					door.name = sanitize(electronics.passed_name)
 				else
 					door.name = base_name
+				if(electronics.passed_cycle_id)
+					door.closeOtherId = electronics.passed_cycle_id
+					door.update_other_id()
 				door.previous_airlock = previous_assembly
 				electronics.forceMove(door)
 				door.update_appearance()

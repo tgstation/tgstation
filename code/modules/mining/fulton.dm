@@ -170,7 +170,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/structure/extraction_point/Destroy()
 	GLOB.total_extraction_beacons -= src
-	..()
+	return ..()
 
 /obj/effect/extraction_holder
 	name = "extraction holder"

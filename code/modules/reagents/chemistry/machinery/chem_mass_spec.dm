@@ -7,7 +7,7 @@
 	desc = {"This machine can separate reagents based on charge, meaning it can clean reagents of some of their impurities, unlike the Chem Master 3000.
 By selecting a range in the mass spectrograph certain reagents will be transferred from one beaker to another, which will clean it of any impurities up to a certain amount.
 This will not clean any inverted reagents. Inverted reagents will still be correctly detected and displayed on the scanner, however.
-\nLeft click with a beaker to add it to the input slot, Right click with a beaker to add it to the output slot. Alt + left/right click can let you quickly remove the corrisponding beaker too."}
+\nLeft click with a beaker to add it to the input slot, Right click with a beaker to add it to the output slot. Alt + left/right click can let you quickly remove the corresponding beaker."}
 	density = TRUE
 	layer = BELOW_OBJ_LAYER
 	icon = 'icons/obj/chemical.dmi'
@@ -16,6 +16,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	circuit = /obj/item/circuitboard/machine/chem_mass_spec
 	///If we're processing reagents or not
 	var/processing_reagents = FALSE
 	///Time we started processing + the delay
@@ -32,24 +33,53 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	var/obj/item/reagent_containers/beaker1
 	///Output reagents container
 	var/obj/item/reagent_containers/beaker2
+	///multiplies the final time needed to process the chems depending on the laser stock part
+	var/cms_coefficient = 1
 
-/obj/machinery/chem_mass_spec/Initialize()
+/obj/machinery/chem_mass_spec/Initialize(mapload)
 	. = ..()
-	beaker2 = new /obj/item/reagent_containers/glass/beaker/large(src)
 	ADD_TRAIT(src, DO_NOT_SPLASH, src.type)
+	if(mapload)
+		beaker2 = new /obj/item/reagent_containers/glass/beaker/large(src)
 
 /obj/machinery/chem_mass_spec/Destroy()
 	QDEL_NULL(beaker1)
 	QDEL_NULL(beaker2)
 	return ..()
 
+/obj/machinery/chem_mass_spec/RefreshParts()
+	cms_coefficient = 1
+	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
+		cms_coefficient /= laser.rating
+
+/obj/machinery/chem_mass_spec/deconstruct(disassembled)
+	if(beaker1)
+		beaker1.forceMove(drop_location())
+		beaker1 = null
+	if(beaker2)
+		beaker2.forceMove(drop_location())
+		beaker2 = null
+	. = ..()
+
+/obj/machinery/chem_mass_spec/update_overlays()
+	. = ..()
+	if(panel_open)
+		. += mutable_appearance(icon, "[base_icon_state]_panel-o")
+
 /*			beaker swapping/attack code			*/
 
-///Adds beaker 1
 /obj/machinery/chem_mass_spec/attackby(obj/item/item, mob/user, params)
 	if(processing_reagents)
 		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
 		return ..()
+
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, item))
+		update_appearance()
+		return
+
+	if(default_unfasten_wrench(user, item))
+		return
+
 	if(istype(item, /obj/item/reagent_containers) && !(item.item_flags & ABSTRACT) && item.is_open_container())
 		var/obj/item/reagent_containers/beaker = item
 		. = TRUE //no afterattack
@@ -57,15 +87,21 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 			return
 		replace_beaker(user, BEAKER1, beaker)
 		to_chat(user, span_notice("You add [beaker] to [src]."))
+		update_appearance()
 		updateUsrDialog()
-	update_appearance()
+		return
 	..()
 
-///Adds beaker 2
 /obj/machinery/chem_mass_spec/attackby_secondary(obj/item/item, mob/user, params)
+	. = ..()
+
 	if(processing_reagents)
 		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
 		return
+
+	if(default_deconstruction_crowbar(item))
+		return
+
 	if(istype(item, /obj/item/reagent_containers) && !(item.item_flags & ABSTRACT) && item.is_open_container())
 		var/obj/item/reagent_containers/beaker = item
 		if(!user.transferItemToLoc(beaker, src))
@@ -73,8 +109,9 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		replace_beaker(user, BEAKER2, beaker)
 		to_chat(user, span_notice("You add [beaker] to [src]."))
 		updateUsrDialog()
+		. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	update_appearance()
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/chem_mass_spec/AltClick(mob/living/user)
 	. = ..()
@@ -362,5 +399,5 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 			continue
 		var/inverse_purity = 1-reagent.purity
 		time += (((reagent.mass * reagent.volume) + (reagent.mass * inverse_purity * 0.1)) * 0.0035) + 10 ///Roughly 10 - 30s?
-	delay_time = time
+	delay_time = (time * cms_coefficient)
 	return delay_time

@@ -548,6 +548,7 @@ SUBSYSTEM_DEF(shuttle)
 	return new_transit_dock
 
 /datum/controller/subsystem/shuttle/Recover()
+	initialized = SSshuttle.initialized
 	if (istype(SSshuttle.mobile))
 		mobile = SSshuttle.mobile
 	if (istype(SSshuttle.stationary))

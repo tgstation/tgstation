@@ -101,10 +101,9 @@
 			F.times_used = 0
 			F.burnt_out = FALSE
 			F.update_appearance()
-		else if(istype(I, /obj/item/melee/baton))
-			var/obj/item/melee/baton/B = I
-			if(B.cell)
-				B.cell.charge = B.cell.maxcharge
+		else if(istype(I, /obj/item/melee/baton/security))
+			var/obj/item/melee/baton/security/baton = I
+			baton.cell?.charge = baton.cell.maxcharge
 		else if(istype(I, /obj/item/gun/energy))
 			var/obj/item/gun/energy/EG = I
 			if(!EG.chambered)
@@ -341,6 +340,19 @@
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
 
+/obj/item/robot_model/medical/be_transformed_to(obj/item/robot_model/old_model)
+	var/mob/living/silicon/robot/cyborg = loc
+	var/list/medical_icons = list(
+		"Qualified Doctor" = image(icon = 'icons/mob/robots.dmi', icon_state = "qualified_doctor"),
+		)
+	var/medical_robot_icon = show_radial_menu(cyborg, cyborg, medical_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg, old_model), radius = 38, require_near = TRUE)
+	switch(medical_robot_icon)
+		if("Qualified Doctor")
+			cyborg_base_icon = "qualified_doctor"
+		else
+			return FALSE
+	return ..()
+
 // --------------------- Mining
 /obj/item/robot_model/miner
 	name = "Miner"
@@ -422,7 +434,7 @@
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/restraints/handcuffs/cable/zipties,
-		/obj/item/melee/baton/loaded,
+		/obj/item/melee/baton/security/loaded,
 		/obj/item/gun/energy/disabler/cyborg,
 		/obj/item/clothing/mask/gas/sechailer/cyborg,
 		/obj/item/extinguisher/mini)
@@ -519,7 +531,7 @@
 	name = "Syndicate Assault"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/melee/transforming/energy/sword/cyborg,
+		/obj/item/melee/energy/sword/cyborg,
 		/obj/item/gun/energy/printer,
 		/obj/item/gun/ballistic/revolver/grenadelauncher/cyborg,
 		/obj/item/card/emag,
@@ -556,7 +568,7 @@
 		/obj/item/cautery,
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
-		/obj/item/melee/transforming/energy/sword/cyborg/saw,
+		/obj/item/melee/energy/sword/cyborg/saw,
 		/obj/item/roller/robo,
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,

@@ -15,17 +15,13 @@
 	var/datum/port/output/output
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
-/obj/item/circuit_component/index/Initialize()
-	. = ..()
+/obj/item/circuit_component/index/populate_ports()
 	index_port = add_input_port("Index", PORT_TYPE_ANY)
 	list_port = add_input_port("List", PORT_TYPE_LIST)
 
 	output = add_output_port("Value", PORT_TYPE_ANY)
 
 /obj/item/circuit_component/index/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	var/index = index_port.value
 	var/list/list_input = list_port.value

@@ -72,13 +72,13 @@
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/analyzer
-	name = "Analyzer"
+	name = "Gas Analyzer"
 	id = "analyzer"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 30, /datum/material/glass = 20)
 	build_path = /obj/item/analyzer
 	category = list("initial","Tools","Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/tscanner
 	name = "T-Ray Scanner"
@@ -401,6 +401,14 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 3000)
 	build_path = /obj/item/storage/bag/tray
+	category = list("initial","Dinnerware")
+
+/datum/design/plate
+	name = "Plate"
+	id = "plate"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 3500)
+	build_path = /obj/item/plate
 	category = list("initial","Dinnerware")
 
 /datum/design/cafeteria_tray
@@ -1213,3 +1221,12 @@
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
 	build_path = /obj/item/assembly/control
 	category = list("initial","Misc")
+
+/datum/design/razor
+	name = "Electric Razor"
+	id = "razor"
+	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
+	materials = list(/datum/material/iron = 75)
+	build_path = /obj/item/razor
+	category = list("initial","Medical")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE

@@ -33,8 +33,7 @@
 	if(!mapload)
 		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
 
-		for(var/port_id in SSshuttle.stationary)
-			var/obj/docking_port/stationary/S = SSshuttle.stationary[port_id]
+		for(var/obj/docking_port/stationary/S as anything in SSshuttle.stationary)
 			if(S.id == shuttleId)
 				jumpto_ports[S.id] = TRUE
 

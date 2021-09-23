@@ -325,7 +325,7 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	point_value = 45
 	material_type = /datum/material/alloy/plastitanium
 	merge_type = /obj/item/stack/sheet/mineral/plastitanium
-	material_flags = MATERIAL_NO_EFFECTS
+	material_flags = NONE
 	walltype = /turf/closed/wall/mineral/plastitanium
 
 GLOBAL_LIST_INIT(plastitanium_recipes, list ( \

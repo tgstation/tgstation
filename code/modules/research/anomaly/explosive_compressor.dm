@@ -8,7 +8,7 @@
  *
  * The explosive compressor machine used in anomaly core production.
  *
- * Uses the standard toxins/tank explosion scaling to compress raw anomaly cores into completed ones. The required explosion radius increases as more cores of that type are created.
+ * Uses the standard ordnance/tank explosion scaling to compress raw anomaly cores into completed ones. The required explosion radius increases as more cores of that type are created.
  */
 /obj/machinery/research/explosive_compressor
 	name = "implosion compressor"
