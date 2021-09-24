@@ -8290,12 +8290,14 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
 "bJQ" = (
-/obj/item/beacon,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
 "bJX" = (
@@ -12135,7 +12137,9 @@
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "cDx" = (
-/obj/item/beacon,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "cDz" = (
@@ -14280,7 +14284,9 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "daH" = (
-/obj/item/beacon,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "daI" = (
@@ -16781,6 +16787,9 @@
 /area/service/bar)
 "dQS" = (
 /obj/effect/spawner/random/trash/mess,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -17263,6 +17272,9 @@
 /obj/effect/landmark/start/paramedic,
 /obj/machinery/duct,
 /obj/structure/disposalpipe/segment,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "eai" = (
@@ -19037,12 +19049,14 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "eDY" = (
-/obj/item/beacon,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/status_display/evac/directional/north,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
 "eEe" = (
@@ -24305,12 +24319,14 @@
 /turf/open/floor/iron/dark,
 /area/commons/cryopods)
 "gty" = (
-/obj/item/beacon,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron,
 /area/security/courtroom)
 "gtK" = (
@@ -25272,12 +25288,14 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "gKe" = (
-/obj/item/beacon,
 /obj/structure/cable,
 /obj/machinery/holopad/secure,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable/layer3,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
 "gKg" = (
@@ -28001,6 +28019,9 @@
 "hMO" = (
 /obj/item/target/syndicate,
 /obj/structure/training_machine,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron,
 /area/security/range)
 "hMW" = (
@@ -29749,11 +29770,11 @@
 	pixel_y = -23
 	},
 /obj/machinery/door/window{
+	atom_integrity = 300;
 	base_state = "leftsecure";
 	dir = 8;
 	icon_state = "leftsecure";
 	name = "Primary AI Core Access";
-	atom_integrity = 300;
 	req_access_txt = "16"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -31243,6 +31264,12 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
+"iYe" = (
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
+/turf/open/floor/wood,
+/area/service/library)
 "iYn" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -32493,6 +32520,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron/dark,
 /area/command/gateway)
 "jwJ" = (
@@ -34425,6 +34455,9 @@
 /obj/machinery/holopad,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron,
 /area/service/hydroponics/garden)
 "khj" = (
@@ -41399,11 +41432,11 @@
 /area/medical/chemistry)
 "mLk" = (
 /obj/machinery/door/window{
+	atom_integrity = 300;
 	base_state = "rightsecure";
 	dir = 4;
 	icon_state = "rightsecure";
 	name = "Primary AI Core Access";
-	atom_integrity = 300;
 	req_access_txt = "16"
 	},
 /obj/machinery/camera{
@@ -43488,6 +43521,12 @@
 /obj/structure/statue/snow/snowman,
 /turf/open/floor/grass/snow/safe,
 /area/maintenance/port/aft)
+"nsT" = (
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
+/turf/open/floor/iron,
+/area/service/hydroponics)
 "nsU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -48025,9 +48064,11 @@
 /turf/open/floor/plating,
 /area/maintenance/space_hut)
 "oYC" = (
-/obj/item/beacon,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
+	},
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
@@ -48645,6 +48686,9 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/hangover,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron/dark,
 /area/commons/fitness/recreation)
 "plr" = (
@@ -52122,6 +52166,16 @@
 /obj/item/ai_module/reset/purge,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
+"qup" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
+/turf/open/floor/iron,
+/area/maintenance/disposal/incinerator)
 "quu" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -53104,6 +53158,9 @@
 /area/medical/medbay/central)
 "qLI" = (
 /obj/structure/cable,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron,
 /area/ai_monitored/command/storage/eva)
 "qLK" = (
@@ -53757,8 +53814,10 @@
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "rag" = (
-/obj/item/beacon,
 /obj/structure/cable,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "rai" = (
@@ -57084,6 +57143,9 @@
 /area/maintenance/aft/secondary)
 "ske" = (
 /obj/effect/spawner/xmastree,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/wood,
 /area/service/bar)
 "skl" = (
@@ -57497,6 +57559,13 @@
 	},
 /turf/open/floor/iron,
 /area/construction/storage_wing)
+"ssi" = (
+/obj/effect/landmark/event_spawn,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
+/turf/open/floor/iron,
+/area/engineering/main)
 "ssj" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -58516,12 +58585,12 @@
 	pixel_x = 8
 	},
 /obj/machinery/door/window{
+	atom_integrity = 300;
 	base_state = "leftsecure";
 	dir = 8;
 	icon_state = "leftsecure";
 	layer = 4.1;
 	name = "Tertiary AI Core Access";
-	atom_integrity = 300;
 	pixel_x = -3;
 	req_access_txt = "16"
 	},
@@ -60514,6 +60583,9 @@
 "tuV" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
 "tvh" = (
@@ -62185,6 +62257,9 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/roboticist,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/circuit/green,
 /area/science/robotics/mechbay)
 "uay" = (
@@ -63083,7 +63158,6 @@
 "usi" = (
 /obj/structure/table,
 /obj/item/hand_tele,
-/obj/item/beacon,
 /obj/machinery/airalarm/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -63094,6 +63168,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
 	},
 /turf/open/floor/iron/dark,
 /area/command/teleporter)
@@ -63776,6 +63853,9 @@
 /area/security/office)
 "uFb" = (
 /obj/structure/cable,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/grass,
 /area/medical/virology)
 "uFo" = (
@@ -70973,12 +71053,12 @@
 	pixel_x = -8
 	},
 /obj/machinery/door/window{
+	atom_integrity = 300;
 	base_state = "rightsecure";
 	dir = 4;
 	icon_state = "rightsecure";
 	layer = 4.1;
 	name = "Secondary AI Core Access";
-	atom_integrity = 300;
 	pixel_x = 4;
 	req_access_txt = "16"
 	},
@@ -71538,6 +71618,15 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"xuH" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
+/turf/open/floor/iron,
+/area/cargo/storage)
 "xuL" = (
 /obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/engine/plasma,
@@ -73274,6 +73363,15 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/break_room)
+"yft" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
+/turf/open/floor/carpet,
+/area/service/chapel)
 "yfG" = (
 /obj/machinery/computer/arcade/orion_trail{
 	desc = "For gamers only. Casuals need not apply.";
@@ -91592,7 +91690,7 @@ dwW
 feh
 jUF
 hpE
-jUF
+xuH
 hpE
 jUF
 ozq
@@ -94443,7 +94541,7 @@ eMW
 lTG
 oav
 eMW
-oMN
+iYe
 xls
 lgw
 pJq
@@ -97330,7 +97428,7 @@ eRy
 yjQ
 gTo
 coS
-coS
+yft
 uXC
 uXC
 uXC
@@ -108336,7 +108434,7 @@ rBy
 jQZ
 gKu
 mwm
-iKa
+nsT
 iKa
 kTA
 paq
@@ -113480,7 +113578,7 @@ wFe
 qzU
 uiG
 mge
-itV
+qup
 aiT
 mqJ
 apP
@@ -114463,7 +114561,7 @@ tdc
 dSI
 muT
 juH
-jqS
+ssi
 muT
 muT
 jqS

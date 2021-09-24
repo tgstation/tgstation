@@ -522,9 +522,11 @@
 /turf/open/floor/plating,
 /area/mine/production)
 "bO" = (
-/obj/item/beacon,
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
+	},
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
 	},
 /turf/open/floor/iron,
 /area/mine/production)

@@ -3315,9 +3315,11 @@
 /area/cargo/storage)
 "aqH" = (
 /obj/structure/table,
-/obj/item/beacon,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/south,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron/dark,
 /area/command/teleporter)
 "aqI" = (
@@ -7539,6 +7541,9 @@
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron,
 /area/commons/dorms)
 "aHZ" = (
@@ -8046,6 +8051,9 @@
 /turf/open/floor/iron/freezer,
 /area/commons/toilet/restrooms)
 "aNw" = (
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron,
 /area/service/hydroponics/garden)
 "aNx" = (
@@ -9529,6 +9537,9 @@
 /area/service/hydroponics/garden)
 "aZO" = (
 /obj/machinery/holopad,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/carpet,
 /area/service/library)
 "aZQ" = (
@@ -13503,6 +13514,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron,
 /area/security/brig)
 "cJx" = (
@@ -16934,6 +16948,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
+"dWR" = (
+/mob/living/carbon/human/species/monkey,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
+/turf/open/floor/grass,
+/area/medical/virology)
 "dXh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/camera{
@@ -18348,6 +18369,9 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "ewA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron/dark,
 /area/medical/treatment_center)
 "ewK" = (
@@ -19339,6 +19363,9 @@
 "eQS" = (
 /obj/machinery/holopad,
 /obj/effect/landmark/event_spawn,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/carpet,
 /area/service/chapel)
 "eRd" = (
@@ -22671,6 +22698,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
 "gbJ" = (
@@ -25309,6 +25339,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron,
 /area/hallway/secondary/exit)
 "hbW" = (
@@ -39714,6 +39747,9 @@
 /area/science/explab)
 "mOF" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron,
 /area/science/robotics/mechbay)
 "mOL" = (
@@ -39907,6 +39943,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron,
 /area/security/courtroom)
 "mRY" = (
@@ -41376,6 +41415,9 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/navbeacon/wayfinding/bridge,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "nzS" = (
@@ -46260,6 +46302,12 @@
 	},
 /turf/open/floor/iron,
 /area/service/hydroponics/garden)
+"ptb" = (
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
+/turf/open/floor/glass,
+/area/service/kitchen/diner)
 "ptl" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -46288,6 +46336,22 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
+"ptM" = (
+/obj/effect/turf_decal/trimline/green/corner,
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 1
+	},
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
+/turf/open/floor/iron/dark,
+/area/service/hydroponics)
 "ptQ" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 4
@@ -47760,6 +47824,9 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "pVU" = (
@@ -51011,7 +51078,9 @@
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
 "rke" = (
-/obj/item/beacon,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "rki" = (
@@ -52535,6 +52604,15 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
+"rSm" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
+/turf/open/floor/iron,
+/area/ai_monitored/command/storage/eva)
 "rSJ" = (
 /obj/structure/chair{
 	dir = 8
@@ -52631,6 +52709,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/security/checkpoint)
+"rVc" = (
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
+/turf/open/floor/iron,
+/area/engineering/atmos)
 "rVq" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -58798,6 +58882,9 @@
 "upb" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron,
 /area/engineering/main)
 "upd" = (
@@ -60967,6 +61054,12 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron,
 /area/engineering/break_room)
+"voy" = (
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
+/turf/open/floor/iron,
+/area/command/gateway)
 "voB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
@@ -63124,6 +63217,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron/grimy,
 /area/ai_monitored/turret_protected/aisat/foyer)
 "wfV" = (
@@ -66260,8 +66356,10 @@
 /turf/open/floor/grass,
 /area/medical/virology)
 "xmJ" = (
-/obj/item/beacon,
 /obj/item/toy/figure/assistant,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "xmS" = (
@@ -66857,6 +66955,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
 /turf/open/floor/iron,
 /area/maintenance/disposal)
 "xyk" = (
@@ -67977,6 +68078,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet,
 /area/commons/vacant_room/office)
+"xUA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
+/turf/open/floor/iron,
+/area/cargo/storage)
 "xUJ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -103822,7 +103930,7 @@ tnL
 dGY
 iky
 cuV
-tnL
+rVc
 gVz
 pIQ
 tOt
@@ -152850,12 +152958,12 @@ dYY
 rsE
 wWT
 wIc
-xJK
+voy
 htR
 dcJ
 pII
 tVj
-qCU
+rSm
 vTV
 aqN
 jeU
@@ -166458,7 +166566,7 @@ amK
 rXv
 jQF
 mpr
-fqO
+ptM
 fqO
 qER
 amK
@@ -166480,7 +166588,7 @@ xHa
 rYY
 tbF
 irR
-irR
+ptb
 qae
 lNh
 irR
@@ -171151,7 +171259,7 @@ joC
 kVO
 khB
 bcs
-pnd
+dWR
 dIz
 xmG
 joC
@@ -176748,7 +176856,7 @@ wDe
 ujH
 tiq
 tiq
-jLw
+xUA
 haY
 qCl
 wIC
