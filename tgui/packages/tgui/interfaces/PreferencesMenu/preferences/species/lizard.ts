@@ -6,18 +6,37 @@ const Lizard: Species = {
     empire: though now they must contend with their younger, more \
     technologically advanced human neighbours.",
   features: {
-    good: [createLanguagePerk("Draconic")],
+    good: [{
+      icon: "drumstick-bite",
+      name: "Nutritious Regeneration",
+      description: "Lizards heal brute damage when well fed.",
+    }, {
+      icon: "heart",
+      name: "Second Heart",
+      description: "Lizards have a secondary heart, which acts as the majority \
+        of their better-than-average blood regeneration.",
+    }, createLanguagePerk("Draconic")],
     neutral: [{
       icon: "thermometer-empty",
       name: "Cold-blooded",
-      description: "Higher tolerance for high temperatures, but lower \
-        tolerance for cold temperatures.",
+      description: "Higher range of tolerable temperatures, but cannot \
+        stabilize their temperature naturally.",
+    }, {
+      icon: "allergies",
+      name: "Scaled Body",
+      description: "Lizards have a harder time being cut up due to \
+      their scales, so surgery on them takes longer.",
     }],
     bad: [{
       icon: "tint",
       name: "Exotic Blood",
       description: "Lizards have a unique \"L\" type blood, which can make \
         receiving medical treatment more difficult.",
+    }, {
+      icon: "biohazard",
+      name: "Toxin Weakness",
+      description: "Lizards have a weakness to toxins, taking additional \
+      damage from them, and being worse at purging them from their body.",
     }],
   },
   lore: [
