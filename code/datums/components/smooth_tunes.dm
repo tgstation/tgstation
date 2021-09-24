@@ -49,6 +49,8 @@
 
 	if(starting_song.lines.len * starting_song.tempo > LONG_ENOUGH_SONG)
 		viable_for_final_effect = TRUE
+	else
+		to_chat(parent, span_warning("This song is too short, so it won't include the song finishing effect."))
 
 	START_PROCESSING(SSobj, src) //even though WE aren't an object, our parent is!
 	if(linked_songtuner_rite.song_start_message)
@@ -73,8 +75,11 @@
 /datum/component/smooth_tunes/proc/stop_singing(datum/source, finished)
 	SIGNAL_HANDLER
 	STOP_PROCESSING(SSobj, src)
-	if(finished && viable_for_final_effect)
-		linked_songtuner_rite.finish_effect(parent, linked_song)
+	if(viable_for_final_effect)
+		if(!finished)
+			to_chat(parent, span_warning("The song was interrupted, you cannot activate the finishing ability!"))
+		else
+			linked_songtuner_rite.finish_effect(parent, linked_song)
 	linked_song.parent?.remove_filter("smooth_tunes_outline")
 	UnregisterSignal(linked_song.parent, list(
 		COMSIG_SONG_END,
