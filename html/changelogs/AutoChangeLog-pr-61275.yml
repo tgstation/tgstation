@@ -1,6 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes: 
-  - bugfix: "Fixes screwdrivers not being recycle-friendly in the autolathe."
-  - qol: "Moves screwdrivering an autolathe's maintenance panel open to right click."
-  - bugfix: "Fixes being able to feed the autolathe when its maintenance panel is open."

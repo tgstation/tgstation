@@ -417,6 +417,14 @@
 	metabolization_rate = 0.15 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/garlic/on_mob_add(mob/living/L, amount)
+	. = ..()
+	ADD_TRAIT(L, TRAIT_GARLIC_BREATH, type)
+
+/datum/reagent/consumable/garlic/on_mob_delete(mob/living/L)
+	. = ..()
+	REMOVE_TRAIT(L, TRAIT_GARLIC_BREATH, type)
+
 /datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(isvampire(M)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
 		if(DT_PROB(min(current_cycle/2, 12.5), delta_time))
@@ -646,6 +654,13 @@
 	description = "This condiment will make any food break the mold. Or your stomach."
 	color ="#708a88"
 	taste_description = "rancid fungus"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/eggrot
+	name = "Rotten Eggyolk"
+	description = "It smells absolutely dreadful."
+	color ="#708a88"
+	taste_description = "rotten eggs"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/tearjuice

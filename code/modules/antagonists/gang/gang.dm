@@ -7,6 +7,7 @@
 	antagpanel_category = "Family"
 	show_in_antagpanel = FALSE // i don't *think* this base class is buggy but it's too worthless to test
 	suicide_cry = "FOR THE FAMILY!!"
+	preview_outfit = /datum/outfit/gangster
 	/// The overarching family that the owner of this datum is a part of. Family teams are generic and imprinted upon by the per-person antagonist datums.
 	var/datum/team/gang/my_gang
 	/// The name of the family corresponding to this family member datum.
@@ -28,6 +29,12 @@
 
 	/// A reference to the handler datum that manages the families gamemode. In case of no handler (admin-spawned during round), this will be null; this is fine.
 	var/datum/gang_handler/handler
+
+/datum/outfit/gangster
+	name = "Gangster (Preview only)"
+
+	uniform = /obj/item/clothing/under/suit/henchmen
+	back = /obj/item/storage/backpack/henchmen
 
 /datum/antagonist/gang/get_team()
 	return my_gang
@@ -223,7 +230,7 @@
 	if(H.stat)
 		return FALSE
 
-	var/obj/item/slapper/secret_handshake_item = new(owner)
+	var/obj/item/slapper/secret_handshake/secret_handshake_item = new(owner)
 	if(owner.put_in_hands(secret_handshake_item))
 		to_chat(owner, span_notice("You ready your secret handshake."))
 	else

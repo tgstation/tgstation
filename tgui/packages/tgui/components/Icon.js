@@ -21,19 +21,22 @@ export const Icon = props => {
     inverse,
     ...rest
   } = props;
-  const boxProps = computeBoxProps(rest);
+
   if (size) {
-    if (!boxProps.style) {
-      boxProps.style = {};
+    if (!rest.style) {
+      rest.style = {};
     }
-    boxProps.style['font-size'] = (size * 100) + '%';
+    rest.style['font-size'] = (size * 100) + '%';
   }
   if (typeof rotation === 'number') {
-    if (!boxProps.style) {
-      boxProps.style = {};
+    if (!rest.style) {
+      rest.style = {};
     }
-    boxProps.style['transform'] = `rotate(${rotation}deg)`;
+    rest.style['transform'] = `rotate(${rotation}deg)`;
   }
+
+  const boxProps = computeBoxProps(rest);
+
   let iconClass = "";
   if (name.startsWith("tg-")) {
     // tgfont icon

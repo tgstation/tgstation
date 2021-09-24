@@ -151,275 +151,89 @@
 	icon_state = "aimed"
 
 // this status effect is used to negotiate the high-fiving capabilities of all concerned parties
-/datum/status_effect/high_fiving
-	id = "high_fiving"
+/datum/status_effect/offering
+	id = "offering"
 	duration = -1
 	tick_interval = -1
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
-	/// The carbons who were offered the ability to partake in the high-five
+	/// The people who were offered this item at the start
 	var/list/possible_takers
-	/// The actual slapper item
-	var/obj/item/slapper/slap_item
-	/// Whether it's a secret handshake or not for code purposes.
-	var/is_secret_handshake = FALSE
+	/// The actual item being offered
+	var/obj/item/offered_item
+	/// The type of alert given to people when offered, in case you need to override some behavior (like for high-fives)
+	var/give_alert_type = /atom/movable/screen/alert/give
 
-/datum/status_effect/high_fiving/on_creation(mob/living/new_owner, obj/item/slap)
+/datum/status_effect/offering/on_creation(mob/living/new_owner, obj/item/offer, give_alert_override)
 	. = ..()
 	if(!.)
 		return
-	if(!is_secret_handshake)
-		slap_item = slap
-		owner.visible_message(span_notice("[owner] raises [owner.p_their()] arm, looking for a high-five!"), \
-			span_notice("You post up, looking for a high-five!"), null, 2)
-
-		for(var/mob/living/carbon/possible_taker in orange(1, owner))
-			if(!owner.CanReach(possible_taker) || possible_taker.incapacitated())
-				continue
-			register_candidate(possible_taker)
-
-		if(!possible_takers) // in case we tried high-fiving with only a dead body around or something
-			owner.visible_message(span_danger("[owner] realizes no one within range is actually capable of high-fiving, lowering [owner.p_their()] arm in shame..."), \
-				span_warning("You realize a moment too late that no one within range is actually capable of high-fiving you, oof..."), null, 2)
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_alone)
-			qdel(src)
-			return
-
-		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/check_owner_in_range)
-		RegisterSignal(slap_item, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), .proc/dropped_slap)
-		RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
-
-/datum/status_effect/high_fiving/Destroy()
-	QDEL_NULL(slap_item)
-	for(var/i in possible_takers)
-		var/mob/living/carbon/lost_hope = i
-		remove_candidate(lost_hope)
-	LAZYCLEARLIST(possible_takers)
-	return ..()
-
-/// Hook up the specified carbon mob for possible high-fiving, give them the alert and signals and all
-/datum/status_effect/high_fiving/proc/register_candidate(mob/living/carbon/possible_candidate)
-	var/atom/movable/screen/alert/highfive/G = possible_candidate.throw_alert("[owner]", /atom/movable/screen/alert/highfive)
-	if(!G)
-		return
-	LAZYADD(possible_takers, possible_candidate)
-	RegisterSignal(possible_candidate, COMSIG_MOVABLE_MOVED, .proc/check_taker_in_range)
-	G.setup(possible_candidate, owner, slap_item)
-
-/// Remove the alert and signals for the specified carbon mob
-/datum/status_effect/high_fiving/proc/remove_candidate(mob/living/carbon/removed_candidate)
-	removed_candidate.clear_alert("[owner]")
-	LAZYREMOVE(possible_takers, removed_candidate)
-	UnregisterSignal(removed_candidate, COMSIG_MOVABLE_MOVED)
-
-/// We failed to high-five broh, either because there's no one viable next to us anymore, or we lost the slapper, or what
-/datum/status_effect/high_fiving/proc/fail()
-	owner.visible_message(span_danger("[owner] slowly lowers [owner.p_their()] arm, realizing no one will high-five [owner.p_them()]! How embarassing..."), \
-		span_warning("You realize the futility of continuing to wait for a high-five, and lower your arm..."), null, 2)
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/left_hanging)
-	qdel(src)
-
-/// Yeah broh! This is where we do the high-fiving (or high-tenning :o)
-/datum/status_effect/high_fiving/proc/we_did_it(mob/living/carbon/successful_taker)
-	var/open_hands_taker
-	var/slappers_owner
-	for(var/i in successful_taker.held_items) // see how many hands the taker has open for high'ing
-		if(isnull(i))
-			open_hands_taker++
-
-	if(!open_hands_taker)
-		to_chat(successful_taker, span_warning("You can't high-five [owner] with no open hands!"))
-		SEND_SIGNAL(successful_taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_full_hand) // not so successful now!
-		return
-
-	for(var/i in owner.held_items)
-		var/obj/item/slapper/slap_check = i
-		if(istype(slap_check))
-			slappers_owner++
-
-	if(!slappers_owner) // THE PRANKAGE
-		too_slow_p1(successful_taker)
-		return
-
-	if(slappers_owner >= 2) // we only check this if it's already established the taker has 2+ hands free
-		owner.visible_message(span_notice("[successful_taker] enthusiastically high-tens [owner]!"), span_nicegreen("Wow! You're high-tenned [successful_taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=successful_taker)
-		to_chat(successful_taker, span_nicegreen("You give high-tenning [owner] your all!"))
-		playsound(owner, 'sound/weapons/slap.ogg', 100, TRUE, 1)
-		owner.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_PROTAGONIST = successful_taker, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
-		successful_taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_PROTAGONIST = owner, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
-		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_ten)
-		SEND_SIGNAL(successful_taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_ten)
-	else
-		owner.visible_message(span_notice("[successful_taker] high-fives [owner]!"), span_nicegreen("All right! You're high-fived by [successful_taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=successful_taker)
-		to_chat(successful_taker, span_nicegreen("You high-five [owner]!"))
-		playsound(owner, 'sound/weapons/slap.ogg', 50, TRUE, -1)
-		owner.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_PROTAGONIST = successful_taker, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
-		successful_taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_PROTAGONIST = owner, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
-		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
-		SEND_SIGNAL(successful_taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
-	qdel(src)
-
-/// If we don't have any slappers in hand when someone goes to high-five us, we prank the hell out of them
-/datum/status_effect/high_fiving/proc/too_slow_p1(mob/living/carbon/rube)
-	owner.visible_message(span_notice("[rube] rushes in to high-five [owner], but-"), span_nicegreen("[rube] falls for your trick just as planned, lunging for a high-five that no longer exists! Classic!"), ignored_mobs=rube)
-	to_chat(rube, span_nicegreen("You go in for [owner]'s high-five, but-"))
-	addtimer(CALLBACK(src, .proc/too_slow_p2, rube), 0.5 SECONDS)
-
-/// Part two of the ultimate prank
-/datum/status_effect/high_fiving/proc/too_slow_p2(mob/living/carbon/rube)
-	if(!owner || !rube)
-		qdel(src)
-		return
-	owner.visible_message(span_danger("[owner] pulls away from [rube]'s slap at the last second, dodging the high-five entirely!"), span_nicegreen("[rube] fails to make contact with your hand, making an utter fool of [rube.p_them()]self!"), span_hear("You hear a disappointing sound of flesh not hitting flesh!"), ignored_mobs=rube)
-	var/all_caps_for_emphasis = uppertext("NO! [owner] PULLS [owner.p_their()] HAND AWAY FROM YOURS! YOU'RE TOO SLOW!")
-	to_chat(rube, span_userdanger("[all_caps_for_emphasis]"))
-	playsound(owner, 'sound/weapons/thudswoosh.ogg', 100, TRUE, 1)
-	rube.Knockdown(1 SECONDS)
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/down_low)
-	SEND_SIGNAL(rube, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/too_slow)
-	qdel(src)
-
-/// If someone examine_more's us while we don't have a slapper in hand, it'll tip them off to our trickster ways
-/datum/status_effect/high_fiving/proc/check_fake_out(datum/source, mob/user, list/examine_list)
-	SIGNAL_HANDLER
-
-	if(!slap_item)
-		examine_list += "[span_warning("[owner]'s arm appears tensed up, as if [owner.p_they()] plan on pulling it back suddenly...")]\n"
-
-/// One of our possible takers moved, see if they left us hanging
-/datum/status_effect/high_fiving/proc/check_taker_in_range(mob/living/carbon/taker)
-	SIGNAL_HANDLER
-	if(owner.CanReach(taker) && !taker.incapacitated())
-		return
-
-	to_chat(taker, span_warning("You left [owner] hanging!"))
-	remove_candidate(taker)
-	if(!possible_takers)
-		fail()
-
-/datum/status_effect/high_fiving/secret_handshake
-	id = "secret_handshake"
-	is_secret_handshake = TRUE
-	/// References the active families gamemode handler (if one exists), for adding new family members to.
-	var/datum/gang_handler/handler
-	/// The typepath of the gang antagonist datum that the person who uses the package should have added to them -- remember that the distinction between e.g. Ballas and Grove Street is on the antag datum level, not the team datum level.
-	var/gang_to_use
-	/// The team datum that the person who uses this package should be added to.
-	var/datum/team/gang/team_to_use
-
-/datum/status_effect/high_fiving/secret_handshake/on_creation(mob/living/new_owner, obj/item/slap)
-	. = ..()
-	if(!.)
-		return
-	slap_item = slap
-	owner.visible_message(span_notice("[owner] is ready to teach someone the Secret Handshake!"), \
-		span_notice("You ready yourself to teach someone the Secret Handshake."), null, 2)
+	offered_item = offer
+	if(give_alert_override)
+		give_alert_type = give_alert_override
 
 	for(var/mob/living/carbon/possible_taker in orange(1, owner))
-		if(!owner.CanReach(possible_taker) || possible_taker.incapacitated())
+		if(!owner.CanReach(possible_taker) || IS_DEAD_OR_INCAP(possible_taker) || !possible_taker.can_hold_items())
 			continue
 		register_candidate(possible_taker)
 
-	if(!possible_takers)
-		owner.visible_message(span_danger("[owner] realizes no one within range is actually capable of learning the secret handshake."), \
-			span_warning("You realize a moment too late that no one within range is actually capable of learning the secret handshake."), null, 2)
+	if(!possible_takers) // no one around
 		qdel(src)
 		return
 
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/check_owner_in_range)
-	RegisterSignal(slap_item, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), .proc/dropped_slap)
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
+	RegisterSignal(offered_item, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), .proc/dropped_item)
+	//RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
 
-/datum/status_effect/high_fiving/secret_handshake/we_did_it(mob/living/carbon/successful_taker)
-	var/open_hands_taker
-	for(var/i in successful_taker.held_items) // see how many hands the taker has open for high'ing
-		if(isnull(i))
-			open_hands_taker++
+/datum/status_effect/offering/Destroy()
+	for(var/i in possible_takers)
+		var/mob/living/carbon/removed_taker = i
+		remove_candidate(removed_taker)
+	LAZYCLEARLIST(possible_takers)
+	return ..()
 
-	if(!open_hands_taker)
-		to_chat(successful_taker, span_warning("You can't get taught the secret handshake if [owner] has no free hands!"))
-		return
-
-	if(HAS_TRAIT(successful_taker, TRAIT_MINDSHIELD))
-		to_chat(successful_taker, "You attended a seminar on not signing up for a gang and are not interested.")
-		return
-
-	var/datum/antagonist/gang/is_gangster = successful_taker.mind.has_antag_datum(/datum/antagonist/gang)
-	if(is_gangster?.starter_gangster)
-		if(is_gangster.my_gang == team_to_use)
-			to_chat(successful_taker, "You started your family. You don't need to join it.")
-			return
-		to_chat(successful_taker, "You started your family. You can't turn your back on it now.")
-		return
-
-	owner.visible_message(span_notice("[successful_taker] is taught the secret handshake by [owner]!"), span_nicegreen("All right! You've taught the secret handshake to [successful_taker]!"), span_hear("You hear a bunch of weird shuffling and flesh slapping sounds!"), ignored_mobs=successful_taker)
-	to_chat(successful_taker, span_nicegreen("You get taught the secret handshake by [owner]!"))
-	var/datum/antagonist/gang/owner_gang_datum = owner.mind.has_antag_datum(/datum/antagonist/gang)
-	handler = owner_gang_datum.handler
-	gang_to_use = owner_gang_datum.type
-	team_to_use = owner_gang_datum.my_gang
-	attempt_join_gang(successful_taker)
-	qdel(src)
-
-/datum/status_effect/high_fiving/secret_handshake/register_candidate(mob/living/carbon/possible_candidate)
-	var/atom/movable/screen/alert/secret_handshake/G = possible_candidate.throw_alert("[owner]", /atom/movable/screen/alert/secret_handshake)
+/// Hook up the specified carbon mob to be offered the item in question, give them the alert and signals and all
+/datum/status_effect/offering/proc/register_candidate(mob/living/carbon/possible_candidate)
+	var/atom/movable/screen/alert/give/G = possible_candidate.throw_alert("[owner]", give_alert_type)
 	if(!G)
 		return
 	LAZYADD(possible_takers, possible_candidate)
 	RegisterSignal(possible_candidate, COMSIG_MOVABLE_MOVED, .proc/check_taker_in_range)
-	G.setup(possible_candidate, owner, slap_item)
+	G.setup(possible_candidate, owner, offered_item)
 
-/// Adds the user to the family that this package corresponds to, dispenses the free_clothes of that family, and adds them to the handler if it exists.
-/datum/status_effect/high_fiving/secret_handshake/proc/add_to_gang(mob/living/user, original_name)
-	var/datum/antagonist/gang/swappin_sides = new gang_to_use()
-	swappin_sides.original_name = original_name
-	swappin_sides.handler = handler
-	user.mind.add_antag_datum(swappin_sides, team_to_use)
-	var/policy = get_policy(ROLE_FAMILIES)
-	if(policy)
-		to_chat(user, policy)
-	team_to_use.add_member(user.mind)
-	for(var/threads in team_to_use.free_clothes)
-		new threads(get_turf(user))
-	for(var/threads in team_to_use.current_theme.bonus_items)
-		new threads(get_turf(user))
-	var/obj/item/gangster_cellphone/phone = new(get_turf(user))
-	phone.gang_id = team_to_use.my_gang_datum.gang_name
-	phone.name = "[team_to_use.my_gang_datum.gang_name] branded cell phone"
-	if (!isnull(handler) && !handler.gangbangers.Find(user.mind)) // if we have a handler and they're not tracked by it
-		handler.gangbangers += user.mind
+/// Remove the alert and signals for the specified carbon mob. Automatically removes the status effect when we lost the last taker
+/datum/status_effect/offering/proc/remove_candidate(mob/living/carbon/removed_candidate)
+	removed_candidate.clear_alert("[owner]")
+	LAZYREMOVE(possible_takers, removed_candidate)
+	UnregisterSignal(removed_candidate, COMSIG_MOVABLE_MOVED)
+	if(!possible_takers && !QDELING(src))
+		qdel(src)
 
-/// Checks if the user is trying to use the package of the family they are in, and if not, adds them to the family, with some differing processing depending on whether the user is already a family member.
-/datum/status_effect/high_fiving/secret_handshake/proc/attempt_join_gang(mob/living/user)
-	if(user?.mind)
-		var/datum/antagonist/gang/is_gangster = user.mind.has_antag_datum(/datum/antagonist/gang)
-		if(is_gangster)
-			if(is_gangster.my_gang == team_to_use)
-				return
-			else
-				var/real_name_backup = is_gangster.original_name
-				is_gangster.my_gang.remove_member(user.mind)
-				user.mind.remove_antag_datum(/datum/antagonist/gang)
-				add_to_gang(user, real_name_backup)
-		else
-			add_to_gang(user)
+/// One of our possible takers moved, see if they left us hanging
+/datum/status_effect/offering/proc/check_taker_in_range(mob/living/carbon/taker)
+	SIGNAL_HANDLER
+	if(owner.CanReach(taker) && !IS_DEAD_OR_INCAP(taker))
+		return
 
-/// The propositioner moved, see if anyone is out of range now
-/datum/status_effect/high_fiving/proc/check_owner_in_range(mob/living/carbon/source)
+	remove_candidate(taker)
+
+/// The offerer moved, see if anyone is out of range now
+/datum/status_effect/offering/proc/check_owner_in_range(mob/living/carbon/source)
 	SIGNAL_HANDLER
 
 	for(var/i in possible_takers)
 		var/mob/living/carbon/checking_taker = i
-		if(!istype(checking_taker) || !owner.CanReach(checking_taker) || checking_taker.incapacitated())
+		if(!istype(checking_taker) || !owner.CanReach(checking_taker) || IS_DEAD_OR_INCAP(checking_taker))
 			remove_candidate(checking_taker)
 
-	if(!possible_takers)
-		fail()
-
-/// Something fishy is going on here...
-/datum/status_effect/high_fiving/proc/dropped_slap(obj/item/source)
+/// We lost the item, give it up
+/datum/status_effect/offering/proc/dropped_item(obj/item/source)
 	SIGNAL_HANDLER
-	slap_item = null
+	qdel(src)
+
+/datum/status_effect/offering/secret_handshake
+	id = "secret_handshake"
+	give_alert_type = /atom/movable/screen/alert/give/secret_handshake
 
 //this effect gives the user an alert they can use to surrender quickly
 /datum/status_effect/grouped/surrender

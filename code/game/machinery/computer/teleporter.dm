@@ -237,16 +237,16 @@
 	possible_targets = add_output_port("Possible Targets", PORT_TYPE_LIST)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/teleporter_control_console/register_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/teleporter_control_console/register_usb_parent(atom/movable/shell)
 	. = ..()
 
-	if (istype(parent, /obj/machinery/computer/teleporter))
-		attached_console = parent
+	if (istype(shell, /obj/machinery/computer/teleporter))
+		attached_console = shell
 
 		RegisterSignal(attached_console, COMSIG_TELEPORTER_NEW_TARGET, .proc/on_teleporter_new_target)
 		update_targets()
 
-/obj/item/circuit_component/teleporter_control_console/unregister_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/teleporter_control_console/unregister_usb_parent(atom/movable/shell)
 	UnregisterSignal(attached_console, COMSIG_TELEPORTER_NEW_TARGET)
 	attached_console = null
 	return attached_console

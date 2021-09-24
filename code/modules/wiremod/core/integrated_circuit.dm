@@ -84,7 +84,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	for(var/obj/item/circuit_component/to_delete in attached_components)
 		remove_component(to_delete)
 		qdel(to_delete)
-	QDEL_LIST(circuit_variables)
+	QDEL_LIST_ASSOC_VAL(circuit_variables)
 	attached_components.Cut()
 	shell = null
 	examined_component = null

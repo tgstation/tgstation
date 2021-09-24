@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "Round setup hints and circuit board descriptions that mention production of research points through power generation no longer appear. This functionality was removed a long time ago."

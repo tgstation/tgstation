@@ -402,14 +402,22 @@
 			if (specificTarget)
 				specificTarget = null
 				return
-			var/list/mobs = getpois()//code stolen from observer.dm
-			var/inputTarget = input("Select a mob! (Smiting does this automatically)", "Target", null, null) as null|anything in mobs
-			if (isnull(inputTarget))
-				return
-			var/mob/target = mobs[inputTarget]
-			specificTarget = target///input specific tartget
-			. = TRUE
 
+			var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
+			var/target = input("Select a mob! (Smiting does this automatically)", "Target", null, null) as null|anything in possible_destinations
+
+			if (isnull(target))
+				return
+
+			var/mob/mob_target = possible_destinations[target]
+
+			// During the break between opening the input menu and selecting our target, has this become an invalid option?
+			if(!SSpoints_of_interest.is_valid_poi(mob_target))
+				return
+
+			specificTarget = mob_target
+
+			. = TRUE
 		////////////////////////////TIMER DELAYS//////////////////
 		if("editTiming") //Change the different timers relating to the pod
 			var/delay = params["timer"]
