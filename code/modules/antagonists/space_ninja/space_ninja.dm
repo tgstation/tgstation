@@ -60,7 +60,7 @@
 	explanation_text = "Use your gloves on a communication console in order to bring another threat to the station.  Note that the AI will be alerted once you begin!"
 
 /datum/objective/research_secrets
-	explanation_text = "Use your gloves on a research & development master server to sabotage research efforts.  Note that the AI will be alerted once you begin!"
+	explanation_text = "Use your gloves on a research & development server to sabotage research efforts.  Note that the AI will be alerted once you begin!"
 
 /**
  * Proc that adds all the ninja's objectives to the antag datum.
@@ -73,10 +73,8 @@
 	objectives += hijack
 
 	// Break into science and mess up their research. Only add this objective if the similar steal objective is possible.
-	var/datum/objective_item/steal/hdd_extraction/steal_hdd = locate() in GLOB.possible_items
-	if(steal_hdd)
-		var/datum/objective/research_secrets/sabotage_research = new /datum/objective/research_secrets()
-		objectives += sabotage_research
+	var/datum/objective/research_secrets/sabotage_research = new /datum/objective/research_secrets()
+	objectives += sabotage_research
 
 	//Door jacks, flag will be set to complete on when the last door is hijacked
 	var/datum/objective/door_jack/doorobjective = new /datum/objective/door_jack()

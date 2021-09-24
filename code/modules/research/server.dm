@@ -243,13 +243,13 @@
 				to_chat(user, span_notice("You can't see a place to insert [src]."))
 		if(HDD_PANEL_OPEN)
 			if(istype(attacking_item, /obj/item/crowbar/hdd_extraction))
-				to_chat(user, span_notice("You can see [source_code_hdd] in a secure housing through behind the front panel. Your tiny [attacking_item.name] barely fits inside. You begin to pry it loose..."))
+				to_chat(user, span_notice("You can see [source_code_hdd] in a secure housing behind the front panel. Your tiny [attacking_item.name] barely fits inside. You begin to pry it loose..."))
 				if(attacking_item.use_tool(src, user, 200, volume=100))
 					to_chat(user, span_notice("You pry [source_code_hdd] free of its secure housing."))
 					deconstruction_state = HDD_PRIED
 				return
 			if(istype(attacking_item, /obj/item/computer_hardware/hard_drive/cluster/hdd_theft))
-				to_chat(user, span_notice("There's already a [source_code_hdd.name] in the server. No need to add a second."))
+				to_chat(user, span_notice("There's already \an [source_code_hdd.name] in the server. No need to add a second."))
 		if(HDD_PRIED)
 			if(istype(attacking_item, /obj/item/wirecutters/hdd_extraction))
 				to_chat(user, span_notice("With [source_code_hdd] free, you begin to delicately cut wires with [attacking_item]. Following the instructions on its display, there are [hdd_wires] wires left..."))
@@ -260,6 +260,7 @@
 						deconstruction_state = HDD_CUT_LOOSE
 						to_chat(user, span_notice("You cut the final wire and remove [source_code_hdd]."))
 						try_put_in_hand(source_code_hdd, user)
+						source_code_hdd = null
 						return
 
 					to_chat(user, span_notice("You cut the wire indicated by [attacking_item]. [hdd_wires] wires left..."))
@@ -287,6 +288,18 @@
 		log_game("[src] has been deconstructed by unknown user, destroying [source_code_hdd] inside.")
 
 	return ..()
+
+/// Used to quickly qdel the source_code_hdd and put the machine's antag objective state in
+/obj/machinery/rnd/server/master/proc/destroy_source_code_hdd()
+	if(source_code_hdd)
+		QDEL_NULL(source_code_hdd)
+
+	if(deconstruction_state == HDD_PANEL_CLOSED)
+		add_overlay("RD-server-hdd-panel-open")
+
+	front_panel_screws = 0
+	hdd_wires = 0
+	deconstruction_state = HDD_CUT_LOOSE
 
 #undef HDD_PANEL_CLOSED
 #undef HDD_PANEL_OPEN
