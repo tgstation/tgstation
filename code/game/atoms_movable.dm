@@ -149,6 +149,7 @@
 	//DO it after moveToNullspace so memes can be had
 	LAZYCLEARLIST(important_recursive_contents)
 
+	vis_locs = null //clears this atom out of all viscontents
 	vis_contents.Cut()
 
 /atom/movable/proc/update_emissive_block()
