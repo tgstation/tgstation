@@ -69,7 +69,7 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/stickman/ranged
 
-/mob/living/basic/stickman/ranged/Initialize()
+/mob/living/basic/stickman/ranged/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, list(/obj/item/gun/ballistic/automatic/pistol/stickman))
 	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/c9mm, 'sound/misc/bang.ogg')

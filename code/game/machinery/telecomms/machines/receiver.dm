@@ -58,7 +58,7 @@
 	freq_listening = list(FREQ_COMMAND, FREQ_ENGINEERING, FREQ_SECURITY)
 
 	//Common and other radio frequencies for people to freely use
-/obj/machinery/telecomms/receiver/preset_right/Initialize()
+/obj/machinery/telecomms/receiver/preset_right/Initialize(mapload)
 	. = ..()
 	for(var/i = MIN_FREQ, i <= MAX_FREQ, i += 2)
 		freq_listening |= i

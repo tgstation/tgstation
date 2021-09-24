@@ -12,7 +12,7 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/raw_tiziran_sausage/Initialize()
+/obj/item/food/raw_tiziran_sausage/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dryable,  /obj/item/food/tiziran_sausage)
 
@@ -36,7 +36,7 @@
 	foodtypes = MEAT | GROSS
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/raw_headcheese/Initialize()
+/obj/item/food/raw_headcheese/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dryable,  /obj/item/food/headcheese)
 
@@ -357,7 +357,7 @@
 	venue_value = FOOD_PRICE_CHEAP
 	burns_in_oven = TRUE
 
-/obj/item/food/bread/root/Initialize()
+/obj/item/food/bread/root/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
@@ -374,7 +374,7 @@
 	foodtypes = VEGETABLES | NUTS
 	venue_value = FOOD_PRICE_TRASH
 
-/obj/item/food/breadslice/root/Initialize()
+/obj/item/food/breadslice/root/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 

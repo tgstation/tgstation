@@ -146,7 +146,7 @@
 	desc = "A collapsed roller bed that can be ejected for emergency use. Must be collected or replaced after use."
 	var/obj/structure/bed/roller/loaded = null
 
-/obj/item/roller/robo/Initialize()
+/obj/item/roller/robo/Initialize(mapload)
 	. = ..()
 	loaded = new(src)
 
@@ -226,6 +226,6 @@
 	desc = "An old grubby mattress. You try to not think about what could be the cause of those stains."
 	icon_state = "dirty_mattress"
 
-/obj/structure/bed/maint/Initialize()
+/obj/structure/bed/maint/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)

@@ -18,7 +18,7 @@
 	var/zap_cooldown = 100
 	var/last_zap = 0
 
-/obj/machinery/power/tesla_coil/Initialize()
+/obj/machinery/power/tesla_coil/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/tesla_coil(src)
 

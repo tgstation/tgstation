@@ -264,7 +264,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 		return list()
 	. = ..()
 
-/obj/item/paper/secretrecipe/Initialize()
+/obj/item/paper/secretrecipe/Initialize(mapload)
 	. = ..()
 
 	recipe_id = pick(possible_recipes)

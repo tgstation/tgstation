@@ -302,7 +302,7 @@
  * * clears overlays and priority overlays
  * * clears the light object
  */
-/atom/Destroy()
+/atom/Destroy(force)
 	if(alternate_appearances)
 		for(var/current_alternate_appearance in alternate_appearances)
 			var/datum/atom_hud/alternate_appearance/selected_alternate_appearance = alternate_appearances[current_alternate_appearance]

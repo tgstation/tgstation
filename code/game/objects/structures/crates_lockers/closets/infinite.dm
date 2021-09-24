@@ -5,7 +5,7 @@
 	var/stop_replicating_at = 4
 	var/auto_close_time = 15 SECONDS // Set to 0 to disable auto-closing.
 
-/obj/structure/closet/infinite/Initialize()
+/obj/structure/closet/infinite/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 

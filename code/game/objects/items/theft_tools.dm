@@ -15,7 +15,7 @@
 	var/cooldown = 0
 	var/pulseicon = "plutonium_core_pulse"
 
-/obj/item/nuke_core/Initialize()
+/obj/item/nuke_core/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -233,7 +233,7 @@
 	usesound = 'sound/weapons/bladeslice.ogg'
 	var/usesLeft
 
-/obj/item/scalpel/supermatter/Initialize()
+/obj/item/scalpel/supermatter/Initialize(mapload)
 	. = ..()
 	usesLeft = rand(2, 4)
 

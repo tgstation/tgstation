@@ -267,7 +267,7 @@
 /obj/item/paper/contractor_guide
 	name = "Contractor Guide"
 
-/obj/item/paper/contractor_guide/Initialize()
+/obj/item/paper/contractor_guide/Initialize(mapload)
 	info = {"<p>Welcome agent, congratulations on your new position as contractor. On top of your already assigned objectives,
 			this kit will provide you contracts to take on for TC payments.</p>
 

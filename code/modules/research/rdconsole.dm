@@ -45,7 +45,7 @@ Nothing else in the console has ID requirements.
 		return reagent.name
 	return ID
 
-/obj/machinery/computer/rdconsole/Initialize()
+/obj/machinery/computer/rdconsole/Initialize(mapload)
 	. = ..()
 	stored_research = SSresearch.science_tech
 	stored_research.consoles_accessing[src] = TRUE

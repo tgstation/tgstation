@@ -19,7 +19,7 @@
 	var/temp_penalty_coefficient = 0.5 //1 = -1 points per degree above high tolerance. 0.5 = -0.5 points per degree above high tolerance.
 	req_access = list(ACCESS_RD) //ONLY THE R&D CAN CHANGE SERVER SETTINGS.
 
-/obj/machinery/rnd/server/Initialize()
+/obj/machinery/rnd/server/Initialize(mapload)
 	. = ..()
 	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
 	SSresearch.servers |= src
