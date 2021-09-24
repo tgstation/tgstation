@@ -13,3 +13,16 @@ GLOBAL_LIST_INIT(typecache_machine_or_structure, typecacheof(list(/obj/machinery
 
 /// A typecache listing structures that are considered to have surfaces that you can place items on that are higher than the floor. This, of course, should be restricted to /atom/movables. This is primarily used for food decomposition code.
 GLOBAL_LIST_INIT(typecache_elevated_structures, typecacheof(list(/obj/structure/table,/obj/structure/rack,/obj/machinery/conveyor,/obj/structure/closet)))
+
+/// A typecache of objects that player controlled, easily accessible, hostile mobs should not be able to attack
+GLOBAL_LIST_INIT(typecache_general_bad_hostile_attack_targets, typecacheof(list(
+	/obj/machinery/airalarm,
+	/obj/machinery/atmospherics,
+	/obj/machinery/power/apc,
+)))
+
+/// A typecache of objects that player controlled, easily accessible, hostile mobs should not be able to move around easily
+GLOBAL_LIST_INIT(typecache_general_bad_things_to_easily_move, typecacheof(list(
+	/obj/machinery/portable_atmospherics/canister,
+	/obj/structure/reagent_dispensers,
+)))
