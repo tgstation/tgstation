@@ -5,11 +5,11 @@
  * Used for the null rod to pick the other holy weapons.
  */
 /datum/component/subtype_picker
-	///on Attach, it's a list of types and their menu descriptions. after building, it's a list of lists with all the data each item needs to give to the radial menu.
+	///A list of types and their menu descriptions
 	var/list/subtype2descriptions
-	///list given to the radial menu to display
+	///list given to the radial menu to display, built after init
 	var/list/built_radial_list
-	///the radial will return a name of the wanted subtype, this is a list of references back to the type
+	///the radial will return a name of the wanted subtype, this is a list of names back to the type, built after init
 	var/list/name2subtype
 	///optional proc to callback to when the weapon is picked
 	var/datum/callback/on_picked_callback
