@@ -11,8 +11,8 @@
 		/obj/effect/spawner/random/trash/moisture_trap = 50,
 		/obj/effect/spawner/random/trash/hobo_squat = 30,
 		/obj/structure/closet/mini_fridge = 35,
-		/obj/item/kirbyplants/fern = 20,
 		/obj/effect/spawner/random/trash/mess = 30,
+		/obj/item/kirbyplants/fern = 20,
 		/obj/structure/closet/crate/decorations = 15,
 	)
 
