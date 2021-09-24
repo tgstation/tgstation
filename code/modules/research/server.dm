@@ -1,6 +1,10 @@
+/// Default master server machine state. Use a special screwdriver to get to the next state.
 #define HDD_PANEL_CLOSED 0
+/// Front master server HDD panel has been removed. Use a special crowbar to get to the next state.
 #define HDD_PANEL_OPEN 1
+/// Master server HDD has been pried loose and is held in by only cables. Use a special set of wirecutters to finish stealing the objective.
 #define HDD_PRIED 2
+/// Master server HDD has been cut loose.
 #define HDD_CUT_LOOSE 3
 
 /obj/machinery/rnd/server
@@ -50,10 +54,6 @@
 	. = ..()
 	refresh_working()
 	return
-
-/obj/machinery/rnd/server/attackby(obj/item/O, mob/user, params)
-	. = ..()
-
 
 /obj/machinery/rnd/server/proc/refresh_working()
 	if(machine_stat & EMPED || research_disabled || machine_stat & NOPOWER)
@@ -269,6 +269,22 @@
 		if(HDD_CUT_LOOSE)
 			if(istype(attacking_item, /obj/item/computer_hardware/hard_drive/cluster/hdd_theft))
 				to_chat(user, span_notice("[src] is too badly damaged to add [attacking_item]."))
+
+	return ..()
+
+/obj/machinery/rnd/server/master/on_deconstruction()
+	// If the machine contains a source code HDD, destroying it will negatively impact research speed. Safest to log this.
+	if(source_code_hdd)
+		// If there's a usr, this was likely a direct deconstruction of some sort. Extra logging info!
+		if(usr)
+			var/mob/user = usr
+
+			message_admins("[ADMIN_LOOKUPFLW(user)] deconstructed [ADMIN_JMP(src)], destroying [source_code_hdd] inside.")
+			log_game("[key_name(user)] deconstructed [src], destroying [source_code_hdd] inside.")
+			return ..()
+
+		message_admins("[ADMIN_JMP(src)] has been deconstructed by unknown user, destroying [source_code_hdd] inside.")
+		log_game("[src] has been deconstructed by unknown user, destroying [source_code_hdd] inside.")
 
 	return ..()
 
