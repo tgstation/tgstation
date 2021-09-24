@@ -5,4 +5,5 @@
 /datum/smite/immerse/effect(client/user, mob/living/target)
 	. = ..()
 	immerse_player(target)
-	to_chat(target, span_boldnotice("Please roleplay correctly!"))
+	SEND_SOUND(target, sound('sound/voice/roleplay.ogg'))
+	to_chat(target, span_boldnotice("Please roleplay appropriately, okay?"))
