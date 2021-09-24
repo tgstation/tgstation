@@ -198,8 +198,8 @@
 	qdel(src)
 	return RM
 
-/obj/item/robot_model/proc/be_transformed_to(obj/item/robot_model/old_model)
-	if(islist(borg_skins))
+/obj/item/robot_model/proc/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
+	if(islist(borg_skins) && !forced)
 		var/mob/living/silicon/robot/cyborg = loc
 		var/list/reskin_icons = list()
 		for(var/skin in borg_skins)

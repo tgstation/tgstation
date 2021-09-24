@@ -150,7 +150,7 @@
 
 /mob/living/silicon/robot/model/Initialize()
 	. = ..()
-	model.transform_to(set_model)
+	INVOKE_ASYNC(model, /obj/item/robot_model.proc/transform_to, set_model, TRUE)
 
 // --------------------- Clown
 /mob/living/silicon/robot/model/clown
