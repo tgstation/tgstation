@@ -192,7 +192,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/plastic/galactoturf/setup_broken_states()
-	return
+	return list()
 
 /turf/open/floor/plastic/galactoturf/dark
 	icon_state = "galactoturf_dark"
