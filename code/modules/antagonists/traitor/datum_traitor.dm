@@ -12,8 +12,6 @@
 #define DESTROY_AI_PROB(denominator) (100 / denominator)
 /// If the destroy AI objective doesn't roll, chance that we'll get a maroon instead. If this prob fails, they will get a generic assassinate objective instead.
 #define MAROON_PROB 30
-/// If it's a steal objective, this is the chance that it'll be a download research notes objective. Science staff can't get this objective. It can only roll once. If any of these fail, they will get a generic steal objective instead.
-#define DOWNLOAD_PROB 15
 
 /datum/antagonist/traitor
 	name = "Traitor"
@@ -180,12 +178,6 @@
 		kill_objective.owner = owner
 		kill_objective.find_target()
 		return kill_objective
-
-	if(prob(DOWNLOAD_PROB) && !(locate(/datum/objective/download) in objectives) && !(owner.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SCIENCE))
-		var/datum/objective/download/download_objective = new
-		download_objective.owner = owner
-		download_objective.gen_amount_goal()
-		return download_objective
 
 	var/datum/objective/steal/steal_objective = new
 	steal_objective.owner = owner
@@ -367,4 +359,3 @@
 #undef KILL_PROB
 #undef DESTROY_AI_PROB
 #undef MAROON_PROB
-#undef DOWNLOAD_PROB

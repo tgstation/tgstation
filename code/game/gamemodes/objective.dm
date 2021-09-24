@@ -649,40 +649,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/steal/special/find_target(dupe_search_range)
 	return set_target(pick(GLOB.possible_items_special))
 
-/datum/objective/download
-	name = "download"
-
-/datum/objective/download/proc/gen_amount_goal()
-	target_amount = rand(20,40)
-	update_explanation_text()
-	return target_amount
-
-/datum/objective/download/update_explanation_text()
-	..()
-	explanation_text = "Download [target_amount] research node\s."
-
-/datum/objective/download/check_completion()
-	var/datum/techweb/checking = new
-	var/list/datum/mind/owners = get_owners()
-	for(var/datum/mind/owner in owners)
-		if(ismob(owner.current))
-			var/mob/M = owner.current //Yeah if you get morphed and you eat a quantum tech disk with the RD's latest backup good on you soldier.
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H && (H.stat != DEAD) && istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
-					var/obj/item/clothing/suit/space/space_ninja/S = H.wear_suit
-					S.stored_research.copy_research_to(checking)
-			var/list/otherwise = M.GetAllContents()
-			for(var/obj/item/disk/tech_disk/TD in otherwise)
-				TD.stored_research.copy_research_to(checking)
-	return checking.researched_nodes.len >= target_amount
-
-/datum/objective/download/admin_edit(mob/admin)
-	var/count = input(admin,"How many nodes ?","Nodes",target_amount) as num|null
-	if(count)
-		target_amount = count
-	update_explanation_text()
-
 /datum/objective/capture
 	name = "capture"
 
@@ -949,7 +915,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		/datum/objective/survive,
 		/datum/objective/martyr,
 		/datum/objective/steal,
-		/datum/objective/download,
 		/datum/objective/nuclear,
 		/datum/objective/capture,
 		/datum/objective/absorb,

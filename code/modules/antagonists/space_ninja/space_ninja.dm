@@ -69,11 +69,13 @@
 	var/datum/objective/hijack = new /datum/objective/cyborg_hijack()
 	objectives += hijack
 
-	//Research stealing
-	var/datum/objective/download/research = new /datum/objective/download()
-	research.owner = owner
-	research.gen_amount_goal()
-	objectives += research
+	// Break into science and mess up their research.
+	var/datum/objective_item/steal/hdd_extraction/steal_hdd = locate() in GLOB.possible_items
+	if(steal_hdd)
+		var/datum/objective/steal/steal_objective = new
+		steal_objective.owner = owner
+		steal_objective.set_target(steal_hdd)
+		objectives += steal_objective
 
 	//Door jacks, flag will be set to complete on when the last door is hijacked
 	var/datum/objective/door_jack/doorobjective = new /datum/objective/door_jack()
