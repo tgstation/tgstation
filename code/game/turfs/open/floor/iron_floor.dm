@@ -370,17 +370,3 @@
 	base_icon_state = "sepia"
 	desc = "Well, the flow of time is normal on these tiles, weird."
 	floor_tile = /obj/item/stack/tile/iron/sepia
-
-/turf/open/floor/iron/galactoturf
-	name = "galactoturf"
-	desc = "The finest faux grass, for that natural feel (but not too natural)."
-	icon_state = "galactoturf"
-	base_icon_state = "galactoturf"
-
-/turf/open/floor/iron/galactoturf/dark
-	icon_state = "galactoturf_dark"
-	base_icon_state = "galactoturf_dark"
-
-/turf/open/floor/iron/galactoturf/light
-	icon_state = "galactoturf_light"
-	base_icon_state = "galactoturf_light"

@@ -181,6 +181,27 @@
 /turf/open/floor/plastic/setup_broken_states()
 	return list("plastic-damaged1","plastic-damaged2")
 
+/turf/open/floor/plastic/galactoturf
+	name = "galactoturf"
+	desc = "The finest faux grass, for that natural feel (but not too natural)."
+	icon_state = "galactoturf"
+	base_icon_state = "galactoturf"
+	footstep = FOOTSTEP_GRASS
+	barefootstep = FOOTSTEP_GRASS
+	clawfootstep = FOOTSTEP_GRASS
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plastic/galactoturf/setup_broken_states()
+	return
+
+/turf/open/floor/plastic/galactoturf/dark
+	icon_state = "galactoturf_dark"
+	base_icon_state = "galactoturf_dark"
+
+/turf/open/floor/plastic/galactoturf/light
+	icon_state = "galactoturf_light"
+	base_icon_state = "galactoturf_light"
+
 /turf/open/floor/eighties
 	name = "retro floor"
 	desc = "This one takes you back."

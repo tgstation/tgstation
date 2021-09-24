@@ -1010,6 +1010,39 @@
 	turf_type = /turf/open/floor/plastic
 	merge_type = /obj/item/stack/tile/plastic
 
+/obj/item/stack/tile/plastic/galactoturf
+	name = "galactoturf floor tile"
+	singular_name = "galactoturf floor tile"
+	desc = "The finest faux grass, for that natural feel (but not too natural)."
+	icon_state = "tile_galactoturf"
+	turf_type = /turf/open/floor/plastic/galactoturf
+	merge_type = /obj/item/stack/tile/plastic/galactoturf
+
+/obj/item/stack/tile/plastic/galactoturf_dark
+	name = "dark galactoturf floor tile"
+	singular_name = "dark galactoturf floor tile"
+	desc = "The finest faux grass, for that natural feel (but not too natural)."
+	icon_state = "tile_galactoturf_dark"
+	turf_type = /turf/open/floor/plastic/galactoturf/dark
+	merge_type = /obj/item/stack/tile/plastic/galactoturf_dark
+
+/obj/item/stack/tile/plastic/galactoturf_light
+	name = "light galactoturf floor tile"
+	singular_name = "light galactoturf floor tile"
+	desc = "The finest faux grass, for that natural feel (but not too natural)."
+	icon_state = "tile_galactoturf_light"
+	turf_type = /turf/open/floor/plastic/galactoturf/light
+	merge_type = /obj/item/stack/tile/plastic/galactoturf_light
+
+/obj/item/stack/tile/plastic/galactoturf/fifty
+	amount = 50
+
+/obj/item/stack/tile/plastic/galactoturf_dark/fifty
+	amount = 50
+
+/obj/item/stack/tile/plastic/galactoturf_light/fifty
+	amount = 50
+
 /obj/item/stack/tile/material
 	name = "floor tile"
 	singular_name = "floor tile"

@@ -1625,6 +1625,16 @@
 	)
 	crate_name = "neon carpet crate"
 
+/datum/supply_pack/service/galactoturf
+	name = "Galactoturf Faux Grass Crate"
+	desc = "Need a dash of nature in your artificially heated, artificially lit, and artificially oxygenated space? Pick up some Galactoturf, and experience the overwhelming rush of mediocrity that you can only get from faux grass."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/stack/tile/plastic/galactoturf/fifty,
+					/obj/item/stack/tile/plastic/galactoturf_light/fifty,
+					/obj/item/stack/tile/plastic/galactoturf_dark/fifty,
+	)
+	crate_name = "galactoturf crate"
+
 /datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights"
 	desc = "May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs."
