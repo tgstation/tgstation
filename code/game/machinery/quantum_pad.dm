@@ -20,7 +20,7 @@
 	var/map_pad_id = "" as text //what's my name
 	var/map_pad_link_id = "" as text //who's my friend
 
-/obj/machinery/quantumpad/Initialize()
+/obj/machinery/quantumpad/Initialize(mapload)
 	. = ..()
 	if(map_pad_id)
 		mapped_quantum_pads[map_pad_id] = src
@@ -211,12 +211,12 @@
 	target_pad = add_input_port("Target Pad", PORT_TYPE_ATOM)
 	failed = add_output_port("On Fail", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/quantumpad/register_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/quantumpad/register_usb_parent(atom/movable/shell)
 	. = ..()
-	if(istype(parent, /obj/machinery/quantumpad))
-		attached_pad = parent
+	if(istype(shell, /obj/machinery/quantumpad))
+		attached_pad = shell
 
-/obj/item/circuit_component/quantumpad/unregister_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/quantumpad/unregister_usb_parent(atom/movable/shell)
 	attached_pad = null
 	return ..()
 

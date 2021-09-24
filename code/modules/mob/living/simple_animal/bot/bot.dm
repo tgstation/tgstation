@@ -149,7 +149,7 @@
 	to_chat(src, span_userdanger("You turned off!"))
 	update_appearance()
 
-/mob/living/simple_animal/bot/Initialize()
+/mob/living/simple_animal/bot/Initialize(mapload)
 	. = ..()
 	GLOB.bots_list += src
 	// Give bots a fancy new ID card that can hold any access.
@@ -901,7 +901,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	use_power = NO_POWER_USE
 	anchored = FALSE
 
-/obj/machinery/bot_core/Initialize()
+/obj/machinery/bot_core/Initialize(mapload)
 	. = ..()
 	if(!isbot(loc))
 		return INITIALIZE_HINT_QDEL

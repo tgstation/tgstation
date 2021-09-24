@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if((!isnull(cartridge)))
 		. += span_notice("Ctrl+Shift-click to remove the cartridge.") //won't name cart on examine in case it's Detomatix
 
-/obj/item/pda/Initialize()
+/obj/item/pda/Initialize(mapload)
 	. = ..()
 
 	GLOB.PDAs += src

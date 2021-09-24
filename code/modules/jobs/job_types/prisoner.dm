@@ -16,7 +16,7 @@
 
 	exclusive_mail_goodies = TRUE
 	mail_goodies = list (
-		/obj/effect/spawner/lootdrop/prison_contraband = 1
+		/obj/effect/spawner/random/contraband/prison = 1
 	)
 
 	family_heirlooms = list(/obj/item/pen/blue)

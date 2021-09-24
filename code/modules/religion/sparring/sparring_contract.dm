@@ -16,7 +16,7 @@
 	///who has signed this contract. fills itself with WEAKREFS, to prevent hanging references
 	var/list/datum/weakref/signed_by = list(null, null)
 
-/obj/item/sparring_contract/Initialize()
+/obj/item/sparring_contract/Initialize(mapload)
 	. = ..()
 	name = "[GLOB.deity]'s sparring contract"
 
@@ -24,7 +24,7 @@
 	QDEL_NULL(signed_by)
 	var/datum/religion_sect/spar/sect = GLOB.religious_sect
 	sect?.existing_contract = null
-	. = ..()
+	return ..()
 
 /obj/item/sparring_contract/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

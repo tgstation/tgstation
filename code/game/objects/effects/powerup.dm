@@ -15,7 +15,7 @@
 	/// Cooldown for the powerup to respawn after it's been used
 	COOLDOWN_DECLARE(respawn_cooldown)
 
-/obj/effect/powerup/Initialize()
+/obj/effect/powerup/Initialize(mapload)
 	. = ..()
 	if(lifetime)
 		QDEL_IN(src, lifetime)

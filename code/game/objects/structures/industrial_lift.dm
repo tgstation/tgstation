@@ -551,7 +551,7 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	///icons for the tgui console to list out for what is at this location
 	var/list/tgui_icons = list()
 
-/obj/effect/landmark/tram/Initialize()
+/obj/effect/landmark/tram/Initialize(mapload)
 	. = ..()
 	GLOB.tram_landmarks += src
 

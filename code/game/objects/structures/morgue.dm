@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	var/message_cooldown
 	var/breakout_time = 600
 
-/obj/structure/bodycontainer/Initialize()
+/obj/structure/bodycontainer/Initialize(mapload)
 	. = ..()
 	GLOB.bodycontainers += src
 	recursive_organ_check(src)
@@ -158,7 +158,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	/// The cooldown to prevent this from spamming beeps.
 	COOLDOWN_DECLARE(next_beep)
 
-/obj/structure/bodycontainer/morgue/Initialize()
+/obj/structure/bodycontainer/morgue/Initialize(mapload)
 	. = ..()
 	connected = new/obj/structure/tray/m_tray(src)
 	connected.connected = src
@@ -217,7 +217,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	dir = SOUTH
 	var/id = 1
 
-/obj/structure/bodycontainer/crematorium/Initialize()
+/obj/structure/bodycontainer/crematorium/Initialize(mapload)
 	. = ..()
 	GLOB.crematoriums += src
 	connected = new /obj/structure/tray/c_tray(src)

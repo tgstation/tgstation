@@ -1,13 +1,19 @@
 
 ///Adds a memory to people that can see this happening, only use this for impactful or rare events to reduce overhead.
-/proc/add_memory_in_range(atom/source, range, memory_type, extra_info, story_value, memory_flags)
-	for(var/mob/living/carbon/memorizer in hearers(range, source))
+/proc/add_memory_in_range(atom/source, range, memory_type, extra_info, story_value, memory_flags, protagonist_memory_flags)
+	var/list/memorizers = hearers(range, source)
+	if(!isnull(protagonist_memory_flags))
+		var/mob/living/carbon/protagonist = extra_info[DETAIL_PROTAGONIST]
+		if(istype(protagonist))
+			memorizers -= protagonist
+			protagonist.mind?.add_memory(memory_type, extra_info, story_value, protagonist_memory_flags)
+	for(var/mob/living/carbon/memorizer in memorizers)
 		memorizer.mind?.add_memory(memory_type, extra_info, story_value, memory_flags)
 
 /**
  * add_memory
  *
- * Adds a memory to a mob's mind, called wherever the memory takes place (memory for catching on fire in mob's fire code, for example)
+ * Adds a memory to a mob's mind if conditions are met, called wherever the memory takes place (memory for catching on fire in mob's fire code, for example)
  * Argument:
  * * memory_type: defined string in memory_defines.dm, shows the memories.json file which story parts to use (and generally what type it is)
  * * extra_info: the contents of the story. You're gonna want at least the protagonist for who is the main character in the story
@@ -16,6 +22,17 @@
  * Returns the datum memory created, null otherwise.
  */
 /datum/mind/proc/add_memory(memory_type, extra_info, story_value, memory_flags)
+	if(current)
+		if(!(memory_flags & MEMORY_SKIP_UNCONSCIOUS) && current.stat >= UNCONSCIOUS)
+			return
+		var/is_blind = FALSE
+		if(memory_flags & MEMORY_CHECK_BLINDNESS && current.is_blind())
+			if(!(memory_flags & MEMORY_CHECK_DEAFNESS)) // Only check for blindness
+				return
+			is_blind = TRUE // Otherwise check if the mob is both blind and deaf
+		if(memory_flags & MEMORY_CHECK_DEAFNESS && HAS_TRAIT(current, TRAIT_DEAF) && (!(memory_flags & MEMORY_CHECK_BLINDNESS) || is_blind))
+			return
+
 	var/story_mood = MOODLESS_MEMORY
 	var/victim_mood = MOODLESS_MEMORY
 

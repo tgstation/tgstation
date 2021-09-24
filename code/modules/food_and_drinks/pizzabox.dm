@@ -35,7 +35,7 @@
 	/// Max bomb timer allower in seconds
 	var/bomb_timer_max = 20
 
-/obj/item/pizzabox/Initialize()
+/obj/item/pizzabox/Initialize(mapload)
 	. = ..()
 	if(pizza)
 		pizza = new pizza
@@ -296,7 +296,7 @@
 	wires = null
 	update_appearance()
 
-/obj/item/pizzabox/bomb/Initialize()
+/obj/item/pizzabox/bomb/Initialize(mapload)
 	. = ..()
 	if(!pizza)
 		var/randompizza = pick(subtypesof(/obj/item/food/pizza))
@@ -348,7 +348,7 @@
 	///List of ckeys and their favourite pizzas. e.g. pizza_preferences[ckey] = /obj/item/food/pizza/meat
 	var/static/list/pizza_preferences
 
-/obj/item/pizzabox/infinite/Initialize()
+/obj/item/pizzabox/infinite/Initialize(mapload)
 	. = ..()
 	if(!pizza_preferences)
 		pizza_preferences = list()

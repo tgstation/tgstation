@@ -307,7 +307,7 @@
 	generate_amount = 1
 	generate_delay = 40 //deciseconds
 
-/obj/item/reagent_containers/spray/waterflower/cyborg/Initialize()
+/obj/item/reagent_containers/spray/waterflower/cyborg/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -384,7 +384,7 @@
 	var/last_generate = 0
 	var/generate_delay = 10 //deciseconds
 
-/obj/item/reagent_containers/spray/chemsprayer/janitor/Initialize()
+/obj/item/reagent_containers/spray/chemsprayer/janitor/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -423,7 +423,7 @@
 	volume = 100
 	custom_premium_price = PAYCHECK_HARD * 2
 
-/obj/item/reagent_containers/spray/syndicate/Initialize()
+/obj/item/reagent_containers/spray/syndicate/Initialize(mapload)
 	. = ..()
 	icon_state = pick("sprayer_sus_1", "sprayer_sus_2", "sprayer_sus_3", "sprayer_sus_4", "sprayer_sus_5","sprayer_sus_6", "sprayer_sus_7", "sprayer_sus_8")
 

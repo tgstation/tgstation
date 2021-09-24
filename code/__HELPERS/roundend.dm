@@ -133,23 +133,24 @@
 		SSblackbox.record_feedback("associative", "antagonists", 1, antag_info)
 
 /datum/controller/subsystem/ticker/proc/record_nuke_disk_location()
-	var/obj/item/disk/nuclear/N = locate() in GLOB.poi_list
-	if(N)
+	var/disk_count = 1
+	for(var/obj/item/disk/nuclear/nuke_disk as anything in SSpoints_of_interest.real_nuclear_disks)
 		var/list/data = list()
-		var/turf/T = get_turf(N)
-		if(T)
-			data["x"] = T.x
-			data["y"] = T.y
-			data["z"] = T.z
-		var/atom/outer = get_atom_on_turf(N,/mob/living)
-		if(outer != N)
+		var/turf/disk_turf = get_turf(nuke_disk)
+		if(disk_turf)
+			data["x"] = disk_turf.x
+			data["y"] = disk_turf.y
+			data["z"] = disk_turf.z
+		var/atom/outer = get_atom_on_turf(nuke_disk, /mob/living)
+		if(outer != nuke_disk)
 			if(isliving(outer))
-				var/mob/living/L = outer
-				data["holder"] = L.real_name
+				var/mob/living/disk_holder = outer
+				data["holder"] = disk_holder.real_name
 			else
 				data["holder"] = outer.name
 
-		SSblackbox.record_feedback("associative", "roundend_nukedisk", 1 , data)
+		SSblackbox.record_feedback("associative", "roundend_nukedisk", disk_count, data)
+		disk_count++
 
 /datum/controller/subsystem/ticker/proc/gather_newscaster()
 	var/json_file = file("[GLOB.log_directory]/newscaster.json")
