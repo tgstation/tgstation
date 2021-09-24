@@ -503,7 +503,7 @@
 	name = "source code drive extraction kit"
 	desc = "A box containing all the equipment and instructions you need to infiltrate the R&D servers and steal valuable source code."
 
-/obj/item/storage/box/syndie_kit/supermatter/PopulateContents()
+/obj/item/storage/box/syndie_kit/hdd_extraction/PopulateContents()
 	new /obj/item/screwdriver/hdd_extraction(src)
 	new /obj/item/crowbar/hdd_extraction(src)
 	new /obj/item/wirecutters/hdd_extraction(src)

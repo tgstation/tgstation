@@ -76,7 +76,7 @@ SUBSYSTEM_DEF(research)
 	// Check if any master server has a source code HDD in it or if all master servers have just been plain old blown up.
 	// Start by assuming no source code, then set the modifier to 1 if we find one.
 	var/bitcoin_multiplier = no_source_code_income_modifier
-	for(var/obj/machinery/rnd/server/master/master_server as anything in servers)
+	for(var/obj/machinery/rnd/server/master/master_server as anything in master_servers)
 		if(master_server.source_code_hdd)
 			bitcoin_multiplier = 1
 			break
