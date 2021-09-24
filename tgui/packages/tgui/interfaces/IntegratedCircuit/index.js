@@ -162,6 +162,7 @@ export class IntegratedCircuit extends Component {
     const output_port = output_comp.output_ports[output_port_id-1];
     // Do not predict ports that do not match because there is no guarantee
     // that they will properly match.
+    // TODO: Implement proper prediction for this
     if (!input_port || input_port.type !== output_port.type) {
       return;
     }
