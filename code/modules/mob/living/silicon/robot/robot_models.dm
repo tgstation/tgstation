@@ -1,11 +1,11 @@
-/***************************************************************************************
+/**
  * # robot_model
  *
  * Definition of /obj/item/robot_model, which defines behavior for each model.
  * Deals with the creation and deletion of modules (tools).
  * Assigns modules and traits to a borg with a specific model selected.
  *
- ***************************************************************************************/
+ **/
 /obj/item/robot_model
 	name = "Default"
 	icon = 'icons/obj/module.dmi'
@@ -15,54 +15,47 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
-
 	///Host of this model
 	var/mob/living/silicon/robot/robot
-
+	///Icon of the module selection screen
 	var/model_select_icon = "nomod"
-
 	///Produces the icon for the borg and, if no special_light_key is set, the lights
 	var/cyborg_base_icon = "robot"
 	///If we want specific lights, use this instead of copying lights in the dmi
 	var/special_light_key
-
-// ------------------------------------------ Modules (tools)
 	///Holds all the usable modules (tools)
 	var/list/modules = list()
-
-	var/list/basic_modules = list() //a list of paths, converted to a list of instances on New()
-	var/list/emag_modules = list() //ditto
-
+	///Paths of modules to be created when the model is created
+	var/list/basic_modules = list()
+	///Paths of modules to be created on emagging
+	var/list/emag_modules = list()
 	///Modules not inherent to the robot configuration
-	var/list/added_modules = list() //kept when the configuration changes
+	var/list/added_modules = list()
+	///Storage types of the model
 	var/list/storages = list()
-
-// ------------------------------------------ Traits
 	///List of traits that will be applied to the mob if this model is used.
 	var/list/model_traits = null
-
+	///List of radio channels added to the cyborg
 	var/list/radio_channels = list()
-
+	///Do we have a magboot effect
 	var/magpulsing = FALSE
+	///Do we clean when we move
 	var/clean_on_move = FALSE
 	///Whether the borg loses tool slots with damage.
 	var/breakable_modules = TRUE
 	///Whether swapping to this configuration should lockcharge the borg
 	var/locked_transform = TRUE
-
+	///Can we be ridden
 	var/allow_riding = TRUE
 	///Whether the borg can stuff itself into disposals
 	var/canDispose = FALSE
-
-	var/did_feedback = FALSE
-
-// ------------------------------------------ Offsets
+	///The y offset of  the hat put on
 	var/hat_offset = -3
-
+	///The x offsets of a person riding the borg
 	var/list/ride_offset_x = list("north" = 0, "south" = 0, "east" = -6, "west" = 6)
+	///The y offsets of a person riding the borg
 	var/list/ride_offset_y = list("north" = 4, "south" = 4, "east" = 3, "west" = 3)
-
-	///List of borg skins, optional
+	///List of skins the borg can be reskinned to, optional
 	var/list/borg_skins
 
 /obj/item/robot_model/Initialize()
@@ -181,12 +174,11 @@
 		O.emp_act(severity)
 	..()
 
-// --------------------- Transformations
-/obj/item/robot_model/proc/transform_to(new_config_type)
+/obj/item/robot_model/proc/transform_to(new_config_type, forced = FALSE)
 	var/mob/living/silicon/robot/R = loc
 	var/obj/item/robot_model/RM = new new_config_type(R)
 	RM.robot = R
-	if(!RM.be_transformed_to(src))
+	if(!RM.be_transformed_to(src, forced))
 		qdel(RM)
 		return
 	R.model = RM
@@ -204,7 +196,7 @@
 		var/list/reskin_icons = list()
 		for(var/skin in borg_skins)
 			var/list/details = borg_skins[skin]
-			reskin_icons[skin] = image(icon = details[SKIN_ICON], icon_state = details[SKIN_ICON_STATE])
+			reskin_icons[skin] = image(icon = details[SKIN_ICON] || 'icons/mob/robots.dmi', icon_state = details[SKIN_ICON_STATE])
 		var/borg_skin = show_radial_menu(cyborg, cyborg, reskin_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg, old_model), radius = 38, require_near = TRUE)
 		if(!borg_skin)
 			return FALSE
@@ -226,7 +218,6 @@
 	for(var/i in old_model.added_modules)
 		added_modules += i
 		old_model.added_modules -= i
-	did_feedback = old_model.did_feedback
 	return TRUE
 
 /obj/item/robot_model/proc/do_transform_animation()
@@ -279,8 +270,6 @@
 		return FALSE
 	return TRUE
 
-// ------------------------------------------ Setting base model modules
-// --------------------- Clown
 /obj/item/robot_model/clown
 	name = "Clown"
 	basic_modules = list(
@@ -308,7 +297,6 @@
 	cyborg_base_icon = "clown"
 	hat_offset = -2
 
-// --------------------- Engineering
 /obj/item/robot_model/engineering
 	name = "Engineering"
 	basic_modules = list(
@@ -342,7 +330,6 @@
 	magpulsing = TRUE
 	hat_offset = -4
 
-// --------------------- Janitor
 /obj/item/robot_model/janitor
 	name = "Janitor"
 	basic_modules = list(
@@ -391,7 +378,6 @@
 	if(CL)
 		CL.reagents.add_reagent(/datum/reagent/lube, 2 * coeff)
 
-// --------------------- Medical
 /obj/item/robot_model/medical
 	name = "Medical"
 	basic_modules = list(
@@ -427,7 +413,6 @@
 		"Qualified Doctor" = list(SKIN_ICON_STATE = "qualified_doctor"),
 	)
 
-// --------------------- Mining
 /obj/item/robot_model/miner
 	name = "Miner"
 	basic_modules = list(
@@ -464,7 +449,6 @@
 	QDEL_NULL(mining_scanner)
 	return ..()
 
-// --------------------- Peacekeeper
 /obj/item/robot_model/peacekeeper
 	name = "Peacekeeper"
 	basic_modules = list(
@@ -487,7 +471,6 @@
 	to_chat(loc, "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
 	You are not a security member and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
 
-// --------------------- Security
 /obj/item/robot_model/security
 	name = "Security"
 	basic_modules = list(
@@ -520,7 +503,6 @@
 		else
 			T.charge_timer = 0
 
-// --------------------- Service
 /obj/item/robot_model/service
 	name = "Service"
 	basic_modules = list(
@@ -562,8 +544,6 @@
 	if(O)
 		O.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
 
-// ------------------------------------------ Syndicate
-// --------------------- Syndicate Assault
 /obj/item/robot_model/syndicate
 	name = "Syndicate Assault"
 	basic_modules = list(
@@ -591,7 +571,6 @@
 	var/mob/living/silicon/robot/Syndi = loc
 	Syndi.faction += "silicon" //ai is your bff now!
 
-// --------------------- Syndicate Medical
 /obj/item/robot_model/syndicate_medical
 	name = "Syndicate Medical"
 	basic_modules = list(
@@ -619,7 +598,6 @@
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
 
-// --------------------- Syndicate Saboteur
 /obj/item/robot_model/saboteur
 	name = "Syndicate Saboteur"
 	basic_modules = list(
@@ -655,7 +633,6 @@
 	hat_offset = -4
 	canDispose = TRUE
 
-// --------------------- Kiltborg
 /obj/item/robot_model/syndicate/kiltborg
 	name = "Highlander"
 	basic_modules = list(
