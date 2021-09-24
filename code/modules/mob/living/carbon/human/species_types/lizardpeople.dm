@@ -96,7 +96,7 @@
 	var/real_spines = C.dna.features["spines"]
 
 	. = ..()
-	C.mob_surgery_speed_mod -= 0.35
+	C.mob_surgery_speed_mod -= 0.15
 	RegisterSignal(C, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
 	RegisterSignal(C, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
 	// Special handler for loading preferences. If we're doing it from a preference load, we'll want
@@ -116,7 +116,7 @@
 		new_tail.Insert(C, TRUE, FALSE)
 
 /datum/species/lizard/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
-	C.mob_surgery_speed_mod += 0.35
+	C.mob_surgery_speed_mod += 0.15
 	UnregisterSignal(C, COMSIG_CARBON_GAIN_ORGAN)
 	UnregisterSignal(C, COMSIG_CARBON_LOSE_ORGAN)
 	C.remove_client_colour(/datum/client_colour/monochrome/lizard)
