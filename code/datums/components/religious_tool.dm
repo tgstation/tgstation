@@ -110,6 +110,7 @@
 	switch(action)
 		if("sect_select")
 			select_sect(usr, params["path"])
+			return TRUE //they picked a sect lets update so some weird spammy shit doesn't happen
 		if("perform_rite")
 			perform_rite(usr, params["path"])
 		else
@@ -139,7 +140,7 @@
 
 /// Perform the rite, called from [/datum/component/religious_tool/proc/AttemptActions]
 /datum/component/religious_tool/proc/perform_rite(mob/living/user, path)
-	if(user.mind.holy_role == HOLY_ROLE_DEACON)
+	if(user.mind.holy_role <= HOLY_ROLE_DEACON)
 		to_chat(user, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
 		return
 	if(performing_rite)

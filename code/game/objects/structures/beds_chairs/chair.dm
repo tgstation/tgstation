@@ -548,6 +548,6 @@
 
 /obj/item/chair/musical
 	name = "musical chair"
-	desc = "Oh, so this is the Yu-Gi-Oh rules where there are no rules and you can pick up and place the musical chairs as you please."
+	desc = "Oh, so this is like the fucked up Monopoly rules where there are no rules and you can pick up and place the musical chairs as you please."
 	particles = new /particles/musical_notes
 	origin_type = /obj/structure/chair/musical

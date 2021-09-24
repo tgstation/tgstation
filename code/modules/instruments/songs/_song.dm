@@ -226,16 +226,19 @@
 
 /**
  * Stops playing, terminating all sounds if in synthesized mode. Clears hearing_mobs.
+ *
+ * Arguments:
+ * * finished: boolean, whether the song ended via reaching the end.
  */
-/datum/song/proc/stop_playing()
+/datum/song/proc/stop_playing(finished = FALSE)
 	if(!playing)
 		return
 	playing = FALSE
 	if(!debug_mode)
 		compiled_chords = null
 	STOP_PROCESSING(SSinstruments, src)
-	SEND_SIGNAL(parent, COMSIG_SONG_END)
-	SEND_SIGNAL(user_playing, COMSIG_SONG_END)
+	SEND_SIGNAL(parent, COMSIG_SONG_END, finished)
+	SEND_SIGNAL(user_playing, COMSIG_SONG_END, finished)
 	terminate_all_sounds(TRUE)
 	hearing_mobs.len = 0
 	user_playing = null
@@ -244,25 +247,28 @@
  * Processes our song.
  */
 /datum/song/proc/process_song(wait)
-	if(!length(compiled_chords) || should_stop_playing(user_playing))
-		stop_playing()
+	if(!length(compiled_chords))
+		stop_playing(TRUE)
+		return
+	if(should_stop_playing(user_playing))
+		stop_playing(FALSE)
 		return
 	var/list/chord = compiled_chords[current_chord]
-	if(++elapsed_delay >= delay_by)
-		play_chord(chord)
-		elapsed_delay = 0
-		delay_by = tempodiv_to_delay(chord[length(chord)])
-		current_chord++
-		if(current_chord > length(compiled_chords))
-			if(repeat)
-				repeat--
-				current_chord = 1
-				SEND_SIGNAL(parent, COMSIG_SONG_REPEAT)
-				SEND_SIGNAL(user_playing, COMSIG_SONG_REPEAT)
-				return
-			else
-				stop_playing()
-				return
+	if(++elapsed_delay < delay_by)
+		return
+	play_chord(chord)
+	elapsed_delay = 0
+	delay_by = tempodiv_to_delay(chord[length(chord)])
+	current_chord++
+	if(current_chord <= length(compiled_chords))
+		return
+	if(!repeat)
+		stop_playing(TRUE)
+		return
+	repeat--
+	current_chord = 1
+	SEND_SIGNAL(parent, COMSIG_SONG_REPEAT, TRUE)
+	SEND_SIGNAL(user_playing, COMSIG_SONG_REPEAT, TRUE)
 
 /**
  * Converts a tempodiv to ticks to elapse before playing the next chord, taking into account our tempo.

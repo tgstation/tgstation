@@ -423,4 +423,9 @@
 		/datum/religion_rites/song_tuner/sooth,
 		/datum/religion_rites/song_tuner/pain,
 		/datum/religion_rites/song_tuner/lullaby,
+		/datum/religion_rites/song_tuner/power,
 	)
+
+/datum/religion_sect/music/on_conversion(mob/living/chap)
+	. = ..()
+	new /obj/item/choice_beacon/music(get_turf(chap))

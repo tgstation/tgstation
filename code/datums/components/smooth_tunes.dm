@@ -1,3 +1,6 @@
+///how many lines multiplied by tempo should at least be higher than this.
+#define LONG_ENOUGH_SONG 220
+
 ///Smooth tunes component! Applied to musicians to give the songs they play special effects, according to a rite!
 ///Comes with BARTICLES!!!
 /datum/component/smooth_tunes
@@ -11,8 +14,10 @@
 	var/particles_path
 	///the particle holder of the particle path (created when song starts) ((no i cant think of a better var name because i made the typepath and im perfect))
 	var/obj/effect/abstract/particle_holder/particle_holder
-
+	///a funny little glow applied to the instrument while playing
 	var/glow_color
+	///whether to call the rite's finish effect, only true when the song is long enough
+	var/viable_for_final_effect = FALSE
 
 /datum/component/smooth_tunes/Initialize(linked_songtuner_rite, allow_repeats, particles_path, glow_color)
 	if(!isinstrument(parent) && !isliving(parent))
@@ -41,9 +46,13 @@
 		return
 	if(istype(starting_song.parent, /obj/structure/musician))
 		return //TODO: make stationary instruments work with no hiccups
+
+	if(starting_song.lines.len * starting_song.tempo > LONG_ENOUGH_SONG)
+		viable_for_final_effect = TRUE
+
 	START_PROCESSING(SSobj, src) //even though WE aren't an object, our parent is!
-	if(linked_songtuner_rite.visible_message)
-		starting_song.parent.visible_message(linked_songtuner_rite.visible_message)
+	if(linked_songtuner_rite.song_start_message)
+		starting_song.parent.visible_message(linked_songtuner_rite.song_start_message)
 
 	///prevent more songs from being blessed concurrently
 	UnregisterSignal(parent, COMSIG_SONG_START)
@@ -61,9 +70,11 @@
 	linked_song.parent?.add_filter("smooth_tunes_outline", 9, list("type" = "outline", "color" = glow_color))
 
 ///Ends the effect when the song is no longer playing.
-/datum/component/smooth_tunes/proc/stop_singing(datum/source)
+/datum/component/smooth_tunes/proc/stop_singing(datum/source, finished)
 	SIGNAL_HANDLER
 	STOP_PROCESSING(SSobj, src)
+	if(finished && viable_for_final_effect)
+		linked_songtuner_rite.finish_effect(parent, linked_song)
 	linked_song.parent?.remove_filter("smooth_tunes_outline")
 	UnregisterSignal(linked_song.parent, list(
 		COMSIG_SONG_END,
@@ -77,3 +88,5 @@
 		linked_songtuner_rite.song_effect(parent, linked_song)
 	else
 		stop_singing()
+
+#undef LONG_ENOUGH_SONG

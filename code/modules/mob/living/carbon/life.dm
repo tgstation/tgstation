@@ -485,7 +485,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		drowsyness = max(drowsyness - (restingpwr * delta_time), 0)
 		blur_eyes(1 * delta_time)
 		if(DT_PROB(2.5, delta_time))
-			AdjustSleeping(100)
+			AdjustSleeping(10 SECONDS)
 
 	//Jitteriness
 	if(jitteriness)
