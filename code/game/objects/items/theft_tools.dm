@@ -110,7 +110,7 @@
 	Rumour has it that Nanotrasen are using their R&D Servers to create something awful! They've codenamed it Project Goon, whatever that means.<br>\
 	This cannot be allowed to stand. Below is all our intel for stealing their source code and crippling their research efforts:<br>\
 	<ul>\
-	<li>Locate the physical R&D Server mainframes. Intel sugests these are stored in specially cooled rooms deep within their Science department.</li>\
+	<li>Locate the physical R&D Server mainframes. Intel suggests these are stored in specially cooled rooms deep within their Science department.</li>\
 	<li>Nanotrasen is a corporation not known for subtlety in design. You should be able to identify the master server by any distinctive markings.</li>\
 	<li>Use the electrical screwdriver with the proprietary tip (provided) to open the server's front panel.</li>\
 	<li>Pry the hard drive loose from its secure housing with the claw bar (also provided).</li>\
