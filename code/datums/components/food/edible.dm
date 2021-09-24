@@ -492,4 +492,4 @@ Behavior that's still missing from this component that original food items had t
 		eater.visible_message(span_warning("[src] eats [eaten_food]!"), span_notice("You eat [eaten_food]."))
 		playsound(get_turf(eater),'sound/items/eatfood.ogg', rand(30,50), TRUE)
 		qdel(eaten_food)
-		return COMSIG_ATOM_EATEN
+		return COMPONENT_ATOM_EATEN
