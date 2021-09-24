@@ -14,16 +14,16 @@
 			return legcuffed
 	return null
 
-/mob/living/carbon/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1)
+/mob/living/carbon/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1, force_equip = FALSE)
 	for(var/slot in slots)
-		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0, disable_warning = TRUE))
+		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0, disable_warning = TRUE, force_equip = force_equip))
 			return slot
 	if(qdel_on_fail)
 		qdel(I)
 	return null
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
-/mob/living/carbon/equip_to_slot(obj/item/I, slot, initial = FALSE, redraw_mob = FALSE)
+/mob/living/carbon/equip_to_slot(obj/item/I, slot, initial = FALSE, redraw_mob = FALSE, force_equip = FALSE)
 	if(!slot)
 		return
 	if(!istype(I))
@@ -52,23 +52,39 @@
 	switch(slot)
 		if(ITEM_SLOT_BACK)
 			if(back)
-				return
+				if(!force_equip)
+					return
+				else
+					if(!dropItemToGround(back))
+						qdel(back)
 			back = I
 			update_inv_back()
 		if(ITEM_SLOT_MASK)
 			if(wear_mask)
-				return
+				if(!force_equip)
+					return
+				else
+					if(!dropItemToGround(wear_mask))
+						qdel(wear_mask)
 			wear_mask = I
 			wear_mask_update(I, toggle_off = 0)
 		if(ITEM_SLOT_HEAD)
 			if(head)
-				return
+				if(!force_equip)
+					return
+				else
+					if(!dropItemToGround(head))
+						qdel(head)
 			head = I
 			SEND_SIGNAL(src, COMSIG_CARBON_EQUIP_HAT, I)
 			head_update(I)
 		if(ITEM_SLOT_NECK)
 			if(wear_neck)
-				return
+				if(!force_equip)
+					return
+				else
+					if(!dropItemToGround(wear_neck))
+						qdel(wear_neck)
 			wear_neck = I
 			update_inv_neck(I)
 		if(ITEM_SLOT_HANDCUFFED)

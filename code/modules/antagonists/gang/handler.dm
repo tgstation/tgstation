@@ -15,6 +15,7 @@
 
 
 GLOBAL_VAR_INIT(deaths_during_shift, 0)
+///Forces the Families theme to be the one in this variable via variable editing. Used for debugging.
 GLOBAL_VAR(families_override_theme)
 
 /**
@@ -180,16 +181,16 @@ GLOBAL_VAR(families_override_theme)
 	var/list/gangs_to_use = current_theme.involved_gangs
 	var/amount_of_gangs = gangs_to_use.len // idk if the len will change mid loop w/ pick n take
 
-	for(var/i in 1 to amount_of_gangs)
+	for(var/_ in 1 to amount_of_gangs)
 		var/gang_to_use = pick_n_take(gangs_to_use)
-		for(var/i_two_the_sequel_starring_the_rock_and_adam_sandler in 1 to current_theme.starting_gangsters)
+		for(var/__ in 1 to current_theme.starting_gangsters)
 			if(!gangbangers.len)
 				break
-			var/datum/mind/gangbanger = pick_n_take(gangbangers)
+			var/datum/mind/gangster_mind = pick_n_take(gangbangers)
 			var/datum/antagonist/gang/new_gangster = new gang_to_use()
 			new_gangster.handler = src
 			new_gangster.starter_gangster = TRUE
-			gangbanger.add_antag_datum(new_gangster)
+			gangster_mind.add_antag_datum(new_gangster)
 
 		// see /datum/antagonist/gang/create_team() for how the gang team datum gets instantiated and added to our gangs list
 
@@ -426,7 +427,3 @@ GLOBAL_VAR(families_override_theme)
 	cops_arrived = TRUE
 	update_wanted_level(wanted_level) // gotta make sure everyone's wanted level display looks nice
 	return TRUE
-
-/// Hijacks the space cops' roundend results to say if cops / a gang won the round. Included in the same file as the gang_handler as it's far more related to the gamemode than it is to the beat cop datum; it's kind of hacky.
-/datum/antagonist/ert/families/beatcop/roundend_report_footer()
-	return "</div><div class='panel redborder'>" // </div> at the front not the back because this proc is intended for normal text not a whole new panel

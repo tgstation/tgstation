@@ -171,7 +171,9 @@
 	flags_inv = HIDEEARS|HIDEHAIR
 	var/earflaps = TRUE
 	cold_protection = HEAD
+	///Sprite visible when the ushanka flaps are folded up.
 	var/upsprite = "ushankaup"
+	///Sprite visible when the ushanka flaps are folded down.
 	var/downsprite = "ushankadown"
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 

@@ -454,14 +454,14 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/suit/osi
-	name = "O.S.I. body armor"
+	name = "\improper O.S.I. body armor"
 	desc = "You're beyond good and evil, super man. You work for the government. And you're a tool, boy, a tool! Built for a single purpose by the United States of shut your third fucking damn eye for a fucking reason! You can't teach a hammer to love nails, son. That dog don't hunt!"
 	icon_state = "osi_suit"
 	inhand_icon_state = "osi_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/suit/tmc
-	name = "Lost M.C. cut"
+	name = "\improper Lost M.C. cut"
 	desc = "Making sure everyone knows you're in the best biker gang this side of Alderney."
 	icon_state = "tmc_suit"
 	inhand_icon_state = "tmc_suit"

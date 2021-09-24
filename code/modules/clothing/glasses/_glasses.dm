@@ -562,13 +562,13 @@
 		var/mob/living/carbon/human/H = user
 		H.update_sight()
 
-/obj/item/clothing/glasses/sunglasses/osi
+/obj/item/clothing/glasses/osi
 	name = "O.S.I. Sunglasses"
 	desc = "There's no such thing as good news! Just bad news and... weird news.."
 	icon_state = "osi_glasses"
 	inhand_icon_state = "osi_glasses"
 
-/obj/item/clothing/glasses/sunglasses/phantom
+/obj/item/clothing/glasses/phantom
 	name = "Phantom Thief Mask"
 	desc = "Lookin' cool."
 	icon_state = "phantom_glasses"

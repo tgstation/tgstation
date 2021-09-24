@@ -1,5 +1,5 @@
-/mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
-	return dna.species.can_equip(I, slot, disable_warning, src, bypass_equip_delay_self)
+/mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, force_equip = FALSE)
+	return dna.species.can_equip(I, slot, disable_warning, src, bypass_equip_delay_self, force_equip)
 
 // Return the item currently in the slot ID
 /mob/living/carbon/human/get_item_by_slot(slot_id)
@@ -79,7 +79,7 @@
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 // Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
-/mob/living/carbon/human/equip_to_slot(obj/item/I, slot, initial = FALSE, redraw_mob = FALSE)
+/mob/living/carbon/human/equip_to_slot(obj/item/I, slot, initial = FALSE, redraw_mob = FALSE, force_equip = FALSE)
 	if(!..()) //a check failed or the item has already found its slot
 		return
 
@@ -87,23 +87,39 @@
 	switch(slot)
 		if(ITEM_SLOT_BELT)
 			if(belt)
-				return
+				if(!force_equip)
+					return
+				else
+					if(!dropItemToGround(belt))
+						qdel(belt)
 			belt = I
 			update_inv_belt()
 		if(ITEM_SLOT_ID)
 			if(wear_id)
-				return
+				if(!force_equip)
+					return
+				else
+					if(!dropItemToGround(wear_id))
+						qdel(wear_id)
 			wear_id = I
 			sec_hud_set_ID()
 			update_inv_wear_id()
 		if(ITEM_SLOT_EARS)
 			if(ears)
-				return
+				if(!force_equip)
+					return
+				else
+					if(!dropItemToGround(ears))
+						qdel(ears)
 			ears = I
 			update_inv_ears()
 		if(ITEM_SLOT_EYES)
 			if(glasses)
-				return
+				if(!force_equip)
+					return
+				else
+					if(!dropItemToGround(glasses))
+						qdel(glasses)
 			glasses = I
 			var/obj/item/clothing/glasses/G = I
 			if(G.glass_colour_type)
@@ -117,17 +133,29 @@
 			update_inv_glasses()
 		if(ITEM_SLOT_GLOVES)
 			if(gloves)
-				return
+				if(!force_equip)
+					return
+				else
+					if(!dropItemToGround(gloves))
+						qdel(gloves)
 			gloves = I
 			update_inv_gloves()
 		if(ITEM_SLOT_FEET)
 			if(shoes)
-				return
+				if(!force_equip)
+					return
+				else
+					if(!dropItemToGround(shoes))
+						qdel(shoes)
 			shoes = I
 			update_inv_shoes()
 		if(ITEM_SLOT_OCLOTHING)
 			if(wear_suit)
-				return
+				if(!force_equip)
+					return
+				else
+					if(!dropItemToGround(wear_suit))
+						qdel(wear_suit)
 
 			wear_suit = I
 
@@ -140,7 +168,11 @@
 			update_inv_wear_suit()
 		if(ITEM_SLOT_ICLOTHING)
 			if(w_uniform)
-				return
+				if(!force_equip)
+					return
+				else
+					if(!dropItemToGround(w_uniform))
+						qdel(w_uniform)
 			w_uniform = I
 			update_suit_sensors()
 			update_inv_w_uniform()
@@ -152,7 +184,11 @@
 			update_inv_pockets()
 		if(ITEM_SLOT_SUITSTORE)
 			if(s_store)
-				return
+				if(!force_equip)
+					return
+				else
+					if(!dropItemToGround(s_store))
+						qdel(s_store)
 			s_store = I
 			update_inv_s_store()
 		else

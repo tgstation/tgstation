@@ -305,6 +305,7 @@
 				ROLE_BROTHER,
 				ROLE_CHANGELING,
 				ROLE_CULTIST,
+				ROLE_FAMILIES,
 				ROLE_HERETIC,
 				ROLE_HIVE,
 				ROLE_INTERNAL_AFFAIRS,
@@ -322,7 +323,6 @@
 				ROLE_SYNDICATE,
 				ROLE_TRAITOR,
 				ROLE_WIZARD,
-				ROLE_FAMILIES,
 			),
 		)
 		for(var/department in long_job_lists)

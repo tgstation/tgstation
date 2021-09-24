@@ -603,11 +603,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			hair_hidden = TRUE
 
 	if(H.w_uniform)
-		var/obj/item/I = H.w_uniform
-		if(isclothing(I))
-			var/obj/item/clothing/C = I
-			dynamic_hair_suffix = C.dynamic_hair_suffix
-		if(I.flags_inv & HIDEHAIR)
+		var/obj/item/item_uniform = H.w_uniform
+		if(isclothing(item_uniform))
+			var/obj/item/clothing/clothing_object = item_uniform
+			dynamic_hair_suffix = clothing_object.dynamic_hair_suffix
+		if(item_uniform.flags_inv & HIDEHAIR)
 			hair_hidden = TRUE
 
 	if(H.wear_mask)
@@ -1028,13 +1028,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
+/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE, force_equip = FALSE)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
 
 	// if there's an item in the slot we want, fail
-	if(H.get_item_by_slot(slot))
+	if(H.get_item_by_slot(slot) && !force_equip)
 		return FALSE
 
 	// this check prevents us from equipping something to a slot it doesn't support, WITH the exceptions of storage slots (pockets, suit storage, and backpacks)

@@ -335,16 +335,16 @@
  *
  * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
  */
-/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE, initial = FALSE)
+/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE, initial = FALSE, force_equip = FALSE)
 	if(!istype(W) || QDELETED(W)) //This qdeleted is to prevent stupid behavior with things that qdel during init, like say stacks
 		return FALSE
-	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self))
+	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self, force_equip))
 		if(qdel_on_fail)
 			qdel(W)
 		else if(!disable_warning)
 			to_chat(src, span_warning("You are unable to equip that!"))
 		return FALSE
-	equip_to_slot(W, slot, initial, redraw_mob) //This proc should not ever fail.
+	equip_to_slot(W, slot, initial, redraw_mob, force_equip) //This proc should not ever fail.
 	return TRUE
 
 /**

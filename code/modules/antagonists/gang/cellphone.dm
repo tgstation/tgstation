@@ -54,8 +54,8 @@ GLOBAL_LIST_EMPTY(gangster_cell_phones)
 		to_chat(player_mob, span_gangradio("<b>[speaker.name]</b> \[CELL: [gang_id]\] says, \"[message]\""))
 
 /obj/item/gangster_cellphone/proc/say_message(message, atom/movable/speaker)
-	for(var/mob/living/carbon/human/hugh_mann in get_turf(src))
-		if(HAS_TRAIT(hugh_mann, TRAIT_DEAF))
+	for(var/mob/living/carbon/human/cellphone_hearer in get_turf(src))
+		if(HAS_TRAIT(cellphone_hearer, TRAIT_DEAF))
 			continue
-		to_chat(hugh_mann, span_gangradio("<b>[speaker.name]</b> \[CELL: [gang_id]\] says, \"[message]\""))
+		to_chat(cellphone_hearer, span_gangradio("<b>[speaker.name]</b> \[CELL: [gang_id]\] says, \"[message]\""))
 

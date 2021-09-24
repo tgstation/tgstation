@@ -1,12 +1,20 @@
 /datum/gang_theme
+	///The name of the theme.
 	var/name = "Gang Theme"
+	///All gangs in the theme, typepaths of gangs.
 	var/list/involved_gangs = list()
+	///The radio announcement played after 5 minutes.
 	var/description = "I dunno, some shit here."
-	var/list/gang_objectives = list() // assoc list, type = "objective"
-	var/list/bonus_items = list() // Items given to every gangster in this theme.
-	var/list/bonus_first_gangster_items = list() // Stuff given to the starting gangster at roundstart. Assoc list, type = list(item_type)
-	var/list/everyone_objective = null // If this isn't null, everyone gets this objective.
-	var/starting_gangsters = 3 // How many gangsters should each gang start with?
+	///The objectives for the gangs. Associative list, type = "objective"
+	var/list/gang_objectives = list()
+	///Stuff given to every gangster in this theme.
+	var/list/bonus_items = list()
+	///Stuff given to the starting gangster at roundstart. Assoc list, type = list(item_type)
+	var/list/bonus_first_gangster_items = list()
+	///If this isn't null, everyone gets this objective.
+	var/list/everyone_objective = null
+	///How many gangsters should each gang start with? Recommend to keep this in the ballpark of ensuring 9-10 total gangsters spawn.
+	var/starting_gangsters = 3
 
 /datum/gang_theme/goodfellas
 	name = "Goodfellas"
