@@ -194,11 +194,15 @@
 /obj/item/clothing/suit/armor/vest/ctf
 	name = "white shielded vest"
 	desc = "Standard issue vest for playing capture the flag."
-	icon_state = "ert_medical"
-	inhand_icon_state = "ert_medical"
+	icon = 'icons/mob/clothing/suits/ctf.dmi'
+	worn_icon = 'icons/mob/clothing/suits/ctf.dmi'
+	icon_state = "standard"
 	// Adding TRAIT_NODROP is done when the CTF spawner equips people
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0) // CTF gear gives no protection outside of the shield
 	allowed = null
+	greyscale_config = /datum/greyscale_config/ctf_standard
+	greyscale_config_worn = /datum/greyscale_config/ctf_standard_worn
+	greyscale_colors = "#ffffff"
 
 	has_shielding = TRUE
 	max_charges = 150
@@ -210,6 +214,9 @@
 /obj/item/clothing/suit/armor/vest/ctf/light
 	name = "light white shielded vest"
 	desc = "Lightweight vest for playing capture the flag."
+	icon_state = "light"
+	greyscale_config = /datum/greyscale_config/ctf_light
+	greyscale_config_worn = /datum/greyscale_config/ctf_light_worn
 	max_charges = 30
 	slowdown = -0.25
 
@@ -475,61 +482,61 @@
 // Regular
 /obj/item/clothing/suit/armor/vest/ctf/red
 	name = "red shielded vest"
-	icon_state = "ert_security"
 	inhand_icon_state = "ert_security"
 	shield_icon = "shield-red"
+	greyscale_colors = COLOR_VIVID_RED
 
 // Light
 /obj/item/clothing/suit/armor/vest/ctf/light/red
 	name = "light red shielded vest"
-	icon_state = "ert_security"
 	inhand_icon_state = "ert_security"
 	shield_icon = "shield-red"
+	greyscale_colors = COLOR_VIVID_RED
 
 // BLUE TEAM SUITS
 
 // Regular
 /obj/item/clothing/suit/armor/vest/ctf/blue
 	name = "blue shielded vest"
-	icon_state = "ert_command"
 	inhand_icon_state = "ert_command"
 	shield_icon = "shield-old"
+	greyscale_colors = COLOR_DARK_CYAN
 
 // Light
 /obj/item/clothing/suit/armor/vest/ctf/light/blue
 	name = "light blue shielded vest"
-	icon_state = "ert_command"
 	inhand_icon_state = "ert_command"
 	shield_icon = "shield-old"
+	greyscale_colors = COLOR_DARK_CYAN
 
 // GREEN TEAM SUITS
 
 // Regular
 /obj/item/clothing/suit/armor/vest/ctf/green
 	name = "green shielded vest"
-	icon_state = "ert_green"
 	inhand_icon_state = "ert_green"
 	shield_icon = "shield-green"
+	greyscale_colors = COLOR_LIME
 
 // Light
 /obj/item/clothing/suit/armor/vest/ctf/light/green
 	name = "light green shielded vest"
-	icon_state = "ert_green"
 	inhand_icon_state = "ert_green"
 	shield_icon = "shield-green"
+	greyscale_colors = COLOR_LIME
 
 // YELLOW TEAM SUITS
 
 // Regular
 /obj/item/clothing/suit/armor/vest/ctf/yellow
 	name = "yellow shielded vest"
-	icon_state = "ert_engineer"
 	inhand_icon_state = "ert_engineer"
 	shield_icon = "shield-yellow"
+	greyscale_colors = COLOR_VIVID_YELLOW
 
 // Light
 /obj/item/clothing/suit/armor/vest/ctf/light/yellow
 	name = "light yellow shielded vest"
-	icon_state = "ert_engineer"
 	inhand_icon_state = "ert_engineer"
 	shield_icon = "shield-yellow"
+	greyscale_colors = COLOR_VIVID_YELLOW

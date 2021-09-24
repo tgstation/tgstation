@@ -183,7 +183,7 @@
 	team_radio_freq = FREQ_CTF_GREEN
 
 /datum/outfit/ctf/marksman/green
-	name = "CTF Marksman (Blue)"
+	name = "CTF Marksman (Green)"
 	suit = /obj/item/clothing/suit/armor/vest/ctf/green
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/marksman/green
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/green
@@ -218,7 +218,7 @@
 	team_radio_freq = FREQ_CTF_YELLOW
 
 /datum/outfit/ctf/marksman/yellow
-	name = "CTF Marksman (Blue)"
+	name = "CTF Marksman (Yellow)"
 	suit = /obj/item/clothing/suit/armor/vest/ctf/yellow
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/marksman/yellow
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/yellow
