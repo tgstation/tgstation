@@ -206,6 +206,7 @@
 
 /obj/machinery/rnd/server/master/Initialize()
 	. = ..()
+	name = "\improper Master " + name
 	source_code_hdd = new(src)
 	SSresearch.master_servers += src
 
@@ -247,7 +248,7 @@
 				return
 		if(HDD_PRIED)
 			if(istype(attacking_item, /obj/item/wirecutters/hdd_extraction))
-				to_chat(user, span_notice("With [source_code_hdd] free, you begin to delicately cut wires with [attacking_item] while following the instructions on its display. It indicates there are [hdd_wires] wires left."))
+				to_chat(user, span_notice("With [source_code_hdd] free, you begin to delicately cut wires with [attacking_item]. Following the instructions on its display, there are [hdd_wires] wires left..."))
 				while(attacking_item.use_tool(src, user, 80, volume=100))
 					hdd_wires--
 
@@ -257,7 +258,7 @@
 						try_put_in_hand(source_code_hdd, user)
 						return
 
-					to_chat(user, span_notice("The [attacking_item] flashes up and you snip one of the wires. It indiates there are still [hdd_wires] wires left..."))
+					to_chat(user, span_notice("You cut the wire indicated by [attacking_item]. [hdd_wires] wires left..."))
 				return
 
 	return ..()
