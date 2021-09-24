@@ -94,6 +94,10 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/hugemushroomslice/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_WALKING_MUSHROOM, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
 /obj/item/food/popcorn
 	name = "popcorn"
 	desc = "Now let's find some cinema."

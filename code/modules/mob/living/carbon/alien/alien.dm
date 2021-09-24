@@ -128,6 +128,7 @@ Des: Removes all infected images from the alien.
 		new_xeno.real_name = real_name
 	if(mind)
 		mind.transfer_to(new_xeno)
+		mind.name = new_xeno.real_name
 	qdel(src)
 
 /mob/living/carbon/alien/can_hold_items(obj/item/I)

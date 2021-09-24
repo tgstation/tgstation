@@ -41,7 +41,7 @@ GLOBAL_VAR(station_nuke_source)
 	core = new /obj/item/nuke_core(src)
 	STOP_PROCESSING(SSobj, core)
 	update_appearance()
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 	previous_level = get_security_level()
 
 /obj/machinery/nuclearbomb/Destroy()
@@ -646,7 +646,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 	AddElement(/datum/element/bed_tuckable, 6, -6, 0)
 
 	if(!fake)
-		AddElement(/datum/element/point_of_interest)
+		SSpoints_of_interest.make_point_of_interest(src)
 		last_disk_move = world.time
 		START_PROCESSING(SSobj, src)
 

@@ -160,13 +160,13 @@ Buildable meters
 	var/list/potentially_conflicting_machines = list()
 	// Work out which machines we would potentially conflict with
 	for(var/obj/machinery/atmospherics/machine in loc)
+		// Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
+		if(machine.pipe_flags & flags & PIPING_ONE_PER_TURF)
+			to_chat(user, span_warning("Something is hogging the tile!"))
+			return TRUE
 		// skip checks if we don't overlap layers, either by being on the same layer or by something being on all layers
 		if(machine.piping_layer != piping_layer && !((machine.pipe_flags | flags) & PIPING_ALL_LAYER))
 			continue
-		// Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
-		if((machine.pipe_flags & flags & PIPING_ONE_PER_TURF))
-			to_chat(user, span_warning("Something is hogging the tile!"))
-			return TRUE
 		potentially_conflicting_machines += machine
 
 	// See if we would conflict with any of the potentially interacting machines

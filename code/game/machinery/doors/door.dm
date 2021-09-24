@@ -263,6 +263,9 @@
 /obj/machinery/door/attackby_secondary(obj/item/weapon, mob/user, params)
 	if (weapon.tool_behaviour == TOOL_WELDER)
 		try_to_weld_secondary(weapon, user)
+
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		
 	if (weapon.tool_behaviour == TOOL_CROWBAR)
 		var/forced_open = FALSE
 		if(istype(weapon, /obj/item/crowbar))
@@ -270,7 +273,10 @@
 			forced_open = crowbar.force_opens
 		try_to_crowbar_secondary(weapon, user, forced_open)
 
-	return ..()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	..()
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
