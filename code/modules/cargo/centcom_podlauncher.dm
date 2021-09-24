@@ -93,7 +93,7 @@
 	cam_screen.screen_loc = "[map_name]:1,1"
 	cam_plane_masters = list()
 	for(var/plane in subtypesof(/atom/movable/screen/plane_master))
-		var/atom/movable/screen/instance = new plane()
+		var/atom/movable/screen/instance = new plane(null, TRUE)
 		if (!renderLighting && instance.plane == LIGHTING_PLANE)
 			instance.alpha = 100
 		instance.assigned_map = map_name
