@@ -107,6 +107,11 @@
 	targetitem = /obj/item/nuke_core/supermatter_sliver
 	difficulty = 15
 
+/datum/objective_item/steal/hdd_extraction
+	name = "the source code for project goon from the master r&d server mainframe"
+	tragetitem = /obj/item/computer_hardware/hard_drive/cluster/hdd_theft
+	difficulty = 10
+
 /datum/objective_item/steal/supermatter/New()
 	special_equipment += /obj/item/storage/box/syndie_kit/supermatter
 	..()
