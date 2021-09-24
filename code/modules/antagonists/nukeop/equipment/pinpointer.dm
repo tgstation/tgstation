@@ -37,7 +37,7 @@
 	target = null
 	switch(mode)
 		if(TRACK_NUKE_DISK)
-			var/obj/item/disk/nuclear/N = locate() in GLOB.poi_list
+			var/obj/item/disk/nuclear/N = locate() in SSpoints_of_interest.real_nuclear_disks
 			target = N
 		if(TRACK_MALF_AI)
 			for(var/V in GLOB.ai_list)

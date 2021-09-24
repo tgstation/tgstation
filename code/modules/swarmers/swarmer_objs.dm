@@ -58,7 +58,7 @@
 
 /obj/structure/swarmer_beacon/Initialize()
 	. = ..()
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 
 /obj/structure/swarmer_beacon/attack_ghost(mob/user)
 	. = ..()

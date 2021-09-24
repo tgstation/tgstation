@@ -459,10 +459,6 @@
 /obj/machinery/vending/snack,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
-"bT" = (
-/obj/effect/spawner/randomarcade,
-/turf/open/floor/iron,
-/area/hallway/primary/central)
 "bU" = (
 /obj/machinery/airalarm{
 	locked = 0;
@@ -1074,14 +1070,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
 /area/engineering/storage)
-"gK" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8;
-	icon_state = "connector_map-2"
-	},
-/obj/machinery/portable_atmospherics/canister/plasma,
-/turf/open/floor/plating,
-/area/construction)
 "gW" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -1607,6 +1595,14 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
+"Kg" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8;
+	icon_state = "connector_map-2"
+	},
+/obj/machinery/portable_atmospherics/canister/plasma,
+/turf/open/floor/plating,
+/area/construction)
 "Kw" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
@@ -1753,6 +1749,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"Yf" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/turf/open/floor/iron,
+/area/hallway/primary/central)
 "Zc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -2791,7 +2791,7 @@ dn
 dn
 dn
 dn
-gK
+Kg
 dn
 dL
 cN
@@ -3584,7 +3584,7 @@ dV
 aI
 aI
 ak
-bT
+Yf
 bE
 co
 bO

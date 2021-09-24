@@ -567,6 +567,7 @@
 	var/datum/bank_account/department_account = SSeconomy.get_dep_account(payment_department)
 	if(department_account)
 		department_account.adjust_money(fair_market_price)
+	return TRUE
 
 /obj/machinery/proc/nap_violation(mob/violator)
 	return
@@ -630,6 +631,8 @@
 	if(user_unbuckle_mob(unbuckled,user))
 		return TRUE
 
+	return _try_interact(user)
+
 /obj/machinery/attack_ai(mob/user)
 	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !isAdminGhostAI(user))
 		return FALSE
@@ -688,15 +691,16 @@
 
 /obj/machinery/deconstruct(disassembled = TRUE)
 	if(flags_1 & NODECONSTRUCT_1)
-		return..()
+		return ..() //Just delete us, no need to call anything else.
 
 	on_deconstruction()
 	if(!LAZYLEN(component_parts))
-		return
+		return ..() //we don't have any parts.
 	spawn_frame(disassembled)
 	for(var/obj/item/part in component_parts)
 		part.forceMove(loc)
 	LAZYCLEARLIST(component_parts)
+	return ..()
 
 /**
  * Spawns a frame where this machine is. If the machine was not disassmbled, the

@@ -1,4 +1,0 @@
-author: "TheSmallBlue"
-delete-after: True
-changes: 
-  - rscadd: "Added the Proximity Pinpointer component, get the coordinates of any entity! (As long as its in view)"
