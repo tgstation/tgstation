@@ -4303,9 +4303,9 @@
 	req_access_txt = "20"
 	},
 /obj/effect/spawner/random/aimodule/harmless{
-	spawn_loot_split = 1;
 	spawn_loot_count = 3;
-	spawn_loot_double = 0
+	spawn_loot_double = 0;
+	spawn_loot_split = 1
 	},
 /obj/structure/table,
 /obj/structure/window/reinforced,
@@ -37376,9 +37376,9 @@
 	req_access_txt = "20"
 	},
 /obj/effect/spawner/random/aimodule/harmful{
-	spawn_loot_split = 1;
 	spawn_loot_count = 2;
-	spawn_loot_double = 0
+	spawn_loot_double = 0;
+	spawn_loot_split = 1
 	},
 /obj/item/ai_module/supplied/oxygen{
 	pixel_x = -3;
@@ -46480,12 +46480,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/spawner/random/structure/crate,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/spawner/random/structure/crate,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/port)

@@ -12922,18 +12922,6 @@
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
-"cwD" = (
-/obj/structure/closet/crate/trashcart/laundry,
-/obj/effect/spawner/random/contraband/prison,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/shoes/sneakers/orange,
-/obj/item/clothing/shoes/sneakers/orange,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "cwJ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /turf/open/floor/iron,
@@ -19325,17 +19313,6 @@
 /obj/structure/closet/crate,
 /turf/open/floor/iron,
 /area/cargo/storage)
-"eQL" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/random/contraband/prison,
-/obj/item/stack/license_plates/empty/fifty,
-/obj/item/stack/license_plates/empty/fifty,
-/obj/item/stack/license_plates/empty/fifty,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "eQS" = (
 /obj/machinery/holopad,
 /obj/effect/landmark/event_spawn,
@@ -20388,13 +20365,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/hallway/primary/tram/right)
-"fke" = (
-/obj/effect/spawner/random/structure/crate,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "fkL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -22135,26 +22105,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/security/courtroom)
-"fQq" = (
-/obj/structure/bed,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/item/bedsheet/red,
-/obj/effect/spawner/random/contraband/prison,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "fQs" = (
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating/asteroid,
@@ -24186,15 +24136,6 @@
 	},
 /turf/open/floor/iron,
 /area/service/bar)
-"gGw" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/effect/spawner/random/maintenance/seven,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "gGM" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -33961,16 +33902,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/research)
-"koH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
-/obj/item/flashlight,
-/obj/effect/spawner/random/maintenance/three,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "koJ" = (
 /obj/structure/railing/corner,
 /obj/effect/turf_decal/trimline/purple/filled/corner,
@@ -40215,30 +40146,6 @@
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
 /area/maintenance/central)
-"mYX" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/closet/secure_closet/contraband/armory,
-/obj/effect/spawner/random/contraband/armory,
-/obj/effect/spawner/random/maintenance/three,
-/obj/machinery/button/door/directional/east{
-	id = "armory";
-	name = "Armory Shutters";
-	req_access_txt = "3"
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "mZd" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -40267,14 +40174,6 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/white,
 /area/science/explab)
-"mZp" = (
-/obj/effect/spawner/random/vending/colavend,
-/obj/structure/cable,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "mZD" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/security_space_law,
@@ -41522,21 +41421,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/security/courtroom)
-"nCD" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/bin,
-/obj/effect/spawner/random/contraband/prison,
-/obj/item/trash/sosjerky,
-/obj/item/trash/boritos,
-/obj/item/trash/can,
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 10
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "nDr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/purple/filled/corner{
@@ -44324,15 +44208,6 @@
 	},
 /turf/open/floor/plating,
 /area/cargo/storage)
-"oHN" = (
-/obj/structure/closet,
-/obj/effect/spawner/random/clothing/costume,
-/obj/effect/decal/cleanable/dirt,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "oHS" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -49686,16 +49561,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/tcommsat/computer)
-"qII" = (
-/obj/effect/spawner/random/entertainment/arcade,
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 5
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "qIK" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/sign/poster/ripped{
@@ -50966,23 +50831,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/dark,
 /area/tcommsat/computer)
-"rjE" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/door/airlock/security{
-	name = "Brig";
-	req_access_txt = "63; 42"
-	},
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/red/filled/line,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-side-entrance"
-	},
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "rjI" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -53473,14 +53321,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/commons/storage/tools)
-"snC" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/trash/mess,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "snL" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/decal/cleanable/dirt,
@@ -56187,16 +56027,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/cargo/storage)
-"toO" = (
-/obj/structure/closet/crate/trashcart,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/contraband/prison,
-/obj/item/storage/box/donkpockets/donkpocketberry,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "toQ" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -59016,14 +58846,6 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
-"uux" = (
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/decal/cleanable/dirt,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "uuB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -88099,7 +87921,7 @@ ahI
 vyF
 ahI
 dhe
-koH
+dhe
 dhe
 aEc
 wcA
@@ -91172,7 +90994,7 @@ bJv
 dhe
 dhe
 dhe
-mZp
+dhe
 aaB
 xPs
 yiT
@@ -92983,7 +92805,7 @@ aCk
 aaB
 dhe
 dhe
-gGw
+dhe
 dhe
 dhe
 aEc
@@ -95547,7 +95369,7 @@ dhe
 dhe
 dhe
 dhe
-fke
+dhe
 aaB
 acg
 vzN
@@ -96838,7 +96660,7 @@ vLw
 aGF
 aBM
 aBM
-oHN
+dhe
 dhe
 dhe
 aHH
@@ -97337,7 +97159,7 @@ gOH
 wZm
 dhe
 dhe
-snC
+dhe
 aGF
 lPJ
 aac
@@ -100659,7 +100481,7 @@ dhe
 dhe
 dhe
 dhe
-fQq
+dhe
 dhe
 dhe
 amK
@@ -101431,7 +101253,7 @@ dhe
 dhe
 dhe
 dhe
-cwD
+dhe
 dhe
 amK
 ahC
@@ -102198,7 +102020,7 @@ dhe
 dhe
 dhe
 dhe
-nCD
+dhe
 dhe
 dhe
 dhe
@@ -103742,7 +103564,7 @@ dhe
 dhe
 dhe
 dhe
-eQL
+dhe
 dhe
 dhe
 dhe
@@ -103994,7 +103816,7 @@ aBM
 aBM
 dhe
 dhe
-qII
+dhe
 dhe
 dhe
 dhe
@@ -104264,7 +104086,7 @@ dhe
 dhe
 dhe
 dhe
-toO
+dhe
 dhe
 dhe
 dhe
@@ -105030,7 +104852,7 @@ dhe
 dhe
 dhe
 dhe
-uux
+dhe
 dhe
 dhe
 dhe
@@ -161316,7 +161138,7 @@ aBM
 dhe
 dhe
 dhe
-rjE
+dhe
 dhe
 dhe
 aFF
@@ -167224,7 +167046,7 @@ aYr
 aBM
 aBM
 dhe
-mYX
+dhe
 dhe
 amK
 mWs
