@@ -44,7 +44,7 @@
 	source.add_movespeed_modifier(/datum/movespeed_modifier/nerfed_pull)
 
 /datum/element/nerfed_pulling/proc/will_slow_down(datum/input)
-	return typecache[input.type]
+	return !isnull(input) && typecache[input.type]
 
 /datum/movespeed_modifier/nerfed_pull
 	multiplicative_slowdown = 5.5
