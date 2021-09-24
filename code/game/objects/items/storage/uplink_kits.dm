@@ -501,7 +501,7 @@
 
 /obj/item/storage/box/syndie_kit/hdd_extraction
 	name = "source code drive extraction kit"
-	dest = "A box containing all the equipment and instructions you need to infiltrate the R&D servers and steal valuable source code."
+	desc = "A box containing all the equipment and instructions you need to infiltrate the R&D servers and steal valuable source code."
 
 /obj/item/storage/box/syndie_kit/supermatter/PopulateContents()
 	new /obj/item/screwdriver/hdd_extraction(src)

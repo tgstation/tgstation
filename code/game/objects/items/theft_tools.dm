@@ -115,7 +115,7 @@
 	<li>Use the electrical screwdriver with the proprietary tip (provided) to open the server's front panel.</li>\
 	<li>Pry the hard drive loose from its secure housing with the claw bar (also provided).</li>\
 	<li>Finally, carefully cut any of the hard drive's connecting wires using the digital wirecutters (also provided).</li>\
-	<ul>
+	<ul>\
 	Removing this drive is guaranteed to cripple research efforts regardless of what data is contained on it.<br>\
 	There's no putting it back once you've extracted it. The crew are likely to be as mad as bees if they find out!<br>\
 	Survive the shift and extract the hard drive safely.<br>\

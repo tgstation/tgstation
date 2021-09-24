@@ -109,7 +109,7 @@
 
 /datum/objective_item/steal/hdd_extraction
 	name = "the source code for project goon from the master r&d server mainframe"
-	tragetitem = /obj/item/computer_hardware/hard_drive/cluster/hdd_theft
+	targetitem = /obj/item/computer_hardware/hard_drive/cluster/hdd_theft
 	difficulty = 10
 
 /datum/objective_item/steal/supermatter/New()
