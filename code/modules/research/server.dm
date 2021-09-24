@@ -227,7 +227,7 @@
 	switch(deconstruction_state)
 		if(HDD_PANEL_CLOSED)
 			if(istype(attacking_item, /obj/item/screwdriver/hdd_extraction))
-				to_chat(user, span_notice("Your [attacking_item] fits perfectly into the slots of [src]'s front panel screws. You can see [front_panel_screws] screws. You start unscrewing them..."))
+				to_chat(user, span_notice("Your [attacking_item.name] fits perfectly into the slots of [src]'s front panel screws. You can see [front_panel_screws] screws. You start unscrewing them..."))
 				while(attacking_item.use_tool(src, user, 100, volume=100))
 					front_panel_screws--
 
@@ -243,13 +243,13 @@
 				to_chat(user, span_notice("You can't see a place to insert [src]."))
 		if(HDD_PANEL_OPEN)
 			if(istype(attacking_item, /obj/item/crowbar/hdd_extraction))
-				to_chat(user, span_notice("You can see [source_code_hdd] in a secure housing through behind the front panel. Your tiny [attacking_item] barely fits inside. You begin to pry it loose..."))
+				to_chat(user, span_notice("You can see [source_code_hdd] in a secure housing through behind the front panel. Your tiny [attacking_item.name] barely fits inside. You begin to pry it loose..."))
 				if(attacking_item.use_tool(src, user, 200, volume=100))
 					to_chat(user, span_notice("You pry [source_code_hdd] free of its secure housing."))
 					deconstruction_state = HDD_PRIED
 				return
 			if(istype(attacking_item, /obj/item/computer_hardware/hard_drive/cluster/hdd_theft))
-				to_chat(user, span_notice("There's already a [source_code_hdd] in the server. No need to add a second."))
+				to_chat(user, span_notice("There's already a [source_code_hdd.name] in the server. No need to add a second."))
 		if(HDD_PRIED)
 			if(istype(attacking_item, /obj/item/wirecutters/hdd_extraction))
 				to_chat(user, span_notice("With [source_code_hdd] free, you begin to delicately cut wires with [attacking_item]. Following the instructions on its display, there are [hdd_wires] wires left..."))
@@ -265,7 +265,7 @@
 					to_chat(user, span_notice("You cut the wire indicated by [attacking_item]. [hdd_wires] wires left..."))
 				return
 			if(istype(attacking_item, /obj/item/computer_hardware/hard_drive/cluster/hdd_theft))
-				to_chat(user, span_notice("There's already a [source_code_hdd] in the server. No need to add a second."))
+				to_chat(user, span_notice("There's already a [source_code_hdd.name] in the server. No need to add a second."))
 		if(HDD_CUT_LOOSE)
 			if(istype(attacking_item, /obj/item/computer_hardware/hard_drive/cluster/hdd_theft))
 				to_chat(user, span_notice("[src] is too badly damaged to add [attacking_item]."))
