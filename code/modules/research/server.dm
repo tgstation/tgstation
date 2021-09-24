@@ -1,3 +1,8 @@
+#define HDD_PANEL_CLOSED 0
+#define HDD_PANEL_OPEN 1
+#define HDD_PRIED 2
+#define HDD_CUT_LOOSE 3
+
 /obj/machinery/rnd/server
 	name = "\improper R&D Server"
 	desc = "A computer system running a deep neural network that processes arbitrary information to produce data useable in the development of new technologies. In layman's terms, it makes research points."
@@ -45,6 +50,10 @@
 	. = ..()
 	refresh_working()
 	return
+
+/obj/machinery/rnd/server/attackby(obj/item/O, mob/user, params)
+	. = ..()
+
 
 /obj/machinery/rnd/server/proc/refresh_working()
 	if(machine_stat & EMPED || research_disabled || machine_stat & NOPOWER)
@@ -187,3 +196,73 @@
 	playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	obj_flags |= EMAGGED
 	to_chat(user, span_notice("You disable the security protocols."))
+
+/// Master R&D server. As long as this still exists and still holds the HDD for the theft objective, research points generate at normal speed. Destroy it or an antag steals the HDD? Half research speed.
+/obj/machinery/rnd/server/master
+	var/obj/item/computer_hardware/hard_drive/cluster/hdd_theft/source_code_hdd
+	var/deconstruction_state
+	var/front_panel_screws = 4
+	var/hdd_wires = 6
+
+/obj/machinery/rnd/server/master/Initialize()
+	. = ..()
+	source_code_hdd = new(src)
+	SSresearch.master_servers += src
+
+	add_overlay("RD-server-objective-stripes")
+
+/obj/machinery/rnd/server/master/Destroy()
+	if(source_code_hdd)
+		QDEL_NULL(source_code_hdd)
+
+	SSresearch.master_servers -= src
+
+	return ..()
+
+/obj/machinery/rnd/server/master/attackby(obj/item/attacking_item, mob/user, params)
+	if(!source_code_hdd)
+		return ..()
+
+	switch(deconstruction_state)
+		if(HDD_PANEL_CLOSED)
+			if(istype(attacking_item, /obj/item/screwdriver/hdd_extraction))
+				to_chat(user, span_notice("Your [attacking_item] fits perfectly into the slots of [src]'s front panel screws. You can see [front_panel_screws] screws. You start unscrewing them..."))
+				while(attacking_item.use_tool(src, user, 60, volume=100))
+					front_panel_screws--
+
+					if(front_panel_screws <= 0)
+						deconstruction_state = HDD_PANEL_OPEN
+						to_chat(user, span_notice("You remove the last screw from [src]'s front panel. It drops, held only by wires."))
+						add_overlay("RD-server-hdd-panel-open")
+						return
+
+					to_chat(user, span_notice("You remove a screw from [src]'s front panel. Only [front_panel_screws] left..."))
+				return
+		if(HDD_PANEL_OPEN)
+			if(istype(attacking_item, /obj/item/crowbar/hdd_extraction))
+				to_chat(user, span_notice("You can see [source_code_hdd] in a secure housing through behind the front panel. Your tiny [attacking_item] barely fits inside. You begin to pry it loose..."))
+				if(attacking_item.use_tool(src, user, 80, volume=100, amount=1))
+					to_chat(user, span_notice("You pry [source_code_hdd] free of its secure housing."))
+					deconstruction_state = HDD_PRIED
+				return
+		if(HDD_PRIED)
+			if(istype(attacking_item, /obj/item/wirecutters/hdd_extraction))
+				to_chat(user, span_notice("With [source_code_hdd] free, you begin to delicately cut wires with [attacking_item] while following the instructions on its display. It indicates there are [hdd_wires] wires left."))
+				while(attacking_item.use_tool(src, user, 80, volume=100, amount=1))
+					hdd_wires--
+
+					if(hdd_wires <= 0)
+						deconstruction_state = HDD_CUT_LOOSE
+						to_chat(user, span_notice("You cut the final wire and remove [source_code_hdd]."))
+						try_put_in_hand(source_code_hdd, user)
+						return
+
+					to_chat(user, span_notice("The [attacking_item] flashes up and you snip one of the wires. It indiates there are still [hdd_wires] wires left..."))
+				return
+
+	return ..()
+
+#undef HDD_PANEL_CLOSED
+#undef HDD_PANEL_OPEN
+#undef HDD_PRIED
+#undef HDD_CUT_LOOSE
