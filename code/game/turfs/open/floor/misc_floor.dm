@@ -190,17 +190,26 @@
 	barefootstep = FOOTSTEP_GRASS
 	clawfootstep = FOOTSTEP_GRASS
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	floor_tile = /obj/item/stack/tile/plastic/galactoturf
 
 /turf/open/floor/plastic/galactoturf/setup_broken_states()
-	return list()
+	return list("galactoturf")
 
 /turf/open/floor/plastic/galactoturf/dark
 	icon_state = "galactoturf_dark"
 	base_icon_state = "galactoturf_dark"
+	floor_tile = /obj/item/stack/tile/plastic/galactoturf_dark
+
+/turf/open/floor/plastic/galactoturf/dark/setup_broken_states()
+	return list("galactoturf_dark")
 
 /turf/open/floor/plastic/galactoturf/light
 	icon_state = "galactoturf_light"
 	base_icon_state = "galactoturf_light"
+	floor_tile = /obj/item/stack/tile/plastic/galactoturf_light
+
+/turf/open/floor/plastic/galactoturf/light/setup_broken_states()
+	return list("galactoturf_light")
 
 /turf/open/floor/eighties
 	name = "retro floor"
