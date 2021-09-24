@@ -255,7 +255,7 @@
 /area/start)
 "fY" = (
 /obj/effect/landmark/start/new_player,
-/turf/closed/indestructible/start_area,
+/turf/open/floor/plating,
 /area/start)
 "fZ" = (
 /obj/effect/landmark/ctf,
