@@ -1,10 +1,69 @@
 /***************************************************************************************
- * # robot_modules
+ * # robot_model
  *
+ * Definition of /obj/item/robot_model, which defines behavior for each model.
  * Deals with the creation and deletion of modules (tools).
  * Assigns modules and traits to a borg with a specific model selected.
  *
  ***************************************************************************************/
+/obj/item/robot_model
+	name = "Default"
+	icon = 'icons/obj/module.dmi'
+	icon_state = "std_mod"
+	w_class = WEIGHT_CLASS_GIGANTIC
+	inhand_icon_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	flags_1 = CONDUCT_1
+
+	///Host of this model
+	var/mob/living/silicon/robot/robot
+
+	var/model_select_icon = "nomod"
+
+	///Produces the icon for the borg and, if no special_light_key is set, the lights
+	var/cyborg_base_icon = "robot"
+	///If we want specific lights, use this instead of copying lights in the dmi
+	var/special_light_key
+
+// ------------------------------------------ Modules (tools)
+	///Holds all the usable modules (tools)
+	var/list/modules = list()
+
+	var/list/basic_modules = list() //a list of paths, converted to a list of instances on New()
+	var/list/emag_modules = list() //ditto
+
+	///Modules not inherent to the robot configuration
+	var/list/added_modules = list() //kept when the configuration changes
+	var/list/storages = list()
+
+// ------------------------------------------ Traits
+	///List of traits that will be applied to the mob if this model is used.
+	var/list/model_traits = null
+
+	var/list/radio_channels = list()
+
+	var/magpulsing = FALSE
+	var/clean_on_move = FALSE
+	///Whether the borg loses tool slots with damage.
+	var/breakable_modules = TRUE
+	///Whether swapping to this configuration should lockcharge the borg
+	var/locked_transform = TRUE
+
+	var/allow_riding = TRUE
+	///Whether the borg can stuff itself into disposals
+	var/canDispose = FALSE
+
+	var/did_feedback = FALSE
+
+// ------------------------------------------ Offsets
+	var/hat_offset = -3
+
+	var/list/ride_offset_x = list("north" = 0, "south" = 0, "east" = -6, "west" = 6)
+	var/list/ride_offset_y = list("north" = 4, "south" = 4, "east" = 3, "west" = 3)
+
+	///List of borg skins, optional
+	var/list/borg_skins
 
 /obj/item/robot_model/Initialize()
 	. = ..()
@@ -140,6 +199,30 @@
 	return RM
 
 /obj/item/robot_model/proc/be_transformed_to(obj/item/robot_model/old_model)
+	if(islist(borg_skins))
+		var/mob/living/silicon/robot/cyborg = loc
+		var/list/reskin_icons = list()
+		for(var/skin in borg_skins)
+			var/list/details = borg_skins[skin]
+			reskin_icons[skin] = image(icon = details[SKIN_ICON], icon_state = details[SKIN_ICON_STATE])
+		var/borg_skin = show_radial_menu(cyborg, cyborg, reskin_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg, old_model), radius = 38, require_near = TRUE)
+		if(!borg_skin)
+			return FALSE
+		var/list/details = borg_skins[borg_skin]
+		if(!isnull(details[SKIN_ICON_STATE]))
+			base_icon_state = details[SKIN_ICON_STATE]
+		if(!isnull(details[SKIN_ICON]))
+			cyborg.icon = details[SKIN_ICON]
+		if(!isnull(details[SKIN_PIXEL_X]))
+			cyborg.base_pixel_x = details[SKIN_PIXEL_X]
+		if(!isnull(details[SKIN_PIXEL_Y]))
+			cyborg.base_pixel_y = details[SKIN_PIXEL_Y]
+		if(!isnull(details[SKIN_LIGHT_KEY]))
+			special_light_key = details[SKIN_LIGHT_KEY]
+		if(!isnull(details[SKIN_HAT_OFFSET]))
+			hat_offset = details[SKIN_HAT_OFFSET]
+		if(!isnull(details[SKIN_TRAITS]))
+			model_traits += details[SKIN_TRAITS]
 	for(var/i in old_model.added_modules)
 		added_modules += i
 		old_model.added_modules -= i
@@ -339,19 +422,10 @@
 	model_select_icon = "medical"
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
-
-/obj/item/robot_model/medical/be_transformed_to(obj/item/robot_model/old_model)
-	var/mob/living/silicon/robot/cyborg = loc
-	var/list/medical_icons = list(
-		"Qualified Doctor" = image(icon = 'icons/mob/robots.dmi', icon_state = "qualified_doctor"),
-		)
-	var/medical_robot_icon = show_radial_menu(cyborg, cyborg, medical_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg, old_model), radius = 38, require_near = TRUE)
-	switch(medical_robot_icon)
-		if("Qualified Doctor")
-			cyborg_base_icon = "qualified_doctor"
-		else
-			return FALSE
-	return ..()
+	borg_skins = list(
+		"Machinified Doctor" = list(SKIN_ICON_STATE = "medical"),
+		"Qualified Doctor" = list(SKIN_ICON_STATE = "qualified_doctor"),
+	)
 
 // --------------------- Mining
 /obj/item/robot_model/miner
@@ -374,27 +448,12 @@
 	cyborg_base_icon = "miner"
 	model_select_icon = "miner"
 	hat_offset = 0
+	borg_skins = list(
+		"Asteroid Miner" = list(SKIN_ICON_STATE = "minerOLD"),
+		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin"),
+		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
+	)
 	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes.
-
-/obj/item/robot_model/miner/be_transformed_to(obj/item/robot_model/old_model)
-	var/mob/living/silicon/robot/cyborg = loc
-	var/list/miner_icons = list(
-		"Asteroid Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "minerOLD"),
-		"Spider Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "spidermin"),
-		"Lavaland Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "miner")
-		)
-	var/miner_robot_icon = show_radial_menu(cyborg, cyborg, miner_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg, old_model), radius = 38, require_near = TRUE)
-	switch(miner_robot_icon)
-		if("Asteroid Miner")
-			cyborg_base_icon = "minerOLD"
-			special_light_key = "miner"
-		if("Spider Miner")
-			cyborg_base_icon = "spidermin"
-		if("Lavaland Miner")
-			cyborg_base_icon = "miner"
-		else
-			return FALSE
-	return ..()
 
 /obj/item/robot_model/miner/rebuild_modules()
 	. = ..()
@@ -489,41 +548,19 @@
 	model_select_icon = "service"
 	special_light_key = "service"
 	hat_offset = 0
+	borg_skins = list(
+		"Bro" = list(SKIN_ICON_STATE = "brobot"),
+		"Butler" = list(SKIN_ICON_STATE = "service_m"),
+		"Kent" = list(SKIN_ICON_STATE = "kent", SKIN_LIGHT_KEY = "medical", SKIN_HAT_OFFSET = 3),
+		"Tophat" = list(SKIN_ICON_STATE = "tophat", SKIN_LIGHT_KEY = NONE, SKIN_HAT_OFFSET = INFINITY),
+		"Waitress" = list(SKIN_ICON_STATE = "service_f"),
+	)
 
 /obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
 	var/obj/item/reagent_containers/O = locate(/obj/item/reagent_containers/food/condiment/enzyme) in basic_modules
 	if(O)
 		O.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
-
-/obj/item/robot_model/service/be_transformed_to(obj/item/robot_model/old_model)
-	var/mob/living/silicon/robot/cyborg = loc
-	var/list/service_icons = list(
-		"Bro" = image(icon = 'icons/mob/robots.dmi', icon_state = "brobot"),
-		"Butler" = image(icon = 'icons/mob/robots.dmi', icon_state = "service_m"),
-		"Kent" = image(icon = 'icons/mob/robots.dmi', icon_state = "kent"),
-		"Tophat" = image(icon = 'icons/mob/robots.dmi', icon_state = "tophat"),
-		"Waitress" = image(icon = 'icons/mob/robots.dmi', icon_state = "service_f")
-		)
-	var/service_robot_icon = show_radial_menu(cyborg, cyborg, service_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg, old_model), radius = 38, require_near = TRUE)
-	switch(service_robot_icon)
-		if("Bro")
-			cyborg_base_icon = "brobot"
-		if("Butler")
-			cyborg_base_icon = "service_m"
-		if("Kent")
-			cyborg_base_icon = "kent"
-			special_light_key = "medical"
-			hat_offset = 3
-		if("Tophat")
-			cyborg_base_icon = "tophat"
-			special_light_key = null
-			hat_offset = INFINITY //He is already wearing a hat
-		if("Waitress")
-			cyborg_base_icon = "service_f"
-		else
-			return FALSE
-	return ..()
 
 // ------------------------------------------ Syndicate
 // --------------------- Syndicate Assault
