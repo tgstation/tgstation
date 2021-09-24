@@ -53,23 +53,18 @@
 		screen_maps[screen_obj.assigned_map] = list()
 	// NOTE: Possibly an expensive operation
 	var/list/screen_map = screen_maps[screen_obj.assigned_map]
-	if(!screen_map.Find(screen_obj))
-		screen_map += screen_obj
-	if(!screen.Find(screen_obj))
-		screen += screen_obj
+	screen_map |= screen_obj
+	screen |= screen_obj
 
 /**
  * Clears the map of registered screen objects.
- *
- * Not really needed most of the time, as the client's screen list gets reset
- * on relog. any of the buttons are going to get caught by garbage collection
- * anyway. they're effectively qdel'd.
  */
 /client/proc/clear_map(map_name)
-	if(!map_name || !(map_name in screen_maps))
+	if(!map_name || !screen_maps[map_name])
 		return FALSE
 	for(var/atom/movable/screen/screen_obj in screen_maps[map_name])
 		screen_maps[map_name] -= screen_obj
+		screen -= screen_obj
 		if(screen_obj.del_on_map_removal)
 			qdel(screen_obj)
 	screen_maps -= map_name

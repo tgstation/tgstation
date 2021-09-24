@@ -328,7 +328,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/pmv = CONFIG_GET(flag/preference_map_voting)
 	if(pmv)
 		for (var/client/c in GLOB.clients)
-			var/vote = c.prefs.preferred_map
+			var/vote = c.prefs.read_preference(/datum/preference/choiced/preferred_map)
 			if (!vote)
 				if (global.config.defaultmap)
 					mapvotes[global.config.defaultmap.map_name] += 1
@@ -595,7 +595,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	return isolated_ruins_z.z_value
 
 /datum/controller/subsystem/mapping/proc/spawn_maintenance_loot()
-	for(var/obj/effect/spawner/lootdrop/maintenance/spawner as anything in GLOB.maintenance_loot_spawners)
+	for(var/obj/effect/spawner/random/maintenance/spawner as anything in GLOB.maintenance_loot_spawners)
 		CHECK_TICK
 
 		spawner.spawn_loot()

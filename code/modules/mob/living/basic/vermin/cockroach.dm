@@ -31,7 +31,7 @@
 	. = ..()
 	AddElement(/datum/element/death_drops, list(/obj/effect/decal/cleanable/insectguts))
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
-	AddElement(/datum/element/basic_body_temp_sensetive, 270, INFINITY)
+	AddElement(/datum/element/basic_body_temp_sensitive, 270, INFINITY)
 	AddComponent(/datum/component/squashable, squash_chance = 50, squash_damage = 1)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -51,20 +51,11 @@
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/cockroach,
 		/datum/ai_planning_subtree/find_and_hunt_target
 )
-
-
-/datum/ai_controller/basic_controller/cockroach/PerformIdleBehavior(delta_time)
-	. = ..()
-	var/mob/living/living_pawn = pawn
-
-	if(DT_PROB(25, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
-		var/move_dir = pick(GLOB.alldirs)
-		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
-
 
 /obj/projectile/glockroachbullet
 	damage = 10 //same damage as a hivebot

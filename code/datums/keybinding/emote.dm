@@ -10,7 +10,6 @@
 	emote_key = initial(faketype.key)
 	name = initial(faketype.key)
 	full_name = capitalize(initial(faketype.key))
-	description = "Do the emote '*[emote_key]'"
 
 /datum/keybinding/emote/down(client/user)
 	. = ..()

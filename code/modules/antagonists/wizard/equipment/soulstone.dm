@@ -88,6 +88,15 @@
 	one_use = TRUE
 	grab_sleeping = FALSE
 
+/obj/item/soulstone/anybody/chaplain/sparring
+	icon_state = "purified_soulstone"
+	theme = THEME_HOLY
+
+/obj/item/soulstone/anybody/sparring/Initialize(mapload)
+	. = ..()
+	name = "[GLOB.deity]'s punishment"
+	desc = "A prison for those who lost [GLOB.deity]'s game."
+
 /obj/item/soulstone/anybody/mining
 	grab_sleeping = FALSE
 
@@ -260,7 +269,8 @@
 		return TRUE
 	else
 		to_chat(user, "[span_userdanger("Capture failed!")]: The soul has already fled its mortal frame. You attempt to bring it back...")
-		return getCultGhost(victim,user)
+		INVOKE_ASYNC(src, .proc/getCultGhost, victim, user)
+		return TRUE //it'll probably get someone ;)
 
 ///captures a shade that was previously released from a soulstone.
 /obj/item/soulstone/proc/capture_shade(mob/living/simple_animal/shade/shade, mob/user)

@@ -48,16 +48,28 @@ export class Dropdown extends Component {
 
   buildMenu() {
     const { options = [] } = this.props;
-    const ops = options.map(option => (
-      <Box
-        key={option}
-        className="Dropdown__menuentry"
-        onClick={() => {
-          this.setSelected(option);
-        }}>
-        {option}
-      </Box>
-    ));
+    const ops = options.map(option => {
+      let displayText, value;
+
+      if (typeof option === "string") {
+        displayText = option;
+        value = option;
+      } else {
+        displayText = option.displayText;
+        value = option.value;
+      }
+
+      return (
+        <Box
+          key={value}
+          className="Dropdown__menuentry"
+          onClick={() => {
+            this.setSelected(value);
+          }}>
+          {displayText}
+        </Box>
+      );
+    });
     return ops.length ? ops : 'No Options Found';
   }
 
@@ -67,12 +79,16 @@ export class Dropdown extends Component {
       icon,
       iconRotation,
       iconSpin,
+      clipSelectedText = true,
       color = 'default',
+      dropdownStyle,
       over,
       noscroll,
       nochevron,
       width,
+      openWidth = width,
       onClick,
+      onOpen,
       selected,
       disabled,
       displayText,
@@ -90,7 +106,7 @@ export class Dropdown extends Component {
         ref={menu => { this.menuRef = menu; }}
         tabIndex="-1"
         style={{
-          'width': width,
+          'width': openWidth,
         }}
         className={classes([
           noscroll && 'Dropdown__menu-noscroll' || 'Dropdown__menu',
@@ -101,9 +117,9 @@ export class Dropdown extends Component {
     ) : null;
 
     return (
-      <div className="Dropdown">
+      <div className="Dropdown" style={dropdownStyle}>
         <Box
-          width={width}
+          width={this.state.open ? openWidth : width}
           className={classes([
             'Dropdown__control',
             'Button',
@@ -112,11 +128,15 @@ export class Dropdown extends Component {
             className,
           ])}
           {...rest}
-          onClick={() => {
+          onClick={(event) => {
             if (disabled && !this.state.open) {
               return;
             }
             this.setOpen(!this.state.open);
+
+            if (props.onOpen) {
+              props.onOpen(event);
+            }
           }}>
           {icon && (
             <Icon
@@ -125,7 +145,9 @@ export class Dropdown extends Component {
               spin={iconSpin}
               mr={1} />
           )}
-          <span className="Dropdown__selected-text">
+          <span className="Dropdown__selected-text" style={{
+            "overflow": clipSelectedText ? "hidden" : "visible",
+          }}>
             {displayText ? displayText : this.state.selected}
           </span>
           {!!nochevron || (

@@ -487,12 +487,12 @@
 "bz" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/cleanable/cobweb,
-/obj/effect/spawner/lootdrop/space/cashmoney,
+/obj/effect/spawner/random/entertainment/money_large,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "bA" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/space/languagebook,
+/obj/effect/spawner/random/exotic/languagebook,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "bB" = (
@@ -590,7 +590,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/space/languagebook,
+/obj/effect/spawner/random/exotic/languagebook,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bP" = (
@@ -714,7 +714,7 @@
 /area/ruin/space/has_grav/hellfactory)
 "cj" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/space/material,
+/obj/effect/spawner/random/engineering/material_rare,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "ck" = (
@@ -960,7 +960,7 @@
 /obj/structure/rack,
 /obj/item/stack/wrapping_paper,
 /obj/item/stack/package_wrap,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "oH" = (
