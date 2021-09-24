@@ -202,7 +202,7 @@
 			return FALSE
 		var/list/details = borg_skins[borg_skin]
 		if(!isnull(details[SKIN_ICON_STATE]))
-			base_icon_state = details[SKIN_ICON_STATE]
+			cyborg_base_icon = details[SKIN_ICON_STATE]
 		if(!isnull(details[SKIN_ICON]))
 			cyborg.icon = details[SKIN_ICON]
 		if(!isnull(details[SKIN_PIXEL_X]))
