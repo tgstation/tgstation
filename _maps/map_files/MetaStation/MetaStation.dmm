@@ -29749,11 +29749,11 @@
 	pixel_y = -23
 	},
 /obj/machinery/door/window{
+	atom_integrity = 300;
 	base_state = "leftsecure";
 	dir = 8;
 	icon_state = "leftsecure";
 	name = "Primary AI Core Access";
-	atom_integrity = 300;
 	req_access_txt = "16"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -41399,11 +41399,11 @@
 /area/medical/chemistry)
 "mLk" = (
 /obj/machinery/door/window{
+	atom_integrity = 300;
 	base_state = "rightsecure";
 	dir = 4;
 	icon_state = "rightsecure";
 	name = "Primary AI Core Access";
-	atom_integrity = 300;
 	req_access_txt = "16"
 	},
 /obj/machinery/camera{
@@ -58516,12 +58516,12 @@
 	pixel_x = 8
 	},
 /obj/machinery/door/window{
+	atom_integrity = 300;
 	base_state = "leftsecure";
 	dir = 8;
 	icon_state = "leftsecure";
 	layer = 4.1;
 	name = "Tertiary AI Core Access";
-	atom_integrity = 300;
 	pixel_x = -3;
 	req_access_txt = "16"
 	},
@@ -67563,6 +67563,11 @@
 	},
 /turf/open/floor/wood,
 /area/service/bar)
+"vWA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/machinery/rnd/server/master,
+/turf/open/floor/circuit/telecomms/server,
+/area/science/server)
 "vWI" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
@@ -70973,12 +70978,12 @@
 	pixel_x = -8
 	},
 /obj/machinery/door/window{
+	atom_integrity = 300;
 	base_state = "rightsecure";
 	dir = 4;
 	icon_state = "rightsecure";
 	layer = 4.1;
 	name = "Secondary AI Core Access";
-	atom_integrity = 300;
 	pixel_x = 4;
 	req_access_txt = "16"
 	},
@@ -108864,7 +108869,7 @@ dwL
 dwL
 dwL
 dwL
-vRa
+vWA
 ped
 tag
 rzZ

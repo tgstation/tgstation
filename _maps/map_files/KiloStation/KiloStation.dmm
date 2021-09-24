@@ -4303,9 +4303,9 @@
 	req_access_txt = "20"
 	},
 /obj/effect/spawner/random/aimodule/harmless{
-	spawn_loot_split = 1;
 	spawn_loot_count = 3;
-	spawn_loot_double = 0
+	spawn_loot_double = 0;
+	spawn_loot_split = 1
 	},
 /obj/structure/table,
 /obj/structure/window/reinforced,
@@ -27668,6 +27668,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/security/interrogation)
+"dif" = (
+/obj/machinery/rnd/server/master,
+/turf/open/floor/circuit/green/telecomms/mainframe,
+/area/science/server)
 "dik" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral,
@@ -37376,9 +37380,9 @@
 	req_access_txt = "20"
 	},
 /obj/effect/spawner/random/aimodule/harmful{
-	spawn_loot_split = 1;
 	spawn_loot_count = 2;
-	spawn_loot_double = 0
+	spawn_loot_double = 0;
+	spawn_loot_split = 1
 	},
 /obj/item/ai_module/supplied/oxygen{
 	pixel_x = -3;
@@ -122914,7 +122918,7 @@ aim
 bkd
 ykB
 kuB
-baJ
+dif
 bcz
 baJ
 iOj
