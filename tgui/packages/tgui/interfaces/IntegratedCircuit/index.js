@@ -108,7 +108,7 @@ export class IntegratedCircuit extends Component {
     this.handlePortDrag(event);
 
     this.timeUntilPortReleaseWorks
-      = performance.now() + TIME_UNTIL_PORT_RELEASE_WORKS;
+      = Date.now() + TIME_UNTIL_PORT_RELEASE_WORKS;
 
     window.addEventListener('mousemove', this.handlePortDrag);
     window.addEventListener('mouseup', this.handlePortRelease);
@@ -181,7 +181,7 @@ export class IntegratedCircuit extends Component {
   handlePortRelease(event) {
     window.removeEventListener('mouseup', this.handlePortRelease);
 
-    if (this.timeUntilPortReleaseWorks > performance.now()) {
+    if (this.timeUntilPortReleaseWorks > Date.now()) {
       return;
     }
 
