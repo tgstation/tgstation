@@ -1345,7 +1345,9 @@
 #define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity, modifiers)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
-
+///FROM mob/living/simple_animal/hostile/ooze/eat_atom(): (atom/target, edible_flags)
+#define COMSIG_OOZE_EAT_ATOM "ooze_eat_atom"
+	#define COMPONENT_ATOM_EATEN  (1<<0)
 
 
 // Aquarium related signals
