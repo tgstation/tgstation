@@ -338,6 +338,7 @@
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "electrical_screwdriver"
 	toolspeed = 0.5
+	random_color = FALSE
 
 /// HDD extraction objective crowbar. Pries the HDD loose of its enclosure.
 /obj/item/crowbar/hdd_extraction
@@ -357,3 +358,4 @@
 	icon_state = "digital_wirecutters"
 	toolspeed = 0.25
 	w_class = WEIGHT_CLASS_TINY
+	random_color = FALSE
