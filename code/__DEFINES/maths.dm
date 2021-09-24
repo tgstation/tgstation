@@ -221,3 +221,5 @@
 // )
 
 #define GET_TRUE_DIST(a, b) (a == null || b == null) ? -1 : max(abs(a.x -b.x), abs(a.y-b.y), abs(a.z-b.z))
+
+#define INVERSE(a) (1 / a)
