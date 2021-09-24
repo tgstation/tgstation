@@ -564,14 +564,21 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			var/designated_type = /obj/item/circuit_component/getter
 			if(params["is_setter"])
 				designated_type = /obj/item/circuit_component/setter
-			var/obj/item/circuit_component/component = new designated_type(src, params["variable"])
-			component.rel_x = text2num(params["rel_x"])
-			component.rel_y = text2num(params["rel_y"])
+			var/obj/item/circuit_component/component = new designated_type(src)
 			if(!add_component(component, usr))
 				qdel(component)
 				return
+			if(params["is_setter"])
+				var/obj/item/circuit_component/setter/setter = component
+				setter.variable_name.set_input(params["variable"])
+			else
+				var/obj/item/circuit_component/getter/getter = component
+				getter.variable_name.set_input(params["variable"])
+			component.rel_x = text2num(params["rel_x"])
+			component.rel_y = text2num(params["rel_y"])
 			RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/clear_setter_or_getter)
 			setter_and_getter_count++
+			return TRUE
 		if("move_screen")
 			screen_x = text2num(params["screen_x"])
 			screen_y = text2num(params["screen_y"])

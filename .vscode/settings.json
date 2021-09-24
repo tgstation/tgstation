@@ -13,7 +13,9 @@
 		"source.fixAll.eslint": true
 	},
 	"workbench.editorAssociations": {
-		"*.dmi": "imagePreview.previewEditor"
+		"*.dmi": "imagePreview.previewEditor",
+		"*.ipynb": "jupyter.notebook.ipynb",
+		"*.eot": "default"
 	},
 	"files.eol": "\n",
 	"files.insertFinalNewline": true,
