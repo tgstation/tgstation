@@ -200,7 +200,7 @@
 /// Master R&D server. As long as this still exists and still holds the HDD for the theft objective, research points generate at normal speed. Destroy it or an antag steals the HDD? Half research speed.
 /obj/machinery/rnd/server/master
 	var/obj/item/computer_hardware/hard_drive/cluster/hdd_theft/source_code_hdd
-	var/deconstruction_state
+	var/deconstruction_state = HDD_PANEL_CLOSED
 	var/front_panel_screws = 4
 	var/hdd_wires = 6
 
@@ -241,14 +241,14 @@
 		if(HDD_PANEL_OPEN)
 			if(istype(attacking_item, /obj/item/crowbar/hdd_extraction))
 				to_chat(user, span_notice("You can see [source_code_hdd] in a secure housing through behind the front panel. Your tiny [attacking_item] barely fits inside. You begin to pry it loose..."))
-				if(attacking_item.use_tool(src, user, 80, volume=100, amount=1))
+				if(attacking_item.use_tool(src, user, 80, volume=100))
 					to_chat(user, span_notice("You pry [source_code_hdd] free of its secure housing."))
 					deconstruction_state = HDD_PRIED
 				return
 		if(HDD_PRIED)
 			if(istype(attacking_item, /obj/item/wirecutters/hdd_extraction))
 				to_chat(user, span_notice("With [source_code_hdd] free, you begin to delicately cut wires with [attacking_item] while following the instructions on its display. It indicates there are [hdd_wires] wires left."))
-				while(attacking_item.use_tool(src, user, 80, volume=100, amount=1))
+				while(attacking_item.use_tool(src, user, 80, volume=100))
 					hdd_wires--
 
 					if(hdd_wires <= 0)
