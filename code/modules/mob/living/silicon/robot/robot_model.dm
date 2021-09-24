@@ -85,7 +85,7 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	for(var/module in get_usable_modules())
 		if(!(module in cyborg.held_items))
-			. += m
+			. += module
 
 /obj/item/robot_model/proc/add_module(obj/item/added_module, nonstandard, requires_rebuild)
 	if(istype(added_module, /obj/item/stack))
@@ -176,7 +176,7 @@
 
 /obj/item/robot_model/proc/transform_to(new_config_type, forced = FALSE)
 	var/mob/living/silicon/robot/cyborg = loc
-	var/obj/item/robot_model/new_model = new new_config_type(R)
+	var/obj/item/robot_model/new_model = new new_config_type(cyborg)
 	new_model.robot = cyborg
 	if(!new_model.be_transformed_to(src, forced))
 		qdel(new_model)
@@ -497,7 +497,7 @@
 	var/obj/item/gun/energy/e_gun/advtaser/cyborg/taser = locate(/obj/item/gun/energy/e_gun/advtaser/cyborg) in basic_modules
 	if(taser)
 		if(taser.cell.charge < taser.cell.maxcharge)
-			var/obj/item/ammo_casing/energy/shot = taser.ammo_type[T.select]
+			var/obj/item/ammo_casing/energy/shot = taser.ammo_type[taser.select]
 			taser.cell.give(shot.e_cost * coeff)
 			taser.update_appearance()
 		else
