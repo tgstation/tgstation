@@ -437,3 +437,11 @@
 	icon_state = "DutchJacket"
 	inhand_icon_state = "DutchJacket"
 	body_parts_covered = ARMS
+
+/obj/item/clothing/suit/wedding_dress
+	name = "wedding dress"
+	desc = "A luxurious gown for once-in-a-lifetime occasions."
+	icon_state = "wedding_dress"
+	inhand_icon_state = "wedding_dress"
+	body_parts_covered = CHEST|GROIN|LEGS
+	flags_inv = HIDESHOES
