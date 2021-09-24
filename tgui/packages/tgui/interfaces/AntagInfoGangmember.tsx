@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { BlockQuote, Divider, Icon, Section, Stack } from '../components';
+import { BlockQuote, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Info = {
@@ -34,18 +34,18 @@ export const AntagInfoGangmember = (props, context) => {
               induct new members with induction packages,
               and accomplish your family objective.
             </Stack.Item>
-            <Divider />
+            <Stack.Divider />
             <Stack.Item>
               <Stack>
-                <Stack.Item width="50%">
+                <Stack.Item grow>
                   <GangClothesPrintout />
                 </Stack.Item>
-                <Stack.Item width="50%">
+                <Stack.Item grow>
                   <GangPhonePrintout />
                 </Stack.Item>
               </Stack>
             </Stack.Item>
-            <Divider />
+            <Stack.Divider />
             <Stack.Item>
               <GangObjectivePrintout />
             </Stack.Item>
@@ -129,8 +129,7 @@ const GangObjectivePrintout = (props, context) => {
       </Stack.Item>
       <Stack.Item>
         {gang_objective
-          ? gang_objective
-          : "No objective set! This is a problem!"}
+          || "No objective set! This is a problem!"}
       </Stack.Item>
     </Stack>
   );

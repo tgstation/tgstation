@@ -201,7 +201,7 @@
 	var/list/report = list()
 	report += "<span class='header'>[name]:</span>"
 	if(!members.len)
-		report += "<span class='redtext'>The family was wiped out!</span>"
+		report += span_redtext("The family was wiped out!")
 	if(current_theme.everyone_objective)
 		report += "Objective: [current_theme.everyone_objective]"
 	else
