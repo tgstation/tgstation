@@ -105,6 +105,23 @@
 	<li>???</li>\
 	</ul>"
 
+/obj/item/paper/guides/antag/hdd_extraction
+	info = "<h1>Source Code Theft & You - The Idiot's Guide to Crippling Nanotrasen Research & Development</h><br>\
+	Rumour has it that Nanotrasen are using their R&D Servers to create something awful! They've codenamed it Project Goon, whatever that means.<br>\
+	This cannot be allowed to stand. Below is all our intel for stealing their source code and crippling their research efforts:<br>\
+	<ul>\
+	<li>Locate the physical R&D Server mainframes. Intel sugests these are stored in specially cooled rooms deep within their Science department.</li>\
+	<li>Nanotrasen is a corporation not known for subtlety in design. You should be able to identify the master server by any distinctive markings.</li>\
+	<li>Use the electrical screwdriver with the proprietary tip (provided) to open the server's front panel.</li>\
+	<li>Pry the hard drive loose from its secure housing with the claw bar (also provided).</li>\
+	<li>Finally, carefully cut any of the hard drive's connecting wires using the digital wirecutters (also provided).</li>\
+	<ul>
+	Removing this drive is guaranteed to cripple research efforts regardless of what data is contained on it.<br>\
+	There's no putting it back once you've extracted it. The crew are likely to be as mad as bees if they find out!<br>\
+	Survive the shift and extract the hard drive safely.<br>\
+	Succeed and you will receive a coveted green highlight on your record for this assignment. Fail us and red's the last colour you'll ever see.<br>\
+	Do not dissapoint us.<br>"
+
 // STEALING SUPERMATTER
 
 /obj/item/paper/guides/antag/supermatter_sliver
@@ -298,3 +315,30 @@
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	QDEL_NULL(sliver)
 	update_appearance()
+
+/// HDD extraction objective screwdriver. Opens the front panel.
+/obj/item/screwdriver/hdd_extraction
+	name = "electrical screwdriver"
+	desc = "A special screwdriver with a proprietary tip. The yellow and orange colouring is intended to give the user a sense of safety, despite the fact this screwdriver is as electrically conductive as any other."
+	icon = 'icons/obj/nuke_tools.dmi'
+	icon_state = "electrical_screwdriver"
+	toolspeed = 0.5
+
+/// HDD extraction objective crowbar. Pries the HDD loose of its enclosure.
+/obj/item/crowbar/hdd_extraction
+	name = "claw bar"
+	desc = "One half wrench, one half crowbar, all parts awesome. Utterly useless as a traditional wrench and barely capable of prying things open. Still, it's very compact and sure looks stylish! When all else fails, the business end can provide decent percussive maintenance to your foes."
+	force = 10
+	icon = 'icons/obj/nuke_tools.dmi'
+	icon_state = "claw_bar"
+	toolspeed = 0.5
+	w_class = WEIGHT_CLASS_TINY
+
+/// HDD extraction objective wirecutters. Destructively cuts the HDD free from the server.
+/obj/item/wirecutters/hdd_extraction
+	name = "digital wirecutters"
+	desc = "The fancy digital display tells you exactly which wire you need to cut! Bad news is it's only calibrated with schematics for the R&D Servers. The tiny size of the clippers makes them very slow and fiddly to use. Still, sure looks modern and they are impressively tiny!"
+	icon = 'icons/obj/nuke_tools.dmi'
+	icon_state = "digital_wirecutters"
+	toolspeed = 0.25
+	w_class = WEIGHT_CLASS_TINY
