@@ -107,7 +107,7 @@ export class IntegratedCircuit extends Component {
 
     this.handlePortDrag(event);
 
-    this.timeUntilPortReleaseWorks
+    this.timeUntilPortReleaseTimesOut
       = Date.now() + TIME_UNTIL_PORT_RELEASE_WORKS;
 
     window.addEventListener('mousemove', this.handlePortDrag);
@@ -181,7 +181,10 @@ export class IntegratedCircuit extends Component {
   handlePortRelease(event) {
     window.removeEventListener('mouseup', this.handlePortRelease);
 
-    if (this.timeUntilPortReleaseWorks > Date.now()) {
+    // This will let players release their mouse when dragging
+    // to stop connecting the port, whilst letting players
+    // click on the port to click and connect.
+    if (this.timeUntilPortReleaseTimesOut > Date.now()) {
       return;
     }
 
