@@ -509,7 +509,7 @@
 		"super_matter_bin",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
-	discount_experiments = list(/datum/experiment/scanning/machinery_tiered_scan/lathes_tier2 = 3500)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/lathes_tier2 = 3500)
 
 /datum/techweb_node/adv_power
 	id = "adv_power"
@@ -526,7 +526,8 @@
 		"super_cell",
 		"superpacman",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_capacitors = 2000)
 
 /////////////////////////Bluespace tech/////////////////////////
 /datum/techweb_node/bluespace_basic //Bluespace-memery
@@ -875,7 +876,7 @@
 		"ultra_micro_laser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
-	discount_experiments = list(/datum/experiment/scanning/machinery_pinpoint_scan/tier2_micro_laser_calibration = 1500)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_micro_laser_calibration = 1500)
 
 /datum/techweb_node/emp_super
 	id = "emp_super"

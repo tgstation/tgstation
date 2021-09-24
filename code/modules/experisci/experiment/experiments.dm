@@ -152,20 +152,30 @@
 	total_requirement = 3
 	possible_plant_genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/glow/shadow, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/brewing, /datum/plant_gene/trait/juicing, /datum/plant_gene/trait/eyes, /datum/plant_gene/trait/sticky)
 
-/datum/experiment/scanning/machinery_tiered_scan/lathes_tier2
+/datum/experiment/scanning/points/machinery_tiered_scan/lathes_tier2
 	name = "Advanced Stock Parts Benchmark"
 	description = "TBD"
+	required_points = 6
 	required_atoms = list(/obj/machinery/rnd/production/protolathe/department/science = 1,
 		/obj/machinery/rnd/production/protolathe/department/engineering = 1,
 		/obj/machinery/rnd/production/techfab/department/cargo = 1,
 		/obj/machinery/rnd/production/techfab/department/medical = 1,
 		/obj/machinery/rnd/production/techfab/department/security = 1,
-		/obj/machinery/rnd/production/techfab/department/service = 1
-		)
+		/obj/machinery/rnd/production/techfab/department/service = 1)
 	required_tier = 2
 
-/datum/experiment/scanning/machinery_pinpoint_scan/tier2_micro_laser_calibration
+/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_micro_laser_calibration
 	name = "High-power Micro-lasers Calibration"
 	description = "TBD"
-	required_atoms = list(/obj/machinery/mecha_part_fabricator = 2)
+	required_points = 2
+	required_atoms = list(/obj/machinery/mecha_part_fabricator = 1)
 	required_stock_part = /obj/item/stock_parts/micro_laser/high
+
+/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_capacitors
+	name = "Advanced Capacitors Benchmark"
+	description = "TBD"
+	required_points = 6
+	required_atoms = list(/obj/machinery/recharge_station = 1,
+		/obj/machinery/cell_charger = 1,
+		/obj/machinery/chem_dispenser = 2)
+	required_stock_part = /obj/item/stock_parts/capacitor/adv
