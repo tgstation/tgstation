@@ -14,7 +14,7 @@ Stabilized extracts:
 	var/datum/status_effect/linked_effect
 	var/mob/living/owner
 
-/obj/item/slimecross/stabilized/Initialize()
+/obj/item/slimecross/stabilized/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj,src)
 
@@ -129,7 +129,7 @@ Stabilized extracts:
 					mob_spawn_pets += T
 	mob_type = pick(mob_spawn_pets)
 
-/obj/item/slimecross/stabilized/gold/Initialize()
+/obj/item/slimecross/stabilized/gold/Initialize(mapload)
 	. = ..()
 	generate_mobtype()
 

@@ -16,7 +16,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags_1 = NODECONSTRUCT_1
 
-/obj/machinery/telecomms/allinone/Initialize()
+/obj/machinery/telecomms/allinone/Initialize(mapload)
 	. = ..()
 	if (intercept)
 		freq_listening = list(FREQ_SYNDICATE)

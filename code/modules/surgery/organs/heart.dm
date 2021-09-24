@@ -269,7 +269,7 @@
 	///Color of the heart, is set by the species on gain
 	var/ethereal_color = "#9c3030"
 
-/obj/item/organ/heart/ethereal/Initialize()
+/obj/item/organ/heart/ethereal/Initialize(mapload)
 	. = ..()
 	add_atom_colour(ethereal_color, FIXED_COLOUR_PRIORITY)
 

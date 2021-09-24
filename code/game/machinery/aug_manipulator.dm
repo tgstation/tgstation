@@ -14,7 +14,7 @@
 	if(storedpart)
 		. += span_notice("Alt-click to eject the limb.")
 
-/obj/machinery/aug_manipulator/Initialize()
+/obj/machinery/aug_manipulator/Initialize(mapload)
 	if(!base_icon_state)
 		base_icon_state = initial(icon_state)
 	return ..()

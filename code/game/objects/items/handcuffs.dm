@@ -10,6 +10,7 @@
 /obj/item/restraints
 	breakouttime = 1 MINUTES
 	dye_color = DYE_PRISONER
+	icon = 'icons/obj/restraints.dmi'
 
 /obj/item/restraints/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -26,7 +27,6 @@
 	name = "handcuffs"
 	desc = "Use this to keep prisoners in line."
 	gender = PLURAL
-	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "handcuff"
 	worn_icon_state = "handcuff"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
@@ -154,7 +154,6 @@
 /obj/item/restraints/handcuffs/cable/sinew
 	name = "sinew restraints"
 	desc = "A pair of restraints fashioned from long strands of flesh."
-	icon = 'icons/obj/mining.dmi'
 	icon_state = "sinewcuff"
 	inhand_icon_state = "sinewcuff"
 	custom_materials = null
@@ -276,7 +275,6 @@
 	name = "leg cuffs"
 	desc = "Use this to keep prisoners in line."
 	gender = PLURAL
-	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "handcuff"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
@@ -302,7 +300,7 @@
 	///How much damage the trap deals when triggered.
 	var/trap_damage = 20
 
-/obj/item/restraints/legcuffs/beartrap/Initialize()
+/obj/item/restraints/legcuffs/beartrap/Initialize(mapload)
 	. = ..()
 	update_appearance()
 	var/static/list/loc_connections = list(
@@ -391,7 +389,7 @@
 	item_flags = DROPDEL
 	flags_1 = NONE
 
-/obj/item/restraints/legcuffs/beartrap/energy/Initialize()
+/obj/item/restraints/legcuffs/beartrap/energy/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/dissipate), 100)
 
@@ -477,7 +475,7 @@
 	breakouttime = 6 SECONDS
 	custom_price = PAYCHECK_HARD * 0.35
 
-/obj/item/restraints/legcuffs/bola/energy/Initialize()
+/obj/item/restraints/legcuffs/bola/energy/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_UNCATCHABLE, TRAIT_GENERIC) // People said energy bolas being uncatchable is a feature.
 

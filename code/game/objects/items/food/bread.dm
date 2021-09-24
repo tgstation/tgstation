@@ -6,7 +6,7 @@
 	foodtypes = GRAIN
 	eat_time = 3 SECONDS
 
-/obj/item/food/bread/Initialize()
+/obj/item/food/bread/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
 	AddComponent(/datum/component/food_storage)
@@ -19,7 +19,7 @@
 	eat_time = 0.5 SECONDS
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/breadslice/Initialize()
+/obj/item/food/breadslice/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
 
@@ -34,7 +34,7 @@
 	venue_value = FOOD_PRICE_CHEAP
 	burns_in_oven = TRUE
 
-/obj/item/food/bread/plain/Initialize()
+/obj/item/food/bread/plain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
@@ -50,7 +50,7 @@
 	venue_value = FOOD_PRICE_TRASH
 	decomp_type = /obj/item/food/breadslice/moldy
 
-/obj/item/food/breadslice/plain/Initialize()
+/obj/item/food/breadslice/plain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
@@ -67,7 +67,7 @@
 	name = "bacteria rich moldy 'bread' slice"
 	desc = "Something (possibly necroyeast) has caused this bread to rise in a macabre state of unlife. It lurchs about when unattended. You might want to locate a priest if you see this. Or maybe a flamethrower."
 
-/obj/item/food/breadslice/moldy/bacteria/Initialize()
+/obj/item/food/breadslice/moldy/bacteria/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)
 
@@ -215,7 +215,7 @@
 	foodtypes = GRAIN
 	desc = "It's a slice of bread, customized to your wildest dreams."
 
-/obj/item/food/breadslice/empty/Initialize()
+/obj/item/food/breadslice/empty/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 

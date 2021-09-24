@@ -49,7 +49,7 @@
 	var/festive_tree = /obj/structure/flora/tree/pine/xmas
 	var/christmas_tree = /obj/structure/flora/tree/pine/xmas/presents
 
-/obj/effect/spawner/xmastree/Initialize()
+/obj/effect/spawner/xmastree/Initialize(mapload)
 	..()
 	if((CHRISTMAS in SSevents.holidays) && christmas_tree)
 		new christmas_tree(get_turf(src))

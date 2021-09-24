@@ -45,7 +45,7 @@
 	interaction_range = 7 //wireless control range
 	var/obj/item/pda/ai/aiPDA
 
-/mob/living/silicon/Initialize()
+/mob/living/silicon/Initialize(mapload)
 	. = ..()
 	GLOB.silicon_mobs += src
 	faction += "silicon"

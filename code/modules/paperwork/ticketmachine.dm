@@ -60,7 +60,7 @@
 		tickets.Cut()
 	update_appearance()
 
-/obj/machinery/ticket_machine/Initialize()
+/obj/machinery/ticket_machine/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
@@ -85,7 +85,7 @@
 	req_access = list()
 	id = "ticket_machine_default"
 
-/obj/machinery/button/ticket_machine/Initialize()
+/obj/machinery/button/ticket_machine/Initialize(mapload)
 	. = ..()
 	if(device)
 		var/obj/item/assembly/control/ticket_machine/ours = device
@@ -108,7 +108,7 @@
 	desc = "A remote controller for the HoP's ticket machine."
 	var/datum/weakref/linked //To whom are we linked?
 
-/obj/item/assembly/control/ticket_machine/Initialize()
+/obj/item/assembly/control/ticket_machine/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 

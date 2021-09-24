@@ -35,7 +35,7 @@
 	icon_state = "labcoat_cmo"
 	inhand_icon_state = "labcoat_cmo"
 
-/obj/item/clothing/suit/toggle/labcoat/cmo/Initialize()
+/obj/item/clothing/suit/toggle/labcoat/cmo/Initialize(mapload)
 	. = ..()
 	allowed += list(
 		/obj/item/melee/baton/telescopic,
