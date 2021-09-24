@@ -58,7 +58,7 @@
 	///List of skins the borg can be reskinned to, optional
 	var/list/borg_skins
 
-/obj/item/robot_model/Initialize()
+/obj/item/robot_model/Initialize(mapload)
 	. = ..()
 	for(var/i in basic_modules)
 		var/obj/item/I = new i(src)

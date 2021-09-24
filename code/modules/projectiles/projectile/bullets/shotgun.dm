@@ -57,7 +57,7 @@
 		var/atom/throw_target = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
 		M.safe_throw_at(throw_target, 3, 2, force = MOVE_FORCE_EXTREMELY_STRONG)
 
-/obj/projectile/bullet/shotgun_meteorslug/Initialize()
+/obj/projectile/bullet/shotgun_meteorslug/Initialize(mapload)
 	. = ..()
 	SpinAnimation()
 
@@ -110,7 +110,7 @@
 	wound_bonus = 0
 	bare_wound_bonus = 7.5
 
-/obj/projectile/bullet/pellet/shotgun_improvised/Initialize()
+/obj/projectile/bullet/pellet/shotgun_improvised/Initialize(mapload)
 	. = ..()
 	range = rand(1, 8)
 

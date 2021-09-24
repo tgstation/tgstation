@@ -43,7 +43,7 @@
 /obj/machinery/space_heater/get_cell()
 	return cell
 
-/obj/machinery/space_heater/Initialize()
+/obj/machinery/space_heater/Initialize(mapload)
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
@@ -255,7 +255,7 @@
 /obj/machinery/space_heater/constructed
 	cell = null
 
-/obj/machinery/space_heater/constructed/Initialize()
+/obj/machinery/space_heater/constructed/Initialize(mapload)
 	. = ..()
 	panel_open = TRUE
 	update_appearance()

@@ -18,7 +18,7 @@
 /obj/item/gun/energy/pulse/prize
 	pin = /obj/item/firing_pin
 
-/obj/item/gun/energy/pulse/prize/Initialize()
+/obj/item/gun/energy/pulse/prize/Initialize(mapload)
 	. = ..()
 	SSpoints_of_interest.make_point_of_interest(src)
 	var/turf/T = get_turf(src)

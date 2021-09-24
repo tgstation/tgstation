@@ -360,7 +360,7 @@
 	/// Energy recharged per second
 	var/rechargerate = 10
 
-/obj/item/mecha_parts/mecha_equipment/generator/Initialize()
+/obj/item/mecha_parts/mecha_equipment/generator/Initialize(mapload)
 	. = ..()
 	generator_init()
 
