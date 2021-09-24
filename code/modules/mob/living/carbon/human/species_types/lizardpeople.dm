@@ -67,7 +67,7 @@
 /datum/species/lizard/spec_stun(mob/living/carbon/human/H,amount)
 	if(H)
 		stop_wagging_tail(H)
-	. = ..()
+	return ..()
 
 /datum/species/lizard/can_wag_tail(mob/living/carbon/human/H)
 	return mutant_bodyparts["tail_lizard"] || mutant_bodyparts["waggingtail_lizard"]
@@ -149,7 +149,7 @@
 /datum/species/lizard/proc/on_gained_organ(mob/living/receiver, obj/item/organ/tongue/organ)
 	SIGNAL_HANDLER
 
-	if(!istype(organ) || organ.taste_sensitivity > LIZARD_TASTE_SENSITIVITY)
+	if(!istype(organ) || !(organ.taste_sensitivity <= LIZARD_TASTE_SENSITIVITY || organ.organ_flags & ORGAN_UNREMOVABLE))
 		return
 	receiver.remove_client_colour(/datum/client_colour/monochrome/lizard)
 

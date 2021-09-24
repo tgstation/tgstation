@@ -252,6 +252,6 @@
 
 /obj/item/organ/liver/lizard
 	name = "lizard liver"
-	icon_state = "liver"
+	icon_state = "liver-l"
 	desc = "Due to a low number of natural poisons on Tizira, lizard livers have a lower tolerance for poisons when compared to human ones."
 	toxTolerance = 2

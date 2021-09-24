@@ -236,12 +236,12 @@
 
 /datum/reagent/cryostylane/on_mob_add(mob/living/consumer, amount)
 	. = ..()
-	consumer.mob_surgery_speed_mod = ((CRYO_SPEED_PREFACTOR * (1 - creation_purity))+CRYO_SPEED_CONSTANT) //10% - 30% slower
+	consumer.mob_surgery_speed_mod -= ((CRYO_SPEED_PREFACTOR * (1 - creation_purity))+CRYO_SPEED_CONSTANT) //10% - 30% slower
 	consumer.color = COLOR_CYAN
 
 /datum/reagent/cryostylane/on_mob_delete(mob/living/consumer)
 	. = ..()
-	consumer.mob_surgery_speed_mod = 1
+	consumer.mob_surgery_speed_mod += ((CRYO_SPEED_PREFACTOR * (1 - creation_purity))+CRYO_SPEED_CONSTANT)
 	consumer.color = COLOR_WHITE
 
 //Pauses decay! Does do something, I promise.

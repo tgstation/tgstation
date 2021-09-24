@@ -316,7 +316,7 @@
 
 /obj/item/organ/stomach/lizard
 	name = "lizard stomach"
-	icon_state = "stomach"
+	icon_state = "stomach-l"
 	desc = "Lizards have evolved highly efficient stomachs, made to get nutrients out of what they eat as fast as possible."
 	metabolism_efficiency = 0.07
 

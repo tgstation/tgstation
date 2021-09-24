@@ -494,10 +494,11 @@
 	icon_state = "second_heart"
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_HEART_AID
-	healing_factor = STANDARD_ORGAN_HEALING
-	decay_factor = 2.5 * STANDARD_ORGAN_DECAY
+	healing_factor = 1.5 * STANDARD_ORGAN_HEALING
+	decay_factor = 1.5 * STANDARD_ORGAN_DECAY
 	attack_verb_continuous = list("beats", "thumps")
 	attack_verb_simple = list("beat", "thump")
+	/// How much blood we regenerate
 	var/regen_modifier = 0.5
 
 /obj/item/organ/second_heart/on_life(delta_time, times_fired)
