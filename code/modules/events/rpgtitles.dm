@@ -112,5 +112,5 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
  * If the item it is giving fantasy to is a storage item, there's a chance it'll drop in an item fortification scroll. neat!
  */
 /datum/rpgtitle_controller/proc/handle_current_jobs()
-	for(var/mob/living/player in GLOB.player_list)
+	for(var/mob/living/player as anything in GLOB.alive_player_list)
 		on_crewmember_join(SSdcs, player, player.mind?.assigned_role.title)
