@@ -60,14 +60,14 @@
 
 /obj/item/robot_model/Initialize(mapload)
 	. = ..()
-	for(var/i in basic_modules)
-		var/obj/item/I = new i(src)
-		basic_modules += I
-		basic_modules -= i
-	for(var/i in emag_modules)
-		var/obj/item/I = new i(src)
-		emag_modules += I
-		emag_modules -= i
+	for(var/path in basic_modules)
+		var/obj/item/new_module = new path(src)
+		basic_modules += new_module
+		basic_modules -= path
+	for(var/path in emag_modules)
+		var/obj/item/new_module = new path(src)
+		emag_modules += new_module
+		emag_modules -= path
 
 /obj/item/robot_model/Destroy()
 	basic_modules.Cut()
@@ -82,14 +82,14 @@
 
 /obj/item/robot_model/proc/get_inactive_modules()
 	. = list()
-	var/mob/living/silicon/robot/R = loc
-	for(var/m in get_usable_modules())
-		if(!(m in R.held_items))
+	var/mob/living/silicon/robot/cyborg = loc
+	for(var/module in get_usable_modules())
+		if(!(module in cyborg.held_items))
 			. += m
 
-/obj/item/robot_model/proc/add_module(obj/item/I, nonstandard, requires_rebuild)
-	if(istype(I, /obj/item/stack))
-		var/obj/item/stack/sheet_module = I
+/obj/item/robot_model/proc/add_module(obj/item/added_module, nonstandard, requires_rebuild)
+	if(istype(added_module, /obj/item/stack))
+		var/obj/item/stack/sheet_module = added_module
 		if(ispath(sheet_module.source, /datum/robot_energy_storage))
 			sheet_module.source = get_or_create_estorage(sheet_module.source)
 
@@ -102,66 +102,66 @@
 			sheet_module.cost = max(sheet_module.cost, 1) // Must not cost 0 to prevent div/0 errors.
 			sheet_module.is_cyborg = TRUE
 
-	if(I.loc != src)
-		I.forceMove(src)
-	modules += I
-	ADD_TRAIT(I, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-	I.mouse_opacity = MOUSE_OPACITY_OPAQUE
+	if(added_module.loc != src)
+		added_module.forceMove(src)
+	modules += added_module
+	ADD_TRAIT(added_module, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	added_module.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	if(nonstandard)
-		added_modules += I
+		added_modules += added_module
 	if(requires_rebuild)
 		rebuild_modules()
-	return I
+	return added_module
 
-/obj/item/robot_model/proc/remove_module(obj/item/I, delete_after)
-	basic_modules -= I
-	modules -= I
-	emag_modules -= I
-	added_modules -= I
+/obj/item/robot_model/proc/remove_module(obj/item/removed_module, delete_after)
+	basic_modules -= removed_module
+	modules -= removed_module
+	emag_modules -= removed_module
+	added_modules -= removed_module
 	rebuild_modules()
 	if(delete_after)
-		qdel(I)
+		qdel(removed_module)
 
 /obj/item/robot_model/proc/rebuild_modules() //builds the usable module list from the modules we have
-	var/mob/living/silicon/robot/R = loc
-	var/list/held_modules = R.held_items.Copy()
-	var/active_module = R.module_active
-	R.uneq_all()
+	var/mob/living/silicon/robot/cyborg = loc
+	var/list/held_modules = cyborg.held_items.Copy()
+	var/active_module = cyborg.module_active
+	cyborg.uneq_all()
 	modules = list()
-	for(var/obj/item/I in basic_modules)
-		add_module(I, FALSE, FALSE)
-	if(R.emagged)
-		for(var/obj/item/I in emag_modules)
-			add_module(I, FALSE, FALSE)
-	for(var/obj/item/I in added_modules)
-		add_module(I, FALSE, FALSE)
-	for(var/i in held_modules)
-		if(i)
-			R.equip_module_to_slot(i, held_modules.Find(i))
+	for(var/obj/item/module in basic_modules)
+		add_module(module, FALSE, FALSE)
+	if(cyborg.emagged)
+		for(var/obj/item/module in emag_modules)
+			add_module(module, FALSE, FALSE)
+	for(var/obj/item/module in added_modules)
+		add_module(module, FALSE, FALSE)
+	for(var/module in held_modules)
+		if(module)
+			cyborg.equip_module_to_slot(module, held_modules.Find(module))
 	if(active_module)
-		R.select_module(held_modules.Find(active_module))
-	if(R.hud_used)
-		R.hud_used.update_robot_modules_display()
+		cyborg.select_module(held_modules.Find(active_module))
+	if(cyborg.hud_used)
+		cyborg.hud_used.update_robot_modules_display()
 
-/obj/item/robot_model/proc/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
-	for(var/datum/robot_energy_storage/st in storages)
-		st.energy = min(st.max_energy, st.energy + coeff * st.recharge_rate)
+/obj/item/robot_model/proc/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
+	for(var/datum/robot_energy_storage/storage_datum in storages)
+		storage_datum.energy = min(storage_datum.max_energy, storage_datum.energy + coeff * storage_datum.recharge_rate)
 
-	for(var/obj/item/I in get_usable_modules())
-		if(istype(I, /obj/item/assembly/flash))
-			var/obj/item/assembly/flash/F = I
-			F.times_used = 0
-			F.burnt_out = FALSE
-			F.update_appearance()
-		else if(istype(I, /obj/item/melee/baton/security))
-			var/obj/item/melee/baton/security/baton = I
+	for(var/obj/item/module in get_usable_modules())
+		if(istype(module, /obj/item/assembly/flash))
+			var/obj/item/assembly/flash/flash = module
+			flash.times_used = 0
+			flash.burnt_out = FALSE
+			flash.update_appearance()
+		else if(istype(module, /obj/item/melee/baton/security))
+			var/obj/item/melee/baton/security/baton = module
 			baton.cell?.charge = baton.cell.maxcharge
-		else if(istype(I, /obj/item/gun/energy))
-			var/obj/item/gun/energy/EG = I
-			if(!EG.chambered)
-				EG.recharge_newshot() //try to reload a new shot.
+		else if(istype(module, /obj/item/gun/energy))
+			var/obj/item/gun/energy/gun = module
+			if(!gun.chambered)
+				gun.recharge_newshot() //try to reload a new shot.
 
-	R.toner = R.tonermax
+	cyborg.toner = cyborg.tonermax
 
 /obj/item/robot_model/proc/get_or_create_estorage(storage_type)
 	return (locate(storage_type) in storages) || new storage_type(src)
@@ -170,25 +170,25 @@
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
-	for(var/obj/O in modules)
-		O.emp_act(severity)
+	for(var/obj/module in modules)
+		module.emp_act(severity)
 	..()
 
 /obj/item/robot_model/proc/transform_to(new_config_type, forced = FALSE)
-	var/mob/living/silicon/robot/R = loc
-	var/obj/item/robot_model/RM = new new_config_type(R)
-	RM.robot = R
-	if(!RM.be_transformed_to(src, forced))
-		qdel(RM)
+	var/mob/living/silicon/robot/cyborg = loc
+	var/obj/item/robot_model/new_model = new new_config_type(R)
+	new_model.robot = cyborg
+	if(!new_model.be_transformed_to(src, forced))
+		qdel(new_model)
 		return
-	R.model = RM
-	R.update_module_innate()
-	RM.rebuild_modules()
-	R.radio.recalculateChannels()
+	cyborg.model = new_model
+	cyborg.update_module_innate()
+	new_model.rebuild_modules()
+	cyborg.radio.recalculateChannels()
 
-	INVOKE_ASYNC(RM, .proc/do_transform_animation)
+	INVOKE_ASYNC(new_model, .proc/do_transform_animation)
 	qdel(src)
-	return RM
+	return new_model
 
 /obj/item/robot_model/proc/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
 	if(islist(borg_skins) && !forced)
@@ -221,38 +221,38 @@
 	return TRUE
 
 /obj/item/robot_model/proc/do_transform_animation()
-	var/mob/living/silicon/robot/R = loc
-	if(R.hat)
-		R.hat.forceMove(get_turf(R))
-		R.hat = null
-	R.cut_overlays()
-	R.setDir(SOUTH)
+	var/mob/living/silicon/robot/cyborg = loc
+	if(cyborg.hat)
+		cyborg.hat.forceMove(drop_location())
+		cyborg.hat = null
+	cyborg.cut_overlays()
+	cyborg.setDir(SOUTH)
 	do_transform_delay()
 
 /obj/item/robot_model/proc/do_transform_delay()
-	var/mob/living/silicon/robot/R = loc
-	var/prev_lockcharge = R.lockcharge
+	var/mob/living/silicon/robot/cyborg = loc
+	var/prev_lockcharge = cyborg.lockcharge
 	sleep(1)
-	flick("[cyborg_base_icon]_transform", R)
-	R.notransform = TRUE
+	flick("[cyborg_base_icon]_transform", cyborg)
+	cyborg.notransform = TRUE
 	if(locked_transform)
-		R.SetLockdown(TRUE)
-		R.set_anchored(TRUE)
-	R.logevent("Chassis model has been set to [name].")
+		cyborg.SetLockdown(TRUE)
+		cyborg.set_anchored(TRUE)
+	cyborg.logevent("Chassis model has been set to [name].")
 	sleep(1)
 	for(var/i in 1 to 4)
-		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
+		playsound(cyborg, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
 		sleep(7)
-	R.SetLockdown(prev_lockcharge)
-	R.setDir(SOUTH)
-	R.set_anchored(FALSE)
-	R.notransform = FALSE
-	R.updatehealth()
-	R.update_icons()
-	R.notify_ai(NEW_MODEL)
-	if(R.hud_used)
-		R.hud_used.update_robot_modules_display()
-	SSblackbox.record_feedback("tally", "cyborg_modules", 1, R.model)
+	cyborg.SetLockdown(prev_lockcharge)
+	cyborg.setDir(SOUTH)
+	cyborg.set_anchored(FALSE)
+	cyborg.notransform = FALSE
+	cyborg.updatehealth()
+	cyborg.update_icons()
+	cyborg.notify_ai(NEW_MODEL)
+	if(cyborg.hud_used)
+		cyborg.hud_used.update_robot_modules_display()
+	SSblackbox.record_feedback("tally", "cyborg_modules", 1, cyborg.model)
 
 /**
  * Checks if we are allowed to interact with a radial menu
@@ -363,20 +363,20 @@
 	name = "lube spray"
 	list_reagents = list(/datum/reagent/lube = 250)
 
-/obj/item/robot_model/janitor/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+/obj/item/robot_model/janitor/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	..()
-	var/obj/item/lightreplacer/LR = locate(/obj/item/lightreplacer) in basic_modules
-	if(LR)
-		for(var/i in 1 to coeff)
-			LR.Charge(R)
+	var/obj/item/lightreplacer/light_replacer = locate(/obj/item/lightreplacer) in basic_modules
+	if(light_replacer)
+		for(var/charge in 1 to coeff)
+			light_replacer.Charge(cyborg)
 
-	var/obj/item/reagent_containers/spray/cyborg_drying/CD = locate(/obj/item/reagent_containers/spray/cyborg_drying) in basic_modules
-	if(CD)
-		CD.reagents.add_reagent(/datum/reagent/drying_agent, 5 * coeff)
+	var/obj/item/reagent_containers/spray/cyborg_drying/drying_agent = locate(/obj/item/reagent_containers/spray/cyborg_drying) in basic_modules
+	if(drying_agent)
+		drying_agent.reagents.add_reagent(/datum/reagent/drying_agent, 5 * coeff)
 
-	var/obj/item/reagent_containers/spray/cyborg_lube/CL = locate(/obj/item/reagent_containers/spray/cyborg_lube) in emag_modules
-	if(CL)
-		CL.reagents.add_reagent(/datum/reagent/lube, 2 * coeff)
+	var/obj/item/reagent_containers/spray/cyborg_lube/lube = locate(/obj/item/reagent_containers/spray/cyborg_lube) in emag_modules
+	if(lube)
+		lube.reagents.add_reagent(/datum/reagent/lube, 2 * coeff)
 
 /obj/item/robot_model/medical
 	name = "Medical"
@@ -438,7 +438,7 @@
 		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin"),
 		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
 	)
-	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes.
+	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes. //fuck you
 
 /obj/item/robot_model/miner/rebuild_modules()
 	. = ..()
@@ -492,16 +492,16 @@
 	to_chat(loc, "<span class='userdanger'>While you have picked the security model, you still have to follow your laws, NOT Space Law. \
 	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
 
-/obj/item/robot_model/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+/obj/item/robot_model/security/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	..()
-	var/obj/item/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/gun/energy/e_gun/advtaser/cyborg) in basic_modules
-	if(T)
-		if(T.cell.charge < T.cell.maxcharge)
-			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-			T.cell.give(S.e_cost * coeff)
-			T.update_appearance()
+	var/obj/item/gun/energy/e_gun/advtaser/cyborg/taser = locate(/obj/item/gun/energy/e_gun/advtaser/cyborg) in basic_modules
+	if(taser)
+		if(taser.cell.charge < taser.cell.maxcharge)
+			var/obj/item/ammo_casing/energy/shot = taser.ammo_type[T.select]
+			taser.cell.give(shot.e_cost * coeff)
+			taser.update_appearance()
 		else
-			T.charge_timer = 0
+			taser.charge_timer = 0
 
 /obj/item/robot_model/service
 	name = "Service"
@@ -538,11 +538,11 @@
 		"Waitress" = list(SKIN_ICON_STATE = "service_f"),
 	)
 
-/obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+/obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	..()
-	var/obj/item/reagent_containers/O = locate(/obj/item/reagent_containers/food/condiment/enzyme) in basic_modules
-	if(O)
-		O.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
+	var/obj/item/reagent_containers/enzyme = locate(/obj/item/reagent_containers/food/condiment/enzyme) in basic_modules
+	if(enzyme)
+		enzyme.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
 
 /obj/item/robot_model/syndicate
 	name = "Syndicate Assault"
@@ -563,13 +563,13 @@
 
 /obj/item/robot_model/syndicate/rebuild_modules()
 	..()
-	var/mob/living/silicon/robot/Syndi = loc
-	Syndi.faction  -= "silicon" //ai turrets
+	var/mob/living/silicon/robot/cyborg = loc
+	cyborg.faction -= "silicon" //ai turrets
 
-/obj/item/robot_model/syndicate/remove_module(obj/item/I, delete_after)
+/obj/item/robot_model/syndicate/remove_module(obj/item/removed_module, delete_after)
 	..()
-	var/mob/living/silicon/robot/Syndi = loc
-	Syndi.faction += "silicon" //ai is your bff now!
+	var/mob/living/silicon/robot/cyborg = loc
+	cyborg.faction += "silicon" //ai is your bff now!
 
 /obj/item/robot_model/syndicate_medical
 	name = "Syndicate Medical"
