@@ -107,24 +107,8 @@
 
 	return drain_total
 
-//RDCONSOLE//
-/obj/machinery/computer/rdconsole/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
-	if(!ninja_suit || !ninja || !ninja_gloves)
-		return INVALID_DRAIN
-
-	. = DRAIN_RD_HACK_FAILED
-
-	to_chat(ninja, span_notice("Hacking \the [src]..."))
-	AI_notify_hack()
-
-	if(stored_research)
-		to_chat(ninja, span_notice("Copying files..."))
-		if(do_after(ninja, ninja_suit.s_delay, target = src) && src)
-			stored_research.copy_research_to(ninja_suit.stored_research)
-	to_chat(ninja, span_notice("Data analyzed. Process finished."))
-
 //RD SERVER//
-/obj/machinery/rnd/server/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
+/obj/machinery/rnd/server/master/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
 	if(!ninja_suit || !ninja || !ninja_gloves)
 		return INVALID_DRAIN
 
@@ -133,11 +117,26 @@
 	to_chat(ninja, span_notice("Hacking \the [src]..."))
 	AI_notify_hack()
 
-	if(stored_research)
-		to_chat(ninja, span_notice("Copying files..."))
+	// Two paths this can take. If the traitor theft objective is still present, this will destroy it...
+	if(source_code_hdd)
+		to_chat(ninja, span_notice("Encrypted source code detected. Overloading storage device..."))
 		if(do_after(ninja, ninja_suit.s_delay, target = src) && src)
-			stored_research.copy_research_to(ninja_suit.stored_research)
-	to_chat(ninja, span_notice("Data analyzed. Process finished."))
+			deconstruction_state = HDD_CUT_LOOSE
+			qdel(source_code_hdd)
+			add_overlay("RD-server-hdd-panel-open")
+			to_chat(ninja, span_notice("Sabotage complete. Storage device overloaded."))
+			var/datum/objective/research_secrets/objective = locate() in ninja_antag.objectives
+			if(objective)
+				objective.completed = TRUE
+	// Otherwise, wipe all saved research points. Brutal!
+	else
+		to_chat(ninja, span_notice("Research notes detected. Corrupting data..."))
+		if(do_after(ninja, ninja_suit.s_delay, target = src) && src)
+			SSresearch.science_tech.modify_points_all(0)
+			to_chat(ninja, span_notice("Sabotage complete. Research notes corrupted."))
+			var/datum/objective/research_secrets/objective = locate() in ninja_antag.objectives
+			if(objective)
+				objective.completed = TRUE
 
 //SECURITY CONSOLE//
 /obj/machinery/computer/secure_data/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
