@@ -5,7 +5,7 @@
 	icon_state = "grievous"
 	health = 150
 	maxHealth = 150
-	baton_type = /obj/item/melee/transforming/energy/sword/saber
+	baton_type = /obj/item/melee/energy/sword/saber
 	base_speed = 4 //he's a fast fucker
 	var/block_chance = 50
 	weapon_force = 30
@@ -20,14 +20,14 @@
 	weapon_force = 0
 
 /mob/living/simple_animal/bot/secbot/grievous/bullet_act(obj/projectile/P)
-	visible_message("<span class='warning'>[src] deflects [P] with its energy swords!</span>")
+	visible_message(span_warning("[src] deflects [P] with its energy swords!"))
 	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE)
 	return BULLET_ACT_BLOCK
 
 /mob/living/simple_animal/bot/secbot/grievous/on_entered(datum/source, atom/movable/AM)
 	. = ..()
 	if(ismob(AM) && AM == target)
-		visible_message("<span class='warning'>[src] flails his swords and cuts [AM]!</span>")
+		visible_message(span_warning("[src] flails his swords and cuts [AM]!"))
 		playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
 		INVOKE_ASYNC(src, .proc/stun_attack, AM)
 
@@ -43,7 +43,7 @@
 	if(mode != BOT_HUNT)
 		return
 	if(prob(block_chance))
-		visible_message("<span class='warning'>[src] deflects [user]'s attack with his energy swords!</span>")
+		visible_message(span_warning("[src] deflects [user]'s attack with his energy swords!"))
 		playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
 		return TRUE
 
@@ -98,7 +98,7 @@
 			bot_patrol()
 
 /mob/living/simple_animal/bot/secbot/grievous/look_for_perp()
-	anchored = FALSE
+	set_anchored(FALSE)
 	var/judgement_criteria = judgement_criteria()
 	for (var/mob/living/carbon/C in view(7,src)) //Let's find us a criminal
 		if((C.stat) || (C.handcuffed))
@@ -118,7 +118,7 @@
 			speak("Level [threatlevel] infraction alert!")
 			playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
 			playsound(src,'sound/weapons/saberon.ogg',50,TRUE,-1)
-			visible_message("<span class='warning'>[src] ignites his energy swords!</span>")
+			visible_message(span_warning("[src] ignites his energy swords!"))
 			icon_state = "grievous-c"
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = BOT_HUNT
@@ -131,7 +131,7 @@
 /mob/living/simple_animal/bot/secbot/grievous/explode()
 
 	walk_to(src,0)
-	visible_message("<span class='boldannounce'>[src] lets out a huge cough as it blows apart!</span>")
+	visible_message(span_boldannounce("[src] lets out a huge cough as it blows apart!"))
 	var/atom/Tsec = drop_location()
 
 	var/obj/item/bot_assembly/secbot/Sa = new (Tsec)

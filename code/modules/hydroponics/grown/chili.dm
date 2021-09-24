@@ -41,7 +41,7 @@
 	production = 4
 	rarity = 20
 	genes = list(/datum/plant_gene/trait/chem_cooling)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/frostoil = 0.25, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
 	graft_gene = /datum/plant_gene/trait/chem_cooling
 
@@ -67,8 +67,8 @@
 	production = 10
 	yield = 3
 	rarity = 20
-	genes = list(/datum/plant_gene/trait/chem_heating)
-	mutatelist = list()
+	genes = list(/datum/plant_gene/trait/chem_heating, /datum/plant_gene/trait/backfire/chili_heat)
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.3, /datum/reagent/consumable/capsaicin = 0.55, /datum/reagent/consumable/nutriment = 0.04)
 	graft_gene = /datum/plant_gene/trait/chem_heating
 
@@ -78,27 +78,5 @@
 	desc = "It seems to be vibrating gently."
 	icon_state = "ghostchilipepper"
 	bite_consumption_mod = 5
-	var/mob/living/carbon/human/held_mob
-	bite_consumption_mod = 2
 	foodtypes = FRUIT
 	wine_power = 50
-
-/obj/item/food/grown/ghost_chili/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	if( ismob(loc) )
-		held_mob = loc
-		START_PROCESSING(SSobj, src)
-
-/obj/item/food/grown/ghost_chili/process(delta_time)
-	if(held_mob && loc == held_mob)
-		if(held_mob.is_holding(src))
-			if(istype(held_mob) && held_mob.gloves)
-				return
-			held_mob.adjust_bodytemperature(7.5 * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
-			if(DT_PROB(5, delta_time))
-				to_chat(held_mob, "<span class='warning'>Your hand holding [src] burns!</span>")
-	else
-		held_mob = null
-		..()

@@ -212,6 +212,7 @@
 			for(var/obj/machinery/duct/duct in get_step(parent, D))
 				if(duct.duct_layer == ducting_layer)
 					duct.remove_connects(turn(D, 180))
+					duct.neighbours.Remove(parent)
 					duct.update_appearance()
 
 ///settle wherever we are, and start behaving like a piece of plumbing
@@ -241,12 +242,9 @@
 					var/obj/machinery/duct/duct = A
 					duct.attempt_connect()
 				else
-					for(var/plumber in A.GetComponents(/datum/component/plumbing))
-						if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
-							continue
-						var/datum/component/plumbing/plumb = plumber
-						if(plumb && plumb.ducting_layer == ducting_layer)
-							direct_connect(plumb, D)
+					for(var/datum/component/plumbing/plumber as anything in A.GetComponents(/datum/component/plumbing))
+						if(plumber.ducting_layer == ducting_layer)
+							direct_connect(plumber, D)
 
 /// Toggle our machinery on or off. This is called by a hook from default_unfasten_wrench with anchored as only param, so we dont have to copypaste this on every object that can move
 /datum/component/plumbing/proc/toggle_active(obj/O, new_state)

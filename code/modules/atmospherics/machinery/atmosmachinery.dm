@@ -34,10 +34,6 @@
 	///This only works on pipes, because they have 1000 subtypes wich need to be visible and invisible under tiles, so we track this here
 	var/hide = TRUE
 
-	///Identifiers for the iconset, the path where the image will be taken from
-	var/static/list/iconsetids = list()
-	///The unique identifier created from the iconsetids, the parameters are then used to define the pipe image (icon, icon_state, color, direction, piping_layer)
-	var/static/list/pipeimages = list()
 	///The image of the pipe/device used for ventcrawling
 	var/image/pipe_vision_img = null
 
@@ -62,20 +58,17 @@
 	///The bitflag that's being checked on ventcrawling. Default is to allow ventcrawling and seeing pipes.
 	var/vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE
 
-	///Store the smart pipes connections, used for pipe construction
-	var/connection_num = 0
-
 /obj/machinery/atmospherics/LateInitialize()
 	. = ..()
-	name = "[GLOB.pipe_color_name[pipe_color]] [name]"
+	update_name()
 
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>[src] is on layer [piping_layer].</span>"
+	. += span_notice("[src] is on layer [piping_layer].")
 	if((vent_movement & VENTCRAWL_ENTRANCE_ALLOWED) && isliving(user))
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
-			. += "<span class='notice'>Alt-click to crawl through it.</span>"
+			. += span_notice("Alt-click to crawl through it.")
 
 /obj/machinery/atmospherics/New(loc, process = TRUE, setdir, init_dir = ALL_CARDINALS)
 	if(!isnull(setdir))
@@ -109,6 +102,14 @@
 /obj/machinery/atmospherics/proc/destroy_network()
 	return
 
+/// This should only be called by SSair as part of the rebuild queue.
+/// Handles rebuilding pipelines after init or they've been changed.
+/obj/machinery/atmospherics/proc/rebuild_pipes()
+	var/list/targets = get_rebuild_targets()
+	rebuilding = FALSE
+	for(var/datum/pipeline/build_off as anything in targets)
+		build_off.build_pipeline(src) //This'll add to the expansion queue
+
 /**
  * Returns a list of new pipelines that need to be built up
  */
@@ -135,13 +136,16 @@
 	var/list/node_connects = list()
 	node_connects.len = device_type
 
+	var/init_directions = GetInitDirections()
 	for(var/i in 1 to device_type)
-		for(var/D in GLOB.cardinals)
-			if(D & GetInitDirections())
-				if(D in node_connects)
-					continue
-				node_connects[i] = D
-				break
+		for(var/direction in GLOB.cardinals)
+			if(!(direction & init_directions))
+				continue
+			if(direction in node_connects)
+				continue
+			node_connects[i] = direction
+			break
+
 	return node_connects
 
 /**
@@ -352,18 +356,18 @@
 	var/unsafe_wrenching = FALSE
 	var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
 
-	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
+	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
 
 	if (internal_pressure > 2*ONE_ATMOSPHERE)
-		to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
+		to_chat(user, span_warning("As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?"))
 		unsafe_wrenching = TRUE //Oh dear oh dear
 
 	if(I.use_tool(src, user, 20, volume=50))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
-			"<span class='notice'>You unfasten \the [src].</span>", \
-			"<span class='hear'>You hear ratchet.</span>")
-		investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", INVESTIGATE_ATMOS)
+			span_notice("You unfasten \the [src]."), \
+			span_hear("You hear ratchet."))
+		investigate_log("was [span_warning("REMOVED")] by [key_name(usr)]", INVESTIGATE_ATMOS)
 
 		//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 		if(unsafe_wrenching)
@@ -398,7 +402,7 @@
 		var/datum/gas_mixture/env_air = loc.return_air()
 		pressures = int_air.return_pressure() - env_air.return_pressure()
 
-	user.visible_message("<span class='danger'>[user] is sent flying by pressure!</span>","<span class='userdanger'>The pressure sends you flying!</span>")
+	user.visible_message(span_danger("[user] is sent flying by pressure!"),span_userdanger("The pressure sends you flying!"))
 
 	// if get_dir(src, user) is not 0, target is the edge_target_turf on that dir
 	// otherwise, edge_target_turf uses a random cardinal direction
@@ -417,52 +421,36 @@
 			var/obj/item/pipe/stored = new construction_type(loc, null, dir, src, pipe_color)
 			stored.setPipingLayer(piping_layer)
 			if(!disassembled)
-				stored.obj_integrity = stored.max_integrity * 0.5
+				stored.take_damage(stored.max_integrity * 0.5, sound_effect=FALSE)
 			transfer_fingerprints_to(stored)
 			. = stored
 	..()
 
 /**
- * Getter for pipe underlay
+ * Getter for piping layer shifted, pipe colored overlays
  *
  * Creates the image for the pipe underlay that all components use, called by get_pipe_underlay() in components_base.dm
  * Arguments:
- * * iconset - path of the iconstate we are using (ex: 'icons/obj/atmospherics/components/thermomachine.dmi')
+ * * iconfile  - path of the iconstate we are using (ex: 'icons/obj/atmospherics/components/thermomachine.dmi')
  * * iconstate - the image we are using inside the file
  * * direction - the direction of our device
- * * col - the color (in hex value, like #559900) that the pipe should have
+ * * color - the color (in hex value, like #559900) that the pipe should have
  * * piping_layer - the piping_layer the device is in, used inside PIPING_LAYER_SHIFT
  * * trinary - if TRUE we also use PIPING_FORWARD_SHIFT on layer 1 and 5 for trinary devices (filters and mixers)
  */
-/obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255), piping_layer=3, trinary = FALSE)
-
-	//Add identifiers for the iconset
-	if(iconsetids[iconset] == null)
-		iconsetids[iconset] = num2text(iconsetids.len + 1)
-
-	//Generate a unique identifier for this image combination
-	var/identifier = iconsetids[iconset] + "_[iconstate]_[direction]_[col]_[piping_layer]"
-
-	if((!(. = pipeimages[identifier])))
-		var/image/pipe_overlay
-		pipe_overlay = . = pipeimages[identifier] = image(iconset, iconstate, dir = direction)
-		pipe_overlay.color = col
-		PIPING_LAYER_SHIFT(pipe_overlay, piping_layer)
-		if(trinary == TRUE && (piping_layer == 1 || piping_layer == 5))
-			PIPING_FORWARD_SHIFT(pipe_overlay, piping_layer, 2)
-
-///Similar to getpipeimage(); will create an image from the set_icon and set_state; mostly used to create overlays for connections.
-/obj/machinery/atmospherics/proc/pipe_overlay(set_icon, set_state, direction, color = COLOR_VERY_LIGHT_GRAY, piping_layer = 3, set_layer = PIPE_VISIBLE_LEVEL)
-	var/image/pipe_overlay
-	pipe_overlay = image(icon = set_icon, icon_state = set_state, layer = set_layer, dir = direction)
+/obj/machinery/atmospherics/proc/getpipeimage(iconfile, iconstate, direction, color = COLOR_VERY_LIGHT_GRAY, piping_layer = 3, trinary = FALSE)
+	var/image/pipe_overlay = image(iconfile, iconstate, dir = direction)
 	pipe_overlay.color = color
 	PIPING_LAYER_SHIFT(pipe_overlay, piping_layer)
+	if(trinary == TRUE && (piping_layer == 1 || piping_layer == 5))
+		PIPING_FORWARD_SHIFT(pipe_overlay, piping_layer, 2)
 	return pipe_overlay
 
 /obj/machinery/atmospherics/on_construction(obj_color, set_layer)
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		pipe_color = obj_color
+	update_name()
 	setPipingLayer(set_layer)
 	atmosinit()
 	var/list/nodes = pipeline_expansion()
@@ -471,9 +459,13 @@
 		A.addMember(src)
 	SSair.add_to_rebuild_queue(src)
 
-/obj/machinery/atmospherics/Entered(atom/movable/AM)
-	if(istype(AM, /mob/living))
-		var/mob/living/L = AM
+/obj/machinery/atmospherics/update_name()
+	name = "[GLOB.pipe_color_name[pipe_color]] [initial(name)]"
+	return ..()
+
+/obj/machinery/atmospherics/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(istype(arrived, /mob/living))
+		var/mob/living/L = arrived
 		L.ventcrawl_layer = piping_layer
 	return ..()
 

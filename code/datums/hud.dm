@@ -28,7 +28,8 @@ GLOBAL_LIST_INIT(huds, list(
 	ANTAG_HUD_FUGITIVE = new/datum/atom_hud/antag(),
 	ANTAG_HUD_GANGSTER = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_SPACECOP = new/datum/atom_hud/antag(),
-	ANTAG_HUD_HERETIC = new/datum/atom_hud/antag/hidden()
+	ANTAG_HUD_HERETIC = new/datum/atom_hud/antag/hidden(),
+	ANTAG_HUD_BRAINWASHED = new/datum/atom_hud/antag/hidden()
 	))
 
 /datum/atom_hud
@@ -99,6 +100,7 @@ GLOBAL_LIST_INIT(huds, list(
 /datum/atom_hud/proc/unregister_mob(datum/source, force)
 	SIGNAL_HANDLER
 	remove_hud_from(source, TRUE)
+	remove_from_hud(source)
 
 /datum/atom_hud/proc/hide_single_atomhud_from(hud_user,hidden_atom)
 	if(hudusers[hud_user])

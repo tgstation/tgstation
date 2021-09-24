@@ -78,7 +78,7 @@
 
 /datum/award/achievement/on_unlock(mob/user)
 	. = ..()
-	to_chat(user, "<span class='greenannounce'><B>Achievement unlocked: [name]!</B></span>")
+	to_chat(user, span_greenannounce("<B>Achievement unlocked: [name]!</B>"))
 
 ///Scores are for leaderboarded things, such as killcount of a specific boss
 /datum/award/score

@@ -1,6 +1,7 @@
 GLOBAL_LIST_EMPTY(exp_to_update)
 GLOBAL_PROTECT(exp_to_update)
 
+#define IS_XP_LOCKED(job) (exp_requirements && ((exp_required_type_department && CONFIG_GET(flag/use_exp_restrictions_heads)) || (exp_required_type && CONFIG_GET(flag/use_exp_restrictions_other))))
 // Procs
 /datum/job/proc/required_playtime_remaining(client/C)
 	if(!C)
@@ -9,9 +10,7 @@ GLOBAL_PROTECT(exp_to_update)
 		return 0
 	if(!SSdbcore.Connect())
 		return 0
-	if(!exp_requirements || !exp_type)
-		return 0
-	if(!job_is_xp_locked(src.title))
+	if(!IS_XP_LOCKED(src))
 		return 0
 	if(CONFIG_GET(flag/use_exp_restrictions_admin_bypass) && check_rights_for(C,R_ADMIN))
 		return 0
@@ -24,37 +23,32 @@ GLOBAL_PROTECT(exp_to_update)
 		return 0
 	else
 		return (job_requirement - my_exp)
+#undef IS_XP_LOCKED
+
 
 /datum/job/proc/get_exp_req_amount()
-	if(title in (GLOB.command_positions | list("AI")))
+	if(exp_required_type_department)
 		var/uerhh = CONFIG_GET(number/use_exp_restrictions_heads_hours)
 		if(uerhh)
 			return uerhh * 60
 	return exp_requirements
 
-/datum/job/proc/get_exp_req_type()
-	if(title in (GLOB.command_positions | list("AI")))
-		if(CONFIG_GET(flag/use_exp_restrictions_heads_department) && exp_type_department)
-			return exp_type_department
-	return exp_type
 
-/proc/job_is_xp_locked(jobtitle)
-	if(!CONFIG_GET(flag/use_exp_restrictions_heads) && (jobtitle in (GLOB.command_positions | list("AI"))))
-		return FALSE
-	if(!CONFIG_GET(flag/use_exp_restrictions_other) && !(jobtitle in (GLOB.command_positions | list("AI"))))
-		return FALSE
-	return TRUE
+/datum/job/proc/get_exp_req_type()
+	if(exp_required_type_department && CONFIG_GET(flag/use_exp_restrictions_heads_department))
+		return exp_required_type_department
+	return exp_required_type
+
 
 /client/proc/calc_exp_type(exptype)
-	var/list/explist = prefs.exp.Copy()
-	var/amount = 0
-	var/list/typelist = GLOB.exp_jobsmap[exptype]
-	if(!typelist)
+	var/list/job_list = SSjob.experience_jobs_map[exptype]
+	if(!job_list)
 		return -1
-	for(var/job in typelist["titles"])
-		if(job in explist)
-			amount += explist[job]
-	return amount
+	var/list/exp_map = prefs.exp.Copy()
+	. = 0
+	for(var/datum/job/job as anything in job_list)
+		. += exp_map[job.title]
+
 
 /client/proc/get_exp_living(pure_numeric = FALSE)
 	if(!prefs.exp || !prefs.exp[EXP_TYPE_LIVING])

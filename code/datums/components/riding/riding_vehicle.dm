@@ -16,43 +16,43 @@
 
 	if(!keycheck(user))
 		if(COOLDOWN_FINISHED(src, message_cooldown))
-			to_chat(user, "<span class='warning'>[vehicle_parent] has no key inserted!</span>")
+			to_chat(user, span_warning("[vehicle_parent] has no key inserted!"))
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
 		return COMPONENT_DRIVER_BLOCK_MOVE
 
 	if(HAS_TRAIT(user, TRAIT_INCAPACITATED))
 		if(ride_check_flags & UNBUCKLE_DISABLED_RIDER)
 			vehicle_parent.unbuckle_mob(user, TRUE)
-			user.visible_message("<span class='danger'>[user] falls off \the [vehicle_parent].</span>",\
-			"<span class='danger'>You slip off \the [vehicle_parent] as your body slumps!</span>")
+			user.visible_message(span_danger("[user] falls off \the [vehicle_parent]."),\
+			span_danger("You slip off \the [vehicle_parent] as your body slumps!"))
 			user.Stun(3 SECONDS)
 
 		if(COOLDOWN_FINISHED(src, message_cooldown))
-			to_chat(user, "<span class='warning'>You cannot operate \the [vehicle_parent] right now!</span>")
+			to_chat(user, span_warning("You cannot operate \the [vehicle_parent] right now!"))
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
 		return COMPONENT_DRIVER_BLOCK_MOVE
 
 	if(ride_check_flags & RIDER_NEEDS_LEGS && HAS_TRAIT(user, TRAIT_FLOORED))
 		if(ride_check_flags & UNBUCKLE_DISABLED_RIDER)
 			vehicle_parent.unbuckle_mob(user, TRUE)
-			user.visible_message("<span class='danger'>[user] falls off \the [vehicle_parent].</span>",\
-			"<span class='danger'>You fall off \the [vehicle_parent] while trying to operate it while unable to stand!</span>")
+			user.visible_message(span_danger("[user] falls off \the [vehicle_parent]."),\
+			span_danger("You fall off \the [vehicle_parent] while trying to operate it while unable to stand!"))
 			user.Stun(3 SECONDS)
 
 		if(COOLDOWN_FINISHED(src, message_cooldown))
-			to_chat(user, "<span class='warning'>You can't seem to manage that while unable to stand up enough to move \the [vehicle_parent]...</span>")
+			to_chat(user, span_warning("You can't seem to manage that while unable to stand up enough to move \the [vehicle_parent]..."))
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
 		return COMPONENT_DRIVER_BLOCK_MOVE
 
 	if(ride_check_flags & RIDER_NEEDS_ARMS && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		if(ride_check_flags & UNBUCKLE_DISABLED_RIDER)
 			vehicle_parent.unbuckle_mob(user, TRUE)
-			user.visible_message("<span class='danger'>[user] falls off \the [vehicle_parent].</span>",\
-			"<span class='danger'>You fall off \the [vehicle_parent] while trying to operate it without being able to hold on!</span>")
+			user.visible_message(span_danger("[user] falls off \the [vehicle_parent]."),\
+			span_danger("You fall off \the [vehicle_parent] while trying to operate it without being able to hold on!"))
 			user.Stun(3 SECONDS)
 
 		if(COOLDOWN_FINISHED(src, message_cooldown))
-			to_chat(user, "<span class='warning'>You can't seem to hold onto \the [vehicle_parent] to move it...</span>")
+			to_chat(user, span_warning("You can't seem to hold onto \the [vehicle_parent] to move it..."))
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
 		return COMPONENT_DRIVER_BLOCK_MOVE
 
@@ -67,7 +67,7 @@
 	if(!istype(next) || !istype(current))
 		return //not happening.
 	if(!turf_check(next, current))
-		to_chat(user, "<span class='warning'>\The [movable_parent] can not go onto [next]!</span>")
+		to_chat(user, span_warning("\The [movable_parent] can not go onto [next]!"))
 		return
 	if(!Process_Spacemove(direction) || !isturf(movable_parent.loc))
 		return
@@ -168,7 +168,7 @@
 
 /datum/component/riding/vehicle/scooter/skateboard/wheelys/skishoes/handle_specials()
 	. = ..()
-	allowed_turf_typecache = typecacheof(/turf/open/floor/plating/asteroid/snow/icemoon)
+	allowed_turf_typecache = typecacheof(list(/turf/open/floor/plating/asteroid/snow, /turf/open/floor/grass/snow, /turf/open/floor/holofloor/snow, /turf/open/floor/plating/ice))
 
 /datum/component/riding/vehicle/secway
 	keytype = /obj/item/key/security
@@ -185,7 +185,7 @@
 
 	if(keycheck(user) && the_secway.eddie_murphy)
 		if(COOLDOWN_FINISHED(src, message_cooldown))
-			the_secway.visible_message("<span class='warning'>[src] sputters and refuses to move!</span>")
+			the_secway.visible_message(span_warning("[src] sputters and refuses to move!"))
 			playsound(get_turf(the_secway), 'sound/effects/stall.ogg', 70)
 			COOLDOWN_START(src, message_cooldown, 0.75 SECONDS)
 		return COMPONENT_DRIVER_BLOCK_MOVE

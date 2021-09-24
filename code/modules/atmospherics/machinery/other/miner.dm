@@ -43,25 +43,25 @@
 		return FALSE
 	var/turf/T = get_turf(src)
 	if(!isopenturf(T))
-		broken_message = "<span class='boldnotice'>VENT BLOCKED</span>"
+		broken_message = span_boldnotice("VENT BLOCKED")
 		set_broken(TRUE)
 		return FALSE
 	var/turf/open/OT = T
 	if(OT.planetary_atmos)
-		broken_message = "<span class='boldwarning'>DEVICE NOT ENCLOSED IN A PRESSURIZED ENVIRONMENT</span>"
+		broken_message = span_boldwarning("DEVICE NOT ENCLOSED IN A PRESSURIZED ENVIRONMENT")
 		set_broken(TRUE)
 		return FALSE
 	if(isspaceturf(T))
-		broken_message = "<span class='boldnotice'>AIR VENTING TO SPACE</span>"
+		broken_message = span_boldnotice("AIR VENTING TO SPACE")
 		set_broken(TRUE)
 		return FALSE
 	var/datum/gas_mixture/G = OT.return_air()
 	if(G.return_pressure() > (max_ext_kpa - ((spawn_mol*spawn_temp*R_IDEAL_GAS_EQUATION)/(CELL_VOLUME))))
-		broken_message = "<span class='boldwarning'>EXTERNAL PRESSURE OVER THRESHOLD</span>"
+		broken_message = span_boldwarning("EXTERNAL PRESSURE OVER THRESHOLD")
 		set_broken(TRUE)
 		return FALSE
 	if(G.total_moles() > max_ext_mol)
-		broken_message = "<span class='boldwarning'>EXTERNAL AIR CONCENTRATION OVER THRESHOLD</span>"
+		broken_message = span_boldwarning("EXTERNAL AIR CONCENTRATION OVER THRESHOLD")
 		set_broken(TRUE)
 		return FALSE
 	if(broken)
@@ -87,15 +87,15 @@
 	var/P = G.return_pressure()
 	switch(power_draw)
 		if(GASMINER_POWER_NONE)
-			active_power_usage = 0
+			update_use_power(ACTIVE_POWER_USE, 0)
 		if(GASMINER_POWER_STATIC)
-			active_power_usage = power_draw_static
+			update_use_power(ACTIVE_POWER_USE, power_draw_static)
 		if(GASMINER_POWER_MOLES)
-			active_power_usage = spawn_mol * power_draw_dynamic_mol_coeff
+			update_use_power(ACTIVE_POWER_USE, spawn_mol * power_draw_dynamic_mol_coeff)
 		if(GASMINER_POWER_KPA)
-			active_power_usage = P * power_draw_dynamic_kpa_coeff
+			update_use_power(ACTIVE_POWER_USE, P * power_draw_dynamic_kpa_coeff)
 		if(GASMINER_POWER_FULLSCALE)
-			active_power_usage = (spawn_mol * power_draw_dynamic_mol_coeff) + (P * power_draw_dynamic_kpa_coeff)
+			update_use_power(ACTIVE_POWER_USE, (spawn_mol * power_draw_dynamic_mol_coeff) + (P * power_draw_dynamic_kpa_coeff))
 
 /obj/machinery/atmospherics/miner/proc/do_use_power(amount)
 	var/turf/T = get_turf(src)
@@ -159,7 +159,7 @@
 	overlay_color = "#007FFF"
 	spawn_id = /datum/gas/oxygen
 
-/obj/machinery/atmospherics/miner/toxins
+/obj/machinery/atmospherics/miner/plasma
 	name = "\improper Plasma Gas Miner"
 	overlay_color = "#FF0000"
 	spawn_id = /datum/gas/plasma

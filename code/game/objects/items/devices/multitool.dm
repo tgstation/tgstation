@@ -35,10 +35,10 @@
 
 /obj/item/multitool/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Its buffer [buffer ? "contains [buffer]." : "is empty."]</span>"
+	. += span_notice("Its buffer [buffer ? "contains [buffer]." : "is empty."]")
 
 /obj/item/multitool/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!</span>")
+	user.visible_message(span_suicide("[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!"))
 	return OXYLOSS//theres a reason it wasn't recommended by doctors
 
 
@@ -95,7 +95,7 @@
 /obj/item/multitool/ai_detect/proc/toggle_hud(mob/user)
 	hud_on = !hud_on
 	if(user)
-		to_chat(user, "<span class='notice'>You toggle the ai detection HUD on [src] [hud_on ? "on" : "off"].</span>")
+		to_chat(user, span_notice("You toggle the ai detection HUD on [src] [hud_on ? "on" : "off"]."))
 	if(hud_on)
 		show_hud(user)
 	else

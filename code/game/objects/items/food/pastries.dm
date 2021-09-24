@@ -375,9 +375,9 @@
 		return
 	var/mob/living/carbon/human/moffin_observer = user
 	if(moffin_observer.dna.species.liked_food & CLOTH)
-		. += "<span class='nicegreen'>Ooh! It's even got bits of clothes on it! Yummy!</span>"
+		. += span_nicegreen("Ooh! It's even got bits of clothes on it! Yummy!")
 	else
-		. += "<span class='warning'>You're not too sure what's on top though...</span>"
+		. += span_warning("You're not too sure what's on top though...")
 
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
 
@@ -435,6 +435,10 @@
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
+//donk pockets cook quick... try not to burn them for using an unoptimal tool
+/obj/item/food/donkpocket/MakeBakeable()
+	AddComponent(/datum/component/bakeable, microwaved_type, rand(25 SECONDS, 30 SECONDS), TRUE, TRUE)
+
 /obj/item/food/donkpocket/warm
 	name = "warm Donk-pocket"
 	desc = "The heated food of choice for the seasoned traitor."
@@ -442,6 +446,10 @@
 	microwaved_type = null
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
 	foodtypes = GRAIN
+
+///Override for fast-burning food
+/obj/item/food/donkpocket/warm/MakeBakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/badrecipe, rand(10 SECONDS, 15 SECONDS), FALSE)
 
 /obj/item/food/dankpocket
 	name = "\improper Dank-pocket"
@@ -745,7 +753,7 @@
 		return ..()
 	if(newresult)
 		qdel(garnish)
-		to_chat(user, "<span class='notice'>You add [garnish] to [src].</span>")
+		to_chat(user, span_notice("You add [garnish] to [src]."))
 		AddComponent(/datum/component/grillable, cook_result = newresult)
 
 /obj/item/food/pancakes/raw/examine(mob/user)
@@ -812,11 +820,11 @@
 	if(istype(item, /obj/item/food/pancakes))
 		var/obj/item/food/pancakes/pancake = item
 		if((contents.len >= PANCAKE_MAX_STACK) || ((pancake.contents.len + contents.len) > PANCAKE_MAX_STACK))
-			to_chat(user, "<span class='warning'>You can't add that many pancakes to [src]!</span>")
+			to_chat(user, span_warning("You can't add that many pancakes to [src]!"))
 		else
 			if(!user.transferItemToLoc(pancake, src))
 				return
-			to_chat(user, "<span class='notice'>You add the [pancake] to the [src].</span>")
+			to_chat(user, span_notice("You add the [pancake] to the [src]."))
 			pancake.name = initial(pancake.name)
 			contents += pancake
 			update_snack_overlays(pancake)

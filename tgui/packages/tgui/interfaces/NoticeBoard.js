@@ -35,7 +35,7 @@ export const NoticeBoard = (props, context) => {
               </Flex.Item>
               <Flex.Item>
                 <Button
-                  icon="search"
+                  icon="eye"
                   onClick={() => act("examine", { ref: item.ref })}
                 />
                 <Button

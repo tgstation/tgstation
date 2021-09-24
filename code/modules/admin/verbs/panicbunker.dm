@@ -2,7 +2,7 @@
 	set category = "Server"
 	set name = "Toggle Panic Bunker"
 	if (!CONFIG_GET(flag/sql_enabled))
-		to_chat(usr, "<span class='adminnotice'>The Database is not enabled!</span>", confidential = TRUE)
+		to_chat(usr, span_adminnotice("The Database is not enabled!"), confidential = TRUE)
 		return
 
 	var/new_pb = !CONFIG_GET(flag/panic_bunker)
@@ -30,7 +30,7 @@
 	set category = "Server"
 	set name = "Toggle PB Interviews"
 	if (!CONFIG_GET(flag/panic_bunker))
-		to_chat(usr, "<span class='adminnotice'>NOTE: The panic bunker is not enabled, so this change will not effect anything until it is enabled.</span>", confidential = TRUE)
+		to_chat(usr, span_adminnotice("NOTE: The panic bunker is not enabled, so this change will not effect anything until it is enabled."), confidential = TRUE)
 	var/new_interview = !CONFIG_GET(flag/panic_bunker_interview)
 	CONFIG_SET(flag/panic_bunker_interview, new_interview)
 	log_admin("[key_name(usr)] has toggled the Panic Bunker's interview system, it is now [new_interview ? "enabled" : "disabled"].")

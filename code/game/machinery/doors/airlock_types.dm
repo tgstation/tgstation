@@ -110,15 +110,15 @@
 	autoclose = FALSE
 	frequency = FREQ_AIRLOCK_CONTROL
 	heat_proof = TRUE
-	req_access = list(ACCESS_TOXINS)
+	req_access = list(ACCESS_ORDNANCE)
 
-/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior
+/obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior
 	name = "Mixing Room Interior Airlock"
-	id_tag = INCINERATOR_TOXMIX_AIRLOCK_INTERIOR
+	id_tag = INCINERATOR_ORDMIX_AIRLOCK_INTERIOR
 
-/obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior
+/obj/machinery/door/airlock/research/glass/incinerator/ordmix_exterior
 	name = "Mixing Room Exterior Airlock"
-	id_tag = INCINERATOR_TOXMIX_AIRLOCK_EXTERIOR
+	id_tag = INCINERATOR_ORDMIX_AIRLOCK_EXTERIOR
 
 /obj/machinery/door/airlock/mining/glass
 	opacity = FALSE

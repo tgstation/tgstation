@@ -34,7 +34,7 @@
 	if(can_interact(user))
 		volume_rate = MAX_TRANSFER_RATE
 		investigate_log("was set to [volume_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
-		to_chat(user, "<span class='notice'>You maximize the volume output on [src] to [volume_rate] L/s.</span>")
+		balloon_alert(user, "volume output set to [volume_rate] L/s")
 		update_appearance()
 	return ..()
 
@@ -191,7 +191,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/can_unwrench(mob/user)
 	. = ..()
 	if(. && on && is_operational)
-		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		to_chat(user, span_warning("You cannot unwrench [src], turn it off first!"))
 		return FALSE
 
 // mapping
@@ -226,9 +226,9 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste
 	name = "engine outlet injector"
 	id = ATMOS_GAS_MONITOR_WASTE_ENGINE
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxin_input
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/plasma_input
 	name = "plasma tank input injector"
-	id = ATMOS_GAS_MONITOR_INPUT_TOX
+	id = ATMOS_GAS_MONITOR_INPUT_PLAS
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/oxygen_input
 	name = "oxygen tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_O2
@@ -298,6 +298,6 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/incinerator_input
 	name = "incinerator chamber input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_INCINERATOR
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input
-	name = "toxins mixing input injector"
-	id = ATMOS_GAS_MONITOR_INPUT_TOXINS_LAB
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/ordnance_mixing_input
+	name = "ordnance mixing input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_ORDNANCE_LAB

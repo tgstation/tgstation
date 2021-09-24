@@ -85,8 +85,8 @@
 	desc = "You're frozen inside of a protective ice cube! While inside, you can't do anything, but are immune to harm! You will be free when the chem runs out."
 
 /datum/reagent/inverse/cryostylane
-	name = "Cyrogelidia"
-	description = "Freezes the live or dead patient in an incuded cyrostasis ice block."
+	name = "Cryogelidia"
+	description = "Freezes the live or dead patient in a cryostasis ice block."
 	reagent_state = LIQUID
 	color = "#03dbfc"
 	taste_description = "your tongue freezing, shortly followed by your thoughts. Brr!"
@@ -100,7 +100,7 @@
 /datum/reagent/inverse/cryostylane/on_mob_add(mob/living/carbon/owner, amount)
 	cube = new /obj/structure/ice_stasis(get_turf(owner))
 	cube.color = COLOR_CYAN
-	cube.anchored = TRUE
+	cube.set_anchored(TRUE)
 	owner.forceMove(cube)
 	owner.apply_status_effect(STATUS_EFFECT_STASIS, STASIS_CHEMICAL_EFFECT)
 	cryostylane_alert = owner.throw_alert("cryostylane_alert", /atom/movable/screen/alert/status_effect/freon/cryostylane)

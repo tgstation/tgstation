@@ -174,7 +174,7 @@
 	icon_state = "mushroomsoup"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 9, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("mushroom" = 1)
-	foodtypes = VEGETABLES
+	foodtypes = VEGETABLES | DAIRY
 
 /obj/item/food/soup/beet
 	name = "beet soup"
@@ -215,7 +215,7 @@
 	bite_consumption = 7
 	max_volume = 100
 	tastes = list("tomato" = 1, "carrot" = 1)
-	foodtypes = VEGETABLES
+	foodtypes = VEGETABLES | MEAT
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/soup/sweetpotato
@@ -241,7 +241,7 @@
 	icon_state = "onionsoup"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/medicine/oculine = 5, /datum/reagent/consumable/tomatojuice = 8, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("caramelized onions" = 1)
-	foodtypes = VEGETABLES
+	foodtypes = VEGETABLES | DAIRY
 
 /obj/item/food/soup/bisque
 	name = "bisque"
@@ -256,7 +256,7 @@
 	name = "electron soup"
 	desc = "A gastronomic curiosity of ethereal origin. It is famed for the minature weather system formed over a properly prepared soup."
 	icon_state = "electronsoup"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/liquidelectricity/enriched = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/liquidelectricity/enriched = 12)
 	tastes = list("mushroom" = 1, "electrons" = 4)
 	foodtypes = VEGETABLES | TOXIC
 

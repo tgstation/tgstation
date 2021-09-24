@@ -10,7 +10,7 @@
 
 	layer = LOW_OBJ_LAYER
 
-	var/obj/machinery/atmospherics/components/unary/heat_exchanger/partner = null
+	var/datum/weakref/partner_ref = null
 	var/update_cycle
 
 	pipe_state = "heunary"
@@ -35,20 +35,26 @@
 	PIPING_LAYER_SHIFT(src, piping_layer)
 
 /obj/machinery/atmospherics/components/unary/heat_exchanger/atmosinit()
+	var/obj/machinery/atmospherics/components/unary/heat_exchanger/partner = partner_ref?.resolve()
 	if(!partner)
+		partner_ref = null
 		var/partner_connect = turn(dir,180)
 
 		for(var/obj/machinery/atmospherics/components/unary/heat_exchanger/target in get_step(src,partner_connect))
 			if(target.dir & get_dir(src,target))
-				partner = target
-				partner.partner = src
+				partner_ref = WEAKREF(target)
+				target.partner_ref = WEAKREF(src)
 				break
 
 	..()
 
 /obj/machinery/atmospherics/components/unary/heat_exchanger/process_atmos()
 	..()
-	if(!partner || SSair.times_fired <= update_cycle)
+	var/obj/machinery/atmospherics/components/unary/heat_exchanger/partner = partner_ref?.resolve()
+	if(!partner)
+		partner_ref = null
+		return
+	if(SSair.times_fired <= update_cycle)
 		return
 
 	update_cycle = SSair.times_fired

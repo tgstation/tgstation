@@ -40,7 +40,7 @@
 	if(!istype(user))
 		return
 	if(user.get_item_by_slot(user.getBackSlot()) != src)
-		to_chat(user, "<span class='warning'>The watertank must be worn properly to use!</span>")
+		to_chat(user, span_warning("The watertank must be worn properly to use!"))
 		return
 	if(user.incapacitated())
 		return
@@ -50,7 +50,7 @@
 	if(noz in src)
 		//Detach the nozzle into the user's hands
 		if(!user.put_in_hands(noz))
-			to_chat(user, "<span class='warning'>You need a free hand to hold the mister!</span>")
+			to_chat(user, span_warning("You need a free hand to hold the mister!"))
 			return
 	else
 		//Remove from their hands and put back "into" the tank
@@ -114,7 +114,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	amount_per_transfer_from_this = 50
-	possible_transfer_amounts = list(25,50,100)
+	possible_transfer_amounts = list(50)
+	can_toggle_range = FALSE
 	volume = 500
 	item_flags = NOBLUDGEON | ABSTRACT  // don't put in storage
 	slot_flags = NONE
@@ -128,13 +129,10 @@
 		return INITIALIZE_HINT_QDEL
 	reagents = tank.reagents //This mister is really just a proxy for the tank's reagents
 
-/obj/item/reagent_containers/spray/mister/attack_self()
-	return
-
 /obj/item/reagent_containers/spray/mister/doMove(atom/destination)
 	if(destination && (destination != tank.loc || !ismob(destination)))
 		if (loc != tank)
-			to_chat(tank.loc, "<span class='notice'>The mister snaps back onto the watertank.</span>")
+			to_chat(tank.loc, span_notice("The mister snaps back onto the watertank."))
 		destination = tank
 	..()
 
@@ -164,16 +162,45 @@
 	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = list()
+	possible_transfer_amounts = list(5, 10)
 	current_range = 5
-	spray_range = 5
 
 /obj/item/watertank/janitor/make_noz()
 	return new /obj/item/reagent_containers/spray/mister/janitor(src)
 
-/obj/item/reagent_containers/spray/mister/janitor/attack_self(mob/user)
-	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
-	to_chat(user, "<span class='notice'>You [amount_per_transfer_from_this == 10 ? "remove" : "fix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>")
+/obj/item/reagent_containers/spray/mister/janitor/mode_change_message(mob/user)
+	to_chat(user, span_notice("You [amount_per_transfer_from_this == 10 ? "remove" : "affix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray."))
+
+//Security tank
+/obj/item/watertank/pepperspray
+	name = "ANTI-TIDER-2500 suppression backpack"
+	desc = "The ultimate crowd-control device; this tool allows the user to quickly and efficiently pacify groups of hostile targets."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "pepperbackpacksec"
+	inhand_icon_state = "pepperbackpacksec"
+	custom_price = PAYCHECK_MEDIUM * 2
+
+/obj/item/watertank/pepperspray/Initialize()
+	. = ..()
+	reagents.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 500)
+
+/obj/item/reagent_containers/spray/mister/pepperspray
+	name = "security spray nozzle"
+	desc = "A pacifying spray nozzle attached to a pepperspray tank, designed to silence perps."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "mistersec"
+	inhand_icon_state = "mistersec"
+	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
+	amount_per_transfer_from_this = 5
+	possible_transfer_amounts = list(5, 10)
+	current_range = 6
+
+/obj/item/watertank/pepperspray/make_noz()
+	return new /obj/item/reagent_containers/spray/mister/pepperspray(src)
+
+/obj/item/reagent_containers/spray/mister/pepperspray/mode_change_message(mob/user)
+	to_chat(user, span_notice("You [amount_per_transfer_from_this == 10 ? "remove" : "affix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray."))
 
 //ATMOS FIRE FIGHTING BACKPACK
 
@@ -244,7 +271,7 @@
 /obj/item/extinguisher/mini/nozzle/doMove(atom/destination)
 	if(destination && (destination != tank.loc || !ismob(destination)))
 		if(loc != tank)
-			to_chat(tank.loc, "<span class='notice'>The nozzle snaps back onto the tank.</span>")
+			to_chat(tank.loc, span_notice("The nozzle snaps back onto the tank."))
 		destination = tank
 	..()
 
@@ -253,17 +280,17 @@
 		if(EXTINGUISHER)
 			nozzle_mode = RESIN_LAUNCHER
 			tank.icon_state = "waterbackpackatmos_1"
-			to_chat(user, "<span class='notice'>Swapped to resin launcher.</span>")
+			to_chat(user, span_notice("Swapped to resin launcher."))
 			return
 		if(RESIN_LAUNCHER)
 			nozzle_mode = RESIN_FOAM
 			tank.icon_state = "waterbackpackatmos_2"
-			to_chat(user, "<span class='notice'>Swapped to resin foamer.</span>")
+			to_chat(user, span_notice("Swapped to resin foamer."))
 			return
 		if(RESIN_FOAM)
 			nozzle_mode = EXTINGUISHER
 			tank.icon_state = "waterbackpackatmos_0"
-			to_chat(user, "<span class='notice'>Swapped to water extinguisher.</span>")
+			to_chat(user, span_notice("Swapped to water extinguisher."))
 			return
 	return
 
@@ -279,10 +306,10 @@
 			return //Safety check so you don't blast yourself trying to refill your tank
 		var/datum/reagents/R = reagents
 		if(R.total_volume < 100)
-			to_chat(user, "<span class='warning'>You need at least 100 units of water to use the resin launcher!</span>")
+			to_chat(user, span_warning("You need at least 100 units of water to use the resin launcher!"))
 			return
 		if(resin_cooldown)
-			to_chat(user, "<span class='warning'>Resin launcher is still recharging...</span>")
+			to_chat(user, span_warning("Resin launcher is still recharging..."))
 			return
 		resin_cooldown = TRUE
 		R.remove_any(100)
@@ -300,7 +327,7 @@
 			return
 		for(var/S in target)
 			if(istype(S, /obj/effect/particle_effect/foam/metal/resin) || istype(S, /obj/structure/foamedmetal/resin))
-				to_chat(user, "<span class='warning'>There's already resin here!</span>")
+				to_chat(user, span_warning("There's already resin here!"))
 				return
 		if(metal_synthesis_cooldown < 5)
 			var/obj/effect/particle_effect/foam/metal/resin/F = new (get_turf(target))
@@ -308,7 +335,7 @@
 			metal_synthesis_cooldown++
 			addtimer(CALLBACK(src, .proc/reduce_metal_synth_cooldown), 10 SECONDS)
 		else
-			to_chat(user, "<span class='warning'>Resin foam mix is still being synthesized...</span>")
+			to_chat(user, span_warning("Resin foam mix is still being synthesized..."))
 			return
 
 /obj/item/extinguisher/mini/nozzle/proc/reduce_metal_synth_cooldown()
@@ -370,7 +397,7 @@
 	if(!istype(user))
 		return
 	if (user.get_item_by_slot(ITEM_SLOT_BACK) != src)
-		to_chat(user, "<span class='warning'>The chemtank needs to be on your back before you can activate it!</span>")
+		to_chat(user, span_warning("The chemtank needs to be on your back before you can activate it!"))
 		return
 	if(on)
 		turn_off()
@@ -378,35 +405,36 @@
 		turn_on()
 
 //Todo : cache these.
-/obj/item/reagent_containers/chemtank/worn_overlays(isinhands = FALSE) //apply chemcolor and level
-	. = list()
+/obj/item/reagent_containers/chemtank/worn_overlays(mutable_appearance/standing, isinhands = FALSE) //apply chemcolor and level
+	. = ..()
 	//inhands + reagent_filling
-	if(!isinhands && reagents.total_volume)
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "backpackmob-10")
+	if(isinhands || !reagents.total_volume)
+		return
 
-		var/percent = round((reagents.total_volume / volume) * 100)
-		switch(percent)
-			if(0 to 15)
-				filling.icon_state = "backpackmob-10"
-			if(16 to 60)
-				filling.icon_state = "backpackmob50"
-			if(61 to INFINITY)
-				filling.icon_state = "backpackmob100"
+	var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "backpackmob-10")
+	var/percent = round((reagents.total_volume / volume) * 100)
+	switch(percent)
+		if(0 to 15)
+			filling.icon_state = "backpackmob-10"
+		if(16 to 60)
+			filling.icon_state = "backpackmob50"
+		if(61 to INFINITY)
+			filling.icon_state = "backpackmob100"
 
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		. += filling
+	filling.color = mix_color_from_reagents(reagents.reagent_list)
+	. += filling
 
 /obj/item/reagent_containers/chemtank/proc/turn_on()
 	on = TRUE
 	START_PROCESSING(SSobj, src)
 	if(ismob(loc))
-		to_chat(loc, "<span class='notice'>[src] turns on.</span>")
+		to_chat(loc, span_notice("[src] turns on."))
 
 /obj/item/reagent_containers/chemtank/proc/turn_off()
 	on = FALSE
 	STOP_PROCESSING(SSobj, src)
 	if(ismob(loc))
-		to_chat(loc, "<span class='notice'>[src] turns off.</span>")
+		to_chat(loc, span_notice("[src] turns off."))
 
 /obj/item/reagent_containers/chemtank/process(delta_time)
 	if(!ishuman(loc))

@@ -14,7 +14,7 @@
 		for (var/bullethole in bullethole_overlays)
 			cut_overlay(bullethole)
 		bullethole_overlays = null
-		to_chat(user, "<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>")
+		to_chat(user, span_notice("You slice off [src]'s uneven chunks of aluminium and scorch marks."))
 	return TRUE
 
 /obj/item/target/syndicate
@@ -54,7 +54,7 @@
 	if(C.GetPixel(p_x, p_y) && P.original == src && overlays.len <= 35) // if the located pixel isn't blank (null)
 		hp -= P.damage
 		if(hp <= 0)
-			visible_message("<span class='danger'>[src] breaks into tiny pieces and collapses!</span>")
+			visible_message(span_danger("[src] breaks into tiny pieces and collapses!"))
 			qdel(src)
 		var/image/bullet_hole = image('icons/effects/effects.dmi', "scorch", OBJ_LAYER + 0.5)
 		bullet_hole.pixel_x = p_x - 1 //offset correction

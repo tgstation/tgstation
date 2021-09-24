@@ -48,15 +48,15 @@
 
 /obj/structure/falsewall/proc/toggle_open()
 	if(!QDELETED(src))
-		density = !density
+		set_density(!density)
 		set_opacity(density)
 		opening = FALSE
 		update_appearance()
 		air_update_turf(TRUE, !density)
 
-/obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
+/obj/structure/falsewall/update_icon(updates=ALL)//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	. = ..()
-	if(!density)
+	if(!density || !(updates & UPDATE_SMOOTHING))
 		return
 
 	if(opening)
@@ -82,22 +82,22 @@
 
 /obj/structure/falsewall/attackby(obj/item/W, mob/user, params)
 	if(opening)
-		to_chat(user, "<span class='warning'>You must wait until the door has stopped moving!</span>")
+		to_chat(user, span_warning("You must wait until the door has stopped moving!"))
 		return
 
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(density)
 			var/turf/T = get_turf(src)
 			if(T.density)
-				to_chat(user, "<span class='warning'>[src] is blocked!</span>")
+				to_chat(user, span_warning("[src] is blocked!"))
 				return
 			if(!isfloorturf(T))
-				to_chat(user, "<span class='warning'>[src] bolts must be tightened on the floor!</span>")
+				to_chat(user, span_warning("[src] bolts must be tightened on the floor!"))
 				return
-			user.visible_message("<span class='notice'>[user] tightens some bolts on the wall.</span>", "<span class='notice'>You tighten the bolts on the wall.</span>")
+			user.visible_message(span_notice("[user] tightens some bolts on the wall."), span_notice("You tighten the bolts on the wall."))
 			ChangeToWall()
 		else
-			to_chat(user, "<span class='warning'>You can't reach, close it first!</span>")
+			to_chat(user, span_warning("You can't reach, close it first!"))
 
 	else if(W.tool_behaviour == TOOL_WELDER)
 		if(W.use_tool(src, user, 0, volume=50))
@@ -106,7 +106,7 @@
 		return ..()
 
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
-	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
+	user.visible_message(span_notice("[user] dismantles the false wall."), span_notice("You dismantle the false wall."))
 	if(tool)
 		tool.play_tool_sound(src, 100)
 	else
@@ -126,7 +126,7 @@
 	return null
 
 /obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
-	to_chat(user, "<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>")
+	to_chat(user, span_notice("The outer plating is <b>welded</b> firmly in place."))
 	return null
 
 /*
@@ -144,7 +144,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 
 /obj/structure/falsewall/reinforced/examine_status(mob/user)
-	to_chat(user, "<span class='notice'>The outer <b>grille</b> is fully intact.</span>")
+	to_chat(user, span_notice("The outer <b>grille</b> is fully intact."))
 	return null
 
 /obj/structure/falsewall/reinforced/attackby(obj/item/tool, mob/user)

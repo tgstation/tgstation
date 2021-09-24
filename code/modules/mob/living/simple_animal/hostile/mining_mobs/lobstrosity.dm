@@ -25,7 +25,7 @@
 	attack_verb_simple = "snip"
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE //the closest we have to a crustacean pinching attack effect rn.
-	weather_immunities = list("snow")
+	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 	vision_range = 5
 	aggro_vision_range = 7
 	charger = TRUE
@@ -39,7 +39,7 @@
 	if(COOLDOWN_FINISHED(src, charge_cooldown))
 		INVOKE_ASYNC(src, /mob/living/simple_animal/hostile/.proc/enter_charge, target)
 	else
-		to_chat(src, "<span class='notice'>Your charge is still on cooldown!</span>")
+		to_chat(src, span_notice("Your charge is still on cooldown!"))
 
 /mob/living/simple_animal/hostile/asteroid/lobstrosity/lava
 	name = "tropical lobstrosity"

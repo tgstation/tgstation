@@ -85,7 +85,7 @@ export const BiogeneratorContent = (props, context) => {
           <Button
             icon="eject"
             content="Eject"
-            onClick={() => act('detach')} />
+            onClick={() => act('eject')} />
           <Button
             icon="cog"
             content="Activate"

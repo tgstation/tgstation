@@ -10,9 +10,13 @@
 <!-- Please add a short description of why you think these changes would benefit the game. If you can't justify it in words, it might not be worth adding. -->
 
 ## Changelog
+
+<!-- If your PR modifies aspects of the game that can be concretely observed by players or admins you should add a changelog. If your change does NOT meet this description, remove this section. -->
+
 :cl:
-add: Added new things
+add: Added new mechanics or gameplay changes
 add: Added more things
+expansion: Expands content of an existing feature
 del: Removed old things
 qol: made something easier to use
 balance: rebalanced something

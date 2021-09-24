@@ -41,7 +41,7 @@ To add a crossbreed:
 /obj/item/slimecross/examine(mob/user)
 	. = ..()
 	if(effect_desc)
-		. += "<span class='notice'>[effect_desc]</span>"
+		. += span_notice("[effect_desc]")
 
 /obj/item/slimecross/Initialize()
 	. = ..()
@@ -113,7 +113,7 @@ To add a crossbreed:
 
 /obj/item/slimecrossbeaker/process()
 	if(!reagents.total_volume)
-		visible_message("<span class='notice'>[src] has been drained completely, and melts away.</span>")
+		visible_message(span_notice("[src] has been drained completely, and melts away."))
 		qdel(src)
 
 /obj/item/slimecrossbeaker/bloodpack //Pack of 50u blood. Deletes on empty.
@@ -144,22 +144,22 @@ To add a crossbreed:
 
 /obj/item/slimecrossbeaker/autoinjector/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
-		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+		to_chat(user, span_warning("[src] is empty!"))
 		return
 	if(!iscarbon(M))
 		return
 	if(self_use_only && M != user)
-		to_chat(user, "<span class='warning'>This can only be used on yourself.</span>")
+		to_chat(user, span_warning("This can only be used on yourself."))
 		return
 	if(reagents.total_volume && (ignore_flags || M.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE)))
 		reagents.trans_to(M, reagents.total_volume, transfered_by = user)
 		if(user != M)
-			to_chat(M, "<span class='warning'>[user] presses [src] against you!</span>")
-			to_chat(user, "<span class='notice'>You press [src] against [M], injecting [M.p_them()].</span>")
+			to_chat(M, span_warning("[user] presses [src] against you!"))
+			to_chat(user, span_notice("You press [src] against [M], injecting [M.p_them()]."))
 		else
-			to_chat(user, "<span class='notice'>You press [src] against yourself, and it flattens against you!</span>")
+			to_chat(user, span_notice("You press [src] against yourself, and it flattens against you!"))
 	else
-		to_chat(user, "<span class='warning'>There's no place to stick [src]!</span>")
+		to_chat(user, span_warning("There's no place to stick [src]!"))
 
 /obj/item/slimecrossbeaker/autoinjector/regenpack
 	ignore_flags = TRUE //It is, after all, intended to heal.

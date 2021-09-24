@@ -60,7 +60,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "o" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "p" = (

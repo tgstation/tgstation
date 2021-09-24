@@ -26,6 +26,9 @@
 	nullifyAllNodes()
 	return ..()
 
+/obj/machinery/atmospherics/pipe/layer_manifold/update_pipe_icon()
+	return
+
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/nullifyAllNodes()
 	for(var/obj/machinery/atmospherics/A in nodes)
 		A.disconnect(src)
@@ -41,9 +44,13 @@
 	. = ..()
 
 	for(var/node in front_nodes)
-		. += get_attached_images(node)
+		var/list/front_images = get_attached_images(node)
+		if(length(front_images))
+			. += front_images
 	for(var/node in back_nodes)
-		. += get_attached_images(node)
+		var/list/back_images = get_attached_images(node)
+		if(length(back_images))
+			. += back_images
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_attached_images(obj/machinery/atmospherics/A)
 	if(!A)
@@ -58,10 +65,9 @@
 	. += get_attached_image(get_dir(src, A), A.piping_layer, A.pipe_color)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_attached_image(p_dir, p_layer, p_color)
-	// Uses pipe-3 because we don't want the vertical shifting
-	var/image/I = getpipeimage(icon, "pipe-3", p_dir, p_color, p_layer)
-	I.layer = layer - 0.01
-	return I
+	var/mutable_appearance/muta = mutable_appearance('icons/obj/atmospherics/pipes/layer_manifold_underlays.dmi', "intact_[p_dir]_[p_layer]", layer = layer - 0.01, appearance_flags = RESET_COLOR)
+	muta.color = p_color
+	return muta
 
 /obj/machinery/atmospherics/pipe/layer_manifold/SetInitDirections()
 	switch(dir)

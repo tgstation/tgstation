@@ -243,8 +243,6 @@
 	if(!humanoid || !istype(humanoid))
 		return FALSE
 	if(..())
-		if (humanoid in GLOB.nanite_sensors_list)
-			return TRUE
 		if (istype(humanoid.w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/uniform = humanoid.w_uniform
 			if(uniform.has_sensor && uniform.sensor_mode >= SENSOR_COORDS) // Suit sensors must be on maximum
@@ -272,7 +270,7 @@
 	pointercolor = "red"
 
 /datum/computer_file/program/radar/fission360/find_atom()
-	return locate(selected) in GLOB.poi_list
+	return SSpoints_of_interest.get_poi_atom_by_ref(selected)
 
 /datum/computer_file/program/radar/fission360/scan()
 	if(world.time < next_scan)
@@ -287,7 +285,7 @@
 			name = nuke.name,
 			)
 		objects += list(nukeinfo)
-	var/obj/item/disk/nuclear/disk = locate() in GLOB.poi_list
+	var/obj/item/disk/nuclear/disk = locate() in SSpoints_of_interest.real_nuclear_disks
 	var/list/nukeinfo = list(
 		ref = REF(disk),
 		name = "Nuke Auth. Disk",

@@ -126,15 +126,15 @@
 	if(!istype(multitool))
 		return
 	if(!istype(multitool.buffer, /obj/machinery/atmospherics/components/unary/bluespace_sender))
-		to_chat(user, "<span class='notice'>Wrong machine type in [multitool] buffer...</span>")
+		to_chat(user, span_notice("Wrong machine type in [multitool] buffer..."))
 		return
 	if(connected_machine)
-		to_chat(user, "<span class='notice'>Changing [src] bluespace network...</span>")
+		to_chat(user, span_notice("Changing [src] bluespace network..."))
 	if(!do_after(user, 0.2 SECONDS, src))
 		return
 	playsound(get_turf(user), 'sound/machines/click.ogg', 10, TRUE)
 	register_machine(multitool.buffer)
-	to_chat(user, "<span class='notice'>You link [src] to the console in [multitool]'s buffer.</span>")
+	to_chat(user, span_notice("You link [src] to the console in [multitool]'s buffer."))
 	return TRUE
 
 /obj/machinery/bluespace_vendor/attackby(obj/item/item, mob/living/user)
@@ -156,11 +156,11 @@
 /obj/machinery/bluespace_vendor/examine(mob/user)
 	. = ..()
 	if(empty_tanks > 1)
-		. += "<span class='notice'>There are currently [empty_tanks] empty tanks available, more can be made by inserting iron sheets in the machine.</span>"
+		. += span_notice("There are currently [empty_tanks] empty tanks available, more can be made by inserting iron sheets in the machine.")
 	else if(empty_tanks == 1)
-		. += "<span class='notice'>There is only one empty tank available, please refill the machine by using iron sheets.</span>"
+		. += span_notice("There is only one empty tank available, please refill the machine by using iron sheets.")
 	else
-		. += "<span class='notice'>There is no available tank, please refill the machine by using iron sheets.</span>"
+		. += span_notice("There is no available tank, please refill the machine by using iron sheets.")
 
 ///Check what is the current operating mode
 /obj/machinery/bluespace_vendor/proc/check_mode()
@@ -183,9 +183,10 @@
 ///Unregister the connected_machine (either when qdel this or the sender)
 /obj/machinery/bluespace_vendor/proc/unregister_machine()
 	SIGNAL_HANDLER
-	UnregisterSignal(connected_machine, COMSIG_PARENT_QDELETING)
-	LAZYREMOVE(connected_machine.vendors, src)
-	connected_machine = null
+	if(connected_machine)
+		UnregisterSignal(connected_machine, COMSIG_PARENT_QDELETING)
+		LAZYREMOVE(connected_machine.vendors, src)
+		connected_machine = null
 	mode = BS_MODE_OFF
 	update_appearance()
 

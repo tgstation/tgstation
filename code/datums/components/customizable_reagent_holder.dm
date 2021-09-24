@@ -111,11 +111,11 @@
 
 	// only accept valid ingredients
 	if (!valid_ingredient || HAS_TRAIT(ingredient, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER))
-		to_chat(attacker, "<span class='warning'>[ingredient] doesn't belong on [parent]!</span>")
+		to_chat(attacker, span_warning("[ingredient] doesn't belong on [parent]!"))
 		return
 
 	if (LAZYLEN(ingredients) >= max_ingredients)
-		to_chat(attacker, "<span class='warning'>[parent] is too full for any more ingredients!</span>")
+		to_chat(attacker, span_warning("[parent] is too full for any more ingredients!"))
 		return COMPONENT_NO_AFTERATTACK
 
 	var/atom/atom_parent = parent
@@ -125,7 +125,6 @@
 		var/atom/replacement_parent = new replacement(atom_parent.drop_location())
 		ingredient.forceMove(replacement_parent)
 		replacement = null
-		RemoveComponent()
 		replacement_parent.TakeComponent(src)
 		qdel(atom_parent)
 	handle_reagents(ingredient)

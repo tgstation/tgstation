@@ -60,8 +60,8 @@ Bonus
 		return
 	switch(A.stage)
 		if(4, 5)
-			to_chat(C, "<span class='warning'>[pick("Your skin feels itchy.", "You feel light headed.")]</span>")
-			C.easy_randmut((NEGATIVE | MINOR_NEGATIVE | POSITIVE) - excludemuts, TRUE, TRUE, TRUE, mutadone_proof)
+			to_chat(C, span_warning("[pick("Your skin feels itchy.", "You feel light headed.")]"))
+			C.easy_random_mutate((NEGATIVE | MINOR_NEGATIVE | POSITIVE) - excludemuts, TRUE, TRUE, TRUE, mutadone_proof)
 
 /datum/symptom/genetic_mutation/End(datum/disease/advance/A)
 	. = ..()

@@ -31,12 +31,12 @@
 /obj/machinery/computer/emergency_shuttle/examine(mob/user)
 	. = ..()
 	if(hijack_announce)
-		. += "<span class='danger'>Security systems present on console. Any unauthorized tampering will result in an emergency announcement.</span>"
+		. += span_danger("Security systems present on console. Any unauthorized tampering will result in an emergency announcement.")
 	if(user?.mind?.get_hijack_speed())
-		. += "<span class='danger'>Alt click on this to attempt to hijack the shuttle. This will take multiple tries (current: stage [SSshuttle.emergency.hijack_status]/[HIJACKED]).</span>"
-		. += "<span class='notice'>It will take you [(hijack_stage_time * user.mind.get_hijack_speed()) / 10] seconds to reprogram a stage of the shuttle's navigational firmware, and the console will undergo automated timed lockout for [hijack_stage_cooldown/10] seconds after each stage.</span>"
+		. += span_danger("Alt click on this to attempt to hijack the shuttle. This will take multiple tries (current: stage [SSshuttle.emergency.hijack_status]/[HIJACKED]).")
+		. += span_notice("It will take you [(hijack_stage_time * user.mind.get_hijack_speed()) / 10] seconds to reprogram a stage of the shuttle's navigational firmware, and the console will undergo automated timed lockout for [hijack_stage_cooldown/10] seconds after each stage.")
 		if(hijack_announce)
-			. += "<span class='warning'>It is probably best to fortify your position as to be uninterrupted during the attempt, given the automatic announcements..</span>"
+			. += span_warning("It is probably best to fortify your position as to be uninterrupted during the attempt, given the automatic announcements..")
 
 /obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,params)
 	if(istype(I, /obj/item/card/id))
@@ -93,11 +93,11 @@
 	var/obj/item/card/id/ID = user.get_idcard(TRUE)
 
 	if(!ID)
-		to_chat(user, "<span class='warning'>You don't have an ID.</span>")
+		to_chat(user, span_warning("You don't have an ID."))
 		return
 
 	if(!(ACCESS_HEADS in ID.access))
-		to_chat(user, "<span class='warning'>The access level of your card is not high enough.</span>")
+		to_chat(user, span_warning("The access level of your card is not high enough."))
 		return
 
 	if (user in acted_recently)
@@ -208,13 +208,13 @@
 	if(hijack_hacking == TRUE)
 		return
 	if(SSshuttle.emergency.hijack_status >= HIJACKED)
-		to_chat(user, "<span class='warning'>The emergency shuttle is already loaded with a corrupt navigational payload. What more do you want from it?</span>")
+		to_chat(user, span_warning("The emergency shuttle is already loaded with a corrupt navigational payload. What more do you want from it?"))
 		return
 	if(hijack_last_stage_increase >= world.time + hijack_stage_cooldown)
 		say("Error - Catastrophic software error detected. Input is currently on timeout.")
 		return
 	hijack_hacking = TRUE
-	to_chat(user, "<span class='boldwarning'>You [SSshuttle.emergency.hijack_status == NOT_BEGUN? "begin" : "continue"] to override [src]'s navigational protocols.</span>")
+	to_chat(user, span_boldwarning("You [SSshuttle.emergency.hijack_status == NOT_BEGUN? "begin" : "continue"] to override [src]'s navigational protocols."))
 	say("Software override initiated.")
 	var/turf/console_hijack_turf = get_turf(src)
 	message_admins("[src] is being overriden for hijack by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(console_hijack_turf)]")
@@ -226,7 +226,7 @@
 		message_admins("[src] has had its hijack stage increased to stage [SSshuttle.emergency.hijack_status] out of [HIJACKED] by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(console_hijack_turf)]")
 		log_game("[src] has had its hijack stage increased to stage [SSshuttle.emergency.hijack_status] out of [HIJACKED] by [key_name(user)] at [AREACOORD(src)]")
 		. = TRUE
-		to_chat(user, "<span class='notice'>You reprogram some of [src]'s programming, putting it on timeout for [hijack_stage_cooldown/10] seconds.</span>")
+		to_chat(user, span_notice("You reprogram some of [src]'s programming, putting it on timeout for [hijack_stage_cooldown/10] seconds."))
 	hijack_hacking = FALSE
 
 /obj/machinery/computer/emergency_shuttle/proc/announce_hijack_stage()
@@ -254,7 +254,7 @@
 		return
 
 	if((obj_flags & EMAGGED) || ENGINES_STARTED) //SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
-		to_chat(user, "<span class='warning'>The shuttle is already about to launch!</span>")
+		to_chat(user, span_warning("The shuttle is already about to launch!"))
 		return
 
 	var/time = TIME_LEFT
@@ -268,7 +268,7 @@
 		// the shuttle system doesn't know who these people are, but they
 		// must be important, surely
 		var/obj/item/card/id/ID = new(src)
-		var/datum/job/J = pick(SSjob.occupations)
+		var/datum/job/J = pick(SSjob.joinable_occupations)
 		ID.registered_name = S.random_name(pick(MALE, FEMALE))
 		ID.assignment = J.title
 
@@ -573,7 +573,7 @@
 			launch_status = EARLY_LAUNCHED
 			return ..()
 	else
-		to_chat(usr, "<span class='warning'>Escape pods will only launch during \"Code Red\" security alert.</span>")
+		to_chat(usr, span_warning("Escape pods will only launch during \"Code Red\" security alert."))
 		return TRUE
 
 /obj/docking_port/mobile/pod/cancel()
@@ -601,11 +601,12 @@
 		return
 	obj_flags |= EMAGGED
 	locked = FALSE
-	to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
+	to_chat(user, span_warning("You fry the pod's alert level checking system."))
 
 /obj/machinery/computer/shuttle/pod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()
-	possible_destinations += ";[port.id]_lavaland"
+	if(port)
+		possible_destinations += ";[port.id]_lavaland"
 
 /**
  * Signal handler for checking if we should lock or unlock escape pods accordingly to a newly set security level
@@ -694,6 +695,8 @@
 	new /obj/item/pickaxe/emergency(src)
 	new /obj/item/survivalcapsule(src)
 	new /obj/item/storage/toolbox/emergency(src)
+	new /obj/item/bodybag/environmental(src)
+	new /obj/item/bodybag/environmental(src)
 
 /obj/item/storage/pod/attackby(obj/item/W, mob/user, params)
 	if (can_interact(user))
@@ -737,6 +740,11 @@
 	. = ..()
 	SSshuttle.emergency = current_emergency
 	SSshuttle.backup_shuttle = src
+
+/obj/docking_port/mobile/emergency/backup/Destroy(force)
+	if(SSshuttle.backup_shuttle == src)
+		SSshuttle.backup_shuttle = null
+	return ..()
 
 /obj/docking_port/mobile/emergency/shuttle_build/register()
 	. = ..()

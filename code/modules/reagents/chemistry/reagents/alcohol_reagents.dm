@@ -59,14 +59,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(istype(exposed_obj, /obj/item/paper))
 		var/obj/item/paper/paperaffected = exposed_obj
 		paperaffected.clearpaper()
-		to_chat(usr, "<span class='notice'>[paperaffected]'s ink washes away.</span>")
+		to_chat(usr, span_notice("[paperaffected]'s ink washes away."))
 	if(istype(exposed_obj, /obj/item/book))
 		if(reac_volume >= 5)
 			var/obj/item/book/affectedbook = exposed_obj
 			affectedbook.dat = null
-			exposed_obj.visible_message("<span class='notice'>[exposed_obj]'s writing is washed away by [name]!</span>")
+			exposed_obj.visible_message(span_notice("[exposed_obj]'s writing is washed away by [name]!"))
 		else
-			exposed_obj.visible_message("<span class='warning'>[exposed_obj]'s ink is smeared by [name], but doesn't wash away!</span>")
+			exposed_obj.visible_message(span_warning("[exposed_obj]'s ink is smeared by [name], but doesn't wash away!"))
 	return ..()
 
 /datum/reagent/consumable/ethanol/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
@@ -233,7 +233,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return ..()
 
 /datum/reagent/consumable/ethanol/thirteenloko/overdose_start(mob/living/M)
-	to_chat(M, "<span class='userdanger'>Your entire body violently jitters as you start to feel queasy. You really shouldn't have drank all of that [name]!</span>")
+	to_chat(M, span_userdanger("Your entire body violently jitters as you start to feel queasy. You really shouldn't have drank all of that [name]!"))
 	M.Jitter(20)
 	M.Stun(15)
 
@@ -242,11 +242,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.dropItemToGround(I)
-			to_chat(M, "<span class='notice'>Your hands jitter and you drop what you were holding!</span>")
+			to_chat(M, span_notice("Your hands jitter and you drop what you were holding!"))
 			M.Jitter(10)
 
 	if(DT_PROB(3.5, delta_time))
-		to_chat(M, "<span class='notice'>[pick("You have a really bad headache.", "Your eyes hurt.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]</span>")
+		to_chat(M, span_notice("[pick("You have a really bad headache.", "Your eyes hurt.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]"))
 
 	if(DT_PROB(2.5, delta_time) && iscarbon(M))
 		var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
@@ -254,23 +254,23 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(istype(eyes))
 				eyes.Remove(M)
 				eyes.forceMove(get_turf(M))
-				to_chat(M, "<span class='userdanger'>You double over in pain as you feel your eyeballs liquify in your head!</span>")
+				to_chat(M, span_userdanger("You double over in pain as you feel your eyeballs liquify in your head!"))
 				M.emote("scream")
 				M.adjustBruteLoss(15)
 		else
-			to_chat(M, "<span class='userdanger'>You scream in terror as you go blind!</span>")
+			to_chat(M, span_userdanger("You scream in terror as you go blind!"))
 			eyes.applyOrganDamage(eyes.maxHealth)
 			M.emote("scream")
 
 	if(DT_PROB(1.5, delta_time) && iscarbon(M))
-		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
+		M.visible_message(span_danger("[M] starts having a seizure!"), span_userdanger("You have a seizure!"))
 		M.Unconscious(100)
 		M.Jitter(350)
 
 	if(DT_PROB(0.5, delta_time) && iscarbon(M))
 		var/datum/disease/D = new /datum/disease/heart_failure
 		M.ForceContractDisease(D)
-		to_chat(M, "<span class='userdanger'>You're pretty sure you just felt your heart stop for a second there..</span>")
+		to_chat(M, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
 		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
 
 /datum/reagent/consumable/ethanol/vodka
@@ -716,12 +716,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_metabolize(mob/living/M)
 	tough_text = pick("brawny", "tenacious", "tough", "hardy", "sturdy") //Tuff stuff
-	to_chat(M, "<span class='notice'>You feel [tough_text]!</span>")
+	to_chat(M, span_notice("You feel [tough_text]!"))
 	M.maxHealth += 10 //Brave Bull makes you sturdier, and thus capable of withstanding a tiny bit more punishment.
 	M.health += 10
 
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_end_metabolize(mob/living/M)
-	to_chat(M, "<span class='notice'>You no longer feel [tough_text].</span>")
+	to_chat(M, span_notice("You no longer feel [tough_text]."))
 	M.maxHealth -= 10
 	M.health = min(M.health - 10, M.maxHealth) //This can indeed crit you if you're alive solely based on alchol ingestion
 
@@ -740,7 +740,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_metabolize(mob/living/M)
-	to_chat(M, "<span class='notice'>You feel gentle warmth spread through your body!</span>")
+	to_chat(M, span_notice("You feel gentle warmth spread through your body!"))
 	light_holder = new(M)
 	light_holder.set_light(3, 0.7, "#FFCC00") //Tequila Sunrise makes you radiate dim light, like a sunrise!
 
@@ -752,7 +752,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return ..()
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_end_metabolize(mob/living/M)
-	to_chat(M, "<span class='notice'>The warmth in your body fades.</span>")
+	to_chat(M, span_notice("The warmth in your body fades."))
 	QDEL_NULL(light_holder)
 
 /datum/reagent/consumable/ethanol/toxins_special
@@ -851,7 +851,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(HAS_TRAIT(H, TRAIT_DWARF))
-			to_chat(H, "<span class='notice'>Now THAT is MANLY!</span>")
+			to_chat(H, span_notice("Now THAT is MANLY!"))
 			boozepwr = 50 // will still smash but not as much.
 			dorf_mode = TRUE
 
@@ -1539,7 +1539,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(DT_PROB(10, delta_time))
 		M.adjustStaminaLoss(10)
 		M.drop_all_held_items()
-		to_chat(M, "<span class='notice'>You cant feel your hands!</span>")
+		to_chat(M, span_notice("You cant feel your hands!"))
 	if(current_cycle > 5)
 		if(DT_PROB(10, delta_time))
 			var/t = pickt()
@@ -1551,7 +1551,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				if(!M.undergoing_cardiac_arrest() && M.can_heartattack())
 					M.set_heartattack(TRUE)
 					if(M.stat == CONSCIOUS)
-						M.visible_message("<span class='userdanger'>[M] clutches at [M.p_their()] chest as if [M.p_their()] heart stopped!</span>")
+						M.visible_message(span_userdanger("[M] clutches at [M.p_their()] chest as if [M.p_their()] heart stopped!"))
 	. = TRUE
 	..()
 
@@ -1774,9 +1774,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		L.adjustToxLoss(-1)
 		L.adjustOxyLoss(-1)
 		L.adjustStaminaLoss(-1)
-	L.visible_message("<span class='warning'>[L] shivers with renewed vigor!</span>", "<span class='notice'>One taste of [lowertext(name)] fills you with energy!</span>")
+	L.visible_message(span_warning("[L] shivers with renewed vigor!"), span_notice("One taste of [lowertext(name)] fills you with energy!"))
 	if(!L.stat && heal_points == 20) //brought us out of softcrit
-		L.visible_message("<span class='danger'>[L] lurches to [L.p_their()] feet!</span>", "<span class='boldnotice'>Up and at 'em, kid.</span>")
+		L.visible_message(span_danger("[L] lurches to [L.p_their()] feet!"), span_boldnotice("Up and at 'em, kid."))
 
 /datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_life(mob/living/L, delta_time, times_fired)
 	if(L.health > 0)
@@ -1899,7 +1899,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		for(var/obj/item/shield/theshield in thehuman.contents)
 			mighty_shield = theshield
 			mighty_shield.block_chance += 10
-			to_chat(thehuman, "<span class='notice'>[theshield] appears polished, although you don't recall polishing it.</span>")
+			to_chat(thehuman, span_notice("[theshield] appears polished, although you don't recall polishing it."))
 			return TRUE
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_life(mob/living/L, delta_time, times_fired)
@@ -1910,7 +1910,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/alexander/on_mob_end_metabolize(mob/living/L)
 	if(mighty_shield)
 		mighty_shield.block_chance -= 10
-		to_chat(L,"<span class='notice'>You notice [mighty_shield] looks worn again. Weird.</span>")
+		to_chat(L,span_notice("You notice [mighty_shield] looks worn again. Weird."))
 	..()
 
 /datum/reagent/consumable/ethanol/amaretto_alexander
@@ -2305,7 +2305,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/turbo/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(2, delta_time))
-		to_chat(M, "<span class='notice'>[pick("You feel disregard for the rule of law.", "You feel pumped!", "Your head is pounding.", "Your thoughts are racing..")]</span>")
+		to_chat(M, span_notice("[pick("You feel disregard for the rule of law.", "You feel pumped!", "Your head is pounding.", "Your thoughts are racing..")]"))
 	M.adjustStaminaLoss(-0.25 * M.drunkenness * REM * delta_time)
 	return ..()
 
@@ -2335,7 +2335,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 					metabolizer.update_hair()
 
 				if(metabolizer.age > 969) //Best not let people get older than this or i might incur G-ds wrath
-					metabolizer.visible_message("<span class='notice'>[metabolizer] becomes older than any man should be.. and crumbles into dust!</span>")
+					metabolizer.visible_message(span_notice("[metabolizer] becomes older than any man should be.. and crumbles into dust!"))
 					metabolizer.dust(just_ash = FALSE, drop_items = TRUE, force = FALSE)
 
 	return ..()
@@ -2521,3 +2521,137 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A lovely fresh smelling cocktail, a true Sicilian delight."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/ethanol/kortara
+	name = "Kortara"
+	description = "A sweet, milky nut-based drink enjoyed on Tizira. Frequently mixed with fruit juices and cocoa for extra refreshment."
+	boozepwr = 25
+	color = "#EEC39A"
+	quality = DRINK_GOOD
+	taste_description = "sweet nectar"
+	glass_icon_state = "kortara_glass"
+	glass_name = "glass of kortara"
+	glass_desc = "The fermented nectar of the Korta nut, as enjoyed by lizards galaxywide."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/kortara/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(M.getBruteLoss() && DT_PROB(10, delta_time))
+		M.heal_bodypart_damage(1,0, 0)
+		. = TRUE
+
+/datum/reagent/consumable/ethanol/sea_breeze
+	name = "Sea Breeze"
+	description = "Light and refreshing with a mint and cocoa hit- like mint choc chip ice cream you can drink!"
+	boozepwr = 15
+	color = "#CFFFE5"
+	quality = DRINK_VERYGOOD
+	taste_description = "mint choc chip"
+	glass_icon_state = "sea_breeze"
+	glass_name = "Sea Breeze"
+	glass_desc = "Minty, chocolatey, and creamy. It's like drinkable mint chocolate chip!"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/sea_breeze/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.apply_status_effect(/datum/status_effect/throat_soothed)
+	..()
+
+/datum/reagent/consumable/ethanol/white_tiziran
+	name = "White Tiziran"
+	description = "A mix of vodka and kortara. The Lizard imbibes."
+	boozepwr = 65
+	color = "#A68340"
+	quality = DRINK_GOOD
+	taste_description = "strikes and gutters"
+	glass_icon_state = "white_tiziran"
+	glass_name = "White Tiziran"
+	glass_desc = "I had a rough night and I hate the fucking humans, man."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/drunken_espatier
+	name = "Drunken Espatier"
+	description = "Look, if you had to get into a shootout in the cold vacuum of space, you'd want to be drunk too."
+	boozepwr = 65
+	color = "#A68340"
+	quality = DRINK_GOOD
+	taste_description = "sorrow"
+	glass_icon_state = "drunken_espatier"
+	glass_name = "Drunken Espatier"
+	glass_desc = "A drink to make facing death easier."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/drunken_espatier/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
+	C.hal_screwyhud = SCREWYHUD_HEALTHY //almost makes you forget how much it hurts
+	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_medium, name) //comfortably numb
+	..()
+
+/datum/reagent/consumable/ethanol/protein_blend
+	name = "Protein Blend"
+	description = "A vile blend of protein, pure grain alcohol, korta flour, and blood. Useful for bulking up, if you can keep it down."
+	boozepwr = 65
+	color = "#FF5B69"
+	quality = DRINK_NICE
+	taste_description = "regret"
+	glass_icon_state = "protein_blend"
+	glass_name = "Protein Blend"
+	glass_desc = "Vile, even by lizard standards."
+	nutriment_factor = 3 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/protein_blend/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.adjust_nutrition(2 * REM * delta_time)
+	if(!islizard(M))
+		M.adjust_disgust(5 * REM * delta_time)
+	else
+		M.adjust_disgust(2 * REM * delta_time)
+	..()
+
+/datum/reagent/consumable/ethanol/mushi_kombucha
+	name = "Mushi Kombucha"
+	description = "A popular summer beverage on Tizira, made from sweetened mushroom tea."
+	boozepwr = 10
+	color = "#C46400"
+	quality = DRINK_VERYGOOD
+	taste_description = "sweet 'shrooms"
+	glass_icon_state = "glass_orange"
+	glass_name = "glass of mushi kombucha"
+	glass_desc = "A glass of (slightly alcoholic) fermented sweetened mushroom tea. Refreshing, if a little strange."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/triumphal_arch
+	name = "Triumphal Arch"
+	description = "A drink celebrating the Lizard Empire and its military victories. It's popular at bars on Unification Day."
+	boozepwr = 60
+	color = "#FFD700"
+	quality = DRINK_FANTASTIC
+	taste_description = "victory"
+	glass_icon_state = "triumphal_arch"
+	glass_name = "Triumphal Arch"
+	glass_desc = "A toast to the Empire, long may it stand."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/triumphal_arch/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(islizard(M))
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "triumph", /datum/mood_event/memories_of_home, name)
+	..()
+
+/datum/reagent/consumable/ethanol/the_juice
+	name = "The Juice"
+	description = "Woah man, this like, feels familiar to you dude."
+	color = "#4c14be"
+	boozepwr = 50
+	quality = DRINK_GOOD
+	taste_description = "like, the future, man"
+	glass_icon_state = "thejuice"
+	glass_name = "The Juice"
+	glass_desc = "A concoction of not-so-edible things that apparently lets you feel like you're in two places at once"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/datum/brain_trauma/special/bluespace_prophet/prophet_trauma
+
+/datum/reagent/consumable/ethanol/the_juice/on_mob_metabolize(mob/living/carbon/victim)
+	. = ..()
+	prophet_trauma = new()
+	victim.gain_trauma(prophet_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/reagent/consumable/ethanol/the_juice/on_mob_end_metabolize(mob/living/carbon/victim)
+	if(prophet_trauma)
+		QDEL_NULL(prophet_trauma)
+	return ..()

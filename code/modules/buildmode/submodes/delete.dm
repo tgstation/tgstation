@@ -45,7 +45,7 @@
 						to_chat(usr, "No instances of this type exist")
 						return
 					log_admin("[key_name(usr)] deleted all instances of type [O_type] ([i] instances deleted) ")
-					message_admins("<span class='notice'>[key_name(usr)] deleted all instances of type [O_type] ([i] instances deleted) </span>")
+					message_admins(span_notice("[key_name(usr)] deleted all instances of type [O_type] ([i] instances deleted) "))
 				if("Type and subtypes")
 					var/i = 0
 					for(var/Obj in world)
@@ -57,4 +57,4 @@
 						to_chat(usr, "No instances of this type exist")
 						return
 					log_admin("[key_name(usr)] deleted all instances of type or subtype of [O_type] ([i] instances deleted) ")
-					message_admins("<span class='notice'>[key_name(usr)] deleted all instances of type or subtype of [O_type] ([i] instances deleted) </span>")
+					message_admins(span_notice("[key_name(usr)] deleted all instances of type or subtype of [O_type] ([i] instances deleted) "))

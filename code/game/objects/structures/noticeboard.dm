@@ -45,16 +45,16 @@
 /obj/structure/noticeboard/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/paper) || istype(O, /obj/item/photo))
 		if(!allowed(user))
-			to_chat(user, "<span class='warning'>You are not authorized to add notices!</span>")
+			to_chat(user, span_warning("You are not authorized to add notices!"))
 			return
 		if(notices < MAX_NOTICES)
 			if(!user.transferItemToLoc(O, src))
 				return
 			notices++
 			icon_state = "nboard0[notices]"
-			to_chat(user, "<span class='notice'>You pin the [O] to the noticeboard.</span>")
+			to_chat(user, span_notice("You pin the [O] to the noticeboard."))
 		else
-			to_chat(user, "<span class='warning'>The notice board is full!</span>")
+			to_chat(user, span_warning("The notice board is full!"))
 	else
 		return ..()
 

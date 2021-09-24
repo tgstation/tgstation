@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	source = /datum/robot_energy_storage/glass
 
 /obj/item/stack/sheet/glass/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins to slice [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins to slice [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
 /obj/item/stack/sheet/glass/fifty
@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 			return
 		CC.use(5)
 		use(1)
-		to_chat(user, "<span class='notice'>You attach wire to the [name].</span>")
+		to_chat(user, span_notice("You attach wire to the [name]."))
 		var/obj/item/stack/light_w/new_tile = new(user.loc)
 		new_tile.add_fingerprint(user)
 		return
@@ -60,14 +60,15 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 		var/obj/item/stack/rods/V = W
 		if (V.get_amount() >= 1 && get_amount() >= 1)
 			var/obj/item/stack/sheet/rglass/RG = new (get_turf(user))
-			RG.add_fingerprint(user)
+			if(!QDELETED(RG))
+				RG.add_fingerprint(user)
 			var/replace = user.get_inactive_held_item()==src
 			V.use(1)
 			use(1)
-			if(QDELETED(src) && replace)
+			if(QDELETED(src) && replace && !QDELETED(RG))
 				user.put_in_hands(RG)
 		else
-			to_chat(user, "<span class='warning'>You need one rod and one sheet of glass to make reinforced glass!</span>")
+			to_chat(user, span_warning("You need one rod and one sheet of glass to make reinforced glass!"))
 		return
 	return ..()
 
@@ -89,7 +90,8 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plasmaglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10)
-	material_flags = MATERIAL_NO_EFFECTS
+	material_flags = NONE
+	tableVariant = /obj/structure/table/glass/plasmaglass
 
 /obj/item/stack/sheet/plasmaglass/fifty
 	amount = 50
@@ -112,7 +114,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 			if(QDELETED(src) && replace)
 				user.put_in_hands(RG)
 		else
-			to_chat(user, "<span class='warning'>You need one rod and one sheet of plasma glass to make reinforced plasma glass!</span>")
+			to_chat(user, span_warning("You need one rod and one sheet of plasma glass to make reinforced plasma glass!"))
 			return
 	else
 		return ..()
@@ -142,6 +144,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/iron = 10)
 	point_value = 4
 	matter_amount = 6
+	tableVariant = /obj/structure/table/reinforced/rglass
 
 /obj/item/stack/sheet/rglass/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -160,7 +163,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 /obj/item/stack/sheet/rglass/cyborg/get_amount()
 	return min(round(source.energy / cost), round(glasource.energy / glacost))
 
-/obj/item/stack/sheet/rglass/cyborg/use(used, transfer = FALSE) // Requires special checks, because it uses two storages
+/obj/item/stack/sheet/rglass/cyborg/use(used, transfer = FALSE, check = TRUE) // Requires special checks, because it uses two storages
 	if(get_amount(used)) //ensure we still have enough energy if called in a do_after chain
 		source.use_charge(used * cost)
 		glasource.use_charge(used * glacost)
@@ -189,11 +192,12 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	mats_per_unit = list(/datum/material/alloy/plasmaglass=MINERAL_MATERIAL_AMOUNT, /datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.5)
 	armor = list(MELEE = 20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
 	resistance_flags = ACID_PROOF
-	material_flags = MATERIAL_NO_EFFECTS
+	material_flags = NONE
 	merge_type = /obj/item/stack/sheet/plasmarglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
 	point_value = 23
 	matter_amount = 8
+	tableVariant = /obj/structure/table/reinforced/plasmarglass
 
 /obj/item/stack/sheet/plasmarglass/get_main_recipes()
 	. = ..()
@@ -215,6 +219,7 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/titaniumglass
+	tableVariant = /obj/structure/table/reinforced/titaniumglass
 
 /obj/item/stack/sheet/titaniumglass/get_main_recipes()
 	. = ..()
@@ -234,9 +239,10 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	mats_per_unit = list(/datum/material/alloy/plastitaniumglass=MINERAL_MATERIAL_AMOUNT)
 	material_type = /datum/material/alloy/plastitaniumglass
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
-	material_flags = MATERIAL_NO_EFFECTS
+	material_flags = NONE
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plastitaniumglass
+	tableVariant = /obj/structure/table/reinforced/plastitaniumglass
 
 /obj/item/stack/sheet/plastitaniumglass/get_main_recipes()
 	. = ..()
@@ -267,13 +273,13 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 
 
 /obj/item/shard/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat")] with the shard of glass! It looks like [user.p_theyre()] trying to commit suicide.</span>")
+	user.visible_message(span_suicide("[user] is slitting [user.p_their()] [pick("wrists", "throat")] with the shard of glass! It looks like [user.p_theyre()] trying to commit suicide."))
 	return (BRUTELOSS)
 
 
 /obj/item/shard/Initialize()
 	. = ..()
-	AddElement(/datum/element/caltrop, min_damage = force)
+	AddComponent(/datum/component/caltrop, min_damage = force)
 	AddComponent(/datum/component/butchering, 150, 65)
 	icon_state = pick("large", "medium", "small")
 	switch(icon_state)
@@ -295,7 +301,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/shard/Destroy()
 	. = ..()
@@ -316,7 +322,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(!H.gloves && !HAS_TRAIT(H, TRAIT_PIERCEIMMUNE)) // golems, etc
-			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
+			to_chat(H, span_warning("[src] cuts into your hand!"))
 			H.apply_damage(force*0.5, BRUTE, hit_hand)
 
 /obj/item/shard/attackby(obj/item/I, mob/user, params)
@@ -325,11 +331,11 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		L.attackby(src, user)
 	else if(istype(I, /obj/item/stack/sheet/cloth))
 		var/obj/item/stack/sheet/cloth/C = I
-		to_chat(user, "<span class='notice'>You begin to wrap the [C] around the [src]...</span>")
+		to_chat(user, span_notice("You begin to wrap the [C] around the [src]..."))
 		if(do_after(user, 35, target = src))
 			var/obj/item/kitchen/knife/shiv/S = new /obj/item/kitchen/knife/shiv
 			C.use(1)
-			to_chat(user, "<span class='notice'>You wrap the [C] around the [src] forming a makeshift weapon.</span>")
+			to_chat(user, span_notice("You wrap the [C] around the [src] forming a makeshift weapon."))
 			remove_item_from_storage(src)
 			qdel(src)
 			user.put_in_hands(S)
@@ -347,7 +353,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 			if(G.amount >= G.max_amount)
 				continue
 			G.attackby(NG, user)
-		to_chat(user, "<span class='notice'>You add the newly-formed [NG.name] to the stack. It now contains [NG.amount] sheet\s.</span>")
+		to_chat(user, span_notice("You add the newly-formed [NG.name] to the stack. It now contains [NG.amount] sheet\s."))
 		qdel(src)
 	return TRUE
 

@@ -21,7 +21,7 @@
 	if(prob(1))
 		new/obj/effect/particle_effect/smoke(get_turf(src))
 		playsound(src, 'sound/effects/smoke.ogg', 50, TRUE)
-		visible_message("<span class='warning'>Oh, ye gods! [src] is ruined! But what if...?</span>")
+		visible_message(span_warning("Oh, ye gods! [src] is ruined! But what if...?"))
 		name = "steamed ham"
 		desc = pick("Ahh, Head of Personnel, welcome. I hope you're prepared for an unforgettable luncheon!",
 		"And you call these steamed hams despite the fact that they are obviously microwaved?",
@@ -69,7 +69,7 @@
 	icon_state = "fishburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("bun" = 4, "fish" = 4)
-	foodtypes = GRAIN | MEAT
+	foodtypes = GRAIN | SEAFOOD
 	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/burger/tofu
@@ -338,7 +338,7 @@
 	name = "empowered burger"
 	desc = "It's shockingly good, if you live off of electricity that is."
 	icon_state = "empoweredburger"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/liquidelectricity/enriched = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/liquidelectricity/enriched = 6)
 	tastes = list("bun" = 2, "pure electricity" = 4)
 	foodtypes = GRAIN | TOXIC
 	venue_value = FOOD_PRICE_CHEAP
@@ -349,7 +349,7 @@
 	icon_state = "crabburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("bun" = 2, "crab meat" = 4)
-	foodtypes = GRAIN | MEAT
+	foodtypes = GRAIN | SEAFOOD
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/burger/soylent

@@ -8,11 +8,10 @@
 	initial_language_holder = /datum/language_holder/synthetic
 	see_in_dark = 8
 	bubble_icon = "machine"
-	weather_immunities = list("ash")
 	mob_biotypes = MOB_ROBOTIC
 	deathsound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	examine_cursor_icon = null
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
@@ -25,8 +24,8 @@
 
 	var/obj/item/radio/borg/radio = null  ///If this is a path, this gets created as an object in Initialize.
 
-	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
-	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
+	var/list/alarm_types_show = list(ALARM_ATMOS = 0, ALARM_FIRE = 0, ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
+	var/list/alarm_types_clear = list(ALARM_ATMOS = 0, ALARM_FIRE = 0, ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
 
 	var/lawcheck[1]
 	var/ioncheck[1]
@@ -43,7 +42,7 @@
 	var/updating = FALSE //portable camera camerachunk update
 
 	var/hack_software = FALSE //Will be able to use hacking actions
-	var/interaction_range = 7 //wireless control range
+	interaction_range = 7 //wireless control range
 	var/obj/item/pda/ai/aiPDA
 
 /mob/living/silicon/Initialize()
@@ -59,6 +58,8 @@
 	add_sensors()
 	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT)
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)
@@ -79,16 +80,7 @@
 /mob/living/silicon/contents_explosion(severity, target)
 	return
 
-/mob/living/silicon/proc/cancelAlarm()
-	return
-
-/mob/living/silicon/proc/freeCamera()
-	return
-
-/mob/living/silicon/proc/triggerAlarm()
-	return
-
-/mob/living/silicon/proc/queueAlarm(message, type, incoming = 1)
+/mob/living/silicon/proc/queueAlarm(message, type, incoming = FALSE)
 	var/in_cooldown = (alarms_to_show.len > 0 || alarms_to_clear.len > 0)
 	if(incoming)
 		alarms_to_show += message
@@ -109,24 +101,8 @@
 	else if(alarms_to_show.len)
 
 		var/msg = "--- "
-
-		if(alarm_types_show["Burglar"])
-			msg += "BURGLAR: [alarm_types_show["Burglar"]] alarms detected. - "
-
-		if(alarm_types_show["Motion"])
-			msg += "MOTION: [alarm_types_show["Motion"]] alarms detected. - "
-
-		if(alarm_types_show["Fire"])
-			msg += "FIRE: [alarm_types_show["Fire"]] alarms detected. - "
-
-		if(alarm_types_show["Atmosphere"])
-			msg += "ATMOSPHERE: [alarm_types_show["Atmosphere"]] alarms detected. - "
-
-		if(alarm_types_show["Power"])
-			msg += "POWER: [alarm_types_show["Power"]] alarms detected. - "
-
-		if(alarm_types_show["Camera"])
-			msg += "CAMERA: [alarm_types_show["Camera"]] alarms detected. - "
+		for(var/alarm_type in alarm_types_show)
+			msg += "[uppertext(alarm_type)]: [alarm_types_show[alarm_type]] alarms detected. - "
 
 		msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
 		to_chat(src, msg)
@@ -138,20 +114,8 @@
 	else if(alarms_to_clear.len)
 		var/msg = "--- "
 
-		if(alarm_types_clear["Motion"])
-			msg += "MOTION: [alarm_types_clear["Motion"]] alarms cleared. - "
-
-		if(alarm_types_clear["Fire"])
-			msg += "FIRE: [alarm_types_clear["Fire"]] alarms cleared. - "
-
-		if(alarm_types_clear["Atmosphere"])
-			msg += "ATMOSPHERE: [alarm_types_clear["Atmosphere"]] alarms cleared. - "
-
-		if(alarm_types_clear["Power"])
-			msg += "POWER: [alarm_types_clear["Power"]] alarms cleared. - "
-
-		if(alarm_types_show["Camera"])
-			msg += "CAMERA: [alarm_types_clear["Camera"]] alarms cleared. - "
+		for(var/alarm_type in alarm_types_clear)
+			msg += "[uppertext(alarm_type)]: [alarm_types_clear[alarm_type]] alarms cleared. - "
 
 		msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
 		to_chat(src, msg)
@@ -170,7 +134,7 @@
 /mob/living/silicon/try_inject(mob/user, target_zone, injection_flags)
 	. = ..()
 	if(!. && (injection_flags & INJECT_TRY_SHOW_ERROR_MESSAGE))
-		to_chat(user, "<span class='alert'>[p_their(TRUE)] outer shell is too tough.</span>")
+		to_chat(user, span_alert("[p_their(TRUE)] outer shell is too tough."))
 
 /proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
@@ -213,7 +177,7 @@
 
 	if (href_list["printlawtext"]) // this is kinda backwards
 		if (href_list["dead"] && (!isdead(usr) && !usr.client.holder)) // do not print deadchat law notice if the user is now alive
-			to_chat(usr, "<span class='warning'>You cannot view law changes that were made while you were dead.</span>")
+			to_chat(usr, span_warning("You cannot view law changes that were made while you were dead."))
 			return
 		to_chat(usr, href_list["printlawtext"])
 
@@ -344,7 +308,7 @@
 
 /mob/living/silicon/proc/set_autosay() //For allowing the AI and borgs to set the radio behavior of auto announcements (state laws, arrivals).
 	if(!radio)
-		to_chat(src, "<span class='alert'>Radio not detected.</span>")
+		to_chat(src, span_alert("Radio not detected."))
 		return
 
 	//Ask the user to pick a channel from what it has available.
@@ -363,7 +327,7 @@
 				radiomod = ":" + key
 				break
 
-	to_chat(src, "<span class='notice'>Automatic announcements [Autochan == "None" ? "will not use the radio." : "set to [Autochan]."]</span>")
+	to_chat(src, span_notice("Automatic announcements [Autochan == "None" ? "will not use the radio." : "set to [Autochan]."]"))
 
 /mob/living/silicon/put_in_hand_check() // This check is for borgs being able to receive items, not put them in others' hands.
 	return FALSE
@@ -398,27 +362,15 @@
 		return
 	sensors_on = !sensors_on
 	if (!sensors_on)
-		to_chat(src, "<span class='notice'>Sensor overlay deactivated.</span>")
+		to_chat(src, span_notice("Sensor overlay deactivated."))
 		remove_sensors()
 		return
 	add_sensors()
-	to_chat(src, "<span class='notice'>Sensor overlay activated.</span>")
+	to_chat(src, span_notice("Sensor overlay activated."))
 
 /mob/living/silicon/proc/GetPhoto(mob/user)
 	if (aicamera)
 		return aicamera.selectpicture(user)
-
-/mob/living/silicon/update_transform()
-	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
-	var/changed = 0
-	if(resize != RESIZE_DEFAULT_SIZE)
-		changed++
-		ntransform.Scale(resize)
-		resize = RESIZE_DEFAULT_SIZE
-
-	if(changed)
-		animate(src, transform = ntransform, time = 2,easing = EASE_IN|EASE_OUT)
-	return ..()
 
 /mob/living/silicon/is_literate()
 	return TRUE

@@ -88,7 +88,7 @@
 		printer_ready = world.time + PRINTER_TIMEOUT
 		new /obj/item/paper/record_printout(loc, record)
 	else if(user)
-		to_chat(user, "<span class='warning'>[src] is busy right now.</span>")
+		to_chat(user, span_warning("[src] is busy right now."))
 
 /obj/item/paper/record_printout
 	name = "paper - Log Recording"
@@ -118,16 +118,16 @@
 	if(I.tool_behaviour == TOOL_WRENCH)
 		if(!anchored && !isinspace())
 			set_anchored(TRUE)
-			to_chat(user, "<span class='notice'>You fasten [src].</span>")
+			to_chat(user, span_notice("You fasten [src]."))
 		else if(anchored)
 			set_anchored(FALSE)
-			to_chat(user, "<span class='notice'>You unfasten [src].</span>")
+			to_chat(user, span_notice("You unfasten [src]."))
 		I.play_tool_sound(src)
 		return
 	return ..()
 
 /obj/machinery/doppler_array/proc/rot_message(mob/user)
-	to_chat(user, "<span class='notice'>You adjust [src]'s dish to face to the [dir2text(dir)].</span>")
+	to_chat(user, span_notice("You adjust [src]'s dish to face to the [dir2text(dir)]."))
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
 
 /obj/machinery/doppler_array/proc/sense_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range, light_impact_range,
@@ -226,11 +226,11 @@
 	var/cash_gain = 0
 
 	/*****The Point Calculator*****/
-	if(orig_light_range < 10)
+	if(orig_light_range < TECHWEB_BOMB_MIN_RANGE)
 		say("Explosion not large enough for profitability.")
 		return
-	else if(orig_light_range < 4500)
-		cash_gain = (83300 * orig_light_range) / (orig_light_range + 3000)
+	else if(orig_light_range < TECHWEB_BOMB_MAX_RANGE)
+		cash_gain = (TECHWEB_BOMB_SCALE_CONST * orig_light_range) / (TECHWEB_BOMB_SCALE_DIVISOR + orig_light_range)
 	else
 		cash_gain = TECHWEB_BOMB_CASHCAP
 
@@ -240,14 +240,14 @@
 			var/old_tech_largest_bomb_value = linked_techweb.largest_bomb_value //held so we can pull old before we do math
 			linked_techweb.largest_bomb_value = cash_gain
 			cash_gain -= old_tech_largest_bomb_value
-			cash_gain = min(cash_gain,TECHWEB_BOMB_CASHCAP)
+			cash_gain = min(cash_gain, TECHWEB_BOMB_CASHCAP)
 		else
 			linked_techweb.largest_bomb_value = TECHWEB_BOMB_CASHCAP
 			cash_gain = 1000
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		if(D)
 			D.adjust_money(cash_gain)
-			say("Explosion details and mixture analyzed and sold to the highest bidder for [cash_gain] cr.")
+			say("Explosion details and mixture analysis sold to the highest bidder for [cash_gain] cr.")
 	else //you've made smaller bombs
 		say("Data already captured. Aborting.")
 		return

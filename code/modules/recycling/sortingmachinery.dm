@@ -15,7 +15,7 @@
 	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 
 /obj/structure/big_delivery/interact(mob/user)
-	to_chat(user, "<span class='notice'>You start to unwrap the package...</span>")
+	to_chat(user, span_notice("You start to unwrap the package..."))
 	if(!do_after(user, 15, target = user))
 		return
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
@@ -55,40 +55,42 @@
 
 		if(sort_tag != O.currTag)
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
-			to_chat(user, "<span class='notice'>*[tag]*</span>")
+			to_chat(user, span_notice("*[tag]*"))
 			sort_tag = O.currTag
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 
 	else if(istype(W, /obj/item/pen))
 		if(!user.is_literate())
-			to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
+			to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
 			return
 		var/str = stripped_input(user, "Label text?", "Set label", "", MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(!str || !length(str))
-			to_chat(user, "<span class='warning'>Invalid text!</span>")
+			to_chat(user, span_warning("Invalid text!"))
 			return
-		user.visible_message("<span class='notice'>[user] labels [src] as [str].</span>")
+		user.visible_message(span_notice("[user] labels [src] as [str]."))
 		name = "[name] ([str])"
 
 	else if(istype(W, /obj/item/stack/wrapping_paper) && !giftwrapped)
 		var/obj/item/stack/wrapping_paper/WP = W
 		if(WP.use(3))
-			user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
+			user.visible_message(span_notice("[user] wraps the package in festive paper!"))
 			giftwrapped = TRUE
 			icon_state = "gift[icon_state]"
+			greyscale_config = text2path("/datum/greyscale_config/[icon_state]")
+			set_greyscale(colors = WP.greyscale_colors)
 		else
-			to_chat(user, "<span class='warning'>You need more paper!</span>")
+			to_chat(user, span_warning("You need more paper!"))
 
 	else if(istype(W, /obj/item/paper))
 		if(note)
-			to_chat(user, "<span class='warning'>This package already has a note attached!</span>")
+			to_chat(user, span_warning("This package already has a note attached!"))
 			return
 		if(!user.transferItemToLoc(W, src))
-			to_chat(user, "<span class='warning'>For some reason, you can't attach [W]!</span>")
+			to_chat(user, span_warning("For some reason, you can't attach [W]!"))
 			return
-		user.visible_message("<span class='notice'>[user] attaches [W] to [src].</span>", "<span class='notice'>You attach [W] to [src].</span>")
+		user.visible_message(span_notice("[user] attaches [W] to [src]."), span_notice("You attach [W] to [src]."))
 		note = W
 		var/overlaystring = "[icon_state]_note"
 		if(giftwrapped)
@@ -98,15 +100,15 @@
 	else if(istype(W, /obj/item/sales_tagger))
 		var/obj/item/sales_tagger/tagger = W
 		if(sticker)
-			to_chat(user, "<span class='warning'>This package already has a barcode attached!</span>")
+			to_chat(user, span_warning("This package already has a barcode attached!"))
 			return
 		if(!(tagger.payments_acc))
-			to_chat(user, "<span class='warning'>Swipe an ID on [tagger] first!</span>")
+			to_chat(user, span_warning("Swipe an ID on [tagger] first!"))
 			return
 		if(tagger.paper_count <= 0)
-			to_chat(user, "<span class='warning'>[tagger] is out of paper!</span>")
+			to_chat(user, span_warning("[tagger] is out of paper!"))
 			return
-		user.visible_message("<span class='notice'>[user] attaches a barcode to [src].</span>", "<span class='notice'>You attach a barcode to [src].</span>")
+		user.visible_message(span_notice("[user] attaches a barcode to [src]."), span_notice("You attach a barcode to [src]."))
 		tagger.paper_count -= 1
 		sticker = new /obj/item/barcode(src)
 		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
@@ -122,13 +124,13 @@
 	else if(istype(W, /obj/item/barcode))
 		var/obj/item/barcode/stickerA = W
 		if(sticker)
-			to_chat(user, "<span class='warning'>This package already has a barcode attached!</span>")
+			to_chat(user, span_warning("This package already has a barcode attached!"))
 			return
 		if(!(stickerA.payments_acc))
-			to_chat(user, "<span class='warning'>This barcode seems to be invalid. Guess it's trash now.</span>")
+			to_chat(user, span_warning("This barcode seems to be invalid. Guess it's trash now."))
 			return
 		if(!user.transferItemToLoc(W, src))
-			to_chat(user, "<span class='warning'>For some reason, you can't attach [W]!</span>")
+			to_chat(user, span_warning("For some reason, you can't attach [W]!"))
 			return
 		sticker = stickerA
 		var/list/wrap_contents = src.GetAllContents()
@@ -148,11 +150,11 @@
 		var/atom/movable/AM = loc //can't unwrap the wrapped container if it's inside something.
 		AM.relay_container_resist_act(user, O)
 		return
-	to_chat(user, "<span class='notice'>You lean on the back of [O] and start pushing to rip the wrapping around it.</span>")
+	to_chat(user, span_notice("You lean on the back of [O] and start pushing to rip the wrapping around it."))
 	if(do_after(user, 50, target = O))
 		if(!user || user.stat != CONSCIOUS || user.loc != O || O.loc != src )
 			return
-		to_chat(user, "<span class='notice'>You successfully removed [O]'s wrapping !</span>")
+		to_chat(user, span_notice("You successfully removed [O]'s wrapping !"))
 		O.forceMove(loc)
 		playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 		new /obj/effect/decal/cleanable/wrapping(get_turf(user))
@@ -160,7 +162,7 @@
 		qdel(src)
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
-			to_chat(user, "<span class='warning'>You fail to remove [O]'s wrapping!</span>")
+			to_chat(user, span_warning("You fail to remove [O]'s wrapping!"))
 
 /obj/structure/big_delivery/proc/unwrap_contents()
 	if(!sticker)
@@ -198,7 +200,7 @@
 			SSexplosions.low_mov_atom += contents
 
 /obj/item/small_delivery/attack_self(mob/user)
-	to_chat(user, "<span class='notice'>You start to unwrap the package...</span>")
+	to_chat(user, span_notice("You start to unwrap the package..."))
 	if(!do_after(user, 15, target = user))
 		return
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
@@ -246,40 +248,42 @@
 
 		if(sort_tag != O.currTag)
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
-			to_chat(user, "<span class='notice'>*[tag]*</span>")
+			to_chat(user, span_notice("*[tag]*"))
 			sort_tag = O.currTag
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 
 	else if(istype(W, /obj/item/pen))
 		if(!user.is_literate())
-			to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
+			to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
 			return
 		var/str = stripped_input(user, "Label text?", "Set label", "", MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(!str || !length(str))
-			to_chat(user, "<span class='warning'>Invalid text!</span>")
+			to_chat(user, span_warning("Invalid text!"))
 			return
-		user.visible_message("<span class='notice'>[user] labels [src] as [str].</span>")
+		user.visible_message(span_notice("[user] labels [src] as [str]."))
 		name = "[name] ([str])"
 
 	else if(istype(W, /obj/item/stack/wrapping_paper) && !giftwrapped)
 		var/obj/item/stack/wrapping_paper/WP = W
 		if(WP.use(1))
+			user.visible_message(span_notice("[user] wraps the package in festive paper!"))
+			giftwrapped = TRUE
 			icon_state = "gift[icon_state]"
-			giftwrapped = 1
-			user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
+			greyscale_config = text2path("/datum/greyscale_config/[icon_state]")
+			set_greyscale(colors = WP.greyscale_colors)
 		else
-			to_chat(user, "<span class='warning'>You need more paper!</span>")
+			to_chat(user, span_warning("You need more paper!"))
 
 	else if(istype(W, /obj/item/paper))
 		if(note)
-			to_chat(user, "<span class='warning'>This package already has a note attached!</span>")
+			to_chat(user, span_warning("This package already has a note attached!"))
 			return
 		if(!user.transferItemToLoc(W, src))
-			to_chat(user, "<span class='warning'>For some reason, you can't attach [W]!</span>")
+			to_chat(user, span_warning("For some reason, you can't attach [W]!"))
 			return
-		user.visible_message("<span class='notice'>[user] attaches [W] to [src].</span>", "<span class='notice'>You attach [W] to [src].</span>")
+		user.visible_message(span_notice("[user] attaches [W] to [src]."), span_notice("You attach [W] to [src]."))
 		note = W
 		var/overlaystring = "[icon_state]_note"
 		if(giftwrapped)
@@ -289,15 +293,15 @@
 	else if(istype(W, /obj/item/sales_tagger))
 		var/obj/item/sales_tagger/tagger = W
 		if(sticker)
-			to_chat(user, "<span class='warning'>This package already has a barcode attached!</span>")
+			to_chat(user, span_warning("This package already has a barcode attached!"))
 			return
 		if(!(tagger.payments_acc))
-			to_chat(user, "<span class='warning'>Swipe an ID on [tagger] first!</span>")
+			to_chat(user, span_warning("Swipe an ID on [tagger] first!"))
 			return
 		if(tagger.paper_count <= 0)
-			to_chat(user, "<span class='warning'>[tagger] is out of paper!</span>")
+			to_chat(user, span_warning("[tagger] is out of paper!"))
 			return
-		user.visible_message("<span class='notice'>[user] attaches a barcode to [src].</span>", "<span class='notice'>You attach a barcode to [src].</span>")
+		user.visible_message(span_notice("[user] attaches a barcode to [src]."), span_notice("You attach a barcode to [src]."))
 		tagger.paper_count -= 1
 		sticker = new /obj/item/barcode(src)
 		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
@@ -314,13 +318,13 @@
 	else if(istype(W, /obj/item/barcode))
 		var/obj/item/barcode/stickerA = W
 		if(sticker)
-			to_chat(user, "<span class='warning'>This package already has a barcode attached!</span>")
+			to_chat(user, span_warning("This package already has a barcode attached!"))
 			return
 		if(!(stickerA.payments_acc))
-			to_chat(user, "<span class='warning'>This barcode seems to be invalid. Guess it's trash now.</span>")
+			to_chat(user, span_warning("This barcode seems to be invalid. Guess it's trash now."))
 			return
 		if(!user.transferItemToLoc(W, src))
-			to_chat(user, "<span class='warning'>For some reason, you can't attach [W]!</span>")
+			to_chat(user, span_warning("For some reason, you can't attach [W]!"))
 			return
 		sticker = stickerA
 		var/list/wrap_contents = src.GetAllContents()
@@ -362,11 +366,11 @@
 	desc = "Used to fool the disposal mail network into thinking that you're a harmless parcel. Does actually work as a regular destination tagger as well."
 
 /obj/item/dest_tagger/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] begins tagging [user.p_their()] final destination! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins tagging [user.p_their()] final destination! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if (islizard(user))
-		to_chat(user, "<span class='notice'>*HELL*</span>")//lizard nerf
+		to_chat(user, span_notice("*HELL*"))//lizard nerf
 	else
-		to_chat(user, "<span class='notice'>*HEAVEN*</span>")
+		to_chat(user, span_notice("*HEAVEN*"))
 	playsound(src, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 	return BRUTELOSS
 
@@ -421,10 +425,10 @@
 
 /obj/item/sales_tagger/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>[src] has [paper_count]/[max_paper_count] available barcodes. Refill with paper.</span>"
-	. += "<span class='notice'>Profit split on sale is currently set to [round(cut_multiplier*100)]%. <b>Alt-click</b> to change.</span>"
+	. += span_notice("[src] has [paper_count]/[max_paper_count] available barcodes. Refill with paper.")
+	. += span_notice("Profit split on sale is currently set to [round(cut_multiplier*100)]%. <b>Alt-click</b> to change.")
 	if(payments_acc)
-		. += "<span class='notice'><b>Ctrl-click</b> to clear the registered account.</span>"
+		. += span_notice("<b>Ctrl-click</b> to clear the registered account.")
 
 /obj/item/sales_tagger/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -432,14 +436,14 @@
 		var/obj/item/card/id/potential_acc = I
 		if(potential_acc.registered_account)
 			if(payments_acc == potential_acc.registered_account)
-				to_chat(user, "<span class='notice'>ID card already registered.</span>")
+				to_chat(user, span_notice("ID card already registered."))
 				return
 			else
 				payments_acc = potential_acc.registered_account
 				playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
-				to_chat(user, "<span class='notice'>[src] registers the ID card. Tag a wrapped item to create a barcode.</span>")
+				to_chat(user, span_notice("[src] registers the ID card. Tag a wrapped item to create a barcode."))
 		else if(!potential_acc.registered_account)
-			to_chat(user, "<span class='warning'>This ID card has no account registered!</span>")
+			to_chat(user, span_warning("This ID card has no account registered!"))
 			return
 	if(istype(I, /obj/item/paper))
 		if (!(paper_count >=  max_paper_count))
@@ -447,25 +451,25 @@
 			qdel(I)
 			if (paper_count >=  max_paper_count)
 				paper_count = max_paper_count
-				to_chat(user, "<span class='notice'>[src]'s paper supply is now full.</span>")
+				to_chat(user, span_notice("[src]'s paper supply is now full."))
 				return
-			to_chat(user, "<span class='notice'>You refill [src]'s paper supply, you have [paper_count] left.</span>")
+			to_chat(user, span_notice("You refill [src]'s paper supply, you have [paper_count] left."))
 			return
 		else
-			to_chat(user, "<span class='notice'>[src]'s paper supply is full.</span>")
+			to_chat(user, span_notice("[src]'s paper supply is full."))
 			return
 
 /obj/item/sales_tagger/attack_self(mob/user)
 	. = ..()
 	if(paper_count <=  0)
-		to_chat(user, "<span class='warning'>You're out of paper!'.</span>")
+		to_chat(user, span_warning("You're out of paper!'."))
 		return
 	if(!payments_acc)
-		to_chat(user, "<span class='warning'>You need to swipe [src] with an ID card first.</span>")
+		to_chat(user, span_warning("You need to swipe [src] with an ID card first."))
 		return
 	paper_count -= 1
 	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
-	to_chat(user, "<span class='notice'>You print a new barcode.</span>")
+	to_chat(user, span_notice("You print a new barcode."))
 	var/obj/item/barcode/new_barcode = new /obj/item/barcode(src)
 	new_barcode.payments_acc = payments_acc		// The sticker gets the scanner's registered account.
 	new_barcode.cut_multiplier = cut_multiplier		// Also the registered percent cut.
@@ -474,7 +478,7 @@
 /obj/item/sales_tagger/CtrlClick(mob/user)
 	. = ..()
 	payments_acc = null
-	to_chat(user, "<span class='notice'>You clear the registered account.</span>")
+	to_chat(user, span_notice("You clear the registered account."))
 
 /obj/item/sales_tagger/AltClick(mob/user)
 	. = ..()
@@ -482,7 +486,7 @@
 	if(!potential_cut)
 		cut_multiplier = initial(cut_multiplier)
 	cut_multiplier = clamp(round(potential_cut/100, cut_min), cut_min, cut_max)
-	to_chat(user, "<span class='notice'>[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold.</span>")
+	to_chat(user, span_notice("[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold."))
 
 /obj/item/barcode
 	name = "barcode tag"

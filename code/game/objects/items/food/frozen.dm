@@ -165,6 +165,7 @@
 	icon_state = "mime_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nothing = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "nothing" = 5)
+	foodtypes = SUGAR
 
 /obj/item/food/snowcones/clown
 	name = "clown snowcone"
@@ -172,6 +173,7 @@
 	icon_state = "clown_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/laughter = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "jokes" = 5, "brainfreeze" = 5, "joy" = 5)
+	foodtypes = SUGAR | FRUIT
 
 /obj/item/food/snowcones/soda
 	name = "space cola snowcone"
@@ -179,6 +181,7 @@
 	icon_state = "soda_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/space_cola = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "cola" = 5)
+	foodtypes = SUGAR
 
 /obj/item/food/snowcones/spacemountainwind
 	name = "Space Mountain Wind snowcone"
@@ -186,6 +189,7 @@
 	icon_state = "mountainwind_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/spacemountainwind = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "mountain wind" = 5)
+	foodtypes = SUGAR
 
 
 /obj/item/food/snowcones/pwrgame
@@ -194,6 +198,7 @@
 	icon_state = "pwrgame_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/pwr_game = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "valid" = 5, "salt" = 5, "wats" = 5)
+	foodtypes = SUGAR
 
 /obj/item/food/snowcones/honey
 	name = "honey snowcone"
@@ -201,6 +206,7 @@
 	icon_state = "amber_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/honey = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "flowers" = 5, "sweetness" = 5, "wax" = 1)
+	foodtypes = SUGAR
 
 /obj/item/food/snowcones/rainbow
 	name = "rainbow snowcone"
@@ -208,6 +214,7 @@
 	icon_state = "rainbow_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/laughter = 25, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "sunlight" = 5, "light" = 5, "slime" = 5, "paint" = 3, "clouds" = 3)
+	foodtypes = SUGAR
 
 /obj/item/food/popsicle
 	name = "bug popsicle"
@@ -227,6 +234,7 @@
 /obj/item/food/popsicle/Initialize()
 	. = ..()
 	bite_consumption = reagents.total_volume / bite_states
+	update_icon() // make sure the popsicle overlay is primed so it's not just a stick until you start eating it
 
 /obj/item/food/popsicle/MakeEdible()
 	AddComponent(/datum/component/edible,\

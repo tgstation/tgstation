@@ -17,7 +17,7 @@
 	if(istype(O, /obj/item/stack/cable_coil) && state == FLOODLIGHT_NEEDS_WIRES)
 		var/obj/item/stack/S = O
 		if(S.use(5))
-			to_chat(user, "<span class='notice'>You wire [src].</span>")
+			to_chat(user, span_notice("You wire [src]."))
 			name = "wired [name]"
 			desc = "A bare metal frame looking vaguely like a floodlight. Requires securing with a screwdriver."
 			icon_state = "floodlight_c2"
@@ -27,7 +27,7 @@
 			to_chat(user, "You need 5 cables to wire [src].")
 			return
 	if(O.tool_behaviour == TOOL_SCREWDRIVER && state == FLOODLIGHT_NEEDS_SECURING)
-		to_chat(user, "<span class='notice'>You fasten the wiring and electronics in [src].</span>")
+		to_chat(user, span_notice("You fasten the wiring and electronics in [src]."))
 		name = "secured [name]"
 		desc = "A bare metal frame that looks like a floodlight. Requires a light tube to complete."
 		icon_state = "floodlight_c3"
@@ -36,7 +36,7 @@
 	if(istype(O, /obj/item/light/tube))
 		var/obj/item/light/tube/L = O
 		if(state == FLOODLIGHT_NEEDS_LIGHTS && L.status != 2) //Ready for a light tube, and not broken.
-			to_chat(user, "<span class='notice'>You put lights in [src].</span>")
+			to_chat(user, span_notice("You put lights in [src]."))
 			new /obj/machinery/power/floodlight(loc)
 			qdel(src)
 			qdel(O)
@@ -47,7 +47,7 @@
 		var/obj/item/lightreplacer/L = O
 		if(state == FLOODLIGHT_NEEDS_LIGHTS && L.CanUse(user))
 			L.Use(user)
-			to_chat(user, "<span class='notice'>You put lights in [src].</span>")
+			to_chat(user, span_notice("You put lights in [src]."))
 			new /obj/machinery/power/floodlight(loc)
 			qdel(src)
 			return
@@ -105,7 +105,7 @@
 		if(4)
 			setting_text = "high power"
 	if(user)
-		to_chat(user, "<span class='notice'>You set [src] to [setting_text].</span>")
+		to_chat(user, span_notice("You set [src] to [setting_text]."))
 
 /obj/machinery/power/floodlight/attackby(obj/item/O, mob/user, params)
 	if(O.tool_behaviour == TOOL_WRENCH)
@@ -129,7 +129,7 @@
 		current--
 	change_setting(current, user)
 
-/obj/machinery/power/floodlight/obj_break(damage_flag)
+/obj/machinery/power/floodlight/atom_break(damage_flag)
 	. = ..()
 	if(!.)
 		return

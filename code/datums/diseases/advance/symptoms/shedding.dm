@@ -34,17 +34,17 @@ BONUS
 
 	var/mob/living/M = A.affected_mob
 	if(prob(base_message_chance))
-		to_chat(M, "<span class='warning'>[pick("Your scalp itches.", "Your skin feels flaky.")]</span>")
+		to_chat(M, span_warning("[pick("Your scalp itches.", "Your skin feels flaky.")]"))
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		switch(A.stage)
 			if(3, 4)
 				if(!(H.hairstyle == "Bald") && !(H.hairstyle == "Balding Hair"))
-					to_chat(H, "<span class='warning'>Your hair starts to fall out in clumps...</span>")
+					to_chat(H, span_warning("Your hair starts to fall out in clumps..."))
 					addtimer(CALLBACK(src, .proc/Shed, H, FALSE), 50)
 			if(5)
 				if(!(H.facial_hairstyle == "Shaved") || !(H.hairstyle == "Bald"))
-					to_chat(H, "<span class='warning'>Your hair starts to fall out in clumps...</span>")
+					to_chat(H, span_warning("Your hair starts to fall out in clumps..."))
 					addtimer(CALLBACK(src, .proc/Shed, H, TRUE), 50)
 
 /datum/symptom/shedding/proc/Shed(mob/living/carbon/human/H, fullbald)

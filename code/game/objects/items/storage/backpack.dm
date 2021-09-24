@@ -67,7 +67,7 @@
 	STR.max_combined_w_class = 35
 
 /obj/item/storage/backpack/holding/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
+	user.visible_message(span_suicide("[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide."))
 	user.dropItemToGround(src, TRUE)
 	user.Stun(100, ignore_canstun = TRUE)
 	sleep(20)
@@ -92,7 +92,7 @@
 	STR.max_combined_w_class = 60
 
 /obj/item/storage/backpack/santabag/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] places [src] over [user.p_their()] head and pulls it tight! It looks like [user.p_they()] [user.p_are()]n't in the Christmas spirit...</span>")
+	user.visible_message(span_suicide("[user] places [src] over [user.p_their()] head and pulls it tight! It looks like [user.p_they()] [user.p_are()]n't in the Christmas spirit..."))
 	return (OXYLOSS)
 
 /obj/item/storage/backpack/santabag/proc/regenerate_presents()
@@ -181,8 +181,8 @@
 /obj/item/storage/backpack/science
 	name = "science backpack"
 	desc = "A specially designed backpack. It's fire resistant and smells vaguely of plasma."
-	icon_state = "toxpack"
-	inhand_icon_state = "toxpack"
+	icon_state = "scipack"
+	inhand_icon_state = "scipack"
 
 /obj/item/storage/backpack/virology
 	name = "virology backpack"
@@ -274,11 +274,11 @@
 	icon_state = "satchel-gen"
 	inhand_icon_state = "satchel-gen"
 
-/obj/item/storage/backpack/satchel/tox
+/obj/item/storage/backpack/satchel/science
 	name = "scientist satchel"
 	desc = "Useful for holding research materials."
-	icon_state = "satchel-tox"
-	inhand_icon_state = "satchel-tox"
+	icon_state = "satchel-sci"
+	inhand_icon_state = "satchel-sci"
 
 /obj/item/storage/backpack/satchel/hyd
 	name = "botanist satchel"
@@ -406,11 +406,11 @@
 	icon_state = "duffel-genetics"
 	inhand_icon_state = "duffel-genetics"
 
-/obj/item/storage/backpack/duffelbag/toxins
+/obj/item/storage/backpack/duffelbag/science
 	name = "scientist's duffel bag"
 	desc = "A large duffel bag for holding extra scientific components."
-	icon_state = "duffel-toxins"
-	inhand_icon_state = "duffel-toxins"
+	icon_state = "duffel-sci"
+	inhand_icon_state = "duffel-sci"
 
 /obj/item/storage/backpack/duffelbag/virology
 	name = "virologist's duffel bag"

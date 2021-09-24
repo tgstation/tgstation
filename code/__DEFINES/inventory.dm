@@ -157,7 +157,6 @@ GLOBAL_LIST_INIT(advanced_hardsuit_allowed, typecacheof(list(
 	/obj/item/flashlight,
 	/obj/item/gun,
 	/obj/item/melee/baton,
-	/obj/item/melee/classic_baton,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
 	/obj/item/tank/internals,
@@ -170,7 +169,6 @@ GLOBAL_LIST_INIT(security_hardsuit_allowed, typecacheof(list(
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
 	/obj/item/melee/baton,
-	/obj/item/melee/classic_baton,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
 	/obj/item/tank/internals,
@@ -185,13 +183,14 @@ GLOBAL_LIST_INIT(detective_vest_allowed, typecacheof(list(
 	/obj/item/gun/energy,
 	/obj/item/lighter,
 	/obj/item/melee/baton,
-	/obj/item/melee/classic_baton,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
 	/obj/item/storage/fancy/cigarettes,
 	/obj/item/taperecorder,
 	/obj/item/tank/internals/emergency_oxygen,
 	/obj/item/tank/internals/plasmaman,
+	/obj/item/storage/belt/holster/detective,
+	/obj/item/storage/belt/holster/nukie,
 	)))
 
 GLOBAL_LIST_INIT(security_vest_allowed, typecacheof(list(
@@ -202,11 +201,12 @@ GLOBAL_LIST_INIT(security_vest_allowed, typecacheof(list(
 	/obj/item/gun/energy,
 	/obj/item/kitchen/knife/combat,
 	/obj/item/melee/baton,
-	/obj/item/melee/classic_baton,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
 	/obj/item/tank/internals/emergency_oxygen,
 	/obj/item/tank/internals/plasmaman,
+	/obj/item/storage/belt/holster/detective,
+	/obj/item/storage/belt/holster/nukie,
 	)))
 
 GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
@@ -215,7 +215,25 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
 	/obj/item/melee/baton,
-	/obj/item/melee/classic_baton,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
+	/obj/item/storage/belt/holster/detective,
+	/obj/item/storage/belt/holster/nukie,
 	)))
+
+/// String for items placed into the left pocket.
+#define LOCATION_LPOCKET "in your left pocket"
+/// String for items placed into the right pocket
+#define LOCATION_RPOCKET "in your right pocket"
+/// String for items placed into the backpack.
+#define LOCATION_BACKPACK "in your backpack"
+/// String for items placed into the hands.
+#define LOCATION_HANDS "in your hands"
+/// String for items placed in the glove slot.
+#define LOCATION_GLOVES "on your hands"
+/// String for items placed in the eye/glasses slot.
+#define LOCATION_EYES "covering your eyes"
+/// String for items placed on the head/hat slot.
+#define LOCATION_HEAD "on your head"
+/// String for items placed in the neck slot.
+#define LOCATION_NECK "around your neck"

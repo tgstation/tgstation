@@ -24,10 +24,10 @@
 
 /obj/item/resonator/attack_self(mob/user)
 	if(mode == RESONATOR_MODE_AUTO)
-		to_chat(user, "<span class='info'>You set the resonator's fields to detonate only after you hit one with it.</span>")
+		to_chat(user, span_info("You set the resonator's fields to detonate only after you hit one with it."))
 		mode = RESONATOR_MODE_MANUAL
 	else
-		to_chat(user, "<span class='info'>You set the resonator's fields to automatically detonate after 2 seconds.</span>")
+		to_chat(user, span_info("You set the resonator's fields to automatically detonate after 2 seconds."))
 		mode = RESONATOR_MODE_AUTO
 
 /obj/item/resonator/proc/CreateResonance(target, mob/user)
@@ -69,7 +69,7 @@
 		var/static/list/loc_connections = list(
 			COMSIG_ATOM_ENTERED = .proc/burst,
 		)
-		AddElement(/datum/element/connect_loc, src, loc_connections)
+		AddElement(/datum/element/connect_loc, loc_connections)
 	. = ..()
 	creator = set_creator
 	res = set_resonator
@@ -113,7 +113,7 @@
 	for(var/mob/living/L in T)
 		if(creator)
 			log_combat(creator, L, "used a resonator field on", "resonator")
-		to_chat(L, "<span class='userdanger'>[src] ruptured with you in it!</span>")
+		to_chat(L, span_userdanger("[src] ruptured with you in it!"))
 		L.apply_damage(resonance_damage, BRUTE)
 		L.add_movespeed_modifier(/datum/movespeed_modifier/resonance)
 		addtimer(CALLBACK(L, /mob/proc/remove_movespeed_modifier, /datum/movespeed_modifier/resonance), 10 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
@@ -142,13 +142,13 @@
 
 /obj/item/resonator/upgraded/attack_self(mob/user)
 	if(mode == RESONATOR_MODE_AUTO)
-		to_chat(user, "<span class='info'>You set the resonator's fields to detonate only after you hit one with it.</span>")
+		to_chat(user, span_info("You set the resonator's fields to detonate only after you hit one with it."))
 		mode = RESONATOR_MODE_MANUAL
 	else if(mode == RESONATOR_MODE_MANUAL)
-		to_chat(user, "<span class='info'>You set the resonator's fields to work as matrix traps.</span>")
+		to_chat(user, span_info("You set the resonator's fields to work as matrix traps."))
 		mode = RESONATOR_MODE_MATRIX
 	else
-		to_chat(user, "<span class='info'>You set the resonator's fields to automatically detonate after 2 seconds.</span>")
+		to_chat(user, span_info("You set the resonator's fields to automatically detonate after 2 seconds."))
 		mode = RESONATOR_MODE_AUTO
 
 #undef RESONATOR_MODE_AUTO

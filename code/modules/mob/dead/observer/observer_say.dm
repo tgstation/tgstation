@@ -10,19 +10,24 @@
 	return message
 
 /mob/dead/observer/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
-	if (!message)
+	message = trim(message) //trim now and sanitize after checking for special admin radio keys
+	if(!message)
 		return
 	var/list/message_mods = list()
 	message = get_message_mods(message, message_mods)
-	if(client?.holder && (message_mods[RADIO_EXTENSION] == MODE_ADMIN || message_mods[RADIO_EXTENSION] == MODE_DEADMIN))
+	if(client?.holder && (message_mods[RADIO_EXTENSION] == MODE_ADMIN || message_mods[RADIO_EXTENSION] == MODE_DEADMIN || (message_mods[RADIO_EXTENSION] == MODE_PUPPET && mind?.current)))
 		message = trim_left(copytext_char(message, length(message_mods[RADIO_KEY]) + 2))
-		if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-			client.cmd_admin_say(message)
-		else if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-			client.dsay(message)
+		switch(message_mods[RADIO_EXTENSION])
+			if(MODE_ADMIN)
+				client.cmd_admin_say(message)
+			if(MODE_DEADMIN)
+				client.dsay(message)
+			if(MODE_PUPPET)
+				if(!mind.current.say(message))
+					to_chat(src, span_warning("Your linked body was unable to speak!"))
 		return
 
+	message = copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN)
 	if(check_emote(message, forced))
 		return
 
@@ -41,11 +46,10 @@
 			to_follow = V.source
 	var/link = FOLLOW_LINK(src, to_follow)
 	// Create map text prior to modifying message for goonchat
-	if (client?.prefs.chat_on_map && (client.prefs.see_chat_non_mob || ismob(speaker)))
+	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
 		create_chat_message(speaker, message_language, raw_message, spans)
 	// Recompose the message, because it's scrambled by default
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 	to_chat(src,
 		html = "[link] [message]",
 		avoid_highlighting = speaker == src)
-

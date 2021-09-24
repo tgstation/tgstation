@@ -1,6 +1,5 @@
-import { multiline } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Divider, Icon, NumberInput, Section, Stack } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, Divider, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const buttonWidth = 2;
@@ -508,8 +507,8 @@ const ORION_STATUS_MARKET = (props, context) => {
                         <Stack.Item>
                           <Button
                             fluid
-                            icon="hamburger"
-                            content={"5 Food for 5 Fuel"}
+                            icon="gas-pump"
+                            content={"5 Food -> 5 Fuel"}
                             color="green"
                             onClick={() => act('trade', {
                               what: 2,
@@ -556,8 +555,8 @@ const ORION_STATUS_MARKET = (props, context) => {
                         <Stack.Item>
                           <Button
                             fluid
-                            icon="gas-pump"
-                            content={"5 Fuel for 5 Food"}
+                            icon="hamburger"
+                            content={"5 Fuel -> 5 Food"}
                             color="olive"
                             onClick={() => act('trade', {
                               what: 1,

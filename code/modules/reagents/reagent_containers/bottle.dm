@@ -420,3 +420,35 @@
 /obj/item/reagent_containers/glass/bottle/thermite
 	name = "thermite bottle"
 	list_reagents = list(/datum/reagent/thermite = 30)
+
+// Bottles for mail goodies.
+
+/obj/item/reagent_containers/glass/bottle/clownstears
+	name = "bottle of distilled clown misery"
+	desc = "A small bottle. Contains a mythical liquid used by sublime bartenders; made from the unhappiness of clowns."
+	list_reagents = list(/datum/reagent/consumable/clownstears = 30)
+
+/obj/item/reagent_containers/glass/bottle/saltpetre
+	name = "saltpetre bottle"
+	desc = "A small bottle. Contains saltpetre."
+	list_reagents = list(/datum/reagent/saltpetre = 30)
+
+/obj/item/reagent_containers/glass/bottle/flash_powder
+	name = "flash powder bottle"
+	desc = "A small bottle. Contains flash powder."
+	list_reagents = list(/datum/reagent/flash_powder = 30)
+
+/obj/item/reagent_containers/glass/bottle/exotic_stabilizer
+	name = "exotic stabilizer bottle"
+	desc = "A small bottle. Contains exotic stabilizer."
+	list_reagents = list(/datum/reagent/exotic_stabilizer = 30)
+
+/obj/item/reagent_containers/glass/bottle/leadacetate
+	name = "lead acetate bottle"
+	desc = "A small bottle. Contains lead acetate."
+	list_reagents = list(/datum/reagent/toxin/leadacetate = 30)
+
+/obj/item/reagent_containers/glass/bottle/caramel
+	name = "bottle of caramel"
+	desc = "A bottle containing caramalized sugar, also known as caramel. Do not lick."
+	list_reagents = list(/datum/reagent/consumable/caramel = 30)

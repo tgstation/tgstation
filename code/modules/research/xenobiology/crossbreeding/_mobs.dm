@@ -27,7 +27,7 @@ Slimecrossing Mobs
 /mob/living/simple_animal/slime/transformedslime
 
 /mob/living/simple_animal/slime/transformedslime/Reproduce() //Just in case.
-	to_chat(src, "<span class='warning'>I can't reproduce...</span>")
+	to_chat(src, span_warning("I can't reproduce..."))
 	return
 
 //Slime corgi - Chilling Pink

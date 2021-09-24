@@ -32,6 +32,8 @@
 	var/externalreplyamount = 0
 	///When was the last time we warned them about not cryoing without an ahelp, set to -5 minutes so that rounstart cryo still warns
 	COOLDOWN_DECLARE(cryo_warned)
+	///Tracks say() usage for ic/dchat while slowmode is enabled
+	COOLDOWN_DECLARE(say_slowmode)
 		/////////
 		//OTHER//
 		/////////
@@ -209,3 +211,6 @@
 
 	/// If the client is currently under the restrictions of the interview system
 	var/interviewee = FALSE
+
+	/// Whether or not this client has standard hotkeys enabled
+	var/hotkeys = TRUE

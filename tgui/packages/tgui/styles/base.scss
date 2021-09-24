@@ -4,6 +4,7 @@
  */
 
 @use 'sass:color';
+@use 'sass:math';
 
 $color-fg: #ffffff !default;
 $color-bg: #252525 !default;
@@ -19,9 +20,9 @@ $font-size: 1 * $unit !default;
 $border-radius: 0.16em !default;
 
 @function em($px) {
-  @return 1em * ($px / $unit);
+  @return 1em * math.div($px, $unit);
 }
 
 @function rem($px) {
-  @return 1rem * ($px / $unit);
+  @return 1rem * math.div($px, $unit);
 }

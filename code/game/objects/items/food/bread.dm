@@ -32,6 +32,7 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
+	burns_in_oven = TRUE
 
 /obj/item/food/bread/plain/Initialize()
 	. = ..()
@@ -47,20 +48,26 @@
 	foodtypes = GRAIN
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	venue_value = FOOD_PRICE_TRASH
+	decomp_type = /obj/item/food/breadslice/moldy
 
 /obj/item/food/breadslice/plain/Initialize()
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
 /obj/item/food/breadslice/moldy
-	name = "moldy bread slice"
+	name = "moldy 'bread' slice"
 	desc = "Entire stations have been ripped apart over arguing whether this is still good to eat."
 	icon_state = "moldybreadslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/mold = 10)
 	tastes = list("decaying fungus" = 1)
 	foodtypes = GROSS
+	preserved_food = TRUE
 
-/obj/item/food/breadslice/moldy/Initialize()
+/obj/item/food/breadslice/moldy/bacteria
+	name = "bacteria rich moldy 'bread' slice"
+	desc = "Something (possibly necroyeast) has caused this bread to rise in a macabre state of unlife. It lurchs about when unattended. You might want to locate a priest if you see this. Or maybe a flamethrower."
+
+/obj/item/food/breadslice/moldy/bacteria/Initialize()
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)
 
@@ -262,6 +269,9 @@
 
 
 /obj/item/food/deepfryholder/Initialize(mapload, obj/item/fried)
+	if(!fried)
+		stack_trace("A deepfried object was created with no fried target")
+		return INITIALIZE_HINT_QDEL
 	. = ..()
 	name = fried.name //We'll determine the other stuff when it's actually removed
 	appearance = fried.appearance

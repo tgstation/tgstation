@@ -34,6 +34,12 @@
 
 	var/failure_time = 0
 
+// Players can look at prefs before atoms SS init, and without this
+// they would not be able to see external organs, such as moth wings.
+// This is also necessary because assets SS is before atoms, and so
+// any nonhumans created in that time would experience the same effect.
+INITIALIZE_IMMEDIATE(/obj/item/organ)
+
 /obj/item/organ/Initialize()
 	. = ..()
 	if(organ_flags & ORGAN_EDIBLE)
@@ -61,6 +67,7 @@
 		else
 			qdel(replaced)
 
+	SEND_SIGNAL(src, COMSIG_ORGAN_IMPLANTED, reciever)
 	SEND_SIGNAL(reciever, COMSIG_CARBON_GAIN_ORGAN, src, special)
 
 	owner = reciever
@@ -92,6 +99,7 @@
 	for(var/datum/action/action as anything in actions)
 		action.Remove(organ_owner)
 
+	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
 
 	START_PROCESSING(SSobj, src)
@@ -113,6 +121,7 @@
 	applyOrganDamage(decay_factor * maxHealth * delta_time)
 
 /obj/item/organ/proc/on_life(delta_time, times_fired) //repair organ damage if the organ is not failing
+	check_failing_thresholds(owner) // Check if an organ should/shouldnt be failing
 	if(organ_flags & ORGAN_FAILING)
 		handle_failing_organs(delta_time)
 		return
@@ -132,17 +141,17 @@
 /obj/item/organ/examine(mob/user)
 	. = ..()
 
-	. += "<span class='notice'>It should be inserted in the [parse_zone(zone)].</span>"
+	. += span_notice("It should be inserted in the [parse_zone(zone)].")
 
 	if(organ_flags & ORGAN_FAILING)
 		if(status == ORGAN_ROBOTIC)
-			. += "<span class='warning'>[src] seems to be broken.</span>"
+			. += span_warning("[src] seems to be broken.")
 			return
-		. += "<span class='warning'>[src] has decayed for too long, and has turned a sickly color. It probably won't work without repairs.</span>"
+		. += span_warning("[src] has decayed for too long, and has turned a sickly color. It probably won't work without repairs.")
 		return
 
 	if(damage > high_threshold)
-		. += "<span class='warning'>[src] is starting to look discolored.</span>"
+		. += span_warning("[src] is starting to look discolored.")
 
 /obj/item/organ/Initialize()
 	. = ..()
@@ -191,20 +200,28 @@
 	var/delta = damage - prev_damage
 	if(delta > 0)
 		if(damage >= maxHealth)
-			organ_flags |= ORGAN_FAILING
 			return now_failing
 		if(damage > high_threshold && prev_damage <= high_threshold)
 			return high_threshold_passed
 		if(damage > low_threshold && prev_damage <= low_threshold)
 			return low_threshold_passed
 	else
-		organ_flags &= ~ORGAN_FAILING
 		if(prev_damage > low_threshold && damage <= low_threshold)
 			return low_threshold_cleared
 		if(prev_damage > high_threshold && damage <= high_threshold)
 			return high_threshold_cleared
 		if(prev_damage == maxHealth)
 			return now_fixed
+
+/**check_failing_thresholds
+ * input: mob/organ_owner (a mob, the owner of the organ we call the proc on)
+ * output: failing organ flags on a failing/no longer failing organ.
+ */
+/obj/item/organ/proc/check_failing_thresholds(mob/organ_owner)
+	if(damage >= maxHealth)
+		organ_flags |= ORGAN_FAILING
+	if(damage < maxHealth)
+		organ_flags &= ~ORGAN_FAILING
 
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
@@ -279,3 +296,17 @@
 /// Called before organs are replaced in regenerate_organs with new ones
 /obj/item/organ/proc/before_organ_replacement(obj/item/organ/replacement)
 	return
+
+/// Called by medical scanners to get a simple summary of how healthy the organ is. Returns an empty string if things are fine.
+/obj/item/organ/proc/get_status_text()
+	var/status = ""
+	if(owner.has_reagent(/datum/reagent/inverse/technetium))
+		status = "<font color='#E42426'> organ is [round((damage/maxHealth)*100, 1)]% damaged.</font>"
+	else if(organ_flags & ORGAN_FAILING)
+		status = "<font color='#cc3333'>Non-Functional</font>"
+	else if(damage > high_threshold)
+		status = "<font color='#ff9933'>Severely Damaged</font>"
+	else if (damage > low_threshold)
+		status = "<font color='#ffcc33'>Mildly Damaged</font>"
+
+	return status

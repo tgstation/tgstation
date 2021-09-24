@@ -48,20 +48,20 @@
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/living/user, params)
 	var/list/modifiers = params2list(params)
 	if(P.tool_behaviour == TOOL_WRENCH && LAZYACCESS(modifiers, RIGHT_CLICK))
-		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
+		to_chat(user, span_notice("You begin to [anchored ? "unwrench" : "wrench"] [src]."))
 		if(P.use_tool(src, user, 20, volume=50))
-			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
+			to_chat(user, span_notice("You successfully [anchored ? "unwrench" : "wrench"] [src]."))
 			set_anchored(!anchored)
 	else if(P.w_class < WEIGHT_CLASS_NORMAL)
 		if(!user.transferItemToLoc(P, src))
 			return
-		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
+		to_chat(user, span_notice("You put [P] in [src]."))
 		icon_state = "[initial(icon_state)]-open"
 		sleep(5)
 		icon_state = initial(icon_state)
 		updateUsrDialog()
 	else if(!user.combat_mode)
-		to_chat(user, "<span class='warning'>You can't put [P] in [src]!</span>")
+		to_chat(user, span_warning("You can't put [P] in [src]!"))
 	else
 		return ..()
 
@@ -69,7 +69,7 @@
 /obj/structure/filingcabinet/ui_interact(mob/user)
 	. = ..()
 	if(contents.len <= 0)
-		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+		to_chat(user, span_notice("[src] is empty."))
 		return
 
 	var/dat = "<center><table>"
@@ -95,9 +95,9 @@
 			I.forceMove(loc)
 			if(prob(25))
 				step_rand(I)
-			to_chat(user, "<span class='notice'>You pull \a [I] out of [src] at random.</span>")
+			to_chat(user, span_notice("You pull \a [I] out of [src] at random."))
 			return
-	to_chat(user, "<span class='notice'>You find nothing in [src].</span>")
+	to_chat(user, span_notice("You find nothing in [src]."))
 
 
 /obj/structure/filingcabinet/Topic(href, href_list)
@@ -213,7 +213,7 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 
 
 /obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)
-	new /obj/item/paper/contract/employment(src, employee)
+	new /obj/item/paper/employment_contract(src, employee.mind.name)
 
 /obj/structure/filingcabinet/employment/interact(mob/user)
 	if(virgin)

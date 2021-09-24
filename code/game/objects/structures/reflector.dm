@@ -39,9 +39,9 @@
 		. += "It is set to [rotation_angle] degrees, and the rotation is [can_rotate ? "unlocked" : "locked"]."
 		if(!admin)
 			if(can_rotate)
-				. += "<span class='notice'>Alt-click to adjust its direction.</span>"
+				. += span_notice("Alt-click to adjust its direction.")
 			else
-				. += "<span class='notice'>Use screwdriver to unlock the rotation.</span>"
+				. += span_notice("Use screwdriver to unlock the rotation.")
 
 /obj/structure/reflector/proc/set_angle(new_angle)
 	if(can_rotate)
@@ -77,54 +77,54 @@
 
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		can_rotate = !can_rotate
-		to_chat(user, "<span class='notice'>You [can_rotate ? "unlock" : "lock"] [src]'s rotation.</span>")
+		to_chat(user, span_notice("You [can_rotate ? "unlock" : "lock"] [src]'s rotation."))
 		W.play_tool_sound(src)
 		return
 
 	if(W.tool_behaviour == TOOL_WRENCH)
 		if(anchored)
-			to_chat(user, "<span class='warning'>Unweld [src] from the floor first!</span>")
+			to_chat(user, span_warning("Unweld [src] from the floor first!"))
 			return
-		user.visible_message("<span class='notice'>[user] starts to dismantle [src].</span>", "<span class='notice'>You start to dismantle [src]...</span>")
+		user.visible_message(span_notice("[user] starts to dismantle [src]."), span_notice("You start to dismantle [src]..."))
 		if(W.use_tool(src, user, 80, volume=50))
-			to_chat(user, "<span class='notice'>You dismantle [src].</span>")
+			to_chat(user, span_notice("You dismantle [src]."))
 			new framebuildstacktype(drop_location(), framebuildstackamount)
 			if(buildstackamount)
 				new buildstacktype(drop_location(), buildstackamount)
 			qdel(src)
 	else if(W.tool_behaviour == TOOL_WELDER)
-		if(obj_integrity < max_integrity)
+		if(atom_integrity < max_integrity)
 			if(!W.tool_start_check(user, amount=0))
 				return
 
-			user.visible_message("<span class='notice'>[user] starts to repair [src].</span>",
-								"<span class='notice'>You begin repairing [src]...</span>",
-								"<span class='hear'>You hear welding.</span>")
+			user.visible_message(span_notice("[user] starts to repair [src]."),
+								span_notice("You begin repairing [src]..."),
+								span_hear("You hear welding."))
 			if(W.use_tool(src, user, 40, volume=40))
-				obj_integrity = max_integrity
-				user.visible_message("<span class='notice'>[user] repairs [src].</span>", \
-									"<span class='notice'>You finish repairing [src].</span>")
+				atom_integrity = max_integrity
+				user.visible_message(span_notice("[user] repairs [src]."), \
+									span_notice("You finish repairing [src]."))
 
 		else if(!anchored)
 			if(!W.tool_start_check(user, amount=0))
 				return
 
-			user.visible_message("<span class='notice'>[user] starts to weld [src] to the floor.</span>",
-								"<span class='notice'>You start to weld [src] to the floor...</span>",
-								"<span class='hear'>You hear welding.</span>")
+			user.visible_message(span_notice("[user] starts to weld [src] to the floor."),
+								span_notice("You start to weld [src] to the floor..."),
+								span_hear("You hear welding."))
 			if (W.use_tool(src, user, 20, volume=50))
 				set_anchored(TRUE)
-				to_chat(user, "<span class='notice'>You weld [src] to the floor.</span>")
+				to_chat(user, span_notice("You weld [src] to the floor."))
 		else
 			if(!W.tool_start_check(user, amount=0))
 				return
 
-			user.visible_message("<span class='notice'>[user] starts to cut [src] free from the floor.</span>",
-								"<span class='notice'>You start to cut [src] free from the floor...</span>",
-								"<span class='hear'>You hear welding.</span>")
+			user.visible_message(span_notice("[user] starts to cut [src] free from the floor."),
+								span_notice("You start to cut [src] free from the floor..."),
+								span_hear("You hear welding."))
 			if (W.use_tool(src, user, 20, volume=50))
 				set_anchored(FALSE)
-				to_chat(user, "<span class='notice'>You cut [src] free from the floor.</span>")
+				to_chat(user, span_notice("You cut [src] free from the floor."))
 
 	//Finishing the frame
 	else if(istype(W, /obj/item/stack/sheet))
@@ -136,14 +136,14 @@
 				new /obj/structure/reflector/single(drop_location())
 				qdel(src)
 			else
-				to_chat(user, "<span class='warning'>You need five sheets of glass to create a reflector!</span>")
+				to_chat(user, span_warning("You need five sheets of glass to create a reflector!"))
 				return
 		if(istype(S, /obj/item/stack/sheet/rglass))
 			if(S.use(10))
 				new /obj/structure/reflector/double(drop_location())
 				qdel(src)
 			else
-				to_chat(user, "<span class='warning'>You need ten sheets of reinforced glass to create a double reflector!</span>")
+				to_chat(user, span_warning("You need ten sheets of reinforced glass to create a double reflector!"))
 				return
 		if(istype(S, /obj/item/stack/sheet/mineral/diamond))
 			if(S.use(1))
@@ -154,7 +154,7 @@
 
 /obj/structure/reflector/proc/rotate(mob/user)
 	if (!can_rotate || admin)
-		to_chat(user, "<span class='warning'>The rotation is locked!</span>")
+		to_chat(user, span_warning("The rotation is locked!"))
 		return FALSE
 	var/new_angle = input(user, "Input a new angle for primary reflection face.", "Reflector Angle", rotation_angle) as null|num
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))

@@ -79,7 +79,7 @@
 
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel
-/obj/machinery/proc/powered(chan = -1) // defaults to power_channel
+/obj/machinery/proc/powered(chan = power_channel)
 	if(!loc)
 		return FALSE
 	if(!use_power)
@@ -88,18 +88,13 @@
 	var/area/A = get_area(src) // make sure it's in an area
 	if(!A)
 		return FALSE // if not, then not powered
-	if(chan == -1)
-		chan = power_channel
+
 	return A.powered(chan) // return power status of the area
 
 // increment the power usage stats for an area
-/obj/machinery/proc/use_power(amount, chan = -1) // defaults to power_channel
+/obj/machinery/proc/use_power(amount, chan = power_channel)
 	var/area/A = get_area(src) // make sure it's in an area
-	if(!A)
-		return
-	if(chan == -1)
-		chan = power_channel
-	A.use_power(amount, chan)
+	A?.use_power(amount, chan)
 
 /**
  * An alternative to 'use_power', this proc directly costs the APC in direct charge, as opposed to being calculated periodically.
@@ -154,9 +149,7 @@
 
 /obj/machinery/proc/addStaticPower(value, powerchannel)
 	var/area/A = get_area(src)
-	if(!A)
-		return
-	A.addStaticPower(value, powerchannel)
+	A?.addStaticPower(value, powerchannel)
 
 /obj/machinery/proc/removeStaticPower(value, powerchannel)
 	addStaticPower(-value, powerchannel)
@@ -404,9 +397,9 @@
 
 	if (isarea(power_source))
 		var/area/source_area = power_source
-		source_area.use_power(drained_energy/GLOB.CELLRATE)
+		source_area.use_power(drained_energy WATTS)
 	else if (istype(power_source, /datum/powernet))
-		var/drained_power = drained_energy/GLOB.CELLRATE //convert from "joules" to "watts"
+		var/drained_power = drained_energy WATTS //convert from "joules" to "watts"
 		PN.delayedload += (min(drained_power, max(PN.newavail - PN.delayedload, 0)))
 	else if (istype(power_source, /obj/item/stock_parts/cell))
 		cell.use(drained_energy)

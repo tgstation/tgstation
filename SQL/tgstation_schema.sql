@@ -260,6 +260,25 @@ CREATE TABLE `library` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `library_action`
+--
+
+DROP TABLE IF EXISTS `library_action`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `library_action` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `book` int(10) unsigned NOT NULL,
+  `reason` longtext DEFAULT NULL,
+  `ckey` varchar(11) NOT NULL DEFAULT '',
+  `datetime` datetime NOT NULL DEFAULT current_timestamp(),
+  `action` varchar(11) NOT NULL DEFAULT '',
+  `ip_addr` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `messages`
 --
 
@@ -628,6 +647,20 @@ CREATE TABLE `text_adventures` (
 	`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`approved` TINYINT(1) NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+--
+-- Table structure for table `admin_connections`
+--
+DROP TABLE IF EXISTS `admin_connections`;
+CREATE TABLE `admin_connections` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `ckey` VARCHAR(32) NOT NULL,
+  `ip` INT(11) UNSIGNED NOT NULL,
+  `cid` VARCHAR(32) NOT NULL,
+  `verification_time` DATETIME NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `unique_constraints` (`ckey`, `ip`, `cid`)
 ) ENGINE=InnoDB;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

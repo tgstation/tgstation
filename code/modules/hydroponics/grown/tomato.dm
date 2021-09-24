@@ -35,7 +35,7 @@
 	species = "bloodtomato"
 	plantname = "Blood-Tomato Plants"
 	product = /obj/item/food/grown/tomato/blood
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/blood = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 20
 
@@ -84,8 +84,8 @@
 	plantname = "Bluespace Tomato Plants"
 	product = /obj/item/food/grown/tomato/blue/bluespace
 	yield = 2
-	mutatelist = list()
-	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest)
+	mutatelist = null
+	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/backfire/bluespace)
 	reagents_add = list(/datum/reagent/lube = 0.2, /datum/reagent/bluespace = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 50
 	graft_gene = /datum/plant_gene/trait/teleport
@@ -99,20 +99,6 @@
 	distill_reagent = null
 	wine_power = 80
 
-/obj/item/food/grown/tomato/blue/bluespace/Initialize(mapload, obj/item/seeds/new_seed)
-	. = ..()
-	AddElement(/datum/element/plant_backfire, /obj/item/food/grown/tomato/blue/bluespace.proc/splat_user, extra_genes = list(/datum/plant_gene/trait/squash))
-
-/*
- * Splat our tomato on our user. Called from [/datum/element/plant_backfire]
- *
- * user - the mob handling the bluespace tomato
- */
-/obj/item/food/grown/tomato/blue/bluespace/proc/splat_user(mob/living/carbon/user)
-	if(prob(50))
-		to_chat(user, "<span class='danger'>[src] slips out of your hand!</span>")
-		attack_self(user)
-
 // Killer Tomato
 /obj/item/seeds/tomato/killer
 	name = "pack of killer-tomato seeds"
@@ -122,12 +108,12 @@
 	plantname = "Killer-Tomato Plants"
 	product = /obj/item/food/grown/tomato/killer
 	yield = 2
-	genes = list(/datum/plant_gene/trait/squash)
+	genes = list(/datum/plant_gene/trait/mob_transformation/tomato)
 	growthstages = 2
 	icon_grow = "killertomato-grow"
 	icon_harvest = "killertomato-harvest"
 	icon_dead = "killertomato-dead"
-	mutatelist = list()
+	mutatelist = null
 	rarity = 30
 
 /obj/item/food/grown/tomato/killer
@@ -135,56 +121,4 @@
 	name = "\improper killer-tomato"
 	desc = "I say to-mah-to, you say tom-mae-to... OH GOD IT'S EATING MY LEGS!!"
 	icon_state = "killertomato"
-	var/awakening = 0
 	distill_reagent = /datum/reagent/consumable/ethanol/demonsblood
-
-/obj/item/food/grown/tomato/killer/Initialize(mapload, obj/item/seeds/new_seed)
-	. = ..()
-	AddElement(/datum/element/plant_backfire, /obj/item/food/grown/tomato/killer.proc/early_awaken)
-
-/obj/item/food/grown/tomato/killer/attack(mob/M, mob/user, def_zone)
-	if(awakening)
-		to_chat(user, "<span class='warning'>[src] is twitching and shaking, preventing you from eating it.</span>")
-		return
-	..()
-
-/obj/item/food/grown/tomato/killer/attack_self(mob/user)
-	if(awakening || isspaceturf(user.loc))
-		return
-	to_chat(user, "<span class='notice'>You begin to awaken [src]...</span>")
-	begin_awaken(3 SECONDS)
-	log_game("[key_name(user)] awakened a killer tomato at [AREACOORD(user)].")
-
-/*
- * Begin the process of awakening the killer tomato.
- *
- * awaken_time - the time, in seconds, it will take for the tomato to spawn.
- */
-/obj/item/food/grown/tomato/killer/proc/begin_awaken(awaken_time)
-	awakening = TRUE
-	addtimer(CALLBACK(src, .proc/awaken), awaken_time)
-
-/*
- * Actually awaken the killer tomato, spawning the killer tomato mob.
- */
-/obj/item/food/grown/tomato/killer/proc/awaken()
-	if(QDELETED(src))
-		return
-	var/mob/living/simple_animal/hostile/killertomato/K = new /mob/living/simple_animal/hostile/killertomato(get_turf(src.loc))
-	K.maxHealth += round(seed.endurance / 3)
-	K.melee_damage_lower += round(seed.potency / 10)
-	K.melee_damage_upper += round(seed.potency / 10)
-	K.move_to_delay -= round(seed.production / 50)
-	K.health = K.maxHealth
-	K.visible_message("<span class='notice'>[src] growls as it suddenly awakens.</span>")
-	qdel(src)
-
-/*
- * Wakes up our tomato early. Called from [/datum/element/plant_backfire]
- *
- * user - the mob handling the killer tomato
- */
-/obj/item/food/grown/tomato/killer/proc/early_awaken(mob/living/carbon/user)
-	if(!awakening && prob(25))
-		to_chat(user, "<span class='danger'>[src] begins to growl and shake!</span>")
-		begin_awaken(1 SECONDS)

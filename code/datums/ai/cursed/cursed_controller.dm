@@ -12,6 +12,8 @@
 		BB_TARGET_SLOT,
 		BB_CURSED_THROW_ATTEMPT_COUNT
 	)
+	planning_subtrees = list(/datum/ai_planning_subtree/cursed)
+	idle_behavior = /datum/idle_behavior/idle_ghost_item
 
 /datum/ai_controller/cursed/TryPossessPawn(atom/new_pawn)
 	if(!isitem(new_pawn))
@@ -23,31 +25,6 @@
 /datum/ai_controller/cursed/UnpossessPawn()
 	UnregisterSignal(pawn, list(COMSIG_MOVABLE_IMPACT, COMSIG_ITEM_EQUIPPED))
 	return ..() //Run parent at end
-
-/datum/ai_controller/cursed/SelectBehaviors(delta_time)
-	current_behaviors = list()
-	var/obj/item/item_pawn = pawn
-
-
-	//make sure we have a target
-	var/mob/living/carbon/curse_target = blackboard[BB_CURSE_TARGET]
-	if(!curse_target)
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/find_and_set/cursed)
-		return
-	//make sure attack is valid
-	if(get_dist(curse_target, item_pawn) > CURSED_VIEW_RANGE)
-		blackboard[BB_CURSE_TARGET] = null
-		return
-	current_movement_target = curse_target
-	current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/item_move_close_and_attack/cursed)
-
-/datum/ai_controller/cursed/PerformIdleBehavior(delta_time)
-	var/obj/item/item_pawn = pawn
-	if(ismob(item_pawn.loc)) //Being held. dont teleport
-		return
-	if(DT_PROB(CURSED_ITEM_TELEPORT_CHANCE, delta_time))
-		playsound(item_pawn.loc, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
-		do_teleport(pawn, get_turf(pawn), 4, channel = TELEPORT_CHANNEL_MAGIC)
 
 ///signal called by the pawn hitting something after a throw
 /datum/ai_controller/cursed/proc/on_throw_hit(datum/source, atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -79,14 +56,14 @@
 	if(attempted_slot == ITEM_SLOT_HANDS) //hands needs some different checks
 		curse_victim.drop_all_held_items()
 		if(curse_victim.put_in_hands(item_pawn, del_on_fail = FALSE))
-			to_chat(curse_victim, "<span class='danger'>[item_pawn] leaps into your hands!</span>")
+			to_chat(curse_victim, span_danger("[item_pawn] leaps into your hands!"))
 			what_a_horrible_night_to_have_a_curse()
 		return
 	var/obj/item/blocking = curse_victim.get_item_by_slot(attempted_slot)
 	if(!curse_victim.dropItemToGround(blocking, silent = TRUE))
 		return //cannot equip to this person so whatever just keep whacking them until they die or fugg off
 	curse_victim.equip_to_slot_if_possible(item_pawn, attempted_slot, qdel_on_fail = FALSE, disable_warning = FALSE)
-	to_chat(curse_victim, "<span class='danger'>[item_pawn] equips [item_pawn.p_them()]self onto you!</span>")
+	to_chat(curse_victim, span_danger("[item_pawn] equips [item_pawn.p_them()]self onto you!"))
 	what_a_horrible_night_to_have_a_curse()
 
 ///proc called when the cursed object successfully attaches itself to someone, removing the cursed element and by extension the ai itself

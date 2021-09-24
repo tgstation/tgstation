@@ -25,10 +25,9 @@
 	SSair.start_processing_machine(src)
 
 /obj/machinery/portable_atmospherics/Destroy()
-	SSair.stop_processing_machine(src)
-
 	disconnect()
-	QDEL_NULL(air_contents)
+	air_contents = null
+	SSair.stop_processing_machine(src)
 
 	return ..()
 
@@ -77,7 +76,7 @@
 	var/datum/pipeline/connected_port_parent = connected_port.parents[1]
 	connected_port_parent.reconcile_air()
 
-	anchored = TRUE //Prevent movement
+	set_anchored(TRUE) //Prevent movement
 	pixel_x = new_port.pixel_x
 	pixel_y = new_port.pixel_y
 
@@ -96,7 +95,7 @@
 /obj/machinery/portable_atmospherics/proc/disconnect()
 	if(!connected_port)
 		return FALSE
-	anchored = FALSE
+	set_anchored(FALSE)
 	connected_port.connected_device = null
 	connected_port = null
 	pixel_x = 0
@@ -112,15 +111,15 @@
 		return
 	if(!holding)
 		return
-	to_chat(user, "<span class='notice'>You remove [holding] from [src].</span>")
+	to_chat(user, span_notice("You remove [holding] from [src]."))
 	replace_tank(user, TRUE)
 
 /obj/machinery/portable_atmospherics/examine(mob/user)
 	. = ..()
 	if(!holding)
 		return
-	. += "<span class='notice'>\The [src] contains [holding]. Alt-click [src] to remove it.</span>"+\
-		"<span class='notice'>Click [src] with another gas tank to hot swap [holding].</span>"
+	. += span_notice("\The [src] contains [holding]. Alt-click [src] to remove it.")+\
+		span_notice("Click [src] with another gas tank to hot swap [holding].")
 
 /**
  * Allow the player to place a tank inside the machine.
@@ -150,7 +149,7 @@
 	var/obj/item/tank/T = W
 	if(!user.transferItemToLoc(T, src))
 		return FALSE
-	to_chat(user, "<span class='notice'>[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [T]" : "You insert [T] into [src]"].</span>")
+	to_chat(user, span_notice("[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [T]" : "You insert [T] into [src]"]."))
 	investigate_log("had its internal [holding] swapped with [T] by [key_name(user)].", INVESTIGATE_ATMOS)
 	replace_tank(user, FALSE, T)
 	update_appearance()
@@ -164,22 +163,22 @@
 		W.play_tool_sound(src)
 		user.visible_message( \
 			"[user] disconnects [src].", \
-			"<span class='notice'>You unfasten [src] from the port.</span>", \
-			"<span class='hear'>You hear a ratchet.</span>")
+			span_notice("You unfasten [src] from the port."), \
+			span_hear("You hear a ratchet."))
 		update_appearance()
 		return TRUE
 	var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
 	if(!possible_port)
-		to_chat(user, "<span class='notice'>Nothing happens.</span>")
+		to_chat(user, span_notice("Nothing happens."))
 		return FALSE
 	if(!connect(possible_port))
-		to_chat(user, "<span class='notice'>[name] failed to connect to the port.</span>")
+		to_chat(user, span_notice("[name] failed to connect to the port."))
 		return FALSE
 	W.play_tool_sound(src)
 	user.visible_message( \
 		"[user] connects [src].", \
-		"<span class='notice'>You fasten [src] to the port.</span>", \
-		"<span class='hear'>You hear a ratchet.</span>")
+		span_notice("You fasten [src] to the port."), \
+		span_hear("You hear a ratchet."))
 	update_appearance()
 	investigate_log("was connected to [possible_port] by [key_name(user)].", INVESTIGATE_ATMOS)
 	return TRUE

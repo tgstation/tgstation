@@ -19,7 +19,7 @@
 /area/awaymission/caves/research
 	name = "Research Outpost"
 	icon_state = "awaycontent5"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	static_lighting = TRUE
 
 /area/awaymission/caves/northblock //engineering, bridge (not really north but it doesnt really need its own APC)
 

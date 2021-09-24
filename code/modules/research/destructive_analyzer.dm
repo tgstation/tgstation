@@ -32,11 +32,11 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if(!is_insertion_ready(user))
 			return
 		if(!user.transferItemToLoc(O, src))
-			to_chat(user, "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in the [src.name]!</span>")
+			to_chat(user, span_warning("\The [O] is stuck to your hand, you cannot put it in the [src.name]!"))
 			return
 		busy = TRUE
 		loaded_item = O
-		to_chat(user, "<span class='notice'>You add the [O.name] to the [src.name]!</span>")
+		to_chat(user, span_notice("You add the [O.name] to the [src.name]!"))
 		flick("d_analyzer_la", src)
 		addtimer(CALLBACK(src, .proc/finish_loading), 10)
 		updateUsrDialog()
@@ -209,7 +209,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 	if(ls["eject_item"]) //Eject the item inside the destructive analyzer.
 		if(busy)
-			to_chat(usr, "<span class='danger'>The destructive analyzer is busy at the moment.</span>")
+			to_chat(usr, span_danger("The destructive analyzer is busy at the moment."))
 			return
 		if(loaded_item)
 			unload_item()

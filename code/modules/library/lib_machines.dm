@@ -333,15 +333,15 @@
 
 /obj/machinery/computer/bookmanagement/proc/print_forbidden_lore(mob/user)
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
-	to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a sinister dagger sitting on the desk. You don't even remember where it came from...</span>")
-	user.visible_message("<span class='warning'>[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older.</span>", 2)
+	to_chat(user, span_warning("Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a sinister dagger sitting on the desk. You don't even remember where it came from..."))
+	user.visible_message(span_warning("[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older."), 2)
 
 /obj/machinery/computer/bookmanagement/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/barcodescanner))
 		var/obj/item/barcodescanner/scanner = W
 		scanner.computer = src
-		to_chat(user, "<span class='notice'>[scanner]'s associated machine has been set to [src].</span>")
-		audible_message("<span class='hear'>[src] lets out a low, short blip.</span>")
+		to_chat(user, span_notice("[scanner]'s associated machine has been set to [src]."))
+		audible_message(span_hear("[src] lets out a low, short blip."))
 	else
 		return ..()
 
@@ -485,7 +485,7 @@
 					B.author = author
 					B.dat = content
 					B.icon_state = "book[rand(1,8)]"
-					visible_message("<span class='notice'>[src]'s printer hums as it produces a completely bound book. How did it do that?</span>")
+					visible_message(span_notice("[src]'s printer hums as it produces a completely bound book. How did it do that?"))
 				break
 			qdel(query_library_print)
 	if(href_list["printbible"])
@@ -588,18 +588,18 @@
 	if(machine_stat)
 		return
 	if(busy)
-		to_chat(user, "<span class='warning'>The book binder is busy. Please wait for completion of previous operation.</span>")
+		to_chat(user, span_warning("The book binder is busy. Please wait for completion of previous operation."))
 		return
 	if(!user.transferItemToLoc(P, src))
 		return
-	user.visible_message("<span class='notice'>[user] loads some paper into [src].</span>", "<span class='notice'>You load some paper into [src].</span>")
-	audible_message("<span class='hear'>[src] begins to hum as it warms up its printing drums.</span>")
+	user.visible_message(span_notice("[user] loads some paper into [src]."), span_notice("You load some paper into [src]."))
+	audible_message(span_hear("[src] begins to hum as it warms up its printing drums."))
 	busy = TRUE
 	sleep(rand(200,400))
 	busy = FALSE
 	if(P)
 		if(!machine_stat)
-			visible_message("<span class='notice'>[src] whirs as it prints and binds a new book.</span>")
+			visible_message(span_notice("[src] whirs as it prints and binds a new book."))
 			var/obj/item/book/B = new(src.loc)
 			B.dat = P.info
 			B.name = "Print Job #" + "[rand(100, 999)]"

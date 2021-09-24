@@ -26,9 +26,10 @@
 
 /atom/movable/screen/plane_master/openspace/Initialize()
 	. = ..()
-	add_filter("first_stage_openspace", 1, drop_shadow_filter(color = "#04080FAA", size = -10))
-	add_filter("second_stage_openspace", 2, drop_shadow_filter(color = "#04080FAA", size = -15))
-	add_filter("third_stage_openspace", 2, drop_shadow_filter(color = "#04080FAA", size = -20))
+	add_filter("multiz_lighting_mask", 1, alpha_mask_filter(render_source = LIGHTING_RENDER_TARGET, flags = MASK_INVERSE))
+	add_filter("first_stage_openspace", 2, drop_shadow_filter(color = "#04080FAA", size = -10))
+	add_filter("second_stage_openspace", 3, drop_shadow_filter(color = "#04080FAA", size = -15))
+	add_filter("third_stage_openspace", 4, drop_shadow_filter(color = "#04080FAA", size = -20))
 
 ///Contains just the floor
 /atom/movable/screen/plane_master/floor
@@ -57,7 +58,8 @@
 	blend_mode = BLEND_OVERLAY
 
 /atom/movable/screen/plane_master/game_world/backdrop(mob/mymob)
-	if(istype(mymob) && mymob.client && mymob.client.prefs && mymob.client.prefs.ambientocclusion)
+	remove_filter("AO")
+	if(istype(mymob) && mymob.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
 
 
@@ -183,6 +185,6 @@
 	blend_mode = BLEND_OVERLAY
 
 /atom/movable/screen/plane_master/runechat/backdrop(mob/mymob)
-	filters = list()
-	if(istype(mymob) && mymob.client?.prefs?.ambientocclusion)
+	remove_filter("AO")
+	if(istype(mymob) && mymob.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))

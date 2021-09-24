@@ -16,6 +16,7 @@
 	var/static_visibility_range = 16
 	var/ai_detector_visible = TRUE
 	var/ai_detector_color = COLOR_RED
+	interaction_range = null
 
 /mob/camera/ai_eye/Initialize()
 	. = ..()
@@ -107,11 +108,11 @@
 	var/turf/target = get_step_multiz(src, dir)
 	if(!target)
 		if(feedback)
-			to_chat(ai, "<span class='warning'>There's nowhere to go in that direction!</span>")
+			to_chat(ai, span_warning("There's nowhere to go in that direction!"))
 		return FALSE
 	if(!canZMove(dir, target))
 		if(feedback)
-			to_chat(ai, "<span class='warning'>You couldn't move there!</span>")
+			to_chat(ai, span_warning("You couldn't move there!"))
 		return FALSE
 	setLoc(target, TRUE)
 	return TRUE

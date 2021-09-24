@@ -291,14 +291,13 @@
 "B" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
-/obj/item/toy/figure/assistant,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "D" = (
 /obj/structure/table/reinforced,
 /obj/item/folder,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/shuttle/arrival)

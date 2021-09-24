@@ -220,7 +220,7 @@ Primarily used in reagents/reaction_agents
 
 /// Called when an overdose starts
 /datum/reagent/proc/overdose_start(mob/living/M)
-	to_chat(M, "<span class='userdanger'>You feel like you took too much of [name]!</span>")
+	to_chat(M, span_userdanger("You feel like you took too much of [name]!"))
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
 	return
 

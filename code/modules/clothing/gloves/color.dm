@@ -27,11 +27,11 @@
 		var/success = C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, qdel_on_fail = TRUE, disable_warning = TRUE)
 		if(success)
 			if(C == user)
-				C.visible_message("<span class='notice'>[U] sprays their hands with glittery rubber!</span>")
+				C.visible_message(span_notice("[U] sprays their hands with glittery rubber!"))
 			else
-				C.visible_message("<span class='warning'>[U] sprays glittery rubber on the hands of [C]!</span>")
+				C.visible_message(span_warning("[U] sprays glittery rubber on the hands of [C]!"))
 		else
-			C.visible_message("<span class='warning'>The rubber fails to stick to [C]'s hands!</span>")
+			C.visible_message(span_warning("The rubber fails to stick to [C]'s hands!"))
 
 /obj/item/clothing/gloves/color/yellow/sprayon
 	desc = "How're you gonna get 'em off, nerd?"
@@ -58,7 +58,7 @@
 	charges_remaining--
 	if(charges_remaining <= 0)
 		var/turf/location = get_turf(src)
-		location.visible_message("<span class='warning'>[src] crumble[p_s()] away into nothing.</span>") // just like my dreams after working with .dm
+		location.visible_message(span_warning("[src] crumble[p_s()] away into nothing.")) // just like my dreams after working with .dm
 		qdel(src)
 
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
@@ -104,6 +104,19 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/fingerless
+
+/obj/item/clothing/gloves/fingerless
+	name = "fingerless gloves"
+	desc = "Plain black gloves without fingertips for the hard working."
+	icon_state = "fingerless"
+	inhand_icon_state = "fingerless"
+	transfer_prints = TRUE
+	strip_delay = 40
+	equip_delay_other = 20
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	custom_price = PAYCHECK_ASSISTANT * 1.5
+	undyeable = TRUE
 
 /obj/item/clothing/gloves/color/orange
 	name = "orange gloves"
@@ -241,20 +254,3 @@
 	icon_state = "white"
 	inhand_icon_state = "wgloves"
 	custom_price = PAYCHECK_MINIMAL
-
-/obj/effect/spawner/lootdrop/gloves
-	name = "random gloves"
-	desc = "These gloves are supposed to be a random color..."
-	icon = 'icons/obj/clothing/gloves.dmi'
-	icon_state = "random_gloves"
-	loot = list(
-		/obj/item/clothing/gloves/color/orange = 1,
-		/obj/item/clothing/gloves/color/red = 1,
-		/obj/item/clothing/gloves/color/blue = 1,
-		/obj/item/clothing/gloves/color/purple = 1,
-		/obj/item/clothing/gloves/color/green = 1,
-		/obj/item/clothing/gloves/color/grey = 1,
-		/obj/item/clothing/gloves/color/light_brown = 1,
-		/obj/item/clothing/gloves/color/brown = 1,
-		/obj/item/clothing/gloves/color/white = 1,
-		/obj/item/clothing/gloves/color/rainbow = 1)

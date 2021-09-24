@@ -29,7 +29,7 @@
 	if(contents.len)
 		var/obj/item/I = pick(contents)
 		user.put_in_hands(I)
-		to_chat(user, "<span class='notice'>You carefully remove the photo from \the [src].</span>")
+		to_chat(user, span_notice("You carefully remove the photo from \the [src]."))
 		displayed = null
 		update_appearance()
 	return ..()
@@ -118,16 +118,16 @@
 
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
 	if(can_decon && (I.tool_behaviour == TOOL_SCREWDRIVER || I.tool_behaviour == TOOL_WRENCH))
-		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
+		to_chat(user, span_notice("You start unsecuring [name]..."))
 		if(I.use_tool(src, user, 30, volume=50))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
+			to_chat(user, span_notice("You unsecure [name]."))
 			deconstruct()
 
 	else if(I.tool_behaviour == TOOL_WIRECUTTER && framed)
 		framed.forceMove(drop_location())
 		framed = null
-		user.visible_message("<span class='warning'>[user] cuts away [framed] from [src]!</span>")
+		user.visible_message(span_warning("[user] cuts away [framed] from [src]!"))
 		return
 
 	else if(istype(I, /obj/item/photo))

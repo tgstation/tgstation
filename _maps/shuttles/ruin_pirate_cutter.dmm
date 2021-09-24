@@ -771,7 +771,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Gh" = (
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
@@ -991,7 +991,7 @@
 "Xq" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/obj/item/melee/classic_baton,
+/obj/item/melee/baton,
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)

@@ -12,6 +12,8 @@
 /obj/vehicle/ridden/atv/Initialize()
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/atv)
+	if(!atvcover)
+		atvcover = mutable_appearance(icon, "atvcover", MOB_LAYER + 0.1)
 
 /obj/vehicle/ridden/atv/post_buckle_mob(mob/living/M)
 	add_overlay(atvcover)
@@ -40,7 +42,10 @@
 	. = ..()
 	if(!turret)
 		return
-	turret.forceMove(get_turf(src))
+	var/turf/our_turf = get_turf(src)
+	if(!our_turf)
+		return
+	turret.forceMove(our_turf)
 	switch(dir)
 		if(NORTH)
 			turret.pixel_x = base_pixel_x
@@ -60,22 +65,22 @@
 			turret.layer = OBJ_LAYER
 
 /obj/vehicle/ridden/atv/welder_act(mob/living/user, obj/item/I)
-	if(obj_integrity >= max_integrity)
+	if(atom_integrity >= max_integrity)
 		return TRUE
 	if(!I.use_tool(src, user, 0, volume=50, amount=1))
 		return TRUE
-	user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to \the [src].</span>")
-	obj_integrity += min(10, max_integrity-obj_integrity)
-	if(obj_integrity == max_integrity)
-		to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
+	user.visible_message(span_notice("[user] repairs some damage to [name]."), span_notice("You repair some damage to \the [src]."))
+	atom_integrity += min(10, max_integrity-atom_integrity)
+	if(atom_integrity == max_integrity)
+		to_chat(user, span_notice("It looks to be fully repaired now."))
 	return TRUE
 
-/obj/vehicle/ridden/atv/obj_break()
+/obj/vehicle/ridden/atv/atom_break()
 	START_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/vehicle/ridden/atv/process(delta_time)
-	if(obj_integrity >= integrity_failure * max_integrity)
+	if(atom_integrity >= integrity_failure * max_integrity)
 		return PROCESS_KILL
 	if(DT_PROB(10, delta_time))
 		return
@@ -91,7 +96,7 @@
 		buckled_mob.bullet_act(P)
 	return TRUE
 
-/obj/vehicle/ridden/atv/obj_destruction()
+/obj/vehicle/ridden/atv/atom_destruction()
 	explosion(src, devastation_range = -1, light_impact_range = 2, flame_range = 3, flash_range = 4)
 	return ..()
 

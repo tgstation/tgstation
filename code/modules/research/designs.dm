@@ -27,7 +27,7 @@ other types of metals and chemistry for reagents).
 	var/desc = "Desc"
 	/// The ID of the design. Used for quick reference. Alphanumeric, lower-case, no symbols
 	var/id = DESIGN_ID_IGNORE
-	/// Bitflags indicating what machines this design is compatable with. ([IMPRINTER]|[AWAY_IMPRINTER]|[PROTOLATHE]|[AWAY_LATHE]|[AUTOLATHE]|[MECHFAB]|[BIOGENERATOR]|[LIMBGROWER]|[SMELTER]|[NANITE_COMPILER])
+	/// Bitflags indicating what machines this design is compatable with. ([IMPRINTER]|[AWAY_IMPRINTER]|[PROTOLATHE]|[AWAY_LATHE]|[AUTOLATHE]|[MECHFAB]|[BIOGENERATOR]|[LIMBGROWER]|[SMELTER])
 	var/build_type = null
 	/// List of materials required to create one unit of the product. Format is (typepath or caregory) -> amount
 	var/list/materials = list()
@@ -59,6 +59,8 @@ other types of metals and chemistry for reagents).
 	var/icon_cache
 	/// Optional string that interfaces can use as part of search filters. See- item/borg/upgrade/ai and the Exosuit Fabs.
 	var/search_metadata
+	/// For protolathe designs that don't require reagents: If they can be exported to autolathes with a design disk or not.
+	var/autolathe_exportable = TRUE
 
 /datum/design/error_design
 	name = "ERROR"

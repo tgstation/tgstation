@@ -28,7 +28,6 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, GLOB.spines_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, GLOB.animated_spines_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, GLOB.legs_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.r_wings_list,roundstart = TRUE)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/caps, GLOB.caps_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae, GLOB.moth_antennae_list)
@@ -46,12 +45,19 @@
 		GLOB.surgeries_list += new path()
 	sortList(GLOB.surgeries_list, /proc/cmp_typepaths_asc)
 
+	// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
+	for(var/path in subtypesof(/datum/sprite_accessory/hair_gradient))
+		var/datum/sprite_accessory/hair_gradient/H = new path()
+		GLOB.hair_gradients_list[H.name] = H
+
 	// Keybindings
 	init_keybindings()
 
 	GLOB.emote_list = init_emote_list()
 
 	init_crafting_recipes(GLOB.crafting_recipes)
+
+	init_subtypes_w_path_keys(/obj/projectile, GLOB.proj_by_path_key)
 
 /// Inits the crafting recipe list, sorting crafting recipe requirements in the process.
 /proc/init_crafting_recipes(list/crafting_recipes)
@@ -79,3 +85,10 @@
 			L+= path
 		return L
 
+/// Functions like init_subtypes, but uses the subtype's path as a key for easy access
+/proc/init_subtypes_w_path_keys(prototype, list/L)
+	if(!istype(L))
+		L = list()
+	for(var/path as anything in subtypesof(prototype))
+		L[path] = new path()
+	return L

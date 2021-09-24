@@ -44,11 +44,11 @@
 	glob_lists_deregister()
 	return ..()
 
-/obj/machinery/navbeacon/onTransitZ(old_z, new_z)
-	if (GLOB.navbeacons["[old_z]"])
-		GLOB.navbeacons["[old_z]"] -= src
-	if (GLOB.navbeacons["[new_z]"])
-		GLOB.navbeacons["[new_z]"] += src
+/obj/machinery/navbeacon/on_changed_z_level(turf/old_turf, turf/new_turf)
+	if (GLOB.navbeacons["[old_turf?.z]"])
+		GLOB.navbeacons["[old_turf?.z]"] -= src
+	if (GLOB.navbeacons["[new_turf?.z]"])
+		GLOB.navbeacons["[new_turf?.z]"] += src
 	..()
 
 // set the transponder codes assoc list from codes_txt
@@ -79,6 +79,8 @@
 /obj/machinery/navbeacon/proc/glob_lists_register(init=FALSE)
 	if(!init)
 		glob_lists_deregister()
+	if(!codes)
+		return
 	if(codes["patrol"])
 		if(!GLOB.navbeacons["[z]"])
 			GLOB.navbeacons["[z]"] = list()
@@ -102,7 +104,7 @@
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		open = !open
 
-		user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the beacon's cover.</span>", "<span class='notice'>You [open ? "open" : "close"] the beacon's cover.</span>")
+		user.visible_message(span_notice("[user] [open ? "opens" : "closes"] the beacon's cover."), span_notice("You [open ? "open" : "close"] the beacon's cover."))
 
 		update_appearance()
 
@@ -110,12 +112,12 @@
 		if(open)
 			if (src.allowed(user))
 				src.locked = !src.locked
-				to_chat(user, "<span class='notice'>Controls are now [src.locked ? "locked" : "unlocked"].</span>")
+				to_chat(user, span_notice("Controls are now [src.locked ? "locked" : "unlocked"]."))
 			else
-				to_chat(user, "<span class='danger'>Access denied.</span>")
+				to_chat(user, span_danger("Access denied."))
 			updateDialog()
 		else
-			to_chat(user, "<span class='warning'>You must open the cover first!</span>")
+			to_chat(user, span_warning("You must open the cover first!"))
 	else
 		return ..()
 
@@ -133,7 +135,7 @@
 		return // prevent intraction when T-scanner revealed
 
 	if(!open && !ai) // can't alter controls if not open, unless you're an AI
-		to_chat(user, "<span class='warning'>The beacon's control cover is closed!</span>")
+		to_chat(user, span_warning("The beacon's control cover is closed!"))
 		return
 
 

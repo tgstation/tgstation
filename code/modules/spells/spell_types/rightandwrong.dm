@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 
 	var/in_hand = H.put_in_hands(G) // not always successful
 
-	to_chat(H, "<span class='warning'>\A [G] appears [in_hand ? "in your hand" : "at your feet"]!</span>")
+	to_chat(H, span_warning("\A [G] appears [in_hand ? "in your hand" : "at your feet"]!"))
 
 /proc/give_magic(mob/living/carbon/human/H)
 	if(H.stat == DEAD || !(H.client))
@@ -144,14 +144,14 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 
 	var/in_hand = H.put_in_hands(M)
 
-	to_chat(H, "<span class='warning'>\A [M] appears [in_hand ? "in your hand" : "at your feet"]!</span>")
+	to_chat(H, span_warning("\A [M] appears [in_hand ? "in your hand" : "at your feet"]!"))
 	if(lucky)
-		to_chat(H, "<span class='notice'>You feel incredibly lucky.</span>")
+		to_chat(H, span_notice("You feel incredibly lucky."))
 
 
 /proc/rightandwrong(summon_type, mob/user, survivor_probability)
 	if(user) //in this case either someone holding a spellbook or a badmin
-		to_chat(user, "<span class='warning'>You summoned [summon_type]!</span>")
+		to_chat(user, span_warning("You summoned [summon_type]!"))
 		message_admins("[ADMIN_LOOKUPFLW(user)] summoned [summon_type]!")
 		log_game("[key_name(user)] summoned [summon_type]!")
 
@@ -204,9 +204,10 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 
 ///signal proc to give magic to new crewmembers
-/proc/magic_up_new_crew(mob/living/carbon/human/new_crewmember, rank)
+/datum/summon_magic_controller/proc/magic_up_new_crew(datum/source, mob/living/new_crewmember, rank)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(GLOB.summon_magic, .proc/give_magic, new_crewmember)
+	if(ishuman(new_crewmember))
+		INVOKE_ASYNC(GLOB.summon_magic, .proc/give_magic, new_crewmember)
 
 /**
  * The guns controller handles the summon guns event.
@@ -232,7 +233,8 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 
 ///signal proc to give guns to new crewmembers
-/proc/arm_up_new_crew(mob/living/carbon/human/new_crewmember, rank)
+/datum/summon_guns_controller/proc/arm_up_new_crew(datum/source, mob/living/new_crewmember, rank)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(GLOB.summon_guns, .proc/give_guns, new_crewmember)
+	if(ishuman(new_crewmember))
+		INVOKE_ASYNC(GLOB.summon_guns, .proc/give_guns, new_crewmember)
 

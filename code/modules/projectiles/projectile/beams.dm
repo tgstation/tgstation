@@ -202,41 +202,6 @@
 /obj/projectile/beam/lasertag/bluetag/hitscan
 	hitscan = TRUE
 
-/obj/projectile/beam/instakill
-	name = "instagib laser"
-	icon_state = "purple_laser"
-	damage = 200
-	damage_type = BURN
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
-	light_color = LIGHT_COLOR_PURPLE
-
-/obj/projectile/beam/instakill/blue
-	icon_state = "blue_laser"
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
-	light_color = LIGHT_COLOR_BLUE
-
-/obj/projectile/beam/instakill/red
-	icon_state = "red_laser"
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
-	light_color = COLOR_SOFT_RED
-
-/obj/projectile/beam/instakill/green
-	icon_state = "green_laser"
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
-	light_color = COLOR_VERY_PALE_LIME_GREEN
-
-/obj/projectile/beam/instakill/yellow
-	icon_state = "yellow_laser"
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
-	light_color = COLOR_VERY_SOFT_YELLOW
-
-/obj/projectile/beam/instakill/on_hit(atom/target)
-	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
-		M.gib()
-
 //a shrink ray that shrinks stuff, which grows back after a short while.
 /obj/projectile/beam/shrink
 	name = "shrink ray"

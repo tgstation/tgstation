@@ -13,7 +13,7 @@
 					It is an empty void, of which our kind was the apex predator, and there was little to rival our claim to this title.\n\
 					But now, we find intruders spread out amongst our claim, willing to fight our teeth with magics unimaginable, their dens like lights flickering in the depths of space.\n\
 					Today, we will snuff out one of those lights.</b>")
-	to_chat(owner, "<span class='boldwarning'>You have five minutes to find a safe location to place down the first rift.  If you take longer than five minutes to place a rift, you will be returned from whence you came.</span>")
+	to_chat(owner, span_boldwarning("You have five minutes to find a safe location to place down the first rift.  If you take longer than five minutes to place a rift, you will be returned from whence you came."))
 	owner.announce_objectives()
 	SEND_SOUND(owner.current, sound('sound/magic/demon_attack1.ogg'))
 
@@ -25,6 +25,17 @@
 /datum/antagonist/space_dragon/on_gain()
 	forge_objectives()
 	. = ..()
+
+/datum/antagonist/space_dragon/get_preview_icon()
+	var/icon/icon = icon('icons/mob/spacedragon.dmi', "spacedragon")
+
+	icon.Blend(COLOR_STRONG_VIOLET, ICON_MULTIPLY)
+	icon.Blend(icon('icons/mob/spacedragon.dmi', "overlay_base"), ICON_OVERLAY)
+
+	icon.Crop(10, 9, 54, 53)
+	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+
+	return icon
 
 /datum/objective/summon_carp
 	var/datum/antagonist/space_dragon/dragon

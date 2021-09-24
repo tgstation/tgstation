@@ -57,6 +57,11 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	SEND_TEXT(world.log, text)
 #endif
 
+#ifdef REFERENCE_TRACKING_LOG
+#define log_reftracker(msg) log_world("## REF SEARCH [msg]")
+#else
+#define log_reftracker(msg)
+#endif
 
 /* Items with ADMINPRIVATE prefixed are stripped from public logs. */
 /proc/log_admin(text)
@@ -106,6 +111,19 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	if (CONFIG_GET(flag/log_access))
 		WRITE_LOG(GLOB.world_game_log, "ACCESS: [text]")
 
+/**
+ * Writes to a special log file if the log_suspicious_login config flag is set,
+ * which is intended to contain all logins that failed under suspicious circumstances.
+ *
+ * Mirrors this log entry to log_access when access_log_mirror is TRUE, so this proc
+ * doesn't need to be used alongside log_access and can replace it where appropriate.
+ */
+/proc/log_suspicious_login(text, access_log_mirror = TRUE)
+	if (CONFIG_GET(flag/log_suspicious_login))
+		WRITE_LOG(GLOB.world_suspicious_login_log, "SUSPICIOUS_ACCESS: [text]")
+	if(access_log_mirror)
+		log_access(text)
+
 /proc/log_law(text)
 	if (CONFIG_GET(flag/log_law))
 		WRITE_LOG(GLOB.world_game_log, "LAW: [text]")
@@ -118,9 +136,9 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	if (CONFIG_GET(flag/log_econ))
 		WRITE_LOG(GLOB.world_econ_log, "MONEY: [text]")
 
-/proc/log_manifest(ckey, datum/mind/mind,mob/body, latejoin = FALSE)
+/proc/log_manifest(ckey, datum/mind/mind, mob/body, latejoin = FALSE)
 	if (CONFIG_GET(flag/log_manifest))
-		WRITE_LOG(GLOB.world_manifest_log, "[ckey] \\ [body.real_name] \\ [mind.assigned_role] \\ [mind.special_role ? mind.special_role : "NONE"] \\ [latejoin ? "LATEJOIN":"ROUNDSTART"]")
+		WRITE_LOG(GLOB.world_manifest_log, "[ckey] \\ [body.real_name] \\ [mind.assigned_role.title] \\ [mind.special_role ? mind.special_role : "NONE"] \\ [latejoin ? "LATEJOIN":"ROUNDSTART"]")
 
 /proc/log_bomber(atom/user, details, atom/bomb, additional_details, message_admins = TRUE)
 	var/bomb_message = "[details][bomb ? " [bomb.name] at [AREACOORD(bomb)]": ""][additional_details ? " [additional_details]" : ""]."
@@ -199,6 +217,9 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 
 /proc/log_href(text)
 	WRITE_LOG(GLOB.world_href_log, "HREF: [text]")
+
+/proc/log_mob_tag(text)
+	WRITE_LOG(GLOB.world_mob_tag_log, "TAG: [text]")
 
 /proc/log_sql(text)
 	WRITE_LOG(GLOB.sql_error_log, "SQL: [text]")

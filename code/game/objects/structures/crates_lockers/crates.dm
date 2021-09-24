@@ -27,7 +27,7 @@
 		AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
 	update_appearance()
 
-/obj/structure/closet/crate/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/closet/crate/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(!istype(mover, /obj/structure/closet))
 		var/obj/structure/closet/crate/locatedcrate = locate(/obj/structure/closet/crate) in get_turf(mover)
@@ -67,14 +67,14 @@
 /obj/structure/closet/crate/open(mob/living/user, force = FALSE)
 	. = ..()
 	if(. && manifest)
-		to_chat(user, "<span class='notice'>The manifest is torn off [src].</span>")
+		to_chat(user, span_notice("The manifest is torn off [src]."))
 		playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 		manifest.forceMove(get_turf(src))
 		manifest = null
 		update_appearance()
 
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
-	to_chat(user, "<span class='notice'>You tear the manifest off of [src].</span>")
+	to_chat(user, span_notice("You tear the manifest off of [src]."))
 	playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 
 	manifest.forceMove(loc)
@@ -101,7 +101,7 @@
 /obj/structure/closet/crate/maint/PopulateContents()
 	. = ..()
 	for(var/i in 1 to rand(2,6))
-		new /obj/effect/spawner/lootdrop/maintenance(src)
+		new /obj/effect/spawner/random/maintenance(src)
 
 /obj/structure/closet/crate/trashcart/Initialize()
 	. = ..()
@@ -112,10 +112,10 @@
 /obj/structure/closet/crate/trashcart/filled/PopulateContents()
 	. = ..()
 	for(var/i in 1 to rand(7,15))
-		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
+		new /obj/effect/spawner/random/trash/garbage(src)
 		if(prob(12))
 			new /obj/item/storage/bag/trash/filled(src)
-	new /obj/effect/spawner/scatter/grime(loc)
+	new /obj/effect/spawner/random/trash/grime(loc)
 
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."
@@ -269,4 +269,4 @@
 /obj/structure/closet/crate/decorations/PopulateContents()
 	. = ..()
 	for(var/i in 1 to 4)
-		new /obj/effect/spawner/lootdrop/decorations_spawner(src)
+		new /obj/effect/spawner/random/decoration/generic(src)

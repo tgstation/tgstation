@@ -317,7 +317,7 @@
 	dwidth = 11
 	height = 22
 	width = 35
-	shuttlekeys = list("whiteship_meta", "whiteship_pubby", "whiteship_box", "whiteship_cere", "whiteship_kilo", "whiteship_donut", "whiteship_delta")
+	shuttlekeys = list("whiteship_meta", "whiteship_pubby", "whiteship_box", "whiteship_cere", "whiteship_kilo", "whiteship_donut", "whiteship_delta", "whiteship_tram")
 
 /obj/docking_port/mobile
 	name = "shuttle"
@@ -717,10 +717,9 @@
 		var/turf/T = thing
 		if(!T || !istype(T.loc, area_type))
 			continue
-		for (var/thing2 in T)
-			var/atom/movable/AM = thing2
-			if (length(AM.client_mobs_in_contents))
-				AM.update_parallax_contents()
+		for (var/atom/movable/movable as anything in T)
+			if (length(movable.client_mobs_in_contents))
+				movable.update_parallax_contents()
 
 /obj/docking_port/mobile/proc/check_transit_zone()
 	if(assigned_transit)
@@ -879,8 +878,16 @@
 	var/range = (engine_coeff * max(width, height))
 	var/long_range = range * 2.5
 	var/atom/distant_source
-	if(engine_list[1])
-		distant_source = engine_list[1]
+	var/list/engines = list()
+	for(var/datum/weakref/engine in engine_list)
+		var/obj/structure/shuttle/engine/real_engine = engine.resolve()
+		if(!real_engine)
+			engine_list -= engine
+			continue
+		engines += real_engine
+
+	if(engines[1])
+		distant_source = engines[1]
 	else
 		for(var/A in areas)
 			distant_source = locate(/obj/machinery/door) in A
@@ -894,11 +901,11 @@
 				M.playsound_local(distant_source, "sound/runtime/hyperspace/[selected_sound]_distance.ogg", 100)
 			else if(dist_far <= range)
 				var/source
-				if(engine_list.len == 0)
+				if(engines.len == 0)
 					source = distant_source
 				else
 					var/closest_dist = 10000
-					for(var/obj/O in engine_list)
+					for(var/obj/O in engines)
 						var/dist_near = get_dist(M, O)
 						if(dist_near < closest_dist)
 							source = O
@@ -923,7 +930,7 @@
 		var/area/shuttle/areaInstance = thing
 		for(var/obj/structure/shuttle/engine/E in areaInstance.contents)
 			if(!QDELETED(E))
-				engine_list += E
+				engine_list += WEAKREF(E)
 				. += E.engine_power
 
 // Double initial engines to get to 0.5 minimum

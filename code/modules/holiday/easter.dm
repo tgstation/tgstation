@@ -74,7 +74,7 @@
 	var/eggs_added_from_eating = rand(1, 4)
 	var/max_eggs_held = 8
 	AddComponent(/datum/component/egg_layer,\
-		/obj/item/food/egg/loaded,\
+		/obj/item/surprise_egg,\
 		list(/obj/item/food/grown/carrot),\
 		feed_messages,\
 		list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling."),\
@@ -91,7 +91,7 @@
 	icon_living = "s_rabbit_white"
 	icon_dead = "s_rabbit_white_dead"
 	icon_prefix = "s_rabbit"
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 	unsuitable_atmos_damage = 0
@@ -110,11 +110,11 @@
 	add_overlay("basket-grass")
 	add_overlay("basket-egg[min(contents.len, 5)]")
 
-/obj/item/storage/basket/easter/Exited()
+/obj/item/storage/basket/easter/Exited(atom/movable/gone, direction)
 	. = ..()
 	countEggs()
 
-/obj/item/storage/basket/easter/Entered()
+/obj/item/storage/basket/easter/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	countEggs()
 
@@ -146,59 +146,51 @@
 	inhand_icon_state = "satchel_carrot"
 
 //Egg prizes and egg spawns!
-/obj/item/food/egg
-	var/containsPrize = FALSE
+/obj/item/surprise_egg
+	name = "wrapped egg"
+	desc = "A chocolate egg containing a little something special. Unwrap and enjoy!"
+	icon_state = "egg"
+	resistance_flags = FLAMMABLE
+	w_class = WEIGHT_CLASS_TINY
+	icon = 'icons/obj/food/food.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	obj_flags = UNIQUE_RENAME
 
-/obj/item/food/egg/loaded
-	containsPrize = TRUE
-
-/obj/item/food/egg/loaded/Initialize()
+/obj/item/surprise_egg/Initialize()
 	. = ..()
 	var/eggcolor = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
 	icon_state = "egg-[eggcolor]"
 
-/obj/item/food/egg/proc/dispensePrize(turf/where)
-	var/won = pick(/obj/item/clothing/head/bunnyhead,
-	/obj/item/clothing/suit/bunnysuit,
-	/obj/item/storage/backpack/satchel/bunnysatchel,
-	/obj/item/food/grown/carrot,
-	/obj/item/toy/balloon,
-	/obj/item/toy/gun,
-	/obj/item/toy/sword,
-	/obj/item/toy/talking/ai,
-	/obj/item/toy/talking/owl,
-	/obj/item/toy/talking/griffin,
-	/obj/item/toy/minimeteor,
-	/obj/item/toy/clockwork_watch,
-	/obj/item/toy/toy_xeno,
-	/obj/item/toy/foamblade,
-	/obj/item/toy/prize/ripley,
-	/obj/item/toy/prize/fireripley,
-	/obj/item/toy/prize/deathripley,
-	/obj/item/toy/prize/gygax,
-	/obj/item/toy/prize/durand,
-	/obj/item/toy/prize/marauder,
-	/obj/item/toy/prize/seraph,
-	/obj/item/toy/prize/mauler,
-	/obj/item/toy/prize/odysseus,
-	/obj/item/toy/prize/phazon,
-	/obj/item/toy/prize/reticence,
-	/obj/item/toy/prize/honk,
-	/obj/item/toy/prize/clarke,
-	/obj/item/toy/plush/carpplushie,
-	/obj/item/toy/redbutton,
-	/obj/item/toy/windup_toolbox,
-	/obj/item/clothing/head/collectable/rabbitears)
+/obj/item/surprise_egg/proc/dispensePrize(turf/where)
+	var/static/list/prize_list = list(/obj/item/clothing/head/bunnyhead,
+		/obj/item/clothing/suit/bunnysuit,
+		/obj/item/storage/backpack/satchel/bunnysatchel,
+		/obj/item/food/grown/carrot,
+		/obj/item/toy/balloon,
+		/obj/item/toy/gun,
+		/obj/item/toy/sword,
+		/obj/item/toy/talking/ai,
+		/obj/item/toy/talking/owl,
+		/obj/item/toy/talking/griffin,
+		/obj/item/toy/minimeteor,
+		/obj/item/toy/clockwork_watch,
+		/obj/item/toy/toy_xeno,
+		/obj/item/toy/foamblade,
+		/obj/item/toy/plush/carpplushie,
+		/obj/item/toy/redbutton,
+		/obj/item/toy/windup_toolbox,
+		/obj/item/clothing/head/collectable/rabbitears
+		) + subtypesof(/obj/item/toy/mecha)
+	var/won = pick(prize_list)
 	new won(where)
 	new/obj/item/food/chocolateegg(where)
 
-/obj/item/food/egg/attack_self(mob/user)
+/obj/item/surprise_egg/attack_self(mob/user)
 	..()
-	if(containsPrize)
-		to_chat(user, "<span class='notice'>You unwrap [src] and find a prize inside!</span>")
-		dispensePrize(get_turf(user))
-		containsPrize = FALSE
-		qdel(src)
+	to_chat(user, span_notice("You unwrap [src] and find a prize inside!"))
+	dispensePrize(get_turf(user))
+	qdel(src)
 
 //Easter Recipes + food
 /obj/item/food/hotcrossbun

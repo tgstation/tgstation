@@ -124,7 +124,7 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/NukeDiskCheck()
-	for (var/obj/item/disk/nuclear/N in GLOB.poi_list)
+	for (var/obj/item/disk/nuclear/N in SSpoints_of_interest.real_nuclear_disks)
 		if (get_area(N) in areas)
 			return TRUE
 	return FALSE
@@ -190,7 +190,7 @@
 
 	Launch(TRUE)
 
-	to_chat(user, "<span class='notice'>Calling your shuttle. One moment...</span>")
+	to_chat(user, span_notice("Calling your shuttle. One moment..."))
 	while(mode != SHUTTLE_CALL && !damaged)
 		stoplag()
 
