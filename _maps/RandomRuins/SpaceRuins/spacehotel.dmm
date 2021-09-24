@@ -1205,6 +1205,11 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
+"eu" = (
+/obj/structure/table/wood,
+/obj/item/storage/dice,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/hotel/guestroom/room_2)
 "ev" = (
 /obj/machinery/door/airlock{
 	name = "Bathroom"
@@ -3396,37 +3401,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/pool)
-"kV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 6
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hotel/power)
-"kW" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hotel/power)
-"kX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 1
-	},
-/obj/structure/plaque/static_plaque/atmos{
-	pixel_y = 32
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hotel/power)
-"kY" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hotel/power)
-"kZ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hotel/power)
 "la" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/cable,
@@ -4284,6 +4258,9 @@
 /obj/effect/baseturf_helper/space,
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/pool)
+"nS" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel/power)
 "sN" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -4292,16 +4269,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
-"vk" = (
-/obj/effect/spawner/random/entertainment/arcade,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/hotel/pool)
-"yx" = (
-/obj/structure/table/wood,
-/obj/item/storage/dice,
-/turf/open/floor/wood,
-/area/ruin/space/has_grav/hotel/guestroom/room_2)
+"HV" = (
+/obj/structure/plaque/static_plaque/atmos{
+	pixel_y = 32
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel/power)
 "Jk" = (
 /obj/structure/chair/stool/bar/directional/south,
 /obj/effect/turf_decal/tile/bar,
@@ -4310,10 +4283,19 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/bar)
-"VI" = (
+"JU" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/hotel/pool)
+"OM" = (
 /obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/pool)
+"VS" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/supply,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel/power)
 
 (1,1,1) = {"
 aa
@@ -4924,7 +4906,7 @@ jA
 jA
 kq
 kH
-kV
+nS
 lp
 kH
 aa
@@ -4994,7 +4976,7 @@ jB
 jB
 kr
 kH
-kW
+nS
 lp
 kH
 aa
@@ -5064,7 +5046,7 @@ iK
 iK
 kr
 kH
-kX
+HV
 lq
 kH
 aa
@@ -5134,7 +5116,7 @@ jC
 kf
 kt
 kI
-kY
+VS
 lp
 kH
 aa
@@ -5204,7 +5186,7 @@ jD
 iK
 ku
 kH
-kZ
+nS
 lp
 kH
 aa
@@ -5741,7 +5723,7 @@ cZ
 dr
 dN
 dN
-yx
+eu
 cZ
 aw
 fi
@@ -6460,7 +6442,7 @@ eT
 am
 cJ
 jt
-VI
+OM
 ko
 jR
 jR
@@ -6530,7 +6512,7 @@ eT
 am
 cJ
 jt
-VI
+OM
 ko
 kD
 kD
@@ -6600,7 +6582,7 @@ iC
 am
 iY
 jt
-VI
+OM
 ko
 kD
 kD
@@ -7580,7 +7562,7 @@ fu
 fu
 eX
 jt
-VI
+OM
 ko
 kD
 kS
@@ -7650,7 +7632,7 @@ fu
 fu
 eY
 jt
-VI
+OM
 ko
 kD
 kS
@@ -7720,7 +7702,7 @@ fu
 fu
 eZ
 jy
-vk
+JU
 kp
 kG
 kT
