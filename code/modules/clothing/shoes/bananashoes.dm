@@ -8,7 +8,7 @@
 	var/on = FALSE
 	var/always_noslip = FALSE
 
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize()
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize(mapload)
 	. = ..()
 	if(always_noslip)
 		clothing_flags |= NOSLIP

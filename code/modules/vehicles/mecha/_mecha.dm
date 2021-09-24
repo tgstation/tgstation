@@ -201,7 +201,7 @@
 	add_scanmod()
 	add_capacitor()
 	START_PROCESSING(SSobj, src)
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 	log_message("[src.name] created.", LOG_MECHA)
 	GLOB.mechas_list += src //global mech list
 	prepare_huds()

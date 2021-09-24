@@ -6,7 +6,7 @@
 	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/organ/cyberimp/bci/Initialize()
+/obj/item/organ/cyberimp/bci/Initialize(mapload)
 	. = ..()
 
 	var/obj/item/integrated_circuit/circuit = new(src)
@@ -335,7 +335,7 @@
 
 	COOLDOWN_DECLARE(message_cooldown)
 
-/obj/machinery/bci_implanter/Initialize()
+/obj/machinery/bci_implanter/Initialize(mapload)
 	. = ..()
 	occupant_typecache = typecacheof(/mob/living/carbon)
 

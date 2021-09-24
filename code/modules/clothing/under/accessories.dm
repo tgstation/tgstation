@@ -339,13 +339,13 @@
 	icon_state = "pocketprotector"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/pocketprotector
 
-/obj/item/clothing/accessory/pocketprotector/full/Initialize()
+/obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
 	. = ..()
 	new /obj/item/pen/red(src)
 	new /obj/item/pen(src)
 	new /obj/item/pen/blue(src)
 
-/obj/item/clothing/accessory/pocketprotector/cosmetology/Initialize()
+/obj/item/clothing/accessory/pocketprotector/cosmetology/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to 3)
 		new /obj/item/lipstick/random(src)

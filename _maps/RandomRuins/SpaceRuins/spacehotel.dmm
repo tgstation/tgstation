@@ -1205,11 +1205,6 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
-"eu" = (
-/obj/structure/table/wood,
-/obj/item/storage/dice,
-/turf/open/floor/wood,
-/area/ruin/space/has_grav/hotel/guestroom/room_2)
 "ev" = (
 /obj/machinery/door/airlock{
 	name = "Bathroom"
@@ -3012,10 +3007,6 @@
 "jR" = (
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/pool)
-"jS" = (
-/obj/effect/spawner/randomarcade,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/hotel/pool)
 "jT" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
@@ -3044,11 +3035,6 @@
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
 	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/hotel/pool)
-"ka" = (
-/obj/effect/spawner/randomarcade,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/pool)
 "kb" = (
@@ -4306,6 +4292,16 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
+"vk" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/hotel/pool)
+"yx" = (
+/obj/structure/table/wood,
+/obj/item/storage/dice,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/hotel/guestroom/room_2)
 "Jk" = (
 /obj/structure/chair/stool/bar/directional/south,
 /obj/effect/turf_decal/tile/bar,
@@ -4314,6 +4310,10 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/bar)
+"VI" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/hotel/pool)
 
 (1,1,1) = {"
 aa
@@ -5741,7 +5741,7 @@ cZ
 dr
 dN
 dN
-eu
+yx
 cZ
 aw
 fi
@@ -6460,7 +6460,7 @@ eT
 am
 cJ
 jt
-jS
+VI
 ko
 jR
 jR
@@ -6530,7 +6530,7 @@ eT
 am
 cJ
 jt
-jS
+VI
 ko
 kD
 kD
@@ -6600,7 +6600,7 @@ iC
 am
 iY
 jt
-jS
+VI
 ko
 kD
 kD
@@ -7580,7 +7580,7 @@ fu
 fu
 eX
 jt
-jS
+VI
 ko
 kD
 kS
@@ -7650,7 +7650,7 @@ fu
 fu
 eY
 jt
-jS
+VI
 ko
 kD
 kS
@@ -7720,7 +7720,7 @@ fu
 fu
 eZ
 jy
-ka
+vk
 kp
 kG
 kT

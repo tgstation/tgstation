@@ -26,7 +26,7 @@
 /obj/effect/anomaly/Initialize(mapload, new_lifespan, drops_core = TRUE)
 	. = ..()
 
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 
 	START_PROCESSING(SSobj, src)
 	impact_area = get_area(src)

@@ -8,7 +8,7 @@
 
 	hide = FALSE
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/Initialize()
+/obj/machinery/atmospherics/pipe/heat_exchanging/Initialize(mapload)
 	. = ..()
 
 	add_atom_colour("#404040", FIXED_COLOUR_PRIORITY)

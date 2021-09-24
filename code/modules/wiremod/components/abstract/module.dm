@@ -91,7 +91,7 @@
 	attached_module = null
 	return ..()
 
-/obj/item/circuit_component/module/Initialize()
+/obj/item/circuit_component/module/Initialize(mapload)
 	. = ..()
 	internal_circuit = new(src)
 	internal_circuit.attached_module = src

@@ -11,7 +11,7 @@
 	var/power = 4
 	var/list/thrown_items = list()
 
-/obj/projectile/gravityrepulse/Initialize()
+/obj/projectile/gravityrepulse/Initialize(mapload)
 	. = ..()
 	var/obj/item/ammo_casing/energy/gravity/repulse/C = loc
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
@@ -46,7 +46,7 @@
 	var/power = 4
 	var/list/thrown_items = list()
 
-/obj/projectile/gravityattract/Initialize()
+/obj/projectile/gravityattract/Initialize(mapload)
 	. = ..()
 	var/obj/item/ammo_casing/energy/gravity/attract/C = loc
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
@@ -80,7 +80,7 @@
 	var/power = 4
 	var/list/thrown_items = list()
 
-/obj/projectile/gravitychaos/Initialize()
+/obj/projectile/gravitychaos/Initialize(mapload)
 	. = ..()
 	var/obj/item/ammo_casing/energy/gravity/chaos/C = loc
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items

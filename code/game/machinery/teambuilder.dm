@@ -14,7 +14,7 @@
 	///What radio station is your radio set to when crossed (And human)?
 	var/team_radio = FREQ_COMMON
 
-/obj/machinery/teambuilder/Initialize()
+/obj/machinery/teambuilder/Initialize(mapload)
 	. = ..()
 	add_filter("teambuilder", 2, list("type" = "outline", "color" = team_color, "size" = 2))
 	var/static/list/loc_connections = list(
