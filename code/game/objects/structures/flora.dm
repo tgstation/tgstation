@@ -400,7 +400,7 @@
 
 /obj/item/kirbyplants/fern/Initialize()
 	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_ALGAE, CELL_VIRUS_TABLE_GENERIC, 1, 5)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_ALGAE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 5)
 
 //a rock is flora according to where the icon file is
 //and now these defines
