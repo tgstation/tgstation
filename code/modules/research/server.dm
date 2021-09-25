@@ -227,8 +227,8 @@
 	switch(deconstruction_state)
 		if(HDD_PANEL_CLOSED)
 			if(istype(attacking_item, /obj/item/screwdriver/hdd_extraction))
-				to_chat(user, span_notice("Your [attacking_item.name] fits perfectly into the slots of [src]'s front panel screws. You can see [front_panel_screws] screws. You start unscrewing them..."))
-				while(attacking_item.use_tool(src, user, 100, volume=100))
+				to_chat(user, span_notice("Your [attacking_item.name] fits perfectly into the slots of [src]'s front panel screws. You can see [front_panel_screws] screw\s. You start unscrewing [front_panel_screws == 1 ? "it" : "them"]..."))
+				while(attacking_item.use_tool(src, user, 10 SECONDS, volume=100))
 					front_panel_screws--
 
 					if(front_panel_screws <= 0)
@@ -240,20 +240,22 @@
 					to_chat(user, span_notice("You remove a screw from [src]'s front panel. Only [front_panel_screws] left..."))
 				return
 			if(istype(attacking_item, /obj/item/computer_hardware/hard_drive/cluster/hdd_theft))
-				to_chat(user, span_notice("You can't see a place to insert [src]."))
+				balloon_alert(user, "you can't find a place to insert it!")
+			return
 		if(HDD_PANEL_OPEN)
 			if(istype(attacking_item, /obj/item/crowbar/hdd_extraction))
 				to_chat(user, span_notice("You can see [source_code_hdd] in a secure housing behind the front panel. Your tiny [attacking_item.name] barely fits inside. You begin to pry it loose..."))
-				if(attacking_item.use_tool(src, user, 200, volume=100))
+				if(attacking_item.use_tool(src, user, 20 SECONDS, volume=100))
 					to_chat(user, span_notice("You pry [source_code_hdd] free of its secure housing."))
 					deconstruction_state = HDD_PRIED
 				return
 			if(istype(attacking_item, /obj/item/computer_hardware/hard_drive/cluster/hdd_theft))
-				to_chat(user, span_notice("There's already \an [source_code_hdd.name] in the server. No need to add a second."))
+				balloon_alert(user, "there's already an hdd in there!")
+			return
 		if(HDD_PRIED)
 			if(istype(attacking_item, /obj/item/wirecutters/hdd_extraction))
-				to_chat(user, span_notice("With [source_code_hdd] free, you begin to delicately cut wires with [attacking_item]. Following the instructions on its display, there are [hdd_wires] wires left..."))
-				while(attacking_item.use_tool(src, user, 100, volume=100))
+				to_chat(user, span_notice("With [source_code_hdd] free, you begin to delicately cut wires with [attacking_item]. Following the instructions on its display, there are [hdd_wires] wire\s left..."))
+				while(attacking_item.use_tool(src, user, 10 SECONDS, volume=100))
 					hdd_wires--
 
 					if(hdd_wires <= 0)
@@ -263,13 +265,15 @@
 						source_code_hdd = null
 						return
 
-					to_chat(user, span_notice("You cut the wire indicated by [attacking_item]. [hdd_wires] wires left..."))
+					to_chat(user, span_notice("You cut the wire indicated by [attacking_item]. [hdd_wires] wire\s left..."))
 				return
 			if(istype(attacking_item, /obj/item/computer_hardware/hard_drive/cluster/hdd_theft))
-				to_chat(user, span_notice("There's already a [source_code_hdd.name] in the server. No need to add a second."))
+				balloon_alert(user, "there's already an hdd in there!")
+			return
 		if(HDD_CUT_LOOSE)
 			if(istype(attacking_item, /obj/item/computer_hardware/hard_drive/cluster/hdd_theft))
-				to_chat(user, span_notice("[src] is too badly damaged to add [attacking_item]."))
+				balloon_alert(user, "it's too badly damaged!")
+			return
 
 	return ..()
 
@@ -284,8 +288,8 @@
 			log_game("[key_name(user)] deconstructed [src], destroying [source_code_hdd] inside.")
 			return ..()
 
-		message_admins("[ADMIN_JMP(src)] has been deconstructed by unknown user, destroying [source_code_hdd] inside.")
-		log_game("[src] has been deconstructed by unknown user, destroying [source_code_hdd] inside.")
+		message_admins("[ADMIN_JMP(src)] has been deconstructed by an unknown user, destroying [source_code_hdd] inside.")
+		log_game("[src] has been deconstructed by an unknown user, destroying [source_code_hdd] inside.")
 
 	return ..()
 
