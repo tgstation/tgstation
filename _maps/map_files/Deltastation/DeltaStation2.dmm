@@ -37698,6 +37698,11 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
+"flV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/machinery/rnd/server/master,
+/turf/open/floor/circuit/green/telecomms/mainframe,
+/area/science/server)
 "flZ" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -136835,7 +136840,7 @@ dEB
 dFR
 dHq
 dIF
-vHk
+flV
 cOR
 dMb
 czP
