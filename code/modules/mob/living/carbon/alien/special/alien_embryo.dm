@@ -12,7 +12,7 @@
 	/// How long does it take to advance one stage? Growth time * 5 = how long till we make a Larva!
 	var/growth_time = 60 SECONDS
 
-/obj/item/organ/body_egg/alien_embryo/Initialize()
+/obj/item/organ/body_egg/alien_embryo/Initialize(mapload)
 	. = ..()
 	advance_embryo_stage()
 

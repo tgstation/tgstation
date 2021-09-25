@@ -27,7 +27,7 @@ at the cost of risking a vicious bite.**/
 					/obj/item/coin/mythril = 1) //the loot table isn't that great and should probably be improved and expanded later.
 
 
-/obj/structure/moisture_trap/Initialize()
+/obj/structure/moisture_trap/Initialize(mapload)
 	. = ..()
 	if(prob(40))
 		critter_infested = FALSE

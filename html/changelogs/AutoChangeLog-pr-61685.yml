@@ -1,0 +1,7 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - rscdel: "Removed the research note download objective."
+  - rscadd: "Added new master R&D servers to science departmental server rooms. This server cannot be deconstructed via ordinary methods. This server cannot be rebuilt if destroyed and cannot be repaired if sabotaged. If destroyed or sabotaged, research point gain is halved for the rest of the shift."
+  - rscadd: "Added a new antag objective for traitors and lings to steal the hard drive from a master R&D server. Any other antag can steal it too, for fun. But only traitors and lings and things that get traitor or ling objectives can get it as a dedicated steal objective."
+  - rscadd: "Added a new objective for the space ninja and interactions allowing them to destroy the drive in the master R&D server or set the current research points back to 0. Both of these interactions alert the AI and are performed by using the gloves on an appropriate R&D server."

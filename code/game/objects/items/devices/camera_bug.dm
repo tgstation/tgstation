@@ -31,7 +31,7 @@
 	var/last_found = null
 	var/last_seen = null
 
-/obj/item/camera_bug/Initialize()
+/obj/item/camera_bug/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 

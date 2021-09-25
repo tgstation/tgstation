@@ -38,7 +38,7 @@
 	#endif
 	var/eventturf = FALSE
 
-/turf/open/Initialize()
+/turf/open/Initialize(mapload)
 	if(!blocks_air)
 		air = new
 		air.copy_from_turf(src)

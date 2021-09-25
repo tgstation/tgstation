@@ -5,7 +5,7 @@
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/spaghetti/Initialize()
+/obj/item/food/spaghetti/Initialize(mapload)
 	. = ..()
 	if(!microwaved_type) // This isn't cooked, why would you put uncooked spaghetti in your pocket?
 		var/list/display_message = list(
@@ -27,7 +27,7 @@
 
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 
-/obj/item/food/spaghetti/boiledspaghetti/Initialize()
+/obj/item/food/spaghetti/boiledspaghetti/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_SCATTER, max_ingredients = 6)
 
