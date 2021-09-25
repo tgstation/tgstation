@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - bugfix: "Fixes malfunctioning bots breaking when they ordered from the bar. Uh... oops!"

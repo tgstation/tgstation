@@ -1,5 +1,0 @@
-author: "Maurukas"
-delete-after: True
-changes: 
-  - bugfix: "Mapped in atmospheric tanks will now connect to pipenets in the appropriate direction"
-  - bugfix: "Icebox, Runtime, and a number of ruins have had their gas tanks rotated or repiped"

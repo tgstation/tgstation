@@ -778,3 +778,20 @@
   necromanceranne:
   - bugfix: Stickmen flatguns now properly drop out of your hands when picked up,
       as intended.
+2021-09-25:
+  Fikou:
+  - bugfix: The Qualified Doctor skin for medborgs is now not the only option
+  Iamgoofball:
+  - bugfix: Fixes the logging text on respawn to correctly say it's respawn instead
+      of "abandon mob"
+  Maurukas:
+  - bugfix: Mapped in atmospheric tanks will now connect to pipenets in the appropriate
+      direction
+  - bugfix: Icebox, Runtime, and a number of ruins have had their gas tanks rotated
+      or repiped
+  Qustinnus:
+  - bugfix: Oozes can now eat food again
+  tralezab:
+  - bugfix: Fixes malfunctioning bots breaking when they ordered from the bar. Uh...
+      oops!
+  - expansion: Admin fully immerse smite now reminds the victim to roleplay correctly
