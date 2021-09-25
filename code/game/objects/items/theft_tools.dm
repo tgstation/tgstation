@@ -112,12 +112,13 @@
 	<ul>\
 	<li>Locate the physical R&D Server mainframes. Intel suggests these are stored in specially cooled rooms deep within their Science department.</li>\
 	<li>Nanotrasen is a corporation not known for subtlety in design. You should be able to identify the master server by any distinctive markings.</li>\
-	<li>Use the electrical screwdriver with the proprietary tip (provided) to open the server's front panel.</li>\
-	<li>Pry the hard drive loose from its secure housing with the claw bar (also provided).</li>\
-	<li>Finally, carefully cut any of the hard drive's connecting wires using the digital wirecutters (also provided).</li>\
+	<li>Tools are on-site procurement. Screwdriver, crowbar and wirecutters should be all you need to do the job.<li>\
+	<li>The front panel screws are hidden in recesses behind stickers. Easily removed once you know they're there.</li>\
+	<li>You'll probably find the hard drive in secure housing. You may need to pry it loose with a crowbar, shouldn't do too much damage.</li>\
+	<li>Finally, carefully cut all of the hard drive's connecting wires. Don't rush this, snipping the wrong wire could wipe all data!</li>\
 	</ul>\
 	Removing this drive is guaranteed to cripple research efforts regardless of what data is contained on it.<br>\
-	There's no putting it back once you've extracted it. The crew are likely to be as mad as bees if they find out!<br>\
+	The thing's probably hardwired. No putting it back once you've extracted it. The crew are likely to be as mad as bees if they find out!<br>\
 	Survive the shift and extract the hard drive safely.<br>\
 	Succeed and you will receive a coveted green highlight on your record for this assignment. Fail us and red's the last colour you'll ever see.<br>\
 	Do not disappoint us.<br>"
