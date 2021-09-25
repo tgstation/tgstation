@@ -150,7 +150,7 @@
 	/// Short description of what this item is capable of, for radial menu uses
 	var/menu_description = "A standard chaplain's weapon. Fits in pockets. Can be worn on the belt."
 
-/obj/item/nullrod/Initialize()
+/obj/item/nullrod/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 	AddElement(/datum/element/bane, /mob/living/simple_animal/revenant, 0, 25, FALSE)
@@ -230,7 +230,7 @@
 	attack_verb_simple = list("punch", "cross counter", "pummel")
 	menu_description = "An undroppable god hand dealing burn damage. Disappears if the arm holding it is cut off."
 
-/obj/item/nullrod/godhand/Initialize()
+/obj/item/nullrod/godhand/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
@@ -403,7 +403,7 @@
 	attack_verb_simple = list("chop", "slice", "cut", "reap")
 	menu_description = "A sharp scythe which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
 
-/obj/item/nullrod/scythe/Initialize()
+/obj/item/nullrod/scythe/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 70, 110) //the harvest gives a high bonus chance
 
@@ -445,7 +445,7 @@
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Able to awaken a friendly spirit to provide guidance. Very effective at butchering bodies. Can be worn on the back."
 
-/obj/item/nullrod/scythe/talking/Initialize()
+/obj/item/nullrod/scythe/talking/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/spirit_holding)
 
@@ -478,7 +478,7 @@
 	attack_verb_simple = list("smash", "bash", "hammer", "crunch")
 	menu_description = "A war hammer. Capable of tapping knees to measure brain health. Can be worn on the belt."
 
-/obj/item/nullrod/hammer/Initialize()
+/obj/item/nullrod/hammer/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/kneejerk)
 
@@ -500,7 +500,7 @@
 	toolspeed = 2 //slower than a real saw
 	menu_description = "An undroppable sharp chainsaw hand. Can be used as a very slow saw tool. Capable of slowly butchering bodies. Disappears if the arm holding it is cut off."
 
-/obj/item/nullrod/chainsaw/Initialize()
+/obj/item/nullrod/chainsaw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 30, 100, 0, hitsound)
@@ -537,7 +537,7 @@
 	hitsound = 'sound/weapons/blade1.ogg'
 	menu_description = "A hammer dealing a little less damage due to it's user's pride. Has a low chance of transferring some of the user's reagents to the target. Capable of tapping knees to measure brain health. Can be worn on the back."
 
-/obj/item/nullrod/pride_hammer/Initialize()
+/obj/item/nullrod/pride_hammer/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/kneejerk)
 	AddElement(
@@ -595,7 +595,7 @@
 	bare_wound_bonus = 25
 	menu_description = "An undroppable sharp armblade capable of inflicting deep wounds. Capable of an ineffective butchering of bodies. Disappears if the arm holding it is cut off."
 
-/obj/item/nullrod/armblade/Initialize()
+/obj/item/nullrod/armblade/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 80, 70)
@@ -621,7 +621,7 @@
 	hitsound = 'sound/weapons/bite.ogg'
 	menu_description = "A plushie dealing a little less damage due to it's cute form. Capable of blessing one person with the Carp-Sie favor, which grants friendship of all wild space carps. Fits in pockets. Can be worn on the belt."
 
-/obj/item/nullrod/carp/Initialize()
+/obj/item/nullrod/carp/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/faction_granter, "carp", holy_role_required = HOLY_ROLE_PRIEST, grant_message = span_boldnotice("You are blessed by Carp-Sie. Wild space carp will no longer attack you."))
 

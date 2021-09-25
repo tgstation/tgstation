@@ -69,6 +69,8 @@
 #define BB_HAUNT_TARGET "BB_haunt_target"
 ///Amount of successful hits in a row this item has had
 #define BB_HAUNTED_THROW_ATTEMPT_COUNT "BB_haunted_throw_attempt_count"
+///If true, tolerates the equipper holding/equipping the hauntium
+#define BB_LIKES_EQUIPPER "BB_likes_equipper"
 
 ///Cursed item controller defines
 

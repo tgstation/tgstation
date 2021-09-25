@@ -24,7 +24,7 @@
 	icon_state = "moon_rock1"
 	food_reagents = list(/datum/reagent/drug/kronkaine = 10)
 
-/obj/item/food/drug/moon_rock/Initialize()
+/obj/item/food/drug/moon_rock/Initialize(mapload)
 	. = ..()
 	icon_state = pick("moon_rock1", "moon_rock2", "moon_rock3")
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOONICORN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

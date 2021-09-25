@@ -48,6 +48,11 @@
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, .proc/on_job_after_spawn)
 
+/datum/station_trait/hangover/revert()
+	for (var/obj/effect/landmark/start/hangover/hangover_spot in GLOB.start_landmarks_list)
+		QDEL_LIST(hangover_spot.debris)
+
+	return ..()
 
 /datum/station_trait/hangover/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned_mob)
 	SIGNAL_HANDLER
@@ -89,6 +94,8 @@
 	blacklist = list(/datum/station_trait/filled_maint)
 	trait_to_give = STATION_TRAIT_EMPTY_MAINT
 
+	// This station trait is checked when loot drops initialize, so it's too late
+	can_revert = FALSE
 
 /datum/station_trait/overflow_job_bureaucracy
 	name = "Overflow bureaucracy mistake"
@@ -156,6 +163,12 @@
 	name = "Revenge of Pun Pun"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
+
+	// Way too much is done on atoms SS to be reverted, and it'd look
+	// kinda clunky on round start. It's not impossible to make this work,
+	// but it's a project for...someone else.
+	can_revert = FALSE
+
 	var/static/list/weapon_types
 
 /datum/station_trait/revenge_of_pun_pun/New()

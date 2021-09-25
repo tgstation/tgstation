@@ -18,7 +18,7 @@
 	///determines if the circuit board originated from a vendor off station or not.
 	var/onstation = TRUE
 
-/obj/item/circuitboard/Initialize()
+/obj/item/circuitboard/Initialize(mapload)
 	set_greyscale(new_config=/datum/greyscale_config/circuit)
 	return ..()
 

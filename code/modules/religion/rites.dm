@@ -448,7 +448,7 @@
 	show_written_words = FALSE
 
 	//info set in here because we need GLOB.deity
-/obj/item/paper/holy_writ/Initialize()
+/obj/item/paper/holy_writ/Initialize(mapload)
 	add_filter("holy_outline", 9, list("type" = "outline", "color" = "#fdff6c"))
 	name = "[GLOB.deity]'s honorbound rules"
 	info = {"[GLOB.deity]'s honorbound rules:

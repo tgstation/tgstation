@@ -69,8 +69,8 @@
 	if(entity)
 		remove_output_port(entity)
 
-	target = add_input_port("Target", PORT_TYPE_ATOM, order = 1, trigger = null)
-	entity = add_output_port("Source Entity", PORT_TYPE_ATOM, order = 0)
+	target = add_input_port("Target", PORT_TYPE_DATUM, order = 1, trigger = null)
+	entity = add_output_port("Source Entity", PORT_TYPE_DATUM, order = 0)
 
 /obj/item/circuit_component/signal_handler/save_data_to_list(list/component_data)
 	. = ..()

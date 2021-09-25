@@ -14,7 +14,7 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 
-/obj/item/assembly/mousetrap/Initialize()
+/obj/item/assembly/mousetrap/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,

@@ -1,0 +1,6 @@
+author: "MetalClone"
+delete-after: True
+changes: 
+  - rscadd: "Added the handlebar moustache, available in the character setup"
+  - rscadd: "Added the handlebar moustache 2, available in the character setup"
+  - imageadd: "added both handlebar moustache icons"

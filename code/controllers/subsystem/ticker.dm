@@ -253,6 +253,8 @@ SUBSYSTEM_DEF(ticker)
 		cb.InvokeAsync()
 	LAZYCLEARLIST(round_start_events)
 
+	SEND_SIGNAL(src, COMSIG_TICKER_ROUND_STARTING)
+
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
 	round_start_time = world.time
 	SSdbcore.SetRoundStart()

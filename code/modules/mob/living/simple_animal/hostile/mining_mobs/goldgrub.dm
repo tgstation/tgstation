@@ -38,7 +38,7 @@
 	var/datum/action/innate/goldgrub/burrow/burrow
 	var/is_burrowed = FALSE
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/Initialize()
+/mob/living/simple_animal/hostile/asteroid/goldgrub/Initialize(mapload)
 	. = ..()
 	var/i = rand(1,3)
 	while(i)
