@@ -19,7 +19,7 @@
 	var/charge_size = 15
 	var/fire_sound = 'sound/weapons/gun/general/cannon.ogg'
 
-/obj/structure/cannon/Initialize()
+/obj/structure/cannon/Initialize(mapload)
 	. = ..()
 	create_reagents(charge_size)
 

@@ -15,7 +15,7 @@
 	///Determines the typepath of what the object folds into
 	var/foldabletype = /obj/item/wheelchair
 
-/obj/vehicle/ridden/wheelchair/Initialize()
+/obj/vehicle/ridden/wheelchair/Initialize(mapload)
 	. = ..()
 	make_ridable()
 	wheels_overlay = image(icon, overlay_icon, FLY_LAYER)

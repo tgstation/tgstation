@@ -113,7 +113,7 @@
 	true_name = "strange geyser"
 	discovery_message = "It's a strange geyser! How does any of this even work?" //it doesnt
 
-/obj/structure/geyser/random/Initialize()
+/obj/structure/geyser/random/Initialize(mapload)
 	. = ..()
 	reagent_id = get_random_reagent_id()
 

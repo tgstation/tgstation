@@ -31,7 +31,7 @@
 	. = ..()
 	. += span_notice("It's operating system seems quite outdated... It doesn't seem like it'd be compatible with the latest remote NTOS monitoring systems.")
 
-/obj/machinery/computer/monitor/Initialize()
+/obj/machinery/computer/monitor/Initialize(mapload)
 	. = ..()
 	search()
 	history["supply"] = list()

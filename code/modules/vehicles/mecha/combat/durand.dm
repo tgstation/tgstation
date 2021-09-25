@@ -14,7 +14,7 @@
 	var/obj/durand_shield/shield
 
 
-/obj/vehicle/sealed/mecha/combat/durand/Initialize()
+/obj/vehicle/sealed/mecha/combat/durand/Initialize(mapload)
 	. = ..()
 	shield = new /obj/durand_shield(loc, src, layer, dir)
 	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, .proc/relay)

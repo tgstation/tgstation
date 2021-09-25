@@ -142,6 +142,9 @@
 					sub_category += "Engineering"
 			else
 				sub_category += "All Cyborgs"
+		else if(ispath(built_item, /obj/item/borg_restart_board))
+			sub_category += "All Cyborgs" //Otherwise the restart board shows in the "parts" category, which seems dumb
+
 		// Else check if this design builds a piece of exosuit equipment.
 		else if(built_item in typesof(/obj/item/mecha_parts/mecha_equipment))
 			var/obj/item/mecha_parts/mecha_equipment/E = built_item

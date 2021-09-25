@@ -69,7 +69,7 @@
 	var/poster_item_icon_state = "rolled_poster"
 	var/poster_item_type = /obj/item/poster
 
-/obj/structure/sign/poster/Initialize()
+/obj/structure/sign/poster/Initialize(mapload)
 	. = ..()
 	if(random_basetype)
 		randomise(random_basetype)

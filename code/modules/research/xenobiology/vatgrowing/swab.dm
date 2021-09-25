@@ -7,7 +7,7 @@
 	w_class = WEIGHT_CLASS_TINY
 
 ///Adds the swabbing component to the biopsy tool
-/obj/item/swab/Initialize()
+/obj/item/swab/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/swabbing, TRUE, TRUE, FALSE, null, CALLBACK(src, .proc/update_swab_icon), max_items = 1)
 

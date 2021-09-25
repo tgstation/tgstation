@@ -9,7 +9,7 @@
 	var/independent = FALSE
 	var/list/channels = list()
 
-/obj/item/encryptionkey/Initialize()
+/obj/item/encryptionkey/Initialize(mapload)
 	. = ..()
 	if(!channels.len)
 		desc = "An encryption key for a radio headset.  Has no special codes in it. You should probably tell a coder!"

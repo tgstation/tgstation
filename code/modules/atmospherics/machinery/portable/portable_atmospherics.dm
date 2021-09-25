@@ -17,7 +17,7 @@
 	///Used to track if anything of note has happen while running process_atmos()
 	var/excited = TRUE
 
-/obj/machinery/portable_atmospherics/Initialize()
+/obj/machinery/portable_atmospherics/Initialize(mapload)
 	. = ..()
 	air_contents = new
 	air_contents.volume = volume

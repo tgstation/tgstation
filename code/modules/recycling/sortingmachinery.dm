@@ -10,7 +10,7 @@
 	var/obj/item/paper/note
 	var/obj/item/barcode/sticker
 
-/obj/structure/big_delivery/Initialize()
+/obj/structure/big_delivery/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 
@@ -186,7 +186,7 @@
 	var/obj/item/paper/note
 	var/obj/item/barcode/sticker
 
-/obj/item/small_delivery/Initialize()
+/obj/item/small_delivery/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 
