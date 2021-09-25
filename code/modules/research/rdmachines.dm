@@ -18,7 +18,7 @@
 /obj/machinery/rnd/proc/reset_busy()
 	busy = FALSE
 
-/obj/machinery/rnd/Initialize()
+/obj/machinery/rnd/Initialize(mapload)
 	. = ..()
 	stored_research = SSresearch.science_tech
 	wires = new /datum/wires/rnd(src)

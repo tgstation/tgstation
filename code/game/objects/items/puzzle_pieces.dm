@@ -121,7 +121,7 @@
 	var/reward = /obj/item/food/cookie
 	var/claimed = FALSE
 
-/obj/item/pressure_plate/hologrid/Initialize()
+/obj/item/pressure_plate/hologrid/Initialize(mapload)
 	. = ..()
 	if(undertile_pressureplate)
 		AddElement(/datum/element/undertile, tile_overlay = tile_overlay, use_anchor = FALSE) //we remove use_anchor here, so it ALWAYS stays anchored

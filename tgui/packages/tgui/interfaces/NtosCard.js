@@ -29,9 +29,7 @@ export const NtosCardContent = (props, context) => {
     accessFlags,
     accessFlagNames,
     showBasic,
-  } = data;
-
-  const { templates } = data || {};
+  } = data; 
 
   if (!have_id_slot) {
     return (
@@ -72,7 +70,7 @@ export const NtosCardContent = (props, context) => {
               }
               tooltipPosition="left" />
           } >
-          <TemplateDropdown templates={templates} />
+          <TemplateDropdown templates={data} />
         </Section>)}
       <Stack mt={1}>
         <Stack.Item grow>

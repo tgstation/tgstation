@@ -12,7 +12,7 @@
 	var/buildstacktype = /obj/item/stack/sheet/iron //they're iron now, shut up
 	var/buildstackamount = 1
 
-/obj/structure/toilet/Initialize()
+/obj/structure/toilet/Initialize(mapload)
 	. = ..()
 	open = round(rand(0, 1))
 	update_appearance()
@@ -175,7 +175,7 @@
 	dir = EAST
 	pixel_x = -32
 
-/obj/structure/urinal/Initialize()
+/obj/structure/urinal/Initialize(mapload)
 	. = ..()
 	hiddenitem = new /obj/item/food/urinalcake
 
@@ -764,7 +764,7 @@
 	GLOB.curtains -= src
 	return ..()
 
-/obj/structure/curtain/cloth/fancy/mechanical/Initialize()
+/obj/structure/curtain/cloth/fancy/mechanical/Initialize(mapload)
 	. = ..()
 	GLOB.curtains += src
 

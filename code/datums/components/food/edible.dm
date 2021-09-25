@@ -70,6 +70,7 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, .proc/OnProcessed)
 	RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_COOKED, .proc/OnMicrowaveCooked)
 	RegisterSignal(parent, COMSIG_EDIBLE_INGREDIENT_ADDED, .proc/edible_ingredient_added)
+	RegisterSignal(parent, COMSIG_OOZE_EAT_ATOM, .proc/on_ooze_eat)
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
@@ -485,3 +486,14 @@ Behavior that's still missing from this component that original food items had t
 			tastes[t] += E.tastes[t]
 	foodtypes |= E.foodtypes
 
+/// Response to oozes trying to eat something edible
+/datum/component/edible/proc/on_ooze_eat(datum/source, mob/eater, edible_flags)
+	SIGNAL_HANDLER
+
+	if(foodtypes & edible_flags)
+		var/atom/eaten_food = parent
+		eaten_food.reagents.trans_to(eater, eaten_food.reagents.total_volume, transfered_by = eater)
+		eater.visible_message(span_warning("[src] eats [eaten_food]!"), span_notice("You eat [eaten_food]."))
+		playsound(get_turf(eater),'sound/items/eatfood.ogg', rand(30,50), TRUE)
+		qdel(eaten_food)
+		return COMPONENT_ATOM_EATEN

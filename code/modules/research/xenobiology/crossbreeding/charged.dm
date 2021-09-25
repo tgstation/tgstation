@@ -10,7 +10,7 @@ Charged extracts:
 	effect = "charged"
 	icon_state = "charged"
 
-/obj/item/slimecross/charged/Initialize()
+/obj/item/slimecross/charged/Initialize(mapload)
 	. = ..()
 	create_reagents(10, INJECTABLE | DRAWABLE)
 

@@ -103,7 +103,7 @@
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "beans_empty"
 
-/obj/item/trash/can/Initialize()
+/obj/item/trash/can/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)

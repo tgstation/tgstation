@@ -16,7 +16,7 @@
 	custom_price = PAYCHECK_ASSISTANT * 0.8
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/burger/plain/Initialize()
+/obj/item/food/burger/plain/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		new/obj/effect/particle_effect/smoke(get_turf(src))
@@ -153,7 +153,7 @@
 	verb_yell = "wails"
 	venue_value = FOOD_PRICE_EXOTIC
 
-/obj/item/food/burger/ghost/Initialize()
+/obj/item/food/burger/ghost/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -397,7 +397,7 @@
 	foodtypes = GRAIN | MEAT | DAIRY
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/burger/cheese/Initialize()
+/obj/item/food/burger/cheese/Initialize(mapload)
 	. = ..()
 	if(prob(33))
 		icon_state = "cheeseburgeralt"
@@ -410,7 +410,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/capsaicin = 3, /datum/reagent/consumable/condensedcapsaicin = 3, /datum/reagent/consumable/nutriment/vitamin = 6)
 	foodtypes = GRAIN | MEAT | DAIRY
 
-/obj/item/food/burger/crazy/Initialize()
+/obj/item/food/burger/crazy/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
