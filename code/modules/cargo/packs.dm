@@ -1648,7 +1648,7 @@
 	name = "Wedding Crate"
 	desc = "Everything you need to host a wedding! Now you just need an officiant."
 	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/clothing/under/dress/wedding_dress,
+	contains = list(/obj/item/clothing/suit/wedding_dress,
 					/obj/item/clothing/under/suit/tuxedo,
 					/obj/item/storage/belt/cummerbund,
 					/obj/item/clothing/head/weddingveil,
