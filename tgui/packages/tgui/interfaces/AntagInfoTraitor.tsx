@@ -26,7 +26,7 @@ type Objective = {
 }
 
 type Info = {
-  has_codewords: string;
+  has_codewords: BooleanLike;
   phrases: string;
   responses: string;
   theme: string;
