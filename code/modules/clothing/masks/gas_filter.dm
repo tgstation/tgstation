@@ -100,7 +100,7 @@
 	desc = "A piece of filtering cloth to be used with atmospheric gas masks and emergency gas masks, it seems damaged."
 	filter_status = 50 //override on initialize
 
-/obj/item/gas_filter/damaged/Initialize()
+/obj/item/gas_filter/damaged/Initialize(mapload)
 	. = ..()
 	filter_status = rand(35, 65)
 

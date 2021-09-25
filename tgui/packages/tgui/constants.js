@@ -167,7 +167,7 @@ const GASES = [
     'id': 'water_vapor',
     'name': 'Water Vapor',
     'label': 'H₂O',
-    'color': 'grey',
+    'color': 'lightsteelblue',
   },
   {
     'id': 'nob',
@@ -179,7 +179,7 @@ const GASES = [
     'id': 'n2o',
     'name': 'Nitrous Oxide',
     'label': 'N₂O',
-    'color': 'red',
+    'color': 'bisque',
   },
   {
     'id': 'no2',
@@ -191,25 +191,25 @@ const GASES = [
     'id': 'tritium',
     'name': 'Tritium',
     'label': 'Tritium',
-    'color': 'green',
+    'color': 'limegreen',
   },
   {
     'id': 'bz',
     'name': 'BZ',
     'label': 'BZ',
-    'color': 'purple',
+    'color': 'mediumpurple',
   },
   {
     'id': 'stim',
     'name': 'Stimulum',
     'label': 'Stimulum',
-    'color': 'purple',
+    'color': 'darkviolet',
   },
   {
     'id': 'pluox',
     'name': 'Pluoxium',
     'label': 'Pluoxium',
-    'color': 'blue',
+    'color': 'mediumslateblue',
   },
   {
     'id': 'miasma',
@@ -218,10 +218,52 @@ const GASES = [
     'color': 'olive',
   },
   {
+    'id': 'Freon',
+    'name': 'Freon',
+    'label': 'Freon',
+    'color': 'paleturquoise',
+  },
+  {
     'id': 'hydrogen',
     'name': 'Hydrogen',
     'label': 'H₂',
     'color': 'white',
+  },
+  {
+    'id': 'healium',
+    'name': 'Healium',
+    'label': 'Healium',
+    'color': 'salmon',
+  },
+  {
+    'id': 'proto_nitrate',
+    'name': 'Proto Nitrate',
+    'label': 'Proto-Nitrate',
+    'color': 'greenyellow',
+  },
+  {
+    'id': 'zauker',
+    'name': 'Zauker',
+    'label': 'Zauker',
+    'color': 'darkgreen',
+  },
+  {
+    'id': 'halon',
+    'name': 'Halon',
+    'label': 'Halon',
+    'color': 'purple',
+  },
+  {
+    'id': 'helium',
+    'name': 'Helium',
+    'label': 'He',
+    'color': 'aliceblue',
+  },
+  {
+    'id': 'antinoblium',
+    'name': 'Antinoblium',
+    'label': 'Anti-Noblium',
+    'color': 'maroon',
   },
 ];
 

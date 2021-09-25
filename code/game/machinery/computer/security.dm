@@ -50,12 +50,12 @@
 	records = add_output_port("Security Records", PORT_TYPE_TABLE)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/arrest_console_data/register_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/arrest_console_data/register_usb_parent(atom/movable/shell)
 	. = ..()
-	if(istype(parent, /obj/machinery/computer/secure_data))
-		attached_console = parent
+	if(istype(shell, /obj/machinery/computer/secure_data))
+		attached_console = shell
 
-/obj/item/circuit_component/arrest_console_data/unregister_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/arrest_console_data/unregister_usb_parent(atom/movable/shell)
 	attached_console = null
 	return ..()
 
@@ -121,12 +121,12 @@
 
 	var/obj/machinery/computer/secure_data/attached_console
 
-/obj/item/circuit_component/arrest_console_arrest/register_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/arrest_console_arrest/register_usb_parent(atom/movable/shell)
 	. = ..()
-	if(istype(parent, /obj/machinery/computer/secure_data))
-		attached_console = parent
+	if(istype(shell, /obj/machinery/computer/secure_data))
+		attached_console = shell
 
-/obj/item/circuit_component/arrest_console_arrest/unregister_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/arrest_console_arrest/unregister_usb_parent(atom/movable/shell)
 	attached_console = null
 	return ..()
 

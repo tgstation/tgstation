@@ -53,6 +53,7 @@
 	taste_description = "an awful, strongly chemical taste"
 	color = "#270d03"
 	glass_price = DRINK_PRICE_HIGH
+	fallback_icon_state = "failed_reaction_fallback"
 
 // Unique
 

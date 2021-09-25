@@ -577,3 +577,221 @@
   - rscadd: MOONICORNS. Watch out for their horn!
   - refactor: during a code refactor for cow, they may be SLIGHTLY faster or SLIGHTLY
       slower as an accidental result
+2021-09-19:
+  Ghommie:
+  - balance: 'Replaces the hardcoded material restriction for exporting protolathe
+      designs to autolathes with a variable that does the same when set FALSE. Energy
+      bolas, gun part kits, tele shield, enegy bolas and jaws of life currently have
+      it set FALSE. TL;DR: You can export designs like bluespace cells to autolathes.'
+  - qol: Added a chat feedback when unable to import designs to autolathes.
+  Ryll/Shaps:
+  - balance: Bone wounds in general have been made less obnoxious, especially when
+      suffered on the legs. Instead of limping every step with that leg, you now have
+      a chance to limp each step with that leg that scales with the severity of the
+      wound. Putting your leg in a sling also reduces this limp chance per step, in
+      addition to reducing the delay the limp adds.
+  - balance: Skeletons and plasmamen can now apply bone gel directly to fractured
+      limbs, take no damage from applying this fix, don't need surgical tape, and
+      recover 4x as fast as fleshy humans do from these improvised fixes. Shine on,
+      you crazy bone-bags!
+  - balance: Sticky tape (and especially surgical tape) makef for much more effective
+      slings than before, with surgical tape even outshining gauze.
+  - spellcheck: Adjusted some bone wound examine descriptions to be more obvious what
+      they represent
+  Timberpoes:
+  - bugfix: Fixed an oversight/exploit allowing the nuke disk to be removed from station
+      z-levels.
+  - admin: Improved the warnings for when stationloving objects such as the nuke disk
+      get relocated.
+  - admin: Expanded explosion logging should now make your day a little bit brighter.
+  Watermelon914:
+  - qol: Heretic now has an antagonist panel
+  necromanceranne:
+  - code_imp: Added an argument for the decomposition component that allows for specifying
+      what kind of item something decomposes into.
+  - bugfix: Space ants no longer prey upon chickens and their produce.
+  - rscadd: Includes some examples from existing food and a new kind of food. Moldy
+      bread, moldy pizza slices, rotten eggs and moldy dead mice.
+  tralezab:
+  - bugfix: fixed one small runtime with sparring sect
+2021-09-20:
+  JohnFulpWillard:
+  - bugfix: Maintenance sect's adapted eyes will no longer render you permanently
+      blind despite having them repaired via the darkness.
+  Kevinz for Citadel, who was ported to TGMC by XSlayer300, now ported to tg by Ryll/Shaps:
+  - rscadd: Text modifiers have been added! You can now |italicize| _underline_ and
+      +bold+ your messages.
+  LemonInTheDark:
+  - bugfix: Imaginary friends will show up properly again
+  Mothblocks:
+  - bugfix: Fixed FPS preference not applying after reconnect.
+  Pepsiman0:
+  - bugfix: holosword doesnt have blockchance
+  TiviPlus:
+  - bugfix: fixed lighting bug
+  Watermelon914:
+  - qol: BCIs only come with 1 bci action component and it is now removable.
+  - balance: Devastating explosions will now deal damage equivalent to 40% to 75%
+      of a dragon's max health.
+  - balance: Carp rifts will no longer be instantly destroyed to devastating explosions.
+  - qol: Allows you to interrupt delay components and makes it so that it cannot queue
+      multiple delays.
+  carshalash:
+  - bugfix: adjusted arnold palmer recipe to be made with iced tea instead of hot
+      tea.
+  esainane:
+  - code_imp: The tgui ProgressBar can now accept color specifications in hexademical,
+      rgb/rgba, color-\<name\> class, and base CSS named colors.
+  - bugfix: Add missing gas color mappings to tgui, and disambiguate old mappings.
+      Exotic (and mundane) gases in the SM monitor and HFR interfaces have never been
+      more colorful!
+  - bugfix: The HFR now actually produces T3 gas at Fusion Level 2, provided you have
+      enough plasma in the moderator
+  tralezab:
+  - bugfix: some small critters that should have been able to fit in the vim but couldn't,
+      now can
+2021-09-21:
+  Ghommie:
+  - bugfix: Certain memories should no longer be added to mobs that are unaware of
+      them (almost always unconsciousness, in some cases blindness and/or deafness).
+  - bugfix: stun-harm-batoning for stunbatons has been fixed.
+  GoldenAlpharex:
+  - bugfix: Flowers now properly display on people with mutant ears, meaning that
+      they no longer hide within cat ears anymore.
+  - bugfix: Welding goggles no longer hide in your hair when you pull them up, they
+      will now properly display above your hair (and mutant body features if you have
+      any).
+  - code_imp: Glasses and headwear can now appear over hair and all mutant body features,
+      meaning that they shouldn't get wrongly hidden anymore.
+  Guillaume Prata:
+  - qol: The atmos holofan barrier has a new animation and is slightly transparent
+      to easily convey that you can move through it.
+  Krysonism:
+  - bugfix: Mega arachnids can snare people again.
+  Mooshimi:
+  - bugfix: Fixes a missing piece of pipe on Icebox
+  Timberpoes:
+  - bugfix: Things pushed via bumping into them now get fingerprints and admin-viewable
+      hiddenprints added to them.
+  TiviPlus:
+  - code_imp: changed some turf changing code remember to report bugs
+  Zytolg:
+  - bugfix: The Icebox Mining Basement Levels now utilize power and air provided by
+      the main station. Some areas were changed to accomplish this.
+  - bugfix: The Icebox Mining Basement Levels now utilize pipe layers 2 and 4 instead
+      of the improper 3, and 4.
+  - bugfix: You can now use the B-2 level of Icebox mining safely and reliably, a
+      new, quaint layout affords miners easy access to the B-2 exploration Z.
+  - bugfix: Due to the extent of the alterations on for mining's B-2 level, the B-1
+      level has received some upgrades as well. Please look forwards to them.
+2021-09-22:
+  Fikou:
+  - balance: If you are on Combat Mode, your bullets no longer pass through prone
+      people
+  Ghommie:
+  - bugfix: Fixes evolved xenos deaths being broadcasted in dchat with the old larva
+      name .
+  - bugfix: Fixed hitting people accidentally with food if their mouth is covered
+      or if they can't  otherwise consume food.
+  Guillaume Prata:
+  - bugfix: Space heater actually turns On with right click now, for reals this time!
+  Krysonism:
+  - imageadd: The mega arachnid's flesh snare now has a visible sprite.
+  Mothblocks:
+  - server: MOTD is now read sequentially in configuration, allowing for multiple
+      MOTD files.
+  - bugfix: Quirks being removed/renamed/rebalanced will no longer break your quirks
+      menu
+  MrZoraman:
+  - spellcheck: Fix the grammar for the message shown when appraising great art.
+  Watermelon914:
+  - expansion: Adds the "speaker name" port to the voice activator circuit component
+  - admin: Admins are no longer able to bypass proccall protections using remote methods
+      of proccalling.
+  - bugfix: Ntnets are now type safe again.
+  - bugfix: Fixed progress bars appearing white.
+  axietheaxolotl:
+  - rscadd: Added new CC armour suit, with accompanying helmet and gasmask
+  - rscadd: Added suit storage that contains this new armour and gasmask.
+  - expansion: Expands on the old CC armour suit
+  - imageadd: added some sprites for da drip
+  necromanceranne:
+  - bugfix: Fixes pizzas not being able to be processed.
+  remuluson2:
+  - rscadd: Electric razors can now be printed at any lathe. Its in medical section.
+  - rscadd: Electric razor can be bought from the library vendor.
+  stylemistake:
+  - bugfix: 'tgui: IE8: Removed "iefix" css classes from Flex elements which resulted
+      in unusable layout in complex UIs, such as tgui prefs.'
+  - bugfix: 'tgui: IE8: Fixed button clicks.'
+2021-09-23:
+  EricZilla:
+  - expansion: Updated old GAGS colors for the PDAs based on user feedback
+  - imageadd: Updated appearance of the Survival Pen
+  - expansion: The Quartermaster now starts with a Survival Pen because its flavorful.
+      Survival Pen has also been updated to use the fancy font, since, its fancy.
+  Ghilker:
+  - bugfix: fix scrubbers/vents/injectors/etc from being able to be placed on all
+      layer on the same turf
+  Ghommie:
+  - bugfix: The weapons authorization setting for turrets will now check for weapons
+      on targets without a chameleon identification card instead of those with either
+      a chameleon ID or no ID at all.
+  Krysonism:
+  - expansion: Leapers, mega arachnids, queen bees, frogs and walking mushrooms can
+      now be grown using cytology.
+  - expansion: A neglected fern, once collected on nearby jungle planet, can sometimes
+      be found in maintenance
+  LemonInTheDark:
+  - bugfix: Fixes a rare case of new players being unable to move
+  MMMiracles:
+  - rscadd: Tramstation's Security and Service wing has been flipped around.
+  - rscadd: Tramstation's commissary has been placed above in the central wing beside
+      the kitchen.
+  - rscadd: Tramstation's EVA and Gateway rooms have been adjusted. EVA now has one
+      extra suit storage unit.
+  - rscadd: Tramstation's maintenance near the Service and Security wing has had reworked
+      layouts.
+  - rscadd: Tramstation's asteroid now leaves behind breathable turfs so digging out
+      a room isn't as tedious.
+  Mothblocks:
+  - bugfix: You can now bind Ctrl/Alt again.
+  - bugfix: Fixed the quirks list in the preferences menu sometimes being empty.
+  - admin: Added a panel for editing station traits.
+  TheSmallBlue:
+  - rscadd: Added the Proximity Pinpointer component, get the coordinates of any entity!
+      (As long as its in view)
+  Timberpoes:
+  - admin: Adds a couple of missing traits relating to cult and bloodshot eyes to
+      the Modify Traits VV dropdown menu for mobs.
+  Y0SH1M4S73R:
+  - admin: The Set Var, Get Var, Proc Call, and Signal Handler admin circuit components
+      now use a "datum" datatype for their "Target" port. The "datum" datatype can
+      accept inputs from "atom" ports, and can be safely cast to the "atom" datatype
+      using the typecasting component when necessary.
+  - admin: The Get Var component now has an option port used to select the expected
+      datatype of the obtained var. Similarly, the Proc Call component now has an
+      option port used to select the expected datatype of the proc's return value.
+      Both of these options default to "any"
+  grimm-hollowknight, ported by tralezab with a few overlays:
+  - imageadd: New borg sprite, from Yogstation!
+  necromanceranne:
+  - bugfix: Stickmen flatguns now properly drop out of your hands when picked up,
+      as intended.
+2021-09-25:
+  Fikou:
+  - bugfix: The Qualified Doctor skin for medborgs is now not the only option
+  Iamgoofball:
+  - bugfix: Fixes the logging text on respawn to correctly say it's respawn instead
+      of "abandon mob"
+  Maurukas:
+  - bugfix: Mapped in atmospheric tanks will now connect to pipenets in the appropriate
+      direction
+  - bugfix: Icebox, Runtime, and a number of ruins have had their gas tanks rotated
+      or repiped
+  Qustinnus:
+  - bugfix: Oozes can now eat food again
+  tralezab:
+  - bugfix: Fixes malfunctioning bots breaking when they ordered from the bar. Uh...
+      oops!
+  - expansion: Admin fully immerse smite now reminds the victim to roleplay correctly

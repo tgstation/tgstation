@@ -231,7 +231,21 @@
 	return E.ValidateAndSet("[new_val]")
 
 /datum/controller/configuration/proc/LoadMOTD()
-	motd = file2text("[directory]/motd.txt")
+	var/list/motd_contents = list()
+
+	var/list/motd_list = CONFIG_GET(str_list/motd)
+	if (motd_list.len == 0 && fexists("[directory]/motd.txt"))
+		motd_list = list("motd.txt")
+
+	for (var/motd_file in motd_list)
+		if (fexists("[directory]/[motd_file]"))
+			motd_contents += file2text("[directory]/[motd_file]")
+		else
+			log_config("MOTD file [motd_file] didn't exist")
+			DelayedMessageAdmins("MOTD file [motd_file] didn't exist")
+
+	motd = motd_contents.Join("\n")
+
 	var/tm_info = GLOB.revdata.GetTestMergeInfo()
 	if(motd || tm_info)
 		motd = motd ? "[motd]<br>[tm_info]" : tm_info

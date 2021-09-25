@@ -18,7 +18,7 @@
 	var/overheat_max = 40
 	var/heat_diffusion = 0.5
 
-/obj/item/minigunpack/Initialize()
+/obj/item/minigunpack/Initialize(mapload)
 	. = ..()
 	gun = new(src)
 	battery = new(src)
@@ -114,7 +114,7 @@
 	can_charge = FALSE
 	var/obj/item/minigunpack/ammo_pack
 
-/obj/item/gun/energy/minigun/Initialize()
+/obj/item/gun/energy/minigun/Initialize(mapload)
 	if(!istype(loc, /obj/item/minigunpack)) //We should spawn inside an ammo pack so let's use that one.
 		return INITIALIZE_HINT_QDEL //No pack, no gun
 	ammo_pack = loc

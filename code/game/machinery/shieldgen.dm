@@ -11,7 +11,7 @@
 	max_integrity = 200 //The shield can only take so much beating (prevents perma-prisons)
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
-/obj/structure/emergency_shield/Initialize()
+/obj/structure/emergency_shield/Initialize(mapload)
 	. = ..()
 	setDir(pick(GLOB.cardinals))
 	air_update_turf(TRUE, TRUE)
@@ -283,7 +283,7 @@
 /obj/machinery/power/shieldwallgen/unlocked/anchored
 	anchored = TRUE
 
-/obj/machinery/power/shieldwallgen/Initialize()
+/obj/machinery/power/shieldwallgen/Initialize(mapload)
 	. = ..()
 	if(anchored)
 		connect_to_network()

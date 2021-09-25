@@ -26,7 +26,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	requires_power = TRUE
 	always_unpowered = TRUE
 	static_lighting = FALSE
-	base_lighting_color = COLOR_WHITE
+
 	base_lighting_alpha = 255
 	power_light = FALSE
 	power_equip = FALSE
@@ -105,7 +105,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/ai_will_not_hear_this = list('sound/ambience/ambimalf.ogg')
 	airlock_wires = /datum/wires/airlock/ai
 
-/area/ai_monitored/turret_protected/Initialize()
+/area/ai_monitored/turret_protected/Initialize(mapload)
 	. = ..()
 	if(ai_will_not_hear_this)
 		ambientsounds += ai_will_not_hear_this

@@ -72,14 +72,14 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// The current size of the circuit.
 	var/current_size = 0
 
-/obj/item/integrated_circuit/Initialize()
+/obj/item/integrated_circuit/Initialize(mapload)
 	. = ..()
 
 	GLOB.integrated_circuits += src
 
 	RegisterSignal(src, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
 
-/obj/item/integrated_circuit/loaded/Initialize()
+/obj/item/integrated_circuit/loaded/Initialize(mapload)
 	. = ..()
 	set_cell(new /obj/item/stock_parts/cell/high(src))
 
