@@ -293,6 +293,7 @@ LINEN BINS
 /obj/item/bedsheet/double
 	icon_state = "double_sheetwhite"
 	inhand_icon_state = "sheetwhite"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
 
 /obj/item/bedsheet/double/blue
 	icon_state = "double_sheetblue"
