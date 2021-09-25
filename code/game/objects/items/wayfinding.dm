@@ -13,6 +13,7 @@
 	payment_department = ACCOUNT_CIV
 	light_power = 0.5
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	speech_span = SPAN_ROBOT
 	///List of user-specific cooldowns to prevent pinpointer spam.
 	var/list/user_spawn_cooldowns = list()
 	///List of user-specific cooldowns to prevent message spam.
@@ -114,7 +115,7 @@
 
 	for(var/obj/item/pinpointer/wayfinding/held_pinpointer in user.GetAllContents())
 		set_expression("veryhappy", 2 SECONDS)
-		say(span_robot("You already have a pinpointer!"))
+		say("You already have a pinpointer!")
 		return
 
 	var/msg
@@ -126,7 +127,7 @@
 
 	if(pnpts_found)
 		set_expression("veryhappy", 2 SECONDS)
-		say(span_robot("[pnpts_found == 1 ? "There's a pinpointer" : "There are pinpointers"] there!"))
+		say("[pnpts_found == 1 ? "There's a pinpointer" : "There are pinpointers"] there!")
 		return
 
 	if(world.time < user_spawn_cooldowns[user.real_name])
@@ -148,10 +149,10 @@
 
 	if(!dispense)
 		set_expression("sad", 2 SECONDS)
-		say(span_robot("Sorry, [user.first_name()]! You'll need [msg]!"))
+		say("Sorry, [user.first_name()]! You'll need [msg]!")
 	else
 		set_expression("veryhappy", 2 SECONDS)
-		say(span_robot("Here's your pinpointer!"))
+		say("Here's your pinpointer!")
 		var/obj/item/pinpointer/wayfinding/P = new /obj/item/pinpointer/wayfinding(get_turf(src))
 		user_spawn_cooldowns[user.real_name] = world.time + COOLDOWN_SPAWN
 		user.put_in_hands(P)
@@ -176,7 +177,7 @@
 			holochip.name = "[holochip.credits] credit holochip"
 			user.put_in_hands(holochip)
 		else if(!itsmypinpointer)
-			var/costume = pick(subtypesof(/obj/effect/spawner/bundle/costume))
+			var/costume = pick(subtypesof(/obj/effect/spawner/costume))
 			new costume(user.loc)
 			is_a_thing = "is a freshly synthesised costume!"
 			if(prob(funnyprob))
@@ -196,7 +197,7 @@
 		qdel(attacking_pinpointer)
 
 		set_expression("veryhappy", 2 SECONDS)
-		say(span_robot("Thank you for [recycling] [the_pinpointer]! Here [is_a_thing]"))
+		say("Thank you for [recycling] [the_pinpointer]! Here [is_a_thing]")
 		return
 
 	else if(istype(I, /obj/item/pinpointer))

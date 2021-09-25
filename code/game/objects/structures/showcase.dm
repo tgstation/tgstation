@@ -17,7 +17,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 
-/obj/structure/showcase/fakeid/Initialize()
+/obj/structure/showcase/fakeid/Initialize(mapload)
 	. = ..()
 	add_overlay("id")
 	add_overlay("id_key")
@@ -28,10 +28,10 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 
-/obj/structure/showcase/fakesec/Initialize()
+/obj/structure/showcase/fakesec/update_overlays()
 	. = ..()
-	add_overlay("security")
-	add_overlay("security_key")
+	. += "security"
+	. += "security_key"
 
 /obj/structure/showcase/horrific_experiment
 	name = "horrific experiment"

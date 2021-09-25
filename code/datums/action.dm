@@ -5,8 +5,8 @@
 
 /datum/action
 	var/name = "Generic Action"
-	var/desc = null
-	var/obj/target = null
+	var/desc
+	var/datum/target
 	var/check_flags = NONE
 	var/processing = FALSE
 	var/atom/movable/screen/movable/action_button/button = null
@@ -67,7 +67,7 @@
 		LAZYADD(M.actions, src)
 		if(M.client)
 			M.client.screen += button
-			button.locked = M.client.prefs.buttons_locked || button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE //even if it's not defaultly locked we should remember we locked it before
+			button.locked = M.client.prefs.read_preference(/datum/preference/toggle/buttons_locked) || button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE //even if it's not defaultly locked we should remember we locked it before
 			button.moved = button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE
 		M.update_action_buttons()
 	else
@@ -178,21 +178,21 @@
 	return TRUE
 
 /datum/action/item_action/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
+	var/obj/item/item_target = target
 	if(button_icon && button_icon_state)
 		// If set, use the custom icon that we set instead
 		// of the item appearence
 		..()
-	else if((target && current_button.appearance_cache != target.appearance) || force) //replace with /ref comparison if this is not valid.
-		var/obj/item/I = target
-		var/old_layer = I.layer
-		var/old_plane = I.plane
-		I.layer = FLOAT_LAYER //AAAH
-		I.plane = FLOAT_PLANE //^ what that guy said
+	else if((target && current_button.appearance_cache != item_target.appearance) || force) //replace with /ref comparison if this is not valid.
+		var/old_layer = item_target.layer
+		var/old_plane = item_target.plane
+		item_target.layer = FLOAT_LAYER //AAAH
+		item_target.plane = FLOAT_PLANE //^ what that guy said
 		current_button.cut_overlays()
-		current_button.add_overlay(I)
-		I.layer = old_layer
-		I.plane = old_plane
-		current_button.appearance_cache = I.appearance
+		current_button.add_overlay(item_target)
+		item_target.layer = old_layer
+		item_target.plane = old_plane
+		current_button.appearance_cache = item_target.appearance
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
@@ -352,7 +352,8 @@
 
 /datum/action/item_action/toggle/New(Target)
 	..()
-	name = "Toggle [target.name]"
+	var/obj/item/item_target = target
+	name = "Toggle [item_target.name]"
 	button.name = name
 
 /datum/action/item_action/halt
@@ -381,7 +382,8 @@
 
 /datum/action/item_action/adjust/New(Target)
 	..()
-	name = "Adjust [target.name]"
+	var/obj/item/item_target = target
+	name = "Adjust [item_target.name]"
 	button.name = name
 
 /datum/action/item_action/switch_hud
@@ -469,12 +471,14 @@
 
 /datum/action/item_action/organ_action/toggle/New(Target)
 	..()
-	name = "Toggle [target.name]"
+	var/obj/item/organ/organ_target = target
+	name = "Toggle [organ_target.name]"
 	button.name = name
 
 /datum/action/item_action/organ_action/use/New(Target)
 	..()
-	name = "Use [target.name]"
+	var/obj/item/organ/organ_target = target
+	name = "Use [organ_target.name]"
 	button.name = name
 
 /datum/action/item_action/cult_dagger
@@ -767,12 +771,13 @@
 
 /datum/action/item_action/storage_gather_mode/ApplyIcon(atom/movable/screen/movable/action_button/current_button)
 	. = ..()
-	var/old_layer = target.layer
-	var/old_plane = target.plane
-	target.layer = FLOAT_LAYER //AAAH
-	target.plane = FLOAT_PLANE //^ what that guy said
+	var/obj/item/item_target = target
+	var/old_layer = item_target.layer
+	var/old_plane = item_target.plane
+	item_target.layer = FLOAT_LAYER //AAAH
+	item_target.plane = FLOAT_PLANE //^ what that guy said
 	current_button.cut_overlays()
 	current_button.add_overlay(target)
-	target.layer = old_layer
-	target.plane = old_plane
-	current_button.appearance_cache = target.appearance
+	item_target.layer = old_layer
+	item_target.plane = old_plane
+	current_button.appearance_cache = item_target.appearance

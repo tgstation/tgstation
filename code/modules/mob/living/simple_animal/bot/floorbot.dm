@@ -54,8 +54,8 @@
 		health = 100
 		maxHealth = 100
 
-/mob/living/simple_animal/bot/floorbot/Exited(atom/movable/A, atom/newloc)
-	if(A == tilestack)
+/mob/living/simple_animal/bot/floorbot/Exited(atom/movable/gone, direction)
+	if(tilestack == gone)
 		if(tilestack && tilestack.max_amount < tilestack.amount) //split the stack if it exceeds its normal max_amount
 			var/iterations = round(tilestack.amount/tilestack.max_amount) //round() without second arg floors the value
 			for(var/a in 1 to iterations)

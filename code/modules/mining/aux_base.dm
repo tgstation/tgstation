@@ -16,6 +16,7 @@
 	interface with the mining shuttle at the landing site if a mobile beacon is also deployed."
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
+	icon_keyboard = null
 	req_one_access = list(ACCESS_AUX_BASE, ACCESS_HEADS)
 	circuit = /obj/item/circuitboard/computer/auxiliary_base
 	/// Shuttle ID of the base
@@ -30,6 +31,8 @@
 	var/destination
 	/// If blind drop option is available
 	var/blind_drop_ready = TRUE
+
+	density = FALSE //this is a wallmount
 
 /obj/machinery/computer/auxiliary_base/directional/north
 	dir = SOUTH
@@ -47,7 +50,7 @@
 	dir = EAST
 	pixel_x = -32
 
-/obj/machinery/computer/auxiliary_base/Initialize()
+/obj/machinery/computer/auxiliary_base/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "NT_AUX")
 

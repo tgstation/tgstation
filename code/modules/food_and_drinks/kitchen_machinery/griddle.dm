@@ -1,7 +1,7 @@
 /obj/machinery/griddle
 	name = "griddle"
 	desc = "Because using pans is for pansies."
-	icon = 'icons/obj/machines/griddle.dmi'
+	icon = 'icons/obj/machines/kitchenmachines.dmi'
 	icon_state = "griddle1_off"
 	density = TRUE
 	use_power = IDLE_POWER_USE
@@ -22,9 +22,9 @@
 	///How many shit fits on the griddle?
 	var/max_items = 8
 
-/obj/machinery/griddle/Initialize()
+/obj/machinery/griddle/Initialize(mapload)
 	. = ..()
-	grill_loop = new(list(src), FALSE)
+	grill_loop = new(src, FALSE)
 	if(isnum(variant))
 		variant = rand(1,3)
 	RegisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENT, .proc/on_expose_reagent)

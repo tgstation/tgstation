@@ -193,3 +193,13 @@
 	)
 	result = /obj/item/food/cheese/royal
 	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/ant_candy
+	name = "Ant Candy"
+	reqs = list(/obj/item/stack/rods = 1,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/water = 5,
+		/datum/reagent/ants = 10
+	)
+	result = /obj/item/food/ant_candy
+	subcategory = CAT_MISCFOOD

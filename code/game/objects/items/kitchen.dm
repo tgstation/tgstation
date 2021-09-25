@@ -17,7 +17,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 
-/obj/item/kitchen/Initialize()
+/obj/item/kitchen/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_APC_SHOCKING, INNATE_TRAIT)
 
@@ -40,7 +40,7 @@
 	var/datum/reagent/forkload //used to eat omelette
 	custom_price = PAYCHECK_PRISONER
 
-/obj/item/kitchen/fork/Initialize()
+/obj/item/kitchen/fork/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/eyestab)
 
@@ -75,7 +75,7 @@
 	custom_materials = list(/datum/material/plastic=80)
 	custom_price = PAYCHECK_PRISONER * 2
 
-/obj/item/kitchen/fork/plastic/Initialize()
+/obj/item/kitchen/fork/plastic/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 
@@ -98,11 +98,11 @@
 	sharpness = SHARP_EDGED
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	var/bayonet = FALSE //Can this be attached to a gun?
-	wound_bonus = -5
-	bare_wound_bonus = 10
+	wound_bonus = 5
+	bare_wound_bonus = 15
 	tool_behaviour = TOOL_KNIFE
 
-/obj/item/kitchen/knife/Initialize()
+/obj/item/kitchen/knife/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/eyestab)
 	set_butchering()
@@ -132,7 +132,7 @@
 	sharpness = SHARP_EDGED
 	custom_price = PAYCHECK_PRISONER * 2
 
-/obj/item/kitchen/knife/plastic/Initialize()
+/obj/item/kitchen/knife/plastic/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 
@@ -185,12 +185,14 @@
 	attack_verb_simple = list("cleave", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_EASY * 5
+	wound_bonus = 15
 
 /obj/item/kitchen/knife/hunting
 	name = "hunting knife"
 	desc = "Despite its name, it's mainly used for cutting meat from dead prey rather than actual hunting."
 	inhand_icon_state = "huntingknife"
 	icon_state = "huntingknife"
+	wound_bonus = 10
 
 /obj/item/kitchen/knife/hunting/set_butchering()
 	AddComponent(/datum/component/butchering, 80 - force, 100, force + 10)
@@ -307,7 +309,7 @@
 	custom_price = PAYCHECK_PRISONER * 2
 	toolspeed = 75 // The plastic spoon takes 5 minutes to dig through a single mineral turf... It's one, continuous, breakable, do_after...
 
-/obj/item/kitchen/spoon/plastic/Initialize()
+/obj/item/kitchen/spoon/plastic/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 

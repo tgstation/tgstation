@@ -69,7 +69,7 @@
 		var/static/list/loc_connections = list(
 			COMSIG_ATOM_ENTERED = .proc/burst,
 		)
-		AddElement(/datum/element/connect_loc, src, loc_connections)
+		AddElement(/datum/element/connect_loc, loc_connections)
 	. = ..()
 	creator = set_creator
 	res = set_resonator
@@ -127,7 +127,7 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	duration = 4
 
-/obj/effect/temp_visual/resonance_crush/Initialize()
+/obj/effect/temp_visual/resonance_crush/Initialize(mapload)
 	. = ..()
 	transform = matrix()*1.5
 	animate(src, transform = matrix()*0.1, alpha = 50, time = 4)

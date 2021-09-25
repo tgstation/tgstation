@@ -55,9 +55,9 @@
 	if(ismovable(target))
 		var/atom/movable/M = target
 		var/atom/throw_target = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
-		M.safe_throw_at(throw_target, 3, 2)
+		M.safe_throw_at(throw_target, 3, 2, force = MOVE_FORCE_EXTREMELY_STRONG)
 
-/obj/projectile/bullet/shotgun_meteorslug/Initialize()
+/obj/projectile/bullet/shotgun_meteorslug/Initialize(mapload)
 	. = ..()
 	SpinAnimation()
 
@@ -68,7 +68,7 @@
 
 /obj/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = FALSE)
 	..()
-	explosion(target, devastation_range = -1, light_impact_range = 1)
+	explosion(target, devastation_range = -1, light_impact_range = 1, explosion_cause = src)
 	return BULLET_ACT_HIT
 
 /obj/projectile/bullet/pellet
@@ -110,7 +110,7 @@
 	wound_bonus = 0
 	bare_wound_bonus = 7.5
 
-/obj/projectile/bullet/pellet/shotgun_improvised/Initialize()
+/obj/projectile/bullet/pellet/shotgun_improvised/Initialize(mapload)
 	. = ..()
 	range = rand(1, 8)
 

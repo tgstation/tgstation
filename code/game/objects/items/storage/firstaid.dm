@@ -152,7 +152,7 @@
 
 /obj/item/storage/firstaid/fire
 	name = "burn treatment kit"
-	desc = "A specialized medical kit for when the toxins lab <i>-spontaneously-</i> burns down."
+	desc = "A specialized medical kit for when the ordnance lab <i>-spontaneously-</i> burns down."
 	icon_state = "ointment"
 	inhand_icon_state = "firstaid-ointment"
 	damagetype_healed = BURN
@@ -338,7 +338,7 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.allow_quick_gather = TRUE
 	STR.click_gather = TRUE
-	STR.set_holdable(list(/obj/item/reagent_containers/pill, /obj/item/dice))
+	STR.set_holdable(list(/obj/item/reagent_containers/pill))
 
 /obj/item/storage/pill_bottle/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -492,7 +492,7 @@
 	name = "bottle of maintenance pills"
 	desc = "An old pill bottle. It smells musty."
 
-/obj/item/storage/pill_bottle/maintenance_pill/Initialize()
+/obj/item/storage/pill_bottle/maintenance_pill/Initialize(mapload)
 	. = ..()
 	var/obj/item/reagent_containers/pill/P = locate() in src
 	name = "bottle of [P.name]s"
@@ -554,7 +554,7 @@
 		/obj/item/food/icecream
 		))
 
-/obj/item/storage/organbox/Initialize()
+/obj/item/storage/organbox/Initialize(mapload)
 	. = ..()
 	create_reagents(100, TRANSPARENT)
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/freeze)
@@ -633,7 +633,17 @@
 	return ..()
 
 /obj/item/storage/organbox/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is putting [user.p_theyre()] head inside the [src], it looks like [user.p_theyre()] trying to commit suicide!"))
+	if(HAS_TRAIT(user, TRAIT_RESISTCOLD)) //if they're immune to cold, just do the box suicide
+		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
+		if(myhead)
+			user.visible_message(span_suicide("[user] puts [user.p_their()] head into \the [src] and begins closing it! It looks like [user.p_theyre()] trying to commit suicide!"))
+			myhead.dismember()
+			myhead.forceMove(src) //force your enemies to kill themselves with your head collection box!
+			playsound(user, "desecration-01.ogg", 50, TRUE, -1)
+			return BRUTELOSS
+		user.visible_message(span_suicide("[user] is beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		return BRUTELOSS
+	user.visible_message(span_suicide("[user] is putting [user.p_their()] head inside the [src], it looks like [user.p_theyre()] trying to commit suicide!"))
 	user.adjust_bodytemperature(-300)
 	user.apply_status_effect(/datum/status_effect/freon)
-	return (OXYLOSS)
+	return FIRELOSS

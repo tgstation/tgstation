@@ -14,8 +14,8 @@
 	var/id = null
 	var/on = FALSE
 
-/obj/machinery/igniter/incinerator_toxmix
-	id = INCINERATOR_TOXMIX_IGNITER
+/obj/machinery/igniter/incinerator_ordmix
+	id = INCINERATOR_ORDMIX_IGNITER
 
 /obj/machinery/igniter/incinerator_atmos
 	id = INCINERATOR_ATMOS_IGNITER
@@ -44,7 +44,7 @@
 			location.hotspot_expose(1000,500,1)
 	return 1
 
-/obj/machinery/igniter/Initialize()
+/obj/machinery/igniter/Initialize(mapload)
 	. = ..()
 	icon_state = "igniter[on]"
 
@@ -85,10 +85,10 @@
 	dir = EAST
 	pixel_x = -26
 
-/obj/machinery/sparker/toxmix
-	id = INCINERATOR_TOXMIX_IGNITER
+/obj/machinery/sparker/ordmix
+	id = INCINERATOR_ORDMIX_IGNITER
 
-/obj/machinery/sparker/Initialize()
+/obj/machinery/sparker/Initialize(mapload)
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)

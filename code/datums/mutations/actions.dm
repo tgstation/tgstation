@@ -56,7 +56,7 @@
 		var/list/prints = sniffed.return_fingerprints()
 		if(prints)
 			for(var/mob/living/carbon/C in GLOB.carbon_list)
-				if(prints[md5(C.dna.uni_identity)])
+				if(prints[md5(C.dna.unique_identity)])
 					possible |= C
 		if(!length(possible))
 			to_chat(user,span_warning("Despite your best efforts, there are no scents to be found on [sniffed]..."))
@@ -140,6 +140,7 @@
 			return FALSE
 
 /obj/effect/proc_holder/spell/aimed/firebreath/ready_projectile(obj/projectile/P, atom/target, mob/user, iteration)
+	. = ..()
 	if(!istype(P, /obj/projectile/magic/aoe/fireball))
 		return
 	var/obj/projectile/magic/aoe/fireball/F = P

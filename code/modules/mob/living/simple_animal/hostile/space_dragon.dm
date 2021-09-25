@@ -29,10 +29,12 @@
 /mob/living/simple_animal/hostile/space_dragon
 	name = "Space Dragon"
 	desc = "A vile, leviathan-esque creature that flies in the most unnatural way.  Looks slightly similar to a space carp."
-	maxHealth = 400
-	health = 400
+	maxHealth = 320
+	health = 320
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0.5, OXY = 1)
 	combat_mode = TRUE
 	speed = 0
+	movement_type = FLYING
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
@@ -45,7 +47,7 @@
 	health_doll_icon = "spacedragon"
 	obj_damage = 50
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	melee_damage_upper = 35
 	melee_damage_lower = 35
 	mob_size = MOB_SIZE_LARGE
@@ -57,7 +59,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	deathmessage = "screeches as its wings turn to dust and it collapses on the floor, its life extinguished."
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 	faction = list("carp")
@@ -88,6 +90,10 @@
 	var/datum/action/innate/summon_rift/rift
 	/// The color of the space dragon.
 	var/chosen_color
+	/// Minimum devastation damage dealt coefficient based on max health
+	var/devastation_damage_min_percentage = 0.4
+	/// Maximum devastation damage dealt coefficient based on max health
+	var/devastation_damage_max_percentage = 0.75
 
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
 	. = ..()
@@ -102,6 +108,10 @@
 	if(!chosen_color)
 		dragon_name()
 		color_selection()
+
+/mob/living/simple_animal/hostile/space_dragon/ex_act_devastate()
+	var/damage_coefficient = rand(devastation_damage_min_percentage, devastation_damage_max_percentage)
+	adjustBruteLoss(initial(maxHealth)*damage_coefficient)
 
 /mob/living/simple_animal/hostile/space_dragon/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
@@ -156,7 +166,7 @@
 			to_chat(src, span_warning("You begin to swallow [L] whole..."))
 			if(do_after(src, 30, target = L))
 				if(eat(L))
-					adjustHealth(-L.maxHealth * 0.5)
+					adjustHealth(-L.maxHealth * 0.25)
 			return
 	. = ..()
 	if(istype(target, /obj/vehicle/sealed/mecha))
@@ -298,7 +308,7 @@
 		for(var/obj/machinery/door/D in T.contents)
 			if(D.density)
 				return
-		delayFire += 1.0
+		delayFire += 1.5
 		addtimer(CALLBACK(src, .proc/dragon_fire_line, T), delayFire)
 
 /**
@@ -550,13 +560,21 @@
 	/// Current charge state of the rift.
 	var/charge_state = CHARGE_ONGOING
 	/// The interval for adding additional space carp spawns to the rift.
-	var/carp_interval = 30
+	var/carp_interval = 60
 	/// The time since an extra carp was added to the ghost role spawning pool.
 	var/last_carp_inc = 0
+	/// A list of all the ckeys which have used this carp rift to spawn in as carps.
+	var/list/ckey_list = list()
 
 /obj/structure/carp_rift/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+
+// Carp rifts always take heavy explosion damage. Discourages the use of maxcaps
+// and favours more weaker explosives to destroy the portal
+// as they have the same effect on the portal.
+/obj/structure/carp_rift/ex_act(severity, target)
+	return ..(min(EXPLODE_HEAVY, severity))
 
 /obj/structure/carp_rift/examine(mob/user)
 	. = ..()
@@ -633,7 +651,7 @@
 		charge_state = CHARGE_COMPLETED
 		var/area/A = get_area(src)
 		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "Central Command Wildlife Observations")
-		obj_integrity = INFINITY
+		atom_integrity = INFINITY
 		icon_state = "carp_rift_charged"
 		set_light_color(LIGHT_COLOR_YELLOW)
 		update_light()
@@ -666,15 +684,28 @@
 /obj/structure/carp_rift/proc/summon_carp(mob/user)
 	if(carp_stored <= 0)//Not enough carp points
 		return FALSE
+	var/is_listed = FALSE
+	if (user.ckey in ckey_list)
+		if(carp_stored == 1)
+			to_chat(user, span_warning("You've already become a carp using this rift!  Either wait for a backlog of carp spawns or until the next rift!"))
+			return FALSE
+		is_listed = TRUE
 	var/carp_ask = tgui_alert(usr,"Become a carp?", "Help bring forth the horde?", list("Yes", "No"))
 	if(carp_ask == "No" || !src || QDELETED(src) || QDELETED(user))
 		return FALSE
 	if(carp_stored <= 0)
 		to_chat(user, span_warning("The rift already summoned enough carp!"))
 		return FALSE
+
 	var/mob/living/simple_animal/hostile/carp/newcarp = new /mob/living/simple_animal/hostile/carp(loc)
+	newcarp.AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
+	newcarp.AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
+
+	if(!is_listed)
+		ckey_list += user.ckey
 	newcarp.key = user.key
-	var/datum/antagonist/space_dragon/S = dragon.mind.has_antag_datum(/datum/antagonist/space_dragon)
+	newcarp.set_name()
+	var/datum/antagonist/space_dragon/S = dragon?.mind?.has_antag_datum(/datum/antagonist/space_dragon)
 	if(S)
 		S.carp += newcarp.mind
 	to_chat(newcarp, span_boldwarning("You have arrived in order to assist the space dragon with securing the rifts.  Do not jeopardize the mission, and protect the rifts at all costs!"))

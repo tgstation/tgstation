@@ -47,7 +47,7 @@
 /**
  * Called on a normal destruction, so we have a cool explosion and toss whatever's attached
  */
-/obj/structure/training_machine/obj_destruction(damage_flag)
+/obj/structure/training_machine/atom_destruction(damage_flag)
 	remove_attached_item(throwing = TRUE)
 	explosion(src, light_impact_range = 1, flash_range = 2)
 	return ..()
@@ -396,6 +396,8 @@
 
 /obj/item/training_toolbox/AltClick(mob/user)
 	. = ..()
+	if(!can_interact(user))
+		return
 	to_chat(user, span_notice("You push the 'Lap' button on the toolbox's display."))
 	lap_hits = initial(lap_hits)
 

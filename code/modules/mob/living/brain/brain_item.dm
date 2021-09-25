@@ -161,6 +161,8 @@
 		O.attack(brainmob, user) //Oh noooeeeee
 
 	if(O.force != 0 && !(O.item_flags & NOBLUDGEON))
+		user.do_attack_animation(src)
+		playsound(loc, 'sound/effects/meatslap.ogg', 50)
 		setOrganDamage(maxHealth) //fails the brain as the brain was attacked, they're pretty fragile.
 		visible_message(span_danger("[user] hits [src] with [O]!"))
 		to_chat(user, span_danger("You hit [src] with [O]!"))

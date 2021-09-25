@@ -56,7 +56,7 @@
 	var/obj/structure/chrono_field/field = null
 	var/turf/startpos = null
 
-/obj/item/gun/energy/chrono_gun/Initialize()
+/obj/item/gun/energy/chrono_gun/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHRONO_GUN_TRAIT)
 	if(istype(loc, /obj/item/chrono_eraser))
@@ -128,7 +128,7 @@
 	nodamage = TRUE
 	var/obj/item/gun/energy/chrono_gun/gun = null
 
-/obj/projectile/energy/chrono_beam/Initialize()
+/obj/projectile/energy/chrono_beam/Initialize(mapload)
 	. = ..()
 	var/obj/item/ammo_casing/energy/chrono_beam/C = loc
 	if(istype(C))
@@ -151,7 +151,7 @@
 	e_cost = 0
 	var/obj/item/gun/energy/chrono_gun/gun
 
-/obj/item/ammo_casing/energy/chrono_beam/Initialize()
+/obj/item/ammo_casing/energy/chrono_beam/Initialize(mapload)
 	if(istype(loc))
 		gun = loc
 	. = ..()
@@ -212,8 +212,8 @@
 	ttk_frame = clamp(CEILING(ttk_frame * CHRONO_FRAME_COUNT, 1), 1, CHRONO_FRAME_COUNT)
 	if(ttk_frame != RPpos)
 		RPpos = ttk_frame
+		underlays -= mob_underlay
 		mob_underlay.icon_state = "frame[RPpos]"
-		underlays = list() //hack: BYOND refuses to update the underlay to match the icon_state otherwise
 		underlays += mob_underlay
 
 /obj/structure/chrono_field/process(delta_time)

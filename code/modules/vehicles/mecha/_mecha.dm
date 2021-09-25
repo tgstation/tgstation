@@ -22,9 +22,9 @@
 	desc = "Exosuit"
 	icon = 'icons/mecha/mecha.dmi'
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	flags_1 = HEAR_1
 	max_integrity = 300
 	armor = list(MELEE = 20, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
+	force = 5
 	movedelay = 1 SECONDS
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
@@ -58,7 +58,7 @@
 	///Whether the mechs maintenance protocols are on or off
 	var/construction_state = MECHA_LOCKED
 	///Contains flags for the mecha
-	var/mecha_flags = ADDING_ACCESS_POSSIBLE | CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS
+	var/mecha_flags = ADDING_ACCESS_POSSIBLE | CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 	///Stores the DNA enzymes of a carbon so tht only they can access the mech
 	var/dna_lock
 	///Spark effects are handled by this datum
@@ -201,7 +201,7 @@
 	add_scanmod()
 	add_capacitor()
 	START_PROCESSING(SSobj, src)
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 	log_message("[src.name] created.", LOG_MECHA)
 	GLOB.mechas_list += src //global mech list
 	prepare_huds()
@@ -213,6 +213,8 @@
 	update_appearance()
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT) //protects pilots from ashstorms.
 
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/ejectee in occupants)
@@ -240,7 +242,7 @@
 		diag_hud.remove_from_hud(src) //YEET
 	return ..()
 
-/obj/vehicle/sealed/mecha/obj_destruction()
+/obj/vehicle/sealed/mecha/atom_destruction()
 	loc.assume_air(cabin_air)
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
@@ -267,12 +269,12 @@
 		return base_icon_state
 	return "[base_icon_state]-open"
 
-/obj/vehicle/sealed/mecha/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
+/obj/vehicle/sealed/mecha/CanPassThrough(atom/blocker, movement_dir, blocker_opinion)
 	if(!phasing || get_charge() <= phasing_energy_drain || throwing)
 		return ..()
 	if(phase_state)
 		flick(phase_state, src)
-	var/area/destination_area = target.loc
+	var/area/destination_area = get_step(loc, movement_dir).loc
 	if(destination_area.area_flags & NOTELEPORT)
 		return FALSE
 	return TRUE
@@ -346,7 +348,7 @@
 
 /obj/vehicle/sealed/mecha/examine(mob/user)
 	. = ..()
-	var/integrity = obj_integrity*100/max_integrity
+	var/integrity = atom_integrity*100/max_integrity
 	switch(integrity)
 		if(85 to 100)
 			. += "It's fully intact."
@@ -462,7 +464,7 @@
 				else
 					occupant.throw_alert("charge", /atom/movable/screen/alert/emptycell)
 
-		var/integrity = obj_integrity/max_integrity*100
+		var/integrity = atom_integrity/max_integrity*100
 		switch(integrity)
 			if(30 to 45)
 				occupant.throw_alert("mech damage", /atom/movable/screen/alert/low_mech_integrity, 1)
@@ -576,8 +578,9 @@
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		target = pick(oview(1,src))
 
-	target.mech_melee_attack(src, user)
-	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
+	if(force)
+		target.mech_melee_attack(src, user)
+		TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
 
 /obj/vehicle/sealed/mecha/proc/on_middlemouseclick(mob/user, atom/target, params)
 	SIGNAL_HANDLER
@@ -712,7 +715,6 @@
 /obj/vehicle/sealed/mecha/Bump(atom/obstacle)
 	. = ..()
 	if(phasing) //Theres only one cause for phasing canpass fails
-		addtimer(VARSET_CALLBACK(src, movedelay, TRUE), movedelay*3)
 		to_chat(occupants, "[icon2html(src, occupants)][span_warning("A dull, universal force is preventing you from [phasing] here!")]")
 		spark_system.start()
 		return
@@ -722,7 +724,7 @@
 		if(COOLDOWN_FINISHED(src, mecha_bump_smash))
 			obstacle.mech_melee_attack(src)
 			COOLDOWN_START(src, mecha_bump_smash, smashcooldown)
-			if(!obstacle || obstacle.CanPass(src,get_step(src,dir)))
+			if(!obstacle || obstacle.CanPass(src, get_dir(obstacle, src) || dir)) // The else is in case the obstacle is in the same turf.
 				step(src,dir)
 	if(isobj(obstacle))
 		var/obj/obj_obstacle = obstacle
@@ -745,7 +747,7 @@
 	if(!islist(possible_int_damage) || !length(possible_int_damage))
 		return
 	if(prob(20))
-		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
+		if(ignore_threshold || atom_integrity*100/max_integrity < internal_damage_threshold)
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
 					possible_int_damage -= T
@@ -754,7 +756,7 @@
 				if(int_dam_flag)
 					set_internal_damage(int_dam_flag)
 	if(prob(5))
-		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
+		if(ignore_threshold || atom_integrity*100/max_integrity < internal_damage_threshold)
 			if(LAZYLEN(equipment))
 				var/obj/item/mecha_parts/mecha_equipment/ME = pick(equipment)
 				qdel(ME)
@@ -939,7 +941,7 @@
 	visible_message(span_notice("[M] starts to climb into [name]."))
 
 	if(do_after(M, enter_delay, target = src))
-		if(obj_integrity <= 0)
+		if(atom_integrity <= 0)
 			to_chat(M, span_warning("You cannot get in the [name], it has been destroyed!"))
 		else if(LAZYLEN(occupants) >= max_occupants)
 			to_chat(M, span_danger("[occupants[occupants.len]] was faster! Try better next time, loser."))//get the last one that hopped in
@@ -978,15 +980,17 @@
 		SEND_SOUND(newoccupant, sound('sound/mecha/nominal.ogg',volume=50))
 	return TRUE
 
-/obj/vehicle/sealed/mecha/proc/mmi_move_inside(obj/item/mmi/M, mob/user)
-	if(!M.brain_check(user))
+/obj/vehicle/sealed/mecha/proc/mmi_move_inside(obj/item/mmi/brain_obj, mob/user)
+	if(!(mecha_flags & MMI_COMPATIBLE))
+		to_chat(user, span_warning("This mecha is not compatible with MMIs!"))
 		return FALSE
-
-	var/mob/living/brain/B = M.brainmob
+	if(!brain_obj.brain_check(user))
+		return FALSE
+	var/mob/living/brain/brain_mob = brain_obj.brainmob
 	if(LAZYLEN(occupants) >= max_occupants)
 		to_chat(user, span_warning("It's full!"))
 		return FALSE
-	if(dna_lock && (!B.stored_dna || (dna_lock != B.stored_dna.unique_enzymes)))
+	if(dna_lock && (!brain_mob.stored_dna || (dna_lock != brain_mob.stored_dna.unique_enzymes)))
 		to_chat(user, span_warning("Access denied. [name] is secured with a DNA lock."))
 		return FALSE
 
@@ -996,32 +1000,32 @@
 		to_chat(user, span_notice("You stop inserting the MMI."))
 		return FALSE
 	if(LAZYLEN(occupants) < max_occupants)
-		return mmi_moved_inside(M, user)
+		return mmi_moved_inside(brain_obj, user)
 	to_chat(user, span_warning("Maximum occupants exceeded!"))
 	return FALSE
 
-/obj/vehicle/sealed/mecha/proc/mmi_moved_inside(obj/item/mmi/M, mob/user)
-	if(!(Adjacent(M) && Adjacent(user)))
+/obj/vehicle/sealed/mecha/proc/mmi_moved_inside(obj/item/mmi/brain_obj, mob/user)
+	if(!(Adjacent(brain_obj) && Adjacent(user)))
 		return FALSE
-	if(!M.brain_check(user))
-		return FALSE
-
-	var/mob/living/brain/B = M.brainmob
-	if(!user.transferItemToLoc(M, src))
-		to_chat(user, span_warning("\the [M] is stuck to your hand, you cannot put it in \the [src]!"))
+	if(!brain_obj.brain_check(user))
 		return FALSE
 
-	M.set_mecha(src)
-	add_occupant(B)//Note this forcemoves the brain into the mech to allow relaymove
+	var/mob/living/brain/brain_mob = brain_obj.brainmob
+	if(!user.transferItemToLoc(brain_obj, src))
+		to_chat(user, span_warning("[brain_obj] is stuck to your hand, you cannot put it in [src]!"))
+		return FALSE
+
+	brain_obj.set_mecha(src)
+	add_occupant(brain_mob)//Note this forcemoves the brain into the mech to allow relaymove
 	mecha_flags |= SILICON_PILOT
-	B.reset_perspective(src)
-	B.remote_control = src
-	B.update_mouse_pointer()
+	brain_mob.reset_perspective(src)
+	brain_mob.remote_control = src
+	brain_mob.update_mouse_pointer()
 	setDir(dir_in)
-	log_message("[M] moved in as pilot.", LOG_MECHA)
+	log_message("[brain_obj] moved in as pilot.", LOG_MECHA)
 	if(!internal_damage)
-		SEND_SOUND(M, sound('sound/mecha/nominal.ogg',volume=50))
-	log_game("[key_name(user)] has put the MMI/posibrain of [key_name(B)] into [src] at [AREACOORD(src)]")
+		SEND_SOUND(brain_obj, sound('sound/mecha/nominal.ogg',volume=50))
+	log_game("[key_name(user)] has put the MMI/posibrain of [key_name(brain_mob)] into [src] at [AREACOORD(src)]")
 	return TRUE
 
 /obj/vehicle/sealed/mecha/container_resist_act(mob/living/user)

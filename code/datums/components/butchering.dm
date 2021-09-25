@@ -11,8 +11,10 @@
 	var/butchering_enabled = TRUE
 	/// Whether or not this component is compatible with blunt tools.
 	var/can_be_blunt = FALSE
+	/// Callback for butchering
+	var/datum/callback/butcher_callback
 
-/datum/component/butchering/Initialize(_speed, _effectiveness, _bonus_modifier, _butcher_sound, disabled, _can_be_blunt)
+/datum/component/butchering/Initialize(_speed, _effectiveness, _bonus_modifier, _butcher_sound, disabled, _can_be_blunt, _butcher_callback)
 	if(_speed)
 		speed = _speed
 	if(_effectiveness)
@@ -25,6 +27,8 @@
 		butchering_enabled = FALSE
 	if(_can_be_blunt)
 		can_be_blunt = _can_be_blunt
+	if(_butcher_callback)
+		butcher_callback = _butcher_callback
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/onItemAttack)
 
@@ -126,15 +130,13 @@
 	if(butcher)
 		butcher.visible_message(span_notice("[butcher] butchers [meat]."), \
 								span_notice("You butcher [meat]."))
-	ButcherEffects(meat)
+	butcher_callback?.Invoke(butcher, meat)
 	meat.harvest(butcher)
 	meat.gib(FALSE, FALSE, TRUE)
 
-/datum/component/butchering/proc/ButcherEffects(mob/living/meat) //extra effects called on butchering, override this via subtypes
-	return
-
 ///Special snowflake component only used for the recycler.
 /datum/component/butchering/recycler
+
 
 /datum/component/butchering/recycler/Initialize(_speed, _effectiveness, _bonus_modifier, _butcher_sound, disabled, _can_be_blunt)
 	if(!istype(parent, /obj/machinery/recycler)) //EWWW
@@ -146,15 +148,16 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, parent, loc_connections)
+	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
-/datum/component/butchering/recycler/proc/on_entered(datum/source, mob/living/L)
+/datum/component/butchering/recycler/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
-	if(!istype(L))
+	if(!isliving(arrived))
 		return
+	var/mob/living/victim = arrived
 	var/obj/machinery/recycler/eater = parent
 	if(eater.safety_mode || (eater.machine_stat & (BROKEN|NOPOWER))) //I'm so sorry.
 		return
-	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
-		Butcher(parent, L)
+	if(victim.stat == DEAD && (victim.butcher_results || victim.guaranteed_butcher_results))
+		Butcher(parent, victim)

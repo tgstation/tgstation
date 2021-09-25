@@ -1,7 +1,12 @@
+#define VENUE_RESTAURANT "Restaurant Venue"
+#define VENUE_BAR "Bar Venue"
+
 ///Represents the abstract concept of a food venue in the code.
 /datum/venue
 	///Name of the venue, also used for the icon state of any radials it can be selected in
 	var/name = "unnamed venue"
+	///What kind of Venue are we
+	var/venue_type = VENUE_RESTAURANT
 	///Max amount of guests at any time
 	var/max_guests = 6
 	///Weighted list of customer types
@@ -115,7 +120,7 @@
 	/// A weak reference to the mob who turned on the portal
 	var/datum/weakref/turned_on_portal
 
-/obj/machinery/restaurant_portal/Initialize()
+/obj/machinery/restaurant_portal/Initialize(mapload)
 	. = ..()
 	if(linked_venue)
 		linked_venue = SSrestaurant.all_venues[linked_venue]
@@ -181,8 +186,8 @@
 	if(linked_venue && linked_venue.restaurant_portal) //We're already linked, unlink us.
 		if(linked_venue.open)
 			linked_venue.close()
-		linked_venue.restaurant_portal.linked_venue = null
 		linked_venue.restaurant_portal = null
+		linked_venue = null
 
 	linked_venue = chosen_venue
 	linked_venue.restaurant_portal = src
@@ -207,7 +212,7 @@
 	use_vis_overlay = FALSE
 	var/datum/venue/linked_venue = /datum/venue
 
-/obj/structure/holosign/robot_seat/Initialize(loc, source_projector)
+/obj/structure/holosign/robot_seat/Initialize(mapload, loc, source_projector)
 	. = ..()
 	linked_venue = SSrestaurant.all_venues[linked_venue]
 	linked_venue.linked_seats[src] += null

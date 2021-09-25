@@ -24,7 +24,7 @@
 	var/on = FALSE
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/chainsaw/Initialize()
+/obj/item/chainsaw/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
@@ -74,9 +74,7 @@
 
 	if(src == user.get_active_held_item()) //update inhands
 		user.update_inv_hands()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /obj/item/chainsaw/doomslayer
 	name = "THE GREAT COMMUNICATOR"

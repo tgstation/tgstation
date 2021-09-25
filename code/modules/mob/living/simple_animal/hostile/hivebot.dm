@@ -24,7 +24,7 @@
 	projectiletype = /obj/projectile/hivebotbullet
 	faction = list("hivebot")
 	check_friendly_fire = 1
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	verb_say = "states"
 	verb_ask = "queries"
@@ -38,7 +38,7 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
-/mob/living/simple_animal/hostile/hivebot/Initialize()
+/mob/living/simple_animal/hostile/hivebot/Initialize(mapload)
 	. = ..()
 	deathmessage = "[src] blows apart!"
 
@@ -108,7 +108,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	var/datum/action/innate/hivebot/foamwall/foam
 
-/mob/living/simple_animal/hostile/hivebot/mechanic/Initialize()
+/mob/living/simple_animal/hostile/hivebot/mechanic/Initialize(mapload)
 	. = ..()
 	foam = new
 	foam.Grant(src)

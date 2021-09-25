@@ -1,12 +1,31 @@
 Any time you make a change to the schema files, remember to increment the database schema version. Generally increment the minor number, major should be reserved for significant changes to the schema. Both values go up to 255.
 
-The latest database version is 5.14; The query to update the schema revision table is:
+The latest database version is 5.16; The query to update the schema revision table is:
 
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 15);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 16);
 or
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 15);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 16);
 
 In any query remember to add a prefix to the table names if you use one.
+
+-----------------------------------------------------
+Version 5.16, 31 July 2021, by Atlanta-Ned
+Added `library_action` table for tracking reported library books and actions taken on them.
+
+```
+DROP TABLE IF EXISTS `library_action`;
+CREATE TABLE `library_action` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `book` int(10) unsigned NOT NULL,
+  `reason` longtext DEFAULT NULL,
+  `ckey` varchar(11) NOT NULL DEFAULT '',
+  `datetime` datetime NOT NULL DEFAULT current_timestamp(),
+  `action` varchar(11) NOT NULL DEFAULT '',
+  `ip_addr` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+```
+
 
 -----------------------------------------------------
 Version 5.15, 2 June 2021, by Mothblocks

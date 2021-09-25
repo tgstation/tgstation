@@ -158,7 +158,7 @@
 	///What the creation reagent is
 	var/reagent_type = /datum/reagent/consumable/ethanol
 
-/obj/item/burner/Initialize()
+/obj/item/burner/Initialize(mapload)
 	. = ..()
 	create_reagents(max_volume, TRANSPARENT)//We have our own refillable - since we want to heat and pour
 	if(reagent_type)

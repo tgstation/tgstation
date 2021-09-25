@@ -20,7 +20,7 @@
 	///track wielded status on item
 	var/wielded = FALSE
 
-/obj/item/singularityhammer/Initialize()
+/obj/item/singularityhammer/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
@@ -101,7 +101,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/mjollnir/Initialize()
+/obj/item/mjollnir/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
@@ -112,10 +112,14 @@
 
 /// triggered on wield of two handed item
 /obj/item/mjollnir/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/mjollnir/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = FALSE
 
 /obj/item/mjollnir/update_icon_state()

@@ -74,7 +74,7 @@
 	)
 
 	if (flags_1 & ON_BORDER_1)
-		AddElement(/datum/element/connect_loc, src, loc_connections)
+		AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/window/ComponentInitialize()
 	. = ..()
@@ -104,7 +104,7 @@
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 
-/obj/structure/window/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/window/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(.)
 		return
@@ -112,7 +112,7 @@
 	if(fulltile)
 		return FALSE
 
-	if(get_dir(loc, target) == dir)
+	if(border_dir == dir)
 		return FALSE
 
 	if(istype(mover, /obj/structure/window))
@@ -124,16 +124,19 @@
 
 	return TRUE
 
-/obj/structure/window/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+/obj/structure/window/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
 
-	if (istype(leaving) && (leaving.pass_flags & pass_flags_self))
+	if(leaving == src)
+		return // Let's not block ourselves.
+
+	if (leaving.pass_flags & pass_flags_self)
 		return
 
 	if (fulltile)
 		return
 
-	if(get_dir(leaving.loc, new_location) == dir && density)
+	if(direction == dir && density)
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
@@ -182,13 +185,13 @@
 	add_fingerprint(user)
 
 	if(I.tool_behaviour == TOOL_WELDER)
-		if(obj_integrity < max_integrity)
+		if(atom_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount = 0))
 				return
 
 			to_chat(user, span_notice("You begin repairing [src]..."))
 			if(I.use_tool(src, user, 40, volume = 50))
-				obj_integrity = max_integrity
+				atom_integrity = max_integrity
 				update_nearby_icons()
 				to_chat(user, span_notice("You repair [src]."))
 		else
@@ -236,13 +239,19 @@
 /obj/structure/window/proc/check_state_and_anchored(checked_state, checked_anchored)
 	return check_state(checked_state) && check_anchored(checked_anchored)
 
+
 /obj/structure/window/proc/can_be_reached(mob/user)
-	if(!fulltile)
-		if(get_dir(user,src) & dir)
-			for(var/obj/O in loc)
-				if(!O.CanPass(user, user.loc, 1))
-					return FALSE
+	if(fulltile)
+		return TRUE
+	var/checking_dir = get_dir(user, src)
+	if(!(checking_dir & dir))
+		return TRUE // Only windows on the other side may be blocked by other things.
+	checking_dir = REVERSE_DIR(checking_dir)
+	for(var/obj/blocker in loc)
+		if(!blocker.CanPass(user, checking_dir))
+			return FALSE
 	return TRUE
+
 
 /obj/structure/window/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
@@ -296,9 +305,8 @@
 	air_update_turf(TRUE, FALSE)
 	add_fingerprint(user)
 
-/obj/structure/window/proc/on_painted(is_dark_color)
+/obj/structure/window/proc/on_painted(obj/structure/window/source, is_dark_color)
 	SIGNAL_HANDLER
-
 	if (is_dark_color && fulltile) //Opaque directional windows restrict vision even in directions they are not placed in, please don't do this
 		set_opacity(255)
 	else
@@ -337,7 +345,7 @@
 	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
 		QUEUE_SMOOTH(src)
 
-	var/ratio = obj_integrity / max_integrity
+	var/ratio = atom_integrity / max_integrity
 	ratio = CEILING(ratio*4, 1) * 25
 	cut_overlay(crack_overlay)
 	if(ratio > 75)
@@ -451,7 +459,11 @@
 			else if (tool.tool_behaviour)
 				to_chat(user, span_warning("The bolts need to be loosened first!"))
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if (tool.tool_behaviour)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	return ..()
 
 /obj/structure/window/proc/cool_bolts()
 	if(state == RWINDOW_BOLTS_HEATED)
@@ -619,7 +631,7 @@
 	name = "frosted window"
 	icon_state = "fwindow"
 
-/* Full Tile Windows (more obj_integrity) */
+/* Full Tile Windows (more atom_integrity) */
 
 /obj/structure/window/fulltile
 	icon = 'icons/obj/smooth_structures/window.dmi'
@@ -785,13 +797,13 @@
 	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
 	var/static/mutable_appearance/paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER - 0.1)
 
-/obj/structure/window/paperframe/Initialize()
+/obj/structure/window/paperframe/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
 /obj/structure/window/paperframe/examine(mob/user)
 	. = ..()
-	if(obj_integrity < max_integrity)
+	if(atom_integrity < max_integrity)
 		. += span_info("It looks a bit damaged, you may be able to fix it with some <b>paper</b>.")
 
 /obj/structure/window/paperframe/spawnDebris(location)
@@ -810,7 +822,7 @@
 
 /obj/structure/window/paperframe/update_appearance(updates)
 	. = ..()
-	set_opacity(obj_integrity >= max_integrity)
+	set_opacity(atom_integrity >= max_integrity)
 
 /obj/structure/window/paperframe/update_icon(updates=ALL)
 	. = ..()
@@ -819,7 +831,7 @@
 
 /obj/structure/window/paperframe/update_overlays()
 	. = ..()
-	. += (obj_integrity < max_integrity) ? torn : paper
+	. += (atom_integrity < max_integrity) ? torn : paper
 
 /obj/structure/window/paperframe/attackby(obj/item/W, mob/living/user)
 	if(W.get_temperature())
@@ -827,13 +839,13 @@
 		return
 	if(user.combat_mode)
 		return ..()
-	if(istype(W, /obj/item/paper) && obj_integrity < max_integrity)
+	if(istype(W, /obj/item/paper) && atom_integrity < max_integrity)
 		user.visible_message(span_notice("[user] starts to patch the holes in \the [src]."))
 		if(do_after(user, 20, target = src))
-			obj_integrity = min(obj_integrity+4,max_integrity)
+			atom_integrity = min(atom_integrity+4,max_integrity)
 			qdel(W)
 			user.visible_message(span_notice("[user] patches some of the holes in \the [src]."))
-			if(obj_integrity == max_integrity)
+			if(atom_integrity == max_integrity)
 				update_appearance()
 			return
 	..()

@@ -34,6 +34,14 @@
 #define DAMAGE_CAP_MULTIPLIER 0.005
 ///Sets the range of the hallucinations
 #define HALLUCINATION_HFR(P) (min(7, round(abs(P) ** 0.25)))
+///Chance in percentage points per fusion level of iron accumulation when operating at unsafe levels
+#define IRON_CHANCE_PER_FUSION_LEVEL 17
+///Amount of iron accumulated per second whenever we fail our saving throw, using the chance above
+#define IRON_ACCUMULATED_PER_SECOND 0.005
+///Maximum amount of iron that can be healed per second. Calculated to mostly keep up with fusion level 5.
+#define IRON_OXYGEN_HEAL_PER_SECOND (IRON_ACCUMULATED_PER_SECOND * (100 - IRON_CHANCE_PER_FUSION_LEVEL) / 100)
+///Amount of oxygen in moles required to fully remove 100% iron content. Currently about 2409mol. Calculated to consume at most 10mol/s.
+#define OXYGEN_MOLES_CONSUMED_PER_IRON_HEAL (10 / IRON_OXYGEN_HEAL_PER_SECOND)
 
 //If integrity percent remaining is less than these values, the monitor sets off the relevant alarm.
 #define HYPERTORUS_MELTING_PERCENT 5
@@ -46,3 +54,18 @@
 #define HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN 3 SECONDS
 
 #define HYPERTORUS_COUNTDOWN_TIME 30 SECONDS
+
+#define HYPERTORUS_SUBCRITICAL_MOLES 2000
+#define HYPERTORUS_HYPERCRITICAL_MOLES 10000
+#define HYPERTORUS_MAX_MOLE_DAMAGE 10
+
+#define HYPERTORUS_FLAG_BASE_EXPLOSION (1<<0)
+#define HYPERTORUS_FLAG_MEDIUM_EXPLOSION (1<<1)
+#define HYPERTORUS_FLAG_DEVASTATING_EXPLOSION (1<<2)
+#define HYPERTORUS_FLAG_RADIATION_PULSE (1<<3)
+#define HYPERTORUS_FLAG_EMP (1<<4)
+#define HYPERTORUS_FLAG_MINIMUM_SPREAD (1<<5)
+#define HYPERTORUS_FLAG_MEDIUM_SPREAD (1<<6)
+#define HYPERTORUS_FLAG_BIG_SPREAD (1<<7)
+#define HYPERTORUS_FLAG_MASSIVE_SPREAD (1<<8)
+#define HYPERTORUS_FLAG_CRITICAL_MELTDOWN (1<<9)

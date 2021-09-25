@@ -8,7 +8,7 @@
 
 	hide = FALSE
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/Initialize()
+/obj/machinery/atmospherics/pipe/heat_exchanging/Initialize(mapload)
 	. = ..()
 
 	add_atom_colour("#404040", FIXED_COLOUR_PRIORITY)
@@ -78,3 +78,6 @@
 			for(var/m in buckled_mobs)
 				var/mob/living/buckled_mob = m
 				buckled_mob.apply_damage(delta_time * 2 * log(pipe_air.temperature - heat_limit), BURN, BODY_ZONE_CHEST)
+
+/obj/machinery/atmospherics/pipe/heat_exchanging/update_pipe_icon()
+	return

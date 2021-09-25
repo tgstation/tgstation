@@ -49,6 +49,8 @@ GLOBAL_DATUM(global_funny_embedding, /datum/global_funny_embedding)
 
 ///signal sent by a new item being created.
 /datum/global_funny_embedding/proc/on_new_item_in_existence(datum/source, obj/item/created_item)
+	SIGNAL_HANDLER
+
 	// this proc says it's for initializing components, but we're initializing elements too because it's you and me against the world >:)
 	if(LAZYLEN(created_item.embedding))
 		return //already embeds to some degree, so whatever 🐀

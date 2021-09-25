@@ -19,6 +19,26 @@
 	var/finish_name = "turret" //the name applied to the product turret
 	var/obj/item/gun/installed_gun = null
 
+/obj/machinery/porta_turret_construct/examine(mob/user)
+	. = ..()
+	switch(build_step)
+		if(PTURRET_UNSECURED)
+			. += span_notice("The external bolts are <b>unwrenched</b>, and the frame could be <i>pried</i> apart.")
+		if(PTURRET_BOLTED)
+			. += span_notice("The frame requires <b>metal</b> for its internal armor, the external bolts are <i>wrenched</i> in place.")
+		if(PTURRET_START_INTERNAL_ARMOUR)
+			. += span_notice("The turret's armor needs to be <b>bolted</b> in place, the armor looked like it could be <i>welded</i> out.")
+		if(PTURRET_INTERNAL_ARMOUR_ON)
+			. += span_notice("The turret requires an <b>energy based gun</b> to function, the armor is secured by <i>bolts</i>.")
+		if(PTURRET_GUN_EQUIPPED)
+			. += span_notice("The turret requires an <b>proximity sensor</b> to function. The energy gun could <i>be removed</i>.")
+		if(PTURRET_SENSORS_ON)
+			. += span_notice("The turret's access hatch is <b>unscrewed</b>. The proximity sensor could <i>be removed</i>.")
+		if(PTURRET_CLOSED)
+			. += span_notice("The turret requires <b>metal</b> for its external armor, the access hatch could be <i>unscrewed</i>.")
+		if(PTURRET_START_EXTERNAL_ARMOUR)
+			. += span_notice("The turret's armor needs to be <b>welded</b> in place, the armor looks like it could be <i>pried</i> off.")
+
 /obj/machinery/porta_turret_construct/attackby(obj/item/I, mob/user, params)
 	//this is a bit unwieldy but self-explanatory
 	switch(build_step)

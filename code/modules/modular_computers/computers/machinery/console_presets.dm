@@ -5,7 +5,7 @@
 	var/_has_battery = FALSE
 	var/_has_ai = FALSE
 
-/obj/machinery/modular_computer/console/preset/Initialize()
+/obj/machinery/modular_computer/console/preset/Initialize(mapload)
 	. = ..()
 	if(!cpu)
 		return
@@ -43,6 +43,7 @@
 	console_department = "Research"
 	name = "research director's console"
 	desc = "A stationary computer. This one comes preloaded with research programs."
+	_has_second_id_slot = TRUE
 	_has_ai = TRUE
 
 /obj/machinery/modular_computer/console/preset/research/install_programs()

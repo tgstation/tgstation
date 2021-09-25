@@ -127,6 +127,7 @@ SUBSYSTEM_DEF(mapping)
 	setup_map_transitions()
 	generate_station_area_list()
 	initialize_reserved_level(transit.z_value)
+	SSticker.OnRoundstart(CALLBACK(src, .proc/spawn_maintenance_loot))
 	return ..()
 
 /datum/controller/subsystem/mapping/proc/wipe_reservations(wipe_safety_delay = 100)
@@ -194,6 +195,8 @@ Used by the AI doomsday and the self-destruct nuke.
 	turf_reservations = SSmapping.turf_reservations
 	used_turfs = SSmapping.used_turfs
 	holodeck_templates = SSmapping.holodeck_templates
+	transit = SSmapping.transit
+	areas_in_z = SSmapping.areas_in_z
 
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
@@ -298,7 +301,7 @@ Used by the AI doomsday and the self-destruct nuke.
 GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
-	var/list/station_areas_blacklist = typecacheof(list(/area/space, /area/mine, /area/ruin, /area/asteroid/nearstation))
+	var/static/list/station_areas_blacklist = typecacheof(list(/area/space, /area/mine, /area/ruin, /area/asteroid/nearstation))
 	for(var/area/A in world)
 		if (is_type_in_typecache(A, station_areas_blacklist))
 			continue
@@ -325,7 +328,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/pmv = CONFIG_GET(flag/preference_map_voting)
 	if(pmv)
 		for (var/client/c in GLOB.clients)
-			var/vote = c.prefs.preferred_map
+			var/vote = c.prefs.read_preference(/datum/preference/choiced/preferred_map)
 			if (!vote)
 				if (global.config.defaultmap)
 					mapvotes[global.config.defaultmap.map_name] += 1
@@ -590,3 +593,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		isolated_ruins_z = add_new_zlevel("Isolated Ruins/Reserved", list(ZTRAIT_RESERVED = TRUE, ZTRAIT_ISOLATED_RUINS = TRUE))
 		initialize_reserved_level(isolated_ruins_z.z_value)
 	return isolated_ruins_z.z_value
+
+/datum/controller/subsystem/mapping/proc/spawn_maintenance_loot()
+	for(var/obj/effect/spawner/random/maintenance/spawner as anything in GLOB.maintenance_loot_spawners)
+		CHECK_TICK
+
+		spawner.spawn_loot()
+		spawner.hide()

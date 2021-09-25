@@ -7,7 +7,7 @@
 	///Alternative mode for hiding the hood, instead of storing the hood in the suit it qdels it, useful for when you deal with hooded suit with storage.
 	var/alternative_mode = FALSE
 
-/obj/item/clothing/suit/hooded/Initialize()
+/obj/item/clothing/suit/hooded/Initialize(mapload)
 	. = ..()
 	if(!alternative_mode)
 		MakeHood()
@@ -50,9 +50,7 @@
 		if(alternative_mode)
 			QDEL_NULL(hood)
 
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /obj/item/clothing/suit/hooded/dropped()
 	..()
@@ -79,9 +77,7 @@
 			suittoggled = TRUE
 			icon_state = "[initial(icon_state)]_t"
 			H.update_inv_wear_suit()
-			for(var/X in actions)
-				var/datum/action/A = X
-				A.UpdateButtonIcon()
+			update_action_buttons()
 	else
 		RemoveHood()
 
@@ -132,16 +128,14 @@
 		src.icon_state = "[initial(icon_state)]_t"
 		src.suittoggled = TRUE
 	usr.update_inv_wear_suit()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /obj/item/clothing/suit/toggle/examine(mob/user)
 	. = ..()
 	. += "Alt-click on [src] to toggle the [togglename]."
 
 //Hardsuit toggle code
-/obj/item/clothing/suit/space/hardsuit/Initialize()
+/obj/item/clothing/suit/space/hardsuit/Initialize(mapload)
 	MakeHelmet()
 	. = ..()
 
@@ -150,7 +144,8 @@
 		helmet.suit = null
 		qdel(helmet)
 		helmet = null
-	QDEL_NULL(jetpack)
+	if (isatom(jetpack))
+		QDEL_NULL(jetpack)
 	return ..()
 
 /obj/item/clothing/head/helmet/space/hardsuit/Destroy()

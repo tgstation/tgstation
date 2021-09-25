@@ -51,7 +51,7 @@
 	/// How fast it charges cells in a suit
 	var/charge_rate = 250
 
-/obj/machinery/suit_storage_unit/Initialize()
+/obj/machinery/suit_storage_unit/Initialize(mapload)
 	. = ..()
 	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
 
@@ -63,6 +63,11 @@
 /obj/machinery/suit_storage_unit/captain
 	suit_type = /obj/item/clothing/suit/space/hardsuit/swat/captain
 	mask_type = /obj/item/clothing/mask/gas/atmos/captain
+	storage_type = /obj/item/tank/jetpack/oxygen/captain
+
+/obj/machinery/suit_storage_unit/centcom
+	suit_type = /obj/item/clothing/suit/space/hardsuit/swat/centcom
+	mask_type = /obj/item/clothing/mask/gas/atmos/centcom
 	storage_type = /obj/item/tank/jetpack/oxygen/captain
 
 /obj/machinery/suit_storage_unit/engine
@@ -140,7 +145,7 @@
 	state_open = TRUE
 	density = FALSE
 
-/obj/machinery/suit_storage_unit/Initialize()
+/obj/machinery/suit_storage_unit/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/suit_storage_unit(src)
 	if(suit_type)

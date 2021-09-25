@@ -26,7 +26,7 @@ LINEN BINS
 
 /obj/item/bedsheet/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/surgery_initiator, null)
+	AddElement(/datum/element/surgery_initiator)
 	AddElement(/datum/element/bed_tuckable, 0, 0, 0)
 
 /obj/item/bedsheet/attack_self(mob/user)
@@ -254,7 +254,7 @@ LINEN BINS
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
 	slot_flags = null
 
-/obj/item/bedsheet/random/Initialize()
+/obj/item/bedsheet/random/Initialize(mapload)
 	..()
 	var/type = pick(typesof(/obj/item/bedsheet) - /obj/item/bedsheet/random)
 	new type(loc)
@@ -266,7 +266,7 @@ LINEN BINS
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
 	slot_flags = null
 
-/obj/item/bedsheet/dorms/Initialize()
+/obj/item/bedsheet/dorms/Initialize(mapload)
 	..()
 	var/type = pickweight(list("Colors" = 80, "Special" = 20))
 	switch(type)

@@ -58,8 +58,7 @@
 	message_admins("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
 	log_game("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
 	var/mob/M = get_mob_by_ckey(fingerprint)
-	var/turf/T = get_turf(M)
-	G.log_grenade(M, T) //Used in arm_grenade() too but this one conveys where the mob who triggered the bomb is
+	G.log_grenade(M) //Used in arm_grenade() too but this one conveys where the mob who triggered the bomb is
 	if(G.landminemode)
 		G.detonate() ///already armed
 	else

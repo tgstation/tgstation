@@ -79,10 +79,10 @@
 	. = ..()
 	AddComponent(/datum/component/wet_floor, TURF_WET_SUPERLUBE, INFINITY, 0, INFINITY, TRUE)
 
-/turf/open/indestructible/honk/Entered(atom/movable/AM)
-	..()
-	if(ismob(AM))
-		playsound(src,sound,50,TRUE)
+/turf/open/indestructible/honk/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(ismob(arrived))
+		playsound(src, sound, 50, TRUE)
 
 /turf/open/indestructible/necropolis
 	name = "necropolis floor"
@@ -97,7 +97,7 @@
 	heavyfootstep = FOOTSTEP_LAVA
 	tiled_dirt = FALSE
 
-/turf/open/indestructible/necropolis/Initialize()
+/turf/open/indestructible/necropolis/Initialize(mapload)
 	. = ..()
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"

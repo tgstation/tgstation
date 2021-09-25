@@ -41,7 +41,7 @@
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = TRUE
 
-/obj/item/sign/Initialize() //Signs not attached to walls are always rotated so they look like they're laying horizontal.
+/obj/item/sign/Initialize(mapload) //Signs not attached to walls are always rotated so they look like they're laying horizontal.
 	. = ..()
 	var/matrix/M = matrix()
 	M.Turn(90)
@@ -97,7 +97,7 @@
 	. = ..()
 	if(user.combat_mode)
 		return FALSE
-	if(obj_integrity == max_integrity)
+	if(atom_integrity == max_integrity)
 		to_chat(user, span_warning("This sign is already in perfect condition."))
 		return TRUE
 	if(!I.tool_start_check(user, amount=0))
@@ -108,14 +108,14 @@
 		return TRUE
 	user.visible_message(span_notice("[user] finishes repairing [src]."), \
 		span_notice("You finish repairing [src]."))
-	obj_integrity = max_integrity
+	atom_integrity = max_integrity
 	return TRUE
 
 /obj/item/sign/welder_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(user.combat_mode)
 		return FALSE
-	if(obj_integrity == max_integrity)
+	if(atom_integrity == max_integrity)
 		to_chat(user, span_warning("This sign is already in perfect condition."))
 		return TRUE
 	if(!I.tool_start_check(user, amount=0))
@@ -126,7 +126,7 @@
 		return TRUE
 	user.visible_message(span_notice("[user] finishes repairing [src]."), \
 		span_notice("You finish repairing [src]."))
-	obj_integrity = max_integrity
+	atom_integrity = max_integrity
 	return TRUE
 
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
@@ -150,7 +150,7 @@
 		var/obj/structure/sign/changedsign = new sign_type(get_turf(src))
 		changedsign.pixel_x = pixel_x
 		changedsign.pixel_y = pixel_y
-		changedsign.obj_integrity = obj_integrity
+		changedsign.atom_integrity = atom_integrity
 		qdel(src)
 		user.visible_message(span_notice("[user] finishes changing the sign."), \
 			span_notice("You finish changing the sign."))
@@ -210,7 +210,7 @@
 	placed_sign.setDir(dir)
 	qdel(src)
 
-/obj/item/sign/random/Initialize()
+/obj/item/sign/random/Initialize(mapload)
 	. = ..()
 	set_sign_type(GLOB.editable_sign_types[pick(GLOB.editable_sign_types)])
 

@@ -35,7 +35,7 @@
 	var/normal_desc
 	//--end of love :'(--
 
-/obj/item/toy/plush/Initialize()
+/obj/item/toy/plush/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, squeak_override)
 	AddElement(/datum/element/bed_tuckable, 6, -5, 90)
@@ -502,13 +502,13 @@
 /obj/item/toy/plush/lizard_plushie
 	name = "lizard plushie"
 	desc = "An adorable stuffed toy that resembles a lizardperson."
-	icon_state = "map_pushie_lizard"
+	icon_state = "map_plushie_lizard"
 	greyscale_config = /datum/greyscale_config/plush_lizard
 	attack_verb_continuous = list("claws", "hisses", "tail slaps")
 	attack_verb_simple = list("claw", "hiss", "tail slap")
 	squeak_override = list('sound/weapons/slash.ogg' = 1)
 
-/obj/item/toy/plush/lizard_plushie/Initialize()
+/obj/item/toy/plush/lizard_plushie/Initialize(mapload)
 	. = ..()
 	if(!greyscale_colors)
 		// Generate a random valid lizard color for our plushie friend

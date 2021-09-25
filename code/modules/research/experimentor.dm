@@ -35,7 +35,6 @@
 	var/list/item_reactions = list()
 	var/list/valid_items = list() //valid items for special reactions like transforming
 	var/list/critical_items_typecache //items that can cause critical reactions
-	var/banned_typecache // items that won't be produced
 
 /obj/machinery/rnd/experimentor/proc/ConvertReqString2List(list/source_list)
 	var/list/temp_list = params2list(source_list)
@@ -46,7 +45,7 @@
 
 /obj/machinery/rnd/experimentor/proc/SetTypeReactions()
 	// Don't need to keep this typecache around, only used in this proc once.
-	var/list/banned_typecache = typecacheof(list(
+	var/static/list/banned_typecache = typecacheof(list(
 		/obj/item/stock_parts/cell/infinite,
 		/obj/item/grenade/chem_grenade/tuberculosis
 	))
@@ -70,7 +69,7 @@
 			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
 				valid_items["[I]"] += rand(1,4)
 
-/obj/machinery/rnd/experimentor/Initialize()
+/obj/machinery/rnd/experimentor/Initialize(mapload)
 	. = ..()
 
 	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/ian) in GLOB.mob_living_list
@@ -565,7 +564,7 @@
 	var/reset_timer = 60
 	COOLDOWN_DECLARE(cooldown)
 
-/obj/item/relic/Initialize()
+/obj/item/relic/Initialize(mapload)
 	. = ..()
 	icon_state = pick("shock_kit","armor-igniter-analyzer","infra-igniter0","infra-igniter1","radio-multitool","prox-radio1","radio-radio","timer-multitool0","radio-igniter-tank")
 	realName = "[pick("broken","twisted","spun","improved","silly","regular","badly made")] [pick("device","object","toy","illegal tech","weapon")]"

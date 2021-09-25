@@ -1,5 +1,3 @@
-#define DARK_COLOR_LIGHTNESS_THRESHOLD 0.25
-
 #define RANDOM_GRAFFITI "Random Graffiti"
 #define RANDOM_LETTER "Random Letter"
 #define RANDOM_PUNCTUATION "Random Punctuation"
@@ -79,7 +77,7 @@
 	user.visible_message(span_suicide("[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS|OXYLOSS)
 
-/obj/item/toy/crayon/Initialize()
+/obj/item/toy/crayon/Initialize(mapload)
 	. = ..()
 
 	dye_color = crayon_color
@@ -250,9 +248,14 @@
 		if("select_colour")
 			. = can_change_colour && select_colour(usr)
 		if("enter_text")
-			var/txt = stripped_input(usr,"Choose what to write.",
-				"Scribbles",default = text_buffer)
-			text_buffer = crayon_text_strip(txt)
+			var/txt = input(usr, "Choose what to write.", "Scribbles", text_buffer) as text|null
+			if(isnull(txt))
+				return
+			txt = crayon_text_strip(txt)
+			if(text_buffer == txt)
+				return // No valid changes.
+			text_buffer = txt
+
 			. = TRUE
 			paint_mode = PAINT_NORMAL
 			drawtype = "a"
@@ -266,8 +269,9 @@
 	return FALSE
 
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
-	var/static/regex/crayon_r = new /regex(@"[^\w!?,.=%#&+\/\-]")
-	return replacetext(lowertext(text), crayon_r, "")
+	text = copytext(text, 1, MAX_MESSAGE_LEN)
+	var/static/regex/crayon_regex = new /regex(@"[^\w!?,.=&%#+/\-]", "ig")
+	return lowertext(crayon_regex.Replace(text, ""))
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
 	. = ..()
@@ -600,7 +604,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/cardboard = 2000)
 
-/obj/item/storage/crayons/Initialize()
+/obj/item/storage/crayons/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 7
@@ -702,7 +706,7 @@
 
 		return (OXYLOSS)
 
-/obj/item/toy/crayon/spraycan/Initialize()
+/obj/item/toy/crayon/spraycan/Initialize(mapload)
 	. = ..()
 	// If default crayon red colour, pick a more fun spraycan colour
 	if(!paint_color)
@@ -756,9 +760,7 @@
 
 	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
 		if(actually_paints)
-			var/list/rgb = hex2rgb(paint_color)
-			var/list/hsl = rgb2hsl(rgb[1], rgb[2], rgb[3])
-			var/color_is_dark = hsl[3] < DARK_COLOR_LIGHTNESS_THRESHOLD
+			var/color_is_dark = is_color_dark(paint_color)
 
 			if (color_is_dark && !(target.flags_1 & ALLOW_DARK_PAINTS_1))
 				to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
@@ -766,7 +768,7 @@
 
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 			SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, color_is_dark)
-		. = use_charges(user, 2)
+		. = use_charges(user, 2, requires_full = FALSE)
 		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
 
 		if(pre_noise || post_noise)
@@ -859,7 +861,6 @@
 	charges = -1
 	desc = "Now with 30% more bluespace technology."
 
-#undef DARK_COLOR_LIGHTNESS_THRESHOLD
 #undef RANDOM_GRAFFITI
 #undef RANDOM_LETTER
 #undef RANDOM_PUNCTUATION

@@ -29,15 +29,15 @@
 		return FALSE
 
 	var/mob/living/victim = targets[1] //The target of the spell whos body will be transferred to.
+	if(istype(victim, /mob/living/simple_animal/hostile/guardian))
+		var/mob/living/simple_animal/hostile/guardian/stand = victim
+		if(stand.summoner)
+			victim = stand.summoner
 	var/datum/mind/VM = victim.mind
 	if(victim.anti_magic_check(TRUE, FALSE) || VM.has_antag_datum(/datum/antagonist/wizard) || VM.has_antag_datum(/datum/antagonist/cult) || VM.has_antag_datum(/datum/antagonist/changeling) || VM.has_antag_datum(/datum/antagonist/rev) || victim.key[1] == "@")
 		if(!silent)
 			to_chat(user, span_warning("[victim.p_their(TRUE)] mind is resisting your spell!"))
 		return FALSE
-	if(istype(victim, /mob/living/simple_animal/hostile/guardian))
-		var/mob/living/simple_animal/hostile/guardian/stand = victim
-		if(stand.summoner)
-			victim = stand.summoner
 
 	//You should not be able to enter one of the most powerful side-antags as a fucking wizard.
 	if(istype(victim,/mob/living/simple_animal/hostile/imp/slaughter))

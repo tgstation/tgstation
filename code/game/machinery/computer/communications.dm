@@ -1,4 +1,5 @@
 #define IMPORTANT_ACTION_COOLDOWN (60 SECONDS)
+#define EMERGENCY_ACCESS_COOLDOWN (30 SECONDS)
 #define MAX_STATUS_LINE_LENGTH 40
 
 #define STATE_BUYING_SHUTTLE "buying_shuttle"
@@ -18,6 +19,7 @@
 
 	/// Cooldown for important actions, such as messaging CentCom or other sectors
 	COOLDOWN_DECLARE(static/important_action_cooldown)
+	COOLDOWN_DECLARE(static/emergency_access_cooldown)
 
 	/// The current state of the UI
 	var/state = STATE_MAIN
@@ -41,7 +43,14 @@
 	/// The last lines used for changing the status display
 	var/static/last_status_display
 
-/obj/machinery/computer/communications/Initialize()
+	///how many uses the console has done of toggling the emergency access
+	var/toggle_uses = 0
+	///how many uses can you toggle emergency access with before cooldowns start occuring BOTH ENABLE/DISABLE
+	var/toggle_max_uses = 3
+	///when was emergency access last toggled
+	var/last_toggled
+
+/obj/machinery/computer/communications/Initialize(mapload)
 	. = ..()
 	GLOB.shuttle_caller_list += src
 	AddComponent(/datum/component/gps, "Secured Communications Signal")
@@ -255,7 +264,7 @@
 			if (!COOLDOWN_FINISHED(src, important_action_cooldown))
 				return
 
-			var/message = trim(html_encode(params["message"]), MAX_MESSAGE_LEN)
+			var/message = trim(params["message"], MAX_MESSAGE_LEN)
 			if (!message)
 				return
 
@@ -269,7 +278,7 @@
 				payload["network"] = network_name
 			payload["sender_ckey"] = usr.ckey
 
-			send2otherserver(station_name(), message, "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload)
+			send2otherserver(html_decode(station_name()), message, "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload)
 			minor_announce(message, title = "Outgoing message to allied station")
 			usr.log_talk(message, LOG_SAY, tag = "message to the other server")
 			message_admins("[ADMIN_LOOKUPFLW(usr)] has sent a message to the other server\[s].")
@@ -328,6 +337,8 @@
 			state = STATE_MAIN
 			playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 		if ("toggleEmergencyAccess")
+			if(emergency_access_cooldown(usr)) //if were in cooldown, dont allow the following code
+				return
 			if (!authenticated_as_silicon_or_captain(usr))
 				return
 			if (GLOB.emergency_access)
@@ -364,6 +375,24 @@
 			SSjob.safe_code_requested = TRUE
 			SSjob.safe_code_timer_id = addtimer(CALLBACK(SSjob, /datum/controller/subsystem/job.proc/send_spare_id_safe_code, pod_location), 120 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
 			minor_announce("Due to staff shortages, your station has been approved for delivery of access codes to secure the Captain's Spare ID. Delivery via drop pod at [get_area(pod_location)]. ETA 120 seconds.")
+
+/obj/machinery/computer/communications/proc/emergency_access_cooldown(mob/user)
+	if(toggle_uses == toggle_max_uses) //you have used up free uses already, do it one more time and start a cooldown
+		to_chat(user, span_warning("This was your last free use without cooldown, you will not be able to use this again for [DisplayTimeText(EMERGENCY_ACCESS_COOLDOWN)]."))
+		COOLDOWN_START(src, emergency_access_cooldown, EMERGENCY_ACCESS_COOLDOWN)
+		++toggle_uses //add a use so that this if() is false the next time you try this button
+		return FALSE
+
+	if(!COOLDOWN_FINISHED(src, emergency_access_cooldown))
+		var/time_left = DisplayTimeText(COOLDOWN_TIMELEFT(src, emergency_access_cooldown), 1)
+		to_chat(user, span_warning("Emergency Access is still in cooldown for [time_left]!"))
+		return TRUE //dont use the button, we are in cooldown
+	else if((last_toggled + EMERGENCY_ACCESS_COOLDOWN) < world.time)
+		toggle_uses = 0 //either cooldown is done, or we just havent touched it in 30 seconds, either way reset uses
+
+	++toggle_uses //add a use
+	last_toggled = world.time
+	return FALSE //if we are not in cooldown, allow using the button
 
 /obj/machinery/computer/communications/ui_data(mob/user)
 	var/list/data = list(
@@ -648,6 +677,7 @@
 		possible_answers = new_possible_answers
 
 #undef IMPORTANT_ACTION_COOLDOWN
+#undef EMERGENCY_ACCESS_COOLDOWN
 #undef MAX_STATUS_LINE_LENGTH
 #undef STATE_BUYING_SHUTTLE
 #undef STATE_CHANGING_STATUS

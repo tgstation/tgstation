@@ -1,6 +1,6 @@
 /datum/species/android
 	name = "Android"
-	id = "android"
+	id = SPECIES_ANDROID
 	say_mod = "states"
 	species_traits = list(NOBLOOD)
 	inherent_traits = list(
@@ -20,6 +20,7 @@
 		TRAIT_NOHUNGER,
 		TRAIT_LIMBATTACHMENT,
 		TRAIT_NOCLONELOSS,
+		TRAIT_CAN_USE_FLIGHT_POTION,
 	)
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null

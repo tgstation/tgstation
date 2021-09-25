@@ -28,7 +28,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 	if(!ignore_typecache)
 		ignore_typecache = typecacheof(list(
@@ -130,6 +130,9 @@
 
 /obj/structure/trap/stun/hunter/flare()
 	..()
+	var/turf/our_turf = get_turf(src)
+	if(!our_turf)
+		return
 	stored_item.forceMove(get_turf(src))
 	forceMove(stored_item)
 	if(caught)
@@ -223,7 +226,7 @@
 	density = TRUE
 	time_between_triggers = 1200 //Exists for 2 minutes
 
-/obj/structure/trap/ward/Initialize()
+/obj/structure/trap/ward/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, time_between_triggers)
 

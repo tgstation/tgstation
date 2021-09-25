@@ -268,7 +268,7 @@
 		// the shuttle system doesn't know who these people are, but they
 		// must be important, surely
 		var/obj/item/card/id/ID = new(src)
-		var/datum/job/J = pick(SSjob.occupations)
+		var/datum/job/J = pick(SSjob.joinable_occupations)
 		ID.registered_name = S.random_name(pick(MALE, FEMALE))
 		ID.assignment = J.title
 
@@ -605,7 +605,8 @@
 
 /obj/machinery/computer/shuttle/pod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()
-	possible_destinations += ";[port.id]_lavaland"
+	if(port)
+		possible_destinations += ";[port.id]_lavaland"
 
 /**
  * Signal handler for checking if we should lock or unlock escape pods accordingly to a newly set security level
@@ -694,6 +695,8 @@
 	new /obj/item/pickaxe/emergency(src)
 	new /obj/item/survivalcapsule(src)
 	new /obj/item/storage/toolbox/emergency(src)
+	new /obj/item/bodybag/environmental(src)
+	new /obj/item/bodybag/environmental(src)
 
 /obj/item/storage/pod/attackby(obj/item/W, mob/user, params)
 	if (can_interact(user))
@@ -728,7 +731,7 @@
 	height = 8
 	dir = EAST
 
-/obj/docking_port/mobile/emergency/backup/Initialize()
+/obj/docking_port/mobile/emergency/backup/Initialize(mapload)
 	// We want to be a valid emergency shuttle
 	// but not be the main one, keep whatever's set
 	// valid.

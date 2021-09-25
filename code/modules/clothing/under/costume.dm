@@ -87,7 +87,7 @@
 /obj/item/clothing/under/costume/kilt/highlander
 	desc = "You're the only one worthy of this kilt."
 
-/obj/item/clothing/under/costume/kilt/highlander/Initialize()
+/obj/item/clothing/under/costume/kilt/highlander/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
 
@@ -114,7 +114,7 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
-/obj/item/clothing/under/costume/maid/Initialize()
+/obj/item/clothing/under/costume/maid/Initialize(mapload)
 	. = ..()
 	var/obj/item/clothing/accessory/maidapron/A = new (src)
 	attach_accessory(A)
@@ -281,4 +281,11 @@
 	desc = "Why don't you go secure some bitches?"
 	icon_state = "SwagOutfit"
 	inhand_icon_state = "SwagOutfit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/referee
+	name = "referee uniform"
+	desc = "A standard black and white striped uniform to signal authority."
+	icon_state = "referee"
+	inhand_icon_state = "referee"
 	can_adjust = FALSE

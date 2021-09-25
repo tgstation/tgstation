@@ -8,7 +8,7 @@
 	if(!ishuman(user))
 		return FALSE
 	var/mob/living/carbon/human/H = user
-	if(H.dna.species.id == "abductor")
+	if(H.dna.species.id == SPECIES_ABDUCTOR)
 		return TRUE
 	for(var/obj/item/implant/abductor/A in H.implants)
 		return TRUE

@@ -15,7 +15,7 @@
 	volume = 100
 	force = 15 //Smashing bottles over someone's head hurts.
 	throwforce = 15
-	inhand_icon_state = "broken_beer" //Generic held-item sprite until unique ones are made.
+	inhand_icon_state = "beer" //Generic held-item sprite until unique ones are made.
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	isGlass = TRUE
@@ -23,10 +23,6 @@
 	age_restricted = TRUE // wrryy can't set an init value to see if foodtype contains ALCOHOL so here we go
 	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	var/bottle_knockdown_duration = 1.3 SECONDS
-
-/obj/item/reagent_containers/food/drinks/bottle/update_overlays()
-	. = ..()
-	. += "[initial(icon_state)]shine"
 
 /obj/item/reagent_containers/food/drinks/bottle/small
 	name = "small glass bottle"
@@ -144,16 +140,44 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	inhand_icon_state = "beer"
+	inhand_icon_state = "broken_beer"
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("stabs", "slashes", "attacks")
 	attack_verb_simple = list("stab", "slash", "attack")
 	sharpness = SHARP_EDGED
 	var/static/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 
-/obj/item/broken_bottle/Initialize()
+/obj/item/broken_bottle/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 200, 55)
+
+/obj/item/reagent_containers/food/drinks/bottle/beer
+	name = "space beer"
+	desc = "Beer. In space."
+	icon_state = "beer"
+	volume = 30
+	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
+	foodtype = GRAIN | ALCOHOL
+	custom_price = PAYCHECK_EASY
+
+/obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty
+	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 1)
+
+/obj/item/reagent_containers/food/drinks/bottle/beer/light
+	name = "Carp Lite"
+	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."
+	list_reagents = list(/datum/reagent/consumable/ethanol/beer/light = 30)
+
+/obj/item/reagent_containers/food/drinks/bottle/ale
+	name = "Magm-Ale"
+	desc = "A true dorf's drink of choice."
+	icon_state = "alebottle"
+	volume = 30
+	list_reagents = list(/datum/reagent/consumable/ethanol/ale = 30)
+	foodtype = GRAIN | ALCOHOL
+	custom_price = PAYCHECK_EASY
 
 /obj/item/reagent_containers/food/drinks/bottle/gin
 	name = "Griffeater gin"
@@ -292,7 +316,7 @@
 	icon_state = "absinthebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/absinthe = 100)
 
-/obj/item/reagent_containers/food/drinks/bottle/absinthe/Initialize()
+/obj/item/reagent_containers/food/drinks/bottle/absinthe/Initialize(mapload)
 	. = ..()
 	redact()
 
@@ -371,7 +395,7 @@
 	icon_state = "sakebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/sake = 100)
 
-/obj/item/reagent_containers/food/drinks/bottle/sake/Initialize()
+/obj/item/reagent_containers/food/drinks/bottle/sake/Initialize(mapload)
 	. = ..()
 	if(prob(10))
 		name = "Fluffy Tail Sake"
@@ -489,8 +513,56 @@
 	name = "Eau d' Dandy Brut Champagne"
 	desc = "Finely sourced from only the most pretentious French vineyards."
 	icon_state = "champagne_bottle"
+	base_icon_state = "champagne_bottle"
+	reagent_flags = TRANSPARENT
+	spillable = FALSE
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/ethanol/champagne = 100)
+
+
+/obj/item/reagent_containers/food/drinks/bottle/champagne/attack_self(mob/user)
+	if(spillable)
+		return ..()
+	balloon_alert(user, "fiddling with cork...")
+	if(do_after(user, 1 SECONDS, src))
+		return pop_cork(user)
+
+/obj/item/reagent_containers/food/drinks/bottle/champagne/update_icon_state()
+	. = ..()
+	if(spillable)
+		icon_state = "[base_icon_state]_popped"
+	else
+		icon_state = base_icon_state
+
+/obj/item/reagent_containers/food/drinks/bottle/champagne/proc/pop_cork(mob/user)
+	user.visible_message(span_danger("[user] loosens the cork of [src] causing it to pop out of the bottle with great force."), \
+		span_nicegreen("You elegantly loosen the cork of [src] causing it to pop out of the bottle with great force."))
+	reagents.flags |= OPENCONTAINER
+	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
+	spillable = TRUE
+	update_appearance()
+	var/obj/item/champagne_cork/popped_cork = new(user.loc)
+	popped_cork.might_of_the_sun_king = TRUE
+	var/turf/pop_target = get_edge_target_turf(popped_cork, user.dir)
+	popped_cork.throw_at(target = pop_target, thrower = user, speed = 2, range = 7, spin = FALSE)
+
+/obj/item/champagne_cork
+	name = "champagne cork"
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "champagne_cork"
+	force = 0
+	throwforce = 10
+	///this var determines if the cork will knockdown on impact.
+	var/might_of_the_sun_king = FALSE
+
+/obj/item/champagne_cork/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(!iscarbon(hit_atom) || !might_of_the_sun_king)
+		return
+
+	var/mob/living/carbon/champagne_victim = hit_atom
+	champagne_victim.Knockdown(20)
+	might_of_the_sun_king = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/blazaam
 	name = "Ginbad's Blazaam"
@@ -601,7 +673,7 @@
 	var/fermentation_time_remaining /// for partial fermentation
 	var/fermentation_timer /// store the timer id of fermentation
 
-/obj/item/reagent_containers/food/drinks/bottle/pruno/Initialize()
+/obj/item/reagent_containers/food/drinks/bottle/pruno/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/check_fermentation)
 

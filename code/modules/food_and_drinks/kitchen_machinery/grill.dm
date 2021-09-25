@@ -16,9 +16,9 @@
 	var/grill_time = 0
 	var/datum/looping_sound/grill/grill_loop
 
-/obj/machinery/grill/Initialize()
+/obj/machinery/grill/Initialize(mapload)
 	. = ..()
-	grill_loop = new(list(src), FALSE)
+	grill_loop = new(src, FALSE)
 
 /obj/machinery/grill/Destroy()
 	QDEL_NULL(grill_loop)
@@ -94,11 +94,11 @@
 		grill_fuel -= GRILL_FUELUSAGE_ACTIVE * delta_time
 		grilled_item.AddComponent(/datum/component/sizzle)
 
-/obj/machinery/grill/Exited(atom/movable/AM)
-	if(AM == grilled_item)
+/obj/machinery/grill/Exited(atom/movable/gone, direction)
+	if(gone == grilled_item)
 		finish_grill()
 		grilled_item = null
-	..()
+	return ..()
 
 /obj/machinery/grill/Destroy()
 	grilled_item = null

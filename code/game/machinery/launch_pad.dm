@@ -3,7 +3,7 @@
 	desc = "A bluespace pad able to thrust matter through bluespace, teleporting it to or from nearby locations."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "lpad-idle"
-	use_power = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 2500
 	hud_possible = list(DIAG_LAUNCHPAD_HUD)
@@ -26,7 +26,7 @@
 	range = initial(range)
 	range *= E
 
-/obj/machinery/launchpad/Initialize()
+/obj/machinery/launchpad/Initialize(mapload)
 	. = ..()
 	prepare_huds()
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
@@ -108,16 +108,12 @@
 		y_offset = clamp(y, -range, range)
 	update_indicator()
 
-/obj/machinery/launchpad/proc/doteleport(mob/user, sending)
-	if(teleporting)
-		to_chat(user, span_warning("ERROR: Launchpad busy."))
-		return
+/// Performs the teleport.
+/// sending - TRUE/FALSE depending on if the launch pad is teleporting *to* or *from* the target.
+/// alternate_log_name - An alternative name to use in logs, if `user` is not present..
+/obj/machinery/launchpad/proc/doteleport(mob/user, sending, alternate_log_name = null)
 
 	var/turf/dest = get_turf(src)
-
-	if(dest && is_centcom_level(dest.z))
-		to_chat(user, span_warning("ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible."))
-		return
 
 	var/target_x = x + x_offset
 	var/target_y = y + y_offset
@@ -153,7 +149,7 @@
 
 	var/turf/source = target
 	var/list/log_msg = list()
-	log_msg += ": [key_name(user)] has teleported "
+	log_msg += ": [alternate_log_name || key_name(user)] triggered a teleport "
 
 	if(sending)
 		source = dest
@@ -216,7 +212,7 @@
 	icon_state = "blpad-idle"
 	icon_teleport = "blpad-beam"
 	anchored = FALSE
-	use_power = FALSE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
 	teleport_speed = 20
@@ -233,7 +229,9 @@
 	briefcase = _briefcase
 
 /obj/machinery/launchpad/briefcase/Destroy()
-	QDEL_NULL(briefcase)
+	if(!QDELETED(briefcase))
+		qdel(briefcase)
+	briefcase = null
 	return ..()
 
 /obj/machinery/launchpad/briefcase/isAvailable()
@@ -267,13 +265,14 @@
 /obj/item/storage/briefcase/launchpad
 	var/obj/machinery/launchpad/briefcase/pad
 
-/obj/item/storage/briefcase/launchpad/Initialize()
+/obj/item/storage/briefcase/launchpad/Initialize(mapload)
 	pad = new(null, src) //spawns pad in nullspace to hide it from briefcase contents
 	. = ..()
 
 /obj/item/storage/briefcase/launchpad/Destroy()
 	if(!QDELETED(pad))
-		QDEL_NULL(pad)
+		qdel(pad)
+	pad = null
 	return ..()
 
 /obj/item/storage/briefcase/launchpad/PopulateContents()
@@ -386,7 +385,7 @@
 			our_pad.display_name = new_name
 		if("remove")
 			. = TRUE
-			if(usr && tgui_alert(usr, "Are you sure?", "Unlink Launchpad", list("I'm Sure", "Abort")) != "Abort")
+			if(usr && tgui_alert(usr, "Are you sure?", "Unlink Launchpad", list("I'm Sure", "Abort")) == "I'm Sure")
 				our_pad = null
 		if("launch")
 			sending = TRUE

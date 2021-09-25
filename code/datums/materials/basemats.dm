@@ -333,10 +333,10 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/hot_ice/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	source.AddComponent(/datum/component/hot_ice, "plasma", amount*150, amount*20+300)
+	source.AddComponent(/datum/component/combustible_flooder, "plasma", amount*1.5, amount*0.2+300)
 
 /datum/material/hot_ice/on_removed(atom/source, amount, material_flags)
-	qdel(source.GetComponent(/datum/component/hot_ice, "plasma", amount*150, amount*20+300))
+	qdel(source.GetComponent(/datum/component/combustible_flooder))
 	return ..()
 
 /datum/material/hot_ice/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)

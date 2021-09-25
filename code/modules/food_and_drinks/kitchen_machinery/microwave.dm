@@ -32,11 +32,11 @@
 	var/static/list/radial_options = list("eject" = radial_eject, "use" = radial_use)
 	var/static/list/ai_radial_options = list("eject" = radial_eject, "use" = radial_use, "examine" = radial_examine)
 
-/obj/machinery/microwave/Initialize()
+/obj/machinery/microwave/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/microwave(src)
 	create_reagents(100)
-	soundloop = new(list(src), FALSE)
+	soundloop = new(src, FALSE)
 
 /obj/machinery/microwave/Destroy()
 	eject()
@@ -198,9 +198,10 @@
 
 	..()
 
-/obj/machinery/microwave/RightClick(mob/user)
+/obj/machinery/microwave/attack_hand_secondary(mob/user, list/modifiers)
 	if(user.canUseTopic(src, !issilicon(usr)))
 		cook()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/microwave/ui_interact(mob/user)
 	. = ..()

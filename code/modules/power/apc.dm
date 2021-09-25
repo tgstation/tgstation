@@ -32,6 +32,8 @@
 /// The APCs power channel is automatically on.
 #define APC_CHANNEL_AUTO_ON 3
 
+#define APC_CHANNEL_IS_ON(channel) (channel >= APC_CHANNEL_ON)
+
 // APC autoset enums:
 /// The APC turns automated and manual power channels off.
 #define AUTOSET_FORCE_OFF 0
@@ -129,7 +131,7 @@
 	var/environ = APC_CHANNEL_AUTO_ON
 	var/operating = TRUE
 	var/charging = APC_NOT_CHARGING
-	var/chargemode = 1
+	var/chargemode = TRUE
 	var/chargecount = 0
 	var/locked = TRUE
 	var/coverlocked = TRUE
@@ -149,6 +151,7 @@
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/mob/living/silicon/ai/occupier = null
 	var/transfer_in_progress = FALSE //Is there an AI being transferred out of us?
+	///buffer state that makes apcs not shut off channels immediately as long as theres some power left, effect visible in apcs only slowly losing power
 	var/longtermpower = 10
 	var/auto_name = FALSE
 	var/failure_timer = 0
@@ -160,6 +163,8 @@
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
 	var/obj/machinery/computer/apc_control/remote_control = null
+	///Represents a signel source of power alarms for this apc
+	var/datum/alarm_handler/alarm_manager
 
 /obj/machinery/power/apc/unlocked
 	locked = FALSE
@@ -254,17 +259,18 @@
 
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
-	area.power_light = FALSE
-	area.power_equip = FALSE
-	area.power_environ = FALSE
-	area.power_change()
-	area.poweralert(FALSE, src)
+	if(area)
+		area.power_light = FALSE
+		area.power_equip = FALSE
+		area.power_environ = FALSE
+		area.power_change()
+	QDEL_NULL(alarm_manager)
 	if(occupier)
-		malfvacate(1)
-	qdel(wires)
-	wires = null
+		malfvacate(TRUE)
+	if(wires)
+		QDEL_NULL(wires)
 	if(cell)
-		qdel(cell)
+		QDEL_NULL(cell)
 	if(terminal)
 		disconnect_terminal()
 	. = ..()
@@ -285,6 +291,7 @@
 /obj/machinery/power/apc/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	alarm_manager = new(src)
 
 	if(!mapload)
 		return
@@ -699,7 +706,7 @@
 			to_chat(user, span_warning("[src] has both electronics and a cell."))
 			return
 	else if (istype(W, /obj/item/wallframe/apc) && opened)
-		if (!(machine_stat & BROKEN || opened==APC_COVER_REMOVED || obj_integrity < max_integrity)) // There is nothing to repair
+		if (!(machine_stat & BROKEN || opened==APC_COVER_REMOVED || atom_integrity < max_integrity)) // There is nothing to repair
 			to_chat(user, span_warning("You found no reason for repairing this APC!"))
 			return
 		if (!(machine_stat & BROKEN) && opened==APC_COVER_REMOVED) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
@@ -720,7 +727,7 @@
 			to_chat(user, span_notice("You replace the damaged APC frame with a new one."))
 			qdel(W)
 			set_machine_stat(machine_stat & ~BROKEN)
-			obj_integrity = max_integrity
+			atom_integrity = max_integrity
 			if (opened==APC_COVER_REMOVED)
 				opened = APC_COVER_OPENED
 			update_appearance()
@@ -777,7 +784,9 @@
 	return FALSE
 
 /obj/machinery/power/apc/AltClick(mob/user)
-	..()
+	. = ..()
+	if(!can_interact(user))
+		return
 	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
 		return
 	else
@@ -808,12 +817,12 @@
 	last_nightshift_switch = world.time
 	set_nightshift(!nightshift_lights)
 
-/obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/machinery/power/apc/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(machine_stat & BROKEN)
 		return damage_amount
 	. = ..()
 
-/obj/machinery/power/apc/obj_break(damage_flag)
+/obj/machinery/power/apc/atom_break(damage_flag)
 	. = ..()
 	if(.)
 		set_broken()
@@ -852,51 +861,50 @@
 	if(.)
 		return
 
-	if(isethereal(user))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/datum/species/ethereal/E = H.dna.species
-		var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - APC_POWER_GAIN
-		var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
-		if((E.drain_time < world.time) && LAZYACCESS(modifiers, RIGHT_CLICK) && stomach)
-			if(H.combat_mode)
-				if(cell.charge <= (cell.maxcharge / 2)) // ethereals can't drain APCs under half charge, this is so that they are forced to look to alternative power sources if the station is running low
-					to_chat(H, span_warning("The APC's syphon safeties prevent you from draining power!"))
-					return
-				if(stomach.crystal_charge > charge_limit)
-					to_chat(H, span_warning("Your charge is full!"))
-					return
-				E.drain_time = world.time + APC_DRAIN_TIME
-				to_chat(H, span_notice("You start channeling some power through the APC into your body."))
-				if(do_after(user, APC_DRAIN_TIME, target = src))
-					if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > charge_limit))
+		var/obj/item/organ/stomach/maybe_stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+
+		if(istype(maybe_stomach, /obj/item/organ/stomach/ethereal))
+			var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - APC_POWER_GAIN
+			var/obj/item/organ/stomach/ethereal/stomach = maybe_stomach
+			if((stomach?.drain_time < world.time) && LAZYACCESS(modifiers, RIGHT_CLICK))
+				if(H.combat_mode)
+					if(cell.charge <= (cell.maxcharge / 2)) // ethereals can't drain APCs under half charge, this is so that they are forced to look to alternative power sources if the station is running low
+						to_chat(H, span_warning("The APC's syphon safeties prevent you from draining power!"))
 						return
-					if(istype(stomach))
+					if(stomach.crystal_charge > charge_limit)
+						to_chat(H, span_warning("Your charge is full!"))
+						return
+					stomach.drain_time = world.time + APC_DRAIN_TIME
+					to_chat(H, span_notice("You start channeling some power through the APC into your body."))
+					if(do_after(user, APC_DRAIN_TIME, target = src))
+						if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > charge_limit))
+							return
 						to_chat(H, span_notice("You receive some charge from the APC."))
 						stomach.adjust_charge(APC_POWER_GAIN)
 						cell.charge -= APC_POWER_GAIN
-					else
-						to_chat(H, span_warning("You can't receive charge from the APC!"))
-				return
-			else
-				if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
-					to_chat(H, span_warning("The APC can't receive anymore power!"))
 					return
-				if(stomach.crystal_charge < APC_POWER_GAIN)
-					to_chat(H, span_warning("Your charge is too low!"))
-					return
-				E.drain_time = world.time + APC_DRAIN_TIME
-				to_chat(H, span_notice("You start channeling power through your body into the APC."))
-				if(do_after(user, APC_DRAIN_TIME, target = src))
-					if((cell.charge >= (cell.maxcharge - APC_POWER_GAIN)) || (stomach.crystal_charge < APC_POWER_GAIN))
-						to_chat(H, span_warning("You can't transfer power to the APC!"))
+				else
+					if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
+						to_chat(H, span_warning("The APC can't receive anymore power!"))
 						return
-					if(istype(stomach))
-						to_chat(H, span_notice("You transfer some power to the APC."))
-						stomach.adjust_charge(-APC_POWER_GAIN)
-						cell.charge += APC_POWER_GAIN
-					else
-						to_chat(H, span_warning("You can't transfer power to the APC!"))
-				return
+					if(stomach.crystal_charge < APC_POWER_GAIN)
+						to_chat(H, span_warning("Your charge is too low!"))
+						return
+					stomach.drain_time = world.time + APC_DRAIN_TIME
+					to_chat(H, span_notice("You start channeling power through your body into the APC."))
+					if(do_after(user, APC_DRAIN_TIME, target = src))
+						if((cell.charge >= (cell.maxcharge - APC_POWER_GAIN)) || (stomach.crystal_charge < APC_POWER_GAIN))
+							to_chat(H, span_warning("You can't transfer power to the APC!"))
+							return
+						if(istype(stomach))
+							to_chat(H, span_notice("You transfer some power to the APC."))
+							stomach.adjust_charge(-APC_POWER_GAIN)
+							cell.charge += APC_POWER_GAIN
+						else
+							to_chat(H, span_warning("You can't transfer power to the APC!"))
+					return
 
 	if(opened && (!issilicon(user)))
 		if(cell)
@@ -1139,10 +1147,12 @@
 		occupier.parent = malf.parent
 	else
 		occupier.parent = malf
-	malf.shunted = 1
+	malf.shunted = TRUE
 	occupier.eyeobj.name = "[occupier.name] (AI Eye)"
 	if(malf.parent)
 		qdel(malf)
+	for(var/obj/item/pinpointer/nuke/disk_pinpointers in GLOB.pinpointer_list)
+		disk_pinpointers.switch_mode_to(TRACK_MALF_AI) //Pinpointer will track the shunted AI
 	var/datum/action/innate/core_return/CR = new
 	CR.Grant(occupier)
 	occupier.cancel_camera()
@@ -1152,7 +1162,7 @@
 		return
 	if(occupier.parent && occupier.parent.stat != DEAD)
 		occupier.mind.transfer_to(occupier.parent)
-		occupier.parent.shunted = 0
+		occupier.parent.shunted = FALSE
 		occupier.parent.setOxyLoss(occupier.getOxyLoss())
 		occupier.parent.cancel_camera()
 		qdel(occupier)
@@ -1162,9 +1172,11 @@
 			occupier.forceMove(drop_location())
 			occupier.death()
 			occupier.gib()
-			for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
-				P.switch_mode_to(TRACK_NUKE_DISK) //Pinpointers go back to tracking the nuke disk
-				P.alert = FALSE
+
+	if(!occupier.nuking) //Pinpointers go back to tracking the nuke disk, as long as the AI (somehow) isn't mid-nuking.
+		for(var/obj/item/pinpointer/nuke/disk_pinpointers in GLOB.pinpointer_list)
+			disk_pinpointers.switch_mode_to(TRACK_NUKE_DISK)
+			disk_pinpointers.alert = FALSE
 
 /obj/machinery/power/apc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(card.AI)
@@ -1250,9 +1262,10 @@
 		force_update = TRUE
 		return
 
-	lastused_light = area.power_usage[AREA_USAGE_LIGHT] + area.power_usage[AREA_USAGE_STATIC_LIGHT]
-	lastused_equip = area.power_usage[AREA_USAGE_EQUIP] + area.power_usage[AREA_USAGE_STATIC_EQUIP]
-	lastused_environ = area.power_usage[AREA_USAGE_ENVIRON] + area.power_usage[AREA_USAGE_STATIC_ENVIRON]
+	//dont use any power from that channel if we shut that power channel off
+	lastused_light = APC_CHANNEL_IS_ON(lighting) ? area.power_usage[AREA_USAGE_LIGHT] + area.power_usage[AREA_USAGE_STATIC_LIGHT] : 0
+	lastused_equip = APC_CHANNEL_IS_ON(equipment) ? area.power_usage[AREA_USAGE_EQUIP] + area.power_usage[AREA_USAGE_STATIC_EQUIP] : 0
+	lastused_environ = APC_CHANNEL_IS_ON(environ) ? area.power_usage[AREA_USAGE_ENVIRON] + area.power_usage[AREA_USAGE_STATIC_ENVIRON] : 0
 	area.clear_usage()
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ
@@ -1274,18 +1287,18 @@
 
 	if(cell && !shorted)
 		// draw power from cell as before to power the area
-		var/cellused = min(cell.charge, GLOB.CELLRATE * lastused_total) // clamp deduction to a max, amount left in cell
+		var/cellused = min(cell.charge, lastused_total JOULES) // clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
 		if(excess > lastused_total) // if power excess recharge the cell
 										// by the same amount just used
 			cell.give(cellused)
-			add_load(cellused/GLOB.CELLRATE) // add the load used to recharge the cell
+			add_load(cellused WATTS) // add the load used to recharge the cell
 
 
 		else // no excess, and not enough per-apc
-			if((cell.charge/GLOB.CELLRATE + excess) >= lastused_total) // can we draw enough from cell+grid to cover last usage?
-				cell.charge = min(cell.maxcharge, cell.charge + GLOB.CELLRATE * excess) //recharge with what we can
+			if((cell.charge WATTS + excess) >= lastused_total) // can we draw enough from cell+grid to cover last usage?
+				cell.charge = min(cell.maxcharge, cell.charge + excess JOULES) //recharge with what we can
 				add_load(excess) // so draw what we can from the grid
 				charging = APC_NOT_CHARGING
 
@@ -1310,31 +1323,31 @@
 			equipment = autoset(equipment, AUTOSET_FORCE_OFF)
 			lighting = autoset(lighting, AUTOSET_FORCE_OFF)
 			environ = autoset(environ, AUTOSET_FORCE_OFF)
-			area.poweralert(TRUE, src)
+			alarm_manager.send_alarm(ALARM_POWER)
 		else if(cell.percent() < 15 && longtermpower < 0) // <15%, turn off lighting & equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_OFF)
 			environ = autoset(environ, AUTOSET_ON)
-			area.poweralert(TRUE, src)
+			alarm_manager.send_alarm(ALARM_POWER)
 		else if(cell.percent() < 30 && longtermpower < 0) // <30%, turn off equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
-			area.poweralert(TRUE, src)
+			alarm_manager.send_alarm(ALARM_POWER)
 		else // otherwise all can be on
 			equipment = autoset(equipment, AUTOSET_ON)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
-			area.poweralert(FALSE, src)
 			if(cell.percent() > 75)
-				area.poweralert(FALSE, src)
+				alarm_manager.clear_alarm(ALARM_POWER)
+
 
 		// now trickle-charge the cell
 		if(chargemode && charging == APC_CHARGING && operating)
 			if(excess > 0) // check to make sure we have enough to charge
 				// Max charge is capped to % per second constant
-				var/ch = min(excess*GLOB.CELLRATE, cell.maxcharge*GLOB.CHARGELEVEL)
-				add_load(ch/GLOB.CELLRATE) // Removes the power we're taking from the grid
+				var/ch = min(excess JOULES, cell.maxcharge JOULES)
+				add_load(ch WATTS) // Removes the power we're taking from the grid
 				cell.give(ch) // actually recharge the cell
 
 			else
@@ -1369,7 +1382,7 @@
 		equipment = autoset(equipment, AUTOSET_FORCE_OFF)
 		lighting = autoset(lighting, AUTOSET_FORCE_OFF)
 		environ = autoset(environ, AUTOSET_FORCE_OFF)
-		area.poweralert(TRUE, src)
+		alarm_manager.send_alarm(ALARM_POWER)
 
 	// update icon & area power if anything changed
 
@@ -1399,17 +1412,18 @@
  *   - [AUTOSET_OFF]: The APC turns automatic channels off.
  */
 /obj/machinery/power/apc/proc/autoset(val, on)
-	if(on == AUTOSET_FORCE_OFF)
-		if(val == APC_CHANNEL_ON) // if on, return off
-			return APC_CHANNEL_OFF
-		else if(val == APC_CHANNEL_AUTO_ON) // if auto-on, return auto-off
-			return APC_CHANNEL_AUTO_OFF
-	else if(on == AUTOSET_ON)
-		if(val == APC_CHANNEL_AUTO_OFF) // if auto-off, return auto-on
-			return APC_CHANNEL_AUTO_ON
-	else if(on == AUTOSET_OFF)
-		if(val == APC_CHANNEL_AUTO_ON) // if auto-on, return auto-off
-			return APC_CHANNEL_AUTO_OFF
+	switch(on)
+		if(AUTOSET_FORCE_OFF)
+			if(val == APC_CHANNEL_ON) // if on, return off
+				return APC_CHANNEL_OFF
+			else if(val == APC_CHANNEL_AUTO_ON) // if auto-on, return auto-off
+				return APC_CHANNEL_AUTO_OFF
+		if(AUTOSET_ON)
+			if(val == APC_CHANNEL_AUTO_OFF) // if auto-off, return auto-on
+				return APC_CHANNEL_AUTO_ON
+		if(AUTOSET_OFF)
+			if(val == APC_CHANNEL_AUTO_ON) // if auto-on, return auto-off
+				return APC_CHANNEL_AUTO_OFF
 	return val
 
 /**
@@ -1473,9 +1487,9 @@
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	operating = FALSE
-	obj_break()
+	atom_break()
 	if(occupier)
-		malfvacate(1)
+		malfvacate(TRUE)
 	update()
 
 // overload all the lights in this APC area

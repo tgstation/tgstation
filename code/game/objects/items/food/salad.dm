@@ -33,7 +33,7 @@
 	icon_state = "validsalad"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/doctor_delight = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("leaves" = 1, "potato" = 1, "meat" = 1, "valids" = 1)
-	foodtypes = VEGETABLES | MEAT | FRIED | JUNKFOOD | FRUIT
+	foodtypes = VEGETABLES | MEAT | FRIED | FRUIT
 
 /obj/item/food/salad/fruit
 	name = "fruit salad"
@@ -82,7 +82,7 @@
 	icon_state = "ricepudding"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("rice" = 1, "sweetness" = 1)
-	foodtypes = GRAIN | DAIRY
+	foodtypes = GRAIN | DAIRY | SUGAR
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/salad/ricepork
@@ -137,7 +137,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_ASSISTANT * 0.6
 
-/obj/item/reagent_containers/glass/bowl/Initialize()
+/obj/item/reagent_containers/glass/bowl/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/salad/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
 

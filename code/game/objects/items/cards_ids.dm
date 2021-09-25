@@ -46,7 +46,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	var/detail_color = COLOR_ASSEMBLY_ORANGE
 
-/obj/item/card/data/Initialize()
+/obj/item/card/data/Initialize(mapload)
 	.=..()
 	update_appearance()
 
@@ -608,7 +608,7 @@
 	return msg
 
 /obj/item/card/id/GetAccess()
-	return access
+	return access.Copy()
 
 /obj/item/card/id/GetID()
 	return src
@@ -692,7 +692,7 @@
 	var/department_name = ACCOUNT_CIV_NAME
 	registered_age = null
 
-/obj/item/card/id/departmental_budget/Initialize()
+/obj/item/card/id/departmental_budget/Initialize(mapload)
 	. = ..()
 	var/datum/bank_account/B = SSeconomy.get_dep_account(department_ID)
 	if(B)
@@ -761,7 +761,7 @@
 	var/intern_threshold = (CONFIG_GET(number/use_low_living_hour_intern_hours) * 60) || (CONFIG_GET(number/use_exp_restrictions_heads_hours) * 60) || INTERN_THRESHOLD_FALLBACK_HOURS * 60
 	var/playtime = user.client.get_exp_living(pure_numeric = TRUE)
 
-	if((intern_threshold >= playtime) && (user.mind?.assigned_role in SSjob.station_jobs))
+	if((intern_threshold >= playtime) && (user.mind?.assigned_role.title in SSjob.station_jobs))
 		is_intern = TRUE
 		update_label()
 		return
@@ -963,7 +963,7 @@
 	trim = /datum/id_trim/admin
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
 
-/obj/item/card/id/advanced/debug/Initialize()
+/obj/item/card/id/advanced/debug/Initialize(mapload)
 	. = ..()
 	registered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 
@@ -1040,7 +1040,7 @@
 
 /obj/item/card/id/advanced/chameleon
 	name = "agent card"
-	desc = "A highly advanced chameleon ID card. Touch this card on another ID card to choose which accesses to copy."
+	desc = "A highly advanced chameleon ID card. Touch this card on another ID card or player to choose which accesses to copy. Has special magnetic properties which force it to the front of wallets."
 	trim = /datum/id_trim/chameleon
 	wildcard_slots = WILDCARD_LIMIT_CHAMELEON
 
@@ -1051,8 +1051,9 @@
 	/// Weak ref to the ID card we're currently attempting to steal access from.
 	var/datum/weakref/theft_target
 
-/obj/item/card/id/advanced/chameleon/Initialize()
+/obj/item/card/id/advanced/chameleon/Initialize(mapload)
 	. = ..()
+
 	var/datum/action/item_action/chameleon/change/id/chameleon_card_action = new(src)
 	chameleon_card_action.chameleon_type = /obj/item/card/id/advanced
 	chameleon_card_action.chameleon_name = "ID Card"
@@ -1062,13 +1063,63 @@
 	theft_target = null
 	. = ..()
 
-/obj/item/card/id/advanced/chameleon/afterattack(obj/item/O, mob/user, proximity)
+/obj/item/card/id/advanced/chameleon/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
-	if(istype(O, /obj/item/card/id))
-		theft_target = WEAKREF(O)
+
+	if(istype(target, /obj/item/card/id))
+		theft_target = WEAKREF(target)
 		ui_interact(user)
 		return
+
+	return ..()
+
+/obj/item/card/id/advanced/chameleon/pre_attack_secondary(atom/target, mob/living/user, params)
+	// If we're attacking a human, we want it to be covert. We're not ATTACKING them, we're trying
+	// to sneakily steal their accesses by swiping our agent ID card near them. As a result, we
+	// return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN to cancel any part of the following the attack chain.
+	if(istype(target, /mob/living/carbon/human))
+		to_chat(user, "<span class='notice'>You covertly start to scan [target] with \the [src], hoping to pick up a wireless ID card signal...</span>")
+
+		if(!do_mob(user, target, 2 SECONDS))
+			to_chat(user, "<span class='notice'>The scan was interrupted.</span>")
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+		var/mob/living/carbon/human/human_target = target
+
+		var/list/target_id_cards = human_target.get_all_contents_type(/obj/item/card/id)
+
+		if(!length(target_id_cards))
+			to_chat(user, "<span class='notice'>The scan failed to locate any ID cards.</span>")
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+		var/selected_id = pick(target_id_cards)
+		to_chat(user, "<span class='notice'>You successfully sync your [src] with \the [selected_id].</span>")
+		theft_target = WEAKREF(selected_id)
+		ui_interact(user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(istype(target, /obj/item))
+		var/obj/item/target_item = target
+
+		to_chat(user, "<span class='notice'>You covertly start to scan [target] with your [src], hoping to pick up a wireless ID card signal...</span>")
+
+		var/list/target_id_cards = target_item.get_all_contents_type(/obj/item/card/id)
+
+		var/target_item_id = target_item.GetID()
+
+		if(target_item_id)
+			target_id_cards |= target_item_id
+
+		if(!length(target_id_cards))
+			to_chat(user, "<span class='notice'>The scan failed to locate any ID cards.</span>")
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+		var/selected_id = pick(target_id_cards)
+		to_chat(user, "<span class='notice'>You successfully sync your [src] with \the [selected_id].</span>")
+		theft_target = WEAKREF(selected_id)
+		ui_interact(user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	return ..()
 
@@ -1084,6 +1135,33 @@
 	data["accessFlagNames"] = SSid_access.access_flag_string_by_flag
 	data["accessFlags"] = SSid_access.flags_by_access
 	return data
+
+/obj/item/card/id/advanced/chameleon/ui_host(mob/user)
+	// Hook our UI to the theft target ID card for UI state checks.
+	return theft_target?.resolve()
+
+/obj/item/card/id/advanced/chameleon/ui_state(mob/user)
+	return GLOB.always_state
+
+/obj/item/card/id/advanced/chameleon/ui_status(mob/user)
+	var/target = theft_target?.resolve()
+
+	if(!target)
+		return UI_CLOSE
+
+	var/status = min(
+		ui_status_user_strictly_adjacent(user, target),
+		ui_status_user_is_advanced_tool_user(user),
+		max(
+			ui_status_user_is_conscious_and_lying_down(user),
+			ui_status_user_is_abled(user, target),
+		),
+	)
+
+	if(status < UI_INTERACTIVE)
+		return UI_CLOSE
+
+	return status
 
 /obj/item/card/id/advanced/chameleon/ui_data(mob/user)
 	var/list/data = list()
@@ -1205,6 +1283,9 @@
 				if(new_age)
 					registered_age = max(round(text2num(new_age)), 0)
 
+				if(tgui_alert(user, "Activate wallet ID spoofing, allowing this card to force itself to occupy the visible ID slot in wallets?", "Wallet ID Spoofing", list("Yes", "No")) == "Yes")
+					ADD_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
+
 				update_label()
 				update_icon()
 				forged = TRUE
@@ -1225,6 +1306,7 @@
 				registered_name = initial(registered_name)
 				assignment = initial(assignment)
 				SSid_access.remove_trim_from_chameleon_card(src)
+				REMOVE_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
 				log_game("[key_name(user)] has reset \the [initial(name)] named \"[src]\" to default.")
 				update_label()
 				update_icon()

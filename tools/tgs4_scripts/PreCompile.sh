@@ -66,32 +66,6 @@ env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --release --target=i686-un
 mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 cd ..
 
-# get dependencies for extools
-apt-get install -y cmake build-essential gcc-multilib g++-multilib cmake wget
-
-# update extools
-if [ ! -d "extools" ]; then
-	echo "Cloning extools..."
-	git clone https://github.com/MCHSL/extools
-	cd extools/byond-extools
-else
-	echo "Fetching extools..."
-	cd extools/byond-extools
-	git fetch
-fi
-
-echo "Deploying extools..."
-git checkout "$EXTOOLS_VERSION"
-if [ -d "build" ]; then
-	rm -R build
-fi
-mkdir build
-cd build
-cmake ..
-make
-mv libbyond-extools.so "$1/libbyond-extools.so"
-cd ../../..
-
 # install or update youtube-dl when not present, or if it is present with pip3,
 # which we assume was used to install it
 if ! [ -x "$has_youtubedl" ]; then

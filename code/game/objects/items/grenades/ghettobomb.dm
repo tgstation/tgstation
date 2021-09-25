@@ -15,12 +15,12 @@
 	slot_flags = ITEM_SLOT_BELT
 	active = FALSE
 	det_time = 50
-	display_timer = 0
+	display_timer = FALSE
 	var/check_parts = FALSE
 	var/range = 3
 	var/list/times
 
-/obj/item/grenade/iedcasing/Initialize()
+/obj/item/grenade/iedcasing/Initialize(mapload)
 	. = ..()
 	add_overlay("improvised_grenade_filled")
 	add_overlay("improvised_grenade_wired")
@@ -37,7 +37,7 @@
 /obj/item/grenade/iedcasing/spawned
 	check_parts = TRUE
 
-/obj/item/grenade/iedcasing/spawned/Initialize()
+/obj/item/grenade/iedcasing/spawned/Initialize(mapload)
 	new /obj/item/reagent_containers/food/drinks/soda_cans/random(src)
 	return ..()
 

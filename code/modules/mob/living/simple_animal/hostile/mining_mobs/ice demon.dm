@@ -43,7 +43,7 @@
 	/// Distance the demon will teleport from the target
 	var/teleport_distance = 3
 
-/mob/living/simple_animal/hostile/asteroid/ice_demon/Initialize()
+/mob/living/simple_animal/hostile/asteroid/ice_demon/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 
@@ -53,6 +53,7 @@
 	speed = 4
 	nodamage = FALSE
 	temperature = -75
+	slowdown = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/OpenFire()
 	ranged_cooldown = world.time + ranged_cooldown_time

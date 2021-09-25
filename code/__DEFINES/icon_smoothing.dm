@@ -151,7 +151,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_SECURITY_BARRICADE S_OBJ(63) ///obj/structure/barricade/security
 #define SMOOTH_GROUP_SANDBAGS S_OBJ(64) ///obj/structure/barricade/sandbags
 
-#define SMOOTH_GROUP_HEDGE_FLUFF S_OBJ(65) ///obj/structure/fluff/hedge
+#define SMOOTH_GROUP_HEDGE_FLUFF S_OBJ(65) ///obj/structure/hedge
 
 #define SMOOTH_GROUP_SHUTTLE_PARTS S_OBJ(66) ///obj/structure/window/shuttle, /obj/structure/window/plasma/reinforced/plastitanium, /turf/closed/indestructible/opsglass, /obj/structure/shuttle
 
@@ -159,4 +159,6 @@ DEFINE_BITFIELD(smoothing_flags, list(
 
 #define SMOOTH_GROUP_INDUSTRIAL_LIFT S_OBJ(70) ///obj/structure/industrial_lift
 
-#define MAX_S_OBJ SMOOTH_GROUP_INDUSTRIAL_LIFT //Always match this value with the one above it.
+#define SMOOTH_GROUP_GAS_TANK S_OBJ(71)
+
+#define MAX_S_OBJ SMOOTH_GROUP_GAS_TANK //Always match this value with the one above it.

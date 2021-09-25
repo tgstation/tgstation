@@ -22,7 +22,7 @@
 	///Current status of the cannon, alternates between CLOWN_CANNON_INACTIVE, CLOWN_CANNON_BUSY and CLOWN_CANNON_READY
 	var/cannonmode = CLOWN_CANNON_INACTIVE
 
-/obj/vehicle/sealed/car/clowncar/Initialize()
+/obj/vehicle/sealed/car/clowncar/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj,src)
 
@@ -39,7 +39,7 @@
 /obj/vehicle/sealed/car/clowncar/auto_assign_occupant_flags(mob/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.mind?.assigned_role == "Clown") //Ensures only clowns can drive the car. (Including more at once)
+		if(is_clown_job(H.mind?.assigned_role)) //Ensures only clowns can drive the car. (Including more at once)
 			add_control_flags(H, VEHICLE_CONTROL_DRIVE)
 			RegisterSignal(H, COMSIG_MOB_CLICKON, .proc/fire_cannon_at)
 			M.log_message("has entered [src] as a possible driver", LOG_ATTACK)
@@ -75,7 +75,7 @@
 	if(!istype(I, /obj/item/food/grown/banana))
 		return
 	var/obj/item/food/grown/banana/banana = I
-	obj_integrity += min(banana.seed.potency, max_integrity-obj_integrity)
+	atom_integrity += min(banana.seed.potency, max_integrity-atom_integrity)
 	to_chat(user, span_danger("You use the [banana] to repair the [src]!"))
 	qdel(banana)
 
@@ -110,7 +110,7 @@
 	initialize_controller_action_type(/datum/action/vehicle/sealed/cannon, VEHICLE_CONTROL_DRIVE)
 	AddElement(/datum/element/waddling)
 
-/obj/vehicle/sealed/car/clowncar/obj_destruction(damage_flag)
+/obj/vehicle/sealed/car/clowncar/atom_destruction(damage_flag)
 	playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
 	STOP_PROCESSING(SSobj,src)
 	return ..()

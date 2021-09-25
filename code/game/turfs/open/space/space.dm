@@ -16,7 +16,7 @@
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
 	light_power = 0.25
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	always_lit = TRUE
 	bullet_bounce_sound = null
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
@@ -29,7 +29,7 @@
  *
  * Doesn't call parent, see [/atom/proc/Initialize]
  */
-/turf/open/space/Initialize()
+/turf/open/space/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
@@ -49,9 +49,6 @@
 			smoothing_flags |= SMOOTH_OBJ
 		SET_BITFLAG_LIST(canSmoothWith)
 
-	var/area/A = loc
-	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
-		add_overlay(/obj/effect/fullbright)
 
 	if(requires_activation)
 		SSair.add_to_active(src, TRUE)
@@ -158,19 +155,19 @@
 		else
 			to_chat(user, span_warning("The plating is going to need some support! Place metal rods first."))
 
-/turf/open/space/Entered(atom/movable/A)
+/turf/open/space/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if ((!(A) || src != A.loc))
+	if(!arrived || src != arrived.loc)
 		return
 
-	if(destination_z && destination_x && destination_y && !(A.pulledby || !A.can_be_z_moved))
+	if(destination_z && destination_x && destination_y && !(arrived.pulledby || !arrived.can_be_z_moved))
 		var/tx = destination_x
 		var/ty = destination_y
 		var/turf/DT = locate(tx, ty, destination_z)
 		var/itercount = 0
 		while(DT.density || istype(DT.loc,/area/shuttle)) // Extend towards the center of the map, trying to look for a better place to arrive
 			if (itercount++ >= 100)
-				log_game("SPACE Z-TRANSIT ERROR: Could not find a safe place to land [A] within 100 iterations.")
+				log_game("SPACE Z-TRANSIT ERROR: Could not find a safe place to land [arrived] within 100 iterations.")
 				break
 			if (tx < 128)
 				tx++
@@ -182,9 +179,9 @@
 				ty--
 			DT = locate(tx, ty, destination_z)
 
-		var/atom/movable/pulling = A.pulling
-		var/atom/movable/puller = A
-		A.forceMove(DT)
+		var/atom/movable/pulling = arrived.pulling
+		var/atom/movable/puller = arrived
+		arrived.forceMove(DT)
 
 		while (pulling != null)
 			var/next_pulling = pulling.pulling
@@ -197,11 +194,6 @@
 
 			puller = pulling
 			pulling = next_pulling
-
-		//now we're on the new z_level, proceed the space drifting
-		stoplag()//Let a diagonal move finish, if necessary
-		A.newtonian_move(A.inertia_dir)
-		A.inertia_moving = TRUE
 
 
 /turf/open/space/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)

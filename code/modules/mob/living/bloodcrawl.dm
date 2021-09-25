@@ -122,7 +122,7 @@
 	icon = 'icons/effects/blood.dmi'
 	item_flags = ABSTRACT | DROPDEL
 
-/obj/item/bloodcrawl/Initialize()
+/obj/item/bloodcrawl/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
@@ -136,23 +136,25 @@
 	// but only for a few seconds
 	addtimer(CALLBACK(src, /atom/.proc/remove_atom_colour, TEMPORARY_COLOUR_PRIORITY, newcolor), 6 SECONDS)
 
-/mob/living/proc/phasein(obj/effect/decal/cleanable/B)
-	if(notransform)
-		to_chat(src, span_warning("Finish eating first!"))
-		return FALSE
-	B.visible_message(span_warning("[B] starts to bubble..."))
-	if(!do_after(src, 20, target = B))
-		return
-	if(!B)
-		return
-	forceMove(B.loc)
+/mob/living/proc/phasein(atom/target, forced = FALSE)
+	if(!forced)
+		if(notransform)
+			to_chat(src, span_warning("Finish eating first!"))
+			return FALSE
+		target.visible_message(span_warning("[target] starts to bubble..."))
+		if(!do_after(src, 20, target = target))
+			return FALSE
+	forceMove(get_turf(target))
 	client.eye = src
-	SEND_SIGNAL(src, COMSIG_LIVING_AFTERPHASEIN, B)
+	SEND_SIGNAL(src, COMSIG_LIVING_AFTERPHASEIN, target)
 	visible_message(span_boldwarning("[src] rises out of the pool of blood!"))
-	exit_blood_effect(B)
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		for(var/obj/item/bloodcrawl/BC in C)
-			BC.flags_1 = null
-			qdel(BC)
+	exit_blood_effect(target)
 	return TRUE
+
+/mob/living/carbon/phasein(atom/target, forced = FALSE)
+	. = ..()
+	if(!.)
+		return
+	for(var/obj/item/bloodcrawl/blood_hand in held_items)
+		blood_hand.flags_1 = null
+		qdel(blood_hand)

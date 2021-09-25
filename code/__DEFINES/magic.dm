@@ -12,7 +12,7 @@
 //NEUTRAL SPELLS (punished by honorbound gods if you get caught using it)
 #define SCHOOL_EVOCATION "evocation" //kill or destroy shit, usually out of thin air
 #define SCHOOL_TRANSMUTATION "transmutation" //transform shit
-#define SCHOOL_TRANSLOCATION "illusion" //movement based
+#define SCHOOL_TRANSLOCATION "translocation" //movement based
 #define SCHOOL_CONJURATION "conjuration" //summoning
 
 //EVIL SPELLS (instant smite + banishment)

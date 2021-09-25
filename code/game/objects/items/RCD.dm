@@ -186,6 +186,8 @@ RLD
 	return .
 
 /obj/item/construction/proc/range_check(atom/A, mob/user)
+	if(A.z != user.z)
+		return
 	if(!(A in view(7, get_turf(user))))
 		to_chat(user, span_warning("The \'Out of Range\' light on [src] blinks red."))
 		return FALSE
@@ -270,6 +272,15 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 	return getHologramIcon(grille_icon)
 
+/obj/item/construction/rcd/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/openspace_item_click_handler)
+
+/obj/item/construction/rcd/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
+	if(proximity_flag)
+		mode = construction_mode
+		rcd_create(target, user)
+
 /obj/item/construction/rcd/ui_action_click(mob/user, actiontype)
 	if (!COOLDOWN_FINISHED(src, destructive_scan_cooldown))
 		to_chat(user, span_warning("[src] lets out a low buzz."))
@@ -287,14 +298,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 		var/skip_to_next_turf = FALSE
 
-		#if MIN_COMPILER_VERSION >= 514
-		#warn Please replace the loop below this warning with an `as anything` loop.
-		#endif
 
-		for (var/_content_of_turf in surrounding_turf.contents)
-			// `as anything` doesn't play well on 513 with special lists such as contents.
-			// When the minimum version is raised to 514, upgrade this to `as anything`.
-			var/atom/content_of_turf = _content_of_turf
+		for (var/atom/content_of_turf as anything in surrounding_turf.contents)
 			if (content_of_turf.density)
 				skip_to_next_turf = TRUE
 				break
@@ -643,7 +648,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	return TRUE
 
-/obj/item/construction/rcd/Initialize()
+/obj/item/construction/rcd/Initialize(mapload)
 	. = ..()
 	airlock_electronics = new(src)
 	airlock_electronics.name = "Access Control"
@@ -741,7 +746,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	. = ..()
 	mode = construction_mode
 	rcd_create(A, user)
-	return FALSE
+	return TRUE
 
 /obj/item/construction/rcd/pre_attack_secondary(atom/target, mob/living/user, params)
 	. = ..()
@@ -765,9 +770,10 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	. = ..()
 	if(has_ammobar)
 		var/ratio = CEILING((matter / max_matter) * ammo_sections, 1)
-		. += "[icon_state]_charge[ratio]"
+		if(ratio > 0)
+			. += "[icon_state]_charge[ratio]"
 
-/obj/item/construction/rcd/Initialize()
+/obj/item/construction/rcd/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
@@ -872,6 +878,10 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		pre_attack_secondary(target, user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/item/construction/rcd/arcd/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
+	if(ranged && range_check(target, user))
+		mode = construction_mode
+		rcd_create(target, user)
 
 /obj/item/construction/rcd/arcd/rcd_create(atom/A, mob/user)
 	. = ..()

@@ -36,12 +36,15 @@
 	to_chat(owner, text_gain_indication)
 	var/mob/new_mob
 	if(prob(95))
-		if(prob(50))
-			new_mob = owner.easy_randmut(NEGATIVE + MINOR_NEGATIVE)
-		else
-			new_mob = owner.randmuti()
+		switch(rand(1,3))
+			if(1)
+				new_mob = owner.easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
+			if(2)
+				new_mob = owner.random_mutate_unique_identity()
+			if(3)
+				new_mob = owner.random_mutate_unique_features()
 	else
-		new_mob = owner.easy_randmut(POSITIVE)
+		new_mob = owner.easy_random_mutate(POSITIVE)
 	if(new_mob && ismob(new_mob))
 		owner = new_mob
 	. = owner
@@ -451,7 +454,7 @@
 	for(var/obj/item/organ/I in organs)
 		qdel(I)
 
-	explosion(owner, light_impact_range = 2, adminlog = TRUE)
+	explosion(owner, light_impact_range = 2, adminlog = TRUE, explosion_cause = src)
 	for(var/mob/living/carbon/human/H in view(2,owner))
 		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 		if(eyes)

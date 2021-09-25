@@ -31,7 +31,7 @@
 	. = ..()
 	. += span_notice("It's operating system seems quite outdated... It doesn't seem like it'd be compatible with the latest remote NTOS monitoring systems.")
 
-/obj/machinery/computer/monitor/Initialize()
+/obj/machinery/computer/monitor/Initialize(mapload)
 	. = ..()
 	search()
 	history["supply"] = list()
@@ -39,10 +39,10 @@
 
 /obj/machinery/computer/monitor/process()
 	if(!get_powernet())
-		use_power = IDLE_POWER_USE
+		update_use_power(IDLE_POWER_USE)
 		search()
 	else
-		use_power = ACTIVE_POWER_USE
+		update_use_power(ACTIVE_POWER_USE)
 		record()
 
 /obj/machinery/computer/monitor/proc/search() //keep in sync with /datum/computer_file/program/power_monitor's version

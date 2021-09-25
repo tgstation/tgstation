@@ -18,7 +18,7 @@
 	/// What we're implanting
 	var/obj/item/skillchip/inserted_skillchip
 
-/obj/machinery/skill_station/Initialize()
+/obj/machinery/skill_station/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
@@ -52,9 +52,9 @@
 	. = ..()
 	interrupt_operation()
 
-/obj/machinery/skill_station/Exited(atom/movable/AM, atom/newloc)
+/obj/machinery/skill_station/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(AM == inserted_skillchip)
+	if(gone == inserted_skillchip)
 		inserted_skillchip = null
 		interrupt_operation()
 

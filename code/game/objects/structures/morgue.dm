@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	var/message_cooldown
 	var/breakout_time = 600
 
-/obj/structure/bodycontainer/Initialize()
+/obj/structure/bodycontainer/Initialize(mapload)
 	. = ..()
 	GLOB.bodycontainers += src
 	recursive_organ_check(src)
@@ -158,7 +158,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	/// The cooldown to prevent this from spamming beeps.
 	COOLDOWN_DECLARE(next_beep)
 
-/obj/structure/bodycontainer/morgue/Initialize()
+/obj/structure/bodycontainer/morgue/Initialize(mapload)
 	. = ..()
 	connected = new/obj/structure/tray/m_tray(src)
 	connected.connected = src
@@ -217,22 +217,19 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	dir = SOUTH
 	var/id = 1
 
+/obj/structure/bodycontainer/crematorium/Initialize(mapload)
+	. = ..()
+	GLOB.crematoriums += src
+	connected = new /obj/structure/tray/c_tray(src)
+	connected.connected = src
+
 /obj/structure/bodycontainer/crematorium/attack_robot(mob/user) //Borgs can't use crematoriums without help
 	to_chat(user, span_warning("[src] is locked against you."))
 	return
 
 /obj/structure/bodycontainer/crematorium/Destroy()
-	GLOB.crematoriums.Remove(src)
+	GLOB.crematoriums -= src
 	return ..()
-
-/obj/structure/bodycontainer/crematorium/New()
-	GLOB.crematoriums.Add(src)
-	..()
-
-/obj/structure/bodycontainer/crematorium/Initialize()
-	. = ..()
-	connected = new /obj/structure/tray/c_tray(src)
-	connected.connected = src
 
 /obj/structure/bodycontainer/crematorium/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	id = "[port.id]_[id]"
@@ -388,7 +385,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	icon_state = "morguet"
 	pass_flags_self = PASSTABLE
 
-/obj/structure/tray/m_tray/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/tray/m_tray/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(.)
 		return
