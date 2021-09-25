@@ -989,7 +989,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return word + "ay"
 	//otherwise unmutated
 	return word
-  
+	
 /**
  * The procedure to check the text of the entered text on ntnrc_client.dm
  *
