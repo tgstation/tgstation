@@ -58,11 +58,8 @@
 				return FALSE
 			/// Number of sheets we're adding
 			var/num_to_add = 0
-			/// Some goober put their manifesto in the paperbin, complain at the user if that's why nothing happened
-			var/rejected_sheets = FALSE
 			for(var/obj/item/paper/the_paper as anything in bin.papers) // Search for the first blank sheet of paper, then toss it in
 				if(the_paper.info != "") // Uh oh, paper has words! 
-					rejected_sheets = TRUE
 					continue
 				if(istype(the_paper, /obj/item/paper/carbon)) // Add both the carbon, and the copy
 					var/obj/item/paper/carbon/carbon_paper = the_paper
@@ -76,10 +73,7 @@
 				break // All full!
 			bin.update_appearance()
 			if(!num_to_add)
-				if(rejected_sheets)
-					balloon_alert(user, "everything is written on!")
-				else
-					to_chat(user, span_warning("The [src]'s paper recycler refuses \the [bin], flashing some cryptic message about a feed error!"))
+				balloon_alert(user, "everything is written on!")
 			else
 				balloon_alert(user, "pulled in [num_to_add] sheets\s of paper")
 			return TRUE
