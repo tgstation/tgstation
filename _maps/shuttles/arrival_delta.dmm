@@ -41,7 +41,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "h" = (
-/obj/effect/spawner/structure/reinforced/window/reinforced/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "i" = (
