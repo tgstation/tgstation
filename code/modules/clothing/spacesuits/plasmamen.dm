@@ -45,6 +45,7 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = 2
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 100, ACID = 75)
+	permeability_coefficient = 0.05
 	resistance_flags = FIRE_PROOF
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_range = 4
