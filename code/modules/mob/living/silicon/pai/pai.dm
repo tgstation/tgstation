@@ -25,7 +25,7 @@
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
 	greyscale_config = /datum/greyscale_config/pai
-	greyscale_colors = "#2ddf1d"
+	greyscale_colors = "#2ddf1d#DA1B1B"
 
 	var/ram = 100 // Used as currency to purchase different abilities
 	var/list/software = list()

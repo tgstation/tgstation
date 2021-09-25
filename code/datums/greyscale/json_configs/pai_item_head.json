@@ -1,0 +1,80 @@
+{
+	"repairbot": [
+		{
+			"type": "icon_state",
+			"icon_state": "repairbot_chasis",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "repairbot_holo",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"cat": [
+		{
+			"type": "icon_state",
+			"icon_state": "cat_chasis",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cat_holo",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"mouse": [
+		{
+			"type": "icon_state",
+			"icon_state": "mouse_chasis",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mouse_holo",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"monkey": [
+		{
+			"type": "icon_state",
+			"icon_state": "monkey_chasis",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "monkey_holo",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"rabbit": [
+		{
+			"type": "icon_state",
+			"icon_state": "rabbit_chasis",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "rabbit_holo",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"duffel": [
+		{
+			"type": "icon_state",
+			"icon_state": "duffel_chasis",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "duffel_holo",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}
