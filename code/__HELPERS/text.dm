@@ -999,7 +999,6 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/reject_bad_chattext(text, max_length = 256)
 	var/non_whitespace = FALSE
 	var/char = ""
-
 	if (length(text) > max_length)
 		return
 	else
