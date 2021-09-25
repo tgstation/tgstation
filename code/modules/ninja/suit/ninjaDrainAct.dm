@@ -122,7 +122,7 @@
 	AI_notify_hack()
 	to_chat(ninja, span_notice("Encrypted source code detected. Overloading storage device..."))
 	if(do_after(ninja, 30 SECONDS, target = src))
-		destroy_source_code_hdd()
+		overload_source_code_hdd()
 		to_chat(ninja, span_notice("Sabotage complete. Storage device overloaded."))
 		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 		if(!ninja_antag)
