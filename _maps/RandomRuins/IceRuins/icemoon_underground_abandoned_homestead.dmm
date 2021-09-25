@@ -144,10 +144,13 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/obj/item/plate,
 /obj/item/candle{
 	pixel_x = -8;
 	pixel_y = 13
+	},
+/obj/item/food/soup/stew{
+	name = "porridge";
+	pixel_y = 3
 	},
 /turf/open/floor/wood/large{
 	initial_gas_mix = "ICEMOON_ATMOS"
@@ -256,6 +259,18 @@
 /obj/structure/barricade/wooden/crude/snow,
 /turf/open/floor/wood{
 	icon_state = "wood-broken";
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"HF" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/innards,
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/effect/decal/cleanable/blood/gibs/limb{
+	pixel_x = -9;
+	pixel_y = -8
+	},
+/turf/open/floor/stone{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
@@ -489,7 +504,7 @@ ol
 Nz
 ng
 RO
-QI
+HF
 ym
 QI
 wl
