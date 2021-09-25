@@ -152,7 +152,7 @@
 	total_requirement = 3
 	possible_plant_genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/glow/shadow, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/brewing, /datum/plant_gene/trait/juicing, /datum/plant_gene/trait/eyes, /datum/plant_gene/trait/sticky)
 
-/datum/experiment/scanning/points/machinery_tiered_scan/lathes_tier2
+/datum/experiment/scanning/points/machinery_tiered_scan/tier2_lathes
 	name = "Advanced Stock Parts Benchmark"
 	description = "TBD"
 	required_points = 6
@@ -164,18 +164,93 @@
 		/obj/machinery/rnd/production/techfab/department/service = 1)
 	required_tier = 2
 
-/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_micro_laser_calibration
+/datum/experiment/scanning/points/machinery_tiered_scan/tier3_bluespacemachines
+	name = "Bluespace Machinery Attunement"
+	description = "TBD"
+	required_points = 4
+	required_atoms = list(/obj/machinery/teleport/hub = 1,
+		/obj/machinery/teleport/station = 1)
+	required_tier = 3
+
+/datum/experiment/scanning/points/machinery_tiered_scan/tier3_variety
+	name = "High Efficiency Parts Applications Test"
+	description = "TBD"
+	required_points = 15
+	required_atoms = list(/obj/machinery/autolathe = 1,
+		/obj/machinery/rnd/production/circuit_imprinter/department/science = 1,
+		/obj/machinery/monkey_recycler = 1,
+		/obj/machinery/processor/slime = 1,
+		/obj/machinery/processor = 2,
+		/obj/machinery/reagentgrinder = 2,
+		/obj/machinery/atmospherics/components/unary/cryo_cell = 3,
+		/obj/machinery/chem_master = 3,
+		/obj/machinery/harvester = 3,
+		/obj/machinery/quantumpad = 5
+		)
+	required_tier = 3
+
+/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay
+	name = "Military-grade Mech Bay Specs"
+	description = "TBD"
+	required_points = 6
+	required_atoms = list(/obj/machinery/mecha_part_fabricator = 1,
+		/obj/machinery/mech_bay_recharge_port = 1,
+		/obj/machinery/recharge_station = 1)
+	required_tier = 4
+
+/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_microlaser
 	name = "High-power Micro-lasers Calibration"
 	description = "TBD"
-	required_points = 2
-	required_atoms = list(/obj/machinery/mecha_part_fabricator = 1)
+	required_points = 10
+	required_atoms = list(/obj/machinery/mecha_part_fabricator = 1,
+		/obj/machinery/rnd/experimentor = 1,
+		/obj/machinery/dna_scannernew = 1,
+		/obj/machinery/microwave = 2,
+		/obj/machinery/deepfryer = 2,
+		/obj/machinery/chem_heater = 3,
+		/obj/machinery/power/emitter = 3)
 	required_stock_part = /obj/item/stock_parts/micro_laser/high
 
 /datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_capacitors
 	name = "Advanced Capacitors Benchmark"
 	description = "TBD"
-	required_points = 6
+	required_points = 12
 	required_atoms = list(/obj/machinery/recharge_station = 1,
 		/obj/machinery/cell_charger = 1,
+		/obj/machinery/mech_bay_recharge_port = 1,
 		/obj/machinery/chem_dispenser = 2)
+		/*/obj/machinery/chem_dispenser/drinks = 2,
+		/obj/machinery/chem_dispenser/drinks/beer = 2)*/
 	required_stock_part = /obj/item/stock_parts/capacitor/adv
+
+/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_scanmodules
+	name = "Advanced Scanning Modules Calibration"
+	description = "TBD"
+	required_points = 6
+	required_atoms = list(/obj/machinery/dna_scannernew = 1,
+		/obj/machinery/rnd/experimentor = 1,
+		/obj/machinery/medical_kiosk = 2,
+		/obj/machinery/piratepad/civilian = 2
+		)
+	required_stock_part = /obj/item/stock_parts/scanning_module/adv
+
+/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_cells
+	name = "Power Cells Capacity Test"
+	description = "TBD"
+	required_points = 8
+	required_atoms = list(/obj/machinery/recharge_station = 1,
+		/obj/machinery/chem_dispenser = 1,
+		/obj/machinery/power/smes = 2)
+	required_stock_part = /obj/item/stock_parts/cell/hyper
+
+/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_microlaser
+	name = "Ultra-high-power Micro-lasers Calibration"
+	description = "TBD"
+	required_points = 10
+	required_atoms = list(/obj/machinery/mecha_part_fabricator = 1,
+		/obj/machinery/microwave = 1,
+		/obj/machinery/rnd/experimentor = 1,
+		/obj/machinery/atmospherics/components/binary/thermomachine/freezer = 2,
+		/obj/machinery/power/emitter = 2,
+		/obj/machinery/chem_heater = 2)
+	required_stock_part = /obj/item/stock_parts/micro_laser/ultra
