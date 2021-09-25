@@ -330,32 +330,3 @@
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	QDEL_NULL(sliver)
 	update_appearance()
-
-/// HDD extraction objective screwdriver. Opens the front panel.
-/obj/item/screwdriver/hdd_extraction
-	name = "electrical screwdriver"
-	desc = "A special screwdriver with a proprietary tip. The yellow and orange colouring is intended to give the user a sense of safety, despite the fact this screwdriver is as electrically conductive as any other."
-	icon = 'icons/obj/nuke_tools.dmi'
-	icon_state = "electrical_screwdriver"
-	toolspeed = 0.5
-	random_color = FALSE
-
-/// HDD extraction objective crowbar. Pries the HDD loose of its enclosure.
-/obj/item/crowbar/hdd_extraction
-	name = "claw bar"
-	desc = "One half wrench, one half crowbar, all parts awesome. Utterly useless as a traditional wrench and barely capable of prying things open. Still, it's very compact and sure looks stylish! When all else fails, the business end can provide decent percussive maintenance to your foes."
-	force = 10
-	icon = 'icons/obj/nuke_tools.dmi'
-	icon_state = "claw_bar"
-	toolspeed = 0.5
-	w_class = WEIGHT_CLASS_TINY
-
-/// HDD extraction objective wirecutters. Destructively cuts the HDD free from the server.
-/obj/item/wirecutters/hdd_extraction
-	name = "digital wirecutters"
-	desc = "The fancy digital display tells you exactly which wire you need to cut! Bad news is it's only calibrated with schematics for the R&D Servers. The tiny size of the clippers makes them very slow and fiddly to use. Still, sure looks modern and they are impressively tiny!"
-	icon = 'icons/obj/nuke_tools.dmi'
-	icon_state = "digital_wirecutters"
-	toolspeed = 0.25
-	w_class = WEIGHT_CLASS_TINY
-	random_color = FALSE

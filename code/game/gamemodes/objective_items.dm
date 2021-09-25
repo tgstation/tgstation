@@ -108,7 +108,7 @@
 	difficulty = 10
 
 /datum/objective_item/steal/hdd_extraction/New()
-	special_equipment += /obj/item/storage/box/syndie_kit/hdd_extraction
+	special_equipment += /obj/item/paper/guides/antag/hdd_extraction
 	return ..()
 
 
