@@ -40,7 +40,7 @@
 
 /datum/blood_type/lizard
 	name = "L"
-	color = rgb(0, 150, 150)
+	color = "#009696"
 	compatible_types = list(/datum/blood_type/lizard)
 
 /datum/blood_type/universal
@@ -49,3 +49,12 @@
 /datum/blood_type/universal/New()
 	. = ..()
 	compatible_types = subtypesof(/datum/blood_type)
+
+/datum/blood_type/xenomorph //for xenomorph gib dna
+	name = "X"
+	color = rgb(0, 255, 0)
+	compatible_types = list(/datum/blood_type/xenomorph)
+
+/datum/blood_type/animal //for simplemob gib dna
+	name = "Y-"
+	compatible_types = list(/datum/blood_type/animal)
