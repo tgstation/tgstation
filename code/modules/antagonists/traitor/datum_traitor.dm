@@ -213,7 +213,7 @@
 
 /datum/antagonist/traitor/ui_static_data(mob/user)
 	var/list/data = list()
-	data["has_codewords"] = should_give_codewords ? TRUE : FALSE
+	data["has_codewords"] = should_give_codewords
 	if(should_give_codewords)
 		data["phrases"] = jointext(GLOB.syndicate_code_phrase, ", ")
 		data["responses"] = jointext(GLOB.syndicate_code_response, ", ")
