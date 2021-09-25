@@ -18838,7 +18838,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "eBe" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
 	dir = 4
 	},
@@ -24495,7 +24495,7 @@
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "gyl" = (
-/obj/structure/window/plasma/reinforced/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/east,
 /turf/open/space/basic,
 /area/space/nearstation)
 "gyB" = (
@@ -34502,7 +34502,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "kkt" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "kkA" = (
@@ -39802,7 +39802,7 @@
 /area/engineering/atmos)
 "mfL" = (
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine,
@@ -44841,7 +44841,7 @@
 /area/hallway/primary/fore)
 "nQq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "nQF" = (
@@ -48253,7 +48253,7 @@
 /area/security/brig)
 "pdy" = (
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -48958,7 +48958,7 @@
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "ppN" = (
-/obj/structure/window/plasma/reinforced/spawner/west,
+/obj/structure/window/reinforced/plasma/spawner/west,
 /turf/open/space/basic,
 /area/space/nearstation)
 "ppT" = (
@@ -51199,7 +51199,7 @@
 /turf/open/floor/iron/white,
 /area/medical/surgery/room_b)
 "qdD" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter)
 "qdX" = (
@@ -56591,7 +56591,7 @@
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/exit/departure_lounge)
 "scK" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "scO" = (
@@ -61492,7 +61492,7 @@
 /area/commons/vacant_room/office)
 "tNb" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction,
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "tNy" = (
@@ -63589,7 +63589,7 @@
 /turf/open/floor/iron/white,
 /area/science/robotics/lab)
 "uCe" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
@@ -64947,7 +64947,7 @@
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "vcI" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
@@ -67199,7 +67199,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "vQt" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)

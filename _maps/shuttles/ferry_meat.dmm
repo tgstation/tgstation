@@ -92,7 +92,7 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "o" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "p" = (

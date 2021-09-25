@@ -74,7 +74,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "ah" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast door"
@@ -224,7 +224,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/engine)
 "au" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast door"
@@ -956,7 +956,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/abandoned/crew)
 "bP" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_bridge";
 	name = "Cockpit Emergency Blast door"
@@ -1242,7 +1242,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/abandoned/crew)
 "cs" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast door"
@@ -1693,7 +1693,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/crew)
 "df" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast door"

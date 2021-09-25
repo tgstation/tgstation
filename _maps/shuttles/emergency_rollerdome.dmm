@@ -125,7 +125,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "wf" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating/elevatorshaft,
 /area/shuttle/escape)
 "wn" = (
