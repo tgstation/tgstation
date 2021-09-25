@@ -36,7 +36,7 @@
 	alpha = 255
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/openspace/Initialize()
+/atom/movable/screen/plane_master/openspace/Initialize(mapload)
 	. = ..()
 	add_filter("first_stage_openspace", 1, drop_shadow_filter(color = "#04080FAA", size = -10))
 	add_filter("second_stage_openspace", 2, drop_shadow_filter(color = "#04080FAA", size = -15))
@@ -129,7 +129,7 @@
  * A color matrix filter is applied to the emissive plane to mask out anything that isn't whatever the emissive color is.
  * This is then used to alpha mask the lighting plane.
  */
-/atom/movable/screen/plane_master/lighting/Initialize()
+/atom/movable/screen/plane_master/lighting/Initialize(mapload)
 	. = ..()
 	add_filter("emissives", 1, alpha_mask_filter(render_source = EMISSIVE_RENDER_TARGET, flags = MASK_INVERSE))
 	add_filter("object_lighting", 2, alpha_mask_filter(render_source = O_LIGHTING_VISUAL_RENDER_TARGET, flags = MASK_INVERSE))
@@ -145,7 +145,7 @@
 	render_target = EMISSIVE_RENDER_TARGET
 	render_relay_plane = null
 
-/atom/movable/screen/plane_master/emissive/Initialize()
+/atom/movable/screen/plane_master/emissive/Initialize(mapload)
 	. = ..()
 	add_filter("em_block_masking", 1, color_matrix_filter(GLOB.em_mask_matrix))
 
