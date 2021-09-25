@@ -683,6 +683,20 @@
 
 	return parts.Join("<br>")
 
+/datum/antagonist/changeling/get_preview_icon()
+	var/icon/final_icon = render_preview_outfit(/datum/outfit/changeling)
+	var/icon/split_icon = render_preview_outfit(/datum/outfit/job/engineer)
+
+	final_icon.Shift(WEST, world.icon_size / 2)
+	final_icon.Shift(EAST, world.icon_size / 2)
+
+	split_icon.Shift(EAST, world.icon_size / 2)
+	split_icon.Shift(WEST, world.icon_size / 2)
+
+	final_icon.Blend(split_icon, ICON_OVERLAY)
+
+	return finish_preview_icon(final_icon)
+
 /datum/antagonist/changeling/ui_data(mob/user)
 	var/list/data = list()
 	var/list/memories = list()
@@ -726,3 +740,10 @@
 		to_chat(owner, span_boldannounce("You are a fresh changeling birthed from a headslug! You aren't as strong as a normal changeling, as you are newly born."))
 	if(policy)
 		to_chat(owner, policy)
+
+/datum/outfit/changeling
+	name = "Changeling"
+
+	head = /obj/item/clothing/head/helmet/changeling
+	suit = /obj/item/clothing/suit/armor/changeling
+	l_hand = /obj/item/melee/arm_blade

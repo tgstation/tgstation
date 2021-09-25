@@ -15,7 +15,7 @@
 
 INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
-/obj/effect/landmark/Initialize()
+/obj/effect/landmark/Initialize(mapload)
 	. = ..()
 	GLOB.landmarks_list += src
 
@@ -37,7 +37,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	if(delete_after_roundstart)
 		qdel(src)
 
-/obj/effect/landmark/start/Initialize()
+/obj/effect/landmark/start/Initialize(mapload)
 	. = ..()
 	GLOB.start_landmarks_list += src
 	if(jobspawn_override)
@@ -250,7 +250,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "wiznerd_spawn"
 
-/obj/effect/landmark/start/wizard/Initialize()
+/obj/effect/landmark/start/wizard/Initialize(mapload)
 	..()
 	GLOB.wizardstart += loc
 	return INITIALIZE_HINT_QDEL
@@ -260,7 +260,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "snukeop_spawn"
 
-/obj/effect/landmark/start/nukeop/Initialize()
+/obj/effect/landmark/start/nukeop/Initialize(mapload)
 	..()
 	GLOB.nukeop_start += loc
 	return INITIALIZE_HINT_QDEL
@@ -270,7 +270,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "snukeop_leader_spawn"
 
-/obj/effect/landmark/start/nukeop_leader/Initialize()
+/obj/effect/landmark/start/nukeop_leader/Initialize(mapload)
 	..()
 	GLOB.nukeop_leader_start += loc
 	return INITIALIZE_HINT_QDEL
@@ -282,7 +282,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/start/new_player
 	name = "New Player"
 
-/obj/effect/landmark/start/new_player/Initialize()
+/obj/effect/landmark/start/new_player/Initialize(mapload)
 	..()
 	GLOB.newplayer_start += loc
 	return INITIALIZE_HINT_QDEL
@@ -451,16 +451,23 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "hangover spawn"
 	icon_state = "hangover_spawn"
 
-/obj/effect/landmark/start/hangover/Initialize()
+	/// A list of everything this hangover spawn created
+	var/list/debris = list()
+
+/obj/effect/landmark/start/hangover/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/landmark/start/hangover/Destroy()
+	debris = null
+	return ..()
 
 /obj/effect/landmark/start/hangover/LateInitialize()
 	. = ..()
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER))
 		return
 	if(prob(60))
-		new /obj/effect/decal/cleanable/vomit(get_turf(src))
+		debris += new /obj/effect/decal/cleanable/vomit(get_turf(src))
 	if(prob(70))
 		var/bottle_count = rand(1, 3)
 		for(var/index in 1 to bottle_count)
@@ -474,7 +481,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 					break
 			if(dense_object)
 				continue
-			new /obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty(turf_to_spawn_on)
+			debris += new /obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty(turf_to_spawn_on)
 
 ///Spawns the mob with some drugginess/drunkeness, and some disgust.
 /obj/effect/landmark/start/hangover/proc/make_hungover(mob/hangover_mob)

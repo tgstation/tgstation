@@ -31,7 +31,7 @@
 /obj/item/stock_parts/cell/emproof/wiremod_gun
 	maxcharge = 100
 
-/obj/item/gun/energy/wiremod_gun/Initialize()
+/obj/item/gun/energy/wiremod_gun/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/wiremod_gun()
@@ -47,7 +47,7 @@
 	/// The entity being shot
 	var/datum/port/output/shot
 
-/obj/item/circuit_component/wiremod_gun/Initialize()
+/obj/item/circuit_component/wiremod_gun/Initialize(mapload)
 	. = ..()
 	shooter = add_output_port("Shooter", PORT_TYPE_ATOM)
 	shot = add_output_port("Shot Entity", PORT_TYPE_ATOM)

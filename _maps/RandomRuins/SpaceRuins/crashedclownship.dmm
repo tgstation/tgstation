@@ -48,7 +48,7 @@
 	},
 /obj/item/clothing/shoes/clown_shoes/banana_shoes,
 /obj/item/gps/spaceruin,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "l" = (

@@ -11,7 +11,7 @@
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/cult
 
-/turf/closed/wall/mineral/cult/Initialize()
+/turf/closed/wall/mineral/cult/Initialize(mapload)
 	new /obj/effect/temp_visual/cult/turf(src)
 	. = ..()
 

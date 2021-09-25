@@ -38,7 +38,7 @@
 	trigger_guard = TRIGGER_GUARD_NORMAL
 
 
-/obj/item/pneumatic_cannon/Initialize()
+/obj/item/pneumatic_cannon/Initialize(mapload)
 	. = ..()
 	if(selfcharge)
 		init_charge()
@@ -291,7 +291,7 @@
 	clumsyCheck = FALSE
 	var/static/list/pie_typecache = typecacheof(/obj/item/food/pie)
 
-/obj/item/pneumatic_cannon/pie/Initialize()
+/obj/item/pneumatic_cannon/pie/Initialize(mapload)
 	. = ..()
 	allowed_typecache = pie_typecache
 

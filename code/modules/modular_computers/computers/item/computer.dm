@@ -52,7 +52,7 @@
 	var/comp_light_luminosity = 3 //The brightness of that light
 	var/comp_light_color //The color of that light
 
-/obj/item/modular_computer/Initialize()
+/obj/item/modular_computer/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	if(!physical)

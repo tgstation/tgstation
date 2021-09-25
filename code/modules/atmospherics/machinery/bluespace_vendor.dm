@@ -79,7 +79,7 @@
 
 	update_appearance()
 
-/obj/machinery/bluespace_vendor/Initialize()
+/obj/machinery/bluespace_vendor/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/payment, tank_cost, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
 

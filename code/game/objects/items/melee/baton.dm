@@ -37,7 +37,7 @@
 	/// Whether the stun attack is logged. Only relevant for abductor batons, which have different modes.
 	var/log_stun_attack = TRUE
 
-/obj/item/melee/baton/Initialize()
+/obj/item/melee/baton/Initialize(mapload)
 	. = ..()
 	// Adding an extra break for the sake of presentation
 	if(stamina_damage != 0)
@@ -255,7 +255,7 @@
 	/// The force on extension.
 	var/active_force = 10
 
-/obj/item/melee/baton/telescopic/Initialize()
+/obj/item/melee/baton/telescopic/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
@@ -359,7 +359,7 @@
 	var/can_remove_cell = TRUE
 	var/convertible = TRUE //if it can be converted with a conversion kit
 
-/obj/item/melee/baton/security/Initialize()
+/obj/item/melee/baton/security/Initialize(mapload)
 	. = ..()
 	if(preload_cell_type)
 		if(!ispath(preload_cell_type,/obj/item/stock_parts/cell))
@@ -488,8 +488,8 @@
 	if(. != BATON_DO_NORMAL_ATTACK)
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		if(active && cooldown_check <= world.time && check_parried(target, user))
-			finalize_baton_attack(target, user, modifiers)
+		if(active && cooldown_check <= world.time && !check_parried(target, user))
+			finalize_baton_attack(target, user, modifiers, in_attack_chain = FALSE)
 	else if(!user.combat_mode)
 		target.visible_message(span_warning("[user] prods [target] with [src]. Luckily it was off."), \
 			span_warning("[user] prods you with [src]. Luckily it was off."))
@@ -571,7 +571,7 @@
 	convertible = FALSE
 	var/obj/item/assembly/igniter/sparkler
 
-/obj/item/melee/baton/security/cattleprod/Initialize()
+/obj/item/melee/baton/security/cattleprod/Initialize(mapload)
 	. = ..()
 	sparkler = new (src)
 

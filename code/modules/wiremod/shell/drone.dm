@@ -11,7 +11,7 @@
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_on = FALSE
 
-/mob/living/circuit_drone/Initialize()
+/mob/living/circuit_drone/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/bot_circuit()

@@ -2077,7 +2077,7 @@
 	desc = "The cow goes moo!"
 	cost = CARGO_CRATE_VALUE * 6
 	access_view = ACCESS_HYDROPONICS
-	contains = list(/mob/living/simple_animal/cow)
+	contains = list(/mob/living/basic/cow)
 	crate_name = "cow crate"
 
 /datum/supply_pack/critter/crab
@@ -2410,7 +2410,7 @@
 
 /datum/supply_pack/costumes_toys/mafia/fill(obj/structure/closet/crate/C)
 	for(var/i in 1 to 4)
-		new /obj/effect/spawner/lootdrop/mafia_outfit(C)
+		new /obj/effect/spawner/random/clothing/mafia_outfit(C)
 		new /obj/item/virgin_mary(C)
 		if(prob(30)) //Not all mafioso have mustaches, some people also find this item annoying.
 			new /obj/item/clothing/mask/fakemoustache/italian(C)

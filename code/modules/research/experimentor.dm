@@ -69,7 +69,7 @@
 			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
 				valid_items["[I]"] += rand(1,4)
 
-/obj/machinery/rnd/experimentor/Initialize()
+/obj/machinery/rnd/experimentor/Initialize(mapload)
 	. = ..()
 
 	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/ian) in GLOB.mob_living_list
@@ -564,7 +564,7 @@
 	var/reset_timer = 60
 	COOLDOWN_DECLARE(cooldown)
 
-/obj/item/relic/Initialize()
+/obj/item/relic/Initialize(mapload)
 	. = ..()
 	icon_state = pick("shock_kit","armor-igniter-analyzer","infra-igniter0","infra-igniter1","radio-multitool","prox-radio1","radio-radio","timer-multitool0","radio-igniter-tank")
 	realName = "[pick("broken","twisted","spun","improved","silly","regular","badly made")] [pick("device","object","toy","illegal tech","weapon")]"

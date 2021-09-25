@@ -1009,6 +1009,10 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/shuttle/escape)
+"lm" = (
+/obj/machinery/meter,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "lB" = (
 /turf/open/floor/iron/chapel{
 	dir = 8
@@ -1029,10 +1033,6 @@
 "me" = (
 /obj/structure/table/wood/fancy,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
-"mh" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
-/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "mi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -1111,6 +1111,10 @@
 /obj/machinery/light/small/directional/north,
 /obj/item/seeds/watermelon/holy,
 /turf/open/floor/grass,
+/area/shuttle/escape)
+"nb" = (
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "nd" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -4004,13 +4008,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
-"TK" = (
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "TR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -4435,12 +4432,6 @@
 	pixel_y = 1
 	},
 /turf/open/space/basic,
-/area/shuttle/escape)
-"YB" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden{
-	dir = 6
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "YC" = (
 /obj/machinery/light/small/directional/west,
@@ -5080,7 +5071,7 @@ zE
 jR
 Gv
 kN
-mh
+nb
 nr
 rw
 zb
@@ -6170,7 +6161,7 @@ ZM
 yc
 Rx
 Su
-YB
+Zf
 dR
 nr
 Ho
@@ -6252,7 +6243,7 @@ kq
 yc
 Zr
 Ig
-TK
+lm
 dR
 nr
 Ho

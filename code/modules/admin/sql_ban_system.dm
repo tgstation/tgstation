@@ -119,7 +119,7 @@
 	var/datum/browser/panel = new(usr, "banpanel", "Banning Panel", 910, panel_height)
 	panel.add_stylesheet("admin_panelscss", 'html/admin/admin_panels.css')
 	panel.add_stylesheet("banpanelcss", 'html/admin/banpanel.css')
-	var/tgui_fancy = usr.client.prefs.tgui_fancy
+	var/tgui_fancy = usr.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy)
 	if(tgui_fancy) //some browsers (IE8) have trouble with unsupported css3 elements and DOM methods that break the panel's functionality, so we won't load those if a user is in no frills tgui mode since that's for similar compatability support
 		panel.add_stylesheet("admin_panelscss3", 'html/admin/admin_panels_css3.css')
 		panel.add_script("banpaneljs", 'html/admin/banpanel.js')
@@ -316,6 +316,9 @@
 				ROLE_REV,
 				ROLE_REVENANT,
 				ROLE_REV_HEAD,
+				ROLE_SENTIENT_DISEASE,
+				ROLE_SPIDER,
+				ROLE_SWARMER,
 				ROLE_SYNDICATE,
 				ROLE_TRAITOR,
 				ROLE_WIZARD,
