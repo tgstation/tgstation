@@ -55,3 +55,18 @@
 
 /obj/structure/chair/sofa/corp/corner
 	icon_state = "corp_sofacorner"
+
+// Ported from Skyrat
+/obj/structure/chair/sofa/bench
+	name = "bench"
+	desc = "Perfectly designed to be comfortable to sit on, and hellish to sleep on."
+	icon_state = "bench_middle"
+
+/obj/structure/chair/sofa/bench/left
+	icon_state = "bench_left"
+
+/obj/structure/chair/sofa/bench/right
+	icon_state = "bench_right"
+
+/obj/structure/chair/sofa/bench/corner
+	icon_state = "bench_corner"
