@@ -10,16 +10,20 @@
 	. += span_info("This spawner has an effective loot count of [get_effective_lootcount()].")
 
 /obj/effect/spawner/random/maintenance/Initialize(mapload)
+	// Late loaded templates like shuttles can have maintenance loot.
+	// Once the game state progresses to roundstart, new maint loot spawners should just instantly pop.
+	if(SSticker.current_state >= GAME_STATE_SETTING_UP)
+		spawn_on_init = TRUE
+
 	. = ..()
-	// There is a single callback in SSmapping to spawn all delayed maintenance loot
-	// so we don't just make one callback per loot spawner
+
+	// If parent Initialize is calling for us to qdel, we can just return early.
+	if(. == INITIALIZE_HINT_QDEL || . == INITIALIZE_HINT_QDEL_FORCE)
+		return
+
+	// Otherwise we hang around until SSmapping spawns us in OnRoundstart and deletes us.
 	GLOB.maintenance_loot_spawners += src
 	loot = GLOB.maintenance_loot
-
-	// Late loaded templates like shuttles can have maintenance loot
-	if(SSticker.current_state >= GAME_STATE_SETTING_UP)
-		spawn_loot()
-		hide()
 
 /obj/effect/spawner/random/maintenance/Destroy()
 	GLOB.maintenance_loot_spawners -= src
