@@ -44,7 +44,7 @@
 	///Efficiency minimum amount, min 0.25, max 1 (works best on higher laser tiers)
 	var/parts_efficiency = 1
 
-/obj/machinery/atmospherics/components/binary/thermomachine/Initialize()
+/obj/machinery/atmospherics/components/binary/thermomachine/Initialize(mapload)
 	. = ..()
 	RefreshParts()
 	update_appearance()
@@ -228,7 +228,7 @@
 			efficiency *= clamp(log(1.55, exchange_target.total_moles()) * 0.15, 0.65, 1)
 
 		efficiency *= mole_efficiency
-		efficiency = max(efficiency, parts_efficiency) 
+		efficiency = max(efficiency, parts_efficiency)
 
 		if (exchange_target.temperature > THERMOMACHINE_SAFE_TEMPERATURE && safeties)
 			on = FALSE
@@ -387,7 +387,7 @@
 		return TRUE
 
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/explode()
-	explosion(loc, 0, 0, 3, 3, TRUE)
+	explosion(loc, 0, 0, 3, 3, TRUE, explosion_cause = src)
 	var/datum/gas_mixture/main_port = airs[1]
 	var/datum/gas_mixture/exchange_target = airs[2]
 	if(main_port)
@@ -489,7 +489,7 @@
 	on = TRUE
 	icon_state = "thermo_base_1"
 
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/Initialize()
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/Initialize(mapload)
 	. = ..()
 	if(target_temperature == initial(target_temperature))
 		target_temperature = min_temperature
@@ -500,7 +500,7 @@
 	greyscale_colors = COLOR_CYAN
 	cooling = TRUE
 
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/coldroom/Initialize()
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/coldroom/Initialize(mapload)
 	. = ..()
 	target_temperature = COLD_ROOM_TEMP
 

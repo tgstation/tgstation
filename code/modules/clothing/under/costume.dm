@@ -87,7 +87,7 @@
 /obj/item/clothing/under/costume/kilt/highlander
 	desc = "You're the only one worthy of this kilt."
 
-/obj/item/clothing/under/costume/kilt/highlander/Initialize()
+/obj/item/clothing/under/costume/kilt/highlander/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
 
@@ -114,7 +114,7 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
-/obj/item/clothing/under/costume/maid/Initialize()
+/obj/item/clothing/under/costume/maid/Initialize(mapload)
 	. = ..()
 	var/obj/item/clothing/accessory/maidapron/A = new (src)
 	attach_accessory(A)

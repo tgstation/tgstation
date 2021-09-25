@@ -90,7 +90,7 @@
 	QDEL_NULL(keyslot)
 	return ..()
 
-/obj/item/radio/Initialize()
+/obj/item/radio/Initialize(mapload)
 	wires = new /datum/wires/radio(src)
 	if(prison_radio)
 		wires.cut(WIRE_TX) // OH GOD WHY
@@ -398,7 +398,7 @@
 	syndie = 1
 	keyslot = new /obj/item/encryptionkey/syndicate
 
-/obj/item/radio/borg/syndicate/Initialize()
+/obj/item/radio/borg/syndicate/Initialize(mapload)
 	. = ..()
 	set_frequency(FREQ_SYNDICATE)
 

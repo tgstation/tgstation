@@ -142,7 +142,7 @@
 	var/datum/duel/duel
 	var/mutable_appearance/setting_overlay
 
-/obj/item/gun/energy/dueling/Initialize()
+/obj/item/gun/energy/dueling/Initialize(mapload)
 	. = ..()
 	setting_overlay = mutable_appearance(icon,setting_iconstate())
 	add_overlay(setting_overlay)

@@ -45,7 +45,7 @@
 /obj/item/gun/energy/get_cell()
 	return cell
 
-/obj/item/gun/energy/Initialize()
+/obj/item/gun/energy/Initialize(mapload)
 	. = ..()
 	if(cell_type)
 		cell = new cell_type(src)

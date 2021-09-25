@@ -23,7 +23,7 @@
 	///Represents a signel source of screaming when broken
 	var/datum/alarm_handler/alarm_manager
 
-/obj/structure/displaycase/Initialize()
+/obj/structure/displaycase/Initialize(mapload)
 	. = ..()
 	if(start_showpieces.len && !start_showpiece_type)
 		var/list/showpiece_entry = pick(start_showpieces)
@@ -296,7 +296,7 @@
 	integrity_failure = 0
 	openable = FALSE
 
-/obj/structure/displaycase/trophy/Initialize()
+/obj/structure/displaycase/trophy/Initialize(mapload)
 	. = ..()
 	GLOB.trophy_cases += src
 

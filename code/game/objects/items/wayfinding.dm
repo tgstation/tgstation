@@ -177,7 +177,7 @@
 			holochip.name = "[holochip.credits] credit holochip"
 			user.put_in_hands(holochip)
 		else if(!itsmypinpointer)
-			var/costume = pick(subtypesof(/obj/effect/spawner/bundle/costume))
+			var/costume = pick(subtypesof(/obj/effect/spawner/costume))
 			new costume(user.loc)
 			is_a_thing = "is a freshly synthesised costume!"
 			if(prob(funnyprob))

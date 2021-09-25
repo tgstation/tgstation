@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	/// Used to provide source to the regex replacement function. DO NOT MODIFY DIRECTLY
 	var/static/obj/item/exodrone/_regex_context
 
-/obj/item/exodrone/Initialize()
+/obj/item/exodrone/Initialize(mapload)
 	. = ..()
 	name = pick(strings(EXODRONE_FILE,"probe_names"))
 	if(name_counter[name])
@@ -347,7 +347,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	/// Loaded fuel pellet.
 	var/obj/item/fuel_pellet/fuel_canister
 
-/obj/machinery/exodrone_launcher/Initialize()
+/obj/machinery/exodrone_launcher/Initialize(mapload)
 	. = ..()
 	GLOB.exodrone_launchers += src
 

@@ -16,7 +16,7 @@
 	var/obj/effect/food_cart_stand/cart_tent
 	var/list/packed_things
 
-/obj/machinery/food_cart/Initialize()
+/obj/machinery/food_cart/Initialize(mapload)
 	. = ..()
 	cart_griddle = new(src)
 	cart_smartfridge = new(src)

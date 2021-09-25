@@ -63,7 +63,7 @@
 /obj/item/circuit_component/proc/add_option_port(name, list/list_to_use, order = 0, trigger = .proc/input_received)
 	return add_input_port(name, PORT_TYPE_OPTION, order = order, trigger = trigger, port_type = /datum/port/input/option, extra_args = list("possible_options" = list_to_use))
 
-/obj/item/circuit_component/Initialize()
+/obj/item/circuit_component/Initialize(mapload)
 	. = ..()
 	if(name == COMPONENT_DEFAULT_NAME)
 		name = "[lowertext(display_name)] [COMPONENT_DEFAULT_NAME]"
@@ -325,8 +325,20 @@
 	for(var/entry in entries)
 		. += create_ui_notice("Column Name: '[entry]'", "grey", "columns")
 
-/obj/item/circuit_component/proc/register_usb_parent(atom/movable/parent)
+/**
+ * Called when a circuit component is added to an object with a USB port.
+ *
+ * Arguments:
+ * * shell - The object that USB cables can connect to
+ */
+/obj/item/circuit_component/proc/register_usb_parent(atom/movable/shell)
 	return
 
-/obj/item/circuit_component/proc/unregister_usb_parent(atom/movable/parent)
+/**
+ * Called when a circuit component is removed from an object with a USB port.
+ *
+ * Arguments:
+ * * shell - The object that USB cables can connect to
+ */
+/obj/item/circuit_component/proc/unregister_usb_parent(atom/movable/shell)
 	return

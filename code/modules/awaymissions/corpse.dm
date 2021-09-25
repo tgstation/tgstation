@@ -49,7 +49,7 @@
 		return
 	if(!radial_based)
 		var/ghost_role = tgui_alert(usr, "Become [mob_name]? (Warning, You can no longer be revived!)",, list("Yes", "No"))
-		if(ghost_role == "No" || !loc || QDELETED(user))
+		if(ghost_role != "Yes" || !loc || QDELETED(user))
 			return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
@@ -74,7 +74,7 @@
 	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		INVOKE_ASYNC(src, .proc/create)
 	else if(ghost_usable)
-		AddElement(/datum/element/point_of_interest)
+		SSpoints_of_interest.make_point_of_interest(src)
 		LAZYADD(GLOB.mob_spawners[name], src)
 
 /obj/effect/mob_spawn/Destroy()
@@ -186,7 +186,7 @@
 	var/facial_haircolor
 	var/skin_tone
 
-/obj/effect/mob_spawn/human/Initialize()
+/obj/effect/mob_spawn/human/Initialize(mapload)
 	if(ispath(outfit))
 		outfit = new outfit()
 	if(!outfit)

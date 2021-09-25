@@ -13,7 +13,7 @@
 	light_system = MOVABLE_LIGHT
 	light_on = FALSE
 
-/obj/structure/server/Initialize()
+/obj/structure/server/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/shell, null, SHELL_CAPACITY_VERY_LARGE, SHELL_FLAG_REQUIRE_ANCHOR|SHELL_FLAG_USB_PORT)
 
