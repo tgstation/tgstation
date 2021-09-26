@@ -504,6 +504,8 @@
 
 ///how many times can the shuttle be cursed?
 #define MAX_SHUTTLE_CURSES 3
+///if the max number of shuttle curses are used within this duration, the entire cult gets an achievement
+#define SHUTTLE_CURSE_OMFG_TIMESPAN 10 SECONDS
 
 /obj/item/shuttle_curse
 	name = "cursed orb"
@@ -512,6 +514,10 @@
 	icon_state ="shuttlecurse"
 	///how many times has the shuttle been cursed so far?
 	var/static/totalcurses = 0
+	///when was the first shuttle curse?
+	var/static/first_curse_time
+	///curse messages that have already been used
+	var/static/list/remaining_curses
 
 /obj/item/shuttle_curse/attack_self(mob/living/user)
 	if(!IS_CULTIST(user))
@@ -528,10 +534,14 @@
 		return
 
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
-		var/cursetime = 1800
+		var/cursetime = 3 MINUTES
 		var/timer = SSshuttle.emergency.timeLeft(1) + cursetime
 		var/security_num = seclevel2num(get_security_level())
 		var/set_coefficient = 1
+
+		if(totalcurses == 0)
+			first_curse_time = world.time
+
 		switch(security_num)
 			if(SEC_LEVEL_GREEN)
 				set_coefficient = 2
@@ -546,24 +556,28 @@
 		totalcurses++
 		to_chat(user, span_danger("You shatter the orb! A dark essence spirals into the air, then disappears."))
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 50, TRUE)
-		var/static/list/curses
-		if(!curses)
-			curses = list("A fuel technician just slit his own throat and begged for death.",
-			"The shuttle's navigation programming was replaced by a file containing just two words: IT COMES.",
-			"The shuttle's custodian was found washing the windows with their own blood.",
-			"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh.",
-			"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine.",
-			"The shuttle dispatcher was found dead with bloody symbols carved into their flesh.",
-			"The shuttle's transponder is emitting the encoded message 'FEAR THE OLD BLOOD' in lieu of its assigned identification signal.")
-		var/message = pick_n_take(curses)
-		message += " The shuttle will be delayed by three minutes."
-		priority_announce("[message]", "System Failure", 'sound/misc/notice1.ogg')
+
+		if(!remaining_curses)
+			remaining_curses = strings(CULT_SHUTTLE_CURSE, "curse_announce")
+
+		var/curse_message = pick_n_take(remaining_curses) || "Something has gone horrendously wrong..."
+
+		curse_message += " The shuttle will be delayed by three minutes."
+		priority_announce("[curse_message]", "System Failure", 'sound/misc/notice1.ogg')
 		if(MAX_SHUTTLE_CURSES-totalcurses <= 0)
 			to_chat(user, span_danger(span_big("You sense that the emergency escape shuttle can no longer be cursed. It would be unwise to create more cursed orbs.")))
 		else if(MAX_SHUTTLE_CURSES-totalcurses == 1)
 			to_chat(user, span_danger(span_big("You sense that the emergency escape shuttle can only be cursed one more time.")))
 		else
 			to_chat(user, span_danger(span_big("You sense that the emergency escape shuttle can only be cursed [MAX_SHUTTLE_CURSES-totalcurses] more times.")))
+
+		if(totalcurses >= MAX_SHUTTLE_CURSES && (world.time < first_curse_time + SHUTTLE_CURSE_OMFG_TIMESPAN))
+			var/omfg_message = pick_list(CULT_SHUTTLE_CURSE, "omfg_announce") || "LEAVE US ALONE!"
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/priority_announce, omfg_message, "Priority Alert", 'sound/misc/notice1.ogg', null, "Central Command Division of Transportation"), rand(2 SECONDS, 6 SECONDS))
+			for(var/mob/iter_player as anything in GLOB.player_list)
+				if(IS_CULTIST(iter_player))
+					iter_player.client?.give_award(/datum/award/achievement/misc/cult_shuttle_omfg, iter_player)
+
 		qdel(src)
 
 #undef MAX_SHUTTLE_CURSES
