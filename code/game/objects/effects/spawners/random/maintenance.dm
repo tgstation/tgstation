@@ -10,6 +10,8 @@
 	. += span_info("This spawner has an effective loot count of [get_effective_lootcount()].")
 
 /obj/effect/spawner/random/maintenance/Initialize(mapload)
+	loot = GLOB.maintenance_loot
+
 	// Late loaded templates like shuttles can have maintenance loot.
 	// Once the game state progresses to roundstart, new maint loot spawners should just instantly pop.
 	if(SSticker.current_state >= GAME_STATE_SETTING_UP)
@@ -23,7 +25,6 @@
 
 	// Otherwise we hang around until SSmapping spawns us in OnRoundstart and deletes us.
 	GLOB.maintenance_loot_spawners += src
-	loot = GLOB.maintenance_loot
 
 /obj/effect/spawner/random/maintenance/Destroy()
 	GLOB.maintenance_loot_spawners -= src
