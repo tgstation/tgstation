@@ -1,0 +1,762 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bP" = (
+/obj/machinery/light/dim,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 9
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"cz" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/bodypart/l_leg,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"dQ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"ex" = (
+/obj/structure/table/optable,
+/obj/effect/mob_spawn/human/clown/corpse,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"fU" = (
+/obj/effect/spawner/structure/window/reinforced/indestructable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"fX" = (
+/obj/item/trash/candy,
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/visible/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible/layer2{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"go" = (
+/obj/structure/table/glass,
+/obj/item/bodypart/r_arm,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"hO" = (
+/obj/structure/closet/crate/mail,
+/obj/structure/disposalpipe/junction/yjunction{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"iR" = (
+/obj/effect/spawner/structure/window/reinforced/indestructable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"kD" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"lB" = (
+/obj/machinery/light/dim{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"lJ" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	opacity = 0
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"mx" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"nR" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"nW" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	opacity = 0
+	},
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"ob" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"od" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"ot" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"oJ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/bodypart/l_arm,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"oW" = (
+/obj/machinery/disposal/delivery_chute,
+/obj/structure/disposalpipe/trunk,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"qJ" = (
+/obj/effect/spawner/structure/window/reinforced/indestructable,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"sp" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/item/bodypart/r_leg,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"sP" = (
+/obj/machinery/light/dim,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"tR" = (
+/obj/machinery/light/small,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/visible/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible/layer2,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"vk" = (
+/obj/structure/closet/crate/mail,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"vC" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 5
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"wO" = (
+/obj/structure/fluff/paper/stack,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"xT" = (
+/obj/structure/table/glass,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"yf" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"yt" = (
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"zx" = (
+/obj/item/paper/crumpled/bloody/fluff/stations/lavaland/mailroom,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"BI" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	opacity = 0
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Cz" = (
+/obj/machinery/light/dim{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Dl" = (
+/obj/structure/closet/crate/freezer/blood,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Dp" = (
+/obj/structure/closet/crate/mail,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Du" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"DB" = (
+/obj/machinery/smartfridge/organ,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"DE" = (
+/obj/structure/fluff/paper/stack,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"ED" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/visible/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible/layer2{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"EK" = (
+/obj/structure/disposalpipe/trunk,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/disposal/delivery_chute,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Fh" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Gq" = (
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"GF" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	opacity = 0
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Kc" = (
+/obj/machinery/computer/operating{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Lv" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"NZ" = (
+/obj/item/paper/crumpled/bloody/fluff/stations/lavaland/mailroom/waiting,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Oi" = (
+/obj/effect/decal/cleanable/blood/gibs/bubblegum,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"PE" = (
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Qd" = (
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Qw" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"QK" = (
+/obj/structure/closet/crate/freezer/surplus_limbs,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Rw" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Sz" = (
+/turf/closed/wall{
+	opacity = 0
+	},
+/area/tdome/arena)
+"Tm" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"TB" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	opacity = 0
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Um" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper/stack,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Va" = (
+/obj/item/trash/cheesie,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible/layer2{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"VH" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/visible/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible/layer2{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Wc" = (
+/obj/structure/fluff/paper/stack,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"WK" = (
+/obj/effect/decal/cleanable/crayon,
+/obj/machinery/light/floor,
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Xc" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Xf" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"XA" = (
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Yq" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/visible/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible/layer2{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"YM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/visible/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible/layer2{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"YP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/mail/full,
+/obj/structure/disposalpipe/junction/yjunction{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"ZB" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	opacity = 0
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"ZD" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tdome/arena)
+
+(1,1,1) = {"
+Sz
+GF
+Sz
+Sz
+Sz
+Sz
+ZB
+Sz
+"}
+(2,1,1) = {"
+Cz
+YM
+qJ
+Qw
+Kc
+qJ
+fX
+sP
+"}
+(3,1,1) = {"
+oW
+Du
+iR
+XA
+ex
+iR
+EK
+Rw
+"}
+(4,1,1) = {"
+Sz
+BI
+Sz
+TB
+Sz
+Sz
+Sz
+lJ
+"}
+(5,1,1) = {"
+DB
+kD
+Xf
+sp
+iR
+Dp
+YP
+od
+"}
+(6,1,1) = {"
+go
+ED
+Lv
+vC
+fU
+Wc
+wO
+zx
+"}
+(7,1,1) = {"
+Dl
+ZD
+Tm
+ZD
+Sz
+oW
+Fh
+PE
+"}
+(8,1,1) = {"
+lB
+ZD
+WK
+Yq
+nW
+Gq
+DE
+tR
+"}
+(9,1,1) = {"
+QK
+ZD
+Oi
+cz
+Sz
+oW
+mx
+Qd
+"}
+(10,1,1) = {"
+xT
+VH
+yt
+ob
+iR
+NZ
+dQ
+Qd
+"}
+(11,1,1) = {"
+DB
+oJ
+Xc
+ot
+fU
+vk
+hO
+Um
+"}
+(12,1,1) = {"
+Sz
+BI
+Sz
+TB
+Sz
+Sz
+Sz
+BI
+"}
+(13,1,1) = {"
+oW
+nR
+iR
+XA
+ex
+iR
+EK
+nR
+"}
+(14,1,1) = {"
+Cz
+YM
+qJ
+yf
+Kc
+qJ
+Va
+bP
+"}
+(15,1,1) = {"
+Sz
+GF
+Sz
+Sz
+Sz
+Sz
+GF
+Sz
+"}
