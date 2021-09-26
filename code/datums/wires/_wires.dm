@@ -62,6 +62,20 @@
 		else
 			colors = GLOB.wire_color_directory[key]
 
+	addtimer(CALLBACK(src, .proc/DisableHacking), 1) // I want this in a timer just incase something sets new wires AFTER we leave this proc
+
+/datum/wires/proc/DisableHacking()
+	var/total = length(wires)
+	wires.Cut()
+	while(total)
+		var/dud = WIRE_DUD_PREFIX + "[--total]"
+		wires |= dud
+	randomize()
+	RegisterSignal(holder, COMSIG_PARENT_EXAMINE, .proc/DisableHackingExamine)
+
+/datum/wires/proc/DisableHackingExamine(datum/source, mob/user, list/examine_list)
+	examine_list += span_boldnotice("It appears that the wires for [source] have been disabled.")
+
 /datum/wires/Destroy()
 	holder = null
 	assemblies = list()
@@ -208,6 +222,7 @@
 // Overridable Procs
 /datum/wires/proc/interactable(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
+	return FALSE // <-- TOOLBOX
 	if((SEND_SIGNAL(user, COMSIG_TRY_WIRES_INTERACT, holder) & COMPONENT_CANT_INTERACT_WIRES))
 		return FALSE
 	return TRUE
