@@ -49,7 +49,7 @@
 	/// The sprite accessory this tail gives to the human it's attached to. If null, it will inherit its value from the human's DNA once attached.
 	var/spines = "None"
 
-/obj/item/organ/tail/lizard/Initialize()
+/obj/item/organ/tail/lizard/Initialize(mapload)
 	. = ..()
 	color = "#"+ random_color()
 

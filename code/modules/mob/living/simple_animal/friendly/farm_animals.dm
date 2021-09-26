@@ -37,7 +37,7 @@
 
 	footstep_type = FOOTSTEP_MOB_SHOE
 
-/mob/living/simple_animal/hostile/retaliate/goat/Initialize()
+/mob/living/simple_animal/hostile/retaliate/goat/Initialize(mapload)
 	AddComponent(/datum/component/udder)
 	. = ..()
 
@@ -97,126 +97,6 @@
 			H.visible_message(span_warning("[src] takes a big chomp out of [H]!"), \
 								  span_userdanger("[src] takes a big chomp out of your [NB]!"))
 			NB.dismember()
-//cow
-/mob/living/simple_animal/cow
-	name = "cow"
-	desc = "Known for their milk, just don't tip them over."
-	icon_state = "cow"
-	icon_living = "cow"
-	icon_dead = "cow_dead"
-	icon_gib = "cow_gib"
-	gender = FEMALE
-	mob_biotypes = MOB_ORGANIC | MOB_BEAST
-	speak = list("moo?","moo","MOOOOOO")
-	speak_emote = list("moos","moos hauntingly")
-	emote_hear = list("brays.")
-	emote_see = list("shakes her head.")
-	speak_chance = 1
-	turns_per_move = 5
-	see_in_dark = 6
-	butcher_results = list(/obj/item/food/meat/slab = 6)
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
-	attack_verb_continuous = "kicks"
-	attack_verb_simple = "kick"
-	attack_sound = 'sound/weapons/punch1.ogg'
-	attack_vis_effect = ATTACK_EFFECT_KICK
-	health = 50
-	maxHealth = 50
-	gold_core_spawnable = FRIENDLY_SPAWN
-	blood_volume = BLOOD_VOLUME_NORMAL
-	footstep_type = FOOTSTEP_MOB_SHOE
-
-/mob/living/simple_animal/cow/Initialize()
-	AddComponent(/datum/component/udder)
-	AddComponent(/datum/component/tippable, \
-		tip_time = 0.5 SECONDS, \
-		untip_time = 0.5 SECONDS, \
-		self_right_time = rand(25 SECONDS, 50 SECONDS), \
-		post_tipped_callback = CALLBACK(src, .proc/after_cow_tipped))
-	AddElement(/datum/element/pet_bonus, "moos happily!")
-	add_cell_sample()
-	make_tameable()
-	. = ..()
-
-///wrapper for the tameable component addition so you can have non tamable cow subtypes
-/mob/living/simple_animal/cow/proc/make_tameable()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/wheat), tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, .proc/tamed))
-
-/mob/living/simple_animal/cow/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COW, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-
-/mob/living/simple_animal/cow/proc/tamed(mob/living/tamer)
-	can_buckle = TRUE
-	buckle_lying = 0
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
-
-/*
- * Proc called via callback after the cow is tipped by the tippable component.
- * Begins a timer for us pleading for help.
- *
- * tipper - the mob who tipped us
- */
-/mob/living/simple_animal/cow/proc/after_cow_tipped(mob/living/carbon/tipper)
-	addtimer(CALLBACK(src, .proc/look_for_help, tipper), rand(10 SECONDS, 20 SECONDS))
-
-/*
- * Find a mob in a short radius around us (prioritizing the person who originally tipped us)
- * and either look at them for help, or give up. No actual mechanical difference between the two.
- *
- * tipper - the mob who originally tipped us
- */
-/mob/living/simple_animal/cow/proc/look_for_help(mob/living/carbon/tipper)
-	// visible part of the visible message
-	var/seen_message = ""
-	// self part of the visible message
-	var/self_message = ""
-	// the mob we're looking to for aid
-	var/mob/living/carbon/savior
-	// look for someone in a radius around us for help. If our original tipper is in range, prioritize them
-	for(var/mob/living/carbon/potential_aid in oview(3, get_turf(src)))
-		if(potential_aid == tipper)
-			savior = tipper
-			break
-		savior = potential_aid
-
-	if(prob(75) && savior)
-		var/text = pick("imploringly", "pleadingly", "with a resigned expression")
-		seen_message = "[src] looks at [savior] [text]."
-		self_message = "You look at [savior] [text]."
-	else
-		seen_message = "[src] seems resigned to its fate."
-		self_message = "You resign yourself to your fate."
-	visible_message(span_notice("[seen_message]"), span_notice("[self_message]"))
-
-///Wisdom cow, gives XP to a random skill and speaks wisdoms
-/mob/living/simple_animal/cow/wisdom
-	name = "wisdom cow"
-	desc = "Known for its wisdom, shares it with all"
-	gold_core_spawnable = FALSE
-	speak_chance = 15
-
-/mob/living/simple_animal/cow/wisdom/Initialize()
-	. = ..()
-	speak = GLOB.wisdoms //Done here so it's setup properly
-
-/mob/living/simple_animal/cow/wisdom/make_tameable()
-	return //cannot tame
-
-///Give intense wisdom to the attacker if they're being friendly about it
-/mob/living/simple_animal/cow/wisdom/attack_hand(mob/living/carbon/user, list/modifiers)
-	if(!stat && !user.combat_mode)
-		to_chat(user, span_nicegreen("[src] whispers you some intense wisdoms and then disappears!"))
-		user.mind?.adjust_experience(pick(GLOB.skill_types), 500)
-		do_smoke(1, get_turf(src))
-		qdel(src)
-		return
-	return ..()
-
 
 /mob/living/simple_animal/chick
 	name = "\improper chick"
@@ -252,7 +132,7 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
-/mob/living/simple_animal/chick/Initialize()
+/mob/living/simple_animal/chick/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "chirps!")
 	pixel_x = base_pixel_x + rand(-6, 6)
@@ -313,7 +193,7 @@
 	///boolean deciding whether eggs laid by this chicken can hatch into chicks
 	var/process_eggs = TRUE
 
-/mob/living/simple_animal/chicken/Initialize()
+/mob/living/simple_animal/chicken/Initialize(mapload)
 	. = ..()
 	chicken_count++
 	add_cell_sample()

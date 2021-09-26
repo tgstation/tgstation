@@ -29,7 +29,7 @@
 	var/state = "01" //How far the door assembly has progressed
 	CanAtmosPass = ATMOS_PASS_PROC
 
-/obj/structure/windoor_assembly/Initialize(loc, set_dir)
+/obj/structure/windoor_assembly/Initialize(mapload, loc, set_dir)
 	. = ..()
 	if(set_dir)
 		setDir(set_dir)

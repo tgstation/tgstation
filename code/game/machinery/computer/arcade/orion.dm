@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	var/list/gamers = list()
 	var/killed_crew = 0
 
-/obj/machinery/computer/arcade/orion_trail/Initialize()
+/obj/machinery/computer/arcade/orion_trail/Initialize(mapload)
 	. = ..()
 	radio = new /obj/item/radio(src)
 	radio.listening = 0

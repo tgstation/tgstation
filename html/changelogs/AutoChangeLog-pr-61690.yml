@@ -1,0 +1,4 @@
+author: "CRITAWAKETS"
+delete-after: True
+changes: 
+  - bugfix: "Gets rid of the placeholder alien bed and replaces its appearance in Snowdin with the proper alien bed."

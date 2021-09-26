@@ -2,7 +2,7 @@
 	name = "Holodeck"
 	icon_state = "Holodeck"
 	static_lighting = FALSE
-	base_lighting_color = COLOR_WHITE
+
 	base_lighting_alpha = 255
 	flags_1 = NONE
 	sound_environment = SOUND_ENVIRONMENT_PADDED_CELL

@@ -13,7 +13,7 @@
 	embedding = null
 	shrapnel_type = null
 
-/obj/projectile/bullet/honker/Initialize()
+/obj/projectile/bullet/honker/Initialize(mapload)
 	. = ..()
 	SpinAnimation()
 

@@ -998,6 +998,14 @@
 	name = "Moustache (Watson)"
 	icon_state = "facial_watson"
 
+/datum/sprite_accessory/facial_hair/handlebar
+	name = "Moustache (Handlebar)"
+	icon_state = "facial_handlebar"
+
+/datum/sprite_accessory/facial_hair/handlebar2
+	name = "Moustache (Handlebar 2)"
+	icon_state = "facial_handlebar2"
+
 /datum/sprite_accessory/facial_hair/elvis
 	name = "Sideburns (Elvis)"
 	icon_state = "facial_elvis"

@@ -62,13 +62,13 @@ no power level overlay is currently in the overlays list.
 		. += "+p[power_level]"
 
 
-/obj/machinery/field/generator/Initialize()
+/obj/machinery/field/generator/Initialize(mapload)
 	. = ..()
 	fields = list()
 	connected_gens = list()
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity_if_active)
 
-/obj/machinery/field/generator/anchored/Initialize()
+/obj/machinery/field/generator/anchored/Initialize(mapload)
 	. = ..()
 	set_anchored(TRUE)
 

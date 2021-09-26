@@ -30,14 +30,14 @@
 	///Power used to say an error message
 	var/power_to_speak = 1
 
-/obj/item/inspector/Initialize()
+/obj/item/inspector/Initialize(mapload)
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
 
 // Clean up the cell on destroy
 /obj/item/clothing/suit/space/Destroy()
-	if(cell)
+	if(isatom(cell))
 		QDEL_NULL(cell)
 	return ..()
 
@@ -283,7 +283,7 @@
 		paper_charges = min(paper_charges + charges_per_paper, max_paper_charges)
 		qdel(I)
 
-/obj/item/inspector/clown/bananium/Initialize()
+/obj/item/inspector/clown/bananium/Initialize(mapload)
 	. = ..()
 	playsound(src, 'sound/effects/angryboat.ogg', 150, FALSE)
 

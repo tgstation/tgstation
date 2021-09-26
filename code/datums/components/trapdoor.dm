@@ -264,6 +264,6 @@
 ///subtype with internals already included. If you're giving a department a roundstart trapdoor, this is what you want
 /obj/item/trapdoor_remote/preloaded
 
-/obj/item/trapdoor_remote/preloaded/Initialize()
+/obj/item/trapdoor_remote/preloaded/Initialize(mapload)
 	. = ..()
 	internals = new(src)

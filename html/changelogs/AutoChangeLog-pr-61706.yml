@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Traitors who aren't given codewords will no longer notice them when said or have them in their antag menu."

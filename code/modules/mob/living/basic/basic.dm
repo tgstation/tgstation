@@ -83,8 +83,6 @@
 	///Sentience type, for slime potions. SHOULD BE AN ELEMENT BUT I DONT CARE ABOUT IT FOR NOW
 	var/sentience_type = SENTIENCE_ORGANIC
 
-
-
 /mob/living/basic/Initialize(mapload)
 	. = ..()
 
@@ -131,6 +129,10 @@
 	var/result = target.attack_basic_mob(src)
 	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
 	return result
+
+/mob/living/basic/vv_edit_var(vname, vval)
+	if(vname == NAMEOF(src, speed))
+		set_varspeed(vval)
 
 /mob/living/basic/proc/set_varspeed(var_value)
 	speed = var_value
