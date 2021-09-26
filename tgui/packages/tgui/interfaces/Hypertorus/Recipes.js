@@ -76,10 +76,15 @@ const effect_to_icon = (effect_value, effect_scale, base) => {
   return "angle-down";
 };
 
+const recipeChange = {
+  onComponentShouldUpdate: (lastProps, nextProps) =>
+    lastProps.selectedFuelID != nextProps.selectedFuelID
+    || lastProps.enableRecipeSelection != nextProps.enableRecipeSelection
+};
+
 const bgChange = {
-  onComponentShouldUpdate: (lastProps, nextProps) => {
-    return lastProps.backgroundColor !== nextProps.backgroundColor;
-  },
+  onComponentShouldUpdate: (lastProps, nextProps) =>
+    lastProps.backgroundColor !== nextProps.backgroundColor
 };
 
 const MemoRow = props => {
@@ -247,3 +252,5 @@ export const HypertorusRecipes = props => {
     </Table>
   );
 };
+
+HypertorusRecipes.defaultHooks = recipeChange;

@@ -6,6 +6,7 @@ import { ActSet, HoverHelp, HelpDummy } from './helpers';
 
 import { Box, Button, LabeledList, NumberInput, ProgressBar, Section, Tooltip } from '../../components';
 import { getGasColor, getGasLabel } from '../../constants';
+import { ActFixed } from './helpers';
 
 const moderator_gases_help = {
   plasma: "Produces basic gases. Has a modest heat bonus to help kick start the early fusion process. When added in large quantities, its high heat capacity can help to slow down temperature changes to manageable speeds.",
@@ -109,17 +110,22 @@ const GasList = (props, context) => {
   </LabeledList>);
 };
 
-export const HypertorusGases = props => {
+export const HypertorusGases = (props, context) => {
+  const { data } = useBackend(context);
+
   const {
-    fusionGases: fusion_gases,
-    moderatorGases: moderator_gases,
-    selectedFuel,
-  } = props;
+    fusion_gases,
+    moderator_gases
+  } = data;
+
+  const selected_fuel = (data.selectable_fuel || []).filter(
+    d => d.id === data.selected
+  )[0];
 
   return (
     <>
       <Section title="Internal Fusion Gases">
-        {selectedFuel 
+        {selected_fuel
           ? (
             <GasList
               input_rate="fuel_injection_rate"
@@ -133,7 +139,7 @@ export const HypertorusGases = props => {
                 "The rate at which new fuel is added from the fuel input port."
                 + " This rate affects the rate of production,"
                 + " even when input is not active."}
-              stickyGases={selectedFuel.requirements}
+              stickyGases={selected_fuel.requirements}
             />
           )
           : (

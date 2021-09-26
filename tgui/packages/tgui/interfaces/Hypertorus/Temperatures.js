@@ -81,21 +81,30 @@ const VerticalProgressBar = props => {
 };
 
 export const HypertorusTemperatures = (props, context) => {
-  const {
-    powerLevel: power_level,
-    baseMaxTemperature: base_max_temperature,
-    internalFusionTemperature: internal_fusion_temperature,
-    internalFusionTemperatureDelta: internal_fusion_temperature_delta,
-    moderatorInternalTemperature: moderator_internal_temperature,
-    moderatorInternalTemperatureDelta: moderator_internal_temperature_delta,
-    internalOutputTemperature: internal_output_temperature,
-    internalOutputTemperatureDelta: internal_output_temperature_delta,
-    internalCoolantTemperature: internal_coolant_temperature,
-    internalCoolantTemperatureDelta: internal_coolant_temperature_delta,
-    selectedFuel: selected_fuel,
-  } = props;
+  const { data } = useBackend(context);
 
-  const { act, data } = useBackend(context);
+  const {
+    power_level,
+    base_max_temperature,
+    internal_fusion_temperature,
+    moderator_internal_temperature,
+    internal_output_temperature,
+    internal_coolant_temperature,
+    temperature_period,
+  } = data;
+
+  const internal_fusion_temperature_delta = (internal_fusion_temperature
+    - data.internal_fusion_temperature_archived) / temperature_period;
+  const internal_output_temperature_delta = (internal_output_temperature
+    - data.internal_output_temperature_archived) / temperature_period;
+  const internal_coolant_temperature_delta = (internal_coolant_temperature
+    - data.internal_coolant_temperature_archived) / temperature_period;
+  const moderator_internal_temperature_delta = (moderator_internal_temperature
+    - data.moderator_internal_temperature_archived) / temperature_period;
+
+  const selected_fuel = (data.selectable_fuel || []).filter(
+    d => d.id === data.selected
+  )[0];
 
   let prev_power_level_temperature = 10 ** (1+power_level);
   let next_power_level_temperature = 10 ** (2+power_level);
@@ -107,7 +116,7 @@ export const HypertorusTemperatures = (props, context) => {
     prev_power_level_temperature = 500;
   } else if (power_level === 6) {
     next_power_level_temperature = base_max_temperature
-      * selected_fuel.temperature_multiplier;
+      * (selected_fuel ? selected_fuel.temperature_multiplier : 1);
   }
 
   const temperatures = [
@@ -294,4 +303,4 @@ export const HypertorusTemperatures = (props, context) => {
     </Section>
   );
 };
-HypertorusTemperatures.defaultHooks = pureComponentHooks;
+//HypertorusTemperatures.defaultHooks = pureComponentHooks;
