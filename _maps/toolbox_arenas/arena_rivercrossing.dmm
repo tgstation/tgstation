@@ -1,0 +1,479 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"fR" = (
+/turf/open/floor/iron/textured_large,
+/area/tdome/arena)
+"fZ" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/turf/open/water/jungle,
+/area/tdome/arena)
+"gt" = (
+/obj/structure/flora/junglebush/b,
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"gS" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/water/jungle,
+/area/tdome/arena)
+"iA" = (
+/obj/effect/decal/remains/robot,
+/turf/open/water/jungle,
+/area/tdome/arena)
+"jT" = (
+/obj/effect/turf_decal/weather/dirt,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/tdome/arena)
+"ka" = (
+/obj/effect/turf_decal/weather/sand,
+/turf/open/water/jungle,
+/area/tdome/arena)
+"ke" = (
+/obj/structure/fluff/broken_flooring,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"nl" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/floor/plating/sandy_dirt,
+/area/tdome/arena)
+"nq" = (
+/obj/effect/turf_decal/weather/dirt,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 9
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/tdome/arena)
+"oJ" = (
+/obj/structure/barricade/sandbags,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
+/turf/open/floor/iron/textured_large,
+/area/tdome/arena)
+"ps" = (
+/obj/item/ammo_casing/a556,
+/turf/open/floor/iron/textured_large,
+/area/tdome/arena)
+"qc" = (
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"rd" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/item/broken_missile,
+/turf/open/water/jungle,
+/area/tdome/arena)
+"ru" = (
+/turf/open/water/jungle,
+/area/tdome/arena)
+"su" = (
+/obj/structure/flora/junglebush/large,
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"tL" = (
+/obj/effect/supplypod_rubble,
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"tR" = (
+/obj/effect/turf_decal/siding/wideplating/corner,
+/turf/open/floor/iron/textured_large,
+/area/tdome/arena)
+"vt" = (
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/floor/plating/sandy_dirt,
+/area/tdome/arena)
+"vv" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/tdome/arena)
+"vY" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/floor/plating/sandy_dirt,
+/area/tdome/arena)
+"wj" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 1
+	},
+/turf/open/water/jungle,
+/area/tdome/arena)
+"xV" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/turf/open/water/jungle,
+/area/tdome/arena)
+"AE" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt,
+/obj/effect/turf_decal/siding/wideplating/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/tdome/arena)
+"CZ" = (
+/obj/item/ammo_casing/a556,
+/turf/open/floor/iron/large,
+/area/tdome/arena)
+"Dd" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"Di" = (
+/obj/item/ammo_casing/a556{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/ammo_casing/a556{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/turf/open/floor/iron/large,
+/area/tdome/arena)
+"FG" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/structure/flora/ausbushes/stalkybush,
+/turf/open/water/jungle,
+/area/tdome/arena)
+"Ge" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/tdome/arena)
+"Gz" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/turf/open/water/jungle,
+/area/tdome/arena)
+"It" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/turf/open/water/jungle,
+/area/tdome/arena)
+"Ix" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/water/jungle,
+/area/tdome/arena)
+"Jl" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/tdome/arena)
+"JS" = (
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Kk" = (
+/obj/structure/fluff/tram_rail/floor{
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/plating/sandy_dirt,
+/area/tdome/arena)
+"Lc" = (
+/obj/effect/supplypod_rubble{
+	pixel_y = 7
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/tdome/arena)
+"Ma" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 10
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/tdome/arena)
+"Mw" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/floor{
+	pixel_y = 8
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/tdome/arena)
+"ME" = (
+/obj/effect/turf_decal/siding/wideplating/corner{
+	dir = 4
+	},
+/obj/effect/decal/remains/human,
+/turf/open/floor/iron/textured_large,
+/area/tdome/arena)
+"No" = (
+/obj/structure/flora/junglebush/c,
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"Oa" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/turf/open/water/jungle,
+/area/tdome/arena)
+"Ok" = (
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 6
+	},
+/turf/open/floor/iron/textured_large,
+/area/tdome/arena)
+"Oz" = (
+/obj/structure/hedge,
+/turf/open/floor/plating/grass,
+/area/tdome/arena)
+"PJ" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Qb" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/structure/flora/ausbushes/fernybush,
+/turf/open/water/jungle,
+/area/tdome/arena)
+"Sf" = (
+/obj/structure/flora/junglebush,
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"Td" = (
+/turf/open/floor/iron/large,
+/area/tdome/arena)
+"TM" = (
+/obj/effect/decal/remains/xeno/larva,
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"TN" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/tdome/arena)
+"TP" = (
+/obj/structure/barricade/sandbags,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 8
+	},
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"Uq" = (
+/obj/effect/supplypod_rubble{
+	pixel_y = 7
+	},
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"Wn" = (
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 5
+	},
+/turf/open/floor/iron/textured_large,
+/area/tdome/arena)
+"Xp" = (
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular";
+	pixel_x = 4;
+	pixel_y = -17
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Zx" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/water/jungle,
+/area/tdome/arena)
+
+(1,1,1) = {"
+Td
+Td
+fR
+Td
+Td
+fR
+Td
+Td
+"}
+(2,1,1) = {"
+Oz
+Td
+fR
+Td
+JS
+fR
+Td
+Oz
+"}
+(3,1,1) = {"
+Oz
+CZ
+fR
+Xp
+Lc
+JS
+Td
+Oz
+"}
+(4,1,1) = {"
+Td
+Di
+ps
+Td
+PJ
+ke
+Td
+Td
+"}
+(5,1,1) = {"
+oJ
+oJ
+ME
+Td
+Td
+tR
+oJ
+oJ
+"}
+(6,1,1) = {"
+Gz
+gS
+Wn
+oJ
+oJ
+Ok
+Qb
+Gz
+"}
+(7,1,1) = {"
+iA
+ka
+Kk
+FG
+xV
+Kk
+wj
+ru
+"}
+(8,1,1) = {"
+ru
+ka
+Mw
+wj
+ka
+Mw
+wj
+fZ
+"}
+(9,1,1) = {"
+fZ
+ka
+Kk
+It
+Zx
+Kk
+wj
+ru
+"}
+(10,1,1) = {"
+Oa
+rd
+nq
+TP
+TP
+Ma
+Ix
+Oa
+"}
+(11,1,1) = {"
+TP
+TP
+vY
+qc
+qc
+AE
+TP
+TP
+"}
+(12,1,1) = {"
+qc
+qc
+nl
+gt
+Jl
+Ge
+TM
+qc
+"}
+(13,1,1) = {"
+No
+Dd
+TN
+vv
+vt
+Uq
+qc
+Sf
+"}
+(14,1,1) = {"
+qc
+qc
+tL
+qc
+jT
+qc
+No
+qc
+"}
+(15,1,1) = {"
+qc
+su
+qc
+qc
+jT
+qc
+qc
+qc
+"}
