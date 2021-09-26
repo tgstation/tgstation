@@ -17,4 +17,4 @@
 	blacklisted_movetypes = (FLYING|FLOATING)
 
 /datum/movespeed_modifier/status_effect/power_chord
-	multiplicative_slowdown = -0.9
+	multiplicative_slowdown = -0.2

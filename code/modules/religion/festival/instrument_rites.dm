@@ -44,6 +44,7 @@
 	name = "Evangelical Hymn"
 	desc = "Spreads the word of your god, gaining favor for each non-holy listener. At the end of the song, you'll bless all listeners, improving mood."
 	particles_path = /particles/musical_notes/holy
+	song_invocation_message = "You've prepared a holy song!"
 	song_start_message = span_notice("This music sounds blessed!")
 	glow_color = "#FEFFE0"
 	favor_cost = 0
@@ -68,6 +69,7 @@
 	name = "Mending Chord"
 	desc = "Sing a sweet song, healing bruises and burns around you. At the end of a song, you'll seal one wound."
 	particles_path = /particles/musical_notes/heal
+	song_invocation_message = "You've prepared a healing song!"
 	song_start_message = span_nicegreen("This music is closing your wounds!")
 	glow_color = "#44FF84"
 	repeats_okay = FALSE
@@ -95,6 +97,7 @@
 	name = "Murderous Chord"
 	desc = "Sing a sharp song, cutting those around you. Works less effectively on fellow priests. At the end of the song, you'll open the wounds of all listeners."
 	particles_path = /particles/musical_notes/harm
+	song_invocation_message = "You've prepared a painful song!"
 	song_start_message = span_danger("This music cuts like a knife!")
 	glow_color = "#FF4460"
 	repeats_okay = FALSE
@@ -119,6 +122,7 @@
 	name = "Spiritual Lullaby"
 	desc = "Sing a lullaby, tiring those around you, making them slower. At the end of the song, you'll put people who are tired enough to sleep."
 	particles_path = /particles/musical_notes/sleepy
+	song_invocation_message = "You've prepared a sleepy song!"
 	song_start_message = span_warning("This music's making you feel drowsy...")
 	favor_cost = 40 //actually really strong
 	glow_color = "#83F6FF"
@@ -155,6 +159,7 @@
 	name = "Power Chord"
 	desc = "Sing a powerful tune, speeding up listeners. At the end of the song, Ethereals fully recharge."
 	particles_path = /particles/musical_notes/power
+	song_invocation_message = "You've prepared a powerful song!"
 	song_start_message = span_warning("This music's making you feel excited!")
 	favor_cost = 20
 	glow_color = "#E8E822"
