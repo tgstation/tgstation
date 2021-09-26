@@ -1,14 +1,15 @@
 
-import { useBackend } from '../backend';
-import { Button, Collapsible, Flex, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from 'tgui/backend';
+import { Button, Collapsible, Section, Stack } from 'tgui/components';
+import { Window } from 'tgui/layouts';
 
-import { HypertorusGases } from './Hypertorus/Gases';
-import { HypertorusParameters } from './Hypertorus/Parameters';
-import { HypertorusTemperatures } from './Hypertorus/Temperatures';
-import { HypertorusRecipes } from './Hypertorus/Recipes';
+import { HypertorusGases } from './Gases';
+import { HypertorusParameters } from './Parameters';
+import { HypertorusTemperatures } from './Temperatures';
+import { HypertorusRecipes } from './Recipes';
 
-import { HypertorusSecondaryControls, HypertorusIO, HypertorusWasteRemove } from './Hypertorus/Controls';
+import { ActFixed } from './helpers';
+import { HypertorusSecondaryControls, HypertorusWasteRemove } from './Controls';
 
 const HypertorusMainControls = (props, context) => {
   const { act, data } = useBackend(context);
