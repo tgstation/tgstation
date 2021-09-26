@@ -1,4 +1,4 @@
-//Called on /mob/living/carbon/Initialize(), for the carbon mobs to register relevant signals.
+//Called on /mob/living/carbon/Initialize(mapload), for the carbon mobs to register relevant signals.
 /mob/living/carbon/register_init_signals()
 	. = ..()
 

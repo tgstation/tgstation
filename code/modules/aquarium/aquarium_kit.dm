@@ -7,7 +7,7 @@
 	icon_state = "fish_feed"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/fish_feed/Initialize()
+/obj/item/fish_feed/Initialize(mapload)
 	. = ..()
 	create_reagents(5, OPENCONTAINER)
 	reagents.add_reagent(/datum/reagent/consumable/nutriment, 1) //Default fish diet
@@ -24,7 +24,7 @@
 
 	component_type = /datum/component/storage/concrete/fish_case
 
-/obj/item/storage/fish_case/Initialize()
+/obj/item/storage/fish_case/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, TRAIT_GENERIC)
 

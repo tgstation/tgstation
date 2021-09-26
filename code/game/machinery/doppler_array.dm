@@ -18,7 +18,7 @@
 	/// List of all explosion records in the form of /datum/data/tachyon_record
 	var/list/records = list()
 
-/obj/machinery/doppler_array/Initialize()
+/obj/machinery/doppler_array/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
 	RegisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, .proc/power_change)
@@ -194,7 +194,7 @@
 	circuit = /obj/item/circuitboard/machine/doppler_array
 	var/datum/techweb/linked_techweb
 
-/obj/machinery/doppler_array/research/Initialize()
+/obj/machinery/doppler_array/research/Initialize(mapload)
 	..()
 	linked_techweb = SSresearch.science_tech
 	return INITIALIZE_HINT_LATELOAD
@@ -252,7 +252,7 @@
 		say("Data already captured. Aborting.")
 		return
 
-/obj/machinery/doppler_array/research/science/Initialize()
+/obj/machinery/doppler_array/research/science/Initialize(mapload)
 	. = ..()
 	linked_techweb = SSresearch.science_tech
 

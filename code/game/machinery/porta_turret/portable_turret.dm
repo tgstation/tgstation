@@ -106,7 +106,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	/// Mob that is remotely controlling the turret
 	var/mob/remote_controller
 
-/obj/machinery/porta_turret/Initialize()
+/obj/machinery/porta_turret/Initialize(mapload)
 	. = ..()
 	if(!base)
 		base = src
@@ -553,7 +553,7 @@ DEFINE_BITFIELD(turret_flags, list(
 			return 0
 
 	if(turret_flags & TURRET_FLAG_AUTH_WEAPONS) //check for weapon authorization
-		if(isnull(perp.wear_id) || istype(perp.wear_id.GetID(), /obj/item/card/id/advanced/chameleon))
+		if(!istype(perp.wear_id?.GetID(), /obj/item/card/id/advanced/chameleon))
 
 			if(allowed(perp)) //if the perp has security access, return 0
 				return 0
@@ -812,7 +812,7 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/aux_base/interact(mob/user) //Controlled solely from the base console.
 	return
 
-/obj/machinery/porta_turret/aux_base/Initialize()
+/obj/machinery/porta_turret/aux_base/Initialize(mapload)
 	. = ..()
 	cover.name = name
 	cover.desc = desc

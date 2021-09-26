@@ -1,5 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - rscadd: "MOONICORNS. Watch out for their horn!"
-  - refactor: "during a code refactor for cow, they may be SLIGHTLY faster or SLIGHTLY slower as an accidental result"
