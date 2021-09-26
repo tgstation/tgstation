@@ -2153,3 +2153,28 @@
 		exp_list[mind.assigned_role.title] = minutes
 
 	return exp_list
+
+/**
+  * A proc triggered by callback when someone gets slammed by the tram and lands somewhere.
+  *
+  * This proc is used to force people to fall through things like lattice and unplated flooring at the expense of some
+  * extra damage, so jokers can't use half a stack of iron rods to make getting hit by the tram immediately lethal.
+  */
+/mob/living/proc/tram_slam_land()
+	if(!istype(loc, /turf/open/openspace) && !istype(loc, /turf/open/floor/plating))
+		return
+
+	if(istype(loc, /turf/open/floor/plating))
+		var/turf/open/floor/smashed_plating = loc
+		visible_message(span_danger("[src] is thrown violently into [smashed_plating], smashing through it and punching straight through!"),
+				span_userdanger("You're thrown violently into [smashed_plating], smashing through it and punching straight through!"))
+		apply_damage(rand(5,20), BRUTE, BODY_ZONE_CHEST)
+		smashed_plating.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
+
+	for(var/atom/iter_atom as anything in loc)
+		if(istype(iter_atom, /obj/structure/lattice))
+			visible_message(span_danger("[src] is thrown violently into [iter_atom], smashing through it and punching straight through!"),
+				span_userdanger("You're thrown violently into [iter_atom], smashing through it and punching straight through!"))
+			apply_damage(rand(5,10), BRUTE, BODY_ZONE_CHEST)
+			var/obj/structure/bye_bye = iter_atom
+			bye_bye.deconstruct(FALSE)
