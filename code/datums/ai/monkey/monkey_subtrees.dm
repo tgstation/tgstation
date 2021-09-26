@@ -110,7 +110,7 @@
 
 	controller.blackboard[BB_MONKEY_INSTRUMENT] = song_player.song
 
-	var/list/donkey_kong_lines = splittext(DONKEY_KONG_THEME, "\n")
+	var/list/donkey_kong_lines = splittext(MONKEY_SONG, "\n")
 	if(song_player.song.lines != donkey_kong_lines || !song_player.song.repeat)
 		controller.queue_behavior(/datum/ai_behavior/setup_dk_instrument, BB_MONKEY_INSTRUMENT)
 

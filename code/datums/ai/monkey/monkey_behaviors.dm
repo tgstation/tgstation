@@ -298,7 +298,7 @@
 
 	//just in case- it won't do anything if the instrument isn't playing
 	song.stop_playing()
-	song.ParseSong(DONKEY_KONG_THEME)
+	song.ParseSong(MONKEY_SONG)
 	song.repeat = 10
 	finish_action(controller, TRUE)
 
