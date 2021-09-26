@@ -1,5 +1,7 @@
+import { useBackend } from '../../backend';
 import { pureComponentHooks } from 'common/react';
 import { Box, Icon, Flex, Section, Stack, Tooltip } from '../../components';
+import { logger } from '../../logging';
 
 import { to_exponential_if_big } from './helpers';
 
@@ -78,7 +80,7 @@ const VerticalProgressBar = props => {
     </div>);
 };
 
-export const HypertorusTemperatures = props => {
+export const HypertorusTemperatures = (props, context) => {
   const {
     powerLevel: power_level,
     baseMaxTemperature: base_max_temperature,
@@ -92,6 +94,8 @@ export const HypertorusTemperatures = props => {
     internalCoolantTemperatureDelta: internal_coolant_temperature_delta,
     selectedFuel: selected_fuel,
   } = props;
+
+  const { act, data } = useBackend(context);
 
   let prev_power_level_temperature = 10 ** (1+power_level);
   let next_power_level_temperature = 10 ** (2+power_level);
@@ -118,7 +122,7 @@ export const HypertorusTemperatures = props => {
   ].map(d => parseFloat(d));
 
   const maxTemperature = Math.max(...temperatures);
-  const minTemperature = Math.min(...temperatures);
+  const minTemperature = Math.max(2.73, Math.min(20, ...temperatures.filter(d=>d>0))); // Math.min(1, ...temperatures);
 
   if (power_level === 6) {
     next_power_level_temperature = 0;
@@ -132,8 +136,9 @@ export const HypertorusTemperatures = props => {
   const yAxisMargin = yAxisLabelWidth + yAxisIconWidth + yAxisIconPadding * 2;
 
   const value_to_y = (value, baseTemp = minTemperature, fromBottom=false) => {
-    const ratio = (value - baseTemp) / (maxTemperature - minTemperature);
+    const ratio = (Math.log10(value) - Math.log10(baseTemp)) / (Math.log10(maxTemperature) - Math.log10(minTemperature));
     const ret = height * (fromBottom ? (1 - ratio) : ratio);
+    logger.log('value map:',value,baseTemp,maxTemperature,minTemperature,'(',ratio,')', height,'=>',ret);
     return ret;
   };
 
@@ -257,13 +262,13 @@ export const HypertorusTemperatures = props => {
   };
 
   return (
-    <Section title="Gas Monitoring">
+    <Section title="Gas Monitoring" minWidth="400px">
       <Flex overflowY="hidden">
         <Flex.Item mx={1} width={`${yAxisMargin}px`}>
-          {(power_level === 0 || value_to_y(Math.abs(prev_power_level_temperature - minTemperature), 0) > 20) && (<TemperatureLabel key="min_temp" value={minTemperature} force />)}
+          {(power_level === 0 || Math.abs(value_to_y(prev_power_level_temperature) - value_to_y(minTemperature)) > 20) && (<TemperatureLabel key="min_temp" value={minTemperature} force />)}
           <TemperatureLabel key="prev_fusion_temp" icon="chevron-down" tooltip="Previous Fusion Level" value={prev_power_level_temperature} />
           <TemperatureLabel key="next_fusion_temp" icon="chevron-up" tooltip="Next Fusion Level" value={next_power_level_temperature} />
-          {value_to_y(Math.abs(next_power_level_temperature - maxTemperature), 0) > 20 && (<TemperatureLabel key="max_temp" value={maxTemperature} />)}
+          {Math.abs(value_to_y(next_power_level_temperature) - value_to_y(maxTemperature)) > 20 && (<TemperatureLabel key="max_temp" value={maxTemperature} />)}
         </Flex.Item>
         <TemperatureBar
           label="Fusion"
