@@ -67490,6 +67490,11 @@
 	},
 /turf/open/floor/wood,
 /area/service/bar)
+"vWA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/machinery/rnd/server/master,
+/turf/open/floor/circuit/telecomms/server,
+/area/science/server)
 "vWI" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
@@ -108787,7 +108792,7 @@ dwL
 dwL
 dwL
 dwL
-vRa
+vWA
 ped
 tag
 rzZ

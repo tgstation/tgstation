@@ -54,6 +54,9 @@
 	/// Determines the amount of space this circuit occupies in an integrated circuit.
 	var/circuit_size = 1
 
+	/// The UI buttons of this circuit component. An assoc list that has this format: "button_icon" = "action_name"
+	var/ui_buttons = null
+
 /// Called when the option ports should be set up
 /obj/item/circuit_component/proc/populate_options()
 	return
@@ -307,6 +310,16 @@
 		. += create_ui_notice("Power Usage Per Input: [power_usage_per_input]", "orange", "bolt")
 
 /**
+ * Called when a special button is pressed on this component in the UI.
+ *
+ * Arguments:
+ * * user - Interacting mob
+ * * action - A string for which action is being performed. No parameters passed because it's only a button press.
+ */
+/obj/item/circuit_component/proc/ui_perform_action(mob/user, action)
+	return
+
+/**
  * Creates a UI notice entry to be used in get_ui_notices()
  *
  * Returns a list that can then be added to the return list in get_ui_notices()
@@ -319,6 +332,11 @@
 		"content" = content,
 		"color" = color,
 	))
+
+/obj/item/circuit_component/ui_host(mob/user)
+	if(parent)
+		return parent.ui_host()
+	return ..()
 
 /**
  * Creates a table UI notice entry to be used in get_ui_notices()

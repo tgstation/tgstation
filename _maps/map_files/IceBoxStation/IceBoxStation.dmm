@@ -25051,6 +25051,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/virology)
+"iWu" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/rnd/server/master,
+/turf/open/openspace/icemoon,
+/area/science/server)
 "iWy" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -95788,7 +95793,7 @@ box
 boz
 bGz
 byf
-jAK
+iWu
 mIT
 jAK
 kLD

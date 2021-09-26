@@ -27668,6 +27668,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/security/interrogation)
+"dif" = (
+/obj/machinery/rnd/server/master,
+/turf/open/floor/circuit/green/telecomms/mainframe,
+/area/science/server)
 "dik" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral,
@@ -122910,7 +122914,7 @@ aim
 bkd
 ykB
 kuB
-baJ
+dif
 bcz
 baJ
 iOj

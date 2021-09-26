@@ -1,0 +1,6 @@
+author: "Superlagg"
+delete-after: True
+changes: 
+  - qol: "Paper bins now can directly insert their contents into computers."
+  - qol: "Greatly reduced click cooldown on paper bins."
+  - qol: "Paper bins can now pick up papers by clicking on them."
