@@ -958,7 +958,7 @@
 		for(var/datum/job/job as anything in SSjob.joinable_occupations)
 			if(job.title == Add)
 				job.total_positions += 1
-?				log_job_debug("[key_name(usr)] added a slot to [job.title]")
+				log_job_debug("[key_name(usr)] added a slot to [job.title]")
 				break
 
 		src.manage_free_slots()
