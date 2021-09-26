@@ -552,7 +552,7 @@
 	var/imagined_eye_contact = FALSE
 	if(!LAZYACCESS(examined_mob.client?.recent_examines, src))
 		// even if you haven't looked at them recently, if you have the shift eyes trait, they may still imagine the eye contact
-		if(HAS_TRAIT(examined_mob, TRAIT_SHIFTY_EYES) && prob (10 - get_dist(src, examined_mob)))
+		if(HAS_TRAIT(examined_mob, TRAIT_SHIFTY_EYES) && prob(10 - get_dist(src, examined_mob)))
 			imagined_eye_contact = TRUE
 		else
 			return
