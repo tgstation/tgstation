@@ -97,6 +97,7 @@
 		autofire_on(source.client)
 
 /datum/component/automatic_fire/proc/on_mouse_down(client/source, atom/_target, turf/location, control, params)
+	SIGNAL_HANDLER
 	var/list/modifiers = params2list(params) //If they're shift+clicking, for example, let's not have them accidentally shoot.
 
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
@@ -136,7 +137,7 @@
 	target = _target
 	target_loc = get_turf(target)
 	mouse_parameters = params
-	start_autofiring()
+	INVOKE_ASYNC(src, .proc/start_autofiring)
 
 
 //Dakka-dakka
@@ -245,7 +246,7 @@
 		return FALSE
 	var/obj/item/bodypart/other_hand = shooter.has_hand_for_held_index(shooter.get_inactive_hand_index())
 	if(weapon_weight == WEAPON_HEAVY && (shooter.get_inactive_held_item() || !other_hand))
-		to_chat(shooter, "<span class='warning'>You need two hands to fire [src]!</span>")
+		to_chat(shooter, span_warning("You need two hands to fire [src]!"))
 		return FALSE
 	return TRUE
 

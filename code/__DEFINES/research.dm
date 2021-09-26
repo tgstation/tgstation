@@ -22,14 +22,12 @@
 
 //! Techweb names for new point types. Can be used to define specific point values for specific types of research (science, security, engineering, etc.)
 #define TECHWEB_POINT_TYPE_GENERIC "General Research"
-#define TECHWEB_POINT_TYPE_NANITES "Nanite Research"
 
 #define TECHWEB_POINT_TYPE_DEFAULT TECHWEB_POINT_TYPE_GENERIC
 
 //! Associative names for techweb point values, see: [all_nodes][code/modules/research/techweb/all_nodes.dm]
 #define TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES list(\
 	TECHWEB_POINT_TYPE_GENERIC = "General Research",\
-	TECHWEB_POINT_TYPE_NANITES = "Nanite Research"\
 	)
 
 /// Amount of cash you can get from a maxcap

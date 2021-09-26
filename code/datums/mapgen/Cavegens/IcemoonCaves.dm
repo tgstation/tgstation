@@ -8,7 +8,8 @@
 						  /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow = 50, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10, \
 						  /mob/living/simple_animal/hostile/asteroid/lobstrosity = 15)
 	flora_spawn_list = list(/obj/structure/flora/tree/pine = 2, /obj/structure/flora/rock/icy = 2, /obj/structure/flora/rock/pile/icy = 2, /obj/structure/flora/grass/both = 6, /obj/structure/flora/ash/chilly = 2)
-	feature_spawn_list = list(/obj/structure/geyser/random = 1)
+	///Note that this spawn list is also in the lavaland generator
+	feature_spawn_list = list(/obj/structure/geyser/wittel = 6, /obj/structure/geyser/random = 2, /obj/structure/geyser/plasma_oxide = 10, /obj/structure/geyser/protozine = 10, /obj/structure/geyser/hollowwater = 10)
 
 /datum/map_generator/cave_generator/icemoon/surface
 	flora_spawn_chance = 4

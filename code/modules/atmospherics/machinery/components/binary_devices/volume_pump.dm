@@ -41,7 +41,7 @@
 	if(can_interact(user))
 		transfer_rate = MAX_TRANSFER_RATE
 		investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
-		to_chat(user, "<span class='notice'>You maximize the volume output on [src] to [transfer_rate] L/s.</span>")
+		balloon_alert(user, "volume output set to [transfer_rate] L/s")
 		update_appearance()
 	return ..()
 
@@ -75,12 +75,14 @@
 
 	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
 
+	if(!removed.total_moles())
+		return
+
 	if(overclocked)//Some of the gas from the mixture leaks to the environment when overclocked
 		var/turf/open/T = loc
 		if(istype(T))
 			var/datum/gas_mixture/leaked = removed.remove_ratio(VOLUME_PUMP_LEAK_AMOUNT)
 			T.assume_air(leaked)
-			T.air_update_turf(FALSE, FALSE)
 
 	air2.merge(removed)
 
@@ -187,7 +189,7 @@
 /obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)
 	. = ..()
 	if(. && on && is_operational)
-		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		to_chat(user, span_warning("You cannot unwrench [src], turn it off first!"))
 		return FALSE
 
 /obj/machinery/atmospherics/components/binary/volume_pump/multitool_act(mob/living/user, obj/item/I)

@@ -10,7 +10,7 @@
 	if(!user.client)
 		return
 	if(!linked_bug)
-		user.audible_message("<span class='warning'>[src] lets off a shrill beep!</span>")
+		user.audible_message(span_warning("[src] lets off a shrill beep!"))
 	if("spypopup_map" in user.client.screen_maps) //alright, the popup this object uses is already IN use, so the window is open. no point in doing any other work here, so we're good.
 		return
 	user.client.setup_popup("spypopup", 3, 3, 2)

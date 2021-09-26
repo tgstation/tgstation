@@ -11,5 +11,6 @@
 				/obj/effect/decal/cleanable/wrapping = 5,
 				/obj/effect/decal/cleanable/plastic = 5,
 				/obj/effect/decal/cleanable/glass = 5,
-				/obj/effect/decal/cleanable/dirt = 30
+				/obj/effect/decal/cleanable/dirt = 30,
+				/obj/effect/decal/cleanable/ants = 5,
 				)

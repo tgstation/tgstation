@@ -44,11 +44,11 @@ export const OutfitEditor = (props, context) => {
                   color="transparent"
                   icon="info"
                   tooltip="Ctrl-click a button to select *any* item instead of what will probably fit in that slot."
-                  tooltipPosition="bottom-left" />
+                  tooltipPosition="bottom-start" />
                 <Button
                   icon="code"
                   tooltip="Edit this outfit on a VV window"
-                  tooltipPosition="bottom-left"
+                  tooltipPosition="bottom-start"
                   onClick={() => act("vv")} />
                 <Button
                   color={!saveable && "bad"}
@@ -56,7 +56,7 @@ export const OutfitEditor = (props, context) => {
                   tooltip={saveable
                     ? "Save this outfit to the custom outfit list"
                     : "Remove this outfit from the custom outfit list"}
-                  tooltipPosition="bottom-left"
+                  tooltipPosition="bottom-start"
                   onClick={() => act(saveable ? "save" : "delete")} />
               </Stack.Item>
             </Stack>

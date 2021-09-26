@@ -243,8 +243,6 @@
 	if(!humanoid || !istype(humanoid))
 		return FALSE
 	if(..())
-		if (humanoid in GLOB.nanite_sensors_list)
-			return TRUE
 		if (istype(humanoid.w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/uniform = humanoid.w_uniform
 			if(uniform.has_sensor && uniform.sensor_mode >= SENSOR_COORDS) // Suit sensors must be on maximum

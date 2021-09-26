@@ -30,6 +30,6 @@
 		return FALSE
 	if(!isliving(target))
 		if(!silent)
-			to_chat(user, "<span class='warning'>You can only blind living beings!</span>")
+			to_chat(user, span_warning("You can only blind living beings!"))
 		return FALSE
 	return TRUE

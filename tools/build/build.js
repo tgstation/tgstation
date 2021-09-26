@@ -1,224 +1,293 @@
 #!/usr/bin/env node
 /**
+ * Build script for /tg/station 13 codebase.
+ *
+ * This script uses Juke Build, read the docs here:
+ * https://github.com/stylemistake/juke-build
+ *
  * @file
- * @copyright 2020 Aleksej Komarov
+ * @copyright 2021 Aleksej Komarov
  * @license MIT
  */
 
-// Change working directory to project root
-process.chdir(require('path').resolve(__dirname, '../../'));
+import fs from 'fs';
+import { DreamDaemon, DreamMaker } from './lib/byond.js';
+import { yarn } from './lib/yarn.js';
+import Juke from './juke/index.js';
 
-// Validate NodeJS version
-const NODE_VERSION = parseInt(process.versions.node.match(/(\d+)/)[1]);
-const NODE_VERSION_TARGET = parseInt(require('fs')
-  .readFileSync('dependencies.sh', 'utf-8')
-  .match(/NODE_VERSION=(\d+)/)[1]);
-if (NODE_VERSION < NODE_VERSION_TARGET) {
-  console.error('Your current Node.js version is out of date.');
-  console.error('You have two options:');
-  console.error('  a) Go to https://nodejs.org/ and install the latest LTS release of Node.js');
-  console.error('  b) Uninstall Node.js (our build system automatically downloads one)');
-  process.exit(1);
-}
+Juke.chdir('../..', import.meta.url);
+Juke.setup({ file: import.meta.url }).then((code) => process.exit(code));
 
-const STANDARD_BUILD = "Standard Build"
-const TGS_BUILD = "TGS Build"
-const ALL_MAPS_BUILD = "CI All Maps Build"
-const TEST_RUN_BUILD = "CI Integration Tests Build"
-const NO_DM_BUILD = "Except DM Build"
+const DME_NAME = 'tgstation';
 
-let BUILD_MODE = STANDARD_BUILD;
-if (process.env.CBT_BUILD_MODE) {
-  switch (process.env.CBT_BUILD_MODE) {
-    case "ALL_MAPS":
-      BUILD_MODE = ALL_MAPS_BUILD
-      break;
-    case "TEST_RUN":
-      BUILD_MODE = TEST_RUN_BUILD
-      break;
-    case "TGS":
-      BUILD_MODE = TGS_BUILD
-      break;
-    case "NO_DM":
-      BUILD_MODE = NO_DM_BUILD
-      break;
-    default:
-      BUILD_MODE = process.env.CBT_BUILD_MODE
-      break;
-  }
-}
-console.log(`Starting CBT in ${BUILD_MODE} mode.`)
+export const DefineParameter = new Juke.Parameter({
+  type: 'string[]',
+  alias: 'D',
+});
 
-const DME_NAME = 'tgstation'
+export const PortParameter = new Juke.Parameter({
+  type: 'string',
+  alias: 'p',
+});
 
-// Main
-// --------------------------------------------------------
+export const CiParameter = new Juke.Parameter({
+  type: 'boolean',
+});
 
-const { resolveGlob, stat } = require('./cbt/fs');
-const { exec } = require('./cbt/process');
-const { Task, runTasks } = require('./cbt/task');
-const { regQuery } = require('./cbt/winreg');
-const fs = require('fs');
+export const DmMapsIncludeTarget = new Juke.Target({
+  executes: async () => {
+    const folders = [
+      ...Juke.glob('_maps/RandomRuins/**/*.dmm'),
+      ...Juke.glob('_maps/RandomZLevels/**/*.dmm'),
+      ...Juke.glob('_maps/shuttles/**/*.dmm'),
+      ...Juke.glob('_maps/templates/**/*.dmm'),
+    ];
+    const content = folders
+      .map((file) => file.replace('_maps/', ''))
+      .map((file) => `#include "${file}"`)
+      .join('\n') + '\n';
+    fs.writeFileSync('_maps/templates.dm', content);
+  },
+});
 
-const yarn = args => {
-  const yarnPath = resolveGlob('./tgui/.yarn/releases/yarn-*.cjs')[0]
-    .replace('/tgui/', '/');
-  return exec('node', [yarnPath, ...args], {
-    cwd: './tgui',
-  });
-};
+export const DmTarget = new Juke.Target({
+  dependsOn: ({ get }) => [
+    get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
+  ],
+  inputs: [
+    '_maps/map_files/generic/**',
+    'code/**',
+    'goon/**',
+    'html/**',
+    'icons/**',
+    'interface/**',
+    `${DME_NAME}.dme`,
+  ],
+  outputs: [
+    `${DME_NAME}.dmb`,
+    `${DME_NAME}.rsc`,
+  ],
+  parameters: [DefineParameter],
+  executes: async ({ get }) => {
+    const defines = get(DefineParameter);
+    if (defines.length > 0) {
+      Juke.logger.info('Using defines:', defines.join(', '));
+    }
+    await DreamMaker(`${DME_NAME}.dme`, {
+      defines: ['CBT', ...defines],
+    });
+  },
+});
 
-/** Installs all tgui dependencies */
-const taskYarn = new Task('yarn')
-  // The following dependencies skip what could be considered an important
-  // step in Yarn: it verifies the integrity of cache. With this setup, if
-  // cache ever becomes corrupted, your only option is to clean build.
-  .depends('tgui/.yarn/+(cache|releases|plugins|sdks)/**/*')
-  .depends('tgui/**/package.json')
-  .depends('tgui/yarn.lock')
-  // Phony target (automatically created at the end of the task)
-  .provides('tgui/.yarn/install-target')
-  .build(() => yarn(['install']));
+export const DmTestTarget = new Juke.Target({
+  dependsOn: ({ get }) => [
+    get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
+  ],
+  executes: async ({ get }) => {
+    const defines = get(DefineParameter);
+    if (defines.length > 0) {
+      Juke.logger.info('Using defines:', defines.join(', '));
+    }
+    fs.copyFileSync(`${DME_NAME}.dme`, `${DME_NAME}.test.dme`);
+    await DreamMaker(`${DME_NAME}.test.dme`, {
+      defines: ['CBT', 'CIBUILDING', ...defines],
+    });
+    Juke.rm('data/logs/ci', { recursive: true });
+    await DreamDaemon(
+      `${DME_NAME}.test.dmb`,
+      '-close', '-trusted', '-verbose',
+      '-params', 'log-directory=ci'
+    );
+    Juke.rm('*.test.*');
+    try {
+      const cleanRun = fs.readFileSync('data/logs/ci/clean_run.lk', 'utf-8');
+      console.log(cleanRun);
+    }
+    catch (err) {
+      Juke.logger.error('Test run was not clean, exiting');
+      throw new Juke.ExitCode(1);
+    }
+  },
+});
 
-/** Builds svg fonts */
-const taskTgfont = new Task('tgfont')
-  .depends('tgui/.yarn/install-target')
-  .depends('tgui/packages/tgfont/**/*.+(js|cjs|svg)')
-  .depends('tgui/packages/tgfont/package.json')
-  .provides('tgui/packages/tgfont/dist/tgfont.css')
-  .provides('tgui/packages/tgfont/dist/tgfont.eot')
-  .provides('tgui/packages/tgfont/dist/tgfont.woff2')
-  .build(() => yarn(['workspace', 'tgfont', 'build']));
+export const YarnTarget = new Juke.Target({
+  inputs: [
+    'tgui/.yarn/+(cache|releases|plugins|sdks)/**/*',
+    'tgui/**/package.json',
+    'tgui/yarn.lock',
+  ],
+  outputs: [
+    'tgui/.yarn/install-target',
+  ],
+  executes: async () => {
+    await yarn('install');
+  },
+});
 
-/** Builds tgui */
-const taskTgui = new Task('tgui')
-  .depends('tgui/.yarn/install-target')
-  .depends('tgui/webpack.config.js')
-  .depends('tgui/**/package.json')
-  .depends('tgui/packages/**/*.+(js|cjs|ts|tsx|scss)')
-  .provides('tgui/public/tgui.bundle.css')
-  .provides('tgui/public/tgui.bundle.js')
-  .provides('tgui/public/tgui-common.bundle.js')
-  .provides('tgui/public/tgui-panel.bundle.css')
-  .provides('tgui/public/tgui-panel.bundle.js')
-  .build(async () => {
-    await yarn(['run', 'webpack-cli', '--mode=production']);
-  });
+export const TgFontTarget = new Juke.Target({
+  dependsOn: [YarnTarget],
+  inputs: [
+    'tgui/.yarn/install-target',
+    'tgui/packages/tgfont/**/*.+(js|cjs|svg)',
+    'tgui/packages/tgfont/package.json',
+  ],
+  outputs: [
+    'tgui/packages/tgfont/dist/tgfont.css',
+    'tgui/packages/tgfont/dist/tgfont.eot',
+    'tgui/packages/tgfont/dist/tgfont.woff2',
+  ],
+  executes: async () => {
+    await yarn('workspace', 'tgfont', 'build');
+  },
+});
+
+export const TguiTarget = new Juke.Target({
+  dependsOn: [YarnTarget],
+  inputs: [
+    'tgui/.yarn/install-target',
+    'tgui/webpack.config.js',
+    'tgui/**/package.json',
+    'tgui/packages/**/*.+(js|cjs|ts|tsx|scss)',
+  ],
+  outputs: [
+    'tgui/public/tgui.bundle.css',
+    'tgui/public/tgui.bundle.js',
+    'tgui/public/tgui-panel.bundle.css',
+    'tgui/public/tgui-panel.bundle.js',
+  ],
+  executes: async () => {
+    await yarn('webpack-cli', '--mode=production');
+  },
+});
+
+export const TguiEslintTarget = new Juke.Target({
+  dependsOn: [YarnTarget],
+  executes: async ({ args }) => {
+    await yarn(
+      'eslint', 'packages',
+      '--fix', '--ext', '.js,.cjs,.ts,.tsx',
+      ...args
+    );
+  },
+});
+
+export const TguiTscTarget = new Juke.Target({
+  dependsOn: [YarnTarget],
+  executes: async () => {
+    await yarn('tsc');
+  },
+});
+
+export const TguiTestTarget = new Juke.Target({
+  dependsOn: [YarnTarget],
+  executes: async ({ args }) => {
+    await yarn('jest', ...args);
+  },
+});
+
+export const TguiLintTarget = new Juke.Target({
+  dependsOn: [YarnTarget, TguiEslintTarget, TguiTscTarget, TguiTestTarget],
+});
+
+export const TguiDevTarget = new Juke.Target({
+  dependsOn: [YarnTarget],
+  executes: async ({ args }) => {
+    await yarn('node', 'packages/tgui-dev-server/index.js', ...args);
+  },
+});
+
+export const TguiAnalyzeTarget = new Juke.Target({
+  dependsOn: [YarnTarget],
+  executes: async () => {
+    await yarn('webpack-cli', '--mode=production', '--analyze');
+  },
+});
+
+export const TestTarget = new Juke.Target({
+  dependsOn: [DmTestTarget, TguiTestTarget],
+});
+
+export const LintTarget = new Juke.Target({
+  dependsOn: [TguiLintTarget],
+});
+
+export const BuildTarget = new Juke.Target({
+  dependsOn: [TguiTarget, TgFontTarget, DmTarget],
+});
+
+export const ServerTarget = new Juke.Target({
+  dependsOn: [BuildTarget],
+  executes: async ({ get }) => {
+    const port = get(PortParameter) || '1337';
+    await DreamDaemon(`${DME_NAME}.dmb`, port, '-trusted');
+  },
+});
+
+export const AllTarget = new Juke.Target({
+  dependsOn: [TestTarget, LintTarget, BuildTarget],
+});
+
+/**
+ * Removes the immediate build junk to produce clean builds.
+ */
+export const CleanTarget = new Juke.Target({
+  executes: async () => {
+    Juke.rm('*.dmb');
+    Juke.rm('*.rsc');
+    Juke.rm('*.mdme');
+    Juke.rm('*.mdme*');
+    Juke.rm('*.m.*');
+    Juke.rm('_maps/templates.dm');
+    Juke.rm('tgui/public/.tmp', { recursive: true });
+    Juke.rm('tgui/public/*.map');
+    Juke.rm('tgui/public/*.chunk.*');
+    Juke.rm('tgui/public/*.bundle.*');
+    Juke.rm('tgui/public/*.hot-update.*');
+    Juke.rm('tgui/packages/tgfont/dist', { recursive: true });
+    Juke.rm('tgui/.yarn/cache', { recursive: true });
+    Juke.rm('tgui/.yarn/unplugged', { recursive: true });
+    Juke.rm('tgui/.yarn/webpack', { recursive: true });
+    Juke.rm('tgui/.yarn/build-state.yml');
+    Juke.rm('tgui/.yarn/install-state.gz');
+    Juke.rm('tgui/.yarn/install-target');
+    Juke.rm('tgui/.pnp.*');
+  },
+});
+
+/**
+ * Removes more junk at expense of much slower initial builds.
+ */
+export const DistCleanTarget = new Juke.Target({
+  dependsOn: [CleanTarget],
+  executes: async () => {
+    Juke.logger.info('Cleaning up data/logs');
+    Juke.rm('data/logs', { recursive: true });
+    Juke.logger.info('Cleaning up bootstrap cache');
+    Juke.rm('tools/bootstrap/.cache', { recursive: true });
+    Juke.logger.info('Cleaning up global yarn cache');
+    await yarn('cache', 'clean', '--all');
+  },
+});
 
 /**
  * Prepends the defines to the .dme.
  * Does not clean them up, as this is intended for TGS which
  * clones new copies anyway.
  */
-const taskPrependDefines = (...defines) => new Task('prepend-defines')
-  .build(async () => {
-    const dmeContents = fs.readFileSync(`${DME_NAME}.dme`);
-    const textToWrite = defines.map(define => `#define ${define}\n`);
-    fs.writeFileSync(`${DME_NAME}.dme`, `${textToWrite}\n${dmeContents}`);
-  });
+const prependDefines = (...defines) => {
+  const dmeContents = fs.readFileSync(`${DME_NAME}.dme`);
+  const textToWrite = defines.map(define => `#define ${define}\n`);
+  fs.writeFileSync(`${DME_NAME}.dme`, `${textToWrite}\n${dmeContents}`);
+};
 
-const taskDm = (...injectedDefines) => new Task('dm')
-  .depends('_maps/map_files/generic/**')
-  .depends('code/**')
-  .depends('goon/**')
-  .depends('html/**')
-  .depends('icons/**')
-  .depends('interface/**')
-  .depends('tgui/public/tgui.html')
-  .depends('tgui/public/*.bundle.*')
-  .depends(`${DME_NAME}.dme`)
-  .provides(`${DME_NAME}.dmb`)
-  .provides(`${DME_NAME}.rsc`)
-  .build(async () => {
-    const dmPath = await (async () => {
-      // Search in array of paths
-      const paths = [
-        ...((process.env.DM_EXE && process.env.DM_EXE.split(',')) || []),
-        'C:\\Program Files\\BYOND\\bin\\dm.exe',
-        'C:\\Program Files (x86)\\BYOND\\bin\\dm.exe',
-        ['reg', 'HKLM\\Software\\Dantom\\BYOND', 'installpath'],
-        ['reg', 'HKLM\\SOFTWARE\\WOW6432Node\\Dantom\\BYOND', 'installpath'],
-      ];
-      const isFile = path => {
-        try {
-          const fstat = stat(path);
-          return fstat && fstat.isFile();
-        }
-        catch (err) {}
-        return false;
-      };
-      for (let path of paths) {
-        // Resolve a registry key
-        if (Array.isArray(path)) {
-          const [type, ...args] = path;
-          path = await regQuery(...args);
-        }
-        if (!path) {
-          continue;
-        }
-        // Check if path exists
-        if (isFile(path)) {
-          return path;
-        }
-        if (isFile(path + '/dm.exe')) {
-          return path + '/dm.exe';
-        }
-        if (isFile(path + '/bin/dm.exe')) {
-          return path + '/bin/dm.exe';
-        }
-      }
-      // Default paths
-      return (
-        process.platform === 'win32' && 'dm.exe'
-        || 'DreamMaker'
-      );
-    })();
-    if (injectedDefines.length) {
-        const injectedContent = injectedDefines
-          .map(x => `#define ${x}\n`)
-          .join('')
-        // Create mdme file
-        fs.writeFileSync(`${DME_NAME}.mdme`, injectedContent)
-        // Add the actual dme content
-        const dme_content = fs.readFileSync(`${DME_NAME}.dme`)
-        fs.appendFileSync(`${DME_NAME}.mdme`, dme_content)
-        await exec(dmPath, [`${DME_NAME}.mdme`]);
-        // Rename dmb
-        fs.renameSync(`${DME_NAME}.mdme.dmb`, `${DME_NAME}.dmb`)
-        // Rename rsc
-        fs.renameSync(`${DME_NAME}.mdme.rsc`, `${DME_NAME}.rsc`)
-        // Remove mdme
-        fs.unlinkSync(`${DME_NAME}.mdme`)
-    }
-    else {
-      await exec(dmPath, [`${DME_NAME}.dme`]);
-    }
-  });
+export const TgsTarget = new Juke.Target({
+  dependsOn: [TguiTarget, TgFontTarget],
+  executes: async () => {
+    Juke.logger.info('Prepending TGS define');
+    prependDefines('TGS');
+  },
+});
 
-// Frontend
-let tasksToRun = [
-  taskYarn,
-  taskTgfont,
-  taskTgui,
-];
-switch (BUILD_MODE) {
-  case STANDARD_BUILD:
-    tasksToRun.push(taskDm('CBT'));
-    break;
-  case TGS_BUILD:
-    tasksToRun.push(taskPrependDefines('TGS'));
-    break;
-  case ALL_MAPS_BUILD:
-    tasksToRun.push(taskDm('CBT','CIBUILDING','CITESTING','ALL_MAPS'));
-    break;
-  case TEST_RUN_BUILD:
-    tasksToRun.push(taskDm('CBT','CIBUILDING'));
-    break;
-  case NO_DM_BUILD:
-    break;
-  default:
-    console.error(`Unknown build mode : ${BUILD_MODE}`)
-    break;
-}
+const TGS_MODE = process.env.CBT_BUILD_MODE === 'TGS';
 
-runTasks(tasksToRun);
+export default TGS_MODE ? TgsTarget : BuildTarget;

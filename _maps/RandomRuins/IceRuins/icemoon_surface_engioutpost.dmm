@@ -162,18 +162,14 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
-/obj/machinery/light/small/broken{
-	dir = 8
-	},
+/obj/machinery/light/small/broken/directional/west,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aL" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aM" = (
@@ -233,9 +229,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "ba" = (
@@ -549,7 +543,7 @@
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "ci" = (
-/obj/machinery/light/broken,
+/obj/machinery/light/broken/directional/south,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cj" = (
@@ -566,9 +560,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/machinery/light/dim{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cm" = (
@@ -586,9 +578,7 @@
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cs" = (
-/obj/machinery/light/dim{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
@@ -707,7 +697,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cR" = (
@@ -781,7 +771,7 @@
 /area/icemoon/surface/outdoors)
 "df" = (
 /obj/machinery/rnd/production/protolathe/department/engineering,
-/obj/machinery/light/small/broken,
+/obj/machinery/light/small/broken/directional/south,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "dg" = (
@@ -821,7 +811,7 @@
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "dp" = (
-/obj/machinery/light/built,
+/obj/machinery/light/built/directional/south,
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "dq" = (

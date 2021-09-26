@@ -136,7 +136,7 @@
 			ui_interact(user)
 			return
 		else
-			to_chat(user, "<span class='notice'>It looks like this device can be worn as a belt for increased accessibility. A label indicates that the 'CTRL'-button on the device may be used to close it after it has been filled with bottles and beakers of chemicals.</span>")
+			to_chat(user, span_notice("It looks like this device can be worn as a belt for increased accessibility. A label indicates that the 'CTRL'-button on the device may be used to close it after it has been filled with bottles and beakers of chemicals."))
 			return
 	return
 

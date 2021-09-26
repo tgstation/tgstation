@@ -1,6 +1,7 @@
 // Clickable stat() button.
 /obj/effect/statclick
 	name = "Initializing..."
+	blocks_emissive = NONE
 	var/target
 
 INITIALIZE_IMMEDIATE(/obj/effect/statclick)
@@ -61,3 +62,30 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 			SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Failsafe Controller")
 
 	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")
+
+/client/proc/debug_controller()
+	set category = "Debug"
+	set name = "Debug Controller"
+	set desc = "Debug the various periodic loop controllers for the game (be careful!)"
+
+	if(!holder)
+		return
+	
+	var/list/controllers = list()
+	var/list/controller_choices = list()
+	
+	for (var/datum/controller/controller in world)
+		if (istype(controller, /datum/controller/subsystem))
+			continue
+		controllers["[controller] (controller.type)"] = controller //we use an associated list to ensure clients can't hold references to controllers
+		controller_choices += "[controller] (controller.type)"
+	
+	var/datum/controller/controller_string = input("Select controller to debug", "Debug Controller") as null|anything in controller_choices
+	var/datum/controller/controller = controllers[controller_string]
+	
+	if (!istype(controller))
+		return
+	debug_variables(controller)
+	
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Failsafe Controller")
+	message_admins("Admin [key_name_admin(usr)] is debugging the [controller] controller.")

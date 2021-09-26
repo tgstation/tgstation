@@ -40,7 +40,10 @@
 	. = ..()
 	if(!turret)
 		return
-	turret.forceMove(get_turf(src))
+	var/turf/our_turf = get_turf(src)
+	if(!our_turf)
+		return
+	turret.forceMove(our_turf)
 	switch(dir)
 		if(NORTH)
 			turret.pixel_x = base_pixel_x
@@ -64,10 +67,10 @@
 		return TRUE
 	if(!I.use_tool(src, user, 0, volume=50, amount=1))
 		return TRUE
-	user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to \the [src].</span>")
+	user.visible_message(span_notice("[user] repairs some damage to [name]."), span_notice("You repair some damage to \the [src]."))
 	obj_integrity += min(10, max_integrity-obj_integrity)
 	if(obj_integrity == max_integrity)
-		to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
+		to_chat(user, span_notice("It looks to be fully repaired now."))
 	return TRUE
 
 /obj/vehicle/ridden/atv/obj_break()

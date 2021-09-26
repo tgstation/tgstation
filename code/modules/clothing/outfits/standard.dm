@@ -73,7 +73,7 @@
 	suit = null
 	back = /obj/item/storage/backpack
 	backpack_contents = list(
-		/obj/item/stack/tile/iron = 6,
+		/obj/item/stack/tile/iron/base = 6,
 )
 	head = null
 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
@@ -116,6 +116,8 @@
 /datum/outfit/pirate
 	name = "Space Pirate"
 
+	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/pirate
 	uniform = /obj/item/clothing/under/costume/pirate
 	suit = /obj/item/clothing/suit/pirate/armored
 	ears = /obj/item/radio/headset/syndicate
@@ -140,12 +142,12 @@
 /datum/outfit/pirate/captain
 	name = "Space Pirate Captain"
 
+	id_trim = /datum/id_trim/pirate/captain
 	head = /obj/item/clothing/head/pirate/armored
 
 /datum/outfit/pirate/space
 	name = "Space Pirate (EVA)"
 
-	id = /obj/item/card/id/advanced
 	suit = /obj/item/clothing/suit/space/pirate
 	suit_store = /obj/item/tank/internals/oxygen
 	head = /obj/item/clothing/head/helmet/space/pirate/bandana
@@ -171,7 +173,7 @@
 /datum/outfit/pirate/silverscale/captain
 	name = "Silver Scale Captain"
 
-	id_trim = /datum/id_trim/pirate/silverscale/captain
+	id_trim = /datum/id_trim/pirate/captain/silverscale
 	head = /obj/item/clothing/head/crown
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	l_pocket = /obj/item/lighter
@@ -309,19 +311,19 @@
 	back = /obj/item/storage/backpack
 	backpack_contents = list(
 		/obj/item/storage/box/survival = 1,
+		/obj/item/spellbook = 1,
 )
 	ears = /obj/item/radio/headset
 	head = /obj/item/clothing/head/wizard
 	shoes = /obj/item/clothing/shoes/sandal/magic
 	r_pocket = /obj/item/teleportation_scroll
 	l_hand = /obj/item/staff
-	r_hand = /obj/item/spellbook
 
 /datum/outfit/wizard/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
-	var/obj/item/spellbook/S = locate() in H.held_items
+	var/obj/item/spellbook/S = locate() in H.back
 	if(S)
 		S.owner = H
 
@@ -343,7 +345,7 @@
 
 	suit = /obj/item/clothing/suit/wizrobe/marisa
 	head = /obj/item/clothing/head/wizard/marisa
-	shoes = /obj/item/clothing/shoes/sandal/marisa
+	shoes = /obj/item/clothing/shoes/sneakers/marisa
 
 /datum/outfit/centcom/soviet
 	name = "Soviet Admiral"

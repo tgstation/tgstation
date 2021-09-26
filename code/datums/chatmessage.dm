@@ -16,8 +16,6 @@
 #define CHAT_MESSAGE_MAX_LENGTH 110
 /// The dimensions of the chat message icons
 #define CHAT_MESSAGE_ICON_SIZE 9
-/// Macro from Lummox used to get height from a MeasureText proc
-#define WXH_TO_HEIGHT(x) text2num(copytext(x, findtextEx(x, "x") + 1))
 
 ///Base layer of chat elements
 #define CHAT_LAYER 1
@@ -145,10 +143,10 @@
 
 	// Append radio icon if from a virtual speaker
 	if (extra_classes.Find("virtual-speaker"))
-		var/image/r_icon = image('icons/UI_Icons/chat/chat_icons.dmi', icon_state = "radio")
+		var/image/r_icon = image('icons/ui_icons/chat/chat_icons.dmi', icon_state = "radio")
 		LAZYADD(prefixes, "\icon[r_icon]")
 	else if (extra_classes.Find("emote"))
-		var/image/r_icon = image('icons/UI_Icons/chat/chat_icons.dmi', icon_state = "emote")
+		var/image/r_icon = image('icons/ui_icons/chat/chat_icons.dmi', icon_state = "emote")
 		LAZYADD(prefixes, "\icon[r_icon]")
 
 	// Append language icon if the language uses one
@@ -234,6 +232,8 @@
  * * spans - Additional classes to be added to the message
  */
 /mob/proc/create_chat_message(atom/movable/speaker, datum/language/message_language, raw_message, list/spans, runechat_flags = NONE)
+	if(SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(speaker, TRAIT_BYPASS_MEASURES))
+		return
 	// Ensure the list we are using, if present, is a copy so we don't modify the list provided to us
 	spans = spans ? spans.Copy() : list()
 
@@ -317,4 +317,3 @@
 #undef CHAT_LAYER_Z_STEP
 #undef CHAT_LAYER_MAX_Z
 #undef CHAT_MESSAGE_ICON_SIZE
-#undef WXH_TO_HEIGHT

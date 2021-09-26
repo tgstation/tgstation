@@ -103,7 +103,7 @@ handles linking back and forth.
 	var/obj/item/multitool/M = I
 	if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
 		if (silo == M.buffer)
-			to_chat(user, "<span class='warning'>[parent] is already connected to [silo]!</span>")
+			to_chat(user, span_warning("[parent] is already connected to [silo]!"))
 			return COMPONENT_BLOCK_TOOL_ATTACK
 		if (silo)
 			silo.connected -= src
@@ -115,7 +115,7 @@ handles linking back and forth.
 		silo.connected += src
 		silo.updateUsrDialog()
 		mat_container = silo.GetComponent(/datum/component/material_container)
-		to_chat(user, "<span class='notice'>You connect [parent] to [silo] from the multitool's buffer.</span>")
+		to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
 		return COMPONENT_BLOCK_TOOL_ATTACK
 
 /datum/component/remote_materials/proc/on_hold()
@@ -130,3 +130,21 @@ handles linking back and forth.
 		return "[mat_container.total_amount] / [mat_container.max_amount == INFINITY ? "Unlimited" : mat_container.max_amount] ([silo ? "remote" : "local"])"
 	else
 		return "0 / 0"
+
+/// Ejects the given material ref and logs it, or says out loud the problem.
+/datum/component/remote_materials/proc/eject_sheets(datum/material/material_ref, eject_amount)
+	var/atom/movable/movable_parent = parent
+	if (!istype(movable_parent))
+		return 0
+
+	if (!mat_container)
+		movable_parent.say("No access to material storage, please contact the quartermaster.")
+		return 0
+	if (on_hold())
+		movable_parent.say("Mineral access is on hold, please contact the quartermaster.")
+		return 0
+	var/count = mat_container.retrieve_sheets(eject_amount, material_ref, movable_parent.drop_location())
+	var/list/matlist = list()
+	matlist[material_ref] = eject_amount
+	silo_log(parent, "ejected", -count, "sheets", matlist)
+	return count

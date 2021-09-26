@@ -245,7 +245,7 @@
 		/obj/item/food/meat/cutlet = 2,
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/cheese = 2,
-		/obj/item/food/spaghetti = 1
+		/obj/item/food/spaghetti/raw = 1
 	)
 	result = /obj/item/food/lasagna
 	subcategory = CAT_MEAT

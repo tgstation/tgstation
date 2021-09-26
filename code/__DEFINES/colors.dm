@@ -75,6 +75,14 @@
 #define COLOR_DARK_BROWN "#997C4F"
 #define COLOR_ORANGE_BROWN "#a9734f"
 
+//Color defines used by the soapstone (based on readability against grey tiles)
+#define COLOR_SOAPSTONE_PLASTIC "#a19d94"
+#define COLOR_SOAPSTONE_IRON "#b2b2b2"
+#define COLOR_SOAPSTONE_BRONZE "#FE8001"
+#define COLOR_SOAPSTONE_SILVER "#FFFFFF"
+#define COLOR_SOAPSTONE_GOLD "#FFD900"
+#define COLOR_SOAPSTONE_DIAMOND "#00ffee"
+
 #define COLOR_GREEN_GRAY       "#99BB76"
 #define COLOR_RED_GRAY         "#B4696A"
 #define COLOR_PALE_BLUE_GRAY   "#98C5DF"
@@ -135,7 +143,7 @@
 #define LIGHT_COLOR_CYAN       "#7DE1E1"
 /// Electric cyan rgb(0, 255, 255)
 #define LIGHT_COLOR_ELECTRIC_CYAN "#00FFFF"
-/// More-saturated cyan. rgb(16, 21, 22)
+/// More-saturated cyan. rgb(64, 206, 255)
 #define LIGHT_COLOR_LIGHT_CYAN "#40CEFF"
 /// Saturated blue. rgb(51, 117, 248)
 #define LIGHT_COLOR_DARK_BLUE  "#6496FA"
@@ -169,3 +177,21 @@
 #define LIGHT_COLOR_TUNGSTEN   "#FAE1AF"
 /// Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
 #define LIGHT_COLOR_HALOGEN    "#F0FAFA"
+
+//The GAGS greyscale_colors for each department's computer/machine circuits
+#define CIRCUIT_COLOR_GENERIC "#1A7A13"
+#define CIRCUIT_COLOR_COMMAND "#1B4594"
+#define CIRCUIT_COLOR_SECURITY "#9A151E"
+#define CIRCUIT_COLOR_SCIENCE "#BC4A9B"
+#define CIRCUIT_COLOR_SERVICE "#92DCBA"
+#define CIRCUIT_COLOR_MEDICAL "#00CCFF"
+#define CIRCUIT_COLOR_ENGINEERING "#F8D700"
+#define CIRCUIT_COLOR_SUPPLY "#C47749"
+
+/// Colors for pride week
+#define COLOR_PRIDE_RED "#FF6666"
+#define COLOR_PRIDE_ORANGE "#FC9F3C"
+#define COLOR_PRIDE_YELLOW "#EAFF51"
+#define COLOR_PRIDE_GREEN "#41FC66"
+#define COLOR_PRIDE_BLUE "#42FFF2"
+#define COLOR_PRIDE_PURPLE "#5D5DFC"

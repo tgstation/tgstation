@@ -52,7 +52,7 @@
 		singularity_size = NARSIE_SINGULARITY_SIZE, \
 	))
 
-	send_to_playing_players("<span class='narsie'>NAR'SIE HAS RISEN</span>")
+	send_to_playing_players(span_narsie("NAR'SIE HAS RISEN"))
 	sound_to_playing_players('sound/creatures/narsie_rises.ogg')
 
 	var/area/area = get_area(src)
@@ -90,7 +90,7 @@
 	INVOKE_ASYNC(GLOBAL_PROC, .proc/begin_the_end)
 
 /obj/narsie/Destroy()
-	send_to_playing_players("<span class='narsie'>\"<b>[pick("Nooooo...", "Not die. How-", "Die. Mort-", "Sas tyen re-")]\"</b></span>")
+	send_to_playing_players(span_narsie("\"<b>[pick("Nooooo...", "Not die. How-", "Die. Mort-", "Sas tyen re-")]\"</b>"))
 	sound_to_playing_players('sound/magic/demon_dies.ogg', 50)
 
 	var/list/all_cults = list()
@@ -132,7 +132,7 @@
 	for (var/mob/living/carbon/victim in viewers(NARSIE_CONSUME_RANGE, src))
 		if (victim.stat == CONSCIOUS)
 			if (!IS_CULTIST(victim))
-				to_chat(victim, "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src]...</span>")
+				to_chat(victim, span_cult("You feel conscious thought crumble away in an instant as you gaze upon [src]..."))
 				victim.apply_effect(NARSIE_MESMERIZE_EFFECT, EFFECT_STUN)
 
 /// Narsie rewards her cultists with being devoured first, then picks a ghost to follow.
@@ -179,12 +179,12 @@
 	if (food == old_target)
 		return
 
-	to_chat(old_target, "<span class='cultsmall'>NAR'SIE HAS LOST INTEREST IN YOU.</span>")
+	to_chat(old_target, span_cult("NAR'SIE HAS LOST INTEREST IN YOU."))
 	singularity_component.target = food
 	if(ishuman(food))
-		to_chat(food, "<span class='cult'>NAR'SIE HUNGERS FOR YOUR SOUL.</span>")
+		to_chat(food, span_cult("NAR'SIE HUNGERS FOR YOUR SOUL."))
 	else
-		to_chat(food, "<span class='cult'>NAR'SIE HAS CHOSEN YOU TO LEAD HER TO HER NEXT MEAL.</span>")
+		to_chat(food, span_cult("NAR'SIE HAS CHOSEN YOU TO LEAD HER TO HER NEXT MEAL."))
 
 /// Called to make Nar'Sie convert objects to cult stuff, or to eat
 /obj/narsie/proc/consume(atom/target)

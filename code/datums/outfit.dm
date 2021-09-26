@@ -336,6 +336,7 @@
 	.["ears"] = ears
 	.["glasses"] = glasses
 	.["id"] = id
+	.["id_trim"] = id_trim
 	.["l_pocket"] = l_pocket
 	.["r_pocket"] = r_pocket
 	.["suit_store"] = suit_store
@@ -363,6 +364,7 @@
 	ears = target.ears
 	glasses = target.glasses
 	id = target.id
+	id_trim = target.id_trim
 	l_pocket = target.l_pocket
 	r_pocket = target.r_pocket
 	suit_store = target.suit_store
@@ -401,6 +403,7 @@
 	ears = text2path(outfit_data["ears"])
 	glasses = text2path(outfit_data["glasses"])
 	id = text2path(outfit_data["id"])
+	id_trim = text2path(outfit_data["id_trim"])
 	l_pocket = text2path(outfit_data["l_pocket"])
 	r_pocket = text2path(outfit_data["r_pocket"])
 	suit_store = text2path(outfit_data["suit_store"])

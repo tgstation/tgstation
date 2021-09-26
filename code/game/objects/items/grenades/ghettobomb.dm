@@ -15,7 +15,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	active = FALSE
 	det_time = 50
-	display_timer = 0
+	display_timer = FALSE
 	var/check_parts = FALSE
 	var/range = 3
 	var/list/times
@@ -59,7 +59,7 @@
 /obj/item/grenade/iedcasing/attack_self(mob/user) //
 	if(!active)
 		if(!botch_check(user))
-			to_chat(user, "<span class='warning'>You light the [name]!</span>")
+			to_chat(user, span_warning("You light the [name]!"))
 			cut_overlay("improvised_grenade_filled")
 			arm_grenade(user, null, FALSE)
 

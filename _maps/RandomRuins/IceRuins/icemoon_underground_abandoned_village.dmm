@@ -7,6 +7,7 @@
 /area/ruin/powered)
 "aP" = (
 /obj/structure/dresser,
+/obj/structure/mirror/directional/north,
 /turf/open/floor/wood,
 /area/ruin/powered)
 "aZ" = (
@@ -14,9 +15,7 @@
 /turf/closed/wall/rust,
 /area/icemoon/underground/explored)
 "bR" = (
-/obj/machinery/light/small/broken{
-	dir = 4
-	},
+/obj/machinery/light/small/broken/directional/east,
 /obj/structure/fluff/fokoff_sign,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -81,9 +80,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered)
 "jP" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "kl" = (
@@ -111,6 +108,7 @@
 "li" = (
 /obj/structure/dresser,
 /obj/effect/decal/cleanable/glass,
+/obj/structure/mirror/directional/north,
 /turf/open/floor/wood,
 /area/ruin/powered)
 "lo" = (
@@ -286,9 +284,7 @@
 "AG" = (
 /obj/structure/showcase/machinery/tv,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/broken{
-	dir = 1
-	},
+/obj/machinery/light/broken/directional/north,
 /turf/open/floor/holofloor/wood,
 /area/ruin/powered)
 "AM" = (
@@ -394,12 +390,6 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/powered)
-"Ha" = (
-/obj/structure/mirror{
-	broken = 1
-	},
-/turf/closed/wall/mineral/wood,
-/area/ruin/powered)
 "Hf" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/wood,
@@ -501,10 +491,6 @@
 /obj/structure/flora/grass/both,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"Si" = (
-/obj/structure/mirror,
-/turf/closed/wall/mineral/wood,
-/area/ruin/powered)
 "Sk" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/effect/decal/cleanable/blood/footprints{
@@ -844,7 +830,7 @@ Kd
 Ei
 Ei
 lo
-Ha
+Vn
 li
 Hf
 SZ
@@ -1024,7 +1010,7 @@ Ei
 Vn
 EF
 hD
-Si
+Vn
 aP
 WH
 ZG

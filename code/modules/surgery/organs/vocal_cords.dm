@@ -39,15 +39,15 @@
 	owner.say(".x[message]")
 
 /obj/item/organ/vocal_cords/adamantine/handle_speech(message)
-	var/msg = "<span class='resonate'><span class='name'>[owner.real_name]</span> <span class='message'>resonates, \"[message]\"</span></span>"
-	for(var/m in GLOB.player_list)
-		if(iscarbon(m))
-			var/mob/living/carbon/C = m
-			if(C.getorganslot(ORGAN_SLOT_ADAMANTINE_RESONATOR))
-				to_chat(C, msg)
-		if(isobserver(m))
-			var/link = FOLLOW_LINK(m, owner)
-			to_chat(m, "[link] [msg]")
+	var/msg = span_resonate(span_name("[owner.real_name]</span> <span class='message'>resonates, \"[message]\""))
+	for(var/player in GLOB.player_list)
+		if(iscarbon(player))
+			var/mob/living/carbon/speaker = player
+			if(speaker.getorganslot(ORGAN_SLOT_ADAMANTINE_RESONATOR))
+				to_chat(speaker, msg)
+		if(isobserver(player))
+			var/link = FOLLOW_LINK(player, owner)
+			to_chat(player, "[link] [msg]")
 
 //Colossus drop, forces the listeners to obey certain commands
 /obj/item/organ/vocal_cords/colossus
@@ -74,8 +74,8 @@
 	if(!owner)
 		return FALSE
 	if(isliving(owner))
-		var/mob/living/L = owner
-		if(!L.can_speak_vocal())
+		var/mob/living/living = owner
+		if(!living.can_speak_vocal())
 			return FALSE
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		if(owner.stat)
@@ -86,7 +86,7 @@
 	. = ..()
 	if(!IsAvailable())
 		if(world.time < cords.next_command)
-			to_chat(owner, "<span class='notice'>You must wait [DisplayTimeText(cords.next_command - world.time)] before Speaking again.</span>")
+			to_chat(owner, span_notice("You must wait [DisplayTimeText(cords.next_command - world.time)] before Speaking again."))
 		return
 	var/command = input(owner, "Speak with the Voice of God", "Command")
 	if(QDELETED(src) || QDELETED(owner))
@@ -97,12 +97,12 @@
 
 /obj/item/organ/vocal_cords/colossus/can_speak_with()
 	if(world.time < next_command)
-		to_chat(owner, "<span class='notice'>You must wait [DisplayTimeText(next_command - world.time)] before Speaking again.</span>")
+		to_chat(owner, span_notice("You must wait [DisplayTimeText(next_command - world.time)] before Speaking again."))
 		return FALSE
 	if(!owner)
 		return FALSE
 	if(!owner.can_speak_vocal())
-		to_chat(owner, "<span class='warning'>You are unable to speak!</span>")
+		to_chat(owner, span_warning("You are unable to speak!"))
 		return FALSE
 	return TRUE
 

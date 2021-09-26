@@ -9,6 +9,22 @@
 	max_integrity = 200
 	integrity_failure = 0.5
 
+/obj/structure/mirror/directional/north
+	dir = SOUTH
+	pixel_y = 28
+
+/obj/structure/mirror/directional/south
+	dir = NORTH
+	pixel_y = -28
+
+/obj/structure/mirror/directional/east
+	dir = WEST
+	pixel_x = 28
+
+/obj/structure/mirror/directional/west
+	dir = EAST
+	pixel_x = -28
+
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
 	if(icon_state == "mirror_broke" && !broken)
@@ -42,7 +58,7 @@
 		if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 			return //no tele-grooming
 		if(HAS_TRAIT(H, TRAIT_BALD))
-			to_chat(H, "<span class='notice'>If only growing back hair were that easy for you...</span>")
+			to_chat(H, span_notice("If only growing back hair were that easy for you..."))
 		if(new_style)
 			H.hairstyle = new_style
 
@@ -59,7 +75,7 @@
 
 	. = ..()
 	if(broken) // breaking a mirror truly gets you bad luck!
-		to_chat(user, "<span class='warning'>A chill runs down your spine as [src] shatters...</span>")
+		to_chat(user, span_warning("A chill runs down your spine as [src] shatters..."))
 		user.AddComponent(/datum/component/omen, silent=TRUE) // we have our own message
 
 /obj/structure/mirror/bullet_act(obj/projectile/P)
@@ -69,10 +85,11 @@
 	. = ..()
 	if(broken) // breaking a mirror truly gets you bad luck!
 		var/mob/living/unlucky_dude = P.firer
-		to_chat(unlucky_dude, "<span class='warning'>A chill runs down your spine as [src] shatters...</span>")
+		to_chat(unlucky_dude, span_warning("A chill runs down your spine as [src] shatters..."))
 		unlucky_dude.AddComponent(/datum/component/omen, silent=TRUE) // we have our own message
 
 /obj/structure/mirror/obj_break(damage_flag, mapload)
+	. = ..()
 	if(broken || (flags_1 & NODECONSTRUCT_1))
 		return
 	icon_state = "mirror_broke"
@@ -99,9 +116,9 @@
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
 
-	to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+	to_chat(user, span_notice("You begin repairing [src]..."))
 	if(I.use_tool(src, user, 10, volume=50))
-		to_chat(user, "<span class='notice'>You repair [src].</span>")
+		to_chat(user, span_notice("You repair [src]."))
 		broken = 0
 		icon_state = initial(icon_state)
 		desc = initial(desc)
@@ -199,9 +216,10 @@
 
 					if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
 						H.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
+						H.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
 
 					else
-						to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")
+						to_chat(H, span_notice("Invalid color. Your color is not bright enough."))
 
 			H.update_body()
 			H.update_hair()
@@ -212,22 +230,22 @@
 			if(!(H.gender in list("male", "female"))) //blame the patriarchy
 				return
 			if(H.gender == "male")
-				if(alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
+				if(tgui_alert(H, "Become a Witch?", "Confirmation", list("Yes", "No")) == "Yes")
 					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return
 					H.gender = FEMALE
 					H.body_type = FEMALE
-					to_chat(H, "<span class='notice'>Man, you feel like a woman!</span>")
+					to_chat(H, span_notice("Man, you feel like a woman!"))
 				else
 					return
 
 			else
-				if(alert(H, "Become a Warlock?", "Confirmation", "Yes", "No") == "Yes")
+				if(tgui_alert(H, "Become a Warlock?", "Confirmation", list("Yes", "No")) == "Yes")
 					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return
 					H.gender = MALE
 					H.body_type = MALE
-					to_chat(H, "<span class='notice'>Whoa man, you feel like a man!</span>")
+					to_chat(H, span_notice("Whoa man, you feel like a man!"))
 				else
 					return
 			H.dna.update_ui_block(DNA_GENDER_BLOCK)
@@ -235,7 +253,7 @@
 			H.update_mutations_overlay() //(hulk male/female)
 
 		if("hair")
-			var/hairchoice = alert(H, "Hairstyle or hair color?", "Change Hair", "Style", "Color")
+			var/hairchoice = tgui_alert(H, "Hairstyle or hair color?", "Change Hair", list("Style", "Color"))
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
 			if(hairchoice == "Style") //So you just want to use a mirror then?

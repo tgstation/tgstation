@@ -26,11 +26,10 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	var/static/list/edibles = typecacheof(list(/mob/living/simple_animal/butterfly, /mob/living/simple_animal/hostile/cockroach)) //list of atoms, however turfs won't affect AI, but will affect consumption.
-	pet_bonus = TRUE
-	pet_bonus_emote = "sticks its tongue out contentedly!"
 
 /mob/living/simple_animal/hostile/lizard/Initialize()
 	. = ..()
+	AddElement(/datum/element/pet_bonus, "sticks its tongue out contentedly!")
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/lizard/CanAttack(atom/the_target)//Can we actually attack a possible target?
@@ -42,7 +41,7 @@
 
 /mob/living/simple_animal/hostile/lizard/AttackingTarget()
 	if(is_type_in_typecache(target,edibles)) //Makes sure player lizards only consume edibles.
-		visible_message("<span class='notice'>[name] consumes [target] in a single gulp.</span>", "<span class='notice'>You consume [target] in a single gulp.</span>")
+		visible_message(span_notice("[name] consumes [target] in a single gulp."), span_notice("You consume [target] in a single gulp."))
 		QDEL_NULL(target) //Nom
 		adjustBruteLoss(-2)
 		return TRUE

@@ -5,7 +5,7 @@
 
 	var/method = 0 //0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL items)
 
-	if(tgui_alert(src, "Are you sure you'd like to mass-modify every instance of the [var_name] variable? This can break everything if you do not know what you are doing.", "Slow down, chief!", list("Yes", "No")) != "Yes")
+	if(tgui_alert(usr, "Are you sure you'd like to mass-modify every instance of the [var_name] variable? This can break everything if you do not know what you are doing.", "Slow down, chief!", list("Yes", "No"), 60 SECONDS) != "Yes")
 		return
 
 	if(!check_rights(R_VAREDIT))
@@ -52,7 +52,7 @@
 	if(variable in GLOB.VVpixelmovement)
 		if(!check_rights(R_DEBUG))
 			return
-		var/prompt = alert(src, "Editing this var may irreparably break tile gliding for the rest of the round. THIS CAN'T BE UNDONE", "DANGER", "ABORT ", "Continue", " ABORT")
+		var/prompt = tgui_alert(usr, "Editing this var may irreparably break tile gliding for the rest of the round. THIS CAN'T BE UNDONE", "DANGER", list("ABORT ", "Continue", " ABORT"))
 		if (prompt != "Continue")
 			return
 
@@ -118,7 +118,7 @@
 			var/pre_processing = new_value
 			var/unique
 			if (varsvars?.len)
-				unique = alert(usr, "Process vars unique to each instance, or same for all?", "Variable Association", "Unique", "Same")
+				unique = tgui_alert(usr, "Process vars unique to each instance, or same for all?", "Variable Association", list("Unique", "Same"))
 				if(unique == "Unique")
 					unique = TRUE
 				else
@@ -145,7 +145,7 @@
 				CHECK_TICK
 
 		if (VV_NEW_TYPE)
-			var/many = alert(src, "Create only one [value["type"]] and assign each or a new one for each thing", "How Many", "One", "Many", "Cancel")
+			var/many = tgui_alert(usr, "Create only one [value["type"]] and assign each or a new one for each thing", "How Many", list("One", "Many", "Cancel"))
 			if (many == "Cancel")
 				return
 			if (many == "Many")

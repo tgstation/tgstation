@@ -62,7 +62,7 @@
 
 /obj/effect/anomaly/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	qdel(countdown)
+	QDEL_NULL(countdown)
 	if(aSignal)
 		QDEL_NULL(aSignal)
 	return ..()
@@ -91,7 +91,7 @@
 
 /obj/effect/anomaly/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_ANALYZER)
-		to_chat(user, "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code].</span>")
+		to_chat(user, span_notice("Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code]."))
 
 ///////////////////////
 
@@ -101,6 +101,13 @@
 	density = FALSE
 	var/boing = 0
 	aSignal = /obj/item/assembly/signaler/anomaly/grav
+
+/obj/effect/anomaly/grav/Initialize(mapload, new_lifespan, drops_core)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
@@ -123,8 +130,8 @@
 			if(target && !target.stat)
 				O.throw_at(target, 5, 10)
 
-/obj/effect/anomaly/grav/Crossed(atom/movable/AM)
-	. = ..()
+/obj/effect/anomaly/grav/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	gravShock(AM)
 
 /obj/effect/anomaly/grav/Bump(atom/A)
@@ -168,6 +175,10 @@
 /obj/effect/anomaly/flux/Initialize(mapload, new_lifespan, drops_core = TRUE, _explosive = TRUE)
 	. = ..()
 	explosive = _explosive
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
@@ -175,8 +186,12 @@
 	for(var/mob/living/M in range(0, src))
 		mobShock(M)
 
-/obj/effect/anomaly/flux/Crossed(atom/movable/AM)
+/obj/effect/anomaly/flux/update_overlays()
 	. = ..()
+	. += emissive_appearance(icon, icon_state, alpha=src.alpha)
+
+/obj/effect/anomaly/flux/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	mobShock(AM)
 
 /obj/effect/anomaly/flux/Bump(atom/A)

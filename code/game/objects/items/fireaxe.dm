@@ -50,7 +50,7 @@
 	return ..()
 
 /obj/item/fireaxe/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS)
 
 /obj/item/fireaxe/afterattack(atom/A, mob/user, proximity)

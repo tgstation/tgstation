@@ -7,7 +7,7 @@
 	if(!holder)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = "<span class='danger'>Error: Admin-PM-Context: Only administrators may use this command.</span>",
+			html = span_danger("Error: Admin-PM-Context: Only administrators may use this command."),
 			confidential = TRUE)
 		return
 	if(!ismob(M) || !M.client)
@@ -22,20 +22,20 @@
 	if(!holder)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = "<span class='danger'>Error: Admin-PM-Panel: Only administrators may use this command.</span>",
+			html = span_danger("Error: Admin-PM-Panel: Only administrators may use this command."),
 			confidential = TRUE)
 		return
-	var/list/client/targets[0]
-	for(var/client/T)
-		if(T.mob)
-			if(isnewplayer(T.mob))
-				targets["(New Player) - [T]"] = T
-			else if(isobserver(T.mob))
-				targets["[T.mob.name](Ghost) - [T]"] = T
+	var/list/targets = list()
+	for(var/client/client as anything in GLOB.clients)
+		if(client.mob)
+			if(isnewplayer(client.mob))
+				targets["(New Player) - [client]"] = client
+			else if(isobserver(client.mob))
+				targets["[client.mob.name](Ghost) - [client]"] = client
 			else
-				targets["[T.mob.real_name](as [T.mob.name]) - [T]"] = T
+				targets["[client.mob.real_name](as [client.mob.name]) - [client]"] = client
 		else
-			targets["(No Mob) - [T]"] = T
+			targets["(No Mob) - [client]"] = client
 	var/target = input(src,"To whom shall we send a message?","Admin PM",null) as null|anything in sortList(targets)
 	cmd_admin_pm(targets[target],null)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -44,7 +44,7 @@
 	if(prefs.muted & MUTE_ADMINHELP)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = "<span class='danger'>Error: Admin-PM: You are unable to use admin PM-s (muted).</span>",
+			html = span_danger("Error: Admin-PM: You are unable to use admin PM-s (muted)."),
 			confidential = TRUE)
 		return
 	var/client/C
@@ -58,7 +58,7 @@
 		if(holder)
 			to_chat(src,
 				type = MESSAGE_TYPE_ADMINPM,
-				html = "<span class='danger'>Error: Admin-PM: Client not found.</span>",
+				html = span_danger("Error: Admin-PM: Client not found."),
 				confidential = TRUE)
 		return
 
@@ -76,11 +76,11 @@
 		else
 			to_chat(src,
 				type = MESSAGE_TYPE_ADMINPM,
-				html = "<span class='danger'>Error: Admin-PM: Client not found.</span>",
+				html = span_danger("Error: Admin-PM: Client not found."),
 				confidential = TRUE)
 			to_chat(src,
 				type = MESSAGE_TYPE_ADMINPM,
-				html = "<span class='danger'><b>Message not sent:</b></span><br>[msg]",
+				html = "[span_danger("<b>Message not sent:</b>")]<br>[msg]",
 				confidential = TRUE)
 			AH.AddInteraction("<b>No client found, message not sent:</b><br>[msg]")
 			return
@@ -92,18 +92,18 @@
 	if(prefs.muted & MUTE_ADMINHELP)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = "<span class='danger'>Error: Admin-PM: You are unable to use admin PM-s (muted).</span>",
+			html = span_danger("Error: Admin-PM: You are unable to use admin PM-s (muted)."),
 			confidential = TRUE)
 		return
 
 	if(!holder && !current_ticket) //no ticket? https://www.youtube.com/watch?v=iHSPf6x1Fdo
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = "<span class='danger'>You can no longer reply to this ticket, please open another one by using the Adminhelp verb if need be.</span>",
+			html = span_danger("You can no longer reply to this ticket, please open another one by using the Adminhelp verb if need be."),
 			confidential = TRUE)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = "<span class='notice'>Message: [msg]</span>",
+			html = span_notice("Message: [msg]"),
 			confidential = TRUE)
 		return
 
@@ -124,7 +124,7 @@
 	if(!recipient)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = "<span class='danger'>Error: Admin-PM: Client not found.</span>",
+			html = span_danger("Error: Admin-PM: Client not found."),
 			confidential = TRUE)
 		return
 
@@ -142,7 +142,7 @@
 		if(holder)
 			to_chat(src,
 				type = MESSAGE_TYPE_ADMINPM,
-				html = "<span class='danger'>Error: Use the admin IRC/Discord channel, nerd.</span>",
+				html = span_danger("Error: Use the admin IRC/Discord channel, nerd."),
 				confidential = TRUE)
 			return
 
@@ -162,11 +162,11 @@
 				if(holder)
 					to_chat(src,
 						type = MESSAGE_TYPE_ADMINPM,
-						html = "<span class='danger'>Error: Admin-PM: Client not found.</span>",
+						html = span_danger("Error: Admin-PM: Client not found."),
 						confidential = TRUE)
 					to_chat(src,
 						type = MESSAGE_TYPE_ADMINPM,
-						html = "<span class='danger'><b>Message not sent:</b></span><br>[msg]",
+						html = "[span_danger("<b>Message not sent:</b>")]<br>[msg]",
 						confidential = TRUE)
 					if(recipient_ticket)
 						recipient_ticket.AddInteraction("<b>No client found, message not sent:</b><br>[msg]")
@@ -179,7 +179,7 @@
 	if(prefs.muted & MUTE_ADMINHELP)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = "<span class='danger'>Error: Admin-PM: You are unable to use admin PM-s (muted).</span>",
+			html = span_danger("Error: Admin-PM: You are unable to use admin PM-s (muted)."),
 			confidential = TRUE)
 		return
 
@@ -202,7 +202,7 @@
 	if(external)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = "<span class='notice'>PM to-<b>Admins</b>: <span class='linkify'>[rawmsg]</span></span>",
+			html = span_notice("PM to-<b>Admins</b>: <span class='linkify'>[rawmsg]</span>"),
 			confidential = TRUE)
 		var/datum/admin_help/AH = admin_ticket_log(src, "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, TRUE)]</b> to <i>External</i>: [keywordparsedmsg]</font>")
 		externalreplyamount--
@@ -215,11 +215,11 @@
 			if(holder)
 				to_chat(recipient,
 					type = MESSAGE_TYPE_ADMINPM,
-					html = "<span class='danger'>Admin PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='linkify'>[keywordparsedmsg]</span></span>",
+					html = span_danger("Admin PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='linkify'>[keywordparsedmsg]</span>"),
 					confidential = TRUE)
 				to_chat(src,
 					type = MESSAGE_TYPE_ADMINPM,
-					html = "<span class='notice'>Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='linkify'>[keywordparsedmsg]</span></span>",
+					html = span_notice("Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='linkify'>[keywordparsedmsg]</span>"),
 					confidential = TRUE)
 				//omg this is dumb, just fill in both their tickets
 				var/interaction_message = "<font color='purple'>PM from-<b>[key_name(src, recipient, 1)]</b> to-<b>[key_name(recipient, src, 1)]</b>: [keywordparsedmsg]</font>"
@@ -232,11 +232,11 @@
 				admin_ticket_log(src, "<font color='red'>[replymsg]</font>")
 				to_chat(recipient,
 					type = MESSAGE_TYPE_ADMINPM,
-					html = "<span class='danger'>[replymsg]</span>",
+					html = span_danger("[replymsg]"),
 					confidential = TRUE)
 				to_chat(src,
 					type = MESSAGE_TYPE_ADMINPM,
-					html = "<span class='notice'>PM to-<b>Admins</b>: <span class='linkify'>[msg]</span></span>",
+					html = span_notice("PM to-<b>Admins</b>: <span class='linkify'>[msg]</span>"),
 					confidential = TRUE)
 				SSblackbox.LogAhelp(current_ticket.id, "Reply", msg, recipient.ckey, src.ckey)
 
@@ -258,15 +258,15 @@
 					confidential = TRUE)
 				to_chat(recipient,
 					type = MESSAGE_TYPE_ADMINPM,
-					html = "<span class='adminsay'>Admin PM from-<b>[key_name(src, recipient, 0)]</b>: <span class='linkify'>[msg]</span></span>",
+					html = span_adminsay("Admin PM from-<b>[key_name(src, recipient, 0)]</b>: <span class='linkify'>[msg]</span>"),
 					confidential = TRUE)
 				to_chat(recipient,
 					type = MESSAGE_TYPE_ADMINPM,
-					html = "<span class='adminsay'><i>Click on the administrator's name to reply.</i></span>",
+					html = span_adminsay("<i>Click on the administrator's name to reply.</i>"),
 					confidential = TRUE)
 				to_chat(src,
 					type = MESSAGE_TYPE_ADMINPM,
-					html = "<span class='notice'>Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='linkify'>[msg]</span></span>",
+					html = span_notice("Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='linkify'>[msg]</span>"),
 					confidential = TRUE)
 
 				admin_ticket_log(recipient, "<font color='purple'>PM From [key_name_admin(src)]: [keywordparsedmsg]</font>")
@@ -285,11 +285,11 @@
 				if(!current_ticket)
 					to_chat(src,
 						type = MESSAGE_TYPE_ADMINPM,
-						html = "<span class='danger'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</span>",
+						html = span_danger("Error: Admin-PM: Non-admin to non-admin PM communication is forbidden."),
 						confidential = TRUE)
 					to_chat(src,
 						type = MESSAGE_TYPE_ADMINPM,
-						html = "<span class='danger'><b>Message not sent:</b></span><br>[msg]",
+						html = "[span_danger("<b>Message not sent:</b>")]<br>[msg]",
 						confidential = TRUE)
 					return
 				current_ticket.MessageNoRecipient(msg)
@@ -299,7 +299,7 @@
 		for(var/client/X in GLOB.admins)
 			to_chat(X,
 				type = MESSAGE_TYPE_ADMINPM,
-				html = "<span class='notice'><B>PM: [key_name(src, X, 0)]-&gt;External:</B> [keywordparsedmsg]</span>",
+				html = span_notice("<B>PM: [key_name(src, X, 0)]-&gt;External:</B> [keywordparsedmsg]"),
 				confidential = TRUE)
 	else
 		window_flash(recipient, ignorepref = TRUE)
@@ -309,7 +309,7 @@
 			if(X.key!=key && X.key!=recipient.key) //check client/X is an admin and isn't the sender or recipient
 				to_chat(X,
 					type = MESSAGE_TYPE_ADMINPM,
-					html = "<span class='notice'><B>PM: [key_name(src, X, 0)]-&gt;[key_name(recipient, X, 0)]:</B> [keywordparsedmsg]</span>" ,
+					html = span_notice("<B>PM: [key_name(src, X, 0)]-&gt;[key_name(recipient, X, 0)]:</B> [keywordparsedmsg]") ,
 					confidential = TRUE)
 
 /client/proc/popup_admin_pm(client/recipient, msg)
@@ -406,11 +406,11 @@
 		confidential = TRUE)
 	to_chat(C,
 		type = MESSAGE_TYPE_ADMINPM,
-		html = "<span class='adminsay'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</span>",
+		html = span_adminsay("Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]"),
 		confidential = TRUE)
 	to_chat(C,
 		type = MESSAGE_TYPE_ADMINPM,
-		html = "<span class='adminsay'><i>Click on the administrator's name to reply.</i></span>",
+		html = span_adminsay("<i>Click on the administrator's name to reply.</i>"),
 		confidential = TRUE)
 
 	admin_ticket_log(C, "<font color='purple'>PM From [tgs_tagged]: [msg]</font>")

@@ -97,7 +97,7 @@
 						spoken = TRUE
 						understood = TRUE
 				if(language_holder.blocked_languages && language_holder.blocked_languages[language_datum])
-					choice = alert(user, "Do you want to lift the blockage that's also preventing the language to be spoken or understood?", "[language_datum]", "Yes", "No")
+					choice = tgui_alert(user, "Do you want to lift the blockage that's also preventing the language to be spoken or understood?", "[language_datum]", list("Yes", "No"))
 					if(choice == "Yes")
 						language_holder.remove_blocked_language(language_datum, LANGUAGE_ALL)
 				language_holder.grant_language(language_datum, understood, spoken)

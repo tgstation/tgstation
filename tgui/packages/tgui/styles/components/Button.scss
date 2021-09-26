@@ -37,7 +37,7 @@ $bg-map: colors.$bg-map !default;
 
   &:hover,
   &:focus {
-    background-color: lighten($color, 15%);
+    background-color: lighten($color, 30%);
     color: $text-color;
   }
 }

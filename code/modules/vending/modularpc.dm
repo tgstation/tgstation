@@ -21,7 +21,8 @@
 		           /obj/item/computer_hardware/ai_slot = 2,
 		           /obj/item/computer_hardware/printer/mini = 2,
 		           /obj/item/computer_hardware/recharger/apc_recharger = 2,
-		           /obj/item/paicard = 2)
+		           /obj/item/paicard = 2,
+				   /obj/item/computer_hardware/radio_card = 1)
 	refill_canister = /obj/item/vending_refill/modularpc
 	default_price = PAYCHECK_MEDIUM
 	extra_price = PAYCHECK_HARD

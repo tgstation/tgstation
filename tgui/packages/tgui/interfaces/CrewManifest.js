@@ -40,41 +40,42 @@ export const CrewManifest = (props, context) => {
                     collapsing
                   >
                     {positions[dept].exceptions.includes(crewMember.rank) && (
-                      <Icon className="CrewManifest__Icon" name="infinity">
-                        <Tooltip
-                          content="No position limit"
-                          position="bottom"
-                        />
-                      </Icon>
+
+                      <Tooltip
+                        content="No position limit"
+                        position="bottom"
+                      >
+                        <Icon className="CrewManifest__Icon" name="infinity" />
+                      </Tooltip>
                     )}
                     {crewMember.rank === "Captain" && (
-                      <Icon
-                        className={classes([
-                          "CrewManifest__Icon",
-                          "CrewManifest__Icon--Command",
-                        ])}
-                        name="star"
+                      <Tooltip
+                        content="Captain"
+                        position="bottom"
                       >
-                        <Tooltip
-                          content="Captain"
-                          position="bottom"
+                        <Icon
+                          className={classes([
+                            "CrewManifest__Icon",
+                            "CrewManifest__Icon--Command",
+                          ])}
+                          name="star"
                         />
-                      </Icon>
+                      </Tooltip>
                     )}
                     {commandJobs.includes(crewMember.rank) && (
-                      <Icon
-                        className={classes([
-                          "CrewManifest__Icon",
-                          "CrewManifest__Icon--Command",
-                          "CrewManifest__Icon--Chevron",
-                        ])}
-                        name="chevron-up"
+                      <Tooltip
+                        content="Member of command"
+                        position="bottom"
                       >
-                        <Tooltip
-                          content="Member of command"
-                          position="bottom"
+                        <Icon
+                          className={classes([
+                            "CrewManifest__Icon",
+                            "CrewManifest__Icon--Command",
+                            "CrewManifest__Icon--Chevron",
+                          ])}
+                          name="chevron-up"
                         />
-                      </Icon>
+                      </Tooltip>
                     )}
                   </Table.Cell>
                   <Table.Cell

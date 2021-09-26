@@ -38,6 +38,7 @@ export interface BoxProps {
   bold?: BooleanLike;
   italic?: BooleanLike;
   nowrap?: BooleanLike;
+  preserveWhitespace?: BooleanLike;
   m?: string | BooleanLike;
   mx?: string | BooleanLike;
   my?: string | BooleanLike;
@@ -163,6 +164,7 @@ const styleMapperByPropName = {
   bold: mapBooleanPropTo('font-weight', 'bold'),
   italic: mapBooleanPropTo('font-style', 'italic'),
   nowrap: mapBooleanPropTo('white-space', 'nowrap'),
+  preserveWhitespace: mapBooleanPropTo('white-space', 'pre-wrap'),
   // Margins
   m: mapDirectionalUnitPropTo('margin', halfUnit, [
     'top', 'bottom', 'left', 'right',

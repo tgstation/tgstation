@@ -28,7 +28,7 @@
 #define BOT_WAIT_FOR_NAV 16 // waiting for nav computation
 #define BOT_NO_ROUTE 17 // no destination beacon found (or no route)
 #define BOT_SHOWERSTANCE 18 // cleaning unhygienic humans
-#define BOT_TIPPED 19 // someone tipped a medibot over ;_;
+#define BOT_TIPPED 19 // someone tipped a bot over ;_;
 
 //Bot types
 #define SEC_BOT (1<<0) // Secutritrons (Beepsky) and ED-209s

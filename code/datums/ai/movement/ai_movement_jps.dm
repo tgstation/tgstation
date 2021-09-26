@@ -19,9 +19,10 @@
 		// right now I'm just taking the shortest minimum distance of our current behaviors, at some point in the future
 		// we should let whatever sets the current_movement_target also set the min distance and max path length
 		// (or at least cache it on the controller)
-		for(var/datum/ai_behavior/iter_behavior as anything in controller.current_behaviors)
-			if(iter_behavior.required_distance < minimum_distance)
-				minimum_distance = iter_behavior.required_distance
+		if(LAZYLEN(controller.current_behaviors))
+			for(var/datum/ai_behavior/iter_behavior as anything in controller.current_behaviors)
+				if(iter_behavior.required_distance < minimum_distance)
+					minimum_distance = iter_behavior.required_distance
 
 		if(get_dist(movable_pawn, controller.current_movement_target) <= minimum_distance)
 			continue

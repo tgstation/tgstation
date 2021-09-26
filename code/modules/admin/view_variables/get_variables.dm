@@ -264,10 +264,10 @@
 					break
 				D = locate(ref)
 				if(!D)
-					alert("Invalid ref!")
+					tgui_alert(usr,"Invalid ref!")
 					continue
 				if(!D.can_vv_mark())
-					alert("Datum can not be marked!")
+					tgui_alert(usr,"Datum can not be marked!")
 					continue
 			while(!D)
 			.["type"] = D.type

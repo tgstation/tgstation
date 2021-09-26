@@ -8,7 +8,6 @@
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/operating
 
-	var/mob/living/carbon/human/patient
 	var/obj/structure/table/optable/table
 	var/list/advanced_surgeries = list()
 	var/datum/techweb/linked_techweb
@@ -28,9 +27,9 @@
 
 /obj/machinery/computer/operating/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/disk/surgery))
-		user.visible_message("<span class='notice'>[user] begins to load \the [O] in \the [src]...</span>", \
-			"<span class='notice'>You begin to load a surgery protocol from \the [O]...</span>", \
-			"<span class='hear'>You hear the chatter of a floppy drive.</span>")
+		user.visible_message(span_notice("[user] begins to load \the [O] in \the [src]..."), \
+			span_notice("You begin to load a surgery protocol from \the [O]..."), \
+			span_hear("You hear the chatter of a floppy drive."))
 		var/obj/item/disk/surgery/D = O
 		if(do_after(user, 10, target = src))
 			advanced_surgeries |= D.surgeries
@@ -70,16 +69,18 @@
 		surgery["desc"] = initial(S.desc)
 		surgeries += list(surgery)
 	data["surgeries"] = surgeries
-	data["patient"] = null
-	if(table)
-		data["table"] = table
-		if(!table.check_eligible_patient())
-			return data
-		data["patient"] = list()
-		patient = table.patient
-	else
+
+	//If there's no patient just hop to it yeah?
+	if(!table)
 		data["patient"] = null
 		return data
+
+	data["table"] = table
+	if(!table.check_eligible_patient())
+		return data
+	data["patient"] = list()
+	var/mob/living/carbon/human/patient = table.patient
+
 	switch(patient.stat)
 		if(CONSCIOUS)
 			data["patient"]["stat"] = "Conscious"

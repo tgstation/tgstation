@@ -82,7 +82,6 @@
 			return
 
 		loc.assume_air(removed)
-		air_update_turf(FALSE, FALSE)
 
 		var/datum/pipeline/parent1 = parents[1]
 		parent1.update = TRUE
@@ -107,7 +106,6 @@
 			return
 
 		air2.merge(removed)
-		air_update_turf(FALSE, FALSE)
 
 		var/datum/pipeline/parent2 = parents[2]
 		parent2.update = TRUE
@@ -221,8 +219,8 @@
 	piping_layer = 4
 	icon_state = "dpvent_map_on-4"
 
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_toxmix
-	id = INCINERATOR_TOXMIX_DP_VENTPUMP
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_ordmix
+	id = INCINERATOR_ORDMIX_DP_VENTPUMP
 	frequency = FREQ_AIRLOCK_CONTROL
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_atmos

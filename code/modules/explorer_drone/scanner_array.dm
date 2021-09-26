@@ -270,6 +270,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	return current_scan
 
 /datum/scanner_controller/proc/cleanup_current_scan()
+	SIGNAL_HANDLER
 	current_scan = null
 	SEND_SIGNAL(src,COMSIG_EXOSCAN_FINISHED,current_scan)
 

@@ -130,7 +130,7 @@ export const CyborgBootDebug = (props, context) => {
                 <Button
                   icon="info"
                   tooltip={TOOLTIP_LAWSYNC}
-                  tooltipPosition="top-left" />
+                  tooltipPosition="top-start" />
               )}>
               <Button
                 icon={!aisync ? "lock" : lawsync ? "unlock" : "lock"}

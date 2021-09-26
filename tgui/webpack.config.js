@@ -98,10 +98,6 @@ module.exports = (env = {}, argv) => {
     },
     optimization: {
       emitOnErrors: false,
-      splitChunks: {
-        chunks: 'initial',
-        name: 'tgui-common',
-      },
     },
     performance: {
       hints: false,

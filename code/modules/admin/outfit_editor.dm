@@ -117,11 +117,11 @@
 	if(!choice)
 		return
 	if(!ispath(choice))
-		alert(owner, "Invalid item", OUTFIT_EDITOR_NAME, "oh no")
+		tgui_alert(owner, "Invalid item", OUTFIT_EDITOR_NAME, list("oh no"))
 		return
 	if(initial(choice.icon_state) == null) //hacky check copied from experimentor code
 		var/msg = "Warning: This item's icon_state is null, indicating it is very probably not actually a usable item."
-		if(alert(owner, msg, OUTFIT_EDITOR_NAME, "Use it anyway", "Cancel") != "Use it anyway")
+		if(tgui_alert(owner, msg, OUTFIT_EDITOR_NAME, list("Use it anyway", "Cancel")) != "Use it anyway")
 			return
 
 	if(drip.vars.Find(slot))
@@ -168,7 +168,7 @@
 				suit = new suit //initial() doesn't like lists
 				options = suit.allowed
 			if(!options.len) //nothing will happen, but don't let the user think it's broken
-				to_chat(owner, "<span class='warning'>No options available for the current suit.</span>")
+				to_chat(owner, span_warning("No options available for the current suit."))
 
 		if("belt")
 			options = typesof(/obj/item/storage/belt)

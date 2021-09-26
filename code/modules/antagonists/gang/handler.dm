@@ -480,14 +480,14 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 
 			//Spawn the body
 			var/mob/living/carbon/human/cop = new(spawnloc)
-			chosen_candidate.client.prefs.copy_to(cop)
+			chosen_candidate.client.prefs.safe_transfer_prefs_to(cop, is_antag = TRUE)
 			cop.key = chosen_candidate.key
 
 			//Give antag datum
 			var/datum/antagonist/ert/families/ert_antag = new cops_to_send
 
 			cop.mind.add_antag_datum(ert_antag)
-			cop.mind.assigned_role = ert_antag.name
+			cop.mind.set_assigned_role(SSjob.GetJobType(ert_antag.ert_job_path))
 			SSjob.SendToLateJoin(cop)
 
 			//Logging and cleanup

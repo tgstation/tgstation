@@ -1,5 +1,5 @@
 
-///the essential proc to call when an obj must receive damage of any kind.
+/// The essential proc to call when an obj must receive damage of any kind.
 /obj/proc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	if(QDELETED(src))
 		stack_trace("[src] taking damage after deletion")
@@ -15,13 +15,43 @@
 		return
 
 	. = damage_amount
-	obj_integrity = max(obj_integrity - damage_amount, 0)
+
+	update_integrity(obj_integrity - damage_amount)
+
 	//BREAKING FIRST
 	if(integrity_failure && obj_integrity <= integrity_failure * max_integrity)
 		obj_break(damage_flag)
+
 	//DESTROYING SECOND
 	if(obj_integrity <= 0)
 		obj_destruction(damage_flag)
+
+/// Proc for recovering obj_integrity. Returns the amount repaired by
+/obj/proc/repair_damage(amount)
+	if(amount <= 0) // We only recover here
+		return
+	var/new_integrity = min(max_integrity, obj_integrity + amount)
+	. = new_integrity - obj_integrity
+
+	update_integrity(new_integrity)
+
+	if(integrity_failure && obj_integrity > integrity_failure * max_integrity)
+		obj_fix()
+
+/// Handles the integrity of an object changing. This must be called instead of changing integrity directly.
+/obj/proc/update_integrity(new_value)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	var/old_value = obj_integrity
+	new_value = max(0, new_value)
+	if(obj_integrity == new_value)
+		return
+	obj_integrity = new_value
+	SEND_SIGNAL(src, COMSIG_OBJ_INTEGRITY_CHANGED, old_value, new_value)
+
+/// This mostly exists to keep obj_integrity private. Might be useful in the future.
+/obj/proc/get_integrity()
+	SHOULD_BE_PURE(TRUE)
+	return obj_integrity
 
 ///returns the damage value of the attack after processing the obj's various armor protections
 /obj/proc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration = 0)
@@ -75,10 +105,11 @@
 /obj/bullet_act(obj/projectile/P)
 	. = ..()
 	playsound(src, P.hitsound, 50, TRUE)
+	var/no_damage = FALSE
+	if(!QDELETED(src) && !take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration)) //Bullet on_hit effect might have already destroyed this object
+		no_damage = TRUE
 	if(P.suppressed != SUPPRESSED_VERY)
-		visible_message("<span class='danger'>[src] is hit by \a [P]!</span>", null, null, COMBAT_MESSAGE_RANGE)
-	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
-		take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration)
+		visible_message(span_danger("[src] is hit by \a [P][no_damage ? ", which doesn't leave a mark" : ""]!"), null, null, COMBAT_MESSAGE_RANGE)
 
 ///Called to get the damage that hulks will deal to the obj.
 /obj/proc/hulk_damage()
@@ -86,7 +117,7 @@
 
 /obj/attack_hulk(mob/living/carbon/human/user)
 	..()
-	user.visible_message("<span class='danger'>[user] smashes [src]!</span>", "<span class='danger'>You smash [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_danger("[user] smashes [src]!"), span_danger("You smash [src]!"), null, COMBAT_MESSAGE_RANGE)
 	if(density)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	else
@@ -222,9 +253,15 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	SEND_SIGNAL(src, COMSIG_OBJ_DECONSTRUCT, disassembled)
 	qdel(src)
 
-///called after the obj takes damage and integrity is below integrity_failure level
+/// Called after the obj takes damage and integrity is below integrity_failure level
 /obj/proc/obj_break(damage_flag)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_OBJ_BREAK)
+
+/// Called when integrity is repaired above the breaking point having been broken before
+/obj/proc/obj_fix()
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_OBJ_FIX)
 
 ///what happens when the obj's integrity reaches zero.
 /obj/proc/obj_destruction(damage_flag)

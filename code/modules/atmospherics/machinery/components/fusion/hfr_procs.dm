@@ -60,16 +60,19 @@
 			if(linked_input && linked_input != object)
 				. =  FALSE
 			linked_input = object
+			machine_parts |= object
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/waste_output))
 			if(linked_output && linked_output != object)
 				. =  FALSE
 			linked_output = object
+			machine_parts |= object
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/moderator_input))
 			if(linked_moderator && linked_moderator != object)
 				. =  FALSE
 			linked_moderator = object
+			machine_parts |= object
 
 	if(!linked_interface || !linked_input || !linked_moderator || !linked_output || corners.len != 4)
 		. = FALSE
@@ -82,9 +85,9 @@
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/activate(mob/living/user)
 	if(active)
-		to_chat(user, "<span class='notice'>You already activated the machine.</span>")
+		to_chat(user, span_notice("You already activated the machine."))
 		return
-	to_chat(user, "<span class='notice'>You link all parts toghether.</span>")
+	to_chat(user, span_notice("You link all parts toghether."))
 	active = TRUE
 	update_appearance()
 	linked_interface.active = TRUE
@@ -103,7 +106,7 @@
 		corner.active = TRUE
 		corner.update_appearance()
 		RegisterSignal(corner, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
-	soundloop = new(list(src), TRUE)
+	soundloop = new(src, TRUE)
 	soundloop.volume = 5
 
 /**
@@ -113,10 +116,15 @@
  * * only_signals: default FALSE, if true the proc will not call the deactivate() proc
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/unregister_signals(only_signals = FALSE)
-	UnregisterSignal(linked_interface, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(linked_input, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(linked_output, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(linked_moderator, COMSIG_PARENT_QDELETING)
+	SIGNAL_HANDLER
+	if(linked_interface)
+		UnregisterSignal(linked_interface, COMSIG_PARENT_QDELETING)
+	if(linked_input)
+		UnregisterSignal(linked_input, COMSIG_PARENT_QDELETING)
+	if(linked_output)
+		UnregisterSignal(linked_output, COMSIG_PARENT_QDELETING)
+	if(linked_moderator)
+		UnregisterSignal(linked_moderator, COMSIG_PARENT_QDELETING)
 	for(var/obj/machinery/hypertorus/corner/corner in corners)
 		UnregisterSignal(corner, COMSIG_PARENT_QDELETING)
 	if(!only_signals)
@@ -203,7 +211,7 @@
  * Check the integrity level and returns the status of the machine
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/get_status()
-	var/integrity = get_integrity()
+	var/integrity = get_integrity_percent()
 	if(integrity < HYPERTORUS_MELTING_PERCENT)
 		return HYPERTORUS_MELTING
 
@@ -238,7 +246,7 @@
 /**
  * Getter for the machine integrity
  */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/get_integrity()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/get_integrity_percent()
 	var/integrity = critical_threshold_proximity / melting_point
 	integrity = round(100 - integrity * 100, 0.01)
 	integrity = integrity < 0 ? 0 : integrity
@@ -256,18 +264,18 @@
 		alarm()
 
 		if(critical_threshold_proximity > emergency_point)
-			radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity()]%", common_channel)
+			radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity_percent()]%", common_channel)
 			lastwarning = REALTIMEOFDAY
 			if(!has_reached_emergency)
 				investigate_log("has reached the emergency point for the first time.", INVESTIGATE_HYPERTORUS)
 				message_admins("[src] has reached the emergency point [ADMIN_JMP(src)].")
 				has_reached_emergency = TRUE
 		else if(critical_threshold_proximity >= critical_threshold_proximity_archived) // The damage is still going up
-			radio.talk_into(src, "[warning_alert] Integrity: [get_integrity()]%", engineering_channel)
+			radio.talk_into(src, "[warning_alert] Integrity: [get_integrity_percent()]%", engineering_channel)
 			lastwarning = REALTIMEOFDAY - (WARNING_TIME_DELAY * 5)
 
 		else // Phew, we're safe
-			radio.talk_into(src, "[safe_alert] Integrity: [get_integrity()]%", engineering_channel)
+			radio.talk_into(src, "[safe_alert] Integrity: [get_integrity_percent()]%", engineering_channel)
 			lastwarning = REALTIMEOFDAY
 
 	//Melt
@@ -311,16 +319,47 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/meltdown()
 	explosion(src, light_impact_range = power_level * 5, flash_range = power_level * 6, adminlog = TRUE, ignorecap = TRUE)
 	radiation_pulse(loc, power_level * 7000, (1 / (power_level + 5)), TRUE)
-	empulse(loc, power_level * 5, power_level * 7)
-	var/fusion_moles = internal_fusion.total_moles() ? internal_fusion.total_moles() : 0
-	var/moderator_moles = moderator_internal.total_moles() ? moderator_internal.total_moles() : 0
+	empulse(loc, power_level * 5, power_level * 7, TRUE)
+	var/list/around_turfs = circlerangeturfs(src, power_level * 5)
+	for(var/turf/turf as anything in around_turfs)
+		if(isclosedturf(turf) || isspaceturf(turf))
+			around_turfs -= turf
+			continue
 	var/datum/gas_mixture/remove_fusion
 	if(internal_fusion.total_moles() > 0)
-		remove_fusion = internal_fusion.remove(fusion_moles)
-		loc.assume_air(remove_fusion)
+		remove_fusion = internal_fusion.remove_ratio(0.2)
+		var/datum/gas_mixture/remove
+		for(var/i in 1 to 10)
+			remove = remove_fusion.remove_ratio(0.1)
+			var/turf/local = pick(around_turfs)
+			local.assume_air(remove)
+		loc.assume_air(internal_fusion)
 	var/datum/gas_mixture/remove_moderator
 	if(moderator_internal.total_moles() > 0)
-		remove_moderator = moderator_internal.remove(moderator_moles)
-		loc.assume_air(remove_moderator)
-	air_update_turf(FALSE, FALSE)
+		remove_moderator = moderator_internal.remove_ratio(0.2)
+		var/datum/gas_mixture/remove
+		for(var/i in 1 to 10)
+			remove = remove_moderator.remove_ratio(0.1)
+			var/turf/local = pick(around_turfs)
+			local.assume_air(remove)
+		loc.assume_air(moderator_internal)
 	qdel(src)
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_cracked_parts()
+	for(var/obj/machinery/atmospherics/components/unary/hypertorus/part in machine_parts)
+		if(part.cracked)
+			return TRUE
+	return FALSE
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/create_crack()
+	var/obj/machinery/atmospherics/components/unary/hypertorus/part = pick(machine_parts)
+	part.cracked = TRUE
+	part.update_appearance()
+	return part
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/spill_gases(obj/origin, datum/gas_mixture/target_mix, ratio)
+	var/datum/gas_mixture/remove_mixture = target_mix.remove_ratio(ratio)
+	var/turf/origin_turf = origin.loc
+	if(!origin_turf)
+		return
+	origin_turf.assume_air(remove_mixture)

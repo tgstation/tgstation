@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(hfr_fuels_list, hfr_fuels_create_list())
 	negative_temperature_multiplier = 2.5
 	positive_temperature_multiplier = 0.1
 	energy_concentration_multiplier = 10
-	fuel_consumption_multiplier = 0.3
+	fuel_consumption_multiplier = 3.3
 	gas_production_multiplier = 1.4
 	temperature_change_multiplier = 0.6
 	requirements = list(/datum/gas/plasma, /datum/gas/oxygen)
@@ -93,7 +93,7 @@ GLOBAL_LIST_INIT(hfr_fuels_list, hfr_fuels_create_list())
 	negative_temperature_multiplier = 0.2
 	positive_temperature_multiplier = 2.2
 	energy_concentration_multiplier = 0.2
-	fuel_consumption_multiplier = 1.9
+	fuel_consumption_multiplier = 0.55
 	gas_production_multiplier = 1.4
 	temperature_change_multiplier = 0.9
 	requirements = list(/datum/gas/hypernoblium, /datum/gas/hydrogen)
@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(hfr_fuels_list, hfr_fuels_create_list())
 	negative_temperature_multiplier = 0.1
 	positive_temperature_multiplier = 2.5
 	energy_concentration_multiplier = 0.1
-	fuel_consumption_multiplier = 1.7
+	fuel_consumption_multiplier = 0.45
 	gas_production_multiplier = 1.7
 	temperature_change_multiplier = 0.95
 	requirements = list(/datum/gas/hypernoblium, /datum/gas/tritium)

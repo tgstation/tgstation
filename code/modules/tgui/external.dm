@@ -146,6 +146,7 @@
  * client/verb/uiclose(), which closes the ui window
  */
 /datum/proc/ui_close(mob/user)
+	SIGNAL_HANDLER
 
 /**
  * verb

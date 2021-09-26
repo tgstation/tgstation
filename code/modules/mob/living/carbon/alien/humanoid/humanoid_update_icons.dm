@@ -65,7 +65,13 @@
 		dmi_file = 'icons/mob/alienqueen.dmi'
 
 	if(handcuffed)
-		overlays_standing[HANDCUFF_LAYER] = mutable_appearance(dmi_file, cuff_icon, -HANDCUFF_LAYER)
+		var/mutable_appearance/handcuff_overlay = mutable_appearance(dmi_file, cuff_icon, -HANDCUFF_LAYER)
+		if(handcuffed.blocks_emissive)
+			var/mutable_appearance/handcuff_blocker = mutable_appearance(dmi_file, cuff_icon, plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+			handcuff_blocker.color = GLOB.em_block_color
+			handcuff_overlay.overlays += handcuff_blocker
+
+		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
 		apply_overlay(HANDCUFF_LAYER)
 
 //Royals have bigger sprites, so inhand things must be handled differently.
@@ -79,14 +85,24 @@
 		var/itm_state = l_hand.inhand_icon_state
 		if(!itm_state)
 			itm_state = l_hand.icon_state
-		hands += mutable_appearance(alt_inhands_file, "[itm_state][caste]_l", -HANDS_LAYER)
+		var/mutable_appearance/l_hand_item = mutable_appearance(alt_inhands_file, "[itm_state][caste]_l", -HANDS_LAYER)
+		if(l_hand.blocks_emissive)
+			var/mutable_appearance/l_hand_block = mutable_appearance(alt_inhands_file, "[itm_state][caste]_l", plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+			l_hand_block.color = GLOB.em_block_color
+			l_hand_item.overlays += l_hand_block
+		hands += l_hand_item
 
 	var/obj/item/r_hand = get_item_for_held_index(2)
 	if(r_hand)
 		var/itm_state = r_hand.inhand_icon_state
 		if(!itm_state)
 			itm_state = r_hand.icon_state
-		hands += mutable_appearance(alt_inhands_file, "[itm_state][caste]_r", -HANDS_LAYER)
+		var/mutable_appearance/r_hand_item = mutable_appearance(alt_inhands_file, "[itm_state][caste]_r", -HANDS_LAYER)
+		if(r_hand.blocks_emissive)
+			var/mutable_appearance/r_hand_block = mutable_appearance(alt_inhands_file, "[itm_state][caste]_r", plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+			r_hand_block.color = GLOB.em_block_color
+			r_hand_item.overlays += r_hand_block
+		hands += r_hand_item
 
 	overlays_standing[HANDS_LAYER] = hands
 	apply_overlay(HANDS_LAYER)

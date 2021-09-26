@@ -38,7 +38,7 @@
 	var/extinguish_fires = TRUE
 	var/stationary_mode = FALSE
 
-/mob/living/simple_animal/bot/firebot/Initialize()
+/mob/living/simple_animal/bot/firebot/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	update_appearance(UPDATE_ICON)
@@ -49,10 +49,7 @@
 	prev_access = access_card.access.Copy()
 
 	create_extinguisher()
-
-/mob/living/simple_animal/bot/firebot/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /mob/living/simple_animal/bot/firebot/bot_reset()
 	create_extinguisher()
@@ -95,7 +92,7 @@
 	target_fire = null
 	old_target_fire = null
 	ignore_list = list()
-	anchored = FALSE
+	set_anchored(FALSE)
 	update_appearance()
 
 /mob/living/simple_animal/bot/firebot/proc/soft_reset()
@@ -131,8 +128,8 @@
 	..()
 	if(emagged == 2)
 		if(user)
-			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
-		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
+			to_chat(user, span_danger("[src] buzzes and beeps."))
+		audible_message(span_danger("[src] buzzes oddly!"))
 		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(user)
 			old_target_fire = user
@@ -307,7 +304,7 @@
 
 /mob/living/simple_animal/bot/firebot/explode()
 	on = FALSE
-	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
+	visible_message(span_boldannounce("[src] blows apart!"))
 
 	var/atom/Tsec = drop_location()
 

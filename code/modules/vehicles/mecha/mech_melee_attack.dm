@@ -7,8 +7,8 @@
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
 			playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
-			mecha_attacker.visible_message("<span class='danger'>[mecha_attacker.name] hits [src]!</span>", \
-							"<span class='danger'>You hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+			mecha_attacker.visible_message(span_danger("[mecha_attacker.name] hits [src]!"), \
+							span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
 			if(prob(hardness + mecha_attacker.force) && mecha_attacker.force > 20)
 				dismantle_wall(1)
 				playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
@@ -38,7 +38,7 @@
 				return 0
 			else
 				return 0
-	mecha_attacker.visible_message("<span class='danger'>[mecha_attacker.name] hits [src]!</span>", "<span class='danger'>You hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+	mecha_attacker.visible_message(span_danger("[mecha_attacker.name] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
 	return take_damage(mecha_attacker.force * 3, mech_damtype, "melee", play_soundeffect, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
 /obj/structure/window/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker)
@@ -49,7 +49,7 @@
 /mob/living/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
 	if(user.combat_mode)
 		if(HAS_TRAIT(user, TRAIT_PACIFISM))
-			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+			to_chat(user, span_warning("You don't want to harm other living beings!"))
 			return
 		mecha_attacker.do_attack_animation(src)
 		if(mecha_attacker.damtype == "brute")
@@ -67,16 +67,16 @@
 			else
 				return
 		updatehealth()
-		visible_message("<span class='danger'>[mecha_attacker.name] hits [src]!</span>", \
-						"<span class='userdanger'>[mecha_attacker.name] hits you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, mecha_attacker)
-		to_chat(mecha_attacker, "<span class='danger'>You hit [src]!</span>")
+		visible_message(span_danger("[mecha_attacker.name] hits [src]!"), \
+						span_userdanger("[mecha_attacker.name] hits you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, mecha_attacker)
+		to_chat(mecha_attacker, span_danger("You hit [src]!"))
 		log_combat(user, src, "attacked", mecha_attacker, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
 	else
 		step_away(src, mecha_attacker)
 		log_combat(user, src, "pushed", mecha_attacker)
-		visible_message("<span class='warning'>[mecha_attacker] pushes [src] out of the way.</span>", \
-						"<span class='warning'>[mecha_attacker] pushes you out of the way.</span>", "<span class='hear'>You hear aggressive shuffling!</span>", 5, list(mecha_attacker))
-		to_chat(mecha_attacker, "<span class='danger'>You push [src] out of the way.</span>")
+		visible_message(span_warning("[mecha_attacker] pushes [src] out of the way."), \
+						span_warning("[mecha_attacker] pushes you out of the way."), span_hear("You hear aggressive shuffling!"), 5, list(mecha_attacker))
+		to_chat(mecha_attacker, span_danger("You push [src] out of the way."))
 
 /mob/living/carbon/human/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
 	if(!isliving(user))
@@ -84,7 +84,7 @@
 	var/mob/living/attacker = user
 	if(attacker.combat_mode)
 		if(HAS_TRAIT(user, TRAIT_PACIFISM))
-			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+			to_chat(user, span_warning("You don't want to harm other living beings!"))
 			return
 		mecha_attacker.do_attack_animation(src)
 		if(mecha_attacker.damtype == BRUTE)
@@ -112,9 +112,9 @@
 				update_damage_overlays()
 			updatehealth()
 
-		visible_message("<span class='danger'>[mecha_attacker.name] hits [src]!</span>", \
-						"<span class='userdanger'>[mecha_attacker.name] hits you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, list(mecha_attacker))
-		to_chat(mecha_attacker, "<span class='danger'>You hit [src]!</span>")
+		visible_message(span_danger("[mecha_attacker.name] hits [src]!"), \
+						span_userdanger("[mecha_attacker.name] hits you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, list(mecha_attacker))
+		to_chat(mecha_attacker, span_danger("You hit [src]!"))
 		log_combat(user, src, "attacked", mecha_attacker, "(COMBAT MODE: [uppertext(user.combat_mode)] (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
 	else
 		return ..()

@@ -24,16 +24,16 @@
 
 /obj/item/storage/box/syndicate/bundle_a/PopulateContents()
 	switch (pickweight(list(
-		KIT_RECON = 2, 
-		KIT_BLOODY_SPAI = 3, 
-		KIT_STEALTHY = 2, 
-		KIT_SCREWED = 2, 
-		KIT_SABOTAGE = 3, 
-		KIT_GUN = 2, 
-		KIT_MURDER = 2, 
-		KIT_IMPLANTS = 1, 
-		KIT_HACKER = 3, 
-		KIT_SNIPER = 1, 
+		KIT_RECON = 2,
+		KIT_BLOODY_SPAI = 3,
+		KIT_STEALTHY = 2,
+		KIT_SCREWED = 2,
+		KIT_SABOTAGE = 3,
+		KIT_GUN = 2,
+		KIT_MURDER = 2,
+		KIT_IMPLANTS = 1,
+		KIT_HACKER = 3,
+		KIT_SNIPER = 1,
 		KIT_NUKEOPS_METAGAME = 1
 		)))
 		if(KIT_RECON)
@@ -153,14 +153,14 @@
 			new /obj/item/card/emag/doorjack(src) // 3 tc
 
 /obj/item/storage/box/syndicate/bundle_b/PopulateContents()
-	switch (pickweight(list( 
-		KIT_JAMES_BOND = 2, 
-		KIT_NINJA = 1, 
-		KIT_DARK_LORD = 1, 
-		KIT_WHITE_WHALE_HOLY_GRAIL = 2, 
-		KIT_MAD_SCIENTIST = 2, 
-		KIT_BEES = 1, 
-		KIT_MR_FREEZE = 2, 
+	switch (pickweight(list(
+		KIT_JAMES_BOND = 2,
+		KIT_NINJA = 1,
+		KIT_DARK_LORD = 1,
+		KIT_WHITE_WHALE_HOLY_GRAIL = 2,
+		KIT_MAD_SCIENTIST = 2,
+		KIT_BEES = 1,
+		KIT_MR_FREEZE = 2,
 		KIT_TRAITOR_2006 = 1
 		)))
 		if(KIT_JAMES_BOND)
@@ -237,12 +237,12 @@
 			new /obj/item/dnainjector/cryokinesis(src)
 			new /obj/item/gun/energy/temperature/security(src)
 			new /obj/item/melee/transforming/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue
-			
+
 		if(KIT_TRAITOR_2006) //A kit so old, it's probably older than you. //This bundle is filled with the entire unlink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.
 			new /obj/item/storage/toolbox/emergency/old/ancientbundle(src) //Items fit neatly into a classic toolbox just to remind you what the theme is.
-		
+
 /obj/item/storage/toolbox/emergency/old/ancientbundle/ //So the subtype works
-		
+
 /obj/item/storage/toolbox/emergency/old/ancientbundle/PopulateContents()
 	new /obj/item/card/emag(src)
 	new /obj/item/pen/sleepy(src)
@@ -632,7 +632,7 @@
 	for(var/i in implants)
 		group.register(i)
 	desc += " The implants are registered to the \"[group.name]\" group."
-	
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY

@@ -20,7 +20,7 @@
 	SIGNAL_HANDLER
 
 	if (get_dist(mover,newloc) > max_dist)
-		to_chat(mover, "<span class='userdanger'>The [tether_name] runs out of slack and prevents you from moving!</span>")
+		to_chat(mover, span_userdanger("The [tether_name] runs out of slack and prevents you from moving!"))
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 	var/atom/blocker
@@ -35,5 +35,5 @@
 					blocker = A
 					break out
 	if (blocker)
-		to_chat(mover, "<span class='userdanger'>The [tether_name] catches on [blocker] and prevents you from moving!</span>")
+		to_chat(mover, span_userdanger("The [tether_name] catches on [blocker] and prevents you from moving!"))
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE

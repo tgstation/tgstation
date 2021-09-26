@@ -13,6 +13,14 @@ This build script is the recommended way to compile the game, including not only
 
 The script will skip build steps whose inputs have not changed since the last run.
 
+## Getting list of available targets
+
+You can get a list of all targets that you can build by running the following command:
+
+```
+tools/build/build --help
+```
+
 ## Dependencies
 
 - On Windows, `BUILD.bat` will automatically install a private (vendored) copy of Node.
@@ -22,3 +30,5 @@ The script will skip build steps whose inputs have not changed since the last ru
 ## Why?
 
 We used to include compiled versions of the tgui JavaScript code in the Git repository so that the project could be compiled using BYOND only. These pre-compiled files tended to have merge conflicts for no good reason. Using a build script lets us avoid this problem, while keeping builds convenient for people who are not modifying tgui.
+
+This build script is based on [Juke Build](https://github.com/stylemistake/juke-build) - please follow the link and read the documentation for the project to understand how it works and how to contribute to this build script.

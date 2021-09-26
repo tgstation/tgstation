@@ -34,7 +34,7 @@
 		var/selected
 		if (destructive && (req_atom in scanned))
 			selected = req_atom
-		else if (!destructive && !(target in scanned[req_atom]))
+		else if (!destructive && !(WEAKREF(target) in scanned[req_atom]))
 			selected = req_atom
 
 		// Run any additonal checks if necessary

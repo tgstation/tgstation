@@ -10,7 +10,7 @@
 	worn_icon_state = "hypo"
 	amount_per_transfer_from_this = 5
 	volume = 30
-	possible_transfer_amounts = list()
+	possible_transfer_amounts = list(5)
 	resistance_flags = ACID_PROOF
 	reagent_flags = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
@@ -26,7 +26,7 @@
 ///Handles all injection checks, injection and logging.
 /obj/item/reagent_containers/hypospray/proc/inject(mob/living/M, mob/user)
 	if(!reagents.total_volume)
-		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+		to_chat(user, span_warning("[src] is empty!"))
 		return FALSE
 	if(!iscarbon(M))
 		return FALSE
@@ -39,8 +39,8 @@
 	log_combat(user, M, "attempted to inject", src, "([contained])")
 
 	if(reagents.total_volume && (ignore_flags || M.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))) // Ignore flag should be checked first or there will be an error message.
-		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
-		to_chat(user, "<span class='notice'>You inject [M] with [src].</span>")
+		to_chat(M, span_warning("You feel a tiny prick!"))
+		to_chat(user, span_notice("You inject [M] with [src]."))
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 
 
@@ -51,7 +51,7 @@
 			else
 				reagents.expose(M, INJECT, fraction)
 				trans = reagents.copy_to(M, amount_per_transfer_from_this)
-			to_chat(user, "<span class='notice'>[trans] unit\s injected. [reagents.total_volume] unit\s remaining in [src].</span>")
+			to_chat(user, span_notice("[trans] unit\s injected. [reagents.total_volume] unit\s remaining in [src]."))
 			log_combat(user, M, "injected", src, "([contained])")
 		return TRUE
 	return FALSE
@@ -116,7 +116,7 @@
 	custom_premium_price = PAYCHECK_HARD
 
 /obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS//ironic. he could save others from oxyloss, but not himself.
 
 /obj/item/reagent_containers/hypospray/medipen/inject(mob/living/M, mob/user)
@@ -137,9 +137,9 @@
 /obj/item/reagent_containers/hypospray/medipen/examine()
 	. = ..()
 	if(reagents?.reagent_list.len)
-		. += "<span class='notice'>It is currently loaded.</span>"
+		. += span_notice("It is currently loaded.")
 	else
-		. += "<span class='notice'>It is spent.</span>"
+		. += span_notice("It is spent.")
 
 /obj/item/reagent_containers/hypospray/medipen/stimpack //goliath kiting
 	name = "stimpack medipen"
@@ -238,10 +238,10 @@
 		return ..()
 
 	if(DOING_INTERACTION(user, DOAFTER_SOURCE_SURVIVALPEN))
-		to_chat(user,"<span class='notice'>You are too busy to use \the [src]!</span>")
+		to_chat(user,span_notice("You are too busy to use \the [src]!"))
 		return
 
-	to_chat(user,"<span class='notice'>You start manually releasing the low-pressure gauge...</span>")
+	to_chat(user,span_notice("You start manually releasing the low-pressure gauge..."))
 	if(!do_mob(user, M, 10 SECONDS, interaction_key = DOAFTER_SOURCE_SURVIVALPEN))
 		return
 

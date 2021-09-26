@@ -41,7 +41,7 @@
 	for(var/mob/living/silicon/robot/R in range(current_range, get_turf(host)))
 		if(R.has_buckled_mobs())
 			for(var/mob/living/L in R.buckled_mobs)
-				L.visible_message("<span class='warning'>[L] is knocked off of [R] by the charge in [R]'s chassis induced by [name]!</span>") //I know it's bad.
+				L.visible_message(span_warning("[L] is knocked off of [R] by the charge in [R]'s chassis induced by [name]!")) //I know it's bad.
 				L.Paralyze(10)
 				R.unbuckle_mob(L)
 				do_sparks(5, 0, L)
@@ -106,7 +106,7 @@
 	staging -= AM
 	return ..()
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/field_edge_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F, turf/entering)
+/datum/proximity_monitor/advanced/peaceborg_dampener/field_edge_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F, border_dir)
 	if(istype(AM, /obj/projectile))
 		staging[AM] = get_turf(AM)
 	. = ..()

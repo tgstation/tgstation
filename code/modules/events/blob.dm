@@ -8,9 +8,7 @@
 
 	dynamic_should_hijack = TRUE
 
-	gamemode_blacklist = list("blob") //Just in case a blob survives that long
-
-/datum/round_event_control/blob/canSpawnEvent(players, gamemode)
+/datum/round_event_control/blob/canSpawnEvent(players)
 	if(EMERGENCY_PAST_POINT_OF_NO_RETURN) // no blobs if the shuttle is past the point of no return
 		return FALSE
 

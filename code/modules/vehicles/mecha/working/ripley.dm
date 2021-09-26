@@ -117,7 +117,10 @@
 /obj/vehicle/sealed/mecha/working/ripley/mining
 	desc = "An old, dusty mining Ripley."
 	name = "\improper APLU \"Miner\""
-	obj_integrity = 75 //Low starting health
+
+/obj/vehicle/sealed/mecha/working/ripley/mining/Initialize()
+	. = ..()
+	take_damage(125) // Low starting health
 
 /obj/vehicle/sealed/mecha/working/ripley/mining/Initialize()
 	. = ..()
@@ -147,7 +150,6 @@
 	icon_state = "hauler"
 	base_icon_state = "hauler"
 	max_equip = 2
-	obj_integrity = 50 //Low starting health
 	max_integrity = 100 //Has half the health of a normal RIPLEY mech, so it's harder to use as a weapon.
 
 /obj/vehicle/sealed/mecha/working/ripley/cargo/Initialize()
@@ -159,8 +161,10 @@
 	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/HC = new
 	HC.attach(src)
 
-/obj/vehicle/sealed/mecha/working/ripley/Exit(atom/movable/O)
-	if(O in cargo)
+	take_damage(max_integrity * 0.5, sound_effect=FALSE) //Low starting health
+
+/obj/vehicle/sealed/mecha/working/ripley/Exit(atom/movable/leaving, direction)
+	if(leaving in cargo)
 		return FALSE
 	return ..()
 
@@ -169,7 +173,7 @@
 	if(href_list["drop_from_cargo"])
 		var/obj/cargoobj = locate(href_list["drop_from_cargo"]) in cargo
 		if(cargoobj)
-			to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>You unload [cargoobj].</span>")
+			to_chat(occupants, "[icon2html(src, occupants)][span_notice("You unload [cargoobj].")]")
 			cargoobj.forceMove(drop_location())
 			LAZYREMOVE(cargo, cargoobj)
 			if(cargoobj == box)
@@ -197,16 +201,16 @@
 	return output
 
 /obj/vehicle/sealed/mecha/working/ripley/relay_container_resist_act(mob/living/user, obj/O)
-	to_chat(user, "<span class='notice'>You lean on the back of [O] and start pushing so it falls out of [src].</span>")
+	to_chat(user, span_notice("You lean on the back of [O] and start pushing so it falls out of [src]."))
 	if(do_after(user, 300, target = O))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || O.loc != src )
 			return
-		to_chat(user, "<span class='notice'>You successfully pushed [O] out of [src]!</span>")
+		to_chat(user, span_notice("You successfully pushed [O] out of [src]!"))
 		O.forceMove(drop_location())
 		LAZYREMOVE(cargo, O)
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
-			to_chat(user, "<span class='warning'>You fail to push [O] out of [src]!</span>")
+			to_chat(user, span_warning("You fail to push [O] out of [src]!"))
 
 /**
  * Makes the mecha go faster and halves the mecha drill cooldown if in Lavaland pressure.

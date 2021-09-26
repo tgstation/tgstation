@@ -20,7 +20,7 @@
 /obj/machinery/door/password/Initialize(mapload)
 	. = ..()
 	if(voice_activated)
-		flags_1 |= HEAR_1
+		become_hearing_sensitive()
 
 /obj/machinery/door/password/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()

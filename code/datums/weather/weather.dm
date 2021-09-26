@@ -63,7 +63,7 @@
 	/// If the weather has no purpose other than looks
 	var/aesthetic = FALSE
 	/// Used by mobs to prevent them from being affected by the weather
-	var/immunity_type = "storm"
+	var/immunity_type = WEATHER_STORM
 
 	/// The stage of the weather, from 1-4
 	var/stage = END_STAGE
@@ -94,6 +94,7 @@
 /datum/weather/proc/telegraph()
 	if(stage == STARTUP_STAGE)
 		return
+	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_TELEGRAPH(type))
 	stage = STARTUP_STAGE
 	var/list/affectareas = list()
 	for(var/V in get_areas(area_type))
@@ -109,13 +110,15 @@
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
 	START_PROCESSING(SSweather, src)
 	update_areas()
-	for(var/M in GLOB.player_list)
-		var/turf/mob_turf = get_turf(M)
-		if(mob_turf && (mob_turf.z in impacted_z_levels))
+	for(var/z_level in impacted_z_levels)
+		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
+			var/turf/mob_turf = get_turf(player)
+			if(!mob_turf)
+				continue
 			if(telegraph_message)
-				to_chat(M, telegraph_message)
+				to_chat(player, telegraph_message)
 			if(telegraph_sound)
-				SEND_SOUND(M, sound(telegraph_sound))
+				SEND_SOUND(player, sound(telegraph_sound))
 	addtimer(CALLBACK(src, .proc/start), telegraph_duration)
 
 /**
@@ -128,15 +131,18 @@
 /datum/weather/proc/start()
 	if(stage >= MAIN_STAGE)
 		return
+	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_START(type))
 	stage = MAIN_STAGE
 	update_areas()
-	for(var/M in GLOB.player_list)
-		var/turf/mob_turf = get_turf(M)
-		if(mob_turf && (mob_turf.z in impacted_z_levels))
+	for(var/z_level in impacted_z_levels)
+		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
+			var/turf/mob_turf = get_turf(player)
+			if(!mob_turf)
+				continue
 			if(weather_message)
-				to_chat(M, weather_message)
+				to_chat(player, weather_message)
 			if(weather_sound)
-				SEND_SOUND(M, sound(weather_sound))
+				SEND_SOUND(player, sound(weather_sound))
 	if(!perpetual)
 		addtimer(CALLBACK(src, .proc/wind_down), weather_duration)
 
@@ -150,15 +156,18 @@
 /datum/weather/proc/wind_down()
 	if(stage >= WIND_DOWN_STAGE)
 		return
+	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_WINDDOWN(type))
 	stage = WIND_DOWN_STAGE
 	update_areas()
-	for(var/M in GLOB.player_list)
-		var/turf/mob_turf = get_turf(M)
-		if(mob_turf && (mob_turf.z in impacted_z_levels))
+	for(var/z_level in impacted_z_levels)
+		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
+			var/turf/mob_turf = get_turf(player)
+			if(!mob_turf)
+				continue
 			if(end_message)
-				to_chat(M, end_message)
+				to_chat(player, end_message)
 			if(end_sound)
-				SEND_SOUND(M, sound(end_sound))
+				SEND_SOUND(player, sound(end_sound))
 	addtimer(CALLBACK(src, .proc/end), end_duration)
 
 /**
@@ -170,7 +179,8 @@
  */
 /datum/weather/proc/end()
 	if(stage == END_STAGE)
-		return 1
+		return
+	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_END(type))
 	stage = END_STAGE
 	STOP_PROCESSING(SSweather, src)
 	update_areas()
@@ -179,14 +189,27 @@
  * Returns TRUE if the living mob can be affected by the weather
  *
  */
-/datum/weather/proc/can_weather_act(mob/living/L)
-	var/turf/mob_turf = get_turf(L)
-	if(mob_turf && !(mob_turf.z in impacted_z_levels))
+/datum/weather/proc/can_weather_act(mob/living/mob_to_check)
+	var/turf/mob_turf = get_turf(mob_to_check)
+
+	if(!mob_turf)
 		return
-	if(immunity_type in L.weather_immunities)
+
+	if(!(mob_turf.z in impacted_z_levels))
 		return
-	if(!(get_area(L) in impacted_areas))
+
+	if(istype(mob_to_check.loc, /obj/structure/closet))
+		var/obj/structure/closet/current_locker = mob_to_check.loc
+		if(current_locker.weather_protection)
+			if((immunity_type in current_locker.weather_protection) || (WEATHER_ALL in current_locker.weather_protection))
+				return
+
+	if((immunity_type in mob_to_check.weather_immunities) || (WEATHER_ALL in mob_to_check.weather_immunities))
 		return
+
+	if(!(get_area(mob_to_check) in impacted_areas))
+		return
+
 	return TRUE
 
 /**

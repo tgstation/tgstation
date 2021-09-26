@@ -91,17 +91,17 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	if(..())
 		return
 	else if (aggressiveness == AGGR_BROKEN)
-		to_chat(user, "<span class='danger'>You adjust the restrictor but nothing happens, probably because it's broken.</span>")
+		to_chat(user, span_danger("You adjust the restrictor but nothing happens, probably because it's broken."))
 		return
 	var/position = aggressiveness == AGGR_GOOD_COP ? "middle" : aggressiveness == AGGR_BAD_COP ? "last" : "first"
-	to_chat(user, "<span class='notice'>You set the restrictor to the [position] position.</span>")
+	to_chat(user, span_notice("You set the restrictor to the [position] position."))
 	aggressiveness = aggressiveness % 3 + 1 // loop AGGR_GOOD_COP -> AGGR_SHIT_COP
 
 /obj/item/clothing/mask/gas/sechailer/wirecutter_act(mob/living/user, obj/item/I)
 	. = TRUE
 	..()
 	if(aggressiveness != AGGR_BROKEN)
-		to_chat(user, "<span class='danger'>You broke the restrictor!</span>")
+		to_chat(user, span_danger("You broke the restrictor!"))
 		aggressiveness = AGGR_BROKEN
 
 /obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, action)
@@ -115,7 +115,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer/emag_act(mob/user)
 	if(safety)
 		safety = FALSE
-		to_chat(user, "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer.</span>")
+		to_chat(user, span_warning("You silently fry [src]'s vocal circuit with the cryptographic sequencer."))
 
 /obj/item/clothing/mask/gas/sechailer/verb/halt()
 	set category = "Object"
@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	if(!isliving(usr) || !can_use(usr) || cooldown)
 		return
 	if(broken_hailer)
-		to_chat(usr, "<span class='warning'>\The [src]'s hailing system is broken.</span>")
+		to_chat(usr, span_warning("\The [src]'s hailing system is broken."))
 		return
 
 	// handle recent uses for overuse
@@ -136,12 +136,12 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 
 	switch(recent_uses)
 		if(3)
-			to_chat(usr, "<span class='warning'>\The [src] is starting to heat up.</span>")
+			to_chat(usr, span_warning("\The [src] is starting to heat up."))
 		if(4)
-			to_chat(usr, "<span class='userdanger'>\The [src] is heating up dangerously from overuse!</span>")
+			to_chat(usr, span_userdanger("\The [src] is heating up dangerously from overuse!"))
 		if(5) // overload
 			broken_hailer = TRUE
-			to_chat(usr, "<span class='userdanger'>\The [src]'s power modulator overloads and breaks.</span>")
+			to_chat(usr, span_userdanger("\The [src]'s power modulator overloads and breaks."))
 			return
 
 	// select phrase to play

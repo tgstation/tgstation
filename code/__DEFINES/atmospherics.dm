@@ -27,6 +27,26 @@
 /// -14C - Temperature used for kitchen cold room, medical freezer, etc.
 #define COLD_ROOM_TEMP 259.15
 
+/**
+ *I feel the need to document what happens here. Basically this is used
+ *catch rounding errors, and make gas go away in small portions.
+ *People have raised it to higher levels in the past, do not do this. Consider this number a soft limit
+ *If you're making gasmixtures that have unexpected behavior related to this value, you're doing something wrong.
+ *
+ *On an unrelated note this may cause a bug that creates negative gas, related to round(). When it has a second arg it will round up.
+ *So for instance round(0.5, 1) == 1. I've hardcoded a fix for this into share, by forcing the garbage collect.
+ *Any other attempts to fix it just killed atmos. I leave this to a greater man then I
+ */
+/// The minimum heat capacity of a gas
+#define MINIMUM_HEAT_CAPACITY 0.0003
+/// Minimum mole count of a gas
+#define MINIMUM_MOLE_COUNT 0.01
+/// Molar accuracy to round to
+#define MOLAR_ACCURACY  1E-4
+/// Types of gases (based on gaslist_cache)
+#define GAS_TYPE_COUNT GLOB.gaslist_cache.len
+/// Maximum error caused by QUANTIZE when removing gas (roughly, in reality around 2 * MOLAR_ACCURACY less)
+#define MAXIMUM_ERROR_GAS_REMOVAL (MOLAR_ACCURACY * GAS_TYPE_COUNT)
 ///moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC (103 or so)
 #define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))
 ///compared against for superconductivity
@@ -192,6 +212,20 @@
 /// The modifier on cold damage hulks get.
 #define HULK_COLD_DAMAGE_MOD 2
 
+// Body temperature warning icons
+/// The temperature the red icon is displayed.
+#define BODYTEMP_HEAT_WARNING_3 (BODYTEMP_HEAT_DAMAGE_LIMIT + 360) //+700k
+/// The temperature the orange icon is displayed.
+#define BODYTEMP_HEAT_WARNING_2 (BODYTEMP_HEAT_DAMAGE_LIMIT + 120) //460K
+/// The temperature the yellow icon is displayed.
+#define BODYTEMP_HEAT_WARNING_1 (BODYTEMP_HEAT_DAMAGE_LIMIT) //340K
+/// The temperature the light green icon is displayed.
+#define BODYTEMP_COLD_WARNING_1 (BODYTEMP_COLD_DAMAGE_LIMIT) //270k
+/// The temperature the cyan icon is displayed.
+#define BODYTEMP_COLD_WARNING_2 (BODYTEMP_COLD_DAMAGE_LIMIT - 70) //200k
+/// The temperature the blue icon is displayed.
+#define BODYTEMP_COLD_WARNING_3 (BODYTEMP_COLD_DAMAGE_LIMIT - 150) //120k
+
 /// what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
 #define SPACE_HELM_MIN_TEMP_PROTECT 2.0
 /// Thermal insulation works both ways /Malkevin
@@ -242,6 +276,15 @@
 #define COLD_SLOWDOWN_FACTOR 20
 
 //PIPES
+//Defines for pipe bitmasking
+#define NORTH_FULLPIPE (1<<0) //also just NORTH
+#define SOUTH_FULLPIPE (1<<1) //also just SOUTH
+#define EAST_FULLPIPE (1<<2) //also just EAST
+#define WEST_FULLPIPE (1<<3) //also just WEST
+#define NORTH_SHORTPIPE (1<<4)
+#define SOUTH_SHORTPIPE (1<<5)
+#define EAST_SHORTPIPE (1<<6)
+#define WEST_SHORTPIPE (1<<7)
 //Atmos pipe limits
 /// (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_OUTPUT_PRESSURE 4500
@@ -334,9 +377,9 @@
 #define ATMOS_GAS_MONITOR_OUTPUT_O2 "o2_out"
 #define ATMOS_GAS_MONITOR_SENSOR_O2 "o2_sensor"
 
-#define ATMOS_GAS_MONITOR_INPUT_TOX "tox_in"
-#define ATMOS_GAS_MONITOR_OUTPUT_TOX "tox_out"
-#define ATMOS_GAS_MONITOR_SENSOR_TOX "tox_sensor"
+#define ATMOS_GAS_MONITOR_INPUT_PLAS "plas_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_PLAS "plas_out"
+#define ATMOS_GAS_MONITOR_SENSOR_PLAS "plas_sensor"
 
 #define ATMOS_GAS_MONITOR_INPUT_AIR "air_in"
 #define ATMOS_GAS_MONITOR_OUTPUT_AIR "air_out"
@@ -426,9 +469,9 @@
 #define ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR "incinerator_out"
 #define ATMOS_GAS_MONITOR_SENSOR_INCINERATOR "incinerator_sensor"
 
-#define ATMOS_GAS_MONITOR_INPUT_TOXINS_LAB "toxinslab_in"
-#define ATMOS_GAS_MONITOR_OUTPUT_TOXINS_LAB "toxinslab_out"
-#define ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB "toxinslab_sensor"
+#define ATMOS_GAS_MONITOR_INPUT_ORDNANCE_LAB "ordnancelab_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_ORDNANCE_LAB "ordnancelab_out"
+#define ATMOS_GAS_MONITOR_SENSOR_ORDNANCE_LAB "ordnancelab_sensor"
 
 #define ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION "distro-loop_meter"
 #define ATMOS_GAS_MONITOR_LOOP_ATMOS_WASTE "atmos-waste_loop_meter"
@@ -438,14 +481,14 @@
 
 //AIRLOCK CONTROLLER TAGS
 
-//RnD toxins burn chamber
-#define INCINERATOR_TOXMIX_IGNITER "toxmix_igniter"
-#define INCINERATOR_TOXMIX_VENT "toxmix_vent"
-#define INCINERATOR_TOXMIX_DP_VENTPUMP "toxmix_airlock_pump"
-#define INCINERATOR_TOXMIX_AIRLOCK_SENSOR "toxmix_airlock_sensor"
-#define INCINERATOR_TOXMIX_AIRLOCK_CONTROLLER "toxmix_airlock_controller"
-#define INCINERATOR_TOXMIX_AIRLOCK_INTERIOR "toxmix_airlock_interior"
-#define INCINERATOR_TOXMIX_AIRLOCK_EXTERIOR "toxmix_airlock_exterior"
+//RnD ordnance burn chamber
+#define INCINERATOR_ORDMIX_IGNITER "ordmix_igniter"
+#define INCINERATOR_ORDMIX_VENT "ordmix_vent"
+#define INCINERATOR_ORDMIX_DP_VENTPUMP "ordmix_airlock_pump"
+#define INCINERATOR_ORDMIX_AIRLOCK_SENSOR "ordmix_airlock_sensor"
+#define INCINERATOR_ORDMIX_AIRLOCK_CONTROLLER "ordmix_airlock_controller"
+#define INCINERATOR_ORDMIX_AIRLOCK_INTERIOR "ordmix_airlock_interior"
+#define INCINERATOR_ORDMIX_AIRLOCK_EXTERIOR "ordmix_airlock_exterior"
 
 //Atmospherics/maintenance incinerator
 #define INCINERATOR_ATMOS_IGNITER "atmos_incinerator_igniter"
@@ -533,6 +576,18 @@
 	out_var = 0;\
 	for(var/total_moles_id in cached_gases){\
 		out_var += cached_gases[total_moles_id][MOLES];\
+	}
+
+GLOBAL_LIST_INIT(nonoverlaying_gases, typecache_of_gases_with_no_overlays())
+#define GAS_OVERLAYS(gases, out_var)\
+	out_var = list();\
+	for(var/_ID in gases){\
+		if(GLOB.nonoverlaying_gases[_ID]) continue;\
+		var/_GAS = gases[_ID];\
+		var/_GAS_META = _GAS[GAS_META];\
+		if(_GAS[MOLES] <= _GAS_META[META_GAS_MOLES_VISIBLE]) continue;\
+		var/_GAS_OVERLAY = _GAS_META[META_GAS_OVERLAY];\
+		out_var += _GAS_OVERLAY[min(TOTAL_VISIBLE_STATES, CEILING(_GAS[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))];\
 	}
 
 #ifdef TESTING
