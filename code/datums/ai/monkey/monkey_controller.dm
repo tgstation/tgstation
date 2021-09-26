@@ -6,7 +6,11 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey
 	movement_delay = 0.4 SECONDS
-	planning_subtrees = list(/datum/ai_planning_subtree/monkey_tree)
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/monkey_tree,
+		//the monkey tree is mostly combat related, if it isn't busy with that then it may do instrument related things
+		/datum/ai_planning_subtree/play_instrument,
+	)
 	blackboard = list(
 		BB_MONKEY_AGGRESSIVE = FALSE,
 		BB_MONKEY_BEST_FORCE_FOUND = 0,
