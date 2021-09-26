@@ -12,8 +12,8 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/new_highlander)
 	sound_to_playing_players('sound/misc/highlander.ogg')
 	send_to_playing_players(span_boldannounce("<font size=6>THERE CAN BE ONLY ONE</font>"))
-	for(var/obj/item/disk/nuclear/fukkendisk in GLOB.poi_list)
-		var/datum/component/stationloving/component = fukkendisk.GetComponent(/datum/component/stationloving)
+	for(var/obj/item/disk/nuclear/nuke_disk as anything in SSpoints_of_interest.real_nuclear_disks)
+		var/datum/component/stationloving/component = nuke_disk.GetComponent(/datum/component/stationloving)
 		component?.relocate() //Gets it out of bags and such
 
 	for(var/mob/living/carbon/human/human in GLOB.player_list)

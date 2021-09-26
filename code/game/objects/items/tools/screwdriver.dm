@@ -47,7 +47,7 @@
 	user.visible_message(span_suicide("[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return(BRUTELOSS)
 
-/obj/item/screwdriver/Initialize()
+/obj/item/screwdriver/Initialize(mapload)
 	if(random_color)
 		var/our_color = pick(screwdriver_colors)
 		set_greyscale(colors=list(screwdriver_colors[our_color]))
@@ -95,7 +95,7 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 
-/obj/item/screwdriver/power/Initialize()
+/obj/item/screwdriver/power/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/transforming, \
 		force_on = force, \

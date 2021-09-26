@@ -109,16 +109,6 @@
 "aw" = (
 /turf/open/floor/plating,
 /area/engineering/atmos)
-"ax" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/engineering/atmos)
-"ay" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/engineering/atmos)
 "aD" = (
 /obj/structure/fans/tiny,
 /obj/structure/cable,
@@ -457,10 +447,6 @@
 /area/hallway/primary/central)
 "bS" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/iron,
-/area/hallway/primary/central)
-"bT" = (
-/obj/effect/spawner/randomarcade,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bU" = (
@@ -1744,6 +1730,10 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
+"WR" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/turf/open/floor/iron,
+/area/hallway/primary/central)
 "XN" = (
 /obj/structure/railing,
 /turf/open/floor/plating,
@@ -2553,7 +2543,7 @@ ad
 Dm
 ah
 am
-ax
+aw
 aw
 ba
 bk
@@ -2607,7 +2597,7 @@ ad
 af
 ah
 am
-ay
+aw
 aN
 bb
 bl
@@ -2661,7 +2651,7 @@ ad
 af
 ah
 am
-ay
+aw
 aO
 bc
 bm
@@ -3584,7 +3574,7 @@ dV
 aI
 aI
 ak
-bT
+WR
 bE
 co
 bO
