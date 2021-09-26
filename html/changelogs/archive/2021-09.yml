@@ -778,3 +778,72 @@
   necromanceranne:
   - bugfix: Stickmen flatguns now properly drop out of your hands when picked up,
       as intended.
+2021-09-25:
+  Fikou:
+  - bugfix: The Qualified Doctor skin for medborgs is now not the only option
+  Iamgoofball:
+  - bugfix: Fixes the logging text on respawn to correctly say it's respawn instead
+      of "abandon mob"
+  Maurukas:
+  - bugfix: Mapped in atmospheric tanks will now connect to pipenets in the appropriate
+      direction
+  - bugfix: Icebox, Runtime, and a number of ruins have had their gas tanks rotated
+      or repiped
+  Qustinnus:
+  - bugfix: Oozes can now eat food again
+  tralezab:
+  - bugfix: Fixes malfunctioning bots breaking when they ordered from the bar. Uh...
+      oops!
+  - expansion: Admin fully immerse smite now reminds the victim to roleplay correctly
+2021-09-26:
+  Guillaume Prata:
+  - bugfix: Huge scrubbers will use their own sprite instead of their little brother
+      one.
+  Krysonism:
+  - bugfix: The crate spawner spawns full crates rather than empty ones again. fix:The
+      neglected fern can actually spawn now
+  - bugfix: The neglected fern now has the standard 2-4 cell ines per sample rather
+      than 1.
+  Melbert:
+  - bugfix: Telescopic shields are bulky again when extended, and the balloon alerts
+      are shorter
+  MetalClone:
+  - rscadd: Added the handlebar moustache, available in the character setup
+  - rscadd: Added the handlebar moustache 2, available in the character setup
+  - imageadd: added both handlebar moustache icons
+  Mothblocks:
+  - bugfix: Fixed not being able to disable specific antagonists randomly.
+  Timberpoes:
+  - bugfix: Players can once again select AI eyes and blob eyes from the various orbit,
+      observe and jump menus.
+  - rscdel: Removed the research note download objective.
+  - rscadd: Added new master R&D servers to science departmental server rooms. This
+      server cannot be deconstructed via ordinary methods. This server cannot be rebuilt
+      if destroyed and cannot be repaired if sabotaged. If destroyed or sabotaged,
+      research point gain is halved for the rest of the shift.
+  - rscadd: Added a new antag objective for traitors and lings to steal the hard drive
+      from a master R&D server. Any other antag can steal it too, for fun. But only
+      traitors and lings and things that get traitor or ling objectives can get it
+      as a dedicated steal objective.
+  - rscadd: Added a new objective for the space ninja and interactions allowing them
+      to destroy the drive in the master R&D server or set the current research points
+      back to 0. Both of these interactions alert the AI and are performed by using
+      the gloves on an appropriate R&D server.
+  Watermelon914:
+  - qol: List Literal can now increase/decrease the amount of input ports from within
+      the UI now.
+  - qol: Module components can now have their integrated circuit and UI accessed from
+      within the integrated circuit. To add circuit components, the module still needs
+      to be disconnected.
+  - qol: Connecting ports together will feel more responsive especially if you have
+      bad internet speeds.
+  - qol: Circuit variables UI has been revamped and made better. You can now drag
+      and drop the setters and getters for each circuit variable and it will no longer
+      automatically close when you move the background. It also takes up less of the
+      screen.
+  - qol: The integrated circuits UI when initially opened will now be bigger.
+  - qol: You can now click to connect ports again
+  necromanceranne:
+  - admin: Meteor guns do damage once again.
+  tralezab:
+  - rscadd: Hauntium can now be worn by the undead!

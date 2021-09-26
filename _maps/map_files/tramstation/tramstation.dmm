@@ -40538,6 +40538,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/hallway/secondary/exit)
+"niE" = (
+/obj/machinery/rnd/server/master,
+/turf/open/floor/circuit/telecomms/server,
+/area/science/server)
 "nje" = (
 /obj/effect/turf_decal/trimline/white/line{
 	dir = 10
@@ -179954,7 +179958,7 @@ wsJ
 qSg
 aNN
 xjn
-vnK
+niE
 wIK
 vnK
 xjn

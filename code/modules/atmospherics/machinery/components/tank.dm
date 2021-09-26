@@ -92,6 +92,10 @@
 	QUEUE_SMOOTH(src)
 	QUEUE_SMOOTH_NEIGHBORS(src)
 
+	// Mapped in tanks should automatically connect to adjacent pipenets in the direction set in dir
+	if(mapload)
+		initialize_directions = dir
+
 	return INITIALIZE_HINT_LATELOAD
 
 // We late initialize here so all stationary tanks have time to set up their
