@@ -1,8 +1,9 @@
+import { useBackend } from '../../backend';
 import { LabeledControls, RoundGauge, Section } from '../../components';
 import { formatSiUnit } from '../../format';
 import { toFixed } from 'common/math';
 
-export const HypertorusParameters = props => {
+export const HypertorusParameters = (props, context) => {
   const {
     apcEnergy: apc_energy,
     energyLevel: energy_level,
@@ -15,6 +16,7 @@ export const HypertorusParameters = props => {
     ironContent: iron_content,
     integrity,
   } = props;
+  const { act, data } = useBackend(context);
 
   const energy_minimum_exponent = 12;
   const energy_minimum_suffix = energy_minimum_exponent / 3;
@@ -106,7 +108,7 @@ export const HypertorusParameters = props => {
             value={activity * 100}
             minValue={0}
             maxValue={130} // Proto-nitrate lets us exceed 100%
-            format={v => `${toFixed(activity * 100, 1)}%`}
+            format={v => `${data.start_power ? toFixed(activity * 100, 1) : 0}%`}
             ranges={{
               grey: [0, 70],
               blue: [70, 100],
@@ -119,7 +121,7 @@ export const HypertorusParameters = props => {
             value={Math.max(instability, 0)}
             minValue={0}
             maxValue={10}
-            format={v => `${toFixed(Math.max(instability, 0)/8 * 100, 1)}%`}
+            format={v => `${data.start_power ? toFixed(Math.max(instability, 0)/8 * 100, 1) : 0}%`}
             ranges={{
               orange: [0, 8], // exothermic
               blue: [8, 10], // endothermic
