@@ -182,5 +182,8 @@
 //for your ever biggening badminnery kevinz000
 //❤ - Cyberboss
 /proc/load_new_z_level(file, name, secret)
-	var/datum/map_template/template = new(file, name)
+	var/datum/map_template/template = new(file, name, TRUE)
+	if(!template.cached_map || template.cached_map.check_for_errors())
+		return FALSE
 	template.load_new_z(secret)
+	return TRUE

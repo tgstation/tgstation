@@ -47,6 +47,9 @@ require only minor tweaks.
 // boolean - does this z prevent ghosts from observing it
 #define ZTRAIT_SECRET "Secret"
 
+// boolean - does this z prevent phasing
+#define ZTRAIT_NOPHASE "No Phase"
+
 // number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
 
@@ -70,7 +73,7 @@ require only minor tweaks.
 #define ZTRAIT_BASETURF "Baseturf"
 
 // default trait definitions, used by SSmapping
-#define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE)
+#define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE, ZTRAIT_NOPHASE = TRUE)
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
 #define ZTRAITS_LAVALAND list(\
@@ -80,7 +83,7 @@ require only minor tweaks.
 	ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
 	ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
 #define ZTRAITS_AWAY list(ZTRAIT_AWAY = TRUE)
-#define ZTRAITS_AWAY_SECRET list(ZTRAIT_AWAY = TRUE, ZTRAIT_SECRET = TRUE)
+#define ZTRAITS_AWAY_SECRET list(ZTRAIT_AWAY = TRUE, ZTRAIT_SECRET = TRUE, ZTRAIT_NOPHASE = TRUE)
 
 #define DL_NAME "name"
 #define DL_TRAITS "traits"

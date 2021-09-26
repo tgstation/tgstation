@@ -11,8 +11,8 @@ GLOBAL_LIST_INIT(potentialConfigRandomZlevels, generateConfigMapList(directory =
 	else
 		return
 	to_chat(world, span_boldannounce("Loading away mission..."))
-	load_new_z_level(map, "Away Mission", config_gateway)
-	to_chat(world, span_boldannounce("Away mission loaded."))
+	var/loaded = load_new_z_level(map, "Away Mission", config_gateway)
+	to_chat(world, span_boldannounce("Away mission [loaded ? "loaded" : "aborted due to errors"]."))
 
 /obj/effect/landmark/awaystart
 	name = "away mission spawn"

@@ -365,9 +365,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!can_reenter_corpse)
 		to_chat(src, span_warning("You cannot re-enter your body."))
 		return
-	if(SSmapping.level_trait(mind.current.z, ZTRAIT_SECRET) && !client.holder)
-		to_chat(src, span_warning("Mystical energies are making your body resist you."))
-		return
 	if(mind.current.key && mind.current.key[1] != "@") //makes sure we don't accidentally kick any clients
 		to_chat(usr, span_warning("Another consciousness is in your body...It is resisting you."))
 		return
@@ -462,7 +459,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
-	if (!istype(target))
+	if (!istype(target) || SSmapping.level_trait(target.z, ZTRAIT_SECRET))
 		return
 
 	var/icon/I = icon(target.icon,target.icon_state,target.dir)
@@ -849,17 +846,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/reset_perspective(atom/A)
 	if(client)
 		if(ismob(client.eye) && (client.eye != src))
-			var/mob/target = client.eye
-			observetarget = null
-			client.perspective = initial(client.perspective)
-			sight = initial(sight)
-			if(target.observers)
-				target.observers -= src
-				UNSETEMPTY(target.observers)
+			cleanup_observe()
 	if(..())
 		if(hud_used)
 			client.screen = list()
 			hud_used.show_hud(hud_used.hud_version)
+
+
+/mob/dead/observer/proc/cleanup_observe()
+	var/mob/target = observetarget
+	observetarget = null
+	client.perspective = initial(client.perspective)
+	sight = initial(sight)
+	UnregisterSignal(target, COMSIG_MOVABLE_Z_CHANGED)
+	if(target.observers)
+		target.observers -= src
+		UNSETEMPTY(target.observers)
 
 /mob/dead/observer/verb/observe()
 	set name = "Observe"

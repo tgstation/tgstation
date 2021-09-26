@@ -42,6 +42,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/cmd_admin_rejuvenate,
 	/datum/admins/proc/show_traitor_panel,
 	/client/proc/disable_communication,
+	/client/proc/show_map_reports,
 	/client/proc/cmd_show_at_list,
 	/client/proc/cmd_show_at_markers,
 	/client/proc/manipulate_organs,
@@ -147,6 +148,18 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 				for(var/turf/turf in view(7,intercom.loc))
 					new /obj/effect/abstract/marker/intercom(turf)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Intercom Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/show_map_reports()
+	set category = "Mapping"
+	set name = "Show map report list"
+	set desc = "Displays a list of map reports"
+
+	var/dat = {"<b>List of all map reports:</b><br>"}
+
+	for(var/datum/map_report/report as anything in GLOB.map_reports)
+		dat += "[report.tag] ([report.original_path]) - <a href='?src=[REF(report)];[HrefToken()];show=1'>View</a><br>"
+
+	usr << browse(dat, "window=map_reports")
 
 /client/proc/cmd_show_at_list()
 	set category = "Mapping"
