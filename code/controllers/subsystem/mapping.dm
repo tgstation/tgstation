@@ -83,7 +83,7 @@ SUBSYSTEM_DEF(mapping)
 
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
-		createRandomZlevel()
+		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
 
 	// Load the virtual reality hub
 	if(CONFIG_GET(flag/virtual_reality))

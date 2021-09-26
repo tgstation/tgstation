@@ -114,7 +114,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	update_appearance()
 
-	if(!T)
+	if(!T || SSmapping.level_trait(T.z, ZTRAIT_SECRET))
 		var/list/turfs = get_area_turfs(/area/shuttle/arrival)
 		if(turfs.len)
 			T = pick(turfs)
@@ -364,6 +364,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	if(!can_reenter_corpse)
 		to_chat(src, span_warning("You cannot re-enter your body."))
+		return
+	if(SSmapping.level_trait(mind.current.z, ZTRAIT_SECRET) && !client.holder)
+		to_chat(src, span_warning("Mystical energies are making your body resist you."))
 		return
 	if(mind.current.key && mind.current.key[1] != "@") //makes sure we don't accidentally kick any clients
 		to_chat(usr, span_warning("Another consciousness is in your body...It is resisting you."))
@@ -848,6 +851,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(ismob(client.eye) && (client.eye != src))
 			var/mob/target = client.eye
 			observetarget = null
+			client.perspective = initial(client.perspective)
+			sight = initial(sight)
 			if(target.observers)
 				target.observers -= src
 				UNSETEMPTY(target.observers)
@@ -890,12 +895,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	//Istype so we filter out points of interest that are not mobs
 	if(client && mob_eye && istype(mob_eye))
 		client.eye = mob_eye
+		client.perspective = EYE_PERSPECTIVE
+		if(SSmapping.level_trait(mob_eye.z, ZTRAIT_SECRET) && !client?.holder)
+			sight = null //we dont want ghosts to see through walls in secret areas
+		RegisterSignal(mob_eye, COMSIG_MOVABLE_Z_CHANGED, .proc/on_observing_z_changed)
 		if(mob_eye.hud_used)
 			client.screen = list()
 			LAZYINITLIST(mob_eye.observers)
 			mob_eye.observers |= src
 			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
 			observetarget = mob_eye
+
+/mob/dead/observer/proc/on_observing_z_changed(datum/source, turf/old_turf, turf/new_turf)
+	if(SSmapping.level_trait(new_turf.z, ZTRAIT_SECRET) && !client?.holder)
+		sight = null //we dont want ghosts to see through walls in secret areas
+	else
+		sight = initial(sight)
 
 /mob/dead/observer/verb/register_pai_candidate()
 	set category = "Ghost"
