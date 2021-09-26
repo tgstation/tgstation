@@ -20,8 +20,9 @@
 				if (replace_decal(C))
 					return INITIALIZE_HINT_QDEL
 	#ifdef EVENTMODE
-	///AUTO CLEAN
-	QDEL_IN(src, 30)
+	///AUTO CLEAN - outside arena only
+	if(!istype(get_area(src), /area/tdome/arena))
+		QDEL_IN(src, 30)
 	return . //skip disease handling
 	#endif
 	if(LAZYLEN(diseases))

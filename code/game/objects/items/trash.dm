@@ -10,8 +10,9 @@
 
 /obj/item/trash/Initialize(mapload)
 	#ifdef EVENTMODE
-	///AUTO CLEAN
-	QDEL_IN(src, 30)
+	///AUTO CLEAN - outside arena only
+	if(!istype(get_area(src), /area/tdome/arena))
+		QDEL_IN(src, 30)
 	return ..()
 	#endif
 	var/turf/T = get_turf(src)
