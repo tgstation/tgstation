@@ -1389,11 +1389,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
-"gB" = (
-/obj/machinery/power/apc/auto_name/south,
-/obj/structure/cable,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/bridge/access)
 "gC" = (
 /turf/open/floor/iron/airless{
 	icon_state = "floorscorched2"
@@ -10833,8 +10828,8 @@ cF
 fK
 fT
 fT
-fT
-gB
+fx
+fx
 cs
 cs
 ZB
