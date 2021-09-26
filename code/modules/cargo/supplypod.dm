@@ -612,8 +612,6 @@
 /obj/effect/pod_landingzone/proc/beginLaunch(effectCircle) //Begin the animation for the pod falling. The effectCircle param determines whether the pod gets to come in from any descent angle
 	pod.addGlow()
 	pod.update_appearance()
-	if (pod.style != STYLE_INVISIBLE)
-		pod.add_filter("motionblur",1,list("type"="motion_blur", "x"=0, "y"=3))
 	pod.forceMove(drop_location())
 	for (var/mob/living/M in pod) //Remember earlier (initialization) when we moved mobs into the pod_landingzone so they wouldnt get lost in nullspace? Time to get them out
 		M.reset_perspective(null)
@@ -625,8 +623,7 @@
 	pod.transform = matrix().Turn(rotation)
 	pod.layer = FLY_LAYER
 	if (pod.style != STYLE_INVISIBLE)
-		animate(pod.get_filter("motionblur"), y = 0, time = pod.delays[POD_FALLING], flags = ANIMATION_PARALLEL)
-		animate(pod, pixel_z = -1 * abs(sin(rotation))*4, pixel_x = SUPPLYPOD_X_OFFSET + (sin(rotation) * 20), time = pod.delays[POD_FALLING], easing = LINEAR_EASING, flags = ANIMATION_PARALLEL) //Make the pod fall! At an angle!
+		animate(pod, pixel_z = -1 * abs(sin(rotation))*4, pixel_x = SUPPLYPOD_X_OFFSET + (sin(rotation) * 20), time = pod.delays[POD_FALLING], easing = LINEAR_EASING) //Make the pod fall! At an angle!
 	addtimer(CALLBACK(src, .proc/endLaunch), pod.delays[POD_FALLING], TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 /obj/effect/pod_landingzone/proc/setupSmoke(rotation)
