@@ -4,12 +4,10 @@
 	name = "Cabin"
 	icon_state = "away2"
 	requires_power = TRUE
-	static_lighting = TRUE
 
 /area/awaymission/cabin/snowforest
 	name = "Snow Forest"
 	icon_state = "away"
-	static_lighting = FALSE
 
 /area/awaymission/cabin/snowforest/sovietsurface
 	name = "Snow Forest"

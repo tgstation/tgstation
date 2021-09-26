@@ -261,6 +261,12 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/cabin/snowforest)
+"gL" = (
+/obj/machinery/light/dim{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/awaymission/cabin/snowforest)
 "ht" = (
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
@@ -1278,8 +1284,9 @@
 /turf/open/indestructible,
 /area/tdome/tdome2)
 "Kx" = (
-/turf/closed/indestructible/fakeglass,
-/area/tdome/arena)
+/obj/machinery/light/dim,
+/turf/open/floor/plastic,
+/area/awaymission/cabin/snowforest)
 "KU" = (
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
@@ -25739,7 +25746,7 @@ xU
 wX
 xW
 kD
-Kx
+Ab
 By
 By
 By
@@ -25748,7 +25755,7 @@ By
 By
 By
 WO
-Kx
+Ab
 kD
 Co
 Co
@@ -25869,7 +25876,7 @@ LW
 xu
 LW
 kD
-Kx
+Ab
 By
 By
 By
@@ -25878,7 +25885,7 @@ By
 By
 By
 By
-Kx
+Ab
 kD
 Co
 Co
@@ -25999,7 +26006,7 @@ LW
 LW
 LW
 kD
-Kx
+Ab
 By
 By
 By
@@ -26008,7 +26015,7 @@ By
 By
 By
 By
-Kx
+Ab
 kD
 Co
 Co
@@ -26129,7 +26136,7 @@ xW
 LW
 xU
 kD
-Kx
+Ab
 By
 By
 By
@@ -26138,7 +26145,7 @@ By
 By
 By
 By
-Kx
+Ab
 kD
 Co
 Co
@@ -26259,7 +26266,7 @@ yb
 LW
 LW
 kD
-Kx
+Ab
 By
 By
 By
@@ -26268,7 +26275,7 @@ By
 By
 By
 By
-Kx
+Ab
 kD
 YP
 YP
@@ -26389,7 +26396,7 @@ yH
 LW
 LW
 kD
-Kx
+Ab
 By
 By
 By
@@ -26398,7 +26405,7 @@ By
 By
 By
 By
-Kx
+Ab
 kD
 Co
 Co
@@ -26519,7 +26526,7 @@ yH
 LW
 LW
 kD
-Kx
+Ab
 By
 By
 By
@@ -26528,7 +26535,7 @@ By
 By
 By
 By
-Kx
+Ab
 kD
 Co
 Co
@@ -26648,8 +26655,8 @@ xe
 yH
 LW
 xU
-kD
 Kx
+Ab
 By
 By
 By
@@ -26658,8 +26665,8 @@ By
 By
 By
 By
-Kx
-kD
+Ab
+gL
 Co
 Co
 Co
@@ -26779,7 +26786,7 @@ yH
 LW
 LW
 kD
-Kx
+Ab
 By
 By
 By
@@ -26788,7 +26795,7 @@ By
 By
 By
 By
-Kx
+Ab
 kD
 Co
 Co
@@ -26909,7 +26916,7 @@ yH
 LW
 LW
 kD
-Kx
+Ab
 By
 By
 By
@@ -26918,7 +26925,7 @@ By
 By
 By
 By
-Kx
+Ab
 kD
 Co
 Co
@@ -27039,7 +27046,7 @@ yI
 LW
 LW
 kD
-Kx
+Ab
 By
 By
 By
@@ -27048,7 +27055,7 @@ By
 By
 By
 By
-Kx
+Ab
 kD
 YP
 YP
@@ -27169,7 +27176,7 @@ xW
 LW
 xU
 kD
-Kx
+Ab
 By
 By
 By
@@ -27178,7 +27185,7 @@ By
 By
 By
 By
-Kx
+Ab
 kD
 Co
 Co
@@ -27299,7 +27306,7 @@ LW
 LW
 LW
 kD
-Kx
+Ab
 By
 By
 By
@@ -27308,7 +27315,7 @@ By
 By
 By
 By
-Kx
+Ab
 kD
 Co
 Co
@@ -27429,7 +27436,7 @@ LW
 wW
 LW
 kD
-Kx
+Ab
 By
 By
 By
@@ -27438,7 +27445,7 @@ By
 By
 By
 By
-Kx
+Ab
 kD
 Co
 Co
@@ -27559,7 +27566,7 @@ xU
 wX
 xW
 kD
-Kx
+Ab
 Bz
 By
 By
@@ -27568,7 +27575,7 @@ By
 By
 By
 By
-Kx
+Ab
 kD
 Co
 Co
