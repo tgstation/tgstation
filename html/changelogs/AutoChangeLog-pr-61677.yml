@@ -1,7 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - qol: "Connecting ports together will feel more responsive especially if you have bad internet speeds."
-  - qol: "Circuit variables UI has been revamped and made better. You can now drag and drop the setters and getters for each circuit variable and it will no longer automatically close when you move the background. It also takes up less of the screen."
-  - qol: "The integrated circuits UI when initially opened will now be bigger."
-  - qol: "You can now click to connect ports again"

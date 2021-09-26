@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes: 
-  - bugfix: "Huge scrubbers will use their own sprite instead of their little brother one."

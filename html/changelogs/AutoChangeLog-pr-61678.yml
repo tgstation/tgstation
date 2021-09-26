@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Players can once again select AI eyes and blob eyes from the various orbit, observe and jump menus."

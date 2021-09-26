@@ -1,5 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - qol: "List Literal can now increase/decrease the amount of input ports from within the UI now."
-  - qol: "Module components can now have their integrated circuit and UI accessed from within the integrated circuit. To add circuit components, the module still needs to be disconnected."
