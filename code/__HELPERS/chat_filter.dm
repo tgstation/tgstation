@@ -5,7 +5,7 @@
 /// Given a text, will return what word is on the IC filter, with the reason.
 /// Returns null if the message is OK.
 /proc/is_ic_filtered(message)
-	if (config.ic_filter_regex.Find(message))
+	if (config.ic_filter_regex?.Find(message))
 		var/matched_group = GET_MATCHED_GROUP(config.ic_filter_regex)
 		return list(
 			matched_group,
@@ -17,7 +17,7 @@
 /// Given a text, will return what word is on the IC filter, ignoring words allowed on the PDA, with the reason.
 /// Returns null if the message is OK.
 /proc/is_ic_filtered_for_pdas(message)
-	if (config.ic_outside_pda_filter_regex.Find(message))
+	if (config.ic_outside_pda_filter_regex?.Find(message))
 		var/matched_group = GET_MATCHED_GROUP(config.ic_outside_pda_filter_regex)
 		return list(
 			matched_group,
@@ -29,7 +29,7 @@
 /// Given a text, will return what word is on the OOC filter, with the reason.
 /// Returns null if the message is OK.
 /proc/is_ooc_filtered(message)
-	if (config.ooc_filter_regex.Find(message))
+	if (config.ooc_filter_regex?.Find(message))
 		var/matched_group = GET_MATCHED_GROUP(config.ooc_filter_regex)
 		return list(matched_group, config.shared_filter_reasons[matched_group])
 
