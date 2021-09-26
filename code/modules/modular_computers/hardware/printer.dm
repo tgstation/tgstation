@@ -54,7 +54,7 @@
 		var/obj/item/paper_bin/bin = I
 		if(LAZYLEN(bin.papers))
 			if(stored_paper >= max_paper)
-				balloon_alert(user, "its full!")
+				balloon_alert(user, "it's full!")
 				return FALSE
 			/// Number of sheets we're adding
 			var/num_to_add = 0
