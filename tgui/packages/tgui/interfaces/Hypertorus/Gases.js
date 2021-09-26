@@ -63,7 +63,7 @@ const GasList = (props, context) => {
         label={
           <>
             <HoverHelp content={rateHelp} />
-            Injection Rate:
+            Injection control:
           </>
         }
       >
@@ -129,8 +129,10 @@ export const HypertorusGases = props => {
               gases={fusion_gases}
               minimumScale={500}
               prepend={()=>(<HelpDummy />)}
-              rateHelp={"The rate at which new fuel is added from the fuel input port. "
-               + "Affects the rate of production, even when not active."}
+              rateHelp={
+                "The rate at which new fuel is added from the fuel input port."
+                + " This rate affects the rate of production,"
+                + " even when input is not active."}
               stickyGases={selectedFuel.requirements}
             />
           )
