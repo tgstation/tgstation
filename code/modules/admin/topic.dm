@@ -958,7 +958,7 @@
 		for(var/datum/job/job as anything in SSjob.joinable_occupations)
 			if(job.title == Add)
 				job.total_positions += 1
-				log_job_debug("[key_name(usr?.client)] added a slot to [job.title]")
+?				log_job_debug("[key_name(usr)] added a slot to [job.title]")
 				break
 
 		src.manage_free_slots()
@@ -977,7 +977,7 @@
 				if(!newtime)
 					to_chat(src.owner, "Setting to amount of positions filled for the job", confidential = TRUE)
 					job.total_positions = job.current_positions
-					log_job_debug("[key_name(usr?.client)] set the job cap for [job.title] to [job.total_positions]")
+					log_job_debug("[key_name(usr)] set the job cap for [job.title] to [job.total_positions]")
 					break
 				job.total_positions = newtime
 
@@ -992,7 +992,7 @@
 		for(var/datum/job/job as anything in SSjob.joinable_occupations)
 			if(job.title == Remove && job.total_positions - job.current_positions > 0)
 				job.total_positions -= 1
-				log_job_debug("[key_name(usr?.client)] removed a slot from [job.title]")
+				log_job_debug("[key_name(usr)] removed a slot from [job.title]")
 				break
 
 		src.manage_free_slots()
@@ -1006,7 +1006,7 @@
 		for(var/datum/job/job as anything in SSjob.joinable_occupations)
 			if(job.title == Unlimit)
 				job.total_positions = -1
-				log_job_debug("[key_name(usr?.client)] removed the limit from [job.title]")
+				log_job_debug("[key_name(usr)] removed the limit from [job.title]")
 				break
 
 		src.manage_free_slots()
@@ -1020,7 +1020,7 @@
 		for(var/datum/job/job as anything in SSjob.joinable_occupations)
 			if(job.title == Limit)
 				job.total_positions = job.current_positions
-				log_job_debug("[key_name(usr?.client)] set the limit for [job.title] to [job.total_positions]")
+				log_job_debug("[key_name(usr)] set the limit for [job.title] to [job.total_positions]")
 				break
 
 		src.manage_free_slots()
