@@ -2,7 +2,7 @@ import { useBackend } from '../../backend';
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
-import { ActNone, ActSet, HoverHelp, HelpDummy } from './helpers';
+import { ActSet, HoverHelp, HelpDummy } from './helpers';
 
 import { Box, Button, LabeledList, NumberInput, ProgressBar, Section, Tooltip } from '../../components';
 import { getGasColor, getGasLabel } from '../../constants';
@@ -73,7 +73,7 @@ const GasList = (props, context) => {
           icon={data[input_switch] ? 'power-off' : 'times'}
           content={data[input_switch] ? 'On' : 'Off'}
           selected={data[input_switch]}
-          onClick={ActNone(act, input_switch)} />
+          onClick={ActFixed(act, input_switch)} />
         <NumberInput
           animated
           value={parseFloat(data[input_rate])}

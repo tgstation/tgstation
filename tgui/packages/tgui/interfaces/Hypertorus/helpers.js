@@ -15,9 +15,7 @@ const ActParam = (key, value) => {
   return ret;
 };
 
-export const ActNone = (act, key) => () => act(key);
-
-export const ActFixed = (act, key, val) => () => act(key, ActParam(key, val));
+export const ActFixed = (act, key, ...vals) => () => act(key, ActParam(key, ...vals));
 
 export const ActSet = (act, key) => (e, val) => act(key, ActParam(key, val));
 
