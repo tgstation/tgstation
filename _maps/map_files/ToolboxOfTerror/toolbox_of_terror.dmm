@@ -61,15 +61,10 @@
 /turf/open/floor/wood/parquet,
 /area/space)
 "bx" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
+/turf/open/floor/iron/stairs/left{
+	color = "#964B00";
+	dir = 8
 	},
-/obj/structure/railing{
-	color = "black";
-	dir = 1
-	},
-/obj/structure/table/wood/fancy,
-/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "bP" = (
 /obj/effect/turf_decal/siding/wood/corner,
@@ -108,14 +103,10 @@
 /turf/open/floor/wood,
 /area/space)
 "cI" = (
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 8
-	},
-/obj/structure/railing/corner{
+/turf/open/floor/iron/stairs/right{
 	color = "#964B00";
-	dir = 8
+	dir = 4
 	},
-/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "cO" = (
 /turf/closed/indestructible/fakedoor{
@@ -301,7 +292,10 @@
 /turf/open/floor/wood/parquet,
 /area/space)
 "iv" = (
-/obj/structure/chair/sofa/right,
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/railing/corner{
+	color = "#964B00"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "iH" = (
@@ -502,8 +496,14 @@
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
 "nN" = (
-/obj/structure/table/wood/fancy,
-/turf/open/floor/wood,
+/obj/structure/railing{
+	color = "#964B00"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/iron/stairs/right{
+	color = "#964B00";
+	dir = 8
+	},
 /area/awaymission/cabin/snowforest)
 "oi" = (
 /obj/structure/table/wood,
@@ -1002,17 +1002,19 @@
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/cabin/snowforest)
 "Db" = (
-/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
 /obj/structure/railing/corner{
-	color = "#964B00"
+	color = "#964B00";
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "Dl" = (
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 4
+/turf/open/floor/iron/stairs/left{
+	color = "#964B00"
 	},
-/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "Dm" = (
 /obj/item/kirbyplants{
@@ -1021,10 +1023,16 @@
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/cabin/snowforest)
 "Dt" = (
-/obj/structure/chair/sofa/corner{
+/obj/structure/railing{
+	color = "#964B00";
 	dir = 4
 	},
-/turf/open/floor/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/iron/stairs/right{
+	color = "#964B00"
+	},
 /area/awaymission/cabin/snowforest)
 "Du" = (
 /obj/structure/flora/ausbushes/pointybush,
@@ -1035,7 +1043,9 @@
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "DE" = (
-/obj/structure/chair/sofa/left,
+/obj/structure/chair/sofa/corner{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "DF" = (
@@ -1122,9 +1132,7 @@
 /turf/open/indestructible,
 /area/tdome/tdome1)
 "Ft" = (
-/obj/structure/chair/sofa/left{
-	dir = 8
-	},
+/obj/structure/chair/sofa/left,
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "FA" = (
@@ -1142,9 +1150,8 @@
 /turf/open/indestructible,
 /area/tdome/tdome1)
 "FN" = (
-/turf/open/floor/iron/stairs/left{
-	color = "#964B00"
-	},
+/obj/structure/chair/sofa/right,
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "Gb" = (
 /turf/closed/indestructible/wood,
@@ -1323,24 +1330,24 @@
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "Nw" = (
-/obj/structure/railing{
-	color = "#964B00";
-	dir = 4
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/turf/open/floor/iron/stairs/right{
-	color = "#964B00"
-	},
+/obj/structure/chair/sofa/corner,
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "Ny" = (
 /obj/item/food/spiderling,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/cabin/snowforest)
 "Oe" = (
-/obj/structure/chair/sofa/corner,
-/turf/open/floor/wood,
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/iron/stairs/left{
+	color = "#964B00"
+	},
 /area/awaymission/cabin/snowforest)
 "Or" = (
 /obj/effect/landmark/thunderdome/one,
@@ -1367,13 +1374,8 @@
 /turf/open/floor/iron/stairs/medium,
 /area/awaymission/cabin/snowforest)
 "Pg" = (
-/obj/structure/railing{
-	color = "#964B00"
-	},
-/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/iron/stairs/right{
-	color = "#964B00";
-	dir = 8
+	color = "#964B00"
 	},
 /area/awaymission/cabin/snowforest)
 "Pi" = (
@@ -1431,7 +1433,7 @@
 /area/tdome/arena)
 "PV" = (
 /obj/structure/chair/sofa{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
@@ -1447,15 +1449,14 @@
 	},
 /area/tdome/arena)
 "Qm" = (
-/obj/structure/chair/sofa{
-	dir = 4
-	},
+/obj/structure/table/wood/fancy,
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "Qq" = (
-/turf/open/floor/iron/stairs/right{
-	color = "#964B00"
+/obj/structure/chair/sofa{
+	dir = 8
 	},
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "Qt" = (
 /obj/structure/chair/sofa/corp/corner,
@@ -1598,16 +1599,10 @@
 /turf/open/floor/stone,
 /area/awaymission/cabin/snowforest)
 "VW" = (
-/obj/structure/railing{
-	color = "#964B00";
-	dir = 8
+/obj/structure/chair/sofa/right{
+	dir = 4
 	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/turf/open/floor/iron/stairs/left{
-	color = "#964B00"
-	},
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "Wc" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1616,9 +1611,7 @@
 /turf/open/floor/stone,
 /area/awaymission/cabin/snowforest)
 "Wn" = (
-/obj/structure/chair/sofa/right{
-	dir = 4
-	},
+/obj/machinery/door/airlock/wood,
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "Wq" = (
@@ -1710,14 +1703,21 @@
 	},
 /area/awaymission/cabin/snowforest)
 "YQ" = (
-/obj/machinery/door/airlock/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/railing{
+	color = "black";
+	dir = 1
+	},
+/obj/structure/table/wood/fancy,
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "YS" = (
-/turf/open/floor/iron/stairs/left{
-	color = "#964B00";
+/obj/structure/chair/sofa/left{
 	dir = 8
 	},
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "Za" = (
 /obj/effect/turf_decal/siding/white/corner{
@@ -1726,22 +1726,22 @@
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/cabin/snowforest)
 "Zt" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
+"Zu" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
-"Zu" = (
+"ZC" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/awaymission/cabin/snowforest)
-"ZC" = (
-/turf/open/floor/iron/stairs/right{
-	color = "#964B00";
-	dir = 4
-	},
 /area/awaymission/cabin/snowforest)
 "ZI" = (
 /obj/structure/flora/grass/jungle/b,
@@ -24710,12 +24710,12 @@ Yy
 Gk
 Yy
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
 LW
 LW
 Fr
@@ -24840,12 +24840,12 @@ XV
 XV
 XV
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+fH
+fH
+Dl
+Dl
+Dl
 LW
 LW
 mM
@@ -24970,12 +24970,12 @@ Sr
 FA
 XV
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+fH
+iv
+Dt
+Dt
+Dt
 LW
 LW
 mM
@@ -25100,12 +25100,12 @@ SD
 Gu
 XV
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+bx
+nN
+DE
+PV
+VW
 LW
 LW
 Fr
@@ -25230,12 +25230,12 @@ SD
 Gu
 XV
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+Fr
+Fr
+Ft
+Qm
+Qm
 LW
 LW
 LW
@@ -25626,12 +25626,12 @@ Fr
 Fr
 Fr
 Fr
-Fr
-Fr
-Fr
+fH
+fH
 LW
 LW
-LW
+fH
+fH
 Fr
 bU
 bU
@@ -25753,15 +25753,15 @@ kD
 Co
 Co
 Co
+Co
+Co
 Fr
 fH
 fH
-FN
-FN
-FN
 LW
 LW
-LW
+fH
+fH
 Fr
 Fr
 oj
@@ -25883,15 +25883,15 @@ kD
 Co
 Co
 Co
+Co
+Co
 Fr
 fH
-Db
-Nw
-Nw
-Nw
+fH
 LW
 LW
-LW
+fH
+fH
 QI
 qF
 oj
@@ -26013,15 +26013,15 @@ kD
 Co
 Co
 Co
+Co
+Co
 Fr
-YS
-Pg
-Dt
-Qm
-Wn
+fH
+fH
 LW
 LW
-LW
+fH
+fH
 QI
 qF
 oj
@@ -26143,15 +26143,15 @@ kD
 Co
 Co
 Co
+Co
+Co
 Fr
-Fr
-Fr
-DE
-nN
-nN
+fH
+fH
 LW
 LW
-LW
+fH
+fH
 QI
 qF
 oj
@@ -26273,15 +26273,15 @@ kD
 YP
 YP
 YP
-YQ
-fH
-fH
-fH
+YP
+YP
+Wn
 fH
 fH
 LW
 LW
-LW
+fH
+fH
 Fr
 Fr
 oj
@@ -26403,15 +26403,15 @@ kD
 Co
 Co
 Co
+Co
+Co
 Fr
-Dl
-LW
-LW
-LW
+Zt
 fH
 LW
 LW
-LW
+fH
+fH
 Fr
 oj
 oj
@@ -26533,15 +26533,15 @@ kD
 Co
 Co
 Co
-bx
-Zt
-LW
-LW
-LW
+Co
+Co
+YQ
+Zu
 fH
 LW
 LW
-LW
+fH
+fH
 TT
 oj
 oj
@@ -26663,15 +26663,15 @@ kD
 Co
 Co
 Co
-bx
-Zt
-LW
-LW
-LW
+Co
+Co
+YQ
+Zu
 fH
 LW
 LW
-LW
+fH
+fH
 Fr
 oj
 oj
@@ -26793,15 +26793,15 @@ kD
 Co
 Co
 Co
-bx
-Zt
-LW
-LW
-LW
+Co
+Co
+YQ
+Zu
 fH
 LW
 LW
-LW
+fH
+fH
 TT
 oj
 oj
@@ -26923,15 +26923,15 @@ kD
 Co
 Co
 Co
+Co
+Co
 Fr
-Zu
-LW
-LW
-LW
+ZC
 fH
 LW
 LW
-LW
+fH
+fH
 Fr
 oj
 oj
@@ -27053,15 +27053,15 @@ kD
 YP
 YP
 YP
-YQ
-fH
-fH
-fH
+YP
+YP
+Wn
 fH
 fH
 LW
 LW
-LW
+fH
+fH
 Fr
 Fr
 oj
@@ -27183,15 +27183,15 @@ kD
 Co
 Co
 Co
+Co
+Co
 Fr
-Fr
-Fr
-iv
-nN
-nN
+fH
+fH
 LW
 LW
-LW
+fH
+fH
 QI
 qF
 oj
@@ -27313,15 +27313,15 @@ kD
 Co
 Co
 Co
+Co
+Co
 Fr
-ZC
-pq
-Oe
-PV
-Ft
+fH
+fH
 LW
 LW
-LW
+fH
+fH
 QI
 qF
 oj
@@ -27443,15 +27443,15 @@ kD
 Co
 Co
 Co
+Co
+Co
 Fr
 fH
-cI
-VW
-VW
-VW
+fH
 LW
 LW
-LW
+fH
+fH
 QI
 qF
 oj
@@ -27573,15 +27573,15 @@ kD
 Co
 Co
 Co
+Co
+Co
 Fr
 fH
 fH
-Qq
-Qq
-Qq
 LW
 LW
-LW
+fH
+fH
 Fr
 Fr
 oj
@@ -27706,12 +27706,12 @@ Fr
 Fr
 Fr
 Fr
-Fr
-Fr
-Fr
+fH
+fH
 LW
 LW
-LW
+fH
+fH
 Fr
 TA
 TA
@@ -28090,12 +28090,12 @@ Tp
 BG
 Gb
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+Fr
+Fr
+FN
+Qm
+Qm
 LW
 LW
 LW
@@ -28220,12 +28220,12 @@ Tl
 BG
 Gb
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+cI
+pq
+Nw
+Qq
+YS
 LW
 LW
 LW
@@ -28350,12 +28350,12 @@ Uc
 BG
 Gb
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+fH
+Db
+Oe
+Oe
+Oe
 LW
 LW
 LW
@@ -28480,12 +28480,12 @@ Gb
 Gb
 Gb
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+fH
+fH
+Pg
+Pg
+Pg
 LW
 LW
 LW
@@ -28610,12 +28610,12 @@ Yy
 fE
 Yy
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
 LW
 LW
 LW
