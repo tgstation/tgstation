@@ -31,6 +31,7 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/stickman
@@ -41,14 +42,6 @@
 
 /datum/ai_behavior/basic_melee_attack/stickman
 	action_cooldown = 1.5 SECONDS
-
-/datum/ai_controller/basic_controller/stickman/PerformIdleBehavior(delta_time)
-	. = ..()
-	var/mob/living/living_pawn = pawn
-
-	if(DT_PROB(25, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
-		var/move_dir = pick(GLOB.alldirs)
-		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
 
 /mob/living/basic/stickman/dog
 	name = "Angry Stick Dog"
@@ -76,7 +69,7 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/stickman/ranged
 
-/mob/living/basic/stickman/ranged/Initialize()
+/mob/living/basic/stickman/ranged/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, list(/obj/item/gun/ballistic/automatic/pistol/stickman))
 	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/c9mm, 'sound/misc/bang.ogg')

@@ -11,7 +11,7 @@
 	beauty = -250
 	clean_type = CLEAN_TYPE_BLOOD
 
-/obj/effect/decal/cleanable/xenoblood/Initialize()
+/obj/effect/decal/cleanable/xenoblood/Initialize(mapload)
 	. = ..()
 	add_blood_DNA(list("UNKNOWN DNA" = "X*"))
 
@@ -27,7 +27,7 @@
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
 	mergeable_decal = FALSE
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/Initialize()
+/obj/effect/decal/cleanable/xenoblood/xgibs/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, .proc/on_pipe_eject)
 
@@ -92,6 +92,6 @@
 	icon_state = "xtracks"
 	random_icon_states = null
 
-/obj/effect/decal/cleanable/blood/xtracks/Initialize()
+/obj/effect/decal/cleanable/blood/xtracks/Initialize(mapload)
 	. = ..()
 	add_blood_DNA(list("Unknown DNA" = "X*"))

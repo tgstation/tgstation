@@ -361,7 +361,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/coinflip
 	item_flags = NO_MAT_REDEMPTION //You know, it's kind of a problem that money is worth more extrinsicly than intrinsically in this universe.
 
-/obj/item/coin/Initialize()
+/obj/item/coin/Initialize(mapload)
 	. = ..()
 	coinflip = pick(sideslist)
 	icon_state = "coin_[coinflip]"

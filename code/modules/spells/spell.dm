@@ -272,7 +272,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/playMagSound()
 	playsound(get_turf(usr), sound,50,TRUE)
 
-/obj/effect/proc_holder/spell/Initialize()
+/obj/effect/proc_holder/spell/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 

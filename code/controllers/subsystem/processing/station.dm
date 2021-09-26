@@ -25,6 +25,25 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 ///Rolls for the amount of traits and adds them to the traits list
 /datum/controller/subsystem/processing/station/proc/SetupTraits()
+	if (fexists(FUTURE_STATION_TRAITS_FILE))
+		var/forced_traits_contents = file2text(FUTURE_STATION_TRAITS_FILE)
+		fdel(FUTURE_STATION_TRAITS_FILE)
+
+		var/list/forced_traits_text_paths = json_decode(forced_traits_contents)
+		forced_traits_text_paths = SANITIZE_LIST(forced_traits_text_paths)
+
+		for (var/trait_text_path in forced_traits_text_paths)
+			var/station_trait_path = text2path(trait_text_path)
+			if (!ispath(station_trait_path, /datum/station_trait) || station_trait_path == /datum/station_trait)
+				var/message = "Invalid station trait path [station_trait_path] was requested in the future station traits!"
+				log_game(message)
+				message_admins(message)
+				continue
+
+			setup_trait(station_trait_path)
+
+		return
+
 	for(var/i in subtypesof(/datum/station_trait))
 		var/datum/station_trait/trait_typepath = i
 

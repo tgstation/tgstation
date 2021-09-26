@@ -95,7 +95,7 @@
 		style = customStyle
 	setStyle(style) //Upon initialization, give the supplypod an iconstate, name, and description based on the "style" variable. This system is important for the centcom_podlauncher to function correctly
 
-/obj/structure/closet/supplypod/extractionpod/Initialize()
+/obj/structure/closet/supplypod/extractionpod/Initialize(mapload)
 	. = ..()
 	var/turf/picked_turf = pick(GLOB.holdingfacility)
 	reverse_dropoff_coords = list(picked_turf.x, picked_turf.y, picked_turf.z)
@@ -268,7 +268,7 @@
 			target_living.adjustBruteLoss(damage)
 	var/explosion_sum = B[1] + B[2] + B[3] + B[4]
 	if (explosion_sum != 0) //If the explosion list isn't all zeroes, call an explosion
-		explosion(turf_underneath, B[1], B[2], B[3], flame_range = B[4], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod)) //less advanced equipment than bluespace pod, so larger explosion when landing
+		explosion(turf_underneath, B[1], B[2], B[3], flame_range = B[4], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod), explosion_cause = src) //less advanced equipment than bluespace pod, so larger explosion when landing
 	else if (!effectQuiet && !(pod_flags & FIRST_SOUNDS)) //If our explosion list IS all zeroes, we still make a nice explosion sound (unless the effectQuiet var is true)
 		playsound(src, "explosion", landingSound ? soundVolume * 0.25 : soundVolume, TRUE)
 	if (landingSound)

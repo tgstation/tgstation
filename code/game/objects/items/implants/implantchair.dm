@@ -21,7 +21,7 @@
 	var/message_cooldown
 	var/breakout_time = 600
 
-/obj/machinery/implantchair/Initialize()
+/obj/machinery/implantchair/Initialize(mapload)
 	. = ..()
 	open_machine()
 	update_appearance()

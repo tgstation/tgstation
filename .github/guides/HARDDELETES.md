@@ -137,7 +137,7 @@ Once you've found the issue, it becomes a matter of making sure the ref is clear
 First and simplest we have `Destroy()`. Use this to clean up after yourself for simple cases
 
 ```dm
-/someobject/Initialize()
+/someobject/Initialize(mapload)
     . = ..()
     GLOB.somethings += src //We add ourselves to some global list
 
@@ -157,12 +157,12 @@ This is helpful when for cases where both objects "own" each other
 /someotherobject
     var/someobject/friend
 
-/someobject/Initialize()
+/someobject/Initialize(mapload)
     if(!buddy)
         buddy = new()
         buddy.friend = src
 
-/someotherobject/Initialize()
+/someotherobject/Initialize(mapload)
     if(!friend)
         friend = new()
         friend.buddy = src

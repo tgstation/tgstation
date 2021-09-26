@@ -50,6 +50,7 @@
 #define CELL_LINE_TABLE_MOIST "cell_line_moist_table"
 #define CELL_LINE_TABLE_BLOB "cell_line_blob_table"
 #define CELL_LINE_TABLE_CLOWN "cell_line_clown_table"
+#define CELL_LINE_TABLE_ALGAE "cell_line_algae_table"
 
 //! Biopsy cell line types
 #define CELL_LINE_TABLE_BEAR "cell_line_bear_table"
@@ -73,6 +74,11 @@
 #define CELL_LINE_TABLE_VATBEAST "cell_line_vatbeast_table"
 #define CELL_LINE_TABLE_NETHER "cell_line_nether_table"
 #define CELL_LINE_TABLE_GLUTTON "cell_line_glutton_table"
+#define CELL_LINE_TABLE_FROG	"cell_line_frog_table"
+#define CELL_LINE_TABLE_WALKING_MUSHROOM "cell_line_walking_mushroom_table"
+#define CELL_LINE_TABLE_QUEEN_BEE "cell_line_bee_queen_table"
+#define CELL_LINE_TABLE_LEAPER	"cell_line_leaper_table"
+#define CELL_LINE_TABLE_MEGA_ARACHNID "cell_line_table_mega_arachnid"
 
 //! All cell virus types
 #define CELL_VIRUS_TABLE_GENERIC "cell_virus_generic_table"

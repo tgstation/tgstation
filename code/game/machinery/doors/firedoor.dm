@@ -26,7 +26,7 @@
 	var/list/affecting_areas
 	var/being_held_open = FALSE
 
-/obj/machinery/door/firedoor/Initialize()
+/obj/machinery/door/firedoor/Initialize(mapload)
 	. = ..()
 	CalculateAffectingAreas()
 
@@ -263,7 +263,7 @@
 	opacity = TRUE
 	density = TRUE
 
-/obj/machinery/door/firedoor/border_only/Initialize()
+/obj/machinery/door/firedoor/border_only/Initialize(mapload)
 	. = ..()
 
 	var/static/list/loc_connections = list(

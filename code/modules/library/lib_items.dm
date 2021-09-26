@@ -179,7 +179,7 @@
 /obj/structure/bookcase/manuals/engineering
 	name = "engineering manuals bookcase"
 
-/obj/structure/bookcase/manuals/engineering/Initialize()
+/obj/structure/bookcase/manuals/engineering/Initialize(mapload)
 	. = ..()
 	new /obj/item/book/manual/wiki/engineering_construction(src)
 	new /obj/item/book/manual/wiki/engineering_hacking(src)
@@ -192,7 +192,7 @@
 /obj/structure/bookcase/manuals/research_and_development
 	name = "\improper R&D manuals bookcase"
 
-/obj/structure/bookcase/manuals/research_and_development/Initialize()
+/obj/structure/bookcase/manuals/research_and_development/Initialize(mapload)
 	. = ..()
 	new /obj/item/book/manual/wiki/research_and_development(src)
 	update_appearance()

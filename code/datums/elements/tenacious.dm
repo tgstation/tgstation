@@ -17,9 +17,9 @@
 	ADD_TRAIT(target, TRAIT_TENACIOUS, INNATE_TRAIT)
 
 /datum/element/tenacious/Detach(datum/target)
-	. = ..()
 	UnregisterSignal(target, COMSIG_MOB_STATCHANGE)
 	REMOVE_TRAIT(target, TRAIT_TENACIOUS, INNATE_TRAIT)
+	return ..()
 
 ///signal called by the stat of the target changing
 /datum/element/tenacious/proc/on_stat_change(mob/living/carbon/human/target, new_stat)
