@@ -8,4 +8,4 @@
 	multiplicative_slowdown = 0.5
 
 /datum/actionspeed_modifier/power_chord
-	multiplicative_slowdown = -0.75
+	multiplicative_slowdown = -0.15

@@ -33,6 +33,8 @@
 /**
  * When the song is long enough, it will have a special effect when it ends.
  *
+ * If you want something that ALWAYS goes off regardless of song length, affix it to the Destroy proc. The rite is destroyed when smooth tunes is done.
+ *
  * Arguments:
  * * song_player - parent of the smooth_tunes component. This is limited to the compatible items of said component, which currently includes mobs and objects so we'll have to type appropriately.
  * * song_datum - Datum song being played
@@ -164,16 +166,20 @@
 	favor_cost = 20
 	glow_color = "#E8E822"
 	repeats_okay = FALSE
-	///after each process, the song's listeners are recorded so people who are
-	var/list/last_hearers = list()
+	///after each process, the song's listeners are recorded as weakrefs so people who are powered up can be cleared of buffs when the song is over
+	var/list/buffed_weakrefs = list()
 
 /datum/religion_rites/song_tuner/power/song_effect(atom/song_player, datum/song/song_datum)
 	if(!song_datum)
 		return
-	for(var/mob/living/last_listener as anything in last_hearers)
-		if(!(last_listener in song_datum.hearing_mobs))
-			last_listener.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/power_chord)
-			last_listener.remove_actionspeed_modifier(/datum/actionspeed_modifier/power_chord)
+	//buffed
+	var/list/has_modifiers = resolve_weakref_list(buffed_weakrefs)
+	//buffed, but not listening
+	var/list/remove_modifiers = has_modifiers - song_datum.hearing_mobs
+	for(var/mob/living/not_listening in remove_modifiers)
+		to_chat(world, "removing movespeed from [not_listening]")
+		not_listening.remove_actionspeed_modifier(/datum/actionspeed_modifier/power_chord)
+		not_listening.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/power_chord)
 	for(var/mob/living/listener in song_datum.hearing_mobs)
 		if(listener.anti_magic_check(magic = FALSE, holy = TRUE))
 			continue
@@ -181,10 +187,11 @@
 			continue
 		if(prob(20))
 			to_chat(listener, span_warning(pick("The music is hyping you up!", "The music makes you feel amp'd up.", "This song is electric!")))
-		if(listener in last_hearers)
+		if(!(listener in has_modifiers))
+			to_chat(world, "adding movespeed to [listener]")
 			listener.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/power_chord)
 			listener.add_actionspeed_modifier(/datum/actionspeed_modifier/power_chord)
-	last_hearers = song_datum.hearing_mobs
+	buffed_weakrefs = weakref_list(song_datum.hearing_mobs)
 
 /datum/religion_rites/song_tuner/power/finish_effect(atom/song_player, datum/song/song_datum)
 	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
@@ -194,5 +201,10 @@
 		stomach.crystal_charge = ETHEREAL_CHARGE_FULL
 
 /datum/religion_rites/song_tuner/power/Destroy()
-	QDEL_NULL(last_hearers)
+	var/list/has_modifiers = resolve_weakref_list(buffed_weakrefs)
+	for(var/mob/living/finished_listening in has_modifiers)
+		to_chat(world, "song over. removing movespeed from [not_listening]")
+		finished_listening.remove_actionspeed_modifier(/datum/actionspeed_modifier/power_chord)
+		finished_listening.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/power_chord)
+	QDEL_NULL(has_modifiers)
 	. = ..()

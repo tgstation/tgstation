@@ -140,7 +140,10 @@
 
 /// Perform the rite, called from [/datum/component/religious_tool/proc/AttemptActions]
 /datum/component/religious_tool/proc/perform_rite(mob/living/user, path)
-	if(user.mind.holy_role <= HOLY_ROLE_DEACON)
+	if(!user.mind.holy_role)
+		to_chat(user, "<span class='warning'>Only the religious can perform rites.")
+		return
+	if(user.mind.holy_role == HOLY_ROLE_DEACON)
 		to_chat(user, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
 		return
 	if(performing_rite)

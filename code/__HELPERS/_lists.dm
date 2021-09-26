@@ -583,3 +583,19 @@
 			? right_list.Copy()\
 			: null\
 	)
+
+///takes a list, and returns a list with each of the contents as their weakref.
+/proc/weakref_list(list/real_list)
+	var/list/weakref_list = list()
+	for(var/real in real_list)
+		weakref_list += WEAKREF(real)
+	return weakref_list
+
+///takes a list of weakrefs, and returns a list of resolved instances. in essence, it is the opposite of `weakref_list`
+/proc/resolve_weakref_list(list/weakref_list)
+	var/list/real_list = list()
+	for(var/datum/weakref/weakref as anything in weakref_list)
+		var/real = weakref.resolve()
+		if(real)
+			real_list += real
+	return real_list
