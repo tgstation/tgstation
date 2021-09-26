@@ -2155,11 +2155,11 @@
 	return exp_list
 
 /**
-  * A proc triggered by callback when someone gets slammed by the tram and lands somewhere.
-  *
-  * This proc is used to force people to fall through things like lattice and unplated flooring at the expense of some
-  * extra damage, so jokers can't use half a stack of iron rods to make getting hit by the tram immediately lethal.
-  */
+ * A proc triggered by callback when someone gets slammed by the tram and lands somewhere.
+ *
+ * This proc is used to force people to fall through things like lattice and unplated flooring at the expense of some
+ * extra damage, so jokers can't use half a stack of iron rods to make getting hit by the tram immediately lethal.
+ */
 /mob/living/proc/tram_slam_land()
 	if(!istype(loc, /turf/open/openspace) && !istype(loc, /turf/open/floor/plating))
 		return
