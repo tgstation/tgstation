@@ -517,7 +517,7 @@
 	///when was the first shuttle curse?
 	var/static/first_curse_time
 	///curse messages that have already been used
-	var/static/list/used_curses = list()
+	var/static/list/remaining_curses
 
 /obj/item/shuttle_curse/attack_self(mob/living/user)
 	if(!IS_CULTIST(user))
@@ -557,13 +557,10 @@
 		to_chat(user, span_danger("You shatter the orb! A dark essence spirals into the air, then disappears."))
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 50, TRUE)
 
-		var/curse_message = "Something has gone horrendously wrong..."
-		for(var/i in 1 to 3) // can't use pick_and_take() with json, so we just do 3 shots at pulling a message we haven't used yet, probably good enough
-			curse_message = pick_list(CULT_SHUTTLE_CURSE, "curse_announce")
-			if(!(curse_message in used_curses))
-				break
+		if(!remaining_curses)
+			remaining_curses = strings(CULT_SHUTTLE_CURSE, "curse_announce")
 
-		used_curses += curse_message
+		var/curse_message = pick_n_take(remaining_curses) || "Something has gone horrendously wrong..."
 
 		curse_message += " The shuttle will be delayed by three minutes."
 		priority_announce("[curse_message]", "System Failure", 'sound/misc/notice1.ogg')
@@ -576,8 +573,8 @@
 
 		if(totalcurses >= MAX_SHUTTLE_CURSES && (world.time < first_curse_time + SHUTTLE_CURSE_OMFG_TIMESPAN))
 			var/omfg_message = pick_list(CULT_SHUTTLE_CURSE, "omfg_announce") || "LEAVE US ALONE!"
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/priority_announce, omfg_message, "Priority Alert", 'sound/misc/notice1.ogg'), rand(2 SECONDS, 6 SECONDS))
-			for(var/mob/iter_player in GLOB.player_list)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/priority_announce, omfg_message, "Priority Alert", 'sound/misc/notice1.ogg', sender_override = "Central Command Division of Transportation"), rand(2 SECONDS, 6 SECONDS))
+			for(var/mob/iter_player as anything in GLOB.player_list)
 				if(IS_CULTIST(iter_player))
 					iter_player.client?.give_award(/datum/award/achievement/misc/cult_shuttle_omfg, iter_player)
 
