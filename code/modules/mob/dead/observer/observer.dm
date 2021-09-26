@@ -459,7 +459,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
-	if (!istype(target) || SSmapping.level_trait(target.z, ZTRAIT_SECRET))
+	if (!istype(target) || (SSmapping.level_trait(target.z, ZTRAIT_SECRET) && !client?.holder))
 		return
 
 	var/icon/I = icon(target.icon,target.icon_state,target.dir)
@@ -856,7 +856,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/proc/cleanup_observe()
 	var/mob/target = observetarget
 	observetarget = null
-	client.perspective = initial(client.perspective)
+	client?.perspective = initial(client.perspective)
 	sight = initial(sight)
 	UnregisterSignal(target, COMSIG_MOVABLE_Z_CHANGED)
 	if(target.observers)
