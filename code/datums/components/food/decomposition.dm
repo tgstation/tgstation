@@ -57,6 +57,7 @@
 		examine_type = DECOMP_EXAM_GROSS
 
 	handle_movement()
+	QDEL_IN(src, 1) // BEGONE YE
 
 
 /datum/component/decomposition/UnregisterFromParent()
