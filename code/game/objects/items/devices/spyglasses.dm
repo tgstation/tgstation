@@ -69,7 +69,9 @@
 	// omnipresent, then this wouldn't be needed.
 	cam_plane_masters = list()
 	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
-		var/atom/movable/screen/instance = new plane()
+		var/atom/movable/screen/plane_master/instance = new plane()
+		if(instance.blend_mode_override)
+			instance.blend_mode = instance.blend_mode_override
 		instance.assigned_map = "spypopup_map"
 		instance.del_on_map_removal = FALSE
 		instance.screen_loc = "spypopup_map:CENTER"
