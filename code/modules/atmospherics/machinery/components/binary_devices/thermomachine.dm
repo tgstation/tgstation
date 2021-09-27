@@ -44,7 +44,7 @@
 	///Efficiency minimum amount, min 0.25, max 1 (works best on higher laser tiers)
 	var/parts_efficiency = 1
 
-/obj/machinery/atmospherics/components/binary/thermomachine/Initialize()
+/obj/machinery/atmospherics/components/binary/thermomachine/Initialize(mapload)
 	. = ..()
 	RefreshParts()
 	update_appearance()
@@ -489,7 +489,7 @@
 	on = TRUE
 	icon_state = "thermo_base_1"
 
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/Initialize()
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/Initialize(mapload)
 	. = ..()
 	if(target_temperature == initial(target_temperature))
 		target_temperature = min_temperature
@@ -500,7 +500,7 @@
 	greyscale_colors = COLOR_CYAN
 	cooling = TRUE
 
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/coldroom/Initialize()
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/coldroom/Initialize(mapload)
 	. = ..()
 	target_temperature = COLD_ROOM_TEMP
 

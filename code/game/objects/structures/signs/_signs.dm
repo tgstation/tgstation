@@ -41,7 +41,7 @@
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = TRUE
 
-/obj/item/sign/Initialize() //Signs not attached to walls are always rotated so they look like they're laying horizontal.
+/obj/item/sign/Initialize(mapload) //Signs not attached to walls are always rotated so they look like they're laying horizontal.
 	. = ..()
 	var/matrix/M = matrix()
 	M.Turn(90)
@@ -210,7 +210,7 @@
 	placed_sign.setDir(dir)
 	qdel(src)
 
-/obj/item/sign/random/Initialize()
+/obj/item/sign/random/Initialize(mapload)
 	. = ..()
 	set_sign_type(GLOB.editable_sign_types[pick(GLOB.editable_sign_types)])
 

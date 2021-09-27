@@ -12,7 +12,7 @@
 	name = "circuit airlock"
 	autoclose = FALSE
 
-/obj/machinery/door/airlock/shell/Initialize()
+/obj/machinery/door/airlock/shell/Initialize(mapload)
 	. = ..()
 	AddComponent( \
 		/datum/component/shell, \

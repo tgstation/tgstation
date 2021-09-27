@@ -34,7 +34,7 @@
 	dir = EAST
 	pixel_x = -32
 
-/obj/machinery/defibrillator_mount/loaded/Initialize() //loaded subtype for mapping use
+/obj/machinery/defibrillator_mount/loaded/Initialize(mapload) //loaded subtype for mapping use
 	. = ..()
 	defib = new/obj/item/defibrillator/loaded(src)
 
@@ -213,7 +213,7 @@
 	wallframe_type = /obj/item/wallframe/defib_mount/charging
 
 
-/obj/machinery/defibrillator_mount/charging/Initialize()
+/obj/machinery/defibrillator_mount/charging/Initialize(mapload)
 	. = ..()
 	if(is_operational)
 		begin_processing()

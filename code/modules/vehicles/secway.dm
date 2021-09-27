@@ -11,7 +11,7 @@
 	///This stores a banana that, when used on the secway, prevents the vehicle from moving until it is removed.
 	var/obj/item/food/grown/banana/eddie_murphy
 
-/obj/vehicle/ridden/secway/Initialize()
+/obj/vehicle/ridden/secway/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/secway)
 
