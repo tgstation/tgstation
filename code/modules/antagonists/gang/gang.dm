@@ -246,8 +246,8 @@
 		qdel(secret_handshake_item)
 		to_chat(owner, span_warning("You're incapable of performing a handshake in your current state."))
 		return FALSE
-	owner.visible_message(span_notice("[src] is offering to induct people into the Family."), \
-					span_notice("You offer to induct people into the Family."), null, 2)
+	owner.visible_message(span_notice("[src] is offering to induct people into the Family."),
+		span_notice("You offer to induct people into the Family."), null, 2)
 	if(H.has_status_effect(STATUS_EFFECT_HANDSHAKE))
 		return FALSE
 	if(!(locate(/mob/living/carbon) in orange(1, owner)))
