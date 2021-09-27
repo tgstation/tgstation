@@ -15,14 +15,14 @@
 					/obj/item/flashlight/seclite = 4,
 					/obj/item/restraints/legcuffs/bola/energy = 7)
 	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,
-					  /obj/item/storage/fancy/donut_box = 2)
+					/obj/item/storage/fancy/donut_box = 2)
 	premium = list(/obj/item/storage/belt/security/webbing = 5,
-				   /obj/item/coin/antagtoken = 1,
-				   /obj/item/clothing/head/helmet/blueshirt = 1,
-				   /obj/item/clothing/suit/armor/vest/blueshirt = 1,
-				   /obj/item/clothing/gloves/tackler = 5,
-				   /obj/item/grenade/stingbang = 1,
-				   /obj/item/watertank/pepperspray = 2)
+					/obj/item/coin/antagtoken = 1,
+					/obj/item/clothing/head/helmet/blueshirt = 1,
+					/obj/item/clothing/suit/armor/vest/blueshirt = 1,
+					/obj/item/clothing/gloves/tackler = 5,
+					/obj/item/grenade/stingbang = 1,
+					/obj/item/watertank/pepperspray = 2)
 	refill_canister = /obj/item/vending_refill/security
 	default_price = PAYCHECK_MEDIUM
 	extra_price = PAYCHECK_HARD * 1.5

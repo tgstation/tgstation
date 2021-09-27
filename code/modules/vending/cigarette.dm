@@ -15,11 +15,11 @@
 					/obj/item/storage/fancy/rollingpapers = 5)
 	contraband = list(/obj/item/clothing/mask/vape = 5)
 	premium = list(/obj/item/storage/fancy/cigarettes/cigpack_robustgold = 3,
-				   /obj/item/storage/box/gum/nicotine = 2,
-				   /obj/item/lighter = 3,
-		           /obj/item/storage/fancy/cigarettes/cigars = 1,
-		           /obj/item/storage/fancy/cigarettes/cigars/havana = 1,
-		           /obj/item/storage/fancy/cigarettes/cigars/cohiba = 1)
+					/obj/item/storage/box/gum/nicotine = 2,
+					/obj/item/lighter = 3,
+					/obj/item/storage/fancy/cigarettes/cigars = 1,
+					/obj/item/storage/fancy/cigarettes/cigars/havana = 1,
+					/obj/item/storage/fancy/cigarettes/cigars/cohiba = 1)
 	refill_canister = /obj/item/vending_refill/cigarette
 	default_price = PAYCHECK_ASSISTANT
 	extra_price = PAYCHECK_HARD

@@ -17,7 +17,7 @@
 					/obj/item/secateurs = 3,
 					/obj/item/plant_analyzer = 4)
 	contraband = list(/obj/item/reagent_containers/glass/bottle/ammonia = 10,
-					  /obj/item/reagent_containers/glass/bottle/diethylamine = 5)
+					/obj/item/reagent_containers/glass/bottle/diethylamine = 5)
 	refill_canister = /obj/item/vending_refill/hydronutrients
 	default_price = PAYCHECK_ASSISTANT * 0.8
 	extra_price = PAYCHECK_HARD * 0.8
