@@ -93,6 +93,9 @@
 	name = "Thunderdome Arena"
 	icon_state = "thunder"
 
+/area/tdome/arena/nograv
+	has_gravity = FALSE
+
 /area/tdome/arena_source
 	name = "Thunderdome Arena Template"
 	icon_state = "thunder"

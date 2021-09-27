@@ -169,7 +169,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 	#ifdef EVENTMODE
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
 	#endif
 	. = ..()
 
