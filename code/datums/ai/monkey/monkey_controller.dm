@@ -23,7 +23,8 @@ have ways of interacting with a specific mob and control it.
 		BB_MONKEY_CURRENT_ATTACK_TARGET = null,
 		BB_MONKEY_GUN_NEURONS_ACTIVATED = FALSE,
 		BB_MONKEY_GUN_WORKED = TRUE,
-		BB_MONKEY_NEXT_HUNGRY = 0
+		BB_MONKEY_NEXT_HUNGRY = 0,
+		BB_SONG_LINES = MONKEY_SONG,
 	)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,

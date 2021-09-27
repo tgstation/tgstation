@@ -288,27 +288,3 @@
 		enemies[your_enemy] = MONKEY_RECRUIT_HATED_AMOUNT
 		monkey_ai.blackboard[BB_MONKEY_RECRUIT_COOLDOWN] = world.time + MONKEY_RECRUIT_COOLDOWN
 	finish_action(controller, TRUE)
-
-/datum/ai_behavior/setup_dk_instrument
-
-/datum/ai_behavior/setup_dk_instrument/perform(delta_time, datum/ai_controller/controller, song_key)
-	. = ..()
-
-	var/datum/song/song = controller.blackboard[song_key]
-
-	//just in case- it won't do anything if the instrument isn't playing
-	song.stop_playing()
-	song.ParseSong(MONKEY_SONG)
-	song.repeat = 10
-	song.volume = song.max_volume - 10
-	finish_action(controller, TRUE)
-
-/datum/ai_behavior/play_instrument
-
-/datum/ai_behavior/play_instrument/perform(delta_time, datum/ai_controller/controller, song_key)
-	. = ..()
-
-	var/datum/song/dk_theme = controller.blackboard[song_key]
-
-	dk_theme.start_playing(controller.pawn)
-	finish_action(controller, TRUE)
