@@ -30,7 +30,6 @@
 	var/has_opened_overlay = TRUE
 	var/has_closed_overlay = TRUE
 	var/icon_door = null
-	var/icon_door_override = FALSE //override to have open overlay use icon different to its base's
 	var/secure = FALSE //secure locker or not, also used if overriding a non-secure locker with a secure door overlay to add fancy lights
 	var/opened = FALSE
 	var/welded = FALSE
@@ -104,7 +103,7 @@
 	. = new_overlays
 	if(enable_door_overlay && !is_animating_door)
 		if(opened && has_opened_overlay)
-			var/mutable_appearance/door_overlay = mutable_appearance(icon, "[icon_door_override ? icon_door : icon_state]_open", alpha = src.alpha)
+			var/mutable_appearance/door_overlay = mutable_appearance(icon, "[icon_state]_open", alpha = src.alpha)
 			. += door_overlay
 			door_overlay.overlays += emissive_blocker(door_overlay.icon, door_overlay.icon_state, alpha = door_overlay.alpha) // If we don't do this the door doesn't block emissives and it looks weird.
 		else if(has_closed_overlay)
@@ -129,7 +128,6 @@
 	if(!door_obj)
 		door_obj = new
 	var/default_door_icon = "[icon_door || icon_state]_door"
-	var/override_door_icon = "[icon_door_override ? icon_door : icon_state]_back"
 	vis_contents += door_obj
 	door_obj.icon = icon
 	door_obj.icon_state = default_door_icon
@@ -143,7 +141,7 @@
 		var/door_layer
 
 		if (angle >= 90)
-			door_state = override_door_icon
+			door_state = "[icon_state]_back"
 			door_layer = FLOAT_LAYER
 		else
 			door_state = default_door_icon
