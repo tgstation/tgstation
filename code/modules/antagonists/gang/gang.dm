@@ -250,13 +250,13 @@
 	gang_name = "Mafia"
 	gang_id = "RM"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/red,
-							/obj/item/clothing/neck/scarf/red,
-							/obj/item/clothing/under/suit/white,
-							/obj/item/clothing/head/beanie/red,
-							/obj/item/clothing/head/ushanka)
+	/obj/item/clothing/neck/scarf/red,
+	/obj/item/clothing/under/suit/white,
+	/obj/item/clothing/head/beanie/red,
+	/obj/item/clothing/head/ushanka)
 	free_clothes = list(/obj/item/clothing/head/ushanka,
-						/obj/item/clothing/under/suit/white,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/under/suit/white,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Russian"
 	gang_team_type = /datum/team/gang/russian_mafia
 
@@ -275,12 +275,12 @@
 	gang_name = "Mob"
 	gang_id = "IM"
 	acceptable_clothes = list(/obj/item/clothing/under/suit/checkered,
-							/obj/item/clothing/head/fedora,
-							/obj/item/clothing/neck/scarf/green,
-							/obj/item/clothing/mask/bandana/green)
+	/obj/item/clothing/head/fedora,
+	/obj/item/clothing/neck/scarf/green,
+	/obj/item/clothing/mask/bandana/green)
 	free_clothes = list(/obj/item/clothing/head/fedora,
-						/obj/item/clothing/under/suit/checkered,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/under/suit/checkered,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Italian"
 	gang_team_type = /datum/team/gang/russian_mafia
 
@@ -299,11 +299,11 @@
 	gang_name = "Tunnel Snakes"
 	gang_id = "TS"
 	acceptable_clothes = list(/obj/item/clothing/under/pants/classicjeans,
-							/obj/item/clothing/suit/jacket,
-							/obj/item/clothing/mask/bandana/skull)
+	/obj/item/clothing/suit/jacket,
+	/obj/item/clothing/mask/bandana/skull)
 	free_clothes = list(/obj/item/clothing/suit/jacket,
-						/obj/item/clothing/under/pants/classicjeans,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/under/pants/classicjeans,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Snakes"
 	gang_team_type = /datum/team/gang/tunnel_snakes
 
@@ -322,14 +322,14 @@
 	gang_name = "Monarch Crew"
 	gang_id = "HENCH"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/yellow,
-							/obj/item/clothing/under/suit/henchmen,
-							/obj/item/clothing/neck/scarf/yellow,
-							/obj/item/clothing/head/beanie/yellow,
-							/obj/item/clothing/mask/bandana/gold,
-							/obj/item/storage/backpack/henchmen)
+	/obj/item/clothing/under/suit/henchmen,
+	/obj/item/clothing/neck/scarf/yellow,
+	/obj/item/clothing/head/beanie/yellow,
+	/obj/item/clothing/mask/bandana/gold,
+	/obj/item/storage/backpack/henchmen)
 	free_clothes = list(/obj/item/storage/backpack/henchmen,
-						/obj/item/clothing/under/suit/henchmen,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/under/suit/henchmen,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Monarch"
 	gang_team_type = /datum/team/gang/henchmen
 
@@ -347,18 +347,18 @@
 	gang_name = "Tojo Clan"
 	gang_id = "YAK"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/yellow,
-							/obj/item/clothing/under/costume/yakuza,
-							/obj/item/clothing/shoes/yakuza,
-							/obj/item/clothing/neck/scarf/yellow,
-							/obj/item/clothing/head/beanie/yellow,
-							/obj/item/clothing/mask/bandana/gold,
-							/obj/item/clothing/head/hardhat,
-							/obj/item/clothing/suit/yakuza)
+	/obj/item/clothing/under/costume/yakuza,
+	/obj/item/clothing/shoes/yakuza,
+	/obj/item/clothing/neck/scarf/yellow,
+	/obj/item/clothing/head/beanie/yellow,
+	/obj/item/clothing/mask/bandana/gold,
+	/obj/item/clothing/head/hardhat,
+	/obj/item/clothing/suit/yakuza)
 	free_clothes = list(/obj/item/clothing/under/costume/yakuza,
-						/obj/item/clothing/shoes/yakuza,
-						/obj/item/clothing/suit/yakuza,
-						/obj/item/clothing/head/hardhat,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/shoes/yakuza,
+	/obj/item/clothing/suit/yakuza,
+	/obj/item/clothing/head/hardhat,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Tojo"
 	gang_team_type = /datum/team/gang/yakuza
 
@@ -377,14 +377,14 @@
 	gang_name = "Jack Bros"
 	gang_id = "JB"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/blue,
-							/obj/item/clothing/under/costume/jackbros,
-							/obj/item/clothing/shoes/jackbros,
-							/obj/item/clothing/head/jackbros,
-							/obj/item/clothing/mask/bandana/blue)
+	/obj/item/clothing/under/costume/jackbros,
+	/obj/item/clothing/shoes/jackbros,
+	/obj/item/clothing/head/jackbros,
+	/obj/item/clothing/mask/bandana/blue)
 	free_clothes = list(/obj/item/clothing/under/costume/jackbros,
-						/obj/item/clothing/shoes/jackbros,
-						/obj/item/clothing/head/jackbros,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/shoes/jackbros,
+	/obj/item/clothing/head/jackbros,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "JackFrost"
 	gang_team_type = /datum/team/gang/jackbros
 
@@ -404,14 +404,14 @@
 	gang_name = "Dutch van der Linde's Gang"
 	gang_id = "VDL"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/black,
-							/obj/item/clothing/under/costume/dutch,
-							/obj/item/clothing/suit/dutch,
-							/obj/item/clothing/head/bowler,
-							/obj/item/clothing/mask/bandana/black)
+	/obj/item/clothing/under/costume/dutch,
+	/obj/item/clothing/suit/dutch,
+	/obj/item/clothing/head/bowler,
+	/obj/item/clothing/mask/bandana/black)
 	free_clothes = list(/obj/item/clothing/under/costume/dutch,
-						/obj/item/clothing/head/bowler,
-						/obj/item/clothing/suit/dutch,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/head/bowler,
+	/obj/item/clothing/suit/dutch,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Dutch"
 	gang_team_type = /datum/team/gang/dutch
 
@@ -431,12 +431,12 @@
 	gang_name = "Internal Revenue Service"
 	gang_id = "IRS"
 	acceptable_clothes = list(/obj/item/clothing/suit/irs,
-							/obj/item/clothing/under/costume/irs,
-							/obj/item/clothing/head/irs)
+	/obj/item/clothing/under/costume/irs,
+	/obj/item/clothing/head/irs)
 	free_clothes = list(/obj/item/clothing/suit/irs,
-							/obj/item/clothing/under/costume/irs,
-							/obj/item/clothing/head/irs,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/under/costume/irs,
+	/obj/item/clothing/head/irs,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "IRS"
 	gang_team_type = /datum/team/gang/irs
 
@@ -455,12 +455,12 @@
 	gang_name = "Office of Secret Intelligence"
 	gang_id = "OSI"
 	acceptable_clothes = list(/obj/item/clothing/suit/osi,
-							/obj/item/clothing/under/costume/osi,
-							/obj/item/clothing/glasses/osi)
+	/obj/item/clothing/under/costume/osi,
+	/obj/item/clothing/glasses/osi)
 	free_clothes = list(/obj/item/clothing/suit/osi,
-							/obj/item/clothing/under/costume/osi,
-							/obj/item/clothing/glasses/osi,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/under/costume/osi,
+	/obj/item/clothing/glasses/osi,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "OSI"
 	gang_team_type = /datum/team/gang/osi
 
@@ -479,12 +479,12 @@
 	gang_name = "The Lost M.C."
 	gang_id = "TMC"
 	acceptable_clothes = list(/obj/item/clothing/suit/tmc,
-							/obj/item/clothing/under/costume/tmc,
-							/obj/item/clothing/head/tmc)
+	/obj/item/clothing/under/costume/tmc,
+	/obj/item/clothing/head/tmc)
 	free_clothes = list(/obj/item/clothing/suit/tmc,
-							/obj/item/clothing/under/costume/tmc,
-							/obj/item/clothing/head/tmc,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/under/costume/tmc,
+	/obj/item/clothing/head/tmc,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "LostMC"
 	gang_team_type = /datum/team/gang/tmc
 
@@ -503,12 +503,12 @@
 	gang_name = "Powder Gangers"
 	gang_id = "PG"
 	acceptable_clothes = list(/obj/item/clothing/suit/pg,
-							/obj/item/clothing/under/costume/pg,
-							/obj/item/clothing/head/pg)
+	/obj/item/clothing/under/costume/pg,
+	/obj/item/clothing/head/pg)
 	free_clothes = list(/obj/item/clothing/suit/pg,
-							/obj/item/clothing/under/costume/pg,
-							/obj/item/clothing/head/pg,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/under/costume/pg,
+	/obj/item/clothing/head/pg,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "PowderGang"
 	gang_team_type = /datum/team/gang/pg
 
@@ -535,7 +535,7 @@
 							/obj/item/clothing/under/costume/driscoll,
 							/obj/item/clothing/mask/gas/driscoll,
 							/obj/item/clothing/shoes/cowboy,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Drill"
 	gang_team_type = /datum/team/gang/driscoll
 
@@ -554,14 +554,14 @@
 	gang_name = "Deckers"
 	gang_id = "DK"
 	acceptable_clothes = list(/obj/item/clothing/suit/deckers,
-							/obj/item/clothing/under/costume/deckers,
-							/obj/item/clothing/head/deckers,
-							/obj/item/clothing/shoes/deckers)
+	/obj/item/clothing/under/costume/deckers,
+	/obj/item/clothing/head/deckers,
+	/obj/item/clothing/shoes/deckers)
 	free_clothes = list(/obj/item/clothing/suit/deckers,
-							/obj/item/clothing/under/costume/deckers,
-							/obj/item/clothing/head/deckers,
-							/obj/item/clothing/shoes/deckers,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/under/costume/deckers,
+	/obj/item/clothing/head/deckers,
+	/obj/item/clothing/shoes/deckers,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Deckers"
 	gang_team_type = /datum/team/gang/deckers
 
@@ -581,14 +581,14 @@
 	gang_name = "Morningstar"
 	gang_id = "MS"
 	acceptable_clothes = list(/obj/item/clothing/suit/morningstar,
-							/obj/item/clothing/under/costume/morningstar,
-							/obj/item/clothing/head/morningstar,
-							/obj/item/clothing/shoes/morningstar)
+	/obj/item/clothing/under/costume/morningstar,
+	/obj/item/clothing/head/morningstar,
+	/obj/item/clothing/shoes/morningstar)
 	free_clothes = list(/obj/item/clothing/suit/morningstar,
-							/obj/item/clothing/under/costume/morningstar,
-							/obj/item/clothing/head/morningstar,
-							/obj/item/clothing/shoes/morningstar,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/under/costume/morningstar,
+	/obj/item/clothing/head/morningstar,
+	/obj/item/clothing/shoes/morningstar,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "MorningStar"
 	gang_team_type = /datum/team/gang/morningstar
 
@@ -607,14 +607,14 @@
 	gang_name = "Third Street Saints"
 	gang_id = "TSS"
 	acceptable_clothes = list(/obj/item/clothing/suit/saints,
-							/obj/item/clothing/under/costume/saints,
-							/obj/item/clothing/head/saints,
-							/obj/item/clothing/shoes/saints)
+	/obj/item/clothing/under/costume/saints,
+	/obj/item/clothing/head/saints,
+	/obj/item/clothing/shoes/saints)
 	free_clothes = list(/obj/item/clothing/suit/saints,
-							/obj/item/clothing/under/costume/saints,
-							/obj/item/clothing/head/saints,
-							/obj/item/clothing/shoes/saints,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/under/costume/saints,
+	/obj/item/clothing/head/saints,
+	/obj/item/clothing/shoes/saints,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "TheSaints"
 	gang_team_type = /datum/team/gang/saints
 
@@ -634,14 +634,14 @@
 	gang_name = "Phantom Thieves of Hearts"
 	gang_id = "PT"
 	acceptable_clothes = list(/obj/item/clothing/suit/phantom,
-							/obj/item/clothing/under/costume/phantom,
-							/obj/item/clothing/glasses/phantom,
-							/obj/item/clothing/shoes/phantom)
+	/obj/item/clothing/under/costume/phantom,
+	/obj/item/clothing/glasses/phantom,
+	/obj/item/clothing/shoes/phantom)
 	free_clothes = list(/obj/item/clothing/suit/phantom,
-							/obj/item/clothing/under/costume/phantom,
-							/obj/item/clothing/glasses/phantom,
-							/obj/item/clothing/shoes/phantom,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/under/costume/phantom,
+	/obj/item/clothing/glasses/phantom,
+	/obj/item/clothing/shoes/phantom,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "PhantomThieves"
 	gang_team_type = /datum/team/gang/phantom
 
@@ -660,11 +660,11 @@
 	gang_name = "Allies"
 	gang_id = "ALLIES"
 	free_clothes = list(/obj/item/clothing/suit/allies,
-							/obj/item/clothing/under/costume/allies,
-							/obj/item/clothing/head/allies,
-							/obj/item/clothing/gloves/color/black,
-							/obj/item/clothing/shoes/jackboots,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/under/costume/allies,
+	/obj/item/clothing/head/allies,
+	/obj/item/clothing/gloves/color/black,
+	/obj/item/clothing/shoes/jackboots,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Allies"
 	gang_team_type = /datum/team/gang/allies
 
@@ -683,11 +683,11 @@
 	gang_name = "Soviets"
 	gang_id = "SOV"
 	free_clothes = list(/obj/item/clothing/suit/soviet,
-							/obj/item/clothing/under/costume/soviet_families,
-							/obj/item/clothing/head/ushanka/soviet,
-							/obj/item/clothing/gloves/color/black,
-							/obj/item/clothing/shoes/jackboots,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/under/costume/soviet_families,
+	/obj/item/clothing/head/ushanka/soviet,
+	/obj/item/clothing/gloves/color/black,
+	/obj/item/clothing/shoes/jackboots,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Soviets"
 	gang_team_type = /datum/team/gang/soviet
 
@@ -706,11 +706,11 @@
 	gang_name = "Yuri's Army"
 	gang_id = "YR"
 	free_clothes = list(/obj/item/clothing/suit/yuri,
-							/obj/item/clothing/under/costume/yuri,
-							/obj/item/clothing/head/yuri,
-							/obj/item/clothing/gloves/color/black,
-							/obj/item/clothing/shoes/jackboots,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/under/costume/yuri,
+	/obj/item/clothing/head/yuri,
+	/obj/item/clothing/gloves/color/black,
+	/obj/item/clothing/shoes/jackboots,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "YuriArmy"
 	gang_team_type = /datum/team/gang/yuri
 
@@ -729,11 +729,11 @@
 	gang_name = "Sybil Slickers"
 	gang_id = "SS"
 	free_clothes = list(/obj/item/clothing/suit/sybil_slickers,
-							/obj/item/clothing/under/costume/sybil_slickers,
-							/obj/item/clothing/head/sybil_slickers,
-							/obj/item/clothing/gloves/tackler/football,
-							/obj/item/clothing/shoes/sybil_slickers,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/under/costume/sybil_slickers,
+	/obj/item/clothing/head/sybil_slickers,
+	/obj/item/clothing/gloves/tackler/football,
+	/obj/item/clothing/shoes/sybil_slickers,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "SybilSlickers"
 	gang_team_type = /datum/team/gang/sybil_slickers
 
@@ -752,11 +752,11 @@
 	gang_name = "Basil Boys"
 	gang_id = "BB"
 	free_clothes = list(/obj/item/clothing/suit/basil_boys,
-							/obj/item/clothing/under/costume/basil_boys,
-							/obj/item/clothing/head/basil_boys,
-							/obj/item/clothing/gloves/tackler/football,
-							/obj/item/clothing/shoes/basil_boys,
-						/obj/item/toy/crayon/spraycan)
+	/obj/item/clothing/under/costume/basil_boys,
+	/obj/item/clothing/head/basil_boys,
+	/obj/item/clothing/gloves/tackler/football,
+	/obj/item/clothing/shoes/basil_boys,
+	/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "BasilBoys"
 	gang_team_type = /datum/team/gang/basil_boys
 
