@@ -189,7 +189,7 @@
 	required_candidates = 1
 	weight = 7
 	cost = 10
-	requirements = list(50,40,30,20,10,10,10,10,10,10)
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	repeatable = TRUE
 
 	/// Whether or not this instance of sleeper agent should be randomly acceptable.

@@ -15,9 +15,9 @@
 	restricted_roles = list("AI", "Cyborg")
 	required_candidates = 1
 	weight = 5
-	cost = 8 // Avoid raising traitor threat above 10, as it is the default low cost ruleset.
+	cost = 8 // Avoid raising traitor threat above this, as it is the default low cost ruleset.
 	scaling_cost = 9
-	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	requirements = list(8,8,8,8,8,8,8,8,8,8)
 	antag_cap = list("denominator" = 24)
 	var/autotraitor_cooldown = (15 MINUTES)
 	COOLDOWN_DECLARE(autotraitor_cooldown_check)
