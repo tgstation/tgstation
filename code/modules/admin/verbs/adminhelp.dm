@@ -782,3 +782,32 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 				break
 
 	return potential_hits
+
+/**
+ * Checks a given message to see if any of the words contain an active admin's ckey with an @ before it
+ *
+ * Returns nothing if no pings are found, otherwise returns an associative list with ckey -> client
+ * Also modifies msg to underline the pings, then stores them in the key [ADMINSAY_PING_UNDERLINE_NAME_INDEX] for returning
+ *
+ * Arguments:
+ * * msg - the message being scanned
+ */
+/proc/check_admin_pings(msg)
+	//explode the input msg into a list
+	var/list/msglist = splittext(msg, " ")
+	var/list/admins_to_ping = list()
+
+	var/i = 0
+	for(var/word in msglist)
+		i++
+		if(word[1] != "@")
+			continue
+		var/ckey_check = lowertext(copytext(word, 2))
+		var/client/client_check = GLOB.directory[ckey_check]
+		if(client_check?.holder)
+			msglist[i] = "<u>[word]</u>"
+			admins_to_ping[ckey_check] = client_check
+
+	if(length(admins_to_ping))
+		admins_to_ping[ADMINSAY_PING_UNDERLINE_NAME_INDEX] = jointext(msglist, " ") // without tuples, we must make do!
+		return admins_to_ping
