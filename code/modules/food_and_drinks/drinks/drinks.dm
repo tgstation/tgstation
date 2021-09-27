@@ -580,6 +580,8 @@
 	pixel_y = rand(-4,4)
 	if (random_sprite)
 		icon_state = "colocup[rand(0, 6)]"
+		if (icon_state == "colocup6")
+			desc = "A cheap, mass produced style of cup, typically used at parties. Woah, this one is in red! What the hell?"
 
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
