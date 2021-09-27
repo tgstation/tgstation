@@ -392,7 +392,7 @@
 					if(moderator_list[/datum/gas/plasma] > 50)
 						internal_output.assert_gases(/datum/gas/bz)
 						internal_output.gases[/datum/gas/bz][MOLES] += scaled_production * 1.8
-						moderator_internal.gases[selected_fuel.secondary_products[3]] += scaled_production * 1.15
+						moderator_internal.gases[selected_fuel.secondary_products[3]][MOLES] += scaled_production * 1.15
 						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.75)
 					if(moderator_list[/datum/gas/proto_nitrate] > 20)
 						radiation *= 1.55
@@ -551,7 +551,7 @@
 			var/max_iron_removable = IRON_OXYGEN_HEAL_PER_SECOND
 			var/iron_removed = min(max_iron_removable * delta_time, iron_content)
 			iron_content -= iron_removed
-			moderator_internal.gases[/datum/gas/oxygen] -= iron_removed * OXYGEN_MOLES_CONSUMED_PER_IRON_HEAL
+			moderator_internal.gases[/datum/gas/oxygen][MOLES] -= iron_removed * OXYGEN_MOLES_CONSUMED_PER_IRON_HEAL
 
 	if(prob(critical_threshold_proximity / 15))
 		var/grav_range = round(log(2.5, critical_threshold_proximity))

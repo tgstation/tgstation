@@ -16,7 +16,7 @@
 	var/list/active_tables = list()
 	var/tables_required = 2
 
-/obj/machinery/power/emitter/energycannon/magical/Initialize()
+/obj/machinery/power/emitter/energycannon/magical/Initialize(mapload)
 	. = ..()
 	if(prob(50))
 		desc = "Oh no, not again."
@@ -143,7 +143,7 @@
 	unique_name = FALSE // disables the (123) number suffix
 	initial_language_holder = /datum/language_holder/universal
 
-/mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
+/mob/living/simple_animal/drone/snowflake/bardrone/Initialize(mapload)
 	. = ..()
 	access_card.add_access(list(ACCESS_CENT_BAR))
 	become_area_sensitive(ROUNDSTART_TRAIT)
@@ -160,7 +160,7 @@
 	stop_automated_movement = TRUE
 	initial_language_holder = /datum/language_holder/universal
 
-/mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize()
+/mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize(mapload)
 	. = ..()
 	// Simple bot ID card that can hold all accesses. Someone turn access into a component at some point, please.
 	access_card = new /obj/item/card/id/advanced/simple_bot(src)

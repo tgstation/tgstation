@@ -37,7 +37,7 @@
 	target = null
 	switch(mode)
 		if(TRACK_NUKE_DISK)
-			var/obj/item/disk/nuclear/N = locate() in GLOB.poi_list
+			var/obj/item/disk/nuclear/N = locate() in SSpoints_of_interest.real_nuclear_disks
 			target = N
 		if(TRACK_MALF_AI)
 			for(var/V in GLOB.ai_list)
@@ -72,7 +72,7 @@
 	flags_1 = NONE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/item/pinpointer/syndicate_cyborg/Initialize()
+/obj/item/pinpointer/syndicate_cyborg/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 

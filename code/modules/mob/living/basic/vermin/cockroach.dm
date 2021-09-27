@@ -27,7 +27,7 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/cockroach
 
-/mob/living/basic/cockroach/Initialize()
+/mob/living/basic/cockroach/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, list(/obj/effect/decal/cleanable/insectguts))
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
@@ -51,20 +51,11 @@
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/cockroach,
 		/datum/ai_planning_subtree/find_and_hunt_target
 )
-
-
-/datum/ai_controller/basic_controller/cockroach/PerformIdleBehavior(delta_time)
-	. = ..()
-	var/mob/living/living_pawn = pawn
-
-	if(DT_PROB(25, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
-		var/move_dir = pick(GLOB.alldirs)
-		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
-
 
 /obj/projectile/glockroachbullet
 	damage = 10 //same damage as a hivebot
@@ -87,7 +78,7 @@
 	faction = list("hostile")
 	ai_controller = /datum/ai_controller/basic_controller/cockroach/glockroach
 
-/mob/living/basic/cockroach/glockroach/Initialize()
+/mob/living/basic/cockroach/glockroach/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/glockroach)
 
@@ -121,7 +112,7 @@
 	sharpness = SHARP_POINTY
 	ai_controller = /datum/ai_controller/basic_controller/cockroach/hauberoach
 
-/mob/living/basic/cockroach/hauberoach/Initialize()
+/mob/living/basic/cockroach/hauberoach/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 10, max_damage = 15, flags = (CALTROP_BYPASS_SHOES | CALTROP_SILENT))
 	AddComponent(/datum/component/squashable, squash_chance = 100, squash_damage = 1, squash_callback = /mob/living/basic/cockroach/hauberoach/.proc/on_squish)

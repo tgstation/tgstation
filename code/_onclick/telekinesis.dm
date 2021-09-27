@@ -96,7 +96,7 @@
 	var/atom/movable/focus
 	var/mob/living/carbon/tk_user
 
-/obj/item/tk_grab/Initialize()
+/obj/item/tk_grab/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 

@@ -270,6 +270,6 @@
 	custom_price = PAYCHECK_ASSISTANT * 0.2
 	custom_materials = (list(/datum/material/plastic = 500))
 
-/obj/item/clothing/neck/beads/Initialize()
+/obj/item/clothing/neck/beads/Initialize(mapload)
 	. = ..()
 	color = color = pick("#ff0077","#d400ff","#2600ff","#00ccff","#00ff2a","#e5ff00","#ffae00","#ff0000", "#ffffff")

@@ -106,15 +106,15 @@ const AbilitiesSection = (props, context) => {
             <Stack.Item basis={0} textColor="label" grow>
               Your
               <span style={absorbstyle}>
-                &ensp;Absorb
+                &ensp;Absorb DNA
               </span> ability
-              allows you to steal the DNA and memories of a victim. The
+              allows you to steal the DNA and memories of a victim.
+              Your
               <span style={absorbstyle}>
-                &ensp;Transform Sting
+                &ensp;Extract DNA Sting
               </span> ability
-              does the same instantly and quietly, but doesn&apos;t
-              count for objectives, kill them, or
-              include their memories and speech patterns.
+              also steals the DNA of a victim, and is undetectable, but
+              does not grant you their memories or speech patterns.
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item basis={0} textColor="label" grow>

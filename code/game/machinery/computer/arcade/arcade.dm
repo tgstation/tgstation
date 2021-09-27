@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /obj/machinery/computer/arcade/proc/Reset()
 	return
 
-/obj/machinery/computer/arcade/Initialize()
+/obj/machinery/computer/arcade/Initialize(mapload)
 	. = ..()
 
 	Reset()

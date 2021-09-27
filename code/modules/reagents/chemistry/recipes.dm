@@ -326,7 +326,7 @@
 		log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(power , T, 0, 0)
-		e.start()
+		e.start(holder.my_atom)
 	holder.clear_reagents()
 
 /*
@@ -440,7 +440,7 @@
 
 //Calls the default explosion subsystem handiler to explode with fire (random firespots and noise)
 /datum/chemical_reaction/proc/explode_fire(datum/reagents/holder, datum/equilibrium/equilibrium, range = 3)
-	explosion(holder.my_atom, flame_range = range)
+	explosion(holder.my_atom, flame_range = range, explosion_cause = src)
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly errupts in flames!")
 
 //Creates a ring of fire in a set range around the beaker location

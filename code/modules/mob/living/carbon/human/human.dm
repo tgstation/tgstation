@@ -1,4 +1,4 @@
-/mob/living/carbon/human/Initialize()
+/mob/living/carbon/human/Initialize(mapload)
 	add_verb(src, /mob/living/proc/mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
@@ -1017,7 +1017,7 @@
 	var/race = null
 	var/use_random_name = TRUE
 
-/mob/living/carbon/human/species/Initialize()
+/mob/living/carbon/human/species/Initialize(mapload)
 	. = ..()
 	INVOKE_ASYNC(src, .proc/set_species, race)
 

@@ -50,7 +50,7 @@
 	stamp_max = 2
 	stamp_offset_y = 5
 
-/obj/item/mail/Initialize()
+/obj/item/mail/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 	AddElement(/datum/element/item_scaling, 0.75, 1)
@@ -193,7 +193,7 @@
 		disposal_holder.destinationTag = sort_tag
 
 /// Subtype that's always junkmail
-/obj/item/mail/junkmail/Initialize()
+/obj/item/mail/junkmail/Initialize(mapload)
 	. = ..()
 	junk_mail()
 
@@ -243,7 +243,7 @@
 	update_icon()
 
 /// Crate for mail that automatically depletes the economy subsystem's pending mail counter.
-/obj/structure/closet/crate/mail/economy/Initialize()
+/obj/structure/closet/crate/mail/economy/Initialize(mapload)
 	. = ..()
 	populate(SSeconomy.mail_waiting)
 	SSeconomy.mail_waiting = 0
@@ -253,7 +253,7 @@
 	name = "brimming mail crate"
 	desc = "A certified post crate from CentCom. Looks stuffed to the gills."
 
-/obj/structure/closet/crate/mail/full/Initialize()
+/obj/structure/closet/crate/mail/full/Initialize(mapload)
 	. = ..()
 	populate(INFINITY)
 
@@ -285,7 +285,7 @@
 	icon_state = "scrap"
 	var/nuclear_option_odds = 0.1
 
-/obj/item/paper/fluff/junkmail_redpill/Initialize()
+/obj/item/paper/fluff/junkmail_redpill/Initialize(mapload)
 	. = ..()
 	if(!prob(nuclear_option_odds)) // 1 in 1000 chance of getting 2 random nuke code characters.
 		info = "<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[rand(0,9)][rand(0,9)][rand(0,9)]...'"
@@ -303,6 +303,6 @@
 	name = "important document"
 	icon_state = "paper_words"
 
-/obj/item/paper/fluff/junkmail_generic/Initialize()
+/obj/item/paper/fluff/junkmail_generic/Initialize(mapload)
 	. = ..()
 	info = pick(GLOB.junkmail_messages)
