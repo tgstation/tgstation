@@ -300,6 +300,7 @@
 	song.stop_playing()
 	song.ParseSong(MONKEY_SONG)
 	song.repeat = 10
+	song.volume = song.max_volume - 10
 	finish_action(controller, TRUE)
 
 /datum/ai_behavior/play_instrument
