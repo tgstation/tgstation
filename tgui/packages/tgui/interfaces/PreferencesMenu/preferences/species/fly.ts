@@ -17,7 +17,7 @@ const Fly: Species = {
     bad: [{
       icon: "fist-raised",
       name: "Insectoid Biology",
-      description: "Fly swatters will deal significantly higher ammounts of \
+      description: "Fly swatters will deal significantly higher amounts of \
       damage to a Flyperson.",
     }, {
       icon: "sun",
