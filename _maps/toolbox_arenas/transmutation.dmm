@@ -1,0 +1,625 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bb" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"bi" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/tdome/arena)
+"bn" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper/stack{
+	dir = 1;
+	mouse_opacity = 0
+	},
+/obj/structure/fluff/paper{
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"dO" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper{
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"dY" = (
+/obj/item/paper/crumpled/docslogs,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"ef" = (
+/obj/item/paper/crumpled/bloody/fluff/stations/lavaland/library/warning,
+/turf/open/floor/stone,
+/area/tdome/arena)
+"eP" = (
+/obj/structure/fluff/paper/stack{
+	dir = 1;
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"eV" = (
+/obj/item/candle/infinite{
+	mouse_opacity = 0;
+	pixel_x = 10
+	},
+/turf/open/floor/stone,
+/area/tdome/arena)
+"fE" = (
+/obj/item/paper/crumpled/muddy/fluff/elephant_graveyard/mutiny,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"fS" = (
+/turf/open/floor/iron/stairs/right,
+/area/tdome/arena)
+"gp" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/tdome/arena)
+"gz" = (
+/turf/open/floor/iron/stairs/medium,
+/area/tdome/arena)
+"gH" = (
+/obj/structure/fluff/paper/stack{
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"gW" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"hy" = (
+/turf/open/floor/iron/stairs/medium{
+	dir = 4
+	},
+/area/tdome/arena)
+"ic" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper{
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"iE" = (
+/obj/item/toy/eldritch_book,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/stone,
+/area/tdome/arena)
+"iF" = (
+/obj/item/candle/infinite{
+	mouse_opacity = 0;
+	pixel_y = 12
+	},
+/turf/open/floor/stone,
+/area/tdome/arena)
+"js" = (
+/obj/structure/chair/wood,
+/turf/open/floor/wood{
+	icon_state = "wood-broken4"
+	},
+/area/tdome/arena)
+"jS" = (
+/obj/structure/fluff/paper/stack{
+	dir = 5;
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"kK" = (
+/obj/structure/fluff/paper/stack{
+	dir = 4;
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/tdome/arena)
+"kQ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/tdome/arena)
+"mO" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/tdome/arena)
+"nr" = (
+/obj/structure/railing/corner,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"ow" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper{
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken2"
+	},
+/area/tdome/arena)
+"oX" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/tdome/arena)
+"qo" = (
+/turf/open/floor/stone,
+/area/tdome/arena)
+"sV" = (
+/obj/structure/fluff/paper{
+	dir = 1;
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"tV" = (
+/obj/structure/fluff/paper/stack{
+	mouse_opacity = 0
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"up" = (
+/obj/structure/destructible/cult/tome,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"wK" = (
+/obj/item/paper/fluff/awaymissions/moonoutpost19/research/larva_autopsy,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"wS" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper/stack{
+	dir = 10;
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"xF" = (
+/obj/structure/fluff/paper{
+	dir = 9;
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"zn" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"BT" = (
+/obj/item/paper/crumpled/muddy/fluff/cannon_instructions,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"Cl" = (
+/obj/structure/table/wood,
+/obj/structure/microscope{
+	anchored = 1;
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"De" = (
+/obj/item/candle/infinite{
+	mouse_opacity = 0;
+	pixel_x = -10
+	},
+/turf/open/floor/stone,
+/area/tdome/arena)
+"Dw" = (
+/turf/open/floor/wood,
+/area/tdome/arena)
+"Es" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"FK" = (
+/obj/item/paper/crumpled/fluff/poem,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"GW" = (
+/obj/effect/eldritch/big,
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/ash/large,
+/obj/effect/decal/remains/human,
+/turf/open/floor/stone,
+/area/tdome/arena)
+"He" = (
+/obj/structure/table/wood,
+/obj/item/paper,
+/obj/item/pen/fountain,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"Ix" = (
+/obj/structure/chair/wood,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"IR" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack,
+/obj/structure/fluff/paper{
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"Jb" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/tdome/arena)
+"Jq" = (
+/obj/structure/railing,
+/turf/open/floor/iron/stairs/right{
+	dir = 8
+	},
+/area/tdome/arena)
+"KZ" = (
+/turf/open/floor/iron/stairs/right{
+	dir = 4
+	},
+/area/tdome/arena)
+"LM" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood{
+	icon_state = "wood-broken2"
+	},
+/area/tdome/arena)
+"LS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/table/wood/fancy/black,
+/obj/item/flashlight/lantern{
+	pixel_y = 8
+	},
+/turf/open/floor/stone,
+/area/tdome/arena)
+"Mc" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/table/wood/fancy/black,
+/obj/item/flashlight/lantern{
+	pixel_y = 8
+	},
+/turf/open/floor/stone,
+/area/tdome/arena)
+"MP" = (
+/obj/item/candle/infinite{
+	mouse_opacity = 0;
+	pixel_y = -10
+	},
+/obj/structure/railing,
+/turf/open/floor/stone,
+/area/tdome/arena)
+"Nr" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"NL" = (
+/obj/structure/railing,
+/turf/open/floor/stone,
+/area/tdome/arena)
+"NP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/tdome/arena)
+"NS" = (
+/obj/item/paper/crumpled/fluff/stations/lavaland/library/diary,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"OC" = (
+/obj/structure/destructible/cult/tome,
+/obj/structure/fluff/paper{
+	dir = 6;
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"OF" = (
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"OQ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/stone,
+/area/tdome/arena)
+"PZ" = (
+/obj/structure/eldritch_crucible{
+	anchored = 1;
+	mouse_opacity = 0
+	},
+/turf/open/floor/stone,
+/area/tdome/arena)
+"RE" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/tdome/arena)
+"RG" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/fluff/paper{
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"RY" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper{
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/tdome/arena)
+"Ss" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/tdome/arena)
+"SI" = (
+/turf/closed/wall/mineral/wood{
+	opacity = 0
+	},
+/area/tdome/arena)
+"Tm" = (
+/turf/open/floor/iron/stairs/medium{
+	dir = 8
+	},
+/area/tdome/arena)
+"Vl" = (
+/turf/open/floor/iron/stairs/left{
+	dir = 8
+	},
+/area/tdome/arena)
+"Vy" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/tdome/arena)
+"XX" = (
+/obj/structure/fluff/paper{
+	dir = 4;
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"Yc" = (
+/turf/open/floor/iron/stairs/left,
+/area/tdome/arena)
+"Yx" = (
+/obj/structure/railing,
+/turf/open/floor/iron/stairs/left{
+	dir = 4
+	},
+/area/tdome/arena)
+"YG" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/item/paper,
+/obj/structure/fluff/paper{
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/tdome/arena)
+"YV" = (
+/obj/structure/fluff/paper{
+	dir = 8;
+	mouse_opacity = 0
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"Zc" = (
+/obj/structure/table/wood,
+/obj/item/book/codex_gigas,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"ZC" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/tdome/arena)
+
+(1,1,1) = {"
+xF
+gW
+NP
+XX
+Dw
+gW
+NS
+up
+"}
+(2,1,1) = {"
+tV
+bb
+FK
+bb
+wS
+gp
+Ix
+He
+"}
+(3,1,1) = {"
+Dw
+bb
+ZC
+bb
+Dw
+gW
+gW
+Cl
+"}
+(4,1,1) = {"
+ow
+bb
+dO
+bb
+Dw
+fE
+LM
+eP
+"}
+(5,1,1) = {"
+gW
+OF
+Dw
+gW
+Ss
+Dw
+nr
+Nr
+"}
+(6,1,1) = {"
+LS
+RE
+Vy
+SI
+KZ
+hy
+Yx
+RG
+"}
+(7,1,1) = {"
+OQ
+qo
+oX
+Yc
+qo
+De
+NL
+YG
+"}
+(8,1,1) = {"
+iE
+ef
+PZ
+gz
+iF
+GW
+MP
+RY
+"}
+(9,1,1) = {"
+OQ
+qo
+oX
+fS
+qo
+eV
+NL
+IR
+"}
+(10,1,1) = {"
+Mc
+kQ
+kQ
+SI
+Vl
+Tm
+Jq
+ic
+"}
+(11,1,1) = {"
+bi
+Dw
+gH
+LM
+Dw
+BT
+zn
+mO
+"}
+(12,1,1) = {"
+bn
+bb
+Dw
+bb
+sV
+gp
+Dw
+dY
+"}
+(13,1,1) = {"
+Dw
+bb
+gW
+bb
+sV
+gW
+jS
+Es
+"}
+(14,1,1) = {"
+Dw
+bb
+kK
+bb
+gW
+gH
+js
+Zc
+"}
+(15,1,1) = {"
+wK
+YV
+gW
+Dw
+Jb
+Dw
+gW
+OC
+"}

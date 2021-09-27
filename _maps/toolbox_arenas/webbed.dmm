@@ -1,0 +1,501 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/indestructible/rock{
+	opacity = 0
+	},
+/area/tdome/arena)
+"b" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"d" = (
+/obj/item/food/spiderleg{
+	pixel_x = -16;
+	pixel_y = -16
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/insectguts{
+	icon_state = "xsplatter1"
+	},
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"f" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/closed/indestructible/rock{
+	opacity = 0
+	},
+/area/tdome/arena)
+"g" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/food/spiderling,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"h" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/spider/cocoon{
+	icon_state = "eggs";
+	mouse_opacity = 0
+	},
+/obj/structure/spider/stickyweb{
+	icon_state = "stickyweb2"
+	},
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"i" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/spider/cocoon{
+	icon_state = "eggs";
+	mouse_opacity = 0
+	},
+/obj/structure/spider/stickyweb,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"j" = (
+/obj/effect/decal/cleanable/blood,
+/turf/closed/indestructible/rock{
+	opacity = 0
+	},
+/area/tdome/arena)
+"k" = (
+/obj/structure/spider/stickyweb{
+	icon_state = "stickyweb2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"l" = (
+/obj/effect/decal/cleanable/insectguts{
+	icon_state = "xfloor3"
+	},
+/obj/structure/spider/stickyweb,
+/turf/open/floor/gravel,
+/area/tdome/arena)
+"m" = (
+/obj/structure/spider/stickyweb,
+/turf/open/floor/gravel,
+/area/tdome/arena)
+"o" = (
+/obj/structure/spider/cocoon{
+	mouse_opacity = 0
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"p" = (
+/obj/structure/spider/stickyweb{
+	icon_state = "stickyweb2"
+	},
+/obj/effect/decal/remains/human,
+/turf/open/floor/gravel,
+/area/tdome/arena)
+"q" = (
+/obj/effect/turf_decal/gravedge{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"r" = (
+/obj/structure/spider/stickyweb{
+	icon_state = "stickyweb2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/gravel,
+/area/tdome/arena)
+"s" = (
+/obj/structure/spider/stickyweb{
+	icon_state = "stickyweb2"
+	},
+/turf/open/floor/gravel,
+/area/tdome/arena)
+"u" = (
+/obj/effect/turf_decal/gravedge{
+	dir = 1
+	},
+/obj/item/food/meat/slab/spider,
+/obj/item/food/spiderleg,
+/obj/item/food/spidereggs,
+/obj/item/food/spiderleg{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/insectguts{
+	icon_state = "xfloor3"
+	},
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"v" = (
+/obj/structure/spider/cocoon{
+	mouse_opacity = 0
+	},
+/obj/structure/spider/stickyweb,
+/turf/open/floor/gravel,
+/area/tdome/arena)
+"w" = (
+/obj/structure/spider/cocoon{
+	icon_state = "eggs";
+	mouse_opacity = 0
+	},
+/obj/structure/spider/stickyweb,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"x" = (
+/obj/structure/spider/stickyweb/sealed,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/gravel,
+/area/tdome/arena)
+"y" = (
+/obj/effect/turf_decal/gravcorner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/spider/cocoon{
+	mouse_opacity = 0
+	},
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/spider/cocoon{
+	mouse_opacity = 0
+	},
+/obj/structure/spider/stickyweb{
+	icon_state = "stickyweb2"
+	},
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"A" = (
+/obj/item/food/spiderleg{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/insectguts{
+	icon_state = "xfloor7"
+	},
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"C" = (
+/obj/structure/spider/stickyweb/sealed,
+/turf/open/floor/gravel,
+/area/tdome/arena)
+"E" = (
+/obj/structure/flora/rock,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"F" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/spider/stickyweb{
+	icon_state = "stickyweb2"
+	},
+/turf/open/floor/gravel,
+/area/tdome/arena)
+"G" = (
+/obj/effect/mob_spawn/human/skeleton,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor5-old"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "gib2-old"
+	},
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"I" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/spider/stickyweb,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/insectguts,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"L" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/spider/stickyweb{
+	icon_state = "stickyweb2"
+	},
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"M" = (
+/obj/effect/turf_decal/gravcorner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/spider/stickyweb{
+	icon_state = "stickyweb2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"P" = (
+/obj/effect/decal/cleanable/insectguts{
+	icon_state = "xfloor5"
+	},
+/turf/open/floor/gravel,
+/area/tdome/arena)
+"Q" = (
+/turf/open/floor/gravel,
+/area/tdome/arena)
+"R" = (
+/obj/structure/spider/stickyweb,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"S" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"U" = (
+/obj/effect/decal/cleanable/insectguts{
+	icon_state = "xfloor3"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"V" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"W" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/spider/cocoon{
+	mouse_opacity = 0
+	},
+/obj/structure/spider/stickyweb,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"X" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+"Y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/food/spiderling,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/tdome/arena)
+
+(1,1,1) = {"
+a
+j
+V
+V
+V
+V
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+o
+V
+V
+M
+a
+a
+"}
+(3,1,1) = {"
+a
+S
+V
+K
+V
+q
+Q
+a
+"}
+(4,1,1) = {"
+a
+b
+V
+V
+E
+q
+Q
+a
+"}
+(5,1,1) = {"
+h
+R
+b
+V
+V
+q
+P
+m
+"}
+(6,1,1) = {"
+z
+R
+O
+X
+V
+q
+Q
+p
+"}
+(7,1,1) = {"
+Y
+g
+i
+f
+A
+q
+r
+m
+"}
+(8,1,1) = {"
+G
+V
+R
+a
+V
+u
+x
+C
+"}
+(9,1,1) = {"
+b
+g
+L
+a
+d
+q
+F
+v
+"}
+(10,1,1) = {"
+W
+k
+R
+S
+V
+q
+Q
+l
+"}
+(11,1,1) = {"
+I
+w
+e
+V
+V
+q
+Q
+s
+"}
+(12,1,1) = {"
+a
+e
+V
+V
+E
+q
+Q
+a
+"}
+(13,1,1) = {"
+a
+X
+U
+V
+V
+q
+Q
+a
+"}
+(14,1,1) = {"
+a
+a
+V
+V
+V
+y
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+V
+V
+V
+V
+a
+a
+"}
