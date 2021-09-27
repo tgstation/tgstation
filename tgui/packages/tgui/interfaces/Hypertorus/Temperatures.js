@@ -12,14 +12,16 @@ import { to_exponential_if_big } from './helpers';
  * maybe extending ProgressBar.
  */
 
-/// Note: This must be kept in sync with Hypertorus.scss
+/**
+ * Note: This must be kept in sync with Hypertorus.scss
+ */
 const height = 200;
 
 const VerticalBar = props => {
   const {
     color,
     value,
-    progressHeight
+    progressHeight,
   } = props;
   let y = height - progressHeight;
   return (
@@ -32,33 +34,34 @@ const BarLabel = (props) => {
   const {
     label,
     delta,
-    value
+    value,
   } = props;
 
-  return (<>
-    <Box align="center">{label}</Box>
-    {value > 0
-    ? (
-      <>
-        <Box align="center">{to_exponential_if_big(value) + " K"}</Box>
-        <Box align="center">{(delta == 0
-          ? '-'
-          : `${delta < 0 ? '' : '+'}${to_exponential_if_big(delta)} K/s`
-        )}
-        </Box>
-      </>)
-    : (
-      <>
-        <Box align="center" color="red">Empty</Box>
-        <Box class="hypertorus__unselectable"
-          {...(Byond.IS_LTE_IE8 ? {style:{unselectable:true}} : {})}
-        >
+  return (
+    <>
+      <Box align="center">{label}</Box>
+      {value > 0
+        ? (
+          <>
+            <Box align="center">{to_exponential_if_big(value) + " K"}</Box>
+            <Box align="center">{(delta === 0
+              ? '-'
+              : `${delta < 0 ? '' : '+'}${to_exponential_if_big(delta)} K/s`
+            )}
+            </Box>
+          </>)
+        : (
+          <>
+            <Box align="center" color="red">Empty</Box>
+            <Box class="hypertorus__unselectable"
+              {...(Byond.IS_LTE_IE8 ? { style: { unselectable: true } } : {})}
+            >
           &nbsp;
-        </Box>
-      </>
-    )}
-  </>);
-}
+            </Box>
+          </>
+        )}
+    </>);
+};
 
 export const HypertorusTemperatures = (props, context) => {
   const { data } = useBackend(context);
@@ -111,14 +114,18 @@ export const HypertorusTemperatures = (props, context) => {
   ].map(d => parseFloat(d));
 
   const maxTemperature = Math.max(...temperatures);
-  const minTemperature = Math.max(2.73, Math.min(20, ...temperatures.filter(d=>d>0)));
+  const minTemperature = Math.max(
+    2.73,
+    Math.min(20, ...temperatures.filter(d => d>0))
+  );
 
   if (power_level === 6) {
     next_power_level_temperature = 0;
   }
 
   const value_to_y = (value, baseTemp = minTemperature, fromBottom=false) => {
-    const ratio = (Math.log10(value) - Math.log10(baseTemp)) / (Math.log10(maxTemperature) - Math.log10(minTemperature));
+    const ratio = (Math.log10(value) - Math.log10(baseTemp))
+      / (Math.log10(maxTemperature) - Math.log10(minTemperature));
     return height * (fromBottom ? (1 - ratio) : ratio);
   };
 
@@ -127,22 +134,22 @@ export const HypertorusTemperatures = (props, context) => {
       icon,
       force,
       tooltip,
-      value
+      value,
     } = props;
     const y = value_to_y(value);
     const label = (
-      <Box className='hypertorus-temperatures__y-axis-label'>
+      <Box className="hypertorus-temperatures__y-axis-label">
         {icon && (
-        <Icon
-          className="hypertorus-temperatures__y-axis-label-icon"
-          name={icon}
-        />)}
+          <Icon
+            className="hypertorus-temperatures__y-axis-label-icon"
+            name={icon}
+          />)}
         {to_exponential_if_big(value) + " K"}
       </Box>
     );
     return (!!value || force) && (
       <Box class="hypertorus-temperatures__y-axis-tick-anchor" top={`${height - y}px`}>
-        <Box className="hypertorus-temperatures__y-axis-tick"/>
+        <Box className="hypertorus-temperatures__y-axis-tick" />
         {tooltip
           ? (<Tooltip content={tooltip}>{label}</Tooltip>)
           : label}

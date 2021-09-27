@@ -19,7 +19,7 @@ export const HypertorusParameters = (props, context) => {
   const {
     heat_output,
     heat_output_min,
-    heat_output_max
+    heat_output_max,
   } = data;
 
   const energy_minimum_exponent = 12;

@@ -19,7 +19,8 @@ const ActParam = (key, value) => {
 };
 
 // Helpers to wrap act() for simple behavior
-export const ActFixed = (act, key, ...vals) => () => act(key, ActParam(key, ...vals));
+export const ActFixed = (act, key, ...vals) =>
+  () => act(key, ActParam(key, ...vals));
 
 export const ActSet = (act, key) => (e, val) => act(key, ActParam(key, val));
 

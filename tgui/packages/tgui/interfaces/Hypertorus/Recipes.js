@@ -87,13 +87,13 @@ const effect_to_icon = (effect_value, effect_scale, base) => {
 
 const recipeChange = {
   onComponentShouldUpdate: (lastProps, nextProps) =>
-    lastProps.selectedFuelID != nextProps.selectedFuelID
-    || lastProps.enableRecipeSelection != nextProps.enableRecipeSelection
+    lastProps.selectedFuelID !== nextProps.selectedFuelID
+    || lastProps.enableRecipeSelection !== nextProps.enableRecipeSelection,
 };
 
 const activeChange = {
   onComponentShouldUpdate: (lastProps, nextProps) =>
-    lastProps.active !== nextProps.active
+    lastProps.active !== nextProps.active,
 };
 
 const MemoRow = props => {
@@ -218,7 +218,7 @@ export const HypertorusRecipes = props => {
                 return (
                   <Table.Cell key={item.param}>
                     <MaybeTooltip content={(item.tooltip || (v => "x"+v))(value, rest)}>
-                      <Icon className='hypertorus-recipes__icon' name={effect_to_icon(value, item.scale, item.override_base || 1)} />
+                      <Icon className="hypertorus-recipes__icon" name={effect_to_icon(value, item.scale, item.override_base || 1)} />
                     </MaybeTooltip>
                   </Table.Cell>
                 );

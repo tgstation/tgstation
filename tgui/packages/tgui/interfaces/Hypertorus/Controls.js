@@ -152,16 +152,6 @@ export const HypertorusSecondaryControls = (props, context) => {
   );
 };
 
-export const HypertorusIO = (props, context) => {
-  const { act, data } = useBackend(context);
-  return (
-    <Section title="I/O Flow Control" height="100%" width="260px">
-      <LabeledList >
-      </LabeledList>
-    </Section>
-  );
-};
-
 export const HypertorusWasteRemove = (props, context) => {
   const { act, data } = useBackend(context);
   const filterTypes = data.filter_types || [];

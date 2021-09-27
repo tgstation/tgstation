@@ -4,7 +4,7 @@ import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { ActSet, HoverHelp, HelpDummy } from './helpers';
 
-import { Box, Button, LabeledList, NumberInput, ProgressBar, Section, Tooltip } from '../../components';
+import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from '../../components';
 import { getGasColor, getGasLabel } from '../../constants';
 import { ActFixed } from './helpers';
 
@@ -90,30 +90,31 @@ const GasList = (props, context) => {
           onDrag={ActSet(act, input_rate)}
         />
       </LabeledList.Item>
-    {gases.map(gas => {
-      let labelPrefix;
-      if (prepend) {
-        labelPrefix = prepend(gas)
-      }
-      return (
-      <LabeledList.Item
-        key={gas.id}
-        label={
-          <>
-            (labelPrefix)
-            {getGasLabel(gas.id)}:
-          </>}
-        >
-        <ProgressBar
-          color={getGasColor(gas.id)}
-          value={gas.amount}
-          minValue={0}
-          maxValue={minimumScale}>
-          {toFixed(gas.amount, 2) + ' moles'}
-        </ProgressBar>
-      </LabeledList.Item>);
-    })}
-  </LabeledList>);
+      {gases.map(gas => {
+        let labelPrefix;
+        if (prepend) {
+          labelPrefix = prepend(gas);
+        }
+        return (
+          <LabeledList.Item
+            key={gas.id}
+            label={
+              <>
+                {labelPrefix}
+                {getGasLabel(gas.id)}:
+              </>
+            }
+          >
+            <ProgressBar
+              color={getGasColor(gas.id)}
+              value={gas.amount}
+              minValue={0}
+              maxValue={minimumScale}>
+              {toFixed(gas.amount, 2) + ' moles'}
+            </ProgressBar>
+          </LabeledList.Item>);
+      })}
+    </LabeledList>);
 };
 
 export const HypertorusGases = (props, context) => {
@@ -121,7 +122,7 @@ export const HypertorusGases = (props, context) => {
 
   const {
     fusion_gases,
-    moderator_gases
+    moderator_gases,
   } = data;
 
   const selected_fuel = (data.selectable_fuel || []).filter(
@@ -140,11 +141,12 @@ export const HypertorusGases = (props, context) => {
               input_min={.5}
               gases={fusion_gases}
               minimumScale={500}
-              prepend={()=>(<HelpDummy />)}
+              prepend={() => (<HelpDummy />)}
               rateHelp={
                 "The rate at which new fuel is added from the fuel input port."
                 + " This rate affects the rate of production,"
-                + " even when input is not active."}
+                + " even when input is not active."
+              }
               stickyGases={selected_fuel.requirements}
             />
           )
@@ -164,11 +166,10 @@ export const HypertorusGases = (props, context) => {
           minimumScale={500}
           rateHelp={"The rate at which new moderator gas is added from the moderator port."}
           stickyGases={moderator_gases_sticky_order}
-          prepend={gas=>
+          prepend={gas =>
             moderator_gases_help[gas.id]
-            ? (<HoverHelp content={moderator_gases_help[gas.id]} />)
-            : (<HelpDummy />)
-          }
+              ? (<HoverHelp content={moderator_gases_help[gas.id]} />)
+              : (<HelpDummy />)}
         />
       </Section>
     </>
