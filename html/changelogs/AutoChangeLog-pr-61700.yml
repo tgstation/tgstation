@@ -1,0 +1,6 @@
+author: "JosephJomama"
+delete-after: True
+changes: 
+  - qol: "You can now adjust shaft miners' jumpsuits to expose their chest."
+  - imageadd: "New sprites for adjusted shaft miner's jumpsuit."
+  - spellcheck: "The cargo tech jumpskirt now has correct punctuation."
