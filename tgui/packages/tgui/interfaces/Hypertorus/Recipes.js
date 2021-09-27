@@ -2,6 +2,16 @@ import { Box, Button, Icon, Table, Tooltip } from '../../components';
 import { Color } from '../../../common/color';
 import { getGasColor, getGasLabel } from '../../constants';
 
+/*
+ * Recipe selection interface
+ *
+ * Displays a table of recipes with their outputs and effects, along
+ * with buttons to select the active recipe and highlights on the current
+ * recipe.
+ * 
+ * Frankly, rather ugly and a good candidate for future improvements.
+ */
+
 /**
  * The list of recipe effects to list, in order.
  * Parameters:

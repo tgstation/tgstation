@@ -3,6 +3,16 @@ import { LabeledControls, RoundGauge, Section } from '../../components';
 import { formatSiUnit } from '../../format';
 import { toFixed } from 'common/math';
 
+/*
+ * Parameter display
+ *
+ * Displays a set of gauges displaying key information about the
+ * HFR.
+ * 
+ * Parameters with dangerous thresholds also display warnings at the
+ * relevant levels.
+ */
+
 export const HypertorusParameters = (props, context) => {
   const { data } = useBackend(context);
 
@@ -23,7 +33,7 @@ export const HypertorusParameters = (props, context) => {
   }
 
   return (
-    <Section title="Reactor Parameters">
+    <Section title="Reactor Status">
       <LabeledControls justify="space-around">
         <LabeledControls.Item label="Reactor Integrity">
           <RoundGauge

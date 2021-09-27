@@ -8,6 +8,12 @@ import { Box, Button, LabeledList, NumberInput, ProgressBar, Section, Tooltip } 
 import { getGasColor, getGasLabel } from '../../constants';
 import { ActFixed } from './helpers';
 
+/*
+ * Displays contents of gas mixtures, along with help text for gases with
+ * special text when present. Some gas bars are always visible, even when
+ * absent, to hint at what can be added and their effects.
+ */
+
 const moderator_gases_help = {
   plasma: "Produces basic gases. Has a modest heat bonus to help kick start the early fusion process. When added in large quantities, its high heat capacity can help to slow down temperature changes to manageable speeds.",
   bz: "Produces intermediate gases at Fusion Level 3 or higher. Massively increases radiation, and induces hallucinations in bystanders.",

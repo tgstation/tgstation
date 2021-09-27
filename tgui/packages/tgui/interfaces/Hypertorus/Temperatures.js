@@ -1,7 +1,5 @@
 import { useBackend } from '../../backend';
-import { pureComponentHooks } from 'common/react';
 import { Box, Icon, Flex, Section, Stack, Tooltip } from '../../components';
-import { logger } from '../../logging';
 
 import { to_exponential_if_big } from './helpers';
 
@@ -10,71 +8,40 @@ import { to_exponential_if_big } from './helpers';
  *
  * Axis labels draw attention to points of interest.
  *
- * This module is largely a proof of concept, partly reusing the guts of
- * ProgressBar css, and implementing a lot of use-specific logic.
- *
  * This is a good candidate for refactoring into something reusable, or
- * extending ProgressBar.
+ * maybe extending ProgressBar.
  */
 
-const VerticalProgressBar = props => {
+const VerticalBar = props => {
   const {
     borderRadius = "0.16em",
     color,
-    falling=false,
     height,
     value,
-    progressHeight,
-    children,
+    progressHeight
   } = props;
-  const fill_dims = {}, anchor_dims = {}, container_dims = {};
   let y = height - progressHeight;
-  if (falling) {
-    fill_dims.top = '0px';
-    fill_dims.bottom = `${y}px`;
-    container_dims.top = '0px';
-    anchor_dims.top = `${progressHeight}px`;
-    anchor_dims.bottom = `${y}px`;
-  } else {
-    fill_dims.top = `${y}px`;
-    fill_dims.bottom = '0px';
-    container_dims.bottom = '0px';
-    anchor_dims.top = `${y}px`;
-    anchor_dims.bottom = `${progressHeight}px`;
-  }
   return (
     <div
-      className={`ProgressBar--color--${color}`}
       style={{
         display: 'absolute',
         position: 'relative',
         height: `${height}px`,
         width: '17px',
-        padding: '0',
-        "border-radius": borderRadius,
-        ...container_dims,
+        bottom: '0',
       }}
     >
       {
         !!value && (
-          <>
-            <div className="ProgressBar__fill ProgressBar__fill--animated" style={{
-              position: 'absolute',
-              left: '-0.5px',
-              right: '-0.5px',
-              "border-radius": borderRadius,
-              ...fill_dims,
-            }} />
-            {children && (
-              <div style={{
-                position: 'relative',
-                height: '1px',
-                ...anchor_dims,
-                'background-color': 'magenta',
-              }}>{children}
-              </div>
-            )}
-          </>
+          <div style={{
+            'background-color': color,
+            position: 'absolute',
+            left: '-0.5px',
+            right: '-0.5px',
+            bottom: '0px',
+            top: `${y}px`,
+            "border-radius": borderRadius,
+          }} />
         )
       }
     </div>);
@@ -131,7 +98,7 @@ export const HypertorusTemperatures = (props, context) => {
   ].map(d => parseFloat(d));
 
   const maxTemperature = Math.max(...temperatures);
-  const minTemperature = Math.max(2.73, Math.min(20, ...temperatures.filter(d=>d>0))); // Math.min(1, ...temperatures);
+  const minTemperature = Math.max(2.73, Math.min(20, ...temperatures.filter(d=>d>0)));
 
   if (power_level === 6) {
     next_power_level_temperature = 0;
@@ -146,9 +113,7 @@ export const HypertorusTemperatures = (props, context) => {
 
   const value_to_y = (value, baseTemp = minTemperature, fromBottom=false) => {
     const ratio = (Math.log10(value) - Math.log10(baseTemp)) / (Math.log10(maxTemperature) - Math.log10(minTemperature));
-    const ret = height * (fromBottom ? (1 - ratio) : ratio);
-    logger.log('value map:',value,baseTemp,maxTemperature,minTemperature,'(',ratio,')', height,'=>',ret);
-    return ret;
+    return height * (fromBottom ? (1 - ratio) : ratio);
   };
 
   const TemperatureLabel = (props, context) => {
@@ -220,14 +185,14 @@ export const HypertorusTemperatures = (props, context) => {
       <Flex.Item mx={1}>
         <Stack vertical align="center">
           <Stack.Item>
-            <VerticalProgressBar
+            <VerticalBar
               height={height}
               progressHeight={y}
               value={value}
               {...rest}
             >
               {children}
-            </VerticalProgressBar>
+            </VerticalBar>
           </Stack.Item>
           <Stack.Item color="label">
             <Box align="center">{label}</Box>
@@ -260,7 +225,7 @@ export const HypertorusTemperatures = (props, context) => {
                       unselectable: Byond.IS_LTE_IE8,
                     }}
                   >
-                &nbsp; {/* Placeholder. Geocities did nothing wrong :o) */}
+                &nbsp;
                   </Box>
                 </>
               )}
@@ -279,16 +244,26 @@ export const HypertorusTemperatures = (props, context) => {
           <TemperatureLabel key="next_fusion_temp" icon="chevron-up" tooltip="Next Fusion Level" value={next_power_level_temperature} />
           {Math.abs(value_to_y(next_power_level_temperature) - value_to_y(maxTemperature)) > 20 && (<TemperatureLabel key="max_temp" value={maxTemperature} />)}
         </Flex.Item>
+        <Box
+          backgroundColor="label"
+          style={{
+            position: "absolute",
+            left: `${yAxisMargin}px`,
+            height: `${height}px`,
+            top: '0.5em',
+            width: '1px',
+          }}
+        />
         <TemperatureBar
           label="Fusion"
           value={internal_fusion_temperature}
           delta={internal_fusion_temperature_delta}
-          color="orange" />
+          color="#f2711c" />
         <TemperatureBar
           label="Moderator"
           value={moderator_internal_temperature}
           delta={moderator_internal_temperature_delta}
-          color="pink" />
+          color="#e03997" />
         <TemperatureBar
           label="Coolant"
           value={internal_coolant_temperature}
@@ -298,9 +273,8 @@ export const HypertorusTemperatures = (props, context) => {
           label="Output"
           value={internal_output_temperature}
           delta={internal_output_temperature_delta}
-          color="green" />
+          color="#20b142" />
       </Flex>
     </Section>
   );
 };
-//HypertorusTemperatures.defaultHooks = pureComponentHooks;

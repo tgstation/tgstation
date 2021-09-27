@@ -89,7 +89,7 @@ const ComboKnob = props => {
 export const HypertorusSecondaryControls = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Section title="Tweakable Inputs">
+    <Section title="Reactor Control">
       <LabeledControls justify="space-around">
         <LabeledControls.Item label="Heating Conductor">
           <ComboKnob
@@ -166,7 +166,7 @@ export const HypertorusWasteRemove = (props, context) => {
   const { act, data } = useBackend(context);
   const filterTypes = data.filter_types || [];
   return (
-    <Section title="Output control">
+    <Section title="Output Control">
       <LabeledList>
         <LabeledList.Item
           label={
