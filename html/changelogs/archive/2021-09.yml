@@ -847,3 +847,28 @@
   - admin: Meteor guns do damage once again.
   tralezab:
   - rscadd: Hauntium can now be worn by the undead!
+2021-09-27:
+  CRITAWAKETS:
+  - bugfix: Gets rid of the placeholder alien bed and replaces its appearance in Snowdin
+      with the proper alien bed.
+  JohnFulpWillard:
+  - bugfix: Traitors who aren't given codewords will no longer notice them when said
+      or have them in their antag menu.
+  Mothblocks:
+  - server: 'Added a new word filter configuration: word_filter.toml, which can specify
+      *why* words are banned.'
+  - bugfix: Emotes are now properly filtered.
+  - qol: For players, you will now see which word you said was filtered.
+  PositiveEntropy:
+  - imageadd: All folders are now resprited!
+  Ryll/Shaps:
+  - rscadd: Added a new achievement for cultists who like to mess with NT's shuttle
+      corps, "WHAT JUST HAPPENED".
+  Sheits:
+  - imageadd: resprites the smoke, forcewall, lightning and blind spells
+  Superlagg:
+  - qol: Paper bins now can directly insert their contents into computers.
+  - qol: Greatly reduced click cooldown on paper bins.
+  - qol: Paper bins can now pick up papers by clicking on them.
+  remove32:
+  - admin: now logging when you update available jobs!
