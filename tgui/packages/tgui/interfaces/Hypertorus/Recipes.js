@@ -1,5 +1,4 @@
 import { Box, Button, Icon, Table, Tooltip } from '../../components';
-import { Color } from '../../../common/color';
 import { getGasColor, getGasLabel } from '../../constants';
 
 /*
@@ -92,21 +91,21 @@ const recipeChange = {
     || lastProps.enableRecipeSelection != nextProps.enableRecipeSelection
 };
 
-const bgChange = {
+const activeChange = {
   onComponentShouldUpdate: (lastProps, nextProps) =>
-    lastProps.backgroundColor !== nextProps.backgroundColor
+    lastProps.active !== nextProps.active
 };
 
 const MemoRow = props => {
   const {
-    backgroundColor,
+    active,
     children,
     key,
     ...rest
   } = props;
   return (
     <Table.Row
-      backgroundColor={backgroundColor}
+      className={`hypertorus-recipes__row${active ? ' hypertorus-recipes__activerow' : ''}`}
       {...rest}
     >
       {children}
@@ -114,7 +113,7 @@ const MemoRow = props => {
   );
 };
 
-MemoRow.defaultHooks = bgChange;
+MemoRow.defaultHooks = activeChange;
 
 const GasCellItem = props => {
   const {
@@ -154,58 +153,33 @@ export const HypertorusRecipes = props => {
   } = props;
   return (
     <Table>
-      <MemoRow color="label" header>
+      <MemoRow header>
         <Table.Cell />
-        <Table.Cell textAlign="center" colspan="2">
-          Fuel
-        </Table.Cell>
-        <Table.Cell textAlign="center" colspan="2">
-          Fusion Byproducts
-        </Table.Cell>
-        <Table.Cell textAlign="center" colspan="6">
-          Produced gases
-        </Table.Cell>
-        <Table.Cell textAlign="center" colspan="6">
-          Effects
-        </Table.Cell>
-        <Table.Cell grow="1" />
+        <Table.Cell colspan="2">Fuel</Table.Cell>
+        <Table.Cell colspan="2">Fusion Byproducts</Table.Cell>
+        <Table.Cell colspan="6">Produced gases</Table.Cell>
+        <Table.Cell colspan="6">Effects</Table.Cell>
       </MemoRow>
-      <MemoRow color="label" header>
+      <MemoRow header>
         <Table.Cell />
-        <Table.Cell textAlign="center">
-          Primary
-        </Table.Cell>
-        <Table.Cell textAlign="center">
-          Secondary
-        </Table.Cell>
+        <Table.Cell>Primary</Table.Cell>
+        <Table.Cell>Secondary</Table.Cell>
         <Table.Cell colspan="2" />
-        <Table.Cell textAlign="center">
-          Tier 1
-        </Table.Cell>
-        <Table.Cell textAlign="center">
-          Tier 2
-        </Table.Cell>
-        <Table.Cell textAlign="center">
-          Tier 3
-        </Table.Cell>
-        <Table.Cell textAlign="center">
-          Tier 4
-        </Table.Cell>
-        <Table.Cell textAlign="center">
-          Tier 5
-        </Table.Cell>
-        <Table.Cell textAlign="center">
-          Tier 6
-        </Table.Cell>
+        <Table.Cell>Tier 1</Table.Cell>
+        <Table.Cell>Tier 2</Table.Cell>
+        <Table.Cell>Tier 3</Table.Cell>
+        <Table.Cell>Tier 4</Table.Cell>
+        <Table.Cell>Tier 5</Table.Cell>
+        <Table.Cell>Tier 6</Table.Cell>
         {
           // Lay out our pictographic headers for effects.
           recipe_effect_structure.map(item => (
             <Table.Cell key={item.param} color="label">
               <MaybeTooltip content={item.label}>
                 {typeof(item.icon) === "string" ? (
-                  <Icon position="relative" width="10px" name={item.icon} />
+                  <Icon className="hypertorus-recipes__icon" name={item.icon} />
                 ) : (
-                  <Icon.Stack positition="relative" width="10px" textAlign="center">
+                  <Icon.Stack className="hypertorus-recipes__icon">
                     {item.icon.map(icon => (
                       <Icon key={icon} name={icon} />
                     ))}
@@ -218,14 +192,8 @@ export const HypertorusRecipes = props => {
       </MemoRow>
       {selectable_fuels.filter(d => d.id).map((recipe, index) => {
         const active = recipe.id === selected_fuel_id;
-        const odd = 1 - 2 * (index % 2);
-        const secondary = 50 - odd * 50;
-        const primary = active ? secondary + 80 : secondary;
-        const alpha = (active ? .13 : .07);
         return (
-          <MemoRow key={recipe.id} backgroundColor={
-            String(new Color(secondary, primary, secondary, alpha))
-          }>
+          <MemoRow key={recipe.id} active={active}>
             <Table.Cell>
               <Button
                 icon={recipe.id === selected_fuel_id ? "times" : "power-off"}
@@ -250,7 +218,7 @@ export const HypertorusRecipes = props => {
                 return (
                   <Table.Cell key={item.param}>
                     <MaybeTooltip content={(item.tooltip || (v => "x"+v))(value, rest)}>
-                      <Icon position="relative" color="rgb(230,30,40)" width="10px" name={effect_to_icon(value, item.scale, item.override_base || 1)} />
+                      <Icon className='hypertorus-recipes__icon' name={effect_to_icon(value, item.scale, item.override_base || 1)} />
                     </MaybeTooltip>
                   </Table.Cell>
                 );

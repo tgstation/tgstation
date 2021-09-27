@@ -53,14 +53,10 @@ const HypertorusMainControls = (props, context) => {
 };
 
 const HypertorusLayout = () => {
-  // Note this adds bottom margin to non-Section elements for consistent
-  // spacing. This is a good candidate to be moved to css > properties to
-  // avoid low level presentation detail being exposed here.
-
   return (
-    <>
+    <span class="hypertorus-layout">
       <HypertorusMainControls />
-      <Stack mb="0.5em">
+      <Stack>
         <Stack.Item grow>
           <HypertorusGases />
         </Stack.Item>
@@ -71,7 +67,7 @@ const HypertorusLayout = () => {
       <HypertorusParameters />
       <HypertorusSecondaryControls />
       <HypertorusWasteRemove />
-    </>
+    </span>
   );
 };
 
