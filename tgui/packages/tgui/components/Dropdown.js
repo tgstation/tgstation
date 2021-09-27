@@ -86,6 +86,7 @@ export class Dropdown extends Component {
       noscroll,
       nochevron,
       width,
+      openWidth = width,
       onClick,
       onOpen,
       selected,
@@ -105,7 +106,7 @@ export class Dropdown extends Component {
         ref={menu => { this.menuRef = menu; }}
         tabIndex="-1"
         style={{
-          'width': width,
+          'width': openWidth,
         }}
         className={classes([
           noscroll && 'Dropdown__menu-noscroll' || 'Dropdown__menu',
@@ -118,7 +119,7 @@ export class Dropdown extends Component {
     return (
       <div className="Dropdown" style={dropdownStyle}>
         <Box
-          width={width}
+          width={this.state.open ? openWidth : width}
           className={classes([
             'Dropdown__control',
             'Button',

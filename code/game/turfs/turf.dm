@@ -170,6 +170,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	requires_activation = FALSE
 	..()
 
+	vis_locs = null //clears this atom out of all viscontents
 	vis_contents.Cut()
 
 /// WARNING WARNING

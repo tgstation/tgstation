@@ -562,10 +562,9 @@
 //////////////////////////////////////////////
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops
-	name = "Clown Ops"
+	name = "Clown Operatives"
 	antag_datum = /datum/antagonist/nukeop/clownop
 	antag_flag = ROLE_CLOWN_OPERATIVE
-	antag_preference = ROLE_OPERATIVE
 	antag_flag_override = ROLE_OPERATIVE
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
@@ -573,14 +572,15 @@
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops/pre_execute()
 	. = ..()
 	if(.)
-		for(var/obj/machinery/nuclearbomb/syndicate/S in GLOB.nuke_list)
-			var/turf/T = get_turf(S)
-			if(T)
-				qdel(S)
-				new /obj/machinery/nuclearbomb/syndicate/bananium(T)
-		for(var/datum/mind/V in assigned)
-			V.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
-			V.special_role = ROLE_CLOWN_OPERATIVE
+		var/obj/machinery/nuclearbomb/syndicate/syndicate_nuke = locate() in GLOB.nuke_list
+		if(syndicate_nuke)
+			var/turf/nuke_turf = get_turf(syndicate_nuke)
+			if(nuke_turf)
+				new /obj/machinery/nuclearbomb/syndicate/bananium(nuke_turf)
+				qdel(syndicate_nuke)
+		for(var/datum/mind/clowns in assigned)
+			clowns.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
+			clowns.special_role = ROLE_CLOWN_OPERATIVE
 
 
 //////////////////////////////////////////////

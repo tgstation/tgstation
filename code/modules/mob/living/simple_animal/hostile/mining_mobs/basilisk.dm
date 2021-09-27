@@ -130,7 +130,7 @@
 	search_objects = 1
 	wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Initialize()
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 
@@ -148,7 +148,7 @@
 			qdel(potential_consumption)
 			visible_message(span_notice("[src] examines [potential_consumption] closer, and telekinetically shatters the pen."))
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize()
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		if(prob(75))

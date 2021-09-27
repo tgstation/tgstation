@@ -12,7 +12,7 @@
 	var/minimum_time_between_warnings = 400
 	var/syphoning_credits = 0
 
-/obj/machinery/computer/bank_machine/Initialize()
+/obj/machinery/computer/bank_machine/Initialize(mapload)
 	. = ..()
 	radio = new(src)
 	radio.subspace_transmission = TRUE

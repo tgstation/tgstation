@@ -144,7 +144,7 @@
 
 	network_id = NETWORK_DOOR_AIRLOCKS
 
-/obj/machinery/door/airlock/Initialize()
+/obj/machinery/door/airlock/Initialize(mapload)
 	. = ..()
 	wires = set_wires()
 	if(frequency)

@@ -294,6 +294,12 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
       this.cancelNextKeyUp = undefined;
       keyEvent.event.preventDefault();
     }
+
+    const { lastKeyboardEvent, rebindingHotkey } = this.state;
+
+    if (rebindingHotkey && lastKeyboardEvent) {
+      this.setRebindingHotkey(formatKeyboardEvent(lastKeyboardEvent));
+    }
   }
 
   getKeybindingOnClick(

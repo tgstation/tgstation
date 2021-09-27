@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "The HFR will now once again use warning colors on the iron content indicator when dangerous levels of iron content are present."

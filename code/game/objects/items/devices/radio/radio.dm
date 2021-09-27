@@ -63,7 +63,53 @@
 	/// associative list of the encrypted radio channels this radio can listen/broadcast to, of the form: list(channel name = channel frequency)
 	var/list/secure_radio_connections
 
-/obj/item/radio/Initialize()
+/obj/item/radio/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
+	return BRUTELOSS
+
+/obj/item/radio/proc/set_frequency(new_frequency)
+	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)
+	remove_radio(src, frequency)
+	frequency = add_radio(src, new_frequency)
+
+/obj/item/radio/proc/recalculateChannels()
+	resetChannels()
+
+	if(keyslot)
+		for(var/ch_name in keyslot.channels)
+			if(!(ch_name in channels))
+				channels[ch_name] = keyslot.channels[ch_name]
+
+		if(keyslot.translate_binary)
+			translate_binary = TRUE
+		if(keyslot.syndie)
+			syndie = TRUE
+		if(keyslot.independent)
+			independent = TRUE
+
+	for(var/ch_name in channels)
+		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
+
+// Used for cyborg override
+/obj/item/radio/proc/resetChannels()
+	channels = list()
+	translate_binary = FALSE
+	syndie = FALSE
+	independent = FALSE
+
+/obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
+	qdel(keyslot)
+	keyslot = new /obj/item/encryptionkey/syndicate
+	syndie = 1
+	recalculateChannels()
+
+/obj/item/radio/Destroy()
+	remove_radio_all(src) //Just to be sure
+	QDEL_NULL(wires)
+	QDEL_NULL(keyslot)
+	return ..()
+
+/obj/item/radio/Initialize(mapload)
 	wires = new /datum/wires/radio(src)
 	if(prison_radio)
 		wires.cut(WIRE_TX) // OH GOD WHY
@@ -473,7 +519,7 @@
 	syndie = TRUE
 	keyslot = new /obj/item/encryptionkey/syndicate
 
-/obj/item/radio/borg/syndicate/Initialize()
+/obj/item/radio/borg/syndicate/Initialize(mapload)
 	. = ..()
 	set_frequency(FREQ_SYNDICATE)
 

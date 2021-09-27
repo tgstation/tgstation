@@ -15,7 +15,7 @@
 	ignore_syncmesh_share = TRUE
 
 
-/obj/structure/blob/special/node/Initialize()
+/obj/structure/blob/special/node/Initialize(mapload)
 	GLOB.blob_nodes += src
 	START_PROCESSING(SSobj, src)
 	. = ..()
