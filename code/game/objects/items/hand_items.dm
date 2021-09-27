@@ -363,12 +363,7 @@
 
 /obj/item/slapper/secret_handshake/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
 	. = TRUE
-	var/open_hands_taker
-	for(var/i in taker.held_items) // see how many hands the taker has open for high'ing
-		if(isnull(i))
-			open_hands_taker++
-
-	if(!open_hands_taker)
+	if (!(null in taker.held_items))
 		to_chat(taker, span_warning("You can't get taught the secret handshake if [offerer] has no free hands!"))
 		return
 
