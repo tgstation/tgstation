@@ -1,6 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - server: "Added a new word filter configuration: word_filter.toml, which can specify *why* words are banned."
-  - bugfix: "Emotes are now properly filtered."
-  - qol: "For players, you will now see which word you said was filtered."
