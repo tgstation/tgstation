@@ -7,7 +7,7 @@ const Fly: Species = {
     ranking staff or officials.",
   features: {
     good: [{
-      icon: "grin-tongue",
+      icon: "head-side-cough",
       name: "Uncanny Digestive System",
       description: "Flypeople regurgitate their stomach contents and drink it \
         off the floor to eat and drink with little care for taste, favoring \
