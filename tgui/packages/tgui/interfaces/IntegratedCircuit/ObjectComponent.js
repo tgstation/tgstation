@@ -182,7 +182,7 @@ export class ObjectComponent extends Component {
                 ))}
               </Stack>
             </Stack.Item>
-            <Stack.Item ml={2}>
+            <Stack.Item ml={5}>
               <Stack vertical>
                 {output_ports.map((port, portIndex) => (
                   <Stack.Item key={portIndex}>
