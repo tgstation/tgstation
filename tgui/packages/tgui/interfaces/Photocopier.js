@@ -174,48 +174,47 @@ const Options = (props, context) => {
 
 const Blanks = (props, context) => {
   const { act, data } = useBackend(context);
-	const {
-	  blanks,
-		category
-	} = data;
-	
-	const sortBlanks = sortBy(
-		blank => blanks.category,
-	)(blanks || []);
+  const {
+    blanks,
+    category
+  } = data;
 
-	const categories = [];
-		for (let blank of sortBlanks) {
-			if (!categories.includes(blank.category)) {
-		    categories.push(blank.category);
-		}
-	}
-  
-	let selectCategory;
-	if (category === null) {
+  const sortBlanks = sortBy(
+    blank => blanks.category,
+  )(blanks || []);
+
+  const categories = [];
+    for (let blank of sortBlanks) {
+      if (!categories.includes(blank.category)) {
+        categories.push(blank.category);
+      }
+    }
+
+  let selectCategory;
+  if (category === null) {
     selectCategory = sortBlanks.filter(blank => blank.category === categories[0]);
-	} else {
-		selectCategory = sortBlanks.filter(blank => blank.category === category);
-	}
-  
-	return (
+  } else {
+    selectCategory = sortBlanks.filter(blank => blank.category === category);
+  }
+
+  return (
     <Section title="Blanks">
-		  <Dropdown
-		    width="100%"
+      <Dropdown
+        width="100%"
         options={categories}
-			  selected={category === null ? categories[0] : category}
-				onSelected={value => act("choose_category", {
-				  category: value, 
-				})}
+        selected={category === null ? categories[0] : category}
+        onSelected={value => act("choose_category", {
+          category: value,
+        })}
       />
-		
-		  <Box mt={0.4}>
-			  {selectCategory.map(blank => (
-				  <Button key={blank.path}
+      <Box mt={0.4}>
+        {selectCategory.map(blank => (
+          <Button key={blank.path}
             content={blank.code}
             tooltip={blank.name}
-					  onClick={() => act("print_blank", {
-						  path: blank.path
-					  })}
+            onClick={() => act("print_blank", {
+              path: blank.path
+            })}
           />
         ))}
       </Box>
