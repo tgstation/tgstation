@@ -36,17 +36,17 @@ export const AntagInfoGangmember = (props, context) => {
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item>
-              <Stack>
-                <Stack.Item grow>
+              <Stack fill>
+                <Stack.Item grow basis={0}>
                   <GangClothesPrintout />
                 </Stack.Item>
-                <Stack.Item grow>
+                <Stack.Item grow basis={0}>
                   <GangPhonePrintout />
                 </Stack.Item>
               </Stack>
             </Stack.Item>
             <Stack.Divider />
-            <Stack.Item>
+            <Stack.Item grow basis={0}>
               <GangObjectivePrintout />
             </Stack.Item>
           </Stack>

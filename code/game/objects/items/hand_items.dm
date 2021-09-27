@@ -343,30 +343,23 @@
 	if(policy)
 		to_chat(user, policy)
 	team_to_use.add_member(user.mind)
-	for(var/threads in team_to_use.free_clothes)
-		new threads(get_turf(user))
-	for(var/threads in team_to_use.current_theme.bonus_items)
-		new threads(get_turf(user))
-	var/obj/item/gangster_cellphone/phone = new(get_turf(user))
-	phone.gang_id = team_to_use.my_gang_datum.gang_name
-	phone.name = "[team_to_use.my_gang_datum.gang_name] branded cell phone"
+	swappin_sides.equip_gangster_in_inventory()
 	if (!isnull(handler) && !handler.gangbangers.Find(user.mind)) // if we have a handler and they're not tracked by it
 		handler.gangbangers += user.mind
 
 /// Checks if the user is trying to use the package of the family they are in, and if not, adds them to the family, with some differing processing depending on whether the user is already a family member.
 /obj/item/slapper/secret_handshake/proc/attempt_join_gang(mob/living/user)
-	if(user?.mind)
-		var/datum/antagonist/gang/is_gangster = user.mind.has_antag_datum(/datum/antagonist/gang)
-		if(is_gangster)
-			if(is_gangster.my_gang == team_to_use)
-				return
-			else
-				var/real_name_backup = is_gangster.original_name
-				is_gangster.my_gang.remove_member(user.mind)
-				user.mind.remove_antag_datum(/datum/antagonist/gang)
-				add_to_gang(user, real_name_backup)
-		else
-			add_to_gang(user)
+	if(!user?.mind)
+		return
+	var/datum/antagonist/gang/is_gangster = user.mind.has_antag_datum(/datum/antagonist/gang)
+	var/real_name_backup = user.real_name
+	if(is_gangster)
+		if(is_gangster.my_gang == team_to_use)
+			return
+		real_name_backup = is_gangster.original_name
+		is_gangster.my_gang.remove_member(user.mind)
+		user.mind.remove_antag_datum(/datum/antagonist/gang)
+	add_to_gang(user, real_name_backup)
 
 /obj/item/slapper/secret_handshake/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
 	. = TRUE

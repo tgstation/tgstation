@@ -1,3 +1,4 @@
+///Gang themes for the Families gamemode. Used to determine the RP theme of the round, what gangs are present, and what their objectives are.
 /datum/gang_theme
 	///The name of the theme.
 	var/name = "Gang Theme"

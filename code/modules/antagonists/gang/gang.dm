@@ -117,51 +117,35 @@
 /// Gives a gangster their equipment in their backpack and / or pockets.
 /datum/antagonist/gang/proc/equip_gangster_in_inventory()
 	if(istype(owner.current, /mob/living/carbon/human))
-		var/list/slots = list (
-			"head" = ITEM_SLOT_HEAD,
-			"suit" = ITEM_SLOT_OCLOTHING,
-			"jumpsuit" = ITEM_SLOT_ICLOTHING,
-			"shoes" = ITEM_SLOT_FEET,
-			"neck" = ITEM_SLOT_NECK,
-			"glasses" = ITEM_SLOT_EYES,
-			"gloves" = ITEM_SLOT_GLOVES,
-			"back" = ITEM_SLOT_BACK,
-			"mask" = ITEM_SLOT_MASK,
-			"belt" = ITEM_SLOT_BELT,
-			"ears" = ITEM_SLOT_EARS,
-			"backpack" = ITEM_SLOT_BACKPACK,
-			"left pocket" = ITEM_SLOT_LPOCKET,
-			"right pocket" = ITEM_SLOT_RPOCKET,
-			"hands" = ITEM_SLOT_HANDS
-		)
 		var/obj/item/gangster_cellphone/phone = new()
 		phone.gang_id = gang_name
 		phone.name = "[gang_name] branded cell phone"
 		var/mob/living/carbon/human/gangster_human = owner.current
-		var/phone_equipped = gangster_human.equip_in_one_of_slots(phone, slots, qdel_on_fail = FALSE, force_equip = !isplasmaman(gangster_human))
+		var/phone_equipped = phone.equip_to_best_slot(gangster_human)
 		if(!phone_equipped)
 			to_chat(owner.current, "Your [phone.name] has been placed at your feet.")
 			phone.forceMove(get_turf(gangster_human))
 		for(var/clothing in my_gang.free_clothes)
-			var/obj/clothing_object = new clothing(owner.current)
-			var/equipped = gangster_human.equip_in_one_of_slots(clothing_object, slots, qdel_on_fail = FALSE, force_equip = !isplasmaman(gangster_human))
+			var/obj/item/clothing_object = new clothing(owner.current)
+			var/equipped = clothing_object.equip_to_best_slot(gangster_human)
 			if(!equipped)
 				to_chat(owner.current, "Your [clothing_object.name] has been placed at your feet.")
 				clothing_object.forceMove(get_turf(gangster_human))
 		if(my_gang.current_theme.bonus_items)
 			for(var/bonus_item in my_gang.current_theme.bonus_items)
-				var/obj/bonus_object = new bonus_item(owner.current)
-				var/equipped = gangster_human.equip_in_one_of_slots(bonus_object, slots, qdel_on_fail = FALSE, force_equip = !isplasmaman(gangster_human))
+				var/obj/item/bonus_object = new bonus_item(owner.current)
+				var/equipped = bonus_object.equip_to_best_slot(gangster_human)
 				if(!equipped)
 					to_chat(owner.current, "Your [bonus_object.name] has been placed at your feet.")
 					bonus_object.forceMove(get_turf(gangster_human))
-		if(my_gang.current_theme.bonus_first_gangster_items)
-			for(var/bonus_starter_item in my_gang.current_theme.bonus_first_gangster_items)
-				var/obj/bonus_starter_object = new bonus_starter_item(owner.current)
-				var/equipped = gangster_human.equip_in_one_of_slots(bonus_starter_object, slots, qdel_on_fail = FALSE, force_equip = !isplasmaman(gangster_human))
-				if(!equipped)
-					to_chat(owner.current, "Your [bonus_starter_object.name] has been placed at your feet.")
-					bonus_starter_object.forceMove(get_turf(gangster_human))
+		if(starter_gangster)
+			if(my_gang.current_theme.bonus_first_gangster_items)
+				for(var/bonus_starter_item in my_gang.current_theme.bonus_first_gangster_items)
+					var/obj/item/bonus_starter_object = new bonus_starter_item(owner.current)
+					var/equipped = bonus_starter_object.equip_to_best_slot(gangster_human)
+					if(!equipped)
+						to_chat(owner.current, "Your [bonus_starter_object.name] has been placed at your feet.")
+						bonus_starter_object.forceMove(get_turf(gangster_human))
 
 /datum/antagonist/gang/ui_static_data(mob/user)
 	var/list/data = list()
