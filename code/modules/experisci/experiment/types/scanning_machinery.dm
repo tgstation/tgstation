@@ -10,7 +10,7 @@
 
 /datum/experiment/scanning/points/machinery_tiered_scan/check_progress()
 	. = ..()
-	.[1] = EXPERIMENT_PROG_INT("Scan samples of the following machines built with tier [required_tier] parts.", points, required_points)[1]
+	.[1] = EXPERIMENT_PROG_INT("Scan samples of the following machines built with parts of tier [required_tier] or better.", points, required_points)[1]
 
 /datum/experiment/scanning/points/machinery_tiered_scan/final_contributing_index_checks(atom/target, typepath)
 	. = ..()

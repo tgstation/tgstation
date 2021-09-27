@@ -154,7 +154,7 @@
 
 /datum/experiment/scanning/points/machinery_tiered_scan/tier2_lathes
 	name = "Advanced Stock Parts Benchmark"
-	description = "TBD"
+	description = "Our newly-designed advanced machinery components require practical application tests for hints at possible further advancements, as well as a general confirmation the we didn't actually design worse parts somehow."
 	required_points = 6
 	required_atoms = list(/obj/machinery/rnd/production/protolathe/department/science = 1,
 		/obj/machinery/rnd/production/protolathe/department/engineering = 1,
@@ -166,7 +166,7 @@
 
 /datum/experiment/scanning/points/machinery_tiered_scan/tier3_bluespacemachines
 	name = "Bluespace Machinery Attunement"
-	description = "TBD"
+	description = "Teleportation technology using bluespace capabilities is a high selling point for our company, but the threat of a critical malfunction in calibration procedures wasn't something we predicted to emerge. Since our RnD department has started a flyperson race riot, maybe your advancements in stock parts could help mitigate the buzzing problem."
 	required_points = 4
 	required_atoms = list(/obj/machinery/teleport/hub = 1,
 		/obj/machinery/teleport/station = 1)
@@ -174,7 +174,7 @@
 
 /datum/experiment/scanning/points/machinery_tiered_scan/tier3_variety
 	name = "High Efficiency Parts Applications Test"
-	description = "TBD"
+	description = "We require further testing of the stock part designs to push their efficiency and market price even further."
 	required_points = 15
 	required_atoms = list(/obj/machinery/autolathe = 1,
 		/obj/machinery/rnd/production/circuit_imprinter/department/science = 1,
@@ -182,25 +182,26 @@
 		/obj/machinery/processor/slime = 1,
 		/obj/machinery/processor = 2,
 		/obj/machinery/reagentgrinder = 2,
+		/obj/machinery/hydroponics = 2,
+		/obj/machinery/gibber = 3,
 		/obj/machinery/atmospherics/components/unary/cryo_cell = 3,
 		/obj/machinery/chem_master = 3,
 		/obj/machinery/harvester = 3,
-		/obj/machinery/quantumpad = 5
-		)
+		/obj/machinery/quantumpad = 5)
 	required_tier = 3
 
 /datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay
-	name = "Military-grade Mech Bay Specs"
-	description = "TBD"
+	name = "Military-grade Mech Bay Setup"
+	description = "Constructing combat-oriented exosuits is a pricy endeavour. Make sure you have an efficient setup for production, and we'll send over some of our design documents."
 	required_points = 6
 	required_atoms = list(/obj/machinery/mecha_part_fabricator = 1,
 		/obj/machinery/mech_bay_recharge_port = 1,
 		/obj/machinery/recharge_station = 1)
-	required_tier = 4
+	required_tier = 3
 
 /datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_microlaser
 	name = "High-power Micro-lasers Calibration"
-	description = "TBD"
+	description = "Our Nanotrasen High-Power Office-Ready Laser Pointer ™ isn't powerful enough to strike airborne Syndidrones out of the sky yet. Find us some diode applications for hints on how to improve them!"
 	required_points = 10
 	required_atoms = list(/obj/machinery/mecha_part_fabricator = 1,
 		/obj/machinery/rnd/experimentor = 1,
@@ -213,44 +214,49 @@
 
 /datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_capacitors
 	name = "Advanced Capacitors Benchmark"
-	description = "TBD"
+	description = "Further improving the power capacity of devices station-wide is the next step towards the important project marked as CRITICAL: motorised wheelchairs that run on bluespace-contained nuclear power."
 	required_points = 12
 	required_atoms = list(/obj/machinery/recharge_station = 1,
 		/obj/machinery/cell_charger = 1,
 		/obj/machinery/mech_bay_recharge_port = 1,
-		/obj/machinery/chem_dispenser = 2)
-		/*/obj/machinery/chem_dispenser/drinks = 2,
-		/obj/machinery/chem_dispenser/drinks/beer = 2)*/
+		/obj/machinery/recharger = 2,
+		/obj/machinery/power/smes = 2,
+		/obj/machinery/chem_dispenser = 3,
+		/obj/machinery/chem_dispenser/drinks = 3,
+		/obj/machinery/chem_dispenser/drinks/beer = 3) //actually having only the chem dispenser works for scanning soda/booze dispensers but im not quite sure how would i go about actually pointing that out w/o these two lines
 	required_stock_part = /obj/item/stock_parts/capacitor/adv
 
 /datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_scanmodules
 	name = "Advanced Scanning Modules Calibration"
-	description = "TBD"
+	description = "Despite the apparent lack of use of the scanning modules on our stations, we still expect you to run performance tests on them, just in case we come up with a ground-breaking way to fit 6 scanning modules in an exosuit."
 	required_points = 6
 	required_atoms = list(/obj/machinery/dna_scannernew = 1,
 		/obj/machinery/rnd/experimentor = 1,
 		/obj/machinery/medical_kiosk = 2,
-		/obj/machinery/piratepad/civilian = 2
-		)
+		/obj/machinery/piratepad/civilian = 2,
+		/obj/machinery/rnd/bepis = 3)
 	required_stock_part = /obj/item/stock_parts/scanning_module/adv
 
 /datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_cells
 	name = "Power Cells Capacity Test"
-	description = "TBD"
+	description = "Nanotrasen has two major problems with their new Hamster-powered Generator Array: excess of power produced and violent protests of Animal Rights Consortium activists over genetically modifying hamsters with the Hulk gene. We place dibs on dealing with the latter!"
 	required_points = 8
 	required_atoms = list(/obj/machinery/recharge_station = 1,
 		/obj/machinery/chem_dispenser = 1,
+		/obj/machinery/chem_dispenser/drinks = 1,
+		/obj/machinery/chem_dispenser/drinks/beer = 1,
 		/obj/machinery/power/smes = 2)
 	required_stock_part = /obj/item/stock_parts/cell/hyper
 
 /datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_microlaser
 	name = "Ultra-high-power Micro-lasers Calibration"
-	description = "TBD"
+	description = "We're very close to outperforming the surgeons of the past by inventing laser tools precise enough to perform surgeries on grapes. Help us fine-tune the diodes to perfection!"
 	required_points = 10
 	required_atoms = list(/obj/machinery/mecha_part_fabricator = 1,
 		/obj/machinery/microwave = 1,
 		/obj/machinery/rnd/experimentor = 1,
 		/obj/machinery/atmospherics/components/binary/thermomachine/freezer = 2,
 		/obj/machinery/power/emitter = 2,
-		/obj/machinery/chem_heater = 2)
+		/obj/machinery/chem_heater = 2,
+		/obj/machinery/chem_mass_spec = 3)
 	required_stock_part = /obj/item/stock_parts/micro_laser/ultra
