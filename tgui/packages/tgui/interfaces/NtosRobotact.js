@@ -95,6 +95,7 @@ export const NtosRobotactContent = (props, context) => {
             </Flex.Item>
             <Flex.Item
               grow={1}
+              basis="content"
               ml={1}>
               <Section
                 title="Status">
