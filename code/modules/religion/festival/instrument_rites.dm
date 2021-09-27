@@ -175,7 +175,7 @@
 	//buffed
 	var/list/has_modifiers = resolve_weakref_list(buffed_weakrefs)
 	//buffed, but not listening
-	var/list/remove_modifiers = has_modifiers - song_datum.hearing_mobs
+	var/list/remove_modifiers = difflist(has_modifiers, song_datum.hearing_mobs)
 	for(var/mob/living/not_listening in remove_modifiers)
 		to_chat(world, "removing movespeed from [not_listening]")
 		not_listening.remove_actionspeed_modifier(/datum/actionspeed_modifier/power_chord)
@@ -203,7 +203,7 @@
 /datum/religion_rites/song_tuner/power/Destroy()
 	var/list/has_modifiers = resolve_weakref_list(buffed_weakrefs)
 	for(var/mob/living/finished_listening in has_modifiers)
-		to_chat(world, "song over. removing movespeed from [not_listening]")
+		to_chat(world, "song over. removing movespeed from [finished_listening]")
 		finished_listening.remove_actionspeed_modifier(/datum/actionspeed_modifier/power_chord)
 		finished_listening.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/power_chord)
 	QDEL_NULL(has_modifiers)
