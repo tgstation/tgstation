@@ -16,9 +16,9 @@
 
 	controller.blackboard[BB_SONG_DATUM] = song_player.song
 
-	var/list/donkey_kong_lines = splittext(MONKEY_SONG, "\n")
-	popleft(donkey_kong_lines) //remove BPM as it is parsed out
-	if(!compare_list(song_player.song.lines, donkey_kong_lines) || !song_player.song.repeat)
+	var/list/parsed_song_lines = splittext(controller.blackboard[BB_SONG_LINES], "\n")
+	popleft(parsed_song_lines) //remove BPM as it is parsed out
+	if(!compare_list(song_player.song.lines, parsed_song_lines) || !song_player.song.repeat)
 		controller.queue_behavior(/datum/ai_behavior/setup_instrument, BB_SONG_DATUM, BB_SONG_LINES)
 
 	if(!song_player.song.playing) //we may stop playing if we weren't playing before, were setting up dk theme, or ran out of repeats (also causing setup behavior)
