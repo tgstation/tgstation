@@ -129,20 +129,6 @@ const GasCellItem = props => {
   );
 };
 
-// Quick wrapper to globally toggle use of tooltips on or off.
-// Remove once tooltip performance is fixed for good.
-const MaybeTooltip = props => {
-  const {
-    children,
-    ...rest
-  } = props;
-  const noTooltips = false;
-  if (noTooltips) {
-    return (<Box>{children}</Box>);
-  }
-  return (<Tooltip {...rest}>{children}</Tooltip>);
-};
-
 export const HypertorusRecipes = props => {
   const {
     enableRecipeSelection: enable_recipe_selection,
@@ -175,7 +161,7 @@ export const HypertorusRecipes = props => {
           // Lay out our pictographic headers for effects.
           recipe_effect_structure.map(item => (
             <Table.Cell key={item.param} color="label">
-              <MaybeTooltip content={item.label}>
+              <Tooltip content={item.label}>
                 {typeof(item.icon) === "string" ? (
                   <Icon className="hypertorus-recipes__icon" name={item.icon} />
                 ) : (
@@ -185,7 +171,7 @@ export const HypertorusRecipes = props => {
                     ))}
                   </Icon.Stack>
                 )}
-              </MaybeTooltip>
+              </Tooltip>
             </Table.Cell>
           ))
         }
@@ -217,9 +203,9 @@ export const HypertorusRecipes = props => {
                 // so we set the width to work with both without jumping.
                 return (
                   <Table.Cell key={item.param}>
-                    <MaybeTooltip content={(item.tooltip || (v => "x"+v))(value, rest)}>
+                    <Tooltip content={(item.tooltip || (v => "x"+v))(value, rest)}>
                       <Icon className="hypertorus-recipes__icon" name={effect_to_icon(value, item.scale, item.override_base || 1)} />
-                    </MaybeTooltip>
+                    </Tooltip>
                   </Table.Cell>
                 );
               })
