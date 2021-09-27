@@ -128,9 +128,11 @@
 		return
 	if(!door_obj)
 		door_obj = new
+	var/default_door_icon = "[icon_door || icon_state]_door"
+	var/override_door_icon = "[icon_door_override ? icon_door : icon_state]_back"
 	vis_contents += door_obj
 	door_obj.icon = icon
-	door_obj.icon_state = "[icon_door || icon_state]_door"
+	door_obj.icon_state = default_door_icon
 	is_animating_door = TRUE
 	var/num_steps = door_anim_time / world.tick_lag
 
@@ -141,10 +143,10 @@
 		var/door_layer
 
 		if (angle >= 90)
-			door_state = "[icon_door_override ? icon_door : icon_state]_back"
+			door_state = override_door_icon
 			door_layer = FLOAT_LAYER
 		else
-			door_state = "[icon_door || icon_state]_door"
+			door_state = default_door_icon
 			door_layer = ABOVE_MOB_LAYER
 
 		if(step == 0)
