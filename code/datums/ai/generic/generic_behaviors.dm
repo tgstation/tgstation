@@ -154,13 +154,13 @@
 	. = ..()
 	controller.current_movement_target = target
 
-/datum/ai_behavior/consume/perform(delta_time, datum/ai_controller/controller, obj/item/target)
+/datum/ai_behavior/consume/perform(delta_time, datum/ai_controller/controller, obj/item/target, hunger_timer_key)
 	. = ..()
 	var/mob/living/pawn = controller.pawn
 
 	if(!(target in pawn.held_items))
 		if(!pawn.put_in_hand_check(target))
-			finish_action(controller, FALSE)
+			finish_action(controller, FALSE, target, hunger_timer_key)
 			return
 
 		pawn.put_in_hands(target)
@@ -168,7 +168,12 @@
 	target.melee_attack_chain(pawn, pawn)
 
 	if(QDELETED(target) || prob(10)) // Even if we don't finish it all we can randomly decide to be done
-		finish_action(controller, TRUE)
+		finish_action(controller, TRUE, null, hunger_timer_key)
+
+/datum/ai_behavior/consume/finish_action(datum/ai_controller/controller, succeeded, obj/item/target, hunger_timer_key)
+	. = ..()
+	if(succeeded)
+		controller.blackboard[hunger_timer_key] = world.time + rand(120, 600) SECONDS
 
 /**find and set
  * Finds an item near themselves, sets a blackboard key as it. Very useful for ais that need to use machines or something.
