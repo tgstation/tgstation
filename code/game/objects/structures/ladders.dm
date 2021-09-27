@@ -12,6 +12,13 @@
 	/// Optional travel time for ladder in deciseconds
 	var/travel_time = 0
 
+// Is it a ladder or is it stairs, you decide!
+/obj/structure/ladder/spiral_stair
+	name = "spiral stairs"
+	desc = "A sturdy spiral staircase."
+	icon = 'icons/obj/spiralstair.dmi'
+	resistance_flags = INDESTRUCTIBLE
+
 /obj/structure/ladder/Initialize(mapload, obj/structure/ladder/up, obj/structure/ladder/down)
 	..()
 	if (up)
