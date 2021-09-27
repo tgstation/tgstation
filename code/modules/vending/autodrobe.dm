@@ -138,7 +138,7 @@
 					/obj/item/clothing/shoes/roman = 1,
 					/obj/item/shield/riot/roman/fake = 1,
 					/obj/item/clothing/suit/chaplainsuit/clownpriest = 1,
-				 	/obj/item/clothing/head/clownmitre = 1,
+					/obj/item/clothing/head/clownmitre = 1,
 					/obj/item/skub = 1,
 					/obj/item/clothing/suit/hooded/mysticrobe = 1,
 					/obj/item/clothing/under/dress/wedding_dress = 1,
