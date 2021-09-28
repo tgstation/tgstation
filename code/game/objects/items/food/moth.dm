@@ -25,6 +25,10 @@
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/cheese_curds/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dryable,  /obj/item/food/firm_cheese)
+
 /obj/item/food/herby_cheese
 	name = "herby cheese"
 	desc = "As a staple of mothic cuisine, cheese is often augmented with various flavours to keep variety in their diet. Herbs are one such addition, and are particularly beloved."
@@ -54,6 +58,10 @@
 	tastes = list("aged cheese" = 1)
 	foodtypes = DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	burns_on_grill = TRUE
+
+/obj/item/food/firm_cheese_slice/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/grilled_cheese, rand(25 SECONDS, 35 SECONDS), TRUE, TRUE)
 
 /obj/item/food/mozzarella
 	name = "mozzarella cheese"
@@ -169,12 +177,12 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/loaded_curds
-	name = "ozlsettitæloskekllön" //ozlsettit = overflowing (ozl = over, sett = flow, it = ing), ælo = cheese, skekllön = curds (skeklit = squeaking, llön = pieces/bits)
-	desc = "What's better than cheese curds? Deep fried cheese curds! What's better than deep fried cheese curds? Deep fried cheese curds with chili (and more cheese) on top!"
+	name = "ozlsettitæloskekllön ede pommes" //ozlsettit = overflowing (ozl = over, sett = flow, it = ing), ælo = cheese, skekllön = curds (skeklit = squeaking, llön = pieces/bits), ede = and, pommes = fries (hey, France!)
+	desc = "What's better than cheese curds? Deep fried cheese curds! What's better than deep fried cheese curds? Deep fried cheese curds with chili (and more cheese) on top! And what's better than that? Putting it on fries!"
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "loaded_curds"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/capsaicin = 1)
-	tastes = list("cheese" = 1, "oil" = 1, "chili" = 1)
+	tastes = list("cheese" = 1, "oil" = 1, "chili" = 1, "fries" = 1)
 	foodtypes = DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -255,11 +263,14 @@
 	desc = "A mothic favourite, baked rice can be filled with a variety of vegetable fillings to make a delicious meal to share. Potatoes are also often layered on the bottom of the cooking vessel to create a flavourful crust which is hotly contested amongst diners."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "big_baked_rice"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 18)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 12, /datum/reagent/consumable/nutriment/vitamin = 36)
 	tastes = list("rice" = 1, "potato" = 1, "veggies" = 1)
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_NORMAL
 	burns_in_oven = TRUE
+
+/obj/item/food/big_baked_rice/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/lil_baked_rice, 6, 30)
 
 /obj/item/food/lil_baked_rice
 	name = "lil baked rice"

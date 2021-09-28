@@ -70,6 +70,18 @@
 	result = /obj/item/food/soup/hotchili
 	subcategory = CAT_SOUP
 
+/datum/crafting_recipe/food/vegetarian_chili
+	name = "Chili sin carne"
+	reqs = list(
+		/obj/item/food/tofu = 1,
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/reagent_containers/glass/bowl = 1
+	)
+	result = /obj/item/food/soup/vegetarian_chili
+	subcategory = CAT_SOUP
+
 /datum/crafting_recipe/food/coldchili
 	name = "Cold chili"
 	reqs = list(

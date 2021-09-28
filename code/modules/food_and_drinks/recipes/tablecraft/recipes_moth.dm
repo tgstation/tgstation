@@ -8,7 +8,7 @@
 	subcategory = CAT_MOTH
 
 /datum/crafting_recipe/food/mothic_salad
-	name = "Crisp salad"
+	name = "Mothic salad"
 	reqs = list(
 		/obj/item/food/grown/cabbage = 1,
 		/obj/item/food/onion_slice/red = 2,
@@ -88,11 +88,12 @@
 	subcategory = CAT_MOTH
 
 /datum/crafting_recipe/food/loaded_curds
-	name = "Ozlsettitæloskekllön (Loaded curds)"
+	name = "Ozlsettitæloskekllön ede pommes (Loaded curds and fries)"
 	reqs = list(
 		/obj/item/food/cheese_curds = 1,
 		/obj/item/food/soup/vegetarian_chili = 1,
 		/obj/item/food/onion_slice = 1,
+		/obj/item/food/cheese = 1,
 		/obj/item/food/fries = 1
 	)
 	result = /obj/item/food/loaded_curds
@@ -121,7 +122,7 @@
 /datum/crafting_recipe/food/raw_baked_rice
 	name = "Big baked rice"
 	reqs = list(
-		/obj/item/food/salad/ricebowl = 2,
+		/obj/item/food/salad/boiledrice = 2,
 		/obj/item/food/soup/vegetable = 1,
 		/obj/item/food/grown/potato = 2,
 		/obj/item/food/grown/chili = 1,
@@ -223,18 +224,6 @@
 	result = /obj/item/food/soup/moth_seed_soup
 	subcategory = CAT_MOTH
 
-/datum/crafting_recipe/food/vegetarian_chili
-	name = "Chili sin carne"
-	reqs = list(
-		/obj/item/food/tofu = 1,
-		/obj/item/food/grown/chili = 1,
-		/obj/item/food/grown/tomato = 1,
-		/obj/item/food/grown/onion = 1,
-		/obj/item/reagent_containers/glass/bowl = 1
-	)
-	result = /obj/item/food/soup/vegetarian_chili
-	subcategory = CAT_MOTH
-
 /datum/crafting_recipe/food/moth_bean_stew
 	name = "Prickeldröndolhaskl (Spicy bean stew)"
 	reqs = list(
@@ -268,7 +257,7 @@
 	reqs = list(
 		/obj/item/food/grown/ghost_chili = 1,
 		/obj/item/food/tofu = 1,
-		/datum/reagent/consumable/milk = 10,
+		/datum/reagent/consumable/yoghurt = 10,
 		/datum/reagent/consumable/vinegar = 2,
 		/obj/item/reagent_containers/glass/bowl = 1
 	)
@@ -290,7 +279,7 @@
 	reqs = list(
 		/obj/item/food/soup/rice_porridge = 1,
 		/obj/item/food/meat/bacon = 1,
-		/obj/item/food/friedegg = 1
+		/obj/item/food/friedegg = 2
 	)
 	result = /obj/item/food/soup/hua_mulan_congee
 	subcategory = CAT_MOTH
@@ -333,7 +322,8 @@
 		/obj/item/food/soup/cheesy_porridge = 1,
 		/obj/item/food/grown/eggplant = 1,
 		/obj/item/food/breadslice = 2,
-		/obj/item/food/tomato_sauce = 1
+		/obj/item/food/tomato_sauce = 1,
+		/obj/item/food/mozzarella = 1
 	)
 	result = /obj/item/food/soup/fried_eggplant_polenta
 	subcategory = CAT_MOTH
@@ -432,6 +422,7 @@
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/bechamel_sauce = 1,
 		/obj/item/food/firm_cheese = 1,
+		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/mozzarella = 1,
 		/obj/item/food/grown/herbs = 1
 	)
