@@ -183,10 +183,11 @@
 		/obj/machinery/processor = 2,
 		/obj/machinery/reagentgrinder = 2,
 		/obj/machinery/hydroponics = 2,
+		/obj/machinery/biogenerator = 3,
 		/obj/machinery/gibber = 3,
-		/obj/machinery/atmospherics/components/unary/cryo_cell = 3,
 		/obj/machinery/chem_master = 3,
-		/obj/machinery/harvester = 3,
+		/obj/machinery/atmospherics/components/unary/cryo_cell = 3,
+		/obj/machinery/harvester = 5,
 		/obj/machinery/quantumpad = 5)
 	required_tier = 3
 
