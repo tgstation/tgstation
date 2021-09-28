@@ -890,7 +890,7 @@
 	. = ..()
 
 /datum/reagent/medicine/mannitol/overdose_start(mob/living/owner)
-	to_chat(owner, span_notice("You suddenly feel </span><span class='purple'>E N L I G H T E N E D!"))
+	to_chat(owner, span_notice("You suddenly feel <span class='purple'>E N L I G H T E N E D!</span>"))
 
 /datum/reagent/medicine/mannitol/overdose_process(mob/living/owner, delta_time, times_fired)
 	if(DT_PROB(65, delta_time))
@@ -903,8 +903,8 @@
 	else
 		tips = world.file2list("strings/chemistrytips.txt")
 	var/message = pick(tips)
-	to_chat(owner, span_purple("<b>Tip of the round: </b>[html_encode(message)]"))
-	..()
+	send_tip_of_the_round(owner, message)
+	return ..()
 
 /datum/reagent/medicine/neurine
 	name = "Neurine"
