@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - qol: "You can now use backslashes to escape say text modifiers (e.g. a\\\\+b\\\\+c = d will be outputted as a+b+c instead of abc with the middle letter b bolded)."
-  - qol: "Two new tips of the round, both concerning say\"\" syntax."

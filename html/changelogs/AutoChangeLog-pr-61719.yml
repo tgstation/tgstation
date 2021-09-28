@@ -1,6 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - rscadd: "Secret Gateways can now be a thing enabled by config. They are not on the repository, instead, loaded from a config folder."
-  - rscadd: "Adds the secret and anti-phasing z level traits used by Secret Gateways, secret prevents observers from looking at the z level in any way other than observing through another player's eyes"
-  - admin: "admin loaded away missions can be secret as well"
