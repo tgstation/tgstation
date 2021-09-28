@@ -2663,7 +2663,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "Made with laraha oranges, for an aromatic finish."
 	boozepwr = 30
 	color = "#1a5fa1"
-	quality = DRINK_FANTASTIC
+	quality = DRINK_NICE
 	taste_description = "blue orange"
 	glass_icon_state = "curacao"
 	glass_name = "glass of curaçao"
@@ -2675,7 +2675,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "Rum as the finest sailors drink."
 	boozepwr = 90 //the finest sailors are often drunk
 	color = "#d8e8f0"
-	quality = DRINK_FANTASTIC
+	quality = DRINK_NICE
 	taste_description = "a life on the waves"
 	glass_icon_state = "ginvodkaglass"
 	glass_name = "glass of navy rum"
@@ -2687,7 +2687,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A bartender's best friend, often used to lend a delicate spiciness to any drink. Produced in New Trinidad, now and forever."
 	boozepwr = 70
 	color = "#1c0000"
-	quality = DRINK_FANTASTIC
+	quality = DRINK_NICE
 	taste_description = "spiced alcohol"
 	glass_icon_state = "bitters"
 	glass_name = "glass of bitters"
@@ -2699,7 +2699,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A refined, bitter drink made with navy rum, vermouth and fernet."
 	boozepwr = 100
 	color = "#1F0001"
-	quality = DRINK_FANTASTIC
+	quality = DRINK_VERYGOOD
 	taste_description = "haughty arrogance"
 	glass_icon_state = "admiralty"
 	glass_name = "Admiralty"
@@ -2711,7 +2711,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A favourite amongst freighter pilots, unscrupulous smugglers, and nerf herders."
 	boozepwr = 35
 	color = "#003153"
-	quality = DRINK_GOOD
+	quality = DRINK_VERYGOOD
 	taste_description = "companionship"
 	glass_icon_state = "long_haul"
 	glass_name = "Long Haul"
@@ -2723,7 +2723,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A long drink of navy rum, bitters, and lemonade. Particularly popular aboard the Mothic Fleet as it's light on ration credits and heavy on flavour."
 	boozepwr = 50
 	color = "#c4b35c"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "rum and spices"
 	glass_icon_state = "long_john_silver"
 	glass_name = "Long John Silver"
@@ -2735,7 +2735,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A taste of the Caribbean in one glass."
 	boozepwr = 40
 	color = "#00bfa3"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "the tropics"
 	glass_icon_state = "tropical_storm"
 	glass_name = "Tropical Storm"
@@ -2747,7 +2747,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A classic drink arriving to thunderous applause." //thank you, thank you, I'll be here forever
 	boozepwr = 50
 	color = "#8c5046"
-	quality = DRINK_NICE
+	quality = DRINK_GOOD
 	taste_description = "ginger and rum"
 	glass_icon_state = "dark_and_stormy"
 	glass_name = "Dark and Stormy"
@@ -2759,7 +2759,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A bracing sour with an interesting salty taste."
 	boozepwr = 60
 	color = "#b4abd0"
-	quality = DRINK_NICE
+	quality = DRINK_FANTASTIC
 	taste_description = "salt and spice"
 	glass_icon_state = "salt_and_swell"
 	glass_name = "Salt and Swell"
@@ -2783,7 +2783,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A mix of Tiltällen, Töchtaüse Syrup, and vodka. It's not exactly to everyones' tastes."
 	boozepwr = 75
 	color = "#b4abd0"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "spicy sour cheesy yoghurt"
 	glass_icon_state = "tich_toch"
 	glass_name = "Tich Toch"
