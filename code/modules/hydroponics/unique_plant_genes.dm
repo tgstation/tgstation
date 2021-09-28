@@ -576,10 +576,11 @@
 /datum/plant_gene/trait/gas_production/on_new_seed(obj/item/seeds/new_seed)
 	RegisterSignal(new_seed, COMSIG_SEED_ON_PLANTED, .proc/set_home_tray)
 	RegisterSignal(new_seed, COMSIG_SEED_ON_GROW, .proc/try_release_gas)
+	RegisterSignal(new_seed, COMSIG_PARENT_QDELETING, .proc/stop_gas)
 	stinky_seed = WEAKREF(new_seed)
 
 /datum/plant_gene/trait/gas_production/on_removed(obj/item/seeds/old_seed)
-	UnregisterSignal(old_seed, list(COMSIG_SEED_ON_PLANTED, COMSIG_SEED_ON_GROW))
+	UnregisterSignal(old_seed, list(COMSIG_PARENT_QDELETING, COMSIG_SEED_ON_PLANTED, COMSIG_SEED_ON_GROW))
 	stop_gas()
 
 /*
@@ -608,9 +609,11 @@
 	START_PROCESSING(SSobj, src)
 
 /*
- * Stop the seed from releasing gas and null all our references.
+ * Stop the seed from releasing gas.
  */
 /datum/plant_gene/trait/gas_production/proc/stop_gas(datum/source)
+	SIGNAL_HANDLER
+
 	STOP_PROCESSING(SSobj, src)
 
 /*
