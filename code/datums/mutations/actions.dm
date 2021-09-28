@@ -111,7 +111,7 @@
 
 /datum/mutation/human/firebreath/modify()
 	var/obj/effect/proc_holder/spell/cone/staggered/firebreath/our_spell = power
-	our_spell.cone_levels = round(our_spell.cone_levels * GET_MUTATION_POWER(src) + 0.1) //Power firebreath makes it fwoosh more. Round up.
+	our_spell.cone_levels = round(our_spell.cone_levels * GET_MUTATION_POWER(src) + 0.5) //Power firebreath makes it fwoosh more. Round up.
 
 /obj/effect/proc_holder/spell/cone/staggered/firebreath
 	name = "Fire Breath"
@@ -153,7 +153,7 @@
 /obj/effect/proc_holder/spell/cone/staggered/firebreath/do_mob_cone_effect(mob/living/target_mob, level)
 	// Further out targets take less immediate burn damage and get less fire stacks.
 	// The actual burn damage application is not blocked by fireproofing, like space dragons.
-	target_mob.apply_damage(max(10, 30 - (5 * level)), BURN, spread_damage = TRUE)
+	target_mob.apply_damage(max(10, 40 - (5 * level)), BURN, spread_damage = TRUE)
 	target_mob.adjust_fire_stacks(max(2, 5 - level))
 	target_mob.IgniteMob()
 
