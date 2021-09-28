@@ -717,7 +717,7 @@
 
 /obj/item/food/canned/envirochow
 	name = "dog eat dog envirochow"
-	desc = "The first pet food product that is made fully sustainable by employing ancient British animal husbandry tecniques."
+	desc = "The first pet food product that is made fully sustainable by employing ancient British animal husbandry techniques."
 	icon_state = "envirochow"
 	trash_type = /obj/item/trash/can/food/envirochow
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 9, /datum/reagent/consumable/nutriment/vitamin = 4)

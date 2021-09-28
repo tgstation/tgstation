@@ -522,7 +522,7 @@
 /datum/movespeed_modifier/status_speed_boost
 	multiplicative_slowdown = -1
 
-//this buff provides a max health buff and a health
+///this buff provides a max health buff and a heal.
 /datum/status_effect/limited_buff/health_buff
 	id = "health_buff"
 	alert_type = null
@@ -535,7 +535,7 @@
 	///If the mob has a low max health, we instead use this flat value to increase max health and calculate any heal.
 	var/fragile_mob_health_buff = 10
 
-/datum/status_effect/limited_buff/health_buff/on_creation(mob/living/new_owner, ...)
+/datum/status_effect/limited_buff/health_buff/on_creation(mob/living/new_owner)
 	historic_max_health = new_owner.maxHealth
 	. = ..()
 

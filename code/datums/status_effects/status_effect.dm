@@ -288,8 +288,7 @@
 	///How many stacks we can have maximum
 	var/max_stacks = 3
 
-/datum/status_effect/limited_buff/refresh(effect, ...)
-	. = ..()
+/datum/status_effect/limited_buff/refresh(effect)
 	if(stacks < max_stacks)
 		on_apply()
 		stacks++
