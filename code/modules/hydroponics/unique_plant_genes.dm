@@ -154,7 +154,8 @@
 	if(!.)
 		return
 
-	our_plant.AddElement(/datum/element/plant_backfire, CALLBACK(src, .proc/backfire_effect), cancel_action_on_backfire, traits_to_check, genes_to_check)
+	our_plant.AddElement(/datum/element/plant_backfire, cancel_action_on_backfire, traits_to_check, genes_to_check)
+	RegisterSignal(our_plant, COMSIG_PLANT_ON_BACKFIRE, .proc/backfire_effect)
 
 /*
  * The backfire effect. Override with plant-specific effects.
@@ -228,15 +229,16 @@
 	name = "Active Capsicum Glands"
 	genes_to_check = list(/datum/plant_gene/trait/chem_heating)
 	/// The mob currently holding the chili.
-	var/mob/living/carbon/human/held_mob
+	var/datum/weakref/held_mob
 	/// The chili this gene is tied to, to track it for processing.
-	var/obj/item/our_chili
+	var/datum/weakref/our_chili
 
 /datum/plant_gene/trait/backfire/chili_heat/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
 
+	our_chili = WEAKREF(our_plant)
 	RegisterSignal(our_plant, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), .proc/stop_backfire_effect)
 
 /*
@@ -248,8 +250,7 @@
 /datum/plant_gene/trait/backfire/chili_heat/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
 	. = ..()
 
-	held_mob = user
-	our_chili = our_plant
+	held_mob = WEAKREF(user)
 	START_PROCESSING(SSobj, src)
 
 /*
@@ -261,7 +262,6 @@
 	SIGNAL_HANDLER
 
 	held_mob = null
-	our_chili = null
 	STOP_PROCESSING(SSobj, src)
 
 /*
@@ -269,10 +269,11 @@
  * Stops processing if we're no longer being held by [held mob].
  */
 /datum/plant_gene/trait/backfire/chili_heat/process(delta_time)
-	if(held_mob.is_holding(our_chili))
-		held_mob.adjust_bodytemperature(7.5 * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
+	var/mob/living/carbon/our_mob = held_mob?.resolve()
+	if(our_mob.is_holding(our_chili))
+		our_mob.adjust_bodytemperature(7.5 * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
 		if(DT_PROB(5, delta_time))
-			to_chat(held_mob, "<span class='warning'>Your hand holding [our_chili] burns!</span>")
+			to_chat(our_mob, span_warning("Your hand holding [our_chili] burns!"))
 	else
 		stop_backfire_effect()
 
@@ -312,7 +313,8 @@
 		return
 
 	if(dangerous)
-		our_plant.AddElement(/datum/element/plant_backfire, CALLBACK(src, .proc/early_awakening), TRUE)
+		our_plant.AddElement(/datum/element/plant_backfire, TRUE)
+		RegisterSignal(our_plant, COMSIG_PLANT_ON_BACKFIRE, .proc/early_awakening)
 	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/manual_awakening)
 	RegisterSignal(our_plant, COMSIG_ITEM_PRE_ATTACK, .proc/pre_consumption_check)
 
@@ -566,10 +568,6 @@
 	var/datum/weakref/stinky_seed
 
 /datum/plant_gene/trait/gas_production/on_new_seed(obj/item/seeds/new_seed)
-	. = ..()
-	if(!.)
-		return
-
 	RegisterSignal(new_seed, COMSIG_SEED_ON_PLANTED, .proc/set_home_tray)
 	RegisterSignal(new_seed, COMSIG_SEED_ON_GROW, .proc/try_release_gas)
 	stinky_seed = WEAKREF(new_seed)
@@ -635,7 +633,7 @@
 	tray_turf.assume_air(stank)
 
 /// Starthistle's essential invasive spreading
-/datum/plant_gene/trait/invasive/starthistle
+/datum/plant_gene/trait/invasive/galaxythistle
 	mutability_flags = PLANT_GENE_GRAFTABLE
 
 /// Jupitercup's essential carnivory

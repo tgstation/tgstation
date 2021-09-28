@@ -104,9 +104,11 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/glowshroom/Destroy()
-	. = ..()
+	if(isatom(myseed))
+		QDEL_NULL(myseed)
 	GLOB.glowshrooms--
 	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /**
  * Causes glowshroom spreading across the floor/walls.
