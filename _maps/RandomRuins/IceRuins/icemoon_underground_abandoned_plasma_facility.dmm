@@ -106,7 +106,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating,
 /area/ruin/plasma_facility/operations)
 "bv" = (
 /obj/effect/turf_decal/tile/brown/half,
@@ -982,7 +982,9 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
-/turf/open/floor/iron/smooth,
+/turf/open/floor/iron/smooth{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/plasma_facility/operations)
 "oE" = (
 /obj/structure/table,
@@ -1356,7 +1358,9 @@
 	dir = 4
 	},
 /mob/living/simple_animal/hostile/asteroid/wolf,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/iron/smooth{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/plasma_facility/operations)
 "uq" = (
 /obj/effect/turf_decal/tile/brown/half,

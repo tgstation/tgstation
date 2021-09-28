@@ -235,9 +235,6 @@
 /obj/structure/flora/rock/icy,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"FH" = (
-/turf/open/genturf,
-/area/icemoon/underground/explored)
 "FS" = (
 /obj/structure/railing{
 	color = "#8a7453"
@@ -474,7 +471,7 @@ Sv
 Sv
 sF
 Sv
-FH
+Sv
 qd
 Ht
 Vf

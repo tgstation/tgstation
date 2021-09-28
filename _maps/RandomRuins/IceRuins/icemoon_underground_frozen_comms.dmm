@@ -137,7 +137,9 @@
 /area/ruin/powered/shuttle)
 "vh" = (
 /obj/item/chair/plastic,
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/iron/showroomfloor{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/powered/shuttle)
 "wg" = (
 /obj/effect/turf_decal/box/corners{
