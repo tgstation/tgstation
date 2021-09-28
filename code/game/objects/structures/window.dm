@@ -127,6 +127,9 @@
 /obj/structure/window/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
 
+	if(leaving.movement_type & PHASING)
+		return
+
 	if(leaving == src)
 		return // Let's not block ourselves.
 
