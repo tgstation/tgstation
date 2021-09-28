@@ -521,15 +521,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/production)
-"bO" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
-/turf/open/floor/iron,
-/area/mine/production)
 "bP" = (
 /turf/open/floor/iron,
 /area/mine/production)
@@ -1814,6 +1805,15 @@
 /mob/living/simple_animal/hostile/megafauna/legion,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
+"hh" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/spawner/random/engineering/tracking_beacon{
+	spawn_loot_chance = 35
+	},
+/turf/open/floor/iron,
+/area/mine/production)
 "hs" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -15650,7 +15650,7 @@ ab
 cM
 cV
 Rr
-Rr
+cV
 cM
 ej
 eq
@@ -19498,7 +19498,7 @@ rR
 ps
 bn
 br
-bO
+hh
 ck
 NS
 br

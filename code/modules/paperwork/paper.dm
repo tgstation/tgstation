@@ -101,7 +101,7 @@
 			contact_poison = null
 	. = ..()
 
-/obj/item/paper/Initialize()
+/obj/item/paper/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-9, 9)
 	pixel_y = base_pixel_y + rand(-8, 8)
@@ -202,7 +202,7 @@
 		return
 
 	// Enable picking paper up by clicking on it with the clipboard or folder
-	if(istype(P, /obj/item/clipboard) || istype(P, /obj/item/folder))
+	if(istype(P, /obj/item/clipboard) || istype(P, /obj/item/folder) || istype(P, /obj/item/paper_bin))
 		P.attackby(src, user)
 		return
 	else if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
@@ -371,14 +371,14 @@
  */
 /obj/item/paper/construction
 
-/obj/item/paper/construction/Initialize()
+/obj/item/paper/construction/Initialize(mapload)
 	. = ..()
 	color = pick("FF0000", "#33cc33", "#ffb366", "#551A8B", "#ff80d5", "#4d94ff")
 
 /**
  * Natural paper
  */
-/obj/item/paper/natural/Initialize()
+/obj/item/paper/natural/Initialize(mapload)
 	. = ..()
 	color = "#FFF5ED"
 

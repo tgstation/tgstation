@@ -771,7 +771,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/ghost_limit = 3
 	var/ghosts = 0
 
-/obj/effect/rune/manifest/Initialize()
+/obj/effect/rune/manifest/Initialize(mapload)
 	. = ..()
 
 

@@ -24,7 +24,7 @@
 	var/range = 1
 	var/list/connection_images = list()
 
-/obj/item/clothing/glasses/meson/engine/Initialize()
+/obj/item/clothing/glasses/meson/engine/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	update_appearance()

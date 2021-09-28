@@ -14,7 +14,7 @@
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_on = FALSE
 
-/obj/item/compact_remote/Initialize()
+/obj/item/compact_remote/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/compact_remote()

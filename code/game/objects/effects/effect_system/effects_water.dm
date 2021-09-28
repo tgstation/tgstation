@@ -8,7 +8,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 
-/obj/effect/particle_effect/water/Initialize()
+/obj/effect/particle_effect/water/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 70)
 
@@ -46,7 +46,7 @@
 	icon_state = "extinguish"
 	density = FALSE
 
-/obj/effect/particle_effect/steam/Initialize()
+/obj/effect/particle_effect/steam/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 20)
 

@@ -605,9 +605,6 @@
 /obj/item/melee/baton/security/cattleprod,
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/machinery/power/apc/unlocked{
 	dir = 8;
 	environ = 0;
@@ -617,7 +614,6 @@
 	},
 /obj/structure/rack,
 /obj/item/melee/baton/security/cattleprod,
-/obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)

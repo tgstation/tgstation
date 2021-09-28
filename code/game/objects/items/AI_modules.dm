@@ -258,7 +258,7 @@ AI MODULES
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
 		return
-	if(CHAT_FILTER_CHECK(targName))
+	if(is_ic_filtered(targName))
 		to_chat(user, span_warning("Error: Law contains invalid text.")) // AI LAW 2 SAY U W U WITHOUT THE SPACES
 		return
 	laws[1] = targName
@@ -351,7 +351,7 @@ AI MODULES
 /obj/item/ai_module/core/full
 	var/law_id // if non-null, loads the laws from the ai_laws datums
 
-/obj/item/ai_module/core/full/Initialize()
+/obj/item/ai_module/core/full/Initialize(mapload)
 	. = ..()
 	if(!law_id)
 		return
@@ -421,7 +421,7 @@ AI MODULES
 /obj/item/ai_module/core/full/custom
 	name = "Default Core AI Module"
 
-/obj/item/ai_module/core/full/custom/Initialize()
+/obj/item/ai_module/core/full/custom/Initialize(mapload)
 	. = ..()
 	for(var/line in world.file2list("[global.config.directory]/silicon_laws.txt"))
 		if(!line)
@@ -465,7 +465,7 @@ AI MODULES
 	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
 		return
-	if(CHAT_FILTER_CHECK(targName))
+	if(is_ic_filtered(targName))
 		to_chat(user, span_warning("Error: Law contains invalid text."))
 		return
 	laws[1] = targName
@@ -487,7 +487,7 @@ AI MODULES
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
 		return
-	if(CHAT_FILTER_CHECK(targName)) // not even the syndicate can uwu
+	if(is_ic_filtered(targName)) // not even the syndicate can uwu
 		to_chat(user, span_warning("Error: Law contains invalid text."))
 		return
 	laws[1] = targName

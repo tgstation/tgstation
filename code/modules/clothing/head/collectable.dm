@@ -6,7 +6,7 @@
 	desc = "A rare collectable hat."
 	icon_state = null
 
-/obj/item/clothing/head/collectable/Initialize()
+/obj/item/clothing/head/collectable/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/series, /obj/item/clothing/head/collectable, "Super duper collectable hats")
 

@@ -19,7 +19,7 @@
 	var/datum/team/ashwalkers/ashies
 	var/datum/linked_objective
 
-/obj/structure/lavaland/ash_walker/Initialize()
+/obj/structure/lavaland/ash_walker/Initialize(mapload)
 	.=..()
 	ashies = new /datum/team/ashwalkers()
 	var/datum/objective/protect_object/objective = new

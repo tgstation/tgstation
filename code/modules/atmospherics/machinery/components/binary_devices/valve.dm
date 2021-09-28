@@ -82,7 +82,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_OPEN | INTERACT_MACHINE_OPEN_SILICON
 
-/obj/machinery/atmospherics/components/binary/valve/digital/Initialize()
+/obj/machinery/atmospherics/components/binary/valve/digital/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/digital_valve))
 
