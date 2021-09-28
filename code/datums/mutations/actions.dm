@@ -110,17 +110,15 @@
 	power_coeff = 1
 
 /datum/mutation/human/firebreath/modify()
-	// If we have a power chromosome, buff our spell
-	if(power && GET_MUTATION_POWER(src) > 1)
-		var/obj/effect/proc_holder/spell/cone/staggered/firebreath/our_spell = power
-		our_spell.cone_levels *= 2 //Power firebreath makes it fwoosh double distance.
+	var/obj/effect/proc_holder/spell/cone/staggered/firebreath/our_spell = power
+	our_spell.cone_levels = round(our_spell.cone_levels * GET_MUTATION_POWER(src) + 0.1) //Power firebreath makes it fwoosh more. Round up.
 
 /obj/effect/proc_holder/spell/cone/staggered/firebreath
 	name = "Fire Breath"
-	desc = "You can breathe a cone of fire at a target."
+	desc = "You breathe a cone of fire directly in front of you."
 	school = SCHOOL_EVOCATION
 	invocation = ""
-	charge_max = 600
+	charge_max = 400
 	clothes_req = FALSE
 	range = 20
 	base_icon_state = "fireball"
@@ -128,7 +126,7 @@
 	still_recharging_msg = "<span class='warning'>You can't muster any flames!</span>"
 	sound = 'sound/magic/demon_dies.ogg' //horrifying lizard noises
 	respect_density = TRUE
-	cone_levels = 2
+	cone_levels = 3
 
 /obj/effect/proc_holder/spell/cone/staggered/firebreath/before_cast(list/targets)
 	. = ..()
@@ -141,22 +139,27 @@
 
 	our_lizard.adjust_fire_stacks(cone_levels)
 	our_lizard.IgniteMob()
-	to_chat(our_lizard, span_warning("Something in front of your mouth caught fire!"))
+	to_chat(our_lizard, span_warning("Something in front of your mouth catches fire!"))
+
+// Makes the cone shoot out into a 3 wide column of flames.
+/obj/effect/proc_holder/spell/cone/staggered/firebreath/calculate_cone_shape(current_level)
+	return (2 * current_level) - 1
 
 /obj/effect/proc_holder/spell/cone/staggered/firebreath/do_turf_cone_effect(turf/target_turf, level)
 	// Further turfs experience less exposed_temperature and exposed_volume
-	new /obj/effect/hotspot(target_turf)
+	new /obj/effect/hotspot(target_turf) // for style
 	target_turf.hotspot_expose(max(500, 900 - (100 * level)), max(50, 200 - (50 * level)), 1)
 
 /obj/effect/proc_holder/spell/cone/staggered/firebreath/do_mob_cone_effect(mob/living/target_mob, level)
-	// Further out targets take less burn damage
+	// Further out targets take less immediate burn damage and get less fire stacks.
+	// The actual burn damage application is not blocked by fireproofing, like space dragons.
 	target_mob.apply_damage(max(10, 30 - (5 * level)), BURN, spread_damage = TRUE)
 	target_mob.adjust_fire_stacks(max(2, 5 - level))
 	target_mob.IgniteMob()
 
 /obj/effect/proc_holder/spell/cone/staggered/firebreath/do_obj_cone_effect(obj/target_obj, level)
-	// Further out objects are exposed to less heat
-	target_obj.fire_act(max(1000, 500 + (100 * level)), max(50, 200 - (50 * level)))
+	// Further out objects experience less exposed_temperature and exposed_volume
+	target_obj.fire_act(max(500, 900 - (100 * level)), max(50, 200 - (50 * level)))
 
 /datum/mutation/human/void
 	name = "Void Magnet"
