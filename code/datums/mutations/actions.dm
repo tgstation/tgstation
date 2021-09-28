@@ -150,7 +150,7 @@
 
 /obj/effect/proc_holder/spell/cone/staggered/firebreath/do_mob_cone_effect(mob/living/target_mob, level)
 	// Further out targets take less burn damage
-	target_mob.apply_damage(max(10, 30 - (5 * level)), BURN)
+	target_mob.apply_damage(max(10, 30 - (5 * level)), BURN, spread_damage = TRUE)
 	target_mob.adjust_fire_stacks(max(2, 5 - level))
 	target_mob.IgniteMob()
 
