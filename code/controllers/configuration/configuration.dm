@@ -430,7 +430,7 @@ Example config:
 			to_join_on_whitespace_splits += REGEX_QUOTE(banned_word)
 
 	var/whitespace_split = @"(?:(?:^|\s+)(" + jointext(to_join_on_whitespace_splits, "|") + @")(?:$|\s+))"
-	var/word_bounds = @"(\b(" + jointext(to_join_on_word_bounds, "|") + "))"
+	var/word_bounds = @"(\b(" + jointext(to_join_on_word_bounds, "|") + @")\b)"
 	return regex("([whitespace_split]|[word_bounds])", "i")
 
 //Message admins when you can.
