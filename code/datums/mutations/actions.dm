@@ -104,7 +104,7 @@
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>Your throat is burning!</span>"
 	text_lose_indication = "<span class='notice'>Your throat is cooling down.</span>"
-	power = /obj/effect/proc_holder/spell/cone/staggered/firebreath/
+	power = /obj/effect/proc_holder/spell/cone/staggered/firebreath
 	instability = 30
 	energy_coeff = 1
 	power_coeff = 1
