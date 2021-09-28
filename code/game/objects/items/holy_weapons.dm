@@ -143,7 +143,9 @@
 	w_class = WEIGHT_CLASS_TINY
 	obj_flags = UNIQUE_RENAME
 	wound_bonus = -10
-	/// Short description of what this item is capable of, for radial menu uses. set to null to not allow it to be picked
+	/// boolean on whether it's allowed to be picked from the nullrod's transformation ability
+	var/chaplain_spawnable = TRUE
+	/// Short description of what this item is capable of, for radial menu uses.
 	var/menu_description = "A standard chaplain's weapon. Fits in pockets. Can be worn on the belt."
 
 /obj/item/nullrod/Initialize()
@@ -153,7 +155,7 @@
 	if(!GLOB.holy_weapon_type && istype(src, /obj/item/nullrod))
 		var/list/rods = list()
 		for(var/obj/item/nullrod/nullrod_type as anything in typesof(/obj/item/nullrod))
-			if(!initial(nullrod_type.menu_description))
+			if(!chaplain_spawnable)
 				continue
 			rods[nullrod_type] = initial(nullrod_type.menu_description)
 		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, .proc/on_holy_weapon_picked))
@@ -414,7 +416,7 @@
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5 //faster than normal saw
-	menu_description = null //prevents being pickable as a chaplain weapon (it has 30 force)
+	chaplain_spawnable = FALSE //prevents being pickable as a chaplain weapon (it has 30 force)
 
 /obj/item/nullrod/hammer
 	name = "relic war hammer"
