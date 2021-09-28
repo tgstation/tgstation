@@ -1,0 +1,4 @@
+author: "TiviPlus"
+delete-after: True
+changes: 
+  - bugfix: "fixed changing a turf sometimes making an area dark"
