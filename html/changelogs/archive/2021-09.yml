@@ -724,3 +724,180 @@
   - bugfix: 'tgui: IE8: Removed "iefix" css classes from Flex elements which resulted
       in unusable layout in complex UIs, such as tgui prefs.'
   - bugfix: 'tgui: IE8: Fixed button clicks.'
+2021-09-23:
+  EricZilla:
+  - expansion: Updated old GAGS colors for the PDAs based on user feedback
+  - imageadd: Updated appearance of the Survival Pen
+  - expansion: The Quartermaster now starts with a Survival Pen because its flavorful.
+      Survival Pen has also been updated to use the fancy font, since, its fancy.
+  Ghilker:
+  - bugfix: fix scrubbers/vents/injectors/etc from being able to be placed on all
+      layer on the same turf
+  Ghommie:
+  - bugfix: The weapons authorization setting for turrets will now check for weapons
+      on targets without a chameleon identification card instead of those with either
+      a chameleon ID or no ID at all.
+  Krysonism:
+  - expansion: Leapers, mega arachnids, queen bees, frogs and walking mushrooms can
+      now be grown using cytology.
+  - expansion: A neglected fern, once collected on nearby jungle planet, can sometimes
+      be found in maintenance
+  LemonInTheDark:
+  - bugfix: Fixes a rare case of new players being unable to move
+  MMMiracles:
+  - rscadd: Tramstation's Security and Service wing has been flipped around.
+  - rscadd: Tramstation's commissary has been placed above in the central wing beside
+      the kitchen.
+  - rscadd: Tramstation's EVA and Gateway rooms have been adjusted. EVA now has one
+      extra suit storage unit.
+  - rscadd: Tramstation's maintenance near the Service and Security wing has had reworked
+      layouts.
+  - rscadd: Tramstation's asteroid now leaves behind breathable turfs so digging out
+      a room isn't as tedious.
+  Mothblocks:
+  - bugfix: You can now bind Ctrl/Alt again.
+  - bugfix: Fixed the quirks list in the preferences menu sometimes being empty.
+  - admin: Added a panel for editing station traits.
+  TheSmallBlue:
+  - rscadd: Added the Proximity Pinpointer component, get the coordinates of any entity!
+      (As long as its in view)
+  Timberpoes:
+  - admin: Adds a couple of missing traits relating to cult and bloodshot eyes to
+      the Modify Traits VV dropdown menu for mobs.
+  Y0SH1M4S73R:
+  - admin: The Set Var, Get Var, Proc Call, and Signal Handler admin circuit components
+      now use a "datum" datatype for their "Target" port. The "datum" datatype can
+      accept inputs from "atom" ports, and can be safely cast to the "atom" datatype
+      using the typecasting component when necessary.
+  - admin: The Get Var component now has an option port used to select the expected
+      datatype of the obtained var. Similarly, the Proc Call component now has an
+      option port used to select the expected datatype of the proc's return value.
+      Both of these options default to "any"
+  grimm-hollowknight, ported by tralezab with a few overlays:
+  - imageadd: New borg sprite, from Yogstation!
+  necromanceranne:
+  - bugfix: Stickmen flatguns now properly drop out of your hands when picked up,
+      as intended.
+2021-09-25:
+  Fikou:
+  - bugfix: The Qualified Doctor skin for medborgs is now not the only option
+  Iamgoofball:
+  - bugfix: Fixes the logging text on respawn to correctly say it's respawn instead
+      of "abandon mob"
+  Maurukas:
+  - bugfix: Mapped in atmospheric tanks will now connect to pipenets in the appropriate
+      direction
+  - bugfix: Icebox, Runtime, and a number of ruins have had their gas tanks rotated
+      or repiped
+  Qustinnus:
+  - bugfix: Oozes can now eat food again
+  tralezab:
+  - bugfix: Fixes malfunctioning bots breaking when they ordered from the bar. Uh...
+      oops!
+  - expansion: Admin fully immerse smite now reminds the victim to roleplay correctly
+2021-09-26:
+  Guillaume Prata:
+  - bugfix: Huge scrubbers will use their own sprite instead of their little brother
+      one.
+  Krysonism:
+  - bugfix: The crate spawner spawns full crates rather than empty ones again. fix:The
+      neglected fern can actually spawn now
+  - bugfix: The neglected fern now has the standard 2-4 cell ines per sample rather
+      than 1.
+  Melbert:
+  - bugfix: Telescopic shields are bulky again when extended, and the balloon alerts
+      are shorter
+  MetalClone:
+  - rscadd: Added the handlebar moustache, available in the character setup
+  - rscadd: Added the handlebar moustache 2, available in the character setup
+  - imageadd: added both handlebar moustache icons
+  Mothblocks:
+  - bugfix: Fixed not being able to disable specific antagonists randomly.
+  Timberpoes:
+  - bugfix: Players can once again select AI eyes and blob eyes from the various orbit,
+      observe and jump menus.
+  - rscdel: Removed the research note download objective.
+  - rscadd: Added new master R&D servers to science departmental server rooms. This
+      server cannot be deconstructed via ordinary methods. This server cannot be rebuilt
+      if destroyed and cannot be repaired if sabotaged. If destroyed or sabotaged,
+      research point gain is halved for the rest of the shift.
+  - rscadd: Added a new antag objective for traitors and lings to steal the hard drive
+      from a master R&D server. Any other antag can steal it too, for fun. But only
+      traitors and lings and things that get traitor or ling objectives can get it
+      as a dedicated steal objective.
+  - rscadd: Added a new objective for the space ninja and interactions allowing them
+      to destroy the drive in the master R&D server or set the current research points
+      back to 0. Both of these interactions alert the AI and are performed by using
+      the gloves on an appropriate R&D server.
+  Watermelon914:
+  - qol: List Literal can now increase/decrease the amount of input ports from within
+      the UI now.
+  - qol: Module components can now have their integrated circuit and UI accessed from
+      within the integrated circuit. To add circuit components, the module still needs
+      to be disconnected.
+  - qol: Connecting ports together will feel more responsive especially if you have
+      bad internet speeds.
+  - qol: Circuit variables UI has been revamped and made better. You can now drag
+      and drop the setters and getters for each circuit variable and it will no longer
+      automatically close when you move the background. It also takes up less of the
+      screen.
+  - qol: The integrated circuits UI when initially opened will now be bigger.
+  - qol: You can now click to connect ports again
+  necromanceranne:
+  - admin: Meteor guns do damage once again.
+  tralezab:
+  - rscadd: Hauntium can now be worn by the undead!
+2021-09-27:
+  CRITAWAKETS:
+  - bugfix: Gets rid of the placeholder alien bed and replaces its appearance in Snowdin
+      with the proper alien bed.
+  JohnFulpWillard:
+  - bugfix: Traitors who aren't given codewords will no longer notice them when said
+      or have them in their antag menu.
+  Mothblocks:
+  - server: 'Added a new word filter configuration: word_filter.toml, which can specify
+      *why* words are banned.'
+  - bugfix: Emotes are now properly filtered.
+  - qol: For players, you will now see which word you said was filtered.
+  PositiveEntropy:
+  - imageadd: All folders are now resprited!
+  Ryll/Shaps:
+  - rscadd: Added a new achievement for cultists who like to mess with NT's shuttle
+      corps, "WHAT JUST HAPPENED".
+  Sheits:
+  - imageadd: resprites the smoke, forcewall, lightning and blind spells
+  Superlagg:
+  - qol: Paper bins now can directly insert their contents into computers.
+  - qol: Greatly reduced click cooldown on paper bins.
+  - qol: Paper bins can now pick up papers by clicking on them.
+  remove32:
+  - admin: now logging when you update available jobs!
+2021-09-28:
+  Fikou:
+  - rscadd: Secret Gateways can now be a thing enabled by config. They are not on
+      the repository, instead, loaded from a config folder.
+  - rscadd: Adds the secret and anti-phasing z level traits used by Secret Gateways,
+      secret prevents observers from looking at the z level in any way other than
+      observing through another player's eyes
+  - admin: admin loaded away missions can be secret as well
+  Ghilker:
+  - bugfix: fix gases not having an overlay
+  Ghommie:
+  - qol: You can now use backslashes to escape say text modifiers (e.g. a\\+b\\+c
+      = d will be outputted as a+b+c instead of abc with the middle letter b bolded).
+  - qol: Two new tips of the round, both concerning say"" syntax.
+  JohnFulpWillard:
+  - admin: Admins can now cancel out of sending an announcement.
+  JosephJomama:
+  - qol: You can now adjust shaft miners' jumpsuits to expose their chest.
+  - imageadd: New sprites for adjusted shaft miner's jumpsuit.
+  - spellcheck: The cargo tech jumpskirt now has correct punctuation.
+  Mothblocks:
+  - balance: The minimum threat for traitor related rulesets to be considered running
+      has been lowered to their cost.
+  Ryll/Shaps:
+  - admin: You can now ping other admins (or whatever other roles) in asay by using
+      @theirckey in your message
+  tralezab:
+  - rscadd: Hand a monkey an instrument. It'll play a cool song!
+  - qol: sparring sect now has an info button in the top right of the contract menu

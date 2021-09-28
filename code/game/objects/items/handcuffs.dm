@@ -300,7 +300,7 @@
 	///How much damage the trap deals when triggered.
 	var/trap_damage = 20
 
-/obj/item/restraints/legcuffs/beartrap/Initialize()
+/obj/item/restraints/legcuffs/beartrap/Initialize(mapload)
 	. = ..()
 	update_appearance()
 	var/static/list/loc_connections = list(
@@ -389,7 +389,7 @@
 	item_flags = DROPDEL
 	flags_1 = NONE
 
-/obj/item/restraints/legcuffs/beartrap/energy/Initialize()
+/obj/item/restraints/legcuffs/beartrap/energy/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/dissipate), 100)
 
@@ -475,7 +475,7 @@
 	breakouttime = 6 SECONDS
 	custom_price = PAYCHECK_HARD * 0.35
 
-/obj/item/restraints/legcuffs/bola/energy/Initialize()
+/obj/item/restraints/legcuffs/bola/energy/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_UNCATCHABLE, TRAIT_GENERIC) // People said energy bolas being uncatchable is a feature.
 

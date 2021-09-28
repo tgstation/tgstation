@@ -1,0 +1,4 @@
+author: "CRITAWAKETS"
+delete-after: True
+changes: 
+  - bugfix: "Auxiliary base construction consoles now work, instead of deleting the drone before it exists."

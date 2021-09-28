@@ -16,7 +16,7 @@
 
 	var/static/regex/standard_station_regex
 
-/obj/item/station_charter/Initialize()
+/obj/item/station_charter/Initialize(mapload)
 	. = ..()
 	if(!standard_station_regex)
 		var/prefixes = jointext(GLOB.station_prefixes, "|")
@@ -136,7 +136,7 @@
 	//A cooldown, once it's over you can't declare a new name anymore
 	COOLDOWN_DECLARE(cutoff)
 
-/obj/item/station_charter/revolution/Initialize()
+/obj/item/station_charter/revolution/Initialize(mapload)
 	. = ..()
 	COOLDOWN_START(src, cutoff, 5 MINUTES)
 

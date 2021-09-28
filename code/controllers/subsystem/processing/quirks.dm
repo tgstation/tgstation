@@ -150,9 +150,11 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	var/list/new_quirks = list()
 	var/list/positive_quirks = list()
 	var/balance = 0
+	
+	var/list/all_quirks = get_quirks()
 
 	for (var/quirk_name in quirks)
-		var/datum/quirk/quirk = SSquirks.quirks[quirk_name]
+		var/datum/quirk/quirk = all_quirks[quirk_name]
 		if (isnull(quirk))
 			continue
 

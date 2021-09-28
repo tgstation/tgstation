@@ -26,7 +26,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 
-/obj/item/ceremonial_blade/Initialize()
+/obj/item/ceremonial_blade/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 40, 105)
 	RegisterSignal(src, COMSIG_ITEM_SHARPEN_ACT, .proc/block_sharpening)

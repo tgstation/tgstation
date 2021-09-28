@@ -58,7 +58,7 @@
 	var/static/beehometypecache = typecacheof(/obj/structure/beebox)
 	var/static/hydroponicstypecache = typecacheof(/obj/machinery/hydroponics)
 
-/mob/living/simple_animal/hostile/bee/Initialize()
+/mob/living/simple_animal/hostile/bee/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
@@ -247,7 +247,7 @@
 /mob/living/simple_animal/hostile/bee/will_escape_storage()
 	return TRUE
 
-/mob/living/simple_animal/hostile/bee/toxin/Initialize()
+/mob/living/simple_animal/hostile/bee/toxin/Initialize(mapload)
 	. = ..()
 	var/datum/reagent/R = pick(typesof(/datum/reagent/toxin))
 	assign_reagent(GLOB.chemical_reagents_list[R])
@@ -328,7 +328,7 @@
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/obj/item/queen_bee/bought/Initialize()
+/obj/item/queen_bee/bought/Initialize(mapload)
 	. = ..()
 	queen = new(src)
 
@@ -359,7 +359,7 @@
 	icon_state = "bee_item"
 	var/datum/reagent/beegent
 
-/obj/item/trash/bee/Initialize()
+/obj/item/trash/bee/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

@@ -117,7 +117,7 @@ export const BluespaceVendor = (props, context) => {
                             icon="play"
                             tooltipPosition="left"
                             tooltip={"Start adding " + gas.name + "."}
-                            disabled={data.pumping || !data.inserted_tank}
+                            disabled={!data.inserted_tank}
                             onClick={() => act('start_pumping', {
                               gas_id: gas.id,
                             })} />

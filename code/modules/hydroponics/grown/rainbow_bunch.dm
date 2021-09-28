@@ -36,7 +36,7 @@
 	greyscale_config = /datum/greyscale_config/flower_simple
 	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
 
-/obj/item/food/grown/rainbow_flower/Initialize()
+/obj/item/food/grown/rainbow_flower/Initialize(mapload)
 	. = ..()
 	if(greyscale_colors)
 		return
