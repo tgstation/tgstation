@@ -269,8 +269,13 @@
  * Stops processing if we're no longer being held by [held mob].
  */
 /datum/plant_gene/trait/backfire/chili_heat/process(delta_time)
-	var/mob/living/carbon/our_mob = held_mob?.resolve()
-	var/obj/item/plant = our_chili?.resolve()
+	if(!held_mob || !our_chili)
+		stop_backfire_effect()
+		return
+
+	var/mob/living/carbon/our_mob = held_mob.resolve()
+	var/obj/item/plant = our_chili.resolve()
+
 	if(plant && our_mob?.is_holding(plant))
 		our_mob.adjust_bodytemperature(7.5 * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
 		if(DT_PROB(5, delta_time))
@@ -616,8 +621,8 @@
 		stop_gas()
 		return
 
-	var/obj/item/seeds/seed = stinky_seed?.resolve()
-	var/obj/machinery/hydroponics/tray = home_tray?.resolve()
+	var/obj/item/seeds/seed = stinky_seed.resolve()
+	var/obj/machinery/hydroponics/tray = home_tray.resolve()
 
 	if(seed.loc != tray)
 		stop_gas()
