@@ -212,6 +212,11 @@
  * the Atom subsystem intialization, or if the atom is being loaded from the map template.
  * If the item is being created at runtime any time after the Atom subsystem is intialized then
  * it's false.
+ * 
+ * The mapload argument occupies the same position as loc when Initialize() is called by New(). 
+ * The loc argument that usually accompanies New() will no longer be needed after it has 
+ * been stored. loc being the first positional argument will then be overwritten
+ * with mapload at atom/New() before this proc (atom/Initialize()) is called.
  *
  * You must always call the parent of this proc, otherwise failures will occur as the item
  * will not be seen as initalized (this can lead to all sorts of strange behaviour, like
