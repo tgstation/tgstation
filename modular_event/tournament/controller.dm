@@ -145,7 +145,7 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 
 /obj/machinery/computer/tournament_controller/proc/clear_arena()
 	for (var/turf/arena_turf in get_arena_turfs())
-		arena_turf.empty(turf_type = /turf/open/floor/plating)
+		arena_turf.empty(turf_type = /turf/open/floor/plating, baseturf_type = /turf/open/floor/plating)
 
 	QDEL_LIST(contestants)
 	QDEL_LIST(toolboxes)
