@@ -4,7 +4,7 @@
 
 /obj/effect/spawner/random/structure/crate
 	name = "crate spawner"
-	icon_state = "crate"
+	icon_state = "crate_secure"
 	loot = list(
 		/obj/effect/spawner/random/structure/crate_loot = 745,
 		/obj/structure/closet/crate/trashcart/filled = 75,
