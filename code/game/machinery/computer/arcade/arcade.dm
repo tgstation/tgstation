@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /obj/machinery/computer/arcade/proc/Reset()
 	return
 
-/obj/machinery/computer/arcade/Initialize()
+/obj/machinery/computer/arcade/Initialize(mapload)
 	. = ..()
 
 	Reset()
@@ -641,6 +641,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	circuit = /obj/item/circuitboard/computer/arcade/amputation
 
 /obj/machinery/computer/arcade/amputation/attack_hand(mob/user, list/modifiers)
+	. = ..()
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/c_user = user

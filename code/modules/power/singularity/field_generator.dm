@@ -62,13 +62,13 @@ no power level overlay is currently in the overlays list.
 		. += "+p[power_level]"
 
 
-/obj/machinery/field/generator/Initialize()
+/obj/machinery/field/generator/Initialize(mapload)
 	. = ..()
 	fields = list()
 	connected_gens = list()
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity_if_active)
 
-/obj/machinery/field/generator/anchored/Initialize()
+/obj/machinery/field/generator/anchored/Initialize(mapload)
 	. = ..()
 	set_anchored(TRUE)
 
@@ -84,7 +84,7 @@ no power level overlay is currently in the overlays list.
 	if(state != FG_WELDED)
 		to_chat(user, span_warning("[src] needs to be firmly secured to the floor first!"))
 		return
-	if(get_dist(src, user) >= 1)//Need to actually touch the thing to turn it on
+	if(get_dist(src, user) > 1)//Need to actually touch the thing to turn it on
 		return
 	if(active >= FG_CHARGING)
 		to_chat(user, span_warning("You are unable to turn off [src] once it is online!"))

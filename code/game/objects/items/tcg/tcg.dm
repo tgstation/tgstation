@@ -190,7 +190,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	var/static/radial_shuffle = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_shuffle")
 	var/static/radial_pickup = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup")
 
-/obj/item/tcgcard_deck/Initialize()
+/obj/item/tcgcard_deck/Initialize(mapload)
 	. = ..()
 	LoadComponent(/datum/component/storage/concrete/tcg)
 
@@ -362,7 +362,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		"epic" = 30,
 		"legendary" = 5)
 
-/obj/item/cardpack/Initialize()
+/obj/item/cardpack/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/item_scaling, 0.4, 1)
 	//Pass by refrance moment
@@ -411,7 +411,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 
-/obj/item/storage/card_binder/Initialize()
+/obj/item/storage/card_binder/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/tcgcard))

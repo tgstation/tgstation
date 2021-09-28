@@ -11,7 +11,7 @@
 	layer = ABOVE_WINDOW_LAYER
 
 	custom_materials = list(/datum/material/iron=20000) // plasteel is not a material to prevent two bugs: one where the default pressure is 1.5 times higher as plasteel's material modifier is added, and a second one where the tank names could be "plasteel plasteel" tanks
-	material_flags = MATERIAL_GREYSCALE | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_GREYSCALE | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
 
 	pipe_flags = PIPING_ONE_PER_TURF
 	device_type = QUATERNARY
@@ -57,7 +57,7 @@
 	/// The typecache of types which are allowed to merge internal storage
 	var/static/list/merger_typecache
 
-/obj/machinery/atmospherics/components/tank/Initialize()
+/obj/machinery/atmospherics/components/tank/Initialize(mapload)
 	. = ..()
 
 	if(!knob_overlays)
@@ -91,6 +91,10 @@
 
 	QUEUE_SMOOTH(src)
 	QUEUE_SMOOTH_NEIGHBORS(src)
+
+	// Mapped in tanks should automatically connect to adjacent pipenets in the direction set in dir
+	if(mapload)
+		initialize_directions = dir
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -294,7 +298,7 @@
 /obj/machinery/atmospherics/components/tank/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
 	. = TRUE
-	if(obj_integrity >= max_integrity)
+	if(atom_integrity >= max_integrity)
 		return
 	if(!tool.tool_start_check(user, amount=0))
 		return
@@ -341,7 +345,7 @@
 /obj/machinery/atmospherics/components/tank/air
 	name = "pressure tank (Air)"
 
-/obj/machinery/atmospherics/components/tank/air/Initialize()
+/obj/machinery/atmospherics/components/tank/air/Initialize(mapload)
 	. = ..()
 	FillToPressure(/datum/gas/oxygen, safety_margin=(O2STANDARD * 0.5))
 	FillToPressure(/datum/gas/nitrogen, safety_margin=(N2STANDARD * 0.5))

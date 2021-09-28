@@ -17,17 +17,18 @@
 	required_distance = 3
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 	action_cooldown = 20
-	///Blackboard key for the max attempt of throws
-	var/throw_count_key
-	///Blackboard key for the target to hit
-	var/target_key
 	///Sound to use
 	var/attack_sound
 	///Max attemps to make
 	var/max_attempts = 3
 
 
-/datum/ai_behavior/item_move_close_and_attack/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/item_move_close_and_attack/setup(datum/ai_controller/controller, target_key, throw_count_key)
+	. = ..()
+	controller.current_movement_target = controller.blackboard[target_key]
+
+
+/datum/ai_behavior/item_move_close_and_attack/perform(delta_time, datum/ai_controller/controller, target_key, throw_count_key)
 	. = ..()
 	var/obj/item/item_pawn = controller.pawn
 	var/atom/throw_target = controller.blackboard[target_key]
@@ -37,24 +38,21 @@
 	playsound(item_pawn.loc, attack_sound, 100, TRUE)
 	controller.blackboard[throw_count_key]++
 	if(controller.blackboard[throw_count_key] >= max_attempts)
-		finish_action(controller, TRUE)
+		finish_action(controller, TRUE, target_key, throw_count_key)
 
-/datum/ai_behavior/item_move_close_and_attack/finish_action(datum/ai_controller/controller, succeeded)
+/datum/ai_behavior/item_move_close_and_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, throw_count_key)
 	. = ..()
-	reset_blackboard(controller, succeeded)
+	reset_blackboard(controller, succeeded, target_key, throw_count_key)
 
-
-/datum/ai_behavior/item_move_close_and_attack/proc/reset_blackboard(datum/ai_controller/controller, succeeded)
+/datum/ai_behavior/item_move_close_and_attack/proc/reset_blackboard(datum/ai_controller/controller, succeeded, target_key, throw_count_key)
+	controller.blackboard -= target_key
 	controller.blackboard[throw_count_key] = 0
-	controller.blackboard[target_key] = null
 
 /datum/ai_behavior/item_move_close_and_attack/haunted
-	throw_count_key = BB_HAUNTED_THROW_ATTEMPT_COUNT
-	target_key = BB_HAUNT_TARGET
 	attack_sound = 'sound/items/haunted/ghostitemattack.ogg'
 	max_attempts = 4
 
-/datum/ai_behavior/item_move_close_and_attack/haunted/finish_action(datum/ai_controller/controller, succeeded)
+/datum/ai_behavior/item_move_close_and_attack/haunted/finish_action(datum/ai_controller/controller, succeeded, target_key, throw_count_key)
 	var/atom/throw_target = controller.blackboard[target_key]
 	var/list/hauntee_list = controller.blackboard[BB_TO_HAUNT_LIST]
 	hauntee_list[throw_target]--

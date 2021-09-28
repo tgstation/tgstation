@@ -319,4 +319,4 @@
 	if(.)
 		return
 	var/mob/living/silicon/robot/borgo = usr
-	borgo.robot_alerts()
+	borgo.alert_control.ui_interact(borgo)

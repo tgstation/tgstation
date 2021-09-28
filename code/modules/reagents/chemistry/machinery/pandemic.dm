@@ -9,7 +9,7 @@
 	icon_state = "mixer0"
 	icon_keyboard = null
 	base_icon_state = "mixer"
-	use_power = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	resistance_flags = ACID_PROOF
 	circuit = /obj/item/circuitboard/computer/pandemic
@@ -18,7 +18,7 @@
 	var/datum/symptom/selected_symptom
 	var/obj/item/reagent_containers/beaker
 
-/obj/machinery/computer/pandemic/Initialize()
+/obj/machinery/computer/pandemic/Initialize(mapload)
 	. = ..()
 	update_appearance()
 

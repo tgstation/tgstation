@@ -131,9 +131,8 @@
 
 	/// the last health before updating - to check net change in health
 	var/previous_health
-	///Alarm listener datum, handes caring about alarm events and such
-	var/datum/alarm_listener/listener
-
+	/// Station alert datum for showing alerts UI
+	var/datum/station_alert/alert_control
 
 /***************************************************************************************
  *                          Defining specific kinds of robots
@@ -149,52 +148,42 @@
 /mob/living/silicon/robot/model
 	var/set_model = /obj/item/robot_model
 
-/mob/living/silicon/robot/model/Initialize()
+/mob/living/silicon/robot/model/Initialize(mapload)
 	. = ..()
-	model.transform_to(set_model)
+	INVOKE_ASYNC(model, /obj/item/robot_model.proc/transform_to, set_model, TRUE)
 
-// --------------------- Clown
 /mob/living/silicon/robot/model/clown
 	set_model = /obj/item/robot_model/clown
 	icon_state = "clown"
 
-// --------------------- Engineering
 /mob/living/silicon/robot/model/engineering
 	set_model = /obj/item/robot_model/engineering
 	icon_state = "engineer"
 
-// --------------------- Janitor
 /mob/living/silicon/robot/model/janitor
 	set_model = /obj/item/robot_model/janitor
 	icon_state = "janitor"
 
-// --------------------- Medical
 /mob/living/silicon/robot/model/medical
 	set_model = /obj/item/robot_model/medical
 	icon_state = "medical"
 
-// --------------------- Miner
 /mob/living/silicon/robot/model/miner
 	set_model = /obj/item/robot_model/miner
 	icon_state = "miner"
 
-// --------------------- Peacekeeper
 /mob/living/silicon/robot/model/peacekeeper
 	set_model = /obj/item/robot_model/peacekeeper
 	icon_state = "peace"
 
-// --------------------- Security
 /mob/living/silicon/robot/model/security
 	set_model = /obj/item/robot_model/security
 	icon_state = "sec"
 
-// --------------------- Service (formerly Butler)
 /mob/living/silicon/robot/model/service
 	set_model = /obj/item/robot_model/service
 	icon_state = "brobot"
 
-// ------------------------------------------ Syndie borgs
-// --------------------- Syndicate Assault
 /mob/living/silicon/robot/model/syndicate
 	icon_state = "synd_sec"
 	faction = list(ROLE_SYNDICATE)
@@ -215,7 +204,6 @@
 	if(playstyle_string)
 		to_chat(src, playstyle_string)
 
-// --------------------- Syndicate Medical
 /mob/living/silicon/robot/model/syndicate/medical
 	icon_state = "synd_medical"
 	playstyle_string = "<span class='big bold'>You are a Syndicate medical cyborg!</span><br>\
@@ -226,7 +214,6 @@
 						<i>Help the operatives secure the disk at all costs!</i></b>"
 	set_model = /obj/item/robot_model/syndicate_medical
 
-// --------------------- Syndicate Saboteur
 /mob/living/silicon/robot/model/syndicate/saboteur
 	icon_state = "synd_engi"
 	playstyle_string = "<span class='big bold'>You are a Syndicate saboteur cyborg!</span><br>\
@@ -238,7 +225,6 @@
 						<i>Help the operatives secure the disk at all costs!</i></b>"
 	set_model = /obj/item/robot_model/saboteur
 
-// --------------------- Kiltborg (Highlander)
 /mob/living/silicon/robot/model/syndicate/kiltborg
 	set_model = /obj/item/robot_model/syndicate/kiltborg
 	icon_state = "peace"

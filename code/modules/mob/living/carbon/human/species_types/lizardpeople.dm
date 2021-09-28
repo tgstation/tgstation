@@ -3,7 +3,7 @@
 	name = "Lizardperson"
 	id = SPECIES_LIZARD
 	say_mod = "hisses"
-	default_color = "00FF00"
+	default_color = COLOR_VIBRANT_LIME
 	species_traits = list(MUTCOLORS, EYECOLOR, LIPS, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
@@ -29,7 +29,7 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
 	disliked_food = GRAIN | DAIRY | CLOTH
-	liked_food = GROSS | MEAT
+	liked_food = GROSS | MEAT | SEAFOOD
 	inert_mutation = FIREBREATH
 	deathsound = 'sound/voice/lizard/deathsound.ogg'
 	wings_icons = list("Dragon")

@@ -76,6 +76,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/obj/item/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
+	///account id of the ID held
+	var/account_id
 
 	var/obj/item/paicard/pai = null // A slot for a personal AI device
 
@@ -109,7 +111,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if((!isnull(cartridge)))
 		. += span_notice("Ctrl+Shift-click to remove the cartridge.") //won't name cart on examine in case it's Detomatix
 
-/obj/item/pda/Initialize()
+/obj/item/pda/Initialize(mapload)
 	. = ..()
 
 	GLOB.PDAs += src
@@ -127,8 +129,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	. = ..()
 	if(!equipped)
 		if(user.client)
-			background_color = user.client.prefs.pda_color
-			switch(user.client.prefs.pda_style)
+			background_color = user.client.prefs.read_preference(/datum/preference/color/pda_color)
+			switch(user.client.prefs.read_preference(/datum/preference/choiced/pda_style))
 				if(MONO)
 					font_index = MODE_MONO
 					font_mode = FONT_MONO
@@ -756,6 +758,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return
 	if((last_text && world.time < last_text + 10) || (everyone && last_everyone && world.time < last_everyone + PDA_SPAM_DELAY))
 		return
+
+	var/list/filter_result = is_ic_filtered_for_pdas(message)
+	if (filter_result)
+		REPORT_CHAT_FILTER_TO_USER(user, filter_result)
+		return
+
 	if(prob(1))
 		message += "\nSent from my PDA"
 	// Send the signal
@@ -1199,24 +1207,24 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(user, span_alert("Turn on your receiver in order to send messages."))
 		return
 
-	for (var/obj/item/pda/P in get_viewable_pdas())
-		if (P == src)
+	for (var/obj/item/pda/pda as anything in get_viewable_pdas())
+		if (pda == src)
 			continue
-		else if (P == aiPDA)
+		else if (pda == aiPDA)
 			continue
 
-		plist[avoid_assoc_duplicate_keys(P.owner, namecounts)] = P
+		plist[avoid_assoc_duplicate_keys(pda.owner, namecounts)] = pda
 
-	var/c = input(user, "Please select a PDA") as null|anything in sortList(plist)
+	var/choice = tgui_input_list(user, "Please select a PDA", "PDA Messenger", sortList(plist))
 
-	if (!c)
+	if (!choice)
 		return
 
-	var/selected = plist[c]
+	var/selected = plist[choice]
 
 	if(aicamera.stored.len)
-		var/add_photo = input(user,"Do you want to attach a photo?","Photo","No") as null|anything in list("Yes","No")
-		if(add_photo=="Yes")
+		var/add_photo = tgui_alert(user,"Do you want to attach a photo?", "PDA Messenger", list("Yes","No"))
+		if(add_photo == "Yes")
 			var/datum/picture/Pic = aicamera.selectpicture(user)
 			aiPDA.picture = Pic
 

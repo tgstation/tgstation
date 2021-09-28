@@ -119,8 +119,17 @@
 	else
 		return null
 
-/datum/surgery/proc/complete()
+/datum/surgery/proc/complete(mob/surgeon)
 	SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
+	surgeon.mind.add_memory(
+		MEMORY_SUCCESSFUL_SURGERY,
+		list(
+			DETAIL_PROTAGONIST = surgeon,
+			DETAIL_DEUTERAGONIST = target,
+			DETAIL_SURGERY_TYPE = src,
+		),
+		story_value = STORY_VALUE_OKAY
+	)
 	qdel(src)
 
 /datum/surgery/advanced
@@ -140,7 +149,7 @@
 	icon_state = "datadisk1"
 	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100)
 
-/obj/item/disk/surgery/debug/Initialize()
+/obj/item/disk/surgery/debug/Initialize(mapload)
 	. = ..()
 	surgeries = list()
 	var/list/req_tech_surgeries = subtypesof(/datum/surgery)

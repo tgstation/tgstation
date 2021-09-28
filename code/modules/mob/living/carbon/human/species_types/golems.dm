@@ -134,7 +134,7 @@
 			boom_warning = FALSE
 
 	if(H.bodytemperature > 850 && H.on_fire && prob(25))
-		explosion(H, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5)
+		explosion(H, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5, explosion_cause = src)
 		if(H)
 			H.gib()
 	if(H.fire_stacks < 2) //flammable
@@ -251,11 +251,11 @@
 
 /datum/species/golem/titanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	LAZYOR(C.weather_immunities, WEATHER_ASH)
+	ADD_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SPECIES_TRAIT)
 
 /datum/species/golem/titanium/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	LAZYREMOVE(C.weather_immunities, WEATHER_ASH)
+	REMOVE_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SPECIES_TRAIT)
 
 //Immune to ash storms and lava
 /datum/species/golem/plastitanium
@@ -270,13 +270,13 @@
 
 /datum/species/golem/plastitanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	LAZYOR(C.weather_immunities, WEATHER_LAVA)
-	LAZYOR(C.weather_immunities, WEATHER_ASH)
+	ADD_TRAIT(C, TRAIT_LAVA_IMMUNE, SPECIES_TRAIT)
+	ADD_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SPECIES_TRAIT)
 
 /datum/species/golem/plastitanium/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	LAZYREMOVE(C.weather_immunities, WEATHER_ASH)
-	LAZYREMOVE(C.weather_immunities, WEATHER_LAVA)
+	REMOVE_TRAIT(C, TRAIT_LAVA_IMMUNE, SPECIES_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SPECIES_TRAIT)
 
 //Fast and regenerates... but can only speak like an abductor
 /datum/species/golem/alloy
@@ -1163,7 +1163,7 @@
 
 /datum/action/innate/bonechill/Activate()
 	if(world.time < last_use + cooldown)
-		to_chat(span_warning("You aren't ready yet to rattle your bones again!"))
+		to_chat(owner, span_warning("You aren't ready yet to rattle your bones again!"))
 		return
 	owner.visible_message(span_warning("[owner] rattles [owner.p_their()] bones harrowingly."), span_notice("You rattle your bones"))
 	last_use = world.time
@@ -1225,7 +1225,7 @@
 
 /datum/species/golem/snow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	LAZYOR(C.weather_immunities, WEATHER_SNOW)
+	ADD_TRAIT(C, TRAIT_SNOWSTORM_IMMUNE, SPECIES_TRAIT)
 	ball = new
 	ball.charge_counter = 0
 	C.AddSpell(ball)
@@ -1235,7 +1235,7 @@
 
 /datum/species/golem/snow/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	LAZYREMOVE(C.weather_immunities, WEATHER_SNOW)
+	REMOVE_TRAIT(C, TRAIT_SNOWSTORM_IMMUNE, SPECIES_TRAIT)
 	if(ball)
 		C.RemoveSpell(ball)
 	if(cryo)

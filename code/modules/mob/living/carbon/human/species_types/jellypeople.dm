@@ -469,7 +469,7 @@
 	light_power = 2.5
 	light_color = COLOR_WHITE
 
-/obj/effect/dummy/luminescent_glow/Initialize()
+/obj/effect/dummy/luminescent_glow/Initialize(mapload)
 	. = ..()
 	if(!isliving(loc))
 		return INITIALIZE_HINT_QDEL
@@ -585,8 +585,8 @@
 	id = SPECIES_STARGAZER
 	var/datum/action/innate/project_thought/project_thought
 	var/datum/action/innate/link_minds/link_minds
+	var/datum/action/innate/linked_speech/master_speech
 	var/list/mob/living/linked_mobs = list()
-	var/list/datum/action/innate/linked_speech/linked_actions = list()
 	var/datum/weakref/slimelink_owner
 	var/current_link_id = 0
 
@@ -597,6 +597,7 @@
 	linked_mobs.Cut()
 	QDEL_NULL(project_thought)
 	QDEL_NULL(link_minds)
+	QDEL_NULL(master_speech)
 	slimelink_owner = null
 	return ..()
 
@@ -608,6 +609,8 @@
 		QDEL_NULL(project_thought)
 	if(link_minds)
 		QDEL_NULL(link_minds)
+	if(master_speech)
+		QDEL_NULL(master_speech)
 	slimelink_owner = null
 
 /datum/species/jelly/stargazer/spec_death(gibbed, mob/living/carbon/human/H)
@@ -621,43 +624,45 @@
 	project_thought.Grant(C)
 	link_minds = new(src)
 	link_minds.Grant(C)
+	master_speech = new(src)
+	master_speech.Grant(C)
 	slimelink_owner = WEAKREF(C)
-	link_mob(C)
 
-/datum/species/jelly/stargazer/proc/link_mob(mob/living/M)
-	if(QDELETED(M) || M.stat == DEAD)
+/**
+ * Adds a living, not mind/psych shielded mob to the linked_mobs list and gives him
+ * the ability to chat with other mobs in the same lists.
+ * Don't call this proc on the owner; stat, mindshield, antimagic checks and superfluous comsigs
+ * will only lead to bugs in that case. He has his own ability.
+ */
+/datum/species/jelly/stargazer/proc/link_mob(mob/living/mob_linked)
+	if(QDELETED(mob_linked) || mob_linked.stat == DEAD)
 		return FALSE
-	if(HAS_TRAIT(M, TRAIT_MINDSHIELD)) //mindshield implant, no dice
+	if(HAS_TRAIT(mob_linked, TRAIT_MINDSHIELD)) //mindshield implant, no dice
 		return FALSE
-	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
+	if(mob_linked.anti_magic_check(FALSE, FALSE, TRUE, 0))
 		return FALSE
-	if(M in linked_mobs)
+	if(mob_linked in linked_mobs)
 		return FALSE
 	var/mob/living/carbon/human/owner = slimelink_owner.resolve()
 	if(!owner)
 		return FALSE
-	linked_mobs.Add(M)
-	to_chat(M, span_notice("You are now connected to [owner.real_name]'s Slime Link."))
+	to_chat(mob_linked, span_notice("You are now connected to [owner.real_name]'s Slime Link."))
 	var/datum/action/innate/linked_speech/action = new(src)
-	linked_actions.Add(action)
-	action.Grant(M)
-	RegisterSignal(M, COMSIG_LIVING_DEATH , .proc/unlink_mob)
-	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/unlink_mob)
+	action.Grant(mob_linked)
+	linked_mobs[mob_linked] = action
+	RegisterSignal(mob_linked, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, SIGNAL_ADDTRAIT(TRAIT_MINDSHIELD)), .proc/unlink_mob)
 	return TRUE
 
-/datum/species/jelly/stargazer/proc/unlink_mob(mob/living/M)
+/datum/species/jelly/stargazer/proc/unlink_mob(mob/living/mob_linked)
 	SIGNAL_HANDLER
-	var/link_id = linked_mobs.Find(M)
-	if(!(link_id))
+	if(!linked_mobs.Find(mob_linked))
 		return
-	UnregisterSignal(M, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
-	var/datum/action/innate/linked_speech/action = linked_actions[link_id]
-	action.Remove(M)
+	UnregisterSignal(mob_linked, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, SIGNAL_ADDTRAIT(TRAIT_MINDSHIELD)))
+	var/datum/action/innate/linked_speech/action = linked_mobs[mob_linked]
 	var/mob/living/carbon/human/owner = slimelink_owner.resolve()
 	if(owner)
-		to_chat(M, span_notice("You are no longer connected to [owner.real_name]'s Slime Link."))
-	linked_mobs -= M
-	linked_actions -= action
+		to_chat(mob_linked, span_notice("You are no longer connected to [owner.real_name]'s Slime Link."))
+	linked_mobs -= mob_linked
 	qdel(action)
 
 /datum/action/innate/linked_speech
@@ -668,35 +673,35 @@
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/linked_speech/Activate()
-	var/mob/living/carbon/human/H = owner
-	if(H.stat == DEAD)
+	var/mob/living/carbon/human/human_user = owner
+	if(human_user.stat == DEAD)
 		return
-	var/datum/species/jelly/stargazer/species = target
-	if(!species || !(H in species.linked_mobs))
-		to_chat(H, span_warning("The link seems to have been severed..."))
-		Remove(H)
+
+	var/datum/species/jelly/stargazer/master_species = target
+	var/mob/living/carbon/human/star_owner = master_species.slimelink_owner.resolve()
+
+	if(star_owner != human_user && !(human_user in master_species.linked_mobs))
+		to_chat(human_user, span_warning("The link seems to have been severed..."))
 		return
 
 	var/message = sanitize(input("Message:", "Slime Telepathy") as text|null)
 
-	if(!species || !(H in species.linked_mobs))
-		to_chat(H, span_warning("The link seems to have been severed..."))
-		Remove(H)
+	if(!message)
 		return
 
-	var/mob/living/carbon/human/star_owner = species.slimelink_owner.resolve()
+	if(QDELETED(master_species) || (star_owner != human_user && !(human_user in master_species.linked_mobs)))
+		to_chat(human_user, span_warning("The link seems to have been severed..."))
+		return
 
-	if(message && star_owner)
-		var/msg = "<i><font color=#008CA2>\[[star_owner.real_name]'s Slime Link\] <b>[H]:</b> [message]</font></i>"
-		log_directed_talk(H, star_owner, msg, LOG_SAY, "slime link")
-		for(var/X in species.linked_mobs)
-			var/mob/living/M = X
-			to_chat(M, msg)
+	var/msg = "<i><font color=#008CA2>\[[star_owner.real_name]'s Slime Link\] <b>[human_user]:</b> [message]</font></i>"
+	log_directed_talk(human_user, star_owner, msg, LOG_SAY, "slime link")
+	to_chat(star_owner, msg)
+	for(var/mob/living/recipient as anything in master_species.linked_mobs)
+		to_chat(recipient, msg)
 
-		for(var/X in GLOB.dead_mob_list)
-			var/mob/M = X
-			var/link = FOLLOW_LINK(M, H)
-			to_chat(M, "[link] [msg]")
+	for(var/mob/recipient as anything in GLOB.dead_mob_list)
+		var/link = FOLLOW_LINK(recipient, human_user)
+		to_chat(recipient, "[link] [msg]")
 
 /datum/action/innate/project_thought
 	name = "Send Thought"
@@ -711,7 +716,6 @@
 		return
 	if(!is_species(H, /datum/species/jelly/stargazer))
 		return
-	CHECK_DNA_AND_SPECIES(H)
 
 	var/list/options = list()
 	for(var/mob/living/Ms in oview(H))
@@ -745,25 +749,24 @@
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/link_minds/Activate()
-	var/mob/living/carbon/human/H = owner
-	if(!is_species(H, /datum/species/jelly/stargazer))
-		return
-	CHECK_DNA_AND_SPECIES(H)
-
-	if(!H.pulling || !isliving(H.pulling) || H.grab_state < GRAB_AGGRESSIVE)
-		to_chat(H, span_warning("You need to aggressively grab someone to link minds!"))
+	var/mob/living/carbon/human/human_user = owner
+	if(!is_species(human_user, /datum/species/jelly/stargazer))
 		return
 
-	var/mob/living/target = H.pulling
-	var/datum/species/jelly/stargazer/species = target
+	if(!human_user.pulling || !isliving(human_user.pulling) || human_user.grab_state < GRAB_AGGRESSIVE)
+		to_chat(human_user, span_warning("You need to aggressively grab someone to link minds!"))
+		return
 
-	to_chat(H, span_notice("You begin linking [target]'s mind to yours..."))
-	to_chat(target, span_warning("You feel a foreign presence within your mind..."))
-	if(do_after(H, 60, target = target))
-		if(H.pulling != target || H.grab_state < GRAB_AGGRESSIVE)
+	var/mob/living/living_target = human_user.pulling
+	var/datum/species/jelly/stargazer/user_species = human_user.dna.species
+
+	to_chat(human_user, span_notice("You begin linking [living_target]'s mind to yours..."))
+	to_chat(living_target, span_warning("You feel a foreign presence within your mind..."))
+	if(do_after(human_user, 60, target = living_target))
+		if(human_user.pulling != living_target || human_user.grab_state < GRAB_AGGRESSIVE)
 			return
-		if(species.link_mob(target))
-			to_chat(H, span_notice("You connect [target]'s mind to your slime link!"))
+		if(user_species?.link_mob(living_target))
+			to_chat(human_user, span_notice("You connect [living_target]'s mind to your slime link!"))
 		else
-			to_chat(H, span_warning("You can't seem to link [target]'s mind..."))
-			to_chat(target, span_warning("The foreign presence leaves your mind."))
+			to_chat(human_user, span_warning("You can't seem to link [living_target]'s mind..."))
+			to_chat(living_target, span_warning("The foreign presence leaves your mind."))

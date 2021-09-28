@@ -24,7 +24,7 @@
 	var/regrowth_time_high = 16 MINUTES
 	var/number_of_variants = 4
 
-/obj/structure/flora/ash/Initialize()
+/obj/structure/flora/ash/Initialize(mapload)
 	. = ..()
 	base_icon = "[icon_state][rand(1, number_of_variants)]"
 	icon_state = base_icon
@@ -194,7 +194,7 @@
 	seed = /obj/item/seeds/lavaland/polypore
 	wine_power = 20
 
-/obj/item/food/grown/ash_flora/Initialize()
+/obj/item/food/grown/ash_flora/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-4, 4)
 	pixel_y = base_pixel_y + rand(-4, 4)

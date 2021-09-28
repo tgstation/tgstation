@@ -20,6 +20,11 @@
 	var/min_size = 1
 	var/max_size = 20
 
+	ui_buttons = list(
+		"plus" = "increase",
+		"minus" = "decrease"
+	)
+
 /obj/item/circuit_component/list_literal/save_data_to_list(list/component_data)
 	. = ..()
 	component_data["length"] = length
@@ -49,10 +54,9 @@
 		var/index = length(input_ports)
 		if(trigger_input)
 			index -= 1
-		entry_ports += add_input_port("Index [index+1]", PORT_TYPE_ANY, index = index+1)
+		entry_ports += add_input_port("Index [index+1]", PORT_TYPE_ANY)
 
-/obj/item/circuit_component/list_literal/Initialize()
-	. = ..()
+/obj/item/circuit_component/list_literal/populate_ports()
 	set_list_size(default_list_size)
 	list_output = add_output_port("Value", PORT_TYPE_LIST)
 
@@ -61,21 +65,14 @@
 	return ..()
 
 // Increases list length
-/obj/item/circuit_component/list_literal/attack_self(mob/user, list/modifiers)
-	. = ..()
-	set_list_size(min(length + 1, max_size))
-	balloon_alert(user, "new size is now [length]")
-
-// Decreases list length
-/obj/item/circuit_component/list_literal/attack_self_secondary(mob/user, list/modifiers)
-	. = ..()
-	set_list_size(max(length - 1, min_size))
-	balloon_alert(user, "new size is now [length]")
+/obj/item/circuit_component/list_literal/ui_perform_action(mob/user, action)
+	switch(action)
+		if("increase")
+			set_list_size(min(length + 1, max_size))
+		if("decrease")
+			set_list_size(max(length - 1, min_size))
 
 /obj/item/circuit_component/list_literal/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	var/list/new_literal = list()
 	for(var/datum/port/input/entry_port as anything in entry_ports)

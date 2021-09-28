@@ -18,7 +18,7 @@
 
 	var/static/list/mutable_appearance/center_cache = list()
 
-/obj/machinery/atmospherics/pipe/color_adapter/Initialize()
+/obj/machinery/atmospherics/pipe/color_adapter/Initialize(mapload)
 	icon_state = ""
 	. = ..()
 

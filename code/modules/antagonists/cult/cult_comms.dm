@@ -20,8 +20,10 @@
 	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
 	if(!input || !IsAvailable())
 		return
-	if(CHAT_FILTER_CHECK(input))
-		to_chat(usr, span_warning("You cannot send a message that contains a word prohibited in IC chat!"))
+
+	var/list/filter_result = is_ic_filtered(input)
+	if(filter_result)
+		REPORT_CHAT_FILTER_TO_USER(usr, filter_result)
 		return
 	cultist_commune(usr, input)
 
@@ -356,13 +358,14 @@
 	if(!target)
 		return
 	C.cult_team.blood_target = target
-	var/area/A = get_area(target)
+	var/atom/atom_target = target
+	var/area/A = get_area(atom_target)
 	cooldown = world.time + base_cooldown
 	addtimer(CALLBACK(owner, /mob.proc/update_action_buttons_icon), base_cooldown)
-	C.cult_team.blood_target_image = image('icons/effects/mouse_pointers/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
+	C.cult_team.blood_target_image = image('icons/effects/mouse_pointers/cult_target.dmi', atom_target, "glow", ABOVE_MOB_LAYER)
 	C.cult_team.blood_target_image.appearance_flags = RESET_COLOR
-	C.cult_team.blood_target_image.pixel_x = -target.pixel_x
-	C.cult_team.blood_target_image.pixel_y = -target.pixel_y
+	C.cult_team.blood_target_image.pixel_x = -atom_target.pixel_x
+	C.cult_team.blood_target_image.pixel_y = -atom_target.pixel_y
 	SEND_SOUND(owner, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
 	owner.client.images += C.cult_team.blood_target_image
 	for(var/datum/mind/B as anything in get_antag_minds(/datum/antagonist/cult))
@@ -370,7 +373,7 @@
 			to_chat(B.current, span_cultlarge("<b>[owner] has marked [C.cult_team.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b>"))
 			SEND_SOUND(B.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
 			B.current.client.images += C.cult_team.blood_target_image
-	to_chat(owner,span_cultbold("You have marked the [target] for the cult! It will last for [DisplayTimeText(base_cooldown)]."))
+	to_chat(owner,span_cultbold("You have marked the [atom_target] for the cult! It will last for [DisplayTimeText(base_cooldown)]."))
 	name = "Clear the Blood Mark"
 	desc = "Remove the Blood Mark you previously set."
 	button_icon_state = "emp"

@@ -14,7 +14,7 @@
 	if(storedpart)
 		. += span_notice("Alt-click to eject the limb.")
 
-/obj/machinery/aug_manipulator/Initialize()
+/obj/machinery/aug_manipulator/Initialize(mapload)
 	if(!base_icon_state)
 		base_icon_state = initial(icon_state)
 	return ..()
@@ -79,7 +79,7 @@
 			update_appearance()
 
 	else if(O.tool_behaviour == TOOL_WELDER && !user.combat_mode)
-		if(obj_integrity < max_integrity)
+		if(atom_integrity < max_integrity)
 			if(!O.tool_start_check(user, amount=0))
 				return
 
@@ -92,7 +92,7 @@
 					return
 				to_chat(user, span_notice("You repair [src]."))
 				set_machine_stat(machine_stat & ~BROKEN)
-				obj_integrity = max(obj_integrity, max_integrity)
+				atom_integrity = max(atom_integrity, max_integrity)
 				update_appearance()
 		else
 			to_chat(user, span_notice("[src] does not need repairs."))

@@ -82,7 +82,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_OPEN | INTERACT_MACHINE_OPEN_SILICON
 
-/obj/machinery/atmospherics/components/binary/valve/digital/Initialize()
+/obj/machinery/atmospherics/components/binary/valve/digital/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/digital_valve))
 
@@ -104,8 +104,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	/// Sent when the valve is closed
 	var/datum/port/output/closed
 
-/obj/item/circuit_component/digital_valve/Initialize()
-	. = ..()
+/obj/item/circuit_component/digital_valve/populate_ports()
 	open = add_input_port("Open", PORT_TYPE_SIGNAL)
 	close = add_input_port("Close", PORT_TYPE_SIGNAL)
 
@@ -132,9 +131,6 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 		closed.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/digital_valve/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	if(!attached_valve)
 		return

@@ -25,7 +25,7 @@ Difficulty: Hard
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
-	weather_immunities = list(WEATHER_SNOW)
+	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 40
@@ -90,7 +90,7 @@ Difficulty: Hard
 	chosen_message = "<span class='colossus'>You are now screeching, disorienting targets around you.</span>"
 	chosen_attack_num = 3
 
-/mob/living/simple_animal/hostile/megafauna/wendigo/Initialize()
+/mob/living/simple_animal/hostile/megafauna/wendigo/Initialize(mapload)
 	. = ..()
 	starting = get_turf(src)
 
@@ -142,7 +142,7 @@ Difficulty: Hard
 /// Slams the ground around the source throwing back enemies caught nearby, delay is for the radius increase
 /proc/wendigo_slam(atom/source, range, delay, throw_range)
 	var/turf/orgin = get_turf(source)
-	if(!orgin) 
+	if(!orgin)
 		return
 	var/list/all_turfs = RANGE_TURFS(range, orgin)
 	for(var/i = 0 to range)

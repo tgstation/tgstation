@@ -90,6 +90,10 @@
 	var/datum/action/innate/summon_rift/rift
 	/// The color of the space dragon.
 	var/chosen_color
+	/// Minimum devastation damage dealt coefficient based on max health
+	var/devastation_damage_min_percentage = 0.4
+	/// Maximum devastation damage dealt coefficient based on max health
+	var/devastation_damage_max_percentage = 0.75
 
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
 	. = ..()
@@ -104,6 +108,10 @@
 	if(!chosen_color)
 		dragon_name()
 		color_selection()
+
+/mob/living/simple_animal/hostile/space_dragon/ex_act_devastate()
+	var/damage_coefficient = rand(devastation_damage_min_percentage, devastation_damage_max_percentage)
+	adjustBruteLoss(initial(maxHealth)*damage_coefficient)
 
 /mob/living/simple_animal/hostile/space_dragon/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
@@ -562,6 +570,12 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
+// Carp rifts always take heavy explosion damage. Discourages the use of maxcaps
+// and favours more weaker explosives to destroy the portal
+// as they have the same effect on the portal.
+/obj/structure/carp_rift/ex_act(severity, target)
+	return ..(min(EXPLODE_HEAVY, severity))
+
 /obj/structure/carp_rift/examine(mob/user)
 	. = ..()
 	if(time_charged < max_charge)
@@ -637,7 +651,7 @@
 		charge_state = CHARGE_COMPLETED
 		var/area/A = get_area(src)
 		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "Central Command Wildlife Observations")
-		obj_integrity = INFINITY
+		atom_integrity = INFINITY
 		icon_state = "carp_rift_charged"
 		set_light_color(LIGHT_COLOR_YELLOW)
 		update_light()
@@ -682,7 +696,11 @@
 	if(carp_stored <= 0)
 		to_chat(user, span_warning("The rift already summoned enough carp!"))
 		return FALSE
+
 	var/mob/living/simple_animal/hostile/carp/newcarp = new /mob/living/simple_animal/hostile/carp(loc)
+	newcarp.AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
+	newcarp.AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
+
 	if(!is_listed)
 		ckey_list += user.ckey
 	newcarp.key = user.key

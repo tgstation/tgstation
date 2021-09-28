@@ -31,7 +31,7 @@
 	///Multiplier for the amount of gas removed per tick
 	var/power_production_drain = 0.001
 
-/obj/machinery/power/rad_collector/anchored/Initialize()
+/obj/machinery/power/rad_collector/anchored/Initialize(mapload)
 	. = ..()
 	set_anchored(TRUE)
 
@@ -69,7 +69,7 @@
 	toggle_power()
 	user.visible_message(span_notice("[user.name] turns the [src.name] [active? "on":"off"]."), \
 	span_notice("You turn the [src.name] [active? "on":"off"]."))
-	var/datum/gas_mixture/tank_mix = loaded_tank.return_air()
+	var/datum/gas_mixture/tank_mix = loaded_tank?.return_air()
 	var/fuel
 	if(loaded_tank)
 		fuel = tank_mix.gases[/datum/gas/plasma]
@@ -162,7 +162,7 @@
 	var/joules = stored_energy * SSmachines.wait * 0.1
 	. += span_notice("[src]'s display states that it has stored <b>[DisplayJoules(joules)]</b>, and is processing <b>[DisplayPower(RAD_COLLECTOR_OUTPUT)]</b>.")
 
-/obj/machinery/power/rad_collector/obj_break(damage_flag)
+/obj/machinery/power/rad_collector/atom_break(damage_flag)
 	. = ..()
 	if(.)
 		eject()

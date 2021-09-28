@@ -12,7 +12,7 @@
 	var/buildstacktype = /obj/item/stack/sheet/iron //they're iron now, shut up
 	var/buildstackamount = 1
 
-/obj/structure/toilet/Initialize()
+/obj/structure/toilet/Initialize(mapload)
 	. = ..()
 	open = round(rand(0, 1))
 	update_appearance()
@@ -103,6 +103,7 @@
 			user.visible_message(span_notice("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!"), span_notice("You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!"), span_hear("You hear grinding porcelain."))
 			cistern = !cistern
 			update_appearance()
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 	else if(I.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
 		I.play_tool_sound(src)
 		deconstruct()
@@ -145,7 +146,7 @@
 		contents += secret
 
 /obj/structure/toilet/greyscale
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstacktype = null
 
 /obj/structure/urinal
@@ -174,7 +175,7 @@
 	dir = EAST
 	pixel_x = -32
 
-/obj/structure/urinal/Initialize()
+/obj/structure/urinal/Initialize(mapload)
 	. = ..()
 	hiddenitem = new /obj/item/food/urinalcake
 
@@ -360,16 +361,16 @@
 			to_chat(user, span_notice("\The [RG] is full."))
 			return FALSE
 
-	if(istype(O, /obj/item/melee/baton))
-		var/obj/item/melee/baton/B = O
-		if(B.cell && B.cell.charge && B.turned_on)
+	if(istype(O, /obj/item/melee/baton/security))
+		var/obj/item/melee/baton/security/baton = O
+		if(baton.cell?.charge && baton.active)
 			flick("baton_active", src)
-			user.Paralyze(B.stun_time)
-			user.stuttering = B.stun_time/20
-			B.deductcharge(B.cell_hit_cost)
-			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [B.name]!"), \
-								span_userdanger("You unwisely attempt to wash [B] while it's still on."))
-			playsound(src, B.stun_sound, 50, TRUE)
+			user.Paralyze(baton.knockdown_time)
+			user.stuttering = baton.knockdown_time*0.5
+			baton.cell.use(baton.cell_hit_cost)
+			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
+								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
+			playsound(src, baton.on_stun_sound, 50, TRUE)
 			return
 
 	if(istype(O, /obj/item/mop))
@@ -458,7 +459,7 @@
 
 /obj/structure/sink/greyscale
 	icon_state = "sink_greyscale"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstacktype = null
 
 /obj/structure/sinkframe
@@ -467,7 +468,7 @@
 	icon_state = "sink_frame"
 	desc = "A sink frame, that needs a water recycler to finish construction."
 	anchored = FALSE
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 /obj/structure/sinkframe/ComponentInitialize()
 	. = ..()
@@ -570,16 +571,16 @@
 			to_chat(user, span_notice("\The [container] is full."))
 			return FALSE
 
-	if(istype(O, /obj/item/melee/baton))
-		var/obj/item/melee/baton/baton = O
-		if(baton.cell && baton.cell.charge && baton.turned_on)
+	if(istype(O, /obj/item/melee/baton/security))
+		var/obj/item/melee/baton/security/baton = O
+		if(baton.cell?.charge && baton.active)
 			flick("baton_active", src)
-			user.Paralyze(baton.stun_time)
-			user.stuttering = baton.stun_time * 0.05
-			baton.deductcharge(baton.cell_hit_cost)
+			user.Paralyze(baton.knockdown_time)
+			user.stuttering = baton.knockdown_time*0.5
+			baton.cell.use(baton.cell_hit_cost)
 			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
 								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
-			playsound(src, baton.stun_sound, 50, TRUE)
+			playsound(src, baton.on_stun_sound, 50, TRUE)
 			return
 
 	if(istype(O, /obj/item/mop))
@@ -763,7 +764,7 @@
 	GLOB.curtains -= src
 	return ..()
 
-/obj/structure/curtain/cloth/fancy/mechanical/Initialize()
+/obj/structure/curtain/cloth/fancy/mechanical/Initialize(mapload)
 	. = ..()
 	GLOB.curtains += src
 

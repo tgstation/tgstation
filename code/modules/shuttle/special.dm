@@ -16,7 +16,7 @@
 	var/list/active_tables = list()
 	var/tables_required = 2
 
-/obj/machinery/power/emitter/energycannon/magical/Initialize()
+/obj/machinery/power/emitter/energycannon/magical/Initialize(mapload)
 	. = ..()
 	if(prob(50))
 		desc = "Oh no, not again."
@@ -143,7 +143,7 @@
 	unique_name = FALSE // disables the (123) number suffix
 	initial_language_holder = /datum/language_holder/universal
 
-/mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
+/mob/living/simple_animal/drone/snowflake/bardrone/Initialize(mapload)
 	. = ..()
 	access_card.add_access(list(ACCESS_CENT_BAR))
 	become_area_sensitive(ROUNDSTART_TRAIT)
@@ -160,7 +160,7 @@
 	stop_automated_movement = TRUE
 	initial_language_holder = /datum/language_holder/universal
 
-/mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize()
+/mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize(mapload)
 	. = ..()
 	// Simple bot ID card that can hold all accesses. Someone turn access into a component at some point, please.
 	access_card = new /obj/item/card/id/advanced/simple_bot(src)
@@ -229,8 +229,9 @@
 	name = "luxury shuttle ticket field"
 	density = FALSE //allows shuttle airlocks to close, nothing but an approved passenger gets past CanPass
 	locked = TRUE
-	use_power = FALSE
+	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	speech_span = SPAN_ROBOT
 	var/threshold = 500
 	var/static/list/approved_passengers = list()
 	var/static/list/check_times = list()
@@ -245,7 +246,7 @@
 			var/obj/vehicle/vehicle = mover
 			for(var/mob/living/rat in vehicle.occupants)
 				if(!(rat in approved_passengers))
-					say(span_robot("Stowaway detected. Please exit the vehicle first."))
+					say("Stowaway detected. Please exit the vehicle first.")
 					return FALSE
 		return TRUE
 	if(isitem(mover))
@@ -253,7 +254,7 @@
 	if(isstructure(mover))
 		var/obj/structure/struct = mover
 		for(var/mob/living/rat in struct.contents)
-			say(span_robot("Stowaway detected. Please exit the structure first."))
+			say("Stowaway detected. Please exit the structure first.")
 			return FALSE
 		return TRUE
 
@@ -378,7 +379,7 @@
 				AM.pulling = HC
 			payees[AM] -= payees[AM]
 
-		say(span_robot("Welcome to first class, [driver_holdout ? "[driver_holdout]" : "[AM]" ]![change ? " Here is your change." : ""]"))
+		say("Welcome to first class, [driver_holdout ? "[driver_holdout]" : "[AM]" ]![change ? " Here is your change." : ""]")
 		approved_passengers |= AM
 		if(vehicle)
 			approved_passengers |= vehicle

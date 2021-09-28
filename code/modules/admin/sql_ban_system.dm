@@ -119,7 +119,7 @@
 	var/datum/browser/panel = new(usr, "banpanel", "Banning Panel", 910, panel_height)
 	panel.add_stylesheet("admin_panelscss", 'html/admin/admin_panels.css')
 	panel.add_stylesheet("banpanelcss", 'html/admin/banpanel.css')
-	var/tgui_fancy = usr.client.prefs.tgui_fancy
+	var/tgui_fancy = usr.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy)
 	if(tgui_fancy) //some browsers (IE8) have trouble with unsupported css3 elements and DOM methods that break the panel's functionality, so we won't load those if a user is in no frills tgui mode since that's for similar compatability support
 		panel.add_stylesheet("admin_panelscss3", 'html/admin/admin_panels_css3.css')
 		panel.add_script("banpaneljs", 'html/admin/banpanel.js')
@@ -248,7 +248,8 @@
 		for(var/datum/job_department/department as anything in SSjob.joinable_departments)
 			var/label_class = department.label_class
 			var/department_name = department.department_name
-			output += "<div class='column'><label class='rolegroup [label_class]'>[department_name]</label><div class='content'>"
+			output += "<div class='column'><label class='rolegroup [label_class]'>[tgui_fancy ? "<input type='checkbox' name='[label_class]' class='hidden' onClick='header_click_all_checkboxes(this)'>" : ""] \
+			[department_name]</label><div class='content'>"
 			for(var/datum/job/job_datum as anything in department.department_jobs)
 				if(break_counter > 0 && (break_counter % 3 == 0))
 					output += "<br>"
@@ -275,7 +276,7 @@
 			"Abstract" = list("Appearance", "Emote", "Deadchat", "OOC"),
 			)
 		for(var/department in other_job_lists)
-			output += "<div class='column'><label class='rolegroup [ckey(department)]'>[department]</label><div class='content'>"
+			output += "<div class='column'><label class='rolegroup [ckey(department)]'>[tgui_fancy ? "<input type='checkbox' name='[department]' class='hidden' onClick='header_click_all_checkboxes(this)'>" : ""][department]</label><div class='content'>"
 			break_counter = 0
 			for(var/job in other_job_lists[department])
 				if(break_counter > 0 && (break_counter % 3 == 0))
@@ -304,6 +305,7 @@
 				ROLE_BROTHER,
 				ROLE_CHANGELING,
 				ROLE_CULTIST,
+				ROLE_FAMILIES,
 				ROLE_HERETIC,
 				ROLE_HIVE,
 				ROLE_INTERNAL_AFFAIRS,
@@ -315,13 +317,16 @@
 				ROLE_REV,
 				ROLE_REVENANT,
 				ROLE_REV_HEAD,
+				ROLE_SENTIENT_DISEASE,
+				ROLE_SPIDER,
+				ROLE_SWARMER,
 				ROLE_SYNDICATE,
 				ROLE_TRAITOR,
 				ROLE_WIZARD,
 			),
 		)
 		for(var/department in long_job_lists)
-			output += "<div class='column'><label class='rolegroup long [ckey(department)]'>[department]</label><div class='content'>"
+			output += "<div class='column'><label class='rolegroup long [ckey(department)]'>[tgui_fancy ? "<input type='checkbox' name='[department]' class='hidden' onClick='header_click_all_checkboxes(this)'>" : ""][department]</label><div class='content'>"
 			break_counter = 0
 			for(var/job in long_job_lists[department])
 				if(break_counter > 0 && (break_counter % 10 == 0))
@@ -503,7 +508,7 @@
 		if(query_check_adminban_count.NextRow())
 			var/adminban_count = text2num(query_check_adminban_count.item[1])
 			var/max_adminbans = MAX_ADMINBANS_PER_ADMIN
-			if(R_EVERYTHING && !(R_EVERYTHING & rank.can_edit_rights)) //edit rights are a more effective way to check hierarchical rank since many non-headmins have R_PERMISSIONS now
+			if(check_rights(R_PERMISSIONS, show_msg = FALSE) && (rank.can_edit_rights & R_EVERYTHING) == R_EVERYTHING) //edit rights are a more effective way to check hierarchical rank since many non-headmins have R_PERMISSIONS now
 				max_adminbans = MAX_ADMINBANS_PER_HEADMIN
 			if(adminban_count >= max_adminbans)
 				to_chat(usr, span_danger("You've already logged [max_adminbans] admin ban(s) or more. Do not abuse this function!"), confidential = TRUE)

@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 /// Assorted weaponry
 /datum/adventure_loot_generator/simple/weapons
 	id = "weapons"
-	loot_list = list(/obj/item/gun/energy/laser,/obj/item/melee/baton/loaded)
+	loot_list = list(/obj/item/gun/energy/laser,/obj/item/melee/baton/security/loaded)
 
 /// Pets and pet accesories in carriers
 /datum/adventure_loot_generator/pet
@@ -145,7 +145,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	var/charge_per_use = 200
 	var/obj/item/stock_parts/cell/cell
 
-/obj/item/firelance/Initialize()
+/obj/item/firelance/Initialize(mapload)
 	. = ..()
 	cell = new /obj/item/stock_parts/cell(src)
 	AddComponent(/datum/component/two_handed)
@@ -167,6 +167,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 		return
 	if(!cell.use(charge_per_use))
 		to_chat(user,span_warning("[src] battery ran dry!"))
+		return
 	ADD_TRAIT(user,TRAIT_IMMOBILIZED,src)
 	to_chat(user,span_notice("You begin to charge [src]"))
 	inhand_icon_state = "firelance_charging"

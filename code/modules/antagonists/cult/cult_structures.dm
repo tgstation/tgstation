@@ -43,17 +43,17 @@
 	if(IS_CULTIST(user) || isobserver(user))
 		var/t_It = p_they(TRUE)
 		var/t_is = p_are()
-		return span_cult("[t_It] [t_is] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability.")
+		return span_cult("[t_It] [t_is] at <b>[round(atom_integrity * 100 / max_integrity)]%</b> stability.")
 	return ..()
 
 /obj/structure/destructible/cult/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(istype(user, /mob/living/simple_animal/hostile/construct/artificer))
-		if(obj_integrity < max_integrity)
+		if(atom_integrity < max_integrity)
 			user.changeNext_move(CLICK_CD_MELEE)
-			obj_integrity = min(max_integrity, obj_integrity + 5)
+			atom_integrity = min(max_integrity, atom_integrity + 5)
 			Beam(user, icon_state="sendbeam", time=4)
 			user.visible_message(span_danger("[user] repairs \the <b>[src]</b>."), \
-				span_cult("You repair <b>[src]</b>, leaving [p_they()] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability."))
+				span_cult("You repair <b>[src]</b>, leaving [p_they()] at <b>[round(atom_integrity * 100 / max_integrity)]%</b> stability."))
 		else
 			to_chat(user, span_cult("You cannot repair [src], as [p_theyre()] undamaged!"))
 	else
@@ -184,7 +184,7 @@
 	var/corrupt_delay = 50
 	var/last_corrupt = 0
 
-/obj/structure/destructible/cult/pylon/Initialize()
+/obj/structure/destructible/cult/pylon/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 

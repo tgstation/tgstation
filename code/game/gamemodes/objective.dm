@@ -159,11 +159,39 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/datum/mind/receiver = pick(get_owners())
 	if(receiver?.current)
 		if(ishuman(receiver.current))
-			var/mob/living/carbon/human/H = receiver.current
+			var/mob/living/carbon/human/receiver_current = receiver.current
 			var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK)
-			for(var/eq_path in special_equipment)
-				var/obj/O = new eq_path
-				H.equip_in_one_of_slots(O, slots)
+			for(var/obj/equipment_path as anything in special_equipment)
+				var/obj/equipment_object = new equipment_path
+				if(!receiver_current.equip_in_one_of_slots(equipment_object, slots))
+					LAZYINITLIST(receiver.failed_special_equipment)
+					receiver.failed_special_equipment += equipment_path
+					receiver.try_give_equipment_fallback()
+
+/obj/effect/proc_holder/spell/self/special_equipment_fallback
+	name = "Request Objective-specific Equipment"
+	desc = "Call down a supply pod containing the equipment required for specific objectives."
+	action_icon = 'icons/obj/device.dmi'
+	action_icon_state = "beacon"
+	charge_max = 0
+	clothes_req = FALSE
+	nonabstract_req = TRUE
+	phase_allowed = TRUE
+	antimagic_allowed = TRUE
+	invocation_type = "none"
+
+/obj/effect/proc_holder/spell/self/special_equipment_fallback/cast(list/targets, mob/user)
+	var/datum/mind/mind = user.mind
+	if(!mind)
+		CRASH("[src] has no owner!")
+	if(mind.failed_special_equipment?.len)
+		podspawn(list(
+			"target" = get_turf(user),
+			"style" = STYLE_SYNDICATE,
+			"spawn" = mind.failed_special_equipment
+		))
+		mind.failed_special_equipment = null
+	mind.RemoveSpell(src)
 
 /datum/objective/assassinate
 	name = "assasinate"
@@ -269,9 +297,9 @@ GLOBAL_LIST_EMPTY(objectives)
 /datum/objective/protect/check_completion()
 	var/obj/item/organ/brain/brain_target
 	if(human_check)
-		brain_target = target.current.getorganslot(ORGAN_SLOT_BRAIN)
+		brain_target = target.current?.getorganslot(ORGAN_SLOT_BRAIN)
 	//Protect will always suceed when someone suicides
-	return !target || considered_alive(target, enforce_human = human_check) || (human_check == TRUE && brain_target) ? brain_target.suicided : FALSE
+	return !target || considered_alive(target, enforce_human = human_check) || brain_target?.suicided
 
 /datum/objective/protect/update_explanation_text()
 	..()
@@ -621,40 +649,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/steal/special/find_target(dupe_search_range)
 	return set_target(pick(GLOB.possible_items_special))
 
-/datum/objective/download
-	name = "download"
-
-/datum/objective/download/proc/gen_amount_goal()
-	target_amount = rand(20,40)
-	update_explanation_text()
-	return target_amount
-
-/datum/objective/download/update_explanation_text()
-	..()
-	explanation_text = "Download [target_amount] research node\s."
-
-/datum/objective/download/check_completion()
-	var/datum/techweb/checking = new
-	var/list/datum/mind/owners = get_owners()
-	for(var/datum/mind/owner in owners)
-		if(ismob(owner.current))
-			var/mob/M = owner.current //Yeah if you get morphed and you eat a quantum tech disk with the RD's latest backup good on you soldier.
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H && (H.stat != DEAD) && istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
-					var/obj/item/clothing/suit/space/space_ninja/S = H.wear_suit
-					S.stored_research.copy_research_to(checking)
-			var/list/otherwise = M.GetAllContents()
-			for(var/obj/item/disk/tech_disk/TD in otherwise)
-				TD.stored_research.copy_research_to(checking)
-	return checking.researched_nodes.len >= target_amount
-
-/datum/objective/download/admin_edit(mob/admin)
-	var/count = input(admin,"How many nodes ?","Nodes",target_amount) as num|null
-	if(count)
-		target_amount = count
-	update_explanation_text()
-
 /datum/objective/capture
 	name = "capture"
 
@@ -921,7 +915,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		/datum/objective/survive,
 		/datum/objective/martyr,
 		/datum/objective/steal,
-		/datum/objective/download,
 		/datum/objective/nuclear,
 		/datum/objective/capture,
 		/datum/objective/absorb,
@@ -942,7 +935,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/found = FALSE
 	while (!found)
 		var/area/dropoff_area = pick(GLOB.sortedAreas)
-		if(dropoff_area && is_station_level(dropoff_area.z) && !dropoff_area.outdoors)
+		if(dropoff_area && (dropoff_area.type in GLOB.the_station_areas) && !dropoff_area.outdoors)
 			dropoff = dropoff_area
 			found = TRUE
 

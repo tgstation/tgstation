@@ -5,6 +5,18 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "tgui:build": "webpack",
+    "tgui:analyze": "webpack --analyze",
+    "tgui:dev": "node --experimental-modules packages/tgui-dev-server/index.js",
+    "tgui:lint": "eslint packages --ext .js,.cjs,.ts,.tsx",
+    "tgui:sonar": "eslint packages --ext .js,.cjs,.ts,.tsx -c .eslintrc-sonar.yml",
+    "tgui:tsc": "tsc",
+    "tgui:test": "jest --watch",
+    "tgui:test-simple": "CI=true jest --color",
+    "tgui:test-ci": "CI=true jest --color --collect-coverage",
+    "tgui:bench": "webpack --env TGUI_BENCH=1 && node packages/tgui-bench/index.js"
+  },
   "dependencies": {
     "@babel/core": "^7.15.0",
     "@babel/eslint-parser": "^7.15.0",
@@ -15,6 +27,8 @@
     "@types/jest": "^27.0.1",
     "@types/jsdom": "^16.2.13",
     "@types/node": "^14.17.9",
+    "@types/webpack": "^5.28.0",
+    "@types/webpack-env": "^1.16.2",
     "@typescript-eslint/parser": "^4.29.1",
     "babel-jest": "^27.0.6",
     "babel-loader": "^8.2.2",
@@ -25,6 +39,7 @@
     "eslint": "^7.32.0",
     "eslint-plugin-radar": "^0.2.1",
     "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-unused-imports": "^1.1.4",
     "file-loader": "^6.2.0",
     "inferno": "^7.4.8",
     "jest": "^27.0.6",

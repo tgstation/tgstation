@@ -218,6 +218,26 @@
 		to_chat(M, span_danger("You glomp [src]!"))
 		return TRUE
 
+/mob/living/attack_basic_mob(mob/living/basic/user, list/modifiers)
+	if(user.melee_damage_upper == 0)
+		if(user != src)
+			visible_message(span_notice("\The [user] [user.friendly_verb_continuous] [src]!"), \
+							span_notice("\The [user] [user.friendly_verb_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, span_notice("You [user.friendly_verb_simple] [src]!"))
+		return FALSE
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_warning("You don't want to hurt anyone!"))
+		return FALSE
+
+	if(user.attack_sound)
+		playsound(loc, user.attack_sound, 50, TRUE, TRUE)
+	user.do_attack_animation(src)
+	visible_message(span_danger("\The [user] [user.attack_verb_continuous] [src]!"), \
+					span_userdanger("\The [user] [user.attack_verb_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
+	to_chat(user, span_danger("You [user.attack_verb_simple] [src]!"))
+	log_combat(user, src, "attacked")
+	return TRUE
+
 /mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
 	user.face_atom(src)
@@ -417,7 +437,7 @@
 	// this forces any kind of flash (namely normal and static) to use a black screen for photosensitive players
 	// it absolutely isn't an ideal solution since sudden flashes to black can apparently still trigger epilepsy, but byond apparently doesn't let you freeze screens
 	// and this is apparently at least less likely to trigger issues than a full white/static flash
-	if(client?.prefs?.darkened_flash)
+	if(client?.prefs?.read_preference(/datum/preference/toggle/darkened_flash))
 		type = /atom/movable/screen/fullscreen/flash/black
 
 	overlay_fullscreen("flash", type)

@@ -49,16 +49,17 @@
 	var/on = TRUE
 	var/last_spin = 13
 
-/obj/machinery/roulette/Initialize()
+/obj/machinery/roulette/Initialize(mapload)
 	. = ..()
 	jackpot_loop = new(src, FALSE)
 	wires = new /datum/wires/roulette(src)
 
 /obj/machinery/roulette/Destroy()
 	QDEL_NULL(jackpot_loop)
+	my_card = null
 	. = ..()
 
-/obj/machinery/roulette/obj_break(damage_flag)
+/obj/machinery/roulette/atom_break(damage_flag)
 	prize_theft(0.05)
 	. = ..()
 
@@ -176,13 +177,24 @@
 				name = msg
 				desc = "Owned by [new_card.registered_account.account_holder], draws directly from [user.p_their()] account."
 				my_card = new_card
+				RegisterSignal(my_card, COMSIG_PARENT_QDELETING, .proc/on_my_card_deleted)
 				to_chat(user, span_notice("You link the wheel to your account."))
 				power_change()
 				return
 	return ..()
 
+///deletes the my_card ref to prevent harddels
+/obj/machinery/roulette/proc/on_my_card_deleted(datum/source)
+	SIGNAL_HANDLER
+	my_card = null
+
 ///Proc called when player is going to try and play
 /obj/machinery/roulette/proc/play(mob/user, obj/item/card/id/player_id, bet_type, bet_amount, potential_payout)
+	if(!my_card?.registered_account) // Something happened to my_card during the 0.4 seconds delay of the timed callback.
+		icon_state = "idle"
+		flick("flick_down", src)
+		playsound(src, 'sound/machines/piston_lower.ogg', 70)
+		return
 
 	var/payout = potential_payout
 
@@ -222,6 +234,10 @@
 		playsound(src, 'sound/machines/synth_no.ogg', 50)
 		return FALSE
 
+	// Prevents money generation exploits. Doesn't prevent the owner being a scrooge and running away with the money.
+	var/account_balance = my_card?.registered_account?.account_balance
+	potential_payout = (account_balance >= potential_payout) ? potential_payout : account_balance
+
 	audible_message(span_notice("You have won [potential_payout] credits! Congratulations!"))
 	playsound(src, 'sound/machines/synth_yes.ogg', 50)
 
@@ -229,6 +245,8 @@
 
 ///Fills a list of coins that should be dropped.
 /obj/machinery/roulette/proc/dispense_prize(payout)
+	if(!payout)
+		return
 
 	if(payout >= ROULETTE_JACKPOT_AMOUNT)
 		jackpot_loop.start()
@@ -277,21 +295,21 @@
 	if(locked)
 		return
 	locked = TRUE
-	var/stolen_cash = my_card.registered_account.account_balance * percentage
+	var/stolen_cash = my_card?.registered_account?.account_balance * percentage
 	dispense_prize(stolen_cash)
 
 
 ///Returns TRUE if the player bet correctly.
 /obj/machinery/roulette/proc/check_win(bet_type, bet_amount, rolled_number)
 	var/actual_bet_number = text2num(bet_type) //Only returns the numeric bet types, AKA singles.
-	if(actual_bet_number) //This means we're playing singles
+	if(!isnull(actual_bet_number)) //This means we're playing singles
 		return rolled_number == actual_bet_number
 
 	switch(bet_type) //Otherwise, we are playing a "special" game, switch on all the cases so we can check.
 		if(ROULETTE_BET_ODD)
 			return ISODD(rolled_number)
 		if(ROULETTE_BET_EVEN)
-			return ISEVEN(rolled_number)
+			return (ISEVEN(rolled_number) && rolled_number != 0)
 		if(ROULETTE_BET_1TO18)
 			return (rolled_number >= 1 && rolled_number <= 18) //between 1 to 18
 		if(ROULETTE_BET_19TO36)
