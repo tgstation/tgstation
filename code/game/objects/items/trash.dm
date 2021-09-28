@@ -103,6 +103,16 @@
 	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "beans_empty"
 
+/obj/item/trash/can/food/tomatoes
+	name = "canned San Marzano tomatoes"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "tomatoescan_empty"
+
+/obj/item/trash/can/food/pine_nuts
+	name = "canned pine nuts"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "pine_nuts_empty"
+
 /obj/item/trash/can/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-4,4)
