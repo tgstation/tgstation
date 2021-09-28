@@ -520,7 +520,7 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "mz" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ni" = (
@@ -1035,7 +1035,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,

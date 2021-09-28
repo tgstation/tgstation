@@ -454,7 +454,7 @@
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "bq" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "br" = (

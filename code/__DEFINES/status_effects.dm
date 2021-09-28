@@ -138,6 +138,8 @@
 
 #define STATUS_EFFECT_OFFERING /datum/status_effect/offering // you are offering up an item to people
 
+#define STATUS_EFFECT_HANDSHAKE /datum/status_effect/offering/secret_handshake // you are attempting to perform a secret Family handshake
+
 #define STATUS_EFFECT_SURRENDER /datum/status_effect/grouped/surrender // gives an alert to quickly surrender
 
 #define STATUS_EFFECT_EIGEN /datum/status_effect/eigenstasium

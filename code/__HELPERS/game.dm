@@ -586,3 +586,28 @@
 				continue
 
 			C.energy_fail(rand(duration_min,duration_max))
+
+/**
+ * Sends a round tip to a target. If selected_tip is null, a random tip will be sent instead (5% chance of it being silly).
+ * Tips that starts with the @ character won't be html encoded. That's necessary for any tip containing markup tags,
+ * just make sure they don't also have html characters like <, > and ' which will be garbled.
+ */
+/proc/send_tip_of_the_round(target, selected_tip)
+	var/message
+	if(selected_tip)
+		message = selected_tip
+	else
+		var/list/randomtips = world.file2list("strings/tips.txt")
+		var/list/memetips = world.file2list("strings/sillytips.txt")
+		if(randomtips.len && prob(95))
+			message = pick(randomtips)
+		else if(memetips.len)
+			message = pick(memetips)
+
+	if(!message)
+		return
+	if(message[1] != "@")
+		message = html_encode(message)
+	else
+		message = copytext(message, 2)
+	to_chat(target, span_purple("<span class='oocplain'><b>Tip of the round: </b>[message]</span>"))

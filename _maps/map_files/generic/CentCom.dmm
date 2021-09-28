@@ -13134,7 +13134,7 @@
 /turf/open/floor/plating,
 /area/centcom/evac)
 "KP" = (
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/centcom/evac)
@@ -13310,7 +13310,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "Lw" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/centcom/evac)
 "Lx" = (

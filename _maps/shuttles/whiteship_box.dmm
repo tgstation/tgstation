@@ -34,7 +34,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/medbay)
 "ah" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},
@@ -71,7 +71,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
 "ak" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},
@@ -690,7 +690,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/bridge)
 "bf" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_bridge"
 	},
@@ -1932,7 +1932,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/medbay)
 "Hf" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},

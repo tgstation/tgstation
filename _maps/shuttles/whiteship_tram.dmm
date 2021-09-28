@@ -31,7 +31,7 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/abandoned/engine)
 "af" = (
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -41,7 +41,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "ah" = (
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "ai" = (
@@ -304,7 +304,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "aZ" = (
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "ba" = (
@@ -998,7 +998,7 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/abandoned/bridge)
 "cV" = (
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/bridge)
 "cW" = (
