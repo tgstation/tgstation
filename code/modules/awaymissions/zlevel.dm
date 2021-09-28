@@ -1,12 +1,20 @@
 // How much "space" we give the edge of the map
 GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "[global.config.directory]/awaymissionconfig.txt"))
+GLOBAL_LIST_INIT(potentialConfigRandomZlevels, generateConfigMapList(directory = "[global.config.directory]/away_missions/"))
 
-/proc/createRandomZlevel()
-	if(GLOB.potentialRandomZlevels && GLOB.potentialRandomZlevels.len)
-		to_chat(world, span_boldannounce("Loading away mission..."))
-		var/map = pick(GLOB.potentialRandomZlevels)
-		load_new_z_level(map, "Away Mission")
-		to_chat(world, span_boldannounce("Away mission loaded."))
+/proc/createRandomZlevel(config_gateway = FALSE)
+	var/map
+	if(config_gateway && GLOB.potentialConfigRandomZlevels?.len)
+		map = pick_n_take(GLOB.potentialConfigRandomZlevels)
+	else if(GLOB.potentialRandomZlevels?.len)
+		map = pick_n_take(GLOB.potentialRandomZlevels)
+	else
+		return to_chat(world, span_boldannounce("No valid away mission files, loading aborted."))
+	to_chat(world, span_boldannounce("Loading away mission..."))
+	var/loaded = load_new_z_level(map, "Away Mission", config_gateway)
+	to_chat(world, span_boldannounce("Away mission [loaded ? "loaded" : "aborted due to errors"]."))
+	if(!loaded)
+		createRandomZlevel(config_gateway)
 
 /obj/effect/landmark/awaystart
 	name = "away mission spawn"
@@ -60,3 +68,12 @@ GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "[global.con
 			continue
 
 		. += t
+
+/proc/generateConfigMapList(directory)
+	var/list/config_maps = list()
+	var/list/maps = flist(directory)
+	for(var/map_file in maps)
+		if(!findtext(map_file, ".dmm"))
+			continue
+		config_maps += (directory + map_file)
+	return config_maps

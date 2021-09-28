@@ -12,12 +12,24 @@
 	armor = list(MELEE = 20, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 60)
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
+	/// The overlay for the closet's door
+	var/obj/effect/overlay/closet_door/door_obj
+	/// Whether or not this door is being animated
+	var/is_animating_door = FALSE
+	/// Vertical squish of the door
+	var/door_anim_squish = 0.12
+	/// The maximum angle the door will be drawn at
+	var/door_anim_angle = 136
+	/// X position of the closet door hinge
+	var/door_hinge_x = -6.5
+	/// Amount of time it takes for the door animation to play
+	var/door_anim_time = 1.5 // set to 0 to make the door not animate at all
+
 	/// Controls whether a door overlay should be applied using the icon_door value as the icon state
 	var/enable_door_overlay = TRUE
 	var/has_opened_overlay = TRUE
 	var/has_closed_overlay = TRUE
 	var/icon_door = null
-	var/icon_door_override = FALSE //override to have open overlay use icon different to its base's
 	var/secure = FALSE //secure locker or not, also used if overriding a non-secure locker with a secure door overlay to add fancy lights
 	var/opened = FALSE
 	var/welded = FALSE
@@ -66,6 +78,7 @@
 
 /obj/structure/closet/Destroy()
 	dump_contents()
+	QDEL_NULL(door_obj)
 	return ..()
 
 /obj/structure/closet/update_appearance(updates=ALL)
@@ -88,9 +101,9 @@
 
 /obj/structure/closet/proc/closet_update_overlays(list/new_overlays)
 	. = new_overlays
-	if(enable_door_overlay)
+	if(enable_door_overlay && !is_animating_door)
 		if(opened && has_opened_overlay)
-			var/mutable_appearance/door_overlay = mutable_appearance(icon, "[icon_door_override ? icon_door : icon_state]_open", alpha = src.alpha)
+			var/mutable_appearance/door_overlay = mutable_appearance(icon, "[icon_state]_open", alpha = src.alpha)
 			. += door_overlay
 			door_overlay.overlays += emissive_blocker(door_overlay.icon, door_overlay.icon_state, alpha = door_overlay.alpha) // If we don't do this the door doesn't block emissives and it looks weird.
 		else if(has_closed_overlay)
@@ -107,6 +120,56 @@
 	//Overlay is similar enough for both that we can use the same mask for both
 	. += emissive_appearance(icon, "locked", alpha = src.alpha)
 	. += locked ? "locked" : "unlocked"
+
+/// Animates the closet door opening and closing
+/obj/structure/closet/proc/animate_door(closing = FALSE)
+	if(!door_anim_time)
+		return
+	if(!door_obj)
+		door_obj = new
+	var/default_door_icon = "[icon_door || icon_state]_door"
+	vis_contents += door_obj
+	door_obj.icon = icon
+	door_obj.icon_state = default_door_icon
+	is_animating_door = TRUE
+	var/num_steps = door_anim_time / world.tick_lag
+
+	for(var/step in 0 to num_steps)
+		var/angle = door_anim_angle * (closing ? 1 - (step/num_steps) : (step/num_steps))
+		var/matrix/door_transform = get_door_transform(angle)
+		var/door_state
+		var/door_layer
+
+		if (angle >= 90)
+			door_state = "[icon_state]_back"
+			door_layer = FLOAT_LAYER
+		else
+			door_state = default_door_icon
+			door_layer = ABOVE_MOB_LAYER
+
+		if(step == 0)
+			door_obj.transform = door_transform
+			door_obj.icon_state = door_state
+			door_obj.layer = door_layer
+		else if(step == 1)
+			animate(door_obj, transform = door_transform, icon_state = door_state, layer = door_layer, time = world.tick_lag, flags = ANIMATION_END_NOW)
+		else
+			animate(transform = door_transform, icon_state = door_state, layer = door_layer, time = world.tick_lag)
+	addtimer(CALLBACK(src, .proc/end_door_animation), door_anim_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_CLIENT_TIME)
+
+/// Ends the door animation and removes the animated overlay
+/obj/structure/closet/proc/end_door_animation()
+	is_animating_door = FALSE
+	vis_contents -= door_obj
+	update_icon()
+
+/// Calculates the matrix to be applied to the animated door overlay
+/obj/structure/closet/proc/get_door_transform(angle)
+	var/matrix/door_matrix = matrix()
+	door_matrix.Translate(-door_hinge_x, 0)
+	door_matrix.Multiply(matrix(cos(angle), 0, 0, -sin(angle) * door_anim_squish, 1, 0))
+	door_matrix.Translate(door_hinge_x, 0)
+	return door_matrix
 
 /obj/structure/closet/examine(mob/user)
 	. = ..()
@@ -187,6 +250,7 @@
 	if(!dense_when_open)
 		set_density(FALSE)
 	dump_contents()
+	animate_door(FALSE)
 	update_appearance()
 	after_open(user, force)
 	return TRUE
@@ -244,6 +308,7 @@
 	playsound(loc, close_sound, close_sound_volume, TRUE, -3)
 	opened = FALSE
 	set_density(TRUE)
+	animate_door(TRUE)
 	update_appearance()
 	after_close(user)
 	return TRUE

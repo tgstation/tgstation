@@ -35,6 +35,14 @@
 //Generic BB keys
 #define BB_CURRENT_MIN_MOVE_DISTANCE "min_move_distance"
 
+//for songs
+
+///song datum blackboard, set by instrument subtrees
+#define BB_SONG_DATUM "BB_SONG_DATUM"
+///song lines blackboard, set by default on controllers
+#define BB_SONG_LINES "song_lines"
+
+
 // Monkey AI controller blackboard keys
 
 #define BB_MONKEY_AGGRESSIVE "BB_monkey_aggressive"
@@ -52,7 +60,6 @@
 #define BB_MONKEY_DISPOSING "BB_monkey_disposing"
 #define BB_MONKEY_RECRUIT_COOLDOWN "BB_monkey_recruit_cooldown"
 #define BB_MONKEY_NEXT_HUNGRY "BB_monkey_next_hungry"
-
 
 ///Haunted item controller defines
 

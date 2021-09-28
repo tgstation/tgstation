@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - admin: "You can now ping other admins (or whatever other roles) in asay by using @theirckey in your message"

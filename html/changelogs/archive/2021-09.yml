@@ -872,3 +872,32 @@
   - qol: Paper bins can now pick up papers by clicking on them.
   remove32:
   - admin: now logging when you update available jobs!
+2021-09-28:
+  Fikou:
+  - rscadd: Secret Gateways can now be a thing enabled by config. They are not on
+      the repository, instead, loaded from a config folder.
+  - rscadd: Adds the secret and anti-phasing z level traits used by Secret Gateways,
+      secret prevents observers from looking at the z level in any way other than
+      observing through another player's eyes
+  - admin: admin loaded away missions can be secret as well
+  Ghilker:
+  - bugfix: fix gases not having an overlay
+  Ghommie:
+  - qol: You can now use backslashes to escape say text modifiers (e.g. a\\+b\\+c
+      = d will be outputted as a+b+c instead of abc with the middle letter b bolded).
+  - qol: Two new tips of the round, both concerning say"" syntax.
+  JohnFulpWillard:
+  - admin: Admins can now cancel out of sending an announcement.
+  JosephJomama:
+  - qol: You can now adjust shaft miners' jumpsuits to expose their chest.
+  - imageadd: New sprites for adjusted shaft miner's jumpsuit.
+  - spellcheck: The cargo tech jumpskirt now has correct punctuation.
+  Mothblocks:
+  - balance: The minimum threat for traitor related rulesets to be considered running
+      has been lowered to their cost.
+  Ryll/Shaps:
+  - admin: You can now ping other admins (or whatever other roles) in asay by using
+      @theirckey in your message
+  tralezab:
+  - rscadd: Hand a monkey an instrument. It'll play a cool song!
+  - qol: sparring sect now has an info button in the top right of the contract menu
