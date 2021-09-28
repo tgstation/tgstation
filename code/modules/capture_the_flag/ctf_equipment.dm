@@ -204,10 +204,11 @@
 	greyscale_config_worn = /datum/greyscale_config/ctf_standard_worn
 	greyscale_colors = "#ffffff"
 
-	has_shielding = TRUE
-	max_charges = 150
-	recharge_amount = 30
-	lose_multiple_charges = TRUE
+	///Icon state to be fed into the shielded component
+	var/team_shield_icon = "shield-old"
+
+/obj/item/clothing/suit/armor/vest/ctf/setup_shielding()
+	AddComponent(/datum/component/shielded, max_charges = 150, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 30, lose_multiple_charges = TRUE, shield_icon = team_shield_icon)
 
 // LIGHT SHIELDED VEST
 
@@ -217,8 +218,10 @@
 	icon_state = "light"
 	greyscale_config = /datum/greyscale_config/ctf_light
 	greyscale_config_worn = /datum/greyscale_config/ctf_light_worn
-	max_charges = 30
 	slowdown = -0.25
+
+/obj/item/clothing/suit/armor/vest/ctf/light/setup_shielding()
+	AddComponent(/datum/component/shielded, max_charges = 30, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 30, lose_multiple_charges = TRUE, shield_icon = team_shield_icon)
 
 // RED TEAM GUNS
 
@@ -483,14 +486,14 @@
 /obj/item/clothing/suit/armor/vest/ctf/red
 	name = "red shielded vest"
 	inhand_icon_state = "ert_security"
-	shield_icon = "shield-red"
+	team_shield_icon = "shield-red"
 	greyscale_colors = COLOR_VIVID_RED
 
 // Light
 /obj/item/clothing/suit/armor/vest/ctf/light/red
 	name = "light red shielded vest"
 	inhand_icon_state = "ert_security"
-	shield_icon = "shield-red"
+	team_shield_icon = "shield-red"
 	greyscale_colors = COLOR_VIVID_RED
 
 // BLUE TEAM SUITS
@@ -499,14 +502,14 @@
 /obj/item/clothing/suit/armor/vest/ctf/blue
 	name = "blue shielded vest"
 	inhand_icon_state = "ert_command"
-	shield_icon = "shield-old"
+	team_shield_icon = "shield-old"
 	greyscale_colors = COLOR_DARK_CYAN
 
 // Light
 /obj/item/clothing/suit/armor/vest/ctf/light/blue
 	name = "light blue shielded vest"
 	inhand_icon_state = "ert_command"
-	shield_icon = "shield-old"
+	team_shield_icon = "shield-old"
 	greyscale_colors = COLOR_DARK_CYAN
 
 // GREEN TEAM SUITS
@@ -515,14 +518,14 @@
 /obj/item/clothing/suit/armor/vest/ctf/green
 	name = "green shielded vest"
 	inhand_icon_state = "ert_green"
-	shield_icon = "shield-green"
+	team_shield_icon = "shield-green"
 	greyscale_colors = COLOR_LIME
 
 // Light
 /obj/item/clothing/suit/armor/vest/ctf/light/green
 	name = "light green shielded vest"
 	inhand_icon_state = "ert_green"
-	shield_icon = "shield-green"
+	team_shield_icon = "shield-green"
 	greyscale_colors = COLOR_LIME
 
 // YELLOW TEAM SUITS
@@ -531,12 +534,12 @@
 /obj/item/clothing/suit/armor/vest/ctf/yellow
 	name = "yellow shielded vest"
 	inhand_icon_state = "ert_engineer"
-	shield_icon = "shield-yellow"
+	team_shield_icon = "shield-yellow"
 	greyscale_colors = COLOR_VIVID_YELLOW
 
 // Light
 /obj/item/clothing/suit/armor/vest/ctf/light/yellow
 	name = "light yellow shielded vest"
 	inhand_icon_state = "ert_engineer"
-	shield_icon = "shield-yellow"
+	team_shield_icon = "shield-yellow"
 	greyscale_colors = COLOR_VIVID_YELLOW
