@@ -69,7 +69,7 @@
 	var/mob/living/thrower = arguments[4] // 4th arg = mob/thrower
 	if(plant_safety_check(source, thrower))
 		return
-	SEND_SIGNAL(source, COMSIG_PLANT_ON_BACKFIRE, user)
+	SEND_SIGNAL(source, COMSIG_PLANT_ON_BACKFIRE, thrower)
 	if(cancel_action)
 		return COMPONENT_CANCEL_THROW
 
