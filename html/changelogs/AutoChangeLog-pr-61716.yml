@@ -1,0 +1,7 @@
+author: "Thunder12345"
+delete-after: True
+changes: 
+  - imageadd: "CTF armour has a shiny new look"
+  - code_imp: "CTF shielded armour has been changed from a hardsuit to a vest to clear the way for modsuits (coming 2021 by Fikou)"
+  - code_imp: "Any item of clothing can now be given an energy shield, not only hardsuits"
+  - bugfix: "CTF marksman outfits are now named correctly"
