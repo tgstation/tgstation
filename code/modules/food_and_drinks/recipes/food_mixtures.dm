@@ -202,7 +202,7 @@
 	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/flour = 1)
 
 /datum/chemical_reaction/food/mothic_pizza_dough
-	required_reagents = list(/datum/reagent/water = 5, /datum/reagent/consumable/quality_oil = 2, /datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/salt = 1, /datum/reagent/consumable/flour = 10, /datum/reagent/consumable/cornmeal = 5)
+	required_reagents = list(/datum/reagent/milk = 5, /datum/reagent/consumable/quality_oil = 2, /datum/reagent/medicine/salglu_solution = 5, /datum/reagent/consumable/cornmeal = 10, /datum/reagent/consumable/flour = 5)
 	mix_message = "The ingredients form a pizza dough."
 	reaction_flags = REACTION_INSTANT
 

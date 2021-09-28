@@ -136,7 +136,7 @@
 
 /obj/item/food/mothic_pizza_dough
 	name = "mothic pizza dough"
-	desc = "A strong, glutenous dough, made with corn and flour, designed to hold up to cheese and sauce."
+	desc = "A strong, glutenous dough, made with cornmeal and flour, designed to hold up to cheese and sauce."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "mothic_pizza_dough"
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
