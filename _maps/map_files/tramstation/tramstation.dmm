@@ -11341,9 +11341,7 @@
 /obj/structure/table,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/south,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/dark,
 /area/command/teleporter)
 "bLN" = (
@@ -11435,9 +11433,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/security/brig)
 "bNT" = (
@@ -11766,9 +11762,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/tram/center)
 "bUE" = (
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/glass,
 /area/service/kitchen/diner)
 "bUF" = (
@@ -21354,9 +21348,7 @@
 /turf/open/floor/iron/dark,
 /area/science/server)
 "fBS" = (
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "fBY" = (
@@ -25101,9 +25093,7 @@
 /area/engineering/supermatter/room)
 "gXy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/dark,
 /area/medical/treatment_center)
 "gYh" = (
@@ -25976,9 +25966,7 @@
 /obj/effect/turf_decal/trimline/green/corner{
 	dir = 1
 	},
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
 "hpM" = (
@@ -30177,9 +30165,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/security/courtroom)
 "iRT" = (
@@ -31852,9 +31838,7 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat/maint)
 "jBR" = (
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/command/gateway)
 "jCm" = (
@@ -34002,9 +33986,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "kqF" = (
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "kqN" = (
@@ -36357,9 +36339,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/hallway/secondary/exit)
 "loK" = (
@@ -43873,9 +43853,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/navbeacon/wayfinding/bridge,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "ozu" = (
@@ -45121,9 +45099,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/ai_monitored/command/storage/eva)
 "oXC" = (
@@ -45528,9 +45504,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "pfC" = (
@@ -46482,9 +46456,7 @@
 /area/maintenance/central/secondary)
 "pzZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "pAc" = (
@@ -47018,9 +46990,7 @@
 /area/engineering/atmos)
 "pIU" = (
 /obj/item/toy/figure/assistant,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "pJm" = (
@@ -47667,9 +47637,7 @@
 /area/security/brig)
 "pUx" = (
 /mob/living/carbon/human/species/monkey,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/grass,
 /area/medical/virology)
 "pUM" = (
@@ -49914,9 +49882,7 @@
 "qQk" = (
 /obj/machinery/holopad,
 /obj/effect/landmark/event_spawn,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/carpet,
 /area/service/chapel)
 "qQm" = (
@@ -50360,9 +50326,7 @@
 "qZR" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/engineering/main)
 "qZT" = (
@@ -51458,9 +51422,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/maintenance/disposal)
 "rxV" = (
@@ -52238,9 +52200,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/grimy,
 /area/ai_monitored/turret_protected/aisat/foyer)
 "rOg" = (
@@ -56012,9 +55972,7 @@
 /area/security/brig)
 "tmG" = (
 /obj/machinery/holopad,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/carpet,
 /area/service/library)
 "tmI" = (
@@ -56398,9 +56356,7 @@
 /area/security/prison)
 "tsG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/science/robotics/mechbay)
 "tsK" = (
@@ -58766,9 +58722,7 @@
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/north,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/commons/dorms)
 "uqs" = (
@@ -59996,9 +59950,7 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "uPz" = (
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/service/hydroponics/garden)
 "uPQ" = (
@@ -66052,9 +66004,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
 "xks" = (

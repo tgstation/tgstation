@@ -12263,9 +12263,7 @@
 "bgn" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/holopad,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/command/teleporter)
 "bgo" = (
@@ -18130,9 +18128,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "bWh" = (
@@ -27648,9 +27644,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/dark,
 /area/commons/fitness/recreation)
 "dix" = (
@@ -32579,9 +32573,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/command/gateway)
 "fbn" = (
@@ -33690,9 +33682,7 @@
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 8
 	},
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/engineering/main)
 "fya" = (
@@ -35059,9 +35049,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/security/courtroom)
 "gat" = (
@@ -35110,9 +35098,7 @@
 /obj/structure/flora/ausbushes/reedbush{
 	pixel_y = 5
 	},
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/grass,
 /area/medical/virology)
 "gdo" = (
@@ -35142,9 +35128,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
 "gdS" = (
@@ -36814,9 +36798,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "gLT" = (
@@ -50181,9 +50163,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/showroomfloor,
 /area/service/bar/atrium)
 "lJw" = (
@@ -52251,9 +52231,7 @@
 /area/maintenance/starboard/aft)
 "mwp" = (
 /obj/effect/turf_decal/box,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/engine/vacuum,
 /area/science/test_area)
 "mwM" = (
@@ -53319,9 +53297,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
 	},
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/science/robotics/mechbay)
 "mOB" = (
@@ -54077,9 +54053,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "ndg" = (
@@ -57135,9 +57109,7 @@
 "oqW" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/holopad,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/ai_monitored/command/storage/eva)
 "orb" = (
@@ -61612,9 +61584,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "pVM" = (
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "pVQ" = (
@@ -64031,9 +64001,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "qQu" = (
@@ -67640,9 +67608,7 @@
 	name = "xenobiology camera";
 	network = list("ss13","rd","xeno")
 	},
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "sdw" = (
@@ -71435,9 +71401,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/showroomfloor,
 /area/medical/medbay/central)
 "tEb" = (
@@ -75891,9 +75855,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/aisat/foyer)
 "voS" = (
@@ -78575,9 +78537,7 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "wpm" = (
 /mob/living/simple_animal/butterfly,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/grass,
 /area/service/chapel)
 "wpn" = (
@@ -78982,9 +78942,7 @@
 "wAH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/wood,
 /area/service/bar)
 "wAO" = (

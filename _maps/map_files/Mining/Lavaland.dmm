@@ -1805,15 +1805,6 @@
 /mob/living/simple_animal/hostile/megafauna/legion,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"hh" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
-/turf/open/floor/iron,
-/area/mine/production)
 "hs" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -1912,6 +1903,13 @@
 /obj/structure/stone_tile/block/cracked,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"iH" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/turf/open/floor/iron,
+/area/mine/production)
 "iK" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/cracked{
@@ -19498,7 +19496,7 @@ rR
 ps
 bn
 br
-hh
+cH
 ck
 NS
 br
@@ -20013,7 +20011,7 @@ Zh
 UC
 Rx
 eC
-eC
+iH
 eC
 eC
 eC

@@ -1913,9 +1913,7 @@
 /area/service/bar)
 "jR" = (
 /obj/effect/landmark/event_spawn,
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "jT" = (
@@ -2675,6 +2673,14 @@
 "nJ" = (
 /turf/closed/wall,
 /area/service/hydroponics)
+"nK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/turf/open/floor/iron,
+/area/mine/eva)
 "nM" = (
 /turf/closed/wall,
 /area/mine/mechbay)
@@ -8456,9 +8462,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 4
 	},
-/obj/effect/spawner/random/engineering/tracking_beacon{
-	spawn_loot_chance = 35
-	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
 "Oa" = (
@@ -32476,7 +32480,7 @@ zR
 Ut
 VR
 el
-KG
+nK
 KG
 KG
 KG
