@@ -125,8 +125,9 @@
 	copy_seed.productdesc = productdesc
 	copy_seed.genes = list()
 	for(var/datum/plant_gene/gene as anything in genes)
-		copy_seed.genes += gene.Copy()
-		gene.on_new_seed(copy_seed)
+		var/datum/plant_gene/copied_gene = gene.Copy()
+		copy_seed.genes += copied_gene
+		copied_gene.on_new_seed(copy_seed)
 
 	copy_seed.reagents_add = reagents_add.Copy() // Faster than grabbing the list from genes.
 	return copy_seed

@@ -267,6 +267,7 @@
 		return FALSE
 	new effect_path(user.loc, seed)
 	to_chat(user, span_notice("You plant [src]."))
+	seed = null // We pass our seed to our planted shroom, null it here
 	qdel(src)
 	return TRUE
 

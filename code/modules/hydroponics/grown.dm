@@ -44,7 +44,7 @@
 	if(!tastes)
 		tastes = list("[name]" = 1) //This happens first else the component already inits
 
-	if(new_seed)
+	if(istype(new_seed))
 		seed = new_seed.Copy()
 
 	else if(ispath(seed))

@@ -270,10 +270,11 @@
  */
 /datum/plant_gene/trait/backfire/chili_heat/process(delta_time)
 	var/mob/living/carbon/our_mob = held_mob?.resolve()
-	if(our_mob.is_holding(our_chili))
+	var/obj/item/plant = our_chili?.resolve()
+	if(plant && our_mob?.is_holding(plant))
 		our_mob.adjust_bodytemperature(7.5 * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
 		if(DT_PROB(5, delta_time))
-			to_chat(our_mob, span_warning("Your hand holding [our_chili] burns!"))
+			to_chat(our_mob, span_warning("Your hand holding [plant] burns!"))
 	else
 		stop_backfire_effect()
 

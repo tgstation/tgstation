@@ -13,8 +13,9 @@
 	. = ..()
 	create_reagents(100)
 
-	if(new_seed)
+	if(istype(new_seed))
 		seed = new_seed.Copy()
+
 	else if(ispath(seed))
 		// This is for adminspawn or map-placed growns. They get the default stats of their seed type.
 		seed = new seed()
