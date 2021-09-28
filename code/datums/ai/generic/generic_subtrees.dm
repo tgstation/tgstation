@@ -46,7 +46,6 @@
  *
  * relevant blackboards:
  * * BB_NEXT_HUNGRY - set by this subtree, is when the controller is next hungry
- * * BB_SONG_LINES - not set by this subtree, is the song loaded into the song datum.
  */
 /datum/ai_planning_subtree/generic_hunger/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	var/mob/living/living_pawn = controller.pawn
