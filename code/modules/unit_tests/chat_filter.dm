@@ -21,14 +21,6 @@
 	)
 
 	test_filter(
-		"these words have filtered words in them: ablockedinic blockedinicbbbb aablockedinicbb",
-		null,
-		null,
-		null,
-		null,
-	)
-
-	test_filter(
 		"<(0_0<) <(0_0)> (>0_0)> KIRBY DANCE!!!",
 		"<(0_0<)",
 		BLOCKED_IC_OUTSIDE_PDA,

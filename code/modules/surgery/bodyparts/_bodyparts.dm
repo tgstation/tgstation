@@ -1,3 +1,4 @@
+
 /obj/item/bodypart
 	name = "limb"
 	desc = "Why is it detached..."
@@ -6,10 +7,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/mob/human_parts.dmi'
 	icon_state = ""
-	/// The icon for Organic limbs using greyscale
-	var/icon_greyscale = DEFAULT_BODYPART_ICON_ORGANIC
-	/// The icon for Robotic limbs
-	var/icon_robotic = DEFAULT_BODYPART_ICON_ROBOTIC
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/liquidgibs = 5) // robotic bodyparts and chests/heads cannot be ground
 	var/mob/living/carbon/owner
@@ -716,9 +713,9 @@
 
 	if(change_icon_to_default)
 		if(status == BODYPART_ORGANIC)
-			icon = icon_greyscale
+			icon = DEFAULT_BODYPART_ICON_ORGANIC
 		else if(status == BODYPART_ROBOTIC)
-			icon = icon_robotic
+			icon = DEFAULT_BODYPART_ICON_ROBOTIC
 
 	if(owner)
 		owner.updatehealth()
@@ -883,7 +880,7 @@
 		return
 
 	if(should_draw_greyscale)
-		limb.icon = icon_greyscale
+		limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 		if(should_draw_gender)
 			limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 		else if(use_digitigrade)

@@ -274,9 +274,8 @@
 		return ..()
 	if(phase_state)
 		flick(phase_state, src)
-	var/turf/destination_turf = get_step(loc, movement_dir)
-	var/area/destination_area = destination_turf.loc
-	if(destination_area.area_flags & NOTELEPORT || SSmapping.level_trait(destination_turf.z, ZTRAIT_NOPHASE))
+	var/area/destination_area = get_step(loc, movement_dir).loc
+	if(destination_area.area_flags & NOTELEPORT)
 		return FALSE
 	return TRUE
 

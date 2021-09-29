@@ -1076,7 +1076,7 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/obj/structure/window/reinforced/plasma,
+/obj/structure/window/plasma/reinforced,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "cN" = (
