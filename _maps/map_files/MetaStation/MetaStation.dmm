@@ -44905,13 +44905,7 @@
 /turf/open/floor/iron,
 /area/science/xenobiology)
 "nRV" = (
-/obj/structure/table/glass,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/table/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
