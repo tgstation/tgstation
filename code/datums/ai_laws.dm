@@ -263,7 +263,12 @@
 /datum/ai_laws/proc/pick_weighted_lawset()
 	var/datum/ai_laws/lawtype
 	var/list/law_weights = CONFIG_GET(keyed_list/law_weight)
-	law_weights -= /datum/ai_laws/default/asimov
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
+		var/list/blacklist = (
+			/datum/ai_laws/default/asimov
+		)
+		for(var/datum/ai_laws/lawset in blacklist)
+			law_weights -= initial(lawset.id)
 	while(!lawtype && law_weights.len)
 		var/possible_id = pickweightAllowZero(law_weights)
 		lawtype = lawid_to_type(possible_id)
