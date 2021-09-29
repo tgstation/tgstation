@@ -31,6 +31,8 @@
 			adjust_nutrition(-(HUNGER_FACTOR/10))
 			if(m_intent == MOVE_INTENT_RUN)
 				adjust_nutrition(-(HUNGER_FACTOR/10))
+	if(body_position == LYING_DOWN)
+		apply_status_effect(STATUS_EFFECT_CRAWLING)
 
 
 /mob/living/carbon/set_usable_legs(new_value)

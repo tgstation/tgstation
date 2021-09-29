@@ -506,6 +506,8 @@
 			return FALSE
 		if(HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED))
 			return FALSE
+		if(L.body_position == LYING_DOWN && !L.has_status_effect(STATUS_EFFECT_CRAWLING))
+			return FALSE
 		if(!hit_prone_targets)
 			if(!L.density)
 				return FALSE

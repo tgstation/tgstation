@@ -460,6 +460,17 @@
 		QDEL_NULL(alt_clone)
 	return ..()
 
+// A status effect that represents a character crawling
+/datum/status_effect/crawling
+	id = "crawling"
+	duration = 6 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+
+/datum/status_effect/crawling/on_remove()
+	if(owner.body_position == LYING_DOWN)
+		to_chat(owner, "<span class='notice'>You assume a prone posistion.")
+
 #undef EIGENSTASIUM_MAX_BUFFER
 #undef EIGENSTASIUM_STABILISATION_RATE
 #undef EIGENSTASIUM_PHASE_1_END

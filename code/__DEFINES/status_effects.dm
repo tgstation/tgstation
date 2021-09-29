@@ -144,6 +144,8 @@
 
 #define STATUS_EFFECT_STONED /datum/status_effect/stoned
 
+#define STATUS_EFFECT_CRAWLING /datum/status_effect/crawling
+
 /////////////
 //  SLIME  //
 /////////////
