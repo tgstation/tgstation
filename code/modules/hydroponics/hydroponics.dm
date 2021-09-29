@@ -649,7 +649,7 @@
 			return
 		if(plant_health <= GENE_SHEAR_MIN_HEALTH) //Check health again to make sure they're not keeping inputs open to get free shears.
 			return
-		for(var/datum/plant_gene/gene as anything in myseed.genes)
+		for(var/datum/plant_gene/gene in myseed.genes)
 			if(gene.name == removed_trait)
 				if(myseed.genes.Remove(gene))
 					gene.on_removed(myseed)

@@ -125,7 +125,7 @@
 	copy_seed.desc = desc
 	copy_seed.productdesc = productdesc
 	copy_seed.genes = list()
-	for(var/datum/plant_gene/gene as anything in genes)
+	for(var/datum/plant_gene/gene in genes)
 		var/datum/plant_gene/copied_gene = gene.Copy()
 		copy_seed.genes += copied_gene
 		copied_gene.on_new_seed(copy_seed)
