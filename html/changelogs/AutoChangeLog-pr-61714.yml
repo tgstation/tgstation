@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the beginning of words being filtered \"e.g. lol filtering lollipop\""

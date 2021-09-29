@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Contractor drop pods are now actually clickable and you can place your target into them without having to drag them to the tiny bit of pod where the rubble overlaps it."

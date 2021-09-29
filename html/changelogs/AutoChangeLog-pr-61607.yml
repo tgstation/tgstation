@@ -1,5 +1,0 @@
-author: "Zytolg"
-delete-after: True
-changes: 
-  - expansion: "Adds the Homestead, Comms Outpost, and Plasma Facility to the Icewastes Ruins Roster."
-  - code_imp: "Adds area support for the Plasma Facility ruin."
