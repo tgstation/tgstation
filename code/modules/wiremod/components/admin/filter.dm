@@ -272,7 +272,7 @@ GLOBAL_LIST_INIT(wiremod_flag_info, list(
 	var/datum/port/output/output_bitflag
 
 /obj/item/circuit_component/bitflag_helper/populate_options()
-	bitflag_port = add_option_port("Bitflag Type", GLOB.wiremod_flag_info)
+	bitflag_port = add_option_port("Bitflag Type", assoc_to_keys(GLOB.wiremod_flag_info))
 
 /obj/item/circuit_component/bitflag_helper/populate_ports()
 	current_bitflag = bitflag_port.value
