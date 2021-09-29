@@ -42,7 +42,7 @@
 		projectile_obj.preparePixelProjectile(target, source, modifiers, spread)
 		if(source.client && isliving(source)) //dont want it to happen from syndie mecha npc mobs, they do direct fire anyways
 			var/mob/living/shooter = source
-			projectile_obj.hit_prone_targets = shooter.combat_mode
+			projectile_obj.hit_crawling_targets = shooter.combat_mode
 		projectile_obj.fire()
 		if(!projectile_obj.suppressed && firing_effect_type)
 			new firing_effect_type(get_turf(src), chassis.dir)

@@ -159,7 +159,7 @@
 	///If we have a shrapnel_type defined, these embedding stats will be passed to the spawned shrapnel type, which will roll for embedding on the target
 	var/list/embedding
 	///If TRUE, hit mobs even if they're on the floor and not our target
-	var/hit_prone_targets = FALSE
+	var/hit_crawling_targets = FALSE
 	///For what kind of brute wounds we're rolling for, if we're doing such a thing. Lasers obviously don't care since they do burn instead.
 	var/sharpness = NONE
 	///How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
@@ -508,11 +508,9 @@
 			return FALSE
 		if(L.body_position == LYING_DOWN && !L.has_status_effect(STATUS_EFFECT_CRAWLING))
 			return FALSE
-		if(!hit_prone_targets)
+		if(!hit_crawling_targets)
 			if(!L.density)
 				return FALSE
-			if(L.body_position != LYING_DOWN)
-				return TRUE
 	return TRUE
 
 /**
