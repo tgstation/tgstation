@@ -173,13 +173,14 @@
 /**find and set
  * Finds an item near themselves, sets a blackboard key as it. Very useful for ais that need to use machines or something.
  * if you want to do something more complicated than find a single atom, change the search_tactic() proc
+ *
  * cool tip: search_tactic() can set lists
  */
 /datum/ai_behavior/find_and_set
 	action_cooldown = 5 SECONDS
 	///search range in how many tiles around the pawn to look for the path
 	var/search_range = 7
-	//optional, don't use if you're changing search_tactic()
+	///optional, don't use if you're changing `search_tactic()`. It's the type of atom to look for.
 	var/locate_path
 	var/bb_key_to_set
 

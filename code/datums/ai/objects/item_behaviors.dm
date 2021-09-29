@@ -1,3 +1,10 @@
+
+//these are all behaviors that set item target blackboards
+
+/datum/ai_behavior/find_and_set/item_target
+	locate_path = /mob/living/carbon
+	bb_key_to_set = BB_ITEM_TARGET
+
 ///This behavior is for obj/items, it is used to free themselves out of the hands of whoever is holding them
 /datum/ai_behavior/item_escape_grasp
 
@@ -19,16 +26,16 @@
 	action_cooldown = 20
 	///Sound to use
 	var/attack_sound
-	///Max attemps to make
+	///Max attempts to make
 	var/max_attempts = 3
 
 
-/datum/ai_behavior/item_move_close_and_attack/setup(datum/ai_controller/controller, target_key, throw_count_key)
+/datum/ai_behavior/item_move_close_and_attack/setup(datum/ai_controller/controller, aggro_list_key, target_key, throw_count_key)
 	. = ..()
 	controller.current_movement_target = controller.blackboard[target_key]
 
 
-/datum/ai_behavior/item_move_close_and_attack/perform(delta_time, datum/ai_controller/controller, target_key, throw_count_key)
+/datum/ai_behavior/item_move_close_and_attack/perform(delta_time, datum/ai_controller/controller, aggro_list_key, target_key, throw_count_key)
 	. = ..()
 	var/obj/item/item_pawn = controller.pawn
 	var/atom/throw_target = controller.blackboard[target_key]
@@ -40,20 +47,15 @@
 	if(controller.blackboard[throw_count_key] >= max_attempts)
 		finish_action(controller, TRUE, target_key, throw_count_key)
 
-/datum/ai_behavior/item_move_close_and_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, throw_count_key)
+/datum/ai_behavior/item_move_close_and_attack/finish_action(datum/ai_controller/controller, succeeded, aggro_list_key, target_key, throw_count_key)
 	. = ..()
-	reset_blackboard(controller, succeeded, target_key, throw_count_key)
+	var/atom/throw_target = controller.blackboard[target_key]
 
-/datum/ai_behavior/item_move_close_and_attack/proc/reset_blackboard(datum/ai_controller/controller, succeeded, target_key, throw_count_key)
 	controller.blackboard -= target_key
 	controller.blackboard[throw_count_key] = 0
+	var/list/aggro_list = controller.blackboard[aggro_list_key]
+	aggro_list[throw_target]--
 
-/datum/ai_behavior/item_move_close_and_attack/haunted
+/datum/ai_behavior/item_move_close_and_attack/ghostly
 	attack_sound = 'sound/items/haunted/ghostitemattack.ogg'
 	max_attempts = 4
-
-/datum/ai_behavior/item_move_close_and_attack/haunted/finish_action(datum/ai_controller/controller, succeeded, target_key, throw_count_key)
-	var/atom/throw_target = controller.blackboard[target_key]
-	var/list/hauntee_list = controller.blackboard[BB_TO_HAUNT_LIST]
-	hauntee_list[throw_target]--
-	return ..()
