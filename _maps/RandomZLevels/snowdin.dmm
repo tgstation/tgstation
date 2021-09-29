@@ -6742,7 +6742,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "rW" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/window/plasma/reinforced/unanchored,
+/obj/structure/window/reinforced/plasma/unanchored,
 /turf/open/lava/plasma,
 /area/awaymission/snowdin/cave/cavern)
 "rY" = (
@@ -6832,12 +6832,12 @@
 /area/awaymission/snowdin/cave/cavern)
 "sn" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/window/plasma/reinforced/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/east,
 /turf/open/lava/plasma,
 /area/awaymission/snowdin/cave/cavern)
 "so" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/window/plasma/reinforced/spawner/west,
+/obj/structure/window/reinforced/plasma/spawner/west,
 /turf/open/lava/plasma,
 /area/awaymission/snowdin/cave/cavern)
 "sp" = (
@@ -6964,7 +6964,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "sG" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/window/plasma/reinforced/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/north,
 /turf/open/lava/plasma,
 /area/awaymission/snowdin/cave/cavern)
 "sH" = (
@@ -7831,11 +7831,11 @@
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/snowdin/post/broken_shuttle)
 "vM" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/broken_shuttle)
 "vN" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/effect/baseturf_helper/asteroid/snow,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/broken_shuttle)
@@ -8994,8 +8994,8 @@
 /area/awaymission/snowdin/cave/cavern)
 "zl" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/window/plasma/reinforced/spawner/north,
-/obj/structure/window/plasma/reinforced/unanchored,
+/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/unanchored,
 /turf/open/lava/plasma,
 /area/awaymission/snowdin/cave/cavern)
 "zm" = (
@@ -10491,7 +10491,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "DH" = (
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/window/reinforced/plasma/plastitanium,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/cave)

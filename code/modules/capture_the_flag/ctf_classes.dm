@@ -4,7 +4,7 @@
 	name = "CTF Rifleman (Solo)"
 	ears = /obj/item/radio/headset
 	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf
+	suit = /obj/item/clothing/suit/armor/vest/ctf
 	toggle_helmet = FALSE // see the whites of their eyes
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
@@ -68,7 +68,7 @@
 
 /datum/outfit/ctf/assault
 	name = "CTF Assaulter (Solo)"
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/light
+	suit = /obj/item/clothing/suit/armor/vest/ctf/light
 	r_hand = /obj/item/gun/ballistic/shotgun/ctf
 	gloves = /obj/item/clothing/gloves/tackler/rocket
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun
@@ -90,7 +90,7 @@
 
 /datum/outfit/ctf/red
 	name = "CTF Rifleman (Red)"
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
+	suit = /obj/item/clothing/suit/armor/vest/ctf/red
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/rifle/red
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/rifle/red
@@ -105,7 +105,7 @@
 
 /datum/outfit/ctf/assault/red
 	name = "CTF Assaulter (Red)"
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/light/red
+	suit = /obj/item/clothing/suit/armor/vest/ctf/light/red
 	r_hand = /obj/item/gun/ballistic/shotgun/ctf/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/red
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/red
@@ -114,7 +114,7 @@
 
 /datum/outfit/ctf/marksman/red
 	name = "CTF Marksman (Red)"
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
+	suit = /obj/item/clothing/suit/armor/vest/ctf/red
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/marksman/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/red
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/red
@@ -125,7 +125,7 @@
 
 /datum/outfit/ctf/blue
 	name = "CTF Rifleman (Blue)"
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
+	suit = /obj/item/clothing/suit/armor/vest/ctf/blue
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/blue
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/rifle/blue
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/rifle/blue
@@ -140,7 +140,7 @@
 
 /datum/outfit/ctf/assault/blue
 	name = "CTF Assaulter (Blue)"
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/light/blue
+	suit = /obj/item/clothing/suit/armor/vest/ctf/light/blue
 	r_hand = /obj/item/gun/ballistic/shotgun/ctf/blue
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/blue
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/blue
@@ -149,7 +149,7 @@
 
 /datum/outfit/ctf/marksman/blue
 	name = "CTF Marksman (Blue)"
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
+	suit = /obj/item/clothing/suit/armor/vest/ctf/blue
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/marksman/blue
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/blue
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/blue
@@ -160,7 +160,7 @@
 
 /datum/outfit/ctf/green
 	name = "CTF Rifleman (Green)"
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/green
+	suit = /obj/item/clothing/suit/armor/vest/ctf/green
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/green
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/rifle/green
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/rifle/green
@@ -175,7 +175,7 @@
 
 /datum/outfit/ctf/assault/green
 	name = "CTF Assaulter (Green)"
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/light/green
+	suit = /obj/item/clothing/suit/armor/vest/ctf/light/green
 	r_hand = /obj/item/gun/ballistic/shotgun/ctf/green
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/green
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/green
@@ -183,8 +183,8 @@
 	team_radio_freq = FREQ_CTF_GREEN
 
 /datum/outfit/ctf/marksman/green
-	name = "CTF Marksman (Blue)"
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/green
+	name = "CTF Marksman (Green)"
+	suit = /obj/item/clothing/suit/armor/vest/ctf/green
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/marksman/green
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/green
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/green
@@ -195,7 +195,7 @@
 
 /datum/outfit/ctf/yellow
 	name = "CTF Rifleman (Yellow)"
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/yellow
+	suit = /obj/item/clothing/suit/armor/vest/ctf/yellow
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/yellow
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/rifle/yellow
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/rifle/yellow
@@ -210,7 +210,7 @@
 
 /datum/outfit/ctf/assault/yellow
 	name = "CTF Assaulter (Yellow)"
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/light/yellow
+	suit = /obj/item/clothing/suit/armor/vest/ctf/light/yellow
 	r_hand = /obj/item/gun/ballistic/shotgun/ctf/yellow
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/yellow
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/yellow
@@ -218,8 +218,8 @@
 	team_radio_freq = FREQ_CTF_YELLOW
 
 /datum/outfit/ctf/marksman/yellow
-	name = "CTF Marksman (Blue)"
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/yellow
+	name = "CTF Marksman (Yellow)"
+	suit = /obj/item/clothing/suit/armor/vest/ctf/yellow
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/marksman/yellow
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/yellow
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/yellow

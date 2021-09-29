@@ -1,0 +1,4 @@
+author: "Zytolg"
+delete-after: True
+changes: 
+  - bugfix: "Monkies no longer play with the firelock switch in Kilostation Genetics via the power of uninstallation."

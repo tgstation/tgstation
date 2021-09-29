@@ -6206,7 +6206,7 @@
 /area/science/misc_lab/range)
 "aTe" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "aTB" = (
@@ -6893,7 +6893,7 @@
 /turf/open/floor/iron,
 /area/security/checkpoint/supply)
 "bcd" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
@@ -16194,7 +16194,7 @@
 /area/medical/medbay/central)
 "cmq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/brown/visible,
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "cmw" = (
@@ -43834,7 +43834,7 @@
 /area/command/heads_quarters/captain/private)
 "hfC" = (
 /obj/structure/lattice,
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/atmos/upper)
 "hfD" = (
@@ -46795,7 +46795,7 @@
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/rd)
 "hVW" = (
-/obj/structure/window/plasma/reinforced/spawner/west{
+/obj/structure/window/reinforced/plasma/spawner/west{
 	dir = 4
 	},
 /obj/machinery/power/rad_collector/anchored,
@@ -46819,7 +46819,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "hWu" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter)
 "hWv" = (
@@ -51655,7 +51655,7 @@
 /area/engineering/break_room)
 "jvK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
@@ -52277,7 +52277,7 @@
 /turf/open/floor/iron,
 /area/cargo/qm)
 "jEV" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "jFf" = (
@@ -57570,7 +57570,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "lgt" = (
@@ -60406,7 +60406,7 @@
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "lUP" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/plating,
 /area/engineering/atmos/upper)
@@ -60469,7 +60469,7 @@
 /turf/open/floor/iron/white,
 /area/hallway/primary/central/aft)
 "lVD" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	dir = 8
 	},
@@ -70411,7 +70411,7 @@
 /turf/open/floor/iron,
 /area/ai_monitored/command/storage/eva)
 "oKZ" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/main)
 "oLa" = (
@@ -76154,7 +76154,7 @@
 /turf/open/floor/iron/dark,
 /area/maintenance/starboard/fore)
 "qvW" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/atmos/upper)
 "qvX" = (
@@ -87242,7 +87242,7 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "tLP" = (
-/obj/structure/window/plasma/reinforced/spawner/west{
+/obj/structure/window/reinforced/plasma/spawner/west{
 	dir = 1
 	},
 /obj/machinery/power/rad_collector/anchored,
@@ -97851,7 +97851,7 @@
 /turf/open/floor/iron/dark,
 /area/service/bar/atrium)
 "wTm" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "wTo" = (
@@ -98242,7 +98242,7 @@
 /turf/open/floor/iron/dark,
 /area/science/misc_lab)
 "wZs" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)

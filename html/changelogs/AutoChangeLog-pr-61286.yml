@@ -1,0 +1,5 @@
+author: "TiviPlus"
+delete-after: True
+changes: 
+  - qol: "grav anomalies now have a pretty effect"
+  - refactor: "Rendering has been refactored, remember to report bugs"

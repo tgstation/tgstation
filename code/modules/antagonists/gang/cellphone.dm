@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(gangster_cell_phones)
 	var/gang_id = "Grove Street Families"
 	var/activated = FALSE
 
-/obj/item/gangster_cellphone/Initialize()
+/obj/item/gangster_cellphone/Initialize(mapload)
 	. = ..()
 	GLOB.gangster_cell_phones += src
 	become_hearing_sensitive()
@@ -58,4 +58,3 @@ GLOBAL_LIST_EMPTY(gangster_cell_phones)
 		if(HAS_TRAIT(cellphone_hearer, TRAIT_DEAF))
 			continue
 		to_chat(cellphone_hearer, span_gangradio("<b>[speaker.name]</b> \[CELL: [gang_id]\] says, \"[message]\""))
-

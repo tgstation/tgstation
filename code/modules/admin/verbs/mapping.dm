@@ -198,20 +198,20 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Roundstart Active Turf Markers")
 
-/client/proc/enable_debug_verbs()
+/client/proc/enable_mapping_verbs()
 	set category = "Debug"
-	set name = "Debug verbs - Enable"
+	set name = "Mapping verbs - Enable"
 	if(!check_rights(R_DEBUG))
 		return
-	remove_verb(src, /client/proc/enable_debug_verbs)
-	add_verb(src, list(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping))
+	remove_verb(src, /client/proc/enable_mapping_verbs)
+	add_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Enable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/disable_debug_verbs()
+/client/proc/disable_mapping_verbs()
 	set category = "Debug"
-	set name = "Debug verbs - Disable"
-	remove_verb(src, list(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping))
-	add_verb(src, /client/proc/enable_debug_verbs)
+	set name = "Mapping verbs - Disable"
+	remove_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
+	add_verb(src, /client/proc/enable_mapping_verbs)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Disable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/count_objects_on_z_level()

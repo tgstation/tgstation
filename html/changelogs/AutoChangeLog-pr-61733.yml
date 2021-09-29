@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "The Derelict now has one APC per area. Weird behavior as two APCs fight for control over the same region should no longer be seen."

@@ -9772,7 +9772,7 @@
 /area/hallway/secondary/construction/engineering)
 "bdI" = (
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
@@ -11816,7 +11816,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /obj/structure/grille,
 /obj/structure/fluff/tram_rail,
 /turf/open/openspace,
@@ -12077,7 +12077,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /obj/structure/grille,
 /obj/structure/fluff/tram_rail{
 	dir = 1
@@ -25351,7 +25351,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /obj/structure/grille,
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -40998,7 +40998,7 @@
 /turf/open/floor/iron,
 /area/security/prison/rec)
 "ntZ" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating/icemoon,
 /area/engineering/atmos)
 "nur" = (
@@ -43567,7 +43567,7 @@
 /turf/open/floor/iron/white,
 /area/science/research)
 "ouR" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter)
 "ouV" = (
@@ -45291,7 +45291,7 @@
 /turf/open/floor/iron,
 /area/commons/lounge)
 "paJ" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "paP" = (
@@ -49644,7 +49644,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /obj/structure/grille,
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -55741,7 +55741,7 @@
 /area/science/robotics/lab)
 "tip" = (
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
@@ -55877,7 +55877,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /obj/structure/grille,
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
