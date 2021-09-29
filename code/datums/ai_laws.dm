@@ -471,8 +471,3 @@
 	return data
 
 #undef AI_LAWS_ASIMOV
-#undef LAW_ZEROTH
-#undef LAW_INHERENT
-#undef LAW_SUPPLIED
-#undef LAW_ION
-#undef LAW_HACKED
