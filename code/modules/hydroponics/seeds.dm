@@ -93,9 +93,10 @@
 /obj/item/seeds/Destroy()
 	// No AS ANYTHING here, because the list/genes could have typepaths in it.
 	for(var/datum/plant_gene/gene in genes)
-		if(genes.Remove(gene))
-			gene.on_removed(src)
-			qdel(gene)
+		gene.on_removed(src)
+		qdel(gene)
+
+	genes.Cut()
 	return ..()
 
 /obj/item/seeds/examine(mob/user)
