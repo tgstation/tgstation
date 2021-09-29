@@ -35,7 +35,7 @@
  * new_seed - the seed being created
  */
 /datum/plant_gene/proc/on_new_seed(obj/item/seeds/new_seed)
-	return FALSE
+	return // Not implemented
 
 /*
  * on_removed is called when the gene is removed from a seed.
@@ -44,7 +44,7 @@
  * old_seed - our seed, before being removed
  */
 /datum/plant_gene/proc/on_removed(obj/item/seeds/old_seed)
-	return FALSE
+	return // Not implemented
 
 /// Reagent genes store a reagent ID and reagent ratio.
 /datum/plant_gene/reagent

@@ -269,19 +269,17 @@
  * Stops processing if we're no longer being held by [held mob].
  */
 /datum/plant_gene/trait/backfire/chili_heat/process(delta_time)
-	if(!held_mob || !our_chili)
+	var/mob/living/carbon/our_mob = held_mob?.resolve()
+	var/obj/item/our_plant = our_chili?.resolve()
+
+	// If our weakrefs don't resolve, or if our mob is not holding our plant, stop processing.
+	if(!our_mob || !our_plant || !our_mob.is_holding(our_plant))
 		stop_backfire_effect()
 		return
 
-	var/mob/living/carbon/our_mob = held_mob.resolve()
-	var/obj/item/plant = our_chili.resolve()
-
-	if(plant && our_mob?.is_holding(plant))
-		our_mob.adjust_bodytemperature(7.5 * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
-		if(DT_PROB(5, delta_time))
-			to_chat(our_mob, span_warning("Your hand holding [plant] burns!"))
-	else
-		stop_backfire_effect()
+	our_mob.adjust_bodytemperature(7.5 * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
+	if(DT_PROB(5, delta_time))
+		to_chat(our_mob, span_warning("Your hand holding [plant] burns!"))
 
 /// Bluespace Tomato squashing on the user on backfire
 /datum/plant_gene/trait/backfire/bluespace
@@ -620,14 +618,11 @@
  * If the conditions are acceptable and the potency is high enough, release miasma into the air.
  */
 /datum/plant_gene/trait/gas_production/process(delta_time)
-	if(!home_tray || !stinky_seed)
-		stop_gas()
-		return
+	var/obj/item/seeds/seed = stinky_seed?.resolve()
+	var/obj/machinery/hydroponics/tray = home_tray?.resolve()
 
-	var/obj/item/seeds/seed = stinky_seed.resolve()
-	var/obj/machinery/hydroponics/tray = home_tray.resolve()
-
-	if(seed.loc != tray)
+	// If our weakrefs don't resolve, or if our seed is /somehow/ not in the tray it was planted in, stop processing.
+	if(!seed || !tray || seed.loc != tray)
 		stop_gas()
 		return
 
