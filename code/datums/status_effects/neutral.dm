@@ -469,7 +469,7 @@
 
 /datum/status_effect/crawling/on_remove()
 	if(owner.body_position == LYING_DOWN)
-		owner.balloon_alert(owner, "You assume a prone position.")
+		owner.balloon_alert(owner, "in prone position")
 
 #undef EIGENSTASIUM_MAX_BUFFER
 #undef EIGENSTASIUM_STABILISATION_RATE
