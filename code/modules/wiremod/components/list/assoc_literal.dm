@@ -37,9 +37,9 @@
 
 /obj/item/circuit_component/assoc_literal/proc/set_list_size(new_size)
 	if(new_size <= 0)
-		for(var/datum/port/input/port in key_ports)
+		for(var/datum/port/input/port as anything in key_ports)
 			remove_input_port(port)
-		for(var/datum/port/input/port in value_ports)
+		for(var/datum/port/input/port as anything in value_ports)
 			remove_input_port(port)
 		key_ports = list()
 		value_ports = list()
