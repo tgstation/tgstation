@@ -4,6 +4,17 @@
 /// Define to be placed at any proc that is triggered by a port.
 #define CIRCUIT_TRIGGER SHOULD_NOT_SLEEP(TRUE)
 
+// Helper procs to define ports on a type
+
+/// Used to define output ports on a circuit component
+#define DEFINE_OUTPUT_PORT(name) var/datum/port/output/##name
+
+/// Used to define option ports on a circuit component
+#define DEFINE_OPTION_PORT(name) var/datum/port/input/option/##name
+
+/// Used to define input ports on a circuit component
+#define DEFINE_INPUT_PORT(name) var/datum/port/input/##name
+
 // Port defines
 
 #define PORT_MAX_NAME_LENGTH 50
@@ -22,12 +33,15 @@
 #define PORT_TYPE_NUMBER "number"
 /// Signal datatype
 #define PORT_TYPE_SIGNAL "signal"
-/// List datatype
-#define PORT_TYPE_LIST "list"
 /// Table datatype. Derivative of list, contains other lists with matching columns.
 #define PORT_TYPE_TABLE "table"
 /// Options datatype. Derivative of string.
 #define PORT_TYPE_OPTION "option"
+
+// Composite datatypes
+#define PORT_COMPOSITE_TYPE_LIST "list"
+/// List datatype
+#define PORT_TYPE_LIST(datatype) composite_datatype(PORT_COMPOSITE_TYPE_LIST, datatype)
 
 // Other datatypes
 /// Atom datatype
@@ -108,3 +122,5 @@
 #define DATATYPE_FLAG_ALLOW_MANUAL_INPUT (1<<0)
 /// The datatype won't update the value when it is connected to the port
 #define DATATYPE_FLAG_AVOID_VALUE_UPDATE (1<<1)
+/// The datatype has been generated and is an existing composite datatype
+#define DATATYPE_FLAG_COMPOSITE (1<<2)

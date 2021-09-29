@@ -1,10 +1,14 @@
 import {
   Stack,
-  Icon,
 } from '../../components';
 import { Component, createRef } from 'inferno';
 import { DisplayName } from "./DisplayName";
+import { classes } from 'common/react';
+import { CSS_COLORS } from '../../constants';
 
+const isColorClass = (str) => {
+  return typeof str === "string" && CSS_COLORS.includes(str);
+};
 
 export class Port extends Component {
   constructor() {
@@ -64,47 +68,52 @@ export class Port extends Component {
     }
   }
 
-  render() {
+  renderDisplayName() {
     const {
       port,
       portIndex,
       componentId,
       isOutput,
+    } = this.props;
+
+    return (
+      <Stack.Item>
+        <DisplayName
+          port={port}
+          isOutput={isOutput}
+          componentId={componentId}
+          portIndex={portIndex} />
+      </Stack.Item>
+    );
+  }
+
+  render() {
+    const {
+      port,
+      isOutput,
       ...rest
     } = this.props;
 
     return (
-      <Stack {...rest} justify={isOutput ? 'flex-end' : 'flex-start'}>
-        {!!isOutput && (
-          <Stack.Item>
-            <DisplayName
-              port={port}
-              isOutput={isOutput}
-              componentId={componentId}
-              portIndex={portIndex} />
-          </Stack.Item>
-        )}
+      <Stack
+        {...rest}
+        justify={isOutput ? 'flex-end' : 'flex-start'}
+      >
+        {!!isOutput && this.renderDisplayName()}
         <Stack.Item>
-          <Icon
-            color={port.color || 'blue'}
-            name={'circle'}
-            position="relative"
+          <div
+            className={classes([
+              "ObjectComponent__Port",
+              isColorClass(port.color) && "color-bg-" + port.color,
+            ])}
             onMouseDown={this.handlePortMouseDown}
             onContextMenu={this.handlePortRightClick}
             onMouseUp={this.handlePortMouseUp}
           >
             <span ref={this.iconRef} className="ObjectComponent__PortPos" />
-          </Icon>
+          </div>
         </Stack.Item>
-        {!isOutput && (
-          <Stack.Item>
-            <DisplayName
-              port={port}
-              isOutput={isOutput}
-              componentId={componentId}
-              portIndex={portIndex} />
-          </Stack.Item>
-        )}
+        {!isOutput && this.renderDisplayName()}
       </Stack>
     );
   }

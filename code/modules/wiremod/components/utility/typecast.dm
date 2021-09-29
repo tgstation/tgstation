@@ -25,7 +25,7 @@
 	var/static/list/component_options = list(
 		PORT_TYPE_STRING,
 		PORT_TYPE_NUMBER,
-		PORT_TYPE_LIST,
+		PORT_COMPOSITE_TYPE_LIST,
 		PORT_TYPE_ATOM,
 	)
 	typecast_options = add_option_port("Typecast Options", component_options)
@@ -48,7 +48,7 @@
 		if(PORT_TYPE_NUMBER)
 			if(isnum(value))
 				value_to_set = value
-		if(PORT_TYPE_LIST)
+		if(PORT_COMPOSITE_TYPE_LIST)
 			if(islist(value))
 				value_to_set = value
 		if(PORT_TYPE_ATOM)

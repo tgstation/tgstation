@@ -58,7 +58,7 @@
 
 /obj/item/circuit_component/list_literal/populate_ports()
 	set_list_size(default_list_size)
-	list_output = add_output_port("Value", PORT_TYPE_LIST)
+	list_output = add_output_port("Value", PORT_TYPE_LIST(PORT_TYPE_ANY))
 
 /obj/item/circuit_component/list_literal/Destroy()
 	list_output = null

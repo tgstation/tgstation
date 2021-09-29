@@ -4,7 +4,7 @@
 $bg-map: colors.$bg-map !default;
 
 .CircuitInfo__Examined {
-  background-color:rgba(0, 0, 0, 1);
+  background-color: rgba(0, 0, 0, 1);
   padding: 8px;
   border-radius: 5px;
 
@@ -30,12 +30,16 @@ $bg-map: colors.$bg-map !default;
   user-select: none;
 }
 
+.ObjectComponent__Port {
+  position: relative;
+  width: 13px;
+  height: 13px;
+  border-radius: 16px;
+}
+
 .ObjectComponent__PortPos {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 50%;
+  left: 50%;
 }
 
 @each $color-name, $color-value in $bg-map {

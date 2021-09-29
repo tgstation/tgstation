@@ -1,10 +1,10 @@
 // An assoc list of all the possible datatypes.
-GLOBAL_LIST_INIT(circuit_datatypes, generate_circuit_datatypes())
+GLOBAL_LIST_INIT_TYPED(circuit_datatypes, /datum/circuit_datatype, generate_circuit_datatypes())
 
 /proc/generate_circuit_datatypes()
 	var/list/datatypes_by_key = list()
 	for(var/datum/circuit_datatype/type as anything in subtypesof(/datum/circuit_datatype))
-		if(!initial(type.datatype))
+		if(!initial(type.datatype) || initial(type.abstract))
 			continue
 		datatypes_by_key[initial(type.datatype)] = new type()
 	return datatypes_by_key
@@ -21,6 +21,9 @@ GLOBAL_LIST_INIT(circuit_datatypes, generate_circuit_datatypes())
 
 	/// The flags of the circuit datatype
 	var/datatype_flags = 0
+
+	/// Whether this datatype should be loaded into the global circuit_datatypes list.
+	var/abstract = FALSE
 
 /**
  * Returns the value to be set for the port
@@ -89,3 +92,9 @@ GLOBAL_LIST_INIT(circuit_datatypes, generate_circuit_datatypes())
  */
 /datum/circuit_datatype/proc/handle_manual_input(datum/port/input/port, mob/user, user_input)
 	return user_input
+
+/**
+ * Used by composite datatypes. Returns all the datatypes that build this datatype up.
+ */
+/datum/circuit_datatype/proc/get_datatypes()
+	return list()

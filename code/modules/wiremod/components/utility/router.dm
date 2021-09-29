@@ -30,7 +30,7 @@
 		PORT_TYPE_ANY,
 		PORT_TYPE_STRING,
 		PORT_TYPE_NUMBER,
-		PORT_TYPE_LIST,
+		PORT_TYPE_LIST(PORT_TYPE_ANY),
 		PORT_TYPE_ATOM,
 	)
 	router_options = add_option_port("Router Options", component_options)
