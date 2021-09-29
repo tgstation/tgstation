@@ -1,0 +1,4 @@
+author: "Krysonism"
+delete-after: True
+changes: 
+  - expansion: "Added new food, envirochow; it permanently increases the max hp of animals."
