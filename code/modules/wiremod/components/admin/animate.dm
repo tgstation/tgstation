@@ -66,7 +66,7 @@
 	var/datum/port/input/animation_flags
 
 /obj/item/circuit_component/animation_step/populate_options()
-	var/list/component_options = list(
+	var/static/list/component_options = list(
 		COMP_ANIMATE_ATOM,
 		COMP_ANIMATE_FILTER,
 	)
