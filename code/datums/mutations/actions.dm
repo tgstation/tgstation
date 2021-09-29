@@ -110,8 +110,11 @@
 	power_coeff = 1
 
 /datum/mutation/human/firebreath/modify()
-	var/obj/effect/proc_holder/spell/cone/staggered/firebreath/our_spell = power
-	our_spell.cone_levels = round(our_spell.cone_levels * GET_MUTATION_POWER(src) + 0.5) //Power firebreath makes it fwoosh more. Round up.
+	// If we have a power chromosome...
+	if(power && GET_MUTATION_POWER(src) > 1)
+		var/obj/effect/proc_holder/spell/cone/staggered/firebreath/our_spell = power
+		our_spell.cone_levels += 2 // Cone fwooshes further, and...
+		our_spell.self_throw_range += 1 // the breath throws the user back more
 
 /obj/effect/proc_holder/spell/cone/staggered/firebreath
 	name = "Fire Breath"
@@ -127,6 +130,8 @@
 	sound = 'sound/magic/demon_dies.ogg' //horrifying lizard noises
 	respect_density = TRUE
 	cone_levels = 3
+	/// The range our user is thrown backwards after casting the spell
+	var/self_throw_range = 1
 
 /obj/effect/proc_holder/spell/cone/staggered/firebreath/before_cast(list/targets)
 	. = ..()
@@ -140,6 +145,14 @@
 	our_lizard.adjust_fire_stacks(cone_levels)
 	our_lizard.IgniteMob()
 	to_chat(our_lizard, span_warning("Something in front of your mouth catches fire!"))
+
+/obj/effect/proc_holder/spell/cone/staggered/firebreath/cast(list/targets, mob/user)
+	. = ..()
+	// When casting, throw them backwards a few tiles.
+	var/original_dir = user.dir
+	user.throw_at(get_edge_target_turf(user, turn(user.dir, 180)), range = self_throw_range, speed = 2, gentle = TRUE)
+	//Try to set us to our original direction after, so we don't end up backwards.
+	user.setDir(original_dir)
 
 // Makes the cone shoot out into a 3 wide column of flames.
 /obj/effect/proc_holder/spell/cone/staggered/firebreath/calculate_cone_shape(current_level)
