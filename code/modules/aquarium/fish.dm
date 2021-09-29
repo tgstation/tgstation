@@ -34,7 +34,7 @@
 			var/datum/aquarium_behaviour/fish/fish_behavior = _fish_behavior
 			if(required_fluid && initial(fish_behavior.required_fluid_type) != required_fluid)
 				continue
-			if(initial(fish_behavior.availible_in_random_cases) || !case_fish_only)
+			if(initial(fish_behavior.available_in_random_cases) || !case_fish_only)
 				chance_table[fish_behavior] = initial(fish_behavior.random_case_rarity)
 		probability_table[argkey] = chance_table
 	return pickweight(probability_table[argkey])
@@ -97,7 +97,7 @@
 	icon_state = "carp"
 	sprite_width = 8
 	sprite_height = 8
-	availible_in_random_cases = FALSE
+	available_in_random_cases = FALSE
 
 // Saltwater fish below
 
