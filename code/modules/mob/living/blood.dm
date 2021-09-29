@@ -30,6 +30,9 @@
 				nutrition_ratio *= 1.25
 			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * delta_time)
 			blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * delta_time), BLOOD_VOLUME_NORMAL)
+		
+		if(blood_volume < BLOOD_VOLUME_NORMAL && HAS_TRAIT(src, TRAIT_NOHUNGER)) //blood regen for non eaters
+			blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * 1.25 * delta_time), BLOOD_VOLUME_NORMAL) //assumes best nutrition conditions for non eaters because they don't eat
 
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
