@@ -40,7 +40,9 @@ GLOBAL_LIST_INIT_TYPED(circuit_composite_templates, /datum/circuit_composite_tem
 /datum/circuit_datatype/composite_instance
 	datatype_flags = DATATYPE_FLAG_COMPOSITE
 	abstract = TRUE
-	var/list/composite_datatypes = list()
+
+	var/list/composite_datatypes
+	var/list/composite_datatypes_style
 
 /datum/circuit_datatype/composite_instance/New(datatype, list/composite_datatypes)
 	. = ..()
@@ -50,6 +52,17 @@ GLOBAL_LIST_INIT_TYPED(circuit_composite_templates, /datum/circuit_composite_tem
 	src.datatype = datatype
 	src.composite_datatypes = composite_datatypes
 	src.abstract = FALSE
+
+	composite_datatypes_style += list()
+	for(var/datatype_to_check in composite_datatypes)
+		composite_datatypes_style += GLOB.circuit_datatypes[datatype_to_check].color
+
+
+/datum/circuit_datatype/composite_instance/datatype_ui_data(datum/port/port)
+	var/list/ui_data = list()
+
+	ui_data["composite_types"] = composite_datatypes_style
+	return ui_data
 
 /datum/circuit_datatype/composite_instance/get_datatypes()
 	return composite_datatypes

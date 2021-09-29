@@ -1,14 +1,10 @@
 import {
   Stack,
+  Box,
 } from '../../components';
 import { Component, createRef } from 'inferno';
 import { DisplayName } from "./DisplayName";
 import { classes } from 'common/react';
-import { CSS_COLORS } from '../../constants';
-
-const isColorClass = (str) => {
-  return typeof str === "string" && CSS_COLORS.includes(str);
-};
 
 export class Port extends Component {
   constructor() {
@@ -94,6 +90,12 @@ export class Port extends Component {
       ...rest
     } = this.props;
 
+
+    let composite_types = null;
+    if (port.datatype_data?.composite_types) {
+      composite_types = port.datatype_data.composite_types;
+    }
+
     return (
       <Stack
         {...rest}
@@ -101,17 +103,50 @@ export class Port extends Component {
       >
         {!!isOutput && this.renderDisplayName()}
         <Stack.Item>
-          <div
+          <Box
             className={classes([
               "ObjectComponent__Port",
-              isColorClass(port.color) && "color-bg-" + port.color,
             ])}
+            backgroundColor={composite_types? null : port.color}
             onMouseDown={this.handlePortMouseDown}
             onContextMenu={this.handlePortRightClick}
             onMouseUp={this.handlePortMouseUp}
+            textAlign="center"
           >
+            {!!composite_types && (
+              <svg
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  position: "absolute",
+                }}
+                viewBox="0, 0, 100, 100"
+              >
+                {composite_types.map((compositeColor, index) => {
+                  const radians = (2*Math.PI)/composite_types.length;
+                  const arcLength = radians*50;
+                  return (
+                    <circle
+                      key={index}
+                      stroke={compositeColor}
+                      strokeDasharray={`${arcLength}, ${100*Math.PI}`}
+                      strokeDashoffset={
+                        -index*(100*(Math.PI/composite_types.length))
+                      }
+                      strokeWidth="50px"
+                      cx="50"
+                      cy="50"
+                      r="50"
+                      fillOpacity="0"
+                      transform="rotate(90, 50, 50)"
+                    />
+                  );
+                })}
+                <circle cx="50" cy="50" r="50" fill={port.color} />
+              </svg>
+            )}
             <span ref={this.iconRef} className="ObjectComponent__PortPos" />
-          </div>
+          </Box>
         </Stack.Item>
         {!isOutput && this.renderDisplayName()}
       </Stack>

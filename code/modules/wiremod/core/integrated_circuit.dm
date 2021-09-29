@@ -309,6 +309,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				"type" = port.datatype,
 				"ref" = REF(port),
 				"color" = port.color,
+				"datatype_data" = port.datatype_ui_data(user)
 			))
 
 		component_data["name"] = component.display_name

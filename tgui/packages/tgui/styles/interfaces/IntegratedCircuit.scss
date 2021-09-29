@@ -32,9 +32,9 @@ $bg-map: colors.$bg-map !default;
 
 .ObjectComponent__Port {
   position: relative;
-  width: 13px;
-  height: 13px;
-  border-radius: 16px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
 }
 
 .ObjectComponent__PortPos {
