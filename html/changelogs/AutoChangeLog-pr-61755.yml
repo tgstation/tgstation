@@ -1,0 +1,4 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - bugfix: "fixed holosigns not counting towards the max limit and not being deleted when clicking the creator."
