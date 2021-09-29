@@ -105,7 +105,7 @@
 	if(!json[id])
 		return
 	var/datum/picture/P = new
-	P.deserialize_json(json[id])
+	P.deserialize_list(json[id])
 	return P
 
 /proc/log_path_from_picture_ID(id)
