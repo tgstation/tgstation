@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - spellcheck: "Fixed a misspelling of the word \"availability\" in the Plexagon HR Core app description."

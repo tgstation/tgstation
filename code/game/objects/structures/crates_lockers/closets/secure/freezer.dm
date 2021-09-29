@@ -1,6 +1,9 @@
 /obj/structure/closet/secure_closet/freezer
 	icon_state = "freezer"
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	door_anim_squish = 0.22
+	door_anim_angle = 123
+	door_anim_time = 4
 	var/jones = FALSE
 
 /obj/structure/closet/secure_closet/freezer/Destroy()
