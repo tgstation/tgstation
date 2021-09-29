@@ -469,3 +469,10 @@
 			data += "[show_numbers ? "[number]:" : ""] [render_html ? "<font color='#990099'>[law]</font>" : law]"
 			number++
 	return data
+
+#undef AI_LAWS_ASIMOV
+#undef LAW_ZEROTH
+#undef LAW_INHERENT
+#undef LAW_SUPPLIED
+#undef LAW_ION
+#undef LAW_HACKED
