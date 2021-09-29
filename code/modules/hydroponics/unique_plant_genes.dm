@@ -279,7 +279,7 @@
 
 	our_mob.adjust_bodytemperature(7.5 * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
 	if(DT_PROB(5, delta_time))
-		to_chat(our_mob, span_warning("Your hand holding [plant] burns!"))
+		to_chat(our_mob, span_warning("Your hand holding [our_plant] burns!"))
 
 /// Bluespace Tomato squashing on the user on backfire
 /datum/plant_gene/trait/backfire/bluespace
