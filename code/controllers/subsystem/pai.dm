@@ -217,6 +217,6 @@ SUBSYSTEM_DEF(pai)
 	var/description
 	var/role
 	var/comments
-	var/secondary_color
-	var/color
+	var/secondary_color = "#DA1B1B"
+	var/color = "#2DDF1D"
 	var/ready = FALSE

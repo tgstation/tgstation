@@ -23,4 +23,4 @@
     var/inverted_r = 255 - old_rgb[1]
     var/inverted_g = 255 - old_rgb[2]
     var/inverted_b = 255 - old_rgb[3]
-    return rgb2hsl(inverted_r, inverted_g, inverted_b)
+    return rgb2(inverted_r, inverted_g, inverted_b)
