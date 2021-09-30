@@ -53,6 +53,12 @@
 	description = "benis"
 	mappath = "_maps/templates/holodeck_lounge.dmm"
 
+/datum/map_template/holodeck/kitchen
+	name = "Holodeck - Kitchen"
+	template_id = "holodeck_kitchen"
+	description = "benis"
+	mappath = "_maps/templates/holodeck_kitchen.dmm"
+
 /datum/map_template/holodeck/petpark
 	name = "Holodeck - Pet Park"
 	template_id = "holodeck_petpark"
