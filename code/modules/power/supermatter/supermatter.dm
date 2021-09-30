@@ -196,7 +196,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/hallucination_power = 0.1
 	///The efficiency of the antinoblium interaction. Converges to antinoblium composition faster at low temperature. Getting close to 1 will have very strong effects.
 	var/antinoblium_efficiency = 0
-	///Used to amplify some effects of the SM, including maximum power before gaining damage, and passively gain power when above 1. It is equal to the square inverse of 1 - antinoblium_efficiency, and should never get below 1.
+	///Used to amplify some effects of the SM, including maximum power before gaining damage, and passively gain power when above 1. It is equal to the inverse of 1 - antinoblium_efficiency, raised to 1 + antinoblium_efficiency, and should never get below 1.
 	var/antinoblium_multiplier = 1
 	///Our internal radio
 	var/obj/item/radio/radio
