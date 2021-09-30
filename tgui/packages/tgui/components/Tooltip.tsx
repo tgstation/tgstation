@@ -136,7 +136,6 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
   }
 
   componentWillUnmount() {
-    // NYI: Fade away tooltip if this is the current hovered one
     this.fadeOut();
   }
 
