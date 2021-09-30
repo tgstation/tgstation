@@ -332,14 +332,13 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			return SECONDARY_ATTACK_CONTINUE_CHAIN
 		if(!do_after(user, 4 SECONDS, src))
 			return SECONDARY_ATTACK_CONTINUE_CHAIN
-		if(locate(/obj/structure/girder) in src || is_blocked_turf())
+		if(is_blocked_turf())
 			user.balloon_alert(user, "something is blocking the tile.")
 			return SECONDARY_ATTACK_CONTINUE_CHAIN
 		if(!using_sheet.use(2))
 			user.balloon_alert(user, "not enough material for that!")
 			return SECONDARY_ATTACK_CONTINUE_CHAIN
-		var/obj/structure/girder/built_girder = new(src)
-		built_girder.anchored = FALSE
+		new/obj/structure/girder/displaced(src)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 

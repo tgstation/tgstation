@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 
 /obj/item/stack/sheet/iron/examine(mob/user)
 	. = ..()
-	. += span_notice("You can make a wall girder by r-click on an empty turf with [src] in hand.")
+	. += span_notice("You can build a wall girder by right clicking on an empty floor with this.")
 
 /obj/item/stack/sheet/iron/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
