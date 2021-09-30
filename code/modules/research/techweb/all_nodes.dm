@@ -118,12 +118,12 @@
 	display_name = "Modular Suits"
 	description = "Powered suits, for powered engineers."
 	design_ids = list(
-		"mod_shell",
-		"mod_helmet",
+		"mod_boots",
 		"mod_chestplate",
 		"mod_gauntlets",
-		"mod_boots",
+		"mod_helmet",
 		"mod_paint_kit",
+		"mod_shell",
 	)
 
 /datum/techweb_node/mech_tools
