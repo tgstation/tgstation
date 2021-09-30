@@ -149,10 +149,12 @@
 /turf/open/floor/holofloor/wood,
 /area/template_noop)
 "I" = (
-/obj/machinery/deepfryer,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
+	},
+/obj/structure/closet/crate/bin{
+	pixel_y = 5
 	},
 /turf/open/floor/holofloor/white,
 /area/template_noop)
