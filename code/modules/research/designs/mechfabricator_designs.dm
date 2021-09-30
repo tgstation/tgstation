@@ -979,3 +979,65 @@
 	construction_time = 150
 	build_path = /obj/effect/mob_spawn/drone
 	category = list("Control Interfaces")
+
+//MODsuit stuff
+
+/datum/design/mod_shell
+	name = "MOD shell"
+	desc = "A 'Nakamura Engineering' designed shell for a Modular Suit."
+	id = "mod_shell"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=10000, /datum/material/plasma=5000)
+	construction_time = 25 SECONDS
+	build_path = /obj/item/mod/construction/shell
+	category = list("Modular Suits")
+
+/datum/design/mod_helmet
+	name = "MOD helmet"
+	desc = "A 'Nakamura Engineering' designed helmet for a Modular Suit."
+	id = "mod_helmet"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=5000)
+	construction_time = 10 SECONDS
+	build_path = /obj/item/mod/construction/helmet
+	category = list("Modular Suits")
+
+/datum/design/mod_chestplate
+	name = "MOD chestplate"
+	desc = "A 'Nakamura Engineering' designed chestplate for a Modular Suit."
+	id = "mod_chestplate"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=5000)
+	construction_time = 10 SECONDS
+	build_path = /obj/item/mod/construction/chestplate
+	category = list("Modular Suits")
+
+/datum/design/mod_gauntlets
+	name = "MOD gauntlets"
+	desc = "'Nakamura Engineering' designed gauntlets for a Modular Suit."
+	id = "mod_gauntlets"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=5000)
+	construction_time = 10 SECONDS
+	build_path = /obj/item/mod/construction/gauntlets
+	category = list("Modular Suits")
+
+/datum/design/mod_boots
+	name = "MOD boots"
+	desc = "'Nakamura Engineering' designed boots for a Modular Suit."
+	id = "mod_boots"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=5000)
+	construction_time = 10 SECONDS
+	build_path = /obj/item/mod/construction/boots
+	category = list("Modular Suits")
+
+/datum/design/mod_paint_kit
+	name = "MOD paint kit"
+	desc = "A paint kit for Modular Suits."
+	id = "mod_paint_kit"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000, /datum/material/glass=1000)
+	construction_time = 5 SECONDS
+	build_path = /obj/item/mod/paint
+	category = list("Modular Suits")

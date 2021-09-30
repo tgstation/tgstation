@@ -34,7 +34,7 @@
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
 
-/obj/item/mod/module/Initialize()
+/obj/item/mod/module/Initialize(mapload)
 	. = ..()
 	if(module_type != MODULE_ACTIVE)
 		return
@@ -219,7 +219,7 @@
 	var/max_combined_w_class = 14
 	var/max_items = 7
 
-/obj/item/mod/module/storage/Initialize()
+/obj/item/mod/module/storage/Initialize(mapload)
 	. = ..()
 	storage = AddComponent(/datum/component/storage/concrete)
 	storage.max_w_class = max_w_class
@@ -407,7 +407,7 @@
 	var/full_speed = FALSE
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
-/obj/item/mod/module/jetpack/Initialize()
+/obj/item/mod/module/jetpack/Initialize(mapload)
 	. = ..()
 	ion_trail = new
 	ion_trail.auto_process = FALSE
@@ -632,7 +632,7 @@
 	var/grace = RAD_GEIGER_GRACE_PERIOD
 	var/datum/looping_sound/geiger/soundloop
 
-/obj/item/mod/module/rad_counter/Initialize()
+/obj/item/mod/module/rad_counter/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, FALSE)
 	soundloop.volume = 5
@@ -909,7 +909,7 @@
 	idle_power_cost = 5
 	incompatible_modules = list(/obj/item/mod/module/circuit)
 
-/obj/item/mod/module/circuit/Initialize()
+/obj/item/mod/module/circuit/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/modsuit()

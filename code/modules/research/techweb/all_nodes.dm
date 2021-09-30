@@ -112,6 +112,20 @@
 		"ripleyupgrade",
 	)
 
+/datum/techweb_node/mod
+	id = "mod"
+	starting_node = TRUE
+	display_name = "Modular Suits"
+	description = "Powered suits, for powered engineers."
+	design_ids = list(
+		"mod_shell",
+		"mod_helmet",
+		"mod_chestplate",
+		"mod_gauntlets",
+		"mod_boots",
+		"mod_paint_kit",
+	)
+
 /datum/techweb_node/mech_tools
 	id = "mech_tools"
 	starting_node = TRUE
