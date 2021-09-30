@@ -116,7 +116,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/healium = HEALIUM_TRANSMIT_MODIFIER,
 		/datum/gas/proto_nitrate = PROTO_NITRATE_TRANSMIT_MODIFIER,
 		/datum/gas/zauker = ZAUKER_TRANSMIT_MODIFIER,
-		/datum/gas/antinoblium = ANTINOBLIUM_TRANSMIT_MODIFIER,
 	)
 	///The list of gases mapped against their heat penaltys. We use it to determin molar and heat output
 	var/list/gas_heat = list(
@@ -197,7 +196,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/hallucination_power = 0.1
 	///The efficiency of the antinoblium interaction. Converges to antinoblium composition faster at low temperature. Getting close to 1 will have very strong effects.
 	var/antinoblium_efficiency = 0
-	///Used to amplify some effects of the SM, including maximum power before gaining damage, and passively gain power when above 1. It is equal to the inverse of 1 - antinoblium_efficiency, and should never get below 1.
+	///Used to amplify some effects of the SM, including maximum power before gaining damage, and passively gain power when above 1. It is equal to the square inverse of 1 - antinoblium_efficiency, and should never get below 1.
 	var/antinoblium_multiplier = 1
 	///Our internal radio
 	var/obj/item/radio/radio
@@ -470,7 +469,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	explode()
 
 /obj/machinery/power/supermatter_crystal/proc/add_matter_power(added_power)
-	var/matter_power_gain = added_power * antinoblium_multiplier
+	var/matter_power_gain = added_power * antinoblium_multiplier ** (1 + antinoblium_efficiency)
 	matter_power += matter_power_gain
 	return matter_power_gain
 
@@ -552,7 +551,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				damage = max(damage + (min(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD) + (45 * psyCoeff)), 0) / 150 ), 0)
 
 			//Maintaining a high antinoblium_multiplier will heal the SM.
-			damage = max(damage - log(10, max(antinoblium_multiplier - 3, 1)), 0)
+			damage = max(damage - log(10, max(antinoblium_multiplier - 10, 1)), 0)
 			//Check for holes in the SM inner chamber
 			for(var/turf/open/space/turf_to_check in RANGE_TURFS(1, loc))
 				if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))
@@ -605,7 +604,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//antinoblium_efficiency converges to antinoblium composition faster when the SM is cold.
 		antinoblium_efficiency = clamp(antinoblium_efficiency + (gas_comp[/datum/gas/antinoblium] - antinoblium_efficiency) * TCMB / (TCMB + removed.temperature), 0, 0.999999)
 		//Multiplies maximum power before taking damage, multiplies power gained from matter, and passively generates power when above 1.
-		antinoblium_multiplier = max(1 / (1 - antinoblium_efficiency), 1)
+		antinoblium_multiplier = max((1 - antinoblium_efficiency) ** -(1 + antinoblium_efficiency), 1)
 		//Minimum value of -10, maximum value of 23. Effects plasma and o2 output and the output heat
 		dynamic_heat_modifier = 0
 		for(var/gas_id in gas_heat)
@@ -673,8 +672,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(power_changes)
 			power = max((removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0)
 
-		//Passively gain power when antinoblium_multiplier is above 1.
-		power += (antinoblium_multiplier - 1) * ANTINOBLIUM_POWER_GENERATION
+			//Passively gain power when antinoblium_multiplier is above 1.
+			power += (antinoblium_multiplier - 1) * ANTINOBLIUM_POWER_GENERATION * removed.temperature / (removed.temperature + T0C + HEAT_PENALTY_THRESHOLD)
 
 		if(prob(50))
 			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
@@ -847,7 +846,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		investigate_log("has been hit by [projectile] fired by [key_name(projectile.firer)]", INVESTIGATE_SUPERMATTER)
 	if(projectile.flag != BULLET)
 		if(power_changes) //This needs to be here I swear
-			power += projectile.damage * bullet_energy * antinoblium_multiplier
+			power += projectile.damage * bullet_energy * antinoblium_multiplier ** (1 + antinoblium_efficiency)
 			if(!has_been_powered)
 				investigate_log("has been powered for the first time.", INVESTIGATE_SUPERMATTER)
 				message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
