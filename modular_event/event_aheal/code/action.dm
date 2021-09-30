@@ -24,6 +24,12 @@
 	if(!.)
 		return FALSE
 
-	lightningbolt(user)
+	// custom lightning bolt for sound
+	var/turf/lightning_source = get_step(get_step(user, NORTH), NORTH)
+	lightning_source.Beam(user, icon_state="lightning[rand(1,12)]", time = 5)
+	playsound(get_turf(user), 'sound/magic/charge.ogg', 50, TRUE)
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_target = user
+		human_target.electrocution_animation(LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH)
 	user.revive(TRUE, TRUE)
 	StartCooldown()

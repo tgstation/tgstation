@@ -2,7 +2,7 @@
 	name = "toolbox spawner"
 	icon = 'icons/effects/random_spawners.dmi'
 	icon_state = "toolbox"
-	layer = HIGH_LANDMARK_LAYER
+	layer = HIGH_OBJ_LAYER
 
 	var/arena_id = ARENA_DEFAULT_ID
 	var/team_id = ARENA_RED_TEAM
