@@ -30,6 +30,7 @@
 			mafia()
 			return TRUE
 		if("ctf")
+			ui.close()
 			CTF()
 			return TRUE
 
