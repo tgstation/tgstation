@@ -8,10 +8,7 @@
 /datum/ai_controller/cursed
 	movement_delay = 0.4 SECONDS
 	blackboard = list(
-		BB_CURSE_TARGET,
 		BB_TARGET_SLOT,
-		BB_ITEM_MOVE_AND_ATTACK_TYPE = /datum/ai_behavior/item_move_close_and_attack/ghostly,
-		BB_ITEM_AGGRO_ADDITION = 1, //this makes the item only try once, it must re-aggro to throw again
 	)
 	planning_subtrees = list(/datum/ai_planning_subtree/cursed)
 	idle_behavior = /datum/idle_behavior/idle_ghost_item
