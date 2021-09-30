@@ -20,18 +20,6 @@
 	},
 /turf/open/floor/holofloor/white,
 /area/template_noop)
-"c" = (
-/obj/structure/table/reinforced/rglass,
-/obj/item/reagent_containers/food/condiment/sugar{
-	pixel_x = -2;
-	pixel_y = 5
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/floor/holofloor/white,
-/area/template_noop)
 "h" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/storage/bag/tray{
@@ -94,30 +82,8 @@
 	},
 /turf/open/floor/holofloor/white,
 /area/template_noop)
-"s" = (
-/obj/structure/table/reinforced/rglass,
-/obj/item/reagent_containers/food/condiment/milk{
-	pixel_x = 4;
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/food/condiment/soymilk{
-	pixel_x = -4;
-	pixel_y = 5
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/floor/holofloor/white,
-/area/template_noop)
 "t" = (
 /obj/structure/table/reinforced/rglass,
-/obj/item/reagent_containers/food/condiment/peppermill{
-	pixel_x = 3
-	},
-/obj/item/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -3
-	},
 /obj/item/reagent_containers/glass/bowl{
 	pixel_y = 12
 	},
@@ -132,19 +98,6 @@
 /area/template_noop)
 "x" = (
 /obj/machinery/oven,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/floor/holofloor/white,
-/area/template_noop)
-"y" = (
-/obj/structure/table/reinforced/rglass,
-/obj/item/reagent_containers/food/condiment/flour,
-/obj/item/reagent_containers/food/condiment/flour{
-	pixel_x = 3;
-	pixel_y = 4
-	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -331,7 +284,7 @@ k
 (3,1,1) = {"
 x
 N
-y
+l
 X
 Z
 l
@@ -344,7 +297,7 @@ Y
 i
 N
 N
-c
+l
 N
 l
 v
@@ -380,7 +333,7 @@ k
 x
 N
 t
-s
+l
 N
 l
 v
