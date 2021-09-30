@@ -65,7 +65,7 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 
-/obj/item/clothing/suit/det_suit/Initialize(mapload)
+/obj/item/clothing/suit/det_suit/Initialize()
 	. = ..()
 	allowed = GLOB.detective_vest_allowed
 
@@ -149,6 +149,13 @@
 	desc = "This jacket is for those special occasions when a security officer isn't required to wear their armor."
 	icon_state = "officerbluejacket"
 	inhand_icon_state = "officerbluejacket"
+	body_parts_covered = CHEST|ARMS
+
+/obj/item/clothing/suit/toggle/security/casualofficer
+	name = "blue security jacket"
+	desc = "A casual blue jacket typically worn by security officers on calm shifts."
+	icon_state = "policejacket"
+	inhand_icon_state = "policejacket"
 	body_parts_covered = CHEST|ARMS
 
 /obj/item/clothing/suit/security/warden

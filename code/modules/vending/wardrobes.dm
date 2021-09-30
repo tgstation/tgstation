@@ -18,6 +18,7 @@
 	product_ads = "Beat perps in style!;It's red so you can't see the blood!;You have the right to be fashionable!;Now you can be the fashion police you always wanted to be!"
 	vend_reply = "Thank you for using the SecDrobe!"
 	products = list(/obj/item/clothing/suit/hooded/wintercoat/security = 3,
+					/obj/item/clothing/suit/toggle/security/casualofficer = 3,
 					/obj/item/storage/backpack/security = 3,
 					/obj/item/storage/backpack/satchel/sec = 3,
 					/obj/item/storage/backpack/duffelbag/sec = 3,
