@@ -3940,6 +3940,8 @@
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
 #include "modular_event\station_traits.dm"
+#include "modular_event\event_aheal\code\action.dm"
+#include "modular_event\event_aheal\code\living.dm"
 #include "modular_event\jobs\jobs.dm"
 #include "modular_event\tournament\controller.dm"
 #include "modular_event\tournament\countdown.dm"

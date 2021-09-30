@@ -672,7 +672,6 @@
 		if(next_use_time > world.time)
 			START_PROCESSING(SSfastprocess, src)
 
-
 //Stickmemes
 /datum/action/item_action/stickmen
 	name = "Summon Stick Minions"
