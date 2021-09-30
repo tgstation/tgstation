@@ -814,6 +814,10 @@
 /// from /obj/machinery/atmospherics/components/binary/valve/toggle(): (on)
 #define COMSIG_VALVE_SET_OPEN "valve_toggled"
 
+/// from /obj/machinery/atmospherics/components/binary/pump/set_on(active): (on)
+#define COMSIG_PUMP_SET_ON "pump_set_on"
+
+
 // /obj access signals
 
 #define COMSIG_OBJ_ALLOWED "door_try_to_activate"
