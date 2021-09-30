@@ -20,6 +20,16 @@
 	},
 /turf/open/floor/holofloor/white,
 /area/template_noop)
+"d" = (
+/obj/structure/closet/cabinet{
+	pixel_y = 1
+	},
+/obj/item/clothing/suit/deckers,
+/obj/item/clothing/suit/jacket/miljacket,
+/obj/item/clothing/suit/jacket/puffer/vest,
+/obj/item/clothing/suit/jacket,
+/turf/open/floor/holofloor/wood,
+/area/template_noop)
 "h" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/storage/bag/tray{
@@ -81,6 +91,12 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor/white,
+/area/template_noop)
+"s" = (
+/obj/structure/closet/crate/bin{
+	pixel_y = 5
+	},
+/turf/open/floor/holofloor/wood,
 /area/template_noop)
 "t" = (
 /obj/structure/table/reinforced/rglass,
@@ -196,6 +212,9 @@
 	},
 /turf/open/floor/holofloor/white,
 /area/template_noop)
+"O" = (
+/turf/closed/wall/mineral/wood,
+/area/template_noop)
 "P" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/book/manual/wiki/cooking_to_serve_man{
@@ -264,10 +283,10 @@ S
 N
 b
 l
+v
 A
-v
-v
-v
+O
+O
 "}
 (2,1,1) = {"
 I
@@ -313,9 +332,9 @@ D
 N
 l
 v
-v
-v
-v
+s
+O
+O
 "}
 (6,1,1) = {"
 i
@@ -361,7 +380,7 @@ N
 N
 p
 v
-v
-v
-v
+d
+O
+O
 "}
