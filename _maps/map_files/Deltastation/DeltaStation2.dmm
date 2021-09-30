@@ -34678,11 +34678,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
 /area/service/chapel)
-"epN" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/west,
-/turf/open/floor/iron,
-/area/security/prison)
 "epP" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown{
@@ -43885,7 +43880,7 @@
 /area/engineering/main)
 "hgA" = (
 /obj/machinery/camera{
-	c_tag = "Engineering - Supermatter Room";
+	c_tag = "Engineering - Supermatter Room West";
 	dir = 4;
 	name = "engineering camera"
 	},
@@ -44928,7 +44923,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/camera{
-	c_tag = "Cargo Bay - Aft Starboard";
+	c_tag = "Cargo Bay - Drone Control Room";
 	dir = 1;
 	name = "cargo camera"
 	},
@@ -60446,7 +60441,7 @@
 /area/service/library/abandoned)
 "lVf" = (
 /obj/machinery/camera{
-	c_tag = "Engineering - Supermatter Room";
+	c_tag = "Engineering - Supermatter Room East";
 	dir = 8;
 	name = "engineering camera"
 	},
@@ -79099,7 +79094,7 @@
 /area/engineering/supermatter/room)
 "roo" = (
 /obj/machinery/camera{
-	c_tag = "Atmospherics - Testing Room";
+	c_tag = "Atmospherics - Testing Room - South";
 	name = "atmospherics camera"
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -94438,7 +94433,7 @@
 	dir = 1
 	},
 /obj/machinery/camera{
-	c_tag = "Atmospherics - Testing Room";
+	c_tag = "Atmospherics - Testing Room Central";
 	name = "atmospherics camera"
 	},
 /turf/open/floor/iron,
@@ -153442,7 +153437,7 @@ qYo
 qYo
 aaa
 pff
-epN
+aJA
 reP
 reP
 npH
