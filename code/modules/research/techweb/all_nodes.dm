@@ -332,6 +332,7 @@
 		"griddle",
 		"microwave",
 		"monkey_recycler",
+		"oven",
 		"processor",
 		"reagentgrinder",
 		"smartfridge",
