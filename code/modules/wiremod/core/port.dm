@@ -92,7 +92,7 @@
 	datatype_handler = handler
 	color = datatype_handler.color
 	datatype_handler.on_gain(src)
-	src.value = datatype_handler.convert_value(src, value)
+	src.value = null
 	SEND_SIGNAL(src, COMSIG_PORT_SET_TYPE, type_to_set)
 	if(connected_component?.parent)
 		SStgui.update_uis(connected_component.parent)

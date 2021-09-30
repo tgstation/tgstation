@@ -45,9 +45,12 @@ SUBSYSTEM_DEF(circuit_component)
 	callbacks_to_invoke += to_call
 
 /// Queues any callbacks to be executed instantly instead of using the subsystem.
-/datum/controller/subsystem/circuit_component/proc/queue_instant_run()
+/datum/controller/subsystem/circuit_component/proc/queue_instant_run(start_cpu_time)
 	instant_run_tick = world.time
-	instant_run_start_cpu_usage = TICK_USAGE
+	if(start_cpu_time)
+		instant_run_start_cpu_usage = start_cpu_time
+	else
+		instant_run_start_cpu_usage = TICK_USAGE
 	instant_run_callbacks_to_run = list()
 
 /**

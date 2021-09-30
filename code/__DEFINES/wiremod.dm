@@ -41,7 +41,7 @@
 // Composite datatypes
 #define PORT_COMPOSITE_TYPE_LIST "list"
 /// List datatype
-#define PORT_TYPE_LIST(datatype) composite_datatype(PORT_COMPOSITE_TYPE_LIST, datatype)
+#define PORT_TYPE_LIST(datatype) SSwiremod_composite.composite_datatype(PORT_COMPOSITE_TYPE_LIST, datatype)
 
 // Other datatypes
 /// Atom datatype

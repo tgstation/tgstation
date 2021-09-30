@@ -38,13 +38,18 @@ $bg-map: colors.$bg-map !default;
 }
 
 .ObjectComponent__PortPos {
-  top: 50%;
-  left: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 @each $color-name, $color-value in $bg-map {
   .color-stroke-#{$color-name} {
     stroke: $color-value !important;
+  }
+
+  .color-fill-#{$color-name} {
+    fill: $color-value !important;
   }
 }
 

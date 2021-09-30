@@ -133,6 +133,7 @@ export class Port extends Component {
                       strokeDashoffset={
                         -index*(100*(Math.PI/composite_types.length))
                       }
+                      className={`color-stroke-${compositeColor}`}
                       strokeWidth="50px"
                       cx="50"
                       cy="50"
@@ -142,7 +143,7 @@ export class Port extends Component {
                     />
                   );
                 })}
-                <circle cx="50" cy="50" r="50" fill={port.color} />
+                <circle ref={this.iconRef} cx="50" cy="50" r="50" className={`color-fill-${port.color}`} />
               </svg>
             )}
             <span ref={this.iconRef} className="ObjectComponent__PortPos" />
