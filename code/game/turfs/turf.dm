@@ -318,6 +318,28 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	return FALSE
 
+/turf/attackby_secondary(obj/item/weapon, mob/user, params)
+	if(istype(weapon, /obj/item/stack/sheet/iron))
+		var/obj/item/stack/sheet/iron/using_sheet = weapon
+		if(using_sheet.get_amount() < 2)
+			user.balloon_alert(user, "not enough material for that!")
+			return SECONDARY_ATTACK_CONTINUE_CHAIN
+		if(is_blocked_turf())
+			user.balloon_alert(user, "something is blocking the tile.")
+			return SECONDARY_ATTACK_CONTINUE_CHAIN
+		if(!do_after(user, 4 SECONDS, src))
+			return SECONDARY_ATTACK_CONTINUE_CHAIN
+		if(locate(/obj/structure/girder) in src || is_blocked_turf())
+			user.balloon_alert(user, "something is blocking the tile.")
+			return SECONDARY_ATTACK_CONTINUE_CHAIN
+		if(!using_sheet.use(2))
+			user.balloon_alert(user, "not enough material for that!")
+			return SECONDARY_ATTACK_CONTINUE_CHAIN
+		var/obj/structure/girder/built_girder = new(src)
+		built_girder.anchored = FALSE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
+
 //There's a lot of QDELETED() calls here if someone can figure out how to optimize this but not runtime when something gets deleted by a Bump/CanPass/Cross call, lemme know or go ahead and fix this mess - kevinz000
 /turf/Enter(atom/movable/mover)
 	// Do not call ..()
