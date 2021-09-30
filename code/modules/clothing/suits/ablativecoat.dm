@@ -38,7 +38,7 @@
 	equip_delay_other = 40
 	var/hit_reflect_chance = 50
 
-/obj/item/clothing/suit/hooded/ablative/Initialize()
+/obj/item/clothing/suit/hooded/ablative/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_vest_allowed
 

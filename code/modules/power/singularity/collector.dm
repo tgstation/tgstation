@@ -31,7 +31,7 @@
 	///Multiplier for the amount of gas removed per tick
 	var/power_production_drain = 0.001
 
-/obj/machinery/power/rad_collector/anchored/Initialize()
+/obj/machinery/power/rad_collector/anchored/Initialize(mapload)
 	. = ..()
 	set_anchored(TRUE)
 

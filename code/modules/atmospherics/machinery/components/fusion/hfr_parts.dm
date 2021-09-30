@@ -25,7 +25,7 @@
 	///Check if the machine is cracked open
 	var/cracked = FALSE
 
-/obj/machinery/atmospherics/components/unary/hypertorus/Initialize()
+/obj/machinery/atmospherics/components/unary/hypertorus/Initialize(mapload)
 	. = ..()
 	initialize_directions = dir
 
@@ -335,12 +335,12 @@
 		if("fuel_injection_rate")
 			var/fuel_injection_rate = text2num(params["fuel_injection_rate"])
 			if(fuel_injection_rate != null)
-				connected_core.fuel_injection_rate = clamp(fuel_injection_rate, 5, 1500)
+				connected_core.fuel_injection_rate = clamp(fuel_injection_rate, 0.5, 150)
 				. = TRUE
 		if("moderator_injection_rate")
 			var/moderator_injection_rate = text2num(params["moderator_injection_rate"])
 			if(moderator_injection_rate != null)
-				connected_core.moderator_injection_rate = clamp(moderator_injection_rate, 5, 1500)
+				connected_core.moderator_injection_rate = clamp(moderator_injection_rate, 0.5, 150)
 				. = TRUE
 		if("current_damper")
 			var/current_damper = text2num(params["current_damper"])

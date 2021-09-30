@@ -19,12 +19,21 @@
 	microwaved_type = /obj/item/food/boiledegg
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_TINY
+	ant_attracting = FALSE
+	decomp_type = /obj/item/food/egg/rotten
+	decomp_req_handle = TRUE //so laid eggs can actually become chickens
 	var/static/chick_count = 0 //I copied this from the chicken_count (note the "en" in there) variable from chicken code.
+
+/obj/item/food/egg/rotten
+	food_reagents = list(/datum/reagent/consumable/eggrot = 10, /datum/reagent/consumable/mold = 10)
+	microwaved_type = /obj/item/food/boiledegg/rotten
+	foodtypes = GROSS
+	preserved_food = TRUE
 
 /obj/item/food/egg/gland
 	desc = "An egg! It looks weird..."
 
-/obj/item/food/egg/gland/Initialize()
+/obj/item/food/egg/gland/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(get_random_reagent_id(), 15)
 
@@ -53,11 +62,21 @@
 
 		to_chat(usr, span_notice("You colour [src] with [W]."))
 		icon_state = "egg-[clr]"
+
 	else if(istype(W, /obj/item/stamp/clown))
 		var/clowntype = pick("grock", "grimaldi", "rainbow", "chaos", "joker", "sexy", "standard", "bobble", "krusty", "bozo", "pennywise", "ronald", "jacobs", "kelly", "popov", "cluwne")
 		icon_state = "egg-clown-[clowntype]"
 		desc = "An egg that has been decorated with the grotesque, robustable likeness of a clown's face. "
 		to_chat(usr, span_notice("You stamp [src] with [W], creating an artistic and not remotely horrifying likeness of clown makeup."))
+
+	else if(is_reagent_container(W))
+		var/obj/item/reagent_containers/dunk_test_container = W
+		if(dunk_test_container.is_drainable() && dunk_test_container.reagents.has_reagent(/datum/reagent/water))
+			to_chat(user, span_notice("You check if [src] is rotten."))
+			if(istype(src, /obj/item/food/egg/rotten))
+				to_chat(user, span_warning("[src] floats in the [dunk_test_container]!"))
+			else
+				to_chat(user, span_notice("[src] sinks into the [dunk_test_container]!"))
 	else
 		..()
 
@@ -104,6 +123,14 @@
 	foodtypes = MEAT | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	ant_attracting = FALSE
+	decomp_type = /obj/item/food/boiledegg/rotten
+
+/obj/item/food/boiledegg/rotten
+	food_reagents = list(/datum/reagent/consumable/eggrot = 10)
+	tastes = list("rotten egg" = 1)
+	foodtypes = GROSS
+	preserved_food = TRUE
 
 /obj/item/food/omelette //FUCK THIS
 	name = "omelette du fromage"

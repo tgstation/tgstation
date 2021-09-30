@@ -25,6 +25,7 @@
 	desc = "Long-used as a symbol of rest, peace, and death."
 	icon_state = "map_flower"
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
@@ -148,6 +149,7 @@
 	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten'd not thy breath.\""
 	icon_state = "harebell"
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
 
@@ -181,6 +183,7 @@
 	damtype = BURN
 	force = 0
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
@@ -210,6 +213,7 @@
 	desc = "Store in a location at least 50 yards away from werewolves."
 	icon_state = "moonflower"
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	distill_reagent = /datum/reagent/consumable/ethanol/absinthe //It's made from flowers.
 
 // Novaflower
@@ -237,6 +241,7 @@
 	damtype = BURN
 	force = 0
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
@@ -276,6 +281,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_MASK
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
 
@@ -319,5 +325,6 @@
 	force = 0
 	throwforce = 0
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	throw_speed = 1
 	throw_range = 3

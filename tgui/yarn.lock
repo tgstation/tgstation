@@ -3709,6 +3709,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-unused-imports@npm:^1.1.4":
+  version: 1.1.4
+  resolution: "eslint-plugin-unused-imports@npm:1.1.4"
+  dependencies:
+    eslint-rule-composer: ^0.3.0
+  peerDependencies:
+    "@typescript-eslint/eslint-plugin": ^4.14.2
+    eslint: ^7.19.0
+  peerDependenciesMeta:
+    "@typescript-eslint/eslint-plugin":
+      optional: true
+  checksum: 62c2dac60efee7e0efe0b9b5e1b7c708251ba6208ecdbe7e04015e8c415ba4e1a84e7bd5716cd9e51895449b57077510e3e98b2bfc3d1f288ca6f3dd46883ca6
+  languageName: node
+  linkType: hard
+
+"eslint-rule-composer@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "eslint-rule-composer@npm:0.3.0"
+  checksum: c2f57cded8d1c8f82483e0ce28861214347e24fd79fd4144667974cd334d718f4ba05080aaef2399e3bbe36f7d6632865110227e6b176ed6daa2d676df9281b1
+  languageName: node
+  linkType: hard
+
 "eslint-scope@npm:5.1.1, eslint-scope@npm:^5.1.1":
   version: 5.1.1
   resolution: "eslint-scope@npm:5.1.1"
@@ -8159,6 +8181,7 @@ resolve@^2.0.0-next.3:
     eslint: ^7.32.0
     eslint-plugin-radar: ^0.2.1
     eslint-plugin-react: ^7.24.0
+    eslint-plugin-unused-imports: ^1.1.4
     file-loader: ^6.2.0
     inferno: ^7.4.8
     jest: ^27.0.6

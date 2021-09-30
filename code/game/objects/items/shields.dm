@@ -126,7 +126,7 @@
 	inhand_icon_state = "flashshield"
 	var/obj/item/assembly/flash/handheld/embedded_flash
 
-/obj/item/shield/riot/flash/Initialize()
+/obj/item/shield/riot/flash/Initialize(mapload)
 	. = ..()
 	embedded_flash = new(src)
 
@@ -212,7 +212,7 @@
 	/// Whether clumsy people can transform this without side effects.
 	var/can_clumsy_use = FALSE
 
-/obj/item/shield/energy/Initialize()
+/obj/item/shield/energy/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
@@ -236,7 +236,7 @@
 
 	enabled = active
 
-	balloon_alert(user, "[name] [active ? "activated":"deactivated"]")
+	balloon_alert(user, "[active ? "activated":"deactivated"]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -257,14 +257,14 @@
 	/// Whether the shield is extended and protecting the user..
 	var/extended = FALSE
 
-/obj/item/shield/riot/tele/Initialize()
+/obj/item/shield/riot/tele/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/transforming, \
 		force_on = 8, \
 		throwforce_on = 5, \
 		throw_speed_on = 2, \
 		hitsound_on = hitsound, \
-		w_class_on = WEIGHT_CLASS_NORMAL, \
+		w_class_on = WEIGHT_CLASS_BULKY, \
 		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
@@ -285,5 +285,5 @@
 	extended = active
 	slot_flags = active ? ITEM_SLOT_BACK : null
 	playsound(user ? user : src, 'sound/weapons/batonextend.ogg', 50, TRUE)
-	balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
+	balloon_alert(user, "[active ? "extended" : "collapsed"]")
 	return COMPONENT_NO_DEFAULT_MESSAGE

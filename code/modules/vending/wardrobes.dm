@@ -437,14 +437,16 @@
 	icon_state = "genedrobe"
 	product_ads = "Perfect for the mad scientist in you!"
 	vend_reply = "Thank you for using the GeneDrobe!"
-	products = list(/obj/item/clothing/under/rank/rnd/geneticist = 2,
-					/obj/item/clothing/under/rank/rnd/geneticist/skirt = 2,
-					/obj/item/clothing/shoes/sneakers/white = 2,
-					/obj/item/clothing/suit/toggle/labcoat/genetics = 2,
-					/obj/item/clothing/suit/hooded/wintercoat/science/genetics = 2,
-					/obj/item/storage/backpack/genetics = 2,
-					/obj/item/storage/backpack/satchel/gen = 2,
-					/obj/item/storage/backpack/duffelbag/genetics = 2)
+	products = list(
+		/obj/item/clothing/under/rank/rnd/geneticist = 2,
+		/obj/item/clothing/under/rank/rnd/geneticist/skirt = 2,
+		/obj/item/clothing/shoes/sneakers/white = 2,
+		/obj/item/clothing/suit/toggle/labcoat/genetics = 2,
+		/obj/item/clothing/suit/hooded/wintercoat/science/genetics = 2,
+		/obj/item/storage/backpack/genetics = 2,
+		/obj/item/storage/backpack/satchel/gen = 2,
+		/obj/item/storage/backpack/duffelbag/genetics = 2
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/gene_wardrobe
 	payment_department = ACCOUNT_SCI
 /obj/item/vending_refill/wardrobe/gene_wardrobe
