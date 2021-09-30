@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Section, Stack } from '../components';
+import { Button, Section } from '../components';
 import { Window } from '../layouts';
 
 export const CTFPanel = (props, context) => {
