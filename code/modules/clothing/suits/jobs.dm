@@ -154,8 +154,8 @@
 /obj/item/clothing/suit/toggle/security/casualofficer
 	name = "blue security jacket"
 	desc = "A casual blue jacket typically worn by security officers on calm shifts."
-	icon_state = "bluepolicejacket"
-	inhand_icon_state = "bluepolicejacket"
+	icon_state = "policejacket"
+	inhand_icon_state = "policejacket"
 	body_parts_covered = CHEST|ARMS
 
 /obj/item/clothing/suit/security/warden
