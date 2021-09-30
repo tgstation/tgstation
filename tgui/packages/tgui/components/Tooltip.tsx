@@ -37,14 +37,10 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
   static singletonPopper: ReturnType<typeof createPopper> | undefined;
   static currentHoveredElement: Element | undefined;
   static virtualElement: VirtualElement = {
-    getBoundingClientRect: () => {
-      const hoveredElement = Tooltip.currentHoveredElement;
-      if (hoveredElement) {
-        return hoveredElement.getBoundingClientRect();
-      } else {
-        return NULL_RECT;
-      }
-    },
+    getBoundingClientRect: () => (
+      Tooltip.currentHoveredElement?.getBoundingClientRect()
+        ?? NULL_RECT
+    ),
   };
 
   getDOMNode() {
