@@ -86,9 +86,6 @@
 ///Chance for haunted item to try to get itself let go.
 #define HAUNTED_ITEM_ESCAPE_GRASP_CHANCE 20
 
-///Blackboard keys for haunted items
-#define BB_ITEM_AGGRO_LIST "BB_to_haunt_list"
-
 ///Cursed item controller defines
 
 //blackboards
