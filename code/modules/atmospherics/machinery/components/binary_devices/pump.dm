@@ -223,7 +223,7 @@
 	var/obj/machinery/atmospherics/components/binary/pump/connected_pump
 
 /obj/item/circuit_component/atmos_pump/populate_ports()
-	pressure_value = add_input_port("New Pressure", PORT_TYPE_NUMBER)
+	pressure_value = add_input_port("New Pressure", PORT_TYPE_NUMBER, trigger = .proc/set_pump_pressure)
 	on = add_input_port("Turn On", PORT_TYPE_SIGNAL)
 	off = add_input_port("Turn Off", PORT_TYPE_SIGNAL)
 	request_data = add_input_port("Request Port Data", PORT_TYPE_SIGNAL)
@@ -255,14 +255,17 @@
 	else
 		turned_off.set_output(COMPONENT_SIGNAL)
 
+/obj/item/circuit_component/atmos_pump/proc/set_pump_pressure()
+	CIRCUIT_TRIGGER
+	if(!connected_pump)
+		return
+	connected_pump.target_pressure = pressure_value.value
+
 /obj/item/circuit_component/atmos_pump/input_received(datum/port/input/port, list/return_values)
 
 	if(!connected_pump)
 		return
 
-	if(pressure_value == port)
-		connected_pump.target_pressure = pressure_value.value
-		return
 	if(on == port)
 		connected_pump.set_on(TRUE)
 		return
