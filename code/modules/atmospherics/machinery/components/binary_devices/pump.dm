@@ -224,9 +224,9 @@
 
 /obj/item/circuit_component/atmos_pump/populate_ports()
 	pressure_value = add_input_port("New Pressure", PORT_TYPE_NUMBER, trigger = .proc/set_pump_pressure)
-	on = add_input_port("Turn On", PORT_TYPE_SIGNAL)
-	off = add_input_port("Turn Off", PORT_TYPE_SIGNAL)
-	request_data = add_input_port("Request Port Data", PORT_TYPE_SIGNAL)
+	on = add_input_port("Turn On", PORT_TYPE_SIGNAL, trigger = .proc/set_pump_on)
+	off = add_input_port("Turn Off", PORT_TYPE_SIGNAL, trigger = .proc/set_pump_off)
+	request_data = add_input_port("Request Port Data", PORT_TYPE_SIGNAL, trigger = .proc/request_pump_data)
 
 	input_pressure = add_output_port("Input Pressure", PORT_TYPE_NUMBER)
 	output_pressure = add_output_port("Output Pressure", PORT_TYPE_NUMBER)
@@ -261,21 +261,25 @@
 		return
 	connected_pump.target_pressure = pressure_value.value
 
-/obj/item/circuit_component/atmos_pump/input_received(datum/port/input/port, list/return_values)
-
+/obj/item/circuit_component/atmos_pump/proc/set_pump_on()
+	CIRCUIT_TRIGGER
 	if(!connected_pump)
 		return
+	connected_pump.set_on(TRUE)
 
-	if(on == port)
-		connected_pump.set_on(TRUE)
+/obj/item/circuit_component/atmos_pump/proc/set_pump_off()
+	CIRCUIT_TRIGGER
+	if(!connected_pump)
 		return
-	if(off ==  port)
-		connected_pump.set_on(FALSE)
+	connected_pump.set_on(FALSE)
+
+/obj/item/circuit_component/atmos_pump/proc/request_pump_data()
+	CIRCUIT_TRIGGER
+	if(!connected_pump)
 		return
-	if(request_data == port)
-		var/datum/gas_mixture/air_input = connected_pump.airs[1]
-		var/datum/gas_mixture/air_output = connected_pump.airs[2]
-		input_pressure.set_output(air_input.return_pressure())
-		output_pressure.set_output(air_output.return_pressure())
-		input_temperature.set_output(air_input.return_temperature())
-		output_temperature.set_output(air_output.return_temperature())
+	var/datum/gas_mixture/air_input = connected_pump.airs[1]
+	var/datum/gas_mixture/air_output = connected_pump.airs[2]
+	input_pressure.set_output(air_input.return_pressure())
+	output_pressure.set_output(air_output.return_pressure())
+	input_temperature.set_output(air_input.return_temperature())
+	output_temperature.set_output(air_output.return_temperature())
