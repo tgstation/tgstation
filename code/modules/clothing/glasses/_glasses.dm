@@ -575,12 +575,24 @@
 	inhand_icon_state = "phantom_glasses"
 
 /obj/item/clothing/glasses/dealmaker
-	name = "dealmaker glasses"
+	name = "dealmakers"
 	desc = "Why be the little sponge who hates its $4.99 life when you can be a BIG SHOT?"
 	icon_state = "dealmaker"
 	inhand_icon_state = "dealmaker"
 
-/obj/item/clothing/glasses/dealmaker/handle_speech(datum/source, list/speech_args)
+/obj/item/clothing/glasses/dealmaker/equipped(mob/M, slot)
+	. = ..()
+	if (slot == ITEM_SLOT_EYES)
+		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+	else
+		UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/glasses/dealmaker/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/glasses/dealmaker/proc/handle_speech(datum/source, list/speech_args) //this should probably be changed at some point via some sort of refactor so that all clothing can modify speech
+	SIGNAL_HANDLER
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		message = " [message]"
