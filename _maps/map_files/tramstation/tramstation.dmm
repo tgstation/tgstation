@@ -24519,7 +24519,7 @@
 /area/security/prison/workout)
 "gNI" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
+	req_one_access_txt = "12;25"
 	},
 /obj/machinery/duct,
 /obj/structure/cable,
@@ -36423,7 +36423,7 @@
 /area/maintenance/tram/right)
 "lra" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
+	req_one_access_txt = "12;25"
 	},
 /obj/structure/cable,
 /obj/machinery/duct,
@@ -54737,7 +54737,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Bar Excess Storage";
-	req_one_access_txt = "12"
+	req_one_access_txt = "12;25"
 	},
 /obj/machinery/duct,
 /turf/open/floor/plating,
