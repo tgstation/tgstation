@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - admin: "renames enable debug verbs to enable mapping verbs"
