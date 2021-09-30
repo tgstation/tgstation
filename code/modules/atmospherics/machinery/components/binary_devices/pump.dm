@@ -194,20 +194,32 @@
 	display_name = "Atmospheric Binary Pump"
 	desc = "The interface for communicating with a pump."
 
+	///Set the target pressure of the pump
 	var/datum/port/input/pressure_value
+	///Activate the pump
 	var/datum/port/input/on
+	///Deactivate the pump
 	var/datum/port/input/off
+	///Signals the circuit to retrieve the pump's current pressure and temperature
 	var/datum/port/input/request_data
 
+	///Pressure of the input port
 	var/datum/port/output/input_pressure
+	///Pressure of the output port
 	var/datum/port/output/output_pressure
+	///Temperature of the input port
 	var/datum/port/output/input_temperature
+	///Temperature of the output port
 	var/datum/port/output/output_temperature
 
+	///Whether the pump is currently active
 	var/datum/port/output/is_active
+	///Send a signal when the pump is turned on
 	var/datum/port/output/turned_on
+	///Send a signal when the pump is turned off
 	var/datum/port/output/turned_off
 
+	///The component parent object
 	var/obj/machinery/atmospherics/components/binary/pump/connected_pump
 
 /obj/item/circuit_component/atmos_pump/populate_ports()
