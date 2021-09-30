@@ -5,3 +5,7 @@
 
 /datum/controller/subsystem/job/GiveRandomJob(mob/dead/new_player/player)
 	return AssignRole(player, new /datum/job/assistant)
+
+/datum/outfit/job/assistant
+	backpack_contents = list(/obj/item/storage/box/syndie_kit/chameleon = 1)
+	box = /obj/item/storage/box/tournament

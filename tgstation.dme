@@ -14,6 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_modular_event\__DEFINES\traits.dm"
 #include "code\_compile_options.dm"
 #include "code\_debugger.dm"
 #include "code\world.dm"
@@ -3940,6 +3941,7 @@
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
 #include "modular_event\station_traits.dm"
+#include "modular_event\auto_equip\auto_equip.dm"
 #include "modular_event\event_aheal\code\action.dm"
 #include "modular_event\event_aheal\code\living.dm"
 #include "modular_event\jobs\jobs.dm"
