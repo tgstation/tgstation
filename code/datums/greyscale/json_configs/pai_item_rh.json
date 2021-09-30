@@ -76,5 +76,13 @@
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
+	],
+	"dummy": [
+		{
+			"type": "icon_state",
+			"icon_state": "second_color_dummy",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
 	]
 }
