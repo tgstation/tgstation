@@ -306,6 +306,7 @@
 	},
 /obj/structure/table,
 /obj/item/restraints/handcuffs,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "cd" = (
@@ -4485,6 +4486,11 @@
 /obj/structure/ladder,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
+"vV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron,
+/area/mine/laborcamp)
 "vW" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -19340,7 +19346,7 @@ ap
 ap
 ap
 yr
-Ee
+vV
 Hf
 Wh
 Ee
