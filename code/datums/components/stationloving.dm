@@ -73,7 +73,7 @@
 
 	return COMPONENT_BLOCK_MARK_RETRIEVAL
 
-/// Checks whether a given atom's loc is within bounds. Returns TRUE if it is, FALSE if it isn't.
+/// Checks whether a given atom's turf is within bounds. Returns TRUE if it is, FALSE if it isn't.
 /datum/component/stationloving/proc/atom_in_bounds(atom/atom_to_check)
 	var/static/list/allowed_shuttles = typecacheof(list(/area/shuttle/syndicate, /area/shuttle/escape, /area/shuttle/pod_1, /area/shuttle/pod_2, /area/shuttle/pod_3, /area/shuttle/pod_4))
 	var/static/list/disallowed_centcom_areas = typecacheof(list(/area/abductor_ship, /area/awaymission/errorroom))
