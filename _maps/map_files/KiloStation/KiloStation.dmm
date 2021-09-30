@@ -9659,7 +9659,7 @@
 /area/medical/virology)
 "aVL" = (
 /obj/machinery/camera{
-	c_tag = "Medical Operating Theater B";
+	c_tag = "Medical Operating Theater A";
 	dir = 1;
 	name = "medical camera";
 	network = list("ss13","medical")
@@ -38511,13 +38511,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /turf/closed/wall/rust,
 /area/engineering/atmos)
-"hsv" = (
-/obj/structure/flora/rock/pile{
-	icon_state = "basalt2"
-	},
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating,
-/area/space/nearstation)
 "hsE" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -46484,8 +46477,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/spawner/random/structure/crate,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -50811,7 +50802,9 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "lUX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
+	dir = 4
+	},
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "lVq" = (
@@ -59388,6 +59381,7 @@
 "pim" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
 /area/engineering/main)
 "piF" = (
@@ -79784,7 +79778,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "wRX" = (
@@ -99297,7 +99290,7 @@ iJZ
 cxK
 cyb
 abJ
-hsv
+ecF
 gtd
 ich
 bJv
