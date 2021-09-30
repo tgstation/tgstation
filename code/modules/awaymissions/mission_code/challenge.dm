@@ -24,6 +24,7 @@
 	anchored = TRUE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
+	projectile_type = /obj/projectile/beam/emitter/hitscan/teststuff
 
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
@@ -35,3 +36,6 @@
 
 /obj/machinery/power/emitter/energycannon/RefreshParts()
 	return
+
+/obj/projectile/beam/emitter/hitscan/teststuff
+	hit_crawling_targets = TRUE

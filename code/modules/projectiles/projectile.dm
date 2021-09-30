@@ -159,7 +159,7 @@
 	///If we have a shrapnel_type defined, these embedding stats will be passed to the spawned shrapnel type, which will roll for embedding on the target
 	var/list/embedding
 	///If TRUE, hit mobs even if they're on the floor and not our target
-	var/hit_prone_targets = FALSE
+	var/hit_crawling_targets = FALSE
 	///For what kind of brute wounds we're rolling for, if we're doing such a thing. Lasers obviously don't care since they do burn instead.
 	var/sharpness = NONE
 	///How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
@@ -489,28 +489,26 @@
 		var/mob/M = firer
 		if((target == firer) || ((target == firer.loc) && ismecha(firer.loc)) || (target in firer.buckled_mobs) || (istype(M) && (M.buckled == target)))
 			return FALSE
-	if(target.density || cross_failed) //This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
-		return TRUE
-	if(!isliving(target))
-		if(isturf(target)) // non dense turfs
-			return FALSE
-		if(target.layer < PROJECTILE_HIT_THRESHHOLD_LAYER)
-			return FALSE
-		else if(!direct_target) // non dense objects do not get hit unless specifically clicked
-			return FALSE
-	else
-		var/mob/living/L = target
-		if(direct_target)
-			return TRUE
-		if(L.stat == DEAD)
-			return FALSE
-		if(HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED))
-			return FALSE
-		if(!hit_prone_targets)
-			if(!L.density)
+	if(!target.density && !cross_failed) //If this thing doesn't block projectiles, otherwise hit it regardless of layer/mob stuns/etc.
+		if(!isliving(target))
+			if(isturf(target)) // non dense turfs
 				return FALSE
-			if(L.body_position != LYING_DOWN)
-				return TRUE
+			if(target.layer < PROJECTILE_HIT_THRESHHOLD_LAYER)
+				return FALSE
+			else if(!direct_target) // non dense objects do not get hit unless specifically clicked
+				return FALSE
+		else
+			var/mob/living/living_target = target
+			if(!direct_target)
+				if(PROJECTILES_SHOULD_AVOID(living_target))
+					return FALSE
+				if(!hit_crawling_targets)
+					if(!living_target.density)
+						return FALSE
+				else if(IS_HITTING_DECK(living_target, living_target.client?.successful_move_delay, FALSE))
+					return FALSE
+	if(SEND_SIGNAL(target, COMSIG_ATOM_CAN_BE_HIT_BY_PROJECTILE, src, direct_target, ignore_loc, cross_failed) & COMSIG_DODGE_PROJECTILE)
+		return FALSE
 	return TRUE
 
 /**

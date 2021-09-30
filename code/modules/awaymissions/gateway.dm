@@ -146,6 +146,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "portal_frame"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	move_resist = INFINITY
 
 	// 3x2 offset by one row
 	pixel_x = -32
@@ -207,9 +208,6 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		if(target)
 			deactivate()
 		return
-
-/obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
-	return
 
 /obj/machinery/gateway/proc/generate_bumper()
 	portal = new(get_turf(src))

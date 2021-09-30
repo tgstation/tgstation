@@ -8,7 +8,8 @@
 	for(var/datum/ai_controller/controller as anything in moving_controllers)
 		if(!COOLDOWN_FINISHED(controller, movement_cooldown))
 			continue
-		COOLDOWN_START(controller, movement_cooldown, controller.movement_delay)
+		var/cached_delay = controller.movement_delay
+		COOLDOWN_START(controller, movement_cooldown, cached_delay)
 
 		var/atom/movable/movable_pawn = controller.pawn
 
@@ -31,3 +32,5 @@
 			controller.pathing_attempts++
 			if(controller.pathing_attempts >= max_pathing_attempts)
 				controller.CancelActions()
+		else
+			COOLDOWN_START(controller, last_successful_movement_cd, cached_delay)

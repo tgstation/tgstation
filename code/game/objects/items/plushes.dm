@@ -35,6 +35,13 @@
 	var/normal_desc
 	//--end of love :'(--
 
+/obj/item/toy/plush/testtest/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/mama_mia), 8 SECONDS)
+
+/obj/item/toy/plush/testtest/proc/mama_mia()
+	throw_at(get_edge_target_turf(src, WEST), 12, 2, hit_crawling_targets = TRUE)
+
 /obj/item/toy/plush/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, squeak_override)

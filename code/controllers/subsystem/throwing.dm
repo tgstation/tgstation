@@ -43,6 +43,8 @@ SUBSYSTEM_DEF(throwing)
 /datum/thrownthing
 	var/atom/movable/thrownthing
 	var/datum/weakref/initial_target
+	///Whether the object can hit living mobs that are crawling.
+	var/hit_crawling_targets
 	var/turf/target_turf
 	var/target_zone
 	var/init_dir
@@ -66,7 +68,7 @@ SUBSYSTEM_DEF(throwing)
 	var/last_move = 0
 
 
-/datum/thrownthing/New(thrownthing, target, init_dir, maxrange, speed, thrower, diagonals_first, force, gentle, callback, target_zone)
+/datum/thrownthing/New(thrownthing, target, init_dir, maxrange, speed, thrower, diagonals_first, force, gentle, callback, target_zone, hit_crawling_targets)
 	. = ..()
 	src.thrownthing = thrownthing
 	RegisterSignal(thrownthing, COMSIG_PARENT_QDELETING, .proc/on_thrownthing_qdel)
@@ -82,6 +84,7 @@ SUBSYSTEM_DEF(throwing)
 	src.gentle = gentle
 	src.callback = callback
 	src.target_zone = target_zone
+	src.hit_crawling_targets = hit_crawling_targets
 
 
 /datum/thrownthing/Destroy()
@@ -102,6 +105,12 @@ SUBSYSTEM_DEF(throwing)
 
 	qdel(src)
 
+#define TURF_THROWNTHING_CHECK(varname) \
+	var/atom/##varname = thrownthing.loc;\
+	SEND_SIGNAL(varname, COMSIG_TURF_THROWNTHING_CHECK, src);\
+	if(!thrownthing.throwing){\
+		return\
+	}
 
 /datum/thrownthing/proc/tick()
 	var/atom/movable/AM = thrownthing
@@ -124,6 +133,7 @@ SUBSYSTEM_DEF(throwing)
 			if (obstacle == actual_target || (obstacle.density && !(obstacle.flags_1 & ON_BORDER_1)))
 				finalize(TRUE, obstacle)
 				return
+		TURF_THROWNTHING_CHECK(old_loc)
 
 	var/atom/step
 
@@ -155,6 +165,8 @@ SUBSYSTEM_DEF(throwing)
 				finalize()
 			return
 
+		TURF_THROWNTHING_CHECK(new_loc)
+
 		dist_travelled++
 
 		if(actual_target && !(actual_target.pass_flags_self & LETPASSTHROW) && actual_target.loc == AM.loc) // we crossed a movable with no density (e.g. a mouse or APC) we intend to hit anyway.
@@ -164,6 +176,8 @@ SUBSYSTEM_DEF(throwing)
 		if (dist_travelled > MAX_THROWING_DIST)
 			finalize()
 			return
+
+#undef TURF_THROWNTHING_CHECK
 
 /datum/thrownthing/proc/finalize(hit = FALSE, target=null)
 	set waitfor = FALSE

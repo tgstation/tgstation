@@ -40,6 +40,10 @@ multiple modular subtrees with behaviors
 	var/datum/ai_movement/ai_movement = /datum/ai_movement/dumb
 	///Cooldown until next movement
 	COOLDOWN_DECLARE(movement_cooldown)
+	///Stores the cooldown of the aforementioned if the movement was successful.
+	COOLDOWN_DECLARE(last_successful_movement_cd)
+	///The connect_loc_behalf component that allows a living pawn to be hit by a thrown thing if crawling.
+	var/datum/component/connect_loc_behalf/thrownthing_catcher
 	///Delay between movements. This is on the controller so we can keep the movement datum singleton
 	var/movement_delay = 0.1 SECONDS
 
@@ -109,6 +113,8 @@ multiple modular subtrees with behaviors
 		set_ai_status(AI_STATUS_ON)
 
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)
+	if(ai_traits & AI_CAN_HIT_DECK && ai_status == AI_STATUS_ON && isliving(pawn))
+		setup_can_hit_deck(pawn)
 
 ///Abstract proc for initializing the pawn to the new controller
 /datum/ai_controller/proc/TryPossessPawn(atom/new_pawn)
@@ -117,11 +123,54 @@ multiple modular subtrees with behaviors
 ///Proc for deinitializing the pawn to the old controller
 /datum/ai_controller/proc/UnpossessPawn(destroy)
 	UnregisterSignal(pawn, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT))
+	if(ai_traits & AI_CAN_HIT_DECK)
+		unset_can_hit_deck(pawn)
+	REMOVE_TRAIT(pawn, TRAIT_CANNOT_EVADE_PROJECTILES, AI_CONTROLLER_TRAIT)
 	pawn.ai_controller = null
 	pawn = null
 	if(destroy)
 		qdel(src)
 	return
+
+/datum/ai_controller/proc/setup_can_hit_deck(mob/living/living_pawn)
+	// Prevents the mob from ALWAYS dodging projectiles because it has no client to check for movement delay.
+	ADD_TRAIT(living_pawn, TRAIT_CANNOT_EVADE_PROJECTILES, AI_CONTROLLER_TRAIT)
+	RegisterSignal(living_pawn, COMSIG_LIVING_ON_LYING_DOWN, .proc/on_lying_down)
+	RegisterSignal(living_pawn, COMSIG_LIVING_ON_STANDING_UP, .proc/on_standing_up)
+	if(living_pawn.body_position == LYING_DOWN)
+		RegisterSignal(living_pawn, COMSIG_ATOM_CAN_BE_HIT_BY_PROJECTILE, .proc/can_be_hit_by_projectile)
+		thrownthing_catcher = AddComponent(/datum/component/connect_loc_behalf, living_pawn, list(COMSIG_TURF_THROWNTHING_CHECK = .proc/on_turf_thrownthing_check))
+
+/datum/ai_controller/proc/unset_can_hit_deck(mob/living/living_pawn)
+	UnregisterSignal(pawn, list(COMSIG_ATOM_CAN_BE_HIT_BY_PROJECTILE, COMSIG_LIVING_ON_LYING_DOWN, COMSIG_LIVING_ON_STANDING_UP))
+	QDEL_NULL(thrownthing_catcher)
+
+/datum/ai_controller/proc/on_lying_down(new_lying_angle)
+	SIGNAL_HANDLER
+	RegisterSignal(pawn, COMSIG_ATOM_CAN_BE_HIT_BY_PROJECTILE, .proc/can_be_hit_by_projectile)
+	thrownthing_catcher = AddComponent(/datum/component/connect_loc_behalf, pawn, list(COMSIG_TURF_THROWNTHING_CHECK = .proc/on_turf_thrownthing_check))
+
+/datum/ai_controller/proc/on_standing_up()
+	SIGNAL_HANDLER
+	UnregisterSignal(pawn, COMSIG_ATOM_CAN_BE_HIT_BY_PROJECTILE)
+	QDEL_NULL(thrownthing_catcher)
+
+/datum/ai_controller/proc/on_turf_thrownthing_check(turf/source, datum/thrownthing/throwdatum)
+	SIGNAL_HANDLER
+	var/mob/living/living_pawn = pawn
+	///Skip if it's either completed its trajectory or isn't hitting crawling mobs or the pawn is incapacitated.
+	if(!throwdatum.thrownthing.throwing || !throwdatum.hit_crawling_targets || PROJECTILES_SHOULD_AVOID(living_pawn))
+		return
+	if(!IS_HITTING_DECK(living_pawn, last_successful_movement_cd, TRUE) || HAS_TRAIT_NOT_FROM(src, TRAIT_CANNOT_EVADE_PROJECTILES, AI_CONTROLLER_TRAIT))
+		throwdatum.finalize(TRUE, living_pawn)
+
+/// AI living mobs can potentially avoid getting shot when not crawling, just like cliented mobs.
+/datum/ai_controller/proc/can_be_hit_by_projectile(mob/living/living_pawn, obj/projectile, direct_target, ignore_loc, cross_failed)
+	SIGNAL_HANDLER
+	if(direct_target || cross_failed)
+		return
+	if(IS_HITTING_DECK(living_pawn, last_successful_movement_cd, TRUE) && !HAS_TRAIT_NOT_FROM(living_pawn, TRAIT_CANNOT_EVADE_PROJECTILES, AI_CONTROLLER_TRAIT))
+		return COMSIG_DODGE_PROJECTILE
 
 ///Returns TRUE if the ai controller can actually run at the moment.
 /datum/ai_controller/proc/able_to_run()
@@ -250,11 +299,15 @@ multiple modular subtrees with behaviors
 	UnregisterSignal(pawn, COMSIG_MOB_LOGIN)
 	if(!continue_processing_when_client)
 		set_ai_status(AI_STATUS_OFF) //Can't do anything while player is connected
+		if(ai_traits & AI_CAN_HIT_DECK)
+			unset_can_hit_deck(pawn)
 	RegisterSignal(pawn, COMSIG_MOB_LOGOUT, .proc/on_sentience_lost)
 
 /datum/ai_controller/proc/on_sentience_lost()
 	SIGNAL_HANDLER
 	UnregisterSignal(pawn, COMSIG_MOB_LOGOUT)
+	if(ai_traits & AI_CAN_HIT_DECK && ai_status == AI_STATUS_OFF && isliving(pawn))
+		setup_can_hit_deck(pawn)
 	set_ai_status(AI_STATUS_ON) //Can't do anything while player is connected
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)
 

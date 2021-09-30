@@ -9,7 +9,8 @@
 	for(var/datum/ai_controller/controller as anything in moving_controllers)
 		if(!COOLDOWN_FINISHED(controller, movement_cooldown))
 			continue
-		COOLDOWN_START(controller, movement_cooldown, controller.movement_delay)
+		var/cached_delay = controller.movement_delay
+		COOLDOWN_START(controller, movement_cooldown, cached_delay)
 
 		var/atom/movable/movable_pawn = controller.pawn
 		if(!isturf(movable_pawn.loc)) //No moving if not on a turf
@@ -33,7 +34,8 @@
 		var/generate_path = FALSE // set to TRUE when we either have no path, or we failed a step
 		if(length(controller.movement_path))
 			var/turf/next_step = controller.movement_path[1]
-			movable_pawn.Move(next_step)
+			if(movable_pawn.Move(next_step))
+				COOLDOWN_START(controller, last_successful_movement_cd, cached_delay)
 
 			// this check if we're on exactly the next tile may be overly brittle for dense pawns who may get bumped slightly
 			// to the side while moving but could maybe still follow their path without needing a whole new path

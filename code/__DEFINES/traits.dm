@@ -327,6 +327,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ALLOWED_HONORBOUND_ATTACK "allowed_honorbound_attack"
 /// The user is sparring
 #define TRAIT_SPARRING "sparring"
+/// The mob can't evade projectiles
+#define TRAIT_CANNOT_EVADE_PROJECTILES "cannot_evade_projectiles"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
@@ -711,6 +713,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 * and readded when a tongue is removed.
 */
 #define NO_TONGUE_TRAIT "no_tongue_trait"
+
+/// Granted by ai controllers.
+#define AI_CONTROLLER_TRAIT "ai_controller"
 
 /// Trait granted by [/mob/living/silicon/robot]
 /// Traits applied to a silicon mob by their model.

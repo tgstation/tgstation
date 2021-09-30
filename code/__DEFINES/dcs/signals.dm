@@ -195,6 +195,10 @@
 #define COMSIG_ATOM_RELAYMOVE "atom_relaymove"
 	///prevents the "you cannot move while buckled! message"
 	#define COMSIG_BLOCK_RELAYMOVE (1<<0)
+///called at the end of /obj/projectile/can_hit_target(): (obj/projectile, direct_target, ignore_loc, cross_failed)
+#define COMSIG_ATOM_CAN_BE_HIT_BY_PROJECTILE "atom_can_be_hit_by_projectile"
+	///prevents the target from being hit by a projectile
+	#define COMSIG_DODGE_PROJECTILE (1<<0)
 
 ///from [/datum/controller/subsystem/explosions/proc/explode]: (/list(/atom, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke, explosion_cause))
 #define COMSIG_ATOM_EXPLODE "atom_explode"
@@ -432,6 +436,8 @@
 #define COMSIG_TURF_ON_SHUTTLE_MOVE "turf_on_shuttle_move"
 ///from /turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature)
 #define COMSIG_TURF_EXPOSE "turf_expose"
+///from /datum/thrownthing/tick(): (datum/thrownthing)
+#define COMSIG_TURF_THROWNTHING_CHECK "turf_thrownthing_check"
 
 ///from /datum/element/decal/Detach(): (description, cleanable, directional, mutable_appearance/pic)
 #define COMSIG_TURF_DECAL_DETACHED "turf_decal_detached"
@@ -664,6 +670,10 @@
 #define COMSIG_LIVING_POST_FULLY_HEAL "living_post_fully_heal"
 /// from start of /mob/living/handle_breathing(): (delta_time, times_fired)
 #define COMSIG_LIVING_HANDLE_BREATHING "living_handle_breathing"
+///from base of /mob/living/on_lying_down(): (new_lying_angle)
+#define COMSIG_LIVING_ON_LYING_DOWN "living_on_lying_down"
+///from base of /mob/living/on_standing_up()
+#define COMSIG_LIVING_ON_STANDING_UP "living_on_standing_up"
 
 ///Called on user, from base of /datum/strippable_item/try_(un)equip() (atom/target, obj/item/equipping?)
 ///also from /mob/living/stripPanel(Un)equip)()

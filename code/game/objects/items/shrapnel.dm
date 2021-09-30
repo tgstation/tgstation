@@ -30,7 +30,7 @@
 	ricochet_chance = 70
 	shrapnel_type = /obj/item/shrapnel
 	ricochet_incidence_leeway = 60
-	hit_prone_targets = TRUE
+	hit_crawling_targets = TRUE
 	sharpness = SHARP_EDGED
 	wound_bonus = 30
 	embedding = list(embed_chance=70, ignore_throwspeed_threshold=TRUE, fall_chance=1)
@@ -60,7 +60,7 @@
 	embedding = list(embed_chance=55, fall_chance=2, jostle_chance=7, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.7, pain_mult=3, jostle_pain_mult=3, rip_time=15)
 
 /obj/projectile/bullet/pellet/stingball/on_ricochet(atom/A)
-	hit_prone_targets = TRUE // ducking will save you from the first wave, but not the rebounds
+	hit_crawling_targets = TRUE // ducking will save you from the first wave, but not the rebounds
 
 /obj/projectile/bullet/pellet/stingball/mega
 	name = "megastingball pellet"

@@ -152,7 +152,7 @@
 	else
 		qdel(GetComponent(/datum/component/slippery))
 
-/obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
+/obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE, hit_crawling_targets = FALSE)
 	if(enabled)
 		if(iscarbon(thrower))
 			var/mob/living/carbon/C = thrower

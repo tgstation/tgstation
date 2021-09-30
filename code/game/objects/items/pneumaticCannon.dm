@@ -199,7 +199,7 @@
 			if(!throw_item(target, I, user))
 				break
 
-/obj/item/pneumatic_cannon/proc/throw_item(turf/target, atom/movable/AM, mob/user)
+/obj/item/pneumatic_cannon/proc/throw_item(turf/target, atom/movable/AM, mob/living/user)
 	if(!istype(AM))
 		return FALSE
 	loadedItems -= AM
@@ -209,7 +209,7 @@
 	else
 		loadedWeightClass--
 	AM.forceMove(get_turf(src))
-	AM.throw_at(target, pressureSetting * 10 * range_multiplier, pressureSetting * 2, user, spin_item)
+	AM.throw_at(target, pressureSetting * 10 * range_multiplier, pressureSetting * 2, user, spin_item, hit_crawling_targets = user?.combat_mode)
 	return TRUE
 
 /obj/item/pneumatic_cannon/proc/get_target(turf/target, turf/starting)

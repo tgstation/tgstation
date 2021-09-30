@@ -43,6 +43,8 @@
 	var/last_turn = 0
 	///Move delay of controlled mob, related to input handling
 	var/move_delay = 0
+	/// Stores the value of the move_delay of the last successful movement.
+	var/successful_move_delay = 0
 	///Current area of the controlled mob
 	var/area = null
 
