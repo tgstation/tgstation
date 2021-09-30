@@ -573,3 +573,26 @@
 	desc = "Lookin' cool."
 	icon_state = "phantom_glasses"
 	inhand_icon_state = "phantom_glasses"
+
+/obj/item/clothing/glasses/dealmaker
+	name = "dealmaker glasses"
+	desc = "Why be the little sponge who hates its $4.99 life when you can be a BIG SHOT?"
+	icon_state = "dealmaker"
+	inhand_icon_state = "dealmaker"
+
+/obj/item/clothing/glasses/dealmaker/handle_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		message = " [message]"
+		var/list/salesman_words = strings("salesman_replacement.json", "salesman")
+
+		for(var/key in salesman_words)
+			var/value = salesman_words[key]
+			if(islist(value))
+				value = pick(value)
+
+			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+			message = replacetextEx(message, " [key]", " [value]")
+
+	speech_args[SPEECH_MESSAGE] = trim(message)
