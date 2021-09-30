@@ -148,16 +148,7 @@
 /obj/item/radio/proc/get_listening()
 	return listening
 
-//now for setters for the above protected vars
-
-///setter for frequency that automatically updates our place in the global radio list
-/obj/item/radio/proc/set_frequency(new_frequency)
-
-	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)
-	remove_radio(src, frequency)
-	frequency = new_frequency
-	if(on && listening)
-		add_radio(src, new_frequency)
+//now for setters for the above protected var
 
 ///setter for the listener var, adds or removes this radio from the global radio list if we are also on
 /obj/item/radio/proc/set_listening(new_listening)
@@ -195,35 +186,6 @@
 		recalculateChannels()
 	else
 		remove_radio_all(src)
-
-/obj/item/radio/proc/recalculateChannels()
-	resetChannels()
-
-	if(keyslot && keyslot.channels)
-		for(var/ch_name in keyslot.channels)
-			LAZYSET(channels, ch_name, keyslot.channels[ch_name])
-
-		if(keyslot.translate_binary)
-			translate_binary = TRUE
-		if(keyslot.syndie)
-			syndie = TRUE
-		if(keyslot.independent)
-			independent = TRUE
-
-	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = GLOB.radiochannels[ch_name]
-		if(on && listening)
-			add_radio(src, GLOB.radiochannels[ch_name])
-
-// Used for cyborg override
-/obj/item/radio/proc/resetChannels()
-	LAZYNULL(channels)
-	remove_radio_all(src)
-	if(on && listening)
-		add_radio(src, frequency)
-	translate_binary = FALSE
-	syndie = FALSE
-	independent = FALSE
 
 /obj/item/radio/talk_into(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(HAS_TRAIT(talking_movable, TRAIT_SIGN_LANG)) //Forces Sign Language users to wear the translation gloves to speak over radios
@@ -476,12 +438,6 @@
 /obj/item/radio/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
-
-/obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
-	qdel(keyslot)
-	keyslot = new /obj/item/encryptionkey/syndicate
-	syndie = 1
-	recalculateChannels()
 
 /obj/item/radio/Destroy()
 	remove_radio_all(src) //Just to be sure
