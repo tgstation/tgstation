@@ -65,8 +65,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/iron/base, 1, 4, 20), \
 	new/datum/stack_recipe("iron rod", /obj/item/stack/rods, 1, 2, 60), \
 	null, \
-	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 40, one_per_turf = TRUE, on_floor = TRUE, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75), \
-	null, \
 	new/datum/stack_recipe("computer frame", /obj/structure/frame/computer, 5, time = 25, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("modular console", /obj/machinery/modular_computer/console/buildable/, 10, time = 25, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("machine frame", /obj/structure/frame/machine, 5, time = 25, one_per_turf = TRUE, on_floor = TRUE), \
@@ -133,6 +131,10 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	matter_amount = 4
 	cost = 500
 	source = /datum/robot_energy_storage/iron
+
+/obj/item/stack/sheet/iron/examine(mob/user)
+	. = ..()
+	. += span_notice("You can make a wall girder by r-click on an empty turf with [src] in hand.")
 
 /obj/item/stack/sheet/iron/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)

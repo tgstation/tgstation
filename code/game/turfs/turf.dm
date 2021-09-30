@@ -321,11 +321,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/stack/sheet/iron))
 		var/obj/item/stack/sheet/iron/using_sheet = weapon
-		if(using_sheet.get_amount() < 2)
-			user.balloon_alert(user, "not enough material for that!")
+		if(!isopenturf(src) || isgroundlessturf(src))
+			user.balloon_alert(user, "can't place it here.")
 			return SECONDARY_ATTACK_CONTINUE_CHAIN
 		if(is_blocked_turf())
 			user.balloon_alert(user, "something is blocking the tile.")
+			return SECONDARY_ATTACK_CONTINUE_CHAIN
+		if(using_sheet.get_amount() < 2)
+			user.balloon_alert(user, "not enough material for that!")
 			return SECONDARY_ATTACK_CONTINUE_CHAIN
 		if(!do_after(user, 4 SECONDS, src))
 			return SECONDARY_ATTACK_CONTINUE_CHAIN
