@@ -560,12 +560,12 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 /obj/effect/landmark/tram/left_part
 	name = "West Wing"
 	destination_id = "left_part"
-	tgui_icons = list("Arrivals" = "plane-arrival", "Service" = "cocktail")
+	tgui_icons = list("Arrivals" = "plane-arrival", "Command" = "bullhorn", "Security" = "gavel")
 
 /obj/effect/landmark/tram/middle_part
 	name = "Central Wing"
 	destination_id = "middle_part"
-	tgui_icons = list("Command" = "bullhorn", "Security" = "gavel", "Medical" = "plus", "Engineering" = "wrench")
+	tgui_icons = list("Service" = "cocktail", "Medical" = "plus", "Engineering" = "wrench")
 
 /obj/effect/landmark/tram/right_part
 	name = "East Wing"
