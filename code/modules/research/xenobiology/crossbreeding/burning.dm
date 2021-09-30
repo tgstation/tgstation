@@ -9,7 +9,7 @@ Burning extracts:
 	effect = "burning"
 	icon_state = "burning"
 
-/obj/item/slimecross/burning/Initialize()
+/obj/item/slimecross/burning/Initialize(mapload)
 	. = ..()
 	create_reagents(10, INJECTABLE | DRAWABLE)
 

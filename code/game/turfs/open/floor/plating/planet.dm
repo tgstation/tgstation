@@ -45,7 +45,7 @@
 /turf/open/floor/plating/dirt/jungle/wasteland/setup_broken_states()
 	return list("[initial(icon_state)]0")
 
-/turf/open/floor/plating/dirt/jungle/wasteland/Initialize()
+/turf/open/floor/plating/dirt/jungle/wasteland/Initialize(mapload)
 	.=..()
 	if(prob(floor_variance))
 		icon_state = "[initial(icon_state)][rand(0,12)]"

@@ -201,7 +201,7 @@
 	add_scanmod()
 	add_capacitor()
 	START_PROCESSING(SSobj, src)
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 	log_message("[src.name] created.", LOG_MECHA)
 	GLOB.mechas_list += src //global mech list
 	prepare_huds()
@@ -274,8 +274,9 @@
 		return ..()
 	if(phase_state)
 		flick(phase_state, src)
-	var/area/destination_area = get_step(loc, movement_dir).loc
-	if(destination_area.area_flags & NOTELEPORT)
+	var/turf/destination_turf = get_step(loc, movement_dir)
+	var/area/destination_area = destination_turf.loc
+	if(destination_area.area_flags & NOTELEPORT || SSmapping.level_trait(destination_turf.z, ZTRAIT_NOPHASE))
 		return FALSE
 	return TRUE
 

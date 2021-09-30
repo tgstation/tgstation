@@ -156,7 +156,6 @@
 /obj/item/clothing/suit/wizrobe/paper/verb/stickmen()
 	set category = "Object"
 	set name = "Summon Stick Minions"
-	set src in usr
 	if(!isliving(usr))
 		return
 	if(!robe_charge)
@@ -164,13 +163,12 @@
 		return
 
 	usr.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
-	playsound(src.loc, 'sound/magic/summon_magic.ogg', 50, TRUE, TRUE)
-	var/mob/living/M = new /mob/living/simple_animal/hostile/stickman(get_turf(usr))
-	var/list/factions = usr.faction
-	M.faction = factions
-	src.robe_charge = FALSE
+	playsound(loc, 'sound/magic/summon_magic.ogg', 50, TRUE, TRUE)
+	var/mob/living/M = new /mob/living/basic/stickman(get_turf(usr))
+	M.faction += list("[REF(usr)]")
+	robe_charge = FALSE
 	sleep(30)
-	src.robe_charge = TRUE
+	robe_charge = TRUE
 	to_chat(usr, span_notice("The robe hums, its internal magic supply restored."))
 
 
@@ -181,15 +179,15 @@
 	desc = "Not all wizards are afraid of getting up close and personal."
 	icon_state = "battlemage"
 	inhand_icon_state = "battlemage"
-	recharge_delay = 0 // no auto-recharge
-	max_charges = 15
-	shield_icon = "shield-red"
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	armor = list(MELEE = 30, BULLET = 20, LASER = 20, ENERGY = 30, BOMB = 20, BIO = 20, RAD = 20, FIRE = 100, ACID = 100)
 	slowdown = 0
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/suit/space/hardsuit/shielded/wizard/setup_shielding()
+	AddComponent(/datum/component/shielded, max_charges = 15, recharge_start_delay = 0 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, shield_icon = "shield-red")
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	name = "battlemage helmet"

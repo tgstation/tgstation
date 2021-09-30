@@ -73,7 +73,7 @@
 	toolspeed = 0.7
 	force_opens = TRUE
 
-/obj/item/crowbar/power/Initialize()
+/obj/item/crowbar/power/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/transforming, \
 		force_on = force, \

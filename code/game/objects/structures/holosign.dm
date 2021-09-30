@@ -10,7 +10,7 @@
 	var/obj/item/holosign_creator/projector
 	var/use_vis_overlay = TRUE
 
-/obj/structure/holosign/Initialize(loc, source_projector)
+/obj/structure/holosign/Initialize(mapload, source_projector)
 	. = ..()
 	if(use_vis_overlay)
 		alpha = 0
@@ -104,7 +104,7 @@
 	name = "sturdy holofirelock"
 	max_integrity = 150
 
-/obj/structure/holosign/barrier/atmos/Initialize()
+/obj/structure/holosign/barrier/atmos/Initialize(mapload)
 	. = ..()
 	var/turf/local = get_turf(loc)
 	ADD_TRAIT(local, TRAIT_FIREDOOR_STOP, TRAIT_GENERIC)

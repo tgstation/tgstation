@@ -549,3 +549,9 @@
 /// Can this mob move between z levels
 /mob/proc/canZMove(direction, turf/target)
 	return FALSE
+
+/mob/abstract_move(atom/destination)
+	var/turf/new_turf = get_turf(destination)
+	if(SSmapping.level_trait(new_turf.z, ZTRAIT_SECRET) && !client?.holder)
+		return
+	return ..()

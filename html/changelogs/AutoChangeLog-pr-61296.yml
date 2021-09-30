@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "The HFR interface now lets you toggle waste removal at power level 6, rather than merely having it permitted in the backend."

@@ -237,7 +237,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	/// Bitflags for upgrades
 	var/upgrade_flags
 
-/obj/item/pipe_dispenser/Initialize()
+/obj/item/pipe_dispenser/Initialize(mapload)
 	. = ..()
 	spark_system = new
 	spark_system.set_up(5, 0, src)
@@ -417,6 +417,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			// Refuse to create a smart pipe that can only connect in one direction (it would act weirdly and lack an icon)
 			if (ISNOTSTUB(target_dir))
 				p_init_dir = target_dir
+			else
+				to_chat(usr, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
+				playeffect = FALSE
 		if("init_reset")
 			p_init_dir = ALL_CARDINALS
 	if(playeffect)

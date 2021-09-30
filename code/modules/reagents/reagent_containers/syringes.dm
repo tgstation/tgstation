@@ -17,7 +17,7 @@
 	/// Flags used by the injection
 	var/inject_flags = null
 
-/obj/item/reagent_containers/syringe/Initialize()
+/obj/item/reagent_containers/syringe/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 

@@ -93,19 +93,21 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	return new_msg
 
 /mob/living/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	var/ic_blocked = FALSE
-	if(client && !forced && CHAT_FILTER_CHECK(message))
+	var/list/filter_result
+	if(client && !forced)
 		//The filter doesn't act on the sanitized message, but the raw message.
-		ic_blocked = TRUE
+		filter_result = is_ic_filtered(message)
 
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
 		return
 
-	if(ic_blocked)
+	if(filter_result)
 		//The filter warning message shows the sanitized message though.
-		to_chat(src, span_warning("That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[message]\"</span>"))
+		to_chat(src, span_warning("That message contained a word prohibited in IC chat! Consider reviewing the server rules."))
+		to_chat(src, span_warning("\"[message]\""))
+		REPORT_CHAT_FILTER_TO_USER(src, filter_result)
 		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
 		return
 	var/list/message_mods = list()
@@ -180,7 +182,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	if(message_mods[WHISPER_MODE] == MODE_WHISPER)
 		message_range = 1
-		log_talk(message, LOG_WHISPER)
+		log_talk(message, LOG_WHISPER, forced_by=forced)
 		if(stat == HARD_CRIT)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
@@ -270,7 +272,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			deaf_type = 2
 
 		// Create map text prior to modifying message for goonchat, sign lang edition
-		if (client?.prefs.chat_on_map && !(stat == UNCONSCIOUS || stat == HARD_CRIT || is_blind(src)) && (client.prefs.see_chat_non_mob || ismob(speaker)))
+		if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && !(stat == UNCONSCIOUS || stat == HARD_CRIT || is_blind(src)) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
 			create_chat_message(speaker, message_language, raw_message, spans)
 
 		if(is_blind(src))
@@ -291,7 +293,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		deaf_type = 2 // Since you should be able to hear yourself without looking
 
 	// Create map text prior to modifying message for goonchat
-	if (client?.prefs.chat_on_map && !(stat == UNCONSCIOUS || stat == HARD_CRIT) && (client.prefs.see_chat_non_mob || ismob(speaker)) && can_hear())
+	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && !(stat == UNCONSCIOUS || stat == HARD_CRIT) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)) && can_hear())
 		create_chat_message(speaker, message_language, raw_message, spans)
 
 	// Recompose message for AI hrefs, language incomprehension.
@@ -356,7 +358,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)
-		if(M.client && (!M.client.prefs.chat_on_map || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
+		if(M.client && (!M.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(M.client)
 	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA

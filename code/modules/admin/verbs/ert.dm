@@ -119,7 +119,7 @@
 		if(ertemplate.spawn_admin)
 			if(isobserver(usr))
 				var/mob/living/carbon/human/admin_officer = new (spawnpoints[1])
-				var/chosen_outfit = usr.client?.prefs?.brief_outfit
+				var/chosen_outfit = usr.client?.prefs?.read_preference(/datum/preference/choiced/brief_outfit)
 				usr.client.prefs.safe_transfer_prefs_to(admin_officer, is_antag = TRUE)
 				admin_officer.equipOutfit(chosen_outfit)
 				admin_officer.key = usr.key

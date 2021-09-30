@@ -159,14 +159,14 @@
 /area/ruin/unpowered/elephant_graveyard)
 "aG" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/glowstick,
+/obj/effect/spawner/random/decoration/glowstick,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "aH" = (
 /turf/closed/wall/mineral/titanium,
 /area/ruin/powered/graveyard_shuttle)
 "aI" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/graveyard_shuttle)
 "aJ" = (

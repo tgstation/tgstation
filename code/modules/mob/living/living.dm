@@ -9,6 +9,7 @@
 		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
+	SSpoints_of_interest.make_point_of_interest(src)
 
 /mob/living/ComponentInitialize()
 	. = ..()
@@ -218,6 +219,7 @@
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
 	now_pushing = TRUE
+	SEND_SIGNAL(src, COMSIG_LIVING_PUSHING_MOVABLE, AM)
 	var/dir_to_target = get_dir(src, AM)
 
 	// If there's no dir_to_target then the player is on the same turf as the atom they're trying to push.
@@ -259,6 +261,7 @@
 	if(isliving(AM))
 		current_dir = AM.dir
 	if(AM.Move(get_step(AM.loc, dir_to_target), dir_to_target, glide_size))
+		AM.add_fingerprint(src)
 		Move(get_step(loc, dir_to_target), dir_to_target)
 	if(current_dir)
 		AM.setDir(current_dir)
@@ -1272,8 +1275,8 @@
 				/mob/living/simple_animal/hostile/asteroid/goliath/beast,
 				/mob/living/simple_animal/hostile/headcrab,
 				/mob/living/simple_animal/hostile/morph,
-				/mob/living/simple_animal/hostile/stickman,
-				/mob/living/simple_animal/hostile/stickman/dog,
+				/mob/living/basic/stickman,
+				/mob/living/basic/stickman/dog,
 				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
 				/mob/living/simple_animal/hostile/gorilla,
 				/mob/living/simple_animal/parrot,
@@ -1283,7 +1286,7 @@
 				/mob/living/simple_animal/pet/cat,
 				/mob/living/simple_animal/mouse,
 				/mob/living/simple_animal/chicken,
-				/mob/living/simple_animal/cow,
+				/mob/living/basic/cow,
 				/mob/living/simple_animal/hostile/lizard,
 				/mob/living/simple_animal/pet/fox,
 				/mob/living/simple_animal/butterfly,
@@ -1545,9 +1548,9 @@
 		else
 			registered_z = null
 
-/mob/living/onTransitZ(old_z,new_z)
+/mob/living/on_changed_z_level(turf/old_turf, turf/new_turf)
 	..()
-	update_z(new_z)
+	update_z(new_turf?.z)
 
 /mob/living/MouseDrop_T(atom/dropping, atom/user)
 	var/mob/living/U = user

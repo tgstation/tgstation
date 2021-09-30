@@ -75,7 +75,7 @@
 	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_DEATH, /datum/alarm_listener/proc/prevent_alarm_changes)
 	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, /datum/alarm_listener/proc/allow_alarm_changes)
 
-/mob/living/silicon/robot/model/syndicate/Initialize()
+/mob/living/silicon/robot/model/syndicate/Initialize(mapload)
 	. = ..()
 	laws = new /datum/ai_laws/syndicate_override()
 	addtimer(CALLBACK(src, .proc/show_playstyle), 5)
@@ -193,8 +193,8 @@
 		changed_name = GLOB.current_anonymous_theme.anonymous_ai_name(FALSE)
 	else if(custom_name)
 		changed_name = custom_name
-	else if(pref_source && pref_source.prefs.custom_names["cyborg"] != DEFAULT_CYBORG_NAME)
-		apply_pref_name("cyborg", pref_source)
+	else if(pref_source && pref_source.prefs.read_preference(/datum/preference/name/cyborg) != DEFAULT_CYBORG_NAME)
+		apply_pref_name(/datum/preference/name/cyborg, pref_source)
 		return //built in camera handled in proc
 	else
 		changed_name = get_standard_name()
@@ -547,7 +547,10 @@
 	if(!client)
 		return
 	if(stat == DEAD)
-		sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		if(!SSmapping.level_trait(z, ZTRAIT_SECRET))
+			sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		else
+			sight = initial(sight)
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_OBSERVER
 		return

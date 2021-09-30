@@ -20,7 +20,7 @@
 	var/drill_level = DRILL_BASIC
 	mech_flags = EXOSUIT_MODULE_WORKING | EXOSUIT_MODULE_COMBAT
 
-/obj/item/mecha_parts/mecha_equipment/drill/Initialize()
+/obj/item/mecha_parts/mecha_equipment/drill/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 50, 100, null, null, TRUE)
 
@@ -169,7 +169,7 @@
 	var/scanning_time = 0
 	mech_flags = EXOSUIT_MODULE_WORKING
 
-/obj/item/mecha_parts/mecha_equipment/mining_scanner/Initialize()
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
