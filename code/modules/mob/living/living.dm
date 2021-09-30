@@ -2171,10 +2171,8 @@
 		apply_damage(rand(5,20), BRUTE, BODY_ZONE_CHEST)
 		smashed_plating.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
 
-	for(var/atom/iter_atom as anything in loc)
-		if(istype(iter_atom, /obj/structure/lattice))
-			visible_message(span_danger("[src] is thrown violently into [iter_atom], smashing through it and punching straight through!"),
-				span_userdanger("You're thrown violently into [iter_atom], smashing through it and punching straight through!"))
-			apply_damage(rand(5,10), BRUTE, BODY_ZONE_CHEST)
-			var/obj/structure/bye_bye = iter_atom
-			bye_bye.deconstruct(FALSE)
+	for(var/obj/structure/lattice/lattice in loc)
+		visible_message(span_danger("[src] is thrown violently into [lattice], smashing through it and punching straight through!"),
+			span_userdanger("You're thrown violently into [lattice], smashing through it and punching straight through!"))
+		apply_damage(rand(5,10), BRUTE, BODY_ZONE_CHEST)
+		lattice.deconstruct(FALSE)
