@@ -1,4 +1,0 @@
-author: "Mooshimi"
-delete-after: True
-changes: 
-  - code_imp: "AIs will no longer get the asimov lawset on unique-lawset station trait rounds"
