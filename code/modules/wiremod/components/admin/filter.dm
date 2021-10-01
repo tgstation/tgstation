@@ -158,7 +158,7 @@ GLOBAL_LIST_INIT(wiremod_flag_info, list(
 	var/datum/port/output/output_params
 
 /obj/item/circuit_component/filter_helper/populate_options()
-	filter_type_port = add_option_port("Filter Type", GLOB.wiremod_filter_info)
+	filter_type_port = add_option_port("Filter Type", assoc_to_keys(GLOB.wiremod_filter_info))
 
 /obj/item/circuit_component/filter_helper/populate_ports()
 	current_filter_type = filter_type_port.value
