@@ -542,13 +542,14 @@
 	desc = "Time to save the day by using science and chemistry!"
 	icon_state = "beaker"
 	inhand_icon_state = "armor"
-	body_parts_covered = CHEST|GROIN|LEGS
+	flags_inv = HIDEEARS|HIDEHAIR
 
 /obj/item/clothing/suit/facebook
 	name = "facebook costume"
 	desc = "Time to save the day by using facts and invading your privacy!"
 	icon_state = "facebook"
 	inhand_icon_state = "armor"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/suit/jestercoat
 	name = "purple leather coat"
