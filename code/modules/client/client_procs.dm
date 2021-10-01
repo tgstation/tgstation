@@ -571,7 +571,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 
 	var/client_is_in_db = query_client_in_db.NextRow()
-	// If we aren't an admin, and the flag is set / the panic bunker is enabled.
+	// If we aren't an admin, and the flag is set (the panic bunker is enabled).
 	if(CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey])
 		// The amount of hours needed to bypass the panic bunker.
 		var/living_recs = CONFIG_GET(number/panic_bunker_living)
@@ -581,7 +581,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		// Check to see if our client should be rejected.
 		// If interviews are on, we should let anyone through, ideally.
 		if(!CONFIG_GET(flag/panic_bunker_interview))
-			// This client was rejected and is not allowed to join.
+			// If we don't have panic_bunker_living set and the client is not in the DB, reject them.
+			// Otherwise, if we do have a panic_bunker_living set, check if they have enough minutes played.
 			if((!living_recs && !client_is_in_db) || living_recs >= minutes)
 				var/reject_message = "Failed Login: [key] - [client_is_in_db ? "":"New "]Account attempting to connect during panic bunker, but\
 					[living_recs == -1 ? " was rejected due to no prior connections to game servers (no database entry)":" they do not have the required living time [minutes]/[living_recs]"]."
