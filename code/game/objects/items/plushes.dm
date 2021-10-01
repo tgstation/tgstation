@@ -614,7 +614,7 @@
 	to_chat(user, span_notice("You put [fat_dart] into [src]'s mouth."))
 	qdel(fat_dart)
 	going_hard = TRUE
-	update_overlays()
+	update_icon(UPDATE_OVERLAYS)
 
 
 /obj/item/toy/plush/goatplushie/examine()
