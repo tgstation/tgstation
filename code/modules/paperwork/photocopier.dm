@@ -65,11 +65,11 @@
 	var/list/blanks = list()
 	for(var/obj/item/paper/blank/paper_type as anything in subtypesof(/obj/item/paper/blank))
 		var/blank[0]
-		blank["path"] = B
-		blank["code"] = initial(bb.code)
-		blank["category"] = initial(bb.category)
-		blank["name"] = initial(bb.name)
-		blank["info"] = initial(bb.info)
+		blank["path"] = paper_type
+		blank["code"] = initial(paper_type.code)
+		blank["category"] = initial(paper_type.category)
+		blank["name"] = initial(paper_type.name)
+		blank["info"] = initial(paper_type.info)
 		blanks[++blanks.len] = blank
 	data["blanks"] = blanks
 	data["category"] = category
