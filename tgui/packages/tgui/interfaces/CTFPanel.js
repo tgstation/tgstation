@@ -16,7 +16,8 @@ export const CTFPanel = (props, context) => {
           {teams.map(team => (
             <Section
               key={team.name}
-              title={team.color + ' Team' + ' (Score:' + team.score + ') (Members:' + team.team_size + ')'}>
+              title={`${team.color} Team (${team.score} points) 
+              (${team.team_size} members)`}>
               <Stack>
                 <Stack.Item grow>
                   <Button
