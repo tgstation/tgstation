@@ -240,7 +240,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 			continue
 		. += peanut_type
 
-/obj/item/food/peanuts/random/Initialize()
+/obj/item/food/peanuts/random/Initialize(mapload)
 	// Generate a sample p
 	var/peanut_type = pick(GLOB.safe_peanut_types)
 	var/obj/item/food/sample = new peanut_type(loc)
@@ -299,7 +299,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	name = "mystery filled C&Ds"
 	desc = "Filled with one of four delicious flavours!"
 
-/obj/item/food/cnds/random/Initialize()
+/obj/item/food/cnds/random/Initialize(mapload)
 	var/random_flavour = pick(subtypesof(/obj/item/food/cnds) - /obj/item/food/cnds/random)
 
 	var/obj/item/food/sample = new random_flavour(loc)

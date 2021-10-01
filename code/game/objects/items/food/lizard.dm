@@ -12,7 +12,7 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/raw_tiziran_sausage/Initialize()
+/obj/item/food/raw_tiziran_sausage/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dryable,  /obj/item/food/tiziran_sausage)
 
@@ -36,7 +36,7 @@
 	foodtypes = MEAT | GROSS
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/raw_headcheese/Initialize()
+/obj/item/food/raw_headcheese/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dryable,  /obj/item/food/headcheese)
 
@@ -357,7 +357,7 @@
 	venue_value = FOOD_PRICE_CHEAP
 	burns_in_oven = TRUE
 
-/obj/item/food/bread/root/Initialize()
+/obj/item/food/bread/root/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
@@ -374,7 +374,7 @@
 	foodtypes = VEGETABLES | NUTS
 	venue_value = FOOD_PRICE_TRASH
 
-/obj/item/food/breadslice/root/Initialize()
+/obj/item/food/breadslice/root/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
@@ -577,7 +577,7 @@
 /obj/item/food/canned_jellyfish
 	name = "canned gunner jellyfish"
 	desc = "A can of gunner jellyfish packed in brine. Contains a mild hallucinogen which is destroyed by cooking."
-	icon = 'icons/obj/food/lizard.dmi'
+	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "canned_jellyfish"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin/mindbreaker = 2, /datum/reagent/consumable/salt = 1)
 	tastes = list("slime" = 1, "burning" = 1, "salt" = 1)
@@ -587,7 +587,7 @@
 /obj/item/food/desert_snails
 	name = "canned desert snails"
 	desc = "Giant snails from the Tiziran desert, packaged in brine. Shells included. Probably best not eaten raw, unless you're a lizard."
-	icon = 'icons/obj/food/lizard.dmi'
+	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "canned_snails"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/salt = 2)
 	tastes = list("snails" = 1)
@@ -597,7 +597,7 @@
 /obj/item/food/larvae
 	name = "canned bee larva"
 	desc = "A can of bee larva packaged in honey. Probably appetizing to someone."
-	icon = 'icons/obj/food/lizard.dmi'
+	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "canned_larvae"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/honey = 2)
 	tastes = list("sweet bugs" = 1)

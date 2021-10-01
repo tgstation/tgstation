@@ -17,7 +17,7 @@
 
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_REQUIRES_ANCHORED
 
-/obj/machinery/power/port_gen/Initialize()
+/obj/machinery/power/port_gen/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, active)
 
@@ -89,12 +89,12 @@
 	var/time_per_sheet = 260
 	var/current_heat = 0
 
-/obj/machinery/power/port_gen/pacman/Initialize()
+/obj/machinery/power/port_gen/pacman/Initialize(mapload)
 	. = ..()
 	if(anchored)
 		connect_to_network()
 
-/obj/machinery/power/port_gen/pacman/Initialize()
+/obj/machinery/power/port_gen/pacman/Initialize(mapload)
 	. = ..()
 
 	var/obj/S = sheet_path

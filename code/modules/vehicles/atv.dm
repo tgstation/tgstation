@@ -9,7 +9,7 @@
 	integrity_failure = 0.5
 	var/static/mutable_appearance/atvcover
 
-/obj/vehicle/ridden/atv/Initialize()
+/obj/vehicle/ridden/atv/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/atv)
 	if(!atvcover)
@@ -33,7 +33,7 @@
 	scan_range = 7
 	density = FALSE
 
-/obj/vehicle/ridden/atv/turret/Initialize()
+/obj/vehicle/ridden/atv/turret/Initialize(mapload)
 	. = ..()
 	turret = new(loc)
 	turret.base = src

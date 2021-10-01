@@ -29,13 +29,13 @@
 /obj/item/laser_pointer/purple
 	pointer_icon_state = "purple_laser"
 
-/obj/item/laser_pointer/Initialize()
+/obj/item/laser_pointer/Initialize(mapload)
 	. = ..()
 	diode = new(src)
 	if(!pointer_icon_state)
 		pointer_icon_state = pick("red_laser","green_laser","blue_laser","purple_laser")
 
-/obj/item/laser_pointer/upgraded/Initialize()
+/obj/item/laser_pointer/upgraded/Initialize(mapload)
 	. = ..()
 	diode = new /obj/item/stock_parts/micro_laser/ultra
 

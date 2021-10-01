@@ -5,8 +5,10 @@
 	///hud that owns this controller
 	var/datum/hud/owner_hud
 
+INITIALIZE_IMMEDIATE(/atom/movable/plane_master_controller)
+
 ///Ensures that all the planes are correctly in the controlled_planes list.
-/atom/movable/plane_master_controller/New(datum/hud/hud)
+/atom/movable/plane_master_controller/Initialize(mapload, datum/hud/hud)
 	. = ..()
 	if(!istype(hud))
 		return
@@ -82,12 +84,7 @@
 	name = PLANE_MASTERS_GAME
 	controlled_planes = list(
 		FLOOR_PLANE,
-		OVER_TILE_PLANE,
-		WALL_PLANE,
 		GAME_PLANE,
-		UNDER_FRILL_PLANE,
-		FRILL_PLANE,
-		AREA_PLANE,
 		MASSIVE_OBJ_PLANE,
 		GHOST_PLANE,
 		POINT_PLANE,

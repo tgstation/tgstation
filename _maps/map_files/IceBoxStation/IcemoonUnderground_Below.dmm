@@ -816,9 +816,6 @@
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
-"DQ" = (
-/turf/open/genturf,
-/area/icemoon/underground/explored)
 "En" = (
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
@@ -23442,7 +23439,7 @@ qI
 qI
 qI
 qI
-DQ
+qI
 hh
 fQ
 AE

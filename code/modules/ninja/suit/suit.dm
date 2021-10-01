@@ -67,7 +67,7 @@
 	"The CLOAK-tech device is <B>[stealth?"active":"inactive"]</B>.\n"+\
 	"[a_boost?"An adrenaline boost is available to use.":"There is no adrenaline boost available.  Try refilling the suit with 20 units of radium."]"
 
-/obj/item/clothing/suit/space/space_ninja/Initialize()
+/obj/item/clothing/suit/space/space_ninja/Initialize(mapload)
 	. = ..()
 
 	//Spark Init

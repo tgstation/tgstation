@@ -602,6 +602,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(I.flags_inv & HIDEHAIR)
 			hair_hidden = TRUE
 
+	if(H.w_uniform)
+		var/obj/item/item_uniform = H.w_uniform
+		if(isclothing(item_uniform))
+			var/obj/item/clothing/clothing_object = item_uniform
+			dynamic_hair_suffix = clothing_object.dynamic_hair_suffix
+		if(item_uniform.flags_inv & HIDEHAIR)
+			hair_hidden = TRUE
+
 	if(H.wear_mask)
 		var/obj/item/I = H.wear_mask
 		if(!dynamic_hair_suffix && isclothing(I)) //head > mask in terms of head hair

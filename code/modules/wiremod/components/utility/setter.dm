@@ -19,6 +19,8 @@
 
 	var/current_type
 
+	circuit_size = 0
+
 /obj/item/circuit_component/setter/populate_options()
 	variable_name = add_option_port("Variable", null)
 

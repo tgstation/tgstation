@@ -82,6 +82,10 @@
 /code/modules/tgui_panel @stylemistake
 /tgui @stylemistake
 
+# tralezab
+
+/code/datums/ai/ @tralezab
+
 # Watermelon914
 
 /code/modules/wiremod/ @Watermelon914

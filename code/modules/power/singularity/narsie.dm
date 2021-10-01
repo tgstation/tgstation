@@ -36,7 +36,7 @@
 	var/souls = 0
 	var/resolved = FALSE
 
-/obj/narsie/Initialize()
+/obj/narsie/Initialize(mapload)
 	. = ..()
 
 	SSpoints_of_interest.make_point_of_interest(src)

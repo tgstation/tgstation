@@ -110,7 +110,7 @@
 	var/list/spawned_table //list of all items "spawned" and how many
 	var/list/stat_table //list of all items "spawned" and their occurrance probability
 
-/obj/item/loot_table_maker/Initialize()
+/obj/item/loot_table_maker/Initialize(mapload)
 	. = ..()
 	make_table()
 

@@ -32,7 +32,7 @@
 	/// Cytology category you can swab the meat for.
 	var/cell_line = CELL_LINE_TABLE_CARP
 
-/obj/item/food/fishmeat/carp/Initialize()
+/obj/item/food/fishmeat/carp/Initialize(mapload)
 	. = ..()
 	if(cell_line)
 		AddElement(/datum/element/swabable, cell_line, CELL_VIRUS_TABLE_GENERIC_MOB)
@@ -482,7 +482,7 @@
 	//total price of this dish is 20 and a small amount more for soy sauce, all of which are available at the orders console
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/sashimi/Initialize()
+/obj/item/food/sashimi/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB)
 
@@ -495,7 +495,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/nugget/Initialize()
+/obj/item/food/nugget/Initialize(mapload)
 	. = ..()
 	var/shape = pick("lump", "star", "lizard", "corgi")
 	desc = "A 'chicken' nugget vaguely shaped like a [shape]."
@@ -621,7 +621,7 @@
 	///Legacy code, handles the coloring of the overlay of the cutlets made from this.
 	var/slab_color = "#FF0000"
 
-/obj/item/food/meat/slab/Initialize()
+/obj/item/food/meat/slab/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dryable,  /obj/item/food/sosjerky/healthy)
 
@@ -751,7 +751,7 @@
 	desc = "A slab of mouse meat. Best not eat it raw."
 	foodtypes = RAW | MEAT | GROSS
 
-/obj/item/food/meat/slab/mouse/Initialize()
+/obj/item/food/meat/slab/mouse/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB)
 
@@ -761,7 +761,7 @@
 	tastes = list("meat" = 4, "a fondness for wearing hats" = 1)
 	foodtypes = RAW | MEAT | GROSS
 
-/obj/item/food/meat/slab/corgi/Initialize()
+/obj/item/food/meat/slab/corgi/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB)
 
@@ -770,7 +770,7 @@
 	desc = "Tastes like... well you know..."
 	foodtypes = RAW | MEAT | GROSS
 
-/obj/item/food/meat/slab/pug/Initialize()
+/obj/item/food/meat/slab/pug/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PUG, CELL_VIRUS_TABLE_GENERIC_MOB)
 
@@ -802,7 +802,7 @@
 /obj/item/food/meat/slab/bear/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/bear, rand(40 SECONDS, 70 SECONDS), TRUE, TRUE)
 
-/obj/item/food/meat/slab/bear/Initialize()
+/obj/item/food/meat/slab/bear/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB)
 
@@ -945,7 +945,7 @@
 /obj/item/food/meat/slab/chicken/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/chicken, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe? (no this is chicken)
 
-/obj/item/food/meat/slab/chicken/Initialize()
+/obj/item/food/meat/slab/chicken/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB)
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
@@ -959,7 +959,7 @@
 	tastes = list("meat" = 1)
 	burns_on_grill = TRUE
 
-/obj/item/food/meat/steak/Initialize()
+/obj/item/food/meat/steak/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_MICROWAVE_COOKED, .proc/OnMicrowaveCooked)
 
@@ -1107,7 +1107,7 @@
 	name = "raw bear cutlet"
 	tastes = list("meat" = 1, "salmon" = 1)
 
-/obj/item/food/meat/rawcutlet/bear/Initialize()
+/obj/item/food/meat/rawcutlet/bear/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB)
 
@@ -1146,7 +1146,7 @@
 /obj/item/food/meat/rawcutlet/chicken/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/chicken, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
 
-/obj/item/food/meat/rawcutlet/chicken/Initialize()
+/obj/item/food/meat/rawcutlet/chicken/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB)
 
@@ -1162,7 +1162,7 @@
 	foodtypes = MEAT
 	burns_on_grill = TRUE
 
-/obj/item/food/meat/cutlet/Initialize()
+/obj/item/food/meat/cutlet/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_MICROWAVE_COOKED, .proc/OnMicrowaveCooked)
 
@@ -1227,7 +1227,7 @@
 	junkiness = 25
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/fried_chicken/Initialize()
+/obj/item/food/fried_chicken/Initialize(mapload)
 	. = ..()
 	if(prob(50))
 		icon_state = "fried_chicken2"
