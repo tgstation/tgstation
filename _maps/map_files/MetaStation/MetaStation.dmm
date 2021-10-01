@@ -8659,9 +8659,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bOJ" = (
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
 /obj/effect/spawner/random/structure/crate,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -51692,9 +51689,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "qlY" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -61425,13 +61419,6 @@
 	},
 /turf/open/floor/iron,
 /area/science/lab)
-"tLA" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/spawner/random/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "tLK" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/three,
@@ -92528,7 +92515,7 @@ jFF
 iNd
 mlx
 doJ
-tLA
+lZy
 dne
 hCI
 doJ
