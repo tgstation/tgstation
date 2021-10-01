@@ -14,12 +14,19 @@ GLOBAL_DATUM_INIT(ctf_panel, /datum/ctf_panel, new())
 /datum/ctf_panel/ui_data(mob/user)
 	var/list/data = list()
 	data["teams"] = list()
+	data["enabled"] = ""
 	for(var/obj/machinery/capture_the_flag/team in GLOB.machines)
 		var/list/this = list()
 		this["name"] = team
+		this["color"] = team.team
 		this["score"] = team.points + team.control_points
+		this["team_size"] = team.team_members.len
 		this["refs"] += "[REF(team)]"	
-		data["teams"] += list(this)		
+		data["teams"] += list(this)
+		if(team.ctf_enabled)
+			data["enabled"] = "CTF is currently running!"
+		else
+			data["enabled"] = "CTF needs 4 players to start, currently [team.people_who_want_to_play.len]/4 have signed up!"
 	return data
 
 
@@ -34,4 +41,11 @@ GLOBAL_DATUM_INIT(ctf_panel, /datum/ctf_panel, new())
 			var/obj/machinery/capture_the_flag/ctf_spawner = locate(params["refs"]) in GLOB.machines 
 			if(ctf_spawner)
 				user.forceMove(get_turf(ctf_spawner))
+				return TRUE
+		if("join")
+			var/obj/machinery/capture_the_flag/ctf_spawner = locate(params["refs"]) in GLOB.machines 
+			if(ctf_spawner)
+				if(ctf_spawner.ctf_enabled)
+					user.forceMove(get_turf(ctf_spawner))
+				ctf_spawner.attack_ghost(user)
 				return TRUE
