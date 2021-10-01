@@ -38,13 +38,13 @@ GLOBAL_DATUM_INIT(ctf_panel, /datum/ctf_panel, new())
 
 	switch(action)
 		if("jump")
-			var/obj/machinery/capture_the_flag/ctf_spawner = locate(params["refs"]) in GLOB.machines 
-			if(ctf_spawner)
+			var/obj/machinery/capture_the_flag/ctf_spawner = locate(params["refs"])
+			if(istype(ctf_spawner))
 				user.forceMove(get_turf(ctf_spawner))
 				return TRUE
 		if("join")
-			var/obj/machinery/capture_the_flag/ctf_spawner = locate(params["refs"]) in GLOB.machines 
-			if(ctf_spawner)
+			var/obj/machinery/capture_the_flag/ctf_spawner = locate(params["refs"])
+			if(istype(ctf_spawner))
 				if(ctf_spawner.ctf_enabled)
 					user.forceMove(get_turf(ctf_spawner))
 				ctf_spawner.attack_ghost(user)
