@@ -143,3 +143,15 @@
 	charge_max = 50
 	cooldown_min = 50
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/bat
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/bat/Shapeshift(mob/living/caster)
+	. = ..()
+
+	if(!.)
+		return
+
+	var/mob/living/simple_animal/hostile/retaliate/bat/bat_shape = .
+
+	REMOVE_TRAIT(bat_shape, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(bat_shape, TRAIT_VENTCRAWLER_VAMPIRE_BAT, INNATE_TRAIT)
+

@@ -513,6 +513,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VENTCRAWLER_ALWAYS "ventcrawler_always"
 #define TRAIT_VENTCRAWLER_NUDE "ventcrawler_nude"
 
+/// Limited ability to ventcrawl. Can't exit vents in blacklisted areas such as armory/cap's quarters.
+#define TRAIT_VENTCRAWLER_VAMPIRE_BAT "ventcrawler_vampire_bat"
+
 /// Minor trait used for beakers, or beaker-ishes. [/obj/item/reagent_containers], to show that they've been used in a reagent grinder.
 #define TRAIT_MAY_CONTAIN_BLENDED_DUST "may_contain_blended_dust"
 

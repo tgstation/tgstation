@@ -1,14 +1,17 @@
 // VENTCRAWLING
 // Handles the entrance and exit on ventcrawling
 /mob/living/proc/handle_ventcrawl(obj/machinery/atmospherics/components/ventcrawl_target)
+	var/static/list/vampire_bat_blacklist = typesof(/area/ai_monitored/security/armory) + typesof(/area/command/heads_quarters/captain)
+
 	// Being able to always ventcrawl trumps being only able to ventcrawl when wearing nothing
-	var/required_nudity = HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS)
+	var/required_nudity = HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE) && (!HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS) || !HAS_TRAIT(src, TRAIT_VENTCRAWLER_VAMPIRE_BAT))
 	// Cache the vent_movement bitflag var from atmos machineries
 	var/vent_movement = ventcrawl_target.vent_movement
 
 	if(!Adjacent(ventcrawl_target))
 		return
-	if(!HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS))
+
+	if(!HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_VAMPIRE_BAT))
 		return
 	if(stat)
 		to_chat(src, span_warning("You must be conscious to do this!"))
@@ -32,6 +35,11 @@
 	if(ventcrawl_target.welded)
 		to_chat(src, span_warning("You can't crawl around a welded vent!"))
 		return
+	if(HAS_TRAIT(src, TRAIT_VENTCRAWLER_VAMPIRE_BAT))
+		var/vent_area = get_area(ventcrawl_target)
+		if(vent_area && (vent_area.type in vampire_bat_blacklist))
+			to_chat(src, span_warning("This vent is infused with an aroma of garlic. You can't crawl through it!"))
+			return
 
 	if(vent_movement & VENTCRAWL_ENTRANCE_ALLOWED)
 		//Handle the exit here
