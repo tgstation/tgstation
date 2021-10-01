@@ -336,7 +336,9 @@
 
 /datum/config_entry/flag/panic_bunker // prevents people the server hasn't seen before from connecting
 
-/datum/config_entry/number/panic_bunker_living // living time in minutes that a player needs to pass the panic bunker
+/// Living time in minutes that a player needs to pass the panic bunker. Defaults to -1 (no one without a DB entry can connect).
+/datum/config_entry/number/panic_bunker_living
+	default = -1
 
 /// Flag for requiring players who would otherwise be denied access by the panic bunker to complete a written interview
 /datum/config_entry/flag/panic_bunker_interview

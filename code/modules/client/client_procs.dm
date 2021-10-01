@@ -571,14 +571,34 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 
 	var/client_is_in_db = query_client_in_db.NextRow()
-	//If we aren't an admin, and the flag is set
+	// If we aren't an admin, and the flag is set / the panic bunker is enabled.
 	if(CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey])
+		// The amount of hours needed to bypass the panic bunker. If -1, no value is set.
 		var/living_recs = CONFIG_GET(number/panic_bunker_living)
-		//Relies on pref existing, but this proc is only called after that occurs, so we're fine.
+		// This relies on prefs existing, but this proc is only called after that occurs, so we're fine.
 		var/minutes = get_exp_living(pure_numeric = TRUE)
-		if((minutes < living_recs && !CONFIG_GET(flag/panic_bunker_interview)) || (isnull(living_recs) && !client_is_in_db))
+		var/reject_this_client = FALSE
+
+		// Check to see if our client should be rejected.
+		// If interviews are on, we should let anyone through, ideally.
+		if(!CONFIG_GET(flag/panic_bunker_interview))
+			// We're using the default value (for panic_bunker_living hours)
+			if(living_recs == -1)
+				// If we don't have a panic_bunker_living time set, and
+				// the person joining is not in the DB, reject them.
+				if(!client_is_in_db)
+					reject_this_client = TRUE
+
+			// We have a set living_recs value (probably, 0 to infinity)
+			else if(minutes < living_recs)
+				// If we have a panic_bunker_living time set, but
+				// panic bunker interviews are disabled, reject them.
+				reject_this_client = TRUE
+
+		// This client was rejected and is not allowed to join.
+		if(reject_this_client)
 			var/reject_message = "Failed Login: [key] - [client_is_in_db ? "":"New "]Account attempting to connect during panic bunker, but\
-			[isnull(living_recs) ? " they do not have the required living time [minutes]/[living_recs]": " was rejected"]."
+				[living_recs == -1 ? " they do not have the required living time [minutes]/[living_recs]": " was rejected"]."
 			log_access(reject_message)
 			message_admins(span_adminnotice("[reject_message]"))
 			var/message = CONFIG_GET(string/panic_bunker_message)
