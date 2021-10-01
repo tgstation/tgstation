@@ -63,8 +63,7 @@
 	data["num_copies"] = num_copies
 	
 	var/list/blanks = list()
-	for(var/B in subtypesof(/obj/item/paper/blank))
-		var/obj/item/paper/blank/bb = B
+	for(var/obj/item/paper/blank/paper_type as anything in subtypesof(/obj/item/paper/blank))
 		var/blank[0]
 		blank["path"] = B
 		blank["code"] = initial(bb.code)
