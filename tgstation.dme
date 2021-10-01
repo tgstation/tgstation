@@ -2411,6 +2411,7 @@
 #include "code\modules\experisci\experiment\types\physical_experiment.dm"
 #include "code\modules\experisci\experiment\types\random_scanning.dm"
 #include "code\modules\experisci\experiment\types\scanning.dm"
+#include "code\modules\experisci\experiment\types\scanning_machinery.dm"
 #include "code\modules\experisci\experiment\types\scanning_material.dm"
 #include "code\modules\experisci\experiment\types\scanning_plants.dm"
 #include "code\modules\experisci\experiment\types\scanning_points.dm"
