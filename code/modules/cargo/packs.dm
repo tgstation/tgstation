@@ -2369,7 +2369,7 @@
 	crate_name = "standard costume crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
-/datum/supply_pack/costumes_toys/batmancostumes
+/datum/supply_pack/costumes_toys/60scostumes
 	name = "2460s Costume Crate"
 	desc = "Holy cheap prop auction Owlman!"
 	cost = CARGO_CRATE_VALUE * 2
