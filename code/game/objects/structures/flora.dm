@@ -371,6 +371,18 @@
 	icon_state = "plant-25"
 	trimmable = FALSE
 
+/obj/item/kirbyplants/crypt
+	icon = 'icons/obj/crypt.dmi'
+	icon_state = "pot"
+	name = "pot"
+	desc = "You can imagine this has a few treasures within it."
+	trimmable = FALSE
+
+/obj/item/kirbyplants/crypt/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	new /obj/item/rupee(get_turf(src))
+	qdel(src)
+
 /obj/item/kirbyplants/photosynthetic
 	name = "photosynthetic potted plant"
 	desc = "A bioluminescent plant."
@@ -401,7 +413,7 @@
 	icon_state = "fern"
 	trimmable = FALSE
 
-/obj/item/kirbyplants/fern/Initialize(mapload)
+/obj/item/kirbyplants/fern/Initialize()
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_ALGAE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 5)
 
@@ -505,3 +517,4 @@
 /obj/structure/flora/rock/pile/largejungle/Initialize(mapload)
 	. = ..()
 	icon_state = "[initial(icon_state)][rand(1,3)]"
+
