@@ -801,7 +801,7 @@
 				limb.icon = style_list_icons[choice]
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	return SECONDARY_ATTACK_CONTINUE_ATTACK_CHAIN
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/toy/crayon/spraycan/update_icon_state()
 	icon_state = is_capped ? icon_capped : icon_uncapped
