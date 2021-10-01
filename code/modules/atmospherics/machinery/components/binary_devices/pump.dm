@@ -249,6 +249,7 @@
 	return ..()
 
 /obj/item/circuit_component/atmos_pump/proc/handle_pump_activation(datum/source, active)
+	SIGNAL_HANDLER
 	is_active.set_output(active)
 	if(active)
 		turned_on.set_output(COMPONENT_SIGNAL)
