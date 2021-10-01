@@ -327,7 +327,7 @@
 	var/area/area = get_area(src)
 	if (!area)
 		return 0
-	var/obj/machinery/power/apc/apc = area.get_apc()
+	var/obj/machinery/power/apc/apc = area.apc
 	if (!apc)
 		return 0
 	var/obj/item/stock_parts/cell/cell = apc.cell
