@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, ColorBox, LabeledList, Section, Stack, Tabs } from '../components';
+import { Box, Button, ColorBox, Dimmer, LabeledList, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 const ROOT_CATEGORIES = [
@@ -33,10 +33,6 @@ const TOOLS = [
   {
     name: 'Destroy',
     bitmask: 4,
-  },
-  {
-    name: 'Reprogram',
-    bitmask: 8,
   },
 ];
 
@@ -222,7 +218,7 @@ const SmartPipeBlockSection = (props, context) => {
                 default (all directions can connect)`} />
             </Stack.Item>
             <Stack.Item>
-              <Button icon="arrow-up"
+              <Button iconRotation={-90} icon="arrow-right"
                 disabled={!!data.smart_pipe}
                 selected={init_directions["north"]}
                 onClick={() => act('init_dir_setting', {
@@ -255,7 +251,7 @@ const SmartPipeBlockSection = (props, context) => {
           </Stack>
         </Stack.Item>
         <Stack.Item grow>
-          <Button icon="arrow-down"
+          <Button iconRotation={90} icon="arrow-right"
             selected={init_directions["south"]}
             onClick={() => act('init_dir_setting', {
               dir_flag: "south",

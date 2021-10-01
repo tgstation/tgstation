@@ -26,7 +26,7 @@
 	var/opening = FALSE
 
 
-/obj/structure/falsewall/Initialize(mapload)
+/obj/structure/falsewall/Initialize()
 	. = ..()
 	air_update_turf(TRUE, TRUE)
 

@@ -25,7 +25,7 @@
 	var/static/radial_juice = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_juice")
 	var/static/radial_mix = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_mix")
 
-/obj/machinery/reagentgrinder/Initialize(mapload)
+/obj/machinery/reagentgrinder/Initialize()
 	. = ..()
 	holdingitems = list()
 	beaker = new /obj/item/reagent_containers/glass/beaker/large(src)
@@ -39,7 +39,7 @@
 	beaker.desc += " May contain blended dust. Don't breathe this!"
 	ADD_TRAIT(beaker, TRAIT_MAY_CONTAIN_BLENDED_DUST, TRAIT_GENERIC)
 
-/obj/machinery/reagentgrinder/constructed/Initialize(mapload)
+/obj/machinery/reagentgrinder/constructed/Initialize()
 	. = ..()
 	holdingitems = list()
 	QDEL_NULL(beaker)

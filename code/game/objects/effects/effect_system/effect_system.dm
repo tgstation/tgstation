@@ -12,7 +12,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	pass_flags = PASSTABLE | PASSGRILLE
 	anchored = TRUE
 
-/obj/effect/particle_effect/Initialize(mapload)
+/obj/effect/particle_effect/Initialize()
 	. = ..()
 	GLOB.cameranet.updateVisibility(src)
 

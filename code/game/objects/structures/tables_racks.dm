@@ -263,7 +263,7 @@
 	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
 	icon_state = "table_greyscale-0"
 	base_icon_state = "table_greyscale"
-	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstack = null //No buildstack, so generate from mat datums
 
 ///Table on wheels
@@ -320,13 +320,10 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
 	var/list/debris = list()
 
-/obj/structure/table/glass/Initialize(mapload)
+/obj/structure/table/glass/Initialize()
 	. = ..()
 	debris += new frame
-	if(buildstack == /obj/item/stack/sheet/plasmaglass)
-		debris += new /obj/item/shard/plasma
-	else
-		debris += new /obj/item/shard
+	debris += new /obj/item/shard
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
@@ -389,16 +386,6 @@
 	for(var/obj/item/shard/S in debris)
 		S.color = NARSIE_WINDOW_COLOUR
 
-/obj/structure/table/glass/plasmaglass
-	name = "plasma glass table"
-	desc = "Someone thought this was a good idea."
-	icon = 'icons/obj/smooth_structures/plasmaglass_table.dmi'
-	icon_state = "plasmaglass_table-0"
-	base_icon_state = "plasmaglass_table"
-	custom_materials = list(/datum/material/alloy/plasmaglass = 2000)
-	buildstack = /obj/item/stack/sheet/plasmaglass
-	max_integrity = 100
-
 /*
  * Wooden tables
  */
@@ -445,7 +432,7 @@
 	canSmoothWith = list(SMOOTH_GROUP_FANCY_WOOD_TABLES)
 	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
 
-/obj/structure/table/wood/fancy/Initialize(mapload)
+/obj/structure/table/wood/fancy/Initialize()
 	. = ..()
 	// Needs to be set dynamically because table smooth sprites are 32x34,
 	// which the editor treats as a two-tile-tall object. The sprites are that
@@ -561,45 +548,6 @@
 	..()
 	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
-/obj/structure/table/reinforced/rglass
-	name = "reinforced glass table"
-	desc = "A reinforced version of the glass table."
-	icon = 'icons/obj/smooth_structures/rglass_table.dmi'
-	icon_state = "rglass_table-0"
-	base_icon_state = "rglass_table"
-	custom_materials = list(/datum/material/glass = 2000, /datum/material/iron = 2000)
-	buildstack = /obj/item/stack/sheet/rglass
-	max_integrity = 150
-
-/obj/structure/table/reinforced/plasmarglass
-	name = "reinforced plasma glass table"
-	desc = "A reinforced version of the plasma glass table."
-	icon = 'icons/obj/smooth_structures/rplasmaglass_table.dmi'
-	icon_state = "rplasmaglass_table-0"
-	base_icon_state = "rplasmaglass_table"
-	custom_materials = list(/datum/material/alloy/plasmaglass = 2000, /datum/material/iron = 2000)
-	buildstack = /obj/item/stack/sheet/plasmarglass
-
-/obj/structure/table/reinforced/titaniumglass
-	name = "titanium glass table"
-	desc = "A titanium reinforced glass table, with a fresh coat of NT white paint."
-	icon = 'icons/obj/smooth_structures/titaniumglass_table.dmi'
-	icon_state = "titaniumglass_table-o"
-	base_icon_state = "titaniumglass_table"
-	custom_materials = list(/datum/material/alloy/titaniumglass = 2000)
-	buildstack = /obj/item/stack/sheet/titaniumglass
-	max_integrity = 250
-
-/obj/structure/table/reinforced/plastitaniumglass
-	name = "plastitanium glass table"
-	desc = "A table made of titanium reinforced silica-plasma composite. About as durable as it sounds."
-	icon = 'icons/obj/smooth_structures/plastitaniumglass_table.dmi'
-	icon_state = "plastitaniumglass_table-0"
-	base_icon_state = "plastitaniumglass_table"
-	custom_materials = list(/datum/material/alloy/plastitaniumglass = 2000)
-	buildstack = /obj/item/stack/sheet/plastitaniumglass
-	max_integrity = 300
-
 /*
  * Surgery Tables
  */
@@ -620,7 +568,7 @@
 	var/mob/living/carbon/human/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
-/obj/structure/table/optable/Initialize(mapload)
+/obj/structure/table/optable/Initialize()
 	. = ..()
 	for(var/direction in GLOB.alldirs)
 		computer = locate(/obj/machinery/computer/operating) in get_step(src, direction)

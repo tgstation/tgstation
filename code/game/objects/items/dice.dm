@@ -1,45 +1,38 @@
+/*****************************Dice Bags********************************/
 
-///holding bag for dice
-/obj/item/storage/dice
+/obj/item/storage/pill_bottle/dice
 	name = "bag of dice"
 	desc = "Contains all the luck you'll ever need."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "dicebag"
-	w_class = WEIGHT_CLASS_SMALL
+	var/list/special_die = list(
+				/obj/item/dice/d1,
+				/obj/item/dice/d2,
+				/obj/item/dice/fudge,
+				/obj/item/dice/d6/space,
+				/obj/item/dice/d00,
+				/obj/item/dice/eightbd20,
+				/obj/item/dice/fourdd6,
+				/obj/item/dice/d100
+				)
 
-/obj/item/storage/dice/Initialize(mapload)
-	. = ..()
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-	storage.allow_quick_gather = TRUE
-	storage.click_gather = TRUE
-	storage.set_holdable(list(/obj/item/dice))
-
-/obj/item/storage/dice/PopulateContents()
+/obj/item/storage/pill_bottle/dice/PopulateContents()
 	new /obj/item/dice/d4(src)
 	new /obj/item/dice/d6(src)
 	new /obj/item/dice/d8(src)
 	new /obj/item/dice/d10(src)
 	new /obj/item/dice/d12(src)
 	new /obj/item/dice/d20(src)
-	var/picked = pick(list(
-		/obj/item/dice/d1,
-		/obj/item/dice/d2,
-		/obj/item/dice/fudge,
-		/obj/item/dice/d6/space,
-		/obj/item/dice/d00,
-		/obj/item/dice/eightbd20,
-		/obj/item/dice/fourdd6,
-		/obj/item/dice/d100,
-	))
+	var/picked = pick(special_die)
 	new picked(src)
 
-/obj/item/storage/dice/suicide_act(mob/user)
+/obj/item/storage/pill_bottle/dice/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (OXYLOSS)
 
-/obj/item/storage/dice/hazard
+/obj/item/storage/pill_bottle/dice/hazard
 
-/obj/item/storage/dice/hazard/PopulateContents()
+/obj/item/storage/pill_bottle/dice/hazard/PopulateContents()
 	new /obj/item/dice/d6(src)
 	new /obj/item/dice/d6(src)
 	new /obj/item/dice/d6(src)
@@ -49,8 +42,9 @@
 		else
 			new /obj/item/dice/d6(src)
 
-///this is a prototype for dice, for a real d6 use "/obj/item/dice/d6"
-/obj/item/dice
+/*****************************Dice********************************/
+
+/obj/item/dice //depreciated d6, use /obj/item/dice/d6 if you actually want a d6
 	name = "die"
 	desc = "A die with six sides. Basic and serviceable."
 	icon = 'icons/obj/dice.dmi'
@@ -64,7 +58,7 @@
 	var/rigged = DICE_NOT_RIGGED
 	var/rigged_value
 
-/obj/item/dice/Initialize(mapload)
+/obj/item/dice/Initialize()
 	. = ..()
 	if(!result)
 		result = roll(sides)
@@ -95,7 +89,7 @@
 /obj/item/dice/d4/Initialize(mapload)
 	. = ..()
 	// 1d4 damage
-	AddComponent(/datum/component/caltrop, min_damage = 1, max_damage = 4)
+	AddElement(/datum/element/caltrop, min_damage = 1, max_damage = 4)
 
 /obj/item/dice/d6
 	name = "d6"
@@ -111,7 +105,7 @@
 	desc = "A die with six sides. 6 TIMES 255 TIMES 255 TILE TOTAL EXISTENCE, SQUARE YOUR MIND OF EDUCATED STUPID: 2 DOES NOT EXIST."
 	icon_state = "spaced6"
 
-/obj/item/dice/d6/space/Initialize(mapload)
+/obj/item/dice/d6/space/Initialize()
 	. = ..()
 	if(prob(10))
 		name = "spess cube"

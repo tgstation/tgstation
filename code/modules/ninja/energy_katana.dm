@@ -32,7 +32,7 @@
 	var/datum/effect_system/spark_spread/spark_system
 	var/datum/action/innate/dash/ninja/jaunt
 
-/obj/item/energy_katana/Initialize(mapload)
+/obj/item/energy_katana/Initialize()
 	. = ..()
 	jaunt = new(src)
 	spark_system = new /datum/effect_system/spark_spread()

@@ -88,14 +88,13 @@
 		return
 	var/mob/living/silicon/pai/pAI = usr
 	var/list/modifiers = params2list(params)
-	var/mob/living/carbon/holder = get(pAI.card.loc, /mob/living/carbon)
-	if(holder)
+	if(iscarbon(pAI.card.loc))
 		if (LAZYACCESS(modifiers, RIGHT_CLICK))
-			pAI.hostscan.attack_secondary(holder, pAI)
+			pAI.hostscan.attack_secondary(pAI.card.loc, pAI)
 		else
-			pAI.hostscan.attack(holder, pAI)
+			pAI.hostscan.attack(pAI.card.loc, pAI)
 	else
-		to_chat(usr, span_warning("You are not being carried by anyone!"))
+		to_chat(src, span_warning("You are not being carried by anyone!"))
 		return FALSE
 
 /atom/movable/screen/pai/crew_manifest

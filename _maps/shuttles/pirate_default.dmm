@@ -116,6 +116,8 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "al" = (
@@ -595,15 +597,15 @@
 /obj/machinery/firealarm/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/melee/energy/sword/pirate{
+/obj/item/melee/transforming/energy/sword/pirate{
 	pixel_x = -1;
 	pixel_y = 6
 	},
-/obj/item/melee/energy/sword/pirate{
+/obj/item/melee/transforming/energy/sword/pirate{
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/melee/energy/sword/pirate{
+/obj/item/melee/transforming/energy/sword/pirate{
 	pixel_x = 13;
 	pixel_y = 6
 	},
@@ -922,7 +924,7 @@
 	id = "piratebridge"
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/plasma/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "ez" = (

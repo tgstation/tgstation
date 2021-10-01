@@ -17,7 +17,7 @@
 	heavyfootstep = FOOTSTEP_CATWALK
 	var/covered = TRUE
 
-/turf/open/floor/plating/catwalk_floor/Initialize(mapload)
+/turf/open/floor/plating/catwalk_floor/Initialize()
 	. = ..()
 	update_icon(UPDATE_OVERLAYS)
 

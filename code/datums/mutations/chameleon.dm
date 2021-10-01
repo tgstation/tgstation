@@ -35,4 +35,4 @@
 	if(..())
 		return
 	owner.alpha = 255
-	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_EARLY_UNARMED_ATTACK))
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)

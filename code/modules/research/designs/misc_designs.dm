@@ -571,7 +571,6 @@
 	build_path = /obj/item/restraints/legcuffs/bola/energy
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	autolathe_exportable = FALSE
 
 /datum/design/zipties
 	name = "Zipties"

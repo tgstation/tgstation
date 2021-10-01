@@ -339,3 +339,4 @@
 		return
 	stored.attack_hand(src) // take out thing from item in storage slot
 	return
+

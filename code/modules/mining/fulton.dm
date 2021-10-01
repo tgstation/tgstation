@@ -163,7 +163,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	density = FALSE
 	var/beacon_network = "station"
 
-/obj/structure/extraction_point/Initialize(mapload)
+/obj/structure/extraction_point/Initialize()
 	. = ..()
 	name += " ([rand(100,999)]) ([get_area_name(src, TRUE)])"
 	GLOB.total_extraction_beacons += src

@@ -163,7 +163,7 @@
 	range = MECHA_MELEE|MECHA_RANGED
 	mech_flags = EXOSUIT_MODULE_WORKING
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/Initialize(mapload)
+/obj/item/mecha_parts/mecha_equipment/extinguisher/Initialize()
 	. = ..()
 	create_reagents(1000)
 	reagents.add_reagent(/datum/reagent/water, 1000)
@@ -240,7 +240,7 @@
 	///determines what we'll so when clicking on a turf
 	var/mode = MODE_DECONSTRUCT
 
-/obj/item/mecha_parts/mecha_equipment/rcd/Initialize(mapload)
+/obj/item/mecha_parts/mecha_equipment/rcd/Initialize()
 	. = ..()
 	GLOB.rcd_list += src
 

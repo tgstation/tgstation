@@ -20,7 +20,7 @@
 /mob/living/carbon/human/species/monkey/angry
 	ai_controller = /datum/ai_controller/monkey/angry
 
-/mob/living/carbon/human/species/monkey/angry/Initialize(mapload)
+/mob/living/carbon/human/species/monkey/angry/Initialize()
 	. = ..()
 	if(prob(10))
 		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
@@ -40,7 +40,7 @@
 	var/relic_mask
 	var/memory_saved = FALSE
 
-/mob/living/carbon/human/species/monkey/punpun/Initialize(mapload)
+/mob/living/carbon/human/species/monkey/punpun/Initialize()
 	Read_Memory()
 
 	var/name_to_use = name

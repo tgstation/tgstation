@@ -65,6 +65,6 @@
 	if(!QDELETED(src))
 		qdel(src)
 
-/obj/item/storage/backpack/snail/Initialize(mapload)
+/obj/item/storage/backpack/snail/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, "snailshell")

@@ -1,5 +1,6 @@
-import { useBackend } from '../backend';
-import { Box, Button, Divider, Section, Stack } from '../components';
+import { multiline } from 'common/string';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Dimmer, Divider, Icon, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const buttonWidth = 2;

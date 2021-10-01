@@ -1,8 +1,9 @@
 /datum/round_event_control/operative
 	name = "Lone Operative"
 	typepath = /datum/round_event/ghost_role/operative
-	weight = 0 //its weight is relative to how much stationary and neglected the nuke disk is. See nuclearbomb.dm. Shouldn't be dynamic hijackable.
+	weight = 0 //Admin only
 	max_occurrences = 1
+	dynamic_should_hijack = TRUE
 
 /datum/round_event/ghost_role/operative
 	minimum_required = 1
@@ -10,7 +11,7 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/operative/spawn_role()
-	var/list/candidates = get_candidates(ROLE_OPERATIVE, ROLE_LONE_OPERATIVE)
+	var/list/candidates = get_candidates(ROLE_OPERATIVE, ROLE_OPERATIVE)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 

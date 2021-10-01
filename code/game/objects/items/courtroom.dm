@@ -14,7 +14,7 @@
 	attack_verb_simple = list("bash", "batter", "judge", "whack")
 	resistance_flags = FLAMMABLE
 
-/obj/item/gavelhammer/Initialize(mapload)
+/obj/item/gavelhammer/Initialize()
 	. = ..()
 	AddElement(/datum/element/kneejerk)
 

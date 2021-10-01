@@ -289,6 +289,11 @@
 /mob/living/simple_animal/hostile/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
+"bt" = (
+/obj/structure/table/reinforced,
+/obj/item/melee/transforming/energy/sword/saber/red,
+/turf/open/floor/mineral/plastitanium/red,
+/area/awaymission/spacebattle/syndicate1)
 "bu" = (
 /obj/machinery/computer/shuttle{
 	dir = 1
@@ -1143,6 +1148,12 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/turf/open/floor/iron,
+/area/awaymission/spacebattle/cruiser)
+"eW" = (
+/obj/effect/mob_spawn/human/syndicatesoldier,
+/obj/item/melee/transforming/energy/sword/saber/red,
+/obj/effect/decal/cleanable/blood,
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "eX" = (
@@ -2453,6 +2464,11 @@
 /obj/structure/barricade/security,
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
+"jE" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/awaymission/spacebattle/cruiser)
 "jF" = (
 /obj/structure/closet/crate,
 /obj/item/ammo_box/magazine/recharge,
@@ -2470,6 +2486,16 @@
 "jH" = (
 /mob/living/simple_animal/hostile/nanotrasen/ranged,
 /turf/open/floor/engine,
+/area/awaymission/spacebattle/cruiser)
+"jI" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/engine,
+/area/awaymission/spacebattle/cruiser)
+"jJ" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/armory_contraband,
+/turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "jK" = (
 /obj/effect/turf_decal/tile/blue{
@@ -2574,6 +2600,10 @@
 /obj/item/gun/ballistic/automatic/laser,
 /obj/item/gun/ballistic/automatic/laser,
 /turf/open/floor/engine,
+/area/awaymission/spacebattle/cruiser)
+"ka" = (
+/obj/effect/spawner/lootdrop/crate_spawner,
+/turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "kb" = (
 /obj/structure/girder,
@@ -2762,48 +2792,18 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
-"pF" = (
-/obj/structure/table/reinforced,
-/obj/item/melee/energy/sword/saber/red,
-/turf/open/floor/mineral/plastitanium/red,
-/area/awaymission/spacebattle/syndicate1)
-"sA" = (
-/obj/effect/spawner/random/structure/crate_abandoned,
-/turf/open/floor/plating,
-/area/awaymission/spacebattle/cruiser)
 "vw" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate5)
 "zS" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate6)
-"AI" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/random/contraband/armory,
-/turf/open/floor/plating,
-/area/awaymission/spacebattle/cruiser)
 "BO" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate2)
-"Cx" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/random/maintenance,
-/turf/open/floor/plating,
-/area/awaymission/spacebattle/cruiser)
 "Dv" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate3)
-"Ny" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/random/maintenance,
-/turf/open/floor/engine,
-/area/awaymission/spacebattle/cruiser)
-"Sj" = (
-/obj/effect/mob_spawn/human/syndicatesoldier,
-/obj/item/melee/energy/sword/saber/red,
-/obj/effect/decal/cleanable/blood,
-/turf/open/floor/iron,
-/area/awaymission/spacebattle/cruiser)
 "UZ" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate1)
@@ -24721,7 +24721,7 @@ aU
 bf
 bf
 bf
-pF
+bt
 bf
 bf
 aU
@@ -26583,9 +26583,9 @@ cK
 cK
 cK
 cK
-Cx
-Cx
-Ny
+jE
+jE
+jI
 el
 el
 jP
@@ -27356,15 +27356,15 @@ cK
 cK
 jF
 fb
-Cx
-Cx
+jE
+jE
 eT
 gc
 gq
 gD
 cK
-sA
-sA
+ka
+ka
 hn
 hn
 bT
@@ -27620,8 +27620,8 @@ cK
 cK
 cK
 cK
-sA
-sA
+ka
+ka
 hn
 hn
 bT
@@ -28127,7 +28127,7 @@ cK
 cK
 eT
 eT
-AI
+jJ
 fn
 jN
 jN
@@ -28907,7 +28907,7 @@ cK
 cK
 cK
 cK
-AI
+jJ
 eT
 bT
 bT
@@ -35835,7 +35835,7 @@ cc
 bT
 jw
 eN
-Sj
+eW
 cc
 cL
 cM

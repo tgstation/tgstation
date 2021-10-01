@@ -44,7 +44,7 @@
 	if(!terminal)
 		. += span_warning("This SMES has no power terminal!")
 
-/obj/machinery/power/smes/Initialize(mapload)
+/obj/machinery/power/smes/Initialize()
 	. = ..()
 	dir_loop:
 		for(var/d in GLOB.cardinals)
@@ -55,7 +55,7 @@
 					break dir_loop
 
 	if(!terminal)
-		atom_break()
+		obj_break()
 		return
 	terminal.master = src
 	update_appearance()
@@ -200,7 +200,7 @@
 	if(terminal)
 		terminal.master = null
 		terminal = null
-		atom_break()
+		obj_break()
 
 
 /obj/machinery/power/smes/update_overlays()

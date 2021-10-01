@@ -26,7 +26,7 @@
 	dir = EAST
 	pixel_x = -26
 
-/obj/machinery/light_switch/Initialize(mapload)
+/obj/machinery/light_switch/Initialize()
 	. = ..()
 	if(istext(area))
 		area = text2path(area)

@@ -12,7 +12,7 @@
 	layer = MOB_LAYER
 	var/scanning = FALSE
 
-/obj/machinery/destructive_scanner/Initialize(mapload)
+/obj/machinery/destructive_scanner/Initialize()
 	..()
 	return INITIALIZE_HINT_LATELOAD
 

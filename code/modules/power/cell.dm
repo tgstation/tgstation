@@ -204,7 +204,7 @@
 	return rating * maxcharge
 
 /* Cell variants*/
-/obj/item/stock_parts/cell/empty/Initialize(mapload)
+/obj/item/stock_parts/cell/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_appearance()
@@ -215,7 +215,7 @@
 	maxcharge = 500
 	custom_materials = list(/datum/material/glass=40)
 
-/obj/item/stock_parts/cell/crap/empty/Initialize(mapload)
+/obj/item/stock_parts/cell/crap/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_appearance()
@@ -237,7 +237,7 @@
 	maxcharge = 600 //600 max charge / 100 charge per shot = six shots
 	custom_materials = list(/datum/material/glass=40)
 
-/obj/item/stock_parts/cell/secborg/empty/Initialize(mapload)
+/obj/item/stock_parts/cell/secborg/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_appearance()
@@ -278,7 +278,7 @@
 	chargerate = 2250
 	rating = 2
 
-/obj/item/stock_parts/cell/high/empty/Initialize(mapload)
+/obj/item/stock_parts/cell/high/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_appearance()
@@ -291,7 +291,7 @@
 	chargerate = 2000
 	rating = 3
 
-/obj/item/stock_parts/cell/super/empty/Initialize(mapload)
+/obj/item/stock_parts/cell/super/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_appearance()
@@ -304,7 +304,7 @@
 	chargerate = 3000
 	rating = 4
 
-/obj/item/stock_parts/cell/hyper/empty/Initialize(mapload)
+/obj/item/stock_parts/cell/hyper/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_appearance()
@@ -318,7 +318,7 @@
 	chargerate = 4000
 	rating = 5
 
-/obj/item/stock_parts/cell/bluespace/empty/Initialize(mapload)
+/obj/item/stock_parts/cell/bluespace/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_appearance()
@@ -367,7 +367,7 @@
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
 
-/obj/item/stock_parts/cell/emproof/empty/Initialize(mapload)
+/obj/item/stock_parts/cell/emproof/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_appearance()
@@ -397,7 +397,7 @@
 	custom_materials = list(/datum/material/glass = 20)
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/stock_parts/cell/emergency_light/Initialize(mapload)
+/obj/item/stock_parts/cell/emergency_light/Initialize()
 	. = ..()
 	var/area/A = get_area(src)
 	if(!A.lightswitch || !A.light_power)
@@ -413,7 +413,7 @@
 	grind_results = null
 	rating = 5
 
-/obj/item/stock_parts/cell/crystal_cell/Initialize(mapload)
+/obj/item/stock_parts/cell/crystal_cell/Initialize()
 	. = ..()
 	charge = 50000
 

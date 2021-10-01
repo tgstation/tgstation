@@ -9,8 +9,7 @@ export const OutfitManager = (props, context) => {
     <Window
       title="Outfit Manager"
       width={300}
-      height={300}
-      theme="admin">
+      height={300}>
       <Window.Content>
         <Section
           fill

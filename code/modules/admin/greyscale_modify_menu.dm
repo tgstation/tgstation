@@ -17,9 +17,6 @@
 	/// A list of colors currently selected
 	var/list/split_colors
 
-	/// The type that the configuration file was assigned at
-	var/config_owner_type
-
 	/// Collection of data for tgui to use in displaying everything
 	var/list/sprite_data
 	/// The sprite dir currently being shown
@@ -41,18 +38,15 @@
 	src.apply_callback = apply_callback || CALLBACK(src, .proc/DefaultApply)
 	icon_state = starting_icon_state
 
-	SetupConfigOwner()
-
 	var/current_config = "[starting_config]" || "[target?.greyscale_config]"
-	var/datum/greyscale_config/new_config = SSgreyscale.configurations[current_config]
+	config = SSgreyscale.configurations[current_config]
 	if(!(current_config in allowed_configs))
-		new_config = SSgreyscale.configurations["[allowed_configs[pick(allowed_configs)]]"]
-	change_config(new_config)
+		config = SSgreyscale.configurations["[allowed_configs[pick(allowed_configs)]]"]
 
 	var/list/config_choices = list()
 	for(var/config_string in allowed_configs)
-		var/datum/greyscale_config/allowed_config = text2path("[config_string]")
-		config_choices[initial(allowed_config.name)] = config_string
+		var/datum/greyscale_config/config = text2path("[config_string]")
+		config_choices[initial(config.name)] = config_string
 	src.allowed_configs = config_choices
 
 	ReadColorsFromString(starting_colors || target?.greyscale_colors)
@@ -94,7 +88,6 @@
 	data["generate_full_preview"] = generate_full_preview
 	data["unlocked"] = unlocked
 	data["refreshing"] = refreshing
-	data["monitoring_files"] = !!(config.datum_flags & DF_ISPROCESSING)
 	data["sprites_dir"] = dir2text(sprite_dir)
 	data["icon_state"] = icon_state
 	data["sprites"] = sprite_data
@@ -115,7 +108,7 @@
 			new_config = allowed_configs[new_config]
 			new_config = SSgreyscale.configurations[new_config] || new_config
 			if(!isnull(new_config) && config != new_config)
-				change_config(new_config)
+				config = new_config
 				queue_refresh()
 
 		if("load_config_from_string")
@@ -123,7 +116,7 @@
 				return
 			var/datum/greyscale_config/new_config = SSgreyscale.configurations[params["config_string"]]
 			if(!isnull(new_config) && config != new_config)
-				change_config(new_config)
+				config = new_config
 				queue_refresh()
 
 		if("toggle_full_preview")
@@ -178,7 +171,7 @@
 			apply_callback.Invoke(src)
 
 		if("refresh_file")
-			if(!unlocked || !check_rights(R_DEBUG))
+			if(!unlocked)
 				return
 			if(length(GLOB.player_list) > 1)
 				var/check = alert(
@@ -191,35 +184,12 @@ This is highly likely to cause a lag spike for a few seconds."},
 				)
 				if(check != "Yes")
 					return
-			config.Refresh(loadFromDisk=TRUE)
-
-		if("save_dmi")
-			if(!unlocked)
-				return
-			config.SaveOutput(split_colors.Copy(1, config.expected_colors+1))
+			SSgreyscale.RefreshConfigsFromFile()
+			queue_refresh()
 
 		if("change_dir")
 			sprite_dir = text2dir(params["new_sprite_dir"])
 			queue_refresh()
-
-		if("toggle_mass_refresh")
-			if(!unlocked || !check_rights(R_DEBUG))
-				return
-			if(config.datum_flags & DF_ISPROCESSING)
-				config.DisableAutoRefresh(remove_all=TRUE)
-				return
-			if(length(GLOB.player_list) > 1)
-				var/check = alert(
-					user,
-{"Other players are connected to the server, are you sure you want to automatically refresh all greyscale configurations?\n
-This is highly likely to cause massive amounts of lag as every object in the game will be iterated over every few seconds."},
-					"Auto-Refresh Greyscale Configurations",
-					"Yes",
-					"Cancel"
-				)
-				if(check != "Yes")
-					return
-			config.EnableAutoRefresh(config_owner_type)
 
 /datum/greyscale_modify_menu/proc/ReadColorsFromString(colorString)
 	var/list/raw_colors = splittext(colorString, "#")
@@ -233,14 +203,7 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 		new_color += num2hex(rand(0, 255), 2)
 	split_colors[color_index] = new_color
 
-/datum/greyscale_modify_menu/proc/change_config(datum/greyscale_config/new_config)
-	if(config)
-		UnregisterSignal(config, COMSIG_GREYSCALE_CONFIG_REFRESHED)
-	config = new_config
-	RegisterSignal(config, COMSIG_GREYSCALE_CONFIG_REFRESHED, .proc/queue_refresh)
-
 /datum/greyscale_modify_menu/proc/queue_refresh()
-	SIGNAL_HANDLER
 	refreshing = TRUE
 	addtimer(CALLBACK(src, .proc/refresh_preview), 1 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
@@ -272,16 +235,16 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 		finished = image(data["icon"], icon_state=icon_state)
 		var/list/steps = list()
 		sprite_data["steps"] = steps
-		var/list/icon_state_data = data["steps"][icon_state]
-		for(var/list/step as anything in icon_state_data)
+		for(var/step in data["steps"])
 			CHECK_TICK
-			var/image/layer = image(step["step"])
-			var/image/result = image(step["result"])
+			var/list/step_data = data["steps"][step]
+			var/image/layer = image(step)
+			var/image/result = step_data["result"]
 			steps += list(
 				list(
 					"layer"=icon2html(layer, user, dir=sprite_dir, sourceonly=TRUE),
 					"result"=icon2html(result, user, dir=sprite_dir, sourceonly=TRUE),
-					"config_name"=step["config_name"]
+					"config_name"=step_data["config_name"]
 				)
 			)
 
@@ -295,14 +258,3 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 
 /datum/greyscale_modify_menu/proc/DefaultApply()
 	target.set_greyscale(split_colors, config.type)
-
-/// Gets the top level type that first uses the configuration in this type path
-/datum/greyscale_modify_menu/proc/SetupConfigOwner()
-	var/atom/current = target.type
-	var/atom/parent = target.parent_type
-	if(!initial(current.greyscale_config))
-		return
-	while(initial(current.greyscale_config) == initial(parent.greyscale_config))
-		current = parent
-		parent = type2parent(current)
-	config_owner_type = current

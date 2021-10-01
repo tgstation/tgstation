@@ -14,7 +14,7 @@
 	var/obj/item/radio/radio
 	var/radio_channel = RADIO_CHANNEL_SUPPLY
 
-/obj/machinery/computer/chef_order/Initialize(mapload)
+/obj/machinery/computer/chef_order/Initialize()
 	. = ..()
 	radio = new(src)
 	radio.frequency = FREQ_SUPPLY

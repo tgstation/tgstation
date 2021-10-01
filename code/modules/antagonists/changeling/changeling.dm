@@ -11,7 +11,6 @@
 	antag_hud_type = ANTAG_HUD_CHANGELING
 	antag_hud_name = "changeling"
 	hijack_speed = 0.5
-	ui_name = "AntagInfoChangeling"
 	suicide_cry = "FOR THE HIVE!!"
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
@@ -30,6 +29,8 @@
 	var/chem_recharge_slowdown = 0
 	var/sting_range = 2
 	var/geneticdamage = 0
+	var/was_absorbed = FALSE //if they were absorbed by another ling already.
+	var/isabsorbing = FALSE
 	var/islinking = FALSE
 	var/geneticpoints = 10
 	var/total_geneticspoints = 10
@@ -43,8 +44,6 @@
 	var/datum/action/changeling/sting/chosen_sting
 	var/datum/cellular_emporium/cellular_emporium
 	var/datum/action/innate/cellular_emporium/emporium_action
-
-	var/hive_name
 
 	var/static/list/all_powers = typecacheof(/datum/action/changeling,TRUE)
 
@@ -63,13 +62,12 @@
 		"s_store" = /obj/item/changeling,
 	)
 
-	var/list/stolen_memories = list()
-
 /datum/antagonist/changeling/New()
 	. = ..()
-	hive_name = hive_name()
-	for(var/datum/antagonist/changeling/other_ling in GLOB.antagonists)
-		if(!other_ling.owner || other_ling.owner == owner)
+	for(var/datum/antagonist/changeling/C in GLOB.antagonists)
+		if(!C.owner || C.owner == owner)
+			continue
+		if(C.was_absorbed) //make sure the other ling wasn't already killed by another one. only matters if the changeling that absorbed them was gibbed after.
 			continue
 		competitive_objectives = TRUE
 		break
@@ -91,7 +89,6 @@
 	if(give_objectives)
 		forge_objectives()
 	owner.current.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue. We are able to transform our body after all.
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	. = ..()
 
 /datum/antagonist/changeling/on_removal()
@@ -242,7 +239,7 @@
 			return TRUE
 	return FALSE
 
-/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, verbose = TRUE)
+/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, verbose=1)
 	var/mob/living/carbon/user = owner.current
 	if(!istype(user))
 		return
@@ -391,6 +388,15 @@
 	handle_clown_mutation(M, removing = FALSE)
 	UnregisterSignal(owner.current, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
 
+
+/datum/antagonist/changeling/greet()
+	if (you_are_greet)
+		to_chat(owner.current, span_boldannounce("You are a changeling! You have absorbed and taken the form of a human."))
+	to_chat(owner.current, "<b>You must complete the following tasks:</b>")
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+
+	owner.announce_objectives()
+
 /datum/antagonist/changeling/farewell()
 	to_chat(owner.current, span_userdanger("You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!"))
 
@@ -418,10 +424,16 @@
 			objectives += ac
 
 	if(prob(60))
-		var/datum/objective/steal/steal_objective = new
-		steal_objective.owner = owner
-		steal_objective.find_target()
-		objectives += steal_objective
+		if(prob(85))
+			var/datum/objective/steal/steal_objective = new
+			steal_objective.owner = owner
+			steal_objective.find_target()
+			objectives += steal_objective
+		else
+			var/datum/objective/download/download_objective = new
+			download_objective.owner = owner
+			download_objective.gen_amount_goal()
+			objectives += download_objective
 
 	var/list/active_ais = active_ais()
 	if(active_ais.len && prob(100/GLOB.joined_player_list.len))
@@ -460,6 +472,11 @@
 			identity_theft.find_target()
 			objectives += identity_theft
 		escape_objective_possible = FALSE
+
+
+/datum/antagonist/changeling/admin_add(datum/mind/new_owner,mob/admin)
+	. = ..()
+	to_chat(new_owner.current, span_boldannounce("Our powers have awoken. A flash of memory returns to us...we are a changeling!"))
 
 /datum/antagonist/changeling/get_admin_commands()
 	. = ..()
@@ -677,44 +694,6 @@
 
 	return parts.Join("<br>")
 
-/datum/antagonist/changeling/get_preview_icon()
-	var/icon/final_icon = render_preview_outfit(/datum/outfit/changeling)
-	var/icon/split_icon = render_preview_outfit(/datum/outfit/job/engineer)
-
-	final_icon.Shift(WEST, world.icon_size / 2)
-	final_icon.Shift(EAST, world.icon_size / 2)
-
-	split_icon.Shift(EAST, world.icon_size / 2)
-	split_icon.Shift(WEST, world.icon_size / 2)
-
-	final_icon.Blend(split_icon, ICON_OVERLAY)
-
-	return finish_preview_icon(final_icon)
-
-/datum/antagonist/changeling/ui_data(mob/user)
-	var/list/data = list()
-	var/list/memories = list()
-
-	for(var/memory_key in stolen_memories)
-		memories += list(list("name" = memory_key, "story" = stolen_memories[memory_key]))
-
-	data["memories"] = memories
-	data["hive_name"] = hive_name
-	data["stolen_antag_info"] = antag_memory
-	data["objectives"] = get_objectives()
-	return data
-
-/datum/memory_panel/ui_data(mob/user)
-	var/list/data = list()
-	var/list/memories = list()
-
-	for(var/memory_key as anything in user?.mind.memories)
-		var/datum/memory/memory =  user.mind.memories[memory_key]
-		memories += list(list("name" = memory.name, "quality" = memory.story_value))
-
-	data["memories"] = memories
-	return data
-
 // Changelings spawned from non-changeling headslugs (IE, due to being transformed into a headslug as a non-ling). Weaker than a normal changeling.
 /datum/antagonist/changeling/headslug
 	name = "Headslug Changeling"
@@ -734,10 +713,4 @@
 		to_chat(owner, span_boldannounce("You are a fresh changeling birthed from a headslug! You aren't as strong as a normal changeling, as you are newly born."))
 	if(policy)
 		to_chat(owner, policy)
-
-/datum/outfit/changeling
-	name = "Changeling"
-
-	head = /obj/item/clothing/head/helmet/changeling
-	suit = /obj/item/clothing/suit/armor/changeling
-	l_hand = /obj/item/melee/arm_blade
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)

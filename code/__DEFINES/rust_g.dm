@@ -102,9 +102,7 @@
 #define rustg_sql_disconnect_pool(handle) call(RUST_G, "sql_disconnect_pool")(handle)
 #define rustg_sql_check_query(job_id) call(RUST_G, "sql_check_query")("[job_id]")
 
-#define rustg_read_toml_file(path) json_decode(call(RUST_G, "toml_file_to_json")(path) || "null")
-
-#define rustg_url_encode(text) call(RUST_G, "url_encode")("[text]")
+#define rustg_url_encode(text) call(RUST_G, "url_encode")(text)
 #define rustg_url_decode(text) call(RUST_G, "url_decode")(text)
 
 #ifdef RUSTG_OVERRIDE_BUILTINS

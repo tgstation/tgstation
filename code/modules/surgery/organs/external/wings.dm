@@ -4,7 +4,7 @@
 	slot = ORGAN_SLOT_EXTERNAL_WINGS
 	layers = EXTERNAL_BEHIND | EXTERNAL_ADJACENT | EXTERNAL_FRONT
 
-	feature_key = "wings"
+	preference = "wings"
 
 /obj/item/organ/external/wings/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!human.wear_suit)
@@ -21,9 +21,9 @@
 	var/datum/action/innate/flight/fly
 
 	///The preference type for opened wings
-	var/wings_open_feature_key = "wingsopen"
+	var/wings_open_preference = "wingsopen"
 	///The preference type for closed wings
-	var/wings_closed_feature_key = "wings"
+	var/wings_closed_preference = "wings"
 
 	///Are our wings open or closed?
 	var/wings_open = FALSE
@@ -120,7 +120,7 @@
 
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/external/wings/functional/proc/open_wings()
-	feature_key = wings_open_feature_key
+	preference = wings_open_preference
 	wings_open = TRUE
 
 	cache_key = generate_icon_cache() //we've changed preference to open, so we only need to update the key and ask for an update to change our sprite
@@ -128,7 +128,7 @@
 
 ///close our wings
 /obj/item/organ/external/wings/functional/proc/close_wings()
-	feature_key = wings_closed_feature_key
+	preference = wings_closed_preference
 	wings_open = FALSE
 
 	cache_key = generate_icon_cache()
@@ -157,8 +157,7 @@
 
 ///Moth wings! They can flutter in low-grav and burn off in heat
 /obj/item/organ/external/wings/moth
-	feature_key = "moth_wings"
-	preference = "feature_moth_wings"
+	preference = "moth_wings"
 	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
 
 	dna_block = DNA_MOTH_WINGS_BLOCK

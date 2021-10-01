@@ -14,7 +14,7 @@
 	var/turf/listeningTo
 	var/hearing_range = 3
 
-/obj/item/assembly/infra/Initialize(mapload)
+/obj/item/assembly/infra/Initialize()
 	. = ..()
 	beams = list()
 	START_PROCESSING(SSobj, src)

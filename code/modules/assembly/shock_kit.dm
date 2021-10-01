@@ -13,7 +13,7 @@
 	QDEL_NULL(electropack_part)
 	return ..()
 
-/obj/item/assembly/shock_kit/Initialize(mapload)
+/obj/item/assembly/shock_kit/Initialize()
 	. = ..()
 	if(!helmet_part)
 		helmet_part = new(src)

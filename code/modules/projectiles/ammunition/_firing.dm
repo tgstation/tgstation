@@ -30,7 +30,6 @@
 	loaded_projectile.original = target
 	loaded_projectile.firer = user
 	loaded_projectile.fired_from = fired_from
-	loaded_projectile.hit_prone_targets = user.combat_mode
 	if (zone_override)
 		loaded_projectile.def_zone = zone_override
 	else
@@ -64,9 +63,8 @@
 	if(!direct_target)
 		var/modifiers = params2list(params)
 		loaded_projectile.preparePixelProjectile(target, user, modifiers, spread)
-	var/obj/projectile/loaded_projectile_cache = loaded_projectile
+	loaded_projectile.fire(null, direct_target)
 	loaded_projectile = null
-	loaded_projectile_cache.fire(null, direct_target)
 	return TRUE
 
 /obj/item/ammo_casing/proc/spread(turf/target, turf/current, distro)

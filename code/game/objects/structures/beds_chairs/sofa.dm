@@ -6,7 +6,7 @@
 	item_chair = null
 	var/mutable_appearance/armrest
 
-/obj/structure/chair/sofa/Initialize(mapload)
+/obj/structure/chair/sofa/Initialize()
 	armrest = mutable_appearance(icon, "[icon_state]_armrest", ABOVE_MOB_LAYER)
 	return ..()
 

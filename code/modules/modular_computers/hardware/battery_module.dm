@@ -16,8 +16,7 @@
 		battery = new battery_type(src)
 
 /obj/item/computer_hardware/battery/Destroy()
-	if(battery)
-		QDEL_NULL(battery)
+	battery = null
 	return ..()
 
 ///What happens when the battery is removed (or deleted) from the module, through try_eject() or not.

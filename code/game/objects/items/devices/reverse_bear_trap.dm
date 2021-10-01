@@ -21,7 +21,7 @@
 	var/datum/looping_sound/reverse_bear_trap/soundloop
 	var/datum/looping_sound/reverse_bear_trap_beep/soundloop2
 
-/obj/item/reverse_bear_trap/Initialize(mapload)
+/obj/item/reverse_bear_trap/Initialize()
 	. = ..()
 	soundloop = new(src)
 	soundloop2 = new(src)

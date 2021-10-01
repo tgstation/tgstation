@@ -42,7 +42,7 @@
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		if(prob(30))
 			paper.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
-			paper.AddElement(/datum/element/honkspam)
+			paper.AddComponent(/datum/component/honkspam)
 	return paper
 
 /obj/item/paper_bin/Destroy()
@@ -78,7 +78,7 @@
 		var/mob/living/living_mob = user
 		if(!(living_mob.mobility_flags & MOBILITY_PICKUP))
 			return
-	user.changeNext_move(CLICK_CD_RAPID)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(at_overlay_limit())
 		dump_contents(drop_location(), TRUE)
 		return

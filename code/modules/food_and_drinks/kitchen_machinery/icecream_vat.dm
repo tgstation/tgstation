@@ -25,7 +25,7 @@
 		/datum/reagent/consumable/berryjuice = 6,
 		/datum/reagent/consumable/ethanol/singulo = 6)
 
-/obj/machinery/icecream_vat/Initialize(mapload)
+/obj/machinery/icecream_vat/Initialize()
 	. = ..()
 
 	if(!cone_prototypes)

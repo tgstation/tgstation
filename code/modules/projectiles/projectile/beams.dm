@@ -34,7 +34,7 @@
 	damage = 25
 	speed = 0.6 // higher power = faster, that's how light works right
 
-/obj/projectile/beam/laser/hellfire/Initialize(mapload)
+/obj/projectile/beam/laser/hellfire/Initialize()
 	. = ..()
 	transform *= 2
 

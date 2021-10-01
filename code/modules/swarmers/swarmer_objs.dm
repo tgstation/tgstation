@@ -56,9 +56,9 @@
 	///Reference to all the swarmers currently alive this beacon has created
 	var/list/mob/living/simple_animal/hostile/swarmer/swarmerlist
 
-/obj/structure/swarmer_beacon/Initialize(mapload)
+/obj/structure/swarmer_beacon/Initialize()
 	. = ..()
-	SSpoints_of_interest.make_point_of_interest(src)
+	AddElement(/datum/element/point_of_interest)
 
 /obj/structure/swarmer_beacon/attack_ghost(mob/user)
 	. = ..()
@@ -130,7 +130,7 @@
 	max_integrity = 10
 	density = FALSE
 
-/obj/structure/swarmer/trap/Initialize(mapload)
+/obj/structure/swarmer/trap/Initialize()
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
@@ -169,7 +169,7 @@
 	icon_state = "disintegrate"
 	duration = 1 SECONDS
 
-/obj/effect/temp_visual/swarmer/disintegration/Initialize(mapload)
+/obj/effect/temp_visual/swarmer/disintegration/Initialize()
 	. = ..()
 	playsound(loc, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 

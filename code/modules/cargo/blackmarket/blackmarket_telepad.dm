@@ -35,7 +35,7 @@
 	/// Queue for purchases that the machine should receive and send.
 	var/list/datum/blackmarket_purchase/queue = list()
 
-/obj/machinery/ltsrbt/Initialize(mapload)
+/obj/machinery/ltsrbt/Initialize()
 	. = ..()
 	SSblackmarket.telepads += src
 

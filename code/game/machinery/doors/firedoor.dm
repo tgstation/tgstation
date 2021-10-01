@@ -26,7 +26,7 @@
 	var/list/affecting_areas
 	var/being_held_open = FALSE
 
-/obj/machinery/door/firedoor/Initialize(mapload)
+/obj/machinery/door/firedoor/Initialize()
 	. = ..()
 	CalculateAffectingAreas()
 
@@ -263,7 +263,7 @@
 	opacity = TRUE
 	density = TRUE
 
-/obj/machinery/door/firedoor/border_only/Initialize(mapload)
+/obj/machinery/door/firedoor/border_only/Initialize()
 	. = ..()
 
 	var/static/list/loc_connections = list(
@@ -279,8 +279,6 @@
 
 /obj/machinery/door/firedoor/border_only/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
-	if(leaving.movement_type & PHASING)
-		return
 	if(leaving == src)
 		return // Let's not block ourselves.
 

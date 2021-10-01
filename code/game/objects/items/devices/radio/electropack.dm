@@ -16,7 +16,7 @@
 	var/frequency = FREQ_ELECTROPACK
 	var/shock_cooldown = FALSE
 
-/obj/item/electropack/Initialize(mapload)
+/obj/item/electropack/Initialize()
 	. = ..()
 	set_frequency(frequency)
 

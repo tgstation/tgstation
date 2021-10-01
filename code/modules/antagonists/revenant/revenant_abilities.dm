@@ -143,7 +143,7 @@
 	var/unlock_amount = 100 //How much essence it costs to unlock
 	var/cast_amount = 50 //How much essence it costs to use
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/Initialize(mapload)
+/obj/effect/proc_holder/spell/aoe_turf/revenant/Initialize()
 	. = ..()
 	if(locked)
 		name = "[initial(name)] ([unlock_amount]SE)"
@@ -307,7 +307,7 @@
 			new /obj/effect/temp_visual/revenant(bot.loc)
 			bot.locked = FALSE
 			bot.open = TRUE
-			bot.emag_act(user)
+			bot.emag_act()
 	for(var/mob/living/carbon/human/human in T)
 		if(human == user)
 			continue
@@ -322,7 +322,7 @@
 		if(prob(20))
 			if(prob(50))
 				new /obj/effect/temp_visual/revenant(thing.loc)
-			thing.emag_act(user)
+			thing.emag_act(null)
 	for(var/mob/living/silicon/robot/S in T) //Only works on cyborgs, not AI
 		playsound(S, 'sound/machines/warning-buzzer.ogg', 50, TRUE)
 		new /obj/effect/temp_visual/revenant(S.loc)

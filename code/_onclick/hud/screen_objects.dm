@@ -266,7 +266,7 @@
 	icon_state = "combat_off"
 	screen_loc = ui_combat_toggle
 
-/atom/movable/screen/combattoggle/Initialize(mapload)
+/atom/movable/screen/combattoggle/Initialize()
 	. = ..()
 	update_appearance()
 
@@ -673,9 +673,7 @@
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 
-INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
-
-/atom/movable/screen/splash/Initialize(mapload, client/C, visible, use_previous_title)
+/atom/movable/screen/splash/New(client/C, visible, use_previous_title) //TODO: Make this use INITIALIZE_IMMEDIATE, except its not easy
 	. = ..()
 	if(!istype(C))
 		return
@@ -690,7 +688,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 			icon = SStitle.icon
 	else
 		if(!SStitle.previous_icon)
-			return INITIALIZE_HINT_QDEL
+			qdel(src)
+			return
 		icon = SStitle.previous_icon
 
 	holder.screen += src

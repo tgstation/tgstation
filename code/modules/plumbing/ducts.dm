@@ -70,8 +70,11 @@ All the important duct code:
 /obj/machinery/duct/proc/attempt_connect()
 
 	for(var/atom/movable/AM in loc)
-		for(var/datum/component/plumbing/plumber as anything in AM.GetComponents(/datum/component/plumbing))
-			if(plumber.active)
+		for(var/plumber in AM.GetComponents(/datum/component/plumbing))
+			if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
+				continue
+			var/datum/component/plumbing/plumb = plumber
+			if(plumb.active)
 				disconnect_duct() //let's not built under plumbing machinery
 				return
 
@@ -88,7 +91,9 @@ All the important duct code:
 	if(istype(AM, /obj/machinery/duct))
 		return connect_duct(AM, direction, ignore_color)
 
-	for(var/datum/component/plumbing/plumber as anything in AM.GetComponents(/datum/component/plumbing))
+	for(var/plumber in AM.GetComponents(/datum/component/plumbing))
+		if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
+			continue
 		. += connect_plumber(plumber, direction) //so that if one is true, all is true. beautiful.
 
 ///connect to a duct
@@ -328,7 +333,7 @@ All the important duct code:
 	item_flags = NOBLUDGEON
 	merge_type = /obj/item/stack/ducts
 	///Color of our duct
-	var/duct_color = "omni"
+	var/duct_color = "grey"
 	///Default layer of our duct
 	var/duct_layer = "Default Layer"
 	///Assoc index with all the available layers. yes five might be a bit much. Colors uses a global by the way

@@ -51,7 +51,7 @@
 		LIGHT_COLOR_FIRE = image(icon = src.icon, icon_state = "light_on-10")
 		)
 
-/turf/open/floor/light/Initialize(mapload)
+/turf/open/floor/light/Initialize()
 	. = ..()
 	update_appearance()
 	if(!length(lighttile_designs))

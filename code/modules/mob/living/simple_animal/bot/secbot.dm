@@ -23,7 +23,7 @@
 
 	combat_mode = TRUE
 
-	var/baton_type = /obj/item/melee/baton/security
+	var/baton_type = /obj/item/melee/baton
 	var/obj/item/weapon
 	var/mob/living/carbon/target
 	var/oldtarget_name
@@ -56,7 +56,7 @@
 	desc = "It's Commander Beep O'sky's smaller, just-as aggressive cousin, Pipsqueak."
 	commissioned = FALSE
 
-/mob/living/simple_animal/bot/secbot/beepsky/jr/Initialize(mapload)
+/mob/living/simple_animal/bot/secbot/beepsky/jr/Initialize()
 	. = ..()
 	resize = 0.8
 	update_transform()
@@ -74,7 +74,7 @@
 	desc = "It's Officer Pingsky! Delegated to satellite guard duty for harbouring anti-human sentiment."
 	radio_channel = RADIO_CHANNEL_AI_PRIVATE
 
-/mob/living/simple_animal/bot/secbot/Initialize(mapload)
+/mob/living/simple_animal/bot/secbot/Initialize()
 	. = ..()
 	weapon = new baton_type()
 	update_appearance(UPDATE_ICON)

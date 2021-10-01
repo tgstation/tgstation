@@ -34,7 +34,7 @@
 	/// Whether to allow players to toggle the water reclaimer.
 	var/can_toggle_refill = TRUE
 
-/obj/machinery/shower/Initialize(mapload)
+/obj/machinery/shower/Initialize()
 	. = ..()
 	create_reagents(reagent_capacity)
 	reagents.add_reagent(reagent_id, reagent_capacity)
@@ -203,7 +203,7 @@
 		return
 	return ..()
 
-/obj/structure/showerframe/Initialize(mapload)
+/obj/structure/showerframe/Initialize()
 	. = ..()
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
 

@@ -541,7 +541,7 @@
 	nodamage = FALSE
 	embed_falloff_tile = 0
 
-/obj/projectile/bullet/reusable/lollipop/Initialize(mapload)
+/obj/projectile/bullet/reusable/lollipop/Initialize()
 	. = ..()
 	var/obj/item/food/lollipop/S = new ammo_type(src)
 	color2 = S.headcolor
@@ -601,7 +601,7 @@
 	energy = 50000
 	energy_recharge = 5000
 
-/obj/item/borg/projectile_dampen/Initialize(mapload)
+/obj/item/borg/projectile_dampen/Initialize()
 	. = ..()
 	projectile_effect = image('icons/effects/fields.dmi', "projectile_dampen_effect")
 	tracked = list()
@@ -764,7 +764,7 @@
 	name = "medical hud"
 	icon_state = "healthhud"
 
-/obj/item/borg/sight/hud/med/Initialize(mapload)
+/obj/item/borg/sight/hud/med/Initialize()
 	. = ..()
 	hud = new /obj/item/clothing/glasses/hud/health(src)
 
@@ -773,7 +773,7 @@
 	name = "security hud"
 	icon_state = "securityhud"
 
-/obj/item/borg/sight/hud/sec/Initialize(mapload)
+/obj/item/borg/sight/hud/sec/Initialize()
 	. = ..()
 	hud = new /obj/item/clothing/glasses/hud/security(src)
 
@@ -791,7 +791,7 @@
 	var/obj/item/stored
 	var/list/storable = list()
 
-/obj/item/borg/apparatus/Initialize(mapload)
+/obj/item/borg/apparatus/Initialize()
 	. = ..()
 	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safedecon)
 
@@ -885,7 +885,7 @@
 	storable = list(/obj/item/reagent_containers/glass/beaker,
 					/obj/item/reagent_containers/glass/bottle)
 
-/obj/item/borg/apparatus/beaker/Initialize(mapload)
+/obj/item/borg/apparatus/beaker/Initialize()
 	. = ..()
 	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
 	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, .proc/on_stored_updated_icon)
@@ -947,7 +947,7 @@
 	storable = list(/obj/item/reagent_containers/food/drinks,
 					/obj/item/reagent_containers/food/condiment)
 
-/obj/item/borg/apparatus/beaker/service/Initialize(mapload)
+/obj/item/borg/apparatus/beaker/service/Initialize()
 	. = ..()
 	stored = new /obj/item/reagent_containers/food/drinks/drinkingglass(src)
 	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, .proc/on_stored_updated_icon)
@@ -1015,7 +1015,7 @@
 	storable = list(/obj/item/circuitboard,
 				/obj/item/electronics)
 
-/obj/item/borg/apparatus/circuit/Initialize(mapload)
+/obj/item/borg/apparatus/circuit/Initialize()
 	. = ..()
 	update_appearance()
 

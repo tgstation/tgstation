@@ -3,7 +3,7 @@
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "x2"
 	anchored = TRUE
-	layer = TURF_LAYER
+	layer = MID_LANDMARK_LAYER
 	invisibility = INVISIBILITY_ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -15,7 +15,7 @@
 
 INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
-/obj/effect/landmark/Initialize(mapload)
+/obj/effect/landmark/Initialize()
 	. = ..()
 	GLOB.landmarks_list += src
 
@@ -37,7 +37,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	if(delete_after_roundstart)
 		qdel(src)
 
-/obj/effect/landmark/start/Initialize(mapload)
+/obj/effect/landmark/start/Initialize()
 	. = ..()
 	GLOB.start_landmarks_list += src
 	if(jobspawn_override)
@@ -219,8 +219,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	/// What department this spawner is for
 	var/department
 
-/obj/effect/landmark/start/depsec/Initialize(mapload)
-	. = ..()
+/obj/effect/landmark/start/depsec/New()
+	..()
 	LAZYADDASSOCLIST(GLOB.department_security_spawns, department, src)
 
 /obj/effect/landmark/start/depsec/Destroy()
@@ -250,7 +250,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "wiznerd_spawn"
 
-/obj/effect/landmark/start/wizard/Initialize(mapload)
+/obj/effect/landmark/start/wizard/Initialize()
 	..()
 	GLOB.wizardstart += loc
 	return INITIALIZE_HINT_QDEL
@@ -260,7 +260,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "snukeop_spawn"
 
-/obj/effect/landmark/start/nukeop/Initialize(mapload)
+/obj/effect/landmark/start/nukeop/Initialize()
 	..()
 	GLOB.nukeop_start += loc
 	return INITIALIZE_HINT_QDEL
@@ -270,7 +270,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "snukeop_leader_spawn"
 
-/obj/effect/landmark/start/nukeop_leader/Initialize(mapload)
+/obj/effect/landmark/start/nukeop_leader/Initialize()
 	..()
 	GLOB.nukeop_leader_start += loc
 	return INITIALIZE_HINT_QDEL
@@ -282,7 +282,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/start/new_player
 	name = "New Player"
 
-/obj/effect/landmark/start/new_player/Initialize(mapload)
+/obj/effect/landmark/start/new_player/Initialize()
 	..()
 	GLOB.newplayer_start += loc
 	return INITIALIZE_HINT_QDEL
@@ -405,11 +405,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/event_spawn
 	name = "generic event spawn"
 	icon_state = "generic_event"
-	layer = OBJ_LAYER
+	layer = HIGH_LANDMARK_LAYER
 
 
-/obj/effect/landmark/event_spawn/Initialize(mapload)
-	. = ..()
+/obj/effect/landmark/event_spawn/New()
+	..()
 	GLOB.generic_event_spawns += src
 
 /obj/effect/landmark/event_spawn/Destroy()
@@ -419,9 +419,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/ruin
 	var/datum/map_template/ruin/ruin_template
 
-/obj/effect/landmark/ruin/Initialize(mapload, my_ruin_template)
-	. = ..()
+/obj/effect/landmark/ruin/New(loc, my_ruin_template)
 	name = "ruin_[GLOB.ruin_landmarks.len + 1]"
+	..(loc)
 	ruin_template = my_ruin_template
 	GLOB.ruin_landmarks |= src
 
@@ -451,23 +451,16 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "hangover spawn"
 	icon_state = "hangover_spawn"
 
-	/// A list of everything this hangover spawn created
-	var/list/debris = list()
-
-/obj/effect/landmark/start/hangover/Initialize(mapload)
+/obj/effect/landmark/start/hangover/Initialize()
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
-
-/obj/effect/landmark/start/hangover/Destroy()
-	debris = null
-	return ..()
 
 /obj/effect/landmark/start/hangover/LateInitialize()
 	. = ..()
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER))
 		return
 	if(prob(60))
-		debris += new /obj/effect/decal/cleanable/vomit(get_turf(src))
+		new /obj/effect/decal/cleanable/vomit(get_turf(src))
 	if(prob(70))
 		var/bottle_count = rand(1, 3)
 		for(var/index in 1 to bottle_count)
@@ -481,7 +474,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 					break
 			if(dense_object)
 				continue
-			debris += new /obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty(turf_to_spawn_on)
+			new /obj/item/reagent_containers/food/drinks/beer/almost_empty(turf_to_spawn_on)
 
 ///Spawns the mob with some drugginess/drunkeness, and some disgust.
 /obj/effect/landmark/start/hangover/proc/make_hungover(mob/hangover_mob)

@@ -53,7 +53,7 @@
 /obj/item/uplink/nuclear_restricted
 	uplink_flag = UPLINK_NUKE_OPS
 
-/obj/item/uplink/nuclear_restricted/Initialize(mapload)
+/obj/item/uplink/nuclear_restricted/Initialize()
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.allow_restricted = FALSE

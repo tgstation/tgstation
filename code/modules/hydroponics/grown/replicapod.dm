@@ -56,7 +56,7 @@
 	var/contains_sample = FALSE
 	var/being_harvested = FALSE
 
-/obj/item/seeds/replicapod/Initialize(mapload)
+/obj/item/seeds/replicapod/Initialize()
 	. = ..()
 
 	create_reagents(volume, INJECTABLE|DRAWABLE)

@@ -77,7 +77,10 @@
 		investigate_log("[key_name(usr)] built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at \a [src]([type]).")
 	for(var/i in 1 to amount)
-		new path(get_turf(src))
+		var/obj/item/I = new path(get_turf(src))
+		if(efficient_with(I.type))
+			I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
+			I.set_custom_materials(matlist)
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 
 /**
@@ -307,6 +310,7 @@
 /obj/machinery/rnd/production/Topic(raw, ls)
 	if(..())
 		return
+	add_fingerprint(usr)
 	usr.set_machine(src)
 	if(ls["switch_screen"])
 		screen = text2num(ls["switch_screen"])

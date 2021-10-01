@@ -150,10 +150,9 @@
 	/// Short description of what this item is capable of, for radial menu uses
 	var/menu_description = "A standard chaplain's weapon. Fits in pockets. Can be worn on the belt."
 
-/obj/item/nullrod/Initialize(mapload)
+/obj/item/nullrod/Initialize()
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
-	AddElement(/datum/element/bane, /mob/living/simple_animal/revenant, 0, 25, FALSE)
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
@@ -230,7 +229,7 @@
 	attack_verb_simple = list("punch", "cross counter", "pummel")
 	menu_description = "An undroppable god hand dealing burn damage. Disappears if the arm holding it is cut off."
 
-/obj/item/nullrod/godhand/Initialize(mapload)
+/obj/item/nullrod/godhand/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
@@ -245,7 +244,7 @@
 	force = 5
 	slot_flags = ITEM_SLOT_BACK
 	block_chance = 50
-	menu_description = "A red staff which provides a medium chance of blocking incoming attacks via a protective red aura around its user, but deals very low amount of damage. Can be worn only on the back."
+	menu_description = "A red staff which provides a high chance of blocking incoming attacks via a protective red aura around it's user, but deals very low amount of damage. Can be worn only on the back."
 	/// The icon which appears over the mob holding the item
 	var/shield_icon = "shield-red"
 
@@ -259,7 +258,7 @@
 	icon_state = "godstaff-blue"
 	inhand_icon_state = "godstaff-blue"
 	shield_icon = "shield-old"
-	menu_description = "A blue staff which provides a medium chance of blocking incoming attacks via a protective blue aura around its user, but deals very low amount of damage. Can be worn only on the back."
+	menu_description = "A blue staff which provides a high chance of blocking incoming attacks via a protective blue aura around it's user, but deals very low amount of damage. Can be worn only on the back."
 
 /obj/item/nullrod/claymore
 	name = "holy claymore"
@@ -346,8 +345,8 @@
 	name = "light energy sword"
 	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
 	icon = 'icons/obj/transforming_energy.dmi'
-	icon_state = "e_sword_on_blue"
-	inhand_icon_state = "e_sword_on_blue"
+	icon_state = "swordblue"
+	inhand_icon_state = "swordblue"
 	worn_icon_state = "swordblue"
 	slot_flags = ITEM_SLOT_BELT
 	hitsound = 'sound/weapons/blade1.ogg'
@@ -356,15 +355,15 @@
 /obj/item/nullrod/claymore/saber/red
 	name = "dark energy sword"
 	desc = "Woefully ineffective when used on steep terrain."
-	icon_state = "e_sword_on_red"
-	inhand_icon_state = "e_sword_on_red"
+	icon_state = "swordred"
+	inhand_icon_state = "swordred"
 	worn_icon_state = "swordred"
 
 /obj/item/nullrod/claymore/saber/pirate
 	name = "nautical energy sword"
 	desc = "Convincing HR that your religion involved piracy was no mean feat."
-	icon_state = "e_cutlass_on"
-	inhand_icon_state = "e_cutlass_on"
+	icon_state = "cutlass1"
+	inhand_icon_state = "cutlass1"
 	worn_icon_state = "swordred"
 
 /obj/item/nullrod/sord
@@ -403,7 +402,7 @@
 	attack_verb_simple = list("chop", "slice", "cut", "reap")
 	menu_description = "A sharp scythe which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
 
-/obj/item/nullrod/scythe/Initialize(mapload)
+/obj/item/nullrod/scythe/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 70, 110) //the harvest gives a high bonus chance
 
@@ -445,7 +444,7 @@
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Able to awaken a friendly spirit to provide guidance. Very effective at butchering bodies. Can be worn on the back."
 
-/obj/item/nullrod/scythe/talking/Initialize(mapload)
+/obj/item/nullrod/scythe/talking/Initialize()
 	. = ..()
 	AddComponent(/datum/component/spirit_holding)
 
@@ -478,7 +477,7 @@
 	attack_verb_simple = list("smash", "bash", "hammer", "crunch")
 	menu_description = "A war hammer. Capable of tapping knees to measure brain health. Can be worn on the belt."
 
-/obj/item/nullrod/hammer/Initialize(mapload)
+/obj/item/nullrod/hammer/Initialize()
 	. = ..()
 	AddElement(/datum/element/kneejerk)
 
@@ -500,7 +499,7 @@
 	toolspeed = 2 //slower than a real saw
 	menu_description = "An undroppable sharp chainsaw hand. Can be used as a very slow saw tool. Capable of slowly butchering bodies. Disappears if the arm holding it is cut off."
 
-/obj/item/nullrod/chainsaw/Initialize(mapload)
+/obj/item/nullrod/chainsaw/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 30, 100, 0, hitsound)
@@ -518,8 +517,6 @@
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	menu_description = "A sharp dagger. Fits in pockets. Can be worn on the belt. Honk."
 
-#define CHEMICAL_TRANSFER_CHANCE 30
-
 /obj/item/nullrod/pride_hammer
 	name = "Pride-struck Hammer"
 	desc = "It resonates an aura of Pride."
@@ -535,19 +532,21 @@
 	attack_verb_continuous = list("attacks", "smashes", "crushes", "splatters", "cracks")
 	attack_verb_simple = list("attack", "smash", "crush", "splatter", "crack")
 	hitsound = 'sound/weapons/blade1.ogg'
-	menu_description = "A hammer dealing a little less damage due to its user's pride. Has a low chance of transferring some of the user's reagents to the target. Capable of tapping knees to measure brain health. Can be worn on the back."
+	menu_description = "A hammer dealing a little less damage due to it's user's pride. Has a low chance of transferring some of the user's reagents to the target. Capable of tapping knees to measure brain health. Can be worn on the back."
 
-/obj/item/nullrod/pride_hammer/Initialize(mapload)
+/obj/item/nullrod/pride_hammer/Initialize()
 	. = ..()
 	AddElement(/datum/element/kneejerk)
-	AddElement(
-		/datum/element/chemical_transfer,\
-		span_notice("Your pride reflects on %VICTIM."),\
-		span_userdanger("You feel insecure, taking on %ATTACKER's burden."),\
-		CHEMICAL_TRANSFER_CHANCE\
-	)
 
-#undef CHEMICAL_TRANSFER_CHANCE
+/obj/item/nullrod/pride_hammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	if(prob(30) && ishuman(A))
+		var/mob/living/carbon/human/H = A
+		user.reagents.trans_to(H, user.reagents.total_volume, 1, 1, 0, transfered_by = user)
+		to_chat(user, span_notice("Your pride reflects on [H]."))
+		to_chat(H, span_userdanger("You feel insecure, taking on [user]'s burden."))
 
 /obj/item/nullrod/whip
 	name = "holy whip"
@@ -595,7 +594,7 @@
 	bare_wound_bonus = 25
 	menu_description = "An undroppable sharp armblade capable of inflicting deep wounds. Capable of an ineffective butchering of bodies. Disappears if the arm holding it is cut off."
 
-/obj/item/nullrod/armblade/Initialize(mapload)
+/obj/item/nullrod/armblade/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 80, 70)
@@ -619,11 +618,16 @@
 	attack_verb_continuous = list("bites", "eats", "fin slaps")
 	attack_verb_simple = list("bite", "eat", "fin slap")
 	hitsound = 'sound/weapons/bite.ogg'
-	menu_description = "A plushie dealing a little less damage due to its cute form. Capable of blessing one person with the Carp-Sie favor, which grants friendship of all wild space carps. Fits in pockets. Can be worn on the belt."
+	menu_description = "A plushie dealing a little less damage due to it's cute form. Capable of blessing one person with the Carp-Sie favor, which grants friendship of all wild space carps. Fits in pockets. Can be worn on the belt."
+	/// If the item has already been used to bless someone
+	var/used_blessing = FALSE
 
-/obj/item/nullrod/carp/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/faction_granter, "carp", holy_role_required = HOLY_ROLE_PRIEST, grant_message = span_boldnotice("You are blessed by Carp-Sie. Wild space carp will no longer attack you."))
+/obj/item/nullrod/carp/attack_self(mob/living/user)
+	if(used_blessing)
+	else if(user.mind && (user.mind.holy_role))
+		to_chat(user, span_boldnotice("You are blessed by Carp-Sie. Wild space carp will no longer attack you."))
+		user.faction |= "carp"
+		used_blessing = TRUE
 
 /obj/item/nullrod/claymore/bostaff //May as well make it a "claymore" and inherit the blocking
 	name = "monk's staff"
@@ -642,7 +646,7 @@
 	worn_icon_state = "bostaff0"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	menu_description = "A staff which provides a medium-low chance of blocking incoming melee attacks and deals a little less damage due to being made of wood. Can be worn on the back."
+	menu_description = "A staff which provides a medium chance of blocking incoming melee attacks and deals a little less damage due to being made of wood. Can be worn on the back."
 
 /obj/item/nullrod/tribal_knife
 	icon_state = "crysknife"
@@ -658,7 +662,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	item_flags = SLOWS_WHILE_IN_HAND
-	menu_description = "A sharp knife. Randomly speeds or slows its user at a regular intervals. Capable of butchering bodies. Cannot be worn anywhere."
+	menu_description = "A sharp knife. Randomly speeds or slows it's user at a regular intervals. Capable of butchering bodies. Cannot be worn anywhere."
 
 /obj/item/nullrod/tribal_knife/Initialize(mapload)
 	. = ..()

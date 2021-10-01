@@ -44,7 +44,7 @@
 	icon = 'icons/obj/halloween_items.dmi'
 	icon_state = "treatbag"
 
-/obj/item/storage/spooky/Initialize(mapload)
+/obj/item/storage/spooky/Initialize()
 	. = ..()
 	for(var/distrobuteinbag in 0 to 5)
 		var/type = pick(/obj/item/food/cookie/sugar/spookyskull,

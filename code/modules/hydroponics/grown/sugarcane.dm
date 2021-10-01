@@ -44,7 +44,6 @@
 	growing_icon = 'icons/obj/hydroponics/growing.dmi'
 	icon_dead = "bamboo-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = null
 
 /obj/item/grown/log/bamboo
 	seed = /obj/item/seeds/bamboo

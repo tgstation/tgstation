@@ -20,7 +20,7 @@
 				<b>Integrity:</b> Implant will last so long as the subject is alive."}
 	return dat
 
-/obj/item/implant/chem/Initialize(mapload)
+/obj/item/implant/chem/Initialize()
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
 	GLOB.tracked_chem_implants += src

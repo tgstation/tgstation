@@ -9,7 +9,7 @@
 	icon_state = "unknown"
 	layer = AREA_LAYER
 	//Keeping this on the default plane, GAME_PLANE, will make area overlays fail to render on FLOOR_PLANE.
-	plane = AREA_PLANE
+	plane = BLACKNESS_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
 
@@ -92,9 +92,6 @@
 	///Used to decide what the maximum time between ambience is
 	var/max_ambience_cooldown = 90 SECONDS
 
-	var/list/air_vent_info = list()
-	var/list/air_scrub_info = list()
-
 /**
  * A list of teleport locations
  *
@@ -153,10 +150,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	icon_state = ""
 	if(!ambientsounds)
 		ambientsounds = GLOB.ambience_assoc[ambience_index]
-
-	if(area_flags & AREA_USES_STARLIGHT)
-		static_lighting = CONFIG_GET(flag/starlight)
-
 	if(requires_power)
 		luminosity = 0
 	else
@@ -164,13 +157,20 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		power_equip = TRUE
 		power_environ = TRUE
 
-		if(static_lighting)
+		if(dynamic_lighting == DYNAMIC_LIGHTING_FORCED)
+			dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 			luminosity = 0
+		else if(dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
+			dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	if(dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
+		dynamic_lighting = CONFIG_GET(flag/starlight) ? DYNAMIC_LIGHTING_ENABLED : DYNAMIC_LIGHTING_DISABLED
+
 
 	. = ..()
 
-	if(!static_lighting)
+	if(!IS_DYNAMIC_LIGHTING(src))
 		blend_mode = BLEND_MULTIPLY
+		add_overlay(/obj/effect/fullbright)
 
 	reg_in_areas_in_z()
 
@@ -178,8 +178,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(!network_root_id)
 			network_root_id = STATION_NETWORK_ROOT // default to station root because this might be created with a blueprint
 		SSnetworks.assign_area_network_id(src)
-
-	update_base_lighting()
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -435,6 +433,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Updates the area icon, calls power change on all machinees in the area, and sends the `COMSIG_AREA_POWER_CHANGE` signal.
  */
 /area/proc/power_change()
+	for(var/obj/machinery/M in src) // for each machine in the area
+		M.power_change() // reverify power status (to update icons etc.)
 	SEND_SIGNAL(src, COMSIG_AREA_POWER_CHANGE)
 	update_appearance()
 
@@ -453,28 +453,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			power_usage[powerchannel] += value
 
 /**
- * Remove a static amount of power load to an area
+ * Clear all power usage in area
  *
- * Possible channels
- * *AREA_USAGE_STATIC_EQUIP
- * *AREA_USAGE_STATIC_LIGHT
- * *AREA_USAGE_STATIC_ENVIRON
- */
-/area/proc/removeStaticPower(value, powerchannel)
-	switch(powerchannel)
-		if(AREA_USAGE_STATIC_START to AREA_USAGE_STATIC_END)
-			power_usage[powerchannel] -= value
-
-/**
- * Clear all non-static power usage in area
- *
- * Clears all power used for the dynamic equipment, light and environment channels
+ * Clears all power used for equipment, light and environment channels
  */
 /area/proc/clear_usage()
-	power_usage[AREA_USAGE_EQUIP] = 0
-	power_usage[AREA_USAGE_LIGHT] = 0
-	power_usage[AREA_USAGE_ENVIRON] = 0
-
+	for(var/i in AREA_USAGE_DYNAMIC_START to AREA_USAGE_DYNAMIC_END)
+		power_usage[i] = 0
 
 /**
  * Add a power value amount to the stored used_x variables

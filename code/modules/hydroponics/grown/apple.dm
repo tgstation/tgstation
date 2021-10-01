@@ -37,7 +37,7 @@
 	maturation = 10
 	production = 10
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = null
+	mutatelist = list()
 	reagents_add = list(/datum/reagent/gold = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 40 // Alchemy!
 

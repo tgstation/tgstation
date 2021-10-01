@@ -28,7 +28,7 @@
 /obj/machinery/electrolyzer/get_cell()
 	return cell
 
-/obj/machinery/electrolyzer/Initialize(mapload)
+/obj/machinery/electrolyzer/Initialize()
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)

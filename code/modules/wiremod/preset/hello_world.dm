@@ -5,7 +5,7 @@
  */
 /obj/item/integrated_circuit/loaded/hello_world
 
-/obj/item/integrated_circuit/loaded/hello_world/Initialize(mapload)
+/obj/item/integrated_circuit/loaded/hello_world/Initialize()
 	. = ..()
 	var/obj/item/circuit_component/speech/speech = new()
 	add_component(speech)

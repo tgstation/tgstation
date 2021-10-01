@@ -27,7 +27,7 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
-/mob/living/simple_animal/pet/dog/Initialize(mapload)
+/mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "woofs happily!")
 	add_cell_sample()
@@ -124,19 +124,19 @@
 	animal_species = /mob/living/simple_animal/pet/dog/corgi/exoticcorgi
 	nofur = TRUE
 
-/mob/living/simple_animal/pet/dog/Initialize(mapload)
+/mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
 	var/dog_area = get_area(src)
 	for(var/obj/structure/bed/dogbed/D in dog_area)
 		if(D.update_owner(src)) //No muscling in on my turf you fucking parrot
 			break
 
-/mob/living/simple_animal/pet/dog/corgi/Initialize(mapload)
+/mob/living/simple_animal/pet/dog/corgi/Initialize()
 	. = ..()
 	regenerate_icons()
 	AddElement(/datum/element/strippable, GLOB.strippable_corgi_items)
 
-/mob/living/simple_animal/pet/dog/corgi/exoticcorgi/Initialize(mapload)
+/mob/living/simple_animal/pet/dog/corgi/exoticcorgi/Initialize()
 		. = ..()
 		var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 		add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
@@ -430,7 +430,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	var/memory_saved = FALSE
 	var/saved_head //path
 
-/mob/living/simple_animal/pet/dog/corgi/ian/Initialize(mapload)
+/mob/living/simple_animal/pet/dog/corgi/ian/Initialize()
 	. = ..()
 	//parent call must happen first to ensure IAN
 	//is not in nullspace when child puppies spawn
@@ -627,7 +627,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	maxbodytemp = T0C + 40
 	held_state = "void_puppy"
 
-/mob/living/simple_animal/pet/dog/corgi/puppy/void/Initialize(mapload)
+/mob/living/simple_animal/pet/dog/corgi/puppy/void/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_AI_BAGATTACK, INNATE_TRAIT)
 

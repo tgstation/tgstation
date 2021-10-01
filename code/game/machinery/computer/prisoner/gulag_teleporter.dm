@@ -15,7 +15,7 @@
 	var/datum/data/record/temporary_record = null
 
 
-/obj/machinery/computer/prisoner/gulag_teleporter_computer/Initialize(mapload)
+/obj/machinery/computer/prisoner/gulag_teleporter_computer/Initialize()
 	. = ..()
 	scan_machinery()
 

@@ -11,7 +11,7 @@
 
 	var/static/list/AllTeleporters
 
-/obj/effect/bump_teleporter/Initialize(mapload)
+/obj/effect/bump_teleporter/Initialize()
 	. = ..()
 	LAZYADD(AllTeleporters, src)
 

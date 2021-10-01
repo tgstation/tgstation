@@ -1,4 +1,4 @@
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { multiline } from 'common/string';
 import { BlockQuote, Button, Dimmer, Section, Stack } from '../components';
 import { BooleanLike } from 'common/react';
@@ -26,7 +26,6 @@ type Objective = {
 }
 
 type Info = {
-  has_codewords: BooleanLike;
   phrases: string;
   responses: string;
   theme: string;
@@ -34,7 +33,6 @@ type Info = {
   goal: string;
   intro: string;
   code: string;
-  failsafe_code: string;
   has_uplink: BooleanLike;
   uplink_intro: string;
   uplink_unlock_info: string;
@@ -98,8 +96,7 @@ const EmployerSection = (props, context) => {
           icon="hammer"
           tooltip={multiline`
             This is a gameplay suggestion for bored traitors.
-            You don't have to follow it, unless you want some
-            ideas for how to spend the round.`}
+            You don't have to follow it... kinda like spacelaw!`}
           tooltipPosition="bottom-start">
           Policy
         </Button>
@@ -138,7 +135,6 @@ const UplinkSection = (props, context) => {
     uplink_intro,
     uplink_unlock_info,
     code,
-    failsafe_code,
   } = data;
   return (
     <Section
@@ -157,8 +153,6 @@ const UplinkSection = (props, context) => {
               {uplink_intro}
               <br />
               <span style={goalstyle}>Code: {code}</span>
-              <br />
-              <span style={badstyle}>Failsafe: {failsafe_code}</span>
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item mt="1%">
@@ -176,55 +170,42 @@ const UplinkSection = (props, context) => {
 const CodewordsSection = (props, context) => {
   const { data } = useBackend<Info>(context);
   const {
-    has_codewords,
     phrases,
     responses,
   } = data;
   return (
-    <Section
-      title="Codewords"
-      mb={!has_codewords && -1}>
+    <Section title="Codewords">
       <Stack fill>
-        {!has_codewords && (
+        <Stack.Item grow basis={0}>
           <BlockQuote>
-            You have not been supplied the Syndicate codewords.
-            You will have to use alternative methods to find potential allies.
-            Proceed with caution, however, as everyone is a potential foe.
+            The Syndicate have provided you with the following
+            codewords to identify fellow agents. Use the codewords
+            during regular conversation to identify other agents.
+            Proceed with caution, however, as everyone is a
+            potential foe.
+            <span style={badstyle}>
+              &ensp;You have memorized the codewords, allowing you
+              to recognise them when heard.
+            </span>
           </BlockQuote>
-        ) || (
-          <>
-            <Stack.Item grow basis={0}>
-              <BlockQuote>
-                The Syndicate have provided you with the following
-                codewords to identify fellow agents. Use the codewords
-                during regular conversation to identify other agents.
-                Proceed with caution, however, as everyone is a
-                potential foe.
-                <span style={badstyle}>
-                  &ensp;You have memorized the codewords, allowing you
-                  to recognise them when heard.
-                </span>
-              </BlockQuote>
+        </Stack.Item>
+        <Stack.Divider mr={1} />
+        <Stack.Item grow basis={0}>
+          <Stack vertical>
+            <Stack.Item>
+              Code Phrases:
             </Stack.Item>
-            <Stack.Divider mr={1} />
-            <Stack.Item grow basis={0}>
-              <Stack vertical>
-                <Stack.Item>
-                  Code Phrases:
-                </Stack.Item>
-                <Stack.Item bold textColor="blue">
-                  {phrases}
-                </Stack.Item>
-                <Stack.Item>
-                  Code Responses:
-                </Stack.Item>
-                <Stack.Item bold textColor="red">
-                  {responses}
-                </Stack.Item>
-              </Stack>
+            <Stack.Item bold textColor="blue">
+              {phrases}
             </Stack.Item>
-          </>
-        )}
+            <Stack.Item>
+              Code Responses:
+            </Stack.Item>
+            <Stack.Item bold textColor="red">
+              {responses}
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
       </Stack>
     </Section>
   );

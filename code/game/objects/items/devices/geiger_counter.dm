@@ -28,7 +28,7 @@
 	var/fail_to_receive = 0
 	var/current_warning = 1
 
-/obj/item/geiger_counter/Initialize(mapload)
+/obj/item/geiger_counter/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 

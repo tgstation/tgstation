@@ -158,8 +158,10 @@
 	var/shrapnel_type
 	///If we have a shrapnel_type defined, these embedding stats will be passed to the spawned shrapnel type, which will roll for embedding on the target
 	var/list/embedding
+
 	///If TRUE, hit mobs even if they're on the floor and not our target
-	var/hit_prone_targets = FALSE
+	var/hit_stunned_targets = FALSE
+
 	///For what kind of brute wounds we're rolling for, if we're doing such a thing. Lasers obviously don't care since they do burn instead.
 	var/sharpness = NONE
 	///How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
@@ -170,7 +172,7 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 
-/obj/projectile/Initialize(mapload)
+/obj/projectile/Initialize()
 	. = ..()
 	decayedRange = range
 	if(embedding)
@@ -502,15 +504,15 @@
 		var/mob/living/L = target
 		if(direct_target)
 			return TRUE
+		// If target not able to use items, move and stand - or if they're just dead, pass over.
 		if(L.stat == DEAD)
 			return FALSE
-		if(HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED))
+		if(!L.density)
 			return FALSE
-		if(!hit_prone_targets)
-			if(!L.density)
-				return FALSE
-			if(L.body_position != LYING_DOWN)
-				return TRUE
+		if(L.body_position != LYING_DOWN)
+			return TRUE
+		var/stunned = HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED)
+		return !stunned || hit_stunned_targets
 	return TRUE
 
 /**

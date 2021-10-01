@@ -17,7 +17,7 @@
 	/// The typepath of the assembly to attach to the TTV.
 	var/assembly_type
 
-/obj/effect/spawner/newbomb/Initialize(mapload)
+/obj/effect/spawner/newbomb/Initialize()
 	. = ..()
 	var/obj/item/transfer_valve/ttv = new(loc)
 	var/obj/item/tank/internals/plasma/plasma_tank = new(ttv)

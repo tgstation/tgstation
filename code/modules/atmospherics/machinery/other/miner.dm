@@ -29,7 +29,7 @@
 	idle_power_usage = 150
 	active_power_usage = 2000
 
-/obj/machinery/atmospherics/miner/Initialize(mapload)
+/obj/machinery/atmospherics/miner/Initialize()
 	. = ..()
 	set_active(active) //Force overlay update.
 
@@ -87,15 +87,15 @@
 	var/P = G.return_pressure()
 	switch(power_draw)
 		if(GASMINER_POWER_NONE)
-			update_use_power(ACTIVE_POWER_USE, 0)
+			active_power_usage = 0
 		if(GASMINER_POWER_STATIC)
-			update_use_power(ACTIVE_POWER_USE, power_draw_static)
+			active_power_usage = power_draw_static
 		if(GASMINER_POWER_MOLES)
-			update_use_power(ACTIVE_POWER_USE, spawn_mol * power_draw_dynamic_mol_coeff)
+			active_power_usage = spawn_mol * power_draw_dynamic_mol_coeff
 		if(GASMINER_POWER_KPA)
-			update_use_power(ACTIVE_POWER_USE, P * power_draw_dynamic_kpa_coeff)
+			active_power_usage = P * power_draw_dynamic_kpa_coeff
 		if(GASMINER_POWER_FULLSCALE)
-			update_use_power(ACTIVE_POWER_USE, (spawn_mol * power_draw_dynamic_mol_coeff) + (P * power_draw_dynamic_kpa_coeff))
+			active_power_usage = (spawn_mol * power_draw_dynamic_mol_coeff) + (P * power_draw_dynamic_kpa_coeff)
 
 /obj/machinery/atmospherics/miner/proc/do_use_power(amount)
 	var/turf/T = get_turf(src)
@@ -159,7 +159,7 @@
 	overlay_color = "#007FFF"
 	spawn_id = /datum/gas/oxygen
 
-/obj/machinery/atmospherics/miner/plasma
+/obj/machinery/atmospherics/miner/toxins
 	name = "\improper Plasma Gas Miner"
 	overlay_color = "#FF0000"
 	spawn_id = /datum/gas/plasma

@@ -18,7 +18,7 @@
 	var/locked = FALSE //Locked beacons don't allow to jump to it.
 
 
-/obj/machinery/spaceship_navigation_beacon/Initialize(mapload)
+/obj/machinery/spaceship_navigation_beacon/Initialize()
 	. = ..()
 	SSshuttle.beacons |= src
 

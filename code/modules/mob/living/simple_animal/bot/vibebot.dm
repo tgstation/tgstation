@@ -24,7 +24,7 @@
 	light_power = 3
 
 
-/mob/living/simple_animal/bot/vibebot/Initialize(mapload)
+/mob/living/simple_animal/bot/vibebot/Initialize()
 	. = ..()
 	update_appearance()
 

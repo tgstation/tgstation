@@ -19,7 +19,7 @@
 
 	var/irradiate = TRUE // RTGs irradiate surroundings, but only when panel is open.
 
-/obj/machinery/power/rtg/Initialize(mapload)
+/obj/machinery/power/rtg/Initialize()
 	. = ..()
 	connect_to_network()
 

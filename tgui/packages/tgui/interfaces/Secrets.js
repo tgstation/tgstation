@@ -556,8 +556,7 @@ export const Secrets = (props, context) => {
     <Window
       title="Secrets Panel"
       width={500}
-      height={488}
-      theme="admin">
+      height={488}>
       <Window.Content>
         <Flex direction="column" height="100%">
           <Flex.Item mb={1}>

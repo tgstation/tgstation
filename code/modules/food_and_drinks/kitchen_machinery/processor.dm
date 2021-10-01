@@ -23,7 +23,7 @@
 	 */
 	var/static/list/processor_inputs
 
-/obj/machinery/processor/Initialize(mapload)
+/obj/machinery/processor/Initialize()
 	. = ..()
 	if(processor_inputs)
 		return

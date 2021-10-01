@@ -5,20 +5,22 @@
 #define REAGENT_TRANSFER_AMOUNT "amount"
 #define REAGENT_PURITY "purity"
 
-/// Initialises all /datum/reagent into a list indexed by reagent id
-/proc/init_chemical_reagent_list()
-	var/list/reagent_list = list()
+/////////////These are used in the reagents subsystem init() and the reagent_id_typos.dm////////
+/proc/build_chemical_reagent_list()
+	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
+
+	if(GLOB.chemical_reagents_list)
+		return
 
 	var/paths = subtypesof(/datum/reagent)
+	GLOB.chemical_reagents_list = list()
 
 	for(var/path in paths)
 		if(path in GLOB.fake_reagent_blacklist)
 			continue
 		var/datum/reagent/D = new path()
 		D.mass = rand(10, 800) //This is terrible and should be removed ASAP!
-		reagent_list[path] = D
-
-	return reagent_list
+		GLOB.chemical_reagents_list[path] = D
 
 /proc/build_chemical_reactions_lists()
 	//Chemical Reactions - Initialises all /datum/chemical_reaction into a list

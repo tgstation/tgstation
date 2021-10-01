@@ -7,7 +7,7 @@
 	anchored = TRUE
 	var/old_heat_capacity
 
-/obj/effect/shield/Initialize(mapload)
+/obj/effect/shield/Initialize()
 	. = ..()
 	var/turf/location = get_turf(src)
 	old_heat_capacity=location.heat_capacity

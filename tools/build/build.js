@@ -4,23 +4,19 @@
  *
  * This script uses Juke Build, read the docs here:
  * https://github.com/stylemistake/juke-build
+ *
+ * @file
+ * @copyright 2021 Aleksej Komarov
+ * @license MIT
  */
 
 import fs from 'fs';
-import Juke from './juke/index.js';
 import { DreamDaemon, DreamMaker } from './lib/byond.js';
 import { yarn } from './lib/yarn.js';
+import Juke from './juke/index.js';
 
 Juke.chdir('../..', import.meta.url);
-Juke.setup({ file: import.meta.url }).then((code) => {
-  // We're using the currently available quirk in Juke Build, which
-  // prevents it from exiting on Windows, to wait on errors.
-  if (code !== 0 && process.argv.includes('--wait-on-error')) {
-    Juke.logger.error('Please inspect the error and close the window.');
-    return;
-  }
-  process.exit(code);
-});
+Juke.setup({ file: import.meta.url }).then((code) => process.exit(code));
 
 const DME_NAME = 'tgstation';
 
@@ -34,11 +30,8 @@ export const PortParameter = new Juke.Parameter({
   alias: 'p',
 });
 
-export const CiParameter = new Juke.Parameter({ type: 'boolean' });
-
-export const WarningParameter = new Juke.Parameter({
-  type: 'string[]',
-  alias: 'W',
+export const CiParameter = new Juke.Parameter({
+  type: 'boolean',
 });
 
 export const DmMapsIncludeTarget = new Juke.Target({
@@ -58,7 +51,6 @@ export const DmMapsIncludeTarget = new Juke.Target({
 });
 
 export const DmTarget = new Juke.Target({
-  parameters: [DefineParameter],
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
   ],
@@ -75,24 +67,30 @@ export const DmTarget = new Juke.Target({
     `${DME_NAME}.dmb`,
     `${DME_NAME}.rsc`,
   ],
+  parameters: [DefineParameter],
   executes: async ({ get }) => {
+    const defines = get(DefineParameter);
+    if (defines.length > 0) {
+      Juke.logger.info('Using defines:', defines.join(', '));
+    }
     await DreamMaker(`${DME_NAME}.dme`, {
-      defines: ['CBT', ...get(DefineParameter)],
-      warningsAsErrors: get(WarningParameter).includes('error'),
+      defines: ['CBT', ...defines],
     });
   },
 });
 
 export const DmTestTarget = new Juke.Target({
-  parameters: [DefineParameter],
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
   ],
   executes: async ({ get }) => {
+    const defines = get(DefineParameter);
+    if (defines.length > 0) {
+      Juke.logger.info('Using defines:', defines.join(', '));
+    }
     fs.copyFileSync(`${DME_NAME}.dme`, `${DME_NAME}.test.dme`);
     await DreamMaker(`${DME_NAME}.test.dme`, {
-      defines: ['CBT', 'CIBUILDING', ...get(DefineParameter)],
-      warningsAsErrors: get(WarningParameter).includes('error'),
+      defines: ['CBT', 'CIBUILDING', ...defines],
     });
     Juke.rm('data/logs/ci', { recursive: true });
     await DreamDaemon(
@@ -113,7 +111,6 @@ export const DmTestTarget = new Juke.Target({
 });
 
 export const YarnTarget = new Juke.Target({
-  parameters: [CiParameter],
   inputs: [
     'tgui/.yarn/+(cache|releases|plugins|sdks)/**/*',
     'tgui/**/package.json',
@@ -122,7 +119,9 @@ export const YarnTarget = new Juke.Target({
   outputs: [
     'tgui/.yarn/install-target',
   ],
-  executes: ({ get }) => yarn('install', get(CiParameter) && '--immutable'),
+  executes: async () => {
+    await yarn('install');
+  },
 });
 
 export const TgFontTarget = new Juke.Target({
@@ -137,7 +136,9 @@ export const TgFontTarget = new Juke.Target({
     'tgui/packages/tgfont/dist/tgfont.eot',
     'tgui/packages/tgfont/dist/tgfont.woff2',
   ],
-  executes: () => yarn('tgfont:build'),
+  executes: async () => {
+    await yarn('workspace', 'tgfont', 'build');
+  },
 });
 
 export const TguiTarget = new Juke.Target({
@@ -154,48 +155,52 @@ export const TguiTarget = new Juke.Target({
     'tgui/public/tgui-panel.bundle.css',
     'tgui/public/tgui-panel.bundle.js',
   ],
-  executes: () => yarn('tgui:build'),
+  executes: async () => {
+    await yarn('webpack-cli', '--mode=production');
+  },
 });
 
 export const TguiEslintTarget = new Juke.Target({
-  parameters: [CiParameter],
   dependsOn: [YarnTarget],
-  executes: ({ get }) => yarn('tgui:lint', !get(CiParameter) && '--fix'),
-});
-
-export const TguiSonarTarget = new Juke.Target({
-  dependsOn: [YarnTarget],
-  executes: () => yarn('tgui:sonar'),
+  executes: async ({ args }) => {
+    await yarn(
+      'eslint', 'packages',
+      '--fix', '--ext', '.js,.cjs,.ts,.tsx',
+      ...args
+    );
+  },
 });
 
 export const TguiTscTarget = new Juke.Target({
   dependsOn: [YarnTarget],
-  executes: () => yarn('tgui:tsc'),
+  executes: async () => {
+    await yarn('tsc');
+  },
 });
 
 export const TguiTestTarget = new Juke.Target({
-  parameters: [CiParameter],
   dependsOn: [YarnTarget],
-  executes: ({ get }) => yarn(`tgui:test-${get(CiParameter) ? 'ci' : 'simple'}`),
+  executes: async ({ args }) => {
+    await yarn('jest', ...args);
+  },
 });
 
 export const TguiLintTarget = new Juke.Target({
-  dependsOn: [YarnTarget, TguiEslintTarget, TguiTscTarget],
+  dependsOn: [YarnTarget, TguiEslintTarget, TguiTscTarget, TguiTestTarget],
 });
 
 export const TguiDevTarget = new Juke.Target({
   dependsOn: [YarnTarget],
-  executes: ({ args }) => yarn('tgui:dev', ...args),
+  executes: async ({ args }) => {
+    await yarn('node', 'packages/tgui-dev-server/index.js', ...args);
+  },
 });
 
 export const TguiAnalyzeTarget = new Juke.Target({
   dependsOn: [YarnTarget],
-  executes: () => yarn('tgui:analyze'),
-});
-
-export const TguiBenchTarget = new Juke.Target({
-  dependsOn: [YarnTarget],
-  executes: () => yarn('tgui:bench'),
+  executes: async () => {
+    await yarn('webpack-cli', '--mode=production', '--analyze');
+  },
 });
 
 export const TestTarget = new Juke.Target({
@@ -222,13 +227,26 @@ export const AllTarget = new Juke.Target({
   dependsOn: [TestTarget, LintTarget, BuildTarget],
 });
 
-export const TguiCleanTarget = new Juke.Target({
+/**
+ * Removes the immediate build junk to produce clean builds.
+ */
+export const CleanTarget = new Juke.Target({
   executes: async () => {
+    Juke.rm('*.dmb');
+    Juke.rm('*.rsc');
+    Juke.rm('*.mdme');
+    Juke.rm('*.mdme*');
+    Juke.rm('*.m.*');
+    Juke.rm('_maps/templates.dm');
     Juke.rm('tgui/public/.tmp', { recursive: true });
     Juke.rm('tgui/public/*.map');
-    Juke.rm('tgui/public/*.{chunk,bundle,hot-update}.*');
+    Juke.rm('tgui/public/*.chunk.*');
+    Juke.rm('tgui/public/*.bundle.*');
+    Juke.rm('tgui/public/*.hot-update.*');
     Juke.rm('tgui/packages/tgfont/dist', { recursive: true });
-    Juke.rm('tgui/.yarn/{cache,unplugged,webpack}', { recursive: true });
+    Juke.rm('tgui/.yarn/cache', { recursive: true });
+    Juke.rm('tgui/.yarn/unplugged', { recursive: true });
+    Juke.rm('tgui/.yarn/webpack', { recursive: true });
     Juke.rm('tgui/.yarn/build-state.yml');
     Juke.rm('tgui/.yarn/install-state.gz');
     Juke.rm('tgui/.yarn/install-target');
@@ -236,24 +254,16 @@ export const TguiCleanTarget = new Juke.Target({
   },
 });
 
-export const CleanTarget = new Juke.Target({
-  dependsOn: [TguiCleanTarget],
-  executes: async () => {
-    Juke.rm('*.{dmb,rsc}');
-    Juke.rm('*.mdme*');
-    Juke.rm('*.m.*');
-    Juke.rm('_maps/templates.dm');
-  },
-});
-
 /**
- * Removes more junk at the expense of much slower initial builds.
+ * Removes more junk at expense of much slower initial builds.
  */
-export const CleanAllTarget = new Juke.Target({
+export const DistCleanTarget = new Juke.Target({
   dependsOn: [CleanTarget],
   executes: async () => {
     Juke.logger.info('Cleaning up data/logs');
     Juke.rm('data/logs', { recursive: true });
+    Juke.logger.info('Cleaning up bootstrap cache');
+    Juke.rm('tools/bootstrap/.cache', { recursive: true });
     Juke.logger.info('Cleaning up global yarn cache');
     await yarn('cache', 'clean', '--all');
   },

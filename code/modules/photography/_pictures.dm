@@ -105,7 +105,7 @@
 	if(!json[id])
 		return
 	var/datum/picture/P = new
-	P.deserialize_list(json[id])
+	P.deserialize_json(json[id])
 	return P
 
 /proc/log_path_from_picture_ID(id)
@@ -155,7 +155,7 @@
 		fdel(jsonpath)
 	else
 		json = list()
-	json[id] = serialize_list()
+	json[id] = serialize_json()
 	WRITE_FILE(jsonpath, json_encode(json))
 
 /datum/picture/proc/Copy(greyscale = FALSE, cropx = 0, cropy = 0)

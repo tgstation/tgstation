@@ -31,9 +31,8 @@
 	attempt_join_gang(user)
 
 /// Adds the user to the family that this package corresponds to, dispenses the free_clothes of that family, and adds them to the handler if it exists.
-/obj/item/gang_induction_package/proc/add_to_gang(mob/living/user, original_name)
+/obj/item/gang_induction_package/proc/add_to_gang(mob/living/user)
 	var/datum/antagonist/gang/swappin_sides = new gang_to_use()
-	swappin_sides.original_name = original_name
 	swappin_sides.handler = handler
 	user.mind.add_antag_datum(swappin_sides, team_to_use)
 	var/policy = get_policy(ROLE_FAMILIES)
@@ -42,13 +41,9 @@
 	team_to_use.add_member(user.mind)
 	for(var/threads in team_to_use.free_clothes)
 		new threads(get_turf(user))
-	for(var/threads in team_to_use.current_theme.bonus_items)
-		new threads(get_turf(user))
-	var/obj/item/gangster_cellphone/phone = new(get_turf(user))
-	phone.gang_id = team_to_use.my_gang_datum.gang_name
-	phone.name = "[team_to_use.my_gang_datum.gang_name] branded cell phone"
 	if (!isnull(handler) && !handler.gangbangers.Find(user.mind)) // if we have a handler and they're not tracked by it
 		handler.gangbangers += user.mind
+	team_to_use.adjust_points(30)
 
 /// Checks if the user is trying to use the package of the family they are in, and if not, adds them to the family, with some differing processing depending on whether the user is already a family member.
 /obj/item/gang_induction_package/proc/attempt_join_gang(mob/living/user)
@@ -58,10 +53,10 @@
 			if(is_gangster.my_gang == team_to_use)
 				return
 			else
-				var/real_name_backup = is_gangster.original_name
+				is_gangster.my_gang.adjust_points(-30)
 				is_gangster.my_gang.remove_member(user.mind)
 				user.mind.remove_antag_datum(/datum/antagonist/gang)
-				add_to_gang(user, real_name_backup)
+				add_to_gang(user)
 				qdel(src)
 		else
 			add_to_gang(user)

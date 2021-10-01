@@ -16,9 +16,8 @@
 	var/static_visibility_range = 16
 	var/ai_detector_visible = TRUE
 	var/ai_detector_color = COLOR_RED
-	interaction_range = null
 
-/mob/camera/ai_eye/Initialize(mapload)
+/mob/camera/ai_eye/Initialize()
 	. = ..()
 	GLOB.aiEyes += src
 	update_ai_detect_hud()

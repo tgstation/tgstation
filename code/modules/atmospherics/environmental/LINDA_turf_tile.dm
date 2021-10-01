@@ -37,7 +37,7 @@
 	var/max_share = 0
 	#endif
 
-/turf/open/Initialize(mapload)
+/turf/open/Initialize()
 	if(!blocks_air)
 		air = new
 		air.copy_from_turf(src)

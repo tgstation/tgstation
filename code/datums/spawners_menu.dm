@@ -29,6 +29,7 @@
 		this["flavor_text"] = ""
 		this["important_warning"] = ""
 		this["amount_left"] = 0
+		this["refs"] = list()
 		for(var/spawner_obj in GLOB.mob_spawners[spawner])
 			if(!this["desc"])
 				if(istype(spawner_obj, /obj/effect/mob_spawn))
@@ -41,6 +42,7 @@
 				else
 					var/obj/object = spawner_obj
 					this["desc"] = object.desc
+			this["refs"] += "[REF(spawner_obj)]"
 			this["amount_left"] += 1
 		if(this["amount_left"] > 0)
 			data["spawners"] += list(this)
@@ -61,7 +63,7 @@
 	if(!spawnerlist.len)
 		return
 	var/obj/effect/mob_spawn/mob_spawner = pick(spawnerlist)
-	if(!istype(mob_spawner) || !SSpoints_of_interest.is_valid_poi(mob_spawner))
+	if(!istype(mob_spawner) || !(mob_spawner in GLOB.poi_list))
 		return
 
 	switch(action)

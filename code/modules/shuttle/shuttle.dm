@@ -279,7 +279,7 @@
 	var/area/shuttle/transit/assigned_area
 	var/obj/docking_port/mobile/owner
 
-/obj/docking_port/stationary/transit/Initialize(mapload)
+/obj/docking_port/stationary/transit/Initialize()
 	. = ..()
 	SSshuttle.transit += src
 

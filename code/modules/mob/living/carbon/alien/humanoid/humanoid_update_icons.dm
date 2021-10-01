@@ -51,7 +51,7 @@
 	// update_icons() //Handled in update_transform(), leaving this here as a reminder
 		update_transform()
 
-/mob/living/carbon/alien/humanoid/perform_update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
+/mob/living/carbon/alien/humanoid/update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
 	. = ..()
 	update_icons()
 
@@ -67,7 +67,9 @@
 	if(handcuffed)
 		var/mutable_appearance/handcuff_overlay = mutable_appearance(dmi_file, cuff_icon, -HANDCUFF_LAYER)
 		if(handcuffed.blocks_emissive)
-			handcuff_overlay += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, alpha = handcuff_overlay.alpha)
+			var/mutable_appearance/handcuff_blocker = mutable_appearance(dmi_file, cuff_icon, plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+			handcuff_blocker.color = GLOB.em_block_color
+			handcuff_overlay.overlays += handcuff_blocker
 
 		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
 		apply_overlay(HANDCUFF_LAYER)
@@ -85,7 +87,9 @@
 			itm_state = l_hand.icon_state
 		var/mutable_appearance/l_hand_item = mutable_appearance(alt_inhands_file, "[itm_state][caste]_l", -HANDS_LAYER)
 		if(l_hand.blocks_emissive)
-			l_hand_item.overlays += emissive_blocker(l_hand_item.icon, l_hand_item.icon_state, alpha = l_hand_item.alpha)
+			var/mutable_appearance/l_hand_block = mutable_appearance(alt_inhands_file, "[itm_state][caste]_l", plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+			l_hand_block.color = GLOB.em_block_color
+			l_hand_item.overlays += l_hand_block
 		hands += l_hand_item
 
 	var/obj/item/r_hand = get_item_for_held_index(2)
@@ -95,7 +99,9 @@
 			itm_state = r_hand.icon_state
 		var/mutable_appearance/r_hand_item = mutable_appearance(alt_inhands_file, "[itm_state][caste]_r", -HANDS_LAYER)
 		if(r_hand.blocks_emissive)
-			r_hand_item.overlays += emissive_blocker(r_hand_item.icon, r_hand_item.icon_state, alpha = r_hand_item.alpha)
+			var/mutable_appearance/r_hand_block = mutable_appearance(alt_inhands_file, "[itm_state][caste]_r", plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+			r_hand_block.color = GLOB.em_block_color
+			r_hand_item.overlays += r_hand_block
 		hands += r_hand_item
 
 	overlays_standing[HANDS_LAYER] = hands

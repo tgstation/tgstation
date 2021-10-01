@@ -92,13 +92,13 @@
 	base_icon_state = "sat"
 	anchored = FALSE
 	density = TRUE
-	use_power = NO_POWER_USE
+	use_power = FALSE
 	var/mode = "NTPROBEV0.8"
 	var/active = FALSE
 	var/static/gid = 0
 	var/id = 0
 
-/obj/machinery/satellite/Initialize(mapload)
+/obj/machinery/satellite/Initialize()
 	. = ..()
 	id = gid++
 

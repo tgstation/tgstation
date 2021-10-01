@@ -34,7 +34,7 @@
 	///cost of the materials in the magazine/box itself
 	var/list/base_cost
 
-/obj/item/ammo_box/Initialize(mapload)
+/obj/item/ammo_box/Initialize()
 	. = ..()
 	if(!bullet_cost)
 		base_cost = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.1)

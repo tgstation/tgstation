@@ -27,7 +27,7 @@
 	var/mob/living/silicon/robot/user // needed for process()
 	var/animation_playing = FALSE
 
-/obj/item/borg_chameleon/Initialize(mapload)
+/obj/item/borg_chameleon/Initialize()
 	. = ..()
 	friendlyName = pick(GLOB.ai_names)
 

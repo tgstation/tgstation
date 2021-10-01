@@ -8,7 +8,7 @@
 	mind_control_duration = 1200
 	var/list/possible_reagents = list()
 
-/obj/item/organ/heart/gland/chem/Initialize(mapload)
+/obj/item/organ/heart/gland/chem/Initialize()
 	. = ..()
 	for(var/R in subtypesof(/datum/reagent/drug) + subtypesof(/datum/reagent/medicine) + typesof(/datum/reagent/toxin))
 		possible_reagents += R

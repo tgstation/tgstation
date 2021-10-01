@@ -18,12 +18,16 @@
 	var/datum/port/input/new_value
 
 
-/obj/item/circuit_component/set_variable/populate_ports()
-	entity = add_input_port("Target", PORT_TYPE_DATUM)
+/obj/item/circuit_component/set_variable/Initialize()
+	. = ..()
+	entity = add_input_port("Target", PORT_TYPE_ATOM)
 	variable_name = add_input_port("Variable Name", PORT_TYPE_STRING)
 	new_value = add_input_port("New Value", PORT_TYPE_ANY)
 
 /obj/item/circuit_component/set_variable/input_received(datum/port/input/port)
+	. = ..()
+	if(.)
+		return
 	var/atom/object = entity.value
 	var/var_name = variable_name.value
 	if(!var_name || !object)

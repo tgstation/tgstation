@@ -39,31 +39,31 @@ Slimecrossing Potions
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potlightpink"
 
-/obj/item/slimepotion/peacepotion/attack(mob/living/peace_target, mob/user)
-	if(!isliving(peace_target) || peace_target.stat == DEAD)
+/obj/item/slimepotion/peacepotion/attack(mob/living/M, mob/user)
+	if(!isliving(M) || M.stat == DEAD)
 		to_chat(user, span_warning("[src] only works on the living."))
 		return ..()
-	if(istype(peace_target, /mob/living/simple_animal/hostile/megafauna))
+	if(istype(M, /mob/living/simple_animal/hostile/megafauna))
 		to_chat(user, span_warning("[src] does not work on beings of pure evil!"))
 		return ..()
-	if(peace_target != user)
-		peace_target.visible_message(span_danger("[user] starts to feed [peace_target] [src]!"),
+	if(M != user)
+		M.visible_message(span_danger("[user] starts to feed [M] [src]!"),
 			span_userdanger("[user] starts to feed you [src]!"))
 	else
-		peace_target.visible_message(span_danger("[user] starts to drink [src]!"),
+		M.visible_message(span_danger("[user] starts to drink [src]!"),
 			span_danger("You start to drink [src]!"))
 
-	if(!do_after(user, 100, target = peace_target))
+	if(!do_after(user, 100, target = M))
 		return
-	if(peace_target != user)
-		to_chat(user, span_notice("You feed [peace_target] [src]!"))
+	if(M != user)
+		to_chat(user, span_notice("You feed [M] [src]!"))
 	else
 		to_chat(user, span_warning("You drink [src]!"))
-	if(isanimal(peace_target))
-		ADD_TRAIT(peace_target, TRAIT_PACIFISM, MAGIC_TRAIT)
-	else if(iscarbon(peace_target))
-		var/mob/living/carbon/peaceful_carbon = peace_target
-		peaceful_carbon.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_SURGERY)
+	if(isanimal(M))
+		ADD_TRAIT(M, TRAIT_PACIFISM, MAGIC_TRAIT)
+	else if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_SURGERY)
 	qdel(src)
 
 //Love potion - Charged Pink
@@ -73,29 +73,31 @@ Slimecrossing Potions
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potpink"
 
-/obj/item/slimepotion/lovepotion/attack(mob/living/love_target, mob/user)
-	if(!isliving(love_target) || love_target.stat == DEAD)
+/obj/item/slimepotion/lovepotion/attack(mob/living/M, mob/user)
+	if(!isliving(M) || M.stat == DEAD)
 		to_chat(user, span_warning("The love potion only works on living things, sicko!"))
 		return ..()
-	if(istype(love_target, /mob/living/simple_animal/hostile/megafauna))
+	if(istype(M, /mob/living/simple_animal/hostile/megafauna))
 		to_chat(user, span_warning("The love potion does not work on beings of pure evil!"))
 		return ..()
-	if(user == love_target)
+	if(user == M)
 		to_chat(user, span_warning("You can't drink the love potion. What are you, a narcissist?"))
 		return ..()
-	if(love_target.has_status_effect(STATUS_EFFECT_INLOVE))
-		to_chat(user, span_warning("[love_target] is already lovestruck!"))
+	if(M.has_status_effect(STATUS_EFFECT_INLOVE))
+		to_chat(user, span_warning("[M] is already lovestruck!"))
 		return ..()
 
-	love_target.visible_message(span_danger("[user] starts to feed [love_target] a love potion!"),
+	M.visible_message(span_danger("[user] starts to feed [M] a love potion!"),
 		span_userdanger("[user] starts to feed you a love potion!"))
 
-	if(!do_after(user, 50, target = love_target))
+	if(!do_after(user, 50, target = M))
 		return
-	to_chat(user, span_notice("You feed [love_target] the love potion!"))
-	to_chat(love_target, span_notice("You develop feelings for [user], and anyone [user.p_they()] like[user.p_s()]."))
-	love_target.faction |= "[REF(user)]"
-	love_target.apply_status_effect(STATUS_EFFECT_INLOVE, user)
+	to_chat(user, span_notice("You feed [M] the love potion!"))
+	to_chat(M, span_notice("You develop feelings for [user], and anyone [user.p_they()] like[user.p_s()]."))
+	if(M.mind)
+		M.mind.store_memory("You are in love with [user].")
+	M.faction |= "[REF(user)]"
+	M.apply_status_effect(STATUS_EFFECT_INLOVE, user)
 	qdel(src)
 
 //Pressure potion - Charged Dark Blue
@@ -178,21 +180,21 @@ Slimecrossing Potions
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potsilver"
 
-/obj/item/slimepotion/slime_reviver/attack(mob/living/simple_animal/slime/revive_target, mob/user)
-	if(!isslime(revive_target))
+/obj/item/slimepotion/slime_reviver/attack(mob/living/simple_animal/slime/M, mob/user)
+	if(!isslime(M))
 		to_chat(user, span_warning("The potion only works on slimes!"))
 		return ..()
-	if(revive_target.stat != DEAD)
+	if(M.stat != DEAD)
 		to_chat(user, span_warning("The slime is still alive!"))
 		return
-	if(revive_target.maxHealth <= 0)
+	if(M.maxHealth <= 0)
 		to_chat(user, span_warning("The slime is too unstable to return!"))
-	revive_target.revive(full_heal = TRUE, admin_revive = FALSE)
-	revive_target.set_stat(CONSCIOUS)
-	revive_target.visible_message(span_notice("[revive_target] is filled with renewed vigor and blinks awake!"))
-	revive_target.maxHealth -= 10 //Revival isn't healthy.
-	revive_target.health -= 10
-	revive_target.regenerate_icons()
+	M.revive(full_heal = TRUE, admin_revive = FALSE)
+	M.set_stat(CONSCIOUS)
+	M.visible_message(span_notice("[M] is filled with renewed vigor and blinks awake!"))
+	M.maxHealth -= 10 //Revival isn't healthy.
+	M.health -= 10
+	M.regenerate_icons()
 	qdel(src)
 
 //Stabilizer potion - Charged Blue
@@ -202,17 +204,17 @@ Slimecrossing Potions
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potcyan"
 
-/obj/item/slimepotion/slime/chargedstabilizer/attack(mob/living/simple_animal/slime/stabilize_target, mob/user)
-	if(!isslime(stabilize_target))
+/obj/item/slimepotion/slime/chargedstabilizer/attack(mob/living/simple_animal/slime/M, mob/user)
+	if(!isslime(M))
 		to_chat(user, span_warning("The stabilizer only works on slimes!"))
 		return ..()
-	if(stabilize_target.stat)
+	if(M.stat)
 		to_chat(user, span_warning("The slime is dead!"))
 		return
-	if(stabilize_target.mutation_chance == 0)
+	if(M.mutation_chance == 0)
 		to_chat(user, span_warning("The slime already has no chance of mutating!"))
 		return
 
 	to_chat(user, span_notice("You feed the slime the omnistabilizer. It will not mutate this cycle!"))
-	stabilize_target.mutation_chance = 0
+	M.mutation_chance = 0
 	qdel(src)

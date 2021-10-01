@@ -19,7 +19,7 @@ Industrial extracts:
 /obj/item/slimecross/industrial/proc/do_after_spawn(obj/item/spawned)
 	return
 
-/obj/item/slimecross/industrial/Initialize(mapload)
+/obj/item/slimecross/industrial/Initialize()
 	. = ..()
 	create_reagents(100, INJECTABLE | DRAWABLE)
 	START_PROCESSING(SSobj,src)

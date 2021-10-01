@@ -7,7 +7,7 @@
 	var/popped = FALSE
 	var/pop_sound_effect = 'sound/items/party_horn.ogg'
 
-/obj/effect/fun_balloon/Initialize(mapload)
+/obj/effect/fun_balloon/Initialize()
 	. = ..()
 	SSobj.processing |= src
 
@@ -88,7 +88,7 @@
 			bodies += possessable
 
 	var/question = "Would you like to be [group_name]?"
-	var/list/candidates = poll_candidates_for_mobs(question, ROLE_PAI, FALSE, 10 SECONDS, bodies)
+	var/list/candidates = pollCandidatesForMobs(question, ROLE_PAI, FALSE, 100, bodies)
 	while(LAZYLEN(candidates) && LAZYLEN(bodies))
 		var/mob/dead/observer/C = pick_n_take(candidates)
 		var/mob/living/body = pick_n_take(bodies)
@@ -132,7 +132,7 @@
 	var/min_crash_strength = 3
 	var/max_crash_strength = 15
 
-/obj/effect/station_crash/Initialize(mapload)
+/obj/effect/station_crash/Initialize()
 	..()
 	shuttle_crash()
 	return INITIALIZE_HINT_QDEL

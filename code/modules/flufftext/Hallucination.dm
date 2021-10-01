@@ -212,7 +212,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			return
 		Expand()
 		if((get_turf(target) in flood_turfs) && !target.internal)
-			new /datum/hallucination/fake_alert(target, TRUE, "too_much_plas")
+			new /datum/hallucination/fake_alert(target, TRUE, "too_much_tox")
 		next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
 
 /datum/hallucination/fake_flood/proc/Expand()
@@ -569,7 +569,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 				else
 					image_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 				target.playsound_local(H, 'sound/weapons/saberon.ogg',35,1)
-				A = image(image_file,H,"e_sword_on_red", layer=ABOVE_MOB_LAYER)
+				A = image(image_file,H,"swordred", layer=ABOVE_MOB_LAYER)
 			if("dual_esword")
 				if(side == "right")
 					image_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -862,10 +862,10 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	feedback_details += "Type: [is_radio ? "Radio" : "Talk"], Source: [person.real_name], Message: [message]"
 
 	// Display message
-	if (!is_radio && !target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
+	if (!is_radio && !target.client?.prefs.chat_on_map)
 		var/image/speech_overlay = image('icons/mob/talk.dmi', person, "default0", layer = ABOVE_MOB_LAYER)
 		INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, speech_overlay, list(target.client), 30)
-	if (target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
+	if (target.client?.prefs.chat_on_map)
 		target.create_chat_message(person, understood_language, chosen, spans)
 	to_chat(target, message)
 	qdel(src)
@@ -1109,23 +1109,23 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /datum/hallucination/fake_alert/New(mob/living/carbon/C, forced = TRUE, specific, duration = 150)
 	set waitfor = FALSE
 	..()
-	alert_type = pick("not_enough_oxy","not_enough_plas","not_enough_co2","too_much_oxy","too_much_co2","too_much_plas","newlaw","nutrition","charge","gravity","fire","locked","hacked","temphot","tempcold","pressure")
+	alert_type = pick("not_enough_oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","too_much_tox","newlaw","nutrition","charge","gravity","fire","locked","hacked","temphot","tempcold","pressure")
 	if(specific)
 		alert_type = specific
 	feedback_details += "Type: [alert_type]"
 	switch(alert_type)
 		if("not_enough_oxy")
 			target.throw_alert(alert_type, /atom/movable/screen/alert/not_enough_oxy, override = TRUE)
-		if("not_enough_plas")
-			target.throw_alert(alert_type, /atom/movable/screen/alert/not_enough_plas, override = TRUE)
+		if("not_enough_tox")
+			target.throw_alert(alert_type, /atom/movable/screen/alert/not_enough_tox, override = TRUE)
 		if("not_enough_co2")
 			target.throw_alert(alert_type, /atom/movable/screen/alert/not_enough_co2, override = TRUE)
 		if("too_much_oxy")
 			target.throw_alert(alert_type, /atom/movable/screen/alert/too_much_oxy, override = TRUE)
 		if("too_much_co2")
 			target.throw_alert(alert_type, /atom/movable/screen/alert/too_much_co2, override = TRUE)
-		if("too_much_plas")
-			target.throw_alert(alert_type, /atom/movable/screen/alert/too_much_plas, override = TRUE)
+		if("too_much_tox")
+			target.throw_alert(alert_type, /atom/movable/screen/alert/too_much_tox, override = TRUE)
 		if("nutrition")
 			if(prob(50))
 				target.throw_alert(alert_type, /atom/movable/screen/alert/fat, override = TRUE)
@@ -1259,8 +1259,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 					halitem.icon_state = "plasticx40"
 			if(3) //sword
 				halitem.icon = 'icons/obj/transforming_energy.dmi'
-				halitem.icon_state = "e_sword"
-				halitem.name = "energy sword"
+				halitem.icon_state = "sword0"
+				halitem.name = "Energy Sword"
 			if(4) //stun baton
 				halitem.icon = 'icons/obj/items_and_weapons.dmi'
 				halitem.icon_state = "stunbaton"
@@ -1375,7 +1375,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /obj/effect/hallucination/danger/anomaly
 	name = "flux wave anomaly"
 
-/obj/effect/hallucination/danger/anomaly/Initialize(mapload)
+/obj/effect/hallucination/danger/anomaly/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	var/static/list/loc_connections = list(

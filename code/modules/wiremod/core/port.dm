@@ -22,17 +22,13 @@
 	/// The port color. If unset, appears as blue.
 	var/color
 
-	/// The weight of the port. Determines the
-	var/order = 1
-
-/datum/port/New(obj/item/circuit_component/to_connect, name, datatype, order = 1)
+/datum/port/New(obj/item/circuit_component/to_connect, name, datatype)
 	if(!to_connect)
 		qdel(src)
 		return
 	. = ..()
 	connected_component = to_connect
 	src.name = name
-	src.order = order
 	set_datatype(datatype)
 
 /datum/port/Destroy(force)
@@ -49,7 +45,7 @@
 	if(src.value != value || force)
 		if(isatom(value))
 			UnregisterSignal(value, COMSIG_PARENT_QDELETING)
-		src.value = datatype_handler.convert_value(src, value, force)
+		src.value = datatype_handler.convert_value(src, value)
 		if(isatom(value))
 			RegisterSignal(value, COMSIG_PARENT_QDELETING, .proc/null_value)
 	SEND_SIGNAL(src, COMSIG_PORT_SET_VALUE, value)
@@ -57,12 +53,12 @@
 /**
  * Updates the value of the input and calls input_received on the connected component
  */
-/datum/port/input/proc/set_input(value, list/return_values)
+/datum/port/input/proc/set_input(value)
 	if(QDELETED(src)) //Pain
 		return
 	set_value(value)
 	if(trigger)
-		connected_component.trigger_component(src, return_values)
+		TRIGGER_CIRCUIT_COMPONENT(connected_component, src)
 
 /datum/port/output/proc/set_output(value)
 	set_value(value)
@@ -154,29 +150,23 @@
  * and keeps its value equal to the last such signal received.
  */
 /datum/port/input
-	/// The proc that this trigger will call on the connected component.
-	var/trigger
+	/// Whether this port triggers an update whenever an output is received.
+	var/trigger = FALSE
 
 	/// The ports this port is wired to.
 	var/list/datum/port/output/connected_ports
 
-/datum/port/input/New(obj/item/circuit_component/to_connect, name, datatype, order = 1, trigger = null, default = null)
+/datum/port/input/New(obj/item/circuit_component/to_connect, name, datatype, trigger, default)
 	. = ..()
 	set_value(default)
-	if(trigger)
-		src.trigger = trigger
+	src.trigger = trigger
 	src.connected_ports = list()
 
 /**
- * Connects an input port to an output port.
- *
- * Arguments:
- * * output - The output port to connect to.
+ * Introduces two ports to one another.
  */
 /datum/port/input/proc/connect(datum/port/output/output)
-	if(output in connected_ports)
-		return
-	connected_ports += output
+	connected_ports |= output
 	RegisterSignal(output, COMSIG_PORT_SET_VALUE, .proc/receive_value)
 	RegisterSignal(output, COMSIG_PORT_SET_TYPE, .proc/check_type)
 	RegisterSignal(output, COMSIG_PORT_DISCONNECT, .proc/disconnect)
@@ -209,7 +199,7 @@
  */
 /datum/port/input/proc/receive_value(datum/port/output/output, value)
 	SIGNAL_HANDLER
-	SScircuit_component.add_callback(src, CALLBACK(src, .proc/set_input, value))
+	SScircuit_component.add_callback(CALLBACK(src, .proc/set_input, value))
 
 /// Signal handler proc to null the input if an atom is deleted. An update is not sent because this was not set by anything.
 /datum/port/proc/null_value(datum/source)

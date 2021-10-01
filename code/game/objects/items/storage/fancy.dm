@@ -344,7 +344,7 @@
 	candy = TRUE
 	age_restricted = FALSE
 
-/obj/item/storage/fancy/cigarettes/cigpack_candy/Initialize(mapload)
+/obj/item/storage/fancy/cigarettes/cigpack_candy/Initialize()
 	. = ..()
 	if(prob(7))
 		spawn_type = /obj/item/clothing/mask/cigarette/candy/nicotine //uh oh!

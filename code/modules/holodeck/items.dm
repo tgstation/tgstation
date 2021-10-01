@@ -7,30 +7,63 @@
 // Items
 //
 
-/obj/item/melee/energy/sword/holographic
+/obj/item/holo
+	damtype = STAMINA
+
+/obj/item/holo/esword
 	name = "holographic energy sword"
 	desc = "May the force be with you. Sorta."
-	damtype = STAMINA
+	icon = 'icons/obj/transforming_energy.dmi'
+	icon_state = "sword0"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	force = 3.0
 	throw_speed = 2
-	block_chance = 0
+	throw_range = 5
 	throwforce = 0
-	embedding = null
-	sword_color_icon = null
+	w_class = WEIGHT_CLASS_SMALL
+	hitsound = "swing_hit"
+	armour_penetration = 50
+	var/active = 0
+	var/saber_color
 
-	active_throwforce = 0
-	active_sharpness = NONE
-	active_heat = 0
-
-/obj/item/melee/energy/sword/holographic/Initialize(mapload)
+/obj/item/holo/esword/green/Initialize()
 	. = ..()
-	if(!sword_color_icon)
-		sword_color_icon = pick("red", "blue", "green", "purple")
+	saber_color = "green"
 
-/obj/item/melee/energy/sword/holographic/green
-	sword_color_icon = "green"
+/obj/item/holo/esword/red/Initialize()
+	. = ..()
+	saber_color = "red"
 
-/obj/item/melee/energy/sword/holographic/red
-	sword_color_icon = "red"
+/obj/item/holo/esword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(active)
+		return ..()
+	return 0
+
+/obj/item/holo/esword/attack(target, mob/user)
+	..()
+
+/obj/item/holo/esword/Initialize()
+	. = ..()
+	saber_color = pick("red","blue","green","purple")
+
+/obj/item/holo/esword/attack_self(mob/living/user)
+	active = !active
+	if (active)
+		force = 30
+		icon_state = "sword[saber_color]"
+		w_class = WEIGHT_CLASS_BULKY
+		hitsound = 'sound/weapons/blade1.ogg'
+		playsound(user, 'sound/weapons/saberon.ogg', 20, TRUE)
+		to_chat(user, span_notice("[src] is now active."))
+	else
+		force = 3
+		icon_state = "sword0"
+		w_class = WEIGHT_CLASS_SMALL
+		hitsound = "swing_hit"
+		playsound(user, 'sound/weapons/saberoff.ogg', 20, TRUE)
+		to_chat(user, span_notice("[src] can now be concealed."))
+	return
 
 //BASKETBALL OBJECTS
 

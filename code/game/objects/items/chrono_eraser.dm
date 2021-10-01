@@ -56,7 +56,7 @@
 	var/obj/structure/chrono_field/field = null
 	var/turf/startpos = null
 
-/obj/item/gun/energy/chrono_gun/Initialize(mapload)
+/obj/item/gun/energy/chrono_gun/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHRONO_GUN_TRAIT)
 	if(istype(loc, /obj/item/chrono_eraser))
@@ -128,7 +128,7 @@
 	nodamage = TRUE
 	var/obj/item/gun/energy/chrono_gun/gun = null
 
-/obj/projectile/energy/chrono_beam/Initialize(mapload)
+/obj/projectile/energy/chrono_beam/Initialize()
 	. = ..()
 	var/obj/item/ammo_casing/energy/chrono_beam/C = loc
 	if(istype(C))
@@ -151,7 +151,7 @@
 	e_cost = 0
 	var/obj/item/gun/energy/chrono_gun/gun
 
-/obj/item/ammo_casing/energy/chrono_beam/Initialize(mapload)
+/obj/item/ammo_casing/energy/chrono_beam/Initialize()
 	if(istype(loc))
 		gun = loc
 	. = ..()

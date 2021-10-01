@@ -37,7 +37,7 @@
 	var/weaponscheck = TRUE
 	var/bikehorn = /obj/item/bikehorn
 
-/mob/living/simple_animal/bot/honkbot/Initialize(mapload)
+/mob/living/simple_animal/bot/honkbot/Initialize()
 	. = ..()
 	update_appearance()
 	auto_patrol = TRUE

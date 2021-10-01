@@ -113,7 +113,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	icon_state = "[base_icon_state]0"
 	return ..()
 
-/obj/machinery/requests_console/Initialize(mapload)
+/obj/machinery/requests_console/Initialize()
 	. = ..()
 	name = "\improper [department] requests console"
 	GLOB.allConsoles += src

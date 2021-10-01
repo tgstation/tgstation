@@ -11,7 +11,7 @@
 		return
 	if(!linked_bug)
 		user.audible_message(span_warning("[src] lets off a shrill beep!"))
-	if(user.client.screen_maps["spypopup_map"]) //alright, the popup this object uses is already IN use, so the window is open. no point in doing any other work here, so we're good.
+	if("spypopup_map" in user.client.screen_maps) //alright, the popup this object uses is already IN use, so the window is open. no point in doing any other work here, so we're good.
 		return
 	user.client.setup_popup("spypopup", 3, 3, 2)
 	user.client.register_map_obj(linked_bug.cam_screen)
@@ -53,7 +53,7 @@
 	var/cam_range = 1
 	var/datum/movement_detector/tracker
 
-/obj/item/clothing/accessory/spy_bug/Initialize(mapload)
+/obj/item/clothing/accessory/spy_bug/Initialize()
 	. = ..()
 	tracker = new /datum/movement_detector(src, CALLBACK(src, .proc/update_view))
 
@@ -68,10 +68,8 @@
 	// NOT apply to map popups. If there's ever a way to make planesmasters
 	// omnipresent, then this wouldn't be needed.
 	cam_plane_masters = list()
-	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
-		var/atom/movable/screen/plane_master/instance = new plane()
-		if(instance.blend_mode_override)
-			instance.blend_mode = instance.blend_mode_override
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master))
+		var/atom/movable/screen/instance = new plane()
 		instance.assigned_map = "spypopup_map"
 		instance.del_on_map_removal = FALSE
 		instance.screen_loc = "spypopup_map:CENTER"
@@ -80,9 +78,9 @@
 /obj/item/clothing/accessory/spy_bug/Destroy()
 	if(linked_glasses)
 		linked_glasses.linked_bug = null
-	QDEL_NULL(cam_screen)
+	qdel(cam_screen)
 	QDEL_LIST(cam_plane_masters)
-	QDEL_NULL(tracker)
+	qdel(tracker)
 	. = ..()
 
 /obj/item/clothing/accessory/spy_bug/proc/update_view()//this doesn't do anything too crazy, just updates the vis_contents of its screen obj

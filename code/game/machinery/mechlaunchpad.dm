@@ -13,7 +13,7 @@
 	///List of consoles that can access the pad
 	var/list/obj/machinery/computer/mechpad/consoles
 
-/obj/machinery/mechpad/Initialize(mapload)
+/obj/machinery/mechpad/Initialize()
 	. = ..()
 	display_name = "Orbital Pad - [get_area_name(src)]"
 	GLOB.mechpad_list += src

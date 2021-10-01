@@ -16,7 +16,7 @@
 	var/grill_time = 0
 	var/datum/looping_sound/grill/grill_loop
 
-/obj/machinery/grill/Initialize(mapload)
+/obj/machinery/grill/Initialize()
 	. = ..()
 	grill_loop = new(src, FALSE)
 

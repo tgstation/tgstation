@@ -72,8 +72,6 @@
 
 /datum/config_entry/flag/log_cloning // log cloning actions.
 
-/datum/config_entry/flag/log_asset //asset logging
-
 /datum/config_entry/flag/log_vote // log voting
 
 /datum/config_entry/flag/log_whisper // log client whisper
@@ -127,8 +125,7 @@
 
 /datum/config_entry/flag/no_dead_vote // dead people can't vote
 
-/// Gives the ability to send players a maptext popup.
-/datum/config_entry/flag/popup_admin_pm
+/datum/config_entry/flag/popup_admin_pm // adminPMs to non-admins show in a pop-up 'reply' window when set
 
 /datum/config_entry/number/fps
 	default = 20
@@ -535,5 +532,3 @@
 /datum/config_entry/number/hard_deletes_overrun_limit
 	default = 0
 	min_val = 0
-
-/datum/config_entry/str_list/motd

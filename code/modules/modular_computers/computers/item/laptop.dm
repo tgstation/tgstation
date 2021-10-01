@@ -28,7 +28,7 @@
 	if(screen_on)
 		. += span_notice("Alt-click to close it.")
 
-/obj/item/modular_computer/laptop/Initialize(mapload)
+/obj/item/modular_computer/laptop/Initialize()
 	. = ..()
 
 	if(start_open && !screen_on)
@@ -93,9 +93,6 @@
 
 
 /obj/item/modular_computer/laptop/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
 	if(screen_on) // Close it.
 		try_toggle_open(user)
 	else

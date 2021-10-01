@@ -4,7 +4,7 @@
 	icon_state = "scooter"
 	are_legs_exposed = TRUE
 
-/obj/vehicle/ridden/scooter/Initialize(mapload)
+/obj/vehicle/ridden/scooter/Initialize()
 	. = ..()
 	make_ridable()
 
@@ -50,7 +50,7 @@
 	///Stamina drain multiplier
 	var/instability = 10
 
-/obj/vehicle/ridden/scooter/skateboard/Initialize(mapload)
+/obj/vehicle/ridden/scooter/skateboard/Initialize()
 	. = ..()
 	sparks = new
 	sparks.set_up(1, 0, src)

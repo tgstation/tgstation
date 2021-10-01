@@ -998,14 +998,6 @@
 	name = "Moustache (Watson)"
 	icon_state = "facial_watson"
 
-/datum/sprite_accessory/facial_hair/handlebar
-	name = "Moustache (Handlebar)"
-	icon_state = "facial_handlebar"
-
-/datum/sprite_accessory/facial_hair/handlebar2
-	name = "Moustache (Handlebar 2)"
-	icon_state = "facial_handlebar2"
-
 /datum/sprite_accessory/facial_hair/elvis
 	name = "Sideburns (Elvis)"
 	icon_state = "facial_elvis"
@@ -1500,14 +1492,6 @@
 
 // please make sure they're sorted alphabetically and categorized
 
-/datum/sprite_accessory/socks/ace_knee
-	name = "Knee-high (Ace)"
-	icon_state = "ace_knee"
-
-/datum/sprite_accessory/socks/bee_knee
-	name = "Knee-high (Bee)"
-	icon_state = "bee_knee"
-
 /datum/sprite_accessory/socks/black_knee
 	name = "Knee-high (Black)"
 	icon_state = "black_knee"
@@ -1539,6 +1523,10 @@
 /datum/sprite_accessory/socks/white_knee
 	name = "Knee-high (White)"
 	icon_state = "white_knee"
+
+/datum/sprite_accessory/socks/bee_knee
+	name = "Knee-high (Bee)"
+	icon_state = "bee_knee"
 
 /datum/sprite_accessory/socks/black_norm
 	name = "Normal (Black)"
@@ -1592,14 +1580,6 @@
 	name = "Stockings (Yellow)"
 	icon_state = "stockings_yellow"
 
-/datum/sprite_accessory/socks/ace_thigh
-	name = "Thigh-high (Ace)"
-	icon_state = "ace_thigh"
-
-/datum/sprite_accessory/socks/bee_thigh
-	name = "Thigh-high (Bee)"
-	icon_state = "bee_thigh"
-
 /datum/sprite_accessory/socks/black_thigh
 	name = "Thigh-high (Black)"
 	icon_state = "black_thigh"
@@ -1631,6 +1611,10 @@
 /datum/sprite_accessory/socks/white_thigh
 	name = "Thigh-high (White)"
 	icon_state = "white_thigh"
+
+/datum/sprite_accessory/socks/bee_thigh
+	name = "Thigh-high (Bee)"
+	icon_state = "bee_thigh"
 
 /datum/sprite_accessory/socks/thocks
 	name = "Thocks"

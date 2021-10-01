@@ -737,7 +737,7 @@
 	name = "Cyborg Upgrade (Emergency Reboot Board)"
 	id = "borg_upgrade_restart"
 	build_type = MECHFAB
-	build_path = /obj/item/borg_restart_board
+	build_path = /obj/item/borg/upgrade/restart
 	materials = list(/datum/material/iron = 20000 , /datum/material/glass = 5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")

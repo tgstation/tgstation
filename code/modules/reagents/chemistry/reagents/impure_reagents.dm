@@ -53,7 +53,6 @@
 	taste_description = "an awful, strongly chemical taste"
 	color = "#270d03"
 	glass_price = DRINK_PRICE_HIGH
-	fallback_icon_state = "failed_reaction_fallback"
 
 // Unique
 
@@ -86,8 +85,8 @@
 	desc = "You're frozen inside of a protective ice cube! While inside, you can't do anything, but are immune to harm! You will be free when the chem runs out."
 
 /datum/reagent/inverse/cryostylane
-	name = "Cryogelidia"
-	description = "Freezes the live or dead patient in a cryostasis ice block."
+	name = "Cyrogelidia"
+	description = "Freezes the live or dead patient in an incuded cyrostasis ice block."
 	reagent_state = LIQUID
 	color = "#03dbfc"
 	taste_description = "your tongue freezing, shortly followed by your thoughts. Brr!"

@@ -11,7 +11,7 @@
 	gender = NEUTER
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	speak_emote = list("roars")
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	health = 250
 	maxHealth = 250
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 1, CLONE = 2, STAMINA = 0, OXY = 1)
@@ -25,7 +25,7 @@
 
 	var/obj/effect/proc_holder/tentacle_slap/tentacle_slap
 
-/mob/living/simple_animal/hostile/vatbeast/Initialize(mapload)
+/mob/living/simple_animal/hostile/vatbeast/Initialize()
 	. = ..()
 	tentacle_slap = new(src, src)
 	AddAbility(tentacle_slap)

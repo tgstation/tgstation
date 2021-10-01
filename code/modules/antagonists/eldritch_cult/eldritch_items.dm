@@ -296,7 +296,7 @@
 	. += "This item can carve 'Grasping carving' - when stepped on it causes heavy damage to the legs and stuns for 5 seconds."
 	. += "This item can carve 'Mad carving' - when stepped on it causes dizzyness, jiterryness, temporary blindness, confusion , stuttering and slurring."
 
-/obj/item/melee/rune_carver/Initialize(mapload)
+/obj/item/melee/rune_carver/Initialize()
 	. = ..()
 	linked_action = new(src)
 

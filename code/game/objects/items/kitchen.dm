@@ -17,7 +17,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 
-/obj/item/kitchen/Initialize(mapload)
+/obj/item/kitchen/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_APC_SHOCKING, INNATE_TRAIT)
 
@@ -40,7 +40,7 @@
 	var/datum/reagent/forkload //used to eat omelette
 	custom_price = PAYCHECK_PRISONER
 
-/obj/item/kitchen/fork/Initialize(mapload)
+/obj/item/kitchen/fork/Initialize()
 	. = ..()
 	AddElement(/datum/element/eyestab)
 
@@ -75,7 +75,7 @@
 	custom_materials = list(/datum/material/plastic=80)
 	custom_price = PAYCHECK_PRISONER * 2
 
-/obj/item/kitchen/fork/plastic/Initialize(mapload)
+/obj/item/kitchen/fork/plastic/Initialize()
 	. = ..()
 	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 
@@ -102,7 +102,7 @@
 	bare_wound_bonus = 15
 	tool_behaviour = TOOL_KNIFE
 
-/obj/item/kitchen/knife/Initialize(mapload)
+/obj/item/kitchen/knife/Initialize()
 	. = ..()
 	AddElement(/datum/element/eyestab)
 	set_butchering()
@@ -132,7 +132,7 @@
 	sharpness = SHARP_EDGED
 	custom_price = PAYCHECK_PRISONER * 2
 
-/obj/item/kitchen/knife/plastic/Initialize(mapload)
+/obj/item/kitchen/knife/plastic/Initialize()
 	. = ..()
 	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 
@@ -309,7 +309,7 @@
 	custom_price = PAYCHECK_PRISONER * 2
 	toolspeed = 75 // The plastic spoon takes 5 minutes to dig through a single mineral turf... It's one, continuous, breakable, do_after...
 
-/obj/item/kitchen/spoon/plastic/Initialize(mapload)
+/obj/item/kitchen/spoon/plastic/Initialize()
 	. = ..()
 	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 

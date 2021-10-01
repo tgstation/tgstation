@@ -1,6 +1,3 @@
-#define USERNAME_SIZE 32
-#define CHANNELNAME_SIZE 12
-#define MESSAGE_SIZE 2048
 
 /datum/computer_file/program/chatclient
 	filename = "ntnrc_client"
@@ -47,7 +44,7 @@
 		if("PRG_speak")
 			if(!channel || isnull(active_channel))
 				return
-			var/message = reject_bad_chattext(params["message"], MESSAGE_SIZE)
+			var/message = reject_bad_text(params["message"])
 			if(!message)
 				return
 			if(channel.password && (!(src in channel.active_clients) && !(src in channel.offline_clients)))
@@ -79,7 +76,7 @@
 				active_channel = null
 				return TRUE
 		if("PRG_newchannel")
-			var/channel_title = reject_bad_chattext(params["new_channel_name"], CHANNELNAME_SIZE)
+			var/channel_title = reject_bad_text(params["new_channel_name"])
 			if(!channel_title)
 				return
 			var/datum/ntnet_conversation/C = new /datum/ntnet_conversation()
@@ -102,7 +99,7 @@
 				netadmin_mode = TRUE
 				return TRUE
 		if("PRG_changename")
-			var/newname = reject_bad_chattext(params["new_name"], USERNAME_SIZE)
+			var/newname = sanitize(params["new_name"])
 			newname = replacetext(newname, " ", "_")
 			if(!newname || newname == username)
 				return
@@ -138,7 +135,7 @@
 		if("PRG_renamechannel")
 			if(!authed)
 				return
-			var/newname = reject_bad_chattext(params["new_name"], CHANNELNAME_SIZE)
+			var/newname = reject_bad_text(params["new_name"])
 			if(!newname || !channel)
 				return
 			channel.add_status_message("Channel renamed from [channel.title] to [newname] by operator.")
@@ -270,7 +267,3 @@
 		data["messages"] = list()
 
 	return data
-
-#undef USERNAME_SIZE
-#undef CHANNELNAME_SIZE
-#undef MESSAGE_SIZE

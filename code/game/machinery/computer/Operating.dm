@@ -13,7 +13,7 @@
 	var/datum/techweb/linked_techweb
 	light_color = LIGHT_COLOR_BLUE
 
-/obj/machinery/computer/operating/Initialize(mapload)
+/obj/machinery/computer/operating/Initialize()
 	. = ..()
 	linked_techweb = SSresearch.science_tech
 	find_table()

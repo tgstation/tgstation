@@ -22,7 +22,7 @@
 /obj/effect/landmark/sc_bible_spawner
 	name = "Safecode hint spawner"
 
-/obj/effect/landmark/sc_bible_spawner/Initialize(mapload)
+/obj/effect/landmark/sc_bible_spawner/Initialize()
 	..()
 	var/obj/item/storage/book/bible/B = new /obj/item/storage/book/bible/booze(loc)
 	B.name = "The Holy book of the Geometer"
@@ -48,7 +48,7 @@
 //Syndicate sub-machine guns.
 /obj/item/gun/ballistic/automatic/c20r/sc_c20r
 
-/obj/item/gun/ballistic/automatic/c20r/sc_c20r/Initialize(mapload)
+/obj/item/gun/ballistic/automatic/c20r/sc_c20r/Initialize()
 	. = ..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance
@@ -57,7 +57,7 @@
 //Barman's shotgun
 /obj/item/gun/ballistic/shotgun/sc_pump
 
-/obj/item/gun/ballistic/shotgun/sc_pump/Initialize(mapload)
+/obj/item/gun/ballistic/shotgun/sc_pump/Initialize()
 	. = ..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance
@@ -84,13 +84,13 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_prison
 	name = "smudged paper"
 
-/obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_prison/Initialize(mapload)
+/obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_prison/Initialize()
 	. = ..()
 	info = "<i>The ink is smudged, you can only make out a couple numbers:</i> '[GLOB.sc_safecode1]**[GLOB.sc_safecode4]*'"
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_hydro
 	name = "shredded paper"
-/obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_hydro/Initialize(mapload)
+/obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_hydro/Initialize()
 	. = ..()
 	info = "<i>Although the paper is shredded, you can clearly see the number:</i> '[GLOB.sc_safecode2]'"
 
@@ -101,7 +101,7 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible
 	name = "hidden paper"
-/obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible/Initialize(mapload)
+/obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible/Initialize()
 	. = ..()
 	info = {"<i>It would appear that the pen hidden with the paper had leaked ink over the paper.
 			However you can make out the last three digits:</i>'[GLOB.sc_safecode3][GLOB.sc_safecode4][GLOB.sc_safecode5]'
@@ -126,7 +126,7 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 /obj/item/storage/secure/safe/sc_ssafe
 	name = "Captain's secure safe"
 
-/obj/item/storage/secure/safe/sc_ssafe/Initialize(mapload)
+/obj/item/storage/secure/safe/sc_ssafe/Initialize()
 	. = ..()
 	l_code = "[GLOB.sc_safecode1][GLOB.sc_safecode2][GLOB.sc_safecode3][GLOB.sc_safecode4][GLOB.sc_safecode5]"
 	l_set = 1

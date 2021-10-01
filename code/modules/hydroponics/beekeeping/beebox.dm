@@ -40,7 +40,7 @@
 	var/bee_resources = 0
 
 
-/obj/structure/beebox/Initialize(mapload)
+/obj/structure/beebox/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -58,7 +58,7 @@
 	var/random_reagent = FALSE
 
 
-/obj/structure/beebox/premade/Initialize(mapload)
+/obj/structure/beebox/premade/Initialize()
 	. = ..()
 
 	icon_state = "beebox"

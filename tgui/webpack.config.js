@@ -25,10 +25,9 @@ const createStats = verbose => ({
 });
 
 module.exports = (env = {}, argv) => {
-  const mode = argv.mode || 'production';
-  const bench = env.TGUI_BENCH;
+  const mode = argv.mode === 'production' ? 'production' : 'development';
   const config = {
-    mode: mode === 'production' ? 'production' : 'development',
+    mode,
     context: path.resolve(__dirname),
     target: ['web', 'es3', 'browserslist:ie 8'],
     entry: {
@@ -60,9 +59,7 @@ module.exports = (env = {}, argv) => {
           use: [
             {
               loader: require.resolve('babel-loader'),
-              options: createBabelConfig({
-                removeConsole: !bench,
-              }),
+              options: createBabelConfig({ mode }),
             },
           ],
         },
@@ -116,7 +113,7 @@ module.exports = (env = {}, argv) => {
     stats: createStats(true),
     plugins: [
       new webpack.EnvironmentPlugin({
-        NODE_ENV: env.NODE_ENV || mode,
+        NODE_ENV: env.NODE_ENV || argv.mode || 'development',
         WEBPACK_HMR_ENABLED: env.WEBPACK_HMR_ENABLED || argv.hot || false,
         DEV_SERVER_IP: env.DEV_SERVER_IP || null,
       }),
@@ -127,17 +124,17 @@ module.exports = (env = {}, argv) => {
     ],
   };
 
-  if (bench) {
-    config.entry = {
-      'tgui-bench': [
-        './packages/tgui-polyfill',
-        './packages/tgui-bench/entrypoint',
-      ],
-    };
+  // Add a bundle analyzer to the plugins array
+  if (argv.analyze) {
+    const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+    config.plugins = [
+      ...config.plugins,
+      new BundleAnalyzerPlugin(),
+    ];
   }
 
   // Production build specific options
-  if (mode === 'production') {
+  if (argv.mode === 'production') {
     const TerserPlugin = require('terser-webpack-plugin');
     config.optimization.minimizer = [
       new TerserPlugin({
@@ -154,7 +151,7 @@ module.exports = (env = {}, argv) => {
   }
 
   // Development build specific options
-  if (mode !== 'production') {
+  if (argv.mode !== 'production') {
     config.devtool = 'cheap-module-source-map';
   }
 

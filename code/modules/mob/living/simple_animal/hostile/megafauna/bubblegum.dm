@@ -541,7 +541,7 @@ Difficulty: Hard
 	deathsound = 'sound/effects/splat.ogg'
 	true_spawn = FALSE
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Initialize(mapload)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Initialize()
 	. = ..()
 	toggle_ai(AI_OFF)
 

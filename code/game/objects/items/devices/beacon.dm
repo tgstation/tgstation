@@ -9,7 +9,7 @@
 	var/enabled = TRUE
 	var/renamed = FALSE
 
-/obj/item/beacon/Initialize(mapload)
+/obj/item/beacon/Initialize()
 	. = ..()
 	if (enabled)
 		GLOB.teleportbeacons += src

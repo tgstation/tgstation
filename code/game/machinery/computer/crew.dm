@@ -30,15 +30,16 @@
 
 	var/obj/machinery/computer/crew/attached_console
 
-/obj/item/circuit_component/medical_console_data/populate_ports()
+/obj/item/circuit_component/medical_console_data/Initialize()
+	. = ..()
 	records = add_output_port("Crew Monitoring Data", PORT_TYPE_TABLE)
 
-/obj/item/circuit_component/medical_console_data/register_usb_parent(atom/movable/shell)
+/obj/item/circuit_component/medical_console_data/register_usb_parent(atom/movable/parent)
 	. = ..()
-	if(istype(shell, /obj/machinery/computer/crew))
-		attached_console = shell
+	if(istype(parent, /obj/machinery/computer/crew))
+		attached_console = parent
 
-/obj/item/circuit_component/medical_console_data/unregister_usb_parent(atom/movable/shell)
+/obj/item/circuit_component/medical_console_data/unregister_usb_parent(atom/movable/parent)
 	attached_console = null
 	return ..()
 
@@ -57,6 +58,9 @@
 
 
 /obj/item/circuit_component/medical_console_data/input_received(datum/port/input/port)
+	. = ..()
+	if(.)
+		return
 
 	if(!attached_console || !GLOB.crewmonitor)
 		return

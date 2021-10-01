@@ -49,7 +49,7 @@
 	var/ignore_signals = FALSE
 
 
-/obj/machinery/scanner_gate/Initialize(mapload)
+/obj/machinery/scanner_gate/Initialize()
 	. = ..()
 	wires = new /datum/wires/scanner_gate(src)
 	set_scanline("passive")

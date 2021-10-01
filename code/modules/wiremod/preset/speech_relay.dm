@@ -5,7 +5,7 @@
  */
 /obj/item/integrated_circuit/loaded/speech_relay
 
-/obj/item/integrated_circuit/loaded/speech_relay/Initialize(mapload)
+/obj/item/integrated_circuit/loaded/speech_relay/Initialize()
 	. = ..()
 	var/obj/item/circuit_component/hear/hear = new()
 	add_component(hear)

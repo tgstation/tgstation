@@ -731,7 +731,7 @@
 	height = 8
 	dir = EAST
 
-/obj/docking_port/mobile/emergency/backup/Initialize(mapload)
+/obj/docking_port/mobile/emergency/backup/Initialize()
 	// We want to be a valid emergency shuttle
 	// but not be the main one, keep whatever's set
 	// valid.

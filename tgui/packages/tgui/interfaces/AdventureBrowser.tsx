@@ -28,11 +28,6 @@ const AdventureEntry = (props, context) => {
   const { data, act } = useBackend<AdventureBrowserData>(context);
   const { entry_ref, close }: { entry_ref: string, close: () => void } = props;
   const entry = data.adventures.find(x => x.ref === entry_ref);
-
-  if (!entry) {
-    return null;
-  }
-
   return (
     <Section>
       <LabeledList>
@@ -67,7 +62,7 @@ const AdventureList = (props, context) => {
   const [
     openAdventure,
     setOpenAdventure,
-  ] = useLocalState<string | null>(context, 'openAdventure', null);
+  ] = useLocalState(context, 'openAdventure', null);
 
   return (
     <>
@@ -83,13 +78,13 @@ const AdventureList = (props, context) => {
             <Table.Cell color="label">Title</Table.Cell>
             <Table.Cell color="label">Edit</Table.Cell>
           </Table.Row>
-          {data.adventures.map(adventure => (
+          {data.adventures.map(p => (
             <Table.Row
-              key={adventure.ref}
+              key={p.ref}
               className="candystripe">
-              <Table.Cell>{adventure.id}</Table.Cell>
-              <Table.Cell>{adventure.name}</Table.Cell>
-              <Table.Cell><Button icon="edit" onClick={() => setOpenAdventure(adventure.ref)} /></Table.Cell>
+              <Table.Cell>{p.id}</Table.Cell>
+              <Table.Cell>{p.name}</Table.Cell>
+              <Table.Cell><Button icon="edit" onClick={() => setOpenAdventure(p.ref)} /></Table.Cell>
             </Table.Row>
           ))}
           <Table.Row>
@@ -109,14 +104,7 @@ const DebugPlayer = (props, context) => {
       buttons={<Button onClick={() => act("end_play")}>End Playtest</Button>}>
       {data.delay_time > 0
         ? <Box>DELAY {formatTime(data.delay_time)} / {data.delay_message}</Box>
-        : (
-          <AdventureScreen
-            adventure_data={data.adventure_data}
-            drone_integrity={100}
-            drone_max_integrity={100}
-            hide_status
-          />
-        )}
+        : <AdventureScreen hide_status />}
     </Section>);
 };
 

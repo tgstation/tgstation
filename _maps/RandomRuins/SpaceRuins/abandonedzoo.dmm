@@ -2,6 +2,11 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
+"ab" = (
+/obj/machinery/power/shieldwallgen/anchored,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/abandonedzoo)
 "ac" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -93,6 +98,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/abandonedzoo)
+"aE" = (
+/obj/machinery/power/shieldwallgen/anchored,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandonedzoo)
 "aG" = (
 /obj/structure/table/reinforced,
 /obj/item/gun/energy/floragun,
@@ -160,6 +170,20 @@
 	},
 /turf/template_noop,
 /area/template_noop)
+"aS" = (
+/obj/machinery/power/apc/unlocked{
+	dir = 8;
+	environ = 0;
+	lighting = 0;
+	name = "Worn-out APC";
+	pixel_x = -25
+	},
+/obj/structure/rack,
+/obj/item/melee/baton/cattleprod,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/cable,
+/turf/open/floor/iron/dark/side,
+/area/ruin/space/has_grav/abandonedzoo)
 "aT" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/eva,
@@ -271,6 +295,16 @@
 /obj/structure/table/reinforced,
 /obj/machinery/microwave,
 /turf/open/floor/iron/dark/side,
+/area/ruin/space/has_grav/abandonedzoo)
+"bs" = (
+/obj/structure/cable,
+/obj/machinery/power/shieldwallgen/anchored,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandonedzoo)
+"bt" = (
+/obj/structure/cable,
+/obj/machinery/power/shieldwallgen/anchored,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "bu" = (
 /obj/structure/flora/ausbushes/sunnybush,
@@ -394,6 +428,10 @@
 /obj/structure/grille/broken,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
+"bV" = (
+/obj/machinery/power/shieldwallgen,
+/turf/template_noop,
+/area/template_noop)
 "bW" = (
 /obj/item/shard,
 /turf/template_noop,
@@ -404,11 +442,6 @@
 "gE" = (
 /mob/living/simple_animal/hostile/bee,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav/abandonedzoo)
-"ix" = (
-/obj/structure/cable,
-/obj/machinery/power/shieldwallgen/unlocked/anchored,
-/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "iZ" = (
 /obj/machinery/light/small/directional/west,
@@ -471,10 +504,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/abandonedzoo)
-"ly" = (
-/obj/machinery/power/shieldwallgen/unlocked,
-/turf/template_noop,
-/area/template_noop)
 "mY" = (
 /obj/structure/alien/weeds/node,
 /obj/machinery/light/directional/north,
@@ -484,11 +513,6 @@
 /obj/structure/flora/ausbushes/leafybush,
 /mob/living/simple_animal/hostile/bee,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav/abandonedzoo)
-"qX" = (
-/obj/machinery/power/shieldwallgen/unlocked/anchored,
-/obj/structure/cable,
-/turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "rG" = (
 /obj/machinery/light/small/directional/west,
@@ -503,11 +527,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/abandonedzoo)
-"sT" = (
-/obj/structure/cable,
-/obj/machinery/power/shieldwallgen/unlocked/anchored,
-/turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "uA" = (
 /obj/structure/rack,
@@ -577,11 +596,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
-"Gh" = (
-/obj/machinery/power/shieldwallgen/unlocked/anchored,
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/abandonedzoo)
 "GX" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light/directional/south,
@@ -592,30 +606,6 @@
 /obj/machinery/light/directional/north,
 /mob/living/simple_animal/hostile/carp,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/abandonedzoo)
-"LD" = (
-/obj/machinery/power/apc/unlocked{
-	dir = 8;
-	environ = 0;
-	lighting = 0;
-	name = "Worn-out APC";
-	pixel_x = -25
-	},
-/obj/structure/rack,
-/obj/item/melee/baton/security/cattleprod,
-/obj/effect/spawner/random/maintenance,
-/obj/structure/cable,
-/obj/machinery/power/apc/unlocked{
-	dir = 8;
-	environ = 0;
-	lighting = 0;
-	name = "Worn-out APC";
-	pixel_x = -25
-	},
-/obj/structure/rack,
-/obj/item/melee/baton/security/cattleprod,
-/obj/structure/cable,
-/turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "Mb" = (
 /mob/living/simple_animal/hostile/bee,
@@ -673,24 +663,24 @@
 /area/ruin/space/has_grav/abandonedzoo)
 
 (1,1,1) = {"
-Gh
+ab
 ac
 ac
 ac
 ac
-Gh
+ab
 aa
 aa
 aa
 aa
 aa
 aa
-Gh
+ab
 ac
 ac
 ac
 ac
-Gh
+ab
 aa
 "}
 (2,1,1) = {"
@@ -764,7 +754,7 @@ as
 ar
 ac
 at
-LD
+aS
 Ck
 Ck
 be
@@ -778,24 +768,24 @@ ac
 aa
 "}
 (6,1,1) = {"
-Gh
+ab
 ac
 ac
 ac
 ac
-qX
+aE
 at
 aT
 ay
 bd
 bf
 at
-qX
+aE
 ac
 ac
 ac
 ac
-Gh
+ab
 aa
 "}
 (7,1,1) = {"
@@ -925,24 +915,24 @@ aa
 aa
 "}
 (13,1,1) = {"
-Gh
+ab
 ac
 ac
 ac
 ac
-qX
+aE
 at
 aY
 ay
 Ck
 bk
 at
-sT
+bs
 ac
 ac
 ac
 ac
-ix
+bt
 aa
 "}
 (14,1,1) = {"
@@ -1030,19 +1020,19 @@ bP
 aa
 "}
 (18,1,1) = {"
-Gh
+ab
 ac
 ac
 ac
 ac
-Gh
+ab
 aa
 aa
 aa
 aa
 aa
 aa
-ix
+bt
 ac
 ac
 bN
@@ -1068,6 +1058,6 @@ aa
 aa
 aa
 aa
-ly
+bV
 aa
 "}

@@ -40,7 +40,7 @@
 		QUEUE_SMOOTH(src)
 
 /obj/structure/grille/update_icon_state()
-	icon_state = "[base_icon_state][((atom_integrity / max_integrity) <= 0.5) ? "50_[rand(0, 3)]" : null]"
+	icon_state = "[base_icon_state][((obj_integrity / max_integrity) <= 0.5) ? "50_[rand(0, 3)]" : null]"
 	return ..()
 
 /obj/structure/grille/examine(mob/user)
@@ -220,15 +220,15 @@
 					return
 				var/obj/structure/window/WD
 				if(istype(W, /obj/item/stack/sheet/plasmarglass))
-					WD = new/obj/structure/window/reinforced/plasma/fulltile(drop_location()) //reinforced plasma window
+					WD = new/obj/structure/window/plasma/reinforced/fulltile(drop_location()) //reinforced plasma window
 				else if(istype(W, /obj/item/stack/sheet/plasmaglass))
 					WD = new/obj/structure/window/plasma/fulltile(drop_location()) //plasma window
 				else if(istype(W, /obj/item/stack/sheet/rglass))
 					WD = new/obj/structure/window/reinforced/fulltile(drop_location()) //reinforced window
 				else if(istype(W, /obj/item/stack/sheet/titaniumglass))
-					WD = new/obj/structure/window/reinforced/shuttle(drop_location())
+					WD = new/obj/structure/window/shuttle(drop_location())
 				else if(istype(W, /obj/item/stack/sheet/plastitaniumglass))
-					WD = new/obj/structure/window/reinforced/plasma/plastitanium(drop_location())
+					WD = new/obj/structure/window/plasma/reinforced/plastitanium(drop_location())
 				else if(istype(W, /obj/item/stack/sheet/bronze))
 					WD = new/obj/structure/window/bronze/fulltile(drop_location())
 				else
@@ -264,12 +264,12 @@
 		qdel(src)
 	..()
 
-/obj/structure/grille/atom_break()
+/obj/structure/grille/obj_break()
 	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		icon_state = "brokengrille"
 		set_density(FALSE)
-		atom_integrity = 20
+		obj_integrity = 20
 		broken = TRUE
 		rods_amount = 1
 		rods_broken = FALSE
@@ -280,7 +280,7 @@
 	if(broken)
 		icon_state = "grille"
 		set_density(TRUE)
-		atom_integrity = max_integrity
+		obj_integrity = max_integrity
 		broken = FALSE
 		rods_amount = 2
 		rods_broken = TRUE

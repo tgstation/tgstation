@@ -24,7 +24,6 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	max_integrity = 300
 	armor = list(MELEE = 20, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
-	force = 5
 	movedelay = 1 SECONDS
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
@@ -201,7 +200,7 @@
 	add_scanmod()
 	add_capacitor()
 	START_PROCESSING(SSobj, src)
-	SSpoints_of_interest.make_point_of_interest(src)
+	AddElement(/datum/element/point_of_interest)
 	log_message("[src.name] created.", LOG_MECHA)
 	GLOB.mechas_list += src //global mech list
 	prepare_huds()
@@ -214,7 +213,6 @@
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT) //protects pilots from ashstorms.
 
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/ejectee in occupants)
@@ -242,7 +240,7 @@
 		diag_hud.remove_from_hud(src) //YEET
 	return ..()
 
-/obj/vehicle/sealed/mecha/atom_destruction()
+/obj/vehicle/sealed/mecha/obj_destruction()
 	loc.assume_air(cabin_air)
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
@@ -274,9 +272,8 @@
 		return ..()
 	if(phase_state)
 		flick(phase_state, src)
-	var/turf/destination_turf = get_step(loc, movement_dir)
-	var/area/destination_area = destination_turf.loc
-	if(destination_area.area_flags & NOTELEPORT || SSmapping.level_trait(destination_turf.z, ZTRAIT_NOPHASE))
+	var/area/destination_area = get_step(loc, movement_dir).loc
+	if(destination_area.area_flags & NOTELEPORT)
 		return FALSE
 	return TRUE
 
@@ -349,7 +346,7 @@
 
 /obj/vehicle/sealed/mecha/examine(mob/user)
 	. = ..()
-	var/integrity = atom_integrity*100/max_integrity
+	var/integrity = obj_integrity*100/max_integrity
 	switch(integrity)
 		if(85 to 100)
 			. += "It's fully intact."
@@ -465,7 +462,7 @@
 				else
 					occupant.throw_alert("charge", /atom/movable/screen/alert/emptycell)
 
-		var/integrity = atom_integrity/max_integrity*100
+		var/integrity = obj_integrity/max_integrity*100
 		switch(integrity)
 			if(30 to 45)
 				occupant.throw_alert("mech damage", /atom/movable/screen/alert/low_mech_integrity, 1)
@@ -579,9 +576,8 @@
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		target = pick(oview(1,src))
 
-	if(force)
-		target.mech_melee_attack(src, user)
-		TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
+	target.mech_melee_attack(src, user)
+	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
 
 /obj/vehicle/sealed/mecha/proc/on_middlemouseclick(mob/user, atom/target, params)
 	SIGNAL_HANDLER
@@ -716,6 +712,7 @@
 /obj/vehicle/sealed/mecha/Bump(atom/obstacle)
 	. = ..()
 	if(phasing) //Theres only one cause for phasing canpass fails
+		addtimer(VARSET_CALLBACK(src, movedelay, TRUE), movedelay*3)
 		to_chat(occupants, "[icon2html(src, occupants)][span_warning("A dull, universal force is preventing you from [phasing] here!")]")
 		spark_system.start()
 		return
@@ -748,7 +745,7 @@
 	if(!islist(possible_int_damage) || !length(possible_int_damage))
 		return
 	if(prob(20))
-		if(ignore_threshold || atom_integrity*100/max_integrity < internal_damage_threshold)
+		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
 					possible_int_damage -= T
@@ -757,7 +754,7 @@
 				if(int_dam_flag)
 					set_internal_damage(int_dam_flag)
 	if(prob(5))
-		if(ignore_threshold || atom_integrity*100/max_integrity < internal_damage_threshold)
+		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
 			if(LAZYLEN(equipment))
 				var/obj/item/mecha_parts/mecha_equipment/ME = pick(equipment)
 				qdel(ME)
@@ -942,7 +939,7 @@
 	visible_message(span_notice("[M] starts to climb into [name]."))
 
 	if(do_after(M, enter_delay, target = src))
-		if(atom_integrity <= 0)
+		if(obj_integrity <= 0)
 			to_chat(M, span_warning("You cannot get in the [name], it has been destroyed!"))
 		else if(LAZYLEN(occupants) >= max_occupants)
 			to_chat(M, span_danger("[occupants[occupants.len]] was faster! Try better next time, loser."))//get the last one that hopped in

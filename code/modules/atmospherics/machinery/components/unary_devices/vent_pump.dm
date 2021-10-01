@@ -167,17 +167,12 @@
 	if(!GLOB.air_vent_names[id_tag])
 		// If we do not have a name, assign one.
 		// Produces names like "Port Quarter Solar vent pump hZ2l6".
-		update_name()
+		name = "\proper [vent_area.name] vent pump [id_tag]"
 		GLOB.air_vent_names[id_tag] = name
 
 	vent_area.air_vent_info[id_tag] = signal.data
 
 	radio_connection.post_signal(src, signal, radio_filter_out)
-
-/obj/machinery/atmospherics/components/unary/vent_pump/update_name()
-	..()
-	var/area/vent_area = get_area(src)
-	name = "\proper [vent_area.name] [name] [id_tag]"
 
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atmosinit()
@@ -366,9 +361,9 @@
 	on = TRUE
 	icon_state = "vent_map_siphon_on-3"
 
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/plasma_output
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxin_output
 	name = "plasma tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_PLAS
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TOX
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/oxygen_output
 	name = "oxygen tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_O2
@@ -436,9 +431,9 @@
 	name = "incinerator chamber output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR
 	frequency = FREQ_ATMOS_CONTROL
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/ordnance_mixing_output
-	name = "ordnance mixing output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_ORDNANCE_LAB
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output
+	name = "toxins mixing output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TOXINS_LAB
 	frequency = FREQ_ATMOS_CONTROL
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/layer2

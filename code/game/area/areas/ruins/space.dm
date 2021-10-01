@@ -262,11 +262,11 @@
 
 /area/ruin/space/has_grav/ancientstation/proto
 	name = "\improper Delta Station Prototype Lab"
-	icon_state = "ordlab"
+	icon_state = "toxlab"
 
 /area/ruin/space/has_grav/ancientstation/rnd
 	name = "Delta Station Research and Development"
-	icon_state = "ordlab"
+	icon_state = "toxlab"
 
 /area/ruin/space/has_grav/ancientstation/deltaai
 	name = "\improper Delta Station AI Core"

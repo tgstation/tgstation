@@ -15,7 +15,7 @@
 	var/infinite = FALSE
 	var/start_lit = FALSE
 
-/obj/item/candle/Initialize(mapload)
+/obj/item/candle/Initialize()
 	. = ..()
 	if(start_lit)
 		light()

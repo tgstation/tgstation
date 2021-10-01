@@ -18,7 +18,7 @@
 	var/obj/item/noz
 	var/volume = 500
 
-/obj/item/watertank/Initialize(mapload)
+/obj/item/watertank/Initialize()
 	. = ..()
 	create_reagents(volume, OPENCONTAINER)
 	noz = make_noz()
@@ -122,7 +122,7 @@
 
 	var/obj/item/watertank/tank
 
-/obj/item/reagent_containers/spray/mister/Initialize(mapload)
+/obj/item/reagent_containers/spray/mister/Initialize()
 	. = ..()
 	tank = loc
 	if(!istype(tank))
@@ -149,7 +149,7 @@
 	inhand_icon_state = "waterbackpackjani"
 	custom_price = PAYCHECK_EASY * 5
 
-/obj/item/watertank/janitor/Initialize(mapload)
+/obj/item/watertank/janitor/Initialize()
 	. = ..()
 	reagents.add_reagent(/datum/reagent/space_cleaner, 500)
 
@@ -180,7 +180,7 @@
 	inhand_icon_state = "pepperbackpacksec"
 	custom_price = PAYCHECK_MEDIUM * 2
 
-/obj/item/watertank/pepperspray/Initialize(mapload)
+/obj/item/watertank/pepperspray/Initialize()
 	. = ..()
 	reagents.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 500)
 
@@ -217,7 +217,7 @@
 	volume = 200
 	slowdown = 0
 
-/obj/item/watertank/atmos/Initialize(mapload)
+/obj/item/watertank/atmos/Initialize()
 	. = ..()
 	reagents.add_reagent(/datum/reagent/water, 200)
 
@@ -253,7 +253,7 @@
 	var/metal_synthesis_cooldown = 0
 	var/resin_cooldown = 0
 
-/obj/item/extinguisher/mini/nozzle/Initialize(mapload)
+/obj/item/extinguisher/mini/nozzle/Initialize()
 	. = ..()
 	tank = loc
 	if (!istype(tank))
@@ -464,7 +464,7 @@
 	volume = 2000
 	slowdown = 0
 
-/obj/item/watertank/op/Initialize(mapload)
+/obj/item/watertank/op/Initialize()
 	. = ..()
 	reagents.add_reagent(/datum/reagent/toxin/mutagen,350)
 	reagents.add_reagent(/datum/reagent/napalm,125)

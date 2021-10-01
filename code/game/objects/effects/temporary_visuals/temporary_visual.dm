@@ -11,7 +11,7 @@
 	///id of the deletion timer
 	var/timerid
 
-/obj/effect/temp_visual/Initialize(mapload)
+/obj/effect/temp_visual/Initialize()
 	. = ..()
 	if(randomdir)
 		setDir(pick(GLOB.cardinals))

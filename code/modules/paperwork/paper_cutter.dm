@@ -12,7 +12,7 @@
 	pass_flags = PASSTABLE
 
 
-/obj/item/papercutter/Initialize(mapload)
+/obj/item/papercutter/Initialize()
 	. = ..()
 	storedcutter = new /obj/item/hatchet/cutterblade(src)
 	update_appearance()
@@ -120,7 +120,7 @@
 	return ..()
 
 
-/obj/item/paperslip/Initialize(mapload)
+/obj/item/paperslip/Initialize()
 	. = ..()
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)

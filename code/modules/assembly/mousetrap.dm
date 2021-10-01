@@ -14,7 +14,7 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 
-/obj/item/assembly/mousetrap/Initialize(mapload)
+/obj/item/assembly/mousetrap/Initialize()
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
@@ -47,11 +47,11 @@
 
 /obj/item/assembly/mousetrap/on_attach()
 	. = ..()
-	AddComponent(/datum/component/connect_loc_behalf, holder, holder_connections)
+	AddElement(/datum/element/connect_loc_behalf, holder, holder_connections)
 
 /obj/item/assembly/mousetrap/on_detach()
 	. = ..()
-	qdel(GetComponent(/datum/component/connect_loc_behalf))
+	RemoveElement(/datum/element/connect_loc_behalf, holder, holder_connections)
 
 /obj/item/assembly/mousetrap/proc/triggered(mob/target, type = "feet")
 	if(!armed)

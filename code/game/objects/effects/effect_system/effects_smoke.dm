@@ -30,7 +30,7 @@
 			set_opacity(0) //if we were blocking view, we aren't now because we're fading out
 		stoplag()
 
-/obj/effect/particle_effect/smoke/Initialize(mapload)
+/obj/effect/particle_effect/smoke/Initialize()
 	. = ..()
 	create_reagents(500)
 	START_PROCESSING(SSobj, src)
@@ -125,7 +125,7 @@
 /obj/effect/particle_effect/smoke/bad
 	lifetime = 8
 
-/obj/effect/particle_effect/smoke/bad/Initialize(mapload)
+/obj/effect/particle_effect/smoke/bad/Initialize()
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,

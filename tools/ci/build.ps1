@@ -5,6 +5,6 @@ if(!(Test-Path -Path "C:/byond")){
 }
 
 bash tools/ci/install_node.sh
-bash tools/build/build -Werror
+bash tools/build/build
 
 exit $LASTEXITCODE

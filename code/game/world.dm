@@ -29,6 +29,7 @@ GLOBAL_VAR(restart_counter)
  * All atoms in both compiled and uncompiled maps are initialized()
  */
 /world/New()
+	enable_debugger()
 
 	log_world("World loaded at [time_stamp()]!")
 

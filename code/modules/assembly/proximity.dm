@@ -12,7 +12,7 @@
 	var/sensitivity = 1
 	var/hearing_range = 3
 
-/obj/item/assembly/prox_sensor/Initialize(mapload)
+/obj/item/assembly/prox_sensor/Initialize()
 	. = ..()
 	proximity_monitor = new(src, 0)
 	START_PROCESSING(SSobj, src)

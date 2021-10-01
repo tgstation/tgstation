@@ -18,12 +18,16 @@
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
-/obj/item/circuit_component/split/populate_ports()
+/obj/item/circuit_component/split/Initialize()
+	. = ..()
 	input_port = add_input_port("Input", PORT_TYPE_STRING)
 	separator = add_input_port("Seperator", PORT_TYPE_STRING)
 	output = add_output_port("Output", PORT_TYPE_LIST)
 
 /obj/item/circuit_component/split/input_received(datum/port/input/port)
+	. = ..()
+	if(.)
+		return
 
 	var/separator_value = separator.value
 	if(isnull(separator_value))

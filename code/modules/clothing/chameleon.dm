@@ -139,7 +139,6 @@
 
 /datum/action/item_action/chameleon/change
 	name = "Chameleon Change"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED
 	var/list/chameleon_blacklist = list() //This is a typecache
 	var/list/chameleon_list = list()
 	var/chameleon_type = null
@@ -216,32 +215,31 @@
 	UpdateButtonIcon()
 
 /datum/action/item_action/chameleon/change/proc/update_item(obj/item/picked_item)
-	var/atom/atom_target = target
-	atom_target.name = initial(picked_item.name)
-	atom_target.desc = initial(picked_item.desc)
-	atom_target.icon_state = initial(picked_item.icon_state)
-	if(isitem(atom_target))
-		var/obj/item/item_target = target
-		item_target.worn_icon = initial(picked_item.worn_icon)
-		item_target.lefthand_file = initial(picked_item.lefthand_file)
-		item_target.righthand_file = initial(picked_item.righthand_file)
+	target.name = initial(picked_item.name)
+	target.desc = initial(picked_item.desc)
+	target.icon_state = initial(picked_item.icon_state)
+	if(isitem(target))
+		var/obj/item/clothing/I = target
+		I.worn_icon = initial(picked_item.worn_icon)
+		I.lefthand_file = initial(picked_item.lefthand_file)
+		I.righthand_file = initial(picked_item.righthand_file)
 		if(initial(picked_item.greyscale_colors))
 			if(initial(picked_item.greyscale_config_worn))
-				item_target.worn_icon = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config_worn), initial(picked_item.greyscale_colors))
+				I.worn_icon = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config_worn), initial(picked_item.greyscale_colors))
 			if(initial(picked_item.greyscale_config_inhand_left))
-				item_target.lefthand_file = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config_inhand_left), initial(picked_item.greyscale_colors))
+				I.lefthand_file = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config_inhand_left), initial(picked_item.greyscale_colors))
 			if(initial(picked_item.greyscale_config_inhand_right))
-				item_target.righthand_file = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config_inhand_right), initial(picked_item.greyscale_colors))
-		item_target.worn_icon_state = initial(picked_item.worn_icon_state)
-		item_target.inhand_icon_state = initial(picked_item.inhand_icon_state)
-		if(istype(item_target, /obj/item/clothing) && istype(initial(picked_item), /obj/item/clothing))
-			var/obj/item/clothing/clothing_target = item_target
-			var/obj/item/clothing/picked_clothing = picked_item
-			clothing_target.flags_cover = initial(picked_clothing.flags_cover)
+				I.righthand_file = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config_inhand_right), initial(picked_item.greyscale_colors))
+		I.worn_icon_state = initial(picked_item.worn_icon_state)
+		I.inhand_icon_state = initial(picked_item.inhand_icon_state)
+		if(istype(I, /obj/item/clothing) && istype(initial(picked_item), /obj/item/clothing))
+			var/obj/item/clothing/CL = I
+			var/obj/item/clothing/PCL = picked_item
+			CL.flags_cover = initial(PCL.flags_cover)
 	if(initial(picked_item.greyscale_config) && initial(picked_item.greyscale_colors))
-		atom_target.icon = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config), initial(picked_item.greyscale_colors))
+		target.icon = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config), initial(picked_item.greyscale_colors))
 	else
-		atom_target.icon = initial(picked_item.icon)
+		target.icon = initial(picked_item.icon)
 
 /datum/action/item_action/chameleon/change/Trigger()
 	if(!IsAvailable())
@@ -385,7 +383,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/under/chameleon/Initialize(mapload)
+/obj/item/clothing/under/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/under
@@ -399,7 +397,7 @@
 		return
 	chameleon_action.emp_randomise()
 
-/obj/item/clothing/under/chameleon/broken/Initialize(mapload)
+/obj/item/clothing/under/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
@@ -414,7 +412,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/suit/chameleon/Initialize(mapload)
+/obj/item/clothing/suit/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/suit
@@ -428,7 +426,7 @@
 		return
 	chameleon_action.emp_randomise()
 
-/obj/item/clothing/suit/chameleon/broken/Initialize(mapload)
+/obj/item/clothing/suit/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
@@ -442,7 +440,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/glasses/chameleon/Initialize(mapload)
+/obj/item/clothing/glasses/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
@@ -456,7 +454,7 @@
 		return
 	chameleon_action.emp_randomise()
 
-/obj/item/clothing/glasses/chameleon/broken/Initialize(mapload)
+/obj/item/clothing/glasses/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
@@ -471,7 +469,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/gloves/chameleon/Initialize(mapload)
+/obj/item/clothing/gloves/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/gloves
@@ -485,7 +483,7 @@
 		return
 	chameleon_action.emp_randomise()
 
-/obj/item/clothing/gloves/chameleon/broken/Initialize(mapload)
+/obj/item/clothing/gloves/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
@@ -499,7 +497,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/head/chameleon/Initialize(mapload)
+/obj/item/clothing/head/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/head
@@ -513,7 +511,7 @@
 		return
 	chameleon_action.emp_randomise()
 
-/obj/item/clothing/head/chameleon/broken/Initialize(mapload)
+/obj/item/clothing/head/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
@@ -523,7 +521,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	// which means it offers no protection, it's just air and light
 
-/obj/item/clothing/head/chameleon/drone/Initialize(mapload)
+/obj/item/clothing/head/chameleon/drone/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	chameleon_action.random_look()
@@ -541,6 +539,7 @@
 	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
@@ -549,7 +548,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/mask/chameleon/Initialize(mapload)
+/obj/item/clothing/mask/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/mask
@@ -563,7 +562,7 @@
 		return
 	chameleon_action.emp_randomise()
 
-/obj/item/clothing/mask/chameleon/broken/Initialize(mapload)
+/obj/item/clothing/mask/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
@@ -578,7 +577,7 @@
 	// Can drones use the voice changer part? Let's not find out.
 	voice_change = 0
 
-/obj/item/clothing/mask/chameleon/drone/Initialize(mapload)
+/obj/item/clothing/mask/chameleon/drone/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	chameleon_action.random_look()
@@ -604,7 +603,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/shoes/chameleon/Initialize(mapload)
+/obj/item/clothing/shoes/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/shoes
@@ -622,7 +621,7 @@
 	clothing_flags = NOSLIP
 	can_be_bloody = FALSE
 
-/obj/item/clothing/shoes/chameleon/noslip/broken/Initialize(mapload)
+/obj/item/clothing/shoes/chameleon/noslip/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
@@ -630,7 +629,7 @@
 	name = "backpack"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/storage/backpack/chameleon/Initialize(mapload)
+/obj/item/storage/backpack/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/storage/backpack
@@ -643,7 +642,7 @@
 		return
 	chameleon_action.emp_randomise()
 
-/obj/item/storage/backpack/chameleon/broken/Initialize(mapload)
+/obj/item/storage/backpack/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
@@ -652,7 +651,7 @@
 	desc = "Holds tools."
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/storage/belt/chameleon/Initialize(mapload)
+/obj/item/storage/belt/chameleon/Initialize()
 	. = ..()
 
 	chameleon_action = new(src)
@@ -671,7 +670,7 @@
 		return
 	chameleon_action.emp_randomise()
 
-/obj/item/storage/belt/chameleon/broken/Initialize(mapload)
+/obj/item/storage/belt/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
@@ -679,7 +678,7 @@
 	name = "radio headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/radio/headset/chameleon/Initialize(mapload)
+/obj/item/radio/headset/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/radio/headset
@@ -692,7 +691,7 @@
 		return
 	chameleon_action.emp_randomise()
 
-/obj/item/radio/headset/chameleon/broken/Initialize(mapload)
+/obj/item/radio/headset/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
@@ -700,7 +699,7 @@
 	name = "PDA"
 	var/datum/action/item_action/chameleon/change/pda/chameleon_action
 
-/obj/item/pda/chameleon/Initialize(mapload)
+/obj/item/pda/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/pda
@@ -714,21 +713,21 @@
 		return
 	chameleon_action.emp_randomise()
 
-/obj/item/pda/chameleon/broken/Initialize(mapload)
+/obj/item/pda/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/stamp/chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/stamp/chameleon/Initialize(mapload)
+/obj/item/stamp/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/stamp
 	chameleon_action.chameleon_name = "Stamp"
 	chameleon_action.initialize_disguises()
 
-/obj/item/stamp/chameleon/broken/Initialize(mapload)
+/obj/item/stamp/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
@@ -743,7 +742,7 @@
 /obj/item/clothing/neck/chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/neck/chameleon/Initialize(mapload)
+/obj/item/clothing/neck/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/neck
@@ -761,6 +760,6 @@
 		return
 	chameleon_action.emp_randomise()
 
-/obj/item/clothing/neck/chameleon/broken/Initialize(mapload)
+/obj/item/clothing/neck/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)

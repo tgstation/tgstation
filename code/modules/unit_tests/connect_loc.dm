@@ -59,7 +59,7 @@
 /obj/item/watches_mock_calls
 	var/times_called
 
-/obj/item/watches_mock_calls/Initialize(mapload)
+/obj/item/watches_mock_calls/Initialize()
 	. = ..()
 
 	var/static/list/connections = list(

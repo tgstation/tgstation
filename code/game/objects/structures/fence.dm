@@ -23,7 +23,7 @@
 	var/hole_size= NO_HOLE
 	var/invulnerable = FALSE
 
-/obj/structure/fence/Initialize(mapload)
+/obj/structure/fence/Initialize()
 	. = ..()
 
 	update_cut_status()
@@ -112,7 +112,7 @@
 	cuttable = FALSE
 	var/open = FALSE
 
-/obj/structure/fence/door/Initialize(mapload)
+/obj/structure/fence/door/Initialize()
 	. = ..()
 
 	update_door_status()

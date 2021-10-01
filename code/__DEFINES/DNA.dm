@@ -6,7 +6,6 @@
 #define ACIDFLESH /datum/mutation/human/acidflesh
 #define ANTENNA /datum/mutation/human/antenna
 #define ANTIGLOWY /datum/mutation/human/glow/anti
-#define AUTONOMY /datum/mutation/human/self_amputation
 #define BADBLINK /datum/mutation/human/badblink
 #define BADSIGHT /datum/mutation/human/nearsight
 #define BIOTECHCOMPAT /datum/mutation/human/biotechcompat
@@ -38,9 +37,9 @@
 #define NERVOUS /datum/mutation/human/nervousness
 #define OLFACTION /datum/mutation/human/olfaction
 #define PARANOIA /datum/mutation/human/paranoia
-#define PIGLATIN /datum/mutation/human/piglatin
 #define RACEMUT /datum/mutation/human/race
 #define RADIOACTIVE /datum/mutation/human/radioactive
+#define AUTONOMY /datum/mutation/human/self_amputation
 #define SHOCKTOUCH /datum/mutation/human/shock
 #define SPACEMUT /datum/mutation/human/space_adaptation
 #define SPASTIC /datum/mutation/human/spastic
@@ -123,29 +122,31 @@
 #define LIPS 5
 #define NOBLOOD 6
 #define NOTRANSSTING 7
-#define NOZOMBIE 8
+/// Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+#define MUTCOLORS_PARTSONLY 8
+#define NOZOMBIE 9
 /// Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
-#define DIGITIGRADE 9
-#define NO_UNDERWEAR 10
-#define NOSTOMACH 11
-#define NO_DNA_COPY 12
-#define DRINKSBLOOD 13
+#define DIGITIGRADE 10
+#define NO_UNDERWEAR 11
+#define NOSTOMACH 12
+#define NO_DNA_COPY     13
+#define DRINKSBLOOD 14
 /// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
-#define DYNCOLORS 14
-#define AGENDER 15
+#define DYNCOLORS 15
+#define AGENDER 16
 /// Do not draw eyes or eyeless overlay
-#define NOEYESPRITES 16
+#define NOEYESPRITES 17
 /// Used for determining which wounds are applicable to this species.
 /// if we have flesh (can suffer slash/piercing/burn wounds, requires they don't have NOBLOOD)
-#define HAS_FLESH 17
+#define HAS_FLESH 18
 /// if we have bones (can suffer bone wounds)
-#define HAS_BONE 18
+#define HAS_BONE 19
 ///If we have a limb-specific overlay sprite
-#define HAS_MARKINGS 19
+#define HAS_MARKINGS 20
 /// Do not draw blood overlay
-#define NOBLOODOVERLAY 20
+#define NOBLOODOVERLAY 21
 ///No augments, for monkeys in specific because they will turn into fucking freakazoids https://cdn.discordapp.com/attachments/326831214667235328/791313258912153640/102707682-fa7cad80-4294-11eb-8f13-8c689468aeb0.png
-#define NOAUGMENTS 21
+#define NOAUGMENTS 22
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"

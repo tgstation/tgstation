@@ -279,7 +279,7 @@
 	var/datum/proximity_monitor/advanced/current = null
 	var/mob/listeningTo
 
-/obj/item/multitool/field_debug/Initialize(mapload)
+/obj/item/multitool/field_debug/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 

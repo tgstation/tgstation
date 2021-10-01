@@ -28,8 +28,7 @@
 	return ..()
 
 /obj/item/computer_hardware/card_slot/Destroy()
-	if(stored_card) //If you didn't expect this behavior for some dumb reason, do something different instead of directly destroying the slot
-		QDEL_NULL(stored_card)
+	try_eject(forced = TRUE)
 	return ..()
 
 /obj/item/computer_hardware/card_slot/GetAccess()

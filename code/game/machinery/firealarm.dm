@@ -79,31 +79,31 @@
 	if(is_station_level(z))
 		. += "fire_[SSsecurity_level.current_level]"
 		. += mutable_appearance(icon, "fire_[SSsecurity_level.current_level]")
-		. += emissive_appearance(icon, "fire_[SSsecurity_level.current_level]", alpha = src.alpha)
+		. += emissive_appearance(icon, "fire_[SSsecurity_level.current_level]")
 	else
 		. += "fire_[SEC_LEVEL_GREEN]"
 		. += mutable_appearance(icon, "fire_[SEC_LEVEL_GREEN]")
-		. += emissive_appearance(icon, "fire_[SEC_LEVEL_GREEN]", alpha = src.alpha)
+		. += emissive_appearance(icon, "fire_[SEC_LEVEL_GREEN]")
 
 	var/area/area = get_area(src)
 
 	if(!detecting || !area.fire)
 		. += "fire_off"
 		. += mutable_appearance(icon, "fire_off")
-		. += emissive_appearance(icon, "fire_off", alpha = src.alpha)
+		. += emissive_appearance(icon, "fire_off")
 	else if(obj_flags & EMAGGED)
 		. += "fire_emagged"
 		. += mutable_appearance(icon, "fire_emagged")
-		. += emissive_appearance(icon, "fire_emagged", alpha = src.alpha)
+		. += emissive_appearance(icon, "fire_emagged")
 	else
 		. += "fire_on"
 		. += mutable_appearance(icon, "fire_on")
-		. += emissive_appearance(icon, "fire_on", alpha = src.alpha)
+		. += emissive_appearance(icon, "fire_on")
 
 	if(!panel_open && detecting && triggered) //It just looks horrible with the panel open
 		. += "fire_detected"
 		. += mutable_appearance(icon, "fire_detected")
-		. += emissive_appearance(icon, "fire_detected", alpha = src.alpha) //Pain
+		. += emissive_appearance(icon, "fire_detected") //Pain
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()
@@ -177,8 +177,7 @@
 
 /obj/machinery/firealarm/attack_hand(mob/user, list/modifiers)
 	if(buildstage != 2)
-		return
-	. = ..()
+		return ..()
 	add_fingerprint(user)
 	var/area/area = get_area(src)
 	if(area.fire)
@@ -205,13 +204,13 @@
 	if(panel_open)
 
 		if(tool.tool_behaviour == TOOL_WELDER && !user.combat_mode)
-			if(atom_integrity < max_integrity)
+			if(obj_integrity < max_integrity)
 				if(!tool.tool_start_check(user, amount=0))
 					return
 
 				to_chat(user, span_notice("You begin repairing [src]..."))
 				if(tool.use_tool(src, user, 40, volume=50))
-					atom_integrity = max_integrity
+					obj_integrity = max_integrity
 					to_chat(user, span_notice("You repair [src]."))
 			else
 				to_chat(user, span_warning("[src] is already in good condition!"))
@@ -315,7 +314,7 @@
 /obj/machinery/firealarm/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(.) //damage received
-		if(atom_integrity > 0 && !(machine_stat & BROKEN) && buildstage != 0)
+		if(obj_integrity > 0 && !(machine_stat & BROKEN) && buildstage != 0)
 			if(prob(33))
 				alarm()
 
@@ -324,7 +323,7 @@
 		deconstruct()
 	..()
 
-/obj/machinery/firealarm/atom_break(damage_flag)
+/obj/machinery/firealarm/obj_break(damage_flag)
 	if(buildstage == 0) //can't break the electronics if there isn't any inside.
 		return
 	. = ..()

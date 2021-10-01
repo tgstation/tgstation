@@ -13,7 +13,7 @@
 	user.visible_message(span_suicide("[user] begins filing an imaginary death warrant! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
-/obj/item/folder/Initialize(mapload)
+/obj/item/folder/Initialize()
 	update_icon()
 	. = ..()
 
@@ -26,7 +26,7 @@
 
 /obj/item/folder/examine()
 	. = ..()
-	if(length(contents))
+	if(contents)
 		. += span_notice("Right-click to remove [contents[1]].")
 
 /obj/item/folder/proc/rename(mob/user)

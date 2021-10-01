@@ -16,8 +16,8 @@
 	var/fuel_added = 0
 	var/flame_expiry_timer
 
-/obj/structure/fireplace/Initialize(mapload)
-	. = ..()
+/obj/structure/fireplace/New()
+	..()
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/fireplace/Destroy()

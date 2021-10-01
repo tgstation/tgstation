@@ -1,3 +1,7 @@
+#define MUSICIAN_HEARCHECK_MINDELAY 4
+#define MUSIC_MAXLINES 1000
+#define MUSIC_MAXLINECHARS 300
+
 /**
  * # Song datum
  *

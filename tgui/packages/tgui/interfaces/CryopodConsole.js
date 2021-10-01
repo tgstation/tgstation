@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { LabeledList, NoticeBox, Section, Stack } from '../components';
+import { Box, LabeledList, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const CryopodConsole = (props, context) => {

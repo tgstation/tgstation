@@ -74,6 +74,7 @@
 .Dropdown__selected-text {
   display: inline-block;
   text-overflow: ellipsis;
+  overflow: hidden;
   white-space: nowrap;
   height: base.em(17px);
   width: calc(100% - 1.2em);

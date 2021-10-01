@@ -6,7 +6,7 @@
 	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100)
 	var/datum/techweb/stored_research
 
-/obj/item/disk/tech_disk/Initialize(mapload)
+/obj/item/disk/tech_disk/Initialize()
 	. = ..()
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)
@@ -17,7 +17,7 @@
 	desc = "A debug item for research"
 	custom_materials = null
 
-/obj/item/disk/tech_disk/debug/Initialize(mapload)
+/obj/item/disk/tech_disk/debug/Initialize()
 	. = ..()
 	stored_research = new /datum/techweb/admin
 
@@ -27,7 +27,7 @@
 	icon_state = "rndmajordisk"
 	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100)
 
-/obj/item/disk/tech_disk/major/Initialize(mapload)
+/obj/item/disk/tech_disk/major/Initialize()
 	. = ..()
 	stored_research = new /datum/techweb/bepis
 
@@ -37,6 +37,6 @@
 	icon_state = "rndmajordisk"
 	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100)
 
-/obj/item/disk/tech_disk/spaceloot/Initialize(mapload)
+/obj/item/disk/tech_disk/spaceloot/Initialize()
 	. = ..()
 	stored_research = new /datum/techweb/bepis(remove_tech = FALSE)

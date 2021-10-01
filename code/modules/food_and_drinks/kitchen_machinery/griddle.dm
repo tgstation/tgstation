@@ -22,7 +22,7 @@
 	///How many shit fits on the griddle?
 	var/max_items = 8
 
-/obj/machinery/griddle/Initialize(mapload)
+/obj/machinery/griddle/Initialize()
 	. = ..()
 	grill_loop = new(src, FALSE)
 	if(isnum(variant))

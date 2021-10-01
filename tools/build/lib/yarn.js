@@ -7,10 +7,7 @@ export const yarn = (...args) => {
     yarnPath = Juke.glob('./tgui/.yarn/releases/*.cjs')[0]
       .replace('/tgui/', '/');
   }
-  return Juke.exec('node', [
-    yarnPath,
-    ...args.filter((arg) => typeof arg === 'string'),
-  ], {
+  return Juke.exec('node', [yarnPath, ...args], {
     cwd: './tgui',
   });
 };

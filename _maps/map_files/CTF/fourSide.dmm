@@ -52,7 +52,7 @@
 /obj/structure/window/reinforced/fulltile{
 	max_integrity = 5000;
 	name = "hardened window";
-	atom_integrity = 5000
+	obj_integrity = 5000
 	},
 /turf/open/floor/plating,
 /area/ctf)

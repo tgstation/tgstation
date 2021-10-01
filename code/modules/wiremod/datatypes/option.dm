@@ -1,11 +1,10 @@
 /datum/port/input/option
 	var/list/possible_options
 
-/datum/port/input/option/New(obj/item/circuit_component/to_connect, name, datatype, order = 1, trigger = null, default = null, possible_options)
+/datum/port/input/option/New(obj/item/circuit_component/to_connect, name, datatype, trigger, default, possible_options)
 	. = ..()
 	src.possible_options = possible_options
-	if(length(possible_options))
-		set_value(possible_options[1])
+	set_value(default, force = TRUE)
 
 /datum/circuit_datatype/option
 	datatype = PORT_TYPE_OPTION
@@ -22,10 +21,7 @@
 
 	return datatype_to_check == PORT_TYPE_STRING
 
-/datum/circuit_datatype/option/convert_value(datum/port/input/option/port, value_to_convert, force = FALSE)
-	if(force)
-		return value_to_convert
-
+/datum/circuit_datatype/option/convert_value(datum/port/input/option/port, value_to_convert)
 	if(!port.possible_options)
 		return null
 

@@ -105,8 +105,7 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	WRITE_LOG(GLOB.world_paper_log, "PAPER: [text]")
 
 /proc/log_asset(text)
-	if(CONFIG_GET(flag/log_asset))
-		WRITE_LOG(GLOB.world_asset_log, "ASSET: [text]")
+	WRITE_LOG(GLOB.world_asset_log, "ASSET: [text]")
 
 /proc/log_access(text)
 	if (CONFIG_GET(flag/log_access))

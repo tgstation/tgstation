@@ -6,15 +6,15 @@
 	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/organ/cyberimp/bci/Initialize(mapload)
+/obj/item/organ/cyberimp/bci/Initialize()
 	. = ..()
-
-	var/obj/item/integrated_circuit/circuit = new(src)
-	circuit.add_component(new /obj/item/circuit_component/bci_action(null, "One"))
 
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/bci_core,
-	), SHELL_CAPACITY_SMALL, starting_circuit = circuit)
+		new /obj/item/circuit_component/bci_action(null, "One"),
+		new /obj/item/circuit_component/bci_action(null, "Two"),
+		new /obj/item/circuit_component/bci_action(null, "Three"),
+	), SHELL_CAPACITY_SMALL)
 
 /obj/item/organ/cyberimp/bci/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
@@ -119,6 +119,11 @@
 	QDEL_NULL(bci_action)
 
 /obj/item/circuit_component/bci_action/input_received(datum/port/input/port)
+	. = ..()
+
+	if (.)
+		return
+
 	if (!isnull(bci_action))
 		update_action()
 
@@ -162,7 +167,8 @@
 
 	var/datum/weakref/user
 
-/obj/item/circuit_component/bci_core/populate_ports()
+/obj/item/circuit_component/bci_core/Initialize()
+	. = ..()
 
 	message = add_input_port("Message", PORT_TYPE_STRING)
 	send_message_signal = add_input_port("Send Message", PORT_TYPE_SIGNAL)
@@ -193,24 +199,24 @@
 		COMSIG_ORGAN_REMOVED,
 	))
 
-/obj/item/circuit_component/bci_core/should_receive_input(datum/port/input/port)
-	if (!COMPONENT_TRIGGERED_BY(send_message_signal, port))
-		return FALSE
-	return ..()
-
 /obj/item/circuit_component/bci_core/input_received(datum/port/input/port)
-	var/sent_message = trim(message.value)
-	if (!sent_message)
-		return
+	. = ..()
+	if (.)
+		return .
 
-	var/mob/living/carbon/resolved_owner = user?.resolve()
-	if (isnull(resolved_owner))
-		return
+	if (COMPONENT_TRIGGERED_BY(send_message_signal, port))
+		var/sent_message = trim(message.value)
+		if (!sent_message)
+			return
 
-	if (resolved_owner.stat == DEAD)
-		return
+		var/mob/living/carbon/resolved_owner = user?.resolve()
+		if (isnull(resolved_owner))
+			return
 
-	to_chat(resolved_owner, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("[html_encode(sent_message)]")]\"")
+		if (resolved_owner.stat == DEAD)
+			return
+
+		to_chat(resolved_owner, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("[html_encode(sent_message)]")]\"")
 
 /obj/item/circuit_component/bci_core/proc/on_organ_implanted(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
@@ -335,7 +341,7 @@
 
 	COOLDOWN_DECLARE(message_cooldown)
 
-/obj/machinery/bci_implanter/Initialize(mapload)
+/obj/machinery/bci_implanter/Initialize()
 	. = ..()
 	occupant_typecache = typecacheof(/mob/living/carbon)
 

@@ -11,7 +11,7 @@
 	volume = 30
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
 
-/obj/item/reagent_containers/glass/bottle/Initialize(mapload)
+/obj/item/reagent_containers/glass/bottle/Initialize()
 	. = ..()
 	if(!icon_state)
 		icon_state = "bottle"
@@ -122,7 +122,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	var/extra_reagent = null
 
-/obj/item/reagent_containers/glass/bottle/traitor/Initialize(mapload)
+/obj/item/reagent_containers/glass/bottle/traitor/Initialize()
 	. = ..()
 	extra_reagent = pick(/datum/reagent/toxin/polonium, /datum/reagent/toxin/histamine, /datum/reagent/toxin/formaldehyde, /datum/reagent/toxin/venom, /datum/reagent/toxin/fentanyl, /datum/reagent/toxin/cyanide)
 	reagents.add_reagent(extra_reagent, 3)
@@ -212,7 +212,7 @@
 	name = "Buffer bottle"
 	desc = "A small bottle of chemical buffer."
 
-/obj/item/reagent_containers/glass/bottle/random_buffer/Initialize(mapload)
+/obj/item/reagent_containers/glass/bottle/random_buffer/Initialize()
 	. = ..()
 	if(prob(50))
 		name = "Acidic buffer bottle"

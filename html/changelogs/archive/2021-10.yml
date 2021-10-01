@@ -1,9 +1,0 @@
-2021-10-01:
-  Mooshimi:
-  - code_imp: AIs will no longer get the asimov lawset on unique-lawset station trait
-      rounds
-  Timberpoes:
-  - bugfix: Spawners Menu buttons once again work to jump or spawn as ghost roles.
-  Watermelon914:
-  - bugfix: Fixed module circuit size not taking up capacity equal to the amount of
-      circuit components inside of it.

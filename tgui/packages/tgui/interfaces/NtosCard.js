@@ -29,8 +29,9 @@ export const NtosCardContent = (props, context) => {
     accessFlags,
     accessFlagNames,
     showBasic,
-    templates = {},
-  } = data; 
+  } = data;
+
+  const { templates } = data || {};
 
   if (!have_id_slot) {
     return (

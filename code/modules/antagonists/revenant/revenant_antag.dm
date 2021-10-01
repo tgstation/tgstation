@@ -18,6 +18,3 @@
 /datum/antagonist/revenant/on_gain()
 	forge_objectives()
 	. = ..()
-
-/datum/antagonist/revenant/get_preview_icon()
-	return finish_preview_icon(icon('icons/mob/mob.dmi', "revenant_idle"))

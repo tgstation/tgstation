@@ -542,7 +542,7 @@
 	duration = 9
 	pixel_z = 270
 
-/obj/effect/temp_visual/fireball/Initialize(mapload)
+/obj/effect/temp_visual/fireball/Initialize()
 	. = ..()
 	animate(src, pixel_z = 0, time = duration)
 

@@ -5,7 +5,7 @@
  */
 
 import { useLocalState } from '../backend';
-import { Button, Section, Tabs } from '../components';
+import { Box, Button, Divider, Section, Tabs } from '../components';
 
 export const meta = {
   title: 'Tabs',

@@ -46,16 +46,17 @@
 
 	var/obj/machinery/computer/secure_data/attached_console
 
-/obj/item/circuit_component/arrest_console_data/populate_ports()
+/obj/item/circuit_component/arrest_console_data/Initialize()
+	. = ..()
 	records = add_output_port("Security Records", PORT_TYPE_TABLE)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/arrest_console_data/register_usb_parent(atom/movable/shell)
+/obj/item/circuit_component/arrest_console_data/register_usb_parent(atom/movable/parent)
 	. = ..()
-	if(istype(shell, /obj/machinery/computer/secure_data))
-		attached_console = shell
+	if(istype(parent, /obj/machinery/computer/secure_data))
+		attached_console = parent
 
-/obj/item/circuit_component/arrest_console_data/unregister_usb_parent(atom/movable/shell)
+/obj/item/circuit_component/arrest_console_data/unregister_usb_parent(atom/movable/parent)
 	attached_console = null
 	return ..()
 
@@ -74,6 +75,9 @@
 
 
 /obj/item/circuit_component/arrest_console_data/input_received(datum/port/input/port)
+	. = ..()
+	if(.)
+		return
 
 	if(!attached_console || !attached_console.authenticated)
 		on_fail.set_output(COMPONENT_SIGNAL)
@@ -121,12 +125,12 @@
 
 	var/obj/machinery/computer/secure_data/attached_console
 
-/obj/item/circuit_component/arrest_console_arrest/register_usb_parent(atom/movable/shell)
+/obj/item/circuit_component/arrest_console_arrest/register_usb_parent(atom/movable/parent)
 	. = ..()
-	if(istype(shell, /obj/machinery/computer/secure_data))
-		attached_console = shell
+	if(istype(parent, /obj/machinery/computer/secure_data))
+		attached_console = parent
 
-/obj/item/circuit_component/arrest_console_arrest/unregister_usb_parent(atom/movable/shell)
+/obj/item/circuit_component/arrest_console_arrest/unregister_usb_parent(atom/movable/parent)
 	attached_console = null
 	return ..()
 
@@ -140,12 +144,16 @@
 	)
 	new_status = add_option_port("Arrest Options", component_options)
 
-/obj/item/circuit_component/arrest_console_arrest/populate_ports()
+/obj/item/circuit_component/arrest_console_arrest/Initialize()
+	. = ..()
 	targets = add_input_port("Targets", PORT_TYPE_TABLE)
 	new_status_set = add_output_port("Set Status", PORT_TYPE_STRING)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/arrest_console_arrest/input_received(datum/port/input/port)
+	. = ..()
+	if(.)
+		return
 
 	if(!attached_console || !attached_console.authenticated)
 		on_fail.set_output(COMPONENT_SIGNAL)
@@ -774,7 +782,7 @@ What a mess.*/
 							active1.fields["age"] = t1
 					if("species")
 						if(istype(active1, /datum/data/record))
-							var/t1 = input("Select a species", "Species Selection") as null|anything in get_selectable_species()
+							var/t1 = input("Select a species", "Species Selection") as null|anything in GLOB.roundstart_races
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["species"] = t1
@@ -1014,7 +1022,7 @@ What a mess.*/
 				if(6)
 					R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
 				if(7)
-					R.fields["species"] = pick(get_selectable_species())
+					R.fields["species"] = pick(GLOB.roundstart_races)
 				if(8)
 					var/datum/data/record/G = pick(GLOB.data_core.general)
 					R.fields["photo_front"] = G.fields["photo_front"]

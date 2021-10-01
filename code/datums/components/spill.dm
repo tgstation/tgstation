@@ -7,11 +7,10 @@
 
 	var/list/droptext
 	var/list/dropsound
-	var/drop_memory
 
 // droptext is an arglist for visible_message
 // dropsound is a list of potential sounds that gets picked from
-/datum/component/spill/Initialize(list/_droptext, list/_dropsound, _drop_memory)
+/datum/component/spill/Initialize(list/_droptext, list/_dropsound)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -21,9 +20,7 @@
 
 	if(_dropsound && !islist(_dropsound))
 		_dropsound = list(_dropsound)
-
 	dropsound = _dropsound
-	drop_memory = _drop_memory
 
 /datum/component/spill/PostTransfer()
 	if(!isitem(parent))
@@ -67,5 +64,3 @@
 		fool.visible_message(arglist(droptext))
 	if(dropsound)
 		playsound(master, pick(dropsound), 30)
-	if(drop_memory)
-		fool.mind?.add_memory(MEMORY_SPAGHETTI_SPILL, list(DETAIL_PROTAGONIST = fool), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLINDNESS)

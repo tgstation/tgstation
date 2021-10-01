@@ -27,11 +27,11 @@
 /obj/structure/bonfire/dense
 	density = TRUE
 
-/obj/structure/bonfire/prelit/Initialize(mapload)
+/obj/structure/bonfire/prelit/Initialize()
 	. = ..()
 	start_burning()
 
-/obj/structure/bonfire/Initialize(mapload)
+/obj/structure/bonfire/Initialize()
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,

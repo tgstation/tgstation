@@ -25,7 +25,7 @@
 	var/grace = RAD_GEIGER_GRACE_PERIOD
 	var/datum/looping_sound/geiger/soundloop
 
-/obj/item/clothing/head/helmet/space/hardsuit/Initialize(mapload)
+/obj/item/clothing/head/helmet/space/hardsuit/Initialize()
 	. = ..()
 	soundloop = new(src, FALSE, TRUE)
 	soundloop.volume = 5
@@ -114,7 +114,7 @@
 	var/obj/item/tank/jetpack/suit/jetpack = null
 	var/hardsuit_type
 
-/obj/item/clothing/suit/space/hardsuit/Initialize(mapload)
+/obj/item/clothing/suit/space/hardsuit/Initialize()
 	if(jetpack && ispath(jetpack))
 		jetpack = new jetpack(src)
 	. = ..()
@@ -182,7 +182,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/dropped(mob/user)
 	..()
-	if(isatom(jetpack))
+	if(jetpack)
 		for(var/X in jetpack.actions)
 			var/datum/action/A = X
 			A.Remove(user)
@@ -281,7 +281,7 @@
 	light_range = 7
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator)
 
-/obj/item/clothing/head/helmet/space/hardsuit/mining/Initialize(mapload)
+/obj/item/clothing/head/helmet/space/hardsuit/mining/Initialize()
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
 	RegisterSignal(src, COMSIG_ARMOR_PLATED, .proc/upgrade_icon)
@@ -314,7 +314,7 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
-/obj/item/clothing/suit/space/hardsuit/mining/Initialize(mapload)
+/obj/item/clothing/suit/space/hardsuit/mining/Initialize()
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
 	RegisterSignal(src, COMSIG_ARMOR_PLATED, .proc/upgrade_icon)
@@ -348,7 +348,7 @@
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags = STOPSPRESSUREDAMAGE
 
-/obj/item/clothing/head/helmet/space/hardsuit/syndi/Initialize(mapload)
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/Initialize()
 	. = ..()
 	if(istype(loc, /obj/item/clothing/suit/space/hardsuit/syndi))
 		linkedsuit = loc
@@ -417,7 +417,7 @@
 	hardsuit_type = "syndi"
 	w_class = WEIGHT_CLASS_NORMAL
 	armor = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40, BOMB = 35, BIO = 100, RAD = 50, FIRE = 50, ACID = 90, WOUND = 25)
-	allowed = list(/obj/item/gun, /obj/item/ammo_box,/obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
+	allowed = list(/obj/item/gun, /obj/item/ammo_box,/obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/transforming/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	jetpack = /obj/item/tank/jetpack/suit
 	cell = /obj/item/stock_parts/cell/hyper
@@ -436,7 +436,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug
 
-/obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug/Initialize(mapload)
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug/Initialize()
 	. = ..()
 	soundloop.volume = 0
 
@@ -519,7 +519,7 @@
 	cell = /obj/item/stock_parts/cell/hyper
 	slowdown = 0 //you're spending 2 wizard points on this thing, the least it could do is not make you a sitting duck
 
-/obj/item/clothing/suit/space/hardsuit/wizard/Initialize(mapload)
+/obj/item/clothing/suit/space/hardsuit/wizard/Initialize()
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, FALSE, FALSE, ITEM_SLOT_OCLOTHING, INFINITY, FALSE)
 
@@ -558,7 +558,7 @@
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SCAN_REAGENTS | SNUG_FIT
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_research_scanner)
 
-/obj/item/clothing/head/helmet/space/hardsuit/rd/Initialize(mapload)
+/obj/item/clothing/head/helmet/space/hardsuit/rd/Initialize()
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
 
@@ -616,7 +616,7 @@
 	armor = list(MELEE = 35, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 10, BIO = 100, RAD = 50, FIRE = 75, ACID = 75, WOUND = 20)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security
 
-/obj/item/clothing/suit/space/hardsuit/security/Initialize(mapload)
+/obj/item/clothing/suit/space/hardsuit/security/Initialize()
 	. = ..()
 	allowed = GLOB.security_hardsuit_allowed
 
@@ -665,7 +665,7 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/swat
 
 // SWAT and Captain get EMP Protection
-/obj/item/clothing/suit/space/hardsuit/swat/Initialize(mapload)
+/obj/item/clothing/suit/space/hardsuit/swat/Initialize()
 	. = ..()
 	allowed = GLOB.security_hardsuit_allowed
 
@@ -806,7 +806,7 @@
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
-/obj/item/clothing/head/helmet/space/hardsuit/ert/Initialize(mapload)
+/obj/item/clothing/head/helmet/space/hardsuit/ert/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
 
@@ -825,7 +825,7 @@
 	cell = /obj/item/stock_parts/cell/bluespace
 
 // ERT suit's gets EMP Protection
-/obj/item/clothing/suit/space/hardsuit/ert/Initialize(mapload)
+/obj/item/clothing/suit/space/hardsuit/ert/Initialize()
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_CONTENTS)
 
@@ -926,7 +926,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize(mapload)
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize()
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE, ITEM_SLOT_OCLOTHING)
 
@@ -955,7 +955,7 @@
 	actions_types = list()
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACIALHAIR //facial hair will clip with the helm, this'll need a dynamic_fhair_suffix at some point.
 
-/obj/item/clothing/head/helmet/space/hardsuit/carp/Initialize(mapload)
+/obj/item/clothing/head/helmet/space/hardsuit/carp/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
 
@@ -1013,9 +1013,24 @@
 	allowed = null
 	armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 10, BIO = 100, RAD = 50, FIRE = 100, ACID = 100, WOUND = 15)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	/// How many charges total the shielding has
+	var/max_charges = 3
+	/// How long after we've been shot before we can start recharging.
+	var/recharge_delay = 20 SECONDS
+	/// How quickly the shield recharges each charge once it starts charging
+	var/recharge_rate = 1 SECONDS
+	/// How many charges are recovered on each recharge
+	var/recharge_amount = 1
+	/// Should the shield lose charges equal to the damage dealt by a hit?
+	var/lose_multiple_charges = FALSE
+	/// The icon for the shield
+	var/shield_icon = "shield-old"
 
-/obj/item/clothing/suit/space/hardsuit/shielded/setup_shielding()
-	AddComponent(/datum/component/shielded, max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, shield_icon = "shield-old")
+/obj/item/clothing/suit/space/hardsuit/shielded/Initialize()
+	. = ..()
+	if(!allowed)
+		allowed = GLOB.advanced_hardsuit_allowed
+	AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_delay, charge_increment_delay = recharge_rate, charge_recovery = recharge_amount, lose_multiple_charges = lose_multiple_charges, shield_icon = shield_icon)
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -1028,13 +1043,11 @@
 	inhand_icon_state = "syndie_hardsuit"
 	hardsuit_type = "syndi"
 	armor = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40, BOMB = 35, BIO = 100, RAD = 50, FIRE = 100, ACID = 100, WOUND = 30)
-	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
+	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/transforming/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
 	slowdown = 0
+	shield_icon = "shield-red"
 	jetpack = /obj/item/tank/jetpack/suit
-
-/obj/item/clothing/suit/space/hardsuit/shielded/syndi/setup_shielding()
-	AddComponent(/datum/component/shielded, max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, shield_icon = "shield-red")
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
 	name = "blood-red hardsuit helmet"
@@ -1051,14 +1064,13 @@
 	icon_state = "deathsquad"
 	inhand_icon_state = "swat_suit"
 	hardsuit_type = "syndi"
+	max_charges = 4
+	recharge_delay = 1.5 SECONDS
 	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 60, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100, WOUND = 30)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/swat
 	dog_fashion = /datum/dog_fashion/back/deathsquad
-
-/obj/item/clothing/suit/space/hardsuit/shielded/swat/setup_shielding()
-	AddComponent(/datum/component/shielded, max_charges = 4, recharge_start_delay = 1.5 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, shield_icon = "shield-old")
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/swat
 	name = "death commando helmet"

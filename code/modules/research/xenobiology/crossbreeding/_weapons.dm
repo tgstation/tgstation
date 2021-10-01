@@ -93,7 +93,7 @@ Slimecrossing Weapons
 	ammo_type = /obj/item/ammo_casing/magic/bloodchill
 	fire_sound = 'sound/effects/attackblob.ogg'
 
-/obj/item/gun/magic/bloodchill/Initialize(mapload)
+/obj/item/gun/magic/bloodchill/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 

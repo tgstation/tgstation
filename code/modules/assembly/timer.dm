@@ -24,7 +24,7 @@
 	user.adjustOxyLoss(200)
 	user.death(0)
 
-/obj/item/assembly/timer/Initialize(mapload)
+/obj/item/assembly/timer/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 

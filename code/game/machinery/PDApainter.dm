@@ -43,7 +43,7 @@
 	if(stored_pda || stored_id_card)
 		. += "[initial(icon_state)]-closed"
 
-/obj/machinery/pdapainter/Initialize(mapload)
+/obj/machinery/pdapainter/Initialize()
 	. = ..()
 
 	if(!target_dept)
@@ -116,7 +116,7 @@
 					return
 				to_chat(user, span_notice("You repair [src]."))
 				set_machine_stat(machine_stat & ~BROKEN)
-				atom_integrity = max_integrity
+				obj_integrity = max_integrity
 				update_appearance(UPDATE_ICON)
 			return
 		return ..()
@@ -154,7 +154,7 @@
 	return ..()
 
 /obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
-	atom_break()
+	obj_break()
 
 /**
  * Insert a PDA into the machine.

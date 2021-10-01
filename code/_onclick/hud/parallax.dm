@@ -48,10 +48,10 @@
 	var/mob/screenmob = viewmob || mymob
 	var/client/C = screenmob.client
 	if(C.prefs)
-		var/pref = C.prefs.read_preference(/datum/preference/choiced/parallax)
+		var/pref = C.prefs.parallax
 		if (isnull(pref))
 			pref = PARALLAX_HIGH
-		switch(pref)
+		switch(C.prefs.parallax)
 			if (PARALLAX_INSANE)
 				C.parallax_throttle = FALSE
 				C.parallax_layers_max = 5
@@ -156,8 +156,7 @@
 
 		L.transform = newtransform
 
-		animate(L, transform = L.transform, time = 0, loop = -1, flags = ANIMATION_END_NOW)
-		animate(transform = matrix(), time = T)
+		animate(L, transform = matrix(), time = T, loop = -1, flags = ANIMATION_END_NOW)
 
 /datum/hud/proc/update_parallax(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob

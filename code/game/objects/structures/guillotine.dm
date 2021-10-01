@@ -29,7 +29,7 @@
 	var/kill_count = 0
 	var/current_action = 0 // What's currently happening to the guillotine
 
-/obj/structure/guillotine/Initialize(mapload)
+/obj/structure/guillotine/Initialize()
 	LAZYINITLIST(buckled_mobs)
 	. = ..()
 

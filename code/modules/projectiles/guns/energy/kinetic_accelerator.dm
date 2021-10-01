@@ -84,7 +84,7 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 
-/obj/item/gun/energy/kinetic_accelerator/Initialize(mapload)
+/obj/item/gun/energy/kinetic_accelerator/Initialize()
 	. = ..()
 	if(!holds_charge)
 		empty()

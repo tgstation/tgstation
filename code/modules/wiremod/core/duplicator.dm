@@ -109,8 +109,6 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 
 				port.connect(output_port)
 
-	SEND_SIGNAL(src, COMSIG_CIRCUIT_POST_LOAD)
-
 #undef LOG_ERROR
 
 /// Converts a circuit into json.
@@ -142,12 +140,9 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		var/list/input_ports_stored_data = list()
 		for(var/datum/port/input/input as anything in component.input_ports)
 			var/list/connection_data = list()
-			if(!length(input.connected_ports))
-				if(isnull(input.value) || !(input.datatype in GLOB.circuit_dupe_whitelisted_types))
-					continue
+			if(!isnull(input.value) && (input.datatype in GLOB.circuit_dupe_whitelisted_types))
 				connection_data["stored_data"] = input.value
 				input_ports_stored_data[input.name] = connection_data
-				continue
 			connection_data["connected_ports"] = list()
 			for(var/datum/port/output/output as anything in input.connected_ports)
 				connection_data["connected_ports"] += list(list(
@@ -182,8 +177,6 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		new_data["datatype"] = variable.datatype
 		variables += list(new_data)
 	general_data["variables"] = variables
-
-	SEND_SIGNAL(src, COMSIG_CIRCUIT_PRE_SAVE_TO_JSON, general_data)
 
 	return json_encode(general_data)
 

@@ -50,43 +50,37 @@
 	return FALSE
 
 //******Modular Computer Bounties******
-/datum/bounty/item/science/ntnet
+/datum/bounty/item/science/NTNet
 	name = "Modular Tablets"
 	description = "Turns out that NTNet wasn't actually a fad afterall, who knew. Ship us some fully constructed tablets and send it turned on."
 	reward = CARGO_CRATE_VALUE * 6
 	required_count = 4
 	wanted_types = list(/obj/item/modular_computer/tablet)
-	var/require_powered = TRUE
 
-/datum/bounty/item/science/ntnet/applies_to(obj/O)
-	if(!..())
-		return FALSE
-	if(require_powered)
-		var/obj/item/modular_computer/computer = O
-		if(!istype(computer) || !computer.enabled)
-			return FALSE
-	return TRUE
-
-/datum/bounty/item/science/ntnet/laptops
+/datum/bounty/item/science/NTNet/laptops
 	name = "Modular Laptops"
 	description = "Central command brass need something more powerful than a tablet, but more portable than a console. Help these old fogeys out by shipping us some working laptops. Send it turned on."
 	reward = CARGO_CRATE_VALUE * 3
 	required_count = 2
 	wanted_types = list(/obj/item/modular_computer/laptop)
 
-/datum/bounty/item/science/ntnet/console
+/datum/bounty/item/science/NTNet/console
 	name = "Modular Computer Console"
 	description = "Our big data devision needs more powerful hardware to play 'Outbomb Cuban Pe-', err, to closely monitor threats in your sector. Send us a working modular computer console."
 	reward = CARGO_CRATE_VALUE * 6
 	required_count = 1
 	wanted_types = list(/obj/machinery/modular_computer/console)
-	require_powered = FALSE
 
-/datum/bounty/item/science/ntnet/console/applies_to(obj/O)
-	if(!..())
-		return FALSE
-	var/obj/machinery/modular_computer/computer = O
-	if(!istype(computer) || !computer.cpu)
-		return FALSE
+/datum/bounty/item/science/NTnet/applies_to(obj/O)
+	. = ..()
+	var/obj/item/modular_computer/computer = O
+	if(computer.enabled)
+		return TRUE
 	return TRUE
+
+/datum/bounty/item/science/NTnet/console/applies_to(obj/O)
+	var/obj/machinery/modular_computer/console/computer = O
+	if(computer.cpu)
+		return TRUE
+	return FALSE
 

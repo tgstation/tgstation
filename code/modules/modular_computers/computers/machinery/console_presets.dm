@@ -5,7 +5,7 @@
 	var/_has_battery = FALSE
 	var/_has_ai = FALSE
 
-/obj/machinery/modular_computer/console/preset/Initialize(mapload)
+/obj/machinery/modular_computer/console/preset/Initialize()
 	. = ..()
 	if(!cpu)
 		return

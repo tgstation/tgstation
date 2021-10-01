@@ -36,7 +36,7 @@
 	QDEL_NULL(reset)
 	return ..()
 
-/obj/item/ctf/Initialize(mapload)
+/obj/item/ctf/Initialize()
 	. = ..()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
@@ -234,9 +234,9 @@
 	/// This variable is needed because of ctf shitcode + we need to make sure we're deleting the current ctf landmark that spawned us in and not a new one.
 	var/obj/effect/landmark/ctf/ctf_landmark
 
-/obj/machinery/capture_the_flag/Initialize(mapload)
+/obj/machinery/capture_the_flag/Initialize()
 	. = ..()
-	SSpoints_of_interest.make_point_of_interest(src)
+	AddElement(/datum/element/point_of_interest)
 	ctf_landmark = GLOB.ctf_spawner
 
 /obj/machinery/capture_the_flag/Destroy()

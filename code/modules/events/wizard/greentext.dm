@@ -34,7 +34,7 @@
 
 /obj/item/greentext/Initialize(mapload)
 	. = ..()
-	SSpoints_of_interest.make_point_of_interest(src)
+	AddElement(/datum/element/point_of_interest)
 	roundend_callback = CALLBACK(src,.proc/check_winner)
 	SSticker.OnRoundend(roundend_callback)
 

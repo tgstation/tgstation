@@ -110,6 +110,16 @@
 "aw" = (
 /turf/open/floor/plating,
 /area/engineering/atmos)
+"ax" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/engineering/atmos)
+"ay" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/engineering/atmos)
 "aA" = (
 /turf/open/floor/iron,
 /area/engineering/main)
@@ -2026,7 +2036,7 @@
 /area/engineering/atmos)
 "jU" = (
 /obj/structure/table,
-/obj/item/melee/energy/axe,
+/obj/item/melee/transforming/energy/axe,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "kj" = (
@@ -6111,7 +6121,7 @@ aa
 aa
 ah
 am
-aw
+ax
 aw
 ba
 jE
@@ -6203,7 +6213,7 @@ aa
 aa
 ah
 dS
-aw
+ay
 aN
 bb
 bl
@@ -6295,7 +6305,7 @@ aa
 aa
 ah
 am
-aw
+ay
 aO
 bc
 bm
