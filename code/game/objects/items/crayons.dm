@@ -729,7 +729,7 @@
 		return
 
 	if(is_capped)
-		to_chat(user, span_warning("Take the cap off first!"))
+		balloon_alert(user, "take the cap off first!")
 		return
 
 	if(check_empty(user))
