@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - bugfix: "UI with tooltips will now be much faster to create them, such as R&D console searching or preferences menu tab switching."
