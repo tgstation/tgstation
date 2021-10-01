@@ -221,7 +221,7 @@ GOOD:
 ```
 :::
 
-### "Okay, back to what we were doing!"
+## "Okay, back to what we were doing!"
 
 Wow, what a tangent! But it's important to understand subtree planning as it is the core of our AI. We have a subtree for the cows to occasionally make sounds, which can be interrupted by the tipping subtree (since cows can be tipped!) The Blackboard stays empty for our cows, since the tipped subtree does not have any blackboards it needs to read that could change per-ai controller. The Tipping blackboards are handled by the subtree's setup.
 
@@ -238,7 +238,7 @@ Wow, what a tangent! But it's important to understand subtree planning as it is 
 	)
 ```
 
-## Finished Product: A COW.
+### Finished Product: A COW.
 
 And... we're finished! The tip_reaction subtree hooks signals and runs behaviors when the cow is tipped, the random speech occasionally plans speech, the idle behavior runs when no behaviors are planned, and the cow acts like a cow!
 
