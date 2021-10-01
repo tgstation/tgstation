@@ -13,4 +13,6 @@
 
 /mob/living/Logout()
 	. = ..()
+	if(!arena_action)
+		return
 	arena_action.Remove(src)
