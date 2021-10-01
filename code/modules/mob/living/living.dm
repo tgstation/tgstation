@@ -570,7 +570,7 @@
 	ADD_TRAIT(src, TRAIT_UI_BLOCKED, LYING_DOWN_TRAIT)
 	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, LYING_DOWN_TRAIT)
 	set_density(FALSE) // We lose density and stop bumping passable dense things.
-	AddElement(/datum/element/connect_loc, list(COMSIG_TURF_THROWNTHING_CHECK = .proc/on_turf_thrownthing_check))
+	AddElement(/datum/element/connect_loc, list(COMSIG_TURF_FIND_THROWNTHING_TARGET = .proc/thrownthing_find_target))
 	if(HAS_TRAIT(src, TRAIT_FLOORED) && !(dir & (NORTH|SOUTH)))
 		setDir(pick(NORTH, SOUTH)) // We are and look helpless.
 	body_position_pixel_y_offset = PIXEL_Y_OFFSET_LYING
@@ -582,18 +582,18 @@
 	if(layer == LYING_MOB_LAYER)
 		layer = initial(layer)
 	set_density(initial(density)) // We were prone before, so we become dense and things can bump into us again.
-	RemoveElement(/datum/element/connect_loc, list(COMSIG_TURF_THROWNTHING_CHECK = .proc/on_turf_thrownthing_check))
+	RemoveElement(/datum/element/connect_loc, list(COMSIG_TURF_FIND_THROWNTHING_TARGET = .proc/thrownthing_find_target))
 	REMOVE_TRAIT(src, TRAIT_UI_BLOCKED, LYING_DOWN_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_PULL_BLOCKED, LYING_DOWN_TRAIT)
 	body_position_pixel_y_offset = 0
 	SEND_SIGNAL(src, COMSIG_LIVING_ON_STANDING_UP)
 
-/mob/living/proc/on_turf_thrownthing_check(turf/source, datum/thrownthing/throwdatum)
+/mob/living/proc/thrownthing_find_target(turf/source, datum/thrownthing/throwdatum)
 	SIGNAL_HANDLER
-	///Skip if it's either completed its trajectory or isn't hitting crawling mobs or source is incapacitated.
+	// Skip if the thrown thing has either completed its trajectory or isn't hitting crawling mobs or if src is incapacitated.
 	if(!throwdatum.thrownthing.throwing || !throwdatum.hit_crawling_targets || PROJECTILES_SHOULD_AVOID(src))
 		return
-	if(!IS_HITTING_DECK(src, client?.successful_move_delay, TRUE) || HAS_TRAIT_NOT_FROM(src, TRAIT_CANNOT_EVADE_PROJECTILES, AI_CONTROLLER_TRAIT))
+	if(!IS_HITTING_DECK(src, client?.successful_move_delay, TRUE) || HAS_TRAIT_NOT_FROM(src, TRAIT_CANNOT_EVADE_PROJECTILES, TACTICAL_RESTING_COMPONENT_TRAIT))
 		throwdatum.finalize(TRUE, src)
 
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.

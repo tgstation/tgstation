@@ -199,6 +199,8 @@
 #define COMSIG_ATOM_CAN_BE_HIT_BY_PROJECTILE "atom_can_be_hit_by_projectile"
 	///prevents the target from being hit by a projectile
 	#define COMSIG_DODGE_PROJECTILE (1<<0)
+///from base of datum/ai_controller/set_ai_status(): (new_ai_status)
+#define COMSIG_ATOM_SET_AI_STATUS "atom_set_ai_status"
 
 ///from [/datum/controller/subsystem/explosions/proc/explode]: (/list(/atom, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke, explosion_cause))
 #define COMSIG_ATOM_EXPLODE "atom_explode"
@@ -436,8 +438,8 @@
 #define COMSIG_TURF_ON_SHUTTLE_MOVE "turf_on_shuttle_move"
 ///from /turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature)
 #define COMSIG_TURF_EXPOSE "turf_expose"
-///from /datum/thrownthing/tick(): (datum/thrownthing)
-#define COMSIG_TURF_THROWNTHING_CHECK "turf_thrownthing_check"
+///from /datum/thrownthing/find_target(): (datum/thrownthing, actual_target)
+#define COMSIG_TURF_FIND_THROWNTHING_TARGET "turf_find_thrownthing_target"
 
 ///from /datum/element/decal/Detach(): (description, cleanable, directional, mutable_appearance/pic)
 #define COMSIG_TURF_DECAL_DETACHED "turf_decal_detached"
@@ -471,6 +473,8 @@
 ///from /obj/vehicle/proc/driver_move, caught by the riding component to check and execute the driver trying to drive the vehicle
 #define COMSIG_RIDDEN_DRIVER_MOVE "driver_move"
 	#define COMPONENT_DRIVER_BLOCK_MOVE (1<<0)
+///sent after an ai_movement datum has attempted to move a pawn around: (datum/ai_controller, delta_time, success)
+#define COMSIG_MOVABLE_ON_AI_MOVEMENT "movable_on_ai_movement"
 ///from base of atom/movable/throw_at(): (list/args)
 #define COMSIG_MOVABLE_PRE_THROW "movable_pre_throw"
 	#define COMPONENT_CANCEL_THROW (1<<0)

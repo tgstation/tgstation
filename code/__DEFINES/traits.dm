@@ -698,9 +698,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define BLOODDRUNK_TRAIT "blooddrunk"
 /// Trait granted by lipstick
 #define LIPSTICK_TRAIT "lipstick_trait"
+/// Temporarily granted while being moved by conveyor belts.
+#define CONVEYOR_BELT_TRAIT "conveyor_belt_trait"
 /// Self-explainatory.
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
 #define MOOD_COMPONENT_TRAIT "mood_component"
+#define TACTICAL_RESTING_COMPONENT_TRAIT "tactical_resting"
 #define DRONE_SHY_TRAIT "drone_shy"
 /// Pacifism trait given by stabilized light pink extracts.
 #define STABILIZED_LIGHT_PINK_TRAIT "stabilized_light_pink"
@@ -713,9 +716,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 * and readded when a tongue is removed.
 */
 #define NO_TONGUE_TRAIT "no_tongue_trait"
-
-/// Granted by ai controllers.
-#define AI_CONTROLLER_TRAIT "ai_controller"
 
 /// Trait granted by [/mob/living/silicon/robot]
 /// Traits applied to a silicon mob by their model.

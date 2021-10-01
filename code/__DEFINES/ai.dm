@@ -26,8 +26,6 @@
 
 ///AI flags
 #define STOP_MOVING_WHEN_PULLED (1<<0)
-///For living pawns: if the pawn can avoid/dodge non-direct projectiles and thrown things when lying on the ground and not crawling.
-#define AI_CAN_HIT_DECK (1<<1)
 
 ///Subtree defines
 

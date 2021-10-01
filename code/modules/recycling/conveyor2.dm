@@ -161,8 +161,12 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			continue
 		if(isliving(movable_thing))
 			var/mob/living/zoommob = movable_thing
-			if((zoommob.movement_type & FLYING) && !zoommob.stat)
+			if(zoommob.movement_type & (FLYING|FLOATING))
 				continue
+			//I have seen officers hilariously struggle to deal with people on conveyor belts. -t someone who has made hallways-wide belt loops before.
+			if(!HAS_TRAIT_FROM(zoommob, TRAIT_CANNOT_EVADE_PROJECTILES, CONVEYOR_BELT_TRAIT))
+				ADD_TRAIT(zoommob, TRAIT_CANNOT_EVADE_PROJECTILES, CONVEYOR_BELT_TRAIT)
+				addtimer(TRAIT_CALLBACK_REMOVE(zoommob, TRAIT_CANNOT_EVADE_PROJECTILES, CONVEYOR_BELT_TRAIT), 3 SECONDS)
 		if(!movable_thing.anchored && movable_thing.has_gravity())
 			step(movable_thing, movedir)
 	conveying = FALSE

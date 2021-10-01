@@ -470,7 +470,7 @@
 #define GET_TARGETS_FROM(who) (who.targets_from ? who.get_targets_from() : who)
 
 ///Ensures mobs that have recently stopped crawling can be easily hit for a little longer. See below.
-#define CRAWLING_PENALTY (0.3 SECONDS + world.tick_lag*2)
+#define CRAWLING_PENALTY (0.5 SECONDS)
 
 /**
  * Whether a projectile or thrown thing with hit_crawling_targets TRUE
@@ -478,5 +478,5 @@
  */
 #define IS_HITTING_DECK(living, delay, skip_trait) (living.body_position == LYING_DOWN && (delay + CRAWLING_PENALTY) <= world.time && (skip_trait || !HAS_TRAIT(living, TRAIT_CANNOT_EVADE_PROJECTILES)))
 
-///Ensures projectiles and thrown things can cross over incapacitated living mobs when possible.
+///Ensures projectiles and thrown movables can move over living mobs that are incapacitated when possible.
 #define PROJECTILES_SHOULD_AVOID(living) (living.stat == DEAD || (HAS_TRAIT(living, TRAIT_IMMOBILIZED) && HAS_TRAIT(living, TRAIT_FLOORED) && HAS_TRAIT(living, TRAIT_HANDS_BLOCKED)))

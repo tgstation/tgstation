@@ -105,13 +105,6 @@ SUBSYSTEM_DEF(throwing)
 
 	qdel(src)
 
-#define TURF_THROWNTHING_CHECK(varname) \
-	var/atom/##varname = thrownthing.loc;\
-	SEND_SIGNAL(varname, COMSIG_TURF_THROWNTHING_CHECK, src);\
-	if(!thrownthing.throwing){\
-		return\
-	}
-
 /datum/thrownthing/proc/tick()
 	var/atom/movable/AM = thrownthing
 	if (!isturf(AM.loc) || !AM.throwing)
@@ -125,15 +118,15 @@ SUBSYSTEM_DEF(throwing)
 	var/atom/movable/actual_target = initial_target?.resolve()
 
 	if(dist_travelled) //to catch sneaky things moving on our tile while we slept
+		find_target(AM.loc, actual_target)
 		for(var/atom/movable/obstacle as anything in get_turf(thrownthing))
 			if (obstacle == thrownthing || (obstacle == thrower && !ismob(thrownthing)))
 				continue
 			if(obstacle.pass_flags_self & LETPASSTHROW)
 				continue
-			if (obstacle == actual_target || (obstacle.density && !(obstacle.flags_1 & ON_BORDER_1)))
+			if (obstacle.density && !(obstacle.flags_1 & ON_BORDER_1))
 				finalize(TRUE, obstacle)
 				return
-		TURF_THROWNTHING_CHECK(old_loc)
 
 	var/atom/step
 
@@ -165,7 +158,7 @@ SUBSYSTEM_DEF(throwing)
 				finalize()
 			return
 
-		TURF_THROWNTHING_CHECK(new_loc)
+		find_target(AM.loc, actual_target)
 
 		dist_travelled++
 
@@ -177,7 +170,16 @@ SUBSYSTEM_DEF(throwing)
 			finalize()
 			return
 
-#undef TURF_THROWNTHING_CHECK
+/datum/thrownthing/proc/find_target(turf/location, atom/actual_target)
+	// the thown thing has crossed a movable with no density (e.g. a mouse or APC) which happens to be the actual target. Finalize it.
+	if(actual_target && actual_target.loc == location && !(actual_target.pass_flags_self & LETPASSTHROW))
+		finalize(TRUE, actual_target)
+		return TRUE
+	// Send a signal to the turf. It might hit something else.
+	if(SEND_SIGNAL(location, COMSIG_TURF_FIND_THROWNTHING_TARGET, src, actual_target))
+		if(thrownthing.throwing) //A target was found yet it didn't finalize...
+			finalize()
+		return TRUE
 
 /datum/thrownthing/proc/finalize(hit = FALSE, target=null)
 	set waitfor = FALSE
