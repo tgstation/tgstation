@@ -69,6 +69,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// The Y position of the screen. Used for adding components.
 	var/screen_y = 0
 
+	/// The current size of the circuit.
+	var/current_size = 0
+
 /obj/item/integrated_circuit/Initialize(mapload)
 	. = ..()
 
@@ -224,6 +227,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	to_add.rel_y = rand(COMPONENT_MIN_RANDOM_POS, COMPONENT_MAX_RANDOM_POS) - screen_y
 	to_add.parent = src
 	attached_components += to_add
+	current_size += to_add.circuit_size
 	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, .proc/component_move_handler)
 	SStgui.update_uis(src)
 
@@ -255,6 +259,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		to_remove.unregister_shell(shell)
 
 	UnregisterSignal(to_remove, COMSIG_MOVABLE_MOVED)
+	current_size -= to_remove.circuit_size
 	attached_components -= to_remove
 	to_remove.disconnect()
 	to_remove.parent = null
@@ -570,8 +575,17 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			if(!add_component(component, usr))
 				qdel(component)
 				return
+			if(params["is_setter"])
+				var/obj/item/circuit_component/setter/setter = component
+				setter.variable_name.set_input(params["variable"])
+			else
+				var/obj/item/circuit_component/getter/getter = component
+				getter.variable_name.set_input(params["variable"])
+			component.rel_x = text2num(params["rel_x"])
+			component.rel_y = text2num(params["rel_y"])
 			RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/clear_setter_or_getter)
 			setter_and_getter_count++
+			return TRUE
 		if("move_screen")
 			screen_x = text2num(params["screen_x"])
 			screen_y = text2num(params["screen_y"])

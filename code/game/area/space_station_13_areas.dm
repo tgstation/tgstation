@@ -722,7 +722,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/service/theater
 	name = "\improper Theater"
-	icon_state = "Theater"
+	icon_state = "theatre"
 	sound_environment = SOUND_AREA_WOODFLOOR
 
 /area/service/theater/abandoned

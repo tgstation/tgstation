@@ -280,4 +280,29 @@
 	living_pawn.say(speech, forced = "AI Controller")
 	finish_action(controller, TRUE)
 
+//song behaviors
 
+/datum/ai_behavior/setup_instrument
+
+/datum/ai_behavior/setup_instrument/perform(delta_time, datum/ai_controller/controller, song_datum_key, song_lines_key)
+	. = ..()
+
+	var/datum/song/song = controller.blackboard[song_datum_key]
+	var/song_lines = controller.blackboard[song_lines_key]
+
+	//just in case- it won't do anything if the instrument isn't playing
+	song.stop_playing()
+	song.ParseSong(song_lines)
+	song.repeat = 10
+	song.volume = song.max_volume - 10
+	finish_action(controller, TRUE)
+
+/datum/ai_behavior/play_instrument
+
+/datum/ai_behavior/play_instrument/perform(delta_time, datum/ai_controller/controller, song_datum_key)
+	. = ..()
+
+	var/datum/song/song = controller.blackboard[song_datum_key]
+
+	song.start_playing(controller.pawn)
+	finish_action(controller, TRUE)

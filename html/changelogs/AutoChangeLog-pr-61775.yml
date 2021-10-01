@@ -1,0 +1,4 @@
+author: "InvalidArgument3"
+delete-after: True
+changes: 
+  - bugfix: "durand shield will no longer burn forever or take fire/acid damage from the environment"

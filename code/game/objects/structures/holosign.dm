@@ -10,7 +10,7 @@
 	var/obj/item/holosign_creator/projector
 	var/use_vis_overlay = TRUE
 
-/obj/structure/holosign/Initialize(mapload, loc, source_projector)
+/obj/structure/holosign/Initialize(mapload, source_projector)
 	. = ..()
 	if(use_vis_overlay)
 		alpha = 0

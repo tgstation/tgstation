@@ -264,3 +264,12 @@
 	)
 	result = /obj/item/food/full_english
 	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/envirochow
+	name = "Envirochow"
+	reqs = list(
+		/obj/item/food/meat/slab/corgi = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+	)
+	result = /obj/item/food/canned/envirochow
+	subcategory = CAT_MEAT

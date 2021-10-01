@@ -1,6 +1,0 @@
-author: "Krysonism"
-delete-after: True
-changes: 
-  - bugfix: "The crate spawner spawns full crates rather than empty ones again.
-fix:The neglected fern can actually spawn now"
-  - bugfix: "The neglected fern now has the standard 2-4 cell ines per sample rather than 1."

@@ -1,0 +1,4 @@
+author: "InvalidArgument3"
+delete-after: True
+changes: 
+  - bugfix: "you can now properly toggle on/off exosuit modules such as the generators, repair droid, tesla energy relays, and RCS"
