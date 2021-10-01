@@ -619,15 +619,13 @@
 
 /obj/item/toy/plush/goatplushie/examine()
 	. = ..()
-	if(!going_hard)
-		return
-	. += span_notice("[src] is going so hard, feel free to take a picture.")
+	if(going_hard)
+		. += span_notice("[src] is going so hard, feel free to take a picture.")
 
 /obj/item/toy/plush/goatplushie/update_overlays()
 	. = ..()
-	if(!going_hard)
-		return
-	. += "goat_dart"
+	if(going_hard)
+		. += "goat_dart"
 
 /obj/item/toy/plush/moth
 	name = "moth plushie"
