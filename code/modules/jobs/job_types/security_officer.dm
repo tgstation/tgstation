@@ -381,7 +381,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 			indices -= chosen
 			preferences[chosen] = null
 
-	listclearnulls(preferences)
+	list_clear_nulls(preferences)
 
 	departments -= biggest_preference
 

@@ -712,7 +712,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	var/list/finalized = list()
 	finalized = accepted.Copy() + oldentries.Copy() //we keep old and unreferenced phrases near the bottom for culling
-	listclearnulls(finalized)
+	list_clear_nulls(finalized)
 	if(length(finalized) > storemax)
 		finalized.Cut(storemax + 1)
 	fdel(log)
@@ -989,12 +989,12 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return word + "ay"
 	//otherwise unmutated
 	return word
-	
+
 /**
  * The procedure to check the text of the entered text on ntnrc_client.dm
  *
- * This procedure is designed to check the text you type into the chat client. 
- * It checks for invalid characters and the size of the entered text. 
+ * This procedure is designed to check the text you type into the chat client.
+ * It checks for invalid characters and the size of the entered text.
  */
 /proc/reject_bad_chattext(text, max_length = 256)
 	var/non_whitespace = FALSE

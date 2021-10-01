@@ -104,7 +104,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				max_save_slots = 8
 
 	// give them default keybinds and update their movement keys
-	key_bindings = deepCopyList(GLOB.default_hotkeys)
+	key_bindings = deep_copy_list(GLOB.default_hotkeys)
 	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
 	randomise = get_default_randomization()
 
