@@ -56,7 +56,6 @@
 
 /datum/component/ai_tactical_resting_handler/proc/on_lying_down(datum/source, new_lying_angle)
 	SIGNAL_HANDLER
-	RegisterSignal(parent, COMSIG_ATOM_CAN_BE_HIT_BY_PROJECTILE, .proc/can_be_hit_by_projectile)
 	thrownthing_catcher = AddComponent(/datum/component/connect_loc_behalf, parent, list(COMSIG_TURF_FIND_THROWNTHING_TARGET = .proc/thrownthing_find_target))
 
 /datum/component/ai_tactical_resting_handler/proc/on_standing_up()
