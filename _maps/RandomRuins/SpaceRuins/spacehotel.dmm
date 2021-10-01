@@ -859,7 +859,7 @@
 "dh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "di" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/workroom)
@@ -871,7 +871,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "dk" = (
 /obj/machinery/shower{
 	dir = 4
@@ -983,36 +983,36 @@
 "dA" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "dB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "dC" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "dD" = (
 /obj/structure/table,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "dE" = (
 /obj/structure/table,
 /obj/item/soap,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "dF" = (
 /obj/machinery/washing_machine,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "dG" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "dH" = (
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
@@ -1077,38 +1077,38 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "dV" = (
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "dX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 5
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "dY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "ea" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "eb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "ec" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "ed" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
@@ -1167,32 +1167,32 @@
 	pixel_x = -24
 	},
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "eo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 5
 	},
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "ep" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "eq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "er" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "es" = (
 /obj/machinery/door/airlock{
 	name = "Bathroom"
@@ -1229,11 +1229,11 @@
 "ey" = (
 /obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "ez" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "eA" = (
 /obj/machinery/power/apc/highcap/five_k{
 	name = "Laundry APC";
@@ -1241,34 +1241,34 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "eB" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "eC" = (
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "eD" = (
 /obj/structure/closet/crate,
 /obj/item/clothing/head/rice_hat,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "eE" = (
 /obj/structure/closet/crate,
 /obj/item/bedsheet/patriot,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "eF" = (
 /obj/structure/closet/crate,
 /obj/item/card/id/away/hotel,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/hotel/workroom)
+/area/ruin/space/has_grav/hotel/storeroom)
 "eG" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/dock)
@@ -4269,6 +4269,9 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
+"Cl" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/hotel/storeroom)
 "HV" = (
 /obj/structure/plaque/static_plaque/atmos{
 	pixel_y = 32
@@ -6839,12 +6842,12 @@ ar
 cx
 cL
 cF
-di
+Cl
 dA
 dV
 en
 ey
-di
+Cl
 eP
 fm
 fM
@@ -6914,7 +6917,7 @@ dB
 dB
 eo
 ey
-di
+Cl
 eQ
 fn
 fM
@@ -6984,7 +6987,7 @@ dC
 dX
 ep
 ey
-di
+Cl
 eQ
 fn
 fM
@@ -7049,12 +7052,12 @@ ar
 cx
 cL
 cF
-di
+Cl
 dD
 dY
 ep
 ez
-di
+Cl
 eR
 fo
 fM
@@ -7119,12 +7122,12 @@ ar
 cx
 cL
 cF
-di
+Cl
 dE
 dY
 eq
 eA
-di
+Cl
 eS
 fm
 fM
@@ -7189,12 +7192,12 @@ ar
 cx
 cL
 cF
-di
-di
+Cl
+Cl
 ea
 ep
 dV
-di
+Cl
 eT
 fp
 fN
@@ -7259,12 +7262,12 @@ at
 cD
 cL
 cF
-di
+Cl
 dF
 ea
 ep
 dF
-di
+Cl
 eU
 fq
 am
@@ -7329,12 +7332,12 @@ at
 cx
 cL
 cF
-di
+Cl
 dG
 ea
 er
 dG
-di
+Cl
 eG
 fr
 eG
@@ -7399,12 +7402,12 @@ at
 cx
 cL
 cF
-di
+Cl
 dF
 eb
 dV
 dF
-di
+Cl
 eV
 fs
 fO
@@ -7469,12 +7472,12 @@ at
 cx
 cL
 cF
-di
-di
-di
+Cl
+Cl
+Cl
 dV
 dV
-di
+Cl
 eW
 ft
 fu
@@ -7541,10 +7544,10 @@ cL
 cR
 am
 ac
-di
+Cl
 dV
 eB
-di
+Cl
 eX
 fu
 fu
@@ -7614,7 +7617,7 @@ ac
 ec
 dV
 eC
-di
+Cl
 eY
 fu
 fu
@@ -7684,7 +7687,7 @@ ac
 ec
 dV
 eD
-di
+Cl
 eZ
 fu
 fu
@@ -7754,7 +7757,7 @@ ac
 ec
 dV
 eE
-di
+Cl
 eW
 fu
 fu
@@ -7821,10 +7824,10 @@ cF
 cF
 am
 ac
-di
+Cl
 dV
 eF
-di
+Cl
 fa
 fu
 fu
@@ -7891,10 +7894,10 @@ cG
 cG
 am
 ac
-di
-di
-di
-di
+Cl
+Cl
+Cl
+Cl
 fb
 fu
 fu
