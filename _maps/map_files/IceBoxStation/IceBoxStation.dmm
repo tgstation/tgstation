@@ -48572,7 +48572,6 @@
 "vJF" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/status_display/evac/directional/east,
-/obj/machinery/aug_manipulator,
 /turf/open/floor/iron/white,
 /area/science/robotics/lab)
 "vJL" = (

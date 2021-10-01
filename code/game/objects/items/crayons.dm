@@ -780,12 +780,12 @@
 
 /obj/item/toy/crayon/spraycan/afterattack_secondary(atom/target, mob/user, proximity, params)
 	if(!proximity)
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(is_capped)
 		to_chat(user, span_warning("Take the cap off first!"))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(check_empty(user))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(istype(target, /obj/item/bodypart) && actually_paints)
 		var/obj/item/bodypart/limb = target
@@ -797,8 +797,9 @@
 				skins += list("[skin_option]" = part_image)
 			var/choice = show_radial_menu(user, src, skins, require_near = TRUE)
 			if(choice && (use_charges(user, 5, requires_full = FALSE) == 5))
+				playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 				limb.icon = style_list_icons[choice]
-			return
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	. = ..()
 
