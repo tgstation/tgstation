@@ -1,0 +1,4 @@
+author: "Mooshimi"
+delete-after: True
+changes: 
+  - bugfix: "you will no longer spawn behind the arrivals shuttle on kilo or on ice wastes for icebox, when the stations has the random spawn trait"
