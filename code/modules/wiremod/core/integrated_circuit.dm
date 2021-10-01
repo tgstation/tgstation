@@ -547,7 +547,8 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			var/variable_datatype = params["variable_datatype"]
 			if(!(variable_datatype in GLOB.wiremod_basic_types))
 				return
-
+			if(params["is_list"])
+				variable_datatype = PORT_TYPE_LIST(variable_datatype)
 			circuit_variables[variable_identifier] = new /datum/circuit_variable(variable_identifier, variable_datatype)
 			. = TRUE
 		if("remove_variable")
@@ -564,19 +565,14 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			if(setter_and_getter_count >= max_setters_and_getters)
 				balloon_alert(usr, "setter and getter count at maximum capacity")
 				return
-			var/designated_type = /obj/item/circuit_component/getter
+			var/designated_type = /obj/item/circuit_component/variable/getter
 			if(params["is_setter"])
-				designated_type = /obj/item/circuit_component/setter
-			var/obj/item/circuit_component/component = new designated_type(src)
+				designated_type = /obj/item/circuit_component/variable/setter
+			var/obj/item/circuit_component/variable/component = new designated_type(src)
 			if(!add_component(component, usr))
 				qdel(component)
 				return
-			if(params["is_setter"])
-				var/obj/item/circuit_component/setter/setter = component
-				setter.variable_name.set_input(params["variable"])
-			else
-				var/obj/item/circuit_component/getter/getter = component
-				getter.variable_name.set_input(params["variable"])
+			component.variable_name.set_input(params["variable"])
 			component.rel_x = text2num(params["rel_x"])
 			component.rel_y = text2num(params["rel_y"])
 			RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/clear_setter_or_getter)

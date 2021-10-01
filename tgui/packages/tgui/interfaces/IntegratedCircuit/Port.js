@@ -91,7 +91,7 @@ export class Port extends Component {
     } = this.props;
 
 
-    let composite_types = null;
+    let composite_types = [];
     if (port.datatype_data?.composite_types) {
       composite_types = port.datatype_data.composite_types;
     }
@@ -107,45 +107,42 @@ export class Port extends Component {
             className={classes([
               "ObjectComponent__Port",
             ])}
-            backgroundColor={composite_types? null : port.color}
             onMouseDown={this.handlePortMouseDown}
             onContextMenu={this.handlePortRightClick}
             onMouseUp={this.handlePortMouseUp}
             textAlign="center"
           >
-            {!!composite_types && (
-              <svg
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  position: "absolute",
-                }}
-                viewBox="0, 0, 100, 100"
-              >
-                {composite_types.map((compositeColor, index) => {
-                  const radians = (2*Math.PI)/composite_types.length;
-                  const arcLength = radians*50;
-                  return (
-                    <circle
-                      key={index}
-                      stroke={compositeColor}
-                      strokeDasharray={`${arcLength}, ${100*Math.PI}`}
-                      strokeDashoffset={
-                        -index*(100*(Math.PI/composite_types.length))
-                      }
-                      className={`color-stroke-${compositeColor}`}
-                      strokeWidth="50px"
-                      cx="50"
-                      cy="50"
-                      r="50"
-                      fillOpacity="0"
-                      transform="rotate(90, 50, 50)"
-                    />
-                  );
-                })}
-                <circle ref={this.iconRef} cx="50" cy="50" r="50" className={`color-fill-${port.color}`} />
-              </svg>
-            )}
+            <svg
+              style={{
+                width: "100%",
+                height: "100%",
+                position: "absolute",
+              }}
+              viewBox="0, 0, 100, 100"
+            >
+              {composite_types.map((compositeColor, index) => {
+                const radians = (2*Math.PI)/composite_types.length;
+                const arcLength = radians*50;
+                return (
+                  <circle
+                    key={index}
+                    stroke={compositeColor}
+                    strokeDasharray={`${arcLength}, ${100*Math.PI}`}
+                    strokeDashoffset={
+                      -index*(100*(Math.PI/composite_types.length))
+                    }
+                    className={`color-stroke-${compositeColor}`}
+                    strokeWidth="50px"
+                    cx="50"
+                    cy="50"
+                    r="50"
+                    fillOpacity="0"
+                    transform="rotate(90, 50, 50)"
+                  />
+                );
+              })}
+              <circle ref={this.iconRef} cx="50" cy="50" r="50" className={`color-fill-${port.color}`} />
+            </svg>
             <span ref={this.iconRef} className="ObjectComponent__PortPos" />
           </Box>
         </Stack.Item>

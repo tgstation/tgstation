@@ -45,7 +45,7 @@
 
 /obj/item/circuit_component/filter_list/populate_ports()
 	list_to_filter = add_input_port("List Input", PORT_TYPE_LIST(PORT_TYPE_ANY))
-	accept_entry = add_input_port("Accept Entry", PORT_TYPE_SIGNAL, trigger = .proc/accept_entry)
+	accept_entry = add_input_port("Accept Entry", PORT_TYPE_SIGNAL, trigger = .proc/accept_entry_port)
 
 	element = add_output_port("Element", PORT_TYPE_ANY)
 	current_index = add_output_port("Index", PORT_TYPE_NUMBER)
@@ -54,7 +54,7 @@
 	on_finished = add_output_port("On Finished", PORT_TYPE_SIGNAL)
 	on_failed = add_output_port("On Failed", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/filter_list/proc/accept_entry(datum/port/input/port, list/return_values)
+/obj/item/circuit_component/filter_list/proc/accept_entry_port(datum/port/input/port, list/return_values)
 	CIRCUIT_TRIGGER
 	if(return_values)
 		return_values["accept_entry"] = TRUE

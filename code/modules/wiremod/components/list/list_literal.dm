@@ -57,9 +57,7 @@
 
 	while(length < new_size)
 		length++
-		var/index = length(input_ports)
-		if(trigger_input)
-			index -= 1
+		var/index = length(entry_ports)
 		entry_ports += add_input_port("Index [index+1]", list_options.value || PORT_TYPE_ANY)
 
 /obj/item/circuit_component/list_literal/pre_input_received(datum/port/input/port)
@@ -89,8 +87,22 @@
 
 	var/list/new_literal = list()
 	for(var/datum/port/input/entry_port as anything in entry_ports)
-		// Prevents lists from merging together
-		new_literal += list(entry_port.value)
+		var/value = entry_port.value
+		// To prevent people from infinitely making lists to crash the server
+		if(islist(value))
+			var/list/lists_to_check = list()
+			lists_to_check += list(value)
+			var/lists = 1
+			while(length(lists_to_check))
+				var/list/list_to_iterate = lists_to_check[length(lists_to_check)]
+				for(var/list/list_data in list_to_iterate)
+					lists_to_check += list(new_data)
+					lists += 1
+				lists_to_check.len--
+				if(lists > max_list_count)
+					visible_message(span_warning("[src] begins to overheat!"))
+					return
+		new_literal += list(value)
 
 	list_output.set_output(new_literal)
 

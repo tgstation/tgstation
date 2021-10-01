@@ -184,6 +184,11 @@
 	if(!(datatype_handler.datatype_flags & DATATYPE_FLAG_AVOID_VALUE_UPDATE))
 		set_input(output.value)
 
+/datum/port/input/set_datatype(new_type)
+	. = ..()
+	for(var/datum/port/output/port as anything in connected_ports)
+		check_type(port)
+
 /**
  * Determines if a datatype is compatible with another port of a different type.
  *

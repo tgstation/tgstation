@@ -5,6 +5,8 @@
 	var/datatype
 	/// The path to the composite type
 	var/composite_datatype_path
+	/// The amount of composite datatypes needed to generate a datatype from this template
+	var/expected_types = 1
 
 	/// Types to generate during initialization
 	var/list/types_to_generate = list()
@@ -33,6 +35,9 @@
 		types_to_generate += list(composite_datatypes)
 		return new_datatype
 
+	if(length(expected_types) != length(composite_datatypes))
+		CRASH("Invalid amount of composite datatypes passed to [type]. Expected [expected_types], got [length(composite_datatypes)] arguments.")
+
 	if(GLOB.circuit_datatypes[new_datatype])
 		return new_datatype
 	for(var/datatype_to_check in composite_datatypes)
@@ -60,7 +65,11 @@
 
 	/// The base datatype, used for comparisons
 	var/base_datatype
+
+	/// The composite datatypes that make this datatype up
 	var/list/composite_datatypes
+
+	/// A list composed of the composite datatypes sent to the UI.
 	var/list/composite_datatypes_style
 
 /datum/circuit_datatype/composite_instance/New(datatype, base_datatype, list/composite_datatypes)

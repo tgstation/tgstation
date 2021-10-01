@@ -162,10 +162,21 @@ export class VariableMenu extends Component {
                         height="100%"
                         color="green"
                         onClick={(e) =>
-                          onAddVariable(variable_name, variable_type, e)}
+                          onAddVariable(variable_name, variable_type, false, e)}
                         fluid
                       >
-                        <PlusIconButton />
+                        <IconButton icon="plus" />
+                      </Button>
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Button
+                        height="100%"
+                        color="green"
+                        onClick={(e) =>
+                          onAddVariable(variable_name, variable_type, true, e)}
+                        fluid
+                      >
+                        <IconButton icon="list" />
                       </Button>
                     </Stack.Item>
                   </Stack>
@@ -179,12 +190,12 @@ export class VariableMenu extends Component {
   }
 }
 
-const PlusIconButton = (props, context) => {
+const IconButton = (props, context) => {
   return (
     <Stack fill align="center">
       <Stack.Item grow>
         <Icon
-          name="plus"
+          name={props.icon}
           size={1}
           width="100%"
           m="0em"
