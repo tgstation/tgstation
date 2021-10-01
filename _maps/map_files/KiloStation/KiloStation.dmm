@@ -21754,7 +21754,7 @@
 "clS" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/maintenance,
+/obj/machinery/drone_dispenser/preloaded,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "clX" = (
