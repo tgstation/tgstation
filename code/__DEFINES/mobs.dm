@@ -469,12 +469,13 @@
 //Saves a proc call, life is suffering. If who has no targets_from var, we assume it's just who
 #define GET_TARGETS_FROM(who) (who.targets_from ? who.get_targets_from() : who)
 
-///Ensures mobs that have recently stopped crawling can be easily hit for a little longer. See below.
+///Ensures mobs that have recently stopped crawling can be hit by projectiles with hit_crawling_targets TRUE for just a little longer. See below.
 #define CRAWLING_PENALTY (0.5 SECONDS)
 
 /**
- * Whether a projectile or thrown thing with hit_crawling_targets TRUE
- * should hit a mob that's currently on movement cooldown while lying down. (1300+50) <= 1300
+ * Checks if the mob is lying down, if he hasn't recently moved and
+ * doesn't have the cannot_evade_projectiles trait if skip_trait is FALSE.
+ * If all is good then that means the mob shouldn't be hit by projectiles not directly fired at him, hit_crawling_targets or not.
  */
 #define IS_HITTING_DECK(living, delay, skip_trait) (living.body_position == LYING_DOWN && (delay + CRAWLING_PENALTY) <= world.time && (skip_trait || !HAS_TRAIT(living, TRAIT_CANNOT_EVADE_PROJECTILES)))
 
