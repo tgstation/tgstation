@@ -180,8 +180,8 @@
 		"The Jester" = image(icon = src.icon, icon_state = "chaos"),
 		"The Madman" = image(icon = src.icon, icon_state = "joker"),
 		"The Car Chaser" = image(icon = src.icon, icon_state = "the_jester"),
-		"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow")
-		"The Terror" = image(icon = src.icon, icon_state = "scaryclownmask")
+		"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow"),
+		"The Terror" = image(icon = src.icon, icon_state = "scaryclownmask"),
 		"The Bag" = image(icon = src.icon, icon_state = "gigglesmask")
 		)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
