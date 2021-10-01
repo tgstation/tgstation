@@ -182,7 +182,7 @@ export class ObjectComponent extends Component {
           py={1}
           px={1}>
           <Stack>
-            <Stack.Item grow={1}>
+            <Stack.Item>
               <Stack vertical fill>
                 {input_ports.map((port, portIndex) => (
                   <Stack.Item key={portIndex}>
