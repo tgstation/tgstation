@@ -47,7 +47,7 @@
 
 /atom/movable/screen/ghost/minigames_menu
 	name ="Minigames"
-	icon_state = "mafia"
+	icon_state = "minigames"
 	
 /atom/movable/screen/ghost/minigames_menu/Click()
 	var/mob/dead/observer/observer = usr
