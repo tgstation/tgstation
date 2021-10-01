@@ -409,7 +409,7 @@
 			iron_content -= iron_removed
 			moderator_internal.gases[/datum/gas/oxygen][MOLES] -= iron_removed * OXYGEN_MOLES_CONSUMED_PER_IRON_HEAL
 
-	check_gravity_pulse()
+	check_gravity_pulse(delta_time)
 
 	emit_rads(radiation)
 
@@ -493,8 +493,8 @@
 	for(var/i in 1 to zap_number)
 		supermatter_zap(src, 5, power_level * 300, flags, zap_cutoff = cutoff, power_level = src.power_level * 1000, zap_icon = zaps_aspect)
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_gravity_pulse()
-	if(prob(100 - critical_threshold_proximity / 15))
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_gravity_pulse(delta_time)
+	if(DT_PROB(100 - critical_threshold_proximity / 15, delta_time))
 		return
 	var/grav_range = round(log(2.5, critical_threshold_proximity))
 	for(var/mob/alive_mob in GLOB.alive_mob_list)
