@@ -36,7 +36,7 @@
 		to_chat(src, span_warning("You can't crawl around a welded vent!"))
 		return
 	if(HAS_TRAIT(src, TRAIT_VENTCRAWLER_VAMPIRE_BAT))
-		var/vent_area = get_area(ventcrawl_target)
+		var/area/vent_area = get_area(ventcrawl_target)
 		if(vent_area && (vent_area.type in vampire_bat_blacklist))
 			to_chat(src, span_warning("This vent is infused with an aroma of garlic. You can't crawl through it!"))
 			return
