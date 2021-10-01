@@ -155,6 +155,42 @@ Example:
 	UnregisterSignal(controller.pawn, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 ```
 
+### Lil' Subtree Warning
+
+**Do not set blackboards on the subtree!** Subtrees are there to sort and optimize behavior selection, putting logic for setting blackboards is essentially skipping a behavior. I'm putting this here because unfortunately a lot of our current ai datum code has this exact mistake, and I'm hoping we can move on from it!
+
+BAD:
+
+```dm
+	if(prob(50))
+		var/list/possible_targets = list()
+		for(var/atom/thing in view(2, living_pawn))
+			if(!thing.mouse_opacity)
+				continue
+			if(thing.IsObscured())
+				continue
+			possible_targets += thing
+		var/atom/target = pick(possible_targets)
+		if(target)
+			controller.blackboard[BB_MONKEY_CURRENT_PRESS_TARGET] = target
+			controller.queue_behavior(/datum/ai_behavior/use_on_object, BB_MONKEY_CURRENT_PRESS_TARGET)
+			return
+```
+
+GOOD:
+
+```dm
+	if(!controller.blackboard[BB_MONKEY_CURRENT_PRESS_TARGET])
+		controller.queue_behavior(/datum/ai_behavior/find_nearby, BB_MONKEY_CURRENT_PRESS_TARGET)
+		return
+
+	if(prob(50))
+		controller.queue_behavior(/datum/ai_behavior/use_on_object, BB_MONKEY_CURRENT_PRESS_TARGET)
+		return SUBTREE_RETURN_FINISH_PLANNING
+```
+
+As you can see we're putting the search behavior... on a behavior! and sinc e the planning subtree passes to other subtrees afterwards, the monkey will still find things to do. The next pass, if the search behavior was successful, the action can be completed.
+
 ### Behaviors for subtrees
 
 Finally, we've reached the final stop on this controller rabbit hole: Behaviors! These are what subtrees are planning, and the AI will do THESE from first planned all the way to the end, just like it runs through subtrees.
@@ -186,28 +222,25 @@ This behavior drops the pawn out of the holder's hands. **It must call finish_ac
 
 We can let the behavior ending in a certain way modify the pawn or controller. Most often this is setting/forgetting blackboards.
 
-The last important thing to know is that behaviors take the keys from subtree planning as arguments. They do not search for the blackboards they need themselves.
+The last important thing to know is that behaviors take the keys from subtree planning as arguments. **They do not search for the blackboards they need themselves.**
 
 BAD:
 
-:::danger
 ```
 /datum/ai_behavior/play_instrument
 
 /datum/ai_behavior/play_instrument/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 
-    //bzzt! using blackboard keys directly! leave this to subtrees for setting and using them!
+	//bzzt! using blackboard keys directly! let the subtree pass this in!
 	var/datum/song/song = controller.blackboard[BB_SONG_DATUM]
 
 	song.start_playing(controller.pawn)
 	finish_action(controller, TRUE)
 ```
-:::
 
 GOOD:
 
-:::success
 ```
 /datum/ai_behavior/play_instrument
 
@@ -219,7 +252,6 @@ GOOD:
 	song.start_playing(controller.pawn)
 	finish_action(controller, TRUE)
 ```
-:::
 
 ## "Okay, back to what we were doing!"
 
