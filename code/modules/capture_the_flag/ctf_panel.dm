@@ -23,10 +23,11 @@ GLOBAL_DATUM_INIT(ctf_panel, /datum/ctf_panel, new())
 		this["team_size"] = team.team_members.len
 		this["refs"] += "[REF(team)]"	
 		data["teams"] += list(this)
-		if(team.ctf_enabled)
-			data["enabled"] = "CTF is currently running!"
-		else
-			data["enabled"] = "CTF needs 4 players to start, currently [team.people_who_want_to_play.len]/4 have signed up!"
+		if(!data["enabled"])
+			if(team.ctf_enabled)
+				data["enabled"] = "CTF is currently running!"
+			else
+				data["enabled"] = "CTF needs [CTF_REQUIRED_PLAYERS] players to start, currently [team.people_who_want_to_play.len]/[CTF_REQUIRED_PLAYERS] have signed up!"
 	return data
 
 
