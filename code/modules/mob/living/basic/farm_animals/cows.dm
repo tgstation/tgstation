@@ -27,7 +27,6 @@
 	maxHealth = 50
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
-
 	ai_controller = /datum/ai_controller/basic_controller/cow
 
 /mob/living/basic/cow/Initialize(mapload)
