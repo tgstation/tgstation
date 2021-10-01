@@ -7,7 +7,8 @@
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/item_ghost_resist,
-		/datum/ai_planning_subtree/item_aggro_attack,
+		/datum/ai_planning_subtree/item_target_from_aggro_list,
+		/datum/ai_planning_subtree/item_throw_attack,
 	)
 	idle_behavior = /datum/idle_behavior/idle_ghost_item
 

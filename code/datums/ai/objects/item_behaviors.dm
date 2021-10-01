@@ -18,7 +18,6 @@
 	item_holder.dropItemToGround(item_pawn, TRUE)
 	finish_action(controller, TRUE)
 
-
 ///This behavior is for obj/items, it is used to move closer to a target and throw themselves towards them.
 /datum/ai_behavior/item_move_close_and_attack
 	required_distance = 3
@@ -53,8 +52,9 @@
 
 	controller.blackboard -= target_key
 	controller.blackboard[throw_count_key] = 0
-	var/list/aggro_list = controller.blackboard[aggro_list_key]
-	aggro_list[throw_target]--
+	if(aggro_list_key)
+		var/list/aggro_list = controller.blackboard[aggro_list_key]
+		aggro_list[throw_target]--
 
 /datum/ai_behavior/item_move_close_and_attack/ghostly
 	attack_sound = 'sound/items/haunted/ghostitemattack.ogg'

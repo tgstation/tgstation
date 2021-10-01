@@ -58,23 +58,15 @@
 			controller.queue_behavior(/datum/ai_behavior/item_escape_grasp)
 
 /**
- * Item Aggro Attack Subtree
+ * Item Target From Aggro List Subtree
  *
- * Requires at least an item, and another subtree to assign aggro targets via BB_ITEM_AGGRO_LIST.
- * Attacks
+ * Requires at least an item, and another subtree to assign aggro to the `BB_ITEM_AGGRO_LIST`.
  *
  * relevant blackboards:
  * * BB_ITEM_AGGRO_LIST - not set by this subtree, assoc list of targets
  * * BB_ITEM_TARGET - set by this subtree, target mob we're attacking
  */
-/datum/ai_planning_subtree/item_aggro_attack
-
-/datum/ai_planning_subtree/item_aggro_attack/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	var/obj/item/item_pawn = controller.pawn
-
-	if(!DT_PROB(ITEM_AGGRO_ATTACK_CHANCE, delta_time))
-		return
-
+/datum/ai_planning_subtree/item_target_from_aggro_list
 	var/list/aggro_list = controller.blackboard[BB_ITEM_AGGRO_LIST]
 
 	for(var/mob/potential_target as anything in aggro_list)
@@ -82,5 +74,24 @@
 			continue
 		if(get_dist(potential_target, item_pawn) <= ITEM_AGGRO_VIEW_RANGE)
 			controller.blackboard[BB_ITEM_TARGET] = potential_target
-			controller.queue_behavior(controller.blackboard[BB_ITEM_MOVE_AND_ATTACK_TYPE], BB_ITEM_TARGET, BB_ITEM_THROW_ATTEMPT_COUNT)
-			return SUBTREE_RETURN_FINISH_PLANNING
+
+/**
+ * Item Throw Attack Subtree
+ *
+ * Requires at least an item, and another subtree to assign a target
+ * Attacks
+ *
+ * relevant blackboards:
+ * * BB_ITEM_AGGRO_LIST - not set by this subtree, assoc list of targets
+ * * BB_ITEM_TARGET - not set by this subtree, target mob we're attacking
+ */
+/datum/ai_planning_subtree/item_throw_attack
+
+/datum/ai_planning_subtree/item_throw_attack/SelectBehaviors(datum/ai_controller/controller, delta_time)
+	var/obj/item/item_pawn = controller.pawn
+
+	if(!controller.blackboard[BB_ITEM_TARGET] || !DT_PROB(ITEM_AGGRO_ATTACK_CHANCE, delta_time))
+		return //no target, or didn't aggro
+
+	controller.queue_behavior(controller.blackboard[BB_ITEM_MOVE_AND_ATTACK_TYPE], BB_ITEM_TARGET, BB_ITEM_THROW_ATTEMPT_COUNT)
+	return SUBTREE_RETURN_FINISH_PLANNING
