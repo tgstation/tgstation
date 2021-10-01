@@ -1,0 +1,7 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - rscadd: "Tramstation's cargo crates now spawn with some maintenance loot at roundstart."
+  - bugfix: "Fixed a singular rogue corner decal in Tramstation's cargo"
+  - bugfix: "Tramstation's dinner room area disposal now actually connects to the disposal grid and not directly back into the dinner area."
+  - bugfix: "Tramstation's directional signs have been updated to properly show department directions."
