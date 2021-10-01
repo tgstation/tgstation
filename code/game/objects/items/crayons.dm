@@ -782,7 +782,7 @@
 	if(!proximity)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(is_capped)
-		to_chat(user, span_warning("Take the cap off first!"))
+		balloon_alert(user, "take the cap off first!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(check_empty(user))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
