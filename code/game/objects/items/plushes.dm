@@ -599,6 +599,28 @@
 	icon_state = "goat"
 	desc = "Despite its cuddly appearance and plush nature, it will beat you up all the same. Goats never change."
 	squeak_override = list('sound/weapons/punch1.ogg'=1)
+	var/going_hard = FALSE
+
+/obj/item/toy/plush/goatplushie/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/clothing/mask/cigarette/rollie))
+		var/obj/item/clothing/mask/cigarette/rollie/fat_dart = I
+		if(!going_hard)
+			if(fat_dart.lit)
+				to_chat(user, span_notice("You put [fat_dart] into [src]'s mouth."))
+				qdel(fat_dart)
+				add_overlay("goat_dart")
+				going_hard = TRUE
+			else
+				to_chat(user, span_notice("You'll have to light that first!"))
+		else
+			to_chat(user, span_notice("[src] is already going too hard!"))
+	else
+		return ..()
+
+/obj/item/toy/plush/goatplushie/examine()
+	. = ..()
+	if(going_hard)
+		. += span_notice("[src] is going so hard, feel free to take a picture.")
 
 /obj/item/toy/plush/moth
 	name = "moth plushie"
