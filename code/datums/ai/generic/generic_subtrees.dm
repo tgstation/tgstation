@@ -4,25 +4,23 @@
  * Requires at least a living mob that can hold items.
  *
  * relevant blackboards:
- * * BB_SONG_DATUM - set by this subtree, is the song datum the pawn plays music from.
+ * * BB_SONG_INSTRUMENT - set by this subtree, is the song datum the pawn plays music from.
  * * BB_SONG_LINES - not set by this subtree, is the song loaded into the song datum.
  */
 /datum/ai_planning_subtree/generic_play_instrument/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	var/mob/living/living_pawn = controller.pawn
-	var/obj/item/instrument/song_player = locate(/obj/item/instrument) in living_pawn.held_items
-	if(!song_player)
-		controller.blackboard[BB_SONG_DATUM] = null
+	if(!controller.blackboard[BB_SONG_INSTRUMENT])
+		controller.queue_behavior(/datum/ai_behavior/find_and_set/in_hands, /obj/item/instrument)
 		return //we can't play a song since we do not have an instrument
 
-	controller.blackboard[BB_SONG_DATUM] = song_player.song
+	var/obj/item/instrument/song_player = controller.blackboard[BB_SONG_INSTRUMENT]
 
 	var/list/parsed_song_lines = splittext(controller.blackboard[BB_SONG_LINES], "\n")
 	popleft(parsed_song_lines) //remove BPM as it is parsed out
 	if(!compare_list(song_player.song.lines, parsed_song_lines) || !song_player.song.repeat)
-		controller.queue_behavior(/datum/ai_behavior/setup_instrument, BB_SONG_DATUM, BB_SONG_LINES)
+		controller.queue_behavior(/datum/ai_behavior/setup_instrument, BB_SONG_INSTRUMENT, BB_SONG_LINES)
 
 	if(!song_player.song.playing) //we may stop playing if we weren't playing before, were setting up dk theme, or ran out of repeats (also causing setup behavior)
-		controller.queue_behavior(/datum/ai_behavior/play_instrument, BB_SONG_DATUM)
+		controller.queue_behavior(/datum/ai_behavior/play_instrument, BB_SONG_INSTRUMENT)
 
 /**
  * Generic Resist Subtree, resist if it makes sense to!
@@ -48,8 +46,6 @@
  * * BB_NEXT_HUNGRY - set by this subtree, is when the controller is next hungry
  */
 /datum/ai_planning_subtree/generic_hunger/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	var/mob/living/living_pawn = controller.pawn
-
 	//inits the blackboard timer
 	if(!controller.blackboard[BB_NEXT_HUNGRY])
 		controller.blackboard[BB_NEXT_HUNGRY] = world.time + rand(0, 300)
@@ -57,22 +53,10 @@
 	if(world.time < controller.blackboard[BB_NEXT_HUNGRY])
 		return
 
-	var/list/food_candidates = list()
-	for(var/obj/item as anything in living_pawn.held_items)
-		if(!item || !IsEdible(item))
-			continue
-		food_candidates += item
+	if(!controller.blackboard[BB_FOOD_TARGET])
+		controller.queue_behavior(/datum/ai_behavior/find_and_set/edible, BB_FOOD_TARGET, /obj/item, 2)
+		return
 
-	for(var/obj/item/candidate in oview(2, living_pawn))
-		if(!IsEdible(candidate))
-			continue
-		food_candidates += candidate
-
-	if(length(food_candidates))
-		var/obj/item/best_held = GetBestWeapon(controller, null, living_pawn.held_items)
-		for(var/obj/item/held as anything in living_pawn.held_items)
-			if(!held || held == best_held)
-				continue
-			living_pawn.dropItemToGround(held)
-
-		controller.queue_behavior(/datum/ai_behavior/consume, pick(food_candidates), BB_NEXT_HUNGRY)
+	controller.queue_behavior(/datum/ai_behavior/drop_item)
+	controller.queue_behavior(/datum/ai_behavior/consume, BB_FOOD_TARGET, BB_NEXT_HUNGRY)
+	return SUBTREE_RETURN_FINISH_PLANNING

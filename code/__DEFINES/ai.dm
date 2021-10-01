@@ -40,11 +40,13 @@
 #define BB_CURRENT_MIN_MOVE_DISTANCE "min_move_distance"
 ///time until we should next eat, set by the generic hunger subtree
 #define BB_NEXT_HUNGRY "BB_NEXT_HUNGRY"
+///what we're going to eat next
+#define BB_FOOD_TARGET "bb_food_target"
 
 //for songs
 
-///song datum blackboard, set by instrument subtrees
-#define BB_SONG_DATUM "BB_SONG_DATUM"
+///song instrument blackboard, set by instrument subtrees
+#define BB_SONG_INSTRUMENT "BB_SONG_INSTRUMENT"
 ///song lines blackboard, set by default on controllers
 #define BB_SONG_LINES "song_lines"
 

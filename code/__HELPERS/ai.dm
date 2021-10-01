@@ -35,6 +35,8 @@
 
 ///returns if something can be consumed, drink or food
 /proc/IsEdible(obj/item/thing)
+	if(!istype(thing))
+		return FALSE
 	if(IS_EDIBLE(thing))
 		return TRUE
 	if(istype(thing, /obj/item/reagent_containers/food/drinks/drinkingglass))
