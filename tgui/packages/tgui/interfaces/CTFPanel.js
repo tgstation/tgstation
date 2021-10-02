@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Section, Stack } from '../components';
+import { Box, Button, Section, Flex, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const CTFPanel = (props, context) => {
@@ -13,37 +13,44 @@ export const CTFPanel = (props, context) => {
       height={600}>
       <Window.Content scrollable>
         <Section title={enabled} textAlign="center">
-          <Stack wrap="wrap" justify="space-between">
+          <Flex wrap="wrap" justify="space-around">
             {teams.map(team => (
-              <Stack.Item key={team.name} minWidth="30%">
+              <Flex.Item key={team.name} minWidth="30%" mb={8}>
                 <Section
                   key={team.name}
-                  title={`${team.color} Team (Score:${team.score}) 
-                (Members:${team.team_size})`}>
-                  <Stack>
+                  title={`${team.color} Team`}
+                >
+                  <Stack fill mb={1}>
                     <Stack.Item grow>
-                      <Button
-                        content="Jump"
-                        fluid={1}
-                        color={team.color.toLowerCase()}
-                        onClick={() => act('jump', {
-                          refs: team.refs,
-                        })} />
+                      <Box><b>{team.team_size}</b> members</Box>
                     </Stack.Item>
+
                     <Stack.Item grow>
-                      <Button
-                        content="Join"
-                        fluid={1}
-                        color={team.color.toLowerCase()}
-                        onClick={() => act('join', {
-                          refs: team.refs,
-                        })} /> 
+                      <Box><b>{team.score}</b> points</Box>
                     </Stack.Item>
                   </Stack>
+
+                  <Button
+                    content="Jump"
+                    fontSize="18px"
+                    fluid={1}
+                    color={team.color.toLowerCase()}
+                    onClick={() => act('jump', {
+                      refs: team.refs,
+                    })} />
+
+                  <Button
+                    content="Join"
+                    fontSize="18px"
+                    fluid={1}
+                    color={team.color.toLowerCase()}
+                    onClick={() => act('join', {
+                      refs: team.refs,
+                    })} />
                 </Section>
-              </Stack.Item>
+              </Flex.Item>
             ))}
-          </Stack>
+          </Flex>
         </Section>
       </Window.Content>
     </Window>
