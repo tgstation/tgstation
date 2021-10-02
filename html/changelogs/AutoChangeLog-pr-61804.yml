@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Oven boards can now be researched with the rest of the kitchen's machinery."
