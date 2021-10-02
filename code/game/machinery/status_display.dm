@@ -228,6 +228,14 @@
 	dir = EAST
 	pixel_x = -32
 
+/obj/machinery/status_display/Initialize(mapload, ndir, building)
+	. = ..()
+	if(building)
+		setDir(ndir)
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
+		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
+	update_appearance()
+
 /obj/machinery/status_display/evac/Initialize(mapload)
 	. = ..()
 	// register for radio system
