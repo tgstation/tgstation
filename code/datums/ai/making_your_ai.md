@@ -198,29 +198,35 @@ Finally, we've reached the final stop on this controller rabbit hole: Behaviors!
 As before, let's take a look at a basic example of one:
 
 ```dm
-/datum/ai_behavior/item_escape_grasp
+/datum/ai_behavior/follow
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
+	required_distance = 1
 
-/datum/ai_behavior/item_escape_grasp/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/follow/perform(delta_time, datum/ai_controller/controller, follow_key, range_key)
 	. = ..()
-	var/obj/item/item_pawn = controller.pawn
-	var/mob/item_holder = item_pawn.loc
-	if(!istype(item_holder))
-		finish_action(controller, FALSE) //We're no longer beind held. abort abort!!
-	item_pawn.visible_message(span_warning("[item_pawn] slips out of the hands of [item_holder]!"))
-	item_holder.dropItemToGround(item_pawn, TRUE)
-	finish_action(controller, TRUE)
+	var/mob/living/living_pawn = controller.pawn
+	if(!istype(living_pawn) || !isturf(living_pawn.loc))
+		return
+
+	var/datum/weakref/follow_ref = controller.blackboard[follow_key]
+	var/atom/movable/follow_target = follow_ref?.resolve()
+	if(!follow_target || get_dist(living_pawn, follow_target) > controller.blackboard[range_key])
+		finish_action(controller, FALSE)
+		return
+
+	var/mob/living/living_target = follow_target
+	if(istype(living_target) && (living_target.stat == DEAD))
+		finish_action(controller, TRUE)
+		return
+
+	controller.current_movement_target = living_target
+
+/datum/ai_behavior/follow/finish_action(datum/ai_controller/controller, succeeded, follow_key, range_key)
+	. = ..()
+	controller.blackboard[follow_key] = null
 ```
 
-This behavior drops the pawn out of the holder's hands. **It must call finish_action to actually finish it, as the behavior will continually be run until finished.** That's important because if you leave no exit condition it's essentially like a while loop that can't end. In this case, whether the behavior is successful or not, it doesn't matter. In theory though:
-
-```dm
-/datum/ai_behavior/item_escape_grasp/finish_action(datum/ai_controller/controller, succeeded)
-	. = ..() <-- ending code for the action
-    if(succeeded)
-        //whatever code for a successful behavior goes here
-```
-
-We can let the behavior ending in a certain way modify the pawn or controller. Most often this is setting/forgetting blackboards.
+This behavior makes the ai move to one tile away and finish the action, only finishing the action if the target is dead (success) or out of range (fail). When the action finishes, the follow target is unset by finish_action() regardless of success. Nice!
 
 The last important thing to know is that behaviors take the keys from subtree planning as arguments. **They do not search for the blackboards they need themselves.**
 
