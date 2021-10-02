@@ -216,12 +216,14 @@
 	return ..()
 
 /obj/structure/sign/picture_frame/portrait/update_icon_state(updates)
+	. = ..()
 	if(framed)
 		icon_state = "frame-overlay"
 	else
 		icon_state = portrait_state
 
 /obj/structure/sign/picture_frame/portrait/update_desc(updates)
+	. = ..()
 	if(framed)
 		desc = "Every time you look it makes you laugh."
 	else
