@@ -50,7 +50,7 @@
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 6 SECONDS))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		user.balloon_alert(user, "[anchored ? "un" : ""]secured...")
+		user.balloon_alert(user, "[anchored ? "un" : ""]secured")
 		deconstruct()
 		return TRUE
 
@@ -63,7 +63,7 @@
 							span_hear("You hear welding."))
 		if(tool.use_tool(src, user, 4 SECONDS, volume=50))
 			if(!(machine_stat & BROKEN))
-				to_chat(user, span_notice("[src] does not need repairs."))
+				balloon_alert(user, "it doesn't need repairs!")
 				return
 			to_chat(user, span_notice("You repair [src]."))
 			atom_integrity = max_integrity
@@ -73,7 +73,7 @@
 		return ..()
 
 /obj/machinery/status_display/deconstruct(disassembled = TRUE)
-	if( !flags_1 && !NODECONSTRUCT_1 && !disassembled )
+	if(!(flags_1 & NODECONSTRUCT_1) && !disassembled)
 		new /obj/item/stack/sheet/iron(loc, 2)
 		new /obj/item/shard(loc)
 		new /obj/item/shard(loc)
