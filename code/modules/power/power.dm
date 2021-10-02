@@ -105,7 +105,7 @@
 	var/obj/machinery/power/apc/local_apc
 	if(!A)
 		return FALSE
-	local_apc = A.get_apc()
+	local_apc = A.apc
 	if(!local_apc)
 		return FALSE
 	if(!local_apc.cell)
@@ -134,7 +134,7 @@
 	if(!home.requires_power)
 		return amount //Shuttles get free power, don't ask why
 
-	var/obj/machinery/power/apc/local_apc = home?.get_apc()
+	var/obj/machinery/power/apc/local_apc = home?.apc
 	if(!local_apc)
 		return FALSE
 	var/surplus = local_apc.surplus()
@@ -326,7 +326,7 @@
 	var/area/source_area
 	if (isarea(power_source))
 		source_area = power_source
-		power_source = source_area.get_apc()
+		power_source = source_area.apc
 	else if (istype(power_source, /obj/structure/cable))
 		var/obj/structure/cable/Cable = power_source
 		power_source = Cable.powernet
@@ -418,8 +418,3 @@
 			C.update_appearance()
 			return C
 	return null
-
-/area/proc/get_apc()
-	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
-		if(APC.area == src)
-			return APC
