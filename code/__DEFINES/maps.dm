@@ -26,6 +26,9 @@ require only minor tweaks.
 
 #define SPACERUIN_MAP_EDGE_PAD 15
 
+/// Special map path value for custom adminloaded stations.
+#define CUSTOM_MAP_PATH "custom"
+
 // traits
 // boolean - marks a level as having that property if present
 #define ZTRAIT_CENTCOM "CentCom"
