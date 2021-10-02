@@ -71,6 +71,12 @@
 "bU" = (
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
+"bV" = (
+/obj/effect/landmark/disband_location{
+	team_id = "green"
+	},
+/turf/open/floor/wood/large,
+/area/tdome/tdome2)
 "cj" = (
 /obj/structure/table/wood/fancy,
 /obj/structure/mirror/directional/north{
@@ -113,45 +119,45 @@
 /turf/open/floor/wood/parquet,
 /area/awaymission/cabin/snowforest)
 "da" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/space)
 "dc" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/space)
 "dG" = (
 /turf/open/floor/iron/dark/textured_large,
 /area/awaymission/cabin/snowforest)
 "dI" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/space)
 "dL" = (
 /turf/open/floor/carpet/green,
 /area/space)
 "ei" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/space)
 "em" = (
@@ -175,7 +181,7 @@
 /turf/open/floor/wood/parquet,
 /area/awaymission/cabin/snowforest)
 "fe" = (
-/obj/effect/landmark/thunderdome/two,
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/stone,
 /area/space)
 "ff" = (
@@ -260,10 +266,10 @@
 	},
 /area/space)
 "gt" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/machinery/tournament_spawn/green{
 	arena_id = "arena_alternate"
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/stone,
 /area/space)
 "gC" = (
@@ -271,10 +277,10 @@
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "ht" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/machinery/tournament_spawn/red{
 	arena_id = "arena_alternate"
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/stone,
 /area/space)
 "hy" = (
@@ -318,11 +324,11 @@
 /turf/open/floor/wood/parquet,
 /area/space)
 "iX" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/space)
 "jj" = (
@@ -354,11 +360,11 @@
 /turf/open/floor/plastic,
 /area/awaymission/cabin/snowforest)
 "la" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/space)
 "lk" = (
@@ -423,21 +429,21 @@
 	},
 /area/space)
 "nq" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/space)
 "nw" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/space)
 "nx" = (
@@ -472,23 +478,23 @@
 /turf/open/floor/stone,
 /area/awaymission/cabin/snowforest)
 "oI" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/space)
 "oK" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/space)
 "oT" = (
@@ -518,21 +524,21 @@
 /turf/open/floor/wood/parquet,
 /area/space)
 "pG" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/space)
 "pO" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/space)
 "pS" = (
@@ -592,8 +598,8 @@
 /turf/open/floor/wood/large,
 /area/tdome/tdome1)
 "rM" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/delivery,
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/stone,
 /area/space)
 "rX" = (
@@ -603,13 +609,13 @@
 /turf/open/floor/stone,
 /area/awaymission/cabin/snowforest)
 "rY" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/space)
 "rZ" = (
@@ -617,22 +623,22 @@
 /turf/open/floor/wood/large,
 /area/tdome/tdome2)
 "sa" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/space)
 "sj" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/delivery,
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/stone,
 /area/space)
 "sk" = (
-/obj/effect/landmark/thunderdome/one,
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/stone,
 /area/space)
 "sn" = (
@@ -641,13 +647,13 @@
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "sw" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/space)
 "sy" = (
@@ -760,13 +766,13 @@
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
 "wp" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/space)
 "wE" = (
@@ -776,6 +782,10 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/space)
+"wG" = (
+/obj/effect/landmark/disband_location,
+/turf/open/floor/wood/large,
+/area/tdome/tdome1)
 "wM" = (
 /obj/structure/table/bronze,
 /turf/open/floor/carpet/red,
@@ -1006,24 +1016,24 @@
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
 "Ew" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "EJ" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "EL" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "EQ" = (
@@ -1047,20 +1057,20 @@
 /turf/open/floor/iron,
 /area/tdome/arena)
 "Fn" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "Fr" = (
 /turf/closed/indestructible/wood,
 /area/awaymission/cabin/snowforest)
 "Fs" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "Ft" = (
@@ -1079,10 +1089,10 @@
 	},
 /area/tdome/arena)
 "FG" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "FN" = (
@@ -1169,10 +1179,10 @@
 /turf/closed/indestructible/rock,
 /area/space)
 "IH" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "IQ" = (
@@ -1182,8 +1192,8 @@
 /turf/open/floor/wood/parquet,
 /area/awaymission/cabin/snowforest)
 "IU" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/delivery,
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "Jf" = (
@@ -1195,7 +1205,6 @@
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/cabin/snowforest)
 "JM" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1206,34 +1215,42 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "JY" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "Kx" = (
 /turf/closed/indestructible/fakeglass,
 /area/tdome/arena)
 "KU" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "KZ" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/delivery,
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "Lb" = (
 /obj/effect/turf_decal/siding/white/corner,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/cabin/snowforest)
+"Lo" = (
+/obj/effect/landmark/disband_location{
+	arena_id = "arena_alternate";
+	team_id = "green"
+	},
+/turf/open/floor/carpet/green,
+/area/space)
 "Lt" = (
 /turf/open/floor/iron/stairs/left,
 /area/awaymission/cabin/snowforest)
@@ -1292,7 +1309,6 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "Or" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1303,13 +1319,14 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "Ox" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "OB" = (
@@ -1335,7 +1352,6 @@
 /turf/open/floor/wood/large,
 /area/tdome/tdome2)
 "Pk" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1347,10 +1363,10 @@
 	dir = 8
 	},
 /obj/machinery/tournament_spawn/green,
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "Pq" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1362,6 +1378,7 @@
 	dir = 8
 	},
 /obj/machinery/tournament_spawn/red,
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "Ps" = (
@@ -1460,10 +1477,10 @@
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/cabin/snowforest)
 "Sr" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "Sx" = (
@@ -1471,27 +1488,33 @@
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "SD" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "SJ" = (
-/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "SO" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
+"Tm" = (
+/obj/effect/landmark/disband_location{
+	arena_id = "arena_alternate"
+	},
+/turf/open/floor/carpet/red,
+/area/space)
 "Tp" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "TA" = (
@@ -1502,10 +1525,10 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "Uc" = (
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "Uk" = (
@@ -7626,7 +7649,7 @@ pi
 pS
 dL
 dL
-dL
+Lo
 dL
 nb
 qW
@@ -12306,7 +12329,7 @@ bt
 pS
 au
 au
-au
+Tm
 au
 pU
 fp
@@ -24267,7 +24290,7 @@ AU
 CO
 GQ
 uF
-uF
+bV
 XH
 RB
 UU
@@ -28947,7 +28970,7 @@ BK
 Uk
 Yl
 Yl
-Yl
+wG
 Yl
 UD
 Xf

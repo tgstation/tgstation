@@ -30,16 +30,20 @@
 
 	var/list/spawn_locations = list()
 
-	var/area/area = get_area(src)
-	for (var/obj/effect/landmark/thunderdome/thunderdome_landmark in area)
-		spawn_locations += get_turf(thunderdome_landmark)
+	for (var/obj/effect/landmark/tournament_spawn_valid_location/landmark in range(3, src))
+		landmark.invisibility = INVISIBILITY_ABSTRACT
+		spawn_locations += get_turf(landmark)
+
+	if (spawn_locations.len == 0)
+		stack_trace("Arena spawn had no nearby thunderdome spawns (for [arena_id] on team [team])")
+		qdel(src)
+		return
 
 	tournament_controller.valid_team_spawns[team] = spawn_locations
 
-/obj/effect/landmark/thunderdome/one/Initialize()
-	..()
-	return INITIALIZE_HINT_NORMAL
+/obj/effect/landmark/tournament_spawn_valid_location
+	name = "valid tournament spawn location"
+	icon_state = "tdome_admin"
 
-/obj/effect/landmark/thunderdome/two/Initialize()
-	..()
-	return INITIALIZE_HINT_NORMAL
+	// Makes it so it actually shows up in range
+	invisibility = INVISIBILITY_MAXIMUM

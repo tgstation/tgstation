@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from "../backend";
-import { Button, Dropdown, Section, Stack } from "../components";
+import { Button, Dropdown, Flex, Section, Stack } from "../components";
 import { Window } from "../layouts";
 
 type TournamentControllerData = {
@@ -76,8 +76,8 @@ const RoundInfo = (props, context) => {
         </Stack.Item>
       </Stack>
 
-      <Stack fill>
-        <Stack.Item>
+      <Flex justify="space-around" wrap="wrap" mt={2}>
+        <Flex.Item>
           <Button
             icon="user-friends"
             onClick={() => {
@@ -89,35 +89,55 @@ const RoundInfo = (props, context) => {
           >
             Spawn teams
           </Button>
-        </Stack.Item>
+        </Flex.Item>
 
-        <Stack.Item>
+        <Flex.Item>
           <Button
             icon="door-closed"
             onClick={() => act("close_shutters")}
           >
             Close shutters
           </Button>
-        </Stack.Item>
+        </Flex.Item>
 
-        <Stack.Item>
+        <Flex.Item>
           <Button
             icon="door-open"
             onClick={() => act("open_shutters")}
           >
             Open shutters
           </Button>
-        </Stack.Item>
+        </Flex.Item>
 
-        <Stack.Item>
+        <Flex.Item>
           <Button.Confirm
             content="Start countdown"
             icon="stopwatch"
             onClick={() => act("start_countdown")}
             tooltip="This will open the shutters at the end of the countdown."
           />
-        </Stack.Item>
-      </Stack>
+        </Flex.Item>
+
+        <Flex.Item>
+          <Button
+            icon="user-minus"
+            onClick={() => act("disband_teams")}
+            tooltip="This will send team members to their dressing rooms."
+          >
+            Disband teams
+          </Button>
+        </Flex.Item>
+
+        <Flex.Item>
+          <Button
+            icon="map"
+            onClick={() => act("clear_arena")}
+            tooltip="You don't have to do this if you're already loading a new map, by the way."
+          >
+            Clear arena
+          </Button>
+        </Flex.Item>
+      </Flex>
     </Section>
   );
 };

@@ -17,6 +17,12 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 	/// Shutters that separate teams from the arena
 	var/list/obj/machinery/door/poddoor/arena_shutters = list()
 
+	/// The places to disband team members
+	var/list/disband_locations = list()
+
+	/// Old mobs by team
+	var/list/old_mobs = list()
+
 	/// The places to spawn toolboxes
 	var/list/toolbox_spawns = list()
 
@@ -56,8 +62,14 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 		return .
 
 	switch (action)
+		if ("clear_arena")
+			clear_arena()
+			return TRUE
 		if ("close_shutters")
 			close_shutters()
+			return TRUE
+		if ("disband_teams")
+			disband_teams()
 			return TRUE
 		if ("open_shutters")
 			open_shutters()
@@ -151,6 +163,8 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 	QDEL_LIST(toolboxes)
 
 /obj/machinery/computer/tournament_controller/proc/spawn_teams(mob/user, list/team_names)
+	old_mobs.Cut()
+
 	var/index = 1
 
 	for (var/team_name in team_names)
@@ -160,21 +174,23 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 			return
 
 		var/team_spawn_id = valid_team_spawns[index]
+		old_mobs[team_spawn_id] = list()
 
 		var/list/clients = team.get_clients()
 
 		for (var/client/client as anything in clients)
-			var/old_mob = client?.mob
+			var/mob/old_mob = client?.mob
+			if (isliving(old_mob))
+				old_mobs[team_spawn_id][client] = old_mob
+				old_mob.forceMove(src)
+
 			var/mob/living/carbon/human/contestant_mob = new
 
 			client?.prefs?.apply_prefs_to(contestant_mob)
 			contestant_mob.equipOutfit(team.outfit)
-			// MOTHBLOCKS TODO: Spawn in the setup room beforehand?
 			contestant_mob.forceMove(pick(valid_team_spawns[team_spawn_id]))
 			contestant_mob.key = client?.key
 			contestant_mob.reset_perspective()
-
-			qdel(old_mob)
 
 			contestants += contestant_mob
 
