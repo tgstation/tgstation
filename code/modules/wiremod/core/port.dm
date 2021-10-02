@@ -124,6 +124,7 @@
  * an integrated circuit
  */
 /datum/port/proc/disconnect_all()
+	value = null
 	SEND_SIGNAL(src, COMSIG_PORT_DISCONNECT)
 
 /datum/port/input/disconnect_all()

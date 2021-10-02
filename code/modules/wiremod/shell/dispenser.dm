@@ -55,6 +55,22 @@
 		new /obj/item/circuit_component/dispenser_bot()
 	), SHELL_CAPACITY_LARGE)
 
+/obj/structure/dispenser_bot/attackby(obj/item/item, mob/living/user, params)
+	. = ..()
+	if(user.combat_mode || .)
+		return
+
+	if(item.w_class > max_weight)
+		balloon_alert(user, "item too big!")
+		return
+
+	if(length(stored_items) >= capacity)
+		balloon_alert(user, "at maximum capacity!")
+		return
+
+	add_item(item)
+
+
 /obj/structure/dispenser_bot/wrench_act(mob/living/user, obj/item/tool)
 	if(locked)
 		return
@@ -134,7 +150,7 @@
 				balloon_alert(user, "you have hit vendor component limit!")
 				return
 			var/obj/item/circuit_component/vendor_component/vendor_component = new(parent)
-			parent.add_component(parent, user)
+			parent.add_component(vendor_component, user)
 			vendor_components += vendor_component
 			RegisterSignal(vendor_component, list(
 				COMSIG_PARENT_QDELETING,
@@ -150,9 +166,11 @@
 	var/obj/structure/dispenser_bot/attached_bot
 
 	/// The item this vendor component should vend
-	DEFINE_OPTION_PORT(item_to_vend)
+	DEFINE_INPUT_PORT(item_to_vend)
 	/// Used to vend the item
 	DEFINE_INPUT_PORT(vend_item)
+
+	circuit_size = 0
 
 /obj/item/circuit_component/vendor_component/register_shell(atom/movable/shell)
 	. = ..()
@@ -164,15 +182,15 @@
 	return ..()
 
 /obj/item/circuit_component/vendor_component/populate_ports()
-	item_to_vend = add_option_port("Item", PORT_TYPE_ATOM)
-	vend_item = add_input_port("Vend Item", PORT_TYPE_SIGNAL, .proc/vend_item)
+	item_to_vend = add_input_port("Item", PORT_TYPE_ATOM, trigger = null)
+	vend_item = add_input_port("Vend Item", PORT_TYPE_SIGNAL, trigger = .proc/vend_item)
 
 /obj/item/circuit_component/vendor_component/proc/vend_item(datum/port/input/port, list/return_values)
 	CIRCUIT_TRIGGER
 	if(!attached_bot)
 		return
 
-	var/obj/item/vending_item = attached_bot.stored_items[item_to_vend.value]
+	var/obj/item/vending_item = locate(item_to_vend.value) in attached_bot.stored_items
 
 	if(!vending_item)
 		return
