@@ -201,8 +201,8 @@
 			icon_state = "frame-rat"
 		if(4) // Ratvar
 			name = "portrait of the imprisoned god"
-			desc = "Under the portrait a plaque reads: 'In loving memory of Ratvar, ancient powerful entity and rival of Nar'Sie,\
-				 ultimately struck down by NT bluespace artillery at the hands of Outpost 17 crew. Rust in peace.'" // common core lore.
+			desc = "Under the portrait a plaque reads: 'In loving memory of Ratvar, ancient powerful entity and rival of Nar'Sie, \
+				ultimately struck down by NT bluespace artillery at the hands of Outpost 17 crew. Rust in peace.'" // common core lore.
 			icon_state = "frame-ratvar"
 	portrait_name = name
 	portrait_state = icon_state
