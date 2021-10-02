@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - admin: "Added a preference to disable your usual deadmin preferences when you are spawned in CentCom. This is on by default."

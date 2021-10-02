@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - bugfix: "The species list will now scroll properly when there are too many. This has meant nothing up until this point, but will when Halloween races are enabled again."
