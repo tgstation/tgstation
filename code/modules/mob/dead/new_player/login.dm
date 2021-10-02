@@ -1,7 +1,7 @@
 /mob/dead/new_player/Login()
 	if(!client)
 		return
-	name = ckey
+
 	if(CONFIG_GET(flag/use_exp_tracking))
 		client.set_exp_from_db()
 		client.set_db_player_flags()

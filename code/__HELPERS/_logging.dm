@@ -362,7 +362,7 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 		else
 			if(include_link)
 				. += "<a href='?priv_msg=[ckey]'>"
-			. += ckey
+			. += key
 		if(!C)
 			. += "\[DC\]"
 
