@@ -167,17 +167,12 @@
 
 	internal_fusion.assert_gas(/datum/gas/antinoblium)
 
-	for(var/gas_id in GLOB.meta_gas_info)
-		moderator_internal.assert_gas(gas_id)
+	moderator_internal.assert_gases(arglist(GLOB.meta_gas_info))
 
 	if (!selected_fuel)
 		return
 
-	for(var/gas_id in selected_fuel.requirements) //These are the fuels
-		internal_fusion.assert_gas(gas_id)
-
-	for(var/gas_id in selected_fuel.primary_products) //These are the gases that can be produced inside the internal_fusion mix
-		internal_fusion.assert_gas(gas_id)
+	internal_fusion.assert_gases(arglist(selected_fuel.requirements | selected_fuel.primary_products))
 
 /**
  * Updates all related pipenets from all connected components
