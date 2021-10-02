@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - balance: "Getting hit by the tram and landing on lattice or unplated flooring (on the upper z-level) will now cause you to smash through it and fall to the z-level below at the cost of taking some extra damage. Note that floors with plating will still hold steady, so you can still use flooring to make getting hit by the tram insanely lethal, it just takes a bit more effort."

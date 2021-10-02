@@ -267,7 +267,7 @@
 /obj/item/paper/contractor_guide
 	name = "Contractor Guide"
 
-/obj/item/paper/contractor_guide/Initialize()
+/obj/item/paper/contractor_guide/Initialize(mapload)
 	info = {"<p>Welcome agent, congratulations on your new position as contractor. On top of your already assigned objectives,
 			this kit will provide you contracts to take on for TC payments.</p>
 
@@ -322,7 +322,7 @@
 /obj/item/storage/box/syndicate/contract_kit/PopulateContents()
 	new /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink(src)
 	new /obj/item/storage/box/syndicate/contractor_loadout(src)
-	new /obj/item/melee/classic_baton/telescopic/contractor_baton(src)
+	new /obj/item/melee/baton/telescopic/contractor_baton(src)
 
 	// All about 4 TC or less - some nukeops only items, but fit nicely to the theme.
 	var/list/item_list = list(

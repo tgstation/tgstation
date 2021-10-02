@@ -75,7 +75,7 @@
 	src.equipment_path = path
 	src.cost = cost
 
-/obj/machinery/mineral/equipment_vendor/Initialize()
+/obj/machinery/mineral/equipment_vendor/Initialize(mapload)
 	. = ..()
 	build_inventory()
 
@@ -209,7 +209,7 @@
 	name = "golem ship equipment vendor"
 	circuit = /obj/item/circuitboard/machine/mining_equipment_vendor/golem
 
-/obj/machinery/mineral/equipment_vendor/golem/Initialize()
+/obj/machinery/mineral/equipment_vendor/golem/Initialize(mapload)
 	desc += "\nIt seems a few selections have been added."
 	prize_list += list(
 		new /datum/data/mining_equipment("Extra Id", /obj/item/card/id/advanced/mining, 250),

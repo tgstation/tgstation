@@ -1,0 +1,51 @@
+2021-10-01:
+  Mooshimi:
+  - code_imp: AIs will no longer get the asimov lawset on unique-lawset station trait
+      rounds
+  Timberpoes:
+  - bugfix: Spawners Menu buttons once again work to jump or spawn as ghost roles.
+  Watermelon914:
+  - bugfix: Fixed module circuit size not taking up capacity equal to the amount of
+      circuit components inside of it.
+2021-10-02:
+  Arkatos:
+  - qol: Vending machines now use their name as a title for their UI.
+  InvalidArgument3:
+  - bugfix: durand shield will no longer burn forever or take fire/acid damage from
+      the environment
+  - bugfix: burning vehicles can now be extinguished.
+  - bugfix: you can now properly toggle on/off exosuit modules such as the generators,
+      repair droid, tesla energy relays, and RCS
+  JohnFulpWillard:
+  - spellcheck: The NT IRN app will properly tell you that it cannot be used with
+      department budget cards, who is this 'budgetorders' fellow anyways?
+  - bugfix: Oven boards can now be researched with the rest of the kitchen's machinery.
+  MMMiracles:
+  - rscadd: Tramstation's cargo crates now spawn with some maintenance loot at roundstart.
+  - bugfix: Fixed a singular rogue corner decal in Tramstation's cargo
+  - bugfix: Tramstation's dinner room area disposal now actually connects to the disposal
+      grid and not directly back into the dinner area.
+  - bugfix: Tramstation's directional signs have been updated to properly show department
+      directions.
+  Melbert:
+  - balance: The firebreath Mutation is now a cone of fire, instead of a real fireball.
+  Mooshimi:
+  - bugfix: you will no longer spawn behind the arrivals shuttle on kilo or on ice
+      wastes for icebox, when the stations has the random spawn trait
+  Mothblocks:
+  - admin: You can now cancel incoming and outgoing cross comms console messages.
+  - bugfix: The species list will now scroll properly when there are too many. This
+      has meant nothing up until this point, but will when Halloween races are enabled
+      again.
+  - admin: Added a preference to disable your usual deadmin preferences when you are
+      spawned in CentCom. This is on by default.
+  - bugfix: UI with tooltips will now be much faster to create them, such as R&D console
+      searching or preferences menu tab switching.
+  Sealed101:
+  - expansion: 'There is a new type of experiment provided by Nanotrasen: Machinery
+      scanning!'
+  Y0SH1M4S73R:
+  - admin: Circuit components to perform animations and manipulate filters have been
+      added. These components are the "Begin Animation", "Animation Step", "Add Filter",
+      "Filter Remover", "Filter Parameter Helper", and "Animation & Filter Bitflag
+      Helper" components. Refer to their descriptions for more information.

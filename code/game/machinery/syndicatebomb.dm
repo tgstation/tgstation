@@ -81,7 +81,7 @@
 		update_appearance()
 		try_detonate(TRUE)
 
-/obj/machinery/syndicatebomb/Initialize()
+/obj/machinery/syndicatebomb/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/syndicatebomb(src)
 	if(payload)
@@ -205,6 +205,7 @@
 		if(!active)
 			visible_message(span_danger("[icon2html(src, viewers(loc))] [timer_set] seconds until detonation, please clear the area."))
 			activate()
+			user.mind?.add_memory(MEMORY_BOMB_PRIMED, list(DETAIL_BOMB_TYPE = src), story_value = STORY_VALUE_AMAZING)
 			update_appearance()
 			add_fingerprint(user)
 
@@ -245,7 +246,7 @@
 	open_panel = TRUE
 	timer_set = 120
 
-/obj/machinery/syndicatebomb/empty/Initialize()
+/obj/machinery/syndicatebomb/empty/Initialize(mapload)
 	. = ..()
 	wires.cut_all()
 

@@ -8,7 +8,7 @@
 	var/set_luminosity = 8
 	var/set_cap = 0
 
-/obj/effect/light_emitter/Initialize()
+/obj/effect/light_emitter/Initialize(mapload)
 	. = ..()
 	set_light(set_luminosity, set_cap)
 

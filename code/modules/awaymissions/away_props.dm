@@ -19,7 +19,7 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	var/strength = 30
 
-/obj/effect/wind/Initialize()
+/obj/effect/wind/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj,src)
 
@@ -38,7 +38,7 @@
 	var/list/blocked_types = list()
 	var/reverse = FALSE //Block if path not present
 
-/obj/effect/path_blocker/Initialize()
+/obj/effect/path_blocker/Initialize(mapload)
 	. = ..()
 	if(blocked_types.len)
 		blocked_types = typecacheof(blocked_types)
@@ -63,7 +63,7 @@
 	var/open = FALSE
 	var/hidden = FALSE
 
-/obj/structure/pitgrate/Initialize()
+/obj/structure/pitgrate/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SSdcs,COMSIG_GLOB_BUTTON_PRESSED, .proc/OnButtonPressed)
 	if(hidden)
@@ -91,7 +91,7 @@
 	else
 		talpha = 255
 		obj_flags |= BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
-	plane = BYOND_LIGHTING_PLANE //What matters it's one above openspace, so our animation is not dependant on what's there. Up to revision with 513
+	plane = ABOVE_LIGHTING_PLANE //What matters it's one above openspace, so our animation is not dependant on what's there. Up to revision with 513
 	animate(src,alpha = talpha,time = 10)
 	addtimer(CALLBACK(src,.proc/reset_plane),10)
 	if(hidden)

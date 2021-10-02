@@ -27,6 +27,7 @@ const HypertorusMainControls = (props, context) => {
             {'Start cooling: '}
             <Button
               disabled={data.start_fuel === 1
+                || data.start_moderator === 1
                 || data.start_power === 0
                 || (data.start_cooling && data.power_level > 0)}
               icon={data.start_cooling ? 'power-off' : 'times'}
@@ -43,6 +44,16 @@ const HypertorusMainControls = (props, context) => {
               content={data.start_fuel ? 'On' : 'Off'}
               selected={data.start_fuel}
               onClick={() => act('start_fuel')} />
+          </Stack.Item>
+          <Stack.Item color="label">
+            {'Start moderator injection: '}
+            <Button
+              disabled={data.start_power === 0
+                || data.start_cooling === 0}
+              icon={data.start_moderator ? 'power-off' : 'times'}
+              content={data.start_moderator ? 'On' : 'Off'}
+              selected={data.start_moderator}
+              onClick={() => act('start_moderator')} />
           </Stack.Item>
         </Stack>
       </Section>
@@ -107,7 +118,7 @@ const HypertorusSecondaryControls = (props, context) => {
               animated
               value={parseFloat(data.magnetic_constrictor)}
               width="63px"
-              unit="m^3/B"
+              unit="m³/T"
               minValue={50}
               maxValue={1000}
               onDrag={(e, value) => act('magnetic_constrictor', {
@@ -119,9 +130,9 @@ const HypertorusSecondaryControls = (props, context) => {
               animated
               value={parseFloat(data.fuel_injection_rate)}
               width="63px"
-              unit="g/s"
-              minValue={5}
-              maxValue={1500}
+              unit="mol/s"
+              minValue={.5}
+              maxValue={150}
               onDrag={(e, value) => act('fuel_injection_rate', {
                 fuel_injection_rate: value,
               })} />
@@ -131,9 +142,9 @@ const HypertorusSecondaryControls = (props, context) => {
               animated
               value={parseFloat(data.moderator_injection_rate)}
               width="63px"
-              unit="g/s"
-              minValue={5}
-              maxValue={1500}
+              unit="mol/s"
+              minValue={.5}
+              maxValue={150}
               onDrag={(e, value) => act('moderator_injection_rate', {
                 moderator_injection_rate: value,
               })} />
@@ -156,7 +167,6 @@ const HypertorusSecondaryControls = (props, context) => {
         <LabeledList>
           <LabeledList.Item label="Waste remove">
             <Button
-              disabled={data.power_level > 5}
               icon={data.waste_remove ? 'power-off' : 'times'}
               content={data.waste_remove ? 'On' : 'Off'}
               selected={data.waste_remove}
@@ -165,13 +175,26 @@ const HypertorusSecondaryControls = (props, context) => {
           <LabeledList.Item label="Filter from moderator mix">
             {filterTypes.map(filter => (
               <Button
-                key={filter.id}
-                selected={filter.selected}
-                content={getGasLabel(filter.id, filter.name)}
+                key={filter.gas_id}
+                icon={filter.enabled ? 'check-square-o' : 'square-o'}
+                selected={filter.enabled}
+                content={getGasLabel(filter.gas_id, filter.gas_name)}
                 onClick={() => act('filter', {
-                  mode: filter.id,
+                  mode: filter.gas_id,
                 })} />
             ))}
+          </LabeledList.Item>
+          <LabeledList.Item label="Moderator filtering rate">
+            <NumberInput
+              animated
+              value={parseFloat(data.mod_filtering_rate)}
+              width="63px"
+              unit="mol/s"
+              minValue={5}
+              maxValue={200}
+              onDrag={(e, value) => act('mod_filtering_rate', {
+                mod_filtering_rate: value,
+              })} />
           </LabeledList.Item>
         </LabeledList>
       </Section>
@@ -272,9 +295,9 @@ const HypertorusParameters = (props, context) => {
             <ProgressBar
               value={iron_content}
               ranges={{
-                good: [-Infinity, 3],
-                average: [3, 6],
-                bad: [6, Infinity],
+                good: [-Infinity, .1],
+                average: [.1, .36],
+                bad: [.36, Infinity],
               }} />
           </LabeledList.Item>
           <LabeledList.Item label="Energy Levels">

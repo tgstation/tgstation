@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	var/locked = FALSE
 	var/datum/action/innate/mimic/lock/lock
 
-/mob/living/simple_animal/hostile/mimic/xenobio/Initialize()
+/mob/living/simple_animal/hostile/mimic/xenobio/Initialize(mapload)
 	. = ..()
 	lock = new
 	lock.Grant(src)

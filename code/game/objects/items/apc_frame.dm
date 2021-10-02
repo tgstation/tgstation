@@ -93,7 +93,7 @@
 		return
 	var/turf/T = get_turf(on_wall) //the user is not where it needs to be.
 	var/area/A = get_area(user)
-	if(A.get_apc())
+	if(A.apc)
 		to_chat(user, span_warning("This area already has an APC!"))
 		return //only one APC per area
 	if(!A.requires_power)

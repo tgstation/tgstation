@@ -1,0 +1,6 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "spirit holder exorcisms now make sounds"
+  - bugfix: "fixes possessed blade not actually being able to be possessed"
+  - refactor: "null rod's subtype picking is now an element"

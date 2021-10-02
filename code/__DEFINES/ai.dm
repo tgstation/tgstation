@@ -35,6 +35,14 @@
 //Generic BB keys
 #define BB_CURRENT_MIN_MOVE_DISTANCE "min_move_distance"
 
+//for songs
+
+///song datum blackboard, set by instrument subtrees
+#define BB_SONG_DATUM "BB_SONG_DATUM"
+///song lines blackboard, set by default on controllers
+#define BB_SONG_LINES "song_lines"
+
+
 // Monkey AI controller blackboard keys
 
 #define BB_MONKEY_AGGRESSIVE "BB_monkey_aggressive"
@@ -53,15 +61,12 @@
 #define BB_MONKEY_RECRUIT_COOLDOWN "BB_monkey_recruit_cooldown"
 #define BB_MONKEY_NEXT_HUNGRY "BB_monkey_next_hungry"
 
-
 ///Haunted item controller defines
 
 ///Chance for haunted item to haunt someone
 #define HAUNTED_ITEM_ATTACK_HAUNT_CHANCE 10
 ///Chance for haunted item to try to get itself let go.
 #define HAUNTED_ITEM_ESCAPE_GRASP_CHANCE 20
-///Chance for haunted item to warp somewhere new
-#define HAUNTED_ITEM_TELEPORT_CHANCE 4
 ///Amount of aggro you get when picking up a haunted item
 #define HAUNTED_ITEM_AGGRO_ADDITION 2
 
@@ -71,13 +76,14 @@
 #define BB_HAUNT_TARGET "BB_haunt_target"
 ///Amount of successful hits in a row this item has had
 #define BB_HAUNTED_THROW_ATTEMPT_COUNT "BB_haunted_throw_attempt_count"
+///If true, tolerates the equipper holding/equipping the hauntium
+#define BB_LIKES_EQUIPPER "BB_likes_equipper"
 
 ///Cursed item controller defines
 
 //defines
 ///how far a cursed item will still try to chase a target
 #define CURSED_VIEW_RANGE 7
-#define CURSED_ITEM_TELEPORT_CHANCE 4
 //blackboards
 
 ///Actual mob the item is haunting at the moment
@@ -179,6 +185,12 @@
 #define BB_HUNTING_COOLDOWN "BB_HUNTING_COOLDOWN"
 
 ///Basic Mob Keys
+
+///Tipped blackboards
+///Bool that means a basic mob will start reacting to being tipped in it's planning
+#define BB_BASIC_MOB_TIP_REACTING "BB_basic_tip_reacting"
+///the motherfucker who tipped us
+#define BB_BASIC_MOB_TIPPER "BB_basic_tip_tipper"
 
 ///Targetting subtrees
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"

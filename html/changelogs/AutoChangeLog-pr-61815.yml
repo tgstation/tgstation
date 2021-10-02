@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "The Space Hotel ruin's Staff Room and Staff Store now use distinct areas, and no longer have APCs fighting each other for control."

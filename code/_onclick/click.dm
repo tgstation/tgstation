@@ -341,13 +341,13 @@
 	return
 
 /atom/proc/CtrlClick(mob/user)
-	if(!can_interact(user))
-		return FALSE
 	SEND_SIGNAL(src, COMSIG_CLICK_CTRL, user)
 	SEND_SIGNAL(user, COMSIG_MOB_CTRL_CLICKED, src)
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
+	if(!can_interact(user))
+		return FALSE
 
 /mob/living/CtrlClick(mob/user)
 	if(!isliving(user) || !user.CanReach(src) || user.incapacitated())

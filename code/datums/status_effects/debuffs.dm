@@ -183,11 +183,10 @@
 		owner.adjustStaminaLoss(healing)
 	if(human_owner?.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
-	if(prob(20))
-		if(carbon_owner)
-			carbon_owner.handle_dreams()
-		if(prob(10) && owner.health > owner.crit_threshold)
-			owner.emote("snore")
+	if(carbon_owner)
+		carbon_owner.handle_dreams()
+	if(prob(2) && owner.health > owner.crit_threshold)
+		owner.emote("snore")
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
@@ -624,7 +623,7 @@
 /obj/effect/temp_visual/curse
 	icon_state = "curse"
 
-/obj/effect/temp_visual/curse/Initialize()
+/obj/effect/temp_visual/curse/Initialize(mapload)
 	. = ..()
 	deltimer(timerid)
 
@@ -700,8 +699,8 @@
 	var/mob/living/carbon/C = owner
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
 	// The brain trauma itself does its own set of logging, but this is the only place the source of the hypnosis phrase can be found.
-	C.log_message("has been hypnotised by the phrase '[hearing_args[HEARING_RAW_MESSAGE]]' spoken by [key_name(hearing_speaker)]", LOG_ATTACK)
-	hearing_speaker.log_message("has hypnotised [key_name(C)] with the phrase '[hearing_args[HEARING_RAW_MESSAGE]]'", LOG_ATTACK, log_globally = FALSE)
+	hearing_speaker.log_message("has hypnotised [key_name(C)] with the phrase '[hearing_args[HEARING_RAW_MESSAGE]]'", LOG_ATTACK)
+	C.log_message("has been hypnotised by the phrase '[hearing_args[HEARING_RAW_MESSAGE]]' spoken by [key_name(hearing_speaker)]", LOG_VICTIM, log_globally = FALSE)
 	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
 	addtimer(CALLBACK(C, /mob/living.proc/Stun, 60, TRUE, TRUE), 15) //Take some time to think about it
 	qdel(src)

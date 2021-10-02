@@ -12,7 +12,7 @@
 /obj/structure/plasticflaps/opaque
 	opacity = TRUE
 
-/obj/structure/plasticflaps/Initialize()
+/obj/structure/plasticflaps/Initialize(mapload)
 	. = ..()
 	alpha = 0
 	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, plane, dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
@@ -110,7 +110,7 @@
 		new /obj/item/stack/sheet/plastic/five(loc)
 	qdel(src)
 
-/obj/structure/plasticflaps/Initialize()
+/obj/structure/plasticflaps/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE, TRUE)
 

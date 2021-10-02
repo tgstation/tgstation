@@ -31,6 +31,11 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	var/raw_msg = msg
 
+	var/list/filter_result = is_ooc_filtered(msg)
+	if (filter_result)
+		REPORT_CHAT_FILTER_TO_USER(usr, filter_result)
+		return
+
 	if(!msg)
 		return
 
@@ -58,7 +63,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	var/keyname = key
 	if(prefs.unlock_content)
 		if(prefs.toggles & MEMBER_PUBLIC)
-			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'>[icon2html('icons/member_content.dmi', world, "blag")][keyname]</font>"
+			keyname = "<font color='[prefs.read_preference(/datum/preference/color/ooc_color) || GLOB.normal_ooc_colour]'>[icon2html('icons/member_content.dmi', world, "blag")][keyname]</font>"
 	if(prefs.hearted)
 		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 		keyname = "[sheet.icon_tag("emoji-heart")][keyname]"
@@ -74,7 +79,8 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		if(holder)
 			if(!holder.fakekey || receiver.holder)
 				if(check_rights_for(src, R_ADMIN))
-					to_chat(receiver, span_adminooc("[CONFIG_GET(flag/allow_admin_ooccolor) && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ][span_prefix("OOC:")] <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span>"), avoid_highlighting = avoid_highlight)
+					var/ooc_color = prefs.read_preference(/datum/preference/color/ooc_color)
+					to_chat(receiver, span_adminooc("[CONFIG_GET(flag/allow_admin_ooccolor) && ooc_color ? "<font color=[ooc_color]>" :"" ][span_prefix("OOC:")] <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span>"), avoid_highlighting = avoid_highlight)
 				else
 					to_chat(receiver, span_adminobserverooc(span_prefix("OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
 			else
@@ -123,7 +129,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		message_admins("[usr.key] has attempted to use the Set Player OOC Color verb!")
 		log_admin("[key_name(usr)] tried to set player ooc color without authorization.")
 		return
-	var/new_color = sanitize_ooccolor(newColor)
+	var/new_color = sanitize_color(newColor)
 	message_admins("[key_name_admin(usr)] has set the players' ooc color to [new_color].")
 	log_admin("[key_name_admin(usr)] has set the player ooc color to [new_color].")
 	GLOB.OOC_COLOR = new_color
@@ -144,36 +150,6 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	message_admins("[key_name_admin(usr)] has reset the players' ooc color.")
 	log_admin("[key_name_admin(usr)] has reset player ooc color.")
 	GLOB.OOC_COLOR = null
-
-
-/client/verb/colorooc()
-	set name = "Set Your OOC Color"
-	set category = "Preferences"
-
-	if(!holder || !check_rights_for(src, R_ADMIN))
-		if(!is_content_unlocked())
-			return
-
-	var/new_ooccolor = input(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
-	if(isnull(new_ooccolor))
-		return
-	new_ooccolor = sanitize_ooccolor(new_ooccolor)
-	prefs.ooccolor = new_ooccolor
-	prefs.save_preferences()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set OOC Color") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
-/client/verb/resetcolorooc()
-	set name = "Reset Your OOC Color"
-	set desc = "Returns your OOC Color to default"
-	set category = "Preferences"
-
-	if(!holder || !check_rights_for(src, R_ADMIN))
-		if(!is_content_unlocked())
-			return
-
-		prefs.ooccolor = initial(prefs.ooccolor)
-		prefs.save_preferences()
 
 //Checks admin notice
 /client/verb/admin_notice()

@@ -166,6 +166,7 @@
 							desc += "<br>The inscription reads: [input] - [user.real_name]"
 							log_game("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 							message_admins("<b>[key_name_admin(M)]</b> was given the following commendation by <b>[key_name_admin(user)]</b>: [input]")
+							add_memory_in_range(M, 7, MEMORY_RECEIVED_MEDAL, list(DETAIL_PROTAGONIST = M, DETAIL_MEDAL_TYPE = src, DETAIL_DEUTERAGONIST = user, DETAIL_MEDAL_REASON = input), STORY_VALUE_AMAZING)
 
 		else
 			to_chat(user, span_warning("Medals can only be pinned on jumpsuits!"))
@@ -338,13 +339,13 @@
 	icon_state = "pocketprotector"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/pocketprotector
 
-/obj/item/clothing/accessory/pocketprotector/full/Initialize()
+/obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
 	. = ..()
 	new /obj/item/pen/red(src)
 	new /obj/item/pen(src)
 	new /obj/item/pen/blue(src)
 
-/obj/item/clothing/accessory/pocketprotector/cosmetology/Initialize()
+/obj/item/clothing/accessory/pocketprotector/cosmetology/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to 3)
 		new /obj/item/lipstick/random(src)

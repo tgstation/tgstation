@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "The SM/HFR will now always play harsh accent sounds when they should"

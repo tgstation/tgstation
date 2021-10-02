@@ -17,7 +17,7 @@
 	var/max_syringes = 4
 	var/last_synth = 0
 
-/obj/item/gun/chem/Initialize()
+/obj/item/gun/chem/Initialize(mapload)
 	. = ..()
 	chambered = new /obj/item/ammo_casing/chemgun(src)
 	START_PROCESSING(SSobj, src)
