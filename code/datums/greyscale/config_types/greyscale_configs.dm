@@ -106,22 +106,27 @@
 	name = "Held Prison Jumpsuit, Right"
 	icon_file = 'icons/mob/inhands/clothing_righthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_inhand.json'
+
 /datum/greyscale_config/pai
 	name = "PAI"
 	icon_file = 'icons/mob/pai.dmi'
 	json_config = 'code/datums/greyscale/json_configs/pai.json'
+
 /datum/greyscale_config/pai_item_head
 	name = "PAI Head"
 	icon_file = 'icons/mob/pai_item_head.dmi'
 	json_config = 'code/datums/greyscale/json_configs/pai_item_head.json'
+
 /datum/greyscale_config/pai_lh
 	name = "PAI Left hand"
 	icon_file = 'icons/mob/pai_item_lh.dmi'
 	json_config = 'code/datums/greyscale/json_configs/pai_item_lh.json'
+
 /datum/greyscale_config/pai_rh
 	name = "PAI Right hand"
 	icon_file = 'icons/mob/pai_item_rh.dmi'
 	json_config = 'code/datums/greyscale/json_configs/pai_item_rh.json'
+
 /datum/greyscale_config/pda
 	name = "PDA"
 	icon_file = 'icons/obj/pda.dmi'
