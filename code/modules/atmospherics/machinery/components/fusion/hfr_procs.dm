@@ -548,45 +548,50 @@
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_spill(delta_time)
 	var/obj/machinery/atmospherics/components/unary/hypertorus/cracked_part = check_cracked_parts()
-	if (!cracked_part)
-		if (moderator_internal.total_moles() < HYPERTORUS_HYPERCRITICAL_MOLES)
-			return
-		cracked_part = create_crack()
-		// See if we do anything in the initial rupture
+	if (cracked_part)
+		// We have an existing crack
+		var/leak_rate
 		if (moderator_internal.return_pressure() < HYPERTORUS_MEDIUM_SPILL_PRESSURE)
-			return
-		if (moderator_internal.return_pressure() < HYPERTORUS_STRONG_SPILL_PRESSURE)
-			// Medium explosion on initial rupture
-			explosion(
-				origin = cracked_part,
-				devastation_range = 0,
-				heavy_impact_range = 0,
-				light_impact_range = 1,
-				flame_range = 3,
-				flash_range = 3
-				)
-			spill_gases(cracked_part, moderator_internal, ratio = HYPERTORUS_MEDIUM_SPILL_INITIAL)
-			return
-		// Enough pressure for a strong explosion. Oh dear, oh dear.
+			// Not high pressure, but can still leak
+			if (!prob(HYPERTORUS_WEAK_SPILL_CHANCE))
+				return
+			leak_rate = HYPERTORUS_WEAK_SPILL_RATE
+		else if (moderator_internal.return_pressure() < HYPERTORUS_STRONG_SPILL_PRESSURE)
+			// Lots of gas in here, out we go
+			leak_rate = HYPERTORUS_MEDIUM_SPILL_RATE
+		else
+			// Gotta go fast
+			leak_rate = HYPERTORUS_STRONG_SPILL_RATE
+		spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - leak_rate) ** delta_time)
+		return
+
+	if (moderator_internal.total_moles() < HYPERTORUS_HYPERCRITICAL_MOLES)
+		return
+	cracked_part = create_crack()
+	// See if we do anything in the initial rupture
+	if (moderator_internal.return_pressure() < HYPERTORUS_MEDIUM_SPILL_PRESSURE)
+		return
+	if (moderator_internal.return_pressure() < HYPERTORUS_STRONG_SPILL_PRESSURE)
+		// Medium explosion on initial rupture
 		explosion(
 			origin = cracked_part,
 			devastation_range = 0,
-			heavy_impact_range = 1,
-			light_impact_range = 3,
-			flame_range = 5,
-			flash_range = 5
+			heavy_impact_range = 0,
+			light_impact_range = 1,
+			flame_range = 3,
+			flash_range = 3
 			)
-		spill_gases(cracked_part, moderator_internal, ratio = HYPERTORUS_STRONG_SPILL_INITIAL)
+		spill_gases(cracked_part, moderator_internal, ratio = HYPERTORUS_MEDIUM_SPILL_INITIAL)
 		return
-	// We have an existing crack
-	if (moderator_internal.return_pressure() < HYPERTORUS_MEDIUM_SPILL_PRESSURE)
-		// Not high pressure, but can still leak
-		if (prob(HYPERTORUS_WEAK_SPILL_CHANCE))
-			spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - HYPERTORUS_WEAK_SPILL_RATE) ** delta_time)
-		return
-	// Lots of gas in here, out we go
-	if (moderator_internal.return_pressure() < HYPERTORUS_STRONG_SPILL_PRESSURE)
-		spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - HYPERTORUS_MEDIUM_SPILL_RATE) ** delta_time)
-		return
-	spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - HYPERTORUS_STRONG_SPILL_RATE) ** delta_time)
+	// Enough pressure for a strong explosion. Oh dear, oh dear.
+	explosion(
+		origin = cracked_part,
+		devastation_range = 0,
+		heavy_impact_range = 1,
+		light_impact_range = 3,
+		flame_range = 5,
+		flash_range = 5
+		)
+	spill_gases(cracked_part, moderator_internal, ratio = HYPERTORUS_STRONG_SPILL_INITIAL)
+	return
 
