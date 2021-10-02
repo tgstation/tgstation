@@ -19,8 +19,8 @@
 	return final_color
 ///Given a hexcolor (#FFFFFF), returns the inverted hexcolor.
 /proc/invert_hex(hexcolor)
-    var/list/old_rgb = hex2rgb(hexcolor)
-    var/inverted_r = 255 - old_rgb[1]
-    var/inverted_g = 255 - old_rgb[2]
-    var/inverted_b = 255 - old_rgb[3]
-    return rgb(inverted_r, inverted_g, inverted_b)
+	var/list/old_rgb = hex2rgb(hexcolor)
+	var/inverted_r = 255 - old_rgb[1]
+	var/inverted_g = 255 - old_rgb[2]
+	var/inverted_b = 255 - old_rgb[3]
+	return rgb(inverted_r, inverted_g, inverted_b)
