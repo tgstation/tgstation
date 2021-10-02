@@ -9,12 +9,12 @@ const Shadowperson: Species = {
     good: [{
       icon: "moon",
       name: "Shadowborn",
-      description: "Their skin blooms in the darkness. All kinds of damage- \
-      no matter how extreme- will heal over time as long as there is no light.",
+      description: "Their skin blooms in the darkness. All kinds of damage, \
+      no matter how extreme, will heal over time as long as there is no light.",
     }, {
       icon: "eye",
       name: "Nightvision",
-      description: "Their eyes have adapted to the night. Their red eyes can \
+      description: "Their eyes, adapted to the night, Can \
       see in the dark with no problems.",
     }],
     neutral: [],

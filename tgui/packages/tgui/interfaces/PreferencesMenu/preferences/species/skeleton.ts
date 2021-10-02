@@ -1,7 +1,7 @@
 import { Species } from "./base";
 
 const Skeleton: Species = {
-  description: "A rattling skeleton! They descend upon Space Station Thirteen \
+  description: "A rattling skeleton! They descend upon Space Station 13 \
     Every year to spook the crew! \"I've got a BONE to pick with you!\"",
   features: {
     good: [{
