@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - balance: "The minimum threat for traitor related rulesets to be considered running has been lowered to their cost."

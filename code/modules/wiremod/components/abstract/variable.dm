@@ -11,6 +11,7 @@
 	var/datum/port/input/option/variable_name
 
 	var/datum/circuit_variable/current_variable
+	circuit_size = 0
 
 /obj/item/circuit_component/variable/populate_options()
 	variable_name = add_option_port("Variable", null)

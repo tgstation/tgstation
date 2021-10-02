@@ -12,6 +12,8 @@
 	/// The input to store
 	var/datum/port/input/input_port
 
+	circuit_size = 0
+
 /obj/item/circuit_component/variable/setter/populate_ports()
 	input_port = add_input_port("Input", PORT_TYPE_ANY)
 	trigger_input = add_input_port("Store", PORT_TYPE_SIGNAL)

@@ -161,13 +161,15 @@ ALLOW_AI_MULTICAM
 ## Uncomment to load the virtual reality hub map
 #VIRTUAL_REALITY
 
-## Uncomment to load one of the missions from awaymissionconfig.txt at roundstart.
+## Uncomment to load one of the missions from awaymissionconfig.txt or away_missions/ at roundstart.
 #ROUNDSTART_AWAY
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
 GATEWAY_DELAY 18000
 
+## The probability of the gateway mission being a config one
+CONFIG_GATEWAY_CHANCE 0
 
 ## ACCESS ###
 

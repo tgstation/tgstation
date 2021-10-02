@@ -464,7 +464,7 @@ export class IntegratedCircuit extends Component {
                 onAddVariable={(name, type, asList, event) => act("add_variable", {
                   variable_name: name,
                   variable_datatype: type,
-                  as_list: asList,
+                  is_list: asList,
                 })}
                 onRemoveVariable={(name, event) => act("remove_variable", {
                   variable_name: name,

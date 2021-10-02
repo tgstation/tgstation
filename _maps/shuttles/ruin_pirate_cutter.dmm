@@ -670,11 +670,11 @@
 /obj/machinery/door/poddoor{
 	id = "caravanpirate_bridge"
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "BC" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor{
 	id = "caravanpirate_bridge"
 	},

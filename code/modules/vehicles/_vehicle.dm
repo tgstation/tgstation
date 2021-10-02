@@ -8,6 +8,7 @@
 	density = TRUE
 	anchored = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	pass_flags_self = PASSMACHINE
 	COOLDOWN_DECLARE(cooldown_vehicle_move)
 	var/list/mob/occupants //mob = bitflags of their control level.
 	///Maximum amount of passengers plus drivers

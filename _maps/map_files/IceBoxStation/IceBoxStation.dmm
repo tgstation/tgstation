@@ -13723,8 +13723,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cIv" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "cIW" = (
@@ -23450,7 +23450,7 @@
 /area/engineering/main)
 "ifB" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "ifU" = (
@@ -24641,7 +24641,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "iLd" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "iLm" = (
@@ -27396,7 +27396,7 @@
 /area/hallway/primary/aft)
 "kpY" = (
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
 /obj/structure/cable,
@@ -27510,7 +27510,7 @@
 /area/science/xenobiology)
 "ksu" = (
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -29620,7 +29620,7 @@
 	},
 /area/maintenance/department/medical)
 "lBH" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
@@ -31760,7 +31760,7 @@
 	},
 /area/service/hydroponics)
 "mFX" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
@@ -32833,7 +32833,7 @@
 /turf/open/floor/iron,
 /area/cargo/miningdock)
 "nid" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
@@ -38055,7 +38055,7 @@
 /turf/open/floor/iron,
 /area/command/teleporter)
 "pWt" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter)
 "pXw" = (
@@ -40054,7 +40054,7 @@
 /turf/open/floor/carpet,
 /area/service/chapel)
 "riF" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating/icemoon,
 /area/engineering/atmos)
 "riK" = (

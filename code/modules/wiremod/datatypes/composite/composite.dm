@@ -35,7 +35,7 @@
 		types_to_generate += list(composite_datatypes)
 		return new_datatype
 
-	if(length(expected_types) != length(composite_datatypes))
+	if(expected_types != length(composite_datatypes))
 		CRASH("Invalid amount of composite datatypes passed to [type]. Expected [expected_types], got [length(composite_datatypes)] arguments.")
 
 	if(GLOB.circuit_datatypes[new_datatype])
