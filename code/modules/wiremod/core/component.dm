@@ -252,7 +252,7 @@
 		if(!cell?.use(power_usage_per_input))
 			return FALSE
 
-	if((circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
+	if((!port || port.trigger == .proc/input_received) && (circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
 		return FALSE
 
 	return TRUE
