@@ -162,7 +162,7 @@
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "fox__rest_holo_alt",
+			"icon_state": "fox_rest_holo_alt",
 			"blend_mode": "overlay",
 			"color_ids": [ 2 ]
 		}
