@@ -44,45 +44,41 @@
 	result_path = /obj/machinery/status_display
 
 //Copy pasted decon paths from newscaster.dm
-/obj/machinery/status_display/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH)
-		to_chat(user, span_notice("You start [anchored ? "un" : ""]securing [name]..."))
-		I.play_tool_sound(src)
-		if(I.use_tool(src, user, 60))
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-			if(machine_stat & BROKEN)
-				to_chat(user, span_warning("The broken remains of [src] fall on the ground."))
-				new /obj/item/stack/sheet/iron(loc, 5)
-				new /obj/item/shard(loc)
-				new /obj/item/shard(loc)
-			else
-				to_chat(user, span_notice("You [anchored ? "un" : ""]secure [name]."))
-				new /obj/item/wallframe/status_display(loc)
-			qdel(src)
-	else if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode)
-		if(machine_stat & BROKEN)
-			if(!I.tool_start_check(user, amount=0))
-				return
-			user.visible_message(span_notice("[user] is repairing [src]."), \
+/obj/machinery/status_display/wrench_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	user.balloon_alert(user, "[anchored ? "un" : ""]securing...")
+	tool.play_tool_sound(src)
+	if(tool.use_tool(src, user, 6 SECONDS))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		user.balloon_alert(user, "[anchored ? "un" : ""]secured...")
+		deconstruct()
+		return TRUE
+
+/obj/machinery/status_display/welder_act(mob/living/user, obj/item/tool)
+	if(machine_stat & BROKEN)
+		if(!tool.tool_start_check(user, amount=0))
+			return
+		user.visible_message(span_notice("[user] is repairing [src]."), \
 							span_notice("You begin repairing [src]..."), \
 							span_hear("You hear welding."))
-			if(I.use_tool(src, user, 40, volume=50))
-				if(!(machine_stat & BROKEN))
-					return
-				to_chat(user, span_notice("You repair [src]."))
-				atom_integrity = max_integrity
-				set_machine_stat(machine_stat & ~BROKEN)
-				update_appearance()
-		else
-			to_chat(user, span_notice("[src] does not need repairs."))
+		if(tool.use_tool(src, user, 4 SECONDS, volume=50))
+			if(!(machine_stat & BROKEN))
+				to_chat(user, span_notice("[src] does not need repairs."))
+				return
+			to_chat(user, span_notice("You repair [src]."))
+			atom_integrity = max_integrity
+			set_machine_stat(machine_stat & ~BROKEN)
+			update_appearance()
 	else
 		return ..()
 
 /obj/machinery/status_display/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if( !(flags_1 & NODECONSTRUCT_1) & !disassembled )
 		new /obj/item/stack/sheet/iron(loc, 2)
 		new /obj/item/shard(loc)
 		new /obj/item/shard(loc)
+	else
+		new /obj/item/wallframe/status_display(drop_location())
 	qdel(src)
 
 /// Immediately blank the display.
