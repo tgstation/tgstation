@@ -228,6 +228,7 @@
 	dir = EAST
 	pixel_x = -32
 
+//makes it go on the wall when built
 /obj/machinery/status_display/Initialize(mapload, ndir, building)
 	. = ..()
 	if(building)
