@@ -2,6 +2,12 @@
 #define CRAWLING_PENALTY (0.5 SECONDS)
 
 /**
+ * One of the concerns with "tactical resting" was being able to use guns without
+ * giving up any of the evasiness granted by lying down. This should fix that.
+ */
+#define SHOOTING_WHILE_LYING_DOWN_PENALTY (2.5 SECONDS)
+
+/**
  * Allows a living mobs that's lying on the floor to avoid getting hit by bullets and thrown objects not
  * with hit_crawling_targets TRUE and not directly aimed at them when prone but not crawling and without
  * the CANNOT_AVOID_PROJECTILES trait.
@@ -28,29 +34,38 @@
 	var/mob/living/living_parent = parent
 	if(living_parent.body_position == LYING_DOWN)
 		RegisterSignal(parent, COMSIG_ATOM_CAN_BE_HIT_BY_PROJECTILE, .proc/can_be_hit_by_projectile)
+		RegisterSignal(parent, COMSIG_MOB_FIRED_GUN, .proc/on_gun_fired)
 		thrownthing_catcher = AddComponent(/datum/component/connect_loc_behalf, parent, list(COMSIG_TURF_FIND_THROWNTHING_TARGET = .proc/thrownthing_find_target))
 
 /datum/component/prone_projectiles_avoidance/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_AI_MOVED, COMSIG_MOB_CLIENT_MOVED, COMSIG_LIVING_ON_LYING_DOWN, COMSIG_LIVING_ON_STANDING_UP, COMSIG_ATOM_CAN_BE_HIT_BY_PROJECTILE))
+	var/list/comsigs =  list(COMSIG_MOVABLE_AI_MOVED, COMSIG_MOB_CLIENT_MOVED,
+		COMSIG_LIVING_ON_LYING_DOWN, COMSIG_LIVING_ON_STANDING_UP,
+		COMSIG_ATOM_CAN_BE_HIT_BY_PROJECTILE, COMSIG_MOB_FIRED_GUN)
+	UnregisterSignal(parent, comsigs)
 	QDEL_NULL(thrownthing_catcher)
 	successful_move_penalty = null
 
 /datum/component/prone_projectiles_avoidance/proc/on_ai_moved(atom/movable/source, datum/ai_controller/controller, delta_time)
 	SIGNAL_HANDLER
-	successful_move_penalty = controller.movement_cooldown + CRAWLING_PENALTY
+	successful_move_penalty = max(successful_move_penalty, controller.movement_cooldown + CRAWLING_PENALTY)
 
 /datum/component/prone_projectiles_avoidance/proc/on_client_moved(mob/source)
 	SIGNAL_HANDLER
-	successful_move_penalty = source.client.move_delay + CRAWLING_PENALTY
+	successful_move_penalty = max(successful_move_penalty, source.client.move_delay + CRAWLING_PENALTY)
+
+/datum/component/prone_projectiles_avoidance/proc/on_gun_fired(mob/source, obj/item/gun, atom/target, params, zone_override)
+	SIGNAL_HANDLER
+	successful_move_penalty = max(successful_move_penalty, world.time + SHOOTING_WHILE_LYING_DOWN_PENALTY)
 
 /datum/component/prone_projectiles_avoidance/proc/on_lying_down(datum/source, new_lying_angle)
 	SIGNAL_HANDLER
 	RegisterSignal(parent, COMSIG_ATOM_CAN_BE_HIT_BY_PROJECTILE, .proc/can_be_hit_by_projectile)
+	RegisterSignal(parent, COMSIG_MOB_FIRED_GUN, .proc/on_gun_fired)
 	thrownthing_catcher = AddComponent(/datum/component/connect_loc_behalf, parent, list(COMSIG_TURF_FIND_THROWNTHING_TARGET = .proc/thrownthing_find_target))
 
 /datum/component/prone_projectiles_avoidance/proc/on_standing_up()
 	SIGNAL_HANDLER
-	UnregisterSignal(parent, COMSIG_ATOM_CAN_BE_HIT_BY_PROJECTILE)
+	UnregisterSignal(parent, list(COMSIG_ATOM_CAN_BE_HIT_BY_PROJECTILE, COMSIG_MOB_FIRED_GUN))
 	QDEL_NULL(thrownthing_catcher)
 
 /datum/component/prone_projectiles_avoidance/proc/can_be_hit_by_projectile(mob/living/source, obj/projectile, direct_target, ignore_loc, cross_failed)
@@ -70,3 +85,4 @@
 		throwdatum.finalize(TRUE, living_parent)
 
 #undef CRAWLING_PENALTY
+#undef SHOOTING_WHILE_LYING_DOWN_PENALTY
