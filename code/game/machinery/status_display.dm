@@ -73,7 +73,7 @@
 		return ..()
 
 /obj/machinery/status_display/deconstruct(disassembled = TRUE)
-	if( !(flags_1 & NODECONSTRUCT_1) & !disassembled )
+	if( !flags_1 && !NODECONSTRUCT_1 && !disassembled )
 		new /obj/item/stack/sheet/iron(loc, 2)
 		new /obj/item/shard(loc)
 		new /obj/item/shard(loc)
