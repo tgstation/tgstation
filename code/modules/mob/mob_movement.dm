@@ -151,8 +151,6 @@
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-		successful_move_delay = move_delay
-
 		// At this point we've moved the client's attached mob. This is one of the only ways to guess that a move was done
 		// as a result of player input and not because they were pulled or any other magic.
 		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVED)

@@ -505,8 +505,6 @@
 				if(!hit_crawling_targets)
 					if(!living_target.density)
 						return FALSE
-				else if(IS_HITTING_DECK(living_target, living_target.client?.successful_move_delay, FALSE))
-					return FALSE
 	if(SEND_SIGNAL(target, COMSIG_ATOM_CAN_BE_HIT_BY_PROJECTILE, src, direct_target, ignore_loc, cross_failed) & COMSIG_DODGE_PROJECTILE)
 		return FALSE
 	return TRUE

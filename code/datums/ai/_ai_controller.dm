@@ -117,7 +117,6 @@ multiple modular subtrees with behaviors
 ///Proc for deinitializing the pawn to the old controller
 /datum/ai_controller/proc/UnpossessPawn(destroy)
 	UnregisterSignal(pawn, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT))
-	set_ai_status(AI_STATUS_OFF)
 	pawn.ai_controller = null
 	pawn = null
 	if(destroy)
@@ -208,8 +207,6 @@ multiple modular subtrees with behaviors
 			STOP_PROCESSING(SSai_behaviors, src)
 			SSai_controllers.active_ai_controllers -= src
 			CancelActions()
-
-	SEND_SIGNAL(pawn, COMSIG_ATOM_SET_AI_STATUS, new_ai_status)
 
 /datum/ai_controller/proc/PauseAi(time)
 	paused_until = world.time + time

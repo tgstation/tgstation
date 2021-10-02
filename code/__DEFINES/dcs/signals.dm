@@ -199,8 +199,6 @@
 #define COMSIG_ATOM_CAN_BE_HIT_BY_PROJECTILE "atom_can_be_hit_by_projectile"
 	///prevents the target from being hit by a projectile
 	#define COMSIG_DODGE_PROJECTILE (1<<0)
-///from base of datum/ai_controller/set_ai_status(): (new_ai_status)
-#define COMSIG_ATOM_SET_AI_STATUS "atom_set_ai_status"
 
 ///from [/datum/controller/subsystem/explosions/proc/explode]: (/list(/atom, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke, explosion_cause))
 #define COMSIG_ATOM_EXPLODE "atom_explode"
@@ -473,8 +471,8 @@
 ///from /obj/vehicle/proc/driver_move, caught by the riding component to check and execute the driver trying to drive the vehicle
 #define COMSIG_RIDDEN_DRIVER_MOVE "driver_move"
 	#define COMPONENT_DRIVER_BLOCK_MOVE (1<<0)
-///sent after an ai_movement datum has attempted to move a pawn around: (datum/ai_controller, delta_time, success)
-#define COMSIG_MOVABLE_ON_AI_MOVEMENT "movable_on_ai_movement"
+///sent after an ai_movement datum has moved a pawn around: (datum/ai_controller, delta_time)
+#define COMSIG_MOVABLE_AI_MOVED "movable_ai_moved"
 ///from base of atom/movable/throw_at(): (list/args)
 #define COMSIG_MOVABLE_PRE_THROW "movable_pre_throw"
 	#define COMPONENT_CANCEL_THROW (1<<0)

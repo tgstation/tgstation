@@ -9,6 +9,7 @@
 
 	GLOB.carbon_list += src
 	RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/attach_rot)
+	AddComponent(/datum/component/prone_projectiles_avoidance)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -105,9 +106,10 @@
 		if(hurt)
 			victim.take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
-			victim.Paralyze(2 SECONDS)
-			Paralyze(2 SECONDS)
-			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""], knocking them both over!"),\
+			if(!victim.body_position != LYING_DOWN) //Stops potential stunlocking now that things can hit prone mobs.
+				victim.Paralyze(2 SECONDS)
+				Paralyze(2 SECONDS)
+			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""][victim.body_position != LYING_DOWN ? ", knocking them both over" : ""]!"),\
 				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""]!"))
 		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
 

@@ -25,9 +25,8 @@
 	for(var/datum/ai_controller/controller as anything in moving_controllers)
 		if(!COOLDOWN_FINISHED(controller, movement_cooldown))
 			continue
-		var/atom/movable/movable_pawn = controller.pawn
-		var/success = execute_movement(controller, movable_pawn, delta_time)
-		SEND_SIGNAL(movable_pawn, COMSIG_MOVABLE_ON_AI_MOVEMENT, controller, delta_time, success)
+		if(execute_movement(controller, controller.pawn, delta_time))
+			SEND_SIGNAL(controller.pawn, COMSIG_MOVABLE_AI_MOVED, controller, delta_time)
 
 /datum/ai_movement/proc/execute_movement(datum/ai_controller/controller, atom/movable/movable_pawn, delta_time)
 	stack_trace("Unset ai movement behaviour for ai_movement datum of type [type].")
