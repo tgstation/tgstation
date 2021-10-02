@@ -64,17 +64,16 @@
 	//Store the volume of the fusion reaction multiplied by the force of the magnets that controls how big it will be
 	var/volume = internal_fusion.volume * (magnetic_constrictor * 0.01)
 
-	//Store the fuel gases and the product gas moles
-
 	var/energy_concentration_multiplier = 1
 	var/positive_temperature_multiplier = 1
 	var/negative_temperature_multiplier = 1
-	var/list/fuel_list = list()
 
 	//We scale it down by volume/2 because for fusion conditions, moles roughly = 2*volume, but we want it to be based off something constant between reactions.
 	var/scale_factor = volume * 0.5
 
-	//Scaled down moles of gases, no less than 0
+	/// Store the fuel gases and the byproduct gas quantities
+	var/list/fuel_list = list()
+	/// Scaled down moles of gases, no less than 0
 	var/list/scaled_fuel_list = list()
 
 	if (selected_fuel)
@@ -82,26 +81,19 @@
 		positive_temperature_multiplier = selected_fuel.positive_temperature_multiplier
 		negative_temperature_multiplier = selected_fuel.negative_temperature_multiplier
 
-		for(var/gas_id in selected_fuel.requirements)
-			fuel_list[gas_id] = internal_fusion.gases[gas_id][MOLES]
+		for(var/gas_id in selected_fuel.requirements | selected_fuel.primary_products)
+			var/amount = internal_fusion.gases[gas_id][MOLES]
+			fuel_list[gas_id] = amount
+			scaled_fuel_list[gas_id] = max((amount - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 
-		for(var/gas_id in selected_fuel.primary_products)
-			fuel_list[gas_id] = internal_fusion.gases[gas_id][MOLES]
-
-		for(var/gas_id in selected_fuel.requirements)
-			scaled_fuel_list[gas_id] = max((fuel_list[gas_id] - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
-
-		for(var/gas_id in selected_fuel.primary_products)
-			scaled_fuel_list[gas_id] = max((fuel_list[gas_id] - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
-
-	//Store the moderators gases moles
+	/// Store the moderators gases quantities
 	var/list/moderator_list = list()
-	for(var/gas_id in moderator_internal.gases)
-		moderator_list[gas_id] = moderator_internal.gases[gas_id][MOLES]
-
+	/// Scaled down moles of gases, no less than 0
 	var/list/scaled_moderator_list = list()
 	for(var/gas_id in moderator_internal.gases)
-		scaled_moderator_list[gas_id] = max((moderator_list[gas_id] - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+		var/amount = moderator_internal.gases[gas_id][MOLES]
+		moderator_list[gas_id] = amount
+		scaled_moderator_list[gas_id] = max((amount - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 
 	/*
 	 *FUSION MAIN PROCESS
