@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(wiremod_composite)
 	name = "Wiremod Composite Templates"
-	flags = SS_NO_FIRE|
+	flags = SS_NO_FIRE
 	/// The templates created and stored
 	var/list/templates = list()
 
