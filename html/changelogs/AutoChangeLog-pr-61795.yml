@@ -1,0 +1,6 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - qol: "Allow players to build a girder on a turf by r-clicking the turf with a sheet of iron with enough material in it
+remove: Removed wall girder building from iron sheet construction recipe UI"
+  - qol: "added an examine text on iron sheets to inform players about the new method of building girders"
