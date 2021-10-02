@@ -18,6 +18,10 @@
 	desc = null
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
+	base_icon_state = "unanchoredstatusdisplay"
+	verb_say = "beeps"
+	verb_ask = "beeps"
+	verb_exclaim = "beeps"
 	density = FALSE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
@@ -31,6 +35,55 @@
 	var/message2 = "" // message line 2
 	var/index1 // display index for scrolling messages or 0 if non-scrolling
 	var/index2
+
+/obj/item/wallframe/status_display
+	name = "status display frame"
+	desc = "Used to build status displays, just secure to the wall."
+	icon_state = "unanchoredstatusdisplay"
+	custom_materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
+	result_path = /obj/machinery/status_display
+
+//Copy pasted decon paths from newscaster.dm
+/obj/machinery/status_display/attackby(obj/item/I, mob/living/user, params)
+	if(I.tool_behaviour == TOOL_WRENCH)
+		to_chat(user, span_notice("You start [anchored ? "un" : ""]securing [name]..."))
+		I.play_tool_sound(src)
+		if(I.use_tool(src, user, 60))
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+			if(machine_stat & BROKEN)
+				to_chat(user, span_warning("The broken remains of [src] fall on the ground."))
+				new /obj/item/stack/sheet/iron(loc, 5)
+				new /obj/item/shard(loc)
+				new /obj/item/shard(loc)
+			else
+				to_chat(user, span_notice("You [anchored ? "un" : ""]secure [name]."))
+				new /obj/item/wallframe/status_display(loc)
+			qdel(src)
+	else if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode)
+		if(machine_stat & BROKEN)
+			if(!I.tool_start_check(user, amount=0))
+				return
+			user.visible_message(span_notice("[user] is repairing [src]."), \
+							span_notice("You begin repairing [src]..."), \
+							span_hear("You hear welding."))
+			if(I.use_tool(src, user, 40, volume=50))
+				if(!(machine_stat & BROKEN))
+					return
+				to_chat(user, span_notice("You repair [src]."))
+				atom_integrity = max_integrity
+				set_machine_stat(machine_stat & ~BROKEN)
+				update_appearance()
+		else
+			to_chat(user, span_notice("[src] does not need repairs."))
+	else
+		return ..()
+
+/obj/machinery/status_display/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/stack/sheet/iron(loc, 2)
+		new /obj/item/shard(loc)
+		new /obj/item/shard(loc)
+	qdel(src)
 
 /// Immediately blank the display.
 /obj/machinery/status_display/proc/remove_display()
