@@ -20,7 +20,7 @@
 	density = FALSE
 	climbable = FALSE
 
-/obj/structure/railing/Initialize()
+/obj/structure/railing/Initialize(mapload)
 	. = ..()
 	ini_dir = dir
 	if(climbable)

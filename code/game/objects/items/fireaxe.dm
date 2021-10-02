@@ -23,7 +23,7 @@
 	bare_wound_bonus = 20
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/fireaxe/Initialize()
+/obj/item/fireaxe/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)

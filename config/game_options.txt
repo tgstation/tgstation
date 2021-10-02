@@ -161,13 +161,15 @@ ALLOW_AI_MULTICAM
 ## Uncomment to load the virtual reality hub map
 #VIRTUAL_REALITY
 
-## Uncomment to load one of the missions from awaymissionconfig.txt at roundstart.
+## Uncomment to load one of the missions from awaymissionconfig.txt or away_missions/ at roundstart.
 #ROUNDSTART_AWAY
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
 GATEWAY_DELAY 18000
 
+## The probability of the gateway mission being a config one
+CONFIG_GATEWAY_CHANCE 0
 
 ## ACCESS ###
 
@@ -307,6 +309,7 @@ SILICON_MAX_LAW_AMOUNT 12
 ROUNDSTART_RACES human
 
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
+ROUNDSTART_RACES felinid
 ROUNDSTART_RACES lizard
 #ROUNDSTART_RACES fly
 ROUNDSTART_RACES moth
@@ -339,9 +342,6 @@ ROUNDSTART_RACES ethereal
 ## Roundstart no-reset races
 ## Races defined here will not cause existing characters to be reset to human if they currently have a non-roundstart species defined.
 #ROUNDSTART_NO_HARD_CHECK felinid
-
-## Uncomment to give players the choice of joining as a human with mutant bodyparts before they join the game
-#JOIN_WITH_MUTANT_HUMANS
 
 ##Overflow job. Default is assistant
 OVERFLOW_JOB Assistant

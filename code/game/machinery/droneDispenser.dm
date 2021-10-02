@@ -48,7 +48,7 @@
 	var/break_message = "lets out a tinny alarm before falling dark."
 	var/break_sound = 'sound/machines/warning-buzzer.ogg'
 
-/obj/machinery/drone_dispenser/Initialize()
+/obj/machinery/drone_dispenser/Initialize(mapload)
 	. = ..()
 	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_DRONE_DISPENSER, allowed_items=/obj/item/stack)
 	materials.insert_amount_mat(starting_amount)

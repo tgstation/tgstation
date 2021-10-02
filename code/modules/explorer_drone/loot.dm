@@ -145,7 +145,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	var/charge_per_use = 200
 	var/obj/item/stock_parts/cell/cell
 
-/obj/item/firelance/Initialize()
+/obj/item/firelance/Initialize(mapload)
 	. = ..()
 	cell = new /obj/item/stock_parts/cell(src)
 	AddComponent(/datum/component/two_handed)

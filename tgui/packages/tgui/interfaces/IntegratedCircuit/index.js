@@ -5,13 +5,12 @@ import {
   Stack,
   Box,
   Button,
-  Section,
 } from '../../components';
 import { Component } from 'inferno';
-import { Layout, Window } from '../../layouts';
+import { Window } from '../../layouts';
 import { resolveAsset } from '../../assets';
 import { CircuitInfo } from './CircuitInfo';
-import { NULL_REF, ABSOLUTE_Y_OFFSET, MOUSE_BUTTON_LEFT } from './constants';
+import { ABSOLUTE_Y_OFFSET, MOUSE_BUTTON_LEFT, TIME_UNTIL_PORT_RELEASE_WORKS } from './constants';
 import { Connections } from './Connections';
 import { ObjectComponent } from './ObjectComponent';
 import { VariableMenu } from './VariableMenu';
@@ -40,6 +39,10 @@ export class IntegratedCircuit extends Component {
     this.handlePortRelease = this.handlePortRelease.bind(this);
     this.handleZoomChange = this.handleZoomChange.bind(this);
     this.handleBackgroundMoved = this.handleBackgroundMoved.bind(this);
+
+    this.onVarClickedSetter = this.onVarClickedSetter.bind(this);
+    this.onVarClickedGetter = this.onVarClickedGetter.bind(this);
+    this.handleVarDropped = this.handleVarDropped.bind(this);
   }
 
   // Helper function to get an element's exact position
@@ -83,6 +86,11 @@ export class IntegratedCircuit extends Component {
   }
 
   handlePortClick(portIndex, componentId, port, isOutput, event) {
+    if (this.state.selectedPort) {
+      this.handlePortUp(portIndex, componentId, port, isOutput, event);
+      return;
+    }
+
     if (event.button !== MOUSE_BUTTON_LEFT) {
       return;
     }
@@ -99,6 +107,9 @@ export class IntegratedCircuit extends Component {
 
     this.handlePortDrag(event);
 
+    this.timeUntilPortReleaseTimesOut
+      = Date.now() + TIME_UNTIL_PORT_RELEASE_WORKS;
+
     window.addEventListener('mousemove', this.handlePortDrag);
     window.addEventListener('mouseup', this.handlePortRelease);
   }
@@ -106,7 +117,7 @@ export class IntegratedCircuit extends Component {
   // mouse up called whilst over a port. This means we can check if selectedPort
   // exists and do perform some actions if it does.
   handlePortUp(portIndex, componentId, port, isOutput, event) {
-    const { act } = useBackend(this.context);
+    const { act, data: uiData } = useBackend(this.context);
     const {
       selectedPort,
     } = this.state;
@@ -116,6 +127,9 @@ export class IntegratedCircuit extends Component {
     if (selectedPort.is_output === isOutput) {
       return;
     }
+    this.setState({
+      selectedPort: null,
+    });
     let data;
     if (isOutput) {
       data = {
@@ -133,6 +147,26 @@ export class IntegratedCircuit extends Component {
       };
     }
     act("add_connection", data);
+
+    const { components } = uiData;
+    const {
+      input_component_id,
+      input_port_id,
+      output_component_id,
+      output_port_id,
+    } = data;
+
+    const input_comp = components[input_component_id-1];
+    const input_port = input_comp.input_ports[input_port_id-1];
+    const output_comp = components[output_component_id-1];
+    const output_port = output_comp.output_ports[output_port_id-1];
+    // Do not predict ports that do not match because there is no guarantee
+    // that they will properly match.
+    // TODO: Implement proper prediction for this
+    if (!input_port || input_port.type !== output_port.type) {
+      return;
+    }
+    input_port.connected_to.push(isOutput? port.ref : selectedPort.ref);
   }
 
   handlePortDrag(event) {
@@ -145,12 +179,20 @@ export class IntegratedCircuit extends Component {
   }
 
   handlePortRelease(event) {
+    window.removeEventListener('mouseup', this.handlePortRelease);
+
+    // This will let players release their mouse when dragging
+    // to stop connecting the port, whilst letting players
+    // click on the port to click and connect.
+    if (this.timeUntilPortReleaseTimesOut > Date.now()) {
+      return;
+    }
+
     this.setState({
       selectedPort: null,
     });
 
     window.removeEventListener('mousemove', this.handlePortDrag);
-    window.removeEventListener('mouseup', this.handlePortRelease);
   }
 
   handlePortRightClick(portIndex, componentId, port, isOutput, event) {
@@ -175,11 +217,6 @@ export class IntegratedCircuit extends Component {
       backgroundX: newX,
       backgroundY: newY,
     });
-    if (this.state.menuOpen) {
-      this.setState({
-        menuOpen: false,
-      });
-    }
   }
 
   componentDidMount() {
@@ -198,6 +235,10 @@ export class IntegratedCircuit extends Component {
     if (examined_name) {
       act('remove_examined_component');
     }
+
+    if (this.state.selectedPort) {
+      this.handlePortRelease(event);
+    }
   }
 
   handleMouseUp(event) {
@@ -209,6 +250,55 @@ export class IntegratedCircuit extends Component {
         screen_y: backgroundY,
       });
     }
+  }
+
+  onVarClickedSetter(event, variable) {
+    this.handleVarClicked(event, variable, true);
+  }
+
+  onVarClickedGetter(event, variable) {
+    this.handleVarClicked(event, variable, false);
+  }
+
+  handleVarClicked(event, variable, is_setter) {
+    this.setState({
+      draggingVariable: variable,
+      variableIsSetter: is_setter,
+    });
+
+    window.addEventListener('mouseup', this.handleVarDropped);
+  }
+
+  handleVarDropped(event) {
+    const { data, act } = useBackend(this.context);
+    const {
+      draggingVariable,
+      variableIsSetter,
+      backgroundX,
+      backgroundY,
+      zoom,
+    } = this.state;
+    const {
+      screen_x,
+      screen_y,
+    } = data;
+
+    const xPos = (event.clientX - (backgroundX || screen_x));
+    const yPos = (event.clientY - (backgroundY || screen_y));
+
+    act("add_setter_or_getter", {
+      variable: draggingVariable,
+      is_setter: variableIsSetter,
+      rel_x: xPos*Math.pow(zoom, -1),
+      rel_y: (yPos + ABSOLUTE_Y_OFFSET)*Math.pow(zoom, -1),
+    });
+
+    this.setState({
+      draggingVariable: null,
+      variableIsSetter: null,
+    });
+
+    window.removeEventListener('mouseup', this.handleVarDropped);
   }
 
   render() {
@@ -264,8 +354,8 @@ export class IntegratedCircuit extends Component {
 
     return (
       <Window
-        width={600}
-        height={600}
+        width={1200}
+        height={800}
         buttons={(
           <Box
             width="160px"
@@ -354,16 +444,23 @@ export class IntegratedCircuit extends Component {
           {!!menuOpen && (
             <Box
               position="absolute"
-              bottom={0}
               left={0}
-              height="50%"
-              minHeight="300px"
-              width="100%"
-              backgroundColor="#202020"
+              bottom={0}
+              height="20%"
+              minHeight="175px"
+              minWidth="600px"
+              width="50%"
+              style={{
+                "border-radius": "0px 32px 0px 0px",
+                "background-color": "rgba(0, 0, 0, 0.3)",
+                "-ms-user-select": "none",
+              }}
+              unselectable="on"
             >
               <VariableMenu
                 variables={variables}
                 types={global_basic_types}
+                onClose={(event) => this.setState({ menuOpen: false })}
                 onAddVariable={(name, type, event) => act("add_variable", {
                   variable_name: name,
                   variable_datatype: type,
@@ -371,12 +468,11 @@ export class IntegratedCircuit extends Component {
                 onRemoveVariable={(name, event) => act("remove_variable", {
                   variable_name: name,
                 })}
-                handleAddSetter={(e) => act("add_setter_or_getter", {
-                  is_setter: true,
-                })}
-                handleAddGetter={(e) => act("add_setter_or_getter", {
-                  is_setter: false,
-                })}
+                handleMouseDownSetter={this.onVarClickedSetter}
+                handleMouseDownGetter={this.onVarClickedGetter}
+                style={{
+                  "border-radius": "0px 32px 0px 0px",
+                }}
               />
             </Box>
           )}

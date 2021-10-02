@@ -63,12 +63,14 @@
 	/// Short description of what this mob is capable of, for radial menu uses
 	var/menu_description = "Versatile spider variant for frontline combat with high health and damage. Does not inject toxin."
 
-/mob/living/simple_animal/hostile/giant_spider/Initialize()
+/mob/living/simple_animal/hostile/giant_spider/Initialize(mapload)
 	. = ..()
 	lay_web = new
 	lay_web.Grant(src)
 	if(poison_per_bite)
 		AddElement(/datum/element/venomous, poison_type, poison_per_bite)
+	AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
+	AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
 
 /mob/living/simple_animal/hostile/giant_spider/Login()
 	. = ..()
@@ -135,7 +137,7 @@
 	///The health HUD applied to the mob.
 	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
 
-/mob/living/simple_animal/hostile/giant_spider/nurse/Initialize()
+/mob/living/simple_animal/hostile/giant_spider/nurse/Initialize(mapload)
 	. = ..()
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.add_hud_to(src)
@@ -280,7 +282,7 @@
 	///The ability for the spider to send a message to all currently living spiders.
 	var/datum/action/innate/spider/comm/letmetalkpls
 
-/mob/living/simple_animal/hostile/giant_spider/midwife/Initialize()
+/mob/living/simple_animal/hostile/giant_spider/midwife/Initialize(mapload)
 	. = ..()
 	wrap = new
 	AddAbility(wrap)
@@ -693,6 +695,6 @@
 	health = 80
 	menu_description = "Stronger assassin spider variant with an unmatched speed, high amount of health and very deadly poison, but deals very low amount of damage. It also has ability to ventcrawl. Venom injection of 6u per bite."
 
-/mob/living/simple_animal/hostile/giant_spider/viper/wizard/Initialize()
+/mob/living/simple_animal/hostile/giant_spider/viper/wizard/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)

@@ -23,7 +23,7 @@
 
 ///returns nothing with an alert instead of the message if it contains something in the ic filter, and sanitizes normally if the name is fine. It returns nothing so it backs out of the input the same way as if you had entered nothing.
 /proc/sanitize_name(t,allow_numbers=FALSE)
-	if(CHAT_FILTER_CHECK(t))
+	if(is_ic_filtered(t))
 		tgui_alert(usr, "You cannot set a name that contains a word prohibited in IC chat!")
 		return ""
 	var/r = reject_bad_name(t,allow_numbers=allow_numbers,strict=TRUE)
@@ -221,7 +221,7 @@
 			return //(not case sensitive)
 
 	// Protects against names containing IC chat prohibited words.
-	if(CHAT_FILTER_CHECK(t_out))
+	if(is_ic_filtered(t_out))
 		return
 
 	return t_out
@@ -989,3 +989,27 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return word + "ay"
 	//otherwise unmutated
 	return word
+	
+/**
+ * The procedure to check the text of the entered text on ntnrc_client.dm
+ *
+ * This procedure is designed to check the text you type into the chat client. 
+ * It checks for invalid characters and the size of the entered text. 
+ */
+/proc/reject_bad_chattext(text, max_length = 256)
+	var/non_whitespace = FALSE
+	var/char = ""
+	if (length(text) > max_length)
+		return
+	else
+		for(var/i = 1, i <= length(text), i += length(char))
+			char = text[i]
+			switch(text2ascii(char))
+				if(0 to 31)
+					return
+				if(32)
+					continue
+				else
+					non_whitespace = TRUE
+		if (non_whitespace)
+			return text

@@ -77,6 +77,25 @@ export const map: MapFunction = <T, U>(iterateeFn) =>
     throw new Error(`map() can't iterate on type ${typeof collection}`);
   };
 
+/**
+ * Given a collection, will run each element through an iteratee function.
+ * Will then filter out undefined values.
+ */
+export const filterMap = <T, U>(collection: T[], iterateeFn: (
+  value: T
+) => U | undefined): U[] => {
+  const finalCollection: U[] = [];
+
+  for (const value of collection) {
+    const output = iterateeFn(value);
+    if (output !== undefined) {
+      finalCollection.push(output);
+    }
+  }
+
+  return finalCollection;
+};
+
 const COMPARATOR = (objA, objB) => {
   const criteriaA = objA.criteria;
   const criteriaB = objB.criteria;
@@ -99,8 +118,6 @@ const COMPARATOR = (objA, objB) => {
  * of running each element in a collection thru each iteratee.
  *
  * Iteratees are called with one argument (value).
- *
- * @returns {any[]}
  */
 export const sortBy = <T>(
   ...iterateeFns: ((input: T) => unknown)[]
@@ -133,6 +150,8 @@ export const sortBy = <T>(
   };
 
 export const sort = sortBy();
+
+export const sortStrings = sortBy<string>();
 
 /**
  * Returns a range of numbers from start to end, exclusively.
@@ -246,3 +265,48 @@ export const zipWith = <T, U>(iterateeFn: (...values: T[]) => U) =>
   (...arrays: T[][]): U[] => {
     return map((values: T[]) => iterateeFn(...values))(zip(...arrays));
   };
+
+const binarySearch = <T, U = unknown>(
+  getKey: (value: T) => U,
+  collection: readonly T[],
+  inserting: T,
+): number => {
+  if (collection.length === 0) {
+    return 0;
+  }
+
+  const insertingKey = getKey(inserting);
+
+  let [low, high] = [0, collection.length];
+
+  // Because we have checked if the collection is empty, it's impossible
+  // for this to be used before assignment.
+  let compare: U = undefined as unknown as U;
+  let middle = 0;
+
+  while (low < high) {
+    middle = (low + high) >> 1;
+
+    compare = getKey(collection[middle]);
+
+    if (compare < insertingKey) {
+      low = middle + 1;
+    } else if (compare === insertingKey) {
+      return middle;
+    } else {
+      high = middle;
+    }
+  }
+
+  return compare > insertingKey ? middle : middle + 1;
+};
+
+export const binaryInsertWith = <T, U = unknown>(getKey: (value: T) => U):
+  ((collection: readonly T[], value: T) => T[]) =>
+{
+  return (collection, value) => {
+    const copy = [...collection];
+    copy.splice(binarySearch(getKey, collection, value), 0, value);
+    return copy;
+  };
+};

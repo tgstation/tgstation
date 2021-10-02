@@ -82,7 +82,7 @@
 //Pod objects
 
 //Window
-/obj/structure/window/shuttle/survival_pod
+/obj/structure/window/reinforced/shuttle/survival_pod
 	name = "pod window"
 	icon = 'icons/obj/smooth_structures/pod_window.dmi'
 	icon_state = "pod_window-0"
@@ -91,13 +91,13 @@
 	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_SURVIVAL_TIANIUM_POD)
 	canSmoothWith = list(SMOOTH_GROUP_SURVIVAL_TIANIUM_POD)
 
-/obj/structure/window/shuttle/survival_pod/spawner/north
+/obj/structure/window/reinforced/shuttle/survival_pod/spawner/north
 	dir = NORTH
 
-/obj/structure/window/shuttle/survival_pod/spawner/east
+/obj/structure/window/reinforced/shuttle/survival_pod/spawner/east
 	dir = EAST
 
-/obj/structure/window/shuttle/survival_pod/spawner/west
+/obj/structure/window/reinforced/shuttle/survival_pod/spawner/west
 	dir = WEST
 
 /obj/structure/window/reinforced/survival_pod
@@ -302,7 +302,7 @@
 						/obj/item/phylactery,
 						/obj/item/banhammer)
 
-/obj/item/fakeartefact/Initialize()
+/obj/item/fakeartefact/Initialize(mapload)
 	. = ..()
 	var/obj/item/I = pick(possible)
 	name = initial(I.name)

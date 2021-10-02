@@ -81,6 +81,41 @@
 		};\
 	} while(FALSE)
 
+/**
+ * Custom binary search sorted insert utilising comparison procs instead of vars.
+ * INPUT: Object to be inserted
+ * LIST: List to insert object into
+ * TYPECONT: The typepath of the contents of the list
+ * COMPARE: The object to compare against, usualy the same as INPUT
+ * COMPARISON: The plaintext name of a proc on INPUT that takes a single argument to accept a single element from LIST and returns a positive, negative or zero number to perform a comparison.
+ * COMPTYPE: How should the values be compared? Either COMPARE_KEY or COMPARE_VALUE.
+ */
+#define BINARY_INSERT_PROC_COMPARE(INPUT, LIST, TYPECONT, COMPARE, COMPARISON, COMPTYPE) \
+	do {\
+		var/list/__BIN_LIST = LIST;\
+		var/__BIN_CTTL = length(__BIN_LIST);\
+		if(!__BIN_CTTL) {\
+			__BIN_LIST += INPUT;\
+		} else {\
+			var/__BIN_LEFT = 1;\
+			var/__BIN_RIGHT = __BIN_CTTL;\
+			var/__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
+			var ##TYPECONT/__BIN_ITEM;\
+			while(__BIN_LEFT < __BIN_RIGHT) {\
+				__BIN_ITEM = COMPTYPE;\
+				if(__BIN_ITEM.##COMPARISON(COMPARE) <= 0) {\
+					__BIN_LEFT = __BIN_MID + 1;\
+				} else {\
+					__BIN_RIGHT = __BIN_MID;\
+				};\
+				__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
+			};\
+			__BIN_ITEM = COMPTYPE;\
+			__BIN_MID = __BIN_ITEM.##COMPARISON(COMPARE) > 0 ? __BIN_MID : __BIN_MID + 1;\
+			__BIN_LIST.Insert(__BIN_MID, INPUT);\
+		};\
+	} while(FALSE)
+
 //Returns a list in plain english as a string
 /proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = length(input)
@@ -347,14 +382,14 @@
 /proc/bitfield2list(bitfield = 0, list/wordlist)
 	var/list/r = list()
 	if(islist(wordlist))
-		var/max = min(wordlist.len,16)
+		var/max = min(wordlist.len,24)
 		var/bit = 1
 		for(var/i=1, i<=max, i++)
 			if(bitfield & bit)
 				r += wordlist[i]
 			bit = bit << 1
 	else
-		for(var/bit=1, bit<=65535, bit = bit << 1)
+		for(var/bit=1, bit<=(1<<24), bit = bit << 1)
 			if(bitfield & bit)
 				r += bit
 
@@ -554,11 +589,12 @@
 		else
 			L1[key] = other_value
 
-/proc/assoc_list_strip_value(list/input)
-	var/list/ret = list()
+/// Turns an associative list into a flat list of keys
+/proc/assoc_to_keys(list/input)
+	var/list/keys = list()
 	for(var/key in input)
-		ret += key
-	return ret
+		keys += key
+	return keys
 
 /proc/compare_list(list/l,list/d)
 	if(!islist(l) || !islist(d))

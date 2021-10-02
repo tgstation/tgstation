@@ -21,7 +21,7 @@
 
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE | INTERACT_MACHINE_REQUIRES_SIGHT
 
-/obj/machinery/computer/camera_advanced/Initialize()
+/obj/machinery/computer/camera_advanced/Initialize(mapload)
 	. = ..()
 	for(var/i in networks)
 		networks -= i

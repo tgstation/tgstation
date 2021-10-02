@@ -16,7 +16,7 @@
 	///Type of filter that spawns on roundstart
 	var/starting_filter_type = /obj/item/gas_filter
 
-/obj/item/clothing/mask/gas/Initialize()
+/obj/item/clothing/mask/gas/Initialize(mapload)
 	. = ..()
 	if(!max_filters || !starting_filter_type)
 		return
@@ -104,6 +104,13 @@
 	inhand_icon_state = "gas_cap"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+/obj/item/clothing/mask/gas/atmos/centcom
+	name = "\improper CentCom gas mask"
+	desc = "Oooh, gold and green. Fancy! This should help as you sit in your office."
+	icon_state = "gas_centcom"
+	inhand_icon_state = "gas_centcom"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
 // **** Welding gas mask ****
 
 /obj/item/clothing/mask/gas/welding
@@ -126,7 +133,7 @@
 
 /obj/item/clothing/mask/gas/welding/up
 
-/obj/item/clothing/mask/gas/welding/up/Initialize()
+/obj/item/clothing/mask/gas/welding/up/Initialize(mapload)
 	. = ..()
 	visor_toggling()
 
@@ -344,3 +351,11 @@
 	inhand_icon_state = "hunter"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR|HIDESNOUT
+
+/obj/item/clothing/mask/gas/driscoll
+	name = "driscoll mask"
+	desc = "Great for train hijackings. Works like a normal full face gas mask, but won't conceal your identity."
+	icon_state = "driscoll_mask"
+	flags_inv = HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_NORMAL
+	inhand_icon_state = "driscoll_mask"

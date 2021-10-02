@@ -157,12 +157,9 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/list/atom/movable/lift_load //things to move
 	var/datum/lift_master/lift_master_datum    //control from
 
-/obj/structure/industrial_lift/New()
-	GLOB.lifts.Add(src)
-	..()
-
 /obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
+	GLOB.lifts.Add(src)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXITED =.proc/UncrossedRemoveItemFromLift,
 		COMSIG_ATOM_ENTERED = .proc/AddItemOnLift,
@@ -551,7 +548,7 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	///icons for the tgui console to list out for what is at this location
 	var/list/tgui_icons = list()
 
-/obj/effect/landmark/tram/Initialize()
+/obj/effect/landmark/tram/Initialize(mapload)
 	. = ..()
 	GLOB.tram_landmarks += src
 
@@ -563,12 +560,12 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 /obj/effect/landmark/tram/left_part
 	name = "West Wing"
 	destination_id = "left_part"
-	tgui_icons = list("Arrivals" = "plane-arrival", "Service" = "cocktail")
+	tgui_icons = list("Arrivals" = "plane-arrival", "Command" = "bullhorn", "Security" = "gavel")
 
 /obj/effect/landmark/tram/middle_part
 	name = "Central Wing"
 	destination_id = "middle_part"
-	tgui_icons = list("Command" = "bullhorn", "Security" = "gavel", "Medical" = "plus", "Engineering" = "wrench")
+	tgui_icons = list("Service" = "cocktail", "Medical" = "plus", "Engineering" = "wrench")
 
 /obj/effect/landmark/tram/right_part
 	name = "East Wing"
