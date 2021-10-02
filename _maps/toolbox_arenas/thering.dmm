@@ -1,0 +1,285 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/tile/neutral/half,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"b" = (
+/turf/open/floor/iron/stairs/left{
+	dir = 4
+	},
+/area/tdome/arena)
+"f" = (
+/turf/open/floor/circuit/off,
+/area/tdome/arena)
+"g" = (
+/obj/structure/chair/plastic{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/half,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"j" = (
+/obj/structure/table/wood/fancy,
+/obj/item/storage/belt/champion,
+/turf/open/floor/circuit/red,
+/area/tdome/arena)
+"k" = (
+/turf/open/floor/iron/stairs/medium{
+	dir = 8
+	},
+/area/tdome/arena)
+"o" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/obj/effect/turf_decal/tile/dark/full,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"p" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/half,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"q" = (
+/obj/structure/table/wood/fancy,
+/obj/structure/railing,
+/turf/open/floor/circuit/red,
+/area/tdome/arena)
+"r" = (
+/obj/machinery/power/floodlight{
+	anchored = 1
+	},
+/turf/open/floor/circuit/off,
+/area/tdome/arena)
+"u" = (
+/turf/open/floor/iron/stairs/right{
+	dir = 8
+	},
+/area/tdome/arena)
+"x" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/tile/dark/full,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"A" = (
+/turf/open/floor/iron/stairs/medium{
+	dir = 4
+	},
+/area/tdome/arena)
+"B" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"D" = (
+/obj/effect/turf_decal/tile/dark/full,
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"E" = (
+/turf/open/floor/iron/stairs/left{
+	dir = 8
+	},
+/area/tdome/arena)
+"F" = (
+/turf/open/floor/iron/stairs/right{
+	dir = 4
+	},
+/area/tdome/arena)
+"G" = (
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"J" = (
+/obj/structure/table/wood/fancy,
+/turf/open/floor/circuit/red,
+/area/tdome/arena)
+"O" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/tile/dark/full,
+/obj/item/chair,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"R" = (
+/obj/effect/turf_decal/tile/dark/full,
+/obj/structure/table/glass,
+/obj/item/reagent_containers/food/drinks/colocup,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"S" = (
+/obj/effect/turf_decal/tile/dark/full,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"W" = (
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/half,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"X" = (
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+
+(1,1,1) = {"
+D
+f
+F
+A
+b
+f
+G
+a
+"}
+(2,1,1) = {"
+R
+f
+F
+A
+b
+f
+G
+a
+"}
+(3,1,1) = {"
+S
+f
+F
+A
+b
+f
+B
+p
+"}
+(4,1,1) = {"
+S
+f
+f
+f
+f
+f
+B
+p
+"}
+(5,1,1) = {"
+S
+r
+f
+f
+f
+r
+G
+a
+"}
+(6,1,1) = {"
+x
+J
+J
+J
+J
+q
+G
+g
+"}
+(7,1,1) = {"
+x
+J
+J
+J
+J
+q
+G
+g
+"}
+(8,1,1) = {"
+O
+J
+J
+j
+J
+q
+G
+g
+"}
+(9,1,1) = {"
+x
+J
+J
+J
+J
+q
+G
+g
+"}
+(10,1,1) = {"
+x
+J
+J
+J
+J
+q
+G
+g
+"}
+(11,1,1) = {"
+S
+r
+f
+f
+f
+r
+G
+a
+"}
+(12,1,1) = {"
+S
+f
+f
+f
+f
+f
+X
+W
+"}
+(13,1,1) = {"
+S
+f
+E
+k
+u
+f
+X
+W
+"}
+(14,1,1) = {"
+R
+f
+E
+k
+u
+f
+G
+a
+"}
+(15,1,1) = {"
+o
+f
+E
+k
+u
+f
+G
+a
+"}

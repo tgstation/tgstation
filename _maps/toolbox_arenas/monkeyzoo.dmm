@@ -1,0 +1,457 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/flora/rock/jungle,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/water/jungle,
+/area/tdome/arena)
+"b" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"c" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing,
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"d" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/stump{
+	mouse_opacity = 0
+	},
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"e" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"f" = (
+/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/railing,
+/turf/open/water/jungle,
+/area/tdome/arena)
+"g" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/water/jungle,
+/area/tdome/arena)
+"h" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/railing,
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"i" = (
+/obj/structure/flora/junglebush/b,
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"j" = (
+/obj/structure/railing,
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"k" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/open/water/jungle,
+/area/tdome/arena)
+"l" = (
+/obj/structure/flora/junglebush/c,
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"m" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"n" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"o" = (
+/obj/item/toy/beach_ball,
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"p" = (
+/obj/effect/turf_decal/weather/dirt,
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/water/jungle,
+/area/tdome/arena)
+"q" = (
+/obj/structure/flora/tree/jungle{
+	mouse_opacity = 0
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"r" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"s" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/mob/living/carbon/human/species/monkey{
+	ai_controller = null
+	},
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"t" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"u" = (
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"v" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"w" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/railing,
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"x" = (
+/obj/structure/flora/tree/jungle/small,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"y" = (
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"z" = (
+/obj/structure/railing,
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"A" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/water/jungle,
+/area/tdome/arena)
+"B" = (
+/obj/structure/flora/grass/jungle,
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"C" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"D" = (
+/obj/item/food/grown/banana,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"E" = (
+/obj/structure/flora/grass/jungle,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"F" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"G" = (
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"H" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/water/jungle,
+/area/tdome/arena)
+"I" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"J" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing,
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"K" = (
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/water/jungle,
+/area/tdome/arena)
+"L" = (
+/obj/structure/flora/grass/jungle,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"M" = (
+/obj/structure/railing/corner,
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"N" = (
+/obj/structure/railing,
+/turf/open/water/jungle,
+/area/tdome/arena)
+"O" = (
+/obj/structure/plaque/static_plaque{
+	desc = "Wild animals are not pets. Respect their wildness.";
+	name = "DO NOT FEED THE MONKEYS"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood/end,
+/turf/closed/wall/mineral/wood{
+	opacity = 0
+	},
+/area/tdome/arena)
+"P" = (
+/obj/structure/plaque/static_plaque{
+	desc = "Wild animals are not pets. Respect their wildness.";
+	name = "DO NOT FEED THE MONKEYS"
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 1
+	},
+/turf/closed/wall/mineral/wood{
+	opacity = 0
+	},
+/area/tdome/arena)
+"Q" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/obj/structure/railing,
+/turf/open/water/jungle,
+/area/tdome/arena)
+"R" = (
+/turf/open/water/jungle,
+/area/tdome/arena)
+"S" = (
+/obj/structure/flora/rock/jungle,
+/obj/structure/railing,
+/turf/open/water/jungle,
+/area/tdome/arena)
+"T" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/turf/open/water/jungle,
+/area/tdome/arena)
+"U" = (
+/obj/structure/flora/grass/jungle/b,
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"V" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"W" = (
+/obj/structure/flora/junglebush,
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"X" = (
+/obj/structure/flora/grass/jungle/b,
+/obj/structure/railing,
+/turf/open/floor/plating/dirt/jungle,
+/area/tdome/arena)
+"Y" = (
+/mob/living/carbon/human/species/monkey{
+	ai_controller = null
+	},
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+"Z" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/grass/jungle,
+/area/tdome/arena)
+
+(1,1,1) = {"
+I
+t
+m
+m
+y
+k
+K
+S
+"}
+(2,1,1) = {"
+I
+D
+m
+u
+y
+U
+H
+N
+"}
+(3,1,1) = {"
+Z
+m
+u
+u
+y
+y
+k
+f
+"}
+(4,1,1) = {"
+Z
+u
+E
+u
+u
+y
+y
+Q
+"}
+(5,1,1) = {"
+V
+m
+u
+u
+m
+u
+y
+z
+"}
+(6,1,1) = {"
+x
+i
+u
+s
+u
+W
+y
+X
+"}
+(7,1,1) = {"
+v
+r
+u
+b
+C
+C
+M
+c
+"}
+(8,1,1) = {"
+O
+V
+m
+C
+d
+b
+j
+P
+"}
+(9,1,1) = {"
+n
+e
+u
+C
+C
+C
+F
+J
+"}
+(10,1,1) = {"
+q
+y
+u
+m
+Y
+C
+l
+w
+"}
+(11,1,1) = {"
+L
+y
+u
+u
+u
+u
+u
+j
+"}
+(12,1,1) = {"
+g
+o
+y
+u
+m
+B
+u
+w
+"}
+(13,1,1) = {"
+A
+T
+y
+y
+u
+u
+m
+w
+"}
+(14,1,1) = {"
+A
+p
+G
+y
+u
+m
+D
+h
+"}
+(15,1,1) = {"
+a
+R
+T
+y
+m
+m
+t
+h
+"}
