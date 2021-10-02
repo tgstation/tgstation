@@ -43,40 +43,38 @@
 	custom_materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
 	result_path = /obj/machinery/status_display
 
-//Copy pasted decon paths from newscaster.dm
 /obj/machinery/status_display/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
-	user.balloon_alert(user, "[anchored ? "un" : ""]securing...")
+	balloon_alert(user, "[anchored ? "un" : ""]securing...")
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 6 SECONDS))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		user.balloon_alert(user, "[anchored ? "un" : ""]secured")
+		balloon_alert(user, "[anchored ? "un" : ""]secured")
 		deconstruct()
 		return TRUE
 
 /obj/machinery/status_display/welder_act(mob/living/user, obj/item/tool)
-	if(machine_stat & BROKEN)
-		if(!tool.tool_start_check(user, amount=0))
-			return
-		user.visible_message(span_notice("[user] is repairing [src]."), \
-							span_notice("You begin repairing [src]..."), \
-							span_hear("You hear welding."))
-		if(tool.use_tool(src, user, 4 SECONDS, volume=50))
-			if(!(machine_stat & BROKEN))
-				balloon_alert(user, "it doesn't need repairs!")
-				return
-			to_chat(user, span_notice("You repair [src]."))
-			atom_integrity = max_integrity
-			set_machine_stat(machine_stat & ~BROKEN)
-			update_appearance()
-	else
-		return ..()
+	if(user.combat_mode)
+		return
+	if(!(atom_integrity < max_integrity))
+		balloon_alert(user, "it doesn't need repairs!")
+		return TRUE
+	user.balloon_alert_to_viewers("repairing...", "repairing...")
+	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume=50))
+		return TRUE
+	balloon_alert(user, "repaired")
+	atom_integrity = max_integrity
+	set_machine_stat(machine_stat & ~BROKEN)
+	update_appearance()
+	return TRUE
 
 /obj/machinery/status_display/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1) && !disassembled)
-		new /obj/item/stack/sheet/iron(loc, 2)
-		new /obj/item/shard(loc)
-		new /obj/item/shard(loc)
+	if(!NODECONSTRUCT_1)
+		return
+	if( !disassembled && !(flags_1 & NODECONSTRUCT_1) )
+		new /obj/item/stack/sheet/iron(drop_location(), 2)
+		new /obj/item/shard(drop_location())
+		new /obj/item/shard(drop_location())
 	else
 		new /obj/item/wallframe/status_display(drop_location())
 	qdel(src)
