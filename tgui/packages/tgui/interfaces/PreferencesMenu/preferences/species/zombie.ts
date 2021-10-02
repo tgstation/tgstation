@@ -7,7 +7,7 @@ const Zombie: Species = {
     good: [{
       icon: "user-plus",
       name: "Limbs Easily Reattached",
-      description: "Zombies limbs are easily readded, and as such do not \
+      description: "A zombie's limbs are easily readded, and as such do not \
         require surgery to restore. Simply pick it up and pop it back in, \
         champ!",
     }, {
@@ -28,7 +28,7 @@ const Zombie: Species = {
     bad: [{
       icon: "user-times",
       name: "Limbs Easily Dismembered",
-      description: "Zombies limbs are not secured well, and as such they are \
+      description: "A zombie's limbs are not secured well, and as such they are \
         easily dismembered.",
     }, {
       icon: "user-injured",

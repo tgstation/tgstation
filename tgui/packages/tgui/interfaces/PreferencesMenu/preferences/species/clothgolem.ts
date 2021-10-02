@@ -24,7 +24,7 @@ const Mummy: Species = {
       name: "Incredibly Flammable",
       description: "Mummies are made entirely of cloth, which makes them \
         very vulnerable to fire. They will not reform if they die while on \
-        fire, and they will easily catch at all times.",
+        fire, and they will easily catch alight.",
     }],
   },
   lore: [

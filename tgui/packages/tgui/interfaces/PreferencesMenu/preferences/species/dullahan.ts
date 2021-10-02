@@ -18,7 +18,7 @@ const Dullahan: Species = {
       name: "Headless and Horseless",
       description: "Dullahans must lug their head around in their arms. While \
       many creative uses can come out of your head being independent of your \
-      body, dullahans will find it mostly a pain.",
+      body, Dullahans will find it mostly a pain.",
     }],
   },
   lore: [

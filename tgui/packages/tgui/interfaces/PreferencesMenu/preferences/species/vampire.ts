@@ -22,7 +22,7 @@ const Vampire: Species = {
         are great for escaping bad situations. They can also travel through \
         vents, giving Vampires a lot of access. Just remember that access \
         doesn't equal permission, and people may be unhappy with you showing \
-        up anywhere!",
+        up uninvited!",
     }],
     neutral: [],
     bad: [{
