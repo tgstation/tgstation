@@ -22,11 +22,17 @@ export const CTFPanel = (props, context) => {
                 >
                   <Stack fill mb={1}>
                     <Stack.Item grow>
-                      <Box><b>{team.team_size}</b> members</Box>
+                      <Box>
+                        <b>{team.team_size}</b> member
+                        {team.team_size === 1 ? "" : "s"}
+                      </Box>
                     </Stack.Item>
 
                     <Stack.Item grow>
-                      <Box><b>{team.score}</b> points</Box>
+                      <Box>
+                        <b>{team.score}</b> point
+                        {team.score === 1 ? "" : "s"}
+                      </Box>
                     </Stack.Item>
                   </Stack>
 
