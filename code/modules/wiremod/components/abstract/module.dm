@@ -46,6 +46,16 @@
 
 	return ..()
 
+/obj/item/integrated_circuit/module/add_component(obj/item/circuit_component/to_add, mob/living/user)
+	. = ..()
+	if(attached_module)
+		attached_module.circuit_size += to_add.circuit_size
+
+/obj/item/integrated_circuit/module/remove_component(obj/item/circuit_component/to_remove)
+	if(attached_module)
+		attached_module.circuit_size -= to_remove.circuit_size
+	return ..()
+
 /obj/item/integrated_circuit/module/Destroy()
 	attached_module = null
 	return ..()

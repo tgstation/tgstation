@@ -947,3 +947,39 @@
   - rscadd: Adding the ability to use a large number of characters in the chat client.
   - code_imp: In the chat client code, the standard text checking procedures have
       been replaced by special chat text checking procedures.
+2021-09-30:
+  567Turtle:
+  - expansion: Filing cabinets can be constructed for 2 iron sheets
+  Arkatos:
+  - spellcheck: Fixed a few grammar mistakes in the nullrod radial menu descriptions
+      and better clarified some block chances of the certain nullrod variants.
+  - spellcheck: Fixed a misspelling of the word "availability" in the Plexagon HR
+      Core app description.
+  Iamgoofball:
+  - spellcheck: Fixed the Popularity Contest theme having references to Grove Street
+      Families, a long since removed Gang.
+  Mooshimi:
+  - code_imp: vendor code has less spaces and more tabs
+  Mothblocks:
+  - bugfix: New photographs taken will now properly save.
+  PositiveEntropy, Kryson, maxymax13, Salla:
+  - imageadd: Resprites iron and material chairs into new ones, originally from Yogstation!
+  TiviPlus:
+  - qol: grav anomalies now have a pretty effect
+  - refactor: Rendering has been refactored, remember to report bugs
+  Zytolg:
+  - bugfix: Monkies no longer play with the firelock switch in Kilostation Genetics
+      via the power of uninstallation.
+  - bugfix: Removes a duplicate table and pipes and cable from the Metastation Eng
+      Foyer.
+  carshalash:
+  - bugfix: thirteen look no longer puts you to sleep
+  esainane:
+  - bugfix: The Derelict now has one APC per area. Weird behavior as two APCs fight
+      for control over the same region should no longer be seen.
+  vincentiusvin:
+  - bugfix: fixed holosigns not counting towards the max limit and not being deleted
+      when clicking the creator.
+  - bugfix: NanoTrasen denies all allegations of unethically producing electrical
+      cables by forcing ill-equipped employees to lay them and materializing new cables
+      out of thin air. The reports were clearly exaggerated.
