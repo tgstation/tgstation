@@ -13,33 +13,37 @@ export const CTFPanel = (props, context) => {
       height={600}>
       <Window.Content scrollable>
         <Section title={enabled} textAlign="center">
-          {teams.map(team => (
-            <Section
-              key={team.name}
-              title={`${team.color} Team (Score:${team.score}) 
-              (Members:${team.team_size})`}>
-              <Stack>
-                <Stack.Item grow>
-                  <Button
-                    content="Jump"
-                    fluid={1}
-                    color={team.color.toLowerCase()}
-                    onClick={() => act('jump', {
-                      refs: team.refs,
-                    })} />
-                </Stack.Item>
-                <Stack.Item grow>
-                  <Button
-                    content="Join"
-                    fluid={1}
-                    color={team.color.toLowerCase()}
-                    onClick={() => act('join', {
-                      refs: team.refs,
-                    })} /> 
-                </Stack.Item>
-              </Stack>
-            </Section>
-          ))}
+          <Stack wrap="wrap" justify="space-between">
+            {teams.map(team => (
+              <Stack.Item key={team.name} minWidth="30%">
+                <Section
+                  key={team.name}
+                  title={`${team.color} Team (Score:${team.score}) 
+                (Members:${team.team_size})`}>
+                  <Stack>
+                    <Stack.Item grow>
+                      <Button
+                        content="Jump"
+                        fluid={1}
+                        color={team.color.toLowerCase()}
+                        onClick={() => act('jump', {
+                          refs: team.refs,
+                        })} />
+                    </Stack.Item>
+                    <Stack.Item grow>
+                      <Button
+                        content="Join"
+                        fluid={1}
+                        color={team.color.toLowerCase()}
+                        onClick={() => act('join', {
+                          refs: team.refs,
+                        })} /> 
+                    </Stack.Item>
+                  </Stack>
+                </Section>
+              </Stack.Item>
+            ))}
+          </Stack>
         </Section>
       </Window.Content>
     </Window>
