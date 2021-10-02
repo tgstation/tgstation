@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		if(null)
 			return
 		if(/turf/baseturf_bottom)
-			path = SSmapping.level_trait(z, ZTRAIT_BASETURF) || /turf/open/space
+			path = SSmapping.level_trait(z, ZTRAIT_BASETURF) || /turf/open/openspace
 			if (!ispath(path))
 				path = text2path(path)
 				if (!ispath(path))

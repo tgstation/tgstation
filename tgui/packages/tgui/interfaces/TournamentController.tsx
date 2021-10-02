@@ -28,12 +28,12 @@ const ArenaInfo = (props, context) => {
         <Stack.Item>
           <Button
             color="green"
-            icon="upload"
+            icon="map"
             onClick={() => act("load_arena", {
               arena_template: selectedArena,
             })}
           >
-            Upload
+            Load
           </Button>
         </Stack.Item>
       </Stack>
@@ -119,23 +119,21 @@ const RoundInfo = (props, context) => {
         </Flex.Item>
 
         <Flex.Item>
-          <Button
+          <Button.Confirm
+            content="Disband teams"
             icon="user-minus"
             onClick={() => act("disband_teams")}
             tooltip="This will send team members to their dressing rooms."
-          >
-            Disband teams
-          </Button>
+          />
         </Flex.Item>
 
         <Flex.Item>
-          <Button
-            icon="map"
+          <Button.Confirm
+            content="Clear arena"
+            icon="recycle"
             onClick={() => act("clear_arena")}
             tooltip="You don't have to do this if you're already loading a new map, by the way."
-          >
-            Clear arena
-          </Button>
+          />
         </Flex.Item>
       </Flex>
     </Section>

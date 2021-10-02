@@ -182,6 +182,8 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 			var/mob/old_mob = client?.mob
 			if (isliving(old_mob))
 				old_mobs[team_spawn_id][client] = old_mob
+				old_mob.visible_message(span_notice("[old_mob] was teleported away to participate in the tournament!"))
+				playsound(get_turf(old_mob), 'sound/magic/wand_teleport.ogg', 50, TRUE)
 				old_mob.forceMove(src)
 
 			var/mob/living/carbon/human/contestant_mob = new
