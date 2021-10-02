@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(wiremod_composite)
 	name = "Wiremod Composite Templates"
-	flags = SS_NO_FIRE
+	flags = SS_NO_FIRE|
 	/// The templates created and stored
 	var/list/templates = list()
 
@@ -13,6 +13,7 @@ SUBSYSTEM_DEF(wiremod_composite)
 		templates[initial(type.datatype)] = new type()
 
 /datum/controller/subsystem/wiremod_composite/Initialize(start_timeofday)
+	. = ..()
 	for(var/type in templates)
 		var/datum/circuit_composite_template/template = templates[type]
 		template.Initialize()
