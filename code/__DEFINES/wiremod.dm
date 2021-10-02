@@ -24,6 +24,8 @@
 #define PORT_TYPE_SIGNAL "signal"
 /// List datatype
 #define PORT_TYPE_LIST "list"
+/// Associative List datatype. Derivative of list.
+#define PORT_TYPE_ASSOC_LIST "assoc list"
 /// Table datatype. Derivative of list, contains other lists with matching columns.
 #define PORT_TYPE_TABLE "table"
 /// Options datatype. Derivative of string.

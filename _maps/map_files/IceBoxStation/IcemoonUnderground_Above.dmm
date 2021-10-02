@@ -5539,8 +5539,11 @@
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
 "Bb" = (
-/turf/open/floor/plating/snowed/icemoon,
-/area/hallway/secondary/service)
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "Bd" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -9602,10 +9605,6 @@
 "Tw" = (
 /turf/open/floor/iron,
 /area/cargo/storage)
-"Ty" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating/snowed/icemoon,
-/area/hallway/secondary/service)
 "Tz" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -51948,9 +51947,9 @@ ak
 ak
 ak
 Et
-Ty
-Bb
-Bb
+mv
+mv
+mv
 Et
 Et
 fK
@@ -52976,7 +52975,7 @@ ak
 ak
 ak
 Jf
-Fp
+Bb
 Fp
 PG
 PG
