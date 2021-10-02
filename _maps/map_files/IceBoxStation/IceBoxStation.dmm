@@ -22728,10 +22728,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/fore)
-"hJS" = (
-/obj/structure/cable,
-/turf/open/floor/iron/white,
-/area/science/research)
 "hKf" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/poster/official/fruit_bowl{
@@ -25801,7 +25797,6 @@
 /area/command/bridge)
 "jtd" = (
 /obj/machinery/holopad,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/science/research)
@@ -36841,14 +36836,6 @@
 /obj/item/clipboard,
 /turf/open/floor/iron,
 /area/cargo/qm)
-"pnZ" = (
-/obj/machinery/power/apc/auto_name/west,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/science/research)
 "poa" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm/directional/south,
@@ -42667,7 +42654,6 @@
 	id = "rnd2";
 	name = "research lab shutters"
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/white/side{
 	dir = 9
 	},
@@ -99386,8 +99372,8 @@ jzH
 hjU
 rHq
 sYj
-hJS
-hJS
+bWr
+bWr
 jtd
 ezY
 ilR
@@ -99643,7 +99629,7 @@ bvx
 sxn
 bpX
 uIv
-bta
+bBD
 cnK
 bvH
 mqG
@@ -100157,8 +100143,8 @@ bpf
 iEK
 bpZ
 uIv
-bta
-pnZ
+bBD
+sVf
 ini
 xeS
 peS
