@@ -56,7 +56,7 @@
 	desc = "It's Commander Beep O'sky's smaller, just-as aggressive cousin, Pipsqueak."
 	commissioned = FALSE
 
-/mob/living/simple_animal/bot/secbot/beepsky/jr/Initialize()
+/mob/living/simple_animal/bot/secbot/beepsky/jr/Initialize(mapload)
 	. = ..()
 	resize = 0.8
 	update_transform()
@@ -83,7 +83,7 @@
 	health = 50
 	maxHealth = 50
 
-/mob/living/simple_animal/bot/secbot/Initialize()
+/mob/living/simple_animal/bot/secbot/Initialize(mapload)
 	. = ..()
 	weapon = new baton_type()
 	update_appearance(UPDATE_ICON)

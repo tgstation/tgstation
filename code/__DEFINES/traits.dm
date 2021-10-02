@@ -111,7 +111,7 @@
 
 #define HAS_TRAIT(target, trait) (target.status_traits?[trait] ? TRUE : FALSE)
 #define HAS_TRAIT_FROM(target, trait, source) (target.status_traits?[trait] && (source in target.status_traits[trait]))
-#define HAS_TRAIT_FROM_ONLY(target, trait, source) (target.status_traits?[trait] && (source in target.status_traits[trait]) && (length(target.status_traits) == 1))
+#define HAS_TRAIT_FROM_ONLY(target, trait, source) (target.status_traits?[trait] && (source in target.status_traits[trait]) && (length(target.status_traits[trait]) == 1))
 #define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits?[trait] && (length(target.status_traits[trait] - source) > 0))
 
 #define GET_TRAITS_IN_LIST(target, list) ((target.status_traits && islist(list)) ? (target.status_traits & list) : null)
@@ -535,8 +535,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NIGHT_VISION "night_vision"
 #define TRAIT_LIGHT_STEP "light_step"
 #define TRAIT_SPIRITUAL "spiritual"
-#define TRAIT_FAN_CLOWN "fan_clown"
-#define TRAIT_FAN_MIME "fan_mime"
+#define TRAIT_CLOWN_ENJOYER "clown_enjoyer"
+#define TRAIT_MIME_FAN "mime_fan"
 #define TRAIT_VORACIOUS "voracious"
 #define TRAIT_SELF_AWARE "self_aware"
 #define TRAIT_FREERUNNING "freerunning"

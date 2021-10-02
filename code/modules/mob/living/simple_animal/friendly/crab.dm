@@ -29,7 +29,7 @@
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 
-/mob/living/simple_animal/crab/Initialize()
+/mob/living/simple_animal/crab/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 

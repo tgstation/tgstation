@@ -1943,11 +1943,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
-"fL" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/mouse,
-/turf/open/floor/carpet,
-/area/awaymission/cabin/caves/mountain)
 "fM" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -3058,13 +3053,6 @@
 	name = "soviet floor"
 	},
 /area/awaymission/cabin/caves/sovietcave)
-"iq" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/mob/living/simple_animal/hostile/hivebot/range/soviet,
-/turf/open/floor/mineral/plastitanium/red{
-	name = "soviet floor"
-	},
-/area/awaymission/cabin/caves/sovietcave)
 "ir" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/barricade/sandbags,
@@ -3147,10 +3135,6 @@
 "iI" = (
 /obj/structure/closet/acloset,
 /obj/item/toy/foamblade,
-/turf/open/floor/plating/snowed,
-/area/awaymission/cabin/caves)
-"iJ" = (
-/obj/structure/bed/alien,
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "iK" = (
@@ -4089,16 +4073,6 @@
 /obj/item/shovel,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/cabin/caves)
-"kZ" = (
-/obj/effect/decal/cleanable/insectguts,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood,
-/obj/effect/decal/cleanable/blood/gibs,
-/mob/living/simple_animal/hostile/skeleton/ratty{
-	dir = 1
-	},
-/turf/open/floor/carpet,
-/area/awaymission/cabin/caves/mountain)
 "la" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/crowbar/large,
@@ -4217,14 +4191,6 @@
 	desc = "It's still alive.";
 	icon_state = "snowlegion_alive"
 	},
-/turf/open/floor/plating/asteroid/snow,
-/area/awaymission/cabin/caves)
-"lq" = (
-/obj/effect/decal/cleanable/glitter/blue{
-	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
-	},
-/mob/living/simple_animal/hostile/statue/snowman,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/cabin/caves)
 "lr" = (
@@ -5094,6 +5060,16 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
+"yy" = (
+/obj/effect/decal/cleanable/insectguts,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/gibs,
+/mob/living/simple_animal/hostile/skeleton/ratty{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/awaymission/cabin/caves/mountain)
 "zv" = (
 /obj/structure/dresser,
 /obj/machinery/button/door/directional/north{
@@ -5102,6 +5078,30 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
+"CU" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/mouse,
+/turf/open/floor/carpet,
+/area/awaymission/cabin/caves/mountain)
+"DB" = (
+/obj/structure/bed/abductor,
+/turf/open/floor/plating/snowed,
+/area/awaymission/cabin/caves)
+"Fm" = (
+/obj/effect/decal/cleanable/glitter/blue{
+	desc = "It looks like fancy glitter to me.";
+	name = "icy wind"
+	},
+/mob/living/simple_animal/hostile/statue/snowman,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/cabin/caves)
+"Lm" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/simple_animal/hostile/hivebot/range/soviet,
+/turf/open/floor/mineral/plastitanium/red{
+	name = "soviet floor"
+	},
+/area/awaymission/cabin/caves/sovietcave)
 "Na" = (
 /obj/machinery/button/door/directional/north{
 	id = "fightingcommunity10";
@@ -16712,7 +16712,7 @@ cx
 cx
 cx
 fG
-fL
+CU
 fG
 gd
 gd
@@ -18517,7 +18517,7 @@ gd
 gd
 fG
 fH
-fL
+CU
 cx
 cx
 cx
@@ -20573,14 +20573,14 @@ gd
 gd
 fG
 gA
-fL
+CU
 fG
 gT
 fH
 gT
 fG
 kX
-kZ
+yy
 cx
 co
 co
@@ -20825,7 +20825,7 @@ cx
 cx
 fG
 fG
-fL
+CU
 gd
 gd
 gu
@@ -21607,7 +21607,7 @@ fG
 fG
 fG
 fG
-fL
+CU
 fG
 cx
 co
@@ -21855,7 +21855,7 @@ fG
 fI
 fG
 fG
-fL
+CU
 fG
 fG
 fG
@@ -39125,7 +39125,7 @@ iA
 iC
 iC
 iC
-iJ
+DB
 iz
 gx
 gx
@@ -51565,7 +51565,7 @@ gx
 gx
 li
 ld
-lq
+Fm
 lk
 lv
 gx
@@ -57754,7 +57754,7 @@ it
 it
 it
 ii
-iq
+Lm
 ii
 gx
 ii
@@ -57777,7 +57777,7 @@ ii
 im
 im
 kF
-iq
+Lm
 ii
 im
 ii
@@ -62139,7 +62139,7 @@ gx
 gx
 ii
 im
-iq
+Lm
 ii
 gx
 gx
@@ -62652,7 +62652,7 @@ gx
 gx
 gx
 ii
-iq
+Lm
 im
 ii
 gx
@@ -64452,7 +64452,7 @@ gx
 gx
 ii
 im
-iq
+Lm
 ii
 gx
 gx
@@ -64965,7 +64965,7 @@ gx
 gx
 gx
 ii
-iq
+Lm
 im
 ii
 gx

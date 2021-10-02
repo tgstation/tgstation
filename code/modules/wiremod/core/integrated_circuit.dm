@@ -69,14 +69,17 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// The Y position of the screen. Used for adding components.
 	var/screen_y = 0
 
-/obj/item/integrated_circuit/Initialize()
+	/// The current size of the circuit.
+	var/current_size = 0
+
+/obj/item/integrated_circuit/Initialize(mapload)
 	. = ..()
 
 	GLOB.integrated_circuits += src
 
 	RegisterSignal(src, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
 
-/obj/item/integrated_circuit/loaded/Initialize()
+/obj/item/integrated_circuit/loaded/Initialize(mapload)
 	. = ..()
 	set_cell(new /obj/item/stock_parts/cell/high(src))
 
@@ -224,6 +227,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	to_add.rel_y = rand(COMPONENT_MIN_RANDOM_POS, COMPONENT_MAX_RANDOM_POS) - screen_y
 	to_add.parent = src
 	attached_components += to_add
+	current_size += to_add.circuit_size
 	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, .proc/component_move_handler)
 	SStgui.update_uis(src)
 
@@ -255,6 +259,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		to_remove.unregister_shell(shell)
 
 	UnregisterSignal(to_remove, COMSIG_MOVABLE_MOVED)
+	current_size -= to_remove.circuit_size
 	attached_components -= to_remove
 	to_remove.disconnect()
 	to_remove.parent = null
@@ -316,6 +321,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		component_data["y"] = component.rel_y
 		component_data["removable"] = component.removable
 		component_data["color"] = component.ui_color
+		component_data["ui_buttons"] = component.ui_buttons
 		.["components"] += list(component_data)
 
 	.["variables"] = list()
@@ -380,7 +386,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 #define WITHIN_RANGE(id, table) (id >= 1 && id <= length(table))
 
-/obj/item/integrated_circuit/ui_act(action, list/params)
+/obj/item/integrated_circuit/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
@@ -464,6 +470,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				if(port.datatype != PORT_TYPE_ATOM && port.datatype != PORT_TYPE_ANY)
 					return
 				var/obj/item/multitool/circuit/marker = usr.get_active_held_item()
+				// Let's admins upload marked datums to an entity port.
 				if(!istype(marker))
 					var/client/user = usr.client
 					if(!check_rights_for(user, R_VAREDIT))
@@ -568,11 +575,29 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			if(!add_component(component, usr))
 				qdel(component)
 				return
+			if(params["is_setter"])
+				var/obj/item/circuit_component/setter/setter = component
+				setter.variable_name.set_input(params["variable"])
+			else
+				var/obj/item/circuit_component/getter/getter = component
+				getter.variable_name.set_input(params["variable"])
+			component.rel_x = text2num(params["rel_x"])
+			component.rel_y = text2num(params["rel_y"])
 			RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/clear_setter_or_getter)
 			setter_and_getter_count++
+			return TRUE
 		if("move_screen")
 			screen_x = text2num(params["screen_x"])
 			screen_y = text2num(params["screen_y"])
+		if("perform_action")
+			var/component_id = text2num(params["component_id"])
+			if(!WITHIN_RANGE(component_id, attached_components))
+				return
+			var/obj/item/circuit_component/component = attached_components[component_id]
+			component.ui_perform_action(ui.user, params["action_name"])
+
+
+#undef WITHIN_RANGE
 
 /obj/item/integrated_circuit/proc/clear_setter_or_getter(datum/source)
 	SIGNAL_HANDLER
@@ -585,8 +610,6 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	SIGNAL_HANDLER
 	usb_cable.balloon_alert(user, "circuit needs to be in a compatible shell")
 	return COMSIG_CANCEL_USB_CABLE_ATTACK
-
-#undef WITHIN_RANGE
 
 /// Sets the display name that appears on the shell.
 /obj/item/integrated_circuit/proc/set_display_name(new_name)

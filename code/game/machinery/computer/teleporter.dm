@@ -13,7 +13,7 @@
 	///Weakref to the target atom we're pointed at currently
 	var/datum/weakref/target_ref
 
-/obj/machinery/computer/teleporter/Initialize()
+/obj/machinery/computer/teleporter/Initialize(mapload)
 	. = ..()
 	id = "[rand(1000, 9999)]"
 	link_power_station()

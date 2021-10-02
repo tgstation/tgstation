@@ -1,0 +1,4 @@
+author: "KittyCatMeowMeow"
+delete-after: True
+changes: 
+  - bugfix: "Fixes access on Maint airlocks on the tramstation bar"

@@ -14,7 +14,7 @@
 	///List of ckeys containing players who have recently activated the device, players on this list are prohibited from activating the device untill their residue decays.
 	var/list/ectoplasmic_residues = list()
 
-/obj/machinery/ecto_sniffer/Initialize()
+/obj/machinery/ecto_sniffer/Initialize(mapload)
 	. = ..()
 	wires = new/datum/wires/ecto_sniffer(src)
 

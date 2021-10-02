@@ -69,13 +69,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"em" = (
-/obj/effect/spawner/structure/window/shuttle,
-/obj/structure/shuttle/engine/heater{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/shuttle/pirate)
 "eK" = (
 /obj/structure/shuttle/engine/router,
 /turf/open/floor/plating/airless,
@@ -90,10 +83,24 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"fD" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/shuttle/pirate)
 "fN" = (
 /obj/structure/dresser,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet/royalblack,
+/area/shuttle/pirate)
+"fO" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "silverbridge"
+	},
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "fT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -106,6 +113,11 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"gX" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "ht" = (
 /obj/machinery/door/airlock/silver,
@@ -122,6 +134,13 @@
 	dir = 8
 	},
 /turf/open/floor/pod/dark,
+/area/shuttle/pirate)
+"iG" = (
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 5
+	},
+/obj/machinery/porta_turret/syndicate/energy/pirate,
+/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "iY" = (
 /obj/structure/chair/comfy/shuttle,
@@ -154,11 +173,6 @@
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
-"jo" = (
-/obj/effect/spawner/structure/window/shuttle,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
 "jG" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 9
@@ -189,11 +203,6 @@
 	},
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"kF" = (
-/obj/effect/turf_decal/trimline/yellow/warning,
-/obj/machinery/porta_turret/syndicate/energy/pirate,
-/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "kU" = (
 /obj/machinery/light/floor,
@@ -230,18 +239,24 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
+"mJ" = (
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 6
+	},
+/obj/machinery/porta_turret/syndicate/energy/pirate,
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate)
 "nh" = (
 /obj/machinery/computer/monitor/secret{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"nB" = (
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 5
+"nz" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 1
 	},
-/obj/machinery/porta_turret/syndicate/energy/pirate,
-/turf/open/floor/plating/airless,
+/turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "nY" = (
 /obj/machinery/door/airlock/external/glass{
@@ -249,12 +264,12 @@
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
-"pk" = (
-/obj/machinery/porta_turret/syndicate/energy/pirate,
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 9
+"oU" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/structure/shuttle/engine/heater{
+	dir = 4
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "pU" = (
 /obj/machinery/door/airlock/silver,
@@ -304,13 +319,6 @@
 /obj/structure/closet/secure_closet/personal/cabinet,
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
-"vP" = (
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 6
-	},
-/obj/machinery/porta_turret/syndicate/energy/pirate,
-/turf/open/floor/plating/airless,
-/area/shuttle/pirate)
 "wa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/pod/dark,
@@ -330,10 +338,6 @@
 	pixel_y = 9
 	},
 /turf/open/floor/carpet/royalblack,
-/area/shuttle/pirate)
-"xs" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
 /area/shuttle/pirate)
 "xO" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -395,12 +399,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"AE" = (
-/obj/effect/spawner/structure/window/shuttle,
-/obj/structure/shuttle/engine/heater{
-	dir = 8
-	},
-/turf/open/space/basic,
+"At" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "AR" = (
 /obj/structure/toilet{
@@ -494,13 +495,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"HD" = (
-/obj/effect/spawner/structure/window/shuttle,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "silverbridge"
-	},
-/turf/open/floor/plating,
-/area/shuttle/pirate)
 "HS" = (
 /obj/structure/musician/piano{
 	icon_state = "piano"
@@ -520,6 +514,20 @@
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
+"It" = (
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/obj/machinery/porta_turret/syndicate/energy/pirate,
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate)
+"IG" = (
+/obj/machinery/porta_turret/syndicate/energy/pirate,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 9
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate)
 "Jc" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/food/drinks/drinkingglass{
@@ -533,6 +541,11 @@
 	pixel_y = 6
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"Jf" = (
+/obj/effect/turf_decal/trimline/yellow/warning,
+/obj/machinery/porta_turret/syndicate/energy/pirate,
+/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "Jq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -573,6 +586,13 @@
 	y_offset = 5
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"Ms" = (
+/obj/machinery/porta_turret/syndicate/energy/pirate,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "Mu" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -648,10 +668,6 @@
 "Qm" = (
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
-"QI" = (
-/obj/machinery/atmospherics/components/tank/air,
-/turf/open/floor/pod/dark,
-/area/shuttle/pirate)
 "QO" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/black,
@@ -709,13 +725,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
-"Sh" = (
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
-	},
-/obj/machinery/porta_turret/syndicate/energy/pirate,
-/turf/open/floor/plating/airless,
-/area/shuttle/pirate)
 "Si" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -740,13 +749,6 @@
 	dir = 4
 	},
 /turf/open/floor/pod/dark,
-/area/shuttle/pirate)
-"TV" = (
-/obj/machinery/porta_turret/syndicate/energy/pirate,
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 10
-	},
-/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "Ut" = (
 /obj/structure/rack,
@@ -885,7 +887,7 @@ je
 "}
 (3,1,1) = {"
 je
-AE
+fD
 rB
 jQ
 rB
@@ -899,27 +901,27 @@ Ww
 rB
 zN
 rB
-AE
+fD
 je
 "}
 (4,1,1) = {"
-pk
+IG
 rB
 rB
 de
 rB
-HD
-HD
-HD
+fO
+fO
+fO
 rB
-HD
-HD
-HD
+fO
+fO
+fO
 rB
 zQ
 rB
 rB
-TV
+Ms
 "}
 (5,1,1) = {"
 rB
@@ -936,7 +938,7 @@ RO
 xR
 rB
 Si
-QI
+nz
 rB
 rB
 "}
@@ -998,11 +1000,11 @@ rB
 rB
 "}
 (9,1,1) = {"
-HD
+fO
 JL
 fT
 cE
-xs
+At
 HS
 kU
 iY
@@ -1010,18 +1012,18 @@ Jc
 gg
 kU
 aA
-xs
+At
 Kq
 fT
 Gy
-HD
+fO
 "}
 (10,1,1) = {"
-HD
+fO
 Ut
 fT
 CH
-xs
+At
 hu
 am
 eU
@@ -1029,11 +1031,11 @@ Xw
 DX
 am
 dT
-xs
+At
 Ai
 fT
 Oo
-HD
+fO
 "}
 (11,1,1) = {"
 rB
@@ -1055,11 +1057,11 @@ CW
 rB
 "}
 (12,1,1) = {"
-HD
+fO
 Ai
 ue
 Aj
-jo
+gX
 lk
 am
 am
@@ -1067,18 +1069,18 @@ am
 am
 am
 ei
-jo
+gX
 Ch
 Ch
 zB
-HD
+fO
 "}
 (13,1,1) = {"
-HD
+fO
 XX
 fT
 CH
-xs
+At
 Nm
 Vw
 vz
@@ -1086,11 +1088,11 @@ Dt
 vz
 YD
 Ae
-xs
+At
 Ai
 fT
 Ig
-HD
+fO
 "}
 (14,1,1) = {"
 rB
@@ -1098,13 +1100,13 @@ rB
 pU
 rB
 rB
-HD
-HD
+fO
+fO
 Mo
 fj
 nh
-HD
-HD
+fO
+fO
 rB
 rB
 pU
@@ -1117,13 +1119,13 @@ dI
 Sv
 XB
 rB
-kF
-HD
-HD
-HD
-HD
-HD
-Sh
+Jf
+fO
+fO
+fO
+fO
+fO
+It
 rB
 fN
 Sv
@@ -1135,7 +1137,7 @@ rB
 vM
 BK
 MA
-HD
+fO
 xO
 je
 je
@@ -1143,7 +1145,7 @@ je
 je
 je
 RF
-HD
+fO
 LQ
 JV
 YL
@@ -1154,7 +1156,7 @@ rB
 rB
 QO
 mI
-HD
+fO
 je
 je
 je
@@ -1162,7 +1164,7 @@ je
 je
 je
 je
-HD
+fO
 Jq
 RE
 rB
@@ -1208,7 +1210,7 @@ je
 "}
 (20,1,1) = {"
 je
-em
+oU
 rB
 ky
 rB
@@ -1222,7 +1224,7 @@ je
 rB
 AR
 rB
-em
+oU
 je
 "}
 (21,1,1) = {"
@@ -1247,7 +1249,7 @@ je
 (22,1,1) = {"
 je
 je
-nB
+iG
 rB
 rB
 je
@@ -1259,7 +1261,7 @@ je
 je
 rB
 rB
-vP
+mJ
 je
 je
 "}

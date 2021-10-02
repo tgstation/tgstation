@@ -29,9 +29,9 @@
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	COOLDOWN_DECLARE(mecha_bump_smash)
-	light_system = MOVABLE_LIGHT
+	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_on = FALSE
-	light_range = 4
+	light_range = 8
 	generic_canpass = FALSE
 	///What direction will the mech face when entered/powered on? Defaults to South.
 	var/dir_in = SOUTH
@@ -201,7 +201,7 @@
 	add_scanmod()
 	add_capacitor()
 	START_PROCESSING(SSobj, src)
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 	log_message("[src.name] created.", LOG_MECHA)
 	GLOB.mechas_list += src //global mech list
 	prepare_huds()
@@ -274,8 +274,9 @@
 		return ..()
 	if(phase_state)
 		flick(phase_state, src)
-	var/area/destination_area = get_step(loc, movement_dir).loc
-	if(destination_area.area_flags & NOTELEPORT)
+	var/turf/destination_turf = get_step(loc, movement_dir)
+	var/area/destination_area = destination_turf.loc
+	if(destination_area.area_flags & NOTELEPORT || SSmapping.level_trait(destination_turf.z, ZTRAIT_NOPHASE))
 		return FALSE
 	return TRUE
 

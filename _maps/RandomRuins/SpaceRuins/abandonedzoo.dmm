@@ -170,20 +170,6 @@
 	},
 /turf/template_noop,
 /area/template_noop)
-"aS" = (
-/obj/machinery/power/apc/unlocked{
-	dir = 8;
-	environ = 0;
-	lighting = 0;
-	name = "Worn-out APC";
-	pixel_x = -25
-	},
-/obj/structure/rack,
-/obj/item/melee/baton/security/cattleprod,
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/structure/cable,
-/turf/open/floor/iron/dark/side,
-/area/ruin/space/has_grav/abandonedzoo)
 "aT" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/eva,
@@ -368,10 +354,6 @@
 /obj/structure/flora/ausbushes/reedbush,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
-"bJ" = (
-/mob/living/simple_animal/crab/carp_friendly,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/abandonedzoo)
 "bK" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
@@ -512,6 +494,10 @@
 /mob/living/simple_animal/hostile/bee,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
+"oI" = (
+/mob/living/simple_animal/crab/carp_friendly,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandonedzoo)
 "rG" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/tile/green{
@@ -647,6 +633,30 @@
 /mob/living/simple_animal/hostile/bee,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
+"So" = (
+/obj/machinery/power/apc/unlocked{
+	dir = 8;
+	environ = 0;
+	lighting = 0;
+	name = "Worn-out APC";
+	pixel_x = -25
+	},
+/obj/structure/rack,
+/obj/item/melee/baton/security/cattleprod,
+/obj/effect/spawner/random/maintenance,
+/obj/structure/cable,
+/obj/machinery/power/apc/unlocked{
+	dir = 8;
+	environ = 0;
+	lighting = 0;
+	name = "Worn-out APC";
+	pixel_x = -25
+	},
+/obj/structure/rack,
+/obj/item/melee/baton/security/cattleprod,
+/obj/structure/cable,
+/turf/open/floor/iron/dark/side,
+/area/ruin/space/has_grav/abandonedzoo)
 "ZP" = (
 /obj/structure/table/reinforced,
 /obj/item/surgicaldrill,
@@ -718,7 +728,7 @@ aL
 aD
 bv
 bv
-bJ
+oI
 bv
 ac
 aa
@@ -752,7 +762,7 @@ as
 ar
 ac
 at
-aS
+So
 Ck
 Ck
 be

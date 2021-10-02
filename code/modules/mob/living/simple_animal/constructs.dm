@@ -45,7 +45,7 @@
 	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
 	var/theme = THEME_CULT
 
-/mob/living/simple_animal/hostile/construct/Initialize()
+/mob/living/simple_animal/hostile/construct/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
@@ -303,7 +303,7 @@
 	///The health HUD applied to this mob.
 	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
 
-/mob/living/simple_animal/hostile/construct/artificer/Initialize()
+/mob/living/simple_animal/hostile/construct/artificer/Initialize(mapload)
 	. = ..()
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.add_hud_to(src)
@@ -440,7 +440,7 @@
 		return FALSE
 	. = ..()
 
-/mob/living/simple_animal/hostile/construct/harvester/Initialize()
+/mob/living/simple_animal/hostile/construct/harvester/Initialize(mapload)
 	. = ..()
 	var/datum/action/innate/seek_prey/seek = new()
 	seek.Grant(src)

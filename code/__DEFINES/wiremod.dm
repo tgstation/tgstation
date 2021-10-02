@@ -24,6 +24,8 @@
 #define PORT_TYPE_SIGNAL "signal"
 /// List datatype
 #define PORT_TYPE_LIST "list"
+/// Associative List datatype. Derivative of list.
+#define PORT_TYPE_ASSOC_LIST "assoc list"
 /// Table datatype. Derivative of list, contains other lists with matching columns.
 #define PORT_TYPE_TABLE "table"
 /// Options datatype. Derivative of string.
@@ -32,6 +34,8 @@
 // Other datatypes
 /// Atom datatype
 #define PORT_TYPE_ATOM "entity"
+/// Datum datatype
+#define PORT_TYPE_DATUM "datum"
 
 
 /// The maximum range between a port and an atom

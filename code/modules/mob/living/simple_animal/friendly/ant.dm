@@ -33,7 +33,7 @@
 	// randomizes hunting intervals, minimum 5 turns
 	var/time_to_hunt = 5
 
-/mob/living/simple_animal/ant/Initialize()
+/mob/living/simple_animal/ant/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	time_to_hunt = rand(5,10)

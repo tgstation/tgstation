@@ -19,7 +19,7 @@
 	var/boom_sizes = list(0, 0, 3)
 	var/full_damage_on_mobs = FALSE
 
-/obj/item/grenade/c4/Initialize()
+/obj/item/grenade/c4/Initialize(mapload)
 	. = ..()
 	plastic_overlay = mutable_appearance(icon, "[inhand_icon_state]2", HIGH_OBJ_LAYER)
 	wires = new /datum/wires/explosive/c4(src)

@@ -10,6 +10,7 @@
 	for(var/faction_trait in innate_factions)
 		ADD_TRAIT(src, faction_trait, INNATE_TRAIT)
 	GLOB.mob_living_list += src
+	SSpoints_of_interest.make_point_of_interest(src)
 
 /mob/living/ComponentInitialize()
 	. = ..()
@@ -216,6 +217,7 @@
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
 	now_pushing = TRUE
+	SEND_SIGNAL(src, COMSIG_LIVING_PUSHING_MOVABLE, AM)
 	var/dir_to_target = get_dir(src, AM)
 
 	// If there's no dir_to_target then the player is on the same turf as the atom they're trying to push.
@@ -257,6 +259,7 @@
 	if(isliving(AM))
 		current_dir = AM.dir
 	if(AM.Move(get_step(AM.loc, dir_to_target), dir_to_target, glide_size))
+		AM.add_fingerprint(src)
 		Move(get_step(loc, dir_to_target), dir_to_target)
 	if(current_dir)
 		AM.setDir(current_dir)
@@ -2174,3 +2177,26 @@
 	REMOVE_TRAIT(src, faction_trait, INNATE_TRAIT)
 	LAZYREMOVE(innate_factions, faction_trait)
 
+
+/**
+ * A proc triggered by callback when someone gets slammed by the tram and lands somewhere.
+ *
+ * This proc is used to force people to fall through things like lattice and unplated flooring at the expense of some
+ * extra damage, so jokers can't use half a stack of iron rods to make getting hit by the tram immediately lethal.
+ */
+/mob/living/proc/tram_slam_land()
+	if(!istype(loc, /turf/open/openspace) && !istype(loc, /turf/open/floor/plating))
+		return
+
+	if(istype(loc, /turf/open/floor/plating))
+		var/turf/open/floor/smashed_plating = loc
+		visible_message(span_danger("[src] is thrown violently into [smashed_plating], smashing through it and punching straight through!"),
+				span_userdanger("You're thrown violently into [smashed_plating], smashing through it and punching straight through!"))
+		apply_damage(rand(5,20), BRUTE, BODY_ZONE_CHEST)
+		smashed_plating.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
+
+	for(var/obj/structure/lattice/lattice in loc)
+		visible_message(span_danger("[src] is thrown violently into [lattice], smashing through it and punching straight through!"),
+			span_userdanger("You're thrown violently into [lattice], smashing through it and punching straight through!"))
+		apply_damage(rand(5,10), BRUTE, BODY_ZONE_CHEST)
+		lattice.deconstruct(FALSE)

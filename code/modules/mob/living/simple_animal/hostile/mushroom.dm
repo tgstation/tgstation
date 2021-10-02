@@ -54,7 +54,7 @@
 	if(!stat)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
 		adjustBruteLoss(-1 * delta_time)
 
-/mob/living/simple_animal/hostile/mushroom/Initialize()//Makes every shroom a little unique
+/mob/living/simple_animal/hostile/mushroom/Initialize(mapload)//Makes every shroom a little unique
 	melee_damage_lower += rand(3, 5)
 	melee_damage_upper += rand(10,20)
 	maxHealth += rand(40,60)
@@ -65,6 +65,7 @@
 	cap_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	UpdateMushroomCap()
 	health = maxHealth
+	add_cell_sample()
 	. = ..()
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
@@ -196,3 +197,7 @@
 		S.reagents.add_reagent(/datum/reagent/drug/mushroomhallucinogen, powerlevel)
 		S.reagents.add_reagent(/datum/reagent/medicine/omnizine, powerlevel)
 		S.reagents.add_reagent(/datum/reagent/medicine/synaptizine, powerlevel)
+
+/mob/living/simple_animal/hostile/mushroom/add_cell_sample()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_WALKING_MUSHROOM, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

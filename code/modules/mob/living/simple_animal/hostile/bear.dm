@@ -48,7 +48,7 @@
 
 	var/armored = FALSE
 
-/mob/living/simple_animal/hostile/bear/Initialize()
+/mob/living/simple_animal/hostile/bear/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	add_cell_sample()

@@ -34,7 +34,7 @@
 	///Innate spells that are supposed to be added when a beast is created
 	var/list/spells_to_add
 
-/mob/living/simple_animal/hostile/eldritch/Initialize()
+/mob/living/simple_animal/hostile/eldritch/Initialize(mapload)
 	. = ..()
 	add_spells()
 
@@ -63,7 +63,7 @@
 
 	var/list/linked_mobs = list()
 
-/mob/living/simple_animal/hostile/eldritch/raw_prophet/Initialize()
+/mob/living/simple_animal/hostile/eldritch/raw_prophet/Initialize(mapload)
 	. = ..()
 	link_mob(src)
 

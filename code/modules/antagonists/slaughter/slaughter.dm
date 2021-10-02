@@ -206,7 +206,7 @@
 	// Keep the people we hug!
 	var/list/consumed_mobs = list()
 
-/mob/living/simple_animal/hostile/imp/slaughter/laughter/Initialize()
+/mob/living/simple_animal/hostile/imp/slaughter/laughter/Initialize(mapload)
 	. = ..()
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		icon_state = "honkmon"

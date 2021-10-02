@@ -54,7 +54,7 @@
 		list(CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	)
 
-/obj/item/petri_dish/random/Initialize()
+/obj/item/petri_dish/random/Initialize(mapload)
 	. = ..()
 	var/list/chosen = pick(possible_samples)
 	sample = new

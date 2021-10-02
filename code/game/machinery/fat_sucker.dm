@@ -27,7 +27,7 @@
 	"Unsaturated fat, that is monounsaturated fats, polyunsaturated fats and omega-3 fatty acids, is found in plant foods and fish." \
 	)
 
-/obj/machinery/fat_sucker/Initialize()
+/obj/machinery/fat_sucker/Initialize(mapload)
 	. = ..()
 	soundloop = new(src,  FALSE)
 	update_appearance()

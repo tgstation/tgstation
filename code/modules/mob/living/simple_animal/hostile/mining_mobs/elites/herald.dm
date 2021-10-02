@@ -205,7 +205,7 @@
 	is_mirror = TRUE
 	var/mob/living/simple_animal/hostile/asteroid/elite/herald/my_master = null
 
-/mob/living/simple_animal/hostile/asteroid/elite/herald/mirror/Initialize()
+/mob/living/simple_animal/hostile/asteroid/elite/herald/mirror/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 	toggle_ai(AI_OFF)

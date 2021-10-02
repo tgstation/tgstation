@@ -431,14 +431,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"aQ" = (
-/obj/machinery/porta_turret/syndicate/energy/pirate,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/pirate)
-"aR" = (
-/obj/machinery/porta_turret/syndicate/energy/pirate,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/pirate)
 "aS" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
@@ -822,10 +814,6 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"df" = (
-/obj/machinery/porta_turret/syndicate/energy/pirate,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/pirate)
 "dy" = (
 /obj/structure/chair/wood,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -909,14 +897,6 @@
 /obj/item/wrench,
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
-"ey" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "piratebridge"
-	},
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/plastitanium,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
 "ez" = (
 /obj/structure/window/reinforced,
 /obj/structure/frame/machine,
@@ -940,6 +920,10 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
+/area/shuttle/pirate)
+"eR" = (
+/obj/machinery/porta_turret/syndicate/energy/pirate,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "fW" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -988,6 +972,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
+"ts" = (
+/obj/machinery/porta_turret/syndicate/energy/pirate,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/pirate)
 "vB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -1014,10 +1002,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/showroomfloor,
-/area/shuttle/pirate)
-"wR" = (
-/obj/machinery/porta_turret/syndicate/energy/pirate,
-/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/pirate)
 "yi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1136,6 +1120,14 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/pirate)
+"Sq" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "piratebridge"
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "Ur" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt,
@@ -1158,7 +1150,7 @@ aj
 aj
 aj
 aj
-wR
+ts
 af
 af
 af
@@ -1183,7 +1175,7 @@ af
 af
 "}
 (3,1,1) = {"
-aQ
+eR
 aj
 aj
 aj
@@ -1207,7 +1199,7 @@ af
 af
 af
 af
-ey
+Sq
 ay
 Oe
 OL
@@ -1234,14 +1226,14 @@ aj
 aj
 aj
 aj
-aR
+ts
 "}
 (6,1,1) = {"
 af
 af
 af
-ey
-ey
+Sq
+Sq
 aj
 aj
 aj
@@ -1257,8 +1249,8 @@ aJ
 (7,1,1) = {"
 af
 af
-ey
-ey
+Sq
+Sq
 aC
 aW
 aj
@@ -1275,7 +1267,7 @@ aj
 (8,1,1) = {"
 af
 af
-ey
+Sq
 ab
 ae
 bf
@@ -1293,7 +1285,7 @@ aH
 (9,1,1) = {"
 af
 af
-ey
+Sq
 ac
 ag
 am
@@ -1311,7 +1303,7 @@ aK
 (10,1,1) = {"
 af
 af
-ey
+Sq
 ad
 ah
 an
@@ -1329,8 +1321,8 @@ er
 (11,1,1) = {"
 af
 af
-ey
-ey
+Sq
+Sq
 al
 aB
 aj
@@ -1348,8 +1340,8 @@ aj
 af
 af
 af
-ey
-ey
+Sq
+Sq
 aj
 aj
 aj
@@ -1378,7 +1370,7 @@ aj
 aj
 aj
 aj
-aR
+ts
 "}
 (14,1,1) = {"
 af
@@ -1387,7 +1379,7 @@ af
 af
 af
 af
-ey
+Sq
 eE
 bC
 bJ
@@ -1399,7 +1391,7 @@ aH
 af
 "}
 (15,1,1) = {"
-aQ
+eR
 aj
 aj
 aj
@@ -1446,7 +1438,7 @@ aj
 aj
 aj
 aj
-df
+ts
 af
 af
 af

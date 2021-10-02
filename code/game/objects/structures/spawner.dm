@@ -15,7 +15,7 @@
 	var/faction = list("hostile")
 	var/spawner_type = /datum/component/spawner
 
-/obj/structure/spawner/Initialize()
+/obj/structure/spawner/Initialize(mapload)
 	. = ..()
 	for(var/faction_trait in faction)
 		ADD_TRAIT(src, faction_trait, INNATE_TRAIT)

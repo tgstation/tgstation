@@ -115,6 +115,10 @@
 /datum/greyscale_config/pda/chaplain
 	name = "Chaplain PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_chaplain.json'
+	
+/datum/greyscale_config/pda/captain
+	name = "Captain PDA"
+	json_config = 'code/datums/greyscale/json_configs/pda_captain.json'
 
 /datum/greyscale_config/pda/clown
 	name = "Clown PDA"
@@ -388,3 +392,23 @@
 
 /datum/greyscale_config/janicart_upgrade/installed
 	json_config = 'code/datums/greyscale/json_configs/janicart_upgrade_installed.json'
+
+/datum/greyscale_config/ctf_standard
+	name = "CTF Standard Vest"
+	icon_file = 'icons/obj/clothing/suits/ctf.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ctf_standard.json'
+
+/datum/greyscale_config/ctf_standard_worn
+	name = "Worn CTF Standard Vest"
+	icon_file = 'icons/mob/clothing/suits/ctf.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ctf_standard_worn.json'
+
+/datum/greyscale_config/ctf_light
+	name = "CTF Light Vest"
+	icon_file = 'icons/obj/clothing/suits/ctf.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ctf_light.json'
+
+/datum/greyscale_config/ctf_light_worn
+	name = "Worn CTF Light Vest"
+	icon_file = 'icons/mob/clothing/suits/ctf.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ctf_light_worn.json'

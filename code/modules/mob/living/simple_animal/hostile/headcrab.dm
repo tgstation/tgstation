@@ -24,7 +24,7 @@
 	var/datum/mind/origin
 	var/egg_lain = 0
 
-/mob/living/simple_animal/hostile/headcrab/Initialize()
+/mob/living/simple_animal/hostile/headcrab/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 

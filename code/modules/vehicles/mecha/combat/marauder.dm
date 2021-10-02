@@ -23,7 +23,7 @@
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_smoke)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_zoom)
 
-/obj/vehicle/sealed/mecha/combat/marauder/loaded/Initialize()
+/obj/vehicle/sealed/mecha/combat/marauder/loaded/Initialize(mapload)
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/thrusters/ion(src)
 	ME.attach(src)
@@ -51,7 +51,7 @@
 	force = 55
 	max_equip = 6
 
-/obj/vehicle/sealed/mecha/combat/marauder/seraph/Initialize()
+/obj/vehicle/sealed/mecha/combat/marauder/seraph/Initialize(mapload)
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/thrusters/ion(src)
 	ME.attach(src)
@@ -78,12 +78,12 @@
 	max_equip = 6
 	destruction_sleep_duration = 20
 
-/obj/vehicle/sealed/mecha/combat/marauder/mauler/Initialize()
+/obj/vehicle/sealed/mecha/combat/marauder/mauler/Initialize(mapload)
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/thrusters/ion(src)
 	ME.attach(src)
 
-/obj/vehicle/sealed/mecha/combat/marauder/mauler/loaded/Initialize()
+/obj/vehicle/sealed/mecha/combat/marauder/mauler/loaded/Initialize(mapload)
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg(src)
 	ME.attach(src)

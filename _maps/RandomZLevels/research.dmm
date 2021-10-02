@@ -1750,12 +1750,6 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
-"ef" = (
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/structure/closet/crate,
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "eg" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/machinery/light/small/directional/east,
@@ -1992,11 +1986,6 @@
 /area/awaymission/research/interior/maint)
 "eF" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
-"eG" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "eH" = (
@@ -3599,18 +3588,6 @@
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/genetics)
-"hX" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
-"hY" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "hZ" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -3682,16 +3659,6 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/iron/white,
-/area/awaymission/research/interior/security)
-"ij" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/mob/living/simple_animal/bot/secbot/beepsky/genesky,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
 "ik" = (
@@ -5209,15 +5176,6 @@
 /obj/effect/landmark/awaystart,
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
-"lU" = (
-/obj/effect/spawner/randomarcade{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/yellow{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/awaymission/research/interior/dorm)
 "lW" = (
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
@@ -5287,14 +5245,6 @@
 /area/awaymission/research/interior/escapepods)
 "mj" = (
 /obj/structure/table,
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/iron/white,
-/area/awaymission/research/interior/escapepods)
-"mk" = (
-/obj/effect/spawner/randomarcade,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -5660,6 +5610,12 @@
 "nf" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/research/interior/engineering)
+"nE" = (
+/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/random/maintenance,
+/obj/structure/closet/crate,
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
 "pt" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Three"
@@ -5743,6 +5699,16 @@
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
+"wx" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/mob/living/simple_animal/bot/secbot/beepsky/genesky,
+/turf/open/floor/iron/white,
+/area/awaymission/research/interior/security)
 "wM" = (
 /obj/machinery/door/airlock/medical{
 	name = "Medical"
@@ -5802,6 +5768,15 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
+"DD" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/yellow{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/awaymission/research/interior/dorm)
 "IO" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/yellow,
@@ -5829,6 +5804,23 @@
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
+"KP" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"Ln" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"PF" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
 "Qd" = (
 /obj/machinery/door/airlock/medical{
 	name = "Medical"
@@ -5927,6 +5919,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
+"XB" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/awaymission/research/interior/escapepods)
 "XE" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Airlock"
@@ -41530,7 +41530,7 @@ gV
 cp
 bD
 eF
-hX
+Ln
 id
 ip
 iA
@@ -41556,7 +41556,7 @@ iX
 iX
 bD
 mb
-mk
+XB
 mn
 mn
 mE
@@ -42035,8 +42035,8 @@ ad
 aH
 aH
 bD
-ef
-eG
+nE
+PF
 cp
 fL
 gA
@@ -42044,7 +42044,7 @@ gV
 cp
 bD
 aO
-hY
+KP
 id
 id
 iA
@@ -42578,8 +42578,8 @@ lc
 lp
 lp
 lN
-lU
-lU
+DD
+DD
 lY
 aP
 bD
@@ -49755,7 +49755,7 @@ fW
 fW
 fW
 fW
-ij
+wx
 do
 hD
 aH

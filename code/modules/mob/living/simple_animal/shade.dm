@@ -34,7 +34,7 @@
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
 
-/mob/living/simple_animal/shade/Initialize()
+/mob/living/simple_animal/shade/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)

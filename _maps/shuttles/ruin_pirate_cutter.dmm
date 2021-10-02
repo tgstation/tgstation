@@ -64,12 +64,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
-"eL" = (
-/obj/machinery/porta_turret/syndicate/pod/pirate{
-	dir = 10
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/caravan/pirate)
 "fh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -223,27 +217,12 @@
 	dir = 1
 	},
 /area/shuttle/caravan/pirate)
-"ku" = (
-/obj/structure/rack,
-/obj/item/storage/bag/money/vault,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/mob/living/simple_animal/parrot/pegwing,
-/turf/open/floor/iron/dark,
-/area/shuttle/caravan/pirate)
 "kY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
 /obj/machinery/meter,
 /turf/open/floor/plating,
-/area/shuttle/caravan/pirate)
-"le" = (
-/obj/machinery/porta_turret/syndicate/pod/pirate{
-	dir = 5
-	},
-/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)
 "lG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -258,6 +237,12 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/caravan/pirate)
+"lT" = (
+/obj/machinery/porta_turret/syndicate/pod/pirate{
+	dir = 10
+	},
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)
 "mr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -418,12 +403,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
-"qo" = (
-/obj/machinery/porta_turret/syndicate/pod/pirate{
-	dir = 6
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/caravan/pirate)
 "qC" = (
 /obj/structure/table,
 /obj/item/storage/fancy/donut_box{
@@ -581,6 +560,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
+"xU" = (
+/obj/machinery/porta_turret/syndicate/pod/pirate{
+	dir = 5
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/pirate)
 "yt" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/stripes/line{
@@ -613,6 +598,15 @@
 	dir = 6
 	},
 /turf/open/floor/plating,
+/area/shuttle/caravan/pirate)
+"zl" = (
+/obj/structure/rack,
+/obj/item/storage/bag/money/vault,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/mob/living/simple_animal/parrot/pegwing,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "zB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -660,20 +654,6 @@
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/caravan/pirate)
-"Bi" = (
-/obj/machinery/door/poddoor{
-	id = "caravanpirate_bridge"
-	},
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
-/turf/open/floor/plating,
-/area/shuttle/caravan/pirate)
-"BC" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
-/obj/machinery/door/poddoor{
-	id = "caravanpirate_bridge"
-	},
-/turf/open/floor/plating,
-/area/shuttle/caravan/pirate)
 "BI" = (
 /obj/structure/table,
 /obj/machinery/light/small/directional/west,
@@ -686,6 +666,13 @@
 /obj/item/stack/cable_coil,
 /obj/item/stock_parts/cell/high,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/caravan/pirate)
+"BW" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/machinery/door/poddoor{
+	id = "caravanpirate_bridge"
+	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Cb" = (
@@ -701,6 +688,12 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
+/area/shuttle/caravan/pirate)
+"CI" = (
+/obj/machinery/porta_turret/syndicate/pod/pirate{
+	dir = 9
+	},
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)
 "DY" = (
 /obj/structure/closet/crate/secure/loot,
@@ -982,6 +975,13 @@
 /obj/item/bedsheet/brown,
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
+"Wy" = (
+/obj/machinery/door/poddoor{
+	id = "caravanpirate_bridge"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/caravan/pirate)
 "Xq" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -989,9 +989,9 @@
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
-"Yj" = (
+"XU" = (
 /obj/machinery/porta_turret/syndicate/pod/pirate{
-	dir = 9
+	dir = 6
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)
@@ -1071,7 +1071,7 @@ Jv
 "}
 (3,1,1) = {"
 Jv
-Yj
+CI
 af
 qX
 yt
@@ -1081,7 +1081,7 @@ RK
 FM
 jh
 af
-eL
+lT
 Jv
 "}
 (4,1,1) = {"
@@ -1176,7 +1176,7 @@ oL
 "}
 (10,1,1) = {"
 Jv
-BC
+BW
 Ld
 nD
 bH
@@ -1186,7 +1186,7 @@ iX
 vd
 GQ
 Ld
-Bi
+Wy
 Jv
 "}
 (11,1,1) = {"
@@ -1237,15 +1237,15 @@ Jv
 (14,1,1) = {"
 Jv
 Jv
-le
+xU
 af
 xg
 qC
 pK
 Sk
-ku
+zl
 af
-qo
+XU
 Jv
 Jv
 "}
@@ -1329,11 +1329,11 @@ Jv
 Jv
 Jv
 Jv
-Bi
+Wy
 oO
 EB
 bd
-BC
+BW
 Jv
 Jv
 Jv
@@ -1344,11 +1344,11 @@ Jv
 Jv
 Jv
 Jv
-BC
-BC
+BW
+BW
 fL
-BC
-BC
+BW
+BW
 Jv
 Jv
 Jv
@@ -1360,9 +1360,9 @@ Jv
 Jv
 Jv
 Jv
-BC
-BC
-BC
+BW
+BW
+BW
 Jv
 Jv
 Jv

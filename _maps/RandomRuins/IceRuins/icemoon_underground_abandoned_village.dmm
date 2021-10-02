@@ -178,6 +178,10 @@
 /obj/machinery/door/airlock/maintenance_hatch,
 /turf/open/floor/plating,
 /area/ruin/powered)
+"qv" = (
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/holofloor/wood,
+/area/ruin/powered)
 "rC" = (
 /obj/structure/closet/secure_closet/freezer,
 /obj/item/food/fishmeat/carp,
@@ -415,6 +419,11 @@
 /obj/structure/flora/grass/green,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"Lt" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/mob/living/simple_animal/hostile/illusion/village_elder,
+/turf/open/floor/engine/cult,
+/area/ruin/powered)
 "LZ" = (
 /obj/structure/bed,
 /obj/item/bedsheet/random,
@@ -435,15 +444,6 @@
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/ruin/powered)
-"Pp" = (
-/obj/effect/spawner/randomsnackvend,
-/turf/open/floor/holofloor/wood,
-/area/ruin/powered)
-"PQ" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/mob/living/simple_animal/hostile/illusion/village_elder,
-/turf/open/floor/engine/cult,
 /area/ruin/powered)
 "Qh" = (
 /obj/structure/closet/crate/trashcart,
@@ -828,7 +828,7 @@ SZ
 zT
 zT
 Vn
-Pp
+qv
 aM
 pP
 Vn
@@ -1030,7 +1030,7 @@ Og
 Ei
 Vn
 Cl
-PQ
+Lt
 Ed
 jk
 aM

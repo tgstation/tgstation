@@ -16,7 +16,7 @@
 	var/obj/effect/countdown/transformer/countdown
 	var/mob/living/silicon/ai/masterAI
 
-/obj/machinery/transformer/Initialize()
+/obj/machinery/transformer/Initialize(mapload)
 	// On us
 	. = ..()
 	new /obj/machinery/conveyor/auto(locate(x - 1, y, z), WEST)
