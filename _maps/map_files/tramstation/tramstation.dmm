@@ -837,6 +837,14 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron,
 /area/security/prison)
+"afk" = (
+/obj/machinery/shower{
+	pixel_y = 24
+	},
+/obj/structure/curtain,
+/obj/structure/cable,
+/turf/open/floor/iron/freezer,
+/area/security/prison/shower)
 "afn" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -3657,11 +3665,6 @@
 	},
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/glasses/science,
-/obj/machinery/camera{
-	c_tag = "Medical - Pharmacy";
-	dir = 1;
-	network = list("ss13","medbay")
-	},
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "arJ" = (
@@ -7700,6 +7703,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/commons/vacant_room/commissary)
 "aIX" = (
@@ -13750,7 +13754,7 @@
 /area/service/library)
 "cQc" = (
 /obj/machinery/camera{
-	c_tag = "Civilian - Radstorm Shelter";
+	c_tag = "Service - Radstorm Shelter";
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16882,7 +16886,6 @@
 /area/science/xenobiology)
 "dVA" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
@@ -17559,6 +17562,7 @@
 "ehO" = (
 /obj/machinery/power/apc/auto_name/east,
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/iron/freezer,
 /area/security/prison/shower)
 "ehZ" = (
@@ -20662,7 +20666,7 @@
 	pressure_checks = 0
 	},
 /obj/machinery/camera{
-	c_tag = "Science - Xenobiology Kill Room";
+	c_tag = "Science - Xenobiology Kill Room Lower";
 	dir = 1;
 	network = list("ss13","rd","xeno")
 	},
@@ -25532,7 +25536,7 @@
 /area/engineering/supermatter/room)
 "hhr" = (
 /obj/machinery/camera/motion{
-	c_tag = "Secure - AI Lower External West";
+	c_tag = "Secure - AI Lower External North";
 	dir = 1;
 	network = list("ss13","minisat")
 	},
@@ -28540,6 +28544,7 @@
 "ipc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "ipr" = (
@@ -28737,7 +28742,7 @@
 "ium" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
-	c_tag = "Hallway - Upper West Power Hatch";
+	c_tag = "Hallway - Upper East Power Hatch";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -29544,7 +29549,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/camera{
-	c_tag = "Medical - Security Outpost";
+	c_tag = "Medical - Security Outpost South";
 	dir = 1;
 	network = list("ss13","medbay")
 	},
@@ -29895,7 +29900,7 @@
 "iLW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
-	c_tag = "Hallway - Lower West Power Hatch";
+	c_tag = "Hallway - Lower East Power Hatch";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -30071,7 +30076,9 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/commons/vacant_room/commissary)
 "iQg" = (
@@ -30980,7 +30987,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
@@ -31197,6 +31203,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "jmC" = (
@@ -33505,6 +33512,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
 "kgy" = (
@@ -41821,6 +41829,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
 "nIQ" = (
@@ -46085,6 +46094,7 @@
 	},
 /obj/effect/landmark/start/botanist,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
 "prb" = (
@@ -50716,6 +50726,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/commons/vacant_room/commissary)
 "rgO" = (
@@ -52320,8 +52331,6 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "rPI" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/north,
 /obj/structure/window/reinforced,
 /obj/structure/railing{
 	dir = 8
@@ -52614,10 +52623,6 @@
 /area/ai_monitored/security/armory)
 "rWA" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/yellow/warning,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
@@ -52625,15 +52630,7 @@
 	c_tag = "Maintenance - West Tram Tunnel 3";
 	dir = 6
 	},
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/warning,
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 1
-	},
-/obj/machinery/camera{
-	c_tag = "Maintenance - West Tram Tunnel 3";
-	dir = 6
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -56737,7 +56734,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
@@ -57803,6 +57799,20 @@
 /obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/iron/dark,
 /area/security/interrogation)
+"tVO" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4;
+	external_pressure_bound = 140;
+	name = "killroom vent";
+	pressure_checks = 0
+	},
+/obj/machinery/camera{
+	c_tag = "Science - Xenobiology Kill Room Upper";
+	dir = 1;
+	network = list("ss13","rd","xeno")
+	},
+/turf/open/floor/circuit/telecomms,
+/area/science/xenobiology)
 "tWb" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -58711,14 +58721,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/tram/left)
-"upw" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
-/turf/open/floor/iron,
-/area/engineering/atmospherics_engine)
 "upD" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
@@ -60749,7 +60751,7 @@
 /obj/machinery/light/directional/west,
 /obj/machinery/newscaster/security_unit/directional/west,
 /obj/machinery/camera{
-	c_tag = "Medical - Security Outpost";
+	c_tag = "Medical - Security Outpost North";
 	dir = 4;
 	network = list("ss13","medbay")
 	},
@@ -68612,6 +68614,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
 "yib" = (
@@ -91824,7 +91827,7 @@ hLR
 pva
 afv
 gpn
-eve
+afk
 hje
 cJD
 wvG
@@ -92081,7 +92084,7 @@ iux
 gEc
 qlg
 gpn
-eve
+afk
 ehO
 cJD
 wvG
@@ -108343,7 +108346,7 @@ uMV
 bRs
 xUr
 uMV
-upw
+uMV
 tuo
 rkS
 qnB
@@ -175173,7 +175176,7 @@ dGu
 lQG
 mrd
 lDd
-fpi
+tVO
 lQG
 dhe
 dhe
