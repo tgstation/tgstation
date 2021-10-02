@@ -1,0 +1,9 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - bugfix: "The Metastation gravity generator is now properly connected to the power grid again"
+  - bugfix: "A large number of doubled power cables have been fixed across on all stations"
+  - bugfix: "A large number of broken, disconnected or doubled up atmospherics pipes have been fixed across all stations"
+  - bugfix: "Multiple disconnected vents and scrubbers have been reconnected to the atmos network on Tram and Meta"
+  - bugfix: "A large number of improperly named and networked cameras have been fixed across all stations"
+  - bugfix: "Doubled tiles, decals, disposals, pipes and wires from the great map merge incident have been removed"
