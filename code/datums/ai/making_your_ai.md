@@ -278,8 +278,4 @@ Wow, what a tangent! But it's important to understand subtree planning as it is 
 
 ### Finished Product: A COW.
 
-And... we're finished! The tip_reaction subtree hooks signals and runs behaviors when the cow is tipped, the random speech occasionally plans speech, the idle behavior runs when no behaviors are planned, and the cow acts like a cow!
-
-:::info
-We used a mob in this case because everyone knows how a cow works as it's a very simple creature. But AI Controllers work on anything! It's just as valid of a use case to make, say, the staff of animation apply AI Controllers to items.
-:::
+And... we're finished! The tip_reaction subtree hooks signals and runs behaviors when the cow is tipped, the random speech occasionally plans speech, the idle behavior runs when no behaviors are planned, and the cow acts like a cow! We used a mob in this case because everyone knows how a cow works as it's a very simple creature. But AI Controllers work on anything! It's just as valid of a use case to make, say, the staff of animation apply AI Controllers to items.
