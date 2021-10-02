@@ -28421,8 +28421,10 @@
 /turf/open/floor/iron/white,
 /area/science/lab)
 "imK" = (
-/obj/machinery/airalarm/directional/north,
 /obj/machinery/icecream_vat,
+/obj/machinery/airalarm/kitchen_cold_room{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/service/kitchen/coldroom)
 "imM" = (
