@@ -510,10 +510,11 @@
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/induce_hallucination(strength, delta_time, force=FALSE)
 	for(var/mob/living/carbon/human/human in view(src, HALLUCINATION_HFR(heat_output)))
-		if(force || !istype(human.glasses, /obj/item/clothing/glasses/meson))
-			var/distance_root = sqrt(1 / max(1, get_dist(human, src)))
-			human.hallucination += strength * distance_root * delta_time
-			human.hallucination = clamp(human.hallucination, 0, 200)
+		if(!force && istype(human.glasses, /obj/item/clothing/glasses/meson))
+			continue
+		var/distance_root = sqrt(1 / max(1, get_dist(human, src)))
+		human.hallucination += strength * distance_root * delta_time
+		human.hallucination = clamp(human.hallucination, 0, 200)
 
 /**
  * Emit radiation
