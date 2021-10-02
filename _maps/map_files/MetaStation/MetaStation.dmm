@@ -57009,7 +57009,10 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "sjt" = (
-/obj/machinery/door/airlock/medical,
+/obj/machinery/door/airlock/medical{
+	name = "Medical Cold Room";
+	req_access_txt = "5"
+	},
 /turf/open/floor/iron,
 /area/medical/coldroom)
 "sjF" = (
