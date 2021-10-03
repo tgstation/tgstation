@@ -450,7 +450,7 @@
 		gas_pockets = 15
 		gas_spread = power_level * 8
 
-	var/list/around_turfs = circlerangeturfs(src, gas_spread)
+	var/list/around_turfs = circle_range_turfs(src, gas_spread)
 	for(var/turf/turf as anything in around_turfs)
 		if(isclosedturf(turf) || isspaceturf(turf))
 			around_turfs -= turf
