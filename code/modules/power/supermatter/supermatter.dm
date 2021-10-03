@@ -469,7 +469,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	explode()
 
 /obj/machinery/power/supermatter_crystal/proc/add_matter_power(added_power)
-	var/matter_power_gain = added_power * antinoblium_multiplier ** (1 + antinoblium_efficiency)
+	var/matter_power_gain = added_power * antinoblium_multiplier ** (1 + antinoblium_efficiency * 0.25)
 	matter_power += matter_power_gain
 	return matter_power_gain
 
@@ -602,9 +602,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		gasmix_power_ratio = clamp(gasmix_power_ratio, 0, 1)
 
 		//antinoblium_efficiency converges to antinoblium composition faster when the SM is cold.
-		antinoblium_efficiency = clamp(antinoblium_efficiency + (gas_comp[/datum/gas/antinoblium] - antinoblium_efficiency) * TCMB / (TCMB + removed.temperature), 0, 0.999999)
+		antinoblium_efficiency = clamp(antinoblium_efficiency + (gas_comp[/datum/gas/antinoblium] - antinoblium_efficiency) * TCMB / (TCMB + removed.temperature), 0, 0.999)
 		//Multiplies maximum power before taking damage, multiplies power gained from matter, and passively generates power when above 1.
-		antinoblium_multiplier = max((1 - antinoblium_efficiency) ** -(1 + antinoblium_efficiency), 1)
+		antinoblium_multiplier = max((1 - antinoblium_efficiency) ** -(1 + antinoblium_efficiency * 0.25 + removed.temperature / (2 * removed.temperature + POWER_PENALTY_THRESHOLD)), 1)
 		//Minimum value of -10, maximum value of 23. Effects plasma and o2 output and the output heat
 		dynamic_heat_modifier = 0
 		for(var/gas_id in gas_heat)
@@ -706,7 +706,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Power * 0.55 * (some value between 1.5 and 23) / 5
 		removed.temperature += ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_MODIFIER)
 		//We can only emit so much heat, that being 57500
-		removed.temperature = max(0, min(removed.temperature, 2500 * dynamic_heat_modifier))
+		removed.temperature = max(0, min(removed.temperature, 2500 * dynamic_heat_modifier * min(antinoblium_multiplier, 10)))
 
 		//Calculate how much gas to release
 		//Varies based on power and gas content
@@ -846,7 +846,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		investigate_log("has been hit by [projectile] fired by [key_name(projectile.firer)]", INVESTIGATE_SUPERMATTER)
 	if(projectile.flag != BULLET)
 		if(power_changes) //This needs to be here I swear
-			power += projectile.damage * bullet_energy * antinoblium_multiplier ** (1 + antinoblium_efficiency)
+			power += projectile.damage * bullet_energy * antinoblium_multiplier ** (1 + antinoblium_efficiency * 0.25)
 			if(!has_been_powered)
 				investigate_log("has been powered for the first time.", INVESTIGATE_SUPERMATTER)
 				message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
