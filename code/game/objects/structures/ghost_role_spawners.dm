@@ -829,6 +829,52 @@
 	to_chat(new_spawn, "<b>You have this horrible lurching feeling deep down that your binding to this world will fail if you abandon this zone... Were you reanimated to protect something?</b>")
 	new_spawn.AddComponent(/datum/component/stationstuck, PUNISHMENT_MURDER, "You experience a feeling like a stressed twine being pulled until it snaps. Then, merciful nothing.")
 
+// Pizza Chefs
+/obj/effect/mob_spawn/human/pizza
+	name = "pizza pod"
+	desc = "A humming cryo pod. The machine is attempting to wake up its occupant. It smells like tomatos and flour."
+	mob_name = "a pizza place worker"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	roundstart = FALSE
+	death = FALSE
+	random = TRUE
+	outfit = /datum/outfit/pizzacook
+	mob_species = /datum/species/human
+	short_desc = "You are an employee of a small pizza shop in space."
+	flavour_text = "Mama mia! Business is slow recently. Luckily you have pamphlets, a teleporter, and a beacon for ships now. Start prepping some pies and making menus for the (hopefully) large crowds of hungry customers!"
+	important_info = "Don't abandon the pizza shop, make some money!"
+
+/datum/outfit/pizzacook
+	name = "Pizza Cook"
+	uniform = /obj/item/clothing/under/rank/civilian/chef
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	id = /obj/item/card/id/away
+	implants = list(/obj/item/implant/mindshield, /obj/item/implant/exile/noteleport)
+
+//Radio DJ
+
+/obj/effect/mob_spawn/human/radiohost
+	name = "groovy pod"
+	desc = "A humming cryo pod. The machine is attempting to wake up its occupant. You can vaguely hear music coming from inside."
+	mob_name = "a "
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	roundstart = FALSE
+	death = FALSE
+	random = TRUE
+	outfit = /datum/outfit/radiohost
+	mob_species = /datum/species/human
+	short_desc = "You are a DJ and radio host."
+	flavour_text = "You and your partner run a little radio show in deep space."
+	important_info = "Come up with a gimmick for your show or just mess around, but do not leave the radio station without good reason."
+
+/datum/outfit/radiohost
+	name = "Radio Host"
+	uniform = /obj/item/clothing/under/color/black
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	id = /obj/item/card/id/away
+
 //terribly basic spawns below, please read the disclaimer. unless you're an admin. these are perfect for events as they have no intro text.
 
 //if you're going to use these in a map of some kind, add GUIDANCE or stationstuck component to them on spawn. see ash walkers and skeletons for an example of each. they're simply not very fleshed out.

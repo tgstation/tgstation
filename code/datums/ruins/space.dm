@@ -299,3 +299,16 @@
 	suffix = "hellfactory.dmm"
 	name = "Heck Brewery"
 	description = "An abandoned warehouse and brewing facility, which has been recently rediscovered. Reports claim that the security system entered an ultra-hard lockdown, but these reports are inconclusive."
+
+/datum/map_template/ruin/space/pizza
+	id = "pizza"
+	suffix = "pizzatime.dmm"
+	name = "Pizza Shop"
+	description = "Pizza! Pasta! Put it in a box! Deliver it to my house and put..."
+
+/datum/map_template/ruin/space/djhut
+	id = "djhut"
+	suffix = "djhut.dmm"
+	name = "DJ Hut"
+	description = "A pair of radio hosts try to run a radio show in space."
+

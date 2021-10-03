@@ -1,0 +1,1309 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/machinery/vending/donksofttoyvendor,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"as" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"aG" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"bj" = (
+/obj/structure/table,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/obj/item/paper/pamphlet/pizza,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/pizzaplace)
+"bL" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"cc" = (
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"dc" = (
+/obj/structure/chair/sofa/corp/left,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"dr" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"dE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/pizzaplace)
+"fe" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"gA" = (
+/obj/effect/mob_spawn/human/pizza,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"hH" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"hO" = (
+/obj/structure/table,
+/obj/item/storage/fancy/nugget_box,
+/obj/item/storage/fancy/nugget_box,
+/obj/item/storage/fancy/nugget_box,
+/obj/item/storage/fancy/nugget_box,
+/obj/item/storage/fancy/nugget_box,
+/obj/item/storage/fancy/nugget_box,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"ie" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/mob_spawn/human/pizza{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"iz" = (
+/obj/structure/chair/stool/bar{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"iE" = (
+/obj/structure/chair/sofa/corp/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"iN" = (
+/obj/machinery/teleport/hub,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/pizzaplace)
+"jJ" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"jK" = (
+/turf/template_noop,
+/area/template_noop)
+"jT" = (
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/pizzaplace)
+"jW" = (
+/obj/machinery/seed_extractor,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"jZ" = (
+/obj/structure/closet/crate/secure/freezer/pizza,
+/obj/machinery/light,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"kt" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"kw" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"lo" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"lv" = (
+/obj/structure/cable,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"lI" = (
+/obj/structure/chair/sofa/corp/right{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"lN" = (
+/obj/machinery/hydroponics/constructable,
+/obj/structure/window/reinforced/tinted,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"lQ" = (
+/obj/machinery/vending/hydroseeds,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"lY" = (
+/obj/structure/table/wood,
+/obj/item/paper/pamphlet/pizza,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"mh" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"mu" = (
+/obj/machinery/spaceship_navigation_beacon,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/pizzaplace)
+"mD" = (
+/obj/machinery/vending/boozeomat/all_access,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"mH" = (
+/obj/structure/chair/stool/bar{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"mL" = (
+/obj/structure/fans/tiny,
+/obj/machinery/vending/hydronutrients,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"nf" = (
+/obj/structure/table,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/pizzaplace)
+"ng" = (
+/obj/machinery/biogenerator,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"oD" = (
+/obj/structure/table/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"oG" = (
+/obj/machinery/light,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"oZ" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"ql" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/fullupgrade,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"qP" = (
+/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/food/condiment/milk{
+	list_reagents = list(/datum/reagent/consumable/milk = 750);
+	name = "the big space milky";
+	volume = 750
+	},
+/obj/item/reagent_containers/food/condiment/flour{
+	list_reagents = list(/datum/reagent/consumable/flour = 600);
+	name = "Premium All-Purpose Flour (16KG)";
+	volume = 600
+	},
+/obj/item/reagent_containers/food/condiment/flour{
+	list_reagents = list(/datum/reagent/consumable/flour = 600);
+	name = "Premium All-Purpose Flour (16KG)";
+	volume = 600
+	},
+/obj/item/reagent_containers/food/condiment/flour{
+	list_reagents = list(/datum/reagent/consumable/flour = 600);
+	name = "Premium All-Purpose Flour (16KG)";
+	volume = 600
+	},
+/obj/item/reagent_containers/food/condiment/flour{
+	list_reagents = list(/datum/reagent/consumable/flour = 600);
+	name = "Premium All-Purpose Flour (16KG)";
+	volume = 600
+	},
+/obj/item/reagent_containers/food/condiment/flour{
+	list_reagents = list(/datum/reagent/consumable/flour = 600);
+	name = "Premium All-Purpose Flour (16KG)";
+	volume = 600
+	},
+/obj/item/reagent_containers/food/condiment/milk{
+	list_reagents = list(/datum/reagent/consumable/milk = 750);
+	name = "the big space milky";
+	volume = 750
+	},
+/obj/item/reagent_containers/food/condiment/milk{
+	list_reagents = list(/datum/reagent/consumable/milk = 750);
+	name = "the big space milky";
+	volume = 750
+	},
+/obj/item/reagent_containers/food/condiment/milk{
+	list_reagents = list(/datum/reagent/consumable/milk = 750);
+	name = "the big space milky";
+	volume = 750
+	},
+/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/structure/closet/crate/secure/freezer,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/pizzaplace)
+"re" = (
+/obj/structure/chair,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"rl" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/mob_spawn/human/pizza,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/pizzaplace)
+"rL" = (
+/obj/item/radio/intercom/directional/east,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"rV" = (
+/obj/structure/table,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"sr" = (
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"sF" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"sH" = (
+/obj/machinery/teleport/station,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/pizzaplace)
+"ty" = (
+/obj/structure/table,
+/obj/structure/closet/crate/secure/freezer/pizza,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"tA" = (
+/obj/machinery/door/airlock/glass,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/pizzaplace)
+"tP" = (
+/obj/machinery/paystand,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"uD" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/fullupgrade,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"uG" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"uV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"xF" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"xN" = (
+/obj/machinery/vending/clothing,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"xV" = (
+/obj/structure/table/wood,
+/obj/item/radio{
+	desc = "An old handheld radio. You could use it, if you really wanted to.";
+	icon_state = "radio";
+	name = "old radio";
+	pixel_y = 15
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"yi" = (
+/obj/structure/chair/sofa/corp{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"yl" = (
+/obj/structure/table/wood,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"yA" = (
+/obj/structure/chair,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"yJ" = (
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"yZ" = (
+/obj/machinery/griddle,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"zf" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/pizzaplace)
+"zt" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/pizzaplace)
+"zx" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"zF" = (
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical,
+/obj/item/multitool,
+/obj/item/vending_refill/custom,
+/obj/item/circuitboard/machine/vendor,
+/obj/structure/closet/crate,
+/obj/item/storage/belt/utility/full/engi,
+/obj/item/storage/belt/utility/full/engi,
+/obj/item/storage/belt/utility/full/engi,
+/obj/item/storage/belt/utility/full/engi,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"Ao" = (
+/obj/structure/table,
+/obj/item/clothing/head/chefhat,
+/obj/item/clothing/head/chefhat,
+/obj/item/clothing/head/chefhat,
+/obj/item/radio{
+	desc = "An old handheld radio. You could use it, if you really wanted to.";
+	icon_state = "radio";
+	name = "old radio";
+	pixel_y = 15
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"AC" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"CA" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/pizzaplace)
+"CD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"Dj" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"DK" = (
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"Ex" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/pizzaplace)
+"Ez" = (
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/structure/closet/crate/secure/freezer,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/pizzaplace)
+"EI" = (
+/obj/structure/cable,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"EN" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/mob_spawn/human/pizza,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"EU" = (
+/obj/machinery/telecomms/relay/preset/station,
+/obj/machinery/light,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"Fs" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"Fv" = (
+/obj/effect/mob_spawn/human/pizza,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"FA" = (
+/obj/machinery/processor,
+/obj/structure/table,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"Gl" = (
+/obj/effect/mob_spawn/human/pizza{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"GB" = (
+/obj/machinery/computer/teleporter{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/pizzaplace)
+"GC" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"GQ" = (
+/obj/item/beacon,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/pizzaplace)
+"GR" = (
+/obj/effect/mob_spawn/human/pizza,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/pizzaplace)
+"HH" = (
+/obj/structure/window/reinforced/tinted,
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"HT" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"Iz" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"IG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/pizzaplace)
+"JA" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"KS" = (
+/obj/item/clothing/mask/fakemoustache/italian,
+/obj/item/clothing/mask/fakemoustache/italian,
+/obj/item/clothing/mask/fakemoustache/italian,
+/obj/item/clothing/mask/fakemoustache/italian,
+/obj/item/clothing/mask/fakemoustache/italian,
+/obj/item/clothing/mask/fakemoustache/italian,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"Lh" = (
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/pizzaplace)
+"LB" = (
+/obj/machinery/oven,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"LV" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"Na" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/obj/machinery/power/apc/auto_name/east,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"Nm" = (
+/obj/machinery/vending/coffee,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"Nr" = (
+/obj/machinery/grill,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"Ns" = (
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"NX" = (
+/obj/machinery/power/smes/magical{
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
+	name = "power storage unit"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"Oa" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"Od" = (
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/structure/closet/crate/secure/freezer,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/pizzaplace)
+"OR" = (
+/obj/machinery/computer/arcade/orion_trail,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"Qi" = (
+/obj/machinery/atmospherics/components/tank/air,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"QI" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"RF" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"Su" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"SW" = (
+/obj/item/circuitboard/machine/spaceship_navigation_beacon,
+/obj/item/circuitboard/machine/spaceship_navigation_beacon,
+/obj/item/circuitboard/machine/spaceship_navigation_beacon,
+/obj/item/vending_refill/hydronutrients,
+/obj/item/vending_refill/hydroseeds,
+/obj/item/vending_refill/dinnerware,
+/obj/structure/closet/crate,
+/obj/item/storage/box/stockparts/deluxe,
+/obj/item/storage/box/stockparts/deluxe,
+/obj/item/storage/box/stockparts/deluxe,
+/obj/item/storage/part_replacer/bluespace/tier4,
+/obj/item/storage/box/beakers/bluespace,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"Tb" = (
+/obj/structure/chair/stool/bar{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"TC" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"Uu" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"UT" = (
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"Vu" = (
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"Wb" = (
+/obj/structure/chair/sofa/corp/corner{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/pizzaplace)
+"Wt" = (
+/obj/structure/table,
+/obj/item/storage/box/beakers,
+/obj/item/storage/box/beakers/variety,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/storage/box/drinkingglasses,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"Xb" = (
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/structure/closet/crate,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/pizzaplace)
+"Xz" = (
+/obj/structure/table,
+/obj/structure/closet/crate/secure/freezer/pizza,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"Yh" = (
+/obj/item/seeds/tomato,
+/obj/item/seeds/tomato,
+/obj/item/seeds/tomato,
+/obj/item/seeds/tomato,
+/obj/item/seeds/eggplant/eggy,
+/obj/item/seeds/eggplant/eggy,
+/obj/item/seeds/eggplant/eggy,
+/obj/item/seeds/eggplant/eggy,
+/obj/item/seeds/eggplant/eggy,
+/obj/item/seeds/eggplant/eggy,
+/obj/item/seeds/eggplant/eggy,
+/obj/item/seeds/eggplant/eggy,
+/obj/item/seeds/eggplant/eggy,
+/obj/structure/closet/crate/secure/hydroponics,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+"YP" = (
+/obj/structure/table,
+/obj/item/clothing/suit/apron/chef,
+/obj/item/clothing/suit/apron/chef,
+/obj/item/clothing/suit/apron/chef,
+/obj/item/clothing/suit/apron/chef,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/pizzaplace)
+
+(1,1,1) = {"
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+"}
+(2,1,1) = {"
+jK
+jK
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+Dj
+Dj
+zf
+Dj
+Dj
+zf
+Dj
+Dj
+zf
+zf
+Dj
+Dj
+jK
+"}
+(3,1,1) = {"
+jK
+jK
+zf
+Od
+DK
+Yh
+ie
+lN
+Wb
+yi
+lI
+UT
+Uu
+Uu
+LV
+Uu
+Uu
+UT
+HT
+iE
+Dj
+jK
+"}
+(4,1,1) = {"
+zf
+zf
+zf
+Ez
+DK
+lQ
+Ns
+HH
+dc
+RF
+RF
+UT
+RF
+RF
+UT
+RF
+lY
+UT
+RF
+dr
+zf
+jK
+"}
+(5,1,1) = {"
+zf
+NX
+zf
+qP
+DK
+bL
+Ns
+lN
+UT
+UT
+UT
+UT
+fe
+fe
+UT
+fe
+fe
+UT
+QI
+UT
+zf
+jK
+"}
+(6,1,1) = {"
+zf
+GC
+zf
+mL
+Fs
+Fs
+Ns
+lN
+UT
+UT
+UT
+UT
+UT
+UT
+CD
+uV
+UT
+zf
+zf
+zf
+zf
+jK
+"}
+(7,1,1) = {"
+zf
+lv
+hH
+EI
+TC
+jW
+Ns
+lN
+Tb
+Tb
+Tb
+UT
+yA
+RF
+jJ
+uV
+UT
+Iz
+zx
+zx
+kw
+jK
+"}
+(8,1,1) = {"
+zf
+zf
+zf
+zf
+xF
+zf
+ng
+zf
+yl
+RF
+RF
+UT
+yA
+RF
+jJ
+Su
+zf
+zf
+zf
+zf
+zf
+jK
+"}
+(9,1,1) = {"
+jK
+zf
+Nr
+mh
+TC
+JA
+Ns
+rV
+jT
+jT
+tP
+UT
+UT
+UT
+UT
+uV
+zf
+iN
+sH
+GB
+zf
+jK
+"}
+(10,1,1) = {"
+jK
+zf
+yZ
+Ns
+YP
+TC
+Ns
+ql
+jT
+Ex
+lY
+mH
+UT
+UT
+UT
+uV
+CA
+Lh
+Lh
+Lh
+sr
+jK
+"}
+(11,1,1) = {"
+jK
+Dj
+FA
+Ns
+Ao
+TC
+Ns
+mD
+jT
+dE
+RF
+mH
+yA
+RF
+jJ
+uV
+CA
+Lh
+Lh
+Lh
+sr
+jK
+"}
+(12,1,1) = {"
+jK
+Dj
+LB
+as
+hO
+TC
+Fs
+Fs
+dE
+dE
+oD
+iz
+re
+lY
+jJ
+Su
+zf
+rl
+Lh
+Lh
+sr
+jK
+"}
+(13,1,1) = {"
+jK
+Dj
+LB
+Ns
+Ns
+TC
+Ns
+rL
+jT
+jT
+xV
+mH
+uV
+UT
+UT
+uV
+zf
+GR
+GQ
+Lh
+sr
+jK
+"}
+(14,1,1) = {"
+jK
+zf
+ty
+Xz
+Ns
+TC
+jZ
+zf
+kt
+UT
+uD
+CD
+uV
+uV
+uV
+uV
+tA
+IG
+zt
+Lh
+sr
+jK
+"}
+(15,1,1) = {"
+jK
+zf
+gA
+TC
+TC
+TC
+AC
+zf
+EN
+UT
+UT
+UT
+yA
+RF
+jJ
+UT
+CA
+Lh
+Lh
+Lh
+sr
+jK
+"}
+(16,1,1) = {"
+jK
+zf
+yJ
+TC
+Wt
+sF
+sF
+zf
+Fv
+UT
+UT
+UT
+yA
+RF
+jJ
+UT
+zf
+bj
+nf
+mu
+zf
+jK
+"}
+(17,1,1) = {"
+zf
+zf
+zf
+oZ
+zf
+zf
+zf
+zf
+xN
+UT
+UT
+UT
+UT
+UT
+UT
+oG
+zf
+zf
+zf
+zf
+zf
+jK
+"}
+(18,1,1) = {"
+zf
+SW
+uG
+Oa
+lo
+zx
+EU
+zf
+OR
+UT
+cc
+Vu
+Nm
+aa
+Gl
+UT
+UT
+Iz
+zx
+zx
+kw
+jK
+"}
+(19,1,1) = {"
+zf
+zF
+KS
+Qi
+Na
+aG
+Xb
+zf
+zf
+zf
+Dj
+Dj
+zf
+Dj
+Dj
+zf
+zf
+zf
+zf
+zf
+zf
+jK
+"}
+(20,1,1) = {"
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+"}
