@@ -1,168 +1,1566 @@
-"ai" = (/obj/structure/table,/obj/item/storage/box/donkpockets{pixel_x = 2},/obj/item/storage/box/donkpockets{pixel_x = -2; pixel_y = 6},/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"am" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/door/airlock/public/glass,/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"aq" = (/obj/machinery/light{dir = 4},/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"aC" = (/obj/structure/closet/secure_closet/freezer/fridge{req_access = null},/obj/item/storage/fancy/egg_box,/obj/item/storage/fancy/egg_box,/obj/item/storage/fancy/egg_box,/obj/item/storage/fancy/egg_box,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"aN" = (/obj/machinery/door/airlock/public,/turf/open/floor/iron/showroomfloor,/area/ruin/space/has_grav/radiostation)
-"aO" = (/obj/structure/table,/obj/item/storage/fancy/donut_box,/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"ba" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 4},/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"bt" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/storage/firstaid/advanced{pixel_y = 12},/obj/item/storage/firstaid/brute{pixel_y = 8},/obj/item/storage/firstaid/fire{pixel_y = 4},/obj/item/storage/firstaid,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"cj" = (/mob/living/simple_animal/pet/fox,/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"dr" = (/turf/open/floor/plating/grass,/area/ruin/space/has_grav/radiostation)
-"dt" = (/obj/structure/table,/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 1},/obj/item/bodybag,/obj/item/bodybag/environmental{pixel_y = 8},/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"dO" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"ef" = (/obj/machinery/door/airlock/glass,/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"fv" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/light{dir = 4},/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"fQ" = (/obj/structure/disposalpipe/trunk{dir = 4},/obj/structure/disposaloutlet{dir = 8},/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"gu" = (/obj/structure/chair/office{dir = 4},/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"gH" = (/obj/structure/table,/obj/item/radio/intercom{dir = 8; freerange = 1; name = "Pirate Radio Listening Channel"; pixel_x = -10; pixel_y = 25},/obj/item/radio/intercom{dir = 8; freerange = 1; name = "Pirate Radio Listening Channel"; pixel_x = 10; pixel_y = 25},/obj/item/storage/fancy/nugget_box,/obj/item/radio/headset/chameleon,/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"gS" = (/obj/machinery/telecomms/relay/preset/ruskie,/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"hv" = (/obj/machinery/vending/hydronutrients,/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"hC" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,/turf/open/floor/plating/grass,/area/ruin/space/has_grav/radiostation)
-"iv" = (/obj/structure/tank_dispenser/oxygen,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"iI" = (/obj/structure/table,/obj/item/storage/firstaid/medical{pixel_x = 3; pixel_y = 3},/obj/item/storage/firstaid/medical,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"ja" = (/obj/machinery/jukebox,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"jl" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/door/airlock/hatch,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"jp" = (/obj/structure/curtain,/turf/open/floor/iron/showroomfloor,/area/ruin/space/has_grav/radiostation)
-"jI" = (/obj/effect/spawner/structure/window/reinforced,/obj/structure/disposalpipe/segment{dir = 4},/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"ko" = (/obj/machinery/power/terminal{dir = 1},/obj/structure/cable,/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"kp" = (/obj/structure/closet/crate,/obj/item/stack/sheet/glass/fifty,/obj/item/stack/sheet/iron/fifty,/obj/item/stack/sheet/plasteel/twenty,/obj/item/stack/sheet/rglass{amount = 50},/obj/item/storage/box/stockparts/deluxe,/obj/item/storage/box/stockparts/deluxe,/obj/item/storage/box/stockparts/deluxe,/obj/item/storage/box/stockparts/deluxe,/obj/item/storage/part_replacer/bluespace,/obj/item/storage/box/rndboards{desc = "A box containing a set of outdated boards."; name = "research boards"},/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"kw" = (/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"kM" = (/obj/structure/chair/office{dir = 8},/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"kW" = (/obj/machinery/disposal/bin,/obj/structure/disposalpipe/trunk{dir = 8},/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"lb" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/structure/fans/tiny/invisible,/obj/machinery/door/airlock/maintenance_hatch,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"lX" = (/turf/closed/mineral,/area/ruin/unpowered/no_grav)
-"mJ" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{dir = 8},/obj/machinery/light,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"nV" = (/obj/machinery/smartfridge,/turf/closed/wall,/area/ruin/space/has_grav/radiostation)
-"oh" = (/obj/structure/table,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"oA" = (/obj/item/storage/box/beakers{pixel_x = 2; pixel_y = 2},/obj/item/storage/box/beakers,/obj/structure/table,/obj/item/cultivator,/obj/item/cultivator,/obj/item/shovel/spade,/obj/item/shovel/spade,/obj/item/hatchet,/obj/item/geneshears,/obj/item/gun/energy/floragun,/obj/item/reagent_containers/glass/beaker/bluespace,/obj/item/reagent_containers/glass/beaker/bluespace,/obj/item/reagent_containers/glass/beaker/bluespace,/obj/item/reagent_containers/glass/beaker/bluespace,/turf/open/floor/plating/grass,/area/ruin/space/has_grav/radiostation)
-"pe" = (/obj/machinery/shower{pixel_y = 14},/turf/open/floor/iron/showroomfloor,/area/ruin/space/has_grav/radiostation)
-"pG" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"qv" = (/turf/closed/mineral,/area/space)
-"qO" = (/obj/machinery/reagentgrinder,/obj/structure/table,/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"qP" = (/obj/structure/table,/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 4},/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"rN" = (/obj/structure/fans/tiny/invisible,/obj/structure/reagent_dispensers/watertank/high,/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"te" = (/obj/machinery/light,/obj/structure/toilet{dir = 4},/turf/open/floor/iron/showroomfloor,/area/ruin/space/has_grav/radiostation)
-"ti" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"ts" = (/obj/structure/table,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c500,/obj/item/stack/spacecash/c500,/obj/item/stack/spacecash/c100,/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"tt" = (/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"tw" = (/obj/machinery/vending/cigarette,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"tE" = (/obj/machinery/door/airlock/external{req_access_txt = "12"},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/structure/fans/tiny/invisible,/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 1},/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"tN" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"uu" = (/obj/structure/cable,/obj/machinery/light{dir = 4},/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"uA" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,/obj/machinery/light{dir = 4},/turf/open/floor/iron/showroomfloor,/area/ruin/space/has_grav/radiostation)
-"uH" = (/obj/structure/table,/obj/item/reagent_containers/spray/cleaner,/obj/item/reagent_containers/spray/cleaner,/obj/item/reagent_containers/spray/cleaner,/obj/item/grenade/chem_grenade/cleaner{pixel_x = -7; pixel_y = 12},/obj/item/grenade/chem_grenade/cleaner{pixel_x = -7; pixel_y = 12},/obj/item/grenade/chem_grenade/cleaner{pixel_x = -7; pixel_y = 12},/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"va" = (/obj/structure/reagent_dispensers/watertank/high,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"vu" = (/obj/structure/table,/obj/structure/fans/tiny/invisible,/obj/item/mop/advanced,/obj/item/mop/advanced,/obj/item/reagent_containers/glass/bucket,/obj/item/reagent_containers/glass/bucket,/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"vD" = (/obj/machinery/hydroponics/constructable,/obj/machinery/light{dir = 4},/turf/open/floor/plating/grass,/area/ruin/space/has_grav/radiostation)
-"vF" = (/obj/machinery/light{dir = 4},/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"vY" = (/obj/machinery/light,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"vZ" = (/obj/structure/table,/obj/machinery/computer/arcade/orion_trail{desc = "For gamers only. Casuals need not apply."; icon_screen = "library"; icon_state = "oldcomp"; name = "Gamer Computer"},/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"wt" = (/turf/template_noop,/area/template_noop)
-"wu" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/door/airlock/maintenance_hatch,/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"xe" = (/obj/structure/table,/obj/machinery/chem_dispenser/drinks/fullupgrade{dir = 4},/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"yf" = (/obj/machinery/stasis,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"ys" = (/obj/machinery/recharger,/obj/structure/table,/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"yG" = (/obj/structure/sink{dir = 4; pixel_x = -12; pixel_y = -6},/obj/structure/mirror/directional/west,/turf/open/floor/iron/showroomfloor,/area/ruin/space/has_grav/radiostation)
-"yH" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"yP" = (/obj/machinery/vending/clothing,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"yW" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{dir = 4},/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"Aq" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered/no_grav)
-"Ax" = (/obj/machinery/power/smes/magical{desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."; name = "power storage unit"},/obj/structure/cable,/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"AF" = (/obj/structure/table,/obj/structure/fans/tiny/invisible,/obj/item/storage/box/lights/mixed{pixel_x = 6; pixel_y = 8},/obj/item/storage/box/lights/mixed{pixel_x = 6; pixel_y = 8},/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"AG" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"AQ" = (/obj/machinery/computer/camera_advanced{dir = 8},/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"AV" = (/obj/machinery/vending,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Br" = (/obj/machinery/vending/boozeomat/all_access,/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"Bz" = (/turf/closed/mineral/random/high_chance,/area/space)
-"BK" = (/obj/machinery/vending/donksofttoyvendor,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"BL" = (/obj/structure/closet/secure_closet/freezer/meat{req_access = null},/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Cr" = (/obj/structure/table,/obj/item/radio/intercom{dir = 8; freerange = 1; name = "Pirate Radio Listening Channel"; pixel_x = -10; pixel_y = 25},/obj/item/radio/intercom{dir = 8; freerange = 1; name = "Pirate Radio Listening Channel"; pixel_x = 10; pixel_y = 25},/obj/item/radio/headset/chameleon,/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"Di" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/effect/mob_spawn/human/radiohost{dir = 4},/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Dp" = (/obj/machinery/vending/dinnerware,/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"DO" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 8},/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Em" = (/obj/machinery/oven,/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"EN" = (/mob/living/simple_animal/pet/cat,/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"Fq" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 4},/obj/machinery/light{dir = 8},/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"Fz" = (/obj/structure/table,/obj/item/radio/intercom{broadcasting = 1; dir = 8; freerange = 1; listening = 0; name = "Pirate Radio Broadcast Channel"},/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"FD" = (/turf/closed/wall,/area/ruin/space/has_grav/radiostation)
-"FK" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"Gh" = (/obj/machinery/vending/hydroseeds,/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"Gx" = (/obj/structure/table,/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 8},/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Hb" = (/obj/machinery/griddle{pixel_x = 2},/obj/machinery/light{dir = 8},/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"Hd" = (/obj/machinery/vending/medical,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Hy" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"HJ" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/light{dir = 8},/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Ic" = (/obj/machinery/processor,/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"Ih" = (/obj/machinery/computer/camera_advanced{dir = 4},/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"IQ" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 8},/obj/machinery/light{dir = 4},/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"Jd" = (/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,/obj/item/storage/fancy/egg_box,/obj/item/storage/fancy/egg_box,/obj/item/storage/fancy/egg_box,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Jo" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 1},/turf/open/floor/iron/showroomfloor,/area/ruin/space/has_grav/radiostation)
-"JN" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/showroomfloor,/area/ruin/space/has_grav/radiostation)
-"JZ" = (/mob/living/simple_animal/bot/medbot,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"KF" = (/obj/machinery/atmospherics/components/tank/air{dir = 1},/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"KN" = (/obj/machinery/light{dir = 1},/turf/open/floor/plating/grass,/area/ruin/space/has_grav/radiostation)
-"LH" = (/obj/structure/cable,/obj/item/multitool,/obj/item/storage/toolbox/mechanical,/obj/item/storage/toolbox/electrical{pixel_x = 3; pixel_y = -4},/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"LY" = (/obj/structure/table,/obj/machinery/microwave,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"LZ" = (/obj/structure/table,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Mh" = (/obj/machinery/vending/autodrobe/all_access,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Nq" = (/obj/machinery/biogenerator,/turf/open/floor/plating/grass,/area/ruin/space/has_grav/radiostation)
-"NC" = (/obj/machinery/vending/games,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"NQ" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Os" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/pickaxe{pixel_x = 5},/obj/item/pickaxe,/obj/item/mining_scanner,/obj/item/mining_scanner,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"OB" = (/obj/machinery/door/airlock/external{req_access_txt = "12"},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/structure/fans/tiny/invisible,/obj/effect/mapping_helpers/airlock/cyclelink_helper,/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"OK" = (/obj/structure/table,/obj/item/storage/toolbox/syndicate{pixel_x = 3},/obj/item/storage/toolbox/syndicate{pixel_x = 6; pixel_y = 6},/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"OW" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/curtain/cloth/fancy,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Pf" = (/obj/structure/closet/firecloset/full,/obj/item/reagent_containers/glass/beaker/cryoxadone,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Po" = (/obj/machinery/vending/snack,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Pp" = (/obj/machinery/grill,/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"PN" = (/obj/structure/table,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/item/gun/energy/e_gun/mini,/obj/item/gun/energy/e_gun/mini{pixel_y = 6},/obj/machinery/recharger,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Qn" = (/obj/machinery/door/airlock/external{req_access_txt = "12"},/obj/structure/fans/tiny/invisible,/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"RY" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"Sq" = (/obj/structure/table,/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{dir = 4},/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"Tl" = (/turf/open/floor/iron/showroomfloor,/area/ruin/space/has_grav/radiostation)
-"TC" = (/obj/structure/table,/obj/item/stack/sheet/cloth/ten,/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"TQ" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/door/airlock/public,/turf/open/floor/iron/showroomfloor,/area/ruin/space/has_grav/radiostation)
-"UH" = (/obj/machinery/seed_extractor,/turf/open/floor/plating/grass,/area/ruin/space/has_grav/radiostation)
-"Vk" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{dir = 4},/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"VR" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/plating/grass,/area/ruin/space/has_grav/radiostation)
-"VW" = (/obj/machinery/vending/cola/sodie,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Wj" = (/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
-"Wm" = (/obj/machinery/stasis,/obj/machinery/light{dir = 4},/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Wv" = (/obj/machinery/vending/coffee,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Ww" = (/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"WT" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/plating,/area/ruin/space/has_grav/radiostation)
-"XO" = (/obj/machinery/hydroponics/constructable,/turf/open/floor/plating/grass,/area/ruin/space/has_grav/radiostation)
-"XU" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Yu" = (/obj/structure/cable,/obj/machinery/power/apc/auto_name/east,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"YJ" = (/obj/structure/reagent_dispensers/watertank/high,/obj/item/reagent_containers/glass/bucket,/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Zp" = (/obj/structure/bed,/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 8},/turf/open/floor/iron,/area/ruin/space/has_grav/radiostation)
-"Zs" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/cafeteria,/area/ruin/space/has_grav/radiostation)
-"Zw" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{dir = 8},/turf/open/floor/iron/dark,/area/ruin/space/has_grav/radiostation)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ai" = (
+/obj/structure/table,
+/obj/item/storage/box/donkpockets{
+	pixel_x = 2
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"am" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"aq" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"aC" = (
+/obj/structure/closet/secure_closet/freezer/fridge{
+	req_access = null
+	},
+/obj/item/storage/fancy/egg_box,
+/obj/item/storage/fancy/egg_box,
+/obj/item/storage/fancy/egg_box,
+/obj/item/storage/fancy/egg_box,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"aN" = (
+/obj/machinery/door/airlock/public,
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/radiostation)
+"aO" = (
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"ba" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"bt" = (
+/obj/structure/rack{
+	dir = 8;
+	layer = 2.9
+	},
+/obj/item/storage/firstaid/advanced{
+	pixel_y = 12
+	},
+/obj/item/storage/firstaid/brute{
+	pixel_y = 8
+	},
+/obj/item/storage/firstaid/fire{
+	pixel_y = 4
+	},
+/obj/item/storage/firstaid,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"cj" = (
+/mob/living/simple_animal/pet/fox,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"dr" = (
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/radiostation)
+"dt" = (
+/obj/structure/table,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/item/bodybag,
+/obj/item/bodybag/environmental{
+	pixel_y = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"dO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"ef" = (
+/obj/machinery/door/airlock/glass,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"fv" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"fQ" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"gu" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"gH" = (
+/obj/structure/table,
+/obj/item/radio/intercom{
+	dir = 8;
+	freerange = 1;
+	name = "Pirate Radio Listening Channel";
+	pixel_x = -10;
+	pixel_y = 25
+	},
+/obj/item/radio/intercom{
+	dir = 8;
+	freerange = 1;
+	name = "Pirate Radio Listening Channel";
+	pixel_x = 10;
+	pixel_y = 25
+	},
+/obj/item/storage/fancy/nugget_box,
+/obj/item/radio/headset/chameleon,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"gS" = (
+/obj/machinery/telecomms/relay/preset/ruskie,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"hv" = (
+/obj/machinery/vending/hydronutrients,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"hC" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/radiostation)
+"iv" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"iI" = (
+/obj/structure/table,
+/obj/item/storage/firstaid/medical{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/firstaid/medical,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"ja" = (
+/obj/machinery/jukebox,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"jl" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"jp" = (
+/obj/structure/curtain,
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/radiostation)
+"jI" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"ko" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"kp" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/plasteel/twenty,
+/obj/item/stack/sheet/rglass{
+	amount = 50
+	},
+/obj/item/storage/box/stockparts/deluxe,
+/obj/item/storage/box/stockparts/deluxe,
+/obj/item/storage/box/stockparts/deluxe,
+/obj/item/storage/box/stockparts/deluxe,
+/obj/item/storage/part_replacer/bluespace,
+/obj/item/storage/box/rndboards{
+	desc = "A box containing a set of outdated boards.";
+	name = "research boards"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"kw" = (
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"kM" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"kW" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"lb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/fans/tiny/invisible,
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"lX" = (
+/turf/closed/mineral,
+/area/ruin/unpowered/no_grav)
+"mJ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/machinery/light,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"nV" = (
+/obj/machinery/smartfridge,
+/turf/closed/wall,
+/area/ruin/space/has_grav/radiostation)
+"oh" = (
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"oA" = (
+/obj/item/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/storage/box/beakers,
+/obj/structure/table,
+/obj/item/cultivator,
+/obj/item/cultivator,
+/obj/item/shovel/spade,
+/obj/item/shovel/spade,
+/obj/item/hatchet,
+/obj/item/geneshears,
+/obj/item/gun/energy/floragun,
+/obj/item/reagent_containers/glass/beaker/bluespace,
+/obj/item/reagent_containers/glass/beaker/bluespace,
+/obj/item/reagent_containers/glass/beaker/bluespace,
+/obj/item/reagent_containers/glass/beaker/bluespace,
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/radiostation)
+"pe" = (
+/obj/machinery/shower{
+	pixel_y = 14
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/radiostation)
+"pG" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"qv" = (
+/turf/closed/mineral,
+/area/space)
+"qO" = (
+/obj/machinery/reagentgrinder,
+/obj/structure/table,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"qP" = (
+/obj/structure/table,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"rN" = (
+/obj/structure/fans/tiny/invisible,
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"te" = (
+/obj/machinery/light,
+/obj/structure/toilet{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/radiostation)
+"ti" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"ts" = (
+/obj/structure/table,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c500,
+/obj/item/stack/spacecash/c500,
+/obj/item/stack/spacecash/c100,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"tt" = (
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"tw" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"tE" = (
+/obj/machinery/door/airlock/external{
+	req_access_txt = "12"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/fans/tiny/invisible,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"tN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"uu" = (
+/obj/structure/cable,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"uA" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/radiostation)
+"uH" = (
+/obj/structure/table,
+/obj/item/reagent_containers/spray/cleaner,
+/obj/item/reagent_containers/spray/cleaner,
+/obj/item/reagent_containers/spray/cleaner,
+/obj/item/grenade/chem_grenade/cleaner{
+	pixel_x = -7;
+	pixel_y = 12
+	},
+/obj/item/grenade/chem_grenade/cleaner{
+	pixel_x = -7;
+	pixel_y = 12
+	},
+/obj/item/grenade/chem_grenade/cleaner{
+	pixel_x = -7;
+	pixel_y = 12
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"va" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"vu" = (
+/obj/structure/table,
+/obj/structure/fans/tiny/invisible,
+/obj/item/mop/advanced,
+/obj/item/mop/advanced,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"vD" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/radiostation)
+"vF" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"vY" = (
+/obj/machinery/light,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"vZ" = (
+/obj/structure/table,
+/obj/machinery/computer/arcade/orion_trail{
+	desc = "For gamers only. Casuals need not apply.";
+	icon_screen = "library";
+	icon_state = "oldcomp";
+	name = "Gamer Computer"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"wt" = (
+/turf/template_noop,
+/area/template_noop)
+"wu" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"xe" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/fullupgrade{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"yf" = (
+/obj/machinery/stasis,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"ys" = (
+/obj/machinery/recharger,
+/obj/structure/table,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"yG" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12;
+	pixel_y = -6
+	},
+/obj/structure/mirror/directional/west,
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/radiostation)
+"yH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"yP" = (
+/obj/machinery/vending/clothing,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"yW" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"Aq" = (
+/turf/closed/mineral/random/high_chance,
+/area/ruin/unpowered/no_grav)
+"Ax" = (
+/obj/machinery/power/smes/magical{
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
+	name = "power storage unit"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"AF" = (
+/obj/structure/table,
+/obj/structure/fans/tiny/invisible,
+/obj/item/storage/box/lights/mixed{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/storage/box/lights/mixed{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"AG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"AQ" = (
+/obj/machinery/computer/camera_advanced{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"AV" = (
+/obj/machinery/vending,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Br" = (
+/obj/machinery/vending/boozeomat/all_access,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"Bz" = (
+/turf/closed/mineral/random/high_chance,
+/area/space)
+"BK" = (
+/obj/machinery/vending/donksofttoyvendor,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"BL" = (
+/obj/structure/closet/secure_closet/freezer/meat{
+	req_access = null
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Cr" = (
+/obj/structure/table,
+/obj/item/radio/intercom{
+	dir = 8;
+	freerange = 1;
+	name = "Pirate Radio Listening Channel";
+	pixel_x = -10;
+	pixel_y = 25
+	},
+/obj/item/radio/intercom{
+	dir = 8;
+	freerange = 1;
+	name = "Pirate Radio Listening Channel";
+	pixel_x = 10;
+	pixel_y = 25
+	},
+/obj/item/radio/headset/chameleon,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"Di" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mob_spawn/human/radiohost{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Dp" = (
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"DO" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Em" = (
+/obj/machinery/oven,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"EN" = (
+/mob/living/simple_animal/pet/cat,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"Fq" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"Fz" = (
+/obj/structure/table,
+/obj/item/radio/intercom{
+	broadcasting = 1;
+	dir = 8;
+	freerange = 1;
+	listening = 0;
+	name = "Pirate Radio Broadcast Channel"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"FD" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/radiostation)
+"FK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"Gh" = (
+/obj/machinery/vending/hydroseeds,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"Gx" = (
+/obj/structure/table,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Hb" = (
+/obj/machinery/griddle{
+	pixel_x = 2
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"Hd" = (
+/obj/machinery/vending/medical,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Hy" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"HJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Ic" = (
+/obj/machinery/processor,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"Ih" = (
+/obj/machinery/computer/camera_advanced{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"IQ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"Jd" = (
+/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
+/obj/item/storage/fancy/egg_box,
+/obj/item/storage/fancy/egg_box,
+/obj/item/storage/fancy/egg_box,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Jo" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/radiostation)
+"JN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/radiostation)
+"JZ" = (
+/mob/living/simple_animal/bot/medbot,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"KF" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"KN" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/radiostation)
+"LH" = (
+/obj/structure/cable,
+/obj/item/multitool,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical{
+	pixel_x = 3;
+	pixel_y = -4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"LY" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"LZ" = (
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Mh" = (
+/obj/machinery/vending/autodrobe/all_access,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Nq" = (
+/obj/machinery/biogenerator,
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/radiostation)
+"NC" = (
+/obj/machinery/vending/games,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"NQ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Os" = (
+/obj/structure/rack{
+	dir = 8;
+	layer = 2.9
+	},
+/obj/item/pickaxe{
+	pixel_x = 5
+	},
+/obj/item/pickaxe,
+/obj/item/mining_scanner,
+/obj/item/mining_scanner,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"OB" = (
+/obj/machinery/door/airlock/external{
+	req_access_txt = "12"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/fans/tiny/invisible,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"OK" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/syndicate{
+	pixel_x = 3
+	},
+/obj/item/storage/toolbox/syndicate{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"OW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/curtain/cloth/fancy,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Pf" = (
+/obj/structure/closet/firecloset/full,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Po" = (
+/obj/machinery/vending/snack,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Pp" = (
+/obj/machinery/grill,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"PN" = (
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/gun/energy/e_gun/mini,
+/obj/item/gun/energy/e_gun/mini{
+	pixel_y = 6
+	},
+/obj/machinery/recharger,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Qn" = (
+/obj/machinery/door/airlock/external{
+	req_access_txt = "12"
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"RY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"Sq" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"Tl" = (
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/radiostation)
+"TC" = (
+/obj/structure/table,
+/obj/item/stack/sheet/cloth/ten,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"TQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/public,
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/radiostation)
+"UH" = (
+/obj/machinery/seed_extractor,
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/radiostation)
+"Vk" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"VR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/radiostation)
+"VW" = (
+/obj/machinery/vending/cola/sodie,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Wj" = (
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"Wm" = (
+/obj/machinery/stasis,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Wv" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Ww" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"WT" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"XO" = (
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/radiostation)
+"XU" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Yu" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/east,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"YJ" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Zp" = (
+/obj/structure/bed,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Zs" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"Zw" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
 
 (1,1,1) = {"
-wtwtwtwtwtwtlXlXlXwtwtwtwtwtwtlXlXwtwtwtlXlXlXwtwt
-wtwtwtlXlXlXlXlXlXlXlXlXlXlXlXlXlXlXlXlXlXlXlXlXwt
-wtwtlXlXAqlXlXlXlXlXlXlXlXlXlXlXAqlXlXlXlXAqlXlXlX
-wtlXlXlXlXlXFDFDFDFDlXlXAqlXlXlXlXlXlXlXlXlXlXlXlX
-wtwtlXlXlXlXFDAxgSFDFDFDFDFDFDFDFDFDFDFDFDFDFDlXAq
-wtwtFDFDFDFDFDkoLHFDFDvurNFDFDtsgHFzFDFzCrTCFDlXlX
-wtwtHyXOKNoAFDkpuuFDAFWwWwENFDWjguAQFDIhkMWjFDlXwt
-wtwtHyXOdrXOFDKFWTFDuHWwcjaqFDyWFKvZFDaOFKZwFDlXwt
-wtwtHyXOdrvDFDFDwuFDWwWwWwWwFDysAGIQFDFqAGysFDlXAq
-wtwtHyXOhCNqBLJdfvFDQnHyHyFDFDFDamFDFDFDamFDFDlXlX
-wtwtHyXOVRUHaCNQNQnVkwkwXUPoVWWvdOkwjakwdOBKFDlXwt
-wtwtFDqOtNttVkZsGhHykwkwtikwkwkwdOkwkwkwdONCHylXwt
-wtfQjIkWtNLYohZshvHyYJyHdOdOdOdOdOdOdOdOdOHdHylXwt
-wtwtHyEmttaiSqZsDpHyYJyHtitwdtiIOKvYdOkwvYAVFDlXwt
-wtwtHyPpttIcxeZsBrFDHJdOtiFDFDFDFDFDjlFDFDFDFDlXwt
-wtqvFDHbttbatNZsZsefpGNQYuFDpeFDpeFDdOGxkwMhFDlXlX
-qvqvFDFDFDFDFDFDFDFDtiyHkwFDjpFDjpFDdOtimJyPFDAqlX
-wtqvFDPfkwivbtvaWmFDtiyHkwFDyGTlTlFDDivFFDFDFDlXlX
-qvBzFDPfkwXUJZkwyfFDtiyHkwFDyGTluAFDDiyHOWZpFDAqlX
-BzqvFDHJtitititidOlbdOyHDOFDFDFDJNTQdOkwFDFDFDlXlX
-wtqvFDtikwLZOsqPyHFDkwvYkwFDteaNJoFDPNyHOWZpFDlXlX
-wtqvFDOBFDHyHyHyFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDlXwt
-wtqvFDRYFDwtwtwtlXlXAqlXlXlXlXlXlXlXlXlXlXlXlXlXwt
-wtwtFDtEFDwtwtwtwtlXlXlXlXAqlXlXlXlXlXlXlXlXwtwtwt
-wtwtwtwtwtwtwtwtwtwtlXAqlXlXlXwtwtwtwtwtlXwtwtwtwt
+wt
+wt
+wt
+wt
+wt
+wt
+wt
+wt
+wt
+wt
+wt
+wt
+wt
+wt
+wt
+wt
+qv
+wt
+qv
+Bz
+wt
+wt
+wt
+wt
+wt
+"}
+(2,1,1) = {"
+wt
+wt
+wt
+lX
+wt
+wt
+wt
+wt
+wt
+wt
+wt
+wt
+fQ
+wt
+wt
+qv
+qv
+qv
+Bz
+qv
+qv
+qv
+qv
+wt
+wt
+"}
+(3,1,1) = {"
+wt
+wt
+lX
+lX
+lX
+FD
+Hy
+Hy
+Hy
+Hy
+Hy
+FD
+jI
+Hy
+Hy
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+wt
+"}
+(4,1,1) = {"
+wt
+lX
+lX
+lX
+lX
+FD
+XO
+XO
+XO
+XO
+XO
+qO
+kW
+Em
+Pp
+Hb
+FD
+Pf
+Pf
+HJ
+ti
+OB
+RY
+tE
+wt
+"}
+(5,1,1) = {"
+wt
+lX
+Aq
+lX
+lX
+FD
+KN
+dr
+dr
+hC
+VR
+tN
+tN
+tt
+tt
+tt
+FD
+kw
+kw
+ti
+kw
+FD
+FD
+FD
+wt
+"}
+(6,1,1) = {"
+wt
+lX
+lX
+lX
+lX
+FD
+oA
+XO
+vD
+Nq
+UH
+tt
+LY
+ai
+Ic
+ba
+FD
+iv
+XU
+ti
+LZ
+Hy
+wt
+wt
+wt
+"}
+(7,1,1) = {"
+lX
+lX
+lX
+FD
+FD
+FD
+FD
+FD
+FD
+BL
+aC
+Vk
+oh
+Sq
+xe
+tN
+FD
+bt
+JZ
+ti
+Os
+Hy
+wt
+wt
+wt
+"}
+(8,1,1) = {"
+lX
+lX
+lX
+FD
+Ax
+ko
+kp
+KF
+FD
+Jd
+NQ
+Zs
+Zs
+Zs
+Zs
+Zs
+FD
+va
+kw
+ti
+qP
+Hy
+wt
+wt
+wt
+"}
+(9,1,1) = {"
+lX
+lX
+lX
+FD
+gS
+LH
+uu
+WT
+wu
+fv
+NQ
+Gh
+hv
+Dp
+Br
+Zs
+FD
+Wm
+yf
+dO
+yH
+FD
+lX
+wt
+wt
+"}
+(10,1,1) = {"
+wt
+lX
+lX
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+nV
+Hy
+Hy
+Hy
+FD
+ef
+FD
+FD
+FD
+lb
+FD
+FD
+lX
+lX
+wt
+"}
+(11,1,1) = {"
+wt
+lX
+lX
+lX
+FD
+FD
+AF
+uH
+Ww
+Qn
+kw
+kw
+YJ
+YJ
+HJ
+pG
+ti
+ti
+ti
+dO
+kw
+FD
+Aq
+lX
+lX
+"}
+(12,1,1) = {"
+wt
+lX
+lX
+lX
+FD
+vu
+Ww
+Ww
+Ww
+Hy
+kw
+kw
+yH
+yH
+dO
+NQ
+yH
+yH
+yH
+yH
+vY
+FD
+lX
+lX
+Aq
+"}
+(13,1,1) = {"
+wt
+lX
+lX
+Aq
+FD
+rN
+Ww
+cj
+Ww
+Hy
+XU
+ti
+dO
+ti
+ti
+Yu
+kw
+kw
+kw
+DO
+kw
+FD
+lX
+lX
+lX
+"}
+(14,1,1) = {"
+wt
+lX
+lX
+lX
+FD
+FD
+EN
+aq
+Ww
+FD
+Po
+kw
+dO
+tw
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+lX
+Aq
+lX
+"}
+(15,1,1) = {"
+wt
+lX
+lX
+lX
+FD
+FD
+FD
+FD
+FD
+FD
+VW
+kw
+dO
+dt
+FD
+pe
+jp
+yG
+yG
+FD
+te
+FD
+lX
+lX
+lX
+"}
+(16,1,1) = {"
+lX
+lX
+lX
+lX
+FD
+ts
+Wj
+yW
+ys
+FD
+Wv
+kw
+dO
+iI
+FD
+FD
+FD
+Tl
+Tl
+FD
+aN
+FD
+lX
+lX
+wt
+"}
+(17,1,1) = {"
+lX
+lX
+Aq
+lX
+FD
+gH
+gu
+FK
+AG
+am
+dO
+dO
+dO
+OK
+FD
+pe
+jp
+Tl
+uA
+JN
+Jo
+FD
+lX
+lX
+wt
+"}
+(18,1,1) = {"
+wt
+lX
+lX
+lX
+FD
+Fz
+AQ
+vZ
+IQ
+FD
+kw
+kw
+dO
+vY
+FD
+FD
+FD
+FD
+FD
+TQ
+FD
+FD
+lX
+lX
+wt
+"}
+(19,1,1) = {"
+wt
+lX
+lX
+lX
+FD
+FD
+FD
+FD
+FD
+FD
+ja
+kw
+dO
+dO
+jl
+dO
+dO
+Di
+Di
+dO
+PN
+FD
+lX
+lX
+wt
+"}
+(20,1,1) = {"
+wt
+lX
+lX
+lX
+FD
+Fz
+Ih
+aO
+Fq
+FD
+kw
+kw
+dO
+kw
+FD
+Gx
+ti
+vF
+yH
+kw
+yH
+FD
+lX
+lX
+wt
+"}
+(21,1,1) = {"
+lX
+lX
+lX
+lX
+FD
+Cr
+kM
+FK
+AG
+am
+dO
+dO
+dO
+vY
+FD
+kw
+mJ
+FD
+OW
+FD
+OW
+FD
+lX
+lX
+lX
+"}
+(22,1,1) = {"
+lX
+lX
+Aq
+lX
+FD
+TC
+Wj
+Zw
+ys
+FD
+BK
+NC
+Hd
+AV
+FD
+Mh
+yP
+FD
+Zp
+FD
+Zp
+FD
+lX
+lX
+wt
+"}
+(23,1,1) = {"
+lX
+lX
+lX
+lX
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+Hy
+Hy
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+lX
+wt
+wt
+"}
+(24,1,1) = {"
+wt
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+Aq
+lX
+Aq
+lX
+lX
+lX
+lX
+wt
+wt
+"}
+(25,1,1) = {"
+wt
+wt
+lX
+lX
+Aq
+lX
+wt
+wt
+Aq
+lX
+wt
+wt
+wt
+wt
+wt
+lX
+lX
+lX
+lX
+lX
+lX
+wt
+wt
+wt
+wt
 "}
