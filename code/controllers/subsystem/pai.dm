@@ -47,7 +47,9 @@ SUBSYSTEM_DEF(pai)
 				var/choice = tgui_input_list(usr, "Pick a colour for your pAI", "Interface Color",list("Malware Red", "Data Green", "Holonet Blue", "Input Yellow", "Storagespace Orange", "Output Purple", "Custom"))
 				if(choice == "Custom")
 					choice = input(usr, "Enter a color for your pAI.", "pAI color", candidate.color) as color|null
-					if(choice)
+					if(is_color_dark(choice, 0.5))
+						tgui_alert(usr, "The colour is too dark! Pick something lighter!", "Error", list("OK"))
+					else
 						candidate.color = choice
 				else if(choice)
 					candidate.color = pai_color_predetermined[choice]
