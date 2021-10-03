@@ -132,14 +132,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/healium = HEALIUM_HEAT_PENALTY,
 		/datum/gas/proto_nitrate = PROTO_NITRATE_HEAT_PENALTY,
 		/datum/gas/zauker = ZAUKER_HEAT_PENALTY,
-		/datum/gas/antinoblium = ANTINOBLIUM_HEAT_PENALTY,
 	)
 	///The list of gases mapped against their heat resistance. We use it to moderate heat damage.
 	var/list/gas_resist = list(
 		/datum/gas/nitrous_oxide = N2O_HEAT_RESISTANCE,
 		/datum/gas/hydrogen = HYDROGEN_HEAT_RESISTANCE,
 		/datum/gas/proto_nitrate = PROTO_NITRATE_HEAT_RESISTANCE,
-		/datum/gas/antinoblium = ANTINOBLIUM_HEAT_RESISTANCE,
 	)
 	///The list of gases mapped against their powermix ratio
 	var/list/gas_powermix = list(
@@ -551,7 +549,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				damage = max(damage + (min(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD) + (45 * psyCoeff)), 0) / 150 ), 0)
 
 			//Maintaining a high antinoblium_multiplier will heal the SM.
-			damage = max(damage - log(10, max(antinoblium_multiplier - 10, 1)), 0)
+			damage = max(damage - log(10, antinoblium_multiplier), 0)
 			//Check for holes in the SM inner chamber
 			for(var/turf/open/space/turf_to_check in RANGE_TURFS(1, loc))
 				if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))

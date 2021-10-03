@@ -11,7 +11,6 @@
 #define HEALIUM_HEAT_PENALTY 4
 #define PROTO_NITRATE_HEAT_PENALTY -3
 #define ZAUKER_HEAT_PENALTY 8
-#define ANTINOBLIUM_HEAT_PENALTY 1
 
 //All of these get divided by 10-bzcomp * 5 before having 1 added and being multiplied with power to determine rads
 //Keep the negative values here above -10 and we won't get negative rads
@@ -33,7 +32,6 @@
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
 #define HYDROGEN_HEAT_RESISTANCE 2 // just a bit of heat resistance to spice it up
 #define PROTO_NITRATE_HEAT_RESISTANCE 5
-#define ANTINOBLIUM_HEAT_RESISTANCE 3 //Its very low specific heat and the nature of giving SM high power heats it up very easily.
 
 /// The minimum portion of the miasma in the air that will be consumed. Higher values mean more miasma will be consumed be default.
 #define MIASMA_CONSUMPTION_RATIO_MIN 0
