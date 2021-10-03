@@ -269,10 +269,10 @@ SUBSYSTEM_DEF(persistence)
 		return
 
 	var/frame_json = json_decode(file2text(frame_path))
-	fdel(frame_path)
 	frame_json -= identifier
 
 	frame_json = json_encode(frame_json)
+	fdel(frame_path)
 	WRITE_FILE(frame_path, frame_json)
 
 /datum/controller/subsystem/persistence/proc/LoadPhotoPersistence()
