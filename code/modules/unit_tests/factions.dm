@@ -3,7 +3,6 @@
  * and the faction_bind component work correctly.
  */
 /datum/unit_test/factions
-	var/emotes_used = 0
 
 /datum/unit_test/factions/Run()
 
