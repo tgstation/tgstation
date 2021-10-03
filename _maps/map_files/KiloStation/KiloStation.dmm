@@ -35221,10 +35221,16 @@
 /area/security/prison)
 "gfH" = (
 /obj/structure/rack,
-/obj/item/storage/crayons,
-/obj/item/storage/crayons,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/north,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/rcl/pre_loaded,
+/obj/item/storage/crayons,
+/obj/item/storage/crayons,
 /turf/open/floor/iron/dark,
 /area/service/library)
 "gfK" = (
@@ -44508,6 +44514,7 @@
 "jId" = (
 /obj/structure/easel,
 /obj/effect/turf_decal/bot,
+/obj/item/canvas/twentythree_twentythree,
 /obj/item/airlock_painter,
 /turf/open/floor/iron/dark,
 /area/service/library)
