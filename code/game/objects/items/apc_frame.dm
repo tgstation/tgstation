@@ -24,7 +24,7 @@
 	if(A.always_unpowered)
 		to_chat(user, span_warning("You cannot place [src] in this area!"))
 		return
-	if(gotwallitem(T, ndir, inverse*2))
+	if(got_wall_item(T, ndir, inverse*2))
 		to_chat(user, span_warning("There's already an item on this wall!"))
 		return
 
