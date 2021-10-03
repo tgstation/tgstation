@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes: 
-  - bugfix: "Reactions will now properly fully react when it has moles to consume. Instead of the reaction stopping when one of the gasses is lower than reaction rate, it will instead adjust the reaction rate so that it consumes all of the gas."
