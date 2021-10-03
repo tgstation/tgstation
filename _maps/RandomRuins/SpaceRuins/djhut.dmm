@@ -359,7 +359,7 @@
 /area/ruin/space/has_grav/radiostation)
 "qv" = (
 /turf/closed/mineral,
-/area/space)
+/area/ruin/space/has_grav/radiostation)
 "qO" = (
 /obj/machinery/reagentgrinder,
 /obj/structure/table,
@@ -631,7 +631,7 @@
 /area/ruin/space/has_grav/radiostation)
 "Bz" = (
 /turf/closed/mineral/random/high_chance,
-/area/space)
+/area/ruin/space/has_grav/radiostation)
 "BK" = (
 /obj/machinery/vending/donksofttoyvendor,
 /obj/effect/turf_decal/tile/brown/anticorner{
