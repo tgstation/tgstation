@@ -1,24 +1,24 @@
 /**
- * # Bit Array to Number Component
+ * # Decimal Conversion Component
  *
- * Return an array (well, different outputs actually) of binary digits.
+ * Return a number from an array of binary inputs.
  */
-/obj/item/circuit_component/binary_decimal/bit_array_to_decimal
-	display_name = "Binary Array To Decimal Number"
+/obj/item/circuit_component/binary_decimal/decimal_conversion
+	display_name = "Decimal Conversion"
 	desc = "Merges an array of binary digits, or bits, represented as 1 or 0 and often used in boolean or binary operations, into a decimal number. \
 		Attack in hand to increase array size, right click to decrease array size."
 
-/obj/item/circuit_component/binary_decimal/bit_array_to_decimal/populate_ports()
+/obj/item/circuit_component/binary_decimal/decimal_conversion/populate_ports()
 	. = ..()
 	number = add_output_port("Number", PORT_TYPE_NUMBER)
 
-/obj/item/circuit_component/binary_decimal/bit_array_to_decimal/add_bit_port(index)
+/obj/item/circuit_component/binary_decimal/decimal_conversion/add_bit_port(index)
 	add_input_port("Bit [index]", PORT_TYPE_NUMBER)
 
-/obj/item/circuit_component/binary_decimal/bit_array_to_decimal/remove_bit_port(datum/port/to_remove)
+/obj/item/circuit_component/binary_decimal/decimal_conversion/remove_bit_port(datum/port/to_remove)
 	remove_input_port(to_remove)
 
-/obj/item/circuit_component/binary_decimal/bit_array_to_decimal/input_received(datum/port/input/port)
+/obj/item/circuit_component/binary_decimal/decimal_conversion/input_received(datum/port/input/port)
 	if(!array_size)
 		return
 

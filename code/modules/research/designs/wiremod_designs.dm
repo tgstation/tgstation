@@ -93,15 +93,15 @@
 	id = "comp_random"
 	build_path = /obj/item/circuit_component/random
 
-/datum/design/component/decimal_to_bit_array
-	name = "Decimal Number To Binary Array"
-	id = "comp_dec_to_bits"
-	build_path = /obj/item/circuit_component/binary_decimal/decimal_to_bit_array
+/datum/design/component/binary_conversion
+	name = "Binary Conversion Component"
+	id = "comp_binary_convert"
+	build_path = /obj/item/circuit_component/binary_decimal/binary_conversion
 
-/datum/design/component/bit_array_to_decimal
-	name = "Binary Array To Decimal Number"
-	id = "comp_bits_to_dec"
-	build_path = /obj/item/circuit_component/binary_decimal/bit_array_to_decimal
+/datum/design/component/decimal_conversion
+	name = "Decimal Conversion Component"
+	id = "comp_decimal_convert"
+	build_path = /obj/item/circuit_component/binary_decimal/decimal_conversion
 
 /datum/design/component/species
 	name = "Get Species Component"
