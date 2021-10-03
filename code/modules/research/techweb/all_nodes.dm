@@ -220,6 +220,8 @@
 		"comp_module",
 		"comp_multiplexer",
 		"comp_not",
+		"comp_de_to_bits",
+		"comp_bits_to_dec",
 		"comp_ntnet_receive",
 		"comp_ntnet_send",
 		"comp_pinpointer",
