@@ -10,6 +10,12 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/radiostation)
+"al" = (
+/obj/effect/turf_decal/tile/brown/anticorner{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
 "am" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -41,11 +47,26 @@
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/radiostation)
+"aQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
 "ba" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/structure/sink{
+	dir = 1;
+	pixel_y = -8
+	},
 /turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"bj" = (
+/obj/effect/turf_decal/tile/brown/half,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "bt" = (
 /obj/structure/rack{
@@ -64,9 +85,23 @@
 /obj/item/storage/firstaid,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
+"ca" = (
+/obj/structure/sign/poster/official/random{
+	pixel_y = -30
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
 "cj" = (
 /mob/living/simple_animal/pet/fox,
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"dc" = (
+/obj/machinery/button/curtain{
+	id = null;
+	id_tag = "djhut";
+	pixel_x = 25
+	},
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/radiostation)
 "dr" = (
 /turf/open/floor/plating/grass,
@@ -80,6 +115,7 @@
 /obj/item/bodybag/environmental{
 	pixel_y = 8
 	},
+/obj/effect/turf_decal/tile/brown/half,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "dO" = (
@@ -110,6 +146,12 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"gk" = (
+/obj/effect/turf_decal/tile/brown/anticorner{
+	dir = 8
+	},
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "gu" = (
 /obj/structure/chair/office{
@@ -149,6 +191,19 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plating/grass,
 /area/ruin/space/has_grav/radiostation)
+"ic" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/poster/official/random{
+	pixel_x = 30
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"it" = (
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
 "iv" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/iron,
@@ -160,10 +215,23 @@
 	pixel_y = 3
 	},
 /obj/item/storage/firstaid/medical,
+/obj/effect/turf_decal/tile/brown/half,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"iM" = (
+/obj/machinery/airalarm/all_access{
+	pixel_y = 30
+	},
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "ja" = (
 /obj/machinery/jukebox,
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "jl" = (
@@ -271,6 +339,12 @@
 /obj/item/reagent_containers/glass/beaker/bluespace,
 /turf/open/floor/plating/grass,
 /area/ruin/space/has_grav/radiostation)
+"oC" = (
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
 "pe" = (
 /obj/machinery/shower{
 	pixel_y = 14
@@ -320,6 +394,7 @@
 /obj/item/stack/spacecash/c500,
 /obj/item/stack/spacecash/c500,
 /obj/item/stack/spacecash/c100,
+/obj/effect/spawner/random/entertainment/musical_instrument,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/radiostation)
 "tt" = (
@@ -327,6 +402,7 @@
 /area/ruin/space/has_grav/radiostation)
 "tw" = (
 /obj/machinery/vending/cigarette,
+/obj/effect/turf_decal/tile/brown/half,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "tE" = (
@@ -344,12 +420,25 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/radiostation)
+"tY" = (
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 30
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
 "uu" = (
 /obj/structure/cable,
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"uz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 8
+	},
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "uA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -375,10 +464,13 @@
 	pixel_x = -7;
 	pixel_y = 12
 	},
+/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/radiostation)
 "va" = (
-/obj/structure/reagent_dispensers/watertank/high,
+/obj/effect/turf_decal/mining/survival{
+	pixel_y = 26
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "vu" = (
@@ -405,6 +497,7 @@
 /area/ruin/space/has_grav/radiostation)
 "vY" = (
 /obj/machinery/light,
+/obj/effect/turf_decal/tile/brown/half,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "vZ" = (
@@ -416,6 +509,20 @@
 	name = "Gamer Computer"
 	},
 /turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/radiostation)
+"wh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"wn" = (
+/obj/effect/turf_decal/tile/brown/anticorner,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "wt" = (
 /turf/template_noop,
@@ -433,6 +540,15 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/radiostation)
+"xv" = (
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 1
+	},
+/obj/structure/sign/poster/official/random{
+	pixel_y = 30
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
 "yf" = (
 /obj/machinery/stasis,
 /turf/open/floor/iron,
@@ -440,6 +556,7 @@
 "ys" = (
 /obj/machinery/recharger,
 /obj/structure/table,
+/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/radiostation)
 "yG" = (
@@ -462,6 +579,9 @@
 "yW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
+	},
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = -30
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/radiostation)
@@ -502,6 +622,7 @@
 /area/ruin/space/has_grav/radiostation)
 "AV" = (
 /obj/machinery/vending,
+/obj/effect/turf_decal/tile/brown/anticorner,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "Br" = (
@@ -513,6 +634,9 @@
 /area/space)
 "BK" = (
 /obj/machinery/vending/donksofttoyvendor,
+/obj/effect/turf_decal/tile/brown/anticorner{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "BL" = (
@@ -597,12 +721,9 @@
 /obj/machinery/vending/hydroseeds,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/radiostation)
-"Gx" = (
-/obj/structure/table,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
-/turf/open/floor/iron,
+"Gu" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/floor/plating/grass,
 /area/ruin/space/has_grav/radiostation)
 "Hb" = (
 /obj/machinery/griddle{
@@ -630,6 +751,7 @@
 /area/ruin/space/has_grav/radiostation)
 "Ic" = (
 /obj/machinery/processor,
+/obj/structure/table,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/radiostation)
 "Ih" = (
@@ -648,11 +770,14 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/radiostation)
 "Jd" = (
-/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
-/obj/item/storage/fancy/egg_box,
-/obj/item/storage/fancy/egg_box,
-/obj/item/storage/fancy/egg_box,
+/obj/structure/sign/poster/official/random{
+	pixel_y = 30
+	},
 /turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Jl" = (
+/obj/effect/turf_decal/box,
+/turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/radiostation)
 "Jo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -713,6 +838,12 @@
 /obj/machinery/vending/games,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
+"NJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/brown/half,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
 "NQ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -736,9 +867,13 @@
 	req_access_txt = "12"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/fans/tiny/invisible,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"OJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/caution/stand_clear,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "OK" = (
 /obj/structure/table,
@@ -749,6 +884,7 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
+/obj/effect/turf_decal/tile/brown/half,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "OW" = (
@@ -763,11 +899,19 @@
 /area/ruin/space/has_grav/radiostation)
 "Po" = (
 /obj/machinery/vending/snack,
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "Pp" = (
 /obj/machinery/grill,
 /turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/radiostation)
+"Pr" = (
+/obj/effect/spawner/random/decoration/carpet,
+/obj/effect/spawner/random/decoration/paint,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/radiostation)
 "PN" = (
 /obj/structure/table,
@@ -786,6 +930,28 @@
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/radiostation)
+"Qo" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
+"Qy" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/curtain{
+	id_tag = "djhut"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"RU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = -30
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
 "RY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -797,12 +963,23 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/radiostation)
+"Td" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 8
+	},
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = -30
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/radiostation)
 "Tl" = (
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/radiostation)
 "TC" = (
 /obj/structure/table,
 /obj/item/stack/sheet/cloth/ten,
+/obj/effect/spawner/random/entertainment/musical_instrument,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/radiostation)
 "TQ" = (
@@ -827,9 +1004,17 @@
 /area/ruin/space/has_grav/radiostation)
 "VW" = (
 /obj/machinery/vending/cola/sodie,
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "Wj" = (
+/obj/machinery/button/curtain{
+	id = null;
+	id_tag = "djhut";
+	pixel_x = -25
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/radiostation)
 "Wm" = (
@@ -841,6 +1026,9 @@
 /area/ruin/space/has_grav/radiostation)
 "Wv" = (
 /obj/machinery/vending/coffee,
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "Ww" = (
@@ -850,6 +1038,12 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/radiostation)
+"XF" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 8
+	},
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "XO" = (
 /obj/machinery/hydroponics/constructable,
@@ -867,6 +1061,9 @@
 "YJ" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/item/reagent_containers/glass/bucket,
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/radiostation)
 "Zp" = (
@@ -885,6 +1082,9 @@
 "Zw" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
+	},
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = 30
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/radiostation)
@@ -977,7 +1177,7 @@ lX
 lX
 lX
 FD
-XO
+Gu
 XO
 XO
 XO
@@ -991,7 +1191,7 @@ FD
 Pf
 Pf
 HJ
-ti
+OJ
 OB
 RY
 tE
@@ -1010,10 +1210,10 @@ dr
 hC
 VR
 tN
-tN
+aQ
 tt
-tt
-tt
+Jl
+ca
 FD
 kw
 kw
@@ -1170,17 +1370,17 @@ AF
 uH
 Ww
 Qn
-kw
-kw
+al
+it
 YJ
 YJ
-HJ
+wh
 pG
-ti
-ti
-ti
+uz
+Td
+uz
 dO
-kw
+gk
 FD
 Aq
 lX
@@ -1197,7 +1397,7 @@ Ww
 Ww
 Ww
 Hy
-kw
+oC
 kw
 yH
 yH
@@ -1224,17 +1424,17 @@ Ww
 cj
 Ww
 Hy
-XU
+Qo
 ti
 dO
 ti
-ti
+ic
 Yu
 kw
-kw
-kw
+XF
+XF
 DO
-kw
+wn
 FD
 lX
 lX
@@ -1249,7 +1449,7 @@ FD
 FD
 EN
 aq
-Ww
+Pr
 FD
 Po
 kw
@@ -1359,7 +1559,7 @@ AQ
 vZ
 IQ
 FD
-kw
+iM
 kw
 dO
 vY
@@ -1382,17 +1582,17 @@ lX
 lX
 FD
 FD
-FD
-FD
+Qy
+Qy
 FD
 FD
 ja
 kw
 dO
-dO
+NJ
 jl
 dO
-dO
+RU
 Di
 Di
 dO
@@ -1413,12 +1613,12 @@ Ih
 aO
 Fq
 FD
-kw
+xv
 kw
 dO
-kw
+bj
 FD
-Gx
+DO
 ti
 vF
 yH
@@ -1445,7 +1645,7 @@ dO
 dO
 vY
 FD
-kw
+tY
 mJ
 FD
 OW
@@ -1463,7 +1663,7 @@ Aq
 lX
 FD
 TC
-Wj
+dc
 Zw
 ys
 FD
@@ -1521,10 +1721,10 @@ lX
 lX
 lX
 lX
-lX
-lX
-lX
-lX
+wt
+wt
+wt
+wt
 lX
 lX
 Aq
