@@ -13,7 +13,7 @@
  * This one only works with numbers.
  */
 /obj/item/circuit_component/trigonometric
-	display_name = "Arithmetic"
+	display_name = "Trigonometric"
 	desc = "General trigonometric component with main and inverse trigonometric functions."
 
 	var/datum/port/input/option/trigonometric_function
