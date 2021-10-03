@@ -44,7 +44,7 @@
 	song_length = length
 	song_beat = beat
 
-/obj/machinery/jukebox/Initialize()
+/obj/machinery/jukebox/Initialize(mapload)
 	. = ..()
 	var/list/tracks = flist("[global.config.directory]/jukebox_music/sounds/")
 

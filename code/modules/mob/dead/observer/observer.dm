@@ -34,7 +34,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/image/ghostimage_simple = null //this mob with the simple white ghost sprite
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/mob/observetarget = null //The target mob that the ghost is observing. Used as a reference in logout()
-	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
 	var/health_scan = FALSE //Are health scans currently enabled?
 	var/chem_scan = FALSE //Are chem scans currently enabled?
@@ -60,10 +59,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	// Used for displaying in ghost chat, without changing the actual name
 	// of the mob
 	var/deadchat_name
-	var/datum/orbit_menu/orbit_menu
 	var/datum/spawners_menu/spawners_menu
 
-/mob/dead/observer/Initialize()
+/mob/dead/observer/Initialize(mapload)
 	set_invisibility(GLOB.observer_default_invisibility)
 
 	add_verb(src, list(
@@ -116,7 +114,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	update_appearance()
 
-	if(!T)
+	if(!T || SSmapping.level_trait(T.z, ZTRAIT_SECRET))
 		var/list/turfs = get_area_turfs(/area/shuttle/arrival)
 		if(turfs.len)
 			T = pick(turfs)
@@ -149,6 +147,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	show_data_huds()
 	data_huds_on = 1
 
+	SSpoints_of_interest.make_point_of_interest(src)
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
@@ -176,7 +175,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	updateallghostimages()
 
-	QDEL_NULL(orbit_menu)
 	QDEL_NULL(spawners_menu)
 	return ..()
 
@@ -457,14 +455,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Orbit" // "Haunt"
 	set desc = "Follow and orbit a mob."
 
-	if(!orbit_menu)
-		orbit_menu = new(src)
-
-	orbit_menu.ui_interact(src)
+	GLOB.orbit_menu.show(src)
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
-	if (!istype(target))
+	if (!istype(target) || (SSmapping.level_trait(target.z, ZTRAIT_SECRET) && !client?.holder))
 		return
 
 	var/icon/I = icon(target.icon,target.icon_state,target.dir)
@@ -503,27 +498,31 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Jump to Mob"
 	set desc = "Teleport to a mob"
 
-	if(isobserver(usr)) //Make sure they're an observer!
+	if(!isobserver(usr)) //Make sure they're an observer!
+		return
 
+	var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
+	var/target = null
 
-		var/list/dest = list() //List of possible destinations (mobs)
-		var/target = null    //Chosen target.
+	target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in possible_destinations
 
-		dest += getpois(mobs_only = TRUE) //Fill list, prompt user with list
-		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
+	if (!target || !isobserver(usr))
+		return
 
-		if (!target)//Make sure we actually have a target
-			return
-		else
-			var/mob/M = dest[target] //Destination mob
-			var/mob/A = src  //Source mob
-			var/turf/T = get_turf(M) //Turf of the destination mob
+	var/mob/destination_mob = possible_destinations[target] //Destination mob
 
-			if(T && isturf(T)) //Make sure the turf exists, then move the source to that destination.
-				A.abstract_move(T)
-				A.update_parallax_contents()
-			else
-				to_chat(A, span_danger("This mob is not located in the game world."))
+	// During the break between opening the input menu and selecting our target, has this become an invalid option?
+	if(!SSpoints_of_interest.is_valid_poi(destination_mob))
+		return
+
+	var/mob/source_mob = src  //Source mob
+	var/turf/destination_turf = get_turf(destination_mob) //Turf of the destination mob
+
+	if(isturf(destination_turf))
+		source_mob.abstract_move(destination_turf)
+		source_mob.update_parallax_contents()
+	else
+		to_chat(source_mob, span_danger("This mob is not located in the game world."))
 
 /mob/dead/observer/verb/change_view_range()
 	set category = "Ghost"
@@ -847,43 +846,75 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/reset_perspective(atom/A)
 	if(client)
 		if(ismob(client.eye) && (client.eye != src))
-			var/mob/target = client.eye
-			observetarget = null
-			if(target.observers)
-				target.observers -= src
-				UNSETEMPTY(target.observers)
+			cleanup_observe()
 	if(..())
 		if(hud_used)
 			client.screen = list()
 			hud_used.show_hud(hud_used.hud_version)
 
+
+/mob/dead/observer/proc/cleanup_observe()
+	var/mob/target = observetarget
+	observetarget = null
+	client?.perspective = initial(client.perspective)
+	sight = initial(sight)
+	UnregisterSignal(target, COMSIG_MOVABLE_Z_CHANGED)
+	if(target.observers)
+		target.observers -= src
+		UNSETEMPTY(target.observers)
+
 /mob/dead/observer/verb/observe()
 	set name = "Observe"
 	set category = "Ghost"
 
-	var/list/creatures = getpois()
+	if(!isobserver(usr)) //Make sure they're an observer!
+		return
 
 	reset_perspective(null)
 
-	var/eye_name = null
+	var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
+	var/target = null
 
-	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
+	target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in possible_destinations
 
-	if (!eye_name)
+	if (!target || !isobserver(usr))
 		return
 
-	do_observe(creatures[eye_name])
+	var/mob/chosen_target = possible_destinations[target]
+
+	// During the break between opening the input menu and selecting our target, has this become an invalid option?
+	if(!SSpoints_of_interest.is_valid_poi(chosen_target))
+		return
+
+	do_observe(chosen_target)
 
 /mob/dead/observer/proc/do_observe(mob/mob_eye)
+	if(isnewplayer(mob_eye))
+		stack_trace("/mob/dead/new_player: \[[mob_eye]\] is being observed by [key_name(src)]. This should never happen and has been blocked.")
+		message_admins("[ADMIN_LOOKUPFLW(src)] attempted to observe someone in the lobby: [ADMIN_LOOKUPFLW(mob_eye)]. This should not be possible and has been blocked.")
+		return
+
 	//Istype so we filter out points of interest that are not mobs
 	if(client && mob_eye && istype(mob_eye))
 		client.eye = mob_eye
+		client.perspective = EYE_PERSPECTIVE
+		if(SSmapping.level_trait(mob_eye.z, ZTRAIT_SECRET) && !client?.holder)
+			sight = null //we dont want ghosts to see through walls in secret areas
+		RegisterSignal(mob_eye, COMSIG_MOVABLE_Z_CHANGED, .proc/on_observing_z_changed)
 		if(mob_eye.hud_used)
 			client.screen = list()
 			LAZYINITLIST(mob_eye.observers)
 			mob_eye.observers |= src
 			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
 			observetarget = mob_eye
+
+/mob/dead/observer/proc/on_observing_z_changed(datum/source, turf/old_turf, turf/new_turf)
+	SIGNAL_HANDLER
+
+	if(SSmapping.level_trait(new_turf.z, ZTRAIT_SECRET) && !client?.holder)
+		sight = null //we dont want ghosts to see through walls in secret areas
+	else
+		sight = initial(sight)
 
 /mob/dead/observer/verb/register_pai_candidate()
 	set category = "Ghost"

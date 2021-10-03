@@ -8,6 +8,7 @@
 	open_sound_volume = 25
 	close_sound_volume = 50
 	max_integrity = 70
+	door_anim_time = 0 // no animation
 
 /obj/structure/closet/acloset
 	name = "strange closet"
@@ -120,10 +121,10 @@
 
 /obj/structure/closet/mini_fridge/PopulateContents()
 	. = ..()
-	new /obj/effect/spawner/lootdrop/refreshing_beverage(src)
-	new /obj/effect/spawner/lootdrop/refreshing_beverage(src)
+	new /obj/effect/spawner/random/food_or_drink/refreshing_beverage(src)
+	new /obj/effect/spawner/random/food_or_drink/refreshing_beverage(src)
 	if(prob(50))
-		new /obj/effect/spawner/lootdrop/refreshing_beverage(src)
+		new /obj/effect/spawner/random/food_or_drink/refreshing_beverage(src)
 	if(prob(40))
 		if(prob(50))
 			new /obj/item/food/pizzaslice/moldy/bacteria(src)

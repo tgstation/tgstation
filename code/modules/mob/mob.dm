@@ -676,22 +676,22 @@
 		to_chat(usr, span_boldnotice("You must be dead to use this!"))
 		return
 
-	log_game("[key_name(usr)] used abandon mob.")
+	log_game("[key_name(usr)] used the respawn button.")
 
 	to_chat(usr, span_boldnotice("Please roleplay correctly!"))
 
 	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
+		log_game("[key_name(usr)] respawn failed due to disconnect.")
 		return
 	client.screen.Cut()
 	client.screen += client.void
 	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
+		log_game("[key_name(usr)] respawn failed due to disconnect.")
 		return
 
 	var/mob/dead/new_player/M = new /mob/dead/new_player()
 	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
+		log_game("[key_name(usr)] respawn failed due to disconnect.")
 		qdel(M)
 		return
 
@@ -910,6 +910,15 @@
 
 ///Add a spell to the mobs spell list
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/S)
+	// HACK: Preferences menu creates one of every selectable species.
+	// Some species, like vampires, create spells when they're made.
+	// The "action" is created when those spells Initialize.
+	// Preferences menu can create these assets at *any* time, primarily before
+	// the atoms SS initializes.
+	// That means "action" won't exist.
+	if (isnull(S.action))
+		return
+
 	LAZYADD(mob_spell_list, S)
 	S.action.Grant(src)
 

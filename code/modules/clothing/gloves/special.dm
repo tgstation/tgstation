@@ -11,7 +11,7 @@
 	undyeable = TRUE
 	var/datum/weakref/pull_component_weakref
 
-/obj/item/clothing/gloves/cargo_gauntlet/Initialize()
+/obj/item/clothing/gloves/cargo_gauntlet/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, .proc/on_glove_equip)
 	RegisterSignal(src, COMSIG_ITEM_POST_UNEQUIP, .proc/on_glove_unequip)

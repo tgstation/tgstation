@@ -313,7 +313,7 @@
 	var/obj/machinery/power/tracker/connected_tracker = null
 	var/list/connected_panels = list()
 
-/obj/machinery/power/solar_control/Initialize()
+/obj/machinery/power/solar_control/Initialize(mapload)
 	. = ..()
 	azimuth_rate = SSsun.base_rotation
 	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/timed_track)

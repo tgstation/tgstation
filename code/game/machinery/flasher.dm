@@ -176,7 +176,7 @@
 			new /obj/item/stack/sheet/iron (loc, 2)
 	qdel(src)
 
-/obj/machinery/flasher/portable/Initialize()
+/obj/machinery/flasher/portable/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 0)
 

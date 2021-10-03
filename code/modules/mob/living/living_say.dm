@@ -93,19 +93,21 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	return new_msg
 
 /mob/living/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	var/ic_blocked = FALSE
-	if(client && !forced && CHAT_FILTER_CHECK(message))
+	var/list/filter_result
+	if(client && !forced)
 		//The filter doesn't act on the sanitized message, but the raw message.
-		ic_blocked = TRUE
+		filter_result = is_ic_filtered(message)
 
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
 		return
 
-	if(ic_blocked)
+	if(filter_result)
 		//The filter warning message shows the sanitized message though.
-		to_chat(src, span_warning("That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[message]\"</span>"))
+		to_chat(src, span_warning("That message contained a word prohibited in IC chat! Consider reviewing the server rules."))
+		to_chat(src, span_warning("\"[message]\""))
+		REPORT_CHAT_FILTER_TO_USER(src, filter_result)
 		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
 		return
 	var/list/message_mods = list()

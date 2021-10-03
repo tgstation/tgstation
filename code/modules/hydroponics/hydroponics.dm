@@ -56,7 +56,7 @@
 	///The icon state for the overlay used to represent that this tray is self-sustaining.
 	var/self_sustaining_overlay_icon_state = "gaia_blessing"
 
-/obj/machinery/hydroponics/Initialize()
+/obj/machinery/hydroponics/Initialize(mapload)
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
 	//SO HERE LIES THE "nutrilevel" VAR. IT'S DEAD AND I PUT IT OUT OF IT'S MISERY. USE "reagents" INSTEAD. ~ArcaneMusic, accept no substitutes.
 	create_reagents(20)

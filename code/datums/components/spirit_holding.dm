@@ -101,10 +101,10 @@
 /datum/component/spirit_holding/proc/attempt_exorcism(mob/exorcist)
 	var/atom/movable/exorcised_movable = parent
 	to_chat(exorcist, span_notice("You begin to exorcise [parent]..."))
-	playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
+	playsound(parent, 'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
 	if(!do_after(exorcist, 4 SECONDS, target = exorcised_movable))
 		return
-	playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
+	playsound(parent, 'sound/effects/pray_chaplain.ogg',60,TRUE)
 	UnregisterSignal(exorcised_movable, list(COMSIG_ATOM_RELAYMOVE, COMSIG_BIBLE_SMACKED))
 	RegisterSignal(exorcised_movable, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
 	to_chat(bound_spirit, span_userdanger("You were exorcised!"))
