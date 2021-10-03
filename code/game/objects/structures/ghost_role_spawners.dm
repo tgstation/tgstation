@@ -857,7 +857,7 @@
 /obj/effect/mob_spawn/human/radiohost
 	name = "groovy pod"
 	desc = "A humming cryo pod. The machine is attempting to wake up its occupant. You can vaguely hear music coming from inside."
-	mob_name = "a "
+	mob_name = "a radio host"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
