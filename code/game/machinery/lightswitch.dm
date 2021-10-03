@@ -10,6 +10,12 @@
 	/// instead of the switch's location.
 	var/area/area = null
 
+/obj/machinery/light_switch/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/light_switch,
+	))
+
 /obj/machinery/light_switch/directional/north
 	dir = SOUTH
 	pixel_y = 26
@@ -62,12 +68,15 @@
 
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()
+	toggle_lights()
 
+/obj/machinery/light_switch/proc/toggle_lights()
 	area.lightswitch = !area.lightswitch
 	area.update_appearance()
 
-	for(var/obj/machinery/light_switch/L in area)
-		L.update_appearance()
+	for(var/obj/machinery/light_switch/light_switch in area)
+		light_switch.update_appearance()
+		SEND_SIGNAL(light_switch, COMSIG_LIGHT_SWITCH_TOGGLED, area.lightswitch)
 
 	area.power_change()
 
@@ -82,3 +91,41 @@
 		return
 	if(!(machine_stat & (BROKEN|NOPOWER)))
 		power_change()
+
+/obj/item/circuit_component/light_switch
+	display_name = "Light Switch"
+	desc = "Allows to control the lights of an area."
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
+
+	///Send a signal when the lights are toggled on
+	var/datum/port/output/toggled_on
+	///Send a signal when the lights are toggled off
+	var/datum/port/output/toggled_off
+
+	var/obj/machinery/light_switch/attached_switch
+
+/obj/item/circuit_component/light_switch/populate_ports()
+	toggled_on = add_output_port("Toggled On", PORT_TYPE_SIGNAL)
+
+	toggled_off = add_output_port("Toggled Off", PORT_TYPE_SIGNAL)
+
+/obj/item/circuit_component/light_switch/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/light_switch))
+		attached_switch = parent
+		RegisterSignal(parent, COMSIG_LIGHT_SWITCH_TOGGLED, .proc/on_light_switch_toggle)
+
+/obj/item/circuit_component/light_switch/unregister_usb_parent(atom/movable/parent)
+	attached_switch = null
+	UnregisterSignal(parent, COMSIG_LIGHT_SWITCH_TOGGLED)
+	return ..()
+
+/obj/item/circuit_component/light_switch/proc/on_light_switch_toggle(datum/source, active)
+	SIGNAL_HANDLER
+	if(active)
+		toggled_on.set_output(COMPONENT_SIGNAL)
+	else
+		toggled_off.set_output(COMPONENT_SIGNAL)
+
+/obj/item/circuit_component/light_switch/input_received(datum/port/input/port)
+	attached_switch?.toggle_lights()
