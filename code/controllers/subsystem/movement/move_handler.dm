@@ -25,6 +25,10 @@ SUBSYSTEM_DEF(move_manager)
 		return FALSE
 	return our_info.remove_subsystem(subsystem)
 
+///Temporary proc for use while packets live on the subsystem. I'm going to move them to the objects later, but it makes debugging harder
+/datum/controller/subsystem/move_manager/proc/get_packet(atom/movable/packet_holder)
+	return packets[packet_holder]
+	
 ///A packet of information that describes the current state of a moving object
 /datum/movement_packet
 	///Our parent atom

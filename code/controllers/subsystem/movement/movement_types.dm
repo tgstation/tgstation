@@ -6,29 +6,30 @@
 	var/datum/controller/subsystem/movement/controller
 	///The thing we're moving about
 	var/atom/movable/moving
-	///Lifetime in deci-seconds, defaults to forever
+	///Time to stop processing in deci-seconds, defaults to forever
 	var/lifetime = INFINITY
 	///Delay between each move in deci-seconds
 	var/delay = 1
-	///We use this to track the delay between movements
+	///The next time we should process
 	var/timer = 0
-	///The last tick we processed
-	var/lasttick = 0
 
 /datum/move_loop/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving)
 	src.owner = owner
 	src.controller = controller
 	src.moving = moving
+	RegisterSignal(moving, COMSIG_PARENT_QDELETING, .proc/nuke_loop)
 
 /datum/move_loop/proc/setup(delay = 1, timeout = INFINITY)
 	if(!ismovable(moving) || !owner)
 		return FALSE
 
 	src.delay = delay
-	lifetime = timeout
-
-	RegisterSignal(moving, COMSIG_PARENT_QDELETING, .proc/nuke_loop)
+	src.lifetime =  max(world.time + timeout, INFINITY)
 	return TRUE
+
+/datum/move_loop/proc/start_loop()
+	src.timer = world.time + delay
+	return
 
 /datum/move_loop/Destroy()
 	if(owner)
@@ -47,16 +48,17 @@
 	qdel(src)
 
 /datum/move_loop/process(delta_ticks)
-	timer += delta_ticks
-	if(timer >= lifetime)
-		nuke_loop()
-		return
-	if(timer - delay < lasttick)
+	if(timer > world.time)
 		return
 	if(SEND_SIGNAL(moving, COMSIG_MOVELOOP_PROCESS_CHECK) & MOVELOOP_STOP_PROCESSING) //Chance for the object to react
+		qdel(src)
+		return
+	lifetime -= delay //This needs to be based on work over time, not just time passed
+	if(lifetime <= 0) //Otherwise lag would make things look really weird
+		nuke_loop()
 		return
 
-	lasttick = timer
+	timer = world.time + delay
 	moving.set_glide_size(DELAY_TO_GLIDE_SIZE(delay))
 	move()
 
@@ -96,6 +98,51 @@
 /datum/move_loop/move/move()
 	moving.Move(get_step(moving, direction), direction)
 
+
+/**
+ * Handles drifting, most commonly used by space movement
+ *
+ * Arguments:
+ * moving - The atom we want to move
+ * direction - The direction we want to move in
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
+ * override - Should we replace the current loop if it exists. Defaults to TRUE
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+**/
+/proc/drift(moving, direction, delay, timeout, override, subsystem)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move/drift, override, delay, timeout, direction)
+
+/datum/move_loop/move/drift
+	var/atom/inertia_last_loc
+
+/datum/move_loop/move/drift/start_loop()
+	inertia_last_loc = moving.loc
+	return ..()
+
+/datum/move_loop/move/drift/move()
+	if (!moving.loc || moving.loc != inertia_last_loc || moving.Process_Spacemove(0))
+		moving.inertia_dir = 0
+
+	if (!moving.inertia_dir)
+		qdel(src)
+		return
+
+	direction = moving.inertia_dir
+
+	var/old_dir = moving.dir
+	var/old_loc = moving.loc
+	moving.inertia_moving = TRUE
+	..()
+	moving.inertia_moving = FALSE //Moving becomes null here? somehow? what? Oh. OHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH it's the override I think.
+	//Should really use signals to react to movements rather then trying to track it directly like this, would let us avoid the many registrations issue too.
+	//Means a bigger refactor though. Pain
+	moving.setDir(old_dir)
+	inertia_last_loc = moving.loc
+	if (moving.loc == old_loc)
+		qdel(src)
+		return
 
 /datum/move_loop/has_target
 	///The thing we're moving in relation to, either at or away from
@@ -162,7 +209,7 @@
 
 /datum/move_loop/has_target/dist_bound/move()
 	if(!check_dist()) //If we're too close don't do the move
-		lasttick = round(lasttick - delay, 0.1) //Make sure to move as soon as possible
+		timer = world.time //Make sure to move as soon as possible
 		return FALSE
 	return TRUE
 
@@ -263,12 +310,15 @@
 	if(!.)
 		return FALSE
 	src.home = home
-	update_slope()
 
 	if(home)
 		if(ismovable(target))
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/update_slope) //If it can move, update your slope when it does
 		RegisterSignal(moving, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+
+/datum/move_loop/has_target/move_towards/start_loop()
+	update_slope()
+	return ..()
 
 /datum/move_loop/has_target/move_towards/Destroy()
 	if(home)

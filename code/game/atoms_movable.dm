@@ -812,8 +812,29 @@
 	inertia_dir = direction
 	if(!direction)
 		return TRUE
-	inertia_last_loc = loc
-	SSspacedrift.processing[src] = src
+
+	//Lemon TODO: Make this suck less
+	var/datum/movement_packet/packet = SSmove_manager.get_packet(src)
+	if(istype(packet?.running_loop, /datum/move_loop/move/drift))
+		var/datum/move_loop/move/drift/existing_drift = packet.running_loop
+		if(existing_drift.controller == SSspacedrift)
+			existing_drift.inertia_last_loc = loc
+			return
+
+	//TDLR;
+	//Fix/work around glide size in client/move
+	//Do something about how inerial_last_loc is tracked
+	//Change how glide size is set during each loop to make it more consistent with the actual delay between steps (The min should go)
+	//Test precedence system. Dab on floyd
+
+	//Ok so this doesn't actually do anything
+	//Since client/Move ovverides this directly after the move completes to account for like, the direction you actually ended up moving in
+	//Rather then the direction it expects you to move in
+	//We either need to override that cleanly, or shift the start of the drift forward a bit so it finishes on time. both options kinda suck though.
+	//Also need to make glide size stuff scale better for the move types. right now it delays based off actual/real byond time, in reality we should scale based on
+	//How slow the ss is going. That's a bit hard to track, maybe we could calculate it for each object? slight cost there though. I hope it gets rid of the weird snapping I was seeing
+	set_glide_size(DELAY_TO_GLIDE_SIZE(inertia_move_delay))
+	drift(moving = src, direction = inertia_dir, delay = inertia_move_delay, subsystem = SSspacedrift)
 	return TRUE
 
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
