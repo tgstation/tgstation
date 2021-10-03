@@ -1083,7 +1083,7 @@
 		return TRUE
 	if(IsSleeping())
 		return TRUE
-	if(HAS_TRAIT(src, TRAIT_DUMB))
+	if(HAS_TRAIT(src, TRAIT_DUMB) || HAS_TRAIT(src, TRAIT_PUSHOVER))
 		return TRUE
 	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
 	if(mood)

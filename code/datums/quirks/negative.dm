@@ -448,7 +448,7 @@
 	desc = "Your first instinct is always to let people push you around. Resisting out of grabs will take conscious effort."
 	icon = "handshake"
 	value = -8
-	mob_trait = TRAIT_GRABWEAKNESS
+	mob_trait = TRAIT_PUSHOVER
 	gain_text = "<span class='danger'>You feel like a pushover.</span>"
 	lose_text = "<span class='notice'>You feel like standing up for yourself.</span>"
 	medical_record_text = "Patient presents a notably unassertive personality and is easy to manipulate."
