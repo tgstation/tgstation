@@ -200,7 +200,6 @@
 	design_ids = list(
 		"circuit_multitool",
 		"comp_arithmetic",
-		"comp_trigonometric",
 		"comp_clock",
 		"comp_comparison",
 		"comp_concat",
@@ -240,6 +239,7 @@
 		"comp_textcase",
 		"comp_tonumber",
 		"comp_tostring",
+		"comp_trigonometric",
 		"comp_typecast",
 		"comp_typecheck",
 		"compact_remote_shell",
