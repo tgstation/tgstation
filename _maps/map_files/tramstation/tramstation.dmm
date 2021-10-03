@@ -4586,7 +4586,7 @@
 	},
 /obj/machinery/light/directional/south,
 /obj/structure/sign/directions/vault{
-	dir = 4;
+	dir = 1;
 	pixel_y = -22
 	},
 /turf/open/floor/iron,
@@ -4810,7 +4810,7 @@
 	},
 /obj/machinery/light/directional/south,
 /obj/structure/sign/directions/upload{
-	dir = 8;
+	dir = 4;
 	pixel_y = -22
 	},
 /turf/open/floor/iron,
@@ -6312,7 +6312,7 @@
 	},
 /obj/machinery/light/directional/north,
 /obj/structure/sign/directions/vault{
-	dir = 4;
+	dir = 8;
 	pixel_y = 22
 	},
 /obj/effect/landmark/start/hangover,
@@ -46007,7 +46007,7 @@
 	},
 /obj/machinery/light/directional/north,
 /obj/structure/sign/directions/vault{
-	dir = 4;
+	dir = 1;
 	pixel_y = 22
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
