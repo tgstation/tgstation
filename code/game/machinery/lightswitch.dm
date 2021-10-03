@@ -97,17 +97,16 @@
 	desc = "Allows to control the lights of an area."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
-	///Send a signal when the lights are toggled on
-	var/datum/port/output/toggled_on
-	///Send a signal when the lights are toggled off
-	var/datum/port/output/toggled_off
+	///If the lights should be turned on or off when the trigger is triggered.
+	var/datum/port/input/on_setting
+	///Whether the lights are turned on
+	var/datum/port/output/is_on
 
 	var/obj/machinery/light_switch/attached_switch
 
 /obj/item/circuit_component/light_switch/populate_ports()
-	toggled_on = add_output_port("Toggled On", PORT_TYPE_SIGNAL)
-
-	toggled_off = add_output_port("Toggled Off", PORT_TYPE_SIGNAL)
+	on_setting = add_input_port("On/Off Setting", PORT_TYPE_NUMBER)
+	is_on = add_output_port("On/Off Status", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/light_switch/register_usb_parent(atom/movable/parent)
 	. = ..()
@@ -122,10 +121,9 @@
 
 /obj/item/circuit_component/light_switch/proc/on_light_switch_toggle(datum/source, active)
 	SIGNAL_HANDLER
-	if(active)
-		toggled_on.set_output(COMPONENT_SIGNAL)
-	else
-		toggled_off.set_output(COMPONENT_SIGNAL)
+	is_on.set_output(active)
 
 /obj/item/circuit_component/light_switch/input_received(datum/port/input/port)
-	attached_switch?.toggle_lights()
+	//Working around the fact we don't have boolean port types.
+	if(attached_switch.area.lightswitch == !on_setting.value)
+		attached_switch?.toggle_lights()
