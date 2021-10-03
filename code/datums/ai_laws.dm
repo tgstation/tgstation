@@ -1,8 +1,3 @@
-#define LAW_ZEROTH "zeroth"
-#define LAW_INHERENT "inherent"
-#define LAW_SUPPLIED "supplied"
-#define LAW_ION "ion"
-#define LAW_HACKED "hacked"
 #define AI_LAWS_ASIMOV "asimov"
 
 /datum/ai_laws
