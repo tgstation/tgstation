@@ -10,174 +10,163 @@
 	opacity = FALSE
 	density = TRUE
 	blocks_air = FALSE
-	flags_1 = RAD_NO_CONTAMINATE_1 | ALLOW_DARK_PAINTS_1
 	rad_insulation = null
-	frill_icon = 'icons/effects/frills/windows/window_normal_frill.dmi'
-	///Bitflag to hold state on what other objects we have
-	var/window_state = NONE
-	///what step in the construction procedure we are in
-	var/construction_state = WINDOW_FRAME_EMPTY
+	frill_icon = null // we dont have a frill, our window does
+	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 0, ACID = 0)
+	max_integrity = 50
+
+	///whether we currently have a grille
+	var/has_grille = FALSE
+	///whether we spawn a window structure with us on mapload
+	var/start_with_window = FALSE
 	///Icon used by grilles for this window frame
 	var/grille_icon = 'icons/turf/walls/low_walls/window_grille.dmi'
 	///Icon state used by grilles for this window frame
 	var/grille_icon_state = "window_grille"
-	///Icon used by windows for this window frame
-	var/window_icon = 'icons/turf/walls/low_walls/windows/window_normal.dmi'
-	///Icon state used by windows for this window frame
-	var/window_icon_state = "window_normal"
-	///Frill used for window frame
-	var/has_frill = TRUE
+
 	///whether or not this window is reinforced and thus doesnt use the default attackby() behavior
 	var/is_reinforced = FALSE
 
-	///what glass sheet type our window is made out of
+	///typepath. what glass sheet type our window is made out of
 	var/glass_material = /obj/item/stack/sheet/glass
-
-	//custom_materials = list(/datum/material/iron = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
-
-	var/break_sound = "shatter"
-	var/knock_sound = 'sound/effects/Glassknock.ogg'
-	var/bash_sound = 'sound/effects/Glassbash.ogg'
-	var/hit_sound = 'sound/effects/Glasshit.ogg'
+	///typepath or null. if not null, we will spawn this window typepath on ourselves at mapload
+	var/window_type_override = null
 
 	uses_integrity = TRUE
 
 /turf/closed/wall/window_frame/Initialize(mapload)
 	. = ..()
 
-	update_icon()
+	update_appearance()
+	AddElement(/datum/element/climbable)
 
-	RegisterSignal(src, COMSIG_OBJ_PAINTED, .proc/on_painted)
+	if(mapload && start_with_window)
+		create_structure_window(glass_material, TRUE)
 
-	if(window_state & WINDOW_FRAME_WITH_WINDOW)
-		air_update_turf(TRUE, TRUE)
+///helper proc to check if we already have a window
+/turf/closed/wall/window_frame/proc/has_window()
+	SHOULD_BE_PURE(TRUE)
+	if(locate(/obj/structure/window/fulltile) in contents)
+		return TRUE
 
-	if(sheet_type == null || glass_material == null)
-		stack_trace("[src.type] was initialized with null materials! frame: [sheet_type], glass: [glass_material]")
+	return FALSE
 
-	if(window_state & WINDOW_FRAME_WITH_GRILLES)
-		construction_state = max(construction_state, WINDOW_FRAME_GRILLE_ADDED)
-	if(window_state & WINDOW_FRAME_WITH_WINDOW)
-		construction_state = max(construction_state, WINDOW_FRAME_WINDOW_SECURED)
-	else
-		AddElement(/datum/element/climbable)
+/turf/closed/wall/window_frame/proc/create_structure_window(glass_type, start_anchored = TRUE)
+	var/obj/structure/window/our_window
+
+	if(!window_type_override)
+		if(ispath(glass_type, /obj/item/stack/sheet/glass))
+			our_window = new/obj/structure/window/fulltile(src)
+
+		if(ispath(glass_type, /obj/item/stack/sheet/rglass))
+			our_window = new/obj/structure/window/reinforced/fulltile(src)
+
+		if(ispath(glass_type, /obj/item/stack/sheet/plasmaglass))
+			our_window = new/obj/structure/window/plasma/fulltile(src)
+
+		if(ispath(glass_type, /obj/item/stack/sheet/plasmarglass))
+			our_window = new/obj/structure/window/plasma/reinforced/fulltile(src)
+
+		if(ispath(glass_type, /obj/item/stack/sheet/titaniumglass))
+			our_window = new/obj/structure/window/shuttle(src)
+
+		if(ispath(glass_type, /obj/item/stack/sheet/plastitaniumglass))
+			our_window = new/obj/structure/window/plasma/reinforced/plastitanium(src)
+
+		if(ispath(glass_type, /obj/item/stack/sheet/paperframes))
+			our_window = new/obj/structure/window/paperframe(src)
+
+	else if(ispath(window_type_override, /obj/structure/window))
+		our_window = new window_type_override(src)//some window types dont map directly to glass materials
+
+	if(!start_anchored)
+		our_window.set_anchored(FALSE)
+		our_window.state = WINDOW_OUT_OF_FRAME
+
+	our_window.update_appearance()
 
 /turf/closed/wall/window_frame/attackby(obj/item/attacking_item, mob/living/user, params)
 
 	add_fingerprint(user)
 
 	if(attacking_item.tool_behaviour == TOOL_WELDER)
-		//if(window_state & WINDOW_FRAME_WITH_WINDOW && construction_state == WINDOW_FRAME_WINDOW_SECURED)
-			//TODOKYLER: implement repair of the window
+		if(atom_integrity < max_integrity)
+			if(!attacking_item.tool_start_check(user, amount = 0))
+				return
+
+			to_chat(user, span_notice("You begin repairing [src]..."))
+			if(!attacking_item.use_tool(src, user, 40, volume = 50))
+				return
+
+			atom_integrity = max_integrity
+			to_chat(user, span_notice("You repair [src]."))
+			update_appearance()
+		else
+			to_chat(user, span_warning("[src] is already in good condition!"))
+		return
 
 	else if(attacking_item.tool_behaviour == TOOL_WIRECUTTER)
-		if(construction_state == WINDOW_FRAME_GRILLE_ADDED)
+		if(has_grille)
 
 			if(!attacking_item.use_tool(src, user, 0, volume = 50))
 				return
 
 			to_chat(user, "<span class='notice'>You cut the grille on [src].</span>")
 
-			construction_state = WINDOW_FRAME_EMPTY
-			window_state &= ~WINDOW_FRAME_WITH_GRILLES
+			has_grille = FALSE
 			update_appearance()
-			AddElement(/datum/element/climbable)
-			return
-
-	else if(attacking_item.tool_behaviour == TOOL_WRENCH)
-		if(construction_state == WINDOW_FRAME_WINDOW_UNSECURED)
-			to_chat(user, "<span class='notice'>You start securing the window glass to the frame.</span>")
-			if(!attacking_item.use_tool(src, user, 40, volume = 50))
-				return
-
-			to_chat(user, "<span class='notice'>You secure the window glass to the frame.</span>")
-
-			construction_state = WINDOW_FRAME_COMPLETE
-			return
-
-		else if(construction_state == WINDOW_FRAME_WINDOW_SECURED)
-			if(!attacking_item.tool_start_check(user, amount = 0))
-				return
-
-			to_chat(user, "<span class='notice'>You begin unwrenching the window glass from the frame.</span>")
-			if(!attacking_item.use_tool(src, user, 40, volume = 50))
-				return
-
-			to_chat(user, "<span class='notice'>You unwrench the window glass from the frame.</span>")
-			construction_state = WINDOW_FRAME_WINDOW_UNSECURED
 			return
 
 	else if(isstack(attacking_item))
 		var/obj/item/stack/adding_stack = attacking_item
 		var/stack_name = "[adding_stack]" // in case the stack gets deleted after use()
 
-		if(is_glass_sheet(adding_stack) && !(window_state & WINDOW_FRAME_WITH_WINDOW) && adding_stack.use(sheet_amount))
+		if(is_glass_sheet(adding_stack) && !(has_window()) && adding_stack.use(sheet_amount))
 			to_chat(user, "<span class='notice'>You start to add [stack_name] to [src].")
 			if(!do_after(user, 2 SECONDS, src))
 				return
 
-			to_chat(user, "<span class='notice'>You add [stack_name] to [src].")
+			to_chat(user, "<span class='notice'>You add [stack_name] to [src].")//create window here
 			glass_material = adding_stack.type
-			window_state |= WINDOW_FRAME_WITH_WINDOW
-			construction_state = WINDOW_FRAME_WINDOW_UNSECURED
-			//var/list/new_materials = custom_materials.Copy()
-			//LAZYADDASSOC(new_materials, GET_MATERIAL_REF(glass_material), WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
-			//set_custom_materials(new_materials)
+			create_structure_window(glass_material, FALSE)
 
-			update_appearance()
-			RemoveElement(/datum/element/climbable) //cant climb through us anymore
-
-		else if(istype(adding_stack, /obj/item/stack/rods) && construction_state == WINDOW_FRAME_EMPTY && adding_stack.use(sheet_amount))
-			window_state |= WINDOW_FRAME_WITH_GRILLES
-			construction_state = WINDOW_FRAME_GRILLE_ADDED
+		else if(istype(adding_stack, /obj/item/stack/rods) && !has_grille && adding_stack.use(sheet_amount))
+			has_grille = TRUE
 			to_chat(user, "<span class='notice'>You add [stack_name] to [src]")
 			update_appearance()
-			RemoveElement(/datum/element/climbable)
 
-	return ..()
+	return ..() || attacking_item.attack_atom(src, user, params)
 
-//turf/closed/wall/try_decon(obj/item/used_item, mob/user, turf/user_turf)
 
-/turf/closed/wall/window_frame/attack_hand(mob/living/user, list/modifiers)
-	user.changeNext_move(CLICK_CD_MELEE)
-
-	if(!user.combat_mode)
-		if(construction_state == WINDOW_FRAME_WINDOW_UNSECURED)
-			construction_state = (window_state & WINDOW_FRAME_WITH_GRILLES) ? WINDOW_FRAME_GRILLE_ADDED : WINDOW_FRAME_EMPTY
-			window_state &= ~WINDOW_FRAME_WITH_WINDOW
-			//var/list/new_materials = custom_materials.Copy()
-			add_fingerprint(user)
-			playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
-
-			to_chat(user, "<span class='notice'>You take the unsecured glass out of [src].</span>")
-
-			//var/datum/material/our_glass = GET_MATERIAL_REF(glass_material)
-			//LAZYREMOVEASSOC(new_materials, our_glass, WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
-			new glass_material(src, sheet_amount)
-			//set_custom_materials(new_materials)
-
-			update_appearance()
-			AddElement(/datum/element/climbable)
-			return
-
-		user.visible_message("<span class='notice'>[user] knocks on [src].</span>", \
-			"<span class='notice'>You knock on [src].</span>")
-		playsound(src, knock_sound, 50, TRUE)
-		return
-	else
-		user.visible_message("<span class='warning'>[user] bashes [src]!</span>", \
-			"<span class='warning'>You bash [src]!</span>")
-		playsound(src, bash_sound, 100, TRUE)
+/turf/closed/wall/window_frame/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(!attacking_item.force)
 		return
 
-	//return ..()
+	var/no_damage = TRUE
+	if(take_damage(attacking_item.force, attacking_item.damtype, MELEE, 1))
+		no_damage = FALSE
+	//only witnesses close by and the victim see a hit message.
+	log_combat(user, src, "attacked", attacking_item)
+	user.visible_message(span_danger("[user] hits [src] with [attacking_item][no_damage ? ", which doesn't leave a mark" : ""]!"), \
+		span_danger("You hit [src] with [attacking_item][no_damage ? ", which doesn't leave a mark" : ""]!"), null, COMBAT_MESSAGE_RANGE)
 
-/turf/closed/wall/window_frame/attack_tk(mob/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
-	add_fingerprint(user)
-	playsound(src, knock_sound, 50, TRUE)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+/turf/closed/wall/window_frame/atom_destruction(damage_flag)
+	dismantle_wall()
+
+/turf/closed/wall/window_frame/dismantle_wall(devastated = FALSE, explode = FALSE)
+	ScrapeAway()
+
+
+/turf/closed/wall/window_frame/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = NONE)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(src, 'sound/effects/grillehit.ogg', 80, TRUE)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+		if(BURN)
+			playsound(src, 'sound/items/welder.ogg', 80, TRUE)
+
 
 /turf/closed/wall/window_frame/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -189,55 +178,18 @@
 
 /turf/closed/wall/window_frame/rcd_act(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
-		to_chat(user, "<span class='notice'>You deconstruct the window.</span>")
-		qdel(src)
+		to_chat(user, "<span class='notice'>You deconstruct the window frame.</span>")
+		ScrapeAway()
 		return TRUE
 	return FALSE
 
-/turf/closed/wall/window_frame/proc/set_glass_icon()
-	if(!is_glass_sheet(glass_material))
-		CRASH("set_glass_icon() on [src.type] was called when glass_material was not a glass sheet type! [glass_material]")
-
-	switch(glass_material)
-		if(/obj/item/stack/sheet/glass)
-			window_icon = 'icons/turf/walls/low_walls/windows/window_normal.dmi'
-			window_icon_state = "window_normal"
-			frill_icon = 'icons/effects/frills/windows/window_normal_frill.dmi'
-
-		if(/obj/item/stack/sheet/rglass)
-			window_icon = 'icons/turf/walls/low_walls/windows/window_reinforced.dmi'
-			window_icon_state = "window_reinforced"
-			frill_icon = 'icons/effects/frills/windows/window_reinforced_frill.dmi'
-
-		if(/obj/item/stack/sheet/plasmaglass)
-			window_icon = 'icons/turf/walls/low_walls/windows/window_plasma.dmi'
-			window_icon_state = "window_plasma"
-			frill_icon = 'icons/effects/frills/windows/window_plasma_frill.dmi'
-
-		if(/obj/item/stack/sheet/plasmarglass)
-			window_icon = 'icons/turf/walls/low_walls/windows/window_plasma_reinforced.dmi'
-			window_icon_state = "window_plasma_reinforced"
-			frill_icon = 'icons/effects/frills/windows/window_reinforced_plasma_frill.dmi'
-
-		if(/obj/item/stack/sheet/titaniumglass)
-			window_icon = 'icons/turf/walls/low_walls/windows/window_titanium.dmi'
-			window_icon_state = "window_titanium"
-			frill_icon = 'icons/effects/frills/windows/window_titanium_frill.dmi'
-
-		if(/obj/item/stack/sheet/plastitaniumglass)
-			window_icon = 'icons/turf/walls/low_walls/windows/window_plastitanium.dmi'
-			window_icon_state = "window_plastitanium"
-			frill_icon = 'icons/effects/frills/windows/window_plastitanium_frill.dmi'
-
-
-
 /turf/closed/wall/window_frame/examine(mob/user)
 	. = ..()
-	if(window_state & (WINDOW_FRAME_WITH_WINDOW|WINDOW_FRAME_WITH_GRILLES))
+	if(has_window() && has_grille)
 		. += "<span class='notice'>The window is fully constructed.</span>"
-	else if(window_state & WINDOW_FRAME_WITH_WINDOW)
+	else if(has_window())
 		. += "<span class='notice'>The window set into the frame has no reinforcement.</span>"
-	else if(window_state & WINDOW_FRAME_WITH_GRILLES)
+	else if(has_grille)
 		. += "<span class='notice'>The window frame only has a grille set into it.</span>"
 	else
 		. += "<span class='notice'>The window frame is empty</span>"
@@ -271,44 +223,35 @@
 	. = ..()
 	update_icon()
 
-/turf/closed/wall/window_frame/update_appearance(updates)
-	set_glass_icon()
-	. = ..()
-	if(window_state & WINDOW_FRAME_WITH_WINDOW)
-		set_frill(TRUE)
-	else
-		set_frill(FALSE)
-
-
-/turf/closed/wall/window_frame/proc/set_frill(on)
-	if(!on)
-		if(has_frill)
-			RemoveElement(/datum/element/frill, frill_icon)
-			has_frill = FALSE
-	else
-		if(!has_frill)
-			AddElement(/datum/element/frill, frill_icon)
-			has_frill = TRUE
-
 /turf/closed/wall/window_frame/update_overlays()
 	. = ..()
-	if(window_state & WINDOW_FRAME_WITH_GRILLES)
+	if(has_grille)
 		. += mutable_appearance(grille_icon, "[grille_icon_state]-[smoothing_junction]")
-	if(window_state & WINDOW_FRAME_WITH_WINDOW)
-		. += mutable_appearance(window_icon, "[window_icon_state]-[smoothing_junction]")
 
 /turf/closed/wall/window_frame/grille
-	window_state = WINDOW_FRAME_WITH_GRILLES
+	has_grille = TRUE
 
 /turf/closed/wall/window_frame/grille_and_window
-	window_state = WINDOW_FRAME_COMPLETE
+	has_grille = TRUE
+	start_with_window = TRUE
+
+/turf/closed/wall/window_frame/reinforced
+	name = "reinforced window frame"
+	glass_material = /obj/item/stack/sheet/rglass
+	armor = list(MELEE = 80, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 25, BIO = 100, RAD = 100, FIRE = 80, ACID = 100)
+	max_integrity = 150
+	damage_deflection = 11
+
+/turf/closed/wall/window_frame/reinforced/grille_and_window
+	has_grille = TRUE
+	start_with_window = TRUE
 
 /turf/closed/wall/window_frame/titanium
 	name = "shuttle window frame"
 	icon = 'icons/turf/walls/low_walls/low_wall_shuttle.dmi'
 	icon_state = "low_wall_shuttle-0"
 	base_icon_state = "low_wall_shuttle"
-	sheet_type = /datum/material/titanium
+	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	custom_materials = list(/datum/material/titanium = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /turf/closed/wall/window_frame/plastitanium
@@ -316,7 +259,7 @@
 	icon = 'icons/turf/walls/low_walls/low_wall_plastitanium.dmi'
 	icon_state = "low_wall_plastitanium-0"
 	base_icon_state = "low_wall_plastitanium"
-	sheet_type = /datum/material/alloy/plastitanium
+	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	custom_materials = list(/datum/material/alloy/plastitanium = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /turf/closed/wall/window_frame/wood
@@ -324,7 +267,7 @@
 	icon = 'icons/turf/walls/low_walls/low_wall_wood.dmi'
 	icon_state = "low_wall_wood-0"
 	base_icon_state = "low_wall_wood"
-	sheet_type = /datum/material/wood
+	sheet_type = /obj/item/stack/sheet/mineral/wood
 	custom_materials = list(/datum/material/wood = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /turf/closed/wall/window_frame/uranium
@@ -332,7 +275,7 @@
 	icon = 'icons/turf/walls/low_walls/low_wall_uranium.dmi'
 	icon_state = "low_wall_uranium-0"
 	base_icon_state = "low_wall_uranium"
-	sheet_type = /datum/material/uranium
+	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	custom_materials = list(/datum/material/uranium = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /turf/closed/wall/window_frame/iron
@@ -340,7 +283,7 @@
 	icon = 'icons/turf/walls/low_walls/low_wall_iron.dmi'
 	icon_state = "low_wall_iron-0"
 	base_icon_state = "low_wall_iron"
-	sheet_type = /datum/material/iron
+	sheet_type = /obj/item/stack/sheet/iron
 	custom_materials = list(/datum/material/iron = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /turf/closed/wall/window_frame/silver
@@ -348,7 +291,7 @@
 	icon = 'icons/turf/walls/low_walls/low_wall_silver.dmi'
 	icon_state = "low_wall_silver-0"
 	base_icon_state = "low_wall_silver"
-	sheet_type = /datum/material/silver
+	sheet_type = /obj/item/stack/sheet/mineral/silver
 	custom_materials = list(/datum/material/silver = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /turf/closed/wall/window_frame/gold
@@ -356,7 +299,7 @@
 	icon = 'icons/turf/walls/low_walls/low_wall_gold.dmi'
 	icon_state = "low_wall_gold-0"
 	base_icon_state = "low_wall_gold"
-	sheet_type = /datum/material/gold
+	sheet_type = /obj/item/stack/sheet/mineral/gold
 	custom_materials = list(/datum/material/gold = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /turf/closed/wall/window_frame/bronze
@@ -364,7 +307,7 @@
 	icon = 'icons/turf/walls/low_walls/low_wall_bronze.dmi'
 	icon_state = "low_wall_bronze-0"
 	base_icon_state = "low_wall_bronze"
-	sheet_type = /datum/material/bronze
+	sheet_type = /obj/item/stack/sheet/bronze
 	custom_materials = list(/datum/material/bronze = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /turf/closed/wall/window_frame/cult
@@ -372,7 +315,7 @@
 	icon = 'icons/turf/walls/low_walls/low_wall_cult.dmi'
 	icon_state = "low_wall_cult-0"
 	base_icon_state = "low_wall_cult"
-	sheet_type = /datum/material/runedmetal
+	sheet_type = /obj/item/stack/sheet/runed_metal
 	custom_materials = list(/datum/material/runedmetal = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /turf/closed/wall/window_frame/hotel
@@ -380,7 +323,7 @@
 	icon = 'icons/turf/walls/low_walls/low_wall_hotel.dmi'
 	icon_state = "low_wall_hotel-0"
 	base_icon_state = "low_wall_hotel"
-	sheet_type = /datum/material/wood
+	sheet_type = /obj/item/stack/sheet/mineral/wood
 	custom_materials = list(/datum/material/wood = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /turf/closed/wall/window_frame/material
@@ -395,7 +338,7 @@
 	icon = 'icons/turf/walls/low_walls/low_wall_rusty.dmi'
 	icon_state = "low_wall_rusty-0"
 	base_icon_state = "low_wall_rusty"
-	sheet_type = /datum/material/iron
+	sheet_type = /obj/item/stack/sheet/iron
 	custom_materials = list(/datum/material/iron = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /turf/closed/wall/window_frame/sandstone
@@ -403,7 +346,7 @@
 	icon = 'icons/turf/walls/low_walls/low_wall_sandstone.dmi'
 	icon_state = "low_wall_sandstone-0"
 	base_icon_state = "low_wall_sandstone"
-	sheet_type = /datum/material/sandstone
+	sheet_type = /obj/item/stack/sheet/mineral/sandstone
 	custom_materials = list(/datum/material/sandstone = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /turf/closed/wall/window_frame/bamboo
@@ -411,7 +354,7 @@
 	icon = 'icons/turf/walls/low_walls/low_wall_bamboo.dmi'
 	icon_state = "low_wall_bamboo-0"
 	base_icon_state = "low_wall_bamboo"
-	sheet_type = /datum/material/bamboo
+	sheet_type = /obj/item/stack/sheet/mineral/bamboo
 	custom_materials = list(/datum/material/bamboo = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /turf/closed/wall/window_frame/paperframe
@@ -419,5 +362,5 @@
 	icon = 'icons/turf/walls/low_walls/low_wall_paperframe.dmi'
 	icon_state = "low_wall_paperframe-0"
 	base_icon_state = "low_wall_paperframe"
-	sheet_type = /datum/material/paper
+	sheet_type = /obj/item/stack/sheet/paperframes
 	custom_materials = list(/datum/material/paper = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)

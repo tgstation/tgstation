@@ -22,9 +22,6 @@
 
 	rcd_memory = RCD_MEMORY_WALL
 
-	///amount of damage this wall can take before it is forced to deconstruct
-	var/integrity = 100
-
 	///lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/hardness = 40
 	var/slicing_duration = 100  //default time taken to slice the wall
@@ -95,6 +92,11 @@
 	new sheet_type(src, sheet_amount)
 	if(girder_type)
 		new /obj/item/stack/sheet/iron(src)
+
+//TODOKYLER PRIORITY ONE: make hitting the window work, dont do a single other thing until that is done well enough
+
+/turf/attacked_by(obj/item/attacking_item, mob/living/user)
+	return
 
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)
@@ -198,8 +200,8 @@
 	var/turf/T = user.loc //get user's location for delay checks
 
 	//the istype cascade has been spread among various procs for easy overriding
-	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T) || try_damage(W, user, T))
-		return
+	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T))
+		return TRUE
 
 	return ..()
 

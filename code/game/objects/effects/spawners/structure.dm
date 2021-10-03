@@ -22,7 +22,7 @@ again.
 	icon = 'icons/obj/structures_spawners.dmi'
 	icon_state = "window_spawner"
 	name = "window spawner"
-	spawn_list = list(/turf/closed/wall/window_frame/grille_and_window)
+	spawn_list = list(/turf/closed/wall/window_frame/reinforced/grille_and_window)
 	dir = SOUTH
 
 /obj/effect/spawner/structure/window/Initialize()
