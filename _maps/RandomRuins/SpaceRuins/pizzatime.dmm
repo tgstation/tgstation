@@ -794,6 +794,9 @@
 /obj/item/stack/sheet/mineral/coal/ten,
 /obj/item/stack/sheet/mineral/coal/ten,
 /obj/structure/closet/crate,
+/obj/item/stack/sheet/cardboard/fifty,
+/obj/item/stack/sheet/cardboard/fifty,
+/obj/item/stack/sheet/cardboard/fifty,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/pizzaplace)
 "Xz" = (
