@@ -9,14 +9,17 @@
 	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
 		return
-	log_prayer("[src.key]/([src.name]): [msg]")
 	if(usr.client)
 		if(usr.client.prefs.muted & MUTE_PRAY)
 			to_chat(usr, span_danger("You cannot pray (muted)."), confidential = TRUE)
 			return
 		if(src.client.handle_spam_prevention(msg,MUTE_PRAY))
 			return
+	if(is_banned_from(ckey, "Pray"))
+		to_chat(src, span_danger("You have been banned from praying."))
+		return
 
+	log_prayer("[src.key]/([src.name]): [msg]")
 	var/mutable_appearance/cross = mutable_appearance('icons/obj/storage.dmi', "bible")
 	var/font_color = "purple"
 	var/prayer_type = "PRAYER"
