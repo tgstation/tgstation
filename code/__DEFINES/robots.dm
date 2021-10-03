@@ -1,6 +1,11 @@
 /*ALL DEFINES FOR AIS, CYBORGS, AND SIMPLE ANIMAL BOTS*/
 
 #define DEFAULT_AI_LAWID "default"
+#define LAW_ZEROTH "zeroth"
+#define LAW_INHERENT "inherent"
+#define LAW_SUPPLIED "supplied"
+#define LAW_ION "ion"
+#define LAW_HACKED "hacked"
 
 //Bot defines, placed here so they can be read by other things!
 #define BOT_STEP_DELAY 4 //Delay between movemements
