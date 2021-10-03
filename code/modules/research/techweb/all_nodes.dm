@@ -200,6 +200,7 @@
 	design_ids = list(
 		"circuit_multitool",
 		"comp_arithmetic",
+		"comp_trigonometric",
 		"comp_clock",
 		"comp_comparison",
 		"comp_concat",

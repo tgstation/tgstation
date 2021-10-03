@@ -48,6 +48,11 @@
 	id = "comp_arithmetic"
 	build_path = /obj/item/circuit_component/arithmetic
 
+/datum/design/component/trigonometric
+	name = "Trigonometric Component"
+	id = "comp_trigonometric"
+	build_path = /obj/item/circuit_component/trigonometric
+
 /datum/design/component/clock
 	name = "Clock Component"
 	id = "comp_clock"
