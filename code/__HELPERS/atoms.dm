@@ -295,3 +295,7 @@ rough example of the "cone" made by the 3 dirs checked
 	for(var/atom/location = target.loc, location, location = location.loc)
 		if(location == src)
 			return TRUE
+
+///A do nothing proc
+/proc/pass(...)
+	return
