@@ -93,8 +93,6 @@
 	if(girder_type)
 		new /obj/item/stack/sheet/iron(src)
 
-//TODOKYLER PRIORITY ONE: make hitting the window work, dont do a single other thing until that is done well enough
-
 /turf/attacked_by(obj/item/attacking_item, mob/living/user)
 	return
 

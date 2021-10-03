@@ -137,7 +137,6 @@
 
 	return ..() || attacking_item.attack_atom(src, user, params)
 
-
 /turf/closed/wall/window_frame/attacked_by(obj/item/attacking_item, mob/living/user)
 	if(!attacking_item.force)
 		return
@@ -155,7 +154,6 @@
 
 /turf/closed/wall/window_frame/dismantle_wall(devastated = FALSE, explode = FALSE)
 	ScrapeAway()
-
 
 /turf/closed/wall/window_frame/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = NONE)
 	switch(damage_type)

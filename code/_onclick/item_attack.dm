@@ -226,7 +226,7 @@
 	attacked_atom.attacked_by(src, user)
 
 /// Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds
-/atom/proc/attacked_by(obj/item/attacking_item, mob/living/user) //TODOKYLER: figure out if this should go in another file
+/atom/proc/attacked_by(obj/item/attacking_item, mob/living/user)
 	if(!uses_integrity)
 		CRASH("attacked_by() was called on an object that doesnt use integrity!")
 
