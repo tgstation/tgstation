@@ -115,7 +115,7 @@
 /datum/greyscale_config/pda/chaplain
 	name = "Chaplain PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_chaplain.json'
-	
+
 /datum/greyscale_config/pda/captain
 	name = "Captain PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_captain.json'
@@ -412,3 +412,13 @@
 	name = "Worn CTF Light Vest"
 	icon_file = 'icons/mob/clothing/suits/ctf.dmi'
 	json_config = 'code/datums/greyscale/json_configs/ctf_light_worn.json'
+
+/datum/greyscale_config/changshan
+	name = "Changshan"
+	icon_file = 'icons/mob/clothing/under/suits.dmi'
+	json_config = 'code/datums/greyscale/json_configs/changshan.json'
+
+/datum/greyscale_config/cheongsam
+	name = "Cheongsam"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/cheongsam.json'

@@ -96,3 +96,14 @@
 	desc = "A preppy green skirt with a white blouse."
 	icon_state = "plaid_green"
 	inhand_icon_state = "plaid_green"
+
+/obj/item/clothing/under/dress/cheongsam
+	name = "Cheongsam"
+	desc = "A gorgeously embroidered silk dress."
+	icon_state = "cheongsam"
+	inhand_icon_state = "r_suit"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	greyscale_config = /datum/greyscale_config/cheongsam
+	greyscale_config_worn = /datum/greyscale_config/cheongsam
+	greyscale_colors = "#CB0808#F3D16B"
+	flags_1 = IS_PLAYER_COLORABLE_1

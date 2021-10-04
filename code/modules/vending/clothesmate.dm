@@ -170,7 +170,9 @@
 		/obj/item/clothing/suit/basil_boys = 20,
 		/obj/item/clothing/under/costume/basil_boys = 20,
 		/obj/item/clothing/head/basil_boys = 20,
-		/obj/item/clothing/shoes/basil_boys = 20
+		/obj/item/clothing/shoes/basil_boys = 20,
+		/obj/item/clothing/under/suit/changshan = 1,
+		/obj/item/clothing/under/dress/cheongsam = 1
 	)
 	contraband = list(
 		/obj/item/clothing/under/syndicate/tacticool = 1,

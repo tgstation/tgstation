@@ -145,3 +145,14 @@
 	desc = "A formal black tuxedo. It exudes classiness."
 	icon_state = "tuxedo"
 	inhand_icon_state = "tuxedo"
+
+/obj/item/clothing/under/suit/changshan
+	name = "Changshan"
+	desc = "A gorgeously embroidered silk shirt."
+	icon_state = "changshan"
+	inhand_icon_state = "r_suit"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	greyscale_config = /datum/greyscale_config/changshan
+	greyscale_config_worn = /datum/greyscale_config/changshan
+	greyscale_colors = "#CB0808#393744#F3D16B"
+	flags_1 = IS_PLAYER_COLORABLE_1

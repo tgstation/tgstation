@@ -357,34 +357,6 @@
 	inhand_icon_state = "pharoah"
 	body_parts_covered = CHEST|GROIN
 
-/obj/item/clothing/suit/changshan_red
-	name = "red changshan"
-	desc = "A gorgeously embroidered silk shirt."
-	icon_state = "changshan_red"
-	inhand_icon_state = "changshan_red"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-
-/obj/item/clothing/suit/changshan_blue
-	name = "blue changshan"
-	desc = "A gorgeously embroidered silk shirt."
-	icon_state = "changshan_blue"
-	inhand_icon_state = "changshan_blue"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-
-/obj/item/clothing/suit/cheongsam_red
-	name = "red cheongsam"
-	desc = "A gorgeously embroidered silk dress."
-	icon_state = "cheongsam_red"
-	inhand_icon_state = "cheongsam_red"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-
-/obj/item/clothing/suit/cheongsam_blue
-	name = "blue cheongsam"
-	desc = "A gorgeously embroidered silk dress."
-	icon_state = "cheongsam_blue"
-	inhand_icon_state = "cheongsam_blue"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-
 /obj/item/clothing/suit/bronze
 	name = "bronze suit"
 	desc = "A big and clanky suit made of bronze that offers no protection and looks very unfashionable. Nice."
