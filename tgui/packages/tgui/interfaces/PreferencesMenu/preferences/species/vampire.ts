@@ -33,6 +33,12 @@ const Vampire: Species = {
       their blood, and they will die if they run out. As a note, it doesn't \
       matter whose blood you drink, it will all be converted into your blood \
       type when consumed.",
+    },
+    {
+      icon: "cross",
+      name: "Against God and Nature",
+      description: "Almost all higher powers are disgusted by the existence of \
+      vampires, and entering the chapel is essentially suicide. Do not do it!",
     }],
   },
   lore: [
