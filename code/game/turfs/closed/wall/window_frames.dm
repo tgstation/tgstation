@@ -27,10 +27,9 @@
 	///whether or not this window is reinforced and thus doesnt use the default attackby() behavior
 	var/is_reinforced = FALSE
 
-	///typepath. what glass sheet type our window is made out of
-	var/glass_material = /obj/item/stack/sheet/glass
-	///typepath or null. if not null, we will spawn this window typepath on ourselves at mapload
-	var/window_type_override = null
+	///typepath. creates a corresponding window for this frame.
+	///is either a material sheet typepath (eg /obj/item/stack/sheet/glass) or a fulltile window typepath (eg /obj/structure/window/fulltile)
+	var/window_type = /obj/item/stack/sheet/glass
 
 	uses_integrity = TRUE
 
@@ -41,7 +40,7 @@
 	AddElement(/datum/element/climbable)
 
 	if(mapload && start_with_window)
-		create_structure_window(glass_material, TRUE)
+		create_structure_window(window_type, TRUE)
 
 ///helper proc to check if we already have a window
 /turf/closed/wall/window_frame/proc/has_window()
@@ -221,7 +220,7 @@
 
 /turf/closed/wall/window_frame/reinforced
 	name = "reinforced window frame"
-	glass_material = /obj/item/stack/sheet/rglass
+	window_type = /obj/item/stack/sheet/rglass
 	armor = list(MELEE = 80, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 25, BIO = 100, RAD = 100, FIRE = 80, ACID = 100)
 	max_integrity = 150
 	damage_deflection = 11

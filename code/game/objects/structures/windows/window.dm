@@ -205,6 +205,10 @@
 
 	if(!(flags_1 & NODECONSTRUCT_1) && !(reinf && state >= RWINDOW_FRAME_BOLTED))
 		if(I.tool_behaviour == TOOL_SCREWDRIVER)
+			if(fulltile && !anchored && !istype(loc, /turf/closed/wall/window_frame))
+				to_chat(user, span_notice("You can only secure this window to a window frame!"))
+				return
+
 			to_chat(user, span_notice("You begin to [anchored ? "unscrew the window from":"screw the window to"] [loc]..."))
 			if(I.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
 				set_anchored(!anchored)
