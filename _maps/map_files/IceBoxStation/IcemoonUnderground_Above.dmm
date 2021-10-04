@@ -76,6 +76,14 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/service/chapel/office)
+"au" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/service/chapel)
 "aw" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating/asteroid/snow/icemoon,
@@ -274,8 +282,8 @@
 "bt" = (
 /obj/machinery/status_display/evac/directional/west,
 /obj/machinery/light/directional/west,
-/obj/machinery/firealarm/directional/south,
 /obj/item/kirbyplants/random,
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "bu" = (
@@ -563,6 +571,7 @@
 /area/mine/living_quarters)
 "da" = (
 /obj/structure/reagent_dispensers/watertank,
+/obj/effect/spawner/random/trash/soap,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
 "db" = (
@@ -1170,11 +1179,21 @@
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "fQ" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/status_display/evac/directional/east,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/light/directional/east,
-/obj/machinery/status_display/evac/directional/east,
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/bookcase{
+	name = "Holy Bookcase"
+	},
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "fR" = (
@@ -1932,7 +1951,8 @@
 "iH" = (
 /obj/machinery/door/window/eastleft{
 	dir = 8;
-	name = "graveyard access"
+	name = "graveyard access";
+	req_one_access_txt = "22"
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
@@ -2241,6 +2261,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"jV" = (
+/obj/effect/spawner/xmastree,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/service/chapel)
 "jW" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/closet/crate/secure/loot,
@@ -2739,17 +2766,18 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/service/hydroponics)
 "lR" = (
+/obj/structure/bookcase{
+	name = "Holy Bookcase"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/bookcase{
-	name = "Holy Bookcase"
-	},
-/obj/structure/sign/plaques/kiddie/badger{
-	pixel_y = 32
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/service/chapel)
@@ -3074,6 +3102,16 @@
 "nD" = (
 /obj/machinery/light/directional/east,
 /obj/item/kirbyplants/random,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "nE" = (
@@ -3437,6 +3475,13 @@
 	dir = 1
 	},
 /area/service/theater)
+"pa" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/obj/structure/sign/warning,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
 "pb" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
@@ -4062,6 +4107,17 @@
 /obj/structure/sign/poster/random{
 	pixel_x = 32
 	},
+/obj/machinery/vending/coffee,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "rt" = (
@@ -4133,6 +4189,10 @@
 	dir = 1
 	},
 /obj/item/storage/book/bible,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "rH" = (
@@ -4536,6 +4596,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
 "th" = (
@@ -4967,6 +5028,9 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/noticeboard/directional/north,
 /obj/item/flashlight/lantern,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "uZ" = (
@@ -5020,6 +5084,10 @@
 /area/mine/laborcamp)
 "vl" = (
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "vm" = (
@@ -5590,6 +5658,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "xN" = (
@@ -5740,12 +5809,13 @@
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
 "yu" = (
-/obj/machinery/door/airlock/highsecurity{
-	name = "Chapel Maintenance Exit";
-	req_one_access_txt = "28;35"
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "Chapel Maintenance External Airlock";
+	opacity = 0
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
@@ -6103,6 +6173,12 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
+"zN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/carpet,
+/area/service/chapel)
 "zP" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -6315,12 +6391,6 @@
 /obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/plating,
 /area/cargo/warehouse)
-"AC" = (
-/obj/effect/spawner/xmastree,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/carpet,
-/area/service/chapel)
 "AD" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -6331,11 +6401,18 @@
 /area/service/chapel)
 "AE" = (
 /obj/machinery/light/directional/west,
+/obj/structure/bookcase{
+	name = "Holy Bookcase"
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/bookcase{
-	name = "Holy Bookcase"
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/service/chapel)
@@ -6500,6 +6577,18 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
+"Bn" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/service/chapel)
 "Bp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/newscaster/directional/north,
@@ -6576,6 +6665,7 @@
 	c_tag = "Chapel South";
 	dir = 1
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "BG" = (
@@ -6901,8 +6991,8 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "CW" = (
-/obj/machinery/firealarm/directional/south,
 /obj/item/kirbyplants/random,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "CX" = (
@@ -7556,6 +7646,16 @@
 	},
 /turf/open/floor/stone,
 /area/service/bar/atrium)
+"FB" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/service/chapel)
 "FC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7567,6 +7667,15 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
+"FD" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/service/chapel)
 "FF" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -7621,6 +7730,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -7669,6 +7779,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
+"Gd" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron/dark,
+/area/service/chapel)
 "Ge" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7811,10 +7928,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/science/xenobiology)
-"GA" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/carpet,
-/area/service/chapel)
 "GB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -8306,6 +8419,14 @@
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"Iq" = (
+/obj/structure/sign/plaques/kiddie/badger{
+	pixel_y = 32
+	},
+/turf/open/floor/plating/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored)
 "Is" = (
 /obj/structure/girder,
 /obj/structure/grille,
@@ -8995,14 +9116,15 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "LE" = (
-/obj/machinery/door/airlock/highsecurity{
-	name = "Chapel Exterior Exit";
-	req_one_access_txt = "28;35"
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "Chapel External Airlock";
+	opacity = 0
+	},
 /turf/open/floor/iron,
 /area/service/chapel)
 "LF" = (
@@ -9131,6 +9253,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
+"Mi" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/service/chapel)
 "Mk" = (
 /obj/machinery/camera{
 	c_tag = "Xenobiology Kill Chamber";
@@ -9877,6 +10006,7 @@
 	},
 /obj/machinery/newscaster/directional/north,
 /obj/item/flashlight/lantern,
+/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "Pe" = (
@@ -10032,6 +10162,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
+"PL" = (
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/plating,
+/area/maintenance/department/chapel)
 "PO" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -10329,6 +10463,9 @@
 /obj/effect/spawner/random/structure/furniture_parts,
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/structure/furniture_parts,
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
 "Re" = (
@@ -10672,6 +10809,7 @@
 /obj/effect/spawner/random/clothing/gloves,
 /obj/effect/landmark/blobstart,
 /obj/effect/landmark/event_spawn,
+/obj/effect/spawner/random/trash/janitor_supplies,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
 "SD" = (
@@ -11021,6 +11159,22 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"TP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/service/chapel)
 "TQ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -11659,12 +11813,18 @@
 /area/science/xenobiology)
 "Wu" = (
 /obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/extinguisher_cabinet/directional/north,
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/bookcase{
+	name = "Holy Bookcase"
+	},
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "Wv" = (
@@ -12149,12 +12309,6 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/service/bar)
-"Yo" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/service/chapel)
 "Yp" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/dirt,
@@ -12360,6 +12514,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/service/chapel)
@@ -55572,9 +55729,9 @@ Jf
 Fp
 PG
 Fp
-Fp
-Fp
-Fp
+PG
+PG
+PG
 Fp
 Fp
 PG
@@ -56355,7 +56512,7 @@ De
 De
 Ux
 Fp
-Jf
+pa
 Fp
 Fp
 Fp
@@ -56862,7 +57019,7 @@ iJ
 oQ
 JR
 kk
-UU
+Iq
 UU
 UU
 Np
@@ -57383,7 +57540,7 @@ tr
 UU
 qM
 Fp
-Jf
+RT
 Fp
 Et
 as
@@ -57891,7 +58048,7 @@ vY
 gP
 YN
 AE
-LF
+Vq
 dX
 dC
 dX
@@ -58148,7 +58305,7 @@ YN
 YN
 YN
 lR
-LF
+FD
 LF
 hQ
 LF
@@ -58404,8 +58561,8 @@ zJ
 ON
 YN
 Pb
+Bn
 jn
-LF
 wV
 Xy
 wV
@@ -58660,8 +58817,8 @@ VF
 BK
 mx
 qS
+TP
 jm
-Yo
 dX
 UN
 Qu
@@ -58918,7 +59075,7 @@ jh
 YN
 YN
 Zn
-OQ
+au
 LF
 LF
 oc
@@ -59437,10 +59594,10 @@ mW
 Ub
 Pe
 Pe
+zN
 Pe
 Pe
 Pe
-AC
 Pe
 QU
 BF
@@ -59692,7 +59849,7 @@ Vq
 uO
 HI
 Cm
-GA
+Cm
 Cm
 wp
 Cm
@@ -59946,7 +60103,7 @@ xQ
 as
 as
 xJ
-uO
+Mi
 LF
 LF
 bE
@@ -60190,7 +60347,7 @@ Et
 Et
 Et
 kk
-Ri
+PL
 Ri
 Ri
 kk
@@ -60203,7 +60360,7 @@ LF
 sz
 as
 rF
-LF
+Lz
 LF
 wV
 qi
@@ -60460,8 +60617,8 @@ Fi
 ND
 as
 uY
-Vq
-LF
+FB
+jV
 tN
 tA
 tN
@@ -60469,7 +60626,7 @@ xX
 LF
 bn
 nP
-LF
+Gd
 vl
 as
 as
@@ -60718,7 +60875,7 @@ Fi
 as
 as
 Wu
-LF
+Lz
 LF
 oc
 LF
@@ -60975,7 +61132,7 @@ as
 as
 as
 fQ
-LF
+jn
 TI
 LF
 SO
@@ -62001,10 +62158,10 @@ oh
 oh
 oh
 oh
-oh
+Et
+Et
 Fp
-PG
-PG
+Fp
 ak
 ak
 ak
@@ -62260,7 +62417,7 @@ oh
 Fp
 Fp
 Fp
-ak
+Fp
 ak
 ak
 ak
@@ -62515,7 +62672,7 @@ oh
 Fp
 Fp
 Fp
-ak
+Fp
 PG
 ak
 ak
@@ -62771,7 +62928,7 @@ Fp
 Fp
 Fp
 Fp
-ak
+Fp
 ak
 ak
 ak
