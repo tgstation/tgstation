@@ -165,7 +165,7 @@
 	if (.)
 		to_chat(user, span_notice("The uplink vibrates quietly, connecting to nearby agents..."))
 
-		var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the Contractor Support Unit for [user.real_name]?", ROLE_PAI, FALSE, 100, POLL_IGNORE_CONTRACTOR_SUPPORT)
+		var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the Contractor Support Unit for [user.real_name]?", ROLE_PAI, FALSE, 100, POLL_IGNORE_CONTRACTOR_SUPPORT)
 
 		if(LAZYLEN(candidates))
 			var/mob/dead/observer/C = pick(candidates)
