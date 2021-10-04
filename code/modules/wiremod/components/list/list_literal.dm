@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/list_literal
 	display_name = "List Literal"
-	desc = "A component that returns the value of a list at a given index. Attack in hand to increase list size, right click to decrease list size."
+	desc = "A component that returns a list from whatever input you give it."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The list type
