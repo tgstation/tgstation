@@ -13,7 +13,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return
 	if(alternate_appearances && alternate_appearances[key])
 		return
-	if(!(type in subtypesof(/datum/hud/alternate_appearances)))
+	if(!(type in subtypesof(/datum/hud/alternate_appearance)))
 		CRASH("Invalid type passed in: [type]")
 
 	var/list/arguments = args.Copy(2)
