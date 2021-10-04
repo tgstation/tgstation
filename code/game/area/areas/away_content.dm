@@ -10,6 +10,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	has_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_AWAY
 	sound_environment = SOUND_ENVIRONMENT_ROOM
+	area_flags = UNIQUE_AREA|NO_ALERTS
 
 /area/awaymission/beach
 	name = "Beach"
@@ -26,3 +27,5 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 
 	has_gravity = STANDARD_GRAVITY
 
+/area/awaymission/secret
+	area_flags = UNIQUE_AREA|NOTELEPORT|HIDDEN_AREA|NO_ALERTS

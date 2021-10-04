@@ -170,14 +170,13 @@
 
 	var/regen_cooldown = 0
 
-/mob/living/simple_animal/hostile/carp/megacarp/Initialize()
+/mob/living/simple_animal/hostile/carp/megacarp/Initialize(mapload)
 	. = ..()
 	name = "[pick(GLOB.megacarp_first_names)] [pick(GLOB.megacarp_last_names)]"
 	melee_damage_lower += rand(2, 10)
 	melee_damage_upper += rand(10,20)
 	maxHealth += rand(30,60)
 	move_to_delay = rand(3,7)
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGACARP, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 
 /mob/living/simple_animal/hostile/carp/megacarp/add_cell_sample()
@@ -241,7 +240,7 @@
 	/// Colored disk mouth appearance for adding it as a mouth overlay
 	var/mutable_appearance/colored_disk_mouth
 
-/mob/living/simple_animal/hostile/carp/cayenne/Initialize()
+/mob/living/simple_animal/hostile/carp/cayenne/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "bloops happily!")
 	colored_disk_mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth")

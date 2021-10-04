@@ -64,85 +64,85 @@
  * * [obj/item/proc/afterattack] (atom,user,adjacent,params) - used both ranged and adjacent
  * * [mob/proc/RangedAttack] (atom,modifiers) - used only ranged, only used for tk and laser eyes but could be changed
  */
-/mob/proc/ClickOn( atom/A, params )
+/mob/proc/ClickOn(atom/clicked_atom, params)
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
 
-	if(check_click_intercept(params,A))
+	if(check_click_intercept(params, clicked_atom))
 		return
 
 	if(notransform)
 		return
 
-	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, clicked_atom, params) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-			ShiftMiddleClickOn(A)
+			ShiftMiddleClickOn(clicked_atom)
 			return
 		if(LAZYACCESS(modifiers, CTRL_CLICK))
-			CtrlShiftClickOn(A)
+			CtrlShiftClickOn(clicked_atom)
 			return
-		ShiftClickOn(A)
+		ShiftClickOn(clicked_atom)
 		return
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-		MiddleClickOn(A, params)
+		MiddleClickOn(clicked_atom, params)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			alt_click_on_secondary(A)
+			alt_click_on_secondary(clicked_atom)
 		else
-			AltClickOn(A)
+			AltClickOn(clicked_atom)
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
-		CtrlClickOn(A)
+		CtrlClickOn(clicked_atom)
 		return
 
 	if(incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
 		return
 
-	face_atom(A)
+	face_atom(clicked_atom)
 
 	if(next_move > world.time) // in the year 2000...
 		return
 
-	if(!LAZYACCESS(modifiers, "catcher") && A.IsObscured())
+	if(!LAZYACCESS(modifiers, "catcher") && clicked_atom.IsObscured())
 		return
 
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
-		UnarmedAttack(A, FALSE, modifiers)
+		UnarmedAttack(clicked_atom, FALSE, modifiers)
 		return
 
 	if(throw_mode)
 		changeNext_move(CLICK_CD_THROW)
-		throw_item(A)
+		throw_item(clicked_atom)
 		return
 
-	var/obj/item/W = get_active_held_item()
+	var/obj/item/used_item = get_active_held_item()
 
-	if(W == A)
+	if(used_item == clicked_atom)
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			W.attack_self_secondary(src, modifiers)
+			used_item.attack_self_secondary(src, modifiers)
 			update_inv_hands()
 			return
 		else
-			W.attack_self(src, modifiers)
+			used_item.attack_self(src, modifiers)
 			update_inv_hands()
 			return
 
 	//These are always reachable.
 	//User itself, current loc, and user inventory
-	if(A in DirectAccess())
-		if(W)
-			W.melee_attack_chain(src, A, params)
+	if(clicked_atom in DirectAccess())
+		if(used_item)
+			used_item.melee_attack_chain(src, clicked_atom, params)
 		else
-			if(ismob(A))
+			if(ismob(clicked_atom))
 				changeNext_move(CLICK_CD_MELEE)
 
-			UnarmedAttack(A, FALSE, modifiers)
+			UnarmedAttack(clicked_atom, FALSE, modifiers)
 		return
 
 	//Can't reach anything else in lockers or other weirdness
@@ -150,27 +150,32 @@
 		return
 
 	//Standard reach turf to turf or reaching inside storage
-	if(CanReach(A,W))
-		if(W)
-			W.melee_attack_chain(src, A, params)
+	if(CanReach(clicked_atom, used_item))
+		if(used_item)
+			used_item.melee_attack_chain(src, clicked_atom, params)
 		else
-			if(ismob(A))
+			if(ismob(clicked_atom))
 				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A,1,modifiers)
-	else
-		if(W)
-			if(LAZYACCESS(modifiers, RIGHT_CLICK))
-				var/after_attack_secondary_result = W.afterattack_secondary(A, src, FALSE, params)
-
-				if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
-					W.afterattack(A, src, FALSE, params)
-			else
-				W.afterattack(A,src,0,params)
+			UnarmedAttack(clicked_atom, 1, modifiers)
+		return
+	if(!used_item)
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+			ranged_secondary_attack(clicked_atom, modifiers)
 		else
-			if(LAZYACCESS(modifiers, RIGHT_CLICK))
-				ranged_secondary_attack(A, modifiers)
-			else
-				RangedAttack(A,modifiers)
+			RangedAttack(clicked_atom, modifiers)
+		return
+
+	if(!LAZYACCESS(modifiers, RIGHT_CLICK))
+		used_item.afterattack(clicked_atom,src,0,params)
+
+	var/attack_secondary = used_item.attack_secondary(clicked_atom, src, params)
+	if(attack_secondary == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
+	var/after_attack_secondary_result = used_item.afterattack_secondary(clicked_atom, src, FALSE, params)
+
+	if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
+		used_item.afterattack(clicked_atom, src, FALSE, params)
 
 /// Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
 /atom/proc/IsObscured()

@@ -6,7 +6,8 @@
 		return
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
 	for(var/button_type in buttons)
-		var/atom/movable/screen/lobbyscreen = new button_type()
+		var/atom/movable/screen/lobby/lobbyscreen = new button_type()
+		lobbyscreen.SlowInit()
 		lobbyscreen.hud = src
 		static_inventory += lobbyscreen
 		if(istype(lobbyscreen, /atom/movable/screen/lobby/button))
@@ -17,6 +18,10 @@
 	plane = SPLASHSCREEN_PLANE
 	layer = LOBBY_BUTTON_LAYER
 	screen_loc = "TOP,CENTER"
+
+/// Run sleeping actions after initialize
+/atom/movable/screen/lobby/proc/SlowInit()
+	return
 
 /atom/movable/screen/lobby/background
 	layer = LOBBY_BACKGROUND_LAYER
@@ -256,10 +261,9 @@
 
 	var/new_poll = FALSE
 
-///Need to use New due to init
-/atom/movable/screen/lobby/button/poll/New(loc, ...)
+/atom/movable/screen/lobby/button/poll/SlowInit(mapload)
 	. = ..()
-	if(!usr) //
+	if(!usr)
 		return
 	var/mob/dead/new_player/new_player = usr
 	if(IsGuestKey(new_player.key))

@@ -21,7 +21,7 @@
 	active_sharpness = NONE
 	active_heat = 0
 
-/obj/item/melee/energy/sword/holographic/Initialize()
+/obj/item/melee/energy/sword/holographic/Initialize(mapload)
 	. = ..()
 	if(!sword_color_icon)
 		sword_color_icon = pick("red", "blue", "green", "purple")
