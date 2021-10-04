@@ -345,7 +345,7 @@
 
 /obj/item/food/burger/catburger
 	name = "catburger"
-	desc = "Finally those catpeople are worth something!"
+	desc = "Finally those cats and catpeople are worth something!"
 	icon_state = "catburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("bun" = 4, "meat" = 2, "cat" = 2)
