@@ -4622,6 +4622,7 @@
 /area/maintenance/department/chapel)
 "th" = (
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
 /area/service/chapel/office)
 "tj" = (
@@ -10869,7 +10870,6 @@
 	c_tag = "Chapel Office"
 	},
 /obj/item/radio/intercom/directional/north,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
 /area/service/chapel/office)
 "SE" = (
@@ -11116,6 +11116,7 @@
 /obj/structure/table/wood,
 /obj/item/storage/photo_album/chapel,
 /obj/structure/noticeboard/directional/west,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/grimy,
 /area/service/chapel/office)
 "Tu" = (

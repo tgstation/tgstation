@@ -15039,6 +15039,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/wood,
 /area/service/library)
 "doe" = (
@@ -15669,6 +15670,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
 /area/service/library)
 "dHi" = (
@@ -17790,6 +17792,7 @@
 /area/cargo/storage)
 "eXo" = (
 /obj/item/radio/intercom/directional/west,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
 /area/service/library)
 "eXt" = (
@@ -24910,7 +24913,6 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/wood,
 /area/service/library)
 "iLq" = (
@@ -27626,6 +27628,7 @@
 /obj/structure/filingcabinet,
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
 /area/service/library)
 "knk" = (
@@ -28839,6 +28842,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/carpet,
 /area/service/library)
 "kSz" = (
@@ -34117,6 +34121,8 @@
 "nJn" = (
 /obj/structure/destructible/cult/tome,
 /obj/item/book/codex_gigas,
+/obj/machinery/light/small/directional/south,
+/obj/machinery/computer/security/telescreen/entertainment/directional/east,
 /turf/open/floor/engine/cult,
 /area/service/library)
 "nJt" = (
@@ -35719,7 +35725,6 @@
 /area/engineering/atmos)
 "oyV" = (
 /obj/machinery/airalarm/directional/west,
-/obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
 /area/service/library)
 "ozO" = (
@@ -37542,6 +37547,10 @@
 	},
 /turf/open/floor/iron,
 /area/ai_monitored/command/storage/eva)
+"pvL" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/wood,
+/area/service/library)
 "pvT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -47391,6 +47400,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"uFQ" = (
+/obj/structure/noticeboard/directional/west,
+/turf/open/floor/engine/cult,
+/area/service/library)
 "uFV" = (
 /obj/machinery/shower{
 	dir = 4
@@ -48298,6 +48311,7 @@
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /obj/effect/turf_decal/siding/wood/corner,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/wood,
 /area/service/library)
 "vjW" = (
@@ -52365,6 +52379,7 @@
 /obj/structure/table/wood,
 /obj/machinery/libraryscanner,
 /obj/effect/turf_decal/siding/wood/corner,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/wood,
 /area/service/library)
 "xzA" = (
@@ -97626,7 +97641,7 @@ pEH
 mjl
 siL
 fKz
-vMz
+dRT
 ekk
 nhQ
 eMg
@@ -97876,7 +97891,7 @@ vjN
 yjL
 sbs
 iLn
-siL
+pvL
 siL
 siL
 siL
@@ -98649,7 +98664,7 @@ pfQ
 rqy
 pXx
 cnF
-rvZ
+uFQ
 rRH
 pXx
 nfk
