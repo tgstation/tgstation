@@ -17,23 +17,29 @@
 	layer = GAS_SCRUBBER_LAYER
 	hide = TRUE
 	shift_underlay_only = FALSE
+	pipe_state = "uvent"
+	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 
+	///Direction of pumping the gas (RELEASING or SIPHONING)
 	var/pump_direction = RELEASING
-
+	///Flag to indicate what pressure check to implement (EXT_BOUND, INT_BOUND, NO_BOUND)
 	var/pressure_checks = EXT_BOUND
+	///Variable to set the external pressure check (default 101 kPa)
 	var/external_pressure_bound = ONE_ATMOSPHERE
+	///Variable to set the internal pressure check (default 0 kPa)
 	var/internal_pressure_bound = 0
 	// EXT_BOUND: Do not pass external_pressure_bound
 	// INT_BOUND: Do not pass internal_pressure_bound
 	// NO_BOUND: Do not pass either
 
+	///Frequency id for connecting to the NTNet
 	var/frequency = FREQ_ATMOS_CONTROL
+	///Reference to the radio datum
 	var/datum/radio_frequency/radio_connection
+	///Radio connection to the air alarm
 	var/radio_filter_out
+	///Radio connection from the air alarm
 	var/radio_filter_in
-
-	pipe_state = "uvent"
-	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	if(!id_tag)
@@ -111,7 +117,7 @@
 
 		if(pressure_delta > 0)
 			if(air_contents.temperature > 0)
-				var/transfer_moles = (pressure_delta*environment.volume)/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+				var/transfer_moles = (pressure_delta * environment.volume) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
 				if(!removed || !removed.total_moles())
@@ -260,12 +266,12 @@
 	broadcast_status()
 	update_appearance()
 
-/obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/I)
+/obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/welder)
 	..()
-	if(!I.tool_start_check(user, amount=0))
+	if(!welder.tool_start_check(user, amount=0))
 		return TRUE
 	to_chat(user, span_notice("You begin welding the vent..."))
-	if(I.use_tool(src, user, 20, volume=50))
+	if(welder.use_tool(src, user, 20, volume=50))
 		if(!welded)
 			user.visible_message(span_notice("[user] welds the vent shut."), span_notice("You weld the vent shut."), span_hear("You hear welding."))
 			welded = TRUE

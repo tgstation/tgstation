@@ -6,13 +6,17 @@
 	desc = "Very useful for filtering gasses."
 
 	can_unwrench = TRUE
-	var/transfer_rate = MAX_TRANSFER_RATE
-	var/filter_type = null
-	var/frequency = 0
-	var/datum/radio_frequency/radio_connection
-
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "filter"
+
+	///Rate of transfer of the gases to the outputs
+	var/transfer_rate = MAX_TRANSFER_RATE
+	///What gas are we filtering
+	var/filter_type = null
+	///Frequency id for connecting to the NTNet
+	var/frequency = 0
+	///Reference to the radio datum
+	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/atmospherics/components/trinary/filter/CtrlClick(mob/user)
 	if(can_interact(user))

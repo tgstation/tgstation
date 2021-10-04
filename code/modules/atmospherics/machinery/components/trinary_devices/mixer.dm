@@ -6,14 +6,15 @@
 	desc = "Very useful for mixing gasses."
 
 	can_unwrench = TRUE
-
-	var/target_pressure = ONE_ATMOSPHERE
-	var/node1_concentration = 0.5
-	var/node2_concentration = 0.5
-
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "mixer"
 
+	///Output pressure target
+	var/target_pressure = ONE_ATMOSPHERE
+	///Ratio between the node 1 and 2, determines the amount of gas transfered, sums up to 1
+	var/node1_concentration = 0.5
+	///Ratio between the node 1 and 2, determines the amount of gas transfered, sums up to 1
+	var/node2_concentration = 0.5
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
 /obj/machinery/atmospherics/components/trinary/mixer/CtrlClick(mob/user)

@@ -8,20 +8,21 @@
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
 	hide = TRUE
-
+	layer = GAS_SCRUBBER_LAYER
+	pipe_state = "injector"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
-	var/injecting = 0
-
+	///Variable used for radio frequency injection
+	var/injecting = FALSE
+	///Rate of operation of the device
 	var/volume_rate = 50
 
+	///Frequency id for connecting to the NTNet
 	var/frequency = 0
-	var/id = null
+	///Reference to the radio datum
 	var/datum/radio_frequency/radio_connection
-
-	layer = GAS_SCRUBBER_LAYER
-
-	pipe_state = "injector"
+	///Id of the radio connection
+	var/id = null
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
 	if(can_interact(user))

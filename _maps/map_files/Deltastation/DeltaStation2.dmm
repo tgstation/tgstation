@@ -24223,7 +24223,6 @@
 /area/science/genetics)
 "djC" = (
 /obj/machinery/camera{
-	can_atmos_pass = "science camera";
 	c_tag = "Genetics Lab North";
 	name = "science camera";
 	network = list("ss13","rd")

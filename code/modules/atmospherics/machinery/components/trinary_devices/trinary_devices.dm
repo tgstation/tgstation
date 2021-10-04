@@ -8,6 +8,7 @@
 	pipe_flags = PIPING_ONE_PER_TURF
 	vent_movement = NONE
 
+	///Flips the node connections so that the first and third ports are swapped
 	var/flipped = FALSE
 
 /obj/machinery/atmospherics/components/trinary/set_init_directions()
