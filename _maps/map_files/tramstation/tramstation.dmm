@@ -13832,7 +13832,6 @@
 	icon_state = "plating"
 	},
 /obj/structure/window/shuttle,
-/obj/structure/grille,
 /obj/structure/fluff/tram_rail,
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
@@ -14229,7 +14228,6 @@
 	icon_state = "plating"
 	},
 /obj/structure/window/shuttle,
-/obj/structure/grille,
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
@@ -27594,7 +27592,6 @@
 	icon_state = "plating"
 	},
 /obj/structure/window/shuttle,
-/obj/structure/grille,
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
@@ -30292,7 +30289,6 @@
 "iby" = (
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/machinery/vending/wallmed/directional/south,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "ibI" = (
@@ -34221,11 +34217,11 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/window{
+	atom_integrity = 300;
 	base_state = "rightsecure";
 	dir = 1;
 	icon_state = "rightsecure";
 	name = "Primary AI Core Access";
-	atom_integrity = 300;
 	req_access_txt = "16"
 	},
 /turf/open/floor/iron/dark,
@@ -44562,7 +44558,6 @@
 "nvm" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/structure/cable,
-/obj/machinery/vending/wallmed/directional/south,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "nvp" = (
@@ -52563,7 +52558,6 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 3
 	},
-/obj/structure/reagent_dispensers/virusfood/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "qpf" = (
@@ -53695,7 +53689,6 @@
 	icon_state = "plating"
 	},
 /obj/structure/window/shuttle,
-/obj/structure/grille,
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
@@ -60115,7 +60108,6 @@
 	icon_state = "plating"
 	},
 /obj/structure/window/shuttle,
-/obj/structure/grille,
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
 "tls" = (
