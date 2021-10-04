@@ -266,16 +266,16 @@
 /obj/item/stock_parts/cell/high
 	name = "high-capacity power cell"
 	icon_state = "hcell"
-	maxcharge = 10000
+	maxcharge = 2000
 	custom_materials = list(/datum/material/glass=60)
-	chargerate = 1500
+	chargerate = 300
 
 /obj/item/stock_parts/cell/high/plus
 	name = "high-capacity power cell+"
 	desc = "Where did these come from?"
 	icon_state = "h+cell"
-	maxcharge = 15000
-	chargerate = 2250
+	maxcharge = 2500
+	chargerate = 300
 	rating = 2
 
 /obj/item/stock_parts/cell/high/empty/Initialize(mapload)
@@ -286,9 +286,9 @@
 /obj/item/stock_parts/cell/super
 	name = "super-capacity power cell"
 	icon_state = "scell"
-	maxcharge = 20000
+	maxcharge = 2000
 	custom_materials = list(/datum/material/glass=300)
-	chargerate = 2000
+	chargerate = 200
 	rating = 3
 
 /obj/item/stock_parts/cell/super/empty/Initialize(mapload)
@@ -299,9 +299,9 @@
 /obj/item/stock_parts/cell/hyper
 	name = "hyper-capacity power cell"
 	icon_state = "hpcell"
-	maxcharge = 30000
+	maxcharge = 3000
 	custom_materials = list(/datum/material/glass=400)
-	chargerate = 3000
+	chargerate = 300
 	rating = 4
 
 /obj/item/stock_parts/cell/hyper/empty/Initialize(mapload)
@@ -313,9 +313,9 @@
 	name = "bluespace power cell"
 	desc = "A rechargeable transdimensional power cell."
 	icon_state = "bscell"
-	maxcharge = 40000
+	maxcharge = 4000
 	custom_materials = list(/datum/material/glass=600)
-	chargerate = 4000
+	chargerate = 400
 	rating = 5
 
 /obj/item/stock_parts/cell/bluespace/empty/Initialize(mapload)
