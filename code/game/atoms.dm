@@ -156,6 +156,8 @@
 	var/atom/orbit_target
 	///AI controller that controls this atom. type on init, then turned into an instance during runtime
 	var/datum/ai_controller/ai_controller
+	///Should we ignore any attempts to auto align? Mappers should edit this
+	var/manual_align = FALSE
 
 	///any atom that uses integrity and can be damaged must set this to true, otherwise the integrity procs will runtime
 	var/uses_integrity = FALSE
@@ -285,8 +287,11 @@
  * useful for doing things like finding other machines on GLOB.machines because you can guarantee
  * that all atoms will actually exist in the "WORLD" at this time and that all their Intialization
  * code has been run
+ *
+ * mapload: This parameter behaves the same as what you may have seen in [/atom/proc/Initialize]
+ * It's true if the object is loading in from a map file, and false otherwise
  */
-/atom/proc/LateInitialize()
+/atom/proc/LateInitialize(mapload)
 	set waitfor = FALSE
 
 /// Put your [AddComponent] calls here
@@ -2094,3 +2099,63 @@
 		new /datum/merger(id, allowed_types, src)
 		candidate = mergers[id]
 	return candidate
+
+/*
+Some details about how to use these lists
+We're essentially trying to predict how doors/doorlike things will be placed/surounded, and use that to set their direction
+It's a little finiky, and you may need to override the lists or worst case senario manually edit something's dir
+But it should behave like you expect
+*/
+
+///What to connect with by default. Used by /atom/proc/auto_align(). This can be overriden
+GLOBAL_LIST_INIT(default_connectables, typecacheof(list(
+		/obj/machinery/door/airlock,
+		/obj/machinery/door/poddoor,
+		/obj/machinery/smartfridge,
+		/obj/structure/girder/reinforced,
+		/obj/structure/plasticflaps,
+		/obj/machinery/power/shieldwallgen,
+		/obj/structure/door_assembly,
+	)))
+///What to connect with at a lower priority by default. Used for stuff that we want to consider, but only if we don't find anything else
+GLOBAL_LIST_INIT(lower_priority_connectables, typecacheof(list(
+		/obj/machinery/door/window,
+		/obj/structure/table,
+		/obj/structure/window,
+		/obj/structure/girder,
+	)))
+
+///Ok so this whole proc is about finding tiles that we could in theory be connected to, and blocking off that direction right?
+///It's not perfect, and it can make mistakes, but it does a pretty good job predicting a mapper's intentions
+/atom/proc/auto_align(connectables_typecache, lower_priority_typecache)
+	if(manual_align)
+		return
+	if(!connectables_typecache)
+		connectables_typecache = GLOB.default_connectables
+	if(!lower_priority_typecache)
+		lower_priority_typecache = GLOB.lower_priority_connectables
+
+	var/list/dirs_usable = GLOB.cardinals.Copy()
+	var/list/dirs_secondary_priority = GLOB.cardinals.Copy()
+	for(var/dir_to_check in GLOB.cardinals)
+		var/turf/turf_to_check = get_step(src, dir_to_check)
+		if(turf_to_check.density) //Dense turfs are connectable
+			dirs_usable -= dir_to_check
+			continue
+		for(var/atom/movable/thing_to_check in turf_to_check)
+			if(is_type_in_typecache(thing_to_check, connectables_typecache))
+				dirs_usable -= dir_to_check //So are things in the default typecache
+				break
+			if(is_type_in_typecache(thing_to_check, lower_priority_typecache))
+				dirs_secondary_priority -= dir_to_check //Assuming we find nothing else, note down the secondary priority stuff
+
+	var/dirs_avalible = length(dirs_usable)
+	//Only continue if we've got ourself either a corner or a side piece. Only side pieces really work well here, since corners aren't really something we can fudge handling for
+	if(dirs_avalible <= 2 && dirs_avalible != 0)
+		dir = dirs_usable[1] //Just take the first dir avalible
+		return
+	dirs_usable &= dirs_secondary_priority //Only consider dirs we both share
+	dirs_avalible = length(dirs_usable)
+	if(dirs_avalible <= 2 && dirs_avalible != 0)
+		dir = dirs_usable[1] //Just take the first dir avalible
+		return

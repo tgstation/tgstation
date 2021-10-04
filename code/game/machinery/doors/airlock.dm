@@ -182,7 +182,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/door/airlock/LateInitialize()
+/obj/machinery/door/airlock/LateInitialize(mapload)
 	. = ..()
 	if (cyclelinkeddir)
 		cyclelinkairlock()
@@ -209,6 +209,8 @@
 				panel_open = TRUE
 	if(cutAiWire)
 		wires.cut(WIRE_AI)
+	if(mapload)
+		auto_align()
 	update_appearance()
 
 

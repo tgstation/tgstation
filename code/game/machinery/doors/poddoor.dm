@@ -23,6 +23,16 @@
 	var/datum/crafting_recipe/recipe_type = /datum/crafting_recipe/blast_doors
 	var/deconstruction = BLASTDOOR_FINISHED // deconstruction step
 
+/obj/machinery/door/poddoor/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/door/poddoor/LateInitialize(mapload)
+	. = ..()
+	if(mapload)
+		auto_align()
+
 /obj/machinery/door/poddoor/attackby(obj/item/W, mob/user, params)
 	. = ..()
 
