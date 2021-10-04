@@ -6836,6 +6836,7 @@
 	dir = 8
 	},
 /obj/effect/spawner/random/trash/bin,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/cafeteria,
 /area/hallway/secondary/exit/departure_lounge)
 "bgf" = (
@@ -6847,11 +6848,11 @@
 /turf/open/floor/iron/white/corner,
 /area/hallway/secondary/exit/departure_lounge)
 "bgg" = (
-/obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /obj/item/kirbyplants/random,
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /turf/open/floor/iron/white/corner,
 /area/hallway/secondary/exit/departure_lounge)
 "bgh" = (
@@ -26817,6 +26818,7 @@
 /area/science/misc_lab)
 "jOr" = (
 /obj/machinery/light/small/directional/west,
+/obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/wood,
 /area/service/library)
 "jOy" = (
@@ -27556,6 +27558,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /turf/open/floor/wood,
 /area/service/library)
 "kmc" = (
@@ -31052,7 +31055,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
@@ -34497,6 +34500,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/sign/poster/random{
+	pixel_x = -32
+	},
 /turf/open/floor/iron/cafeteria,
 /area/hallway/secondary/exit/departure_lounge)
 "nRY" = (
@@ -36750,6 +36756,14 @@
 	},
 /obj/structure/table/wood,
 /obj/item/clothing/under/suit/red,
+/obj/item/candle{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/candle{
+	pixel_x = 8;
+	pixel_y = 4
+	},
 /turf/open/floor/engine/cult,
 /area/service/library)
 "pby" = (
@@ -45671,9 +45685,7 @@
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 4
 	},
-/obj/structure/sign/poster/random{
-	pixel_x = -32
-	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/cafeteria,
 /area/hallway/secondary/exit/departure_lounge)
 "tTm" = (

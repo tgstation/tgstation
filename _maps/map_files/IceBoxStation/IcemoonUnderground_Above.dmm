@@ -589,6 +589,12 @@
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
+"dd" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/chapel)
 "dg" = (
 /turf/open/floor/circuit,
 /area/mine/maintenance)
@@ -1486,6 +1492,7 @@
 	dir = 8
 	},
 /obj/item/kirbyplants/random,
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "gZ" = (
@@ -1965,7 +1972,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/maintenance/department/chapel)
 "iL" = (
 /obj/effect/turf_decal/tile/brown{
@@ -2672,6 +2681,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/grimy,
 /area/service/chapel/office)
 "lA" = (
@@ -3019,6 +3029,7 @@
 	dir = 4
 	},
 /obj/machinery/disposal/bin,
+/obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/iron/grimy,
 /area/service/chapel/office)
 "nj" = (
@@ -3551,6 +3562,17 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/maintenance/starboard/fore)
+"pl" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/department/chapel)
 "pm" = (
 /obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	color = "#0000ff";
@@ -4596,7 +4618,6 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
-/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
 "th" = (
@@ -5220,6 +5241,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
 "vN" = (
@@ -5309,6 +5331,9 @@
 /obj/structure/closet/crate/coffin,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/poster/random{
+	pixel_y = 32
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
 "wj" = (
@@ -5778,6 +5803,7 @@
 "yo" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/south,
+/obj/structure/rack,
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/chapel)
 "yp" = (
@@ -5955,6 +5981,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/service/chapel/office)
 "zb" = (
@@ -6528,6 +6555,11 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating/snowed/icemoon,
 /area/maintenance/department/chapel)
+"Bf" = (
+/obj/effect/decal/cleanable/generic,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/maintenance/department/chapel)
 "Bg" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
@@ -6666,6 +6698,7 @@
 	dir = 1
 	},
 /obj/item/kirbyplants/random,
+/obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "BG" = (
@@ -8389,6 +8422,11 @@
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
+"Ii" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/department/chapel)
 "Ij" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -8525,6 +8563,11 @@
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"IS" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/maintenance/department/chapel)
 "IV" = (
 /obj/machinery/door/airlock{
 	name = "Hydroponics Maintenance";
@@ -8583,6 +8626,10 @@
 /obj/structure/table,
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"Je" = (
+/obj/structure/closet/crate,
+/turf/open/floor/plating,
+/area/maintenance/department/chapel)
 "Jf" = (
 /obj/structure/fence{
 	dir = 4
@@ -9072,6 +9119,9 @@
 /obj/effect/spawner/random/food_or_drink/booze,
 /obj/effect/spawner/random/food_or_drink/booze,
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
 "Ls" = (
@@ -9505,6 +9555,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
+"Nf" = (
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/department/chapel)
 "Ng" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/glass{
@@ -9768,12 +9823,6 @@
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/iron/dark,
 /area/service/bar/atrium)
-"Ob" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/textured_half{
-	dir = 1
-	},
-/area/service/chapel/office)
 "Od" = (
 /obj/structure/fence/corner{
 	dir = 6
@@ -9893,7 +9942,8 @@
 /area/maintenance/department/crew_quarters/bar)
 "OC" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/random/trash/graffiti,
+/obj/effect/landmark/event_spawn,
+/obj/effect/decal/cleanable/crayon,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
 "OF" = (
@@ -10156,6 +10206,10 @@
 /obj/structure/marker_beacon/burgundy,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"PJ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/maintenance/department/chapel)
 "PK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -10660,6 +10714,7 @@
 /area/science/xenobiology)
 "RO" = (
 /obj/effect/spawner/random/structure/tank_holder,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
 "RQ" = (
@@ -10680,7 +10735,9 @@
 /area/icemoon/underground/explored)
 "RV" = (
 /obj/structure/closet/firecloset,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
 /area/maintenance/department/chapel)
 "RW" = (
 /obj/structure/chair/comfy/brown{
@@ -10799,16 +10856,11 @@
 /turf/open/floor/iron,
 /area/mine/production)
 "SB" = (
-/obj/effect/landmark/xeno_spawn,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/effect/decal/cleanable/generic,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/closet,
 /obj/effect/spawner/random/clothing/gloves,
-/obj/effect/landmark/blobstart,
-/obj/effect/landmark/event_spawn,
 /obj/effect/spawner/random/trash/janitor_supplies,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
@@ -11456,6 +11508,16 @@
 	},
 /turf/open/floor/iron/white,
 /area/mine/laborcamp)
+"UQ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/effect/landmark/xeno_spawn,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/department/chapel)
 "UR" = (
 /obj/machinery/door/airlock{
 	name = "Theater Backstage";
@@ -11508,6 +11570,11 @@
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
+"Vc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/maintenance/department/chapel)
 "Vd" = (
 /obj/item/radio/intercom/directional/north{
 	desc = "A station intercom. It looks like it has been modified to not broadcast.";
@@ -12320,6 +12387,7 @@
 "Yq" = (
 /obj/structure/closet/crate/coffin,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/toy/figure/chaplain,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
 "Yr" = (
@@ -56758,7 +56826,7 @@ kk
 RV
 yV
 fA
-Ri
+Ii
 JK
 eo
 kk
@@ -57269,7 +57337,7 @@ kk
 GM
 kk
 kk
-lI
+pl
 kk
 kk
 FJ
@@ -57522,7 +57590,7 @@ ak
 ak
 ak
 kk
-Ri
+Je
 Gk
 kk
 RO
@@ -57530,7 +57598,7 @@ lI
 kk
 us
 ug
-Ob
+vY
 gP
 YN
 wx
@@ -58807,7 +58875,7 @@ ak
 kk
 Yq
 iV
-Xj
+Vc
 kk
 SD
 yC
@@ -59064,7 +59132,7 @@ Et
 kk
 wh
 SB
-Xj
+UQ
 kk
 UA
 ow
@@ -59319,8 +59387,8 @@ ak
 ak
 Et
 kk
-Ri
-Ri
+Nf
+Bf
 Ri
 kk
 Sb
@@ -59835,7 +59903,7 @@ Et
 kk
 Rd
 Ri
-Ri
+PJ
 kk
 da
 kk
@@ -60092,7 +60160,7 @@ Et
 kk
 Ll
 OC
-Ri
+Nf
 tg
 wj
 kk
@@ -60348,8 +60416,8 @@ Et
 Et
 kk
 PL
-Ri
-Ri
+dd
+dd
 kk
 Ri
 Hc
@@ -60610,7 +60678,7 @@ VB
 kk
 kk
 ax
-Ri
+IS
 kk
 Fi
 Fi
@@ -60861,7 +60929,7 @@ ak
 Et
 Et
 Fp
-oh
+li
 oh
 oh
 oh
@@ -61118,7 +61186,7 @@ ak
 ak
 PG
 Fp
-oh
+li
 oh
 oh
 oh
@@ -61375,7 +61443,7 @@ ak
 ak
 ak
 Fp
-Fp
+mv
 oh
 oh
 oh
@@ -61631,7 +61699,7 @@ ak
 ak
 ak
 ak
-ak
+Fp
 Fp
 Fp
 oh
