@@ -53,7 +53,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		var/image/cap = getpipeimage(icon, "vent_cap", initialize_directions)
+		var/image/cap = get_pipe_image(icon, "vent_cap", initialize_directions)
 		add_overlay(cap)
 	else
 		PIPING_LAYER_SHIFT(src, PIPING_LAYER_DEFAULT)
@@ -180,7 +180,7 @@
 	name = "\proper [vent_area.name] [name] [id_tag]"
 
 
-/obj/machinery/atmospherics/components/unary/vent_pump/atmosinit()
+/obj/machinery/atmospherics/components/unary/vent_pump/atmos_init()
 	//some vents work his own spesial way
 	radio_filter_in = frequency==FREQ_ATMOS_CONTROL?(RADIO_FROM_AIRALARM):null
 	radio_filter_out = frequency==FREQ_ATMOS_CONTROL?(RADIO_TO_AIRALARM):null

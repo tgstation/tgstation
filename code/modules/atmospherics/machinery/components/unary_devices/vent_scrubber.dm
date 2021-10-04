@@ -53,7 +53,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		var/image/cap = getpipeimage(icon, "scrub_cap", initialize_directions)
+		var/image/cap = get_pipe_image(icon, "scrub_cap", initialize_directions)
 		add_overlay(cap)
 	else
 		PIPING_LAYER_SHIFT(src, PIPING_LAYER_DEFAULT)
@@ -117,7 +117,7 @@
 	var/area/scrub_area = get_area(src)
 	name = "\proper [scrub_area.name] [name] [id_tag]"
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/atmosinit()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/atmos_init()
 	radio_filter_in = frequency==initial(frequency)?(RADIO_FROM_AIRALARM):null
 	radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
 	if(frequency)
@@ -203,7 +203,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/check_turfs()
 	adjacent_turfs.Cut()
 	var/turf/T = get_turf(src)
-	adjacent_turfs = T.GetAtmosAdjacentTurfs(alldir = TRUE)
+	adjacent_turfs = T.get_atmos_adjacent_turfs(alldir = TRUE)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
 	if(!is_operational || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))

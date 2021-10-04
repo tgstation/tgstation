@@ -13803,7 +13803,7 @@
 /area/centcom/supplypod)
 "NT" = (
 /obj/structure/window/paperframe{
-	CanAtmosPass = 0
+	can_atmos_pass = 0
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)

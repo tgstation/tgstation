@@ -243,20 +243,20 @@ All ShuttleMove procs go here
 					break
 
 			if(!connected)
-				nullifyNode(i)
+				nullify_node(i)
 
 		if(!nodes[i])
 			missing_nodes = TRUE
 
 	if(missing_nodes)
-		atmosinit()
+		atmos_init()
 		for(var/obj/machinery/atmospherics/A in pipeline_expansion())
-			A.atmosinit()
-			if(A.returnPipenet())
-				A.addMember(src)
+			A.atmos_init()
+			if(A.return_pipenet())
+				A.add_member(src)
 		SSair.add_to_rebuild_queue(src)
 	else
-		// atmosinit() calls update_appearance(), so we don't need to call it
+		// atmos_init() calls update_appearance(), so we don't need to call it
 		update_appearance()
 
 /obj/machinery/navbeacon/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)

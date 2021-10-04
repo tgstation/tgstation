@@ -67,7 +67,7 @@
 
 		var/obj/machinery/atmospherics/pipeyoudiein = M.loc
 		var/datum/pipeline/ourpipeline
-		var/pipenets = pipeyoudiein.returnPipenets()
+		var/pipenets = pipeyoudiein.return_pipenets()
 		if(islist(pipenets))
 			ourpipeline = pipenets[1]
 		else
