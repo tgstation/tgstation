@@ -25,7 +25,7 @@
 	drawn = FALSE
 	if(chambered)
 		chambered.forceMove(drop_location())
-		chambered = magazine.get_round(keep = FALSE)
+		magazine.get_round(keep = FALSE)
 		chambered = null
 	update_appearance()
 
