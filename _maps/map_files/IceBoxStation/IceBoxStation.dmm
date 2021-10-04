@@ -12129,6 +12129,7 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
 	},
+/obj/machinery/navbeacon/wayfinding/dockesc,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
 "cqk" = (
@@ -15909,7 +15910,7 @@
 	req_access_txt = "18";
 	safety_mode = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/textured,
 /area/hallway/secondary/exit/departure_lounge)
 "dTW" = (
 /obj/structure/flora/rock,
@@ -22966,6 +22967,15 @@
 	dir = 1
 	},
 /area/hallway/secondary/entry)
+"hQi" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/machinery/navbeacon/wayfinding/library,
+/turf/open/floor/wood,
+/area/service/library)
 "hQl" = (
 /obj/structure/table,
 /obj/item/plant_analyzer,
@@ -28001,13 +28011,13 @@
 /obj/item/pickaxe,
 /obj/item/pickaxe,
 /obj/item/shovel,
-/obj/item/shovel,
 /obj/item/flashlight,
 /obj/item/flashlight,
 /obj/machinery/camera{
 	c_tag = "Departure Lounge Emergency EVA";
 	dir = 6
 	},
+/obj/item/radio/off,
 /turf/open/floor/iron/white,
 /area/hallway/secondary/exit/departure_lounge)
 "kCr" = (
@@ -30761,7 +30771,6 @@
 	name = "Private Study";
 	req_access_txt = "37"
 	},
-/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/engine/cult,
 /area/service/library)
 "maG" = (
@@ -31390,8 +31399,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/effect/spawner/random/trash/bin,
 /obj/machinery/airalarm/directional/south,
+/obj/structure/closet/crate/bin,
+/obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/iron/cafeteria,
 /area/hallway/secondary/exit/departure_lounge)
 "mrZ" = (
@@ -37935,6 +37945,8 @@
 /obj/structure/sign/warning/coldtemp{
 	pixel_x = -32
 	},
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
 /turf/open/floor/iron/white,
 /area/hallway/secondary/exit/departure_lounge)
 "pLo" = (
@@ -41171,6 +41183,12 @@
 	},
 /turf/open/floor/iron,
 /area/service/janitor)
+"rBZ" = (
+/obj/machinery/navbeacon/wayfinding/chapel,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/hallway/primary/starboard)
 "rCp" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
@@ -50358,9 +50376,6 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Airlock";
 	safety_mode = 1
-	},
-/obj/machinery/navbeacon/wayfinding{
-	location = "Escape"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
@@ -97644,7 +97659,7 @@ fgA
 vVp
 siL
 fKz
-dRT
+hQi
 eGW
 nhQ
 rkK
@@ -100456,7 +100471,7 @@ auI
 qDf
 aHf
 bbk
-alP
+asB
 sNB
 qyU
 vTK
@@ -100733,7 +100748,7 @@ iim
 fVt
 cqN
 qkY
-jOF
+rBZ
 mGd
 aYV
 xXm
