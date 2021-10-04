@@ -46,38 +46,42 @@
 ///helper proc to check if we already have a window
 /turf/closed/wall/window_frame/proc/has_window()
 	SHOULD_BE_PURE(TRUE)
-	if(locate(/obj/structure/window/fulltile) in contents)
-		return TRUE
+	for(var/obj/structure/window/window in src)
+		if(window.fulltile)
+			return TRUE
 
 	return FALSE
 
-/turf/closed/wall/window_frame/proc/create_structure_window(glass_type, start_anchored = TRUE)
+///creates a window from the typepath given from window_type, which is either a glass sheet typepath or a /obj/structure/window subtype
+/turf/closed/wall/window_frame/proc/create_structure_window(window_type, start_anchored = TRUE)
 	var/obj/structure/window/our_window
 
-	if(!window_type_override)
-		if(ispath(glass_type, /obj/item/stack/sheet/glass))
-			our_window = new/obj/structure/window/fulltile(src)
+	if(ispath(window_type, /obj/structure/window))
+		our_window = new window_type(src)
+		if(!our_window.fulltile)
+			stack_trace("window frames cant use non fulltile windows!")
 
-		if(ispath(glass_type, /obj/item/stack/sheet/rglass))
-			our_window = new/obj/structure/window/reinforced/fulltile(src)
+	//window_type isnt a window typepath, so check if its a material typepath
+	if(ispath(window_type, /obj/item/stack/sheet/glass))
+		our_window = new/obj/structure/window/fulltile(src)
 
-		if(ispath(glass_type, /obj/item/stack/sheet/plasmaglass))
-			our_window = new/obj/structure/window/plasma/fulltile(src)
+	if(ispath(window_type, /obj/item/stack/sheet/rglass))
+		our_window = new/obj/structure/window/reinforced/fulltile(src)
 
-		if(ispath(glass_type, /obj/item/stack/sheet/plasmarglass))
-			our_window = new/obj/structure/window/plasma/reinforced/fulltile(src)
+	if(ispath(window_type, /obj/item/stack/sheet/plasmaglass))
+		our_window = new/obj/structure/window/plasma/fulltile(src)
 
-		if(ispath(glass_type, /obj/item/stack/sheet/titaniumglass))
-			our_window = new/obj/structure/window/shuttle(src)
+	if(ispath(window_type, /obj/item/stack/sheet/plasmarglass))
+		our_window = new/obj/structure/window/plasma/reinforced/fulltile(src)
 
-		if(ispath(glass_type, /obj/item/stack/sheet/plastitaniumglass))
-			our_window = new/obj/structure/window/plasma/reinforced/plastitanium(src)
+	if(ispath(window_type, /obj/item/stack/sheet/titaniumglass))
+		our_window = new/obj/structure/window/shuttle(src)
 
-		if(ispath(glass_type, /obj/item/stack/sheet/paperframes))
-			our_window = new/obj/structure/window/paperframe(src)
+	if(ispath(window_type, /obj/item/stack/sheet/plastitaniumglass))
+		our_window = new/obj/structure/window/plasma/reinforced/plastitanium(src)
 
-	else if(ispath(window_type_override, /obj/structure/window))
-		our_window = new window_type_override(src)//some window types dont map directly to glass materials
+	if(ispath(window_type, /obj/item/stack/sheet/paperframes))
+		our_window = new/obj/structure/window/paperframe(src)
 
 	if(!start_anchored)
 		our_window.set_anchored(FALSE)
@@ -126,9 +130,8 @@
 			if(!do_after(user, 2 SECONDS, src))
 				return
 
-			to_chat(user, "<span class='notice'>You add [stack_name] to [src].")//create window here
-			glass_material = adding_stack.type
-			create_structure_window(glass_material, FALSE)
+			to_chat(user, "<span class='notice'>You add [stack_name] to [src].")
+			create_structure_window(adding_stack.type, FALSE)
 
 		else if(istype(adding_stack, /obj/item/stack/rods) && !has_grille && adding_stack.use(sheet_amount))
 			has_grille = TRUE
@@ -165,7 +168,6 @@
 		if(BURN)
 			playsound(src, 'sound/items/welder.ogg', 80, TRUE)
 
-
 /turf/closed/wall/window_frame/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
@@ -191,22 +193,6 @@
 		. += "<span class='notice'>The window frame only has a grille set into it.</span>"
 	else
 		. += "<span class='notice'>The window frame is empty</span>"
-	/*
-	if(reinf)
-		if(anchored && state == WINDOW_SCREWED_TO_FRAME)
-			. += "<span class='notice'>The window is <b>screwed</b> to the frame.</span>"
-		else if(anchored && state == WINDOW_IN_FRAME)
-			. += "<span class='notice'>The window is <i>unscrewed</i> but <b>pried</b> into the frame.</span>"
-		else if(anchored && state == WINDOW_OUT_OF_FRAME)
-			. += "<span class='notice'>The window is out of the frame, but could be <i>pried</i> in. It is <b>screwed</b> to the floor.</span>"
-		else if(!anchored)
-			. += "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>"
-	else
-		if(anchored)
-			. += "<span class='notice'>The window is <b>screwed</b> to the floor.</span>"
-		else
-			. += "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>"
-	*/
 
 /turf/closed/wall/window_frame/proc/on_painted(is_dark_color)
 	SIGNAL_HANDLER
