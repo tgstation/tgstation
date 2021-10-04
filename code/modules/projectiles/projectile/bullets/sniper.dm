@@ -33,8 +33,8 @@
 	name = "penetrator round"
 	icon_state = "gauss"
 	damage = 60
-	projectile_piercing = PASSMOB
-	projectile_phasing = (ALL & (~PASSMOB))
+	projectile_piercing = PASSMOB & PASSMACHINE
+	projectile_phasing = (ALL & (~PASSMOB & ~PASSMACHINE))
 	dismemberment = 0 //It goes through you cleanly.
 	paralyze = 0
 	breakthings = FALSE
