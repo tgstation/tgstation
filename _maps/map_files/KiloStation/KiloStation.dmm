@@ -35221,10 +35221,19 @@
 /area/security/prison)
 "gfH" = (
 /obj/structure/rack,
-/obj/item/storage/crayons,
-/obj/item/storage/crayons,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/north,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/rcl/pre_loaded,
+/obj/item/storage/crayons,
+/obj/item/storage/crayons,
+/obj/structure/sign/painting/library{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/dark,
 /area/service/library)
 "gfK" = (
@@ -44508,6 +44517,7 @@
 "jId" = (
 /obj/structure/easel,
 /obj/effect/turf_decal/bot,
+/obj/item/canvas/twentythree_twentythree,
 /obj/item/airlock_painter,
 /turf/open/floor/iron/dark,
 /area/service/library)
@@ -47639,6 +47649,9 @@
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/radio/intercom/directional/east,
+/obj/structure/sign/painting/library{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/dark,
 /area/service/library)
 "kLr" = (
@@ -48433,6 +48446,9 @@
 /obj/structure/table/wood,
 /obj/machinery/computer/libraryconsole{
 	pixel_y = 5
+	},
+/obj/structure/sign/painting/library{
+	pixel_y = 32
 	},
 /turf/open/floor/iron/dark,
 /area/service/library)
@@ -76021,10 +76037,8 @@
 "vtN" = (
 /obj/structure/bookcase/random/religion,
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/sign/barsign{
-	pixel_y = 32;
-	req_access = null;
-	req_access_txt = "25"
+/obj/structure/sign/painting/library{
+	pixel_y = 32
 	},
 /turf/open/floor/iron/dark,
 /area/service/library)
