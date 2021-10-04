@@ -179,7 +179,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Uses powerloss_dynamic_scaling and combined_gas to lessen the effects of our powerloss functions
 	var/powerloss_inhibitor = 1
 	///Based on co2 percentage, slowly moves between 0 and 1. We use it to calc the powerloss_inhibitor
-	var/powerloss_dynamic_scaling= 0
+	var/powerloss_dynamic_scaling = 0
 	///Affects the amount of radiation the sm makes. We multiply this with power to find the rads.
 	var/power_transmission_bonus = 0
 	///Used to increase or lessen the amount of damage the sm takes from heat based on molar counts.
@@ -194,7 +194,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/hallucination_power = 0.1
 	///The efficiency of the antinoblium interaction. Converges to antinoblium composition faster at low temperature. Getting close to 1 will have very strong effects.
 	var/antinoblium_efficiency = 0
-	///Used to amplify some effects of the SM, including maximum power before gaining damage, and passively gain power when above 1. It is equal to the inverse of 1 - antinoblium_efficiency, raised to 1 + antinoblium_efficiency, and should never get below 1.
+	///Amplifies power production, changes how fast powerloss_dynamic_scaling changes, reduce damage from high power, and slowly heals SM when above 1.
 	var/antinoblium_multiplier = 1
 	///Our internal radio
 	var/obj/item/radio/radio
@@ -467,7 +467,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	explode()
 
 /obj/machinery/power/supermatter_crystal/proc/add_matter_power(added_power)
-	var/matter_power_gain = added_power * antinoblium_multiplier ** (1 + antinoblium_efficiency * 0.25)
+	var/matter_power_gain = added_power * antinoblium_multiplier
 	matter_power += matter_power_gain
 	return matter_power_gain
 
