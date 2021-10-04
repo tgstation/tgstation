@@ -168,9 +168,10 @@
 	if(!LAZYACCESS(modifiers, RIGHT_CLICK))
 		used_item.afterattack(clicked_atom,src,0,params)
 
-	var/attack_secondary = used_item.attack_secondary(clicked_atom, src, params)
-	if(attack_secondary == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
+	if (isliving(clicked_atom))
+		var/attack_secondary = used_item.attack_secondary(clicked_atom, src, params)
+		if(attack_secondary == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+			return
 
 	var/after_attack_secondary_result = used_item.afterattack_secondary(clicked_atom, src, FALSE, params)
 
