@@ -616,6 +616,10 @@
 	going_hard = TRUE
 	update_icon(UPDATE_OVERLAYS)
 
+/obj/item/toy/plush/goatplushie/attack_self(mob/user)
+	. = ..()
+	if(going_hard && prob(1))
+		say(pick("I'm driving a Mercenary-Hades Benjaminz.", "My name is Mercenary-Hades Benjaminz.", "My name is [src].", "Here's my car.", "Okay.", "It's a mother fucking Mercenary-Hades Benjaminz.", "This is my car."))
 
 /obj/item/toy/plush/goatplushie/examine()
 	. = ..()
