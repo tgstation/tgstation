@@ -393,6 +393,7 @@
 /obj/item/reagent_containers/medigel/synthflesh,
 /obj/item/organ/heart/cybernetic/tier2,
 /obj/item/organ/heart/cybernetic/tier2,
+/obj/item/defibrillator,
 /turf/open/floor/sepia,
 /area/centcom/holding)
 "cJ" = (
@@ -640,6 +641,7 @@
 	pixel_x = 11
 	},
 /obj/structure/mirror/directional/east,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/centcom/holding)
 "ep" = (
@@ -891,6 +893,15 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/tdome/arena_source)
+"fA" = (
+/obj/machinery/light/floor{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/holding)
 "fD" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -9062,6 +9073,11 @@
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/two)
+"zv" = (
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/holding)
 "zx" = (
 /obj/structure/closet/syndicate/personal,
 /obj/effect/turf_decal/stripes/line{
@@ -12185,7 +12201,13 @@
 /turf/open/lava/airless,
 /area/wizard_station)
 "GA" = (
-/turf/open/floor/plating/ashplanet/wateryrock,
+/obj/machinery/light/floor{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/centcom/holding)
 "GC" = (
 /obj/structure/table,
@@ -14750,7 +14772,9 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/floor/plating/ashplanet/wateryrock,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/centcom/holding)
 "MD" = (
 /obj/effect/light_emitter{
@@ -15066,7 +15090,13 @@
 	pixel_x = -12;
 	pixel_y = 15
 	},
-/turf/open/floor/plating/ashplanet/wateryrock,
+/obj/machinery/light/floor{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/centcom/holding)
 "Ou" = (
 /obj/effect/turf_decal/siding/wood{
@@ -15525,7 +15555,9 @@
 /turf/open/floor/wood/tile,
 /area/centcom/holding)
 "Rt" = (
-/turf/open/water,
+/turf/open/water{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/centcom/holding)
 "Ru" = (
 /obj/effect/turf_decal/stripes/line{
@@ -16132,6 +16164,15 @@
 	dir = 4
 	},
 /area/centcom/holding)
+"Va" = (
+/obj/machinery/light/floor{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/holding)
 "Vc" = (
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/iron/dark,
@@ -16510,7 +16551,9 @@
 /obj/structure/flora/rock/pile/largejungle{
 	pixel_y = -3
 	},
-/turf/open/floor/plating/ashplanet/wateryrock,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/centcom/holding)
 "Yn" = (
 /turf/closed/indestructible/riveted,
@@ -41859,7 +41902,7 @@ YC
 YC
 QL
 GA
-GA
+Va
 QL
 YC
 YC
@@ -42115,7 +42158,7 @@ Nd
 YC
 YC
 QL
-GA
+zv
 XY
 QL
 YC
@@ -42372,8 +42415,8 @@ Oi
 YC
 YC
 QL
-GA
-GA
+zv
+zv
 QL
 YC
 YC
@@ -42629,7 +42672,7 @@ Oi
 YC
 YC
 QL
-GA
+fA
 Os
 QL
 YC
