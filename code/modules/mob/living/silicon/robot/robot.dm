@@ -91,6 +91,25 @@
 		modularInterface = new /obj/item/modular_computer/tablet/integrated/syndicate(src)
 	return ..()
 
+/**
+ * Sets the tablet theme and icon
+ *
+ * These variables are based on if the borg is a syndicate type or is emagged. This gets used in model change code
+ * and also borg emag code.
+ */
+/mob/living/silicon/robot/proc/set_modularInterface_theme()
+	if(istype(model, /obj/item/robot_model/syndicate) || emagged)
+		modularInterface.device_theme = "syndicate"
+		modularInterface.icon_state = "tablet-silicon-syndicate"
+		modularInterface.icon_state_powered = "tablet-silicon-syndicate"
+		modularInterface.icon_state_unpowered = "tablet-silicon-syndicate"
+	else
+		modularInterface.device_theme = "ntos"
+		modularInterface.icon_state = "tablet-silicon"
+		modularInterface.icon_state_powered = "tablet-silicon"
+		modularInterface.icon_state_unpowered = "tablet-silicon"
+	modularInterface.update_icon()
+
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
 	var/atom/T = drop_location()//To hopefully prevent run time errors.
@@ -329,7 +348,14 @@
 		add_overlay(head_overlay)
 	update_fire()
 
-/mob/living/silicon/robot/proc/self_destruct()
+/mob/living/silicon/robot/proc/self_destruct(mob/usr)
+	var/turf/groundzero = get_turf(src)
+	message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(src, client)] at [ADMIN_VERBOSEJMP(groundzero)]!"))
+	log_game("[key_name(usr)] detonated [key_name(src)]!")
+	log_combat(usr, src, "detonated cyborg")
+	if(connected_ai)
+		to_chat(connected_ai, "<br><br>[span_alert("ALERT - Cyborg detonation detected: [name]")]<br>")
+
 	if(emagged)
 		QDEL_NULL(mmi)
 		explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 2)
@@ -395,6 +421,7 @@
 		throw_alert("hacked", /atom/movable/screen/alert/hacked)
 	else
 		clear_alert("hacked")
+	set_modularInterface_theme()
 
 /// Special handling for getting hit with a light eater
 /mob/living/silicon/robot/proc/on_light_eater(mob/living/silicon/robot/source, datum/light_eater)
