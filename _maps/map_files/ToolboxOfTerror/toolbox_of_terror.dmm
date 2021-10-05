@@ -2,6 +2,12 @@
 "ac" = (
 /turf/closed/indestructible/iron,
 /area/tdome/tdome2)
+"ae" = (
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest)
 "ag" = (
 /obj/structure/table/wood/fancy/green,
 /obj/structure/mirror/directional/north{
@@ -30,6 +36,16 @@
 "aG" = (
 /turf/open/floor/iron/white/textured_large,
 /area/awaymission/cabin/snowforest)
+"aH" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"aI" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/junglebush,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
 "aP" = (
 /obj/effect/landmark/arena/end{
 	arena_id = "arena_alternate"
@@ -44,6 +60,23 @@
 "aU" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
+"aV" = (
+/obj/structure/closet/crate/grave,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"aY" = (
+/obj/structure/flora/rock/pile/largejungle,
+/turf/open/water,
+/area/awaymission/cabin/snowforest)
+"ba" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest)
 "bh" = (
 /obj/structure/sink/kitchen{
@@ -60,6 +93,26 @@
 /turf/open/floor/stone,
 /area/tdome/tdome1)
 "bj" = (
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"bk" = (
+/obj/structure/chair/sofa,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"bl" = (
+/obj/structure/fluff/drake_statue/falling{
+	name = "Zhaitan the Starseer"
+	},
+/turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
+"bm" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/mineral_door/wood{
+	name = "Grand Wardrobe"
+	},
 /turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest)
 "bn" = (
@@ -85,6 +138,15 @@
 	icon_state = "wood_parquet-broken3"
 	},
 /area/tdome/tdome1)
+"bw" = (
+/obj/structure/table/wood/fancy/black,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 1
+	},
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken2"
+	},
+/area/awaymission/cabin/snowforest)
 "bx" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -104,9 +166,18 @@
 /obj/effect/turf_decal/tile/bar,
 /turf/open/floor/iron,
 /area/awaymission/cabin/snowforest)
+"bH" = (
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
 "bI" = (
 /turf/closed/indestructible/wood,
 /area/tdome/tdome1)
+"bN" = (
+/obj/structure/chair/pew/right{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/awaymission/cabin/snowforest)
 "bP" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/carpet/red,
@@ -139,6 +210,28 @@
 /obj/machinery/deepfryer,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin/snowforest)
+"cb" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/gravel,
+/area/awaymission/cabin/snowforest)
+"cc" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"cg" = (
+/obj/structure/flora/rock,
+/turf/open/water,
+/area/awaymission/cabin/snowforest)
+"ci" = (
+/obj/structure/flora/tree/jungle,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
 "cj" = (
 /obj/structure/table/wood/fancy,
 /obj/structure/mirror/directional/north{
@@ -146,6 +239,18 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/tdome/tdome1)
+"cl" = (
+/obj/structure/chair/pew/left{
+	dir = 4
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"cn" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
 "cp" = (
 /obj/structure/closet/crate/coffin,
 /obj/effect/mob_spawn/human/corpse/charredskeleton,
@@ -164,6 +269,20 @@
 	},
 /turf/open/floor/wood,
 /area/tdome/arena)
+"cG" = (
+/obj/structure/flora/junglebush/c,
+/obj/structure/flora/ausbushes/grassybush,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"cH" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-06"
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
 "cI" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
@@ -173,6 +292,15 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
+"cJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/chair/pew/right{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest)
 "cO" = (
 /turf/closed/indestructible/fakedoor{
@@ -184,6 +312,18 @@
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
+/area/awaymission/cabin/snowforest)
+"cX" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"cZ" = (
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/turf/open/floor/carpet/stellar,
 /area/awaymission/cabin/snowforest)
 "da" = (
 /obj/structure/rack{
@@ -215,8 +355,31 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/cabin/snowforest)
+"dm" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"do" = (
+/obj/structure/flora/rock/pile,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
+"dq" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/cabin/snowforest)
+"dE" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/storage/box/donkpockets/donkpocketspicy,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
 "dG" = (
 /turf/open/floor/iron/dark/textured_large,
+/area/awaymission/cabin/snowforest)
+"dH" = (
+/obj/structure/chair/sofa/right,
+/turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
 "dI" = (
 /obj/effect/turf_decal/stripes/line{
@@ -237,6 +400,27 @@
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/wood/parquet,
 /area/tdome/tdome1)
+"dS" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"ea" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-03"
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/cabin/snowforest)
+"ee" = (
+/obj/structure/chair/pew/left{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
 "ei" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -247,25 +431,74 @@
 /obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/tdome/arena)
+"ek" = (
+/obj/structure/window/reinforced/survival_pod{
+	icon_state = null
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
 "em" = (
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"en" = (
+/obj/structure/chair/comfy{
+	color = "#FF0000";
+	dir = 1
+	},
+/obj/effect/turf_decal/siding,
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest)
+"eo" = (
+/obj/structure/chair/sofa/right,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"ep" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/kirbyplants,
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken"
+	},
+/area/awaymission/cabin/snowforest)
+"er" = (
+/obj/structure/flora/tree/jungle/small,
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/plating/grass/jungle,
 /area/awaymission/cabin/snowforest)
 "es" = (
 /turf/closed/indestructible/fakedoor{
 	name = "CentCom Warehouse"
 	},
 /area/tdome/tdome1)
+"ev" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
 "ew" = (
 /obj/structure/flora/grass/jungle,
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"ez" = (
+/obj/structure/mineral_door/wood{
+	name = "Men's Washrooms"
+	},
+/turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest)
 "eC" = (
 /turf/closed/indestructible/fakedoor{
 	name = "CentCom Warehouse"
 	},
 /area/tdome/tdome2)
+"eE" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
 "eN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -274,6 +507,32 @@
 	},
 /obj/item/food/pizza/margherita,
 /turf/open/floor/iron/cafeteria,
+/area/awaymission/cabin/snowforest)
+"eT" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"eV" = (
+/obj/structure/table/wood,
+/obj/item/book/random,
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken"
+	},
+/area/awaymission/cabin/snowforest)
+"eX" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"fc" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/floor/plating/grass/lavaland,
 /area/awaymission/cabin/snowforest)
 "fd" = (
 /obj/structure/chair/sofa/corp/left{
@@ -289,6 +548,12 @@
 /turf/open/floor/iron/stairs/left{
 	color = "#964B00"
 	},
+/area/awaymission/cabin/snowforest)
+"fm" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet/green,
 /area/awaymission/cabin/snowforest)
 "fp" = (
 /obj/structure/table/wood/fancy,
@@ -331,16 +596,31 @@
 "fH" = (
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
+"fK" = (
+/obj/structure/chair/sofa/left,
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest)
 "fL" = (
 /obj/structure/flora/grass/jungle,
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"fN" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1;
+	icon_state = null
+	},
+/turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest)
 "fQ" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
 /turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest)
+"fR" = (
+/obj/structure/flora/grass/jungle/b,
+/turf/open/floor/gravel,
 /area/awaymission/cabin/snowforest)
 "fT" = (
 /obj/structure/table/wood,
@@ -367,6 +647,11 @@
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/wood/parquet,
 /area/tdome/tdome2)
+"fW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood/tile,
+/area/awaymission/cabin/snowforest)
 "fZ" = (
 /obj/machinery/door/poddoor{
 	id = "arena_default";
@@ -400,6 +685,16 @@
 	dir = 4
 	},
 /area/tdome/tdome2)
+"gl" = (
+/obj/structure/flora/grass/jungle,
+/obj/structure/flora/ausbushes/grassybush,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"gq" = (
+/obj/structure/table/wood,
+/obj/item/book/random,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
 "gs" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -415,9 +710,32 @@
 /obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/stone,
 /area/tdome/arena)
+"gB" = (
+/obj/effect/decal/cleanable/food/flour,
+/turf/open/floor/bronze,
+/area/awaymission/cabin/snowforest)
 "gC" = (
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/junglebush/large,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
+"gN" = (
+/obj/structure/railing{
+	color = "#964B00"
+	},
+/turf/open/water,
+/area/awaymission/cabin/snowforest)
+"gR" = (
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/grass/jungle/b,
 /turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"gU" = (
+/obj/structure/healingfountain,
+/obj/structure/stone_tile/slab/cracked{
+	dir = 5
+	},
+/obj/effect/rune/narsie,
+/turf/open/floor/stone,
 /area/awaymission/cabin/snowforest)
 "gX" = (
 /obj/structure/table/reinforced,
@@ -430,8 +748,25 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/cabin/snowforest)
+"ha" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"hb" = (
+/obj/structure/table/wood/fancy/green,
+/turf/open/floor/carpet,
+/area/awaymission/cabin/snowforest)
 "hc" = (
 /turf/open/floor/carpet/purple,
+/area/awaymission/cabin/snowforest)
+"hd" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/usb_cable,
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/plating/catwalk_floor,
 /area/awaymission/cabin/snowforest)
 "he" = (
 /obj/structure/table/wood,
@@ -452,9 +787,33 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
+"hf" = (
+/obj/structure/chair/pew/right{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"hg" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken"
+	},
+/area/awaymission/cabin/snowforest)
+"hk" = (
+/obj/structure/chair/sofa/corner{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
 "hm" = (
 /obj/structure/chair/wood,
 /turf/open/floor/carpet/purple,
+/area/awaymission/cabin/snowforest)
+"hq" = (
+/obj/item/kirbyplants,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/snowforest)
 "ht" = (
 /obj/machinery/tournament_spawn/red{
@@ -473,6 +832,36 @@
 	},
 /turf/open/floor/wood,
 /area/tdome/arena)
+"hC" = (
+/obj/machinery/light/warm/directional/east,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
+"hE" = (
+/obj/structure/flora/junglebush,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"hJ" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"hW" = (
+/obj/structure/fireplace,
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"hX" = (
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/carpet/lone,
+/area/awaymission/cabin/snowforest)
+"ig" = (
+/obj/structure/chair/pew/left{
+	dir = 8
+	},
+/obj/item/toy/plush/slimeplushie,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
 "ii" = (
 /obj/structure/table,
 /obj/item/storage/box/ingredients/wildcard{
@@ -485,6 +874,12 @@
 	pixel_y = -3
 	},
 /turf/open/floor/iron/cafeteria,
+/area/awaymission/cabin/snowforest)
+"ip" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest)
 "iq" = (
 /obj/structure/table,
@@ -510,9 +905,34 @@
 /obj/structure/cable,
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
+"iy" = (
+/obj/structure/table/wood/fancy/royalblue,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"iz" = (
+/obj/structure/chair/sofa/left{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"iB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/chair/pew/right{
+	dir = 4
+	},
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken2"
+	},
+/area/awaymission/cabin/snowforest)
 "iH" = (
-/obj/structure/flora/ausbushes/reedbush,
-/turf/open/floor/plating/dirt,
+/obj/structure/flora/ausbushes,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
+"iK" = (
+/obj/structure/flora/rock/pile/largejungle,
+/turf/open/floor/grass,
 /area/awaymission/cabin/snowforest)
 "iN" = (
 /obj/structure/chair/sofa/corp/left{
@@ -526,20 +946,68 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/tdome/tdome1)
+"iT" = (
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken2"
+	},
+/area/awaymission/cabin/snowforest)
+"jd" = (
+/obj/item/mop/cyborg,
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"jg" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/paper/fluff,
+/turf/open/floor/carpet/stellar,
+/area/awaymission/cabin/snowforest)
 "jj" = (
 /obj/structure/chair/sofa/corp/right,
 /turf/open/floor/carpet/royalblack,
 /area/awaymission/cabin/snowforest)
+"jk" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/window/reinforced/survival_pod{
+	icon_state = null
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"jo" = (
+/obj/structure/bonfire/prelit,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/railing{
+	color = "black";
+	dir = 1
+	},
+/turf/open/floor/fakepit,
+/area/awaymission/cabin/snowforest)
 "jt" = (
 /turf/open/floor/iron/cafeteria,
+/area/awaymission/cabin/snowforest)
+"jw" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"jz" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
+"jD" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest)
 "jG" = (
 /obj/structure/stairs/north,
 /turf/open/floor/iron/stairs,
-/area/awaymission/cabin/snowforest)
-"jJ" = (
-/obj/structure/flora/junglebush/large,
-/turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "jN" = (
 /obj/item/toy/plush/slimeplushie{
@@ -547,8 +1015,15 @@
 	},
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
+"jQ" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
 "jU" = (
-/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/window/reinforced/survival_pod{
+	icon_state = null
+	},
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "jY" = (
@@ -561,14 +1036,29 @@
 	},
 /turf/open/floor/wood,
 /area/tdome/arena)
+"kc" = (
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
 "kg" = (
 /obj/structure/table,
 /turf/open/floor/iron/cafeteria,
+/area/awaymission/cabin/snowforest)
+"kk" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest)
 "ko" = (
 /obj/machinery/power/tesla_coil,
 /obj/structure/cable,
 /turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"kw" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/floor/grass,
 /area/awaymission/cabin/snowforest)
 "kA" = (
 /turf/open/floor/iron/stairs/right{
@@ -596,9 +1086,67 @@
 /obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/tdome/arena)
+"lc" = (
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/carpet,
+/area/awaymission/cabin/snowforest)
+"lh" = (
+/obj/structure/chair/pew/left{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"li" = (
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
 "lk" = (
 /obj/structure/table/wood/fancy/red,
 /turf/open/floor/wood/parquet,
+/area/awaymission/cabin/snowforest)
+"ln" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood/tile,
+/area/awaymission/cabin/snowforest)
+"lr" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/plating/grass/lavaland,
+/area/awaymission/cabin/snowforest)
+"ls" = (
+/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/ausbushes/grassybush,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"lt" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"lv" = (
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 9
+	},
+/turf/open/water,
+/area/awaymission/cabin/snowforest)
+"lx" = (
+/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/junglebush,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"ly" = (
+/obj/structure/flora/tree/jungle/small,
+/turf/open/floor/plating/grass/jungle,
 /area/awaymission/cabin/snowforest)
 "lB" = (
 /obj/effect/landmark/toolbox{
@@ -609,6 +1157,15 @@
 	},
 /turf/open/floor/wood,
 /area/tdome/arena)
+"lC" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
+"lE" = (
+/turf/closed/indestructible/oldshuttle,
+/area/awaymission/cabin/snowforest)
 "lF" = (
 /turf/open/floor/stone,
 /area/tdome/tdome2)
@@ -617,8 +1174,106 @@
 /obj/structure/fence,
 /turf/open/floor/gravel,
 /area/awaymission/cabin/snowforest)
-"mh" = (
-/obj/structure/flora/ausbushes/pointybush,
+"lI" = (
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 8
+	},
+/obj/structure/flora/tree/jungle/small,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"lN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/clothing/suit/space/hardsuit/carp{
+	pixel_y = -4
+	},
+/obj/item/clothing/head/helmet/space/hardsuit/carp{
+	pixel_y = 10
+	},
+/obj/item/clothing/mask/gas/carp{
+	pixel_y = 9
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"lO" = (
+/obj/structure/flora/junglebush/b,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"lR" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/mineral_door/wood{
+	name = "Guest Suite"
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"lS" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/gravel,
+/area/awaymission/cabin/snowforest)
+"lY" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"ma" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/mineral_door/wood{
+	name = "Grand Suite"
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"mc" = (
+/obj/structure/chair/pew{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"md" = (
+/obj/machinery/door/airlock/wood{
+	name = "Projector Room"
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"ml" = (
+/obj/machinery/porta_turret/lasertag/blue,
+/turf/open/floor/mineral/plastitanium/red,
+/area/awaymission/cabin/snowforest)
+"mn" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"mt" = (
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/awaymission/cabin/snowforest)
+"mu" = (
+/obj/structure/chair/pew/left{
+	dir = 8
+	},
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "my" = (
@@ -631,6 +1286,11 @@
 /obj/structure/fence,
 /turf/open/floor/gravel,
 /area/awaymission/cabin/snowforest)
+"mA" = (
+/obj/structure/table/wood/fancy/black,
+/obj/machinery/microwave,
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest)
 "mB" = (
 /obj/item/kirbyplants,
 /turf/open/floor/wood/parquet,
@@ -641,12 +1301,41 @@
 	},
 /turf/open/floor/carpet/purple,
 /area/awaymission/cabin/snowforest)
+"mG" = (
+/obj/structure/table/wood,
+/obj/item/shovel/spade{
+	pixel_x = -4
+	},
+/obj/item/shovel/spade{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/tile,
+/area/awaymission/cabin/snowforest)
+"mL" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
 "mM" = (
 /turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
+"mO" = (
+/obj/item/reagent_containers/glass/bucket,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
+/turf/open/floor/grass,
 /area/awaymission/cabin/snowforest)
 "mW" = (
 /obj/structure/mirror/directional/north,
 /turf/open/floor/iron,
+/area/awaymission/cabin/snowforest)
+"mX" = (
+/obj/structure/table/wood/fancy/green,
+/obj/item/flashlight/lantern,
+/turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
 "mZ" = (
 /turf/open/floor/wood/parquet{
@@ -663,17 +1352,58 @@
 /obj/structure/chair/stool/directional/north,
 /turf/open/floor/wood/parquet,
 /area/tdome/tdome2)
+"nf" = (
+/turf/open/floor/carpet,
+/area/awaymission/cabin/snowforest)
+"ng" = (
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 4
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"nl" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/awaymission/cabin/snowforest)
 "np" = (
 /obj/structure/chair/stool/directional/north,
 /turf/open/floor/wood/parquet{
 	icon_state = "wood_parquet-broken4"
 	},
 /area/tdome/tdome2)
+"nv" = (
+/obj/structure/railing/corner{
+	color = "#964B00";
+	dir = 1
+	},
+/turf/open/water,
+/area/awaymission/cabin/snowforest)
 "nx" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
 /turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
+"ny" = (
+/obj/item/clothing/shoes/galoshes,
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"nD" = (
+/obj/structure/chair/pew/left{
+	dir = 8
+	},
+/obj/item/toy/plush/space_lizard_plushie,
+/turf/open/floor/grass,
 /area/awaymission/cabin/snowforest)
 "nE" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -681,24 +1411,71 @@
 	},
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
+"nG" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/mineral_door/wood,
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"nI" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/fluff/drake_statue{
+	name = "Calus Tul Carnus"
+	},
+/turf/open/floor/cobble,
+/area/awaymission/cabin/snowforest)
 "nN" = (
 /obj/structure/table/wood/fancy,
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
-"oi" = (
-/obj/effect/turf_decal/siding/white{
-	dir = 9
+"nS" = (
+/obj/structure/chair/sofa/right,
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken2"
 	},
-/turf/open/floor/iron/showroomfloor,
+/area/awaymission/cabin/snowforest)
+"nY" = (
+/obj/structure/flora/junglebush/b,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"og" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/carpet/green,
+/area/awaymission/cabin/snowforest)
+"oi" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/flora/tree/jungle/small,
+/turf/open/floor/plating/grass/jungle,
 /area/awaymission/cabin/snowforest)
 "oj" = (
 /turf/open/floor/iron/dark,
+/area/awaymission/cabin/snowforest)
+"oq" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/chair/pew/right{
+	dir = 8
+	},
+/turf/open/floor/carpet/lone,
+/area/awaymission/cabin/snowforest)
+"or" = (
+/obj/structure/closet/crate/grave/filled/lead_researcher,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/floor/grass,
 /area/awaymission/cabin/snowforest)
 "oz" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
 /turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
+"oH" = (
+/obj/structure/flora/ausbushes/grassybush,
+/turf/open/floor/grass,
 /area/awaymission/cabin/snowforest)
 "oJ" = (
 /obj/structure/table/wood,
@@ -723,11 +1500,49 @@
 /obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/tdome/arena)
-"oT" = (
-/obj/effect/turf_decal/siding/white{
+"oL" = (
+/obj/structure/chair/sofa/left,
+/turf/open/floor/carpet,
+/area/awaymission/cabin/snowforest)
+"oO" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/cabin/snowforest)
+"oR" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/turf/open/floor/iron/showroomfloor,
+/obj/structure/mineral_door/wood{
+	name = "Showers"
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"oT" = (
+/obj/structure/flora/ausbushes,
+/obj/structure/window/reinforced/survival_pod{
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"oY" = (
+/obj/structure/mineral_door/wood{
+	name = "Ladies' Facilities"
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"pe" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"pg" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "ph" = (
 /obj/effect/turf_decal/tile/bar,
@@ -741,6 +1556,30 @@
 /obj/structure/mirror/directional/north,
 /turf/open/floor/wood/parquet,
 /area/tdome/tdome2)
+"pj" = (
+/obj/structure/water_source/puddle{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"po" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/mineral_door/wood{
+	name = "Technomancy Chambers"
+	},
+/obj/structure/barricade/wooden,
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"pp" = (
+/obj/structure/table/wood/fancy/green,
+/turf/open/floor/carpet/lone,
+/area/awaymission/cabin/snowforest)
 "pq" = (
 /obj/structure/railing{
 	color = "#964B00"
@@ -750,6 +1589,32 @@
 	color = "#964B00";
 	dir = 4
 	},
+/area/awaymission/cabin/snowforest)
+"pt" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4;
+	icon_state = null
+	},
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken2"
+	},
+/area/awaymission/cabin/snowforest)
+"py" = (
+/obj/structure/chair/pew/right{
+	dir = 4
+	},
+/obj/item/toy/plush/goatplushie,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"pA" = (
+/obj/structure/chair/pew{
+	dir = 8
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"pB" = (
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/bronze,
 /area/awaymission/cabin/snowforest)
 "pC" = (
 /obj/structure/table/wood/fancy,
@@ -770,6 +1635,21 @@
 /obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/tdome/arena)
+"pI" = (
+/obj/structure/flora/tree/jungle/small,
+/obj/structure/window/reinforced/survival_pod{
+	icon_state = null
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"pN" = (
+/obj/structure/chair/sofa/left,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
 "pO" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -780,6 +1660,12 @@
 /obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/tdome/arena)
+"pP" = (
+/obj/structure/chair/pew/right{
+	dir = 4
+	},
+/turf/open/floor/carpet/lone,
+/area/awaymission/cabin/snowforest)
 "pS" = (
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/wood/parquet,
@@ -791,10 +1677,22 @@
 /turf/open/floor/wood/parquet,
 /area/tdome/tdome1)
 "qa" = (
-/obj/effect/turf_decal/siding/white{
-	dir = 5
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
 	},
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken"
+	},
+/area/awaymission/cabin/snowforest)
+"qc" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/glass/bucket{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/wood/tile,
 /area/awaymission/cabin/snowforest)
 "qf" = (
 /obj/structure/table,
@@ -809,6 +1707,10 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin/snowforest)
+"qg" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
 "qh" = (
 /obj/structure/statue/sandstone/venus,
 /turf/open/floor/stone,
@@ -820,6 +1722,29 @@
 	icon_state = "wood_parquet-broken"
 	},
 /area/tdome/tdome2)
+"ql" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/plating/grass/lavaland,
+/area/awaymission/cabin/snowforest)
+"qq" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
+"qr" = (
+/obj/structure/flora/tree/jungle/small,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1;
+	icon_state = null
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
 "qu" = (
 /obj/structure/table/wood,
 /obj/item/clothing/mask/cigarette/cigar/havana{
@@ -835,8 +1760,41 @@
 /obj/item/lighter,
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
+"qw" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/carpet/green,
+/area/awaymission/cabin/snowforest)
+"qx" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/carpet/lone,
+/area/awaymission/cabin/snowforest)
+"qD" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/grass/jungle/b,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"qE" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
 "qF" = (
 /turf/closed/indestructible/opsglass,
+/area/awaymission/cabin/snowforest)
+"qG" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"qJ" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/plating/grass/lavaland,
 /area/awaymission/cabin/snowforest)
 "qU" = (
 /obj/machinery/defibrillator_mount/loaded/directional/south,
@@ -850,15 +1808,42 @@
 /obj/item/surgical_drapes,
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
+"qV" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/gravel,
+/area/awaymission/cabin/snowforest)
 "qW" = (
 /obj/structure/table/wood/fancy/green,
 /obj/structure/mirror/directional/south,
 /turf/open/floor/wood/parquet,
 /area/tdome/tdome2)
+"qZ" = (
+/turf/open/floor/wood/tile,
+/area/awaymission/cabin/snowforest)
+"rd" = (
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken2"
+	},
+/area/awaymission/cabin/snowforest)
+"rg" = (
+/obj/structure/flora/junglebush/c,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
 "ri" = (
 /obj/structure/flora/grass/jungle,
 /obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"rj" = (
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"rm" = (
+/obj/effect/turf_decal/siding/wood/end,
+/turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest)
 "rv" = (
 /obj/structure/mineral_door/wood,
@@ -869,6 +1854,27 @@
 	icon_state = "wood_parquet-broken3"
 	},
 /area/tdome/tdome2)
+"rE" = (
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 4
+	},
+/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/window/reinforced/survival_pod{
+	icon_state = null
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"rF" = (
+/obj/structure/chair/pew/left{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/awaymission/cabin/snowforest)
 "rG" = (
 /obj/machinery/button/door{
 	id = "thunderdomegen";
@@ -876,6 +1882,22 @@
 	},
 /turf/open/floor/wood/large,
 /area/tdome/tdome1)
+"rH" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"rM" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/mineral_door/wood{
+	name = "Astrology"
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
 "rX" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -886,6 +1908,24 @@
 /obj/structure/mineral_door/wood,
 /turf/open/floor/wood/large,
 /area/tdome/tdome2)
+"sb" = (
+/obj/structure/mirror/directional/east,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"sc" = (
+/obj/structure/urinal/directional/west,
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"se" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/awaymission/cabin/snowforest)
 "sj" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/landmark/tournament_spawn_valid_location,
@@ -899,6 +1939,12 @@
 /obj/structure/flora/grass/jungle/b,
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"st" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest)
 "sw" = (
 /obj/effect/turf_decal/stripes/line{
@@ -934,6 +1980,15 @@
 	},
 /turf/open/floor/carpet/purple,
 /area/awaymission/cabin/snowforest)
+"sF" = (
+/obj/structure/bed,
+/obj/item/bedsheet/dorms,
+/turf/open/floor/carpet,
+/area/awaymission/cabin/snowforest)
+"sH" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/carpet/lone,
+/area/awaymission/cabin/snowforest)
 "sJ" = (
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/iron/cafeteria,
@@ -942,10 +1997,38 @@
 /turf/open/floor/wood/parquet,
 /area/tdome/tdome1)
 "sV" = (
-/obj/effect/turf_decal/siding/white/corner{
-	dir = 1
+/obj/structure/flora/tree/jungle,
+/obj/structure/window/reinforced/survival_pod{
+	icon_state = null
 	},
-/turf/open/floor/iron/showroomfloor,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"sX" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
+"sZ" = (
+/obj/structure/window/bronze/fulltile,
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
+"tb" = (
+/obj/structure/window/reinforced/fulltile/ice,
+/turf/open/floor/vault,
+/area/awaymission/cabin/snowforest)
+"tc" = (
+/obj/structure/chair/pew/left{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/awaymission/cabin/snowforest)
+"th" = (
+/obj/structure/table/reinforced/plasmarglass,
+/turf/open/floor/bronze,
 /area/awaymission/cabin/snowforest)
 "ti" = (
 /obj/structure/chair/sofa/corp/left,
@@ -968,9 +2051,19 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin/snowforest)
+"tI" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/floor/gravel,
+/area/awaymission/cabin/snowforest)
 "tJ" = (
 /obj/structure/chair/pew/right,
 /turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"tL" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-24"
+	},
+/turf/open/floor/carpet/lone,
 /area/awaymission/cabin/snowforest)
 "tN" = (
 /obj/structure/punching_bag,
@@ -989,6 +2082,15 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/tdome/tdome2)
+"ud" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/structure/statue/sandstone/venus{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
 "uf" = (
 /turf/open/floor/stone,
 /area/tdome/tdome1)
@@ -996,8 +2098,26 @@
 /obj/item/clothing/head/hardhat/pumpkinhead,
 /turf/open/floor/stone,
 /area/tdome/tdome2)
+"up" = (
+/obj/structure/chair/pew/right{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken2"
+	},
+/area/awaymission/cabin/snowforest)
 "ur" = (
 /turf/open/openspace,
+/area/awaymission/cabin/snowforest)
+"ut" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/gravel,
 /area/awaymission/cabin/snowforest)
 "uC" = (
 /obj/structure/table/wood/fancy/black,
@@ -1006,6 +2126,10 @@
 "uF" = (
 /turf/open/floor/wood/large,
 /area/tdome/tdome2)
+"uG" = (
+/obj/structure/table/wood/fancy/green,
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest)
 "uM" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -1032,6 +2156,10 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/tdome/tdome1)
+"uW" = (
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/gravel,
+/area/awaymission/cabin/snowforest)
 "vb" = (
 /obj/effect/landmark/arena/start{
 	arena_id = "arena_alternate"
@@ -1042,6 +2170,41 @@
 /obj/structure/fluff/arc,
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
+"vh" = (
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 8
+	},
+/turf/open/water,
+/area/awaymission/cabin/snowforest)
+"vl" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/structure/fluff/paper/stack{
+	name = "Research Notes"
+	},
+/turf/open/floor/bronze,
+/area/awaymission/cabin/snowforest)
+"vo" = (
+/obj/structure/chair/pew/right{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"vw" = (
+/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/junglebush/c,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"vy" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/obj/item/paicard,
+/turf/open/floor/mineral/plastitanium/red,
+/area/awaymission/cabin/snowforest)
 "vA" = (
 /obj/structure/railing{
 	color = "#964B00";
@@ -1049,8 +2212,10 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
-"vB" = (
-/turf/open/floor/iron/showroomfloor,
+"vD" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/flashlight/lantern,
+/turf/open/floor/bronze,
 /area/awaymission/cabin/snowforest)
 "vE" = (
 /obj/machinery/computer/tournament_controller{
@@ -1058,13 +2223,6 @@
 	},
 /turf/open/floor/stone,
 /area/tdome/tdome1)
-"vP" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green{
-	pixel_y = 8
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/awaymission/cabin/snowforest)
 "vQ" = (
 /turf/open/floor/wood/parquet,
 /area/awaymission/cabin/snowforest)
@@ -1072,6 +2230,12 @@
 /obj/structure/chair/comfy{
 	color = "#FF0000";
 	dir = 1
+	},
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest)
+"wb" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-13"
 	},
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
@@ -1088,6 +2252,31 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin/snowforest)
+"wf" = (
+/obj/structure/ai_core/deactivated,
+/turf/open/floor/mineral/plastitanium/red,
+/area/awaymission/cabin/snowforest)
+"wg" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"wh" = (
+/obj/structure/flora/grass/jungle/b,
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"wm" = (
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"wo" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-05"
+	},
+/turf/open/floor/carpet,
+/area/awaymission/cabin/snowforest)
 "wp" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1098,6 +2287,11 @@
 /obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/tdome/arena)
+"wq" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
 "wE" = (
 /obj/structure/table/wood/fancy,
 /obj/structure/mirror/directional/south{
@@ -1109,9 +2303,23 @@
 /obj/effect/landmark/disband_location,
 /turf/open/floor/wood/large,
 /area/tdome/tdome1)
+"wI" = (
+/obj/structure/chair/pew/left{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"wL" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
 "wM" = (
 /obj/structure/table/bronze,
 /turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest)
+"wP" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest)
 "wW" = (
 /obj/structure/chair/wood{
@@ -1123,12 +2331,30 @@
 /obj/structure/table/wood/fancy,
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
+"xa" = (
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken3"
+	},
+/area/awaymission/cabin/snowforest)
 "xc" = (
 /turf/open/floor/carpet/royalblack,
 /area/awaymission/cabin/snowforest)
 "xe" = (
 /obj/structure/table/bronze,
 /turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
+"xm" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/storage/crayons,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"xo" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/plating/grass/lavaland,
 /area/awaymission/cabin/snowforest)
 "xr" = (
 /obj/structure/railing/corner{
@@ -1145,13 +2371,25 @@
 "xz" = (
 /turf/open/floor/carpet/royalblue,
 /area/awaymission/cabin/snowforest)
+"xG" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/fluff/drake_statue{
+	name = "Fracis Tel Satus"
+	},
+/turf/open/floor/cobble,
+/area/awaymission/cabin/snowforest)
 "xH" = (
 /obj/machinery/vending/wardrobe/chef_wardrobe,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin/snowforest)
-"xK" = (
-/obj/structure/chair/sofa/right,
-/turf/open/floor/iron/showroomfloor,
+"xI" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest)
 "xU" = (
 /obj/structure/chair/wood,
@@ -1163,11 +2401,46 @@
 	},
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
+"xX" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/filingcabinet/chestdrawer{
+	name = "film drawer";
+	pixel_y = 2
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
 "yb" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest)
+"yh" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"ys" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/structure/statue/sandstone/venus,
+/turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
+"yF" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/open/floor/plating/grass/lavaland,
+/area/awaymission/cabin/snowforest)
+"yG" = (
+/obj/structure/chair/sofa/right{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest)
 "yH" = (
 /obj/structure/chair/stool/directional/south,
@@ -1185,11 +2458,51 @@
 	color = "#964B00"
 	},
 /area/awaymission/cabin/snowforest)
+"yN" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/tile,
+/area/awaymission/cabin/snowforest)
+"zh" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8;
+	icon_state = null
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
 "zj" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/mineral/coal/ten,
 /obj/item/stack/sheet/mineral/coal/ten,
 /turf/open/floor/iron/cafeteria,
+/area/awaymission/cabin/snowforest)
+"zq" = (
+/obj/structure/flora/rock/jungle,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1;
+	icon_state = null
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"zx" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/mineral_door/wood{
+	name = "Theatre"
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"zD" = (
+/obj/structure/flora/tree/jungle/small,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "zI" = (
 /obj/structure/chair/wood{
@@ -1197,23 +2510,118 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
-"Ab" = (
-/obj/structure/chair/sofa,
-/turf/open/floor/iron/showroomfloor,
+"zJ" = (
+/obj/item/kirbyplants/fern,
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken3"
+	},
+/area/awaymission/cabin/snowforest)
+"zO" = (
+/obj/structure/mineral_door/wood{
+	name = "Alchemy Lab"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"zS" = (
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"zU" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken2"
+	},
+/area/awaymission/cabin/snowforest)
+"zW" = (
+/obj/structure/chair/comfy{
+	color = "#FF0000";
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding,
+/turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
 "Ac" = (
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/wood/parquet,
 /area/tdome/tdome1)
+"Ae" = (
+/obj/structure/mineral_door/wood{
+	name = "Alchemy Lab"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"Ah" = (
+/obj/structure/necropolis_arch,
+/turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
+"Ai" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/toy/plush/ratplush,
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken2"
+	},
+/area/awaymission/cabin/snowforest)
+"An" = (
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
 "Ap" = (
 /obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/carpet/purple,
 /area/awaymission/cabin/snowforest)
+"Aw" = (
+/obj/structure/flora/ausbushes/grassybush,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
 "AA" = (
 /obj/structure/flora/junglebush,
 /turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"AB" = (
+/obj/structure/chair/sofa/left{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"AE" = (
+/obj/structure/mineral_door/wood{
+	name = "Toilet"
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"AF" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"AG" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/carpet/green,
+/area/awaymission/cabin/snowforest)
+"AH" = (
+/obj/structure/dresser,
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest)
+"AJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest)
 "AP" = (
 /obj/structure/table/wood/fancy/green,
@@ -1222,6 +2630,18 @@
 	},
 /turf/open/floor/wood/large,
 /area/tdome/tdome2)
+"AR" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/mineral_door/wood{
+	name = "Spare Lounge"
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
 "AS" = (
 /obj/effect/landmark/toolbox{
 	team_id = "green"
@@ -1238,6 +2658,9 @@
 /obj/structure/mirror/directional/north,
 /turf/open/floor/wood/large,
 /area/tdome/tdome2)
+"AV" = (
+/turf/open/floor/bronze,
+/area/awaymission/cabin/snowforest)
 "Be" = (
 /obj/structure/table/wood/fancy/green,
 /obj/structure/mirror/directional/north,
@@ -1245,9 +2668,31 @@
 	icon_state = "wood_large-broken3"
 	},
 /area/tdome/tdome2)
+"Bg" = (
+/obj/item/reagent_containers/glass/bucket,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"Bh" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
 "Bm" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/iron/cafeteria,
+/area/awaymission/cabin/snowforest)
+"Bt" = (
+/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/junglebush/b,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Bx" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "By" = (
 /turf/open/floor/plating,
@@ -1256,6 +2701,12 @@
 /obj/effect/landmark/arena/end,
 /turf/open/floor/plating,
 /area/tdome/arena)
+"BA" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
 "BB" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -1266,6 +2717,17 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
+/area/awaymission/cabin/snowforest)
+"BE" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/cabin/snowforest)
+"BF" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/storage/book/bible,
+/turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest)
 "BG" = (
 /obj/effect/landmark/toolbox,
@@ -1298,6 +2760,21 @@
 	},
 /turf/open/floor/wood/large,
 /area/tdome/tdome1)
+"BQ" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/circuitboard/computer/aiupload,
+/turf/open/floor/plating/catwalk_floor,
+/area/awaymission/cabin/snowforest)
+"BR" = (
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Cm" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
 "Co" = (
 /obj/structure/chair/comfy{
 	color = "#FF0000";
@@ -1325,9 +2802,38 @@
 	icon_state = "wood_large-broken3"
 	},
 /area/tdome/tdome2)
+"Ct" = (
+/obj/structure/chair/comfy{
+	color = "#FF0000";
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding,
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest)
 "Cu" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"CA" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/toy/crayon/spraycan{
+	pixel_x = -4
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"CB" = (
+/obj/structure/flora/tree/jungle,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
+"CI" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/storage/box/donkpockets/donkpocketteriyaki,
+/obj/item/storage/box/donkpockets/donkpocketspicy,
+/obj/item/storage/box/donkpockets/donkpocketberry,
+/turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest)
 "CO" = (
 /obj/structure/chair/stool/directional/south,
@@ -1338,9 +2844,15 @@
 /turf/open/floor/stone,
 /area/awaymission/cabin/snowforest)
 "CZ" = (
-/obj/structure/chair/sofa/left,
-/obj/item/toy/plush/beeplushie,
-/turf/open/floor/iron/showroomfloor,
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 4
+	},
+/turf/open/water,
+/area/awaymission/cabin/snowforest)
+"Da" = (
+/obj/structure/table/wood/fancy/royalblue,
+/turf/open/floor/carpet/stellar,
 /area/awaymission/cabin/snowforest)
 "Db" = (
 /obj/effect/turf_decal/siding/wood/corner,
@@ -1349,6 +2861,18 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
+"Dd" = (
+/obj/structure/chair/pew{
+	dir = 4
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Dh" = (
+/obj/structure/chair/sofa/right{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/awaymission/cabin/snowforest)
 "Dl" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -1356,10 +2880,14 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "Dm" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
 	},
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"Ds" = (
+/obj/structure/window/reinforced/fulltile/ice,
+/turf/open/floor/grass,
 /area/awaymission/cabin/snowforest)
 "Dt" = (
 /obj/structure/chair/sofa/corner{
@@ -1367,11 +2895,21 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
-"Du" = (
-/obj/effect/turf_decal/siding/white/corner{
+"Dx" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
+"Dy" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/chair/pew/left{
 	dir = 4
 	},
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/carpet/lone,
+/area/awaymission/cabin/snowforest)
+"DC" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "DD" = (
 /obj/structure/flora/junglebush/c,
@@ -1391,10 +2929,28 @@
 /turf/open/floor/wood,
 /area/tdome/tdome2)
 "DI" = (
-/obj/effect/turf_decal/siding/white{
-	dir = 8
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4;
+	icon_state = null
 	},
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"DN" = (
+/obj/structure/flora/rock/pile,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1;
+	icon_state = null
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"DQ" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/bronze,
 /area/awaymission/cabin/snowforest)
 "DU" = (
 /obj/structure/chair/comfy{
@@ -1403,11 +2959,37 @@
 	},
 /turf/open/floor/carpet/royalblue,
 /area/awaymission/cabin/snowforest)
+"DW" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"DY" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/mineral_door/wood,
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"Eb" = (
+/obj/structure/flora/tree/dead,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
 "Eg" = (
 /obj/structure/fence/corner{
 	dir = 8
 	},
 /turf/open/floor/gravel,
+/area/awaymission/cabin/snowforest)
+"En" = (
+/obj/structure/chair/comfy{
+	color = "#FF0000";
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding,
+/turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
 "Et" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -1420,6 +3002,13 @@
 /obj/item/book/manual/wiki/cooking_to_serve_man,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin/snowforest)
+"Ez" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
 "EQ" = (
 /obj/machinery/door/poddoor{
 	id = "arena_default";
@@ -1430,6 +3019,15 @@
 	},
 /turf/open/indestructible,
 /area/tdome/arena)
+"EY" = (
+/obj/structure/closet/crate/grave,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"Fa" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/plating/catwalk_floor,
+/area/awaymission/cabin/snowforest)
 "Fc" = (
 /obj/machinery/door/poddoor{
 	id = "arena_default";
@@ -1440,6 +3038,23 @@
 	},
 /turf/open/floor/iron,
 /area/tdome/arena)
+"Ff" = (
+/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/rock/jungle,
+/turf/open/floor/gravel,
+/area/awaymission/cabin/snowforest)
+"Fj" = (
+/obj/structure/chair/pew/right{
+	dir = 4
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Fk" = (
+/obj/structure/chair/pew/left{
+	dir = 8
+	},
+/turf/open/floor/carpet/lone,
+/area/awaymission/cabin/snowforest)
 "Fn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -1463,6 +3078,11 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
+"Fy" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/flashlight/lantern,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
 "FA" = (
 /obj/effect/landmark/toolbox{
 	team_id = "green"
@@ -1478,6 +3098,25 @@
 /obj/machinery/light/dim,
 /turf/open/floor/plastic,
 /area/awaymission/cabin/snowforest)
+"FD" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/iron/stairs/medium{
+	dir = 1
+	},
+/area/awaymission/cabin/snowforest)
+"FE" = (
+/obj/structure/flora/ausbushes/grassybush,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"FF" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
 "FG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -1490,20 +3129,56 @@
 	color = "#964B00"
 	},
 /area/awaymission/cabin/snowforest)
+"FZ" = (
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/carpet,
+/area/awaymission/cabin/snowforest)
+"Ga" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/plating/grass/lavaland,
+/area/awaymission/cabin/snowforest)
+"Gb" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
 "Gc" = (
 /obj/item/kirbyplants,
 /turf/open/floor/wood/large{
 	icon_state = "wood_large-broken3"
 	},
 /area/tdome/tdome1)
+"Gg" = (
+/obj/structure/closet/wardrobe/mixed,
+/turf/open/floor/bronze,
+/area/awaymission/cabin/snowforest)
 "Gk" = (
 /obj/item/clothing/head/hardhat/pumpkinhead,
 /turf/open/floor/wood/large,
 /area/tdome/tdome2)
-"Gm" = (
-/obj/structure/table/wood,
-/obj/item/clothing/gloves/botanic_leather,
-/turf/open/floor/iron/showroomfloor,
+"Gp" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Gq" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"Gr" = (
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"Gs" = (
+/obj/structure/chair/bronze{
+	dir = 1
+	},
+/turf/open/floor/stone,
 /area/awaymission/cabin/snowforest)
 "Gu" = (
 /obj/effect/landmark/toolbox{
@@ -1525,6 +3200,12 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/awaymission/cabin/snowforest)
+"GD" = (
+/obj/structure/chair/sofa/left{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/awaymission/cabin/snowforest)
 "GI" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -1532,6 +3213,16 @@
 	},
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron,
+/area/awaymission/cabin/snowforest)
+"GK" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"GM" = (
+/obj/machinery/exoscanner{
+	name = "Telescope"
+	},
+/turf/open/floor/stone,
 /area/awaymission/cabin/snowforest)
 "GN" = (
 /obj/structure/railing/corner{
@@ -1556,6 +3247,33 @@
 	},
 /turf/open/floor/wood/large,
 /area/tdome/tdome2)
+"Hj" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1;
+	icon_state = null
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Hk" = (
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 8
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Hp" = (
+/mob/living/simple_animal/pet/gondola,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
 "Hr" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -1570,6 +3288,19 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin/snowforest)
+"Hx" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-05"
+	},
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken"
+	},
+/area/awaymission/cabin/snowforest)
+"Hz" = (
+/obj/structure/flora/tree/jungle/small,
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
 "HE" = (
 /obj/structure/railing{
 	color = "#964B00";
@@ -1580,43 +3311,197 @@
 	},
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
-"Ib" = (
-/obj/structure/curtain,
-/turf/open/floor/iron/showroomfloor,
+"HG" = (
+/obj/structure/table/wood/fancy/green,
+/obj/item/flashlight/lantern,
+/turf/open/floor/carpet/lone,
 /area/awaymission/cabin/snowforest)
-"Ic" = (
-/obj/structure/table/wood,
-/obj/item/shovel/spade,
-/turf/open/floor/iron/showroomfloor,
+"HH" = (
+/obj/structure/closet/wardrobe/green,
+/turf/open/floor/bronze,
+/area/awaymission/cabin/snowforest)
+"HJ" = (
+/obj/structure/chair/pew/left,
+/obj/item/toy/plush/snakeplushie,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"HN" = (
+/obj/item/crowbar/large/heavy,
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken"
+	},
+/area/awaymission/cabin/snowforest)
+"Ii" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-18"
+	},
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest)
+"In" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"Ip" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/machinery/light/warm/directional/east,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
+"Iu" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/cobble,
 /area/awaymission/cabin/snowforest)
 "Ix" = (
 /turf/closed/indestructible/iron,
 /area/tdome/arena)
+"IA" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"IB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"IC" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/item/shard/plasma,
+/turf/open/floor/mineral/plastitanium/red,
+/area/awaymission/cabin/snowforest)
+"IJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
 "IQ" = (
 /obj/structure/chair/sofa/corp/right{
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
 /area/awaymission/cabin/snowforest)
-"Jf" = (
-/obj/item/food/spiderling,
-/turf/open/floor/iron/showroomfloor,
+"IZ" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/turf/open/floor/plating/catwalk_floor,
+/area/awaymission/cabin/snowforest)
+"Jd" = (
+/turf/open/floor/plating/grass/lavaland,
+/area/awaymission/cabin/snowforest)
+"Jm" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/stock_parts/micro_laser/quadultra,
+/obj/item/clothing/head/helmet/space/plasmaman/robotics{
+	pixel_y = 17
+	},
+/turf/open/floor/plating/catwalk_floor,
 /area/awaymission/cabin/snowforest)
 "Jn" = (
 /turf/open/floor/wood/parquet,
 /area/tdome/tdome2)
+"Jq" = (
+/obj/structure/chair/pew{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"Jw" = (
+/obj/structure/frame/computer,
+/turf/open/floor/plating/catwalk_floor,
+/area/awaymission/cabin/snowforest)
 "JD" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade,
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "JH" = (
-/mob/living/simple_animal/hostile/lightgeist,
-/turf/open/floor/iron/showroomfloor,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"JU" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/storage/box/donkpockets/donkpocketspicy,
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken2"
+	},
+/area/awaymission/cabin/snowforest)
+"JX" = (
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 1
+	},
+/obj/structure/flora/rock,
+/turf/open/water,
 /area/awaymission/cabin/snowforest)
 "Kb" = (
 /turf/open/floor/wood,
 /area/tdome/tdome1)
+"Kc" = (
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
+"Kg" = (
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 8
+	},
+/obj/structure/flora/junglebush/large,
+/obj/structure/window/reinforced/survival_pod{
+	icon_state = null
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Kl" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-20";
+	pixel_y = 3
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"Kp" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 4
+	},
+/obj/structure/window/reinforced/survival_pod{
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Kt" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Kw" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
 "Kx" = (
 /turf/closed/indestructible/iron,
 /area/tdome/tdome1)
@@ -1628,6 +3513,47 @@
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/awaymission/cabin/snowforest)
+"KF" = (
+/obj/structure/chair/pew/right,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"KH" = (
+/obj/structure/table/wood/fancy/black,
+/obj/machinery/microwave,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"KI" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/table/wood/shuttle_bar,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"KL" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/floor/gravel,
+/area/awaymission/cabin/snowforest)
+"KQ" = (
+/obj/structure/closet/crate/grave/filled/lead_researcher,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"KR" = (
+/obj/structure/healingfountain,
+/obj/structure/stone_tile/slab/cracked{
+	dir = 4
+	},
+/obj/effect/rune/narsie,
+/turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
 "KU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1635,14 +3561,41 @@
 /obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
+"KX" = (
+/obj/structure/dresser,
+/turf/open/floor/carpet,
+/area/awaymission/cabin/snowforest)
 "KZ" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
 "Lb" = (
-/obj/effect/turf_decal/siding/white/corner,
-/turf/open/floor/iron/showroomfloor,
+/obj/structure/flora/tree/jungle,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Li" = (
+/obj/structure/flora/tree/jungle,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1;
+	icon_state = null
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Ln" = (
+/obj/structure/closet/crate/grave,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/grass,
 /area/awaymission/cabin/snowforest)
 "Lo" = (
 /obj/effect/landmark/disband_location{
@@ -1661,6 +3614,31 @@
 "Lt" = (
 /turf/open/floor/iron/stairs/left,
 /area/awaymission/cabin/snowforest)
+"Lv" = (
+/obj/structure/closet/crate/grave,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"Ly" = (
+/obj/item/wrench,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"Lz" = (
+/obj/structure/chair/pew/right{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"LB" = (
+/obj/structure/cloth_pile,
+/turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
+"LC" = (
+/obj/machinery/light/small/broken/directional/west,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
 "LF" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -1672,8 +3650,38 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/cabin/snowforest)
+"LH" = (
+/obj/structure/flora/ausbushes,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"LI" = (
+/obj/structure/chair/pew/left{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"LK" = (
+/obj/machinery/vending/clothing,
+/turf/open/floor/bronze,
+/area/awaymission/cabin/snowforest)
+"LV" = (
+/obj/structure/easel,
+/obj/item/canvas/twentythree_twentythree,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
 "LW" = (
 /turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest)
+"LX" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/table/wood/shuttle_bar,
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"LY" = (
+/obj/structure/flora/ausbushes/pointybush,
+/turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "Mc" = (
 /obj/structure/flora/tree/jungle,
@@ -1685,6 +3693,69 @@
 	},
 /turf/closed/indestructible/iron,
 /area/awaymission/cabin/snowforest)
+"Me" = (
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Mf" = (
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken"
+	},
+/area/awaymission/cabin/snowforest)
+"Mk" = (
+/obj/structure/ethereal_crystal,
+/turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
+"Ml" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Mm" = (
+/obj/structure/chair/pew/right{
+	dir = 8
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Mo" = (
+/obj/structure/fluff/drake_statue/falling,
+/turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
+"Mp" = (
+/obj/structure/flora/rock/pile/largejungle,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
+"Mt" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/cobble,
+/area/awaymission/cabin/snowforest)
+"Mv" = (
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/water,
+/area/awaymission/cabin/snowforest)
+"Mw" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/iron/stairs/medium{
+	dir = 1
+	},
+/area/awaymission/cabin/snowforest)
+"MB" = (
+/obj/structure/mirror/directional/east,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken2"
+	},
+/area/awaymission/cabin/snowforest)
 "MC" = (
 /obj/structure/railing{
 	color = "#964B00"
@@ -1695,23 +3766,66 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
+"MK" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"MQ" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"MT" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"MU" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/wirecutters,
+/turf/open/floor/plating/catwalk_floor,
+/area/awaymission/cabin/snowforest)
 "MW" = (
 /turf/open/floor/carpet/green,
 /area/tdome/tdome2)
-"Nj" = (
-/obj/effect/turf_decal/siding/white{
-	dir = 10
+"Ne" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
 	},
-/turf/open/floor/iron/showroomfloor,
+/obj/structure/mineral_door/wood{
+	name = "Beauty Spa"
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"Nj" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/plating/grass/jungle,
 /area/awaymission/cabin/snowforest)
 "Nk" = (
 /turf/open/floor/iron/stairs/right,
 /area/awaymission/cabin/snowforest)
+"Np" = (
+/obj/structure/flora/tree/jungle/small,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
 "Ns" = (
-/obj/effect/turf_decal/siding/white/corner{
-	dir = 8
+/obj/structure/flora/tree/jungle/small,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4;
+	icon_state = null
 	},
-/turf/open/floor/iron/showroomfloor,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "Nt" = (
 /obj/structure/table,
@@ -1739,11 +3853,10 @@
 	color = "#964B00"
 	},
 /area/awaymission/cabin/snowforest)
-"Ny" = (
-/obj/structure/chair/comfy/brown{
-	dir = 4
-	},
-/turf/open/floor/iron/showroomfloor,
+"NG" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "NS" = (
 /obj/structure/table,
@@ -1756,9 +3869,19 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin/snowforest)
+"Oc" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-22"
+	},
+/turf/open/floor/carpet/stellar,
+/area/awaymission/cabin/snowforest)
 "Oe" = (
 /obj/structure/chair/sofa/corner,
 /turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
+"Ol" = (
+/obj/structure/closet/crate/grave,
+/turf/open/floor/grass,
 /area/awaymission/cabin/snowforest)
 "Or" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -1783,6 +3906,10 @@
 /obj/machinery/icecream_vat,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin/snowforest)
+"Ot" = (
+/obj/machinery/vending/wardrobe/bar_wardrobe,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
 "Ox" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1790,12 +3917,34 @@
 /obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
+"Oz" = (
+/obj/structure/frame/machine,
+/obj/item/stack/cable_coil/five,
+/obj/item/circuitboard/machine/cyborgrecharger,
+/obj/item/screwdriver,
+/turf/open/floor/mineral/plastitanium/red,
+/area/awaymission/cabin/snowforest)
 "OB" = (
 /turf/open/floor/iron/stairs/medium,
+/area/awaymission/cabin/snowforest)
+"OD" = (
+/obj/structure/railing/corner{
+	color = "#964B00"
+	},
+/turf/open/water,
 /area/awaymission/cabin/snowforest)
 "OE" = (
 /obj/structure/chair/sofa/corp/right,
 /turf/open/floor/carpet/orange,
+/area/awaymission/cabin/snowforest)
+"OF" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/mineral_door/wood{
+	name = "Theatre"
+	},
+/turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest)
 "OG" = (
 /obj/structure/table/wood,
@@ -1816,6 +3965,15 @@
 /obj/machinery/vending/wardrobe/bar_wardrobe,
 /turf/open/floor/iron,
 /area/awaymission/cabin/snowforest)
+"OT" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/chair/pew/left{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
 "OX" = (
 /obj/structure/table,
 /obj/item/food/cheese/wheel{
@@ -1827,6 +3985,15 @@
 /area/awaymission/cabin/snowforest)
 "OY" = (
 /turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"Pe" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/book/manual/wiki/chemistry{
+	name = "A Witches' Guide to Potion Brewing";
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/turf/open/floor/bronze,
 /area/awaymission/cabin/snowforest)
 "Pg" = (
 /obj/structure/railing{
@@ -1859,6 +4026,10 @@
 /obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
+"Pm" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/plating/grass/lavaland,
+/area/awaymission/cabin/snowforest)
 "Po" = (
 /obj/machinery/chem_master/condimaster{
 	name = "CondiMaster Neo"
@@ -1891,9 +4062,31 @@
 	icon_state = "wood_large-broken"
 	},
 /area/tdome/tdome1)
+"PD" = (
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 5
+	},
+/turf/open/water,
+/area/awaymission/cabin/snowforest)
+"PI" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/fans{
+	name = "Film Projector"
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
 "PO" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
+"PQ" = (
+/obj/structure/chair/pew/right{
+	dir = 4
+	},
+/turf/open/floor/carpet,
 /area/awaymission/cabin/snowforest)
 "PR" = (
 /obj/structure/chair/sofa/corp/left{
@@ -1901,6 +4094,16 @@
 	},
 /turf/open/floor/wood/large,
 /area/tdome/tdome2)
+"PS" = (
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"PT" = (
+/obj/structure/chair/sofa/right,
+/turf/open/floor/carpet,
+/area/awaymission/cabin/snowforest)
 "PV" = (
 /obj/structure/chair/sofa{
 	dir = 8
@@ -1917,11 +4120,27 @@
 	},
 /turf/open/floor/wood/large,
 /area/tdome/tdome1)
+"Qg" = (
+/obj/effect/decal/cleanable/food/flour,
+/turf/open/floor/carpet,
+/area/awaymission/cabin/snowforest)
 "Qh" = (
 /turf/open/floor/wood/large{
 	icon_state = "wood_large-broken2"
 	},
 /area/tdome/tdome1)
+"Qj" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/cabin/snowforest)
+"Ql" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
 "Qm" = (
 /obj/structure/chair/sofa{
 	dir = 4
@@ -1933,14 +4152,38 @@
 	color = "#964B00"
 	},
 /area/awaymission/cabin/snowforest)
+"Qr" = (
+/obj/structure/mopbucket,
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"Qs" = (
+/obj/structure/rack,
+/turf/open/floor/bronze,
+/area/awaymission/cabin/snowforest)
 "Qt" = (
 /obj/structure/chair/sofa/corp/corner,
 /turf/open/floor/wood/parquet,
+/area/awaymission/cabin/snowforest)
+"Qu" = (
+/obj/structure/table/wood/fancy/green,
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest)
 "Qx" = (
 /obj/structure/cable,
 /obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Qz" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"QD" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/floor/gravel,
 /area/awaymission/cabin/snowforest)
 "QH" = (
 /turf/closed/indestructible/iron,
@@ -1951,9 +4194,21 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
+"QL" = (
+/obj/structure/flora/tree/jungle/small,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
 "QS" = (
 /obj/structure/closet/secure_closet/freezer/meat,
 /turf/open/floor/iron/cafeteria,
+/area/awaymission/cabin/snowforest)
+"QU" = (
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 1
+	},
+/turf/open/water,
 /area/awaymission/cabin/snowforest)
 "QV" = (
 /obj/effect/turf_decal/tile/bar,
@@ -1967,14 +4222,40 @@
 /obj/structure/flora/grass/jungle/b,
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
+"QY" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"Ra" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/item/bikehorn/rubberducky,
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"Rd" = (
+/obj/structure/table/wood/fancy/green,
+/obj/item/flashlight/lantern,
+/turf/open/floor/carpet,
+/area/awaymission/cabin/snowforest)
+"Rk" = (
+/turf/open/floor/carpet/stellar,
+/area/awaymission/cabin/snowforest)
 "Rm" = (
 /obj/structure/flora/grass/jungle,
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "Rn" = (
-/obj/structure/table/wood,
-/obj/item/clothing/glasses/geist_gazers,
-/turf/open/floor/iron/showroomfloor,
+/turf/open/water,
+/area/awaymission/cabin/snowforest)
+"Rq" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/flashlight/lantern,
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken"
+	},
 /area/awaymission/cabin/snowforest)
 "Rv" = (
 /obj/item/kirbyplants,
@@ -1982,10 +4263,24 @@
 	icon_state = "wood_large-broken"
 	},
 /area/tdome/tdome2)
+"Rz" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
 "RB" = (
 /obj/structure/chair/stool/directional/north,
 /turf/open/floor/wood/large,
 /area/tdome/tdome2)
+"RC" = (
+/obj/structure/table/wood,
+/obj/item/clothing/gloves/botanic_leather{
+	pixel_y = 7
+	},
+/obj/item/clothing/gloves/botanic_leather,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/tile,
+/area/awaymission/cabin/snowforest)
 "RD" = (
 /obj/structure/sink/kitchen{
 	dir = 4;
@@ -1997,15 +4292,62 @@
 /obj/structure/fence/corner,
 /turf/open/floor/gravel,
 /area/awaymission/cabin/snowforest)
+"RK" = (
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/gravel,
+/area/awaymission/cabin/snowforest)
 "RS" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/stone,
 /area/awaymission/cabin/snowforest)
-"Sq" = (
-/obj/structure/chair/comfy/brown{
-	dir = 8
+"RZ" = (
+/obj/structure/easel,
+/obj/item/canvas/twentythree_twentythree,
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken2"
 	},
-/turf/open/floor/iron/showroomfloor,
+/area/awaymission/cabin/snowforest)
+"Sc" = (
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 4
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Sl" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken2"
+	},
+/area/awaymission/cabin/snowforest)
+"Sq" = (
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 4
+	},
+/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1;
+	icon_state = null
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Ss" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass,
 /area/awaymission/cabin/snowforest)
 "Sv" = (
 /obj/machinery/door/airlock/gold/glass{
@@ -2018,6 +4360,22 @@
 /obj/structure/chair/pew/left,
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
+"SH" = (
+/obj/structure/chair/pew/left{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"SK" = (
+/obj/structure/closet/crate/grave/filled/lead_researcher,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"SL" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/floor/plating/grass/lavaland,
+/area/awaymission/cabin/snowforest)
 "SO" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -2025,6 +4383,11 @@
 /obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
+"SU" = (
+/obj/structure/bed,
+/obj/item/bedsheet/dorms,
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest)
 "SW" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -2032,6 +4395,25 @@
 	},
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/iron,
+/area/awaymission/cabin/snowforest)
+"Tb" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/reagent_containers/food/drinks/drinkingglass/filled,
+/obj/item/reagent_containers/food/drinks/drinkingglass/filled,
+/obj/item/reagent_containers/food/drinks/drinkingglass/filled,
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken2"
+	},
+/area/awaymission/cabin/snowforest)
+"Tc" = (
+/obj/structure/flora/tree/jungle/small,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Td" = (
+/obj/structure/table/wood,
+/obj/item/clothing/glasses/geist_gazers,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/tile,
 /area/awaymission/cabin/snowforest)
 "Tg" = (
 /obj/machinery/defibrillator_mount/loaded/directional/south,
@@ -2048,8 +4430,16 @@
 /obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
+"Tx" = (
+/obj/structure/flora/junglebush/large,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
 "TA" = (
 /turf/open/floor/gravel,
+/area/awaymission/cabin/snowforest)
+"TL" = (
+/obj/structure/statue/angelstatue,
+/turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "TT" = (
 /obj/structure/mineral_door/wood,
@@ -2062,6 +4452,9 @@
 /obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/indestructible,
 /area/tdome/arena)
+"Uh" = (
+/turf/open/floor/carpet/lone,
+/area/awaymission/cabin/snowforest)
 "Uk" = (
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/wood/large,
@@ -2071,8 +4464,28 @@
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "Um" = (
-/obj/effect/turf_decal/siding/white,
-/turf/open/floor/iron/showroomfloor,
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 8
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Uo" = (
+/obj/structure/chair/comfy{
+	color = "#FF0000";
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding,
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest)
+"Uq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest)
 "Ur" = (
 /turf/open/floor/iron,
@@ -2081,12 +4494,27 @@
 /obj/structure/statue/diamond/ai2,
 /turf/open/floor/mineral/gold,
 /area/awaymission/cabin/snowforest)
+"Ux" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
 "UD" = (
 /obj/structure/chair/stool/directional/south{
 	dir = 2
 	},
 /turf/open/floor/wood/large,
 /area/tdome/tdome1)
+"UH" = (
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
+"UO" = (
+/obj/structure/closet/crate/grave/filled/lead_researcher,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
 "UQ" = (
 /obj/item/kirbyplants,
 /turf/open/floor/wood/large{
@@ -2102,14 +4530,61 @@
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
+"UX" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/window/reinforced/survival_pod{
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"UY" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Vg" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/reagent_containers/glass/bottle/morphine{
+	name = "Sleeping Potion";
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/reagent_containers/glass/bottle/morphine{
+	name = "Sleeping Potion"
+	},
+/obj/item/reagent_containers/glass/bottle/morphine{
+	name = "Sleeping Potion";
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/turf/open/floor/bronze,
+/area/awaymission/cabin/snowforest)
 "Vi" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /turf/open/floor/stone,
 /area/awaymission/cabin/snowforest)
+"Vn" = (
+/obj/structure/chair/pew,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
 "Vo" = (
 /turf/open/floor/mineral/gold,
+/area/awaymission/cabin/snowforest)
+"Vp" = (
+/obj/structure/bonfire/prelit,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"Vr" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"Vs" = (
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/carpet/stellar,
 /area/awaymission/cabin/snowforest)
 "Vx" = (
 /obj/structure/table/wood,
@@ -2126,11 +4601,42 @@
 	},
 /turf/open/floor/carpet/orange,
 /area/awaymission/cabin/snowforest)
+"Vz" = (
+/obj/structure/flora/tree/jungle,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
 "VA" = (
 /obj/structure/sink{
 	pixel_y = 17
 	},
 /turf/open/floor/iron,
+/area/awaymission/cabin/snowforest)
+"VD" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/mineral_door/wood{
+	name = "Guest Room"
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"VM" = (
+/obj/structure/flora/junglebush/large,
+/obj/structure/window/reinforced/survival_pod{
+	icon_state = null
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4;
+	icon_state = null
+	},
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
+"VU" = (
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/stone,
 /area/awaymission/cabin/snowforest)
 "VW" = (
 /obj/structure/railing{
@@ -2149,6 +4655,16 @@
 	dir = 4
 	},
 /turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
+"We" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken3"
+	},
+/area/awaymission/cabin/snowforest)
+"Wm" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest)
 "Wn" = (
 /obj/structure/chair/sofa/right{
@@ -2171,6 +4687,32 @@
 	},
 /turf/open/indestructible,
 /area/tdome/arena)
+"Wt" = (
+/obj/structure/fluff/iced_abductor,
+/turf/open/floor/carpet/green,
+/area/awaymission/cabin/snowforest)
+"Ww" = (
+/obj/structure/railing/corner{
+	color = "#964B00";
+	dir = 8
+	},
+/turf/open/water,
+/area/awaymission/cabin/snowforest)
+"Wx" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/food/drug/moon_rock{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/food/drug/moon_rock,
+/obj/item/food/drug/moon_rock{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/turf/open/floor/wood/tile,
+/area/awaymission/cabin/snowforest)
 "WD" = (
 /obj/structure/table/wood,
 /obj/item/pizzabox/infinite{
@@ -2179,13 +4721,24 @@
 /turf/open/floor/carpet/orange,
 /area/awaymission/cabin/snowforest)
 "WG" = (
-/obj/effect/turf_decal/siding/white{
-	dir = 6
+/obj/structure/flora/ausbushes/stalkybush,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
+"WJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
 	},
-/turf/open/floor/iron/showroomfloor,
+/obj/structure/chair/pew/left{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest)
 "WK" = (
 /turf/open/floor/carpet/orange,
+/area/awaymission/cabin/snowforest)
+"WL" = (
+/obj/item/paper/fluff,
+/turf/open/floor/stone,
 /area/awaymission/cabin/snowforest)
 "WN" = (
 /obj/structure/table/wood/fancy/green,
@@ -2203,6 +4756,43 @@
 /obj/machinery/chem_dispenser/drinks/fullupgrade,
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
+"WR" = (
+/obj/structure/flora/tree/jungle/small,
+/obj/structure/window/reinforced/survival_pod{
+	icon_state = null
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"WU" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/stock_parts/matter_bin/adv,
+/obj/item/stock_parts/matter_bin/adv{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/stock_parts/manipulator/pico,
+/turf/open/floor/plating/catwalk_floor,
+/area/awaymission/cabin/snowforest)
+"WW" = (
+/obj/structure/flora/tree/jungle/small,
+/obj/structure/window/reinforced/survival_pod{
+	icon_state = null
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4;
+	icon_state = null
+	},
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
+"WY" = (
+/mob/living/simple_animal/hostile/lightgeist,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
 "Xd" = (
 /obj/structure/table/wood/fancy,
 /obj/structure/mirror/directional/south{
@@ -2215,6 +4805,23 @@
 /obj/structure/mirror/directional/south,
 /turf/open/floor/wood/large,
 /area/tdome/tdome1)
+"Xj" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/mineral_door/wood,
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
+"Xl" = (
+/obj/structure/railing/corner{
+	color = "#964B00";
+	dir = 4
+	},
+/turf/open/water,
+/area/awaymission/cabin/snowforest)
 "Xm" = (
 /obj/structure/railing/corner{
 	color = "#964B00";
@@ -2225,9 +4832,35 @@
 	},
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
+"Xn" = (
+/mob/living/simple_animal/hostile/lightgeist,
+/obj/structure/window/reinforced/survival_pod{
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Xp" = (
+/obj/structure/bonfire/prelit,
+/obj/item/storage/bag/tray{
+	name = "Make this a Cauldron"
+	},
+/turf/open/floor/bronze,
+/area/awaymission/cabin/snowforest)
+"Xu" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
 "Xx" = (
 /obj/structure/fence/door/opened,
 /turf/open/floor/gravel,
+/area/awaymission/cabin/snowforest)
+"Xy" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken3"
+	},
 /area/awaymission/cabin/snowforest)
 "Xz" = (
 /obj/structure/railing{
@@ -2236,22 +4869,83 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
+"XA" = (
+/mob/living/simple_animal/hostile/lightgeist,
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 8
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1;
+	icon_state = null
+	},
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"XB" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/storage/box/donkpockets/donkpocketgondola,
+/obj/item/storage/box/donkpockets/donkpocketgondola,
+/obj/item/storage/box/donkpockets/donkpockethonk,
+/obj/item/storage/box/donkpockets/donkpocketteriyaki,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
 "XD" = (
 /obj/machinery/griddle,
 /turf/open/floor/iron/cafeteria,
+/area/awaymission/cabin/snowforest)
+"XE" = (
+/obj/machinery/door/airlock/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/tile,
+/area/awaymission/cabin/snowforest)
+"XF" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"XG" = (
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 4
+	},
+/turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
 "XH" = (
 /turf/open/floor/wood/large{
 	icon_state = "wood_large-broken2"
 	},
 /area/tdome/tdome2)
+"XI" = (
+/obj/structure/chair/sofa/right{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
 "XK" = (
 /obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/carpet/purple,
 /area/awaymission/cabin/snowforest)
+"XS" = (
+/obj/machinery/chem_dispenser/mutagensaltpeter,
+/turf/open/floor/bronze,
+/area/awaymission/cabin/snowforest)
+"XT" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
 "XV" = (
 /turf/closed/indestructible/wood,
 /area/tdome/arena)
+"XX" = (
+/obj/structure/table/wood,
+/obj/machinery/light/warm/directional/west,
+/obj/item/plant_analyzer{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/obj/item/plant_analyzer,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/tile,
+/area/awaymission/cabin/snowforest)
 "Yc" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -2264,6 +4958,12 @@
 	},
 /turf/open/floor/stone,
 /area/awaymission/cabin/snowforest)
+"Yj" = (
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
 "Yk" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -2273,12 +4973,45 @@
 "Yl" = (
 /turf/open/floor/wood/large,
 /area/tdome/tdome1)
+"Yx" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/cabin/snowforest)
 "Yy" = (
 /turf/closed/indestructible/wood,
 /area/tdome/tdome2)
+"YB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"YE" = (
+/obj/structure/table/wood/fancy/purple,
+/turf/open/floor/bronze,
+/area/awaymission/cabin/snowforest)
+"YI" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 1
+	},
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
 "YJ" = (
 /obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/iron/cafeteria,
+/area/awaymission/cabin/snowforest)
+"YM" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/machinery/microwave,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"YO" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/paper/fluff,
+/turf/open/floor/stone,
 /area/awaymission/cabin/snowforest)
 "YP" = (
 /turf/open/floor/iron/stairs/old{
@@ -2310,9 +5043,32 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin/snowforest)
-"Za" = (
-/mob/living/simple_animal/hostile/lightgeist,
+"YZ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"Za" = (
+/obj/machinery/light/warm/directional/north,
+/turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
+"Zg" = (
+/obj/structure/flora/junglebush/c,
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"Zi" = (
+/obj/structure/closet/crate/grave,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"Zs" = (
+/obj/structure/chair/sofa/corner,
+/obj/item/instrument/banjo,
+/turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest)
 "Zt" = (
 /obj/effect/turf_decal/siding/wood{
@@ -2335,6 +5091,15 @@
 /obj/item/clothing/head/that,
 /turf/open/floor/iron,
 /area/awaymission/cabin/snowforest)
+"ZA" = (
+/obj/structure/chair/pew/right{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
 "ZB" = (
 /obj/structure/table/wood,
 /obj/item/clothing/glasses/monocle,
@@ -2346,10 +5111,29 @@
 	dir = 4
 	},
 /area/awaymission/cabin/snowforest)
+"ZH" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/mineral_door/wood,
+/turf/open/floor/stonebrick,
+/area/awaymission/cabin/snowforest)
 "ZI" = (
 /obj/structure/flora/grass/jungle/b,
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"ZN" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/book/random,
+/turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
+"ZQ" = (
+/obj/item/kirbyplants/fern,
+/turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest)
 "ZT" = (
 /obj/structure/railing/corner{
@@ -24431,21 +27215,21 @@ Fr
 Ur
 Fr
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+cc
+eE
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
 my
 TA
 TA
@@ -24561,21 +27345,21 @@ Ur
 Ur
 Ur
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+XF
+eE
+Np
+cq
+cq
+cq
+cq
+cq
+cq
+Mc
+cq
+cq
+Np
+cq
+cq
 my
 TA
 TA
@@ -24691,21 +27475,21 @@ VA
 Ur
 Ur
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+qh
+cq
+cq
+cq
+iK
+cq
+cq
+Np
+cq
+cq
+cq
+cq
+cq
+cq
+cq
 my
 TA
 TA
@@ -24821,21 +27605,21 @@ mW
 pD
 Ur
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Cm
+eE
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+wg
+cq
+cq
+cq
+cq
+cq
 my
 TA
 TA
@@ -24951,21 +27735,21 @@ Fr
 Fr
 Fr
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+BR
+eE
+cq
+cq
+Mc
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+wg
+cq
 my
 TA
 TA
@@ -25020,18 +27804,18 @@ TA
 TA
 qF
 qF
-TA
-TA
-cq
-ff
-ff
-ff
-ff
-ff
-ff
-ff
-ff
-cq
+gC
+WG
+iH
+sX
+iH
+gC
+bH
+bH
+er
+Xu
+do
+gC
 Fr
 TA
 LW
@@ -25067,35 +27851,35 @@ Fr
 Fr
 Fr
 bU
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+bU
+bU
+bU
+bU
+bU
+bU
+Bx
+Fj
+Dd
+cl
+YZ
+Gp
+XF
+qh
+Kw
+eE
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+Mc
+cq
+cq
 my
 TA
 TA
@@ -25149,19 +27933,19 @@ TA
 TA
 qF
 qF
-TA
-TA
-TA
-ff
-ff
-iH
-mh
+Fr
+Fr
+bH
+Ux
 bU
-jU
 bU
-jJ
-ff
-ff
+bU
+bU
+bU
+bU
+LH
+gC
+Xu
 Fr
 TA
 LW
@@ -25197,35 +27981,35 @@ ur
 ur
 Fr
 bU
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+mn
+kw
+BA
+KL
+SL
+fc
+lS
+Vi
+Vi
+Yk
+ys
+BA
+BA
+cq
+BA
+Mc
+cq
+Np
+cq
+cq
+cq
+iK
+cq
+cq
+cq
+cq
+cq
+iK
+cq
 my
 TA
 TA
@@ -25278,20 +28062,20 @@ TA
 TA
 qF
 qF
-TA
-TA
-TA
-TA
-ff
-gC
+RC
+XX
+Fr
+Fr
+Tc
 bU
-oi
-DI
-DI
-Nj
 bU
-em
-ff
+bU
+DI
+Kt
+bU
+bU
+bU
+CB
 Fr
 TA
 LW
@@ -25327,35 +28111,35 @@ ur
 ur
 Fr
 bU
+Lv
+SK
 cq
-cq
-cq
-cq
-cq
-cq
-bU
+TA
+TA
+TA
+Ga
 mM
 mM
-mM
-bU
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+RS
+XF
+eE
+cq
+cq
+iK
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+Np
+cq
+cq
+cq
 my
 TA
 TA
@@ -25407,21 +28191,21 @@ cq
 TA
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-ff
-iH
-oi
+Td
+fW
+yN
+qc
+Fr
+bU
+bU
+bU
 sV
-Gm
-Ic
+Rn
+Rn
 Ns
-Nj
-Za
-ff
+bU
+bU
+wq
 Fr
 LW
 LW
@@ -25457,35 +28241,35 @@ mM
 mM
 Fr
 bU
+Ez
 cq
-cq
-cq
-cq
-cq
-cq
+IA
+Jd
+Ol
+kc
+Bt
+DF
+mM
+RS
 bU
-mM
-mM
-mM
-bU
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+kc
+Mc
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+Mc
+cq
+cq
+cq
+py
+Jq
+wI
+wg
 my
 TA
 TA
@@ -25537,21 +28321,21 @@ cq
 TA
 qF
 qF
-TA
-TA
-TA
-TA
-TA
-ff
-em
+mG
+yN
+yN
+Wx
+Fr
+bU
+bU
 oT
-vB
-vB
-vB
-vB
-Um
-AA
-ff
+Rn
+Mv
+Rn
+Rn
+MK
+WY
+gC
 Fr
 LW
 LW
@@ -25587,35 +28371,35 @@ mM
 mM
 Fr
 bU
+eE
+lt
+SK
+TA
 cq
-cq
-cq
-cq
-cq
-cq
-bU
+ev
+Rm
+DF
 mM
-mM
-mM
-bU
+RS
+Gp
+eE
+cq
+cq
+tI
+TA
+TA
+uW
+TA
+cq
+cq
+cq
+cq
+cq
+uW
 TA
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+fR
 my
 TA
 TA
@@ -25666,22 +28450,22 @@ cq
 cq
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-ff
+Fr
+Fr
+yN
+yN
+Fr
+Fr
 bU
-oT
-vP
-vB
-vB
-vB
-Um
-mh
-ff
+bU
+WR
+Rn
+Rn
+Rn
+Mv
+MK
+bU
+ly
 Fr
 LW
 LW
@@ -25717,34 +28501,34 @@ Fr
 Fr
 Fr
 bU
+KQ
 cq
-cq
-cq
-cq
-cq
-cq
-bU
+oH
+Jd
+Gb
+or
+QX
+DF
 mM
+RS
+qh
+cq
+wg
+HJ
+TA
+wh
+jz
+bj
+TA
+Ff
+cq
+uW
+cq
+fR
+TA
+XT
+bj
 mM
-mM
-bU
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
 TA
 my
 TA
@@ -25796,22 +28580,22 @@ cq
 cq
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-ff
-jJ
-oT
-xK
-vB
-Jf
-Ny
-Um
+gC
+Fr
+XE
+XE
+Fr
+bU
+bU
 jU
-ff
+Rn
+Rn
+aY
+Rn
+Rn
+MK
+LY
+Dx
 Fr
 LW
 LW
@@ -25847,34 +28631,34 @@ LW
 LW
 Fr
 bU
+Gq
 cq
+Ol
+TA
 cq
-cq
-cq
-cq
-cq
-bU
+MT
+AA
+DF
 mM
+RS
+ls
+eE
+cq
+Vn
+TA
 mM
+Mo
 mM
-cr
 TA
+cq
 TA
+cq
 TA
+cq
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+mM
+KR
+jz
 TA
 my
 TA
@@ -25926,22 +28710,22 @@ cq
 cq
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-ff
-jU
-oT
-Ab
-vB
-vB
-Rn
-Um
+iH
+qq
+bH
+bH
+LC
 bU
-ff
+bU
+jU
+Mv
+Rn
+Rn
+Mv
+Rn
+MK
+Ux
+Xu
 Fr
 LW
 LW
@@ -25977,35 +28761,35 @@ LW
 LW
 Fr
 bU
+eE
+SK
 cq
-cq
-cq
-cq
-cq
-cq
-bU
+TA
+Ol
+kc
+Rm
+DF
 mM
+jQ
+cc
+eE
+cq
+KF
+TA
+jz
+bj
+bj
+fR
+cq
+fR
+cq
+TA
+uW
+TA
 mM
+bj
 mM
-cr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+fR
 my
 TA
 TA
@@ -26056,22 +28840,22 @@ cq
 cq
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-ff
+oi
+WG
+bH
+CB
+bH
 bU
-oT
+bU
+Kp
 CZ
-vB
-vB
+CZ
+CZ
+CZ
 Sq
-Um
-jJ
-ff
+bU
+bU
+bH
 Fr
 LW
 LW
@@ -26107,35 +28891,35 @@ LW
 LW
 Fr
 bU
+aV
+rH
+ha
+Pm
 cq
-cq
-cq
-TA
-cq
-cq
-bU
+ev
+vw
+DF
 mM
-mM
-mM
-bU
+jQ
+pg
+eE
+cq
+cq
+fR
 TA
 TA
 TA
 TA
+cq
+cq
+wg
+cq
+cq
+TA
+uW
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+uW
 my
 TA
 TA
@@ -26186,22 +28970,22 @@ cq
 cq
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-ff
+Nj
+bH
+gC
+iH
+Dx
 bU
-oT
+bU
 Dm
-vB
-vB
-vB
-Um
+Dm
+Dm
+Xy
+Dm
+Dm
 bU
-ff
+bU
+CB
 Fr
 LW
 LW
@@ -26241,31 +29025,31 @@ bU
 bU
 bU
 TA
-cq
-cq
-bU
+oH
+EY
+Rm
 DF
 mM
 RS
-bU
+qh
+cq
+cq
+Mc
+cq
+cq
+cq
+cq
+cq
+cq
+Mc
+cq
+cq
+cq
+cq
 TA
+oH
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+cq
 my
 TA
 TA
@@ -26316,22 +29100,22 @@ cq
 cq
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-ff
-mh
-qa
-Du
-vB
-JH
-Lb
 WG
+Mp
+bH
+Xu
 bU
-ff
+bU
+bU
+JH
+qa
+JH
+JH
+JH
+zU
+bU
+bU
+iH
 Fr
 LW
 LW
@@ -26370,32 +29154,32 @@ Fr
 oj
 oj
 bU
+ql
 TA
-TA
-cq
-bU
-DF
+Jd
+KL
+mM
 mM
 RS
-bU
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+gR
+eE
+cq
+cq
+cq
+cq
+Mc
+cq
+cq
+cq
+cq
+cq
+cq
+Np
+cq
+wg
+fR
+lt
+cq
 my
 TA
 TA
@@ -26446,22 +29230,22 @@ cq
 cq
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-ff
-em
+Za
+gC
+bH
 bU
-oT
-vB
-vB
+bU
+bU
+VM
+vh
+vh
+vh
+vh
+XA
 Um
 bU
-em
-ff
+bU
+ly
 Fr
 LW
 LW
@@ -26500,32 +29284,32 @@ qF
 oj
 oj
 bU
-cq
-TA
-TA
-bU
-DF
+yF
+qJ
+qV
+xo
+mM
 mM
 RS
-bU
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+cn
+eE
+rH
+rH
+cq
+cq
+cq
+cq
+cq
+wg
+cq
+cq
+cq
+cq
+cq
+IA
+cq
+cq
+cq
 my
 TA
 TA
@@ -26576,22 +29360,22 @@ cq
 cq
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-ff
-ff
-jJ
-qa
-Du
+bH
+Dx
+iH
+bU
+bU
+WW
+Rn
+Rn
+Rn
+Rn
+Rn
 Lb
-WG
-jJ
-ff
-ff
+bU
+bU
+LH
+UH
 Fr
 LW
 LW
@@ -26633,29 +29417,29 @@ bU
 bU
 bU
 bU
-bU
+TL
 DF
 mM
 RS
-bU
-bU
-bU
-bU
+NG
+qh
+qD
+BR
+eE
+cq
+cq
+Mc
+cq
 cq
 cq
 cq
 Mc
 cq
 cq
-cq
-cq
-Mc
-cq
-cq
 TA
+Qz
 TA
-TA
-TA
+cq
 my
 TA
 TA
@@ -26706,22 +29490,22 @@ cq
 cq
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-cq
-ff
-ff
-ff
-Ib
-Ib
-ff
-ff
-ff
-cq
+bH
+bH
+CB
+bU
+UX
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Hj
+bU
+bU
+bU
+gC
 Fr
 LW
 LW
@@ -26770,8 +29554,8 @@ oz
 Vi
 Vi
 Yk
-bU
-cq
+Ql
+eE
 cq
 cq
 cq
@@ -26784,8 +29568,8 @@ cq
 cq
 TA
 TA
-TA
-TA
+hE
+cq
 my
 TA
 TA
@@ -26836,22 +29620,22 @@ cq
 cq
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+ly
+bH
+bH
+bU
+jU
+OD
+CZ
+CZ
+CZ
+CZ
+Xl
+Mv
+MK
+bU
+gC
+bH
 Fr
 LW
 LW
@@ -26900,22 +29684,22 @@ mM
 mM
 mM
 RS
-bU
+qh
+rH
+rH
 cq
+rH
+rH
+rH
 cq
-cq
-cq
-cq
-cq
-cq
-cq
-cq
-cq
-cq
+rH
+rH
+rH
+ci
+Gb
 TA
 TA
-TA
-TA
+rH
 my
 TA
 TA
@@ -26966,22 +29750,22 @@ TA
 TA
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+iH
+bH
+bU
+bU
+jU
+gN
+DW
+gq
+Mf
+ZQ
+QU
+Rn
+zD
+bU
+Dx
+iH
 Fr
 LW
 LW
@@ -27030,9 +29814,9 @@ Wc
 rX
 mM
 RS
-bU
-bU
-bU
+UY
+qD
+XF
 qh
 fL
 ZI
@@ -27041,11 +29825,11 @@ qh
 ew
 ri
 sn
+Me
 cq
-TA
-TA
-TA
-TA
+IA
+oH
+Ml
 my
 TA
 TA
@@ -27096,22 +29880,22 @@ TA
 TA
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+gC
+bH
+bU
+bU
+jk
+gN
+hk
+XI
+OY
+OY
+JX
+Rn
+MK
+bU
+bU
+CB
 Fr
 LW
 LW
@@ -27171,11 +29955,11 @@ Vi
 Vi
 Vi
 Vi
+Vi
 mM
-TA
-TA
-TA
-TA
+mM
+mM
+Vi
 my
 TA
 TA
@@ -27226,22 +30010,22 @@ TA
 TA
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+bH
+ly
+bU
+jU
+Rn
+gN
+bk
+OY
+pt
+OY
+PD
+CZ
+MK
+bU
+bU
+WG
 Fr
 wM
 wM
@@ -27302,10 +30086,10 @@ mM
 mM
 mM
 mM
-TA
-TA
-TA
-TA
+Ah
+mM
+mM
+mM
 Xx
 TA
 TA
@@ -27356,22 +30140,22 @@ TA
 TA
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Dx
+bH
+bU
+jU
+cg
+gN
+bk
+ek
+Vp
+fN
+OY
+OY
+bU
+bU
+bU
+gC
 Fr
 LW
 LW
@@ -27431,11 +30215,11 @@ Wc
 Wc
 Wc
 Wc
+Wc
 mM
-TA
-TA
-TA
-TA
+mM
+mM
+Wc
 my
 TA
 TA
@@ -27486,22 +30270,22 @@ TA
 TA
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+CB
+iH
+bU
+jU
+Rn
+gN
+bk
+OY
+zh
+OY
+lv
+vh
+MK
+bU
+LH
+bH
 Fr
 LW
 LW
@@ -27550,9 +30334,9 @@ Vi
 nx
 mM
 RS
-bU
-bU
-bU
+AA
+gl
+wL
 Yg
 ew
 ri
@@ -27561,11 +30345,11 @@ Yg
 fL
 ZI
 uR
+Kw
 cq
-TA
-TA
-TA
-TA
+lt
+uW
+aH
 my
 TA
 TA
@@ -27616,22 +30400,22 @@ TA
 TA
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Xu
+bH
+bU
+Xn
+Rn
+gN
+Zs
+AB
+OY
+OY
+QU
+Rn
+MK
+bU
+LH
+Xu
 Fr
 LW
 LW
@@ -27680,22 +30464,22 @@ mM
 mM
 mM
 RS
-bU
+Yg
+BA
+BA
 cq
+BA
+BA
+BA
 cq
-cq
-cq
-cq
-cq
-cq
-cq
-cq
-cq
-cq
+BA
+BA
+BA
+BA
+BA
 TA
-TA
-TA
-TA
+Gb
+lO
 my
 TA
 TA
@@ -27746,22 +30530,22 @@ TA
 TA
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+iH
+gC
+bU
+jU
+Rn
+gN
+eV
+dm
+OY
+zJ
+QU
+zq
+bU
+bU
+ly
+iH
 Fr
 LW
 LW
@@ -27810,7 +30594,9 @@ aU
 Wc
 Wc
 Cq
-bU
+DC
+eE
+Mc
 cq
 cq
 cq
@@ -27820,12 +30606,10 @@ cq
 cq
 cq
 cq
-cq
-cq
+oH
+fR
 TA
-TA
-TA
-TA
+cq
 my
 TA
 TA
@@ -27876,22 +30660,22 @@ TA
 TA
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+bH
+bH
+bU
+UX
+Rn
+Ww
+vh
+vh
+vh
+vh
+nv
+MK
+bU
+bU
+Dx
+UH
 Fr
 LW
 LW
@@ -27933,29 +30717,29 @@ bU
 bU
 bU
 bU
-bU
+TL
 DF
 mM
 RS
-bU
-bU
-bU
-bU
+Me
+Yg
+zS
+mL
+eE
 cq
 cq
 cq
+Np
 cq
 cq
-cq
-cq
-cq
+Mc
 cq
 cq
 cq
 TA
 TA
-TA
-TA
+cq
+cq
 my
 TA
 TA
@@ -28006,22 +30790,22 @@ TA
 TA
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+bH
+ly
+bU
+jU
+Rn
+Mv
+Rn
+Rn
+Rn
+Rn
+Li
+bU
+bU
+bU
+Ux
+bH
 Fr
 LW
 LW
@@ -28060,32 +30844,32 @@ qF
 oj
 oj
 bU
-TA
-TA
-TA
-TA
+QD
+SL
+KL
+KL
 DF
 mM
 RS
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+rg
+eE
+BA
+BA
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+Zg
+Gb
+uW
+cq
 my
 TA
 TA
@@ -28136,22 +30920,22 @@ TA
 TA
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+gC
+Dx
+bU
+bU
+ng
+rE
+CZ
+CZ
+CZ
+CZ
+Sc
+XG
+bU
+Ux
+LH
+gC
 Fr
 LW
 LW
@@ -28190,32 +30974,32 @@ Fr
 oj
 oj
 bU
+lr
 TA
 TA
-TA
-TA
+Ga
 DF
 mM
 RS
+lx
+eE
+cq
+cq
+cq
+cq
+Mc
+cq
+cq
+cq
+iK
+cq
+cq
+cq
+Np
+cq
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+IA
+cq
 my
 TA
 TA
@@ -28266,22 +31050,22 @@ TA
 TA
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Za
+bU
+bU
+bU
+Dm
+Dm
+Dm
+Dm
+Dm
+hg
+Dm
+Dm
+bU
+bU
+bH
+Dx
 Fr
 LW
 LW
@@ -28320,32 +31104,32 @@ bU
 bU
 bU
 bU
-TA
-TA
-TA
-TA
+cb
+SK
+EY
+AA
 DF
 mM
 RS
+Yg
+cq
+cq
+cq
+Mc
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+fR
+Tx
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+cq
 my
 TA
 TA
@@ -28396,32 +31180,32 @@ TA
 TA
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+bH
+Vz
+bU
+bU
+zU
+JH
+JH
+JH
+JH
+JH
+JH
+JH
+bU
+bU
+bH
+CB
 Fr
 LW
 LW
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+LK
+DQ
+DQ
+DQ
+HH
 XV
 BG
 Fn
@@ -28432,50 +31216,50 @@ KU
 SO
 BG
 XV
+Ds
+FF
+en
 LW
+en
 LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
+en
+Fr
+nI
+Mt
 LW
 LW
 LW
 Fr
 bU
+UO
+jw
+Zi
+Jd
+IA
+kc
+QX
+mM
+mM
+RS
+BR
+eE
+cq
+cq
+fR
+TA
+fR
+TA
+TA
+cq
+cq
+cq
+cq
+cq
+uW
 TA
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+fR
 my
 TA
 TA
@@ -28526,32 +31310,32 @@ TA
 TA
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Xu
+bU
+bU
+bU
+lI
+Um
+Kg
+vh
+vh
+vh
+Hk
+Um
+bU
+bU
+Xu
+bH
 Fr
 LW
 LW
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+AV
+AV
+AV
+AV
+AV
 XV
 BG
 Fs
@@ -28562,49 +31346,49 @@ KZ
 Tp
 BG
 XV
+lE
+Wm
+Uo
 LW
+en
 LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
+En
+Fr
+Fr
+Fr
 LW
 LW
 LW
 Fr
 bU
+Ez
+oH
+SK
 TA
+lt
+or
+Rm
+mM
+mM
+RS
+Rz
+eE
+cq
+cq
 TA
+mM
+bj
+Kc
 TA
+uW
 TA
+cq
+tI
+Zg
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+jz
+bj
+mM
 TA
 my
 TA
@@ -28656,32 +31440,32 @@ TA
 TA
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+iH
+bU
+bU
+bU
+bU
+UX
+Rn
+Rn
+Rn
+Rn
+qr
+bU
+bU
+bU
+bU
+iH
 Fr
 LW
 LW
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+AV
+AV
+YE
+AV
+AV
 XV
 BG
 Fs
@@ -28692,49 +31476,49 @@ Or
 Tp
 BG
 XV
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
+lE
+bj
+AJ
+AJ
+Mw
+AJ
+Mw
+AJ
+zx
+FF
 LW
 LW
 LW
 Fr
 bU
+Lv
+cq
+cq
+Jd
+Ol
+FE
+Ul
+mM
+mM
+RS
+aI
+eE
+cq
+Mc
+TA
+bj
+Mo
+mM
 TA
 TA
+nY
+cq
+cq
+fR
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+mM
+gU
+bj
 TA
 my
 TA
@@ -28786,32 +31570,32 @@ TA
 TA
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+CB
+bH
+bU
+bU
+bU
+jU
+Rn
+Mv
+Rn
+Rn
+Mv
+MK
+bU
+bU
+Tc
+Dx
 Fr
 LW
 LW
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+AV
+AV
+YE
+AV
+AV
 XV
 BG
 Fs
@@ -28822,49 +31606,49 @@ KZ
 Tp
 BG
 XV
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
+lE
+bj
+ba
+ba
+FD
+ba
+FD
+ba
+OF
+Uq
 LW
 LW
 LW
 Fr
 bU
+eE
+SK
+IA
 TA
+cq
+kc
+AA
+mM
+mM
+RS
+Yg
+cq
+cq
+cq
 TA
+XT
+mM
+bj
 TA
+cq
+cq
+uW
+AF
+cq
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+wh
+mM
+Kc
 TA
 my
 TA
@@ -28917,31 +31701,31 @@ TA
 TA
 qF
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Xu
+Ux
+bU
+bU
+jU
+Rn
+cg
+Rn
+Rn
+Rn
+MK
+bU
+bU
+bU
+gC
 Fr
 TA
 LW
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+bm
+AV
+AV
+Qs
+AV
+AV
 XV
 BG
 FG
@@ -28952,46 +31736,46 @@ Ox
 Uc
 BG
 XV
+lE
+Wm
+zW
 LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
+Ct
+Fr
+Fr
+Fr
+Fr
+Fr
 LW
 LW
 LW
 Fr
 bU
+Gq
+oH
+Ol
+TA
+SK
+MT
+QX
+mM
+mM
+RS
+cG
+eE
+cq
+cq
 TA
 TA
+fR
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+cq
+cq
+cq
+cq
+cq
+tI
 TA
 TA
 TA
@@ -29047,31 +31831,31 @@ TA
 TA
 TA
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+gC
+Dx
+LH
+bU
+bU
+pI
+Rn
+Rn
+Mv
+DN
+bU
+WY
+bU
+Ux
+Hz
 Fr
 TA
 LW
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+bm
+AV
+AV
+YE
+AV
+AV
 XV
 XV
 XV
@@ -29082,50 +31866,50 @@ Wq
 XV
 XV
 XV
+lE
+Wm
+en
 LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
+en
+sZ
+KI
+LX
+lY
+Fr
 LW
 LW
 LW
 Fr
 bU
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Lv
+cq
+SK
+Jd
+Gb
+EY
+DD
+mM
+mM
+RS
+qg
+eE
+cq
+cq
+cq
+ig
+mc
+Lz
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+nD
+mc
+Lz
+cq
 my
 TA
 TA
@@ -29178,30 +31962,30 @@ TA
 TA
 qF
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+bH
+gC
+bU
+bU
+bU
+MQ
+MQ
+MQ
+bU
+bU
+bU
+bU
+Tc
+bH
 Fr
 TA
 LW
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+AV
+AV
+Qs
+AV
+AV
 bI
 rG
 bI
@@ -29212,50 +31996,50 @@ Yl
 bI
 fE
 bI
+lE
+Wm
+en
 LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
+en
+sZ
+PI
+bj
+Wm
+md
 LW
 LW
 LW
 Fr
 bU
+KQ
+Gb
+cq
 TA
+Jd
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+SL
+mM
+mM
+RS
+XF
+eE
+cq
+cq
+cq
+wg
+cq
+cq
+cq
+Np
+cq
+cq
+cq
+Np
+cq
+cq
+cq
+Np
+cq
 my
 TA
 TA
@@ -29309,29 +32093,29 @@ TA
 TA
 qF
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Xu
+bH
+bU
+bU
+bU
+bU
+bU
+bU
+LH
+bU
+Ux
+WG
+Xu
 Fr
 TA
 LW
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+bm
+AV
+AV
+YE
+AV
+AV
 bI
 bI
 bI
@@ -29342,50 +32126,50 @@ rv
 bI
 bI
 bI
+lE
+Wm
+en
 LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
+en
+sZ
+xX
+ba
+cH
+Fr
 LW
 LW
 LW
 Fr
 bU
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+qG
+Ln
+Aw
+Ga
+Ga
+qV
+ut
+Wc
+Wc
+Cq
+ud
+eE
+cq
+Mc
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
 my
 TA
 TA
@@ -29440,28 +32224,28 @@ TA
 TA
 qF
 qF
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+QL
+bH
+hC
+bH
+bH
+CB
+bH
+gC
+Ip
+bH
+bH
+ly
 Fr
 TA
 LW
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+bm
+AV
+AV
+Qs
+AV
+AV
 bI
 BK
 Uk
@@ -29472,50 +32256,50 @@ Yl
 UD
 Xd
 bI
+lE
+Wm
+Uo
 LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
+En
+Fr
+Fr
+Fr
+Fr
+Fr
 LW
 LW
 LW
 Fr
 bU
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+bU
+bU
+bU
+bU
+bU
+bU
+Bx
+mu
+pA
+Mm
+YZ
+eE
+cq
+cq
+cq
+Np
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
 my
 TA
 TA
@@ -29586,12 +32370,12 @@ Fr
 TA
 LW
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+AV
+AV
+YE
+AV
+AV
 bI
 BK
 Uk
@@ -29602,16 +32386,16 @@ Yl
 UD
 Xf
 bI
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
+lE
+bj
+AJ
+AJ
+Mw
+AJ
+Mw
+AJ
+zx
+FF
 LW
 LW
 LW
@@ -29620,32 +32404,32 @@ Fr
 Fr
 Fr
 Fr
+tb
 Fr
+tb
 Fr
-Fr
-Fr
-Fr
+tb
 Fr
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+UY
+eE
+cq
+cq
+cq
+cq
+cq
+iK
+cq
+cq
+Mc
+cq
+cq
+cq
+cq
+cq
+cq
+Np
+cq
 my
 TA
 TA
@@ -29700,28 +32484,28 @@ TA
 TA
 TA
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Bh
+Bg
+Fr
+YM
+CI
+Rq
+iy
+Ot
+Fr
+PQ
+tc
+Fr
 TA
 TA
 LW
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+AV
+AV
+YE
+AV
+AV
 bI
 BM
 Uk
@@ -29732,50 +32516,50 @@ Yl
 UD
 Xf
 bI
+lE
+bj
+ba
+ba
+FD
+ba
+FD
+ba
+OF
+Uq
 LW
 LW
 LW
-LW
-LW
-LW
-LW
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Fr
+HG
+pp
+pp
+Fr
+LV
+rd
+CA
+dE
+mA
 Fr
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+BA
+cq
+wg
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+iK
+cq
+cq
+cq
+cq
+cq
+cq
 my
 TA
 TA
@@ -29829,29 +32613,29 @@ TA
 TA
 TA
 TA
+tb
+Bh
+cq
+nG
+OY
+rd
+OY
+OY
+OY
+DY
+nf
+nf
+Fr
 Fr
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
 LW
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fr
+AV
+AV
+AV
+AV
+AV
 bI
 bI
 Gc
@@ -29862,50 +32646,50 @@ Yl
 UQ
 bI
 bI
+lE
+Wm
+zW
 LW
+en
 LW
-LW
-LW
-LW
-LW
-LW
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Ct
 Fr
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Fr
+LW
+LW
+LW
+Fr
+hX
+Uh
+Uh
+DY
+OY
+OY
+OY
+PS
+LW
+AH
+Fr
+Fr
+cq
+cq
+cq
+Mc
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
 my
 TA
 TA
@@ -29959,29 +32743,29 @@ TA
 TA
 TA
 TA
+tb
+Bh
+cq
+Fr
+nS
+OY
+rd
+OY
+iT
+Fr
+nf
+nf
+lc
 Fr
 TA
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-LW
-LW
-LW
+Fr
+Gg
+DQ
+DQ
+DQ
+LK
 bI
 bI
 bI
@@ -29992,50 +32776,50 @@ bI
 bI
 bI
 bI
+Ds
+Uq
+en
+LW
+en
+LW
+en
+Fr
+xG
+Mt
 LW
 LW
 LW
+Fr
+hX
+Uh
+Uh
+Fr
+OY
+OY
+rd
+OY
 LW
-LW
-LW
-LW
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+SU
 Fr
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Fr
+cq
+cq
+cq
+cq
+cq
+Np
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+Mc
+cq
+cq
 my
 TA
 TA
@@ -30089,83 +32873,83 @@ TA
 TA
 TA
 TA
+tb
+Bh
+cq
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+pN
+OY
+OY
+OY
+An
+Fr
+ma
+ma
 Fr
 Fr
+ln
+tb
+ln
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+Iu
+Fr
+zU
+zU
+JH
+JH
+Fr
+Iu
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+ln
+tb
+ln
+Fr
+Fr
+lR
+lR
+Fr
+Sl
+SH
+vo
+OY
+LW
+Fr
+Fr
+uG
+Fr
+Fr
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+Np
+cq
+cq
+cq
+cq
+cq
+cq
+cq
 my
 TA
 TA
@@ -30219,66 +33003,66 @@ TA
 TA
 TA
 TA
+tb
+Bh
+cq
+nG
+OY
+rd
+OY
+Hx
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Fr
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+Fr
+Fr
+eX
+hJ
+wm
+hJ
+Fr
+RK
+ae
+mX
 Fr
 Fr
 TA
@@ -30350,67 +33134,67 @@ TA
 TA
 TA
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Bh
+mO
 Fr
+se
+se
+wo
+Fr
+Fr
+Wt
+dL
+dL
+dL
+dL
+YI
+In
+In
+In
+In
+In
+rm
+dL
+dL
+dL
+dL
+dL
+YI
+In
+In
+rm
+dL
+dL
+dL
+dL
+dL
+YI
+In
+rm
+dL
+dL
+dL
+YI
+In
+In
+In
+rm
+dL
+dL
+dL
+dL
+Wt
+Fr
+Fr
+wm
+Hp
+Gb
+Fr
+RK
+LW
+LW
+SU
+tb
 TA
 TA
 TA
@@ -30480,67 +33264,67 @@ TA
 TA
 TA
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
 Fr
+Fr
+Fr
+sF
+KX
+Fr
+Fr
+Wt
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+Wt
+Fr
+Fr
+Eb
+Fr
+Fr
+Fr
+wb
+LW
+AH
+tb
 TA
 TA
 TA
@@ -30610,66 +33394,66 @@ TA
 TA
 TA
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Vs
+Vs
+Fr
+Fr
+Fr
+Fr
+Wt
+dL
+dL
+dL
+dL
+ea
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+WJ
+cJ
+Fr
+Fr
+dL
+og
+Yx
+Yx
+oO
+dL
+Fr
+Fr
+ee
+up
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+Fy
+BF
+Fy
+Fr
+ea
+dL
+dL
+dL
+dL
+Wt
+Fr
+Fr
+Fr
+sH
+Fr
+Fr
+ZH
+Fr
 Fr
 TA
 TA
@@ -30739,67 +33523,67 @@ TA
 TA
 TA
 TA
+tb
+Da
+Da
+jg
+Da
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Wt
+dL
+dL
+st
+FF
+dL
+Fr
+Fr
+sc
+sc
+Fr
+qE
+Fr
+qE
+Fr
+Fr
+Fr
+Fr
+An
+dL
+QY
+li
+li
+cX
+dL
+An
+Fr
+Fr
+Fr
+Fr
+qE
+Fr
+qE
+Fr
+bj
+qE
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+dL
+st
+FF
+dL
+dL
+Wt
+Fr
+tL
+Uh
+pP
+Dy
+OY
+KH
 Fr
 TA
 TA
@@ -30869,68 +33653,68 @@ TA
 TA
 TA
 TA
+tb
+jg
+cZ
+Rk
+Rk
+rM
+dL
+dL
+qw
+bj
+bj
+BE
+AG
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+bj
+bj
 Fr
+AE
+Fr
+AE
+Fr
+dS
+Ra
+Fr
+An
+qw
+Vr
+iz
+eo
+pe
+BE
+An
+Fr
+Ra
+dS
+Fr
+AE
+Fr
+AE
+Fr
+AE
+Fr
+Fr
+bN
+rF
+jo
+Fr
+AG
+qw
+bj
+bj
+BE
+dL
+dL
+ma
+Uh
+Uh
+Uh
+qx
+OY
+Tb
+tb
 TA
 TA
 TA
@@ -30999,68 +33783,68 @@ TA
 TA
 TA
 TA
+tb
+Vs
+Rk
+Rk
+Rk
+rM
+dL
+dL
+qw
+bj
+bj
+BE
+AG
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+OY
+OY
+OY
+rd
+OY
+OY
+oR
+bj
+bj
 Fr
+An
+qw
+eT
+yG
+pN
+wP
+BE
+An
+Fr
+bj
+bj
+oR
+OY
+rd
+OY
+OY
+OY
+rd
+Ne
+qZ
+qZ
+jo
+Fr
+AG
+qw
+bj
+bj
+BE
+dL
+dL
+ma
+Uh
+Uh
+Uh
+qx
+OY
+XB
+tb
 TA
 TA
 TA
@@ -31129,67 +33913,67 @@ TA
 TA
 TA
 TA
+tb
+Vs
+Rk
+Rk
+Oc
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Wt
+dL
+dL
+xI
+Uq
+dL
+Fr
+Fr
+OY
+MB
+sb
+sb
+sb
+OY
+Fr
+Fr
+Fr
+Fr
+An
+dL
+ip
+li
+li
+IJ
+dL
+An
+Fr
+Fr
+Fr
+Fr
+OY
+sb
+sb
+MB
+sb
+OY
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+dL
+xI
+Uq
+dL
+dL
+Wt
+Fr
+tL
+Uh
+Fk
+oq
+OY
+bw
 Fr
 TA
 TA
@@ -31260,66 +34044,66 @@ TA
 TA
 TA
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Fr
+Xj
+Xj
+Fr
+Fr
+Fr
+Wt
+dL
+dL
+dL
+dL
+ea
+Fr
+ez
+Fr
+Fr
+Fr
+Fr
+ez
+Fr
+iB
+OT
+Fr
+Fr
+dL
+Qj
+fm
+fm
+dq
+dL
+Fr
+Fr
+ZA
+lh
+Fr
+oY
+Fr
+Fr
+Fr
+Fr
+oY
+Fr
+Fy
+Ai
+Fy
+Fr
+ea
+dL
+dL
+dL
+dL
+Wt
+Fr
+Fr
+Fr
+sH
+Fr
+Fr
+ZH
+Fr
 Fr
 TA
 TA
@@ -31389,68 +34173,68 @@ TA
 TA
 TA
 TA
+tb
+VU
+mM
+mM
+lC
+ZN
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
 Fr
+Wt
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+Wt
+Fr
+Fr
+Eb
+Fr
+Fr
+Fr
+Ii
+LW
+AH
+tb
 TA
 TA
 TA
@@ -31519,68 +34303,68 @@ TA
 TA
 TA
 TA
+tb
+VU
+mM
+mM
+mM
+Gs
+ZN
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
 Fr
+Wt
+dL
+dL
+dL
+dL
+YI
+In
+In
+In
+In
+In
+rm
+dL
+dL
+dL
+dL
+dL
+YI
+In
+In
+rm
+dL
+dL
+dL
+dL
+dL
+YI
+In
+rm
+dL
+dL
+dL
+YI
+In
+In
+In
+rm
+dL
+dL
+dL
+dL
+Wt
+Fr
+Fr
+Hp
+Gb
+wm
+Fr
+RK
+LW
+LW
+SU
+tb
 TA
 TA
 TA
@@ -31651,64 +34435,64 @@ TA
 TA
 Fr
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+LB
+mM
+mM
+mM
+YO
+VU
+Fr
+Fr
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+Fr
+Fr
+yh
+Ss
+wm
+yh
+Fr
+RK
+ae
+uG
 Fr
 Fr
 TA
@@ -31781,63 +34565,63 @@ TA
 TA
 TA
 Fr
+tb
+GM
+WL
+mM
+mM
+mM
+VU
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Xj
+Xj
+Fr
+Fr
+Fr
+AR
+Fr
+Fr
+Fr
+Fr
+VD
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+st
+FF
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+VD
+VD
+Fr
+Fr
+Fr
+Fr
+Fr
+po
+po
+Fr
+Fr
+Fr
+Fr
+lR
+lR
+Fr
+Kl
+hf
+LI
+OY
+LW
+Fr
+Fr
+mX
 Fr
 Fr
 TA
@@ -31911,62 +34695,62 @@ TA
 TA
 TA
 TA
+tb
+tb
+Mk
+WL
+mM
+mM
+VU
 Fr
+bj
+bj
+rj
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+xa
+OY
+Kl
+Fr
+We
+OY
+OY
+rd
+kk
+Fr
+GD
+Dh
+Fr
+Ae
+zO
+Fr
+pB
+pB
+Fr
+hW
+jD
+rd
+OY
+uG
+mX
+Fr
+BQ
+WU
+OY
+OY
+nl
+Oz
+Fr
+hX
+Uh
+Uh
+Fr
+rd
+OY
+OY
+OY
+LW
+AH
+Fr
 Fr
 Fr
 TA
@@ -32042,60 +34826,60 @@ TA
 TA
 TA
 TA
+tb
+tb
+bl
+mM
+Yj
+ZN
+Fr
+pj
+jd
+rj
+Fr
+YB
+JH
+qa
 Fr
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+ep
+lN
+JH
+Fr
+Fr
+Qg
+nf
+hq
+IB
+Wm
+AV
+AV
+AV
+Fr
+Fr
+Fr
+OY
+OY
+ae
+uG
+Fr
+Jw
+Fa
+rd
+GK
+IC
+wf
+Fr
+hX
+Uh
+Uh
+DY
+OY
+OY
+rd
+PS
+LW
+SU
 Fr
 Fr
 TA
@@ -32175,56 +34959,56 @@ TA
 TA
 Fr
 Fr
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+ZN
+ZN
+YO
+Fr
+Qr
+ny
+Gr
+Fr
+PT
+nf
+nf
+KX
+Fr
+mt
+nf
+nf
+Fr
+FZ
+nf
+Qg
+nf
+IB
+Wm
+AV
+Xp
+AV
+vD
+Fr
+dH
+OY
+rd
+LW
+wb
+Fr
+MU
+IZ
+Ly
+OY
+vy
+ml
+Fr
+HG
+pp
+pp
+Fr
+RZ
+OY
+xm
+JU
+mA
 Fr
 Fr
 TA
@@ -32306,6 +35090,43 @@ TA
 TA
 Fr
 Fr
+tb
+Fr
+Fr
+tb
+Fr
+Qu
+Fr
+oL
+nf
+nf
+sF
+Fr
+Rd
+sF
+KX
+Fr
+FZ
+nf
+mt
+hq
+IB
+Wm
+AV
+gB
+AV
+vl
+Fr
+fK
+OY
+OY
+SU
+AH
+Fr
+hd
+Jm
+OY
+HN
 Fr
 Fr
 Fr
@@ -32313,48 +35134,11 @@ Fr
 Fr
 Fr
 Fr
+tb
 Fr
+tb
 Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
-Fr
+tb
 Fr
 TA
 TA
@@ -32440,40 +35224,40 @@ TA
 TA
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Fr
+tb
+Fr
+tb
+tb
+tb
+Fr
+Fr
+tb
+tb
+tb
+Fr
+Fr
+hb
+hb
+FZ
+IB
+Wm
+th
+Vg
+Pe
+Fr
+Fr
+Fr
+tb
+tb
+Fr
+Fr
+Fr
+Fr
+Fr
+tb
+tb
+Fr
 TA
 TA
 TA
@@ -32582,16 +35366,16 @@ TA
 TA
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Fr
+tb
+tb
+FZ
+xI
+Uq
+XS
+tb
+tb
+Fr
 TA
 TA
 TA
@@ -32714,12 +35498,12 @@ TA
 TA
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
+tb
+tb
+Fr
+Fr
+tb
+tb
 TA
 TA
 TA
