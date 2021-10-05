@@ -16,7 +16,6 @@
 	req_access = list(ACCESS_ENGINE_EQUIP, ACCESS_ATMOSPHERICS)
 	max_integrity = 350
 	integrity_failure = 0.2
-	circuit = /obj/item/circuitboard/machine/rad_collector
 	rad_insulation = RAD_EXTREME_INSULATION
 	///Stores the loaded tank instance
 	var/obj/item/tank/internals/plasma/loaded_tank = null
