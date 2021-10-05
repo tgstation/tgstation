@@ -137,7 +137,7 @@
 			borgo.toggle_headlamp(FALSE, TRUE)
 
 		if("selfDestruct")
-			if(borgo.stat) //No detonation while stunned
+			if(borgo.stat || borgo.lockcharge) //No detonation while stunned or locked down
 				return
 			if(borgo.emagged || istype(borgo, /mob/living/silicon/robot/model/syndicate/)) //This option shouldn't even be showing otherwise
 				borgo.self_destruct(borgo)
