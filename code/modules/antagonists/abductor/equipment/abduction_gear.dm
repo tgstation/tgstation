@@ -278,7 +278,7 @@
 		radio_off_mob(M)
 
 /obj/item/abductor/silencer/proc/radio_off_mob(mob/living/carbon/human/M)
-	var/list/all_items = M.GetAllContents()
+	var/list/all_items = M.get_all_contents()
 
 	for(var/obj/I in all_items)
 		if(istype(I, /obj/item/radio/))

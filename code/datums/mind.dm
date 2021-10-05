@@ -381,7 +381,7 @@
 	if (!istype(traitor_mob))
 		return
 
-	var/list/all_contents = traitor_mob.GetAllContents()
+	var/list/all_contents = traitor_mob.get_all_contents()
 	var/obj/item/pda/PDA = locate() in all_contents
 	var/obj/item/radio/R = locate() in all_contents
 	var/obj/item/pen/P
@@ -657,7 +657,7 @@
 		obj_count++
 
 /datum/mind/proc/find_syndicate_uplink(check_unlocked)
-	var/list/L = current.GetAllContents()
+	var/list/L = current.get_all_contents()
 	for (var/i in L)
 		var/atom/movable/I = i
 		var/datum/component/uplink/found_uplink = I.GetComponent(/datum/component/uplink)

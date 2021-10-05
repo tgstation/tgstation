@@ -67,7 +67,7 @@
 					"name" = A.area.name,
 					"operating" = A.operating,
 					"charge" = (has_cell) ? A.cell.percent() : "NOCELL",
-					"load" = DisplayPower(A.lastused_total),
+					"load" = display_power(A.lastused_total),
 					"charging" = A.charging,
 					"chargeMode" = A.chargemode,
 					"eqp" = A.equipment,

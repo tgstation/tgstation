@@ -1,5 +1,3 @@
-#define SDQL_qdel_datum(d) qdel(d)
-
 //SDQL2 datumized, /tg/station special!
 
 /*
@@ -694,7 +692,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 
 		if("delete")
 			for(var/datum/d in found)
-				SDQL_qdel_datum(d)
+				qdel(d)
 				obj_count_finished++
 				SDQL2_TICK_CHECK
 				SDQL2_HALT_CHECK

@@ -113,7 +113,7 @@
 
 	user_interact_cooldowns[user.real_name] = world.time + COOLDOWN_INTERACT
 
-	for(var/obj/item/pinpointer/wayfinding/held_pinpointer in user.GetAllContents())
+	for(var/obj/item/pinpointer/wayfinding/held_pinpointer in user.get_all_contents())
 		set_expression("veryhappy", 2 SECONDS)
 		say("You already have a pinpointer!")
 		return

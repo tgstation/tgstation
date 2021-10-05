@@ -247,7 +247,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	if(!lst)
 		return
 
-	if(!A || !IsValidSrc(A))
+	if(!A || !is_valid_src(A))
 		to_chat(usr, span_warning("Error: callproc_datum(): owner of proc no longer exists."), confidential = TRUE)
 		return
 	log_admin("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
