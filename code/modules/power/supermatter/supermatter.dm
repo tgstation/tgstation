@@ -844,7 +844,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		investigate_log("has been hit by [projectile] fired by [key_name(projectile.firer)]", INVESTIGATE_SUPERMATTER)
 	if(projectile.flag != BULLET)
 		if(power_changes) //This needs to be here I swear
-			power += projectile.damage * bullet_energy * antinoblium_multiplier ** (1 + antinoblium_efficiency * 0.25)
+			power += projectile.damage * bullet_energy * antinoblium_multiplier
 			if(!has_been_powered)
 				investigate_log("has been powered for the first time.", INVESTIGATE_SUPERMATTER)
 				message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
