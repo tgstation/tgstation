@@ -10,7 +10,7 @@ import { Box, Button, Section, Stack, Input } from '../components';
 import { KEY_DOWN, KEY_UP, KEY_ENTER } from 'common/keycodes';
 import { Window } from '../layouts';
 import { Component, createRef } from 'inferno';
-import { listenForKeyEvents } from "../hotkeys";
+import { globalEvents } from "../events";
 
 export class ListInput extends Component {
   constructor() {
@@ -24,6 +24,7 @@ export class ListInput extends Component {
     };
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleKey = this.handleKey.bind(this);
   }
 
   handleKeyDown(e) {
@@ -74,25 +75,17 @@ export class ListInput extends Component {
     }
   }
 
+  handleKey(key) {
+    key.event.preventDefault();
+  }
+
   componentDidMount() {
-    this.dispose = listenForKeyEvents(key => {
-      if (this.props.onKey) {
-        this.props.onKey(key);
-      }
-
-      if (key.isDown() && this.props.onKeyDown) {
-        this.props.onKeyDown(key);
-      }
-
-      if (key.isUp() && this.props.onKeyUp) {
-        this.props.onKeyUp(key);
-      }
-    });
+    globalEvents.on("keydown", this.handleKey);
     setTimeout(() => this.inputRef.current?.inputRef?.current.focus(), 1);
   }
 
   componentWillUnmount() {
-    this.dispose();
+    globalEvents.off("keydown", this.handleKey);
   }
 
   render() {
