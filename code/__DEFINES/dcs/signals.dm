@@ -477,7 +477,7 @@
 #define COMSIG_MOVABLE_LIGHT_OVERLAY_TOGGLE_ON "movable_light_overlay_toggle_on"
 ///called when the movable's glide size is updated: (new_glide_size)
 #define COMSIG_MOVABLE_UPDATE_GLIDE_SIZE "movable_glide_size"
-///Called when a movable is hit by a plunger in layer mode, from /obj/item/plunger/attack_obj()
+///Called when a movable is hit by a plunger in layer mode, from /obj/item/plunger/attack_atom()
 #define COMSIG_MOVABLE_CHANGE_DUCT_LAYER "movable_change_duct_layer"
 
 // /mob signals
@@ -706,19 +706,19 @@
 ///from base of mob/living/simple_animal/hostile/regalrat: (mob/living/simple_animal/hostile/regalrat/king)
 #define COMSIG_RAT_INTERACT "rat_interaction"
 
-///from /obj/item/slapper/attack_obj(): (source=mob/living/slammer, obj/structure/table/slammed_table)
+///from /obj/item/slapper/attack_atom(): (source=mob/living/slammer, obj/structure/table/slammed_table)
 #define COMSIG_LIVING_SLAM_TABLE "living_slam_table"
-///from /obj/item/slapper/attack_obj(): (source=obj/structure/table/slammed_table, mob/living/slammer)
+///from /obj/item/slapper/attack_atom(): (source=obj/structure/table/slammed_table, mob/living/slammer)
 #define COMSIG_TABLE_SLAMMED "table_slammed"
 
 // /obj signals
 
 ///from base of [/obj/proc/take_damage]: (damage_amount, damage_type, damage_flag, sound_effect, attack_dir, aurmor_penetration)
-#define COMSIG_OBJ_TAKE_DAMAGE "obj_take_damage"
+#define COMSIG_ATOM_TAKE_DAMAGE "obj_take_damage"
 	/// Return bitflags for the above signal which prevents the object taking any damage.
 	#define COMPONENT_NO_TAKE_DAMAGE (1<<0)
 ///from base of [/obj/proc/update_integrity]: (old_value, new_value)
-#define COMSIG_OBJ_INTEGRITY_CHANGED "obj_integrity_changed"
+#define COMSIG_ATOM_INTEGRITY_CHANGED "obj_integrity_changed"
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
 ///from base of code/game/machinery
@@ -727,14 +727,14 @@
 #define COMSIG_OBJ_HIDE "obj_hide"
 /// from /obj/item/toy/crayon/spraycan/afterattack: (color_is_dark)
 #define COMSIG_OBJ_PAINTED "obj_painted"
-/// from /obj/proc/obj_break: ()
-#define COMSIG_OBJ_BREAK "obj_break"
-/// from base of [/obj/proc/obj_fix]: ()
-#define COMSIG_OBJ_FIX "obj_fix"
+/// from /obj/proc/atom_break: ()
+#define COMSIG_ATOM_BREAK "atom_break"
+/// from base of [/obj/proc/atom_fix]: ()
+#define COMSIG_ATOM_FIX "atom_fix"
 
 // /obj/machinery signals
 
-///from /obj/machinery/obj_break(damage_flag): (damage_flag)
+///from /obj/machinery/atom_break(damage_flag): (damage_flag)
 #define COMSIG_MACHINERY_BROKEN "machinery_broken"
 ///from base power_change() when power is lost
 #define COMSIG_MACHINERY_POWER_LOST "machinery_power_lost"
@@ -1223,7 +1223,7 @@
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 //from base of obj/item/attack_self_secondary(): (/mob)
 #define COMSIG_ITEM_ATTACK_SELF_SECONDARY "item_attack_self_secondary"
-///from base of obj/item/attack_obj(): (/obj, /mob)
+///from base of obj/item/attack_atom(): (/obj, /mob)
 #define COMSIG_ITEM_ATTACK_OBJ "item_attack_obj"
 ///from base of obj/item/pre_attack(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_PRE_ATTACK "item_pre_attack"

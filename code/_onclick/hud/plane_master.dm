@@ -65,19 +65,6 @@
 	if(istype(mymob) && mymob.client && mymob.client.prefs && mymob.client.prefs.ambientocclusion)
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
 
-/atom/movable/screen/plane_master/frill_under
-	name = "frill under plane master"
-	plane = UNDER_FRILL_PLANE
-	appearance_flags = PLANE_MASTER
-	blend_mode = BLEND_OVERLAY
-	render_target = UNDER_FRILL_RENDER_TARGET
-
-/atom/movable/screen/plane_master/frill_under/backdrop(mob/mymob)
-	if(!mymob)
-		CRASH("Plane master backdrop called without a mob attached.")
-	remove_filter(FRILL_MOB_MASK)
-	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = FRILL_MASK_RENDER_TARGET, flags = MASK_INVERSE))
-
 /atom/movable/screen/plane_master/frill_mask
 	name = "frill mask plane master"
 	plane = FRILL_MASK_PLANE
@@ -90,19 +77,6 @@
 	plane = WALL_PLANE
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
-
-/atom/movable/screen/plane_master/frill_under
-	name = "frill under plane master"
-	plane = UNDER_FRILL_PLANE
-	appearance_flags = PLANE_MASTER
-	blend_mode = BLEND_OVERLAY
-	render_target = UNDER_FRILL_RENDER_TARGET
-
-/atom/movable/screen/plane_master/frill_under/backdrop(mob/mymob)
-	if(!mymob)
-		CRASH("Plane master backdrop called without a mob attached.")
-	remove_filter(FRILL_MOB_MASK)
-	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = FRILL_MASK_RENDER_TARGET, flags = MASK_INVERSE))
 
 ///Contains wall frills
 /atom/movable/screen/plane_master/frill
@@ -124,6 +98,19 @@
 	if(!client_prefs.frills_over_floors)
 		add_filter(FRILL_FLOOR_CUT, 1, alpha_mask_filter(render_source = FLOOR_PLANE_RENDER_TARGET, flags = MASK_INVERSE))
 	//add_filter(FRILL_GAME_CUT, 1, alpha_mask_filter(render_source = EMISSIVE_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE))
+	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = FRILL_MASK_RENDER_TARGET, flags = MASK_INVERSE))
+
+/atom/movable/screen/plane_master/frill_under
+	name = "frill under plane master"
+	plane = UNDER_FRILL_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+	render_target = UNDER_FRILL_RENDER_TARGET
+
+/atom/movable/screen/plane_master/frill_under/backdrop(mob/mymob)
+	if(!mymob)
+		CRASH("Plane master backdrop called without a mob attached.")
+	remove_filter(FRILL_MOB_MASK)
 	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = FRILL_MASK_RENDER_TARGET, flags = MASK_INVERSE))
 
 /atom/movable/screen/plane_master/area

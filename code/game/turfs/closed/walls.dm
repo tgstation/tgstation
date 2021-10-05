@@ -33,7 +33,6 @@
 
 	var/list/dent_decals
 
-
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
 	if(is_station_level(z))
@@ -93,6 +92,9 @@
 	new sheet_type(src, sheet_amount)
 	if(girder_type)
 		new /obj/item/stack/sheet/iron(src)
+
+/turf/attacked_by(obj/item/attacking_item, mob/living/user)
+	return
 
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)
@@ -197,7 +199,7 @@
 
 	//the istype cascade has been spread among various procs for easy overriding
 	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T))
-		return
+		return TRUE
 
 	return ..()
 
@@ -246,6 +248,9 @@
 			return TRUE
 
 	return FALSE
+
+/turf/closed/wall/proc/try_damage(obj/item/attacking_item, mob/user, turf/user_turf)
+	return //by default walls dont work like this
 
 /turf/closed/wall/singularity_pull(S, current_size)
 	..()

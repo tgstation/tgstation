@@ -180,7 +180,7 @@
 
 /// Updates the amount of material in this ammo box according to how many bullets are left in it.
 /obj/item/ammo_box/proc/update_custom_materials()
-	var/temp_materials = custom_materials.Copy()
+	var/temp_materials = custom_materials?.Copy()
 	for(var/material in bullet_cost)
 		temp_materials[material] = (bullet_cost[material] * stored_ammo.len) + base_cost[material]
 	set_custom_materials(temp_materials)

@@ -162,7 +162,7 @@
 	var/joules = stored_energy * SSmachines.wait * 0.1
 	. += span_notice("[src]'s display states that it has stored <b>[DisplayJoules(joules)]</b>, and is processing <b>[DisplayPower(RAD_COLLECTOR_OUTPUT)]</b>.")
 
-/obj/machinery/power/rad_collector/obj_break(damage_flag)
+/obj/machinery/power/rad_collector/atom_break(damage_flag)
 	. = ..()
 	if(.)
 		eject()

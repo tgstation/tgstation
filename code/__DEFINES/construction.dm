@@ -31,6 +31,9 @@
 #define RWINDOW_BOLTS_HEATED 7
 #define RWINDOW_SECURE 8
 
+#define WINDOW_ON_FRAME_Y_OFFSET 0
+#define WINDOW_OFF_FRAME_Y_OFFSET -7
+
 //airlock assembly construction states
 #define AIRLOCK_ASSEMBLY_NEEDS_WIRES 0
 #define AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS 1

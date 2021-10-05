@@ -159,6 +159,19 @@
 	///Should we ignore any attempts to auto align? Mappers should edit this
 	var/manual_align = FALSE
 
+	///any atom that uses integrity and can be damaged must set this to true, otherwise the integrity procs will runtime
+	var/uses_integrity = FALSE
+
+
+	var/datum/armor/armor
+	VAR_PRIVATE/atom_integrity //defaults to max_integrity
+	var/max_integrity = 500
+	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the obj breaks. 0.5 being 50%
+	///Damage under this value will be completely ignored
+	var/damage_deflection = 0
+
+	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
+
 /**
  * Called when an atom is created in byond (built in engine proc)
  *
@@ -248,7 +261,16 @@
 		SET_BITFLAG_LIST(canSmoothWith)
 
 	// apply materials properly from the default custom_materials value
-	set_custom_materials(custom_materials)
+	set_custom_materials()
+
+	if(uses_integrity)
+		if (islist(armor))
+			armor = getArmor(arglist(armor))
+		else if (!armor)
+			armor = getArmor()
+		else if (!istype(armor, /datum/armor))
+			stack_trace("Invalid type [armor.type] found in .armor during /atom Initialize()")
+		atom_integrity = max_integrity
 
 	ComponentInitialize()
 	InitializeAIController()
@@ -1756,6 +1778,7 @@
 
 	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
 
+
 /**
  * Returns the material composition of the atom.
  *
@@ -1793,13 +1816,13 @@
 		return null
 
 	var/materials_of_type
-	for(var/m in cached_materials)
-		if(cached_materials[m] < mat_amount)
+	for(var/material_typepath in cached_materials)
+		if(cached_materials[material_typepath] < mat_amount)
 			continue
-		var/datum/material/material = GET_MATERIAL_REF(m)
-		if(exact ? material.type != m : !istype(material, mat_type))
+		var/datum/material/material = GET_MATERIAL_REF(material_typepath)
+		if(exact ? material.type != material_typepath : !istype(material, mat_type))
 			continue
-		LAZYSET(materials_of_type, material, cached_materials[m])
+		LAZYSET(materials_of_type, material, cached_materials[material_typepath])
 
 	return materials_of_type
 

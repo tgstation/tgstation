@@ -265,7 +265,7 @@
 	if(!(machine_stat & BROKEN) && powered())
 		. += emissive_appearance(icon, light_mask)
 
-/obj/machinery/vending/obj_break(damage_flag)
+/obj/machinery/vending/atom_break(damage_flag)
 	. = ..()
 	if(!.)
 		return
