@@ -110,3 +110,5 @@
 #define DATATYPE_FLAG_ALLOW_MANUAL_INPUT (1<<0)
 /// The datatype won't update the value when it is connected to the port
 #define DATATYPE_FLAG_AVOID_VALUE_UPDATE (1<<1)
+/// Allows the datatype to take entity values from the circuit multitool.
+#define DATATYPE_FLAG_ALLOW_ATOM_INPUT (1<<2)
