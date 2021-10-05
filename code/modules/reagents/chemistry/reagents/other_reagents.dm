@@ -213,7 +213,7 @@
 	if(methods & TOUCH)
 		exposed_mob.extinguish_mob() // extinguish removes all fire stacks
 	if((methods & VAPOR) && isfelinid(exposed_mob))
-		exposed_mob.Paralyze(1) //cancels any do_after
+		exposed_mob.Stun(1) //cancels any do_after
 		SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "watersprayed", /datum/mood_event/watersprayed)
 
 /datum/reagent/water/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
