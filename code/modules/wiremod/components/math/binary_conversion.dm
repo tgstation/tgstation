@@ -13,10 +13,10 @@
 	number = add_input_port("Number", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/binary_decimal/binary_conversion/add_bit_port(index)
-	add_output_port("Bit [index]", PORT_TYPE_NUMBER)
+	return add_output_port("Bit [index]", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/binary_decimal/binary_conversion/remove_bit_port(datum/port/to_remove)
-	remove_output_port(to_remove)
+	return remove_output_port(to_remove)
 
 /obj/item/circuit_component/binary_decimal/binary_conversion/input_received(datum/port/input/port)
 	if(!array_size)

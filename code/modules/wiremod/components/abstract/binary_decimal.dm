@@ -52,8 +52,6 @@
 	while(array_size < new_size)
 		array_size++
 		var/index = length(bit_array)
-		if(!trigger_input)
-			index += 1
 		bit_array += add_bit_port(index)
 
 /obj/item/circuit_component/binary_decimal/proc/add_bit_port(index)
@@ -64,11 +62,6 @@
 
 /obj/item/circuit_component/binary_decimal/populate_ports()
 	set_array_size(default_array_size)
-
-/obj/item/circuit_component/binary_decimal/Destroy()
-	number = null
-	bit_array = null
-	return ..()
 
 // Increase or decrease the array size
 /obj/item/circuit_component/binary_decimal/ui_perform_action(mob/user, action)
