@@ -1,5 +1,6 @@
 ///each cell in a spatial_grid is this many turfs in length and width
-#define SPATIAL_GRID_CELLSIZE 5
+#define SPATIAL_GRID_CELLSIZE 15
+#define INVERSE_SPATIAL_GRID_CELLSIZE (1 / SPATIAL_GRID_CELLSIZE)
 
 #define SPATIAL_GRID_CHANNELS 2
 
