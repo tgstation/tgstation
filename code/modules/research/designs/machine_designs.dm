@@ -417,14 +417,13 @@
 	build_path = /obj/item/circuitboard/machine/holopad
 	category = list ("Misc. Machinery")
 
-
 /datum/design/board/autolathe
 	name = "Machine Design (Autolathe Board)"
 	desc = "The circuit board for an autolathe."
 	id = "autolathe"
 	build_path = /obj/item/circuitboard/machine/autolathe
 	category = list ("Misc. Machinery")
-
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/board/recharger
 	name = "Machine Design (Weapon Recharger Board)"
