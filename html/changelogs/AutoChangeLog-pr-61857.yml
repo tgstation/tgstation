@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - admin: "Admins should no longer get trolled by URL keys creating clickable links that look the same as admin PM shortcuts."

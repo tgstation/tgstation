@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fixes people getting rejected by the panic bunker when they probably shouldn't have been (if you can read this, it probably doesn't affect you anymore)"
