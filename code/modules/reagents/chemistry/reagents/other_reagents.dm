@@ -212,10 +212,8 @@
 	. = ..()
 	if(methods & TOUCH)
 		exposed_mob.extinguish_mob() // extinguish removes all fire stacks
-	if(methods & VAPOR)
-		if(!isfelinid(exposed_mob))
-			return
-		exposed_mob.Startle(1) //cancels any do_after
+	if((methods & VAPOR) && isfelinid(exposed_mob))
+		exposed_mob.Paralyze(1) //cancels any do_after
 		SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "watersprayed", /datum/mood_event/watersprayed)
 
 
