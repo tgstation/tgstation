@@ -9,3 +9,11 @@
 /datum/circuit_datatype/composite_instance/list
 	color = "white"
 	datatype_flags = DATATYPE_FLAG_COMPOSITE
+
+/datum/circuit_datatype/composite_instance/list/convert_value(datum/port/port, value_to_convert, force)
+	var/datum/circuit_datatype/datatype_handler = GLOB.circuit_datatypes[composite_datatypes[1]]
+
+	var/list/converted_list = list()
+	for(var/data in value_to_convert)
+		converted_list += list(datatype_handler.convert_value(port, data))
+	return converted_list

@@ -211,6 +211,7 @@
 		"comp_health",
 		"comp_hear",
 		"comp_index",
+		"comp_index_assoc",
 		"comp_index_table",
 		"comp_length",
 		"comp_light",
