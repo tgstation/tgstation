@@ -23,6 +23,7 @@
 	if(can_interact(user) && !(heat_transfer_rate == max_heat_transfer_rate))
 		heat_transfer_rate = max_heat_transfer_rate
 		investigate_log("was set to [heat_transfer_rate]% by [key_name(user)]", INVESTIGATE_ATMOS)
+		balloon_alert(user, "transfer rate set to [heat_transfer_rate]%")
 		update_appearance()
 	return ..()
 
@@ -45,15 +46,20 @@
 
 	if(coolant_temperature_delta > 0)
 		var/input_capacity = remove_input.heat_capacity()
-		var/output_capacity = air_output.heat_capacity()
+		var/output_capacity = remove_output.heat_capacity()
 
 		var/cooling_heat_amount = (heat_transfer_rate * 0.01) * coolant_temperature_delta * (input_capacity * output_capacity / (input_capacity + output_capacity))
 		remove_input.temperature = max(remove_input.temperature - (cooling_heat_amount / input_capacity), TCMB)
 		remove_output.temperature = max(remove_output.temperature + (cooling_heat_amount / output_capacity), TCMB)
 		update_parents()
 
+	var/power_usage = 200
+
 	air_input.merge(remove_input)
 	air_output.merge(remove_output)
+
+	if(power_usage)
+		use_power(power_usage)
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

@@ -165,7 +165,7 @@
 	/// Should this fish type show in fish catalog
 	var/show_in_catalog = TRUE
 	/// Should this fish spawn in random fish cases
-	var/availible_in_random_cases = TRUE
+	var/available_in_random_cases = TRUE
 	/// How rare this fish is in the random cases
 	var/random_case_rarity = FISH_RARITY_BASIC
 
@@ -248,7 +248,7 @@
 /datum/aquarium_behaviour/fish/proc/death()
 	STOP_PROCESSING(SSobj, src)
 	status = FISH_DEAD
-	var/message = "<span class='notice'>\The [name] dies.</span>"
+	var/message = span_notice("\The [name] dies.")
 	if(parent.current_aquarium)
 		parent.current_aquarium.visible_message(message)
 		parent.current_aquarium.alive_fish -= 1
@@ -290,7 +290,7 @@
 /datum/aquarium_behaviour/fish/auto
 	name = "automatic fish"
 	desc = "generates fish appearance automatically from component parent appearance"
-	availible_in_random_cases = FALSE
+	available_in_random_cases = FALSE
 	sprite_width = 8
 	sprite_height = 8
 	show_in_catalog = FALSE

@@ -34,7 +34,7 @@
 	species = "oat"
 	plantname = "Oat Stalks"
 	product = /obj/item/food/grown/oat
-	mutatelist = list()
+	mutatelist = null
 
 /obj/item/food/grown/oat
 	seed = /obj/item/seeds/wheat/oat
@@ -57,7 +57,7 @@
 	plantname = "Rice Stalks"
 	instability = 1
 	product = /obj/item/food/grown/rice
-	mutatelist = list()
+	mutatelist = null
 	growthstages = 3
 
 /obj/item/food/grown/rice
@@ -80,7 +80,7 @@
 	species = "meatwheat"
 	plantname = "Meatwheat"
 	product = /obj/item/food/grown/meatwheat
-	mutatelist = list()
+	mutatelist = null
 
 /obj/item/food/grown/meatwheat
 	name = "meatwheat"
@@ -95,7 +95,7 @@
 	can_distill = FALSE
 
 /obj/item/food/grown/meatwheat/attack_self(mob/living/user)
-	user.visible_message("<span class='notice'>[user] crushes [src] into meat.</span>", "<span class='notice'>You crush [src] into something that resembles meat.</span>")
+	user.visible_message(span_notice("[user] crushes [src] into meat."), span_notice("You crush [src] into something that resembles meat."))
 	playsound(user, 'sound/effects/blobattack.ogg', 50, TRUE)
 	var/obj/item/food/meat/slab/meatwheat/M = new
 	qdel(src)

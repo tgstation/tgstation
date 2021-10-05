@@ -6,7 +6,7 @@
 	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/item/storage/drone_tools/Initialize()
+/obj/item/storage/drone_tools/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
@@ -57,12 +57,14 @@
 	random_color = FALSE
 
 
-/obj/item/screwdriver/drone/worn_overlays(isinhands = FALSE, icon_file)
-	. = list()
-	if(isinhands)
-		var/mutable_appearance/head = mutable_appearance(icon_file, "screwdriver_head")
-		head.appearance_flags = RESET_COLOR
-		. += head
+/obj/item/screwdriver/drone/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
+	. = ..()
+	if(!isinhands)
+		return
+
+	var/mutable_appearance/head = mutable_appearance(icon_file, "screwdriver_head")
+	head.appearance_flags = RESET_COLOR
+	. += head
 
 /obj/item/wrench/drone
 	name = "built-in wrench"

@@ -31,7 +31,7 @@
 	///What state we're at in the tutorial
 	var/tutorial_state = 0
 
-/obj/machinery/chem_heater/Initialize()
+/obj/machinery/chem_heater/Initialize(mapload)
 	. = ..()
 	create_reagents(200, NO_REACT)//Lets save some calculations here
 	//TODO: comsig reaction_start and reaction_end to enable/disable the UI autoupdater - this doesn't work presently as there's a hard divide between instant and processed reactions
@@ -87,7 +87,7 @@
 /obj/machinery/chem_heater/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Heating reagents at <b>[heater_coefficient*1000]%</b> speed.</span>"
+		. += span_notice("The status display reads: Heating reagents at <b>[heater_coefficient*1000]%</b> speed.")
 
 /obj/machinery/chem_heater/process(delta_time)
 	..()
@@ -157,7 +157,7 @@
 		if(!user.transferItemToLoc(B, src))
 			return
 		replace_beaker(user, B)
-		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
+		to_chat(user, span_notice("You add [B] to [src]."))
 		updateUsrDialog()
 		update_appearance()
 		return
@@ -474,7 +474,7 @@ To continue set your target temperature to 390K."}
 	name = "Debug Reaction Chamber"
 	desc = "Now with even more buffers!"
 
-/obj/machinery/chem_heater/debug/Initialize()
+/obj/machinery/chem_heater/debug/Initialize(mapload)
 	. = ..()
 	reagents.maximum_volume = 2000
 	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 1000)
@@ -485,7 +485,7 @@ To continue set your target temperature to 390K."}
 /obj/machinery/chem_heater/withbuffer
 	desc = "This Reaction Chamber comes with a bit of buffer to help get you started."
 
-/obj/machinery/chem_heater/withbuffer/Initialize()
+/obj/machinery/chem_heater/withbuffer/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 20)
 	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 20)

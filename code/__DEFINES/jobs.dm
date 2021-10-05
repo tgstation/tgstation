@@ -48,11 +48,42 @@
 #define JOB_DISPLAY_ORDER_PRISONER 35
 
 
-#define DEPARTMENT_SECURITY (1<<0)
-#define DEPARTMENT_COMMAND (1<<1)
-#define DEPARTMENT_SERVICE (1<<2)
-#define DEPARTMENT_CARGO (1<<3)
-#define DEPARTMENT_ENGINEERING (1<<4)
-#define DEPARTMENT_SCIENCE (1<<5)
-#define DEPARTMENT_MEDICAL (1<<6)
-#define DEPARTMENT_SILICON (1<<7)
+#define DEPARTMENT_UNASSIGNED "No department assigned"
+#define DEPARTMENT_BITFLAG_SECURITY (1<<0)
+#define DEPARTMENT_SECURITY "Security"
+#define DEPARTMENT_BITFLAG_COMMAND (1<<1)
+#define DEPARTMENT_COMMAND "Command"
+#define DEPARTMENT_BITFLAG_SERVICE (1<<2)
+#define DEPARTMENT_SERVICE "Service"
+#define DEPARTMENT_BITFLAG_CARGO (1<<3)
+#define DEPARTMENT_CARGO "Cargo"
+#define DEPARTMENT_BITFLAG_ENGINEERING (1<<4)
+#define DEPARTMENT_ENGINEERING "Engineering"
+#define DEPARTMENT_BITFLAG_SCIENCE (1<<5)
+#define DEPARTMENT_SCIENCE "Science"
+#define DEPARTMENT_BITFLAG_MEDICAL (1<<6)
+#define DEPARTMENT_MEDICAL "Medical"
+#define DEPARTMENT_BITFLAG_SILICON (1<<7)
+#define DEPARTMENT_SILICON "Silicon"
+
+/* Job datum job_flags */
+/// Whether the mob is announced on arrival.
+#define JOB_ANNOUNCE_ARRIVAL (1<<0)
+/// Whether the mob is added to the crew manifest.
+#define JOB_CREW_MANIFEST (1<<1)
+/// Whether the mob is equipped through SSjob.EquipRank() on spawn.
+#define JOB_EQUIP_RANK (1<<2)
+/// Whether the job is considered a regular crew member of the station. Equipment such as AI and cyborgs not included.
+#define JOB_CREW_MEMBER (1<<3)
+/// Whether this job can be joined through the new_player menu.
+#define JOB_NEW_PLAYER_JOINABLE (1<<4)
+/// Whether this job appears in bold in the job menu.
+#define JOB_BOLD_SELECT_TEXT (1<<5)
+/// Reopens this position if we lose the player at roundstart.
+#define JOB_REOPEN_ON_ROUNDSTART_LOSS (1<<6)
+/// If the player with this job can have quirks assigned to him or not. Relevant for new player joinable jobs and roundstart antags.
+#define JOB_ASSIGN_QUIRKS (1<<7)
+
+
+#define FACTION_NONE "None"
+#define FACTION_STATION "Station"

@@ -9,8 +9,8 @@
 	var/obj/item/card/id/stored_card
 
 ///What happens when the ID card is removed (or deleted) from the module, through try_eject() or not.
-/obj/item/computer_hardware/card_slot/Exited(atom/A, atom/newloc)
-	if(A == stored_card)
+/obj/item/computer_hardware/card_slot/Exited(atom/movable/gone, direction)
+	if(stored_card == gone)
 		stored_card = null
 		if(holder)
 			if(holder.active_program)
@@ -28,7 +28,8 @@
 	return ..()
 
 /obj/item/computer_hardware/card_slot/Destroy()
-	try_eject(forced = TRUE)
+	if(stored_card) //If you didn't expect this behavior for some dumb reason, do something different instead of directly destroying the slot
+		QDEL_NULL(stored_card)
 	return ..()
 
 /obj/item/computer_hardware/card_slot/GetAccess()
@@ -73,7 +74,7 @@
 		I.forceMove(src)
 
 	stored_card = I
-	to_chat(user, "<span class='notice'>You insert \the [I] into \the [expansion_hw ? "secondary":"primary"] [src].</span>")
+	to_chat(user, span_notice("You insert \the [I] into \the [expansion_hw ? "secondary":"primary"] [src]."))
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 
 	var/holder_loc = holder.loc
@@ -88,7 +89,7 @@
 
 /obj/item/computer_hardware/card_slot/try_eject(mob/living/user = null, forced = FALSE)
 	if(!stored_card)
-		to_chat(user, "<span class='warning'>There are no cards in \the [src].</span>")
+		to_chat(user, span_warning("There are no cards in \the [src]."))
 		return FALSE
 
 	if(user && !issilicon(user) && in_range(src, user))
@@ -96,7 +97,7 @@
 	else
 		stored_card.forceMove(drop_location())
 
-	to_chat(user, "<span class='notice'>You remove the card from \the [src].</span>")
+	to_chat(user, span_notice("You remove the card from \the [src]."))
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 
 	return TRUE
@@ -106,11 +107,11 @@
 		return
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(stored_card)
-			to_chat(user, "<span class='notice'>You press down on the manual eject button with \the [I].</span>")
+			to_chat(user, span_notice("You press down on the manual eject button with \the [I]."))
 			try_eject(user)
 			return
 		swap_slot()
-		to_chat(user, "<span class='notice'>You adjust the connecter to fit into [expansion_hw ? "an expansion bay" : "the primary ID bay"].</span>")
+		to_chat(user, span_notice("You adjust the connecter to fit into [expansion_hw ? "an expansion bay" : "the primary ID bay"]."))
 
 /**
  *Swaps the card_slot hardware between using the dedicated card slot bay on a computer, and using an expansion bay.

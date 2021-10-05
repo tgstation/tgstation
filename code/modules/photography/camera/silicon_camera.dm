@@ -47,7 +47,7 @@
 	var/number = stored.len
 	picture.picture_name = "Image [number] (taken by [loc.name])"
 	stored[picture] = TRUE
-	to_chat(usr, "<span class='infoplain'><span class='unconscious'>Image recorded</span></span>")
+	to_chat(usr, "<span class='infoplain'>[span_unconscious("Image recorded")]</span>")
 
 /obj/item/camera/siliconcam/robot_camera
 	name = "Cyborg photo camera"
@@ -59,12 +59,12 @@
 		var/number = C.connected_ai.aicamera.stored.len
 		picture.picture_name = "Image [number] (taken by [loc.name])"
 		C.connected_ai.aicamera.stored[picture] = TRUE
-		to_chat(usr, "<span class='infoplain'><span class='unconscious'>Image recorded and saved to remote database</span></span>")
+		to_chat(usr, "<span class='infoplain'>[span_unconscious("Image recorded and saved to remote database")]</span>")
 	else
 		var/number = stored.len
 		picture.picture_name = "Image [number] (taken by [loc.name])"
 		stored[picture] = TRUE
-		to_chat(usr, "<span class='infoplain'><span class='unconscious'>Image recorded and saved to local storage. Upload will happen automatically if unit is lawsynced.</span></span>")
+		to_chat(usr, "<span class='infoplain'>[span_unconscious("Image recorded and saved to local storage. Upload will happen automatically if unit is lawsynced.")]</span>")
 
 /obj/item/camera/siliconcam/robot_camera/selectpicture(mob/user)
 	var/mob/living/silicon/robot/R = loc
@@ -77,15 +77,15 @@
 /obj/item/camera/siliconcam/robot_camera/proc/borgprint(mob/user)
 	var/mob/living/silicon/robot/C = loc
 	if(!istype(C) || C.toner < 20)
-		to_chat(user, "<span class='warning'>Insufficent toner to print image.</span>")
+		to_chat(user, span_warning("Insufficent toner to print image."))
 		return
 	var/datum/picture/selection = selectpicture(user)
 	if(!istype(selection))
-		to_chat(user, "<span class='warning'>Invalid Image.</span>")
+		to_chat(user, span_warning("Invalid Image."))
 		return
 	var/obj/item/photo/p = new /obj/item/photo(C.loc, selection)
 	p.pixel_x = p.base_pixel_x + rand(-10, 10)
 	p.pixel_y = p.base_pixel_y + rand(-10, 10)
 	C.toner -= printcost  //All fun allowed.
-	visible_message("<span class='notice'>[C.name] spits out a photograph from a narrow slot on its chassis.</span>")
-	to_chat(usr, "<span class='notice'>You print a photograph.</span>")
+	visible_message(span_notice("[C.name] spits out a photograph from a narrow slot on its chassis."))
+	to_chat(usr, span_notice("You print a photograph."))

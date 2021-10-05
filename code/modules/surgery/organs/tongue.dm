@@ -7,6 +7,7 @@
 	attack_verb_continuous = list("licks", "slobbers", "slaps", "frenches", "tongues")
 	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue")
 	var/list/languages_possible
+	var/list/languages_native //human mobs can speak with this languages without the accent (letters replaces)
 	var/say_mod = null
 
 	/// Whether the owner of this tongue can taste anything. Being set to FALSE will mean no taste feedback will be provided.
@@ -37,6 +38,12 @@
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
+	if(speech_args[SPEECH_LANGUAGE] in languages_native)
+		return FALSE //no changes
+	modify_speech(source, speech_args)
+
+/obj/item/organ/tongue/proc/modify_speech(datum/source, list/speech_args)
+	return speech_args[SPEECH_MESSAGE]
 
 /obj/item/organ/tongue/Insert(mob/living/carbon/tongue_owner, special = 0)
 	..()
@@ -75,8 +82,9 @@
 	say_mod = "hisses"
 	taste_sensitivity = 10 // combined nose + tongue, extra sensitive
 	modifies_speech = TRUE
+	languages_native = list(/datum/language/draconic)
 
-/obj/item/organ/tongue/lizard/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/lizard/modify_speech(datum/source, list/speech_args)
 	var/static/regex/lizard_hiss = new("s+", "g")
 	var/static/regex/lizard_hiSS = new("S+", "g")
 	var/static/regex/lizard_kss = new(@"(\w)x", "g")
@@ -119,19 +127,19 @@
 /datum/action/item_action/organ_action/statue/Trigger()
 	. = ..()
 	if(!iscarbon(owner))
-		to_chat(owner, "<span class='warning'>Your body rejects the powers of the tongue!</span>")
+		to_chat(owner, span_warning("Your body rejects the powers of the tongue!"))
 		return
 	var/mob/living/carbon/becoming_statue = owner
 	if(becoming_statue.health < 1)
-		to_chat(becoming_statue, "<span class='danger'>You are too weak to become a statue!</span>")
+		to_chat(becoming_statue, span_danger("You are too weak to become a statue!"))
 		return
 	if(!COOLDOWN_FINISHED(src, ability_cooldown))
-		to_chat(becoming_statue, "<span class='warning'>You just used the ability, wait a little bit!</span>")
+		to_chat(becoming_statue, span_warning("You just used the ability, wait a little bit!"))
 		return
 	var/is_statue = becoming_statue.loc == statue
-	to_chat(becoming_statue, "<span class='notice'>You begin to [is_statue ? "break free from the statue" : "make a glorious pose as you become a statue"]!</span>")
+	to_chat(becoming_statue, span_notice("You begin to [is_statue ? "break free from the statue" : "make a glorious pose as you become a statue"]!"))
 	if(!do_after(becoming_statue, (is_statue ? 5 : 30), target = get_turf(becoming_statue)))
-		to_chat(becoming_statue, "<span class='warning'>Your transformation is interrupted!</span>")
+		to_chat(becoming_statue, span_warning("Your transformation is interrupted!"))
 		COOLDOWN_START(src, ability_cooldown, 3 SECONDS)
 		return
 	COOLDOWN_START(src, ability_cooldown, 10 SECONDS)
@@ -142,16 +150,16 @@
 		statue.set_custom_materials(list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT*5))
 
 	if(is_statue)
-		statue.visible_message("<span class='danger'>[statue] becomes animated!</span>")
+		statue.visible_message(span_danger("[statue] becomes animated!"))
 		becoming_statue.forceMove(get_turf(statue))
 		statue.moveToNullspace()
 		UnregisterSignal(becoming_statue, COMSIG_MOVABLE_MOVED)
 	else
-		becoming_statue.visible_message("<span class='notice'>[becoming_statue] hardens into a silver statue.</span>", "<span class='notice'>You have become a silver statue!</span>")
+		becoming_statue.visible_message(span_notice("[becoming_statue] hardens into a silver statue."), span_notice("You have become a silver statue!"))
 		statue.set_visuals(becoming_statue.appearance)
 		statue.forceMove(get_turf(becoming_statue))
 		becoming_statue.forceMove(statue)
-		statue.obj_integrity = becoming_statue.health
+		statue.update_integrity(becoming_statue.health)
 		RegisterSignal(becoming_statue, COMSIG_MOVABLE_MOVED, .proc/human_left_statue)
 
 	//somehow they used an exploit/teleportation to leave statue, lets clean up
@@ -162,7 +170,9 @@
 	UnregisterSignal(mover, COMSIG_MOVABLE_MOVED)
 
 /datum/action/item_action/organ_action/statue/proc/statue_destroyed(datum/source)
-	to_chat(owner, "<span class='userdanger'>Your existence as a living creature snaps as your statue form crumbles!</span>")
+	SIGNAL_HANDLER
+
+	to_chat(owner, span_userdanger("Your existence as a living creature snaps as your statue form crumbles!"))
 	if(iscarbon(owner))
 		//drop everything, just in case
 		var/mob/living/carbon/dying_carbon = owner
@@ -178,6 +188,7 @@
 	say_mod = "buzzes"
 	taste_sensitivity = 25 // you eat vomit, this is a mercy
 	modifies_speech = TRUE
+	languages_native = list(/datum/language/buzzwords)
 	var/static/list/languages_possible_fly = typecacheof(list(
 		/datum/language/common,
 		/datum/language/draconic,
@@ -195,7 +206,7 @@
 		/datum/language/buzzwords
 	))
 
-/obj/item/organ/tongue/fly/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/fly/modify_speech(datum/source, list/speech_args)
 	var/static/regex/fly_buzz = new("z+", "g")
 	var/static/regex/fly_buZZ = new("Z+", "g")
 	var/message = speech_args[SPEECH_MESSAGE]
@@ -228,28 +239,28 @@
 		return
 
 	if(tongue.mothership == mothership)
-		to_chat(tongue_holder, "<span class='notice'>[src] is already attuned to the same channel as your own.</span>")
+		to_chat(tongue_holder, span_notice("[src] is already attuned to the same channel as your own."))
 
-	tongue_holder.visible_message("<span class='notice'>[tongue_holder] holds [src] in their hands, and concentrates for a moment.</span>", "<span class='notice'>You attempt to modify the attenuation of [src].</span>")
+	tongue_holder.visible_message(span_notice("[tongue_holder] holds [src] in their hands, and concentrates for a moment."), span_notice("You attempt to modify the attenuation of [src]."))
 	if(do_after(tongue_holder, delay=15, target=src))
-		to_chat(tongue_holder, "<span class='notice'>You attune [src] to your own channel.</span>")
+		to_chat(tongue_holder, span_notice("You attune [src] to your own channel."))
 		mothership = tongue.mothership
 
 /obj/item/organ/tongue/abductor/examine(mob/examining_mob)
 	. = ..()
 	if(HAS_TRAIT(examining_mob, TRAIT_ABDUCTOR_TRAINING) || (examining_mob.mind && HAS_TRAIT(examining_mob.mind, TRAIT_ABDUCTOR_TRAINING)) || isobserver(examining_mob))
-		. += "<span class='notice'>It can be attuned to a different channel by using it inhand.</span>"
+		. += span_notice("It can be attuned to a different channel by using it inhand.")
 		if(!mothership)
-			. += "<span class='notice'>It is not attuned to a specific mothership.</span>"
+			. += span_notice("It is not attuned to a specific mothership.")
 		else
-			. += "<span class='notice'>It is attuned to [mothership].</span>"
+			. += span_notice("It is attuned to [mothership].")
 
-/obj/item/organ/tongue/abductor/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/abductor/modify_speech(datum/source, list/speech_args)
 	//Hacks
 	var/message = speech_args[SPEECH_MESSAGE]
 	var/mob/living/carbon/human/user = source
-	var/rendered = "<span class='abductor'><b>[user.real_name]:</b> [message]</span>"
-	user.log_talk(message, LOG_SAY, tag="abductor")
+	var/rendered = span_abductor("<b>[user.real_name]:</b> [message]")
+	user.log_talk(message, LOG_SAY, tag=SPECIES_ABDUCTOR)
 	for(var/mob/living/carbon/human/living_mob in GLOB.alive_mob_list)
 		var/obj/item/organ/tongue/abductor/tongue = living_mob.getorganslot(ORGAN_SLOT_TONGUE)
 		if(!istype(tongue))
@@ -271,7 +282,7 @@
 	modifies_speech = TRUE
 	taste_sensitivity = 32
 
-/obj/item/organ/tongue/zombie/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/zombie/modify_speech(datum/source, list/speech_args)
 	var/list/message_list = splittext(speech_args[SPEECH_MESSAGE], " ")
 	var/maxchanges = max(round(message_list.len / 1.5), 2)
 
@@ -304,7 +315,7 @@
 	. = ..()
 	languages_possible = languages_possible_alien
 
-/obj/item/organ/tongue/alien/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/alien/modify_speech(datum/source, list/speech_args)
 	playsound(owner, "hiss", 25, TRUE, TRUE)
 
 /obj/item/organ/tongue/bone
@@ -336,12 +347,12 @@
 		/datum/language/calcic
 	))
 
-/obj/item/organ/tongue/bone/Initialize()
+/obj/item/organ/tongue/bone/Initialize(mapload)
 	. = ..()
 	phomeme_type = pick(phomeme_types)
 	languages_possible = languages_possible_skeleton
 
-/obj/item/organ/tongue/bone/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/bone/modify_speech(datum/source, list/speech_args)
 	if (chattering)
 		chatter(speech_args[SPEECH_MESSAGE], phomeme_type, source)
 	switch(phomeme_type)
@@ -371,7 +382,7 @@
 /obj/item/organ/tongue/robot/can_speak_language(language)
 	return TRUE // THE MAGIC OF ELECTRONICS
 
-/obj/item/organ/tongue/robot/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/robot/modify_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
 
 /obj/item/organ/tongue/snail
@@ -380,7 +391,7 @@
 	desc = "A minutely toothed, chitious ribbon, which as a side effect, makes all snails talk IINNCCRREEDDIIBBLLYY SSLLOOWWLLYY."
 	modifies_speech = TRUE
 
-/obj/item/organ/tongue/snail/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/snail/modify_speech(datum/source, list/speech_args)
 	var/new_message
 	var/message = speech_args[SPEECH_MESSAGE]
 	for(var/i in 1 to length(message))
@@ -395,9 +406,9 @@
 	desc = "A sophisticated ethereal organ, capable of synthesising speech via electrical discharge."
 	icon_state = "electrotongue"
 	say_mod = "crackles"
+	taste_sensitivity = 10 // ethereal tongues function (very loosely) like a gas spectrometer: vaporising a small amount of the food and allowing it to pass to the nose, resulting in more sensitive taste
 	attack_verb_continuous = list("shocks", "jolts", "zaps")
 	attack_verb_simple = list("shock", "jolt", "zap")
-	sense_of_taste = FALSE
 	var/static/list/languages_possible_ethereal = typecacheof(list(
 		/datum/language/common,
 		/datum/language/draconic,
@@ -449,7 +460,7 @@
 
 //Thank you Jwapplephobia for helping me with the literal hellcode below
 
-/obj/item/organ/tongue/tied/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/tied/modify_speech(datum/source, list/speech_args)
 	var/new_message
 	var/message = speech_args[SPEECH_MESSAGE]
 	var/exclamation_found = findtext(message, "!")
@@ -463,8 +474,8 @@
 	speech_args[SPEECH_MESSAGE] = new_message
 
 	if(exclamation_found && question_found)
-		signer.visible_message("<span class='notice'>[signer] lowers one of [signer.p_their()] eyebrows, raising the other.</span>")
+		signer.visible_message(span_notice("[signer] lowers one of [signer.p_their()] eyebrows, raising the other."))
 	else if(exclamation_found)
-		signer.visible_message("<span class='notice'>[signer] raises [signer.p_their()] eyebrows.</span>")
+		signer.visible_message(span_notice("[signer] raises [signer.p_their()] eyebrows."))
 	else if(question_found)
-		signer.visible_message("<span class='notice'>[signer] lowers [signer.p_their()] eyebrows.</span>")
+		signer.visible_message(span_notice("[signer] lowers [signer.p_their()] eyebrows."))

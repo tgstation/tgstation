@@ -1,4 +1,5 @@
 /obj/machinery/atmospherics/pipe
+	icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi'
 	damage_deflection = 12
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/volume = 0
@@ -13,6 +14,8 @@
 	can_buckle = TRUE
 	buckle_requires_restraints = TRUE
 	buckle_lying = NO_BUCKLE_LYING
+
+	vis_flags = VIS_INHERIT_PLANE
 
 /obj/machinery/atmospherics/pipe/New()
 	add_atom_colour(pipe_color, FIXED_COLOUR_PRIORITY)
@@ -79,7 +82,6 @@
 	QDEL_NULL(parent)
 
 	releaseAirToTurf()
-	QDEL_NULL(air_temporary)
 
 	var/turf/T = loc
 	for(var/obj/machinery/meter/meter in T)
@@ -89,8 +91,23 @@
 			qdel(meter)
 	. = ..()
 
+/obj/machinery/atmospherics/pipe/proc/update_pipe_icon()
+	icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi'
+	var/connections = NONE
+	var/bitfield = NONE
+	for(var/i in 1 to device_type)
+		if(!nodes[i])
+			continue
+		var/obj/machinery/atmospherics/node = nodes[i]
+		var/connected_dir = get_dir(src, node)
+		connections |= connected_dir
+	bitfield = CARDINAL_TO_FULLPIPES(connections)
+	bitfield |= CARDINAL_TO_SHORTPIPES(initialize_directions & ~connections)
+	icon_state = "[bitfield]_[piping_layer]"
+
 /obj/machinery/atmospherics/pipe/update_icon()
 	. = ..()
+	update_pipe_icon()
 	update_layer()
 
 /obj/machinery/atmospherics/proc/update_node_icon()

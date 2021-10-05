@@ -28,6 +28,11 @@
 	icon_file = 'icons/obj/atmospherics/prototype_canister.dmi'
 	json_config = 'code/datums/greyscale/json_configs/canister_proto.json'
 
+/datum/greyscale_config/stationary_canister
+	name = "Stationary Canister"
+	icon_file = 'icons/obj/atmospherics/stationary_canisters.dmi'
+	json_config = 'code/datums/greyscale/json_configs/smooth_canister_stationary.json'
+
 /datum/greyscale_config/carp
 	name = "Space Carp"
 	icon_file = 'icons/mob/carp.dmi'
@@ -110,6 +115,10 @@
 /datum/greyscale_config/pda/chaplain
 	name = "Chaplain PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_chaplain.json'
+	
+/datum/greyscale_config/pda/captain
+	name = "Captain PDA"
+	json_config = 'code/datums/greyscale/json_configs/pda_captain.json'
 
 /datum/greyscale_config/pda/clown
 	name = "Clown PDA"
@@ -203,6 +212,26 @@
 	name = "Base Worn Sombrero Style"
 	json_config = 'code/datums/greyscale/json_configs/sombrero_base_worn.json'
 
+/datum/greyscale_config/winter_coats
+	name = "Winter Coat"
+	icon_file = 'icons/obj/clothing/suits/wintercoat.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wintercoats.json'
+
+/datum/greyscale_config/winter_coats/worn
+	name = "Winter Coat Worn"
+	icon_file = 'icons/mob/clothing/suits/wintercoat.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wintercoats_worn.json'
+
+/datum/greyscale_config/winter_hoods
+	name = "Winter Coat Hood"
+	icon_file = 'icons/obj/clothing/head/winterhood.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wintercoats_hood.json'
+
+/datum/greyscale_config/winter_hoods/worn
+	name = "Winter Coat Hood Worn"
+	icon_file = 'icons/mob/clothing/head/winterhood.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wintercoats_hood_worn.json'
+
 /datum/greyscale_config/plush_lizard
 	name = "Plushie Lizard"
 	icon_file = 'icons/obj/plushes.dmi'
@@ -257,3 +286,129 @@
 	name = "Gold Worn Cleric Mace"
 	icon_file = 'icons/obj/items/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn_gold.json'
+
+/datum/greyscale_config/ceremonial_blade
+	name = "Base Ceremonial Blade"
+	icon_file = 'icons/obj/items/ritual_weapon.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/ceremonial_blade.json'
+
+/datum/greyscale_config/ceremonial_blade_lefthand
+	name = "Base Held Ceremonial Blade, Left"
+	icon_file = 'icons/obj/items/ritual_weapon.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/ceremonial_blade_lefthand.json'
+
+/datum/greyscale_config/ceremonial_blade_righthand
+	name = "Base Held Ceremonial Blade, Right"
+	icon_file = 'icons/obj/items/ritual_weapon.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/ceremonial_blade_righthand.json'
+
+/datum/greyscale_config/beret
+	name = "Beret"
+	icon_file = 'icons/obj/clothing/head/beret.dmi'
+	json_config = 'code/datums/greyscale/json_configs/beret.json'
+
+/datum/greyscale_config/beret/worn
+	name = "Beret Worn"
+	json_config = 'code/datums/greyscale/json_configs/beret_worn.json'
+
+/datum/greyscale_config/beret_badge
+	name = "Beret With Badge"
+	icon_file = 'icons/obj/clothing/head/beret.dmi'
+	json_config = 'code/datums/greyscale/json_configs/beret_badge.json'
+
+/datum/greyscale_config/beret_badge/worn
+	name = "Beret With Badge Worn"
+	json_config = 'code/datums/greyscale/json_configs/beret_badge_worn.json'
+
+/datum/greyscale_config/suspenders
+	name = "Suspenders"
+	icon_file = 'icons/obj/clothing/belts.dmi'
+	json_config = 'code/datums/greyscale/json_configs/suspenders.json'
+
+/datum/greyscale_config/suspenders/worn
+	name = "Worn Suspenders"
+	icon_file = 'icons/mob/clothing/suit.dmi'
+	json_config = 'code/datums/greyscale/json_configs/suspenders_worn.json'
+
+/datum/greyscale_config/giftdeliverybox
+	name = "Gift Box"
+	icon_file = 'icons/obj/storage.dmi'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliverybox.json'
+
+/datum/greyscale_config/giftdeliverycloset
+	name = "Gift Closet"
+	icon_file = 'icons/obj/storage.dmi'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliverycloset.json'
+
+/datum/greyscale_config/giftdeliverycrate
+	name = "Gift Crate"
+	icon_file = 'icons/obj/storage.dmi'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliverycrate.json'
+
+/datum/greyscale_config/giftdeliverypackage5
+	name = "Gift Package 5 (Biggest)"
+	icon_file = 'icons/obj/storage.dmi'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage5.json'
+
+/datum/greyscale_config/giftdeliverypackage4
+	name = "Gift Package 4"
+	icon_file = 'icons/obj/storage.dmi'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage4.json'
+
+/datum/greyscale_config/giftdeliverypackage3
+	name = "Gift Package 3"
+	icon_file = 'icons/obj/storage.dmi'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage3.json'
+
+/datum/greyscale_config/giftdeliverypackage2
+	name = "Gift Package 2"
+	icon_file = 'icons/obj/storage.dmi'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage2.json'
+
+/datum/greyscale_config/giftdeliverypackage1
+	name = "Gift Package 1 (Smallest)"
+	icon_file = 'icons/obj/storage.dmi'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage1.json'
+
+/datum/greyscale_config/wrap_paper
+	name = "Wrapping Paper"
+	icon_file = 'icons/obj/stack_objects.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wrap_paper.json'
+
+/datum/greyscale_config/meter
+	name = "Meter"
+	icon_file = 'icons/obj/atmospherics/pipes/meter.dmi'
+	json_config = 'code/datums/greyscale/json_configs/meter.json'
+
+/datum/greyscale_config/thermomachine
+	name = "Thermomachine"
+	icon_file = 'icons/obj/atmospherics/components/thermomachine.dmi'
+	json_config = 'code/datums/greyscale/json_configs/thermomachine.json'
+
+/datum/greyscale_config/janicart_upgrade
+	name = "Janicart Upgrade"
+	icon_file = 'icons/obj/janicart_upgrade.dmi'
+	json_config = 'code/datums/greyscale/json_configs/janicart_upgrade.json'
+
+/datum/greyscale_config/janicart_upgrade/installed
+	json_config = 'code/datums/greyscale/json_configs/janicart_upgrade_installed.json'
+
+/datum/greyscale_config/ctf_standard
+	name = "CTF Standard Vest"
+	icon_file = 'icons/obj/clothing/suits/ctf.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ctf_standard.json'
+
+/datum/greyscale_config/ctf_standard_worn
+	name = "Worn CTF Standard Vest"
+	icon_file = 'icons/mob/clothing/suits/ctf.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ctf_standard_worn.json'
+
+/datum/greyscale_config/ctf_light
+	name = "CTF Light Vest"
+	icon_file = 'icons/obj/clothing/suits/ctf.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ctf_light.json'
+
+/datum/greyscale_config/ctf_light_worn
+	name = "Worn CTF Light Vest"
+	icon_file = 'icons/mob/clothing/suits/ctf.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ctf_light_worn.json'

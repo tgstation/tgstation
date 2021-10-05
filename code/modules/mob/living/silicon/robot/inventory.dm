@@ -27,18 +27,18 @@
 		CRASH("activate_module called with item_module not in model.modules")
 
 	if(activated(item_module))
-		to_chat(src, "<span class='warning'>That module is already activated.</span>")
+		to_chat(src, span_warning("That module is already activated."))
 		return FALSE
 
 	if(disabled_modules & BORG_MODULE_ALL_DISABLED)
-		to_chat(src, "<span class='warning'>All modules are disabled!</span>")
+		to_chat(src, span_warning("All modules are disabled!"))
 		return FALSE
 
 	/// What's the first free slot for the borg?
 	var/first_free_slot = !held_items[1] ? 1 : (!held_items[2] ? 2 : (!held_items[3] ? 3 : null))
 
 	if(!first_free_slot || is_invalid_module_number(first_free_slot))
-		to_chat(src, "<span class='warning'>Deactivate a module first!</span>")
+		to_chat(src, span_warning("Deactivate a module first!"))
 		return FALSE
 
 	return equip_module_to_slot(item_module, first_free_slot)
@@ -154,13 +154,13 @@
 			disabled_modules |= BORG_MODULE_ALL_DISABLED
 
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
-			audible_message("<span class='warning'>[src] sounds an alarm! \"CRITICAL ERROR: ALL modules OFFLINE.\"</span>")
+			audible_message(span_warning("[src] sounds an alarm! \"CRITICAL ERROR: ALL modules OFFLINE.\""))
 
 			if(builtInCamera)
 				builtInCamera.status = FALSE
-				to_chat(src, "<span class='userdanger'>CRITICAL ERROR: Built in security camera OFFLINE.</span>")
+				to_chat(src, span_userdanger("CRITICAL ERROR: Built in security camera OFFLINE."))
 
-			to_chat(src, "<span class='userdanger'>CRITICAL ERROR: ALL modules OFFLINE.</span>")
+			to_chat(src, span_userdanger("CRITICAL ERROR: ALL modules OFFLINE."))
 
 		if(BORG_CHOOSE_MODULE_TWO)
 			if(disabled_modules & BORG_MODULE_TWO_DISABLED)
@@ -170,8 +170,8 @@
 			disabled_modules |= BORG_MODULE_TWO_DISABLED
 
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 60, TRUE, TRUE)
-			audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\"</span>")
-			to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module [module_num] OFFLINE.</span>")
+			audible_message(span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\""))
+			to_chat(src, span_userdanger("SYSTEM ERROR: Module [module_num] OFFLINE."))
 
 		if(BORG_CHOOSE_MODULE_THREE)
 			if(disabled_modules & BORG_MODULE_THREE_DISABLED)
@@ -181,8 +181,8 @@
 			disabled_modules |= BORG_MODULE_THREE_DISABLED
 
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, TRUE, TRUE)
-			audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\"</span>")
-			to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module [module_num] OFFLINE.</span>")
+			audible_message(span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\""))
+			to_chat(src, span_userdanger("SYSTEM ERROR: Module [module_num] OFFLINE."))
 
 	return TRUE
 
@@ -212,7 +212,7 @@
 			disabled_modules &= ~BORG_MODULE_ALL_DISABLED
 			if(builtInCamera)
 				builtInCamera.status = TRUE
-				to_chat(src, "<span class='notice'>You hear your built in security camera focus adjust as it comes back online!</span>")
+				to_chat(src, span_notice("You hear your built in security camera focus adjust as it comes back online!"))
 		if(BORG_CHOOSE_MODULE_TWO)
 			if(!(disabled_modules & BORG_MODULE_TWO_DISABLED))
 				return FALSE
@@ -226,7 +226,7 @@
 			inv3.icon_state = initial(inv3.icon_state)
 			disabled_modules &= ~BORG_MODULE_THREE_DISABLED
 
-	to_chat(src, "<span class='notice'>ERROR CLEARED: Module [module_num] back online.</span>")
+	to_chat(src, span_notice("ERROR CLEARED: Module [module_num] back online."))
 
 	return TRUE
 

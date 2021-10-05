@@ -38,7 +38,7 @@
 /datum/component/technoshy/proc/is_not_touched(datum/source, obj/machinery/machine)
 	var/time_since = world.time - machine.last_used_time
 	if(time_since < unused_duration && !isnull(machine.last_user_mobtype) && !is_type_in_typecache(machine.last_user_mobtype, whitelist))
-		to_chat(source, "<span class='warning'>[replacetext(message, "%TARGET", machine)]</span>")
+		to_chat(source, span_warning("[replacetext(message, "%TARGET", machine)]"))
 		return TRUE
 
 /datum/component/technoshy/proc/on_try_use_machine(datum/source, obj/machinery/machine)

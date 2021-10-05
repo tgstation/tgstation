@@ -16,24 +16,29 @@
 	name = "fresh produce" // so recipe text doesn't say 'snack'
 	max_volume = 100
 	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = FLAMMABLE
 	/// type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 	var/obj/item/seeds/seed = null
 	///Name of the plant
 	var/plantname = ""
 	/// The modifier applied to the plant's bite size. If a plant has a large amount of reagents naturally, this should be increased to match.
 	var/bite_consumption_mod = 1
-	///the splat it makes when it splats lol
+	/// The typepath made when the plant is splatted with liquid contents.
 	var/splat_type = /obj/effect/decal/cleanable/food/plant_smudge
-
-	resistance_flags = FLAMMABLE
-	var/dry_grind = FALSE //If TRUE, this object needs to be dry to be ground up
-	var/can_distill = TRUE //If FALSE, this object cannot be distilled into an alcohol.
-	var/distill_reagent //If NULL and this object can be distilled, it uses a generic fruit_wine reagent and adjusts its variables.
-	var/wine_flavor //If NULL, this is automatically set to the fruit's flavor. Determines the flavor of the wine if distill_reagent is NULL.
-	var/wine_power = 10 //Determines the boozepwr of the wine if distill_reagent is NULL.
-	///Color of the grown object
+	/// If TRUE, this object needs to be dry to be ground up
+	var/dry_grind = FALSE
+	/// If FALSE, this object cannot be distilled into an alcohol.
+	var/can_distill = TRUE
+	/// The reagent this plant distill to. If NULL, it uses a generic fruit_wine reagent and adjusts its variables.
+	var/distill_reagent
+	/// Flavor of the plant's wine if NULL distll_reagent. If NULL, this is automatically set to the fruit's flavor.
+	var/wine_flavor
+	/// Boozepwr of the wine if NULL distill_reagent
+	var/wine_power = 10
+	/// Color of the grown object, for use in coloring greyscale splats.
 	var/filling_color
-
+	/// If the grown food has an alternaitve icon state to use in places.
+	var/alt_icon
 
 /obj/item/food/grown/Initialize(mapload, obj/item/seeds/new_seed)
 	if(!tastes)
@@ -46,6 +51,9 @@
 		// This is for adminspawn or map-placed growns. They get the default stats of their seed type.
 		seed = new seed()
 		seed.adjust_potency(50-seed.potency)
+	else if(!seed)
+		stack_trace("Grown object created without a seed. WTF")
+		return INITIALIZE_HINT_QDEL
 
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)
@@ -97,7 +105,7 @@
 
 /obj/item/food/grown/grind_requirements()
 	if(dry_grind && !HAS_TRAIT(src, TRAIT_DRIED))
-		to_chat(usr, "<span class='warning'>[src] needs to be dry before it can be ground up!</span>")
+		to_chat(usr, span_warning("[src] needs to be dry before it can be ground up!"))
 		return
 	return TRUE
 

@@ -63,7 +63,7 @@
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
-		to_chat(usr, "<span class='notice'>You put [W] back into [src].</span>")
+		to_chat(usr, span_notice("You put [W] back into [src]."))
 		qdel(W)
 		return
 	else
@@ -142,7 +142,7 @@
 			var/obj/structure/disposalconstruct/C = new (loc, p_type)
 
 			if(!C.can_place())
-				to_chat(usr, "<span class='warning'>There's not enough room to build that here!</span>")
+				to_chat(usr, span_warning("There's not enough room to build that here!"))
 				qdel(C)
 				return
 			if(href_list["dir"])

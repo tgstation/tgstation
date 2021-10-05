@@ -20,7 +20,7 @@
 			message_admins("TGS: Deployment failed!")
 		if(TGS_EVENT_DEPLOYMENT_COMPLETE)
 			message_admins("TGS: Deployment complete!")
-			to_chat(world, "<span class='boldannounce'>Server updated, changes will be applied on the next round...</span>")
+			to_chat(world, span_boldannounce("Server updated, changes will be applied on the next round..."))
 		if(TGS_EVENT_WATCHDOG_DETACH)
 			message_admins("TGS restarting...")
 			reattach_timer = addtimer(CALLBACK(src, .proc/LateOnReattach), 1 MINUTES, TIMER_STOPPABLE)
@@ -28,14 +28,14 @@
 			var/datum/tgs_version/old_version = world.TgsVersion()
 			var/datum/tgs_version/new_version = args[2]
 			if(!old_version.Equals(new_version))
-				to_chat(world, "<span class='boldannounce'>TGS updated to v[new_version.deprefixed_parameter]</span>")
+				to_chat(world, span_boldannounce("TGS updated to v[new_version.deprefixed_parameter]"))
 			else
 				message_admins("TGS: Back online")
 			if(reattach_timer)
 				deltimer(reattach_timer)
 				reattach_timer = null
 		if(TGS_EVENT_WATCHDOG_SHUTDOWN)
-			to_chat_immediate(world, "<span class='boldannounce'>Server is shutting down!</span>")
+			to_chat_immediate(world, span_boldannounce("Server is shutting down!"))
 
 /datum/tgs_event_handler/impl/proc/LateOnReattach()
 	message_admins("Warning: TGS hasn't notified us of it coming back for a full minute! Is there a problem?")

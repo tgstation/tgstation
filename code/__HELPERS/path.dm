@@ -16,8 +16,9 @@
  * * id: An ID card representing what access we have and what doors we can open. Its location relative to the pathing atom is irrelevant
  * * simulated_only: Whether we consider turfs without atmos simulation (AKA do we want to ignore space)
  * * exclude: If we want to avoid a specific turf, like if we're a mulebot who already got blocked by some turf
+ * * skip_first: Whether or not to delete the first item in the path. This would be done because the first item is the starting tile, which can break movement for some creatures.
  */
-/proc/get_path_to(caller, end, max_distance = 30, mintargetdist, id=null, simulated_only = TRUE, turf/exclude)
+/proc/get_path_to(caller, end, max_distance = 30, mintargetdist, id=null, simulated_only = TRUE, turf/exclude, skip_first=TRUE)
 	if(!caller || !get_turf(end))
 		return
 
@@ -34,6 +35,8 @@
 	SSpathfinder.mobs.found(l)
 	if(!path)
 		path = list()
+	if(length(path) > 0 && skip_first)
+		path.Cut(1,2)
 	return path
 
 /**

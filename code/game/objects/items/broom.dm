@@ -18,7 +18,7 @@
 	attack_verb_simple = list("sweep", "brush off", "bludgeon", "whack")
 	resistance_flags = FLAMMABLE
 
-/obj/item/pushbroom/Initialize()
+/obj/item/pushbroom/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
@@ -41,7 +41,7 @@
 /obj/item/pushbroom/proc/on_wield(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 
-	to_chat(user, "<span class='notice'>You brace the [src] against the ground in a firm sweeping stance.</span>")
+	to_chat(user, span_notice("You brace the [src] against the ground in a firm sweeping stance."))
 	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, .proc/sweep)
 
 /**
@@ -90,7 +90,7 @@
 	if (i > 1)
 		if (target_bin)
 			target_bin.update_appearance()
-			to_chat(user, "<span class='notice'>You sweep the pile of garbage into [target_bin].</span>")
+			to_chat(user, span_notice("You sweep the pile of garbage into [target_bin]."))
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
 /**
@@ -109,5 +109,5 @@
 	name = "robotic push broom"
 
 /obj/item/pushbroom/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	to_chat(user, "<span class='notice'>You cannot place your [src] into the [J]</span>")
+	to_chat(user, span_notice("You cannot place your [src] into the [J]"))
 	return FALSE

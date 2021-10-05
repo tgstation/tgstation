@@ -7,7 +7,7 @@
 	///Alternative mode for hiding the hood, instead of storing the hood in the suit it qdels it, useful for when you deal with hooded suit with storage.
 	var/alternative_mode = FALSE
 
-/obj/item/clothing/suit/hooded/Initialize()
+/obj/item/clothing/suit/hooded/Initialize(mapload)
 	. = ..()
 	if(!alternative_mode)
 		MakeHood()
@@ -50,9 +50,7 @@
 		if(alternative_mode)
 			QDEL_NULL(hood)
 
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /obj/item/clothing/suit/hooded/dropped()
 	..()
@@ -64,10 +62,10 @@
 			return
 		var/mob/living/carbon/human/H = loc
 		if(H.wear_suit != src)
-			to_chat(H, "<span class='warning'>You must be wearing [src] to put up the hood!</span>")
+			to_chat(H, span_warning("You must be wearing [src] to put up the hood!"))
 			return
 		if(H.head)
-			to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
+			to_chat(H, span_warning("You're already wearing something on your head!"))
 			return
 		else
 			if(alternative_mode)
@@ -79,9 +77,7 @@
 			suittoggled = TRUE
 			icon_state = "[initial(icon_state)]_t"
 			H.update_inv_wear_suit()
-			for(var/X in actions)
-				var/datum/action/A = X
-				A.UpdateButtonIcon()
+			update_action_buttons()
 	else
 		RemoveHood()
 
@@ -124,7 +120,7 @@
 	if(!can_use(usr))
 		return 0
 
-	to_chat(usr, "<span class='notice'>You toggle [src]'s [togglename].</span>")
+	to_chat(usr, span_notice("You toggle [src]'s [togglename]."))
 	if(src.suittoggled)
 		src.icon_state = "[initial(icon_state)]"
 		src.suittoggled = FALSE
@@ -132,24 +128,24 @@
 		src.icon_state = "[initial(icon_state)]_t"
 		src.suittoggled = TRUE
 	usr.update_inv_wear_suit()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /obj/item/clothing/suit/toggle/examine(mob/user)
 	. = ..()
 	. += "Alt-click on [src] to toggle the [togglename]."
 
 //Hardsuit toggle code
-/obj/item/clothing/suit/space/hardsuit/Initialize()
+/obj/item/clothing/suit/space/hardsuit/Initialize(mapload)
 	MakeHelmet()
 	. = ..()
 
 /obj/item/clothing/suit/space/hardsuit/Destroy()
-	if(helmet)
+	if(!QDELETED(helmet))
 		helmet.suit = null
 		qdel(helmet)
-	qdel(jetpack)
+		helmet = null
+	if (isatom(jetpack))
+		QDEL_NULL(jetpack)
 	return ..()
 
 /obj/item/clothing/head/helmet/space/hardsuit/Destroy()
@@ -186,7 +182,7 @@
 			helmet.attack_self(H)
 		H.transferItemToLoc(helmet, src, TRUE)
 		H.update_inv_wear_suit()
-		to_chat(H, "<span class='notice'>The helmet on the hardsuit disengages.</span>")
+		to_chat(H, span_notice("The helmet on the hardsuit disengages."))
 		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 	else
 		helmet.forceMove(src)
@@ -200,18 +196,18 @@
 	if(!helmettype)
 		return
 	if(!helmet)
-		to_chat(H, "<span class='warning'>The helmet's lightbulb seems to be damaged! You'll need a replacement bulb.</span>")
+		to_chat(H, span_warning("The helmet's lightbulb seems to be damaged! You'll need a replacement bulb."))
 		return
 	if(!suittoggled)
 		if(ishuman(src.loc))
 			if(H.wear_suit != src)
-				to_chat(H, "<span class='warning'>You must be wearing [src] to engage the helmet!</span>")
+				to_chat(H, span_warning("You must be wearing [src] to engage the helmet!"))
 				return
 			if(H.head)
-				to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
+				to_chat(H, span_warning("You're already wearing something on your head!"))
 				return
 			else if(H.equip_to_slot_if_possible(helmet,ITEM_SLOT_HEAD,0,0,1))
-				to_chat(H, "<span class='notice'>You engage the helmet on the hardsuit.</span>")
+				to_chat(H, span_notice("You engage the helmet on the hardsuit."))
 				suittoggled = TRUE
 				H.update_inv_wear_suit()
 				playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)

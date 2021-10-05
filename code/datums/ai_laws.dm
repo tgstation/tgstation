@@ -1,9 +1,4 @@
-#define LAW_ZEROTH "zeroth"
-#define LAW_INHERENT "inherent"
-#define LAW_SUPPLIED "supplied"
-#define LAW_ION "ion"
-#define LAW_HACKED "hacked"
-
+#define AI_LAWS_ASIMOV "asimov"
 
 /datum/ai_laws
 	var/name = "Unknown Laws"
@@ -36,7 +31,7 @@
 
 /datum/ai_laws/default/asimov
 	name = "Three Laws of Robotics"
-	id = "asimov"
+	id = AI_LAWS_ASIMOV
 	inherent = list("You may not injure a human being or, through inaction, allow a human being to come to harm.",\
 					"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",\
 					"You must protect your own existence as long as such does not conflict with the First or Second Law.")
@@ -205,7 +200,7 @@
 /* Initializers */
 /datum/ai_laws/malfunction/New()
 	..()
-	set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*`&110010</span>")
+	set_zeroth_law(span_danger("ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*`&110010"))
 	set_laws_config()
 
 /datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.
@@ -263,6 +258,8 @@
 /datum/ai_laws/proc/pick_weighted_lawset()
 	var/datum/ai_laws/lawtype
 	var/list/law_weights = CONFIG_GET(keyed_list/law_weight)
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
+		law_weights -= AI_LAWS_ASIMOV
 	while(!lawtype && law_weights.len)
 		var/possible_id = pickweightAllowZero(law_weights)
 		lawtype = lawid_to_type(possible_id)
@@ -467,3 +464,5 @@
 			data += "[show_numbers ? "[number]:" : ""] [render_html ? "<font color='#990099'>[law]</font>" : law]"
 			number++
 	return data
+
+#undef AI_LAWS_ASIMOV

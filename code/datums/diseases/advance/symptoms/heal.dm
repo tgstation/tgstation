@@ -98,12 +98,12 @@
 				turf_to_check = turf_to_check.below()
 			if(!turf_to_check && (direction == ZTRAIT_DOWN || (direction == ZTRAIT_UP && area_to_check.outdoors))) // if does not exist, assume its space since space station if below, however when checking upwards, only assume that its space if the area is outdoors
 				if(levels_of_glass)
-					return STARLIGHT_CAN_HEAL_WITH_PENALTY 
+					return STARLIGHT_CAN_HEAL_WITH_PENALTY
 				return STARLIGHT_CAN_HEAL
 			area_to_check = get_area(turf_to_check)
 			continue
 		return STARLIGHT_CANNOT_HEAL // hit a non-space non-transparent turf
-		
+
 /datum/symptom/heal/starlight/proc/CanTileHeal(turf/original_turf, satisfied_with_penalty)
 	var/current_heal_level = CanTileHealDirectional(original_turf, ZTRAIT_DOWN)
 	if(current_heal_level == STARLIGHT_CAN_HEAL)
@@ -136,7 +136,7 @@
 /datum/symptom/heal/starlight/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = actual_power
 	if(M.getToxLoss() && prob(5))
-		to_chat(M, "<span class='notice'>Your skin tingles as the starlight seems to heal you.</span>")
+		to_chat(M, span_notice("Your skin tingles as the starlight seems to heal you."))
 
 	M.adjustToxLoss(-(4 * heal_amt)) //most effective on toxins
 
@@ -184,7 +184,7 @@
 		if(food_conversion)
 			M.adjust_nutrition(0.3)
 		if(prob(2))
-			to_chat(M, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
+			to_chat(M, span_notice("You feel a mild warmth as your blood purifies itself."))
 	return 1
 
 
@@ -223,7 +223,7 @@
 	var/lost_nutrition = 9 - (reduced_hunger * 5)
 	C.adjust_nutrition(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
 	if(prob(2))
-		to_chat(C, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
+		to_chat(C, span_notice("You feel an odd gurgle in your stomach, as if it was working much faster than normal."))
 	return 1
 
 /datum/symptom/heal/darkness
@@ -264,7 +264,7 @@
 		return
 
 	if(prob(5))
-		to_chat(M, "<span class='notice'>The darkness soothes and mends your wounds.</span>")
+		to_chat(M, span_notice("The darkness soothes and mends your wounds."))
 
 	for(var/obj/item/bodypart/L in parts)
 		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len * 0.5, null, BODYPART_ORGANIC)) //more effective on brute
@@ -335,7 +335,7 @@
 		if(SOFT_CRIT)
 			return power * 0.5
 	if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
-		to_chat(M, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
+		to_chat(M, span_warning("You feel yourself slip into a regenerative coma..."))
 		active_coma = TRUE
 		addtimer(CALLBACK(src, .proc/coma, M), 60)
 
@@ -420,7 +420,7 @@
 		return
 
 	if(prob(5))
-		to_chat(M, "<span class='notice'>You feel yourself absorbing the water around you to soothe your damaged skin.</span>")
+		to_chat(M, span_notice("You feel yourself absorbing the water around you to soothe your damaged skin."))
 
 	for(var/obj/item/bodypart/L in parts)
 		if(L.heal_damage(heal_amt/parts.len * 0.5, heal_amt/parts.len, null, BODYPART_ORGANIC))
@@ -477,17 +477,17 @@
 	var/heal_amt = 4 * actual_power
 
 	if(prob(5))
-		to_chat(M, "<span class='notice'>You feel yourself absorbing plasma inside and around you...</span>")
+		to_chat(M, span_notice("You feel yourself absorbing plasma inside and around you..."))
 
 	var/target_temp = M.get_body_temp_normal()
 	if(M.bodytemperature > target_temp)
 		M.adjust_bodytemperature(-20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT, target_temp)
 		if(prob(5))
-			to_chat(M, "<span class='notice'>You feel less hot.</span>")
+			to_chat(M, span_notice("You feel less hot."))
 	else if(M.bodytemperature < (M.get_body_temp_normal() + 1))
 		M.adjust_bodytemperature(20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT, 0, target_temp)
 		if(prob(5))
-			to_chat(M, "<span class='notice'>You feel warmer.</span>")
+			to_chat(M, span_notice("You feel warmer."))
 
 	M.adjustToxLoss(-heal_amt)
 
@@ -495,7 +495,7 @@
 	if(!parts.len)
 		return
 	if(prob(5))
-		to_chat(M, "<span class='notice'>The pain from your wounds fades rapidly.</span>")
+		to_chat(M, span_notice("The pain from your wounds fades rapidly."))
 	for(var/obj/item/bodypart/L in parts)
 		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYPART_ORGANIC))
 			M.update_damage_overlays()
@@ -558,7 +558,7 @@
 		return
 
 	if(prob(4))
-		to_chat(M, "<span class='notice'>Your skin glows faintly, and you feel your wounds mending themselves.</span>")
+		to_chat(M, span_notice("Your skin glows faintly, and you feel your wounds mending themselves."))
 
 	for(var/obj/item/bodypart/L in parts)
 		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYPART_ORGANIC))

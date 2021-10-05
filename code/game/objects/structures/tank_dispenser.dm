@@ -17,7 +17,7 @@
 /obj/structure/tank_dispenser/plasma
 	oxygentanks = 0
 
-/obj/structure/tank_dispenser/Initialize()
+/obj/structure/tank_dispenser/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to oxygentanks)
 		new /obj/item/tank/internals/oxygen(src)
@@ -54,17 +54,17 @@
 		default_unfasten_wrench(user, I, time = 20)
 		return
 	else if(!user.combat_mode)
-		to_chat(user, "<span class='notice'>[I] does not fit into [src].</span>")
+		to_chat(user, span_notice("[I] does not fit into [src]."))
 		return
 	else
 		return ..()
 	if(full)
-		to_chat(user, "<span class='notice'>[src] can't hold any more of [I].</span>")
+		to_chat(user, span_notice("[src] can't hold any more of [I]."))
 		return
 
 	if(!user.transferItemToLoc(I, src))
 		return
-	to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
+	to_chat(user, span_notice("You put [I] in [src]."))
 	update_appearance()
 
 /obj/structure/tank_dispenser/ui_state(mob/user)

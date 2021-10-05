@@ -66,17 +66,17 @@ FLOOR SAFES
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
 			if(!user.transferItemToLoc(I, src))
-				to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the safe!</span>")
+				to_chat(user, span_warning("\The [I] is stuck to your hand, you cannot put it in the safe!"))
 				return
-			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
+			to_chat(user, span_notice("You put [I] in [src]."))
 		else
-			to_chat(user, "<span class='warning'>[I] won't fit in [src].</span>")
+			to_chat(user, span_warning("[I] won't fit in [src]."))
 	else
 		if(istype(I, /obj/item/clothing/neck/stethoscope))
 			attack_hand(user)
 			return
 		else
-			to_chat(user, "<span class='warning'>You can't put [I] into the safe while it is closed!</span>")
+			to_chat(user, span_warning("You can't put [I] into the safe while it is closed!"))
 			return
 
 /obj/structure/safe/blob_act(obj/structure/blob/B)
@@ -141,9 +141,9 @@ FLOOR SAFES
 	switch(action)
 		if("open")
 			if(!check_unlocked() && !open && !broken)
-				to_chat(user, "<span class='warning'>You cannot open [src], as its lock is engaged!</span>")
+				to_chat(user, span_warning("You cannot open [src], as its lock is engaged!"))
 				return
-			to_chat(user, "<span class='notice'>You [open ? "close" : "open"] [src].</span>")
+			to_chat(user, span_notice("You [open ? "close" : "open"] [src]."))
 			open = !open
 			update_appearance()
 			return TRUE
@@ -151,7 +151,7 @@ FLOOR SAFES
 			if(open)
 				return
 			if(broken)
-				to_chat(user, "<span class='warning'>The dial will not turn, as the mechanism is destroyed!</span>")
+				to_chat(user, span_warning("The dial will not turn, as the mechanism is destroyed!"))
 				return
 			var/ticks = text2num(params["num"])
 			for(var/i = 1 to ticks)
@@ -172,7 +172,7 @@ FLOOR SAFES
 			if(open)
 				return
 			if(broken)
-				to_chat(user, "<span class='warning'>The dial will not turn, as the mechanism is destroyed!</span>")
+				to_chat(user, span_warning("The dial will not turn, as the mechanism is destroyed!"))
 				return
 			var/ticks = text2num(params["num"])
 			for(var/i = 1 to ticks)
@@ -216,7 +216,7 @@ FLOOR SAFES
 		return TRUE
 	if(current_tumbler_index > number_of_tumblers)
 		locked = FALSE
-		visible_message("<span class='boldnotice'>[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</span>")
+		visible_message(span_boldnotice("[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!"))
 		return TRUE
 	locked = TRUE
 	return FALSE

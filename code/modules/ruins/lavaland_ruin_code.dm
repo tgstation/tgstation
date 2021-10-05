@@ -4,25 +4,12 @@
 /obj/item/disk/design_disk/adv/knight_gear
 	name = "Magic Disk of Smithing"
 
-/obj/item/disk/design_disk/adv/knight_gear/Initialize()
+/obj/item/disk/design_disk/adv/knight_gear/Initialize(mapload)
 	. = ..()
 	var/datum/design/knight_armour/A = new
 	var/datum/design/knight_helmet/H = new
 	blueprints[1] = A
 	blueprints[2] = H
-
-//lavaland_surface_seed_vault.dmm
-//Seed Vault
-
-/obj/effect/spawner/lootdrop/seed_vault
-	name = "seed vault seeds"
-	lootcount = 1
-
-	loot = list(/obj/item/seeds/gatfruit = 10,
-				/obj/item/seeds/cherry/bomb = 10,
-				/obj/item/seeds/berry/glow = 10,
-				/obj/item/seeds/sunflower/moonflower = 8
-				)
 
 //Free Golems
 
@@ -32,7 +19,7 @@
 	icon_state = "datadisk1"
 	max_blueprints = 1
 
-/obj/item/disk/design_disk/golem_shell/Initialize()
+/obj/item/disk/design_disk/golem_shell/Initialize(mapload)
 	. = ..()
 	var/datum/design/golem_shell/G = new
 	blueprints[1] = G
@@ -93,12 +80,12 @@
 	var/obj/item/stack/stuff_stack = I
 	var/species = golem_shell_species_types[stuff_stack.merge_type]
 	if(!species)
-		to_chat(user, "<span class='warning'>You can't build a golem out of this kind of material!</span>")
+		to_chat(user, span_warning("You can't build a golem out of this kind of material!"))
 		return
 	if(!stuff_stack.use(10))
-		to_chat(user, "<span class='warning'>You need at least ten sheets to finish a golem!</span>")
+		to_chat(user, span_warning("You need at least ten sheets to finish a golem!"))
 		return
-	to_chat(user, "<span class='notice'>You finish up the golem shell with ten sheets of [stuff_stack].</span>")
+	to_chat(user, span_notice("You finish up the golem shell with ten sheets of [stuff_stack]."))
 	new shell_type(get_turf(src), species, user)
 	qdel(src)
 
@@ -120,7 +107,7 @@
 	flavour_text = "Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. Continue your research as best you can, and try to keep a low profile."
 	important_info = "The base is rigged with explosives, DO NOT abandon it or let it fall into enemy hands!"
 	outfit = /datum/outfit/lavaland_syndicate
-	assignedrole = "Lavaland Syndicate"
+	spawner_job_path = /datum/job/lavaland_syndicate
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/special(mob/living/new_spawn)
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
@@ -154,7 +141,7 @@
 	flavour_text = "Monitor enemy activity as best you can, and try to keep a low profile. Monitor enemy activity as best you can, and try to keep a low profile. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!"
 	important_info = "DO NOT abandon the base."
 
-/obj/effect/mob_spawn/human/lavaland_syndicate/comms/space/Initialize()
+/obj/effect/mob_spawn/human/lavaland_syndicate/comms/space/Initialize(mapload)
 	. = ..()
 	if(prob(90)) //only has a 10% chance of existing, otherwise it'll just be a NPC syndie.
 		new /mob/living/simple_animal/hostile/syndicate/ranged(get_turf(src))
@@ -162,10 +149,10 @@
 
 /datum/outfit/lavaland_syndicate/comms
 	name = "Lavaland Syndicate Comms Agent"
-	r_hand = /obj/item/melee/transforming/energy/sword/saber
+	r_hand = /obj/item/melee/energy/sword/saber
 	mask = /obj/item/clothing/mask/chameleon/gps
 	suit = /obj/item/clothing/suit/armor/vest
 
-/obj/item/clothing/mask/chameleon/gps/Initialize()
+/obj/item/clothing/mask/chameleon/gps/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "Encrypted Signal")

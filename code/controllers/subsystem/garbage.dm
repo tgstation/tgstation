@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(garbage)
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	init_order = INIT_ORDER_GARBAGE
 
-	var/list/collection_timeout = list(2 MINUTES, 10 SECONDS) // deciseconds to wait before moving something up in the queue to the next level
+	var/list/collection_timeout = list(GC_FILTER_QUEUE, GC_DEL_QUEUE) // deciseconds to wait before moving something up in the queue to the next level
 
 	//Stat tracking
 	var/delslasttick = 0 // number of del()'s we've done this tick
@@ -37,8 +37,8 @@ SUBSYSTEM_DEF(garbage)
 	var/totaldels = 0
 	var/totalgcs = 0
 
-	var/highest_del_time = 0
-	var/highest_del_tickusage = 0
+	var/highest_del_ms = 0
+	var/highest_del_type_string = ""
 
 	var/list/pass_counts
 	var/list/fail_counts
@@ -49,17 +49,15 @@ SUBSYSTEM_DEF(garbage)
 	var/list/queues
 	#ifdef REFERENCE_TRACKING
 	var/list/reference_find_on_fail = list()
+	#ifdef REFERENCE_TRACKING_DEBUG
+	//Should we save found refs. Used for unit testing
+	var/should_save_refs = FALSE
+	#endif
 	#endif
 
 
 /datum/controller/subsystem/garbage/PreInit()
-	queues = new(GC_QUEUE_COUNT)
-	pass_counts = new(GC_QUEUE_COUNT)
-	fail_counts = new(GC_QUEUE_COUNT)
-	for(var/i in 1 to GC_QUEUE_COUNT)
-		queues[i] = list()
-		pass_counts[i] = 0
-		fail_counts[i] = 0
+	InitQueues()
 
 /datum/controller/subsystem/garbage/stat_entry(msg)
 	var/list/counts = list()
@@ -90,6 +88,8 @@ SUBSYSTEM_DEF(garbage)
 	for(var/path in items)
 		var/datum/qdel_item/I = items[path]
 		dellog += "Path: [path]"
+		if (I.qdel_flags & QDEL_ITEM_SUSPENDED_FOR_LAG)
+			dellog += "\tSUSPENDED FOR LAG"
 		if (I.failures)
 			dellog += "\tFailures: [I.failures]"
 		dellog += "\tqdel() Count: [I.qdels]"
@@ -97,6 +97,9 @@ SUBSYSTEM_DEF(garbage)
 		if (I.hard_deletes)
 			dellog += "\tTotal Hard Deletes: [I.hard_deletes]"
 			dellog += "\tTime Spent Hard Deleting: [I.hard_delete_time]ms"
+			dellog += "\tHighest Time Spent Hard Deleting: [I.hard_delete_max]ms"
+			if (I.hard_deletes_over_threshold)
+				dellog += "\tHard Deletes Over Threshold: [I.hard_deletes_over_threshold]"
 		if (I.slept_destroy)
 			dellog += "\tSleeps: [I.slept_destroy]"
 		if (I.no_respect_force)
@@ -122,6 +125,15 @@ SUBSYSTEM_DEF(garbage)
 
 
 
+/datum/controller/subsystem/garbage/proc/InitQueues()
+	if (isnull(queues)) // Only init the queues if they don't already exist, prevents overriding of recovered lists
+		queues = new(GC_QUEUE_COUNT)
+		pass_counts = new(GC_QUEUE_COUNT)
+		fail_counts = new(GC_QUEUE_COUNT)
+		for(var/i in 1 to GC_QUEUE_COUNT)
+			queues[i] = list()
+			pass_counts[i] = 0
+			fail_counts[i] = 0
 
 /datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_CHECK)
 	if (level == GC_QUEUE_CHECK)
@@ -170,29 +182,43 @@ SUBSYSTEM_DEF(garbage)
 
 		// Something's still referring to the qdel'd object.
 		fail_counts[level]++
+
+		#ifdef REFERENCE_TRACKING
+		var/ref_searching = FALSE
+		#endif
+
 		switch (level)
 			if (GC_QUEUE_CHECK)
 				#ifdef REFERENCE_TRACKING
 				if(reference_find_on_fail[refID])
-					D.find_references()
+					INVOKE_ASYNC(D, /datum/proc/find_references)
+					ref_searching = TRUE
 				#ifdef GC_FAILURE_HARD_LOOKUP
 				else
-					D.find_references()
+					INVOKE_ASYNC(D, /datum/proc/find_references)
+					ref_searching = TRUE
 				#endif
 				reference_find_on_fail -= refID
 				#endif
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
-				#ifdef TESTING
+
 				log_world("## TESTING: GC: -- \ref[D] | [type] was unable to be GC'd --")
+				#ifdef TESTING
 				for(var/c in GLOB.admins) //Using testing() here would fill the logs with ADMIN_VV garbage
 					var/client/admin = c
 					if(!check_rights_for(admin, R_ADMIN))
 						continue
 					to_chat(admin, "## TESTING: GC: -- [ADMIN_VV(D)] | [type] was unable to be GC'd --")
-				testing("GC: -- \ref[src] | [type] was unable to be GC'd --")
 				#endif
 				I.failures++
+
+				if (I.qdel_flags & QDEL_ITEM_SUSPENDED_FOR_LAG)
+					#ifdef REFERENCE_TRACKING
+					if(ref_searching)
+						return //ref searching intentionally cancels all further fires while running so things that hold references don't end up getting deleted, so we want to return here instead of continue
+					#endif
+					continue
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
 				if (MC_TICK_CHECK)
@@ -200,6 +226,11 @@ SUBSYSTEM_DEF(garbage)
 				continue
 
 		Queue(D, level+1)
+
+		#ifdef REFERENCE_TRACKING
+		if(ref_searching)
+			return
+		#endif
 
 		if (MC_TICK_CHECK)
 			return
@@ -223,52 +254,59 @@ SUBSYSTEM_DEF(garbage)
 
 //this is mainly to separate things profile wise.
 /datum/controller/subsystem/garbage/proc/HardDelete(datum/D)
-	var/time = world.timeofday
-	var/tick = TICK_USAGE
-	var/ticktime = world.time
 	++delslasttick
 	++totaldels
 	var/type = D.type
 	var/refID = "\ref[D]"
 
+	var/tick_usage = TICK_USAGE
 	del(D)
-
-	tick = (TICK_USAGE-tick+((world.time-ticktime)/world.tick_lag*100))
+	tick_usage = TICK_USAGE_TO_MS(tick_usage)
 
 	var/datum/qdel_item/I = items[type]
-
 	I.hard_deletes++
-	I.hard_delete_time += TICK_DELTA_TO_MS(tick)
+	I.hard_delete_time += tick_usage
+	if (tick_usage > I.hard_delete_max)
+		I.hard_delete_max = tick_usage
+	if (tick_usage > highest_del_ms)
+		highest_del_ms = tick_usage
+		highest_del_type_string = "[type]"
 
+	var/time = MS2DS(tick_usage)
 
-	if (tick > highest_del_tickusage)
-		highest_del_tickusage = tick
-	time = world.timeofday - time
-	if (!time && TICK_DELTA_TO_MS(tick) > 1)
-		time = TICK_DELTA_TO_MS(tick)/100
-	if (time > highest_del_time)
-		highest_del_time = time
-	if (time > 10)
-		log_game("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete)")
-		message_admins("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete).")
+	if (time > 0.1 SECONDS)
 		postpone(time)
+	var/threshold = CONFIG_GET(number/hard_deletes_overrun_threshold)
+	if (threshold && (time > threshold SECONDS))
+		if (!(I.qdel_flags & QDEL_ITEM_ADMINS_WARNED))
+			log_game("Error: [type]([refID]) took longer than [threshold] seconds to delete (took [round(time/10, 0.1)] seconds to delete)")
+			message_admins("Error: [type]([refID]) took longer than [threshold] seconds to delete (took [round(time/10, 0.1)] seconds to delete).")
+			I.qdel_flags |= QDEL_ITEM_ADMINS_WARNED
+		I.hard_deletes_over_threshold++
+		var/overrun_limit = CONFIG_GET(number/hard_deletes_overrun_limit)
+		if (overrun_limit && I.hard_deletes_over_threshold >= overrun_limit)
+			I.qdel_flags |= QDEL_ITEM_SUSPENDED_FOR_LAG
 
 /datum/controller/subsystem/garbage/Recover()
+	InitQueues() //We first need to create the queues before recovering data
 	if (istype(SSgarbage.queues))
 		for (var/i in 1 to SSgarbage.queues.len)
 			queues[i] |= SSgarbage.queues[i]
 
-
+/// Qdel Item: Holds statistics on each type that passes thru qdel
 /datum/qdel_item
-	var/name = ""
-	var/qdels = 0 //Total number of times it's passed thru qdel.
-	var/destroy_time = 0 //Total amount of milliseconds spent processing this type's Destroy()
-	var/failures = 0 //Times it was queued for soft deletion but failed to soft delete.
-	var/hard_deletes = 0 //Different from failures because it also includes QDEL_HINT_HARDDEL deletions
-	var/hard_delete_time = 0//Total amount of milliseconds spent hard deleting this type.
-	var/no_respect_force = 0//Number of times it's not respected force=TRUE
-	var/no_hint = 0 //Number of times it's not even bother to give a qdel hint
-	var/slept_destroy = 0 //Number of times it's slept in its destroy
+	var/name = "" //!Holds the type as a string for this type
+	var/qdels = 0 //!Total number of times it's passed thru qdel.
+	var/destroy_time = 0 //!Total amount of milliseconds spent processing this type's Destroy()
+	var/failures = 0 //!Times it was queued for soft deletion but failed to soft delete.
+	var/hard_deletes = 0 //!Different from failures because it also includes QDEL_HINT_HARDDEL deletions
+	var/hard_delete_time = 0 //!Total amount of milliseconds spent hard deleting this type.
+	var/hard_delete_max = 0 //!Highest time spent hard_deleting this in ms.
+	var/hard_deletes_over_threshold = 0 //!Number of times hard deletes took longer than the configured threshold
+	var/no_respect_force = 0 //!Number of times it's not respected force=TRUE
+	var/no_hint = 0 //!Number of times it's not even bother to give a qdel hint
+	var/slept_destroy = 0 //!Number of times it's slept in its destroy
+	var/qdel_flags = 0 //!Flags related to this type's trip thru qdel.
 
 /datum/qdel_item/New(mytype)
 	name = "[mytype]"

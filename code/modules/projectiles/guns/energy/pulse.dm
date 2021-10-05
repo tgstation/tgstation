@@ -18,9 +18,9 @@
 /obj/item/gun/energy/pulse/prize
 	pin = /obj/item/firing_pin
 
-/obj/item/gun/energy/pulse/prize/Initialize()
+/obj/item/gun/energy/pulse/prize/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 	var/turf/T = get_turf(src)
 
 	message_admins("A pulse rifle prize has been created at [ADMIN_VERBOSEJMP(T)]")
@@ -55,7 +55,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse)
 
 /obj/item/gun/energy/pulse/destroyer/attack_self(mob/living/user)
-	to_chat(user, "<span class='danger'>[src.name] has three settings, and they are all DESTROY.</span>")
+	to_chat(user, span_danger("[src.name] has three settings, and they are all DESTROY."))
 
 /obj/item/gun/energy/pulse/pistol
 	name = "pulse pistol"

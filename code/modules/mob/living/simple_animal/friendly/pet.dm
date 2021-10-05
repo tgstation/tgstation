@@ -19,7 +19,7 @@
 		return
 	pcollar = P
 	regenerate_icons()
-	to_chat(user, "<span class='notice'>You put the [P] around [src]'s neck.</span>")
+	to_chat(user, span_notice("You put the [P] around [src]'s neck."))
 	if(P.tagname && !unique_pet)
 		fully_replace_character_name(null, "\proper [P.tagname]")
 
@@ -30,12 +30,12 @@
 
 	if(istype(O, /obj/item/newspaper))
 		if(!stat)
-			user.visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O].</span>")
+			user.visible_message(span_notice("[user] baps [name] on the nose with the rolled up [O]."))
 			dance_rotate(src)
 	else
 		..()
 
-/mob/living/simple_animal/pet/Initialize()
+/mob/living/simple_animal/pet/Initialize(mapload)
 	. = ..()
 	if(pcollar)
 		pcollar = new(src)
@@ -67,6 +67,8 @@
 	if(collar_type)
 		collar_type = "[initial(collar_type)]_dead"
 	regenerate_icons()
+
+	add_memory_in_range(src, 7, MEMORY_PET_DEAD, list(DETAIL_DEUTERAGONIST = src), story_value = STORY_VALUE_AMAZING, memory_flags = MEMORY_CHECK_BLIND_AND_DEAF) //Protagonist is the person memorizing it
 
 /mob/living/simple_animal/pet/regenerate_icons()
 	cut_overlays()

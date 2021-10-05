@@ -18,19 +18,19 @@ Consuming extracts:
 /obj/item/slimecross/consuming/attackby(obj/item/O, mob/user)
 	if(IS_EDIBLE(O))
 		if(last_produced + cooldown > world.time)
-			to_chat(user, "<span class='warning'>[src] is still digesting after its last meal!</span>")
+			to_chat(user, span_warning("[src] is still digesting after its last meal!"))
 			return
 		var/datum/reagent/N = O.reagents.has_reagent(/datum/reagent/consumable/nutriment)
 		if(N)
 			nutriment_eaten += N.volume
-			to_chat(user, "<span class='notice'>[src] opens up and swallows [O] whole!</span>")
+			to_chat(user, span_notice("[src] opens up and swallows [O] whole!"))
 			qdel(O)
 			playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
 		else
-			to_chat(user, "<span class='warning'>[src] burbles unhappily at the offering.</span>")
+			to_chat(user, span_warning("[src] burbles unhappily at the offering."))
 		if(nutriment_eaten >= nutriment_required)
 			nutriment_eaten = 0
-			user.visible_message("<span class='notice'>[src] swells up and produces a small pile of cookies!</span>")
+			user.visible_message(span_notice("[src] swells up and produces a small pile of cookies!"))
 			playsound(src, 'sound/effects/splat.ogg', 40, TRUE)
 			last_produced = world.time
 			for(var/i in 1 to cookies)
@@ -62,18 +62,18 @@ Consuming extracts:
 /obj/item/slime_cookie/attack(mob/living/M, mob/user)
 	var/fed = FALSE
 	if(M == user)
-		M.visible_message("<span class='notice'>[user] eats [src]!</span>", "<span class='notice'>You eat [src].</span>")
+		M.visible_message(span_notice("[user] eats [src]!"), span_notice("You eat [src]."))
 		fed = TRUE
 	else
-		M.visible_message("<span class='danger'>[user] tries to force [M] to eat [src]!</span>", "<span class='userdanger'>[user] tries to force you to eat [src]!</span>")
+		M.visible_message(span_danger("[user] tries to force [M] to eat [src]!"), span_userdanger("[user] tries to force you to eat [src]!"))
 		if(do_after(user, 20, target = M))
 			fed = TRUE
-			M.visible_message("<span class='danger'>[user] forces [M] to eat [src]!</span>", "<span class='warning'>[user] forces you to eat [src].</span>")
+			M.visible_message(span_danger("[user] forces [M] to eat [src]!"), span_warning("[user] forces you to eat [src]."))
 	if(fed)
 		var/mob/living/carbon/human/H = M
 
 		if(!istype(H) || !HAS_TRAIT(H, TRAIT_AGEUSIA))
-			to_chat(M, "<span class='notice'>Tastes like [taste].</span>")
+			to_chat(M, span_notice("Tastes like [taste]."))
 		playsound(get_turf(M), 'sound/items/eatfood.ogg', 20, TRUE)
 		if(nutrition)
 			M.reagents.add_reagent(/datum/reagent/consumable/nutriment,nutrition)
@@ -277,7 +277,7 @@ Consuming extracts:
 
 /obj/item/slime_cookie/cerulean/do_effect(mob/living/M, mob/user)
 	if(prob(50))
-		to_chat(M, "<span class='notice'>A piece of [src] breaks off while you chew, and falls to the ground.</span>")
+		to_chat(M, span_notice("A piece of [src] breaks off while you chew, and falls to the ground."))
 		var/obj/item/slime_cookie/cerulean/C = new(get_turf(M))
 		C.taste = taste + " and a sugar cookie"
 
@@ -293,7 +293,7 @@ Consuming extracts:
 	taste = "vanilla and " //Randomly selected color dye.
 	var/colour = "#FFFFFF"
 
-/obj/item/slime_cookie/pyrite/Initialize()
+/obj/item/slime_cookie/pyrite/Initialize(mapload)
 	. = ..()
 	var/tastemessage = "paint remover"
 	switch(rand(1,7))

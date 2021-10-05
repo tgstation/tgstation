@@ -26,7 +26,7 @@
 			else if(DT_PROB(2.5, delta_time))
 				affected_mob.emote("gasp")
 			if(DT_PROB(5, delta_time))
-				to_chat(affected_mob, "<span class='danger'>You're starting to feel very weak...</span>")
+				to_chat(affected_mob, span_danger("You're starting to feel very weak..."))
 		if(4)
 			if(DT_PROB(5, delta_time))
 				affected_mob.emote("cough")

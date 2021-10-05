@@ -39,6 +39,9 @@
 #define MODE_DEADMIN "deadmin"
 #define MODE_KEY_DEADMIN "d"
 
+#define MODE_PUPPET "puppet"
+#define MODE_KEY_PUPPET "j"
+
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
 
@@ -84,9 +87,6 @@
 #define MAX_NAME_LEN 42
 #define MAX_BROADCAST_LEN 512
 #define MAX_CHARTER_LEN 80
-
-// Is something in the IC chat filter? This is config dependent.
-#define CHAT_FILTER_CHECK(T) (config.ic_filter_regex && findtext(T, config.ic_filter_regex))
 
 // Audio/Visual Flags. Used to determine what sense are required to notice a message.
 #define MSG_VISUAL (1<<0)

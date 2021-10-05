@@ -2,11 +2,12 @@
 	name = "Fake Virus"
 	typepath = /datum/round_event/fake_virus
 	weight = 20
+	alert_observers = FALSE
 
 /datum/round_event/fake_virus/start()
 	var/list/fake_virus_victims = list()
 	for(var/mob/living/carbon/human/victim in shuffle(GLOB.player_list))
-		if(victim.stat == DEAD || HAS_TRAIT(victim, TRAIT_CRITICAL_CONDITION) || !SSjob.GetJob(victim.mind.assigned_role) || (victim.mind.assigned_role in GLOB.nonhuman_positions))
+		if(victim.stat == DEAD || HAS_TRAIT(victim, TRAIT_CRITICAL_CONDITION) || !(victim.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
 			continue
 		fake_virus_victims += victim
 
@@ -25,7 +26,7 @@
 		for(var/i=1; i<=rand(1,defacto_min); i++)
 			var/mob/living/carbon/human/onecoughman = pick(fake_virus_victims)
 			if(prob(25))//1/4 odds to get a spooky message instead of coughing out loud
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, onecoughman, "<span class='warning'>[pick("Your head hurts.", "Your head pounds.")]</span>"), rand(30,150))
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, onecoughman, span_warning("[pick("Your head hurts.", "Your head pounds.")]")), rand(30,150))
 			else
 				addtimer(CALLBACK(onecoughman, .mob/proc/emote, pick("cough", "sniff", "sneeze")), rand(30,150))//deliver the message with a slightly randomized time interval so there arent multiple people coughing at the exact same time
 			fake_virus_victims -= onecoughman

@@ -57,7 +57,7 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "o" = (
-/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "p" = (

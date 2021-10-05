@@ -38,7 +38,7 @@
 	///Visual overlay of the bot commiting warcrimes.
 	var/mutable_appearance/fire_overlay
 
-/mob/living/simple_animal/bot/hygienebot/Initialize()
+/mob/living/simple_animal/bot/hygienebot/Initialize(mapload)
 	. = ..()
 	update_appearance(UPDATE_ICON)
 
@@ -49,11 +49,11 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /mob/living/simple_animal/bot/hygienebot/explode()
 	walk_to(src,0)
-	visible_message("<span class='boldannounce'>[src] blows apart in a foamy explosion!</span>")
+	visible_message(span_boldannounce("[src] blows apart in a foamy explosion!"))
 	do_sparks(3, TRUE, src)
 	on = FALSE
 	new /obj/effect/particle_effect/foam(loc)

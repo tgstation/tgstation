@@ -18,7 +18,7 @@
 	///determines if the circuit board originated from a vendor off station or not.
 	var/onstation = TRUE
 
-/obj/item/circuitboard/Initialize()
+/obj/item/circuitboard/Initialize(mapload)
 	set_greyscale(new_config=/datum/greyscale_config/circuit)
 	return ..()
 
@@ -101,4 +101,4 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			if(!ispath(A))
 				continue
 			nice_list += list("[req_components[A]] [initial(A.name)]")
-		. += "<span class='notice'>Required components: [english_list(nice_list)].</span>"
+		. += span_notice("Required components: [english_list(nice_list)].")

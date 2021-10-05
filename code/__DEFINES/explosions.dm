@@ -12,6 +12,8 @@
 // Must match the arguments to [/datum/controller/subsystem/explosions/proc/propagate_blastwave]
 /// The origin atom of the explosion.
 #define EXARG_KEY_ORIGIN "origin"
+/// The potential cause of the explosion, if different to origin.
+#define EXARG_KEY_EXPLOSION_CAUSE STRINGIFY(explosion_cause)
 /// The devastation range of the explosion.
 #define EXARG_KEY_DEV_RANGE STRINGIFY(devastation_range)
 /// The heavy impact range of the explosion.

@@ -42,6 +42,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/cmd_admin_rejuvenate,
 	/datum/admins/proc/show_traitor_panel,
 	/client/proc/disable_communication,
+	/client/proc/show_map_reports,
 	/client/proc/cmd_show_at_list,
 	/client/proc/cmd_show_at_markers,
 	/client/proc/manipulate_organs,
@@ -53,19 +54,6 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/place_ruin
 ))
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
-
-/obj/effect/debugging/mapfix_marker
-	name = "map fix marker"
-	icon = 'icons/hud/screen_gen.dmi'
-	icon_state = "mapfixmarker"
-	desc = "I am a mappers mistake."
-
-/obj/effect/debugging/marker
-	icon = 'icons/turf/areas.dmi'
-	icon_state = "yellow"
-
-/obj/effect/debugging/marker/Move()
-	return FALSE
 
 /client/proc/camera_view()
 	set category = "Mapping"
@@ -149,18 +137,29 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	set name = "Intercom Range Display"
 
 	var/static/intercom_range_display_status = FALSE
-	intercom_range_display_status = !intercom_range_display_status //blame cyberboss if this breaks something
+	intercom_range_display_status = !intercom_range_display_status //blame cyberboss if this breaks something //blamed
 
-	for(var/obj/effect/debugging/marker/M in world)
-		qdel(M)
+	for(var/obj/effect/abstract/marker/intercom/marker in GLOB.all_abstract_markers)
+		qdel(marker)
 
 	if(intercom_range_display_status)
-		for(var/obj/item/radio/intercom/I in world)
-			for(var/turf/T in orange(7,I))
-				var/obj/effect/debugging/marker/F = new/obj/effect/debugging/marker(T)
-				if (!(F in view(7,I.loc)))
-					qdel(F)
+		for(var/frequency in GLOB.all_radios)
+			for(var/obj/item/radio/intercom/intercom in GLOB.all_radios[frequency])
+				for(var/turf/turf in view(7,intercom.loc))
+					new /obj/effect/abstract/marker/intercom(turf)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Intercom Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/show_map_reports()
+	set category = "Mapping"
+	set name = "Show map report list"
+	set desc = "Displays a list of map reports"
+
+	var/dat = {"<b>List of all map reports:</b><br>"}
+
+	for(var/datum/map_report/report as anything in GLOB.map_reports)
+		dat += "[report.tag] ([report.original_path]) - <a href='?src=[REF(report)];[HrefToken()];show=1'>View</a><br>"
+
+	usr << browse(dat, "window=map_reports")
 
 /client/proc/cmd_show_at_list()
 	set category = "Mapping"
@@ -199,20 +198,20 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Roundstart Active Turf Markers")
 
-/client/proc/enable_debug_verbs()
+/client/proc/enable_mapping_verbs()
 	set category = "Debug"
-	set name = "Debug verbs - Enable"
+	set name = "Mapping verbs - Enable"
 	if(!check_rights(R_DEBUG))
 		return
-	remove_verb(src, /client/proc/enable_debug_verbs)
-	add_verb(src, list(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping))
+	remove_verb(src, /client/proc/enable_mapping_verbs)
+	add_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Enable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/disable_debug_verbs()
+/client/proc/disable_mapping_verbs()
 	set category = "Debug"
-	set name = "Debug verbs - Disable"
-	remove_verb(src, list(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping))
-	add_verb(src, /client/proc/enable_debug_verbs)
+	set name = "Mapping verbs - Disable"
+	remove_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
+	add_verb(src, /client/proc/enable_mapping_verbs)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Disable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/count_objects_on_z_level()
@@ -305,7 +304,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 				for(var/obj/item/I in D)
 					qdel(I)
 				randomize_human(D)
-				JB.equip(D, TRUE, FALSE)
+				D.dress_up_as_job(JB, TRUE)
 				COMPILE_OVERLAYS(D)
 				var/icon/I = icon(getFlatIcon(D), frame = 1)
 				final.Insert(I, JB.title)

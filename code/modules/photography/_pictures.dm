@@ -105,7 +105,13 @@
 	if(!json[id])
 		return
 	var/datum/picture/P = new
-	P.deserialize_json(json[id])
+
+	// Old photos were saved as, and I shit you not, encoded JSON strings.
+	if (istext(json[id]))
+		P.deserialize_json(json[id])
+	else
+		P.deserialize_list(json[id])
+
 	return P
 
 /proc/log_path_from_picture_ID(id)
@@ -155,7 +161,7 @@
 		fdel(jsonpath)
 	else
 		json = list()
-	json[id] = serialize_json()
+	json[id] = serialize_list()
 	WRITE_FILE(jsonpath, json_encode(json))
 
 /datum/picture/proc/Copy(greyscale = FALSE, cropx = 0, cropy = 0)

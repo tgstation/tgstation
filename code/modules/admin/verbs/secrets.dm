@@ -1,4 +1,4 @@
-
+GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 
 /client/proc/secrets() //Creates a verb for admins to open up the ui
 	set name = "Secrets"
@@ -86,11 +86,9 @@
 		if("infinite_sec")
 			if(!is_debugger)
 				return
-			var/datum/job/J = SSjob.GetJob("Security Officer")
-			if(!J)
-				return
-			J.total_positions = -1
-			J.spawn_positions = -1
+			var/datum/job/sec_job = SSjob.GetJobType(/datum/job/security_officer)
+			sec_job.total_positions = -1
+			sec_job.spawn_positions = -1
 			message_admins("[key_name_admin(holder)] has removed the cap on security officers.")
 		//Buttons for helpful stuff. This is where people land in the tgui
 		if("clear_virus")
@@ -140,7 +138,7 @@
 			for(var/i in GLOB.human_list)
 				var/mob/living/carbon/human/H = i
 				if(H.ckey)
-					dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
+					dat += "<tr><td>[H]</td><td>[md5(H.dna.unique_identity)]</td></tr>"
 			dat += "</table>"
 			holder << browse(dat, "window=fingerprints;size=440x410")
 		if("ctfbutton")
@@ -151,7 +149,7 @@
 				return
 
 			log_admin("[key_name(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs].", 1)
-			message_admins("<span class='adminnotice'>[key_name_admin(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs].</span>")
+			message_admins(span_adminnotice("[key_name_admin(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs]."))
 
 			var/area/thunderdome = GLOB.areas_by_type[/area/tdome/arena]
 			if(delete_mobs == "Yes")
@@ -169,13 +167,13 @@
 				return
 			set_station_name(new_name)
 			log_admin("[key_name(holder)] renamed the station to \"[new_name]\".")
-			message_admins("<span class='adminnotice'>[key_name_admin(holder)] renamed the station to: [new_name].</span>")
+			message_admins(span_adminnotice("[key_name_admin(holder)] renamed the station to: [new_name]."))
 			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
 		if("reset_name")
 			var/new_name = new_station_name()
 			set_station_name(new_name)
 			log_admin("[key_name(holder)] reset the station name.")
-			message_admins("<span class='adminnotice'>[key_name_admin(holder)] reset the station name.</span>")
+			message_admins(span_adminnotice("[key_name_admin(holder)] reset the station name."))
 			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
 		if("night_shift_set")
 			var/val = tgui_alert(holder, "What do you want to set night shift to? This will override the automatic system until set to automatic again.", "Night Shift", list("On", "Off", "Automatic"))
@@ -206,7 +204,7 @@
 				message_admins("[key_name_admin(holder)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
 				log_admin("[key_name(holder)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
 			else
-				to_chat(holder, "<span class='admin'>There is no arrivals shuttle.</span>", confidential = TRUE)
+				to_chat(holder, span_admin("There is no arrivals shuttle."), confidential = TRUE)
 		if("movelaborshuttle")
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Send Labor Shuttle"))
 			if(!SSshuttle.toggleShuttle("laborcamp","laborcamp_home","laborcamp_away"))
@@ -246,21 +244,21 @@
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Power All APCs"))
 			log_admin("[key_name(holder)] made all areas powered", 1)
-			message_admins("<span class='adminnotice'>[key_name_admin(holder)] made all areas powered</span>")
+			message_admins(span_adminnotice("[key_name_admin(holder)] made all areas powered"))
 			power_restore()
 		if("unpower")
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Depower All APCs"))
 			log_admin("[key_name(holder)] made all areas unpowered", 1)
-			message_admins("<span class='adminnotice'>[key_name_admin(holder)] made all areas unpowered</span>")
+			message_admins(span_adminnotice("[key_name_admin(holder)] made all areas unpowered"))
 			power_failure()
 		if("quickpower")
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Power All SMESs"))
 			log_admin("[key_name(holder)] made all SMESs powered", 1)
-			message_admins("<span class='adminnotice'>[key_name_admin(holder)] made all SMESs powered</span>")
+			message_admins(span_adminnotice("[key_name_admin(holder)] made all SMESs powered"))
 			power_restore_quick()
 		if("anon_name")
 			if(!is_funmin)
@@ -384,7 +382,7 @@
 				var/list/prefs = settings["mainsettings"]
 
 				if (prefs["amount"]["value"] < 1 || prefs["portalnum"]["value"] < 1)
-					to_chat(holder, "<span class='warning'>Number of portals and mobs to spawn must be at least 1.</span>", confidential = TRUE)
+					to_chat(holder, span_warning("Number of portals and mobs to spawn must be at least 1."), confidential = TRUE)
 					return
 
 				var/mob/pathToSpawn = prefs["typepath"]["value"]
@@ -392,13 +390,13 @@
 					pathToSpawn = text2path(pathToSpawn)
 
 				if (!ispath(pathToSpawn))
-					to_chat(holder, "<span class='notice'>Invalid path [pathToSpawn].</span>", confidential = TRUE)
+					to_chat(holder, span_notice("Invalid path [pathToSpawn]."), confidential = TRUE)
 					return
 
 				var/list/candidates = list()
 
 				if (prefs["offerghosts"]["value"] == "Yes")
-					candidates = pollGhostCandidates(replacetext(prefs["ghostpoll"]["value"], "%TYPE%", initial(pathToSpawn.name)), ROLE_TRAITOR)
+					candidates = poll_ghost_candidates(replacetext(prefs["ghostpoll"]["value"], "%TYPE%", initial(pathToSpawn.name)), ROLE_TRAITOR)
 
 				if (prefs["playersonly"]["value"] == "Yes" && length(candidates) < prefs["minplayers"]["value"])
 					message_admins("Not enough players signed up to create a portal storm, the minimum was [prefs["minplayers"]["value"]] and the number of signups [length(candidates)]")
@@ -434,7 +432,7 @@
 			if (!CONFIG_SET(number/bombcap, newBombCap))
 				return
 
-			message_admins("<span class='boldannounce'>[key_name_admin(holder)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]</span>")
+			message_admins(span_boldannounce("[key_name_admin(holder)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]"))
 			log_admin("[key_name(holder)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]")
 		//buttons that are fun for exactly you and nobody else.
 		if("monkey")
@@ -452,32 +450,24 @@
 			if(!SSticker.HasRoundStarted())
 				tgui_alert(usr,"The game hasn't started yet!")
 				return
+			if(GLOB.everyone_a_traitor)
+				tgui_alert(usr, "The everyone is a traitor secret has already been triggered")
+				return
 			var/objective = stripped_input(holder, "Enter an objective")
 			if(!objective)
 				return
+			GLOB.everyone_a_traitor = new /datum/everyone_is_a_traitor_controller(objective)
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Traitor All", "[objective]"))
 			for(var/mob/living/player in GLOB.player_list)
-				if(!(ishuman(player)||istype(player, /mob/living/silicon/)))
-					continue
-				if(player.stat == DEAD || !player.mind || ispAI(player))
-					continue
-				if(is_special_character(player))
-					continue
-				var/datum/antagonist/traitor/traitor_datum = new()
-				traitor_datum.give_objectives = FALSE
-				var/datum/objective/new_objective = new
-				new_objective.owner = player
-				new_objective.explanation_text = objective
-				traitor_datum.objectives += new_objective
-				player.mind.add_antag_datum(traitor_datum)
-			message_admins("<span class='adminnotice'>[key_name_admin(holder)] used everyone is a traitor secret. Objective is [objective]</span>")
+				GLOB.everyone_a_traitor.make_traitor(null, player)
+			message_admins(span_adminnotice("[key_name_admin(holder)] used everyone is a traitor secret. Objective is [objective]"))
 			log_admin("[key_name(holder)] used everyone is a traitor secret. Objective is [objective]")
 		if("massbraindamage")
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Mass Braindamage"))
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				to_chat(H, "<span class='boldannounce'>You suddenly feel stupid.</span>", confidential = TRUE)
+				to_chat(H, span_boldannounce("You suddenly feel stupid."), confidential = TRUE)
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60, 80)
 			message_admins("[key_name_admin(holder)] made everybody brain damaged")
 		if("floorlava")
@@ -499,7 +489,7 @@
 				var/mob/living/carbon/human/H = i
 				SEND_SOUND(H, sound(SSstation.announcer.event_sounds[ANNOUNCER_ANIMES]))
 
-				if(H.dna.species.id == "human")
+				if(H.dna.species.id == SPECIES_HUMAN)
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
 						var/obj/item/organ/ears/cat/ears = new
 						var/obj/item/organ/tail/cat/tail = new
@@ -521,7 +511,7 @@
 						if(droptype == "Yes")
 							ADD_TRAIT(I, TRAIT_NODROP, ADMIN_TRAIT)
 				else
-					to_chat(H, "<span class='warning'>You're not kawaii enough for this!</span>", confidential = TRUE)
+					to_chat(H, span_warning("You're not kawaii enough for this!"), confidential = TRUE)
 		if("masspurrbation")
 			if(!is_funmin)
 				return
@@ -562,7 +552,7 @@
 			if(teamsize <= 0)
 				return FALSE
 
-			candidates = pollGhostCandidates("Do you wish to be considered for a Nanotrasen emergency response drone?", "Drone")
+			candidates = poll_ghost_candidates("Do you wish to be considered for a Nanotrasen emergency response drone?", "Drone")
 
 			if(length(candidates) == 0)
 				return FALSE
@@ -607,7 +597,7 @@
 		if (length(players))
 			var/mob/chosen = players[1]
 			if (chosen.client)
-				chosen.client.prefs.copy_to(spawnedMob)
+				chosen.client.prefs.safe_transfer_prefs_to(spawnedMob, is_antag = TRUE)
 				spawnedMob.key = chosen.key
 			players -= chosen
 		if (ishuman(spawnedMob) && ispath(humanoutfit, /datum/outfit))
@@ -616,3 +606,31 @@
 	var/turf/T = get_step(loc, SOUTHWEST)
 	flick_overlay_static(portal_appearance, T, 15)
 	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), TRUE)
+
+///Makes sure latejoining crewmembers also become traitors.
+/datum/everyone_is_a_traitor_controller
+	var/objective = ""
+
+/datum/everyone_is_a_traitor_controller/New(objective)
+	src.objective = objective
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/make_traitor)
+
+/datum/everyone_is_a_traitor_controller/Destroy()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
+	return ..()
+
+/datum/everyone_is_a_traitor_controller/proc/make_traitor(datum/source, mob/living/player)
+	SIGNAL_HANDLER
+	if(player.stat == DEAD || !player.mind)
+		return
+	if(!(ishuman(player) || issilicon(player)) || ispAI(player))
+		return
+	if(is_special_character(player))
+		return
+	var/datum/antagonist/traitor/traitor_datum = new()
+	traitor_datum.give_objectives = FALSE
+	var/datum/objective/new_objective = new
+	new_objective.owner = player
+	new_objective.explanation_text = objective
+	traitor_datum.objectives += new_objective
+	player.mind.add_antag_datum(traitor_datum)

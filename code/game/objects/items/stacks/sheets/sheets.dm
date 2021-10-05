@@ -11,6 +11,7 @@
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "smashes")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "smash")
 	novariants = FALSE
+	material_flags = MATERIAL_EFFECTS
 	var/sheettype = null //this is used for girders in the creation of walls/false walls
 	var/point_value = 0 //turn-in value for the gulag stacker - loosely relative to its rarity.
 	///What type of wall does this sheet spawn
@@ -42,6 +43,6 @@
 	user.do_attack_animation(src, ATTACK_EFFECT_BOOP)
 	playsound(src, "shatter", 70, TRUE)
 	use(1)
-	user.visible_message("<span class='notice'>[user] shatters the sheet of [name] on the floor, leaving [english_list(shards)].</span>", \
-		"<span class='notice'>You shatter the sheet of [name] on the floor, leaving [english_list(shards)].</span>")
+	user.visible_message(span_notice("[user] shatters the sheet of [name] on the floor, leaving [english_list(shards)]."), \
+		span_notice("You shatter the sheet of [name] on the floor, leaving [english_list(shards)]."))
 	return TRUE

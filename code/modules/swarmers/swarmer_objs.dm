@@ -56,9 +56,9 @@
 	///Reference to all the swarmers currently alive this beacon has created
 	var/list/mob/living/simple_animal/hostile/swarmer/swarmerlist
 
-/obj/structure/swarmer_beacon/Initialize()
+/obj/structure/swarmer_beacon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 
 /obj/structure/swarmer_beacon/attack_ghost(mob/user)
 	. = ..()
@@ -81,7 +81,7 @@
 	var/mob/living/simple_animal/hostile/swarmer/newswarmer = new /mob/living/simple_animal/hostile/swarmer(src)
 	newswarmer.key = user.key
 	addtimer(CALLBACK(src, .proc/release_swarmer, newswarmer), (LAZYLEN(swarmerlist) * 2 SECONDS) + 5 SECONDS)
-	to_chat(newswarmer, "<span class='boldannounce'>SWARMER CONSTRUCTION INITIALIZED.</span>")
+	to_chat(newswarmer, span_boldannounce("SWARMER CONSTRUCTION INITIALIZED."))
 	processing_swarmer = TRUE
 	return TRUE
 
@@ -130,6 +130,13 @@
 	max_integrity = 10
 	density = FALSE
 
+/obj/structure/swarmer/trap/Initialize(mapload)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 /obj/structure/swarmer/trap/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(isliving(AM))
@@ -149,9 +156,9 @@
 	max_integrity = 50
 	density = TRUE
 
-/obj/structure/swarmer/blockade/CanAllowThrough(atom/movable/O)
+/obj/structure/swarmer/blockade/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(isswarmer(O) || istype(O, /obj/projectile/beam/disabler))
+	if(isswarmer(mover) || istype(mover, /obj/projectile/beam/disabler))
 		return TRUE
 
 /obj/effect/temp_visual/swarmer //temporary swarmer visual feedback objects
@@ -162,7 +169,7 @@
 	icon_state = "disintegrate"
 	duration = 1 SECONDS
 
-/obj/effect/temp_visual/swarmer/disintegration/Initialize()
+/obj/effect/temp_visual/swarmer/disintegration/Initialize(mapload)
 	. = ..()
 	playsound(loc, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 

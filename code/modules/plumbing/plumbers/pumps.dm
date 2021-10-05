@@ -41,7 +41,7 @@
 			update_appearance()
 		if(!geyser) //we didnt find one, abort
 			geyserless = TRUE
-			visible_message("<span class='warning'>The [name] makes a sad beep!</span>")
+			visible_message(span_warning("The [name] makes a sad beep!"))
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
 			return
 

@@ -27,7 +27,7 @@
 
 /obj/item/weaponcrafting/gunkit/nuclear
 	name = "advanced energy gun parts kit"
-	desc = "A suitcase containing the necessary gun parts to tranform a standard energy gun into an advaned energy gun."
+	desc = "A suitcase containing the necessary gun parts to tranform a standard energy gun into an advanced energy gun."
 
 /obj/item/weaponcrafting/gunkit/tesla
 	name = "tesla cannon parts kit"
@@ -38,8 +38,8 @@
 	desc = "A suitcase containing the necessary gun parts to turn a laser gun into a x-ray laser gun. Do not point most parts directly towards face."
 
 /obj/item/weaponcrafting/gunkit/ion
-	name = "generic gun parts kit"
-	desc = "A suitcase containing the necessary gun parts to transform a standard laser gun into a ion carbine."
+	name = "ion carbine parts kit"
+	desc = "A suitcase containing the necessary gun parts to transform a standard laser gun into a ion carbine. Perfect against lockers you don't have access to."
 
 /obj/item/weaponcrafting/gunkit/temperature
 	name = "temperature gun parts kit"

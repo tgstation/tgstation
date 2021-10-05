@@ -117,18 +117,18 @@
 					if(C && istype(C))
 						var/pay = C.get_item_credit_value()
 						if(!pay)
-							to_chat(M, "<span class='warning'>[C] doesn't seem to be worth anything!</span>")
+							to_chat(M, span_warning("[C] doesn't seem to be worth anything!"))
 						else
 							var/diff = p.fine - p.paid
 							GLOB.data_core.payCitation(current.fields["id"], text2num(href_list["cdataid"]), pay)
-							to_chat(M, "<span class='notice'>You have paid [pay] credit\s towards your fine.</span>")
+							to_chat(M, span_notice("You have paid [pay] credit\s towards your fine."))
 							if (pay == diff || pay > diff || pay >= diff)
 								investigate_log("Citation Paid off: <strong>[p.crimeName]</strong> Fine: [p.fine] | Paid off by [key_name(usr)]", INVESTIGATE_RECORDS)
-								to_chat(M, "<span class='notice'>The fine has been paid in full.</span>")
+								to_chat(M, span_notice("The fine has been paid in full."))
 							SSblackbox.ReportCitation(text2num(href_list["cdataid"]),"","","","", 0, pay)
 							qdel(C)
 							playsound(src, "terminal_type", 25, FALSE)
 					else
-						to_chat(M, "<span class='warning'>Fines can only be paid with holochips!</span>")
+						to_chat(M, span_warning("Fines can only be paid with holochips!"))
 	updateUsrDialog()
 	add_fingerprint(M)

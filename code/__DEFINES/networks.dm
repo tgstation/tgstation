@@ -34,6 +34,7 @@
 #define __NETWORK_BOTS "BOTS"
 #define __NETWORK_COMPUTER "COMPUTER"
 #define __NETWORK_CARDS "CARDS"
+#define __NETWORK_CIRCUITS "CIRCUITS"
 
 /// Various combined subnetworks
 #define NETWORK_DOOR_REMOTES NETWORK_NAME_COMBINE(__NETWORK_DOORS, __NETWORK_REMOTES)
@@ -90,5 +91,4 @@
 #define NETWORK_ERROR_BAD_NETWORK "network_error_bad_network"
 #define NETWORK_ERROR_BAD_RECEIVER_ID "network_error_bad_receiver_id"
 #define NETWORK_ERROR_UNAUTHORIZED "network_error_bad_unauthorized"
-#define NETWORK_ERROR_BAD_TARGET_ID "network_error_bad_target_id"
 

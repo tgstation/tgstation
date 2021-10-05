@@ -2,7 +2,7 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	sight = 0
 	see_in_dark = 2
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 	pressure_resistance = 10
 
 	hud_type = /datum/hud/living
@@ -62,7 +62,7 @@
 	  */
 	var/incorporeal_move = FALSE
 
-	var/list/roundstart_quirks = list()
+	var/list/quirks = list()
 
 	var/list/surgeries = list() ///a list of surgery datums. generally empty, they're added when the player wants them.
 	///Mob specific surgery speed modifier
@@ -114,8 +114,6 @@
 	var/list/guaranteed_butcher_results = null ///these will always be yielded from butchering
 	var/butcher_difficulty = 0 ///effectiveness prob. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier
 
-	var/list/weather_immunities
-
 	var/stun_absorption = null ///converted to a list of stun absorption sources this mob has when one is added
 
 	var/blood_volume = 0 ///how much blood the mob has
@@ -138,8 +136,12 @@
 
 	var/list/obj/effect/proc_holder/abilities = list()
 
-	var/can_be_held = FALSE //whether this can be picked up and held.
-	var/worn_slot_flags = NONE //if it can be held, can it be equipped to any slots? (think pAI's on head)
+	///whether this can be picked up and held.
+	var/can_be_held = FALSE
+	/// The w_class of the holder when held.
+	var/held_w_class = WEIGHT_CLASS_NORMAL
+	///if it can be held, can it be equipped to any slots? (think pAI's on head)
+	var/worn_slot_flags = NONE
 
 	var/radiation = 0 ///If the mob is irradiated.
 	var/ventcrawl_layer = PIPING_LAYER_DEFAULT

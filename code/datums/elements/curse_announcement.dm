@@ -15,7 +15,7 @@
 	///new name given to the item on announce
 	var/new_name
 	///optional fantasy component, used in building the name if provided
-	var/datum/component/fantasy/fantasy_component
+	var/datum/weakref/fantasy_component
 
 /datum/element/curse_announcement/Attach(datum/target, announcement_message, filter_color, new_name, datum/component/fantasy/fantasy_component)
 	. = ..()
@@ -25,7 +25,7 @@
 	src.announcement_message = announcement_message
 	src.filter_color = filter_color
 	src.new_name = new_name
-	src.fantasy_component = fantasy_component
+	src.fantasy_component = WEAKREF(fantasy_component)
 	if(cursed_item.slot_equipment_priority) //if it can equip somewhere, only go active when it is actually done
 		RegisterSignal(cursed_item, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
 	else
@@ -47,12 +47,13 @@
 /datum/element/curse_announcement/proc/announce(obj/item/cursed_item, mob/cursed)
 	//this is from rpgloot, remove the quality suffix to format the name correctly
 	var/quality_suffix_text
-	if(fantasy_component)
-		quality_suffix_text = " [fantasy_component.quality]"
+	var/datum/component/fantasy/perchance_to_dream = fantasy_component.resolve()
+	if(perchance_to_dream)
+		quality_suffix_text = " [perchance_to_dream.quality]"
 		cursed_item.name = replacetext(cursed_item.name, quality_suffix_text,"")
 
 	//modifications to the item so it looks cursed
-	to_chat(cursed, "<span class='userdanger'>[announcement_message]</span>")
+	to_chat(cursed, span_userdanger("[announcement_message]"))
 	cursed_item.add_filter("cursed_item", 9, list("type" = "outline", "color" = filter_color, "size" = 1))
 	cursed_item.name = "[cursed_item][new_name]"
 

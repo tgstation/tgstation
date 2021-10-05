@@ -15,7 +15,7 @@
 	var/faction = list("hostile")
 	var/spawner_type = /datum/component/spawner
 
-/obj/structure/spawner/Initialize()
+/obj/structure/spawner/Initialize(mapload)
 	. = ..()
 	AddComponent(spawner_type, mob_types, spawn_time, faction, spawn_text, max_mobs)
 
