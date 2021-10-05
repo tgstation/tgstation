@@ -18,6 +18,9 @@
 	var/zap_cooldown = 100
 	var/last_zap = 0
 
+/obj/machinery/power/tesla_coil/anchored
+	anchored = TRUE
+
 /obj/machinery/power/tesla_coil/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/tesla_coil(src)
@@ -78,13 +81,8 @@
 		obj_flags |= BEING_SHOCKED
 		addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
 		zap_buckle_check(power)
-		if(zap_flags & ZAP_GENERATES_POWER) //I don't want no tesla revolver making 8GW you hear
-			return power / 2
 		var/power_produced = powernet ? power * input_power_multiplier : power
 		add_avail(power_produced)
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_ENG)
-		if(D)
-			D.adjust_money(min(power_produced, 1))
 		flick("coilhit", src)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 		return power - power_produced //You get back the amount we didn't use
@@ -113,6 +111,9 @@
 	can_buckle = TRUE
 	buckle_lying = 0
 	buckle_requires_restraints = TRUE
+
+/obj/machinery/power/grounding_rod/anchored
+	anchored = TRUE
 
 /obj/machinery/power/grounding_rod/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	. = ..()

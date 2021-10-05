@@ -639,9 +639,17 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(power_changes)
 			power = max((removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0)
 
-		if(prob(50))
+		if(prob(30))
 			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
-			radiation_pulse(src, power * max(0, (1 + (power_transmission_bonus/(10-(gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus))// RadModBZ(500%)
+			playsound(src.loc, 'sound/weapons/emitter2.ogg', 70, TRUE)
+			supermatter_zap(
+				zapstart = src,
+				range = 3,
+				zap_str = 1000 * power * max(0, (1 + (power_transmission_bonus / (10 - (gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus),
+				zap_flags = ZAP_SUPERMATTER_FLAGS,
+				zap_cutoff = src.zap_cutoff * 0.1,
+				power_level = power
+				)
 
 		if(prob(gas_comp[/datum/gas/zauker]))
 			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
@@ -719,7 +727,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//We should always be able to zap our way out of the default enclosure
 			//See supermatter_zap() for more details
 			range = clamp(power / removed.return_pressure() * 10, 2, 7)
-		var/flags = ZAP_SUPERMATTER_FLAGS
+		var/flags = ZAP_MOB_DAMAGE
 		var/zap_count = 0
 		//Deal with power zaps
 		switch(power)
