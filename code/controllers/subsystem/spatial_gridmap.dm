@@ -3,6 +3,8 @@
 	var/cell_x
 	///our y index in the list of cells. this is the index of our row list inside of our z level grid
 	var/cell_y
+	///which z level we belong to, corresponding to the index of our gridmap in SSspatial_grid.grids_by_z_level
+	var/cell_z
 	//every data point in a grid cell is separated by usecase
 
 	///every hearing sensitive movable inside this cell
@@ -14,6 +16,7 @@
 	. = ..()
 	src.cell_x = cell_x
 	src.cell_y = cell_y
+	src.cell_z = cell_z
 
 /datum/spatial_grid_cell/Destroy(force, ...)
 	if(force)//the response to someone trying to qdel this is a right proper fuck you
@@ -58,7 +61,7 @@ SUBSYSTEM_DEF(spatial_grid)
 		for(var/y in 1 to cells_per_side)
 			new_cell_grid += list(list())
 			for(var/x in 1 to cells_per_side)
-				var/datum/spatial_grid_cell/cell = new(x, y)
+				var/datum/spatial_grid_cell/cell = new(x, y, z_level.z_value)
 				new_cell_grid[y] += cell
 
 /**
