@@ -151,6 +151,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	///To keep track of things during the animation
 	var/switching = FALSE
 	var/currentuser
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF //The shield should not take damage from fire,  lava, or acid; that's the mech's job.
 
 
 /obj/durand_shield/Initialize(mapload, _chassis, _layer, _dir)
