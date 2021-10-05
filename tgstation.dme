@@ -3850,6 +3850,7 @@
 #include "code\modules\wiremod\components\action\radio.dm"
 #include "code\modules\wiremod\components\action\soundemitter.dm"
 #include "code\modules\wiremod\components\action\speech.dm"
+#include "code\modules\wiremod\components\action\writer.dm"
 #include "code\modules\wiremod\components\admin\animate.dm"
 #include "code\modules\wiremod\components\admin\filter.dm"
 #include "code\modules\wiremod\components\admin\getvar.dm"
