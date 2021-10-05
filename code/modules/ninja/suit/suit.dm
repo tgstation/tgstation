@@ -63,7 +63,7 @@
 		return
 	if(!user == affecting)
 		return
-	. += "All systems operational. Current energy capacity: <B>[DisplayEnergy(cell.charge)]</B>.\n"+\
+	. += "All systems operational. Current energy capacity: <B>[display_energy(cell.charge)]</B>.\n"+\
 	"The CLOAK-tech device is <B>[stealth?"active":"inactive"]</B>.\n"+\
 	"[a_boost?"An adrenaline boost is available to use.":"There is no adrenaline boost available.  Try refilling the suit with 20 units of radium."]"
 

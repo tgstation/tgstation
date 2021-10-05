@@ -1082,7 +1082,7 @@
 
 ///update the ID name of this mob
 /mob/proc/replace_identification_name(oldname,newname)
-	var/list/searching = GetAllContents()
+	var/list/searching = get_all_contents()
 	var/search_id = 1
 	var/search_pda = 1
 
