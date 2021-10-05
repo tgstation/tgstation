@@ -39142,6 +39142,17 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/disposal)
+"hHY" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/circuit/green{
+	luminosity = 2
+	},
+/area/engineering/supermatter)
 "hIk" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -56212,13 +56223,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
 /area/security/office)
-"nYI" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/power/grounding_rod/anchored,
-/turf/open/floor/engine,
-/area/engineering/supermatter)
 "nYK" = (
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating{
@@ -61219,7 +61223,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/power/grounding_rod/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "pPA" = (
@@ -79767,6 +79770,17 @@
 	},
 /turf/open/floor/plating,
 /area/cargo/warehouse)
+"wRq" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/circuit/green{
+	luminosity = 2
+	},
+/area/engineering/supermatter)
 "wRx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/masks,
@@ -118882,7 +118896,7 @@ eAV
 gOw
 eux
 kVo
-kVo
+wRq
 kVo
 qkL
 jts
@@ -119910,7 +119924,7 @@ qkL
 qoR
 opS
 rzN
-rzN
+hHY
 rzN
 qkL
 dlF
@@ -120168,7 +120182,7 @@ vxD
 qkL
 tJe
 xUf
-nYI
+tJe
 eAV
 dlF
 udi

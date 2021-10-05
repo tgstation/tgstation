@@ -57867,11 +57867,6 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/gravity_generator)
-"lkl" = (
-/obj/machinery/light/small/directional/south,
-/obj/machinery/power/grounding_rod/anchored,
-/turf/open/floor/engine,
-/area/engineering/supermatter)
 "lkw" = (
 /obj/structure/table/glass,
 /obj/machinery/light_switch/directional/south,
@@ -59054,7 +59049,6 @@
 /area/engineering/atmos/upper)
 "lBd" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/power/grounding_rod/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "lBf" = (
@@ -73463,6 +73457,14 @@
 	},
 /turf/open/floor/iron,
 /area/security/brig)
+"pKk" = (
+/obj/structure/window/reinforced/plasma/spawner/west{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "pKR" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/purple{
@@ -82386,6 +82388,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/hallway/primary/central/aft)
+"spy" = (
+/obj/structure/window/reinforced/plasma/spawner/west{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "spz" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -122919,7 +122929,7 @@ vvy
 qzf
 qzE
 vyP
-lkl
+xeU
 qzf
 iuk
 iuk
@@ -123175,7 +123185,7 @@ cnP
 kuB
 qzf
 hVW
-hVW
+spy
 hVW
 qzf
 qzf
@@ -123691,7 +123701,7 @@ hWu
 rgQ
 uqa
 wrL
-tLP
+pKk
 vyP
 eZx
 hfD

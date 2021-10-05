@@ -1,3 +1,5 @@
+#define COIL_OUTPUT min(stored_energy, (stored_energy * 0.2) + 1000)
+
 /obj/machinery/power/tesla_coil
 	name = "tesla coil"
 	desc = "For the union!"
@@ -13,10 +15,16 @@
 
 	circuit = /obj/item/circuitboard/machine/tesla_coil
 
+	///Flags of the zap that the coil releases when the wire is pulsed
 	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
+	///Multiplier for power conversion
 	var/input_power_multiplier = 1
+	///Cooldown between pulsed zaps
 	var/zap_cooldown = 100
+	///Reference to the last zap done
 	var/last_zap = 0
+	///Amount of power stored inside the coil to be released in the powernet
+	var/stored_energy = 0
 
 /obj/machinery/power/tesla_coil/anchored
 	anchored = TRUE
@@ -74,6 +82,11 @@
 
 	return ..()
 
+/obj/machinery/power/tesla_coil/process()
+	var/power_produced = COIL_OUTPUT
+	add_avail(power_produced)
+	stored_energy -= power_produced
+
 /obj/machinery/power/tesla_coil/zap_act(power, zap_flags)
 	if(anchored && !panel_open)
 		//don't lose arc power when it's not connected to anything
@@ -81,11 +94,11 @@
 		obj_flags |= BEING_SHOCKED
 		addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
 		zap_buckle_check(power)
-		var/power_produced = powernet ? power * input_power_multiplier : power
-		add_avail(power_produced * 300)
+		var/power_removed = powernet ? power * input_power_multiplier : power
+		stored_energy += max((power_removed - 100) * 100, 0)
 		flick("coilhit", src)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-		return max(power - power_produced, 0) //You get back the amount we didn't use
+		return max(power - power_removed, 0) //You get back the amount we didn't use
 	else
 		. = ..()
 

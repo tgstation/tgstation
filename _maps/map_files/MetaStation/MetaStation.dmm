@@ -6407,9 +6407,7 @@
 /area/maintenance/starboard/aft)
 "bln" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Gas to Cold Loop"
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "blw" = (
@@ -34498,7 +34496,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/atmospherics/components/trinary/filter/flipped/critical,
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+	filter_type = "n2";
+	on = 1
+	},
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "kkY" = (
@@ -35015,14 +35016,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/central)
-"kuT" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "Mix Bypass"
-	},
-/turf/open/floor/engine,
-/area/engineering/supermatter/room)
 "kuY" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -39607,10 +39600,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 1;
-	name = "Cold Loop to Gas"
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "mds" = (
@@ -42112,14 +42102,11 @@
 /turf/closed/wall,
 /area/maintenance/port/aft)
 "mVZ" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4;
-	name = "Cooling Loop Bypass"
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "mWd" = (
@@ -43785,13 +43772,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central)
-"nzH" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4;
-	name = "Gas to Chamber"
-	},
-/turf/open/floor/engine,
-/area/engineering/supermatter)
 "nzL" = (
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
@@ -49869,9 +49849,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "pGc" = (
@@ -50611,7 +50589,8 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = "n2"
+	filter_type = "n2";
+	on = 1
 	},
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
@@ -50852,6 +50831,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/service/hydroponics)
+"pXH" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "pXT" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -53144,9 +53132,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Engine Coolant Bypass"
-	},
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "qOc" = (
@@ -53362,10 +53347,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/aisat/exterior)
-"qRl" = (
-/obj/machinery/power/grounding_rod/anchored,
-/turf/open/floor/engine,
-/area/engineering/supermatter)
 "qRx" = (
 /obj/machinery/camera{
 	c_tag = "Gravity Generator Room";
@@ -59288,6 +59269,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
+"taM" = (
+/obj/structure/window/reinforced/plasma,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "tbb" = (
 /obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/tile/neutral{
@@ -69052,10 +69040,7 @@
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "wCN" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "Gas to Filter"
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "wCP" = (
@@ -71007,7 +70992,10 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
-/obj/machinery/atmospherics/components/trinary/filter/flipped/critical,
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+	filter_type = "n2";
+	on = 1
+	},
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "xli" = (
@@ -71246,13 +71234,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/commons/dorms)
-"xqo" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/trinary/filter/flipped/critical,
-/turf/open/floor/engine,
-/area/engineering/supermatter/room)
 "xqs" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -116175,7 +116156,7 @@ gsg
 jOd
 jOd
 fPi
-nzH
+wCN
 toS
 wCN
 fPi
@@ -116687,7 +116668,7 @@ eBe
 qLO
 gsg
 ugD
-qRl
+toS
 mfL
 jrn
 toS
@@ -116945,11 +116926,11 @@ aGS
 gsg
 iYv
 wST
-mfL
+taM
 jrn
 ctk
 mNF
-pdy
+pXH
 wST
 ifR
 jqt
@@ -117199,7 +117180,7 @@ rVz
 qHT
 vQt
 aGS
-kuT
+bln
 ugD
 toS
 mfL
@@ -117207,7 +117188,7 @@ jrn
 toS
 mNF
 pdy
-qRl
+toS
 kBa
 xVP
 tvy
@@ -117971,7 +117952,7 @@ kKv
 nQq
 wLu
 xGy
-xqo
+pTi
 tpa
 xle
 gda

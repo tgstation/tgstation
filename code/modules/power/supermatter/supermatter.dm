@@ -1236,12 +1236,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(target_type == COIL)
 			//In the best situation we can expect this to grow up to 2120kw before a delam/IT'S GONE TOO FAR FRED SHUT IT DOWN
 			//The formula for power gen is zap_str * zap_mod / 2 * capacitor rating, between 1 and 4
-			var/multi = 1
+			var/multi = 2
 			switch(power_level)//Between 7k and 9k it's 20, above that it's 40
 				if(SEVERE_POWER_PENALTY_THRESHOLD to CRITICAL_POWER_PENALTY_THRESHOLD)
-					multi = 2
-				if(CRITICAL_POWER_PENALTY_THRESHOLD to INFINITY)
 					multi = 4
+				if(CRITICAL_POWER_PENALTY_THRESHOLD to INFINITY)
+					multi = 8
 			if(zap_flags & ZAP_SUPERMATTER_FLAGS)
 				var/remaining_power = target.zap_act(zap_str * multi, zap_flags)
 				zap_str = remaining_power //Coils should take a lot out of the power of the zap

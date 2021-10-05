@@ -18650,10 +18650,6 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /turf/open/floor/iron,
 /area/maintenance/tram/right)
-"eCx" = (
-/obj/machinery/power/grounding_rod/anchored,
-/turf/open/floor/engine,
-/area/engineering/supermatter)
 "eCz" = (
 /obj/structure/filingcabinet,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -44928,6 +44924,15 @@
 	},
 /turf/open/floor/iron,
 /area/security/prison)
+"oSK" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/structure/cable,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "oTr" = (
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /obj/effect/turf_decal/trimline/green/line{
@@ -64398,6 +64403,15 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
+"wGS" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/structure/cable,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "wGY" = (
 /turf/closed/wall/r_wall,
 /area/science/explab)
@@ -98593,7 +98607,7 @@ vGg
 xTx
 usj
 wKG
-eCx
+mYF
 nAf
 mYF
 wKG
@@ -98851,7 +98865,7 @@ oms
 wKG
 roS
 tip
-tip
+oSK
 tip
 wKG
 qMI
@@ -99879,7 +99893,7 @@ wKG
 oAv
 roS
 bdI
-bdI
+wGS
 bdI
 wKG
 jqb
@@ -100137,7 +100151,7 @@ jGh
 wKG
 mYF
 nAf
-eCx
+mYF
 wKG
 ciD
 gXs

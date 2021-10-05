@@ -19285,10 +19285,6 @@
 	},
 /turf/open/floor/iron,
 /area/service/hydroponics/garden)
-"fRq" = (
-/obj/machinery/power/grounding_rod/anchored,
-/turf/open/floor/engine,
-/area/engineering/supermatter)
 "fRx" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
@@ -37800,6 +37796,15 @@
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
+"pRi" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "pRo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -39650,6 +39655,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
+"qTt" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "qTA" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -81433,7 +81447,7 @@ gZp
 hua
 xId
 oob
-fRq
+jDx
 hua
 vvt
 uUh
@@ -81689,7 +81703,7 @@ wOE
 hua
 tLr
 ksu
-ksu
+pRi
 ksu
 hua
 mLE
@@ -82717,7 +82731,7 @@ hua
 mWg
 tLr
 kpY
-kpY
+qTt
 kpY
 hua
 mLE
@@ -82973,7 +82987,7 @@ cWT
 sVk
 njj
 hua
-fRq
+jDx
 oob
 jDx
 hua
