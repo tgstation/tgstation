@@ -216,7 +216,6 @@
 		exposed_mob.Paralyze(1) //cancels any do_after
 		SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "watersprayed", /datum/mood_event/watersprayed)
 
-
 /datum/reagent/water/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = ..()
 	if(M.blood_volume)
