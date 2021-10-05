@@ -49,6 +49,8 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	///list of the spatial_grid_cell datums per z level, arranged in the order of y index then x index
 	var/list/grids_by_z_level = list()
+	///everything that spawns before us is added to this list until we initialize
+	var/list/waiting_to_add_by_type = list(RECURSIVE_CONTENTS_HEARING_SENSITIVE = list(), RECURSIVE_CONTENTS_CLIENT_MOBS = list())
 
 /datum/controller/subsystem/spatial_grid/Initialize(start_timeofday)
 	. = ..()
@@ -63,6 +65,43 @@ SUBSYSTEM_DEF(spatial_grid)
 			for(var/x in 1 to cells_per_side)
 				var/datum/spatial_grid_cell/cell = new(x, y, z_level.z_value)
 				new_cell_grid[y] += cell
+
+	//for anything waiting to be let in
+	for(var/channel_type in waiting_to_add_by_type)
+		for(var/atom/movable/movable as anything in waiting_to_add_by_type[channel_type])
+			var/turf/movable_turf = get_turf(movable)
+			if(movable_turf)
+				enter_cell(movable, movable_turf)
+
+			UnregisterSignal(movable, COMSIG_PARENT_PREQDELETED)
+			waiting_to_add_by_type[channel_type] -= movable
+
+/datum/controller/subsystem/spatial_grid/proc/enter_pre_init_queue(atom/movable/waiting_movable, type)
+	RegisterSignal(waiting_movable, COMSIG_PARENT_PREQDELETED, .proc/queued_item_deleted, override = TRUE)
+	//override because something can enter the queue for two different types but that is done through unrelated procs that shouldnt know about eachother
+	waiting_to_add_by_type[type] += waiting_movable
+
+/datum/controller/subsystem/spatial_grid/proc/remove_from_pre_init_queue(atom/movable/movable_to_remove, exclusive_type)//TODOKYLER: make exclusive_type a list
+	if(exclusive_type)
+		waiting_to_add_by_type[exclusive_type] -= movable_to_remove
+
+		var/waiting_movable_is_in_other_queues = FALSE//we need to check if this movable is inside the other queues
+		for(var/type in waiting_to_add_by_type)
+			if(movable_to_remove in waiting_to_add_by_type[type])
+				waiting_movable_is_in_other_queues = TRUE
+
+		if(!waiting_movable_is_in_other_queues)
+			UnregisterSignal(movable_to_remove, COMSIG_PARENT_PREQDELETED)
+
+		return
+
+	UnregisterSignal(movable_to_remove, COMSIG_PARENT_PREQDELETED)
+	for(var/type in waiting_to_add_by_type)
+		waiting_to_add_by_type[type] -= movable_to_remove
+
+/datum/controller/subsystem/spatial_grid/proc/queued_item_deleted(atom/movable/movable_being_deleted)
+	SIGNAL_HANDLER
+	remove_from_pre_init_queue(movable_being_deleted, null)
 
 /**
  * searches through the grid cells intersecting range radius around center and returns the added contents that are also in LOS

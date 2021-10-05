@@ -677,6 +677,9 @@
 		if(our_turf && SSspatial_grid.initialized)
 			SSspatial_grid.enter_cell(src, our_turf)
 
+		else if(our_turf && !SSspatial_grid.initialized)//SSspatial_grid isnt init'd yet, add ourselves to the queue
+			SSspatial_grid.enter_pre_init_queue(src, RECURSIVE_CONTENTS_HEARING_SENSITIVE)
+
 	ADD_TRAIT(src, TRAIT_HEARING_SENSITIVE, trait_source)
 
 ///allows this movable to know when it has "entered" another area no matter how many movable atoms its stuffed into, uses important_recursive_contents
