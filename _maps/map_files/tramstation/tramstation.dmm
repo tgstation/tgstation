@@ -18650,6 +18650,10 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /turf/open/floor/iron,
 /area/maintenance/tram/right)
+"eCx" = (
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "eCz" = (
 /obj/structure/filingcabinet,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -98589,7 +98593,7 @@ vGg
 xTx
 usj
 wKG
-mYF
+eCx
 nAf
 mYF
 wKG
@@ -100133,7 +100137,7 @@ jGh
 wKG
 mYF
 nAf
-mYF
+eCx
 wKG
 ciD
 gXs

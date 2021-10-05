@@ -57867,6 +57867,11 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/gravity_generator)
+"lkl" = (
+/obj/machinery/light/small/directional/south,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "lkw" = (
 /obj/structure/table/glass,
 /obj/machinery/light_switch/directional/south,
@@ -59049,6 +59054,7 @@
 /area/engineering/atmos/upper)
 "lBd" = (
 /obj/machinery/light/small/directional/west,
+/obj/machinery/power/grounding_rod/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "lBf" = (
@@ -122913,7 +122919,7 @@ vvy
 qzf
 qzE
 vyP
-xeU
+lkl
 qzf
 iuk
 iuk

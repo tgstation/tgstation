@@ -19285,6 +19285,10 @@
 	},
 /turf/open/floor/iron,
 /area/service/hydroponics/garden)
+"fRq" = (
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "fRx" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
@@ -81429,7 +81433,7 @@ gZp
 hua
 xId
 oob
-jDx
+fRq
 hua
 vvt
 uUh
@@ -82969,7 +82973,7 @@ cWT
 sVk
 njj
 hua
-jDx
+fRq
 oob
 jDx
 hua

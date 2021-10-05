@@ -82,10 +82,10 @@
 		addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
 		zap_buckle_check(power)
 		var/power_produced = powernet ? power * input_power_multiplier : power
-		add_avail(power_produced)
+		add_avail(power_produced * 300)
 		flick("coilhit", src)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-		return power - power_produced //You get back the amount we didn't use
+		return max(power - power_produced, 0) //You get back the amount we didn't use
 	else
 		. = ..()
 

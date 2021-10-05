@@ -53362,6 +53362,10 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/aisat/exterior)
+"qRl" = (
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "qRx" = (
 /obj/machinery/camera{
 	c_tag = "Gravity Generator Room";
@@ -116683,7 +116687,7 @@ eBe
 qLO
 gsg
 ugD
-toS
+qRl
 mfL
 jrn
 toS
@@ -117203,7 +117207,7 @@ jrn
 toS
 mNF
 pdy
-toS
+qRl
 kBa
 xVP
 tvy

@@ -43341,7 +43341,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/power/grounding_rod/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "jhL" = (
@@ -56213,6 +56212,13 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
 /area/security/office)
+"nYI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "nYK" = (
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating{
@@ -61213,6 +61219,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/power/grounding_rod/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "pPA" = (
@@ -82760,7 +82767,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/power/grounding_rod/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "xUo" = (
@@ -120162,7 +120168,7 @@ vxD
 qkL
 tJe
 xUf
-tJe
+nYI
 eAV
 dlF
 udi

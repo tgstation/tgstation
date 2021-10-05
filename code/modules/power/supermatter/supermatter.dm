@@ -639,16 +639,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(power_changes)
 			power = max((removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0)
 
-		if(prob(30))
+		if(prob(power * 0.01))
 			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
 			radiation_pulse(src, power * max(0, (1 + (power_transmission_bonus/(10-(gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus))// RadModBZ(500%)
 			playsound(src.loc, 'sound/weapons/emitter2.ogg', 70, TRUE)
 			supermatter_zap(
 				zapstart = src,
-				range = 3,
-				zap_str = 1000 * power * max(0, (1 + (power_transmission_bonus / (10 - (gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus),
+				range = 2,
+				zap_str = power * max(0, (1 + (power_transmission_bonus / (10 - (gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus),
 				zap_flags = ZAP_SUPERMATTER_FLAGS,
-				zap_cutoff = src.zap_cutoff * 0.1,
+				zap_cutoff = 500,
 				power_level = power
 				)
 
@@ -1236,14 +1236,17 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(target_type == COIL)
 			//In the best situation we can expect this to grow up to 2120kw before a delam/IT'S GONE TOO FAR FRED SHUT IT DOWN
 			//The formula for power gen is zap_str * zap_mod / 2 * capacitor rating, between 1 and 4
-			var/multi = 10
+			var/multi = 1
 			switch(power_level)//Between 7k and 9k it's 20, above that it's 40
 				if(SEVERE_POWER_PENALTY_THRESHOLD to CRITICAL_POWER_PENALTY_THRESHOLD)
-					multi = 20
+					multi = 2
 				if(CRITICAL_POWER_PENALTY_THRESHOLD to INFINITY)
-					multi = 40
-			target.zap_act(zap_str * multi, zap_flags)
-			zap_str /= 3 //Coils should take a lot out of the power of the zap
+					multi = 4
+			if(zap_flags & ZAP_SUPERMATTER_FLAGS)
+				var/remaining_power = target.zap_act(zap_str * multi, zap_flags)
+				zap_str = remaining_power //Coils should take a lot out of the power of the zap
+			else
+				zap_str /= 3
 
 		else if(isliving(target))//If we got a fleshbag on our hands
 			var/mob/living/creature = target
