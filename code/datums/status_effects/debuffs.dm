@@ -22,7 +22,7 @@
 	return ..()
 
 
-//STUN
+/// Stun - Freezes the target in place, makes it so they can't interact with anything, and makes them drop what they're carrying
 /datum/status_effect/incapacitating/stun
 	id = "stun"
 
@@ -41,7 +41,7 @@
 	return ..()
 
 
-//KNOCKDOWN
+/// Knockdown - Simply knocks the target to the ground, though they have full autonomy otherwise
 /datum/status_effect/incapacitating/knockdown
 	id = "knockdown"
 
@@ -71,7 +71,7 @@
 	return ..()
 
 
-//PARALYZED
+/// Paralyzed - What you probably think of when you hear "stun". Target can't interact with anything, can't move, can't hold stuff, and is knocked to the ground
 /datum/status_effect/incapacitating/paralyzed
 	id = "paralyzed"
 
@@ -91,6 +91,19 @@
 	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
+/// Startled - only applies TRAIT_INCAPACITATED, such that it interrupts/blocks do_afters, but doesn't make you drop items or freeze you in place like Stun
+/datum/status_effect/incapacitating/startled
+	id = "startled"
+
+/datum/status_effect/incapacitating/startled/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/startled/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	return ..()
 
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
