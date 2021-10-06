@@ -389,9 +389,6 @@
 /datum/action/item_action/switch_hud
 	name = "Switch HUD"
 
-/datum/action/item_action/toggle_wings
-	name = "Toggle Wings"
-
 /datum/action/item_action/toggle_human_head
 	name = "Toggle Human Head"
 
