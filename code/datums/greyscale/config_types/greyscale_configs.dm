@@ -108,22 +108,22 @@
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_inhand.json'
 
 /datum/greyscale_config/pai
-	name = "PAI"
+	name = "pAI"
 	icon_file = 'icons/mob/pai.dmi'
 	json_config = 'code/datums/greyscale/json_configs/pai.json'
 
 /datum/greyscale_config/pai_item_head
-	name = "PAI Head"
+	name = "pAI Head"
 	icon_file = 'icons/mob/pai_item_head.dmi'
 	json_config = 'code/datums/greyscale/json_configs/pai_item_head.json'
 
 /datum/greyscale_config/pai_lh
-	name = "PAI Left hand"
+	name = "pAI Left hand"
 	icon_file = 'icons/mob/pai_item_lh.dmi'
 	json_config = 'code/datums/greyscale/json_configs/pai_item_lh.json'
 
 /datum/greyscale_config/pai_rh
-	name = "PAI Right hand"
+	name = "pAI Right hand"
 	icon_file = 'icons/mob/pai_item_rh.dmi'
 	json_config = 'code/datums/greyscale/json_configs/pai_item_rh.json'
 

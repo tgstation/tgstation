@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(pai)
 				pai.name = candidate.name
 			pai.real_name = pai.name
 			pai.key = candidate.key
-			pai.greyscale_colors = "[candidate.color][candidate.secondary_color]"
+			pai.greyscale_colors = "[candidate.color][invert_hex(candidate.color)]"
 			pai.update_greyscale()
 
 			card.setPersonality(pai)
@@ -53,7 +53,6 @@ SUBSYSTEM_DEF(pai)
 						candidate.color = choice
 				else if(choice)
 					candidate.color = pai_color_predetermined[choice]
-				candidate.secondary_color = invert_hex(choice)
 			if("desc")
 				t = stripped_multiline_input(usr, "Enter a description for your pAI", "pAI Description", candidate.description, MAX_MESSAGE_LEN)
 				if(t)
@@ -70,15 +69,14 @@ SUBSYSTEM_DEF(pai)
 				candidate.savefile_save(usr)
 			if("load")
 				candidate.savefile_load(usr)
-				//In case people have saved unsanitized stuff.
 				if(candidate.name)
-					candidate.name = copytext_char(sanitize(candidate.name),1,MAX_NAME_LEN)
+					candidate.name = copytext_char(candidate.name,1,MAX_NAME_LEN)
 				if(candidate.description)
-					candidate.description = copytext_char(sanitize(candidate.description),1,MAX_MESSAGE_LEN)
+					candidate.description = copytext_char(candidate.description,1,MAX_MESSAGE_LEN)
 				if(candidate.role)
-					candidate.role = copytext_char(sanitize(candidate.role),1,MAX_MESSAGE_LEN)
+					candidate.role = copytext_char(candidate.role,1,MAX_MESSAGE_LEN)
 				if(candidate.comments)
-					candidate.comments = copytext_char(sanitize(candidate.comments),1,MAX_MESSAGE_LEN)
+					candidate.comments = copytext_char(candidate.comments,1,MAX_MESSAGE_LEN)
 
 			if("submit")
 				if(candidate)
@@ -219,6 +217,5 @@ SUBSYSTEM_DEF(pai)
 	var/description
 	var/role
 	var/comments
-	var/secondary_color = "#DA1B1B"
 	var/color = "#2DDF1D"
 	var/ready = FALSE
