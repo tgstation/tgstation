@@ -2379,6 +2379,7 @@
 #include "code\modules\events\prison_break.dm"
 #include "code\modules\events\processor_overload.dm"
 #include "code\modules\events\radiation_storm.dm"
+#include "code\modules\events\rpgtitles.dm"
 #include "code\modules\events\sentience.dm"
 #include "code\modules\events\shuttle_catastrophe.dm"
 #include "code\modules\events\shuttle_insurance.dm"
