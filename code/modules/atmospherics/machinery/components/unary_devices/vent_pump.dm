@@ -22,11 +22,11 @@
 
 	///Direction of pumping the gas (RELEASING or SIPHONING)
 	var/pump_direction = RELEASING
-	///Flag to indicate what pressure check to implement (EXT_BOUND, INT_BOUND, NO_BOUND)
+	///Should we check internal pressure, external pressure, both or none? (EXT_BOUND, INT_BOUND, NO_BOUND)
 	var/pressure_checks = EXT_BOUND
-	///Variable to set the external pressure check (default 101 kPa)
+	///The external pressure threshold (default 101 kPa)
 	var/external_pressure_bound = ONE_ATMOSPHERE
-	///Variable to set the internal pressure check (default 0 kPa)
+	///The internal pressure threshold (default 0 kPa)
 	var/internal_pressure_bound = 0
 	// EXT_BOUND: Do not pass external_pressure_bound
 	// INT_BOUND: Do not pass internal_pressure_bound

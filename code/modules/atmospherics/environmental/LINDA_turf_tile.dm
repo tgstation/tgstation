@@ -286,11 +286,11 @@
 			should_share_air = TRUE
 		else if(our_air.compare(enemy_air)) //Lets see if you're up for it
 			SSair.add_to_active(enemy_tile) //Add yourself young man
-			var/datum/excited_group/compared_group = our_excited_group || enemy_excited_group || new
+			var/datum/excited_group/existing_group = our_excited_group || enemy_excited_group || new
 			if(!our_excited_group)
-				compared_group.add_turf(src)
+				existing_group.add_turf(src)
 			if(!enemy_excited_group)
-				compared_group.add_turf(enemy_tile)
+				existing_group.add_turf(enemy_tile)
 			our_excited_group = excited_group
 			should_share_air = TRUE
 
@@ -407,9 +407,9 @@
 /datum/excited_group/proc/merge_groups(datum/excited_group/target_group)
 	if(turf_list.len > target_group.turf_list.len)
 		SSair.excited_groups -= target_group
-		for(var/turf/open/current_turf as anything in target_group.turf_list)
-			current_turf.excited_group = src
-			turf_list += current_turf
+		for(var/turf/open/group_member as anything in target_group.turf_list)
+			group_member.excited_group = src
+			turf_list += group_member
 		should_display = target_group.should_display | should_display
 		if(should_display || SSair.display_all_groups)
 			target_group.hide_turfs()
@@ -418,9 +418,9 @@
 		dismantle_cooldown = 0
 	else
 		SSair.excited_groups -= src
-		for(var/turf/open/current_turf as anything in turf_list)
-			current_turf.excited_group = target_group
-			target_group.turf_list += current_turf
+		for(var/turf/open/group_member as anything in turf_list)
+			group_member.excited_group = target_group
+			target_group.turf_list += group_member
 		target_group.should_display = target_group.should_display | should_display
 		if(target_group.should_display || SSair.display_all_groups)
 			hide_turfs()
@@ -433,23 +433,23 @@
 	dismantle_cooldown = 0
 
 /datum/excited_group/proc/self_breakdown(roundstart = FALSE, poke_turfs = FALSE)
-	var/datum/gas_mixture/new_mix = new
+	var/datum/gas_mixture/shared_mix = new
 
 	//make local for sanic speed
-	var/list/new_mix_gases = new_mix.gases
+	var/list/shared_gases = shared_mix.gases
 	var/list/turf_list = src.turf_list
 	var/turflen = turf_list.len
 	var/imumutable_in_group = FALSE
 	var/energy = 0
 	var/heat_cap = 0
 
-	for(var/turf/open/current_turf as anything in turf_list)
+	for(var/turf/open/group_member as anything in turf_list)
 		//Cache?
-		var/datum/gas_mixture/turf/mix = current_turf.air
-		if (roundstart && istype(current_turf.air, /datum/gas_mixture/immutable))
+		var/datum/gas_mixture/turf/mix = group_member.air
+		if (roundstart && istype(group_member.air, /datum/gas_mixture/immutable))
 			imumutable_in_group = TRUE
-			new_mix.copy_from(current_turf.air) //This had better be immutable young man
-			new_mix_gases = new_mix.gases //update the cache
+			shared_mix.copy_from(group_member.air) //This had better be immutable young man
+			shared_gases = shared_mix.gases //update the cache
 			break
 		//"borrowing" this code from merge(), I need to play with the temp portion. Lets expand it out
 		//temperature = (giver.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
@@ -459,24 +459,24 @@
 
 		var/list/giver_gases = mix.gases
 		for(var/giver_id in giver_gases)
-			ASSERT_GAS(giver_id, new_mix)
-			new_mix_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
+			ASSERT_GAS(giver_id, shared_mix)
+			shared_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
 	if(!imumutable_in_group)
-		new_mix.temperature = energy / heat_cap
-		for(var/id in new_mix_gases)
-			new_mix_gases[id][MOLES] /= turflen
-		new_mix.garbage_collect()
+		shared_mix.temperature = energy / heat_cap
+		for(var/id in shared_gases)
+			shared_gases[id][MOLES] /= turflen
+		shared_mix.garbage_collect()
 
-	for(var/turf/open/current_turf as anything in turf_list)
-		if(current_turf.planetary_atmos) //We do this as a hack to try and minimize unneeded excited group spread over planetary turfs
-			current_turf.air.copy_from(SSair.planetary[current_turf.initial_gas_mix]) //Comes with a cost of "slower" drains, but it's worth it
+	for(var/turf/open/group_member as anything in turf_list)
+		if(group_member.planetary_atmos) //We do this as a hack to try and minimize unneeded excited group spread over planetary turfs
+			group_member.air.copy_from(SSair.planetary[group_member.initial_gas_mix]) //Comes with a cost of "slower" drains, but it's worth it
 		else
-			current_turf.air.copy_from(new_mix) //Otherwise just set the mix to a copy of our equalized mix
-		current_turf.update_visuals()
+			group_member.air.copy_from(shared_mix) //Otherwise just set the mix to a copy of our equalized mix
+		group_member.update_visuals()
 		if(poke_turfs) //Because we only activate all these once every breakdown, in event of lag due to this code and slow space + vent things, increase the wait time for breakdowns
-			SSair.add_to_active(current_turf)
-			current_turf.significant_share_ticker = EXCITED_GROUP_DISMANTLE_CYCLES //Max out the ticker, if they don't share next tick, nuke em
+			SSair.add_to_active(group_member)
+			group_member.significant_share_ticker = EXCITED_GROUP_DISMANTLE_CYCLES //Max out the ticker, if they don't share next tick, nuke em
 
 	breakdown_cooldown = 0
 
@@ -606,7 +606,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 	//Conduct with air on my tile if I have it
 	if(!blocks_air)
 		temperature = air.temperature_share(null, thermal_conductivity, temperature, heat_capacity)
-	return (blocks_air ? temperature : air.temperature)
+	..((blocks_air ? temperature : air.temperature))
 
 ///Should we attempt to superconduct?
 /turf/proc/consider_superconductivity(starting)
@@ -632,9 +632,10 @@ Then we space some of our heat, and think about if we should stop conducting.
 	if(temperature <= T0C) //Considering 0 degC as te break even point for radiation in and out
 		return
 	var/delta_temperature = (temperature_archived - TCMB) //hardcoded space temperature
-	if(heat_capacity > 0 && abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/heat = thermal_conductivity * delta_temperature * (heat_capacity * HEAT_CAPACITY_VACUUM / (heat_capacity + HEAT_CAPACITY_VACUUM))
-		temperature -= heat/heat_capacity
+	if(heat_capacity <= 0 || abs(delta_temperature) <= MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+		return
+	var/heat = thermal_conductivity * delta_temperature * (heat_capacity * HEAT_CAPACITY_VACUUM / (heat_capacity + HEAT_CAPACITY_VACUUM))
+	temperature -= heat/heat_capacity
 
 /turf/open/proc/temperature_share_open_to_solid(turf/sharer)
 	sharer.temperature = air.temperature_share(null, sharer.thermal_conductivity, sharer.temperature, sharer.heat_capacity)
@@ -642,6 +643,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 /turf/proc/share_temperature_mutual_solid(turf/sharer, conduction_coefficient) //This is all just heat sharing, don't get freaked out
 	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER && heat_capacity && sharer.heat_capacity)
-		var/heat = conduction_coefficient * delta_temperature * (heat_capacity * sharer.heat_capacity / (heat_capacity + sharer.heat_capacity)) //The larger the combined capacity the less is shared
+		var/heat = conduction_coefficient * delta_temperature * \
+			(heat_capacity * sharer.heat_capacity / (heat_capacity + sharer.heat_capacity)) //The larger the combined capacity the less is shared
 		temperature -= heat / heat_capacity //The higher your own heat cap the less heat you get from this arrangement
 		sharer.temperature += heat / sharer.heat_capacity

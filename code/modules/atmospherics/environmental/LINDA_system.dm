@@ -1,5 +1,8 @@
-/atom/var/can_atmos_pass = ATMOS_PASS_YES
-/atom/var/can_atmos_pass_vertical = ATMOS_PASS_YES
+/atom
+	///Check if atmos can pass in this atom (ATMOS_PASS_YES, ATMOS_PASS_NO, ATMOS_PASS_DENSITY, ATMOS_PASS_PROC)
+	var/can_atmos_pass = ATMOS_PASS_YES
+	///Zlevel check for can_atmos_pass
+	var/can_atmos_pass_vertical = ATMOS_PASS_YES
 
 /atom/proc/can_atmos_pass(turf/target_turf)
 	switch (can_atmos_pass)
@@ -10,11 +13,13 @@
 		else
 			return can_atmos_pass
 
-/turf/can_atmos_pass = ATMOS_PASS_NO
-/turf/can_atmos_pass_vertical = ATMOS_PASS_NO
+/turf
+	can_atmos_pass = ATMOS_PASS_NO
+	can_atmos_pass_vertical = ATMOS_PASS_NO
 
-/turf/open/can_atmos_pass = ATMOS_PASS_PROC
-/turf/open/can_atmos_pass_vertical = ATMOS_PASS_PROC
+/turf/open
+	can_atmos_pass = ATMOS_PASS_PROC
+	can_atmos_pass_vertical = ATMOS_PASS_PROC
 
 //Do NOT use this to see if 2 turfs are connected, it mutates state, and we cache that info anyhow. Use TURFS_CAN_SHARE or TURF_SHARES depending on your usecase
 /turf/open/can_atmos_pass(turf/target_turf, vertical = FALSE)
