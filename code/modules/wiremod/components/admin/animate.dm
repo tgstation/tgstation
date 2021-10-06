@@ -29,6 +29,9 @@
 		return
 
 	var/atom/target_atom = target.value
+	if(!isatom(target_atom))
+		return
+	target_atom.datum_flags |= DF_VAR_EDITED
 	var/last_step_used_filter = FALSE
 	if(result["animation_steps"])
 		animate(target_atom, pixel_x = pixel_x, time = 0, loop = animation_loops.value, flags = ANIMATION_PARALLEL) //Just to start the animation
