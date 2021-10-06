@@ -9,7 +9,7 @@
  */
 /datum/ai_planning_subtree/generic_play_instrument/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	if(!controller.blackboard[BB_SONG_INSTRUMENT])
-		controller.queue_behavior(/datum/ai_behavior/find_and_set/in_hands, /obj/item/instrument)
+		controller.queue_behavior(/datum/ai_behavior/find_and_set/in_hands, BB_SONG_INSTRUMENT, /obj/item/instrument)
 		return //we can't play a song since we do not have an instrument
 
 	var/obj/item/instrument/song_player = controller.blackboard[BB_SONG_INSTRUMENT]
