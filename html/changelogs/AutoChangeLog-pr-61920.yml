@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - bugfix: "Borg lights are now visible again."

@@ -40,4 +40,6 @@
 
 	params.Insert(1, spawn_at.value)
 
-	spawned_atom.set_output(new typepath(arglist(params)))
+	var/atom/spawned = new typepath(arglist(params))
+	spawned.datum_flags |= DF_VAR_EDITED
+	spawned_atom.set_output(spawned)
