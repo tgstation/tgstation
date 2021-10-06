@@ -35,8 +35,7 @@
 	for(var/datum/micro_organism/cell_line/organism in micro_organisms) //Types because we don't grow viruses.
 		organism.handle_growth(vat)
 
-///resets the progress and resulting atom of all our cell lines
+///resets the progress of all cell ines
 /datum/biological_sample/proc/reset_sample()
 	for(var/datum/micro_organism/cell_line/organism in micro_organisms) //Types because we don't grow viruses.
 		organism.growth = 0
-		organism.resulting_atoms = initial(organism.resulting_atoms)

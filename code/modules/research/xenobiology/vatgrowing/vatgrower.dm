@@ -112,15 +112,16 @@
 	balloon_alert_to_viewers("resampler [resampler_active ? "activated" : "deactivated"]")
 	update_appearance()
 
-/obj/machinery/plumbing/growing_vat/emag_act()
+/obj/machinery/plumbing/growing_vat/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
+	to_chat(user, span_warning("You overload [src]'s resampling circuit."))
 
 /obj/machinery/plumbing/growing_vat/proc/on_sample_growth_completed()
 	SIGNAL_HANDLER
 	if(resampler_active)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(src), 'sound/effects/servostep.ogg', 70, 1), 1.5 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(src), 'sound/effects/servostep.ogg', 100, 1), 1.5 SECONDS)
 		biological_sample.reset_sample()
 	else
 		UnregisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)
