@@ -209,20 +209,43 @@
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
  * * include_source - if FALSE, source will be subtracted from the output. used for things that want to transmit data to other things like radios
  */
-/proc/get_hearers_in_view(view_radius, atom/source, include_source = TRUE)
+/proc/get_hearers_in_view(view_radius, atom/source)
 	var/turf/center_turf = get_turf(source)
-	. = list()
 	if(!center_turf)
 		return
 
 	if(view_radius <= 0)//special case for if only source cares
+		. = list()
 		for(var/atom/movable/movable as anything in center_turf)
 			var/list/recursive_contents = LAZYACCESS(movable.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE)
 			if(recursive_contents)
 				. += recursive_contents
 		return
 
-	return SSspatial_grid.find_grid_contents_in_view(source, SPATIAL_GRID_CONTENTS_TYPE_HEARING, view_radius, TRUE, include_source)
+	. = SSspatial_grid.orthogonal_range_search(source, SPATIAL_GRID_CONTENTS_TYPE_HEARING, view_radius)
+
+	for(var/atom/movable/target as anything in .)
+		var/turf/target_turf = get_turf(target)
+		var/distance = get_dist(center_turf, target_turf)
+
+		if(distance > view_radius)
+			. -= target
+			continue
+
+		//this turf search algorithm is the worst scaling part of this proc, scaling worse than view() for small-moderate ranges and > 50 length contents_to_return
+		//luckily its significantly faster than view for large ranges in large spaces and/or relatively few contents_to_return
+		//i can do things that would scale better, but they would be slower for low volume searches which is the vast majority of the current workload
+		//maybe in the future a high volume algorithm would be worth it
+		var/turf/inbetween_turf = center_turf
+		while(TRUE)
+			inbetween_turf = get_step(inbetween_turf, get_dir(inbetween_turf, target_turf))
+
+			if(inbetween_turf == target_turf)//we've gotten to target's turf without returning due to turf opacity, so we must be able to see target
+				break
+
+			if(inbetween_turf.opacity || inbetween_turf.opacity_sources)//this turf or something on it is opaque so we cant see through it
+				. -= target
+				break
 
 /proc/get_hearers_in_radio_ranges(list/obj/item/radio/radios)
 	. = list()

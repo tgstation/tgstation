@@ -8,9 +8,9 @@
 	//every data point in a grid cell is separated by usecase
 
 	///every hearing sensitive movable inside this cell
-	var/list/hearing_contents
+	var/list/hearing_contents = list()
 	///every client possessed mob inside this cell
-	var/list/client_contents
+	var/list/client_contents = list()
 
 /datum/spatial_grid_cell/New(cell_x, cell_y, cell_z)
 	. = ..()
@@ -250,27 +250,46 @@ SUBSYSTEM_DEF(spatial_grid)
 	SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED, new_target)
 
 	if(new_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
-		LAZYOR(intersecting_cell.client_contents, new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+		intersecting_cell.client_contents |= new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS]
 
 	if(new_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
-		LAZYOR(intersecting_cell.hearing_contents, new_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
+		intersecting_cell.hearing_contents |= new_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
 
 ///find the spatial map cell that target used to belong to, then subtract target's important_recusive_contents from it.
 ///make sure to provide the turf old_target used to be "in"
 /datum/controller/subsystem/spatial_grid/proc/exit_cell(atom/movable/old_target, turf/target_turf)
+/datum/controller/subsystem/spatial_grid/proc/exit_cell(atom/movable/old_target, turf/target_turf, exclusive_type)
 	if(!target_turf || !old_target?.important_recursive_contents)
 		CRASH("/datum/controller/subsystem/spatial_grid/proc/exit_cell() was given null arguments or a new_target without important_recursive_contents!")
 
-	var/list/grid = grids_by_z_level[target_turf.z]
-	var/datum/spatial_grid_cell/intersecting_cell = grid[CEILING(target_turf.y / SPATIAL_GRID_CELLSIZE, 1)][CEILING(target_turf.x / SPATIAL_GRID_CELLSIZE, 1)]
+	var/x_index = ROUND_UP(target_turf.x * INVERSE_SPATIAL_GRID_CELLSIZE)
+	var/y_index = ROUND_UP(target_turf.y * INVERSE_SPATIAL_GRID_CELLSIZE)
+	var/z_index = target_turf.z
 
-	SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED, old_target)
+	var/list/grid = grids_by_z_level[z_index]
+	var/datum/spatial_grid_cell/intersecting_cell = grid[y_index][x_index]
+
+	if(exclusive_type && old_target.important_recursive_contents[exclusive_type])
+		switch(exclusive_type)
+			if(RECURSIVE_CONTENTS_CLIENT_MOBS)
+				intersecting_cell.client_contents -= old_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS]
+
+			if(RECURSIVE_CONTENTS_HEARING_SENSITIVE)
+				intersecting_cell.client_contents -= old_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+
+		SEND_SIGNAL(src, SPATIAL_GRID_CELL_EXITED(x_index, y_index, z_index, exclusive_type), old_target)
+		return
 
 	if(old_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
-		LAZYREMOVE(intersecting_cell.client_contents, old_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
+		intersecting_cell.client_contents -= old_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS]
+
+		SEND_SIGNAL(src, SPATIAL_GRID_CELL_EXITED(x_index, y_index, z_index, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), old_target)
 
 	if(old_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
-		LAZYREMOVE(intersecting_cell.hearing_contents, old_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
+
+		intersecting_cell.hearing_contents -= old_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+
+		SEND_SIGNAL(src, SPATIAL_GRID_CELL_EXITED(x_index, y_index, z_index, RECURSIVE_CONTENTS_HEARING_SENSITIVE), old_target)
 
 ///find the cell this movable is associated with and removes it from all lists
 /datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove, datum/spatial_grid_cell/input_cell)
@@ -280,8 +299,8 @@ SUBSYSTEM_DEF(spatial_grid)
 			find_hanging_cell_refs_for_movable(to_remove, TRUE, TRUE)
 			return
 
-	LAZYREMOVE(input_cell.client_contents, to_remove)
-	LAZYREMOVE(input_cell.hearing_contents, to_remove)
+	input_cell.client_contents -= to_remove
+	input_cell.hearing_contents -= to_remove
 
 ///if shit goes south, this will find hanging references for qdeleting movables inside
 /datum/controller/subsystem/spatial_grid/proc/find_hanging_cell_refs_for_movable(atom/movable/to_remove, should_yield = TRUE, remove_from_cells = TRUE)

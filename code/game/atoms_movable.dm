@@ -703,9 +703,36 @@
 	var/turf/our_turf = get_turf(src)
 	if(our_turf && SSspatial_grid.initialized)
 		SSspatial_grid.exit_cell(src, our_turf)
+	if(our_turf && !SSspatial_grid.initialized)
+		SSspatial_grid.remove_from_pre_init_queue(src, RECURSIVE_CONTENTS_HEARING_SENSITIVE)
+
 	UnregisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_HEARING_SENSITIVE))
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 		LAZYREMOVEASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE, src)
+
+///Clears the client in contents list of our current "eye". Prevents hard deletes
+/atom/movable/proc/clear_client_in_contents(client/former_client)
+	var/turf/our_turf = get_turf(src)
+
+	if(our_turf && SSspatial_grid.initialized)
+		SSspatial_grid.exit_cell(src, our_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
+	else if(our_turf && !SSspatial_grid.initialized)
+		SSspatial_grid.remove_from_pre_init_queue(src, RECURSIVE_CONTENTS_CLIENT_MOBS)
+
+	for(var/atom/movable/movable_loc as anything in get_nested_locs(src) + src)
+		LAZYREMOVEASSOC(movable_loc.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, former_client.mob)
+
+///
+/atom/movable/proc/enable_client_mobs_in_contents(client/new_client)
+	var/turf/our_turf = get_turf(src)
+
+	if(our_turf && SSspatial_grid.initialized)
+		SSspatial_grid.enter_cell(src, our_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
+	else if(our_turf && !SSspatial_grid.initialized)
+		SSspatial_grid.enter_pre_init_queue(src, RECURSIVE_CONTENTS_CLIENT_MOBS)
+
+	for(var/atom/movable/movable_loc as anything in get_nested_locs(src) + src)
+		LAZYORASSOCLIST(movable_loc.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, new_client.mob)
 
 ///Sets the anchored var and returns if it was sucessfully changed or not.
 /atom/movable/proc/set_anchored(anchorvalue)

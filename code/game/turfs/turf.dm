@@ -376,6 +376,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(!arrived.zfalling)
 		zFall(arrived)
 
+//handles updating the spatial grid
 /turf/Exited(atom/movable/gone, direction)
 	. = ..()
 
@@ -385,7 +386,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/turf/gone_turf = get_turf(gone)
 
 	//this is turf/Exited so we know we have nonzero coords but we dont know if gone has nonzero coords
-	if(gone_turf?.z == z && CEILING(gone_turf.x / SPATIAL_GRID_CELLSIZE, 1) == CEILING(x / SPATIAL_GRID_CELLSIZE, 1) && CEILING(gone_turf.y / SPATIAL_GRID_CELLSIZE, 1) == CEILING(y / SPATIAL_GRID_CELLSIZE, 1))
+	if(gone_turf?.z == z && ROUND_UP(gone_turf.x * INVERSE_SPATIAL_GRID_CELLSIZE) == ROUND_UP(x * INVERSE_SPATIAL_GRID_CELLSIZE) && ROUND_UP(gone_turf.y * INVERSE_SPATIAL_GRID_CELLSIZE) == ROUND_UP(y * INVERSE_SPATIAL_GRID_CELLSIZE))
 		return //both the old location and the new one are in the same grid cell
 
 	SSspatial_grid.exit_cell(gone, src)
