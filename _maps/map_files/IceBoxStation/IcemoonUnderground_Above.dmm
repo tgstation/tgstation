@@ -1290,8 +1290,8 @@
 	c_tag = "Chapel South";
 	dir = 1
 	},
-/obj/item/kirbyplants/random,
 /obj/machinery/status_display/evac/directional/south,
+/obj/structure/closet/crate/bin,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "gf" = (
