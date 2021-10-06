@@ -24,7 +24,7 @@
 	var/datum/port/output/on_finished
 
 	/// The limit of iterations before it breaks. Used to prevent from someone iterating a massive list constantly
-	var/limit = 100
+	var/limit = 300
 
 /obj/item/circuit_component/foreach/populate_options()
 	list_options = add_option_port("List Type", GLOB.wiremod_basic_types)
@@ -46,7 +46,7 @@
 /obj/item/circuit_component/foreach/input_received(datum/port/input/port)
 	var/index = 1
 	for(var/element_in_list in list_to_iterate.value)
-		if(index > limit)
+		if(index > limit && !parent.admin_only)
 			break
 		element.set_output(element_in_list)
 		current_index.set_output(index)
