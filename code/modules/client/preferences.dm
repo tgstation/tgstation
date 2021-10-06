@@ -97,7 +97,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		middleware += new middleware_type(src)
 
 	if(istype(C))
-		if(!IsGuestKey(C.key))
+		if(!is_guest_key(C.key))
 			load_path(C.ckey)
 			unlock_content = !!C.IsByondMember()
 			if(unlock_content)

@@ -198,7 +198,7 @@
 
 /datum/antagonist/cult/proc/admin_take_all(mob/admin)
 	var/mob/living/current = owner.current
-	for(var/o in current.GetAllContents())
+	for(var/o in current.get_all_contents())
 		if(istype(o, /obj/item/melee/cultblade/dagger) || istype(o, /obj/item/stack/sheet/runed_metal))
 			qdel(o)
 

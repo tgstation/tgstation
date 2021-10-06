@@ -165,3 +165,41 @@
       cable, and rack on the same tile.
   tralezab:
   - bugfix: You can now hold people at gunpoint from range!
+2021-10-05:
+  Iamgoofball:
+  - server: Dynamic now has an extra configuration value, max_threat_level. Defaults
+      to 100 threat.
+  Krysonism:
+  - bugfix: Shark biopsy samples are now clean and don't contain a duplicate shark
+      cell line.
+  Melbert:
+  - bugfix: Fixes people getting rejected by the panic bunker when they probably shouldn't
+      have been (if you can read this, it probably doesn't affect you anymore)
+  Mothblocks:
+  - bugfix: Old photos from persistent photo albums will now no longer be lost.
+  Timberpoes:
+  - bugfix: Captains can sleep tight at night knowing that Disky no longer fears escape
+      shuttle rides at the end of the shift. The nuke disk will no longer teleport
+      itself back to the station from the emergency shuttle when the emergency shuttle
+      departs.
+  - admin: Admins should no longer get trolled by URL keys creating clickable links
+      that look the same as admin PM shortcuts.
+  Zytolg:
+  - bugfix: The new mining base on Icebox will now fully load its surrounding plasma
+      lake area.
+  - bugfix: The Kilostation Art Closet now provides station sevants with the necessary
+      art supplies.
+  esainane:
+  - bugfix: The airlock to MetaStation's Medical Cold Room is now properly named and
+      requires Medbay General access.
+  - bugfix: Kitchen cold rooms which are cold (that is, those on Ice, Meta, and Tram)
+      now have their air alarms configured to expect this.
+2021-10-06:
+  JohnFulpWillard:
+  - bugfix: Surgeries that repair organs will once again repair the organ.
+  - bugfix: Swarmers-banned ghosts can no longer create Swarmer bodies from the beacon.
+  Zytolg:
+  - expansion: Remaps the Holding Facility into 2021 Standards
+  - code_imp: Indestructible paper wall support. It's better than the alternative.
+  kopoba:
+  - bugfix: fix ebow was able to accept pka modkits with 0 cost

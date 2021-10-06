@@ -17330,8 +17330,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "eJJ" = (
-/obj/machinery/airalarm/directional/west,
 /obj/structure/table,
+/obj/machinery/airalarm/kitchen_cold_room{
+	dir = 4;
+	pixel_x = -24
+	},
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "eKm" = (

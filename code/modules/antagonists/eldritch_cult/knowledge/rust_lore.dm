@@ -274,7 +274,7 @@
 
 		if(turfie in turfs || is_type_in_typecache(turfie,blacklisted_turfs))
 			continue
-		for(var/line_turfie_owo in getline(turfie,centre))
+		for(var/line_turfie_owo in get_line(turfie,centre))
 			if(get_dist(turfie,line_turfie_owo) <= 1)
 				edge_turfs += turfie
 		CHECK_TICK

@@ -58,7 +58,7 @@
 					break
 		var/list/reactable = accessible
 		for(var/turf/T in accessible)
-			for(var/atom/A in T.GetAllContents())
+			for(var/atom/A in T.get_all_contents())
 				if(!(A in viewable))
 					continue
 				reactable |= A

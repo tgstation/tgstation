@@ -111,8 +111,8 @@
 			var/mob/M = W.resolve()
 			if(M)
 				if (length(args))
-					return world.PushUsr(arglist(list(M, src) + args))
-				return world.PushUsr(M, src)
+					return world.push_usr(arglist(list(M, src) + args))
+				return world.push_usr(M, src)
 
 	if (!object)
 		return
@@ -146,8 +146,8 @@
 			var/mob/M = W.resolve()
 			if(M)
 				if (length(args))
-					return world.PushUsr(arglist(list(M, src) + args))
-				return world.PushUsr(M, src)
+					return world.push_usr(arglist(list(M, src) + args))
+				return world.push_usr(M, src)
 
 	if (!object)
 		return

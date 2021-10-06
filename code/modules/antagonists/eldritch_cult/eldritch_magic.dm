@@ -341,7 +341,7 @@
 		if(!check)
 			break
 		T = check
-	return (getline(user, T) - get_turf(user))
+	return (get_line(user, T) - get_turf(user))
 
 /obj/effect/proc_holder/spell/pointed/ash_final/proc/fire_line(atom/source, list/turfs)
 	var/list/hit_list = list()
