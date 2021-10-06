@@ -1709,6 +1709,9 @@
 /obj/structure/flora/junglebush/c,
 /turf/open/floor/grass,
 /area/awaymission/cabin/snowforest)
+"rn" = (
+/turf/closed/indestructible/wood,
+/area/vip_only)
 "rs" = (
 /obj/structure/closet/crate/grave/filled/lead_researcher,
 /turf/open/floor/grass,
@@ -1975,6 +1978,9 @@
 	icon_state = "wood_large-broken2"
 	},
 /area/awaymission/cabin/snowforest)
+"tQ" = (
+/turf/open/floor/plastic,
+/area/vip_only)
 "tS" = (
 /obj/structure/window/bronze/fulltile,
 /turf/open/floor/wood,
@@ -2274,16 +2280,20 @@
 /obj/structure/table/bronze,
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
+"wP" = (
+/obj/effect/landmark/latejoin,
+/turf/open/floor/gravel,
+/area/awaymission/cabin/snowforest)
 "wW" = (
 /obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/carpet/red,
-/area/awaymission/cabin/snowforest)
+/area/vip_only)
 "wX" = (
 /obj/structure/table/wood/fancy,
 /turf/open/floor/carpet/red,
-/area/awaymission/cabin/snowforest)
+/area/vip_only)
 "xa" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
@@ -2297,7 +2307,7 @@
 "xe" = (
 /obj/structure/table/bronze,
 /turf/open/floor/wood,
-/area/awaymission/cabin/snowforest)
+/area/vip_only)
 "xf" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -2321,7 +2331,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/red,
-/area/awaymission/cabin/snowforest)
+/area/vip_only)
 "xz" = (
 /turf/open/floor/carpet/royalblue,
 /area/awaymission/cabin/snowforest)
@@ -2359,19 +2369,19 @@
 "xU" = (
 /obj/structure/chair/wood,
 /turf/open/floor/carpet/red,
-/area/awaymission/cabin/snowforest)
+/area/vip_only)
 "xW" = (
 /obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/carpet/red,
-/area/awaymission/cabin/snowforest)
+/area/vip_only)
 "yb" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/carpet/red,
-/area/awaymission/cabin/snowforest)
+/area/vip_only)
 "yf" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/tile,
@@ -2407,6 +2417,10 @@
 	},
 /turf/open/floor/gravel,
 /area/awaymission/cabin/snowforest)
+"ys" = (
+/obj/machinery/door/airlock/bronze/trait_limited,
+/turf/open/floor/carpet/red,
+/area/vip_only)
 "yy" = (
 /obj/structure/chair/pew/right,
 /turf/open/floor/grass,
@@ -2426,13 +2440,13 @@
 "yH" = (
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/carpet/red,
-/area/awaymission/cabin/snowforest)
+/area/vip_only)
 "yI" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/carpet/red,
-/area/awaymission/cabin/snowforest)
+/area/vip_only)
 "yL" = (
 /obj/structure/stairs/north,
 /turf/open/floor/iron/stairs/right{
@@ -3157,7 +3171,7 @@
 "FC" = (
 /obj/machinery/light/dim,
 /turf/open/floor/plastic,
-/area/awaymission/cabin/snowforest)
+/area/vip_only)
 "FG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -3706,6 +3720,9 @@
 	},
 /turf/open/floor/grass,
 /area/awaymission/cabin/snowforest)
+"Mg" = (
+/turf/open/floor/carpet/red,
+/area/vip_only)
 "Mh" = (
 /obj/structure/table/wood,
 /obj/item/clothing/gloves/botanic_leather{
@@ -4169,7 +4186,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "PW" = (
-/obj/effect/landmark/start,
+/obj/effect/landmark/start/cyborg,
 /turf/open/floor/gravel,
 /area/awaymission/cabin/snowforest)
 "PY" = (
@@ -4854,6 +4871,10 @@
 	},
 /turf/open/floor/wood/large,
 /area/tdome/tdome1)
+"Xe" = (
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/gravel,
+/area/awaymission/cabin/snowforest)
 "Xf" = (
 /obj/structure/table/wood/fancy,
 /obj/structure/mirror/directional/south,
@@ -29137,11 +29158,11 @@ LW
 LW
 LW
 Fr
-LW
+Mg
 xU
 wX
 xW
-kD
+tQ
 ff
 By
 By
@@ -29199,17 +29220,17 @@ cq
 my
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+PW
+PW
+PW
+PW
+PW
+PW
+PW
+PW
+PW
+PW
+PW
 TA
 Ps
 "}
@@ -29266,12 +29287,12 @@ Fr
 LW
 LW
 LW
-LW
-LW
-LW
+ys
+Mg
+Mg
 xu
-LW
-kD
+Mg
+tQ
 ff
 By
 By
@@ -29329,17 +29350,17 @@ cq
 my
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+PW
+PW
+PW
+PW
+PW
+PW
+PW
+PW
+PW
+PW
+PW
 TA
 Ps
 "}
@@ -29398,10 +29419,10 @@ LW
 LW
 Fr
 wW
-LW
-LW
-LW
-kD
+Mg
+Mg
+Mg
+tQ
 ff
 By
 By
@@ -29459,17 +29480,17 @@ cq
 my
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+wP
+wP
+wP
 TA
 Ps
 "}
@@ -29529,9 +29550,9 @@ LW
 Fr
 wX
 xW
-LW
+Mg
 xU
-kD
+tQ
 ff
 By
 By
@@ -29589,17 +29610,17 @@ cq
 my
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+wP
+wP
+wP
 TA
 Ps
 "}
@@ -29657,11 +29678,11 @@ LW
 LW
 LW
 Fr
-Fr
+rn
 yb
-LW
-LW
-kD
+Mg
+Mg
+tQ
 ff
 By
 By
@@ -29719,17 +29740,17 @@ nQ
 my
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+wP
+wP
+wP
 TA
 Ps
 "}
@@ -29789,9 +29810,9 @@ LW
 fH
 xe
 yH
-LW
-LW
-kD
+Mg
+Mg
+tQ
 ff
 By
 By
@@ -29849,17 +29870,17 @@ Ht
 my
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+wP
+wP
+wP
 TA
 Ps
 "}
@@ -29919,9 +29940,9 @@ LW
 fH
 xe
 yH
-LW
-LW
-kD
+Mg
+Mg
+tQ
 ff
 By
 By
@@ -29979,17 +30000,17 @@ Vi
 my
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+wP
+wP
+wP
 TA
 Ps
 "}
@@ -30049,7 +30070,7 @@ wM
 fH
 xe
 yH
-LW
+Mg
 xU
 FC
 ff
@@ -30109,18 +30130,18 @@ mM
 Xx
 TA
 TA
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+wP
+wP
+wP
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-PW
 Ps
 "}
 (65,1,2) = {"
@@ -30179,9 +30200,9 @@ LW
 fH
 xe
 yH
-LW
-LW
-kD
+Mg
+Mg
+tQ
 ff
 By
 By
@@ -30239,17 +30260,17 @@ Wc
 my
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+wP
+wP
+wP
 TA
 Ps
 "}
@@ -30309,9 +30330,9 @@ LW
 fH
 xe
 yH
-LW
-LW
-kD
+Mg
+Mg
+tQ
 ff
 By
 By
@@ -30369,17 +30390,17 @@ wg
 my
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+wP
+wP
+wP
 TA
 Ps
 "}
@@ -30437,11 +30458,11 @@ LW
 LW
 LW
 Fr
-Fr
+rn
 yI
-LW
-LW
-kD
+Mg
+Mg
+tQ
 ff
 By
 By
@@ -30499,17 +30520,17 @@ no
 my
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+wP
+wP
+wP
 TA
 Ps
 "}
@@ -30569,9 +30590,9 @@ LW
 Fr
 wX
 xW
-LW
+Mg
 xU
-kD
+tQ
 ff
 By
 By
@@ -30629,17 +30650,17 @@ cq
 my
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+wP
+wP
+wP
 TA
 Ps
 "}
@@ -30698,10 +30719,10 @@ LW
 LW
 Fr
 xu
-LW
-LW
-LW
-kD
+Mg
+Mg
+Mg
+tQ
 ff
 By
 By
@@ -30759,17 +30780,17 @@ cq
 my
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+wP
+wP
+wP
 TA
 Ps
 "}
@@ -30826,12 +30847,12 @@ Fr
 LW
 LW
 LW
-LW
-LW
-LW
+ys
+Mg
+Mg
 wW
-LW
-kD
+Mg
+tQ
 ff
 By
 By
@@ -30889,17 +30910,17 @@ cq
 my
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+PW
+PW
+PW
+PW
+PW
+PW
+PW
+PW
+PW
+PW
+PW
 TA
 Ps
 "}
@@ -30957,11 +30978,11 @@ LW
 LW
 LW
 Fr
-LW
+Mg
 xU
 wX
 xW
-kD
+tQ
 ff
 Bz
 By
@@ -31019,17 +31040,17 @@ cq
 my
 TA
 TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
-TA
+PW
+PW
+PW
+PW
+PW
+PW
+PW
+PW
+PW
+PW
+PW
 TA
 Ps
 "}

@@ -3959,4 +3959,6 @@
 #include "modular_event\tournament\teams.dm"
 #include "modular_event\tournament\toolbox.dm"
 #include "modular_event\tournament\tournament_spawn.dm"
+#include "modular_event\trait_limited_content\airlocks.dm"
+#include "modular_event\trait_limited_content\areas.dm"
 // END_INCLUDE
