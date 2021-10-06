@@ -722,7 +722,8 @@
 	for(var/atom/movable/movable_loc as anything in get_nested_locs(src) + src)
 		LAZYREMOVEASSOC(movable_loc.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, former_client.mob)
 
-///
+///propogates new_client's mob through our nested contents, similar to other important_recursive_contents procs
+///main difference is that client contents need to possibly duplicate recursive contents for the clients mob AND its eye
 /atom/movable/proc/enable_client_mobs_in_contents(client/new_client)
 	var/turf/our_turf = get_turf(src)
 

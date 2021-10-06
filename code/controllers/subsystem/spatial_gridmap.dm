@@ -103,100 +103,48 @@ SUBSYSTEM_DEF(spatial_grid)
 	SIGNAL_HANDLER
 	remove_from_pre_init_queue(movable_being_deleted, null)
 
+#define BOUNDING_BOX_MIN(center_coord) max(ROUND_UP((center_coord - range) * INVERSE_SPATIAL_GRID_CELLSIZE), 1)
+#define BOUNDING_BOX_MAX(center_coord) min(ROUND_UP((center_coord + range) * INVERSE_SPATIAL_GRID_CELLSIZE), grid_cells_per_axis)
+
 /**
- * searches through the grid cells intersecting range radius around center and returns the added contents that are also in LOS
- * much faster than iterating through view() to find all of what you want for things that arent that common
+ * https://en.wikipedia.org/wiki/Range_searching#Orthogonal_range_searching
+ *
+ * searches through the grid cells intersecting a rectangular search space (with sides of length 2 * range) then returns all contents of type inside them.
+ * much faster than iterating through view() to find all of what you want for things that arent that common.
+ *
+ * this does NOT return things only in range distance from center! the search space is a square not a circle, if you want only thing in a certain distance
+ * then you need to filter that yourself
  *
  * * center - the atom that is the center of the searched circle
- * * type - the grid contents channel you are looking for, see __DEFINES/spatial_grid.dm
- * * range - the radius of our search circle. the code assumes this is > 1
- * * ignore_visibility - if TRUE, line of sight is ignored, the contents of the grid are only filtered for distance
- * * include_center - if FALSE, subtracts center from the output before filtering, used to speedup searches where you dont care about center being in the output
+ * * type - the type of grid contents you are looking for, see __DEFINES/spatial_grid.dm
+ * * range - the bigger this is, the more spatial grid cells the search space intersects
  */
-/datum/controller/subsystem/spatial_grid/proc/find_grid_contents_in_view(atom/center, type, range, ignore_visibility = FALSE, include_center = TRUE)//should probably just be a global proc but w/e
+/datum/controller/subsystem/spatial_grid/proc/orthogonal_range_search(atom/center, type, range)
 	var/turf/center_turf = get_turf(center)
 
-	var/center_x = center_turf.x
+	var/center_x = center_turf.x//used inside the macros
 	var/center_y = center_turf.y
 
-	var/list/contents_to_return = list()
+	. = list()
 
 	var/static/grid_cells_per_axis = world.maxx / SPATIAL_GRID_CELLSIZE//im going to assume this doesnt change at runtime
 
-	//the minimum x and y cell indexes to test
-	var/min_x = max(CEILING((center_x - range) / SPATIAL_GRID_CELLSIZE, 1), 1)
-	var/min_y = max(CEILING((center_y - range) / SPATIAL_GRID_CELLSIZE, 1), 1)//calculating these indices only takes around 2 microseconds
-
-	//the maximum x and y cell indexes to test
-	var/max_x = min(CEILING((center_x + range) / SPATIAL_GRID_CELLSIZE, 1), grid_cells_per_axis)
-	var/max_y = min(CEILING((center_y + range) / SPATIAL_GRID_CELLSIZE, 1), grid_cells_per_axis)
-
-	var/list/grid_level = grids_by_z_level[center_turf.z]
+	//technically THIS list only contains lists, but inside those lists are grid cell datums and we can go without a SINGLE var init if we do this
+	var/list/datum/spatial_grid_cell/grid_level = grids_by_z_level[center_turf.z]
 	switch(type)
 		if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
-			for(var/row in min_y to max_y)
-				var/list/grid_row = grid_level[row]
+			for(var/row in BOUNDING_BOX_MIN(center_y) to BOUNDING_BOX_MAX(center_y))
+				for(var/x_index in BOUNDING_BOX_MIN(center_x) to BOUNDING_BOX_MAX(center_x))
 
-				for(var/x_index in min_x to max_x)
-					var/datum/spatial_grid_cell/cell = grid_row[x_index]
-
-					if(cell.client_contents)//this if statement slows down the proc by ~3%, try to find a way to make this unnecessary
-						contents_to_return += cell.client_contents
+					. += grid_level[row][x_index].client_contents
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
-			for(var/row in min_y to max_y)
-				var/list/grid_row = grid_level[row]
+			for(var/row in BOUNDING_BOX_MIN(center_y) to BOUNDING_BOX_MAX(center_y))
+				for(var/x_index in BOUNDING_BOX_MIN(center_x) to BOUNDING_BOX_MAX(center_x))
 
-				for(var/x_index in min_x to max_x)
-					var/datum/spatial_grid_cell/cell = grid_row[x_index]
+					. += grid_level[row][x_index].hearing_contents
 
-					if(cell.hearing_contents)
-						contents_to_return += cell.hearing_contents
-
-	//this is faster for things that dont care about themselves but are (probably) in the output, helps us return without using the LOS algorithm
-	if(!include_center)
-		contents_to_return -= center
-
-	if(!length(contents_to_return))
-		return contents_to_return
-
-	if(ignore_visibility)
-		for(var/atom/movable/target as anything in contents_to_return)
-			var/turf/target_turf = get_turf(target)
-
-			if(get_dist(center_turf, target_turf) > range)
-				contents_to_return -= target
-
-		return contents_to_return
-
-	//now that we have the first list of things to return, filter for things with line of sight to x and y
-	for(var/atom/movable/target as anything in contents_to_return)
-		var/turf/target_turf = get_turf(target)
-		var/distance = get_dist(center_turf, target_turf)
-
-		if(distance < 2)//we're adjacent so we can see it :clueless:
-			continue
-
-		if(distance > range)
-			contents_to_return -= target
-			continue
-
-		//this turf search algorithm is the worst scaling part of this proc, scaling worse than view() for small-moderate ranges and > 50 length contents_to_return
-		//luckily its significantly faster than view for large ranges in large spaces and/or relatively few contents_to_return
-		//i can do things that would scale better, but they would be slower for low volume searches which is the vast majority of the current workload
-		//maybe in the future a high volume algorithm would be worth it
-		var/turf/inbetween_turf = center_turf
-		while(TRUE)
-			inbetween_turf = get_step(inbetween_turf, get_dir(inbetween_turf, target_turf))
-
-			if(inbetween_turf == target_turf)//we've gotten to target's turf without returning due to turf opacity, so we must be able to see target
-				break
-
-			if(inbetween_turf.opacity || inbetween_turf.opacity_sources)//this turf or something on it is opaque so we cant see through it
-				contents_to_return -= target
-				break
-
-	return contents_to_return
+	return .
 
 ///get the grid cell encomapassing targets coordinates
 /datum/controller/subsystem/spatial_grid/proc/get_cell_of(atom/target)
@@ -206,10 +154,10 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	var/list/grid = grids_by_z_level[target_turf.z]
 
-	var/datum/spatial_grid_cell/cell_to_return = grid[CEILING(target_turf.y / SPATIAL_GRID_CELLSIZE, 1)][CEILING(target_turf.x / SPATIAL_GRID_CELLSIZE, 1)]
+	var/datum/spatial_grid_cell/cell_to_return = grid[ROUND_UP(target_turf.y * INVERSE_SPATIAL_GRID_CELLSIZE)][ROUND_UP(target_turf.x * INVERSE_SPATIAL_GRID_CELLSIZE)]
 	return cell_to_return
 
-///get all grid cells intersecting radius around center and return a list of them
+///get all grid cells intersecting the bounding box around center with sides of length 2 * range
 /datum/controller/subsystem/spatial_grid/proc/get_cells_in_range(atom/center, range)
 	var/turf/center_turf = get_turf(center)
 
@@ -218,15 +166,15 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	var/list/intersecting_grid_cells = list()
 
-	var/static/grid_cells_per_axis = world.maxx / SPATIAL_GRID_CELLSIZE//im going to assume this doesnt change at runtime
+	var/static/grid_cells_per_axis = world.maxx * INVERSE_SPATIAL_GRID_CELLSIZE//im going to assume this doesnt change at runtime
 
 	//the minimum x and y cell indexes to test
-	var/min_x = max(CEILING((center_x - range) / SPATIAL_GRID_CELLSIZE, 1), 1)
-	var/min_y = max(CEILING((center_y - range) / SPATIAL_GRID_CELLSIZE, 1), 1)//calculating these indices only takes around 2 microseconds
+	var/min_x = max(ROUND_UP((center_x - range) * INVERSE_SPATIAL_GRID_CELLSIZE), 1)
+	var/min_y = max(ROUND_UP((center_y - range) * INVERSE_SPATIAL_GRID_CELLSIZE), 1)//calculating these indices only takes around 2 microseconds
 
 	//the maximum x and y cell indexes to test
-	var/max_x = min(CEILING((center_x + range) / SPATIAL_GRID_CELLSIZE, 1), grid_cells_per_axis)
-	var/max_y = min(CEILING((center_y + range) / SPATIAL_GRID_CELLSIZE, 1), grid_cells_per_axis)
+	var/max_x = min(ROUND_UP((center_x + range) * INVERSE_SPATIAL_GRID_CELLSIZE), grid_cells_per_axis)
+	var/max_y = min(ROUND_UP((center_y + range) * INVERSE_SPATIAL_GRID_CELLSIZE), grid_cells_per_axis)
 
 	var/list/grid_level = grids_by_z_level[center_turf.z]
 
@@ -238,26 +186,35 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	return intersecting_grid_cells
 
-///find the spatial map cell that target belongs to, then add target's important_recusive_contents to it. make sure to provide the turf new_target is "in"
+///find the spatial map cell that target belongs to, then add target's important_recusive_contents to it.
+///make sure to provide the turf new_target is "in"
 /datum/controller/subsystem/spatial_grid/proc/enter_cell(atom/movable/new_target, turf/target_turf)
 	if(!target_turf || !new_target?.important_recursive_contents)
 		CRASH("/datum/controller/subsystem/spatial_grid/proc/enter_cell() was given null arguments or a new_target without important_recursive_contents!")
 
-	var/list/grid = grids_by_z_level[target_turf.z]
+	var/x_index = ROUND_UP(target_turf.x * INVERSE_SPATIAL_GRID_CELLSIZE)
+	var/y_index = ROUND_UP(target_turf.y * INVERSE_SPATIAL_GRID_CELLSIZE)
+	var/z_index = target_turf.z
 
-	var/datum/spatial_grid_cell/intersecting_cell = grid[CEILING(target_turf.y / SPATIAL_GRID_CELLSIZE, 1)][CEILING(target_turf.x / SPATIAL_GRID_CELLSIZE, 1)]
-
-	SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED, new_target)
+	var/datum/spatial_grid_cell/intersecting_cell = grids_by_z_level[z_index][y_index][x_index]
 
 	if(new_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
 		intersecting_cell.client_contents |= new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS]
 
+		SEND_SIGNAL(src, SPATIAL_GRID_CELL_ENTERED(x_index, y_index, z_index, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), new_target)
+
 	if(new_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
 		intersecting_cell.hearing_contents |= new_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
 
-///find the spatial map cell that target used to belong to, then subtract target's important_recusive_contents from it.
-///make sure to provide the turf old_target used to be "in"
-/datum/controller/subsystem/spatial_grid/proc/exit_cell(atom/movable/old_target, turf/target_turf)
+		SEND_SIGNAL(src, SPATIAL_GRID_CELL_ENTERED(x_index, y_index, z_index, RECURSIVE_CONTENTS_HEARING_SENSITIVE), new_target)
+
+/**
+ * find the spatial map cell that target used to belong to, then subtract target's important_recusive_contents from it.
+ * make sure to provide the turf old_target used to be "in"
+ * * old_target - the thing we want to remove from the spatial grid cell
+ * * target_turf - the turf we use to determine the cell we're removing from
+ * * exclusive_type - either null or a valid contents channel. if you just want to remove a single type from the grid cell then use this
+ */
 /datum/controller/subsystem/spatial_grid/proc/exit_cell(atom/movable/old_target, turf/target_turf, exclusive_type)
 	if(!target_turf || !old_target?.important_recursive_contents)
 		CRASH("/datum/controller/subsystem/spatial_grid/proc/exit_cell() was given null arguments or a new_target without important_recursive_contents!")
@@ -317,7 +274,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	return containing_cells
 
-///debug proc for checking if a movable is in multiple cells when it shouldnt be (ie always)
+///debug proc for checking if a movable is in multiple cells when it shouldnt be (ie always unless multitile entering is implemented)
 /atom/proc/find_all_cells_containing(remove_from_cells = FALSE)
 	var/datum/spatial_grid_cell/real_cell = SSspatial_grid.get_cell_of(src)
 	var/list/containing_cells = SSspatial_grid.find_hanging_cell_refs_for_movable(src, FALSE, remove_from_cells)
@@ -330,3 +287,68 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	message_admins(cell_coords)
 	message_admins("[src] is supposed to only be contained in the cell at indexes ([real_cell.cell_x], [real_cell.cell_y])")
+
+/atom/proc/find_grid_statistics_for_z_level(insert_clients = 100)
+	var/raw_clients = 0
+	var/raw_hearables = 0
+
+	var/cells_with_clients = 0
+	var/cells_with_hearables = 0
+
+	var/total_cells = (world.maxx / SPATIAL_GRID_CELLSIZE) ** 2
+
+	var/average_clients_per_cell = 0
+	var/average_hearables_per_cell = 0
+
+	var/hearable_min_x = (world.maxx / SPATIAL_GRID_CELLSIZE)
+	var/hearable_max_x = 1
+
+	var/hearable_min_y = (world.maxy / SPATIAL_GRID_CELLSIZE)
+	var/hearable_max_y = 1
+
+	var/client_min_x = (world.maxx / SPATIAL_GRID_CELLSIZE)
+	var/client_max_x = 1
+
+	var/client_min_y = (world.maxy / SPATIAL_GRID_CELLSIZE)
+	var/client_max_y = 1
+
+	var/list/all_z_level_cells = SSspatial_grid.get_cells_in_range(src, 1000)
+
+	for(var/datum/spatial_grid_cell/cell as anything in all_z_level_cells)
+		var/client_length = length(cell.client_contents)
+		var/hearable_length = length(cell.hearing_contents)
+		raw_clients += client_length
+		raw_hearables += hearable_length
+		if(client_length)
+			cells_with_clients++
+			if(cell.cell_x < client_min_x)
+				client_min_x = cell.cell_x
+			if(cell.cell_x > client_max_x)
+				client_max_x = cell.cell_x
+
+			if(cell.cell_y < client_min_y)
+				client_min_y = cell.cell_y
+			if(cell.cell_y > client_max_y)
+				client_max_y = cell.cell_y
+
+		if(hearable_length)
+			cells_with_hearables++
+			if(cell.cell_x < hearable_min_x)
+				hearable_min_x = cell.cell_x
+			if(cell.cell_x > hearable_max_x)
+				hearable_max_x = cell.cell_x
+
+			if(cell.cell_y < hearable_min_y)
+				hearable_min_y = cell.cell_y
+			if(cell.cell_y > hearable_max_y)
+				hearable_max_y = cell.cell_y
+
+	average_clients_per_cell = raw_clients / total_cells
+	average_hearables_per_cell = raw_hearables / total_cells
+
+	message_admins("on z level [z] there are [raw_clients] clients ([insert_clients] of whom are fakes inserted to random station turfs) \
+	and [raw_hearables] hearables. all of whom are inside the bounding box given by \
+	clients: ([client_min_x], [client_min_y]) x ([client_max_x], [client_max_y]) \
+	and hearables: ([hearable_min_x], [hearable_min_y]) x ([hearable_max_x], [hearable_max_y]) \
+	on average there are [average_clients_per_cell] clients per cell and [average_hearables_per_cell] hearables per cell. \
+	[cells_with_clients] cells have clients and [cells_with_hearables] have hearables")
