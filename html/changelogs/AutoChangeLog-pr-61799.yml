@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - admin: "You can now cancel incoming and outgoing cross comms console messages."

@@ -523,7 +523,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	dummy.pass_flags |= PASSTABLE
 	var/turf/previous_step = get_turf(A)
 	var/first_step = TRUE
-	for(var/turf/next_step as anything in (getline(A, B) - previous_step))
+	for(var/turf/next_step as anything in (get_line(A, B) - previous_step))
 		if(first_step)
 			for(var/obj/blocker in previous_step)
 				if(!blocker.density || !(blocker.flags_1 & ON_BORDER_1))

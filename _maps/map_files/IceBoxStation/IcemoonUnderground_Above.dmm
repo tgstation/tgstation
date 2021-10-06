@@ -306,6 +306,7 @@
 	},
 /obj/structure/table,
 /obj/item/restraints/handcuffs,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "cd" = (
@@ -975,9 +976,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
-"fR" = (
-/turf/closed/mineral/random/snow,
-/area/icemoon/underground/unexplored)
 "fT" = (
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
@@ -1122,10 +1120,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/stone,
 /area/service/bar)
-"gE" = (
-/obj/structure/flora/tree/pine,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/unexplored)
 "gF" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4485,6 +4479,11 @@
 /obj/structure/ladder,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
+"vV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron,
+/area/mine/laborcamp)
 "vW" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -19339,7 +19338,7 @@ ap
 ap
 ap
 yr
-Ee
+vV
 Hf
 Wh
 Ee
@@ -29394,7 +29393,7 @@ Rj
 Xo
 Fp
 Fp
-Iy
+Fp
 Iy
 Iy
 Iy
@@ -29650,8 +29649,8 @@ mO
 mO
 Fp
 Fp
-Iy
-Iy
+Fp
+Fp
 Iy
 Iy
 Iy
@@ -29907,8 +29906,8 @@ mO
 mO
 Fp
 Fp
-Iy
-Iy
+Fp
+Fp
 Iy
 Iy
 Iy
@@ -30164,8 +30163,8 @@ mO
 Fp
 Fp
 Fp
-Iy
-Iy
+Fp
+Fp
 Iy
 Iy
 Iy
@@ -30421,8 +30420,8 @@ Fp
 Fp
 Fp
 Fp
-Iy
-Iy
+Fp
+Fp
 Iy
 ak
 ak
@@ -30678,9 +30677,9 @@ bq
 Fp
 Fp
 Fp
-Iy
-Iy
-Iy
+Fp
+Fp
+Fp
 ak
 ak
 ak
@@ -30935,9 +30934,9 @@ bq
 Fp
 Fp
 Fp
-Iy
-Iy
-Iy
+Fp
+Fp
+Fp
 ak
 ak
 ak
@@ -31192,9 +31191,9 @@ bq
 Fp
 VW
 Fp
-Iy
-Iy
-Iy
+Fp
+Fp
+Fp
 ak
 ak
 ak
@@ -31449,9 +31448,9 @@ bq
 Fp
 Fp
 Fp
-Iy
-Iy
-Iy
+Fp
+Fp
+Fp
 ak
 ak
 ak
@@ -31706,9 +31705,9 @@ vC
 Fp
 Fp
 VW
-Iy
-Iy
-Iy
+Fp
+Fp
+Fp
 ak
 ak
 ak
@@ -31963,9 +31962,9 @@ mv
 Fp
 Fp
 Fp
-Iy
-Iy
-Iy
+Fp
+Fp
+Fp
 ak
 ak
 ak
@@ -32220,9 +32219,9 @@ mv
 Fp
 Fp
 Fp
-Iy
-Iy
-Iy
+Fp
+Fp
+Fp
 ak
 ak
 ak
@@ -32477,8 +32476,8 @@ mv
 Fp
 xO
 Fp
-Iy
-Iy
+Fp
+Fp
 ak
 ak
 ak
@@ -32734,8 +32733,8 @@ mv
 Fp
 Fp
 Fp
-Iy
-Iy
+Fp
+Fp
 ak
 ak
 ak
@@ -32991,7 +32990,7 @@ mv
 Fp
 Fp
 Fp
-Iy
+Fp
 ak
 ak
 ak
@@ -33729,7 +33728,7 @@ Iy
 Iy
 Iy
 Iy
-Iy
+Fp
 Fp
 Fp
 xO
@@ -33987,7 +33986,7 @@ Iy
 Iy
 Iy
 Iy
-Iy
+Fp
 Fp
 Fp
 Fp
@@ -34245,7 +34244,7 @@ Iy
 Iy
 Iy
 Iy
-Iy
+Fp
 Fp
 Fp
 Fp
@@ -34502,7 +34501,7 @@ ak
 ak
 ak
 ak
-Iy
+Fp
 Fp
 Fp
 Fp
@@ -34759,8 +34758,8 @@ ak
 ak
 ak
 ak
-As
-Iy
+Et
+Fp
 Fp
 Fp
 Fp
@@ -34784,7 +34783,7 @@ Fp
 Fp
 Fp
 Fp
-Iy
+Fp
 ak
 ak
 ak
@@ -35018,7 +35017,7 @@ ak
 ak
 ak
 ak
-Iy
+Fp
 xO
 Fp
 ys
@@ -35036,11 +35035,11 @@ Fp
 Fp
 Fp
 Fp
-Iy
-Iy
-Iy
-Iy
-Iy
+Fp
+Fp
+Fp
+Fp
+Fp
 ak
 ak
 ak
@@ -35273,9 +35272,9 @@ ak
 ak
 ak
 ak
-As
-As
-Iy
+Et
+Et
+Fp
 Fp
 Fp
 Xs
@@ -35288,11 +35287,11 @@ IP
 du
 Fp
 Fp
-gE
-Iy
-fR
-fR
-fR
+VW
+Fp
+Et
+Et
+Et
 ak
 ak
 ak
@@ -35529,11 +35528,11 @@ ak
 ak
 ak
 ak
-As
-As
-As
-Iy
-gE
+Et
+Et
+Et
+Fp
+VW
 Fp
 Fp
 Fp
@@ -35541,13 +35540,13 @@ Fp
 Fp
 PG
 PG
-Iy
-Iy
-Iy
-Iy
-Iy
-Iy
-As
+Fp
+Fp
+Fp
+Fp
+Fp
+Fp
+Et
 ak
 ak
 ak
@@ -35791,17 +35790,17 @@ ak
 ak
 ak
 ak
-As
+Et
 ak
 ak
-As
+Et
 xO
 Fp
 ak
 ak
 ak
 ak
-As
+Et
 ak
 ak
 ak
@@ -36047,17 +36046,17 @@ ak
 ak
 ak
 ak
-As
-As
+Et
+Et
 ak
 ak
 ak
-As
-As
+Et
+Et
 ak
 ak
-As
-As
+Et
+Et
 ak
 ak
 ak

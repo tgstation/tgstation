@@ -800,6 +800,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/i = 0
 	for(var/word in msglist)
 		i++
+		if(!length(word))
+			continue
 		if(word[1] != "@")
 			continue
 		var/ckey_check = lowertext(copytext(word, 2))
