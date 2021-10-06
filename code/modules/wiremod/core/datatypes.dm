@@ -22,6 +22,7 @@ GLOBAL_LIST_INIT(circuit_datatypes, generate_circuit_datatypes())
 	/// The flags of the circuit datatype
 	var/datatype_flags = 0
 
+	/// The datatypes that this datatype can receive from.
 	var/list/can_receive_from = list()
 
 /**

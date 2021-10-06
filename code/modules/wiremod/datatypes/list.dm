@@ -2,5 +2,5 @@
 	datatype = PORT_TYPE_LIST
 	color = "white"
 	can_receive_from = list(
-		PORT_TYPE_ASSOC_LIST
+		PORT_TYPE_ASSOC_LIST,
 	)
