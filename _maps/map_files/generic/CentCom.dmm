@@ -883,18 +883,6 @@
 /obj/structure/chair/stool/directional/east,
 /turf/open/floor/plating/beach/sand,
 /area/centcom/holding)
-"fQ" = (
-/obj/structure/window/paperframe{
-	can_atmos_pass = 0
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/turf/open/floor/sepia,
-/area/centcom/holding)
 "fR" = (
 /obj/item/food/egg/rainbow{
 	desc = "I bet you think you're pretty clever... well you are.";
@@ -43720,7 +43708,7 @@ FC
 Qi
 NW
 Qi
-fQ
+Qi
 WX
 WX
 Qi
