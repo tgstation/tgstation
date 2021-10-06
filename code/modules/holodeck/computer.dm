@@ -349,7 +349,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 /obj/machinery/computer/holodeck/proc/emergency_shutdown()
 	last_program = program
 	active = FALSE
-	load_program(offline_program, TRUE)
+	INVOKE_ASYNC(src, .proc/load_program, offline_program, TRUE)
 
 ///returns TRUE if the entire floor of the holodeck is intact, returns FALSE if any are broken
 /obj/machinery/computer/holodeck/proc/floorcheck()

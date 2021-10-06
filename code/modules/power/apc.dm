@@ -267,7 +267,7 @@
 		area.apc = null
 	QDEL_NULL(alarm_manager)
 	if(occupier)
-		malfvacate(TRUE)
+		INVOKE_ASYNC(src, .proc/malfvacate, TRUE)
 	if(wires)
 		QDEL_NULL(wires)
 	if(cell)

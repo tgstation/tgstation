@@ -57,7 +57,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 	anonymous_all_players()
 
 /datum/anonymous_theme/Destroy(force)
-	restore_all_players()
+	INVOKE_ASYNC(src, .proc/restore_all_players)
 	. = ..()
 
 /**
