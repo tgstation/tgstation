@@ -1,4 +1,5 @@
-#define COIL_OUTPUT min(stored_energy, (stored_energy * 0.2) + 1000)
+#define COIL_OUTPUT min(stored_energy, (stored_energy * 0.4) + 1000)
+GLOBAL_VAR_INIT(tesla_last_sound, 0)
 
 /obj/machinery/power/tesla_coil
 	name = "tesla coil"
@@ -88,19 +89,18 @@
 	stored_energy -= power_produced
 
 /obj/machinery/power/tesla_coil/zap_act(power, zap_flags)
-	if(anchored && !panel_open)
-		//don't lose arc power when it's not connected to anything
-		//please place tesla coils all around the station to maximize effectiveness
-		obj_flags |= BEING_SHOCKED
-		addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
-		zap_buckle_check(power)
-		var/power_removed = powernet ? power * input_power_multiplier : power
-		stored_energy += max((power_removed - 100) * 100, 0)
-		flick("coilhit", src)
+	if(!anchored || panel_open)
+		return ..()
+	obj_flags |= BEING_SHOCKED
+	addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
+	zap_buckle_check(power)
+	var/power_removed = powernet ? power * input_power_multiplier : power
+	stored_energy += max((power_removed - 100) * 100, 0)
+	flick("coilhit", src)
+	if(GLOB.tesla_last_sound + 1.2 SECONDS < world.time)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-		return max(power - power_removed, 0) //You get back the amount we didn't use
-	else
-		. = ..()
+		GLOB.tesla_last_sound = world.time
+	return max(power - power_removed, 0) //You get back the amount we didn't use
 
 /obj/machinery/power/tesla_coil/proc/zap()
 	if((last_zap + zap_cooldown) > world.time || !powernet)

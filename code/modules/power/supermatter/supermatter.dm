@@ -1244,7 +1244,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 					multi = 8
 			if(zap_flags & ZAP_SUPERMATTER_FLAGS)
 				var/remaining_power = target.zap_act(zap_str * multi, zap_flags)
-				zap_str = remaining_power //Coils should take a lot out of the power of the zap
+				zap_str = remaining_power / 2 //Coils should take a lot out of the power of the zap
 			else
 				zap_str /= 3
 
