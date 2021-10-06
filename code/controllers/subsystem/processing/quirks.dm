@@ -23,7 +23,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Ageusia","Vegetarian","Deviant Tastes"),
 		list("Ananas Affinity","Ananas Aversion"),
 		list("Alcohol Tolerance","Light Drinker"),
-		list("Clown Fan","Mime Fan"),
+		list("Clown Enjoyer","Mime Fan"),
 		list("Bad Touch", "Friendly"),
 		list("Extrovert", "Introvert"),
 	)
@@ -150,7 +150,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	var/list/new_quirks = list()
 	var/list/positive_quirks = list()
 	var/balance = 0
-	
+
 	var/list/all_quirks = get_quirks()
 
 	for (var/quirk_name in quirks)
