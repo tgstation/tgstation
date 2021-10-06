@@ -4,17 +4,6 @@
 /// Define to be placed at any proc that is triggered by a port.
 #define CIRCUIT_TRIGGER SHOULD_NOT_SLEEP(TRUE)
 
-// Helper procs to define ports on a type
-
-/// Used to define output ports on a circuit component
-#define DEFINE_OUTPUT_PORT(name) var/datum/port/output/##name
-
-/// Used to define option ports on a circuit component
-#define DEFINE_OPTION_PORT(name) var/datum/port/input/option/##name
-
-/// Used to define input ports on a circuit component
-#define DEFINE_INPUT_PORT(name) var/datum/port/input/##name
-
 // Port defines
 
 #define PORT_MAX_NAME_LENGTH 50

@@ -80,7 +80,7 @@
 	src.datatype = datatype
 	src.base_datatype = base_datatype
 	src.composite_datatypes = composite_datatypes
-	src.abstract = FALSE
+	abstract = FALSE
 
 	composite_datatypes_style += list()
 	for(var/datatype_to_check in composite_datatypes)

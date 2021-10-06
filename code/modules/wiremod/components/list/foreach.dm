@@ -9,19 +9,19 @@
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
 	/// The list type
-	DEFINE_OPTION_PORT(list_options)
+	var/datum/port/input/option/list_options
 
 	/// The list to iterate over
-	DEFINE_INPUT_PORT(list_to_iterate)
+	var/datum/port/input/list_to_iterate
 
 	/// The current element from the list
-	DEFINE_OUTPUT_PORT(element)
+	var/datum/port/output/element
 	/// The current index from the list
-	DEFINE_OUTPUT_PORT(current_index)
+	var/datum/port/output/current_index
 	/// A signal that is sent when the list has moved onto the next index.
-	DEFINE_OUTPUT_PORT(on_next_index)
+	var/datum/port/output/on_next_index
 	/// A signal that is sent when the list has finished iterating
-	DEFINE_OUTPUT_PORT(on_finished)
+	var/datum/port/output/on_finished
 
 	/// The limit of iterations before it breaks. Used to prevent from someone iterating a massive list constantly
 	var/limit = 100

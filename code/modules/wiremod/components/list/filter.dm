@@ -9,25 +9,25 @@
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_INSTANT
 
 	/// The list type
-	DEFINE_OPTION_PORT(list_options)
+	var/datum/port/input/option/list_options
 
 	/// Adds the list to the result
-	DEFINE_INPUT_PORT(accept_entry)
+	var/datum/port/input/accept_entry
 	/// The list to filter over
-	DEFINE_INPUT_PORT(list_to_filter)
+	var/datum/port/input/list_to_filter
 
 	/// The current element from the list
-	DEFINE_OUTPUT_PORT(element)
+	var/datum/port/output/element
 	/// The current index from the list
-	DEFINE_OUTPUT_PORT(current_index)
+	var/datum/port/output/current_index
 	/// A signal that is sent when the list has moved onto the next index.
-	DEFINE_OUTPUT_PORT(on_next_index)
+	var/datum/port/output/on_next_index
 	/// The finished list
-	DEFINE_OUTPUT_PORT(finished_list)
+	var/datum/port/output/finished_list
 	/// A signal that is sent when the filtering has finished
-	DEFINE_OUTPUT_PORT(on_finished)
+	var/datum/port/output/on_finished
 	/// A signal that is sent when the filtering has failed
-	DEFINE_OUTPUT_PORT(on_failed)
+	var/datum/port/output/on_failed
 
 	ui_buttons = list(
 		"plus" = "increase",

@@ -23,6 +23,11 @@
 		remove_item(stored_item)
 	return ..()
 
+/obj/structure/dispenser_bot/Destroy()
+	QDEL_LIST(stored_items)
+	return ..()
+
+
 /obj/structure/dispenser_bot/proc/add_item(obj/item/to_add)
 	stored_items += to_add
 	to_add.forceMove(src)
@@ -84,13 +89,13 @@
 	desc = "A dispenser bot that can dispense items "
 
 	/// The list of items
-	DEFINE_OUTPUT_PORT(item_list)
+	var/datum/port/output/item_list
 	/// The item that was added/removed.
-	DEFINE_OUTPUT_PORT(item)
+	var/datum/port/output/item
 	/// Called when an item is added.
-	DEFINE_OUTPUT_PORT(on_item_added)
+	var/datum/port/output/on_item_added
 	/// Called when an item is removed.
-	DEFINE_OUTPUT_PORT(on_item_removed)
+	var/datum/port/output/on_item_removed
 
 	ui_buttons = list(
 		"plus" = "add_vend_component",
@@ -166,9 +171,9 @@
 	var/obj/structure/dispenser_bot/attached_bot
 
 	/// The item this vendor component should vend
-	DEFINE_INPUT_PORT(item_to_vend)
+	var/datum/port/input/item_to_vend
 	/// Used to vend the item
-	DEFINE_INPUT_PORT(vend_item)
+	var/datum/port/input/vend_item
 
 	circuit_size = 0
 

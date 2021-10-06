@@ -1,3 +1,10 @@
+/**
+ * This subsystem is to handle creating and storing
+ * composite templates that are used to create composite datatypes
+ * for integrated circuits
+ *
+ * See: https://en.wikipedia.org/wiki/Composite_data_type
+ **/
 SUBSYSTEM_DEF(wiremod_composite)
 	name = "Wiremod Composite Templates"
 	flags = SS_NO_FIRE
