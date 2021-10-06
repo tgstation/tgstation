@@ -123,13 +123,13 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 			var/obj/O2 = DuplicateObject(O , perfectcopy=TRUE, newloc = B, nerf=nerf_weapons, holoitem=TRUE)
 			if(!O2)
 				continue
-			copiedobjs += O2.GetAllContents()
+			copiedobjs += O2.get_all_contents()
 
 		for(var/mob/M in T)
 			if(iscameramob(M))
 				continue // If we need to check for more mobs, I'll add a variable
 			var/mob/SM = DuplicateObject(M , perfectcopy=TRUE, newloc = B, holoitem=TRUE)
-			copiedobjs += SM.GetAllContents()
+			copiedobjs += SM.get_all_contents()
 
 		for(var/V in T.vars - GLOB.duplicate_forbidden_vars)
 			if(V == "air")

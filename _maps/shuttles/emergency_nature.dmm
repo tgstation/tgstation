@@ -1225,7 +1225,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "VI" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "VM" = (

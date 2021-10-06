@@ -331,6 +331,7 @@
 		to_chat(occupants, "[icon2html(src, occupants)][span_notice("You switch to [equip].")]")
 		visible_message(span_notice("[src] raises [equip]."))
 		send_byjax(usr, "exosuit.browser", "eq_list", get_equipment_list())
+		playsound(src,'sound/machines/piston_raise.ogg', 40, TRUE)
 		return
 
 	//Toggles radio broadcasting

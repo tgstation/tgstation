@@ -33,7 +33,7 @@ Then the player gets the profit from selling his own wasted time.
 
 	var/profit_ratio = 1 //Percentage that gets sent to the seller, rest goes to cargo.
 
-	var/list/contents = AM.GetAllContents()
+	var/list/contents = AM.get_all_contents()
 
 	var/datum/export_report/report = external_report
 

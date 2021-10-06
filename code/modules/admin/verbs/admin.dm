@@ -16,11 +16,11 @@
 	if(!SSticker)
 		return
 
-	SSticker.selected_tip = input
-
 	// If we've already tipped, then send it straight away.
 	if(SSticker.tipped)
-		SSticker.send_tip_of_the_round()
+		send_tip_of_the_round(world, input)
+	else
+		SSticker.selected_tip = input
 
 	message_admins("[key_name_admin(usr)] sent a tip of the round.")
 	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
@@ -33,7 +33,7 @@
 	if(!check_rights(0))
 		return
 
-	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
+	var/message = input("Global message to send:", "Admin Announce", null, null)  as message|null
 	if(message)
 		if(!check_rights(R_SERVER,0))
 			message = adminscrub(message,500)

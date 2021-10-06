@@ -206,7 +206,7 @@
 	var/front_panel_screws = 4
 	var/hdd_wires = 6
 
-/obj/machinery/rnd/server/master/Initialize()
+/obj/machinery/rnd/server/master/Initialize(mapload)
 	. = ..()
 	name = "\improper Master " + name
 	source_code_hdd = new(src)
