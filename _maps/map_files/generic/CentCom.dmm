@@ -223,12 +223,6 @@
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "bf" = (
-/obj/structure/window/paperframe{
-	can_atmos_pass = 0
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
@@ -7543,15 +7537,6 @@
 	},
 /turf/open/floor/carpet,
 /area/wizard_station)
-"vo" = (
-/obj/structure/window/paperframe{
-	can_atmos_pass = 0
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/open/floor/sepia,
-/area/centcom/holding)
 "vu" = (
 /obj/item/storage/box/drinkingglasses,
 /obj/item/reagent_containers/food/drinks/bottle/rum,
@@ -15348,12 +15333,6 @@
 /turf/open/floor/iron,
 /area/centcom/supply)
 "Qz" = (
-/obj/structure/window/paperframe{
-	can_atmos_pass = 0
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /mob/living/simple_animal/bot/medbot{
 	desc = "When engaged in combat, the vanquishing of thine enemy can be the warrior's only concern.";
 	name = "Hattori";
@@ -15843,15 +15822,6 @@
 	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/carpet/black,
-/area/centcom/holding)
-"TF" = (
-/obj/structure/window/paperframe{
-	can_atmos_pass = 0
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/open/floor/wood/parquet,
 /area/centcom/holding)
 "TR" = (
 /obj/machinery/light/directional/south,
@@ -16753,24 +16723,6 @@
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/light/directional/east,
 /turf/open/floor/grass,
-/area/centcom/holding)
-"ZA" = (
-/obj/structure/window/paperframe{
-	can_atmos_pass = 0
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/obj/structure/mineral_door/paperframe{
-	name = "East Wing"
-	},
-/turf/open/floor/sepia,
 /area/centcom/holding)
 "ZH" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -41708,7 +41660,7 @@ NW
 NW
 NW
 fB
-ZA
+fB
 Nd
 Sa
 MQ
@@ -44535,7 +44487,7 @@ bV
 bV
 NW
 gC
-vo
+Zn
 UG
 NW
 Os
@@ -45306,7 +45258,7 @@ bb
 em
 Oy
 bC
-TF
+OL
 gh
 NW
 XB
@@ -45563,7 +45515,7 @@ BU
 YB
 Oy
 bC
-TF
+OL
 dY
 NW
 VG
@@ -45820,7 +45772,7 @@ bb
 em
 Ng
 OL
-TF
+OL
 PC
 Nd
 Nd
