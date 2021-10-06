@@ -6,6 +6,8 @@
 	buffer = 200
 	///List of all microbiological samples in this soup.
 	var/datum/biological_sample/biological_sample
+	///If the vat will restart the sample upon completion
+	var/resampler_active = FALSE
 
 ///Add that sexy demnand component
 /obj/machinery/plumbing/growing_vat/Initialize(mapload, bolt)
@@ -60,6 +62,7 @@
 	to_chat(user, span_warning("You put some of the sample in the vat!"))
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 	update_appearance()
+	RegisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED, .proc/on_sample_growth_completed)
 
 ///Adds text for when there is a sample in the vat
 /obj/machinery/plumbing/growing_vat/examine(mob/user)
@@ -84,6 +87,12 @@
 ///Adds overlays to show the reagent contents
 /obj/machinery/plumbing/growing_vat/update_overlays()
 	. = ..()
+	. += emissive_appearance(icon, "growing_vat_glow", alpha = src.alpha)
+	if(is_operational)
+		if(resampler_active)
+			. += "growing_vat_on"
+		else
+			. += "growing_vat_off"
 	if(!reagents.total_volume)
 		return
 	var/reagentcolor = mix_color_from_reagents(reagents.reagent_list)
@@ -94,3 +103,26 @@
 	if(biological_sample && is_operational)
 		var/mutable_appearance/bubbles_overlay = mutable_appearance(icon, "vat_bubbles")
 		. += bubbles_overlay
+
+/obj/machinery/plumbing/growing_vat/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return
+	resampler_active = !resampler_active
+	balloon_alert_to_viewers("resampler [resampler_active ? "activated" : "deactivated"]")
+	update_appearance()
+
+/obj/machinery/plumbing/growing_vat/emag_act()
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+
+/obj/machinery/plumbing/growing_vat/proc/on_sample_growth_completed()
+	SIGNAL_HANDLER
+	if(resampler_active)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(src), 'sound/effects/servostep.ogg', 70, 1), 1.5 SECONDS)
+		biological_sample.reset_sample()
+	else
+		UnregisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)
+		QDEL_NULL(biological_sample)
+	update_appearance()
