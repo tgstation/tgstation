@@ -194,3 +194,12 @@
       requires Medbay General access.
   - bugfix: Kitchen cold rooms which are cold (that is, those on Ice, Meta, and Tram)
       now have their air alarms configured to expect this.
+2021-10-06:
+  JohnFulpWillard:
+  - bugfix: Surgeries that repair organs will once again repair the organ.
+  - bugfix: Swarmers-banned ghosts can no longer create Swarmer bodies from the beacon.
+  Zytolg:
+  - expansion: Remaps the Holding Facility into 2021 Standards
+  - code_imp: Indestructible paper wall support. It's better than the alternative.
+  kopoba:
+  - bugfix: fix ebow was able to accept pka modkits with 0 cost
