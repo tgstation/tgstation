@@ -114,7 +114,6 @@
 			temp_rating += SP.rating
 		else
 			consumption_coeff += SP.rating
-	power_gen = round(initial(power_gen) * temp_rating)
 	consumption = consumption_coeff / temp_rating
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
