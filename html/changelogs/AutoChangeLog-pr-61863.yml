@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "Kitchen cold rooms which are cold (that is, those on Ice, Meta, and Tram) now have their air alarms configured to expect this."

@@ -28112,7 +28112,6 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
-/obj/machinery/aug_manipulator,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
