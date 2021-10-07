@@ -617,6 +617,7 @@
 	name = "Mining Shuttle Airlock";
 	opacity = 0
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/production)
 "ck" = (
@@ -626,6 +627,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/production)
 "cl" = (
@@ -4500,6 +4502,7 @@
 	name = "Mining Shuttle Airlock";
 	opacity = 0
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/production)
 "WQ" = (
@@ -18983,7 +18986,7 @@ aj
 aj
 ab
 br
-bP
+Rx
 br
 ab
 aj
@@ -19754,7 +19757,7 @@ Gh
 bn
 bC
 Lu
-bP
+Rx
 cl
 cH
 cO

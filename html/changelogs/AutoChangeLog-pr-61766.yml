@@ -1,4 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes: 
-  - admin: "Circuit components to perform animations and manipulate filters have been added. These components are the \"Begin Animation\", \"Animation Step\", \"Add Filter\", \"Filter Remover\", \"Filter Parameter Helper\", and \"Animation & Filter Bitflag Helper\" components. Refer to their descriptions for more information."

@@ -248,7 +248,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	if(locked)
 		return //don't let you cremate something twice or w/e
 	// Make sure we don't delete the actual morgue and its tray
-	var/list/conts = GetAllContents() - src - connected
+	var/list/conts = get_all_contents() - src - connected
 
 	if(!conts.len)
 		audible_message(span_hear("You hear a hollow crackle."))

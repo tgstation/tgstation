@@ -98,7 +98,7 @@
 	var/datum/port/input/animation_flags
 
 /obj/item/circuit_component/animation_step/populate_ports()
-	animation_variables = add_input_port("Variables", PORT_TYPE_ASSOC_LIST, order = 1.66)
+	animation_variables = add_input_port("Variables", PORT_TYPE_ASSOC_LIST(PORT_TYPE_STRING, PORT_TYPE_ANY), order = 1.66)
 	animation_time = add_input_port("Time", PORT_TYPE_NUMBER, order = 1.66)
 	animation_easing = add_input_port("Easing", PORT_TYPE_NUMBER, order = 1.66)
 	animation_flags = add_input_port("Flags", PORT_TYPE_NUMBER, order = 1.66)

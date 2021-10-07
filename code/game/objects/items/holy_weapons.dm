@@ -143,76 +143,30 @@
 	w_class = WEIGHT_CLASS_TINY
 	obj_flags = UNIQUE_RENAME
 	wound_bonus = -10
-	/// If this item has already been reskinned
-	var/reskinned = FALSE
-	/// If this item can be used in a reskin variant selection
+	/// boolean on whether it's allowed to be picked from the nullrod's transformation ability
 	var/chaplain_spawnable = TRUE
-	/// Short description of what this item is capable of, for radial menu uses
+	/// Short description of what this item is capable of, for radial menu uses.
 	var/menu_description = "A standard chaplain's weapon. Fits in pockets. Can be worn on the belt."
 
 /obj/item/nullrod/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 	AddElement(/datum/element/bane, /mob/living/simple_animal/revenant, 0, 25, FALSE)
+	if(!GLOB.holy_weapon_type && istype(src, /obj/item/nullrod))
+		var/list/rods = list()
+		for(var/obj/item/nullrod/nullrod_type as anything in typesof(/obj/item/nullrod))
+			if(!chaplain_spawnable)
+				continue
+			rods[nullrod_type] = initial(nullrod_type.menu_description)
+		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, .proc/on_holy_weapon_picked))
+
+/obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/holy_weapon_type)
+	GLOB.holy_weapon_type = holy_weapon_type
+	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[initial(holy_weapon_type.name)]")
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
 	return (BRUTELOSS|FIRELOSS)
-
-/obj/item/nullrod/attack_self(mob/user)
-	if(user.mind && (user.mind.holy_role) && !reskinned)
-		reskin_holy_weapon(user)
-
-/**
- * Shows a user a radial menu of all available null rod reskins and replaces the current null rod with the user's chosen reskinned variant
- *
- * Arguments:
- * * user The mob choosing a null rod reskin variant
- */
-/obj/item/nullrod/proc/reskin_holy_weapon(mob/user)
-	if(GLOB.holy_weapon_type)
-		return
-	var/list/display_names = list()
-	var/list/nullrod_icons = list()
-	for(var/rod in typesof(/obj/item/nullrod))
-		var/obj/item/nullrod/rodtype = rod
-		if(initial(rodtype.chaplain_spawnable))
-			var/datum/radial_menu_choice/option = new
-			option.image = image(icon = initial(rodtype.icon), icon_state = initial(rodtype.icon_state))
-			option.info = span_boldnotice("[initial(rodtype.menu_description)]")
-			display_names[initial(rodtype.name)] = rodtype
-			nullrod_icons += list(initial(rodtype.name) = option)
-
-	nullrod_icons = sortList(nullrod_icons)
-	var/choice = show_radial_menu(user, src , nullrod_icons, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 42, require_near = TRUE)
-	if(!choice || !check_menu(user))
-		return
-
-	var/picked_rod_type = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
-	var/obj/item/nullrod/holy_weapon = new picked_rod_type(user.drop_location())
-	GLOB.holy_weapon_type = holy_weapon.type
-
-	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[choice]")
-
-	if(holy_weapon)
-		holy_weapon.reskinned = TRUE
-		qdel(src)
-		user.put_in_hands(holy_weapon)
-
-/**
- * Checks if we are allowed to interact with a radial menu
- *
- * Arguments:
- * * user The mob interacting with the menu
- */
-/obj/item/nullrod/proc/check_menu(mob/user)
-	if(!istype(user))
-		return FALSE
-	if(QDELETED(src) || reskinned)
-		return FALSE
-	if(user.incapacitated() || !user.is_holding(src))
-		return FALSE
-	return TRUE
 
 /obj/item/nullrod/godhand
 	name = "god hand"
@@ -462,8 +416,7 @@
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5 //faster than normal saw
-	chaplain_spawnable = FALSE
-	menu_description = "A sharp chainsaw sword dealing a very high amount of damage which partially penetrates armor. Able to awaken a friendly spirit providing guidance. Can be used as a faster saw tool. Very effective at butchering bodies. Can be worn on the belt."
+	chaplain_spawnable = FALSE //prevents being pickable as a chaplain weapon (it has 30 force)
 
 /obj/item/nullrod/hammer
 	name = "relic war hammer"

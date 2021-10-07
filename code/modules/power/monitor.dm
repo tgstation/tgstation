@@ -53,7 +53,7 @@
 	var/area/A = get_area(src) //if the computer isn't directly connected to a wire, attempt to find the APC powering it to pull it's powernet instead
 	if(!A)
 		return
-	local_apc = A.get_apc()
+	local_apc = A.apc
 	if(!local_apc)
 		return
 	if(!local_apc.terminal) //this really shouldn't happen without badminnery.
@@ -98,8 +98,8 @@
 	data["areas"] = list()
 
 	if(connected_powernet)
-		data["supply"] = DisplayPower(connected_powernet.viewavail)
-		data["demand"] = DisplayPower(connected_powernet.viewload)
+		data["supply"] = display_power(connected_powernet.viewavail)
+		data["demand"] = display_power(connected_powernet.viewload)
 		for(var/obj/machinery/power/terminal/term in connected_powernet.nodes)
 			var/obj/machinery/power/apc/A = term.master
 			if(istype(A))
@@ -111,7 +111,7 @@
 				data["areas"] += list(list(
 					"name" = A.area.name,
 					"charge" = cell_charge,
-					"load" = DisplayPower(A.lastused_total),
+					"load" = display_power(A.lastused_total),
 					"charging" = A.charging,
 					"eqp" = A.equipment,
 					"lgt" = A.lighting,
