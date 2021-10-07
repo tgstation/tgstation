@@ -19,11 +19,6 @@
 
 	. = ..()
 
-	// If parent Initialize is calling for us to qdel, we can just return early.
-	if(. == INITIALIZE_HINT_QDEL || . == INITIALIZE_HINT_QDEL_FORCE)
-		return
-
-	// Otherwise we hang around until SSmapping spawns us in OnRoundstart and deletes us.
 	GLOB.maintenance_loot_spawners += src
 
 /obj/effect/spawner/random/maintenance/Destroy()
