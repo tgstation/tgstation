@@ -134,7 +134,7 @@
 	if(!home.requires_power)
 		return amount //Shuttles get free power, don't ask why
 
-	var/obj/machinery/power/apc/local_apc = home?.apc
+	var/obj/machinery/power/apc/local_apc = home.apc
 	if(!local_apc)
 		return FALSE
 	var/surplus = local_apc.surplus()
