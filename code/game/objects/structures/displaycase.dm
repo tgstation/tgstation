@@ -102,6 +102,7 @@
 		return
 	var/area/alarmed = get_area(src)
 	alarmed.burglaralert(src)
+	SEND_SIGNAL(alarmed, COMSIG_AREA_FIRE_ALARM, ALARM_BURGLAR)
 
 	alarm_manager.send_alarm(ALARM_BURGLAR)
 	addtimer(CALLBACK(alarm_manager, /datum/alarm_handler/proc/clear_alarm, ALARM_BURGLAR), 1 MINUTES)

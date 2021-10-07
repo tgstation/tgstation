@@ -32,12 +32,9 @@
 	//Trick to get the glowing overlay visible from a distance
 	luminosity = 1
 
-	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
 	COOLDOWN_DECLARE(last_alarm)
-	var/area/myarea = null
-	//Has this firealarm been triggered by its enviroment?
-	var/triggered = FALSE
+	var/area/my_area = null
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
 	. = ..()
@@ -49,16 +46,10 @@
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	update_appearance()
-	myarea = get_area(src)
-	LAZYADD(myarea.firealarms, src)
+	my_area = get_area(src)
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
-
-/obj/machinery/firealarm/Destroy()
-	myarea.firereset(src)
-	LAZYREMOVE(myarea.firealarms, src)
-	return ..()
 
 /obj/machinery/firealarm/update_icon_state()
 	if(panel_open)
@@ -87,7 +78,7 @@
 
 	var/area/area = get_area(src)
 
-	if(!detecting || !area.fire)
+	if(!area.fire)
 		. += "fire_off"
 		. += mutable_appearance(icon, "fire_off")
 		. += emissive_appearance(icon, "fire_off", alpha = src.alpha)
@@ -100,7 +91,7 @@
 		. += mutable_appearance(icon, "fire_on")
 		. += emissive_appearance(icon, "fire_on", alpha = src.alpha)
 
-	if(!panel_open && detecting && triggered) //It just looks horrible with the panel open
+	if(!panel_open && my_area?.fire_detect && my_area?.fire) //It just looks horrible with the panel open
 		. += "fire_detected"
 		. += mutable_appearance(icon, "fire_detected")
 		. += emissive_appearance(icon, "fire_detected", alpha = src.alpha) //Pain
@@ -115,34 +106,13 @@
 		alarm()
 
 /obj/machinery/firealarm/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
-		return
 	obj_flags |= EMAGGED
 	update_appearance()
 	if(user)
 		user.visible_message(span_warning("Sparks fly out of [src]!"),
-							span_notice("You emag [src], disabling its thermal sensors."))
+							span_notice("You emag [src], disabling the thermal sensors of nearby firelocks."))
 	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-
-/obj/machinery/firealarm/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return (exposed_temperature > T0C + 200 || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && !(obj_flags & EMAGGED) && !machine_stat
-
-/obj/machinery/firealarm/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	if(!detecting)
-		return
-	if(!triggered)
-		triggered = TRUE
-		myarea.triggered_firealarms += 1
-		update_appearance()
-	alarm()
-
-/obj/machinery/firealarm/atmos_end()
-	if(!detecting)
-		return
-	if(triggered)
-		triggered = FALSE
-		myarea.triggered_firealarms -= 1
-		update_appearance()
+	SEND_SIGNAL(my_area, COMSIG_AREA_FIRE_DETECT_CHANGE, FIRE_DETECT_EMAG)
 
 /**
  * Signal handler for checking if we should update fire alarm appearance accordingly to a newly set security level
@@ -158,20 +128,23 @@
 		update_appearance()
 
 /obj/machinery/firealarm/proc/alarm(mob/user)
-	if(!is_operational || !COOLDOWN_FINISHED(src, last_alarm))
+	//if(!is_operational || !COOLDOWN_FINISHED(my_area, last_alarm)) //DEBUG -- fix cooldown
+	if(!is_operational)
 		return
-	COOLDOWN_START(src, last_alarm, FIREALARM_COOLDOWN)
-	var/area/area = get_area(src)
-	area.firealert(src)
-	playsound(loc, 'goon/sound/machinery/FireAlarm.ogg', 75)
+	if(my_area.fire)
+		return //area alarm already active
+	//COOLDOWN_START(my_area, last_alarm, FIREALARM_COOLDOWN)//DEBUG -- fix cooldown
+	my_area.firealert()
+	SEND_SIGNAL(my_area, COMSIG_AREA_FIRE_ALARM, ALARM_GENERIC)
+	//playsound(loc, 'goon/sound/machinery/FireAlarm.ogg', 75)//DEBUG -- fix sound
 	if(user)
 		log_game("[user] triggered a fire alarm at [COORD(src)]")
 
 /obj/machinery/firealarm/proc/reset(mob/user)
 	if(!is_operational)
 		return
-	var/area/area = get_area(src)
-	area.firereset()
+	my_area.unset_fire_alarm_effects()
+	SEND_SIGNAL(my_area, COMSIG_AREA_FIRE_CLEAR)
 	if(user)
 		log_game("[user] reset a fire alarm at [COORD(src)]")
 
@@ -219,15 +192,7 @@
 
 		switch(buildstage)
 			if(2)
-				if(tool.tool_behaviour == TOOL_MULTITOOL)
-					detecting = !detecting
-					if (src.detecting)
-						user.visible_message(span_notice("[user] reconnects [src]'s detecting unit!"), span_notice("You reconnect [src]'s detecting unit."))
-					else
-						user.visible_message(span_notice("[user] disconnects [src]'s detecting unit!"), span_notice("You disconnect [src]'s detecting unit."))
-					return
-
-				else if(tool.tool_behaviour == TOOL_WIRECUTTER)
+				if(tool.tool_behaviour == TOOL_WIRECUTTER)
 					buildstage = 1
 					tool.play_tool_sound(src)
 					new /obj/item/stack/cable_coil(user.loc, 5)
@@ -294,7 +259,6 @@
 					tool.play_tool_sound(src)
 					qdel(src)
 					return
-
 	return ..()
 
 /obj/machinery/firealarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -322,14 +286,12 @@
 /obj/machinery/firealarm/singularity_pull(S, current_size)
 	if (current_size >= STAGE_FIVE) // If the singulo is strong enough to pull anchored objects, the fire alarm experiences integrity failure
 		deconstruct()
-	..()
+	return ..()
 
 /obj/machinery/firealarm/atom_break(damage_flag)
 	if(buildstage == 0) //can't break the electronics if there isn't any inside.
 		return
-	. = ..()
-	if(.)
-		LAZYREMOVE(myarea.firealarms, src)
+	return ..()
 
 /obj/machinery/firealarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -352,7 +314,7 @@
 // Allows users to examine the state of the thermal sensor
 /obj/machinery/firealarm/examine(mob/user)
 	. = ..()
-	. += "A light on the side indicates the thermal sensor is [detecting ? "enabled" : "disabled"]."
+	. += "A light on the side indicates thermal safety detection by local firelocks is [my_area.fire_detect ? "enabled" : "disabled"]."
 
 // Allows Silicons to disable thermal sensor
 /obj/machinery/firealarm/BorgCtrlClick(mob/living/silicon/robot/user)
@@ -365,8 +327,12 @@
 	if(obj_flags & EMAGGED)
 		to_chat(user, span_warning("The control circuitry of [src] appears to be malfunctioning."))
 		return
-	detecting = !detecting
-	to_chat(user, span_notice("You [ detecting ? "enable" : "disable" ] [src]'s detecting unit!"))
+	if(my_area.fire_detect)
+		SEND_SIGNAL(my_area, COMSIG_AREA_FIRE_DETECT_CHANGE, FIRE_DETECT_STOP)
+	else
+		SEND_SIGNAL(my_area, COMSIG_AREA_FIRE_DETECT_CHANGE, FIRE_DETECT_START)
+	my_area.fire_detect = !my_area.fire_detect
+	to_chat(user, span_notice("You [ my_area.fire_detect ? "enable" : "disable" ] the local firelock thermal sensors!"))
 
 /obj/machinery/firealarm/directional/north
 	pixel_y = 26

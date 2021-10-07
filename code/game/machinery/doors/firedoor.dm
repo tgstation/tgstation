@@ -1,6 +1,7 @@
 #define CONSTRUCTION_PANEL_OPEN 1 //Maintenance panel is open, still functioning
 #define CONSTRUCTION_NO_CIRCUIT 2 //Circuit board removed, can safely weld apart
 #define DEFAULT_STEP_TIME 20 /// default time for each step
+#define DETECT_COOLDOWN_STEP_TIME 50 ///Wait time before we can detect an issue again, after a recent clear.
 
 /obj/machinery/door/firedoor
 	name = "firelock"
@@ -21,52 +22,133 @@
 	assemblytype = /obj/structure/firelock_frame
 	armor = list(MELEE = 10, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 100, RAD = 100, FIRE = 95, ACID = 70)
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
+	var/area/my_area
 	var/nextstate = null
 	var/boltslocked = TRUE
 	var/list/affecting_areas
 	var/being_held_open = FALSE
+	var/alarm_type = null
+	var/detecting = TRUE
+	var/detect_cooldown = 0
 
 /obj/machinery/door/firedoor/Initialize(mapload)
 	. = ..()
+	my_area = get_area(src)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 	CalculateAffectingAreas()
 
-/obj/machinery/door/firedoor/examine(mob/user)
+	RegisterSignal(src, COMSIG_MERGER_ADDING, .proc/MergerAdding)
+	RegisterSignal(src, COMSIG_MERGER_REMOVING, .proc/MergerRemoving)
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/door/firedoor/LateInitialize()
 	. = ..()
-	if(!density)
-		. += span_notice("It is open, but could be <b>pried</b> closed.")
-	else if(!welded)
-		. += span_notice("It is closed, but could be <b>pried</b> open.")
-		. += span_notice("Hold the firelock temporarily open by prying it with <i>left-click</i> and standing next to it.")
-		. += span_notice("Prying by <i>right-clicking</i> the firelock will open it permanently.")
-		. += span_notice("Deconstruction would require it to be <b>welded</b> shut.")
-	else if(boltslocked)
-		. += span_notice("It is <i>welded</i> shut. The floor bolts have been locked by <b>screws</b>.")
-	else
-		. += span_notice("The bolt locks have been <i>unscrewed</i>, but the bolts themselves are still <b>wrenched</b> to the floor.")
+	GetMergeGroup(merger_id, allowed_types = typecacheof(/obj/machinery/door/firedoor))
+
+/obj/machinery/door/firedoor/Destroy()
+	remove_from_areas()
+	UnregisterSignal(src, COMSIG_MERGER_ADDING)
+	UnregisterSignal(src, COMSIG_MERGER_REMOVING)
+
+///////////////////////////////////////////////////////////////////
+// Merger handling
+
+/obj/machinery/door/firedoor/proc/MergerAdding(obj/machinery/door/firedoor/us, datum/merger/new_merger)
+    SIGNAL_HANDLER
+    if(new_merger.id != merger_id)
+        return
+    RegisterSignal(new_merger, COMSIG_MERGER_REFRESH_COMPLETE, .proc/MergerRefreshComplete)
+
+/obj/machinery/door/firedoor/proc/MergerRemoving(obj/machinery/door/firedoor/us, datum/merger/old_merger)
+    SIGNAL_HANDLER
+    if(old_merger.id != merger_id)
+        return
+    UnregisterSignal(old_merger, COMSIG_MERGER_REFRESH_COMPLETE)
+
+/// Handles the firelocks to register only one signal per group
+/obj/machinery/door/firedoor/proc/MergerRefreshComplete(datum/merger/merger, list/leaving_members, list/joining_members)
+
+///////////////////////////////////////////////////////////////////
+// End of Merger
 
 /obj/machinery/door/firedoor/proc/CalculateAffectingAreas()
 	remove_from_areas()
 	affecting_areas = get_adjacent_open_areas(src) | get_area(src)
-	for(var/I in affecting_areas)
-		var/area/A = I
-		LAZYADD(A.firedoors, src)
-
-/obj/machinery/door/firedoor/closed
-	icon_state = "door_closed"
-	density = TRUE
-
-//see also turf/AfterChange for adjacency shennanigans
+	for(var/area/place in affecting_areas)
+		RegisterSignal(place, COMSIG_AREA_FIRE_DETECT_CHANGE, .proc/update_detect)
+		RegisterSignal(place, COMSIG_AREA_FIRE_ALARM, .proc/activate)
+		RegisterSignal(place, COMSIG_AREA_FIRE_CLEAR, .proc/reset)
 
 /obj/machinery/door/firedoor/proc/remove_from_areas()
 	if(affecting_areas)
-		for(var/I in affecting_areas)
-			var/area/A = I
-			LAZYREMOVE(A.firedoors, src)
+		for(var/place in affecting_areas)
+			UnregisterSignal(place, COMSIG_AREA_FIRE_DETECT_CHANGE)
+			UnregisterSignal(place, COMSIG_AREA_FIRE_ALARM)
+			UnregisterSignal(place, COMSIG_AREA_FIRE_CLEAR)
 
-/obj/machinery/door/firedoor/Destroy()
-	remove_from_areas()
-	affecting_areas.Cut()
-	return ..()
+/obj/machinery/door/firedoor/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return world.time > detect_cooldown && (exposed_temperature > T0C + 200 || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && !(obj_flags & EMAGGED) && !machine_stat
+
+/obj/machinery/door/firedoor/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	if(obj_flags & EMAGGED)
+		return
+	if(!my_area.fire_detect)
+		return
+	if(alarm_type)
+		return
+
+	if(exposed_temperature > T0C + 200)
+		start_activation_process(ALARM_FIRE)
+		return
+	if(exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+		start_activation_process(ALARM_ATMOS)
+		return
+	activate()//Fallback. If firelocks regularly trigger themselves as generic, we need to do some bugfixing
+
+/obj/machinery/door/firedoor/proc/start_activation_process(code = ALARM_GENERIC)
+	if(alarm_type)
+		return //We're already active
+	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
+		INVOKE_ASYNC(buddylock, .proc/activate, code)
+
+/obj/machinery/door/firedoor/proc/activate(code = ALARM_GENERIC)
+	SIGNAL_HANDLER
+	if(alarm_type)
+		return //Already active
+	alarm_type = code
+	switch(alarm_type)
+		if(ALARM_GENERIC)
+			color = COLOR_BLACK //DEBUG -- replace colors with overlay lights
+		if(ALARM_FIRE)
+			color = COLOR_RED
+		if(ALARM_ATMOS)
+			color = COLOR_BLUE
+	if(!being_held_open)
+		INVOKE_ASYNC(src, .proc/close)
+
+
+/obj/machinery/door/firedoor/proc/reset()
+	SIGNAL_HANDLER
+	alarm_type = null
+	color = COLOR_WHITE //DEBUG -- same as above
+	detect_cooldown = world.time + DETECT_COOLDOWN_STEP_TIME
+	INVOKE_ASYNC(src, .proc/open)
+
+/obj/machinery/door/firedoor/proc/update_detect(code)
+	SIGNAL_HANDLER
+	switch(code)
+		if(FIRE_DETECT_EMAG)
+			obj_flags |= EMAGGED
+			alarm_type = null
+			open()
+		if(FIRE_DETECT_STOP)
+			detecting = FALSE
+		if(FIRE_DETECT_START)
+			for(var/area/place in affecting_areas)
+				if(!place.fire_detect)
+					return
+			detecting = TRUE
 
 /obj/machinery/door/firedoor/Bumped(atom/movable/AM)
 	if(panel_open || operating)
@@ -160,6 +242,8 @@
 
 	if(density)
 		open()
+		if(alarm_type)
+			addtimer(CALLBACK(src, .proc/close), 2 SECONDS, TIMER_UNIQUE)
 	else
 		close()
 
@@ -176,6 +260,8 @@
 	UnregisterSignal(user, COMSIG_PARENT_QDELETING)
 	if(user)
 		user.balloon_alert_to_viewers("released [src]", "released [src]")
+	if(alarm_type)
+		close()
 
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
@@ -183,6 +269,8 @@
 		return TRUE
 	if(density)
 		open()
+		if(alarm_type)
+			addtimer(CALLBACK(src, .proc/close), 2 SECONDS, TIMER_UNIQUE)
 	else
 		close()
 	return TRUE
@@ -196,6 +284,8 @@
 		to_chat(user, span_warning("[src] refuses to budge!"))
 		return
 	open()
+	if(alarm_type)
+		addtimer(CALLBACK(src, .proc/close), 2 SECONDS, TIMER_UNIQUE)
 
 /obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)
@@ -204,7 +294,7 @@
 		if("closing")
 			flick("door_closing", src)
 
-/obj/machinery/door/firedoor/update_icon_state()
+obj/machinery/door/firedoor/update_icon_state()
 	. = ..()
 	icon_state = "[base_icon_state]_[density ? "closed" : "open"]"
 
@@ -250,6 +340,10 @@
 		if(FIREDOOR_CLOSED)
 			nextstate = null
 			close()
+
+/obj/machinery/door/firedoor/closed
+	icon_state = "door_closed"
+	density = TRUE
 
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
@@ -461,3 +555,4 @@
 
 #undef CONSTRUCTION_PANEL_OPEN
 #undef CONSTRUCTION_NO_CIRCUIT
+#undef DETECT_COOLDOWN_STEP_TIME
