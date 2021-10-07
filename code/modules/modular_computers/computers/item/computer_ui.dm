@@ -41,6 +41,7 @@
 	if (!ui)
 		ui = new(user, src, "NtosMain")
 		ui.set_autoupdate(TRUE)
+		//Can't invoke here because it'd break the promise of this if check, and would require queuing the following send_asset
 		if(ui.open())
 			ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
 

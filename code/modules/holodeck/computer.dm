@@ -223,6 +223,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 				holo_turf.baseturfs += /turf/open/floor/holofloor/plating
 
 	template = SSmapping.holodeck_templates[map_id]
+	//Can't async here because of how spawned items work. See finish_spawn() and nerf()
 	template.load(bottom_left) //this is what actually loads the holodeck simulation into the map
 
 	if(template.restricted)
