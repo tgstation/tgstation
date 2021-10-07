@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "The huds for clown and mime fan are back"
+  - bugfix: "You can no longer be a simultaneous clown and mime fan, pick a side coward"
