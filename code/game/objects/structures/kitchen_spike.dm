@@ -133,7 +133,7 @@
 
 /obj/structure/kitchenspike/Destroy()
 	if(has_buckled_mobs())
-		for(var/mob/living/spiked_lad in buckled_mobs)
+		for(var/mob/living/spiked_lad as anything in buckled_mobs)
 			release_mob(spiked_lad)
 	return ..()
 
