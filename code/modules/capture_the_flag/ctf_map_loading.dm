@@ -54,7 +54,7 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 	description = "The original CTF map."
 	mappath = "_maps/map_files/CTF/classic.dmm"
 
-/datum/map_template/ctf/fourSide
+/datum/map_template/ctf/four_side
 	name = "Four Side"
 	description = "A CTF map created to demonstrate 4 team CTF, features a single centred flag rather than one per team."
 	mappath = "_maps/map_files/CTF/fourSide.dmm"
