@@ -117,7 +117,7 @@
 
 /obj/item/areaeditor/blueprints/proc/get_images(turf/T, viewsize)
 	. = list()
-	for(var/turf/TT in RANGE_TURFS(viewsize, T))
+	for(var/turf/TT in view(viewsize, T))
 		if(TT.blueprint_data)
 			. += TT.blueprint_data
 
