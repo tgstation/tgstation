@@ -654,7 +654,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			supermatter_zap(
 				zapstart = src,
 				range = 3,
-				zap_str = power * power_multiplier * pressure_multiplier * co2_power_increase,
+				zap_str = 2 * power * power_multiplier * pressure_multiplier * co2_power_increase,
 				zap_flags = ZAP_SUPERMATTER_FLAGS,
 				zap_cutoff = 300,
 				power_level = power
