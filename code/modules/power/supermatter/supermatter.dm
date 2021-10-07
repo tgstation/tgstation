@@ -487,7 +487,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = local_turf.return_air()
-
+	var/env_pressure = env.return_pressure()
 	var/datum/gas_mixture/removed
 	if(produces_gas)
 		//Remove gas from surrounding area
@@ -648,10 +648,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(power && last_power_zap + 4 SECONDS - (power * 0.001) < world.time)
 			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
 			playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
+			var/power_multiplier = max(0, (1 + (power_transmission_bonus / (10 - (gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus)// RadModBZ(500%)
+			var/pressure_multiplier = max((1 / ((env_pressure ** 1.5) + 5.5) * 0.003) + 0.8, 0.5)
+			var/co2_power_increase = max(gas_comp[/datum/gas/carbon_dioxide] * 2, 1)
 			supermatter_zap(
 				zapstart = src,
 				range = 3,
-				zap_str = 2 * power * max(0, (1 + (power_transmission_bonus / (10 - (gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus),
+				zap_str = power * power_multiplier * pressure_multiplier * co2_power_increase,
 				zap_flags = ZAP_SUPERMATTER_FLAGS,
 				zap_cutoff = 300,
 				power_level = power
