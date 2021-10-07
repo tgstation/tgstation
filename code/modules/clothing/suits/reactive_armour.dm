@@ -226,7 +226,7 @@
 	cooldown_message = "<span class='warning'>The tesla capacitors beep ominously for a moment.</span>"
 	var/zap_power = 25000
 	var/zap_range = 20
-	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_NO_POWER_GEN
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 
 /obj/item/clothing/suit/armor/reactive/tesla/dropped(mob/user)
 	..()

@@ -93,8 +93,8 @@
 	obj_flags |= BEING_SHOCKED
 	addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
 	flick("coilhit", src)
-	if(zap_flags & ZAP_NO_POWER_GEN) //Prevent infinite recursive power
-		return
+	if(!(zap_flags & ZAP_GENERATES_POWER)) //Prevent infinite recursive power
+		power = 0
 	if(zap_flags & ZAP_LOW_POWER_GEN)
 		power /= 10
 	zap_buckle_check(power)
