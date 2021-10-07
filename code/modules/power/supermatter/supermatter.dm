@@ -649,7 +649,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
 			playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 			var/power_multiplier = max(0, (1 + (power_transmission_bonus / (10 - (gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus)// RadModBZ(500%)
-			var/pressure_multiplier = max((1 / ((env_pressure ** 1.5) + 5.5) * 0.003) + 0.8, 0.5)
+			var/pressure_multiplier = max((1 / ((env_pressure ** 1.5) + 5.5) * 0.01) + 0.8, 0.5)
 			var/co2_power_increase = max(gas_comp[/datum/gas/carbon_dioxide] * 2, 1)
 			supermatter_zap(
 				zapstart = src,

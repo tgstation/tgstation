@@ -30,6 +30,8 @@
 /obj/machinery/power/tesla_coil/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/tesla_coil(src)
+	if(anchored)
+		connect_to_network()
 
 /obj/machinery/power/tesla_coil/should_have_node()
 	return anchored
