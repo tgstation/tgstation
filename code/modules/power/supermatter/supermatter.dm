@@ -737,7 +737,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//We should always be able to zap our way out of the default enclosure
 			//See supermatter_zap() for more details
 			range = clamp(power / removed.return_pressure() * 10, 2, 7)
-		var/flags = ZAP_MOB_DAMAGE
+		var/flags = ZAP_SUPERMATTER_FLAGS
 		var/zap_count = 0
 		//Deal with power zaps
 		switch(power)
