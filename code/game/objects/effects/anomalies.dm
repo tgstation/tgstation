@@ -283,7 +283,7 @@
 			for (var/atom/movable/A in urange(12, FROM )) // iterate thru list of mobs in the area
 				if(istype(A, /obj/item/beacon))
 					continue // don't teleport beacons because that's just insanely stupid
-				if(istype(A, /mob/camera))
+				if(iscameramob(A))
 					continue // Don't mess with AI eye, blob eye, xenobio or advanced cameras
 				if(A.anchored)
 					continue
