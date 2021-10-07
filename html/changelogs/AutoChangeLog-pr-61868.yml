@@ -1,4 +1,0 @@
-author: "PeterMorrison1"
-delete-after: True
-changes: 
-  - bugfix: "fixed dropped arrows being controllable with the bow"

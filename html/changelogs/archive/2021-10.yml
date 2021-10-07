@@ -203,3 +203,16 @@
   - code_imp: Indestructible paper wall support. It's better than the alternative.
   kopoba:
   - bugfix: fix ebow was able to accept pka modkits with 0 cost
+2021-10-07:
+  PeterMorrison1:
+  - bugfix: fixed dropped arrows being controllable with the bow
+  Watermelon914:
+  - qol: Refactored tgui list inputs to be a lot more user-friendly.
+  lovegreenstuff:
+  - bugfix: ice reaction oversight, now freezes at the proper 274k instead of 245k
+  tralezab code, melbert idea!:
+  - rscadd: There's a new wizard event, RPG titles. Summon the star duke!
+  zxaber:
+  - rscdel: The augment painter has been removed from the game.
+  - rscadd: Spraycans can now change the visual style of robotic augments via right-click.
+  - bugfix: Borg lights are now visible again.

@@ -1,5 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - rscdel: "The augment painter has been removed from the game."
-  - rscadd: "Spraycans can now change the visual style of robotic augments via right-click."
