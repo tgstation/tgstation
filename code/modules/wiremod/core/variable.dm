@@ -49,5 +49,5 @@
 
 /// Removes a listener to receive inputs when the variable has a value that is set. Listener will usually clean themselves up
 /datum/circuit_variable/proc/remove_listener(obj/item/circuit_component/to_remove)
-	UnregisterSignal(to_add, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(to_remove, COMSIG_PARENT_QDELETING)
 	listeners -= to_remove
