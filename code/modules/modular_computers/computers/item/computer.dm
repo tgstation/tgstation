@@ -417,7 +417,7 @@
 		active_program = null
 	var/mob/user = usr
 	if(user && istype(user))
-		INVOKE_ASYNC(src, /datum/proc/ui_interact, user) // Re-open the UI on this computer. It should show the main screen now.
+		ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
 	update_appearance()
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)

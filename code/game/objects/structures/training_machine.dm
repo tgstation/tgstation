@@ -41,7 +41,7 @@
  * Called on qdel(), so we don't want a cool explosion to happen
  */
 /obj/structure/training_machine/Destroy()
-	INVOKE_ASYNC(src, .proc/remove_attached_item)
+	remove_attached_item())
 	return ..()
 
 /**
@@ -164,7 +164,7 @@
 		UnregisterSignal(attached_item, COMSIG_PARENT_QDELETING)
 		qdel(attached_item)
 	else if (user)
-		user.put_in_hands(attached_item)
+		INVOKE_ASYNC(user, /mob/living/carbon/proc/put_in_hands, attached_item)
 	else
 		attached_item.forceMove(drop_location())
 	if (throwing && !QDELETED(attached_item)) //Fun little thing where we throw out the old attached item when emagged

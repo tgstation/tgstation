@@ -486,7 +486,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.clients -= src
 	GLOB.directory -= ckey
 	log_access("Logout: [key_name(src)]")
-	INVOKE_ASYNC(GLOB.ahelp_tickets, /datum/admin_help_tickets/proc/ClientLogout, src)
+	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.interviews.client_logout(src)
 	GLOB.requests.client_logout(src)
 	SSserver_maint.UpdateHubStatus()
