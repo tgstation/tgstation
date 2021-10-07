@@ -14001,7 +14001,7 @@
 /turf/open/floor/iron/white,
 /area/medical/surgery)
 "cXm" = (
-/obj/machinery/computer/cargo/request{
+/obj/machinery/computer/department_orders/science{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -26716,13 +26716,13 @@
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "hoa" = (
-/obj/machinery/computer/cargo/request,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 4
 	},
+/obj/machinery/computer/department_orders/engineering,
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "hoe" = (
@@ -27454,7 +27454,7 @@
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 8
 	},
-/obj/machinery/computer/cargo/request{
+/obj/machinery/computer/department_orders/security{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -38307,7 +38307,7 @@
 /area/science/misc_lab)
 "lGw" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/cargo/request{
+/obj/machinery/computer/department_orders/service{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -57951,7 +57951,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/computer/cargo/request{
+/obj/machinery/computer/department_orders/medical{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
