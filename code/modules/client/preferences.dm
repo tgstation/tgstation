@@ -116,8 +116,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	randomise_appearance_prefs() //let's create a random character then - rather than a fat, bald and naked man.
 	if(C)
 		apply_all_client_preferences()
-
-	C?.set_macros()
+		C.set_macros()
 
 	if(!loaded_preferences_successfully)
 		save_preferences()
