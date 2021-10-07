@@ -9,7 +9,7 @@
 	use_power = NO_POWER_USE
 
 	var/active = FALSE
-	var/power_gen = 2500
+	var/power_gen = 1500
 	var/power_output = 1
 	var/consumption = 0
 	var/base_icon = "portgen0"
@@ -114,6 +114,7 @@
 			temp_rating += SP.rating
 		else
 			consumption_coeff += SP.rating
+	power_gen = initial(power_gen) + 1000 * temp_rating
 	consumption = consumption_coeff / temp_rating
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
@@ -280,7 +281,7 @@
 	base_icon = "portgen1"
 	circuit = /obj/item/circuitboard/machine/pacman/super
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
-	power_gen = 7500
+	power_gen = 6500
 	time_per_sheet = 85
 
 /obj/machinery/power/port_gen/pacman/super/overheat()
