@@ -1,6 +1,3 @@
-#define COIL_OUTPUT min(stored_energy, (stored_energy * 0.4) + 1000)
-GLOBAL_VAR_INIT(tesla_last_sound, 0)
-
 /obj/machinery/power/tesla_coil
 	name = "tesla coil"
 	desc = "For the union!"
@@ -17,7 +14,7 @@ GLOBAL_VAR_INIT(tesla_last_sound, 0)
 	circuit = /obj/item/circuitboard/machine/tesla_coil
 
 	///Flags of the zap that the coil releases when the wire is pulsed
-	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_NO_POWER_GEN
 	///Multiplier for power conversion
 	var/input_power_multiplier = 1
 	///Cooldown between pulsed zaps
@@ -83,8 +80,8 @@ GLOBAL_VAR_INIT(tesla_last_sound, 0)
 
 	return ..()
 
-/obj/machinery/power/tesla_coil/process()
-	var/power_produced = COIL_OUTPUT
+/obj/machinery/power/tesla_coil/process(delta_time)
+	var/power_produced = min(stored_energy, (stored_energy * 0.04) + 1000) * delta_time
 	add_avail(power_produced)
 	stored_energy -= power_produced
 
@@ -93,13 +90,13 @@ GLOBAL_VAR_INIT(tesla_last_sound, 0)
 		return ..()
 	obj_flags |= BEING_SHOCKED
 	addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
+	flick("coilhit", src)
+	if(zap_flags & ZAP_NO_POWER_GEN) //Prevent infinite recursive power
+		return
 	zap_buckle_check(power)
 	var/power_removed = powernet ? power * input_power_multiplier : power
-	stored_energy += max((power_removed - 100) * 100, 0)
-	flick("coilhit", src)
-	if(GLOB.tesla_last_sound + 1.2 SECONDS < world.time)
-		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-		GLOB.tesla_last_sound = world.time
+	stored_energy += max((power_removed - 80) * 200, 0)
+	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 	return max(power - power_removed, 0) //You get back the amount we didn't use
 
 /obj/machinery/power/tesla_coil/proc/zap()
