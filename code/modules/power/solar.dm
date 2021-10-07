@@ -1,4 +1,4 @@
-#define SOLAR_GEN_RATE 1500
+#define SOLAR_GEN_RATE 500
 #define OCCLUSION_DISTANCE 20
 
 /obj/machinery/power/solar
