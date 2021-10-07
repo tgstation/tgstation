@@ -14,7 +14,7 @@
 	circuit = /obj/item/circuitboard/machine/tesla_coil
 
 	///Flags of the zap that the coil releases when the wire is pulsed
-	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_NO_POWER_GEN
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
 	///Multiplier for power conversion
 	var/input_power_multiplier = 1
 	///Cooldown between pulsed zaps
@@ -95,6 +95,8 @@
 	flick("coilhit", src)
 	if(zap_flags & ZAP_NO_POWER_GEN) //Prevent infinite recursive power
 		return
+	if(zap_flags & ZAP_LOW_POWER_GEN)
+		power /= 10
 	zap_buckle_check(power)
 	var/power_removed = powernet ? power * input_power_multiplier : power
 	stored_energy += max((power_removed - 80) * 200, 0)
