@@ -38,6 +38,7 @@ export const NtosRobotactContent = (props, context) => {
     printerTonerMax,
     thrustersInstalled,
     thrustersStatus,
+    selfDestructAble,
   } = data;
   const borgName = data.name || [];
   const borgType = data.designation || [];
@@ -207,6 +208,15 @@ export const NtosRobotactContent = (props, context) => {
                         <Button
                           content={thrustersStatus}
                           onClick={() => act('toggleThrusters')} />
+                      </LabeledList.Item>
+                    )}
+                    {!!selfDestructAble && (
+                      <LabeledList.Item
+                        label="Self Destruct">
+                        <Button.Confirm
+                          content="ACTIVATE"
+                          color="red"
+                          onClick={() => act('selfDestruct')} />
                       </LabeledList.Item>
                     )}
                   </LabeledList>
