@@ -114,6 +114,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	randomise_appearance_prefs() //let's create a random character then - rather than a fat, bald and naked man.
+	apply_all_client_preferences()
 
 	C?.set_macros()
 
