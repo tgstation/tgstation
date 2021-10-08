@@ -601,4 +601,4 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		CHECK_TICK
 
 		spawner.spawn_loot()
-		spawner.hide()
+		qdel(spawner)
