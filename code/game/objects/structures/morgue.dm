@@ -327,7 +327,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	return attack_hand(user, modifiers)
 
 /obj/structure/tray/attack_robot(mob/user, list/modifiers)
-    return attack_hand(user, modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/structure/tray/attack_hand(mob/user, list/modifiers)
 	. = ..()
