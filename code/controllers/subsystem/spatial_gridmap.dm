@@ -54,17 +54,8 @@ SUBSYSTEM_DEF(spatial_grid)
 
 /datum/controller/subsystem/spatial_grid/Initialize(start_timeofday)
 	. = ..()
-	var/cells_per_side = world.maxx / SPATIAL_GRID_CELLSIZE //assume world.maxx == world.maxy
 	for(var/datum/space_level/z_level as anything in SSmapping.z_list)
-		var/list/new_cell_grid = list()
-
-		grids_by_z_level += list(new_cell_grid)
-
-		for(var/y in 1 to cells_per_side)
-			new_cell_grid += list(list())
-			for(var/x in 1 to cells_per_side)
-				var/datum/spatial_grid_cell/cell = new(x, y, z_level.z_value)
-				new_cell_grid[y] += cell
+		propogate_spatial_grid_to_new_z(null, z_level)
 
 	//for anything waiting to be let in
 	for(var/channel_type in waiting_to_add_by_type)
@@ -75,6 +66,8 @@ SUBSYSTEM_DEF(spatial_grid)
 
 			UnregisterSignal(movable, COMSIG_PARENT_PREQDELETED)
 			waiting_to_add_by_type[channel_type] -= movable
+
+	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, .proc/propogate_spatial_grid_to_new_z)
 
 /datum/controller/subsystem/spatial_grid/proc/enter_pre_init_queue(atom/movable/waiting_movable, type)
 	RegisterSignal(waiting_movable, COMSIG_PARENT_PREQDELETED, .proc/queued_item_deleted, override = TRUE)
@@ -103,6 +96,22 @@ SUBSYSTEM_DEF(spatial_grid)
 	SIGNAL_HANDLER
 	remove_from_pre_init_queue(movable_being_deleted, null)
 
+///creates the spatial grid for a new z level
+/datum/controller/subsystem/spatial_grid/proc/propogate_spatial_grid_to_new_z(datum/controller/subsystem/processing/dcs/fucking_dcs, datum/space_level/z_level)
+	SIGNAL_HANDLER
+
+	var/cells_per_side = SPATIAL_GRID_CELLS_PER_SIDE
+
+	var/list/new_cell_grid = list()
+
+	grids_by_z_level += list(new_cell_grid)
+
+	for(var/y in 1 to cells_per_side)
+		new_cell_grid += list(list())
+		for(var/x in 1 to cells_per_side)
+			var/datum/spatial_grid_cell/cell = new(x, y, z_level.z_value)
+			new_cell_grid[y] += cell
+
 #define BOUNDING_BOX_MIN(center_coord) max(ROUND_UP((center_coord - range) * INVERSE_SPATIAL_GRID_CELLSIZE), 1)
 #define BOUNDING_BOX_MAX(center_coord) min(ROUND_UP((center_coord + range) * INVERSE_SPATIAL_GRID_CELLSIZE), grid_cells_per_axis)
 
@@ -127,7 +136,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	. = list()
 
-	var/static/grid_cells_per_axis = world.maxx / SPATIAL_GRID_CELLSIZE//im going to assume this doesnt change at runtime
+	var/static/grid_cells_per_axis = SPATIAL_GRID_CELLS_PER_SIDE//im going to assume this doesnt change at runtime
 
 	//technically THIS list only contains lists, but inside those lists are grid cell datums and we can go without a SINGLE var init if we do this
 	var/list/datum/spatial_grid_cell/grid_level = grids_by_z_level[center_turf.z]
