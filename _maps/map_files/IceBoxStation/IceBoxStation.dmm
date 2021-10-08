@@ -24639,11 +24639,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/brig)
-"iIq" = (
-/obj/effect/spawner/random/maintenance,
-/obj/structure/rack,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "iIz" = (
 /obj/effect/turf_decal/trimline/blue/corner{
 	dir = 8
@@ -27854,6 +27849,9 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 10
+	},
+/obj/structure/sign/poster/official/random{
+	pixel_y = 32
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
@@ -33385,6 +33383,10 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
+/obj/machinery/firealarm/directional/west,
+/obj/structure/sign/poster/official/random{
+	pixel_y = -32
+	},
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
 "nrE" = (
@@ -33560,11 +33562,11 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/structure/sign/poster/random{
-	pixel_y = -32
-	},
 /obj/machinery/light/directional/south,
 /obj/effect/spawner/random/vending/snackvend,
+/obj/structure/sign/poster/official/random{
+	pixel_y = -32
+	},
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
 "nvG" = (
@@ -33791,6 +33793,14 @@
 /obj/machinery/light/directional/east,
 /turf/open/openspace,
 /area/science/xenobiology)
+"nBC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/poster/random{
+	pixel_y = 32
+	},
+/turf/open/floor/iron,
+/area/hallway/primary/starboard)
 "nBZ" = (
 /obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/iron,
@@ -38039,6 +38049,9 @@
 /area/command/meeting_room)
 "pOy" = (
 /obj/machinery/photocopier,
+/obj/structure/sign/poster/official/random{
+	pixel_x = 32
+	},
 /turf/open/floor/wood,
 /area/service/library)
 "pOC" = (
@@ -44287,6 +44300,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/cafeteria,
 /area/command/heads_quarters/rd)
+"tfs" = (
+/obj/structure/sign/poster/random{
+	pixel_x = -32
+	},
+/turf/open/floor/iron/dark,
+/area/service/chapel)
 "tfw" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/embedded_controller/radio/airlock_controller/incinerator_ordmix{
@@ -96632,7 +96651,7 @@ nqI
 siL
 vKY
 pXx
-dnp
+nBC
 dnp
 pwV
 pwV
@@ -98152,7 +98171,7 @@ alP
 alP
 alP
 anf
-auD
+aqy
 alP
 awJ
 alP
@@ -98409,7 +98428,7 @@ xPV
 rCp
 aEl
 anf
-aqy
+anf
 atB
 anf
 alP
@@ -99441,7 +99460,7 @@ alP
 aBF
 aBF
 arI
-iIq
+iZt
 apE
 aoQ
 anf
@@ -100472,7 +100491,7 @@ qDf
 aHf
 bbk
 asB
-sNB
+tfs
 qyU
 vTK
 vDa
@@ -105624,13 +105643,13 @@ boP
 bnK
 aKV
 bnK
-vQk
+lTB
 bnK
 boP
 boP
 boP
 bnK
-vQk
+aKV
 bnK
 lTB
 bnK

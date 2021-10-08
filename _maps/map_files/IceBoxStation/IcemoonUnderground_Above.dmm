@@ -835,7 +835,7 @@
 /obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "lower_chapel_shutters";
-	name = "chapel shutters"
+	name = "graveyard shutters"
 	},
 /turf/open/floor/plating,
 /area/service/chapel)
@@ -5933,7 +5933,10 @@
 "zo" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/landmark/event_spawn,
-/obj/effect/decal/cleanable/crayon,
+/obj/effect/decal/cleanable/crayon{
+	pixel_x = -5;
+	pixel_y = -5
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
 "zq" = (
